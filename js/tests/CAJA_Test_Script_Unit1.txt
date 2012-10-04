@@ -1,0 +1,107 @@
+﻿// 5/15/2012 SJG Unit text for CAJA Script
+// UTF-8 format
+// @page p defines a named page for testing - all scripts within that page are parsed as a single block
+// @var v defines an initial variable for testing
+// deltavars prints all variable values changed since last print
+
+@var Name
+@var Gender
+
+@page Welcome
+deltavars
+
+@page If Test
+if missingAnEndif
+
+
+@page Introduction 1 of 4
+
+// Set intitial variables
+set Name        to  "Charlie"
+set paragraph to "English, Spanish: ¿Es Inglés?, Russian: Является?, Vietnamese: Đây có phải Anh?, Portuguese: É isto Inglês?, Haitian Creole: Èske sa se vrèman angle?, Simplified Chinese: 这是真的在另一种语言编写吗？"
+set [Last Name] to "Brown"
+set name#2 to "Name 2"
+set name#child to "Name 2"
+// set [Last Name#2] to "Name 2  // unterminated! 
+set [Last Name#child] to "Name 2"
+set a to [child name] +  [child name#2] +   [child name#child counter]
+
+
+set Gender  to  "male"
+set PD  to  259.51
+set v to age(5) + age([child birthday]) + age([child birthday#1]) + age([child birthday#counter])
+set v to "what is vv" + vv +"VV" + "?"
+
+deltavars
+
+@page 05b-Grandchild
+@page Counter Test
+
+SET [g_count] TO 0
+IF [Decedent has dead children TF] = "true"  
+ GOTO '05b-Grandchild'
+ELSE
+ GOTO '06-LOGIC STEP'
+END IF
+
+deltavars
+
+@page Birth
+set Name to "Mr. Является"
+
+set birthday to #1/1/2001#
+set pet  to "Snoopy" +" "+ [last name]
+set [income and benefits] to 25,000
+set test to [income and benefits] and income and benefits = true
+set test to 25,000.25 + "65,000 + 125,000" + 5,000
+set test to 25,000.25 + 65,000 + 125,000 + 5,000
+set v to born or band or anot and not orvil or andy or notty
+set v to x = y and not (j <>  55)
+set v to age(user_born)  + age([first child birthdate#child counter]) + hisher ( [user gender] )
+set v to "this [variable] should not be encoded"
+
+deltavars
+
+@page Birth 2
+
+SET birthday TO #12/31/1960# // peanut's first strip?
+set anniversary to #12/31/2001#
+set diffdays to anniversary - birthday
+
+set info to name + "'s gender is " + gender + " and "+hisher(gender) +" gender HeShe() is " + heshe(gender) +"."
+GOTO "FAC55" // "+MyNextPageDest //comment
+// the code below should never execute
+set info to "This value should not be set"
+
+
+@page Child info 1.2
+set c_count to 1
+set [Child first name TE#1] to "Jack"
+set [Child last name#c_count] to "Smith"
+print Is %%[Child first name TE#c_count]%% %%[Child last name TE#c_count]%% a non-marital child?
+
+deltavars
+
+if num>4 and (not num<10)  
+	GOTO  BigNum
+end if
+
+@page Blurb
+print The user's name is <b>%%Name%%</b> or %%name%%. He was born on %%dateMDY(Birthday)%%.	25	+	-10 = %%25+-10%%. Your dollars are $%%dollarRound(pd)%% and your dollars and cents are $%%dollar(pd)%%.<br>
+«if age<18»You are too young to«else»You are old enough to«end if» fill this form.<br>The end.
+
+set pd  to pd + 5000
+
+@page Page with bad If
+// Missing an end if, should be error flagged
+if x=5
+   set y=93
+else
+
+deltavars
+
+
+@page The End
+deltavars
+tracevars
+

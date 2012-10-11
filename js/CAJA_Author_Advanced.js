@@ -16,6 +16,9 @@ var editwin=window;
 
 */
 
+$(document).ready(function () { initAdvanced(); });
+
+
 function initAdvanced()
 {
 	jQuery(document).bind('paste', handlePaste);
@@ -202,7 +205,7 @@ function parseP(p)
 
 
 
-TCAJA.prototype.convertToText=function()
+TGuide.prototype.convertToText=function()
 {	// Generate report of CAJA contents in single doc text format
 	var t, cnt, vi, v, ci, c, lastStep, pageText, p, page, f, field
 		,scriptBefore,scriptAfter,scriptLast

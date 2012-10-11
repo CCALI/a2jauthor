@@ -15,12 +15,13 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	};
 	var DefaultPromptsUsed={};
 	
-	var caja=new TCAJA();
+	var caja=new TGuide();
 	caja.viewer="A2J";
 	caja.title = TEMPLATE.find('TITLE').text();
 	caja.description = TEMPLATE.find('DESCRIPTION').text();
 	caja.jurisdiction = TEMPLATE.find('JURISDICTION').text();
-	caja.firstQuestion = TEMPLATE.find('FIRSTQUESTION').text();
+	caja.firstQuestion = TEMPLATE.find('FIRSTQUESTION').text(); 
+	
 	// Parse pages into book.pages[] records. 
 	TEMPLATE.find("VARIABLE").each(function() {
 		VARIABLE = $(this);

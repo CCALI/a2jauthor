@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<HTML xmlns="http://www.w3.org/1999/xhtml">
+<!-- DW6 -->
+<HEAD> 
+
+<title>CAJA Web Service Tester</title> 
+
+<script src="../jquery.1.7.2.min.js" xsrc="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script src="../jquery.ui.1.8.23.min.js" xsrc="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js" type="text/javascript"></script>
+<link  href="../jquery.ui.custom.css" rel="stylesheet" type="text/css" />
+<script src="../jquery.ui.custom.min.js" type="text/javascript" ></script>
+<script src="../CAJA_Utils.js" type="text/javascript" ></script>
+<link href="../CAJA_Author.css"  rel="stylesheet" type="text/css"/>
+
+<script>
+var gUserID;
+var gGuideID;
+
+function trace(msg)
+{
+	$('#trace').prepend('<div class=trace>'+  Array.prototype.slice.call(arguments).join(", ")+'</div>'); 
+}
+function status(msg)
+{
+	trace(msg);
+	$('#status').html(msg);
+}
+function html(txt){
+	$('#results').html(txt); 
+}
+$(document).ready(function()
+{  
+	trace("Ready");
+	status('Ready');
+	
+	function signin(data)
+	{
+		gUserID=data.userid;
+		gGuideID=0;
+		if (gUserID==0)
+		{
+			status('Unknown user');
+			html('Please register...');
+		}
+		else
+		{
+			status('User signed in: ' + data.nickname+" user#"+data.userid);
+			html("Welcome "+data.nickname+" user#"+data.userid);
+			ws({cmd:'guides/owned'},listguides);
+		}
+	};
+	function guideloaded(data)
+	{ 
+		gGuideID=data.gid;
+		status('Loaded the guide #'+gGuideID );
+		html("<textarea rows=20 id=guidexml>"+ htmlEscape(data.guide) + "</textarea>"); 
+	}
+	function listguides(data)
+	{
+		gGuideID=0;
+		var items = [];
+	  	$.each(data.guides, function(key, val) {items.push('<li class=guide gid="' + key + '">' + val + '</li>');});
+		status('Listing '+items.length+' guides.');
+		html("Guides <ol>"+items.join('')+"</ol>");
+		$('li.guide').click(function(){
+			html('Loading guide '+$(this).text()+AJAXLoader);
+			ws({cmd:'guide',gid:$(this).attr('gid')},guideloaded);		
+		});
+	}
+	function statusupdate(data)
+	{
+		if (data.error!=null)
+			status(data.error);
+		else
+			status(data.info);
+	}
+	function guideclone(data)
+	{
+		if (data.error!=null)
+			status(data.error);
+		else{
+			gGuideID=data.gid;//new guide id
+			status("Guide cloned to "+gGuideID);
+		}
+	}
+	$('#signin1').click(function(){ws({cmd:'login',username:$('#username').val(),userpass:$('#userpass').val()},signin)});
+	$('#signin2').click(function(){ws({cmd:'login',username:$('#username2').val(),userpass:$('#userpass2').val()},signin)});
+	$('#signout').click(function(){ws({
+		cmd:'logout'},function(data){
+		gUserID=0;
+		gGuideID=0;
+		status('Signed out');
+		html("Goodbye user#"+gUserID)})});
+	$('#guides_owned').click(function(){ws({cmd:'guides/owned'},listguides)});
+	$('#guides_all').click(function(){ws({cmd:'guides'},listguides)});
+	$('#guidesave').click(function()	{if (gGuideID==0) return; ws({cmd:'guidesave',gid:gGuideID, guide:$('#guidexml').val()},statusupdate)});
+	$('#guideclone').click(function(){if (gGuideID==0) return; ws({cmd:'guideclone',gid:gGuideID},guideclone)});
+	
+});
+
+function ws(data,results)
+{
+	//$.getJSON( '../CAJA_WS.php',data,results).error(function(err,xhr) { alert("error:"+xhr.responseText ); })
+	trace(JSON.stringify(data));
+	$.ajax({
+		url:'../CAJA_WS.php',
+		dataType:'json',
+		type: 'POST',
+		data: data,
+		success: function(data){ 
+			trace(String.substr(JSON.stringify(data),0,299));
+			results(data);
+		},
+		error: function(err,xhr) { alert("error:"+xhr.responseText ); }
+	})
+}  
+
+
+function loadFile(bookFile)
+{
+	trace("Loading Unit Test "+bookFile);
+	$.ajax({
+			url: bookFile,
+			dataType: "text"  , // IE will only load XML file from local disk as text, not xml.
+			timeout: 45000,
+			error: function(data,textStatus,thrownError){
+			  alert('Error occurred loading from '+this.url+"\n"+textStatus);
+			 },
+			success: function(data){
+				parseUnit(data);
+			}
+		});
+}  
+
+</script>
+
+
+<style type="text/css">
+<!--
+td {
+	vertical-align: top;
+	text-align: left;
+	padding: 2px;
+}
+form {
+	border: 2px;
+	background-color:#fff;
+	}
+.header {
+	height: 45px;
+}
+li.guide {
+	cursor: pointer;
+}
+li.guide:hover {
+	background-color:#C0DCC0;
+}
+div.trace { padding: 5px;}
+div.trace:nth-child(even) {background-color:#fff;}
+div.trace:nth-child(odd)  {background-color:#eee;}
+
+-->
+</style>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></HEAD>
+
+
+<BODY BGCOLOR="#FFFFFF"  >
+<div class="header">CAJA Web Service Tester</div> <form>
+<table width="100%" height="100%" border="0" cellpadding="5" cellspacing="0">
+	<tr>
+		<th width="33%" height="30" nowrap="nowrap">Commands</th>
+		<th width="33%" height="30" nowrap="nowrap">Current Results</th>
+		<th width="33%" height="30" nowrap="nowrap">Trace</th>
+	</tr>
+	<tr>
+		<td width="33%"><table border="1" cellpadding="5" cellspacing="0" bgcolor="#FFFFCC">
+			<tr>
+				<th valign="top">Command</th>
+				<th valign="top">Data</th>
+			</tr>
+			<tr>
+				<td align="right" valign="middle"><p align="right">Good Login</p></td>
+				<td valign="middle">
+User:	<input type="text" id="username" value="demo"  />
+Pass:	<input type="password" id="userpass" value="demo"   />
+	<input type="button" id="signin1" value="Sign in" />			</td>
+			</tr>
+			<tr>
+				<td align="right" valign="middle"><p align="right">Bad Login</p></td>
+				<td valign="middle"> User:
+					<input id="username2" type="text" value="DEMO '); drop table Guides;" />
+					Pass:
+					<input id="userpass2" type="password" value="bad password" />
+					<input type="button" id="signin2" value="Sign in" />				</td>
+			</tr>
+			<tr>
+				<td align="right" valign="middle"><p align="right">Logout </p></td>
+				<td valign="middle"><input type="button" id="signout" value="Sign out" /></td>
+			</tr>
+			<tr>
+				<td align="right" valign="middle"><p align="right">  Author Guides </p></td>
+				<td valign="middle"> 
+						<input type="button" id="guides_owned" value="My Guides" />
+						<input type="button" id="guides_all" value="All Guides" /></td>
+			</tr>
+			<tr>
+				<td align="right" valign="middle">Editing Guide</td>
+				<td valign="middle"><input type="button" id="guidesave" value="Save Guide" /> <input type="button" id="guideclone" value="Clone Guide" /></td>
+			</tr>
+		</table></td>
+		<td><div id="status">Status</div><div id="results">Results</div></td>
+		<td width="33%"><div id="trace"></div></td>
+	</tr>
+</table>	</form>
+</BODY>
+</HTML>
+
+ 

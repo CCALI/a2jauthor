@@ -18,6 +18,10 @@ var MAXSTEPS= 12;
 var textonlyMode=0; // textonlyMode for single document editing
 var editMode= 0 ; // editMode=0 if separate pages, =1 for single document
 
+// ### Global variables ### //
+var caja; // type TGuide (CBK or A2J)
+
+
 
 // ### Classes ###
 function TText()
@@ -111,9 +115,10 @@ function TPage()
 	return this;
 }
 
-function TCAJA()
-{	// This is the Book representing a lesson.
+function TGuide()
+{	// This is the Guide representing a CALI lesson Book or an A2J Author Interview.
 	this.viewer="";//A2J, CA, CAJA
+	this.filename="";
 	this.version="";
 	this.title="";
 	this.description="";

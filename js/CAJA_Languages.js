@@ -51,3 +51,7 @@ lang.regional['en']= {
 
 lang.set('');
 
+
+$(document).ready(function () {
+	;
+});

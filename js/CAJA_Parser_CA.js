@@ -14,7 +14,7 @@ function parseXML_CA_to_CAJA(BOOK)
 	var step, pageXML, page
 		,b,text,fb;
 	
-	var caja=new TCAJA();
+	var caja=new TGuide();
 	caja.viewer="CA";
 	caja.title = BOOK.find('TITLE').text();
 	caja.description = BOOK.find('INFO > DESCRIPTION').xml();

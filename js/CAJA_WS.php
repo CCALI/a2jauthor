@@ -5,6 +5,7 @@ session_start();
 header("Content-type: text/plain; charset=utf-8");
 
 $userid=$_SESSION['userid'];if (!isset($userid))$userid=0;
+$userdir=$_SESSION['userdir'];if (!isset($userdir))$userdir=0;
 $command=$_REQUEST['cmd'];
 $result=array();
 $err="";
@@ -27,27 +28,32 @@ switch ($command)
 		if ($row=$res->fetch_assoc()){
 			$result['nickname']=$row['nickname'];
 			$userid=$row['uid']; 
+			$userdir=$row['folder'];
 		}
 		else
 		{
 			$userid=0;
+			$userdir=0;
 		}
 		$result['userid']=$userid;
 		$_SESSION['userid']=$userid;
+		$_SESSION['userdir']=$userdir;
 		break;
 	case 'logout':
 		// do logout, clear seession user id
 		$userid=0;
+		$userdir=0;
 		$result['userid']=$userid;
 		$_SESSION['userid']=$userid;
+		$_SESSION['userdir']=$userdir;
 		break;
 	case 'guides':
 		// list of free, public or user owned guides
-		listGuides("select * from guides where isPublic=1 or isFree=1  or (editoruid=$userid) ");
+		listGuides("select * from guides where isPublic=1 or isFree=1  or (editoruid=$userid) order by (editoruid=$userid) desc, title asc ");
 		break;
 	case 'guides/owned':
 		// list of user owned guides
-		listGuides("select * from guides where editoruid=$userid");
+		listGuides("select * from guides where editoruid=$userid order by title asc");
 		break;
 	case 'guide':
 		// return XML of guide if it's public, free or user owned.
@@ -56,8 +62,8 @@ switch ($command)
 		if ($row=$res->fetch_assoc()){
 			$result['gid']=$row['gid'];
 			$result['editoruid']=$row['editoruid'];
-			$result['guide']= file_get_contents(GUIDE_DIR($row['gid']).'/'.$row['filename'],TRUE);
-			trace(GUIDE_DIR($row['gid']).'/'.$row['filename']);
+			$result['guide']= file_get_contents(GUIDE_DIR($row['filename'],TRUE));
+			trace(GUIDE_DIR($row['filename']));
 			//usleep(500000);
 		}
 		else
@@ -73,12 +79,13 @@ switch ($command)
 		if ($row=$res->fetch_assoc()){
 			$result['info']="Will update!";
 			// rename existing auto name file with a date time stamp and save update to autoname
-			$location=GUIDE_DIR($gid);
-			$guidename=$row['filename'];//"guide.xml";
-			$filename = $location.'/'.$guidename;
+			$filename=GUIDE_DIR($row['filename']);
 			if (file_exists($filename)){
 				trace(filemtime($filename));
-				rename($filename, $location.'/'.$row['filename'].'_version_'.date('Y-m-d-H-i-s',filemtime($filename)).'.xml');
+//				$revname=explode('/',$filename);
+//				$revname[count($revname)-1]= $revname[count($revname)-1].'_version_'.date('Y-m-d-H-i-s',filemtime($filename)).'.xml';
+				$revname=$filename .'_version_'.date('Y-m-d-H-i-s',filemtime($filename)).'.xml';//implode('/',$revname);
+				rename($filename, $revname);//$location.'/'.$row['filename'].'_version_'.date('Y-m-d-H-i-s',filemtime($filename)).'.xml');
 			}
 			trace('saving to '.$filename);
 			file_put_contents($filename,$xml);
@@ -92,21 +99,34 @@ switch ($command)
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$res=$mysqli->query("select * from guides where gid=$gid");
 		if ($row=$res->fetch_assoc()){
+			$oldfile = $row['filename'];
+			$newfile = basename($oldfile);
+			$newdirbase = $userdir.'/'.pathinfo($oldfile,PATHINFO_FILENAME);
+			$newdir = $newdirbase;
+			$e=0;
+			while (file_exists($newdir)){
+				$e += 1;
+				$newdir=$newdirbase.' '.$e;
+			}
+			$newfile = $newdirbase.'/'.$newfile;
+			trace($newfile);
+			
 			// clone much of the existing record, copy the files
-			$sql="insert into guides (title,filename,editoruid,clonedfromgid) values 
-										('Copy of ".$mysqli->real_escape_string($row['title'])."', '".$mysqli->real_escape_string($row['filename'])."', ".$userid.",".$gid.")";
+			$sql="insert into guides (title,filename,editoruid,clonedfromgid) values ('Copy of ".$mysqli->real_escape_string($row['title'])."', '".$mysqli->real_escape_string($newfile)."', ".$userid.",".$gid.")";
 			trace($sql);
 			if ($res=$mysqli->query($sql)){
 				// Clone existing guide and copy guide to a new folder for the editor.
 				$newgid=$mysqli->insert_id;
 				$result['gid']=$newgid;
-				$oldlocation=GUIDE_DIR($gid);
-				$newlocation=GUIDE_DIR($newgid);
+				$oldlocation=GUIDE_DIR($oldfile);
+				$newlocation=GUIDE_DIR($newfile);
 				$result['url']=$newlocation;
-				mkdir($newlocation);
-				trace("Copy: ".$oldlocation.'/'.$row['filename'].' to '.$newlocation.'/'.$row['filename']);
+				trace($oldlocation);
+				trace($newlocation);
+				mkdir(GUIDE_DIR($newdir));
+				trace("Copy: ".$oldlocation.' to '.$newlocation);
 				//chmod($newlocation,0775);
-				copy($oldlocation.'/'.$row['filename'],$newlocation.'/'.$row['filename']) or trace("Error copy");
+				copy($oldlocation,$newlocation) or trace("Error copy");
 			}
 		}
 		else
@@ -125,32 +145,9 @@ echo $return;
 
 function GUIDE_DIR($gid)
 {
-	return GUIDES_DIR.str_pad($gid,8,'0',STR_PAD_LEFT );
+	return GUIDES_DIR.$gid;
+	//return GUIDES_DIR.str_pad($gid,8,'0',STR_PAD_LEFT );
 }
-/*
-$return= "{";
-if($err!="") $result['error']=$err;
-$date = date_create();
-foreach ($result as $var=>$val)
-{
-	$return.='"'.$var.'":"'.htmlspecialchars($val).'"'.",\n";
-}
-$return.= '"timestamp":"'.date_format($date, 'Y-m-d H:i:s').'"'."\n";
-$return.= "}";
-echo $return;
-*/
-
-
-/*
-echo"<xml>";
-if($err!="") $result['error']=$err;
-foreach ($result as $var=>$val)
-{
-	echo "<$var>".htmlspecialchars($val)."</$var>";
-}
-echo "</xml>";
-*/
-
 function listGuides($sql)
 {
 	global $userid,$mysqli,$result;
@@ -159,7 +156,7 @@ function listGuides($sql)
 	{
 		$res=$mysqli->query($sql);
 		while($row=$res->fetch_assoc()){
-			$guides[$row['gid']]=$row['title']; 
+			$guides[]=array( "id"=> $row['gid'], "title"=> $row['title'], "owned"=> $row["editoruid"]==$userid); 
 		  } 
 	}
 	$result['guides']=$guides;
@@ -184,7 +181,9 @@ if (writelog)
 	echo "------\nRESULT\n";var_dump ($return);
 	echo "------\nTraces\n";var_dump ($traces);
 	$msg=ob_get_clean();
-	error_log($msg,3,sys_get_temp_dir().'/CAJA_WS.log');
+	//error_log($msg,3,sys_get_temp_dir().'/CAJA_WS.log');
+	file_put_contents(sys_get_temp_dir().'/CAJA_WS.log',$msg);
+	
 }
 
 

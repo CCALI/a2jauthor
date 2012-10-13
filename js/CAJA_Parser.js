@@ -110,7 +110,7 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 
    if (1) {
       if (page == null) {
-         t += "Page not found " + pagename;
+         t.append(form.h2( "Page not found " + pagename)); 
       }
       else {
          var GROUP = page.id;

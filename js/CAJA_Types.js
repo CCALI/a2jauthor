@@ -21,7 +21,11 @@ var editMode= 0 ; // editMode=0 if separate pages, =1 for single document
 // ### Global variables ### //
 var caja; // type TGuide (CBK or A2J)
 
-
+var session = {
+	userid:0, 
+	nickname:"",
+	guideid:0
+};
 
 // ### Classes ###
 function TText()

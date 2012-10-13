@@ -2,6 +2,20 @@
  	03/30/2012 
  */
 
+function listguides(data)
+{
+	session.guideid=0;
+	var mine = [];
+	var others = [];
+	$.each(data.guides, function(key,g) { var str='<li class=guide gid="' + g.id + '">' + g.title + '</li>'; if (g.owned)mine.push(str);else others.push(str);});
+	$('#guidelist').html("My guides <ol>"+mine.join('')+"</ol>" + "Sample guides <ol>"+others.join('')+"</ol>");
+	$('li.guide').click(function(){
+		html('Loading guide '+$(this).text()+AJAXLoader);
+		ws({cmd:'guide',gid:$(this).attr('gid')},guideloaded);
+		//loadGuide($('a[href="#sample"]').first().text(), "TAB ABOUT");
+	});
+}
+
 $(document).ready(function () {
    // Everything loaded, execute.
    lang.set('en');
@@ -10,13 +24,13 @@ $(document).ready(function () {
 
 
    // Activate TABS
-   //$("#PageTabs").tabs(3); // first tab on by default
    $("#tabnav").tabs(); // first tab on by default
-   //$("#NavPagesTabs").tabs(); // first tab on by default	<br />
-   $("#tabviews").tabs({ selected: 2
-      //, doesn't work show:  $.layout.callbacks.resizeTabLayout
-   });
-
+   $("#tabviews").tabs({ selected: 0 });
+	$('.tabset').tabs();
+	//$('button').button();
+	$('#vars_load').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
+	$('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
+	
   // layoutPanes();
 
 
@@ -30,7 +44,7 @@ $(document).ready(function () {
       switch (attr) {
          case '#sample':
             //alert('Loading sample '+$(this).text());
-            loadGuide($(this).text(), "TAB ABOUT");
+            loadGuide($(this).text(), "tabsAbout");
             break;
          case '#mode1': setMode(1); break;
          case '#mode2': setMode(2); break;
@@ -96,12 +110,15 @@ $(document).ready(function () {
    */
 
 
-
-   //loadGuide($('a[href="#sample"]').first().text(), "TAB ABOUT");
-	
-	
-	
-	signin();
+	if (1)
+	{
+		loadGuide($('a[href="#sample"]').first().text(), "TAB ABOUT");
+		$('#authortool').removeClass('hidestart').addClass('authortool');
+		$('.welcome').hide();
+		layoutPanes();
+	}
+	else
+		signinask();
 
 
 });
@@ -115,13 +132,31 @@ function checkLength( o, n, min, max ) {
 		 return true;
 	}
 }
-function signin()
-{
-	var uname = $( "#username" );
-	var upass = $( "#userpass" );
-	var allFields = $( [] ).add( uname ).add( upass );
-	var tips = $( ".validateTips" );
 
+function signin(data)
+{
+	session.userid=data.userid;
+	session.guideid=0;
+	session.nickname=data.nickname;
+	if (session.userid==0)
+	{
+		//status('Unknown user');
+		//html('Please register...');
+	}
+	else
+	{
+		$('#memenu').text(session.nickname);
+		$('#tabsinfo').html("Welcome "+session.nickname+" user#"+session.userid+'<p id="guidelist">Loading your guides '+AJAXLoader +"</p>");
+		$( "#dialog-form" ).dialog( "close" );
+		$('#authortool').removeClass('hidestart').addClass('authortool');
+		$('.welcome').hide();
+		layoutPanes();
+		ws({cmd:'guides'},listguides);
+	}
+}
+
+function signinask()
+{
 	$( "#dialog-form" ).dialog({
 		autoOpen: false,
 		height: 300,
@@ -130,24 +165,18 @@ function signin()
 		buttons: {
 			 "Sign in": function() {
 				  var bValid = true;
-				  allFields.removeClass( "ui-state-error" );
+				 // allFields.removeClass( "ui-state-error" );
 		
 				  //bValid = bValid && checkLength( name, "username", 3, 16 );
-				  //bValid = bValid && checkLength( password, "password", 4, 16 );
-				  bValid = uname.val()=="demo" && upass.val()=="demo";
-				  if ( bValid ) {
-						$( this ).dialog( "close" );
-						$('#authortool').removeClass('hidestart').addClass('authortool');
-						$('.welcome').hide();
-						layoutPanes();
-				  }
+				  //bValid = bValid && checkLength( password, "password", 4, 16 ); 
+				  ws({cmd:'login',username:$('#username').val(),userpass:$('#userpass').val()},signin);
 			 },
 			 Cancel: function() {
 				  $( this ).dialog( "close" );
 			 }
 		},
 		close: function() {
-			 allFields.val( "" ).removeClass( "ui-state-error" );
+			 //allFields.val( "" ).removeClass( "ui-state-error" );
 		}
 	});
 	$( "#dialog-form" ).dialog( "open" );
@@ -234,14 +263,24 @@ function gotoTabOrPage(target)
  
 
 	
-	$('#CAJAContent').html('');
-	if (target.indexOf("TAB ")==0)  caja.noviceTab($('#CAJAContent'),target.substr(4));
+	if (target.indexOf("PAGE ")==0)
+	{
+		$('#CAJAContent').html('');
+		caja.novicePage($('#CAJAContent'),target.substr(5));
+		$('#tabviews').tabs('select','#tabsPageEdit');
+	}
 	else
-	if (target.indexOf("PAGE ")==0) caja.novicePage($('#CAJAContent'),target.substr(5));
-	else
-	if (target.indexOf("STEP ")==0) caja.noviceStep($('#CAJAContent'),target.substr(5));
+	if (target.indexOf("STEP ")==0)
+	{
+		$('#CAJAContent').html('');
+		 caja.noviceStep($('#CAJAContent'),target.substr(5));
+		$('#tabviews').tabs('select','#tabsPageEdit');
+	}
+	else{
+		 caja.noviceTab($('#'+target),target);
+		$('#tabviews').tabs('select',target);
+	}
 
-	
 	
 	// Attach editors
 	//attach all immediate $('.tinyMCEtext').each(function(){tinyMCE.execCommand("mceAddControl", false, $(this).attr('id'));	});
@@ -270,6 +309,8 @@ var form={
 		return $("<h1>"+h+"</h1>");}
 	,h2:function(h){
 		return $("<h2>"+h+"</h2>").click(function(){$(this).next().toggle()});}
+	,note:function(t){
+		return $("<div>"+t+"</div>")}
 	,text:    function(label,group,id,value){
 		return $("<label>"+label+'</label><div class=widetext><input class="editable" type="text" name="'+group+id+'" value="'+htmlEscape(value)+'"></div>');}
 	,number:    function(label,group,id,value,minNum,maxNum){
@@ -386,7 +427,7 @@ TGuide.prototype.noviceTab=function(div,tab)
 {	// 08/03/2012 Edit panel for guide sections 
 	var t=$('<div/>').addClass('editq');
 	switch (tab){
-		case "META":
+		case "tabsAbout":
 			var GROUP="ABOUT";
 			t.append(form.h1('About'));
 			t.append(form.text('Title:',GROUP,"title",this.title));
@@ -404,8 +445,8 @@ TGuide.prototype.noviceTab=function(div,tab)
 
 			break;
 			
-		case "VARS":
-			t+=form.h1('Variables');
+		case "tabsVariables":
+			t.append(form.h1("Variables"));
 			var tt=form.rowheading(["Name","Type","Comment"]); 
 			//sortingNatural
 			var sortvars=[];
@@ -419,8 +460,8 @@ TGuide.prototype.noviceTab=function(div,tab)
 			t+='<table class="A2JVars">'+tt+"</table>";
 			break;
 			
-		case 'STEPS':
-			t+=form.h1("Steps");
+		case 'tabsSteps':
+			t.append(form.h1("Steps"));
 			var s;
 			var tt=form.rowheading(["Number","Sign"]); 
 			for (s in this.steps)
@@ -437,16 +478,24 @@ TGuide.prototype.noviceTab=function(div,tab)
 
 TGuide.prototype.noviceStep=function(div,stepid)
 {	// Show all pages in specified step
-	var t="";
+	var t=$('<div/>');//.addClass('editq');
 	var step=this.steps[stepid];
-	t += form.h1("Step #"+step.number+" " + step.text);
+	t.append(form.h1("Step #"+step.number+" " + step.text));
+	var stepPages=[];
 	for (var p in this.pages)
 	{
 		var page = this.pages[p];
 		if (page.step==stepid)
-			t += this.novicePage(page.name);
+			stepPages.push(page);
 	}
-	return t;
+	t.append(form.note("There are "+stepPages.length+" pages in this step."));
+	for (var p in stepPages)
+	{
+		var page = stepPages[p];
+		t.append(form.h2("Page "+(parseInt(p)+1)+" of "+stepPages.length));
+		this.novicePage(t,page.name);
+	}
+	div.append(t);
 }
 
 
@@ -468,11 +517,12 @@ TGuide.prototype.convertIndex=function()
 		ts+='<li target="STEP '+s+'">'+this.steps[s].number+". "+this.steps[s].text+"</li><ul>"+inSteps[s]+"</ul>";
 	}
 
+			
 	return "<ul>"
-			+ '<li target="TAB META">'+lang.tabAbout+'</li>'
-			+ '<li target="TAB VARS">'+lang.tabVariables+'</li>'
-			+ '<li target="TAB CONST">'+lang.tabConstants+'</li>'
-			+ '<li target="TAB STEPS">'+lang.tabSteps+'</li><ul>'+ts+'</ul>'
+			+ '<li target="tabsAbout">'+lang.tabAbout+'</li>'
+			+ '<li target="tabsVariables">'+lang.tabVariables+'</li>'
+			+ '<li target="tabsConstants">'+lang.tabConstants+'</li>'
+			+ '<li target="tabsSteps">'+lang.tabSteps+'</li><ul>'+ts+'</ul>'
 			+"</ul>";
 }
 
@@ -486,4 +536,23 @@ TGuide.prototype.convertIndexAlpha=function()
 	}	
 	return "<ul>" + txt +"</ul>";
 }
+
+
+
+function ws(data,results)
+{	// Contact the webservice to handle user signin, retrieval of guide lists and load/update/cloning guides.
+	trace(JSON.stringify(data));
+	$.ajax({
+		url:'CAJA_WS.php',
+		dataType:'json',
+		type: 'POST',
+		data: data,
+		success: function(data){ 
+			trace(String.substr(JSON.stringify(data),0,299));
+			results(data);
+		},
+		error: function(err,xhr) { alert("error:"+xhr.responseText ); }
+	})
+}  
+
 

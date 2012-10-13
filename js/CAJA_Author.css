@@ -459,10 +459,27 @@ background-color:#eee;
 
 
 
-
+/*
 label, input { display:block; }
+*/
 input.text { margin-bottom:12px; width:95%; padding: .4em; }
 fieldset { padding:0; border:0; margin-top:25px; }
 .ui-dialog .ui-state-error { padding: .3em; }
 .validateTips { border: 1px solid transparent; padding: 0.3em; }
+
+
+
+
+li.guide {
+	cursor: pointer;
+}
+li.guide:hover {
+	background-color:#C0DCC0;
+}
+
+
+.example{
+	overflow: auto;
+	height: 100%;
+}
 

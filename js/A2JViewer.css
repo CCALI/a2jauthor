@@ -1,3 +1,4 @@
+﻿@charset "utf-8";
 /*
 	02/02/2012  (3/10/2011 SJG
 	A2J Viewer Stylesheet 
@@ -16,17 +17,21 @@ html,body{
 	margin:0px;
 	padding:0px;
 }
-.Viewer {
+.A2JViewer {
+	border: 1px solid #444;
+	background-color:#fff;
 	margin: 0px;
 	padding: 0px;
 	min-width: 800px;
 	min-height: 600px;
-	background-color:#fff;
+	width: 930px;
+	height: 660px;
 }
-.Viewer .NavBar {
+.A2JViewer .NavBar {
 	margin: 0px;
 	padding: 5px;
-	background-color: #ddd;
+	height: 20px;
+	background-color: #eee;
 	border-top-width: 0px;
 	border-right-width: 0px;
 	border-bottom-width: 2px;
@@ -38,7 +43,7 @@ html,body{
 	border-left-color: #000;
 	width: auto;
 }
-.Viewer .NavBar li {
+.A2JViewer .NavBar li {
 	display:inline;
 	margin-left: 1em;
 	margin-right: 1em;
@@ -46,7 +51,7 @@ html,body{
 	vertical-align: middle;
 	list-style: none;
 }
-.Viewer .NavBar li a {
+.A2JViewer .NavBar li a {
 	-moz-border-radius:5px;
 	border-radius:5px;
 	text-decoration:none;
@@ -72,7 +77,7 @@ html,body{
 	border-bottom-color: #eee; 
 	border-left-color: #eee; 
 }
-.Viewer .NavBar li a:hover, .Viewer .NavBar li a:focus{
+.A2JViewer .NavBar li a:hover, .Viewer .NavBar li a:focus{
 	margin: 2px;
 	xcolor:#fff;
 	xbackground:#727454;
@@ -85,7 +90,7 @@ html,body{
 	border-left-color: #FCFCFC;
 	border-left-style: outset;
 }
-.Viewer .interact {
+.A2JViewer .interact {
 }
 
 .size1{
@@ -109,4 +114,41 @@ html,body{
 	background-color:#000;
 	color:#fff;
 }
+
+
+
+/* 2012 */
+
+div.step  {
+	border: 0px solid #808;
+	position:relative;
+	display:block;
+	background-color:#eef;
+	width: 930px;
+	height: 640px;
+	overflow: hidden;
+}
+div.question.bubble {
+	-moz-border-radius:12px; border-radius:12px;
+	border: 1px solid #bbb;
+	background-color: #eee;
+	margin: 0px;
+	padding: 10px;
+}
+div.question.bubble form {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	height: 100%; 
+}
+div.question.bubble form div.buttonlist{
+	text-align:right;
+	width: 100%; 
+}
+div.stepnumber{ text-align:center;}
+div.stepnumber.step1 { 	font-size: 2em; }
+div.stepnumber.step2 { 	font-size: 1em; }
+div.steptext.step1 { 	font-size: 1.5em; }
+div.steptext.step2 { 	font-size: 1em; }
+
 

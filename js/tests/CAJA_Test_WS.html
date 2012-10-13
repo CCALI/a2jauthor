@@ -59,7 +59,7 @@ $(document).ready(function()
 	{
 		gGuideID=0;
 		var items = [];
-	  	$.each(data.guides, function(key, val) {items.push('<li class=guide gid="' + key + '">' + val + '</li>');});
+	  	$.each(data.guides, function(key,g) { items.push('<li class=guide gid="' + g.id + '">' + g.title + ' '+(g.owned?'mine':'other') + '</li>');});
 		status('Listing '+items.length+' guides.');
 		html("Guides <ol>"+items.join('')+"</ol>");
 		$('li.guide').click(function(){
@@ -182,8 +182,8 @@ div.trace:nth-child(odd)  {background-color:#eee;}
 			<tr>
 				<td align="right" valign="middle"><p align="right">Good Login</p></td>
 				<td valign="middle">
-User:	<input type="text" id="username" value="demo"  />
-Pass:	<input type="password" id="userpass" value="demo"   />
+User:	<input type="text" id="username" name="username" value="demo"  />
+Pass:	<input type="password" id="userpass" name="password" value="demo"   />
 	<input type="button" id="signin1" value="Sign in" />			</td>
 			</tr>
 			<tr>

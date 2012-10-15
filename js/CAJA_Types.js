@@ -19,7 +19,8 @@ var textonlyMode=0; // textonlyMode for single document editing
 var editMode= 0 ; // editMode=0 if separate pages, =1 for single document
 
 // ### Global variables ### //
-var caja; // type TGuide (CBK or A2J)
+var gGuide; // global reference to current guide TGuide (CBK or A2J)
+var gPage; // global reference to current edit/viewed TPage
 
 var session = {
 	userid:0, 
@@ -92,7 +93,7 @@ function TPage()
 	this.scripts=[];
 	this.fields=[];
 	this.buttons=[];
-	this.step=0;
+	this.step=0;//index into guide.steps[]
 	
 	this.type ="";//type of page interaction
 	this.style ="";//subtype of page interaction
@@ -131,7 +132,7 @@ function TGuide()
 	this.vars={};//associative array of TVariables()
 	this.constants={};//associative array of contants, MAXINCOME:25000
 	this.mapids=[];// array of mapids indices	
-	this.steps=[];//
+	this.steps=[];//array of TStep()
 	this.popups=[];
 	this.assets=[];//array of images for preloading.
 	return this;

@@ -11,23 +11,46 @@
 <script src="../CAJA_Viewer_A2J.js" type="text/javascript" ></script>
 <style type="text/css">
 <!--
+.zoomed-element {
+    zoom: .75;
+    -moz-transform: scale(.75);
+    -webkit-transform: scale(.75);
+}
 -->
 </style>
 <script type='text/javascript'> 
+// 10/2012 Test A2J's road signs
+var IMG="../img/";
 
 $(document).ready(function()
 {  
 	var steps=[
-		{num:0,text:'Welcome'},
-		{num:1,text:'About you'},
-		{num:2,text:'Your children'},
-		{num:3,text:'Your assets'},
-		{num:4,text:'Some more stuff'},
-		{num:5,text:'Address'},
-		{num:6,text:'Congratulations on completing the interview'}];
+		{number:0,text:'Welcome'},
+		{number:1,text:'About you'},
+		{number:2,text:'Your children'},
+		{number:3,text:'Your assets'},
+		{number:4,text:'Some more stuff'},
+		{number:5,text:'Address'},
+		{number:6,text:'Congratulations on completing the interview'}];
 	for (var s=0;s<steps.length;s++) $('#tests').append('<button>'+s+'</button>');
-	$('button').button().click(function(){a2jviewer.layout($('#demostep'),parseInt($(this).text()),steps);});
+	$('#tests button').button().click(function(){
+		// create layout for step with sample question/learnmore filler.
+		var curstep=parseInt($(this).text());
+		var text="<p>Question text appears here</p>";
+		for (var i=0;i<curstep*4;i++) text+="<p>Line #"+i+'</p>';
+		var question=(text + '<div class="buttonlist"><button>Yes</button><button>No</button></div>');
+		var learnmore=('Learn more text: '+text + '<div class="buttonlist"><button>Close</button></div>');
+		
+		a2jviewer.layout($('#demostep'),curstep,steps,question,learnmore);
+		
+		});
 	a2jviewer.layout($('#demostep'),0,steps);
+	$('#scales button').button().click(function(){
+		var scale=$(this).text(); 
+		$('#demostep').css({zoom:scale,"-moz-transform":"scale("+scale+")","-webkit-transform":"scale("+scale+")"}); });
+
+	
+	
  
 });
 </script>
@@ -36,12 +59,13 @@ $(document).ready(function()
 <p>Steps show the user progress to the courthouse. There are 7 layouts in A2J Author. </p>
 <p>For now just do 2 steps.. First  shows 1 step (the final step). Last is showing  2 steps. If there are more than 2 steps, just show the current and next.</p>
 <div id='tests'></div>
+<div id='scales'><button>1.00</button><button>0.50</button></div>
 <h2>Scripted Steps</h2>
 <div id="demostep">scripted step will appear here</div>
 <h2>1 Step </h2>
 <div class="step" > <img style="position:absolute; left:0; bottom: 0; width: 935px; height: 574px;" src="../img/step1.png" width="804" height="531" /><img src="../img/step_courthouse.png" width="734" height="255" style="position:absolute; left: 249px; top: -2px;"  /><img style="position:absolute; left:  218px; top: 366px;" src="../img/step_circle.png" width="370" height="92" /> <img style="position:absolute; left: 389px; top: 274px;" src="../img/blank_guide2front.png" width="175" height="165" /> <img style="position:absolute; left: 478px; top: 421px;" src="../img/step_sign.png" width="422" height="120" />
 	<div class="question bubble" style="position:absolute; left:57px; top: 140px; width: 285px; height: 320px;">
-		<form>
+		<form class="question">
 			<p>Question text appears here</p>
 			<div class="buttonlist">
 				<button>Yes</button>
@@ -53,11 +77,30 @@ $(document).ready(function()
 	<div class="steptext step1" style="position:absolute; left:561px; top: 429px; width: 234px;">Congratulations. You have completed this interview!</div>
 	<img style="position:absolute; left: 363px; top: 274px; width: 36px; height: 22px;" src="../img/guide_bubble_tip.png" width="59" height="42" /></div>
 <h2>2 Step </h2>
-<div class="step" > <img style="position:absolute; left:0; bottom: 0; width: 934px; height: 591px;" src="../img/step7.png" width="804" height="531" /><img src="../img/step_courthouse.png" width="373" height="88" style="position:absolute; left: 411px; top: 42px; width: 268px; height: 47px;"  /><img style="position:absolute; left:  274px; top: 210px; width: 311px; height: 62px;" src="../img/step_circle.png" width="477" height="118" /><img style="position:absolute; left:  160px; top: 368px;" src="../img/step_circle.png" width="477" height="118" /><img style="position:absolute; left: 339px; top: 278px;" src="../img/blank_guide2front.png" width="175" height="165" /> <img style="position:absolute; left: 551px; top: 413px;" src="../img/step_sign.png" width="422" height="120" /> <img style="position:absolute; left:  517px; top: 248px; width: 246px; height: 59px;" src="../img/step_sign.png" width="422" height="120" />
+<div class="step" > <img style="position:absolute; left:0; bottom: 0; width: 934px; height: 591px;" src="../img/step7.png" width="804" height="531" /><img src="../img/step_courthouse.png" width="373" height="88" style="position:absolute; left: 411px; top: 42px; width: 268px; height: 47px;"  /><img style="position:absolute; left:  274px; top: 210px; width: 311px; height: 62px;" src="../img/step_circle.png" width="477" height="118" /><img style="position:absolute; left:  160px; top: 368px;" src="../img/step_circle_1.png" width="477" height="118" /><img style="position:absolute; left: 393px; top: 277px;" src="../img/blank_guide2front.png" width="175" height="165" /> <img style="position:absolute; left: 551px; top: 413px;" src="../img/step_sign.png" width="422" height="120" /> <img style="position:absolute; left:  517px; top: 248px; width: 246px; height: 59px;" src="../img/step_sign.png" width="422" height="120" />
 	<div class="stepnumber step2" style="position:absolute; left: 530px; top: 260px; width: 24px; height: 17px;">2</div>
 	<div class="steptext step2" style="position:absolute; left: 562px; top: 260px; width: 131px; height: 21px;">Your information</div>
 	<div class="stepnumber step1" style="position:absolute; left:572px; top: 440px; width: 55px;">1</div>
 	<div class="steptext step1" style="position:absolute; left:633px; top: 433px; width: 234px; height: 52px;">Welcome!</div>
-</div>
+	
+	<div class="question bubble" style="position:absolute; left:57px; top: 140px; width: 285px;">
+		<form class="question">
+			<p>Question text appears here.</p>
+			<p>&nbsp;</p>
+			<div class="buttonlist">
+				<button>Yes</button>
+				<button>No</button>
+			</div>
+		</form>
+	</div><div class="learnmore bubble" style="position:absolute; left:604px; top: 93px; width: 285px;">
+		<form class="learnmore">
+			<p>Learn more text appears here.</p>
+			<p>&nbsp;</p>
+			<div class="buttonlist">
+				<button>Close</button>
+			</div>
+		</form>
+	</div>
+	<img style="position:absolute; left: 362px; top: 279px; width: 36px; height: 22px;" src="../img/guide_bubble_tip.png" width="59" height="42" /></div>
 </BODY>
 </HTML>

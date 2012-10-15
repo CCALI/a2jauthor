@@ -1,11 +1,6 @@
 /* CALI Author CAJA - Parse CALI Author into CAJA 
 */
 
-function aie(obj,attr,val)
-{	// set obj's attr to val, only if value exists 
-	if (val===null) return; 
-	obj[attr]=val;
-}
 
 
 function parseXML_CA_to_CAJA(BOOK)
@@ -14,17 +9,17 @@ function parseXML_CA_to_CAJA(BOOK)
 	var step, pageXML, page
 		,b,text,fb;
 	
-	var caja=new TGuide();
-	caja.viewer="CA";
-	caja.title = BOOK.find('TITLE').text();
-	caja.description = BOOK.find('INFO > DESCRIPTION').xml();
-	caja.completionTime = BOOK.find('INFO > COMPLETIONTIME').xml();
-	caja.jurisdiction="";
+	var guide=new TGuide();
+	guide.viewer="CA";
+	guide.title = BOOK.find('TITLE').text();
+	guide.description = BOOK.find('INFO > DESCRIPTION').xml();
+	guide.completionTime = BOOK.find('INFO > COMPLETIONTIME').xml();
+	guide.jurisdiction="";
 	
 	step = new TStep();
 	step.number="1";
 	step.text=lang.eoOutline
-	caja.steps[0]=step;
+	guide.steps[0]=step;
 	
 	BOOK.find("BOOK > PAGE").each(function() {
 		pageXML = $(this);
@@ -91,12 +86,12 @@ function parseXML_CA_to_CAJA(BOOK)
 			}
 		});
 		
-		caja.pages[page.name] = page;
-		caja.sortedPages.push(page);
-		caja.mapids[page.id]=page; 
+		guide.pages[page.name] = page;
+		guide.sortedPages.push(page);
+		guide.mapids[page.id]=page; 
 	});
-//	 alert(caja.sortedPages[0]);
-//	 alert(caja.sortedPages[0].text);
+//	 alert(guide.sortedPages[0]);
+//	 alert(guide.sortedPages[0].text);
 	 
 	/*
 	// Add stub pages for the About and Score screens.
@@ -119,7 +114,7 @@ function parseXML_CA_to_CAJA(BOOK)
 		page.nextPageDisabled=false;
 	}
 	*/
-	return caja;
+	return guide;
 }
 function fbIndex(button,detail)
 {

@@ -15,12 +15,12 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	};
 	var DefaultPromptsUsed={};
 	
-	var caja=new TGuide();
-	caja.viewer="A2J";
-	caja.title = TEMPLATE.find('TITLE').text();
-	caja.description = TEMPLATE.find('DESCRIPTION').text();
-	caja.jurisdiction = TEMPLATE.find('JURISDICTION').text();
-	caja.firstQuestion = TEMPLATE.find('FIRSTQUESTION').text(); 
+	var guide=new TGuide();
+	guide.viewer="A2J";
+	guide.title = TEMPLATE.find('TITLE').text();
+	guide.description = TEMPLATE.find('DESCRIPTION').text();
+	guide.jurisdiction = TEMPLATE.find('JURISDICTION').text();
+	guide.firstQuestion = TEMPLATE.find('FIRSTQUESTION').text(); 
 	
 	// Parse pages into book.pages[] records. 
 	TEMPLATE.find("VARIABLE").each(function() {
@@ -29,7 +29,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		v.name=VARIABLE.attr("NAME");
 		v.sortName=	sortingNatural(v.name);
 		v.type=VARIABLE.attr("TYPE");
-		caja.vars[v.name]=v;
+		guide.vars[v.name]=v;
 		//Obsolete, discard: VARIABLE.attr("SCOPE");
 	 });
 	TEMPLATE.find("STEP").each(function() {
@@ -37,8 +37,8 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		step = new TStep();
 		step.number=STEP.attr("NUMBER");
 		step.text=STEP.find("TEXT").xml();
-		//if (caja.steps==null) caja.steps=[];
-		caja.steps.push(step);
+		//if (guide.steps==null) guide.steps=[];
+		guide.steps.push(step);
 	 });
 	TEMPLATE.find("POPUP").each(function() {//TODO discard unused popups
 		POPUP = $(this);
@@ -46,29 +46,43 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		popup.id=POPUP.attr("ID");
 		popup.name=POPUP.attr("NAME");
 		popup.text=POPUP.find("TEXT").xml();
-		//if (caja.popups==null) caja.popups=[];
-		caja.popups[popup.id]=popup;
+		//if (guide.popups==null) guide.popups=[];
+		guide.popups[popup.id]=popup;
 	});
 
+	var pageNameUsed={};
+	
 	TEMPLATE.find("QUESTION").each(function() {
-	// allocate pages first so we can link scripts in second pass
+		// allocate pages first so we can link scripts in second pass
 		QUESTION = $(this);
 		page = new TPage();
-		page.id=QUESTION.attr("ID");
-		page.name=QUESTION.attr("NAME");
-		page.step=QUESTION.attr("STEP");
-		while (caja.pages[page.name])
-			page.name+="_DUPLICATE";
-		page.sortName=(page.id==caja.firstQuestion) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
+		page.id=QUESTION.attr("ID");// A2J has unique ID
 		
-		caja.pages[page.name] = page;
-		caja.sortedPages.push(page);
-		caja.mapids[page.id]=page; 
+		page.name=QUESTION.attr("NAME");// A2J *can* have same page names so  force duplicates to have unique names.
+		if (pageNameUsed[page.name]){
+			var cnt=0;
+			var newpage;
+			do {
+				cnt++;
+				newpage = page.name+"("+cnt+")"
+			} while (pageNameUsed[newpage]);
+			page.name = newpage
+		}
+		pageNameUsed[page.name]=true;
+		
+		page.step=parseInt(QUESTION.attr("STEP"));
+		while (guide.pages[page.name])
+			page.name+="_DUPLICATE";
+		page.sortName=(page.id==guide.firstQuestion) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
+		
+		guide.pages[page.name] = page;
+		guide.sortedPages.push(page);
+		guide.mapids[page.id]=page; 
 	});
 	
 	TEMPLATE.find("QUESTION").each(function() {
 		QUESTION = $(this);
-		page = caja.pages[QUESTION.attr("NAME")];
+		page = guide.mapids[QUESTION.attr("ID")]; 
 		
 		page.type="A2J";
 		page.style="";
@@ -127,8 +141,8 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 				}
 				else
 				if ((args = statement.match(/goto\s+(\w+)\s?/i))!=null)
-					//statement = "GOTO '"+args[1]+"'";//caja.pageIDtoName(args[1]);
-					statement = "GOTO '"+caja.pageIDtoName(args[1])+"'";//;
+					//statement = "GOTO '"+args[1]+"'";//guide.pageIDtoName(args[1]);
+					statement = "GOTO '"+guide.pageIDtoName(args[1])+"'";//;
 				else
 					statement = "//"+statement;
 				if (tf=="true")
@@ -152,15 +166,41 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			//console.log(script.code);
 			if (comment) script.code = "//"+comment + LINEDEL + script.code;
 			
+			
 			//if (page.scripts==null) page.scripts=[];
 			page.scripts.push(script);
 		});
+		  
+		var scriptBefore=[];
+		var scriptAfter=[];
+		var scriptLast=[];
+		for (var b in page.buttons)
+		{
+			var button=page.buttons[b]; 
+			var resptest="IF ResponseNum="+ (parseInt(b)+1);//"IF Button("+(parseInt(b)+1)+")
+			if (button.name) // if button has a variable attached, we assign a value to it
+				scriptAfter.push(resptest+" THEN SET ["+button.name+"] to "+button.value+"");
+			if (makestr(button.next)!="")// if button has a destination, we'll go there after any AFTER scripts have run.
+				scriptLast.push(resptest+" THEN GOTO "+ guide.pageIDtoName(button.next));
+		}  
+		for (var s in page.scripts)
+		{
+			var script=page.scripts[s];
+			var st= script.code.split("\n")//.join("<BR>");
+			if (script.when=="BEFORE")
+				scriptBefore=scriptBefore.concat(st);
+			else
+				scriptAfter=scriptAfter.concat(st);
+		}
+		page.scripts = "OnBefore\n" + scriptBefore.join("\n") + "OnAfter\n"+ scriptAfter.join("\n")  + "\n" + scriptLast.join("\n");
+
+		
 	});
 	
 	for (p in DefaultPrompts)
 	{
 		if (DefaultPromptsUsed[p]==1)
-			caja.constants[DefaultPrompts[p]] =p;
+			guide.constants[DefaultPrompts[p]] =p;
 	}
 	
 	/* 
@@ -172,6 +212,6 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		page.nextPageDisabled=false;
 	}
 	*/
-	return caja;
+	return guide;
 }
 

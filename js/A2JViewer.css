@@ -55,7 +55,7 @@ html,body{
 	-moz-border-radius:5px;
 	border-radius:5px;
 	text-decoration:none;
-	xbackground: url(../Source/img/button_gradient_blue.png) repeat-x;
+	xbackground: url(../img/button_gradient_blue.png) repeat-x;
 	font-style: normal;
 	font-weight: normal;
 	padding: 2px;
@@ -128,21 +128,39 @@ div.step  {
 	height: 640px;
 	overflow: hidden;
 }
-div.question.bubble {
+div.question.bubble, div.learnmore.bubble {/* question bubble */
 	-moz-border-radius:12px; border-radius:12px;
 	border: 1px solid #bbb;
 	background-color: #eee;
-	margin: 0px;
-	padding: 10px;
+	margin:  0px;
+	padding:  10px;
+	min-height: 150px;
+	max-height: 500px; 
 }
-div.question.bubble form {
+div.question.bubble form, div.learnmore.bubble form{ /* form with viewer's field inputs */
 	margin: 0px;
 	padding: 0px;
 	width: 100%;
-	height: 100%; 
+	overflow: auto;
+	min-height: 150px;
+	max-height: 400px; 
+	position: relative; 
 }
+div.learnmore.bubble, div.learnmore.bubble form {
+	min-height: 50px;
+	max-height: 500px; 
+}
+
 div.question.bubble form div.buttonlist{
 	text-align:right;
+	bottom: 4px;
+	right: 4px;
+	width: 100%; 
+}
+div.learnmore.bubble form div.buttonlist{
+	text-align:center;
+	bottom: 4px;
+	right: 4px;
 	width: 100%; 
 }
 div.stepnumber{ text-align:center;}

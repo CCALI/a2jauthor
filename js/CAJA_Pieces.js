@@ -46,7 +46,7 @@ function walk(f)
 					var field=elt[fi];
 					var value=field.id;
 					if (value.indexOf("meta.")==0)
-						value=caja[value.substr(5)];
+						value=guide[value.substr(5)];
 					var group="";
 					switch (field.type){
 						case "text":

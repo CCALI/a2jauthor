@@ -22,7 +22,7 @@ $(document).ready(function () { initAdvanced(); });
 function initAdvanced()
 {
 	jQuery(document).bind('paste', handlePaste);
-	$('.CAJAContent').bind('mouseup',cajaMouseUp);
+	$('.advanced').bind('mouseup',cajaMouseUp);
 	
 
 	
@@ -120,26 +120,26 @@ function hidem(dohide)
 {
 	//$('.CAJAContent P,.CAJAContent BLOCKQUOTE,.CAJAContent UL,.CAJAContent OL').toggle(reveal);
 	if (dohide){
-		$('.CAJAContent > *').hide();
-		$('.CAJAContent P.CAJAPage, .CAJAContent P.CAJAPage BR, .CAJAContent DIV').show();// P.CAJAPage
+		$('.advanced > *').hide();
+		$('.advanced P.CAJAPage, .advanced P.CAJAPage BR, .advanced DIV').show();// P.CAJAPage
 	}
 	else
-		$('.CAJAContent > *').show();
+		$('.advanced > *').show();
 	return false;
 } 
 
 
 function showPageToEditTextOnly(target)
 {	// For single doc, scroll to anchor
-	$('#CAJAContent').focus();
+	$('#advanced').focus();
 	var range, startNode, sel, xy, v;
 	// FireFox only!
 	range = document.createRange();
 	trace('scrolling to '+target);
 	if (useDIV)
-		startNode = $("#CAJAContent DIV P.CAJAPage:contains('"+target+"')");//.next(); 
+		startNode = $("#advanced DIV P.CAJAPage:contains('"+target+"')");//.next(); 
 	else
-		startNode = $("#CAJAContent P.CAJAPage:contains('"+target+"')");//.next(); 
+		startNode = $("#advanced P.CAJAPage:contains('"+target+"')");//.next(); 
 		//startNode = $("#CAJAContent P.CAJAPage[name='"+pageName+"']");
 	if (startNode.length>0)
 	{
@@ -150,8 +150,8 @@ function showPageToEditTextOnly(target)
 		sel.addRange(range);
 		xy=startNode.position(); 
 		//trace(xy);
-		v=$("#CAJAContent").parent().parent().scrollTop();
-		$("#CAJAContent").parent().parent().scrollTop(v+ xy.top-150 );
+		v=$("#advanced").parent().parent().scrollTop();
+		$("#advanced").parent().parent().scrollTop(v+ xy.top-150 );
 	}
 }
 
@@ -215,20 +215,24 @@ TGuide.prototype.convertToText=function()
 
 
 	t="Converted to text<HR>";
-	function text2C(t){return "<P>// "+t+"</P>";}
-	function text2P(t){return "<P>"+t+"</P>";}
-	function html2P(t){return "<BLOCKQUOTE>"+t+"</BLOCKQUOTE>";}
-	function script2P(s){return  "<P>"+s.join("</P><P>")+"</P>";}
-	function expandPopups(caja,html){ // expand any HREF= POPUP://# with the text
+	function text2C(t){
+		return "<P>// "+t+"</P>";}
+	function text2P(t){
+		return "<P>"+t+"</P>";}
+	function html2P(t){
+		return "<BLOCKQUOTE>"+t+"</BLOCKQUOTE>";}
+	function script2P(s){
+		return  "<P>"+s.join("</P><P>")+"</P>";}
+	function expandPopups(guide,html){ // expand any HREF= POPUP://# with the text
 		var args, a, popid;
-		if (caja.viewer=="CA") return html;//04/13/2012 resolve CA issue
+		if (guide.viewer=="CA") return html;//04/13/2012 resolve CA issue
 		if ((args = html.match(/\"POPUP:\/\/(\w+)\"/ig))!=null)
 		{
 			for (a=0;a<args.length;a++)
 			{
 				popid=args[a].match(/\"POPUP:\/\/(\w+)\"/i)[1];
 				html += "<h1>POPUP: ["+popid+"]</h1>";
-				html+=html2P(caja.popups[popid].text);
+				html+=html2P(guide.popups[popid].text);
 			}
 		}
 		return html;
@@ -293,20 +297,21 @@ TGuide.prototype.convertToText=function()
 			
 			if (field.invalidPrompt!="") pageText+=text2P('PROMPT if invalid is '+field.invalidPrompt);
 		}
-		scriptBefore=[];
-		scriptAfter=[];
-		scriptLast=[];
+		//scriptBefore=[];
+		//scriptAfter=[];
+		//scriptLast=[];
 		for (b in page.buttons)
 		{
 			button=page.buttons[b];
 			//Add button 'Continue' that goes to A2J Name
 			pageText+=text2P("ADD button English("+button.label+")"); // that goes to "+this.pageIDtoName(button.next));
+			/*
 			var resptest="IF ResponseNum="+ (parseInt(b)+1);//"IF Button("+(parseInt(b)+1)+")
 			if (button.name) // if button has a variable attached, we assign a value to it
 				scriptAfter.push(resptest+" THEN SET ["+button.name+"] to "+button.value+"");
-			//scriptBottom += "IF Button('"+button.label+"') THEN GOTO "+this.pageIDtoName(button.next)+"\n";
 			if (makestr(button.next)!="")// if button has a destination, we'll go there after any AFTER scripts have run.
 				scriptLast.push(resptest+" THEN GOTO "+this.pageIDtoName(button.next));
+			*/
 		}
 		
 
@@ -364,7 +369,7 @@ TGuide.prototype.convertToText=function()
 		
 		
 		
-		
+		/*
 		for (s in page.scripts)
 		{
 			script=page.scripts[s];
@@ -374,6 +379,7 @@ TGuide.prototype.convertToText=function()
 			else
 				scriptAfter=scriptAfter.concat(st);
 		}
+		*/
 		
 		if (page.step!=lastStep)
 		{
@@ -381,7 +387,8 @@ TGuide.prototype.convertToText=function()
 			lastStep=page.step;
 		}
 		
-		t2 = text2P("PAGE "+page.name+"") + script2P(scriptBefore) + pageText + script2P(scriptAfter) + script2P(scriptLast) + text2P("");
+		t2 = text2P("PAGE "+page.name+"") +  pageText + (page.scripts) + text2P("");
+//		t2 = text2P("PAGE "+page.name+"") + script2P(scriptBefore) + pageText + script2P(scriptAfter) + script2P(scriptLast) + text2P("");
 		if (useDIV)
 			t +='<div class="editq">'+t2+'</div>';
 		else

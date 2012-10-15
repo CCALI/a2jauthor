@@ -4,6 +4,13 @@
  
 var AJAXLoader="<span class='loader'>   </span>'";
 
+
+function aie(obj,attr,val)
+{	// set obj's attr to val, only if value exists 
+	if (val===null) return; 
+	obj[attr]=val;
+}
+
 String.prototype.printf = function() {
     var formatted = this, i, regexp;
     for (i = 0; i < arguments.length; i++) {

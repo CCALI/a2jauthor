@@ -16,7 +16,7 @@ $(document).ready(function(){
 
 function startCAJA()
 {
-	alert("Loaded "+caja.filename);
+	alert("Loaded "+guide.filename);
 }
 /*
 	<div class="step" > <img style="position:absolute; left:0; bottom: 0; width: 935px; height: 574px;" src="../img/step1.png" width="804" height="531" /><img src="../img/step_courthouse.png" width="734" height="255" style="position:absolute; left: 249px; top: -2px;"  /><img style="position:absolute; left:  218px; top: 366px;" src="../img/step_circle.png" width="370" height="92" /> <img style="position:absolute; left: 389px; top: 274px;" src="../img/blank_guide2front.png" width="175" height="165" /> <img style="position:absolute; left: 478px; top: 421px;" src="../img/step_sign.png" width="422" height="120" />

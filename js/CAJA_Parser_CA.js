@@ -14,16 +14,16 @@ function parseXML_CA_to_CAJA(BOOK)
 	guide.title = BOOK.find('TITLE').text();
 	guide.description = BOOK.find('INFO > DESCRIPTION').xml();
 	guide.completionTime = BOOK.find('INFO > COMPLETIONTIME').xml();
-	guide.jurisdiction="";
-	
+	guide.firstPage="Contents";
+
 	step = new TStep();
 	step.number="1";
 	step.text=lang.eoOutline
 	guide.steps[0]=step;
 	
 	BOOK.find("BOOK > PAGE").each(function() {
-		pageXML = $(this);
-		page = new TPage();
+		var pageXML = $(this);
+		var page = new TPage();
 		page.xml = $(this).xml();
 		page.id=pageXML.attr("ID");
 		page.name=page.id;

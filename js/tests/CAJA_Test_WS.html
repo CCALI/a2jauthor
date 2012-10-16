@@ -53,7 +53,21 @@ $(document).ready(function()
 	{ 
 		gGuideID=data.gid;
 		status('Loaded the guide #'+gGuideID );
-		html("<textarea rows=20 id=guidexml>"+ htmlEscape(data.guide) + "</textarea>"); 
+		
+		
+		
+		var cajaDataXML=$(data.guide);  
+		var description = makestr(cajaDataXML.find('DESCRIPTION').text());
+		var pages=[];
+		cajaDataXML.find("QUESTION").each(function() {
+			QUESTION = $(this);
+			pages.push(QUESTION.attr("ID")+" "+ QUESTION.attr("NAME"));
+		});
+		
+		
+		html("<textarea rows=20 id=guidexml>"+ htmlEscape(data.guide) + "</textarea>"
+		+ data.guide.length+" characters<hr>" 
+		+ description +pages.join('<li>')); 
 	}
 	function listguides(data)
 	{

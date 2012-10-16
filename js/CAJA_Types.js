@@ -87,6 +87,7 @@ function TPage()
 	this.id ="";// Unique id
 	this.name ="";// Unique but author chosen name
 	this.text ="";// Text of question
+	this.learn ="";
 	this.help = "";// Optional help text from Learn More button
 	this.notes="";
 	
@@ -127,6 +128,11 @@ function TGuide()
 	this.version="";
 	this.title="";
 	this.description="";
+	this.credits="";
+	this.completionTime="";
+	this.jurisdiction="";
+	this.firstPage="";
+	
 	this.pages={};// associative array of pages TPage() by page name. E.g., pages["Contents"] = TPage()
 	this.sortedPages=[];//array of pages sorted by name (natural order)
 	this.vars={};//associative array of TVariables()

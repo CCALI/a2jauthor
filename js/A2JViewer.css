@@ -137,31 +137,31 @@ div.question.bubble, div.learnmore.bubble {/* question bubble */
 	min-height: 150px;
 	max-height: 500px; 
 }
-div.question.bubble form, div.learnmore.bubble form{ /* form with viewer's field inputs */
+div.question.bubble div, div.learnmore.bubble div{ /* form with viewer's field inputs */
 	margin: 0px;
 	padding: 0px;
 	width: 100%;
 	overflow: auto;
 	min-height: 150px;
 	max-height: 400px; 
-	position: relative; 
+	position: relative;  
 }
-div.learnmore.bubble, div.learnmore.bubble form {
+div.learnmore.bubble, div.learnmore.bubble div {
 	min-height: 50px;
 	max-height: 500px; 
 }
 
-div.question.bubble form div.buttonlist{
-	text-align:right;
+div.question.bubble div div.buttonlist, div.learnmore.bubble div div.buttonlist{
 	bottom: 4px;
 	right: 4px;
 	width: 100%; 
+	min-height:  1px; 
 }
-div.learnmore.bubble form div.buttonlist{
+div.question.bubble div div.buttonlist{
+	text-align:right;
+}
+div.learnmore.bubble div div.buttonlist{
 	text-align:center;
-	bottom: 4px;
-	right: 4px;
-	width: 100%; 
 }
 div.stepnumber{ text-align:center;}
 div.stepnumber.step1 { 	font-size: 2em; }

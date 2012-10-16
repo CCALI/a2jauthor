@@ -1,4 +1,28 @@
-		<p>8/3/2012 Novice mode instead. </p>
+
+	/*
+	layout:function(div,curstep,steps,question,learnmore)
+	{
+		var stepcount=steps.length-curstep;
+		var html=this.header;
+		$(div).html(html);
+		$('.interact',div).html(a2jviewer.layoutstep(stepcount));
+		$('.A2JViewer .ui-form.question').html(question);
+		$('.A2JViewer .ui-form.learnmore').html(learnmore);
+		$('.stepnumber.step1').text(steps[curstep].number);
+		$('.steptext.step1').text(steps[curstep].text);
+		$('.circle1').attr('src',''+IMG+'step_circle_'+(curstep%3)+'.png');
+		if (curstep<steps.length-1)
+		{
+			$('.stepnumber.step2').text(steps[curstep+1].number);
+			$('.steptext.step2').text(steps[curstep+1].text);
+			$('.circle2').attr('src',''+IMG+'step_circle_'+((curstep+1)%3)+'.png');
+		}
+		$('.A2JViewer button').button()
+	},*/
+	
+	
+	
+	<p>8/3/2012 Novice mode instead. </p>
 		<p>5/09/2012 Entire interview/lesson as an editable text file. jQuery provides immediate parsing to detect information - using Context Sensitive tool bar.</p>
 
 				var ff={group:"Field",

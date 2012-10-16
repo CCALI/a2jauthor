@@ -138,20 +138,54 @@ div.editq {
 	padding-top: 1em;
 	margin-left: 0em;
 }
-.editq label {
-	margin-left: 1em;
+.editq label { 
+	clear: both;
+	display: block;
+	float: left;
+	width: 10em;
+	margin: 5px 0 0;
+	text-align: right; 
 }
-.widetext {
+/*.widetext {
+	width: 20em;
 	padding: 0;
 	margin: 0;
 	padding-left: 3px;
 	padding-right: 3px;
+	background-color: #1ff;
 }
+*/
+.editspan { /* wrap around fields for fluid width */
+	display: block;
+	overflow: hidden;
+	padding: 5 5 5 5;
+}
+.editable.taller {
+	min-height: 3em;
+}
+.editable { /* authoring text fields */ 
+	margin-top: 1px;
+	margin-bottom: 1px;
+	
+	padding: 5px; 
+	background-color: #fff;
+	font-size: 100%;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 0px solid #0066CC;
+	min-height: 1em;
+	
+	width:100%; 
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
 .codearea {
 	white-space: pre-wrap;
 }
 
-.autocomplete.picker.page, .editable {
+.autocomplete.picker.page {
 	width:100%; 
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
@@ -160,19 +194,6 @@ div.editq {
 
 
 
-.editable {
-	width:100%; 
-	margin: 2em;
-	margin-left: 0em;
-	padding: 5px; 
-				
-				
-	background-color: #fff;
-	font-size: 100%;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	border: 1px solid #0066CC;
-}
 .bubble {
 	-moz-border-radius:15px 15px 15px 15px;
 	border-radius:15px 15px 15px 15px;
@@ -310,6 +331,12 @@ background-color:#ddf;
 	padding: 5px;
 	margin: 2px;
 }
+.editq fieldset {
+	padding: inherit;
+	border: inherit;
+	margin-top:25px; 
+}
+
 .section .header {
 	/*font-size: 15px;*/
 	font-style: normal;
@@ -466,13 +493,15 @@ background-color:#eee;
 
 
 
+#login-form label, input { display:block; }
+#login-form input.text { margin-bottom:12px; width:95%; padding: .4em; }
 /*
-label, input { display:block; }
-*/
+
+.validateTips { border: 1px solid transparent; padding: 0.3em; }
 input.text { margin-bottom:12px; width:95%; padding: .4em; }
+*/
 fieldset { padding:0; border:0; margin-top:25px; }
 .ui-dialog .ui-state-error { padding: .3em; }
-.validateTips { border: 1px solid transparent; padding: 0.3em; }
 
 
 

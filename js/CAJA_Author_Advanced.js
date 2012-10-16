@@ -135,7 +135,7 @@ function showPageToEditTextOnly(target)
 	var range, startNode, sel, xy, v;
 	// FireFox only!
 	range = document.createRange();
-	trace('scrolling to '+target);
+	//trace('scrolling to '+target);
 	if (useDIV)
 		startNode = $("#advanced DIV P.CAJAPage:contains('"+target+"')");//.next(); 
 	else

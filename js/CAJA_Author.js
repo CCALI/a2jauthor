@@ -2,37 +2,46 @@
  	03/30/2012 
  */
  
- 
-
 var form={
 	 h1:function(h){
 		return $("<h1>"+h+"</h1>");}
 	,h2:function(h){
 		return $("<h2>"+h+"</h2>").click(function(){$(this).next().toggle()});}
+	,fieldset:function(legend){
+		return $("<fieldset><legend>"+legend+"</legend></fieldset>")//.click(function(){$(this).next().toggle()});
+		}
 	,note:function(t){
 		return $("<div>"+t+"</div>")}
+		
 	,text:    function(label,group,id,value){
-		return $("<label>"+label+'</label><div class=widetext><input class="editable" type="text" name="'+group+id+'" value="'+htmlEscape(value)+'"></div>');}
+		return $("<label>"+label+'</label><span class=editspan> <input class="editable" type="text" name="'+group+id+'" value="'+htmlEscape(value)+'"/> </span>');}
+		
 	,number:    function(label,group,id,value,minNum,maxNum){
-		return "<label>"+label+'</label><input class="editable" type="text" name="'+group+id+'" value="'+htmlEscape(value)+'"><BR/>';}
+		return "<label>"+label+'</label><input class="editable" type="text" name="'+group+id+'" value="'+htmlEscape(value)+'"> ';}
+		
 	,textarea:function(label,group,id,value,rows){
 		if (typeof rows=="undefined") rows=1;
-		return $('<label>'+label+'</label><textarea  class="text editable"  name="'+group+id+'" rows='+rows+'>'+value+'</textarea><BR/>');}
+		return $('<label>'+label+'</label><span class=editspan><textarea  class="text editable taller"  name="'+group+id+'" rows='+rows+'>'+value+'</textarea></span>');}
 		
 	,codearea:function(label,group,id,value){
-		return $('<label>'+label+'</label><div contenteditable=true class="text editable codearea" id="'+group+id+'"  name="'+id+'" >'+value+'</div></div>');}
+		return $('<label>'+label+'</label><span class=editspan><div contenteditable=true class="text editable taller codearea" id="'+group+id+'"  name="'+id+'" >'+value+'</div></span>');}
 		
 		
 	,htmlarea:function(label,group,id,value,data){
-		var field= $('<div>'+(label!="" ? ('<label>'+label+'</label>') : '') + 
-			'<div class=widetext><div contenteditable=true class="text editable tinyMCEtext" id="tinyMCE_'+group+id+'"  name="'+id+'" rows='+4+'>'+value+'</div></div></div>');
-		$('.editable',field).blur(function(){var val=$(this).html();trace('blur,'+val);$(this).data('data').change(val);}).data('data',data) ;
+//		var field= $('<div>'+(label!="" ? ('<label>'+label+'</label>') : '') +'<div class=widetext><div contenteditable=true class="text editable tinyMCEtext" id="tinyMCE_'+group+id+'"  name="'+id+'" rows='+4+'>'+value+'</div></div></div>');
+		
+		var field= $('<div>'+(label!="" ? ('<label>'+label+'</label>') : '') +'<span class=editspan><div contenteditable=true class="text editable taller tinyMCEtext" id="tinyMCE_'+group+id+'"  name="'+id+'" rows='+4+'>'+value+'</div></span></div>');
+		$('.editable',field).blur(function(){var val=$(this).html();  $(this).data('data').change(val);}).data('data',data) ;
 		return field;
 		}
 //	,htmlarea:function(label,group,id,value,rows){if (typeof rows=="undefined") rows=1;return '<label>'+label+'</label><textarea class="tinyMCEtext" style="width:100%" id="tinyMCE_'+group+id+'" name="'+id+'" rows='+rows+'>'+value+'</textarea><BR/>';}
 	,div:function(clas,t){
 		return '<div class="'+clas+'">'+t+'</div>';}
 		
+	,pickpage:function(label,group,id,value){ 
+		value = gGuide.pageIDtoName(value);
+		return $( (label!="" ? ('<label>'+label+'</label>') : '') + '<span class=editspan><input class="ui-state-default ui-combobox-input autocomplete picker page dest" type="text" name="'+id+'" value="'+htmlEscape(value)+'"></span>');
+	}
 	,picklist:function(label,style,list,value){//let user choose number of said item
 		var c=label+'<select class="ui-state-default ui-select '+style+'">';
 		for (var o=0;o<list.length;o++)
@@ -58,9 +67,6 @@ var form={
 			$(this).parent().children('.dest').toggle(br!=0);
 			trace(br);
 		})
-	}
-	,pickpage:function(name,value){ 
-		return $('<input class="ui-state-default ui-combobox-input autocomplete picker page dest" type="text" name="'+name+'" value="'+htmlEscape(value)+'">');
 	}
 	
 	,tablecount:function(label,minelts,maxelts, tablename){//let user choose number of said item
@@ -99,19 +105,6 @@ var form={
 };
 
 
-function listguides(data)
-{
-	session.guideid=0;
-	var mine = [];
-	var others = [];
-	$.each(data.guides, function(key,g) { var str='<li class=guide gid="' + g.id + '">' + g.title + '</li>'; if (g.owned)mine.push(str);else others.push(str);});
-	$('#guidelist').html("My guides <ol>"+mine.join('')+"</ol>" + "Sample guides <ol>"+others.join('')+"</ol>");
-	$('li.guide').click(function(){
-		html('Loading guide '+$(this).text()+AJAXLoader);
-		ws({cmd:'guide',gid:$(this).attr('gid')},guideloaded);
-		//loadGuide($('a[href="#sample"]').first().text(), "TAB ABOUT");
-	});
-}
 
 $(document).ready(function () {
    // Everything loaded, execute.
@@ -130,10 +123,11 @@ $(document).ready(function () {
 	$('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
 	$('#tabviews').bind('tabsselect', function(event, ui) {
 		if (ui.panel.id == 'tabsPageView' ){ 
+			a2jviewer.layoutpage(ui.panel,gGuide,gGuide.steps,gPage);
 			
-			var question = gPage.text;
-			var learnmore = makestr(gPage.learnmore);
-			a2jviewer.layout(ui.panel,gPage.step,gGuide.steps,question,learnmore);
+//			var question = gPage.text;
+//			var learnmore = makestr(gPage.learnmore);
+//			a2jviewer.layout(ui.panel,gPage.step,gGuide.steps,question,learnmore);
 		}
 		});
   // layoutPanes();
@@ -215,7 +209,7 @@ $(document).ready(function () {
    */
 
 
-	if (1)
+	if (0)
 	{
 		loadGuide($('a[href="#sample"]').first().text(), "TAB ABOUT");
 		$('#authortool').removeClass('hidestart').addClass('authortool');
@@ -251,8 +245,8 @@ function signin(data)
 	else
 	{
 		$('#memenu').text(session.nickname);
-		$('#tabsinfo').html("Welcome "+session.nickname+" user#"+session.userid+'<p id="guidelist">Loading your guides '+AJAXLoader +"</p>");
-		$( "#dialog-form" ).dialog( "close" );
+		$('#tabsCAJA').html("Welcome "+session.nickname+" user#"+session.userid+'<p id="guidelist">Loading your guides '+AJAXLoader +"</p>");
+		$("#login-form" ).dialog( "close" );
 		$('#authortool').removeClass('hidestart').addClass('authortool');
 		$('.welcome').hide();
 		layoutPanes();
@@ -262,7 +256,7 @@ function signin(data)
 
 function signinask()
 {
-	$( "#dialog-form" ).dialog({
+	$( "#login-form" ).dialog({
 		autoOpen: false,
 		height: 300,
 		width: 350,
@@ -284,7 +278,7 @@ function signinask()
 			 //allFields.val( "" ).removeClass( "ui-state-error" );
 		}
 	});
-	$( "#dialog-form" ).dialog( "open" );
+	$( "#login-form" ).dialog( "open" );
 }
 
 function layoutPanes()
@@ -318,6 +312,11 @@ function toxml()
 function startCAJA(startTabOrPage)
 { 
 //	$('.CAJAContent').html(gGuide.dump());
+	trace( gGuide.firstPage);
+	if (makestr(startTabOrPage)=="")
+		startTabOrPage="PAGE "+gGuide.pageIDtoName(gGuide.firstPage);
+	trace("Starting location "+startTabOrPage);
+	
 	if(editMode==1)
 		$('#advanced').html(gGuide.convertToText());
 	else
@@ -349,6 +348,8 @@ function setMode(mode)
 	prompt('.');
 	return false;
 }
+
+
 function showPageToEdit()
 {	// Clicked on index, scroll to the right place in the document.
 	var target=$(this).attr('target')
@@ -357,7 +358,14 @@ function showPageToEdit()
 //	else
 		gotoTabOrPage(target);
 }
-
+function gotoPageShortly(dest)
+{	// navigate to given page (after tiny delay)
+	window.setTimeout(function(){
+		gotoTabOrPage("PAGE "+gGuide.pageIDtoName(dest));
+		$('#tabviews').tabs('select','#tabsPageView');
+		//a2jviewer.layoutpage($('#tabsPageView'),gGuide,gGuide.steps,gPage);
+	},1);
+}
 function gotoTabOrPage(target)
 {
 	// Remove existing editors 
@@ -365,23 +373,28 @@ function gotoTabOrPage(target)
 	for (var edId in tinyMCE.editors)
 		tinyMCE.editors[edId].remove();
  
-
+ 	trace("gotoTabOrPage:"+target);
 	
 	if (target.indexOf("PAGE ")==0)
 	{
 		$('#CAJAContent').html('');
 		gGuide.novicePage($('#CAJAContent'),target.substr(5));
+		
+//		alert( $("#tabviews .ui-tabs-selected").attr('id'));
+//			a2jviewer.layoutpage(ui.panel,gGuide,gGuide.steps,gPage);
+		
 		$('#tabviews').tabs('select','#tabsPageEdit');
 	}
 	else
 	if (target.indexOf("STEP ")==0)
 	{
 		$('#CAJAContent').html('');
-		 gGuide.noviceStep($('#CAJAContent'),target.substr(5));
+		gGuide.noviceStep($('#CAJAContent'),target.substr(5));
+		
 		$('#tabviews').tabs('select','#tabsPageEdit');
 	}
 	else{
-		 gGuide.noviceTab($('#'+target),target);
+		gGuide.noviceTab($('#'+target).empty(),target);
 		$('#tabviews').tabs('select',target);
 	}
 
@@ -557,14 +570,14 @@ TGuide.prototype.convertIndexAlpha=function()
 
 function ws(data,results)
 {	// Contact the webservice to handle user signin, retrieval of guide lists and load/update/cloning guides.
-	trace(JSON.stringify(data));
+	//trace(JSON.stringify(data));
 	$.ajax({
 		url:'CAJA_WS.php',
 		dataType:'json',
 		type: 'POST',
 		data: data,
 		success: function(data){ 
-			trace(String.substr(JSON.stringify(data),0,299));
+			//trace(String.substr(JSON.stringify(data),0,299));
 			results(data);
 		},
 		error: function(err,xhr) { alert("error:"+xhr.responseText ); }
@@ -577,46 +590,73 @@ function ws(data,results)
 
 
 TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizard for given page.
-   var t = "";
-   var page = this.pages[pagename];
-	// TODO  handle missing pages
-
+   var t = ""; 
+	
+   var page = this.pages[pagename]; 
+	
    var t = $('<div/>').addClass('editq');
 
    if (1) {
-      if (page == null) {
+      if (page == null || typeof page ==="undefined") {
          t.append(form.h2( "Page not found " + pagename)); 
       }
       else {
          var GROUP = page.id;
 
-         t.append($('<h2/>').text('Your Page & all Info'));
-         t.children('h2').click(function () { alert('click h2'); });
+//         t.append($('<h2/>').text('Your Page & all Info'));
+//         t.children('h2').click(function () { alert('click h2'); });
 
-
-         t.append(form.h2('Page info'));
-         t.append(form.text('Name:', GROUP, "name", page.name));
-
+			var fs=form.fieldset('Page info');
+        	fs.append(form.text('Name:', GROUP, "name", page.name));
          if (page.type != "A2J") {
             t.append(form.h2("Page type/style: " + page.type + "/" + page.style));
          }
-         t.append(form.htmlarea('Text', GROUP, "text", page.text,{change:function(val){trace('value is '+val);page.text=val}}));
+			t.append(fs);
+			
+			var fs=form.fieldset('Page text');
+//         t.append(form.h2('Page info'));
+//        t.append(form.text('Name:', GROUP, "name", page.name));
 
-			t.append(form.codearea('Logic','logic','logic',page.scripts));
+         fs.append(form.htmlarea('Text:', GROUP, "text", page.text,{change:function(val){
+																											 //trace('value is '+val);
+																											 page.text=val}}));
+			
+			fs.append(form.text('Learn More prompt:', "learnmore", 'name', page.learn));
+         fs.append(form.htmlarea("Learn More help:", "help", 'help',page.help));
+			t.append(fs);
+			
+			
 			
          var b, d, detail, fb, t1, t2, list;
 
          if (page.type == "A2J" || page.fields.length > 0) {
-            //t+=form.h1('Fields');
+				var fs=form.fieldset('Fields');
             for (var f in page.fields) {
                var field = page.fields[f];
                var GROUPFIELD = GROUP + "_FIELD" + f;
-               t.append(form.text('Name', GROUPFIELD, 'name', field.name));
-               t.append(form.text('Label', GROUPFIELD, 'label', field.label));
-               t.append(form.text('Optional', GROUPFIELD, 'optional', field.optional));
-               t.append(form.htmlarea('If invalid say:', GROUPFIELD, "invalidPrompt", field.invalidPrompt));
+               fs.append(form.text('Name:', GROUPFIELD, 'name', field.name));
+               fs.append(form.text('Label:', GROUPFIELD, 'label', field.label));
+               fs.append(form.text('Optional:', GROUPFIELD, 'optional', field.optional));
+               fs.append(form.htmlarea('If invalid say:', GROUPFIELD, "invalidPrompt", field.invalidPrompt));
             }
+	 			t.append(fs);
+        }
+         if (page.type == "A2J" || page.buttons.length > 0) {
+				var fs=form.fieldset('Buttons');
+            for (var bi in page.buttons) {
+               var b = page.buttons[bi];
+               var BFIELD = GROUP + "btn" + bi;
+               fs.append(form.text('Label:', BFIELD, 'label', b.label));
+               fs.append(form.text('Var Name:', BFIELD, 'name', b.name)); 
+               fs.append(form.text('Var Value:', BFIELD, 'value', b.value)); 
+               fs.append(form.pickpage('Destination:', BFIELD, 'dest', b.next));
+					 
+            }
+	 			t.append(fs);
          }
+			var fs=form.fieldset('Advanced Logic');
+			fs.append(form.codearea('Logic:','logic','logic',page.scripts));
+			t.append(fs);
 
          if (page.type == "Book page") { }
          else
@@ -635,7 +675,7 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
                   var detail = page.details[d];
                   var fb = page.feedbacks[fbIndex(0, d)];
                   var $fb = $('<div/>').append(form.pickbranch())
-					 .append(form.pickpage("dest", makestr(fb.next)))
+					 .append(form.pickpage('','',"dest", fb.next))
 					 .append(form.htmlarea("", GROUP + "CHOICE" + d, "fb" + d, fb.text));
                   var brtype = makestr(fb.next) == "" ? 0 : (makestr(fb.text) == "" ? 2 : 1);
                   $('select.branch', $fb).val(brtype).change();
@@ -696,11 +736,11 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 
          //pageText += html2P(expandPopups(this,page.text));
 
-         t.append(form.htmlarea("Learn more help", "help", makestr(page.help)));
          t.append(form.textarea('Notes', GROUP, "note", makestr(page.notes)));
 
       }
       //t+=form.h1('XML')+htmlEscape(page.xml);
+	   t.append(htmlEscape(page.xml));
 
    }
 
@@ -716,8 +756,6 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
    //	form.html(t);
    div.append(t);
 
-   //	div.append(htmlEscape($(t).html()));
-   div.append(htmlEscape(page.xml));
 
 
    //	div.append(form.div("editq",t));

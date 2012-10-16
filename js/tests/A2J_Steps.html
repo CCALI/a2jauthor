@@ -9,6 +9,7 @@
 <script src="../jquery.layout.min.js" type="text/javascript"></script>
 <script src="../jquery.ui.custom.min.js" type="text/javascript" ></script>
 <script src="../CAJA_Viewer_A2J.js" type="text/javascript" ></script>
+<script src="../CAJA_Utils.js" type="text/javascript" ></script>
 <style type="text/css">
 <!--
 .zoomed-element {
@@ -32,19 +33,38 @@ $(document).ready(function()
 		{number:4,text:'Some more stuff'},
 		{number:5,text:'Address'},
 		{number:6,text:'Congratulations on completing the interview'}];
+	var guide={};
+	
 	for (var s=0;s<steps.length;s++) $('#tests').append('<button>'+s+'</button>');
-	$('#tests button').button().click(function(){
+	$('#tests button').button().click(function(){teststep(parseInt($(this).text()))});
+	function teststep(curstep)
+	{
 		// create layout for step with sample question/learnmore filler.
-		var curstep=parseInt($(this).text());
-		var text="<p>Question text appears here</p>";
-		for (var i=0;i<curstep*4;i++) text+="<p>Line #"+i+'</p>';
-		var question=(text + '<div class="buttonlist"><button>Yes</button><button>No</button></div>');
-		var learnmore=('Learn more text: '+text + '<div class="buttonlist"><button>Close</button></div>');
+		var page={};
+		page.step=curstep;
+		var text="<p>Question text #"+page.step+" appears here:</p>";
+		for (var i=0;i<page.step*4;i++) text+="<p>Line #"+i+'</p>';
+		page.text=text;
+		if (page.step == steps.length-1)
+		{
+			page.buttons=[{label:'Done!'}];
+			page.help="";
+		}
+		else
+		{
+			page.buttons=[ {label:'Next'},{label:'Skip to '+(page.step+1)}];
+			page.help = 'Learn more text: '+text;
+		}
+		a2jviewer.layoutpage($('#demostep'),guide,steps,page);
 		
-		a2jviewer.layout($('#demostep'),curstep,steps,question,learnmore);
-		
-		});
-	a2jviewer.layout($('#demostep'),0,steps);
+		//var question=(text + '<div class="buttonlist"><button>Yes</button><button>No</button></div>');
+		//var learnmore=('Learn more text: '+text + '<div class="buttonlist"><button>Close</button></div>');
+		//a2jviewer.layout($('#demostep'),curstep,steps,question,learnmore);
+	}
+	
+	teststep(0);
+	//a2jviewer.layout($('#demostep'),0,steps);
+	
 	$('#scales button').button().click(function(){
 		var scale=$(this).text(); 
 		$('#demostep').css({zoom:scale,"-moz-transform":"scale("+scale+")","-webkit-transform":"scale("+scale+")"}); });

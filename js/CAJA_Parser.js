@@ -3,7 +3,7 @@
 
 
 TGuide.prototype.pageIDtoName=function(id)
-{
+{	// convert a page id (#) or reserved word into text.
 	if (this.mapids[id])
 	{
 		id = this.mapids[id].name;
@@ -18,7 +18,7 @@ TGuide.prototype.pageIDtoName=function(id)
 		autoIDs[qIDBACK]=		lang.qIDBACK;//"[Back to prior question]"//8/17/09 3.0.1 Same as history Back button.
 		autoIDs[qIDRESUME]=	lang.qIDRESUME;//"[Exit - Resume interview]"//8/24/09 3.0.2
 		if (typeof autoIDs[id]=="undefined")
-			id=lang.UnknownID.printf(id,props(autoIDs)) //"[Unknown id "+id+"]" + props(autoIDs);
+			id=lang.UnknownID.printf(id);//,props(autoIDs)) //"[Unknown id "+id+"]" + props(autoIDs);
 		else
 			id=autoIDs[id];
 	}
@@ -38,7 +38,7 @@ function parseXML_CAJA_to_CAJA(cajaData)
 function parseXML_Auto_to_CAJA(cajaData)
 {	// Parse XML into CAJA
 	var guide;
-	trace("Parse XML data");
+	//trace("Parse XML data");
 	if ((cajaData.find('A2JVERSION').text())!="")
 		guide=parseXML_A2J_to_CAJA(cajaData);// Parse A2J into CAJA
 	else
@@ -107,8 +107,13 @@ function prompt(status)
 	$('#CAJAStatus').text( status );
 	trace(status);
 }
-
-
+function loadNewGuide(guideFile,startTabOrPage)
+{
+	prompt('Loading '+guideFile);
+	prompt('Start location will be '+startTabOrPage);
+	$('.CAJAContent').html('Loading '+guideFile+AJAXLoader);
+	$('#CAJAIndex, #CAJAListAlpha').html('');
+}
 
 function loadGuide(guideFile,startTabOrPage)
 {
@@ -123,14 +128,47 @@ function loadGuide(guideFile,startTabOrPage)
 		//if (editMode==0) startTabOrPage = "PAGE " + startTabOrPage;
 		guideFile=guideFile[0];
 	}
-	prompt('Loading '+guideFile);
-	prompt('Start location will be '+startTabOrPage);
-	$('.CAJAContent').html('Loading '+guideFile+AJAXLoader);
-	
-	$('#CAJAIndex, #CAJAListAlpha').html('');
-	
+	loadNewGuide(guideFile,startTabOrPage);
 	window.setTimeout(function(){loadGuide2(guideFile,startTabOrPage)},500);
 }
+function guideloaded(data)
+{
+	session.guideid=data.gid;
+	cajaDataXML=$(data.guide);
+	gGuide =  parseXML_Auto_to_CAJA(cajaDataXML);
+	$('li.guide[gid="'+session.guideid+'"]').html(gGuide.title);
+	/*
+		var cajaDataXML=$(data.guide);  
+		var description = makestr(cajaDataXML.find('DESCRIPTION').text());
+		var pages=[];
+		cajaDataXML.find("QUESTION").each(function() {
+			QUESTION = $(this);
+			pages.push(QUESTION.attr("ID")+" "+ QUESTION.attr("NAME"));
+		});
+		alert( description +pages.join('<li>')); 
+	*/
+	//gGuide.filename=guideFile;
+	startCAJA();
+}
+
+function listguides(data)
+{
+	session.guideid=0;
+	var mine = [];
+	var others = [];
+	$.each(data.guides, function(key,g) { var str='<li class=guide gid="' + g.id + '">' + g.title + '</li>'; if (g.owned)mine.push(str);else others.push(str);});
+	$('#guidelist').html("My guides <ol>"+mine.join('')+"</ol>" + "Sample guides <ol>"+others.join('')+"</ol>");
+	$('li.guide').click(function(){
+		var gid=$(this).attr('gid');
+//		$(this).html('Loading guide '+$(this).text()+AJAXLoader);
+		var guideFile=$(this).text();
+		$('li.guide[gid="'+gid+'"]').html('Loading guide '+guideFile+AJAXLoader).addClass('.warning');
+		loadNewGuide(guideFile,'');
+		ws({cmd:'guide',gid:gid},guideloaded);
+		//loadGuide($('a[href="#sample"]').first().text(), "TAB ABOUT");
+	});
+}
+
 function loadGuide2(guideFile,startTabOrPage)
 {
 	var cajaDataXML;

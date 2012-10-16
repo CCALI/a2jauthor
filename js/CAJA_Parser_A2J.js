@@ -18,9 +18,9 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	var guide=new TGuide();
 	guide.viewer="A2J";
 	guide.title = TEMPLATE.find('TITLE').text();
-	guide.description = TEMPLATE.find('DESCRIPTION').text();
-	guide.jurisdiction = TEMPLATE.find('JURISDICTION').text();
-	guide.firstQuestion = TEMPLATE.find('FIRSTQUESTION').text(); 
+	guide.description = makestr(TEMPLATE.find('DESCRIPTION').text());
+	guide.jurisdiction =  makestr(TEMPLATE.find('JURISDICTION').text());
+	guide.firstPage =  makestr(TEMPLATE.find('FIRSTQUESTION').text());
 	
 	// Parse pages into book.pages[] records. 
 	TEMPLATE.find("VARIABLE").each(function() {
@@ -73,7 +73,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		page.step=parseInt(QUESTION.attr("STEP"));
 		while (guide.pages[page.name])
 			page.name+="_DUPLICATE";
-		page.sortName=(page.id==guide.firstQuestion) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
+		page.sortName=(page.id==guide.firstPage) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
 		
 		guide.pages[page.name] = page;
 		guide.sortedPages.push(page);
@@ -90,17 +90,18 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		page.nextPageDisabled = false;
 		//alert(QUESTION.find("TEXT").toString());
 		page.text=QUESTION.find("TEXT").xml();
-		page.learn=QUESTION.find("LEARN").xml();
+		page.learn=makestr(QUESTION.find("LEARN").xml());
+		page.help=makestr(QUESTION.find("HELP").xml());
 		page.note=QUESTION.find("NOTE").xml();
-		page.help=QUESTION.find("HELP").xml();
+		page.xml = $(this).xml();
 		page.alignText="auto";
 
 
 		QUESTION.find('BUTTON').each(function(){
 			button=new TButton();
 			button.label =jQuery.trim($(this).find("LABEL").xml());
-			button.next =$(this).attr("NEXT");if (typeof button.next==="undefined") button.next="";
-			button.name =$(this).attr("NAME");
+			button.next = makestr($(this).attr("NEXT"));
+			button.name =jQuery.trim($(this).find("NAME").xml());
 			button.value = jQuery.trim($(this).find("VALUE").xml());
 			//if (page.buttons==null) page.buttons=[];
 			page.buttons.push(button);
@@ -108,7 +109,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		QUESTION.find('FIELD').each(function(){
 			field=new TField();
 			field.type =$(this).attr("TYPE");
-			field.optional =$(this).attr("OPTIONAL");		
+			field.optional =$(this).attr("OPTIONAL")!="false";
 			field.order =$(this).attr("ORDER");			
 			field.label =jQuery.trim($(this).find("LABEL").xml());
 			field.name =jQuery.trim($(this).find("NAME").xml());
@@ -174,6 +175,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		var scriptBefore=[];
 		var scriptAfter=[];
 		var scriptLast=[];
+		if (0)// Mmove button variable/branch into Scripting?
 		for (var b in page.buttons)
 		{
 			var button=page.buttons[b]; 

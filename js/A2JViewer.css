@@ -163,6 +163,10 @@ div.question.bubble div div.buttonlist{
 div.learnmore.bubble div div.buttonlist{
 	text-align:center;
 }
+div.question.bubble div fieldset{
+	text-align:left;
+	xbackground-color: #1ee;
+}
 div.stepnumber{ text-align:center;}
 div.stepnumber.step1 { 	font-size: 2em; }
 div.stepnumber.step2 { 	font-size: 1em; }

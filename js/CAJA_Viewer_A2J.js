@@ -16,11 +16,16 @@ var a2jviewer={
 		$(div).html(html);
 		$('.interact',div).html(a2jviewer.layoutstep(stepcount)); 
 		
-		$('.A2JViewer .ui-form.question').html(question + '<div class="buttonlist"></div>');
+		$('.A2JViewer .ui-form.question').html(question + '<fieldset class="fieldlist"></fieldset><div class="buttonlist"></div>');
 		for (var bi in page.buttons)
 		{
 			var b = page.buttons[bi];
 			$('.A2JViewer .ui-form.question  .buttonlist').append('<button num='+bi+' title="Go to page '+gGuide.pageIDtoName(b.next)+'">'+b.label+'</button>'); 
+		} 
+		for (var fi in page.fields)
+		{
+			var f = page.fields[fi];
+			$('.A2JViewer .ui-form.question fieldset').append('<label>'+f.label+'</label>').append('<input></input>');
 		} 
 		$('.A2JViewer .ui-form.learnmore').html(help + '<div class="buttonlist"><button>Close</button></div>').parent().hide().filter(function(){return help!=""}).fadeIn(1000);
 		$('.stepnumber.step1').text(steps[curstep].number);

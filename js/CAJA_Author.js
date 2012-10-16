@@ -2,6 +2,9 @@
  	03/30/2012 
  */
  
+ var DEBUGSTART=0;
+ 
+ 
 var form={
 	 h1:function(h){
 		return $("<h1>"+h+"</h1>");}
@@ -209,7 +212,7 @@ $(document).ready(function () {
    */
 
 
-	if (0)
+	if (DEBUGSTART)
 	{
 		loadGuide($('a[href="#sample"]').first().text(), "TAB ABOUT");
 		$('#authortool').removeClass('hidestart').addClass('authortool');

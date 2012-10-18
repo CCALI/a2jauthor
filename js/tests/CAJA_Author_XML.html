@@ -42,12 +42,23 @@ function loadFile(bookFile)
 			}
 		});
 } 
-function parseFile(xml)
-{ 
-	cajaDataXML=$(jQuery.parseXML(xml));
-	guide=  parseXML_Auto_to_CAJA( cajaDataXML );
+function parseFile(xml_str)
+{ 	
+	// Read old file format's XML.
+	var dataXML=$(jQuery.parseXML(xml_str));
+	guide=  parseXML_Auto_to_CAJA( dataXML );
 	trace(guide.title);
-	trace(htmlEscape(exportXML_CAJA_from_CAJA(guide)));
+	//trace( propsJSON('Guide', guide)  ); 
+	
+	// Convert to CAJA XML
+	var cajaDataXML_str = exportXML_CAJA_from_CAJA(guide);
+	trace('<div>'+htmlEscape(cajaDataXML_str)+'</div>');	//trace('<pre>'+htmlEscape(cajaDataXML_str)+'</pre>');
+	
+	// Readin CAJA XML
+	var cajaDataXML=$(jQuery.parseXML(cajaDataXML_str));
+	guide2=  parseXML_Auto_to_CAJA(cajaDataXML);
+	guide2.sortedPages="HIDDEN";
+	trace('<pre>'+propsJSON('Guide', guide2)+'</pre>'); 
 }
 
 </script>

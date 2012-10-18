@@ -129,25 +129,37 @@ function TPage()
 
 function TGuide()
 {	// This is the Guide representing a CALI lesson Book or an A2J Author Interview.
-	this.viewer="";//A2J, CA, CAJA
-	this.filename="";
-	this.version="";
-	this.title="";
-	this.description="";
-	this.credits="";
-	this.completionTime="";
-	this.jurisdiction="";
-	this.firstPage="";
-	this.history="";
+
+	this.viewer=""; 				//Origin CAJA - A2J, CA, CAJA - which viewer to use? 
+	this.version="";				//Original Both - CA uses the mm/dd/yyyy format, A2J is author defined
+	this.title="";					//Origin Both - author title - in CA it's visible at top of page, not seen in A2J by user
+	this.createdate="";			//Original CA - first date of creation of the lesson
+	this.modifydate="";			//Original CA - last date of editing of the lesson
+	this.description="";			//Origin Both - author composed desciprtion or CALI's official lesson description
+	this.credits="";				//Origin CA - credits for image permissions, etc.
+	this.copyrights="";			//Origin CA - CALI copyright notices, etc.
+	this.author="";				//
+	this.sendfeedback="";		//Origin A2J - if true we show email link
+	this.sendfeedbackemail="";	//Origin A2J - if defined, this sends feedback
+	this.completionTime="";		//Origin CA - author's estimated completion time including section breakdown
+	this.subjectarea="";			//Original CA - CA places every lesson into a single main category like Torts.
+	this.jurisdiction="";		//Origin A2J - author's note on jurisdiction like 'Cook County'
+	this.firstPage="";			//Origin A2J - starting page specificed by author
+	this.history="";				//Origin Both - author revision notes or CBK history
+	this.avatar="";				//Origin A2J - default avatar to use (blank or tan)
+	this.language="";				//Origin A2J - language code (default is "en")
 	
-	this.pages={};// associative array of pages TPage() by page name. E.g., pages["Contents"] = TPage()
+	this.pages={};			//Origin both - associative array of pages TPage() by page name. E.g., pages["Contents"] = TPage()
+	this.constants={};	//Origin CAJA - associative array of contants, MAXINCOME:25000
+	this.vars={};			//Origin A2J - associative array of TVariables()
+	this.steps=[];			//Origin A2J - array of TStep()
+	this.popups=[];		//Origin A2J - array of embedded text popups (these are anonymous unlike CA where they are named)
+	this.assets=[];		//Origin CAJA - array of images for preloading.
+
+
+	this.filename="";
+	this.mapids=[];// array of mapids indices	- maps a page.id to page while .pages uses page.name.
 	this.sortedPages=[];//array of pages sorted by name (natural order)
-	this.vars={};//associative array of TVariables()
-	this.constants={};//associative array of contants, MAXINCOME:25000
-	this.mapids=[];// array of mapids indices	
-	this.steps=[];//array of TStep()
-	this.popups=[];
-	this.assets=[];//array of images for preloading.
 	return this;
 }
 

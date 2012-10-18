@@ -30,10 +30,8 @@ function parseXML_CA_to_CAJA(BOOK)
 		page.name=page.id;
 		page.type=pageXML.attr("TYPE");
 		page.style=pageXML.attr("STYLE");
-		page.nextPage="auto";
+		page.nextPage="";
 		page.nextPageDisabled = false;
-		page.sortName=sortingNatural(page.name);//pageXML.attr("SORTNAME");//sortingNatural(page.name);
-
 		page.text= makestr(pageXML.find("QUESTION").xml()) +  makestr(pageXML.find("TEXT").xml());
 		page.alignText="auto";
 		//page.step=0;
@@ -88,7 +86,6 @@ function parseXML_CA_to_CAJA(BOOK)
 		});
 		
 		guide.pages[page.name] = page;
-		guide.sortedPages.push(page);
 		guide.mapids[page.id]=page; 
 	});
 //	 alert(guide.sortedPages[0]);

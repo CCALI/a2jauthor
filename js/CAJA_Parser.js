@@ -4,7 +4,7 @@
 
 function exportXML_CAJA_from_CAJA(guide)
 {	// Convert Guide structure into XML
-	var JSON={GUIDE:{INFO:{},STEPS:[],VARIABLES:[],PAGES:[]}};
+	var JSON={GUIDE:{INFO:{},PAGES:[] ,STEPS:[],VARIABLES:[] }};
 	var chars=" CHARS[<'&\">]";
 	
 	JSON.GUIDE.INFO.viewer=guide.viewer;
@@ -57,54 +57,17 @@ function exportXML_CAJA_from_CAJA(guide)
 			
 	return js2xml('GUIDE',JSON.GUIDE);
 }
-function js2xml(name,o)
-{	// 10/17/2012 Sam's simple JSON to XML. 
-	// If object property name starts with '_' it becomes an attribute.
-	// If object property name starts with 'XML_' it becomes a node that's NOT encoded.
-	function trim(name,attr,body){
-		if (body=='')
-			if (attr=='')
-				return '';
-			else
-				return '<'+name.toUpperCase()+attr+'/>';
-		else
-			return '<'+name.toUpperCase()+attr+'>'+body+'</'+name.toUpperCase()+'>';
-	}
-	if (typeof o === 'object')
-	{
-		var attr="";
-		var body="";
-		for (var p in o)
-		{
-			if (parseInt(p)>= 0) // array assumed
-				body += js2xml('',o[p]);
-			else
-			if (p.substr(0,1)=='_') // embed as attribute
-				attr += " " + p.substr(1)+"=\""+htmlEscape(o[p])+"\"";
-			else
-			if (p.substr(0,4)=='XML_') // treat as raw XML
-				body += o[p];
-			else
-				body += js2xml(p,o[p]); //recurse
-		}
-		if (name=='')
-			return body;
-		else
-			return trim(name,attr,body);//'<'+name+attr+'>'+body+'</'+name+'>';
-	}
-	else
-		return trim(name,'',htmlEscape(o));// '<'+name+'>'+htmlEscape(o)+'</'+name+'>' ; // string or number is escaped. 
-}
-
-function parseXML_CAJA_to_CAJA(cajaData)
+function parseXML_CAJA_to_CAJA(GUIDE)
 {	// Parse parseCAJA
 	var guide=new TGuide();
-	guide.title = cajaData.find('TITLE').text();
-	guide.jurisdiction =  makestr(TEMPLATE.find('JURISDICTION').text());
-	guide.firstPage =  makestr(TEMPLATE.find('FIRSTPAGE').text());
+	guide.title = GUIDE.find('TITLE').text();
+	guide.description = makestr(GUIDE.find('DESCRIPTION').text());
+	guide.firstPage =  makestr(GUIDE.find('FIRSTPAGE').text());
+	guide.jurisdiction =  makestr(GUIDE.find('JURISDICTION').text());
+	guide.viewer =  makestr(GUIDE.find('VIEWER').text());
 	
 	// Parse pages into book.pages[] records. 
-	TEMPLATE.find("VARIABLE").each(function() {
+	GUIDE.find("VARIABLES > VARIABLE").each(function() {
 		var VARIABLE = $(this);
 		var v = new TVariable();
 		v.name=VARIABLE.attr("NAME");
@@ -112,14 +75,14 @@ function parseXML_CAJA_to_CAJA(cajaData)
 		v.type=VARIABLE.attr("TYPE");
 		guide.vars[v.name]=v;
 	 });
-	TEMPLATE.find("STEP").each(function() {
+	GUIDE.find("STEP").each(function() {
 		var STEP = $(this);
 		var step = new TStep();
 		step.number=STEP.attr("NUMBER");
 		step.text=STEP.find("TEXT").xml();
 		guide.steps.push(step);
 	 });
-	TEMPLATE.find("POPUP").each(function() {//TODO discard unused popups
+	GUIDE.find("POPUP").each(function() {//TODO discard unused popups
 		var POPUP = $(this);
 		var popup = new TPopup();
 		popup.id=POPUP.attr("ID");
@@ -127,21 +90,20 @@ function parseXML_CAJA_to_CAJA(cajaData)
 		popup.text=POPUP.find("TEXT").xml();
 		guide.popups[popup.id]=popup;
 	});
-	TEMPLATE.find("CONSTANTS").each(function() {
+	GUIDE.find("CONSTANTS").each(function() {
 		var CONSTANT = $(this);
 		var constant = new TConstant(); 
 		constant.name=v.attr("NAME");
 		constant.text=CONSTANT.find("VAL").xml();
 		guide.constants[constant.name]=constant;
-	});
-	
-	TEMPLATE.find("PAGE").each(function() {
+	});	
+	GUIDE.find("PAGES > PAGE").each(function() {
 		var PAGE = $(this);
 		var page = new TPage();
 		page.xml = $(this).xml();
 		
 		page.id=PAGE.attr("ID");
-		page.name=page.id;
+		page.name=PAGE.attr("NAME");
 		page.type=PAGE.attr("TYPE");
 		page.style=PAGE.attr("STYLE");
 		page.nextPage="auto";
@@ -151,9 +113,13 @@ function parseXML_CAJA_to_CAJA(cajaData)
 		page.learn=makestr(PAGE.find("LEARN").xml());
 		page.help=makestr(PAGE.find("HELP").xml());
 		page.note=PAGE.find("NOTE").xml();
-		page.alignText="auto";
-		page.sortName=(page.id==guide.firstPage) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
+		page.alignText="";
 		page.scripts = PAGE.find("SCRIPTS").xml();
+		
+		
+		page.sortName=(page.id==guide.firstPage) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
+		guide.pages[page.name] = page;
+		guide.mapids[page.id]=page;
 		
 		PAGE.find('BUTTON').each(function(){
 			var button=new TButton();
@@ -207,15 +173,31 @@ TGuide.prototype.pageIDtoName=function(id)
 function parseXML_Auto_to_CAJA(cajaData)
 {	// Parse XML into CAJA
 	var guide;
-	//trace("Parse XML data");
 	if ((cajaData.find('A2JVERSION').text())!="")
 		guide=parseXML_A2J_to_CAJA(cajaData);// Parse A2J into CAJA
 	else
-	if ((cajaData.find('CAJAVERSION').text())!="")
-		guide=parseXML_CAJA_to_CAJA(cajaData);// Parse CALI Author into CAJA
+	if ((cajaData.find('CAVERSIONREQUIRED').text())!="")
+		guide=parseXML_CA_to_CAJA(cajaData);// Parse CALI Author into CAJA
 	else
-		guide=parseXML_CA_to_CAJA(cajaData);// Parse Native CAJA
+		guide=parseXML_CAJA_to_CAJA(cajaData);// Parse Native CAJA
+	
+	
+	for (var vi in guide.variables)
+	{
+		var v=guide.variables[vi];
+		v.sortName=	sortingNatural(v.name);
+	}
+	guide.sortedPages=[];
+	for (var p in guide.pages)
+	{
+		var page = guide.pages[p];
 		
+		
+		//	page.sortName=sortingNatural(page.name);//pageXML.attr("SORTNAME");//sortingNatural(page.name);
+		page.sortName=(page.id==guide.firstPage) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
+
+		guide.sortedPages.push(page);
+	}
 	guide.sortedPages=guide.sortedPages.sort(function (a,b){ if (a.sortName<b.sortName) return -1; else if (a.sortName==b.sortName) return 0; else return 1;});
 
 	return guide;

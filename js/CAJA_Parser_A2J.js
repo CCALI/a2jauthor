@@ -28,7 +28,6 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		VARIABLE = $(this);
 		v = new TVariable();
 		v.name=VARIABLE.attr("NAME");
-		v.sortName=	sortingNatural(v.name);
 		v.type=VARIABLE.attr("TYPE");
 		guide.vars[v.name]=v;
 		//Obsolete, discard: VARIABLE.attr("SCOPE");
@@ -72,12 +71,8 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		pageNameUsed[page.name]=true;
 		
 		page.step=parseInt(QUESTION.attr("STEP"));
-		//while (guide.pages[page.name])
-		//	page.name+="_DUPLICATE";
-		page.sortName=(page.id==guide.firstPage) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
 		
 		guide.pages[page.name] = page;
-		guide.sortedPages.push(page);
 		guide.mapids[page.id]=page; 
 	});
 	
@@ -87,7 +82,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		
 		page.type="A2J";
 		page.style="";
-		page.nextPage="auto";
+		page.nextPage="";
 		page.nextPageDisabled = false;
 		//alert(QUESTION.find("TEXT").toString());
 		page.text=QUESTION.find("TEXT").xml();
@@ -95,7 +90,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		page.help=makestr(QUESTION.find("HELP").xml());
 		page.note=QUESTION.find("NOTE").xml();
 		page.xml = $(this).xml();
-		page.alignText="auto";
+		page.alignText="";
 
 
 		QUESTION.find('BUTTON').each(function(){

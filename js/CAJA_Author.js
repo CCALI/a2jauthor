@@ -2,7 +2,7 @@
  	03/30/2012 
  */
  
- var DEBUGSTART=0;
+var DEBUGSTART=0;
  
  
 var form={
@@ -144,6 +144,19 @@ $(document).ready(function () {
    $('.megamenu li div ul li a').bind('click', (function () {
       var attr = $(this).attr('href');
       switch (attr) {
+			case '#save':
+				if (gGuide!=null)
+					if (gGuideID!=0)
+					{
+						prompt('Saving '+gGuide.title + AJAXLoader);
+						ws( {cmd:'guidesave',gid:gGuideID, guide: exportXML_CAJA_from_CAJA(gGuide)}, function(response){
+							if (response.error!=null)
+								prompt(response.error);
+							else
+								prompt(response.info);
+						} ) ;
+					}
+				break;
          case '#sample':
             //alert('Loading sample '+$(this).text());
             loadGuide($(this).text(), "tabsAbout");
@@ -237,22 +250,23 @@ function checkLength( o, n, min, max ) {
 
 function signin(data)
 {
-	session.userid=data.userid;
-	session.guideid=0;
-	session.nickname=data.nickname;
-	if (session.userid==0)
+	gUserID=data.userid;
+	gGuideID=0;
+	gUserNickName=data.nickname;
+	if (gUserID==0)
 	{
 		//status('Unknown user');
 		//html('Please register...');
 	}
 	else
 	{
-		$('#memenu').text(session.nickname);
-		$('#tabsCAJA').html("Welcome "+session.nickname+" user#"+session.userid+'<p id="guidelist">Loading your guides '+AJAXLoader +"</p>");
+		$('#memenu').text(gUserNickName);
+		$('#tabsCAJA').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist">Loading your guides '+AJAXLoader +"</p>");
 		$("#login-form" ).dialog( "close" );
 		$('#authortool').removeClass('hidestart').addClass('authortool');
 		$('.welcome').hide();
 		layoutPanes();
+		$('#tabviews').tabs( { disabled: [1,2,3,4,5,6,7,8,9]});
 		ws({cmd:'guides'},listguides);
 	}
 }
@@ -316,6 +330,9 @@ function startCAJA(startTabOrPage)
 { 
 //	$('.CAJAContent').html(gGuide.dump());
 	trace( gGuide.firstPage);
+	
+	$('#tabviews').tabs( { disabled:false});
+		
 	if (makestr(startTabOrPage)=="")
 		startTabOrPage="PAGE "+gGuide.pageIDtoName(gGuide.firstPage);
 	trace("Starting location "+startTabOrPage);

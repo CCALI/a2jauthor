@@ -1,4 +1,20 @@
 
+function js2xml(o)
+{ 
+	var t="";
+	if (typeof o==="object")
+	{
+		for (var p in o)
+			if (parseInt(p)>= 0)
+				t += js2xml(o[p]);
+			else
+				t += "<"+p+">" + js2xml(o[p]) + "</"+p+">";
+	}
+	else
+	if (typeof o !== 'function')
+		t = o;
+	return t;
+}
 	/*
 	layout:function(div,curstep,steps,question,learnmore)
 	{

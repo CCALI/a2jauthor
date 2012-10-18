@@ -313,12 +313,13 @@ table.CAJAReportDump tr:nth-child(3n+3) {
 background-color:#ddf;
 }
 .loader {
+	display: inline-block;
 	background-image: url(img/ajax-loader.gif);
 	background-repeat: no-repeat;
 	width:16px;
 	height:16px;
-	padding: 0;
-	margin: 0;
+	padding: 0px;
+	margin: 0px; 
 }
 .pageedit {
 	padding: 5px;

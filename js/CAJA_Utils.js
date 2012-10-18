@@ -2,7 +2,7 @@
 	02/20/2012
 */
  
-var AJAXLoader="<span class='loader'>   </span>'";
+var AJAXLoader="<span class='loader'>&nbsp;</span>'";
 
 
 function aie(obj,attr,val)

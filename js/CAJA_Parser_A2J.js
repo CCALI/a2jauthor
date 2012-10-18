@@ -1,4 +1,5 @@
-/* CALI Author CAJA - Parse A2J into CAJA format */
+/* CALI Author CAJA - Parse CAJA XML format into CAJA format */
+
 
 function parseXML_A2J_to_CAJA(TEMPLATE)
 {	// Parse A2J into CAJA
@@ -71,8 +72,8 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		pageNameUsed[page.name]=true;
 		
 		page.step=parseInt(QUESTION.attr("STEP"));
-		while (guide.pages[page.name])
-			page.name+="_DUPLICATE";
+		//while (guide.pages[page.name])
+		//	page.name+="_DUPLICATE";
 		page.sortName=(page.id==guide.firstPage) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
 		
 		guide.pages[page.name] = page;
@@ -175,16 +176,16 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		var scriptBefore=[];
 		var scriptAfter=[];
 		var scriptLast=[];
-		if (0)// Mmove button variable/branch into Scripting?
-		for (var b in page.buttons)
-		{
-			var button=page.buttons[b]; 
-			var resptest="IF ResponseNum="+ (parseInt(b)+1);//"IF Button("+(parseInt(b)+1)+")
-			if (button.name) // if button has a variable attached, we assign a value to it
-				scriptAfter.push(resptest+" THEN SET ["+button.name+"] to "+button.value+"");
-			if (makestr(button.next)!="")// if button has a destination, we'll go there after any AFTER scripts have run.
-				scriptLast.push(resptest+" THEN GOTO "+ guide.pageIDtoName(button.next));
-		}  
+		if (0)// Move button variable/branch into Scripting? 
+			for (var b in page.buttons)
+			{
+				var button=page.buttons[b]; 
+				var resptest="IF ResponseNum="+ (parseInt(b)+1);//"IF Button("+(parseInt(b)+1)+")
+				if (button.name) // if button has a variable attached, we assign a value to it
+					scriptAfter.push(resptest+" THEN SET ["+button.name+"] to "+button.value+"");
+				if (makestr(button.next)!="")// if button has a destination, we'll go there after any AFTER scripts have run.
+					scriptLast.push(resptest+" THEN GOTO "+ guide.pageIDtoName(button.next));
+			}  
 		for (var s in page.scripts)
 		{
 			var script=page.scripts[s];
@@ -194,9 +195,9 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			else
 				scriptAfter=scriptAfter.concat(st);
 		}
-		page.scripts = "OnBefore\n" + scriptBefore.join("\n") + "OnAfter\n"+ scriptAfter.join("\n")  + "\n" + scriptLast.join("\n");
-
-		
+		if (scriptBefore.length>0) scriptBefore.unshift("OnBefore");
+		if (scriptAfter.length>0) scriptAfter.unshift("OnAfter");
+		page.scripts =  (scriptBefore.concat(scriptAfter).concat(scriptLast)).join("\n");
 	});
 	
 	for (p in DefaultPrompts)

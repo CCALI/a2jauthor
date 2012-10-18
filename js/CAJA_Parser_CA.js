@@ -13,6 +13,7 @@ function parseXML_CA_to_CAJA(BOOK)
 	guide.viewer="CA";
 	guide.title = BOOK.find('TITLE').text();
 	guide.description = BOOK.find('INFO > DESCRIPTION').xml();
+	//guide.history = BOOK.find('INFO > HISTORY').xml();
 	guide.completionTime = BOOK.find('INFO > COMPLETIONTIME').xml();
 	guide.firstPage="Contents";
 
@@ -31,7 +32,7 @@ function parseXML_CA_to_CAJA(BOOK)
 		page.style=pageXML.attr("STYLE");
 		page.nextPage="auto";
 		page.nextPageDisabled = false;
-		page.sortName=pageXML.attr("SORTNAME");//sortingNatural(page.name);
+		page.sortName=sortingNatural(page.name);//pageXML.attr("SORTNAME");//sortingNatural(page.name);
 
 		page.text= makestr(pageXML.find("QUESTION").xml()) +  makestr(pageXML.find("TEXT").xml());
 		page.alignText="auto";

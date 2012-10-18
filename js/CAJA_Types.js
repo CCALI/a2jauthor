@@ -21,12 +21,19 @@ var editMode= 0 ; // editMode=0 if separate pages, =1 for single document
 // ### Global variables ### //
 var gGuide; // global reference to current guide TGuide (CBK or A2J)
 var gPage; // global reference to current edit/viewed TPage
+var gGuideID; // unique service side id for this guide
 
-var session = {
-	userid:0, 
-	nickname:"",
-	guideid:0
-};
+// User 
+var gUserID=0; 
+var gUserNickName="User";
+var amode=0;
+//var username=""
+//var orgName="Authoring Org";
+
+// Session
+var runid=0;
+var resumeScoreURL=null;
+ 
 
 // ### Classes ###
 function TText()
@@ -114,7 +121,6 @@ function TPage()
 	this.textMatches=null;//array of TextMatch
 	this.sortName="";
 	
-	
 	this.subq=null;//
 	this.timeSpent=0;//seconds spent on this page
 	this.startSeconds=null;
@@ -132,6 +138,7 @@ function TGuide()
 	this.completionTime="";
 	this.jurisdiction="";
 	this.firstPage="";
+	this.history="";
 	
 	this.pages={};// associative array of pages TPage() by page name. E.g., pages["Contents"] = TPage()
 	this.sortedPages=[];//array of pages sorted by name (natural order)

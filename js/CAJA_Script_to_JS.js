@@ -7,6 +7,10 @@
 
 
 // Classes
+function jquote(str)
+{
+	return "\""+str.replace( /"/gi,"\\\"")+"\"";
+}
 function ParseError(lineNum,errType,errText)
 {
 	this.line = lineNum
@@ -23,9 +27,15 @@ var _GCS = {  //global CAJA script
 showCAJAScript : 
 	//0 // none
 	//+1 // end of js line
-	2// before js
+	//2// before js
+	3//tracer
 ,
-
+/*
+_IF : function(caja,expr)
+{
+	
+	return expr;
+},
 _VS : function(varname,arrayindex,value)
 {
 	// returns nothing
@@ -39,35 +49,12 @@ _VG : function(varname,arrayindex)
 _ED : function(datestr) // expand a date
 {
 	
-
-/*
-	{	// Date format expected: m/dd/yyyy. 
-		ch='';start++;index++;
-		while (ch!='#' && ch!=EOL)
-			ch=expression.substr(index++,1);
-		token=expression.substr(start,index-start-1);		
-		//var d=token.split("/");
-		//d=Date.UTC(d[2],d[0],d[1])/1000/60/60/24;
-		var d=Date.parse(token)/1000/60/60/24;
-		//trace(d);
-		return {str:d,type:'num'}
-	}
-*/
 	return 0;
 },
 
 _CF : function(fncName)
 {
-	fncName=fncName.toLowerCase();
-	/*
-	if (this.userFunctions[cnfName]==null)
-	{
-		this.scriptError("Undefined function "+fncName);
-	}
-	else
-	{
-	} 
-	*/
+	fncName=fncName.toLowerCase(); 
 },
 
 _GO : function(pagename)
@@ -75,16 +62,18 @@ _GO : function(pagename)
 	//returns nothing
 },
 
-pageExists : function(pageName)
-{	// return true if page name exists
-	return true;
-},
 
 _deltaVars : function(pagename)
 {
 	//returns nothing
 },
+*/
 
+
+pageExists : function(pageName)
+{	// return true if page name exists
+	return true;
+},
 translateCAJAtoJS : function(CAJAScript)
 {	// Translate CAJA script statements of multiple lines with conditionals into JS script but do NOT evaluate
 	// Returns JavaScript source code lines in .js and errors in .errors which caller may evaluate
@@ -121,17 +110,17 @@ translateCAJAtoJS : function(CAJAScript)
 				jj = jj.split("#");// extract array index
 				if (jj.length==1)
 					// Set named variable to evaluated expression
-					js=('_VS("'+jj[0]+'",0,'+this.translateCAJAtoJSExpression(args[3], l, errors)+");");
+					js=('_VS(' + jquote(line)+',"'+jj[0]+'",0,'+this.translateCAJAtoJSExpression(args[3], l, errors)+");");
 				else
 					// Set named variable array element to evaluated expression
-					js=('_VS("'+jj[0]+'",'+ this.translateCAJAtoJSExpression(jj[1], l, errors)+","+this.translateCAJAtoJSExpression(args[3], l, errors)+");");
+					js=('_VS(' + jquote(line)+',"'+jj[0]+'",'+ this.translateCAJAtoJSExpression(jj[1], l, errors)+","+this.translateCAJAtoJSExpression(args[3], l, errors)+");");
 			}
 			else
-			if ((args = line.match(/goto\s+(.+)/i))!=null)
+			if ((args = line.match(/^goto\s+(.+)/i))!=null)
 			{	// Goto named page (not an expression). We 'return' to avoid further processing which is A2J's designed behavior.
 				var pageName=args[1];
 				if (!this.pageExists(pageName)) errors.push(new ParseError(l,"",lang.scriptErrorMissingPage.printf(pageName)));
-				js=("_GO("+pageName+");return;");
+				js=("_GO("+jquote(line)+","+pageName+");return;");
 				
 				//alert(js+"\n"+line+"\n"+CAJAScript);
 			}
@@ -143,47 +132,55 @@ translateCAJAtoJS : function(CAJAScript)
 				//script.trace("RESULT "+script.evalHTML(args[1]));
 			}
 			else
-			if ((args = line.match(/if\s+(.+)/i))!=null)
+			if ((args = line.match(/^if\s+(.+)/i))!=null)
 			{	// "if expressions" becomes "if (expressions) {"
-				js=("if ("+this.translateCAJAtoJSExpression(args[1], l, errors)+"){");
 				ifd++;
+				if (this.showCAJAScript==3) line="";//don't print elese?
+				js=("if (_IF("+ifd+","+jquote(args[1])+","+this.translateCAJAtoJSExpression(args[1], l, errors)+")){");
+				//				js=("if ("+this.translateCAJAtoJSExpression(args[1], l, errors)+"){");
 			}
 			else
-			if ((args = line.match(/end if/i))!=null)
+			if ((args = line.match(/^else if\s+(.+)/i))!=null)
+			{	// "else if expression" becomes "}else if (expression){"
+				//does NOT affect depth. ifd++;
+				if (this.showCAJAScript==3) line="";//don't print elese?
+				js=("} else if (_IF("+ifd+","+jquote(args[1])+","+this.translateCAJAtoJSExpression(args[1], l, errors)+")){");
+				//js=("} else if ("+this.translateCAJAtoJSExpression(args[1], l, errors)+"){");
+			}
+			else
+			if ((args = line.match(/^end if/i))!=null)
 			{	// "END IF" becomes "}"
+				if (this.showCAJAScript==3) line="";//don't print elese?
 				js=("}");
 				ifd--;
 			}
 			else
-			if ((args = line.match(/else if\s+(.+)/i))!=null)
-			{	// "else if expression" becomes "}else if (expression){"
-				js=("} else if ("+this.translateCAJAtoJSExpression(args[1], l, errors)+"){");
-				ifd++;
-			}
-			else
-			if ((args = line.match(/else/i))!=null)
-			{	// "else" becomes "}else{"
+			if ((args = line.match(/^else/i))!=null)
+			{	// "else" becomes "}else{" 
+				if (this.showCAJAScript==3) line="";//don't print elese?
 				js=("}else{");
 			}
 			else
 			if (line.match(/deltavars/i)!=null)
 			{	// debugging aid
-				js=("_deltaVars();");//.traceVars();
+				js=("_deltaVars("+jquote(line)+");");//.traceVars();
 			}
 			else
 			{	// Unknown statement
 				//js=("// Unhandled: "  + line);
+				js="_CAJA("+ jquote(line)+ ");";
 				errors.push(new ParseError(l,"",lang.scriptErrorUnhandled.printf(line)));
 			}
 			
 
-			if (this.showCAJAScript==0)
-				jsLines.push(js);//standard
+			if (this.showCAJAScript==0)jsLines.push(js);//standard
 			else
-			if (this.showCAJAScript==1)//include original source appended
-				jsLines.push(js + " //CAJA: "+line);
-			else // include original source prepended
-				jsLines.push("","//CAJA: "+line,js);
+			if (this.showCAJAScript==1) jsLines.push(js + " //CAJA: "+line); //include original source appended
+			else
+			if (this.showCAJAScript==2) jsLines.push("","//CAJA: "+line,js);// include original source prepended
+			else
+				jsLines.push("","",js); // line.replace( /"/x/gi,"!") +
+//				jsLines.push("",line==""?"":"_CAJA("+ jquote(line)+ ");",js); // line.replace( /"/x/gi,"!") +
 		}
 	}
 	if (ifd>0)errors.push(new ParseError(l,"",lang.scriptErrorEndMissing.printf()));

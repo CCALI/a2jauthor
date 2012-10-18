@@ -1,0 +1,60 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>CAJA Author XML</title>
+
+<script src="../jquery.1.8.2.min.js" type="text/javascript"></script>
+<script src="../jquery.ui.1.9.0.min.js" type="text/javascript"></script>
+<link  href="../jquery.ui.custom.css" rel="stylesheet" type="text/css" />
+<script src="../jquery.ui.custom.min.js" type="text/javascript" ></script>
+<script src="../CAJA_Types.js" type="text/javascript"></script>
+<script src="../CAJA_Utils.js" type="text/javascript"></script>
+<script src="../CAJA_Languages.js" type="text/javascript"></script>
+<script src="../CAJA_Parser.js" type="text/javascript"></script>
+<script src="../CAJA_Parser_CA.js" type="text/javascript"></script>
+<script src="../CAJA_Parser_A2J.js" type="text/javascript"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script> 
+traceScript=trace=function(msg)
+{
+	$('.ScriptTrace').append('<li>'+  Array.prototype.slice.call(arguments).join(", ")); 
+}
+$(document).ready(function()
+{  
+	trace("Ready");
+	loadFile("data/A2J_FieldTypesTest_Interview.xml"); 
+	$("ul.testunits li a").each(function(){
+		loadFile($(this).attr('href')); 
+	});
+});
+function loadFile(bookFile)
+{
+	trace("Loading XML "+bookFile);
+	$.ajax({
+			url: bookFile,
+			dataType: "text"  , // IE will only load XML file from local disk as text, not xml.
+			timeout: 45000,
+			error: function(data,textStatus,thrownError){
+			  alert('Error occurred loading from '+this.url+"\n"+textStatus);
+			 },
+			success: function(data){
+				parseFile(data);
+			}
+		});
+} 
+function parseFile(xml)
+{ 
+	cajaDataXML=$(jQuery.parseXML(xml));
+	guide=  parseXML_Auto_to_CAJA( cajaDataXML );
+	trace(guide.title);
+	trace(htmlEscape(exportXML_CAJA_from_CAJA(guide)));
+}
+
+</script>
+
+
+</head>
+<body >
+<div class="ScriptTrace"></div>
+</body>
+</html>

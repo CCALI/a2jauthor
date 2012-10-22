@@ -6,21 +6,46 @@
 function parseXML_CA_to_CAJA(BOOK)
 {	// Parse CALI Author into CAJA
 	trace("Converting from CALI Author");
-	var step, pageXML, page
-		,b,text,fb;
-	
-	var guide=new TGuide();
-	guide.viewer="CA";
-	guide.title = BOOK.find('TITLE').text();
-	guide.description = BOOK.find('INFO > DESCRIPTION').xml();
-	//guide.history = BOOK.find('INFO > HISTORY').xml();
-	guide.completionTime = BOOK.find('INFO > COMPLETIONTIME').xml();
-	guide.firstPage="Contents";
 
-	step = new TStep();
+	var guide=new TGuide();
+
+	guide.tool= 			"CA";
+	guide.toolversion=	makestr(BOOK.find('INFO > CAVERSIONREQUIRED').text());
+	guide.avatar=			"";
+	guide.completionTime=BOOK.find('INFO > COMPLETIONTIME').xml();
+	guide.copyrights=		BOOK.find('INFO > COPYRIGHTS').xml();
+	guide.createdate=		BOOK.find('INFO > CREATEDATE').xml();
+	guide.credits=			BOOK.find('INFO > CREDITS').xml();
+	guide.description= 	makestr(BOOK.find('DESCRIPTION').text());
+	guide.jurisdiction=	""; 
+	guide.language= 		"en"; 
+	guide.modifydate=		BOOK.find('INFO > MODIFYDATE').xml();
+	guide.notes=			makestr(BOOK.find('INFO > NOTES').xml());
+	guide.sendfeedback=	true;
+	guide.emailContact=	makestr(BOOK.find('EMAILCONTACT').text());
+	guide.subjectarea=	BOOK.find('INFO > SUBJECTAREA').xml();
+	guide.title= 			BOOK.find('TITLE').text();
+	guide.version=			makestr(BOOK.find('VERSION').text());
+	guide.viewer=			"CA";
+
+	guide.authors=[];
+	BOOK.find("BOOK > AUTHORS > AUTHOR").each(function() {
+		var AUTHOR = $(this);
+		var author = new TAuthor();
+		author.name = AUTHOR.find('NAME').text();
+		author.title = AUTHOR.find('TITLE').text();
+		author.school = AUTHOR.find('SCHOOL').text();
+		author.email = AUTHOR.find('EMAIL').text();
+		guide.authors.push(author);
+	});
+
+	guide.firstPage=  			"Contents";
+	guide.exitPage=  				"";
+	var step = new TStep();
 	step.number="1";
 	step.text=lang.eoOutline
 	guide.steps[0]=step;
+	
 	
 	BOOK.find("BOOK > PAGE").each(function() {
 		var pageXML = $(this);
@@ -87,10 +112,11 @@ function parseXML_CA_to_CAJA(BOOK)
 		
 		guide.pages[page.name] = page;
 		guide.mapids[page.id]=page; 
-	});
-//	 alert(guide.sortedPages[0]);
-//	 alert(guide.sortedPages[0].text);
+	}); 
 	 
+	guide.templates="";
+	guide.variables=[];
+	
 	/*
 	// Add stub pages for the About and Score screens.
 	var page = new TPage();

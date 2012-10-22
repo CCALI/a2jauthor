@@ -47,6 +47,7 @@ function TVariable()
 	this.name= "";
 	this.type ="";//E.g., Text, MC, TF
 	this.comment ="";
+	this.repeating=false;//if false, value is the value. if true, value is array of values.
 	this.value =null;
 	this.sortName="";
 	return this;
@@ -63,11 +64,16 @@ function TButton()
 function TField()
 {
 	this.type ="";
-	this.order ="";//default, ASC, DESC
 	this.label ="";
 	this.name ="";//reference TVar.name
 	this.optional =false;
 	this.invalidPrompt ="";
+	this.order ="";//default, ASC, DESC
+	this.min="";
+	this.max="";
+	this.calendar=false;
+	this.calculator=false;
+	this.maxChars="";
 	return this;
 }
 function TScript()
@@ -94,9 +100,12 @@ function TPage()
 	this.id ="";// Unique id
 	this.name ="";// Unique but author chosen name
 	this.text ="";// Text of question
+	this.notes="";
 	this.learn ="";
 	this.help = "";// Optional help text from Learn More button
-	this.notes="";
+	this.helpReader="";
+	this.helpImage="";
+	this.helpVideo="";
 	
 	this.scripts=[];
 	this.fields=[];
@@ -110,6 +119,9 @@ function TPage()
 	this.destPage=null;
 	this.columns=0;
 
+	this.mapx=0;
+	this.mapy=0;
+	
 //	this.alignText="";
 //	this.details=[];
 //	this.captions=[];
@@ -124,38 +136,57 @@ function TPage()
 	this.subq=null;//
 	this.timeSpent=0;//seconds spent on this page
 	this.startSeconds=null;
+	this.alignText="";
 	return this;
 }
+function TAuthor()
+{
+	this.name= "";
+	this.title = "";
+	this.organization ="";
+	this.email ="";
+	return this;
+}
+
 
 function TGuide()
 {	// This is the Guide representing a CALI lesson Book or an A2J Author Interview.
 
-	this.viewer=""; 				//Origin CAJA - A2J, CA, CAJA - which viewer to use? 
-	this.version="";				//Original Both - CA uses the mm/dd/yyyy format, A2J is author defined
-	this.title="";					//Origin Both - author title - in CA it's visible at top of page, not seen in A2J by user
-	this.createdate="";			//Original CA - first date of creation of the lesson
-	this.modifydate="";			//Original CA - last date of editing of the lesson
-	this.description="";			//Origin Both - author composed desciprtion or CALI's official lesson description
-	this.credits="";				//Origin CA - credits for image permissions, etc.
-	this.copyrights="";			//Origin CA - CALI copyright notices, etc.
-	this.author="";				//
-	this.sendfeedback="";		//Origin A2J - if true we show email link
-	this.sendfeedbackemail="";	//Origin A2J - if defined, this sends feedback
-	this.completionTime="";		//Origin CA - author's estimated completion time including section breakdown
-	this.subjectarea="";			//Original CA - CA places every lesson into a single main category like Torts.
-	this.jurisdiction="";		//Origin A2J - author's note on jurisdiction like 'Cook County'
-	this.firstPage="";			//Origin A2J - starting page specificed by author
-	this.history="";				//Origin Both - author revision notes or CBK history
+	this.tool="CAJA";
+	this.toolversion="2012-10-10";
 	this.avatar="";				//Origin A2J - default avatar to use (blank or tan)
+	this.completionTime="";		//Origin CA - author's estimated completion time including section breakdown
+	this.copyrights="";			//Origin CA - CALI copyright notices, etc.
+	this.createdate="";			//Original CA - first date of creation of the lesson
+	this.credits="";				//Origin CA - credits for image permissions, etc.
+	this.description="";			//Origin Both - author composed desciprtion or CALI's official lesson description
+	this.jurisdiction="";		//Origin A2J - author's note on jurisdiction like 'Cook County'
 	this.language="";				//Origin A2J - language code (default is "en")
+	this.modifydate="";			//Original CA - last date of editing of the lesson
+	this.notes="";					//Origin Both - author revision notes or CBK history
+	this.sendfeedback=false;	//Origin A2J - if true we show email link
+	this.emailContact="";		//Origin A2J - if defined, this sends feedback
+	this.subjectarea="";			//Original CA - CA places every lesson into a single main category like Torts.
+	this.title="";					//Origin Both - author title - in CA it's visible at top of page, not seen in A2J by user
+	this.version="";				//Original Both - CA uses the mm/dd/yyyy format, A2J is author defined
+	this.viewer=""; 				//Origin CAJA - A2J, CA, CAJA - which viewer to use? 
+	this.logoImage="";			//Origin A2J
+	this.endImage="";				//Origin A2J
+
+
+	this.authors=[];				//Origin Both - single line, CA is a heirarchy. Array of TAuthor
 	
+	this.firstPage="";			//Origin A2J - starting page specificed by author
+	this.exitPage="";				//Origin A2J - page that exist success 
+	this.steps=[];					//Origin A2J - array of TStep()
+
 	this.pages={};			//Origin both - associative array of pages TPage() by page name. E.g., pages["Contents"] = TPage()
 	this.constants={};	//Origin CAJA - associative array of contants, MAXINCOME:25000
-	this.vars={};			//Origin A2J - associative array of TVariables()
-	this.steps=[];			//Origin A2J - array of TStep()
-	this.popups=[];		//Origin A2J - array of embedded text popups (these are anonymous unlike CA where they are named)
+	//this.popups=[];		//Origin A2J - array of embedded text popups (these are anonymous unlike CA where they are named)
 	this.assets=[];		//Origin CAJA - array of images for preloading.
 
+	this.templates="";	//Origin A2J - notes about source template files
+	this.vars={};			//Origin A2J - associative array of TVariables()
 
 	this.filename="";
 	this.mapids=[];// array of mapids indices	- maps a page.id to page while .pages uses page.name.

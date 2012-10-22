@@ -4,6 +4,31 @@
  
 var AJAXLoader="<span class='loader'>&nbsp;</span>'";
 
+//http://stackoverflow.com/questions/1219860/javascript-jquery-html-encoding
+function htmlEscape(str) {
+    return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&apos;')//'&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+}
+function makestr(s)
+{	// lazy test to make sure s is a string or blank, not "null" or "undefined"
+	if (s===null || typeof s === "undefined" ) return "";
+	else return s;
+}
+function cr2P(txt){
+	return txt == ""?"":"<P>" + txt.split("\n").join("</P><P>")+"</P>";//replace("\n\n","\n")
+}
+function TextToBool(b,defaultb)
+{
+	if (b===null || typeof b === "undefined" )
+		return defaultb;
+	else
+		return (b==1) || (String(b).toLowerCase()=="true")
+}
+
 
 function aie(obj,attr,val)
 {	// set obj's attr to val, only if value exists 
@@ -20,11 +45,7 @@ String.prototype.printf = function() {
     return formatted;
 };
 
-function makestr(s)
-{	// lazy test to make sure s is a string or blank, not "null" or "undefined"
-	if (s===null || typeof s === "undefined" ) return "";
-	else return s;
-}
+
 
 function pickHilite(html,term)
 {	// find term in html text and hilite it
@@ -110,40 +131,48 @@ function propsJSON_(name,d,o)
 {	// 10/17/2012 Sam's simple JSON to XML. 
 	var body = "";
 	//for (var t=0;t<d;t++) body += " ";
-	body = '<div style="margin-left:1em">'//+d+'em">';
+	body = '<div class="json indent">'//+d+'em">';
 	if (typeof o === 'object')
 	{
-		body +=name+':{\n';
-		for (var p in o)
+		body += name + ":";
+		if (o==null)
+			body += "null\n";
+		else
 		{
-			if (parseInt(p)>= 0) // array assumed
-				body += propsJSON_(p,d+1,o[p]);
+			var elts="";
+			for (var p in o)
+			{
+				if (parseInt(p)>= 0) // array assumed
+					elts += propsJSON_(p,d+1,o[p]);
+				else
+					elts += propsJSON_(p,d+1,o[p]); //recurse
+			}
+			if (elts=="")
+				body += "{}\n";
 			else
-				body += propsJSON_(p,d+1,o[p]); //recurse
+				body += "{\n"+elts+"}\n";
 		}
-		body += "\n}\n";
 	}
 	else
 	if (typeof o === 'function')
 		body = '';
 	else
 	if (typeof o === 'string')
-		body += name + ':"' + htmlEscape(o.substr(0,100) )+ '"\n';
+	{
+		var TRIM = 1024;
+		var t=htmlEscape(o );
+		if (t.length<TRIM)
+			body += name + ':"' + t + '"\n';
+		else
+			body += name + ':"' + t.substr(0,TRIM) + '"...\n';
+
+	}
 	else
 		body += name+':'+o+'\n';
 	body += "</div>";
 	return body;
 }
 
-//http://stackoverflow.com/questions/1219860/javascript-jquery-html-encoding
-function htmlEscape(str) {
-    return String(str)
-            .replace(/&/g, '&amp;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#39;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
-}
 //http://stackoverflow.com/questions/5796718/html-entity-decode
 var decodeEntities = (function() {
   // this prevents any overhead from creating the object each time
@@ -165,6 +194,7 @@ var decodeEntities = (function() {
   return decodeHTMLEntities;
 })();
 
+var JS2XML_SKIP={skip:true};
 
 function js2xml(name,o)
 {	// 10/17/2012 Sam's simple JSON to XML. 
@@ -179,28 +209,44 @@ function js2xml(name,o)
 		else
 			return '<'+name.toUpperCase()+attr+'>'+body+'</'+name.toUpperCase()+'>';
 	}
+	function clean(body)
+	{
+		return htmlEscape(body);
+	}
 	if (typeof o === 'object')
 	{
 		var attr="";
 		var body="";
-		for (var p in o)
+		
+/*		var sorted=[];
+		for (var p in o) sorted.push(p);
+		sorted.sort();	
+		for (var pi in sorted)
+		{
+			p=sorted[pi];
+*/		for (var p in o)
 		{
 			if (parseInt(p)>= 0) // array assumed
 				body += js2xml('',o[p]);  //recurse
 			else
-			if (p.substr(0,1)=='_') // embed as attribute
-				attr += " " + p.substr(1)+"=\""+htmlEscape(o[p])+"\"";
+			if (p.substr(0,1)=='_') // embed as attribute if not blank string
+			{
+				if (o[p]!=="" && o[p]!=JS2XML_SKIP)
+					attr += " " + p.substr(1)+"=\""+clean(o[p])+"\"";
+			}
 			else
 			if (p.substr(0,4)=='XML_') // treat as raw XML
-				body += trim(p.substr(4),'',o[p]);//o[p];
+				body += trim(p.substr(4),'',o[p]);
+			//else
+			//if (typeof o[p]==="string")
+			//	body += trim(p,'',o[p]);//o[p];
 			else
 				body += js2xml(p,o[p]); //recurse
 		}
-		if (name=='')
-			return body;
-		else
-			return trim(name,attr,body); 
+		if (name!='')
+			body = trim(name,attr,body); 
 	}
 	else
-		return trim(name,'',htmlEscape(o));
+		body = trim(name,'',clean(o));
+	return body.replace(/&nbsp;/g,'&#160;');
 }

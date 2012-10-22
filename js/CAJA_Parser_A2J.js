@@ -4,9 +4,9 @@
 function parseXML_A2J_to_CAJA(TEMPLATE)
 {	// Parse A2J into CAJA
 	var VARIABLE, v, STEP,step,POPUP,popup,	QUESTION, page
-	,button, field, script, condition, comment, condT, condF, tf, statement, args, p
-	,LINEDEL="\n" //"<BR>xxxx";
-	,INDENT="&nbsp;"//hard space indent one
+	var button, field, script, condition, comment, condT, condF, tf, statement, args, p
+	var LINEDEL="\n" //"<BR>xxxx";
+	var INDENT=" ";//"&nbsp;"//hard space indent one
 	
 	
 	var DefaultPrompts={
@@ -17,47 +17,101 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	var DefaultPromptsUsed={};
 	
 	var guide=new TGuide();
-	guide.viewer="A2J";
-	guide.title = TEMPLATE.find('TITLE').text();
-	guide.description = makestr(TEMPLATE.find('DESCRIPTION').text());
-	guide.jurisdiction =  makestr(TEMPLATE.find('JURISDICTION').text());
-	guide.firstPage =  makestr(TEMPLATE.find('FIRSTQUESTION').text());
 	
+	
+	guide.tool = "A2J";
+	guide.toolversion =  makestr(TEMPLATE.find('A2JVERSION').text());
+	guide.avatar=makestr(TEMPLATE.find('AVATAR').text());
+	guide.completiontime="";
+	guide.copyrights="";
+	guide.createdate="";
+	guide.credits="";
+	guide.description = cr2P(makestr(TEMPLATE.find('DESCRIPTION').xml()));
+	guide.jurisdiction = makestr(TEMPLATE.find('JURISDICTION').text());
+	guide.language=makestr(TEMPLATE.find('LANGUAGE').text());
+	guide.modifydate="";
+	guide.notes= cr2P(makestr(TEMPLATE.find('HISTORY').xml()));
+	guide.sendfeedback= TextToBool(TEMPLATE.find('SENDFEEDBACK').text(),false);
+	guide.emailContact=makestr(TEMPLATE.find('SENDFEEDBACKEMAIL').text());
+	guide.subjectarea =  guide.jurisdiction;
+	guide.title = TEMPLATE.find('TITLE').text();
+	guide.version=makestr(TEMPLATE.find('VERSION').text());
+	guide.viewer="A2J";
+	guide.endImage = TEMPLATE.find('ENDGRAPHIC').text();
+	guide.logoImage = TEMPLATE.find('LOGOGRAPHIC').text();
+	 
+	console.log(guide.title);
+	
+	var author = new TAuthor();
+	author.name = makestr(TEMPLATE.find('AUTHOR').text());
+	guide.authors=[author];
+	
+	guide.firstPage =  makestr(TEMPLATE.find('FIRSTQUESTION').text());
+	guide.exitPage =  makestr(TEMPLATE.find('EXITQUESTION').text());
+	TEMPLATE.find("STEP").each(function() {
+		STEP = $(this);
+		step = new TStep();
+		step.number=STEP.attr("NUMBER");
+		step.text=STEP.find("TEXT").xml(); 
+		guide.steps.push(step);
+	 });
+	
+	guide.templates=makestr(TEMPLATE.find('TEMPLATES').text());
 	// Parse pages into book.pages[] records. 
 	TEMPLATE.find("VARIABLE").each(function() {
 		VARIABLE = $(this);
 		v = new TVariable();
 		v.name=VARIABLE.attr("NAME");
 		v.type=VARIABLE.attr("TYPE");
+		v.repeating=TextToBool(VARIABLE.attr("REPEATING"),false);
+		v.comment=makestr(VARIABLE.find("COMMENT").xml()); 
 		guide.vars[v.name]=v;
 		//Obsolete, discard: VARIABLE.attr("SCOPE");
 	 });
-	TEMPLATE.find("STEP").each(function() {
-		STEP = $(this);
-		step = new TStep();
-		step.number=STEP.attr("NUMBER");
-		step.text=STEP.find("TEXT").xml();
-		//if (guide.steps==null) guide.steps=[];
-		guide.steps.push(step);
-	 });
-	TEMPLATE.find("POPUP").each(function() {//TODO discard unused popups
-		POPUP = $(this);
-		popup = new TPopup();
+	
+	var popups=[];
+	TEMPLATE.find("POPUP").each(function() {
+		var POPUP = $(this);
+		var popup = new TPopup();
 		popup.id=POPUP.attr("ID");
 		popup.name=POPUP.attr("NAME");
 		popup.text=POPUP.find("TEXT").xml();
-		//if (guide.popups==null) guide.popups=[];
-		guide.popups[popup.id]=popup;
+		popups[popup.id]=popup;
 	});
-
-	var pageNameUsed={};
+	
+	function replacePopups(pageName,html)
+	{	// A2J didn't discard old popups. Find any popups, create pages for them.
+		return html.replace(/\"POPUP:\/\/(\w+)\"/ig,function(match,p1,offset,string){
+			var popid=match.match(/\"POPUP:\/\/(\w+)\"/i)[1];
+			var popup = popups[popid];
+			popup.page=guide.addUniquePage(pageName+" popup");
+			popup.page.type="Popup";
+			popup.page.text = replacePopups(pageName,popup.text); 
+			return '"POPUP://' + htmlEscape(popup.page.name)+ '"';
+		 });
+	/*
+		var args;
+		if ((args = html.match(/\"POPUP:\/\/(\w+)\"/ig))!=null)
+			for (var a=0;a<args.length;a++)
+			{
+				var popid=args[a].match(/\"POPUP:\/\/(\w+)\"/i)[1];
+				var popup = popups[popid];
+				popup.page=guide.addUniquePage(pageName+" popup");
+				popup.used++;
+			}*/
+	}
+	
+	
+	//var pageNameUsed={};
 	
 	TEMPLATE.find("QUESTION").each(function() {
 		// allocate pages first so we can link scripts in second pass
-		QUESTION = $(this);
-		page = new TPage();
-		page.id=QUESTION.attr("ID");// A2J has unique ID
+		var QUESTION = $(this); 
+		var page =guide.addUniquePage(QUESTION.attr("NAME"), QUESTION.attr("ID"));
 		
+		//var page = new TPage();
+		//page.id=QUESTION.attr("ID");// A2J has unique ID
+		/*
 		page.name=QUESTION.attr("NAME");// A2J *can* have same page names so  force duplicates to have unique names.
 		if (pageNameUsed[page.name]){
 			var cnt=0;
@@ -69,11 +123,11 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			page.name = newpage
 		}
 		pageNameUsed[page.name]=true;
+		*/
 		
-		page.step=parseInt(QUESTION.attr("STEP"));
 		
-		guide.pages[page.name] = page;
-		guide.mapids[page.id]=page; 
+		//guide.pages[page.name] = page;
+		//guide.mapids[page.id]=page; 
 	});
 	
 	TEMPLATE.find("QUESTION").each(function() {
@@ -82,53 +136,63 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		
 		page.type="A2J";
 		page.style="";
+		page.step=parseInt(QUESTION.attr("STEP"));
+		page.mapx=parseInt(QUESTION.attr("MAPX"));
+		page.mapy=parseInt(QUESTION.attr("MAPY"));
 		page.nextPage="";
 		page.nextPageDisabled = false;
-		//alert(QUESTION.find("TEXT").toString());
-		page.text=QUESTION.find("TEXT").xml();
+		page.text= replacePopups(page.name,makestr(QUESTION.find("TEXT").xml())) 
 		page.learn=makestr(QUESTION.find("LEARN").xml());
-		page.help=makestr(QUESTION.find("HELP").xml());
-		page.note=QUESTION.find("NOTE").xml();
+		page.help= replacePopups(page.name,makestr(QUESTION.find("HELP").xml())) 
+		page.helpReader=makestr(QUESTION.find("HELPREADER").xml());
+		page.helpImage=makestr(QUESTION.find("HELPGRAPHIC").text());
+		page.helpVideo=makestr(QUESTION.find("HELPVIDEO").text());
+		page.notes= cr2P(makestr(QUESTION.find("NOTE").xml()));
+		
 		page.xml = $(this).xml();
 		page.alignText="";
-
+ 
 
 		QUESTION.find('BUTTON').each(function(){
 			button=new TButton();
 			button.label =jQuery.trim($(this).find("LABEL").xml());
 			button.next = makestr($(this).attr("NEXT"));
 			button.name =jQuery.trim($(this).find("NAME").xml());
-			button.value = jQuery.trim($(this).find("VALUE").xml());
-			//if (page.buttons==null) page.buttons=[];
+			button.value = jQuery.trim($(this).find("VALUE").xml()); 
 			page.buttons.push(button);
 		});
 		QUESTION.find('FIELD').each(function(){
 			field=new TField();
 			field.type =$(this).attr("TYPE");
-			field.optional =$(this).attr("OPTIONAL")!="false";
-			field.order =$(this).attr("ORDER");			
-			field.label =jQuery.trim($(this).find("LABEL").xml());
+			field.optional = TextToBool($(this).attr("OPTIONAL"),false);
+			field.order = makestr($(this).attr("ORDER"));
+			field.min = makestr($(this).attr("MIN"));
+			field.max = makestr($(this).attr("MAX"));
+			field.calendar = TextToBool($(this).attr("CALENDAR"),false);
+			field.calculator=TextToBool($(this).attr("CALCULATOR"),false);
+			field.label =makestr(jQuery.trim($(this).find("LABEL").xml()));
 			field.name =jQuery.trim($(this).find("NAME").xml());
-			field.invalidPrompt =jQuery.trim($(this).find("INVALIDPROMPT").xml());
+			field.value = makestr($(this).attr("VALUE"));
+			field.invalidPrompt =makestr(jQuery.trim($(this).find("INVALIDPROMPT").xml()));
+			/*
 			if (typeof DefaultPrompts[field.invalidPrompt]!="undefined")
 			{
 				DefaultPromptsUsed[field.invalidPrompt]=1;
 				field.invalidPrompt = "%%"+DefaultPrompts[field.invalidPrompt]+"%%";
 			}
-			//if (page.fields==null) page.fields=[];
+			*/
 			page.fields.push(field);
 		});
 		QUESTION.find('MACRO').each(function(){
-			script=new TScript();
+			var script=new TScript();
 			script.event =jQuery.trim($(this).find("EVENT").xml());
-			condition =jQuery.trim($(this).find("CONDITION").xml());
-			comment =jQuery.trim($(this).find("COMMENT").xml());
-			condT=[];
-			condF=[];
+			var condition =jQuery.trim($(this).find("CONDITION").xml());
+			var comment =jQuery.trim($(this).find("COMMENT").xml());
+			var condT=[];
+			var condF=[];
 			$(this).find('STATEMENT').each(function(){
-				tf =jQuery.trim($(this).find("CONDITION").xml());
-				statement =jQuery.trim($(this).find("ACTION").xml());
-				
+				var tf =jQuery.trim($(this).find("CONDITION").xml());
+				var statement =jQuery.trim($(this).find("ACTION").xml());
 //				if ((args = statement.match(/set\s+(\w[\w\s]*)\s?(=|TO)\s?(.+)/i))!=null)
 					//statement = 'SET ['+args[1]+'] TO '+args[3];
 				if ((args = statement.match(/set\s+(.+)/i))!=null)
@@ -192,7 +256,8 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		}
 		if (scriptBefore.length>0) scriptBefore.unshift("OnBefore");
 		if (scriptAfter.length>0) scriptAfter.unshift("OnAfter");
-		page.scripts =  (scriptBefore.concat(scriptAfter).concat(scriptLast)).join("\n");
+		page.scripts =  (scriptBefore.concat(scriptAfter).concat(scriptLast)).join("<BR/>");
+		//if (page.scripts!="") console.log("SCRIPTS: "+page.scripts);
 	});
 	
 	for (p in DefaultPrompts)
@@ -200,6 +265,17 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		if (DefaultPromptsUsed[p]==1)
 			guide.constants[DefaultPrompts[p]] =p;
 	}
+	/*
+	var keep=[];
+	for (var p in popups)
+	{
+		var popup = guide.popups[p];
+		trace("Popup "+popup.id+"/"+popup.name+" used "+popup.used+" "+popup.text);
+		if (popup.used>0)
+			keep.push(popup);
+	}
+	guide.popups = keep;
+	*/
 	
 	/* 
 	if (book.lastPage=="") book.lastPage=pageLessonCompleted;

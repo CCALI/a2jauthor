@@ -490,7 +490,7 @@ TGuide.prototype.noviceTab=function(div,tab)
 			
 			t.append(form.h1('Revision History'));
 			t.append(form.text('Current Version:',GROUP,"version",this.version));
-			t.append(form.textarea('Revision History',GROUP,"history",this.history,7));
+			t.append(form.textarea('Revision Notes',GROUP,"notes",this.notes,7));
 
 			break;
 			

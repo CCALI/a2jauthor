@@ -22,7 +22,12 @@ traceScript=trace=function(msg)
 $(document).ready(function()
 {  
 	trace("Ready");
-	loadFile("data/A2J_FieldTypesTest_Interview.xml"); 
+	loadFile(""+
+			"data/Field Characters Test.a2j"
+			//"data/A2J_FieldTypesTest_Interview.xml"
+			//"data/CBK_CAPAGETYPES_jqBookData.xml"
+		); 
+
 	$("ul.testunits li a").each(function(){
 		loadFile($(this).attr('href')); 
 	});
@@ -45,25 +50,73 @@ function loadFile(bookFile)
 function parseFile(xml_str)
 { 	
 	// Read old file format's XML.
+	trace('Guide imported from arbitrary XML');
 	var dataXML=$(jQuery.parseXML(xml_str));
 	guide=  parseXML_Auto_to_CAJA( dataXML );
-	trace(guide.title);
-	//trace( propsJSON('Guide', guide)  ); 
+	trace(guide.title); 
+	guide.pages = guide.sortedPages;
+	guide.sortedPages="HIDDEN";
+	var json1=propsJSON('Guide', guide);
+	//trace('<blockquote>'+json1+'</blockquote>');
 	
 	// Convert to CAJA XML
-	var cajaDataXML_str = exportXML_CAJA_from_CAJA(guide);
-	trace('<div>'+htmlEscape(cajaDataXML_str)+'</div>');	//trace('<pre>'+htmlEscape(cajaDataXML_str)+'</pre>');
+	trace('Guide exported to CAJA XML');
+	var cajaDataXML_str = exportXML_CAJA_from_CAJA(guide);		cajaDataXML_str = cajaDataXML_str.replace("<P></P>","<P/>");//
 	
 	// Readin CAJA XML
 	var cajaDataXML=$(jQuery.parseXML(cajaDataXML_str));
 	guide2=  parseXML_Auto_to_CAJA(cajaDataXML);
+	trace('Guide imported from CAJA XML');
+	trace(guide2.title);
+	//trace(htmlEscape(guide2.description));
+	
+	var cajaDataXML2_str = exportXML_CAJA_from_CAJA(guide2);		cajaDataXML2_str = cajaDataXML2_str.replace("<P></P>","<P/>");//
+
+	trace('Comparing XML structure');
+	var i;
+	for (i=0;i<cajaDataXML_str.length;i++)
+		if (cajaDataXML_str.substr(i,1)!=cajaDataXML2_str.substr(i,1))
+			break;
+	if (cajaDataXML2_str==cajaDataXML_str)
+		trace("XML's match");
+	else
+	{
+		trace("<h1>XML MISMATCH at "+i+"</h1>");
+		i=Math.max(i-50,0);
+		//trace(htmlEscape(cajaDataXML_str.substr(Math.max(0,i-100),200)));
+		trace("1="+  htmlEscape(cajaDataXML_str.substr(i,200)));
+		trace("2="+  htmlEscape(cajaDataXML2_str.substr(i,200)));
+	} 
+	
+	guide2.pages = guide2.sortedPages;
 	guide2.sortedPages="HIDDEN";
-	trace('<pre>'+propsJSON('Guide', guide2)+'</pre>'); 
+	var json2=propsJSON('Guide', guide2);
+	//trace('Guide imported from CAJA XML is: <blockquote>'+json2+'</blockquote>');
+	trace('<hr><blockquote>'+htmlEscape(cajaDataXML2_str)+'</blockquote><hr>');	//trace('<pre>'+htmlEscape(cajaDataXML_str)+'</pre>');
+	
+	/*
+	trace('Comparing JSON structure: ' + (json1 == json2));
+	for (i=0;i<json1.length;i++)
+		if (json1.substr(i,1)!=json2.substr(i,1))
+			break;
+	i=Math.max(i-500,0);
+	trace("<h1>XML MISMATCH at "+i+"</h1>");
+	trace("<table ><tr valign=top><td width=50%>"+json1.substr(i,510)+"</td><td width=50%>"+json2.substr(i,510)+"</td></tr></table>");
+	*/
+	
 }
 
 </script>
 
+<style type="text/css">
+<!--
+.json.indent {
+	margin-left:1em;
+	text-indent: -2em;
+}
 
+-->
+</style>
 </head>
 <body >
 <div class="ScriptTrace"></div>

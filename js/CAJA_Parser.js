@@ -2,69 +2,172 @@
 // Code shared by A2J Author, A2J Viewer, CALI Author and CALI 5 Viewer
 
 
+
 function exportXML_CAJA_from_CAJA(guide)
 {	// Convert Guide structure into XML
-	var JSON={GUIDE:{INFO:{},PAGES:[] ,STEPS:[],VARIABLES:[] }};
-	var chars=" CHARS[<'&\">]";
+	var JSON={GUIDE:{INFO:{AUTHORS:[]},PAGES:[] ,STEPS:[],VARIABLES:[] }};
 	
-	JSON.GUIDE.INFO.viewer=guide.viewer;
-	JSON.GUIDE.INFO.version=guide.version;
-	JSON.GUIDE.INFO.title=guide.title;
-	JSON.GUIDE.INFO.description=guide.description;
-	JSON.GUIDE.INFO.credits=guide.credits;
-	JSON.GUIDE.INFO.completionTime=guide.completionTime;
+	JSON.GUIDE.INFO.tool=guide.tool;
+	JSON.GUIDE.INFO.toolversion=guide.toolversion;
+	JSON.GUIDE.INFO.avatar=guide.avatar;
+	JSON.GUIDE.INFO.XML_completionTime=guide.completionTime;
+	JSON.GUIDE.INFO.XML_copyrights=guide.copyrights;
+	JSON.GUIDE.INFO.createdate=guide.createdate;
+	JSON.GUIDE.INFO.XML_credits=guide.credits;
+	JSON.GUIDE.INFO.XML_DESCRIPTION=guide.description;
+	JSON.GUIDE.INFO.emailContact=guide.emailContact;
 	JSON.GUIDE.INFO.jurisdiction=guide.jurisdiction;
+	JSON.GUIDE.INFO.language=guide.language;
+	JSON.GUIDE.INFO.modifydate=guide.modifydate;
+	JSON.GUIDE.INFO.XML_notes=guide.notes;
+	JSON.GUIDE.INFO.sendfeedback=guide.sendfeedback;
+	JSON.GUIDE.INFO.subjectarea=guide.subjectarea;
+	JSON.GUIDE.INFO.title=guide.title;
+	JSON.GUIDE.INFO.version=guide.version;
+	JSON.GUIDE.INFO.viewer=guide.viewer;
+	JSON.GUIDE.INFO.endImage=guide.endImage;
+	JSON.GUIDE.INFO.logoImage=guide.logoImage; 
+	
+	for (var i in guide.authors)
+	{
+		var author=guide.authors[i];
+		JSON.GUIDE.INFO.AUTHORS.push({
+			AUTHOR:{
+				NAME:author.name,
+				TITLE:author.title,
+				ORGANIZATION:author.organization,
+				EMAIL:author.email}}); 
+	}
+	
 	JSON.GUIDE.INFO.firstPage=guide.firstPage;
-
+	JSON.GUIDE.INFO.exitPage=guide.exitPage;
 	for (var si in guide.steps)
 	{
 		var step=guide.steps[si];
-		JSON.GUIDE.STEPS.push({STEP:{_NUMBER:step.number,TEXT:step.text}}); 
+		JSON.GUIDE.STEPS.push({
+			STEP:{
+				_NUMBER:step.number,
+				XML_TEXT:step.text}}); 
 	}
 	for (var vi in guide.vars)
 	{
 		var v=guide.vars[vi];
-		JSON.GUIDE.VARIABLES.push({VARIABLE:{_NAME:v.name,_TYPE:v.type}}); 
+		var VARIABLE = {
+			  _NAME:v.name,
+			  _TYPE:v.type,
+			  _REPEATING: v.repeating==true ? v.repeating : JS2XML_SKIP,
+			  _COMMENT: v.comment
+			 };
+		JSON.GUIDE.VARIABLES.push({VARIABLE:VARIABLE}); 
 	}
-	if(1)
+
 	for (var pi in guide.pages)
 	{
 		var page = guide.pages[pi];
-		JSON.GUIDE.PAGES.push({PAGE:{
-			_ID:page.id,
-			_NAME:page.name,
-			_TYPE:page.type,
-			_STYLE:page.style,
-			_STEP:page.step,
-			XML_TEXT:page.text, //"<p>text of <b>my</b> page</p><p>" + htmlEscape(chars)+"</p>",
-			XML_HELP:page.help, //"<p>text of <b>my</b> page's help</p><p>" + htmlEscape(chars)+"</p>"
+		var PAGE = {
+			_ID:			page.id,
+			_NAME:		page.name,
+			_TYPE:		page.type,
+			_STYLE:		page.style,
+			_MAPX:		page.mapx,
+			_MAPY:		page.mapy,
+			_STEP:		page.step,
+			_NEXTPAGE:	page.nextPage,
+			_nextPageDisabled: page.nextPageDisabled==true ? true : JS2XML_SKIP,
+			_alignText:	page.alignText,
+			XML_TEXT:	page.text, 
+			XML_LEARN:	page.learn,
+			XML_HELP:	page.help,
+			XML_HELPREADER:	page.helpReader, 
+			HELPIMAGE:	page.helpImage, 
+			HELPVIDEO:	page.helpVideo, 
+			BUTTONS: 	[],
+			FIELDS:		[],
+			XML_SCRIPTS:		page.scripts,
+			XML_NOTES:	page.notes
+		}
+		
+		for (var bi in page.buttons){
+			var b=page.buttons[bi];
+			PAGE.BUTTONS.push({BUTTON:{
+				XML_LABEL:	b.label,
+				_NEXT:	b.next,
+				NAME:		b.name,
+				VALUE:	b.value}});
+		}
+		for (var fi in page.fields){
+			var f=page.fields[fi];
+			var FIELD = {
+				_TYPE:			f.type, 
+				_ORDER:			f.order, 
+				_OPTIONAL:		f.optional==true ? true : JS2XML_SKIP,
+				_MIN:				f.min, 
+				_MAX:				f.max, 
+				_CALENDAR:		f.calendar==true ? true : JS2XML_SKIP, 
+				_CALCULATOR:	f.calculator==true ? true : JS2XML_SKIP, 
+				_MAXCHARS:		f.maxChars,
+				XML_LABEL:			f.label,
+				NAME:				f.name, 
+				VALUE:			f.value, 
+				XML_INVALIDPROMPT:	f.invalidPrompt,
+			}
+			PAGE.FIELDS.push({FIELD:FIELD});
+		}
+		
+		JSON.GUIDE.PAGES.push({PAGE:PAGE});
+	} 
 			
-			_alignText: page.alignText,
-			SCRIPTS: page.scripts 
-			}});
-	}
-/*		page.nextPage="auto";
-		page.nextPageDisabled = false;
-		page.step=parseInt(PAGE.attr("STEP"));
-		page.text=PAGE.find("TEXT").xml();
-		page.learn=makestr(PAGE.find("LEARN").xml());
-		page.help=makestr(PAGE.find("HELP").xml());
-		page.note=PAGE.find("NOTE").xml();
-		page.alignText="auto";
-		page.sortName=(page.id==guide.firstPage) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
-		page.scripts = PAGE.find("SCRIPTS").xml();
-	*/				
-			
-	return js2xml('GUIDE',JSON.GUIDE);
+//	trace('<pre>'+propsJSON('Guide', JSON.GUIDE)+'</pre>'); 
+	return '<?xml version="1.0" encoding="UTF-8" ?>' + js2xml('GUIDE',JSON.GUIDE);
 }
 function parseXML_CAJA_to_CAJA(GUIDE)
 {	// Parse parseCAJA
 	var guide=new TGuide();
-	guide.title = GUIDE.find('TITLE').text();
-	guide.description = makestr(GUIDE.find('DESCRIPTION').text());
+	
+
+	guide.tool = 			makestr(GUIDE.find('TOOL').text());;
+	guide.toolversion =  makestr(GUIDE.find('TOOLVERSION').text());
+	guide.avatar=			makestr(GUIDE.find('AVATAR').text());
+	guide.completiontime=makestr(GUIDE.find('COMPLETIONTIME').xml());;
+	guide.copyrights=		makestr(GUIDE.find('COPYRIGHTS').xml());;
+	guide.createdate=		makestr(GUIDE.find('CREATEDATE').text());;
+	guide.credits=			makestr(GUIDE.find('CREDITS').xml());;
+	guide.description = 	makestr(GUIDE.find('DESCRIPTION').xml());
+	guide.jurisdiction =	makestr(GUIDE.find('JURISDICTION').text());
+	guide.language=		makestr(GUIDE.find('LANGUAGE').text());
+	guide.modifydate=		makestr(GUIDE.find('MODIFYDATE').text());;
+	guide.notes=			makestr(GUIDE.find('NOTES').xml());
+	guide.sendfeedback=	TextToBool(GUIDE.find('SENDFEEDBACK').text(),false);
+	guide.emailContact=	makestr(GUIDE.find('EMAILCONTACT').text());
+	guide.subjectarea =  makestr(GUIDE.find('SUBJECTAREA').text());
+	guide.title = 			GUIDE.find('TITLE').text();
+	guide.version=			makestr(GUIDE.find('VERSION').text());
+	guide.viewer = 		makestr(GUIDE.find('VIEWER').text());
+	guide.logoImage = 	makestr(GUIDE.find('LOGOIMAGE').text());
+	guide.endImage = 		makestr(GUIDE.find('ENDIMAGE').text());
+
+	
+	guide.authors=[];
+	GUIDE.find("AUTHORS > AUTHOR").each(function() {
+		var AUTHOR = $(this);
+		var author = new TAuthor();
+		author.name = AUTHOR.find('NAME').text();
+		author.title = AUTHOR.find('TITLE').text();
+		author.organization = AUTHOR.find('ORGANIZATION').text();
+		author.email = AUTHOR.find('EMAIL').text();
+		guide.authors.push(author);
+	});
+	
+	
 	guide.firstPage =  makestr(GUIDE.find('FIRSTPAGE').text());
-	guide.jurisdiction =  makestr(GUIDE.find('JURISDICTION').text());
-	guide.viewer =  makestr(GUIDE.find('VIEWER').text());
+	guide.exitPage =  makestr(GUIDE.find('EXITPAGE').text());
+	GUIDE.find("STEP").each(function() {
+		var STEP = $(this);
+		var step = new TStep();
+		step.number=STEP.attr("NUMBER");
+		step.text=STEP.find("TEXT").xml();
+		guide.steps.push(step);
+	 });
 	
 	// Parse pages into book.pages[] records. 
 	GUIDE.find("VARIABLES > VARIABLE").each(function() {
@@ -74,13 +177,6 @@ function parseXML_CAJA_to_CAJA(GUIDE)
 		v.sortName=	sortingNatural(v.name);
 		v.type=VARIABLE.attr("TYPE");
 		guide.vars[v.name]=v;
-	 });
-	GUIDE.find("STEP").each(function() {
-		var STEP = $(this);
-		var step = new TStep();
-		step.number=STEP.attr("NUMBER");
-		step.text=STEP.find("TEXT").xml();
-		guide.steps.push(step);
 	 });
 	GUIDE.find("POPUP").each(function() {//TODO discard unused popups
 		var POPUP = $(this);
@@ -99,27 +195,33 @@ function parseXML_CAJA_to_CAJA(GUIDE)
 	});	
 	GUIDE.find("PAGES > PAGE").each(function() {
 		var PAGE = $(this);
-		var page = new TPage();
-		page.xml = $(this).xml();
+		//var page = new TPage();
+		var page = guide.addUniquePage(PAGE.attr("NAME"),PAGE.attr("ID"));
 		
-		page.id=PAGE.attr("ID");
-		page.name=PAGE.attr("NAME");
+		//page.id=PAGE.attr("ID");
+		//page.name=PAGE.attr("NAME");
 		page.type=PAGE.attr("TYPE");
-		page.style=PAGE.attr("STYLE");
-		page.nextPage="auto";
+		page.style=makestr(PAGE.attr("STYLE"));
+		page.mapx=parseInt(PAGE.attr("MAPX"));
+		page.mapy=parseInt(PAGE.attr("MAPY"));
+		page.nextPage="";
 		page.nextPageDisabled = false;
 		page.step=parseInt(PAGE.attr("STEP"));
 		page.text=PAGE.find("TEXT").xml();
 		page.learn=makestr(PAGE.find("LEARN").xml());
 		page.help=makestr(PAGE.find("HELP").xml());
-		page.note=PAGE.find("NOTE").xml();
+		page.helpReader=makestr(PAGE.find("HELPREADER").xml());
+		page.helpImage=makestr(PAGE.find("HELPIMAGE").text());
+		page.helpVideo=makestr(PAGE.find("HELPVIDEO").text());
+		page.notes=makestr(PAGE.find("NOTES").xml());
 		page.alignText="";
-		page.scripts = PAGE.find("SCRIPTS").xml();
+		page.scripts = makestr(PAGE.find("SCRIPTS").xml());
 		
 		
-		page.sortName=(page.id==guide.firstPage) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
-		guide.pages[page.name] = page;
-		guide.mapids[page.id]=page;
+		page.xml = $(this).xml();
+		//page.sortName=(page.id==guide.firstPage) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
+		//guide.pages[page.name] = page;
+		//guide.mapids[page.id]=page;
 		
 		PAGE.find('BUTTON').each(function(){
 			var button=new TButton();
@@ -132,11 +234,17 @@ function parseXML_CAJA_to_CAJA(GUIDE)
 		PAGE.find('FIELD').each(function(){
 			var field=new TField();
 			field.type =$(this).attr("TYPE");
-			field.optional =$(this).attr("OPTIONAL")!="false";
-			field.order =$(this).attr("ORDER");			
-			field.label =jQuery.trim($(this).find("LABEL").xml());
+			field.optional = TextToBool($(this).attr("OPTIONAL"),false);
+			field.order = makestr($(this).attr("ORDER"));
+			field.label =makestr(jQuery.trim($(this).find("LABEL").xml()));
 			field.name =jQuery.trim($(this).find("NAME").xml());
-			field.invalidPrompt =jQuery.trim($(this).find("INVALIDPROMPT").xml());
+			field.value = makestr($(this).attr("VALUE"));
+			field.min = makestr($(this).attr("MIN"));//could be a number or a date so don't convert to number
+			field.max = makestr($(this).attr("MAX"));
+			field.calendar = TextToBool($(this).attr("CALENDAR"),false);
+			field.calculator=TextToBool($(this).attr("CALCULATOR"),false);
+			
+			field.invalidPrompt =makestr(jQuery.trim($(this).find("INVALIDPROMPT").xml()));
 			page.fields.push(field);
 		});
 	});
@@ -144,6 +252,21 @@ function parseXML_CAJA_to_CAJA(GUIDE)
 	return guide;
 }
 
+
+TGuide.prototype.addUniquePage=function(preferredName,id)
+{	// create new page, attach to guide. ensure name is unique
+	var counter=2;
+	var name=preferredName;
+	while (this.pages[name]!=null)
+		name = preferredName +" " + (counter++);
+	var page=new TPage();
+	page.name = name;
+	page.id = id==null ? name : id;
+	this.pages[page.name] = page;
+	this.mapids[page.id] = page;
+	console.log("Created new page "+name +  ( name != preferredName ? " from "+preferredName:""));
+	return page;
+}
 
 
 TGuide.prototype.pageIDtoName=function(id)
@@ -191,11 +314,8 @@ function parseXML_Auto_to_CAJA(cajaData)
 	for (var p in guide.pages)
 	{
 		var page = guide.pages[p];
-		
-		
 		//	page.sortName=sortingNatural(page.name);//pageXML.attr("SORTNAME");//sortingNatural(page.name);
 		page.sortName=(page.id==guide.firstPage) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
-
 		guide.sortedPages.push(page);
 	}
 	guide.sortedPages=guide.sortedPages.sort(function (a,b){ if (a.sortName<b.sortName) return -1; else if (a.sortName==b.sortName) return 0; else return 1;});

@@ -10,7 +10,7 @@ lang.set=function(languageID)
 	var e;
 	var langset = this.regional[languageID];
 	for (e in langset){
-		lang[e]="*"+langset[e];
+		lang[e]=""+langset[e];
 		//trace(e+"="+lang[e]);
 	}
 }
@@ -49,7 +49,7 @@ lang.regional['en']= {
 	app:''
 };
 
-lang.set('');
+//lang.set('');
 
 
 $(document).ready(function () {

@@ -49,15 +49,22 @@ function loadFile(bookFile)
 } 
 function parseFile(xml_str)
 { 	
-	// Read old file format's XML.
-	trace('Guide imported from arbitrary XML');
-	var dataXML=$(jQuery.parseXML(xml_str));
-	guide=  parseXML_Auto_to_CAJA( dataXML );
+	var guide;
+	if (  1 ){
+		guide = BlankGuide();
+		xml_str = exportXML_CAJA_from_CAJA(guide);
+		trace(htmlEscape(xml_str));
+	}else{	
+		// Read old file format's XML.
+		trace('Guide imported from arbitrary XML');
+		var dataXML=$(jQuery.parseXML(xml_str));
+		guide=  parseXML_Auto_to_CAJA( dataXML );
+	}
 	trace(guide.title); 
 	guide.pages = guide.sortedPages;
 	guide.sortedPages="HIDDEN";
 	var json1=propsJSON('Guide', guide);
-	//trace('<blockquote>'+json1+'</blockquote>');
+	trace('<blockquote>'+json1+'</blockquote>');
 	
 	// Convert to CAJA XML
 	trace('Guide exported to CAJA XML');
@@ -94,7 +101,7 @@ function parseFile(xml_str)
 	//trace('Guide imported from CAJA XML is: <blockquote>'+json2+'</blockquote>');
 	trace('<hr><blockquote>'+htmlEscape(cajaDataXML2_str)+'</blockquote><hr>');	//trace('<pre>'+htmlEscape(cajaDataXML_str)+'</pre>');
 	
-	/*
+if (1){
 	trace('Comparing JSON structure: ' + (json1 == json2));
 	for (i=0;i<json1.length;i++)
 		if (json1.substr(i,1)!=json2.substr(i,1))
@@ -102,7 +109,7 @@ function parseFile(xml_str)
 	i=Math.max(i-500,0);
 	trace("<h1>XML MISMATCH at "+i+"</h1>");
 	trace("<table ><tr valign=top><td width=50%>"+json1.substr(i,510)+"</td><td width=50%>"+json2.substr(i,510)+"</td></tr></table>");
-	*/
+}
 	
 }
 

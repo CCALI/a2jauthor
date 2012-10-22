@@ -47,14 +47,17 @@ switch ($command)
 		$_SESSION['userid']=$userid;
 		$_SESSION['userdir']=$userdir;
 		break;
+
 	case 'guides':
 		// list of free, public or user owned guides
 		listGuides("select * from guides where isPublic=1 or isFree=1  or (editoruid=$userid) order by (editoruid=$userid) desc, title asc ");
 		break;
+
 	case 'guides/owned':
 		// list of user owned guides
 		listGuides("select * from guides where editoruid=$userid order by title asc");
 		break;
+
 	case 'guide':
 		// return XML of guide if it's public, free or user owned.
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
@@ -69,23 +72,30 @@ switch ($command)
 		else
 		{// not found
 		}
-	case 'create':
 		break;
+		
+		
 	case 'guidesave':
 		// update the guide (only if user matches guide's editor
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+		$title=($mysqli->real_escape_string($_REQUEST['title']));
 		$xml=$_REQUEST['guide'];
 		$res=$mysqli->query("select * from guides where gid=$gid and editoruid=$userid");
 		if ($row=$res->fetch_assoc()){
 			$result['info']="Will update!";
 			// rename existing auto name file with a date time stamp and save update to autoname
+			$oldtitle=GUIDE_DIR($row['title']);
 			$filename=GUIDE_DIR($row['filename']);
 			if (file_exists($filename)){
 				trace(filemtime($filename));
-//				$revname=explode('/',$filename);
-//				$revname[count($revname)-1]= $revname[count($revname)-1].'_version_'.date('Y-m-d-H-i-s',filemtime($filename)).'.xml';
-				$revname=$filename .'_version_'.date('Y-m-d-H-i-s',filemtime($filename)).'.xml';//implode('/',$revname);
-				rename($filename, $revname);//$location.'/'.$row['filename'].'_version_'.date('Y-m-d-H-i-s',filemtime($filename)).'.xml');
+				$revname=$filename .' Backup_Version-'.date('Y-m-d-H-i-s',filemtime($filename)).'.xml';//implode('/',$revname);
+				rename($filename, $revname);
+				
+				if ($title!="" && $title != $oldtitle)
+				{
+					$sql="update guides set title='".$mysqli->real_escape_string($title)."' where gid = $gid";
+					$res=$mysqli->query($sql);
+				}
 			}
 			trace('saving to '.$filename);
 			file_put_contents($filename,$xml);
@@ -93,7 +103,46 @@ switch ($command)
 		else
 			$err="No permission to update this guide";
 		break;
+
+	case 'guidesaveas':
+		// Saving XML to new record. if gid > 0 we're cloning. if = 0 we've got a new guide.
+		$oldgid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+		$title=($mysqli->real_escape_string($_REQUEST['title']));
+		$xml=$_REQUEST['guide'];
+		$res=$mysqli->query("select * from guides where gid=$oldgid");
+		if ($row=$res->fetch_assoc())
+		{ 
+			if ($title=="") $title = $row['title'];
+		} 
+		trace($oldgid);
+		// Create new entry in guide table including a reference to the cloned guide.
+		$sql="insert into guides (title,editoruid,clonedfromgid) values ('".$mysqli->real_escape_string($title)."', ".$userid.",".$oldgid.")";
+		if ($res=$mysqli->query($sql)){
+			// Save as content to new folder owned by editor
+			$newgid=$mysqli->insert_id;
+			$newdirbase = $userdir.'/'."Guide".$newgid;
+			trace($newdirbase);
+			$newdir = $newdirbase;
+			$newfile = "Guide.xml";
+			$newfile = $newdirbase.'/'.$newfile;
+			$newlocation=GUIDE_DIR($newfile);
+			trace($newlocation);
+			mkdir(GUIDE_DIR($newdir));
+			$filename=GUIDE_DIR($newfile);
+			trace('saving to '.$filename);
+			file_put_contents($filename,$xml);
+			$sql="update guides set filename='".$mysqli->real_escape_string($newfile)."' where gid = $newgid";
+			if ($res=$mysqli->query($sql)){
+			}
+			//chmod($newlocation,0775);
+//			copy($oldlocation,$newlocation) or trace("Error copy");
+			$result['url']=$newlocation;
+			$result['gid']=$newgid;
+		}
+		break;
+
 	case 'guideclone':
+		break;//OUTDATED 
 		// clone a guide 'gid' (Don't care if borrowing)
 		// return new guide's 'gid'
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));

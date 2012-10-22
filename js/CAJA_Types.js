@@ -148,12 +148,12 @@ function TAuthor()
 	return this;
 }
 
-
+	
 function TGuide()
 {	// This is the Guide representing a CALI lesson Book or an A2J Author Interview.
 
 	this.tool="CAJA";
-	this.toolversion="2012-10-10";
+	this.toolversion="2012-10-22";
 	this.avatar="";				//Origin A2J - default avatar to use (blank or tan)
 	this.completionTime="";		//Origin CA - author's estimated completion time including section breakdown
 	this.copyrights="";			//Origin CA - CALI copyright notices, etc.

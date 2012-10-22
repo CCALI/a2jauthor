@@ -88,6 +88,15 @@ $(document).ready(function()
 		else
 			status(data.info);
 	}
+	function guidesaveas(data)
+	{
+		if (data.error!=null)
+			status(data.error);
+		else{
+			gGuideID=data.gid;//new guide id
+			status("Guide saved to "+gGuideID);
+		}
+	}
 	function guideclone(data)
 	{
 		if (data.error!=null)
@@ -108,6 +117,7 @@ $(document).ready(function()
 	$('#guides_owned').click(function(){ws({cmd:'guides/owned'},listguides)});
 	$('#guides_all').click(function(){ws({cmd:'guides'},listguides)});
 	$('#guidesave').click(function()	{if (gGuideID==0) return; ws({cmd:'guidesave',gid:gGuideID, guide:$('#guidexml').val()},statusupdate)});
+	$('#guidesaveas').click(function(){if (gGuideID==0) return; ws({cmd:'guidesaveas',gid:gGuideID, guide:$('#guidexml').val()},guidesaveas)});
 	$('#guideclone').click(function(){if (gGuideID==0) return; ws({cmd:'guideclone',gid:gGuideID},guideclone)});
 	
 });
@@ -220,7 +230,7 @@ Pass:	<input type="password" id="userpass" name="password" value="demo"   />
 			</tr>
 			<tr>
 				<td align="right" valign="middle">Editing Guide</td>
-				<td valign="middle"><input type="button" id="guidesave" value="Save Guide" /> <input type="button" id="guideclone" value="Clone Guide" /></td>
+				<td valign="middle"><input type="button" id="guidesave" value="Save Guide" /> <input type="button" id="guidesaveas" value="Save As Guide" /></td>
 			</tr>
 		</table></td>
 		<td><div id="status">Status</div><div id="results">Results</div></td>

@@ -124,27 +124,27 @@ function parseXML_CAJA_to_CAJA(GUIDE)
 {	// Parse parseCAJA
 	var guide=new TGuide();
 	
-
-	guide.tool = 			makestr(GUIDE.find('TOOL').text());;
-	guide.toolversion =  makestr(GUIDE.find('TOOLVERSION').text());
-	guide.avatar=			makestr(GUIDE.find('AVATAR').text());
-	guide.completiontime=makestr(GUIDE.find('COMPLETIONTIME').xml());;
-	guide.copyrights=		makestr(GUIDE.find('COPYRIGHTS').xml());;
-	guide.createdate=		makestr(GUIDE.find('CREATEDATE').text());;
-	guide.credits=			makestr(GUIDE.find('CREDITS').xml());;
-	guide.description = 	makestr(GUIDE.find('DESCRIPTION').xml());
-	guide.jurisdiction =	makestr(GUIDE.find('JURISDICTION').text());
-	guide.language=		makestr(GUIDE.find('LANGUAGE').text());
-	guide.modifydate=		makestr(GUIDE.find('MODIFYDATE').text());;
-	guide.notes=			makestr(GUIDE.find('NOTES').xml());
-	guide.sendfeedback=	TextToBool(GUIDE.find('SENDFEEDBACK').text(),false);
-	guide.emailContact=	makestr(GUIDE.find('EMAILCONTACT').text());
-	guide.subjectarea =  makestr(GUIDE.find('SUBJECTAREA').text());
-	guide.title = 			GUIDE.find('TITLE').text();
-	guide.version=			makestr(GUIDE.find('VERSION').text());
-	guide.viewer = 		makestr(GUIDE.find('VIEWER').text());
-	guide.logoImage = 	makestr(GUIDE.find('LOGOIMAGE').text());
-	guide.endImage = 		makestr(GUIDE.find('ENDIMAGE').text());
+	var INFO = $('INFO',GUIDE);
+	guide.tool = 			makestr(INFO.children('TOOL').text());;
+	guide.toolversion =  makestr(INFO.children('TOOLVERSION').text());
+	guide.avatar=			makestr(INFO.children('AVATAR').text());
+	guide.completiontime=makestr(INFO.children('COMPLETIONTIME').xml());;
+	guide.copyrights=		makestr(INFO.children('COPYRIGHTS').xml());;
+	guide.createdate=		makestr(INFO.children('CREATEDATE').text());;
+	guide.credits=			makestr(INFO.children('CREDITS').xml());;
+	guide.description = 	makestr(INFO.children('DESCRIPTION').xml());
+	guide.jurisdiction =	makestr(INFO.children('JURISDICTION').text());
+	guide.language=		makestr(INFO.children('LANGUAGE').text());
+	guide.modifydate=		makestr(INFO.children('MODIFYDATE').text());;
+	guide.notes=			makestr(INFO.children('NOTES').xml());
+	guide.sendfeedback=	TextToBool(INFO.children('SENDFEEDBACK').text(),false);
+	guide.emailContact=	makestr(INFO.children('EMAILCONTACT').text());
+	guide.subjectarea =  makestr(INFO.children('SUBJECTAREA').text());
+	guide.title = 			INFO.children('TITLE').text();
+	guide.version=			makestr(INFO.children('VERSION').text());
+	guide.viewer = 		makestr(INFO.children('VIEWER').text());
+	guide.logoImage = 	makestr(INFO.children('LOGOIMAGE').text());
+	guide.endImage = 		makestr(INFO.children('ENDIMAGE').text());
 
 	
 	guide.authors=[];
@@ -223,7 +223,7 @@ function parseXML_CAJA_to_CAJA(GUIDE)
 		//guide.pages[page.name] = page;
 		//guide.mapids[page.id]=page;
 		
-		PAGE.find('BUTTON').each(function(){
+		PAGE.children('BUTTON').each(function(){
 			var button=new TButton();
 			button.label =jQuery.trim($(this).find("LABEL").xml());
 			button.next = makestr($(this).attr("NEXT"));
@@ -231,7 +231,7 @@ function parseXML_CAJA_to_CAJA(GUIDE)
 			button.value = jQuery.trim($(this).find("VALUE").xml()); 
 			page.buttons.push(button);
 		});
-		PAGE.find('FIELD').each(function(){
+		PAGE.children('FIELD').each(function(){
 			var field=new TField();
 			field.type =$(this).attr("TYPE");
 			field.optional = TextToBool($(this).attr("OPTIONAL"),false);
@@ -264,7 +264,7 @@ TGuide.prototype.addUniquePage=function(preferredName,id)
 	page.id = id==null ? name : id;
 	this.pages[page.name] = page;
 	this.mapids[page.id] = page;
-	console.log("Created new page "+name +  ( name != preferredName ? " from "+preferredName:""));
+	//console.log("Created new page "+name +  ( name != preferredName ? " from "+preferredName:""));
 	return page;
 }
 
@@ -378,12 +378,58 @@ function prompt(status)
 	$('#CAJAStatus').text( status );
 	trace(status);
 }
-function loadNewGuide(guideFile,startTabOrPage)
+function loadNewGuidePrep(guideFile,startTabOrPage)
 {
 	prompt('Loading '+guideFile);
 	prompt('Start location will be '+startTabOrPage);
 	$('.CAJAContent').html('Loading '+guideFile+AJAXLoader);
 	$('#CAJAIndex, #CAJAListAlpha').html('');
+}
+
+function BlankGuide(){
+	var guide = new TGuide();
+
+	guide.title="My guide";
+	guide.notes="Guide created on "+new Date();
+	guide.authors=[{name:'My name',organization:"My organization",email:"email@example.com",title:"My title"}];
+	guide.sendfeedback=false;
+	var page=guide.addUniquePage("Welcome","Welcome");
+	page.type="A2J";
+	page.text="Welcome to Access to Justice";
+	page.buttons=[{label:"Continue",next:"",name:"",value:""}];
+	guide.steps=[{number:0,text:"Welcome"}];
+	guide.vars=[]; 
+	guide.sortedPages=[page];
+	guide.firstPage=page.id;
+	return guide;
+}
+
+function guideSave()
+{
+	var guide = gGuide;
+	prompt('Saving '+guide.title + AJAXLoader);
+	ws( {cmd:'guidesave',gid:gGuideID, guide: exportXML_CAJA_from_CAJA(guide), title:guide.title}, function(response){
+		if (response.error!=null)
+			prompt(response.error);
+		else
+			prompt(response.info);
+	});
+}
+function createBlankGuide()
+{	// create blank guide internally, do Save As to get a server id for future saves.
+	var guide=BlankGuide();
+
+	ws({cmd:'guidesaveas',gid:0, guide: exportXML_CAJA_from_CAJA(guide), title: guide.title},function(data){
+		if (data.error!=null)
+			status(data.error);
+		else{
+			var newgid = data.gid;//new guide id
+			ws({cmd:'guides'},function (data){
+				listguides(data);
+				ws({cmd:'guide',gid:newgid},guideloaded);
+			 });
+		}
+	});
 }
 
 function loadGuide(guideFile,startTabOrPage)
@@ -399,7 +445,7 @@ function loadGuide(guideFile,startTabOrPage)
 		//if (editMode==0) startTabOrPage = "PAGE " + startTabOrPage;
 		guideFile=guideFile[0];
 	}
-	loadNewGuide(guideFile,startTabOrPage);
+	loadNewGuidePrep(guideFile,startTabOrPage);
 	window.setTimeout(function(){loadGuide2(guideFile,startTabOrPage)},500);
 }
 function guideloaded(data)
@@ -424,18 +470,24 @@ function guideloaded(data)
 
 function listguides(data)
 {
+	var blank = {id:'a2j', title:'New empty guide'};
 	gGuideID=0;
 	var mine = [];
 	var others = [];
+	var start = '<li class=guide gid="' + blank.id + '">' + blank.title + '</li>';
 	$.each(data.guides, function(key,g) { var str='<li class=guide gid="' + g.id + '">' + g.title + '</li>'; if (g.owned)mine.push(str);else others.push(str);});
-	$('#guidelist').html("My guides <ol>"+mine.join('')+"</ol>" + "Sample guides <ol>"+others.join('')+"</ol>");
+	
+	$('#guidelist').html("New guides <ol>"+start+"</ol>My guides <ol>"+mine.join('')+"</ol>" + "Sample guides <ol>"+others.join('')+"</ol>");
 	$('li.guide').click(function(){
 		var gid=$(this).attr('gid');
 //		$(this).html('Loading guide '+$(this).text()+AJAXLoader);
 		var guideFile=$(this).text();
 		$('li.guide[gid="'+gid+'"]').html('Loading guide '+guideFile+AJAXLoader).addClass('.warning');
-		loadNewGuide(guideFile,'');
-		ws({cmd:'guide',gid:gid},guideloaded);
+		loadNewGuidePrep(guideFile,'');
+		if(gid=='a2j')
+			createBlankGuide();
+		else
+			ws({cmd:'guide',gid:gid},guideloaded);
 		//loadGuide($('a[href="#sample"]').first().text(), "TAB ABOUT");
 	});
 }

@@ -39,8 +39,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	guide.viewer="A2J";
 	guide.endImage = TEMPLATE.find('ENDGRAPHIC').text();
 	guide.logoImage = TEMPLATE.find('LOGOGRAPHIC').text();
-	 
-	console.log(guide.title);
+
 	
 	var author = new TAuthor();
 	author.name = makestr(TEMPLATE.find('AUTHOR').text());
@@ -224,7 +223,6 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 				script.code="IF NOT ("+condition+") THEN"+LINEDEL+INDENT+condF.join(LINEDEL+INDENT)+""+LINEDEL+"END IF"+LINEDEL;//if not x then y
 			else
 				script.code="IF  "+condition+" THEN"+LINEDEL+INDENT+condT.join(LINEDEL+INDENT)+""+LINEDEL+"ELSE"+LINEDEL+INDENT+condF.join(LINEDEL+INDENT)+LINEDEL+"END IF"+LINEDEL;//if x then y else z
-			//console.log(script.code);
 			if (comment) script.code = "//"+comment + LINEDEL + script.code;
 			
 			

@@ -1,49 +1,98 @@
 /*	CALI Author 5 - CAJA Authoring   
  	03/30/2012 
  */
- 
-var DEBUGSTART=0;
+
+
+
+/* 
+function DEBUGSTART(){
+	var SAMPLES = [
+		"tests/data/Field Characters Test.a2j#0-1 Intro",
+		"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name",
+		"tests/data/CBK_CAPAGETYPES_jqBookData.xml", 
+		"tests/data/CBK_CAPAGETYPES_jqBookData.xml#MC Choices 3: 4 choices", 
+		"tests/data/A2J_NYSample_interview.xml",
+		"tests/data/A2J_MobileOnlineInterview_Interview.xml",
+		"tests/data/A2J_ULSOnlineIntake081611_Interview.xml#1b Submit Application for Review",
+		"tests/data/CBK_EVD03_jqBookData.xml"
+	];
+	$(SAMPLES).each(function(i,elt){$('#samples').append('<li><a href="#sample">'+elt+'</a></li>')})
+//	<li><a href="#sample">tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name</a></li>
+//	<li><a href="#sample">tests/data/A2J_NYSample_interview.xml</a></li>
+//	<li><a href="#sample">tests/data/A2J_MobileOnlineInterview_Interview.xml</a></li>
+//	<li><a href="#sample">tests/data/A2J_ULSOnlineIntake081611_Interview.xml#1b Submit Application for Review</a></li>
+//	<li><a href="#sample">tests/data/CBK_CAPAGETYPES_jqBookData.xml#Text Select 2</a></li>
+//	<li><a href="#sample">tests/data/CBK_CAPAGETYPES_jqBookData.xml#MC Choices 3: 4 choices</a></li>
+//	<li><a href="#sample">tests/data/CBK_EVD16_jqBookData.xml</a></li>
+//	<li><a href="#sample">tests/data/CBK_EVD03_jqBookData.xml</a></li>
+//	var t="";	for( var m=1000;m<2500;m++) t+= m +" " ;	$('#Mapper').append( t);
+	loadGuide($('a[href="#sample"]').first().text(), "TAB ABOUT");
+	$('#authortool').removeClass('hidestart').addClass('authortool');
+	$('.welcome').hide();
+	layoutPanes();
+} /* */
  
  
 var form={
+	id:0, 
 	 h1:function(h){
 		return $("<h1>"+h+"</h1>");}
 	,h2:function(h){
 		return $("<h2>"+h+"</h2>").click(function(){$(this).next().toggle()});}
 	,fieldset:function(legend){
-		return $("<fieldset><legend>"+legend+"</legend></fieldset>")//.click(function(){$(this).next().toggle()});
+		return $("<fieldset><legend >"+legend+"</legend></fieldset>")//.click(function(){$(this).next().toggle()});
 		}
 	,note:function(t){
 		return $("<div>"+t+"</div>")}
 		
-	,text:    function(label,group,id,value){
-		return $("<label>"+label+'</label><span class=editspan> <input class="editable" type="text" name="'+group+id+'" value="'+htmlEscape(value)+'"/> </span>');}
 		
-	,number:    function(label,group,id,value,minNum,maxNum){
+	,number:    function(label,value,minNum,maxNum,handler){
 		return "<label>"+label+'</label><input class="editable" type="text" name="'+group+id+'" value="'+htmlEscape(value)+'"> ';}
 		
-	,textarea:function(label,group,id,value,rows){
-		if (typeof rows=="undefined") rows=1;
-		return $('<label>'+label+'</label><span class=editspan><textarea  class="text editable taller"  name="'+group+id+'" rows='+rows+'>'+value+'</textarea></span>');}
-		
-	,codearea:function(label,group,id,value){
-		return $('<label>'+label+'</label><span class=editspan><div contenteditable=true class="text editable taller codearea" id="'+group+id+'"  name="'+id+'" >'+value+'</div></span>');}
-		
-		
-	,htmlarea:function(label,group,id,value,data){
-//		var field= $('<div>'+(label!="" ? ('<label>'+label+'</label>') : '') +'<div class=widetext><div contenteditable=true class="text editable tinyMCEtext" id="tinyMCE_'+group+id+'"  name="'+id+'" rows='+4+'>'+value+'</div></div></div>');
-		
-		var field= $('<div>'+(label!="" ? ('<label>'+label+'</label>') : '') +'<span class=editspan><div contenteditable=true class="text editable taller tinyMCEtext" id="tinyMCE_'+group+id+'"  name="'+id+'" rows='+4+'>'+value+'</div></span></div>');
-		$('.editable',field).blur(function(){var val=$(this).html();  $(this).data('data').change(val);}).data('data',data) ;
-		return field;
-		}
-//	,htmlarea:function(label,group,id,value,rows){if (typeof rows=="undefined") rows=1;return '<label>'+label+'</label><textarea class="tinyMCEtext" style="width:100%" id="tinyMCE_'+group+id+'" name="'+id+'" rows='+rows+'>'+value+'</textarea><BR/>';}
+	,text: function(label,value,handler){
+		var e=$("<label>"+label+'</label><span class=editspan> <input class="editable" type="text""/> </span>');
+		$('input',e).blur(function(){ handler.change($(this).val() ) } ).val(decodeEntities(value));
+		return e;
+	}
+	,codearea:function(label,value,handler){ 
+		this.id++;
+		var e= $('<div>'+(label!="" ? ('<label>'+label+'</label>') : '') +
+			'<span class=editspan><div contenteditable=true class="text editable taller codearea "  rows='+4+'>'+value+'</div></span></div>');
+		$('.editable',e).blur(function(){var val=$(this).html();$(this).data('data').change(val);}).data('data',handler) ;
+		return e;
+	}
+	,textarea: function(label,value,handler){
+		var rows=4;
+		if (typeof rows=="undefined") rows=2;
+		var e=$('<label>'+label+'</label><span class=editspan><textarea  class="text editable taller" rows='+rows+'>'+value+'</textarea></span>');
+		$('.editable',e).blur(function(){var val=$(this).html();$(this).data('data').change(val);}).data('data',handler) ;
+		return e;
+	}
+	,htmlarea: function(label,value,handler){ 
+		this.id++;
+		var e= $('<div>'+(label!="" ? ('<label>'+label+'</label>') : '') +
+			'<span class=editspan><div contenteditable=true class="text editable taller tinyMCEtext" id="tinyMCE_'+this.id+'"  name="'+this.id+'" rows='+4+'>'+value+'</div></span></div>');
+		$('.editable',e).blur(function(){var val=$(this).html();$(this).data('data').change(val);}).data('data',handler) ;
+		return e;
+		} 
 	,div:function(clas,t){
 		return '<div class="'+clas+'">'+t+'</div>';}
-		
-	,pickpage:function(label,group,id,value){ 
-		value = gGuide.pageIDtoName(value);
-		return $( (label!="" ? ('<label>'+label+'</label>') : '') + '<span class=editspan><input class="ui-state-default ui-combobox-input autocomplete picker page dest" type="text" name="'+id+'" value="'+htmlEscape(value)+'"></span>');
+
+	,pickstep:function(label,value,handler){
+		var o='';
+		for (var s=0;s<gGuide.steps.length;s++){
+			var step = gGuide.steps[s];
+			o+="<option value="+s+">"+step.number+". "+ (step.text)+"</option>";
+		}
+		var e =$('<div><label>'+label+'</label>' + '<select class="ui-state-default ui-select-input">'+o+'</select></div>');
+		$('.ui-select-input',e).change(function(){var val=$('option:selected',this).val();  $(this).data('data').change(val);}).data('data',handler).val(value);
+		return e;
+	}
+	,pickpage:function(label,value,handler){ 
+		value = gGuide.pageDisplayName(value); 
+		var e =$( (label!="" ? ('<label>'+label+'</label>') : '') + '<span class=editspan><input class="ui-state-default ui-combobox-input autocomplete picker page dest" type="text" ></span>');
+		$('.picker',e).blur(function(){var val=$(this).val();$(this).data('data').change(val);}).data('data',handler).val(decodeEntities(value));
+		return e;
 	}
 	,picklist:function(label,style,list,value){//let user choose number of said item
 		var c=label+'<select class="ui-state-default ui-select '+style+'">';
@@ -71,7 +120,7 @@ var form={
 			trace(br);
 		})
 	}
-	
+	,clone:function(){return 'Clone buttons';}
 	,tablecount:function(label,minelts,maxelts, tablename){//let user choose number of said item
 		var c=$('<label/>').text(label);
 		var s='<select class="ui-state-default ui-select">';
@@ -139,39 +188,6 @@ $(document).ready(function () {
    //   if (typeof initAdvanced != "undefined")      initAdvanced();
 
 
-   // Menu bar
-   jQuery(".megamenu").megamenu({ 'show_method': 'simple', 'hide_method': 'simple', mm_timeout: 125, 'enable_js_shadow': true, 'shadow_size': 5, 'deactivate_action': 'mouseleave click' });
-   $('.megamenu li div ul li a').bind('click', (function () {
-      var attr = $(this).attr('href');
-      switch (attr) {
-			case '#save':
-				if (gGuide!=null)
-					if (gGuideID!=0)
-						guideSave();
-				break;
-         case '#sample':
-            //alert('Loading sample '+$(this).text());
-            loadGuide($(this).text(), "tabsAbout");
-            break;
-         case '#mode1': setMode(1); break;
-         case '#mode2': setMode(2); break;
-         case '#mode3': setMode(3); break;
-         case '#bold': document.execCommand('bold', false, null); break;
-         case '#italic': document.execCommand('italic', false, null); break;
-         case '#indent': document.execCommand('indent', false, null); break;
-         case '#outdent': document.execCommand('outdent', false, null); break;
-         case '#text2xml': toxml(); break;
-         case '#collapse': hidem(1); break;
-         case '#reveal': hidem(0); break;
-         case '#theme':
-            styleSheetSwitch($(this).text());
-            break;
-         default:
-            alert('Unhandled ' + attr);
-      }
-      return false;
-   }));
-
 
 
    //Ensure HTML possible for combo box pick list
@@ -199,6 +215,10 @@ $(document).ready(function () {
    $('.hotspot').draggable({ containment: 'parent' }).resizable().fadeTo(0.1, 0.9);
 
 
+	$('#tabsMapper button').click(function(){ 
+		mapperScale = mapperScale * parseFloat($(this).attr('zoom')); 
+		$('.map').css({zoom:mapperScale,"-moz-transform":"scale("+mapperScale+")","-webkit-transform":"scale("+mapperScale+")"});
+	});
    /*
    //8/3/2012 http://stackoverflow.com/questions/1176245/how-do-you-set-the-jquery-tabs-to-form-a-100-height
    function resizeUi() {
@@ -216,16 +236,44 @@ $(document).ready(function () {
    resizeUi();
    */
 
-
-	if (DEBUGSTART)
+	if (typeof DEBUGSTART!=="undefined")
 	{
-		loadGuide($('a[href="#sample"]').first().text(), "TAB ABOUT");
-		$('#authortool').removeClass('hidestart').addClass('authortool');
-		$('.welcome').hide();
-		layoutPanes();
+		DEBUGSTART();
 	}
 	else
 		signinask();
+
+   // Menu bar
+   jQuery(".megamenu").megamenu({ 'show_method': 'simple', 'hide_method': 'simple', mm_timeout: 125, 'enable_js_shadow': true, 'shadow_size': 5, 'deactivate_action': 'mouseleave click' });
+   $('.megamenu li div ul li a').click(function () {
+      var attr = $(this).attr('href'); 
+      switch (attr) {
+			case '#save':
+				if (gGuide!=null)
+					if (gGuideID!=0)
+						guideSave();
+				break;
+         case '#sample': 
+            loadGuide($(this).text(), "tabsAbout");
+            break;
+         case '#mode1': setMode(1); break;
+         case '#mode2': setMode(2); break;
+         case '#mode3': setMode(3); break;
+         case '#bold': document.execCommand('bold', false, null); break;
+         case '#italic': document.execCommand('italic', false, null); break;
+         case '#indent': document.execCommand('indent', false, null); break;
+         case '#outdent': document.execCommand('outdent', false, null); break;
+         case '#text2xml': toxml(); break;
+         case '#collapse': hidem(1); break;
+         case '#reveal': hidem(0); break;
+         case '#theme':
+            styleSheetSwitch($(this).text());
+            break;
+         default:
+            alert('Unhandled ' + attr);
+      }
+      return false;
+   });
 
 
 });
@@ -308,7 +356,7 @@ function layoutPanes()
       enableCursorHotkey: false,
       minSize: 50	// ALL panes
 		, north__paneSelector: ".east-north"
-		, north__size: 400
+		, north__size: 200
 		, center__paneSelector: ".east-center"
    });
    //$('.ui-layout-center').layout({		center__onresize:  $.layout.callbacks.resizeTabLayout												});
@@ -326,7 +374,7 @@ function startCAJA(startTabOrPage)
 	$('#tabviews').tabs( { disabled:false});
 		
 	if (makestr(startTabOrPage)=="")
-		startTabOrPage="PAGE "+gGuide.pageIDtoName(gGuide.firstPage);
+		startTabOrPage="PAGE "+(gGuide.firstPage);
 	trace("Starting location "+startTabOrPage);
 	
 	if(editMode==1)
@@ -336,6 +384,10 @@ function startCAJA(startTabOrPage)
 	$('#CAJAIndex').html(gGuide.convertIndex());
 	$('#CAJAListAlpha').html(gGuide.convertIndexAlpha());
 	$('#CAJAIndex li').click(showPageToEdit);
+	
+	
+	buildMap();
+	
 	if (editMode==1)
 	{
 		setMode(2);
@@ -373,7 +425,7 @@ function showPageToEdit()
 function gotoPageShortly(dest)
 {	// navigate to given page (after tiny delay)
 	window.setTimeout(function(){
-		gotoTabOrPage("PAGE "+gGuide.pageIDtoName(dest));
+		gotoTabOrPage("PAGE "+(dest));
 		$('#tabviews').tabs('select','#tabsPageView');
 		//a2jviewer.layoutpage($('#tabsPageView'),gGuide,gGuide.steps,gPage);
 	},1);
@@ -464,58 +516,6 @@ function pickPage(request,response)
 	response(listStarts.concat(listContains).slice(0,30));
 }
 
-TGuide.prototype.noviceTab=function(div,tab)
-{	// 08/03/2012 Edit panel for guide sections 
-	var t=$('<div/>').addClass('editq');
-	switch (tab){
-		case "tabsAbout":
-			var GROUP="ABOUT";
-			t.append(form.h1('About'));
-			t.append(form.text('Title:',GROUP,"title",this.title));
-			t.append(form.textarea('Description',GROUP,"description",this.description,4));
-			t.append(form.text('Jurisdiction:',GROUP,"jurisdiction",this.jurisdiction));
-			t.append(form.textarea('Credits:',GROUP,"credits",this.credits));
-			t.append(form.text('Approximate Completion Time:',GROUP,"completionTime",this.completionTime));
-			
-			t.append(form.h1('Authors'));
-			t.append(form.text('Name:',GROUP,"name",this.name));
-			
-			t.append(form.h1('Revision History'));
-			t.append(form.text('Current Version:',GROUP,"version",this.version));
-			t.append(form.textarea('Revision Notes',GROUP,"notes",this.notes,7));
-
-			break;
-			
-		case "tabsVariables":
-			t.append(form.h1("Variables"));
-			var tt=form.rowheading(["Name","Type","Comment"]); 
-			//sortingNatural
-			var sortvars=[];
-			for (vi in this.vars) sortvars.push(this.vars[vi]);
-			sortvars.sort(function (a,b){ if (a.sortName<b.sortName) return -1; else if (a.sortName==b.sortName) return 0; else return 1;});
-			for (vi in sortvars)
-			{
-				v=sortvars[vi];
-				tt+=form.row([v.name,v.type,v.comment]);
-			}
-			t+='<table class="A2JVars">'+tt+"</table>";
-			break;
-			
-		case 'tabsSteps':
-			t.append(form.h1("Steps"));
-			var s;
-			var tt=form.rowheading(["Number","Sign"]); 
-			for (s in this.steps)
-			{
-				var step=this.steps[s];
-				tt+=form.row([step.number,step.text]);
-			}
-			t+='<table class="A2JSteps">'+tt+"</table>";
-			break;
-	}
-	
-	div.append(t);
-}
 
 TGuide.prototype.noviceStep=function(div,stepid)
 {	// Show all pages in specified step
@@ -601,207 +601,185 @@ function ws(data,results)
 
 
 
-TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizard for given page.
-   var t = ""; 
-	
-   var page = this.pages[pagename]; 
-	
-   var t = $('<div/>').addClass('editq');
 
+//*** Mapper ***
+var mapperScale=1;
+var mapSize= 1 ; //0 is small, 1 is normal
 
-	if (page == null || typeof page === "undefined") {
-		t.append(form.h2( "Page not found " + pagename)); 
-	}
-	else {
-		var GROUP = page.id;
-		trace("Loading page "+pagename);
-		
-
-//         t.append($('<h2/>').text('Your Page & all Info'));
-//         t.children('h2').click(function () { alert('click h2'); });
-
-		var fs=form.fieldset('Page info');
-		fs.append(form.text('Name:', GROUP, "name", page.name));
-		if (page.type != "A2J") {
-			t.append(form.h2("Page type/style: " + page.type + "/" + page.style));
+function buildMap()
+{	// Contruct mapper flowcharts. 
+	var $map = $('.map');
+	$map.empty();
+	//$('.MapViewer').removeClass('big').addClass(mapSize==1 ? 'big':'');
+	/*
+	if (mapSize==0)
+	{	// Render only boxes, no lines
+		// Could be used for students but need to remove popups and add coloring.
+		var YSC=.15;// YScale
+		var XSC=.1 ;
+		for (var p in book.pages)
+		{
+			var page=book.pages[p];
+			if (page.mapbounds != null)
+			{
+				var nodeLeft=XSC*parseInt(page.mapbounds[0]);
+				var nodeTop=YSC*parseInt(page.mapbounds[1]);
+				$(".map").append(''
+					+'<div class="node tiny" rel="'+page.mapid+'" style="left:'+nodeLeft+'px;top:'+nodeTop+'px;"></div>'
+					//+'<span class="hovertip">'+page.name+'</span>'
+				);
+			}
 		}
-		t.append(fs);
-		
-		var fs=form.fieldset('Page text');
-//         t.append(form.h2('Page info'));
-//        t.append(form.text('Name:', GROUP, "name", page.name));
-
-		fs.append(form.htmlarea('Text:', GROUP, "text", page.text,{change:function(val){
-																										 //trace('value is '+val);
-																										 page.text=val}}));
-		
-		fs.append(form.text('Learn More prompt:', "learnmore", 'name', page.learn));
-		fs.append(form.htmlarea("Learn More help:", "help", 'help',page.help));
-		t.append(fs);
-		
-		
-		
-		var b, d, detail, fb, t1, t2, list;
-
-		if (page.type == "A2J" || page.fields.length > 0) {
-			var fs=form.fieldset('Fields');
-			for (var f in page.fields) {
-				var field = page.fields[f];
-				var GROUPFIELD = GROUP + "_FIELD" + f;
-				fs.append(form.text('Name:', GROUPFIELD, 'name', field.name));
-				fs.append(form.text('Label:', GROUPFIELD, 'label', field.label));
-				fs.append(form.text('Optional:', GROUPFIELD, 'optional', field.optional));
-				fs.append(form.htmlarea('If invalid say:', GROUPFIELD, "invalidPrompt", field.invalidPrompt));
-			}
-			t.append(fs);
-	  }
-		if (page.type == "A2J" || page.buttons.length > 0) {
-			var fs=form.fieldset('Buttons');
-			for (var bi in page.buttons) {
-				var b = page.buttons[bi];
-				var BFIELD = GROUP + "btn" + bi;
-				fs.append(form.text('Label:', BFIELD, 'label', b.label));
-				fs.append(form.text('Var Name:', BFIELD, 'name', b.name)); 
-				fs.append(form.text('Var Value:', BFIELD, 'value', b.value)); 
-				fs.append(form.pickpage('Destination:', BFIELD, 'dest', b.next));
-				 
-			}
-			t.append(fs);
-		}
-		var fs=form.fieldset('Advanced Logic');
-		fs.append(form.codearea('Logic:','logic','logic',page.scripts));
-		t.append(fs);
-
-		if (page.type == "Book page") { }
-		else
-			if (page.type == "Multiple Choice" && page.style == "Choose Buttons") {
-				for (var b in page.buttons) {
-					//				t1+=form.short(page.
-					t.append(text2P("Feedback for Button(" + (parseInt(b) + 1) + ")"));
-					fb = page.feedbacks[fbIndex(b, 0)];
-					pageText += html2P(fb.text);
-				}
-			}
-			else if (page.type == "Multiple Choice" && page.style == "Choose List") {
-				var clist = [];
-				var dlist = [];
-				for (var d in page.details) {
-					var detail = page.details[d];
-					var fb = page.feedbacks[fbIndex(0, d)];
-					var $fb = $('<div/>').append(form.pickbranch())
-				 .append(form.pickpage('','',"dest", fb.next))
-				 .append(form.htmlarea("", GROUP + "CHOICE" + d, "fb" + d, fb.text));
-					var brtype = makestr(fb.next) == "" ? 0 : (makestr(fb.text) == "" ? 2 : 1);
-					$('select.branch', $fb).val(brtype).change();
-					clist.push({ row: [detail.label, form.pickscore(fb.grade), form.htmlarea("", GROUP + "CHOICE" + d, "detail" + d, detail.text)] });
-					dlist.push({ row: [detail.label, form.pickscore(fb.grade), $fb] });
-				}
-				t.append(form.h1('Choices'));
-				t.append(form.tablecount("Number of choices", 2, 7, 'choices').after(form.tablerange('choices', clist)));
-
-				t.append(form.h1('Feedback'));
-				t.append(form.tablerange(dlist));
-
-			}
-			else if (page.type == "Multiple Choice" && page.style == "Choose MultiButtons") {
-				for (d in page.details) {
-					var detail = page.details[d];
-					t.append(form.h1("Subquestion " + (parseInt(d) + 1)));
-					t.append(form.htmlarea("","","", detail.text));
-				}
-				for (d in page.details) {
-					for (b in page.buttons) {
-						var button = page.buttons[b];
-						fb = page.feedbacks[fbIndex(b, d)];
-						t.append(form.h1("Feedback for subquestion " + (parseInt(d) + 1) + ", Choice(" + button.label + ")"));
-						t.append(form.htmlarea("","G",b,fb.text));
+	}*/
+	if (mapSize==1)
+	{	// Full size boxes with question names and simple lines connecting boxes.
+		var YSC=1.35;// YScale
+		var NW=56;//half node width
+		for (var p in gGuide.pages)
+		{
+			var page=gGuide.pages[p];
+			if (page.mapx>0) 
+			{
+				var nodeLeft=page.mapx;
+				var nodeTop= page.mapy;
+				$map.append(''
+					+(page.type=="Pop-up page" ? '':'<div class="arrow" style="left:'+(nodeLeft+50)+'px; top:'+(nodeTop-16)+'px;"></div>')
+					+'<div class="node" rel="'+page.mapid+'" style="left:'+nodeLeft+'px;top:'+nodeTop+'px;">'+page.name+'</div>'
+					+lineV(nodeLeft+NW,nodeTop+46,10)
+					);
+				var downlines=false;
+				/* Outgoing branches to show:  
+						A2J - Buttons with Destination, Script GOTOs
+						CA - Next page, Feedback branches, Script GOTOs
+				*/
+				if (page.mapBranches==null)
+				{
+					var branches=[];
+					for (var b in page.buttons)
+					{
+						var btn = page.buttons[b];
+						branches.push({label:btn.label, dest: btn.next} );
 					}
+					page.mapBranches=branches;
 				}
+				/*
+				var nBranches=page.mapBranches.length;
+				var boffset = nBranches %2 * .5;
+				for (var b in page.mapBranches)
+				{
+					var branch = page.mapBranches[b];
+					var branchLeft=nodeLeft + (b+boffset)*30;
+					var branchTop= nodeTop + 100;
+					var branchWidth=50;
+					if (branch.dest!="")
+					{
+						var destLeft= branch.dest.mapx+NW;
+						var destTop = branch.dest.mapy;
+						if (destTop>nodeTop) downlines=true;
+						var x1 =branchLeft+branchWidth/2;// nodeLeft+NW-(b-nBranches/2)*5;
+						var y1 =branchTop+18;// nodeTop+46;
+						var y2 = y1 + 10 +((nBranches-b)*2);
+						var x2,x3;
+						if (destLeft<x1 ) {x2=destLeft;x3=x1;} else {x2=x1;x3=destLeft};
+						$(".map").append(''
+							+(destTop>nodeTop ?  lineV( x1,y1, y2-y1) + lineH(x2,y2,x3-x2):'')
+							);
+					}
+					$(".map").append('<div class="branch" rel="'+branch.dest+'" style="left:'+(branchLeft)+'px; top:'+branchTop+'px; width:'+branchWidth+'px;">'+branch.text+'</div>');
+				}*/
 			}
-			else if (page.type == "Multiple Choice" && page.style == "Radio Buttons") { }
-			else if (page.type == "Multiple Choice" && page.style == "Check Boxes") { }
-			else if (page.type == "Multiple Choice" && page.style == "Check Boxes Set") { }
-			else if (page.type == "Text Entry" && page.style == "Text Short Answer") { }
-			else if (page.type == "Text Entry" && page.style == "Text Select") {
-				t.append(form.htmlarea("Text user will select from", "SELECT", "textselect", page.initialText, 8));
-				list = [];
-				for (ti in page.tests) {
-					var test = page.tests[ti];
-					list.push({ row: [
-								 form.number("", "", "test" + ti, test.slackWordsBefore, 0, 9999),
-							  form.number("", "", "test" + ti, test.slackWordsAfter, 0, 9999),
-											  form.htmlarea("", GROUP + "test" + ti, "test" + ti, test.text, 4)
-			 ]
-					});
-				}
-				t.append(form.h2('Selection matches'));
-				t.append(form.tablecount("Number of tests", 1, 5) + form.tablerange(list, ["Slack words before", "Slack words after", "Words to match"]));
+		}
+		$('.branch',$map).click(function(){focusNode($('.map > .node[rel="'+$(this).attr('rel')+'"]'));	});
+	}
+	$('.node',$map).click(function(){	focusNode($(this));});
+//	focusPage()
+}
+function lineV(left,top,height)
+{
+	return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:1px;height:'+height+'px;"></div>';
+}
+function lineH(left,top,width)
+{
+	return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:'+width+'px;height:1px;"></div>';
+}
 
-				t.append(form.textarea("script"));
-			}
-			else if (page.type == "Text Entry" && page.style == "Text Essay") { }
-			else if (page.type == "Prioritize" && page.style == "PDrag") { }
-			else if (page.type == "Prioritize" && page.style == "PMatch") { }
-			else if (page.type == "Slider") { }
-			else if (page.type == "GAME" && page.style == "FLASHCARD") { }
-			else if (page.type == "GAME" && page.style == "HANGMAN") { }
-
-
-
-		//pageText += html2P(expandPopups(this,page.text));
-
-		t.append(form.textarea('Notes', GROUP, "note", makestr(page.notes)));
-
-	//t+=form.h1('XML')+htmlEscape(page.xml);
-	t.append(htmlEscape(page.xml));
-   }
-
-   /*
-   var t=$('<input/>',{
-   id:'test',
-   click:function(){alert('hi');},
-   addClass:'ui-input'
-   });
-   );*/
-
-   //	editq.append(t);
-   //	form.html(t);
-   div.append(t);
-
-
-
-   //	div.append(form.div("editq",t));
-
-   // Attach event handlers
-   /*
-   $('.picker.branch').change(function(){
-   var br=$(this).val();
-   $(this).parent().children('.text').toggle(br!=2);
-   $(this).parent().children('.dest').toggle(br!=0);
-   })
-   */
-
-   $('.autocomplete.picker.page').autocomplete({ source: pickPage, html: true,
-      change: function () { // if didn't match, restore to original value
-         var matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex($(this).val()) + "$", "i");
-         var newvalue = $(this).data('org'); //attr('orgval');
-         $.each(gGuide.pages, function (p, page) {
-            if (matcher.test(page.name)) {
-               newvalue = page.name
-               return false;
-            }
-         });
-         $(this).val(newvalue);
-         $(this).data('org', $(this).val());
-         //			$(this).attr('orgval',$(this).val());
-      } 
-   })
-		.focus(function () {
-		   console.log($(this).val());
-		   $(this).autocomplete("search");
-		});
-		
-	gPage = page;
+function focusPage()
+{
+	focusNode($('.map > .node[rel="'+page.mapid+'"]'))
 }
 
 
+
+
+
+
+function BlankGuide(){
+	var guide = new TGuide();
+
+	guide.title="My guide";
+	guide.notes="Guide created on "+new Date();
+	guide.authors=[{name:'My name',organization:"My organization",email:"email@example.com",title:"My title"}];
+	guide.sendfeedback=false;
+	var page=guide.addUniquePage("Welcome");
+	page.type="A2J";
+	page.text="Welcome to Access to Justice";
+	page.buttons=[{label:"Continue",next:"",name:"",value:""}];
+	guide.steps=[{number:0,text:"Welcome"}];
+	guide.vars=[]; 
+	guide.sortedPages=[page];
+	guide.firstPage=page.id;
+	return guide;
+}
+
+function guideSave()
+{
+	var guide = gGuide;
+	prompt('Saving '+guide.title + AJAXLoader);
+	ws( {cmd:'guidesave',gid:gGuideID, guide: exportXML_CAJA_from_CAJA(guide), title:guide.title}, function(response){
+		if (response.error!=null)
+			prompt(response.error);
+		else
+			prompt(response.info);
+	});
+}
+function createBlankGuide()
+{	// create blank guide internally, do Save As to get a server id for future saves.
+	var guide=BlankGuide();
+
+	ws({cmd:'guidesaveas',gid:0, guide: exportXML_CAJA_from_CAJA(guide), title: guide.title},function(data){
+		if (data.error!=null)
+			status(data.error);
+		else{
+			var newgid = data.gid;//new guide id
+			ws({cmd:'guides'},function (data){
+				listguides(data);
+				ws({cmd:'guide',gid:newgid},guideloaded);
+			 });
+		}
+	});
+}
+
+
+function listguides(data)
+{
+	var blank = {id:'a2j', title:'New empty guide'};
+	gGuideID=0;
+	var mine = [];
+	var others = [];
+	var start = '<li class=guide gid="' + blank.id + '">' + blank.title + '</li>';
+	$.each(data.guides, function(key,g) { var str='<li class=guide gid="' + g.id + '">' + g.title + '</li>'; if (g.owned)mine.push(str);else others.push(str);});
+	
+	$('#guidelist').html("New guides <ol>"+start+"</ol>My guides <ol>"+mine.join('')+"</ol>" + "Sample guides <ol>"+others.join('')+"</ol>");
+	$('li.guide').click(function(){
+		var gid=$(this).attr('gid');
+//		$(this).html('Loading guide '+$(this).text()+AJAXLoader);
+		var guideFile=$(this).text();
+		$('li.guide[gid="'+gid+'"]').html('Loading guide '+guideFile+AJAXLoader).addClass('.warning');
+		loadNewGuidePrep(guideFile,'');
+		if(gid=='a2j')
+			createBlankGuide();
+		else
+			ws({cmd:'guide',gid:gid},guideloaded);
+		//loadGuide($('a[href="#sample"]').first().text(), "TAB ABOUT");
+	});
+}

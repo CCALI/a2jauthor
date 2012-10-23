@@ -2,6 +2,7 @@
 // Code shared by A2J Author, A2J Viewer, CALI Author and CALI 5 Viewer
 
 
+var SHOWXML=false;
 
 function exportXML_CAJA_from_CAJA(guide)
 {	// Convert Guide structure into XML
@@ -65,7 +66,6 @@ function exportXML_CAJA_from_CAJA(guide)
 	{
 		var page = guide.pages[pi];
 		var PAGE = {
-			_ID:			page.id,
 			_NAME:		page.name,
 			_TYPE:		page.type,
 			_STYLE:		page.style,
@@ -118,9 +118,11 @@ function exportXML_CAJA_from_CAJA(guide)
 	} 
 			
 //	trace('<pre>'+propsJSON('Guide', JSON.GUIDE)+'</pre>'); 
-	return '<?xml version="1.0" encoding="UTF-8" ?>' + js2xml('GUIDE',JSON.GUIDE);
+	var xml = '<?xml version="1.0" encoding="UTF-8" ?>' + js2xml('GUIDE',JSON.GUIDE);
+//	console.log(xml);
+	return xml;
 }
-function parseXML_CAJA_to_CAJA(GUIDE)
+function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 {	// Parse parseCAJA
 	var guide=new TGuide();
 	
@@ -177,7 +179,7 @@ function parseXML_CAJA_to_CAJA(GUIDE)
 		v.sortName=	sortingNatural(v.name);
 		v.type=VARIABLE.attr("TYPE");
 		guide.vars[v.name]=v;
-	 });
+	 });/*
 	GUIDE.find("POPUP").each(function() {//TODO discard unused popups
 		var POPUP = $(this);
 		var popup = new TPopup();
@@ -185,7 +187,7 @@ function parseXML_CAJA_to_CAJA(GUIDE)
 		popup.name=POPUP.attr("NAME");
 		popup.text=POPUP.find("TEXT").xml();
 		guide.popups[popup.id]=popup;
-	});
+	});*/
 	GUIDE.find("CONSTANTS").each(function() {
 		var CONSTANT = $(this);
 		var constant = new TConstant(); 
@@ -195,11 +197,9 @@ function parseXML_CAJA_to_CAJA(GUIDE)
 	});	
 	GUIDE.find("PAGES > PAGE").each(function() {
 		var PAGE = $(this);
-		//var page = new TPage();
-		var page = guide.addUniquePage(PAGE.attr("NAME"),PAGE.attr("ID"));
+		var page = guide.addUniquePage(PAGE.attr("NAME"));
+		page.xml = PAGE.xml(); 
 		
-		//page.id=PAGE.attr("ID");
-		//page.name=PAGE.attr("NAME");
 		page.type=PAGE.attr("TYPE");
 		page.style=makestr(PAGE.attr("STYLE"));
 		page.mapx=parseInt(PAGE.attr("MAPX"));
@@ -217,13 +217,7 @@ function parseXML_CAJA_to_CAJA(GUIDE)
 		page.alignText="";
 		page.scripts = makestr(PAGE.find("SCRIPTS").xml());
 		
-		
-		page.xml = $(this).xml();
-		//page.sortName=(page.id==guide.firstPage) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
-		//guide.pages[page.name] = page;
-		//guide.mapids[page.id]=page;
-		
-		PAGE.children('BUTTON').each(function(){
+		PAGE.find('BUTTONS > BUTTON').each(function(){
 			var button=new TButton();
 			button.label =jQuery.trim($(this).find("LABEL").xml());
 			button.next = makestr($(this).attr("NEXT"));
@@ -231,7 +225,7 @@ function parseXML_CAJA_to_CAJA(GUIDE)
 			button.value = jQuery.trim($(this).find("VALUE").xml()); 
 			page.buttons.push(button);
 		});
-		PAGE.children('FIELD').each(function(){
+		PAGE.find('FIELDS > FIELD').each(function(){
 			var field=new TField();
 			field.type =$(this).attr("TYPE");
 			field.optional = TextToBool($(this).attr("OPTIONAL"),false);
@@ -253,27 +247,25 @@ function parseXML_CAJA_to_CAJA(GUIDE)
 }
 
 
-TGuide.prototype.addUniquePage=function(preferredName,id)
+TGuide.prototype.addUniquePage=function(preferredName)
 {	// create new page, attach to guide. ensure name is unique
 	var counter=2;
 	var name=preferredName;
 	while (this.pages[name]!=null)
 		name = preferredName +" " + (counter++);
 	var page=new TPage();
-	page.name = name;
-	page.id = id==null ? name : id;
-	this.pages[page.name] = page;
-	this.mapids[page.id] = page;
-	//console.log("Created new page "+name +  ( name != preferredName ? " from "+preferredName:""));
+	page.name = name; 
+	this.pages[page.name] = page;  
 	return page;
 }
 
 
-TGuide.prototype.pageIDtoName=function(id)
-{	// convert a page id (#) or reserved word into text.
-	if (this.mapids[id])
+
+TGuide.prototype.pageDisplayName=function(name)//pageNametoText
+{	// Convert a page name or reserved word into readable text.
+	if (this.pages[name])
 	{
-		id = this.mapids[id].name;
+		name = htmlEscape(this.pages[ name ].name);
 	}
 	else
 	{
@@ -284,12 +276,13 @@ TGuide.prototype.pageIDtoName=function(id)
 		autoIDs[qIDEXIT]=		lang.qIDEXIT;//"[Exit - Save Incomplete Form]"//8/17/09 3.0.1 Save incomplete form
 		autoIDs[qIDBACK]=		lang.qIDBACK;//"[Back to prior question]"//8/17/09 3.0.1 Same as history Back button.
 		autoIDs[qIDRESUME]=	lang.qIDRESUME;//"[Exit - Resume interview]"//8/24/09 3.0.2
-		if (typeof autoIDs[id]=="undefined")
-			id=lang.UnknownID.printf(id);//,props(autoIDs)) //"[Unknown id "+id+"]" + props(autoIDs);
+		if (typeof autoIDs[ name ] =="undefined")
+			name = lang.UnknownID.printf( name );//,props(autoIDs)) //"[Unknown id "+id+"]" + props(autoIDs);
 		else
-			id=autoIDs[id];
+			name = autoIDs[ name ];
 	}
-	return id;
+	console.log('pageDisplayName',name);
+	return name;
 }
 
 
@@ -299,7 +292,7 @@ function parseXML_Auto_to_CAJA(cajaData)
 	if ((cajaData.find('A2JVERSION').text())!="")
 		guide=parseXML_A2J_to_CAJA(cajaData);// Parse A2J into CAJA
 	else
-	if ((cajaData.find('CAVERSIONREQUIRED').text())!="")
+	if ((cajaData.find('CALIDESCRIPTION').text())!="")
 		guide=parseXML_CA_to_CAJA(cajaData);// Parse CALI Author into CAJA
 	else
 		guide=parseXML_CAJA_to_CAJA(cajaData);// Parse Native CAJA
@@ -315,7 +308,7 @@ function parseXML_Auto_to_CAJA(cajaData)
 	{
 		var page = guide.pages[p];
 		//	page.sortName=sortingNatural(page.name);//pageXML.attr("SORTNAME");//sortingNatural(page.name);
-		page.sortName=(page.id==guide.firstPage) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
+		page.sortName=(page.name==guide.firstPage) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
 		guide.sortedPages.push(page);
 	}
 	guide.sortedPages=guide.sortedPages.sort(function (a,b){ if (a.sortName<b.sortName) return -1; else if (a.sortName==b.sortName) return 0; else return 1;});
@@ -323,43 +316,6 @@ function parseXML_Auto_to_CAJA(cajaData)
 	return guide;
 }
  
-
-
-TGuide.prototype.dump=function()
-{	// Generate report of entire CAJA contents
-	var txt="",p, f, b, page, field, button,txtp;
-	
-	function row(a,b,c,d){return '<tr><td>'+a+'</td><td>'+b+'</td><td>'+c+'</td><td>'+d+'</td></tr>\n'};
-	txt += row('title','','',this.title)
-		+row('viewer','','',this.viewer)
-		+row('description','','',this.description);
-	for (p in this.pages)
-	{
-		page = this.pages[p];
-		txtp= row(page.id,'','id',page.id)
-			+  row(page.id,'','name',page.name)
-			+  row(page.id,'','text',page.text);
-		for (f in page.fields)
-		{
-			field=page.fields[f];
-			txtp += row(page.id,'field'+f,'label',field.label);
-			txtp += row(page.id,'field'+f,'type',field.type);
-			txtp += row(page.id,'field'+f,'name',field.name);
-			txtp += row(page.id,'field'+f,'optional',field.optional);
-			txtp += row(page.id,'field'+f,'invalidPrompt',field.invalidPrompt);
-		}
-		for (b in page.buttons)
-		{
-			button=page.buttons[b];
-			txtp += row(page.id,'button'+b,'label',button.label);
-			txtp += row(page.id,'button'+b,'next',button.next);
-		}
-		txt += txtp;
-	}
-	return '<table class="CAJAReportDump">'+txt+'</table>';
-}
-
-
 
 
 
@@ -386,51 +342,6 @@ function loadNewGuidePrep(guideFile,startTabOrPage)
 	$('#CAJAIndex, #CAJAListAlpha').html('');
 }
 
-function BlankGuide(){
-	var guide = new TGuide();
-
-	guide.title="My guide";
-	guide.notes="Guide created on "+new Date();
-	guide.authors=[{name:'My name',organization:"My organization",email:"email@example.com",title:"My title"}];
-	guide.sendfeedback=false;
-	var page=guide.addUniquePage("Welcome","Welcome");
-	page.type="A2J";
-	page.text="Welcome to Access to Justice";
-	page.buttons=[{label:"Continue",next:"",name:"",value:""}];
-	guide.steps=[{number:0,text:"Welcome"}];
-	guide.vars=[]; 
-	guide.sortedPages=[page];
-	guide.firstPage=page.id;
-	return guide;
-}
-
-function guideSave()
-{
-	var guide = gGuide;
-	prompt('Saving '+guide.title + AJAXLoader);
-	ws( {cmd:'guidesave',gid:gGuideID, guide: exportXML_CAJA_from_CAJA(guide), title:guide.title}, function(response){
-		if (response.error!=null)
-			prompt(response.error);
-		else
-			prompt(response.info);
-	});
-}
-function createBlankGuide()
-{	// create blank guide internally, do Save As to get a server id for future saves.
-	var guide=BlankGuide();
-
-	ws({cmd:'guidesaveas',gid:0, guide: exportXML_CAJA_from_CAJA(guide), title: guide.title},function(data){
-		if (data.error!=null)
-			status(data.error);
-		else{
-			var newgid = data.gid;//new guide id
-			ws({cmd:'guides'},function (data){
-				listguides(data);
-				ws({cmd:'guide',gid:newgid},guideloaded);
-			 });
-		}
-	});
-}
 
 function loadGuide(guideFile,startTabOrPage)
 {
@@ -466,30 +377,6 @@ function guideloaded(data)
 	*/
 	//gGuide.filename=guideFile;
 	startCAJA();
-}
-
-function listguides(data)
-{
-	var blank = {id:'a2j', title:'New empty guide'};
-	gGuideID=0;
-	var mine = [];
-	var others = [];
-	var start = '<li class=guide gid="' + blank.id + '">' + blank.title + '</li>';
-	$.each(data.guides, function(key,g) { var str='<li class=guide gid="' + g.id + '">' + g.title + '</li>'; if (g.owned)mine.push(str);else others.push(str);});
-	
-	$('#guidelist').html("New guides <ol>"+start+"</ol>My guides <ol>"+mine.join('')+"</ol>" + "Sample guides <ol>"+others.join('')+"</ol>");
-	$('li.guide').click(function(){
-		var gid=$(this).attr('gid');
-//		$(this).html('Loading guide '+$(this).text()+AJAXLoader);
-		var guideFile=$(this).text();
-		$('li.guide[gid="'+gid+'"]').html('Loading guide '+guideFile+AJAXLoader).addClass('.warning');
-		loadNewGuidePrep(guideFile,'');
-		if(gid=='a2j')
-			createBlankGuide();
-		else
-			ws({cmd:'guide',gid:gid},guideloaded);
-		//loadGuide($('a[href="#sample"]').first().text(), "TAB ABOUT");
-	});
 }
 
 function loadGuide2(guideFile,startTabOrPage)

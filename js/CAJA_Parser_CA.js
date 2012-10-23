@@ -1,7 +1,9 @@
 /* CALI Author CAJA - Parse CALI Author into CAJA 
 */
 
-
+function BR2cr(txt){
+	return txt.replace(/&lt;BR \/&gt;/g,"\n");
+}
 
 function parseXML_CA_to_CAJA(BOOK)
 {	// Parse CALI Author into CAJA
@@ -13,14 +15,14 @@ function parseXML_CA_to_CAJA(BOOK)
 	guide.toolversion=	makestr(BOOK.find('INFO > CAVERSIONREQUIRED').text());
 	guide.avatar=			"";
 	guide.completionTime=BOOK.find('INFO > COMPLETIONTIME').xml();
-	guide.copyrights=		BOOK.find('INFO > COPYRIGHTS').xml();
+	guide.copyrights=		cr2P(BR2cr(makestr(BOOK.find('INFO > COPYRIGHTS').xml())));
 	guide.createdate=		BOOK.find('INFO > CREATEDATE').xml();
-	guide.credits=			BOOK.find('INFO > CREDITS').xml();
-	guide.description= 	makestr(BOOK.find('DESCRIPTION').text());
+	guide.credits=			cr2P(BR2cr(makestr(BOOK.find('INFO > CREDITS').xml())));
+	guide.description= 	cr2P(makestr(BOOK.find('CALIDESCRIPTION').xml()));
 	guide.jurisdiction=	""; 
 	guide.language= 		"en"; 
 	guide.modifydate=		BOOK.find('INFO > MODIFYDATE').xml();
-	guide.notes=			makestr(BOOK.find('INFO > NOTES').xml());
+	guide.notes=			cr2P(BR2cr(makestr(BOOK.find('INFO > NOTES').xml())));
 	guide.sendfeedback=	true;
 	guide.emailContact=	makestr(BOOK.find('EMAILCONTACT').text());
 	guide.subjectarea=	BOOK.find('INFO > SUBJECTAREA').xml();
@@ -29,37 +31,44 @@ function parseXML_CA_to_CAJA(BOOK)
 	guide.viewer=			"CA";
 
 	guide.authors=[];
-	BOOK.find("BOOK > AUTHORS > AUTHOR").each(function() {
+	BOOK.find("BOOK > INFO > AUTHORS > AUTHOR").each(function() {
 		var AUTHOR = $(this);
 		var author = new TAuthor();
 		author.name = AUTHOR.find('NAME').text();
-		author.title = AUTHOR.find('TITLE').text();
-		author.school = AUTHOR.find('SCHOOL').text();
+		author.title = BR2cr(makestr(AUTHOR.find('TITLE').text()));
+		author.organization = BR2cr(makestr(AUTHOR.find('SCHOOL').text()));
 		author.email = AUTHOR.find('EMAIL').text();
 		guide.authors.push(author);
 	});
 
-	guide.firstPage=  			"Contents";
-	guide.exitPage=  				"";
-	var step = new TStep();
-	step.number="1";
-	step.text=lang.eoOutline
-	guide.steps[0]=step;
 	
 	
 	BOOK.find("BOOK > PAGE").each(function() {
 		var pageXML = $(this);
 		var page = new TPage();
-		page.xml = $(this).xml();
+		if (SHOWXML) page.xml = $(this).xml();
 		page.id=pageXML.attr("ID");
 		page.name=page.id;
 		page.type=pageXML.attr("TYPE");
-		page.style=pageXML.attr("STYLE");
+		page.style=makestr(pageXML.attr("STYLE"));
 		page.nextPage="";
 		page.nextPageDisabled = false;
 		page.text= makestr(pageXML.find("QUESTION").xml()) +  makestr(pageXML.find("TEXT").xml());
 		page.alignText="auto";
 		//page.step=0;
+		var toc=makestr(pageXML.find("TOC").xml());
+		if (toc!=""){
+			page.text = toc;
+			guide.TOC= toc;
+		}
+
+		var $mapper=pageXML.find('MAPPER');
+		if ($mapper)
+		{	//XML: <MAPPER ID="47" BOUNDS="1198,360,109"><BRANCH KIND="14" NAME="True" DEST="47" BOUNDS="1196,408,30"/></MAPPER>
+			var mapbounds= ($mapper.attr("BOUNDS")).split(',');
+			page.mapx=mapbounds[0];
+			page.mapy=mapbounds[1];
+		}
 		
 		var it=pageXML.find("INITIALTEXT").xml();
 		if (it!==null)
@@ -110,12 +119,46 @@ function parseXML_CA_to_CAJA(BOOK)
 			}
 		});
 		
-		guide.pages[page.name] = page;
-		guide.mapids[page.id]=page; 
+		if (page.type=="Topics" && page.name!="Contents")
+		{
+			// skip placeholder pages
+		}
+		else
+		{
+			guide.pages[page.name] = page;
+			//guide.mapids[page.id]=page;
+			//if (page.name!=page.id) trace("mismatch");
+		}
 	}); 
-	 
+
 	guide.templates="";
 	guide.variables=[];
+	
+	
+	guide.firstPage=  			"Contents";
+	guide.exitPage=  				"";
+	$('LI',guide.TOC).each(function(i,li){
+		var step = new TStep();
+		step.number=i;
+		step.text = $('a',li).html();
+		if (typeof step.text==="undefined")
+		{
+			step.text = $(li).html();
+			step.link = "";
+		}
+		else
+		{
+			step.link = $('a',li).attr('HREF');
+		}
+		guide.steps.push(step);
+	});
+	//trace(guide.TOC);
+	//trace(propsJSON('guide.steps',guide.steps));
+	//var step = new TStep();
+	//step.number="1";
+	//step.text.eoOutline
+	//guide.steps[0]=step;
+	// Convert TOC into useful thing
 	
 	/*
 	// Add stub pages for the About and Score screens.
@@ -138,7 +181,7 @@ function parseXML_CA_to_CAJA(BOOK)
 		page.nextPageDisabled=false;
 	}
 	*/
-	return guide;
+	return parseXML_CAJA_to_CAJA( $(jQuery.parseXML(exportXML_CAJA_from_CAJA(guide))) );
 }
 function fbIndex(button,detail)
 {

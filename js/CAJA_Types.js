@@ -11,6 +11,7 @@ var qIDEXIT="EXIT" //8/17/09 3.0.1 Save like SUCCESS but flag incomplete true.
 var qIDBACK="BACK" //8/17/09 3.0.1 Same as history Back button.
 var qIDRESUME="RESUME" //8/24/09 3.0.2
 
+
 // ### Steps ###
 // colors: 0xffffff,0xBDD6D6, 0xB7DDB7, 0xEFC68C, 0xE7E7B5, 0xEFDED6, 0xECD8EA,0xBDD6D6, 0xB7DDB7, 0xEFC68C, 0xE7E7B5, 0xEFDED6, 0xECD8EA];
 var MAXSTEPS= 12;
@@ -87,14 +88,14 @@ function TStep()
 	this.number ="";
 	this.text ="";
 	return this;
-}
+}/*
 function TPopup()
 {	// This represents an embedded popup
 	this.id ="";//unique id from POPUP://#
 	this.name =""
 	this.text="";
 	return this;
-}
+}*/
 function TPage()
 {	// This represents a single page within the lesson book/interview.
 	this.id ="";// Unique id
@@ -189,8 +190,9 @@ function TGuide()
 	this.vars={};			//Origin A2J - associative array of TVariables()
 
 	this.filename="";
-	this.mapids=[];// array of mapids indices	- maps a page.id to page while .pages uses page.name.
+	//this.mapids=[];// array of mapids indices	- maps a page.id to page while .pages uses page.name.
 	this.sortedPages=[];//array of pages sorted by name (natural order)
+	
 	return this;
 }
 

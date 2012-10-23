@@ -18,9 +18,6 @@ function makestr(s)
 	if (s===null || typeof s === "undefined" ) return "";
 	else return s;
 }
-function cr2P(txt){
-	return txt == ""?"":"<P>" + txt.split("\n").join("</P><P>")+"</P>";//replace("\n\n","\n")
-}
 function TextToBool(b,defaultb)
 {
 	if (b===null || typeof b === "undefined" )
@@ -100,11 +97,19 @@ function sortingNatural(str)
 
 	return newStr.toUpperCase();
 }
-function trace(msg)
+function trace( )
 {
-	if (typeof msg=="object") msg=props(msg);
-	if (typeof console!="undefined") console.log(msg);
-	$('#tracer').prepend('<li>'+msg+"</li>");
+	var msg="";
+	for (var a=0;a<arguments.length;a++)
+	{
+		var arg = arguments[a];
+		if (typeof arg==="object")
+			msg += props(arg);
+		else
+			msg += arg;
+		if (typeof console!="undefined") console.log(arg);
+	}
+	$('#tracer').append('<li>'+msg+"</li>");
 }
 
 function props(o)

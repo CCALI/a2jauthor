@@ -445,8 +445,8 @@ ul.megamenu div ul li:hover {
 	color:#800;
 	font-size: 8pt;
 	padding:1px;
+	margin-left: -2em;
 }
-
 
 /************** List Table ************/
 table.list {
@@ -518,5 +518,118 @@ li.guide:hover {
 .example{
 	overflow: auto;
 	height: 100%;
+}
+
+
+/* Mapper */
+
+#tabsMapper {
+	background-color:#ff0;
+	overflow: none;
+	width: 95%;
+	height: 95%;
+}
+#MapperPanel { 
+	background-color:#ffa;
+	width: 95%;
+	height: 95%;
+	overflow: scroll;
+	border: 2px thick #f00;
+}
+.map {
+	background-color:#fff;
+	width: 1500px;
+	height: 1500px;
+	overflow: none;
+	border: 2px thick #0f0;
+	position: relative;
+}
+
+x.map {
+	height: 100%;
+	width: 100%;
+	padding: 15px;
+	position: relative;
+}
+.map  .node {
+	font-size: 12px;
+	background-color: #D0F0F0;
+	margin: 1px;
+	padding: 4px;
+	height: 35px;
+	width: 100px;
+	border: 1px outset #006699;
+	text-align: center;
+	position: absolute;
+	font-family: Arial, Helvetica, sans-serif;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	color: #000000;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius: 5px;
+	cursor: pointer;
+	overflow: none;
+}
+.map   .tiny {
+	background-image: url(img/map_page.png);
+	background-repeat:no-repeat;
+	background-color:  inherit;
+	border: 0px hidden;
+	margin: 1px;
+	padding: 0px;
+	cursor: pointer;
+	width: 12px;
+	height: 8px;
+	-moz-border-radius:0px;
+	-webkit-border-radius:0px;
+	border-radius: 0px;
+}
+.map .mark {
+	border: 2px double;
+}
+.node .text {
+	overflow: hidden;
+	height: 35px;
+	width: 100px;
+}
+.map .branch {
+	font-size: 8px;
+	background-color: #fff;
+	margin: 1px;
+	padding: 1px;
+	width: 15px;
+	border: 0px none;
+	text-align: center;
+	position: absolute;
+	font-family: Arial, Helvetica, sans-serif;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	color: #000000;
+	overflow: hidden;
+	cursor: pointer;
+}
+.map   .branch.RIGHT {
+	color: #080;
+}
+.map   .branch.WRONG {
+	color: #f00;
+}
+.map   .line {
+	background-color: #000;
+	border: 1px #000;
+	position: absolute;
+}
+.map   .arrow {
+	position: absolute;
+	background-image: url(img/map_arrow_down.png);
+	background-repeat:no-repeat;
+	width:16px;
+	height:20px;
+	margin-top: -5px;
 }
 

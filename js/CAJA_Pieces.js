@@ -1,4 +1,41 @@
 
+TGuide.prototype.dump=function()
+{	// Generate report of entire CAJA contents
+	var txt="",p, f, b, page, field, button,txtp;
+	
+	function row(a,b,c,d){return '<tr><td>'+a+'</td><td>'+b+'</td><td>'+c+'</td><td>'+d+'</td></tr>\n'};
+	txt += row('title','','',this.title)
+		+row('viewer','','',this.viewer)
+		+row('description','','',this.description);
+	for (p in this.pages)
+	{
+		page = this.pages[p];
+		txtp= row(page.id,'','id',page.id)
+			+  row(page.id,'','name',page.name)
+			+  row(page.id,'','text',page.text);
+		for (f in page.fields)
+		{
+			field=page.fields[f];
+			txtp += row(page.id,'field'+f,'label',field.label);
+			txtp += row(page.id,'field'+f,'type',field.type);
+			txtp += row(page.id,'field'+f,'name',field.name);
+			txtp += row(page.id,'field'+f,'optional',field.optional);
+			txtp += row(page.id,'field'+f,'invalidPrompt',field.invalidPrompt);
+		}
+		for (b in page.buttons)
+		{
+			button=page.buttons[b];
+			txtp += row(page.id,'button'+b,'label',button.label);
+			txtp += row(page.id,'button'+b,'next',button.next);
+		}
+		txt += txtp;
+	}
+	return '<table class="CAJAReportDump">'+txt+'</table>';
+}
+
+
+
+
 function js2xml(o)
 { 
 	var t="";

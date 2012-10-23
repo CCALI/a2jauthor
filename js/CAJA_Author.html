@@ -27,6 +27,7 @@
 <script src="CAJA_Parser_CA.js" type="text/javascript"></script>
 <script src="CAJA_Parser_A2J.js" type="text/javascript"></script>
 <script src="CAJA_Viewer_A2J.js" type="text/javascript"></script>
+<script src="CAJA_Dev.js" type="text/javascript"></script>
 <script src="CAJA_Author.js" type="text/javascript"></script>
 <script src="CAJA_Author_Advanced.js" type="text/javascript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -108,22 +109,9 @@
 					</ul>
 				</div>
 			</li>
-			<li  > <a href="#ab">Test</a>
+			<li  > <a href="#test">Test</a>
 				<div style="width: auto;">
-					<ul>
-						<li><a href="#sample">tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name</a></li>
-						<li><a href="#sample">tests/data/A2J_NYSample_interview.xml</a></li>
-						<li><a href="#sample">tests/data/A2J_MobileOnlineInterview_Interview.xml</a></li>
-						<li><a href="#sample">tests/data/A2J_ULSOnlineIntake081611_Interview.xml#1b Submit Application for Review</a></li>
-						<li><a href="#sample">tests/data/CBK_CAPAGETYPES_jqBookData.xml#Text Select 2</a></li>
-						<li><a href="#sample">tests/data/CBK_CAPAGETYPES_jqBookData.xml#MC Choices 3: 4 choices</a></li>
-						<li><a href="#sample">tests/data/CBK_EVD16_jqBookData.xml</a></li>
-						<li><a href="#sample">tests/data/CBK_EVD03_jqBookData.xml</a></li>
-						<li>-</li>
-						<li><a href="#sample">http://localhost/lessons/web/ba08/jqBookData.xml</a></li>
-						<li><a href="#sample">http://localhost/sjgprojects/a2j/flash/data/Field Types Test.a2j</a></li>
-						<li><a href="#sample">http://localhost/sjgprojects/CAJA/js/data/A2J_FieldTypesTest_Interview.xml</a></li>
-						<li><a href="#sample">file:///F:/SJGProjects/a2j/flash/data/Field Types Test.a2j</a></li>
+					<ul id="samples">
 					</ul>
 				</div>
 			</li>
@@ -169,11 +157,25 @@
 				</div>
 			</div>
 		</div>
-		<div class="east-center">
+		<div class="east-center tabset"> 
+			<ul>
+				<li><a href="#tabstracer">Tracer</a></li>
+				<li><a href="#tabsextra">Extra</a></li>
+			</ul>
+			<div class="ui-layout-content">
+				<div id="tabstracer"> 
 			<ul id="tracer">
 				<li> Player debug tracing goes here </li>
 			</ul>
-		</div>
+			
+			
+				</div>
+				<div id="tabsextra"> 
+					<p>extra</p>
+				</div>
+			</div>
+			
+	 </div>
 	</div>
 	<div id="tabviews" class="ui-layout-center tabset">
 		<ul>
@@ -188,8 +190,8 @@
 			<li><a href="#tabsLogic">Logic</a></li>
 			<li><a href="#tabsAdvanced">Advanced</a></li>
 		</ul>
-		<div class="ui-layout-content">
-			<div id="tabsMapper">tabsMapper</div>
+		<div class="ui-layout-content"> 
+			<div id="tabsMapper"><button class="bigger" zoom="1.2">+</button><button class="smaller" zoom="0.8">-</button><div id="MapperPanel"><div class="map"></div></div></div>
 			<div id="tabsAbout">tabsAbout</div>
 			<div id="tabsVariables">tabsVariables</div>
 			<div id="tabsPageEdit">

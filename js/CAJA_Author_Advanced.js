@@ -374,7 +374,7 @@ TGuide.prototype.convertToText=function()
 		{
 			script=page.scripts[s];
 			st= script.code.split("\n")//.join("<BR>");
-			if (script.when=="BEFORE")
+			if (script.event=="BEFORE")
 				scriptBefore=scriptBefore.concat(st);
 			else
 				scriptAfter=scriptAfter.concat(st);
@@ -387,7 +387,7 @@ TGuide.prototype.convertToText=function()
 			lastStep=page.step;
 		}
 		
-		t2 = text2P("PAGE "+page.name+"") +  pageText + (page.scripts) + text2P("");
+		t2 = text2P("PAGE "+page.name+"") +  pageText + (page.codeBefore)+ (page.codeAfter) + text2P("");
 //		t2 = text2P("PAGE "+page.name+"") + script2P(scriptBefore) + pageText + script2P(scriptAfter) + script2P(scriptLast) + text2P("");
 		if (useDIV)
 			t +='<div class="editq">'+t2+'</div>';

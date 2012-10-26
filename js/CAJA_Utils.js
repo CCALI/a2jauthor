@@ -4,6 +4,19 @@
  
 var AJAXLoader="<span class='loader'>&nbsp;</span>'";
 
+function cloneObject(obj) {
+	var clone = {};
+	for(var i in obj) {
+		if(typeof(obj[i])=="object")
+			 clone[i] = cloneObject(obj[i]);
+		else
+			 clone[i] = obj[i];
+	}
+	return clone;
+}
+$.fn.showit = function(yes) { // show/hide via class rather than .toggle to avoid issues with TR
+    return $(this).removeClass('hidden').addClass(yes ? '' : 'hidden');
+}
 //http://stackoverflow.com/questions/1219860/javascript-jquery-html-encoding
 function htmlEscape(str) {
     return String(str)
@@ -104,8 +117,9 @@ function trace( )
 	{
 		var arg = arguments[a];
 		if (typeof arg==="object")
-			msg += props(arg);
+			msg += arg;//props(arg);
 		else
+		if (typeof arg !=="function")
 			msg += arg;
 		if (typeof console!="undefined") console.log(arg);
 	}

@@ -8,28 +8,28 @@ TGuide.prototype.noviceTab=function(div,tab)
 		case "tabsAbout":
 			var GROUP="ABOUT";
 			var fs = form.fieldset('About');
-			fs.append(form.text('Title:',  guide.title, {change:function(val){guide.title=val}}));
-			fs.append(form.htmlarea('Description', guide.description , {change:function(val){guide.description=val}}));
-			fs.append(form.text('Jurisdiction:', guide.jurisdiction, {change:function(val){guide.jurisdiction=val}}));
-			fs.append(form.htmlarea('Credits:',guide.credits, {change:function(val){guide.credits=val}}));
-			fs.append(form.text('Approximate Completion Time:',guide.completionTime, {change:function(val){guide.completionTime=val}}));
+			fs.append(form.text({label:'Title:',  value:guide.title, change:function(val){guide.title=val}}));
+			fs.append(form.htmlarea({label:'Description',value:guide.description,change:function(val){guide.description=val}}));
+			fs.append(form.text({label:'Jurisdiction:', value:guide.jurisdiction, change:function(val){guide.jurisdiction=val}}));
+			fs.append(form.htmlarea({label:'Credits:',value:guide.credits,change:function(val){guide.credits=val}}));
+			fs.append(form.text({label:'Approximate Completion Time:',value:guide.completionTime,change:function(val){guide.completionTime=val}}));
 			t.append(fs);
 			
 			var fs = form.fieldset('Authors');
 			for (var a in guide.authors)
 			{
 				var author = guide.authors[a];
-				fs.append(form.text('Name:', author.name, 					{change:function(val){author.name=val}}));
-				fs.append(form.text('Title:', author.title, 					{change:function(val){author.title=val}}));
-				fs.append(form.text('Organization:', author.organization,	{change:function(val){author.organization=val}}));
-				fs.append(form.text('EMail:', author.email, 					{change:function(val){author.email=val}}));
+				fs.append(form.text({label:'Name:', value:author.name, 					change:function(val){author.name=val}}));
+				fs.append(form.text({label:'Title:', value:author.title, 				change:function(val){author.title=val}}));
+				fs.append(form.text({label:'Organization:', value:author.organization,change:function(val){author.organization=val}}));
+				fs.append(form.text({label:'EMail:', value:author.email, 				change:function(val){author.email=val}}));
 				fs.append(form.clone());
 			}
 			t.append(fs);
 			
 			var fs = form.fieldset('Revision History');  
-			fs.append(form.text('Current Version:',guide.version, {change:function(val){guide.version=val}}));
-			fs.append(form.htmlarea('Revision Notes',guide.notes, {change:function(val){guide.notes=val}}));
+			fs.append(form.text({label:'Current Version:',value:guide.version,change:function(val){guide.version=val}}));
+			fs.append(form.htmlarea({label:'Revision Notes',value:guide.notes,change:function(val){guide.notes=val}}));
 			t.append(fs);
 
 			break;
@@ -81,56 +81,140 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 		trace("Loading page "+pagename);
 		
 
-//         t.append($('<h2/>').text('Your Page & all Info'));
-//         t.children('h2').click(function () { alert('click h2'); });
 
-		var fs=form.fieldset('Page info');
-		fs.append(form.pickstep('Step:', page.step, {change:function(val){page.step=parseInt(val);}} ));
-		fs.append(form.text('Name:', page.name, {change:function(val){page.name=val; /* TODO Rename all references to this page in POPUPs, JUMPs and GOTOs */ }} ));
+		var fs=form.fieldset('Page info',page);
+		fs.append(form.pickStep({label:'Step:',value: page.step, change:function(val,page){page.step=parseInt(val);/* TODO Move page to new outline location */}} ));
+		fs.append(form.text({label:'Name:', value:page.name,change:function(val,page){page.name=val; /* TODO Rename all references to this page in POPUPs, JUMPs and GOTOs */ }} ));
 		if (page.type != "A2J") {
 			fs.append(form.h2("Page type/style: " + page.type + "/" + page.style));
 		}
+		fs.append(form.htmlarea({label:'Notes:',value: page.notes,change:function(val,page){page.notes=val}} ));
 		t.append(fs);
 		
-		var fs=form.fieldset('Page text');
-//         t.append(form.h2('Page info'));
-//        t.append(form.text('Name:', GROUP, "name", page.name));
-
-		fs.append(form.htmlarea('Text:', 				page.text,	{change:function(val){page.text=val}} ));
-		fs.append(form.text('Learn More prompt:',		page.learn,	{change:function(val){page.learn=val}} ));
-		fs.append(form.htmlarea("Learn More help:",	page.help,	{change:function(val){page.help=val}} ));
+		var pagefs=form.fieldset('Question text',page);  
 		
-		t.append(fs);
+		pagefs.append(form.htmlarea(	{label:'Text:',value:page.text,change:function(val,page){page.text=val}} ));
+		pagefs.append(form.pickAudio(	{label:'Text audio:', 	value:	page.textAudioURL,change:function(val,page){page.textAudioURL=val}} ));
+		pagefs.append(form.text(		{label:'Learn More prompt:',	value:page.learn,	change:function(val,page){page.learn=val}} ));
+		function getShowMe(){
+			if (page.helpVideoURL!="") return 2; 
+			else if (page.helpImageURL!="") return 1; 
+			else return 0;
+		}
+		function updateShowMe(form,showMe){
+			trace('udpate show me',showMe);
+			form.find('[name="helpAudio"]').showit(showMe!=2);
+			form.find('[name="helpGraphic"]').showit(showMe==1);
+			form.find('[name="helpReader"]').showit(showMe>=1);
+			form.find('[name="helpVideo"]').showit(showMe==2);			
+		}
+		pagefs.append(form.pickList({label:'Help style:',value:getShowMe(), change:function(val,page,form){
+			trace("HELP CHANGE");
+			updateShowMe(form,val);
+			}},  [0,'Text',1,'Show Me Graphic',2,'Show Me Video']));
+		pagefs.append(form.htmlarea(	{label:"Help:",value:page.help,change:function(val,page){page.help=val}} ));
+		pagefs.append(form.pickAudio(	{name:'helpAudio',label:'Help audio:',value:page.helpAudioURL,			change:function(val,page){page.helpAudioURL=val}} ));
+		pagefs.append(form.text(		{name:'helpGraphic',label:'Help graphic:',value:page.helpImageURL,	change:function(val,page){page.helpImageURL=val}} ));
+		pagefs.append(form.text(		{name:'helpVideo', label:'Help video:',	value:page.helpVideoURL,	change:function(val,page){page.helpVideoURL=val}} ));
+		pagefs.append(form.htmlarea(	{name:'helpReader', label:'Help Text Reader:', value:page.helpReader,change:function(val,page){page.helpReader=val}} ));
+		pagefs.append(form.text(		{label:'Repeating Variable:',	value:page.repeatVar,						change:function(val,page){page.repeatVar=val}} ));
+		t.append(pagefs);
+		updateShowMe(pagefs,getShowMe());
+		pagefs=null;
+		
 		
 		if (page.type == "A2J" || page.fields.length > 0) {
-			var fs=form.fieldset('Fields');
-			for (var f in page.fields) {
-				var field = page.fields[f]; 
-				fs.append(form.text('Type:',  field.type, {change:function(val){field.type=val}}));
-				fs.append(form.text('Name:',  field.name, {change:function(val){field.name=val}}));
-				fs.append(form.text('Label:',   field.label, {change:function(val){field.label=val}}));
-				fs.append(form.text('Optional:',  field.optional, {change:function(val){field.optional=val}}));
-				fs.append(form.htmlarea('If invalid say:',   field.invalidPrompt, {change:function(val){field.invalidPrompt=val}}));
+		
+			var fs=form.fieldset('Fields'); 
+			fs.append(form.tableRowCounter('fields','Number of fields',0, CONST.MAXFIELDS,page.fields.length));
+
+			function updateFieldLayout(form,field){
+				var canMinMax = field.type==CONST.ftNumber || field.type==CONST.ftNumberDollar || field.type==CONST.ftNumberPick || field.type==CONST.ftDateMDY;
+				var canList = field.type==CONST.ftTextPick;
+				var canDefaultValue=	field.type!=CONST.ftCheckBox && field.type!=CONST.ftCheckBoxNOTA && field.type!=CONST.ftGender;
+				var canOrder =   field.type==CONST.ftTextPick || field.type==CONST.ftNumberPick || 	field.type==CONST.ftDateMDY;
+				var canUseCalc = (field.type == CONST.ftNumber) || (field.type == CONST.ftNumberDollar);
+				var canMaxChars= field.type==CONST.ftText || field.type==CONST.ftTextLong || field.type==CONST.ftNumber 
+					|| field.type==CONST.ftNumberDollar || 	field.type==CONST.ftNumberPhone || field.type==CONST.ftNumberZIP;				
+				var canCalendar = field.type==CONST.ftDateMDY;
+				//var canCBRange= curField.type==CField.ftCheckBox || curField.type==CField.ftCheckBoxNOTA;
+				// Can it use extra long labels instead of single line?
+				//	useLongLabel = curField.type==CField.ftCheckBox ||	curField.type==CField.ftCheckBoxNOTA ||curField.type==CField.ftRadioButton ||urField.type==CField.ftCheckBoxMultiple;
+				//	useLongText =curField.type==CField.ftTextLong;
+				
+				form.find('[name="maxchars"]').showit(canMaxChars);
+				form.find('[name="min"]').showit(canMinMax );
+				form.find('[name="max"]').showit(canMinMax );
+				form.find('[name="default"]').showit(canDefaultValue);
+				form.find('[name="calculator"]').showit(canUseCalc);
+				form.find('[name="calendar"]').showit(canCalendar);
 			}
+			function makeField(field){
+				var field1=form.record(field);
+				//var field1=$('<div class=record/>');//form.fieldset('Field');
+				//field1.data('record',field);
+				field1.append(form.pickList({label:'Type:',value: field.type,change:function(val,field,form){
+					field.type=val;
+					updateFieldLayout(form,field);
+					}},fieldTypesList ));
+				field1.append(form.htmlarea({label:'Label:',   value:field.label, 							change:function(val,field){field.label=val;}}));
+				field1.append(form.text({label:'Variable:', value: field.name, 						change:function(val,field){field.name=val}}));
+				field1.append(form.text({label:'Default value:',name:'default', value:  field.value, 				change:function(val,field){field.value=val}}));
+				field1.append(form.checkbox({label:'Validation:', checkbox:'User must fill in', value:field.optional, change:function(val,field){field.optional=val}}));
+				field1.append(form.text({label:'Max chars:',name:'maxchars', value: field.maxChars,			change:function(val,field){field.maxChars=val;}}));
+				field1.append(form.checkbox({label:'Calculator:',name:'calculator',checkbox:'Calculator available?', value:field.calculator,	change:function(val,field){field.calculator=val}}));
+				field1.append(form.checkbox({label:'Calendar:', name:'calendar',checkbox:'Calendar available?', value:field.calendar, 			change:function(val,field){field.calendar=val}}));
+				field1.append(form.text({label:'Min value:',name:'min', value: field.min, 						change:function(val,field){field.min=val}}));
+				field1.append(form.text({label:'Max value:',name:'max', value: field.max, 						change:function(val,field){field.max=val}}));
+				field1.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,	change:function(val,field){field.invalidPrompt=val}}));
+				updateFieldLayout(field1,field);
+				return field1;
+			}
+			
+			var fields=[];
+			for (var f in page.fields) {
+				fields.push({ row: ['Field ', makeField(page.fields[f])]});
+			}
+			var blankField=new TField();
+			blankField.type=CONST.ftText;
+			for (var f=page.fields.length;f<CONST.MAXFIELDS;f++) {
+				fields.push({ row: ['Field ', makeField(blankField)], visible:false });
+			}
+			fs.append(form.tableRows('fields','',fields));
 			t.append(fs);
 	  	}
 		if (page.type == "A2J" || page.buttons.length > 0) {
 			var fs=form.fieldset('Buttons');
-			for (var bi in page.buttons) {
-				var b = page.buttons[bi];
-				fs.append(form.text('Label:',  b.label, {change:function(val){b.label=val}}));
-				fs.append(form.text('Var Name:',  b.name, {change:function(val){b.name=val}}));
-				fs.append(form.text('Var Value:', b.value , {change:function(val){b.value=val}}));
-				fs.append(form.pickpage('Destination:',  b.next, {change:function(val){b.next=val;trace(b.next);}}));
+			fs.append(form.tableRowCounter('buttons','Number of buttons',1, CONST.MAXBUTTONS,page.buttons.length));
+			function makeButton(b)
+			{
+				var record=form.record(b);
+				record.append(form.text({label:'Label:', 				value: b.label,	change:function(val){b.label=val}}));
+				record.append(form.text({label:'Var Name:', 			value: b.name, 	change:function(val){b.name=val}}));
+				record.append(form.text({label:'Var Value:',			value: b.value,	change:function(val){b.value=val}}));
+				record.append(form.pickpage({label:'Destination:', value: b.next, 	change:function(val){b.next=val;trace(b.next);}}));
+				return record;
 			}
+			var buttons=[];
+			for (var b in page.buttons) {
+				buttons.push({ row: ['Button ', makeButton(page.buttons[b])]});
+			}
+			var blankButton=new TButton();
+			for (var b=page.buttons.length;b<CONST.MAXBUTTONS;b++) {
+				buttons.push({ row: ['Field ', makeButton(blankButton)], visible:false });
+			}
+			fs.append(form.tableRows('buttons','',buttons));
 			t.append(fs);
 		}
 		var fs=form.fieldset('Advanced Logic');
-		fs.append(form.codearea('Logic:', page.scripts, {change:function(val){page.scripts=val; /* TODO Compile for syntax errors */}} ));
+		fs.append(form.codearea({label:'Before:',	value:page.codeBefore,	change:function(val){page.codeBefore=val; /* TODO Compile for syntax errors */}} ));
+		fs.append(form.codearea({label:'After:',	value:page.codeAfter, 	change:function(val){page.codeAfter=val; /* TODO Compile for syntax errors */}} ));
 		t.append(fs);
 
 		if (page.type == "Book page") { }
 		else
+		{
+		/*
 			if (page.type == "Multiple Choice" && page.style == "Choose Buttons") {
 				for (var b in page.buttons) {
 					//				t1+=form.short(page.
@@ -154,7 +238,7 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 					dlist.push({ row: [detail.label, form.pickscore(fb.grade), $fb] });
 				}
 				t.append(form.h1('Choices'));
-				t.append(form.tablecount("Number of choices", 2, 7, 'choices').after(form.tablerange('choices', clist)));
+				t.append(form.tableRowCounter("Number of choices", 2, 7, 'choices').after(form.tablerange('choices', clist)));
 
 				t.append(form.h1('Feedback'));
 				t.append(form.tablerange(dlist));
@@ -203,31 +287,17 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 			else if (page.type == "GAME" && page.style == "FLASHCARD") { }
 			else if (page.type == "GAME" && page.style == "HANGMAN") { }
 
-
+*/
+}
 
 		//pageText += html2P(expandPopups(this,page.text));
 
-		t.append(form.textarea('Notes', GROUP, "note", makestr(page.notes)));
-
-	//t+=form.h1('XML')+htmlEscape(page.xml);
-	t.append(htmlEscape(page.xml));
    }
 
-   /*
-   var t=$('<input/>',{
-   id:'test',
-   click:function(){alert('hi');},
-   addClass:'ui-input'
-   });
-   );*/
-
-   //	editq.append(t);
-   //	form.html(t);
    div.append(t);
 
+	div.append('<div class=xml>'+htmlEscape(page.xml)+'</div>');
 
-
-   //	div.append(form.div("editq",t));
 
    // Attach event handlers
    /*
@@ -259,4 +329,5 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 		});
 		
 	gPage = page;
+	page=null;
 }

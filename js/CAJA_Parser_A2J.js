@@ -121,19 +121,22 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		page.step=parseInt(QUESTION.attr("STEP"));
 		page.mapx=parseInt(.3*QUESTION.attr("MAPX"));
 		page.mapy=parseInt(.3*QUESTION.attr("MAPY"));
+		page.repeatVar=makestr(QUESTION.attr("REPEATVAR"));
 		page.nextPage="";
 		page.nextPageDisabled = false;
 		page.text= replacePopups(page.name,makestr(QUESTION.find("TEXT").xml())) 
+		page.textAudioURL= replacePopups(page.name,makestr(QUESTION.find("TEXTAUDIO").xml())) 
 		page.learn=makestr(QUESTION.find("LEARN").xml());
 		page.help= replacePopups(page.name,makestr(QUESTION.find("HELP").xml())) 
+		page.helpAudioURL= replacePopups(page.name,makestr(QUESTION.find("HELPAUDIO").xml())) 
 		page.helpReader=makestr(QUESTION.find("HELPREADER").xml());
-		page.helpImage=makestr(QUESTION.find("HELPGRAPHIC").text());
-		page.helpVideo=makestr(QUESTION.find("HELPVIDEO").text());
+		page.helpImageURL=makestr(QUESTION.find("HELPGRAPHIC").text());
+		page.helpVideoURL=makestr(QUESTION.find("HELPVIDEO").text());
 		page.notes= cr2P(makestr(QUESTION.find("NOTE").xml()));
 		
 		if (SHOWXML) page.xml = $(this).xml();
 		page.alignText="";
- 
+		var scripts=[];
 
 		QUESTION.find('BUTTON').each(function(){
 			button=new TButton();
@@ -170,10 +173,11 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			script.event =jQuery.trim($(this).find("EVENT").xml());
 			var condition =jQuery.trim($(this).find("CONDITION").xml());
 			
-			// Remove old cruft.
-			if (condition == "Example: set a flag if income too high") condition="";
 			
 			var comment =jQuery.trim($(this).find("COMMENT").xml());
+			// Remove old cruft.
+			if (comment == "Example: set a flag if income too high") comment="";
+			
 			var condT=[];
 			var condF=[];
 			$(this).find('STATEMENT').each(function(){
@@ -212,7 +216,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 				script.code="IF  "+condition+" THEN"+LINEDEL+INDENT+condT.join(LINEDEL+INDENT)+""+LINEDEL+"ELSE"+LINEDEL+INDENT+condF.join(LINEDEL+INDENT)+LINEDEL+"END IF"+LINEDEL;//if x then y else z
 			if (comment) script.code = "//"+comment + LINEDEL + script.code;
 			 
-			page.scripts.push(script);
+			scripts.push(script);
 		});
 		  
 		var scriptBefore=[];
@@ -228,18 +232,22 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 				if (makestr(button.next)!="")// if button has a destination, we'll go there after any AFTER scripts have run.
 					scriptLast.push(resptest+" THEN GOTO "+ htmlEscape(fixID(button.next)));
 			}  
-		for (var s in page.scripts)
+		for (var s in scripts)
 		{
-			var script=page.scripts[s];
+			var script=scripts[s];
 			var st= script.code.split("\n")//.join("<BR>");
-			if (script.when=="BEFORE")
+			if (script.event=="BEFORE")
 				scriptBefore=scriptBefore.concat(st);
 			else
 				scriptAfter=scriptAfter.concat(st);
 		}
+		/*
 		if (scriptBefore.length>0) scriptBefore.unshift("OnBefore");
 		if (scriptAfter.length>0) scriptAfter.unshift("OnAfter");
 		page.scripts =  makestr((scriptBefore.concat(scriptAfter).concat(scriptLast)).join("<BR/>")); 
+		*/
+		page.codeBefore =  	makestr((scriptBefore).join("<BR/>")); 
+		page.codeAfter =  	makestr((scriptAfter.concat(scriptLast)).join("<BR/>"));  
 	});
 	
 	for (p in DefaultPrompts)

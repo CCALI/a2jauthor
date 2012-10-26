@@ -72,18 +72,22 @@ function exportXML_CAJA_from_CAJA(guide)
 			_MAPX:		page.mapx,
 			_MAPY:		page.mapy,
 			_STEP:		page.step,
+			_REPEATVAR:	page.repeatVar,
 			_NEXTPAGE:	page.nextPage,
 			_nextPageDisabled: page.nextPageDisabled==true ? true : JS2XML_SKIP,
 			_alignText:	page.alignText,
 			XML_TEXT:	page.text, 
+			TEXTAUDIO:	page.textAudioURL, 
 			XML_LEARN:	page.learn,
 			XML_HELP:	page.help,
+			HELPAUDIO:	page.helpAudioURL,
 			XML_HELPREADER:	page.helpReader, 
-			HELPIMAGE:	page.helpImage, 
-			HELPVIDEO:	page.helpVideo, 
+			HELPIMAGE:	page.helpImageURL, 
+			HELPVIDEO:	page.helpVideoURL, 
 			BUTTONS: 	[],
 			FIELDS:		[],
-			XML_SCRIPTS:		page.scripts,
+			XML_CODEBEFORE:	page.codeBefore,
+			XML_CODEAFTER:		page.codeAfter,
 			XML_NOTES:	page.notes
 		}
 		
@@ -204,18 +208,22 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		page.style=makestr(PAGE.attr("STYLE"));
 		page.mapx=parseInt(PAGE.attr("MAPX"));
 		page.mapy=parseInt(PAGE.attr("MAPY"));
+		page.repeatVar=makestr(PAGE.attr("REPEATVAR"));
 		page.nextPage="";
 		page.nextPageDisabled = false;
 		page.step=parseInt(PAGE.attr("STEP"));
 		page.text=PAGE.find("TEXT").xml();
+		page.textAudioURL=makestr(PAGE.find("TEXTAUDIO").text());
 		page.learn=makestr(PAGE.find("LEARN").xml());
 		page.help=makestr(PAGE.find("HELP").xml());
+		page.helpAudioURL=makestr(PAGE.find("HELPAUDIO").text());
 		page.helpReader=makestr(PAGE.find("HELPREADER").xml());
-		page.helpImage=makestr(PAGE.find("HELPIMAGE").text());
-		page.helpVideo=makestr(PAGE.find("HELPVIDEO").text());
+		page.helpImageURL=makestr(PAGE.find("HELPIMAGE").text());
+		page.helpVideoURL=makestr(PAGE.find("HELPVIDEO").text());
 		page.notes=makestr(PAGE.find("NOTES").xml());
 		page.alignText="";
-		page.scripts = makestr(PAGE.find("SCRIPTS").xml());
+		page.codeBefore = makestr(PAGE.find("CODEBEFORE").xml());
+		page.codeAfter = 	makestr(PAGE.find("CODEAFTER").xml());
 		
 		PAGE.find('BUTTONS > BUTTON').each(function(){
 			var button=new TButton();

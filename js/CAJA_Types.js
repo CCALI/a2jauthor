@@ -3,13 +3,39 @@
 
 // ### Constants  ###
 
-// Navigation page destinations
-var qIDNOWHERE=""
-var qIDSUCCESS="SUCCESS"
-var qIDFAIL="FAIL"
-var qIDEXIT="EXIT" //8/17/09 3.0.1 Save like SUCCESS but flag incomplete true.
-var qIDBACK="BACK" //8/17/09 3.0.1 Same as history Back button.
-var qIDRESUME="RESUME" //8/24/09 3.0.2
+	// Navigation page destinations
+	var qIDNOWHERE=""
+	var qIDSUCCESS="SUCCESS"
+	var qIDFAIL="FAIL"
+	var qIDEXIT="EXIT" //8/17/09 3.0.1 Save like SUCCESS but flag incomplete true.
+	var qIDBACK="BACK" //8/17/09 3.0.1 Same as history Back button.
+	var qIDRESUME="RESUME" //8/24/09 3.0.2
+	
+var CONST = {
+	//Field Types
+	ftButton:"button",
+	ftText:"text",
+	ftTextLong:"textlong",
+	ftTextPick:"textpick",
+	ftNumber:"number",
+	ftNumberDollar:"numberdollar",
+	ftNumberSSN:"numberssn",
+	ftNumberPhone:"numberphone",
+	ftNumberZIP:"numberzip",
+	ftNumberPick:"numberpick",
+	ftDateMDY:"datemdy",
+	ftGender:"gender",
+	ftRace:"race",
+	ftRadioButton:"radio",
+	ftCheckBox:"checkbox",
+	ftCheckBoxNOTA:"checkboxNOTA",
+	ftCheckBoxMultiple:"checkboxmultiple",
+	
+	MAXFIELDS: 10,
+	MAXBUTTONS: 3,
+	
+	0:0
+};
 
 
 // ### Steps ###
@@ -62,7 +88,9 @@ function TButton()
 	this.value = ""; // Value - when clicked, variable 'name' gets value 'value'
 	return this;
 }
-function TField()
+
+var TField = function()
+//function TField()
 {
 	this.type ="";
 	this.label ="";
@@ -77,6 +105,25 @@ function TField()
 	this.maxChars="";
 	return this;
 }
+
+
+var fieldTypesList = [
+	CONST.ftText,"Text",
+	CONST.ftTextLong,"Text (Long)",
+	CONST.ftTextPick,"Text (Pick from list)",
+	CONST.ftNumber,"Number",
+	CONST.ftNumberDollar,"Number Dollar",
+	CONST.ftNumberSSN,"Number SSN",
+	CONST.ftNumberPhone,"Number Phone",
+	CONST.ftNumberZIP,"Number ZIP Code",
+	CONST.ftNumberPick,"Number (Pick from list)",
+	CONST.ftDateMDY,"Date MM/DD/YYYY",
+	CONST.ftGender,"Gender",
+	CONST.ftRadioButton,"Radio Button",
+	CONST.ftCheckBox,"Check box",
+	CONST.ftCheckBoxNOTA,"Check Box (None of the Above)"
+];
+
 function TScript()
 {
 	this.event =""; // BEFORE page is displayed or AFTER user presses a button
@@ -101,14 +148,19 @@ function TPage()
 	this.id ="";// Unique id
 	this.name ="";// Unique but author chosen name
 	this.text ="";// Text of question
+	this.textAudioURL = "";
 	this.notes="";
 	this.learn ="";
 	this.help = "";// Optional help text from Learn More button
+	this.helpAudioURL = "";
 	this.helpReader="";
-	this.helpImage="";
-	this.helpVideo="";
+	this.helpImageURL="";
+	this.helpVideoURL="";
+	this.repeatVar="";// built-in for attaching Field variables to array
 	
-	this.scripts=[];
+	//this.scripts=[];
+	this.codeBefore="";
+	this.codeAfter="";
 	this.fields=[];
 	this.buttons=[];
 	this.step=0;//index into guide.steps[]

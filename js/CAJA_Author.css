@@ -141,27 +141,33 @@ div.editq {
 .editq label { 
 	clear: both;
 	display: block;
+	vertical-align: top;
 	float: left;
-	width: 10em;
+	width: 12em;
 	margin: 5px 0 0;
 	text-align: right; 
+	
+	
+	xborder: 1px solid #ff0;
 }
-/*.widetext {
-	width: 20em;
-	padding: 0;
-	margin: 0;
-	padding-left: 3px;
-	padding-right: 3px;
-	background-color: #1ff;
+.editq fieldset div  {
+	margin-top: 1em;
+	xborder: 1px solid #0f0;
 }
-*/
+
 .editspan { /* wrap around fields for fluid width */
+	xborder: 1px solid #f00;
+	
 	display: block;
 	overflow: hidden;
 	padding: 5 5 5 5;
 }
 .editable.taller {
-	min-height: 3em;
+	margin-top: 0em;
+	min-height: 2em; 
+}
+.editable.tallest {
+	min-height: 5em; 
 }
 .editable { /* authoring text fields */ 
 	margin-top: 1px;
@@ -170,8 +176,8 @@ div.editq {
 	padding: 5px; 
 	background-color: #fff;
 	font-size: 100%;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
 	border: 0px solid #0066CC;
 	min-height: 1em;
 	
@@ -181,10 +187,26 @@ div.editq {
             box-sizing: border-box;
 }
 
-.codearea {
+/*.widetext {
+	width: 20em;
+	padding: 0;
+	margin: 0;
+	padding-left: 3px;
+	padding-right: 3px;
+	background-color: #1ff;
+}
+*/
+.codearea, .xml {
+	font-family: Monospace;
 	white-space: pre-wrap;
 }
-
+.xml {
+	font-size: .5pt;
+}
+.collapse {
+	height: 1.5em;
+	overflow: hidden;
+}
 .autocomplete.picker.page {
 	width:100%; 
     -webkit-box-sizing: border-box;
@@ -457,12 +479,16 @@ table.list tr td  {
 	border:1px solid #111;
 	padding:1em;
 }
-table.list tr:nth-child(even) {
+.hidden {
+	display: none;
+}
+/*table.list tr:nth-child(even) {
 background-color:#fff;
 }
 table.list tr:nth-child(odd) {
 background-color:#eee;
 }
+*/
 
 
 .hidestart {

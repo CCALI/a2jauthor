@@ -4,9 +4,10 @@
 
 
 
-/* 
+/*    * /
 function DEBUGSTART(){
 	var SAMPLES = [
+		"tests/data/Field Characters Test.a2j#1-5 Fields Test 1",
 		"tests/data/Field Characters Test.a2j#0-1 Intro",
 		"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name",
 		"tests/data/CBK_CAPAGETYPES_jqBookData.xml", 
@@ -34,85 +35,112 @@ function DEBUGSTART(){
  
  
 var form={
-	id:0, 
-	 h1:function(h){
+	id:0
+	
+	,change: function(elt,val){
+		var form= $(elt).closest('[name="record"]');
+		trace("Changed value: "+val);
+		$(elt).data('data').change.call(this,val,form.data('record'),form);
+	}
+	 ,h1:function(h){
 		return $("<h1>"+h+"</h1>");}
+		
 	,h2:function(h){
 		return $("<h2>"+h+"</h2>").click(function(){$(this).next().toggle()});}
-	,fieldset:function(legend){
-		return $("<fieldset><legend >"+legend+"</legend></fieldset>")//.click(function(){$(this).next().toggle()});
-		}
-	,note:function(t){
-		return $("<div>"+t+"</div>")}
 		
 		
-	,number:    function(label,value,minNum,maxNum,handler){
-		return "<label>"+label+'</label><input class="editable" type="text" name="'+group+id+'" value="'+htmlEscape(value)+'"> ';}
+	//,note:function(t){
+	//	return $("<div>"+t+"</div>")}
 		
-	,text: function(label,value,handler){
-		var e=$("<label>"+label+'</label><span class=editspan> <input class="editable" type="text""/> </span>');
-		$('input',e).blur(function(){ handler.change($(this).val() ) } ).val(decodeEntities(value));
+	,fieldset:function(legend,record){
+		return $('<fieldset name="record"><legend >'+legend+'</legend></fieldset>').data('record',record);;//.click(function(){$(this).toggleClass('collapse')});
+	}
+	,record:function(record){
+		return $('<div name=record class=record/>').data('record',record);
+	}
+	
+	//,number:    function(label,value,minNum,maxNum,handler){
+	//	return "<label>"+label+'</label><input class="editable" type="text" name="'+group+id+'" value="'+htmlEscape(value)+'"> ';}
+	
+	,checkbox: function(data){
+		var e=$('<div name="'+data.name+'">'+
+			'<label>'+data.label+'</label><span  class=editspan > <input class="" type="checkbox" />'+data.checkbox+'</span></div>');
+		$('input',e).blur(function(){ form.change($(this),$(this).val());}).val( data.value ).data('data',data);
 		return e;
 	}
-	,codearea:function(label,value,handler){ 
+	,text: function(data){
+		var e=$('<div name="'+data.name+'">'+
+			'<label>'+data.label+'</label><span class=editspan> <input class="editable"  type="text" /> </span></div>');
+		$('input',e).blur(function(){ form.change($(this),$(this).val());}).val(decodeEntities(data.value)).data('data',data);
+		return e;
+	}
+	,htmlarea: function(data){//label,value,handler,name){ 
 		this.id++;
-		var e= $('<div>'+(label!="" ? ('<label>'+label+'</label>') : '') +
-			'<span class=editspan><div contenteditable=true class="text editable taller codearea "  rows='+4+'>'+value+'</div></span></div>');
-		$('.editable',e).blur(function(){var val=$(this).html();$(this).data('data').change(val);}).data('data',handler) ;
+		var e= $('<div name="'+data.name+'">'
+			+(data.label!="" ? ('<label>'+data.label+'</label>') : '')
+			+'<span class=editspan>'
+			+'<div contenteditable=true class="text editable taller tinyMCEtext" id="tinyMCE_'+this.id+'"  name="'+this.id+'" rows='+1+'>'
+			+data.value+'</div></span></div>');
+		$('.editable',e).focus(function(){$(this).addClass('tallest')}).blur(function(){$(this).removeClass('tallest'); form.change($(this),$(this).html());}).data('data',data) ;
+		return e;
+	} 
+	,textarea: function(data){
+		var rows=2;
+		var e=$('<div name="'+data.name+'">'
+			+'<label>'+data.label+'</label><span class=editspan><textarea  class="text editable taller" rows='+rows+'>'+data.value+'</textarea></span></div>');
+		$('.editable',e).blur(function(){form.change($(this),$(this).html());}).data('data',data);
 		return e;
 	}
-	,textarea: function(label,value,handler){
-		var rows=4;
-		if (typeof rows=="undefined") rows=2;
-		var e=$('<label>'+label+'</label><span class=editspan><textarea  class="text editable taller" rows='+rows+'>'+value+'</textarea></span>');
-		$('.editable',e).blur(function(){var val=$(this).html();$(this).data('data').change(val);}).data('data',handler) ;
-		return e;
-	}
-	,htmlarea: function(label,value,handler){ 
+	
+	,pickAudio:function(data){ return this.text(data);}
+	,codearea:function(data){ 
 		this.id++;
-		var e= $('<div>'+(label!="" ? ('<label>'+label+'</label>') : '') +
-			'<span class=editspan><div contenteditable=true class="text editable taller tinyMCEtext" id="tinyMCE_'+this.id+'"  name="'+this.id+'" rows='+4+'>'+value+'</div></span></div>');
-		$('.editable',e).blur(function(){var val=$(this).html();$(this).data('data').change(val);}).data('data',handler) ;
+		var e= $('<div>'+(data.label!="" ? ('<label>'+data.label+'</label>') : '') +
+			'<span class=editspan><div contenteditable=true class="text editable taller codearea"  rows='+4+'>'+data.value+'</div></span></div>');
+		$('.editable',e).blur(function(){form.change($(this),$(this).html())}).data('data',data);
 		return e;
-		} 
+	}
 	,div:function(clas,t){
 		return '<div class="'+clas+'">'+t+'</div>';}
 
-	,pickstep:function(label,value,handler){
-		var o='';
+	,pickpage:function(data){ 
+		data.value = gGuide.pageDisplayName(data.value); 
+		var e =$( (data.label!="" ? ('<label>'+data.label+'</label>') : '') 
+			+ '<span class=editspan><input class="ui-state-default ui-combobox-input autocomplete picker page dest" type="text" ></span>');
+		$('.picker',e).blur(function(){var val=$(this).val();$(this).data('data').change(val);}).data('data',data).val(decodeEntities(data.value));
+		return e;
+	}
+	,pickList:function(data,listValueLabel){//list is array to ensure preserved order. Note: js object properties don't guarantee order
+		var c="";
+		for (var o=0;o<listValueLabel.length;o+=2)
+			c+='<option value="'+listValueLabel[o]+'">'+listValueLabel[o+1]+'</option>';
+		var e =$('<div name="'+data.name+'"><label>'+data.label+'</label>' + '<span class=editspan><select class="ui-state-default ui-select-input">'+c+'</select></span></div>');
+		$('.ui-select-input',e).change(function(){form.change($(this),$('option:selected',this).val())}).data('data',data).val(data.value);
+		return e;
+	}
+	,pickStep:function(data){
+		var list=[];
 		for (var s=0;s<gGuide.steps.length;s++){
 			var step = gGuide.steps[s];
-			o+="<option value="+s+">"+step.number+". "+ (step.text)+"</option>";
+			list.push(s,step.number+". "+ (step.text));
 		}
-		var e =$('<div><label>'+label+'</label>' + '<select class="ui-state-default ui-select-input">'+o+'</select></div>');
-		$('.ui-select-input',e).change(function(){var val=$('option:selected',this).val();  $(this).data('data').change(val);}).data('data',handler).val(value);
-		return e;
+		return this.pickList(data,list);
+		//var e =$('<div><label>'+label+'</label>' + '<select class="ui-state-default ui-select-input">'+o+'</select></div>');
+		//$('.ui-select-input',e).change(function(){var val=$('option:selected',this).val();  $(this).data('data').change(val);}).data('data',handler).val(value);
+		//return e;
 	}
-	,pickpage:function(label,value,handler){ 
-		value = gGuide.pageDisplayName(value); 
-		var e =$( (label!="" ? ('<label>'+label+'</label>') : '') + '<span class=editspan><input class="ui-state-default ui-combobox-input autocomplete picker page dest" type="text" ></span>');
-		$('.picker',e).blur(function(){var val=$(this).val();$(this).data('data').change(val);}).data('data',handler).val(decodeEntities(value));
-		return e;
-	}
-	,picklist:function(label,style,list,value){//let user choose number of said item
-		var c=label+'<select class="ui-state-default ui-select '+style+'">';
-		for (var o=0;o<list.length;o++)
-			if (typeof list[o] === "object")
-				c+="<option value="+list[o].value+">"+list[o].label+"</option>";
-			else
-				c+="<option value="+o+">"+list[o]+"</option>";
-		c+="</select>";
-		return $(c).val(value);
-	}
-	,pickscore:function(value){
-		return this.picklist('','picker score',[
-			{value:'RIGHT',label:'Right'},
-			{value:'WRONG',label:'Wrong'},
-			{value:'MAYBE',label:'Maybe'},
-			{value:'INFO',label:'Info'}],value);
+	,pickscore:function(label,value,handler){
+		return this.pickList('','picker score',[
+			'RIGHT','Right',
+			'WRONG','Wrong',
+			'MAYBE','Maybe',
+			'INFO','Info'],value,handler);
 	}
 	,pickbranch:function(){ 
-		return this.picklist("",'picker branch',["Show feedback and return to question","Show feedback then branch to this page","Just branch directly to this page"])
+		return this.pickList("",'picker branch',[
+		0,"Show feedback and return to question",
+		1,"Show feedback then branch to this page",
+		2,"Just branch directly to this page"])
 		.change(function(){
 			var br=$(this).val();
 			$(this).parent().children('.text').toggle(br!=2);
@@ -120,17 +148,32 @@ var form={
 			trace(br);
 		})
 	}
+	
+		
 	,clone:function(){return 'Clone buttons';}
-	,tablecount:function(label,minelts,maxelts, tablename){//let user choose number of said item
+	
+	,tableRowAdjust:function(name,val){
+		// Adjust number of rows. set visible for rows > val. if val > max rows, clone the last row.
+		$tbody = $('table[list="'+name+'"] tbody');
+		var rows = $('tr',$tbody).length;
+		for (var r=0;r<rows;r++)
+			$('tr:nth('+r+')',$tbody).showit(r<val);
+		for (var r=rows;r<val;r++)
+			$('tr:last',$tbody).clone(true).appendTo($tbody);//no longer used?
+		
+		//$(this).data('data').change(val);
+		
+	}
+	,tableRowCounter:function(name,label,minelts,maxelts,value){//let user choose number of said item
 		var c=$('<label/>').text(label);
-		var s='<select class="ui-state-default ui-select">';
+		var s='<select list="'+name+'" class="ui-state-default ui-select">';
 		for (var o=minelts;o<=maxelts;o++)s+="<option>"+o+"</option>";
 			s+="</select>";
-		return $('<div/>').append(c.after(s).data('table',tablename));
+		return $('<div/>').append(c.after(s).change(function(){form.tableRowAdjust(name,$('option:selected',this).val());}).val(value));
 	}
-	,tablerange:function(list,headings){
-		var $tbl=$('<table>').addClass('list');
-		if (headings!==null){
+	,tableRows:function(name,headings,rowList){
+		var $tbl=$('<table/>').addClass('list').data('table',name).attr('list',name);
+		if (typeof headings==="object"){
 			var tr="<tr valign=top>";
 			for (var col in headings)
 			{
@@ -139,18 +182,19 @@ var form={
 			tr+="</tr>";
 			$tbl.append($(tr));
 		}
-		for (var row in list){
+		for (var row in rowList){
 			var $row=$("<tr valign=top/>");
-			for (var col in list[row].row)
+			if (rowList[row].visible==false) $row.addClass('hidden');
+			for (var col in rowList[row].row)
 			{
-				//t+="<td>"+list[row].row[col]+"</td>";
-				$row.append($("<td/>").append(list[row].row[col]));
+				$row.append($("<td/>").append(rowList[row].row[col]));
 			}
-			//t+="<td>add/remove</td>";
 			$tbl.append($row);
 		}
+		$('tbody',$tbl).sortable({
+			handle:"td:eq(0)",
+			update:function(){ }})//.disableSelection();
 		return $tbl;
-//		return "<table class='list' >"+t+"</table>";
 	}
 	,row:function(cols){ return "<tr valign=top><td>"+cols.join("</td><td>")+"</td></tr>";}
 	,rowheading:function(cols){ return "<tr valign=top><th>"+cols.join("</th><th>")+"</th></tr>";}

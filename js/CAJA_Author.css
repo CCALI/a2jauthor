@@ -55,7 +55,10 @@ html, body {
 .ui-tabs .ui-tabs-nav li { 
 	font-size: .5em;
 }
-
+.pagelist {
+	font-size: .8em;
+	line-height: 1em;
+}
 .pagelist ul { 
 	font-weight: normal;
 	color: #f00;
@@ -70,6 +73,19 @@ html, body {
 	background-color:#eee;
 	cursor: pointer;
 }
+
+
+.editicons {
+	border-collapse:collapse;
+	margin: 0px; 
+	padding: 0px;
+	width: 50px;
+	display: inline-block;
+}
+.editicons .ui-icon {
+	display: inline-block;
+}
+
 
 /*********** A2J ***************/
 table.A2JSteps, table.A2JVars {
@@ -95,7 +111,9 @@ background-color:#fff;
 table.A2JVars tr:nth-child(odd) {
 background-color:#eee;
 }
-
+input.narrow {
+	width: 5em;
+}
 /*let ui-layout handle scrolling // .ui-tab-content, .ui-tabs-panel{overflow: scroll;} */
 
 /* Shared */
@@ -124,8 +142,8 @@ background-color:#eee;
 div.editq {
 	width: 100%;
 	-moz-border-radius:12px; border-radius:12px;
-	border: 1px solid #0066CC;
-	background-color: #C4E1FF;
+	xborder: 1px solid #0066CC;
+	xbackground-color: #C4E1FF;
 	margin: 0px;
 	padding: 5px;
 }
@@ -146,17 +164,26 @@ div.editq {
 	width: 12em;
 	margin: 5px 0 0;
 	text-align: right; 
-	
-	
 	xborder: 1px solid #ff0;
+}
+
+fieldset { padding:0; border:0; margin-top:25px; }
+.editq fieldset {
+	border: 1px solid #0066CC;
 }
 .editq fieldset div  {
 	margin-top: 1em;
 	xborder: 1px solid #0f0;
 }
+.editq fieldset {
+	padding: inherit;
+	margin-top:25px; 
+}
+.sorthandle {
+	cursor: move;
+}
 
 .editspan { /* wrap around fields for fluid width */
-	xborder: 1px solid #f00;
 	
 	display: block;
 	overflow: hidden;
@@ -169,7 +196,14 @@ div.editq {
 .editable.tallest {
 	min-height: 5em; 
 }
+/*.editable:focus {
+	min-width: 20em;
+}
+*/
+
 .editable { /* authoring text fields */ 
+	min-width: 10em;
+
 	margin-top: 1px;
 	margin-bottom: 1px;
 	
@@ -178,8 +212,9 @@ div.editq {
 	font-size: 100%;
 	-moz-border-radius: 12px;
 	border-radius: 12px;
-	border: 0px solid #0066CC;
+	border: 1px solid #ccc;
 	min-height: 1em;
+	
 	
 	width:100%; 
     -webkit-box-sizing: border-box;
@@ -354,11 +389,6 @@ background-color:#ddf;
 	padding: 5px;
 	margin: 2px;
 }
-.editq fieldset {
-	padding: inherit;
-	border: inherit;
-	margin-top:25px; 
-}
 
 .section .header {
 	/*font-size: 15px;*/
@@ -472,23 +502,33 @@ ul.megamenu div ul li:hover {
 
 /************** List Table ************/
 table.list {
-	border-collapse:collapse;
+	xborder-collapse:collapse;
+	xborder:1px solid #111;
 	width:100%;
 }
-table.list tr td  {
-	border:1px solid #111;
-	padding:1em;
+table.list tr   {
+	border:5px solid #888;
+	border-collapse:separate;
 }
+table.list tr:nth-child(even) {
+	background-color:rgba(240,240,240,0.5);
+}
+table.list tr:nth-child(odd) {
+	background-color:rgba(255,255,255,0.5);
+}
+table.list tr td  {
+	font-size: .8em;
+	padding:.1em;
+}
+/*
+select {
+	width: 10em;
+}
+*/
+
 .hidden {
 	display: none;
 }
-/*table.list tr:nth-child(even) {
-background-color:#fff;
-}
-table.list tr:nth-child(odd) {
-background-color:#eee;
-}
-*/
 
 
 .hidestart {
@@ -527,7 +567,7 @@ background-color:#eee;
 .validateTips { border: 1px solid transparent; padding: 0.3em; }
 input.text { margin-bottom:12px; width:95%; padding: .4em; }
 */
-fieldset { padding:0; border:0; margin-top:25px; }
+
 .ui-dialog .ui-state-error { padding: .3em; }
 
 

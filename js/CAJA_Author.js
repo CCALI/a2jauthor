@@ -4,7 +4,7 @@
 
 
 
-/*    * /
+/*    */
 function DEBUGSTART(){
 	var SAMPLES = [
 		"tests/data/Field Characters Test.a2j#1-5 Fields Test 1",
@@ -39,7 +39,7 @@ var form={
 	
 	,change: function(elt,val){
 		var form= $(elt).closest('[name="record"]');
-		trace("Changed value: "+val);
+		//trace("Changed value: "+val);
 		$(elt).data('data').change.call(this,val,form.data('record'),form);
 	}
 	 ,h1:function(h){
@@ -49,9 +49,11 @@ var form={
 		return $("<h2>"+h+"</h2>").click(function(){$(this).next().toggle()});}
 		
 		
-	//,note:function(t){
-	//	return $("<div>"+t+"</div>")}
-		
+	,note:function(t){
+		return $('<div class="ui-widget"><div style="margin-top: 20px; padding: 0 .7em;" class="ui-state-highlight ui-corner-all">		<p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-info"></span>'+t+'</div></div>')
+	}
+
+
 	,fieldset:function(legend,record){
 		return $('<fieldset name="record"><legend >'+legend+'</legend></fieldset>').data('record',record);;//.click(function(){$(this).toggleClass('collapse')});
 	}
@@ -63,21 +65,27 @@ var form={
 	//	return "<label>"+label+'</label><input class="editable" type="text" name="'+group+id+'" value="'+htmlEscape(value)+'"> ';}
 	
 	,checkbox: function(data){
-		var e=$('<div name="'+data.name+'">'+
-			'<label>'+data.label+'</label><span  class=editspan > <input class="" type="checkbox" />'+data.checkbox+'</span></div>');
-		$('input',e).blur(function(){ form.change($(this),$(this).val());}).val( data.value ).data('data',data);
+		var e=$('<div name="'+data.name+'">'
+			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
+			+'<span  class=editspan > <input class="ui-checkbox-input" type="checkbox" />'+data.checkbox+'</span></div>');
+		$('input',e).blur(function(){ form.change($(this),$(this).is(':checked'))}).attr( 'checked',data.value==true ).data('data',data);
 		return e;
 	}
+	
+	
 	,text: function(data){
-		var e=$('<div name="'+data.name+'">'+
-			'<label>'+data.label+'</label><span class=editspan> <input class="editable"  type="text" /> </span></div>');
+		var e=$('<div name="'+data.name+'">'
+			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
+			+'<span class=editspan> <input class="editable" placeholder="'+data.placeholder+'" type="text" /> </span></div>');
+		if (typeof data.class!=='undefined') $('input',e).addClass(data.class);
+		if (typeof data.width!=='undefined') $('input',e).css('width',data.class);
 		$('input',e).blur(function(){ form.change($(this),$(this).val());}).val(decodeEntities(data.value)).data('data',data);
 		return e;
 	}
 	,htmlarea: function(data){//label,value,handler,name){ 
 		this.id++;
 		var e= $('<div name="'+data.name+'">'
-			+(data.label!="" ? ('<label>'+data.label+'</label>') : '')
+			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
 			+'<span class=editspan>'
 			+'<div contenteditable=true class="text editable taller tinyMCEtext" id="tinyMCE_'+this.id+'"  name="'+this.id+'" rows='+1+'>'
 			+data.value+'</div></span></div>');
@@ -87,16 +95,20 @@ var form={
 	,textarea: function(data){
 		var rows=2;
 		var e=$('<div name="'+data.name+'">'
-			+'<label>'+data.label+'</label><span class=editspan><textarea  class="text editable taller" rows='+rows+'>'+data.value+'</textarea></span></div>');
+			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
+			+'<span class=editspan><textarea  class="text editable taller" rows='+rows+'>'+data.value+'</textarea></span></div>');
 		$('.editable',e).blur(function(){form.change($(this),$(this).html());}).data('data',data);
 		return e;
 	}
 	
 	,pickAudio:function(data){ return this.text(data);}
+	,pickImage:function(data){ return this.text(data);}
+	,pickVideo:function(data){ return this.text(data);}
 	,codearea:function(data){ 
 		this.id++;
-		var e= $('<div>'+(data.label!="" ? ('<label>'+data.label+'</label>') : '') +
-			'<span class=editspan><div contenteditable=true class="text editable taller codearea"  rows='+4+'>'+data.value+'</div></span></div>');
+		var e= $('<div>'
+			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
+			+'<span class=editspan><div contenteditable=true class="text editable taller codearea"  rows='+4+'>'+data.value+'</div></span></div>');
 		$('.editable',e).blur(function(){form.change($(this),$(this).html())}).data('data',data);
 		return e;
 	}
@@ -105,7 +117,8 @@ var form={
 
 	,pickpage:function(data){ 
 		data.value = gGuide.pageDisplayName(data.value); 
-		var e =$( (data.label!="" ? ('<label>'+data.label+'</label>') : '') 
+		var e =$( ''
+			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
 			+ '<span class=editspan><input class="ui-state-default ui-combobox-input autocomplete picker page dest" type="text" ></span>');
 		$('.picker',e).blur(function(){var val=$(this).val();$(this).data('data').change(val);}).data('data',data).val(decodeEntities(data.value));
 		return e;
@@ -114,7 +127,9 @@ var form={
 		var c="";
 		for (var o=0;o<listValueLabel.length;o+=2)
 			c+='<option value="'+listValueLabel[o]+'">'+listValueLabel[o+1]+'</option>';
-		var e =$('<div name="'+data.name+'"><label>'+data.label+'</label>' + '<span class=editspan><select class="ui-state-default ui-select-input">'+c+'</select></span></div>');
+		var e =$('<div name="'+data.name+'">'
+			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
+			+'<span class=editspan><select class="ui-state-default ui-select-input">'+c+'</select></span></div>');
 		$('.ui-select-input',e).change(function(){form.change($(this),$('option:selected',this).val())}).data('data',data).val(data.value);
 		return e;
 	}
@@ -152,8 +167,8 @@ var form={
 		
 	,clone:function(){return 'Clone buttons';}
 	
-	,tableRowAdjust:function(name,val){
-		// Adjust number of rows. set visible for rows > val. if val > max rows, clone the last row.
+	,tableRowAdjust:function(name,val)
+	{	// Adjust number of rows. set visible for rows > val. if val > max rows, clone the last row.
 		$tbody = $('table[list="'+name+'"] tbody');
 		var rows = $('tr',$tbody).length;
 		for (var r=0;r<rows;r++)
@@ -161,10 +176,16 @@ var form={
 		for (var r=rows;r<val;r++)
 			$('tr:last',$tbody).clone(true).appendTo($tbody);//no longer used?
 		
+//		var list=[];
+		//for (var r=0;r<val;r++)
+		//{
+//			list.push($('tr:nth('+r+')',$tbody).data('record'));
+		//}
 		//$(this).data('data').change(val);
-		
+		trace(list.length);
 	}
-	,tableRowCounter:function(name,label,minelts,maxelts,value){//let user choose number of said item
+	,tableRowCounter:function(name,label,minelts,maxelts,value)
+	{	//let user choose number of said item
 		var c=$('<label/>').text(label);
 		var s='<select list="'+name+'" class="ui-state-default ui-select">';
 		for (var o=minelts;o<=maxelts;o++)s+="<option>"+o+"</option>";
@@ -185,17 +206,140 @@ var form={
 		for (var row in rowList){
 			var $row=$("<tr valign=top/>");
 			if (rowList[row].visible==false) $row.addClass('hidden');
+			//$row.append($('<td class="editicons"/>').append('<span class="ui-draggable sorthandle ui-icon ui-icon-arrowthick-2-n-s"/><span class="ui-icon ui-icon-circle-plus"/><span class="ui-icon ui-icon-circle-minus"/>'));
 			for (var col in rowList[row].row)
 			{
 				$row.append($("<td/>").append(rowList[row].row[col]));
 			}
+			
 			$tbl.append($row);
+			$row.data('record',rowList[row].record);
+		
+/*
+			$row.hover(
+				function(){ // start hovering
+					$('.editicons').remove();
+					$(this).append('<span class="editicons"><a href="#" class="ui-icon ui-icon-circle-plus"></a><a href="#" class="ui-icon ui-icon-circle-minus"></a></span>');
+					$('.editicons .ui-icon-circle-plus').click(function(){
+						// Insert blank statement above
+						//alert($(this).closest('li').html());
+						var line = $(this).closest('li');
+						var cmd = $(this).closest('li').find('.adv.res').html();
+					});
+					$('.editicons .ui-icon-circle-minus').click(function(){
+						// Delete statement line
+						var line = $(this).closest('li');
+						//line.remove();
+					});
+				},
+				function(){ // stop hovering
+					$('.editicons').remove();}
+			);
+			*/
+			
 		}
 		$('tbody',$tbl).sortable({
-			handle:"td:eq(0)",
+			//handle:"td:eq(0)",
+			handle:"td:eq(0) .sorthandle",
 			update:function(){ }})//.disableSelection();
+
+		$('.editicons .ui-icon-circle-plus',$tbl).click(function(){//live('click',function(){
+			var row = $(this).closest('tr');
+			row.clone(true,true).insertAfter(row).fadeIn();
+		});
+		$('.editicons .ui-icon-circle-minus',$tbl).click(function(){//.live('click',function(){
+			var line = $(this).closest('tr').fadeOut("slow").empty();
+		});
+			
 		return $tbl;
 	}
+	
+	 
+	,tableManager:function(data){
+		var div = $('<div/>');//.append($('<label/>').text(data.label));
+		/*
+		var s='<select list="'+data.name+'" class="ui-state-default ui-select">';
+		for (var o=data.min;o<=data.max;o++)s+="<option>"+o+"</option>";
+			s+="</select>";
+		s=$(s).val(data.list.length).change(function(){
+			var val = ($('option:selected',this).val());
+			$tbody = $(this).parent().find('table tbody');
+			var rows = $('tr',$tbody).length;
+			for (var r=0;r<rows;r++)
+				$('tr:nth('+r+')',$tbody).showit(r<val);
+			for (var r=rows;r<val;r++)
+				$('tr:last',$tbody).clone(true).appendTo($tbody);//no longer used?
+				
+			});
+		div.append(s);
+		*/
+		
+		var $tbl=$('<table/>').addClass('list').data('data',data).attr('list',data.name);
+		
+		if (typeof data.columns!=="undefined")
+		{
+			var tr="<tr valign=top>" + "<th>-</th>" ;//+ "<th>#</th>";
+			for (var col in data.columns)
+			{
+				tr+="<th>"+data.columns[col]+"</th>";
+			}
+			tr+="</tr>";
+			$tbl.append($(tr));
+		}
+		function addRow(record)
+		{
+			var $row=$('<tr valign=top class="ui-corner-all" name="record"/>');
+			$row.append($('<td class="editicons"/>')
+				.append('<span class="ui-draggable sorthandle ui-icon ui-icon-arrowthick-2-n-s"/><span class="ui-icon ui-icon-circle-plus"/><span class="ui-icon ui-icon-circle-minus"/>'));
+			//$row.append($("<td>"+(i+1)+"</td>"));
+			//$row.append($("<td/>").append(data.create(data.list[i])));
+			var cols = data.create(record);
+			for (var c in cols){
+				$row.append($('<td/>').append(cols[c]));
+			}			
+			$row.data('record',record); 
+			$tbl.append($row);
+		}
+		
+		for (var i=0;i<data.list.length;i++)
+			addRow(data.list[i]);
+			
+		function save(){// save revised order or added/removed items
+			var list=[];
+			trace('Save table items');
+			$('tr:gt(0)',$tbl).each(function(idx){
+				trace(idx);
+				list.push($(this).data('record'));
+			});
+			data.save(list);
+		}
+		$('tbody',$tbl).sortable({
+			handle:"td .sorthandle",
+			update:function(event,ui){
+				save();
+			}})//.disableSelection();
+
+		$('.editicons .ui-icon-circle-plus',$tbl).click(function(){//live('click',function(){
+			var row = $(this).closest('tr');
+			row.clone(true,true).insertAfter(row).fadeIn();
+			row.data('record',$.extend({},row.data('record')));
+			save();
+		});
+		$('.editicons .ui-icon-circle-minus',$tbl).click(function(){//.live('click',function(){
+			var line = $(this).closest('tr').remove();
+			save();
+		});
+		div.append($tbl);
+		div.append($('<button id="newrow"/>').button({label:'Add',icons:{primary:"ui-icon-plusthick"}}).click(function(){
+			addRow($.extend({},data.blank));
+			save();
+		}));
+		return div;
+	}
+	
+	
+	
+	
 	,row:function(cols){ return "<tr valign=top><td>"+cols.join("</td><td>")+"</td></tr>";}
 	,rowheading:function(cols){ return "<tr valign=top><th>"+cols.join("</th><th>")+"</th></tr>";}
 };
@@ -210,24 +354,24 @@ $(document).ready(function () {
 
 
    // Activate TABS
-//'   $("#tabnav").tabs(); // first tab on by default
-//'   $("#tabviews").tabs({ selected: 0 });
 	$('.tabset').tabs();
 	
-	//$('button').button();
 	$('#vars_load').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
 	$('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
 	$('#tabviews').bind('tabsselect', function(event, ui) {
-		if (ui.panel.id == 'tabsPageView' ){ 
-			a2jviewer.layoutpage(ui.panel,gGuide,gGuide.steps,gPage);
-			
-//			var question = gPage.text;
-//			var learnmore = makestr(gPage.learnmore);
-//			a2jviewer.layout(ui.panel,gPage.step,gGuide.steps,question,learnmore);
+		switch (ui.panel.id){
+			case 'tabsPageView':
+				a2jviewer.layoutpage(ui.panel,gGuide,gGuide.steps,gPage); 
+				break;
+			case 'tabsAbout':
+			case 'tabsVariables':
+			case 'tabsSteps':
+				noviceTab(gGuide,ui.panel.id);
+				break;
+	
+			default:
 		}
-		});
-  // layoutPanes();
-
+		}); 
 
    //   if (typeof initAdvanced != "undefined")      initAdvanced();
 
@@ -391,7 +535,7 @@ function layoutPanes()
       west__showOverflowOnHover: false
 		, north__showOverflowOnHover: true
 		, north__size: 85
-		, west__size: 300
+		, west__size: 200
 		, east__size: 300
 		, east__initClosed: false
 		, north__closable: false, north__resizable: false
@@ -412,10 +556,11 @@ function toxml()
 }
 function startCAJA(startTabOrPage)
 { 
-//	$('.CAJAContent').html(gGuide.dump());
 	trace( gGuide.firstPage);
 	
 	$('#tabviews').tabs( { disabled:false});
+	
+	$('#tabsVariables, #tabsSteps, #tabsAbout').html("");
 		
 	if (makestr(startTabOrPage)=="")
 		startTabOrPage="PAGE "+(gGuide.firstPage);
@@ -425,10 +570,9 @@ function startCAJA(startTabOrPage)
 		$('#advanced').html(gGuide.convertToText());
 	else
 		gotoTabOrPage(startTabOrPage);
-	$('#CAJAIndex').html(gGuide.convertIndex());
-	$('#CAJAListAlpha').html(gGuide.convertIndexAlpha());
-	$('#CAJAIndex li').click(showPageToEdit);
-	
+	$('#CAJAOutline').html(gGuide.convertIndex());
+	$('#CAJAIndex').html(gGuide.convertIndexAlpha());
+	$('#CAJAOutline li, #CAJAIndex li').click(showPageToEdit);
 	
 	buildMap();
 	
@@ -487,22 +631,17 @@ function gotoTabOrPage(target)
 	{
 		$('#CAJAContent').html('');
 		gGuide.novicePage($('#CAJAContent'),target.substr(5));
-		
-//		alert( $("#tabviews .ui-tabs-selected").attr('id'));
-//			a2jviewer.layoutpage(ui.panel,gGuide,gGuide.steps,gPage);
-		
 		$('#tabviews').tabs('select','#tabsPageEdit');
 	}
 	else
 	if (target.indexOf("STEP ")==0)
 	{
-		$('#CAJAContent').html('');
-		gGuide.noviceStep($('#CAJAContent'),target.substr(5));
-		
-		$('#tabviews').tabs('select','#tabsPageEdit');
+		$('#tabviews').tabs('select','#tabsSteps');
+		//$('#CAJAContent').html('');
+		//gGuide.noviceStep($('#CAJAContent'),target.substr(5));
+		//$('#tabviews').tabs('select','#tabsPageEdit');
 	}
 	else{
-		gGuide.noviceTab($('#'+target).empty(),target);
 		$('#tabviews').tabs('select',target);
 	}
 
@@ -519,16 +658,6 @@ function gotoTabOrPage(target)
 }
 
 
-/*
-TGuide.prototype.editTabs={};
-TGuide.prototype.editTabs['interview']=[
-	 {label:'lang.eiTitle',type:'text'}
-	,{label:'lang.eiDescription',type:'textarea'}
-	,{label:'lang.eiJurisdiction',type:'text'}
-	,{label:'lang.eiAuthor',type:'textarea'}
-	,{label:'lang.eiLogoGraphic',type:'graphic'}
-];
-*/
 
 function pickPage(request,response)
 {	// autocomplete page lists including internal text
@@ -561,64 +690,47 @@ function pickPage(request,response)
 }
 
 
-TGuide.prototype.noviceStep=function(div,stepid)
-{	// Show all pages in specified step
-	var t=$('<div/>');//.addClass('editq');
-	var step=this.steps[stepid];
-	t.append(form.h1("Step #"+step.number+" " + step.text));
-	var stepPages=[];
-	for (var p in this.pages)
-	{
-		var page = this.pages[p];
-		if (page.step==stepid)
-			stepPages.push(page);
-	}
-	t.append(form.note("There are "+stepPages.length+" pages in this step."));
-	for (var p in stepPages)
-	{
-		var page = stepPages[p];
-		t.append(form.h2("Page "+(parseInt(p)+1)+" of "+stepPages.length));
-		this.novicePage(t,page.name);
-	}
-	div.append(t);
-}
-
 
 TGuide.prototype.convertIndex=function()
 {	// Build outline for entire interview includes meta, step and question sections.
-	var inSteps=[], s, p, page, ts;
+	var inSteps=[];
+	var popups="";
 	for (s in this.steps)
 	{
 		inSteps[s]="";
 	}
-	for (p in this.sortedPages)
+	for (var p in this.sortedPages)
 	{
-		page = this.sortedPages[p]; 
-		inSteps[page.step] += '<li target="PAGE '+page.name+'">'+page.name+'</li>';
+		var page = this.sortedPages[p];
+		var plink= '<li target="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()+'</li>';
+		if (page.type=="Popup")
+			popups += plink;
+		else
+			inSteps[page.step] += plink;
 	}	
-	ts="";
-	for (s in this.steps)
+	var ts="";
+	for (var s in this.steps)
 	{
 		ts+='<li target="STEP '+s+'">'+this.steps[s].number+". "+this.steps[s].text+"</li><ul>"+inSteps[s]+"</ul>";
-	}
-
-			
+	}			
 	return "<ul>"
 			+ '<li target="tabsAbout">'+lang.tabAbout+'</li>'
 			+ '<li target="tabsVariables">'+lang.tabVariables+'</li>'
 			+ '<li target="tabsConstants">'+lang.tabConstants+'</li>'
 			+ '<li target="tabsSteps">'+lang.tabSteps+'</li><ul>'+ts+'</ul>'
+			+ '<li target="tabsPopups">'+lang.en('Popups')+'</li><ul>'+popups+'</ul>'
 			+"</ul>";
 }
 
 TGuide.prototype.convertIndexAlpha=function()
 {	// Build outline of just pages
-	var txt="", p, page;
-	for (p in this.sortedPages)
+	var txt="";
+	for (var p in this.sortedPages)
 	{
-		page = this.sortedPages[p]; 
-		txt += '<li target="PAGE '+page.name+'">'+page.name+'</li>';
-	}	
+		var page = this.sortedPages[p]; 
+		txt += '<li target="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()+'</li>';
+		console.log(page.name);
+	}
 	return "<ul>" + txt +"</ul>";
 }
 

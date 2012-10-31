@@ -180,7 +180,7 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		var VARIABLE = $(this);
 		var v = new TVariable();
 		v.name=VARIABLE.attr("NAME");
-		v.sortName=	sortingNatural(v.name);
+		//v.sortName=	sortingNatural(v.name);
 		v.type=VARIABLE.attr("TYPE");
 		guide.vars[v.name]=v;
 	 });/*
@@ -236,17 +236,18 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		PAGE.find('FIELDS > FIELD').each(function(){
 			var field=new TField();
 			field.type =$(this).attr("TYPE");
-			field.optional = TextToBool($(this).attr("OPTIONAL"),false);
+			field.required = TextToBool($(this).attr("REQUIRED"),true);
 			field.order = makestr($(this).attr("ORDER"));
 			field.label =makestr(jQuery.trim($(this).find("LABEL").xml()));
 			field.name =jQuery.trim($(this).find("NAME").xml());
-			field.value = makestr($(this).attr("VALUE"));
+			field.value = makestr(jQuery.trim($(this).find("VALUE").xml()));
 			field.min = makestr($(this).attr("MIN"));//could be a number or a date so don't convert to number
 			field.max = makestr($(this).attr("MAX"));
 			field.calendar = TextToBool($(this).attr("CALENDAR"),false);
 			field.calculator=TextToBool($(this).attr("CALCULATOR"),false);
 			
 			field.invalidPrompt =makestr(jQuery.trim($(this).find("INVALIDPROMPT").xml()));
+			field.invalidPromptAudio =makestr(jQuery.trim($(this).find("INVALIDPROMPTAUDIO").xml()));
 			page.fields.push(field);
 		});
 	});
@@ -309,17 +310,20 @@ function parseXML_Auto_to_CAJA(cajaData)
 	for (var vi in guide.variables)
 	{
 		var v=guide.variables[vi];
-		v.sortName=	sortingNatural(v.name);
+		//v.sortName=	sortingNatural(v.name);
 	}
 	guide.sortedPages=[];
 	for (var p in guide.pages)
 	{
 		var page = guide.pages[p];
 		//	page.sortName=sortingNatural(page.name);//pageXML.attr("SORTNAME");//sortingNatural(page.name);
-		page.sortName=(page.name==guide.firstPage) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
+		//page.sortName=(page.name==guide.firstPage) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
 		guide.sortedPages.push(page);
 	}
-	guide.sortedPages=guide.sortedPages.sort(function (a,b){ if (a.sortName<b.sortName) return -1; else if (a.sortName==b.sortName) return 0; else return 1;});
+	guide.sortedPages=guide.sortedPages.sort(function (a,b){
+//	if (a.sortName<b.sortName) return -1; else if (a.sortName==b.sortName) return 0; else return 1
+return sortingNatural(a.name,b.name);
+;});
 
 	return guide;
 }
@@ -347,7 +351,7 @@ function loadNewGuidePrep(guideFile,startTabOrPage)
 	prompt('Loading '+guideFile);
 	prompt('Start location will be '+startTabOrPage);
 	$('.CAJAContent').html('Loading '+guideFile+AJAXLoader);
-	$('#CAJAIndex, #CAJAListAlpha').html('');
+	$('#CAJAOutline, #CAJAIndex').html('');
 }
 
 

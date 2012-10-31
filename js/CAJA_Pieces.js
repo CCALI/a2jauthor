@@ -1,4 +1,26 @@
 
+TGuide.prototype.noviceStep=function(div,stepid)
+{	// Show all pages in specified step
+	var t=$('<div/>');//.addClass('editq');
+	var step=this.steps[stepid];
+	t.append(form.h1("Step #"+step.number+" " + step.text));
+	var stepPages=[];
+	for (var p in this.pages)
+	{
+		var page = this.pages[p];
+		if (page.step==stepid)
+			stepPages.push(page);
+	}
+	t.append(form.note("There are "+stepPages.length+" pages in this step."));
+	for (var p in stepPages)
+	{
+		var page = stepPages[p];
+		t.append(form.h2("Page "+(parseInt(p)+1)+" of "+stepPages.length));
+		this.novicePage(t,page.name);
+	}
+	div.append(t);
+}
+
 TGuide.prototype.dump=function()
 {	// Generate report of entire CAJA contents
 	var txt="",p, f, b, page, field, button,txtp;

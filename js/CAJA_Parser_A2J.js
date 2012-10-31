@@ -149,7 +149,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		QUESTION.find('FIELD').each(function(){
 			field=new TField();
 			field.type =$(this).attr("TYPE");
-			field.optional = TextToBool($(this).attr("OPTIONAL"),false);
+			field.required = !(TextToBool($(this).attr("OPTIONAL"),false));
 			field.order = makestr($(this).attr("ORDER"));
 			field.min = makestr($(this).attr("MIN"));
 			field.max = makestr($(this).attr("MAX"));
@@ -157,8 +157,14 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			field.calculator=TextToBool($(this).attr("CALCULATOR"),false);
 			field.label =makestr(jQuery.trim($(this).find("LABEL").xml()));
 			field.name =jQuery.trim($(this).find("NAME").xml());
-			field.value = makestr($(this).attr("VALUE"));
+			field.value = makestr(jQuery.trim($(this).find("VALUE").xml()));
 			field.invalidPrompt =makestr(jQuery.trim($(this).find("INVALIDPROMPT").xml()));
+			field.invalidPromptAudio =makestr(jQuery.trim($(this).find("INVALIDPROMPTAUDIO").xml()));
+			var list= $(this).find("SELECT").xml();
+			//if (typeof list==="object")
+			//{
+			//	alert(list);
+			//}
 			/*
 			if (typeof DefaultPrompts[field.invalidPrompt]!="undefined")
 			{

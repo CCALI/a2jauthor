@@ -14,7 +14,10 @@ lang.set=function(languageID)
 		//trace(e+"="+lang[e]);
 	}
 }
-
+lang.en=function(txt)
+{	// needs translation
+	return txt;
+}
 
 // English
 lang.regional['en']= {

@@ -33,6 +33,7 @@ var CONST = {
 	
 	MAXFIELDS: 10,
 	MAXBUTTONS: 3,
+	MAXSTEPS: 12,
 	
 	0:0
 };

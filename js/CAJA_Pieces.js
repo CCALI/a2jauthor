@@ -1,4 +1,232 @@
 
+			if (0){
+				function makeField(field){
+					var field1=form.record(field);
+					field1.append(form.pickList({label:'Type:',value: field.type,change:function(val,field,form){
+						field.type=val;
+						updateFieldLayout(form,field);
+						}},fieldTypesList ));
+					field1.append(form.htmlarea({label:'Label:',   value:field.label, 
+						change:function(val,field){field.label=val;}}));
+					field1.append(form.text({label:'Variable:', value: field.name,
+						change:function(val,field){field.name=val}}));
+					field1.append(form.text({label:'Default value:',name:'default', value:  field.value,
+						change:function(val,field){field.value=val}}));
+					field1.append(form.checkbox({label:'Validation:', checkbox:'User must fill in', value:field.optional,
+						change:function(val,field){field.optional=val}}));
+					field1.append(form.text({label:'Max chars:',name:'maxchars', value: field.maxChars,
+						change:function(val,field){field.maxChars=val;}}));
+					field1.append(form.checkbox({label:'Calculator:',name:'calculator',checkbox:'Calculator available?', value:field.calculator,
+						change:function(val,field){field.calculator=val}}));
+					field1.append(form.checkbox({label:'Calendar:', name:'calendar',checkbox:'Calendar available?', value:field.calendar,
+						change:function(val,field){field.calendar=val}}));
+					field1.append(form.text({label:'Min value:',name:'min',placeholder:'min', value: field.min,
+						change:function(val,field){field.min=val}}));
+					field1.append(form.text({label:'Max value:',name:'max',placeholder:'max', value: field.max,
+						change:function(val,field){field.max=val}}));
+					field1.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,	change:function(val,field){field.invalidPrompt=val}}));
+					updateFieldLayout(field1,field);
+					return field1;
+				}			
+				var fs=form.fieldset('Fields');
+				fs.append(form.tableRowCounter('fields','Number of fields:',0, CONST.MAXFIELDS,page.fields.length));
+				var fields=[];
+				for (var f in page.fields) {
+					fields.push({ record:page.fields[f], row: [ makeField(page.fields[f])]});
+				}/*
+				for (var f=page.fields.length;f<CONST.MAXFIELDS;f++) {
+					fields.push({ record:blankField, row: [ makeField(blankField)], visible:false });
+				}*/
+				fs.append(form.tableRows('fields','',fields));
+			}/*
+		$('.editicons .ui-icon-circle-plus',$tbl).click(function(){//live('click',function(){
+			var row = $(this).closest('tr');
+			row.clone(true,true).insertAfter(row).fadeIn();
+			row.data('record',$.extend({},row.data('record')));
+			save();
+		});
+		$('.editicons .ui-icon-circle-minus',$tbl).click(function(){//.live('click',function(){
+			var line = $(this).closest('tr').remove();
+			save();
+		});
+		*/			/*
+		function save(){// save revised order or added/removed items
+			var list=[];
+			trace('Save table items');
+			$('tr:gt(0)',$tbl).each(function(idx){
+				trace(idx);
+				list.push($(this).data('record'));
+			});
+			data.save(list);
+		}*/
+
+	
+	,tableManager:function(data){
+		var div = $('<div/>');//.append($('<label/>').text(data.label));
+		/*
+		var s='<select list="'+data.name+'" class="ui-state-default ui-select">';
+		for (var o=data.min;o<=data.max;o++)s+="<option>"+o+"</option>";
+			s+="</select>";
+		s=$(s).val(data.list.length).change(function(){
+			var val = ($('option:selected',this).val());
+			$tbody = $(this).parent().find('table tbody');
+			var rows = $('tr',$tbody).length;
+			for (var r=0;r<rows;r++)
+				$('tr:nth('+r+')',$tbody).showit(r<val);
+			for (var r=rows;r<val;r++)
+				$('tr:last',$tbody).clone(true).appendTo($tbody);//no longer used?
+				
+			});
+		div.append(s);
+		*/
+		
+		var $tbl=$('<table/>').addClass('list').data('data',data).attr('list',data.name);
+		
+		if (typeof data.columns!=="undefined")
+		{
+			var tr="<tr valign=top>" + "<th>-</th>" ;//+ "<th>#</th>";
+			for (var col in data.columns)
+			{
+				tr+="<th>"+data.columns[col]+"</th>";
+			}
+			tr+="</tr>";
+			$tbl.append($(tr));
+		}
+		function addRow(record)
+		{
+			var $row=$('<tr valign=top class="ui-corner-all" name="record"/>');
+			$row.append($('<td class="editicons"/>')
+				.append('<span class="ui-draggable sorthandle ui-icon ui-icon-arrowthick-2-n-s"/><span class="ui-icon ui-icon-circle-plus"/><span class="ui-icon ui-icon-circle-minus"/>'));
+			//$row.append($("<td>"+(i+1)+"</td>"));
+			//$row.append($("<td/>").append(data.create(data.list[i])));
+			var cols = data.create(record);
+			for (var c in cols){
+				$row.append($('<td/>').append(cols[c]));
+			}			
+			$row.data('record',record); 
+			$tbl.append($row);
+		}
+		
+		for (var i=0;i<data.list.length;i++)
+			addRow(data.list[i]);
+			
+		function save(){// save revised order or added/removed items
+			var list=[];
+			trace('Save table items');
+			$('tr:gt(0)',$tbl).each(function(idx){
+				trace(idx);
+				list.push($(this).data('record'));
+			});
+			data.save(list);
+		}
+		$('tbody',$tbl).sortable({
+			handle:"td .sorthandle",
+			update:function(event,ui){
+				save();
+			}})//.disableSelection();
+
+		$('.editicons .ui-icon-circle-plus',$tbl).click(function(){//live('click',function(){
+			var row = $(this).closest('tr');
+			row.clone(true,true).insertAfter(row).fadeIn();
+			row.data('record',$.extend({},row.data('record')));
+			save();
+		});
+		$('.editicons .ui-icon-circle-minus',$tbl).click(function(){//.live('click',function(){
+			var line = $(this).closest('tr').remove();
+			save();
+		});
+		div.append($tbl);
+		div.append($('<button id="newrow"/>').button({label:'Add',icons:{primary:"ui-icon-plusthick"}}).click(function(){
+			addRow($.extend({},data.blank));
+			save();
+		}));
+		return div;
+	} 
+	
+	
+			/*
+			fs.append(form.tableManager({name:'Fields',picker:'Number of fields',min:0,max:CONST.MAXFIELDS,list:page.fields,blank:blankField
+				,columns:['Label','Var Name','Default Value','Type','Required?','Max Chars','Calc?','Calendar?','Min/Max Value','Invalid Prompt']
+				,save:function(newlist){page.fields=newlist; }
+				,create:function(field){
+					var cols=[
+						form.htmlarea({  value:field.label, 							change:function(val,field){field.label=val;}})
+						,form.text({  value: field.name, placeholder:'variable',						change:function(val,field){field.name=val}})
+						,form.text({  name:'default', placeholder:'default value',	value:  field.value, 				change:function(val,field){field.value=val}})
+						,form.pickList({  value: field.type,change:function(val,field,form){
+							field.type=val;
+							updateFieldLayout(form,field);
+							}},fieldTypesList)
+						,form.checkbox({ checkbox:'', value:field.required, change:function(val,field){field.required=val}})
+						,form.text({name:'maxchars', width:'3em', placeholder:'max chars',	value: field.maxChars,			change:function(val,field){field.maxChars=val;}})
+						,form.checkbox({ name:'calculator',checkbox:'', value:field.calculator,change:function(val,field){field.calculator=val}})
+						,form.checkbox({  name:'calendar',checkbox:'', value:field.calendar, change:function(val,field){field.calendar=val}})
+						,form.text({ name:'min', placeholder:'min',	value: field.min, 						change:function(val,field){field.min=val}})
+						.append(form.text({ name:'max',placeholder:'max',	 value: field.max, 						change:function(val,field){field.max=val}}))
+						,form.htmlarea({value: field.invalidPrompt,	change:function(val,field){field.invalidPrompt=val}})
+					];
+					//updateFieldLayout(field1,field);
+					return cols;
+				}}));
+				*/
+			/*
+			fs.append(form.tableRowCounter('buttons','Number of buttons:',1, CONST.MAXBUTTONS,page.buttons.length));
+			function makeButton(b)
+			{
+				var record=form.record(b);
+				record.append(form.text({label:'Label:', 				value: b.label,	change:function(val){b.label=val}}));
+				record.append(form.text({label:'Var Name:', 			value: b.name, 	change:function(val){b.name=val}}));
+				record.append(form.text({label:'Var Value:',			value: b.value,	change:function(val){b.value=val}}));
+				record.append(form.pickpage({label:'Destination:', value: b.next, 	change:function(val){b.next=val;trace(b.next);}}));
+				return record;
+			}
+			var buttons=[];
+			for (var b in page.buttons) {
+				buttons.push({ row: [ makeButton(page.buttons[b])]});
+			}
+			var blankButton=new TButton();
+			for (var b=page.buttons.length;b<CONST.MAXBUTTONS;b++) {
+				buttons.push({ row: [ makeButton(blankButton)], visible:false });
+			}
+			fs.append(form.tableRows('buttons','',buttons));
+			*/
+			fs.append(form.tableManager({name:'Buttons',picker:'Number of buttons',min:1,max:CONST.MAXBUTTONS,list:page.buttons,blank:blankButton
+				,columns: ['Label','Var Name','Default value','Destination']
+				,save:function(newlist){
+					page.buttons=newlist; }
+				,create:function(b){
+					var cols=[
+						form.text({ 		value: b.label,placeholder:'caption',		change:function(val,b){b.label=val}})
+						,form.text({ 		value: b.name, placeholder:'variable',		change:function(val,b){b.name=val}})
+						,form.text({ 		value: b.value,placeholder:'value',		change:function(val,b){b.value=val}})
+						,form.pickpage({	value: b.next, 	change:function(val,b){b.next=val;}})
+					];
+					//updateFieldLayout(field1,field);
+					return cols;
+				}}));
+			
+			/*
+			fs.append(form.tableManager({name:'Fields',picker:'Number of fields',min:0,max:CONST.MAXFIELDS,list:page.fields,blank:blankField,
+				create:function(field){
+					var field1=form.record(field); 
+					field1.append(form.pickList({label:'Type:',value: field.type,change:function(val,field,form){
+						field.type=val;
+						updateFieldLayout(form,field);
+						}},fieldTypesList ));
+					field1.append(form.htmlarea({label:'Label:',   value:field.label, 							change:function(val,field){field.label=val;}}));
+					field1.append(form.text({label:'Variable:', value: field.name, 						change:function(val,field){field.name=val}}));
+					field1.append(form.text({label:'Default value:',name:'default', value:  field.value, 				change:function(val,field){field.value=val}}));
+					field1.append(form.checkbox({label:'Validation:', checkbox:'User must fill in', value:field.optional, change:function(val,field){field.optional=val}}));
+					field1.append(form.text({label:'Max chars:',name:'maxchars', value: field.maxChars,			change:function(val,field){field.maxChars=val;}}));
+					field1.append(form.checkbox({label:'Calculator:',name:'calculator',checkbox:'Calculator available?', value:field.calculator,change:function(val,field){field.calculator=val}}));
+					field1.append(form.checkbox({label:'Calendar:', name:'calendar',checkbox:'Calendar available?', value:field.calendar, change:function(val,field){field.calendar=val}}));
+					field1.append(form.text({label:'Min value:',name:'min', value: field.min, 						change:function(val,field){field.min=val}}));
+					field1.append(form.text({label:'Max value:',name:'max', value: field.max, 						change:function(val,field){field.max=val}}));
+					field1.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,	change:function(val,field){field.invalidPrompt=val}}));
+					updateFieldLayout(field1,field);
+					return field1;
+				}}));
+				*/
 TGuide.prototype.noviceStep=function(div,stepid)
 {	// Show all pages in specified step
 	var t=$('<div/>');//.addClass('editq');

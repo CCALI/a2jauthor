@@ -12,6 +12,8 @@
 	var qIDRESUME="RESUME" //8/24/09 3.0.2
 	
 var CONST = {
+	//Page Types
+	ptPopup:'Popup',
 	//Field Types
 	ftButton:"button",
 	ftText:"text",

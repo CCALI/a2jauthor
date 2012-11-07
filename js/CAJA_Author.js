@@ -4,7 +4,7 @@
 
 
 
-/*    */
+/*    * /
 function DEBUGSTART(){
 	var SAMPLES = [
 		"tests/data/Field Characters Test.a2j#1-5 Fields Test 1",
@@ -60,23 +60,54 @@ var form={
 	,record:function(record){
 		return $('<div name=record class=record/>').data('record',record);
 	}
-	
+	,div:function(){
+		return $('<div />');
+	}
 	//,number:    function(label,value,minNum,maxNum,handler){
 	//	return "<label>"+label+'</label><input class="editable" type="text" name="'+group+id+'" value="'+htmlEscape(value)+'"> ';}
 	
 	,checkbox: function(data){
 		var e=$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<span  class=editspan > <input class="ui-checkbox-input" type="checkbox" />'+data.checkbox+'</span></div>');
+			+'<span  class=editspan > <input class="ui-state-default ui-checkbox-input" type="checkbox" />'+data.checkbox+'</span></div>');
 		$('input',e).blur(function(){ form.change($(this),$(this).is(':checked'))}).attr( 'checked',data.value==true ).data('data',data);
 		return e;
 	}
 	
 	
+	,pickpage:function(data){ 
+		data.value = gGuide.pageDisplayName(data.value); 
+		var e =$( ''
+			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
+			+ '<span class=editspan><input class="  ui-combobox-input editable autocomplete picker page dest" type="text" ></span>');
+		$('.picker',e).blur(function(){var val=$(this).val();$(this).data('data').change(val);}).data('data',data).val(decodeEntities(data.value));
+		
+		
+   //$('.autocomplete.picker.page',div).
+	$('.autocomplete.picker.page',e).autocomplete({ source: pickPage, html: true,
+      change: function () { // if didn't match, restore to original value
+         var matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex($(this).val()) + "$", "i");
+         var newvalue = $(this).val(); 
+         $.each(gGuide.sortedPages, function (p, page) {
+				if (page.type!=CONST.ptPopup)
+					if (matcher.test(page.name)) {
+						newvalue =  page.name
+						return false;
+					}
+         });
+         $(this).val(newvalue); 
+      }})
+		.focus(function () {
+		   console.log($(this).val());
+		   $(this).autocomplete("search");
+		});
+		
+		return e;
+	}
 	,text: function(data){
 		var e=$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<span class=editspan> <input class="editable" placeholder="'+data.placeholder+'" type="text" /> </span></div>');
+			+'<span class=editspan> <input class="  editable" placeholder="'+data.placeholder+'" type="text" /> </span></div>');
 		if (typeof data.class!=='undefined') $('input',e).addClass(data.class);
 		if (typeof data.width!=='undefined') $('input',e).css('width',data.class);
 		$('input',e).blur(function(){ form.change($(this),$(this).val());}).val(decodeEntities(data.value)).data('data',data);
@@ -87,16 +118,18 @@ var form={
 		var e= $('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
 			+'<span class=editspan>'
-			+'<div contenteditable=true class="text editable taller tinyMCEtext" id="tinyMCE_'+this.id+'"  name="'+this.id+'" rows='+1+'>'
+			+'<div contenteditable=true class="  htmledit  text editable taller" id="tinyMCE_'+this.id+'"  name="'+this.id+'" rows='+1+'>'
 			+data.value+'</div></span></div>');
-		$('.editable',e).focus(function(){$(this).addClass('tallest')}).blur(function(){$(this).removeClass('tallest'); form.change($(this),$(this).html());}).data('data',data) ;
+		$('.editable',e).focus(function(){$(this).addClass('tallest')}).blur(function(){
+		//$(this).removeClass('tallest');
+		form.change($(this),$(this).html());}).data('data',data) ;
 		return e;
 	} 
 	,textarea: function(data){
 		var rows=2;
 		var e=$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<span class=editspan><textarea  class="text editable taller" rows='+rows+'>'+data.value+'</textarea></span></div>');
+			+'<span class=editspan><textarea  class="     text editable taller" rows='+rows+'>'+data.value+'</textarea></span></div>');
 		$('.editable',e).blur(function(){form.change($(this),$(this).html());}).data('data',data);
 		return e;
 	}
@@ -108,28 +141,18 @@ var form={
 		this.id++;
 		var e= $('<div>'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<span class=editspan><div contenteditable=true class="text editable taller codearea"  rows='+4+'>'+data.value+'</div></span></div>');
+			+'<span class=editspan><div contenteditable=true class="     text editable taller codeedit"  rows='+4+'>'+data.value+'</div></span></div>');
 		$('.editable',e).blur(function(){form.change($(this),$(this).html())}).data('data',data);
 		return e;
 	}
-	,div:function(clas,t){
-		return '<div class="'+clas+'">'+t+'</div>';}
 
-	,pickpage:function(data){ 
-		data.value = gGuide.pageDisplayName(data.value); 
-		var e =$( ''
-			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+ '<span class=editspan><input class="ui-state-default ui-combobox-input autocomplete picker page dest" type="text" ></span>');
-		$('.picker',e).blur(function(){var val=$(this).val();$(this).data('data').change(val);}).data('data',data).val(decodeEntities(data.value));
-		return e;
-	}
 	,pickList:function(data,listValueLabel){//list is array to ensure preserved order. Note: js object properties don't guarantee order
 		var c="";
 		for (var o=0;o<listValueLabel.length;o+=2)
 			c+='<option value="'+listValueLabel[o]+'">'+listValueLabel[o+1]+'</option>';
 		var e =$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<span class=editspan><select class="ui-state-default ui-select-input">'+c+'</select></span></div>');
+			+'<span class=editspan><select class="     ui-select-input">'+c+'</select></span></div>');
 		$('.ui-select-input',e).change(function(){form.change($(this),$('option:selected',this).val())}).data('data',data).val(data.value);
 		return e;
 	}
@@ -165,33 +188,8 @@ var form={
 	}
 	
 		
-	,clone:function(){return 'Clone buttons';}
+	//,clone:function(){return 'Clone buttons';}
 	
-	,tableRowAdjust:function(name,val)
-	{	// Adjust number of rows. set visible for rows > val. if val > max rows, clone the last row.
-		$tbody = $('table[list="'+name+'"] tbody');
-		var rows = $('tr',$tbody).length;
-		for (var r=0;r<rows;r++)
-			$('tr:nth('+r+')',$tbody).showit(r<val);
-		for (var r=rows;r<val;r++)
-			$('tr:last',$tbody).clone(true).appendTo($tbody);//no longer used?
-		
-//		var list=[];
-		//for (var r=0;r<val;r++)
-		//{
-//			list.push($('tr:nth('+r+')',$tbody).data('record'));
-		//}
-		//$(this).data('data').change(val);
-		trace(list.length);
-	}
-	,tableRowCounter:function(name,label,minelts,maxelts,value)
-	{	//let user choose number of said item
-		var c=$('<label/>').text(label);
-		var s='<select list="'+name+'" class="ui-state-default ui-select">';
-		for (var o=minelts;o<=maxelts;o++)s+="<option>"+o+"</option>";
-			s+="</select>";
-		return $('<div/>').append(c.after(s).change(function(){form.tableRowAdjust(name,$('option:selected',this).val());}).val(value));
-	}
 	,tableRows:function(name,headings,rowList){
 		var $tbl=$('<table/>').addClass('list').data('table',name).attr('list',name);
 		if (typeof headings==="object"){
@@ -254,86 +252,69 @@ var form={
 		return $tbl;
 	}
 	
-	 
-	,tableManager:function(data){
-		var div = $('<div/>');//.append($('<label/>').text(data.label));
-		/*
-		var s='<select list="'+data.name+'" class="ui-state-default ui-select">';
-		for (var o=data.min;o<=data.max;o++)s+="<option>"+o+"</option>";
+	,tableRowCounter:function(name,label,minelts,maxelts,value)
+	{	//let user choose number of said item
+		var c=$('<label/>').text(label);
+		var s='<select list="'+name+'" class="  ui-select">';
+		for (var o=minelts;o<=maxelts;o++)s+="<option>"+o+"</option>";
 			s+="</select>";
-		s=$(s).val(data.list.length).change(function(){
-			var val = ($('option:selected',this).val());
-			$tbody = $(this).parent().find('table tbody');
-			var rows = $('tr',$tbody).length;
-			for (var r=0;r<rows;r++)
-				$('tr:nth('+r+')',$tbody).showit(r<val);
-			for (var r=rows;r<val;r++)
-				$('tr:last',$tbody).clone(true).appendTo($tbody);//no longer used?
-				
-			});
-		div.append(s);
-		*/
+		return $('<div/>').append(c.after(s).change(function(){form.tableRowAdjust(name,$('option:selected',this).val());}).val(value));
+	}
+	
+	,tableRowAdjust:function(name,val)
+	{	// Adjust number of rows. set visible for rows > val. if val > max rows, clone the last row.
+		$tbl = $('table[list="'+name+'"]');
+		var settings=$tbl.data('settings');
+		$tbody = $('tbody',$tbl);//'table[list="'+name+'"] tbody');
+		var rows = $('tr',$tbody).length;
+		trace('Changing rows from '+rows+' to '+val);
+		//if (rows == val) return;
 		
-		var $tbl=$('<table/>').addClass('list').data('data',data).attr('list',data.name);
-		
-		if (typeof data.columns!=="undefined")
-		{
-			var tr="<tr valign=top>" + "<th>-</th>" ;//+ "<th>#</th>";
-			for (var col in data.columns)
-			{
-				tr+="<th>"+data.columns[col]+"</th>";
-			}
-			tr+="</tr>";
-			$tbl.append($(tr));
-		}
-		function addRow(record)
-		{
-			var $row=$('<tr valign=top class="ui-corner-all" name="record"/>');
-			$row.append($('<td class="editicons"/>')
-				.append('<span class="ui-draggable sorthandle ui-icon ui-icon-arrowthick-2-n-s"/><span class="ui-icon ui-icon-circle-plus"/><span class="ui-icon ui-icon-circle-minus"/>'));
-			//$row.append($("<td>"+(i+1)+"</td>"));
-			//$row.append($("<td/>").append(data.create(data.list[i])));
-			var cols = data.create(record);
-			for (var c in cols){
-				$row.append($('<td/>').append(cols[c]));
-			}			
-			$row.data('record',record); 
-			$tbl.append($row);
-		}
-		
-		for (var i=0;i<data.list.length;i++)
-			addRow(data.list[i]);
-			
-		function save(){// save revised order or added/removed items
-			var list=[];
-			trace('Save table items');
-			$('tr:gt(0)',$tbl).each(function(idx){
-				trace(idx);
-				list.push($(this).data('record'));
-			});
-			data.save(list);
-		}
+		for (var r=0;r<rows;r++)
+			$('tr:nth('+r+')',$tbody).showit(r<val);
+		for (var r=rows;r<val;r++)
+			form.listManagerAddRow($tbl,$.extend({},settings.blank));
+		form.listManagerSave($tbl);
+	}
+	
+	,listManagerSave:function($tbl){// save revised order or added/removed items
+		var settings=$tbl.data('settings');
+		var list=[];
+		$('tr',$tbl).not(':hidden').each(function(idx){ //:gt(0)
+			list.push($(this).data('record'));
+		});
+		settings.save(list);
+		$('select[list="'+settings.name+'"]').val(list.length);
+	}
+	,listManagerAddRow:function($tbl,record){
+		var settings=$tbl.data('settings');
+		var $row=$('<tr valign=top class="ui-corner-all" name="record"/>');
+		$row.append($('<td class="editicons"/>')
+			.append('<span class="ui-draggable sorthandle ui-icon ui-icon-arrowthick-2-n-s"/>'
+			+'<span class="ui-icon ui-icon-circle-plus"/><span class="ui-icon ui-icon-circle-minus"/>'));
+		$row.append($('<td/>').append(settings.create(form.div(),record)));
+		$row.data('record',record); 
+		$tbl.append($row);
+	}
+	,listManager:function(settings){
+		// data.name:'Fields' data.,picker:'Number of fields:',data.min:0,data.max:CONST.MAXFIELDS,data.list:page.fields,data.blank:blankField,data.save=function to save,data.create=create form elts for record
+		var div = $('<div/>');
+		var $tbl=$('<table/>').addClass('list').data('settings',settings).attr('list',settings.name);
+		div.append(form.tableRowCounter(settings.name,settings.picker,settings.min,settings.max,settings.list.length));
+		for (var i=0;i<settings.list.length;i++)
+			form.listManagerAddRow($tbl,settings.list[i]);
 		$('tbody',$tbl).sortable({
 			handle:"td .sorthandle",
 			update:function(event,ui){
-				save();
-			}})//.disableSelection();
+				form.listManagerSave((ui.item.closest('table')));
+			}})
 
-		$('.editicons .ui-icon-circle-plus',$tbl).click(function(){//live('click',function(){
-			var row = $(this).closest('tr');
-			row.clone(true,true).insertAfter(row).fadeIn();
-			row.data('record',$.extend({},row.data('record')));
-			save();
-		});
-		$('.editicons .ui-icon-circle-minus',$tbl).click(function(){//.live('click',function(){
-			var line = $(this).closest('tr').remove();
-			save();
-		});
 		div.append($tbl);
-		div.append($('<button id="newrow"/>').button({label:'Add',icons:{primary:"ui-icon-plusthick"}}).click(function(){
-			addRow($.extend({},data.blank));
+		/*(		div.append($('<button id="newrow"/>').button({label:'Add',icons:{primary:"ui-icon-plusthick"}}).click(function(){
+			addRow($.extend({},settings.blank));
 			save();
 		}));
+		*/
 		return div;
 	}
 	
@@ -345,7 +326,6 @@ var form={
 };
 
 
-
 $(document).ready(function () {
    // Everything loaded, execute.
    lang.set('en');
@@ -353,8 +333,35 @@ $(document).ready(function () {
    if (typeof tinyMCE === "undefined") tinyMCE = {};
 
 
+	
+	//$('table.list').hover(function(){$('.editicons',this).showIt(1);},function(){$('.editicons',this).showIt(0);});
+	$('.editicons .ui-icon-circle-plus').live('click',function(){// clone a table row
+		var $tbl=$(this).closest('table');
+		var row = $(this).closest('tr');
+		var settings=$tbl.data('settings');
+		if ($('tbody tr',$tbl).length>=settings.max) return;
+		row.clone(true,true).insertAfter(row).fadeIn();
+		row.data('record',$.extend({},row.data('record')));
+		form.listManagerSave($(this).closest('table'));
+	});
+	$('.editicons .ui-icon-circle-minus').live('click',function(){// delete a table row
+		var $tbl=$(this).closest('table');
+		var settings=$tbl.data('settings');
+		if ($('tbody tr',$tbl).length<=settings.min) return;
+		$(this).closest('tr').remove();
+		form.listManagerSave($tbl);
+	});
+	
+	
    // Activate TABS
 	$('.tabset').tabs();
+	
+	$('#tabsMapper button').click(function(){ 
+		mapperScale = mapperScale * parseFloat($(this).attr('zoom')); 
+		$('.map').css({zoom:mapperScale,"-moz-transform":"scale("+mapperScale+")","-webkit-transform":"scale("+mapperScale+")"});
+	});
+	$('#tabsMapper button').first().button({label:'Fit',icons:{primary:'ui-icon-arrow-4-diag'}}).next().button({label:'Zoom in',icons:{primary:'ui-icon-zoomin'}}).next().button({label:'Zoom out',icons:{primary:'ui-icon-zoomout'}});
+	
 	
 	$('#vars_load').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
 	$('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
@@ -366,6 +373,8 @@ $(document).ready(function () {
 			case 'tabsAbout':
 			case 'tabsVariables':
 			case 'tabsSteps':
+			case 'tabsLogic':
+			case 'tabsConstants':
 				noviceTab(gGuide,ui.panel.id);
 				break;
 	
@@ -403,10 +412,6 @@ $(document).ready(function () {
    $('.hotspot').draggable({ containment: 'parent' }).resizable().fadeTo(0.1, 0.9);
 
 
-	$('#tabsMapper button').click(function(){ 
-		mapperScale = mapperScale * parseFloat($(this).attr('zoom')); 
-		$('.map').css({zoom:mapperScale,"-moz-transform":"scale("+mapperScale+")","-webkit-transform":"scale("+mapperScale+")"});
-	});
    /*
    //8/3/2012 http://stackoverflow.com/questions/1176245/how-do-you-set-the-jquery-tabs-to-form-a-100-height
    function resizeUi() {
@@ -560,7 +565,7 @@ function startCAJA(startTabOrPage)
 	
 	$('#tabviews').tabs( { disabled:false});
 	
-	$('#tabsVariables, #tabsSteps, #tabsAbout').html("");
+	$('#tabsVariables, #tabsSteps, #tabsAbout, #tabsConstants, #tabsLogic, #tabsAdvanced').html("");
 		
 	if (makestr(startTabOrPage)=="")
 		startTabOrPage="PAGE "+(gGuide.firstPage);
@@ -629,17 +634,14 @@ function gotoTabOrPage(target)
 	
 	if (target.indexOf("PAGE ")==0)
 	{
-		$('#CAJAContent').html('');
-		gGuide.novicePage($('#CAJAContent'),target.substr(5));
+		$('#tabsPageEdit').html('');
+		gGuide.novicePage($('#tabsPageEdit'),target.substr(5));
 		$('#tabviews').tabs('select','#tabsPageEdit');
 	}
 	else
 	if (target.indexOf("STEP ")==0)
 	{
 		$('#tabviews').tabs('select','#tabsSteps');
-		//$('#CAJAContent').html('');
-		//gGuide.noviceStep($('#CAJAContent'),target.substr(5));
-		//$('#tabviews').tabs('select','#tabsPageEdit');
 	}
 	else{
 		$('#tabviews').tabs('select',target);
@@ -668,23 +670,26 @@ function pickPage(request,response)
 	for (var p in gGuide.sortedPages)
 	{
 		var page=gGuide.sortedPages[p];
-		var label= page.name;
-		if (matcherStarts.test(page.name))
-			listStarts.push({label:pickHilite(label,request.term),value:page.name});
-		else
-		if (matcherContains.test(page.name))
-			listContains.push({label:pickHilite(label,request.term),value:page.name});
-		/* search name and text
-		var label="<b>"+page.name +"</b>: "+ page.text;
-		if (matcherStarts.test(page.name))
-			listStarts.push({label:pickHilite(label,request.term),value:page.name});
-		else
-		if (matcherContains.test(page.name))
-			listContains.push({label:pickHilite(label,request.term),value:page.name});
-		else
-		if (matcherContains.test(label))
-			listContains.push({label:pickHilite(label,request.term),value:page.name});
-		*/
+		if (page.type!=CONST.ptPopup)
+		{
+			var label= page.name;
+			if (matcherStarts.test(page.name))
+				listStarts.push({label:pickHilite(label,request.term),value:page.name});
+			else
+			if (matcherContains.test(page.name))
+				listContains.push({label:pickHilite(label,request.term),value:page.name});
+			/* search name and text
+			var label="<b>"+page.name +"</b>: "+ page.text;
+			if (matcherStarts.test(page.name))
+				listStarts.push({label:pickHilite(label,request.term),value:page.name});
+			else
+			if (matcherContains.test(page.name))
+				listContains.push({label:pickHilite(label,request.term),value:page.name});
+			else
+			if (matcherContains.test(label))
+				listContains.push({label:pickHilite(label,request.term),value:page.name});
+			*/
+		}
 	}
 	response(listStarts.concat(listContains).slice(0,30));
 }
@@ -703,7 +708,7 @@ TGuide.prototype.convertIndex=function()
 	{
 		var page = this.sortedPages[p];
 		var plink= '<li target="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()+'</li>';
-		if (page.type=="Popup")
+		if (page.type==CONST.ptPopup)
 			popups += plink;
 		else
 			inSteps[page.step] += plink;

@@ -1,25 +1,45 @@
 @charset "utf-8";
 
-/* Layout header, content and footer */
+
+.ui-widget-header, 
+.ui-state-default, 
+.ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default,
+.ui-state-hover, 
+.ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, 
+.ui-state-focus, 
+.ui-widget-content .ui-state-focus, 
+.ui-widget-header .ui-state-focus,
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active,
+.ui-priority-primary, 
+.ui-widget-content .ui-priority-primary, 
+.ui-widget-header .ui-priority-primary 
+ { font-weight: normal; }
+
+
+
+html, body, input, select, textarea , .htmledit, .codeedit {
+	background-color: #fff;
+	color: #000;
+}
+::-webkit-input-placeholder {	color: #555;font-style:italic}
+:-moz-placeholder {	 			color: #555;font-style:italic}
+:-ms-input-placeholder {			color: #555;font-style:italic;}
 html, body {
 	font-family:   Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
+	font-size: 10px;
 	height:100%;
 	width:100%;
 	margin:0;
 	padding:0;
 	overflow: hidden;
-	background-color: #eee;
 }
 
 
 /**************************/
 /* Frame Layout Theme  */
 .ui-layout-pane { /* all 'panes' */
-	xbackground: #FFF;
 	border: 1px solid #BBB;
 	padding: 10px;
-	//overflow: auto;
 	overflow:  hidden;
 }
 .ui-layout-content {
@@ -33,7 +53,7 @@ html, body {
 }
 
 .picker.branch , .picker.score {
-	font-size: .75em;
+	xfont-size: 1em;
 }
 
 
@@ -44,7 +64,6 @@ html, body {
 
 .header {
 	border-bottom : 2px solid #cccccc;
-	xbackground-color:#aaf;
 	padding-top: 4px;
 	padding-bottom: 0px;
 	background-image: url(img/CAJA_Icon_48.png);
@@ -53,24 +72,31 @@ html, body {
 }
 
 .ui-tabs .ui-tabs-nav li { 
-	font-size: .5em;
+	xfont-size: .9em;
 }
 .pagelist {
-	font-size: .8em;
-	line-height: 1em;
+	xfont-size: .8em;
 }
+
 .pagelist ul { 
 	font-weight: normal;
-	color: #f00;
 	list-style-type: square;
 	font-style: normal;
 	padding: 0px;
+}
+#CAJAOutline.pagelist ul { 
+	xlist-style-image: url(img/new.gif);
+	list-style: bullet;
 	margin-left: 1em;
-	list-style-image: url(img/new.gif);
+}
+#CAJAIndex.pagelist ul { 
+	list-style-type: none;
+	margin-left: 0em;
 }
 
 .pagelist * li:hover{
 	background-color:#eee;
+	color:#222;
 	cursor: pointer;
 }
 
@@ -80,7 +106,7 @@ html, body {
 	margin: 0px; 
 	padding: 0px;
 	width: 50px;
-	display: inline-block;
+	xdisplay: inline-block;
 }
 .editicons .ui-icon {
 	display: inline-block;
@@ -123,27 +149,21 @@ input.narrow {
             box-sizing: border-box;
 }
 .CAJAEditor { 
-	xbackground-color: #0f0;
 	padding: 0;
 	margin: 0;
 	width: 100%;
 }
 .CAJAContent { 
-	xbackground-color: #f00;
-	border: 2px thick #00CC99;
+	xborder: 2px thick #00CC99;
 	padding: 0;
 	margin: 0;
 	width: 100%;
-	xpadding-left: 14px;
-	xpadding-right: 8px;
 }
 
  /*********** Editor ***************/
 div.editq {
 	width: 100%;
-	-moz-border-radius:12px; border-radius:12px;
-	xborder: 1px solid #0066CC;
-	xbackground-color: #C4E1FF;
+	/*-moz-border-radius:12px; border-radius:12px;*/
 	margin: 0px;
 	padding: 5px;
 }
@@ -164,12 +184,13 @@ div.editq {
 	width: 12em;
 	margin: 5px 0 0;
 	text-align: right; 
-	xborder: 1px solid #ff0;
 }
 
-fieldset { padding:0; border:0; margin-top:25px; }
+fieldset { 
+	padding:0; 
+	margin-top:25px;
+}
 .editq fieldset {
-	border: 1px solid #0066CC;
 }
 .editq fieldset div  {
 	margin-top: 1em;
@@ -184,7 +205,6 @@ fieldset { padding:0; border:0; margin-top:25px; }
 }
 
 .editspan { /* wrap around fields for fluid width */
-	
 	display: block;
 	overflow: hidden;
 	padding: 5 5 5 5;
@@ -208,10 +228,9 @@ fieldset { padding:0; border:0; margin-top:25px; }
 	margin-bottom: 1px;
 	
 	padding: 5px; 
-	background-color: #fff;
-	font-size: 100%;
-	-moz-border-radius: 12px;
-	border-radius: 12px;
+	xfont-size: 1em;
+	x-moz-border-radius: 12px;
+	xborder-radius: 12px;
 	border: 1px solid #ccc;
 	min-height: 1em;
 	
@@ -230,23 +249,23 @@ fieldset { padding:0; border:0; margin-top:25px; }
 	padding-right: 3px;
 	background-color: #1ff;
 }
-*/
-.codearea, .xml {
-	font-family: Monospace;
-	white-space: pre-wrap;
-}
-.xml {
-	font-size: .5pt;
-}
-.collapse {
-	height: 1.5em;
-	overflow: hidden;
-}
-.autocomplete.picker.page {
+x.autocomplete.picker.page {
 	width:100%; 
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
+}
+*/
+.codeedit, .xml {
+	font-family: Monospace;
+	white-space: pre-wrap;
+}
+.xml {
+	font-size: .5em;
+}
+.collapse {
+	height: 1.5em;
+	overflow: hidden;
 }
 
 
@@ -321,7 +340,7 @@ P.CAJATest {
 	width: auto;
 }
 .hilite {
-	background-color:#0f0;
+	background-color:#ff8;
 }
 .hilite.slack {
 	background-color:#ff0;
@@ -494,7 +513,6 @@ ul.megamenu div ul li:hover {
 
 /************** Tracer ************/
 #tracer li {
-	color:#800;
 	font-size: 8pt;
 	padding:1px;
 	margin-left: -2em;
@@ -517,7 +535,7 @@ table.list tr:nth-child(odd) {
 	background-color:rgba(255,255,255,0.5);
 }
 table.list tr td  {
-	font-size: .8em;
+	xfont-size: .8em;
 	padding:.1em;
 }
 /*
@@ -587,20 +605,35 @@ li.guide:hover {
 }
 
 
-/* Mapper */
-
-#tabsMapper {
-	background-color:#ff0;
-	overflow: none;
-	width: 95%;
-	height: 95%;
+#tabsAbout, #tabsPageEdit, #tabsPageView, #tabsVariables, #tabsMapper, #tabsConstants, #tabsSteps, #tabsLogic, #tabsCAJA {
+	xbackground-color:#cfa;
+	overflow: hidden;
+	margin:0;
+	padding:0;
+	width: 100%;
+	height: 100%;
+	border: none;
 }
-#MapperPanel { 
-	background-color:#ffa;
-	width: 95%;
-	height: 95%;
+.tabsPanel { 
+	height: 100%;
 	overflow: scroll;
 	border: 2px thick #f00;
+}
+
+
+
+/* Mapper */
+
+#MapperPanel { 
+	position: absolute;
+	xbackground-color:#ffa;
+	top: 40px;
+	left: 10px;
+	right:10px;
+	bottom:10px;
+	
+	overflow: scroll;
+	border: none;
 }
 .map {
 	background-color:#fff;
@@ -698,4 +731,5 @@ x.map {
 	height:20px;
 	margin-top: -5px;
 }
+
 

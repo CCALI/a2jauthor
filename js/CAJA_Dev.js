@@ -1,90 +1,10 @@
 
-function noviceTab(guide,tab)
-{	// 08/03/2012 Edit panel for guide sections 
-	var div = $('#'+tab);
-	if (div.html()!="") return;
-	//trace('Creating content for tab '+tab);
-	var t=$('<div/>').addClass('editq');
-	
-	switch (tab){
-		case "tabsAbout":
-			var fs = form.fieldset('About');
-			fs.append(form.text({label:'Title:', placeholder:'Interview title', value:guide.title, change:function(val){guide.title=val}}));
-			fs.append(form.htmlarea({label:'Description:',value:guide.description,change:function(val){guide.description=val}}));
-			fs.append(form.text({label:'Jurisdiction:', value:guide.jurisdiction, change:function(val){guide.jurisdiction=val}}));
-			fs.append(form.htmlarea({label:'Credits:',value:guide.credits,change:function(val){guide.credits=val}}));
-			fs.append(form.text({label:'Approximate Completion Time:',placeholder:'e.g., 2-3 hours',value:guide.completionTime,change:function(val){guide.completionTime=val}}));
-			t.append(fs);
-			
-			var fs = form.fieldset('Authors');
-			var blankAuthor=new TAuthor();
-			fs.append(form.tableManager({name:'Authors',picker:'',min:1,max:12,list:guide.authors,blank:blankAuthor
-				,columns: ['Name','Title','Organization','EMail']
-				,save:function(newlist){
-					guide.authors=newlist; }
-				,create:function(author){
-					var cols=[
-						form.text({  placeholder:'author name',value:author.name,
-							change:function(val,author){author.name=val}})
-						,form.text({  placeholder:'job title',value:author.title,
-							change:function(val,author){author.title=val}})
-						,form.text({  placeholder:'organization',value:author.organization,
-							change:function(val,author){author.organization=val}})
-						,form.text({  placeholder:'email',value:author.email,
-							change:function(val,author){author.email=val}})
-					];
-					return cols;
-				}}));
-			t.append(fs);
-			
-			var fs = form.fieldset('Revision History');  
-			fs.append(form.text({label:'Current Version:',value:guide.version,change:function(val){guide.version=val}}));
-			fs.append(form.htmlarea({label:'Revision Notes',value:guide.notes,change:function(val){guide.notes=val}}));
-			t.append(fs);
-
-			break;
-
-		case "tabsVariables":
-			t.append(form.h1('Variables'));
-			var tt=form.rowheading(["Name","Type","Comment"]); 
-			//sortingNatural
-			var sortvars=[];
-			for (vi in guide.vars) sortvars.push(guide.vars[vi]);
-			sortvars.sort(function (a,b){ if (a.sortName<b.sortName) return -1; else if (a.sortName==b.sortName) return 0; else return 1;});
-			for (vi in sortvars)
-			{
-				v=sortvars[vi];
-				tt+=form.row([v.name,v.type,v.comment]);
-			}
-			t.append('<table class="A2JVars">'+tt+"</table>");
-			break;
-			
-		case 'tabsSteps':
-			var fs=form.fieldset('Steps'); 
-			fs.append(form.tableRowCounter('Steps','Number of steps',2, CONST.MAXSTEPS,guide.steps.length)); 
-			var steps=[];
-			for (var s in guide.steps)
-			{
-				var step=guide.steps[s];
-				//tt+=form.row([step.number,step.text]);
-				steps.push({ row: [form.text({value:step.number,class:'narrow'}),form.text({value:step.text})]});
-			}
-			//t+='<table class="A2JSteps">'+tt+"</table>";
-			fs.append(form.tableRows('Steps',['Step','Sign'],steps).addClass('A2JSteps'));
-			t.append(fs);
-			
-			break;
-	}
-	
-	div.append(t);
-}
-
 TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizard for given page.
    var t = ""; 
 	
    var page = this.pages[pagename]; 
 	 
-	var t=$('<div/>').addClass('editq');
+	var t=$('<div/>').addClass('tabsPanel editq');
 
 
 	if (page == null || typeof page === "undefined") {
@@ -143,12 +63,11 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 		
 		if (page.type == "A2J" || page.fields.length > 0) {
 		
-			var fs=form.fieldset('Fields'); 
 			var blankField=new TField();
 			blankField.type=CONST.ftText;
 			blankField.label="Label";
 			
-			function updateFieldLayout(form,field){
+			function updateFieldLayout(ff,field){
 				var canMinMax = field.type==CONST.ftNumber || field.type==CONST.ftNumberDollar || field.type==CONST.ftNumberPick || field.type==CONST.ftDateMDY;
 				var canList = field.type==CONST.ftTextPick;
 				var canDefaultValue=	field.type!=CONST.ftCheckBox && field.type!=CONST.ftCheckBoxNOTA && field.type!=CONST.ftGender;
@@ -162,137 +81,66 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 				//	useLongLabel = curField.type==CField.ftCheckBox ||	curField.type==CField.ftCheckBoxNOTA ||curField.type==CField.ftRadioButton ||urField.type==CField.ftCheckBoxMultiple;
 				//	useLongText =curField.type==CField.ftTextLong;
 				
-				form.find('[name="maxchars"]').showit(canMaxChars);
-				form.find('[name="min"]').showit(canMinMax );
-				form.find('[name="max"]').showit(canMinMax );
-				form.find('[name="default"]').showit(canDefaultValue);
-				form.find('[name="calculator"]').showit(canUseCalc);
-				form.find('[name="calendar"]').showit(canCalendar);
-			}
-			/*
-			fs.append(form.tableRowCounter('fields','Number of fields',0, CONST.MAXFIELDS,page.fields.length));
-			function makeField(field){
-				var field1=form.record(field);
-				//var field1=$('<div class=record/>');//form.fieldset('Field');
-				//field1.data('record',field);
-				field1.append(form.pickList({label:'Type:',value: field.type,change:function(val,field,form){
-					field.type=val;
-					updateFieldLayout(form,field);
-					}},fieldTypesList ));
-				field1.append(form.htmlarea({label:'Label:',   value:field.label, 							change:function(val,field){field.label=val;}}));
-				field1.append(form.text({label:'Variable:', value: field.name, 						change:function(val,field){field.name=val}}));
-				field1.append(form.text({label:'Default value:',name:'default', value:  field.value, 				change:function(val,field){field.value=val}}));
-				field1.append(form.checkbox({label:'Validation:', checkbox:'User must fill in', value:field.optional, change:function(val,field){field.optional=val}}));
-				field1.append(form.text({label:'Max chars:',name:'maxchars', value: field.maxChars,			change:function(val,field){field.maxChars=val;}}));
-				field1.append(form.checkbox({label:'Calculator:',name:'calculator',checkbox:'Calculator available?', value:field.calculator,change:function(val,field){field.calculator=val}}));
-				field1.append(form.checkbox({label:'Calendar:', name:'calendar',checkbox:'Calendar available?', value:field.calendar, change:function(val,field){field.calendar=val}}));
-				field1.append(form.text({label:'Min value:',name:'min', value: field.min, 						change:function(val,field){field.min=val}}));
-				field1.append(form.text({label:'Max value:',name:'max', value: field.max, 						change:function(val,field){field.max=val}}));
-				field1.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,	change:function(val,field){field.invalidPrompt=val}}));
-				updateFieldLayout(field1,field);
-				return field1;
+				ff.find('[name="maxchars"]').showit(canMaxChars);
+				ff.find('[name="min"]').showit(canMinMax );
+				ff.find('[name="max"]').showit(canMinMax );
+				ff.find('[name="default"]').showit(canDefaultValue);
+				ff.find('[name="calculator"]').showit(canUseCalc);
+				ff.find('[name="calendar"]').showit(canCalendar);
 			}
 			
-			var fields=[];
-			for (var f in page.fields) {
-				fields.push({ record:page.fields[f], row: [ makeField(page.fields[f])]});
-			}
-			for (var f=page.fields.length;f<CONST.MAXFIELDS;f++) {
-				fields.push({ record:blankField, row: [ makeField(blankField)], visible:false });
-			}
-			fs.append(form.tableRows('fields','',fields));
-			*/
-			
-			/*
-			fs.append(form.tableManager({name:'Fields',picker:'Number of fields',min:0,max:CONST.MAXFIELDS,list:page.fields,blank:blankField,
-				create:function(field){
-					var field1=form.record(field); 
-					field1.append(form.pickList({label:'Type:',value: field.type,change:function(val,field,form){
+			var fs=form.fieldset('Fields');
+			fs.append(form.listManager({name:'Fields',picker:'Number of fields:',min:0,max:CONST.MAXFIELDS,list:page.fields,blank:blankField
+				,save:function(newlist){
+					page.fields=newlist;
+					}
+				,create:function(ff,field){
+					ff.append(form.pickList({label:'Type:',value: field.type,change:function(val,field,ff){
 						field.type=val;
-						updateFieldLayout(form,field);
+						updateFieldLayout(ff,field);
 						}},fieldTypesList ));
-					field1.append(form.htmlarea({label:'Label:',   value:field.label, 							change:function(val,field){field.label=val;}}));
-					field1.append(form.text({label:'Variable:', value: field.name, 						change:function(val,field){field.name=val}}));
-					field1.append(form.text({label:'Default value:',name:'default', value:  field.value, 				change:function(val,field){field.value=val}}));
-					field1.append(form.checkbox({label:'Validation:', checkbox:'User must fill in', value:field.optional, change:function(val,field){field.optional=val}}));
-					field1.append(form.text({label:'Max chars:',name:'maxchars', value: field.maxChars,			change:function(val,field){field.maxChars=val;}}));
-					field1.append(form.checkbox({label:'Calculator:',name:'calculator',checkbox:'Calculator available?', value:field.calculator,change:function(val,field){field.calculator=val}}));
-					field1.append(form.checkbox({label:'Calendar:', name:'calendar',checkbox:'Calendar available?', value:field.calendar, change:function(val,field){field.calendar=val}}));
-					field1.append(form.text({label:'Min value:',name:'min', value: field.min, 						change:function(val,field){field.min=val}}));
-					field1.append(form.text({label:'Max value:',name:'max', value: field.max, 						change:function(val,field){field.max=val}}));
-					field1.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,	change:function(val,field){field.invalidPrompt=val}}));
-					updateFieldLayout(field1,field);
-					return field1;
-				}}));
-				*/
+					ff.append(form.htmlarea({label:'Label:',   value:field.label, 
+						change:function(val,field){field.label=val;}}));
+					ff.append(form.text({label:'Variable:', placeholder:'Variable name', value: field.name,
+						change:function(val,field){field.name=val}}));
+					ff.append(form.text({label:'Default value:',name:'default', placeholder:'Default value',value:  field.value,
+						change:function(val,field){field.value=val}}));
+					ff.append(form.checkbox({label:'Required:', checkbox:'', value:field.required,
+						change:function(val,field){field.required=val}}));
+					ff.append(form.text({label:'Max chars:',name:'maxchars', placeholder:'Max Chars',value: field.maxChars,
+						change:function(val,field){field.maxChars=val;}}));
+					ff.append(form.checkbox({label:'Show Calculator:',name:'calculator',checkbox:'Calculator available?', value:field.calculator,
+						change:function(val,field){field.calculator=val}}));
+					ff.append(form.checkbox({label:'Show Calendar:', name:'calendar',checkbox:'Calendar available?', value:field.calendar,
+						change:function(val,field){field.calendar=val}}));
+					ff.append(form.text({label:'Min value:',name:'min',placeholder:'min', value: field.min,
+						change:function(val,field){field.min=val}}));
+					ff.append(form.text({label:'Max value:',name:'max',placeholder:'max', value: field.max,
+						change:function(val,field){field.max=val}}));
+					ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,	change:function(val,field){field.invalidPrompt=val}}));
+					
+					updateFieldLayout(ff,field);
+					return ff;
+				}
+				}));
 			
-			fs.append(form.tableManager({name:'Fields',picker:'Number of fields',min:0,max:CONST.MAXFIELDS,list:page.fields,blank:blankField
-				,columns:['Label','Var Name','Default Value','Type','Required?','Max Chars','Calc?','Calendar?','Min/Max Value','Invalid Prompt']
-				,save:function(newlist){page.fields=newlist; }
-				,create:function(field){
-					var cols=[
-						form.htmlarea({  value:field.label, 							change:function(val,field){field.label=val;}})
-						,form.text({  value: field.name, placeholder:'variable',						change:function(val,field){field.name=val}})
-						,form.text({  name:'default', placeholder:'default value',	value:  field.value, 				change:function(val,field){field.value=val}})
-						,form.pickList({  value: field.type,change:function(val,field,form){
-							field.type=val;
-							updateFieldLayout(form,field);
-							}},fieldTypesList)
-						,form.checkbox({ checkbox:'', value:field.required, change:function(val,field){field.required=val}})
-						,form.text({name:'maxchars', width:'3em', placeholder:'max chars',	value: field.maxChars,			change:function(val,field){field.maxChars=val;}})
-						,form.checkbox({ name:'calculator',checkbox:'', value:field.calculator,change:function(val,field){field.calculator=val}})
-						,form.checkbox({  name:'calendar',checkbox:'', value:field.calendar, change:function(val,field){field.calendar=val}})
-						,form.text({ name:'min', placeholder:'min',	value: field.min, 						change:function(val,field){field.min=val}})
-						.append(form.text({ name:'max',placeholder:'max',	 value: field.max, 						change:function(val,field){field.max=val}}))
-						,form.htmlarea({value: field.invalidPrompt,	change:function(val,field){field.invalidPrompt=val}})
-					];
-					//updateFieldLayout(field1,field);
-					return cols;
-				}}));
 			
 			t.append(fs);
 	  	}
 		if (page.type == "A2J" || page.buttons.length > 0) {
-			var fs=form.fieldset('Buttons');
 			var blankButton=new TButton();
-			/*
-			fs.append(form.tableRowCounter('buttons','Number of buttons:',1, CONST.MAXBUTTONS,page.buttons.length));
-			function makeButton(b)
-			{
-				var record=form.record(b);
-				record.append(form.text({label:'Label:', 				value: b.label,	change:function(val){b.label=val}}));
-				record.append(form.text({label:'Var Name:', 			value: b.name, 	change:function(val){b.name=val}}));
-				record.append(form.text({label:'Var Value:',			value: b.value,	change:function(val){b.value=val}}));
-				record.append(form.pickpage({label:'Destination:', value: b.next, 	change:function(val){b.next=val;trace(b.next);}}));
-				return record;
-			}
-			var buttons=[];
-			for (var b in page.buttons) {
-				buttons.push({ row: [ makeButton(page.buttons[b])]});
-			}
-			var blankButton=new TButton();
-			for (var b=page.buttons.length;b<CONST.MAXBUTTONS;b++) {
-				buttons.push({ row: [ makeButton(blankButton)], visible:false });
-			}
-			fs.append(form.tableRows('buttons','',buttons));
-			*/
 			
-			fs.append(form.tableManager({name:'Buttons',picker:'Number of buttons',min:1,max:CONST.MAXBUTTONS,list:page.buttons,blank:blankButton
-				,columns: ['Label','Var Name','Default value','Destination']
+			var fs=form.fieldset('Buttons');
+			fs.append(form.listManager({name:'Buttons',picker:'Number of buttons',min:1,max:CONST.MAXBUTTONS,list:page.buttons,blank:blankButton
 				,save:function(newlist){
 					page.buttons=newlist; }
-				,create:function(b){
-					var cols=[
-						form.text({ 		value: b.label,placeholder:'caption',		change:function(val,b){b.label=val}})
-						,form.text({ 		value: b.name, placeholder:'variable',		change:function(val,b){b.name=val}})
-						,form.text({ 		value: b.value,placeholder:'value',		change:function(val,b){b.value=val}})
-						,form.pickpage({	value: b.next, 	change:function(val,b){b.next=val;}})
-					];
-					//updateFieldLayout(field1,field);
-					return cols;
+				,create:function(ff,b){
+					ff.append(form.text({ 		value: b.label,label:'Label:',placeholder:'button label',		change:function(val,b){b.label=val}}));
+					ff.append(form.text({ 		value: b.name, label:'Variable Name:',placeholder:'variable',		change:function(val,b){b.name=val}}));
+					ff.append(form.text({ 		value: b.value,label:'Default value',placeholder:'Default value',		change:function(val,b){b.value=val}}));
+					ff.append(form.pickpage({	value: b.next,label:'Destination:', 	change:function(val,b){b.next=val;}}));
+					return ff;
 				}}));
-			
-			
 			t.append(fs);
 		}
 		var fs=form.fieldset('Advanced Logic');
@@ -387,36 +235,128 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 
 	div.append('<div class=xml>'+htmlEscape(page.xml)+'</div>');
 
-
-   // Attach event handlers
-   /*
-   $('.picker.branch').change(function(){
-   var br=$(this).val();
-   $(this).parent().children('.text').toggle(br!=2);
-   $(this).parent().children('.dest').toggle(br!=0);
-   })
-   */
-
-   $('.autocomplete.picker.page').autocomplete({ source: pickPage, html: true,
-      change: function () { // if didn't match, restore to original value
-         var matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex($(this).val()) + "$", "i");
-         var newvalue = $(this).data('org'); //attr('orgval');
-         $.each(gGuide.pages, function (p, page) {
-            if (matcher.test(page.name)) {
-               newvalue = page.name
-               return false;
-            }
-         });
-         $(this).val(newvalue);
-         $(this).data('org', $(this).val());
-         //			$(this).attr('orgval',$(this).val());
-      } 
-   })
-		.focus(function () {
-		   console.log($(this).val());
-		   $(this).autocomplete("search");
-		});
-		
 	gPage = page;
 	//page=null;
+}
+
+function noviceTab(guide,tab)
+{	// 08/03/2012 Edit panel for guide sections 
+	var div = $('#'+tab);
+	if (div.html()!="") return;
+	//trace('Creating content for tab '+tab);
+	var t=$('<div/>').addClass('tabsPanel editq')//.append($('<div/>').addClass('tabsPanel2'));//editq
+	
+	switch (tab){
+		case "tabsConstants":
+			var fs = form.fieldset('Constants');
+			t.append(fs);
+			break;
+		
+		case "tabsLogic":
+			var fs = form.fieldset('Logic');
+			
+			for (var p in guide.sortedPages)
+			{
+				var page=guide.sortedPages[p];
+				if (page.type!=CONST.ptPopup)
+				{
+					var fs=form.fieldset(page.name);
+					fs.append(form.codearea({label:'Before:',	value:page.codeBefore,	change:function(val){ ; /* TODO Compile for syntax errors */}} ));
+					fs.append(form.codearea({label:'After:',	value:page.codeAfter, 	change:function(val){ ; /* TODO Compile for syntax errors */}} ));
+					t.append(fs);
+				}
+			}
+			
+			break;
+		
+		case "tabsAbout":
+			var fs = form.fieldset('About');
+			fs.append(form.text({label:'Title:', placeholder:'Interview title', value:guide.title, change:function(val){guide.title=val}}));
+			fs.append(form.htmlarea({label:'Description:',value:guide.description,change:function(val){guide.description=val}}));
+			fs.append(form.text({label:'Jurisdiction:', value:guide.jurisdiction, change:function(val){guide.jurisdiction=val}}));
+			fs.append(form.htmlarea({label:'Credits:',value:guide.credits,change:function(val){guide.credits=val}}));
+			fs.append(form.text({label:'Approximate Completion Time:',placeholder:'e.g., 2-3 hours',value:guide.completionTime,change:function(val){guide.completionTime=val}}));
+			t.append(fs);
+			
+			var fs = form.fieldset('Authors');
+			var blankAuthor=new TAuthor();
+			
+			/*
+			fs.append(form.tableManager({name:'Authors',picker:'',min:1,max:12,list:guide.authors,blank:blankAuthor
+				,columns: ['Name','Title','Organization','EMail']
+				,save:function(newlist){
+					guide.authors=newlist; }
+				,create:function(author){
+					var cols=[
+						form.text({  placeholder:'author name',value:author.name,
+							change:function(val,author){author.name=val}})
+						,form.text({  placeholder:'job title',value:author.title,
+							change:function(val,author){author.title=val}})
+						,form.text({  placeholder:'organization',value:author.organization,
+							change:function(val,author){author.organization=val}})
+						,form.text({  placeholder:'email',value:author.email,
+							change:function(val,author){author.email=val}})
+					];
+					return cols;
+				}}));*/
+
+			var fs = form.fieldset('Revision History');  
+			fs.append(form.text({label:'Current Version:',value:guide.version,change:function(val){guide.version=val}}));
+			fs.append(form.htmlarea({label:'Revision Notes',value:guide.notes,change:function(val){guide.notes=val}}));
+			t.append(fs);
+			
+			var fs=form.fieldset('Authors');
+			fs.append(form.listManager({name:'Authors',picker:'Number of authors',min:1,max:12,list:guide.authors,blank:blankAuthor
+				,save:function(newlist){
+					guide.authors=newlist; }
+				,create:function(ff,author){
+						ff.append(form.text({  label:"Author's name:", placeholder:'author name',value:author.name,
+							change:function(val,author){author.name=val}}));
+						ff.append(form.text({  label:"Author's job title:", placeholder:'job title',value:author.title,
+							change:function(val,author){author.title=val}}));
+						ff.append(form.text({  label:"Author's Organization:", placeholder:'organization',value:author.organization,
+							change:function(val,author){author.organization=val}}));
+						ff.append(form.text({  label:"Author's email:", placeholder:'email',value:author.email,
+							change:function(val,author){author.email=val}}));
+					return ff;
+				}}));
+				
+			t.append(fs);
+			
+
+			break;
+
+		case "tabsVariables":
+			t.append(form.h1('Variables'));
+			var tt=form.rowheading(["Name","Type","Comment"]); 
+			//sortingNatural
+			var sortvars=[];
+			for (vi in guide.vars) sortvars.push(guide.vars[vi]);
+			sortvars.sort(function (a,b){ if (a.sortName<b.sortName) return -1; else if (a.sortName==b.sortName) return 0; else return 1;});
+			for (vi in sortvars)
+			{
+				v=sortvars[vi];
+				tt+=form.row([v.name,v.type,v.comment]);
+			}
+			t.append('<table class="A2JVars">'+tt+"</table>");
+			break;
+			
+		case 'tabsSteps':
+			var fs=form.fieldset('Steps'); 
+			fs.append(form.tableRowCounter('Steps','Number of steps',2, CONST.MAXSTEPS,guide.steps.length)); 
+			var steps=[];
+			for (var s in guide.steps)
+			{
+				var step=guide.steps[s];
+				//tt+=form.row([step.number,step.text]);
+				steps.push({ row: [form.text({value:step.number,class:'narrow'}),form.text({value:step.text})]});
+			}
+			//t+='<table class="A2JSteps">'+tt+"</table>";
+			fs.append(form.tableRows('Steps',['Step','Sign'],steps).addClass('A2JSteps'));
+			t.append(fs);
+			
+			break;
+	}
+	
+	div.append(t);
 }

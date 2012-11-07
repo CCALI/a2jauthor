@@ -104,7 +104,7 @@ function exportXML_CAJA_from_CAJA(guide)
 			var FIELD = {
 				_TYPE:			f.type, 
 				_ORDER:			f.order, 
-				_OPTIONAL:		f.optional==true ? true : JS2XML_SKIP,
+				_REQUIRED:		f.required, //==true ? true : JS2XML_SKIP,
 				_MIN:				f.min, 
 				_MAX:				f.max, 
 				_CALENDAR:		f.calendar==true ? true : JS2XML_SKIP, 
@@ -350,7 +350,7 @@ function loadNewGuidePrep(guideFile,startTabOrPage)
 {
 	prompt('Loading '+guideFile);
 	prompt('Start location will be '+startTabOrPage);
-	$('.CAJAContent').html('Loading '+guideFile+AJAXLoader);
+	//$('.CAJAContent').html('Loading '+guideFile+AJAXLoader);
 	$('#CAJAOutline, #CAJAIndex').html('');
 }
 

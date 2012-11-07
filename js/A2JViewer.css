@@ -19,6 +19,8 @@ html,body{
 }
 .A2JViewer {
 	border: 1px solid #444;
+	color: #000;
+	
 	background-color:#fff;
 	margin: 0px;
 	padding: 0px;
@@ -26,6 +28,9 @@ html,body{
 	min-height: 600px;
 	width: 930px;
 	height: 660px;
+}
+.A2JViewer fieldset {
+	border: none;
 }
 .A2JViewer .NavBar {
 	margin: 0px;

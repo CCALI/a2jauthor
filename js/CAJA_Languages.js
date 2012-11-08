@@ -41,7 +41,7 @@ lang.regional['en']= {
 	qIDFAIL : "[Exit - User does not qualify]",
 	qIDEXIT : "[Exit - Save Incomplete Form]",
 	qIDBACK : "[Back to prior question]",
-	qIDRESUME : "Exit - Resume interview]",
+	qIDRESUME : "[Exit - Resume interview]",
 	// Unknown ID
 	UnknownID : "[Unknown id [{1}]: [{2}",
 	

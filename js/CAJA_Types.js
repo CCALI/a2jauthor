@@ -3,14 +3,15 @@
 
 // ### Constants  ###
 
-	// Navigation page destinations
-	var qIDNOWHERE=""
-	var qIDSUCCESS="SUCCESS"
-	var qIDFAIL="FAIL"
-	var qIDEXIT="EXIT" //8/17/09 3.0.1 Save like SUCCESS but flag incomplete true.
-	var qIDBACK="BACK" //8/17/09 3.0.1 Same as history Back button.
-	var qIDRESUME="RESUME" //8/24/09 3.0.2
-	
+// Navigation page destinations
+var qIDNOWHERE=""
+var qIDSUCCESS="SUCCESS"
+var qIDFAIL="FAIL"
+var qIDEXIT="EXIT" //8/17/09 3.0.1 Save like SUCCESS but flag incomplete true.
+var qIDBACK="BACK" //8/17/09 3.0.1 Same as history Back button.
+var qIDRESUME="RESUME" //8/24/09 3.0.2
+
+
 var CONST = {
 	//Page Types
 	ptPopup:'Popup',

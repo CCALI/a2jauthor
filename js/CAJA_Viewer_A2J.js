@@ -20,7 +20,7 @@ var a2jviewer={
 		for (var bi in page.buttons)
 		{
 			var b = page.buttons[bi];
-			$('.A2JViewer .ui-form.question  .buttonlist').append('<button num='+bi+' title="Go to page '+gGuide.pageDisplayName(b.next)+'">'+b.label+'</button>'); 
+			$('.A2JViewer .ui-form.question  .buttonlist').append('<button num='+bi+' title="Go to page '+gGuide.pageDisplayName(b.next).asHTML()+'">'+b.label+'</button>'); 
 		} 
 		for (var fi in page.fields)
 		{

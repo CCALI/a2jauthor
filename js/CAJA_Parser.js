@@ -272,9 +272,12 @@ TGuide.prototype.addUniquePage=function(preferredName)
 
 TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 {	// Convert a page name or reserved word into readable text.
+	var dval="";
 	if (this.pages[name])
 	{
-		name = htmlEscape(this.pages[ name ].name);
+		var page = this.pages[name];
+		//name = htmlEscape(this.pages[ name ].name);
+		dval = name +"\t"+  decodeEntities(page.text);
 	}
 	else
 	{
@@ -284,14 +287,14 @@ TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 		autoIDs[qIDFAIL]=   	lang.qIDFAIL;//"[Exit - User does not qualify]"
 		autoIDs[qIDEXIT]=		lang.qIDEXIT;//"[Exit - Save Incomplete Form]"//8/17/09 3.0.1 Save incomplete form
 		autoIDs[qIDBACK]=		lang.qIDBACK;//"[Back to prior question]"//8/17/09 3.0.1 Same as history Back button.
-		autoIDs[qIDRESUME]=	lang.qIDRESUME;//"[Exit - Resume interview]"//8/24/09 3.0.2
+		autoIDs[qIDRESUME]=	lang.qIDRESUME;//"[Exit - Resume interview]"//8/24/09 3.0.2	
 		if (typeof autoIDs[ name ] =="undefined")
-			name = lang.UnknownID.printf( name );//,props(autoIDs)) //"[Unknown id "+id+"]" + props(autoIDs);
+			dval = lang.UnknownID.printf( name, name );//,props(autoIDs)) //"[Unknown id "+id+"]" + props(autoIDs);
 		else
-			name = autoIDs[ name ];
+			dval = name+"\t"+autoIDs[ name ];
 	}
-	console.log('pageDisplayName',name);
-	return name;
+	console.log('pageDisplayName',dval);
+	return dval;
 }
 
 

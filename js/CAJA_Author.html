@@ -29,7 +29,7 @@
 <script src="CAJA_Viewer_A2J.js" type="text/javascript"></script>
 <script src="CAJA_Dev.js" type="text/javascript"></script>
 <script src="CAJA_Author.js" type="text/javascript"></script>
-<script src="CAJA_Author_Advanced.js" type="text/javascript"></script>
+<xscript src="CAJA_Author_Advanced.js" type="text/javascript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body >
@@ -124,7 +124,7 @@
 		<ul>
 			<li><a href="#CAJAOutline">Outline</a></li>
 			<li><a href="#CAJAIndex">Index</a></li>
-			<li><a href="#tabsfind">Search</a></li>
+			<!--<li><a href="#tabsfind">Search</a></li>-->
 		</ul>
 		<div class="ui-layout-content">
 			<div id="CAJAOutline" class="pagelist">
@@ -134,8 +134,7 @@
 			<div id="CAJAIndex" class="pagelist">
 				<ul>
 				</ul>
-			</div>
-			<div id="tabsfind"> Find? </div>
+			</div><!--			<div id="tabsfind"> Find? </div>-->
 		</div>
 	</div>
 	<div class="ui-layout-south"><span id="CAJAStatus"></span><span style="float:right;text-align:right">All Contents &copy; CALI, The Center for Computer-Assisted Legal
@@ -189,38 +188,40 @@
 			<li><a href="#tabsVariables">Variables</a></li>
 			<li><a href="#tabsConstants">Constants</a></li>
 			<li><a href="#tabsSteps">Steps</a></li>
-			<li><a href="#tabsLogic">Logic</a></li>
-			<li><a href="#tabsAdvanced">Advanced</a></li>
+			<li><a href="#tabsLogic">All Logic</a></li>
+			<li><a href="#tabsText">All Text</a></li>
 		</ul>
 		<div class="ui-layout-content"> 
-			<div id="tabsMapper"><div class="nav">
+			<div id="tabsMapper"><div class="tabHeader">
 			<button zoom="fit"></button>
 			<button zoom="1.2"></button>
 			<button zoom="0.8"></button>
+			<button ></button>
+			<button ></button>
 			</div><div id="MapperPanel"><div class="map"></div></div></div>
-			<div id="tabsAbout"></div>
-			<div id="tabsVariables"></div>
-			<div id="tabsPageEdit"></div>
-			<div id="tabsPageView"></div>
-			<div id="tabsConstants"></div>
-			<div id="tabsSteps"></div>
-			<div id="tabsLogic"></div>
-			<div id="tabsAdvanced"></div>
-			<div id="tabsCAJA" > 
+			<div id="tabsAbout"><div class="tabHeader"></div><div class="tabContentFrame"><div class="tabContent editq"></div></div></div>
+			<div id="tabsVariables"><div class="tabHeader">Variables</div><div class="tabContentFrame"><div class="tabContent editq"></div></div></div>
+			<div id="tabsPageEdit"><div class="tabHeader"></div><div class="tabContentFrame"><div class="tabContent editq"></div></div></div>
+			<div id="tabsPageView"><div class="tabHeader"></div><div class="tabContentFrame"><div class="tabContent editq"></div></div></div>
+			<div id="tabsConstants"><div class="tabHeader">Contants</div><div class="tabContentFrame"><div class="tabContent editq"></div></div></div>
+			<div id="tabsSteps"><div class="tabHeader"></div><div class="tabContentFrame"><div class="tabContent editq"></div></div></div>
+			<div id="tabsLogic"><div class="tabHeader"><form><div id="showlogic"><input checked="checked" type="radio" id="showlogic1" name="showlogic" /><label for="showlogic1">Show only active code</label><input type="radio" id="showlogic2" name="showlogic" /><label for="showlogic2">Show all code blocks</label></div></form></div><div class="tabContentFrame"><div class="tabContent editq"></div></div></div>
+			<div id="tabsText"><div class="tabHeader"><form><div id="showtext"><input checked="checked" type="radio" id="showtext1" name="showtext" /><label for="showtext1">Show only filled text</label><input type="radio" id="showtext2" name="showtext" /><label for="showtext2">Show all text blocks</label></div></form></div><div class="tabContentFrame"><div class="tabContent editq"></div></div></div>
+			<div id="tabsCAJA" > <div class="tabContentFrame"><div class="tabContent editq">
 				<h1>CAJA Alpha </h1>
 				<p>Welcome to CAJA </p>
 				<p>Create a new Guide</p>
 				<p>Open an existing Guide</p>
 				<p>Customize someone else's Guide</p> 
-			</div>
+			</div></div></div>
 		</div>
 	</div>
 </div>
 <div id="login-form" title="signin">
 	<form>
 		<fieldset>
-		<label for="username">Name</label>		<input type="text" name="username" id="username" class="text ui-widget-content ui-corner-all" value="demo" />
-		<label for="userpass">Password</label>	<input type="password" name="password" id="userpass" class="text ui-widget-content ui-corner-all"  value="demo123"  />
+		<label for="username">Name</label>		<input type="text" name="username" id="username" class="text ui-widget-content ui-corner-all"  />
+		<label for="userpass">Password</label>	<input type="password" name="password" id="userpass" class="text ui-widget-content ui-corner-all"   />
 		</fieldset>
 	</form>
 </div>

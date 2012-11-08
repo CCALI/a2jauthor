@@ -1,4 +1,5 @@
 
+
 TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizard for given page.
    var t = ""; 
 	
@@ -6,19 +7,33 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 	 
 	var t=$('<div/>').addClass('tabsPanel editq');
 
+	trace("Loading page "+pagename);
 
 	if (page == null || typeof page === "undefined") {
 		t.append(form.h2( "Page not found " + pagename)); 
 	}
-	else {
-		var GROUP = page.id;
-		trace("Loading page "+pagename);
+	else 
+	if (page.type == CONST.ptPopup ) {
+		var fs=form.fieldset('Popup info',page);
+		fs.append(form.text({label:'Name:',name:'pagename', value:page.name,change:function(val,page,form){
+			if (gGuide.pageRename(page,val)==false) $(this).val(page.name);
+		}} ));
+		fs.append(form.htmlarea({label:'Notes:',value: page.notes,change:function(val,page){page.notes=val}} ));
+		fs.append(form.htmlarea(	{label:'Text:',value:page.text,change:function(val,page){page.text=val}} ));
+		fs.append(form.pickAudio(	{label:'Text audio:', placeholder:'mp3 file',	value:	page.textAudioURL,
+			change:function(val,page){page.textAudioURL=val}} ));
+		t.append(fs);
+	}
+	else	
+	{ 
 		
 
 
 		var fs=form.fieldset('Page info',page);
 		fs.append(form.pickStep({label:'Step:',value: page.step, change:function(val,page){page.step=parseInt(val);/* TODO Move page to new outline location */}} ));
-		fs.append(form.text({label:'Name:', value:page.name,change:function(val,page){page.name=val; /* TODO Rename all references to this page in POPUPs, JUMPs and GOTOs */ }} ));
+		fs.append(form.text({label:'Name:', value:page.name,change:function(val,page,form){
+			if (gGuide.pageRename(page,val)==false) $(this).val(page.name);
+		}} ));
 		if (page.type != "A2J") {
 			fs.append(form.h2("Page type/style: " + page.type + "/" + page.style));
 		}
@@ -138,7 +153,9 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 					ff.append(form.text({ 		value: b.label,label:'Label:',placeholder:'button label',		change:function(val,b){b.label=val}}));
 					ff.append(form.text({ 		value: b.name, label:'Variable Name:',placeholder:'variable',		change:function(val,b){b.name=val}}));
 					ff.append(form.text({ 		value: b.value,label:'Default value',placeholder:'Default value',		change:function(val,b){b.value=val}}));
-					ff.append(form.pickpage({	value: b.next,label:'Destination:', 	change:function(val,b){b.next=val;}}));
+					ff.append(form.pickpage({	value: b.next,label:'Destination:', 	change:function(val,b){
+					trace(b.next,val);
+					b.next=val;}}));
 					return ff;
 				}}));
 			t.append(fs);
@@ -236,15 +253,58 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 	div.append('<div class=xml>'+htmlEscape(page.xml)+'</div>');
 
 	gPage = page;
-	//page=null;
+}
+function tabGUI()
+{
+	//$('table.list').hover(function(){$('.editicons',this).showIt(1);},function(){$('.editicons',this).showIt(0);});
+	$('.editicons .ui-icon-circle-plus').live('click',function(){// clone a table row
+		var $tbl=$(this).closest('table');
+		var row = $(this).closest('tr');
+		var settings=$tbl.data('settings');
+		if ($('tbody tr',$tbl).length>=settings.max) return;
+		row.clone(true,true).insertAfter(row).fadeIn();
+		row.data('record',$.extend({},row.data('record')));
+		form.listManagerSave($(this).closest('table'));
+	});
+	$('.editicons .ui-icon-circle-minus').live('click',function(){// delete a table row
+		var $tbl=$(this).closest('table');
+		var settings=$tbl.data('settings');
+		if ($('tbody tr',$tbl).length<=settings.min) return;
+		$(this).closest('tr').remove();
+		form.listManagerSave($tbl);
+	});
+	
+	$('#tabsMapper button').click(function(){ 
+		var zoom=parseFloat($(this).attr('zoom'));
+		if (zoom>0)
+			mapperScale = mapperScale * zoom; 
+		trace(mapperScale);
+		$('.map').css({zoom:mapperScale,"-moz-transform":"scale("+mapperScale+")","-webkit-transform":"scale("+mapperScale+")"});
+	});
+	$('#tabsMapper button').first().button({label:'Fit',icons:{primary:'ui-icon-arrow-4-diag'}}).next().button({label:'Zoom in',icons:{primary:'ui-icon-zoomin'}}).next().button({label:'Zoom out',icons:{primary:'ui-icon-zoomout'}});
+	
+	
+	$('#vars_load').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
+	$('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
+	
+	$('#showlogic').buttonset();
+	$('#showlogic1').click(function(){gShowLogic=1;noviceTab(gGuide,"tabsLogic",true)});
+	$('#showlogic2').click(function(){gShowLogic=2;noviceTab(gGuide,"tabsLogic",true)});
+	$('#showtext').buttonset();
+	$('#showtext1').click(function(){gShowText=1;noviceTab(gGuide,"tabsText",true)});
+	$('#showtext2').click(function(){gShowText=2;noviceTab(gGuide,"tabsText",true)});
 }
 
-function noviceTab(guide,tab)
+
+function noviceTab(guide,tab,clear)
 {	// 08/03/2012 Edit panel for guide sections 
 	var div = $('#'+tab);
-	if (div.html()!="") return;
-	//trace('Creating content for tab '+tab);
-	var t=$('<div/>').addClass('tabsPanel editq')//.append($('<div/>').addClass('tabsPanel2'));//editq
+	//if (div.html()!="") return;
+	var t = $('.tabContent',div);
+	if (clear) t.html("");
+	if (t.html()!="") return;
+	
+//	var t=$('<div/>').addClass('tabsPanel editq')//.append($('<div/>').addClass('tabsPanel2'));//editq
 	
 	switch (tab){
 		case "tabsConstants":
@@ -253,18 +313,65 @@ function noviceTab(guide,tab)
 			break;
 		
 		case "tabsLogic":
-			var fs = form.fieldset('Logic');
-			
+			t.append(form.note('All logic blocks in this interview'));
 			for (var p in guide.sortedPages)
 			{
 				var page=guide.sortedPages[p];
 				if (page.type!=CONST.ptPopup)
+				if ((gShowLogic==2) || (gShowLogic==1 && (page.codeBefore!="" || page.codeAfter!="")))
 				{
-					var fs=form.fieldset(page.name);
-					fs.append(form.codearea({label:'Before:',	value:page.codeBefore,	change:function(val){ ; /* TODO Compile for syntax errors */}} ));
-					fs.append(form.codearea({label:'After:',	value:page.codeAfter, 	change:function(val){ ; /* TODO Compile for syntax errors */}} ));
-					t.append(fs);
+					var pagefs=form.fieldset(page.name, page);
+					if (gShowLogic==2 || page.codeBefore!="")
+						pagefs.append(form.codearea({label:'Before:',	value:page.codeBefore,	change:function(val,page){
+							page.codeBefore=val; /* TODO Compile for syntax errors */}} ));
+					if (gShowLogic==2 || page.codeAfter!="")
+						pagefs.append(form.codearea({label:'After:',	value:page.codeAfter, 	change:function(val,page){
+							page.codeAfter=val ; /* TODO Compile for syntax errors */}} ));
+					t.append(pagefs);
 				}
+			}
+			
+			break;
+			
+		case "tabsText":
+			t.append(form.note('All non-empty page text blocks in this interview'));
+			for (var p in guide.sortedPages)
+			{
+				var page=guide.sortedPages[p];
+				var pagefs=form.fieldset(page.name, page);
+				pagefs.append(form.htmlarea({label:'Text:',					value:page.text,			change:function(val,page){page.text=val; }} ));
+				if (page.type!=CONST.ptPopup){
+					if (gShowText==2 || page.learn!="") 			pagefs.append(form.text({label:'Learn More prompt:',placeholder:"",	value:page.learn,
+															change:function(val,page){page.learn=val }} ));
+					if (gShowText==2 || page.help!="") 			pagefs.append(form.htmlarea({label:"Help:",					value:page.help,
+															change:function(val,page){page.help=val}} ));
+					if (gShowText==2 || page.helpReader!="") 	pagefs.append(form.htmlarea({label:'Help Text Reader:',	value:page.helpReader,
+															change:function(val,page){page.helpReader=val}} ));
+
+					for (var f in page.fields)
+					{
+						var field = page.fields[f];
+						var ff=form.fieldset('Field '+(parseInt(f)+1),field);
+						ff.append(form.htmlarea({label:'Label:',   value:field.label, 
+							change:function(val,field){field.label=val;}}));
+						if (gShowText==2 || field.value!="") ff.append(form.text({label:'Default value:',placeholder:"",name:'default', value:  field.value,
+							change:function(val,field){field.value=val}}));
+						if (gShowText==2 || field.invalidPrompt!="") ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,
+							change:function(val,field){field.invalidPrompt=val}}));						
+						pagefs.append(ff);
+					}
+					for (var bi in page.buttons)
+					{
+						var b = page.buttons[bi];
+						var bf=form.fieldset('Button '+(parseInt(bi)+1),b);
+						if (gShowText==2 || b.label!="")
+							bf.append(form.text({ 		value: b.label,label:'Label:',placeholder:'button label',		change:function(val,b){b.label=val}}));
+						if (gShowText==2 || b.value!="")
+							bf.append(form.text({ 		value: b.value,label:'Default value',placeholder:'Default value',		change:function(val,b){b.value=val}}));
+						pagefs.append(bf);
+					}
+				}
+				t.append(pagefs);
 			}
 			
 			break;
@@ -358,5 +465,5 @@ function noviceTab(guide,tab)
 			break;
 	}
 	
-	div.append(t);
+	//div.append(t);
 }

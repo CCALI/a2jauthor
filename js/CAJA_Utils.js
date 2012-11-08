@@ -22,7 +22,7 @@ function htmlEscape(str) {
     return String(str)
             .replace(/&/g, '&amp;')
             .replace(/"/g, '&quot;')
-            .replace(/'/g, '&apos;')//'&#39;')
+            //.replace(/'/g, '&apos;')//'&#39;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
 }

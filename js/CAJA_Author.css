@@ -176,7 +176,7 @@ div.editq {
 	padding-top: 1em;
 	margin-left: 0em;
 }
-.editq label { 
+.editq fieldset label { 
 	clear: both;
 	display: block;
 	vertical-align: top;
@@ -240,7 +240,16 @@ fieldset {
        -moz-box-sizing: border-box;
             box-sizing: border-box;
 }
-
+.ui-autocomplete .ui-menu-item {
+	max-height: 2em;
+	overflow: hidden;
+}
+.ui-autocomplete{
+	max-height: 10em;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+ }
 /*.widetext {
 	width: 20em;
 	padding: 0;
@@ -605,7 +614,7 @@ li.guide:hover {
 }
 
 
-#tabsAbout, #tabsPageEdit, #tabsPageView, #tabsVariables, #tabsMapper, #tabsConstants, #tabsSteps, #tabsLogic, #tabsCAJA {
+#tabsAbout, #tabsPageEdit, #tabsPageView, #tabsVariables, #tabsMapper, #tabsConstants, #tabsSteps, #tabsLogic, #tabsText,  #tabsCAJA {
 	xbackground-color:#cfa;
 	overflow: hidden;
 	margin:0;
@@ -621,19 +630,24 @@ li.guide:hover {
 }
 
 
-
+.tabHeader {
+	margin-top: 5px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
 /* Mapper */
-
-#MapperPanel { 
+.tabContentFrame, #MapperPanel { 
 	position: absolute;
-	xbackground-color:#ffa;
 	top: 40px;
 	left: 10px;
 	right:10px;
-	bottom:10px;
-	
-	overflow: scroll;
+	bottom:10px;	
+	overflow: auto;
 	border: none;
+}
+.tabContent {
+	overflow: none;
+	border: 2px thick #0f0;
 }
 .map {
 	background-color:#fff;

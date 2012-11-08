@@ -3,8 +3,11 @@
  */
 
 
+var gShowLogic=1;
+var gShowText=1;
 
-/*    * /
+
+/*     * /
 function DEBUGSTART(){
 	var SAMPLES = [
 		"tests/data/Field Characters Test.a2j#1-5 Fields Test 1",
@@ -34,13 +37,88 @@ function DEBUGSTART(){
 } /* */
  
  
+function selectTab(target)
+{
+	$('#CAJAOutline li, #CAJAIndex li').each(function(){$(this).removeClass('ui-state-active')});
+	$('li').filter(function(){ return target == $(this).attr('target')}).each(function(){$(this).addClass('ui-state-active')});
+}
+TGuide.prototype.pageRename=function(page,newName){
+/* TODO Rename all references to this page in POPUPs, JUMPs and GOTOs */
+	//trace("Renaming page "+page.name+" to "+newName);
+	if (page.name==newName) return true;
+	if (page.name.toLowerCase() != newName.toLowerCase())
+	{
+		if (this.pages[newName])
+		{
+			alert('Already a page named '+newName);
+			return false
+		}
+	}
+	// Rename GUI references
+	var targetOld="PAGE "+page.name;
+	var targetNew="PAGE "+newName;
+	$('li').filter(function(){return targetOld==$(this).attr('target');}).each(function(){
+		$(this).attr('target',targetNew);
+		$(this).text(newName);
+		})
+	
+	delete this.pages[page.name]
+	page.name = newName;
+	this.pages[page.name]=page;
+	trace("RENAMING REFERENES");
+	return true;
+}
+TGuide.prototype.convertIndex=function()
+{	// Build outline for entire interview includes meta, step and question sections.
+	var inSteps=[];
+	var popups="";
+	for (s in this.steps)
+	{
+		inSteps[s]="";
+	}
+	for (var p in this.sortedPages)
+	{
+		var page = this.sortedPages[p];
+		var plink= '<li target="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()+'</li>';
+		if (page.type==CONST.ptPopup)
+			popups += plink;
+		else
+			inSteps[page.step] += plink;
+	}	
+	var ts="";
+	for (var s in this.steps)
+	{
+		ts+='<li target="STEP '+s+'">'+this.steps[s].number+". "+this.steps[s].text+"</li><ul>"+inSteps[s]+"</ul>";
+	}			
+	return "<ul>"
+			+ '<li target="tabsAbout">'+lang.tabAbout+'</li>'
+			+ '<li target="tabsVariables">'+lang.tabVariables+'</li>'
+			+ '<li target="tabsConstants">'+lang.tabConstants+'</li>'
+			+ '<li target="tabsSteps">'+lang.tabSteps+'</li><ul>'+ts+'</ul>'
+			+ '<li target="tabsPopups">'+lang.en('Popups')+'</li><ul>'+popups+'</ul>'
+			+"</ul>";
+}
+
+TGuide.prototype.convertIndexAlpha=function()
+{	// Build outline of just pages
+	var txt="";
+	for (var p in this.sortedPages)
+	{
+		var page = this.sortedPages[p]; 
+		txt += '<li target="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()+'</li>';
+		console.log(page.name);
+	}
+	return "<ul>" + txt +"</ul>";
+}
+
+
 var form={
 	id:0
 	
 	,change: function(elt,val){
 		var form= $(elt).closest('[name="record"]');
-		//trace("Changed value: "+val);
-		$(elt).data('data').change.call(this,val,form.data('record'),form);
+		trace("Changed value: "+elt);
+		$(elt).data('data').change.call(elt,val,form.data('record'),form);
 	}
 	 ,h1:function(h){
 		return $("<h1>"+h+"</h1>");}
@@ -76,32 +154,34 @@ var form={
 	
 	
 	,pickpage:function(data){ 
-		data.value = gGuide.pageDisplayName(data.value); 
+		//data.value = gGuide.pageDisplayName(data.value); 
+
+		var dval = gGuide.pageDisplayName(data.value);
+			
 		var e =$( ''
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
 			+ '<span class=editspan><input class="  ui-combobox-input editable autocomplete picker page dest" type="text" ></span>');
-		$('.picker',e).blur(function(){var val=$(this).val();$(this).data('data').change(val);}).data('data',data).val(decodeEntities(data.value));
-		
-		
-   //$('.autocomplete.picker.page',div).
-	$('.autocomplete.picker.page',e).autocomplete({ source: pickPage, html: true,
-      change: function () { // if didn't match, restore to original value
-         var matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex($(this).val()) + "$", "i");
-         var newvalue = $(this).val(); 
-         $.each(gGuide.sortedPages, function (p, page) {
-				if (page.type!=CONST.ptPopup)
-					if (matcher.test(page.name)) {
-						newvalue =  page.name
-						return false;
-					}
-         });
-         $(this).val(newvalue); 
-      }})
-		.focus(function () {
-		   console.log($(this).val());
-		   $(this).autocomplete("search");
-		});
-		
+		$('.picker',e).blur(function(){
+			var val=$(this).val();
+			form.change($(this),val);
+		}).data('data',data).val(decodeEntities(dval));
+		$('.autocomplete.picker.page',e).autocomplete({ source: pickPage, html: true,
+	      change: function () { // if didn't match, restore to original value
+	         var matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex($(this).val().split("\t")[0]) + "$", "i");
+	         var newvalue = $(this).val();//.split("\t")[0];
+				trace(newvalue);
+	         $.each(gGuide.sortedPages, function (p, page) {
+					if (page.type!=CONST.ptPopup)
+						if (matcher.test(page.name)) {
+							newvalue = gGuide.pageDisplayName(page.name);
+							return false;
+						}
+	         });
+	         $(this).val(newvalue); 
+	      }})
+			.focus(function () {
+			   $(this).autocomplete("search");
+			});
 		return e;
 	}
 	,text: function(data){
@@ -332,39 +412,11 @@ $(document).ready(function () {
 
    if (typeof tinyMCE === "undefined") tinyMCE = {};
 
-
-	
-	//$('table.list').hover(function(){$('.editicons',this).showIt(1);},function(){$('.editicons',this).showIt(0);});
-	$('.editicons .ui-icon-circle-plus').live('click',function(){// clone a table row
-		var $tbl=$(this).closest('table');
-		var row = $(this).closest('tr');
-		var settings=$tbl.data('settings');
-		if ($('tbody tr',$tbl).length>=settings.max) return;
-		row.clone(true,true).insertAfter(row).fadeIn();
-		row.data('record',$.extend({},row.data('record')));
-		form.listManagerSave($(this).closest('table'));
-	});
-	$('.editicons .ui-icon-circle-minus').live('click',function(){// delete a table row
-		var $tbl=$(this).closest('table');
-		var settings=$tbl.data('settings');
-		if ($('tbody tr',$tbl).length<=settings.min) return;
-		$(this).closest('tr').remove();
-		form.listManagerSave($tbl);
-	});
-	
-	
    // Activate TABS
-	$('.tabset').tabs();
-	
-	$('#tabsMapper button').click(function(){ 
-		mapperScale = mapperScale * parseFloat($(this).attr('zoom')); 
-		$('.map').css({zoom:mapperScale,"-moz-transform":"scale("+mapperScale+")","-webkit-transform":"scale("+mapperScale+")"});
-	});
-	$('#tabsMapper button').first().button({label:'Fit',icons:{primary:'ui-icon-arrow-4-diag'}}).next().button({label:'Zoom in',icons:{primary:'ui-icon-zoomin'}}).next().button({label:'Zoom out',icons:{primary:'ui-icon-zoomout'}});
+	$('.tabset').tabs();	
+	tabGUI();
 	
 	
-	$('#vars_load').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
-	$('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
 	$('#tabviews').bind('tabsselect', function(event, ui) {
 		switch (ui.panel.id){
 			case 'tabsPageView':
@@ -374,6 +426,7 @@ $(document).ready(function () {
 			case 'tabsVariables':
 			case 'tabsSteps':
 			case 'tabsLogic':
+			case 'tabsText':
 			case 'tabsConstants':
 				noviceTab(gGuide,ui.panel.id);
 				break;
@@ -494,7 +547,7 @@ function signin(data)
 	else
 	{
 		$('#memenu').text(gUserNickName);
-		$('#tabsCAJA').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist">Loading your guides '+AJAXLoader +"</p>");
+		$('#tabsCAJA .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist">Loading your guides '+AJAXLoader +"</p>");
 		$("#login-form" ).dialog( "close" );
 		$('#authortool').removeClass('hidestart').addClass('authortool');
 		$('.welcome').hide();
@@ -540,7 +593,7 @@ function layoutPanes()
       west__showOverflowOnHover: false
 		, north__showOverflowOnHover: true
 		, north__size: 85
-		, west__size: 200
+		, west__size: 300
 		, east__size: 300
 		, east__initClosed: false
 		, north__closable: false, north__resizable: false
@@ -552,7 +605,7 @@ function layoutPanes()
 		, north__size: 200
 		, center__paneSelector: ".east-center"
    });
-   //$('.ui-layout-center').layout({		center__onresize:  $.layout.callbacks.resizeTabLayout												});
+   //$('.ui-layout-center').layout({		center__onresize:  $.layout.callbacks.resizeTabLayout	});
 }
 
 function toxml()
@@ -565,15 +618,16 @@ function startCAJA(startTabOrPage)
 	
 	$('#tabviews').tabs( { disabled:false});
 	
-	$('#tabsVariables, #tabsSteps, #tabsAbout, #tabsConstants, #tabsLogic, #tabsAdvanced').html("");
+	$('#tabsVariables .tabContent, #tabsLogic  .tabContent,#tabsSteps .tabContent, #tabsAbout .tabContent, #tabsConstants .tabContent, #tabsTex .tabContentt').html("");
+	//#tabsLogic, 
 		
 	if (makestr(startTabOrPage)=="")
 		startTabOrPage="PAGE "+(gGuide.firstPage);
 	trace("Starting location "+startTabOrPage);
 	
-	if(editMode==1)
-		$('#advanced').html(gGuide.convertToText());
-	else
+	//if(editMode==1)
+	//	$('#advanced').html(gGuide.convertToText());
+	//else
 		gotoTabOrPage(startTabOrPage);
 	$('#CAJAOutline').html(gGuide.convertIndex());
 	$('#CAJAIndex').html(gGuide.convertIndexAlpha());
@@ -581,29 +635,11 @@ function startCAJA(startTabOrPage)
 	
 	buildMap();
 	
-	if (editMode==1)
-	{
-		setMode(2);
-		showPageToEditTextOnly(startTabOrPage);
-	}
-}
-
-function setMode(mode)
-{
-	if (editMode==0){
-		editMode=1;
-		startCAJA();
-		return false;
-	}
-	textonlyMode=mode;
-	prompt('scanning');
-	//$('.CAJAContent P').removeClass('hilite').filter(function(){ return $(this).text().indexOf('Question ')==0;}).addClass('hilite');
-	$('.inform').remove();
-	
-	//alert($('.CAJAContent > P').length);
-	$('#advanced > P, #advanced > DIV > P').each(function(){parseP($(this))});
-	prompt('.');
-	return false;
+	//if (editMode==1)
+	//{
+	//	setMode(2);
+	//	showPageToEditTextOnly(startTabOrPage);
+	//}
 }
 
 
@@ -611,7 +647,7 @@ function showPageToEdit()
 {	// Clicked on index, scroll to the right place in the document.
 	var target=$(this).attr('target')
 //	if (editMode==1)
-		showPageToEditTextOnly(target)
+//		showPageToEditTextOnly(target)
 //	else
 		gotoTabOrPage(target);
 }
@@ -623,9 +659,11 @@ function gotoPageShortly(dest)
 		//a2jviewer.layoutpage($('#tabsPageView'),gGuide,gGuide.steps,gPage);
 	},1);
 }
+
 function gotoTabOrPage(target)
 {
 	// Remove existing editors 
+	selectTab(target);
 	
 	for (var edId in tinyMCE.editors)
 		tinyMCE.editors[edId].remove();
@@ -637,6 +675,7 @@ function gotoTabOrPage(target)
 		$('#tabsPageEdit').html('');
 		gGuide.novicePage($('#tabsPageEdit'),target.substr(5));
 		$('#tabviews').tabs('select','#tabsPageEdit');
+		$('#tabsLogic  .tabContent, #tabsText .tabContent').html("");//clear these so they refresh with new data. TODO - update in place
 	}
 	else
 	if (target.indexOf("STEP ")==0)
@@ -659,85 +698,53 @@ function gotoTabOrPage(target)
 */
 }
 
+function pageGOTOList()
+{	// List of page ids we can go to including the built-ins like no where, exit.
+	var pages=[qIDNOWHERE,qIDSUCCESS,qIDFAIL,qIDEXIT,qIDBACK,qIDRESUME];
+	for (var p in gGuide.sortedPages)
+	{
+		var page=gGuide.sortedPages[p];
+		if (page.type!=CONST.ptPopup)
+			pages.push(page.name);
+	}
+	return pages;
+}
 
 
 function pickPage(request,response)
 {	// autocomplete page lists including internal text
+	request.term = request.term.split("\t")[0]
 	var matcherStarts = new RegExp(  '^'+$.ui.autocomplete.escapeRegex(request.term), "i" );
 	var matcherContains = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
-	var listStarts=[];
-	var listContains=[];
+	var lists=[[],[]];
+	var regex= new RegExp(
+			"(?![^&;]+;)(?!<[^<>]*)(" +
+			$.ui.autocomplete.escapeRegex(request.term) +
+			")(?![^<>]*>)(?![^&;]+;)", "gi"
+		);
+	function hilite(html){return html.replace(regex, "<span class=hilite>$1</span>");}
+	//var pages=pageGOTOList();
 	for (var p in gGuide.sortedPages)
 	{
 		var page=gGuide.sortedPages[p];
 		if (page.type!=CONST.ptPopup)
 		{
-			var label= page.name;
-			if (matcherStarts.test(page.name))
-				listStarts.push({label:pickHilite(label,request.term),value:page.name});
+			var list;
+			if (matcherStarts.test(page.name)) list=0;
 			else
-			if (matcherContains.test(page.name))
-				listContains.push({label:pickHilite(label,request.term),value:page.name});
-			/* search name and text
-			var label="<b>"+page.name +"</b>: "+ page.text;
-			if (matcherStarts.test(page.name))
-				listStarts.push({label:pickHilite(label,request.term),value:page.name});
-			else
-			if (matcherContains.test(page.name))
-				listContains.push({label:pickHilite(label,request.term),value:page.name});
-			else
-			if (matcherContains.test(label))
-				listContains.push({label:pickHilite(label,request.term),value:page.name});
-			*/
+			if (matcherContains.test(page.name)) list=1;
+			else list=-1;
+			if (list>=0)
+			{
+				var label = "<b>"+page.name +"</b>: "+  decodeEntities(page.text);
+				lists[list].push({label:hilite(label),value:page.name});
+			}
 		}
 	}
-	response(listStarts.concat(listContains).slice(0,30));
+	response(lists[0].concat(lists[1]).slice(0,30));
 }
 
 
-
-TGuide.prototype.convertIndex=function()
-{	// Build outline for entire interview includes meta, step and question sections.
-	var inSteps=[];
-	var popups="";
-	for (s in this.steps)
-	{
-		inSteps[s]="";
-	}
-	for (var p in this.sortedPages)
-	{
-		var page = this.sortedPages[p];
-		var plink= '<li target="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()+'</li>';
-		if (page.type==CONST.ptPopup)
-			popups += plink;
-		else
-			inSteps[page.step] += plink;
-	}	
-	var ts="";
-	for (var s in this.steps)
-	{
-		ts+='<li target="STEP '+s+'">'+this.steps[s].number+". "+this.steps[s].text+"</li><ul>"+inSteps[s]+"</ul>";
-	}			
-	return "<ul>"
-			+ '<li target="tabsAbout">'+lang.tabAbout+'</li>'
-			+ '<li target="tabsVariables">'+lang.tabVariables+'</li>'
-			+ '<li target="tabsConstants">'+lang.tabConstants+'</li>'
-			+ '<li target="tabsSteps">'+lang.tabSteps+'</li><ul>'+ts+'</ul>'
-			+ '<li target="tabsPopups">'+lang.en('Popups')+'</li><ul>'+popups+'</ul>'
-			+"</ul>";
-}
-
-TGuide.prototype.convertIndexAlpha=function()
-{	// Build outline of just pages
-	var txt="";
-	for (var p in this.sortedPages)
-	{
-		var page = this.sortedPages[p]; 
-		txt += '<li target="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()+'</li>';
-		console.log(page.name);
-	}
-	return "<ul>" + txt +"</ul>";
-}
 
 
 

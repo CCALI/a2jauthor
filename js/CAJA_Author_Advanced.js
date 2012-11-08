@@ -19,6 +19,24 @@ var editwin=window;
 $(document).ready(function () { initAdvanced(); });
 
 
+function setMode(mode)
+{
+	if (editMode==0){
+		editMode=1;
+		startCAJA();
+		return false;
+	}
+	textonlyMode=mode;
+	prompt('scanning');
+	//$('.CAJAContent P').removeClass('hilite').filter(function(){ return $(this).text().indexOf('Question ')==0;}).addClass('hilite');
+	$('.inform').remove();
+	
+	//alert($('.CAJAContent > P').length);
+	$('#advanced > P, #advanced > DIV > P').each(function(){parseP($(this))});
+	prompt('.');
+	return false;
+}
+
 function initAdvanced()
 {
 	jQuery(document).bind('paste', handlePaste);

@@ -7,9 +7,10 @@ var gShowLogic=1;
 var gShowText=1;
 
 
-/*     * /
+/*     */
 function DEBUGSTART(){
 	var SAMPLES = [
+		"tests/data/Field Characters Test.a2j#4-1 If thens",
 		"tests/data/Field Characters Test.a2j#1-5 Fields Test 1",
 		"tests/data/Field Characters Test.a2j#0-1 Intro",
 		"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name",
@@ -126,9 +127,14 @@ var form={
 	,h2:function(h){
 		return $("<h2>"+h+"</h2>").click(function(){$(this).next().toggle()});}
 		
-		
+	,noteHTML:function(kind,t){
+		return '<div class="ui-widget"><div style="margin-top: 20px; padding: 0 .7em;" class="ui-state-highlight ui-corner-all"><p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-'+kind+'"></span>'+t+'</div></div>';
+	}
 	,note:function(t){
-		return $('<div class="ui-widget"><div style="margin-top: 20px; padding: 0 .7em;" class="ui-state-highlight ui-corner-all">		<p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-info"></span>'+t+'</div></div>')
+		return $(form.noteHTML('info',t));
+	}
+	,noteAlert:function(t){
+		return $(form.noteHTML('alert',t));
 	}
 
 
@@ -217,12 +223,80 @@ var form={
 	,pickAudio:function(data){ return this.text(data);}
 	,pickImage:function(data){ return this.text(data);}
 	,pickVideo:function(data){ return this.text(data);}
+	
+	,clear:function(){
+		form.codeCheckList=[];
+	}
+	,finish:function(div){
+	}
+	,codeCheckIntervalID:0
+	,codeCheckList:[]
+	,codeCheckSoon:function(elt){
+		if (form.codeCheckIntervalID==0)
+			form.codeCheckIntervalID=setInterval(form.codeCheckInterval,100);
+		form.codeCheckList.unshift(elt);
+	}
+	,codeCheckInterval:function(){ // syntax check one code block
+		if (form.codeCheckList.length==0){
+			clearInterval(form.codeCheckIntervalID);
+			form.codeCheckIntervalID=0;
+		}
+		else
+			form.codeCheck(form.codeCheckList.pop());
+	}
+	,codeCheck:function(elt){
+		var code=$(elt).html();
+		//TODO remove markup
+		var lines = code.split('<br>');
+		var script = _GCS.translateCAJAtoJS(lines.join("\n"));
+		var tt="";
+		var t=[];
+		if (script.errors.length>0)
+		{/*
+			for (l=0;l<lines.length;l++)
+			{
+				var err=null;
+				for (var e in script.errors)
+					if (script.errors[e].line == l)
+						err=script.errors[e];
+				if (err == null)
+					t.push(lines[l]);
+				else
+				{
+					t.push('<span class="err">'+lines[l]+"</span>");
+				}
+			}
+			tt+=('<BLOCKQUOTE class="Script">'+t.join("<BR>")+"</BLOCKQUOTE>");
+			tt+=("Errors");
+			*/
+			for (var e in script.errors)
+			{
+				err=script.errors[e];
+				tt+=form.noteHTML('alert',"<b>"+err.line+":"+err.text+"</b>");
+			}
+		}
+		else
+		{
+			t=[];
+			t.push('JavaScript:');
+			for (l=0;l<script.js.length;l++)
+			{
+				t.push(script.js[l]);
+			}
+			tt+=("<BLOCKQUOTE class=Script>"+t.join("<BR>")+"</BLOCKQUOTE>");
+		}
+		//tt=propsJSON('SCRIPT',script);
+		$('.errors',$(elt).closest('.editspan')).html(tt);
+	}
 	,codearea:function(data){ 
 		this.id++;
 		var e= $('<div>'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<span class=editspan><div contenteditable=true class="     text editable taller codeedit"  rows='+4+'>'+data.value+'</div></span></div>');
-		$('.editable',e).blur(function(){form.change($(this),$(this).html())}).data('data',data);
+			+'<div class=editspan><div spellcheck="false" contenteditable=true class="text editable taller codeedit"  rows='+4+'>'+data.value+'</div><div class="errors"></div></div></div>');
+		$('.editable',e).blur(function(){
+			form.codeCheckSoon(this);
+			form.change($(this),$(this).html());}).data('data',data);
+		form.codeCheckSoon($('.codeedit',e));
 		return e;
 	}
 

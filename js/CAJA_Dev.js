@@ -8,7 +8,7 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 	var t=$('<div/>').addClass('tabsPanel editq');
 
 	trace("Loading page "+pagename);
-
+	form.clear();
 	if (page == null || typeof page === "undefined") {
 		t.append(form.h2( "Page not found " + pagename)); 
 	}
@@ -249,7 +249,7 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
    }
 
    div.append(t);
-
+	form.finish(t);
 	div.append('<div class=xml>'+htmlEscape(page.xml)+'</div>');
 
 	gPage = page;
@@ -305,6 +305,7 @@ function noviceTab(guide,tab,clear)
 	if (t.html()!="") return;
 	
 //	var t=$('<div/>').addClass('tabsPanel editq')//.append($('<div/>').addClass('tabsPanel2'));//editq
+	form.clear();
 	
 	switch (tab){
 		case "tabsConstants":
@@ -464,6 +465,6 @@ function noviceTab(guide,tab,clear)
 			
 			break;
 	}
-	
+	form.finish(t);
 	//div.append(t);
 }

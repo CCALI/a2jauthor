@@ -214,12 +214,12 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 //				if (condT.length==1)
 //					script.code="IF "+condition+" THEN "+condT.join(LINEDEL)+LINEDEL;//if x then y
 //				else
-					script.code="IF "+condition+" THEN"+LINEDEL+INDENT+condT.join(LINEDEL+INDENT)+""+LINEDEL+"END IF\n";//if x then y,z
+					script.code="IF "+condition+" "+LINEDEL+INDENT+condT.join(LINEDEL+INDENT)+""+LINEDEL+"END IF\n";//if x then y,z
 			else
 			if (condT.length==0)
-				script.code="IF NOT ("+condition+") THEN"+LINEDEL+INDENT+condF.join(LINEDEL+INDENT)+""+LINEDEL+"END IF"+LINEDEL;//if not x then y
+				script.code="IF NOT ("+condition+") "+LINEDEL+INDENT+condF.join(LINEDEL+INDENT)+""+LINEDEL+"END IF"+LINEDEL;//if not x then y
 			else
-				script.code="IF  "+condition+" THEN"+LINEDEL+INDENT+condT.join(LINEDEL+INDENT)+""+LINEDEL+"ELSE"+LINEDEL+INDENT+condF.join(LINEDEL+INDENT)+LINEDEL+"END IF"+LINEDEL;//if x then y else z
+				script.code="IF  "+condition+" "+LINEDEL+INDENT+condT.join(LINEDEL+INDENT)+""+LINEDEL+"ELSE"+LINEDEL+INDENT+condF.join(LINEDEL+INDENT)+LINEDEL+"END IF"+LINEDEL;//if x then y else z
 			if (comment) script.code = "//"+comment + LINEDEL + script.code;
 			 
 			scripts.push(script);
@@ -228,6 +228,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		var scriptBefore=[];
 		var scriptAfter=[];
 		var scriptLast=[];
+		/*
 		if (0)// Move button variable/branch into Scripting? 
 			for (var b in page.buttons)
 			{
@@ -237,7 +238,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 					scriptAfter.push(resptest+" THEN SET ["+button.name+"] to "+button.value+"");
 				if (makestr(button.next)!="")// if button has a destination, we'll go there after any AFTER scripts have run.
 					scriptLast.push(resptest+" THEN GOTO "+ htmlEscape(fixID(button.next)));
-			}  
+			}  */
 		for (var s in scripts)
 		{
 			var script=scripts[s];

@@ -746,4 +746,10 @@ x.map {
 	margin-top: -5px;
 }
 
+div.codeedit span.err {
+	text-decoration: none;
+	border-bottom: dashed  1px #f00;
+	padding-bottom: 0px;
+}
+
 

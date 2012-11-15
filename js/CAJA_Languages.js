@@ -46,7 +46,7 @@ lang.regional['en']= {
 	UnknownID : "[Unknown id [{1}]: [{2}",
 	
 	scriptErrorMissingPage :'Page "{1}" does not exist.',
-	scriptErrorUnhandled : 'Unhandled: {1}',
+	scriptErrorUnhandled : 'Unknown command: {1}',
 	scriptErrorEndMissing : 'Missing an EndIf',
 
 	app:''

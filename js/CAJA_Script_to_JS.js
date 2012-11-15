@@ -77,14 +77,14 @@ pageExists : function(pageName)
 translateCAJAtoJS : function(CAJAScript)
 {	// Translate CAJA script statements of multiple lines with conditionals into JS script but do NOT evaluate
 	// Returns JavaScript source code lines in .js and errors in .errors which caller may evaluate
+	// TODO: needs a regex guru to optimize
 /*
-	_GetVar(x) = get value of variable x
-	_GetVar(x,n) = get nth element of array variable x
+	_VG(x) = get value of variable x
+	_VG(x,n) = get nth element of array variable x
 	_VS(x,y,z) = set value of variable x#y to z
-	ED(d) = parse an mm/dd/yyyy string to date
-	CF(f,a) = call function f with argument a	
+	_ED(d) = parse an mm/dd/yyyy string to date
+	_CF(f,a) = call function f with argument a	
 	
-	Needs a bit of tightening on the regex
 
 	CAJA supported syntax
 	SET v TO e or SET v = e becomes SV(v,e)

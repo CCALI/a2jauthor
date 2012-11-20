@@ -6,8 +6,7 @@
 var gShowLogic=1;
 var gShowText=1;
 
-
-/*     */
+/*     * /
 function DEBUGSTART(){
 	var SAMPLES = [
 		"tests/data/Field Characters Test.a2j#4-1 If thens",

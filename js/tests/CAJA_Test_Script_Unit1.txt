@@ -10,6 +10,42 @@
 @var Name
 @var Gender
 
+@page NYTest2
+IF [Client relationship to decedent MC] = "Wife" 
+ SET [Client is distributee spouse TF] TO "true"
+ SET [Client is distributee TF] TO "true"
+END IF
+
+IF [Client relationship to decedent MC] = "Daughter" 
+ SET [Client is distributee TF] TO "true"
+END IF
+
+IF [Client relationship to decedent MC] = "Other" 
+ GOTO '07d-Other relationship to the decedent'
+END IF
+
+IF [Client relationship to decedent MC] <> "Other" 
+ GOTO '08a-Confirm your relationship'
+END IF
+
+SET [Cut off 1996 DA] TO "08/29/1996"
+SET [Cut off 2008 DA] TO "12/31/2008"
+
+IF [Decedent date of death DA] < [Cut off 1996 DA] 
+ GOTO '03a-Date of death'
+END IF
+
+IF  ([Decedent date of death DA] >= [Cut off 1996 DA]) AND ([Decedent date of death DA] <= [Cut off 2008 DA]) 
+ SET [Asset limit NU] TO "20000"
+ SET [SE-3A form TF] TO "false"
+ GOTO '04a-Decedent place of death'
+ELSE
+ SET [Asset limit NU] TO "30000"
+ SET [SE-3A form TF] TO "true"
+ GOTO '04a-Decedent place of death'
+END IF
+
+
 
 
 @page IF Nested

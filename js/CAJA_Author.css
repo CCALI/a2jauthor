@@ -35,23 +35,6 @@ html, body {
 }
 
 
-/**************************/
-/* Frame Layout Theme  */
-.ui-layout-pane { /* all 'panes' */
-	border: 1px solid #BBB;
-	padding: 10px;
-	overflow:  hidden;
-}
-.ui-layout-content {
-	overflow: auto;
-}
-.ui-layout-resizer { /* all 'resizer-bars' */
-	background: #DDD;
-}
-.ui-layout-toggler { /* all 'toggler-buttons' */
-	background: #AAA;
-}
-
 .picker.branch , .picker.score {
 	xfont-size: 1em;
 }
@@ -62,14 +45,82 @@ html, body {
 /**************************/
 /* Sam's custom */
 
-.header {
-	border-bottom : 2px solid #cccccc;
-	padding-top: 4px;
-	padding-bottom: 0px;
-	background-image: url(img/CAJA_Icon_48.png);
+#guidepanel {
+	position:fixed;
+	xtop: 35px;
+	xbottom: 10px;
+	xleft: 0;
+	xright: 0;
+	xoverflow: scroll;
+}
+#tabnav {
+	position:fixed;
+	top: 32px;
+	left: 0;
+	right: 66%;
+	bottom: 20px;
+}
+#tabviews {
+	position:fixed;
+	top: 32px;
+	left: 33%;
+	right: 0;
+	bottom: 20px;
+}
+x#welcome {
+	position: fixed;
+	top: 40px;
+	bottom: 40px;
+	right: 40px;
+	left: 40px;
+}
+#welcome > div {
+	background-image: url(img/blank_guide2front.png);
 	background-repeat: no-repeat;
 	padding-left: 50px;
 }
+
+
+#cajaheader {
+	border-bottom : 2px solid #cccccc;
+	padding:0px;
+	margin: 0px;
+	height: 32px;
+	background-color: #fff;
+}
+#cajainfo  {
+	position: fixed;
+	width: 32px;
+	height: 32px;
+	background-image: url(img/CAJA_Icon_32.png);
+}
+#cajatitle  {
+	text-align: center;
+	top:4px;
+	position: fixed;
+	left:40px;
+	right:40px;
+}
+#cajasettings  {
+	top:0;
+	right:0;
+	position: fixed;
+}
+#cajasettings li {
+	min-width: 150px;
+}
+#cajafooter {
+	border-top : 2px solid #cccccc;
+	font-size: 9px;
+	position: fixed;
+	padding:0px;
+	margin: 0px;
+	height: 16px;
+	bottom: 0px;
+	width: 100%;
+	background-color: #fff;
+}
+
 
 .ui-tabs .ui-tabs-nav li { 
 	xfont-size: .9em;
@@ -278,24 +329,15 @@ x.autocomplete.picker.page {
 }
 
 
+x.bubble {
+	-moz-border-radius:15px 15px 15px 15px;
+	border-radius:15px 15px 15px 15px;
+	border: 3px solid #0066CC;
+	background-color: #C4E1FF;
+	margin-bottom: 1em;
+	padding: 1em;
+}
 
-.bubble {
-	-moz-border-radius:15px 15px 15px 15px;
-	border-radius:15px 15px 15px 15px;
-	border: 3px solid #0066CC;
-	background-color: #C4E1FF;
-	margin-bottom: 1em;
-	padding: 1em;
-}
-/*.editq {
-	-moz-border-radius:15px 15px 15px 15px;
-	border-radius:15px 15px 15px 15px;
-	border: 3px solid #0066CC;
-	background-color: #C4E1FF;
-	margin-bottom: 1em;
-	padding: 1em;
-}
-*/
 .CAJAContent P {
 	padding: 0;
 	margin: 0;
@@ -498,27 +540,6 @@ textarea {
 
 
 
-/************** Menu bar ************/
-ul.megamenu {
-	background-color: transparent;
-	z-index:2;
-}
-ul.megamenu a.mm-item-link:link, ul.megamenu a.mm-item-link:visited {
-	color: #000;
-}
-ul.megamenu div ul {
-	padding-left: 1em;
-	list-style-type: none;
-	padding: 0;
-	margin: 0;
-}
-ul.megamenu div ul li {
-	padding: .5em;
-}
-ul.megamenu div ul li:hover {
-	background-color: #eee;
-}
-
 
 /************** Tracer ************/
 #tracer li {
@@ -596,7 +617,46 @@ input.text { margin-bottom:12px; width:95%; padding: .4em; }
 */
 
 .ui-dialog .ui-state-error { padding: .3em; }
+.ui-dialog {
+	box-shadow: 10px 10px 10px 0px #888888;
+	xborder: 2px solid #888888;
+}
 
+#dialog_window_minimized_container {
+   position: fixed;
+   bottom: 0px;
+   right: 0px;
+	z-index: 9999;
+}
+.dialog_window_minimized {
+   float: left;
+   padding: 5px 10px;
+   font-size: 12px;
+   cursor: pointer;
+   margin-right: 2px;
+   xdisplay: none;
+}
+.dialog_window_minimized .ui-icon {
+   display: inline-block !important;
+   position: relative;
+   top: 3px;
+   cursor: pointer;
+}
+.ui-dialog .ui-dialog-titlebar-minimize {
+   height: 18px;
+   width: 19px;
+   padding: 1px;
+   position: absolute;
+   right: 23px;
+   top: 9px;
+}
+.ui-dialog .ui-dialog-titlebar-minimize .ui-icon {
+   display: block;
+   margin: 1px;
+}
+.ui-dialog .ui-dialog-titlebar-minimize:hover, .ui-dialog .ui-dialog-titlebar-minimize:focus {
+   padding: 0;
+}
 
 
 
@@ -613,9 +673,7 @@ li.guide:hover {
 	height: 100%;
 }
 
-
-#tabsAbout, #tabsPageEdit, #tabsPageView, #tabsVariables, #tabsMapper, #tabsConstants, #tabsSteps, #tabsLogic, #tabsText,  #tabsCAJA {
-	xbackground-color:#cfa;
+#tabsAbout, #tabsPageEdit, #tabsPageView, #tabsVariables, #tabsMapper, #tabsConstants, #tabsSteps, #tabsLogic, #tabsText /*,  #tabsCAJA*/ {
 	overflow: hidden;
 	margin:0;
 	padding:0;
@@ -627,6 +685,11 @@ li.guide:hover {
 	height: 100%;
 	overflow: scroll;
 	border: 2px thick #f00;
+}
+
+.page-edit-form-panel .tabsPanel{
+	xbackground-color:#cfa;
+	overflow: hidden;
 }
 
 

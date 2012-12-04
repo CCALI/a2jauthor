@@ -358,21 +358,32 @@ function loadNewGuidePrep(guideFile,startTabOrPage)
 }
 
 
-function loadGuide(guideFile,startTabOrPage)
-{
-	guideFile=guideFile.split("#");
-	if (guideFile.length==1)
-	{
-		guideFile=guideFile[0];
-	}
-	else
-	{
-		startTabOrPage= "PAGE " +guideFile[1];
-		//if (editMode==0) startTabOrPage = "PAGE " + startTabOrPage;
-		guideFile=guideFile[0];
-	}
-	loadNewGuidePrep(guideFile,startTabOrPage);
-	window.setTimeout(function(){loadGuide2(guideFile,startTabOrPage)},500);
+
+function startCAJA(startTabOrPage)
+{ 
+	trace( gGuide.firstPage);
+	$('#authortool').removeClass('hidestart').addClass('authortool');
+	$('#welcome').dialog('close');
+	
+	$('#tabviews').tabs( { disabled:false});
+	$('#cajatitle').html(gGuide.title);
+	$('#tabsVariables .tabContent, #tabsLogic  .tabContent,#tabsSteps .tabContent, #tabsAbout .tabContent, #tabsConstants .tabContent, #tabsTex .tabContentt').html("");
+	//#tabsLogic, 
+		
+	if (makestr(startTabOrPage)=="")
+		startTabOrPage="PAGE "+(gGuide.firstPage);
+	trace("Starting location "+startTabOrPage);
+	
+	//if(editMode==1)
+	//	$('#advanced').html(gGuide.convertToText());
+	//else
+		gotoTabOrPage(startTabOrPage);
+	$('#CAJAOutline').html(gGuide.convertIndex());
+	$('#CAJAIndex').html(gGuide.convertIndexAlpha());
+	$('#CAJAOutline li, #CAJAIndex li').click(showPageToEdit);//.dblclick(showPageToEdit);
+	
+	buildMap();
+	
 }
 function guideloaded(data)
 {
@@ -394,7 +405,7 @@ function guideloaded(data)
 	startCAJA();
 }
 
-function loadGuide2(guideFile,startTabOrPage)
+function loadGuideFile2(guideFile,startTabOrPage)
 {
 	var cajaDataXML;
 	$.ajax({
@@ -421,12 +432,27 @@ function loadGuide2(guideFile,startTabOrPage)
 				// global variable guide
 				gGuide =  parseXML_Auto_to_CAJA(cajaDataXML);
 				gGuide.filename=guideFile;
-				startCAJA(startTabOrPage);
-				
+				startCAJA(startTabOrPage);			
 			}
 		});
 }
 
+function loadGuideFile(guideFile,startTabOrPage)
+{	// Load guide file XML directly
+	guideFile=guideFile.split("#");
+	if (guideFile.length==1)
+	{
+		guideFile=guideFile[0];
+	}
+	else
+	{
+		startTabOrPage= "PAGE " +guideFile[1];
+		//if (editMode==0) startTabOrPage = "PAGE " + startTabOrPage;
+		guideFile=guideFile[0];
+	}
+	loadNewGuidePrep(guideFile,startTabOrPage);
+	window.setTimeout(function(){loadGuideFile2(guideFile,startTabOrPage)},500);
+}
 
 function styleSheetSwitch(theme)
 {

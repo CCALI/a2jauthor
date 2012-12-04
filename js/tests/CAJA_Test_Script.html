@@ -5,13 +5,19 @@
 
 <title>CALI Author Script Tester</title> 
 
+<link  href="../themes/a2j/jquery-ui.css" rel="stylesheet" type="text/css" media="all" />
+<link  href="../jquery.ui.custom.css" rel="stylesheet" type="text/css" />
+<link  href="../CAJA_Author.css" rel="stylesheet" type="text/css" />
+
+
 <script src="../jquery.1.8.2.min.js" type="text/javascript"></script>
-<script xsrc="../jQuery/jshashtable-2.1.js" type="text/javascript"></script>
-<script xsrc="../jquery.numberformatter-1.2.1.jsmin.js" type="text/javascript"></script>
 <script src="../CAJA_Utils.js" type="text/javascript"></script>
 <script src="../CAJA_Languages.js" type="text/javascript"></script>
-<script xsrc="js/CAJA_Script.js" type="text/javascript"></script>
 <script src="../CAJA_Script_to_JS.js" type="text/javascript"></script>
+
+<script xsrc="../jQuery/jshashtable-2.1.js" type="text/javascript"></script>
+<script xsrc="../jquery.numberformatter-1.2.1.jsmin.js" type="text/javascript"></script>
+
 
 <script>
 
@@ -412,7 +418,7 @@ P.Script, LI.Script, BLOCKQUOTE.Script {
 .ScriptTrace{
 	font-weight: normal;
 	font-family: "Courier New", Courier, monospace;
-	height: 100%;
+	xheight: 100%;
 	font-size: 8pt; 
 	xoverflow: scroll;
 	border: thin solid #CC9966;
@@ -504,6 +510,11 @@ td.vardiff {
 
 
 <BODY BGCOLOR="#FFFFFF"  >
+
+<div id="cajaheader"><span id="cajainfo" title="About the Authoring System"></span><span id="cajatitle">CAJA Author</span><button id="cajasettings">Settings</button></div>
+<div style="overflow:auto;position:fixed;top:32px;bottom:0px;left:0px;right:0px;">
+
+
 <h1>CAJA - CALI Author/A2J Author Script Tester</h1>
 <p>5/15/2012 updated | <a href="../CAJA_Script.js">CAJA_Script.js</a>|  
 <a href="../../CAJA_Script_Notes.html">Development Notes</a></p>
@@ -515,9 +526,7 @@ td.vardiff {
 <ol class="ScriptTrace1"></ol>
 		<div class="evaluator"><input name="lessontitle" style="width:100%" type="text" id="lessontitle" value="(1+2)=(3-1)" size="40" />
 			<input onclick="update()" type="submit" name="evaluate" id="evaluate" value="Evaluate" /></div> 
-
-<p>&nbsp;</p>
-		<P>&nbsp;</P>
+ </div>
 
 <xiframe id="AIRSandBox" xsrc="CAJA_AIR_Script.html" sandboxRoot="http://www.cali.org" documentRoot="app://sandbox/"></xiframe>
 </BODY>

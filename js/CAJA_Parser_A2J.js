@@ -194,6 +194,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 				if ((args = statement.match(/set\s+(.+)/i))!=null)
 				{
 					args = args[1].split("=");
+					if (args[1]=="") args[1]='""';
 					statement = 'SET ['+args[0]+'] TO '+args[1];
 				}
 				else

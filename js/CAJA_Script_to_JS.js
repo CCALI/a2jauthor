@@ -27,8 +27,8 @@ var _GCS = {  //global CAJA script
 showCAJAScript : 
 	//0 // none
 	//+1 // end of js line
-	//2// before js
-	3//tracer
+	2// before js
+	//3//tracer
 ,
 /*
 _IF : function(caja,expr)
@@ -103,7 +103,8 @@ translateCAJAtoJS : function(CAJAScript)
 		var js;
 		if (line!="")
 		{
-			if ((args = line.match(/set\s+([\w#]+|\[[\w|#|\s]+\])\s*?(=|TO)\s?(.+)/i))!=null)
+			//if ((args = line.match(/set\s+([\w#]+|\[[\w|#|\s]+\])\s*?(=|TO)\s?(.+)/i))!=null)
+			if ((args = line.match(/set\s+([\w#]+|\[.+\])\s*?(=|TO)\s?(.+)/i))!=null)
 			{	// SET variable name TO expression
 				var jj = args[1];
 				jj = jj.replace(/\[|\]/gi,"");// strip variable name brackets if present
@@ -200,15 +201,15 @@ translateCAJAtoJSExpression : function(CAJAExpression, lineNum, errors)
 		// Variable formats:
 		//		Variable name with possible spaces
 		//			[child name] converts to GetVar("child name")
-		jj = jj.replace(/\[([\w|\s]+)\]/gi,"$$1(\"$1\")"); 
+		jj = jj.replace(/\[([\w|\s|-]+)\]/gi,"$$1(\"$1\")"); 
 		
 		//		Variable name with possible spaces#number (array)
 		//			[child name#2] converts to GetVar("child name",2)
-		jj = jj.replace(/\[([\w|\s]+)#([\d]+)\]/gi,"$$1(\"$1\",$2)");
+		jj = jj.replace(/\[([\w|\s|-]+)#([\d]+)\]/gi,"$$1(\"$1\",$2)");
 		
 		// 	Variable name with possible spaces#other variable name that evaluates to a number (array)
 		//			[child name#child counter] converts to GetVar("child name",GetVar("child counter"))
-		jj = jj.replace(/\[([\w|\s]+)#([\w|\s]+)\]/gi,"$$1(\"$1\",$$1(\"$2\"))");
+		jj = jj.replace(/\[([\w|\s|-]+)#([\w|\s|-]+)\]/gi,"$$1(\"$1\",$$1(\"$2\"))");
 
 		//	A2J dates bracketed with # like VB
 		//		#12/25/2012# converts to convertDate("12/25/2012")
@@ -234,6 +235,8 @@ translateCAJAtoJSExpression : function(CAJAExpression, lineNum, errors)
 		
 		//	A2J uses = and <> for comparison while JS uses == and !=
 		jj = jj.replace(/\=/gi,"==");
+		jj = jj.replace(/\>\=\=/gi,">=");
+		jj = jj.replace(/\<\=\=/gi,"<=");
 		jj = jj.replace(/\<\>/gi,"!=");
 		
 		// Constants 

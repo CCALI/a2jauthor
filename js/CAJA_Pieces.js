@@ -1,4 +1,118 @@
 
+x.header {
+	border-bottom : 2px solid #cccccc;
+	padding-top: 4px;
+	padding-bottom: 0px;
+	background-image: url(img/CAJA_Icon_48.png);
+	background-repeat: no-repeat;
+	padding-left: 50px;
+}
+function layoutPanes()
+{
+   // Splitter layout
+	/*
+   var outerLayout = $('#authortool').layout({ //$('body').layout({
+      // enable showOverflow on west-pane so popups will overlap north pane
+      enableCursorHotkey: false,
+      west__showOverflowOnHover: false
+		, north__showOverflowOnHover: true
+		, north__size: 85
+		, west__size: 300
+		, east__size: 300
+		, east__initClosed: false
+		, north__closable: false, north__resizable: false
+   });
+   var eastLayout = $('div.ui-layout-east').layout({
+      enableCursorHotkey: false,
+      minSize: 50	// ALL panes
+		, north__paneSelector: ".east-north"
+		, north__size: 200
+		, center__paneSelector: ".east-center"
+   });
+   
+	*/
+}
+
+
+/**************************/
+/* Frame Layout Theme  */
+.ui-layout-pane { /* all 'panes' */
+	border: 1px solid #BBB;
+	padding: 10px;
+	overflow:  hidden;
+}
+.ui-layout-content {
+	overflow: auto;
+}
+.ui-layout-resizer { /* all 'resizer-bars' */
+	background: #DDD;
+}
+.ui-layout-toggler { /* all 'toggler-buttons' */
+	background: #AAA;
+}
+	<div class="ui-layout-east">
+		<div class="east-north tabset">
+			<ul>
+				<li><a href="#tabsvars">Variables</a></li>
+				<li><a href="#tabsvarssnapshots">Snapshots</a></li>
+			</ul>
+			<div class="ui-layout-content">
+				<div id="tabsvars">
+					<button id="vars_load"> </button>
+					<button id="vars_save"> </button>
+					<p>Variables</p>
+				</div>
+				<div id="tabsvarssnapshots">
+					<button id="vars_load2"> </button>
+					<button id="vars_save2"> </button>
+					<p>Variables</p>
+				</div>
+			</div>
+		</div>
+		<div class="east-center tabset"> 
+			<ul>
+				<li><a href="#tabstracer">Tracer</a></li>
+				<li><a href="#tabsextra">Extra</a></li>
+			</ul>
+			<div class="ui-layout-content">
+				<div id="tabstracer"> 
+			<ul id="tracer">
+				<li> Player debug tracing goes here </li>
+			</ul>
+			
+			
+				</div>
+				<div id="tabsextra"> 
+					<p>extra</p>
+				</div>
+			</div>
+			
+	 </div>
+	</div>
+
+	<div class="ui-layout-south"><span id="CAJAStatus"></span><span style="float:right;text-align:right">All Contents &copy; CALI, The Center for Computer-Assisted Legal
+		Instruction. All Rights Reserved.</span> </div>
+/************** Menu bar ************/
+ul.megamenu {
+	background-color: transparent;
+	z-index:2;
+}
+ul.megamenu a.mm-item-link:link, ul.megamenu a.mm-item-link:visited {
+	color: #000;
+}
+ul.megamenu div ul {
+	padding-left: 1em;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+ul.megamenu div ul li {
+	padding: .5em;
+}
+ul.megamenu div ul li:hover {
+	background-color: #eee;
+}
+
 			if (0){
 				function makeField(field){
 					var field1=form.record(field);
@@ -459,3 +573,19 @@ var clist=dlist=[];
 			}  
 			t+=form.h1('Feedback');
 			t+=form.tablerange(list);
+			
+			
+			
+			
+			
+
+/* jquery.megamenu.min.js */
+var isIE6=navigator.userAgent.toLowerCase().indexOf("msie 6")!=-1;jQuery.fn.megamenu=function(a){a=jQuery.extend({activate_action:"mouseover",deactivate_action:"mouseleave",show_method:"slideDown",hide_method:"slideUp",justify:"left",enable_js_shadow:true,shadow_size:3,mm_timeout:250},a);var b=this;if(a.activate_action=="click"){a.mm_timeout=0}b.children("li").each(function(){jQuery(this).addClass("mm-item");jQuery(".mm-item").css({"float":a.justify});jQuery(this).find("div:first").addClass("mm-item-content");jQuery(this).find("a:first").addClass("mm-item-link");var d=jQuery(this).find(".mm-item-content");var e=jQuery(this).find(".mm-item-link");d.hide();jQuery(document).bind("click",function(){jQuery(".mm-item-content").hide();jQuery(".mm-item-link").removeClass("mm-item-link-hover")});jQuery(this).bind("click",function(f){f.stopPropagation()});d.wrapInner('<div class="mm-content-base"></div>');if(a.enable_js_shadow==true){d.append('<div class="mm-js-shadow"></div>')}var c=0;jQuery(this).bind(a.activate_action,function(h){h.stopPropagation();var g=jQuery(this).find("a.mm-item-link");var f=jQuery(this).find("div.mm-item-content");clearTimeout(c);c=setTimeout(function(){g.addClass("mm-item-link-hover");f.css({top:(e.offset().top+e.outerHeight())-1+"px",left:(e.offset().left)-5+"px"});if(a.justify=="left"){var j=b.offset().left+b.outerWidth();var k=e.offset().left+d.outerWidth()-5;if(k>=j){f.css({left:(e.offset().left-(k-j))-2+"px"})}}else{if(a.justify=="right"){var i=b.offset().left;var l=e.offset().left-f.outerWidth()+e.outerWidth()+5;if(l<=i){f.css({left:i+2+"px"})}else{f.css({left:l+"px"})}}}if(a.enable_js_shadow==true){f.find(".mm-js-shadow").height(f.height());f.find(".mm-js-shadow").width(f.width());f.find(".mm-js-shadow").css({top:(a.shadow_size)+(isIE6?2:0)+"px",left:(a.shadow_size)+(isIE6?2:0)+"px",opacity:0.5})}switch(a.show_method){case"simple":f.show();break;case"slideDown":f.height("auto");f.slideDown("fast");break;case"fadeIn":f.fadeTo("fast",1);break;default:f.each(a.show_method);break}},a.mm_timeout)});jQuery(this).bind(a.deactivate_action,function(h){h.stopPropagation();clearTimeout(c);var g=jQuery(this).find("a.mm-item-link");var f=jQuery(this).find("div.mm-item-content");switch(a.hide_method){case"simple":f.hide();g.removeClass("mm-item-link-hover");break;case"slideUp":f.slideUp("fast",function(){g.removeClass("mm-item-link-hover")});break;case"fadeOut":f.fadeOut("fast",function(){g.removeClass("mm-item-link-hover")});break;default:f.each(a.hide_method);g.removeClass("mm-item-link-hover");break}if(f.length<1){g.removeClass("mm-item-link-hover")}})});this.find(">li:last").after('<li class="clear-fix"></li>');this.show()};
+
+ //  jQuery(".megamenu").megamenu({ 'show_method': 'simple', 'hide_method': 'simple', mm_timeout: 125, 'enable_js_shadow': true, 'shadow_size': 5, 'deactivate_action': 'mouseleave click' });
+
+
+
+
+
+			

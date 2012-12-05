@@ -29,6 +29,7 @@
 <script src="CAJA_Viewer_A2J.js" type="text/javascript"></script>
 <script src="CAJA_Dev.js" type="text/javascript"></script>
 <script src="CAJA_Author.js" type="text/javascript"></script>
+<script src="CAJA_Mapper.js" type="text/javascript"></script>
 <script src="CAJA_Script_to_JS.js" type="text/javascript"></script>
 <xscript src="CAJA_Author_Advanced.js" type="text/javascript">
 </script>
@@ -41,7 +42,11 @@
 	</center>
 </div>
 <div id="authortool" class="hidestart">
-	<div id="guidepanel" >
+	<div id="guidepanel" class="tabset">
+			<ul>
+				<li><a href="#CAJAGuide">Guide</a></li> 
+			</ul>
+		<div id="CAJAGuide">
 		<div id="tabnav" class="ui-layout-west tabset" >
 			<ul>
 				<li><a href="#CAJAOutline">Outline</a></li>
@@ -63,7 +68,7 @@
 		<div id="tabviews" class="ui-layout-center tabset">
 			<ul>
 				<li><a href="#tabsAbout">About</a></li>
-				<li><a href="#tabsMapper">Map</a></li>
+				<!--<li><a href="#tabsMapper">Map</a></li>-->
 				<li><a href="#tabsVariables">Variables</a></li>
 				<li><a href="#tabsConstants">Constants</a></li>
 				<li><a href="#tabsSteps">Steps</a></li>
@@ -71,7 +76,7 @@
 				<li><a href="#tabsText">All Text</a></li>
 			</ul>
 			<div class="ui-layout-content">
-				<div id="tabsMapper">
+				<!--<div id="tabsMapper">
 					<div class="tabHeader">
 						<button zoom="fit"></button>
 						<button zoom="1.2"></button>
@@ -82,7 +87,7 @@
 					<div id="MapperPanel">
 						<div class="map"></div>
 					</div>
-				</div>
+				</div>-->
 				<div id="tabsAbout">
 					<div class="tabHeader"></div>
 					<div class="tabContentFrame">
@@ -138,13 +143,15 @@
 					</div>
 				</div>
 			</div>
+			</div>
 		</div>
 	</div>
-	<div id="cajaheader"><span id="cajainfo" title="About this Authoring System"></span><span id="cajatitle"></span>
+	<div id="cajaheader"><span id="cajainfo" title="About this Authoring System"></span><span xid="cajatitle"></span>
 		<ul id="cajasettings">
 			<li><a href="#"><span class="ui-icon ui-icon-gear"></span>Settings</a>
 				<ul>
 					<li><a href="#save"><span class="ui-icon ui-icon-disk"></span>Save</a></li>
+					<li><a href="#close"><span class="ui-icon ui-icon-disk"></span>Close</a></li>
 					<li  > <a href="#">Text</a>
 							<ul>
 								<li> <a href="#bold">Bold</a> </li>
@@ -184,6 +191,7 @@
 	<div id="cajafooter"><span id="CAJAStatus"></span><span style="float:right;text-align:right">All Contents &copy; CALI, The Center for Computer-Assisted Legal
 		Instruction. All Rights Reserved.</span> </div>
 </div>
+<div class="hidestart">
 <div class="page-edit-form">
 	<div class="page-edit-form-panel"></div>
 </div>
@@ -211,11 +219,12 @@
 	<form>
 		<fieldset>
 		<label for="username">Name</label>
-		<input type="text" name="username" id="username" class="text ui-widget-content ui-corner-all"  />
+		<input type="text" name="name" id="username" class="text ui-widget-content ui-corner-all"  />
 		<label for="userpass">Password</label>
-		<input type="password" name="password" id="userpass" class="text ui-widget-content ui-corner-all"   />
+		<input type="password" name="pass" id="userpass" class="text ui-widget-content ui-corner-all"   />
 		</fieldset>
 	</form>
+</div>
 </div>
 </body>
 </html>

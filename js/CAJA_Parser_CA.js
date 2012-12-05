@@ -1,5 +1,4 @@
-/* CALI Author CAJA - Parse CALI Author into CAJA 
-*/
+/*  CAJA - Parse CALI Author jqXML into CAJA format */
 
 function BR2cr(txt){
 	return txt.replace(/&lt;BR \/&gt;/g,"\n");

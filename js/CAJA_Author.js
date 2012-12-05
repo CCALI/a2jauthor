@@ -1,16 +1,20 @@
 /*	CALI Author 5 - CAJA Authoring   
- 	03/30/2012 
+ 	Created 03/30/2012 
  */
+var prefs= {
+	ShowLogic : 1,
+	ShowText : 1
+}
 
-
-var gShowLogic=1;
-var gShowText=1;
-
-/*      */
+/*      * /
 function DEBUGSTART(){
+	gUserNickName='Tester';
+	gUserID=0;
+	$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist"></p>');
 	var SAMPLES = [
-		"tests/data/Field Characters Test.a2j#4-1 If thens",
 		"tests/data/A2J_NYSample_interview.xml",
+		"tests/data/Field Characters Test.a2j",
+		"tests/data/Field Characters Test.a2j#4-1 If thens",
 		"tests/data/Field Characters Test.a2j#1-5 Fields Test 1",
 		"tests/data/Field Characters Test.a2j#0-1 Intro",
 		"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name",
@@ -20,43 +24,89 @@ function DEBUGSTART(){
 		"tests/data/A2J_ULSOnlineIntake081611_Interview.xml#1b Submit Application for Review",
 		"tests/data/CBK_EVD03_jqBookData.xml"
 	];
-	$(SAMPLES).each(function(i,elt){$('#samples').append('<li><a href="#sample">'+elt+'</a></li>')})
-//	<li><a href="#sample">tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name</a></li>
-//	<li><a href="#sample">tests/data/A2J_NYSample_interview.xml</a></li>
-//	<li><a href="#sample">tests/data/A2J_MobileOnlineInterview_Interview.xml</a></li>
-//	<li><a href="#sample">tests/data/A2J_ULSOnlineIntake081611_Interview.xml#1b Submit Application for Review</a></li>
-//	<li><a href="#sample">tests/data/CBK_CAPAGETYPES_jqBookData.xml#Text Select 2</a></li>
-//	<li><a href="#sample">tests/data/CBK_CAPAGETYPES_jqBookData.xml#MC Choices 3: 4 choices</a></li>
-//	<li><a href="#sample">tests/data/CBK_EVD16_jqBookData.xml</a></li>
-//	<li><a href="#sample">tests/data/CBK_EVD03_jqBookData.xml</a></li>
-//	var t="";	for( var m=1000;m<2500;m++) t+= m +" " ;	$('#Mapper').append( t);
+	$(SAMPLES).each(function(i,elt){
+		$('#samples, #guidelist').append('<li><a href="#sample">'+elt+'</a></li>')
+		
+	})
 	loadGuideFile($('a[href="#sample"]').first().text(), "TAB ABOUT");
 	$('#splash').hide();
 	//$('#welcome').hide();
-	layoutPanes();
-	
-	
-	
-	
 } /* */
- 
- 
-$(document).ready(function () {
+
+
+
+function CAJA_Initialize() {
    // Everything loaded, execute.
    lang.set('en');
 
    if (typeof tinyMCE === "undefined") tinyMCE = {};
 
-	$('#welcome, #texttoolbar').hide();
+	//$('#welcome, #texttoolbar').hide();
 	
 	$('#welcome').dialog({autoOpen:false, height:500, width:500, close:function(event,ui){ 
 		if (typeof event.originalEvent=='object')	signinask();
 	}} );
 	
 	
-   // Activate TABS
-	$('.tabset').tabs();	
-	tabGUI();
+   
+	{// Activate TABS
+		$('.tabset').tabs();
+		//$('#guidepanel').tabs();
+		//$('table.list').hover(function(){$('.editicons',this).showIt(1);},function(){$('.editicons',this).showIt(0);});
+		
+		$('#guidepanel > ul').append('<button id="guideSave">Save</button><a href="#" id="guideClose" class="ui-dialog-titlebar-close ui-corner-all"><span class="ui-icon ui-icon-close"></span></a>');
+		
+		//$('#guidepanel > ul button').button();
+		$('#guideSave').button({click:function(){}});
+		
+	   $('#guideClose').hover(function() {
+	      $(this).addClass('ui-state-hover');
+	   }, function() {
+	      $(this).removeClass('ui-state-hover');
+	   }).click(function() {
+			guideClose();
+	   });
+		
+		
+		$('.editicons .ui-icon-circle-plus').live('click',function(){// clone a table row
+			var $tbl=$(this).closest('table');
+			var row = $(this).closest('tr');
+			var settings=$tbl.data('settings');
+			if ($('tbody tr',$tbl).length>=settings.max) return;
+			row.clone(true,true).insertAfter(row).fadeIn();
+			row.data('record',$.extend({},row.data('record')));
+			form.listManagerSave($(this).closest('table'));
+		});
+		$('.editicons .ui-icon-circle-minus').live('click',function(){// delete a table row
+			var $tbl=$(this).closest('table');
+			var settings=$tbl.data('settings');
+			if ($('tbody tr',$tbl).length<=settings.min) return;
+			$(this).closest('tr').remove();
+			form.listManagerSave($tbl);
+		});
+		
+		$('#tabsMapper button').click(function(){ 
+			var zoom=parseFloat($(this).attr('zoom'));
+			if (zoom>0)
+				mapperScale = mapperScale * zoom; 
+			trace(mapperScale);
+			$('.map').css({zoom:mapperScale,"-moz-transform":"scale("+mapperScale+")","-webkit-transform":"scale("+mapperScale+")"});
+		});
+		$('#tabsMapper button').first().button({label:'Fit',icons:{primary:'ui-icon-arrow-4-diag'}}).next().button({label:'Zoom in',icons:{primary:'ui-icon-zoomin'}}).next().button({label:'Zoom out',icons:{primary:'ui-icon-zoomout'}});
+		
+		
+		$('#vars_load').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
+		$('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
+		
+		$('#showlogic').buttonset();
+		$('#showlogic1').click(function(){prefs.ShowLogic=1;gGuide.noviceTab("tabsLogic",true)});
+		$('#showlogic2').click(function(){prefs.ShowLogic=2;gGuide.noviceTab("tabsLogic",true)});
+		$('#showtext').buttonset();
+		$('#showtext1').click(function(){prefs.ShowText=1;gGuide.noviceTab("tabsText",true)});
+		$('#showtext2').click(function(){prefs.ShowText=2;gGuide.noviceTab("tabsText",true)});
+	}
+
+	
 	
 	
 	$('#tabviews').bind('tabsselect', function(event, ui) {
@@ -70,7 +120,7 @@ $(document).ready(function () {
 			case 'tabsLogic':
 			case 'tabsText':
 			case 'tabsConstants':
-				noviceTab(gGuide,ui.panel.id);
+				gGuide.noviceTab(ui.panel.id);
 				break;
 	
 			default:
@@ -141,6 +191,9 @@ $(document).ready(function () {
 						if (gGuideID!=0)
 							guideSave();
 					break;
+				case '#close':
+					guideClose();
+					break;
 				case '#sample': 
 					loadGuideFile($(this).text(), "tabsAbout");
 					break;
@@ -197,7 +250,7 @@ $(document).ready(function () {
 	$( "#popup" ).button({label:'P'}).click(editButton);
 	
 	$( document ).tooltip();
-});
+}
 
 
 function checkLength( o, n, min, max ) {
@@ -211,30 +264,6 @@ function checkLength( o, n, min, max ) {
 	}
 }
 
-function signin(data)
-{
-	gUserID=data.userid;
-	gGuideID=0;
-	gUserNickName=data.nickname;
-	if (gUserID==0)
-	{
-		//status('Unknown user');
-		//html('Please register...');
-	}
-	else
-	{	// Successful signin.
-		$('#memenu').text(gUserNickName);
-		$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist">Loading your guides '+AJAXLoader +"</p>");
-		$("#login-form" ).dialog( "close" );
-//		$('#authortool').removeClass('hidestart').addClass('authortool');
-		$('#splash').hide();
-		layoutPanes();
-		$('#welcome').show();
-		
-		$('#tabviews').tabs( { disabled: [1,2,3,4,5,6,7,8,9]});
-		ws({cmd:'guides'},listguides);
-	}
-}
 
 function signinask()
 {
@@ -244,13 +273,36 @@ function signinask()
 		width: 350,
 		modal: true,
 		buttons: {
-			 "Sign in": function() {
-				  var bValid = true;
-				 // allFields.removeClass( "ui-state-error" );
-		
-				  //bValid = bValid && checkLength( name, "username", 3, 16 );
-				  //bValid = bValid && checkLength( password, "password", 4, 16 ); 
-				  ws({cmd:'login',username:$('#username').val(),userpass:$('#userpass').val()},signin);
+			"Sign in": function() {
+				var bValid = true;
+				// allFields.removeClass( "ui-state-error" );
+
+				//bValid = bValid && checkLength( name, "username", 3, 16 );
+				//bValid = bValid && checkLength( password, "password", 4, 16 ); 
+				ws({cmd:'login',username:$('#username').val(),userpass:$('#userpass').val()},
+					function (data){
+						gUserID=data.userid;
+						gGuideID=0;
+						gUserNickName=data.nickname;
+						if (gUserID==0)
+						{
+							//status('Unknown user');
+							//html('Please register...');
+						}
+						else
+						{	// Successful signin.
+							$('#memenu').text(gUserNickName);
+							$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist">Loading your guides '+AJAXLoader +"</p>");
+							$("#login-form" ).dialog( "close" );
+					//		$('#authortool').removeClass('hidestart').addClass('authortool');
+							$('#splash').hide();
+							$('#welcome').show();
+							
+							//$('#tabviews').tabs( { disabled: [1,2,3,4,5,6,7,8,9]});
+							ws({cmd:'guides'},listguides);
+						}
+					}				  
+				  );
 			 },
 			 Cancel: function() {
 				  $( this ).dialog( "close" );
@@ -266,10 +318,6 @@ function signinask()
 function toxml()
 {  // convert page at selection start into XML
 
-}
-function showPageOnMap()
-{
-	var target=$(this).attr('target');
 }
 
 function showPageToEdit()
@@ -314,6 +362,12 @@ function gotoPageEdit(pageName)
 				$(this).remove();//("destroy");
 			},
 			buttons:[
+			{text:'Delete', click:function(){ 
+			}},
+			{text:'Clone', click:function(){ 
+			}},
+			{text:'Insert after', click:function(){ 
+			}},
 			{text:'Preview', click:function(){ 
 				gotoPageShortly($(this).attr('rel'));
 			}},
@@ -323,9 +377,6 @@ function gotoPageEdit(pageName)
 		]});
 		var page = gGuide.novicePage($('.page-edit-form-panel',$page).html(''),page.name);	
 	}
-	
-	//$('#tabsPageEdit').html('');$('#tabviews').tabs('select','#tabsPageEdit');
-	//var page = gGuide.novicePage($('#tabsPageEdit'),pageName);
 	$page.dialog('open' );
 	$page.dialog('moveToTop');
 }
@@ -434,121 +485,15 @@ function ws(data,results)
 
 
 
-//*** Mapper ***
-var mapperScale=1;
-var mapSize= 1 ; //0 is small, 1 is normal
-
-function buildMap()
-{	// Contruct mapper flowcharts. 
-	var $map = $('.map');
-	$map.empty();
-	//$('.MapViewer').removeClass('big').addClass(mapSize==1 ? 'big':'');
-	/*
-	if (mapSize==0)
-	{	// Render only boxes, no lines
-		// Could be used for students but need to remove popups and add coloring.
-		var YSC=.15;// YScale
-		var XSC=.1 ;
-		for (var p in book.pages)
-		{
-			var page=book.pages[p];
-			if (page.mapbounds != null)
-			{
-				var nodeLeft=XSC*parseInt(page.mapbounds[0]);
-				var nodeTop=YSC*parseInt(page.mapbounds[1]);
-				$(".map").append(''
-					+'<div class="node tiny" rel="'+page.mapid+'" style="left:'+nodeLeft+'px;top:'+nodeTop+'px;"></div>'
-					//+'<span class="hovertip">'+page.name+'</span>'
-				);
-			}
-		}
-	}*/
-	if (mapSize==1)
-	{	// Full size boxes with question names and simple lines connecting boxes.
-		var YSC=1.35;// YScale
-		var NW=56;//half node width
-		for (var p in gGuide.pages)
-		{
-			var page=gGuide.pages[p];
-			if (page.mapx>0) 
-			{
-				var nodeLeft=page.mapx;
-				var nodeTop= page.mapy;
-				$map.append(''
-					+(page.type=="Pop-up page" ? '':'<div class="arrow" style="left:'+(nodeLeft+50)+'px; top:'+(nodeTop-16)+'px;"></div>')
-					+'<div class="node" rel="'+page.mapid+'" style="left:'+nodeLeft+'px;top:'+nodeTop+'px;">'+page.name+'</div>'
-					+lineV(nodeLeft+NW,nodeTop+46,10)
-					);
-				var downlines=false;
-				/* Outgoing branches to show:  
-						A2J - Buttons with Destination, Script GOTOs
-						CA - Next page, Feedback branches, Script GOTOs
-				*/
-				if (page.mapBranches==null)
-				{
-					var branches=[];
-					for (var b in page.buttons)
-					{
-						var btn = page.buttons[b];
-						branches.push({label:btn.label, dest: btn.next} );
-					}
-					page.mapBranches=branches;
-				}
-				/*
-				var nBranches=page.mapBranches.length;
-				var boffset = nBranches %2 * .5;
-				for (var b in page.mapBranches)
-				{
-					var branch = page.mapBranches[b];
-					var branchLeft=nodeLeft + (b+boffset)*30;
-					var branchTop= nodeTop + 100;
-					var branchWidth=50;
-					if (branch.dest!="")
-					{
-						var destLeft= branch.dest.mapx+NW;
-						var destTop = branch.dest.mapy;
-						if (destTop>nodeTop) downlines=true;
-						var x1 =branchLeft+branchWidth/2;// nodeLeft+NW-(b-nBranches/2)*5;
-						var y1 =branchTop+18;// nodeTop+46;
-						var y2 = y1 + 10 +((nBranches-b)*2);
-						var x2,x3;
-						if (destLeft<x1 ) {x2=destLeft;x3=x1;} else {x2=x1;x3=destLeft};
-						$(".map").append(''
-							+(destTop>nodeTop ?  lineV( x1,y1, y2-y1) + lineH(x2,y2,x3-x2):'')
-							);
-					}
-					$(".map").append('<div class="branch" rel="'+branch.dest+'" style="left:'+(branchLeft)+'px; top:'+branchTop+'px; width:'+branchWidth+'px;">'+branch.text+'</div>');
-				}*/
-			}
-		}
-		$('.branch',$map).click(function(){focusNode($('.map > .node[rel="'+$(this).attr('rel')+'"]'));	});
-	}
-	$('.node',$map).click(function(){	focusNode($(this));});
-//	focusPage()
-}
-function lineV(left,top,height)
-{
-	return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:1px;height:'+height+'px;"></div>';
-}
-function lineH(left,top,width)
-{
-	return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:'+width+'px;height:1px;"></div>';
-}
-/*
-function focusPage()
-{
-	focusNode($('.map > .node[rel="'+page.mapid+'"]'))
-}
-*/
-
-
-
 function BlankGuide(){
 	var guide = new TGuide();
 
 	guide.title="My guide";
 	guide.notes="Guide created on "+new Date();
 	guide.authors=[{name:'My name',organization:"My organization",email:"email@example.com",title:"My title"}];
+	guide.jurisdiction="Description of this guide";
+	guide.jurisdiction="My jurisdiction";
+	guide.version="1";
 	guide.sendfeedback=false;
 	var page=guide.addUniquePage("Welcome");
 	page.type="A2J";
@@ -602,7 +547,6 @@ function listguides(data)
 	$('#guidelist').html("New guides <ol>"+start+"</ol>My guides <ol>"+mine.join('')+"</ol>" + "Sample guides <ol>"+others.join('')+"</ol>");
 	$('li.guide').click(function(){
 		var gid=$(this).attr('gid');
-//		$(this).html('Loading guide '+$(this).text()+AJAXLoader);
 		var guideFile=$(this).text();
 		$('li.guide[gid="'+gid+'"]').html('Loading guide '+guideFile+AJAXLoader).addClass('.warning');
 		loadNewGuidePrep(guideFile,'');
@@ -610,13 +554,9 @@ function listguides(data)
 			createBlankGuide();
 		else
 			ws({cmd:'guide',gid:gid},guideloaded);
-		//loadGuide($('a[href="#sample"]').first().text(), "TAB ABOUT");
 	});
 	$('#welcome').dialog('open');
 }
-
-
-
 
 
 
@@ -876,50 +816,10 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 	gPage = page;
 	return page;
 }
-function tabGUI()
-{
-	//$('table.list').hover(function(){$('.editicons',this).showIt(1);},function(){$('.editicons',this).showIt(0);});
-	$('.editicons .ui-icon-circle-plus').live('click',function(){// clone a table row
-		var $tbl=$(this).closest('table');
-		var row = $(this).closest('tr');
-		var settings=$tbl.data('settings');
-		if ($('tbody tr',$tbl).length>=settings.max) return;
-		row.clone(true,true).insertAfter(row).fadeIn();
-		row.data('record',$.extend({},row.data('record')));
-		form.listManagerSave($(this).closest('table'));
-	});
-	$('.editicons .ui-icon-circle-minus').live('click',function(){// delete a table row
-		var $tbl=$(this).closest('table');
-		var settings=$tbl.data('settings');
-		if ($('tbody tr',$tbl).length<=settings.min) return;
-		$(this).closest('tr').remove();
-		form.listManagerSave($tbl);
-	});
-	
-	$('#tabsMapper button').click(function(){ 
-		var zoom=parseFloat($(this).attr('zoom'));
-		if (zoom>0)
-			mapperScale = mapperScale * zoom; 
-		trace(mapperScale);
-		$('.map').css({zoom:mapperScale,"-moz-transform":"scale("+mapperScale+")","-webkit-transform":"scale("+mapperScale+")"});
-	});
-	$('#tabsMapper button').first().button({label:'Fit',icons:{primary:'ui-icon-arrow-4-diag'}}).next().button({label:'Zoom in',icons:{primary:'ui-icon-zoomin'}}).next().button({label:'Zoom out',icons:{primary:'ui-icon-zoomout'}});
-	
-	
-	$('#vars_load').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
-	$('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
-	
-	$('#showlogic').buttonset();
-	$('#showlogic1').click(function(){gShowLogic=1;noviceTab(gGuide,"tabsLogic",true)});
-	$('#showlogic2').click(function(){gShowLogic=2;noviceTab(gGuide,"tabsLogic",true)});
-	$('#showtext').buttonset();
-	$('#showtext1').click(function(){gShowText=1;noviceTab(gGuide,"tabsText",true)});
-	$('#showtext2').click(function(){gShowText=2;noviceTab(gGuide,"tabsText",true)});
-}
 
-
-function noviceTab(guide,tab,clear)
+TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,clear)
 {	// 08/03/2012 Edit panel for guide sections 
+	var guide = this;
 	var div = $('#'+tab);
 	//if (div.html()!="") return;
 	var t = $('.tabContent',div);
@@ -941,13 +841,13 @@ function noviceTab(guide,tab,clear)
 			{
 				var page=guide.sortedPages[p];
 				if (page.type!=CONST.ptPopup)
-				if ((gShowLogic==2) || (gShowLogic==1 && (page.codeBefore!="" || page.codeAfter!="")))
+				if ((prefs.ShowLogic==2) || (prefs.ShowLogic==1 && (page.codeBefore!="" || page.codeAfter!="")))
 				{
 					var pagefs=form.fieldset(page.name, page);
-					if (gShowLogic==2 || page.codeBefore!="")
+					if (prefs.ShowLogic==2 || page.codeBefore!="")
 						pagefs.append(form.codearea({label:'Before:',	value:page.codeBefore,	change:function(val,page){
 							page.codeBefore=val; /* TODO Compile for syntax errors */}} ));
-					if (gShowLogic==2 || page.codeAfter!="")
+					if (prefs.ShowLogic==2 || page.codeAfter!="")
 						pagefs.append(form.codearea({label:'After:',	value:page.codeAfter, 	change:function(val,page){
 							page.codeAfter=val ; /* TODO Compile for syntax errors */}} ));
 					t.append(pagefs);
@@ -964,11 +864,11 @@ function noviceTab(guide,tab,clear)
 				var pagefs=form.fieldset(page.name, page);
 				pagefs.append(form.htmlarea({label:'Text:',					value:page.text,			change:function(val,page){page.text=val; }} ));
 				if (page.type!=CONST.ptPopup){
-					if (gShowText==2 || page.learn!="") 			pagefs.append(form.text({label:'Learn More prompt:',placeholder:"",	value:page.learn,
+					if (prefs.ShowText==2 || page.learn!="") 			pagefs.append(form.text({label:'Learn More prompt:',placeholder:"",	value:page.learn,
 															change:function(val,page){page.learn=val }} ));
-					if (gShowText==2 || page.help!="") 			pagefs.append(form.htmlarea({label:"Help:",					value:page.help,
+					if (prefs.ShowText==2 || page.help!="") 			pagefs.append(form.htmlarea({label:"Help:",					value:page.help,
 															change:function(val,page){page.help=val}} ));
-					if (gShowText==2 || page.helpReader!="") 	pagefs.append(form.htmlarea({label:'Help Text Reader:',	value:page.helpReader,
+					if (prefs.ShowText==2 || page.helpReader!="") 	pagefs.append(form.htmlarea({label:'Help Text Reader:',	value:page.helpReader,
 															change:function(val,page){page.helpReader=val}} ));
 
 					for (var f in page.fields)
@@ -977,9 +877,9 @@ function noviceTab(guide,tab,clear)
 						var ff=form.fieldset('Field '+(parseInt(f)+1),field);
 						ff.append(form.htmlarea({label:'Label:',   value:field.label, 
 							change:function(val,field){field.label=val;}}));
-						if (gShowText==2 || field.value!="") ff.append(form.text({label:'Default value:',placeholder:"",name:'default', value:  field.value,
+						if (prefs.ShowText==2 || field.value!="") ff.append(form.text({label:'Default value:',placeholder:"",name:'default', value:  field.value,
 							change:function(val,field){field.value=val}}));
-						if (gShowText==2 || field.invalidPrompt!="") ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,
+						if (prefs.ShowText==2 || field.invalidPrompt!="") ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,
 							change:function(val,field){field.invalidPrompt=val}}));						
 						pagefs.append(ff);
 					}
@@ -987,9 +887,9 @@ function noviceTab(guide,tab,clear)
 					{
 						var b = page.buttons[bi];
 						var bf=form.fieldset('Button '+(parseInt(bi)+1),b);
-						if (gShowText==2 || b.label!="")
+						if (prefs.ShowText==2 || b.label!="")
 							bf.append(form.text({ 		value: b.label,label:'Label:',placeholder:'button label',		change:function(val,b){b.label=val}}));
-						if (gShowText==2 || b.value!="")
+						if (prefs.ShowText==2 || b.value!="")
 							bf.append(form.text({ 		value: b.value,label:'Default value',placeholder:'Default value',		change:function(val,b){b.value=val}}));
 						pagefs.append(bf);
 					}
@@ -1135,6 +1035,621 @@ $.ui.dialog.prototype._init = function() {
 
 
 
-function layoutPanes()
+
+function prompt(status)
 {
+	if (status==null) status="";
+	$('#CAJAStatus').text( status );
+	trace(status);
 }
+function loadNewGuidePrep(guideFile,startTabOrPage)
+{
+	prompt('Loading '+guideFile);
+	prompt('Start location will be '+startTabOrPage);
+	//$('.CAJAContent').html('Loading '+guideFile+AJAXLoader);
+	$('#CAJAOutline, #CAJAIndex').html('');
+}
+
+function guideClose()
+{
+	if (gGuide!=null)
+		if (gGuideID!=0)
+			guideSave();
+	
+	$('#welcome').dialog('open');
+	$('#authortool').hide();
+}
+
+function guideStart(startTabOrPage)
+{ 
+	trace( gGuide.firstPage);
+	$('#authortool').removeClass('hidestart').addClass('authortool').show();
+	$('#welcome').dialog('close');
+	
+	$('#tabviews').tabs( { disabled:false});
+	$('#tabsVariables .tabContent, #tabsLogic  .tabContent,#tabsSteps .tabContent, #tabsAbout .tabContent, #tabsConstants .tabContent, #tabsTex .tabContentt').html("");
+	
+	if (makestr(startTabOrPage)=="")
+		startTabOrPage="PAGE "+(gGuide.firstPage);
+	//trace("Starting location "+startTabOrPage);
+	
+	//if(editMode==1)
+	//	$('#advanced').html(gGuide.convertToText());
+	//else
+	
+	gotoTabOrPage(startTabOrPage);
+	$('#CAJAOutline').html(gGuide.convertIndex());
+	$('#CAJAIndex').html(gGuide.convertIndexAlpha());
+	$('#CAJAOutline li, #CAJAIndex li').click(showPageToEdit);//.dblclick(showPageToEdit);
+	
+	$('#guidepanel ul li a:first').html(gGuide.title);
+	/*
+	$('#guidepanel').dialog({
+		title: gGuide.title,
+		autoopen:true,width:800,height:700,
+		buttons: {
+			 "Save": function() {
+			 },
+			 Close: function() {
+				  $( this ).dialog( "close" );
+			 }
+		},
+		close: function() {
+		}});
+		*/
+	//buildMap();	
+	//$('#tabviews').tabs('select','#tabsAbout');
+}
+
+function guideloaded(data)
+{
+	gGuideID=data.gid;
+	cajaDataXML=$(jQuery.parseXML(data.guide));
+	gGuide =  parseXML_Auto_to_CAJA(cajaDataXML);
+	$('li.guide[gid="'+gGuideID+'"]').html(gGuide.title);
+	/*
+		var cajaDataXML=$(data.guide);  
+		var description = makestr(cajaDataXML.find('DESCRIPTION').text());
+		var pages=[];
+		cajaDataXML.find("QUESTION").each(function() {
+			QUESTION = $(this);
+			pages.push(QUESTION.attr("ID")+" "+ QUESTION.attr("NAME"));
+		});
+		alert( description +pages.join('<li>')); 
+	*/
+	//gGuide.filename=guideFile;
+	guideStart();
+}
+
+function loadGuideFile2(guideFile,startTabOrPage)
+{
+	var cajaDataXML;
+	$.ajax({
+			url: guideFile,
+			dataType: ($.browser.msie) ? "text" : "xml", // IE will only load XML file from local disk as text, not xml.
+			timeout: 45000,
+			error: function(data,textStatus,thrownError){
+			  alert('Error occurred loading the XML from '+this.url+"\n"+textStatus);
+			 },
+			success: function(data){
+				//var cajaDataXML;
+				if ($.browser.msie)
+				{	// convert text to XML. 
+					cajaDataXML = new ActiveXObject('Microsoft.XMLDOM');
+					cajaDataXML.async = false;
+					data=data.replace('<!DOCTYPE Access2Justice_1>','');//02/27/12 hack bug error
+					cajaDataXML.loadXML(data);
+				}
+				else
+				{
+					cajaDataXML = data;
+				}
+				cajaDataXML=$(cajaDataXML); 
+				// global variable guide
+				gGuide =  parseXML_Auto_to_CAJA(cajaDataXML);
+				gGuide.filename=guideFile;
+				guideStart(startTabOrPage);			
+			}
+		});
+}
+
+function loadGuideFile(guideFile,startTabOrPage)
+{	// Load guide file XML directly
+	guideFile=guideFile.split("#");
+	if (guideFile.length==1)
+	{
+		guideFile=guideFile[0];
+	}
+	else
+	{
+		startTabOrPage= "PAGE " +guideFile[1];
+		//if (editMode==0) startTabOrPage = "PAGE " + startTabOrPage;
+		guideFile=guideFile[0];
+	}
+	loadNewGuidePrep(guideFile,startTabOrPage);
+	window.setTimeout(function(){loadGuideFile2(guideFile,startTabOrPage)},500);
+}
+
+function styleSheetSwitch(theme)
+{
+	//<link href="cavmobile.css" title="cavmobile" media="screen" rel="stylesheet" type="text/css" />
+	trace('styleSheetSwitch='+theme); 
+	if (theme=='A2J') 
+		theme = "themes/"+theme.toLowerCase()+"/jquery-ui.css";
+	else
+		theme = "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/"+theme.toLowerCase()+"/jquery-ui.css";
+	$('link[title=style]').attr('href',theme);
+}
+
+function editButton()
+{
+	switch ($(this).attr('id')){
+		case 'bold': document.execCommand('bold', false, null); break;
+		case 'italic': document.execCommand('italic', false, null); break;
+		case 'indent': document.execCommand('indent', false, null); break;
+		case 'outdent': document.execCommand('outdent', false, null); break;
+	}
+}
+
+
+function selectTab(target)
+{
+	$('#CAJAOutline li, #CAJAIndex li').each(function(){$(this).removeClass('ui-state-active')});
+	$('li').filter(function(){ return target == $(this).attr('target')}).each(function(){$(this).addClass('ui-state-active')});
+}
+TGuide.prototype.pageRename=function(guide,page,newName){
+/* TODO Rename all references to this page in POPUPs, JUMPs and GOTOs */
+	//trace("Renaming page "+page.name+" to "+newName);
+	if (page.name==newName) return true;
+	if (page.name.toLowerCase() != newName.toLowerCase())
+	{
+		if (this.pages[newName])
+		{
+			alert('Already a page named '+newName);
+			return false
+		}
+	}
+	// Rename GUI references
+	var targetOld="PAGE "+page.name;
+	var targetNew="PAGE "+newName;
+	$('li').filter(function(){return targetOld==$(this).attr('target');}).each(function(){
+		$(this).attr('target',targetNew);
+		$(this).text(newName);
+		})
+	
+	$('.page-edit-form').filter(function(){ return page.name == $(this).attr('rel')}).each(function(){
+		$(this).attr('rel',newName);
+		$(this).dialog({title:newName});
+		})
+	
+	delete this.pages[page.name]
+	page.name = newName;
+	this.pages[page.name]=page;
+	//trace("RENAMING REFERENES");
+	return true;
+}
+TGuide.prototype.convertIndex=function()
+{	// Build outline for entire interview includes meta, step and question sections.
+	var inSteps=[];
+	var popups="";
+	for (s in this.steps)
+	{
+		inSteps[s]="";
+	}
+	for (var p in this.sortedPages)
+	{
+		var page = this.sortedPages[p];
+		var plink= '<li target="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()+'</li>';
+		if (page.type==CONST.ptPopup)
+			popups += plink;
+		else
+			inSteps[page.step] += plink;
+	}	
+	var ts="";
+	for (var s in this.steps)
+	{
+		ts+='<li target="STEP '+s+'">'+this.steps[s].number+". "+this.steps[s].text+"</li><ul>"+inSteps[s]+"</ul>";
+	}			
+	return "<ul>"
+			+ '<li target="tabsAbout">'+lang.tabAbout+'</li>'
+			+ '<li target="tabsMapper">'+'Map'+'</li>'
+			+ '<li target="tabsVariables">'+lang.tabVariables+'</li>'
+			+ '<li target="tabsConstants">'+lang.tabConstants+'</li>'
+			+ '<li target="tabsSteps">'+lang.tabSteps+'</li><ul>'+ts+'</ul>'
+			+ '<li target="tabsPopups">'+lang.en('Popups')+'</li><ul>'+popups+'</ul>'
+			+"</ul>";
+}
+
+TGuide.prototype.convertIndexAlpha=function()
+{	// Build outline of just pages
+	var txt="";
+	for (var p in this.sortedPages)
+	{
+		var page = this.sortedPages[p]; 
+		txt += '<li target="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()+'</li>';
+		console.log(page.name);
+	}
+	return "<ul>" + txt +"</ul>";
+}
+
+
+var form={
+	id:0
+	
+	,editorAdd:function(elt){
+		if (elt.parent().parent().find('.texttoolbar').length==0)
+		//alert(elt.parent().parent().html());
+			$('#texttoolbar').clone(true,true).attr('id','').prependTo(elt.parent()).show();
+	}
+	,editorRemove:function(elt){
+		//$('#texttoolbar').hide();
+	}
+	,change: function(elt,val){
+		var form= $(elt).closest('[name="record"]');
+		trace("Changed value: "+elt);
+		$(elt).data('data').change.call(elt,val,form.data('record'),form);
+	}
+	 ,h1:function(h){
+		return $("<h1>"+h+"</h1>");}
+		
+	,h2:function(h){
+		return $("<h2>"+h+"</h2>").click(function(){$(this).next().toggle()});}
+		
+	,noteHTML:function(kind,t){
+		return '<div class="ui-widget"><div style="margin-top: 20px; padding: 0 .7em;" class="ui-state-highlight ui-corner-all"><p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-'+kind+'"></span>'+t+'</div></div>';
+	}
+	,note:function(t){
+		return $(form.noteHTML('info',t));
+	}
+	,noteAlert:function(t){
+		return $(form.noteHTML('alert',t));
+	}
+
+
+	,fieldset:function(legend,record){
+		return $('<fieldset name="record"><legend >'+legend+'</legend></fieldset>').data('record',record);;//.click(function(){$(this).toggleClass('collapse')});
+	}
+	,record:function(record){
+		return $('<div name=record class=record/>').data('record',record);
+	}
+	,div:function(){
+		return $('<div />');
+	}
+	//,number:    function(label,value,minNum,maxNum,handler){
+	//	return "<label>"+label+'</label><input class="editable" type="text" name="'+group+id+'" value="'+htmlEscape(value)+'"> ';}
+	
+	,checkbox: function(data){
+		var e=$('<div name="'+data.name+'">'
+			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
+			+'<span  class=editspan > <input class="ui-state-default ui-checkbox-input" type="checkbox" />'+data.checkbox+'</span></div>');
+		$('input',e).blur(function(){ form.change($(this),$(this).is(':checked'))}).attr( 'checked',data.value==true ).data('data',data);
+		return e;
+	}
+	
+	
+	,pickpage:function(data){ 
+		//data.value = gGuide.pageDisplayName(data.value); 
+
+		var dval = gGuide.pageDisplayName(data.value);
+			
+		var e =$( ''
+			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
+			+ '<span class=editspan><input class="  ui-combobox-input editable autocomplete picker page dest" type="text" ></span>');
+		$('.picker',e).blur(function(){
+			var val=$(this).val();
+			form.change($(this),val);
+		}).data('data',data).val(decodeEntities(dval));
+		$('.autocomplete.picker.page',e).autocomplete({ source: pickPage, html: true,
+	      change: function () { // if didn't match, restore to original value
+	         var matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex($(this).val().split("\t")[0]) + "$", "i");
+	         var newvalue = $(this).val();//.split("\t")[0];
+				trace(newvalue);
+	         $.each(gGuide.sortedPages, function (p, page) {
+					if (page.type!=CONST.ptPopup)
+						if (matcher.test(page.name)) {
+							newvalue = gGuide.pageDisplayName(page.name);
+							return false;
+						}
+	         });
+	         $(this).val(newvalue); 
+	      }})
+			.focus(function () {
+			   $(this).autocomplete("search");
+			});
+		return e;
+	}
+	,text: function(data){
+		var e=$('<div name="'+data.name+'">'
+			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
+			+'<span class=editspan> <input class="  editable" placeholder="'+data.placeholder+'" type="text" /> </span></div>');
+		if (typeof data.class!=='undefined') $('input',e).addClass(data.class);
+		if (typeof data.width!=='undefined') $('input',e).css('width',data.class);
+		$('input',e).blur(function(){ form.change($(this),$(this).val());}).val(decodeEntities(data.value)).data('data',data);
+		return e;
+	}
+	,htmlarea: function(data){//label,value,handler,name){ 
+		this.id++;
+		var e= $('<div name="'+data.name+'">'
+			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
+			+'<span class=editspan>'
+			+'<div contenteditable=true class="  htmledit  text editable taller" id="tinyMCE_'+this.id+'"  name="'+this.id+'" rows='+1+'>'
+			+data.value+'</div></span></div>');
+		$('.editable',e).focus(function(){$(this).addClass('tallest');form.editorAdd($(this));}).blur(function(){
+		//$(this).removeClass('tallest');
+		form.editorRemove(this);
+		form.change($(this),$(this).html());}).data('data',data) ;
+		return e;
+	} 
+	,textarea: function(data){
+		var rows=2;
+		var e=$('<div name="'+data.name+'">'
+			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
+			+'<span class=editspan><textarea  class="     text editable taller" rows='+rows+'>'+data.value+'</textarea></span></div>');
+		$('.editable',e).blur(function(){form.change($(this),$(this).html());}).data('data',data);
+		return e;
+	}
+	
+	,pickAudio:function(data){ return this.text(data);}
+	,pickImage:function(data){ return this.text(data);}
+	,pickVideo:function(data){ return this.text(data);}
+	
+	,clear:function(){
+		form.codeCheckList=[];
+	}
+	,finish:function(div){
+	}
+	,codeCheckIntervalID:0
+	,codeCheckList:[]
+	,codeCheckSoon:function(elt){
+		if (form.codeCheckIntervalID==0)
+			form.codeCheckIntervalID=setInterval(form.codeCheckInterval,100);
+		form.codeCheckList.unshift(elt);
+	}
+	,codeCheckInterval:function(){ // syntax check one code block
+		if (form.codeCheckList.length==0){
+			clearInterval(form.codeCheckIntervalID);
+			form.codeCheckIntervalID=0;
+		}
+		else
+			form.codeCheck(form.codeCheckList.pop());
+	}
+	,codeCheck:function(elt){
+		var code=$(elt).html();
+		//TODO remove markup
+		//alert(code);
+		var lines = code.split('<br>');
+		var script = _GCS.translateCAJAtoJS(lines.join("\n"));
+		var tt="";
+		var t=[];
+		if (script.errors.length>0)
+		{
+		/*
+			for (l=0;l<lines.length;l++)
+			{
+				var err=null;
+				for (var e in script.errors)
+					if (script.errors[e].line == l)
+						err=script.errors[e];
+				if (err == null)
+					t.push(lines[l]);
+				else
+				{
+					t.push('<span class="err">'+lines[l]+"</span>");
+				}
+			}
+			*/
+			
+			for (var e in script.errors)
+			{
+				err=script.errors[e];
+				tt+=form.noteHTML('alert',"<b>"+err.line+":"+err.text+"</b>");
+			}
+		}
+		if(1)
+		{
+			t=[];
+			t.push('JavaScript:');
+			for (l=0;l<script.js.length;l++)
+			{
+				t.push(script.js[l]);
+			}
+			tt+=("<BLOCKQUOTE class=Script>"+t.join("<BR>")+"</BLOCKQUOTE>");
+		}
+		//tt=propsJSON('SCRIPT',script);
+		$('.errors',$(elt).closest('.editspan')).html(tt);
+	}
+	,codearea:function(data){ 
+		this.id++;
+		var e= $('<div>'
+			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
+			+'<div class=editspan><div spellcheck="false" contenteditable=true class="text editable taller codeedit"  rows='+4+'>'+data.value+'</div><div class="errors"></div></div></div>');
+		$('.editable',e).blur(function(){
+			form.codeCheckSoon(this);
+			form.change($(this),$(this).html());}).data('data',data);
+		form.codeCheckSoon($('.codeedit',e));
+		return e;
+	}
+
+	,pickList:function(data,listValueLabel){//list is array to ensure preserved order. Note: js object properties don't guarantee order
+		var c="";
+		for (var o=0;o<listValueLabel.length;o+=2)
+			c+='<option value="'+listValueLabel[o]+'">'+listValueLabel[o+1]+'</option>';
+		var e =$('<div name="'+data.name+'">'
+			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
+			+'<span class=editspan><select class="     ui-select-input">'+c+'</select></span></div>');
+		$('.ui-select-input',e).change(function(){form.change($(this),$('option:selected',this).val())}).data('data',data).val(data.value);
+		return e;
+	}
+	,pickStep:function(data){
+		var list=[];
+		for (var s=0;s<gGuide.steps.length;s++){
+			var step = gGuide.steps[s];
+			list.push(s,step.number+". "+ (step.text));
+		}
+		return this.pickList(data,list);
+		//var e =$('<div><label>'+label+'</label>' + '<select class="ui-state-default ui-select-input">'+o+'</select></div>');
+		//$('.ui-select-input',e).change(function(){var val=$('option:selected',this).val();  $(this).data('data').change(val);}).data('data',handler).val(value);
+		//return e;
+	}
+	,pickscore:function(label,value,handler){
+		return this.pickList('','picker score',[
+			'RIGHT','Right',
+			'WRONG','Wrong',
+			'MAYBE','Maybe',
+			'INFO','Info'],value,handler);
+	}
+	,pickbranch:function(){ 
+		return this.pickList("",'picker branch',[
+		0,"Show feedback and return to question",
+		1,"Show feedback then branch to this page",
+		2,"Just branch directly to this page"])
+		.change(function(){
+			var br=$(this).val();
+			$(this).parent().children('.text').toggle(br!=2);
+			$(this).parent().children('.dest').toggle(br!=0);
+			trace(br);
+		})
+	}
+	
+		
+	//,clone:function(){return 'Clone buttons';}
+	
+	,tableRows:function(name,headings,rowList){
+		var $tbl=$('<table/>').addClass('list').data('table',name).attr('list',name);
+		if (typeof headings==="object"){
+			var tr="<tr valign=top>";
+			for (var col in headings)
+			{
+				tr+="<th>"+headings[col]+"</th>";
+			}
+			tr+="</tr>";
+			$tbl.append($(tr));
+		}
+		for (var row in rowList){
+			var $row=$("<tr valign=top/>");
+			if (rowList[row].visible==false) $row.addClass('hidden');
+			//$row.append($('<td class="editicons"/>').append('<span class="ui-draggable sorthandle ui-icon ui-icon-arrowthick-2-n-s"/><span class="ui-icon ui-icon-circle-plus"/><span class="ui-icon ui-icon-circle-minus"/>'));
+			for (var col in rowList[row].row)
+			{
+				$row.append($("<td/>").append(rowList[row].row[col]));
+			}
+			
+			$tbl.append($row);
+			$row.data('record',rowList[row].record);
+		
+/*
+			$row.hover(
+				function(){ // start hovering
+					$('.editicons').remove();
+					$(this).append('<span class="editicons"><a href="#" class="ui-icon ui-icon-circle-plus"></a><a href="#" class="ui-icon ui-icon-circle-minus"></a></span>');
+					$('.editicons .ui-icon-circle-plus').click(function(){
+						// Insert blank statement above
+						//alert($(this).closest('li').html());
+						var line = $(this).closest('li');
+						var cmd = $(this).closest('li').find('.adv.res').html();
+					});
+					$('.editicons .ui-icon-circle-minus').click(function(){
+						// Delete statement line
+						var line = $(this).closest('li');
+						//line.remove();
+					});
+				},
+				function(){ // stop hovering
+					$('.editicons').remove();}
+			);
+			*/
+			
+		}
+		$('tbody',$tbl).sortable({
+			//handle:"td:eq(0)",
+			handle:"td:eq(0) .sorthandle",
+			update:function(){ }})//.disableSelection();
+
+		$('.editicons .ui-icon-circle-plus',$tbl).click(function(){//live('click',function(){
+			var row = $(this).closest('tr');
+			row.clone(true,true).insertAfter(row).fadeIn();
+		});
+		$('.editicons .ui-icon-circle-minus',$tbl).click(function(){//.live('click',function(){
+			var line = $(this).closest('tr').fadeOut("slow").empty();
+		});
+			
+		return $tbl;
+	}
+	
+	,tableRowCounter:function(name,label,minelts,maxelts,value)
+	{	//let user choose number of said item
+		var c=$('<label/>').text(label);
+		var s='<select list="'+name+'" class="  ui-select">';
+		for (var o=minelts;o<=maxelts;o++)s+="<option>"+o+"</option>";
+			s+="</select>";
+		return $('<div/>').append(c.after(s).change(function(){form.tableRowAdjust(name,$('option:selected',this).val());}).val(value));
+	}
+	
+	,tableRowAdjust:function(name,val)
+	{	// Adjust number of rows. set visible for rows > val. if val > max rows, clone the last row.
+		$tbl = $('table[list="'+name+'"]');
+		var settings=$tbl.data('settings');
+		$tbody = $('tbody',$tbl);//'table[list="'+name+'"] tbody');
+		var rows = $('tr',$tbody).length;
+		trace('Changing rows from '+rows+' to '+val);
+		//if (rows == val) return;
+		
+		for (var r=0;r<rows;r++)
+			$('tr:nth('+r+')',$tbody).showit(r<val);
+		for (var r=rows;r<val;r++)
+			form.listManagerAddRow($tbl,$.extend({},settings.blank));
+		form.listManagerSave($tbl);
+	}
+	
+	,listManagerSave:function($tbl){// save revised order or added/removed items
+		var settings=$tbl.data('settings');
+		var list=[];
+		$('tr',$tbl).not(':hidden').each(function(idx){ //:gt(0)
+			list.push($(this).data('record'));
+		});
+		settings.save(list);
+		$('select[list="'+settings.name+'"]').val(list.length);
+	}
+	,listManagerAddRow:function($tbl,record){
+		var settings=$tbl.data('settings');
+		var $row=$('<tr valign=top class="ui-corner-all" name="record"/>');
+		$row.append($('<td class="editicons"/>')
+			.append('<span class="ui-draggable sorthandle ui-icon ui-icon-arrowthick-2-n-s"/>'
+			+'<span class="ui-icon ui-icon-circle-plus"/><span class="ui-icon ui-icon-circle-minus"/>'));
+		$row.append($('<td/>').append(settings.create(form.div(),record)));
+		$row.data('record',record); 
+		$tbl.append($row);
+	}
+	,listManager:function(settings){
+		// data.name:'Fields' data.,picker:'Number of fields:',data.min:0,data.max:CONST.MAXFIELDS,data.list:page.fields,data.blank:blankField,data.save=function to save,data.create=create form elts for record
+		var div = $('<div/>');
+		var $tbl=$('<table/>').addClass('list').data('settings',settings).attr('list',settings.name);
+		div.append(form.tableRowCounter(settings.name,settings.picker,settings.min,settings.max,settings.list.length));
+		for (var i=0;i<settings.list.length;i++)
+			form.listManagerAddRow($tbl,settings.list[i]);
+		$('tbody',$tbl).sortable({
+			handle:"td .sorthandle",
+			update:function(event,ui){
+				form.listManagerSave((ui.item.closest('table')));
+			}})
+
+		div.append($tbl);
+		/*(		div.append($('<button id="newrow"/>').button({label:'Add',icons:{primary:"ui-icon-plusthick"}}).click(function(){
+			addRow($.extend({},settings.blank));
+			save();
+		}));
+
+		*/
+		return div;
+	}
+	
+	
+	
+	
+	,row:function(cols){ return "<tr valign=top><td>"+cols.join("</td><td>")+"</td></tr>";}
+	,rowheading:function(cols){ return "<tr valign=top><th>"+cols.join("</th><th>")+"</th></tr>";}
+};
+
+
+
+$(document).ready(CAJA_Initialize)

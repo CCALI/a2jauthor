@@ -9,13 +9,6 @@ var selRange = null;
 var editdoc=document;
 var editwin=window;
 
-/*
-	menu options
-			//case '#div0': useDIV=0; startCAJA();break;
-			//case '#div1': useDIV=1; startCAJA();break;
-
-*/
-
 $(document).ready(function () { initAdvanced(); });
 
 

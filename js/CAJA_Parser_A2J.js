@@ -1,7 +1,5 @@
-/* CALI Author CAJA - Parse CAJA XML format into CAJA format */
-function cr2P(txt){
-	return txt == "" ?"":"<P>" + txt.split("\n").join("</P><P>")+"</P>";//replace("\n\n","\n")
-}
+/* CAJA - Parse A2J 4 .a2j/xml XML into CAJA format */
+
 
 function parseXML_A2J_to_CAJA(TEMPLATE)
 {	// Parse A2J into CAJA

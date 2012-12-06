@@ -38,7 +38,7 @@
 <body >
 <div id="splash" class="welcome" onClick="signin();return false;">
 	<center>
-		<img src="img/CAJA_Icon_512.png"/> <img src="img/blank_guide2front.png"/>
+		<img src="img/A2J5_Icon_512.png"/> <img src="img/blank_guide2front.png"/>
 	</center>
 </div>
 <div id="authortool" class="hidestart">
@@ -67,10 +67,11 @@
 		</div>
 		<div id="tabviews" class="ui-layout-center tabset">
 			<ul>
+				<li><a href="#tabsGuide">Authoring</a></li>
 				<li><a href="#tabsAbout">About</a></li>
 				<!--<li><a href="#tabsMapper">Map</a></li>-->
 				<li><a href="#tabsVariables">Variables</a></li>
-				<li><a href="#tabsConstants">Constants</a></li>
+				<!--<li><a href="#tabsConstants">Constants</a></li>-->
 				<li><a href="#tabsSteps">Steps</a></li>
 				<li><a href="#tabsLogic">All Logic</a></li>
 				<li><a href="#tabsText">All Text</a></li>
@@ -88,6 +89,12 @@
 						<div class="map"></div>
 					</div>
 				</div>-->
+				<div id="tabsGuide">
+					<div class="tabHeader"></div>
+					<div class="tabContentFrame">
+						<div class="tabContent editq">Welcome to A2J Author 5.<p>Not sure where to start? Try some of these authoring resources:<ul><li>Best Practices</li><li>Authoring system</li></ul></p> </div>
+					</div>
+				</div>
 				<div id="tabsAbout">
 					<div class="tabHeader">About this guide</div>
 					<div class="tabContentFrame">
@@ -101,12 +108,13 @@
 					</div>
 					<div class="tabFooter"><button id="var-add">Add Variable</button></div>
 				</div>
-				<div id="tabsConstants">
+				<!--<div id="tabsConstants">
 					<div class="tabHeader"></div>
 					<div class="tabContentFrame">
 						<div class="tabContent editq"></div>
 					</div>
 				</div>
+				-->
 				<div id="tabsSteps">
 					<div class="tabHeader"></div>
 					<div class="tabContentFrame">
@@ -148,45 +156,7 @@
 		</div>
 	</div>
 	<div id="cajaheader"><span id="cajainfo" title="About this Authoring System"></span><span xid="cajatitle"></span>
-		<ul id="cajasettings">
-			<li><a href="#"><span class="ui-icon ui-icon-gear"></span>Settings</a>
-				<ul>
-					<li><a href="#save"><span class="ui-icon ui-icon-disk"></span>Save</a></li>
-					<li><a href="#close"><span class="ui-icon ui-icon-disk"></span>Close</a></li>
-					<li  > <a href="#">Text</a>
-							<ul>
-								<li> <a href="#bold">Bold</a> </li>
-								<li> <a href="#italic">Italic</a> </li>
-								<li> <a href="#indent">Indent</a> </li>
-								<li> <a href="#outdent">Outdent</a> </li>
-							</ul>
-					</li>
-					<li> <a href="#">Theme</a>
-							<ul>
-								<li><a href="#theme">A2J</a></li>
-								<li><a href="#theme">Smoothness</a></li>
-								<li><a href="#theme">UI-Darkness</a></li>
-								<li><a href="#theme">UI-Lightness</a></li>
-								<li><a href="#theme">Sunny</a></li>
-								<li><a href="#theme">Humanity</a></li>
-								<li><a href="#theme">Redmond</a></li>
-								<li><a href="#theme">Cupertino</a></li>
-							</ul>
-					</li>
-					<li> <a href="#" id="memenu">Me</a>
-							<ul>
-								<li><a href="#signout">Sign out</a></li>
-							</ul>
-					</li>
-					<li  > <a href="#test">Test</a>
-
-							<ul id="samples">
-							</ul>
-					</li>
-					<li class="ui-state-disabled"><a href="#"><span class="ui-icon ui-icon-print"></span>Print...</a></li>
-				</ul>
-			</li>
-		</ul>
+		
 	</div>
 	
 	<div id="cajafooter"><span id="CAJAStatus"></span><span style="float:right;text-align:right">All Contents &copy; CALI, The Center for Computer-Assisted Legal
@@ -213,6 +183,30 @@
 	<span class="editspan"><input type="textarea" name="varcomment" id="varcomment" class="editable taller text ui-widget-content ui-corner-all"  /> </span></div></fieldset>
 	</form>
 </div>
+<div id="viewer-var-form" title="Viewer Variables"></div>
+<div id="settings-form" title="Settings"><ul id="cajasettings">
+					
+					<li> <a href="#">Authoring Color Scheme</a>
+							<ul>
+								<li><a href="#theme">A2J</a></li>
+								<li><a href="#theme">Smoothness</a></li>
+								<li><a href="#theme">UI-Darkness</a></li>
+								<li><a href="#theme">UI-Lightness</a></li>
+								<li><a href="#theme">Sunny</a></li>
+								<li><a href="#theme">Humanity</a></li>
+								<li><a href="#theme">Redmond</a></li>
+								<li><a href="#theme">Cupertino</a></li>
+							</ul>
+					</li>
+					<li class="ui-state-disabled"><a href="#">Print...</a></li>
+					<li>System Development tests (removed before final release)<ul>
+					<li  > <a  >Sample Guides for Stress Testing</a> 
+							<ul id="samples">
+							</ul>
+					</li></ul>
+				
+		</ul></div>
+<div id="viewer-logic-form" title="Viewer logic"></div>
 <div id="page-viewer">
 	<div></div>
 </div>
@@ -224,7 +218,7 @@
 </div>
 <div id="welcome" title="Welcome to Access to Justice Author (v5)">
 	<div class="tabContentFrame">
-		<div class="tabContent editq">
+		<div class="tabContent ">
 			<p>What would you like to do? </p>
 			<p>Create a new Guide</p>
 			<p>Open an existing Guide</p>

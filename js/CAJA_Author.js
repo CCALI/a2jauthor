@@ -6,12 +6,13 @@ var prefs= {
 	ShowText : 1
 }
 
-/*      */
+/*       * /
 function DEBUGSTART(){
 	gUserNickName='Tester';
 	gUserID=0;
 	$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist"></p>');
 	var SAMPLES = [
+
 		"tests/data/Field Characters Test.a2j",
 		"tests/data/A2J_NYSample_interview.xml",
 		"tests/data/Field Characters Test.a2j#4-1 If thens",
@@ -49,66 +50,64 @@ function CAJA_Initialize() {
 		if (typeof event.originalEvent=='object')	signinask();
 	}} );
 	
-	
-   
-	{// Activate TABS
-		$('.tabset').tabs();
-		//$('#guidepanel').tabs();
-		//$('table.list').hover(function(){$('.editicons',this).showIt(1);},function(){$('.editicons',this).showIt(0);});
-		
-		$('#guidepanel > ul').append('<button id="guideSave">Save</button><a href="#" id="guideClose" class="ui-dialog-titlebar-close ui-corner-all"><span class="ui-icon ui-icon-close"></span></a>');
-		
-		//$('#guidepanel > ul button').button();
-		$('#guideSave').button({click:function(){}});
-		
-	   $('#guideClose').hover(function() {
-	      $(this).addClass('ui-state-hover');
-	   }, function() {
-	      $(this).removeClass('ui-state-hover');
-	   }).click(function() {
-			guideClose();
-	   });
-		
-		//$('.htmledit a').live('hover',
-		$('.editicons .ui-icon-circle-plus').live('click',function(){// clone a table row
-			var $tbl=$(this).closest('table');
-			var row = $(this).closest('tr');
-			var settings=$tbl.data('settings');
-			if ($('tbody tr',$tbl).length>=settings.max) return;
-			row.clone(true,true).insertAfter(row).fadeIn();
-			row.data('record',$.extend({},row.data('record')));
-			form.listManagerSave($(this).closest('table'));
-		});
-		$('.editicons .ui-icon-circle-minus').live('click',function(){// delete a table row
-			var $tbl=$(this).closest('table');
-			var settings=$tbl.data('settings');
-			if ($('tbody tr',$tbl).length<=settings.min) return;
-			$(this).closest('tr').remove();
-			form.listManagerSave($tbl);
-		});
-		
-		$('#tabsMapper button').click(function(){ 
-			var zoom=parseFloat($(this).attr('zoom'));
-			if (zoom>0)
-				mapperScale = mapperScale * zoom; 
-			trace(mapperScale);
-			$('.map').css({zoom:mapperScale,"-moz-transform":"scale("+mapperScale+")","-webkit-transform":"scale("+mapperScale+")"});
-		});
-		$('#tabsMapper button').first().button({label:'Fit',icons:{primary:'ui-icon-arrow-4-diag'}}).next().button({label:'Zoom in',icons:{primary:'ui-icon-zoomin'}}).next().button({label:'Zoom out',icons:{primary:'ui-icon-zoomout'}});
-		
-		
-		$('#vars_load').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
-		$('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
-		
-		$('#showlogic').buttonset();
-		$('#showlogic1').click(function(){prefs.ShowLogic=1;gGuide.noviceTab("tabsLogic",true)});
-		$('#showlogic2').click(function(){prefs.ShowLogic=2;gGuide.noviceTab("tabsLogic",true)});
-		$('#showtext').buttonset();
-		$('#showtext1').click(function(){prefs.ShowText=1;gGuide.noviceTab("tabsText",true)});
-		$('#showtext2').click(function(){prefs.ShowText=2;gGuide.noviceTab("tabsText",true)});
-	}
 
+	$('.tabset').tabs();
+	//$('#guidepanel').tabs();
+	//$('table.list').hover(function(){$('.editicons',this).showIt(1);},function(){$('.editicons',this).showIt(0);});
 	
+	$('#guidepanel > ul').append('<span><button id="guideSave">Save</button><button id="settings">Settings</button></span>'
+		+'<a href="#" id="guideClose" class="ui-dialog-titlebar-close ui-corner-all"><span class="ui-icon ui-icon-close"></span></a>'
+		//+'<a href="#" id="settings" class="ui-dialog-titlebar-close ui-corner-all"><span class="ui-icon ui-icon-gear"></span></a>'
+		);
+	$('#guideSave').button().click(function(){guideSave();});
+	$('#settings').button().click(function(){$('#settings-form').dialog('open');});
+	
+	$('#guideClose').hover(function() {
+		$(this).addClass('ui-state-hover');
+	}, function() {
+		$(this).removeClass('ui-state-hover');
+	}).click(function() {
+		guideClose();
+	});
+	
+	//$('.htmledit a').live('hover',
+	$('.editicons .ui-icon-circle-plus').live('click',function(){// clone a table row
+		var $tbl=$(this).closest('table');
+		var row = $(this).closest('tr');
+		var settings=$tbl.data('settings');
+		if ($('tbody tr',$tbl).length>=settings.max) return;
+		row.clone(true,true).insertAfter(row).fadeIn();
+		row.data('record',$.extend({},row.data('record')));
+		form.listManagerSave($(this).closest('table'));
+	});
+	$('.editicons .ui-icon-circle-minus').live('click',function(){// delete a table row
+		var $tbl=$(this).closest('table');
+		var settings=$tbl.data('settings');
+		if ($('tbody tr',$tbl).length<=settings.min) return;
+		$(this).closest('tr').remove();
+		form.listManagerSave($tbl);
+	});
+	
+	$('#tabsMapper button').click(function(){ 
+		var zoom=parseFloat($(this).attr('zoom'));
+		if (zoom>0)
+			mapperScale = mapperScale * zoom; 
+		trace(mapperScale);
+		$('.map').css({zoom:mapperScale,"-moz-transform":"scale("+mapperScale+")","-webkit-transform":"scale("+mapperScale+")"});
+	});
+	$('#tabsMapper button').first().button({label:'Fit',icons:{primary:'ui-icon-arrow-4-diag'}}).next().button({label:'Zoom in',icons:{primary:'ui-icon-zoomin'}}).next().button({label:'Zoom out',icons:{primary:'ui-icon-zoomout'}});
+	
+	
+	$('#vars_load').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
+	$('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
+	
+	$('#showlogic').buttonset();
+	$('#showlogic1').click(function(){prefs.ShowLogic=1;gGuide.noviceTab("tabsLogic",true)});
+	$('#showlogic2').click(function(){prefs.ShowLogic=2;gGuide.noviceTab("tabsLogic",true)});
+	$('#showtext').buttonset();
+	$('#showtext1').click(function(){prefs.ShowText=1;gGuide.noviceTab("tabsText",true)});
+	$('#showtext2').click(function(){prefs.ShowText=2;gGuide.noviceTab("tabsText",true)});
+
 	
 	
 	$('#tabviews').bind('tabsselect', function(event, ui) {
@@ -184,7 +183,7 @@ function CAJA_Initialize() {
 		signinask();
 
    // Menu bar
-	$('#cajasettings').menu();
+	//$('#cajasettings').menu();
 	$('#cajasettings a').click(function(){
 			var attr = $(this).attr('href'); 
 			switch (attr) {
@@ -213,10 +212,53 @@ function CAJA_Initialize() {
 					styleSheetSwitch($(this).text());
 					break;
 				default:
-					alert('Unhandled ' + attr);
+					console.log('Unhandled ' + attr);
 			}
 			return false;
 		});
+	
+	$('#settings-form').dialog({ 
+		autoOpen:false,
+		width: 600,
+		height: 500,
+		modal: true,
+		buttons:[
+		{text:'Close',click:function(){ 
+			$(this).dialog("close");
+		 }}
+	]});
+						
+						
+	$('#viewer-var-form').dialog({ 
+		autoOpen:false,
+		width: 405,
+		height: 500,
+		modal:false,
+		buttons:[
+		{text:'Save', click:function(){ 
+		//alert('pretend Save...');
+		}},
+		{text:'Reload', click:function(){ 
+		//alert('pretend Save...');
+		}},
+		{text:'Close',click:function(){ 
+			$(this).dialog("close");
+		 }}
+	]});
+	$('#viewer-logic-form').dialog({ 
+		autoOpen:false,
+		width: 405,
+		height: 500,
+		modal:false,
+		buttons:[
+		{text:'Test', click:function(){  
+		}},
+		{text:'Clear', click:function(){  
+		}},
+		{text:'Close',click:function(){ 
+			$(this).dialog("close");
+		 }}
+	]});
 	
 	$('#page-viewer').dialog({ 
 		title:'A2J Viewer',
@@ -227,17 +269,14 @@ function CAJA_Initialize() {
 		minWidth: 300,
 		minHeight: 500, maxHeight: 800,
 		buttons:[
-		{text:'Return', click:function(){ 
-		//alert('pretend Save...');
-		}},
 		{text:'Edit this page', click:function(){ 
 		//alert('pretend Save...');
 		}},
 		{text:'Variables', click:function(){ 
-		//alert('pretend Save...');
+			$('#viewer-var-form').dialog('open').dialog('moveToTop');
 		}},
-		{text:'Logic tracer', click:function(){ 
-		//alert('pretend Save...');
+		{text:'Logic', click:function(){ 
+			$('#viewer-logic-form').dialog('open').dialog('moveToTop');
 		}},
 		{text:'Close',click:function(){ 
 			$(this).dialog("close");
@@ -385,7 +424,8 @@ function gotoPageEdit(pageName)
 					gGuide.pageDelete(this.name);
 				}});
 			}},
-			{text:'Clone', click:function(){ 
+			{text:'Clone', click:function(){
+				gGuide.pageClone($(this).attr('rel'));
 			}},
 			{text:'Insert after', click:function(){ 
 			}},
@@ -737,8 +777,7 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 					ff.append(form.text({ 		value: b.name, label:'Variable Name:',placeholder:'variable',		change:function(val,b){b.name=val}}));
 					ff.append(form.text({ 		value: b.value,label:'Default value',placeholder:'Default value',		change:function(val,b){b.value=val}}));
 					ff.append(form.pickpage({	value: b.next,label:'Destination:', 	change:function(val,b){
-					trace(b.next,val);
-					b.next=val;}}));
+						b.next=val;}}));
 					return ff;
 				}}));
 			t.append(fs);
@@ -915,7 +954,7 @@ function guideStart(startTabOrPage)
 	$('#welcome').dialog('close');
 	
 	$('#tabviews').tabs( { disabled:false});
-	$('#tabsVariables .tabContent, #tabsLogic  .tabContent,#tabsSteps .tabContent, #tabsAbout .tabContent, #tabsConstants .tabContent, #tabsTex .tabContentt').html("");
+	$('#tabsVariables .tabContent, #tabsLogic  .tabContent, #tabsSteps .tabContent, #tabsAbout .tabContent, #tabsConstants .tabContent, #tabsText .tabContent').html("");
 	
 	if (makestr(startTabOrPage)=="")
 		startTabOrPage="PAGE "+(gGuide.firstPage);
@@ -924,6 +963,8 @@ function guideStart(startTabOrPage)
 	gotoTabOrPage(startTabOrPage);
 	updateTOC();
 	
+
+		
 	$('#guidepanel ul li a:first').html(gGuide.title);
 	/*
 	$('#guidepanel').dialog({
@@ -1058,12 +1099,14 @@ TGuide.prototype.pageRename=function(page,newName){
 		}
 	}
 	// Rename GUI references
+	/*
 	var targetOld="PAGE "+page.name;
 	var targetNew="PAGE "+newName;
 	$('li').filter(function(){return targetOld==$(this).attr('target');}).each(function(){
 		$(this).attr('target',targetNew);
 		$(this).text(newName);
 		})
+		*/
 	
 	$('.page-edit-form').filter(function(){ return page.name == $(this).attr('rel')}).each(function(){
 		$(this).attr('rel',newName);
@@ -1077,7 +1120,7 @@ TGuide.prototype.pageRename=function(page,newName){
 	page.name = newName;
 	guide.pages[page.name]=page;
 	//trace("RENAMING REFERENES");
-	
+	guide.sortPages(); updateTOC();
 	return true;
 }
 TGuide.prototype.IndexOutlineHTML=function()
@@ -1104,9 +1147,9 @@ TGuide.prototype.IndexOutlineHTML=function()
 	}			
 	return "<ul>"
 			+ '<li target="tabsAbout">'+lang.tabAbout+'</li>'
-			+ '<li target="tabsMapper">'+'Map'+'</li>'
+			//+ '<li target="tabsMapper">'+'Map'+'</li>'
 			+ '<li target="tabsVariables">'+lang.tabVariables+'</li>'
-			+ '<li target="tabsConstants">'+lang.tabConstants+'</li>'
+			//+ '<li target="tabsConstants">'+lang.tabConstants+'</li>'
 			+ '<li target="tabsSteps">'+lang.tabSteps+'</li><ul>'+ts+'</ul>'
 			+ '<li target="tabsPopups">'+lang.en('Popups')+'</li><ul>'+popups+'</ul>'
 			+"</ul>";
@@ -1219,6 +1262,9 @@ var form={
 		$('input',e).blur(function(){ form.change($(this),$(this).val());}).val(decodeEntities(data.value)).data('data',data);
 		return e;
 	}
+	,htmlFix:function(html){
+		return html.replace("<br>","<BR/>","gi");
+	}
 	,htmlarea: function(data){//label,value,handler,name){ 
 		this.id++;
 		var e= $('<div name="'+data.name+'">'
@@ -1229,7 +1275,7 @@ var form={
 		$('.editable',e).focus(function(){$(this).addClass('tallest');form.editorAdd($(this));}).blur(function(){
 		//$(this).removeClass('tallest');
 		form.editorRemove(this);
-		form.change($(this),$(this).html());}).data('data',data) ;
+		form.change($(this), form.htmlFix($(this).html()));}).data('data',data) ;
 		return e;
 	} 
 	,textarea: function(data){

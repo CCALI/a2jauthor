@@ -1,4 +1,10 @@
 
+TGuide.prototype.pageClone=function(pageName){
+	var guide=this;
+	var page = guide.pages[pageName];;
+	page = guide.addUniquePage(pageName,cloneObject(page));
+	guide.sortPages(); updateTOC();
+}
 
 TGuide.prototype.pageFindReferences=function(findName,newName){
 // ### Return list of pages and fields pointing to pageName in {name:x,field:y} pairs
@@ -46,8 +52,6 @@ TGuide.prototype.pageFindReferences=function(findName,newName){
 			if (b.next==findName)
 				matches.push({name:page.name,field:'Button '+b.label,text:b.label});
 		}
-		
-		// TODO Check CODE scripts
 	}
 	return matches;
 }
@@ -107,7 +111,6 @@ function varEdit(v/*TVariable*/)
 TGuide.prototype.buildTabVariables = function (t)
 {
 	var guide = this;
-	t.append(form.h1('Variables'));
 	var tt=form.rowheading(["Name","Type","Comment"]); 
 	var sortvars=[];
 	for (vi in guide.vars) sortvars.push(guide.vars[vi]);
@@ -221,7 +224,7 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 			break;
 		
 		case "tabsAbout":
-			var fs = form.fieldset('About');
+			var fs = form.fieldset('About this guide');
 			fs.append(form.text({label:'Title:', placeholder:'Interview title', value:guide.title, change:function(val){guide.title=val}}));
 			fs.append(form.htmlarea({label:'Description:',value:guide.description,change:function(val){guide.description=val}}));
 			fs.append(form.text({label:'Jurisdiction:', value:guide.jurisdiction, change:function(val){guide.jurisdiction=val}}));
@@ -259,8 +262,14 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 			break;
 
 		case 'tabsSteps':
+		
+			var fs=form.fieldset('Start/Exit points');
+			fs.append(form.pickpage({	value: guide.firstPage,label:'Starting Point:',	change:function(val){guide.firstPage=val;}}));
+			fs.append(form.pickpage({	value: guide.exitPage,label:'Exit Point:', 		change:function(val){guide.exitPage=val;}}));
+			t.append(fs);
 			var fs=form.fieldset('Steps');
 			var blankStep=new TStep();
+			
 			fs.append(form.listManager({grid:true,name:'Steps',picker:'Number of Steps',min:1,max:CONST.MAXSTEPS,list:guide.steps,blank:blankStep
 				,save:function(newlist){
 					guide.steps=newlist;
@@ -289,17 +298,19 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 TGuide.prototype.pageDelete=function(name){
 	var guide=this;
 	var page=guide.pages[name];
+	// TODO Anything pointing to this page is redirect to NOWHERE
+	
 	// remove page from indexes
+	/*
 	var target="PAGE "+name;
 	$('li').filter(function(){return target==$(this).attr('target');}).each(function(){
 		$(this).remove();
 	})
-	// rename page edit title bar
+*/	// rename page edit title bar
 	$('.page-edit-form').filter(function(){
 		return page.name == $(this).attr('rel')}).each(function(){
 			$(this).dialog('close');})
-
-	// TODO Anything pointing to this page is redirect to NOWHERE
 	
 	delete guide.pages[page.name]
+	guide.sortPages(); updateTOC();
 }

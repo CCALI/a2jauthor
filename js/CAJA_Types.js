@@ -257,19 +257,6 @@ function TGuide()
 }
 
 
-TGuide.prototype.addUniquePage=function(preferredName)
-{	// create new page, attach to guide. ensure name is unique
-	var guide=this;
-	var counter=2;
-	var name=preferredName;
-	while (guide.pages[name]!=null)
-		name = preferredName +" " + (counter++);
-	var page=new TPage();
-	page.name = name; 
-	guide.pages[page.name] = page;  
-	return page;
-}
-
 
 
 TGuide.prototype.pageDisplayName=function(name)//pageNametoText
@@ -299,3 +286,31 @@ TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 	//console.log('pageDisplayName',dval);
 	return dval;
 }
+
+
+
+TGuide.prototype.addUniquePage=function(preferredName,clonePage)
+{	// create new page, attach to guide. ensure name is unique
+	var guide=this;
+	var counter=1;
+	var name=preferredName;
+	while (guide.pages[name]!=null)//typeof guide.pages[name]!="undefined"){
+	{
+		counter++;
+		name = preferredName +" " + (counter);
+	}
+	var page= clonePage ? clonePage : new TPage();
+	page.name = name; 
+	guide.pages[page.name] = page;  
+	return page;
+}
+
+TGuide.prototype.sortPages=function()
+{
+	var guide=this;
+	guide.sortedPages=[];
+	for (var p in guide.pages)
+		guide.sortedPages.push(guide.pages[p]);
+	guide.sortedPages=guide.sortedPages.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
+}
+

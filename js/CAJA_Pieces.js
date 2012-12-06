@@ -1,4 +1,25 @@
-var textonlyMode=0; // textonlyMode for single document editing
+
+					<li> <a href="#" id="memenu">Me</a>
+							<ul>
+								<li><a href="#signout">Sign out</a></li>
+							</ul>
+					</li>
+<li><a href="#save"><span class="ui-icon ui-icon-disk"></span>Save</a></li>
+					<li><a href="#close"><span class="ui-icon ui-icon-disk"></span>Close</a></li>
+					<li  > <a href="#">Text</a>
+							<ul>
+								<li> <a href="#bold">Bold</a> </li>
+								<li> <a href="#italic">Italic</a> </li>
+								<li> <a href="#indent">Indent</a> </li>
+								<li> <a href="#outdent">Outdent</a> </li>
+							</ul>
+					</li>
+					
+					
+					
+					
+					
+					var textonlyMode=0; // textonlyMode for single document editing
 var editMode= 0 ; // editMode=0 if separate pages, =1 for single document
 
 	//if(editMode==1)

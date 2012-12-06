@@ -4,6 +4,63 @@
 
 var SHOWXML=false;
 
+function page2JSON(page)
+{
+	var PAGE = {
+		_NAME:		page.name,
+		_TYPE:		page.type,
+		_STYLE:		page.style,
+		_MAPX:		page.mapx,
+		_MAPY:		page.mapy,
+		_STEP:		page.step,
+		_REPEATVAR:	page.repeatVar,
+		_NEXTPAGE:	page.nextPage,
+		_nextPageDisabled: page.nextPageDisabled==true ? true : JS2XML_SKIP,
+		_alignText:	page.alignText,
+		XML_TEXT:	page.text, 
+		TEXTAUDIO:	page.textAudioURL, 
+		XML_LEARN:	page.learn,
+		XML_HELP:	page.help,
+		HELPAUDIO:	page.helpAudioURL,
+		XML_HELPREADER:	page.helpReader, 
+		HELPIMAGE:	page.helpImageURL, 
+		HELPVIDEO:	page.helpVideoURL, 
+		BUTTONS: 	[],
+		FIELDS:		[],
+		XML_CODEBEFORE:	page.codeBefore,
+		XML_CODEAFTER:		page.codeAfter,
+		XML_NOTES:	page.notes
+	}
+	
+	for (var bi in page.buttons){
+		var b=page.buttons[bi];
+		PAGE.BUTTONS.push({BUTTON:{
+			XML_LABEL:	b.label,
+			_NEXT:	b.next,
+			NAME:		b.name,
+			VALUE:	b.value}});
+	}
+	for (var fi in page.fields){
+		var f=page.fields[fi];
+		var FIELD = {
+			_TYPE:			f.type, 
+			_ORDER:			f.order, 
+			_REQUIRED:		f.required, //==true ? true : JS2XML_SKIP,
+			_MIN:				f.min, 
+			_MAX:				f.max, 
+			_CALENDAR:		f.calendar==true ? true : JS2XML_SKIP, 
+			_CALCULATOR:	f.calculator==true ? true : JS2XML_SKIP, 
+			_MAXCHARS:		f.maxChars,
+			XML_LABEL:			f.label,
+			NAME:				f.name, 
+			VALUE:			f.value, 
+			XML_INVALIDPROMPT:	f.invalidPrompt,
+		}
+		PAGE.FIELDS.push({FIELD:FIELD});
+	}
+	return PAGE;
+}
+
 function exportXML_CAJA_from_CAJA(guide)
 {	// Convert Guide structure into XML
 	var JSON={GUIDE:{INFO:{AUTHORS:[]},PAGES:[] ,STEPS:[],VARIABLES:[] }};
@@ -64,61 +121,7 @@ function exportXML_CAJA_from_CAJA(guide)
 
 	for (var pi in guide.pages)
 	{
-		var page = guide.pages[pi];
-		var PAGE = {
-			_NAME:		page.name,
-			_TYPE:		page.type,
-			_STYLE:		page.style,
-			_MAPX:		page.mapx,
-			_MAPY:		page.mapy,
-			_STEP:		page.step,
-			_REPEATVAR:	page.repeatVar,
-			_NEXTPAGE:	page.nextPage,
-			_nextPageDisabled: page.nextPageDisabled==true ? true : JS2XML_SKIP,
-			_alignText:	page.alignText,
-			XML_TEXT:	page.text, 
-			TEXTAUDIO:	page.textAudioURL, 
-			XML_LEARN:	page.learn,
-			XML_HELP:	page.help,
-			HELPAUDIO:	page.helpAudioURL,
-			XML_HELPREADER:	page.helpReader, 
-			HELPIMAGE:	page.helpImageURL, 
-			HELPVIDEO:	page.helpVideoURL, 
-			BUTTONS: 	[],
-			FIELDS:		[],
-			XML_CODEBEFORE:	page.codeBefore,
-			XML_CODEAFTER:		page.codeAfter,
-			XML_NOTES:	page.notes
-		}
-		
-		for (var bi in page.buttons){
-			var b=page.buttons[bi];
-			PAGE.BUTTONS.push({BUTTON:{
-				XML_LABEL:	b.label,
-				_NEXT:	b.next,
-				NAME:		b.name,
-				VALUE:	b.value}});
-		}
-		for (var fi in page.fields){
-			var f=page.fields[fi];
-			var FIELD = {
-				_TYPE:			f.type, 
-				_ORDER:			f.order, 
-				_REQUIRED:		f.required, //==true ? true : JS2XML_SKIP,
-				_MIN:				f.min, 
-				_MAX:				f.max, 
-				_CALENDAR:		f.calendar==true ? true : JS2XML_SKIP, 
-				_CALCULATOR:	f.calculator==true ? true : JS2XML_SKIP, 
-				_MAXCHARS:		f.maxChars,
-				XML_LABEL:			f.label,
-				NAME:				f.name, 
-				VALUE:			f.value, 
-				XML_INVALIDPROMPT:	f.invalidPrompt,
-			}
-			PAGE.FIELDS.push({FIELD:FIELD});
-		}
-		
-		JSON.GUIDE.PAGES.push({PAGE:PAGE});
+		JSON.GUIDE.PAGES.push({PAGE:page2JSON(guide.pages[pi])});
 	} 
 			
 //	trace('<pre>'+propsJSON('Guide', JSON.GUIDE)+'</pre>'); 
@@ -152,7 +155,6 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 	guide.logoImage = 	makestr(INFO.children('LOGOIMAGE').text());
 	guide.endImage = 		makestr(INFO.children('ENDIMAGE').text());
 
-	
 	guide.authors=[];
 	GUIDE.find("AUTHORS > AUTHOR").each(function() {
 		var AUTHOR = $(this);
@@ -163,7 +165,6 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		author.email = AUTHOR.find('EMAIL').text();
 		guide.authors.push(author);
 	});
-	
 	
 	guide.firstPage =  makestr(GUIDE.find('FIRSTPAGE').text());
 	guide.exitPage =  makestr(GUIDE.find('EXITPAGE').text());
@@ -208,8 +209,9 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		page.mapx=parseInt(PAGE.attr("MAPX"));
 		page.mapy=parseInt(PAGE.attr("MAPY"));
 		page.repeatVar=makestr(PAGE.attr("REPEATVAR"));
-		page.nextPage="";
-		page.nextPageDisabled = false;
+		//page.nextPage="";
+		//page.nextPageDisabled = false;
+		//page.alignText="";
 		page.step=parseInt(PAGE.attr("STEP"));
 		page.text=PAGE.find("TEXT").xml();
 		page.textAudioURL=makestr(PAGE.find("TEXTAUDIO").text());
@@ -220,7 +222,6 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		page.helpImageURL=makestr(PAGE.find("HELPIMAGE").text());
 		page.helpVideoURL=makestr(PAGE.find("HELPVIDEO").text());
 		page.notes=makestr(PAGE.find("NOTES").xml());
-		page.alignText="";
 		page.codeBefore = makestr(PAGE.find("CODEBEFORE").xml());
 		page.codeAfter = 	makestr(PAGE.find("CODEAFTER").xml());
 		
@@ -267,16 +268,7 @@ function parseXML_Auto_to_CAJA(cajaData)
 	else
 		guide=parseXML_CAJA_to_CAJA(cajaData);// Parse Native CAJA
 	
-	
-	for (var vi in guide.variables)
-	{
-		var v=guide.variables[vi];
-	}
-	guide.sortedPages=[];
-	for (var p in guide.pages)
-		guide.sortedPages.push(guide.pages[p]);
-	guide.sortedPages=guide.sortedPages.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
-
+	guide.sortPages();
 	return guide;
 }
 

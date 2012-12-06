@@ -47,10 +47,13 @@ html, body {
 
 #guidepanel {
 	position:fixed;
-	top: 32px;
+	top: 0px;
 	left:0px;
 	right:0px;
 	bottom: 0px;
+}
+#guidepanel.ui-tabs > .ui-tabs-nav{
+	margin-left: 40px;
 }
 #tabnav {
 	xposition:fixed;
@@ -71,7 +74,7 @@ html, body {
 #welcome > div {
 	background-image: url(img/blank_guide2front.png);
 	background-repeat: no-repeat;
-	padding-left: 50px;
+	padding-left: 150px;
 }
 
 
@@ -86,7 +89,7 @@ html, body {
 	position: fixed;
 	width: 32px;
 	height: 32px;
-	background-image: url(img/CAJA_Icon_32.png);
+	background-image: url(img/A2J5_Icon_32.png);
 }
 #cajatitle  {
 	text-align: center;
@@ -95,14 +98,14 @@ html, body {
 	left:40px;
 	right:40px;
 }
-#cajasettings  {
+x#cajasettings  {
 	top:0;
 	right:0;
 	position: fixed;
 	z-index: 2;
 }
-#cajasettings li {
-	min-width: 150px;
+x#cajasettings li {
+	width: 150px;
 }
 #cajafooter {
 	border-top : 2px solid #cccccc;
@@ -617,8 +620,9 @@ input.text { margin-bottom:12px; width:95%; padding: .4em; }
 	xborder: 2px solid #888888;
 }
 
-#guidepanel > ul button {	
-	float: center;
+#guidepanel > ul > span {	
+	float: right;
+	padding-right: 50px;
 }
 #guidepanel .ui-widget-header  .ui-dialog-titlebar-close {
    height: 18px;
@@ -687,7 +691,7 @@ li.guide:hover {
 	height: 100%;
 }
 
-#tabsAbout, #tabsPageEdit, #tabsPageView, #tabsVariables, #tabsMapper, #tabsConstants, #tabsSteps, #tabsLogic, #tabsText /*,  #tabsCAJA*/ {
+#tabsAbout, #tabsPageEdit, #tabsGuide, #tabsPageView, #tabsVariables, #tabsMapper, #tabsConstants, #tabsSteps, #tabsLogic, #tabsText /*,  #tabsCAJA*/ {
 	overflow: hidden;
 	margin:0;
 	padding:0;

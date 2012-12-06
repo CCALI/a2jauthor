@@ -230,9 +230,9 @@ div.editq {
 	width: 12em;
 	margin: 5px 0 0;
 	text-align: right; 
-}
+} 
 
-fieldset { 
+.editq fieldset { 
 	padding:0; 
 	margin-top:25px;
 }
@@ -715,17 +715,33 @@ li.guide:hover {
 /* Mapper */
 .tabContentFrame, #MapperPanel { 
 	position: absolute;
-	top: 40px;
+	top: 55px;
 	left: 10px;
 	right:10px;
 	bottom:10px;	
 	overflow: auto;
 	border: none;
 }
+#tabsVariables .tabContentFrame {
+	top: 5em;
+	bottom: 4em;
+}
+#tabsLogic .tabContentFrame, #tabsText .tabContentFrame {
+	top: 7em;
+	bottom:10px;
+}
+.tabFooter {
+	position: absolute;
+	bottom: 2px;
+}
 .tabContent {
+	position: absolute;
 	overflow: none;
 	border: 2px thick #0f0;
 }
+
+
+
 .map {
 	background-color:#fff;
 	width: 1500px;

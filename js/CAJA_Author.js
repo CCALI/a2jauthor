@@ -6,14 +6,14 @@ var prefs= {
 	ShowText : 1
 }
 
-/*      * /
+/*      */
 function DEBUGSTART(){
 	gUserNickName='Tester';
 	gUserID=0;
 	$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist"></p>');
 	var SAMPLES = [
-		"tests/data/A2J_NYSample_interview.xml",
 		"tests/data/Field Characters Test.a2j",
+		"tests/data/A2J_NYSample_interview.xml",
 		"tests/data/Field Characters Test.a2j#4-1 If thens",
 		"tests/data/Field Characters Test.a2j#1-5 Fields Test 1",
 		"tests/data/Field Characters Test.a2j#0-1 Intro",
@@ -34,6 +34,8 @@ function DEBUGSTART(){
 } /* */
 
 
+
+$(document).ready(CAJA_Initialize)
 
 function CAJA_Initialize() {
    // Everything loaded, execute.
@@ -67,7 +69,7 @@ function CAJA_Initialize() {
 			guideClose();
 	   });
 		
-		
+		//$('.htmledit a').live('hover',
 		$('.editicons .ui-icon-circle-plus').live('click',function(){// clone a table row
 			var $tbl=$(this).closest('table');
 			var row = $(this).closest('tr');
@@ -219,8 +221,8 @@ function CAJA_Initialize() {
 	$('#page-viewer').dialog({ 
 		title:'A2J Viewer',
 		autoOpen:false,
-		width: 1000,
-		height: 800,
+		width: 975,
+		height: 600,
 		modal:false,
 		minWidth: 300,
 		minHeight: 500, maxHeight: 800,
@@ -242,6 +244,7 @@ function CAJA_Initialize() {
 		 }}
 	]});
 
+	$('#var-add').button({icons:{primary:'ui-icon-trash'}}).click(varAdd);
 	
 	
 	$( "#bold" ).button({label:'B'}).click(editButton);
@@ -249,7 +252,14 @@ function CAJA_Initialize() {
 	$( "#link" ).button({text:false, icons: {primary:'ui-icon-link'}}).click(editButton);
 	$( "#popup" ).button({label:'P'}).click(editButton);
 	
-	$( document ).tooltip();
+	$( document ).tooltip({
+		items: ".htmledit a, [title]",
+		content: function(){
+			var element=$(this);
+			if (element.is("[title]")) return element.attr("title");
+			if (element.is("a")) return element.attr("href");
+		}
+	});
 }
 
 
@@ -323,10 +333,7 @@ function toxml()
 function showPageToEdit()
 {	// Clicked on index, scroll to the right place in the document.
 	var target=$(this).attr('target')
-//	if (editMode==1)
-//		showPageToEditTextOnly(target)
-//	else
-		gotoTabOrPage(target);
+	gotoTabOrPage(target);
 }
 function gotoPageShortly(dest)
 {	// navigate to given page (after tiny delay)
@@ -339,15 +346,15 @@ function gotoPageShortly(dest)
 		//a2jviewer.layoutpage($('#tabsPageView'),gGuide,gGuide.steps,gPage);
 	},1);
 }
-
 function gotoPageEdit(pageName)
 {	// Bring page edit window forward with page content 
    var page = gGuide.pages[pageName]; 
 	if (page == null || typeof page === "undefined") return;
 	$('#tabsLogic  .tabContent, #tabsText .tabContent').html("");//clear these so they refresh with new data. TODO - update in place
 	var $page =	$('.page-edit-form').filter(function(){ return pageName == $(this).attr('rel')});
-	if ($page.length==0){
-		$page = $('.page-edit-form:first').clone(false,false);//.appendTo('#desktop');//.removeClass('ui-helper-hidden');
+	if ($page.length==0)
+	{
+		$page = $('.page-edit-form:first').clone(false,false);
 		$page.attr('rel',page.name);
 		$page.attr('title',page.name);
 		$page.dialog({ 
@@ -362,7 +369,21 @@ function gotoPageEdit(pageName)
 				$(this).remove();//("destroy");
 			},
 			buttons:[
-			{text:'Delete', click:function(){ 
+			{text:'Delete', click:function(){
+				var name= $(this).attr('rel');
+				var refs=gGuide.pageFindReferences(name,null);
+				var txt='';
+				if (refs.length>0)
+				{
+					txt=refs.length+' references to this page.<ul>';
+					for (var r in refs) txt+='<li>'+refs[r].name+' <i>'+refs[r].field+'</i></li>';
+					txt+="</ul>";
+				}
+				else
+					txt='No references';
+				DialogConfirmYesNo({title:'Delete page '+name,message:'Permanently delete this page?<hr>'+txt,height:300,name:name,Yes:function(){
+					gGuide.pageDelete(this.name);
+				}});
 			}},
 			{text:'Clone', click:function(){ 
 			}},
@@ -593,6 +614,7 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 		var fs=form.fieldset('Page info',page);
 		fs.append(form.pickStep({label:'Step:',value: page.step, change:function(val,page){page.step=parseInt(val);/* TODO Move page to new outline location */}} ));
 		fs.append(form.text({label:'Name:', value:page.name,change:function(val,page,form){
+			val = jQuery.trim(val);
 			if (gGuide.pageRename(page,val)==false) $(this).val(page.name);
 		}} ));
 		if (page.type != "A2J") {
@@ -678,9 +700,9 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 					ff.append(form.htmlarea({label:'Label:',   value:field.label, 
 						change:function(val,field){field.label=val;}}));
 					ff.append(form.text({label:'Variable:', placeholder:'Variable name', value: field.name,
-						change:function(val,field){field.name=val}}));
+						change:function(val,field){field.name=jQuery.trim(val)}}));
 					ff.append(form.text({label:'Default value:',name:'default', placeholder:'Default value',value:  field.value,
-						change:function(val,field){field.value=val}}));
+						change:function(val,field){field.value=jQuery.trim(val)}}));
 					ff.append(form.checkbox({label:'Required:', checkbox:'', value:field.required,
 						change:function(val,field){field.required=val}}));
 					ff.append(form.text({label:'Max chars:',name:'maxchars', placeholder:'Max Chars',value: field.maxChars,
@@ -723,7 +745,8 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 		}
 		var fs=form.fieldset('Advanced Logic');
 		fs.append(form.codearea({label:'Before:',	value:page.codeBefore,	change:function(val){page.codeBefore=val; /* TODO Compile for syntax errors */}} ));
-		fs.append(form.codearea({label:'After:',	value:page.codeAfter, 	change:function(val){page.codeAfter=val; /* TODO Compile for syntax errors */}} ));
+		fs.append(form.codearea({label:'After:',	value:page.codeAfter, 	change:function(val){
+			page.codeAfter=val; /* TODO Compile for syntax errors */}} ));
 		t.append(fs);
 
 		if (page.type == "Book page") { }
@@ -817,181 +840,6 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 	return page;
 }
 
-TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,clear)
-{	// 08/03/2012 Edit panel for guide sections 
-	var guide = this;
-	var div = $('#'+tab);
-	//if (div.html()!="") return;
-	var t = $('.tabContent',div);
-	if (clear) t.html("");
-	if (t.html()!="") return;
-	
-//	var t=$('<div/>').addClass('tabsPanel editq')//.append($('<div/>').addClass('tabsPanel2'));//editq
-	form.clear();
-	
-	switch (tab){
-		case "tabsConstants":
-			var fs = form.fieldset('Constants');
-			t.append(fs);
-			break;
-		
-		case "tabsLogic":
-			t.append(form.note('All logic blocks in this interview'));
-			for (var p in guide.sortedPages)
-			{
-				var page=guide.sortedPages[p];
-				if (page.type!=CONST.ptPopup)
-				if ((prefs.ShowLogic==2) || (prefs.ShowLogic==1 && (page.codeBefore!="" || page.codeAfter!="")))
-				{
-					var pagefs=form.fieldset(page.name, page);
-					if (prefs.ShowLogic==2 || page.codeBefore!="")
-						pagefs.append(form.codearea({label:'Before:',	value:page.codeBefore,	change:function(val,page){
-							page.codeBefore=val; /* TODO Compile for syntax errors */}} ));
-					if (prefs.ShowLogic==2 || page.codeAfter!="")
-						pagefs.append(form.codearea({label:'After:',	value:page.codeAfter, 	change:function(val,page){
-							page.codeAfter=val ; /* TODO Compile for syntax errors */}} ));
-					t.append(pagefs);
-				}
-			}
-			
-			break;
-			
-		case "tabsText":
-			t.append(form.note('All non-empty page text blocks in this interview'));
-			for (var p in guide.sortedPages)
-			{
-				var page=guide.sortedPages[p];
-				var pagefs=form.fieldset(page.name, page);
-				pagefs.append(form.htmlarea({label:'Text:',					value:page.text,			change:function(val,page){page.text=val; }} ));
-				if (page.type!=CONST.ptPopup){
-					if (prefs.ShowText==2 || page.learn!="") 			pagefs.append(form.text({label:'Learn More prompt:',placeholder:"",	value:page.learn,
-															change:function(val,page){page.learn=val }} ));
-					if (prefs.ShowText==2 || page.help!="") 			pagefs.append(form.htmlarea({label:"Help:",					value:page.help,
-															change:function(val,page){page.help=val}} ));
-					if (prefs.ShowText==2 || page.helpReader!="") 	pagefs.append(form.htmlarea({label:'Help Text Reader:',	value:page.helpReader,
-															change:function(val,page){page.helpReader=val}} ));
-
-					for (var f in page.fields)
-					{
-						var field = page.fields[f];
-						var ff=form.fieldset('Field '+(parseInt(f)+1),field);
-						ff.append(form.htmlarea({label:'Label:',   value:field.label, 
-							change:function(val,field){field.label=val;}}));
-						if (prefs.ShowText==2 || field.value!="") ff.append(form.text({label:'Default value:',placeholder:"",name:'default', value:  field.value,
-							change:function(val,field){field.value=val}}));
-						if (prefs.ShowText==2 || field.invalidPrompt!="") ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,
-							change:function(val,field){field.invalidPrompt=val}}));						
-						pagefs.append(ff);
-					}
-					for (var bi in page.buttons)
-					{
-						var b = page.buttons[bi];
-						var bf=form.fieldset('Button '+(parseInt(bi)+1),b);
-						if (prefs.ShowText==2 || b.label!="")
-							bf.append(form.text({ 		value: b.label,label:'Label:',placeholder:'button label',		change:function(val,b){b.label=val}}));
-						if (prefs.ShowText==2 || b.value!="")
-							bf.append(form.text({ 		value: b.value,label:'Default value',placeholder:'Default value',		change:function(val,b){b.value=val}}));
-						pagefs.append(bf);
-					}
-				}
-				t.append(pagefs);
-			}
-			
-			break;
-		
-		case "tabsAbout":
-			var fs = form.fieldset('About');
-			fs.append(form.text({label:'Title:', placeholder:'Interview title', value:guide.title, change:function(val){guide.title=val}}));
-			fs.append(form.htmlarea({label:'Description:',value:guide.description,change:function(val){guide.description=val}}));
-			fs.append(form.text({label:'Jurisdiction:', value:guide.jurisdiction, change:function(val){guide.jurisdiction=val}}));
-			fs.append(form.htmlarea({label:'Credits:',value:guide.credits,change:function(val){guide.credits=val}}));
-			fs.append(form.text({label:'Approximate Completion Time:',placeholder:'e.g., 2-3 hours',value:guide.completionTime,change:function(val){guide.completionTime=val}}));
-			t.append(fs);
-			
-			var fs = form.fieldset('Authors');
-			var blankAuthor=new TAuthor();
-			
-			/*
-			fs.append(form.tableManager({name:'Authors',picker:'',min:1,max:12,list:guide.authors,blank:blankAuthor
-				,columns: ['Name','Title','Organization','EMail']
-				,save:function(newlist){
-					guide.authors=newlist; }
-				,create:function(author){
-					var cols=[
-						form.text({  placeholder:'author name',value:author.name,
-							change:function(val,author){author.name=val}})
-						,form.text({  placeholder:'job title',value:author.title,
-							change:function(val,author){author.title=val}})
-						,form.text({  placeholder:'organization',value:author.organization,
-							change:function(val,author){author.organization=val}})
-						,form.text({  placeholder:'email',value:author.email,
-							change:function(val,author){author.email=val}})
-					];
-					return cols;
-				}}));*/
-
-			var fs = form.fieldset('Revision History');  
-			fs.append(form.text({label:'Current Version:',value:guide.version,change:function(val){guide.version=val}}));
-			fs.append(form.htmlarea({label:'Revision Notes',value:guide.notes,change:function(val){guide.notes=val}}));
-			t.append(fs);
-			
-			var fs=form.fieldset('Authors');
-			fs.append(form.listManager({name:'Authors',picker:'Number of authors',min:1,max:12,list:guide.authors,blank:blankAuthor
-				,save:function(newlist){
-					guide.authors=newlist; }
-				,create:function(ff,author){
-						ff.append(form.text({  label:"Author's name:", placeholder:'author name',value:author.name,
-							change:function(val,author){author.name=val}}));
-						ff.append(form.text({  label:"Author's job title:", placeholder:'job title',value:author.title,
-							change:function(val,author){author.title=val}}));
-						ff.append(form.text({  label:"Author's Organization:", placeholder:'organization',value:author.organization,
-							change:function(val,author){author.organization=val}}));
-						ff.append(form.text({  label:"Author's email:", placeholder:'email',value:author.email,
-							change:function(val,author){author.email=val}}));
-					return ff;
-				}}));
-				
-			t.append(fs);
-			
-
-			break;
-
-		case "tabsVariables":
-			t.append(form.h1('Variables'));
-			var tt=form.rowheading(["Name","Type","Comment"]); 
-			//sortingNatural
-			var sortvars=[];
-			for (vi in guide.vars) sortvars.push(guide.vars[vi]);
-			sortvars.sort(function (a,b){ if (a.sortName<b.sortName) return -1; else if (a.sortName==b.sortName) return 0; else return 1;});
-			for (vi in sortvars)
-			{
-				v=sortvars[vi];
-				tt+=form.row([v.name,v.type,v.comment]);
-			}
-			t.append('<table class="A2JVars">'+tt+"</table>");
-			break;
-			
-		case 'tabsSteps':
-			var fs=form.fieldset('Steps'); 
-			fs.append(form.tableRowCounter('Steps','Number of steps',2, CONST.MAXSTEPS,guide.steps.length)); 
-			var steps=[];
-			for (var s in guide.steps)
-			{
-				var step=guide.steps[s];
-				//tt+=form.row([step.number,step.text]);
-				steps.push({ row: [form.text({value:step.number,class:'narrow'}),form.text({value:step.text})]});
-			}
-			//t+='<table class="A2JSteps">'+tt+"</table>";
-			fs.append(form.tableRows('Steps',['Step','Sign'],steps).addClass('A2JSteps'));
-			t.append(fs);
-			
-			break;
-	}
-	form.finish(t);
-	//div.append(t);
-}
-
-
 
 
 /*
@@ -1073,14 +921,8 @@ function guideStart(startTabOrPage)
 		startTabOrPage="PAGE "+(gGuide.firstPage);
 	//trace("Starting location "+startTabOrPage);
 	
-	//if(editMode==1)
-	//	$('#advanced').html(gGuide.convertToText());
-	//else
-	
 	gotoTabOrPage(startTabOrPage);
-	$('#CAJAOutline').html(gGuide.convertIndex());
-	$('#CAJAIndex').html(gGuide.convertIndexAlpha());
-	$('#CAJAOutline li, #CAJAIndex li').click(showPageToEdit);//.dblclick(showPageToEdit);
+	updateTOC();
 	
 	$('#guidepanel ul li a:first').html(gGuide.title);
 	/*
@@ -1100,7 +942,12 @@ function guideStart(startTabOrPage)
 	//buildMap();	
 	//$('#tabviews').tabs('select','#tabsAbout');
 }
-
+function updateTOC()
+{
+	$('#CAJAOutline').html(gGuide.IndexOutlineHTML());
+	$('#CAJAIndex').html(gGuide.IndexAlphaHTML());
+	$('#CAJAOutline li, #CAJAIndex li').click(showPageToEdit);//.dblclick(showPageToEdit);
+}
 function guideloaded(data)
 {
 	gGuideID=data.gid;
@@ -1163,7 +1010,6 @@ function loadGuideFile(guideFile,startTabOrPage)
 	else
 	{
 		startTabOrPage= "PAGE " +guideFile[1];
-		//if (editMode==0) startTabOrPage = "PAGE " + startTabOrPage;
 		guideFile=guideFile[0];
 	}
 	loadNewGuidePrep(guideFile,startTabOrPage);
@@ -1197,15 +1043,17 @@ function selectTab(target)
 	$('#CAJAOutline li, #CAJAIndex li').each(function(){$(this).removeClass('ui-state-active')});
 	$('li').filter(function(){ return target == $(this).attr('target')}).each(function(){$(this).addClass('ui-state-active')});
 }
-TGuide.prototype.pageRename=function(guide,page,newName){
+
+TGuide.prototype.pageRename=function(page,newName){
 /* TODO Rename all references to this page in POPUPs, JUMPs and GOTOs */
 	//trace("Renaming page "+page.name+" to "+newName);
+	var guide=this;
 	if (page.name==newName) return true;
 	if (page.name.toLowerCase() != newName.toLowerCase())
 	{
-		if (this.pages[newName])
+		if (guide.pages[newName])
 		{
-			alert('Already a page named '+newName);
+			DialogAlert('Page rename disallowed','There is already a page named '+newName);
 			return false
 		}
 	}
@@ -1221,14 +1069,18 @@ TGuide.prototype.pageRename=function(guide,page,newName){
 		$(this).attr('rel',newName);
 		$(this).dialog({title:newName});
 		})
-	
-	delete this.pages[page.name]
+
+	gGuide.pageFindReferences(page.name,newName);
+
+		
+	delete guide.pages[page.name]
 	page.name = newName;
-	this.pages[page.name]=page;
+	guide.pages[page.name]=page;
 	//trace("RENAMING REFERENES");
+	
 	return true;
 }
-TGuide.prototype.convertIndex=function()
+TGuide.prototype.IndexOutlineHTML=function()
 {	// Build outline for entire interview includes meta, step and question sections.
 	var inSteps=[];
 	var popups="";
@@ -1260,14 +1112,14 @@ TGuide.prototype.convertIndex=function()
 			+"</ul>";
 }
 
-TGuide.prototype.convertIndexAlpha=function()
+TGuide.prototype.IndexAlphaHTML=function()
 {	// Build outline of just pages
 	var txt="";
 	for (var p in this.sortedPages)
 	{
 		var page = this.sortedPages[p]; 
 		txt += '<li target="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()+'</li>';
-		console.log(page.name);
+		//console.log(page.name);
 	}
 	return "<ul>" + txt +"</ul>";
 }
@@ -1413,11 +1265,14 @@ var form={
 		else
 			form.codeCheck(form.codeCheckList.pop());
 	}
+	,codeFix:function(html){
+		return html.replace("<br>","<BR/>","gi");
+	}
 	,codeCheck:function(elt){
-		var code=$(elt).html();
+		var code=form.codeFix($(elt).html());
 		//TODO remove markup
 		//alert(code);
-		var lines = code.split('<br>');
+		var lines = code.split('<BR/>');
 		var script = _GCS.translateCAJAtoJS(lines.join("\n"));
 		var tt="";
 		var t=[];
@@ -1465,7 +1320,7 @@ var form={
 			+'<div class=editspan><div spellcheck="false" contenteditable=true class="text editable taller codeedit"  rows='+4+'>'+data.value+'</div><div class="errors"></div></div></div>');
 		$('.editable',e).blur(function(){
 			form.codeCheckSoon(this);
-			form.change($(this),$(this).html());}).data('data',data);
+			form.change($(this),form.codeFix($(this).html()));}).data('data',data);
 		form.codeCheckSoon($('.codeedit',e));
 		return e;
 	}
@@ -1536,35 +1391,13 @@ var form={
 			
 			$tbl.append($row);
 			$row.data('record',rowList[row].record);
-		
-/*
-			$row.hover(
-				function(){ // start hovering
-					$('.editicons').remove();
-					$(this).append('<span class="editicons"><a href="#" class="ui-icon ui-icon-circle-plus"></a><a href="#" class="ui-icon ui-icon-circle-minus"></a></span>');
-					$('.editicons .ui-icon-circle-plus').click(function(){
-						// Insert blank statement above
-						//alert($(this).closest('li').html());
-						var line = $(this).closest('li');
-						var cmd = $(this).closest('li').find('.adv.res').html();
-					});
-					$('.editicons .ui-icon-circle-minus').click(function(){
-						// Delete statement line
-						var line = $(this).closest('li');
-						//line.remove();
-					});
-				},
-				function(){ // stop hovering
-					$('.editicons').remove();}
-			);
-			*/
 			
 		}
 		$('tbody',$tbl).sortable({
 			//handle:"td:eq(0)",
 			handle:"td:eq(0) .sorthandle",
 			update:function(){ }})//.disableSelection();
-
+/*
 		$('.editicons .ui-icon-circle-plus',$tbl).click(function(){//live('click',function(){
 			var row = $(this).closest('tr');
 			row.clone(true,true).insertAfter(row).fadeIn();
@@ -1572,7 +1405,7 @@ var form={
 		$('.editicons .ui-icon-circle-minus',$tbl).click(function(){//.live('click',function(){
 			var line = $(this).closest('tr').fadeOut("slow").empty();
 		});
-			
+*/
 		return $tbl;
 	}
 	
@@ -1590,10 +1423,7 @@ var form={
 		$tbl = $('table[list="'+name+'"]');
 		var settings=$tbl.data('settings');
 		$tbody = $('tbody',$tbl);//'table[list="'+name+'"] tbody');
-		var rows = $('tr',$tbody).length;
-		trace('Changing rows from '+rows+' to '+val);
-		//if (rows == val) return;
-		
+		var rows = $('tr',$tbody).length;		
 		for (var r=0;r<rows;r++)
 			$('tr:nth('+r+')',$tbody).showit(r<val);
 		for (var r=rows;r<val;r++)
@@ -1621,7 +1451,7 @@ var form={
 		$tbl.append($row);
 	}
 	,listManager:function(settings){
-		// data.name:'Fields' data.,picker:'Number of fields:',data.min:0,data.max:CONST.MAXFIELDS,data.list:page.fields,data.blank:blankField,data.save=function to save,data.create=create form elts for record
+		//###  data.name:'Fields' data.,picker:'Number of fields:',data.min:0,data.max:CONST.MAXFIELDS,data.list:page.fields,data.blank:blankField,data.save=function to save,data.create=create form elts for record
 		var div = $('<div/>');
 		var $tbl=$('<table/>').addClass('list').data('settings',settings).attr('list',settings.name);
 		div.append(form.tableRowCounter(settings.name,settings.picker,settings.min,settings.max,settings.list.length));
@@ -1652,4 +1482,45 @@ var form={
 
 
 
-$(document).ready(CAJA_Initialize)
+function DialogAlert(args)
+{
+	var $d=$( "#dialog-confirm" );
+	$d.html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>'+args.message+'</p>');
+	$d.dialog({
+		title: args.title,
+		resizable: false,
+		width: 350,
+		height:140,
+		modal: true,
+		buttons: {
+			 OK: function() {
+				  $( this ).dialog( "close" );
+			 }
+		}
+	});
+}
+
+function DialogConfirmYesNo(args)
+{
+	var $d=$( "#dialog-confirm" );
+	$d.html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>'+args.message+'</p>');
+	
+	$d.dialog({
+		title: args.title,
+		resizable: false,
+		width: 350,
+		height:args.height!=null?args.height : 140,
+		modal: true,
+		buttons: {
+			 Yes: function() {
+				  $( this ).dialog( "close" );
+				  args.Yes(args);
+			 },
+			 No: function() {
+				  $( this ).dialog( "close" );
+			 }
+		}
+	});
+}
+
+

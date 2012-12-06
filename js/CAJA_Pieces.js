@@ -1,4 +1,76 @@
+var textonlyMode=0; // textonlyMode for single document editing
+var editMode= 0 ; // editMode=0 if separate pages, =1 for single document
 
+	//if(editMode==1)
+	//	$('#advanced').html(gGuide.convertToText());
+	//else
+	
+		//if (editMode==0) startTabOrPage = "PAGE " + startTabOrPage;
+
+
+function showPageToEdit()
+{	// Clicked on index, scroll to the right place in the document.
+	var target=$(this).attr('target')
+//	if (editMode==1)
+//		showPageToEditTextOnly(target)
+//	else
+		gotoTabOrPage(target);
+}
+
+
+
+			/*
+			fs.append(form.tableManager({name:'Authors',picker:'',min:1,max:12,list:guide.authors,blank:blankAuthor
+				,columns: ['Name','Title','Organization','EMail']
+				,save:function(newlist){
+					guide.authors=newlist; }
+				,create:function(author){
+					var cols=[
+						form.text({  placeholder:'author name',value:author.name,
+							change:function(val,author){author.name=val}})
+						,form.text({  placeholder:'job title',value:author.title,
+							change:function(val,author){author.title=val}})
+						,form.text({  placeholder:'organization',value:author.organization,
+							change:function(val,author){author.organization=val}})
+						,form.text({  placeholder:'email',value:author.email,
+							change:function(val,author){author.email=val}})
+					];
+					return cols;
+				}}));*/
+
+			
+			/*
+			fs.append(form.tableRowCounter('Steps','Number of steps',2, CONST.MAXSTEPS,guide.steps.length)); 
+			var steps=[];
+			for (var s in guide.steps)
+			{
+				var step=guide.steps[s];
+				steps.push({ row: [form.text({value:step.number,class:'narrow'}),form.text({value:step.text})]});
+			}
+			fs.append(form.tableRows('Steps',['Step','Sign'],steps).addClass(''));
+			t.append(fs);
+			*/
+/*
+			$row.hover(
+				function(){ // start hovering
+					$('.editicons').remove();
+					$(this).append('<span class="editicons"><a href="#" class="ui-icon ui-icon-circle-plus"></a><a href="#" class="ui-icon ui-icon-circle-minus"></a></span>');
+					$('.editicons .ui-icon-circle-plus').click(function(){
+						// Insert blank statement above
+						//alert($(this).closest('li').html());
+						var line = $(this).closest('li');
+						var cmd = $(this).closest('li').find('.adv.res').html();
+					});
+					$('.editicons .ui-icon-circle-minus').click(function(){
+						// Delete statement line
+						var line = $(this).closest('li');
+						//line.remove();
+					});
+				},
+				function(){ // stop hovering
+					$('.editicons').remove();}
+			);
+			*/
 x.header {
 	border-bottom : 2px solid #cccccc;
 	padding-top: 4px;

@@ -74,6 +74,26 @@ pageExists : function(pageName)
 {	// return true if page name exists
 	return true;
 },
+pageFindReferences :function(CAJAScript,findName,newName)
+{	// Find/replace all GOTO findName with newName or just return if found.
+	var result={};
+	result.add=false;
+	var csLines = CAJAScript.split('<BR/>');
+	for (var l=0;l<csLines.length;l++)
+	{
+		var line=jQuery.trim(csLines[l]).split("//")[0];
+		if ((args = line.match(/^goto\s+(.+)/i))!=null)
+		{	// Goto named page (not an expression). We 'return' to avoid further processing which is A2J's designed behavior.
+			var pageName=args[1];
+			if (pageName==findName)
+			{
+				result.add=true;
+			}
+		}
+	}
+	return result;
+},
+
 translateCAJAtoJS : function(CAJAScript)
 {	// Translate CAJA script statements of multiple lines with conditionals into JS script but do NOT evaluate
 	// Returns JavaScript source code lines in .js and errors in .errors which caller may evaluate

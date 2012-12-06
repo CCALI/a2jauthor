@@ -64,7 +64,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		v.repeating=TextToBool(VARIABLE.attr("REPEATING"),false);
 		v.comment=makestr(VARIABLE.find("COMMENT").xml()); 
 		//Obsolete, discard: VARIABLE.attr("SCOPE");
-		guide.vars[v.name]=v;
+		guide.vars[v.name.toLowerCase()]=v;
 	 });
 	
 	var popups=[];
@@ -94,6 +94,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			var popup = popups[popid];
 			popup.page=guide.addUniquePage(pageName+" popup");
 			popup.page.type="Popup";
+			console.log("Creating popup ["+popup.page.name+"]");
 			popup.page.text = replacePopups(pageName,popup.text); 
 			return '"POPUP://' + htmlEscape(popup.page.name)+ '"';
 		});
@@ -102,7 +103,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	TEMPLATE.find("QUESTION").each(function() {
 		// allocate pages first so we can link scripts in second pass
 		var QUESTION = $(this); 
-		var page =guide.addUniquePage(QUESTION.attr("NAME"));
+		var page =guide.addUniquePage(jQuery.trim(QUESTION.attr("NAME")));
 		mapids[QUESTION.attr("ID")] = page;
 	});
 	guide.firstPage =  fixID(makestr(TEMPLATE.find('FIRSTQUESTION').text()));
@@ -198,7 +199,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 				else
 				if ((args = statement.match(/goto\s+(\w+)\s?/i))!=null)
 					//statement = "GOTO '"+args[1]+"'";//guide.pageIDtoName(args[1]);
-					statement = "GOTO '"+htmlEscape(fixID(args[1]))+"'";//;
+					statement = "GOTO "+htmlEscape(fixID(args[1]))+"";
 				else
 					statement = "//"+statement;
 				if (tf=="true")

@@ -180,9 +180,8 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		var VARIABLE = $(this);
 		var v = new TVariable();
 		v.name=VARIABLE.attr("NAME");
-		//v.sortName=	sortingNatural(v.name);
 		v.type=VARIABLE.attr("TYPE");
-		guide.vars[v.name]=v;
+		guide.vars[v.name.toLowerCase()]=v;
 	 });/*
 	GUIDE.find("POPUP").each(function() {//TODO discard unused popups
 		var POPUP = $(this);
@@ -272,20 +271,11 @@ function parseXML_Auto_to_CAJA(cajaData)
 	for (var vi in guide.variables)
 	{
 		var v=guide.variables[vi];
-		//v.sortName=	sortingNatural(v.name);
 	}
 	guide.sortedPages=[];
 	for (var p in guide.pages)
-	{
-		var page = guide.pages[p];
-		//	page.sortName=sortingNatural(page.name);//pageXML.attr("SORTNAME");//sortingNatural(page.name);
-		//page.sortName=(page.name==guide.firstPage) ? "#":sortingNatural(page.step+";"+page.name);// sort by Step then Page. 
-		guide.sortedPages.push(page);
-	}
-	guide.sortedPages=guide.sortedPages.sort(function (a,b){
-//	if (a.sortName<b.sortName) return -1; else if (a.sortName==b.sortName) return 0; else return 1
-return sortingNatural(a.name,b.name);
-;});
+		guide.sortedPages.push(guide.pages[p]);
+	guide.sortedPages=guide.sortedPages.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
 
 	return guide;
 }

@@ -33,20 +33,23 @@ var CONST = {
 	ftCheckBoxNOTA:"checkboxNOTA",
 	ftCheckBoxMultiple:"checkboxmultiple",
 	
-	MAXFIELDS: 10,
+	//var vtStrings = ["Unknown","Text","TF","Number","Date","MC","Other"];
+
+	// Limits
+	MAXFIELDS: 9,
 	MAXBUTTONS: 3,
 	MAXSTEPS: 12,
+	kMinYear: 1900,
+	
+	// 11/27/07 1.7.7 Ordering options
+	ordDefault:"",
+	ordAscending:"ASC",
+	ordDescending:"DESC",
 	
 	0:0
 };
-
-
 // ### Steps ###
 // colors: 0xffffff,0xBDD6D6, 0xB7DDB7, 0xEFC68C, 0xE7E7B5, 0xEFDED6, 0xECD8EA,0xBDD6D6, 0xB7DDB7, 0xEFC68C, 0xE7E7B5, 0xEFDED6, 0xECD8EA];
-var MAXSTEPS= 12;
-
-var textonlyMode=0; // textonlyMode for single document editing
-var editMode= 0 ; // editMode=0 if separate pages, =1 for single document
 
 // ### Global variables ### //
 var gGuide; // global reference to current guide TGuide (CBK or A2J)
@@ -56,7 +59,7 @@ var gGuideID; // unique service side id for this guide
 // User 
 var gUserID=0; 
 var gUserNickName="User";
-var amode=0;
+//var amode=0;
 //var username=""
 //var orgName="Authoring Org";
 
@@ -71,6 +74,7 @@ function TText()
 	this.text = "";
 	return this;
 }
+
 
 function TVariable()
 {
@@ -146,6 +150,7 @@ function TPopup()
 	this.text="";
 	return this;
 }*/
+
 function TPage()
 {	// This represents a single page within the lesson book/interview.
 	this.id ="";// Unique id
@@ -170,10 +175,10 @@ function TPage()
 	
 	this.type ="";//type of page interaction
 	this.style ="";//subtype of page interaction
-	this.nextPage="";//default for next page
-	this.nextPageDisabled=false;//boolean - if true, next page button is disabled.
-	this.destPage=null;
-	this.columns=0;
+	//this.nextPage="";//default for next page
+	//this.nextPageDisabled=false;//boolean - if true, next page button is disabled.
+	//this.destPage=null;
+	//this.columns=0;
 
 	this.mapx=0;
 	this.mapy=0;
@@ -254,13 +259,14 @@ function TGuide()
 
 TGuide.prototype.addUniquePage=function(preferredName)
 {	// create new page, attach to guide. ensure name is unique
+	var guide=this;
 	var counter=2;
 	var name=preferredName;
-	while (this.pages[name]!=null)
+	while (guide.pages[name]!=null)
 		name = preferredName +" " + (counter++);
 	var page=new TPage();
 	page.name = name; 
-	this.pages[page.name] = page;  
+	guide.pages[page.name] = page;  
 	return page;
 }
 
@@ -268,10 +274,11 @@ TGuide.prototype.addUniquePage=function(preferredName)
 
 TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 {	// Convert a page name or reserved word into readable text.
+	var guide=this;
 	var dval="";
-	if (this.pages[name])
+	if (guide.pages[name])
 	{
-		var page = this.pages[name];
+		var page = guide.pages[name];
 		//name = htmlEscape(this.pages[ name ].name);
 		dval = name +"\t"+  decodeEntities(page.text);
 	}
@@ -289,6 +296,6 @@ TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 		else
 			dval = name+"\t"+autoIDs[ name ];
 	}
-	console.log('pageDisplayName',dval);
+	//console.log('pageDisplayName',dval);
 	return dval;
 }

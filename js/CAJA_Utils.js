@@ -1,7 +1,7 @@
 ﻿/* CAJA Utils 
 	02/20/2012
 */
- 
+
 var AJAXLoader="<span class='loader'>&nbsp;</span>'";
 
 function cloneObject(obj) {
@@ -32,7 +32,7 @@ String.prototype.asHTML=function(){
 String.prototype.asATTR=function(){
 	return this.replace(/'/g, "&#39;");
 }
-	
+
 function makestr(s)
 {	// lazy test to make sure s is a string or blank, not "null" or "undefined"
 	if (s===null || typeof s === "undefined" ) return "";
@@ -81,7 +81,7 @@ function isNumber(n)
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
-function sortingNatural(a, b) {//http://my.opera.com/GreyWyvern/blog/show.dml/1671288
+function sortingNaturalCompare(a, b) {//http://my.opera.com/GreyWyvern/blog/show.dml/1671288
   function chunkify(t) {
     var tz = [], x = 0, y = -1, n = 0, i, j;
 
@@ -109,6 +109,86 @@ function sortingNatural(a, b) {//http://my.opera.com/GreyWyvern/blog/show.dml/16
   }
   return aa.length - bb.length;
 }
+
+
+//http://stackoverflow.com/questions/5796718/html-entity-decode
+var decodeEntities = (function() {
+  // this prevents any overhead from creating the object each time
+  var element = document.createElement('div');
+
+  function decodeHTMLEntities (str) {
+    if(str && typeof str === 'string') {
+      // strip script/html tags
+      str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+      str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+      element.innerHTML = str;
+      str = element.textContent;
+      element.textContent = '';
+    }
+
+    return str;
+  }
+
+  return decodeHTMLEntities;
+})();
+
+var JS2XML_SKIP={skip:true};
+
+function js2xml(name,o)
+{	// 10/17/2012 Sam's simple JSON to XML. 
+	// If object property name starts with '_' it becomes an attribute.
+	// If object property name starts with 'XML_' it becomes a node that's NOT encoded (PCDATA like)
+	function trim(name,attr,body){
+		if (body=='')
+			if (attr=='')
+				return '';
+			else
+				return '<'+name.toUpperCase()+attr+'/>';
+		else
+			return '<'+name.toUpperCase()+attr+'>'+body+'</'+name.toUpperCase()+'>';
+	}
+	function clean(body)
+	{
+		return htmlEscape(body);
+	}
+	if (typeof o === 'object')
+	{
+		var attr="";
+		var body="";
+		
+/*		var sorted=[];
+		for (var p in o) sorted.push(p);
+		sorted.sort();	
+		for (var pi in sorted)
+		{
+			p=sorted[pi];
+*/		for (var p in o)
+		{
+			if (parseInt(p)>= 0) // array assumed
+				body += js2xml('',o[p]);  //recurse
+			else
+			if (p.substr(0,1)=='_') // embed as attribute if not blank string
+			{
+				if (o[p]!=="" && o[p]!=JS2XML_SKIP)
+					attr += " " + p.substr(1)+"=\""+clean(o[p])+"\"";
+			}
+			else
+			if (p.substr(0,4)=='XML_') // treat as raw XML
+				body += trim(p.substr(4),'',o[p]);
+			//else
+			//if (typeof o[p]==="string")
+			//	body += trim(p,'',o[p]);//o[p];
+			else
+				body += js2xml(p,o[p]); //recurse
+		}
+		if (name!='')
+			body = trim(name,attr,body); 
+	}
+	else
+		body = trim(name,'',clean(o));
+	return body.replace(/&nbsp;/g,'&#160;');
+}
+
 
 function trace( )
 {
@@ -190,82 +270,4 @@ function propsJSON_(name,d,o)
 		body += name+':'+o+'\n';
 	body += "</div>";
 	return body;
-}
-
-//http://stackoverflow.com/questions/5796718/html-entity-decode
-var decodeEntities = (function() {
-  // this prevents any overhead from creating the object each time
-  var element = document.createElement('div');
-
-  function decodeHTMLEntities (str) {
-    if(str && typeof str === 'string') {
-      // strip script/html tags
-      str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
-      str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
-      element.innerHTML = str;
-      str = element.textContent;
-      element.textContent = '';
-    }
-
-    return str;
-  }
-
-  return decodeHTMLEntities;
-})();
-
-var JS2XML_SKIP={skip:true};
-
-function js2xml(name,o)
-{	// 10/17/2012 Sam's simple JSON to XML. 
-	// If object property name starts with '_' it becomes an attribute.
-	// If object property name starts with 'XML_' it becomes a node that's NOT encoded (PCDATA like)
-	function trim(name,attr,body){
-		if (body=='')
-			if (attr=='')
-				return '';
-			else
-				return '<'+name.toUpperCase()+attr+'/>';
-		else
-			return '<'+name.toUpperCase()+attr+'>'+body+'</'+name.toUpperCase()+'>';
-	}
-	function clean(body)
-	{
-		return htmlEscape(body);
-	}
-	if (typeof o === 'object')
-	{
-		var attr="";
-		var body="";
-		
-/*		var sorted=[];
-		for (var p in o) sorted.push(p);
-		sorted.sort();	
-		for (var pi in sorted)
-		{
-			p=sorted[pi];
-*/		for (var p in o)
-		{
-			if (parseInt(p)>= 0) // array assumed
-				body += js2xml('',o[p]);  //recurse
-			else
-			if (p.substr(0,1)=='_') // embed as attribute if not blank string
-			{
-				if (o[p]!=="" && o[p]!=JS2XML_SKIP)
-					attr += " " + p.substr(1)+"=\""+clean(o[p])+"\"";
-			}
-			else
-			if (p.substr(0,4)=='XML_') // treat as raw XML
-				body += trim(p.substr(4),'',o[p]);
-			//else
-			//if (typeof o[p]==="string")
-			//	body += trim(p,'',o[p]);//o[p];
-			else
-				body += js2xml(p,o[p]); //recurse
-		}
-		if (name!='')
-			body = trim(name,attr,body); 
-	}
-	else
-		body = trim(name,'',clean(o));
-	return body.replace(/&nbsp;/g,'&#160;');
 }

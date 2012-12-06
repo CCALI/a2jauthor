@@ -89,19 +89,20 @@
 					</div>
 				</div>-->
 				<div id="tabsAbout">
-					<div class="tabHeader"></div>
+					<div class="tabHeader">About this guide</div>
 					<div class="tabContentFrame">
 						<div class="tabContent editq"></div>
 					</div>
 				</div>
 				<div id="tabsVariables">
-					<div class="tabHeader">Variables</div>
+					<div class="tabHeader">Variables used in this guide</div>
 					<div class="tabContentFrame">
 						<div class="tabContent editq"></div>
 					</div>
+					<div class="tabFooter"><button id="var-add">Add Variable</button></div>
 				</div>
 				<div id="tabsConstants">
-					<div class="tabHeader">Contants</div>
+					<div class="tabHeader"></div>
 					<div class="tabContentFrame">
 						<div class="tabContent editq"></div>
 					</div>
@@ -195,6 +196,23 @@
 <div class="page-edit-form">
 	<div class="page-edit-form-panel"></div>
 </div>
+<div id="var-edit-form" title="Variable">
+	<form class="editq"><fieldset>
+		<div><label for="varname">Name:</label><span class="editspan"><input type="text" name="varname" id="varname" class="editable text ui-widget-content ui-corner-all"  /></span></div>
+		<div><label for="vartype">Type:</label>
+		<span class="editspan"><select name="vartype" id="vartype" class="editable">
+		<option value="Unknown">Unknown</option>
+		<option value="Text">Text</option>
+		<option value="TF">TF - True/False</option>
+		<option value="MC">Number</option>
+		<option value="Date">Date</option>
+		<option value="MC">Multiple choice</option>
+		<option value="Other">Other</option>
+		</select></span></div>
+		<div><label for="varcomment">Comment:</label>
+	<span class="editspan"><input type="textarea" name="varcomment" id="varcomment" class="editable taller text ui-widget-content ui-corner-all"  /> </span></div></fieldset>
+	</form>
+</div>
 <div id="page-viewer">
 	<div></div>
 </div>
@@ -215,6 +233,7 @@
 	</div>
 </div>
 <div id="dialog_window_minimized_container"></div>
+<div id="dialog-confirm" title=""></div>
 <div id="login-form" title="signin">
 	<form>
 		<fieldset>

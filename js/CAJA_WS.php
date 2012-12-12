@@ -10,7 +10,7 @@ $command=$_REQUEST['cmd'];
 $result=array();
 $err="";
 
-$mysqli=""; require "../CONFIG.php";
+$mysqli=""; require "./CONFIG.php";
 // check connection
 if (mysqli_connect_errno()) {
   exit('Connect failed: '. mysqli_connect_error());

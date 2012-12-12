@@ -1,6 +1,4 @@
-/* 02/20/2012 Parse XML of A2J, CALI Author or native CAJA into CAJA structure */
-// Code shared by A2J Author, A2J Viewer, CALI Author and CALI 5 Viewer
-
+// 02/20/2012 Parse native CAJA into CAJA structure
 
 var SHOWXML=false;
 
@@ -276,4 +274,5 @@ function parseXML_Auto_to_CAJA(cajaData)
 function cr2P(txt){
 	return txt == "" ?"":"<P>" + txt.split("\n").join("</P><P>")+"</P>";//replace("\n\n","\n")
 }
+
 

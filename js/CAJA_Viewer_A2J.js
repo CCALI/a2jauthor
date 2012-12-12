@@ -1,9 +1,12 @@
 ﻿/* 10/12/2012 A2J Viewer embedding */
+// Required by Author and Viewers
+
 // Elements: navbar, road step area, question, guide avatar, user avatar, learn more prompt, learn more bubble.
 var IMG="img/";
 
 var a2jviewer={
-	header:'<div class="A2JViewer" title="A2J Viewer"><ul class="NavBar"> <li><a href="#">Back</a></li> <li><a href="#">Next</a></li> <li>Progress: <select id="history"><option>Question 1</option><option>Question 2</option></select></li> <li class="right size3"><a href="#">A</a></li> <li class="right size2"><a href="#">A</a></li> <li class="right size1"><a href="#">A</a></li> <li class="right"><a href="#">Exit</a></li> <li class="right"><a href="#">Save</a></li> </ul> <div class="interact">This is some content </div> </div>',
+	header:'<ul class="NavBar"> <li><a href="#">Back</a></li> <li><a href="#">Next</a></li> <li>Progress: <select id="history"><option>Question 1</option><option>Question 2</option></select></li> <li class="right size3"><a href="#">A</a></li> <li class="right size2"><a href="#">A</a></li> <li class="right size1"><a href="#">A</a></li> <li class="right"><a href="#">Exit</a></li> <li class="right"><a href="#">Save</a></li> </ul> <div class="interact">This is some content </div>',
+	//header:'<div class="A2JViewer" title="A2J Viewer"><ul class="NavBar"> <li><a href="#">Back</a></li> <li><a href="#">Next</a></li> <li>Progress: <select id="history"><option>Question 1</option><option>Question 2</option></select></li> <li class="right size3"><a href="#">A</a></li> <li class="right size2"><a href="#">A</a></li> <li class="right size1"><a href="#">A</a></li> <li class="right"><a href="#">Exit</a></li> <li class="right"><a href="#">Save</a></li> </ul> <div class="interact">This is some content </div> </div>',
 	
 	layoutpage:function(div,guide,steps,page)
 	{	// layout page into interactive viewer. attach event handlers.
@@ -21,34 +24,144 @@ var a2jviewer={
 		{
 			var b = page.buttons[bi];
 			$('.A2JViewer .ui-form.question  .buttonlist').append('<button num='+bi+' title="Go to page '+gGuide.pageDisplayName(b.next).asHTML()+'">'+b.label+'</button>'); 
-		} 
+		}
+		var fs=$('.A2JViewer .ui-form.question fieldset');
+		var varIndex=null;
+		if (page.repeatVar!="")
+			guide.varGet(page.repeatVar);
 		for (var fi in page.fields)
 		{
-			var f = page.fields[fi];
-			$('.A2JViewer .ui-form.question fieldset').append('<label>'+f.label+'</label>').append('<input></input>');
+			var f = page.fields[fi];// field record
+			var fid = "FID_"+fi;//field id - unique
+			var fname = "FID_"+f.name;//field name - possible duplicates, i.e., radio buttons
+/*
+   this.type ="";
+   this.label ="";
+   this.name ="";//reference TVar.name
+   this.optional =false;
+   this.invalidPrompt ="";
+   this.order ="";//default, ASC, DESC
+   this.min="";
+   this.max="";
+   this.calendar=false;
+   this.calculator=false;
+   this.maxChars="";
+*/
+			var defval=guide.varGet(f.name,varIndex);
+			var row=$('<div class="row"/>');
+			switch (f.type)
+			{
+				case CONST.ftText://"Text"
+				   row.append($('<label/>').attr('for',fid).html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   break;
+				case CONST.ftTextLong://"Text (Long)"
+				   row.append($('<label/>').attr('for',fid).html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   break;
+				case CONST.ftTextPick://"Text (Pick from list)"
+				   row.append($('<label/>').attr('for',fid).html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   break;
+				case CONST.ftNumber://"Number"
+				    row.append($('<label/>').html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   break;
+				case CONST.ftNumberDollar://"Number Dollar"
+				   row.append($('<label/>').html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   break;
+				case CONST.ftNumberSSN://"Number SSN"
+				   row.append($('<label/>').html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   break;
+				case CONST.ftNumberPhone://"Number Phone"
+				   row.append($('<label/>').html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   break;
+				case CONST.ftNumberZIP://"Number ZIP Code"
+				   row.append($('<label/>').html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   break;
+				case CONST.ftNumberPick://"Number (Pick from list)"
+				   row.append($('<label/>').attr('for',fid).html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   break;
+				case CONST.ftDateMDY://"Date MM/DD/YYYY"
+				   row.append($('<label/>').attr('for',fid).html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   break;
+				case CONST.ftGender://"Gender"
+					row.append($('<div/>').html(f.label));
+					var fidM=fid+"M";
+					var fidF=fid+"F";
+				   row.append($('<input type=radio id="'+fidM+'" name="'+fname+'"></input>')).append($('<label/>').attr('for',fidM).html('Male'));
+				   row.append($('<input type=radio id="'+fidF+'" name="'+fname+'"></input>')).append($('<label/>').attr('for',fidF).html('Female'));
+				   break;
+				case CONST.ftRadioButton://"Radio Button"
+				   row.append($('<input type=radio id="'+fid+'" name="'+fname+'"></input>')).append($('<label/>').attr('for',fid).html(f.label));
+				   break;
+				case CONST.ftCheckBox://"Check box"
+				   row.append($('<input type=checkbox id="'+fid+'"  name="'+fname+'"></input>')).append($('<label/>').attr('for',fid).html(f.label));
+				   break;
+				case CONST.ftCheckBoxNOTA://"Check Box (None of the Above)"
+					TODO(); 
+					break;
+			}
+			fs.append(row);
 		} 
 		$('.A2JViewer .ui-form.learnmore').html(help + '<div class="buttonlist"><button>Close</button></div>').parent().hide().filter(function(){return help!=""}).fadeIn(1000);
 		$('.stepnumber.step1').text(steps[curstep].number);
 		$('.steptext.step1').text(steps[curstep].text);
 		$('.circle1').attr('src',''+IMG+'step_circle_'+(curstep%3)+'.png');
 		if (curstep<steps.length-1)
-		{
+		{   // layout as many steps as possible
 			$('.stepnumber.step2').text(steps[curstep+1].number);
 			$('.steptext.step2').text(steps[curstep+1].text);
 			$('.circle2').attr('src',''+IMG+'step_circle_'+((curstep+1)%3)+'.png');
 		}
 		$('.A2JViewer .ui-form.learnmore button').button().click(function(){/*close*/});
 		$('.A2JViewer .ui-form.question button').button().click(function(){
+			// Validation form data before proceeding
+			var varIndex=null;
+			if (page.repeatVar!="")
+				guide.varGet(page.repeatVar);
+			
+			for (var fi in page.fields)
+			{
+				var f = page.fields[fi];// field record
+				var fid = "FID_"+fi;//field id - unique
+				var fname = "FID_"+f.name;//field name - possible duplicates, i.e., radio buttons
+					
+				switch (f.type)
+				{
+					case CONST.ftText://"Text"
+					case CONST.ftTextLong://"Text (Long)"
+					case CONST.ftNumber://"Number"
+					case CONST.ftNumberDollar://"Number Dollar"
+					case CONST.ftNumberSSN://"Number SSN"
+					case CONST.ftNumberPhone://"Number Phone"
+					case CONST.ftNumberZIP://"Number ZIP Code"
+					case CONST.ftDateMDY://"Date MM/DD/YYYY"
+						guide.varSet(f.name,varIndex,$('#'+fid).val());
+					   break;
+					case CONST.ftTextPick://"Text (Pick from list)"
+					   break;
+					case CONST.ftNumberPick://"Number (Pick from list)"
+					   break;
+					   break;
+					case CONST.ftGender://"Gender"
+					   break;
+					case CONST.ftRadioButton://"Radio Button"
+
+					   break;
+					case CONST.ftCheckBox://"Check box"
+					   break;
+					case CONST.ftCheckBoxNOTA://"Check Box (None of the Above)" 
+						break;
+				}
+			}
+			
 			var bi=parseInt($(this).attr('num'));
 			var b=page.buttons[bi];
-			// Validation form data before proceeding
-			// VALIDATE()
-			// Set label's variable 
-			if (b.name!="") {}
+			
+			if (b.name!="")
+			{	// Set button's variable 
+				guide.varSet(b.name,varIndex,b.value);				
+			}
 			
 			// execute the logic
-			gotoPageShortly(b.next);
-			//alert(b.label+" > " + b.next)
+			gotoPageViewer(b.next);
 		});
 		
 	},
@@ -70,3 +183,5 @@ var a2jviewer={
 
 
 
+
+/* */

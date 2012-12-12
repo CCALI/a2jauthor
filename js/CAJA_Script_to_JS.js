@@ -1,9 +1,9 @@
-// JavaScript Document
 // 06/15/2012 Convert CAJA script into JavaScript  10/25/11  
 // Phase 1: Compile the CAJA script to spot syntax errors or undefined functions or variables.
 // Phase 2: If compile ie successful, execute the JS version.
 //
 // Dependencies: jqhashtable-2.1.js, jquery.numberformatter-1.2.1.jsmin.js
+// Required by Author and Viewers
 
 
 // Classes
@@ -287,7 +287,6 @@ translateCAJAtoJSExpression : function(CAJAExpression, lineNum, errors)
 		js[j]=jj;
 	}
 	js = js.join('"');
-//	trace("CAJA: "+CAJA + " JS: " + js);
 
 	// Build function to find syntax errors
 	try {
@@ -325,3 +324,5 @@ _GCS.addUserFunction('dateMDY',1,function(val){ var d=new Date(); d.setTime(val*
 
 
 
+
+/* */

@@ -1,8 +1,43 @@
-﻿/* CAJA Utils 
-	02/20/2012
-*/
+﻿// CAJA Utils 
+// Required by Author and Viewers
+//	02/20/2012
+
 
 var AJAXLoader="<span class='loader'>&nbsp;</span>'";
+
+function traceTag(cname,chtml){
+	if (cname=='val' && chtml == "")
+		chtml = "<i>blank</i>";
+	return "<span class="+cname+">"+chtml+"</span>";
+}
+function propCount(obj)
+{
+	var cnt=0;
+	for (var p in obj) cnt++;
+	return cnt;
+}
+
+function traceLogic(html)
+{
+	$('#tracer').append('<li>'+html+"</li>");
+	if (typeof console!=='undefined') console.log(html);
+}
+
+function trace( )
+{
+	var msg="";
+	for (var a=0;a<arguments.length;a++)
+	{
+		var arg = arguments[a];
+		if (typeof arg==="object")
+			msg += arg;//props(arg);
+		else
+		if (typeof arg !=="function")
+			msg += arg;
+		if (typeof console!="undefined") console.log(arg);
+	}
+	//$('#tracer').append('<li>'+msg+"</li>");
+}
 
 function cloneObject(obj) {
 	var clone = {};
@@ -190,22 +225,6 @@ function js2xml(name,o)
 }
 
 
-function trace( )
-{
-	var msg="";
-	for (var a=0;a<arguments.length;a++)
-	{
-		var arg = arguments[a];
-		if (typeof arg==="object")
-			msg += arg;//props(arg);
-		else
-		if (typeof arg !=="function")
-			msg += arg;
-		if (typeof console!="undefined") console.log(arg);
-	}
-	$('#tracer').append('<li>'+msg+"</li>");
-}
-
 function props(o)
 {
 	var t="", p;
@@ -271,3 +290,5 @@ function propsJSON_(name,d,o)
 	body += "</div>";
 	return body;
 }
+
+/* */

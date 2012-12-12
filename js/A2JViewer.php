@@ -1,27 +1,11 @@
-﻿<!-- 3/10/2011 SJG -->
+﻿<!-- 12/12/2012 Copyright 2012 CALI  -->
 <html>
 <head>
-<title>A2J Player</title>
+<title>Access to Justice</title>
 
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js" type="text/javascript"></script>
-<link  href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/smoothness/jquery-ui.css"  rel="stylesheet" type="text/css"/>
-
+<link title="style" href="themes/a2j/jquery-ui.css"  rel="stylesheet" type="text/css"/>
 <link  href="jquery.ui.custom.css" rel="stylesheet" type="text/css" />
-<script src="jquery.ui.custom.min.js" type="text/javascript" ></script>
-
-<link  xhref="jQuery/themes/base/jquery.ui.all.css" rel="stylesheet">
-<link  href="A2JViewer.css"  rel="stylesheet" type="text/css"/>
-<script xsrc="jQuery/external/jquery.bgiframe-2.1.2.js"></script>
-
-<script src="CAJA_Types.js" type="text/javascript"></script>
-<script src="CAJA_Utils.js" type="text/javascript"></script>
-<script src="CAJA_Languages.js" type="text/javascript"></script>
-<script src="CAJA_Parser.js" type="text/javascript"></script>
-<script src="CAJA_Parser_CA.js" type="text/javascript"></script>
-<script src="CAJA_Parser_A2J.js" type="text/javascript"></script>
-<script src="A2JViewer.js" type="text/javascript"></script>
+<link  href="A2JViewer.css" rel="stylesheet" type="text/css" />
 
 
 <SCRIPT LANGUAGE=JavaScript>
@@ -34,23 +18,39 @@ var logURL=   "../A2JLog.php"; //"https://lawhelpinteractive.org/a2j_logging";
 var errRepURL="../A2JErrRep.php";//"https://lawhelpinteractive.org/problem_reporting_form";
 </script>
 
+<script src="jquery.1.8.2.min.js" type="text/javascript"></script>
+<script src="jquery.ui.1.9.1.custom.min.js" type="text/javascript"></script>
+<script src="jquery.ui.custom.min.js" type="text/javascript" ></script>
+<script src="CAJA_Utils.js" type="text/javascript"></script>
+<script src="CAJA_Types.js" type="text/javascript"></script>
+<script src="CAJA_Languages.js" type="text/javascript"></script>
+<script src="CAJA_Parser.js" type="text/javascript"></script>
+<script src="CAJA_Parser_A2J.js" type="text/javascript"></script>
+<script src="CAJA_Shared.js" type="text/javascript"></script>
+<script src="CAJA_Viewer_A2J.js" type="text/javascript"></script>
+<script src="A2JViewer.js" type="text/javascript"></script>
+
+
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
 <body>
 
-<div id="Loader"><img alt="A2J" src="img/A2J_32.png" width="32" height="32" border="0"/>
+<div id="splash" class="welcome">
+	<div align="center">
+		<img src="img/A2J5_Icon_512.png"/> <img src="img/blank_guide2front.png"/>
 	<P>Loading... <img alt="Loading..." src="img/ajax-loader.gif" width="16" height="16" /></P>
-	<noscript>
+	</div>
+</div>
+<div id="page-viewer" class="hidestart ViewerApp">
+	<div class="A2JViewer"></div>
+	<div id="viewer-logic-form" class="ViewerLogicForm"><div class="tracepanel"><ol id="tracer"></ol></div>
+	<div class="immediatepanel">
+<input type="text" id="tracerimm"/>
+</div></div>
+<div id="viewer-var-form" class="ViewerVarForm" ></div></div>
+<div id="dialog-confirm" title=""></div>
+<noscript>
 	<div  class="NoJS">JavaScript is disabled. Please enable JavaScript to continue.</div>
-	</noscript>
-</div>
-<div class="ViewerApp hidestart">
-</div>
-
-
-
-<div class="infobar">
-	<h2>Trace:</h2>
-	<div id="tracer">trace</div>
-</div>
+</noscript>
 </body>
 </html>

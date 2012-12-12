@@ -12,11 +12,7 @@
 <link href="A2JViewer.css"  rel="stylesheet" type="text/css"/>
 <script src="jquery.1.8.2.min.js" type="text/javascript"></script>
 <script src="jquery.ui.1.9.1.custom.min.js" type="text/javascript"></script>
-<script src="jquery.layout.min.js" type="text/javascript"></script>
 <script src="jquery.ui.custom.min.js" type="text/javascript" ></script>
-<!--
-<script src="jQuery/tinymce/tiny_mce.js" type="text/javascript"></script>
--->
 <!--
 <script src="CAJA_min.js" type="text/javascript"></script>
 -->
@@ -26,20 +22,19 @@
 <script src="CAJA_Parser.js" type="text/javascript"></script>
 <script src="CAJA_Parser_CA.js" type="text/javascript"></script>
 <script src="CAJA_Parser_A2J.js" type="text/javascript"></script>
+<script src="CAJA_Shared.js" type="text/javascript"></script>
 <script src="CAJA_Viewer_A2J.js" type="text/javascript"></script>
 <script src="CAJA_Dev.js" type="text/javascript"></script>
 <script src="CAJA_Author.js" type="text/javascript"></script>
 <script src="CAJA_Mapper.js" type="text/javascript"></script>
 <script src="CAJA_Script_to_JS.js" type="text/javascript"></script>
-<xscript src="CAJA_Author_Advanced.js" type="text/javascript">
-</script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body >
-<div id="splash" class="welcome" onClick="signin();return false;">
-	<center>
+<div id="splash" class="welcome" onclick="signin();return false;">
+	<div align="center">
 		<img src="img/A2J5_Icon_512.png"/> <img src="img/blank_guide2front.png"/>
-	</center>
+	</div>
 </div>
 <div id="authortool" class="hidestart">
 	<div id="guidepanel" class="tabset">
@@ -183,7 +178,6 @@
 	<span class="editspan"><input type="textarea" name="varcomment" id="varcomment" class="editable taller text ui-widget-content ui-corner-all"  /> </span></div></fieldset>
 	</form>
 </div>
-<div id="viewer-var-form" title="Viewer Variables"></div>
 <div id="settings-form" title="Settings"><ul id="cajasettings">
 					
 					<li> <a href="#">Authoring Color Scheme</a>
@@ -206,9 +200,13 @@
 					</li></ul>
 				
 		</ul></div>
-<div id="viewer-logic-form" title="Viewer logic"></div>
+<div id="viewer-logic-form" title="Viewer logic" class="ViewerLogicForm"><div class="tracepanel"><ul id="tracer"></ul></div>
+	<div class="immediatepanel">
+<input type="text" id="tracerimm"/>
+</div></div>
+<div id="viewer-var-form" title="Viewer Variables" class="ViewerVarForm"></div>
 <div id="page-viewer">
-	<div></div>
+	<div class="A2JViewer"></div>
 </div>
 <div id="texttoolbar" class="texttoolbar ui-widget-header ui-corner-all">
 	<button id="bold">bold</button>
@@ -228,7 +226,7 @@
 </div>
 <div id="dialog_window_minimized_container"></div>
 <div id="dialog-confirm" title=""></div>
-<div id="login-form" title="signin">
+<div id="login-form" title="Access To Justice 5 Authoring System Sign in">
 	<form>
 		<fieldset>
 		<label for="username">Name</label>
@@ -237,6 +235,7 @@
 		<input type="password" name="pass" id="userpass" class="text ui-widget-content ui-corner-all"   />
 		</fieldset>
 	</form>
+</div>
 </div>
 </div>
 </body>

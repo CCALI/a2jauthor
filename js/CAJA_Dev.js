@@ -64,7 +64,7 @@ TGuide.prototype.varDelete=function(name){
 	gGuide.noviceTab('tabsVariables',true);
 }
 function varAdd()
-{
+{  // Add new variable and edit.
 	var v= new TVariable();
 	varEdit(v);
 }

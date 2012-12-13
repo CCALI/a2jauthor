@@ -13,12 +13,12 @@ function DEBUGSTART(){
 	$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist"></p>');
 	var SAMPLES = [
 
+		"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name",
 		"tests/data/Field Characters Test.a2j",
 		"tests/data/A2J_NYSample_interview.xml",
 		"tests/data/Field Characters Test.a2j#4-1 If thens",
 		"tests/data/Field Characters Test.a2j#1-5 Fields Test 1",
 		"tests/data/Field Characters Test.a2j#0-1 Intro",
-		"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name",
 		"tests/data/CBK_CAPAGETYPES_jqBookData.xml", 
 		"tests/data/CBK_CAPAGETYPES_jqBookData.xml#MC Choices 3: 4 choices", 
 		"tests/data/A2J_MobileOnlineInterview_Interview.xml",
@@ -59,8 +59,8 @@ function CAJA_Initialize() {
 		+'<a href="#" id="guideClose" class="ui-dialog-titlebar-close ui-corner-all"><span class="ui-icon ui-icon-close"></span></a>'
 		//+'<a href="#" id="settings" class="ui-dialog-titlebar-close ui-corner-all"><span class="ui-icon ui-icon-gear"></span></a>'
 		);
-	$('#guideSave').button().click(function(){guideSave();});
-	$('#settings').button().click(function(){$('#settings-form').dialog('open');});
+	$('#guideSave').button({icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
+	$('#settings').button({icons:{primary:"ui-icon-gear"}}).click(function(){$('#settings-form').dialog('open');});
 	
 	$('#guideClose').hover(function() {
 		$(this).addClass('ui-state-hover');
@@ -187,32 +187,18 @@ function CAJA_Initialize() {
 	$('#cajasettings a').click(function(){
 			var attr = $(this).attr('href'); 
 			switch (attr) {
-				case '#save':
-					if (gGuide!=null)
-						if (gGuideID!=0)
-							guideSave();
-					break;
-				case '#close':
-					guideClose();
-					break;
 				case '#sample': 
 					loadGuideFile($(this).text(), "tabsAbout");
 					break;
-				case '#mode1': setMode(1); break;
-				case '#mode2': setMode(2); break;
-				case '#mode3': setMode(3); break;
 				case '#bold': document.execCommand('bold', false, null); break;
 				case '#italic': document.execCommand('italic', false, null); break;
 				case '#indent': document.execCommand('indent', false, null); break;
 				case '#outdent': document.execCommand('outdent', false, null); break;
-				case '#text2xml': toxml(); break;
-				case '#collapse': hidem(1); break;
-				case '#reveal': hidem(0); break;
 				case '#theme':
 					styleSheetSwitch($(this).text());
 					break;
 				default:
-					console.log('Unhandled ' + attr);
+					//console.log('Unhandled ' + attr);
 			}
 			return false;
 		});
@@ -253,12 +239,14 @@ function CAJA_Initialize() {
 		buttons:[
 		{text:'Test', click:function(){  
 		}},
-		{text:'Clear', click:function(){  
+		{text:'Clear', click:function(){
+			$('#tracer').empty();
 		}},
 		{text:'Close',click:function(){ 
 			$(this).dialog("close");
 		 }}
-	]});
+	]}); 
+	//$('#viewer-logic-form').dialog('moveToTop').dialog('open');
 	
 	$('#page-viewer').dialog({ 
 		title:'A2J Viewer',
@@ -271,6 +259,7 @@ function CAJA_Initialize() {
 		buttons:[
 		{text:'Edit this page', click:function(){ 
 		//alert('pretend Save...');
+			$(this).dialog( "option", "stack", true );
 		}},
 		{text:'Variables', click:function(){ 
 			$('#viewer-var-form').dialog('open').dialog('moveToTop');
@@ -280,6 +269,7 @@ function CAJA_Initialize() {
 		}},
 		{text:'Close',click:function(){ 
 			$(this).dialog("close");
+			$(this).dialog( "option", "stack", true );
 		 }}
 	]});
 
@@ -292,7 +282,7 @@ function CAJA_Initialize() {
 	$( "#popup" ).button({label:'P'}).click(editButton);
 	
 	$( document ).tooltip({
-		items: ".htmledit a, [title]",
+		items: ".htmledit a", //skip title for now [title]",
 		content: function(){
 			var element=$(this);
 			if (element.is("[title]")) return element.attr("title");
@@ -364,27 +354,7 @@ function signinask()
 	$( "#login-form" ).dialog( "open" );
 }
 
-function toxml()
-{  // convert page at selection start into XML
 
-}
-
-function showPageToEdit()
-{	// Clicked on index, scroll to the right place in the document.
-	var target=$(this).attr('target')
-	gotoTabOrPage(target);
-}
-function gotoPageShortly(dest)
-{	// navigate to given page (after tiny delay)
-	window.setTimeout(function(){
-		gotoTabOrPage("PAGE "+(dest));
-		var $viewer=$('#page-viewer');
-		a2jviewer.layoutpage($('div',$viewer),gGuide,gGuide.steps,gPage);
-		$viewer.dialog('moveToTop').dialog('open' );
-		//$('#tabviews').tabs('select','#tabsPageView');
-		//a2jviewer.layoutpage($('#tabsPageView'),gGuide,gGuide.steps,gPage);
-	},1);
-}
 function gotoPageEdit(pageName)
 {	// Bring page edit window forward with page content 
    var page = gGuide.pages[pageName]; 
@@ -430,7 +400,7 @@ function gotoPageEdit(pageName)
 			{text:'Insert after', click:function(){ 
 			}},
 			{text:'Preview', click:function(){ 
-				gotoPageShortly($(this).attr('rel'));
+				gotoPageViewer($(this).attr('rel'));
 			}},
 			{text:'Close',click:function(){ 
 				$(this).dialog("close");
@@ -569,15 +539,18 @@ function BlankGuide(){
 
 function guideSave()
 {
-	var guide = gGuide;
-	prompt('Saving '+guide.title + AJAXLoader);
-	ws( {cmd:'guidesave',gid:gGuideID, guide: exportXML_CAJA_from_CAJA(guide), title:guide.title}, function(response){
-		if (response.error!=null)
-			prompt(response.error);
-		else
-			prompt(response.info);
-	});
+	if (gGuide!=null && gGuideID!=0)
+	{
+		prompt('Saving '+gGuide.title + AJAXLoader);
+		ws( {cmd:'guidesave',gid:gGuideID, guide: exportXML_CAJA_from_CAJA(gGuide), title:gGuide.title}, function(response){
+			if (response.error!=null)
+				prompt(response.error);
+			else
+				prompt(response.info);
+		});
+	}
 }
+
 function createBlankGuide()
 {	// create blank guide internally, do Save As to get a server id for future saves.
 	var guide=BlankGuide();
@@ -674,7 +647,6 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 			else return 0;
 		}
 		function updateShowMe(form,showMe){
-			trace('udpate show me',showMe);
 			form.find('[name="helpAudio"]').showit(showMe!=2);
 			form.find('[name="helpGraphic"]').showit(showMe==1);
 			form.find('[name="helpReader"]').showit(showMe>=1);
@@ -949,7 +921,6 @@ function guideClose()
 
 function guideStart(startTabOrPage)
 { 
-	trace( gGuide.firstPage);
 	$('#authortool').removeClass('hidestart').addClass('authortool').show();
 	$('#welcome').dialog('close');
 	
@@ -987,7 +958,10 @@ function updateTOC()
 {
 	$('#CAJAOutline').html(gGuide.IndexOutlineHTML());
 	$('#CAJAIndex').html(gGuide.IndexAlphaHTML());
-	$('#CAJAOutline li, #CAJAIndex li').click(showPageToEdit);//.dblclick(showPageToEdit);
+	$('#CAJAOutline li, #CAJAIndex li').click(function (){
+		var target=$(this).attr('target')
+		gotoTabOrPage(target);
+	});//.dblclick(showPageToEdit);
 }
 function guideloaded(data)
 {
@@ -1007,54 +981,6 @@ function guideloaded(data)
 	*/
 	//gGuide.filename=guideFile;
 	guideStart();
-}
-
-function loadGuideFile2(guideFile,startTabOrPage)
-{
-	var cajaDataXML;
-	$.ajax({
-			url: guideFile,
-			dataType: ($.browser.msie) ? "text" : "xml", // IE will only load XML file from local disk as text, not xml.
-			timeout: 45000,
-			error: function(data,textStatus,thrownError){
-			  alert('Error occurred loading the XML from '+this.url+"\n"+textStatus);
-			 },
-			success: function(data){
-				//var cajaDataXML;
-				if ($.browser.msie)
-				{	// convert text to XML. 
-					cajaDataXML = new ActiveXObject('Microsoft.XMLDOM');
-					cajaDataXML.async = false;
-					data=data.replace('<!DOCTYPE Access2Justice_1>','');//02/27/12 hack bug error
-					cajaDataXML.loadXML(data);
-				}
-				else
-				{
-					cajaDataXML = data;
-				}
-				cajaDataXML=$(cajaDataXML); 
-				// global variable guide
-				gGuide =  parseXML_Auto_to_CAJA(cajaDataXML);
-				gGuide.filename=guideFile;
-				guideStart(startTabOrPage);			
-			}
-		});
-}
-
-function loadGuideFile(guideFile,startTabOrPage)
-{	// Load guide file XML directly
-	guideFile=guideFile.split("#");
-	if (guideFile.length==1)
-	{
-		guideFile=guideFile[0];
-	}
-	else
-	{
-		startTabOrPage= "PAGE " +guideFile[1];
-		guideFile=guideFile[0];
-	}
-	loadNewGuidePrep(guideFile,startTabOrPage);
-	window.setTimeout(function(){loadGuideFile2(guideFile,startTabOrPage)},500);
 }
 
 function styleSheetSwitch(theme)
@@ -1257,8 +1183,8 @@ var form={
 		var e=$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
 			+'<span class=editspan> <input class="  editable" placeholder="'+data.placeholder+'" type="text" /> </span></div>');
-		if (typeof data.class!=='undefined') $('input',e).addClass(data.class);
-		if (typeof data.width!=='undefined') $('input',e).css('width',data.class);
+		//if (typeof data.class!=='undefined') $('input',e).addClass(data.class);
+		//if (typeof data.width!=='undefined') $('input',e).css('width',data.class);
 		$('input',e).blur(function(){ form.change($(this),$(this).val());}).val(decodeEntities(data.value)).data('data',data);
 		return e;
 	}
@@ -1527,25 +1453,6 @@ var form={
 };
 
 
-
-function DialogAlert(args)
-{
-	var $d=$( "#dialog-confirm" );
-	$d.html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>'+args.message+'</p>');
-	$d.dialog({
-		title: args.title,
-		resizable: false,
-		width: 350,
-		height:140,
-		modal: true,
-		buttons: {
-			 OK: function() {
-				  $( this ).dialog( "close" );
-			 }
-		}
-	});
-}
-
 function DialogConfirmYesNo(args)
 {
 	var $d=$( "#dialog-confirm" );
@@ -1570,3 +1477,25 @@ function DialogConfirmYesNo(args)
 }
 
 
+
+
+
+function gotoPageViewer(destPageName)
+{  // navigate to given page (after tiny delay)
+   window.setTimeout(function(){
+      var page = gGuide.pages[destPageName]; 
+      if (page == null || typeof page === "undefined")
+      {
+         DialogAlert( {title:'Missing page',message:'Page is missing: '+ destPageName});
+         traceLogic('Page is missing: '+ destPageName);
+      }
+      else
+      {
+         traceLogic('GOTO '+(destPageName));
+         gPage=page;
+         var $viewer=$('#page-viewer');
+         a2jviewer.layoutpage($('.A2JViewer',$viewer),gGuide,gGuide.steps,gPage);
+         $viewer.dialog('moveToTop').dialog('open' ).dialog( "option", "stack", false );
+      }
+   },1);
+}

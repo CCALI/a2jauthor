@@ -94,7 +94,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			var popup = popups[popid];
 			popup.page=guide.addUniquePage(pageName+" popup");
 			popup.page.type="Popup";
-			console.log("Creating popup ["+popup.page.name+"]");
+			//console.log("Creating popup ["+popup.page.name+"]");
 			popup.page.text = replacePopups(pageName,popup.text); 
 			return '"POPUP://' + htmlEscape(popup.page.name)+ '"';
 		});
@@ -109,7 +109,6 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	guide.firstPage =  fixID(makestr(TEMPLATE.find('FIRSTQUESTION').text()));
 	guide.exitPage =  fixID(makestr(TEMPLATE.find('EXITQUESTION').text()));
 	
-	trace(guide.firstPage);
 	
 	TEMPLATE.find("QUESTION").each(function() {
 		QUESTION = $(this);
@@ -198,8 +197,8 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 				}
 				else
 				if ((args = statement.match(/goto\s+(\w+)\s?/i))!=null)
-					//statement = "GOTO '"+args[1]+"'";//guide.pageIDtoName(args[1]);
-					statement = "GOTO "+htmlEscape(fixID(args[1]))+"";
+					statement = "GOTO '"+args[1]+"'";//guide.pageIDtoName(args[1]);
+					//statement = "GOTO "+htmlEscape(fixID(args[1]))+"";
 				else
 					statement = "//"+statement;
 				if (tf=="true")

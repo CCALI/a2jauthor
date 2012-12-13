@@ -5,7 +5,7 @@
 // 05/15/2012 
 // Dependencies: jqhashtable-2.1.js, jquery.numberformatter-1.2.1.jsmin.js
 
-
+/*
 var CAJAScripter = (function(){
 
 var functions={};
@@ -40,7 +40,7 @@ s.setAttribute('src',jsname);
 th.appendChild(s);
 } 
 */
-
+/*
 var evalHTML_=function(html)
 {	// Parse for %% declarations.
 	var parts=html.split("%%");
@@ -110,3 +110,4 @@ function CALIScriptEvalHTML(html)
 
 }
 
+*/

@@ -1,4 +1,5 @@
 /* CAJA - Type/constant declarations */
+// Required by Author and Viewers
 
 // ### Constants  ###
 
@@ -82,8 +83,7 @@ function TVariable()
 	this.type ="";//E.g., Text, MC, TF
 	this.comment ="";
 	this.repeating=false;//if false, value is the value. if true, value is array of values.
-	this.value =null;
-	this.sortName="";
+	this.values=[];
 	return this;
 }
 
@@ -97,7 +97,6 @@ function TButton()
 }
 
 var TField = function()
-//function TField()
 {
 	this.type ="";
 	this.label ="";
@@ -186,18 +185,16 @@ function TPage()
 //	this.alignText="";
 //	this.details=[];
 //	this.captions=[];
-	this.feedbacks=[];
-	this.feedbackShared="";
-	this.attempts=0;//number of attempts to answer this question
-	this.scores=[];//array of TScore.
-	this.xml=null;
-	this.textMatches=null;//array of TextMatch
-	this.sortName="";
-	
-	this.subq=null;//
+//	this.feedbacks=[];
+//	this.feedbackShared="";
+//	this.attempts=0;//number of attempts to answer this question
+//	this.scores=[];//array of TScore.
+//	this.textMatches=null;//array of TextMatch
+//	this.subq=null;//
+
 	this.timeSpent=0;//seconds spent on this page
 	this.startSeconds=null;
-	this.alignText="";
+	this.xml=null;
 	return this;
 }
 function TAuthor()
@@ -214,7 +211,7 @@ function TGuide()
 {	// This is the Guide representing a CALI lesson Book or an A2J Author Interview.
 
 	this.tool="CAJA";
-	this.toolversion="2012-10-22";
+	this.toolversion="2012-12-12";
 	this.avatar="";				//Origin A2J - default avatar to use (blank or tan)
 	this.completionTime="";		//Origin CA - author's estimated completion time including section breakdown
 	this.copyrights="";			//Origin CA - CALI copyright notices, etc.
@@ -256,6 +253,47 @@ function TGuide()
 	return this;
 }
 
+
+
+TGuide.prototype.varSet=function(varName,varIndex,varVal)
+{
+	var guide=this;
+	var varName_i=varName.toLowerCase();
+	var v=guide.vars[varName_i];
+	if (typeof v === 'undefined')
+	{	// Create variable at runtime
+		var v=new TVariable();
+		v.name=varName;
+		v.repeating= (varIndex==null || varIndex=='')
+		guide.vars[varName_i]=v;
+	}
+	if (varIndex==null || varIndex=='')
+	{
+		traceLogic(traceTag('var',varName)+traceTag('val',varVal));
+		v.values[0]=varVal;
+	}
+	else
+	{
+		traceLogic(traceTag('var',varName+'#'+varIndex)+traceTag('val',varVal));
+		v.values[varIndex]=varVal;
+	}
+} 
+TGuide.prototype.varGet=function(varName,varIndex)
+{
+	var guide=this;
+	var varName_i=varName.toLowerCase();
+	var v=guide.vars[varName_i];
+	if (typeof v == 'undefined')
+	{
+		traceLogic('Undefined variable: '+traceTag('var',varName)+ ((varIndex==null || varIndex=='')?'':traceTag('varidx',varIndex) ));
+		return 'undefined';
+	}
+	else
+	{
+		if (varIndex==null || varIndex=='') varIndex=0;
+		return v.values[varIndex]; 
+	}
+}
 
 
 
@@ -314,3 +352,6 @@ TGuide.prototype.sortPages=function()
 	guide.sortedPages=guide.sortedPages.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
 }
 
+
+
+/* */

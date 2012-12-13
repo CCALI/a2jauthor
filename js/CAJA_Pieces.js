@@ -1,3 +1,38 @@
+	$('#cajasettings a').click(function(){
+			var attr = $(this).attr('href'); 
+			switch (attr) {
+				case '#save':
+							guideSave();
+					break;
+				case '#close':
+					guideClose();
+					break;
+				case '#sample': 
+					loadGuideFile($(this).text(), "tabsAbout");
+					break;
+				case '#mode1': setMode(1); break;
+				case '#mode2': setMode(2); break;
+				case '#mode3': setMode(3); break;
+				case '#bold': document.execCommand('bold', false, null); break;
+				case '#italic': document.execCommand('italic', false, null); break;
+				case '#indent': document.execCommand('indent', false, null); break;
+				case '#outdent': document.execCommand('outdent', false, null); break;
+				case '#text2xml': toxml(); break;
+				case '#collapse': hidem(1); break;
+				case '#reveal': hidem(0); break;
+				case '#theme':
+					styleSheetSwitch($(this).text());
+					break;
+				default:
+					//console.log('Unhandled ' + attr);
+			}
+			return false;
+		});
+function showPageToEdit()
+{	// Clicked on index, scroll to the right place in the document.
+	var target=$(this).attr('target')
+	gotoTabOrPage(target);
+}
 
 					<li> <a href="#" id="memenu">Me</a>
 							<ul>

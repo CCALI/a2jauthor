@@ -1,3 +1,12 @@
+
+			case 'tabsPageView':
+				//a2jviewer.layoutpage(ui.panel,gGuide,gGuide.steps,gPage); 
+				break;
+
+
+
+
+
 	$('#cajasettings a').click(function(){
 			var attr = $(this).attr('href'); 
 			switch (attr) {

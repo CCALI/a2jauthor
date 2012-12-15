@@ -12,7 +12,7 @@ function DEBUGSTART(){
 	gUserID=0;
 	$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist"></p>');
 	var SAMPLES = [
-
+		"/a2j4guides/Logic Tests.a2j",
 		"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name",
 		"tests/data/Field Characters Test.a2j",
 		"tests/data/A2J_NYSample_interview.xml",
@@ -112,9 +112,6 @@ function CAJA_Initialize() {
 	
 	$('#tabviews').bind('tabsselect', function(event, ui) {
 		switch (ui.panel.id){
-			case 'tabsPageView':
-				//a2jviewer.layoutpage(ui.panel,gGuide,gGuide.steps,gPage); 
-				break;
 			case 'tabsAbout':
 			case 'tabsVariables':
 			case 'tabsSteps':
@@ -1243,9 +1240,7 @@ var form={
 	,codeCheck:function(elt){
 		var code=form.codeFix($(elt).html());
 		//TODO remove markup
-		//alert(code);
-		var lines = code.split('<BR/>');
-		var script = _GCS.translateCAJAtoJS(lines.join("\n"));
+		var script = gLogic.translateCAJAtoJS(code);
 		var tt="";
 		var t=[];
 		if (script.errors.length>0)
@@ -1462,7 +1457,7 @@ function DialogConfirmYesNo(args)
 		title: args.title,
 		resizable: false,
 		width: 350,
-		height:args.height!=null?args.height : 140,
+		height:args.height!=null?args.height : 240,
 		modal: true,
 		buttons: {
 			 Yes: function() {
@@ -1475,11 +1470,6 @@ function DialogConfirmYesNo(args)
 		}
 	});
 }
-
-
-
-
-
 function gotoPageViewer(destPageName)
 {  // navigate to given page (after tiny delay)
    window.setTimeout(function(){
@@ -1491,11 +1481,11 @@ function gotoPageViewer(destPageName)
       }
       else
       {
-         traceLogic('GOTO '+(destPageName));
          gPage=page;
-         var $viewer=$('#page-viewer');
-         a2jviewer.layoutpage($('.A2JViewer',$viewer),gGuide,gGuide.steps,gPage);
-         $viewer.dialog('moveToTop').dialog('open' ).dialog( "option", "stack", false );
+         a2jviewer.layoutpage($('.A2JViewer','#page-viewer'),gGuide,gGuide.steps,gPage);
+         $('#page-viewer').dialog('moveToTop').dialog('open' );//.dialog( "option", "stack", false );
       }
    },1);
 }
+
+/* */

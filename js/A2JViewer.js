@@ -16,8 +16,7 @@ function guideStart(start)
 	traceLogic('Guide '+guide.title+' loaded.');
 	traceLogic('#Pages: '+propCount(guide.pages)+', #Variables:'+propCount(guide.vars));
 	
-	for (var pi in guide.pages)
-		traceLogic(traceTag('page',guide.pages[pi].name)); 
+	//for (var pi in guide.pages)	traceLogic(traceTag('page',guide.pages[pi].name)); 
 	
 	traceLogic('Starting on page '+traceTag('page',guide.firstPage));
 	gotoPageViewer(guide.firstPage);
@@ -39,10 +38,8 @@ function gotoPageViewer(destPageName)
       }
       else
       {
-         traceLogic(traceTag('code','GOTO')+' '+ traceTag('page',destPageName));
          gPage=page;
-         var $viewer=$('#page-viewer');
-         a2jviewer.layoutpage($('.A2JViewer',$viewer),gGuide,gGuide.steps,gPage);
+         a2jviewer.layoutpage($('.A2JViewer',$('#page-viewer')),gGuide,gGuide.steps,gPage);
       }
    },1);
 }

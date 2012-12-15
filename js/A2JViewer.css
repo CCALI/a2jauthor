@@ -237,7 +237,6 @@ span.err {
 	left: 0;
 	right: 0;
 	bottom: 32px;
-	xbackground-color: #f03;
 	overflow: scroll;
 }
 .ViewerLogicForm .immediatepanel{
@@ -271,4 +270,5 @@ span.err {
 	bottom: 0;
 	width: 400px;
 	border: 1px solid #bbb;
+	background-color: #cee;
 }

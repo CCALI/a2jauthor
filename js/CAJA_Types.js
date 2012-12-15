@@ -34,7 +34,6 @@ var CONST = {
 	ftCheckBoxNOTA:"checkboxNOTA",
 	ftCheckBoxMultiple:"checkboxmultiple",
 	
-	//var vtStrings = ["Unknown","Text","TF","Number","Date","MC","Other"];
 
 	// Limits
 	MAXFIELDS: 9,
@@ -73,17 +72,6 @@ var resumeScoreURL=null;
 function TText()
 {
 	this.text = "";
-	return this;
-}
-
-
-function TVariable()
-{
-	this.name= "";
-	this.type ="";//E.g., Text, MC, TF
-	this.comment ="";
-	this.repeating=false;//if false, value is the value. if true, value is array of values.
-	this.values=[];
 	return this;
 }
 
@@ -255,8 +243,60 @@ function TGuide()
 
 
 
+
+CONST.vtUnknown = 0;
+CONST.vtText = 1
+CONST.vtTF = 2
+CONST.vtNumber = 3
+CONST.vtDate = 4
+CONST.vtMC = 5
+CONST.vtOther = 6
+
+var vtStrings=["Unknown","Text","TF","Number","Date","MC","Other"];
+var vtStringsAnswerFile=["Unknown","TextValue","TFValue","NumValue","DateValue","MCValue","OtherValue"];
+var vtStringsGrid=["Unknown","Text","True/False","Number","Date","Multiple Choice","Other"];
+
+
+function TVariable()
+{
+	this.name= "";
+	this.type ="";//E.g., Text, MC, TF
+	this.comment ="";
+	this.repeating=false;//if false, value is the value. if true, value is array of values.
+	this.values=[];
+	return this;
+}
+TGuide.prototype.varGet=function(varName,varIndex)
+{
+	varName = jQuery.trim(varName);
+	var guide=this;
+	var varName_i=varName.toLowerCase();
+	var v=guide.vars[varName_i];
+	if (typeof varIndex==='undefined' || varIndex==null || varIndex=='') varIndex=0;
+	if (typeof v === 'undefined')
+	{
+		gLogic.trace('Undefined variable: '+ traceTag('var',varName)+ ((varIndex==0)?'':traceTag('varidx',varIndex) ));
+		return 'undefined';
+	}
+	else
+	{
+		var val = v.values[varIndex]; 
+		switch (v.type){
+			case CONST.vtNumber:
+				 val=parseFloat(val);
+				break;
+			case CONST.vtTF:
+				 val= (val>0) || (val=='true');
+				break;
+		}
+		//gLogic.trace('Getting value of '+  traceTag('var',varName)+ ( (varIndex==0)?'':traceTag('varidx',varIndex) ) +'='+traceTag('val',val));
+		return val;
+	}
+}
+
 TGuide.prototype.varSet=function(varName,varIndex,varVal)
 {
+	varName = jQuery.trim(varName);
 	var guide=this;
 	var varName_i=varName.toLowerCase();
 	var v=guide.vars[varName_i];
@@ -264,37 +304,22 @@ TGuide.prototype.varSet=function(varName,varIndex,varVal)
 	{	// Create variable at runtime
 		var v=new TVariable();
 		v.name=varName;
-		v.repeating= (varIndex==null || varIndex=='')
+		v.repeating= !(typeof varIndex==='undefined' || varIndex==null || varIndex=='');
 		guide.vars[varName_i]=v;
+		gLogic.trace('Creating variable '+traceTag("var",varName));
 	}
-	if (varIndex==null || varIndex=='')
+	if (typeof varIndex==='undefined' || varIndex==null || varIndex=='') varIndex=0;
+	if (varIndex==0)
 	{
-		traceLogic(traceTag('var',varName)+traceTag('val',varVal));
+		gLogic.trace(traceTag('var',varName)+'='+traceTag('val',varVal));
 		v.values[0]=varVal;
 	}
 	else
 	{
-		traceLogic(traceTag('var',varName+'#'+varIndex)+traceTag('val',varVal));
+		gLogic.trace(traceTag('var',varName+'#'+varIndex)+traceTag('val',varVal));
 		v.values[varIndex]=varVal;
 	}
 } 
-TGuide.prototype.varGet=function(varName,varIndex)
-{
-	var guide=this;
-	var varName_i=varName.toLowerCase();
-	var v=guide.vars[varName_i];
-	if (typeof v == 'undefined')
-	{
-		traceLogic('Undefined variable: '+traceTag('var',varName)+ ((varIndex==null || varIndex=='')?'':traceTag('varidx',varIndex) ));
-		return 'undefined';
-	}
-	else
-	{
-		if (varIndex==null || varIndex=='') varIndex=0;
-		return v.values[varIndex]; 
-	}
-}
-
 
 
 TGuide.prototype.pageDisplayName=function(name)//pageNametoText

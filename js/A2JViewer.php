@@ -9,7 +9,10 @@
 
 
 <SCRIPT LANGUAGE=JavaScript>
-var templateURL="tests/data/A2J_FieldTypesTest_Interview.xml";
+var templateURL="/a2j4guides/Logic Tests.a2j";
+//var templateURL="/a2j4guides/Field Types Test.a2j";
+//var templateURL="tests/data/Field Types Test.a2j";
+//var templateURL="tests/data/A2J_FieldTypesTest_Interview.xml";
 var fileDataURL="tests/data/";
 var getDataURL= "A2JGetData.php";
 var setDataURL= "A2JSetData.php?interviewID=<?=$interviewID?>";
@@ -25,6 +28,7 @@ var errRepURL="../A2JErrRep.php";//"https://lawhelpinteractive.org/problem_repor
 <script src="CAJA_Types.js" type="text/javascript"></script>
 <script src="CAJA_Languages.js" type="text/javascript"></script>
 <script src="CAJA_Parser.js" type="text/javascript"></script>
+<script src="CAJA_Logic.js" type="text/javascript"></script>
 <script src="CAJA_Parser_A2J.js" type="text/javascript"></script>
 <script src="CAJA_Shared.js" type="text/javascript"></script>
 <script src="CAJA_Viewer_A2J.js" type="text/javascript"></script>

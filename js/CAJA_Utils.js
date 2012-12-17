@@ -6,7 +6,7 @@
 var AJAXLoader="<span class='loader'>&nbsp;</span>'";
 
 function traceTag(cname,chtml){
-	if (cname=='val' && chtml == "")
+	if (cname=='val' && chtml === "")
 		chtml = "<i>blank</i>";
 	return "<span class="+cname+">"+chtml+"</span>";
 }
@@ -17,11 +17,6 @@ function propCount(obj)
 	return cnt;
 }
 
-function traceLogic(html)
-{
-	$('#tracer').append('<li>'+html+"</li>");
-	if (typeof console!=='undefined') console.log(html);
-}
 
 function trace( )
 {

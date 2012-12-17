@@ -13,7 +13,7 @@ function DialogAlert(args)
       title: args.title,
       resizable: false,
       width: 350,
-      height:140,
+      height:250,
       modal: true,
       buttons: {
           OK: function() {

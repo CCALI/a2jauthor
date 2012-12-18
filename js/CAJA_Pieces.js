@@ -1,4 +1,113 @@
 
+function gotoTabOrPage(target)
+{
+	selectTab(target);
+	
+	// Remove existing editors 
+	//for (var edId in tinyMCE.editors)
+	// tinyMCE.editors[edId].remove();
+	if (target.indexOf("PAGE ")==0)
+	{
+		gotoPageEdit(target.substr(5));
+	}
+	else
+	if (target.indexOf("STEP ")==0)
+	{
+		$('#tabviews').tabs('select','#tabsSteps');
+	}
+	else{
+		$('#tabviews').tabs('select',target);
+	}	
+	// Attach editors
+	//attach all immediate $('.tinyMCEtext').each(function(){tinyMCE.execCommand("mceAddControl", false, $(this).attr('id'));	});
+/*	$('.tinyMCEtext').click(function(){
+		var id=$(this).attr('id');
+		tinyMCE.execCommand("mceAddControl", false, id);
+		tinyMCE.execCommand('mceFocus',true,id);
+		
+		});
+*/
+}
+
+
+
+//var _GCS = {  //global CAJA script// Note:  Not re-entrant.
+
+/*
+_IF : function(caja,expr)
+{
+	
+	return expr;
+},
+_VS : function(varname,arrayindex,value)
+{
+	// returns nothing
+},
+
+_VG : function(varname,arrayindex)
+{
+	return 0;
+},
+
+_ED : function(datestr) // expand a date
+{
+	
+	return 0;
+},
+
+_CF : function(fncName)
+{
+	fncName=fncName.toLowerCase(); 
+},
+
+_GO : function(pagename)
+{
+	//returns nothing
+},
+
+
+_deltaVars : function(pagename)
+{
+	//returns nothing
+},
+*/
+
+
+
+function loadGuideFile2(guideFile,startTabOrPage)
+{
+   var cajaDataXML;
+   $.ajax({
+      url: guideFile,
+      dataType: ($.browser.msie) ? "text" : "xml", // IE will only load XML file from local disk as text, not xml.
+      timeout: 45000,
+      error: function(data,textStatus,thrownError){
+        DialogAlert('Error occurred loading the XML from '+this.url+"\n"+textStatus);
+       },
+      success: function(data){
+         //var cajaDataXML;
+         if ($.browser.msie)
+         {  // convert text to XML. 
+            cajaDataXML = new ActiveXObject('Microsoft.XMLDOM');
+            cajaDataXML.async = false;
+            data=data.replace('<!DOCTYPE Access2Justice_1>','');//02/27/12 hack bug error
+            cajaDataXML.loadXML(data);
+         }
+         else
+         {
+            cajaDataXML = data;
+         }
+         cajaDataXML=$(cajaDataXML); 
+         // global variable guide
+         gGuide =  parseXML_Auto_to_CAJA(cajaDataXML);
+         gGuide.filename=guideFile;
+         guideStart(startTabOrPage);         
+      }
+   });
+}
+
+
+
 			case 'tabsPageView':
 				//a2jviewer.layoutpage(ui.panel,gGuide,gGuide.steps,gPage); 
 				break;
@@ -122,7 +231,6 @@ function showPageToEdit()
 					$(this).append('<span class="editicons"><a href="#" class="ui-icon ui-icon-circle-plus"></a><a href="#" class="ui-icon ui-icon-circle-minus"></a></span>');
 					$('.editicons .ui-icon-circle-plus').click(function(){
 						// Insert blank statement above
-						//alert($(this).closest('li').html());
 						var line = $(this).closest('li');
 						var cmd = $(this).closest('li').find('.adv.res').html();
 					});

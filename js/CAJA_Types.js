@@ -67,6 +67,8 @@ var gUserNickName="User";
 var runid=0;
 var resumeScoreURL=null;
  
+var gDev=0;
+
 
 // ### Classes ###
 function TText()
@@ -346,7 +348,6 @@ TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 		else
 			dval = name+"\t"+autoIDs[ name ];
 	}
-	//console.log('pageDisplayName',dval);
 	return dval;
 }
 

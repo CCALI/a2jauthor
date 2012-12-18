@@ -31,7 +31,6 @@ function trace( )
 			msg += arg;
 		if (typeof console!="undefined") console.log(arg);
 	}
-	//$('#tracer').append('<li>'+msg+"</li>");
 }
 
 function cloneObject(obj) {

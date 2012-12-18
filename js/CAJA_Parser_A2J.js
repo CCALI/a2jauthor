@@ -159,10 +159,6 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			field.invalidPrompt =makestr(jQuery.trim($(this).find("INVALIDPROMPT").xml()));
 			field.invalidPromptAudio =makestr(jQuery.trim($(this).find("INVALIDPROMPTAUDIO").xml()));
 			var list= $(this).find("SELECT").xml();
-			//if (typeof list==="object")
-			//{
-			//	alert(list);
-			//}
 			/*
 			if (typeof DefaultPrompts[field.invalidPrompt]!="undefined")
 			{
@@ -180,7 +176,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			
 			var comment =jQuery.trim($(this).find("COMMENT").xml());
 			// Remove old cruft.
-			if (comment == "Example: set a flag if income too high") comment="";
+			if (comment == "Example: set a flag if income too high" || comment==null || comment=="undefined" ) comment="";
 			
 			var condT=[];
 			var condF=[];
@@ -191,23 +187,31 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 					//statement = 'SET ['+args[1]+'] TO '+args[3];
 				if ((args = statement.match(/set\s+(.+)/i))!=null)
 				{
-					args = args[1].split("=");
-					if (args[1]=="") args[1]='""';
-					statement = 'SET ['+args[0]+'] TO '+args[1];
+					var p=args[1].indexOf('=');
+					var varName = args[1].substr(0,p);
+					var varVal= args[1].substr(p+1);
+					if (varVal=="") varVal='""';
+					if (varName!="")
+					{
+						statement = 'SET ['+varName+'] TO '+varVal;
+					}
+					else
+						statement = "";
 				}
 				else
 				if ((args = statement.match(/goto\s+(\w+)\s?/i))!=null)
-					statement = "GOTO '"+args[1]+"'";//guide.pageIDtoName(args[1]);
-					//statement = "GOTO "+htmlEscape(fixID(args[1]))+"";
+					//statement = "GOTO '"+args[1]+"'";//guide.pageIDtoName(args[1]);
+					statement = "GOTO \""+htmlEscape(fixID(args[1]))+"\"";
 				else
 					statement = "//"+statement;
-				if (tf=="true")
-					condT.push(statement);
-				else
-					condF.push(statement);
+				if (statement!="")
+					if (tf=="true")
+						condT.push(statement);
+					else
+						condF.push(statement);
 			}); 
 			
-			if ((condition=="true" || condition=="1=1"))
+			if ((condition=="true" || condition=="1" || condition=="1=1"))
 				script.code = condT.join(LINEDEL)+LINEDEL;
 			else if (condF.length==0)
 //				if (condT.length==1)

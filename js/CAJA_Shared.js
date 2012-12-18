@@ -25,27 +25,16 @@ function DialogAlert(args)
 
 function loadGuideFile2(guideFile,startTabOrPage)
 {
-   var cajaDataXML;
    $.ajax({
       url: guideFile,
-      dataType: ($.browser.msie) ? "text" : "xml", // IE will only load XML file from local disk as text, not xml.
+      dataType:  "xml", // IE will only load XML file from local disk as text, not xml.
       timeout: 45000,
       error: function(data,textStatus,thrownError){
         DialogAlert('Error occurred loading the XML from '+this.url+"\n"+textStatus);
        },
       success: function(data){
-         //var cajaDataXML;
-         if ($.browser.msie)
-         {  // convert text to XML. 
-            cajaDataXML = new ActiveXObject('Microsoft.XMLDOM');
-            cajaDataXML.async = false;
-            data=data.replace('<!DOCTYPE Access2Justice_1>','');//02/27/12 hack bug error
-            cajaDataXML.loadXML(data);
-         }
-         else
-         {
-            cajaDataXML = data;
-         }
+         var cajaDataXML;
+			cajaDataXML = data;
          cajaDataXML=$(cajaDataXML); 
          // global variable guide
          gGuide =  parseXML_Auto_to_CAJA(cajaDataXML);

@@ -23,8 +23,6 @@ function setMode(mode)
 	prompt('scanning');
 	//$('.CAJAContent P').removeClass('hilite').filter(function(){ return $(this).text().indexOf('Question ')==0;}).addClass('hilite');
 	$('.inform').remove();
-	
-	//alert($('.CAJAContent > P').length);
 	$('#advanced > P, #advanced > DIV > P').each(function(){parseP($(this))});
 	prompt('.');
 	return false;

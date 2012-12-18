@@ -39,9 +39,11 @@ function TLogic()
 
 
 TLogic.prototype.pageExists = function(pageName)
-{	// return true if page name exists
-	return true;
+{	// return true if page name exists (Case-sensitive check)
+	return gGuide.pages[pageName]!=null;
 }
+
+
 TLogic.prototype.pageFindReferences = function(CAJAScript,findName,newName)
 {	// Find/replace all GOTO findName with newName or just return if found.
 	var result={};
@@ -50,7 +52,8 @@ TLogic.prototype.pageFindReferences = function(CAJAScript,findName,newName)
 	for (var l=0;l<csLines.length;l++)
 	{
 		var line=jQuery.trim(csLines[l]).split("//")[0];
-		if ((args = line.match(/^goto\s+(.+)/i))!=null)
+		// TODO : handle Replacement of a page name inside GOTO.
+		if ((args = line.match(/^goto\s+\"(.+)\"/i))!=null)
 		{	// Goto named page (not an expression). We 'return' to avoid further processing which is A2J's designed behavior.
 			var pageName=args[1];
 			if (pageName==findName)
@@ -102,13 +105,14 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 	var errors=[];
 	var jsLines=[];
 	//var csLines=CAJAScriptHTML.split(CONST.ScriptLineBreak);//CAJAScriptLines;//CAJAScript.split("\n");
-	var csLines= decodeEntities(CAJAScriptHTML.replace(CONST.ScriptLineBreak,"\n",'gi')).split("\n");
+	//var csLines= decodeEntities(CAJAScriptHTML.replace(CONST.ScriptLineBreak,"\n",'gi')).split("\n");
 	
+	var csLines= CAJAScriptHTML.split(CONST.ScriptLineBreak);
 	
 	var ifd=0;//if depth syntax checker
 	for (var l=0;l<csLines.length;l++)
 	{
-		var line=jQuery.trim(csLines[l]).split("//")[0];
+		var line=jQuery.trim( decodeEntities(csLines[l])).split("//")[0];
 		var args;
 		var js;
 		if (line!="")
@@ -129,9 +133,13 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 			else
 			if ((args = line.match(/^goto\s+(.+)/i))!=null)
 			{	// Goto named page (not an expression). We 'return' to avoid further processing which is A2J's designed behavior.
-				var pageName=args[1];
-				if (!this.pageExists(pageName)) errors.push(new ParseError(l,"",lang.scriptErrorMissingPage.printf(pageName)));
-				js=("_GO("+jquote(line)+","+pageName+");return;");
+				var pageNameExp=args[1];
+				if (pageNameExp.substr(0,1)=='"' && pageNameExp.substr(-1,1)=='"')
+				{	// We can statically check of a quoted page name.
+					var pageName=pageNameExp.substr(1,pageNameExp.length-2);
+					if (!this.pageExists(pageName)) errors.push(new ParseError(l,"",lang.scriptErrorMissingPage.printf(pageName)));
+				}
+				js=("_GO("+jquote(line)+","+pageNameExp+");return;");
 			}
 			else
 			if ((args = line.match(/print\s+(.+)/i))!=null)
@@ -280,6 +288,7 @@ TLogic.prototype.translateCAJAtoJSExpression = function(CAJAExpression, lineNum,
 		var f=(new Function( js ));
 	}
 	catch (e) { 
+		if (e.message=="missing ; before statement") e.message="syntax error";
 		errors.push(new ParseError(lineNum,"",e.message));
 	}
 	return js;
@@ -358,7 +367,6 @@ TLogic.prototype.executeScript = function(CAJAScriptHTML)
 	if (script.errors.length == 0)
 	{
 		var js = "with (gLogic) {"+ script.js.join("\n") +"}";
-		console.log(js);
 		try {
 			var f=(new Function( js ));
 			var result = f(); // Execute the javascript code. 
@@ -366,14 +374,12 @@ TLogic.prototype.executeScript = function(CAJAScriptHTML)
 		catch (e) {
 			// Trace runtime errors
 			this.trace("ERROR: " +e.message +" " + e.lineNumber);
-			//alert(js);
 			return false;
 		}
 	}
 	else
 	{
 		this.trace("ERROR: "+"syntax error in logic");
-		//alert(script.js.join("\n "));
 		return false;
 	}
 	this.indent=0;
@@ -522,52 +528,6 @@ function CALIScriptEvalHTML(html)
 }
 
 */
-
-
-
-
-
-//var _GCS = {  //global CAJA script// Note:  Not re-entrant.
-
-/*
-_IF : function(caja,expr)
-{
-	
-	return expr;
-},
-_VS : function(varname,arrayindex,value)
-{
-	// returns nothing
-},
-
-_VG : function(varname,arrayindex)
-{
-	return 0;
-},
-
-_ED : function(datestr) // expand a date
-{
-	
-	return 0;
-},
-
-_CF : function(fncName)
-{
-	fncName=fncName.toLowerCase(); 
-},
-
-_GO : function(pagename)
-{
-	//returns nothing
-},
-
-
-_deltaVars : function(pagename)
-{
-	//returns nothing
-},
-*/
-
 
 
 

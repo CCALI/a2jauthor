@@ -82,8 +82,6 @@ function parseXML_CA_to_CAJA(BOOK)
 				slackWordsAfter: pageXML.find("SLACKWORDSAFTER").xml()
 			});
 		}
-		
-		//console.log(page.name);
 		pageXML.children('BUTTON').each(function( )
 		{
 			//if (!('captions' in page)) page.captions=[];

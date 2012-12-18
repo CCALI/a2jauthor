@@ -12,10 +12,9 @@ function guideStart(start)
 {
 	var guide=gGuide;
 	
-	//alert("Loaded "+gGuide.filename+","+start);
 	traceLogic('Guide '+guide.title+' loaded.');
 	traceLogic('#Pages: '+propCount(guide.pages)+', #Variables:'+propCount(guide.vars));
-	
+
 	//for (var pi in guide.pages)	traceLogic(traceTag('page',guide.pages[pi].name)); 
 	
 	traceLogic('Starting on page '+traceTag('page',guide.firstPage));

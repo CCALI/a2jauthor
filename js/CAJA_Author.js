@@ -1,6 +1,10 @@
-/*	CALI Author 5 - CAJA Authoring   
- 	Created 03/30/2012 
- */
+/*	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+	
+ 	Authoring App GUI
+	03/30/2012
+*/
+
 var prefs= {
 	ShowLogic : 1,
 	ShowText : 1

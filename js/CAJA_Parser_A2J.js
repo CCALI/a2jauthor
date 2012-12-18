@@ -1,4 +1,9 @@
-/* CAJA - Parse A2J 4 .a2j/xml XML into CAJA format */
+/*	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+
+	Parse A2J 4 Interview
+	Parses .a2j/xml XML into CAJA format
+*/
 
 
 function parseXML_A2J_to_CAJA(TEMPLATE)

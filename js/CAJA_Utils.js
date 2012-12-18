@@ -1,7 +1,10 @@
-﻿// CAJA Utils 
-// Required by Author and Viewers
-//	02/20/2012
+﻿/*	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
+	CAJA Utils 
+	Required by Author and Viewers
+	02/20/2012
+*/
 
 var AJAXLoader="<span class='loader'>&nbsp;</span>'";
 

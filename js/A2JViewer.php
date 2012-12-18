@@ -1,4 +1,8 @@
-﻿<!-- 12/12/2012 Copyright 2012 CALI  -->
+﻿<!--
+	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+	12/12/2012
+-->
 <html>
 <head>
 <title>Access to Justice</title>

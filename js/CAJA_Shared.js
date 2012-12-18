@@ -1,6 +1,10 @@
-// 12/12/2012 Shared GUI/IO
-// Required by Author and Viewers
+/*	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
+	Shared GUI/IO
+	Required by Author and Viewers
+	12/12/2012 
+*/
 
 
 function DialogAlert(args)

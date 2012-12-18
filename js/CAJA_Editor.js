@@ -1,4 +1,8 @@
-/*	CALI Author 5 - CAJA Authoring Full HTML Editor 
+/*	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+	
+	Full HTML Editor
+	
  	03/30/2012 
 */
 

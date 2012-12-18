@@ -1,3 +1,8 @@
+/*	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+	
+	Pieces of obsolete code that might prove useful later.
+*/
 
 function gotoTabOrPage(target)
 {

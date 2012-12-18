@@ -1,4 +1,10 @@
-// 02/20/2012 Parse native CAJA into CAJA structure
+/*	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+	
+	CAJA Parser
+	Parse native CAJA into CAJA structure
+	02/20/2012 
+*/
 
 var SHOWXML=false;
 

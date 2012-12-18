@@ -1,11 +1,15 @@
+/*	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
-// 06/15/2012 Convert CAJA script into JavaScript  10/25/11  
-// Phase 1: Compile the CAJA script to spot syntax errors or undefined functions or variables.
-// Phase 2: If compile ie successful, execute the JS version.
-//
-// Dependencies: jqhashtable-2.1.js, jquery.numberformatter-1.2.1.jsmin.js
-// Required by Author and Viewers
+	Logic
+	Convert CAJA script into JavaScript
+	Required by Author and Viewers
+	06/15/2012  10/25/11  
+	Phase 1: Compile the CAJA script to spot syntax errors or undefined functions or variables.
+	Phase 2: If compile ie successful, execute the JS version.
 
+	Dependencies: jqhashtable-2.1.js, jquery.numberformatter-1.2.1.jsmin.js
+*/
 
 CONST.ScriptLineBreak='<BR/>';
 // Classes

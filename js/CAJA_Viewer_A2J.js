@@ -1,5 +1,10 @@
-﻿/* 10/12/2012 A2J Viewer embedding */
-// Required by Author and Viewers
+﻿/*	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+	
+	A2J Viewer embedding
+	Required by Author and Viewers
+	10/12/2012
+*/
 
 // Elements: navbar, road step area, question, guide avatar, user avatar, learn more prompt, learn more bubble.
 

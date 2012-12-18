@@ -42,7 +42,7 @@ function parseUnit(unitText)
 			if (curpage != null) curpage.next=pageName;
 			
 			curpage= testunit.pages[pageName.toLowerCase()];
-			testunit.trace("Define page "+scriptTag('page',pageName));
+			testunit.trace("Define page "+traceTag('page',pageName));
 		}
 		else
 		if ((args = line.match(/@var\s+(.+)/i))!=null)
@@ -69,7 +69,7 @@ function parseUnit(unitText)
 		//alert(lines.join("\n"));
 		if (script.errors.length>0)
 		{
-			testunit.trace( '<hr>page ' + scriptTag('page',page.name)) ; 
+			testunit.trace( '<hr>page ' + traceTag('page',page.name)) ; 
 			var t=[];
 			for (l=0;l<lines.length;l++)
 			{
@@ -160,7 +160,7 @@ function parseUnit(unitText)
 	while (loop++<25 && (typeof testunit.nextpage!=="undefined"))
 	{
 		var page=testunit.pages[ testunit.nextpage.toLowerCase() ];
-		testunit.trace( '<hr>page '+scriptTag('page',page.name)+'<span>'); 
+		testunit.trace( '<hr>page '+traceTag('page',page.name)+'<span>'); 
 		testunit.nextpage = page.next; //default next goto page
 		if (page==null)
 		{
@@ -194,8 +194,8 @@ function parseUnit(unitText)
 			testunit.trace("<BLOCKQUOTE class=Script>"+t.join("<BR>")+"</BLOCKQUOTE>");
 			testunit.indent--; 
 			
-			testunit._CAJA=function(c){testunit.trace( scriptTag('code',c));}
-			testunit._IF=function(d,c,e){testunit.trace( scriptTag('code',c)+' = '+(e==true));return (e==true);}
+			testunit._CAJA=function(c){testunit.trace( traceTag('code',c));}
+			testunit._IF=function(d,c,e){testunit.trace( traceTag('code',c)+' = '+(e==true));return (e==true);}
 			testunit._VS=function(c,v,i,val){  return testunit.setVar(v,i,val);}
 			testunit._VG=function( v,i){  return testunit.getVar(v,i);}
 			testunit._CF=function(f){ 
@@ -283,7 +283,7 @@ function loadFile(bookFile)
 			}
 		});
 } 
-function scriptTag(cname,chtml){
+function traceTag(cname,chtml){
 	if (cname=='val' && chtml == "")
 		chtml = "<i>blank</i>";
 	return "<span class="+cname+">"+chtml+"</span>";
@@ -296,7 +296,7 @@ testunit.setVar=function(varName,varIndex,varVal)
 	if (varIndex==null || varIndex=='') varIndex=0;
 	
 	this.indent++;
-	this.trace( scriptTag('var',varName)+ (varIndex>0 ? scriptTag('varidx',varIndex) :'') + ' = '+ scriptTag('val',varVal) );
+	this.trace( traceTag('var',varName)+ (varIndex>0 ? traceTag('varidx',varIndex) :'') + ' = '+ traceTag('val',varVal) );
 	this.indent--;
 	
 	var varName_i=varName.toLowerCase();
@@ -313,13 +313,13 @@ testunit.setVar=function(varName,varIndex,varVal)
 }
 testunit.getVar=function(varName,varIndex)
 {
-	//this.trace('Get '+scriptTag('var',varName));
+	//this.trace('Get '+traceTag('var',varName));
 	var varName_i=varName.toLowerCase();
 	var v=testunit.vars[varName_i];
 	if (typeof v == 'undefined')
 	{
 		testunit.indent++;
-		testunit.trace('Undefined variable: '+scriptTag('var',varName)+ ((varIndex==null || varIndex=='')?'':scriptTag('varidx',varIndex) ));
+		testunit.trace('Undefined variable: '+traceTag('var',varName)+ ((varIndex==null || varIndex=='')?'':traceTag('varidx',varIndex) ));
 		testunit.indent--;
 		return 'undefined';
 	}

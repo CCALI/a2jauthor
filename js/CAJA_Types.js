@@ -1,5 +1,10 @@
-/* CAJA - Type/constant declarations */
-// Required by Author and Viewers
+/*	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+
+	Type/constant declarations
+	Required by Author and Viewers
+*/
+
 
 // ### Constants  ###
 
@@ -67,6 +72,8 @@ var gUserNickName="User";
 var runid=0;
 var resumeScoreURL=null;
  
+var gDev=0;
+
 
 // ### Classes ###
 function TText()
@@ -346,7 +353,6 @@ TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 		else
 			dval = name+"\t"+autoIDs[ name ];
 	}
-	//console.log('pageDisplayName',dval);
 	return dval;
 }
 

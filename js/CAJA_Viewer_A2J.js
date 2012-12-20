@@ -1,5 +1,10 @@
-﻿/* 10/12/2012 A2J Viewer embedding */
-// Required by Author and Viewers
+﻿/*	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+	
+	A2J Viewer embedding
+	Required by Author and Viewers
+	10/12/2012
+*/
 
 // Elements: navbar, road step area, question, guide avatar, user avatar, learn more prompt, learn more bubble.
 
@@ -71,28 +76,45 @@ var a2jviewer={
 			switch (f.type)
 			{
 				case CONST.ftText://"Text"
-				   row.append($('<label/>').attr('for',fid).html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   row.append($('<label/>').attr('for',fid).html(f.label)).append($('<input type=text class=text id='+fid+'></input>').val(defval));
 				   break;
 				case CONST.ftTextLong://"Text (Long)"
-				   row.append($('<label/>').attr('for',fid).html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   row.append($('<label/>').attr('for',fid).html(f.label)).append($('<textarea type=text class=textarea id='+fid+'></textarea>').val(defval));
 				   break;
 				case CONST.ftTextPick://"Text (Pick from list)"
-				   row.append($('<label/>').attr('for',fid).html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   row.append($('<label/>').attr('for',fid).html(f.label)).append($('<select id='+fid+'></select>').val(defval));
+					
+					var list=["1","2","3"];
+					/*
+	,pickList:function(data,listValueLabel){//list is array to ensure preserved order. Note: js object properties don't guarantee order
+		var c="";
+		for (var o=0;o<listValueLabel.length;o+=2)
+			c+='<option value="'+listValueLabel[o]+'">'+listValueLabel[o+1]+'</option>';
+		var e =$('<div name="'+data.name+'">'
+			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
+			+'<span class=editspan><select class="     ui-select-input">'+c+'</select></span></div>');
+		$('.ui-select-input',e).change(function(){form.change($(this),$('option:selected',this).val())}).data('data',data).val(data.value);
+		return e;
+	}*/
+					
+					
+					
+					
 				   break;
 				case CONST.ftNumber://"Number"
-				    row.append($('<label/>').html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				    row.append($('<label/>').html(f.label)).append($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
 				case CONST.ftNumberDollar://"Number Dollar"
-				   row.append($('<label/>').html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   row.append($('<label/>').html(f.label)).append($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
 				case CONST.ftNumberSSN://"Number SSN"
-				   row.append($('<label/>').html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   row.append($('<label/>').html(f.label)).append($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
 				case CONST.ftNumberPhone://"Number Phone"
-				   row.append($('<label/>').html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   row.append($('<label/>').html(f.label)).append($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
 				case CONST.ftNumberZIP://"Number ZIP Code"
-				   row.append($('<label/>').html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   row.append($('<label/>').html(f.label)).append($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
 				case CONST.ftNumberPick://"Number (Pick from list)"
 				   row.append($('<label/>').attr('for',fid).html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));

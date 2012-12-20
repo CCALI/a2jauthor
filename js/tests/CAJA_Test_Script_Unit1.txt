@@ -7,8 +7,19 @@
 // First all variables, pages and scripts are loaded and syntax checked. 
 // Then we start at the first page and execute. 
 
+
+
+
 @var Name
 @var Gender
+
+@page Syntax Error - Blurb
+print The user's name is <b>%%Name%%</b> or %%name%%. He was born on %%dateMDY(Birthday)%%.	25	+	-10 = %%25+-10%%. Your dollars are $%%dollarRound(pd)%% and your dollars and cents are $%%dollar(pd)%%.<br>
+// Syntax Error: formatting strange
+// Welcome to this interview. %%if age<18 %%You are too young for this%%else%%You may do this%%end if%% interview.
+«if age<18»You are too young to«else»You are old enough to«end if» fill this form.<br>The end.
+set pd  to pd + 5000
+
 
 @page NYTest2
 IF [Client relationship to decedent MC] = "Wife" 
@@ -145,12 +156,6 @@ end if
 
 GOTO 'Section 2' // skip to section 2
 
-@page Syntax Error - Blurb
-print The user's name is <b>%%Name%%</b> or %%name%%. He was born on %%dateMDY(Birthday)%%.	25	+	-10 = %%25+-10%%. Your dollars are $%%dollarRound(pd)%% and your dollars and cents are $%%dollar(pd)%%.<br>
-// Syntax Error: formatting strange
-«if age<18»You are too young to«else»You are old enough to«end if» fill this form.<br>The end.
-
-set pd  to pd + 5000
 
 @page Syntax Error - With bad If
 // Syntax Error: Missing an end if, should be error flagged

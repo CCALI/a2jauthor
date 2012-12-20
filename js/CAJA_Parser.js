@@ -1,4 +1,10 @@
-// 02/20/2012 Parse native CAJA into CAJA structure
+/*	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+	
+	CAJA Parser
+	Parse native CAJA into CAJA structure
+	02/20/2012 
+*/
 
 var SHOWXML=false;
 
@@ -52,7 +58,7 @@ function page2JSON(page)
 			XML_LABEL:			f.label,
 			NAME:				f.name, 
 			VALUE:			f.value, 
-			XML_INVALIDPROMPT:	f.invalidPrompt,
+			XML_INVALIDPROMPT:	f.invalidPrompt
 		}
 		PAGE.FIELDS.push({FIELD:FIELD});
 	}
@@ -121,10 +127,7 @@ function exportXML_CAJA_from_CAJA(guide)
 	{
 		JSON.GUIDE.PAGES.push({PAGE:page2JSON(guide.pages[pi])});
 	} 
-			
-//	trace('<pre>'+propsJSON('Guide', JSON.GUIDE)+'</pre>'); 
 	var xml = '<?xml version="1.0" encoding="UTF-8" ?>' + js2xml('GUIDE',JSON.GUIDE);
-//	console.log(xml);
 	return xml;
 }
 function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM

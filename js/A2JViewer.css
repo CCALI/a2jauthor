@@ -1,7 +1,9 @@
 ﻿@charset "utf-8";
 /*
-	02/02/2012  (3/10/2011 SJG
+	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	A2J Viewer Stylesheet 
+	02/02/2012  (3/10/2011 SJG
 */
 
 .hidestart { /* hide some elements initially */
@@ -12,7 +14,7 @@ html,body{
 	padding:0px;
 }
 .ViewerApp  {
-	font-size:14px;
+	font-size: 12px;
 	width:100%;
 	margin:0px;
 	padding:0px;
@@ -157,13 +159,20 @@ div.learnmore.bubble, div.learnmore.bubble > div {
 }
 
 div.question.bubble fieldset div.row{ /* question form field row */
-	border: 1px solid #bbb;
+	xborder: 1px solid #bbb;
 	margin: 0;
 	margin-top: .5em;
 	padding: 0;
 }
+
 div.question.bubble fieldset div.row input[type=text] {
+	background-color:#fff;
+}
+div.question.bubble fieldset div.row input[type=text].text {
 	width: 100%;
+}
+div.question.bubble fieldset div.row input[type=text].number {
+	width: 50%;
 }
 
 div.question.bubble div div.buttonlist, div.learnmore.bubble div div.buttonlist{
@@ -190,13 +199,16 @@ div.steptext.step2 { 	font-size: 1em; }
 
 /* Debugging Aids */
 
+.codeedit, .xml, #tracer li {
+	xfont-family: Monospace;
+}
 #tracer {
 	padding-left: -5px;
 }
 #tracer li{
 	font-weight: normal;
 	xfont-family: "Courier New", Courier, monospace;
-	font-size: 9pt;
+	font-size: 9px;
 	line-height: auto;
 	border: none;
 	xbackground-color: #ddd;

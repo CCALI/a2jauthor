@@ -1,5 +1,10 @@
 @charset "utf-8";
-
+/*
+	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+	Authoring system Stylesheet 
+	
+*/
 
 .ui-widget-header, 
 .ui-state-default, 
@@ -314,7 +319,6 @@ x.autocomplete.picker.page {
 }
 */
 .codeedit, .xml {
-	font-family: Monospace;
 	white-space: pre-wrap;
 }
 .xml {
@@ -842,9 +846,16 @@ x.map {
 	margin-top: -5px;
 }
 
+div.codeedit.haserr {
+	background-color: #fbb;
+}
 div.codeedit span.err {
 	text-decoration: none;
-	border-bottom: dashed  1px #f00;
+	xfloat: right;
+	xdisplay: inline;
+	background-color: #f88;
+	border: 1px;
+	xborder-bottom: dashed  1px #f00;
 	padding-bottom: 0px;
 }
 

@@ -1,6 +1,11 @@
-// A2J Viewer app 
-// Required by Author and Viewers
-// 12/12/2012 
+/*	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+
+	A2J Viewer app
+	Required by Author and Viewers
+	12/12/2012 
+*/
+
 
 $(document).ready(function(){
 	lang.set('en');
@@ -12,10 +17,9 @@ function guideStart(start)
 {
 	var guide=gGuide;
 	
-	//alert("Loaded "+gGuide.filename+","+start);
 	traceLogic('Guide '+guide.title+' loaded.');
 	traceLogic('#Pages: '+propCount(guide.pages)+', #Variables:'+propCount(guide.vars));
-	
+
 	//for (var pi in guide.pages)	traceLogic(traceTag('page',guide.pages[pi].name)); 
 	
 	traceLogic('Starting on page '+traceTag('page',guide.firstPage));

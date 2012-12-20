@@ -1,4 +1,10 @@
-// 07/14/2012 Language file for the authoring tool 
+/*	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+
+	Language (INCOMPLETE)
+	07/14/2012 Language file for the authoring tool 
+*/
+
 
 // ### Global Variable ###
 var lang={regional:[]}; 

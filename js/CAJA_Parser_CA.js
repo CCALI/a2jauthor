@@ -1,4 +1,9 @@
-/*  CAJA - Parse CALI Author jqXML into CAJA format */
+/*	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+	
+	CALI Author Book Parser
+	Parses CALI Author's jqXML into CAJA format 
+*/
 
 function BR2cr(txt){
 	return txt.replace(/&lt;BR \/&gt;/g,"\n");
@@ -82,8 +87,6 @@ function parseXML_CA_to_CAJA(BOOK)
 				slackWordsAfter: pageXML.find("SLACKWORDSAFTER").xml()
 			});
 		}
-		
-		//console.log(page.name);
 		pageXML.children('BUTTON').each(function( )
 		{
 			//if (!('captions' in page)) page.captions=[];

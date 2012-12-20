@@ -1,4 +1,8 @@
-﻿<!-- 12/12/2012 Copyright 2012 CALI  -->
+﻿<!--
+	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+	12/12/2012
+-->
 <html>
 <head>
 <title>Access to Justice</title>
@@ -47,11 +51,8 @@ var errRepURL="../A2JErrRep.php";//"https://lawhelpinteractive.org/problem_repor
 </div>
 <div id="page-viewer" class="hidestart ViewerApp">
 	<div class="A2JViewer"></div>
-	<div id="viewer-logic-form" class="ViewerLogicForm"><div class="tracepanel"><ol id="tracer"></ol></div>
-	<div class="immediatepanel">
-<input type="text" id="tracerimm"/>
-</div></div>
-<div id="viewer-var-form" class="ViewerVarForm" ></div></div>
+	<div id="viewer-logic-form" class="ViewerLogicForm"><div class="tracepanel"><ol id="tracer" contentEditable="true"></ol></div><div class="immediatepanel"><span><input type="text" id="tracerimm"/></span></div></div>
+	<div id="viewer-var-form" class="ViewerVarForm" ></div></div>
 <div id="dialog-confirm" title=""></div>
 <noscript>
 	<div  class="NoJS">JavaScript is disabled. Please enable JavaScript to continue.</div>

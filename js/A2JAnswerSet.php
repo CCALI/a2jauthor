@@ -1,6 +1,9 @@
 <?php	
-session_start();
-header("Content-Type: text/html; charset=utf-8"); 
+/*	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+*/
+	session_start();
+	header("Content-Type: text/html; charset=utf-8"); 
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>

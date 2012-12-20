@@ -1,4 +1,7 @@
-/* CAJA - Advanced editor
+/*	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+	
+	Advanced editor
 	Experimental code for single document editing of a guide
 */
 
@@ -23,8 +26,6 @@ function setMode(mode)
 	prompt('scanning');
 	//$('.CAJAContent P').removeClass('hilite').filter(function(){ return $(this).text().indexOf('Question ')==0;}).addClass('hilite');
 	$('.inform').remove();
-	
-	//alert($('.CAJAContent > P').length);
 	$('#advanced > P, #advanced > DIV > P').each(function(){parseP($(this))});
 	prompt('.');
 	return false;

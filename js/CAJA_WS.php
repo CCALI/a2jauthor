@@ -27,15 +27,18 @@ switch ($command)
 		$pass = MD5($pass);
 		$res=$drupaldb->query("select * from users where name='$user' and pass='$pass'");
 		if ($row=$res->fetch_assoc()){
-			$result['nickname']=$row['name'];
-			$userid=$row['uid']; 
-			$userdir=$row['name'];
-			$checkuser=$mysqli->query("select * from usersbeta where username='$user' and pass='$pass'");
+			$checkuser=$mysqli->query("select * from usersbeta where username='$user'");
 			$numrows=$checkuser->num_rows;
-			
 			if (!$numrows){
-			  $mysqli->query("insert into usersbeta (username, pass) values ('$user', '$pass')");
+			  mkdir(GUIDES_DIR.$user, 0700);
+			  $mysqli->query("insert into usersbeta (username, pass, folder) values ('$user', '$pass', '$user')");
+			  $checkuser=$mysqli->query("select * from usersbeta where username='$user'");
 			}
+			$userrow=$checkuser->fetch_assoc();
+			$result['nickname']=$userrow['name'];
+			$userid=$userrow['uid']; 
+			$userdir=$userrow['folder'];
+			
 		}
 		else
 		{

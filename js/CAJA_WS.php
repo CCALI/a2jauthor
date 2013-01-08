@@ -9,8 +9,9 @@ $userdir=$_SESSION['userdir'];if (!isset($userdir))$userdir=0;
 $command=$_REQUEST['cmd'];
 $result=array();
 $err="";
-
-$mysqli=""; require "./CONFIG.php";
+$mysqli="";
+$drupaldb="";
+require "./CONFIG.php";
 // check connection
 if (mysqli_connect_errno()) {
   exit('Connect failed: '. mysqli_connect_error());
@@ -19,22 +20,32 @@ if (mysqli_connect_errno()) {
 switch ($command)
 {
 	case 'login':
-		// login user, return name and user id.
-		// get user,pass
-		$user=$mysqli->real_escape_string($_REQUEST['username']);
-		$pass=$mysqli->real_escape_string($_REQUEST['userpass']);
-		// look up user/pass
-		$res=$mysqli->query("select * from usersbeta where username='$user' and plainpass='$pass'");//HASH the pass! (actually we'll link to Drupal users eventually instead.
+		//Use Drupal to login;
+		//This will need to be abstracted out for folks not using Drupal
+		$user=$drupaldb->real_escape_string($_REQUEST['username']);
+		$pass=$drupaldb->real_escape_string($_REQUEST['userpass']);
+		$pass = MD5($pass);
+		$res=$drupaldb->query("select * from users where name='$user' and pass='$pass'");
 		if ($row=$res->fetch_assoc()){
-			$result['nickname']=$row['nickname'];
-			$userid=$row['uid']; 
-			$userdir=$row['folder'];
+			$checkuser=$mysqli->query("select * from usersbeta where username='$user'");
+			$numrows=$checkuser->num_rows;
+			if (!$numrows){
+			  mkdir(GUIDES_DIR.$user, 0700);
+			  $mysqli->query("insert into usersbeta (username, pass, folder) values ('$user', '$pass', '$user')");
+			  $checkuser=$mysqli->query("select * from usersbeta where username='$user'");
+			}
+			$userrow=$checkuser->fetch_assoc();
+			$result['nickname']=$userrow['name'];
+			$userid=$userrow['uid']; 
+			$userdir=$userrow['folder'];
+			
 		}
 		else
 		{
 			$userid=0;
 			$userdir=0;
 		}
+		
 		$result['userid']=$userid;
 		$_SESSION['userid']=$userid;
 		$_SESSION['userdir']=$userdir;

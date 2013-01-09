@@ -31,11 +31,18 @@ switch ($command)
 			$numrows=$checkuser->num_rows;
 			if (!$numrows){
 			  mkdir(GUIDES_DIR.$user, 0700);
-			  $mysqli->query("insert into usersbeta (username, pass, folder) values ('$user', '$pass', '$user')");
+			  $uid=$row['uid'];
+			  //the next lines do a deep dive into Drupal profiles
+			  //and will need to be custom to each server install
+			  $nameres=$drupaldb->query("SELECT group_concat(pv.value SEPARATOR ' ') AS fullname from profile_values pv where pv.uid = $uid and pv.fid in (1,2)");
+			  $namerow=$nameres->fetch_assoc();
+			  $fullname=$namerow['fullname'];
+			  //end Drupal profile stuff
+			  $mysqli->query("insert into usersbeta (username, pass, nickname, folder) values ('$user', '$pass', '$fullname', '$user')");
 			  $checkuser=$mysqli->query("select * from usersbeta where username='$user'");
 			}
 			$userrow=$checkuser->fetch_assoc();
-			$result['nickname']=$userrow['name'];
+			$result['nickname']=$userrow['nickname'];
 			$userid=$userrow['uid']; 
 			$userdir=$userrow['folder'];
 			

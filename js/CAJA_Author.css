@@ -31,7 +31,7 @@ html, body, input, select, textarea , .htmledit, .codeedit {
 :-ms-input-placeholder {			color: #555;font-style:italic;}
 html, body {
 	font-family:   Verdana, Arial, Helvetica, sans-serif;
-	font-size: 10px;
+	font-size: 12px;
 	height:100%;
 	width:100%;
 	margin:0;
@@ -50,36 +50,20 @@ html, body {
 /**************************/
 /* Sam's custom */
 
-#guidepanel {
-	position:fixed;
-	top: 0px;
-	left:0px;
-	right:0px;
-	bottom: 0px;
-}
-#guidepanel.ui-tabs > .ui-tabs-nav{
-	margin-left: 40px;
-}
-#tabnav {
-	xposition:fixed;
-	position:absolute;
-	top: 32px;
-	left: 0;
-	right: 66%;
-	bottom: 20px;
-}
-#tabviews {
-	xposition:fixed;
-	position:absolute;
-	top: 32px;
-	left: 33%;
-	right: 0;
-	bottom: 20px;
-}
+
 #welcome > div {
 	background-image: url(img/blank_guide2front.png);
 	background-repeat: no-repeat;
 	padding-left: 150px;
+}
+
+.authortool {
+	height:100%;
+	width:100%;
+	margin:0;
+	padding:0;
+	overflow: hidden;
+	background-color:#888;
 }
 
 #cajaheader {
@@ -95,21 +79,27 @@ html, body {
 	height: 32px;
 	background-image: url(img/A2J5_Icon_32.png);
 }
-#cajatitle  {
+#guidetitle  {
 	text-align: center;
 	top:4px;
 	position: fixed;
 	left:40px;
 	right:40px;
 }
-x#cajasettings  {
-	top:0;
-	right:0;
+#settings {
 	position: fixed;
+	right: 5px;
 	z-index: 2;
 }
-x#cajasettings li {
-	width: 150px;
+.guideio {
+	position: fixed;
+	left: 5px;
+	top: 35px;
+}
+#guideClose {
+	position: fixed;
+	right: 5px;
+	top: 35px;
 }
 #cajafooter {
 	border-top : 2px solid #cccccc;
@@ -123,12 +113,58 @@ x#cajasettings li {
 	background-color: #fff;
 }
 
-
+.guidepanels {
+	position: fixed;
+	right:4px;
+	top: 64px;
+	bottom:24px;
+	left:125px;
+	padding: 15px;
+	padding-left: 40px;
+	background-color: #f8f8ff;
+	background-color: #dde8ff;
+}
+.guidemenu {
+	font-family: Serif;
+	margin: 0px;
+	position:  fixed;
+	left:10px;
+	top: 80px;
+	right:150px;
+	xbottom:0px;
+	width: 112px;
+	border : 1px solid #cccccc;
+	background-color: #eef;
+	z-index: 1;
+}
+.guidemenu ul {
+	font-size: 15px;
+	margin: 1px;
+	padding: 1px;
+}
+.guidemenu ul li {
+	height: 25px;
+	padding: 5px;
+	padding-top: 8px;
+	padding-bottom: 0px;
+	list-style: none;
+	margin: 0px;
+	background-repeat: no-repeat;
+	cursor: default;
+} 
+.guidemenu ul li:hover {
+	font-weight: bold;
+	background-color: #cdf;
+}
+.guidemenu ul li.selected {
+	font-weight: bold;
+	background-color: #cdf;
+	background: url("img/main_tab_selected.png") no-repeat scroll -55px center transparent;
+	overflow: visible;
+	width: 200px;
+}
 .ui-tabs .ui-tabs-nav li { 
 	xfont-size: .9em;
-}
-.pagelist {
-	xfont-size: .8em;
 }
 
 .pagelist ul { 
@@ -136,20 +172,21 @@ x#cajasettings li {
 	list-style-type: square;
 	font-style: normal;
 	padding: 0px;
+	padding-left: 2em;
 }
 #CAJAOutline.pagelist ul { 
 	xlist-style-image: url(img/new.gif);
-	list-style: bullet;
+	list-style-type:: bullet;
 	margin-left: 1em;
 }
 #CAJAIndex.pagelist ul { 
-	list-style-type: none;
-	margin-left: 0em;
+	list-style-type:: bullet;
+	margin-left: 1em;
 }
 
 .pagelist * li:hover{
 	background-color:#eee;
-	color:#222;
+	color: #222;
 	cursor: pointer;
 }
 
@@ -525,7 +562,7 @@ background-color:#ddf;
 */
 textarea {
 	width: 95%;
-	font-size: 100%;
+	font-size: 1em;
 }
 #outline {
 	border:thin solid #00FF99;
@@ -583,29 +620,6 @@ select {
 .hidestart {
 	visibility: hidden;
 }
-
-.authortool {
-	height:100%;
-	width:100%;
-	margin:0;
-	padding:0;
-	overflow: hidden;
-}
-
-
- /*********** TinyMCE ***************/
-.mceExternalToolbar {
-	xposition: fixed !important;
-	top: 60px !important;
-	text-align: center;
-
-	position: absolute !important;
-	xtop: -20px !important;
-	left: 0px;
-
-	z-index: 12;
-}
-
 
 
 
@@ -694,7 +708,7 @@ li.guide:hover {
 	height: 100%;
 }
 
-#tabsAbout, #tabsPageEdit, #tabsGuide, #tabsPageView, #tabsVariables, #tabsMapper, #tabsConstants, #tabsSteps, #tabsLogic, #tabsText /*,  #tabsCAJA*/ {
+/*#tabsAbout, #tabsPageEdit, #tabsGuide, #tabsPageView, #tabsVariables, #tabsMapper, #tabsConstants, #tabsSteps, #tabsLogic, #tabsText {
 	overflow: hidden;
 	margin:0;
 	padding:0;
@@ -702,12 +716,12 @@ li.guide:hover {
 	height: 100%;
 	border: none;
 }
+*/
 .tabsPanel { 
 	height: 100%;
 	overflow: scroll;
 	border: 2px thick #f00;
 }
-
 .page-edit-form-panel .tabsPanel{
 	xbackground-color:#cfa;
 	overflow: hidden;
@@ -728,6 +742,13 @@ li.guide:hover {
 	bottom:10px;	
 	overflow: auto;
 	border: none;
+}
+#tabsPages .tabContentFrame {
+	top: 7em;
+	bottom: 3em;
+}
+#tabsPages .tabContentFrame .tabContent  { 
+	background-color: #fff;
 }
 #tabsVariables .tabContentFrame {
 	top: 5em;

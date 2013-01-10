@@ -4,6 +4,195 @@
 	Pieces of obsolete code that might prove useful later.
 */
 
+/*#guidepanel {
+	position:fixed;
+	top: 0px;
+	left:0px;
+	right:0px;
+	bottom: 0px;
+}
+#guidepanel.ui-tabs > .ui-tabs-nav{
+	margin-left: 40px;
+}
+#tabnav {
+	xposition:fixed;
+	position:absolute;
+	top: 32px;
+	left: 0;
+	right: 66%;
+	bottom: 20px;
+}
+#tabviews {
+	xposition:fixed;
+	position:absolute;
+	top: 32px;
+	left: 33%;
+	right: 0;
+	bottom: 20px;
+}*/
+
+
+function selectTab(target)
+{
+	$('#CAJAOutline li, #CAJAIndex li').each(function(){$(this).removeClass('ui-state-active')});
+	$('li').filter(function(){ return target == $(this).attr('target')}).each(function(){$(this).addClass('ui-state-active')});
+}
+
+	if (target.indexOf("STEP ")==0)
+	{
+		$('#tabviews').tabs('select','#tabsSteps');
+	}
+
+<div id="xguidepanel" class="tabset">
+		<ul>
+			<li><a href="#CAJAGuide">Guide</a></li>
+		</ul>
+		<div id="CAJAGuide">
+			<div id="tabnav" class="ui-layout-west tabset" >
+				<ul>
+					<li><a href="#CAJAOutline">Outline</a></li>
+					<li><a href="#CAJAIndex">Index</a></li>
+					<!--<li><a href="#tabsfind">Search</a></li>-->
+				</ul>
+				<div class="ui-layout-content">
+					<div id="CAJAOutline" class="pagelist tabContentFrame">
+						<ul>
+						</ul>
+					</div>
+					<div id="CAJAIndex" class="pagelist tabContentFrame">
+						<ul>
+						</ul>
+					</div>
+					<!--			<div id="tabsfind"> Find? </div>-->
+				</div>
+			</div>
+			<div id="tabviews" class="ui-layout-center tabset">
+				<ul>
+					<li><a href="#tabsGuide">Authoring</a></li>
+					<li><a href="#tabsAbout">About</a></li>
+					<!--<li><a href="#tabsMapper">Map</a></li>-->
+					<li><a href="#tabsVariables">Variables</a></li>
+					<!--<li><a href="#tabsConstants">Constants</a></li>-->
+					<li><a href="#tabsSteps">Steps</a></li>
+					<li><a href="#tabsLogic">All Logic</a></li>
+					<li><a href="#tabsText">All Text</a></li>
+				</ul>
+				<div class="ui-layout-content">
+					<!--<div id="tabsMapper">
+					<div class="tabHeader">
+						<button zoom="fit"></button>
+						<button zoom="1.2"></button>
+						<button zoom="0.8"></button>
+						<button ></button>
+						<button ></button>
+					</div>
+					<div id="MapperPanel">
+						<div class="map"></div>
+					</div>
+				</div>-->
+					<div id="tabsGuide">
+						<div class="tabHeader"></div>
+						<div class="tabContentFrame">
+							<div class="tabContent editq">Welcome to A2J Author 5.
+								<p>Not sure where to start? Try some of these authoring resources:
+								<ul>
+									<li>Best Practices</li>
+									<li>Authoring system</li>
+								</ul>
+								</p>
+							</div>
+						</div>
+					</div>
+					<div id="tabsAbout">
+						<div class="tabHeader">About this guide</div>
+						<div class="tabContentFrame">
+							<div class="tabContent editq"></div>
+						</div>
+					</div>
+					<div id="tabsVariables">
+						<div class="tabHeader">Variables used in this guide</div>
+						<div class="tabContentFrame">
+							<div class="tabContent editq"></div>
+						</div>
+						<div class="tabFooter">
+							<button id="var-add">Add Variable</button>
+						</div>
+					</div>
+					<!--<div id="tabsConstants">
+					<div class="tabHeader"></div>
+					<div class="tabContentFrame">
+						<div class="tabContent editq"></div>
+					</div>
+				</div>
+				-->
+					<div id="tabsSteps">
+						<div class="tabHeader"></div>
+						<div class="tabContentFrame">
+							<div class="tabContent editq"></div>
+						</div>
+					</div>
+					<div id="tabsLogic">
+						<div class="tabHeader">
+							<form>
+								<div id="showlogic">
+									<input checked="checked" type="radio" id="showlogic1" name="showlogic" />
+									<label for="showlogic1">Show only active code</label>
+									<input type="radio" id="showlogic2" name="showlogic" />
+									<label for="showlogic2">Show all code blocks</label>
+								</div>
+							</form>
+						</div>
+						<div class="tabContentFrame">
+							<div class="tabContent editq"></div>
+						</div>
+					</div>
+					<div id="tabsText">
+						<div class="tabHeader">
+							<form>
+								<div id="showtext">
+									<input checked="checked" type="radio" id="showtext1" name="showtext" />
+									<label for="showtext1">Show only filled text</label>
+									<input type="radio" id="showtext2" name="showtext" />
+									<label for="showtext2">Show all text blocks</label>
+								</div>
+							</form>
+						</div>
+						<div class="tabContentFrame">
+							<div class="tabContent editq"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+x#cajasettings  {
+	top:0;
+	right:0;
+	position: fixed;
+}
+x#cajasettings li {
+	width: 150px;
+}
+
+   if (typeof tinyMCE === "undefined") tinyMCE = {};
+
+
+
+ /*********** TinyMCE ***************/
+.mceExternalToolbar {
+	xposition: fixed !important;
+	top: 60px !important;
+	text-align: center;
+
+	position: absolute !important;
+	xtop: -20px !important;
+	left: 0px;
+
+	z-index: 12;
+}
+
+
 function gotoTabOrPage(target)
 {
 	selectTab(target);
@@ -131,7 +320,7 @@ function loadGuideFile2(guideFile,startTabOrPage)
 					guideClose();
 					break;
 				case '#sample': 
-					loadGuideFile($(this).text(), "tabsAbout");
+					loadGuideFile($(this).text(), "");
 					break;
 				case '#mode1': setMode(1); break;
 				case '#mode2': setMode(2); break;

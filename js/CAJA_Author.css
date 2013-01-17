@@ -189,6 +189,19 @@ html, body {
 	color: #222;
 	cursor: pointer;
 }
+.tabsPages {
+	position: absolute;
+	top:0px;
+	left:0px;
+	right: 70%;
+	bottom:0px;
+	background-color:#fff;
+	overflow: auto;
+}
+
+
+
+
 
 
 .editicons {
@@ -212,14 +225,17 @@ table.A2JSteps tr td, table.A2JVars tr td {
 	border:1px solid #111;
 	padding:1em;
 }
-table.A2JSteps tr:nth-child(3n+1) {
-background-color:#fdd;
+.step0 {
+	background-color:#fff;
 }
-table.A2JSteps tr:nth-child(3n+2) {
-background-color:#dfd;
+.step1, table.A2JSteps tr:nth-child(3n+1) {
+	background-color:#fdd;
 }
-table.A2JSteps tr:nth-child(3n+3) {
-background-color:#ddf;
+.step2, table.A2JSteps tr:nth-child(3n+2) {
+	background-color:#dfd;
+}
+.step3, table.A2JSteps tr:nth-child(3n+3) {
+	background-color:#ddf;
 }
 table.A2JVars tr:nth-child(even) {
 background-color:#fff;
@@ -733,8 +749,7 @@ li.guide:hover {
 	margin-left: 10px;
 	margin-right: 10px;
 }
-/* Mapper */
-.tabContentFrame, #MapperPanel { 
+.tabContentFrame { 
 	position: absolute;
 	top: 55px;
 	left: 10px;
@@ -769,25 +784,44 @@ li.guide:hover {
 }
 
 
+/* Mapper */
+#tabsMapper{
+	position: absolute;
+	top: 0px;
+	left: 33%;
+	right:10px;
+	bottom:10px;	
+	overflow: auto;
+	border: none;
+}
+#MapperPanel {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	right:10px;
+	bottom:35px;	
+	overflow: auto;
+	border: none;
+}
+.tabFoooter {
+	position: absolute;
+	bottom: 0px;
+}
 
 .map {
 	background-color:#fff;
-	width: 1500px;
-	height: 1500px;
+	xwidth: auto;
+	xwidth: 1500px;
+	xheight: 1500px;
 	overflow: none;
 	border: 2px thick #0f0;
 	position: relative;
 }
 
-x.map {
-	height: 100%;
-	width: 100%;
-	padding: 15px;
-	position: relative;
-}
 .map  .node {
+
 	font-size: 12px;
-	background-color: #D0F0F0;
+	xbackground-color: #D0F0F0;
 	margin: 0px;
 	padding: 4px;
 	width: 130px;
@@ -825,9 +859,10 @@ x.map {
 	border: 2px double;
 }
 .node .text {
+	height: 100%;
+	xwidth: 150px;
+	xtext-align: center;
 	overflow: hidden;
-	height: 35px;
-	width: 100px;
 }
 .map .branch {
 	font-size: 8px;
@@ -864,7 +899,8 @@ x.map {
 	background-repeat:no-repeat;
 	width:16px;
 	height:20px;
-	margin-top: -5px;
+	left: 67px;
+	top: -21px;
 }
 
 div.codeedit.haserr {

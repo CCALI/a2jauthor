@@ -13,16 +13,16 @@ var prefs= {
 
 gDev=0;
 
-/*       * /
+/*       */
 function DEBUGSTART(){
 	gUserNickName='Tester';
 	gUserID=0;
 	$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist"></p>');
 	var SAMPLES = [
+		//"/a2j4guides/Logic Tests.a2j",
 		"tests/data/A2J_ULSOnlineIntake081611_Interview.xml",
 		"tests/data/A2J_ULSOnlineIntake081611_Interview.xml#1b Submit Application for Review",
 		"tests/data/Field Characters Test.a2j",
-		"/a2j4guides/Logic Tests.a2j",
 		"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name",
 		"tests/data/A2J_NYSample_interview.xml",
 		"tests/data/Field Characters Test.a2j#4-1 If thens",
@@ -433,16 +433,16 @@ function gotoTabOrPage(target)
 {	// Go to a tab or popup a page.
 	trace(target);
 
-	$('#CAJAOutline li, #CAJAIndex li').each(function(){$(this).removeClass('ui-state-active')});
-	$('li').filter(function(){ return target == $(this).attr('target')}).each(function(){$(this).addClass('ui-state-active')});	
+	//$('#CAJAOutline li, #CAJAIndex li').each(function(){$(this).removeClass('ui-state-active')});
+	//$('li').filter(function(){ return target == $(this).attr('target')}).each(function(){$(this).addClass('ui-state-active')});	
 	
 	if (target.indexOf("PAGE ")==0)
 	{
 		gotoPageEdit(target.substr(5));
 	}
 	else{
-		$('.guidemenu ul li').removeClass('selected');
-		$('.guidemenu ul li[ref="'+target+'"]').addClass('selected');
+		//$('.guidemenu ul li').removeClass('selected');
+		//$('.guidemenu ul li[ref="'+target+'"]').addClass('selected');
 		$('.panel').hide();
 		$('#'+target).show();
 		switch (target)
@@ -914,8 +914,8 @@ function prompt(status)
 }
 function loadNewGuidePrep(guideFile,startTabOrPage)
 {
-	prompt('Loading '+guideFile);
-	prompt('Start location will be '+startTabOrPage);
+	//prompt('Loading '+guideFile);
+	//prompt('Start location will be '+startTabOrPage);
 	//$('.CAJAContent').html('Loading '+guideFile+AJAXLoader);
 	$('#CAJAOutline, #CAJAIndex').html('');
 }
@@ -932,7 +932,7 @@ function guideClose()
 
 function guideStart(startTabOrPage)
 { 
-	if (startTabOrPage == '') startTabOrPage='tabsAbout';
+	if (startTabOrPage == '') startTabOrPage='tabsPages';//'tabsAbout';
 	
 	$('#authortool').removeClass('hidestart').addClass('authortool').show();
 	$('#welcome').dialog('close');
@@ -965,16 +965,24 @@ function guideStart(startTabOrPage)
 		close: function() {
 		}});
 		*/
-	//buildMap();
+	buildMap();
 }
 function updateTOC()
 {
 	$('#CAJAOutline').html(gGuide.IndexOutlineHTML());
 	$('#CAJAIndex').html(gGuide.IndexAlphaHTML());
-	$('#CAJAOutline li, #CAJAIndex li').click(function (){
-		var target=$(this).attr('target')
-		gotoTabOrPage(target);
-	});//.dblclick(showPageToEdit);
+	$('#CAJAOutline li, #CAJAIndex li')
+		.dblclick(function (){
+			var target=$(this).attr('target')
+			$('#CAJAOutline li, #CAJAIndex li').removeClass('ui-state-active');
+			$(this).addClass('ui-state-active')
+			gotoTabOrPage(target);
+		})
+		.click(function(e){
+			if (!e.ctrlKey)
+				$('#CAJAOutline li, #CAJAIndex li').removeClass('ui-state-active');
+			$(this).toggleClass('ui-state-active');
+		});
 }
 function guideloaded(data)
 {

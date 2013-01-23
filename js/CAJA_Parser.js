@@ -207,8 +207,16 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		
 		page.type=PAGE.attr("TYPE");
 		page.style=makestr(PAGE.attr("STYLE"));
-		page.mapx=parseInt(PAGE.attr("MAPX"));
-		page.mapy=parseInt(PAGE.attr("MAPY"));
+		if (page.type==CONST.ptPopup || page.type=="Pop-up page")
+		{
+			page.type=CONST.ptPopup;
+			page.mapx=null;
+		}
+		else
+		{
+			page.mapx=parseInt(PAGE.attr("MAPX"));
+			page.mapy=parseInt(PAGE.attr("MAPY"));
+		}
 		page.repeatVar=makestr(PAGE.attr("REPEATVAR"));
 		//page.nextPage="";
 		//page.nextPageDisabled = false;

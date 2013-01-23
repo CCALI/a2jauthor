@@ -4,7 +4,7 @@
 	Mapper
 */
 
-var mapperScale=1;
+var mapperScale=1.0;
 var mapSize= 1 ; //0 is small, 1 is normal
 
 
@@ -14,7 +14,7 @@ function showPageOnMap()
 	var target=$(this).attr('target');
 }
 
-var GRID_MAP =  {x : 5 , y : 5 };
+var GRID_MAP =  {x : 10 , y : 10 };
 //var GRID_MAP =  {x : 50 , y : 20 };
 var NODE_SIZE = {w : 150, h : 36+8};
 
@@ -70,7 +70,7 @@ function buildMap()
 			if (page.step==0) stepc=0;
 			else stepc=(page.step%4)+1;
 			$map.append(''					
-				+'<div class="node step'+(stepc)+'" rel="'+page.name.asHTML()+'" style="z-index:1; left:'+nodeLeft+'px;top:'+nodeTop+'px;">'
+				+'<div class="node Step'+(stepc)+'" rel="'+page.name.asHTML()+'" style="z-index:1; left:'+nodeLeft+'px;top:'+nodeTop+'px;">'
 				+(page.type==CONST.ptPopup ? '':'<div class="arrow"></div>')
 				+'<div class="text">'+page.name+'</div></div>'
 				);
@@ -80,25 +80,48 @@ function buildMap()
 		}
 	}
 	//$('.branch',$map).click(function(){focusNode($('.map > .node[rel="'+$(this).attr('rel')+'"]'));	});
-	//$('.node',$map).click(function(){	focusNode($(this));});
+	$('.node',$map).dblclick(function(){
+			var target=$(this).attr('rel')
+			//$('#CAJAOutline li, #CAJAIndex li').removeClass('ui-state-active');
+			//$(this).addClass('ui-state-active')
+			gotoPageEdit(target);
+	;});
 	
 	mapLines();
-	$( ".node" ).draggable({
+	//$( ".node" ).draggable({	
+	$map.traggable({
 		grid: [GRID_MAP.x, GRID_MAP.y],
 		start: function(event,ui){
-			trace(ui.position);
 		},
 		stop: function(event,ui){
-			trace(ui.position);
-			trace($(this).attr('rel'));
-			var page = gGuide.pages[$(this).attr('rel')];
+			var node=ui.node;
+			var page = gGuide.pages[$(node).attr('rel')];
 			page.mapx=ui.position.left;
 			page.mapy=ui.position.top;
 			mapLines();
 		}
+		
 	});
-//	focusPage()
 }
+/*
+function focusPage()
+{
+	focusNode($('.map > .node[rel="'+page.mapid+'"]'))
+}
+*/
+
+function mapZoomClick()
+{ 
+	var zoom=parseFloat($(this).attr('zoom'));
+	if (zoom>0)
+		mapperScale = mapperScale * zoom;
+	if (mapperScale>=.9) mapperScale=1;
+	$('.map').traggable('changeScale',mapperScale);
+	//$('.map').css({zoom:mapperScale,"-moz-transform":"scale("+mapperScale+")","-webkit-transform":"scale("+mapperScale+")"});
+}
+
+
+
 function mapLines()
 {
 	var NW=NODE_SIZE.w;
@@ -164,24 +187,17 @@ function mapLines()
 			}
 		}
 	}
-	trace($map.width(),$map.innerWidth());
+	//trace('widths:',$map.css('width'),$map.width(),$map.innerWidth());
 	//$map.width($map.width()+100).height($map.height()+100);
-	
-//	$('.branch',$map).click(function(){focusNode($('.map > .node[rel="'+$(this).attr('rel')+'"]'));	});
+	//	$('.branch',$map).click(function(){focusNode($('.map > .node[rel="'+$(this).attr('rel')+'"]'));	});
 }
 
 function lineV(left,top,height)
 {
-	return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:1px;height:'+height+'px;"></div>';
+	return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:2px;height:'+height+'px;"></div>';
 }
 function lineH(left,top,width)
 {
-	return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:'+width+'px;height:1px;"></div>';
+	return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:'+width+'px;height:2px;"></div>';
 }
-/*
-function focusPage()
-{
-	focusNode($('.map > .node[rel="'+page.mapid+'"]'))
-}
-*/
 

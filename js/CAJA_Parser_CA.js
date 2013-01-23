@@ -51,9 +51,10 @@ function parseXML_CA_to_CAJA(BOOK)
 		var pageXML = $(this);
 		var page = new TPage();
 		if (SHOWXML) page.xml = $(this).xml();
-		page.id=pageXML.attr("ID");
-		page.name=page.id;
+		page.name=pageXML.attr("ID");
+		//page.name=page.id;
 		page.type=pageXML.attr("TYPE");
+		
 		page.style=makestr(pageXML.attr("STYLE"));
 		page.nextPage="";
 		page.nextPageDisabled = false;

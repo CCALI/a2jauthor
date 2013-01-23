@@ -12,22 +12,24 @@ var prefs= {
 }
 
 gDev=0;
+var $pageEditDialog;
 
-/*       */
+/*       * /
 function DEBUGSTART(){
 	gUserNickName='Tester';
 	gUserID=0;
 	$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist"></p>');
 	var SAMPLES = [
-		//"/a2j4guides/Logic Tests.a2j",
+		"/a2j4guides/Field Types Test.a2j",
+		"/a2j4guides/Logic Tests.a2j",
 		"tests/data/A2J_ULSOnlineIntake081611_Interview.xml",
 		"tests/data/A2J_ULSOnlineIntake081611_Interview.xml#1b Submit Application for Review",
 		"tests/data/Field Characters Test.a2j",
-		"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name",
 		"tests/data/A2J_NYSample_interview.xml",
 		"tests/data/Field Characters Test.a2j#4-1 If thens",
 		"tests/data/Field Characters Test.a2j#1-5 Fields Test 1",
 		"tests/data/Field Characters Test.a2j#0-1 Intro",
+		"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name",
 		"tests/data/CBK_CAPAGETYPES_jqBookData.xml", 
 		"tests/data/CBK_CAPAGETYPES_jqBookData.xml#MC Choices 3: 4 choices", 
 		"tests/data/A2J_MobileOnlineInterview_Interview.xml",
@@ -107,13 +109,8 @@ function CAJA_Initialize() {
 		form.listManagerSave($tbl);
 	});
 	
-	$('#tabsMapper button').click(function(){ 
-		var zoom=parseFloat($(this).attr('zoom'));
-		if (zoom>0)
-			mapperScale = mapperScale * zoom; 
-		$('.map').css({zoom:mapperScale,"-moz-transform":"scale("+mapperScale+")","-webkit-transform":"scale("+mapperScale+")"});
-	});
-	$('#tabsMapper button').first().button({label:'Fit',icons:{primary:'ui-icon-arrow-4-diag'}}).next().button({label:'Zoom in',icons:{primary:'ui-icon-zoomin'}}).next().button({label:'Zoom out',icons:{primary:'ui-icon-zoomout'}});
+	$('#tabsMapper button').click(mapZoomClick);
+	$('#tabsMapper button').first().button({disabled:true,label:'Fit',icons:{primary:'ui-icon-arrow-4-diag'}}).next().button({label:'Zoom in',icons:{primary:'ui-icon-zoomin'}}).next().button({label:'Zoom out',icons:{primary:'ui-icon-zoomout'}});
 	
 	
 	$('#vars_load').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
@@ -131,23 +128,6 @@ function CAJA_Initialize() {
 	$('#showpagelist1').click(function(){prefs.ShowPageList=1;$('#CAJAOutline, #CAJAIndex').hide();$('#CAJAOutline').show();});
 	$('#showpagelist2').click(function(){prefs.ShowPageList=2;$('#CAJAOutline, #CAJAIndex').hide();$('#CAJAIndex').show();});
 
-	
-	/*
-	$('#tabviews').bind('tabsselect', function(event, ui) {
-		switch (ui.panel.id){
-			case 'tabsAbout':
-			case 'tabsVariables':
-			case 'tabsSteps':
-			case 'tabsLogic':
-			case 'tabsText':
-			case 'tabsConstants':
-				gGuide.noviceTab(ui.panel.id);
-				break;
-	
-			default:
-		}
-		}); 
-*/
 
    //   if (typeof initAdvanced != "undefined")      initAdvanced();
 
@@ -168,33 +148,10 @@ function CAJA_Initialize() {
    // Tips
    //window.setTimeout(hovertipInit, 1);
 
-   // Click on section header to expand/collapse.
-   if (0) $(".header").click(function () {
-      $(this).next().toggle();
-      //$(this).toggleClass('.sectionheader .collapsable');
-   });
-
 
    // Draggable
    $('.hotspot').draggable({ containment: 'parent' }).resizable().fadeTo(0.1, 0.9);
 
-
-   /*
-   //8/3/2012 http://stackoverflow.com/questions/1176245/how-do-you-set-the-jquery-tabs-to-form-a-100-height
-   function resizeUi() {
-		 
-   var h = $(window).height()-60;
-   var w = $(window).width();
-   $("#tabs").css('height', h-95 );
-   $(".ui-tabs-panel").css('height', h-140 );
-   };
-   var resizeTimer = null;
-   $(window).bind('resize', function() {
-   if (resizeTimer) clearTimeout(resizeTimer);
-   resizeTimer = setTimeout(resizeUi, 100);
-   });
-   resizeUi();
-   */
 
 	if (typeof DEBUGSTART!=="undefined")
 	{
@@ -234,8 +191,10 @@ function CAJA_Initialize() {
 			$(this).dialog("close");
 		 }}
 	]});
-						
-						
+
+	$pageEditDialog =  $('.page-edit-form');
+
+/*
 	$('#viewer-var-form').dialog({ 
 		autoOpen:false,
 		width: 405,
@@ -250,6 +209,8 @@ function CAJA_Initialize() {
 			$(this).dialog("close");
 		 }}
 	]});
+	
+	
 	$('#viewer-logic-form').dialog({ 
 		autoOpen:false,
 		width: 405,
@@ -264,13 +225,15 @@ function CAJA_Initialize() {
 		{text:'Close',click:function(){ 
 			$(this).dialog("close");
 		 }}
-	]}); 
+	]});
+	*/
 	//$('#viewer-logic-form').dialog('moveToTop').dialog('open');
-	
+	$('#page-viewer').hide();
+	/*
 	$('#page-viewer').dialog({ 
 		title:'A2J Viewer',
 		autoOpen:false,
-		width: 975,
+		width: 800,
 		height: 600,
 		modal:false,
 		minWidth: 300,
@@ -290,7 +253,7 @@ function CAJA_Initialize() {
 			$(this).dialog( "option", "stack", true );
 		 }}
 	]});
-
+	*/
 	$('#var-add').button({icons:{primary:'ui-icon-trash'}}).click(varAdd);
 	
 	
@@ -372,28 +335,62 @@ function signinask()
 	$( "#login-form" ).dialog( "open" );
 }
 
+function gotoPageView(destPageName)
+{  // navigate to given page (after tiny delay)
+   window.setTimeout(function(){
+      var page = gGuide.pages[destPageName]; 
+      if (page == null || typeof page === "undefined")
+      {
+         DialogAlert( {title:'Missing page',message:'Page is missing: '+ destPageName});
+         traceLogic('Page is missing: '+ destPageName);
+      }
+      else
+      {
+         gPage=page;
+			$('#authortool').hide();
+         a2jviewer.layoutpage($('.A2JViewer','#page-viewer'),gGuide,gGuide.steps,gPage);
+         $('#page-viewer').removeClass('hidestart').show();//dialog('moveToTop').dialog('open' );//.dialog( "option", "stack", false );
+			$('.A2JViewer').addClass('test',500);
+      }
+   },1);
+}
+
+
+function resumeEdit()
+{
+	$('#authortool').show();
+	$('#page-viewer').hide();
+	$pageEditDialog.dialog('open' );
+}
+/*function findPageDialog(pageName)
+{
+	return $('.page-edit-form').filter(function(){ return pageName == $(this).attr('rel')});
+}
+*/
 
 function gotoPageEdit(pageName)
 {	// Bring page edit window forward with page content 
+	$('#authortool').show();
+	$('#page-viewer').hide();
    var page = gGuide.pages[pageName]; 
 	if (page == null || typeof page === "undefined") return;
 	$('#tabsLogic  .tabContent, #tabsText .tabContent').html("");//clear these so they refresh with new data. TODO - update in place
-	var $page =	$('.page-edit-form').filter(function(){ return pageName == $(this).attr('rel')});
-	if ($page.length==0)
+	//var $page =	findPageDialog(pageName);
+	//if ($page.length==0)
 	{
-		$page = $('.page-edit-form:first').clone(false,false);
-		$page.attr('rel',page.name);
-		$page.attr('title',page.name);
-		$page.dialog({ 
+		//$page = $('.page-edit-form:first').clone(false,false);
+		$pageEditDialog.attr('rel',page.name);
+		$pageEditDialog.attr('title',page.name);
+		$pageEditDialog.dialog({ 
 			autoOpen:false,
-			width: 850,
-			height: 600,
+			width: 750,
+			height: 500,
 			modal:false,
 			minWidth: 200,
-			minHeight: 500, maxHeight: 700,
+			minHeight: 300, maxHeight: 700,
 			
 			close: function(){
-				$(this).remove();//("destroy");
+				//$(this).remove();//("destroy");
 			},
 			buttons:[
 			{text:'Delete', click:function(){
@@ -417,17 +414,19 @@ function gotoPageEdit(pageName)
 			}},
 			{text:'Insert after', click:function(){ 
 			}},
-			{text:'Preview', click:function(){ 
-				gotoPageViewer($(this).attr('rel'));
+			{text:'Preview', click:function(){
+				var pageName=$(this).attr('rel');
+				gotoPageView(pageName);
+				$pageEditDialog.dialog("close");
 			}},
 			{text:'Close',click:function(){ 
 				$(this).dialog("close");
 			 }}
 		]});
-		var page = gGuide.novicePage($('.page-edit-form-panel',$page).html(''),page.name);	
+		var page = gGuide.novicePage($('.page-edit-form-panel',$pageEditDialog).html(''),page.name);	
 	}
-	$page.dialog('open' );
-	$page.dialog('moveToTop');
+	$pageEditDialog.dialog('open' );
+	$pageEditDialog.dialog('moveToTop');
 }
 function gotoTabOrPage(target)
 {	// Go to a tab or popup a page.
@@ -454,6 +453,9 @@ function gotoTabOrPage(target)
 			case 'tabsText':
 			case 'tabsConstants':
 				gGuide.noviceTab(target);
+				break;
+			case 'tabsPreview':
+				gotoPageView(gGuide.firstPage);
 				break;
 		}
 	}	
@@ -864,46 +866,6 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 
 
 
-/*
-
-//http://net.tutsplus.com/tutorials/javascript-ajax/creating-a-windows-like-interface-with-jquery-ui/
-var _init = $.ui.dialog.prototype._init;
-$.ui.dialog.prototype._init = function() {
-   //Run the original initialization code
-   _init.apply(this, arguments);
-   //set some variables for use later
-   var dialog_element = this;
-   var dialog_id = this.uiDialogTitlebar.next().attr('id');
-   //append our minimize icon
-   this.uiDialogTitlebar.append('<a href="#" id="' + dialog_id +
-   '-minbutton" class="ui-dialog-titlebar-minimize ui-corner-all">'+
-   '<span class="ui-icon ui-icon-minusthick"></span></a>');
-//this.uiDialogTitlebar.append($("<button class='options'>Options</button>").button());
-   //append our minimized state
-   $('#dialog_window_minimized_container').append(
-      '<div class="dialog_window_minimized ui-widget ui-state-default ui-corner-all" id="' +
-      dialog_id + '_minimized">' + this.uiDialogTitlebar.find('.ui-dialog-title').text() +
-      '<span class="ui-icon ui-icon-newwin"></div>');
-   //create a hover event for the minimize button so that it looks good
-   $('#' + dialog_id + '-minbutton').hover(function() {
-      $(this).addClass('ui-state-hover');
-   }, function() {
-      $(this).removeClass('ui-state-hover');
-   }).click(function() {
-      //add a click event as well to do our "minimalization" of the window
-      dialog_element.close();
-      $('#' + dialog_id + '_minimized').show();
-   });
-   //create another click event that maximizes our minimized window
-   $('#' + dialog_id + '_minimized').click(function() {
-      $(this).hide();
-      dialog_element.open();
-   });
-};
-*/
-
-
-
 
 
 function prompt(status)
@@ -1084,14 +1046,10 @@ TGuide.prototype.IndexOutlineHTML=function()
 	var ts="";
 	for (var s in this.steps)
 	{
-		ts+='<li target="STEP '+s+'">'+this.steps[s].number+". "+this.steps[s].text+"</li><ul>"+inSteps[s]+"</ul>";
+		ts+='<li target="STEP '+s+'">STEP '+this.steps[s].number+". "+this.steps[s].text+"</li><ul>"+inSteps[s]+"</ul>";
 	}
 	return "<ul>"
-			//+ '<li target="tabsAbout">'+lang.tabAbout+'</li>'
-			//+ '<li target="tabsMapper">'+'Map'+'</li>'
-			//+ '<li target="tabsVariables">'+lang.tabVariables+'</li>'
-			//+ '<li target="tabsConstants">'+lang.tabConstants+'</li>'
-			+ '<li target="tabsSteps">'+lang.tabSteps+'</li><ul>'+ts+'</ul>'
+			+ ts //'<li target="tabsSteps">'+lang.tabSteps+'</li><ul>'+ts+'</ul>'
 			+ '<li target="tabsPopups">'+lang.en('Popups')+'</li><ul>'+popups+'</ul>'
 			+"</ul>";
 }
@@ -1130,23 +1088,6 @@ function DialogConfirmYesNo(args)
 			 }
 		}
 	});
-}
-function gotoPageViewer(destPageName)
-{  // navigate to given page (after tiny delay)
-   window.setTimeout(function(){
-      var page = gGuide.pages[destPageName]; 
-      if (page == null || typeof page === "undefined")
-      {
-         DialogAlert( {title:'Missing page',message:'Page is missing: '+ destPageName});
-         traceLogic('Page is missing: '+ destPageName);
-      }
-      else
-      {
-         gPage=page;
-         a2jviewer.layoutpage($('.A2JViewer','#page-viewer'),gGuide,gGuide.steps,gPage);
-         $('#page-viewer').dialog('moveToTop').dialog('open' );//.dialog( "option", "stack", false );
-      }
-   },1);
 }
 
 
@@ -1242,7 +1183,7 @@ function varEdit(v/*TVariable*/)
 					gGuide.varDelete(this.name);
 				}});
 			}},
-			{text:'Update',click:function(){ 
+			{text:'Close',click:function(){ 
 				var name= $('#varname').val();
 				if(name!=v.name)//rename variable
 				{
@@ -1293,7 +1234,7 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 	
 	switch (tab){
 	
-	
+		
 		case "tabsVariables":
 			guide.buildTabVariables(t);
 			break;
@@ -1304,7 +1245,8 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 			break;
 		
 		case "tabsLogic":
-			t.append(form.note('All logic blocks in this interview'));
+			t.append(form.note(
+				prefs.ShowLogic==1 ? 'Showing only logic fields containing code' : 'Showing all logic fields'));
 			for (var p in guide.sortedPages)
 			{
 				var page=guide.sortedPages[p];
@@ -1325,7 +1267,8 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 			break;
 			
 		case "tabsText":
-			t.append(form.note('All non-empty page text blocks in this interview'));
+			t.append(form.note(
+				prefs.ShowText==1 ? 'All non-empty text blocks in this guide' : 'All text blocks in this guide'));
 			for (var p in guide.sortedPages)
 			{
 				var page=guide.sortedPages[p];
@@ -1685,7 +1628,7 @@ var form={
 		this.id++;
 		var e= $('<div>'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<div class=editspan><div spellcheck="false" contenteditable=true class="text editable taller codeedit"  rows='+4+'>'+data.value+'</div><div class="errors"></div></div></div>');
+			+'<div class=editspan><div spellcheck="false" contenteditable=true spellcheck=false class="text editable taller codeedit"  rows='+4+'>'+data.value+'</div><div class="errors"></div></div></div>');
 		$('.editable',e).blur(function(){
 			form.codeCheckSoon(this);
 			$('SPAN',$(this)).remove();

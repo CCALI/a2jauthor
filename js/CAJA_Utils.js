@@ -61,9 +61,11 @@ function htmlEscape(str) {
 String.prototype.asHTML=function(){
 	return htmlEscape(this);
 }
+/*
 String.prototype.asATTR=function(){
 	return this.replace(/'/g, "&#39;");
 }
+*/
 
 function makestr(s)
 {	// lazy test to make sure s is a string or blank, not "null" or "undefined"

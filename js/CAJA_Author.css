@@ -116,7 +116,7 @@ html, body {
 .guidepanels {
 	position: fixed;
 	right:4px;
-	top: 64px;
+	top: 68px;
 	bottom:24px;
 	left:125px;
 	padding: 15px;
@@ -125,7 +125,6 @@ html, body {
 	background-color: #dde8ff;
 }
 .guidemenu {
-	font-family: Serif;
 	margin: 0px;
 	position:  fixed;
 	left:10px;
@@ -177,7 +176,8 @@ html, body {
 #CAJAOutline.pagelist ul { 
 	xlist-style-image: url(img/new.gif);
 	list-style-type:: bullet;
-	margin-left: 1em;
+	margin-left: 0;
+	text-indent: 0;
 }
 #CAJAIndex.pagelist ul { 
 	list-style-type:: bullet;
@@ -225,18 +225,15 @@ table.A2JSteps tr td, table.A2JVars tr td {
 	border:1px solid #111;
 	padding:1em;
 }
-.step0 {
-	background-color:#fff;
-}
-.step1, table.A2JSteps tr:nth-child(3n+1) {
-	background-color:#fdd;
-}
-.step2, table.A2JSteps tr:nth-child(3n+2) {
-	background-color:#dfd;
-}
-.step3, table.A2JSteps tr:nth-child(3n+3) {
-	background-color:#ddf;
-}
+
+.Step0 { background-color: #ffffff; }
+.Step1, .Step7, table.A2JSteps tr:nth-child(3n+1) { background-color: #BDD6D6; }
+.Step2, .Step8, table.A2JSteps tr:nth-child(3n+2)  { background-color: #B7DDB7; }
+.Step3, .Step9, table.A2JSteps tr:nth-child(3n+3)  { background-color: #EFC68C; }
+.Step4, .Step10 { background-color:#E7E7B5; }
+.Step5, .Step11 { background-color:#EFDED6; }
+.Step6, .Step12 { background-color:#ECD8EA; }
+
 table.A2JVars tr:nth-child(even) {
 background-color:#fff;
 }
@@ -422,14 +419,6 @@ P.CAJAStep {
 	padding: .5em;
 	border: 1px solid #000;
 }
-.Step0 { background-color: #ffffff; }
-.Step1, .Step7 { background-color: #BDD6D6; }
-.Step2, .Step8 { background-color: #B7DDB7; }
-.Step3, .Step9 { background-color: #EFC68C; }
-.Step4, .Step10 { background-color:#E7E7B5; }
-.Step5, .Step11 { background-color:#EFDED6; }
-.Step6, .Step12 { background-color:#ECD8EA; }
-
 
 P.CAJAComment {
 	font-style: italic;
@@ -890,7 +879,7 @@ li.guide:hover {
 }
 .map   .line {
 	background-color: #000;
-	border: 1px #000;
+	border: 0px #000;
 	position: absolute;
 }
 .map   .arrow {

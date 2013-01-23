@@ -13,8 +13,7 @@
 	
 
 var a2jviewer={
-	header:'<ul class="NavBar"> <li><a href="#">Back</a></li> <li><a href="#">Next</a></li> <li>Progress: <select id="history"><option>Question 1</option><option>Question 2</option></select></li> <li class="right size3"><a href="#">A</a></li> <li class="right size2"><a href="#">A</a></li> <li class="right size1"><a href="#">A</a></li> <li class="right"><a href="#">Exit</a></li> <li class="right"><a href="#">Save</a></li> </ul> <div class="interact">This is some content </div>',
-	//header:'<div class="A2JViewer" title="A2J Viewer"><ul class="NavBar"> <li><a href="#">Back</a></li> <li><a href="#">Next</a></li> <li>Progress: <select id="history"><option>Question 1</option><option>Question 2</option></select></li> <li class="right size3"><a href="#">A</a></li> <li class="right size2"><a href="#">A</a></li> <li class="right size1"><a href="#">A</a></li> <li class="right"><a href="#">Exit</a></li> <li class="right"><a href="#">Save</a></li> </ul> <div class="interact">This is some content </div> </div>',
+	header:'<ul class="NavBar"> <li><a href="#">Back</a></li> <li><a href="#">Next</a></li> <li>Progress: <select id="history"><option>Question 1</option><option>Question 2</option></select></li>  <li class="right size2"><a href="#">A</a></li> <li class="right size1"><a href="#">A</a></li> <li class="right"><a href="#">Exit</a></li> <li class="right"><a href="#">Save</a></li> </ul><div class="interact">This is some content </div> <div id="a2jbtn"></div> ',
 	
 	IMG : "img/",
 
@@ -25,7 +24,27 @@ var a2jviewer={
 	layoutpage:function(div,guide,steps,page)
 	{	// layout page into interactive viewer. attach event handlers.
 	
-		traceLogic(traceTag('code','GOTO')+' '+ traceTag('page',page.name));
+		var html=this.header;
+		if ($(div).html()=="")//first time?
+		{
+			$(div).html(html);
+			$('#a2jbtn').click(function()
+			{
+				$('.A2JViewer').toggleClass('test',500);
+			});
+			$('#viewer-var-form').append('<div><button/><button/></div>');
+			$('#viewer-var-form div button').first()
+				.button({label:'Save',icons:{primary:'ui-icon-arrow-4-diag'}}).next()
+				.button({label:'Reload',icons:{primary:'ui-icon-zoomin'}});
+			if (typeof CAJA_Initialize != 'undefined'){
+				$('.A2JViewer').append('<div class="debugmenu"><button/><button/></div>');
+				$('.A2JViewer div.debugmenu button').first()
+					.button({label:'Resume editing',icons:{primary:'ui-icon-arrowreturnthick-1-w'}}).click(function(){resumeEdit()})
+//					.next().button({label:'Edit this page',icons:{primary:'ui-icon-pencil'}}).click(function(){gotoPageEdit(page.name)});//ui-icon-document-b
+					.next().button({label:'Testing',icons:{primary:'ui-icon-pencil'}}).click(function(){$('.A2JViewer').toggleClass('test',500);});
+			}
+		}
+		traceLogic(traceTag('code','PAGE')+' '+ traceTag('page',page.name));
 		//TODO loopcounter; break out if we are in infinite loop
 		
 		gLogic.GOTOPAGE=null;
@@ -35,12 +54,10 @@ var a2jviewer={
 		
 		
 		var curstep = page.step;
-		var question = page.text;
-		var help = page.help;
+		var question = gLogic.evalLogicHTML( page.text );
+		var help = gLogic.evalLogicHTML( page.help);
 
 		var stepcount=steps.length-curstep;
-		var html=this.header;
-		$(div).html(html);
 		$('.interact',div).html(a2jviewer.layoutstep(stepcount)); 
 		
 		$('.A2JViewer .ui-form.question').html(question + '<fieldset class="fieldlist"></fieldset><div class="buttonlist"></div>');
@@ -72,17 +89,18 @@ var a2jviewer={
    this.maxChars="";
 */
 			var defval=guide.varGet(f.name,varIndex);
+			var label = gLogic.evalLogicHTML(f.label);
 			var row=$('<div class="row"/>');
 			switch (f.type)
 			{
 				case CONST.ftText://"Text"
-				   row.append($('<label/>').attr('for',fid).html(f.label)).append($('<input type=text class=text id='+fid+'></input>').val(defval));
+				   row.append($('<label/>').attr('for',fid).html(label)).append($('<input type=text class=text id='+fid+'></input>').val(defval));
 				   break;
 				case CONST.ftTextLong://"Text (Long)"
-				   row.append($('<label/>').attr('for',fid).html(f.label)).append($('<textarea type=text class=textarea id='+fid+'></textarea>').val(defval));
+				   row.append($('<label/>').attr('for',fid).html(label)).append($('<textarea type=text class=textarea id='+fid+'></textarea>').val(defval));
 				   break;
 				case CONST.ftTextPick://"Text (Pick from list)"
-				   row.append($('<label/>').attr('for',fid).html(f.label)).append($('<select id='+fid+'></select>').val(defval));
+				   row.append($('<label/>').attr('for',fid).html(label)).append($('<select id='+fid+'></select>').val(defval));
 					
 					var list=["1","2","3"];
 					/*
@@ -102,38 +120,38 @@ var a2jviewer={
 					
 				   break;
 				case CONST.ftNumber://"Number"
-				    row.append($('<label/>').html(f.label)).append($('<input type=text class=number id='+fid+'></input>').val(defval));
+				    row.append($('<label/>').html(label)).append($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
 				case CONST.ftNumberDollar://"Number Dollar"
-				   row.append($('<label/>').html(f.label)).append($('<input type=text class=number id='+fid+'></input>').val(defval));
+				   row.append($('<label/>').html(label)).append($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
 				case CONST.ftNumberSSN://"Number SSN"
-				   row.append($('<label/>').html(f.label)).append($('<input type=text class=number id='+fid+'></input>').val(defval));
+				   row.append($('<label/>').html(label)).append($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
 				case CONST.ftNumberPhone://"Number Phone"
-				   row.append($('<label/>').html(f.label)).append($('<input type=text class=number id='+fid+'></input>').val(defval));
+				   row.append($('<label/>').html(label)).append($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
 				case CONST.ftNumberZIP://"Number ZIP Code"
-				   row.append($('<label/>').html(f.label)).append($('<input type=text class=number id='+fid+'></input>').val(defval));
+				   row.append($('<label/>').html(label)).append($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
 				case CONST.ftNumberPick://"Number (Pick from list)"
-				   row.append($('<label/>').attr('for',fid).html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   row.append($('<label/>').attr('for',fid).html(label)).append($('<input type=text id='+fid+'></input>').val(defval));
 				   break;
 				case CONST.ftDateMDY://"Date MM/DD/YYYY"
-				   row.append($('<label/>').attr('for',fid).html(f.label)).append($('<input type=text id='+fid+'></input>').val(defval));
+				   row.append($('<label/>').attr('for',fid).html(label)).append($('<input type=text id='+fid+'></input>').val(defval));
 				   break;
 				case CONST.ftGender://"Gender"
-					row.append($('<div/>').html(f.label));
+					row.append($('<div/>').html(label));
 					var fidM=fid+"M";
 					var fidF=fid+"F";
 				   row.append($('<input type=radio id="'+fidM+'" name="'+fname+'"></input>')).append($('<label/>').attr('for',fidM).html('Male'));
 				   row.append($('<input type=radio id="'+fidF+'" name="'+fname+'"></input>')).append($('<label/>').attr('for',fidF).html('Female'));
 				   break;
 				case CONST.ftRadioButton://"Radio Button"
-				   row.append($('<input type=radio id="'+fid+'" name="'+fname+'"></input>')).append($('<label/>').attr('for',fid).html(f.label));
+				   row.append($('<input type=radio id="'+fid+'" name="'+fname+'"></input>')).append($('<label/>').attr('for',fid).html(label));
 				   break;
 				case CONST.ftCheckBox://"Check box"
-				   row.append($('<input type=checkbox id="'+fid+'"  name="'+fname+'"></input>')).append($('<label/>').attr('for',fid).html(f.label));
+				   row.append($('<input type=checkbox id="'+fid+'"  name="'+fname+'"></input>')).append($('<label/>').attr('for',fid).html(label));
 				   break;
 				case CONST.ftCheckBoxNOTA://"Check Box (None of the Above)"
 					TODO(); 
@@ -196,16 +214,17 @@ var a2jviewer={
 			var bi=parseInt($(this).attr('num'));
 			var b=page.buttons[bi];
 			
+			traceLogic( 'You pressed ' + traceTag('ui',b.label));
 			if (b.name!="")
 			{	// Set button's variable 
-				guide.varSet(b.name,varIndex,b.value);				
+				guide.varSet(b.name,varIndex,b.value);
 			}
 			
 			// execute the logic
 			gLogic.GOTOPAGE=b.next;
 			gLogic.executeScript(page.codeAfter);
 			// TODO HANDLE LOOPS
-			gotoPageViewer(b.next);
+			gotoPageView(b.next);
 			
 			
 			

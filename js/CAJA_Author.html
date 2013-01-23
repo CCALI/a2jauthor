@@ -38,6 +38,16 @@
 <div id="splash" class="welcome" onclick="signin();return false;">
 	<div align="center"> <img src="img/A2J5_Icon_512.png"/> <img src="img/blank_guide2front.png"/> </div>
 </div>
+	
+<div id="page-viewer" class="hidestart ViewerApp">
+	<div class="testing">
+		<div id="viewer-logic-form" class="ViewerLogicForm"><div class="tracepanel"><ol id="tracer" contentEditable="true"></ol></div><div class="immediatepanel"><span><input type="text" id="tracerimm"/></span></div></div>
+		<div id="viewer-var-form" class="ViewerVarForm" ></div>
+	</div>
+	<div class="A2JViewer"></div>
+</div>
+	
+	
 <div id="authortool" class="hidestart">
 	<div class="guideio">
 		<button id="guideNew" />
@@ -110,8 +120,8 @@
 					</div>
 					<div class="tabFoooter">
 						<button zoom="fit"></button>
-						<button zoom="1.2"></button>
-						<button zoom="0.8"></button>
+						<button zoom="1.25"></button>
+						<button zoom="0.75"></button>
 					</div>
 				</div>
 		<!--<div id="tabsConstants">
@@ -144,9 +154,9 @@
 				<form>
 					<div id="showtext">
 						<input checked="checked" type="radio" id="showtext1" name="showtext" />
-						<label for="showtext1">Show only filled text</label>
+						<label for="showtext1">Filled fields</label>
 						<input type="radio" id="showtext2" name="showtext" />
-						<label for="showtext2">Show all text blocks</label>
+						<label for="showtext2">All fields</label>
 					</div>
 				</form>
 			</div>
@@ -227,7 +237,7 @@
 				</ul>
 		</ul>
 	</div>
-	<div id="viewer-logic-form" title="Viewer logic" class="ViewerLogicForm">
+	<div id="xviewer-logic-form" title="Viewer logic" class="ViewerLogicForm">
 		<div class="tracepanel">
 			<ul id="tracer">
 			</ul>
@@ -236,10 +246,7 @@
 			<input type="text" id="tracerimm"/>
 		</div>
 	</div>
-	<div id="viewer-var-form" title="Viewer Variables" class="ViewerVarForm"></div>
-	<div id="page-viewer">
-		<div class="A2JViewer"></div>
-	</div>
+	<div id="xviewer-var-form" title="Viewer Variables" class="ViewerVarForm"></div>
 	<div id="texttoolbar" class="texttoolbar ui-widget-header ui-corner-all">
 		<button id="bold">bold</button>
 		<button id="italic">italic</button>

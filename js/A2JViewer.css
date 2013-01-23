@@ -15,22 +15,50 @@ html,body{
 }
 .ViewerApp  {
 	font-size: 12px;
-	width:100%;
 	margin:0px;
 	padding:0px;
+	overflow: none;
+}
+#a2jbtn {
+	position: relative;
+	width: 32px;
+	height: 32px;
+	top: 5px;
+	left: 5px;
+	background-image: url(img/A2J5_Icon_32.png);
 }
 .A2JViewer {
+	position:fixed;
+	left:0px;
+	top:0px;
+	right:0px;
+	bottom:0px;
+	
 	border: 1px solid #444;
 	color: #000;
-	
 	background-color:#fff;
 	margin: 0px;
 	padding: 0px;
-	min-width: 800px;
-	min-height: 600px;
-	width: 930px;
-	height: 660px;
+	xmin-width: 800px;
+	xmin-height: 600px;
+	xwidth: 930px;
+	xheight: 660px;
 }
+.A2JViewer.test {
+	left:410px;
+}
+.testing {
+	position:fixed;
+	width:400px;
+	top:0;
+	left:0;
+	bottom:0;
+	overflow: none;
+	
+	background-color: #eee;
+}
+
+
 .A2JViewer fieldset {
 	border: none;
 }
@@ -97,8 +125,6 @@ html,body{
 	border-left-color: #FCFCFC;
 	border-left-style: outset;
 }
-.A2JViewer .interact {
-}
 
 .size1{
 	font-size:smaller;
@@ -114,7 +140,7 @@ html,body{
 	float: right;
 }
 .interact {
-	clear: both;
+	xclear: both;
 }
 .infobar{
 	padding: 10px;
@@ -124,16 +150,30 @@ html,body{
 
 
 
-/* 2012 */
+.A2JViewer .debugmenu {
+	position: absolute;
+	bottom: 15px;
+	left: 5px;
+}
 
+.A2JViewer .interact {
+	overflow: auto;
+	position: absolute;
+	top:34px;
+	bottom:00;
+	width: 100%;
+}
+.A2JViewer input[type=radio,type=checkbox] {
+	display: inline;
+}
 div.step  {
 	border: 0px solid #808;
-	position:relative;
-	display:block;
+	position: relative;
+	xdisplay:block;
+	xoverflow: auto;
 	background-color:#eef;
 	width: 930px;
 	height: 640px;
-	overflow: hidden;
 }
 div.question.bubble, div.learnmore.bubble {/* question bubble */
 	-moz-border-radius:12px; border-radius:12px;
@@ -172,7 +212,7 @@ div.question.bubble fieldset div.row input[type=text].text {
 	width: 100%;
 }
 div.question.bubble fieldset div.row input[type=text].number {
-	width: 50%;
+	width: 10em;
 }
 
 div.question.bubble div div.buttonlist, div.learnmore.bubble div div.buttonlist{
@@ -216,6 +256,10 @@ div.steptext.step2 { 	font-size: 1em; }
 	padding: 2px;
 }
 span.code, span.var, span.varidx, span.val, span.page {  
+}
+span.ui {
+	border: thin solid #fea;
+	background-color: #fff;
 }
 span.code {
 	border: thin solid #CC9966;
@@ -269,18 +313,18 @@ span.err {
 #page-viewer.ViewerApp  .ViewerVarForm {
 	position: fixed;
 	top:0;
-	right:0;
+	left:0;
 	bottom: 50%;
 	width: 400px;
 	border: 1px solid #bbb;
-	background-color: #cee;
+	xbackground-color: #cee;
 }
 #page-viewer.ViewerApp   .ViewerLogicForm {
 	position: fixed;
 	top:50%;
-	right:0;
+	left:0;
 	bottom: 0;
 	width: 400px;
 	border: 1px solid #bbb;
-	background-color: #cee;
+	xbackground-color: #cee;
 }

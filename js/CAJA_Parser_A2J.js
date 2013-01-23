@@ -122,7 +122,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		page.type="A2J";
 		page.style="";
 		page.step=parseInt(QUESTION.attr("STEP"));
-		page.mapx=parseInt(.3*QUESTION.attr("MAPX"));
+		page.mapx=parseInt(.4*QUESTION.attr("MAPX"));
 		page.mapy=parseInt(.3*QUESTION.attr("MAPY"));
 		page.repeatVar=makestr(QUESTION.attr("REPEATVAR"));
 		page.nextPage="";

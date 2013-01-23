@@ -4,6 +4,101 @@
 	Pieces of obsolete code that might prove useful later.
 */
 
+
+
+   /*
+   //8/3/2012 http://stackoverflow.com/questions/1176245/how-do-you-set-the-jquery-tabs-to-form-a-100-height
+   function resizeUi() {
+		 
+   var h = $(window).height()-60;
+   var w = $(window).width();
+   $("#tabs").css('height', h-95 );
+   $(".ui-tabs-panel").css('height', h-140 );
+   };
+   var resizeTimer = null;
+   $(window).bind('resize', function() {
+   if (resizeTimer) clearTimeout(resizeTimer);
+   resizeTimer = setTimeout(resizeUi, 100);
+   });
+   resizeUi();
+   */
+   // Click on section header to expand/collapse.
+   if (0) $(".header").click(function () {
+      $(this).next().toggle();
+      //$(this).toggleClass('.sectionheader .collapsable');
+   });
+
+	
+	
+	
+	
+	
+	
+//header:'<div class="A2JViewer" title="A2J Viewer"><ul class="NavBar"> <li><a href="#">Back</a></li> <li><a href="#">Next</a></li> <li>Progress: <select id="history"><option>Question 1</option><option>Question 2</option></select></li> <li class="right size3"><a href="#">A</a></li> <li class="right size2"><a href="#">A</a></li> <li class="right size1"><a href="#">A</a></li> <li class="right"><a href="#">Exit</a></li> <li class="right"><a href="#">Save</a></li> </ul> <div class="interact">This is some content </div> </div>',
+	
+
+/*
+
+//http://net.tutsplus.com/tutorials/javascript-ajax/creating-a-windows-like-interface-with-jquery-ui/
+var _init = $.ui.dialog.prototype._init;
+$.ui.dialog.prototype._init = function() {
+   //Run the original initialization code
+   _init.apply(this, arguments);
+   //set some variables for use later
+   var dialog_element = this;
+   var dialog_id = this.uiDialogTitlebar.next().attr('id');
+   //append our minimize icon
+   this.uiDialogTitlebar.append('<a href="#" id="' + dialog_id +
+   '-minbutton" class="ui-dialog-titlebar-minimize ui-corner-all">'+
+   '<span class="ui-icon ui-icon-minusthick"></span></a>');
+//this.uiDialogTitlebar.append($("<button class='options'>Options</button>").button());
+   //append our minimized state
+   $('#dialog_window_minimized_container').append(
+      '<div class="dialog_window_minimized ui-widget ui-state-default ui-corner-all" id="' +
+      dialog_id + '_minimized">' + this.uiDialogTitlebar.find('.ui-dialog-title').text() +
+      '<span class="ui-icon ui-icon-newwin"></div>');
+   //create a hover event for the minimize button so that it looks good
+   $('#' + dialog_id + '-minbutton').hover(function() {
+      $(this).addClass('ui-state-hover');
+   }, function() {
+      $(this).removeClass('ui-state-hover');
+   }).click(function() {
+      //add a click event as well to do our "minimalization" of the window
+      dialog_element.close();
+      $('#' + dialog_id + '_minimized').show();
+   });
+   //create another click event that maximizes our minimized window
+   $('#' + dialog_id + '_minimized').click(function() {
+      $(this).hide();
+      dialog_element.open();
+   });
+};
+*/
+
+
+
+
+
+	
+	/*
+	$('#tabviews').bind('tabsselect', function(event, ui) {
+		switch (ui.panel.id){
+			case 'tabsAbout':
+			case 'tabsVariables':
+			case 'tabsSteps':
+			case 'tabsLogic':
+			case 'tabsText':
+			case 'tabsConstants':
+				gGuide.noviceTab(ui.panel.id);
+				break;
+	
+			default:
+		}
+		}); 
+*/
+
+
+
 /*#guidepanel {
 	position:fixed;
 	top: 0px;
@@ -136,9 +231,9 @@ function selectTab(target)
 							<form>
 								<div id="showlogic">
 									<input checked="checked" type="radio" id="showlogic1" name="showlogic" />
-									<label for="showlogic1">Show only active code</label>
+									<label for="showlogic1">Active code fields</label>
 									<input type="radio" id="showlogic2" name="showlogic" />
-									<label for="showlogic2">Show all code blocks</label>
+									<label for="showlogic2">All code fields</label>
 								</div>
 							</form>
 						</div>

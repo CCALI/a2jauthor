@@ -147,13 +147,13 @@ function TPopup()
 
 function TPage()
 {	// This represents a single page within the lesson book/interview.
-	this.id ="";// Unique id
-	this.name ="";// Unique but author chosen name
-	this.text ="";// Text of question
-	this.textAudioURL = "";
+	//this.id="";// Unique id
+	this.name="";// Unique but author chosen name
+	this.text="";// Text of question
+	this.textAudioURL= "";
 	this.notes="";
-	this.learn ="";
-	this.help = "";// Optional help text from Learn More button
+	this.learn="";
+	this.help= "";// Optional help text from Learn More button
 	this.helpAudioURL = "";
 	this.helpReader="";
 	this.helpImageURL="";
@@ -316,6 +316,7 @@ TGuide.prototype.varSet=function(varName,varIndex,varVal)
 		gLogic.trace('Creating variable '+traceTag("var",varName));
 	}
 	if (typeof varIndex==='undefined' || varIndex==null || varIndex=='') varIndex=0;
+	gLogic.indent++;
 	if (varIndex==0)
 	{
 		gLogic.trace(traceTag('var',varName)+'='+traceTag('val',varVal));
@@ -326,6 +327,7 @@ TGuide.prototype.varSet=function(varName,varIndex,varVal)
 		gLogic.trace(traceTag('var',varName+'#'+varIndex)+traceTag('val',varVal));
 		v.values[varIndex]=varVal;
 	}
+	gLogic.indent--;
 } 
 
 

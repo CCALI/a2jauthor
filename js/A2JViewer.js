@@ -1,15 +1,13 @@
 /*	CALI Author 5 / A2J Author 5 (CAJA)
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-
 	A2J Viewer app
-	Required by Author and Viewers
+	Used by A2J Viewer only.
 	12/12/2012 
 */
 
 
 $(document).ready(function(){
 	lang.set('en');
-//	var html='<div class="Viewer" title="A2J Viewer"><ul class="NavBar"> <li><a href="#">Back</a></li> <li><a href="#">Next</a></li> <li>Progress: <select id="history"><option>Question 1</option><option>Question 2</option></select></li> <li class="right size3"><a href="#">A</a></li> <li class="right size2"><a href="#">A</a></li> <li class="right size1"><a href="#">A</a></li> <li class="right"><a href="#">Exit</a></li> <li class="right"><a href="#">Save</a></li> </ul> <div class="interact">This is some content </div> </div>';
 	loadGuideFile(templateURL);
 });
 
@@ -23,15 +21,15 @@ function guideStart(start)
 	//for (var pi in guide.pages)	traceLogic(traceTag('page',guide.pages[pi].name)); 
 	
 	traceLogic('Starting on page '+traceTag('page',guide.firstPage));
-	gotoPageViewer(guide.firstPage);
-   $('#page-viewer').removeClass('hidestart')
+	gotoPageView(guide.firstPage);
+   $('#page-viewer').removeClass('hidestart');
    $('#splash').empty();
 
 }
 function loadNewGuidePrep(guideFile,startTabOrPage)
 {}
 
-function gotoPageViewer(destPageName)
+function gotoPageView(destPageName)
 {  // navigate to given page (after tiny delay)
    window.setTimeout(function(){
       var page = gGuide.pages[destPageName]; 

@@ -86,8 +86,29 @@ TLogic.prototype.evalLogicHTML = function(html)
 	}
 	return html;
 }
-TLogic.prototype.evalBlock = function(CAJAScript)
+TLogic.prototype.evalBlock = function(expressionInText)
 {
+	var txt = "";
+	var errors=[];
+	var js=this.translateCAJAtoJSExpression(expressionInText, 1, errors);
+	if (errors.length == 0 )
+	{
+		var js = "with (gLogic) { return ("+ js +")}";
+		try {
+			var f=(new Function( js ));
+			var result = f(); // Execute the javascript code. 
+			txt = result;
+		}
+		catch (e) {
+			// Trace runtime errors
+			txt='<span class="code">'+expressionInText+'</span><span class="err">' + e.message + '</span>';
+		}
+	}
+	else
+	{	// Compile time error
+		txt='<span class="code">'+expressionInText+'</span><span class="err">' +'syntax error' + '</span>';
+	}
+	return txt
 }
 TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 {	// Translate CAJA script statements of multiple lines with conditionals into JS script but do NOT evaluate.
@@ -354,7 +375,7 @@ TLogic.prototype._GO = function(c,pageName)
 {
 	this.GOTOPAGE=pageName;
 	this.trace(c);
-	this.trace("Going to page "+traceTag('page',this.GOTOPAGE));
+	//this.trace("Going to page "+traceTag('page',this.GOTOPAGE));
 }
 TLogic.prototype._deltaVars = function()
 {

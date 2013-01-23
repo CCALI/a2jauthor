@@ -50,9 +50,12 @@ var errRepURL="../A2JErrRep.php";//"https://lawhelpinteractive.org/problem_repor
 	</div>
 </div>
 <div id="page-viewer" class="hidestart ViewerApp">
+	<div class="testing">
+		<div id="viewer-logic-form" class="ViewerLogicForm"><div class="tracepanel"><ol id="tracer" contentEditable="true"></ol></div><div class="immediatepanel"><span><input type="text" id="tracerimm"/></span></div></div>
+		<div id="viewer-var-form" class="ViewerVarForm" ></div>
+	</div>
 	<div class="A2JViewer"></div>
-	<div id="viewer-logic-form" class="ViewerLogicForm"><div class="tracepanel"><ol id="tracer" contentEditable="true"></ol></div><div class="immediatepanel"><span><input type="text" id="tracerimm"/></span></div></div>
-	<div id="viewer-var-form" class="ViewerVarForm" ></div></div>
+</div>
 <div id="dialog-confirm" title=""></div>
 <noscript>
 	<div  class="NoJS">JavaScript is disabled. Please enable JavaScript to continue.</div>

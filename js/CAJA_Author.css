@@ -166,42 +166,58 @@ html, body {
 	xfont-size: .9em;
 }
 
-.pagelist ul { 
+.pagelist ul {
 	font-weight: normal;
 	list-style-type: square;
 	font-style: normal;
 	padding: 0px;
 	padding-left: 2em;
+	background-color:#fff;
 }
-#CAJAOutline.pagelist ul { 
+.pageoutline {
+	margin: 0px;
+	padding: 0px;
+}
+.pageoutline ul { 
 	xlist-style-image: url(img/new.gif);
-	list-style-type:: bullet;
+	list-style-type: bullet;
 	margin-left: 0;
 	text-indent: 0;
 }
 #CAJAIndex.pagelist ul { 
-	list-style-type:: bullet;
+	list-style-type: bullet;
 	margin-left: 1em;
 }
-
+.pagelist * li {
+	font-size: 1em;
+	max-height: 2.5em;
+	overflow: hidden;
+}
 .pagelist * li:hover{
 	background-color:#eee;
 	color: #222;
 	cursor: pointer;
 }
+.pagelist * li .tip {
+	color: #666;
+	font-style: italic;
+}
 .tabsPages {
+	position: absolute;
+	top:0px;
+	left:0px;
+	right: 0px;
+	bottom:0px;
+	overflow: auto;
+}
+.tabsMapPages {
 	position: absolute;
 	top:0px;
 	left:0px;
 	right: 70%;
 	bottom:0px;
-	background-color:#fff;
 	overflow: auto;
 }
-
-
-
-
 
 
 .editicons {
@@ -747,12 +763,17 @@ li.guide:hover {
 	overflow: auto;
 	border: none;
 }
+
 #tabsPages .tabContentFrame {
-	top: 7em;
-	bottom: 3em;
+	top: 3em;
+	bottom: 5px;
 }
 #tabsPages .tabContentFrame .tabContent  { 
 	background-color: #fff;
+}
+#tabsMap .tabContentFrame {
+	top: 5px;
+	bottom: 5px;
 }
 #tabsVariables .tabContentFrame {
 	top: 5em;
@@ -779,11 +800,11 @@ li.guide:hover {
 	top: 0px;
 	left: 33%;
 	right:10px;
-	bottom:10px;	
+	bottom:0px;	
 	overflow: auto;
 	border: none;
 }
-#MapperPanel {
+.PagesPanel, #MapperPanel {
 	position: absolute;
 	top: 10px;
 	left: 10px;
@@ -791,10 +812,6 @@ li.guide:hover {
 	bottom:35px;	
 	overflow: auto;
 	border: none;
-}
-.tabFoooter {
-	position: absolute;
-	bottom: 0px;
 }
 
 .map {

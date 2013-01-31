@@ -13,36 +13,7 @@ var prefs= {
 
 gDev=0;
 var $pageEditDialog;
-
-/*       * /
-function DEBUGSTART(){
-	gUserNickName='Tester';
-	gUserID=0;
-	$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist"></p>');
-	var SAMPLES = [
-		"/a2j4guides/Field Types Test.a2j",
-		"/a2j4guides/Logic Tests.a2j",
-		"tests/data/A2J_ULSOnlineIntake081611_Interview.xml",
-		"tests/data/A2J_ULSOnlineIntake081611_Interview.xml#1b Submit Application for Review",
-		"tests/data/Field Characters Test.a2j",
-		"tests/data/A2J_NYSample_interview.xml",
-		"tests/data/Field Characters Test.a2j#4-1 If thens",
-		"tests/data/Field Characters Test.a2j#1-5 Fields Test 1",
-		"tests/data/Field Characters Test.a2j#0-1 Intro",
-		"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name",
-		"tests/data/CBK_CAPAGETYPES_jqBookData.xml", 
-		"tests/data/CBK_CAPAGETYPES_jqBookData.xml#MC Choices 3: 4 choices", 
-		"tests/data/A2J_MobileOnlineInterview_Interview.xml",
-		"tests/data/CBK_EVD03_jqBookData.xml"
-	];
-	$(SAMPLES).each(function(i,elt){
-		$('#samples, #guidelist').append('<li><a href="#sample">'+elt+'</a></li>')
-		
-	})
-	loadGuideFile($('a[href="#sample"]').first().text(), "");
-	$('#splash').hide();
-	//$('#welcome').hide();
-} /* */
+var SELECTED='ui-state-active';
 
 
 
@@ -50,7 +21,7 @@ $(document).ready(CAJA_Initialize)
 
 function CAJA_Initialize() {
    // Everything loaded, execute.
-   lang.set('en');
+   Languages.set(Languages.default);
 
 
 	//$('#welcome, #texttoolbar').hide();
@@ -109,9 +80,28 @@ function CAJA_Initialize() {
 		form.listManagerSave($tbl);
 	});
 	
+	$('#tabsMapper button').first()
+		.button({disabled:true,label:'Fit',icons:{primary:'ui-icon-arrow-4-diag'}}).next()
+		.button({label:'Zoom in',icons:{primary:'ui-icon-zoomin'}}).next()
+		.button({label:'Zoom out',icons:{primary:'ui-icon-zoomout'}});
 	$('#tabsMapper button').click(mapZoomClick);
-	$('#tabsMapper button').first().button({disabled:true,label:'Fit',icons:{primary:'ui-icon-arrow-4-diag'}}).next().button({label:'Zoom in',icons:{primary:'ui-icon-zoomin'}}).next().button({label:'Zoom out',icons:{primary:'ui-icon-zoomout'}});
 	
+	$('.tabsPages .tabFooter button').first()
+		.button({label:'Edit',icons:{primary:'ui-icon-pencil'}}).click(function(){
+			gotoPageEdit(pageEditSelected())
+		}).next()
+		.button({label:'New',icons:{primary:'ui-icon-document'}}).click(function(){
+			pageEditNew();
+		}).next()
+		.button({label:'Clone',icons:{primary:'ui-icon-newwin'}}).click(function(){
+			pageEditClone(pageEditSelected())
+		}).next()
+		.button({label:'Delete',icons:{primary:'ui-icon-trash'}}).click(function(){
+			pageEditDelete(pageEditSelected());
+		});
+	 
+	 
+	 
 	
 	$('#vars_load').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
 	$('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
@@ -124,9 +114,9 @@ function CAJA_Initialize() {
 	$('#showtext1').click(function(){prefs.ShowText=1;gGuide.noviceTab("tabsText",true)});
 	$('#showtext2').click(function(){prefs.ShowText=2;gGuide.noviceTab("tabsText",true)});
 	
-	$('#showpagelist').buttonset();
-	$('#showpagelist1').click(function(){prefs.ShowPageList=1;$('#CAJAOutline, #CAJAIndex').hide();$('#CAJAOutline').show();});
-	$('#showpagelist2').click(function(){prefs.ShowPageList=2;$('#CAJAOutline, #CAJAIndex').hide();$('#CAJAIndex').show();});
+	//$('#showpagelist').buttonset();
+	//$('#showpagelist1').click(function(){prefs.ShowPageList=1;$('#CAJAOutline, #CAJAIndex').hide();$('#CAJAOutline').show();});
+	//$('#showpagelist2').click(function(){prefs.ShowPageList=2;$('#CAJAOutline, #CAJAIndex').hide();$('#CAJAIndex').show();});
 
 
    //   if (typeof initAdvanced != "undefined")      initAdvanced();
@@ -192,7 +182,6 @@ function CAJA_Initialize() {
 		 }}
 	]});
 
-	$pageEditDialog =  $('.page-edit-form');
 
 /*
 	$('#viewer-var-form').dialog({ 
@@ -268,10 +257,14 @@ function CAJA_Initialize() {
 			var element=$(this);
 			if (element.is("[title]")) return element.attr("title");
 			if (element.is("a")) return element.attr("href");
+			return '';
 		}
 	});
 }
 
+	 
+
+	 
 
 function checkLength( o, n, min, max ) {
 	if ( o.val().length > max || o.val().length < min ) {
@@ -349,8 +342,8 @@ function gotoPageView(destPageName)
          gPage=page;
 			$('#authortool').hide();
          a2jviewer.layoutpage($('.A2JViewer','#page-viewer'),gGuide,gGuide.steps,gPage);
-         $('#page-viewer').removeClass('hidestart').show();//dialog('moveToTop').dialog('open' );//.dialog( "option", "stack", false );
-			$('.A2JViewer').addClass('test',500);
+         $('#page-viewer').removeClass('hidestart').show();
+			//$('.A2JViewer').addClass('test',500);
       }
    },1);
 }
@@ -360,7 +353,8 @@ function resumeEdit()
 {
 	$('#authortool').show();
 	$('#page-viewer').hide();
-	$pageEditDialog.dialog('open' );
+	if ($pageEditDialog!=null)
+		$pageEditDialog.dialog('open' );
 }
 /*function findPageDialog(pageName)
 {
@@ -368,15 +362,124 @@ function resumeEdit()
 }
 */
 
+function pageNameRelFilter(e,pageName)
+{	// Return all DOM elements whose REL points to page name.
+	var rel = 'PAGE '+pageName;
+	return $(e).filter(function(){return rel == $(this).attr('rel')});
+}
+
+function pageEditSelected()
+{	// Return currently selected page
+	var rel = makestr($('.pageoutline li.'+SELECTED).first().attr('rel'));
+	if (rel.indexOf("PAGE ")==0)
+		return rel.substr(5);
+	else
+		return '';
+}
+function pageEditSelect(pageName)
+{	// Select named page in our list
+	$('.pageoutline li').removeClass(SELECTED);
+	//trace(pageName);
+	pageNameRelFilter('.pageoutline li',pageName).toggleClass(SELECTED);	
+}
+
+function pageEditNew()
+{	
+	pageEditClone(gGuide.firstPage);
+}
+function pageEditClone(pageName)
+{	// Clone named page and return new page's name.
+	var page = gGuide.pages[pageName];
+	if (typeof page =='undefined') return '';
+	var clonePage = XML2page(page2XML(page));	
+	page = gGuide.addUniquePage(pageName,clonePage);
+	gGuide.sortPages();
+	updateTOC();
+	pageEditSelect(page.name);
+	return page.name;
+}
+
+function pageRename(page,newName){
+/* TODO Rename all references to this page in POPUPs, JUMPs and GOTOs */
+	//trace("Renaming page "+page.name+" to "+newName);
+	if (page.name==newName) return true;
+	if (page.name.toLowerCase() != newName.toLowerCase())
+	{
+		if (gGuide.pages[newName])
+		{
+			DialogAlert('Page rename disallowed','There is already a page named '+newName);
+			return false
+		}
+	}
+	// Rename GUI references
+	/*
+	var targetOld="PAGE "+page.name;
+	var targetNew="PAGE "+newName;
+	$('li').filter(function(){return targetOld==$(this).attr('target');}).each(function(){
+		$(this).attr('target',targetNew);
+		$(this).text(newName);
+		})
+	$('.page-edit-form').filter(function(){ return page.name == $(this).attr('rel')}).each(function(){
+		$(this).attr('rel',newName);
+		$(this).dialog({title:newName});
+		})
+		*/
+	gGuide.pageFindReferences(page.name,newName);
+		
+	delete gGuide.pages[page.name]
+	page.name = newName;
+	gGuide.pages[page.name]=page;
+	//trace("RENAMING REFERENES");
+	gGuide.sortPages();
+	updateTOC();
+	pageEditSelect(newName);
+	return true;
+}
+
+function pageEditDelete(name)
+{	// Delete named page after confirmation that lists all references to it. 
+	var refs=gGuide.pageFindReferences(name,null);
+	var txt='';
+	if (refs.length>0)
+	{
+		txt=refs.length+' references to this page.<ul>';
+		for (var r in refs) txt+='<li>'+refs[r].name+' <i>'+refs[r].field+'</i></li>';
+		txt+="</ul>";
+	}
+	else
+		txt='No references';
+	DialogConfirmYesNo({title:'Delete page '+name,message:'Permanently delete this page?<hr>'+txt,height:300,name:name,Yes:function(){
+		var page=gGuide.pages[this.name];
+		// TODO Anything pointing to this page is redirect to NOWHERE
+		delete gGuide.pages[page.name]
+		gGuide.sortPages();
+		updateTOC();
+		
+		if ($pageEditDialog!=null){
+			$pageEditDialog.dialog("close");
+			$pageEditDialog = null;
+		}
+	}});
+}
+
 function gotoPageEdit(pageName)
-{	// Bring page edit window forward with page content 
+{	// Bring page edit window forward with page content
+	
+	
+	
+	$pageEditDialog =  $('.page-edit-form');
 	$('#authortool').show();
 	$('#page-viewer').hide();
    var page = gGuide.pages[pageName]; 
 	if (page == null || typeof page === "undefined") return;
+	
+	//trace(page2XML(XML2page(page2XML(page))));
+	
+	
 	$('#tabsLogic  .tabContent, #tabsText .tabContent').html("");//clear these so they refresh with new data. TODO - update in place
 	//var $page =	findPageDialog(pageName);
 	//if ($page.length==0)
+	
 	{
 		//$page = $('.page-edit-form:first').clone(false,false);
 		$pageEditDialog.attr('rel',page.name);
@@ -385,37 +488,21 @@ function gotoPageEdit(pageName)
 			autoOpen:false,
 			width: 750,
 			height: 500,
-			modal:false,
 			minWidth: 200,
 			minHeight: 300, maxHeight: 700,
 			
 			close: function(){
-				//$(this).remove();//("destroy");
 			},
 			buttons:[
 			{text:'Delete', click:function(){
-				var name= $(this).attr('rel');
-				var refs=gGuide.pageFindReferences(name,null);
-				var txt='';
-				if (refs.length>0)
-				{
-					txt=refs.length+' references to this page.<ul>';
-					for (var r in refs) txt+='<li>'+refs[r].name+' <i>'+refs[r].field+'</i></li>';
-					txt+="</ul>";
-				}
-				else
-					txt='No references';
-				DialogConfirmYesNo({title:'Delete page '+name,message:'Permanently delete this page?<hr>'+txt,height:300,name:name,Yes:function(){
-					gGuide.pageDelete(this.name);
-				}});
+				pageEditDelete($(this).attr('rel'));
 			}},
 			{text:'Clone', click:function(){
-				gGuide.pageClone($(this).attr('rel'));
-			}},
-			{text:'Insert after', click:function(){ 
+				pageEditClone($(this).attr('rel'));
 			}},
 			{text:'Preview', click:function(){
 				var pageName=$(this).attr('rel');
+				
 				gotoPageView(pageName);
 				$pageEditDialog.dialog("close");
 			}},
@@ -430,7 +517,7 @@ function gotoPageEdit(pageName)
 }
 function gotoTabOrPage(target)
 {	// Go to a tab or popup a page.
-	trace(target);
+	trace('GoTo '+target);
 
 	//$('#CAJAOutline li, #CAJAIndex li').each(function(){$(this).removeClass('ui-state-active')});
 	//$('li').filter(function(){ return target == $(this).attr('target')}).each(function(){$(this).addClass('ui-state-active')});	
@@ -438,27 +525,28 @@ function gotoTabOrPage(target)
 	if (target.indexOf("PAGE ")==0)
 	{
 		gotoPageEdit(target.substr(5));
+		return;
 	}
-	else{
-		//$('.guidemenu ul li').removeClass('selected');
-		//$('.guidemenu ul li[ref="'+target+'"]').addClass('selected');
-		$('.panel').hide();
-		$('#'+target).show();
-		switch (target)
-		{
-			case 'tabsAbout':
-			case 'tabsVariables':
-			case 'tabsSteps':
-			case 'tabsLogic':
-			case 'tabsText':
-			case 'tabsConstants':
-				gGuide.noviceTab(target);
-				break;
-			case 'tabsPreview':
-				gotoPageView(gGuide.firstPage);
-				break;
-		}
-	}	
+	if (target.indexOf("STEP ")==0)
+		target='tabsSteps';
+	$('.guidemenu ul li').removeClass('selected');
+	$('.guidemenu ul li[ref="'+target+'"]').addClass('selected');
+	$('.panel').hide();
+	$('#'+target).show();
+	switch (target)
+	{
+		case 'tabsAbout':
+		case 'tabsVariables':
+		case 'tabsSteps':
+		case 'tabsLogic':
+		case 'tabsText':
+		case 'tabsConstants':
+			gGuide.noviceTab(target);
+			break;
+		case 'tabsPreview':
+			gotoPageView(gGuide.firstPage);
+			break;
+	}
 }
 
 function pageGOTOList()
@@ -624,7 +712,7 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 	if (page.type == CONST.ptPopup ) {
 		var fs=form.fieldset('Popup info',page);
 		fs.append(form.text({label:'Name:',name:'pagename', value:page.name,change:function(val,page,form){
-			if (gGuide.pageRename(page,val)==false) $(this).val(page.name);
+			if (pageRename(page,val)==false) $(this).val(page.name);
 		}} ));
 		fs.append(form.htmlarea({label:'Notes:',value: page.notes,change:function(val,page){page.notes=val}} ));
 		fs.append(form.htmlarea(	{label:'Text:',value:page.text,change:function(val,page){page.text=val}} ));
@@ -641,7 +729,7 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 		fs.append(form.pickStep({label:'Step:',value: page.step, change:function(val,page){page.step=parseInt(val);/* TODO Move page to new outline location */}} ));
 		fs.append(form.text({label:'Name:', value:page.name,change:function(val,page,form){
 			val = jQuery.trim(val);
-			if (gGuide.pageRename(page,val)==false) $(this).val(page.name);
+			if (pageRename(page,val)==false) $(this).val(page.name);
 		}} ));
 		if (page.type != "A2J") {
 			fs.append(form.h2("Page type/style: " + page.type + "/" + page.style));
@@ -669,11 +757,11 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 			updateShowMe(form,val);
 			}},  [0,'Text',1,'Show Me Graphic',2,'Show Me Video']));
 		pagefs.append(form.htmlarea(	{label:"Help:",value:page.help,change:function(val,page){page.help=val}} ));
-		pagefs.append(form.pickAudio(	{name:'helpAudio',label:'Help audio:',placeholder:'',	value:page.helpAudioURL,
+		pagefs.append(form.pickAudio(	{name:'helpAudio',label:'Help audio:',placeholder:'Help audio URL',	value:page.helpAudioURL,
 			change:function(val,page){page.helpAudioURL=val}} ));
-		pagefs.append(form.pickImage(		{name:'helpGraphic',label:'Help graphic:',placeholder:'',	value:page.helpImageURL,
+		pagefs.append(form.pickImage(		{name:'helpGraphic',label:'Help graphic:',placeholder:'Help image URL',	value:page.helpImageURL,
 			change:function(val,page){page.helpImageURL=val}} ));
-		pagefs.append(form.pickVideo(		{name:'helpVideo', label:'Help video:',placeholder:'',		value:page.helpVideoURL,
+		pagefs.append(form.pickVideo(		{name:'helpVideo', label:'Help video:',placeholder:'Help video URL',		value:page.helpVideoURL,
 			change:function(val,page){page.helpVideoURL=val}} ));
 		pagefs.append(form.htmlarea(	{name:'helpReader', label:'Help Text Reader:', value:page.helpReader,
 			change:function(val,page){page.helpReader=val}} ));
@@ -876,10 +964,7 @@ function prompt(status)
 }
 function loadNewGuidePrep(guideFile,startTabOrPage)
 {
-	//prompt('Loading '+guideFile);
-	//prompt('Start location will be '+startTabOrPage);
-	//$('.CAJAContent').html('Loading '+guideFile+AJAXLoader);
-	$('#CAJAOutline, #CAJAIndex').html('');
+	$('.pageoutline').html('');
 }
 
 function guideClose()
@@ -908,8 +993,6 @@ function guideStart(startTabOrPage)
 	
 	gotoTabOrPage(startTabOrPage);
 	updateTOC();
-	$('#CAJAOutline, #CAJAIndex').hide();
-	$('#CAJAOutline').show();
 	
 	//$('#guidepanel ul li a:first').html(gGuide.title);
 	$('#guidetitle').html(gGuide.title);
@@ -929,21 +1012,47 @@ function guideStart(startTabOrPage)
 		*/
 	buildMap();
 }
+
+
 function updateTOC()
-{
-	$('#CAJAOutline').html(gGuide.IndexOutlineHTML());
-	$('#CAJAIndex').html(gGuide.IndexAlphaHTML());
-	$('#CAJAOutline li, #CAJAIndex li')
-		.dblclick(function (){
-			var target=$(this).attr('target')
-			$('#CAJAOutline li, #CAJAIndex li').removeClass('ui-state-active');
-			$(this).addClass('ui-state-active')
-			gotoTabOrPage(target);
-		})
+{	// Build outline for entire interview includes meta, step and question sections.
+	var inSteps=[];
+	var popups="";
+	for (s in gGuide.steps)
+	{
+		inSteps[s]="";
+	}
+	for (var p in gGuide.sortedPages)
+	{
+		var page = gGuide.sortedPages[p];
+		var plink= '<li class="unselectable" rel="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()
+			+' <span class="tip">'+decodeEntities(page.text).substr(0,64)+'</span>' +'</li>';
+		if (page.type==CONST.ptPopup)
+			popups += plink;
+		else
+			inSteps[page.step] += plink;
+	}	
+	var ts="";
+	for (var s in gGuide.steps)
+	{
+		ts+='<li rel="STEP '+s+'">STEP '+gGuide.steps[s].number+". "+gGuide.steps[s].text+"</li><ul>"+inSteps[s]+"</ul>";
+	}
+	$('.pageoutline').html("<ul>"
+		+ ts //'<li target="tabsSteps">'+lang.tabSteps+'</li><ul>'+ts+'</ul>'
+		+ '<li rel="tabsPopups">'+Languages.en('Popups')+'</li><ul>'+popups+'</ul>'
+		+"</ul>");
+	
+	$('.pageoutline li')
 		.click(function(e){
 			if (!e.ctrlKey)
-				$('#CAJAOutline li, #CAJAIndex li').removeClass('ui-state-active');
-			$(this).toggleClass('ui-state-active');
+				$('.pageoutline li').removeClass(SELECTED);
+			$(this).toggleClass(SELECTED);
+		})
+		.dblclick(function (){
+			var rel=$(this).attr('rel')
+			$('.pageoutline li').removeClass(SELECTED);
+			$(this).addClass(SELECTED);
+			gotoTabOrPage(rel);
 		});
 }
 function guideloaded(data)
@@ -987,73 +1096,7 @@ function editButton()
 }
 
 
-
-TGuide.prototype.pageRename=function(page,newName){
-/* TODO Rename all references to this page in POPUPs, JUMPs and GOTOs */
-	//trace("Renaming page "+page.name+" to "+newName);
-	var guide=this;
-	if (page.name==newName) return true;
-	if (page.name.toLowerCase() != newName.toLowerCase())
-	{
-		if (guide.pages[newName])
-		{
-			DialogAlert('Page rename disallowed','There is already a page named '+newName);
-			return false
-		}
-	}
-	// Rename GUI references
-	/*
-	var targetOld="PAGE "+page.name;
-	var targetNew="PAGE "+newName;
-	$('li').filter(function(){return targetOld==$(this).attr('target');}).each(function(){
-		$(this).attr('target',targetNew);
-		$(this).text(newName);
-		})
-		*/
-	
-	$('.page-edit-form').filter(function(){ return page.name == $(this).attr('rel')}).each(function(){
-		$(this).attr('rel',newName);
-		$(this).dialog({title:newName});
-		})
-
-	gGuide.pageFindReferences(page.name,newName);
-
-		
-	delete guide.pages[page.name]
-	page.name = newName;
-	guide.pages[page.name]=page;
-	//trace("RENAMING REFERENES");
-	guide.sortPages(); updateTOC();
-	return true;
-}
-TGuide.prototype.IndexOutlineHTML=function()
-{	// Build outline for entire interview includes meta, step and question sections.
-	var inSteps=[];
-	var popups="";
-	for (s in this.steps)
-	{
-		inSteps[s]="";
-	}
-	for (var p in this.sortedPages)
-	{
-		var page = this.sortedPages[p];
-		var plink= '<li target="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()+'</li>';
-		if (page.type==CONST.ptPopup)
-			popups += plink;
-		else
-			inSteps[page.step] += plink;
-	}	
-	var ts="";
-	for (var s in this.steps)
-	{
-		ts+='<li target="STEP '+s+'">STEP '+this.steps[s].number+". "+this.steps[s].text+"</li><ul>"+inSteps[s]+"</ul>";
-	}
-	return "<ul>"
-			+ ts //'<li target="tabsSteps">'+lang.tabSteps+'</li><ul>'+ts+'</ul>'
-			+ '<li target="tabsPopups">'+lang.en('Popups')+'</li><ul>'+popups+'</ul>'
-			+"</ul>";
-}
-
+/*
 TGuide.prototype.IndexAlphaHTML=function()
 {	// Build outline of just pages
 	var txt="";
@@ -1064,7 +1107,7 @@ TGuide.prototype.IndexAlphaHTML=function()
 	}
 	return "<ul>" + txt +"</ul>";
 }
-
+*/
 
 
 function DialogConfirmYesNo(args)
@@ -1090,13 +1133,6 @@ function DialogConfirmYesNo(args)
 	});
 }
 
-
-TGuide.prototype.pageClone=function(pageName){
-	var guide=this;
-	var page = guide.pages[pageName];;
-	page = guide.addUniquePage(pageName,cloneObject(page));
-	guide.sortPages(); updateTOC();
-}
 
 TGuide.prototype.pageFindReferences=function(findName,newName){
 // ### Return list of pages and fields pointing to pageName in {name:x,field:y} pairs
@@ -1322,6 +1358,9 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 			fs.append(form.text({label:'Title:', placeholder:'Interview title', value:guide.title, change:function(val){guide.title=val}}));
 			fs.append(form.htmlarea({label:'Description:',value:guide.description,change:function(val){guide.description=val}}));
 			fs.append(form.text({label:'Jurisdiction:', value:guide.jurisdiction, change:function(val){guide.jurisdiction=val}}));
+			fs.append(form.text({label:'Language:', value:guide.language, change:function(val){guide.language=val}}));
+			fs.append(form.pickImage({label:'Logo graphic:', placeholder: 'Logo URL',value:guide.logoImage, change:function(val){guide.logoImage=val}}));
+			fs.append(form.pickImage({label:'End graphic:', placeholder:'End (destination graphic) URL',value:guide.endImage, change:function(val){guide.endImage=val}}));
 			fs.append(form.htmlarea({label:'Credits:',value:guide.credits,change:function(val){guide.credits=val}}));
 			fs.append(form.text({label:'Approximate Completion Time:',placeholder:'e.g., 2-3 hours',value:guide.completionTime,change:function(val){guide.completionTime=val}}));
 			t.append(fs);
@@ -1387,27 +1426,6 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 	form.finish(t);
 }
 
-
-
-TGuide.prototype.pageDelete=function(name){
-	var guide=this;
-	var page=guide.pages[name];
-	// TODO Anything pointing to this page is redirect to NOWHERE
-	
-	// remove page from indexes
-	/*
-	var target="PAGE "+name;
-	$('li').filter(function(){return target==$(this).attr('target');}).each(function(){
-		$(this).remove();
-	})
-*/	// rename page edit title bar
-	$('.page-edit-form').filter(function(){
-		return page.name == $(this).attr('rel')}).each(function(){
-			$(this).dialog('close');})
-	
-	delete guide.pages[page.name]
-	guide.sortPages(); updateTOC();
-}
 
 
 
@@ -1493,7 +1511,7 @@ var form={
 	      change: function () { // if didn't match, restore to original value
 	         var matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex($(this).val().split("\t")[0]) + "$", "i");
 	         var newvalue = $(this).val();//.split("\t")[0];
-				trace(newvalue);
+				//trace(newvalue);
 	         $.each(gGuide.sortedPages, function (p, page) {
 					if (page.type!=CONST.ptPopup)
 						if (matcher.test(page.name)) {
@@ -1543,9 +1561,16 @@ var form={
 		return e;
 	}
 	
-	,pickAudio:function(data){ return this.text(data);}
-	,pickImage:function(data){ return this.text(data);}
-	,pickVideo:function(data){ return this.text(data);}
+	,pickAudio:function(data){
+		return this.text(data);
+	}
+	
+	,pickImage:function(data){ 
+		return this.text(data); 
+	}
+	,pickVideo:function(data){
+		return this.text(data);
+	}
 	
 	,clear:function(){
 		form.codeCheckList=[];
@@ -1675,7 +1700,7 @@ var form={
 			var br=$(this).val();
 			$(this).parent().children('.text').toggle(br!=2);
 			$(this).parent().children('.dest').toggle(br!=0);
-			trace(br);
+			//trace(br);
 		})
 	}
 	

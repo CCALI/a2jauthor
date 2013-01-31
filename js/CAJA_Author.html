@@ -62,6 +62,7 @@
 			<li ref="tabsVariables">Variables</a></li>
 			<li ref="tabsSteps">Steps</a></li>
 			<li ref="tabsPages">Pages</a></li>
+			<li ref="tabsMap">Map</a></li>
 			<li ref="tabsLogic">Logic</a></li>
 			<li ref="tabsText">Text</a></li>
 			<li ref="tabsReport">Report</a></li>
@@ -91,39 +92,35 @@
 				<div class="tabContent editq"></div>
 			</div>
 		</div>
-		<div class="panel" id="tabsPages">
-		
+		<div class="panel" id="tabsPages">		
 			<div class="tabHeader">
 				Double-click a page to edit. Select one or more to copy, delete or clone. 
-				<form>
+				<!--<form>
 					<div id="showpagelist">
 						<input checked="checked" 	type="radio" id="showpagelist1" name="showpagelist" /><label for="showpagelist1">Outline</label>
 						<input 							type="radio" id="showpagelist2" name="showpagelist" /><label for="showpagelist2">Alphabetical</label>
 					</div>
-				</form>
+				</form>-->
 			</div>
 			<div class="tabContentFrame">
 				<div class="tabsPages">
-					<div id="CAJAOutline" class="pagelist">
+					<div class="PagesPanel">
+					<div id="CAJAOutline" class="pageoutline pagelist">
 						<ul>
 						</ul>
-					</div>
+					</div><!--
 					<div id="CAJAIndex" class="pagelist">
 						<ul>
 						</ul>
+					</div>-->
+					<!--			<div id="tabsfind"> Find? </div>--></div>
+					<div class="tabFooter">
+						<button ></button>
+						<button ></button>
+						<button ></button>
+						<button ></button>
 					</div>
-					<!--			<div id="tabsfind"> Find? </div>-->
 					</div>
-				<div id="tabsMapper">
-					<div id="MapperPanel">
-						<div class="map"></div>
-					</div>
-					<div class="tabFoooter">
-						<button zoom="fit"></button>
-						<button zoom="1.25"></button>
-						<button zoom="0.75"></button>
-					</div>
-				</div>
 		<!--<div id="tabsConstants">
 					<div class="tabHeader"></div>
 					<div class="tabContentFrame">
@@ -131,8 +128,32 @@
 					</div>
 				</div>
 				-->
+			</div>			 
+		</div>
+		<div class="panel" id="tabsMap">		
+			<div class="tabHeader">
 			</div>
-			 
+			<div class="tabContentFrame">
+				<div class="tabsMapPages">
+					<div class="PagesPanel">
+					<div id="CAJAOutlineMap" class="pageoutline pagelist">
+						<ul>
+						</ul>
+					</div></div>
+					<div class="tabFooter">
+					</div>
+					</div>
+				<div id="tabsMapper">
+					<div id="MapperPanel">
+						<div class="map"></div>
+					</div>
+					<div class="tabFooter">
+						<button zoom="fit"></button>
+						<button zoom="1.25"></button>
+						<button zoom="0.75"></button>
+					</div>
+				</div>
+			</div>			 
 		</div>
 		<div class="panel" id="tabsLogic">
 			<div class="tabHeader">
@@ -181,6 +202,13 @@
 		Instruction. All Rights Reserved.</span> </div>
 </div>
 <div class="hidestart">
+	<div id="xedit-plain-form" title="Edit" class="">
+		<form>
+			<fieldset>
+			<textarea name="text"  class="text ui-widget-content ui-corner-all" ></textarea>
+			</fieldset>
+		</form>
+	</div>
 	<div class="page-edit-form">
 		<div class="page-edit-form-panel"></div>
 	</div>

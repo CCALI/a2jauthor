@@ -6,10 +6,15 @@
 	02/02/2012  (3/10/2011 SJG
 */
 
+div.question.bubble, div.learnmore.bubble {
+	font-size: 1em;
+}
+
+
 .hidestart { /* hide some elements initially */
 	display: none;
 }
-html,body{
+html, body{
 	margin:0px;
 	padding:0px;
 }
@@ -126,13 +131,6 @@ html,body{
 	border-left-style: outset;
 }
 
-.size1{
-	font-size:smaller;
-}
-.size3{
-	font-size:larger;
-}
-
 .left {
 	float: left;
 }
@@ -163,9 +161,7 @@ html,body{
 	bottom:00;
 	width: 100%;
 }
-.A2JViewer input[type=radio,type=checkbox] {
-	display: inline;
-}
+
 div.step  {
 	border: 0px solid #808;
 	position: relative;
@@ -181,8 +177,8 @@ div.question.bubble, div.learnmore.bubble {/* question bubble */
 	background-color: #eee;
 	margin:  0px;
 	padding:  10px;
-	min-height: 150px;
-	max-height: 500px; 
+	xmin-height: 150px;
+	xmax-height: 500px;
 }
 div.question.bubble > div, div.learnmore.bubble > div{ /* form with viewer's field inputs */
 	margin: 0px;
@@ -190,7 +186,7 @@ div.question.bubble > div, div.learnmore.bubble > div{ /* form with viewer's fie
 	width: 100%;
 	overflow: auto;
 	min-height: 150px;
-	max-height: 400px; 
+	max-height: 500px; 
 	position: relative;  
 }
 div.learnmore.bubble, div.learnmore.bubble > div {
@@ -198,21 +194,69 @@ div.learnmore.bubble, div.learnmore.bubble > div {
 	max-height: 500px; 
 }
 
-div.question.bubble fieldset div.row{ /* question form field row */
-	xborder: 1px solid #bbb;
+/*
+.A2JViewer input[type=radio], .A2JViewer input[type=checkbox] {
+	display: inline;
+}
+div.question.bubble fieldset div.row{  
 	margin: 0;
 	margin-top: .5em;
 	padding: 0;
+	width: 100%;
+	display: table-row;
 }
-
-div.question.bubble fieldset div.row input[type=text] {
-	background-color:#fff;
+div.question.bubble div fieldset label {
+    text-align: left;
+	 width: 33%;
 }
 div.question.bubble fieldset div.row input[type=text].text {
-	width: 100%;
+	width: 66%;
 }
 div.question.bubble fieldset div.row input[type=text].number {
-	width: 10em;
+	width: 66%;
+	xwidth: 10em;
+}
+*/
+.question input, .question textarea, .question select {
+	font-size: inherit;/*ensure font size isn't smaller */
+	background-color: #fff;
+}
+.question .text, .question .textarea, .question .maxwidth {
+	width: 100%;
+}
+.question .field {
+	position: relative;
+	padding-top: .5em;
+	width: 100%;	
+}
+.question .labelinput {
+	position: relative;
+}
+.question .labelinput input {
+	vertical-align: middle;
+	margin: 0px;
+	position: absolute;
+	top: 3px;
+}
+.question .labelinput label {
+	margin-left: 30px;
+	display: block;
+}
+.question .label {
+	display: inline-block;
+	vertical-align: top;
+	width: 30%;
+}
+.question .input {
+	display: inline-block ;
+	vertical-align: bottom;
+	width: 65%;
+}
+div.question.ui-form input {
+	display: inline;
+}
+div.question.bubble fieldset div.row input[type=text] {
+	background-color:#fff;
 }
 
 div.question.bubble div div.buttonlist, div.learnmore.bubble div div.buttonlist{
@@ -327,4 +371,15 @@ span.err {
 	width: 400px;
 	border: 1px solid #bbb;
 	xbackground-color: #cee;
+}
+.unselectable {
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
 }

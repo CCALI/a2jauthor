@@ -4,15 +4,16 @@
 	Used by A2J Viewer only.
 	12/12/2012 
 */
+var a2jVDev=1;
 
 
 $(document).ready(function(){
-	lang.set('en');
 	loadGuideFile(templateURL);
 });
 
 function guideStart(start)
 {
+	Languages.set(Languages.default);
 	var guide=gGuide;
 	
 	traceLogic('Guide '+guide.title+' loaded.');
@@ -24,6 +25,7 @@ function guideStart(start)
 	gotoPageView(guide.firstPage);
    $('#page-viewer').removeClass('hidestart');
    $('#splash').empty();
+	if (a2jVDev) $('.A2JViewer').toggleClass('test',500);
 
 }
 function loadNewGuidePrep(guideFile,startTabOrPage)

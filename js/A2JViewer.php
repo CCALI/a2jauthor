@@ -13,8 +13,8 @@
 
 
 <SCRIPT LANGUAGE=JavaScript>
-var templateURL="/a2j4guides/Logic Tests.a2j";
-//var templateURL="/a2j4guides/Field Types Test.a2j";
+//var templateURL="/a2j4guides/Logic Tests.a2j";
+var templateURL="/a2j4guides/Field Types Test.a2j";
 //var templateURL="tests/data/Field Types Test.a2j";
 //var templateURL="tests/data/A2J_FieldTypesTest_Interview.xml";
 var fileDataURL="tests/data/";

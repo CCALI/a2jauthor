@@ -19,8 +19,12 @@ var GRID_MAP =  {x : 10 , y : 10 };
 var NODE_SIZE = {w : 150, h : 36+8};
 
 function buildMap()
-{	// Contruct mapper flowcharts. 
-	
+{	// Contruct mapper flowcharts.
+	if( 0 ){
+		$('#tabsMapper').hide();
+		return;
+	}
+
 	var $map = $('.map');
 	$map.empty();
 	//$('.MapViewer').removeClass('big').addClass(mapSize==1 ? 'big':'');

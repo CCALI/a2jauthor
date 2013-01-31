@@ -18,9 +18,9 @@ function page2JSON(page)
 		_MAPY:		page.mapy,
 		_STEP:		page.step,
 		_REPEATVAR:	page.repeatVar,
-		_NEXTPAGE:	page.nextPage,
+		_NEXTPAGE:	page.nextPage==''?JS2XML_SKIP:page.nextPage,
 		_nextPageDisabled: page.nextPageDisabled==true ? true : JS2XML_SKIP,
-		_alignText:	page.alignText,
+		_alignText:	page.alignText=='' ? JS2XML_SKIP : page.alignText,
 		XML_TEXT:	page.text, 
 		TEXTAUDIO:	page.textAudioURL, 
 		XML_LEARN:	page.learn,
@@ -55,7 +55,7 @@ function page2JSON(page)
 			_CALENDAR:		f.calendar==true ? true : JS2XML_SKIP, 
 			_CALCULATOR:	f.calculator==true ? true : JS2XML_SKIP, 
 			_MAXCHARS:		f.maxChars,
-			XML_LABEL:			f.label,
+			XML_LABEL:		f.label,
 			NAME:				f.name, 
 			VALUE:			f.value, 
 			XML_INVALIDPROMPT:	f.invalidPrompt
@@ -199,10 +199,12 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		constant.name=v.attr("NAME");
 		constant.text=CONSTANT.find("VAL").xml();
 		guide.constants[constant.name]=constant;
-	});	
+	});
 	GUIDE.find("PAGES > PAGE").each(function() {
 		var PAGE = $(this);
 		var page = guide.addUniquePage(PAGE.attr("NAME"));
+		parseXML2Page(PAGE,page);
+		/*
 		page.xml = PAGE.xml(); 
 		
 		page.type=PAGE.attr("TYPE");
@@ -218,9 +220,9 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 			page.mapy=parseInt(PAGE.attr("MAPY"));
 		}
 		page.repeatVar=makestr(PAGE.attr("REPEATVAR"));
-		//page.nextPage="";
-		//page.nextPageDisabled = false;
-		//page.alignText="";
+		page.nextPage="";
+		page.nextPageDisabled = false;
+		page.alignText="";
 		page.step=parseInt(PAGE.attr("STEP"));
 		page.text=PAGE.find("TEXT").xml();
 		page.textAudioURL=makestr(PAGE.find("TEXTAUDIO").text());
@@ -259,11 +261,85 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 			field.invalidPromptAudio =makestr(jQuery.trim($(this).find("INVALIDPROMPTAUDIO").xml()));
 			page.fields.push(field);
 		});
+		*/
 	});
 	
 	return guide;
 }
+function page2XML(page)/* return XML */
+{
+	return '<?xml version="1.0" encoding="UTF-8" ?>' + js2xml('PAGE', page2JSON(page));
+}
+function XML2page(xml)/* return TPage */
+{
+	var $xml =  $(jQuery.parseXML(xml));
+	var PAGE = $('PAGE',$xml);
+	var page = new TPage();
+	parseXML2Page(PAGE,page);
+	return page;
+}
 
+
+function parseXML2Page(PAGE,page)
+{
+	page.xml = PAGE.xml(); 
+	
+	page.type=PAGE.attr("TYPE");
+	page.style=makestr(PAGE.attr("STYLE"));
+	if (page.type==CONST.ptPopup || page.type=="Pop-up page")
+	{
+		page.type=CONST.ptPopup;
+		page.mapx=null;
+	}
+	else
+	{
+		page.mapx=parseInt(PAGE.attr("MAPX"));
+		page.mapy=parseInt(PAGE.attr("MAPY"));
+	}
+	page.repeatVar=makestr(PAGE.attr("REPEATVAR"));
+	page.nextPage="";
+	page.nextPageDisabled = false;
+	page.alignText="";
+	page.step=parseInt(PAGE.attr("STEP"));
+	page.text=PAGE.find("TEXT").xml();
+	page.textAudioURL=makestr(PAGE.find("TEXTAUDIO").text());
+	page.learn=makestr(PAGE.find("LEARN").xml());
+	page.help=makestr(PAGE.find("HELP").xml());
+	page.helpAudioURL=makestr(PAGE.find("HELPAUDIO").text());
+	page.helpReader=makestr(PAGE.find("HELPREADER").xml());
+	page.helpImageURL=makestr(PAGE.find("HELPIMAGE").text());
+	page.helpVideoURL=makestr(PAGE.find("HELPVIDEO").text());
+	page.notes=makestr(PAGE.find("NOTES").xml());
+	page.codeBefore = makestr(PAGE.find("CODEBEFORE").xml());
+	page.codeAfter = 	makestr(PAGE.find("CODEAFTER").xml());
+	
+	PAGE.find('BUTTONS > BUTTON').each(function(){
+		var button=new TButton();
+		button.label =jQuery.trim($(this).find("LABEL").xml());
+		button.next = makestr($(this).attr("NEXT"));
+		button.name =jQuery.trim($(this).find("NAME").xml());
+		button.value = jQuery.trim($(this).find("VALUE").xml()); 
+		page.buttons.push(button);
+	});
+	PAGE.find('FIELDS > FIELD').each(function(){
+		var field=new TField();
+		field.type =$(this).attr("TYPE");
+		field.required = TextToBool($(this).attr("REQUIRED"),true);
+		field.order = makestr($(this).attr("ORDER"));
+		field.label =makestr(jQuery.trim($(this).find("LABEL").xml()));
+		field.name =jQuery.trim($(this).find("NAME").xml());
+		field.value = makestr(jQuery.trim($(this).find("VALUE").xml()));
+		field.min = makestr($(this).attr("MIN"));//could be a number or a date so don't convert to number
+		field.max = makestr($(this).attr("MAX"));
+		field.calendar = TextToBool($(this).attr("CALENDAR"),false);
+		field.calculator=TextToBool($(this).attr("CALCULATOR"),false);
+		
+		field.invalidPrompt =makestr(jQuery.trim($(this).find("INVALIDPROMPT").xml()));
+		field.invalidPromptAudio =makestr(jQuery.trim($(this).find("INVALIDPROMPTAUDIO").xml()));
+		page.fields.push(field);
+	});
+	return page;
+}
 
 
 function parseXML_Auto_to_CAJA(cajaData)

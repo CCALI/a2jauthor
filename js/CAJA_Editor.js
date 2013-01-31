@@ -8,7 +8,7 @@
 
 $(document).ready(function () {
    // Everything loaded, execute.
-   lang.set('en');
+   Languages.set(Languages.default);
 
 
    // Declare TinyMCE Editor options

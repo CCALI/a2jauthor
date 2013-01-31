@@ -96,6 +96,7 @@ var TField = function()
 	this.type ="";
 	this.label ="";
 	this.name ="";//reference TVar.name
+	this.value = "";//default value (used in radio buttons)
 	this.optional =false;
 	this.invalidPrompt ="";
 	this.order ="";//default, ASC, DESC
@@ -339,7 +340,7 @@ TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 	{
 		var page = guide.pages[name];
 		//name = htmlEscape(this.pages[ name ].name);
-		dval = name +"\t"+  decodeEntities(page.text);
+		dval = name// +"\t"+  decodeEntities(page.text);
 	}
 	else
 	{

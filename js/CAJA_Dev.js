@@ -3,7 +3,7 @@
 	
 */
 
-/*       */
+/*       * /
 // Comment DEBUGSTART() function out when NOT testing locally.
 function DEBUGSTART(){
 	gUserNickName='Tester';

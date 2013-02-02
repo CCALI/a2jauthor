@@ -6,9 +6,10 @@
 	02/20/2012 
 */
 
-var SHOWXML=false;
+var SHOWXML = false;
 
 function page2JSON(page)
+/** @param {TPage} page The page to parse */
 {
 	var PAGE = {
 		_NAME:		page.name,
@@ -18,9 +19,9 @@ function page2JSON(page)
 		_MAPY:		page.mapy,
 		_STEP:		page.step,
 		_REPEATVAR:	page.repeatVar,
-		_NEXTPAGE:	page.nextPage==''?JS2XML_SKIP:page.nextPage,
-		_nextPageDisabled: page.nextPageDisabled==true ? true : JS2XML_SKIP,
-		_alignText:	page.alignText=='' ? JS2XML_SKIP : page.alignText,
+		_NEXTPAGE:	page.nextPage===''?JS2XML_SKIP:page.nextPage,
+		_nextPageDisabled: page.nextPageDisabled===true ? true : JS2XML_SKIP,
+		_alignText:	page.alignText==='' ? JS2XML_SKIP : page.alignText,
 		XML_TEXT:	page.text, 
 		TEXTAUDIO:	page.textAudioURL, 
 		XML_LEARN:	page.learn,
@@ -29,14 +30,14 @@ function page2JSON(page)
 		XML_HELPREADER:	page.helpReader, 
 		HELPIMAGE:	page.helpImageURL, 
 		HELPVIDEO:	page.helpVideoURL, 
-		BUTTONS: 	[],
+		BUTTONS:		[],
 		FIELDS:		[],
 		XML_CODEBEFORE:	page.codeBefore,
 		XML_CODEAFTER:		page.codeAfter,
 		XML_NOTES:	page.notes
-	}
-	
-	for (var bi in page.buttons){
+	};
+	var bi;
+	for (bi in page.buttons){
 		var b=page.buttons[bi];
 		PAGE.BUTTONS.push({BUTTON:{
 			XML_LABEL:	b.label,
@@ -44,7 +45,8 @@ function page2JSON(page)
 			NAME:		b.name,
 			VALUE:	b.value}});
 	}
-	for (var fi in page.fields){
+	var fi;
+	for (fi in page.fields){
 		var f=page.fields[fi];
 		var FIELD = {
 			_TYPE:			f.type, 
@@ -52,22 +54,24 @@ function page2JSON(page)
 			_REQUIRED:		f.required, //==true ? true : JS2XML_SKIP,
 			_MIN:				f.min, 
 			_MAX:				f.max, 
-			_CALENDAR:		f.calendar==true ? true : JS2XML_SKIP, 
-			_CALCULATOR:	f.calculator==true ? true : JS2XML_SKIP, 
+			_CALENDAR:		f.calendar===true ? true : JS2XML_SKIP, 
+			_CALCULATOR:	f.calculator===true ? true : JS2XML_SKIP, 
 			_MAXCHARS:		f.maxChars,
 			XML_LABEL:		f.label,
 			NAME:				f.name, 
 			VALUE:			f.value, 
 			XML_INVALIDPROMPT:	f.invalidPrompt
-		}
+		};
 		PAGE.FIELDS.push({FIELD:FIELD});
 	}
 	return PAGE;
 }
 
 function exportXML_CAJA_from_CAJA(guide)
+/** @param {TGuide} guide */
 {	// Convert Guide structure into XML
 	var JSON={GUIDE:{INFO:{AUTHORS:[]},PAGES:[] ,STEPS:[],VARIABLES:[] }};
+	
 	
 	JSON.GUIDE.INFO.tool=guide.tool;
 	JSON.GUIDE.INFO.toolversion=guide.toolversion;
@@ -89,8 +93,8 @@ function exportXML_CAJA_from_CAJA(guide)
 	JSON.GUIDE.INFO.viewer=guide.viewer;
 	JSON.GUIDE.INFO.endImage=guide.endImage;
 	JSON.GUIDE.INFO.logoImage=guide.logoImage; 
-	
-	for (var i in guide.authors)
+	var i;
+	for (i in guide.authors)
 	{
 		var author=guide.authors[i];
 		JSON.GUIDE.INFO.AUTHORS.push({
@@ -103,7 +107,8 @@ function exportXML_CAJA_from_CAJA(guide)
 	
 	JSON.GUIDE.INFO.firstPage=guide.firstPage;
 	JSON.GUIDE.INFO.exitPage=guide.exitPage;
-	for (var si in guide.steps)
+	var si;
+	for (si in guide.steps)
 	{
 		var step=guide.steps[si];
 		JSON.GUIDE.STEPS.push({
@@ -111,19 +116,20 @@ function exportXML_CAJA_from_CAJA(guide)
 				_NUMBER:step.number,
 				XML_TEXT:step.text}}); 
 	}
-	for (var vi in guide.vars)
+	var vi;
+	for (vi in guide.vars)
 	{
 		var v=guide.vars[vi];
 		var VARIABLE = {
 			  _NAME:v.name,
 			  _TYPE:v.type,
-			  _REPEATING: v.repeating==true ? v.repeating : JS2XML_SKIP,
+			  _REPEATING: v.repeating===true ? v.repeating : JS2XML_SKIP,
 			  _COMMENT: v.comment
 			 };
 		JSON.GUIDE.VARIABLES.push({VARIABLE:VARIABLE}); 
 	}
-
-	for (var pi in guide.pages)
+	var pi;
+	for (pi in guide.pages)
 	{
 		JSON.GUIDE.PAGES.push({PAGE:page2JSON(guide.pages[pi])});
 	} 
@@ -135,26 +141,26 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 	var guide=new TGuide();
 	
 	var INFO = $('INFO',GUIDE);
-	guide.tool = 			makestr(INFO.children('TOOL').text());;
+	guide.tool =			makestr(INFO.children('TOOL').text());
 	guide.toolversion =  makestr(INFO.children('TOOLVERSION').text());
 	guide.avatar=			makestr(INFO.children('AVATAR').text());
-	guide.completiontime=makestr(INFO.children('COMPLETIONTIME').xml());;
-	guide.copyrights=		makestr(INFO.children('COPYRIGHTS').xml());;
-	guide.createdate=		makestr(INFO.children('CREATEDATE').text());;
-	guide.credits=			makestr(INFO.children('CREDITS').xml());;
-	guide.description = 	makestr(INFO.children('DESCRIPTION').xml());
+	guide.completiontime=makestr(INFO.children('COMPLETIONTIME').xml());
+	guide.copyrights=		makestr(INFO.children('COPYRIGHTS').xml());
+	guide.createdate=		makestr(INFO.children('CREATEDATE').text());
+	guide.credits =		makestr(INFO.children('CREDITS').xml());
+	guide.description =	makestr(INFO.children('DESCRIPTION').xml());
 	guide.jurisdiction =	makestr(INFO.children('JURISDICTION').text());
 	guide.language=		makestr(INFO.children('LANGUAGE').text());
-	guide.modifydate=		makestr(INFO.children('MODIFYDATE').text());;
+	guide.modifydate=		makestr(INFO.children('MODIFYDATE').text());
 	guide.notes=			makestr(INFO.children('NOTES').xml());
-	guide.sendfeedback=	TextToBool(INFO.children('SENDFEEDBACK').text(),false);
+	guide.sendfeedback =	textToBool(INFO.children('SENDFEEDBACK').text(),false);
 	guide.emailContact=	makestr(INFO.children('EMAILCONTACT').text());
 	guide.subjectarea =  makestr(INFO.children('SUBJECTAREA').text());
-	guide.title = 			INFO.children('TITLE').text();
+	guide.title =			INFO.children('TITLE').text();
 	guide.version=			makestr(INFO.children('VERSION').text());
-	guide.viewer = 		makestr(INFO.children('VIEWER').text());
-	guide.logoImage = 	makestr(INFO.children('LOGOIMAGE').text());
-	guide.endImage = 		makestr(INFO.children('ENDIMAGE').text());
+	guide.viewer =			makestr(INFO.children('VIEWER').text());
+	guide.logoImage =		makestr(INFO.children('LOGOIMAGE').text());
+	guide.endImage =		makestr(INFO.children('ENDIMAGE').text());
 
 	guide.authors=[];
 	GUIDE.find("AUTHORS > AUTHOR").each(function() {
@@ -234,7 +240,7 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		page.helpVideoURL=makestr(PAGE.find("HELPVIDEO").text());
 		page.notes=makestr(PAGE.find("NOTES").xml());
 		page.codeBefore = makestr(PAGE.find("CODEBEFORE").xml());
-		page.codeAfter = 	makestr(PAGE.find("CODEAFTER").xml());
+		page.codeAfter =	makestr(PAGE.find("CODEAFTER").xml());
 		
 		PAGE.find('BUTTONS > BUTTON').each(function(){
 			var button=new TButton();
@@ -247,15 +253,15 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		PAGE.find('FIELDS > FIELD').each(function(){
 			var field=new TField();
 			field.type =$(this).attr("TYPE");
-			field.required = TextToBool($(this).attr("REQUIRED"),true);
+			field.required = textToBool($(this).attr("REQUIRED"),true);
 			field.order = makestr($(this).attr("ORDER"));
 			field.label =makestr(jQuery.trim($(this).find("LABEL").xml()));
 			field.name =jQuery.trim($(this).find("NAME").xml());
 			field.value = makestr(jQuery.trim($(this).find("VALUE").xml()));
 			field.min = makestr($(this).attr("MIN"));//could be a number or a date so don't convert to number
 			field.max = makestr($(this).attr("MAX"));
-			field.calendar = TextToBool($(this).attr("CALENDAR"),false);
-			field.calculator=TextToBool($(this).attr("CALCULATOR"),false);
+			field.calendar = textToBool($(this).attr("CALENDAR"),false);
+			field.calculator=textToBool($(this).attr("CALCULATOR"),false);
 			
 			field.invalidPrompt =makestr(jQuery.trim($(this).find("INVALIDPROMPT").xml()));
 			field.invalidPromptAudio =makestr(jQuery.trim($(this).find("INVALIDPROMPTAUDIO").xml()));
@@ -270,7 +276,7 @@ function page2XML(page)/* return XML */
 {
 	return '<?xml version="1.0" encoding="UTF-8" ?>' + js2xml('PAGE', page2JSON(page));
 }
-function XML2page(xml)/* return TPage */
+function pageFromXML(xml)/* return TPage */
 {
 	var $xml =  $(jQuery.parseXML(xml));
 	var PAGE = $('PAGE',$xml);
@@ -280,27 +286,27 @@ function XML2page(xml)/* return TPage */
 }
 
 
-function parseXML2Page(PAGE,page)
+function parseXML2Page(PAGE, page)
 {
 	page.xml = PAGE.xml(); 
 	
 	page.type=PAGE.attr("TYPE");
 	page.style=makestr(PAGE.attr("STYLE"));
-	if (page.type==CONST.ptPopup || page.type=="Pop-up page")
+	if (page.type===CONST.ptPopup || page.type==="Pop-up page")
 	{
 		page.type=CONST.ptPopup;
 		page.mapx=null;
 	}
 	else
 	{
-		page.mapx=parseInt(PAGE.attr("MAPX"));
-		page.mapy=parseInt(PAGE.attr("MAPY"));
+		page.mapx=parseInt(PAGE.attr("MAPX"),10);
+		page.mapy=parseInt(PAGE.attr("MAPY"),10);
 	}
 	page.repeatVar=makestr(PAGE.attr("REPEATVAR"));
 	page.nextPage="";
 	page.nextPageDisabled = false;
 	page.alignText="";
-	page.step=parseInt(PAGE.attr("STEP"));
+	page.step=parseInt(PAGE.attr("STEP"),10);
 	page.text=PAGE.find("TEXT").xml();
 	page.textAudioURL=makestr(PAGE.find("TEXTAUDIO").text());
 	page.learn=makestr(PAGE.find("LEARN").xml());
@@ -311,7 +317,7 @@ function parseXML2Page(PAGE,page)
 	page.helpVideoURL=makestr(PAGE.find("HELPVIDEO").text());
 	page.notes=makestr(PAGE.find("NOTES").xml());
 	page.codeBefore = makestr(PAGE.find("CODEBEFORE").xml());
-	page.codeAfter = 	makestr(PAGE.find("CODEAFTER").xml());
+	page.codeAfter =	makestr(PAGE.find("CODEAFTER").xml());
 	
 	PAGE.find('BUTTONS > BUTTON').each(function(){
 		var button=new TButton();
@@ -324,15 +330,15 @@ function parseXML2Page(PAGE,page)
 	PAGE.find('FIELDS > FIELD').each(function(){
 		var field=new TField();
 		field.type =$(this).attr("TYPE");
-		field.required = TextToBool($(this).attr("REQUIRED"),true);
+		field.required = textToBool($(this).attr("REQUIRED"),true);
 		field.order = makestr($(this).attr("ORDER"));
 		field.label =makestr(jQuery.trim($(this).find("LABEL").xml()));
 		field.name =jQuery.trim($(this).find("NAME").xml());
 		field.value = makestr(jQuery.trim($(this).find("VALUE").xml()));
 		field.min = makestr($(this).attr("MIN"));//could be a number or a date so don't convert to number
 		field.max = makestr($(this).attr("MAX"));
-		field.calendar = TextToBool($(this).attr("CALENDAR"),false);
-		field.calculator=TextToBool($(this).attr("CALCULATOR"),false);
+		field.calendar = textToBool($(this).attr("CALENDAR"),false);
+		field.calculator=textToBool($(this).attr("CALCULATOR"),false);
 		
 		field.invalidPrompt =makestr(jQuery.trim($(this).find("INVALIDPROMPT").xml()));
 		field.invalidPromptAudio =makestr(jQuery.trim($(this).find("INVALIDPROMPTAUDIO").xml()));
@@ -345,13 +351,16 @@ function parseXML2Page(PAGE,page)
 function parseXML_Auto_to_CAJA(cajaData)
 {	// Parse XML into CAJA
 	var guide;
-	if ((cajaData.find('A2JVERSION').text())!="")
+	if ((cajaData.find('A2JVERSION').text())!==""){
 		guide=parseXML_A2J_to_CAJA(cajaData);// Parse A2J into CAJA
+	}
 	else
-	if ((cajaData.find('CALIDESCRIPTION').text())!="")
+	if ((cajaData.find('CALIDESCRIPTION').text())!==""){
 		guide=parseXML_CA_to_CAJA(cajaData);// Parse CALI Author into CAJA
-	else
+	}
+	else{
 		guide=parseXML_CAJA_to_CAJA(cajaData);// Parse Native CAJA
+	}
 	
 	guide.sortPages();
 	return guide;
@@ -359,7 +368,9 @@ function parseXML_Auto_to_CAJA(cajaData)
 
 
 function cr2P(txt){
-	return txt == "" ?"":"<P>" + txt.split("\n").join("</P><P>")+"</P>";//replace("\n\n","\n")
+	return txt === "" ?"":"<P>" + txt.split("\n").join("</P><P>")+"</P>";//replace("\n\n","\n")
 }
 
 
+
+/* */

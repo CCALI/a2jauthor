@@ -6,17 +6,31 @@
 */
 
 
+/* xproperties ptPopup,ftButton,ftText,ftTextLong,ftTextPick,
+ftNumber,ftNumberDollar,ftNumberSSN,ftNumberPhone,
+ftNumberZIP,ftNumberPick,ftDateMDY,ftGender,ftRace,
+ftRadioButton,ftCheckBox,ftCheckBoxNOTA,ftCheckBoxMultiple,
+vtUnknown,vtText,vtTF,vtNumber,vtDate,vtMC,vtOther,A2JVersion,
+MAXFIELDS,MAXBUTTONS,MAXSTEPS,kMinYear,ordDefault,ordAscending,ordDescending,
+value,event,code,number,textAudioURL,notes,learn,help,
+text,label,next,name,type,optional,invalidPrompt,order,min,max,calendar,calculator,maxChars*/
+	
+ 
+
+
+
+
 // ### Constants  ###
 
 // Navigation page destinations
-var qIDNOWHERE=""
-var qIDSUCCESS="SUCCESS"
-var qIDFAIL="FAIL"
-var qIDEXIT="EXIT" //8/17/09 3.0.1 Save like SUCCESS but flag incomplete true.
-var qIDBACK="BACK" //8/17/09 3.0.1 Same as history Back button.
-var qIDRESUME="RESUME" //8/24/09 3.0.2
+/** @const */ var qIDNOWHERE="";
+/** @const */ var qIDSUCCESS="SUCCESS";
+/** @const */ var qIDFAIL="FAIL";
+/** @const */ var qIDEXIT="EXIT"; //8/17/09 3.0.1 Save like SUCCESS but flag incomplete true.
+/** @const */ var qIDBACK="BACK"; //8/17/09 3.0.1 Same as history Back button.
+/** @const */ var qIDRESUME="RESUME"; //8/24/09 3.0.2
 
-
+/** @const */ 
 var CONST = {
 	//Page Types
 	ptPopup:'Popup',
@@ -40,6 +54,14 @@ var CONST = {
 	ftCheckBoxMultiple:"checkboxmultiple",
 	
 
+	vtUnknown : 0,
+	vtText : 1,
+	vtTF : 2,
+	vtNumber : 3,
+	vtDate : 4,
+	vtMC : 5,
+	vtOther : 6,
+	
 	// Limits
 	MAXFIELDS: 9,
 	MAXBUTTONS: 3,
@@ -51,15 +73,18 @@ var CONST = {
 	ordAscending:"ASC",
 	ordDescending:"DESC",
 	
-	0:0
+	A2JVersion:"5.0.0"
 };
 // ### Steps ###
 // colors: 0xffffff,0xBDD6D6, 0xB7DDB7, 0xEFC68C, 0xE7E7B5, 0xEFDED6, 0xECD8EA,0xBDD6D6, 0xB7DDB7, 0xEFC68C, 0xE7E7B5, 0xEFDED6, 0xECD8EA];
 
 // ### Global variables ### //
+/** @type {TGuide} */
 var gGuide; // global reference to current guide TGuide (CBK or A2J)
+/** @type {TPage} */
 var gPage; // global reference to current edit/viewed TPage
 var gGuideID; // unique service side id for this guide
+
 
 // User 
 var gUserID=0; 
@@ -91,7 +116,11 @@ function TButton()
 	return this;
 }
 
-var TField = function()
+/** 
+ * @constructor
+ * @struct
+ */
+function TField()
 {
 	this.type ="";
 	this.label ="";
@@ -105,39 +134,34 @@ var TField = function()
 	this.calendar=false;
 	this.calculator=false;
 	this.maxChars="";
+	this.listSRC="";
+	this.listDATA="";
 	return this;
 }
 
 
-var fieldTypesList = [
-	CONST.ftText,"Text",
-	CONST.ftTextLong,"Text (Long)",
-	CONST.ftTextPick,"Text (Pick from list)",
-	CONST.ftNumber,"Number",
-	CONST.ftNumberDollar,"Number Dollar",
-	CONST.ftNumberSSN,"Number SSN",
-	CONST.ftNumberPhone,"Number Phone",
-	CONST.ftNumberZIP,"Number ZIP Code",
-	CONST.ftNumberPick,"Number (Pick from list)",
-	CONST.ftDateMDY,"Date MM/DD/YYYY",
-	CONST.ftGender,"Gender",
-	CONST.ftRadioButton,"Radio Button",
-	CONST.ftCheckBox,"Check box",
-	CONST.ftCheckBoxNOTA,"Check Box (None of the Above)"
-];
-
+/** 
+ * @constructor
+ * @struct
+ */
 function TScript()
 {
 	this.event =""; // BEFORE page is displayed or AFTER user presses a button
 	this.code ="";
 	return this;
 }
+/** 
+ * @constructor
+ * @struct
+ */
 function TStep()
 {
 	this.number ="";
 	this.text ="";
 	return this;
-}/*
+}
+
+/*
 function TPopup()
 {	// This represents an embedded popup
 	this.id ="";//unique id from POPUP://#
@@ -146,15 +170,20 @@ function TPopup()
 	return this;
 }*/
 
+/** 
+ * @constructor
+ * @struct
+ */
 function TPage()
 {	// This represents a single page within the lesson book/interview.
 	//this.id="";// Unique id
-	this.name="";// Unique but author chosen name
-	this.text="";// Text of question
+	this.name= "";// Unique but author chosen name
+	this.text= "";// Text of question
 	this.textAudioURL= "";
-	this.notes="";
-	this.learn="";
+	this.notes= "";
+	this.learn= "";
 	this.help= "";// Optional help text from Learn More button
+	
 	this.helpAudioURL = "";
 	this.helpReader="";
 	this.helpImageURL="";
@@ -193,6 +222,10 @@ function TPage()
 	this.xml=null;
 	return this;
 }
+/** 
+ * @constructor
+ * @struct
+ */
 function TAuthor()
 {
 	this.name= "";
@@ -202,7 +235,10 @@ function TAuthor()
 	return this;
 }
 
-	
+/** 
+ * @constructor
+ * @struct
+ */
 function TGuide()
 {	// This is the Guide representing a CALI lesson Book or an A2J Author Interview.
 
@@ -223,17 +259,21 @@ function TGuide()
 	this.subjectarea="";			//Original CA - CA places every lesson into a single main category like Torts.
 	this.title="";					//Origin Both - author title - in CA it's visible at top of page, not seen in A2J by user
 	this.version="";				//Original Both - CA uses the mm/dd/yyyy format, A2J is author defined
-	this.viewer=""; 				//Origin CAJA - A2J, CA, CAJA - which viewer to use? 
+	this.viewer="";				//Origin CAJA - A2J, CA, CAJA - which viewer to use? 
 	this.logoImage="";			//Origin A2J
 	this.endImage="";				//Origin A2J
 
-
+	/** @type Array.TAuthor */
 	this.authors=[];				//Origin Both - single line, CA is a heirarchy. Array of TAuthor
 	
 	this.firstPage="";			//Origin A2J - starting page specificed by author
-	this.exitPage="";				//Origin A2J - page that exist success 
+	this.exitPage="";				//Origin A2J - page that exist success
+	
+	/** @type Array.TStep */
 	this.steps=[];					//Origin A2J - array of TStep()
 
+	
+	/** @type Array.TPage */	
 	this.pages={};			//Origin both - associative array of pages TPage() by page name. E.g., pages["Contents"] = TPage()
 	this.constants={};	//Origin CAJA - associative array of contants, MAXINCOME:25000
 	//this.popups=[];		//Origin A2J - array of embedded text popups (these are anonymous unlike CA where they are named)
@@ -252,13 +292,6 @@ function TGuide()
 
 
 
-CONST.vtUnknown = 0;
-CONST.vtText = 1
-CONST.vtTF = 2
-CONST.vtNumber = 3
-CONST.vtDate = 4
-CONST.vtMC = 5
-CONST.vtOther = 6
 
 var vtStrings=["Unknown","Text","TF","Number","Date","MC","Other"];
 var vtStringsAnswerFile=["Unknown","TextValue","TFValue","NumValue","DateValue","MCValue","OtherValue"];
@@ -268,68 +301,23 @@ var vtStringsGrid=["Unknown","Text","True/False","Number","Date","Multiple Choic
 function TVariable()
 {
 	this.name= "";
-	this.type ="";//E.g., Text, MC, TF
-	this.comment ="";
+	this.type = "";	//E.g., Text, MC, TF
+	this.comment = "";
 	this.repeating=false;//if false, value is the value. if true, value is array of values.
 	this.values=[];
 	return this;
 }
-TGuide.prototype.varGet=function(varName,varIndex)
+TGuide.prototype.sortPages=function()
 {
-	varName = jQuery.trim(varName);
 	var guide=this;
-	var varName_i=varName.toLowerCase();
-	var v=guide.vars[varName_i];
-	if (typeof varIndex==='undefined' || varIndex==null || varIndex=='') varIndex=0;
-	if (typeof v === 'undefined')
-	{
-		gLogic.trace('Undefined variable: '+ traceTag('var',varName)+ ((varIndex==0)?'':traceTag('varidx',varIndex) ));
-		return 'undefined';
+	guide.sortedPages=[];
+	var p;
+	for (p in guide.pages){
+		guide.sortedPages.push(guide.pages[p]);
 	}
-	else
-	{
-		var val = v.values[varIndex]; 
-		switch (v.type){
-			case CONST.vtNumber:
-				 val=parseFloat(val);
-				break;
-			case CONST.vtTF:
-				 val= (val>0) || (val=='true');
-				break;
-		}
-		//gLogic.trace('Getting value of '+  traceTag('var',varName)+ ( (varIndex==0)?'':traceTag('varidx',varIndex) ) +'='+traceTag('val',val));
-		return val;
-	}
-}
+	guide.sortedPages=guide.sortedPages.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
+};
 
-TGuide.prototype.varSet=function(varName,varIndex,varVal)
-{
-	varName = jQuery.trim(varName);
-	var guide=this;
-	var varName_i=varName.toLowerCase();
-	var v=guide.vars[varName_i];
-	if (typeof v === 'undefined')
-	{	// Create variable at runtime
-		var v=new TVariable();
-		v.name=varName;
-		v.repeating= !(typeof varIndex==='undefined' || varIndex==null || varIndex=='');
-		guide.vars[varName_i]=v;
-		gLogic.trace('Creating variable '+traceTag("var",varName));
-	}
-	if (typeof varIndex==='undefined' || varIndex==null || varIndex=='') varIndex=0;
-	gLogic.indent++;
-	if (varIndex==0)
-	{
-		gLogic.trace(traceTag('var',varName)+'='+traceTag('val',varVal));
-		v.values[0]=varVal;
-	}
-	else
-	{
-		gLogic.trace(traceTag('var',varName+'#'+varIndex)+traceTag('val',varVal));
-		v.values[varIndex]=varVal;
-	}
-	gLogic.indent--;
-} 
 
 
 TGuide.prototype.pageDisplayName=function(name)//pageNametoText
@@ -340,24 +328,26 @@ TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 	{
 		var page = guide.pages[name];
 		//name = htmlEscape(this.pages[ name ].name);
-		dval = name// +"\t"+  decodeEntities(page.text);
+		dval = page.name;// +"\t"+  decodeEntities(page.text);
 	}
 	else
 	{
 		var autoIDs={};
 		autoIDs[qIDNOWHERE]=	lang.qIDNOWHERE;//"[no where]"
 		autoIDs[qIDSUCCESS]=	lang.qIDSUCCESS;//"[Success - Process Form]"
-		autoIDs[qIDFAIL]=   	lang.qIDFAIL;//"[Exit - User does not qualify]"
+		autoIDs[qIDFAIL]=		lang.qIDFAIL;//"[Exit - User does not qualify]"
 		autoIDs[qIDEXIT]=		lang.qIDEXIT;//"[Exit - Save Incomplete Form]"//8/17/09 3.0.1 Save incomplete form
 		autoIDs[qIDBACK]=		lang.qIDBACK;//"[Back to prior question]"//8/17/09 3.0.1 Same as history Back button.
 		autoIDs[qIDRESUME]=	lang.qIDRESUME;//"[Exit - Resume interview]"//8/24/09 3.0.2	
-		if (typeof autoIDs[ name ] =="undefined")
+		if (typeof autoIDs[ name ] === 'undefined'){
 			dval = lang.UnknownID.printf( name, name );//,props(autoIDs)) //"[Unknown id "+id+"]" + props(autoIDs);
-		else
+		}
+		else{
 			dval = name+"\t"+autoIDs[ name ];
+		}
 	}
 	return dval;
-}
+};
 
 
 
@@ -366,26 +356,81 @@ TGuide.prototype.addUniquePage=function(preferredName,clonePage)
 	var guide=this;
 	var counter=1;
 	var name=preferredName;
-	while (guide.pages[name]!=null)//typeof guide.pages[name]!="undefined"){
+	while (typeof guide.pages[name]!=='undefined')
 	{
 		counter++;
 		name = preferredName +" " + (counter);
 	}
-	var page= clonePage ? clonePage : new TPage();
+	var page;
+	if (clonePage){
+		page=clonePage;
+	}
+	else{
+		page=new TPage();
+	}
 	page.name = name; 
 	guide.pages[page.name] = page;  
 	return page;
-}
+};
 
-TGuide.prototype.sortPages=function()
+
+TGuide.prototype.varGet=function(varName,varIndex)
 {
+	varName = jQuery.trim(varName);
 	var guide=this;
-	guide.sortedPages=[];
-	for (var p in guide.pages)
-		guide.sortedPages.push(guide.pages[p]);
-	guide.sortedPages=guide.sortedPages.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
-}
+	var varName_i=varName.toLowerCase();
+	var v=guide.vars[varName_i];
+	if (typeof varIndex==='undefined' || varIndex===null || varIndex===''){
+		varIndex=0;
+	}
+	if (typeof v === 'undefined')
+	{
+		gLogic.trace('Undefined variable: '+ traceTag('var',varName)+ ((varIndex===0)?'':traceTag('varidx',varIndex) ));
+		return 'undefined';
+	}
+	var val = v.values[varIndex]; 
+	switch (v.type){
+		case CONST.vtNumber:
+			 val=parseFloat(val);
+			break;
+		case CONST.vtTF:
+			 val= (val>0) || (val===true) || (val==='true');
+			break;
+	}
+	//gLogic.trace('Getting value of '+  traceTag('var',varName)+ ( (varIndex==0)?'':traceTag('varidx',varIndex) ) +'='+traceTag('val',val));
+	return val;
+};
 
+TGuide.prototype.varSet=function(varName,varIndex,varVal)
+{
+	varName = jQuery.trim(varName);
+	var guide=this;
+	var varName_i=varName.toLowerCase();
+	var v=guide.vars[varName_i];
+	if (typeof v === 'undefined')
+	{	// Create variable at runtime
+		v=new TVariable();
+		v.name=varName;
+		v.repeating= !(typeof varIndex==='undefined' || varIndex===null || varIndex==='');
+		guide.vars[varName_i]=v;
+		gLogic.trace('Creating variable '+traceTag("var",varName));
+	}
+	if (typeof varIndex==='undefined' || varIndex===null || varIndex===''){
+		varIndex=0;		
+	}
+	gLogic.indent++;
+	if (varIndex===0)
+	{
+		gLogic.trace(traceTag('var',varName)+'='+traceTag('val',varVal));
+		v.values[0]=varVal;
+	}
+	else
+	{
+		gLogic.trace(traceTag('var',varName+'#'+varIndex)+traceTag('val',varVal));
+		v.values[varIndex]=varVal;
+	}
+	gLogic.indent--;
+};
 
 
 /* */

@@ -4,7 +4,7 @@
 	Used by A2J Viewer only.
 	12/12/2012 
 */
-var a2jVDev=1;
+var a2jVDev = 1;
 
 
 $(document).ready(function(){
@@ -25,7 +25,10 @@ function guideStart(start)
 	gotoPageView(guide.firstPage);
    $('#page-viewer').removeClass('hidestart');
    $('#splash').empty();
-	if (a2jVDev) $('.A2JViewer').toggleClass('test',500);
+	if (a2jVDev)
+	{
+		$('.A2JViewer').toggleClass('test',500);
+	}
 
 }
 function loadNewGuidePrep(guideFile,startTabOrPage)
@@ -34,16 +37,17 @@ function loadNewGuidePrep(guideFile,startTabOrPage)
 function gotoPageView(destPageName)
 {  // navigate to given page (after tiny delay)
    window.setTimeout(function(){
-      var page = gGuide.pages[destPageName]; 
-      if (page == null || typeof page === "undefined")
+      /** @type TPage */
+		var page = gGuide.pages[destPageName];
+      if (typeof page === 'undefined')
       {
-         DialogAlert( {title:'Missing page',message:'Page is missing: '+ destPageName});
+         dialogAlert( {title:'Missing page',message:'Page is missing: '+ destPageName});
          traceLogic('Page is missing: '+ traceTag('page',destPageName));
       }
       else
       {
          gPage=page;
-         a2jviewer.layoutpage($('.A2JViewer',$('#page-viewer')),gGuide,gGuide.steps,gPage);
+         A2JViewer.layoutPage($('.A2JViewer',$('#page-viewer')),gGuide,gGuide.steps,gPage);
       }
    },1);
 }

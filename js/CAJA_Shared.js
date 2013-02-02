@@ -7,10 +7,14 @@
 */
 
 
-function DialogAlert(args)
+function dialogAlert(args)
 {  // args.title = dialog title, args.message = message body
-   if (typeof args === "string") args={message:args};
-   if (args.title==null) args.title="Alert";
+   if (typeof args === "string"){
+		args={message:args};
+	}
+   if (args.title===null){
+		args.title="Alert";
+	}
    var $d=$( "#dialog-confirm" );
    $d.html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>'+args.message+'</p>');
    $d.dialog({
@@ -28,13 +32,14 @@ function DialogAlert(args)
 }
 
 function loadGuideFile2(guideFile,startTabOrPage)
+/** @param {TGuide} guideFile */
 {
    $.ajax({
       url: guideFile,
       dataType:  "xml", // IE will only load XML file from local disk as text, not xml.
       timeout: 45000,
       error: function(data,textStatus,thrownError){
-        DialogAlert('Error occurred loading the XML from '+this.url+"\n"+textStatus);
+        dialogAlert('Error occurred loading the XML from '+this.url+"\n"+textStatus);
        },
       success: function(data){
          var cajaDataXML;
@@ -49,9 +54,10 @@ function loadGuideFile2(guideFile,startTabOrPage)
 }
 
 function loadGuideFile(guideFile,startTabOrPage)
+/** @param {TGuide} guideFile */
 {  // Load guide file XML directly
    guideFile=guideFile.split("#");
-   if (guideFile.length==1)
+   if (guideFile.length===1)
    {
       guideFile=guideFile[0];
    }
@@ -61,7 +67,7 @@ function loadGuideFile(guideFile,startTabOrPage)
       guideFile=guideFile[0];
    }
    loadNewGuidePrep(guideFile,startTabOrPage);
-   window.setTimeout(function(){loadGuideFile2(guideFile,startTabOrPage)},500);
+   window.setTimeout(function(){loadGuideFile2(guideFile,startTabOrPage);},500);
 }
 
 

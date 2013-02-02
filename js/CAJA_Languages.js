@@ -2,7 +2,10 @@
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	Language (INCOMPLETE)
-	07/14/2012 Language file for the authoring tool 
+	07/14/2012 Language file for the authoring tool
+	Language blocks for each supported language.
+	There's a Languages[] structure for A2J Viewer specific code.
+	And jQuery UI structs for Calendar.
 */
 
 var lang = {
@@ -13,28 +16,31 @@ var lang = {
 	MyProgress:'',
 	SaveAndExit:'',
 	ResumeExit:''
-	};
-
+};
 
 var Languages={
 	default: 'en',
-	regional:[],
+	regional: [],
 	set : function(languageID)
 	{
-		if (typeof this.regional[languageID]==='undefined')
+		if (typeof this.regional[languageID]==='undefined'){
 			languageID='en';
+		}
 		trace("Set language to "+languageID);
-		var region = this.regional[languageID];
+		var region;
+		
+		region = this.regional[languageID];
 		lang = {};
-		for (var e in region){
-			lang[e]=""+region[e];
+		var e;
+		for (e in region){
+			lang[e]= String(region[e]);
 			//trace(e+"="+region[e]);
 		}
-		var region = this.regional['en'];
-		for (var e in region){
-			if (makestr(lang[e])=='')
+		region = this.regional['en'];
+		for (e in region){
+			if (makestr(lang[e])==='')
 			{
-				lang[e]=""+region[e];
+				lang[e]= String(region[e]);
 				//trace('Missing '+e+"="+lang[e]);
 			}
 		}
@@ -43,7 +49,7 @@ var Languages={
 	{	// needs translation
 		return txt;
 	}
-}
+};
 
 // English
 Languages.regional['en']= {
@@ -158,7 +164,7 @@ Languages.regional['es']= {
 	/* VIEWER */
 	// 05/05/2005, 03/11/2010 External Spanish language file used with A2J Viewer'
 	Language:'Español',
-	AskYesNo_Yes:'Sí',
+	AskYesNo_Yes:'Si',
 	AskYesNo_No:'No',
 	Close:'Cerrar',
 	Comment:'Comentario',
@@ -258,7 +264,7 @@ Languages.regional['es']= {
 	Ordinals48:'cuadragésimooctavo',
 	Ordinals49:'cuadragésimonoveno',
 	Ordinals50:'quincuagésimo'
-}
+};
 
 
 
@@ -266,7 +272,8 @@ Languages.regional['es']= {
 Languages.regional['vi']= {
 	locale:'vi',
 	
-	/* VIEWER */
+	
+		/* VIEWER */
 	// 11/23/2011 External Vietnamese language file used with A2J Viewer',
 	Language:'Tiếng Anh',
 	AskYesNo_Yes:'Có',
@@ -332,7 +339,10 @@ Languages.regional['vi']= {
 	Ordinals11:'Mười một',
 	Ordinals12:'Mười hai',
 	Ordinals13:'Mười ba'
-}
+	
+	
+	
+};
 
 
 
@@ -406,7 +416,7 @@ Languages.regional['zh-cn']= {
 	Ordinals11:'第十一',
 	Ordinals12:'第十二',
 	Ordinals13:'第十三'
-}
+};
 
 
 
@@ -490,3 +500,5 @@ jQuery(function($){
 });
 
 
+
+/* */

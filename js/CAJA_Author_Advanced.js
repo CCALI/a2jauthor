@@ -362,7 +362,7 @@ TGuide.prototype.convertToText=function()
 				{	
 					button=page.buttons[b];
 					fb=page.feedbacks[fbIndex(b,d)];
-					pageText+=text2P("Feedback for subquestion " +(parseInt(d)+1) + ", Choice("+button.label+")");
+					pageText+=text2P("Feedback for subquestion " +(parseInt(d,10)+1) + ", Choice("+button.label+")");
 					pageText+=html2P(fb.text);
 				}
 			}

@@ -3,6 +3,7 @@
 	
 	A2J Viewer embedding
 	Required by Author and Viewers
+	
 	10/12/2012
 */
 
@@ -10,17 +11,17 @@
 
 	
 
-var a2jviewer={
+var A2JViewer={
 
 	IMG : "img/",
 
 	history:[],
 	
-	layoutpage:function(div,guide,steps,page)
+	layoutPage:function(div,guide,steps,page)
 	{	// layout page into interactive viewer. attach event handlers.
 	
 		var html = '<ul class="NavBar"> <li><a href="#navback">'+lang.GoBack+'</a></li> <li><a href="#">'+lang.GoNext+'</a></li> <li>'+lang.MyProgress+' <select id="history"><option>Question 1</option><option>Question 2</option></select></li>  <li class="right size2"><a href="#">A+</a></li> <li class="right size1"><a href="#">A-</a></li> <li class="right"><a href="#">Exit</a></li> <li class="right"><a href="#">Save</a></li> </ul><div class="interact">This is some content </div> <div id="a2jbtn"></div> ';
-		if ($(div).html()=="")//first time?
+		if ($(div).html()==="")//first time?
 		{
 			$(div).html(html);
 			$('#a2jbtn').click(function()
@@ -35,15 +36,16 @@ var a2jviewer={
 			$('.NavBar a').click(function(){
 				switch ($(this).attr('href')){
 					case '#navback':
+						break;
 					default:
 						//alert($(this).attr('href'));
 				}
 			});
 			
-			if (typeof CAJA_Initialize != 'undefined'){
+			if (typeof authorEditorInitialize !== 'undefined'){
 				$('.A2JViewer').append('<div class="debugmenu"><button/><button/></div>');
 				$('.A2JViewer div.debugmenu button').first()
-					.button({label:'Resume editing',icons:{primary:'ui-icon-arrowreturnthick-1-w'}}).click(function(){resumeEdit()})
+					.button({label:'Resume editing',icons:{primary:'ui-icon-arrowreturnthick-1-w'}}).click(function(){resumeEdit();})
 //					.next().button({label:'Edit this page',icons:{primary:'ui-icon-pencil'}}).click(function(){gotoPageEdit(page.name)});//ui-icon-document-b
 					.next().button({label:'Testing',icons:{primary:'ui-icon-pencil'}}).click(function(){$('.A2JViewer').toggleClass('test',500);});
 			}
@@ -61,19 +63,22 @@ var a2jviewer={
 		var help = gLogic.evalLogicHTML( page.help);
 
 		var stepcount=steps.length-curstep;
-		$('.interact',div).html(a2jviewer.layoutstep(stepcount)); 
+		$('.interact',div).html(A2JViewer.layoutstep(stepcount)); 
 		
 		$('.A2JViewer .ui-form.question').html(question + '<div class="form"></div><div class="buttonlist"></div>');
-		for (var bi in page.buttons)
+		var bi;
+		for (bi in page.buttons)
 		{
 			var b = page.buttons[bi];
 			$('.A2JViewer .ui-form.question  .buttonlist').append('<button num='+bi+' title="Go to page '+gGuide.pageDisplayName(b.next).asHTML()+'">'+b.label+'</button>'); 
 		}
 		var fs=$('.A2JViewer .ui-form.question .form');
 		var varIndex=null;
-		if (page.repeatVar!="")
+		if (page.repeatVar!==''){
 			guide.varGet(page.repeatVar);
-		for (var fi in page.fields)
+		}
+		var fi;
+		for (fi in page.fields)
 		{
 			var f = page.fields[fi];// field record
 			var fid = "FID_"+fi;//field id - unique
@@ -159,36 +164,44 @@ var a2jviewer={
 					break;
 			}
 			var $row=$('<div class="field"/>');
-			if ($labelinput!=null)
-				$row.append($('<div class="labelinput"/>').append([$labelinput,$label]))
-			else
+			if ($labelinput!==null){
+				$row.append($('<div class="labelinput"/>').append([$labelinput,$label]));
+			}
+			else{
 				$row.append([$('<div class="label"/>').append($label),$('<div class="input"/>').append($input)]);
+			}
 			fs.append($row);
 		} 
-		$('.A2JViewer .ui-form.learnmore').html(help + '<div class="buttonlist"><button>Close</button></div>').parent().hide().filter(function(){return help!=""}).fadeIn(1000);
+		$('.A2JViewer .ui-form.learnmore').html(help + '<div class="buttonlist"><button>Close</button></div>').parent().hide().filter(
+			function(){
+				return help!=="";
+			}).fadeIn(1000);
 		$('.stepnumber.step1').text(steps[curstep].number);
 		$('.steptext.step1').text(steps[curstep].text);
-		$('.circle1').attr('src',''+this.IMG+'step_circle_'+(curstep%3)+'.png');
+		$('.circle1').attr('src',this.IMG+'step_circle_'+(curstep%3)+'.png');
 		if (curstep<steps.length-1)
 		{   // layout as many steps as possible
 			$('.stepnumber.step2').text(steps[curstep+1].number);
 			$('.steptext.step2').text(steps[curstep+1].text);
-			$('.circle2').attr('src',''+this.IMG+'step_circle_'+((curstep+1)%3)+'.png');
+			$('.circle2').attr('src',this.IMG+'step_circle_'+((curstep+1)%3)+'.png');
 		}
 		var h=$('.question.ui-form').height();
-		if (h>400) $('.question.bubble').css({top:50});
+		if (h>400){
+			$('.question.bubble').css({top:50});
+		}
 		
 		$('.A2JViewer .ui-form.learnmore button').button().click(function(){/*close*/});
-		$('.A2JViewer .ui-form.question button').button().click(function(){
-			// Validation of form data before proceeding
+		$('.A2JViewer .ui-form.question button').button().click(function()
+		{	// Validation of form data before proceeding
 			var varIndex=null;
-			if (page.repeatVar!="")
-				guide.varGet(page.repeatVar);
-			
-			for (var fi in page.fields)
+			if (page.repeatVar!=="")
 			{
-				var f = TField();
-				f = page.fields[fi];// field record
+				guide.varGet(page.repeatVar);
+			}
+			var fi;
+			for (fi in page.fields)
+			{
+				var f = page.fields[fi];// field record
 				var fid = "FID_"+fi;//field id - unique
 				var fname = "FID_"+f.name;//field name - possible duplicates, i.e., radio buttons
 
@@ -208,16 +221,18 @@ var a2jviewer={
 					   break;
 					case CONST.ftNumberPick://"Number (Pick from list)"
 					   break;
-					   break;
 					case CONST.ftGender://"Gender"
-						if ($('#'+fid+'M').is(':checked'))
+						if ($('#'+fid+'M').is(':checked')){
 							guide.varSet(f.name,varIndex,lang.Male);
-						if ($('#'+fid+'F').is(':checked'))
+						}
+						if ($('#'+fid+'F').is(':checked')){
 							guide.varSet(f.name,varIndex,lang.Female);
+						}
 					   break;
 					case CONST.ftRadioButton://"Radio Button"
-						if ($('#'+fid).is(':checked'))
+						if ($('#'+fid).is(':checked')){
 							guide.varSet(f.name,varIndex,f.value);
+						}
 					   break;
 					case CONST.ftCheckBox://"Check box"
 						guide.varSet(f.name,varIndex,$('#'+fid).is(':checked'));
@@ -227,11 +242,11 @@ var a2jviewer={
 				}
 			}
 			
-			var bi=parseInt($(this).attr('num'));
+			var bi=parseInt($(this).attr('num'),10);
 			var b=page.buttons[bi];
 			
 			traceLogic( 'You pressed ' + traceTag('ui',b.label));
-			if (b.name!="")
+			if (b.name!=="")
 			{	// Set button's variable 
 				guide.varSet(b.name,varIndex,b.value);
 			}
@@ -273,13 +288,10 @@ var a2jviewer={
 		var shared = '<div class="learnmore bubble" style="position:absolute; left:604px; top: 93px; width: 285px;"><div class="ui-form learnmore"><p>Learn more text appears here.</p><div class="buttonlist"><button>Close</button></div></div></div>';
 	
 
-		if (stepcount<=1) final= steps[0]; else final= steps[1];
+		final= (stepcount<=1) ? steps[0] : steps[1];
 		return '<div class="step" >' + final + shared + '</div>';
 	}
 };
-
-
-
 
 
 /* */

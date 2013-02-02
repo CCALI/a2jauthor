@@ -2,28 +2,28 @@
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	Mapper
+	Uses a simple DOM based map with DIVs for text and lines.
+	TODO - replace with CANVAS/SVG flowcharter.
 */
 
 var mapperScale=1.0;
 var mapSize= 1 ; //0 is small, 1 is normal
 
 
-
 function showPageOnMap()
-{
-	var target=$(this).attr('target');
+{	// TODO 
+	//var target=$(this).attr('target');
 }
 
-var GRID_MAP =  {x : 10 , y : 10 };
-//var GRID_MAP =  {x : 50 , y : 20 };
-var NODE_SIZE = {w : 150, h : 36+8};
+/** @const */ var GRID_MAP =  {x : 10 , y : 10 };
+/** @const */ //var GRID_MAP =  {x : 50 , y : 20 };
+/** @const */ var NODE_SIZE = {w : 150, h : 36+8};
 
 function buildMap()
 {	// Contruct mapper flowcharts.
-	if( 0 ){
-		$('#tabsMapper').hide();
-		return;
-	}
+
+	//	$('#tabsMapper').hide();return;
+
 
 	var $map = $('.map');
 	$map.empty();
@@ -49,11 +49,13 @@ function buildMap()
 		}
 	}*/
 
+	var p;
+	var page;
 	// Snap to grid
-	for (var p in gGuide.pages)
+	for (p in gGuide.pages)
 	{
-		var page=gGuide.pages[p];
-		if (page.mapx!=null) 
+		page=gGuide.pages[p];
+		if (page.mapx!==null) 
 		{
 			page.mapx=Math.round(1+page.mapx / GRID_MAP.x)*GRID_MAP.x;
 			page.mapy=Math.round(1+page.mapy / GRID_MAP.y)*GRID_MAP.y;
@@ -61,21 +63,19 @@ function buildMap()
 	}
 	
 	// Full size boxes with question names and simple lines connecting boxes.
-	var NW=NODE_SIZE.w;
-	var NH=NODE_SIZE.h;
-	for (var p in gGuide.pages)
+	//var NW=NODE_SIZE.w; var NH=NODE_SIZE.h;
+	for (p in gGuide.pages)
 	{
-		var page=gGuide.pages[p];
-		if (page.mapx!=null)
+		page=gGuide.pages[p];
+		if (page.mapx!==null)
 		{
 			var nodeLeft=page.mapx;
 			var nodeTop= page.mapy;
 			var stepc;//stepcolor
-			if (page.step==0) stepc=0;
-			else stepc=(page.step%4)+1;
-			$map.append(''					
+			stepc = (page.step===0) ? 0  :  (page.step%4)+1;
+			$map.append(' '
 				+'<div class="node Step'+(stepc)+'" rel="'+page.name.asHTML()+'" style="z-index:1; left:'+nodeLeft+'px;top:'+nodeTop+'px;">'
-				+(page.type==CONST.ptPopup ? '':'<div class="arrow"></div>')
+				+(page.type===CONST.ptPopup ? '':'<div class="arrow"></div>')
 				+'<div class="text">'+page.name+'</div></div>'
 				);
 			//$map.append(''
@@ -85,11 +85,11 @@ function buildMap()
 	}
 	//$('.branch',$map).click(function(){focusNode($('.map > .node[rel="'+$(this).attr('rel')+'"]'));	});
 	$('.node',$map).dblclick(function(){
-			var target=$(this).attr('rel')
-			//$('#CAJAOutline li, #CAJAIndex li').removeClass('ui-state-active');
-			//$(this).addClass('ui-state-active')
-			gotoPageEdit(target);
-	;});
+		var target=$(this).attr('rel');
+		//$('#CAJAOutline li, #CAJAIndex li').removeClass('ui-state-active');
+		//$(this).addClass('ui-state-active')
+		gotoPageEdit(target);
+	});
 	
 	mapLines();
 	//$( ".node" ).draggable({	
@@ -117,9 +117,12 @@ function focusPage()
 function mapZoomClick()
 { 
 	var zoom=parseFloat($(this).attr('zoom'));
-	if (zoom>0)
+	if (zoom>0){
 		mapperScale = mapperScale * zoom;
-	if (mapperScale>=.9) mapperScale=1;
+	}
+	if (mapperScale>=0.9){
+		mapperScale=1;
+	}
 	$('.map').traggable('changeScale',mapperScale);
 	//$('.map').css({zoom:mapperScale,"-moz-transform":"scale("+mapperScale+")","-webkit-transform":"scale("+mapperScale+")"});
 }
@@ -132,40 +135,42 @@ function mapLines()
 	var NH=NODE_SIZE.h;
 	var $map = $('.map');
 	$('.branch, .line',$map).remove();
-	for (var p in gGuide.pages)
+	var p;
+	for (p in gGuide.pages)
 	{
 		var page=gGuide.pages[p];
-		if (page.mapx!=null)
+		if (page.mapx!==null)
 		{
 			var nodeLeft=page.mapx;
 			var nodeTop= page.mapy;
-			var downlines=false;
+			//var downlines=false;
 			/* Outgoing branches to show:  
 					A2J - Buttons with Destination, Script GOTOs
 					CA - Next page, Feedback branches, Script GOTOs
 			*/
-			if (page.mapBranches==null)
+			var b;
+			if (!page.hasOwnProperty('mapBranches'))
 			{
 				var branches=[];
-				for (var b in page.buttons)
+				for (b in page.buttons)
 				{
 					var btn = page.buttons[b];
 					branches.push({text:btn.label, dest: gGuide.pages[btn.next]} );
 				}
 				page.mapBranches=branches;
 			}
-			var nodeCenterX = nodeLeft + NW/2;
+			//var nodeCenterX = nodeLeft + NW/2;
 			var nBranches=page.mapBranches.length;
 			var boffset =   NW/nBranches/2;
-			for (var b in page.mapBranches)
+			for (b in page.mapBranches)
 			{
 				var branch = page.mapBranches[b];
 				var branchX=nodeLeft + b/nBranches*NW+boffset;
 				var branchTop= nodeTop + NH;
-				if (typeof branch.dest!="undefined")
+				if (typeof branch.dest!=="undefined")
 				{
 					//var dy=(branchTop+destTop)/2;//
-					var dy=(nBranches-parseInt(b))*4;
+					var dy=(nBranches-parseInt(b,10))*4;
 					var destX = branch.dest.mapx+NW/2;
 					var destTop = branch.dest.mapy;
 					var x1 = branchX;	var y1 = branchTop;
@@ -175,14 +180,14 @@ function mapLines()
 					{
 						x3 = destX;	y3 = y2;
 						x4 = x3;		y4 = destTop - 10  ;
-						if (destX<x1 ) {x2=destX;x3=x1;} else {x2=x1;x3=destX;};
+						if (destX<x1 ) {x2=destX;x3=x1;} else {x2=x1;x3=destX;}
 						$map.append( lineV(x1,y1,y2-y1) + lineH(x2,y2,x3-x2)+  lineV( x4,y3, y4-y3));
 					}
 					else
 					{
 						x3 = (x2 + destX)/2; y3 = y2;
 						x4 = x3;		y4 = destTop - 10 ;
-						var x5 = destX; var y5=y4;
+						var x5 = destX;// var y5=y4;
 						$map.append( lineV(x1,y1,y2-y1) + ( (x2<x3) ? lineH(x2,y2,x3-x2):lineH(x3,y2,x2-x3)) +  lineV( x4,y4, y3-y4) 
 							+ ( (x4<x5) ? lineH(x4,y4,x5-x4):lineH(x5,y4,x4-x5)) );
 					}
@@ -205,3 +210,5 @@ function lineH(left,top,width)
 	return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:'+width+'px;height:2px;"></div>';
 }
 
+
+/* */

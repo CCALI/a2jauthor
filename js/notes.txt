@@ -1,0 +1,30 @@
+CALI Author 5 / A2J Author 5 (CAJA)
+2012-2013
+Sam's Design notes
+
+
+02/01/2013 jsdoc used for some types for code intelligence
+/** @const */ var x=1;
+/** @param {TPage} page The page to parse */
+
+02/01/2013 jslint tests
+http://www.jslint.com/lint.html
+
+Komodo Edit settings:
+anon=true css=true debug=true devel=true es5=true evil=true indent=3 nomen=true on=true plusplus=true sloppy=true undef=true unparam=true vars=true white=true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+All Contents Copyright The Center for Computer-Assisted Legal Instruction

@@ -3,7 +3,7 @@
 	
 */
 
-/*       * /
+/*       */
 // Comment DEBUGSTART() function out when NOT testing locally.
 function DEBUGSTART(){
 	gUserNickName='Tester';
@@ -26,14 +26,12 @@ function DEBUGSTART(){
 		"tests/data/CBK_EVD03_jqBookData.xml"
 	];
 	$(SAMPLES).each(function(i,elt){
-		$('#samples, #guidelist').append('<li><a href="#sample">'+elt+'</a></li>')
-		
-	})
+		$('#samples, #guidelist').append('<li><a href="#sample">'+elt+'</a></li>');		
+	});
 	loadGuideFile($('a[href="#sample"]').first().text(), "");
 	$('#splash').hide();
 	//$('#welcome').hide();
 }
+
+
 /* */
-
-
-

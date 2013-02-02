@@ -5,7 +5,7 @@
 	Parses CALI Author's jqXML into CAJA format 
 */
 
-function BR2cr(txt){
+function br2cr(txt){
 	return txt.replace(/&lt;BR \/&gt;/g,"\n");
 }
 
@@ -15,22 +15,22 @@ function parseXML_CA_to_CAJA(BOOK)
 
 	var guide=new TGuide();
 
-	guide.tool= 			"CA";
+	guide.tool=				"CA";
 	guide.toolversion=	makestr(BOOK.find('INFO > CAVERSIONREQUIRED').text());
 	guide.avatar=			"";
 	guide.completionTime=BOOK.find('INFO > COMPLETIONTIME').xml();
-	guide.copyrights=		cr2P(BR2cr(makestr(BOOK.find('INFO > COPYRIGHTS').xml())));
+	guide.copyrights=		cr2P(br2cr(makestr(BOOK.find('INFO > COPYRIGHTS').xml())));
 	guide.createdate=		BOOK.find('INFO > CREATEDATE').xml();
-	guide.credits=			cr2P(BR2cr(makestr(BOOK.find('INFO > CREDITS').xml())));
-	guide.description= 	cr2P(makestr(BOOK.find('CALIDESCRIPTION').xml()));
+	guide.credits=			cr2P(br2cr(makestr(BOOK.find('INFO > CREDITS').xml())));
+	guide.description=	cr2P(makestr(BOOK.find('CALIDESCRIPTION').xml()));
 	guide.jurisdiction=	""; 
-	guide.language= 		"en"; 
+	guide.language=		"en"; 
 	guide.modifydate=		BOOK.find('INFO > MODIFYDATE').xml();
-	guide.notes=			cr2P(BR2cr(makestr(BOOK.find('INFO > NOTES').xml())));
+	guide.notes=			cr2P(br2cr(makestr(BOOK.find('INFO > NOTES').xml())));
 	guide.sendfeedback=	true;
 	guide.emailContact=	makestr(BOOK.find('EMAILCONTACT').text());
 	guide.subjectarea=	BOOK.find('INFO > SUBJECTAREA').xml();
-	guide.title= 			BOOK.find('TITLE').text();
+	guide.title=			BOOK.find('TITLE').text();
 	guide.version=			makestr(BOOK.find('VERSION').text());
 	guide.viewer=			"CA";
 
@@ -39,8 +39,8 @@ function parseXML_CA_to_CAJA(BOOK)
 		var AUTHOR = $(this);
 		var author = new TAuthor();
 		author.name = AUTHOR.find('NAME').text();
-		author.title = BR2cr(makestr(AUTHOR.find('TITLE').text()));
-		author.organization = BR2cr(makestr(AUTHOR.find('SCHOOL').text()));
+		author.title = br2cr(makestr(AUTHOR.find('TITLE').text()));
+		author.organization = br2cr(makestr(AUTHOR.find('SCHOOL').text()));
 		author.email = AUTHOR.find('EMAIL').text();
 		guide.authors.push(author);
 	});
@@ -50,7 +50,9 @@ function parseXML_CA_to_CAJA(BOOK)
 	BOOK.find("BOOK > PAGE").each(function() {
 		var pageXML = $(this);
 		var page = new TPage();
-		if (SHOWXML) page.xml = $(this).xml();
+		if (SHOWXML){
+			page.xml = $(this).xml();
+		}
 		page.name=pageXML.attr("ID");
 		//page.name=page.id;
 		page.type=pageXML.attr("TYPE");
@@ -62,7 +64,7 @@ function parseXML_CA_to_CAJA(BOOK)
 		page.alignText="auto";
 		//page.step=0;
 		var toc=makestr(pageXML.find("TOC").xml());
-		if (toc!=""){
+		if (toc!==""){
 			page.text = toc;
 			guide.TOC= toc;
 		}
@@ -97,7 +99,9 @@ function parseXML_CA_to_CAJA(BOOK)
 		});
 		pageXML.find('DETAIL').each(function(d)
 		{
-			if (!('details' in page)) page.details=[];
+			if (!(page.hasOwnProperty('details'))){ //was 'details' in page.
+				page.details=[];
+			}
 			page.details.push({});
 			page.details[d].text =jQuery.trim($(this).xml());
 			page.details[d].label = "ABCDEFG".charAt(d)+".";
@@ -105,29 +109,28 @@ function parseXML_CA_to_CAJA(BOOK)
 		pageXML.find('FEEDBACK').each(function()
 		{	
 			text=jQuery.trim($(this).xml());
-			if ($(this).attr("BUTTON")==null)
+			if ($(this).attr("BUTTON")===null){
 				page.feedbackShared = text;
+			}
 			else
 			{
 				fb={};
 				fb.button=$(this).attr("BUTTON")-1;
 				fb.detail=$(this).attr("DETAIL")-1;
 				fb.grade = $(this).attr("GRADE");
-				if (fb.grade!=null) fb.grade=fb.grade;
 				fb.next=$(this).attr("NEXTPAGE");
 				fb.text = text;
 				fb.id = fbIndex(fb.button,fb.detail);
-				if (page.feedbacks==null) page.feedbacks=[];
+				if (page.feedbacks===null)
+				{
+					page.feedbacks=[];
+				}
 				page.feedbacks[fb.id]=fb; 
 			}
 		});
 		
-		if (page.type=="Topics" && page.name!="Contents")
-		{
-			// skip placeholder pages
-		}
-		else
-		{
+		if (!(page.type==="Topics" && page.name!=="Contents"))
+		{	// skip placeholder pages
 			guide.pages[page.name] = page;
 			//guide.mapids[page.id]=page;
 			//if (page.name!=page.id) trace("mismatch");
@@ -138,8 +141,8 @@ function parseXML_CA_to_CAJA(BOOK)
 	guide.variables=[];
 	
 	
-	guide.firstPage=  			"Contents";
-	guide.exitPage=  				"";
+	guide.firstPage=	"Contents";
+	guide.exitPage=	"";
 	$('LI',guide.TOC).each(function(i,li){
 		var step = new TStep();
 		step.number=i;
@@ -188,6 +191,8 @@ function parseXML_CA_to_CAJA(BOOK)
 }
 function fbIndex(button,detail)
 {
-	return parseInt(button)+"_"+ parseInt(detail);
+	return parseInt(button,10)+"_"+ parseInt(detail,10);
 }
 
+
+/* */

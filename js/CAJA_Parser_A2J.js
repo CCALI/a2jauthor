@@ -9,9 +9,9 @@
 function parseXML_A2J_to_CAJA(TEMPLATE)
 {	// Parse A2J into CAJA
 	trace("Converting from A2J Author (Flash)");
-	var VARIABLE, v, STEP,step,POPUP,popup,	QUESTION, page
-	var button, field, script, condition, comment, condT, condF, tf, statement, args, p
-	var LINEDEL="\n" //"<BR>xxxx";
+	//var VARIABLE, v, STEP,step,POPUP,popup,	QUESTION, page
+	//var button, field, script, condition, comment, condT, condF, tf, statement, args, p
+	var LINEDEL="\n"; //"<BR>xxxx";
 	var INDENT=" ";//"&nbsp;"//hard space indent one
 	
 	
@@ -22,8 +22,10 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	};
 	var DefaultPromptsUsed={};
 	
+	/** @type {TGuide} */
 	var guide=new TGuide();
 	
+	guide.dss="";
 	
 	guide.tool = "A2J";
 	guide.toolversion =  makestr(TEMPLATE.find('A2JVERSION').text());
@@ -37,7 +39,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	guide.language=makestr(TEMPLATE.find('LANGUAGE').text());
 	guide.modifydate="";
 	guide.notes= cr2P(makestr(TEMPLATE.find('HISTORY').xml()));
-	guide.sendfeedback= TextToBool(TEMPLATE.find('SENDFEEDBACK').text(),false);
+	guide.sendfeedback= textToBool(TEMPLATE.find('SENDFEEDBACK').text(),false);
 	guide.emailContact=makestr(TEMPLATE.find('SENDFEEDBACKEMAIL').text());
 	guide.subjectarea =  guide.jurisdiction;
 	guide.title = TEMPLATE.find('TITLE').text();
@@ -66,7 +68,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		v = new TVariable();
 		v.name=VARIABLE.attr("NAME");
 		v.type=VARIABLE.attr("TYPE");
-		v.repeating=TextToBool(VARIABLE.attr("REPEATING"),false);
+		v.repeating=textToBool(VARIABLE.attr("REPEATING"),false);
 		v.comment=makestr(VARIABLE.find("COMMENT").xml()); 
 		//Obsolete, discard: VARIABLE.attr("SCOPE");
 		guide.vars[v.name.toLowerCase()]=v;
@@ -84,15 +86,12 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	
 	var mapids=[]; // map A2J id to page name or special ID
 	
-	function fixID(id)
+	var fixID = function(id)
 	{	// convert a page id (#) to name.
-		if (mapids[id])
-			return mapids[id].name;
-		else
-			return id;
-	}
+		return (mapids[id]) ? mapids[id].name : id;
+	};
 	
-	function replacePopups(pageName,html)
+	var replacePopups = function(pageName,html)
 	{	// A2J didn't discard old popups. Find any popups, create pages for them thus dropping old ones.
 		return html.replace(/\"POPUP:\/\/(\w+)\"/ig,function(match,p1,offset,string){
 			var popid=match.match(/\"POPUP:\/\/(\w+)\"/i)[1];
@@ -103,7 +102,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			popup.page.text = replacePopups(pageName,popup.text); 
 			return '"POPUP://' + htmlEscape(popup.page.name)+ '"';
 		});
-	}
+	};
 		
 	TEMPLATE.find("QUESTION").each(function() {
 		// allocate pages first so we can link scripts in second pass
@@ -121,23 +120,23 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		
 		page.type="A2J";
 		page.style="";
-		page.step=parseInt(QUESTION.attr("STEP"));
-		page.mapx=parseInt(.4*QUESTION.attr("MAPX"));
-		page.mapy=parseInt(.3*QUESTION.attr("MAPY"));
+		page.step=parseInt(QUESTION.attr("STEP"),10);
+		page.mapx=parseInt(0.4*QUESTION.attr("MAPX"),10);
+		page.mapy=parseInt(0.3*QUESTION.attr("MAPY"),10);
 		page.repeatVar=makestr(QUESTION.attr("REPEATVAR"));
 		page.nextPage="";
 		page.nextPageDisabled = false;
-		page.text= replacePopups(page.name,makestr(QUESTION.find("TEXT").xml())) 
-		page.textAudioURL= replacePopups(page.name,makestr(QUESTION.find("TEXTAUDIO").xml())) 
+		page.text=replacePopups(page.name,makestr(QUESTION.find("TEXT").xml()));
+		page.textAudioURL= replacePopups(page.name,makestr(QUESTION.find("TEXTAUDIO").xml()));
 		page.learn=makestr(QUESTION.find("LEARN").xml());
-		page.help= replacePopups(page.name,makestr(QUESTION.find("HELP").xml())) 
-		page.helpAudioURL= replacePopups(page.name,makestr(QUESTION.find("HELPAUDIO").xml())) 
+		page.help= replacePopups(page.name,makestr(QUESTION.find("HELP").xml()));
+		page.helpAudioURL= replacePopups(page.name,makestr(QUESTION.find("HELPAUDIO").xml()));
 		page.helpReader=makestr(QUESTION.find("HELPREADER").xml());
 		page.helpImageURL=makestr(QUESTION.find("HELPGRAPHIC").text());
 		page.helpVideoURL=makestr(QUESTION.find("HELPVIDEO").text());
 		page.notes= cr2P(makestr(QUESTION.find("NOTE").xml()));
 		
-		if (SHOWXML) page.xml = $(this).xml();
+		if (SHOWXML) {page.xml = $(this).xml();}
 		page.alignText="";
 		var scripts=[];
 
@@ -150,20 +149,22 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			page.buttons.push(button);
 		});
 		QUESTION.find('FIELD').each(function(){
-			field=new TField();
+			field= new TField();
 			field.type =$(this).attr("TYPE");
-			field.required = !(TextToBool($(this).attr("OPTIONAL"),false));
+			field.required = !(textToBool($(this).attr("OPTIONAL"),false));
 			field.order = makestr($(this).attr("ORDER"));
 			field.min = makestr($(this).attr("MIN"));
 			field.max = makestr($(this).attr("MAX"));
-			field.calendar = TextToBool($(this).attr("CALENDAR"),false);
-			field.calculator=TextToBool($(this).attr("CALCULATOR"),false);
+			field.calendar = textToBool($(this).attr("CALENDAR"),false);
+			field.calculator=textToBool($(this).attr("CALCULATOR"),false);
 			field.label =makestr(jQuery.trim($(this).find("LABEL").xml()));
 			field.name =jQuery.trim($(this).find("NAME").xml());
 			field.value = makestr(jQuery.trim($(this).find("VALUE").xml()));
 			field.invalidPrompt =makestr(jQuery.trim($(this).find("INVALIDPROMPT").xml()));
 			field.invalidPromptAudio =makestr(jQuery.trim($(this).find("INVALIDPROMPTAUDIO").xml()));
+			field.listSRC =jQuery.trim($(this).find("LISTSRC").xml());
 			var list= $(this).find("SELECT").xml();
+			field.listDATA = list;
 			/*
 			if (typeof DefaultPrompts[field.invalidPrompt]!="undefined")
 			{
@@ -181,7 +182,10 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			
 			var comment =jQuery.trim($(this).find("COMMENT").xml());
 			// Remove old cruft.
-			if (comment == "Example: set a flag if income too high" || comment==null || comment=="undefined" ) comment="";
+			if (comment === "Example: set a flag if income too high" || comment===null || comment==="undefined" )
+			{
+				comment="";
+			}
 			
 			var condT=[];
 			var condF=[];
@@ -190,45 +194,65 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 				var statement =jQuery.trim($(this).find("ACTION").xml());
 //				if ((args = statement.match(/set\s+(\w[\w\s]*)\s?(=|TO)\s?(.+)/i))!=null)
 					//statement = 'SET ['+args[1]+'] TO '+args[3];
-				if ((args = statement.match(/set\s+(.+)/i))!=null)
+				if ((args = statement.match(/set\s+(.+)/i))!==null)
 				{
 					var p=args[1].indexOf('=');
 					var varName = args[1].substr(0,p);
 					var varVal= args[1].substr(p+1);
-					if (varVal=="") varVal='""';
-					if (varName!="")
+					if (varVal===""){
+						varVal='""';
+					}
+					if (varName!=="")
 					{
 						statement = 'SET ['+varName+'] TO '+varVal;
 					}
-					else
+					else{
 						statement = "";
+					}
 				}
 				else
-				if ((args = statement.match(/goto\s+(\w+)\s?/i))!=null)
+				if ((args = statement.match(/goto\s+(\w+)\s?/i))!==null){
 					//statement = "GOTO '"+args[1]+"'";//guide.pageIDtoName(args[1]);
 					statement = "GOTO \""+htmlEscape(fixID(args[1]))+"\"";
-				else
+				}
+				else{
 					statement = "//"+statement;
-				if (statement!="")
-					if (tf=="true")
+				}
+				if (statement!==""){
+					if (tf==="true"){
 						condT.push(statement);
-					else
+					}
+					else{
 						condF.push(statement);
+					}
+				}
 			}); 
 			
-			if ((condition=="true" || condition=="1" || condition=="1=1"))
+			if ((condition.toLowerCase()==="true" || condition==="1" || condition==="1=1"))
+			{
 				script.code = condT.join(LINEDEL)+LINEDEL;
-			else if (condF.length==0)
+			}
+			else
+			if (condF.length===0)
+			{
 //				if (condT.length==1)
 //					script.code="IF "+condition+" THEN "+condT.join(LINEDEL)+LINEDEL;//if x then y
 //				else
-					script.code="IF "+condition+" "+LINEDEL+INDENT+condT.join(LINEDEL+INDENT)+""+LINEDEL+"END IF\n";//if x then y,z
+					script.code="IF "+condition+" "+LINEDEL+INDENT+condT.join(LINEDEL+INDENT) + LINEDEL+"END IF\n";//if x then y,z
+			}
 			else
-			if (condT.length==0)
-				script.code="IF NOT ("+condition+") "+LINEDEL+INDENT+condF.join(LINEDEL+INDENT)+""+LINEDEL+"END IF"+LINEDEL;//if not x then y
+			if (condT.length===0)
+			{
+				script.code="IF NOT ("+condition+") "+LINEDEL+INDENT+condF.join(LINEDEL+INDENT)+ LINEDEL+"END IF"+LINEDEL;//if not x then y
+			}
 			else
-				script.code="IF  "+condition+" "+LINEDEL+INDENT+condT.join(LINEDEL+INDENT)+""+LINEDEL+"ELSE"+LINEDEL+INDENT+condF.join(LINEDEL+INDENT)+LINEDEL+"END IF"+LINEDEL;//if x then y else z
-			if (comment) script.code = "//"+comment + LINEDEL + script.code;
+			{
+				script.code="IF  "+condition+" "+LINEDEL+INDENT+condT.join(LINEDEL+INDENT)+ LINEDEL+"ELSE"+LINEDEL+INDENT+condF.join(LINEDEL+INDENT)+LINEDEL+"END IF"+LINEDEL;//if x then y else z
+			}
+			if (comment)
+			{
+				script.code = "//"+comment + LINEDEL + script.code;
+			}
 			 
 			scripts.push(script);
 		});
@@ -247,28 +271,32 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 				if (makestr(button.next)!="")// if button has a destination, we'll go there after any AFTER scripts have run.
 					scriptLast.push(resptest+" THEN GOTO "+ htmlEscape(fixID(button.next)));
 			}  */
-		for (var s in scripts)
+		var s;
+		for (s in scripts)
 		{
 			var script=scripts[s];
-			var st= script.code.split("\n")//.join("<BR>");
-			if (script.event=="BEFORE")
+			var st= script.code.split("\n");//.join("<BR>");
+			if (script.event==="BEFORE"){
 				scriptBefore=scriptBefore.concat(st);
-			else
+			}
+			else{
 				scriptAfter=scriptAfter.concat(st);
+			}
 		}
 		/*
 		if (scriptBefore.length>0) scriptBefore.unshift("OnBefore");
 		if (scriptAfter.length>0) scriptAfter.unshift("OnAfter");
 		page.scripts =  makestr((scriptBefore.concat(scriptAfter).concat(scriptLast)).join("<BR/>")); 
 		*/
-		page.codeBefore =  	makestr((scriptBefore).join("<BR/>")); 
-		page.codeAfter =  	makestr((scriptAfter.concat(scriptLast)).join("<BR/>"));  
+		page.codeBefore =	makestr((scriptBefore).join("<BR/>")); 
+		page.codeAfter =	makestr((scriptAfter.concat(scriptLast)).join("<BR/>"));  
 	});
-	
+	var p;
 	for (p in DefaultPrompts)
 	{
-		if (DefaultPromptsUsed[p]==1)
+		if (DefaultPromptsUsed[p]===1){
 			guide.constants[DefaultPrompts[p]] =p;
+		}
 	} 
 	/* 
 	if (book.lastPage=="") book.lastPage=pageLessonCompleted;
@@ -282,3 +310,5 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	return parseXML_CAJA_to_CAJA( $(jQuery.parseXML(exportXML_CAJA_from_CAJA(guide))) );
 }
 
+
+/* */

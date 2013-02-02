@@ -1,35 +1,40 @@
 /*	CALI Author 5 / A2J Author 5 (CAJA)
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
- 	Authoring App GUI
+	Authoring App GUI
 	03/30/2012
 */
+//var gGuide,gDev,gUserID,gGuideID,gUserNickName,gPage;
+/*xglobal A2JViewer,ws,form,updateTOC,listGuides,$,makestr,DEBUGSTART,window,document,loadGuideFile,updateTips,AJAXLoader,varAdd,editButton,styleSheetSwitch,
+traceLogic,pageFromXML,page2XML,dialogAlert,Languages,signinask,guideSave,guideClose,gotoTabOrPage,pageEditSelected,pageEditDelete,pageEditClone,pageEditNew,gotoPageEdit,mapZoomClick*/
+/*xproperties _renderItem,content,pages,setTimeout,cmd,username,userpass,userid,addClass,val,ui,nickname,show,tooltip,items,is,
+sortPages,addUniquePage,name,pageFindReferences,toLowerCase,buttons,layoutPage,indexOf,substr,toggleClass,firstPage,hide,filter,title,message,steps,removeClass,modal,Cancel,text,execCommand,listManagerSave,ShowLogic,ShowText,ShowPageList,ready,dialog,set,default,autoOpen,height,width,close,originalEvent,autocomplete,prototype,append,options,html,appendTo,draggable,resizable,fadeTo,containment,buttonset,noviceTab,icons,click,disabled,attr,live,closed,data,length,max,extend,insertAfter,clone,extend,fadeIn,closest,first,next,remove,min,button,label,primary */
 
-var prefs= {
+var prefs = {
 	ShowLogic : 1,
 	ShowText : 1,
 	ShowPageList: 1
-}
+};
 
-gDev=0;
-var $pageEditDialog;
-var SELECTED='ui-state-active';
-
+var $pageEditDialog=null;
+var SELECTED = 'ui-state-active';
 
 
-$(document).ready(CAJA_Initialize)
 
-function CAJA_Initialize() {
+$(document).ready(authorEditorInitialize);
+
+
+function authorEditorInitialize(){
    // Everything loaded, execute.
    Languages.set(Languages.default);
 
 
 	//$('#welcome, #texttoolbar').hide();
 	
-	$('#welcome').dialog({autoOpen:false, height:500, width:700, close:function(event,ui){ 
-		if (typeof event.originalEvent=='object')	signinask();
-	}} );
-	
+	$('#welcome').dialog({autoOpen: false, height: 500, width: 700, close: function(event, ui){
+		if (typeof event.originalEvent==='object') {signinask();}
+	}});
+
 
 //	$('.tabset').tabs();
 	//$('#guidepanel').tabs();
@@ -67,7 +72,7 @@ function CAJA_Initialize() {
 		var $tbl=$(this).closest('table');
 		var row = $(this).closest('tr');
 		var settings=$tbl.data('settings');
-		if ($('tbody tr',$tbl).length>=settings.max) return;
+		if ($('tbody tr',$tbl).length>=settings.max) {return;}
 		row.clone(true,true).insertAfter(row).fadeIn();
 		row.data('record',$.extend({},row.data('record')));
 		form.listManagerSave($(this).closest('table'));
@@ -75,7 +80,7 @@ function CAJA_Initialize() {
 	$('.editicons .ui-icon-circle-minus').live('click',function(){// delete a table row
 		var $tbl=$(this).closest('table');
 		var settings=$tbl.data('settings');
-		if ($('tbody tr',$tbl).length<=settings.min) return;
+		if ($('tbody tr',$tbl).length<=settings.min) {return;}
 		$(this).closest('tr').remove();
 		form.listManagerSave($tbl);
 	});
@@ -88,13 +93,13 @@ function CAJA_Initialize() {
 	
 	$('.tabsPages .tabFooter button').first()
 		.button({label:'Edit',icons:{primary:'ui-icon-pencil'}}).click(function(){
-			gotoPageEdit(pageEditSelected())
+			gotoPageEdit(pageEditSelected());
 		}).next()
 		.button({label:'New',icons:{primary:'ui-icon-document'}}).click(function(){
 			pageEditNew();
 		}).next()
 		.button({label:'Clone',icons:{primary:'ui-icon-newwin'}}).click(function(){
-			pageEditClone(pageEditSelected())
+			pageEditClone(pageEditSelected());
 		}).next()
 		.button({label:'Delete',icons:{primary:'ui-icon-trash'}}).click(function(){
 			pageEditDelete(pageEditSelected());
@@ -107,12 +112,12 @@ function CAJA_Initialize() {
 	$('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
 	
 	$('#showlogic').buttonset();
-	$('#showlogic1').click(function(){prefs.ShowLogic=1;gGuide.noviceTab("tabsLogic",true)});
-	$('#showlogic2').click(function(){prefs.ShowLogic=2;gGuide.noviceTab("tabsLogic",true)});
+	$('#showlogic1').click(function(){prefs.ShowLogic=1;gGuide.noviceTab("tabsLogic",true);});
+	$('#showlogic2').click(function(){prefs.ShowLogic=2;gGuide.noviceTab("tabsLogic",true);});
 	
 	$('#showtext').buttonset();
-	$('#showtext1').click(function(){prefs.ShowText=1;gGuide.noviceTab("tabsText",true)});
-	$('#showtext2').click(function(){prefs.ShowText=2;gGuide.noviceTab("tabsText",true)});
+	$('#showtext1').click(function(){prefs.ShowText=1;gGuide.noviceTab("tabsText",true);});
+	$('#showtext2').click(function(){prefs.ShowText=2;gGuide.noviceTab("tabsText",true);});
 	
 	//$('#showpagelist').buttonset();
 	//$('#showpagelist1').click(function(){prefs.ShowPageList=1;$('#CAJAOutline, #CAJAIndex').hide();$('#CAJAOutline').show();});
@@ -147,8 +152,9 @@ function CAJA_Initialize() {
 	{
 		DEBUGSTART();
 	}
-	else
+	else{
 		signinask();
+	}
 
    // Menu bar
 	//$('#cajasettings').menu();
@@ -255,29 +261,24 @@ function CAJA_Initialize() {
 		items: ".htmledit a", //skip title for now [title]",
 		content: function(){
 			var element=$(this);
-			if (element.is("[title]")) return element.attr("title");
-			if (element.is("a")) return element.attr("href");
+			if (element.is("[title]")) {return element.attr("title");}
+			if (element.is("a")) {return element.attr("href");}
 			return '';
 		}
 	});
 }
 
-	 
-
-	 
-
+/*
 function checkLength( o, n, min, max ) {
 	if ( o.val().length > max || o.val().length < min ) {
 		 o.addClass( "ui-state-error" );
-		 updateTips( "Length of " + n + " must be between " +
-			  min + " and " + max + "." );
+		 updateTips( "Length of " + n + " must be between " + min + " and " + max + "." );
 		 return false;
 	} else {
 		 return true;
 	}
 }
-
-
+*/
 function signinask()
 {
 	$( "#login-form" ).dialog({
@@ -287,7 +288,7 @@ function signinask()
 		modal: true,
 		buttons: {
 			"Sign in": function() {
-				var bValid = true;
+				//var bValid = true;
 				// allFields.removeClass( "ui-state-error" );
 
 				//bValid = bValid && checkLength( name, "username", 3, 16 );
@@ -297,12 +298,7 @@ function signinask()
 						gUserID=data.userid;
 						gGuideID=0;
 						gUserNickName=data.nickname;
-						if (gUserID==0)
-						{
-							//status('Unknown user');
-							//html('Please register...');
-						}
-						else
+						if (gUserID!==0)
 						{	// Successful signin.
 							$('#memenu').text(gUserNickName);
 							$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist">Loading your guides '+AJAXLoader +"</p>");
@@ -312,7 +308,7 @@ function signinask()
 							$('#welcome').show();
 							
 							//$('#tabviews').tabs( { disabled: [1,2,3,4,5,6,7,8,9]});
-							ws({cmd:'guides'},listguides);
+							ws({cmd:'guides'},listGuides);
 						}
 					}				  
 				  );
@@ -332,16 +328,16 @@ function gotoPageView(destPageName)
 {  // navigate to given page (after tiny delay)
    window.setTimeout(function(){
       var page = gGuide.pages[destPageName]; 
-      if (page == null || typeof page === "undefined")
+      if (page === null || typeof page === "undefined")
       {
-         DialogAlert( {title:'Missing page',message:'Page is missing: '+ destPageName});
+         dialogAlert({title: 'Missing page', message: 'Page is missing: '+ destPageName});
          traceLogic('Page is missing: '+ destPageName);
       }
       else
       {
          gPage=page;
 			$('#authortool').hide();
-         a2jviewer.layoutpage($('.A2JViewer','#page-viewer'),gGuide,gGuide.steps,gPage);
+         A2JViewer.layoutPage($('.A2JViewer','#page-viewer'),gGuide,gGuide.steps,gPage);
          $('#page-viewer').removeClass('hidestart').show();
 			//$('.A2JViewer').addClass('test',500);
       }
@@ -353,8 +349,7 @@ function resumeEdit()
 {
 	$('#authortool').show();
 	$('#page-viewer').hide();
-	if ($pageEditDialog!=null)
-		$pageEditDialog.dialog('open' );
+	if ($pageEditDialog!==null){$pageEditDialog.dialog('open');}
 }
 /*function findPageDialog(pageName)
 {
@@ -365,16 +360,24 @@ function resumeEdit()
 function pageNameRelFilter(e,pageName)
 {	// Return all DOM elements whose REL points to page name.
 	var rel = 'PAGE '+pageName;
-	return $(e).filter(function(){return rel == $(this).attr('rel')});
+	return $(e).filter(function()
+	{
+		return rel === $(this).attr('rel');
+	});
 }
 
 function pageEditSelected()
 {	// Return currently selected page
 	var rel = makestr($('.pageoutline li.'+SELECTED).first().attr('rel'));
-	if (rel.indexOf("PAGE ")==0)
-		return rel.substr(5);
+	if (rel.indexOf("PAGE ")===0)
+	{
+		rel=rel.substr(5);
+	}
 	else
-		return '';
+	{
+		rel='';
+	}
+	return rel;
 }
 function pageEditSelect(pageName)
 {	// Select named page in our list
@@ -390,8 +393,8 @@ function pageEditNew()
 function pageEditClone(pageName)
 {	// Clone named page and return new page's name.
 	var page = gGuide.pages[pageName];
-	if (typeof page =='undefined') return '';
-	var clonePage = XML2page(page2XML(page));	
+	if (typeof page === 'undefined') {return '';}
+	var clonePage = pageFromXML(page2XML(page));
 	page = gGuide.addUniquePage(pageName,clonePage);
 	gGuide.sortPages();
 	updateTOC();
@@ -402,13 +405,13 @@ function pageEditClone(pageName)
 function pageRename(page,newName){
 /* TODO Rename all references to this page in POPUPs, JUMPs and GOTOs */
 	//trace("Renaming page "+page.name+" to "+newName);
-	if (page.name==newName) return true;
-	if (page.name.toLowerCase() != newName.toLowerCase())
+	if (page.name===newName) {return true;}
+	if (page.name.toLowerCase() !== newName.toLowerCase())
 	{
 		if (gGuide.pages[newName])
 		{
-			DialogAlert('Page rename disallowed','There is already a page named '+newName);
-			return false
+			dialogAlert('Page rename disallowed','There is already a page named '+newName);
+			return false;
 		}
 	}
 	// Rename GUI references
@@ -426,7 +429,7 @@ function pageRename(page,newName){
 		*/
 	gGuide.pageFindReferences(page.name,newName);
 		
-	delete gGuide.pages[page.name]
+	delete gGuide.pages[page.name];
 	page.name = newName;
 	gGuide.pages[page.name]=page;
 	//trace("RENAMING REFERENES");
@@ -440,22 +443,26 @@ function pageEditDelete(name)
 {	// Delete named page after confirmation that lists all references to it. 
 	var refs=gGuide.pageFindReferences(name,null);
 	var txt='';
+	var r;
 	if (refs.length>0)
 	{
 		txt=refs.length+' references to this page.<ul>';
-		for (var r in refs) txt+='<li>'+refs[r].name+' <i>'+refs[r].field+'</i></li>';
-		txt+="</ul>";
+		for (r in refs){
+			txt+='<li>'+refs[r].name+' <i>'+refs[r].field+'</i></li>';
+		}
+		txt += "</ul>";
 	}
-	else
+	else{
 		txt='No references';
-	DialogConfirmYesNo({title:'Delete page '+name,message:'Permanently delete this page?<hr>'+txt,height:300,name:name,Yes:function(){
+	}
+	dialogConfirmYesNo({title:'Delete page '+name,message:'Permanently delete this page?<hr>'+txt,height:300,name:name,Yes:function(){
 		var page=gGuide.pages[this.name];
 		// TODO Anything pointing to this page is redirect to NOWHERE
-		delete gGuide.pages[page.name]
+		delete gGuide.pages[page.name];
 		gGuide.sortPages();
 		updateTOC();
 		
-		if ($pageEditDialog!=null){
+		if ($pageEditDialog!==null){
 			$pageEditDialog.dialog("close");
 			$pageEditDialog = null;
 		}
@@ -464,54 +471,51 @@ function pageEditDelete(name)
 
 function gotoPageEdit(pageName)
 {	// Bring page edit window forward with page content
-	
-	
-	
 	$pageEditDialog =  $('.page-edit-form');
 	$('#authortool').show();
 	$('#page-viewer').hide();
    var page = gGuide.pages[pageName]; 
-	if (page == null || typeof page === "undefined") return;
+	if (page === null || typeof page === "undefined"){
+		return;
+	}
 	
-	//trace(page2XML(XML2page(page2XML(page))));
+	//trace(page2XML(pageFromXML(page2XML(page))));
 	
 	
 	$('#tabsLogic  .tabContent, #tabsText .tabContent').html("");//clear these so they refresh with new data. TODO - update in place
 	//var $page =	findPageDialog(pageName);
 	//if ($page.length==0)
-	
-	{
-		//$page = $('.page-edit-form:first').clone(false,false);
-		$pageEditDialog.attr('rel',page.name);
-		$pageEditDialog.attr('title',page.name);
-		$pageEditDialog.dialog({ 
-			autoOpen:false,
-			width: 750,
-			height: 500,
-			minWidth: 200,
-			minHeight: 300, maxHeight: 700,
+	//$page = $('.page-edit-form:first').clone(false,false);
+	$pageEditDialog.attr('rel',page.name);
+	$pageEditDialog.attr('title',page.name);
+	$pageEditDialog.dialog({ 
+		autoOpen:false,
+		width: 750,
+		height: 500,
+		minWidth: 200,
+		minHeight: 300, maxHeight: 700,
+		
+		close: function(){
+		},
+		buttons:[
+		{text:'Delete', click:function(){
+			pageEditDelete($(this).attr('rel'));
+		}},
+		{text:'Clone', click:function(){
+			pageEditClone($(this).attr('rel'));
+		}},
+		{text:'Preview', click:function(){
+			var pageName=$(this).attr('rel');
 			
-			close: function(){
-			},
-			buttons:[
-			{text:'Delete', click:function(){
-				pageEditDelete($(this).attr('rel'));
-			}},
-			{text:'Clone', click:function(){
-				pageEditClone($(this).attr('rel'));
-			}},
-			{text:'Preview', click:function(){
-				var pageName=$(this).attr('rel');
-				
-				gotoPageView(pageName);
-				$pageEditDialog.dialog("close");
-			}},
-			{text:'Close',click:function(){ 
-				$(this).dialog("close");
-			 }}
-		]});
-		var page = gGuide.novicePage($('.page-edit-form-panel',$pageEditDialog).html(''),page.name);	
-	}
+			gotoPageView(pageName);
+			$pageEditDialog.dialog("close");
+		}},
+		{text:'Close',click:function(){ 
+			$(this).dialog("close");
+		 }}
+	]});
+	page = gGuide.novicePage($('.page-edit-form-panel',$pageEditDialog).html(''),page.name);
+
 	$pageEditDialog.dialog('open' );
 	$pageEditDialog.dialog('moveToTop');
 }
@@ -522,13 +526,15 @@ function gotoTabOrPage(target)
 	//$('#CAJAOutline li, #CAJAIndex li').each(function(){$(this).removeClass('ui-state-active')});
 	//$('li').filter(function(){ return target == $(this).attr('target')}).each(function(){$(this).addClass('ui-state-active')});	
 	
-	if (target.indexOf("PAGE ")==0)
+	if (target.indexOf("PAGE ")===0)
 	{
 		gotoPageEdit(target.substr(5));
 		return;
 	}
-	if (target.indexOf("STEP ")==0)
+	if (target.indexOf("STEP ")===0)
+	{
 		target='tabsSteps';
+	}
 	$('.guidemenu ul li').removeClass('selected');
 	$('.guidemenu ul li[ref="'+target+'"]').addClass('selected');
 	$('.panel').hide();
@@ -552,11 +558,13 @@ function gotoTabOrPage(target)
 function pageGOTOList()
 {	// List of page ids we can go to including the built-ins like no where, exit.
 	var pages=[qIDNOWHERE,qIDSUCCESS,qIDFAIL,qIDEXIT,qIDBACK,qIDRESUME];
-	for (var p in gGuide.sortedPages)
+	var p;
+	for (p in gGuide.sortedPages)
 	{
 		var page=gGuide.sortedPages[p];
-		if (page.type!=CONST.ptPopup)
+		if (page.type!==CONST.ptPopup){
 			pages.push(page.name);
+		}
 	}
 	return pages;
 }
@@ -564,7 +572,7 @@ function pageGOTOList()
 
 function pickPage(request,response)
 {	// autocomplete page lists including internal text
-	request.term = request.term.split("\t")[0]
+	request.term = request.term.split("\t")[0];
 	var matcherStarts = new RegExp(  '^'+$.ui.autocomplete.escapeRegex(request.term), "i" );
 	var matcherContains = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
 	var lists=[[],[]];
@@ -575,16 +583,24 @@ function pickPage(request,response)
 		);
 	function hilite(html){return html.replace(regex, "<span class=hilite>$1</span>");}
 	//var pages=pageGOTOList();
-	for (var p in gGuide.sortedPages)
+	var p;
+	for (p in gGuide.sortedPages)
 	{
 		var page=gGuide.sortedPages[p];
-		if (page.type!=CONST.ptPopup)
+		if (page.type!==CONST.ptPopup)
 		{
 			var list;
-			if (matcherStarts.test(page.name)) list=0;
+			if (matcherStarts.test(page.name)){
+				list=0;
+			}
 			else
-			if (matcherContains.test(page.name)) list=1;
-			else list=-1;
+			if (matcherContains.test(page.name)){
+				list=1;
+			}
+			else
+			{
+				list=-1;
+			}
 			if (list>=0)
 			{
 				var label = "<b>"+page.name +"</b>: "+  decodeEntities(page.text);
@@ -610,8 +626,8 @@ function ws(data,results)
 			//trace(String.substr(JSON.stringify(data),0,299));
 			results(data);
 		},
-		error: function(err,xhr) { DialogAlert("error:"+xhr.responseText ); }
-	})
+		error: function(err,xhr) { dialogAlert("error:"+xhr.responseText ); }
+	});
 }  
 
 
@@ -620,7 +636,7 @@ function ws(data,results)
 
 
 
-function BlankGuide(){
+function blankGuide(){
 	var guide = new TGuide();
 
 	guide.title="My guide";
@@ -643,29 +659,27 @@ function BlankGuide(){
 
 function guideSave()
 {
-	if (gGuide!=null && gGuideID!=0)
+	if (gGuide!==null && gGuideID!==0)
 	{
 		prompt('Saving '+gGuide.title + AJAXLoader);
 		ws( {cmd:'guidesave',gid:gGuideID, guide: exportXML_CAJA_from_CAJA(gGuide), title:gGuide.title}, function(response){
-			if (response.error!=null)
-				prompt(response.error);
-			else
-				prompt(response.info);
+			prompt(response.error!==null ? response.error : response.info);
 		});
 	}
 }
 
 function createBlankGuide()
 {	// create blank guide internally, do Save As to get a server id for future saves.
-	var guide=BlankGuide();
+	var guide = blankGuide();
 
 	ws({cmd:'guidesaveas',gid:0, guide: exportXML_CAJA_from_CAJA(guide), title: guide.title},function(data){
-		if (data.error!=null)
+		if (data.error!==null){
 			status(data.error);
+		}
 		else{
 			var newgid = data.gid;//new guide id
 			ws({cmd:'guides'},function (data){
-				listguides(data);
+				listGuides(data);
 				ws({cmd:'guide',gid:newgid},guideloaded);
 			 });
 		}
@@ -673,14 +687,23 @@ function createBlankGuide()
 }
 
 
-function listguides(data)
+function listGuides(data)
 {
 	var blank = {id:'a2j', title:'Create a new guide'};
 	gGuideID=0;
 	var mine = [];
 	var others = [];
 	var start = '<li class=guide gid="' + blank.id + '">' + blank.title + '</li>';
-	$.each(data.guides, function(key,g) { var str='<li class=guide gid="' + g.id + '">' + g.title + '</li>'; if (g.owned)mine.push(str);else others.push(str);});
+	$.each(data.guides, function(key,g)
+	{
+		var str='<li class=guide gid="' + g.id + '">' + g.title + '</li>';
+		if (g.owned)
+		{
+			mine.push(str);
+		} else {
+			others.push(str);
+		}
+	});
 	
 	$('#guidelist').html("New guides <ol>"+start+"</ol>My guides <ol>"+mine.join('')+"</ol>" + "Sample guides <ol>"+others.join('')+"</ol>");
 	$('li.guide').click(function(){
@@ -688,10 +711,12 @@ function listguides(data)
 		var guideFile=$(this).text();
 		$('li.guide[gid="'+gid+'"]').html('Loading guide '+guideFile+AJAXLoader).addClass('.warning');
 		loadNewGuidePrep(guideFile,'');
-		if(gid=='a2j')
+		if(gid==='a2j'){
 			createBlankGuide();
-		else
+		}
+		else{
 			ws({cmd:'guide',gid:gid},guideloaded);
+		}
 	});
 	$('#welcome').dialog('open');
 }
@@ -699,94 +724,104 @@ function listguides(data)
 
 
 
-TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizard for given page.
-   var t = ""; 
+TGuide.prototype.novicePage = function (div, pagename)
+{	// Create editing wizard for given page.
+   var t = "";
+	/** @type {TPage} */
    var page = this.pages[pagename]; 
-	var t=$('<div/>').addClass('tabsPanel editq');
-
+	t=$('<div/>').addClass('tabsPanel editq');
+	var fs;
+	
 	form.clear();
-	if (page == null || typeof page === "undefined") {
+	if (page === null || typeof page === "undefined") {
 		t.append(form.h2( "Page not found " + pagename)); 
 	}
 	else 
-	if (page.type == CONST.ptPopup ) {
-		var fs=form.fieldset('Popup info',page);
+	if (page.type === CONST.ptPopup ) {
+		fs=form.fieldset('Popup info',page);
 		fs.append(form.text({label:'Name:',name:'pagename', value:page.name,change:function(val,page,form){
-			if (pageRename(page,val)==false) $(this).val(page.name);
+			if (pageRename(page,val)===false){
+				$(this).val(page.name);
+			}
 		}} ));
-		fs.append(form.htmlarea({label:'Notes:',value: page.notes,change:function(val,page){page.notes=val}} ));
-		fs.append(form.htmlarea(	{label:'Text:',value:page.text,change:function(val,page){page.text=val}} ));
+		fs.append(form.htmlarea({label:'Notes:',value: page.notes,change:function(val,page){page.notes=val;}} ));
+		fs.append(form.htmlarea(	{label:'Text:',value:page.text,change:function(val,page){page.text=val;}} ));
 		fs.append(form.pickAudio(	{label:'Text audio:', placeholder:'mp3 file',	value:	page.textAudioURL,
-			change:function(val,page){page.textAudioURL=val}} ));
+			change:function(val,page){page.textAudioURL=val;}} ));
 		t.append(fs);
 	}
-	else	
-	{ 
-		
-
-
-		var fs=form.fieldset('Page info',page);
-		fs.append(form.pickStep({label:'Step:',value: page.step, change:function(val,page){page.step=parseInt(val);/* TODO Move page to new outline location */}} ));
+	else
+	{
+		fs=form.fieldset('Page info',page);
+		fs.append(form.pickStep({label:'Step:',value: page.step, change:function(val,page){
+			page.step=parseInt(val,10);/* TODO Move page to new outline location */}} ));
 		fs.append(form.text({label:'Name:', value:page.name,change:function(val,page,form){
 			val = jQuery.trim(val);
-			if (pageRename(page,val)==false) $(this).val(page.name);
+			if (pageRename(page,val)===false){
+				$(this).val(page.name);
+			}
 		}} ));
-		if (page.type != "A2J") {
+		if (page.type !== "A2J") {
 			fs.append(form.h2("Page type/style: " + page.type + "/" + page.style));
 		}
-		fs.append(form.htmlarea({label:'Notes:',value: page.notes,change:function(val,page){page.notes=val}} ));
+		fs.append(form.htmlarea({label:'Notes:',value: page.notes,change:function(val,page){page.notes=val;}} ));
 		t.append(fs);
 		
 		var pagefs=form.fieldset('Question text',page);  
 		
-		pagefs.append(form.htmlarea(	{label:'Text:',value:page.text,change:function(val,page){page.text=val}} ));
-		pagefs.append(form.pickAudio(	{label:'Text audio:', placeholder:'mp3 file',	value:	page.textAudioURL,change:function(val,page){page.textAudioURL=val}} ));
-		pagefs.append(form.text(		{label:'Learn More prompt:',placeholder:'Learn more',	value:page.learn,	change:function(val,page){page.learn=val}} ));
-		function getShowMe(){
-			if (page.helpVideoURL!="") return 2; 
-			else if (page.helpImageURL!="") return 1; 
-			else return 0;
-		}
-		function updateShowMe(form,showMe){
-			form.find('[name="helpAudio"]').showit(showMe!=2);
-			form.find('[name="helpGraphic"]').showit(showMe==1);
+		pagefs.append(form.htmlarea(	{label:'Text:',value:page.text,change:function(val,page){page.text=val;}} ));
+		pagefs.append(form.pickAudio(	{label:'Text audio:', placeholder:'mp3 file',	value:	page.textAudioURL,change:function(val,page){page.textAudioURL=val;}} ));
+		pagefs.append(form.text(		{label:'Learn More prompt:',placeholder:'Learn more',	value:page.learn,	change:function(val,page){page.learn=val;}} ));
+		var getShowMe=function()
+		{
+			if (page.helpVideoURL!==""){
+				return 2; 
+			}
+			if (page.helpImageURL!==""){
+				return 1; 
+			}
+			return 0;
+		};
+		var updateShowMe=function(form,showMe)
+		{
+			form.find('[name="helpAudio"]').showit(showMe!==2);
+			form.find('[name="helpGraphic"]').showit(showMe===1);
 			form.find('[name="helpReader"]').showit(showMe>=1);
-			form.find('[name="helpVideo"]').showit(showMe==2);			
-		}
+			form.find('[name="helpVideo"]').showit(showMe===2);			
+		};
 		pagefs.append(form.pickList({label:'Help style:',value:getShowMe(), change:function(val,page,form){
 			updateShowMe(form,val);
 			}},  [0,'Text',1,'Show Me Graphic',2,'Show Me Video']));
-		pagefs.append(form.htmlarea(	{label:"Help:",value:page.help,change:function(val,page){page.help=val}} ));
+		pagefs.append(form.htmlarea(	{label:"Help:",value:page.help,change:function(val,page){page.help=val;}} ));
 		pagefs.append(form.pickAudio(	{name:'helpAudio',label:'Help audio:',placeholder:'Help audio URL',	value:page.helpAudioURL,
-			change:function(val,page){page.helpAudioURL=val}} ));
+			change:function(val,page){page.helpAudioURL=val;}} ));
 		pagefs.append(form.pickImage(		{name:'helpGraphic',label:'Help graphic:',placeholder:'Help image URL',	value:page.helpImageURL,
-			change:function(val,page){page.helpImageURL=val}} ));
+			change:function(val,page){page.helpImageURL=val;}} ));
 		pagefs.append(form.pickVideo(		{name:'helpVideo', label:'Help video:',placeholder:'Help video URL',		value:page.helpVideoURL,
-			change:function(val,page){page.helpVideoURL=val}} ));
+			change:function(val,page){page.helpVideoURL=val;}} ));
 		pagefs.append(form.htmlarea(	{name:'helpReader', label:'Help Text Reader:', value:page.helpReader,
-			change:function(val,page){page.helpReader=val}} ));
+			change:function(val,page){page.helpReader=val;}} ));
 		pagefs.append(form.text(		{label:'Repeating Variable:',placeholder:'',	value:page.repeatVar,
-			change:function(val,page){page.repeatVar=val}} ));
+			change:function(val,page){page.repeatVar=val;}} ));
 		t.append(pagefs);
 		updateShowMe(pagefs,getShowMe());
 		pagefs=null;
 		
 		
-		if (page.type == "A2J" || page.fields.length > 0) {
+		if (page.type === "A2J" || page.fields.length > 0) {
 		
 			var blankField=new TField();
 			blankField.type=CONST.ftText;
 			blankField.label="Label";
 			
-			function updateFieldLayout(ff,field){
-				var canMinMax = field.type==CONST.ftNumber || field.type==CONST.ftNumberDollar || field.type==CONST.ftNumberPick || field.type==CONST.ftDateMDY;
-				var canList = field.type==CONST.ftTextPick;
-				var canDefaultValue=	field.type!=CONST.ftCheckBox && field.type!=CONST.ftCheckBoxNOTA && field.type!=CONST.ftGender;
-				var canOrder =   field.type==CONST.ftTextPick || field.type==CONST.ftNumberPick || 	field.type==CONST.ftDateMDY;
-				var canUseCalc = (field.type == CONST.ftNumber) || (field.type == CONST.ftNumberDollar);
-				var canMaxChars= field.type==CONST.ftText || field.type==CONST.ftTextLong || field.type==CONST.ftNumber 
-					|| field.type==CONST.ftNumberDollar || 	field.type==CONST.ftNumberPhone || field.type==CONST.ftNumberZIP;				
-				var canCalendar = field.type==CONST.ftDateMDY;
+			var updateFieldLayout= function(ff,field){
+				var canMinMax = field.type===CONST.ftNumber || field.type===CONST.ftNumberDollar || field.type===CONST.ftNumberPick || field.type===CONST.ftDateMDY;
+				var canList = field.type===CONST.ftTextPick;
+				var canDefaultValue=	field.type!==CONST.ftCheckBox && field.type!==CONST.ftCheckBoxNOTA && field.type!==CONST.ftGender;
+				var canOrder =   field.type===CONST.ftTextPick || field.type===CONST.ftNumberPick || field.type===CONST.ftDateMDY;
+				var canUseCalc = (field.type === CONST.ftNumber) || (field.type === CONST.ftNumberDollar);
+				var canMaxChars= field.type===CONST.ftText || field.type===CONST.ftTextLong || field.type===CONST.ftNumber || field.type===CONST.ftNumberDollar || field.type===CONST.ftNumberPhone || field.type===CONST.ftNumberZIP;				
+				var canCalendar = field.type===CONST.ftDateMDY;
 				//var canCBRange= curField.type==CField.ftCheckBox || curField.type==CField.ftCheckBoxNOTA;
 				// Can it use extra long labels instead of single line?
 				//	useLongLabel = curField.type==CField.ftCheckBox ||	curField.type==CField.ftCheckBoxNOTA ||curField.type==CField.ftRadioButton ||urField.type==CField.ftCheckBoxMultiple;
@@ -798,37 +833,42 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 				ff.find('[name="default"]').showit(canDefaultValue);
 				ff.find('[name="calculator"]').showit(canUseCalc);
 				ff.find('[name="calendar"]').showit(canCalendar);
-			}
+				
+				ff.find('[name="customlist"]').showit(canList);
+				ff.find('[name="orderlist"]').showit(canOrder);
+			};
 			
-			var fs=form.fieldset('Fields');
+			fs=form.fieldset('Fields');
 			fs.append(form.listManager({name:'Fields',picker:'Number of fields:',min:0,max:CONST.MAXFIELDS,list:page.fields,blank:blankField
 				,save:function(newlist){
 					page.fields=newlist;
 					}
 				,create:function(ff,field){
-					ff.append(form.pickList({label:'Type:',value: field.type,change:function(val,field,ff){
-						field.type=val;
-						updateFieldLayout(ff,field);
-						}},fieldTypesList ));
+					ff.append(form.pickList({label:'Type:',value: field.type,
+						change:function(val,field,ff){
+							field.type=val;
+							updateFieldLayout(ff,field);
+							}},fieldTypesList ));
 					ff.append(form.htmlarea({label:'Label:',   value:field.label, 
 						change:function(val,field){field.label=val;}}));
 					ff.append(form.text({label:'Variable:', placeholder:'Variable name', value: field.name,
-						change:function(val,field){field.name=jQuery.trim(val)}}));
+						change:function(val,field){field.name=jQuery.trim(val);}}));
 					ff.append(form.text({label:'Default value:',name:'default', placeholder:'Default value',value:  field.value,
-						change:function(val,field){field.value=jQuery.trim(val)}}));
+						change:function(val,field){field.value=jQuery.trim(val);}}));
 					ff.append(form.checkbox({label:'Required:', checkbox:'', value:field.required,
-						change:function(val,field){field.required=val}}));
+						change:function(val,field){field.required=val;}}));
 					ff.append(form.text({label:'Max chars:',name:'maxchars', placeholder:'Max Chars',value: field.maxChars,
 						change:function(val,field){field.maxChars=val;}}));
 					ff.append(form.checkbox({label:'Show Calculator:',name:'calculator',checkbox:'Calculator available?', value:field.calculator,
-						change:function(val,field){field.calculator=val}}));
+						change:function(val,field){field.calculator=val;}}));
 					ff.append(form.checkbox({label:'Show Calendar:', name:'calendar',checkbox:'Calendar available?', value:field.calendar,
-						change:function(val,field){field.calendar=val}}));
+						change:function(val,field){field.calendar=val;}}));
 					ff.append(form.text({label:'Min value:',name:'min',placeholder:'min', value: field.min,
-						change:function(val,field){field.min=val}}));
+						change:function(val,field){field.min=val;}}));
 					ff.append(form.text({label:'Max value:',name:'max',placeholder:'max', value: field.max,
-						change:function(val,field){field.max=val}}));
-					ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,	change:function(val,field){field.invalidPrompt=val}}));
+						change:function(val,field){field.max=val;}}));
+					ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,
+						change:function(val,field){field.invalidPrompt=val;}}));
 					
 					updateFieldLayout(ff,field);
 					return ff;
@@ -837,34 +877,38 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 			
 			
 			t.append(fs);
-	  	}
-		if (page.type == "A2J" || page.buttons.length > 0) {
+		}
+		if (page.type === "A2J" || page.buttons.length > 0) {
 			var blankButton=new TButton();
 			
-			var fs=form.fieldset('Buttons');
+			fs=form.fieldset('Buttons');
 			fs.append(form.listManager({name:'Buttons',picker:'Number of buttons',min:1,max:CONST.MAXBUTTONS,list:page.buttons,blank:blankButton
 				,save:function(newlist){
 					page.buttons=newlist; }
 				,create:function(ff,b){
-					ff.append(form.text({ 		value: b.label,label:'Label:',placeholder:'button label',		change:function(val,b){b.label=val}}));
-					ff.append(form.text({ 		value: b.name, label:'Variable Name:',placeholder:'variable',		change:function(val,b){b.name=val}}));
-					ff.append(form.text({ 		value: b.value,label:'Default value',placeholder:'Default value',		change:function(val,b){b.value=val}}));
-					ff.append(form.pickpage({	value: b.next,label:'Destination:', 	change:function(val,b){
+					ff.append(form.text({value: b.label,label:'Label:',placeholder:'button label',
+						change:function(val,b){b.label=val;}}));
+					ff.append(form.text({value: b.name, label:'Variable Name:',placeholder:'variable',
+						change:function(val,b){b.name=val;}}));
+					ff.append(form.text({value: b.value,label:'Default value',placeholder:'Default value',
+						change:function(val,b){b.value=val;}}));
+					ff.append(form.pickpage({value: b.next,label:'Destination:',
+						change:function(val,b){
 						b.next=val;}}));
-					return ff;
+				return ff;
 				}}));
 			t.append(fs);
 		}
-		var fs=form.fieldset('Advanced Logic');
-		fs.append(form.codearea({label:'Before:',	value:page.codeBefore,	change:function(val){page.codeBefore=val; /* TODO Compile for syntax errors */}} ));
-		fs.append(form.codearea({label:'After:',	value:page.codeAfter, 	change:function(val){
-			page.codeAfter=val; /* TODO Compile for syntax errors */}} ));
+		fs=form.fieldset('Advanced Logic');
+		fs.append(form.codearea({label:'Before:',	value:page.codeBefore,
+			change:function(val){page.codeBefore=val; /* TODO Compile for syntax errors */}} ));
+		fs.append(form.codearea({label:'After:',	value:page.codeAfter,
+			change:function(val){page.codeAfter=val; /* TODO Compile for syntax errors */	}} ));
 		t.append(fs);
 
-		if (page.type == "Book page") { }
-		else
-		{
 		/*
+		if (page.type !== "Book page") 
+		{
 			if (page.type == "Multiple Choice" && page.style == "Choose Buttons") {
 				for (var b in page.buttons) {
 					//				t1+=form.short(page.
@@ -938,19 +982,19 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 			else if (page.type == "GAME" && page.style == "HANGMAN") { }
 
 */
-}
-
 		//pageText += html2P(expandPopups(this,page.text));
 
-   }
+	}
 
    div.append(t);
 	form.finish(t);
-	if (gDev) div.append('<div class=xml>'+htmlEscape(page.xml)+'</div>');
+	if (gDev){
+		div.append('<div class=xml>'+htmlEscape(page.xml)+'</div>');
+	}
 
 	gPage = page;
 	return page;
-}
+};
 
 
 
@@ -958,7 +1002,9 @@ TGuide.prototype.novicePage = function (div, pagename) {	// Create editing wizar
 
 function prompt(status)
 {
-	if (status==null) status="";
+	if (status===null){
+		status="";
+	}
 	$('#CAJAStatus').text( status );
 	trace(status);
 }
@@ -969,17 +1015,19 @@ function loadNewGuidePrep(guideFile,startTabOrPage)
 
 function guideClose()
 {
-	if (gGuide!=null)
-		if (gGuideID!=0)
-			guideSave();
-	
+	if ((gGuide!==null) && (gGuideID!==0))
+	{
+		guideSave();
+	}	
 	$('#welcome').dialog('open');
 	$('#authortool').hide();
 }
 
 function guideStart(startTabOrPage)
 { 
-	if (startTabOrPage == '') startTabOrPage='tabsPages';//'tabsAbout';
+	if (startTabOrPage === ''){
+		startTabOrPage='tabsPages';//'tabsAbout';
+	}
 	
 	$('#authortool').removeClass('hidestart').addClass('authortool').show();
 	$('#welcome').dialog('close');
@@ -987,8 +1035,9 @@ function guideStart(startTabOrPage)
 	//$('#tabviews').tabs( { disabled:false});
 	$('#tabsVariables .tabContent, #tabsLogic  .tabContent, #tabsSteps .tabContent, #tabsAbout .tabContent, #tabsConstants .tabContent, #tabsText .tabContent').html("");
 	
-	if (makestr(startTabOrPage)=="")
+	if (makestr(startTabOrPage)===""){
 		startTabOrPage="PAGE "+(gGuide.firstPage);
+	}
 	//trace("Starting location "+startTabOrPage);
 	
 	gotoTabOrPage(startTabOrPage);
@@ -1018,22 +1067,26 @@ function updateTOC()
 {	// Build outline for entire interview includes meta, step and question sections.
 	var inSteps=[];
 	var popups="";
+	var s;
 	for (s in gGuide.steps)
 	{
 		inSteps[s]="";
 	}
-	for (var p in gGuide.sortedPages)
+	var p;
+	for (p in gGuide.sortedPages)
 	{
 		var page = gGuide.sortedPages[p];
 		var plink= '<li class="unselectable" rel="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()
 			+' <span class="tip">'+decodeEntities(page.text).substr(0,64)+'</span>' +'</li>';
-		if (page.type==CONST.ptPopup)
+		if (page.type===CONST.ptPopup){
 			popups += plink;
-		else
+		}
+		else{
 			inSteps[page.step] += plink;
+		}
 	}	
 	var ts="";
-	for (var s in gGuide.steps)
+	for (s in gGuide.steps)
 	{
 		ts+='<li rel="STEP '+s+'">STEP '+gGuide.steps[s].number+". "+gGuide.steps[s].text+"</li><ul>"+inSteps[s]+"</ul>";
 	}
@@ -1044,12 +1097,13 @@ function updateTOC()
 	
 	$('.pageoutline li')
 		.click(function(e){
-			if (!e.ctrlKey)
+			if (!e.ctrlKey){
 				$('.pageoutline li').removeClass(SELECTED);
+			}
 			$(this).toggleClass(SELECTED);
 		})
 		.dblclick(function (){
-			var rel=$(this).attr('rel')
+			var rel=$(this).attr('rel');
 			$('.pageoutline li').removeClass(SELECTED);
 			$(this).addClass(SELECTED);
 			gotoTabOrPage(rel);
@@ -1078,10 +1132,12 @@ function styleSheetSwitch(theme)
 {
 	//<link href="cavmobile.css" title="cavmobile" media="screen" rel="stylesheet" type="text/css" />
 	trace('styleSheetSwitch='+theme); 
-	if (theme=='A2J') 
+	if (theme==='A2J') {
 		theme = "themes/"+theme.toLowerCase()+"/jquery-ui.css";
-	else
+	}
+	else{
 		theme = "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/"+theme.toLowerCase()+"/jquery-ui.css";
+	}
 	$('link[title=style]').attr('href',theme);
 }
 
@@ -1110,7 +1166,7 @@ TGuide.prototype.IndexAlphaHTML=function()
 */
 
 
-function DialogConfirmYesNo(args)
+function dialogConfirmYesNo(args)
 {
 	var $d=$( "#dialog-confirm" );
 	$d.html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>'+args.message+'</p>');
@@ -1119,7 +1175,7 @@ function DialogConfirmYesNo(args)
 		title: args.title,
 		resizable: false,
 		width: 350,
-		height:args.height!=null?args.height : 240,
+		height:args.height!==null?args.height : 240,
 		modal: true,
 		buttons: {
 			 Yes: function() {
@@ -1139,50 +1195,55 @@ TGuide.prototype.pageFindReferences=function(findName,newName){
 // ### If newName is not null, perform a replacement.
 	var guide=this;
 	var matches=[];
-	for (var p in guide.pages)
+	var p;
+	var testtext = function(page,field,fieldname)
+	{
+		var add=false;
+		page[field]=page[field].replace(/\"POPUP:\/\/(([^\"])+)\"/ig,function(match,p1,offset,string)
+		{
+			var popupid=match.match(/\"POPUP:\/\/(([^\"])+)\"/i)[1];
+			if (popupid===findName)
+			{
+				add=true;
+				if (newName!==null)
+				{
+					popupid= htmlEscape(newName);
+				}
+			}
+			return '"POPUP://' + popupid+ '"';
+		});
+		if (add)
+		{
+			matches.push({name:page.name,field:fieldname,text:page[field]});
+		}
+	};
+	var testcode = function(page,field,fieldName)
+	{
+		var result=gLogic.pageFindReferences(page[field],findName,newName);
+		if (result.add){
+			matches.push({name:page.name,field:fieldName,text:''});
+		}
+	};
+	for (p in guide.pages)
 	{
 		var page=guide.pages[p];
-		function testtext(field,fieldname)
-		{
-			var add=false;
-			page[field]=page[field].replace(/\"POPUP:\/\/(([^\"])+)\"/ig,function(match,p1,offset,string){
-				var popupid=match.match(/\"POPUP:\/\/(([^\"])+)\"/i)[1];
-				if (popupid==findName)
-				{
-					add=true;
-					if (newName!=null)
-					{
-						popupid= htmlEscape(newName);
-					}
-				}
-				return '"POPUP://' + popupid+ '"';
-			});
-			if (add)
-			{
-				matches.push({name:page.name,field:fieldname,text:page[field]});
-			}
-		}
-		function testcode(field,fieldName)
-		{
-			var result=gLogic.pageFindReferences(page[field],findName,newName);
-			if (result.add)
-				matches.push({name:page.name,field:fieldName,text:''});
-		}
 		
 		//text, help, codeBefore, codeAfter
-		testtext('text','Text');
-		testtext('help','Help');
-		testcode('codeBefore','Logic Before');
-		testcode('codeAfter','Logic After');
-		for (var bi in page.buttons)
+		testtext(page,'text','Text');
+		testtext(page,'help','Help');
+		testcode(page,'codeBefore','Logic Before');
+		testcode(page,'codeAfter','Logic After');
+		var bi;
+		for (bi in page.buttons)
 		{
 			var b=page.buttons[bi];
-			if (b.next==findName)
+			if (b.next===findName){
 				matches.push({name:page.name,field:'Button '+b.label,text:b.label});
+			}
 		}
 	}
 	return matches;
-}
+};
 
 
 
@@ -1190,7 +1251,7 @@ TGuide.prototype.varDelete=function(name){
 	var guide=this;
 	delete guide.vars[name.toLowerCase()];
 	gGuide.noviceTab('tabsVariables',true);
-}
+};
 function varAdd()
 {  // Add new variable and edit.
 	var v= new TVariable();
@@ -1213,15 +1274,17 @@ function varEdit(v/*TVariable*/)
 			buttons:[
 			{text:'Delete', click:function(){
 				var name= $(this).data().name;
-				if (name=="") return;
-				DialogConfirmYesNo({title:'Delete variable '+name,message:'Delete this variable?',name:name,Yes:function(){
+				if (name===""){
+					return;
+				}
+				dialogConfirmYesNo({title:'Delete variable '+name,message:'Delete this variable?',name:name,Yes:function(){
 					$('#var-edit-form').dialog("close");
 					gGuide.varDelete(this.name);
 				}});
 			}},
 			{text:'Close',click:function(){ 
 				var name= $('#varname').val();
-				if(name!=v.name)//rename variable
+				if(name!==v.name)//rename variable
 				{
 					delete gGuide.vars[v.name.toLowerCase()];
 					v.name=name;
@@ -1241,7 +1304,10 @@ TGuide.prototype.buildTabVariables = function (t)
 	var guide = this;
 	var tt=form.rowheading(["Name","Type","Comment"]); 
 	var sortvars=[];
-	for (vi in guide.vars) sortvars.push(guide.vars[vi]);
+	var vi;
+	for (vi in guide.vars){
+		sortvars.push(guide.vars[vi]);
+	}
 	sortvars.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
 	for (vi in sortvars)
 	{
@@ -1253,8 +1319,7 @@ TGuide.prototype.buildTabVariables = function (t)
 	$('tr',t).click(function(){
 		varEdit(gGuide.vars[$('td:first',this).text().toLowerCase()]);
 	});
-}
-
+};
 
 TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,clear)
 {	// 08/03/2012 Edit panel for guide sections 
@@ -1262,12 +1327,20 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 	var div = $('#'+tab);
 	//if (div.html()!="") return;
 	var t = $('.tabContent',div);
-	if (clear) t.html("");
-	if (t.html()!="") return;
+	if (clear){
+		t.html("");
+	}
+	if (t.html()!==""){
+		return;
+	}
 	
 //	var t=$('<div/>').addClass('tabsPanel editq')//.append($('<div/>').addClass('tabsPanel2'));//editq
 	form.clear();
-	
+	var fs;
+	var ff;
+	var p;
+	var page;
+	var pagefs;
 	switch (tab){
 	
 		
@@ -1276,27 +1349,38 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 			break;
 			
 		case "tabsConstants":
-			var fs = form.fieldset('Constants');
+			fs = form.fieldset('Constants');
 			t.append(fs);
 			break;
 		
 		case "tabsLogic":
 			t.append(form.note(
-				prefs.ShowLogic==1 ? 'Showing only logic fields containing code' : 'Showing all logic fields'));
-			for (var p in guide.sortedPages)
+				prefs.ShowLogic=== 1 ? 'Showing only logic fields containing code' : 'Showing all logic fields'));
+			
+			var codeBeforeChange = function(val,page){
+				page.codeBefore=val; /* TODO Compile for syntax errors */
+			};
+			var codeAfterChange = function(val,page){
+				page.codeAfter=val; /* TODO Compile for syntax errors */
+			};
+			
+			
+			for (p in guide.sortedPages)
 			{
-				var page=guide.sortedPages[p];
-				if (page.type!=CONST.ptPopup)
-				if ((prefs.ShowLogic==2) || (prefs.ShowLogic==1 && (page.codeBefore!="" || page.codeAfter!="")))
+				page=guide.sortedPages[p];
+				if (page.type!==CONST.ptPopup)
 				{
-					var pagefs=form.fieldset(page.name, page);
-					if (prefs.ShowLogic==2 || page.codeBefore!="")
-						pagefs.append(form.codearea({label:'Before:',	value:page.codeBefore,	change:function(val,page){
-							page.codeBefore=val; /* TODO Compile for syntax errors */}} ));
-					if (prefs.ShowLogic==2 || page.codeAfter!="")
-						pagefs.append(form.codearea({label:'After:',	value:page.codeAfter, 	change:function(val,page){
-							page.codeAfter=val ; /* TODO Compile for syntax errors */}} ));
-					t.append(pagefs);
+					if ((prefs.ShowLogic===2) || (prefs.ShowLogic===1 && (page.codeBefore!=="" || page.codeAfter!=="")))
+					{
+						pagefs=form.fieldset(page.name, page);
+						if (prefs.ShowLogic===2 || page.codeBefore!==""){
+							pagefs.append(form.codearea({label:'Before:',	value:page.codeBefore,change:codeBeforeChange} ));
+						}
+						if (prefs.ShowLogic===2 || page.codeAfter!==""){
+							pagefs.append(form.codearea({label:'After:',	value:page.codeAfter,change:codeAfterChange} ));
+						}
+						t.append(pagefs);
+					}
 				}
 			}
 			
@@ -1304,47 +1388,59 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 			
 		case "tabsText":
 			t.append(form.note(
-				prefs.ShowText==1 ? 'All non-empty text blocks in this guide' : 'All text blocks in this guide'));
-			for (var p in guide.sortedPages)
+				prefs.ShowText===1 ? 'All non-empty text blocks in this guide' : 'All text blocks in this guide'));
+			for (p in guide.sortedPages)
 			{
-				var page=guide.sortedPages[p];
-				var pagefs=form.fieldset(page.name, page);
-				pagefs.append(form.htmlarea({label:'Text:',					value:page.text,			change:function(val,page){page.text=val; }} ));
-				if (page.type!=CONST.ptPopup){
-					if (prefs.ShowText==2 || page.learn!="")
+				page=guide.sortedPages[p];
+				pagefs=form.fieldset(page.name, page);
+				pagefs.append(form.htmlarea({label:'Text:',value:page.text,change:function(val,page){page.text=val; }} ));
+				if (page.type!==CONST.ptPopup){
+					if (prefs.ShowText===2 || page.learn!=="")
+					{
 						pagefs.append(form.text({label:'Learn More prompt:',placeholder:"",	value:page.learn,
-							change:function(val,page){page.learn=val }} ));
-					if (prefs.ShowText==2 || page.help!="")
-						pagefs.append(form.htmlarea({label:"Help:",					value:page.help,
-							change:function(val,page){page.help=val}} ));
-					if (prefs.ShowText==2 || page.helpReader!="")
-						pagefs.append(form.htmlarea({label:'Help Text Reader:',	value:page.helpReader,
-							change:function(val,page){page.helpReader=val}} ));
-
-					for (var f in page.fields)
+							change:function(val,page){page.learn=val;}} ));
+					}
+					if (prefs.ShowText===2 || page.help!=="")
+					{
+						pagefs.append(form.htmlarea({label:"Help:",value:page.help,
+							change:function(val,page){page.help=val;}} ));
+					}
+					if (prefs.ShowText===2 || page.helpReader!=="")
+					{
+						pagefs.append(form.htmlarea({label:'Help Text Reader:',value:page.helpReader,
+							change:function(val,page){page.helpReader=val;}} ));
+					}
+					var f;
+					for (f in page.fields)
 					{
 						var field = page.fields[f];
-						var ff=form.fieldset('Field '+(parseInt(f)+1),field);
-						ff.append(form.htmlarea({label:'Label:',   value:field.label, 
-							change:function(val,field){field.label=val;}}));
-						if (prefs.ShowText==2 || field.value!="")
-							ff.append(form.text({label:'Default value:',placeholder:"",name:'default', value:  field.value,
-								change:function(val,field){field.value=val}}));
-						if (prefs.ShowText==2 || field.invalidPrompt!="")
-							ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,
-								change:function(val,field){field.invalidPrompt=val}}));						
+						ff=form.fieldset('Field '+(parseInt(f,10)+1),field);
+						ff.append(form.htmlarea({label:'Label:',value:field.label,change:function(val,field){field.label=val;}}));
+						if (prefs.ShowText===2 || field.value!=="")
+						{
+							ff.append(form.text({label:'Default value:',placeholder:"",name:'default', value:  field.value,change:function(val,field){field.value=val;}}));
+						}
+						if (prefs.ShowText===2 || field.invalidPrompt!=="")
+						{
+							ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,change:function(val,field){field.invalidPrompt=val;}}));
+						}
 						pagefs.append(ff);
 					}
-					for (var bi in page.buttons)
+					var bi;
+					for (bi in page.buttons)
 					{
 						var b = page.buttons[bi];
-						var bf=form.fieldset('Button '+(parseInt(bi)+1),b);
-						if (prefs.ShowText==2 || b.label!="")
-							bf.append(form.text({ 		value: b.label,label:'Label:',placeholder:'button label',
-								change:function(val,b){b.label=val}}));
-						if (prefs.ShowText==2 || b.value!="")
-							bf.append(form.text({ 		value: b.value,label:'Default value',placeholder:'Default value',
-								change:function(val,b){b.value=val}}));
+						var bf=form.fieldset('Button '+(parseInt(bi,10)+1),b);
+						if (prefs.ShowText===2 || b.label!=="")
+						{
+							bf.append(form.text({value: b.label,label:'Label:',placeholder:'button label',
+								change:function(val,b){b.label=val;}}));
+						}
+						if (prefs.ShowText===2 || b.value!=="")
+						{
+							bf.append(form.text({value: b.value,label:'Default value',placeholder:'Default value',
+								change:function(val,b){b.value=val;}}));
+						}
 						pagefs.append(bf);
 					}
 				}
@@ -1354,38 +1450,38 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 			break;
 		
 		case "tabsAbout":
-			var fs = form.fieldset('About');
-			fs.append(form.text({label:'Title:', placeholder:'Interview title', value:guide.title, change:function(val){guide.title=val}}));
-			fs.append(form.htmlarea({label:'Description:',value:guide.description,change:function(val){guide.description=val}}));
-			fs.append(form.text({label:'Jurisdiction:', value:guide.jurisdiction, change:function(val){guide.jurisdiction=val}}));
-			fs.append(form.text({label:'Language:', value:guide.language, change:function(val){guide.language=val}}));
-			fs.append(form.pickImage({label:'Logo graphic:', placeholder: 'Logo URL',value:guide.logoImage, change:function(val){guide.logoImage=val}}));
-			fs.append(form.pickImage({label:'End graphic:', placeholder:'End (destination graphic) URL',value:guide.endImage, change:function(val){guide.endImage=val}}));
-			fs.append(form.htmlarea({label:'Credits:',value:guide.credits,change:function(val){guide.credits=val}}));
-			fs.append(form.text({label:'Approximate Completion Time:',placeholder:'e.g., 2-3 hours',value:guide.completionTime,change:function(val){guide.completionTime=val}}));
+			fs = form.fieldset('About');
+			fs.append(form.text({label:'Title:', placeholder:'Interview title', value:guide.title, change:function(val){guide.title=val;}}));
+			fs.append(form.htmlarea({label:'Description:',value:guide.description,change:function(val){guide.description=val;}}));
+			fs.append(form.text({label:'Jurisdiction:', value:guide.jurisdiction, change:function(val){guide.jurisdiction=val;}}));
+			fs.append(form.text({label:'Language:', value:guide.language, change:function(val){guide.language=val;}}));
+			fs.append(form.pickImage({label:'Logo graphic:', placeholder: 'Logo URL',value:guide.logoImage, change:function(val){guide.logoImage=val;}}));
+			fs.append(form.pickImage({label:'End graphic:', placeholder:'End (destination graphic) URL',value:guide.endImage, change:function(val){guide.endImage=val;}}));
+			fs.append(form.htmlarea({label:'Credits:',value:guide.credits,change:function(val){guide.credits=val;}}));
+			fs.append(form.text({label:'Approximate Completion Time:',placeholder:'e.g., 2-3 hours',value:guide.completionTime,change:function(val){guide.completionTime=val;}}));
 			t.append(fs);
 			
-			var fs = form.fieldset('Authors');
+			fs = form.fieldset('Authors');
 			var blankAuthor=new TAuthor();
 			
-			var fs = form.fieldset('Revision History');  
-			fs.append(form.text({label:'Current Version:',value:guide.version,change:function(val){guide.version=val}}));
-			fs.append(form.htmlarea({label:'Revision Notes',value:guide.notes,change:function(val){guide.notes=val}}));
+			fs = form.fieldset('Revision History');  
+			fs.append(form.text({label:'Current Version:',value:guide.version,change:function(val){guide.version=val;}}));
+			fs.append(form.htmlarea({label:'Revision Notes',value:guide.notes,change:function(val){guide.notes=val;}}));
 			t.append(fs);
 			
-			var fs=form.fieldset('Authors');
+			fs=form.fieldset('Authors');
 			fs.append(form.listManager({name:'Authors',picker:'Number of authors',min:1,max:12,list:guide.authors,blank:blankAuthor
 				,save:function(newlist){
 					guide.authors=newlist; }
 				,create:function(ff,author){
 						ff.append(form.text({  label:"Author's Name:", placeholder:'name',value:author.name,
-							change:function(val,author){author.name=val}}));
+							change:function(val,author){author.name=val;}}));
 						ff.append(form.text({  label:"Author's Title:", placeholder:'title',value:author.title,
-							change:function(val,author){author.title=val}}));
+							change:function(val,author){author.title=val;}}));
 						ff.append(form.text({  label:"Author's Organization:", placeholder:'organization',value:author.organization,
-							change:function(val,author){author.organization=val}}));
+							change:function(val,author){author.organization=val;}}));
 						ff.append(form.text({  label:"Author's email:", placeholder:'email',value:author.email,
-							change:function(val,author){author.email=val}}));
+							change:function(val,author){author.email=val;}}));
 					return ff;
 				}}));
 				
@@ -1396,11 +1492,11 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 
 		case 'tabsSteps':
 		
-			var fs=form.fieldset('Start/Exit points');
+			fs=form.fieldset('Start/Exit points');
 			fs.append(form.pickpage({	value: guide.firstPage,label:'Starting Point:',	change:function(val){guide.firstPage=val;}}));
-			fs.append(form.pickpage({	value: guide.exitPage,label:'Exit Point:', 		change:function(val){guide.exitPage=val;}}));
+			fs.append(form.pickpage({	value: guide.exitPage,label:'Exit Point:',		change:function(val){guide.exitPage=val;}}));
 			t.append(fs);
-			var fs=form.fieldset('Steps');
+			fs=form.fieldset('Steps');
 			var blankStep=new TStep();
 			
 			fs.append(form.listManager({grid:true,name:'Steps',picker:'Number of Steps',min:1,max:CONST.MAXSTEPS,list:guide.steps,blank:blankStep
@@ -1424,22 +1520,7 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 			break;
 	}
 	form.finish(t);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+};
 
 
 
@@ -1447,8 +1528,9 @@ var form={
 	id:0
 	
 	,editorAdd:function(elt){
-		if (elt.parent().parent().find('.texttoolbar').length==0)
+		if (elt.parent().parent().find('.texttoolbar').length===0){
 			$('#texttoolbar').clone(true,true).attr('id','').prependTo(elt.parent()).show();
+		}
 	}
 	,editorRemove:function(elt){
 		//$('#texttoolbar').hide();
@@ -1461,7 +1543,8 @@ var form={
 		return $("<h1>"+h+"</h1>");}
 		
 	,h2:function(h){
-		return $("<h2>"+h+"</h2>").click(function(){$(this).next().toggle()});}
+		return $("<h2>"+h+"</h2>").click(function(){$(this).next().toggle();});
+	}
 		
 	,noteHTML:function(kind,t){
 		return '<div class="ui-widget"><div style="margin-top: 20px; padding: 0 .7em;" class="ui-state-highlight ui-corner-all"><p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-'+kind+'"></span>'+t+'</div></div>';
@@ -1472,10 +1555,8 @@ var form={
 	,noteAlert:function(t){
 		return $(form.noteHTML('alert',t));
 	}
-
-
 	,fieldset:function(legend,record){
-		return $('<fieldset name="record"><legend >'+legend+'</legend></fieldset>').data('record',record);;//.click(function(){$(this).toggleClass('collapse')});
+		return $('<fieldset name="record"><legend >'+legend+'</legend></fieldset>').data('record',record);//.click(function(){$(this).toggleClass('collapse')});
 	}
 	,record:function(record){
 		return $('<div name=record class=record/>').data('record',record);
@@ -1490,7 +1571,8 @@ var form={
 		var e=$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
 			+'<span  class=editspan > <input class="ui-state-default ui-checkbox-input" type="checkbox" />'+data.checkbox+'</span></div>');
-		$('input',e).blur(function(){ form.change($(this),$(this).is(':checked'))}).attr( 'checked',data.value==true ).data('data',data);
+		$('input',e).blur(function(){
+			form.change($(this),$(this).is(':checked'));}).attr( 'checked',data.value===true).data('data',data);
 		return e;
 	}
 	
@@ -1500,9 +1582,8 @@ var form={
 
 		var dval = gGuide.pageDisplayName(data.value);
 			
-		var e =$( ''
-			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+ '<span class=editspan><input class="  ui-combobox-input editable autocomplete picker page dest" type="text" ></span>');
+		var e =$((typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
+				+ '<span class=editspan><input class="  ui-combobox-input editable autocomplete picker page dest" type="text" ></span>');
 		$('.picker',e).blur(function(){
 			var val=$(this).val();
 			form.change($(this),val);
@@ -1513,11 +1594,12 @@ var form={
 	         var newvalue = $(this).val();//.split("\t")[0];
 				//trace(newvalue);
 	         $.each(gGuide.sortedPages, function (p, page) {
-					if (page.type!=CONST.ptPopup)
-						if (matcher.test(page.name)) {
-							newvalue = gGuide.pageDisplayName(page.name);
-							return false;
-						}
+					if ((page.type!==CONST.ptPopup) && (matcher.test(page.name)))
+					{
+						newvalue = gGuide.pageDisplayName(page.name);
+						return false;
+					}
+					return true;
 	         });
 	         $(this).val(newvalue); 
 	      }})
@@ -1580,17 +1662,19 @@ var form={
 	,codeCheckIntervalID:0
 	,codeCheckList:[]
 	,codeCheckSoon:function(elt){
-		if (form.codeCheckIntervalID==0)
+		if (form.codeCheckIntervalID===0){
 			form.codeCheckIntervalID=setInterval(form.codeCheckInterval,100);
+		}
 		form.codeCheckList.unshift(elt);
 	}
 	,codeCheckInterval:function(){ // syntax check one code block
-		if (form.codeCheckList.length==0){
+		if (form.codeCheckList.length===0){
 			clearInterval(form.codeCheckIntervalID);
 			form.codeCheckIntervalID=0;
 		}
-		else
+		else{
 			form.codeCheck(form.codeCheckList.pop());
+		}
 	}
 	,codeFix:function(html){
 		return html.replace(/\<br\>/gi,"<BR/>");
@@ -1621,8 +1705,8 @@ var form={
 				}
 			}
 			*/
-			
-			for (var e in script.errors)
+			var e;
+			for (e in script.errors)
 			{
 				var err=script.errors[e];
 				//tt+=form.noteHTML('alert',"<b>"+err.line+":"+err.text+"</b>");
@@ -1636,10 +1720,10 @@ var form={
 					);				
 			}
 		}
-		if(0 || gDev)
+		if( gDev)
 		{	// print JavaScript
-			var t=[];
-			t.push('JavaScript:');
+			t=[];
+			t.push('JS:');
 			for (l=0;l<script.js.length;l++)
 			{
 				t.push(script.js[l]);
@@ -1665,17 +1749,20 @@ var form={
 
 	,pickList:function(data,listValueLabel){//list is array to ensure preserved order. Note: js object properties don't guarantee order
 		var c="";
-		for (var o=0;o<listValueLabel.length;o+=2)
-			c+='<option value="'+listValueLabel[o]+'">'+listValueLabel[o+1]+'</option>';
+		var o;
+		for (o=0;o<listValueLabel.length;o+=2){
+			c += '<option value="'+listValueLabel[o]+'">'+listValueLabel[o+1]+'</option>';
+		}
 		var e =$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
 			+'<span class=editspan><select class="     ui-select-input">'+c+'</select></span></div>');
-		$('.ui-select-input',e).change(function(){form.change($(this),$('option:selected',this).val())}).data('data',data).val(data.value);
+		$('.ui-select-input',e).change(function(){form.change($(this),$('option:selected',this).val());}).data('data',data).val(data.value);
 		return e;
 	}
 	,pickStep:function(data){
 		var list=[];
-		for (var s=0;s<gGuide.steps.length;s++){
+		var s;
+		for (s=0;s<gGuide.steps.length;s++){
 			var step = gGuide.steps[s];
 			list.push(s,step.number+". "+ (step.text));
 		}
@@ -1691,17 +1778,19 @@ var form={
 			'MAYBE','Maybe',
 			'INFO','Info'],value,handler);
 	}
-	,pickbranch:function(){ 
-		return this.pickList("",'picker branch',[
-		0,"Show feedback and return to question",
-		1,"Show feedback then branch to this page",
-		2,"Just branch directly to this page"])
+	,pickbranch:function()
+	{ 
+		return this.pickList("",'picker branch',
+		[
+			0,"Show feedback and return to question",
+			1,"Show feedback then branch to this page",
+			2,"Just branch directly to this page"
+		])
 		.change(function(){
 			var br=$(this).val();
-			$(this).parent().children('.text').toggle(br!=2);
-			$(this).parent().children('.dest').toggle(br!=0);
-			//trace(br);
-		})
+			$(this).parent().children('.text').toggle(br!==2);
+			$(this).parent().children('.dest').toggle(br!==0);
+		});
 	}
 	
 		
@@ -1709,20 +1798,26 @@ var form={
 	
 	,tableRows:function(name,headings,rowList){
 		var $tbl=$('<table/>').addClass('list').data('table',name).attr('list',name);
-		if (typeof headings==="object"){
-			var tr="<tr valign=top>";
-			for (var col in headings)
+		var tr;
+		var col;
+		if (typeof headings==="object")
+		{
+			tr="<tr valign=top>";
+			for (col in headings)
 			{
 				tr+="<th>"+headings[col]+"</th>";
 			}
 			tr+="</tr>";
 			$tbl.append($(tr));
 		}
-		for (var row in rowList){
+		var row;
+		for (row in rowList){
 			var $row=$("<tr valign=top/>");
-			if (rowList[row].visible==false) $row.addClass('hidden');
+			if (rowList[row].visible===false){
+				$row.addClass('hidden');
+			}
 			//$row.append($('<td class="editicons"/>').append('<span class="ui-draggable sorthandle ui-icon ui-icon-arrowthick-2-n-s"/><span class="ui-icon ui-icon-circle-plus"/><span class="ui-icon ui-icon-circle-minus"/>'));
-			for (var col in rowList[row].row)
+			for (col in rowList[row].row)
 			{
 				$row.append($("<td/>").append(rowList[row].row[col]));
 			}
@@ -1735,6 +1830,7 @@ var form={
 			//handle:"td:eq(0)",
 			handle:"td:eq(0) .sorthandle",
 			update:function(){ }})//.disableSelection();
+		;
 /*
 		$('.editicons .ui-icon-circle-plus',$tbl).click(function(){//live('click',function(){
 			var row = $(this).closest('tr');
@@ -1751,8 +1847,12 @@ var form={
 	{	//let user choose number of said item
 		var c=$('<label/>').text(label);
 		var s='<select list="'+name+'" class="  ui-select">';
-		for (var o=minelts;o<=maxelts;o++)s+="<option>"+o+"</option>";
-			s+="</select>";
+		var o;
+		for (o=minelts;o<=maxelts;o++)
+		{
+			s+="<option>"+o+"</option>";
+		}
+		s+="</select>";
 		return $('<div/>').append(c.after(s).change(function(){form.tableRowAdjust(name,$('option:selected',this).val());}).val(value));
 	}
 	
@@ -1762,10 +1862,13 @@ var form={
 		var settings=$tbl.data('settings');
 		$tbody = $('tbody',$tbl);//'table[list="'+name+'"] tbody');
 		var rows = $('tr',$tbody).length;		
-		for (var r=0;r<rows;r++)
+		var r;
+		for (r=0;r<rows;r++){
 			$('tr:nth('+r+')',$tbody).showit(r<val);
-		for (var r=rows;r<val;r++)
+		}
+		for (r=rows;r<val;r++){
 			form.listManagerAddRow($tbl,$.extend({},settings.blank));
+		}
 		form.listManagerSave($tbl);
 	}
 	
@@ -1793,14 +1896,15 @@ var form={
 		var div = $('<div/>');
 		var $tbl=$('<table/>').addClass('list').data('settings',settings).attr('list',settings.name);
 		div.append(form.tableRowCounter(settings.name,settings.picker,settings.min,settings.max,settings.list.length));
-		for (var i=0;i<settings.list.length;i++)
+		var i;
+		for (i=0;i<settings.list.length;i++){
 			form.listManagerAddRow($tbl,settings.list[i]);
+		}
 		$('tbody',$tbl).sortable({
 			handle:"td .sorthandle",
 			update:function(event,ui){
 				form.listManagerSave((ui.item.closest('table')));
-			}})
-
+			}});
 		div.append($tbl);
 		/*(		div.append($('<button id="newrow"/>').button({label:'Add',icons:{primary:"ui-icon-plusthick"}}).click(function(){
 			addRow($.extend({},settings.blank));
@@ -1817,5 +1921,24 @@ var form={
 	,row:function(cols){ return "<tr valign=top><td>"+cols.join("</td><td>")+"</td></tr>";}
 	,rowheading:function(cols){ return "<tr valign=top><th>"+cols.join("</th><th>")+"</th></tr>";}
 };
+
+
+var fieldTypesList = [
+	CONST.ftText,"Text",
+	CONST.ftTextLong,"Text (Long)",
+	CONST.ftTextPick,"Text (Pick from list)",
+	CONST.ftNumber,"Number",
+	CONST.ftNumberDollar,"Number Dollar",
+	CONST.ftNumberSSN,"Number SSN",
+	CONST.ftNumberPhone,"Number Phone",
+	CONST.ftNumberZIP,"Number ZIP Code",
+	CONST.ftNumberPick,"Number (Pick from list)",
+	CONST.ftDateMDY,"Date MM/DD/YYYY",
+	CONST.ftGender,"Gender",
+	CONST.ftRadioButton,"Radio Button",
+	CONST.ftCheckBox,"Check box",
+	CONST.ftCheckBoxNOTA,"Check Box (None of the Above)"
+];
+
 
 /* */

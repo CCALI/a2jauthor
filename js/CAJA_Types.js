@@ -13,7 +13,7 @@ ftRadioButton,ftCheckBox,ftCheckBoxNOTA,ftCheckBoxMultiple,
 vtUnknown,vtText,vtTF,vtNumber,vtDate,vtMC,vtOther,A2JVersion,
 MAXFIELDS,MAXBUTTONS,MAXSTEPS,kMinYear,ordDefault,ordAscending,ordDescending,
 value,event,code,number,textAudioURL,notes,learn,help,
-text,label,next,name,type,optional,invalidPrompt,order,min,max,calendar,calculator,maxChars*/
+text,label,next,name,type,invalidPrompt,order,min,max,calendar,calculator,maxChars*/
 	
  
 
@@ -101,12 +101,22 @@ var gDev=0;
 
 
 // ### Classes ###
+/** 
+ * @constructor
+ * @struct
+ * @this {TText}
+ */
 function TText()
 {
 	this.text = "";
 	return this;
 }
 
+/** 
+ * @constructor
+ * @struct
+ * @this {TButton} 
+ */
 function TButton()
 {	// Guide defined button, 0 or more
 	this.label = "";  // Caption of button
@@ -119,6 +129,7 @@ function TButton()
 /** 
  * @constructor
  * @struct
+ * @this {TField} 
  */
 function TField()
 {
@@ -126,8 +137,9 @@ function TField()
 	this.label ="";
 	this.name ="";//reference TVar.name
 	this.value = "";//default value (used in radio buttons)
-	this.optional =false;
+	this.required =false;
 	this.invalidPrompt ="";
+	this.invalidPromptAudio = "";
 	this.order ="";//default, ASC, DESC
 	this.min="";
 	this.max="";
@@ -143,6 +155,7 @@ function TField()
 /** 
  * @constructor
  * @struct
+ *  @this {TScript}
  */
 function TScript()
 {
@@ -150,13 +163,30 @@ function TScript()
 	this.code ="";
 	return this;
 }
+
+
+
 /** 
  * @constructor
  * @struct
+ * @this {TStep} 
  */
 function TStep()
 {
 	this.number ="";
+	this.text ="";
+	return this;
+}
+
+
+/** 
+ * @constructor
+ * @struct
+ * @this {TConstant}
+ */
+function TConstant()
+{
+	this.name ="";
 	this.text ="";
 	return this;
 }
@@ -173,6 +203,7 @@ function TPopup()
 /** 
  * @constructor
  * @struct
+ * @this {TPage}
  */
 function TPage()
 {	// This represents a single page within the lesson book/interview.
@@ -222,9 +253,12 @@ function TPage()
 	this.xml=null;
 	return this;
 }
+
+
 /** 
  * @constructor
  * @struct
+ * @this {TAuthor} 
  */
 function TAuthor()
 {
@@ -238,6 +272,7 @@ function TAuthor()
 /** 
  * @constructor
  * @struct
+ * @this {TGuide}
  */
 function TGuide()
 {	// This is the Guide representing a CALI lesson Book or an A2J Author Interview.
@@ -263,17 +298,16 @@ function TGuide()
 	this.logoImage="";			//Origin A2J
 	this.endImage="";				//Origin A2J
 
-	/** @type Array.TAuthor */
+	/** @type {Array.TAuthor} */
 	this.authors=[];				//Origin Both - single line, CA is a heirarchy. Array of TAuthor
 	
 	this.firstPage="";			//Origin A2J - starting page specificed by author
 	this.exitPage="";				//Origin A2J - page that exist success
 	
-	/** @type Array.TStep */
+	/** @type {Array.TStep} */
 	this.steps=[];					//Origin A2J - array of TStep()
-
 	
-	/** @type Array.TPage */	
+	/** @type {Array.TPage} */	
 	this.pages={};			//Origin both - associative array of pages TPage() by page name. E.g., pages["Contents"] = TPage()
 	this.constants={};	//Origin CAJA - associative array of contants, MAXINCOME:25000
 	//this.popups=[];		//Origin A2J - array of embedded text popups (these are anonymous unlike CA where they are named)
@@ -298,6 +332,11 @@ var vtStringsAnswerFile=["Unknown","TextValue","TFValue","NumValue","DateValue",
 var vtStringsGrid=["Unknown","Text","True/False","Number","Date","Multiple Choice","Other"];
 
 
+/** 
+ * @constructor
+ * @struct
+ * @this {TVariable}
+ */
 function TVariable()
 {
 	this.name= "";
@@ -350,7 +389,7 @@ TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 };
 
 
-
+/** @param {...TPage} clonePage */
 TGuide.prototype.addUniquePage=function(preferredName,clonePage)
 {	// create new page, attach to guide. ensure name is unique
 	var guide=this;

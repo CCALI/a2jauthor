@@ -8,12 +8,12 @@ var a2jVDev = 1;
 
 
 $(document).ready(function(){
-	loadGuideFile(templateURL);
+	loadGuideFile(templateURL,"");
 });
 
 function guideStart(start)
 {
-	Languages.set(Languages.default);
+	Languages.set(Languages.defaultLanguage);
 	var guide=gGuide;
 	
 	traceLogic('Guide '+guide.title+' loaded.');

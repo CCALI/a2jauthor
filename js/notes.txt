@@ -1,8 +1,17 @@
-CALI Author 5 / A2J Author 5 (CAJA)
-2012-2013
-Sam's Design notes
+### CALI Author 5 / A2J Author 5 (CAJA) ###
+### 2012-2013  -  Sam's Design notes ###
 
 
+### JSLint ###
+
+ /**
+     * Returns the roster widget element.
+     * @this {Widget}
+     * @return {Element}
+     */
+
+
+	  
 02/01/2013 jsdoc used for some types for code intelligence
 /** @const */ var x=1;
 /** @param {TPage} page The page to parse */
@@ -18,13 +27,6 @@ anon=true css=true debug=true devel=true es5=true evil=true indent=3 nomen=true 
 
 
 
-
-
-
-
-
-
-
-
+### ###
 
 All Contents Copyright The Center for Computer-Assisted Legal Instruction

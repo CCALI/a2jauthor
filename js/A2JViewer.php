@@ -28,6 +28,11 @@ var errRepURL="../A2JErrRep.php";//"https://lawhelpinteractive.org/problem_repor
 <script src="jquery.1.8.2.min.js" type="text/javascript"></script>
 <script src="jquery.ui.1.9.1.custom.min.js" type="text/javascript"></script>
 <script src="jquery.ui.custom.min.js" type="text/javascript" ></script>
+
+
+<!--
+<script src="A2JViewer_min.js" type="text/javascript"></script>
+-->
 <script src="CAJA_Utils.js" type="text/javascript"></script>
 <script src="CAJA_Types.js" type="text/javascript"></script>
 <script src="CAJA_Languages.js" type="text/javascript"></script>
@@ -37,7 +42,6 @@ var errRepURL="../A2JErrRep.php";//"https://lawhelpinteractive.org/problem_repor
 <script src="CAJA_Shared.js" type="text/javascript"></script>
 <script src="CAJA_Viewer_A2J.js" type="text/javascript"></script>
 <script src="A2JViewer.js" type="text/javascript"></script>
-
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>

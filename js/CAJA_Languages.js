@@ -15,13 +15,30 @@ var lang = {
 	GoNext:'',
 	MyProgress:'',
 	SaveAndExit:'',
-	ResumeExit:''
+	ResumeExit:'',
+	
+	qIDNOWHERE:'',
+	qIDSUCCESS:'',
+	qIDFAIL:'',
+	qIDEXIT:'',
+	qIDBACK:'',
+	qIDRESUME:'',
+	UnknownID:'',
+	
+	scriptErrorMissingPage :'',
+	scriptErrorUnhandled : '',
+	scriptErrorEndMissing : ''
 };
-
-var Languages={
-	default: 'en',
-	regional: [],
-	set : function(languageID)
+/** 
+ * @constructor
+ * @struct
+ * @this {TLanguages} 
+ */
+function TLanguages()
+{
+	this.defaultLanguage ='en';
+	this.regional =[];
+	this.set = /** @this {TLanguages} */ function(languageID)	
 	{
 		if (typeof this.regional[languageID]==='undefined'){
 			languageID='en';
@@ -44,12 +61,16 @@ var Languages={
 				//trace('Missing '+e+"="+lang[e]);
 			}
 		}
-	},
-	en : function(txt)
+	};
+	this.en = function(txt)
 	{	// needs translation
 		return txt;
-	}
-};
+	};
+	return this;
+}
+
+
+var Languages = new TLanguages();
 
 // English
 Languages.regional['en']= {

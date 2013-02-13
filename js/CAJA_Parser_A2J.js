@@ -25,12 +25,10 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	/** @type {TGuide} */
 	var guide=new TGuide();
 	
-	guide.dss="";
-	
 	guide.tool = "A2J";
 	guide.toolversion =  makestr(TEMPLATE.find('A2JVERSION').text());
 	guide.avatar=makestr(TEMPLATE.find('AVATAR').text());
-	guide.completiontime="";
+	guide.completionTime="";
 	guide.copyrights="";
 	guide.createdate="";
 	guide.credits="";
@@ -54,8 +52,8 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	guide.authors=[author];
 	
 	TEMPLATE.find("STEP").each(function() {
-		STEP = $(this);
-		step = new TStep();
+		var STEP = $(this);
+		var step = new TStep();
 		step.number=STEP.attr("NUMBER");
 		step.text=STEP.find("TEXT").xml(); 
 		guide.steps.push(step);
@@ -64,8 +62,8 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	guide.templates=makestr(TEMPLATE.find('TEMPLATES').text());
 
 	TEMPLATE.find("VARIABLE").each(function() {
-		VARIABLE = $(this);
-		v = new TVariable();
+		var VARIABLE = $(this);
+		var v = new TVariable();
 		v.name=VARIABLE.attr("NAME");
 		v.type=VARIABLE.attr("TYPE");
 		v.repeating=textToBool(VARIABLE.attr("REPEATING"),false);
@@ -115,8 +113,8 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	
 	
 	TEMPLATE.find("QUESTION").each(function() {
-		QUESTION = $(this);
-		page = mapids[QUESTION.attr("ID")]; 
+		var QUESTION = $(this);
+		var page = mapids[QUESTION.attr("ID")]; 
 		
 		page.type="A2J";
 		page.style="";
@@ -141,7 +139,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		var scripts=[];
 
 		QUESTION.find('BUTTON').each(function(){
-			button=new TButton();
+			var button=new TButton();
 			button.label =jQuery.trim($(this).find("LABEL").xml());
 			button.next = fixID(makestr($(this).attr("NEXT")));
 			button.name =jQuery.trim($(this).find("NAME").xml());
@@ -149,7 +147,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			page.buttons.push(button);
 		});
 		QUESTION.find('FIELD').each(function(){
-			field= new TField();
+			var field= new TField();
 			field.type =$(this).attr("TYPE");
 			field.required = !(textToBool($(this).attr("OPTIONAL"),false));
 			field.order = makestr($(this).attr("ORDER"));
@@ -194,6 +192,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 				var statement =jQuery.trim($(this).find("ACTION").xml());
 //				if ((args = statement.match(/set\s+(\w[\w\s]*)\s?(=|TO)\s?(.+)/i))!=null)
 					//statement = 'SET ['+args[1]+'] TO '+args[3];
+				var args;
 				if ((args = statement.match(/set\s+(.+)/i))!==null)
 				{
 					var p=args[1].indexOf('=');

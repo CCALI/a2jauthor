@@ -8,8 +8,8 @@
 
 var SHOWXML = false;
 
-function page2JSON(page)
 /** @param {TPage} page The page to parse */
+function page2JSON(page)
 {
 	var PAGE = {
 		_NAME:		page.name,
@@ -67,8 +67,8 @@ function page2JSON(page)
 	return PAGE;
 }
 
-function exportXML_CAJA_from_CAJA(guide)
 /** @param {TGuide} guide */
+function exportXML_CAJA_from_CAJA(guide)
 {	// Convert Guide structure into XML
 	var JSON={GUIDE:{INFO:{AUTHORS:[]},PAGES:[] ,STEPS:[],VARIABLES:[] }};
 	
@@ -144,7 +144,7 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 	guide.tool =			makestr(INFO.children('TOOL').text());
 	guide.toolversion =  makestr(INFO.children('TOOLVERSION').text());
 	guide.avatar=			makestr(INFO.children('AVATAR').text());
-	guide.completiontime=makestr(INFO.children('COMPLETIONTIME').xml());
+	guide.completionTime=makestr(INFO.children('COMPLETIONTIME').xml());
 	guide.copyrights=		makestr(INFO.children('COPYRIGHTS').xml());
 	guide.createdate=		makestr(INFO.children('CREATEDATE').text());
 	guide.credits =		makestr(INFO.children('CREDITS').xml());
@@ -202,7 +202,7 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 	GUIDE.find("CONSTANTS").each(function() {
 		var CONSTANT = $(this);
 		var constant = new TConstant(); 
-		constant.name=v.attr("NAME");
+		constant.name=CONSTANT.attr("NAME");
 		constant.text=CONSTANT.find("VAL").xml();
 		guide.constants[constant.name]=constant;
 	});
@@ -356,7 +356,9 @@ function parseXML_Auto_to_CAJA(cajaData)
 	}
 	else
 	if ((cajaData.find('CALIDESCRIPTION').text())!==""){
-		guide=parseXML_CA_to_CAJA(cajaData);// Parse CALI Author into CAJA
+		if (typeof parseXML_CA_to_CAJA !== 'undefined'){
+			guide=parseXML_CA_to_CAJA(cajaData);// Parse CALI Author into CAJA
+		}
 	}
 	else{
 		guide=parseXML_CAJA_to_CAJA(cajaData);// Parse Native CAJA

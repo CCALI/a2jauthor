@@ -17,17 +17,17 @@ $(document).ready(function () { initAdvanced(); });
 
 function setMode(mode)
 {
-	if (editMode==0){
+	if (editMode===0){
 		editMode=1;
 		startCAJA();
 		return false;
 	}
 	textonlyMode=mode;
-	prompt('scanning');
+	setProgress('scanning');
 	//$('.CAJAContent P').removeClass('hilite').filter(function(){ return $(this).text().indexOf('Question ')==0;}).addClass('hilite');
 	$('.inform').remove();
 	$('#advanced > P, #advanced > DIV > P').each(function(){parseP($(this))});
-	prompt('.');
+	setProgress('.');
 	return false;
 }
 
@@ -125,7 +125,7 @@ function cajaMouseUp()
 	if (html!='')
 		status=html;
 	if (status!="") status = 'You selected "'+status+'"'; 
-	prompt(status);
+	setProgress(status);
 }
 
 function hidem(dohide)
@@ -302,8 +302,7 @@ TGuide.prototype.convertToText=function()
 		//Add field with label 'First Name' using variable 'User Name First' which is text
 		//Add field with label Last Name' using variable 'User Name Last' variable			
 			field=page.fields[f];
-//			t+=text2P("Add "+(field.optional?"optional":"")+" "+field.type+" field with label '"+field.label+"' using variable '"+field.name+"'");
-			pageText+=text2P("ADD "+(field.optional?"optional":"")+" "+field.type+" field '"+field.name+"' with label '"+field.label+"'");
+			pageText+=text2P("ADD "+(!field.required?"optional":"")+" "+field.type+" field '"+field.name+"' with label '"+field.label+"'");
 			pageText+="<input type=radio>";
 			//if (field.type="radio") pageText+="<input type=radio>"+field.label+"</input>";
 			

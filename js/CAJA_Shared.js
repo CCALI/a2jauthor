@@ -38,9 +38,11 @@ function loadGuideFile2(guideFile,startTabOrPage)
       url: guideFile,
       dataType:  "xml", // IE will only load XML file from local disk as text, not xml.
       timeout: 45000,
-      error: function(data,textStatus,thrownError){
-        dialogAlert('Error occurred loading the XML from '+this.url+"\n"+textStatus);
-       },
+      error:
+			/*** @this {{url}} */
+			function(data,textStatus,thrownError){
+			  dialogAlert('Error occurred loading the XML from '+this.url+"\n"+textStatus);
+			 },
       success: function(data){
          var cajaDataXML;
 			cajaDataXML = data;

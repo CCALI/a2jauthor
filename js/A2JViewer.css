@@ -10,7 +10,6 @@ div.question.bubble, div.learnmore.bubble {
 	font-size: 1em;
 }
 
-
 .hidestart { /* hide some elements initially */
 	display: none;
 }
@@ -383,3 +382,4 @@ span.err {
    -ms-user-select: none;
    user-select: none;
 }
+

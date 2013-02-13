@@ -18,6 +18,11 @@ function jquote(str)
 	return "\""+str.replace( /"/gi,"\\\"")+"\"";
 }
 
+/** 
+ * @constructor
+ * @struct
+ * @this {ParseError}
+ */
 function ParseError(lineNum,errType,errText)
 {
 	this.line = lineNum;
@@ -27,6 +32,11 @@ function ParseError(lineNum,errType,errText)
 }
 
 
+/** 
+ * @constructor
+ * @struct
+ * @this {TLogic}
+ */
 function TLogic()
 {
 	this.showCAJAScript =
@@ -59,6 +69,7 @@ TLogic.prototype.pageFindReferences = function(CAJAScript,findName,newName)
 	{
 		var line=jQuery.trim(csLines[l]).split("//")[0];
 		// TODO : handle Replacement of a page name inside GOTO.
+		var args;
 		if ((args = line.match(/^goto\s+\"(.+)\"/i))!==null)
 		{	// Goto named page (not an expression). We 'return' to avoid further processing which is A2J's designed behavior.
 			var pageName=args[1];

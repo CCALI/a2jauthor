@@ -20,8 +20,8 @@ function traceTag(cname,chtml){
 		{chtml = "<i>blank</i>";}
 	return "<span class="+cname+">"+chtml+"</span>";
 }
-
-function trace( )
+/** @param {...} var_args */
+function trace(var_args)
 {
 	var msg="";
 	var a;
@@ -210,10 +210,6 @@ function props(o)
 			t+=p+"={"+props(o[p])+"}, ";
 		}
 		else
-		if (typeof o[p]==="array"){
-			t+=p+"=["+props(o[p])+"], ";
-		}
-		else
 		if (typeof o[p] !== 'function'){
 			t+=p+"=" +  o[p] +", ";
 		}
@@ -307,7 +303,7 @@ function sortingNaturalCompare(a, b) {//http://my.opera.com/GreyWyvern/blog/show
 
   var aa = chunkify(a);
   var bb = chunkify(b);
-
+  var x;
   for (x = 0; aa[x] && bb[x]; x++) {
     if (aa[x] !== bb[x]) {
       var c = Number(aa[x]), d = Number(bb[x]);

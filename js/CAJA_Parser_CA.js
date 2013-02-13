@@ -93,7 +93,7 @@ function parseXML_CA_to_CAJA(BOOK)
 		pageXML.children('BUTTON').each(function( )
 		{
 			//if (!('captions' in page)) page.captions=[];
-			b=new TButton();
+			var b=new TButton();
 			b.label=jQuery.trim($(this).xml());
 			page.buttons.push(b);
 		});
@@ -108,13 +108,13 @@ function parseXML_CA_to_CAJA(BOOK)
 		});
 		pageXML.find('FEEDBACK').each(function()
 		{	
-			text=jQuery.trim($(this).xml());
+			var text=jQuery.trim($(this).xml());
 			if ($(this).attr("BUTTON")===null){
 				page.feedbackShared = text;
 			}
 			else
 			{
-				fb={};
+				var fb={};
 				fb.button=$(this).attr("BUTTON")-1;
 				fb.detail=$(this).attr("DETAIL")-1;
 				fb.grade = $(this).attr("GRADE");

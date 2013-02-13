@@ -97,7 +97,9 @@ function buildMap()
 		grid: [GRID_MAP.x, GRID_MAP.y],
 		start: function(event,ui){
 		},
-		stop: function(event,ui){
+		stop:
+		/*** @param {{node,position}} ui */
+		function(event,ui){
 			var node=ui.node;
 			var page = gGuide.pages[$(node).attr('rel')];
 			page.mapx=ui.position.left;

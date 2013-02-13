@@ -21,12 +21,20 @@ var SELECTED = 'ui-state-active';
 
 
 
-$(document).ready(authorEditorInitialize);
+
+function authorViewerHook()
+{	//	Attach Author editing buttons to the A2J viewer 
+	$('.A2JViewer').append('<div class="debugmenu"><button/><button/></div>');
+	$('.A2JViewer div.debugmenu button').first()
+		.button({label:'Resume editing',icons:{primary:'ui-icon-arrowreturnthick-1-w'}}).click(function(){resumeEdit();})
+//					.next().button({label:'Edit this page',icons:{primary:'ui-icon-pencil'}}).click(function(){gotoPageEdit(page.name)});//ui-icon-document-b
+		.next().button({label:'Testing',icons:{primary:'ui-icon-pencil'}}).click(function(){$('.A2JViewer').toggleClass('test',500);});
+}
 
 
-function authorEditorInitialize(){
+$(document).ready(function(){
    // Everything loaded, execute.
-   Languages.set(Languages.default);
+   Languages.set(Languages.defaultLanguage);
 
 
 	//$('#welcome, #texttoolbar').hide();
@@ -132,7 +140,7 @@ function authorEditorInitialize(){
    //Ensure HTML possible for combo box pick list
    //https://github.com/scottgonzalez/jquery-ui-extensions/blob/master/autocomplete/jquery.ui.autocomplete.html.js
    $.extend($.ui.autocomplete.prototype, {
-      _renderItem: function (ul, item) {
+      _renderItem:  function (ul, item) {
          return $("<li></li>")
 				.data("item.autocomplete", item)
 				.append($("<a></a>")[this.options.html ? "html" : "text"](item.label))
@@ -266,7 +274,7 @@ function authorEditorInitialize(){
 			return '';
 		}
 	});
-}
+});
 
 /*
 function checkLength( o, n, min, max ) {
@@ -290,10 +298,10 @@ function signinask()
 			"Sign in": function() {
 				//var bValid = true;
 				// allFields.removeClass( "ui-state-error" );
-
 				//bValid = bValid && checkLength( name, "username", 3, 16 );
 				//bValid = bValid && checkLength( password, "password", 4, 16 ); 
 				ws({cmd:'login',username:$('#username').val(),userpass:$('#userpass').val()},
+					/*** @param {{userid,nickname}} data */
 					function (data){
 						gUserID=data.userid;
 						gGuideID=0;
@@ -410,7 +418,7 @@ function pageRename(page,newName){
 	{
 		if (gGuide.pages[newName])
 		{
-			dialogAlert('Page rename disallowed','There is already a page named '+newName);
+			dialogAlert({title:'Page rename disallowed',message:'There is already a page named '+newName});
 			return false;
 		}
 	}
@@ -432,7 +440,6 @@ function pageRename(page,newName){
 	delete gGuide.pages[page.name];
 	page.name = newName;
 	gGuide.pages[page.name]=page;
-	//trace("RENAMING REFERENES");
 	gGuide.sortPages();
 	updateTOC();
 	pageEditSelect(newName);
@@ -455,18 +462,21 @@ function pageEditDelete(name)
 	else{
 		txt='No references';
 	}
-	dialogConfirmYesNo({title:'Delete page '+name,message:'Permanently delete this page?<hr>'+txt,height:300,name:name,Yes:function(){
-		var page=gGuide.pages[this.name];
-		// TODO Anything pointing to this page is redirect to NOWHERE
-		delete gGuide.pages[page.name];
-		gGuide.sortPages();
-		updateTOC();
-		
-		if ($pageEditDialog!==null){
-			$pageEditDialog.dialog("close");
-			$pageEditDialog = null;
-		}
-	}});
+	dialogConfirmYesNo({title:'Delete page '+name,message:'Permanently delete this page?<hr>'+txt,height:300,name:name,
+		Yes:
+		/*** @this {{name}} */
+		function(){
+			var page=gGuide.pages[this.name];
+			// TODO Anything pointing to this page is redirect to NOWHERE
+			delete gGuide.pages[page.name];
+			gGuide.sortPages();
+			updateTOC();
+			
+			if ($pageEditDialog!==null){
+				$pageEditDialog.dialog("close");
+				$pageEditDialog = null;
+			}
+		}});
 }
 
 function gotoPageEdit(pageName)
@@ -547,7 +557,7 @@ function gotoTabOrPage(target)
 		case 'tabsLogic':
 		case 'tabsText':
 		case 'tabsConstants':
-			gGuide.noviceTab(target);
+			gGuide.noviceTab(target,false);
 			break;
 		case 'tabsPreview':
 			gotoPageView(gGuide.firstPage);
@@ -626,7 +636,7 @@ function ws(data,results)
 			//trace(String.substr(JSON.stringify(data),0,299));
 			results(data);
 		},
-		error: function(err,xhr) { dialogAlert("error:"+xhr.responseText ); }
+		error: function(err,xhr) { dialogAlert({title:"Error",message:xhr.responseText }); }
 	});
 }  
 
@@ -661,9 +671,9 @@ function guideSave()
 {
 	if (gGuide!==null && gGuideID!==0)
 	{
-		prompt('Saving '+gGuide.title + AJAXLoader);
+		setProgress('Saving '+gGuide.title + AJAXLoader);
 		ws( {cmd:'guidesave',gid:gGuideID, guide: exportXML_CAJA_from_CAJA(gGuide), title:gGuide.title}, function(response){
-			prompt(response.error!==null ? response.error : response.info);
+			setProgress(response.error!==null ? response.error : response.info);
 		});
 	}
 }
@@ -674,7 +684,7 @@ function createBlankGuide()
 
 	ws({cmd:'guidesaveas',gid:0, guide: exportXML_CAJA_from_CAJA(guide), title: guide.title},function(data){
 		if (data.error!==null){
-			status(data.error);
+			setProgress(data.error);
 		}
 		else{
 			var newgid = data.gid;//new guide id
@@ -686,7 +696,7 @@ function createBlankGuide()
 	});
 }
 
-
+/*** @param {{guides}} data */
 function listGuides(data)
 {
 	var blank = {id:'a2j', title:'Create a new guide'};
@@ -694,7 +704,9 @@ function listGuides(data)
 	var mine = [];
 	var others = [];
 	var start = '<li class=guide gid="' + blank.id + '">' + blank.title + '</li>';
-	$.each(data.guides, function(key,g)
+	$.each(data.guides,
+	/*** @param {{owned,id,title}} g */
+	function(key,g)
 	{
 		var str='<li class=guide gid="' + g.id + '">' + g.title + '</li>';
 		if (g.owned)
@@ -1000,7 +1012,7 @@ TGuide.prototype.novicePage = function (div, pagename)
 
 
 
-function prompt(status)
+function setProgress(status)
 {
 	if (status===null){
 		status="";
@@ -1112,7 +1124,7 @@ function updateTOC()
 function guideloaded(data)
 {
 	gGuideID=data.gid;
-	cajaDataXML=$(jQuery.parseXML(data.guide));
+	var cajaDataXML=$(jQuery.parseXML(data.guide));
 	gGuide =  parseXML_Auto_to_CAJA(cajaDataXML);
 	$('li.guide[gid="'+gGuideID+'"]').html(gGuide.title);
 	/*
@@ -1277,7 +1289,9 @@ function varEdit(v/*TVariable*/)
 				if (name===""){
 					return;
 				}
-				dialogConfirmYesNo({title:'Delete variable '+name,message:'Delete this variable?',name:name,Yes:function(){
+				dialogConfirmYesNo({title:'Delete variable '+name,message:'Delete this variable?',name:name,Yes:
+				/*** @this {{name}} */
+				function(){
 					$('#var-edit-form').dialog("close");
 					gGuide.varDelete(this.name);
 				}});
@@ -1311,7 +1325,7 @@ TGuide.prototype.buildTabVariables = function (t)
 	sortvars.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
 	for (vi in sortvars)
 	{
-		v=sortvars[vi];
+		var v=sortvars[vi];
 		tt+=form.row([v.name,v.type,v.comment]);
 	}
 
@@ -1622,11 +1636,11 @@ var form={
 		//return html.replace("<br>","<BR/>","gi");
 	}
 	,htmlarea: function(data){//label,value,handler,name){ 
-		this.id++;
+		form.id++;
 		var e= $('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
 			+'<span class=editspan>'
-			+'<div contenteditable=true class="  htmledit  text editable taller" id="tinyMCE_'+this.id+'"  name="'+this.id+'" rows='+1+'>'
+			+'<div contenteditable=true class="  htmledit  text editable taller" id="tinyMCE_'+form.id+'"  name="'+form.id+'" rows='+1+'>'
 			+data.value+'</div></span></div>');
 		$('.editable',e).focus(function(){$(this).addClass('tallest');form.editorAdd($(this));}).blur(function(){
 		//$(this).removeClass('tallest');
@@ -1643,15 +1657,15 @@ var form={
 		return e;
 	}
 	
-	,pickAudio:function(data){
-		return this.text(data);
+	,pickAudio: function(data){
+		return form.text(data);
 	}
 	
 	,pickImage:function(data){ 
-		return this.text(data); 
+		return form.text(data); 
 	}
 	,pickVideo:function(data){
-		return this.text(data);
+		return form.text(data);
 	}
 	
 	,clear:function(){
@@ -1724,6 +1738,7 @@ var form={
 		{	// print JavaScript
 			t=[];
 			t.push('JS:');
+			var l;
 			for (l=0;l<script.js.length;l++)
 			{
 				t.push(script.js[l]);
@@ -1734,7 +1749,7 @@ var form={
 		$('.errors',$(elt).closest('.editspan')).html(tt);
 	}
 	,codearea:function(data){ 
-		this.id++;
+		form.id++;
 		var e= $('<div>'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
 			+'<div class=editspan><div spellcheck="false" contenteditable=true spellcheck=false class="text editable taller codeedit"  rows='+4+'>'+data.value+'</div><div class="errors"></div></div></div>');
@@ -1766,13 +1781,13 @@ var form={
 			var step = gGuide.steps[s];
 			list.push(s,step.number+". "+ (step.text));
 		}
-		return this.pickList(data,list);
+		return form.pickList(data,list);
 		//var e =$('<div><label>'+label+'</label>' + '<select class="ui-state-default ui-select-input">'+o+'</select></div>');
 		//$('.ui-select-input',e).change(function(){var val=$('option:selected',this).val();  $(this).data('data').change(val);}).data('data',handler).val(value);
 		//return e;
 	}
 	,pickscore:function(label,value,handler){
-		return this.pickList('','picker score',[
+		return form.pickList('','picker score',[
 			'RIGHT','Right',
 			'WRONG','Wrong',
 			'MAYBE','Maybe',
@@ -1780,7 +1795,7 @@ var form={
 	}
 	,pickbranch:function()
 	{ 
-		return this.pickList("",'picker branch',
+		return form.pickList("",'picker branch',
 		[
 			0,"Show feedback and return to question",
 			1,"Show feedback then branch to this page",
@@ -1831,15 +1846,6 @@ var form={
 			handle:"td:eq(0) .sorthandle",
 			update:function(){ }})//.disableSelection();
 		;
-/*
-		$('.editicons .ui-icon-circle-plus',$tbl).click(function(){//live('click',function(){
-			var row = $(this).closest('tr');
-			row.clone(true,true).insertAfter(row).fadeIn();
-		});
-		$('.editicons .ui-icon-circle-minus',$tbl).click(function(){//.live('click',function(){
-			var line = $(this).closest('tr').fadeOut("slow").empty();
-		});
-*/
 		return $tbl;
 	}
 	
@@ -1858,9 +1864,9 @@ var form={
 	
 	,tableRowAdjust:function(name,val)
 	{	// Adjust number of rows. set visible for rows > val. if val > max rows, clone the last row.
-		$tbl = $('table[list="'+name+'"]');
+		var $tbl = $('table[list="'+name+'"]');
 		var settings=$tbl.data('settings');
-		$tbody = $('tbody',$tbl);//'table[list="'+name+'"] tbody');
+		var $tbody = $('tbody',$tbl);//'table[list="'+name+'"] tbody');
 		var rows = $('tr',$tbody).length;		
 		var r;
 		for (r=0;r<rows;r++){

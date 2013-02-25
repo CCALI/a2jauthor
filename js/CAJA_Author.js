@@ -802,7 +802,7 @@ TGuide.prototype.novicePage = function (div, pagename)
 			form.find('[name="helpVideo"]').showit(showMe===2);			
 		};
 		pagefs.append(form.pickList({label:'Help style:',value:getShowMe(), change:function(val,page,form){
-			updateShowMe(form,val);
+			updateShowMe(form, (val));
 			}},  [0,'Text',1,'Show Me Graphic',2,'Show Me Video']));
 		pagefs.append(form.htmlarea(	{label:"Help:",value:page.help,change:function(val,page){page.help=val;}} ));
 		pagefs.append(form.pickAudio(	{name:'helpAudio',label:'Help audio:',placeholder:'Help audio URL',	value:page.helpAudioURL,
@@ -879,6 +879,10 @@ TGuide.prototype.novicePage = function (div, pagename)
 						change:function(val,field){field.min=val;}}));
 					ff.append(form.text({label:'Max value:',name:'max',placeholder:'max', value: field.max,
 						change:function(val,field){field.max=val;}}));
+					ff.append(form.pickXML({label:'External list:',value: field.listSrc,
+						change:function(val,field){field.listSrc=val;}}));
+					ff.append(form.textArea({label:'Internal list:',value: field.listData,
+						change:function(val,field){field.listData=val; }}));
 					ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,
 						change:function(val,field){field.invalidPrompt=val;}}));
 					
@@ -940,8 +944,8 @@ TGuide.prototype.novicePage = function (div, pagename)
 				 .append(form.htmlarea("", GROUP + "CHOICE" + d, "fb" + d, fb.text));
 					var brtype = makestr(fb.next) == "" ? 0 : (makestr(fb.text) == "" ? 2 : 1);
 					$('select.branch', $fb).val(brtype).change();
-					clist.push({ row: [detail.label, form.pickscore(fb.grade), form.htmlarea("", GROUP + "CHOICE" + d, "detail" + d, detail.text)] });
-					dlist.push({ row: [detail.label, form.pickscore(fb.grade), $fb] });
+					clist.push({ row: [detail.label, form.picksSore(fb.grade), form.htmlarea("", GROUP + "CHOICE" + d, "detail" + d, detail.text)] });
+					dlist.push({ row: [detail.label, form.picksSore(fb.grade), $fb] });
 				}
 				t.append(form.h1('Choices'));
 				t.append(form.tableRowCounter("Number of choices", 2, 7, 'choices').after(form.tablerange('choices', clist)));
@@ -984,7 +988,7 @@ TGuide.prototype.novicePage = function (div, pagename)
 				t.append(form.h2('Selection matches'));
 				t.append(form.tablecount("Number of tests", 1, 5) + form.tablerange(list, ["Slack words before", "Slack words after", "Words to match"]));
 
-				t.append(form.textarea("script"));
+				t.append(form.textArea("script"));
 			}
 			else if (page.type == "Text Entry" && page.style == "Text Essay") { }
 			else if (page.type == "Prioritize" && page.style == "PDrag") { }
@@ -1002,6 +1006,7 @@ TGuide.prototype.novicePage = function (div, pagename)
 	form.finish(t);
 	if (gDev){
 		div.append('<div class=xml>'+htmlEscape(page.xml)+'</div>');
+		div.append('<div class=xml>'+htmlEscape(page.xmla2j)+'</div>');
 	}
 
 	gPage = page;
@@ -1335,208 +1340,6 @@ TGuide.prototype.buildTabVariables = function (t)
 	});
 };
 
-TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,clear)
-{	// 08/03/2012 Edit panel for guide sections 
-	var guide = this;
-	var div = $('#'+tab);
-	//if (div.html()!="") return;
-	var t = $('.tabContent',div);
-	if (clear){
-		t.html("");
-	}
-	if (t.html()!==""){
-		return;
-	}
-	
-//	var t=$('<div/>').addClass('tabsPanel editq')//.append($('<div/>').addClass('tabsPanel2'));//editq
-	form.clear();
-	var fs;
-	var ff;
-	var p;
-	var page;
-	var pagefs;
-	switch (tab){
-	
-		
-		case "tabsVariables":
-			guide.buildTabVariables(t);
-			break;
-			
-		case "tabsConstants":
-			fs = form.fieldset('Constants');
-			t.append(fs);
-			break;
-		
-		case "tabsLogic":
-			t.append(form.note(
-				prefs.ShowLogic=== 1 ? 'Showing only logic fields containing code' : 'Showing all logic fields'));
-			
-			var codeBeforeChange = function(val,page){
-				page.codeBefore=val; /* TODO Compile for syntax errors */
-			};
-			var codeAfterChange = function(val,page){
-				page.codeAfter=val; /* TODO Compile for syntax errors */
-			};
-			
-			
-			for (p in guide.sortedPages)
-			{
-				page=guide.sortedPages[p];
-				if (page.type!==CONST.ptPopup)
-				{
-					if ((prefs.ShowLogic===2) || (prefs.ShowLogic===1 && (page.codeBefore!=="" || page.codeAfter!=="")))
-					{
-						pagefs=form.fieldset(page.name, page);
-						if (prefs.ShowLogic===2 || page.codeBefore!==""){
-							pagefs.append(form.codearea({label:'Before:',	value:page.codeBefore,change:codeBeforeChange} ));
-						}
-						if (prefs.ShowLogic===2 || page.codeAfter!==""){
-							pagefs.append(form.codearea({label:'After:',	value:page.codeAfter,change:codeAfterChange} ));
-						}
-						t.append(pagefs);
-					}
-				}
-			}
-			
-			break;
-			
-		case "tabsText":
-			t.append(form.note(
-				prefs.ShowText===1 ? 'All non-empty text blocks in this guide' : 'All text blocks in this guide'));
-			for (p in guide.sortedPages)
-			{
-				page=guide.sortedPages[p];
-				pagefs=form.fieldset(page.name, page);
-				pagefs.append(form.htmlarea({label:'Text:',value:page.text,change:function(val,page){page.text=val; }} ));
-				if (page.type!==CONST.ptPopup){
-					if (prefs.ShowText===2 || page.learn!=="")
-					{
-						pagefs.append(form.text({label:'Learn More prompt:',placeholder:"",	value:page.learn,
-							change:function(val,page){page.learn=val;}} ));
-					}
-					if (prefs.ShowText===2 || page.help!=="")
-					{
-						pagefs.append(form.htmlarea({label:"Help:",value:page.help,
-							change:function(val,page){page.help=val;}} ));
-					}
-					if (prefs.ShowText===2 || page.helpReader!=="")
-					{
-						pagefs.append(form.htmlarea({label:'Help Text Reader:',value:page.helpReader,
-							change:function(val,page){page.helpReader=val;}} ));
-					}
-					var f;
-					for (f in page.fields)
-					{
-						var field = page.fields[f];
-						ff=form.fieldset('Field '+(parseInt(f,10)+1),field);
-						ff.append(form.htmlarea({label:'Label:',value:field.label,change:function(val,field){field.label=val;}}));
-						if (prefs.ShowText===2 || field.value!=="")
-						{
-							ff.append(form.text({label:'Default value:',placeholder:"",name:'default', value:  field.value,change:function(val,field){field.value=val;}}));
-						}
-						if (prefs.ShowText===2 || field.invalidPrompt!=="")
-						{
-							ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,change:function(val,field){field.invalidPrompt=val;}}));
-						}
-						pagefs.append(ff);
-					}
-					var bi;
-					for (bi in page.buttons)
-					{
-						var b = page.buttons[bi];
-						var bf=form.fieldset('Button '+(parseInt(bi,10)+1),b);
-						if (prefs.ShowText===2 || b.label!=="")
-						{
-							bf.append(form.text({value: b.label,label:'Label:',placeholder:'button label',
-								change:function(val,b){b.label=val;}}));
-						}
-						if (prefs.ShowText===2 || b.value!=="")
-						{
-							bf.append(form.text({value: b.value,label:'Default value',placeholder:'Default value',
-								change:function(val,b){b.value=val;}}));
-						}
-						pagefs.append(bf);
-					}
-				}
-				t.append(pagefs);
-			}
-			
-			break;
-		
-		case "tabsAbout":
-			fs = form.fieldset('About');
-			fs.append(form.text({label:'Title:', placeholder:'Interview title', value:guide.title, change:function(val){guide.title=val;}}));
-			fs.append(form.htmlarea({label:'Description:',value:guide.description,change:function(val){guide.description=val;}}));
-			fs.append(form.text({label:'Jurisdiction:', value:guide.jurisdiction, change:function(val){guide.jurisdiction=val;}}));
-			fs.append(form.text({label:'Language:', value:guide.language, change:function(val){guide.language=val;}}));
-			fs.append(form.pickImage({label:'Logo graphic:', placeholder: 'Logo URL',value:guide.logoImage, change:function(val){guide.logoImage=val;}}));
-			fs.append(form.pickImage({label:'End graphic:', placeholder:'End (destination graphic) URL',value:guide.endImage, change:function(val){guide.endImage=val;}}));
-			fs.append(form.htmlarea({label:'Credits:',value:guide.credits,change:function(val){guide.credits=val;}}));
-			fs.append(form.text({label:'Approximate Completion Time:',placeholder:'e.g., 2-3 hours',value:guide.completionTime,change:function(val){guide.completionTime=val;}}));
-			t.append(fs);
-			
-			fs = form.fieldset('Authors');
-			var blankAuthor=new TAuthor();
-			
-			fs = form.fieldset('Revision History');  
-			fs.append(form.text({label:'Current Version:',value:guide.version,change:function(val){guide.version=val;}}));
-			fs.append(form.htmlarea({label:'Revision Notes',value:guide.notes,change:function(val){guide.notes=val;}}));
-			t.append(fs);
-			
-			fs=form.fieldset('Authors');
-			fs.append(form.listManager({name:'Authors',picker:'Number of authors',min:1,max:12,list:guide.authors,blank:blankAuthor
-				,save:function(newlist){
-					guide.authors=newlist; }
-				,create:function(ff,author){
-						ff.append(form.text({  label:"Author's Name:", placeholder:'name',value:author.name,
-							change:function(val,author){author.name=val;}}));
-						ff.append(form.text({  label:"Author's Title:", placeholder:'title',value:author.title,
-							change:function(val,author){author.title=val;}}));
-						ff.append(form.text({  label:"Author's Organization:", placeholder:'organization',value:author.organization,
-							change:function(val,author){author.organization=val;}}));
-						ff.append(form.text({  label:"Author's email:", placeholder:'email',value:author.email,
-							change:function(val,author){author.email=val;}}));
-					return ff;
-				}}));
-				
-			t.append(fs);
-			
-
-			break;
-
-		case 'tabsSteps':
-		
-			fs=form.fieldset('Start/Exit points');
-			fs.append(form.pickpage({	value: guide.firstPage,label:'Starting Point:',	change:function(val){guide.firstPage=val;}}));
-			fs.append(form.pickpage({	value: guide.exitPage,label:'Exit Point:',		change:function(val){guide.exitPage=val;}}));
-			t.append(fs);
-			fs=form.fieldset('Steps');
-			var blankStep=new TStep();
-			
-			fs.append(form.listManager({grid:true,name:'Steps',picker:'Number of Steps',min:1,max:CONST.MAXSTEPS,list:guide.steps,blank:blankStep
-				,save:function(newlist){
-					guide.steps=newlist;
-					updateTOC();
-				}
-				,create:function(ff,step){
-						ff.append(form.text({  label:"Step Number:", placeholder:'#',value:step.number,
-							change:function(val,step){
-								step.number=val;
-								updateTOC();}}));
-						ff.append(form.text({  label:"Step Sign:", placeholder:'title',value:step.text,
-							change:function(val,step){
-								step.text=val;
-								updateTOC();
-							}}));
-					return ff;
-				}}));		
-			t.append(fs);
-			break;
-	}
-	form.finish(t);
-};
-
-
 
 var form={
 	id:0
@@ -1648,7 +1451,7 @@ var form={
 		form.change($(this), form.htmlFix($(this).html()));}).data('data',data) ;
 		return e;
 	} 
-	,textarea: function(data){
+	,textArea: function(data){
 		var rows=2;
 		var e=$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
@@ -1665,6 +1468,9 @@ var form={
 		return form.text(data); 
 	}
 	,pickVideo:function(data){
+		return form.text(data);
+	}
+	,pickXML:function(data){
 		return form.text(data);
 	}
 	
@@ -1772,6 +1578,12 @@ var form={
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
 			+'<span class=editspan><select class="     ui-select-input">'+c+'</select></span></div>');
 		$('.ui-select-input',e).change(function(){form.change($(this),$('option:selected',this).val());}).data('data',data).val(data.value);
+		//trace(data.value,$('.ui-select-input',e).val());
+		if ($('.ui-select-input',e).val()!==String(data.value))
+		{
+			$('select',e).append($('<option value="'+data.value+'">{'+data.value+'}</option>'));
+			$('.ui-select-input',e).val(data.value);
+		}
 		return e;
 	}
 	,pickStep:function(data){
@@ -1782,18 +1594,17 @@ var form={
 			list.push(s,step.number+". "+ (step.text));
 		}
 		return form.pickList(data,list);
-		//var e =$('<div><label>'+label+'</label>' + '<select class="ui-state-default ui-select-input">'+o+'</select></div>');
-		//$('.ui-select-input',e).change(function(){var val=$('option:selected',this).val();  $(this).data('data').change(val);}).data('data',handler).val(value);
-		//return e;
 	}
-	,pickscore:function(label,value,handler){
+	/*
+	,picksSore:function(label,value,handler){
 		return form.pickList('','picker score',[
 			'RIGHT','Right',
 			'WRONG','Wrong',
 			'MAYBE','Maybe',
 			'INFO','Info'],value,handler);
 	}
-	,pickbranch:function()
+	
+	,pickBranch:function()
 	{ 
 		return form.pickList("",'picker branch',
 		[
@@ -1807,10 +1618,8 @@ var form={
 			$(this).parent().children('.dest').toggle(br!==0);
 		});
 	}
-	
+	*/
 		
-	//,clone:function(){return 'Clone buttons';}
-	
 	,tableRows:function(name,headings,rowList){
 		var $tbl=$('<table/>').addClass('list').data('table',name).attr('list',name);
 		var tr;

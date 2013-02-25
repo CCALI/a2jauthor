@@ -45,7 +45,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	guide.viewer="A2J";
 	guide.endImage = TEMPLATE.find('ENDGRAPHIC').text();
 	guide.logoImage = TEMPLATE.find('LOGOGRAPHIC').text();
-
+	guide.mobileFriendly='';
 	
 	var author = new TAuthor();
 	author.name = makestr(TEMPLATE.find('AUTHOR').text());
@@ -116,6 +116,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		var QUESTION = $(this);
 		var page = mapids[QUESTION.attr("ID")]; 
 		
+		page.xmla2j = QUESTION.xml(); 
 		page.type="A2J";
 		page.style="";
 		page.step=parseInt(QUESTION.attr("STEP"),10);
@@ -160,9 +161,11 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			field.value = makestr(jQuery.trim($(this).find("VALUE").xml()));
 			field.invalidPrompt =makestr(jQuery.trim($(this).find("INVALIDPROMPT").xml()));
 			field.invalidPromptAudio =makestr(jQuery.trim($(this).find("INVALIDPROMPTAUDIO").xml()));
-			field.listSRC =jQuery.trim($(this).find("LISTSRC").xml());
-			var list= $(this).find("SELECT").xml();
-			field.listDATA = list;
+			field.listSrc =makestr(jQuery.trim($(this).find("LISTSRC").xml()));
+			if (field.listSrc===""){
+				field.listData = $(this).find("SELECT").xml();
+			}
+			//trace(field.listDATA);
 			/*
 			if (typeof DefaultPrompts[field.invalidPrompt]!="undefined")
 			{
@@ -306,7 +309,10 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		page.nextPageDisabled=false;
 	}
 	*/
-	return parseXML_CAJA_to_CAJA( $(jQuery.parseXML(exportXML_CAJA_from_CAJA(guide))) );
+	
+	
+	//return guide;
+	return parseXML_CAJA_to_CAJA( $(jQuery.parseXML(exportXML_CAJA_from_CAJA(guide))) ); // force complete IO
 }
 
 

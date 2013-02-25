@@ -97,7 +97,7 @@ var gUserNickName="User";
 var runid=0;
 var resumeScoreURL=null;
  
-var gDev=0;
+var gDev= 1 ;
 
 
 // ### Classes ###
@@ -146,8 +146,8 @@ function TField()
 	this.calendar=false;
 	this.calculator=false;
 	this.maxChars="";
-	this.listSRC="";
-	this.listDATA="";
+	this.listSrc="";
+	this.listData="";
 	return this;
 }
 
@@ -221,7 +221,6 @@ function TPage()
 	this.helpVideoURL="";
 	this.repeatVar="";// built-in for attaching Field variables to array
 	
-	//this.scripts=[];
 	this.codeBefore="";
 	this.codeAfter="";
 	this.fields=[];
@@ -230,14 +229,14 @@ function TPage()
 	
 	this.type ="";//type of page interaction
 	this.style ="";//subtype of page interaction
-	//this.nextPage="";//default for next page
-	//this.nextPageDisabled=false;//boolean - if true, next page button is disabled.
-	//this.destPage=null;
-	//this.columns=0;
 
 	this.mapx=0;
 	this.mapy=0;
 	
+//	this.nextPage="";//default for next page
+//	this.nextPageDisabled=false;//boolean - if true, next page button is disabled.
+//	this.destPage=null;
+//	this.columns=0;
 //	this.alignText="";
 //	this.details=[];
 //	this.captions=[];
@@ -247,9 +246,9 @@ function TPage()
 //	this.scores=[];//array of TScore.
 //	this.textMatches=null;//array of TextMatch
 //	this.subq=null;//
+//	this.timeSpent=0;//seconds spent on this page
+//	this.startSeconds=null;
 
-	this.timeSpent=0;//seconds spent on this page
-	this.startSeconds=null;
 	this.xml=null;
 	return this;
 }
@@ -297,6 +296,7 @@ function TGuide()
 	this.viewer="";				//Origin CAJA - A2J, CA, CAJA - which viewer to use? 
 	this.logoImage="";			//Origin A2J
 	this.endImage="";				//Origin A2J
+	this.mobileFriendly='';		//If true, will run on Mobile, false won't, '' unknown.
 
 	/** @type {Array.TAuthor} */
 	this.authors=[];				//Origin Both - single line, CA is a heirarchy. Array of TAuthor

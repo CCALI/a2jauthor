@@ -57,6 +57,8 @@ function page2JSON(page)
 			_CALENDAR:		f.calendar===true ? true : JS2XML_SKIP, 
 			_CALCULATOR:	f.calculator===true ? true : JS2XML_SKIP, 
 			_MAXCHARS:		f.maxChars,
+			LISTSRC:			f.listSrc,
+			XML_LISTDATA:	f.listData,
 			XML_LABEL:		f.label,
 			NAME:				f.name, 
 			VALUE:			f.value, 
@@ -92,7 +94,8 @@ function exportXML_CAJA_from_CAJA(guide)
 	JSON.GUIDE.INFO.version=guide.version;
 	JSON.GUIDE.INFO.viewer=guide.viewer;
 	JSON.GUIDE.INFO.endImage=guide.endImage;
-	JSON.GUIDE.INFO.logoImage=guide.logoImage; 
+	JSON.GUIDE.INFO.logoImage=guide.logoImage;
+	JSON.GUIDE.INFO.mobileFriendly=guide.mobileFriendly;
 	var i;
 	for (i in guide.authors)
 	{
@@ -161,7 +164,7 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 	guide.viewer =			makestr(INFO.children('VIEWER').text());
 	guide.logoImage =		makestr(INFO.children('LOGOIMAGE').text());
 	guide.endImage =		makestr(INFO.children('ENDIMAGE').text());
-
+	guide.mobileFriendly=INFO.children('MOBILEFRIENDLY').text();
 	guide.authors=[];
 	GUIDE.find("AUTHORS > AUTHOR").each(function() {
 		var AUTHOR = $(this);
@@ -329,19 +332,26 @@ function parseXML2Page(PAGE, page)
 	});
 	PAGE.find('FIELDS > FIELD').each(function(){
 		var field=new TField();
-		field.type =$(this).attr("TYPE");
-		field.required = textToBool($(this).attr("REQUIRED"),true);
-		field.order = makestr($(this).attr("ORDER"));
-		field.label =makestr(jQuery.trim($(this).find("LABEL").xml()));
-		field.name =jQuery.trim($(this).find("NAME").xml());
-		field.value = makestr(jQuery.trim($(this).find("VALUE").xml()));
-		field.min = makestr($(this).attr("MIN"));//could be a number or a date so don't convert to number
-		field.max = makestr($(this).attr("MAX"));
-		field.calendar = textToBool($(this).attr("CALENDAR"),false);
-		field.calculator=textToBool($(this).attr("CALCULATOR"),false);
+		var $field=$(this);
+		field.type =$field.attr("TYPE");
+		field.required = textToBool($field.attr("REQUIRED"),true);
+		field.order = makestr($field.attr("ORDER"));
+		field.label =makestr(jQuery.trim($field.find("LABEL").xml()));
+		field.name =jQuery.trim($field.find("NAME").xml());
+		field.value = makestr(jQuery.trim($field.find("VALUE").xml()));
+		field.min = makestr($field.attr("MIN"));//could be a number or a date so don't convert to number
+		field.max = makestr($field.attr("MAX"));
+		field.calendar = textToBool($field.attr("CALENDAR"),false);
+		field.calculator=textToBool($field.attr("CALCULATOR"),false);
 		
-		field.invalidPrompt =makestr(jQuery.trim($(this).find("INVALIDPROMPT").xml()));
-		field.invalidPromptAudio =makestr(jQuery.trim($(this).find("INVALIDPROMPTAUDIO").xml()));
+		field.invalidPrompt =makestr(jQuery.trim($field.find("INVALIDPROMPT").xml()));
+		field.invalidPromptAudio =makestr(jQuery.trim($field.find("INVALIDPROMPTAUDIO").xml()));
+		
+		field.listSrc =	makestr($field.find("LISTSRC").xml());
+		if (field.listSrc===""){
+			field.listData =	$field.find("LISTDATA").xml();
+		}
+	
 		page.fields.push(field);
 	});
 	return page;

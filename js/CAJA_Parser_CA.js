@@ -2,7 +2,11 @@
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	CALI Author Book Parser
-	Parses CALI Author's jqXML into CAJA format 
+	04/15/2013
+
+		
+	Parses CALI Author's jqXML into CAJA format
+
 */
 
 function br2cr(txt){

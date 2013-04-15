@@ -2,7 +2,10 @@
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	Language (INCOMPLETE)
-	07/14/2012 Language file for the authoring tool
+	07/14/2012
+	04/15/2013
+
+	Language file for the authoring tool
 	Language blocks for each supported language.
 	There's a Languages[] structure for A2J Viewer specific code.
 	And jQuery UI structs for Calendar.

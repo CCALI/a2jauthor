@@ -2,8 +2,11 @@
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	Shared GUI/IO
+	12/12/2012
+	04/15/2013
+
 	Required by Author and Viewers
-	12/12/2012 
+
 */
 
 
@@ -31,6 +34,14 @@ function dialogAlert(args)
    });
 }
 
+function fixPath(file)
+{	// keep fully qualified path, otherwise default to file within guide's folder
+	if (file.indexOf('http')===0)
+	{
+		return file;
+	}
+	return guidePath+urlSplit(file).file;
+}
 function loadGuideFile2(guideFile,startTabOrPage)
 /** @param {TGuide} guideFile */
 {
@@ -58,16 +69,14 @@ function loadGuideFile2(guideFile,startTabOrPage)
 function loadGuideFile(guideFile,startTabOrPage)
 /** @param {TGuide} guideFile */
 {  // Load guide file XML directly
-   guideFile=guideFile.split("#");
-   if (guideFile.length===1)
-   {
-      guideFile=guideFile[0];
-   }
-   else
-   {
-      startTabOrPage= "PAGE " +guideFile[1];
-      guideFile=guideFile[0];
-   }
+	var url=urlSplit(guideFile);
+	guideFile = url.path+url.file;
+	guidePath = url.path;
+	if (url.hash!=="")
+	{
+      startTabOrPage= "PAGE " +url.hash;
+	}
+
    loadNewGuidePrep(guideFile,startTabOrPage);
    window.setTimeout(function(){loadGuideFile2(guideFile,startTabOrPage);},500);
 }

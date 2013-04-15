@@ -2,8 +2,9 @@
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	Full HTML Editor
+	03/30/2012
+	04/15/2013
 	
-	03/30/2012 
 */
 
 $(document).ready(function () {

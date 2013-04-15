@@ -2,6 +2,10 @@
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	Advanced editor
+	04/09/2012
+	04/15/2013
+
+
 	Experimental code for single document editing of a guide
 */
 

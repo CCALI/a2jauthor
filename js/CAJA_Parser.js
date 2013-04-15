@@ -2,8 +2,10 @@
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	CAJA Parser
+	02/20/2012
+	04/15/2013
+
 	Parse native CAJA into CAJA structure
-	02/20/2012 
 */
 
 var SHOWXML = false;
@@ -327,7 +329,7 @@ function parseXML2Page(PAGE, page)
 		button.label =jQuery.trim($(this).find("LABEL").xml());
 		button.next = makestr($(this).attr("NEXT"));
 		button.name =jQuery.trim($(this).find("NAME").xml());
-		button.value = jQuery.trim($(this).find("VALUE").xml()); 
+		button.value = jQuery.trim($(this).find("VALUE").xml());
 		page.buttons.push(button);
 	});
 	PAGE.find('FIELDS > FIELD').each(function(){

@@ -1,10 +1,12 @@
-/*	CALI Author 5 / A2J Author 5 (CAJA)
+﻿/*	CALI Author 5 / A2J Author 5 (CAJA)
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	Logic
+	06/15/2012  10/25/11
+	04/15/2013
+
 	Convert CAJA script into JavaScript
 	Required by Author and Viewers
-	06/15/2012  10/25/11  
 	Phase 1: Compile the CAJA script to spot syntax errors or undefined functions or variables.
 	Phase 2: If compile ie successful, execute the JS version.
 
@@ -383,14 +385,22 @@ TLogic.prototype._CAJA = function(c)
 };
 TLogic.prototype._IF = function(d,c,e)
 {
-	this.trace( "IF "+traceTag('val',c)+' = '+ traceTag('val',( (e) === true)) );
+	if ( (e) === true ) {
+		this.trace( "IF "+traceTag('val',c) +' ' +  '\u2714'  );
+	}
+	else{
+		this.trace( "<strike>IF "+traceTag('val',c)+'</strike>');
+	}
+	//this.trace( "IF "+traceTag('val',c)+' = '+ traceTag('val',( (e) === true)) );
 	this.indent=d;
 	return (e===true);
 };
 TLogic.prototype._ENDIF = function(d)
 {
-	this.indent=d;
-	this.trace( "ENDIF");
+	//if (this.indent!==d){
+		this.indent=d;
+		//this.trace( "ENDIF");
+	//}
 };
 TLogic.prototype._VS = function(c,varname,varidx,val)
 {

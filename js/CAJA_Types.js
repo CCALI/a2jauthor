@@ -2,36 +2,27 @@
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	Type/constant declarations
+	04/2012
+	04/15/2013
+		
 	Required by Author and Viewers
 */
-
-
-/* xproperties ptPopup,ftButton,ftText,ftTextLong,ftTextPick,
-ftNumber,ftNumberDollar,ftNumberSSN,ftNumberPhone,
-ftNumberZIP,ftNumberPick,ftDateMDY,ftGender,ftRace,
-ftRadioButton,ftCheckBox,ftCheckBoxNOTA,ftCheckBoxMultiple,
-vtUnknown,vtText,vtTF,vtNumber,vtDate,vtMC,vtOther,A2JVersion,
-MAXFIELDS,MAXBUTTONS,MAXSTEPS,kMinYear,ordDefault,ordAscending,ordDescending,
-value,event,code,number,textAudioURL,notes,learn,help,
-text,label,next,name,type,invalidPrompt,order,min,max,calendar,calculator,maxChars*/
-	
- 
-
 
 
 
 // ### Constants  ###
 
-// Navigation page destinations
-/** @const */ var qIDNOWHERE="";
-/** @const */ var qIDSUCCESS="SUCCESS";
-/** @const */ var qIDFAIL="FAIL";
-/** @const */ var qIDEXIT="EXIT"; //8/17/09 3.0.1 Save like SUCCESS but flag incomplete true.
-/** @const */ var qIDBACK="BACK"; //8/17/09 3.0.1 Same as history Back button.
-/** @const */ var qIDRESUME="RESUME"; //8/24/09 3.0.2
-
 /** @const */ 
 var CONST = {
+	
+	A2JVersionNum:"5.0.1",
+	A2JVersionDate:"2013-04-15",
+	
+	
+	CAVersionNum:"5.0.0",
+	CAVersionDate:"2013-04-15",
+	
+	
 	//Page Types
 	ptPopup:'Popup',
 	//Field Types
@@ -71,10 +62,18 @@ var CONST = {
 	// 11/27/07 1.7.7 Ordering options
 	ordDefault:"",
 	ordAscending:"ASC",
-	ordDescending:"DESC",
+	ordDescending:"DESC"
 	
-	A2JVersion:"5.0.0"
 };
+
+// Navigation page destinations
+/** @const */ var qIDNOWHERE="";
+/** @const */ var qIDSUCCESS="SUCCESS";
+/** @const */ var qIDFAIL="FAIL";
+/** @const */ var qIDEXIT="EXIT"; //8/17/09 3.0.1 Save like SUCCESS but flag incomplete true.
+/** @const */ var qIDBACK="BACK"; //8/17/09 3.0.1 Same as history Back button.
+/** @const */ var qIDRESUME="RESUME"; //8/24/09 3.0.2
+
 // ### Steps ###
 // colors: 0xffffff,0xBDD6D6, 0xB7DDB7, 0xEFC68C, 0xE7E7B5, 0xEFDED6, 0xECD8EA,0xBDD6D6, 0xB7DDB7, 0xEFC68C, 0xE7E7B5, 0xEFDED6, 0xECD8EA];
 
@@ -96,8 +95,7 @@ var gUserNickName="User";
 // Session
 var runid=0;
 var resumeScoreURL=null;
- 
-var gDev= 1 ;
+var guidePath;
 
 
 // ### Classes ###

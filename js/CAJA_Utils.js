@@ -1,12 +1,43 @@
-/*	CALI Author 5 / A2J Author 5 (CAJA)
+﻿/*	CALI Author 5 / A2J Author 5 (CAJA)
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	CAJA Utils 
-	Required by Author and Viewers
 	02/20/2012
+	04/15/2013
+
+	Required by Author and Viewers
 */
 
 var AJAXLoader="<span class='loader'>&nbsp;</span>'";
+
+function urlSplit(url)
+{	// given a url like http://www.cali.org/intro/view.php?a=1#start,
+	// return path object with {path:"http://www.cali.org/intro/", file:"view.php", params:"a=1", hash:"start" 
+	var parts={path:"",file:"",params:"",hash:""};
+	var p;
+	url=url.replace("\\","/","gi");
+	p=url.lastIndexOf('#');
+	if (p>=0)
+	{
+		parts.hash =  url.substr(p+1);
+		url=url.substr(0,p);
+	}
+	p=url.lastIndexOf('?');
+	if (p>=0)
+	{
+		parts.params =  url.substr(p+1);
+		url=url.substr(0,p);
+	}
+	p=url.lastIndexOf('/');
+	if (p>=0)
+	{
+		parts.file =  url.substr(p+1);
+		url=url.substr(0,p+1);
+	}
+	parts.path=url;
+	return parts;
+}
+
 
 function propCount(obj){
 	var cnt = 0;
@@ -337,6 +368,20 @@ var decodeEntities = (function() {
   return decodeHTMLEntities;
 })();
 
+/*
+//http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values
+var urlParams;
+(window.onpopstate = function () {
+    var match,
+        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        search = /([^&=]+)=?([^&]*)/g,
+        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+        query  = window.location.search.substring(1);
 
+    urlParams = {};
+    while (match = search.exec(query))
+       urlParams[decode(match[1])] = decode(match[2]);
+})();
+*/
 
 /* */

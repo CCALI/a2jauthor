@@ -1,7 +1,9 @@
-/*	CALI Author 5 / A2J Author 5 (CAJA)
+﻿/*	CALI Author 5 / A2J Author 5 (CAJA)
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	Parse A2J 4 Interview
+	04/15/2013
+
 	Parses .a2j/xml XML into CAJA format
 */
 
@@ -143,7 +145,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			var button=new TButton();
 			button.label =jQuery.trim($(this).find("LABEL").xml());
 			button.next = fixID(makestr($(this).attr("NEXT")));
-			button.name =jQuery.trim($(this).find("NAME").xml());
+			button.name =jQuery.trim($(this).attr("NAME"));
 			button.value = jQuery.trim($(this).find("VALUE").xml()); 
 			page.buttons.push(button);
 		});

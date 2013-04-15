@@ -1,0 +1,386 @@
+﻿@charset "utf-8";
+/*
+	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+	A2J Viewer Stylesheet 
+	02/02/2012  (3/10/2011 SJG
+	04/15/2013
+*/
+
+div.question.bubble, div.learnmore.bubble {
+	font-size: 1em;
+}
+
+.hidestart { /* hide some elements initially */
+	display: none;
+}
+html, body{
+	margin:0px;
+	padding:0px;
+}
+.ViewerApp  {
+	font-size: 12px;
+	margin:0px;
+	padding:0px;
+	overflow: none;
+}
+#a2jbtn {
+	position: relative;
+	width: 32px;
+	height: 32px;
+	top: 5px;
+	left: 5px;
+	background-image: url(img/A2J5_Icon_32.png);
+}
+.A2JViewer {
+	position:fixed;
+	left:0px;
+	top:0px;
+	right:0px;
+	bottom:0px;
+	
+	border: 1px solid #444;
+	color: #000;
+	background-color:#fff;
+	margin: 0px;
+	padding: 0px;
+	xmin-width: 800px;
+	xmin-height: 600px;
+	xwidth: 930px;
+	xheight: 660px;
+}
+.A2JViewer.test {
+	left:410px;
+}
+.testing {
+	position:fixed;
+	width:400px;
+	top:0;
+	left:0;
+	bottom:0;
+	overflow: none;
+	
+	background-color: #eee;
+}
+
+
+.A2JViewer fieldset {
+	border: none;
+}
+.A2JViewer .NavBar {
+	margin: 0px;
+	padding: 5px;
+	height: 20px;
+	background-color: #eee;
+	border-top-width: 0px;
+	border-right-width: 0px;
+	border-bottom-width: 2px;
+	border-left-width: 0px;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: solid;
+	border-left-style: none;
+	border-left-color: #000;
+	width: auto;
+}
+.A2JViewer .NavBar li {
+	display:inline;
+	margin-left: 1em;
+	margin-right: 1em;
+	padding: 5px;
+	vertical-align: middle;
+	list-style: none;
+}
+.A2JViewer .NavBar li a {
+	-moz-border-radius:5px;
+	border-radius:5px;
+	text-decoration:none;
+	xbackground: url(../img/button_gradient_blue.png) repeat-x;
+	font-style: normal;
+	font-weight: normal;
+	padding: 2px;
+	padding-left: 1em;
+	padding-right: 1em;
+	margin: 3px;
+	color:#000;
+	white-space: nowrap;
+	border-top-width: thin;
+	border-right-width: thin;
+	border-bottom-width:  thin;
+	border-left-width: thin; 
+	border-top-style: none; 
+	border-right-style: none; 
+	border-bottom-style: none; 
+	border-left-style:  none;
+	border-top-color: #eee; 
+	border-right-color: #eee; 
+	border-bottom-color: #eee; 
+	border-left-color: #eee; 
+}
+.A2JViewer .NavBar li a:hover, .Viewer .NavBar li a:focus{
+	margin: 2px;
+	xcolor:#fff;
+	xbackground:#727454;
+	border-top-color: #FCFCFC;
+	border-top-style: outset;
+	border-right-color: #FCFCFC;
+	border-right-style: outset;
+	border-bottom-color: #FCFCFC;
+	border-bottom-style: outset;
+	border-left-color: #FCFCFC;
+	border-left-style: outset;
+}
+
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
+.interact {
+	xclear: both;
+}
+.infobar{
+	padding: 10px;
+	background-color:#000;
+	color:#fff;
+}
+
+
+
+.A2JViewer .debugmenu {
+	position: absolute;
+	bottom: 15px;
+	left: 5px;
+}
+
+.A2JViewer .interact {
+	overflow: auto;
+	position: absolute;
+	top:34px;
+	bottom:00;
+	width: 100%;
+}
+
+div.step  {
+	border: 0px solid #808;
+	position: relative;
+	xdisplay:block;
+	xoverflow: auto;
+	background-color:#eef;
+	width: 930px;
+	height: 640px;
+}
+div.question.bubble, div.learnmore.bubble {/* question bubble */
+	-moz-border-radius:12px; border-radius:12px;
+	border: 1px solid #bbb;
+	background-color: #eee;
+	margin:  0px;
+	padding:  10px;
+	xmin-height: 150px;
+	xmax-height: 500px;
+}
+div.question.bubble > div, div.learnmore.bubble > div{ /* form with viewer's field inputs */
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	overflow: auto;
+	min-height: 150px;
+	max-height: 500px; 
+	position: relative;  
+}
+div.learnmore.bubble, div.learnmore.bubble > div {
+	min-height: 50px;
+	max-height: 500px; 
+}
+
+/*
+.A2JViewer input[type=radio], .A2JViewer input[type=checkbox] {
+	display: inline;
+}
+div.question.bubble fieldset div.row{  
+	margin: 0;
+	margin-top: .5em;
+	padding: 0;
+	width: 100%;
+	display: table-row;
+}
+div.question.bubble div fieldset label {
+    text-align: left;
+	 width: 33%;
+}
+div.question.bubble fieldset div.row input[type=text].text {
+	width: 66%;
+}
+div.question.bubble fieldset div.row input[type=text].number {
+	width: 66%;
+	xwidth: 10em;
+}
+*/
+.question input, .question textarea, .question select {
+	font-size: inherit;/*ensure font size isn't smaller */
+	background-color: #fff;
+}
+.question .text, .question .textarea, .question .maxwidth {
+	width: 100%;
+}
+.question .field {
+	position: relative;
+	padding-top: .5em;
+	width: 100%;	
+}
+.question .labelinput {
+	position: relative;
+}
+.question .labelinput input {
+	vertical-align: middle;
+	margin: 0px;
+	position: absolute;
+	top: 3px;
+}
+.question .labelinput label {
+	margin-left: 30px;
+	display: block;
+}
+.question .label {
+	display: inline-block;
+	vertical-align: top;
+	width: 30%;
+}
+.question .input {
+	display: inline-block ;
+	vertical-align: bottom;
+	width: 65%;
+}
+div.question.ui-form input {
+	display: inline;
+}
+div.question.bubble fieldset div.row input[type=text] {
+	background-color:#fff;
+}
+
+div.question.bubble div div.buttonlist, div.learnmore.bubble div div.buttonlist{
+	bottom: 4px;
+	right: 4px;
+	width: 100%; 
+	min-height:  1px; 
+}
+div.question.bubble div div.buttonlist{
+	text-align:right;
+}
+div.learnmore.bubble div div.buttonlist{
+	text-align:center;
+}
+div.question.bubble div fieldset{
+	text-align:left;
+}
+div.stepnumber{ text-align:center;}
+div.stepnumber.step1 { 	font-size: 2em; }
+div.stepnumber.step2 { 	font-size: 1em; }
+div.steptext.step1 { 	font-size: 1.5em; }
+div.steptext.step2 { 	font-size: 1em; }
+
+
+/* Debugging Aids */
+
+.codeedit, .xml, #tracer li {
+	xfont-family: Monospace;
+}
+#tracer {
+	padding-left: -5px;
+}
+#tracer li{
+	font-weight: normal;
+	xfont-family: "Courier New", Courier, monospace;
+	font-size: 9px;
+	line-height: auto;
+	border: none;
+	xbackground-color: #ddd;
+	margin: 1px;
+	padding: 2px;
+}
+span.code, span.var, span.varidx, span.val, span.page {  
+}
+span.ui {
+	border: thin solid #fea;
+	background-color: #fff;
+}
+span.code {
+	border: thin solid #CC9966;
+	background-color: #ddd;
+}
+span.var {
+	border: thin solid #CC9966;
+	background-color: #ffc;
+}
+span.varidx {
+	border: thin solid #CC9966;
+	background-color: #fcc
+}
+span.val{
+	border: thin solid #CC9966;
+	background-color: #fcf;
+}
+span.page {
+	border: thin solid #CC9966;
+	background-color: #ccf;
+}
+span.err {
+	text-decoration: none;
+	border-bottom: dashed  1px #f00;
+	padding-bottom: 0px;
+ }
+
+.ViewerLogicForm .tracepanel{
+	position:absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 32px;
+	overflow: scroll;
+}
+.ViewerLogicForm .immediatepanel{
+	position:absolute;
+	bottom: 0px;
+	height: 20px;
+	left: 0;
+	right: 0;
+	padding:4;
+	margin:4;
+}
+.ViewerLogicForm .immediatepanel input {
+	width: 100%;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+#page-viewer.ViewerApp  .ViewerVarForm {
+	position: fixed;
+	top:0;
+	left:0;
+	bottom: 50%;
+	width: 400px;
+	border: 1px solid #bbb;
+	xbackground-color: #cee;
+}
+#page-viewer.ViewerApp   .ViewerLogicForm {
+	position: fixed;
+	top:50%;
+	left:0;
+	bottom: 0;
+	width: 400px;
+	border: 1px solid #bbb;
+	xbackground-color: #cee;
+}
+.unselectable {
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
+}
+

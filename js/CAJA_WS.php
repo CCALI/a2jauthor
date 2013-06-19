@@ -66,6 +66,7 @@ switch ($command)
 		$_SESSION['userdir']=$userdir;
 		break;
 
+		
 	case 'guides':
 		// list of free, public or user owned guides
 		listGuides("select * from guides where isPublic=1 or isFree=1  or (editoruid=$userid) order by (editoruid=$userid) desc, title asc ");
@@ -91,7 +92,6 @@ switch ($command)
 		{// not found
 		}
 		break;
-		
 		
 	case 'guidesave':
 		// update the guide (only if user matches guide's editor
@@ -159,46 +159,25 @@ switch ($command)
 		}
 		break;
 
-	case 'guideclone':
-		break;//OUTDATED 
-		// clone a guide 'gid' (Don't care if borrowing)
-		// return new guide's 'gid'
-		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
-		$res=$mysqli->query("select * from guides where gid=$gid");
+		
+/*
+	case 'answerfile':
+		// INCOMPLETE return XML of answerfile given answer id. No security check currently.
+		$aid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+		$res=$mysqli->query("select * from answer_files where aid=$aid ");
 		if ($row=$res->fetch_assoc()){
-			$oldfile = $row['filename'];
-			$newfile = basename($oldfile);
-			$newdirbase = $userdir.'/'.pathinfo($oldfile,PATHINFO_FILENAME);
-			$newdir = $newdirbase;
-			$e=0;
-			while (file_exists($newdir)){
-				$e += 1;
-				$newdir=$newdirbase.' '.$e;
-			}
-			$newfile = $newdirbase.'/'.$newfile;
-			trace($newfile);
-			
-			// clone much of the existing record, copy the files
-			$sql="insert into guides (title,filename,editoruid,clonedfromgid) values ('Copy of ".$mysqli->real_escape_string($row['title'])."', '".$mysqli->real_escape_string($newfile)."', ".$userid.",".$gid.")";
-			trace($sql);
-			if ($res=$mysqli->query($sql)){
-				// Clone existing guide and copy guide to a new folder for the editor.
-				$newgid=$mysqli->insert_id;
-				$result['gid']=$newgid;
-				$oldlocation=GUIDE_DIR($oldfile);
-				$newlocation=GUIDE_DIR($newfile);
-				$result['url']=$newlocation;
-				trace($oldlocation);
-				trace($newlocation);
-				mkdir(GUIDE_DIR($newdir));
-				trace("Copy: ".$oldlocation.' to '.$newlocation);
-				//chmod($newlocation,0775);
-				copy($oldlocation,$newlocation) or trace("Error copy");
-			}
+			$result['aid']=$row['aid'];
+			//$result['editoruid']=$row['editoruid'];
+			$result['answers']= $row['xml'];
 		}
 		else
-			$err="Not found";
-		break;
+		{// not found
+		}
+		break;				
+		*/
+		
+
+		
 		
 	default:
 		$err="Unknown command";
@@ -209,6 +188,17 @@ if($err!="") $result['error']=$err;
 
 $return  = json_encode($result);
 echo $return;
+
+function getGuideFileDetails($filename)
+{
+	$filename=GUIDE_DIR($filename);
+	//		file_put_contents($filename,$xml);
+	//$xml=simplexml_load_file($filename,null, LIBXML_NOCDATA);
+	//trace($xml);
+	//$details = $xml->xpath('/description');
+	$details="";
+	return $details;
+}
 
 function GUIDE_DIR($gid)
 {
@@ -223,7 +213,9 @@ function listGuides($sql)
 	{
 		$res=$mysqli->query($sql);
 		while($row=$res->fetch_assoc()){
-			$guides[]=array( "id"=> $row['gid'], "title"=> $row['title'], "owned"=> $row["editoruid"]==$userid); 
+			$guides[]=array( "id"=> $row['gid'], "title"=> $row['title'],
+				"owned"=> $row["editoruid"]==$userid,
+				"details"=> getGuideFileDetails( $row['filename'])); 
 		  } 
 	}
 	$result['guides']=$guides;

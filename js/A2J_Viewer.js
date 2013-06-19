@@ -69,7 +69,7 @@ var A2JViewer={
 					case '#navback':
 						break;
 					default:
-						//alert($(this).attr('href'));
+						// ($(this).attr('href'));
 				}
 			});
 			
@@ -223,7 +223,7 @@ var A2JViewer={
 			{
 				var f = page.fields[fi];// field record
 				var fid = "FID_"+fi;//field id - unique
-				var fname = "FID_"+f.name;//field name - possible duplicates, i.e., radio buttons
+				//var fname = "FID_"+f.name;//field name - possible duplicates, i.e., radio buttons
 
 				switch (f.type)
 				{

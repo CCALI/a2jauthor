@@ -13,7 +13,6 @@
 	Dependencies: jqhashtable-2.1.js, jquery.numberformatter-1.2.1.jsmin.js
 */
 
-CONST.ScriptLineBreak='<BR/>';
 // Classes
 function jquote(str)
 {

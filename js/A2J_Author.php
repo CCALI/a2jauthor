@@ -7,6 +7,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>A2J Author 5</title>
+
+<script type="application/x-javascript"><?php
+require "loginquick.php";
+?></script>
+
+
 <link  xhref="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/sunny/jquery-ui.css"  title="style" rel="stylesheet" type="text/css"/>
 <link  xhref="http://code.jquery.com/ui/1.9.0/themes/sunny/jquery-ui.css" title="style"  rel="stylesheet" type="text/css"/>
 <script xsrc="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
@@ -18,6 +24,7 @@
 <script src="jquery.1.8.2.min.js" type="text/javascript"></script>
 <script src="jquery.ui.1.9.1.custom.min.js" type="text/javascript"></script>
 <script src="jquery.ui.custom.min.js" type="text/javascript" ></script>
+<script src="ckfinder/ckfinder.js" type="text/javascript" ></script>
 
 
 <script src="CAJA_Types.js" type="text/javascript"></script>
@@ -27,6 +34,7 @@
 <script src="CAJA_Parser_A2J.js" type="text/javascript"></script>
 <script src="CAJA_Logic.js" type="text/javascript"></script>
 <script src="CAJA_Shared.js" type="text/javascript"></script>
+<script src="CAJA_IO.js" type="text/javascript"></script>
 <script src="A2J_Mapper.js" type="text/javascript"></script>
 <script src="A2J_Viewer.js" type="text/javascript"></script>
 <script src="A2J_AuthorApp.js" type="text/javascript"></script>
@@ -285,10 +293,12 @@
 	<div id="welcome" title="Welcome to Access to Justice Author (v5)">
 		<div class="tabContentFrame">
 			<div class="tabContent ">
+				<p class="name"></p>
 				<p>What would you like to do? </p>
-				<p>Create a new Guide</p>
-				<p>Open an existing Guide</p>
-				<p>Customize someone else's Guide</p>
+				<div id="guidelist">
+				<p><button id="guideStartCreate">Create a new Interview</button></p>
+				<p><button id="guideStartOpen">Open an existing Interview</button></p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -298,9 +308,9 @@
 		<form>
 			<fieldset>
 			<label for="username">Name</label>
-			<input type="text" name="name" id="username" class="text ui-widget-content ui-corner-all"  />
-			<label for="userpass">Password</label>
-			<input type="password" name="pass" id="userpass" class="text ui-widget-content ui-corner-all"   />
+			<input type="text" name="username" id="username" class="text ui-widget-content ui-corner-all"  />
+			<label for="password">Password</label>
+			<input type="password" name="password" id="password" class="text ui-widget-content ui-corner-all"   />
 			</fieldset>
 		</form>
 	</div>

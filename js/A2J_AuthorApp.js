@@ -13,20 +13,23 @@ function DEBUGSTART(){
 	gUserID=0;
 	$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist"></p>');
 	var SAMPLES = [
-		"/a2j4guides/Field Types Test.a2j#2-1-0 Pick Colors",
+		"tests/data/A2J_NYSample_interview.xml",
 		"tests/data/A2J_MobileOnlineInterview_Interview.xml",
-		"/a2j4guides/Logic Tests.a2j",
 		"tests/data/A2J_ULSOnlineIntake081611_Interview.xml",
 		"tests/data/A2J_ULSOnlineIntake081611_Interview.xml#1b Submit Application for Review",
+		"tests/data/Logic Tests.a2j",
+		"tests/data/Field Types Test.a2j#2-1-0 Pick Colors",
 		"tests/data/Field Characters Test.a2j",
-		"tests/data/A2J_NYSample_interview.xml",
 		"tests/data/Field Characters Test.a2j#4-1 If thens",
 		"tests/data/Field Characters Test.a2j#1-5 Fields Test 1",
 		"tests/data/Field Characters Test.a2j#0-1 Intro",
 		"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name",
-		"tests/data/CBK_CAPAGETYPES_jqBookData.xml", 
-		"tests/data/CBK_CAPAGETYPES_jqBookData.xml#MC Choices 3: 4 choices", 
-		"tests/data/CBK_EVD03_jqBookData.xml"
+		//"tests/data/CBK_CAPAGETYPES_jqBookData.xml", 
+		//"tests/data/CBK_CAPAGETYPES_jqBookData.xml#MC Choices 3: 4 choices", 
+		//"tests/data/CBK_EVD03_jqBookData.xml",
+		//"/a2j4guides/Field Types Test.a2j#2-1-0 Pick Colors",
+		//"/a2j4guides/Logic Tests.a2j"
+		
 	];
 	$(SAMPLES).each(function(i,elt){
 		$('#samples, #guidelist').append('<li><a href="#sample">'+elt+'</a></li>');		
@@ -35,7 +38,7 @@ function DEBUGSTART(){
 	$('#splash').hide();
 	//$('#welcome').hide();
 }
-/ * */
+/* */
 
 TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,clear)
 {	// 08/03/2012 Edit panel for guide sections 
@@ -53,7 +56,7 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 //	var t=$('<div/>').addClass('tabsPanel editq')//.append($('<div/>').addClass('tabsPanel2'));//editq
 	form.clear();
 	var fs;
-	var ff;
+	//var ff;
 	var p;
 	var page;
 	var pagefs;
@@ -109,57 +112,7 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 			{
 				page=guide.sortedPages[p];
 				pagefs=form.fieldset(page.name, page);
-				pagefs.append(form.htmlarea({label:'Text:',value:page.text,change:function(val,page){page.text=val; }} ));
-				if (page.type!==CONST.ptPopup){
-					if (prefs.showText===2 || page.learn!=="")
-					{
-						pagefs.append(form.text({label:'Learn More prompt:',placeholder:"",	value:page.learn,
-							change:function(val,page){page.learn=val;}} ));
-					}
-					if (prefs.showText===2 || page.help!=="")
-					{
-						pagefs.append(form.htmlarea({label:"Help:",value:page.help,
-							change:function(val,page){page.help=val;}} ));
-					}
-					if (prefs.showText===2 || page.helpReader!=="")
-					{
-						pagefs.append(form.htmlarea({label:'Help Text Reader:',value:page.helpReader,
-							change:function(val,page){page.helpReader=val;}} ));
-					}
-					var f;
-					for (f in page.fields)
-					{
-						var field = page.fields[f];
-						ff=form.fieldset('Field '+(parseInt(f,10)+1),field);
-						ff.append(form.htmlarea({label:'Label:',value:field.label,change:function(val,field){field.label=val;}}));
-						if (prefs.showText===2 || field.value!=="")
-						{
-							ff.append(form.text({label:'Default value:',placeholder:"",name:'default', value:  field.value,change:function(val,field){field.value=val;}}));
-						}
-						if (prefs.showText===2 || field.invalidPrompt!=="")
-						{
-							ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,change:function(val,field){field.invalidPrompt=val;}}));
-						}
-						pagefs.append(ff);
-					}
-					var bi;
-					for (bi in page.buttons)
-					{
-						var b = page.buttons[bi];
-						var bf=form.fieldset('Button '+(parseInt(bi,10)+1),b);
-						if (prefs.showText===2 || b.label!=="")
-						{
-							bf.append(form.text({value: b.label,label:'Label:',placeholder:'button label',
-								change:function(val,b){b.label=val;}}));
-						}
-						if (prefs.showText===2 || b.value!=="")
-						{
-							bf.append(form.text({value: b.value,label:'Default value',placeholder:'Default value',
-								change:function(val,b){b.value=val;}}));
-						}
-						pagefs.append(bf);
-					}
-				}
+				pageNameFields(pagefs,page);
 				t.append(pagefs);
 			}
 			
@@ -251,7 +204,60 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 	form.finish(t);
 };
 
-
+function pageNameFields(pagefs,page)
+{
+	pagefs.append(form.htmlarea({label:'Text:',value:page.text,change:function(val,page){page.text=val; }} ));
+	if (page.type!==CONST.ptPopup){
+		if (prefs.showText===2 || page.learn!=="")
+		{
+			pagefs.append(form.text({label:'Learn More prompt:',placeholder:"",	value:page.learn,
+				change:function(val,page){page.learn=val;}} ));
+		}
+		if (prefs.showText===2 || page.help!=="")
+		{
+			pagefs.append(form.htmlarea({label:"Help:",value:page.help,
+				change:function(val,page){page.help=val;}} ));
+		}
+		if (prefs.showText===2 || page.helpReader!=="")
+		{
+			pagefs.append(form.htmlarea({label:'Help Text Reader:',value:page.helpReader,
+				change:function(val,page){page.helpReader=val;}} ));
+		}
+		var f;
+		for (f in page.fields)
+		{
+			var field = page.fields[f];
+			ff=form.fieldset('Field '+(parseInt(f,10)+1),field);
+			ff.append(form.htmlarea({label:'Label:',value:field.label,change:function(val,field){field.label=val;}}));
+			if (prefs.showText===2 || field.value!=="")
+			{
+				ff.append(form.text({label:'Default value:',placeholder:"",name:'default', value:  field.value,change:function(val,field){field.value=val;}}));
+			}
+			if (prefs.showText===2 || field.invalidPrompt!=="")
+			{
+				ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,change:function(val,field){field.invalidPrompt=val;}}));
+			}
+			pagefs.append(ff);
+		}
+		var bi;
+		for (bi in page.buttons)
+		{
+			var b = page.buttons[bi];
+			var bf=form.fieldset('Button '+(parseInt(bi,10)+1),b);
+			if (prefs.showText===2 || b.label!=="")
+			{
+				bf.append(form.text({value: b.label,label:'Label:',placeholder:'button label',
+					change:function(val,b){b.label=val;}}));
+			}
+			if (prefs.showText===2 || b.value!=="")
+			{
+				bf.append(form.text({value: b.value,label:'Default value',placeholder:'Default value',
+					change:function(val,b){b.value=val;}}));
+			}
+			pagefs.append(bf);
+		}
+	}
+}
 
 var prefs = {
 	showLogic : 1,
@@ -310,6 +316,14 @@ $(document).ready(function(){
 	$('#guideClose').button({label:'Close',icons:{primary:"ui-icon-close"}}).click(function(){guideClose();});
 	$('#settings').button({label:'Settings',icons:{primary:"ui-icon-gear"}}).click(function(){$('#settings-form').dialog('open');});
 	
+	/*
+	$('#guideStartCreate').button({icons:{primary:"ui-icon-document"}}).click(function()
+	{
+		createBlankGuide();
+		$('#welcome').dialog('close');
+	});
+	$('#guideStartOpen').button({icons:{primary:"ui-icon-disk"}}).click(function(){alert('guideOpen');});
+	*/
 	
 	$('.guidemenu ul li').click(function(){
 		gotoTabOrPage($(this).attr('ref'));
@@ -538,38 +552,18 @@ function checkLength( o, n, min, max ) {
 */
 function signinask()
 {
+	if (typeof autouser !== "undefined")
+	{
+		$('#username').val(autouser);
+		$('#password').val(autopass);
+	}
 	$( "#login-form" ).dialog({
 		autoOpen: false,
 		height: 300,
 		width: 350,
 		modal: true,
 		buttons: {
-			"Sign in": function() {
-				//var bValid = true;
-				// allFields.removeClass( "ui-state-error" );
-				//bValid = bValid && checkLength( name, "username", 3, 16 );
-				//bValid = bValid && checkLength( password, "password", 4, 16 ); 
-				ws({cmd:'login',username:$('#username').val(),userpass:$('#userpass').val()},
-					/*** @param {{userid,nickname}} data */
-					function (data){
-						gUserID=data.userid;
-						gGuideID=0;
-						gUserNickName=data.nickname;
-						if (gUserID!==0)
-						{	// Successful signin.
-							$('#memenu').text(gUserNickName);
-							$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist">Loading your guides '+AJAXLoader +"</p>");
-							$("#login-form" ).dialog( "close" );
-					//		$('#authortool').removeClass('hidestart').addClass('authortool');
-							$('#splash').hide();
-							$('#welcome').show();
-							
-							//$('#tabviews').tabs( { disabled: [1,2,3,4,5,6,7,8,9]});
-							ws({cmd:'guides'},listGuides);
-						}
-					}				  
-				  );
-			 },
+			"Sign in": signin,
 			 Cancel: function() {
 				  $( this ).dialog( "close" );
 			 }
@@ -579,6 +573,36 @@ function signinask()
 		}
 	});
 	$( "#login-form" ).dialog( "open" );
+	
+	if (typeof autouser !== "undefined")
+		signin();
+}
+function signin(){ 
+	//var bValid = true;
+	// allFields.removeClass( "ui-state-error" );
+	//bValid = bValid && checkLength( name, "username", 3, 16 );
+	//bValid = bValid && checkLength( password, "password", 4, 16 ); 
+	ws({cmd:'login',username:$('#username').val(),userpass:$('#password').val()},
+		/*** @param {{userid,nickname}} data */
+		function (data){
+			gUserID=data.userid;
+			gGuideID=0;
+			gUserNickName=data.nickname;
+			if (gUserID!==0)
+			{	// Successful signin.
+				$('#memenu').text(gUserNickName);
+				$('#welcome .tabContent .name').html("Welcome "+gUserNickName+" user#"+gUserID);
+				//+'<p id="guidelist">Loading your guides '+AJAXLoader +"</p>" 
+				$("#login-form" ).dialog( "close" );
+				//$('#authortool').removeClass('hidestart').addClass('authortool');
+				$('#splash').hide();
+				$('#welcome').show();
+				
+				//$('#tabviews').tabs( { disabled: [1,2,3,4,5,6,7,8,9]});
+				ws({cmd:'guides'},listGuides);
+			}
+		}
+  );
 }
 
 function gotoPageView(destPageName)
@@ -816,7 +840,7 @@ function gotoTabOrPage(target)
 
 function pageGOTOList()
 {	// List of page ids we can go to including the built-ins like no where, exit.
-	var pages=[qIDNOWHERE,qIDSUCCESS,qIDFAIL,qIDEXIT,qIDBACK,qIDRESUME];
+	var pages=[CONST.qIDNOWHERE,CONST.qIDSUCCESS,CONST.qIDFAIL,CONST.qIDEXIT,CONST.qIDBACK,CONST.qIDRESUME];
 	var p;
 	for (p in gGuide.sortedPages)
 	{
@@ -874,25 +898,6 @@ function pickPage(request,response)
 
 
 
-function ws(data,results)
-{	// Contact the webservice to handle user signin, retrieval of guide lists and load/update/cloning guides.
-	$.ajax({
-		url:'CAJA_WS.php',
-		dataType:'json',
-		type: 'POST',
-		data: data,
-		success: function(data){ 
-			//trace(String.substr(JSON.stringify(data),0,299));
-			results(data);
-		},
-		error: function(err,xhr) { dialogAlert({title:"Error",message:xhr.responseText }); }
-	});
-}  
-
-
-
-
-
 
 
 function blankGuide(){
@@ -916,23 +921,12 @@ function blankGuide(){
 	return guide;
 }
 
-function guideSave()
-{
-	if (gGuide!==null && gGuideID!==0)
-	{
-		setProgress('Saving '+gGuide.title + AJAXLoader);
-		ws( {cmd:'guidesave',gid:gGuideID, guide: exportXML_CAJA_from_CAJA(gGuide), title:gGuide.title}, function(response){
-			setProgress(response.error!==null ? response.error : response.info);
-		});
-	}
-}
-
 function createBlankGuide()
 {	// create blank guide internally, do Save As to get a server id for future saves.
 	var guide = blankGuide();
 
 	ws({cmd:'guidesaveas',gid:0, guide: exportXML_CAJA_from_CAJA(guide), title: guide.title},function(data){
-		if (data.error!==null){
+		if (data.error!==undefined){
 			setProgress(data.error);
 		}
 		else{
@@ -948,25 +942,25 @@ function createBlankGuide()
 /*** @param {{guides}} data */
 function listGuides(data)
 {
-	var blank = {id:'a2j', title:'Create a new guide'};
+	var blank = {id:'a2j', title:'Blank Interview'};
 	gGuideID=0;
 	var mine = [];
 	var others = [];
 	var start = '<li class=guide gid="' + blank.id + '">' + blank.title + '</li>';
 	$.each(data.guides,
-	/*** @param {{owned,id,title}} g */
-	function(key,g)
-	{
-		var str='<li class=guide gid="' + g.id + '">' + g.title + '</li>';
-		if (g.owned)
+		/*** @param {{owned,id,title}} g */
+		function(key,g)
 		{
-			mine.push(str);
-		} else {
-			others.push(str);
-		}
+			var str='<li class=guide gid="' + g.id + '">' + g.title + '</li>';
+			if (g.owned)
+			{
+				mine.push(str);
+			} else {
+				others.push(str);
+			}
 	});
 	
-	$('#guidelist').html("New guides <ol>"+start+"</ol>My guides <ol>"+mine.join('')+"</ol>" + "Sample guides <ol>"+others.join('')+"</ol>");
+	$('#guidelist').html("Create a new interview: <ul>"+start+"</ul>Edit one of your existing interviews: <ul>"+mine.join('')+"</ul>" + "Open a Sample interview: <ul>"+others.join('')+"</ul>");
 	$('li.guide').click(function(){
 		var gid=$(this).attr('gid');
 		var guideFile=$(this).text();
@@ -1684,7 +1678,7 @@ var form={
 		return e;
 	}
 	,htmlFix:function(html){
-		return html.replace(/\<br\>/gi,"<BR/>");
+		return html.replace(/<br\>/gi,"<BR/>"); ///\<br\>/gi
 		//return html.replace("<br>","<BR/>","gi");
 	}
 	,htmlarea: function(data){//label,value,handler,name){ 

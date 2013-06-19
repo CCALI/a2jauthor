@@ -9,7 +9,7 @@
 	TODO - replace with CANVAS/SVG flowcharter.
 */
 
-var mapperScale=1.0;
-var mapSize= 1 ; //0 is small, 1 is normal
+var gMapperScale=1.0;
+var gMapSize= 1 ; //0 is small, 1 is normal
 
  

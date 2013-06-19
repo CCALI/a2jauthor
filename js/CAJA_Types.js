@@ -62,17 +62,19 @@ var CONST = {
 	// 11/27/07 1.7.7 Ordering options
 	ordDefault:"",
 	ordAscending:"ASC",
-	ordDescending:"DESC"
+	ordDescending:"DESC",
 	
-};
-
 // Navigation page destinations
-/** @const */ var qIDNOWHERE="";
-/** @const */ var qIDSUCCESS="SUCCESS";
-/** @const */ var qIDFAIL="FAIL";
-/** @const */ var qIDEXIT="EXIT"; //8/17/09 3.0.1 Save like SUCCESS but flag incomplete true.
-/** @const */ var qIDBACK="BACK"; //8/17/09 3.0.1 Same as history Back button.
-/** @const */ var qIDRESUME="RESUME"; //8/24/09 3.0.2
+	qIDNOWHERE:"",
+	qIDSUCCESS:"SUCCESS",
+	qIDFAIL:"FAIL",
+	qIDEXIT:"EXIT", //8/17/09 3.0.1 Save like SUCCESS but flag incomplete true.
+	qIDBACK:"BACK", //8/17/09 3.0.1 Same as history Back button.
+	qIDRESUME:"RESUME", //8/24/09 3.0.2
+
+	
+	ScriptLineBreak : '<BR/>'
+};
 
 // ### Steps ###
 // colors: 0xffffff,0xBDD6D6, 0xB7DDB7, 0xEFC68C, 0xE7E7B5, 0xEFDED6, 0xECD8EA,0xBDD6D6, 0xB7DDB7, 0xEFC68C, 0xE7E7B5, 0xEFDED6, 0xECD8EA];
@@ -370,12 +372,12 @@ TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 	else
 	{
 		var autoIDs={};
-		autoIDs[qIDNOWHERE]=	lang.qIDNOWHERE;//"[no where]"
-		autoIDs[qIDSUCCESS]=	lang.qIDSUCCESS;//"[Success - Process Form]"
-		autoIDs[qIDFAIL]=		lang.qIDFAIL;//"[Exit - User does not qualify]"
-		autoIDs[qIDEXIT]=		lang.qIDEXIT;//"[Exit - Save Incomplete Form]"//8/17/09 3.0.1 Save incomplete form
-		autoIDs[qIDBACK]=		lang.qIDBACK;//"[Back to prior question]"//8/17/09 3.0.1 Same as history Back button.
-		autoIDs[qIDRESUME]=	lang.qIDRESUME;//"[Exit - Resume interview]"//8/24/09 3.0.2	
+		autoIDs[CONST.qIDNOWHERE]=	lang.qIDNOWHERE;//"[no where]"
+		autoIDs[CONST.qIDSUCCESS]=	lang.qIDSUCCESS;//"[Success - Process Form]"
+		autoIDs[CONST.qIDFAIL]=		lang.qIDFAIL;//"[Exit - User does not qualify]"
+		autoIDs[CONST.qIDEXIT]=		lang.qIDEXIT;//"[Exit - Save Incomplete Form]"//8/17/09 3.0.1 Save incomplete form
+		autoIDs[CONST.qIDBACK]=		lang.qIDBACK;//"[Back to prior question]"//8/17/09 3.0.1 Same as history Back button.
+		autoIDs[CONST.qIDRESUME]=	lang.qIDRESUME;//"[Exit - Resume interview]"//8/24/09 3.0.2	
 		if (typeof autoIDs[ name ] === 'undefined'){
 			dval = lang.UnknownID.printf( name, name );//,props(autoIDs)) //"[Unknown id "+id+"]" + props(autoIDs);
 		}

@@ -9,8 +9,8 @@
 	TODO - replace with CANVAS/SVG flowcharter.
 */
 
-var mapperScale=1.0;
-var mapSize= 1 ; //0 is small, 1 is normal
+var gMapperScale=1.0;
+var gMapSize= 1 ; //0 is small, 1 is normal
 
 
 function showPageOnMap()
@@ -30,9 +30,9 @@ function buildMap()
 
 	var $map = $('.map');
 	$map.empty();
-	//$('.MapViewer').removeClass('big').addClass(mapSize==1 ? 'big':'');
+	//$('.MapViewer').removeClass('big').addClass(gMapSize==1 ? 'big':'');
 	/*
-	if (mapSize==0)
+	if (gMapSize==0)
 	{	// Render only boxes, no lines
 		// Could be used for students but need to remove popups and add coloring.
 		var YSC=.15;// YScale
@@ -123,13 +123,13 @@ function mapZoomClick()
 { 
 	var zoom=parseFloat($(this).attr('zoom'));
 	if (zoom>0){
-		mapperScale = mapperScale * zoom;
+		gMapperScale = gMapperScale * zoom;
 	}
-	if (mapperScale>=0.9){
-		mapperScale=1;
+	if (gMapperScale>=0.9){
+		gMapperScale=1;
 	}
-	$('.map').traggable('changeScale',mapperScale);
-	//$('.map').css({zoom:mapperScale,"-moz-transform":"scale("+mapperScale+")","-webkit-transform":"scale("+mapperScale+")"});
+	$('.map').traggable('changeScale',gMapperScale);
+	//$('.map').css({zoom:gMapperScale,"-moz-transform":"scale("+gMapperScale+")","-webkit-transform":"scale("+gMapperScale+")"});
 }
 
 

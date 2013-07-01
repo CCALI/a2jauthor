@@ -63,11 +63,13 @@ html, body {
 	margin:0;
 	padding:0;
 	overflow: hidden;
-	background-color:#888;
+/* */
+	background-color:#fff;
+/* */
 }
 
 #cajaheader {
-	border-bottom : 2px solid #cccccc;
+/*	border-bottom : 2px solid #cccccc;  */
 	padding:0px;
 	margin: 0px;
 	height: 32px;
@@ -75,9 +77,11 @@ html, body {
 }
 #cajainfo  {
 	position: fixed;
-	width: 32px;
+	width: 129px;
 	height: 32px;
-	background-image: url(img/A2J5_Icon_32.png);
+/* JPM */	
+	background-image: url(img/A2J5_Icon_New_01.png);
+/* JPM */
 }
 #guidetitle  {
 	text-align: center;
@@ -85,6 +89,11 @@ html, body {
 	position: fixed;
 	left:40px;
 	right:40px;
+/* JPM */	
+	overflow:hidden;
+	font-size:1.5em;
+/* JPM */	
+	
 }
 #settings {
 	position: fixed;
@@ -116,24 +125,28 @@ html, body {
 .guidepanels {
 	position: fixed;
 	right:4px;
-	top: 68px;
+	top: 70px;
 	bottom:24px;
 	left:125px;
 	padding: 15px;
 	padding-left: 40px;
-	background-color: #f8f8ff;
-	background-color: #dde8ff;
+/* */	
+	background-color: #e5e5e5;
+/* */	
+
 }
 .guidemenu {
 	margin: 0px;
 	position:  fixed;
 	left:10px;
-	top: 80px;
+/* JPM */
+	top: 70px;
+/* JPM */	
 	right:150px;
 	xbottom:0px;
 	width: 112px;
-	border : 1px solid #cccccc;
-	background-color: #eef;
+	border : 1px solid #c0c0c0;
+	background-color: #c0c0c0;
 	z-index: 1;
 }
 .guidemenu ul {
@@ -153,14 +166,19 @@ html, body {
 } 
 .guidemenu ul li:hover {
 	font-weight: bold;
-	background-color: #cdf;
+	background-color: #DEF4FF;
+	color:#666666;
 }
 .guidemenu ul li.selected {
 	font-weight: bold;
 	background-color: #cdf;
-	background: url("img/main_tab_selected.png") no-repeat scroll -55px center transparent;
+	background: url("img/main_tab_selected_02.png") no-repeat scroll -65px center transparent;
 	overflow: visible;
 	width: 200px;
+/* JPM */	
+	color:#0066CC;
+/* JPM */	
+	
 }
 .ui-tabs .ui-tabs-nav li { 
 	xfont-size: .9em;
@@ -173,10 +191,17 @@ html, body {
 	padding: 0px;
 	padding-left: 2em;
 	background-color:#fff;
+/* */
+	margin-top: -.25em;
+	margin-bottom: 2em;	
+/* */	
 }
 .pageoutline {
 	margin: 0px;
-	padding: 0px;
+/* */	
+	padding: 10px 0px 5px;
+	background-color:#fff;
+/* */	
 }
 .pageoutline ul { 
 	xlist-style-image: url(img/new.gif);
@@ -189,10 +214,27 @@ html, body {
 	margin-left: 1em;
 }
 .pagelist * li {
-	font-size: 1em;
-	max-height: 2.5em;
-	overflow: hidden;
+    font-size: 1em;
+    max-height: 2.5em;
+    overflow: hidden;
+/* START JPM edits 7/1/2013 */
+    background-color: #fff;
+	padding: .5em;
+/* END */
 }
+
+.pagelist > ul > li {
+    font-size: 1.25em;
+    max-height: 2.5em;
+    overflow: hidden;
+    background-color:#F0F7FA;
+}
+
+/* START JPM edits 7/1/2013 */
+.pagelist * li:nth-child(even) {background-color:#F0F5F7}; 
+/* END */
+
+
 .pagelist * li:hover{
 	background-color:#eee;
 	color: #222;
@@ -209,6 +251,10 @@ html, body {
 	right: 0px;
 	bottom:0px;
 	overflow: auto;
+/* */	
+	padding: .5em;
+/* */	
+
 }
 .tabsMapPages {
 	position: absolute;
@@ -222,6 +268,11 @@ html, body {
 
 .editicons {
 	border-collapse:collapse;
+/* */	
+	border-style:dotted;
+	border-color:#CCCCCC;
+	border-width:thin;
+/* */	
 	margin: 0px; 
 	padding: 0px;
 	width: 50px;
@@ -236,11 +287,32 @@ html, body {
 table.A2JSteps, table.A2JVars {
 	border-collapse:collapse;
 	width:100%;
+/* JPM */
+	border-style:solid;
+	border-width:thin;
+	border-color:#666666;
+/* JPM */
+	
 }
 table.A2JSteps tr td, table.A2JVars tr td {
-	border:1px solid #111;
-	padding:1em;
+/* JPM */	
+	border-style:solid;
+	border-width:thick;
+	border-color:#FFFFFF;
+/* JPM */	
+	padding:.33em;
 }
+
+/* JPM */	
+table.A2JSteps th, table.A2JVars th {
+	border-style:solid;
+	border-width:thick;
+	border-color:#FFFFFF;
+	padding:.8em;
+	font-size: 1.1em;
+	background-color:#F0F7FA;
+}
+/* JPM */	
 
 .Step0 { background-color: #ffffff; }
 .Step1, .Step7, table.A2JSteps tr:nth-child(3n+1) { background-color: #BDD6D6; }
@@ -267,6 +339,19 @@ input.narrow {
        -moz-box-sizing: border-box;
             box-sizing: border-box;
 }
+
+/* */
+.tabContent legend {
+	font-size: 1.1em;
+	font-weight:bold;
+	background-color:#f8fcff;
+	border-width:thin;
+	border-color:grey;
+	border-style:solid;
+	padding: .75em;
+}
+/* */
+
 .CAJAEditor { 
 	padding: 0;
 	margin: 0;
@@ -280,6 +365,7 @@ input.narrow {
 }
 
  /*********** Editor ***************/
+
 div.editq {
 	width: 100%;
 	/*-moz-border-radius:12px; border-radius:12px;*/
@@ -318,6 +404,11 @@ div.editq {
 .editq fieldset {
 	padding: inherit;
 	margin-top:25px; 
+/* */
+	background:#f8fcff;
+	padding-bottom: 1.3em;
+/* */
+
 }
 .sorthandle {
 	cursor: move;
@@ -738,18 +829,37 @@ li.guide:hover {
 	border: none;
 }
 */
+
+/* JPM */
+.tabsVariables {
+	border:#666666;
+}
+/* JPM */
+
+*/
 .tabsPanel { 
 	height: 100%;
 	overflow: scroll;
 	border: 2px thick #f00;
 }
+
+/* JPM */
+.page-edit-form {
+	background-color:#666666;
+}
+/* JPM */
+
 .page-edit-form-panel .tabsPanel{
-	xbackground-color:#cfa;
+/* JPM */
+	background-color:#666666;
+/* JPM */
 	overflow: hidden;
 }
 
 
 .tabHeader {
+    font-size: 1.5em;
+	font-weight:bold
 	margin-top: 5px;
 	margin-left: 10px;
 	margin-right: 10px;
@@ -757,11 +867,15 @@ li.guide:hover {
 .tabContentFrame { 
 	position: absolute;
 	top: 55px;
-	left: 10px;
+	left: 15px;
 	right:10px;
 	bottom:10px;	
 	overflow: auto;
-	border: none;
+/* JPM */
+	border:thin;
+	border-color:#999999;
+	border-style:solid;
+/* JPM */
 }
 
 #tabsPages .tabContentFrame {
@@ -806,12 +920,14 @@ li.guide:hover {
 }
 .PagesPanel, #MapperPanel {
 	position: absolute;
-	top: 10px;
+	top: 5px;
 	left: 10px;
 	right:10px;
 	bottom:35px;	
 	overflow: auto;
-	border: none;
+/* START 2013/7/1 JPM EDITS */	
+	border: 1px solid #c0c0c0 ;
+/* START 2013/7/1 JPM EDITS */	
 }
 
 .map {

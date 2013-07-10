@@ -285,30 +285,33 @@ html, body {
 
 /*********** A2J ***************/
 table.A2JSteps, table.A2JVars {
-	border-collapse:collapse;
+/*	border-collapse:collapse; */
 	width:100%;
 /* JPM */
 	border-style:solid;
 	border-width:thin;
-	border-color:#666666;
+	border-color:#fffff;
 /* JPM */
 	
 }
 table.A2JSteps tr td, table.A2JVars tr td {
 /* JPM */	
-	border-style:solid;
-	border-width:thick;
-	border-color:#FFFFFF;
+ 	padding:.33em; 
 /* JPM */	
-	padding:.33em;
 }
+
+/* JPM */	
+table.A2JSteps tr, table.A2JVars tr {
+	cursor:pointer;
+}
+/* JPM */	
 
 /* JPM */	
 table.A2JSteps th, table.A2JVars th {
 	border-style:solid;
 	border-width:thick;
-	border-color:#FFFFFF;
-	padding:.8em;
+	border-color:#F0F7FA;
+ 	padding:.8em; 
 	font-size: 1.1em;
 	background-color:#F0F7FA;
 }
@@ -341,7 +344,7 @@ input.narrow {
 }
 
 /* */
-.tabContent legend {
+.tabContent legend, .ui-widget-content legend {
 	font-size: 1.1em;
 	font-weight:bold;
 	background-color:#f8fcff;
@@ -349,6 +352,11 @@ input.narrow {
 	border-color:grey;
 	border-style:solid;
 	padding: .75em;
+}
+
+.ui-dialog-titlebar {
+	font-size: 1.1em;
+	font-weight:bold;
 }
 /* */
 
@@ -745,7 +753,9 @@ input.text { margin-bottom:12px; width:95%; padding: .4em; }
 
 .ui-dialog .ui-state-error { padding: .3em; }
 .ui-dialog {
-	box-shadow: 10px 10px 10px 0px #888888;
+/* JPM*/
+	box-shadow: 2px 2px 10px 10px #888888;
+/* JPM*/
 	xborder: 2px solid #888888;
 }
 
@@ -843,16 +853,7 @@ li.guide:hover {
 	border: 2px thick #f00;
 }
 
-/* JPM */
-.page-edit-form {
-	background-color:#666666;
-}
-/* JPM */
-
 .page-edit-form-panel .tabsPanel{
-/* JPM */
-	background-color:#666666;
-/* JPM */
 	overflow: hidden;
 }
 
@@ -871,11 +872,6 @@ li.guide:hover {
 	right:10px;
 	bottom:10px;	
 	overflow: auto;
-/* JPM */
-	border:thin;
-	border-color:#999999;
-	border-style:solid;
-/* JPM */
 }
 
 #tabsPages .tabContentFrame {

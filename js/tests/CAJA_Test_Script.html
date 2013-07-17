@@ -23,7 +23,7 @@
 <script xsrc="../jquery.numberformatter-1.2.1.jsmin.js" type="text/javascript"></script>
 
 
-<script>
+<script language="javascript">
 
 var testunit={}
 function parseUnit(unitText)
@@ -61,7 +61,7 @@ function parseUnit(unitText)
 			if (curpage!=null)
 				curpage.lines.push(lines[l]);
 	}
-	delete lines;
+	lines=null;//delete lines;
 	
 	testunit.trace("<h1>Syntax errors</h1>");
 	// Parse the syntax of each page's scripts
@@ -88,7 +88,7 @@ function parseUnit(unitText)
 					t.push('<span class="err">'+lines[l]+"</span>");
 				}
 			}
-			testunit.trace('<BLOCKQUOTE class="Script">'+t.join("<BR>")+"</BLOCKQUOTE>");
+			testunit.trace('<BLOCKQUOTE class="Script">'+t.join("<BR/>")+"</BLOCKQUOTE>");
 			testunit.trace("Errors");
 			testunit.indent++;
 			for (var e in script.errors)
@@ -110,7 +110,7 @@ function parseUnit(unitText)
 			{
 				t.push(script.js[l]);
 			}
-			testunit.trace("<BLOCKQUOTE class=Script>"+t.join("<BR>")+"</BLOCKQUOTE>");
+			testunit.trace("<BLOCKQUOTE class=Script>"+t.join("<BR/>")+"</BLOCKQUOTE>");
 			testunit.indent--; 
 		}
 		else
@@ -184,7 +184,7 @@ function parseUnit(unitText)
 				{
 					t.push(lines[l]);
 				}
-				testunit.trace("<BLOCKQUOTE class=Script>"+t.join("<BR>")+"</BLOCKQUOTE>");
+				testunit.trace("<BLOCKQUOTE class=Script>"+t.join("<BR/>")+"</BLOCKQUOTE>");
 				testunit.indent--;
 			}
 			
@@ -195,7 +195,7 @@ function parseUnit(unitText)
 			{
 				t.push(script.js[l]);
 			}
-			testunit.trace("<BLOCKQUOTE class=Script>"+t.join("<BR>")+"</BLOCKQUOTE>");
+			testunit.trace("<BLOCKQUOTE class=Script>"+t.join("<BR/>")+"</BLOCKQUOTE>");
 			testunit.indent--; 
 			
 			testunit._CAJA=function(c){testunit.trace( traceTag('code',c));}
@@ -248,7 +248,7 @@ traceScript=trace=function(msg)
 $(document).ready(function()
 {  
 	trace("Ready");
-	lang.set('en');
+	Languages.set(Languages.defaultLanguage);
 	
 	var childInterface = document.getElementById("AIRSandBox").childSandboxBridge;
 	//alert(childInterface.info())
@@ -350,11 +350,13 @@ testunit.deltaVars=function()
 			var vOld=this.varsOld[varName_i+"."+vi];
 			if (typeof vOld!="undefined")
 			{
-				html += '<tr rel="'+varName_i+'"><td class="colVar">'+varName+'</td><td class="colIndex">'+vi+'</td><td class="colValue '+''+'">'+varVal+'</td><td class="colValue">'+vOld.join(" , ")+'</td></tr>';
+				html += '<TR rel="'+varName_i+'">'
+					//+'<td class="colVar">'+varName+'</td><td class="colIndex">'+vi+'</td><td class="colValue '+''+'">'+varVal+'</td><td class="colValue">'+vOld.join(" , ")+'</td>'
+					+'</TR>';
 			}
-			}
+		}
 	}
-	html+='</table><br>';
+	html += '</table><br/>';
 	this.trace(html);
 	
 	this.varsOld={}; 
@@ -510,7 +512,8 @@ td.vardiff {
 } 
 -->
 </style>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</HEAD>
 
 
 <BODY BGCOLOR="#FFFFFF"  >

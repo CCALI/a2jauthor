@@ -24,7 +24,6 @@ require "loginquick.php";
 <script src="jquery.1.8.2.min.js" type="text/javascript"></script>
 <script src="jquery.ui.1.9.1.custom.min.js" type="text/javascript"></script>
 <script src="jquery.ui.custom.min.js" type="text/javascript" ></script>
-<script src="ckfinder/ckfinder.js" type="text/javascript" ></script>
 
 
 <script src="CAJA_Types.js" type="text/javascript"></script>

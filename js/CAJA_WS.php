@@ -1,6 +1,10 @@
 <?php
 // 010/05/2012 Simple CAJA Author Web Service API
 // A Fuse to handle all a2j author editing stuff
+
+//07/01/2013 HACK to login to demo
+//7/15/2013 Directory restructure
+
 session_start();
 header("Content-type: text/plain; charset=utf-8");
 
@@ -24,13 +28,23 @@ switch ($command)
 		//This will need to be abstracted out for folks not using Drupal
 		$user=$drupaldb->real_escape_string($_REQUEST['username']);
 		$pass=$drupaldb->real_escape_string($_REQUEST['userpass']);
-		$pass = MD5($pass);
+
+		
+		if ($user=='demo')//07/01/2013 HACK to login to demo until switch to drupal 7 hash.
+			$pass='$S$DK05WJZFlhtSX7gZlKdJ7R/ytQx65R7LfoEsYjDQa4dowr4Y2Lhz';
+		else
+			$pass = MD5($pass);
+				
+		
+		
+		
 		$res=$drupaldb->query("select * from users where name='$user' and pass='$pass'");
 		if ($row=$res->fetch_assoc()){
 			$checkuser=$mysqli->query("select * from usersbeta where username='$user'");
 			$numrows=$checkuser->num_rows;
 			if (!$numrows){
 			  mkdir(GUIDES_DIR.$user, 0700);
+			  mkdir(GUIDES_DIR.$user.'/guides', 0700);
 			  $uid=$row['uid'];
 			  //the next lines do a deep dive into Drupal profiles
 			  //and will need to be custom to each server install
@@ -86,7 +100,6 @@ switch ($command)
 			$result['editoruid']=$row['editoruid'];
 			$result['guide']= file_get_contents(GUIDE_DIR($row['filename'],TRUE));
 			trace(GUIDE_DIR($row['filename']));
-			//usleep(500000);
 		}
 		else
 		{// not found
@@ -100,15 +113,22 @@ switch ($command)
 		$xml=$_REQUEST['guide'];
 		$res=$mysqli->query("select * from guides where gid=$gid and editoruid=$userid");
 		if ($row=$res->fetch_assoc()){
-			$result['info']="Will update!";
-			// rename existing auto name file with a date time stamp and save update to autoname
-			$oldtitle=GUIDE_DIR($row['title']);
-			$filename=GUIDE_DIR($row['filename']);
-			if (file_exists($filename)){
-				trace(filemtime($filename));
-				$revname=$filename .' Backup_Version-'.date('Y-m-d-H-i-s',filemtime($filename)).'.xml';//implode('/',$revname);
+		  $result['info']="Will update!";
+		  // Rename existing auto name file with a date time stamp and save update to autoname
+		  $oldtitle=GUIDE_DIR($row['title']);
+		  $filename=GUIDE_DIR($row['filename']);
+		  $path_parts = pathinfo($filename);
+		  $filedir = $path_parts['dirname'];
+		  $filenameonly=$path_parts['filename'];
+		  if (file_exists($filename)){ 
+				//trace(filemtime($filename));
+				$verdir = $filedir.'/Versions';
+				if (!file_exists($verdir))
+				{
+				  mkdir($verdir);
+				}
+				$revname=$verdir.'/'.$filenameonly.' Backup_Version-'.date('Y-m-d-H-i-s',filemtime($filename)).'.xml';
 				rename($filename, $revname);
-				
 				if ($title!="" && $title != $oldtitle)
 				{
 					$sql="update guides set title='".$mysqli->real_escape_string($title)."' where gid = $gid";
@@ -138,7 +158,7 @@ switch ($command)
 		if ($res=$mysqli->query($sql)){
 			// Save as content to new folder owned by editor
 			$newgid=$mysqli->insert_id;
-			$newdirbase = $userdir.'/'."Guide".$newgid;
+			$newdirbase = $userdir.'/guides/'."Guide".$newgid;
 			trace($newdirbase);
 			$newdir = $newdirbase;
 			$newfile = "Guide.xml";

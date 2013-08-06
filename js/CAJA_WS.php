@@ -8,8 +8,6 @@
 session_start();
 header("Content-type: text/plain; charset=utf-8");
 
-$userid=$_SESSION['userid'];if (!isset($userid))$userid=0;
-$userdir=$_SESSION['userdir'];if (!isset($userdir))$userdir=0;
 $command=$_REQUEST['cmd'];
 $result=array();
 $err="";

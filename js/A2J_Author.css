@@ -284,17 +284,17 @@ html, body {
 
 
 /*********** A2J ***************/
-table.A2JSteps, table.A2JVars {
+table.A2JSteps, table.A2JVars ,table.A2JFiles {
 /*	border-collapse:collapse; */
 	width:100%;
 /* JPM */
 	border-style:solid;
 	border-width:thin;
-	border-color:#fffff;
+	border-color:#fff;
 /* JPM */
 	
 }
-table.A2JSteps tr td, table.A2JVars tr td {
+table.A2JSteps tr td, table.A2JVars tr td, table.A2JFiles tr td {
 /* JPM */	
  	padding:.33em; 
 /* JPM */	
@@ -325,10 +325,10 @@ table.A2JSteps th, table.A2JVars th {
 .Step5, .Step11 { background-color:#EFDED6; }
 .Step6, .Step12 { background-color:#ECD8EA; }
 
-table.A2JVars tr:nth-child(even) {
+table.A2JVars tr:nth-child(even) ,table.A2JFiles tr:nth-child(even) {
 background-color:#fff;
 }
-table.A2JVars tr:nth-child(odd) {
+table.A2JVars tr:nth-child(odd),table.A2JFiles tr:nth-child(odd) {
 background-color:#eee;
 }
 input.narrow {
@@ -892,6 +892,10 @@ li.guide:hover {
 #tabsLogic .tabContentFrame, #tabsText .tabContentFrame {
 	top: 7em;
 	bottom:10px;
+}
+#tabsFiles .tabContentFrame {
+	top: 3em;
+	bottom: 3em;
 }
 .tabFooter {
 	position: absolute;

@@ -9,7 +9,7 @@
 <title>Access to Justice</title>
 
 <link title="style" href="themes/a2j/jquery-ui.css"  rel="stylesheet" type="text/css"/>
-<link  href="jquery.ui.custom.css" rel="stylesheet" type="text/css" />
+<link  href="jQuery/jquery.ui.custom.css" rel="stylesheet" type="text/css" />
 <link  href="A2J_Viewer.css" rel="stylesheet" type="text/css" />
 
 
@@ -26,9 +26,9 @@ var logURL=   "../A2JLog.php"; //"https://lawhelpinteractive.org/a2j_logging";
 var errRepURL="../A2JErrRep.php";//"https://lawhelpinteractive.org/problem_reporting_form";
 </script>
 
-<script src="jquery.1.8.2.min.js" type="text/javascript"></script>
-<script src="jquery.ui.1.9.1.custom.min.js" type="text/javascript"></script>
-<script src="jquery.ui.custom.min.js" type="text/javascript" ></script>
+<script src="jQuery/jquery.1.8.2.min.js" type="text/javascript"></script>
+<script src="jQuery/jquery.ui.1.9.1.custom.min.js" type="text/javascript"></script>
+<script src="jQuery/jquery.ui.custom.min.js" type="text/javascript" ></script>
 
 
 <!--

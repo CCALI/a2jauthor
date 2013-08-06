@@ -17,13 +17,24 @@ require "loginquick.php";
 <link  xhref="http://code.jquery.com/ui/1.9.0/themes/sunny/jquery-ui.css" title="style"  rel="stylesheet" type="text/css"/>
 <script xsrc="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 <script xsrc="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js" type="text/javascript"></script>
-<link title="style" href="themes/a2j/jquery-ui.css"  rel="stylesheet" type="text/css"/>
-<link href="jquery.ui.custom.css" rel="stylesheet" type="text/css" />
+<link href="jQuery/themes/a2j/jquery-ui.css" title="style"  rel="stylesheet" type="text/css"/>
+<link href="jQuery/jquery.ui.custom.css" rel="stylesheet" type="text/css" />
+<link  href="jQuery/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
 <link href="A2J_Author.css"  rel="stylesheet" type="text/css"/>
 <link href="A2J_Viewer.css"  rel="stylesheet" type="text/css"/>
-<script src="jquery.1.8.2.min.js" type="text/javascript"></script>
-<script src="jquery.ui.1.9.1.custom.min.js" type="text/javascript"></script>
-<script src="jquery.ui.custom.min.js" type="text/javascript" ></script>
+
+
+<script src="jQuery/jquery.1.8.2.min.js" type="text/javascript"></script>
+<script src="jQuery/jquery.ui.1.9.1.custom.min.js" type="text/javascript"></script>
+<script src="jQuery/jquery.ui.custom.min.js" type="text/javascript" ></script>
+
+
+<!-- The basic File Upload plugin -->
+<script src="jQuery/jquery.fileupload.js"></script>
+<!-- The File Upload processing plugin -->
+<script src="jQuery/jquery.fileupload-process.js"></script>
+<!-- The File Upload validation plugin -->
+<script src="jQuery/jquery.fileupload-validate.js"></script>
 
 
 <script src="CAJA_Types.js" type="text/javascript"></script>
@@ -73,9 +84,10 @@ require "loginquick.php";
 			<li ref="tabsMap">Map</a></li>
 			<li ref="tabsLogic">Logic</a></li>
 			<li ref="tabsText">Text</a></li>
+			<li ref="tabsFiles">Files</a></li>
 			<li ref="tabsReport">Report</a></li>
 			<li ref="tabsPreview">Preview</a></li>
-			<li ref="tabsUpload">Upload</a></li>
+			<li ref="tabsUpload">Publish</a></li>
 		</ul>
 	</div>
 	<div class="guidepanels">
@@ -193,6 +205,29 @@ require "loginquick.php";
 				<div class="tabContent editq"></div>
 			</div>
 		</div>
+		
+		
+<div class="panel" id="tabsFiles">
+	<div class="tabHeader">Files currently attached to this guide</div>
+	<div class="tabContentFrame">
+		<div class="tabContent editq"><table class="A2JFiles"><tbody id="attachmentFiles" class="files"></tbody></table>
+		</div>
+	</div>
+	<div class="tabFooter">
+		<div > 
+			<!-- The fileinput-button span is used to style the file input field as button -->
+			<span class="fileinput-button">
+			<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
+				<span class="ui-button-icon-primary ui-icon ui-icon-plus"></span>
+				<span class="ui-button-text" >Upload files...</span>
+			</button>	
+				<!-- The file input field used as target for the file upload widget -->
+				<input id="fileupload" type="file" name="files[]" multiple />
+			</span>
+			<div id="progress" class="progress progress-success progress-striped"><div class="bar"></div></div>
+		</div>
+	</div>
+</div>
 		<div class="panel" id="tabsReport">
 			<h1>Report</h1>
 			Report of text in a print-friendly layout, also useful for translation projects</div>

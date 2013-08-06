@@ -10,31 +10,39 @@
 // Comment DEBUGSTART() function out when NOT testing locally.
 function DEBUGSTART(){
 	gUserNickName='Tester';
-	gUserID=0;
-	$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist"></p>');
-	var SAMPLES = [
-		"tests/data/A2J_NYSample_interview.xml",
-		"tests/data/A2J_MobileOnlineInterview_Interview.xml",
-		"tests/data/A2J_ULSOnlineIntake081611_Interview.xml",
-		"tests/data/A2J_ULSOnlineIntake081611_Interview.xml#1b Submit Application for Review",
-		"tests/data/Logic Tests.a2j",
-		"tests/data/Field Types Test.a2j#2-1-0 Pick Colors",
-		"tests/data/Field Characters Test.a2j",
-		"tests/data/Field Characters Test.a2j#4-1 If thens",
-		"tests/data/Field Characters Test.a2j#1-5 Fields Test 1",
-		"tests/data/Field Characters Test.a2j#0-1 Intro",
-		"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name",
-		//"tests/data/CBK_CAPAGETYPES_jqBookData.xml", 
-		//"tests/data/CBK_CAPAGETYPES_jqBookData.xml#MC Choices 3: 4 choices", 
-		//"tests/data/CBK_EVD03_jqBookData.xml",
-		//"/a2j4guides/Field Types Test.a2j#2-1-0 Pick Colors",
-		//"/a2j4guides/Logic Tests.a2j"
-		
-	];
-	$(SAMPLES).each(function(i,elt){
-		$('#samples, #guidelist').append('<li><a href="#sample">'+elt+'</a></li>');		
-	});
-	loadGuideFile($('a[href="#sample"]').first().text(), "");
+	gUserID=0; 
+	if ( 1 ) {
+		// Hard code load db
+		var gGuideID = 133;
+		ws({cmd:'guide',gid:gGuideID},guideLoaded);
+	}
+	else
+	{
+		$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist"></p>');
+		var SAMPLES = [
+			"tests/data/A2J_NYSample_interview.xml",
+			"tests/data/A2J_MobileOnlineInterview_Interview.xml",
+			"tests/data/A2J_ULSOnlineIntake081611_Interview.xml",
+			"tests/data/A2J_ULSOnlineIntake081611_Interview.xml#1b Submit Application for Review",
+			"tests/data/Logic Tests.a2j",
+			"tests/data/Field Types Test.a2j#2-1-0 Pick Colors",
+			"tests/data/Field Characters Test.a2j",
+			"tests/data/Field Characters Test.a2j#4-1 If thens",
+			"tests/data/Field Characters Test.a2j#1-5 Fields Test 1",
+			"tests/data/Field Characters Test.a2j#0-1 Intro",
+			"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name",
+			//"tests/data/CBK_CAPAGETYPES_jqBookData.xml", 
+			//"tests/data/CBK_CAPAGETYPES_jqBookData.xml#MC Choices 3: 4 choices", 
+			//"tests/data/CBK_EVD03_jqBookData.xml",
+			//"/a2j4guides/Field Types Test.a2j#2-1-0 Pick Colors",
+			//"/a2j4guides/Logic Tests.a2j"
+			
+		];
+		$(SAMPLES).each(function(i,elt){
+			$('#samples, #guidelist').append('<li><a href="#sample">'+elt+'</a></li>');		
+		});
+		loadGuideFile($('a	[href="#sample"]').first().text(), "");
+	}
 	$('#splash').hide();
 	//$('#welcome').hide();
 }
@@ -283,8 +291,10 @@ function authorViewerHook()
 }
 
 
-$(document).ready(function(){
-   // Everything loaded, execute.
+$(document).ready(main);
+
+function main()
+{   // Everything loaded, execute.
 	
 	
 
@@ -537,7 +547,7 @@ $(document).ready(function(){
 			return '';
 		}
 	});
-});
+}
 
 /*
 function checkLength( o, n, min, max ) {
@@ -933,7 +943,7 @@ function createBlankGuide()
 			var newgid = data.gid;//new guide id
 			ws({cmd:'guides'},function (data){
 				listGuides(data);
-				ws({cmd:'guide',gid:newgid},guideloaded);
+				ws({cmd:'guide',gid:newgid},guideLoaded);
 			 });
 		}
 	});
@@ -970,7 +980,7 @@ function listGuides(data)
 			createBlankGuide();
 		}
 		else{
-			ws({cmd:'guide',gid:gid},guideloaded);
+			ws({cmd:'guide',gid:gid},guideLoaded);
 		}
 	});
 	$('#welcome').dialog('open');
@@ -1319,7 +1329,51 @@ function guideStart(startTabOrPage)
 		close: function() {
 		}});
 		*/
+	
+	if (1) {
+		$('#fileupload').addClass('fileupload-processing');
+		$('#fileupload').fileupload({
+			 url: 'jQuery/UploadHandler-index.php' +'?gid='+gGuideID,
+			 dataType: 'json',
+			 done: function (e, data) {
+				setTimeout(updateAttachmentFiles,1);
+				 // $.each(data.result.files, function (index, file) {
+				//		$('<p/>').text(file.name).appendTo('#files');
+				//  });
+			 },
+			 progressall: function (e, data) {
+				  var progress = parseInt(data.loaded / data.total * 100, 10);
+				  $('#progress .bar').css(
+						'width',
+						progress + '%'
+				  );
+			 }
+		});
+	  updateAttachmentFiles();
+	}
+	
 	buildMap();
+}
+
+var attachmentFiles = {};
+
+function updateAttachmentFiles( ) {
+	 // Load existing files:
+	 $.ajax({
+		  // Uncomment the following to send cross-domain cookies:
+		  //xhrFields: {withCredentials: true},
+		  url: $('#fileupload').fileupload('option', 'url'),
+		  dataType: 'json',
+		  context: $('#fileupload')[0]
+	 }).always(function () {
+		  $(this).removeClass('fileupload-processing');
+	 }).done(function (result) {
+		  attachmentFiles = result.files;
+		  $('#attachmentFiles').empty();
+			$.each(attachmentFiles, function (index, file) {
+				 $('<tr><td>'+(file.name)+'</td><td>'+file.size+'</td></tr>').appendTo('#attachmentFiles');
+			});	
+	 });
 }
 
 
@@ -1369,7 +1423,7 @@ function updateTOC()
 			gotoTabOrPage(rel);
 		});
 }
-function guideloaded(data)
+function guideLoaded(data)
 {
 	gGuideID=data.gid;
 	var cajaDataXML=$(jQuery.parseXML(data.guide));

@@ -54,7 +54,7 @@ $(document).ready(function()
 			ws({cmd:'guides/owned'},listGuides);
 		}
 	};
-	function guideloaded(data)
+	function guideLoaded(data)
 	{ 
 		gGuideID=data.gid;
 		status('Loaded the guide #'+gGuideID );
@@ -83,7 +83,7 @@ $(document).ready(function()
 		html("Guides <ol>"+items.join('')+"</ol>");
 		$('li.guide').click(function(){
 			html('Loading guide '+$(this).text()+AJAXLoader);
-			ws({cmd:'guide',gid:$(this).attr('gid')},guideloaded);		
+			ws({cmd:'guide',gid:$(this).attr('gid')},guideLoaded);		
 		});
 	}
 	function statusupdate(data)

@@ -1415,7 +1415,7 @@ function styleSheetSwitch(theme)
 	//<link href="cavmobile.css" title="cavmobile" media="screen" rel="stylesheet" type="text/css" />
 	trace('styleSheetSwitch='+theme); 
 	if (theme==='A2J') {
-		theme = "themes/"+theme.toLowerCase()+"/jquery-ui.css";
+		theme = "jQuery/themes/"+theme.toLowerCase()+"/jquery-ui.css";
 	}
 	else{
 		theme = "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/"+theme.toLowerCase()+"/jquery-ui.css";

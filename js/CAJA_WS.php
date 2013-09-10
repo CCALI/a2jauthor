@@ -12,7 +12,7 @@ $result=array();
 $err="";
 $mysqli="";
 $drupaldb="";
-require "./CONFIG.php";
+require "CONFIG.php";
 // check connection
 if (mysqli_connect_errno()) {
   exit('Connect failed: '. mysqli_connect_error());
@@ -53,12 +53,12 @@ else
 		$userid=0;
 }
 
-$userdir=$_SESSION['userdir'];if (!isset($userdir))$userdir='00000';
 
 
 
 header("Content-type: text/plain; charset=utf-8");
-
+	
+		
 switch ($command)
 {
 	case 'test':
@@ -78,15 +78,16 @@ switch ($command)
 				$numrows=$checkuser->num_rows;
 				if (!$numrows)
 				{	// No entry, create their user file folder and A2J user record.
-					mkdir(GUIDES_DIR.$uid, 0700);
-					mkdir(GUIDES_DIR.$uid.'/guides', 0700);
+					mkdir(GUIDES_DIR.$username, 0775);//0700);
+					mkdir(GUIDES_DIR.$username.'/guides', 0775);//0700);
 					//the next lines do a deep dive into Drupal profiles
 					//and will need to be custom to each server install
-					$nameres=$drupaldb->query("SELECT group_concat(pv.value SEPARATOR ' ') AS fullname from profile_values pv where pv.uid = $userid and pv.fid in (1,2)");
+					//Drupal 6: $nameres=$drupaldb->query("SELECT group_concat(pv.value SEPARATOR ' ') AS fullname from profile_values pv where pv.uid = $userid and pv.fid in (1,2)");
+					$nameres=$drupaldb->query("SELECT * from realname where uid = $userid");
 					$namerow=$nameres->fetch_assoc();
-					$fullname=$namerow['fullname'];
+					$fullname=$namerow['realname'];
 					//end Drupal profile stuff
-					$mysqli->query("insert into usersbeta (username,   nickname, folder) values ('$username',   '$fullname', '$username')");
+					$mysqli->query("insert into users (uid, username,   nickname, folder) values ($userid, '$username',   '$fullname', '$username')");
 					$checkuser=$mysqli->query("select * from users where uid=$userid");
 				}
 				$userrow=$checkuser->fetch_assoc();
@@ -196,6 +197,8 @@ switch ($command)
 		if ($res=$mysqli->query($sql)){
 			// Save as content to new folder owned by editor
 			$newgid=$mysqli->insert_id;
+			
+			$userdir=$_SESSION['userdir'];if (!isset($userdir))$userdir='00000';
 			$newdirbase = $userdir.'/guides/'."Guide".$newgid;
 			trace($newdirbase);
 			$newdir = $newdirbase;

@@ -77,10 +77,10 @@ html, body {
 }
 #cajainfo  {
 	position: fixed;
-	width: 129px;
+	width: 130px;
 	height: 32px;
 /* JPM */	
-	background-image: url(img/A2J5_Icon_New_01.png);
+	background-image: url(img/A2J5_Icon_New_02.png);
 /* JPM */
 }
 #guidetitle  {

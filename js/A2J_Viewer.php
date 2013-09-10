@@ -37,6 +37,7 @@ var errRepURL="../A2JErrRep.php";//"https://lawhelpinteractive.org/problem_repor
 <script src="CAJA_Utils.js" type="text/javascript"></script>
 <script src="CAJA_Types.js" type="text/javascript"></script>
 <script src="CAJA_Languages.js" type="text/javascript"></script>
+<script src="CAJA_IO.js" type="text/javascript"></script>
 <script src="CAJA_Parser.js" type="text/javascript"></script>
 <script src="CAJA_Logic.js" type="text/javascript"></script>
 <script src="CAJA_Parser_A2J.js" type="text/javascript"></script>

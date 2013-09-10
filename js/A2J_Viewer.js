@@ -34,7 +34,7 @@ function loadXMLListExternal(opts)
 			  dialogAlert('Unable to load a list of items from '+this.url+"\n"+textStatus);
 			 },
       success: function(data){
-			var opts=this.opts;
+			var opts=$(this).opts;//8/2013 this.opts;
 			opts.data=data;
 			loadXMLList(opts);
       }

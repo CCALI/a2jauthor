@@ -46,6 +46,8 @@ function loadGuideFile2(guideFile,startTabOrPage)
 function loadGuideFile(guideFile,startTabOrPage)
 /** @param {TGuide} guideFile */
 {  // Load guide file XML directly
+	
+	/** @type {Object} */
 	var url=urlSplit(guideFile);
 	guideFile = url.path+url.file;
 	guidePath = url.path;
@@ -85,45 +87,5 @@ function guideSave()
 }
 
 
-
-function browseXML(field)
-{
-	 BrowseServer(field,'Lists')
-}
-function browseImage(field)
-{
-	 BrowseServer(field,'Images');
-}
-function BrowseServer(field,kind)
-{
-	 // You can use the "CKFinder" class to render CKFinder in a page:
-	 var finder = new CKFinder( );
-	 //finder.basePath = '../';	// The path for the installation of CKFinder (default = "/ckfinder/").
-	 finder.selectActionFunction = SetFileField;
-	 //CKFinder.config.startupPath ="Guides:/A2J_MobileOnline/";// "Images:/Images/";
-	 CKFinder.config.startupPath =kind+":/A2J_MobileOnline/";
-	 var api = finder.popup();
-	// api.openFolder('Guides','/A2J_MobileOnline/')
-	 //api.data={field:field,kind:kind};
-	 
-	 // It can also be done in a single line, calling the "static"
-	 // popup( basePath, width, height, selectFunction ) function:
-	 // CKFinder.popup( '../', null, null, SetFileField ) ;
-	 //
-	 // The "popup" function can also accept an object as the only argument.
-	 // CKFinder.popup( { basePath : '../', selectActionFunction : SetFileField } ) ;
-}
-
-
-
-// This is a sample function which is called when a file is selected in CKFinder.
-function SetFileField( fileUrl )
-{
-
-	$('#filePath1').val(fileUrl);
-}
-
-
-	//$('#filePath2').parent().find('img').attr('src','http://localhost/js/editors/ckfinder/core/connector/php/connector.php?command=Thumbnail&type=Guides&currentFolder=/A2J_MobileOnline/&langCode=en&FileName=smallestate_screenshot.jpg&')
 
 /* */

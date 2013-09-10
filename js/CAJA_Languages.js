@@ -442,7 +442,7 @@ Languages.regional['zh-cn']= {
 	Ordinals13:'第十三'
 };
 
-
+if ($.datepicker) {
 
 /* Inicialización en español para la extensión 'UI date picker' para jQuery. */
 /* Traducido por Vester (xvester@gmail.com). */
@@ -523,6 +523,8 @@ jQuery(function($){
 	$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
 });
 
+	//code
+}
 
 
 /* */

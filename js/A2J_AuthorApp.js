@@ -6,14 +6,17 @@
 	04/15/2013
 */
 
+CONST.uploadURL = 'CAJA_WS.php?cmd=uploadfile&gid=';
+
 /*  * /
 // Comment DEBUGSTART() function out when NOT testing locally.
 function DEBUGSTART(){
 	gUserNickName='Tester';
-	gUserID=0; 
-	if ( 1 ) {
+	gUserID=0;
+	var TESTMODE = 1;
+	if ( TESTMODE===2 ) {
 		// Hard code load db
-		var gGuideID = 133;
+		gGuideID =238;//238;//133;
 		ws({cmd:'guide',gid:gGuideID},guideLoaded);
 	}
 	else
@@ -30,7 +33,7 @@ function DEBUGSTART(){
 			"tests/data/Field Characters Test.a2j#4-1 If thens",
 			"tests/data/Field Characters Test.a2j#1-5 Fields Test 1",
 			"tests/data/Field Characters Test.a2j#0-1 Intro",
-			"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name",
+			"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name"
 			//"tests/data/CBK_CAPAGETYPES_jqBookData.xml", 
 			//"tests/data/CBK_CAPAGETYPES_jqBookData.xml#MC Choices 3: 4 choices", 
 			//"tests/data/CBK_EVD03_jqBookData.xml",
@@ -41,10 +44,9 @@ function DEBUGSTART(){
 		$(SAMPLES).each(function(i,elt){
 			$('#samples, #guidelist').append('<li><a href="#sample">'+elt+'</a></li>');		
 		});
-		loadGuideFile($('a	[href="#sample"]').first().text(), "");
+		loadGuideFile(SAMPLES[0],"");//$('a	[href="#sample"]').first().text(), "");
 	}
 	$('#splash').hide();
-	//$('#welcome').hide();
 }
 /* */
 
@@ -232,35 +234,38 @@ function pageNameFields(pagefs,page)
 				change:function(val,page){page.helpReader=val;}} ));
 		}
 		var f;
+		var labelChangeFnc=function(val,field){field.label=val;};
+		var defValueChangeFnc=function(val,field){field.value=val;};
+		var invalidChangeFnc=function(val,field){field.invalidPrompt=val;};
 		for (f in page.fields)
 		{
 			var field = page.fields[f];
-			ff=form.fieldset('Field '+(parseInt(f,10)+1),field);
-			ff.append(form.htmlarea({label:'Label:',value:field.label,change:function(val,field){field.label=val;}}));
+			var ff=form.fieldset('Field '+(parseInt(f,10)+1),field);
+			ff.append(form.htmlarea({label:'Label:',value:field.label,change:labelChangeFnc}));
 			if (prefs.showText===2 || field.value!=="")
 			{
-				ff.append(form.text({label:'Default value:',placeholder:"",name:'default', value:  field.value,change:function(val,field){field.value=val;}}));
+				ff.append(form.text({label:'Default value:',placeholder:"",name:'default', value:  field.value,change:defValueChangeFnc}));
 			}
 			if (prefs.showText===2 || field.invalidPrompt!=="")
 			{
-				ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,change:function(val,field){field.invalidPrompt=val;}}));
+				ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,change:invalidChangeFnc}));
 			}
 			pagefs.append(ff);
 		}
 		var bi;
+		var btnLabelChangeFnc=function(val,b){b.label=val;};
+		var bntDevValChangeFnc=function(val,b){b.value=val;};
 		for (bi in page.buttons)
 		{
 			var b = page.buttons[bi];
 			var bf=form.fieldset('Button '+(parseInt(bi,10)+1),b);
 			if (prefs.showText===2 || b.label!=="")
 			{
-				bf.append(form.text({value: b.label,label:'Label:',placeholder:'button label',
-					change:function(val,b){b.label=val;}}));
+				bf.append(form.text({value: b.label,label:'Label:',placeholder:'button label',change:btnLabelChangeFnc}));
 			}
 			if (prefs.showText===2 || b.value!=="")
 			{
-				bf.append(form.text({value: b.value,label:'Default value',placeholder:'Default value',
-					change:function(val,b){b.value=val;}}));
+				bf.append(form.text({value: b.value,label:'Default value',placeholder:'Default value',change:bntDevValChangeFnc}));
 			}
 			pagefs.append(bf);
 		}
@@ -303,10 +308,9 @@ function main()
 	$('#cajainfo').attr('title',versionString());
 
 	//$('#welcome, #texttoolbar').hide();
-	
-	$('#welcome').dialog({autoOpen: false, height: 500, width: 700, close: function(event, ui){
-		if (typeof event.originalEvent==='object') {signinask();}
-	}});
+	$('#welcome').dialog({autoOpen: false,modal:true, height: 500, width: 700
+		, close: function(event, ui){if (typeof event.originalEvent==='object'){signin();}}
+	});
 
 
 //	$('.tabset').tabs();
@@ -416,7 +420,8 @@ function main()
       _renderItem:  function (ul, item) {
          return $("<li></li>")
 				.data("item.autocomplete", item)
-				.append($("<a></a>")[this.options.html ? "html" : "text"](item.label))
+				//.append($("<a></a>")[this.options.html ? "html" : "text"](item.label))
+				.append($("<a></a>").html(item.label))
 				.appendTo(ul);
       }
    });
@@ -434,7 +439,7 @@ function main()
 		DEBUGSTART();
 	}
 	else{
-		signinask();
+		signin();
 	}
 
    // Menu bar
@@ -549,50 +554,11 @@ function main()
 	});
 }
 
-/*
-function checkLength( o, n, min, max ) {
-	if ( o.val().length > max || o.val().length < min ) {
-		 o.addClass( "ui-state-error" );
-		 updateTips( "Length of " + n + " must be between " + min + " and " + max + "." );
-		 return false;
-	} else {
-		 return true;
-	}
-}
-*/
-function signinask()
-{
-	if (typeof autouser !== "undefined")
-	{
-		$('#username').val(autouser);
-		$('#password').val(autopass);
-	}
-	$( "#login-form" ).dialog({
-		autoOpen: false,
-		height: 300,
-		width: 350,
-		modal: true,
-		buttons: {
-			"Sign in": signin,
-			 Cancel: function() {
-				  $( this ).dialog( "close" );
-			 }
-		},
-		close: function() {
-			 //allFields.val( "" ).removeClass( "ui-state-error" );
-		}
-	});
-	$( "#login-form" ).dialog( "open" );
-	
-	if (typeof autouser !== "undefined")
-		signin();
-}
 function signin(){ 
-	//var bValid = true;
-	// allFields.removeClass( "ui-state-error" );
-	//bValid = bValid && checkLength( name, "username", 3, 16 );
-	//bValid = bValid && checkLength( password, "password", 4, 16 ); 
-	ws({cmd:'login',username:$('#username').val(),userpass:$('#password').val()},
+
+	//ws({cmd:'login',username:$('#username').val(),userpass:$('#password').val()},
+	$('#splash').show();
+	ws({cmd:'login'},
 		/*** @param {{userid,nickname}} data */
 		function (data){
 			gUserID=data.userid;
@@ -603,13 +569,16 @@ function signin(){
 				$('#memenu').text(gUserNickName);
 				$('#welcome .tabContent .name').html("Welcome "+gUserNickName+" user#"+gUserID);
 				//+'<p id="guidelist">Loading your guides '+AJAXLoader +"</p>" 
-				$("#login-form" ).dialog( "close" );
+				//$("#login-form" ).dialog( "close" );
 				//$('#authortool').removeClass('hidestart').addClass('authortool');
-				$('#splash').hide();
 				$('#welcome').show();
 				
 				//$('#tabviews').tabs( { disabled: [1,2,3,4,5,6,7,8,9]});
 				ws({cmd:'guides'},listGuides);
+			}
+			else
+			{
+				$('#login-form').dialog();
 			}
 		}
   );
@@ -814,7 +783,7 @@ function gotoPageEdit(pageName)
 }
 function gotoTabOrPage(target)
 {	// Go to a tab or popup a page.
-	trace('GoTo '+target);
+	//trace('GoTo '+target);
 
 	//$('#CAJAOutline li, #CAJAIndex li').each(function(){$(this).removeClass('ui-state-active')});
 	//$('li').filter(function(){ return target == $(this).attr('target')}).each(function(){$(this).addClass('ui-state-active')});	
@@ -961,7 +930,7 @@ function listGuides(data)
 		/*** @param {{owned,id,title}} g */
 		function(key,g)
 		{
-			var str='<li class=guide gid="' + g.id + '">' + g.title + '</li>';
+			var str='<li class=guide gid="' + g.id + '">' + g.title + '('+g.id+')'+  '</li>';
 			if (g.owned)
 			{
 				mine.push(str);
@@ -976,6 +945,7 @@ function listGuides(data)
 		var guideFile=$(this).text();
 		$('li.guide[gid="'+gid+'"]').html('Loading guide '+guideFile+AJAXLoader).addClass('.warning');
 		loadNewGuidePrep(guideFile,'');
+		$('#splash').hide();
 		if(gid==='a2j'){
 			createBlankGuide();
 		}
@@ -1272,11 +1242,13 @@ TGuide.prototype.novicePage = function (div, pagename)
 
 function setProgress(status)
 {
-	if (status===null){
+	if (typeof status==='undefined'){
 		status="";
 	}
-	$('#CAJAStatus').text( status );
-	trace(status);
+	$('#CAJAStatus').html( status );
+	if (status!==""){
+		trace('setProgress',status);
+	}
 }
 function loadNewGuidePrep(guideFile,startTabOrPage)
 {
@@ -1289,7 +1261,8 @@ function guideClose()
 	{
 		guideSave();
 	}	
-	$('#welcome').dialog('open');
+	//$('#welcome').dialog('open');
+	signin();
 	$('#authortool').hide();
 }
 
@@ -1330,27 +1303,22 @@ function guideStart(startTabOrPage)
 		}});
 		*/
 	
-	if (1) {
-		$('#fileupload').addClass('fileupload-processing');
-		$('#fileupload').fileupload({
-			 url: 'jQuery/UploadHandler-index.php' +'?gid='+gGuideID,
-			 dataType: 'json',
-			 done: function (e, data) {
-				setTimeout(updateAttachmentFiles,1);
-				 // $.each(data.result.files, function (index, file) {
-				//		$('<p/>').text(file.name).appendTo('#files');
-				//  });
-			 },
-			 progressall: function (e, data) {
-				  var progress = parseInt(data.loaded / data.total * 100, 10);
-				  $('#progress .bar').css(
-						'width',
-						progress + '%'
-				  );
-			 }
-		});
-	  updateAttachmentFiles();
-	}
+	
+	$('#fileupload').addClass('fileupload-processing');
+	$('#fileupload').fileupload({
+		 //url: 'jQuery/UploadHandler-index.php' +'?gid='+gGuideID,
+		 url:CONST.uploadURL+gGuideID,
+		 dataType: 'json',
+		 done: function (e, data) {setTimeout(updateAttachmentFiles,1);
+		 },
+		 progressall: function (e, data) {
+			  var progress = parseInt(data.loaded / data.total * 100, 10);
+			  $('#progress .bar').css('width',	progress + '%'
+			  );
+		 }
+	});
+	updateAttachmentFiles();
+
 	
 	buildMap();
 }
@@ -1513,7 +1481,8 @@ TGuide.prototype.pageFindReferences=function(findName,newName){
 	var testtext = function(page,field,fieldname)
 	{
 		var add=false;
-		page[field]=page[field].replace(/\"POPUP:\/\/(([^\"])+)\"/ig,function(match,p1,offset,string)
+		page[field]=page[field].replace(/\"POPUP:\/\/(([^\"])+)\"/ig,function(match,p1,offset,string) // jslint nolike: /\"POPUP:\/\/(([^\"])+)\"/ig
+												 
 		{
 			var popupid=match.match(/\"POPUP:\/\/(([^\"])+)\"/i)[1];
 			if (popupid===findName)
@@ -1757,18 +1726,46 @@ var form={
 		return e;
 	}
 	
+	,pickFile : function(mask)
+	{
+		
+		var e=$('<span class="fileinput-button"><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary"><span class="ui-button-icon-primary ui-icon ui-icon-plus"></span><span class="ui-button-text" >Upload...</span></button><input class="fileupload" type="file" name="files[]"/></span>');
+		//.addClass('fileupload-processing')
+		$('.fileupload',e).fileupload({
+			 url:CONST.uploadURL + gGuideID,
+			 dataType: 'json',
+			 done: function (e, data) {
+				var filename = data.result.files[0].name;
+				$(e.target).closest('div').find('input[type=text]').val(filename);
+				setTimeout(updateAttachmentFiles,1);
+				 // $.each(data.result.files, function (index, file) {
+				//		$('<p/>').text(file.name).appendTo('#files');
+				//  });
+			 },
+			 progressall: function (e, data) {
+				  var progress = parseInt(data.loaded / data.total * 100, 10);
+				  $('#progress .bar').css(
+						'width',
+						progress + '%'
+				  );
+			 }
+		});
+		return e;
+	}
+	
+	
 	,pickAudio: function(data){
-		return form.text(data);
+		return form.text(data).append(form.pickFile(''));
 	}
 	
 	,pickImage:function(data){ 
-		return form.text(data); 
+		return form.text(data).append(form.pickFile(''));
 	}
 	,pickVideo:function(data){
-		return form.text(data);
+		return form.text(data).append(form.pickFile(''));
 	}
 	,pickXML:function(data){
-		return form.text(data);
+		return form.text(data).append(form.pickFile(''));
 	}
 	
 	,clear:function(){
@@ -1794,7 +1791,7 @@ var form={
 		}
 	}
 	,codeFix:function(html){
-		return html.replace(/\<br\>/gi,"<BR/>");
+		return html.replace(/<br\>/gi,"<BR/>");
 	}
 	,codeCheck:function(elt){
 		$(elt).removeClass('haserr');

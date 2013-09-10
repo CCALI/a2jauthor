@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+	CALI Author 5 / A2J Author 5 (CAJA)
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+-->
+<HTML xmlns="http://www.w3.org/1999/xhtml">
+<!-- DW6 -->
+<HEAD> 
+
+<title>CALI Author Script Tester</title> 
+
+<link  href="../themes/a2j/jquery-ui.css" rel="stylesheet" type="text/css" media="all" />
+<link  href="../jquery.ui.custom.css" rel="stylesheet" type="text/css" />
+<link  href="../CAJA_Author.css" rel="stylesheet" type="text/css" />
+
+
+<script src="../jQuery/jquery.1.8.2.min.js" type="text/javascript"></script>
+<script src="../CAJA_Utils.js" type="text/javascript"></script>
+<script src="../CAJA_Types.js" type="text/javascript"></script>
+<script src="../CAJA_Languages.js" type="text/javascript"></script>
+<script src="../CAJA_Logic.js" type="text/javascript"></script>
+
+<script xsrc="../jQuery/jshashtable-2.1.js" type="text/javascript"></script>
+<script xsrc="../jquery.numberformatter-1.2.1.jsmin.js" type="text/javascript"></script>
+
+
+<script src="CAJA_Test_Script.js" type="text/javascript"></script>
+
+
+
+<style type="text/css">
+<!--
+Body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+P.Script, LI.Script, BLOCKQUOTE.Script {
+	border: thin solid #CC9966;
+	background-color: #efe;
+	margin: 2px;
+	padding: 3px;
+}
+
+
+.Script {
+	font-weight: normal;
+	font-family: "Courier New", Courier, monospace;
+	font-size: 12px;
+	color: #00f;
+}
+.Script B {
+	font-weight: bold;
+	font-family: "Courier New", Courier, monospace;
+	color: #093;
+}
+.Script I {
+	font-weight: italic;
+	font-family:  Arial, Helvetica, sans-serif;
+	color: #999999;
+}
+.ScriptTrace{
+	font-weight: normal;
+	font-family: "Courier New", Courier, monospace;
+	xheight: 100%;
+	font-size: 8pt; 
+	xoverflow: scroll;
+	border: thin solid #CC9966;
+	background-color: #CCFFCC;
+	xmargin: 1px;
+	xpadding: 2px;
+}
+.ScriptVariables table tr td{
+	border: thin solid #CC9966;
+	background-color: #CCFFCC;
+	font-size: 8pt; 
+	margin: 1px;
+	padding: 2px;
+}
+.Macro {
+	border: thin solid #CC9966;
+	background-color: #CCFFCC;
+	padding: 15px;
+	font-size: smaller;
+}
+.ScriptErr{
+	font-weight: bold;
+	color: #FF0000;
+}
+
+
+
+.ScriptTrace li{
+	font-weight: normal;
+	font-family: "Courier New", Courier, monospace;
+	font-size: 1em;
+	line-height: auto;
+	border: none;
+	background-color: #ddd;
+	margin: 3px;
+	padding: 2px;
+}
+span.code, span.var, span.varidx, span.val, span.page {  
+}
+span.code {
+	border: thin solid #CC9966;
+	background-color: #ddd;
+}
+span.var {
+	border: thin solid #CC9966;
+	background-color: #ffc;
+}
+span.varidx {
+	border: thin solid #CC9966;
+	background-color: #fcc
+}
+span.val{
+	border: thin solid #CC9966;
+	background-color: #fcf;
+}
+span.page {
+	border: thin solid #CC9966;
+	background-color: #ccf;
+}
+span.err {
+	text-decoration: none;
+	border-bottom: dashed  1px #f00;
+	padding-bottom: 0px;
+ }
+th {
+	font-weight: normal;
+}
+td.colVar {
+	color:#022;
+}
+td.colIndex {
+	color:#220;
+}
+td.colValue {
+	color:#202;
+}
+td.varnew {
+	color:#080;
+}
+td.varsame {
+	color:#000;
+}
+td.vardiff {
+	color:#800;
+} 
+-->
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</HEAD>
+
+
+<BODY BGCOLOR="#FFFFFF"  >
+ 
+
+
+<h1>CAJA - CALI Author/A2J Author Script Tester</h1>
+<p>8/22/2013 updated | <a href="../CAJA_Script.js">CAJA_Script.js</a>|  
+<a href="../../CAJA_Script_Notes.html">Development Notes</a></p>
+<p>Scripts to test: </p>
+<ul class="testunits">
+	<li><a href="CAJA_Test_Script_Unit.txt">CAJA_Test_Script_Unit.txt</a></li>
+</ul>
+<ol class="ScriptTrace"></ol>
+<ol class="ScriptTrace1"></ol>
+<div class="evaluator"><input name="lessontitle" style="width:100%" type="text" id="lessontitle" value="(1+2)=(3-1)" size="40" />
+	<input onclick="update();" type="submit" name="evaluate" id="evaluate" value="Evaluate" />
+</div> 
+
+ 
+</BODY>
+</HTML>
+

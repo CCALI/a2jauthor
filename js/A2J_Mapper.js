@@ -143,6 +143,7 @@ function mapLines()
 	var p;
 	for (p in gGuide.pages)
 	{
+		/** @type TPage */
 		var page=gGuide.pages[p];
 		if (page.mapx!==null)
 		{
@@ -154,8 +155,8 @@ function mapLines()
 					CA - Next page, Feedback branches, Script GOTOs
 			*/
 			var b;
-			if (!page.hasOwnProperty('mapBranches'))
-			{
+			//if (!page.hasOwnProperty('mapBranches'))
+			//{
 				var branches=[];
 				for (b in page.buttons)
 				{
@@ -163,7 +164,7 @@ function mapLines()
 					branches.push({text:btn.label, dest: gGuide.pages[btn.next]} );
 				}
 				page.mapBranches=branches;
-			}
+			//}
 			//var nodeCenterX = nodeLeft + NW/2;
 			var nBranches=page.mapBranches.length;
 			var boffset =   NW/nBranches/2;

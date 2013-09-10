@@ -180,9 +180,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		QUESTION.find('MACRO').each(function(){
 			var script=new TScript();
 			script.event =jQuery.trim($(this).find("EVENT").xml());
-			var condition =jQuery.trim($(this).find("CONDITION").xml());
-			
-			
+			var condition =gLogic.hds(jQuery.trim($(this).find("CONDITION").xml()));			
 			var comment =jQuery.trim($(this).find("COMMENT").xml());
 			// Remove old cruft.
 			if (comment === "Example: set a flag if income too high" || comment===null || comment==="undefined" )
@@ -202,13 +200,14 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 				{
 					var p=args[1].indexOf('=');
 					var varName = args[1].substr(0,p);
-					var varVal= args[1].substr(p+1);
+					var varVal= gLogic.hds(args[1].substr(p+1));
 					if (varVal===""){
 						varVal='""';
 					}
 					if (varName!=="")
 					{
-						statement = 'SET ['+varName+'] TO '+varVal;
+						// Version 1: statement = 'SET ['+varName+'] TO '+varVal;
+						statement = 'SET '+varName+' TO '+varVal;
 					}
 					else{
 						statement = "";

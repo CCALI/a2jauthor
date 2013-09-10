@@ -316,7 +316,7 @@ function propsJSON_(name,d,o)
 
 
 
-
+/*jslint eqeq: false  */
 function sortingNaturalCompare(a, b) {//http://my.opera.com/GreyWyvern/blog/show.dml/1671288
   function chunkify(t) {
     var tz = [], x = 0, y = -1, n = 0, i, j;
@@ -339,8 +339,10 @@ function sortingNaturalCompare(a, b) {//http://my.opera.com/GreyWyvern/blog/show
     if (aa[x] !== bb[x]) {
       var c = Number(aa[x]), d = Number(bb[x]);
       if (c == aa[x] && d == bb[x]) {
-        return c - d;
-      } else return (aa[x] > bb[x]) ? 1 : -1;
+         return c - d;
+		} else{
+			return (aa[x] > bb[x]) ? 1 : -1;
+		}
     }
   }
   return aa.length - bb.length;
@@ -367,6 +369,11 @@ var decodeEntities = (function() {
 
   return decodeHTMLEntities;
 })();
+
+
+
+
+
 
 /*
 //http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values

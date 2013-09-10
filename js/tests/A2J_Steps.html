@@ -58,15 +58,15 @@ $(document).ready(function()
 			page.buttons=[ {label:'Next'},{label:'Skip to '+(page.step+1)}];
 			page.help = 'Learn more text: '+text;
 		}
-		a2jviewer.layoutpage($('#demostep'),guide,steps,page);
+		A2JViewer.layoutPage($('#demostep'),guide,steps,page);
 		
 		//var question=(text + '<div class="buttonlist"><button>Yes</button><button>No</button></div>');
 		//var learnmore=('Learn more text: '+text + '<div class="buttonlist"><button>Close</button></div>');
-		//a2jviewer.layout($('#demostep'),curstep,steps,question,learnmore);
+		//A2JViewer.layout($('#demostep'),curstep,steps,question,learnmore);
 	}
 	
 	teststep(0);
-	//a2jviewer.layout($('#demostep'),0,steps);
+	//A2JViewer.layout($('#demostep'),0,steps);
 	
 	$('#scales button').button().click(function(){
 		var scale=$(this).text(); 

@@ -9,7 +9,7 @@
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/MIT
  */
-
+/*
 // 07/2013 SJG - setup to save to user's guide's folder only.
 session_start();
 require "../CONFIG.php";
@@ -42,3 +42,6 @@ if ( 1 )
 	file_put_contents(sys_get_temp_dir().'/Uploader.log',$msg);
 	
 }
+*/
+
+?>

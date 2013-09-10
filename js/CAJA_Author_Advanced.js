@@ -9,6 +9,7 @@
 	Experimental code for single document editing of a guide
 */
 
+/*
 
 var useDIV= 0;// 04/09/12 if 0, only P tags. if 1, each page bounded with DIV
 var editor;
@@ -39,47 +40,45 @@ function initAdvanced()
 {
 	jQuery(document).bind('paste', handlePaste);
 	$('.advanced').bind('mouseup',cajaMouseUp);
-	
 
-	
-/*
-	function getIFrameDocument(aID){  
-	  // if contentDocument exists, W3C compliant (Mozilla)  
-	  if (document.getElementById(aID).contentDocument){  
-		 return document.getElementById(aID).contentDocument;  
-	  } else {  // IE  
-		 return document.frames[aID].document;  
-	  }  
-	}
-	$('#editorWindow').load(function(){
-       editor= $('#editorWindow').contents().find('body') 
-		 editor.text('Greetings there');  
-    });
-	getIFrameDocument("CAJAContent").designMode = "On";
-	//$("#editorWindow").contents().find("#CAJAContent")
-*/
+
+//	function getIFrameDocument(aID){  
+//	  // if contentDocument exists, W3C compliant (Mozilla)  
+//	  if (document.getElementById(aID).contentDocument){  
+//		 return document.getElementById(aID).contentDocument;  
+//	  } else {  // IE  
+//		 return document.frames[aID].document;  
+//	  }  
+//	}
+//	$('#editorWindow').load(function(){
+//       editor= $('#editorWindow').contents().find('body') 
+//		 editor.text('Greetings there');  
+//    });
+//	getIFrameDocument("CAJAContent").designMode = "On";
+//	//$("#editorWindow").contents().find("#CAJAContent")
+
 	if ($.browser.mozilla) document.execCommand('styleWithCSS',false,null);
 }
 function handlePaste(e)
 {
 	return;
-	/*
-	window.setTimeout(function(){
-		var selRange2, range, html;
-		trace('pasting!');
-		selRange2=editwin.getSelection(); 
-		selRange2=selRange2.getRangeAt(0);
-		trace(selRange);
-		trace(selRange2);
-		range = document.createRange(); 
-		range.setStart(selRange.startContainer,selRange.startOffset);
-		range.setEnd(selRange2.endContainer, selRange2.endOffset);
-		trace(range);
-		//range=range.getRangeAt(0);
-		html=new XMLSerializer().serializeToString(range.cloneContents());
-		trace(html);
-	},1);
-	*/
+	
+	//window.setTimeout(function(){
+	//	var selRange2, range, html;
+	//	trace('pasting!');
+	//	selRange2=editwin.getSelection(); 
+	//	selRange2=selRange2.getRangeAt(0);
+	//	trace(selRange);
+	//	trace(selRange2);
+	//	range = document.createRange(); 
+	//	range.setStart(selRange.startContainer,selRange.startOffset);
+	//	range.setEnd(selRange2.endContainer, selRange2.endOffset);
+	//	trace(range);
+	//	//range=range.getRangeAt(0);
+	//	html=new XMLSerializer().serializeToString(range.cloneContents());
+	//	trace(html);
+	//},1);
+	
 }
 
 function selToHTML()
@@ -106,14 +105,12 @@ function selToHTML()
 			html=new XMLSerializer().serializeToString(selRange.cloneContents());
 		}
 	}
-/*	if (0){
-	//TEST Determine DIV clicked in by hiliting it
-	var pageP=(useDIV)?$(selRange.startContainer).closest('DIV') : $(selRange.startContainer).closest('P').prevUntil("P.CAJAPage").prev();
-	trace((pageP));
-	pageP.addClass('hilite');
-	} 
-*/
-
+	//if (0){
+	////TEST Determine DIV clicked in by hiliting it
+	//var pageP=(useDIV)?$(selRange.startContainer).closest('DIV') : $(selRange.startContainer).closest('P').prevUntil("P.CAJAPage").prev();
+	//trace((pageP));
+	//pageP.addClass('hilite');
+	//} 
 	return html;
 }
 
@@ -176,10 +173,10 @@ function showPageToEditTextOnly(target)
 function inform(msg){ return '<span class=inform contenteditable=false>'+msg+'</span> '}
 
 function parseP(p)
-{ 	// Add markup to plain text single doc
+{	// Add markup to plain text single doc
 	var txt=p.text();
 	p.removeClass('CAJAPage CAJAAsk CAJATest');
-	
+
 	if (textonlyMode>1)
 	{
 		if (txt.indexOf('PAGE ')==0){
@@ -320,13 +317,13 @@ TGuide.prototype.convertToText=function()
 			button=page.buttons[b];
 			//Add button 'Continue' that goes to A2J Name
 			pageText+=text2P("ADD button English("+button.label+")"); // that goes to "+this.pageIDtoName(button.next));
-			/*
-			var resptest="IF ResponseNum="+ (parseInt(b)+1);//"IF Button("+(parseInt(b)+1)+")
-			if (button.name) // if button has a variable attached, we assign a value to it
-				scriptAfter.push(resptest+" THEN SET ["+button.name+"] to "+button.value+"");
-			if (makestr(button.next)!="")// if button has a destination, we'll go there after any AFTER scripts have run.
-				scriptLast.push(resptest+" THEN GOTO "+this.pageIDtoName(button.next));
-			*/
+			
+			//var resptest="IF ResponseNum="+ (parseInt(b)+1);//"IF Button("+(parseInt(b)+1)+")
+			//if (button.name) // if button has a variable attached, we assign a value to it
+			//	scriptAfter.push(resptest+" THEN SET ["+button.name+"] to "+button.value+"");
+			//if (makestr(button.next)!="")// if button has a destination, we'll go there after any AFTER scripts have run.
+			//	scriptLast.push(resptest+" THEN GOTO "+this.pageIDtoName(button.next));
+			
 		}
 		
 
@@ -371,30 +368,30 @@ TGuide.prototype.convertToText=function()
 			}
 		}
 		else if (page.type=="Multiple Choice" && page.style=="Radio Buttons") 		{}
-		else if (page.type=="Multiple Choice" && page.style=="Check Boxes")				{}
-		else if (page.type=="Multiple Choice" && page.style=="Check Boxes Set")			{}
-		else if (page.type=="Text Entry" && page.style=="Text Short Answer")				{}
-		else if (page.type=="Text Entry" && page.style=="Text Select")						{}
-		else if (page.type=="Text Entry" && page.style=="Text Essay")						{}
-		else if (page.type=="Prioritize" && page.style=="PDrag")								{}
-		else if (page.type=="Prioritize" && page.style=="PMatch")							{}
-		else if (page.type=="Slider")																	{}
-		else if (page.type=="GAME" && page.style=="FLASHCARD")								{}
-		else if (page.type=="GAME" && page.style=="HANGMAN")									{} 		
+		else if (page.type=="Multiple Choice" && page.style=="Check Boxes")			{}
+		else if (page.type=="Multiple Choice" && page.style=="Check Boxes Set")		{}
+		else if (page.type=="Text Entry" && page.style=="Text Short Answer")			{}
+		else if (page.type=="Text Entry" && page.style=="Text Select")					{}
+		else if (page.type=="Text Entry" && page.style=="Text Essay")					{}
+		else if (page.type=="Prioritize" && page.style=="PDrag")							{}
+		else if (page.type=="Prioritize" && page.style=="PMatch")						{}
+		else if (page.type=="Slider")																{}
+		else if (page.type=="GAME" && page.style=="FLASHCARD")							{}
+		else if (page.type=="GAME" && page.style=="HANGMAN")								{}
 		
 		
 		
-		/*
-		for (s in page.scripts)
-		{
-			script=page.scripts[s];
-			st= script.code.split("\n")//.join("<BR>");
-			if (script.event=="BEFORE")
-				scriptBefore=scriptBefore.concat(st);
-			else
-				scriptAfter=scriptAfter.concat(st);
-		}
-		*/
+		
+		//for (s in page.scripts)
+		//{
+		//	script=page.scripts[s];
+		//	st= script.code.split("\n")//.join("<BR>");
+		//	if (script.event=="BEFORE")
+		//		scriptBefore=scriptBefore.concat(st);
+		//	else
+		//		scriptAfter=scriptAfter.concat(st);
+		//}
+		
 		
 		if (page.step!=lastStep)
 		{
@@ -413,3 +410,4 @@ TGuide.prototype.convertToText=function()
 	return t;
 }
 
+*/

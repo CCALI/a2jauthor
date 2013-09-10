@@ -5,8 +5,7 @@
 //07/01/2013 HACK to login to demo
 //7/15/2013 Directory restructure
 
-session_start();
-header("Content-type: text/plain; charset=utf-8");
+
 
 $command=$_REQUEST['cmd'];
 $result=array();
@@ -19,69 +18,109 @@ if (mysqli_connect_errno()) {
   exit('Connect failed: '. mysqli_connect_error());
 }
 
+/*
+{	// One COULD get user id from Drupal's session cookie then lookup that user in Drupal User table but needs more research.
+	//$prefix = ini_get('session.cookie_secure') ? 'SSESS' : 'SESS';
+	//session_name($prefix . substr(hash('sha256',".a2jauthor.org"), 0, 32));
+	//session_start();
+	//var_dump(session_name());
+}
+*/
+
+
+if ($isProductionServer)
+{
+	//	09/05/2013 SJG Get Drupal userid from session
+	// If user not signed in, userid will be 0.
+	define('DRUPAL_ROOT_DIR','/vol/data/sites/commons7');
+	// Set the working directory to your Drupal root
+	chdir(DRUPAL_ROOT_DIR);
+	define('DRUPAL_ROOT', getcwd());
+	// Require the bootstrap include
+	require_once DRUPAL_ROOT . '/includes/bootstrap.inc';
+	//Load Drupal
+	// Minimum bootstrap to get user's session info is DRUPAL_BOOTSTRAP_SESSION.
+	drupal_bootstrap(DRUPAL_BOOTSTRAP_SESSION);	
+	$userid =intval($user->uid);
+}
+else
+{	// Running locally, just use demo user (26 for a2jauthor.org).
+	session_start();//  09/05/2013 WARNING! LEAVE session_start() OFF TO ACCESS DRUPAL SESSIONS!
+	define("LOCAL_AS_DEMO_USER", 1);
+	if ( LOCAL_AS_DEMO_USER )
+		$userid=26;
+	else
+		$userid=0;
+}
+
+$userdir=$_SESSION['userdir'];if (!isset($userdir))$userdir='00000';
+
+
+
+header("Content-type: text/plain; charset=utf-8");
+
 switch ($command)
 {
+	case 'test':
+		var_dump($_SESSION);
+		break;
+	
 	case 'login':
-		//Use Drupal to login;
-		//This will need to be abstracted out for folks not using Drupal
-		$user=$drupaldb->real_escape_string($_REQUEST['username']);
-		$pass=$drupaldb->real_escape_string($_REQUEST['userpass']);
-
-		
-		if ($user=='demo')//07/01/2013 HACK to login to demo until switch to drupal 7 hash.
-			$pass='$S$DK05WJZFlhtSX7gZlKdJ7R/ytQx65R7LfoEsYjDQa4dowr4Y2Lhz';
-		else
-			$pass = MD5($pass);
-				
-		
-		
-		
-		$res=$drupaldb->query("select * from users where name='$user' and pass='$pass'");
-		if ($row=$res->fetch_assoc()){
-			$checkuser=$mysqli->query("select * from usersbeta where username='$user'");
-			$numrows=$checkuser->num_rows;
-			if (!$numrows){
-			  mkdir(GUIDES_DIR.$user, 0700);
-			  mkdir(GUIDES_DIR.$user.'/guides', 0700);
-			  $uid=$row['uid'];
-			  //the next lines do a deep dive into Drupal profiles
-			  //and will need to be custom to each server install
-			  $nameres=$drupaldb->query("SELECT group_concat(pv.value SEPARATOR ' ') AS fullname from profile_values pv where pv.uid = $uid and pv.fid in (1,2)");
-			  $namerow=$nameres->fetch_assoc();
-			  $fullname=$namerow['fullname'];
-			  //end Drupal profile stuff
-			  $mysqli->query("insert into usersbeta (username, pass, nickname, folder) values ('$user', '$pass', '$fullname', '$user')");
-			  $checkuser=$mysqli->query("select * from usersbeta where username='$user'");
+		if ($isProductionServer)
+		{
+			if ($userid>0)
+			{	// User logged in to Drupal, get their user id, etc.
+				// Can also get Roles here.
+				$username = $user->name;
+	
+				// Get user's A2J user entry. 
+				$checkuser=$mysqli->query("select * from users where uid=$userid");
+				$numrows=$checkuser->num_rows;
+				if (!$numrows)
+				{	// No entry, create their user file folder and A2J user record.
+					mkdir(GUIDES_DIR.$uid, 0700);
+					mkdir(GUIDES_DIR.$uid.'/guides', 0700);
+					//the next lines do a deep dive into Drupal profiles
+					//and will need to be custom to each server install
+					$nameres=$drupaldb->query("SELECT group_concat(pv.value SEPARATOR ' ') AS fullname from profile_values pv where pv.uid = $userid and pv.fid in (1,2)");
+					$namerow=$nameres->fetch_assoc();
+					$fullname=$namerow['fullname'];
+					//end Drupal profile stuff
+					$mysqli->query("insert into usersbeta (username,   nickname, folder) values ('$username',   '$fullname', '$username')");
+					$checkuser=$mysqli->query("select * from users where uid=$userid");
+				}
+				$userrow=$checkuser->fetch_assoc();
+				$result['nickname']=$userrow['nickname'];
+				$userdir=$userrow['folder'];
 			}
-			$userrow=$checkuser->fetch_assoc();
-			$result['nickname']=$userrow['nickname'];
-			$userid=$userrow['uid']; 
-			$userdir=$userrow['folder'];
-			
 		}
 		else
 		{
-			$userid=0;
-			$userdir=0;
+			$username='demo';
+			$result['nickname']='Demo User';
+			$userdir='demo';
 		}
-		
 		$result['userid']=$userid;
-		$_SESSION['userid']=$userid;
+		$result['username']=$username;
+		$result['userdir']=$userdir;
 		$_SESSION['userdir']=$userdir;
 		break;
+	
+
 	case 'logout':
 		// do logout, clear seession user id
 		$userid=0;
-		$userdir=0;
 		$result['userid']=$userid;
 		$_SESSION['userid']=$userid;
-		$_SESSION['userdir']=$userdir;
 		break;
 
 		
 	case 'guides':
 		// list of free, public or user owned guides
 		listGuides("select * from guides where isPublic=1 or isFree=1  or (editoruid=$userid) order by (editoruid=$userid) desc, title asc ");
+		break;
+	case 'guidessys':
+		//array scandir ( string $directory [, int $sorting_order = SCANDIR_SORT_ASCENDING [, resource $context ]] )
 		break;
 
 	case 'guides/owned':
@@ -96,8 +135,9 @@ switch ($command)
 		if ($row=$res->fetch_assoc()){
 			$result['gid']=$row['gid'];
 			$result['editoruid']=$row['editoruid'];
-			$result['guide']= file_get_contents(GUIDE_DIR($row['filename'],TRUE));
-			trace(GUIDE_DIR($row['filename']));
+			$result['guide']= file_get_contents(GUIDES_DIR.$row['filename'],TRUE);
+			//scandir()
+			trace(GUIDES_DIR.$row['filename']);
 		}
 		else
 		{// not found
@@ -113,8 +153,8 @@ switch ($command)
 		if ($row=$res->fetch_assoc()){
 		  $result['info']="Will update!";
 		  // Rename existing auto name file with a date time stamp and save update to autoname
-		  $oldtitle=GUIDE_DIR($row['title']);
-		  $filename=GUIDE_DIR($row['filename']);
+		  $oldtitle=GUIDES_DIR.$row['title'];
+		  $filename=GUIDES_DIR.$row['filename'];
 		  $path_parts = pathinfo($filename);
 		  $filedir = $path_parts['dirname'];
 		  $filenameonly=$path_parts['filename'];
@@ -125,7 +165,7 @@ switch ($command)
 				{
 				  mkdir($verdir);
 				}
-				$revname=$verdir.'/'.$filenameonly.' Backup_Version-'.date('Y-m-d-H-i-s',filemtime($filename)).'.xml';
+				$revname=$verdir.'/'.$filenameonly.' Version_'.date('Y-m-d-H-i-s',filemtime($filename)).'.xml';
 				rename($filename, $revname);
 				if ($title!="" && $title != $oldtitle)
 				{
@@ -161,22 +201,52 @@ switch ($command)
 			$newdir = $newdirbase;
 			$newfile = "Guide.xml";
 			$newfile = $newdirbase.'/'.$newfile;
-			$newlocation=GUIDE_DIR($newfile);
+			$newlocation=GUIDES_DIR.$newfile;
 			trace($newlocation);
-			mkdir(GUIDE_DIR($newdir));
-			$filename=GUIDE_DIR($newfile);
+			mkdir(GUIDES_DIR.$newdir);
+			$filename=GUIDES_DIR.$newfile;
 			trace('saving to '.$filename);
 			file_put_contents($filename,$xml);
 			$sql="update guides set filename='".$mysqli->real_escape_string($newfile)."' where gid = $newgid";
 			if ($res=$mysqli->query($sql)){
 			}
 			//chmod($newlocation,0775);
-//			copy($oldlocation,$newlocation) or trace("Error copy");
+			//copy($oldlocation,$newlocation) or trace("Error copy");
 			$result['url']=$newlocation;
 			$result['gid']=$newgid;
 		}
 		break;
 
+	case 'uploadfile':
+		/*
+		 * jQuery File Upload Plugin PHP Example 5.14
+		 * https://github.com/blueimp/jQuery-File-Upload
+		 *
+		 * Copyright 2010, Sebastian Tschan
+		 * https://blueimp.net
+		 *
+		 * Licensed under the MIT license:
+		 * http://www.opensource.org/licenses/MIT
+		 */
+		
+		// 07/2013 SJG - setup to save to user's guide's folder only.
+		
+		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+		$res=$mysqli->query("select * from guides where gid=$gid and editoruid=$userid");
+		if ($row=$res->fetch_assoc()){
+			$result['info']="OK";
+			$filename=$row['filename'];
+			$path_parts = pathinfo($filename);
+			$filedir =  $path_parts['dirname'];
+			define(UPLOAD_DIR, GUIDES_DIR.$filedir.'/');
+			define(UPLOAD_URL, GUIDES_URL.$filedir.'/');
+		}
+		
+		error_reporting(E_ALL | E_STRICT);
+		include('jQuery/UploadHandler.php');
+		$upload_handler = new UploadHandler();
+		exit();//Return immediately with upload info.
+		break;
 		
 /*
 	case 'answerfile':
@@ -207,9 +277,10 @@ if($err!="") $result['error']=$err;
 $return  = json_encode($result);
 echo $return;
 
+
 function getGuideFileDetails($filename)
 {
-	$filename=GUIDE_DIR($filename);
+	$filename=GUIDES_DIR.$filename;
 	//		file_put_contents($filename,$xml);
 	//$xml=simplexml_load_file($filename,null, LIBXML_NOCDATA);
 	//trace($xml);
@@ -217,12 +288,13 @@ function getGuideFileDetails($filename)
 	$details="";
 	return $details;
 }
-
+/*
 function GUIDE_DIR($gid)
 {
 	return GUIDES_DIR.$gid;
 	//return GUIDES_DIR.str_pad($gid,8,'0',STR_PAD_LEFT );
 }
+*/
 function listGuides($sql)
 {
 	global $userid,$mysqli,$result;

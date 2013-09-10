@@ -8,34 +8,33 @@
 <head>
 <title>A2J Author 5</title>
 
-<script type="application/x-javascript"><?php
-require "loginquick.php";
-?></script>
 
-
-<link  xhref="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/sunny/jquery-ui.css"  title="style" rel="stylesheet" type="text/css"/>
-<link  xhref="http://code.jquery.com/ui/1.9.0/themes/sunny/jquery-ui.css" title="style"  rel="stylesheet" type="text/css"/>
-<script xsrc="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-<script xsrc="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js" type="text/javascript"></script>
+<link xhref="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/sunny/jquery-ui.css"  title="style" rel="stylesheet" type="text/css"/>
+<link xhref="http://code.jquery.com/ui/1.9.0/themes/sunny/jquery-ui.css" title="style"  rel="stylesheet" type="text/css"/>
 <link href="jQuery/themes/a2j/jquery-ui.css" title="style"  rel="stylesheet" type="text/css"/>
 <link href="jQuery/jquery.ui.custom.css" rel="stylesheet" type="text/css" />
-<link  href="jQuery/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
+<link href="jQuery/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
 <link href="A2J_Author.css"  rel="stylesheet" type="text/css"/>
 <link href="A2J_Viewer.css"  rel="stylesheet" type="text/css"/>
 
-
 <script src="jQuery/jquery.1.8.2.min.js" type="text/javascript"></script>
 <script src="jQuery/jquery.ui.1.9.1.custom.min.js" type="text/javascript"></script>
-<script src="jQuery/jquery.ui.custom.min.js" type="text/javascript" ></script>
+<script xsrc="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script xsrc="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js" type="text/javascript"></script>
 
 
-<!-- The basic File Upload plugin -->
-<script src="jQuery/jquery.fileupload.js"></script>
-<!-- The File Upload processing plugin -->
-<script src="jQuery/jquery.fileupload-process.js"></script>
-<!-- The File Upload validation plugin -->
-<script src="jQuery/jquery.fileupload-validate.js"></script>
 
+
+<?php
+	if ( 1 ) { // include full source code
+?>
+
+<script src="jQuery/jquery.custom.js" type="text/javascript" ></script>
+<script src="jQuery/jquery.fileupload.js"></script><!-- The basic File Upload plugin -->
+<script src="jQuery/jquery.fileupload-process.js"></script><!-- The File Upload processing plugin -->
+<script src="jQuery/jquery.fileupload-validate.js"></script><!-- The File Upload validation plugin -->
+<script src="jQuery/jquery.ui.combobox.js" type="text/javascript" ></script>
+<script src="jQuery/jquery.ui.traggable.js" type="text/javascript" ></script>
 
 <script src="CAJA_Types.js" type="text/javascript"></script>
 <script src="CAJA_Utils.js" type="text/javascript"></script>
@@ -48,6 +47,14 @@ require "loginquick.php";
 <script src="A2J_Mapper.js" type="text/javascript"></script>
 <script src="A2J_Viewer.js" type="text/javascript"></script>
 <script src="A2J_AuthorApp.js" type="text/javascript"></script>
+<?php
+	} else { // include minimized code
+?>
+<script src="jQuery/jquery.custom.min.js" type="text/javascript" ></script>
+<script src="A2J_AuthorApp.min.js" type="text/javascript"></script>
+<?php
+	}
+?>
 
 
 
@@ -55,7 +62,7 @@ require "loginquick.php";
 </head>
 <body >
 <div id="splash" class="welcome" onclick="signin();return false;">
-	<div align="center"> <img src="img/A2J5_Icon_512.png"/> <img src="img/blank_guide2front.png"/> </div>
+	<div align="center"> <img src="img/A2J5_Icon_512.png"/>  </div>
 </div>
 	
 <div id="page-viewer" class="hidestart ViewerApp">
@@ -82,11 +89,11 @@ require "loginquick.php";
 			<li ref="tabsSteps">Steps</a></li>
 			<li ref="tabsPages">Pages</a></li>
 			<li ref="tabsMap">Map</a></li>
-			<li ref="tabsLogic">Logic</a></li>
-			<li ref="tabsText">Text</a></li>
 			<li ref="tabsFiles">Files</a></li>
-			<li ref="tabsReport">Report</a></li>
+			<li ref="tabsLogic">All Logic</a></li>
+			<li ref="tabsText">All Text</a></li>
 			<li ref="tabsPreview">Preview</a></li>
+			<li ref="tabsReport">Report</a></li>
 			<li ref="tabsUpload">Publish</a></li>
 		</ul>
 	</div>
@@ -338,15 +345,8 @@ require "loginquick.php";
 	</div>
 	<div id="dialog_window_minimized_container"></div>
 	<div id="dialog-confirm" title=""></div>
-	<div id="login-form" title="Access To Justice 5 Authoring System Sign in">
-		<form>
-			<fieldset>
-			<label for="username">Name</label>
-			<input type="text" name="username" id="username" class="text ui-widget-content ui-corner-all"  />
-			<label for="password">Password</label>
-			<input type="password" name="password" id="password" class="text ui-widget-content ui-corner-all"   />
-			</fieldset>
-		</form>
+	<div id="login-form" title="Access To Justice 5">
+		Please sign in at <a href="http://a2j02.a2jauthor.org">A2J Author.org</a>.
 	</div>
 </div>
 </div>

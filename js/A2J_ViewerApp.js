@@ -14,6 +14,15 @@ $(document).ready(function(){
 	loadGuideFile(templateURL,"");
 });
 
+
+
+function setProgress(status)
+{
+	if (status===null){
+		status="";
+	}
+	trace(status);
+}
 function guideStart(start)
 {
 	if (start.indexOf("PAGE ")===0)

@@ -12,6 +12,7 @@
 
 // ### Constants  ###
 
+
 /** @const */ 
 var CONST = {
 	
@@ -21,7 +22,6 @@ var CONST = {
 	
 	CAVersionNum:"5.0.0",
 	CAVersionDate:"2013-04-15",
-	
 	
 	//Page Types
 	ptPopup:'Popup',
@@ -232,6 +232,7 @@ function TPage()
 
 	this.mapx=0;
 	this.mapy=0;
+	this.mapBranches=null;
 	
 //	this.nextPage="";//default for next page
 //	this.nextPageDisabled=false;//boolean - if true, next page button is disabled.
@@ -298,16 +299,16 @@ function TGuide()
 	this.endImage="";				//Origin A2J
 	this.mobileFriendly='';		//If true, will run on Mobile, false won't, '' unknown.
 
-	/** @type {Array.TAuthor} */
+	/** @type {Array.<TAuthor>} */
 	this.authors=[];				//Origin Both - single line, CA is a heirarchy. Array of TAuthor
 	
 	this.firstPage="";			//Origin A2J - starting page specificed by author
 	this.exitPage="";				//Origin A2J - page that exist success
 	
-	/** @type {Array.TStep} */
+	/** @type {Array.<TStep>} */
 	this.steps=[];					//Origin A2J - array of TStep()
 	
-	/** @type {Array.TPage} */	
+	
 	this.pages={};			//Origin both - associative array of pages TPage() by page name. E.g., pages["Contents"] = TPage()
 	this.constants={};	//Origin CAJA - associative array of contants, MAXINCOME:25000
 	//this.popups=[];		//Origin A2J - array of embedded text popups (these are anonymous unlike CA where they are named)

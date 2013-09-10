@@ -156,11 +156,14 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 	var l;
 	for (l=0;l<csLines.length;l++)
 	{
+		// Strip trailing comments
 		var line=jQuery.trim( decodeEntities(csLines[l])).split("//")[0];
 		var args;
 		var js;
 		if (line!=="")
 		{
+			// SET var TO expression
+			// SET var[index] TO expression
 			//if ((args = line.match(/set\s+([\w#]+|\[[\w|#|\s]+\])\s*?(=|TO)\s?(.+)/i))!=null)
 			if ((args = line.match(/set\s+([\w#]+|\[.+\])\s*?(=|TO)\s?(.+)/i))!==null)
 			{	// SET variable name TO expression
@@ -269,6 +272,16 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 	return {js : jsLines,  errors: errors};
 };
 
+TLogic.prototype.hds = function(a2j4)
+{	// 08/23/2013 convert A2J4 style expression into new format
+	// [client name] CONVERTS TO client name
+	// [child name#child counter]  CONVERTS TO child name[child counter]
+	// [age] is 25 CONVERTS TO age = 25
+	// [name first] + [name last] CONVERTS TO name first + name last
+	// [income 1] < 25,000 and [income 2] < 35,000 CONVERTS TO income 1 < 25,000 AND income 2 < 35,000
+	// Assumptions: TODO
+	return a2j4;
+};
 
 TLogic.prototype.translateCAJAtoJSExpression = function(CAJAExpression, lineNum, errors)
 {	// Parse a CAJA expression into a JS expression, NOT EVALUATED.
@@ -284,15 +297,15 @@ TLogic.prototype.translateCAJAtoJSExpression = function(CAJAExpression, lineNum,
 		// Variable formats:
 		//		Variable name with possible spaces
 		//			[child name] converts to GetVar("child name")
-		jj = jj.replace(/\[([\w|\s|-]+)\]/gi,"$$1(\"$1\")"); 
+		jj = jj.replace(/\[([\w|\s|\-]+)\]/gi,"$$1(\"$1\")"); 
 		
 		//		Variable name with possible spaces#number (array)
 		//			[child name#2] converts to GetVar("child name",2)
-		jj = jj.replace(/\[([\w|\s|-]+)#([\d]+)\]/gi,"$$1(\"$1\",$2)");
+		jj = jj.replace(/\[([\w|\s|\-]+)#([\d]+)\]/gi,"$$1(\"$1\",$2)");
 		
 		// Variable name with possible spaces#other variable name that evaluates to a number (array)
 		//			[child name#child counter] converts to GetVar("child name",GetVar("child counter"))
-		jj = jj.replace(/\[([\w|\s|-]+)#([\w|\s|-]+)\]/gi,"$$1(\"$1\",$$1(\"$2\"))");
+		jj = jj.replace(/\[([\w|\s|\-]+)#([\w|\s|\-]+)\]/gi,"$$1(\"$1\",$$1(\"$2\"))");
 
 		//	A2J dates bracketed with # like VB
 		//		#12/25/2012# converts to convertDate("12/25/2012")

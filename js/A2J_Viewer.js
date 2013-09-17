@@ -1,4 +1,5 @@
-﻿/*	CALI Author 5 / A2J Author 5 (CAJA)
+﻿/*
+ 	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	A2J Viewer embedding
@@ -34,7 +35,8 @@ function loadXMLListExternal(opts)
 			  dialogAlert('Unable to load a list of items from '+this.url+"\n"+textStatus);
 			 },
       success: function(data){
-			var opts=$(this).opts;//8/2013 this.opts;
+			var opts=this.opts;
+			//if (!opts) opts=$(this).opts;//8/2013 this.opts;
 			opts.data=data;
 			loadXMLList(opts);
       }
@@ -88,9 +90,7 @@ var A2JViewer={
 		var curstep = page.step;
 		var question = gLogic.evalLogicHTML( page.text );
 		var help = gLogic.evalLogicHTML( page.help);
-
-		var stepcount=steps.length-curstep;
-		$('.interact',div).html(A2JViewer.layoutstep(stepcount)); 
+		$('.interact',div).html(A2JViewer.layoutstep(curstep,steps)); 
 		
 		$('.A2JViewer .ui-form.question').html(question + '<div class="form"></div><div class="buttonlist"></div>');
 		var bi;
@@ -196,6 +196,7 @@ var A2JViewer={
 			function(){
 				return help!=="";
 			}).fadeIn(1000);
+	/*
 		$('.stepnumber.step1').text(steps[curstep].number);
 		$('.steptext.step1').text(steps[curstep].text);
 		$('.circle1').attr('src',A2JViewer.IMG+'step_circle_'+(curstep%3)+'.png');
@@ -205,12 +206,13 @@ var A2JViewer={
 			$('.steptext.step2').text(steps[curstep+1].text);
 			$('.circle2').attr('src',A2JViewer.IMG+'step_circle_'+((curstep+1)%3)+'.png');
 		}
+		*/
 		var h=$('.question.ui-form').height();
 		if (h>400){
 			$('.question.bubble').css({top:50});
 		}
 		
-		$('.A2JViewer .ui-form.learnmore button').button().click(function(){/*close*/});
+		$('.A2JViewer .ui-form.learnmore button').button().click(function(){$('.A2JViewer .learnmore.bubble').hide()});
 		$('.A2JViewer .ui-form.question button').button().click(function()
 		{	// Validation of form data before proceeding
 			var varIndex=null;
@@ -282,37 +284,52 @@ var A2JViewer={
 		});//button click
 		
 	},
-	layoutstep:function(stepcount)
+	layoutstep:function(curstep,steps)
 	{
-		var IMG = A2JViewer.IMG;
-		var steps=['<img style="position:absolute; left:0; bottom: 0; width: 935px; height: 574px;" src="'
-			+IMG+'step1.png" width="804" height="531" /><img src="'
-			+IMG+'step_courthouse.png" width="734" height="255" style="position:absolute; left: 249px; top: -2px;"  /><img class="circle1" style="position:absolute; left:  218px; top: 366px;" src="'
-			+IMG+'step_circle.png" width="370" height="92" /> <img style="position:absolute; left: 389px; top: 274px;" src="'
-			+IMG+'blank_guide2front.png" width="175" height="165" />'
-			+'<img style="position:absolute; left: 478px; top: 421px;" src="'
-			+IMG+'step_sign.png" width="422" height="120" /><div class="question bubble" style="position:absolute; left:57px; top: 140px; width: 285px; "><div class="question ui-form"><p>Question text appears here</p><div class="buttonlist"><button>Yes</button><button>No</button></div></div></div><div class="stepnumber step1" style="position:absolute; left:498px; top: 445px; width: 55px;">12</div>'
-			+'<div class="steptext step1" style="position:absolute; left:561px; top: 429px; width: 234px;" class="question">'
-			+'Congratulations. You have completed this interview!</div><img style="position:absolute; left: 363px; top: 274px; width: 36px; height: 22px;" src="'
-			+IMG+'guide_bubble_tip.png" width="59" height="42" />',
-					  
-					  
-		'<img style="position:absolute; left:0; bottom: 0; width: 934px; height: 591px;" src="'
-			+IMG+'step7.png" width="804" height="531" /><img src="'
-			+IMG+'step_courthouse.png" width="373" height="88" style="position:absolute; left: 411px; top: 42px; width: 268px; height: 47px;"  /><img style="position:absolute; left:  274px; top: 210px; width: 311px; height: 62px;" src="'
-			+IMG+'step_circle.png" class="circle2" width="477" height="118" /><img style="position:absolute; left:  160px; top: 368px;" src="'
-			+IMG+'step_circle.png" class="circle1" width="477" height="118" /><img style="position:absolute; left: 389px; top: 278px;" src="'
-			+IMG+'blank_guide2front.png" width="175" height="165" /> <img style="position:absolute; left: 551px; top: 413px;" src="'
-			+IMG+'step_sign.png" width="422" height="120" /> <img style="position:absolute; left:  517px; top: 248px; width: 246px; height: 59px;" src="'
-			+IMG+'step_sign.png" width="422" height="120" />'
-			+'<div class="stepnumber step2" style="position:absolute; left: 530px; top: 260px; width: 24px; height: 17px;">2</div><div class="steptext step2" style="position:absolute; left: 562px; top: 260px; width: 131px; height: 21px;">Your information</div>'
-			+'<div class="stepnumber step1" style="position:absolute; left:572px; top: 440px; width: 55px;">1</div><div class="steptext step1" style="position:absolute; left:633px; top: 433px; width: 234px; height: 52px;">Welcome!</div><div class="question bubble" style="position:absolute; left:57px; top: 140px; width: 285px; "><div class="question ui-form"><p>Question text appears here</p>			<div class="buttonlist"><button>Yes</button><button>No</button></div></div></div><img style="position:absolute; left: 362px; top: 279px; width: 36px; height: 22px;" src="'
-			+IMG+'guide_bubble_tip.png" width="59" height="42" /> '];
 		
-		var shared = '<div class="learnmore bubble" style="position:absolute; left:604px; top: 93px; width: 285px;"><div class="ui-form learnmore"><p>Learn more text appears here.</p><div class="buttonlist"><button>Close</button></div></div></div>';
-	
+		var IMG = A2JViewer.IMG;
+		function posimg(src,x,y,w,h){
+			if (typeof w!=undefined) w=' width='+w;
+			if (typeof h!=undefined) h=' height='+h;
+			return '<img src="'+IMG+src+'" '+w+h+' style="position:absolute; left:'+x+'px; top:'+y+'px;">';
+		}
+		var stepcount=steps.length-curstep;
+		var stepInfos = [//ch=courthouse, gl=guide left, gf=guide front, cr=client right
+		  {ground:'step1.png',ch:[322,5,550,350],  gl:[351,204],gf:[451,200],cr:[523,198],
+			steps:[[288,430,432,131]],signs:[[629,277,1]]}
+		,{ground:'step7.png', ch:[579,66,143,61], gl:[351,204],gf:[451,200],cr:[523,198],
+			steps:[[288,430,432,131],[448,236,197,24]],signs:[[619,438,1],[569,212,.8]]}
+		];
+		var COLORS=4;
+		var si = (stepcount<=1) ? stepInfos[0] : stepInfos[1];
+		var txt = posimg(si.ground,0,0) + posimg('A2J5_CourtHouse.png',si.ch[0],si.ch[1],si.ch[2],si.ch[3]);
+		for (var s=0;s<si.steps.length;s++) {
+			var cs = curstep + s;
+			var s1=si.steps[s];
+			var color = (cs===0) ? 0 : (cs-1) % COLORS +1;
+			txt +=  posimg('step_circle_'+ color +'.png',s1[0],s1[1],s1[2],s1[3]) ;
+			var s1=si.signs[s];
+			var zoom = s1[2];zoom = '-moz-transform: scale('+zoom+');';
+			txt += '<div class="stepsign" style="position:absolute; left:'+s1[0]+'px; top: '+s1[1]+'px;'+zoom+'"><div class="stepsigncolor Step'+color+'" ></div>	<div class="stepnumber" >'+steps[cs].number+'</div><div class="steptext">'+steps[cs].text+'!</div></div>';
+			// step'+s+'
+		}
+		var ga='M';//M or F
+		var ca='F';//'' or M or F
+		var qx;
+		if (ca!="")
+		{
+			qx=si.gl[0]-300;
+			txt += posimg('A2JAvatar-Guide-'+ga+'0.png',si.gl[0],si.gl[1])+posimg('A2JAvatar-Client-'+ca+'1.png',si.cr[0],si.cr[1]);
+		}
+		else
+		{
+			qx=si.gf[0]-300;
+			txt += posimg('A2JAvatar-Guide-Front-'+ga+'1.png',si.gf[0],si.gf[1]);
+		}
+		txt +='<div class="question bubble" style="position:absolute; left:'+qx+'px; top: 140px; width: 300px; "><div class="question ui-form"><div class="buttonlist"></div></div></div><img style="position:absolute; left: '+(qx+299)+'px; top: 240px; " src="'+IMG+'guide_bubble_tip.png"   />';
 
-		var txt= (stepcount<=1) ? steps[0] : steps[1];
+		var shared = '<div class="learnmore bubble" style="position:absolute; left:604px; top: 93px; width: 285px;"><div class="ui-form learnmore"><div class="buttonlist"><button>Close</button></div></div></div>';
+
 		return '<div class="step" >' + txt + shared + '</div>';
 	}
 };

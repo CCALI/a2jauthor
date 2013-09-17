@@ -1,9 +1,9 @@
-/*	CALI Author 5 / A2J Author 5 (CAJA)
+/*
+ 	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	Type/constant declarations
 	04/2012
-	04/15/2013
 		
 	Required by Author and Viewers
 */
@@ -16,8 +16,8 @@
 /** @const */ 
 var CONST = {
 	
-	A2JVersionNum:"5.0.1",
-	A2JVersionDate:"2013-04-15",
+	A2JVersionNum:"5.0.1.1",
+	A2JVersionDate:"2013-09-18",
 	
 	
 	CAVersionNum:"5.0.0",

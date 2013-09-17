@@ -1,4 +1,5 @@
-﻿/*	CALI Author 5 / A2J Author 5 (CAJA)
+﻿/*
+ 	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	CAJA Utils 
@@ -39,14 +40,16 @@ function urlSplit(url)
 }
 
 
-function propCount(obj){
+function propCount(obj)
+{
 	var cnt = 0;
 	var p;
 	for ( p in obj){ cnt++;}
 	return cnt;
 }
 
-function traceTag(cname,chtml){
+function traceTag(cname,chtml)
+{
 	if ((cname==='val') && (chtml === ""))
 		{chtml = "<i>blank</i>";}
 	return "<span class="+cname+">"+chtml+"</span>";

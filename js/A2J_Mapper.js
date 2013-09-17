@@ -1,4 +1,5 @@
-/*	CALI Author 5 / A2J Author 5 (CAJA)
+/*
+	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	Mapper
@@ -131,7 +132,6 @@ function mapZoomClick()
 	$('.map').traggable('changeScale',gMapperScale);
 	//$('.map').css({zoom:gMapperScale,"-moz-transform":"scale("+gMapperScale+")","-webkit-transform":"scale("+gMapperScale+")"});
 }
-
 
 
 function mapLines()

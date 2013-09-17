@@ -1,10 +1,12 @@
 @charset "utf-8";
 /*
-	CALI Author 5 / A2J Author 5 (CAJA)
+	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	Authoring system Stylesheet 
+	Authoring system Stylesheet
+	Coloring moved into the A2J jQuery theme
 	04/15/2013
 */
+
 
 .ui-widget-header, 
 .ui-state-default, 
@@ -22,13 +24,7 @@
 
 
 
-html, body, input, select, textarea , .htmledit, .codeedit {
-	background-color: #fff;
-	color: #000;
-}
-::-webkit-input-placeholder {	color: #555;font-style:italic}
-:-moz-placeholder {	 			color: #555;font-style:italic}
-:-ms-input-placeholder {			color: #555;font-style:italic;}
+
 html, body {
 	font-family:   Verdana, Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -38,13 +34,6 @@ html, body {
 	padding:0;
 	overflow: hidden;
 }
-
-
-.picker.branch , .picker.score {
-	xfont-size: 1em;
-}
-
-
 
 
 /**************************/
@@ -63,9 +52,6 @@ html, body {
 	margin:0;
 	padding:0;
 	overflow: hidden;
-/* */
-	background-color:#fff;
-/* */
 }
 
 #cajaheader {
@@ -73,7 +59,6 @@ html, body {
 	padding:0px;
 	margin: 0px;
 	height: 32px;
-	background-color: #fff;
 }
 #cajainfo  {
 	position: fixed;
@@ -119,7 +104,7 @@ html, body {
 	height: 16px;
 	bottom: 0px;
 	width: 100%;
-	background-color: #fff;
+	xbackground-color: #fff;
 }
 
 .guidepanels {
@@ -130,9 +115,6 @@ html, body {
 	left:125px;
 	padding: 15px;
 	padding-left: 40px;
-/* */	
-	background-color: #e5e5e5;
-/* */	
 
 }
 .guidemenu {
@@ -146,8 +128,7 @@ html, body {
 	xbottom:0px;
 	width: 112px;
 	border : 1px solid #c0c0c0;
-	background-color: #c0c0c0;
-	z-index: 1;
+	xbackground-color: #c0c0c0;
 }
 .guidemenu ul {
 	font-size: 15px;
@@ -171,8 +152,10 @@ html, body {
 }
 .guidemenu ul li.selected {
 	font-weight: bold;
-	background-color: #cdf;
-	background: url("img/main_tab_selected_02.png") no-repeat scroll -65px center transparent;
+	background-color: inherit;
+	background-color: rgb(0,0,0,0);
+	background: url("img/main_tab_selected_03.png") no-repeat scroll -65px center;
+	/*(transparent;*/
 	overflow: visible;
 	width: 200px;
 /* JPM */	
@@ -190,7 +173,6 @@ html, body {
 	font-style: normal;
 	padding: 0px;
 	padding-left: 2em;
-	background-color:#fff;
 /* */
 	margin-top: -.25em;
 	margin-bottom: 2em;	
@@ -200,12 +182,11 @@ html, body {
 	margin: 0px;
 /* */	
 	padding: 10px 0px 5px;
-	background-color:#fff;
 /* */	
 }
 .pageoutline ul { 
 	xlist-style-image: url(img/new.gif);
-	list-style-type: bullet;
+	list-style-type: circle;
 	margin-left: 0;
 	text-indent: 0;
 }
@@ -214,25 +195,22 @@ html, body {
 	margin-left: 1em;
 }
 .pagelist * li {
-    font-size: 1em;
-    max-height: 2.5em;
-    overflow: hidden;
+	font-size: 1em;
+	max-height: 2.5em;
+	overflow: hidden;
 /* START JPM edits 7/1/2013 */
-    background-color: #fff;
+	/*background-color: #fff;*/
 	padding: .5em;
 /* END */
 }
 
 .pagelist > ul > li {
-    font-size: 1.25em;
-    max-height: 2.5em;
-    overflow: hidden;
-    background-color:#F0F7FA;
+	cursor: default;
+	font-size: 1.25em;
+	max-height: 2.5em;
+	overflow: hidden;
 }
 
-/* START JPM edits 7/1/2013 */
-.pagelist * li:nth-child(even) {background-color:#F0F5F7}; 
-/* END */
 
 
 .pagelist * li:hover{
@@ -317,20 +295,12 @@ table.A2JSteps th, table.A2JVars th {
 }
 /* JPM */	
 
-.Step0 { background-color: #ffffff; }
-.Step1, .Step7, table.A2JSteps tr:nth-child(3n+1) { background-color: #BDD6D6; }
+
+/*.Step1, .Step7, table.A2JSteps tr:nth-child(3n+1) { background-color: #BDD6D6; }
 .Step2, .Step8, table.A2JSteps tr:nth-child(3n+2)  { background-color: #B7DDB7; }
 .Step3, .Step9, table.A2JSteps tr:nth-child(3n+3)  { background-color: #EFC68C; }
-.Step4, .Step10 { background-color:#E7E7B5; }
-.Step5, .Step11 { background-color:#EFDED6; }
-.Step6, .Step12 { background-color:#ECD8EA; }
+*/
 
-table.A2JVars tr:nth-child(even) ,table.A2JFiles tr:nth-child(even) {
-background-color:#fff;
-}
-table.A2JVars tr:nth-child(odd),table.A2JFiles tr:nth-child(odd) {
-background-color:#eee;
-}
 input.narrow {
 	width: 5em;
 }
@@ -343,22 +313,6 @@ input.narrow {
             box-sizing: border-box;
 }
 
-/* */
-.tabContent legend, .ui-widget-content legend {
-	font-size: 1.1em;
-	font-weight:bold;
-	background-color:#f8fcff;
-	border-width:thin;
-	border-color:grey;
-	border-style:solid;
-	padding: .75em;
-}
-
-.ui-dialog-titlebar {
-	font-size: 1.1em;
-	font-weight:bold;
-}
-/* */
 
 .CAJAEditor { 
 	padding: 0;
@@ -407,13 +361,11 @@ div.editq {
 }
 .editq fieldset div  {
 	margin-top: 1em;
-	xborder: 1px solid #0f0;
 }
 .editq fieldset {
 	padding: inherit;
 	margin-top:25px; 
 /* */
-	background:#f8fcff;
 	padding-bottom: 1.3em;
 /* */
 
@@ -498,7 +450,7 @@ x.autocomplete.picker.page {
 x.bubble {
 	-moz-border-radius:15px 15px 15px 15px;
 	border-radius:15px 15px 15px 15px;
-	border: 3px solid #0066CC;
+	border: 3px solid #06c;
 	background-color: #C4E1FF;
 	margin-bottom: 1em;
 	padding: 1em;
@@ -619,10 +571,8 @@ background-color:#ddf;
 }
 
 .section .header {
-	/*font-size: 15px;*/
 	font-style: normal;
 	padding: 4px;
-	xfont-family: Arial, Helvetica, sans-serif;
 	font-weight: bold;
 	float: none;
 	clear: none;
@@ -708,19 +658,11 @@ textarea {
 
 /************** List Table ************/
 table.list {
-	xborder-collapse:collapse;
-	xborder:1px solid #111;
 	width:100%;
 }
 table.list tr   {
 	border:5px solid #888;
 	border-collapse:separate;
-}
-table.list tr:nth-child(even) {
-	background-color:rgba(240,240,240,0.5);
-}
-table.list tr:nth-child(odd) {
-	background-color:rgba(255,255,255,0.5);
 }
 table.list tr td  {
 	xfont-size: .8em;
@@ -756,7 +698,6 @@ input.text { margin-bottom:12px; width:95%; padding: .4em; }
 /* JPM*/
 	box-shadow: 2px 2px 10px 10px #888888;
 /* JPM*/
-	xborder: 2px solid #888888;
 }
 
 #guidepanel > ul > span {	

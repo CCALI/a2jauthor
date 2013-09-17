@@ -1,4 +1,5 @@
-﻿/*	CALI Author 5 / A2J Author 5 (CAJA)
+﻿/*
+ 	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	Logic
@@ -452,6 +453,7 @@ TLogic.prototype.executeScript = function(CAJAScriptHTML)
 	// Execute lines of CAJA script. Syntax/runtime errors go into logic tracer, error causes all logic to cease.
 	// GOTO's cause immediate break out of script and the caller is responsible for changing page.
 	// Script statement lines separated <BR/> tags.
+	if (typeof CAJAScriptHTML==='undefined') return true;
 	this.indent=0;
 	var script = this.translateCAJAtoJS(CAJAScriptHTML);
 	if (script.errors.length === 0)

@@ -1,5 +1,8 @@
 <?php
-	// 09/07/2013 - 10/05/2012 SJG Customize db and folder paths depending on server.
+/*
+ 	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
+	09/07/2013 - 10/05/2012 SJG Customize db and folder paths depending on server.
+*/
 	$isProductionServer = $_SERVER['HTTP_HOST']=="author.a2jauthor.org" || $_SERVER['HTTP_HOST']=="caja.a2jauthor.org";
 	
 	if ($isProductionServer)

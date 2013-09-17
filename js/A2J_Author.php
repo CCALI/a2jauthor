@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!--
-	CALI Author 5 / A2J Author 5 (CAJA)
+	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	04/15/2013
 -->
@@ -9,16 +9,22 @@
 <title>A2J Author 5</title>
 
 
-<link xhref="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/sunny/jquery-ui.css"  title="style" rel="stylesheet" type="text/css"/>
+<link xhref="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/sunny/jquery-ui.css"  title="style" rel="stylesheet" type="text/css"/>
+<link xhref="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-darkness/jquery-ui.css"  title="style" rel="stylesheet" type="text/css"/>
 <link xhref="http://code.jquery.com/ui/1.9.0/themes/sunny/jquery-ui.css" title="style"  rel="stylesheet" type="text/css"/>
 <link href="jQuery/themes/a2j/jquery-ui.css" title="style"  rel="stylesheet" type="text/css"/>
+
 <link href="jQuery/jquery.ui.custom.css" rel="stylesheet" type="text/css" />
 <link href="jQuery/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
 <link href="A2J_Author.css"  rel="stylesheet" type="text/css"/>
 <link href="A2J_Viewer.css"  rel="stylesheet" type="text/css"/>
 
+<script xsrc="jQuery/jquery.1.10.2.min.js" type="text/javascript"></script>
+<script xsrc="jQuery/jquery.ui.1.10.3.min.js" type="text/javascript"></script>
+
 <script src="jQuery/jquery.1.8.2.min.js" type="text/javascript"></script>
-<script src="jQuery/jquery.ui.1.9.1.custom.min.js" type="text/javascript"></script>
+<script src="jQuery/jquery.ui.1.9.1.min.js" type="text/javascript"></script>
+
 <script xsrc="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 <script xsrc="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js" type="text/javascript"></script>
 
@@ -26,10 +32,10 @@
 
 
 <?php
-	if ( 1 ) { // include full source code
+	if (  1 == true ) { // include full source code
 ?>
 
-<script src="jQuery/jquery.custom.js" type="text/javascript" ></script>
+<script src="jQuery/jquery.xml.min.js" type="text/javascript" ></script>
 <script src="jQuery/jquery.fileupload.js"></script><!-- The basic File Upload plugin -->
 <script src="jQuery/jquery.fileupload-process.js"></script><!-- The File Upload processing plugin -->
 <script src="jQuery/jquery.fileupload-validate.js"></script><!-- The File Upload validation plugin -->
@@ -47,6 +53,7 @@
 <script src="A2J_Mapper.js" type="text/javascript"></script>
 <script src="A2J_Viewer.js" type="text/javascript"></script>
 <script src="A2J_AuthorApp.js" type="text/javascript"></script>
+<script src="CAJA_Dev.js" type="text/javascript"></script>
 <?php
 	} else { // include minimized code
 ?>
@@ -60,7 +67,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
-<body >
+<body class="ui-widget-content">
 <div id="splash" class="welcome" onclick="signin();return false;">
 	<div align="center"> <img src="img/A2J5_Icon_512.png"/>  </div>
 </div>
@@ -97,7 +104,7 @@
 			<li ref="tabsUpload">Publish</a></li>
 		</ul>
 	</div>
-	<div class="guidepanels">
+	<div class="guidepanels xui-widget-content">
 		<div class="panel" id="tabsAbout">
 			<div class="tabHeader">Information about this guide. </div>
 			<div class="tabContentFrame">

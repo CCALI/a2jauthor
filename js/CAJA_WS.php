@@ -1,10 +1,11 @@
 <?php
-// 010/05/2012 Simple CAJA Author Web Service API
-// A Fuse to handle all a2j author editing stuff
-
-//07/01/2013 HACK to login to demo
-//7/15/2013 Directory restructure
-
+/*
+	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
+	10/05/2012 Simple CAJA Author Web Service API
+	A Fuse to handle all a2j author editing stuff
+	07/01/2013 HACK to login to demo
+	7/15/2013 Directory restructure
+*/
 
 
 $command=$_REQUEST['cmd'];
@@ -48,7 +49,8 @@ else
 	session_start();//  09/05/2013 WARNING! LEAVE session_start() OFF TO ACCESS DRUPAL SESSIONS!
 	define("LOCAL_AS_DEMO_USER", 1);
 	if ( LOCAL_AS_DEMO_USER )
-		$userid=26;
+		//$userid=26;
+		$userid=45;
 	else
 		$userid=0;
 }

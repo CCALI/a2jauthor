@@ -1,4 +1,7 @@
-//SJG 1/22/13 - ui.traggable - setscale changed to absolute, drag item changed from .item to .node, added start/stop events
+/*
+ 	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
+ 	SJG 1/22/13 - ui.traggable - setscale changed to absolute, drag item changed from .item to .node, added start/stop events
+*/
 
 
 /* Traggable */

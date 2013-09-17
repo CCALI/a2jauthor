@@ -1,4 +1,5 @@
 /*
+  	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
  * jQuery File Upload Image Preview & Resize Plugin 1.2.2
  * https://github.com/blueimp/jQuery-File-Upload
  *

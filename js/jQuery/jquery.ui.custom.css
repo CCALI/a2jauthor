@@ -1,5 +1,5 @@
 /*
-	CALI Author 5 / A2J Author 5 (CAJA)
+	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	10/02/12 jQuery for CAJA - Custom compilation of extra jQuery ui css
 */
@@ -22,16 +22,3 @@
 	margin: 0;
 	padding: 0.3em;
 }
-
-/* */
-.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
-    background-image: none;
-    opacity: 0.50;
-}
-
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-    background: repeat-x scroll 50% 50% #0066CC;
-    color: #fff;
-    font-weight: normal;
-}
-/* */

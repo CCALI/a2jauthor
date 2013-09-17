@@ -1,54 +1,12 @@
-﻿/*	CALI Author 5 / A2J Author 5 (CAJA)
+﻿/*
+ 	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	Authoring App GUI
-	03/30/2012
-	04/15/2013
 */
 
 CONST.uploadURL = 'CAJA_WS.php?cmd=uploadfile&gid=';
 
-/*  * /
-// Comment DEBUGSTART() function out when NOT testing locally.
-function DEBUGSTART(){
-	gUserNickName='Tester';
-	gUserID=0;
-	var TESTMODE = 1;
-	if ( TESTMODE===2 ) {
-		// Hard code load db
-		gGuideID =238;//238;//133;
-		ws({cmd:'guide',gid:gGuideID},guideLoaded);
-	}
-	else
-	{
-		$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist"></p>');
-		var SAMPLES = [
-			"tests/data/A2J_NYSample_interview.xml",
-			"tests/data/A2J_MobileOnlineInterview_Interview.xml",
-			"tests/data/A2J_ULSOnlineIntake081611_Interview.xml",
-			"tests/data/A2J_ULSOnlineIntake081611_Interview.xml#1b Submit Application for Review",
-			"tests/data/Logic Tests.a2j",
-			"tests/data/Field Types Test.a2j#2-1-0 Pick Colors",
-			"tests/data/Field Characters Test.a2j",
-			"tests/data/Field Characters Test.a2j#4-1 If thens",
-			"tests/data/Field Characters Test.a2j#1-5 Fields Test 1",
-			"tests/data/Field Characters Test.a2j#0-1 Intro",
-			"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name"
-			//"tests/data/CBK_CAPAGETYPES_jqBookData.xml", 
-			//"tests/data/CBK_CAPAGETYPES_jqBookData.xml#MC Choices 3: 4 choices", 
-			//"tests/data/CBK_EVD03_jqBookData.xml",
-			//"/a2j4guides/Field Types Test.a2j#2-1-0 Pick Colors",
-			//"/a2j4guides/Logic Tests.a2j"
-			
-		];
-		$(SAMPLES).each(function(i,elt){
-			$('#samples, #guidelist').append('<li><a href="#sample">'+elt+'</a></li>');		
-		});
-		loadGuideFile(SAMPLES[0],"");//$('a	[href="#sample"]').first().text(), "");
-	}
-	$('#splash').hide();
-}
-/* */
 
 TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,clear)
 {	// 08/03/2012 Edit panel for guide sections 
@@ -287,7 +245,7 @@ var SELECTED = 'ui-state-active';
 
 
 function authorViewerHook()
-{	//	Attach Author editing buttons to the A2J viewer 
+{	//	Attach Author editing buttons to the A2J viewer
 	$('.A2JViewer').append('<div class="debugmenu"><button/><button/></div>');
 	$('.A2JViewer div.debugmenu button').first()
 		.button({label:'Resume editing',icons:{primary:'ui-icon-arrowreturnthick-1-w'}}).click(function(){resumeEdit();})
@@ -352,8 +310,7 @@ function main()
 	});
 	*/
 	
-	//$('.htmledit a').live('hover',
-	$('.editicons .ui-icon-circle-plus').live('click',function(){// clone a table row
+		$(document).on("click", '.editicons .ui-icon-circle-plus',function(){// clone a table row
 		var $tbl=$(this).closest('table');
 		var row = $(this).closest('tr');
 		var settings=$tbl.data('settings');
@@ -362,7 +319,7 @@ function main()
 		row.data('record',$.extend({},row.data('record')));
 		form.listManagerSave($(this).closest('table'));
 	});
-	$('.editicons .ui-icon-circle-minus').live('click',function(){// delete a table row
+	$(document).on("click", ".editicons .ui-icon-circle-minus",  function(){// delete a table row
 		var $tbl=$(this).closest('table');
 		var settings=$tbl.data('settings');
 		if ($('tbody tr',$tbl).length<=settings.min) {return;}
@@ -432,15 +389,6 @@ function main()
 
    // Draggable
    $('.hotspot').draggable({ containment: 'parent' }).resizable().fadeTo(0.1, 0.9);
-
-
-	if (typeof DEBUGSTART!=="undefined")
-	{
-		DEBUGSTART();
-	}
-	else{
-		signin();
-	}
 
    // Menu bar
 	//$('#cajasettings').menu();
@@ -552,6 +500,8 @@ function main()
 			return '';
 		}
 	});
+	
+	signin();
 }
 
 function signin(){ 
@@ -1418,7 +1368,8 @@ function styleSheetSwitch(theme)
 		theme = "jQuery/themes/"+theme.toLowerCase()+"/jquery-ui.css";
 	}
 	else{
-		theme = "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/"+theme.toLowerCase()+"/jquery-ui.css";
+		theme = "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/"+theme.toLowerCase()+"/jquery-ui.css";
+		//1.8.23
 	}
 	$('link[title=style]').attr('href',theme);
 }
@@ -1697,7 +1648,10 @@ var form={
 			+'<span class=editspan> <input class="ui-widget editable" placeholder="'+data.placeholder+'" type="text" /> </span></div>');
 		//if (typeof data.class!=='undefined') $('input',e).addClass(data.class);
 		//if (typeof data.width!=='undefined') $('input',e).css('width',data.class);
-		$('input',e).blur(function(){ form.change($(this),$(this).val());}).val(decodeEntities(data.value)).data('data',data);
+		$('input',e).blur(function(){
+			form.change($(this),$(this).val());
+			trace('saving '+$(this).val());
+			}).val(decodeEntities(data.value)).data('data',data);
 		return e;
 	}
 	,htmlFix:function(html){
@@ -1727,8 +1681,7 @@ var form={
 	}
 	
 	,pickFile : function(mask)
-	{
-		
+	{	
 		var e=$('<span class="fileinput-button"><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary"><span class="ui-button-icon-primary ui-icon ui-icon-plus"></span><span class="ui-button-text" >Upload...</span></button><input class="fileupload" type="file" name="files[]"/></span>');
 		//.addClass('fileupload-processing')
 		$('.fileupload',e).fileupload({
@@ -1737,10 +1690,8 @@ var form={
 			 done: function (e, data) {
 				var filename = data.result.files[0].name;
 				$(e.target).closest('div').find('input[type=text]').val(filename);
-				setTimeout(updateAttachmentFiles,1);
-				 // $.each(data.result.files, function (index, file) {
-				//		$('<p/>').text(file.name).appendTo('#files');
-				//  });
+				//form.change($(this),filename);
+				setTimeout(updateAttachmentFiles,250);
 			 },
 			 progressall: function (e, data) {
 				  var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -1756,8 +1707,7 @@ var form={
 	
 	,pickAudio: function(data){
 		return form.text(data).append(form.pickFile(''));
-	}
-	
+	}	
 	,pickImage:function(data){ 
 		return form.text(data).append(form.pickFile(''));
 	}
@@ -2006,9 +1956,11 @@ var form={
 		var $tbl=$('<table/>').addClass('list').data('settings',settings).attr('list',settings.name);
 		div.append(form.tableRowCounter(settings.name,settings.picker,settings.min,settings.max,settings.list.length));
 		var i;
+		console.log(div.html());
 		for (i=0;i<settings.list.length;i++){
 			form.listManagerAddRow($tbl,settings.list[i]);
 		}
+		console.log(settings.list);
 		$('tbody',$tbl).sortable({
 			handle:"td .sorthandle",
 			update:function(event,ui){

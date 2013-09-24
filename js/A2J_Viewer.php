@@ -15,15 +15,15 @@
 
 <SCRIPT LANGUAGE=JavaScript>
 //var templateURL="/a2j4guides/Logic Tests.a2j";
-var templateURL="/a2j4guides/Field Types Test.a2j#2-1-0 Pick Colors";
+var templateURL="/a2j4guides/Field Types Test.a2j?r="+Math.random()+"#2-1-0 Pick Colors";
 //var templateURL="tests/data/Field Types Test.a2j";
 //var templateURL="tests/data/A2J_FieldTypesTest_Interview.xml";
 var fileDataURL="tests/data/";
-var getDataURL= "A2J_GetData.php";
-var setDataURL= "A2J_SetData.php?interviewID=<?=$interviewID?>";
-var exitURL=   "A2J_Exit.php?interviewID=<?=$interviewID?>";
-var logURL=   "A2J_Log.php"; //"https://lawhelpinteractive.org/a2j_logging";
-var errRepURL="A2J_ErrRep.php";//"https://lawhelpinteractive.org/problem_reporting_form";
+var getDataURL= "A2J_ViewerGetData.php";
+var setDataURL= "A2J_ViewerSetData.php?interviewID=<?=$interviewID?>";
+var exitURL=   "A2J_ViewerExit.php?interviewID=<?=$interviewID?>";
+var logURL=   "A2J_ViewerLog.php"; //"https://lawhelpinteractive.org/a2j_logging";
+var errRepURL="A2J_ViewerErrRep.php";//"https://lawhelpinteractive.org/problem_reporting_form";
 </script>
 
 <script src="jQuery/jquery.1.8.2.min.js" type="text/javascript"></script>
@@ -49,7 +49,7 @@ var errRepURL="A2J_ErrRep.php";//"https://lawhelpinteractive.org/problem_reporti
 	} else { // include minimized code
 ?>
 <script src="jQuery/jquery.custom.min.js" type="text/javascript" ></script>
-<script src="A2JViewer_min.js" type="text/javascript"></script>
+<script src="A2J_ViewerApp.min.js" type="text/javascript"></script>
 <?php
 	}
 ?>

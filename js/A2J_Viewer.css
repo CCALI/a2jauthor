@@ -26,11 +26,11 @@ html, body{
 }
 #a2jbtn {
 	position: relative;
-	width: 32px;
+	width: 200px;
 	height: 32px;
 	top: 5px;
 	left: 5px;
-	background-image: url(img/A2J5_Icon_32.png);
+	background-image: url(img/A2J5_Viewer_Logo.png);
 }
 .A2JViewer {
 	position:fixed;
@@ -66,6 +66,15 @@ html, body{
 
 .A2JViewer fieldset {
 	border: none;
+}
+.A2JViewer .notice {
+	position: absolute;
+	bottom: 0px;
+	margin: 0.5em;
+	padding: 0px;
+}
+.A2JViewer .license {
+	background-color: rgba(255,255,255,.8);
 }
 .A2JViewer .NavBar {
 	margin: 0px;

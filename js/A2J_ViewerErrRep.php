@@ -1,9 +1,14 @@
 <?php
+/*
+ 	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+
+*/
 header("Content-Type: text/html; charset=utf-8"); 
 ?>
 
 Thanks for your error report:
-<form action="A2JLog.php?user=1" method="POST">
+<form action="A2J_Log.php?user=1" method="POST">
 What were you doing when we messed up? <input name="Reason" type=text>
 <BR><input type=submit  value="Submit Report">
 <BR>Extra stuff:<BR>

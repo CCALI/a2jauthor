@@ -30,7 +30,8 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	
 	guide.tool = "A2J";
 	guide.toolversion =  makestr(TEMPLATE.find('A2JVERSION').text());
-	guide.avatar=makestr(TEMPLATE.find('AVATAR').text());
+	guide.avatar=			makestr(TEMPLATE.find('AVATAR').text());
+	guide.guideGender=	makestr(TEMPLATE.find('GUIDEGENDER').text());
 	guide.completionTime="";
 	guide.copyrights="";
 	guide.createdate="";
@@ -64,6 +65,8 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	
 	guide.templates=makestr(TEMPLATE.find('TEMPLATES').text());
 
+	
+	
 	TEMPLATE.find("VARIABLE").each(function() {
 		var VARIABLE = $(this);
 		var v = new TVariable();
@@ -74,6 +77,8 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		//Obsolete, discard: VARIABLE.attr("SCOPE");
 		guide.vars[v.name.toLowerCase()]=v;
 	 });
+	// guide's default avatar/guide settings aren't set here. 
+	
 	
 	var popups=[];
 	TEMPLATE.find("POPUP").each(function() {

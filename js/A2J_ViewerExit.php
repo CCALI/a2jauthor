@@ -1,4 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--
+	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+-->
 <HTML><!-- InstanceBegin template="/Templates/A2JTemplateAuthorTest.dwt" codeOutsideHTMLIsLocked="false" -->
 <HEAD>
 <!-- InstanceBeginEditable name="doctitle" -->

@@ -81,6 +81,7 @@ function exportXML_CAJA_from_CAJA(guide)
 	JSON.GUIDE.INFO.tool=guide.tool;
 	JSON.GUIDE.INFO.toolversion=guide.toolversion;
 	JSON.GUIDE.INFO.avatar=guide.avatar;
+	JSON.GUIDE.INFO.guideGender=guide.guideGender;
 	JSON.GUIDE.INFO.XML_completionTime=guide.completionTime;
 	JSON.GUIDE.INFO.XML_copyrights=guide.copyrights;
 	JSON.GUIDE.INFO.createdate=guide.createdate;
@@ -150,6 +151,8 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 	guide.tool =			makestr(INFO.children('TOOL').text());
 	guide.toolversion =  makestr(INFO.children('TOOLVERSION').text());
 	guide.avatar=			makestr(INFO.children('AVATAR').text());
+	guide.guideGender=	makestr(INFO.children('GUIDEGENDER').text());
+	console.log('guide.guideGender',guide.guideGender)
 	guide.completionTime=makestr(INFO.children('COMPLETIONTIME').xml());
 	guide.copyrights=		makestr(INFO.children('COPYRIGHTS').xml());
 	guide.createdate=		makestr(INFO.children('CREATEDATE').text());

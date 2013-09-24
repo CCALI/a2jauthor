@@ -280,6 +280,7 @@ function TGuide()
 	this.tool="CAJA";
 	this.toolversion="2012-12-12";
 	this.avatar="";				//Origin A2J - default avatar to use (blank or tan)
+	this.guideGender='Female';	//A2J5 - default avatar gender to use (M or F)
 	this.completionTime="";		//Origin CA - author's estimated completion time including section breakdown
 	this.copyrights="";			//Origin CA - CALI copyright notices, etc.
 	this.createdate="";			//Original CA - first date of creation of the lesson
@@ -298,7 +299,7 @@ function TGuide()
 	this.logoImage="";			//Origin A2J
 	this.endImage="";				//Origin A2J
 	this.mobileFriendly='';		//If true, will run on Mobile, false won't, '' unknown.
-
+	
 	/** @type {Array.<TAuthor>} */
 	this.authors=[];				//Origin Both - single line, CA is a heirarchy. Array of TAuthor
 	
@@ -347,6 +348,7 @@ function TVariable()
 	this.values=[];
 	return this;
 }
+
 TGuide.prototype.sortPages=function()
 {
 	var guide=this;
@@ -414,6 +416,10 @@ TGuide.prototype.addUniquePage=function(preferredName,clonePage)
 };
 
 
+/**
+* @param {string} varName
+* @param {string|number} [varIndex]
+*/
 TGuide.prototype.varGet=function(varName,varIndex)
 {
 	varName = jQuery.trim(varName);
@@ -426,7 +432,7 @@ TGuide.prototype.varGet=function(varName,varIndex)
 	if (typeof v === 'undefined')
 	{
 		gLogic.trace('Undefined variable: '+ traceTag('var',varName)+ ((varIndex===0)?'':traceTag('varidx',varIndex) ));
-		return 'undefined';
+		return v;//'undefined';
 	}
 	var val = v.values[varIndex]; 
 	switch (v.type){

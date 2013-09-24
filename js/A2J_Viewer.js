@@ -50,16 +50,17 @@ var A2JViewer={
 
 	history:[],
 	
-	layoutPage:function(div,guide,steps,page)
+	layoutPage:function(div,page)
 	{	// layout page into interactive viewer. attach event handlers.
 	
-		var html = '<ul class="NavBar"> <li><a href="#navback">'+lang.GoBack+'</a></li> <li><a href="#">'+lang.GoNext+'</a></li> <li>'+lang.MyProgress+' <select id="history"><option>Question 1</option><option>Question 2</option></select></li>  <li class="right size2"><a href="#">A+</a></li> <li class="right size1"><a href="#">A-</a></li> <li class="right"><a href="#">Exit</a></li> <li class="right"><a href="#">Save</a></li> </ul><div class="interact">This is some content </div> <div id="a2jbtn"></div> ';
-		if ($(div).html()==="")//first time?
-		{
-			$(div).html(html);
+		var html = '<ul class="NavBar"> <li><a href="#navback">'+lang.GoBack+'</a></li> <li><a href="#">'+lang.GoNext+'</a></li> <li>'+lang.MyProgress+' <select id="history"><option>Question 1</option><option>Question 2</option></select></li>  <li class="right size2"><a href="#">A+</a></li> <li class="right size1"><a href="#">A-</a></li> <li class="right"><a href="#">Exit</a></li> <li class="right"><a href="#">Save</a></li> </ul><div class="interact"></div> <div id="a2jbtn"></div> '+
+		'<div class="notice"><div class="license"><p ><img src="img/SJILogo.gif" width="90" height="55" hspace="3" vspace="3" align="left" />This program was developed under grants from the State Justice Institute (SJI grant number SJI-04-N-121), Center for Access to the Courts through Technology; Chicago Kent College of Law, Center for Computer-Assisted Legal Instruction (CALI), and Legal Services Corporation (LSC).  The points of view expressed are those of the authors and do not necessarily represent the official position or policies of the SJI, Center for Access to the Courts through Technology, Chicago-Kent, CALI, or the LSC.</p><p>&quot;A2J Author&quot; and &quot;A2J Guided Interviews&quot; are federally registered trademarks of Illinois Institute of Technology, Chicago Kent College of Law &amp; Center for Computer-Assisted Legal Instruction.  Any use of either mark must include the full name of the mark, along with the registration circle - ®.  Use of either mark on your webpage, or in any publications, presentations or materials must also prominently display the following sentence, &quot;[insert mark name here]® is a US federally registered trademark owned by Illinois Institute of Technology, Chicago Kent College of Law &amp; Center for Computer-Assisted Legal Instruction. &lt;www.a2jauthor.org&gt; </p></div><div class="copyright">© 2000-2013 Illinois Institute of Technology - Chicago-Kent College of Law and the Center for Computer-Assisted Legal Instruction</div></div>';
+		if (div.html()==="")
+		{	// First time rendering, attach handlers.
+			div.html(html);
 			$('#a2jbtn').attr('title',versionString()).click(function()
 			{
-				$('.A2JViewer').toggleClass('test',500);
+				$(div).toggleClass('test',500);//$('.A2JViewer')
 			});
 			$('#viewer-var-form').append('<div><button/><button/></div>');
 			$('#viewer-var-form div button').first()
@@ -78,6 +79,11 @@ var A2JViewer={
 			if (typeof authorViewerHook !== 'undefined'){
 				authorViewerHook();
 			}
+			else
+			{
+				$('.license',div).delay(5000).slideUp();
+				$('.copyright',div).hover(function(){$('.license').slideDown()},function(){$('.license').slideUp()});
+			}
 		}
 		traceLogic(traceTag('code','PAGE')+' '+ traceTag('page',page.name));
 		//TODO loopcounter; break out if we are in infinite loop
@@ -90,19 +96,23 @@ var A2JViewer={
 		var curstep = page.step;
 		var question = gLogic.evalLogicHTML( page.text );
 		var help = gLogic.evalLogicHTML( page.help);
-		$('.interact',div).html(A2JViewer.layoutstep(curstep,steps)); 
+		$('.interact',div).html(A2JViewer.layoutStep(curstep));
 		
-		$('.A2JViewer .ui-form.question').html(question + '<div class="form"></div><div class="buttonlist"></div>');
+		$('.ui-form.question',div).html(question + '<div class="form"></div><div class="buttonlist"></div>');
 		var bi;
 		for (bi in page.buttons)
 		{
 			var b = page.buttons[bi];
-			$('.A2JViewer .ui-form.question  .buttonlist').append('<button num='+bi+' title="Go to page '+gGuide.pageDisplayName(b.next).asHTML()+'">'+b.label+'</button>'); 
+			$('.ui-form.question  .buttonlist',div).append('<button num='+bi+' title="Go to page '+gGuide.pageDisplayName(b.next).asHTML()+'">'+b.label+'</button>'); //.A2JViewer .ui-form.question  .buttonlist'
 		}
-		var fs=$('.A2JViewer .ui-form.question .form');
+		var fs=$('.ui-form.question .form',div);//'.A2JViewer .ui-form.question .form'
+	
+		/*
+		 * @type {string|number}
+		* */
 		var varIndex=null;
 		if (page.repeatVar!==''){
-			guide.varGet(page.repeatVar);
+			varIndex = gGuide.varGet(page.repeatVar);
 		}
 		var fi;
 		for (fi in page.fields)
@@ -123,7 +133,7 @@ var A2JViewer={
    this.calculator=false;
    this.maxChars="";
 */
-			var defval=guide.varGet(f.name,varIndex);
+			var defval=gGuide.varGet(f.name,varIndex);
 			var label = gLogic.evalLogicHTML(f.label);
 			var $label=$('<label/>').attr('for',fid).html(label);
 			var $input=null;
@@ -192,33 +202,26 @@ var A2JViewer={
 			}
 			fs.append($row);
 		} 
-		$('.A2JViewer .ui-form.learnmore').html(help + '<div class="buttonlist"><button>Close</button></div>').parent().hide().filter(
+		$('.ui-form.learnmore',div).html(help + '<div class="buttonlist"><button>Close</button></div>').parent().hide().filter(
 			function(){
 				return help!=="";
 			}).fadeIn(1000);
-	/*
-		$('.stepnumber.step1').text(steps[curstep].number);
-		$('.steptext.step1').text(steps[curstep].text);
-		$('.circle1').attr('src',A2JViewer.IMG+'step_circle_'+(curstep%3)+'.png');
-		if (curstep<steps.length-1)
-		{   // layout as many steps as possible
-			$('.stepnumber.step2').text(steps[curstep+1].number);
-			$('.steptext.step2').text(steps[curstep+1].text);
-			$('.circle2').attr('src',A2JViewer.IMG+'step_circle_'+((curstep+1)%3)+'.png');
-		}
-		*/
-		var h=$('.question.ui-form').height();
+		var h=$('.question.ui-form',div).height();
 		if (h>400){
-			$('.question.bubble').css({top:50});
+			$('.question.bubble',div).css({top:50});
 		}
 		
-		$('.A2JViewer .ui-form.learnmore button').button().click(function(){$('.A2JViewer .learnmore.bubble').hide()});
-		$('.A2JViewer .ui-form.question button').button().click(function()
+		$('.ui-form.learnmore button',div).button().click(function(){$('.A2JViewer .learnmore.bubble').hide()});
+		$('.ui-form.question button',div).button().click(function()
 		{	// Validation of form data before proceeding
+
+			/*
+			 * @type {string|number}
+			* */
 			var varIndex=null;
-			if (page.repeatVar!=="")
+			if (page.repeatVar!=='')
 			{
-				guide.varGet(page.repeatVar);
+				varIndex=gGuide.varGet(page.repeatVar);
 			}
 			var fi;
 			for (fi in page.fields)
@@ -237,29 +240,29 @@ var A2JViewer={
 					case CONST.ftNumberPhone://"Number Phone"
 					case CONST.ftNumberZIP://"Number ZIP Code"
 					case CONST.ftDateMDY://"Date MM/DD/YYYY"
-						guide.varSet(f.name,varIndex,$('#'+fid).val());
+						gGuide.varSet(f.name,varIndex,$('#'+fid).val());
 					   break;
 					case CONST.ftTextPick://"Text (Pick from list)"
-						guide.varSet(f.name,varIndex,$('#'+fid).val());						
+						gGuide.varSet(f.name,varIndex,$('#'+fid).val());						
 					   break;
 					case CONST.ftNumberPick://"Number (Pick from list)"
-						guide.varSet(f.name,varIndex,$('#'+fid).val());
+						gGuide.varSet(f.name,varIndex,$('#'+fid).val());
 					   break;
 					case CONST.ftGender://"Gender"
 						if ($('#'+fid+'M').is(':checked')){
-							guide.varSet(f.name,varIndex,lang.Male);
+							gGuide.varSet(f.name,varIndex,lang.Male);
 						}
 						if ($('#'+fid+'F').is(':checked')){
-							guide.varSet(f.name,varIndex,lang.Female);
+							gGuide.varSet(f.name,varIndex,lang.Female);
 						}
 					   break;
 					case CONST.ftRadioButton://"Radio Button"
 						if ($('#'+fid).is(':checked')){
-							guide.varSet(f.name,varIndex,f.value);
+							gGuide.varSet(f.name,varIndex,f.value);
 						}
 					   break;
 					case CONST.ftCheckBox://"Check box"
-						guide.varSet(f.name,varIndex,$('#'+fid).is(':checked'));
+						gGuide.varSet(f.name,varIndex,$('#'+fid).is(':checked'));
 					   break;
 					case CONST.ftCheckBoxNOTA://"Check Box (None of the Above)" 
 						break;
@@ -273,7 +276,7 @@ var A2JViewer={
 			trace(b.label,b.name,b.value);
 			if (b.name!=="")
 			{	// Set button's variable 
-				guide.varSet(b.name,varIndex,b.value);
+				gGuide.varSet(b.name,varIndex,b.value);
 			}
 			
 			// execute the logic
@@ -284,10 +287,15 @@ var A2JViewer={
 		});//button click
 		
 	},
-	layoutstep:function(curstep,steps)
+	layoutStep:function(curstep)
 	{
-		
+		var steps=gGuide.steps;
 		var IMG = A2JViewer.IMG;
+		
+		/**
+		* @param {string} [w]
+		* @param {string} [h]
+		*/
 		function posimg(src,x,y,w,h){
 			if (typeof w!=undefined) w=' width='+w;
 			if (typeof h!=undefined) h=' height='+h;
@@ -298,7 +306,7 @@ var A2JViewer={
 		  {ground:'step1.png',ch:[322,5,550,350],  gl:[351,204],gf:[451,200],cr:[523,198],
 			steps:[[288,430,432,131]],signs:[[629,277,1]]}
 		,{ground:'step7.png', ch:[579,66,143,61], gl:[351,204],gf:[451,200],cr:[523,198],
-			steps:[[288,430,432,131],[448,236,197,24]],signs:[[619,438,1],[569,212,.8]]}
+			steps:[[288,430,432,131],[448,236,197,24]],signs:[[619,438,1],[550,200,.6]]}
 		];
 		var COLORS=4;
 		var si = (stepcount<=1) ? stepInfos[0] : stepInfos[1];
@@ -308,23 +316,41 @@ var A2JViewer={
 			var s1=si.steps[s];
 			var color = (cs===0) ? 0 : (cs-1) % COLORS +1;
 			txt +=  posimg('step_circle_'+ color +'.png',s1[0],s1[1],s1[2],s1[3]) ;
-			var s1=si.signs[s];
+			s1=si.signs[s];
 			var zoom = s1[2];zoom = '-moz-transform: scale('+zoom+');';
 			txt += '<div class="stepsign" style="position:absolute; left:'+s1[0]+'px; top: '+s1[1]+'px;'+zoom+'"><div class="stepsigncolor Step'+color+'" ></div>	<div class="stepnumber" >'+steps[cs].number+'</div><div class="steptext">'+steps[cs].text+'!</div></div>';
 			// step'+s+'
 		}
-		var ga='M';//M or F
-		var ca='F';//'' or M or F
+		
+		// Setup guide and client avatars		
+		var avatarVarName="User Avatar"; // "blank" or "tan" or ""
+		var genderVarName="User Gender"; // "Male" or "Female" or ""
+		
+		var gg=gGuide.guideGender;// Guide's gender
+		gg = (gg =='Male') ? 'M' : 'F';//M or F
+		
+		var cg=gGuide.varGet(genderVarName); // Client's gender (blank means only show guide)
+		if (cg=='Male') cg='M'; else if (cg=='Female') cg='F'; else cg='';
+		
+		var av=gGuide.varGet(avatarVarName);// Avatar style, originally blank or tan. Also support number.
+		if (typeof av === 'undefined') av=gGuide.avatar;
+		if (av=='tan')
+			av=1;
+		else
+		if (av=='blank' || av=='')
+			av=0;
+		else
+			av=parseInt(av,10); 
 		var qx;
-		if (ca!="")
+		if (cg!='')
 		{
 			qx=si.gl[0]-300;
-			txt += posimg('A2JAvatar-Guide-'+ga+'0.png',si.gl[0],si.gl[1])+posimg('A2JAvatar-Client-'+ca+'1.png',si.cr[0],si.cr[1]);
+			txt += posimg('A2JAvatar-Guide-'+gg+av+'.png',si.gl[0],si.gl[1])+posimg('A2JAvatar-Client-'+cg+av+'.png',si.cr[0],si.cr[1]);
 		}
 		else
-		{
+		{	// No client gender, just guide facing screen.
 			qx=si.gf[0]-300;
-			txt += posimg('A2JAvatar-Guide-Front-'+ga+'1.png',si.gf[0],si.gf[1]);
+			txt += posimg('A2JAvatar-Guide-Front-'+gg+av+'.png',si.gf[0],si.gf[1]);
 		}
 		txt +='<div class="question bubble" style="position:absolute; left:'+qx+'px; top: 140px; width: 300px; "><div class="question ui-form"><div class="buttonlist"></div></div></div><img style="position:absolute; left: '+(qx+299)+'px; top: 240px; " src="'+IMG+'guide_bubble_tip.png"   />';
 

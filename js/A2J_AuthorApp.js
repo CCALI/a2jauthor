@@ -547,7 +547,7 @@ function gotoPageView(destPageName)
       {
          gPage=page;
 			$('#authortool').hide();
-         A2JViewer.layoutPage($('.A2JViewer','#page-viewer'),gGuide,gGuide.steps,gPage);
+         A2JViewer.layoutPage($('.A2JViewer','#page-viewer'),gPage);
          $('#page-viewer').removeClass('hidestart').show();
 			//$('.A2JViewer').addClass('test',500);
       }

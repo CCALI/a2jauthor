@@ -23,6 +23,7 @@ function parseXML_CA_to_CAJA(BOOK)
 	guide.tool=				"CA";
 	guide.toolversion=	makestr(BOOK.find('INFO > CAVERSIONREQUIRED').text());
 	guide.avatar=			"";
+	guide.guideGender=	"";
 	guide.completionTime=BOOK.find('INFO > COMPLETIONTIME').xml();
 	guide.copyrights=		cr2P(br2cr(makestr(BOOK.find('INFO > COPYRIGHTS').xml())));
 	guide.createdate=		BOOK.find('INFO > CREATEDATE').xml();

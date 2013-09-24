@@ -32,7 +32,7 @@
 
 
 <?php
-	if (  1 == true ) { // include full source code
+	if (  0 == true ) { // include full source code
 ?>
 
 <script src="jQuery/jquery.xml.min.js" type="text/javascript" ></script>

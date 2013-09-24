@@ -284,16 +284,6 @@ table.A2JSteps tr, table.A2JVars tr {
 }
 /* JPM */	
 
-/* JPM */	
-table.A2JSteps th, table.A2JVars th {
-	border-style:solid;
-	border-width:thick;
-	border-color:#F0F7FA;
- 	padding:.8em; 
-	font-size: 1.1em;
-	background-color:#F0F7FA;
-}
-/* JPM */	
 
 
 /*.Step1, .Step7, table.A2JSteps tr:nth-child(3n+1) { background-color: #BDD6D6; }

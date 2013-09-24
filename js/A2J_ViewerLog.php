@@ -1,5 +1,11 @@
 <?php
-// 8/16/11 Handle silent logging. A2J Viewer will ignore any results returned. 
+/*
+ 	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+
+	08/16/2011 Handle silent logging. A2J Viewer will ignore any results returned.
+*/
+
 header("Content-type: text/plain");
 header("Content-Type: text/html; charset=utf-8"); 
 

@@ -68,7 +68,7 @@ function gotoPageView(destPageName)
       else
       {
          gPage=page;
-         A2JViewer.layoutPage($('.A2JViewer',$('#page-viewer')),gGuide,gGuide.steps,gPage);
+         A2JViewer.layoutPage($('#page-viewer .A2JViewer'),gPage);//$('.A2JViewer',$('#page-viewer')
       }
    },1);
 }

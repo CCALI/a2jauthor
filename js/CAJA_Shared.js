@@ -10,7 +10,6 @@
 
 */
 
-
 function dialogAlert(args)
 {  // args.title = dialog title, args.message = message body
    if (typeof args === "string"){

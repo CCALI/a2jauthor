@@ -65,7 +65,7 @@ var errRepURL="A2J_ViewerErrRep.php";//"https://lawhelpinteractive.org/problem_r
 	</div>
 </div>
 <div id="page-viewer" class="hidestart ViewerApp">
-	<div class="testing">
+	<div class="testing ui-widget-content">
 		<div id="viewer-logic-form" class="ViewerLogicForm"><div class="tracepanel"><ol id="tracer" contentEditable="true"></ol></div><div class="immediatepanel"><span><input type="text" id="tracerimm"/></span></div></div>
 		<div id="viewer-var-form" class="ViewerVarForm" ></div>
 	</div>

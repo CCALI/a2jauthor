@@ -47,8 +47,8 @@ if ($isProductionServer)
 else
 {	// Running locally, just use demo user (26 for a2jauthor.org).
 	session_start();//  09/05/2013 WARNING! LEAVE session_start() OFF TO ACCESS DRUPAL SESSIONS!
-	define("LOCAL_AS_DEMO_USER", 1);
-	if ( LOCAL_AS_DEMO_USER )
+	define("LOCAL_AS_DEV_USER", 1);
+	if ( LOCAL_AS_DEV_USER )
 		//$userid=26;
 		$userid=45;
 	else
@@ -99,9 +99,9 @@ switch ($command)
 		}
 		else
 		{
-			$username='demo';
-			$result['nickname']='Demo User';
-			$userdir='demo';
+			$username='DEV';
+			$result['nickname']='Dev User';
+			$userdir='dev';
 		}
 		$result['userid']=$userid;
 		$result['username']=$username;
@@ -245,14 +245,57 @@ switch ($command)
 			$filedir =  $path_parts['dirname'];
 			define(UPLOAD_DIR, GUIDES_DIR.$filedir.'/');
 			define(UPLOAD_URL, GUIDES_URL.$filedir.'/');
+			error_reporting(E_ALL | E_STRICT);
+			include('jQuery/UploadHandler.php');
+			$upload_handler = new UploadHandler();
+			exit();//Return immediately with upload info.
 		}
-		
-		error_reporting(E_ALL | E_STRICT);
-		include('jQuery/UploadHandler.php');
-		$upload_handler = new UploadHandler();
-		exit();//Return immediately with upload info.
 		break;
 		
+
+	case 'uploadguide':
+		// 10/03/2013 Upload existing XML/A2J file to a new guide.
+		$title=($mysqli->real_escape_string('Untitled'));
+		// Create new entry in guide table.
+		$sql="insert into guides (title,editoruid) values ('".$mysqli->real_escape_string($title)."', ".$userid.")";
+		if ($res=$mysqli->query($sql))
+		{
+			$newgid=$mysqli->insert_id;
+			$userdir=$_SESSION['userdir'];if (!isset($userdir))$userdir='00000';
+			$newdirbase = $userdir.'/guides/'."Guide".$newgid;
+			$newdir = $newdirbase;
+			$guideName="Guide.xml";
+			$newfile = $newdirbase.'/'.$guideName;
+			$newlocation=GUIDES_DIR.$newfile;
+			mkdir(GUIDES_DIR.$newdir);
+			$filename=$newfile;
+			$path_parts = pathinfo($filename);
+			$filedir =  $path_parts['dirname'];
+			$_FILES['files']['name'][0]=$guideName;
+			define(UPLOAD_DIR, GUIDES_DIR.$filedir.'/');
+			define(UPLOAD_URL, GUIDES_URL.$filedir.'/');
+			error_reporting(E_ALL | E_STRICT);
+			include('jQuery/UploadHandler.php');
+			$upload_handler = new UploadHandler();
+			$sql="update guides set filename='".$mysqli->real_escape_string($newfile)."' where gid = $newgid";
+			if ($res=$mysqli->query($sql)){}
+			// Extract title from uploaded XML. 
+			$xml=file_get_contents($newlocation);
+			$guideXML = new SimpleXMLElement($xml);
+			$title = $guideXML->TITLE;//A2J 4 format
+			if ($title=='')
+				// A2J 5 would be $guideXML->INFO->TITLE;
+				$title= $guideXML->INFO->TITLE;
+			$sql="update guides set title='".$mysqli->real_escape_string($title)."' where gid = $newgid";
+			if ($res=$mysqli->query($sql)){}
+			//chmod($newlocation,0775);
+			//copy($oldlocation,$newlocation) or trace("Error copy");
+			//$result['url']=$newlocation;
+			//$result['gid']=$newgid;
+			writelognow();
+			exit();//Return immediately with upload info.
+		}
+		break;		
 /*
 	case 'answerfile':
 		// INCOMPLETE return XML of answerfile given answer id. No security check currently.
@@ -281,6 +324,7 @@ if($err!="") $result['error']=$err;
 
 $return  = json_encode($result);
 echo $return;
+
 
 
 function getGuideFileDetails($filename)
@@ -324,20 +368,25 @@ function trace($msg)
 	global $traces;
 	$traces[]=$msg;
 }
-if (writelog)
-{	//log if local only
-	ob_start();
-	echo "------\nGET\n";var_dump ($_GET);
-	echo "------\nFILES\n";var_dump ($_FILES);
-	echo "------\nPOST\n";var_dump ($_POST);
-	//echo "------\nSERVER\n";var_dump ($_SERVER);
-	echo "------\nREQUEST\n";var_dump ($_REQUEST);
-	echo "------\nRESULT\n";var_dump ($return);
-	echo "------\nTraces\n";var_dump ($traces);
-	$msg=ob_get_clean();
-	//error_log($msg,3,sys_get_temp_dir().'/CAJA_WS.log');
-	file_put_contents(sys_get_temp_dir().'/CAJA_WS.log',$msg);
-	
+writelognow();
+
+function writelognow()
+{
+	global $return, $traces;
+	if (writelog)
+	{	//log if local only
+		ob_start();
+		echo "\n\n----------------\n\n";
+		echo "GET\n";var_dump ($_GET);
+		echo "FILES\n";var_dump ($_FILES);
+		echo "POST\n";var_dump ($_POST);
+		echo "REQUEST\n";var_dump ($_REQUEST);
+		echo "RESULT\n";var_dump ($return);
+		echo "Traces\n";var_dump ($traces);
+		$msg=ob_get_clean();
+		//error_log($msg,3,sys_get_temp_dir().'/CAJA_WS.log');
+		file_put_contents(sys_get_temp_dir().'/CAJA_WS.log',$msg,FILE_APPEND);
+	}
 }
 
 

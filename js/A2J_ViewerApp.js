@@ -73,5 +73,4 @@ function gotoPageView(destPageName)
    },1);
 }
 
-
 /* */

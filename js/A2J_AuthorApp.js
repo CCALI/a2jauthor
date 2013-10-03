@@ -5,8 +5,8 @@
 	Authoring App GUI
 */
 
-CONST.uploadURL = 'CAJA_WS.php?cmd=uploadfile&gid=';
-
+CONST.uploadURL = 	'CAJA_WS.php?cmd=uploadfile&gid=';
+CONST.uploadGuideURL='CAJA_WS.php?cmd=uploadguide'
 
 TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,clear)
 {	// 08/03/2012 Edit panel for guide sections 
@@ -20,7 +20,7 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 	if (t.html()!==""){
 		return;
 	}
-	
+
 //	var t=$('<div/>').addClass('tabsPanel editq')//.append($('<div/>').addClass('tabsPanel2'));//editq
 	form.clear();
 	var fs;
@@ -266,9 +266,7 @@ function main()
 	$('#cajainfo').attr('title',versionString());
 
 	//$('#welcome, #texttoolbar').hide();
-	$('#welcome').dialog({autoOpen: false,modal:true, height: 500, width: 700
-		, close: function(event, ui){if (typeof event.originalEvent==='object'){signin();}}
-	});
+	//$('#welcome').dialog({autoOpen: false,modal:true, height: 500, width: 700, close: function(event, ui){if (typeof event.originalEvent==='object'){signin();}}});
 
 
 //	$('.tabset').tabs();
@@ -282,35 +280,41 @@ function main()
 //	$('#guideSave').button({icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
 //	$('#settings').button({icons:{primary:"ui-icon-gear"}}).click(function(){$('#settings-form').dialog('open');});
 	$('#guideSave').button({label:'Save',icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
-	$('#guideSaveAs').button({label:'Save as',disabled:true,  icons:{primary:"ui-icon-disk"}}).click(function(){      });
-	$('#guideNew').button({label:'New', disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){      });
-	$('#guideOpen').button({label:'Open',disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){    });
-	$('#guideClose').button({label:'Close',icons:{primary:"ui-icon-close"}}).click(function(){guideClose();});
+	//$('#guideSaveAs').button({label:'Save as',disabled:true,  icons:{primary:"ui-icon-disk"}}).click(function(){      });
+	//$('#guideNew').button({label:'New', disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){      });
+	//$('#guideOpen').button({label:'Open',disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){    });
+	//$('#guideClose').button({label:'Close',icons:{primary:"ui-icon-close"}}).click(function(){guideClose();});
 	$('#settings').button({label:'Settings',icons:{primary:"ui-icon-gear"}}).click(function(){$('#settings-form').dialog('open');});
 	
-	/*
-	$('#guideStartCreate').button({icons:{primary:"ui-icon-document"}}).click(function()
-	{
-		createBlankGuide();
-		$('#welcome').dialog('close');
-	});
-	$('#guideStartOpen').button({icons:{primary:"ui-icon-disk"}}).click(function(){alert('guideOpen');});
-	*/
+	//$('#guideCreate').button({icons:{primary:"ui-icon-document"}}).click(function(){createBlankGuide();	});
+	$('#guideOpen').button({label:'Open', disabled:false, icons:{primary:"ui-icon-disk"}}).click(function(){
+		//alert('guideOpen');
+		$li=$('li.guide.'+SELECTED).first();
+		var gid=$li.attr('gid');
+		var guideFile=$li.text();
+		$('li.guide[gid="'+gid+'"]').html('Loading guide '+guideFile+AJAXLoader).addClass('.warning');
+		loadNewGuidePrep(guideFile,'');
+		$('#splash').hide();
+		if(gid==='a2j'){
+			createBlankGuide();
+		}
+		else{
+			ws({cmd:'guide',gid:gid},guideLoaded);
+		}
+	 });
+	$('#guideClone').button({label:'Clone', disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){
+		//alert('guideOpen');
+		$li=$('li.guide.'+SELECTED).first();
+		var gid=$li.attr('gid');
+		dialogAlert('Clone interview ');
+	 });
+
 	
 	$('.guidemenu ul li').click(function(){
 		gotoTabOrPage($(this).attr('ref'));
 	});
-	/*
-	$('#guideClose').hover(function() {
-		$(this).addClass('ui-state-hover');
-	}, function() {
-		$(this).removeClass('ui-state-hover');
-	}).click(function() {
-		guideClose();
-	});
-	*/
-	
-		$(document).on("click", '.editicons .ui-icon-circle-plus',function(){// clone a table row
+
+	$(document).on("click", '.editicons .ui-icon-circle-plus',function(){// clone a table row
 		var $tbl=$(this).closest('table');
 		var row = $(this).closest('tr');
 		var settings=$tbl.data('settings');
@@ -501,13 +505,31 @@ function main()
 		}
 	});
 	
+	// call guideSave every 5 minutes
+	setInterval(function() {
+      if (gGuide) guideSave();
+	}, 5*60*1000);
+	
+	
+	$('#guideupload').fileupload({
+		 url:CONST.uploadGuideURL,
+		 dataType: 'json',
+		 done: function (e, data) {
+			setTimeout(signin,1);
+		 },
+		 progressall: function (e, data) {
+			  var progress = parseInt(data.loaded / data.total * 100, 10);
+			  $('#guideuploadprogress .bar').css('width',	progress + '%'
+			);
+		}
+	});
+	
 	signin();
 }
 
-function signin(){ 
-
+function signin(){
 	//ws({cmd:'login',username:$('#username').val(),userpass:$('#password').val()},
-	$('#splash').show();
+	//$('#splash').show();
 	ws({cmd:'login'},
 		/*** @param {{userid,nickname}} data */
 		function (data){
@@ -516,19 +538,18 @@ function signin(){
 			gUserNickName=data.nickname;
 			if (gUserID!==0)
 			{	// Successful signin.
-				$('#memenu').text(gUserNickName);
-				$('#welcome .tabContent .name').html("Welcome "+gUserNickName+" user#"+gUserID);
-				//+'<p id="guidelist">Loading your guides '+AJAXLoader +"</p>" 
-				//$("#login-form" ).dialog( "close" );
-				//$('#authortool').removeClass('hidestart').addClass('authortool');
-				$('#welcome').show();
-				
+				//$('#memenu').text(gUserNickName);
+				//$('#welcome .tabContent .name').html("Welcome "+gUserNickName+" user#"+gUserID);
+				//$('#welcome').show();
+				gotoTabOrPage('tabsGuides');
 				//$('#tabviews').tabs( { disabled: [1,2,3,4,5,6,7,8,9]});
 				ws({cmd:'guides'},listGuides);
+				$('#splash').hide();
+				$('#authortool').removeClass('hidestart');//.addClass('authortool').show();	
 			}
 			else
 			{
-				$('#login-form').dialog();
+				//$('#login-form').dialog();
 			}
 		}
   );
@@ -733,7 +754,7 @@ function gotoPageEdit(pageName)
 }
 function gotoTabOrPage(target)
 {	// Go to a tab or popup a page.
-	//trace('GoTo '+target);
+	trace('GoTo '+target);
 
 	//$('#CAJAOutline li, #CAJAIndex li').each(function(){$(this).removeClass('ui-state-active')});
 	//$('li').filter(function(){ return target == $(this).attr('target')}).each(function(){$(this).addClass('ui-state-active')});	
@@ -759,10 +780,13 @@ function gotoTabOrPage(target)
 		case 'tabsLogic':
 		case 'tabsText':
 		case 'tabsConstants':
-			gGuide.noviceTab(target,false);
+			if (gGuide) gGuide.noviceTab(target,false);
 			break;
 		case 'tabsPreview':
-			gotoPageView(gGuide.firstPage);
+			if (gGuide) gotoPageView(gGuide.firstPage);
+			break;
+		case 'tabsGuides':
+			if (gGuide) guideSave();
 			break;
 	}
 }
@@ -872,10 +896,11 @@ function createBlankGuide()
 function listGuides(data)
 {
 	var blank = {id:'a2j', title:'Blank Interview'};
-	gGuideID=0;
-	var mine = [];
-	var others = [];
-	var start = '<li class=guide gid="' + blank.id + '">' + blank.title + '</li>';
+	//gGuideID=0;
+	
+	var guideListNew =['<li class=guide gid="' + blank.id + '">' + blank.title + '</li>'];
+	var guideListMy = [];
+	var guideListSamples = [];
 	$.each(data.guides,
 		/*** @param {{owned,id,title}} g */
 		function(key,g)
@@ -883,27 +908,18 @@ function listGuides(data)
 			var str='<li class=guide gid="' + g.id + '">' + g.title + '('+g.id+')'+  '</li>';
 			if (g.owned)
 			{
-				mine.push(str);
+				guideListMy.push(str);
 			} else {
-				others.push(str);
+				guideListSamples.push(str);
 			}
 	});
+	$('#guideListNew').html(guideListNew.join(''));
+	$('#guideListMy').html(guideListMy.join(''));
+	$('#guideListSamples').html(guideListSamples.join(''));
+
+	$('li.guide').click(function(){$('li.guide').removeClass(SELECTED);$(this).addClass(SELECTED);});
 	
-	$('#guidelist').html("Create a new interview: <ul>"+start+"</ul>Edit one of your existing interviews: <ul>"+mine.join('')+"</ul>" + "Open a Sample interview: <ul>"+others.join('')+"</ul>");
-	$('li.guide').click(function(){
-		var gid=$(this).attr('gid');
-		var guideFile=$(this).text();
-		$('li.guide[gid="'+gid+'"]').html('Loading guide '+guideFile+AJAXLoader).addClass('.warning');
-		loadNewGuidePrep(guideFile,'');
-		$('#splash').hide();
-		if(gid==='a2j'){
-			createBlankGuide();
-		}
-		else{
-			ws({cmd:'guide',gid:gid},guideLoaded);
-		}
-	});
-	$('#welcome').dialog('open');
+	//$('#welcome').dialog('open');
 }
 
 
@@ -1187,9 +1203,6 @@ TGuide.prototype.novicePage = function (div, pagename)
 };
 
 
-
-
-
 function setProgress(status)
 {
 	if (typeof status==='undefined'){
@@ -1205,16 +1218,6 @@ function loadNewGuidePrep(guideFile,startTabOrPage)
 	$('.pageoutline').html('');
 }
 
-function guideClose()
-{
-	if ((gGuide!==null) && (gGuideID!==0))
-	{
-		guideSave();
-	}	
-	//$('#welcome').dialog('open');
-	signin();
-	$('#authortool').hide();
-}
 
 function guideStart(startTabOrPage)
 { 
@@ -1222,8 +1225,8 @@ function guideStart(startTabOrPage)
 		startTabOrPage='tabsPages';//'tabsAbout';
 	}
 	
-	$('#authortool').removeClass('hidestart').addClass('authortool').show();
-	$('#welcome').dialog('close');
+	//$('#authortool').removeClass('hidestart').addClass('authortool').show();
+	//$('#welcome').dialog('close');
 	
 	//$('#tabviews').tabs( { disabled:false});
 	$('#tabsVariables .tabContent, #tabsLogic  .tabContent, #tabsSteps .tabContent, #tabsAbout .tabContent, #tabsConstants .tabContent, #tabsText .tabContent').html("");
@@ -1256,7 +1259,6 @@ function guideStart(startTabOrPage)
 	
 	$('#fileupload').addClass('fileupload-processing');
 	$('#fileupload').fileupload({
-		 //url: 'jQuery/UploadHandler-index.php' +'?gid='+gGuideID,
 		 url:CONST.uploadURL+gGuideID,
 		 dataType: 'json',
 		 done: function (e, data) {setTimeout(updateAttachmentFiles,1);
@@ -1264,8 +1266,8 @@ function guideStart(startTabOrPage)
 		 progressall: function (e, data) {
 			  var progress = parseInt(data.loaded / data.total * 100, 10);
 			  $('#progress .bar').css('width',	progress + '%'
-			  );
-		 }
+			);
+		}
 	});
 	updateAttachmentFiles();
 

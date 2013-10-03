@@ -9,9 +9,7 @@
 */
 
 
-
 // ### Constants  ###
-
 
 /** @const */ 
 var CONST = {
@@ -321,7 +319,7 @@ function TGuide()
 	this.filename="";
 	//this.mapids=[];// array of mapids indices	- maps a page.id to page while .pages uses page.name.
 	this.sortedPages=[];//array of pages sorted by name (natural order)
-	
+	this.lastSaveXML="";
 	return this;
 }
 
@@ -443,7 +441,6 @@ TGuide.prototype.varGet=function(varName,varIndex)
 			 val= (val>0) || (val===true) || (val==='true');
 			break;
 	}
-	//gLogic.trace('Getting value of '+  traceTag('var',varName)+ ( (varIndex==0)?'':traceTag('varidx',varIndex) ) +'='+traceTag('val',val));
 	return val;
 };
 

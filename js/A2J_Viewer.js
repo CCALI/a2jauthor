@@ -82,7 +82,7 @@ var A2JViewer={
 			else
 			{
 				$('.license',div).delay(5000).slideUp();
-				$('.copyright',div).hover(function(){$('.license').slideDown()},function(){$('.license').slideUp()});
+				$('.copyright',div).click(function(){$('.license').toggle()});//,function(){$('.license').slideUp()});
 			}
 		}
 		traceLogic(traceTag('code','PAGE')+' '+ traceTag('page',page.name));
@@ -331,6 +331,10 @@ var A2JViewer={
 		
 		var cg=gGuide.varGet(genderVarName); // Client's gender (blank means only show guide)
 		if (cg=='Male') cg='M'; else if (cg=='Female') cg='F'; else cg='';
+		
+		
+		cg='F';//TEST
+		
 		
 		var av=gGuide.varGet(avatarVarName);// Avatar style, originally blank or tan. Also support number.
 		if (typeof av === 'undefined') av=gGuide.avatar;

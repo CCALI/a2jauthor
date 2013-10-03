@@ -90,11 +90,13 @@ html, body {
 	left: 5px;
 	top: 35px;
 }
+/*
 #guideClose {
 	position: fixed;
 	right: 5px;
 	top: 35px;
 }
+*/
 #cajafooter {
 	border-top : 2px solid #cccccc;
 	font-size: 9px;
@@ -104,7 +106,6 @@ html, body {
 	height: 16px;
 	bottom: 0px;
 	width: 100%;
-	xbackground-color: #fff;
 }
 
 .guidepanels {
@@ -125,10 +126,8 @@ html, body {
 	top: 70px;
 /* JPM */	
 	right:150px;
-	xbottom:0px;
 	width: 112px;
 	border : 1px solid #c0c0c0;
-	xbackground-color: #c0c0c0;
 }
 .guidemenu ul {
 	font-size: 15px;
@@ -184,12 +183,16 @@ html, body {
 	padding: 10px 0px 5px;
 /* */	
 }
-.pageoutline ul { 
-	xlist-style-image: url(img/new.gif);
-	list-style-type: circle;
+.pageoutline ul, .guidelist { 
+	list-style-type:  none;
 	margin-left: 0;
 	text-indent: 0;
 }
+
+ul.guidelist li {
+	padding: 4px;
+}
+
 #CAJAIndex.pagelist ul { 
 	list-style-type: bullet;
 	margin-left: 1em;
@@ -211,17 +214,11 @@ html, body {
 	overflow: hidden;
 }
 
-
-
-.pagelist * li:hover{
-	background-color:#eee;
-	color: #222;
-	cursor: pointer;
-}
 .pagelist * li .tip {
 	color: #666;
 	font-style: italic;
 }
+
 .tabsPages {
 	position: absolute;
 	top:0px;
@@ -254,7 +251,6 @@ html, body {
 	margin: 0px; 
 	padding: 0px;
 	width: 50px;
-	xdisplay: inline-block;
 }
 .editicons .ui-icon {
 	display: inline-block;
@@ -310,7 +306,6 @@ input.narrow {
 	width: 100%;
 }
 .CAJAContent { 
-	xborder: 2px thick #00CC99;
 	padding: 0;
 	margin: 0;
 	width: 100%;
@@ -747,14 +742,19 @@ input.text { margin-bottom:12px; width:95%; padding: .4em; }
 }
 
 
-
+/*
 li.guide {
 	cursor: pointer;
 }
 li.guide:hover {
 	background-color:#C0DCC0;
 }
-
+*/
+.pagelist * li:hover, li.guide:hover, table.A2JVars tr:hover, table.A2JFiles tr:hover{
+	background-color:rgba(88,88,88,0.75) !important;
+	color: #fff !important;
+	cursor: pointer;
+}
 
 .example{
 	overflow: auto;
@@ -828,13 +828,17 @@ li.guide:hover {
 	top: 3em;
 	bottom: 3em;
 }
+#tabsGuides .tabContentFrame {
+	top: 5em;
+	bottom: 4em;
+}
 .tabFooter {
 	position: absolute;
 	bottom: 2px;
 }
 .tabContent {
 	position: absolute;
-	overflow: none;
+	overflow: hidden;
 	border: 2px thick #0f0;
 }
 
@@ -866,13 +870,12 @@ li.guide:hover {
 	xwidth: auto;
 	xwidth: 1500px;
 	xheight: 1500px;
-	overflow: none;
+	overflow: hidden;
 	border: 2px thick #0f0;
 	position: relative;
 }
 
 .map  .node {
-
 	font-size: 12px;
 	xbackground-color: #D0F0F0;
 	margin: 0px;
@@ -888,7 +891,6 @@ li.guide:hover {
 	font-weight: normal;
 	font-variant: normal;
 	color: #000000;
-	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
 	border-radius: 5px;
 	cursor: pointer;
@@ -904,8 +906,6 @@ li.guide:hover {
 	cursor: pointer;
 	width: 12px;
 	height: 8px;
-	-moz-border-radius:0px;
-	-webkit-border-radius:0px;
 	border-radius: 0px;
 }
 .map .mark {
@@ -961,8 +961,6 @@ div.codeedit.haserr {
 }
 div.codeedit span.err {
 	text-decoration: none;
-	xfloat: right;
-	xdisplay: inline;
 	background-color: #f88;
 	border: 1px;
 	xborder-bottom: dashed  1px #f00;
@@ -970,5 +968,14 @@ div.codeedit span.err {
 }
 
 
+.fileuploader {
+	display: inline-block;
+	position: relative;
+	width: 250px;
+	height: 2em;
+	margin: 0px;
+	padding: 0px;
+	xbackground-color: #ddd;
+}
 
 /* */

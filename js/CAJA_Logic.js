@@ -447,7 +447,6 @@ TLogic.prototype._deltaVars = function()
 {
 };
 
-
 TLogic.prototype.executeScript = function(CAJAScriptHTML)
 {
 	// Execute lines of CAJA script. Syntax/runtime errors go into logic tracer, error causes all logic to cease.

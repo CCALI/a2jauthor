@@ -19,14 +19,14 @@
 body {
 	background-color: #f00;
 }
-#demostep {
+.A2JViewer {
 	position: relative;
-	width: 1024px;
+	width: 964px;
 	height: 700px;
 	overflow: hidden;
+	background-color:#aaf;
 }
 .zoomed-element {
-	zoom: .75;
 	-moz-transform: scale(.75);
 	-webkit-transform: scale(.75);
 }
@@ -35,10 +35,13 @@ body {
 <script type='text/javascript'> 
 // 10/2012 Test A2J's road signs
 var IMG="../img/";
-$(document).ready(function()
+
+function ready()
 {  
+	$('.templates').hide();
 	A2JViewer.IMG = IMG;
-	var steps=[
+	gGuide=new TGuide();
+	gGuide.steps=[
 		{number:0,text:'Welcome'},
 		{number:1,text:'About you'},
 		{number:2,text:'Your children'},
@@ -46,46 +49,48 @@ $(document).ready(function()
 		{number:4,text:'Some more stuff'},
 		{number:5,text:'Address'},
 		{number:6,text:'Congratulations on completing the interview'}];
-	gGuide=new TGuide();
-	
-	for (var s=0;s<steps.length;s++) $('#tests').append('<button>'+s+'</button>');
+	for (var s=0;s<gGuide.steps.length;s++)
+	 $('#tests').append('<button>'+s+'</button>');
 	$('#tests button').button().click(function(){teststep(parseInt($(this).text()))});
-	function teststep(curstep)
-	{	// create layout for step with sample question/learnmore filler.
-		var page={};
-		page.step=curstep;
-		var text="<p>Question text #"+page.step+" appears here:</p>";
-		for (var i=0;i<page.step*4;i++) text+="<p>Line #"+i+'</p>';
-		page.text=text;
-		if (page.step == steps.length-1)
-		{
-			page.buttons=[{label:'Done!'}];
-			page.help="";
-		}
-		else
-		{
-			page.buttons=[ {label:'Next'},{label:'Skip to '+(page.step+1)}];
-			page.help = 'Learn more text: '+text;
-		}
-		$('#demostep').empty();
-		A2JViewer.layoutPage($('#demostep'),gGuide,steps,page);		
-		//var question=(text + '<div class="buttonlist"><button>Yes</button><button>No</button></div>');
-		//var learnmore=('Learn more text: '+text + '<div class="buttonlist"><button>Close</button></div>');
-		//A2JViewer.layout($('#demostep'),curstep,steps,question,learnmore);
-		$('.templates').hide();
-	}
+
 	
-	teststep(0);
+	for (var s=0;s<gGuide.steps.length;s++)
+	 teststep(s);
 	//A2JViewer.layout($('#demostep'),0,steps);
 	
 	$('#scales button').button().click(function(){
 		var scale=$(this).text(); 
-		$('#demostep').css({zoom:scale,"-moz-transform":"scale("+scale+")","-webkit-transform":"scale("+scale+")"}); });
-
-	
-	
- 
-});
+		$('#DemoSteps').css({zoom:scale,"-moz-transform":"scale("+scale+")","-webkit-transform":"scale("+scale+")"});
+	 });
+}
+function teststep(curstep)
+{	// create layout for step with sample question/learnmore filler.
+	/** @type TPage */
+	var demo =$('<div class="A2JViewer"/>');
+	$('#DemoSteps').append(demo);
+	var page={};
+	var steps=gGuide.steps;
+	page.step=curstep;
+	var text='<p>Question text #'+page.step+' appears here:</p>';
+	for (var i=0;i<page.step*4;i++) text+='<p>Line #' + i + '</p>';
+	page.text=text;
+	if (page.step === steps.length-1)
+	{
+		page.buttons=[{label:'Done!'}];
+		page.help="";
+	}
+	else
+	{
+		page.buttons=[ {label:'Next'},{label:'Skip to '+(page.step+1)}];
+		page.help = 'Learn more text: '+text;
+	}
+	$(demo).empty();
+	A2JViewer.layoutPage(demo,page);		
+	//var question=(text + '<div class="buttonlist"><button>Yes</button><button>No</button></div>');
+	//var learnmore=('Learn more text: '+text + '<div class="buttonlist"><button>Close</button></div>');
+	//A2JViewer.layout($('#demostep'),curstep,steps,question,learnmore);
+}
+$(document).ready(ready);
 </script>
 <title>A2J Steps</title>
 <BODY>
@@ -98,7 +103,7 @@ $(document).ready(function()
 	<button>0.50</button>
 </div>
 <h2>Scripted Steps</h2>
-<div id="demostep" class="A2JViewer">scripted step will appear here</div>
+<div id="DemoSteps" >scripted step will appear here:</div>
 <div class="templates">
 <h1>Templates</h1>
 <h2>1 Step </h2>

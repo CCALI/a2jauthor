@@ -13,15 +13,15 @@
 .fileinput-button {
   position: relative;
   overflow: hidden;
-  left: 160px; /* CAJA */
+  left: 64px; /* CAJA */
 }
 .fileinput-button input { /* cover file selector with button */
   position: absolute;
   top: 0;
-  right: 0;
+  left: 0;
   margin: 0;
   opacity: 0;
-  filter: alpha(opacity=0);
+  filter: alpha(opacity=.5);
   /*transform: translate(-300px, 0) scale(4);
   font-size: 23px;
   */ /* CAJA */

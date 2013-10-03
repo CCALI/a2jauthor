@@ -77,13 +77,21 @@ function ws(data,results)
 }  
 
 function guideSave()
-{
+{	// Save current guide, but only if the XML has changed since last save to avoid upload overhead. 
 	if (gGuide!==null && gGuideID!==0)
 	{
 		setProgress('Saving '+gGuide.title + AJAXLoader);
-		ws( {cmd:'guidesave',gid:gGuideID, guide: exportXML_CAJA_from_CAJA(gGuide), title:gGuide.title}, function(response){
-			setProgress(response.error!==null ? response.error : response.info);
-		});
+		var xml = exportXML_CAJA_from_CAJA(gGuide);
+		if (xml!=gGuide.lastSaveXML) {
+			gGuide.lastSaveXML=xml;
+			ws( {cmd:'guidesave',gid:gGuideID, guide: xml, title:gGuide.title}, function(response){
+				setProgress(response.error!==null ? response.error : response.info);
+			});
+		}
+		else
+		{
+			setProgress('No changes');
+		}
 	}
 }
 

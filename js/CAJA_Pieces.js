@@ -5,6 +5,42 @@
 	Pieces of obsolete code that might prove useful later.
 */
 
+		<!--<button id="guideNew" />-->
+		<!--<button id="guideOpen" />-->
+		<!--<button id="guideSave" />-->
+		<!--<button id="guideSaveAs" />-->
+		<!--<button id="guideClose" />-->
+	/*
+	$('#guideClose').hover(function() {
+		$(this).addClass('ui-state-hover');
+	}, function() {
+		$(this).removeClass('ui-state-hover');
+	}).click(function() {
+		guideClose();
+	});
+	*/
+	
+function guideClose()
+{
+	if ((gGuide!==null) && (gGuideID!==0))
+	{
+		guideSave();
+	}	
+	//$('#welcome').dialog('open');
+	signin();
+	//$('#authortool').hide();
+}
+
+	var avatarVarName="User Avatar";
+	var av=this.varGet(avatarVarName); // Client's gender (blank means only show guide)
+	if (typeof cg=='undefined') this.varSet(genderVarName,
+		//code
+	}
+	setVariableLoop(CVariable.genderVarName,"");
+	setVariableLoop(CVariable.avatarVarName,CTemplate.defaultAvatar);
+	getVariable(CVariable.avatarVarName).type=CVariable.vtText;
+
+
 
 /** @const */ var x=1;
 /** @param {TPage} page The page to parse */

@@ -32,7 +32,7 @@
 
 
 <?php
-	if (  0 == true ) { // include full source code
+	if (  1 == true ) { // include full source code
 ?>
 
 <script src="jQuery/jquery.xml.min.js" type="text/javascript" ></script>
@@ -73,7 +73,7 @@
 </div>
 	
 <div id="page-viewer" class="hidestart ViewerApp">
-	<div class="testing">
+	<div class="testing ui-widget-content">
 		<div id="viewer-logic-form" class="ViewerLogicForm"><div class="tracepanel"><ol id="tracer" contentEditable="true"></ol></div><div class="immediatepanel"><span><input type="text" id="tracerimm"/></span></div></div>
 		<div id="viewer-var-form" class="ViewerVarForm" ></div>
 	</div>
@@ -81,13 +81,8 @@
 </div>
 	
 	
-<div id="authortool" class="hidestart">
+<div id="authortool" class="hidestart authortool">
 	<div class="guideio">
-		<button id="guideNew" />
-		<button id="guideOpen" />
-		<button id="guideSave" />
-		<button id="guideSaveAs" />
-		<button id="guideClose" />
 	</div>
 	<div class="guidemenu ui-state-default">
 		<ul>
@@ -102,9 +97,10 @@
 			<li ref="tabsPreview">Preview</a></li>
 			<li ref="tabsReport">Report</a></li>
 			<li ref="tabsUpload">Publish</a></li>
+			<li ref="tabsGuides">Interviews</a></li>
 		</ul>
 	</div>
-	<div class="guidepanels xui-widget-content">
+	<div class="guidepanels ui-widget xui-widget-content">
 		<div class="panel" id="tabsAbout">
 			<div class="tabHeader">Information about this guide. </div>
 			<div class="tabContentFrame">
@@ -228,7 +224,7 @@
 		</div>
 	</div>
 	<div class="tabFooter">
-		<div > 
+		<div class="fileuploader"> 		
 			<!-- The fileinput-button span is used to style the file input field as button -->
 			<span class="fileinput-button">
 			<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
@@ -239,7 +235,41 @@
 				<input id="fileupload" type="file" name="files[]" multiple />
 			</span>
 			<div id="progress" class="progress progress-success progress-striped"><div class="bar"></div></div>
+		</div><button id="guideSave" />
+	</div>
+</div>
+
+<div class="panel" id="tabsGuides">
+	<div class="tabHeader">Interviews</div>
+	<div class="tabContentFrame">
+		<div class="tabContent editq">
+				<p class="name"></p>
+				<p>What would you like to do? </p>
+				
+				
+<fieldset name="record"><legend>Create a new interview</legend><ul  class="guidelist" id="guideListNew"></ul></fieldset>
+<fieldset name="record"><legend>Edit one of my interviews</legend><ul  class="guidelist" id="guideListMy"></ul></fieldset>
+<fieldset name="record"><legend>Open a Sample interview</legend><ul class="guidelist" id="guideListSamples"></ul></fieldset>
+
 		</div>
+	</div>
+	<div class="tabFooter">
+		<div > 
+			<!--	<button id="guideCreate">New</button>-->
+				<button id="guideClone">Clone</button>
+				<button id="guideOpen">Open</button>
+			<div class="fileuploader">
+			<!-- The fileinput-button span is used to style the file input field as button -->
+			<span class="fileinput-button">
+			<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
+				<span class="ui-button-icon-primary ui-icon ui-icon-plus"></span>
+				<span class="ui-button-text" >Upload A2J 4 Guide...</span>
+			</button>	
+				<!-- The file input field used as target for the file upload widget -->
+				<input id="guideupload" type="file" name="files[]" multiple />
+			</span>
+			<div id="guideuploadprogress" class="progress progress-success progress-striped"><div class="bar"></div></div>
+		</div></div>
 	</div>
 </div>
 		<div class="panel" id="tabsReport">
@@ -344,8 +374,6 @@
 				<p class="name"></p>
 				<p>What would you like to do? </p>
 				<div id="guidelist">
-				<p><button id="guideStartCreate">Create a new Interview</button></p>
-				<p><button id="guideStartOpen">Open an existing Interview</button></p>
 				</div>
 			</div>
 		</div>

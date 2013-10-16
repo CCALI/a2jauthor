@@ -1,7 +1,9 @@
-﻿/*
- 	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
-	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
+/**********
+	CAJA_Languages.js
+	CALI Author 5 / A2J Author 5 (CAJA) công lý
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+	
 	Language (INCOMPLETE)
 	07/14/2012
 	04/15/2013
@@ -493,11 +495,6 @@ jQuery(function($){
 		yearSuffix: ''};
 	$.datepicker.setDefaults($.datepicker.regional['vi']);
 });
-
-
-
-
-
 
 
 /* Chinese initialisation for the jQuery UI date picker plugin. */

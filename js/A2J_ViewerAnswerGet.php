@@ -12,4 +12,6 @@
 	Which template and which user to draw the data for depends on the server's session.
 	
 */
+header("mime-type","plaintext/xml");
+echo file_get_contents("tests/data/sample_answers-1.anx");
 ?>

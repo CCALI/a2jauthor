@@ -35,14 +35,9 @@ var errRepURL="A2J_ViewerErrRep.php";//"https://lawhelpinteractive.org/problem_r
 	if ( 1 == true ) { // include full source code
 ?>
 <script src="jQuery/jquery.xml.min.js" type="text/javascript" ></script>
-<script src="CAJA_Utils.js" type="text/javascript"></script>
-<script src="CAJA_Types.js" type="text/javascript"></script>
-<script src="CAJA_Languages.js" type="text/javascript"></script>
-<script src="CAJA_IO.js" type="text/javascript"></script>
-<script src="CAJA_Parser.js" type="text/javascript"></script>
-<script src="CAJA_Logic.js" type="text/javascript"></script>
-<script src="CAJA_Parser_A2J.js" type="text/javascript"></script>
-<script src="CAJA_Shared.js" type="text/javascript"></script>
+<script src="A2J_Shared.js" type="text/javascript"></script>
+<script src="A2J_SharedSus.js" type="text/javascript"></script>
+<script src="A2J_Languages.js" type="text/javascript"></script>
 <script src="A2J_Viewer.js" type="text/javascript"></script>
 <script src="A2J_ViewerApp.js" type="text/javascript"></script>
 <?php

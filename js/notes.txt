@@ -3,6 +3,13 @@
 ### 2012-2013  -  Sam's Design notes ###
 
 
+10/14/2013
+Answer files saved in guide folders. Use same version control system? For repeated testing, need a quick way to reload a stable Answer set .
+'Load Answer' - let user pick from popup list?
+'Save Answer' - allow file names? 
+'Save Answer As' - save with new file name
+
+
 ### JSLint ###
 
  /**

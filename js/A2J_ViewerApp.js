@@ -1,28 +1,25 @@
 /*
- 	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
+	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	
+
 	A2J Viewer app
 	12/12/2012
 	04/15/2013
 
 	Used by A2J Viewer only.
 */
-var devShowTesting = 0 ;
-
 
 $(document).ready(function(){
 	loadGuideFile(templateURL,"");
 });
 
-
-
+/** @param {...string} status */
 function setProgress(status)
 {
 	if (status===null){
-		status="";
+		status='';
 	}
-	trace(status);
+	trace('setProgress',status);
 }
 function guideStart(start)
 {
@@ -44,7 +41,7 @@ function guideStart(start)
 	gotoPageView(start);
    $('#page-viewer').removeClass('hidestart');
    $('#splash').empty();
-	if (devShowTesting)
+	if (CONST.devShowTesting)
 	{
 		$('.A2JViewer').toggleClass('test',500);
 	}

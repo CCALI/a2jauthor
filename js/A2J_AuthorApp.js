@@ -1,14 +1,68 @@
 ﻿/*
- 	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
+	CALI Author 5 / A2J Author 5 (CAJA) công lý
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	
+
 	Authoring App GUI
+	04/15/2013
 */
 
-CONST.uploadURL = 	'CAJA_WS.php?cmd=uploadfile&gid=';
-CONST.uploadGuideURL='CAJA_WS.php?cmd=uploadguide'
+/*   
+// Comment DEBUGSTART() function out when NOT testing locally.
+function DEBUGSTART(){
+	trace("DEBUGSTART");
+	gUserNickName='Tester';
+	gUserID=0;
+	var TESTMODE = 1;
+	if ( TESTMODE===2 ) {
+		// Hard code load db
+		gGuideID =238;//238;//133;
+		ws({cmd:'guide',gid:gGuideID},guideLoaded);
+	}
+	else
+	{
+		$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist"></p>');
+		var SAMPLES = [
+			"tests/data/A2J_NYSample_interview.xml",
+			"tests/data/A2J_MobileOnlineInterview_Interview.xml",
+			"tests/data/A2J_ULSOnlineIntake081611_Interview.xml",
+			"tests/data/A2J_ULSOnlineIntake081611_Interview.xml#1b Submit Application for Review",
+			"tests/data/Logic Tests.a2j",
+			"tests/data/Field Types Test.a2j#2-1-0 Pick Colors",
+			"tests/data/Field Characters Test.a2j",
+			"tests/data/Field Characters Test.a2j#4-1 If thens",
+			"tests/data/Field Characters Test.a2j#1-5 Fields Test 1",
+			"tests/data/Field Characters Test.a2j#0-1 Intro",
+			"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name"
+			//"tests/data/CBK_CAPAGETYPES_jqBookData.xml", 
+			//"tests/data/CBK_CAPAGETYPES_jqBookData.xml#MC Choices 3: 4 choices", 
+			//"tests/data/CBK_EVD03_jqBookData.xml",
+			//"/a2j4guides/Field Types Test.a2j#2-1-0 Pick Colors",
+			//"/a2j4guides/Logic Tests.a2j"
+			
+		];
+		$(SAMPLES).each(function(i,elt){
+			$('#samples, #guidelist').append('<li><a href="#sample">'+elt+'</a></li>');		
+		});
+		loadGuideFile(SAMPLES[0],"");//$('a	[href="#sample"]').first().text(), "");
+	}
+	$('#splash').hide();
+}
+function signin()
+{
+	DEBUGSTART();
+}
+  */
 
-TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,clear)
+
+var gPrefs = {
+	showLogic : 1
+	,showText : 1
+	,showPageList : 1
+	,showJS : 0
+};
+
+
+TGuide.prototype.noviceTab = function(tab,clear) //function noviceTab(guide,tab,clear)
 {	// 08/03/2012 Edit panel for guide sections 
 	var guide = this;
 	var div = $('#'+tab);
@@ -20,8 +74,6 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 	if (t.html()!==""){
 		return;
 	}
-
-//	var t=$('<div/>').addClass('tabsPanel editq')//.append($('<div/>').addClass('tabsPanel2'));//editq
 	form.clear();
 	var fs;
 	//var ff;
@@ -42,7 +94,7 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 		
 		case "tabsLogic":
 			t.append(form.note(
-				prefs.showLogic=== 1 ? 'Showing only logic fields containing code' : 'Showing all logic fields'));
+				gPrefs.showLogic=== 1 ? 'Showing only logic fields containing code' : 'Showing all logic fields'));
 			
 			var codeBeforeChange = function(val,page){
 				page.codeBefore=val; /* TODO Compile for syntax errors */
@@ -57,13 +109,13 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 				page=guide.sortedPages[p];
 				if (page.type!==CONST.ptPopup)
 				{
-					if ((prefs.showLogic===2) || (prefs.showLogic===1 && (page.codeBefore!=="" || page.codeAfter!=="")))
+					if ((gPrefs.showLogic===2) || (gPrefs.showLogic===1 && (page.codeBefore!=="" || page.codeAfter!=="")))
 					{
 						pagefs=form.fieldset(page.name, page);
-						if (prefs.showLogic===2 || page.codeBefore!==""){
+						if (gPrefs.showLogic===2 || page.codeBefore!==""){
 							pagefs.append(form.codearea({label:'Before:',	value:page.codeBefore,change:codeBeforeChange} ));
 						}
-						if (prefs.showLogic===2 || page.codeAfter!==""){
+						if (gPrefs.showLogic===2 || page.codeAfter!==""){
 							pagefs.append(form.codearea({label:'After:',	value:page.codeAfter,change:codeAfterChange} ));
 						}
 						t.append(pagefs);
@@ -75,7 +127,7 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 			
 		case "tabsText":
 			t.append(form.note(
-				prefs.showText===1 ? 'All non-empty text blocks in this guide' : 'All text blocks in this guide'));
+				gPrefs.showText===1 ? 'All non-empty text blocks in this guide' : 'All text blocks in this guide'));
 			for (p in guide.sortedPages)
 			{
 				page=guide.sortedPages[p];
@@ -91,16 +143,14 @@ TGuide.prototype.noviceTab = function (tab,clear)//function noviceTab(guide,tab,
 			fs.append(form.text({label:'Title:', placeholder:'Interview title', value:guide.title, change:function(val){guide.title=val;}}));
 			fs.append(form.htmlarea({label:'Description:',value:guide.description,change:function(val){guide.description=val;}}));
 			fs.append(form.text({label:'Jurisdiction:', value:guide.jurisdiction, change:function(val){guide.jurisdiction=val;}}));
-			//fs.append(form.text({label:'Language:', value:guide.language, change:function(val){guide.language=val;}}));
 			
 			var l,list=[];
 			for (l in Languages.regional){
 				list.push(l,Languages.regional[l].Language+' {'+l+'}');
 			} 
 			fs.append(form.pickList({label:'Language:', value:guide.language, change:function(val){guide.language=val;trace('Guide language is now '+guide.language);}},list));
-			
-			
-			
+			list=[0,1,2];
+			fs.append(form.pickList({label:'Avatar:',value:guide.avatar,change:function(val){guide.language=val;}},list));
 			fs.append(form.htmlarea({label:'Credits:',value:guide.credits,change:function(val){guide.credits=val;}}));
 			fs.append(form.text({label:'Approximate Completion Time:',placeholder:'',value:guide.completionTime,change:function(val){guide.completionTime=val;}}));
 			t.append(fs);
@@ -176,17 +226,17 @@ function pageNameFields(pagefs,page)
 {
 	pagefs.append(form.htmlarea({label:'Text:',value:page.text,change:function(val,page){page.text=val; }} ));
 	if (page.type!==CONST.ptPopup){
-		if (prefs.showText===2 || page.learn!=="")
+		if (gPrefs.showText===2 || page.learn!=="")
 		{
 			pagefs.append(form.text({label:'Learn More prompt:',placeholder:"",	value:page.learn,
 				change:function(val,page){page.learn=val;}} ));
 		}
-		if (prefs.showText===2 || page.help!=="")
+		if (gPrefs.showText===2 || page.help!=="")
 		{
 			pagefs.append(form.htmlarea({label:"Help:",value:page.help,
 				change:function(val,page){page.help=val;}} ));
 		}
-		if (prefs.showText===2 || page.helpReader!=="")
+		if (gPrefs.showText===2 || page.helpReader!=="")
 		{
 			pagefs.append(form.htmlarea({label:'Help Text Reader:',value:page.helpReader,
 				change:function(val,page){page.helpReader=val;}} ));
@@ -200,11 +250,11 @@ function pageNameFields(pagefs,page)
 			var field = page.fields[f];
 			var ff=form.fieldset('Field '+(parseInt(f,10)+1),field);
 			ff.append(form.htmlarea({label:'Label:',value:field.label,change:labelChangeFnc}));
-			if (prefs.showText===2 || field.value!=="")
+			if (gPrefs.showText===2 || field.value!=="")
 			{
 				ff.append(form.text({label:'Default value:',placeholder:"",name:'default', value:  field.value,change:defValueChangeFnc}));
 			}
-			if (prefs.showText===2 || field.invalidPrompt!=="")
+			if (gPrefs.showText===2 || field.invalidPrompt!=="")
 			{
 				ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,change:invalidChangeFnc}));
 			}
@@ -217,11 +267,11 @@ function pageNameFields(pagefs,page)
 		{
 			var b = page.buttons[bi];
 			var bf=form.fieldset('Button '+(parseInt(bi,10)+1),b);
-			if (prefs.showText===2 || b.label!=="")
+			if (gPrefs.showText===2 || b.label!=="")
 			{
 				bf.append(form.text({value: b.label,label:'Label:',placeholder:'button label',change:btnLabelChangeFnc}));
 			}
-			if (prefs.showText===2 || b.value!=="")
+			if (gPrefs.showText===2 || b.value!=="")
 			{
 				bf.append(form.text({value: b.value,label:'Default value',placeholder:'Default value',change:bntDevValChangeFnc}));
 			}
@@ -229,14 +279,6 @@ function pageNameFields(pagefs,page)
 		}
 	}
 }
-
-var prefs = {
-	showLogic : 1,
-	showText : 1,
-	showPageList: 1,
-	showJS:0,
-	showXML:1
-};
 
 var $pageEditDialog=null;
 var SELECTED = 'ui-state-active';
@@ -279,7 +321,7 @@ function main()
 	//	);
 //	$('#guideSave').button({icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
 //	$('#settings').button({icons:{primary:"ui-icon-gear"}}).click(function(){$('#settings-form').dialog('open');});
-	$('#guideSave').button({label:'Save',icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
+	$('#guideSave').button({label:'Save Now',icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
 	//$('#guideSaveAs').button({label:'Save as',disabled:true,  icons:{primary:"ui-icon-disk"}}).click(function(){      });
 	//$('#guideNew').button({label:'New', disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){      });
 	//$('#guideOpen').button({label:'Open',disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){    });
@@ -289,10 +331,11 @@ function main()
 	//$('#guideCreate').button({icons:{primary:"ui-icon-document"}}).click(function(){createBlankGuide();	});
 	$('#guideOpen').button({label:'Open', disabled:false, icons:{primary:"ui-icon-disk"}}).click(function(){
 		//alert('guideOpen');
-		$li=$('li.guide.'+SELECTED).first();
+		var $li=$('li.guide.'+SELECTED).first();
 		var gid=$li.attr('gid');
 		var guideFile=$li.text();
-		$('li.guide[gid="'+gid+'"]').html('Loading guide '+guideFile+AJAXLoader).addClass('.warning');
+		//$('li.guide[gid="'+gid+'"]').html('Loading guide '+guideFile+AJAXLoader).addClass('.warning');
+		setProgress('Loading guide '+guideFile,true);
 		loadNewGuidePrep(guideFile,'');
 		$('#splash').hide();
 		if(gid==='a2j'){
@@ -303,9 +346,8 @@ function main()
 		}
 	 });
 	$('#guideClone').button({label:'Clone', disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){
-		//alert('guideOpen');
-		$li=$('li.guide.'+SELECTED).first();
-		var gid=$li.attr('gid');
+		//var $li=$('li.guide.'+SELECTED).first();
+		//var gid=$li.attr('gid');
 		dialogAlert('Clone interview ');
 	 });
 
@@ -358,16 +400,16 @@ function main()
 	$('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
 	
 	$('#showlogic').buttonset();
-	$('#showlogic1').click(function(){prefs.showLogic=1;gGuide.noviceTab("tabsLogic",true);});
-	$('#showlogic2').click(function(){prefs.showLogic=2;gGuide.noviceTab("tabsLogic",true);});
+	$('#showlogic1').click(function(){gPrefs.showLogic=1;gGuide.noviceTab("tabsLogic",true);});
+	$('#showlogic2').click(function(){gPrefs.showLogic=2;gGuide.noviceTab("tabsLogic",true);});
 	
 	$('#showtext').buttonset();
-	$('#showtext1').click(function(){prefs.showText=1;gGuide.noviceTab("tabsText",true);});
-	$('#showtext2').click(function(){prefs.showText=2;gGuide.noviceTab("tabsText",true);});
+	$('#showtext1').click(function(){gPrefs.showText=1;gGuide.noviceTab("tabsText",true);});
+	$('#showtext2').click(function(){gPrefs.showText=2;gGuide.noviceTab("tabsText",true);});
 	
 	//$('#showpagelist').buttonset();
-	//$('#showpagelist1').click(function(){prefs.showPageList=1;$('#CAJAOutline, #CAJAIndex').hide();$('#CAJAOutline').show();});
-	//$('#showpagelist2').click(function(){prefs.showPageList=2;$('#CAJAOutline, #CAJAIndex').hide();$('#CAJAIndex').show();});
+	//$('#showpagelist1').click(function(){gPrefs.showPageList=1;$('#CAJAOutline, #CAJAIndex').hide();$('#CAJAOutline').show();});
+	//$('#showpagelist2').click(function(){gPrefs.showPageList=2;$('#CAJAOutline, #CAJAIndex').hide();$('#CAJAIndex').show();});
 
 
    //   if (typeof initAdvanced != "undefined")      initAdvanced();
@@ -507,7 +549,9 @@ function main()
 	
 	// call guideSave every 5 minutes
 	setInterval(function() {
-      if (gGuide) guideSave();
+      if (gGuide) {
+			guideSave();
+		}
 	}, 5*60*1000);
 	
 	
@@ -515,7 +559,7 @@ function main()
 		 url:CONST.uploadGuideURL,
 		 dataType: 'json',
 		 done: function (e, data) {
-			setTimeout(signin,1);
+			setTimeout(signin,50);
 		 },
 		 progressall: function (e, data) {
 			  var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -780,13 +824,13 @@ function gotoTabOrPage(target)
 		case 'tabsLogic':
 		case 'tabsText':
 		case 'tabsConstants':
-			if (gGuide) gGuide.noviceTab(target,false);
+			if (gGuide) {gGuide.noviceTab(target,false);}
 			break;
 		case 'tabsPreview':
-			if (gGuide) gotoPageView(gGuide.firstPage);
+			if (gGuide) {gotoPageView(gGuide.firstPage);}
 			break;
 		case 'tabsGuides':
-			if (gGuide) guideSave();
+			if (gGuide) {guideSave();}
 			break;
 	}
 }
@@ -1193,7 +1237,7 @@ TGuide.prototype.novicePage = function (div, pagename)
 
    div.append(t);
 	form.finish(t);
-	if (prefs.showXML){
+	if (CONST.showXML){
 		div.append('<div class=xml>'+htmlEscape(page.xml)+'</div>');
 		div.append('<div class=xml>'+htmlEscape(page.xmla2j)+'</div>');
 	}
@@ -1202,17 +1246,21 @@ TGuide.prototype.novicePage = function (div, pagename)
 	return page;
 };
 
-
-function setProgress(status)
+/** @param status {...number}  showSpinner */
+function setProgress(status, showSpinner)
 {
 	if (typeof status==='undefined'){
-		status="";
+		status='';
 	}
-	$('#CAJAStatus').html( status );
-	if (status!==""){
+	if (status!==''){
 		trace('setProgress',status);
 	}
+	if (showSpinner===true) {
+		status += CONST.AJAXLoader;
+	}
+	$('#CAJAStatus').html( status );
 }
+
 function loadNewGuidePrep(guideFile,startTabOrPage)
 {
 	$('.pageoutline').html('');
@@ -1360,6 +1408,7 @@ function guideLoaded(data)
 	*/
 	//gGuide.filename=guideFile;
 	guideStart('');
+	setProgress();
 }
 
 function styleSheetSwitch(theme)
@@ -1434,10 +1483,10 @@ TGuide.prototype.pageFindReferences=function(findName,newName){
 	var testtext = function(page,field,fieldname)
 	{
 		var add=false;
-		page[field]=page[field].replace(/\"POPUP:\/\/(([^\"])+)\"/ig,function(match,p1,offset,string) // jslint nolike: /\"POPUP:\/\/(([^\"])+)\"/ig
+		page[field]=page[field].replace(REG.LINK_POP,function(match,p1,offset,string) // jslint nolike: /\"POPUP:\/\/(([^\"])+)\"/ig
 												 
 		{
-			var popupid=match.match(/\"POPUP:\/\/(([^\"])+)\"/i)[1];
+			var popupid=match.match(REG.LINK_POP2)[1];
 			if (popupid===findName)
 			{
 				add=true;
@@ -1647,7 +1696,9 @@ var form={
 	,text: function(data){
 		var e=$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<span class=editspan> <input class="ui-widget editable" placeholder="'+data.placeholder+'" type="text" /> </span></div>');
+			+'<span class=editspan> <input class="ui-widget editable" '+
+			//'placeholder="'+data.placeholder+'" '+
+			'type="text" /> </span></div>');
 		//if (typeof data.class!=='undefined') $('input',e).addClass(data.class);
 		//if (typeof data.width!=='undefined') $('input',e).css('width',data.class);
 		$('input',e).blur(function(){
@@ -1786,7 +1837,7 @@ var form={
 					);				
 			}
 		}
-		if( prefs.showJS)
+		if( gPrefs.showJS)
 		{	// print JavaScript
 			t=[];
 			t.push('JS:');
@@ -1841,30 +1892,6 @@ var form={
 		}
 		return form.pickList(data,list);
 	}
-	/*
-	,picksSore:function(label,value,handler){
-		return form.pickList('','picker score',[
-			'RIGHT','Right',
-			'WRONG','Wrong',
-			'MAYBE','Maybe',
-			'INFO','Info'],value,handler);
-	}
-	
-	,pickBranch:function()
-	{ 
-		return form.pickList("",'picker branch',
-		[
-			0,"Show feedback and return to question",
-			1,"Show feedback then branch to this page",
-			2,"Just branch directly to this page"
-		])
-		.change(function(){
-			var br=$(this).val();
-			$(this).parent().children('.text').toggle(br!==2);
-			$(this).parent().children('.dest').toggle(br!==0);
-		});
-	}
-	*/
 		
 	,tableRows:function(name,headings,rowList){
 		var $tbl=$('<table/>').addClass('list').data('table',name).attr('list',name);
@@ -2002,6 +2029,247 @@ var fieldTypesList = [
 	CONST.ftCheckBox,"Check box",
 	CONST.ftCheckBoxNOTA,"Check Box (None of the Above)"
 ];
+
+
+
+
+
+function guideSave()
+{	// Save current guide, but only if the XML has changed since last save to avoid upload overhead. 
+	if (gGuide!==null && gGuideID!==0)
+	{
+		setProgress('Saving '+gGuide.title,true);
+		var xml = exportXML_CAJA_from_CAJA(gGuide);
+		if (xml!==gGuide.lastSaveXML) {
+			gGuide.lastSaveXML=xml;
+			ws( {cmd:'guidesave',gid:gGuideID, guide: xml, title:gGuide.title}, function(response){
+				setProgress((makestr(response.error)!=='') ? response.error : 'Saved');
+			});
+		}
+		else
+		{
+			setProgress('No changes since last save');
+		}
+	}
+}
+
+/* */
+
+
+/**************
+	A2J_Mapper.js
+	CALI Author 5 / A2J Author 5 (CAJA) công lý
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+	
+	Mapper
+	04/2012
+	04/15/2013
+
+	Uses a simple DOM based map with DIVs for text and lines.
+	TODO - replace with CANVAS/SVG flowcharter.
+*/
+
+var gMapperScale=1.0;
+var gMapSize= 1 ; //0 is small, 1 is normal
+
+
+function showPageOnMap()
+{	// TODO 
+	//var target=$(this).attr('target');
+}
+
+/** @const */ var GRID_MAP =  {x : 10 , y : 10 };
+/** @const */ //var GRID_MAP =  {x : 50 , y : 20 };
+/** @const */ var NODE_SIZE = {w : 150, h : 36+8};
+
+function buildMap()
+{	// Contruct mapper flowcharts.
+	var $map = $('.map');
+	$map.empty();
+	//$('.MapViewer').removeClass('big').addClass(gMapSize==1 ? 'big':'');
+	/*
+	if (gMapSize==0)
+	{	// Render only boxes, no lines
+		// Could be used for students but need to remove popups and add coloring.
+		var YSC=.15;// YScale
+		var XSC=.1 ;
+		for (var p in book.pages)
+		{
+			var page=book.pages[p];
+			if (page.mapbounds != null)
+			{
+				var nodeLeft=XSC*parseInt(page.mapbounds[0]);
+				var nodeTop=YSC*parseInt(page.mapbounds[1]);
+				$(".map").append(''
+					+'<div class="node tiny" rel="'+page.mapid+'" style="left:'+nodeLeft+'px;top:'+nodeTop+'px;"></div>'
+					//+'<span class="hovertip">'+page.name+'</span>'
+				);
+			}
+		}
+	}*/
+
+	var p;
+	var page;
+	// Snap to grid
+	for (p in gGuide.pages)
+	{
+		page=gGuide.pages[p];
+		if (page.mapx!==null) 
+		{
+			page.mapx=Math.round(1+page.mapx / GRID_MAP.x)*GRID_MAP.x;
+			page.mapy=Math.round(1+page.mapy / GRID_MAP.y)*GRID_MAP.y;
+		}
+	}
+	
+	// Full size boxes with question names and simple lines connecting boxes.
+	//var NW=NODE_SIZE.w; var NH=NODE_SIZE.h;
+	for (p in gGuide.pages)
+	{
+		page=gGuide.pages[p];
+		if (page.mapx!==null)
+		{
+			var nodeLeft=page.mapx;
+			var nodeTop= page.mapy;
+			var stepc;//stepcolor
+			stepc = (page.step===0) ? 0  :  (page.step%4)+1;
+			$map.append(' '
+				+'<div class="node Step'+(stepc)+'" rel="'+page.name.asHTML()+'" style="z-index:1; left:'+nodeLeft+'px;top:'+nodeTop+'px;">'
+				+(page.type===CONST.ptPopup ? '':'<div class="arrow"></div>')
+				+'<div class="text">'+page.name+'</div></div>'
+				);
+			//$map.append(''
+				//+(page.type=="Pop-up page" ? '':'<div class="arrow" style="left:'+(nodeLeft+NW/2-7)+'px; top:'+(nodeTop-16)+'px;"></div>')
+				//+'<div class="node" rel="'+page.mapid+'" style="z-index:1; left:'+nodeLeft+'px;top:'+nodeTop+'px;">'+page.name+'</div>'			);
+		}
+	}
+	//$('.branch',$map).click(function(){focusNode($('.map > .node[rel="'+$(this).attr('rel')+'"]'));	});
+	$('.node',$map).dblclick(function(){
+		var target=$(this).attr('rel');
+		//$('#CAJAOutline li, #CAJAIndex li').removeClass('ui-state-active');
+		//$(this).addClass('ui-state-active')
+		gotoPageEdit(target);
+	});
+	
+	mapLines();
+	//$( ".node" ).draggable({	
+	$map.traggable({
+		grid: [GRID_MAP.x, GRID_MAP.y],
+		start: function(event,ui){
+		},
+		stop:
+		/*** @param {{node,position}} ui */
+		function(event,ui){
+			var node=ui.node;
+			var page = gGuide.pages[$(node).attr('rel')];
+			page.mapx=ui.position.left;
+			page.mapy=ui.position.top;
+			mapLines();
+		}
+		
+	});
+}
+/*
+function focusPage()
+{
+	focusNode($('.map > .node[rel="'+page.mapid+'"]'))
+}
+*/
+
+function mapZoomClick()
+{ 
+	var zoom=parseFloat($(this).attr('zoom'));
+	if (zoom>0){
+		gMapperScale = gMapperScale * zoom;
+	}
+	if (gMapperScale>=0.9){
+		gMapperScale=1;
+	}
+	$('.map').traggable('changeScale',gMapperScale);
+	//$('.map').css({zoom:gMapperScale,"-moz-transform":"scale("+gMapperScale+")","-webkit-transform":"scale("+gMapperScale+")"});
+}
+
+
+function mapLines()
+{
+	var NW=NODE_SIZE.w;
+	var NH=NODE_SIZE.h;
+	var $map = $('.map');
+	$('.branch, .line',$map).remove();
+	var p;
+	for (p in gGuide.pages)
+	{
+		/** @type TPage */
+		var page=gGuide.pages[p];
+		if (page.mapx!==null)
+		{
+			var nodeLeft=page.mapx;
+			var nodeTop= page.mapy;
+			//var downlines=false;
+			/* Outgoing branches to show:  
+					A2J - Buttons with Destination, Script GOTOs
+					CA - Next page, Feedback branches, Script GOTOs
+			*/
+			var b;
+			//if (!page.hasOwnProperty('mapBranches'))
+			//{
+				var branches=[];
+				for (b in page.buttons)
+				{
+					var btn = page.buttons[b];
+					branches.push({text:btn.label, dest: gGuide.pages[btn.next]} );
+				}
+				page.mapBranches=branches;
+			//}
+			//var nodeCenterX = nodeLeft + NW/2;
+			var nBranches=page.mapBranches.length;
+			var boffset =   NW/nBranches/2;
+			for (b in page.mapBranches)
+			{
+				var branch = page.mapBranches[b];
+				var branchX=nodeLeft + b/nBranches*NW+boffset;
+				var branchTop= nodeTop + NH;
+				if (typeof branch.dest!=="undefined")
+				{
+					//var dy=(branchTop+destTop)/2;//
+					var dy=(nBranches-parseInt(b,10))*4;
+					var destX = branch.dest.mapx+NW/2;
+					var destTop = branch.dest.mapy;
+					var x1 = branchX;	var y1 = branchTop;
+					var x2 = x1;		var y2 = y1 + 10  + dy;
+					var x3,y3,x4,y4;
+					if (destTop>nodeTop+NH+16)
+					{
+						x3 = destX;	y3 = y2;
+						x4 = x3;		y4 = destTop - 10  ;
+						if (destX<x1 ) {x2=destX;x3=x1;} else {x2=x1;x3=destX;}
+						$map.append( lineV(x1,y1,y2-y1) + lineH(x2,y2,x3-x2)+  lineV( x4,y3, y4-y3));
+					}
+					else
+					{
+						x3 = (x2 + destX)/2; y3 = y2;
+						x4 = x3;		y4 = destTop - 10 ;
+						var x5 = destX;// var y5=y4;
+						$map.append( lineV(x1,y1,y2-y1) + ( (x2<x3) ? lineH(x2,y2,x3-x2):lineH(x3,y2,x2-x3)) +  lineV( x4,y4, y3-y4) 
+							+ ( (x4<x5) ? lineH(x4,y4,x5-x4):lineH(x5,y4,x4-x5)) );
+					}
+				}
+				// $(".map").append('<div class="branch" rel="'+branch.dest+'" style="left:'+(branchLeft)+'px; top:'+branchTop+'px; width:'+branchWidth+'px;">'+branch.text+'</div>');
+			}
+		}
+	}
+	//trace('widths:',$map.css('width'),$map.width(),$map.innerWidth());
+	//$map.width($map.width()+100).height($map.height()+100);
+	//	$('.branch',$map).click(function(){focusNode($('.map > .node[rel="'+$(this).attr('rel')+'"]'));	});
+}
+
+function lineV(left,top,height)
+{
+	return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:2px;height:'+height+'px;"></div>';
+}
+function lineH(left,top,width)
+{
+	return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:'+width+'px;height:2px;"></div>';
+}
 
 
 /* */

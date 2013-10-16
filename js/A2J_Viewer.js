@@ -1,5 +1,5 @@
 ﻿/*
- 	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
+	CALI Author 5 / A2J Author 5 (CAJA) công lý
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	A2J Viewer embedding
@@ -10,6 +10,7 @@
 */
 
 // Elements: navbar, road step area, question, guide avatar, user avatar, learn more prompt, learn more bubble.
+
 
 function versionString()
 {
@@ -82,7 +83,9 @@ var A2JViewer={
 			else
 			{
 				$('.license',div).delay(5000).slideUp();
-				$('.copyright',div).click(function(){$('.license').toggle()});//,function(){$('.license').slideUp()});
+				$('.copyright',div).click(function(){
+					$('.license').toggle();
+				});//,function(){$('.license').slideUp()});
 			}
 		}
 		traceLogic(traceTag('code','PAGE')+' '+ traceTag('page',page.name));
@@ -211,10 +214,11 @@ var A2JViewer={
 			$('.question.bubble',div).css({top:50});
 		}
 		
-		$('.ui-form.learnmore button',div).button().click(function(){$('.A2JViewer .learnmore.bubble').hide()});
+		$('.ui-form.learnmore button',div).button().click(function(){
+			$('.A2JViewer .learnmore.bubble').hide();
+		});
 		$('.ui-form.question button',div).button().click(function()
 		{	// Validation of form data before proceeding
-
 			/*
 			 * @type {string|number}
 			* */
@@ -297,8 +301,8 @@ var A2JViewer={
 		* @param {string} [h]
 		*/
 		function posimg(src,x,y,w,h){
-			if (typeof w!=undefined) w=' width='+w;
-			if (typeof h!=undefined) h=' height='+h;
+			if (typeof w!==undefined) {w=' width='+w;}
+			if (typeof h!==undefined) {h=' height='+h;}
 			return '<img src="'+IMG+src+'" '+w+h+' style="position:absolute; left:'+x+'px; top:'+y+'px;">';
 		}
 		var stepcount=steps.length-curstep;
@@ -306,12 +310,13 @@ var A2JViewer={
 		  {ground:'step1.png',ch:[322,5,550,350],  gl:[351,204],gf:[451,200],cr:[523,198],
 			steps:[[288,430,432,131]],signs:[[629,277,1]]}
 		,{ground:'step7.png', ch:[579,66,143,61], gl:[351,204],gf:[451,200],cr:[523,198],
-			steps:[[288,430,432,131],[448,236,197,24]],signs:[[619,438,1],[550,200,.6]]}
+			steps:[[288,430,432,131],[448,236,197,24]],signs:[[619,438,1],[550,200,0.6]]}
 		];
 		var COLORS=4;
 		var si = (stepcount<=1) ? stepInfos[0] : stepInfos[1];
 		var txt = posimg(si.ground,0,0) + posimg('A2J5_CourtHouse.png',si.ch[0],si.ch[1],si.ch[2],si.ch[3]);
-		for (var s=0;s<si.steps.length;s++) {
+		var s;
+		for (s=0;s<si.steps.length;s++) {
 			var cs = curstep + s;
 			var s1=si.steps[s];
 			var color = (cs===0) ? 0 : (cs-1) % COLORS +1;
@@ -327,26 +332,26 @@ var A2JViewer={
 		var genderVarName="User Gender"; // "Male" or "Female" or ""
 		
 		var gg=gGuide.guideGender;// Guide's gender
-		gg = (gg =='Male') ? 'M' : 'F';//M or F
+		gg = (gg ==='Male') ? 'M' : 'F';//M or F
 		
 		var cg=gGuide.varGet(genderVarName); // Client's gender (blank means only show guide)
-		if (cg=='Male') cg='M'; else if (cg=='Female') cg='F'; else cg='';
+		if (cg==='Male'){ cg='M';} else if (cg==='Female') {cg='F';} else {cg='';}
 		
 		
 		cg='F';//TEST
 		
 		
 		var av=gGuide.varGet(avatarVarName);// Avatar style, originally blank or tan. Also support number.
-		if (typeof av === 'undefined') av=gGuide.avatar;
-		if (av=='tan')
-			av=1;
+		if (typeof av === 'undefined') {av=gGuide.avatar;}
+		if (av==='tan')
+			{av=1;}
 		else
-		if (av=='blank' || av=='')
-			av=0;
+		if (av==='blank' || av==='')
+			{av=0;}
 		else
-			av=parseInt(av,10); 
+			{av=parseInt(av,10);}
 		var qx;
-		if (cg!='')
+		if (cg!=='')
 		{
 			qx=si.gl[0]-300;
 			txt += posimg('A2JAvatar-Guide-'+gg+av+'.png',si.gl[0],si.gl[1])+posimg('A2JAvatar-Client-'+cg+av+'.png',si.cr[0],si.cr[1]);

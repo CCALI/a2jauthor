@@ -151,10 +151,10 @@ html, body {
 }
 .guidemenu ul li.selected {
 	font-weight: bold;
-	background-color: inherit;
-	background-color: rgb(0,0,0,0);
+	background-color: #E5E5E5;
+	/*background-color:rgb(0,0,0);
 	background: url("img/main_tab_selected_03.png") no-repeat scroll -65px center;
-	/*(transparent;*/
+	(transparent;*/
 	overflow: visible;
 	width: 200px;
 /* JPM */	
@@ -162,10 +162,10 @@ html, body {
 /* JPM */	
 	
 }
-.ui-tabs .ui-tabs-nav li { 
-	xfont-size: .9em;
+/*.ui-tabs .ui-tabs-nav li { 
+	font-size: .9em;
 }
-
+*/
 .pagelist ul {
 	font-weight: normal;
 	list-style-type: square;
@@ -362,7 +362,7 @@ div.editq {
 .editspan { /* wrap around fields for fluid width */
 	display: block;
 	overflow: hidden;
-	padding: 5 5 5 5;
+	padding: 5px 5px 5px 5px;
 }
 .editable.taller {
 	margin-top: 0em;
@@ -378,18 +378,11 @@ div.editq {
 
 .editable { /* authoring text fields */ 
 	min-width: 10em;
-
 	margin-top: 1px;
 	margin-bottom: 1px;
-	
 	padding: 5px; 
-	xfont-size: 1em;
-	x-moz-border-radius: 12px;
-	xborder-radius: 12px;
 	border: 1px solid #ccc;
 	min-height: 1em;
-	
-	
 	width:100%; 
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
@@ -431,15 +424,15 @@ x.autocomplete.picker.page {
 	overflow: hidden;
 }
 
-
+/*
 x.bubble {
-	-moz-border-radius:15px 15px 15px 15px;
 	border-radius:15px 15px 15px 15px;
 	border: 3px solid #06c;
 	background-color: #C4E1FF;
 	margin-bottom: 1em;
 	padding: 1em;
 }
+*/
 
 .CAJAContent P {
 	padding: 0;
@@ -650,7 +643,7 @@ table.list tr   {
 	border-collapse:separate;
 }
 table.list tr td  {
-	xfont-size: .8em;
+	/*font-size: .8em;*/
 	padding:.1em;
 }
 /*
@@ -711,37 +704,6 @@ input.text { margin-bottom:12px; width:95%; padding: .4em; }
    right: 0px;
 	z-index: 9999;
 }
-.dialog_window_minimized {
-   float: left;
-   padding: 5px 10px;
-   font-size: 12px;
-   cursor: pointer;
-   margin-right: 2px;
-   xdisplay: none;
-}
-.dialog_window_minimized .ui-icon {
-   display: inline-block !important;
-   position: relative;
-   top: 3px;
-   cursor: pointer;
-}
-.ui-dialog .ui-dialog-titlebar-minimize {
-   height: 18px;
-   width: 19px;
-   padding: 1px;
-   position: absolute;
-   right: 23px;
-   top: 9px;
-}
-.ui-dialog .ui-dialog-titlebar-minimize .ui-icon {
-   display: block;
-   margin: 1px;
-}
-.ui-dialog .ui-dialog-titlebar-minimize:hover, .ui-dialog .ui-dialog-titlebar-minimize:focus {
-   padding: 0;
-}
-
-
 /*
 li.guide {
 	cursor: pointer;
@@ -777,11 +739,11 @@ li.guide:hover {
 }
 /* JPM */
 
-*/
+
 .tabsPanel { 
 	height: 100%;
 	overflow: scroll;
-	border: 2px thick #f00;
+	border: 2px #f00 ;
 }
 
 .page-edit-form-panel .tabsPanel{
@@ -790,8 +752,7 @@ li.guide:hover {
 
 
 .tabHeader {
-    font-size: 1.5em;
-	font-weight:bold
+	font-size: 1.5em;
 	margin-top: 5px;
 	margin-left: 10px;
 	margin-right: 10px;
@@ -866,18 +827,13 @@ li.guide:hover {
 }
 
 .map {
-	background-color:#fff;
-	xwidth: auto;
-	xwidth: 1500px;
-	xheight: 1500px;
-	overflow: hidden;
 	border: 2px thick #0f0;
 	position: relative;
 }
 
 .map  .node {
 	font-size: 12px;
-	xbackground-color: #D0F0F0;
+	/*background-color: #D0F0F0;*/
 	margin: 0px;
 	padding: 4px;
 	width: 130px;
@@ -894,7 +850,7 @@ li.guide:hover {
 	-webkit-border-radius:5px;
 	border-radius: 5px;
 	cursor: pointer;
-	overflow: none;
+	overflow: hidden;
 }
 .map   .tiny {
 	background-image: url(img/map_page.png);
@@ -913,8 +869,6 @@ li.guide:hover {
 }
 .node .text {
 	height: 100%;
-	xwidth: 150px;
-	xtext-align: center;
 	overflow: hidden;
 }
 .map .branch {
@@ -963,7 +917,7 @@ div.codeedit span.err {
 	text-decoration: none;
 	background-color: #f88;
 	border: 1px;
-	xborder-bottom: dashed  1px #f00;
+	/*border-bottom: dashed  1px #f00;*/
 	padding-bottom: 0px;
 }
 
@@ -975,7 +929,7 @@ div.codeedit span.err {
 	height: 2em;
 	margin: 0px;
 	padding: 0px;
-	xbackground-color: #ddd;
+	/*background-color: #ddd;*/
 }
 
 /* */

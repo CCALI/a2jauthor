@@ -42,23 +42,16 @@
 <script src="jQuery/jquery.ui.combobox.js" type="text/javascript" ></script>
 <script src="jQuery/jquery.ui.traggable.js" type="text/javascript" ></script>
 
-<script src="CAJA_Types.js" type="text/javascript"></script>
-<script src="CAJA_Utils.js" type="text/javascript"></script>
-<script src="CAJA_Languages.js" type="text/javascript"></script>
-<script src="CAJA_Parser.js" type="text/javascript"></script>
-<script src="CAJA_Parser_A2J.js" type="text/javascript"></script>
-<script src="CAJA_Logic.js" type="text/javascript"></script>
-<script src="CAJA_Shared.js" type="text/javascript"></script>
-<script src="CAJA_IO.js" type="text/javascript"></script>
-<script src="A2J_Mapper.js" type="text/javascript"></script>
-<script src="A2J_Viewer.js" type="text/javascript"></script>
-<script src="A2J_AuthorApp.js" type="text/javascript"></script>
-<script src="CAJA_Dev.js" type="text/javascript"></script>
+<script src="A2J_Shared.js?jsver=5.0.1.2" type="text/javascript"></script>
+<script src="A2J_SharedSus.js?jsver=5.0.1.2" type="text/javascript"></script>
+<script src="A2J_Languages.js?jsver=5.0.1.2" type="text/javascript"></script>
+<script src="A2J_Viewer.js?jsver=5.0.1.2" type="text/javascript"></script>
+<script src="A2J_AuthorApp.js?jsver=5.0.1.2" type="text/javascript"></script>
 <?php
 	} else { // include minimized code
 ?>
-<script src="jQuery/jquery.custom.min.js" type="text/javascript" ></script>
-<script src="A2J_AuthorApp.min.js" type="text/javascript"></script>
+<script src="jQuery/jquery.custom.min.js?jsver=5.0.1.2" type="text/javascript" ></script>
+<script src="A2J_AuthorApp.min.js?jsver=5.0.1.2" type="text/javascript"></script>
 <?php
 	}
 ?>
@@ -285,7 +278,7 @@
 	<div id="cajaheader"><span id="cajainfo" title="About this Authoring System"></span><span id="guidetitle"></span>
 		<button id="settings"/>
 	</div>
-	<div id="cajafooter"><span id="CAJAStatus"></span><span style="float:right;text-align:right">All Contents &copy; CALI, The Center for Computer-Assisted Legal
+	<div id="cajafooter"><span id="saveStatus"></span><span id="CAJAStatus"></span><span style="float:right;text-align:right">All Contents &copy; CALI, The Center for Computer-Assisted Legal
 		Instruction. All Rights Reserved.</span> </div>
 </div>
 <div class="hidestart">

@@ -1,6 +1,8 @@
 <?php
 /*
 	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+	
 	10/05/2012 Simple CAJA Author Web Service API
 	A Fuse to handle all a2j author editing stuff
 	07/01/2013 HACK to login to demo
@@ -261,7 +263,7 @@ switch ($command)
 		if ($res=$mysqli->query($sql))
 		{
 			$newgid=$mysqli->insert_id;
-			$userdir=$_SESSION['userdir'];if (!isset($userdir))$userdir='00000';
+			$userdir=$_SESSION['userdir'];if (!isset($userdir)) $userdir='00000';
 			$newdirbase = $userdir.'/guides/'."Guide".$newgid;
 			$newdir = $newdirbase;
 			$guideName="Guide.xml";

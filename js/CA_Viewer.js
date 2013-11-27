@@ -1,5 +1,6 @@
-﻿/*
-	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
+﻿/*******************************************************************************
+	CA_Viewer.js
+	CALI Author 5 / A2J Author 5 (CAJA) công lý
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	CA Viewer embedding
@@ -8,8 +9,7 @@
 
 	Required by Author and Viewers
 	
-
-*/
+******************************************************************************/
 
 // Elements: navbar, road step area, question, guide avatar, user avatar, learn more prompt, learn more bubble.
 

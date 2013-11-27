@@ -154,9 +154,9 @@ html, body {
 	background-color: #E5E5E5;
 	/*background-color:rgb(0,0,0);
 	background: url("img/main_tab_selected_03.png") no-repeat scroll -65px center;
-	(transparent;*/
+	(transparent;
+	width: 200px;*/
 	overflow: visible;
-	width: 200px;
 /* JPM */	
 	color:#0066CC;
 /* JPM */	
@@ -268,6 +268,8 @@ table.A2JSteps, table.A2JVars ,table.A2JFiles {
 /* JPM */
 	
 }
+
+
 table.A2JSteps tr td, table.A2JVars tr td, table.A2JFiles tr td {
 /* JPM */	
  	padding:.33em; 

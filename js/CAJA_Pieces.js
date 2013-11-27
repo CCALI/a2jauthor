@@ -1,10 +1,87 @@
-/*
+/*******************************************************************************
+
  	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	Pieces of obsolete code that might prove useful later.
-*/
 
+******************************************************************************/
+
+
+/*
+ *
+thead {
+	display: block;
+}
+table.A2JVars tbody {
+	height:auto;
+	overflow: auto;
+	display: block;
+}
+
+
+	$('#viewer-var-form').dialog({ 
+		autoOpen:false,
+		width: 405,
+		height: 500,
+		modal:false,
+		buttons:[
+		{text:'Save', click:function(){ 
+		}},
+		{text:'Reload', click:function(){ 
+		}},
+		{text:'Close',click:function(){ 
+			$(this).dialog("close");
+		 }}
+	]});
+	
+	
+	$('#viewer-logic-form').dialog({
+		autoOpen:false,
+		width: 405,
+		height: 500,
+		modal:false,
+		buttons:[
+		{text:'Test', click:function(){  
+		}},
+		{text:'Clear', click:function(){
+			$('#tracer').empty();
+		}},
+		{text:'Close',click:function(){ 
+			$(this).dialog("close");
+		 }}
+	]});
+	*/
+	//$('#viewer-logic-form').dialog('moveToTop').dialog('open');
+	
+	
+	/*
+	$('#page-viewer').dialog({ 
+		title:'A2J Viewer',
+		autoOpen:false,
+		width: 800,
+		height: 600,
+		modal:false,
+		minWidth: 300,
+		minHeight: 500, maxHeight: 800,
+		buttons:[
+		{text:'Edit this page', click:function(){ 
+			$(this).dialog( "option", "stack", true );
+		}},
+		{text:'Variables', click:function(){ 
+			$('#viewer-var-form').dialog('open').dialog('moveToTop');
+		}},
+		{text:'Logic', click:function(){ 
+			$('#viewer-logic-form').dialog('open').dialog('moveToTop');
+		}},
+		{text:'Close',click:function(){ 
+			$(this).dialog("close");
+			$(this).dialog( "option", "stack", true );
+		 }}
+	]});
+	*/
+	
+	
 <script src="CAJA_Utils.js" type="text/javascript"></script>
 <script src="CAJA_Types.js" type="text/javascript"></script>
 <script src="CAJA_Languages.js" type="text/javascript"></script>

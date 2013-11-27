@@ -385,6 +385,14 @@ span.err {
 	padding-bottom: 0px;
  }
 
+.ViewerVarForm .varvalpanel{
+	position:absolute;
+	top: 2em;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow: scroll;
+}
 .ViewerLogicForm .tracepanel{
 	position:absolute;
 	top: 0;

@@ -1,5 +1,5 @@
-/*
-	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
+/******************************************************************************
+	CALI Author 5 / A2J Author 5 (CAJA) công lý
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	A2J Viewer app
@@ -9,9 +9,8 @@
 	Used by A2J Viewer only.
 */
 
-$(document).ready(function(){
-	loadGuideFile(templateURL,"");
-});
+
+
 
 /** @param {...string} status */
 function setProgress(status)
@@ -20,7 +19,19 @@ function setProgress(status)
 		status='';
 	}
 	trace('setProgress',status);
-}
+}/*
+  *
+	// 05/24/11 Check for answer interview ID hash. If not present or no match current interview ALWAYS start on first question.
+	var hashAnswer = Global.curTemplate.getVariableValue(CVariable.interviewIDVarName);
+	var hashInterview=Global.curTemplate.InterviewHash();
+
+	if (Strings.isBlankOrNull(historyStr) || (hashAnswer != hashInterview))
+	{	// No history or interview hash doesn't match answer hash (or no answer hash),
+		//	start on first question.
+		//ScriptTracer.trace(0,ScriptTracer.blue,false,'Restarting (no history)');
+		sb.gotoQuestion(Global.curTemplate.firstQuestion);
+	}
+  */
 function guideStart(start)
 {
 	if (start.indexOf("PAGE ")===0)
@@ -59,7 +70,7 @@ function gotoPageView(destPageName)
 		var page = gGuide.pages[destPageName];
       if (typeof page === 'undefined')
       {
-         dialogAlert( {title:'Missing page',message:'Page is missing: '+ destPageName});
+         dialogAlert( 'Page is missing: '+ destPageName );
          traceLogic('Page is missing: '+ traceTag('page',destPageName));
       }
       else
@@ -70,4 +81,8 @@ function gotoPageView(destPageName)
    },1);
 }
 
+function main(){
+	loadGuideFile(templateURL,"");
+}
+$(document).ready(main);
 /* */

@@ -13,6 +13,7 @@
 <link xhref="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-darkness/jquery-ui.css"  title="style" rel="stylesheet" type="text/css"/>
 <link xhref="http://code.jquery.com/ui/1.9.0/themes/sunny/jquery-ui.css" title="style"  rel="stylesheet" type="text/css"/>
 <link href="jQuery/themes/a2j/jquery-ui.css" title="style"  rel="stylesheet" type="text/css"/>
+<link href="jQuery/themes/a2j/dark-jquery-ui.css" title="style"  rel="stylesheet" type="text/css"/>
 
 <link href="jQuery/jquery.ui.custom.css" rel="stylesheet" type="text/css" />
 <link href="jQuery/jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
@@ -32,27 +33,42 @@
 
 
 <?php
-	if (  1 == true ) { // include full source code
-?>
-
-<script src="jQuery/jquery.xml.min.js" type="text/javascript" ></script>
-<script src="jQuery/jquery.fileupload.js"></script><!-- The basic File Upload plugin -->
-<script src="jQuery/jquery.fileupload-process.js"></script><!-- The File Upload processing plugin -->
-<script src="jQuery/jquery.fileupload-validate.js"></script><!-- The File Upload validation plugin -->
-<script src="jQuery/jquery.ui.combobox.js" type="text/javascript" ></script>
-<script src="jQuery/jquery.ui.traggable.js" type="text/javascript" ></script>
-
-<script src="A2J_Shared.js?jsver=5.0.1.2" type="text/javascript"></script>
-<script src="A2J_SharedSus.js?jsver=5.0.1.2" type="text/javascript"></script>
-<script src="A2J_Languages.js?jsver=5.0.1.2" type="text/javascript"></script>
-<script src="A2J_Viewer.js?jsver=5.0.1.2" type="text/javascript"></script>
-<script src="A2J_AuthorApp.js?jsver=5.0.1.2" type="text/javascript"></script>
-<?php
-	} else { // include minimized code
-?>
-<script src="jQuery/jquery.custom.min.js?jsver=5.0.1.2" type="text/javascript" ></script>
-<script src="A2J_AuthorApp.min.js?jsver=5.0.1.2" type="text/javascript"></script>
-<?php
+	switch ( 1 ){
+		case 0:	// include minimized code
+		?>
+			<script src="jQuery/jquery.custom.min.js?jsver=5013" type="text/javascript" ></script>
+			<script src="A2J_AuthorApp.min.js?jsver=5013" type="text/javascript"></script>
+		<?php
+			break;
+		
+		case 1:	// include full source code
+		?>
+			<script src="jQuery/jquery.xml.min.js" type="text/javascript" ></script>
+			<script src="jQuery/jquery.fileupload.js"></script><!-- The basic File Upload plugin -->
+			<script src="jQuery/jquery.fileupload-process.js"></script><!-- The File Upload processing plugin -->
+			<script src="jQuery/jquery.fileupload-validate.js"></script><!-- The File Upload validation plugin -->
+			<script src="jQuery/jquery.ui.combobox.js" type="text/javascript" ></script>
+			<script src="jQuery/jquery.ui.traggable.js" type="text/javascript" ></script>
+			
+			<script src="A2J_Types.js?jsver=5013" type="text/javascript"></script>
+			<script src="A2J_Shared.js?jsver=5013" type="text/javascript"></script>
+			<script src="A2J_SharedSus.js?jsver=5013" type="text/javascript"></script>
+			<script src="A2J_Languages.js?jsver=5013" type="text/javascript"></script>
+			<script src="A2J_Logic.js?jsver=5013" type="text/javascript"></script>
+			<script src="A2J_Parser.js?jsver=5013" type="text/javascript"></script>
+			<script src="A2J_Viewer.js?jsver=5013" type="text/javascript"></script>
+			<script src="A2J_Mapper.js?jsver=5013" type="text/javascript"></script>
+			<script src="A2J_Dev.js?jsver=5013" type="text/javascript"></script>
+			<script src="A2J_AuthorApp.js?jsver=5013" type="text/javascript"></script>
+			<script src="A2J_Debug.js?jsver=5013" type="text/javascript"></script>
+		<?php
+			break;
+		case 2:
+		?>
+			<script src="jQuery/jquery.custom.min.js?jsver=5013" type="text/javascript" ></script>
+			<script src="A2J_AuthorOne.js?jsver=5013" type="text/javascript"></script>
+		<?php
+			break;
 	}
 ?>
 
@@ -61,7 +77,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body class="ui-widget-content">
-<div id="splash" class="welcome" onclick="signin();return false;">
+<div id="splash" class="welcome">
 	<div align="center"> <img src="img/A2J5_Icon_512.png"/>  </div>
 </div>
 	
@@ -307,7 +323,7 @@
 					<option value="Unknown">Unknown</option>
 					<option value="Text">Text</option>
 					<option value="TF">TF - True/False</option>
-					<option value="MC">Number</option>
+					<option value="Number">Number</option>
 					<option value="Date">Date</option>
 					<option value="MC">Multiple choice</option>
 					<option value="Other">Other</option>

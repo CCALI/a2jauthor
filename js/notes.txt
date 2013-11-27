@@ -10,6 +10,30 @@ Answer files saved in guide folders. Use same version control system? For repeat
 'Save Answer As' - save with new file name
 
 
+################################
+02/01/2013 jsdoc used for some types for code intelligence
+
+/** @const */ var x=1;
+
+/** @param {TPage} page The page to parse */
+
+/** @type {TField} */
+
+################################
+
+for (var name in myObject) {
+  if (myObject.hasOwnProperty(name)) {
+    alert(name);
+  }
+}
+################################
+
+* @param {string} varName
+* @param {string} varType
+* @param {boolean} varRepeat
+
+
+################################
 ### JSLint ###
 
  /**
@@ -18,22 +42,23 @@ Answer files saved in guide folders. Use same version control system? For repeat
      * @return {Element}
      */
 
+JSHint settings:
+bitwise=true curly=true debug=true devel=true es5=true evil=true funcscope=true immed=true indent=3 iterator=true laxbreak=true laxcomma=true multistr=true newcap=true noarg=true noempty=true nonew=true onecase=true smarttabs=true withstmt=true
 
-	  
-02/01/2013 jsdoc used for some types for code intelligence
-/** @const */ var x=1;
-/** @param {TPage} page The page to parse */
+JSLint settings:
+ anon=true devel=true forin=true indent=3 nomen=true plusplus=true regexp=true sloppy=true undef=true vars=true white=true
 
+
+
+
+	
 02/01/2013 jslint tests
 http://www.jslint.com/lint.html
 
 Komodo Edit settings:
 anon=true css=true debug=true devel=true es5=true evil=true indent=3 nomen=true on=true plusplus=true sloppy=true undef=true unparam=true vars=true white=true
 
-
-
-
-
+bitwise=true curly=true devel=true eqeqeq=true forin=true funcscope=true globalstrict=true immed=true indent=3 latedef=true maxlen=80 newcap=true noarg=true nomen=true nonew=true nonstandard=true plusplus=true regexp=true strict=true trailing=true undef=true white=true withstmt=true
 
 ### ###
 

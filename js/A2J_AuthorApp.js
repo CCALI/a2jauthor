@@ -1,58 +1,15 @@
-﻿/*
+﻿/*******************************************************************************
+	A2J_AuthorApp.js
 	CALI Author 5 / A2J Author 5 (CAJA) công lý
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-
+	
 	Authoring App GUI
 	04/15/2013
-*/
 
-/*   
-// Comment DEBUGSTART() function out when NOT testing locally.
-function DEBUGSTART(){
-	trace("DEBUGSTART");
-	gUserNickName='Tester';
-	gUserID=0;
-	var TESTMODE = 1;
-	if ( TESTMODE===2 ) {
-		// Hard code load db
-		gGuideID =238;//238;//133;
-		ws({cmd:'guide',gid:gGuideID},guideLoaded);
-	}
-	else
-	{
-		$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist"></p>');
-		var SAMPLES = [
-			"tests/data/A2J_NYSample_interview.xml",
-			"tests/data/A2J_MobileOnlineInterview_Interview.xml",
-			"tests/data/A2J_ULSOnlineIntake081611_Interview.xml",
-			"tests/data/A2J_ULSOnlineIntake081611_Interview.xml#1b Submit Application for Review",
-			"tests/data/Logic Tests.a2j",
-			"tests/data/Field Types Test.a2j#2-1-0 Pick Colors",
-			"tests/data/Field Characters Test.a2j",
-			"tests/data/Field Characters Test.a2j#4-1 If thens",
-			"tests/data/Field Characters Test.a2j#1-5 Fields Test 1",
-			"tests/data/Field Characters Test.a2j#0-1 Intro",
-			"tests/data/A2J_FieldTypesTest_Interview.xml#1-1 Name"
-			//"tests/data/CBK_CAPAGETYPES_jqBookData.xml", 
-			//"tests/data/CBK_CAPAGETYPES_jqBookData.xml#MC Choices 3: 4 choices", 
-			//"tests/data/CBK_EVD03_jqBookData.xml",
-			//"/a2j4guides/Field Types Test.a2j#2-1-0 Pick Colors",
-			//"/a2j4guides/Logic Tests.a2j"
-			
-		];
-		$(SAMPLES).each(function(i,elt){
-			$('#samples, #guidelist').append('<li><a href="#sample">'+elt+'</a></li>');		
-		});
-		loadGuideFile(SAMPLES[0],"");//$('a	[href="#sample"]').first().text(), "");
-	}
-	$('#splash').hide();
-}
-function signin()
-{
-	DEBUGSTART();
-}
-  */
+******************************************************************************/
 
+
+/* global gGuidePath,gPage,gGuide,gUserID,gGuideID,gUserNickName */
 
 var gPrefs = {
 	showLogic : 1
@@ -60,10 +17,14 @@ var gPrefs = {
 	,showPageList : 1
 	,showJS : 0
 };
+			
+var $pageEditDialog=null;
+var SELECTED = 'ui-state-active';
 
 
 TGuide.prototype.noviceTab = function(tab,clear) //function noviceTab(guide,tab,clear)
 {	// 08/03/2012 Edit panel for guide sections 
+	/** @type {TGuide} */
 	var guide = this;
 	var div = $('#'+tab);
 	//if (div.html()!="") return;
@@ -81,8 +42,7 @@ TGuide.prototype.noviceTab = function(tab,clear) //function noviceTab(guide,tab,
 	var page;
 	var pagefs;
 	switch (tab){
-	
-		
+			
 		case "tabsVariables":
 			guide.buildTabVariables(t);
 			break;
@@ -126,8 +86,7 @@ TGuide.prototype.noviceTab = function(tab,clear) //function noviceTab(guide,tab,
 			break;
 			
 		case "tabsText":
-			t.append(form.note(
-				gPrefs.showText===1 ? 'All non-empty text blocks in this guide' : 'All text blocks in this guide'));
+			t.append(form.note(gPrefs.showText===1 ? 'All non-empty text blocks in this guide' : 'All text blocks in this guide'));
 			for (p in guide.sortedPages)
 			{
 				page=guide.sortedPages[p];
@@ -146,11 +105,24 @@ TGuide.prototype.noviceTab = function(tab,clear) //function noviceTab(guide,tab,
 			
 			var l,list=[];
 			for (l in Languages.regional){
-				list.push(l,Languages.regional[l].Language+' {'+l+'}');
+				list.push(l,Languages.regional[l].Language+' {'+l+'} '+'('+Languages.regional[l].LanguageEN+')');
 			} 
-			fs.append(form.pickList({label:'Language:', value:guide.language, change:function(val){guide.language=val;trace('Guide language is now '+guide.language);}},list));
-			list=[0,1,2];
-			fs.append(form.pickList({label:'Avatar:',value:guide.avatar,change:function(val){guide.language=val;}},list));
+			fs.append(form.pickList({label:'Language:', value:guide.language, change:function(val){
+				guide.language=val;
+				Languages.set(guide.language);
+				$('.A2JViewer','#page-viewer').html('');
+				}},list));
+			list=['blank','blank','tan','tan','tan2','tan2'];
+			//if (guide.avatar==='tan') guide.avatar=1;
+			if (guide.avatar===''||guide.avatar==='0') {guide.avatar='blank';}
+			fs.append(form.pickList({label:'Avatar:',value:guide.avatar,change:function(val){
+				guide.avatar=val;}},list));
+			list=['Female','Female Guide','Male','Male Guide'];
+			if (guide.guideGender!=='Male') {
+				guide.guideGender='Female';
+			}
+			fs.append(form.pickList({label:'Guide Gender:',value:guide.guideGender,change:function(val){
+				guide.guideGender=val;}},list));
 			fs.append(form.htmlarea({label:'Credits:',value:guide.credits,change:function(val){guide.credits=val;}}));
 			fs.append(form.text({label:'Approximate Completion Time:',placeholder:'',value:guide.completionTime,change:function(val){guide.completionTime=val;}}));
 			t.append(fs);
@@ -164,7 +136,7 @@ TGuide.prototype.noviceTab = function(tab,clear) //function noviceTab(guide,tab,
 			fs = form.fieldset('Authors');
 			var blankAuthor=new TAuthor();
 			
-			fs = form.fieldset('Revision History');  
+			fs = form.fieldset('Revision History');
 			fs.append(form.text({label:'Current Version:',value:guide.version,change:function(val){guide.version=val;}}));
 			fs.append(form.htmlarea({label:'Revision Notes',value:guide.notes,change:function(val){guide.notes=val;}}));
 			t.append(fs);
@@ -280,300 +252,29 @@ function pageNameFields(pagefs,page)
 	}
 }
 
-var $pageEditDialog=null;
-var SELECTED = 'ui-state-active';
-
-
-
 
 function authorViewerHook()
 {	//	Attach Author editing buttons to the A2J viewer
-	$('.A2JViewer').append('<div class="debugmenu"><button/><button/></div>');
+	$('.A2JViewer').append('<div class="debugmenu"><button/><button/><button/></div>');
 	$('.A2JViewer div.debugmenu button').first()
-		.button({label:'Resume editing',icons:{primary:'ui-icon-arrowreturnthick-1-w'}}).click(function(){resumeEdit();})
+		.button({label:'Edit',icons:{primary:'ui-icon-arrowreturnthick-1-w'}}).click(function(){resumeEdit();})
 //					.next().button({label:'Edit this page',icons:{primary:'ui-icon-pencil'}}).click(function(){gotoPageEdit(page.name)});//ui-icon-document-b
-		.next().button({label:'Testing',icons:{primary:'ui-icon-pencil'}}).click(function(){$('.A2JViewer').toggleClass('test',500);});
+		.next()
+		.button({label:'Trace',icons:{primary:'ui-icon-pencil'}}).click(function(){$('.A2JViewer').toggleClass('test',100);})
+		.next()
+		.button({label:'Fill',icons:{primary:'ui-icon-pencil'}}).click(function(){A2JViewer.fillSample();});
 }
 
 
-$(document).ready(main);
 
-function main()
-{   // Everything loaded, execute.
-	
-	
-
-   Languages.set(Languages.defaultLanguage);
-
-	$('#cajainfo').attr('title',versionString());
-
-	//$('#welcome, #texttoolbar').hide();
-	//$('#welcome').dialog({autoOpen: false,modal:true, height: 500, width: 700, close: function(event, ui){if (typeof event.originalEvent==='object'){signin();}}});
-
-
-//	$('.tabset').tabs();
-	//$('#guidepanel').tabs();
-	//$('table.list').hover(function(){$('.editicons',this).showIt(1);},function(){$('.editicons',this).showIt(0);});
-	
-	//$('#guidepanel > ul').append('<span><button id="guideSave">Save</button><button id="settings">Settings</button></span>'
-	//	+'<a href="#" id="guideClose" class="ui-dialog-titlebar-close ui-corner-all"><span class="ui-icon ui-icon-close"></span></a>'
-		//+'<a href="#" id="settings" class="ui-dialog-titlebar-close ui-corner-all"><span class="ui-icon ui-icon-gear"></span></a>'
-	//	);
-//	$('#guideSave').button({icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
-//	$('#settings').button({icons:{primary:"ui-icon-gear"}}).click(function(){$('#settings-form').dialog('open');});
-	$('#guideSave').button({label:'Save Now',icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
-	//$('#guideSaveAs').button({label:'Save as',disabled:true,  icons:{primary:"ui-icon-disk"}}).click(function(){      });
-	//$('#guideNew').button({label:'New', disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){      });
-	//$('#guideOpen').button({label:'Open',disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){    });
-	//$('#guideClose').button({label:'Close',icons:{primary:"ui-icon-close"}}).click(function(){guideClose();});
-	$('#settings').button({label:'Settings',icons:{primary:"ui-icon-gear"}}).click(function(){$('#settings-form').dialog('open');});
-	
-	//$('#guideCreate').button({icons:{primary:"ui-icon-document"}}).click(function(){createBlankGuide();	});
-	$('#guideOpen').button({label:'Open', disabled:false, icons:{primary:"ui-icon-disk"}}).click(function(){
-		//alert('guideOpen');
-		var $li=$('li.guide.'+SELECTED).first();
-		var gid=$li.attr('gid');
-		var guideFile=$li.text();
-		//$('li.guide[gid="'+gid+'"]').html('Loading guide '+guideFile+AJAXLoader).addClass('.warning');
-		setProgress('Loading guide '+guideFile,true);
-		loadNewGuidePrep(guideFile,'');
-		$('#splash').hide();
-		if(gid==='a2j'){
-			createBlankGuide();
-		}
-		else{
-			ws({cmd:'guide',gid:gid},guideLoaded);
-		}
-	 });
-	$('#guideClone').button({label:'Clone', disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){
-		//var $li=$('li.guide.'+SELECTED).first();
-		//var gid=$li.attr('gid');
-		dialogAlert('Clone interview ');
-	 });
-
-	
-	$('.guidemenu ul li').click(function(){
-		gotoTabOrPage($(this).attr('ref'));
-	});
-
-	$(document).on("click", '.editicons .ui-icon-circle-plus',function(){// clone a table row
-		var $tbl=$(this).closest('table');
-		var row = $(this).closest('tr');
-		var settings=$tbl.data('settings');
-		if ($('tbody tr',$tbl).length>=settings.max) {return;}
-		row.clone(true,true).insertAfter(row).fadeIn();
-		row.data('record',$.extend({},row.data('record')));
-		form.listManagerSave($(this).closest('table'));
-	});
-	$(document).on("click", ".editicons .ui-icon-circle-minus",  function(){// delete a table row
-		var $tbl=$(this).closest('table');
-		var settings=$tbl.data('settings');
-		if ($('tbody tr',$tbl).length<=settings.min) {return;}
-		$(this).closest('tr').remove();
-		form.listManagerSave($tbl);
-	});
-	
-	$('#tabsMapper button').first()
-		.button({disabled:true,label:'Fit',icons:{primary:'ui-icon-arrow-4-diag'}}).next()
-		.button({label:'Zoom in',icons:{primary:'ui-icon-zoomin'}}).next()
-		.button({label:'Zoom out',icons:{primary:'ui-icon-zoomout'}});
-	$('#tabsMapper button').click(mapZoomClick);
-	
-	$('.tabsPages .tabFooter button').first()
-		.button({label:'Edit',icons:{primary:'ui-icon-pencil'}}).click(function(){
-			gotoPageEdit(pageEditSelected());
-		}).next()
-		.button({label:'New',icons:{primary:'ui-icon-document'}}).click(function(){
-			pageEditNew();
-		}).next()
-		.button({label:'Clone',icons:{primary:'ui-icon-newwin'}}).click(function(){
-			pageEditClone(pageEditSelected());
-		}).next()
-		.button({label:'Delete',icons:{primary:'ui-icon-trash'}}).click(function(){
-			pageEditDelete(pageEditSelected());
-		});
-	 
-	 
-	 
-	
-	$('#vars_load').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
-	$('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
-	
-	$('#showlogic').buttonset();
-	$('#showlogic1').click(function(){gPrefs.showLogic=1;gGuide.noviceTab("tabsLogic",true);});
-	$('#showlogic2').click(function(){gPrefs.showLogic=2;gGuide.noviceTab("tabsLogic",true);});
-	
-	$('#showtext').buttonset();
-	$('#showtext1').click(function(){gPrefs.showText=1;gGuide.noviceTab("tabsText",true);});
-	$('#showtext2').click(function(){gPrefs.showText=2;gGuide.noviceTab("tabsText",true);});
-	
-	//$('#showpagelist').buttonset();
-	//$('#showpagelist1').click(function(){gPrefs.showPageList=1;$('#CAJAOutline, #CAJAIndex').hide();$('#CAJAOutline').show();});
-	//$('#showpagelist2').click(function(){gPrefs.showPageList=2;$('#CAJAOutline, #CAJAIndex').hide();$('#CAJAIndex').show();});
-
-
-   //   if (typeof initAdvanced != "undefined")      initAdvanced();
-
-
-
-
-   //Ensure HTML possible for combo box pick list
-   //https://github.com/scottgonzalez/jquery-ui-extensions/blob/master/autocomplete/jquery.ui.autocomplete.html.js
-   $.extend($.ui.autocomplete.prototype, {
-      _renderItem:  function (ul, item) {
-         return $("<li></li>")
-				.data("item.autocomplete", item)
-				//.append($("<a></a>")[this.options.html ? "html" : "text"](item.label))
-				.append($("<a></a>").html(item.label))
-				.appendTo(ul);
-      }
-   });
-
-   // Tips
-   //window.setTimeout(hovertipInit, 1);
-
-
-   // Draggable
-   $('.hotspot').draggable({ containment: 'parent' }).resizable().fadeTo(0.1, 0.9);
-
-   // Menu bar
-	//$('#cajasettings').menu();
-	$('#cajasettings a').click(function(){
-			var attr = $(this).attr('href'); 
-			switch (attr) {
-				case '#sample': 
-					loadGuideFile($(this).text(), "");
-					break;
-				case '#bold': document.execCommand('bold', false, null); break;
-				case '#italic': document.execCommand('italic', false, null); break;
-				case '#indent': document.execCommand('indent', false, null); break;
-				case '#outdent': document.execCommand('outdent', false, null); break;
-				case '#theme':
-					styleSheetSwitch($(this).text());
-					break;
-				default:
-					//console.log('Unhandled ' + attr);
-			}
-			return false;
-		});
-	
-	$('#settings-form').dialog({ 
-		autoOpen:false,
-		width: 600,
-		height: 500,
-		modal: true,
-		buttons:[
-		{text:'Close',click:function(){ 
-			$(this).dialog("close");
-		 }}
-	]});
-
-
-/*
-	$('#viewer-var-form').dialog({ 
-		autoOpen:false,
-		width: 405,
-		height: 500,
-		modal:false,
-		buttons:[
-		{text:'Save', click:function(){ 
-		}},
-		{text:'Reload', click:function(){ 
-		}},
-		{text:'Close',click:function(){ 
-			$(this).dialog("close");
-		 }}
-	]});
-	
-	
-	$('#viewer-logic-form').dialog({ 
-		autoOpen:false,
-		width: 405,
-		height: 500,
-		modal:false,
-		buttons:[
-		{text:'Test', click:function(){  
-		}},
-		{text:'Clear', click:function(){
-			$('#tracer').empty();
-		}},
-		{text:'Close',click:function(){ 
-			$(this).dialog("close");
-		 }}
-	]});
-	*/
-	//$('#viewer-logic-form').dialog('moveToTop').dialog('open');
-	$('#page-viewer').hide();
-	/*
-	$('#page-viewer').dialog({ 
-		title:'A2J Viewer',
-		autoOpen:false,
-		width: 800,
-		height: 600,
-		modal:false,
-		minWidth: 300,
-		minHeight: 500, maxHeight: 800,
-		buttons:[
-		{text:'Edit this page', click:function(){ 
-			$(this).dialog( "option", "stack", true );
-		}},
-		{text:'Variables', click:function(){ 
-			$('#viewer-var-form').dialog('open').dialog('moveToTop');
-		}},
-		{text:'Logic', click:function(){ 
-			$('#viewer-logic-form').dialog('open').dialog('moveToTop');
-		}},
-		{text:'Close',click:function(){ 
-			$(this).dialog("close");
-			$(this).dialog( "option", "stack", true );
-		 }}
-	]});
-	*/
-	$('#var-add').button({icons:{primary:'ui-icon-trash'}}).click(varAdd);
-	
-	
-	$( "#bold" ).button({label:'B'}).click(editButton);
-	$( "#italic" ).button({label:'I'}).click(editButton);
-	$( "#link" ).button({text:false, icons: {primary:'ui-icon-link'}}).click(editButton);
-	$( "#popup" ).button({label:'P'}).click(editButton);
-	
-	$( document ).tooltip({
-		items: ".htmledit a", //skip title for now [title]",
-		content: function(){
-			var element=$(this);
-			if (element.is("[title]")) {return element.attr("title");}
-			if (element.is("a")) {return element.attr("href");}
-			return '';
-		}
-	});
-	
-	// call guideSave every 5 minutes
-	setInterval(function() {
-      if (gGuide) {
-			guideSave();
-		}
-	}, 5*60*1000);
-	
-	
-	$('#guideupload').fileupload({
-		 url:CONST.uploadGuideURL,
-		 dataType: 'json',
-		 done: function (e, data) {
-			setTimeout(signin,50);
-		 },
-		 progressall: function (e, data) {
-			  var progress = parseInt(data.loaded / data.total * 100, 10);
-			  $('#guideuploadprogress .bar').css('width',	progress + '%'
-			);
-		}
-	});
-	
-	signin();
-}
 
 function signin(){
 	//ws({cmd:'login',username:$('#username').val(),userpass:$('#password').val()},
 	//$('#splash').show();
+	if (typeof DEBUGSTART !== 'undefined'){
+		DEBUGSTART();
+		return;
+	}
 	ws({cmd:'login'},
 		/*** @param {{userid,nickname}} data */
 		function (data){
@@ -594,6 +295,7 @@ function signin(){
 			else
 			{
 				//$('#login-form').dialog();
+				trace('');
 			}
 		}
   );
@@ -605,7 +307,7 @@ function gotoPageView(destPageName)
       var page = gGuide.pages[destPageName]; 
       if (page === null || typeof page === "undefined")
       {
-         dialogAlert({title: 'Missing page', message: 'Page is missing: '+ destPageName});
+         dialogAlert({title:'Missing page', body:'Page is missing: '+ destPageName});
          traceLogic('Page is missing: '+ destPageName);
       }
       else
@@ -657,7 +359,6 @@ function pageEditSelected()
 function pageEditSelect(pageName)
 {	// Select named page in our list
 	$('.pageoutline li').removeClass(SELECTED);
-	//trace(pageName);
 	pageNameRelFilter('.pageoutline li',pageName).toggleClass(SELECTED);	
 }
 
@@ -685,7 +386,7 @@ function pageRename(page,newName){
 	{
 		if (gGuide.pages[newName])
 		{
-			dialogAlert({title:'Page rename disallowed',message:'There is already a page named '+newName});
+			dialogAlert({title:'Page rename disallowed',body:'There is already a page named '+newName});
 			return false;
 		}
 	}
@@ -791,14 +492,14 @@ function gotoPageEdit(pageName)
 			$(this).dialog("close");
 		 }}
 	]});
-	page = gGuide.novicePage($('.page-edit-form-panel',$pageEditDialog).html(''),page.name);
+	guidePageEditForm(page,$('.page-edit-form-panel',$pageEditDialog).html(''),page.name);
 
 	$pageEditDialog.dialog('open' );
 	$pageEditDialog.dialog('moveToTop');
 }
 function gotoTabOrPage(target)
 {	// Go to a tab or popup a page.
-	trace('GoTo '+target);
+	trace('gotoTabOrPage',target);
 
 	//$('#CAJAOutline li, #CAJAIndex li').each(function(){$(this).removeClass('ui-state-active')});
 	//$('li').filter(function(){ return target == $(this).attr('target')}).each(function(){$(this).addClass('ui-state-active')});	
@@ -897,7 +598,8 @@ function pickPage(request,response)
 
 
 
-function blankGuide(){
+function blankGuide()
+{
 	var guide = new TGuide();
 
 	guide.title="My guide";
@@ -912,7 +614,7 @@ function blankGuide(){
 	page.text="Welcome to Access to Justice";
 	page.buttons=[{label:"Continue",next:"",name:"",value:""}];
 	guide.steps=[{number:0,text:"Welcome"}];
-	guide.vars=[]; 
+	guide.vars= {}; 
 	guide.sortedPages=[page];
 	guide.firstPage=page.id;
 	return guide;
@@ -967,13 +669,11 @@ function listGuides(data)
 }
 
 
-
-
-TGuide.prototype.novicePage = function (div, pagename)
+/** @param {TPage} page */
+function guidePageEditForm(page, div, pagename)//novicePage
 {	// Create editing wizard for given page.
    var t = "";
-	/** @type {TPage} */
-   var page = this.pages[pagename]; 
+  // var page = gGuide.pages[pagename]; 
 	t=$('<div/>').addClass('tabsPanel editq');
 	var fs;
 	
@@ -1059,7 +759,10 @@ TGuide.prototype.novicePage = function (div, pagename)
 			blankField.type=CONST.ftText;
 			blankField.label="Label";
 			
-			var updateFieldLayout= function(ff,field){
+			
+			var updateFieldLayout= function(ff,field)
+			//** @param {TField} field */
+			{
 				var canMinMax = field.type===CONST.ftNumber || field.type===CONST.ftNumberDollar || field.type===CONST.ftNumberPick || field.type===CONST.ftDateMDY;
 				var canList = field.type===CONST.ftTextPick;
 				var canDefaultValue=	field.type!==CONST.ftCheckBox && field.type!==CONST.ftCheckBoxNOTA && field.type!==CONST.ftGender;
@@ -1079,7 +782,8 @@ TGuide.prototype.novicePage = function (div, pagename)
 				ff.find('[name="calculator"]').showit(canUseCalc);
 				ff.find('[name="calendar"]').showit(canCalendar);
 				
-				ff.find('[name="customlist"]').showit(canList);
+				ff.find('[name="listext"]').showit(canList);
+				ff.find('[name="listint"]').showit(canList);
 				ff.find('[name="orderlist"]').showit(canOrder);
 			};
 			
@@ -1088,12 +792,33 @@ TGuide.prototype.novicePage = function (div, pagename)
 				,save:function(newlist){
 					page.fields=newlist;
 					}
-				,create:function(ff,field){
+				,create:function(ff,field)
+				//** @param {TField} field */
+				{
 					ff.append(form.pickList({label:'Type:',value: field.type,
 						change:function(val,field,ff){
 							field.type=val;
 							updateFieldLayout(ff,field);
-							}},fieldTypesList ));
+							}},
+
+							[
+								CONST.ftText,"Text",
+								CONST.ftTextLong,"Text (Long)",
+								CONST.ftTextPick,"Text (Pick from list)",
+								CONST.ftNumber,"Number",
+								CONST.ftNumberDollar,"Number Dollar",
+								CONST.ftNumberSSN,"Number SSN",
+								CONST.ftNumberPhone,"Number Phone",
+								CONST.ftNumberZIP,"Number ZIP Code",
+								CONST.ftNumberPick,"Number (Pick from list)",
+								CONST.ftDateMDY,"Date MM/DD/YYYY",
+								CONST.ftGender,"Gender",
+								CONST.ftRadioButton,"Radio Button",
+								CONST.ftCheckBox,"Check box",
+								CONST.ftCheckBoxNOTA,"Check Box (None of the Above)"
+							]
+							
+							));
 					ff.append(form.htmlarea({label:'Label:',   value:field.label, 
 						change:function(val,field){field.label=val;}}));
 					ff.append(form.text({label:'Variable:', placeholder:'Variable name', value: field.name,
@@ -1112,12 +837,14 @@ TGuide.prototype.novicePage = function (div, pagename)
 						change:function(val,field){field.min=val;}}));
 					ff.append(form.text({label:'Max value:',name:'max',placeholder:'max', value: field.max,
 						change:function(val,field){field.max=val;}}));
-					ff.append(form.pickXML({label:'External list:',value: field.listSrc,
+					ff.append(form.pickXML({label:'External list:',name:'listext',value: field.listSrc,
 						change:function(val,field){field.listSrc=val;}}));
-					ff.append(form.textArea({label:'Internal list:',value: field.listData,
+					ff.append(form.textArea({label:'Internal list:',name:'listint',value: field.listData,
 						change:function(val,field){field.listData=val; }}));
 					ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,
 						change:function(val,field){field.invalidPrompt=val;}}));
+					ff.append(form.text({label:'Sample value:',value: field.sample,
+						change:function(val,field){field.sample=val;}}));
 					
 					updateFieldLayout(ff,field);
 					return ff;
@@ -1241,12 +968,13 @@ TGuide.prototype.novicePage = function (div, pagename)
 		div.append('<div class=xml>'+htmlEscape(page.xml)+'</div>');
 		div.append('<div class=xml>'+htmlEscape(page.xmla2j)+'</div>');
 	}
-
+	
 	gPage = page;
 	return page;
-};
+}
 
-/** @param status {...number}  showSpinner */
+/** @param {...}  status */
+/** @param {...boolean}  showSpinner */
 function setProgress(status, showSpinner)
 {
 	if (typeof status==='undefined'){
@@ -1321,13 +1049,18 @@ function guideStart(startTabOrPage)
 
 	
 	buildMap();
+	
+	
+	if (typeof DEBUGFIRST !== 'undefined'){
+		DEBUGFIRST();
+	}
 }
 
-var attachmentFiles = {};
 
-function updateAttachmentFiles( ) {
-	 // Load existing files:
-	 $.ajax({
+function updateAttachmentFiles( )
+{	// Load list of uploaded existing files:
+	gGuide.attachedFiles={};
+	$.ajax({
 		  // Uncomment the following to send cross-domain cookies:
 		  //xhrFields: {withCredentials: true},
 		  url: $('#fileupload').fileupload('option', 'url'),
@@ -1336,9 +1069,9 @@ function updateAttachmentFiles( ) {
 	 }).always(function () {
 		  $(this).removeClass('fileupload-processing');
 	 }).done(function (result) {
-		  attachmentFiles = result.files;
+		  gGuide.attachedFiles = result.files;
 		  $('#attachmentFiles').empty();
-			$.each(attachmentFiles, function (index, file) {
+			$.each(gGuide.attachedFiles, function (index, file) {
 				 $('<tr><td>'+(file.name)+'</td><td>'+file.size+'</td></tr>').appendTo('#attachmentFiles');
 			});	
 	 });
@@ -1406,15 +1139,17 @@ function guideLoaded(data)
 			pages.push(QUESTION.attr("ID")+" "+ QUESTION.attr("NAME"));
 		});
 	*/
-	//gGuide.filename=guideFile;
+	//gGuide.filename=guideFile; 
+	gGuidePath=urlSplit(data.path).path; 
+	
 	guideStart('');
-	setProgress();
+	setProgress('');
 }
 
 function styleSheetSwitch(theme)
 {
 	//<link href="cavmobile.css" title="cavmobile" media="screen" rel="stylesheet" type="text/css" />
-	trace('styleSheetSwitch='+theme); 
+	trace('styleSheetSwitch',theme); 
 	if (theme==='A2J') {
 		theme = "jQuery/themes/"+theme.toLowerCase()+"/jquery-ui.css";
 	}
@@ -1450,36 +1185,12 @@ TGuide.prototype.IndexAlphaHTML=function()
 */
 
 
-function dialogConfirmYesNo(args)
-{
-	var $d=$( "#dialog-confirm" );
-	$d.html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>'+args.message+'</p>');
-	
-	$d.dialog({
-		title: args.title,
-		resizable: false,
-		width: 350,
-		height:args.height!==null?args.height : 240,
-		modal: true,
-		buttons: {
-			 Yes: function() {
-				  $( this ).dialog( "close" );
-				  args.Yes(args);
-			 },
-			 No: function() {
-				  $( this ).dialog( "close" );
-			 }
-		}
-	});
-}
-
 
 TGuide.prototype.pageFindReferences=function(findName,newName){
 // ### Return list of pages and fields pointing to pageName in {name:x,field:y} pairs
 // ### If newName is not null, perform a replacement.
 	var guide=this;
 	var matches=[];
-	var p;
 	var testtext = function(page,field,fieldname)
 	{
 		var add=false;
@@ -1509,7 +1220,7 @@ TGuide.prototype.pageFindReferences=function(findName,newName){
 			matches.push({name:page.name,field:fieldName,text:''});
 		}
 	};
-	for (p in guide.pages)
+	for (var p in guide.pages)
 	{
 		var page=guide.pages[p];
 		
@@ -1518,8 +1229,7 @@ TGuide.prototype.pageFindReferences=function(findName,newName){
 		testtext(page,'help','Help');
 		testcode(page,'codeBefore','Logic Before');
 		testcode(page,'codeAfter','Logic After');
-		var bi;
-		for (bi in page.buttons)
+		for (var bi in page.buttons)
 		{
 			var b=page.buttons[bi];
 			if (b.next===findName){
@@ -1589,20 +1299,21 @@ function varEdit(v/*TVariable*/)
 TGuide.prototype.buildTabVariables = function (t)
 {
 	var guide = this;
-	var tt=form.rowheading(["Name","Type","Comment"]); 
+	var th=html.rowheading(["Name","Type","Comment"]); 
 	var sortvars=[];
 	var vi;
 	for (vi in guide.vars){
 		sortvars.push(guide.vars[vi]);
 	}
 	sortvars.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
+	var tb='';
 	for (vi in sortvars)
 	{
 		var v=sortvars[vi];
-		tt+=form.row([v.name,v.type,v.comment]);
+		tb+=html.row([v.name,v.type,v.comment]);
 	}
 
-	t.append('<table class="A2JVars">'+tt+"</table>");
+	t.append('<table class="A2JVars">'+th + '<tbody>'+ tb + '</tbody>'+"</table>");
 	$('tr',t).click(function(){
 		varEdit(gGuide.vars[$('td:first',this).text().toLowerCase()]);
 	});
@@ -1703,7 +1414,7 @@ var form={
 		//if (typeof data.width!=='undefined') $('input',e).css('width',data.class);
 		$('input',e).blur(function(){
 			form.change($(this),$(this).val());
-			trace('saving '+$(this).val());
+			trace('Saving text',$(this).val());
 			}).val(decodeEntities(data.value)).data('data',data);
 		return e;
 	}
@@ -1985,11 +1696,11 @@ var form={
 		var $tbl=$('<table/>').addClass('list').data('settings',settings).attr('list',settings.name);
 		div.append(form.tableRowCounter(settings.name,settings.picker,settings.min,settings.max,settings.list.length));
 		var i;
-		console.log(div.html());
+		//trace(div.html());
 		for (i=0;i<settings.list.length;i++){
 			form.listManagerAddRow($tbl,settings.list[i]);
 		}
-		console.log(settings.list);
+		//trace(settings.list);
 		$('tbody',$tbl).sortable({
 			handle:"td .sorthandle",
 			update:function(event,ui){
@@ -2005,32 +1716,7 @@ var form={
 		return div;
 	}
 	
-	
-	
-	
-	,row:function(cols){ return "<tr valign=top><td>"+cols.join("</td><td>")+"</td></tr>";}
-	,rowheading:function(cols){ return "<tr valign=top><th>"+cols.join("</th><th>")+"</th></tr>";}
 };
-
-
-var fieldTypesList = [
-	CONST.ftText,"Text",
-	CONST.ftTextLong,"Text (Long)",
-	CONST.ftTextPick,"Text (Pick from list)",
-	CONST.ftNumber,"Number",
-	CONST.ftNumberDollar,"Number Dollar",
-	CONST.ftNumberSSN,"Number SSN",
-	CONST.ftNumberPhone,"Number Phone",
-	CONST.ftNumberZIP,"Number ZIP Code",
-	CONST.ftNumberPick,"Number (Pick from list)",
-	CONST.ftDateMDY,"Date MM/DD/YYYY",
-	CONST.ftGender,"Gender",
-	CONST.ftRadioButton,"Radio Button",
-	CONST.ftCheckBox,"Check box",
-	CONST.ftCheckBoxNOTA,"Check Box (None of the Above)"
-];
-
-
 
 
 
@@ -2053,223 +1739,246 @@ function guideSave()
 	}
 }
 
-/* */
 
 
-/**************
-	A2J_Mapper.js
-	CALI Author 5 / A2J Author 5 (CAJA) công lý
-	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	
-	Mapper
-	04/2012
-	04/15/2013
-
-	Uses a simple DOM based map with DIVs for text and lines.
-	TODO - replace with CANVAS/SVG flowcharter.
-*/
-
-var gMapperScale=1.0;
-var gMapSize= 1 ; //0 is small, 1 is normal
 
 
-function showPageOnMap()
-{	// TODO 
-	//var target=$(this).attr('target');
-}
 
-/** @const */ var GRID_MAP =  {x : 10 , y : 10 };
-/** @const */ //var GRID_MAP =  {x : 50 , y : 20 };
-/** @const */ var NODE_SIZE = {w : 150, h : 36+8};
 
-function buildMap()
-{	// Contruct mapper flowcharts.
-	var $map = $('.map');
-	$map.empty();
-	//$('.MapViewer').removeClass('big').addClass(gMapSize==1 ? 'big':'');
-	/*
-	if (gMapSize==0)
-	{	// Render only boxes, no lines
-		// Could be used for students but need to remove popups and add coloring.
-		var YSC=.15;// YScale
-		var XSC=.1 ;
-		for (var p in book.pages)
-		{
-			var page=book.pages[p];
-			if (page.mapbounds != null)
-			{
-				var nodeLeft=XSC*parseInt(page.mapbounds[0]);
-				var nodeTop=YSC*parseInt(page.mapbounds[1]);
-				$(".map").append(''
-					+'<div class="node tiny" rel="'+page.mapid+'" style="left:'+nodeLeft+'px;top:'+nodeTop+'px;"></div>'
-					//+'<span class="hovertip">'+page.name+'</span>'
-				);
-			}
-		}
-	}*/
 
-	var p;
-	var page;
-	// Snap to grid
-	for (p in gGuide.pages)
-	{
-		page=gGuide.pages[p];
-		if (page.mapx!==null) 
-		{
-			page.mapx=Math.round(1+page.mapx / GRID_MAP.x)*GRID_MAP.x;
-			page.mapy=Math.round(1+page.mapy / GRID_MAP.y)*GRID_MAP.y;
-		}
-	}
-	
-	// Full size boxes with question names and simple lines connecting boxes.
-	//var NW=NODE_SIZE.w; var NH=NODE_SIZE.h;
-	for (p in gGuide.pages)
-	{
-		page=gGuide.pages[p];
-		if (page.mapx!==null)
-		{
-			var nodeLeft=page.mapx;
-			var nodeTop= page.mapy;
-			var stepc;//stepcolor
-			stepc = (page.step===0) ? 0  :  (page.step%4)+1;
-			$map.append(' '
-				+'<div class="node Step'+(stepc)+'" rel="'+page.name.asHTML()+'" style="z-index:1; left:'+nodeLeft+'px;top:'+nodeTop+'px;">'
-				+(page.type===CONST.ptPopup ? '':'<div class="arrow"></div>')
-				+'<div class="text">'+page.name+'</div></div>'
-				);
-			//$map.append(''
-				//+(page.type=="Pop-up page" ? '':'<div class="arrow" style="left:'+(nodeLeft+NW/2-7)+'px; top:'+(nodeTop-16)+'px;"></div>')
-				//+'<div class="node" rel="'+page.mapid+'" style="z-index:1; left:'+nodeLeft+'px;top:'+nodeTop+'px;">'+page.name+'</div>'			);
-		}
-	}
-	//$('.branch',$map).click(function(){focusNode($('.map > .node[rel="'+$(this).attr('rel')+'"]'));	});
-	$('.node',$map).dblclick(function(){
-		var target=$(this).attr('rel');
-		//$('#CAJAOutline li, #CAJAIndex li').removeClass('ui-state-active');
-		//$(this).addClass('ui-state-active')
-		gotoPageEdit(target);
-	});
-	
-	mapLines();
-	//$( ".node" ).draggable({	
-	$map.traggable({
-		grid: [GRID_MAP.x, GRID_MAP.y],
-		start: function(event,ui){
+function ws(data,results)
+{	// Contact the webservice to handle user signin, retrieval of guide lists and load/update/cloning guides.
+	$.ajax({
+		url:'CAJA_WS.php',
+		dataType:'json',
+		type: 'POST',
+		data: data,
+		success: function(data){ 
+			//trace(String.substr(JSON.stringify(data),0,299));
+			results(data);
 		},
-		stop:
-		/*** @param {{node,position}} ui */
-		function(event,ui){
-			var node=ui.node;
-			var page = gGuide.pages[$(node).attr('rel')];
-			page.mapx=ui.position.left;
-			page.mapy=ui.position.top;
-			mapLines();
+		error: function(err,xhr) {
+			dialogAlert({title:'Error loading file',body:xhr.responseText});
+			setProgress('Error: '+xhr.responseText);
 		}
-		
 	});
-}
-/*
-function focusPage()
-{
-	focusNode($('.map > .node[rel="'+page.mapid+'"]'))
-}
-*/
-
-function mapZoomClick()
-{ 
-	var zoom=parseFloat($(this).attr('zoom'));
-	if (zoom>0){
-		gMapperScale = gMapperScale * zoom;
-	}
-	if (gMapperScale>=0.9){
-		gMapperScale=1;
-	}
-	$('.map').traggable('changeScale',gMapperScale);
-	//$('.map').css({zoom:gMapperScale,"-moz-transform":"scale("+gMapperScale+")","-webkit-transform":"scale("+gMapperScale+")"});
-}
+}  
 
 
-function mapLines()
-{
-	var NW=NODE_SIZE.w;
-	var NH=NODE_SIZE.h;
-	var $map = $('.map');
-	$('.branch, .line',$map).remove();
-	var p;
-	for (p in gGuide.pages)
-	{
-		/** @type TPage */
-		var page=gGuide.pages[p];
-		if (page.mapx!==null)
-		{
-			var nodeLeft=page.mapx;
-			var nodeTop= page.mapy;
-			//var downlines=false;
-			/* Outgoing branches to show:  
-					A2J - Buttons with Destination, Script GOTOs
-					CA - Next page, Feedback branches, Script GOTOs
-			*/
-			var b;
-			//if (!page.hasOwnProperty('mapBranches'))
-			//{
-				var branches=[];
-				for (b in page.buttons)
-				{
-					var btn = page.buttons[b];
-					branches.push({text:btn.label, dest: gGuide.pages[btn.next]} );
-				}
-				page.mapBranches=branches;
-			//}
-			//var nodeCenterX = nodeLeft + NW/2;
-			var nBranches=page.mapBranches.length;
-			var boffset =   NW/nBranches/2;
-			for (b in page.mapBranches)
-			{
-				var branch = page.mapBranches[b];
-				var branchX=nodeLeft + b/nBranches*NW+boffset;
-				var branchTop= nodeTop + NH;
-				if (typeof branch.dest!=="undefined")
-				{
-					//var dy=(branchTop+destTop)/2;//
-					var dy=(nBranches-parseInt(b,10))*4;
-					var destX = branch.dest.mapx+NW/2;
-					var destTop = branch.dest.mapy;
-					var x1 = branchX;	var y1 = branchTop;
-					var x2 = x1;		var y2 = y1 + 10  + dy;
-					var x3,y3,x4,y4;
-					if (destTop>nodeTop+NH+16)
-					{
-						x3 = destX;	y3 = y2;
-						x4 = x3;		y4 = destTop - 10  ;
-						if (destX<x1 ) {x2=destX;x3=x1;} else {x2=x1;x3=destX;}
-						$map.append( lineV(x1,y1,y2-y1) + lineH(x2,y2,x3-x2)+  lineV( x4,y3, y4-y3));
-					}
-					else
-					{
-						x3 = (x2 + destX)/2; y3 = y2;
-						x4 = x3;		y4 = destTop - 10 ;
-						var x5 = destX;// var y5=y4;
-						$map.append( lineV(x1,y1,y2-y1) + ( (x2<x3) ? lineH(x2,y2,x3-x2):lineH(x3,y2,x2-x3)) +  lineV( x4,y4, y3-y4) 
-							+ ( (x4<x5) ? lineH(x4,y4,x5-x4):lineH(x5,y4,x4-x5)) );
-					}
-				}
-				// $(".map").append('<div class="branch" rel="'+branch.dest+'" style="left:'+(branchLeft)+'px; top:'+branchTop+'px; width:'+branchWidth+'px;">'+branch.text+'</div>');
-			}
+
+
+function main()
+{   // Everything loaded, execute.
+
+   Languages.set(Languages.defaultLanguage);
+
+	$('#cajainfo').attr('title',versionString());
+
+	//$('#welcome, #texttoolbar').hide();
+	//$('#welcome').dialog({autoOpen: false,modal:true, height: 500, width: 700, close: function(event, ui){if (typeof event.originalEvent==='object'){signin();}}});
+
+
+//	$('.tabset').tabs();
+	//$('#guidepanel').tabs();
+	//$('table.list').hover(function(){$('.editicons',this).showIt(1);},function(){$('.editicons',this).showIt(0);});
+	
+	//$('#guidepanel > ul').append('<span><button id="guideSave">Save</button><button id="settings">Settings</button></span>'
+	//	+'<a href="#" id="guideClose" class="ui-dialog-titlebar-close ui-corner-all"><span class="ui-icon ui-icon-close"></span></a>'
+		//+'<a href="#" id="settings" class="ui-dialog-titlebar-close ui-corner-all"><span class="ui-icon ui-icon-gear"></span></a>'
+	//	);
+//	$('#guideSave').button({icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
+//	$('#settings').button({icons:{primary:"ui-icon-gear"}}).click(function(){$('#settings-form').dialog('open');});
+	$('#guideSave').button({label:'Save Now',icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
+	//$('#guideSaveAs').button({label:'Save as',disabled:true,  icons:{primary:"ui-icon-disk"}}).click(function(){      });
+	//$('#guideNew').button({label:'New', disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){      });
+	//$('#guideOpen').button({label:'Open',disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){    });
+	//$('#guideClose').button({label:'Close',icons:{primary:"ui-icon-close"}}).click(function(){guideClose();});
+	$('#settings').button({label:'Settings',icons:{primary:"ui-icon-gear"}}).click(function(){$('#settings-form').dialog('open');});
+	
+	//$('#guideCreate').button({icons:{primary:"ui-icon-document"}}).click(function(){createBlankGuide();	});
+	$('#guideOpen').button({label:'Open', disabled:false, icons:{primary:"ui-icon-disk"}}).click(function(){
+		//alert('guideOpen');
+		var $li=$('li.guide.'+SELECTED).first();
+		var gid=$li.attr('gid');
+		var guideFile=$li.text();
+		//$('li.guide[gid="'+gid+'"]').html('Loading guide '+guideFile+AJAXLoader).addClass('.warning');
+		setProgress('Loading guide '+guideFile,true);
+		loadNewGuidePrep(guideFile,'');
+		$('#splash').hide();
+		if(gid==='a2j'){
+			createBlankGuide();
 		}
-	}
-	//trace('widths:',$map.css('width'),$map.width(),$map.innerWidth());
-	//$map.width($map.width()+100).height($map.height()+100);
-	//	$('.branch',$map).click(function(){focusNode($('.map > .node[rel="'+$(this).attr('rel')+'"]'));	});
+		else{
+			ws({cmd:'guide',gid:gid},guideLoaded);
+		}
+	 });
+	$('#guideClone').button({label:'Clone', disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){
+		//var $li=$('li.guide.'+SELECTED).first();
+		//var gid=$li.attr('gid');
+		dialogAlert({title:'Clone interview'});
+	 });
+
+	
+	$('.guidemenu ul li').click(function(){
+		gotoTabOrPage($(this).attr('ref'));
+	});
+
+	$(document).on("click", '.editicons .ui-icon-circle-plus',function(){// clone a table row
+		var $tbl=$(this).closest('table');
+		var row = $(this).closest('tr');
+		var settings=$tbl.data('settings');
+		if ($('tbody tr',$tbl).length>=settings.max) {return;}
+		row.clone(true,true).insertAfter(row).fadeIn();
+		row.data('record',$.extend({},row.data('record')));
+		form.listManagerSave($(this).closest('table'));
+	});
+	$(document).on("click", ".editicons .ui-icon-circle-minus",  function(){// delete a table row
+		var $tbl=$(this).closest('table');
+		var settings=$tbl.data('settings');
+		if ($('tbody tr',$tbl).length<=settings.min) {return;}
+		$(this).closest('tr').remove();
+		form.listManagerSave($tbl);
+	});
+	
+	$('#tabsMapper button').first()
+		.button({disabled:true,label:'Fit',icons:{primary:'ui-icon-arrow-4-diag'}}).next()
+		.button({label:'Zoom in',icons:{primary:'ui-icon-zoomin'}}).next()
+		.button({label:'Zoom out',icons:{primary:'ui-icon-zoomout'}});
+	$('#tabsMapper button').click(mapZoomClick);
+	
+	$('.tabsPages .tabFooter button').first()
+		.button({label:'Edit',icons:{primary:'ui-icon-pencil'}}).click(function(){
+			gotoPageEdit(pageEditSelected());
+		}).next()
+		.button({label:'New',icons:{primary:'ui-icon-document'}}).click(function(){
+			pageEditNew();
+		}).next()
+		.button({label:'Clone',icons:{primary:'ui-icon-newwin'}}).click(function(){
+			pageEditClone(pageEditSelected());
+		}).next()
+		.button({label:'Delete',icons:{primary:'ui-icon-trash'}}).click(function(){
+			pageEditDelete(pageEditSelected());
+		});
+	 
+	 
+	 
+	
+	$('#vars_load').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
+	$('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
+	
+	$('#showlogic').buttonset();
+	$('#showlogic1').click(function(){gPrefs.showLogic=1;gGuide.noviceTab("tabsLogic",true);});
+	$('#showlogic2').click(function(){gPrefs.showLogic=2;gGuide.noviceTab("tabsLogic",true);});
+	
+	$('#showtext').buttonset();
+	$('#showtext1').click(function(){gPrefs.showText=1;gGuide.noviceTab("tabsText",true);});
+	$('#showtext2').click(function(){gPrefs.showText=2;gGuide.noviceTab("tabsText",true);});
+	
+	//$('#showpagelist').buttonset();
+	//$('#showpagelist1').click(function(){gPrefs.showPageList=1;$('#CAJAOutline, #CAJAIndex').hide();$('#CAJAOutline').show();});
+	//$('#showpagelist2').click(function(){gPrefs.showPageList=2;$('#CAJAOutline, #CAJAIndex').hide();$('#CAJAIndex').show();});
+
+
+   //   if (typeof initAdvanced != "undefined")      initAdvanced();
+
+
+
+
+   //Ensure HTML possible for combo box pick list
+   //https://github.com/scottgonzalez/jquery-ui-extensions/blob/master/autocomplete/jquery.ui.autocomplete.html.js
+   $.extend($.ui.autocomplete.prototype, {
+      _renderItem:  function (ul, item) {
+         return $("<li></li>")
+				.data("item.autocomplete", item)
+				//.append($("<a></a>")[this.options.html ? "html" : "text"](item.label))
+				.append($("<a></a>").html(item.label))
+				.appendTo(ul);
+      }
+   });
+
+   // Tips
+   //window.setTimeout(hovertipInit, 1);
+
+
+   // Draggable
+   $('.hotspot').draggable({ containment: 'parent' }).resizable().fadeTo(0.1, 0.9);
+
+   // Menu bar
+	//$('#cajasettings').menu();
+	$('#cajasettings a').click(function(){
+			var attr = $(this).attr('href'); 
+			switch (attr) {
+				case '#sample': 
+					loadGuideFile($(this).text(), "");
+					break;
+				case '#bold': document.execCommand('bold', false, null); break;
+				case '#italic': document.execCommand('italic', false, null); break;
+				case '#indent': document.execCommand('indent', false, null); break;
+				case '#outdent': document.execCommand('outdent', false, null); break;
+				case '#theme':
+					styleSheetSwitch($(this).text());
+					break;
+				default:
+					//trace('Unhandled ' + attr);
+			}
+			return false;
+		});
+	
+	$('#settings-form').dialog({ 
+		autoOpen:false,
+		width: 600,
+		height: 500,
+		modal: true,
+		buttons:[
+		{text:'Close',click:function(){ 
+			$(this).dialog("close");
+		 }}
+	]});
+
+
+	$('#page-viewer').hide();
+	$('#var-add').button({icons:{primary:'ui-icon-trash'}}).click(varAdd);
+	
+	
+	$( "#bold" ).button({label:'B'}).click(editButton);
+	$( "#italic" ).button({label:'I'}).click(editButton);
+	$( "#link" ).button({text:false, icons: {primary:'ui-icon-link'}}).click(editButton);
+	$( "#popup" ).button({label:'P'}).click(editButton);
+	
+	$( document ).tooltip({
+		items: ".htmledit a", //skip title for now [title]",
+		content: function(){
+			var element=$(this);
+			if (element.is("[title]")) {return element.attr("title");}
+			if (element.is("a")) {return element.attr("href");}
+			return '';
+		}
+	});
+	
+	// call guideSave every 5 minutes
+	setInterval(function() {
+      if (gGuide) {
+			guideSave();
+		}
+	}, 5*60*1000);
+	
+	
+	$('#guideupload').fileupload({
+		 url:CONST.uploadGuideURL,
+		 dataType: 'json',
+		 done: function (e, data) {
+			setTimeout(signin,50);
+		 },
+		 progressall: function (e, data) {
+			  var progress = parseInt(data.loaded / data.total * 100, 10);
+			  $('#guideuploadprogress .bar').css('width',	progress + '%'
+			);
+		}
+	});
+	
+	signin();
 }
 
-function lineV(left,top,height)
-{
-	return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:2px;height:'+height+'px;"></div>';
-}
-function lineH(left,top,width)
-{
-	return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:'+width+'px;height:2px;"></div>';
-}
-
+$(document).ready(main);
 
 /* */

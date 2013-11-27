@@ -1,6 +1,5 @@
-
-/**********
-	CAJA_Languages.js
+/******************************************************************************
+	A2J_Languages.js
 	CALI Author 5 / A2J Author 5 (CAJA) công lý
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
@@ -12,9 +11,10 @@
 	Language blocks for each supported language.
 	There's a Languages[] structure for A2J Viewer specific code.
 	And jQuery UI structs for Calendar.
-*/
+******************************************************************************/
 
 var lang = {
+	Language: '',
 	Male:'',
 	Female:'',
 	GoBack:'',
@@ -49,22 +49,26 @@ function TLanguages()
 		if (typeof this.regional[languageID]==='undefined'){
 			languageID='en';
 		}
-		trace("Set language to "+languageID);
+		trace("TLanguages.set",languageID);
 		var region;
 		
 		region = this.regional[languageID];
 		lang = {};
 		var e;
 		for (e in region){
-			lang[e]= String(region[e]);
-			//trace(e+"="+region[e]);
+			if (region.hasOwnProperty(e)) {
+				lang[e]= String(region[e]);
+				//trace(e+"="+region[e]);
+			}
 		}
 		region = this.regional['en'];
 		for (e in region){
-			if (makestr(lang[e])==='')
-			{
-				lang[e]= String(region[e]);
-				//trace('Missing '+e+"="+lang[e]);
+			if (region.hasOwnProperty(e)) {
+				if (makestr(lang[e])==='')
+				{
+					lang[e]= String(region[e]);
+					//trace('Missing '+e+"="+lang[e]);
+				}
 			}
 		}
 	};
@@ -85,6 +89,7 @@ Languages.regional['en']= {
 	/* VIEWER */
 	/* 05/05/2005, 03/11/2010 External English language file used with A2J Viewer'*/
 	Language:'English',
+	LanguageEN: 'English',
 	AskYesNo_Yes:'Yes',
 	AskYesNo_No:'No',
 	Close:'Close',
@@ -191,6 +196,7 @@ Languages.regional['es']= {
 	/* VIEWER */
 	// 05/05/2005, 03/11/2010 External Spanish language file used with A2J Viewer'
 	Language:'Español',
+	LanguageEN: 'Spanish',
 	AskYesNo_Yes:'Si',
 	AskYesNo_No:'No',
 	Close:'Cerrar',
@@ -303,6 +309,7 @@ Languages.regional['vi']= {
 		/* VIEWER */
 	// 11/23/2011 External Vietnamese language file used with A2J Viewer',
 	Language:'Tiếng Anh',
+	LanguageEN: 'Vietnamese',
 	AskYesNo_Yes:'Có',
 	AskYesNo_No:'Không',
 	Close:'Đóng',
@@ -380,6 +387,7 @@ Languages.regional['zh-cn']= {
 	/* VIEWER */
 	//   11/23/2011 External Simplified Chinese language file used with A2J Viewer',
 	Language:'英语',
+	LanguageEN: 'Simplified Chinese',
 	AskYesNo_Yes:'是',
 	AskYesNo_No:'否',
 	Close:'关闭',

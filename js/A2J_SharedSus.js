@@ -1,11 +1,12 @@
-/**********
+/*******************************************************************************
 	A2J_SharedSus.js
-	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
+	CALI Author 5 / A2J Author 5 (CAJA) công lý
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	JavaScript functions with JSLint complaints.
+******************************************************************************/
 
-*/
+
 var REG={
 	LOGIC_SET: /set\s+(.+)/i
 	,LOGIC_SETTO: /set\s+([\w#]+|\[.+\])\s*?(=|TO)\s?(.+)/i
@@ -73,3 +74,4 @@ var decodeEntities = (function() {
 
   return decodeHTMLEntities;
 })();
+/* */

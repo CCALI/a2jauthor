@@ -51,8 +51,8 @@ else
 	session_start();//  09/05/2013 WARNING! LEAVE session_start() OFF TO ACCESS DRUPAL SESSIONS!
 	define("LOCAL_AS_DEV_USER", 1);
 	if ( LOCAL_AS_DEV_USER )
-		//$userid=26;
-		$userid=45;
+		//$userid=26;// Demo Author
+		$userid=45;// DEV Author
 	else
 		$userid=0;
 }
@@ -143,6 +143,8 @@ switch ($command)
 			$result['guide']= file_get_contents(GUIDES_DIR.$row['filename'],TRUE);
 			//scandir()
 			trace(GUIDES_DIR.$row['filename']);
+			// 11/26/2013 Include guide's path so we can access local files.
+			$result['path']=GUIDES_URL.$row['filename'];
 		}
 		else
 		{// not found

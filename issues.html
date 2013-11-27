@@ -1,0 +1,551 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>A2J 5 Issues Page</title>
+<link href="../../styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body> 
+	<h1>A2J 5 Issues 	</h1>
+	<p>### CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие ###</p>
+	<p>11/14/2013</p>
+<table border="1" cellpadding="5" cellspacing="0" class="TODO" >
+	<tr valign="bottom" >
+		<th width="150" align="center" valign="top" nowrap="nowrap" >teaser</th>
+		<th align="center" valign="top" nowrap="nowrap"  >target<br />
+			ver </th>
+		<th nowrap="nowrap"  >problem</th>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>Wiki: <a href="http://wikis.cali.org/A2J_5/A2J_5_Issues">   http://wikis.cali.org/A2J_5/A2J_5_Issues</a></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top"><p>Answer files</p>
+		<p>Variables</p></td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+				<li>TODO - Load/save answer sets from Viewer</li>
+				<li>TODO - Variable popup shows all pages using that variable</li>
+				<li>TODO - Variable Value Editor - Show variable table with current names/indices and values</li>
+				<li>TODO - Variable Value Editor - Make value of variables editable</li>
+				<li>TODO - #Var - Variable name   characters - Enforce variable name character limitations such as   preventing use of reserved character # - also security issue such as SQL   intection attack.</li>
+		</ol>		</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top"><p>Answer files</p>
+		<p>Variables</p></td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li> done - code to save HotDocs answer file</li>
+			<li> done - code to load external HotDocs answer variable file
+				<ul>
+						<li>answer file Repeats override guide's repeat</li>
+					<li>answer file Type does NOT override guide's type</li>
+				</ul>
+			</li>
+		</ol>		</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">Page Names</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li> done - ensure unique names (done),</li>
+				<li>done -  replace button branches</li>
+				<li>done -  replace popup links</li>
+				<li>TODO -  replace logic GOTOs.</li>
+				<li>TODO -  When deleting a page, anything that points to it should point where? BLANK?</li>
+		</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">Page and Steps</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>TODO - When changing a page's step, refresh the page list to show new position</li>
+		</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><p>A2J 8/21/2013</p>
+				<ol>
+					<li>Use       PAGE ID NUMBERS instead of page names – like A2J 4, for CA, auto number –       support multiple pages with same name (name becomes public usage so need       to support duplicates) but also need to show author real ID #. </li>
+					<li>Existing variable names with reserved symbols: </li>
+					<ul>
+						<li> Guardianship/Conservatorship Child assets TE</li>
+						<li>grandchild is/are TE</li>
+					</ul>
+					<li>Try to       emulate HotDocs scripting: </li>
+				</ol>
+			<ol>
+					<ol>
+						<li>AND/OR/NOT  reserved words</li>
+						<li>Variable  names with spaces not in []</li>
+						<li>#  replaced with brackets</li>
+					</ol>
+			</ol>
+			<h2>Conversion examples</h2>
+			<table border="1" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="343" nowrap="nowrap" valign="top"><h2>A2J4 becomes</h2></td>
+						<td width="306" nowrap="nowrap" valign="top"><h2>A2J5 ala HotDocs style</h2></td>
+					</tr>
+					<tr>
+						<td width="343" nowrap="nowrap" valign="top"><p>[first name] </p></td>
+						<td width="306" nowrap="nowrap" valign="top"><p>first name</p></td>
+					</tr>
+					<tr>
+						<td width="343" nowrap="nowrap" valign="top"><p>[first name#child counter]</p></td>
+						<td width="306" nowrap="nowrap" valign="top"><p>first name[child counter]</p></td>
+					</tr>
+					<tr>
+						<td width="343" nowrap="nowrap" valign="top"><p>[income 1] &gt;0 and [income 2] &gt; 0</p></td>
+						<td width="306" nowrap="nowrap" valign="top"><p>Income 1 &gt; 0 AND income 2 &gt; 0</p></td>
+					</tr>
+				</table>
+			<h2>A2J4 to A2J5 Script Conversion requirements:</h2>
+			<p>Identify and/or/not Boolean operators, convert to all caps<br />
+				Convert names within brackets: find x#y replace with x[y]</p>
+			<h2>Final Script to JS Conversion:</h2>
+			<ul type="disc">
+					<li>Replace       all caps AND/OR/NOT with &amp;&amp;/|| and !</li>
+				<li>Word       tokens with spaces:</li>
+				<ul type="circle">
+						<li>Client        name[index 1,index 2]</li>
+				</ul>
+			</ul>
+			<p>&nbsp;</p></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">Author GUI</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><h2>&nbsp;</h2>
+			<ul>
+				<li>
+					<p>TODO - 2/2013 Interview Publication location - Add 'Publish' URL picker - site where this interview would be Published</p>
+				</li>
+				<li>
+					<p>TODO - 2/2013 #Server, #Field, #Lists - Allow author to upload XML file and link to a field</p>
+				</li>
+				<li>
+					<p>TODO - #Lists - Edit Internal Picklists - Allow author to edit a list internally</p>
+					<ul>
+						<li>
+							<p>current   A2J uses list of values which are also the display values. XML files   can have a display value differing from the actual value</p>
+						</li>
+						<li>
+							<p>Should we support internal values?</p>
+						</li>
+						<li>
+							<p>? move internal A2J custom lists into Constants block</p>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<p>TODO - File Upload - Attach media files</p>
+					<ul>
+						<li>
+							<p>TODO - Attaching images/sounds via direct upload rather than picker w/uploader</p>
+						</li>
+						<li>
+							<p>TODO - Video via YouTube's Unlisted videos - allows users to play video but isn't indexed for youtube searches</p>
+						</li>
+						<li>
+							<p>TODO - List all attached media files in separate pane</p>
+						</li>
+						<li>
+							<p>RESOLVED   - currently these are attached locally then uploaded with lesson.   Instead, upload them to some space and then link them. Allow one to link   to external videos or images? - No.</p>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<p>TODO - WYSIWYG hyperlinks - Add/Edit hyperlinks</p>
+				</li>
+				<li>
+					<p>TODO - WYSIWYG popups - Add/Edit Popups</p>
+				</li>
+				<li>
+					<p>TODO   - Page picker method - Pick a destination page via a popup rather than   autocomplete? since there's other non-page destinations to include like   Success, Exit Failure, etc. a popup picker like A2J 4 may be better   option.</p>
+				</li>
+				<li></li>
+				<li>
+					<p>TODO   - Page display title - Optional author defined title for displaying to   the user to avoid the 'machine' style naming, also for better Mobile   experience.</p>
+				</li>
+			</ul>
+			<p><br />
+			</p>
+			<ul data-cke-saved-style="margin-left: 40px;">
+				<li>EM: don't change the original name, like a file name.</li>
+				<li>A2J4 uses fixed page id's. keep it?</li>
+				<li>FINAL   - use unique PAGE NUMBER as in from A2J and CALI Author. Plus page   title as free form that can be duplicates such as used in 2 branches   without revealing branch to student?</li>
+			</ul>
+			<br />
+			<ul>
+				<li>
+					<p>later TODO - Multiple page selection - Allow multiple page selection for Delete, Copy, Clone</p>
+				</li>
+				<li>
+					<p>later   TODO - Author Search - Author search can be more informative since we   can include snippets of the context for a searched term. Also including   occurrences in scripts.</p>
+				</li>
+				<li>
+					<p>later TODO - Author Search/replace - Author search/replace text in guide.</p>
+				</li>
+				<li>
+					<p>TODO - #File - Autosave - autosave timing for guides</p>
+					<ul>
+						<li>
+							<p>Research  - HTML 5 local storage</p>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<p>LATER - Changing step counts - All A2J pages are linked to 1 step. Delete a step &gt; renumber all pages? Leave as is?</p>
+				</li>
+		</ul></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">Viewer GUI</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ul>
+			<li>
+				<p>TODO - 3/20/2013 JM Conf call - A2J remove scroll bars from the interface.</p>
+			</li>
+			<li>
+				<p>TODO - 3/20/2013 JM Conf call - #Report - A2J require step audit presentation to user before advancing to next step.</p>
+			</li>
+			<li>
+				<p>TODO   - 12/2012 #Mobile - Have easy option for Mobile previewing, both within   the author and a simple link for authors to test on actual devices.</p>
+			</li>
+			<li>
+				<p>TODO   - 4/11/13 #Avatar - Add more skin tones - Let author choose several   skin tones instead of blank and tan. Default blank to random color.</p>
+			</li>
+			<li>
+				<p>TODO - 4/11/13 #Avatar - Add guide gender - Let author choose gender of guide to match her/his audio</p>
+			</li>
+			<li>
+				<p>DONE - #Lists - Viewer load external XML lists at run time the external XML</p>
+			</li>
+			<li>
+				<p>TODO - #Lists - Pick list picker defaults</p>
+				<ul>
+					<li>
+						<p>Set list to existing value if found</p>
+					</li>
+					<li>
+						<p>If existing value is blank, set to 'choose an item'</p>
+					</li>
+					<li>
+						<p>If existing value not found, add after 'choose an item'</p>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<p>TODO - add calendar display to viewer</p>
+			</li>
+			<li>
+				<p>TODO - add calculator display to viewer</p>
+			</li>
+			<li>
+				<p>&nbsp;</p>
+			</li>
+			<li>
+				<p>TODO - Fields Invalid Prompts - Provide default prompts for specific field types that are missing</p>
+			</li>
+			<li>
+				<p>DONE - Step colors - keep as is until Mike's new scheme - colors delineate steps</p>
+			</li>
+		</ul>		</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">#Var #Logic #Script #Debug</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+				<li>LATER - #Var Support 2 dimension arrays</li>
+				<li>HotDocs supports multi dimensions</li>
+				<li>e.g., Child City [1,1] where 1 or more children can live in 1 or more cities.</li>
+				<li>How to convert A2J4 syntax: [Child City#index] to support multiple dimensions.</li>
+				<li>How does HotDocs deal with no []? Strip out the [] so we can use them, like JavaScript. Seems the ideal way.</li>
+				<li>if ANSWERED( Child City[1,1]) and Child Flag=true</li>
+				<li>TODO - #Var - Real   personal data warning - on our website provide warning about not   entering real data to avoid securing our answer database - Watermark the   a2jauthor.org viewer.</li>
+				<li>TODO - Conversion issues from A2J 4 logic - A2J4's lax parsing 'gracefully' handles these errors:
+					<ul>
+						<li>Unneeded %% within variable assignment is ignored</li>
+						<li>Missing end quote is presumed</li>
+						<li>iPad parses line breaks in the Code different resulting in some lines appearing as single line</li>
+						<li>Extra ‘If’ within expression is ignored</li>
+					</ul>
+				</li>
+			</ol>		</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top"><h1>Notes</h1></td>
+		<td align="center" valign="top"><h1>&nbsp;</h1></td>
+		<td><h1>&nbsp;</h1></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>WYSIWYG   restrictions - no embed images, tables, fancy formatting. Only bold,   italic, underline, hyperlink to popups/external sites, indent levels.</li>
+		</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top"><h1>LATER</h1></td>
+		<td align="center" valign="top"><h1>&nbsp;</h1></td>
+		<td><h1>&nbsp;</h1></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>LATER - Enhanced Debugger features - Need robust debugging feature for A2J's script format.</li>
+		</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>LATER   - Import Variables from HotDocs - How to import a variable list from   HotDocs? Perhaps the author can upload an Answer file and A2J5 can pluck   out the variables.</li>
+		</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>LATER   - Author comments in Logic - Allow author to include notes on the law   used to determine conditionals, support hyperlinks to relevant law</li>
+		</ol>			</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>LATER - Immediate eval option - Parse immediate expressions in debugger such as					</li>
+		</ol>
+			<ul>
+				<li>SET VAR to EXPRESSION</li>
+				<li>
+					<p>EXPRESSION</p>
+				</li>
+		</ul></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>LATER - Load non - UTF8 answer files</li>
+		</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>LATER - Widgeting the Viewer - The viewer should be embeddable as a widget, probably via IFRAME to run on other folks servers</li>
+		</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>LATER - #Workflow - multiple versions available - Support multiple versions of same guide active at same time</li>
+		</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>LATER - #Workflow - revision reversion - allow author to revert to previous version</li>
+		</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>LATER   - #Reports - Analysis Report (Link Checker) - List orphaned pages,   lists all media elements and hyperlinks and their locations within   pages, page types, author notes</li>
+		</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top"><h1>FUTURE</h1></td>
+		<td align="center" valign="top"><h1>&nbsp;</h1></td>
+		<td><h1>&nbsp;</h1></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+				<li>FUTURE - WYSIWYG editor - Embed Aloha editor with LIMITED TOOLS for text style, formatting and image/linking, tables</li>
+		</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>FUTURE   - Author Report builder tab - Separate tab where author creates a large   document that uses embedded conditionals to build a report of an   interview. Replaces what a user might get at the end (list of their   variables) but in an author structured layout. Support edit/view mode.</li>
+		</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><br />
+			<h2>Mapper</h2>
+			<ul>
+				<li>
+					<p>TODO - Start and Final page settings - Move link for Start and Final page from Steps tab</p>
+				</li>
+				<li>
+					<p>TODO - Show all outgoing branches - Need to evaluate scripts for GOTO page’s to collect all outgoing branches from a page</p>
+				</li>
+				<li>
+					<p>LOW - Mapper Shrink to fit - Add shrink to fit button</p>
+				</li>
+				<li>
+					<p>FUTURE - Mapper draw lines for pathing - Draw lines to indicate flow - draw lines for outgoing Buttons and logic GOTOs</p>
+				</li>
+		</ul></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top"><h1>Done</h1></td>
+		<td align="center" valign="top"><h1>&nbsp;</h1></td>
+		<td><h1>&nbsp;</h1></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>done - Use Drupal Bootstrap to log user in rather than a custom Login box.</li>
+		</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>done - #File - Upload existing A2J 4 - File System - Upload Author.a2j</li>
+		</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>done - 12/2012 CSS styles using jQuery UI themes as base</li>
+		</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top"><h1>Ignore</h1></td>
+		<td align="center" valign="top"><h1>&nbsp;</h1></td>
+		<td><h1>&nbsp;</h1></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><p>  #Var - Suggested name picker for variables - when creating a   variable, provide a way to pick from a publicly recommended list of   variable names. - Don't do this.</p></td>
+	</tr>
+</table>
+<h2>&nbsp;</h2>
+</body>
+</html>

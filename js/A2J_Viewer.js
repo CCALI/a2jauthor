@@ -1,56 +1,109 @@
-﻿/*
+﻿/******************************************************************************
+	A2J_Viewer.js
 	CALI Author 5 / A2J Author 5 (CAJA) công lý
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	
+
 	A2J Viewer embedding
 	10/12/2012
 	04/15/2013
 
 	Required by Author and Viewers
-*/
+******************************************************************************/
 
 // Elements: navbar, road step area, question, guide avatar, user avatar, learn more prompt, learn more bubble.
-
+//var gLogic;
 
 function versionString()
 {
 	return "Access to Justice Viewer/Author Version "+ CONST.A2JVersionNum+"("+CONST.A2JVersionDate+")";
 }
-function loadXMLList(opts)
-{	// opts.elt, opts.data, opts.val
-	var $select=$(opts.data);
-	$($select,'option:first').prepend('<option value="">Choose from this list</option>');
-	$(opts.elt).html($select.html()).val(opts.val);
-}
-function loadXMLListExternal(opts)
-/** */
-{	// opts.url, opts.val, opts.elt
-   $.ajax({
-      url:  fixPath(opts.url),
-      dataType:  "text",
-      timeout: 15000,
-		opts: opts,
-      error:
-			/*** @this {{url}} */
-			function(data,textStatus,thrownError){
-			  dialogAlert('Unable to load a list of items from '+this.url+"\n"+textStatus);
-			 },
-      success: function(data){
-			var opts=this.opts;
-			//if (!opts) opts=$(this).opts;//8/2013 this.opts;
-			opts.data=data;
-			loadXMLList(opts);
-      }
-   });
-}
-
 
 var A2JViewer={
 
 	IMG : "img/",
 
+	
+	refreshVariables : function ( )
+	{
+		var $t=$('.varvalpanel');
+		/** @type {TGuide} */
+		var g = gGuide;
+		/** @type {TVariable} */
+		var v;
+		var th=html.rowheading(["Name",'Loop',"Value"]); 
+		var sortvars=[];
+		var vn;
+		for (vn in g.vars){
+			if (g.vars.hasOwnProperty(vn))
+			{
+				v = g.vars[vn];
+				if (v.repeating) {
+					for (var i=1;i<v.values.length;i++){
+						sortvars.push({name:v.name+"#"+i,v:v,i:i});
+					}
+				}
+				else{
+					sortvars.push({name:v.name,v:v,i:1});				
+				} 
+			}
+		}
+		sortvars.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
+		
+		var tb='';
+		for (var vi=0;vi<sortvars.length;vi++)
+		{
+			var sv=sortvars[vi];
+			v=sv.v;
+			if (v.repeating ) {
+				tb+=html.row([v.name,'#'+(sv.i),v.values[sv.i]]);
+				}
+			else{
+				tb+=html.row([v.name,'',v.values[sv.i]]);
+			}
+		}
+	
+		$t.empty().append('<table class="A2JVars">'+th + '<tbody>'+ tb + '</tbody>'+"</table>");
+		$('tr',$t).click(function(){
+			
+		});
+	},
+	
+	fillSample: function()
+	{
+		var page = gPage;
+		for (var fi=0;fi<page.fields.length;fi++)
+		{
+			var f = page.fields[fi];// field record
+			var fid = "FID_"+fi;//field id - unique
+			var sample = f.sample;
+			switch (f.type)
+			{
+				case CONST.ftText://"Text"
+				case CONST.ftTextLong://"Text (Long)"
+				case CONST.ftTextPick://"Text (Pick from list)"
+				case CONST.ftNumber://"Number"
+				case CONST.ftNumberDollar://"Number Dollar"
+				case CONST.ftNumberSSN://"Number SSN"
+				case CONST.ftNumberPhone://"Number Phone"
+				case CONST.ftNumberZIP://"Number ZIP Code"
+				case CONST.ftNumberPick://"Number (Pick from list)"
+				case CONST.ftDateMDY://"Date MM/DD/YYYY"
+				   $('#'+fid).val(sample);
+				   break;
+				
+				case CONST.ftGender://"Gender"
+				case CONST.ftRadioButton://"Radio Button"
+				case CONST.ftCheckBox://"Check box"
+				case CONST.ftCheckBoxNOTA://"Check Box (None of the Above)
+					// Sample data not used.
+					break;
+			}
+		}
+	},
+	
 	history:[],
 	
+	/** @param {TPage} page  */
 	layoutPage:function(div,page)
 	{	// layout page into interactive viewer. attach event handlers.
 	
@@ -63,10 +116,17 @@ var A2JViewer={
 			{
 				$(div).toggleClass('test',500);//$('.A2JViewer')
 			});
-			$('#viewer-var-form').append('<div><button/><button/></div>');
+			$('#viewer-var-form').append('<div><button/><button/></div><div class=varvalpanel></div>');
 			$('#viewer-var-form div button').first()
-				.button({label:'Save',icons:{primary:'ui-icon-arrow-4-diag'}}).next()
-				.button({label:'Reload',icons:{primary:'ui-icon-zoomin'}});
+				.button({label:'Save',icons:{primary:'ui-icon-folder-open'}}).click(
+					function(){
+						dialogAlert({title:'Save XML',body:prettyXML(gGuide.HotDocsAnswerSetXML())});
+					})
+				.next().button({label:'Refresh',icons:{primary:'ui-icon-zoomin' } } ).click(function(){
+						A2JViewer.refreshVariables();
+					})
+				.next().button({label:'Reload',icons:{primary:'ui-icon-arrowrefresh-1-e'}})
+				;
 				
 			$('.NavBar a').click(function(){
 				switch ($(this).attr('href')){
@@ -102,8 +162,7 @@ var A2JViewer={
 		$('.interact',div).html(A2JViewer.layoutStep(curstep));
 		
 		$('.ui-form.question',div).html(question + '<div class="form"></div><div class="buttonlist"></div>');
-		var bi;
-		for (bi in page.buttons)
+		for (var bi=0;bi<page.buttons.length;bi++)
 		{
 			var b = page.buttons[bi];
 			$('.ui-form.question  .buttonlist',div).append('<button num='+bi+' title="Go to page '+gGuide.pageDisplayName(b.next).asHTML()+'">'+b.label+'</button>'); //.A2JViewer .ui-form.question  .buttonlist'
@@ -117,8 +176,7 @@ var A2JViewer={
 		if (page.repeatVar!==''){
 			varIndex = gGuide.varGet(page.repeatVar);
 		}
-		var fi;
-		for (fi in page.fields)
+		for (var fi=0;fi<page.fields.length;fi++)
 		{
 			var f = page.fields[fi];// field record
 			var fid = "FID_"+fi;//field id - unique
@@ -227,8 +285,7 @@ var A2JViewer={
 			{
 				varIndex=gGuide.varGet(page.repeatVar);
 			}
-			var fi;
-			for (fi in page.fields)
+			for (var fi=0;fi<page.fields.length;fi++)
 			{
 				var f = page.fields[fi];// field record
 				var fid = "FID_"+fi;//field id - unique
@@ -244,29 +301,29 @@ var A2JViewer={
 					case CONST.ftNumberPhone://"Number Phone"
 					case CONST.ftNumberZIP://"Number ZIP Code"
 					case CONST.ftDateMDY://"Date MM/DD/YYYY"
-						gGuide.varSet(f.name,varIndex,$('#'+fid).val());
+						gGuide.varSet(f.name,$('#'+fid).val(),varIndex);
 					   break;
 					case CONST.ftTextPick://"Text (Pick from list)"
-						gGuide.varSet(f.name,varIndex,$('#'+fid).val());						
+						gGuide.varSet(f.name,$('#'+fid).val(),varIndex);						
 					   break;
 					case CONST.ftNumberPick://"Number (Pick from list)"
-						gGuide.varSet(f.name,varIndex,$('#'+fid).val());
+						gGuide.varSet(f.name,$('#'+fid).val(),varIndex);
 					   break;
 					case CONST.ftGender://"Gender"
 						if ($('#'+fid+'M').is(':checked')){
-							gGuide.varSet(f.name,varIndex,lang.Male);
+							gGuide.varSet(f.name,lang.Male,varIndex);
 						}
 						if ($('#'+fid+'F').is(':checked')){
-							gGuide.varSet(f.name,varIndex,lang.Female);
+							gGuide.varSet(f.name,lang.Female,varIndex);
 						}
 					   break;
 					case CONST.ftRadioButton://"Radio Button"
 						if ($('#'+fid).is(':checked')){
-							gGuide.varSet(f.name,varIndex,f.value);
+							gGuide.varSet(f.name,f.value,varIndex);
 						}
 					   break;
 					case CONST.ftCheckBox://"Check box"
-						gGuide.varSet(f.name,varIndex,$('#'+fid).is(':checked'));
+						gGuide.varSet(f.name,$('#'+fid).is(':checked'),varIndex);
 					   break;
 					case CONST.ftCheckBoxNOTA://"Check Box (None of the Above)" 
 						break;
@@ -277,10 +334,10 @@ var A2JViewer={
 			var b=page.buttons[bi];
 			
 			traceLogic( 'You pressed ' + traceTag('ui',b.label));
-			trace(b.label,b.name,b.value);
+			trace('ButtonPress',b.label,b.name,b.value);
 			if (b.name!=="")
 			{	// Set button's variable 
-				gGuide.varSet(b.name,varIndex,b.value);
+				gGuide.varSet(b.name,b.value,varIndex);
 			}
 			
 			// execute the logic
@@ -348,6 +405,9 @@ var A2JViewer={
 		else
 		if (av==='blank' || av==='')
 			{av=0;}
+		else
+		if (av==='tan2')
+			{av=2;}
 		else
 			{av=parseInt(av,10);}
 		var qx;

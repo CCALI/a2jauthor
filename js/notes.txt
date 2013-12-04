@@ -3,6 +3,10 @@
 ### 2012-2013  -  Sam's Design notes ###
 
 
+			//http://stackoverflow.com/questions/2525524/jquery-ui-dialog-button-icons
+			
+			
+			
 10/14/2013
 Answer files saved in guide folders. Use same version control system? For repeated testing, need a quick way to reload a stable Answer set .
 'Load Answer' - let user pick from popup list?

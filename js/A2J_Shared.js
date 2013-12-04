@@ -48,9 +48,9 @@ function dialogAlert(args)
 	//	args.body = message body
 	
    if (typeof args === "string"){args={body:args};	}
-   if (args.title===null){	args.title="Alert";}
-   if (args.width===null){	args.width=350;}
-   if (args.height===null){	args.height=250;}
+   if (typeof args.title==='undefined'){	args.title="Alert";}
+   if (typeof args.width==='undefined'){	args.width=350;}
+   if (typeof args.height==='undefined'){	args.height=250;}
    var $d=$( "#dialog-confirm" );
    $d.html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>'+args.body+'</p>');
    $d.dialog({
@@ -89,9 +89,12 @@ function urlSplit(url)
 	if (p>=0)
 	{
 		parts.file =  url.substr(p+1);
-		url=url.substr(0,p+1);
+		parts.path=url.substr(0,p+1);
 	}
-	parts.path=url;
+	else
+	{
+		parts.file=url;
+	}
 	return parts;
 }
 

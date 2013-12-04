@@ -122,7 +122,7 @@
 				<div class="tabContent editq"></div>
 			</div>
 			<div class="tabFooter">
-				<button id="var-add">Add Variable</button>
+				<button id="var-add">Add</button>				
 			</div>
 		</div>
 		<div class="panel" id="tabsSteps">
@@ -329,6 +329,10 @@
 					<option value="Other">Other</option>
 				</select>
 				</span></div>
+			<div>
+				<label for="varrepeating">Repeating:</label>
+				<input type="checkbox" name="varrepeating" id="varrepeating" />
+			</div>
 			<div>
 				<label for="varcomment">Comment:</label>
 				<span class="editspan">

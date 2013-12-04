@@ -1,4 +1,4 @@
-..\A2J_Parser.js:43: WARNING - dangerous use of the global this object
+..\A2J_Parser.js:45: WARNING - dangerous use of the global this object
 			var opts=this.opts;
 			         ^
 

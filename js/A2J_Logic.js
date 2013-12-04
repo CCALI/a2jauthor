@@ -386,7 +386,7 @@ TLogic.prototype.addUserFunction = function(funcName,numArgs,func)
 TLogic.prototype.trace = function(html)
 {
 	$(this.tracerID).append('<li style="text-indent:'+(this.indent)+'em">'+html+"</li>");
-	//if(1) {trace($('<div>'+html+'</div>').text()); }
+	if(1) {trace($('<div>'+html+'</div>').text()); }
 };
 
 // Functions called by JS translation of CAJA code. 

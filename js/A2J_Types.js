@@ -16,13 +16,13 @@
 var CONST = {
 	
 	devShowTesting: false,
-	showXML: true,
+	showXML: 0,
 	uploadURL: 'CAJA_WS.php?cmd=uploadfile&gid=',
 	uploadGuideURL: 'CAJA_WS.php?cmd=uploadguide',
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
-	A2JVersionNum:"5.0.1.2",//VersionInfo.verNum
-	A2JVersionDate:"2013-09-18",
+	A2JVersionNum:"5.0.1.3",//VersionInfo.verNum
+	A2JVersionDate:"2013-12-02",
 	
 	
 	CAVersionNum:"5.0.0",

@@ -476,15 +476,18 @@ function gotoPageEdit(pageName)
 		close: function(){
 		},
 		buttons:[
+		{text:'XML', click:function(){
+			var pageName=$(this).attr('rel');
+			dialogAlert({title:'Page XML',width:800,height:600,body:prettyXML(page2XML(gGuide.pages[pageName]))});
+		}},/*
 		{text:'Delete', click:function(){
 			pageEditDelete($(this).attr('rel'));
 		}},
 		{text:'Clone', click:function(){
 			pageEditClone($(this).attr('rel'));
-		}},
+		}},*/
 		{text:'Preview', click:function(){
-			var pageName=$(this).attr('rel');
-			
+			var pageName=$(this).attr('rel');			
 			gotoPageView(pageName);
 			$pageEditDialog.dialog("close");
 		}},
@@ -770,6 +773,10 @@ function guidePageEditForm(page, div, pagename)//novicePage
 				var canUseCalc = (field.type === CONST.ftNumber) || (field.type === CONST.ftNumberDollar);
 				var canMaxChars= field.type===CONST.ftText || field.type===CONST.ftTextLong || field.type===CONST.ftNumber || field.type===CONST.ftNumberDollar || field.type===CONST.ftNumberPhone || field.type===CONST.ftNumberZIP;				
 				var canCalendar = field.type===CONST.ftDateMDY;
+				var canUseSample = field.type===CONST.ftText || field.type===CONST.ftTextLong  
+					|| field.type === CONST.ftTextPick  || field.type === CONST.ftNumberPick
+					|| field.type===CONST.ftNumber || field.type === CONST.ftNumberZIP || field.type === CONST.ftNumberSSN || field.type === CONST.ftNumberDollar
+					|| field.type === CONST.ftDateMDY;
 				//var canCBRange= curField.type==CField.ftCheckBox || curField.type==CField.ftCheckBoxNOTA;
 				// Can it use extra long labels instead of single line?
 				//	useLongLabel = curField.type==CField.ftCheckBox ||	curField.type==CField.ftCheckBoxNOTA ||curField.type==CField.ftRadioButton ||urField.type==CField.ftCheckBoxMultiple;
@@ -785,6 +792,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
 				ff.find('[name="listext"]').showit(canList);
 				ff.find('[name="listint"]').showit(canList);
 				ff.find('[name="orderlist"]').showit(canOrder);
+				ff.find('[name="sample"]').showit(canUseSample);
 			};
 			
 			fs=form.fieldset('Fields');
@@ -843,7 +851,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
 						change:function(val,field){field.listData=val; }}));
 					ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,
 						change:function(val,field){field.invalidPrompt=val;}}));
-					ff.append(form.text({label:'Sample value:',value: field.sample,
+					ff.append(form.text({label:'Sample value:',name:'sample',value: field.sample,
 						change:function(val,field){field.sample=val;}}));
 					
 					updateFieldLayout(ff,field);
@@ -1257,15 +1265,14 @@ function varEdit(v/*TVariable*/)
 	$('#varname').val(v.name);
 	$('#vartype').val(v.type);
 	$('#varcomment').val(v.comment);
-	$('#varrepeating').val(v.repeating);
+	$('#varrepeating').attr('checked', v.repeating);
 	$('#var-edit-form').data(v).dialog({
 		autoOpen:true,
 			width: 450,
-			height: 300,
+			height: 400,
 			modal:true,
 			close: function(){
 			},
-			//http://stackoverflow.com/questions/2525524/jquery-ui-dialog-button-icons
 			buttons:[
 			{text:'Delete', click:function(){
 				var name= $(this).data().name;
@@ -1289,7 +1296,7 @@ function varEdit(v/*TVariable*/)
 				}
 				v.type=$('#vartype').val();
 				v.comment=$('#varcomment').val();
-				v.repeating=$('#varrepeating').val();
+				v.repeating=$('#varrepeating').is(':checked');
 				gGuide.noviceTab('tabsVariables',true);
 				$(this).dialog("close");
 			 }}
@@ -1299,7 +1306,7 @@ function varEdit(v/*TVariable*/)
 TGuide.prototype.buildTabVariables = function (t)
 {
 	var guide = this;
-	var th=html.rowheading(["Name","Type","Comment"]); 
+	var th=html.rowheading(["Name","Type","Repeating","Comment"]); 
 	var sortvars=[];
 	var vi;
 	for (vi in guide.vars){
@@ -1310,7 +1317,7 @@ TGuide.prototype.buildTabVariables = function (t)
 	for (vi in sortvars)
 	{
 		var v=sortvars[vi];
-		tb+=html.row([v.name,v.type,v.comment]);
+		tb+=html.row([v.name,v.type,v.repeating,v.comment]);
 	}
 
 	t.append('<table class="A2JVars">'+th + '<tbody>'+ tb + '</tbody>'+"</table>");
@@ -1937,7 +1944,8 @@ function main()
 
 
 	$('#page-viewer').hide();
-	$('#var-add').button({icons:{primary:'ui-icon-trash'}}).click(varAdd);
+	$('#var-add').button({icons:{primary:'ui-icon-new'}}).click(varAdd);
+	//$('#var-del').button({icons:{primary:'ui-icon-trash'}}).click(varDel);
 	
 	
 	$( "#bold" ).button({label:'B'}).click(editButton);

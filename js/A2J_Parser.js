@@ -18,7 +18,9 @@ function fixPath(file)
 	{
 		return file;
 	}
-	return gGuidePath+urlSplit(file).file;
+	var fileFixed = gGuidePath+urlSplit(file).file;
+	trace('fixPath',file,fileFixed);
+	return fileFixed;
 }
 function loadXMLList(opts)
 {	// opts.elt, opts.data, opts.val
@@ -581,30 +583,48 @@ TGuide.prototype.makeHash=function()//InterviewHash
 		//langID
 	// TODO: MD5 or other function to get a somewhat unique ID to map answer file to interview file.
 	//http://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
-	return String(str.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0));
+	return String(str.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a;},0));
 };
 
 TGuide.prototype.HotDocsAnswerSetFromXML=function(AnswerSetXML)
 {	// 11/13 Parse HotDocs answer file XML string into guide's variables.
 	// Add to existing variables. Do NOT override variable types.
+	
+	var mapANX2Var={};
+	mapANX2Var["Unknown"]= CONST.vtUnknown;
+	mapANX2Var["TextValue"]=CONST.vtText;
+	mapANX2Var["TFValue"]=CONST.vtTF;
+	mapANX2Var["MCValue"]=CONST.vtMC;
+	mapANX2Var["NumValue"]=CONST.vtNumber;
+	mapANX2Var["DateValue"]=CONST.vtDate;
+	mapANX2Var["OtherValue"]=CONST.vtOther;
+	mapANX2Var["RptValue"]=CONST.vtUnknown;
+	
 	var guide=this;
 	$(AnswerSetXML).find('AnswerSet > Answer').each(function()
 	{
 		var varName = makestr($(this).attr("name"));
+		if (varName.indexOf('#')>=0) {
+			// 12/03/2013 Do not allow # in variable names. We discard them.
+			trace("Discarding invalidly named variable '"+varName+"'");
+			return;
+		}
 		//var varName_i=varName.toLowerCase();
 		/** @type {TVariable} */
 		var v=guide.varExists(varName);//guide.vars[varName_i];
 		var vNew=false;
+		var varANXType=$(this).children().get(0).tagName;
+		var varType = mapANX2Var[varANXType];
 		if (v === null)
 		{	// Variables not defined in the interview should be added in case we're passing variables between interviews.
-			v=guide.varCreate(varName,CONST.vtUnknown,false, '');
+			v=guide.varCreate(varName,varType,false, '');
 			//v=new TVariable();
 			//v.name=varName;
 			//guide.vars[varName_i]=v;
 			vNew=true;
 		}	
 		
-		switch ($(this).children().get(0).tagName) {
+		switch (varANXType) {
 			case 'TextValue':
 				guide.varSet(varName,$(this).find('TextValue').html());
 				break;
@@ -623,8 +643,9 @@ TGuide.prototype.HotDocsAnswerSetFromXML=function(AnswerSetXML)
 			case 'RptValue':
 				v.repeating=true;
 				$('RptValue',this).children().each(function(i){
-					var tagName=$(this).get(0).tagName;
-					switch (tagName) {
+					varANXType=$(this).get(0).tagName;
+					varType = mapANX2Var[varANXType];
+					switch (varANXType) {
 						case 'TextValue':
 						case 'NumValue':
 						case 'TFValue':
@@ -638,8 +659,21 @@ TGuide.prototype.HotDocsAnswerSetFromXML=function(AnswerSetXML)
 				});
 				break;
 		}
-		
-		//v.trace(vNew ? 'Creating new:' : 'Replacing:');
+		if (v.type === CONST.vtUnknown) {
+			v.type = varType;
+			if (v.type===CONST.vtUnknown) {
+				varName=varName.split(" ");
+				varName=varName[varName.length-1];
+				if (varName=='MC') {	v.type=CONST.vtMC;}
+				else
+				if (varName=='TF') {	v.type=CONST.vtTF;}
+				else
+				if (varName=='NU') {	v.type=CONST.vtNumber;}
+				else					{	v.type=CONST.vtText;	}
+				v.comment += 'Type not in answer file, assuming '+v.type;
+			}
+		}
+		v.trace(vNew ? 'Creating new:' : 'Replacing:');
 	});
 };
 

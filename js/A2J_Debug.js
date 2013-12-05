@@ -21,10 +21,12 @@ function DEBUGFIRST ()
 			gPage = gGuide.pages[gGuide.firstPage];
 			//dialogAlert({title:'DEBUG Interviews answers',body:prettyXML(gGuide.HotDocsAnswerSetXML()),width:800,height:600});
 			//loadXMLAnswerExternal({url:'/SJGProjects/a2j/flash/data/Protection Order_replaced UTF8.anx'});
+			if(0){
+			//load sample answer file
 			gGuide.loadXMLAnswerExternal({url:'http://localhost/SJGProjects/CAJA/CAJA/js/tests/data/Protection Order_replaced UTF8.anx',success:function(){
 				//dialogAlert({title:'DEBUG Answer files answers',body:prettyXML(gGuide.HotDocsAnswerSetXML()),width:800,height:600});
 				}});
-			
+			}
 			break;
 	}
 }

@@ -365,6 +365,16 @@
 				</ul>
 		</ul>
 	</div>
+	
+<div id="dialog-form-var-val-edit" title="Change value">
+<form>
+<fieldset>
+<label for="value">Value</label>
+<input type="text" name="value" id="var-value" class="text ui-widget-content ui-corner-all">
+</fieldset>
+</form>
+</div>
+
 	<div id="xviewer-logic-form" title="Viewer logic" class="ViewerLogicForm">
 		<div class="tracepanel">
 			<ul id="tracer">

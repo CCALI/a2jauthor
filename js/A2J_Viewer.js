@@ -22,6 +22,13 @@ var A2JViewer={
 
 	IMG : "img/",
 
+	filterVariables : function ()
+	{	// Apply user's filter to show only variable/values with match name or value.
+		var filter = $('#viewer-var-filter').val().toUpperCase();
+		$('.A2JVars tbody tr').each(function(){
+			$(this).toggle($(this).text().toUpperCase().indexOf(filter)>=0);
+		});
+	},
 	
 	refreshVariables : function ( )
 	{
@@ -47,25 +54,27 @@ var A2JViewer={
 				} 
 			}
 		}
-		sortvars.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
+		sortvars.sort(function (a,b){return a.name.toLowerCase()>b.name.toLowerCase();/* sortingNaturalCompare(a.name,b.name);*/});
 		
 		var tb='';
 		for (var vi=0;vi<sortvars.length;vi++)
 		{
 			var sv=sortvars[vi];
 			v=sv.v;
+			var val = htmlEscape(makestr(v.values[sv.i]));
 			if (v.repeating ) {
-				tb+=html.row([v.name,'#'+(sv.i),v.values[sv.i]]);
+				tb+=html.row([v.name,'#'+(sv.i),val]);
 				}
 			else{
-				tb+=html.row([v.name,'',v.values[sv.i]]);
+				tb+=html.row([v.name,'',val]);
 			}
 		}
 	
-		$t.empty().append('<table class="A2JVars">'+th + '<tbody>'+ tb + '</tbody>'+"</table>");
+		$t.html('').append('<table class="A2JVars">'+th + '<tbody>'+ tb + '</tbody>'+"</table>");
 		$('tr',$t).click(function(){
-			
+			//$("#dialog-form-var-val-edit" ).dialog( "open" );
 		});
+		A2JViewer.filterVariables();
 	},
 	
 	fillSample: function()
@@ -116,7 +125,9 @@ var A2JViewer={
 			{
 				$(div).toggleClass('test',500);//$('.A2JViewer')
 			});
-			$('#viewer-var-form').append('<div><button/><button/></div><div class=varvalpanel></div>');
+			$('#viewer-var-form').append('<div><button/><button/><button/>'
+												  +'<label for="viewer-var-filter">Filter:</label><input type=text id="viewer-var-filter" size="5"/></div>'
+												  +'<div class=varvalpanel></div></div>');
 			$('#viewer-var-form div button').first()
 				.button({label:'Save',icons:{primary:'ui-icon-folder-open'}}).click(
 					function(){
@@ -127,7 +138,8 @@ var A2JViewer={
 					})
 				.next().button({label:'Reload',icons:{primary:'ui-icon-arrowrefresh-1-e'}})
 				;
-				
+			$('#viewer-var-filter').keyup(A2JViewer.filterVariables);
+			
 			$('.NavBar a').click(function(){
 				switch ($(this).attr('href')){
 					case '#navback':
@@ -148,12 +160,16 @@ var A2JViewer={
 				});//,function(){$('.license').slideUp()});
 			}
 		}
-		traceLogic(traceTag('code','PAGE')+' '+ traceTag('page',page.name));
+		traceLogic( 'PAGE' +' '+ traceTag('page',page.name));
 		//TODO loopcounter; break out if we are in infinite loop
 		
 		gLogic.GOTOPAGE=null;
-		gLogic.executeScript(page.codeBefore);
-		// TODO code returns immediately after a GOTO PAGE call. Check to see if our page changed.
+		if (makestr(page.codeBefore)!='') {
+			traceLogic(traceTag('info','Logic Before Question'));
+			gLogic.executeScript(page.codeBefore);
+			// TODO code returns immediately after a GOTO PAGE call. Check to see if our page changed.
+			traceLogic(traceTag('info','Asking Question'));
+		}
 		
 		
 		var curstep = page.step;

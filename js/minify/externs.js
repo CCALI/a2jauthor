@@ -39,6 +39,7 @@ $.after=function(a){};
 $.hide=function(a){};
 $.dblclick=function(a){};
 $.click=function(a){};
+$.keyup=function(a){};
 $.delay=function(a){};
 $.is=function(a){};
 $.not=function(a){};

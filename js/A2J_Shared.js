@@ -108,10 +108,24 @@ function propCount(obj)
 }
 
 function traceTag(cname,chtml)
-{
-	if ((cname==='val') && (chtml === ""))
-		{chtml = "<i>blank</i>";}
-	return "<span class="+cname+">"+chtml+"</span>";
+{	// cname is tag name, chtml is htmlized value
+	if (cname==='val')
+	{
+		if (chtml === "" || chtml===null )
+		{
+			chtml = "blank";
+			cname = 'valBlank';
+		}
+		else
+		if (chtml == true || chtml=='true') {
+			cname='valT';//any thing like True, use the True styling
+		}
+		else
+		if (chtml == false || chtml=='false') {
+			cname='valF';;//any thing like False, use the False styling
+		}
+	}
+	return "<span class="+cname+">"+htmlEscape(chtml)+"</span>";
 }
 
 /** @param {...} var_args */

@@ -397,12 +397,11 @@ TLogic.prototype._CAJA = function(c)
 TLogic.prototype._IF = function(d,c,e)
 {
 	if ( (e) === true ) {
-		this.trace( "IF "+traceTag('val',c) +' ' +  '\u2714'  );
+		this.trace( "IF "+traceTag('valT',c) +' ' +  '\u2714'  );
 	}
 	else{
-		this.trace( "<strike>IF "+traceTag('val',c)+'</strike>');
+		this.trace( "<strike>IF "+traceTag('valF',c)+'</strike>');
 	}
-	//this.trace( "IF "+traceTag('val',c)+' = '+ traceTag('val',( (e) === true)) );
 	this.indent=d;
 	return (e===true);
 };

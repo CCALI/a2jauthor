@@ -355,28 +355,41 @@ div.steptext.step2 { 	font-size: 1em; }
 }
 span.code, span.var, span.varidx, span.val, span.page {  
 }
-span.ui {
+span.ui { /* color button pressed by client */
 	border: thin solid #fea;
 	background-color: #fff;
+}
+span.info { /* color comment */
+	border: thin solid #fea;
+	background-color: #ccc;
 }
 span.code {
 	border: thin solid #CC9966;
 	background-color: #ddd;
 }
 span.var {
-	border: thin solid #CC9966;
-	background-color: #ffc;
+	background-color: #F5DEB3;
 }
 span.varidx {
-	border: thin solid #CC9966;
 	background-color: #fcc
 }
-span.val{
+span.valT{ /* if value is True */
 	border: thin solid #CC9966;
-	background-color: #fcf;
+	background-color: #90EE90;
+}
+span.valF{ /* if value is False */
+	border: thin solid #CC9966;
+	background-color: #FFC0CB;
+}
+span.valBlank{/* if value is blank or null */
+	border: thin solid #CC9966;
+	background-color: #DCDCDC;
+}
+span.val{/* if value is anything else */
+	border: thin solid #CC9966;
+	background-color: #FFD700;
 }
 span.page {
-	border: thin solid #CC9966;
 	background-color: #ccf;
 }
 span.err {
@@ -387,19 +400,28 @@ span.err {
 
 .ViewerVarForm .varvalpanel{
 	position:absolute;
-	top: 2em;
+	top: 3em;
 	left: 0;
 	right: 0;
 	bottom: 0;
-	overflow: scroll;
+	overflow-y: scroll;
+	background-color: #fdd;
+	font-size: 9px;
 }
+.ViewerVarForm div {
+	white-space: nowrap;
+}
+.ViewerVarForm div input {
+	display: inline;
+}
+
 .ViewerLogicForm .tracepanel{
 	position:absolute;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 32px;
-	overflow: scroll;
+	overflow-y: scroll;
 }
 .ViewerLogicForm .immediatepanel{
 	position:absolute;
@@ -423,7 +445,6 @@ span.err {
 	bottom: 50%;
 	width: 400px;
 	border: 1px solid #bbb;
-	/*background-color: #cee;*/
 }
 #page-viewer.ViewerApp   .ViewerLogicForm {
 	position: fixed;
@@ -432,8 +453,8 @@ span.err {
 	bottom: 0;
 	width: 400px;
 	border: 1px solid #bbb;
-	/*background-color: #cee;*/
 }
+
 .unselectable {
    -moz-user-select: -moz-none;
    -khtml-user-select: none;

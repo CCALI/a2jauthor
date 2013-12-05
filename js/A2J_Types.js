@@ -21,8 +21,8 @@ var CONST = {
 	uploadGuideURL: 'CAJA_WS.php?cmd=uploadguide',
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
-	A2JVersionNum:"5.0.1.3",//VersionInfo.verNum
-	A2JVersionDate:"2013-12-02",
+	A2JVersionNum:"5.0.1.4",//VersionInfo.verNum
+	A2JVersionDate:"2013-12-04",
 	
 	
 	CAVersionNum:"5.0.0",

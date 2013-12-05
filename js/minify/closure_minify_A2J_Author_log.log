@@ -1,5 +1,9 @@
+..\A2J_Debug.js:24: WARNING - unreachable code
+			if(0){
+			     ^
+
 ..\A2J_Parser.js:45: WARNING - dangerous use of the global this object
 			var opts=this.opts;
 			         ^
 
-0 error(s), 1 warning(s), 69.6% typed
+0 error(s), 2 warning(s), 69.6% typed

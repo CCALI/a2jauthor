@@ -8,7 +8,6 @@
 
 ******************************************************************************/
 
-
 /* global gGuidePath,gPage,gGuide,gUserID,gGuideID,gUserNickName */
 
 var gPrefs = {
@@ -260,7 +259,7 @@ function authorViewerHook()
 		.button({label:'Edit',icons:{primary:'ui-icon-arrowreturnthick-1-w'}}).click(function(){resumeEdit();})
 //					.next().button({label:'Edit this page',icons:{primary:'ui-icon-pencil'}}).click(function(){gotoPageEdit(page.name)});//ui-icon-document-b
 		.next()
-		.button({label:'Trace',icons:{primary:'ui-icon-pencil'}}).click(function(){$('.A2JViewer').toggleClass('test',100);})
+		.button({label:'Test',icons:{primary:'ui-icon-pencil'}}).click(function(){$('.A2JViewer').toggleClass('test',100);})
 		.next()
 		.button({label:'Fill',icons:{primary:'ui-icon-pencil'}}).click(function(){A2JViewer.fillSample();});
 }
@@ -316,8 +315,9 @@ function gotoPageView(destPageName)
 			$('#authortool').hide();
          A2JViewer.layoutPage($('.A2JViewer','#page-viewer'),gPage);
          $('#page-viewer').removeClass('hidestart').show();
+			A2JViewer.refreshVariables();//TODO more efficient updates
 			//$('.A2JViewer').addClass('test',500);
-      }
+		}
    },1);
 }
 
@@ -470,8 +470,9 @@ function gotoPageEdit(pageName)
 		autoOpen:false,
 		width: 750,
 		height: 500,
+		modal: false,
 		minWidth: 200,
-		minHeight: 300, maxHeight: 700,
+		minHeight: 500, maxHeight: 700,
 		
 		close: function(){
 		},
@@ -1610,7 +1611,7 @@ var form={
 		}
 		return form.pickList(data,list);
 	}
-		
+/*
 	,tableRows:function(name,headings,rowList){
 		var $tbl=$('<table/>').addClass('list').data('table',name).attr('list',name);
 		var tr;
@@ -1648,7 +1649,7 @@ var form={
 		;
 		return $tbl;
 	}
-	
+*/
 	,tableRowCounter:function(name,label,minelts,maxelts,value)
 	{	//let user choose number of said item
 		var c=$('<label/>').text(label);

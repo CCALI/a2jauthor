@@ -178,6 +178,11 @@ $.fn.showit = function(yes) { // show/hide via class rather than .toggle to avoi
 String.prototype.asHTML=function(){
 	return htmlEscape(this);
 };
+
+String.prototype.ellipsis=function(limit){
+	return this.substring(0,limit);
+};
+
 /*
 String.prototype.asATTR=function(){
 	return this.replace(/'/g, "&#39;");

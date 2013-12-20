@@ -9,7 +9,7 @@
 <body> 
 	<h1>A2J 5 Issues 	</h1>
 	<p>### CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие ###</p>
-	<p>11/14/2013</p>
+	<p>This chart lists current and future issues for A2J 5 development.</p>
 <table border="1" cellpadding="5" cellspacing="0" class="TODO" >
 	<tr valign="bottom" >
 		<th width="150" align="center" valign="top" nowrap="nowrap" >teaser</th>
@@ -21,6 +21,69 @@
 		<td align="center" valign="top">&nbsp;</td>
 		<td align="center" valign="top">&nbsp;</td>
 		<td>Wiki: <a href="http://wikis.cali.org/A2J_5/A2J_5_Issues">   http://wikis.cali.org/A2J_5/A2J_5_Issues</a></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">HIGH</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>ZIP download for LHI to upload</li>
+			<li> TODO - code to viewer in IFRAME for LHI to review, set/get datas</li>
+		</ol>
+		</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top"><p>Document Assembly</p>
+		<p>&nbsp;</p></td>
+		<td align="center" valign="top">FUTURE</td>
+		<td><ol>
+			<li> A2J 5 Doc assembly</li>
+			<li> Wysiwyg - see wiki </li>
+			<li> add a way to add author comments in Doc editor</li>
+			<li>meta document control - script to determine which documents are needed</li>
+			<li>TODO Submit - setting to decide what submit does</li>
+		</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">&nbsp;</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>11/19/13 JM -
+				<ul>
+					<li>Screen review - </li>
+					<li>Indices for backing up - </li>
+				</ul>
+			</li>
+		</ol>			</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">A2J Conf Call</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>TODO REQUEST 12/19/2013 Popup/question windows should remember their possition and size.</li>
+			<li>TODO REQUEST 12/19/2013 Copy/paste BETWEEN interviews</li>
+			<li>TODO REQUEST Download for LOCAL viewer server - via ZIP file!</li>
+			<li></li>
+		</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">Slow switch to viewer</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>NOTE 12/04/2013  Many entries in the trace box slow things down. Clear it out periodically?</li>
+		</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">Spreadsheet</td>
+		<td align="center" valign="top">Idea</td>
+		<td><ol>
+			<li>11/14/2013 JM - Spreadsheet grid Flag - Field level - validation logic on tab to next column, or row
+				<ul>
+					<li>Issue: for a grid of array data we must determine how to validate each field before going to next row. othwrise in mobile mode one might navigate through 10 screens only to discover an error on screen 2. </li>
+					<li>Solution: supply additional Expression box for each field which handles validation. Result is true or false. if False then we display the Field Error prompt and color. </li>
+					<li>Issue: if expression is insufficient to cover cases, should we support if/then as well? imagine testing various conditions and then returning true/false. How to return true false?</li>
+				</ul>
+			</li>
+		</ol>		</td>
 	</tr>
 	<tr valign="top" bordercolor="#CCCCCC" >
 		<td align="center" valign="top"><p>Answer files</p>
@@ -39,14 +102,31 @@
 		<p>Variables</p></td>
 		<td align="center" valign="top">&nbsp;</td>
 		<td><ol>
-			<li> done - code to save HotDocs answer file</li>
-			<li> done - code to load external HotDocs answer variable file
+			<li> DONE - code to save HotDocs answer file</li>
+			<li> DONE - code to load external HotDocs answer variable file
 				<ul>
 						<li>answer file Repeats override guide's repeat</li>
 					<li>answer file Type does NOT override guide's type</li>
 				</ul>
 			</li>
 		</ol>		</td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">Author Feedback on Beta 5.0.1</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><ol>
+			<li>
+				<!-- br {mso-data-placement:same-cell;} -->
+				  I tried the Upload 4.0 interview and it acted like it didn't upload. I ended up uploading it 3 times before I eventually went out of Author, then went back in where they all showed up.  However, I was unable to open any of them so that really didn't work at all.  In addition, there was no way I could figure out to get rid of the extra ones.</li>
+			<li>				 Opening up a template also didn't work.  While it did open, I just got a bunch of &quot;undefined&quot; errors. </li>
+			<li>				 There was no way for me to &quot;exit&quot; the interview - I used the old 4.0 code to exit and submit - Process form and it just kept giving me an error.</li>
+			<li>				  Granted, I only created a 2 question interview - but the back and next buttons, as well as the My Progress&quot; buttons did not work for me. I was using &quot;preview&quot; so maybe that was the issue?   I use IE 10.0. </li>
+			<li>				 The font adjustment buttons also did not work for me.  Nothing happened. Again, that was in preview mode . . . </li>
+			<li>				  I couldn't find a &quot;Save&quot; button except in preview mode and the save/exit buttons didn't seem to do anything there.  Unfortunately, and much of my interview was not saved.  While the names of the questions and where they were routed were saved, the text of the questions, the text of the Learn more and the text of the buttons were not saved.</li>
+			<li>				 The &quot;title&quot; of the learn more does not appear when you go into the question - just the text does with a close option.  If I close the &quot;Learn more&quot;, I can't get back to it.</li>
+			<li>				  I changed my &quot;settings&quot; but when I logged out and went back in, none of my settings were saved.</li>
+			<li>  The logic piece was harder to use for me.  I liked the old way of picking before or after and then having them all listed.  Also, I liked the bigger box there . . . .</li>
+		</ol></td>
 	</tr>
 	<tr valign="top" bordercolor="#CCCCCC" >
 		<td align="center" valign="top">Page Names</td>
@@ -121,142 +201,66 @@
 	<tr valign="top" bordercolor="#CCCCCC" >
 		<td align="center" valign="top">Author GUI</td>
 		<td align="center" valign="top">&nbsp;</td>
-		<td><h2>&nbsp;</h2>
-			<ul>
-				<li>
-					<p>TODO - 2/2013 Interview Publication location - Add 'Publish' URL picker - site where this interview would be Published</p>
-				</li>
-				<li>
-					<p>TODO - 2/2013 #Server, #Field, #Lists - Allow author to upload XML file and link to a field</p>
-				</li>
-				<li>
-					<p>TODO - #Lists - Edit Internal Picklists - Allow author to edit a list internally</p>
+		<td> 
+			<ol>
+				<li>TODO - 2/2013 Interview Publication location - Add 'Publish' URL picker - site where this interview would be Published</li>
+				<li>TODO - 2/2013 #Server, #Field, #Lists - Allow author to upload XML file and link to a field</li>
+				<li>TODO - #Lists - Edit Internal Picklists - Allow author to edit a list internally
 					<ul>
-						<li>
-							<p>current   A2J uses list of values which are also the display values. XML files   can have a display value differing from the actual value</p>
-						</li>
-						<li>
-							<p>Should we support internal values?</p>
-						</li>
-						<li>
-							<p>? move internal A2J custom lists into Constants block</p>
-						</li>
+						<li>current   A2J uses list of values which are also the display values. XML files   can have a display value differing from the actual value</li>
+						<li>Should we support internal values?</li>
+						<li>? move internal A2J custom lists into Constants block</li>
 					</ul>
 				</li>
-				<li>
-					<p>TODO - File Upload - Attach media files</p>
+				<li>TODO - File Upload - Attach media files
 					<ul>
-						<li>
-							<p>TODO - Attaching images/sounds via direct upload rather than picker w/uploader</p>
-						</li>
-						<li>
-							<p>TODO - Video via YouTube's Unlisted videos - allows users to play video but isn't indexed for youtube searches</p>
-						</li>
-						<li>
-							<p>TODO - List all attached media files in separate pane</p>
-						</li>
-						<li>
-							<p>RESOLVED   - currently these are attached locally then uploaded with lesson.   Instead, upload them to some space and then link them. Allow one to link   to external videos or images? - No.</p>
-						</li>
+						<li>TODO - Attaching images/sounds via direct upload rather than picker w/uploader</li>
+						<li>TODO - Video via YouTube's Unlisted videos - allows users to play video but isn't indexed for youtube searches</li>
+						<li>TODO - List all attached media files in separate pane</li>
+						<li>RESOLVED   - currently these are attached locally then uploaded with lesson.   Instead, upload them to some space and then link them. Allow one to link   to external videos or images? - No.</li>
 					</ul>
 				</li>
-				<li>
-					<p>TODO - WYSIWYG hyperlinks - Add/Edit hyperlinks</p>
-				</li>
-				<li>
-					<p>TODO - WYSIWYG popups - Add/Edit Popups</p>
-				</li>
-				<li>
-					<p>TODO   - Page picker method - Pick a destination page via a popup rather than   autocomplete? since there's other non-page destinations to include like   Success, Exit Failure, etc. a popup picker like A2J 4 may be better   option.</p>
-				</li>
-				<li></li>
-				<li>
-					<p>TODO   - Page display title - Optional author defined title for displaying to   the user to avoid the 'machine' style naming, also for better Mobile   experience.</p>
-				</li>
-			</ul>
-			<p><br />
-			</p>
-			<ul data-cke-saved-style="margin-left: 40px;">
+			
+				<li>TODO - WYSIWYG hyperlinks - Add/Edit hyperlinks</li>
+				<li>TODO - WYSIWYG popups - Add/Edit Popups</li>
+				<li>TODO   - Page picker method - Pick a destination page via a popup rather than   autocomplete? since there's other non-page destinations to include like   Success, Exit Failure, etc. a popup picker like A2J 4 may be better   option.</li>
+				<li>TODO   - Page display title - Optional author defined title for displaying to   the user to avoid the 'machine' style naming, also for better Mobile   experience.</li>
 				<li>EM: don't change the original name, like a file name.</li>
 				<li>A2J4 uses fixed page id's. keep it?</li>
 				<li>FINAL   - use unique PAGE NUMBER as in from A2J and CALI Author. Plus page   title as free form that can be duplicates such as used in 2 branches   without revealing branch to student?</li>
-			</ul>
-			<br />
-			<ul>
-				<li>
-					<p>later TODO - Multiple page selection - Allow multiple page selection for Delete, Copy, Clone</p>
-				</li>
-				<li>
-					<p>later   TODO - Author Search - Author search can be more informative since we   can include snippets of the context for a searched term. Also including   occurrences in scripts.</p>
-				</li>
-				<li>
-					<p>later TODO - Author Search/replace - Author search/replace text in guide.</p>
-				</li>
-				<li>
-					<p>TODO - #File - Autosave - autosave timing for guides</p>
-					<ul>
-						<li>
-							<p>Research  - HTML 5 local storage</p>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<p>LATER - Changing step counts - All A2J pages are linked to 1 step. Delete a step &gt; renumber all pages? Leave as is?</p>
-				</li>
-		</ul></td>
+				<li>later TODO - Multiple page selection - Allow multiple page selection for Delete, Copy, Clone</li>
+				<li>later   TODO - Author Search - Author search can be more informative since we   can include snippets of the context for a searched term. Also including   occurrences in scripts.</li>
+				<li>later TODO - Author Search/replace - Author search/replace text in guide.</li>
+				<li>TODO - #File - Autosave - autosave timing for guides				</li>
+				<ul>
+					<li>Research  - HTML 5 local storage</li>
+				</ul>
+				<li>LATER - Changing step counts - All A2J pages are linked to 1 step. Delete a step &gt; renumber all pages? Leave as is?</li>
+			</ol>		</td>
 	</tr>
 	<tr valign="top" bordercolor="#CCCCCC" >
 		<td align="center" valign="top">Viewer GUI</td>
 		<td align="center" valign="top">&nbsp;</td>
-		<td><ul>
-			<li>
-				<p>TODO - 3/20/2013 JM Conf call - A2J remove scroll bars from the interface.</p>
-			</li>
-			<li>
-				<p>TODO - 3/20/2013 JM Conf call - #Report - A2J require step audit presentation to user before advancing to next step.</p>
-			</li>
-			<li>
-				<p>TODO   - 12/2012 #Mobile - Have easy option for Mobile previewing, both within   the author and a simple link for authors to test on actual devices.</p>
-			</li>
-			<li>
-				<p>TODO   - 4/11/13 #Avatar - Add more skin tones - Let author choose several   skin tones instead of blank and tan. Default blank to random color.</p>
-			</li>
-			<li>
-				<p>TODO - 4/11/13 #Avatar - Add guide gender - Let author choose gender of guide to match her/his audio</p>
-			</li>
-			<li>
-				<p>DONE - #Lists - Viewer load external XML lists at run time the external XML</p>
-			</li>
-			<li>
-				<p>TODO - #Lists - Pick list picker defaults</p>
+		<td><ol>
+			<li> TODO - 3/20/2013 JM Conf call - A2J remove scroll bars from the interface.</li>
+			<li> TODO - 3/20/2013 JM Conf call - #Report - A2J require step audit presentation to user before advancing to next step.</li>
+			<li> TODO   - 12/2012 #Mobile - Have easy option for Mobile previewing, both within   the author and a simple link for authors to test on actual devices.</li>
+			<li> TODO   - 4/11/13 #Avatar - Add more skin tones - Let author choose several   skin tones instead of blank and tan. Default blank to random color.</li>
+			<li> TODO - 4/11/13 #Avatar - Add guide gender - Let author choose gender of guide to match her/his audio</li>
+			<li> DONE - #Lists - Viewer load external XML lists at run time the external XML</li>
+			<li> TODO - #Lists - Pick list picker defaults
 				<ul>
-					<li>
-						<p>Set list to existing value if found</p>
-					</li>
-					<li>
-						<p>If existing value is blank, set to 'choose an item'</p>
-					</li>
-					<li>
-						<p>If existing value not found, add after 'choose an item'</p>
-					</li>
+					<li> Set list to existing value if found</li>
+					<li>If existing value is blank, set to 'choose an item'</li>
+					<li>f existing value not found, add after 'choose an item'</li>
 				</ul>
 			</li>
-			<li>
-				<p>TODO - add calendar display to viewer</p>
-			</li>
-			<li>
-				<p>TODO - add calculator display to viewer</p>
-			</li>
-			<li>
-				<p>&nbsp;</p>
-			</li>
-			<li>
-				<p>TODO - Fields Invalid Prompts - Provide default prompts for specific field types that are missing</p>
-			</li>
-			<li>
-				<p>DONE - Step colors - keep as is until Mike's new scheme - colors delineate steps</p>
-			</li>
-		</ul>		</td>
+		
+				<li>TODO - add calendar display to viewer</li>
+				<li>TODO - add calculator display to viewer</li>
+				<li>TODO - Fields Invalid Prompts - Provide default prompts for specific field types that are missing</li>
+				<li>DONE - Step colors - keep as is until Mike's new scheme - colors delineate steps</li>
+		</ol>		</td>
 	</tr>
 	<tr valign="top" bordercolor="#CCCCCC" >
 		<td align="center" valign="top">#Var #Logic #Script #Debug</td>
@@ -280,6 +284,15 @@
 			</ol>		</td>
 	</tr>
 	<tr valign="top" bordercolor="#CCCCCC" >
+		<td align="center" valign="top">Mapper</td>
+		<td align="center" valign="top">&nbsp;</td>
+		<td><br />
+				<ol>
+					<li>TODO - Mapper Show all outgoing branches - Need to evaluate scripts for GOTO page’s to collect all outgoing branches from a page</li>
+					<li>LOW - Mapper Shrink to fit - Add shrink to fit button</li>
+					</ol></td>
+	</tr>
+	<tr valign="top" bordercolor="#CCCCCC" >
 		<td align="center" valign="top">&nbsp;</td>
 		<td align="center" valign="top">&nbsp;</td>
 		<td>&nbsp;</td>
@@ -295,21 +308,6 @@
 		<td><ol>
 			<li>WYSIWYG   restrictions - no embed images, tables, fancy formatting. Only bold,   italic, underline, hyperlink to popups/external sites, indent levels.</li>
 		</ol></td>
-	</tr>
-	<tr valign="top" bordercolor="#CCCCCC" >
-		<td align="center" valign="top">&nbsp;</td>
-		<td align="center" valign="top">&nbsp;</td>
-		<td>&nbsp;</td>
-	</tr>
-	<tr valign="top" bordercolor="#CCCCCC" >
-		<td align="center" valign="top">&nbsp;</td>
-		<td align="center" valign="top">&nbsp;</td>
-		<td>&nbsp;</td>
-	</tr>
-	<tr valign="top" bordercolor="#CCCCCC" >
-		<td align="center" valign="top">&nbsp;</td>
-		<td align="center" valign="top">&nbsp;</td>
-		<td>&nbsp;</td>
 	</tr>
 	<tr valign="top" bordercolor="#CCCCCC" >
 		<td align="center" valign="top">&nbsp;</td>
@@ -360,9 +358,7 @@
 		</ol>
 			<ul>
 				<li>SET VAR to EXPRESSION</li>
-				<li>
-					<p>EXPRESSION</p>
-				</li>
+				<li>EXPRESSION</li>
 		</ul></td>
 	</tr>
 	<tr valign="top" bordercolor="#CCCCCC" >
@@ -403,7 +399,9 @@
 	<tr valign="top" bordercolor="#CCCCCC" >
 		<td align="center" valign="top">&nbsp;</td>
 		<td align="center" valign="top">&nbsp;</td>
-		<td>&nbsp;</td>
+		<td><ol>
+			<li>LATER - Start and Final page settings - Move link for Start and Final page from Steps tab</li>
+		</ol></td>
 	</tr>
 	<tr valign="top" bordercolor="#CCCCCC" >
 		<td align="center" valign="top"><h1>FUTURE</h1></td>
@@ -421,28 +419,15 @@
 		<td align="center" valign="top">&nbsp;</td>
 		<td align="center" valign="top">&nbsp;</td>
 		<td><ol>
-			<li>FUTURE   - Author Report builder tab - Separate tab where author creates a large   document that uses embedded conditionals to build a report of an   interview. Replaces what a user might get at the end (list of their   variables) but in an author structured layout. Support edit/view mode.</li>
+			<li>FUTURE - Mapper draw lines for pathing - Draw lines to indicate flow - draw lines for outgoing Buttons and logic GOTOs</li>
 		</ol></td>
 	</tr>
 	<tr valign="top" bordercolor="#CCCCCC" >
 		<td align="center" valign="top">&nbsp;</td>
 		<td align="center" valign="top">&nbsp;</td>
-		<td><br />
-			<h2>Mapper</h2>
-			<ul>
-				<li>
-					<p>TODO - Start and Final page settings - Move link for Start and Final page from Steps tab</p>
-				</li>
-				<li>
-					<p>TODO - Show all outgoing branches - Need to evaluate scripts for GOTO page’s to collect all outgoing branches from a page</p>
-				</li>
-				<li>
-					<p>LOW - Mapper Shrink to fit - Add shrink to fit button</p>
-				</li>
-				<li>
-					<p>FUTURE - Mapper draw lines for pathing - Draw lines to indicate flow - draw lines for outgoing Buttons and logic GOTOs</p>
-				</li>
-		</ul></td>
+		<td><ol>
+			<li>FUTURE   - Author Report builder tab - Separate tab where author creates a large   document that uses embedded conditionals to build a report of an   interview. Replaces what a user might get at the end (list of their   variables) but in an author structured layout. Support edit/view mode.</li>
+		</ol></td>
 	</tr>
 	<tr valign="top" bordercolor="#CCCCCC" >
 		<td align="center" valign="top"><h1>Done</h1></td>
@@ -546,6 +531,6 @@
 		<td><p>  #Var - Suggested name picker for variables - when creating a   variable, provide a way to pick from a publicly recommended list of   variable names. - Don't do this.</p></td>
 	</tr>
 </table>
-<h2>&nbsp;</h2>
+11/14/2013
 </body>
 </html>

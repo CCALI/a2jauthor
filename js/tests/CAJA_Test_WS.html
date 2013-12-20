@@ -9,12 +9,12 @@
 
 <title>CAJA Web Service Tester</title> 
 
-<script src="../jquery.1.8.2.min.js">  </script>
-<script src="../jquery.ui.1.9.1.custom.min.js" </script>
-<link  href="../jquery.ui.custom.css" rel="stylesheet" type="text/css" />
-<script src="../jquery.ui.custom.min.js" type="text/javascript" ></script>
+<script src="../jQuery/jquery.1.10.2.min.js">  </script>
+<script src="../jQuery/jquery.ui.1.9.1.custom.min.js" </script>
+<link  href="../jQuery/jquery.ui.custom.css" rel="stylesheet" type="text/css" />
+<script src="../jQuery/jquery.ui.custom.min.js" type="text/javascript" ></script>
 <script src="../CAJA_Utils.js" type="text/javascript" ></script>
-<link href="../A2J_Author.css"  rel="stylesheet" type="text/css"/>
+<link  href="../A2J_Author.css"  rel="stylesheet" type="text/css"/>
 
 <script>
 var gUserID;
@@ -28,7 +28,7 @@ function status(msg)
 {
 	trace(msg);
 	$('#status').html(msg);
-	alert(msg);
+	//alert(msg);
 }
 function html(txt){
 	$('#results').html(txt); 
@@ -42,7 +42,7 @@ $(document).ready(function()
 	{
 		gUserID=data.userid;
 		gGuideID=0;
-		if (gUserID==0)
+		if (gUserID===0)
 		{
 			status('Unknown user');
 			html('Please register...');
@@ -53,13 +53,11 @@ $(document).ready(function()
 			html("Welcome "+data.nickname+" user#"+data.userid);
 			ws({cmd:'guides/owned'},listGuides);
 		}
-	};
+	}
 	function guideLoaded(data)
 	{ 
 		gGuideID=data.gid;
-		status('Loaded the guide #'+gGuideID );
-		
-		
+		status('Loaded the guide #'+gGuideID );		
 		
 		var cajaDataXML=$(data.guide);  
 		var description = makestr(cajaDataXML.find('DESCRIPTION').text());
@@ -68,7 +66,6 @@ $(document).ready(function()
 			QUESTION = $(this);
 			pages.push(QUESTION.attr("ID")+" "+ QUESTION.attr("NAME"));
 		});
-		
 		
 		html("<textarea rows=20 id=guidexml>"+ htmlEscape(data.guide) + "</textarea>"
 		+ data.guide.length+" characters<hr>" 
@@ -82,7 +79,8 @@ $(document).ready(function()
 		status('Listing '+items.length+' guides.');
 		html("Guides <ol>"+items.join('')+"</ol>");
 		$('li.guide').click(function(){
-			html('Loading guide '+$(this).text()+AJAXLoader);
+			//html('Loading guide '+$(this).text()+AJAXLoader);
+			setProgress('Loading guide '+$(this).text(),true);
 			ws({cmd:'guide',gid:$(this).attr('gid')},guideLoaded);		
 		});
 	}

@@ -13,18 +13,20 @@
 // Comment DEBUGSTART() function out when NOT testing locally.
 function DEBUGFIRST ()
 {
-	switch ( 2 ){
+	switch ( 1 ){
+		
 		case 1:
 			break;
+		
 		case 2:
 			gotoPageView(gGuide.firstPage);
 			gPage = gGuide.pages[gGuide.firstPage];
 			//dialogAlert({title:'DEBUG Interviews answers',body:prettyXML(gGuide.HotDocsAnswerSetXML()),width:800,height:600});
 			//loadXMLAnswerExternal({url:'/SJGProjects/a2j/flash/data/Protection Order_replaced UTF8.anx'});
-			if(0){
+			if( 1 ){
 			//load sample answer file
-			gGuide.loadXMLAnswerExternal({url:'http://localhost/SJGProjects/CAJA/CAJA/js/tests/data/Protection Order_replaced UTF8.anx',success:function(){
-				//dialogAlert({title:'DEBUG Answer files answers',body:prettyXML(gGuide.HotDocsAnswerSetXML()),width:800,height:600});
+				gGuide.loadXMLAnswerExternal({url:'http://localhost/SJGProjects/CAJA/CAJA/js/tests/data/Protection Order_replaced UTF8.anx',success:function(){
+					//dialogAlert({title:'DEBUG Answer files answers',body:prettyXML(gGuide.HotDocsAnswerSetXML()),width:800,height:600});
 				}});
 			}
 			break;

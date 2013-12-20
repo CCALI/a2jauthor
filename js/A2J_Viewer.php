@@ -14,6 +14,7 @@
 
 
 <SCRIPT LANGUAGE=JavaScript>
+// Override these Javascript variables as needed to setup default interview/answer file loading.
 //var templateURL="/a2j4guides/Logic Tests.a2j";
 var templateURL="/a2j4guides/Field Types Test.a2j?r="+Math.random()+"#2-1-0 Pick Colors";
 //var templateURL="tests/data/Field Types Test.a2j";
@@ -37,7 +38,10 @@ var errRepURL="A2J_ViewerErrRep.php";//"https://lawhelpinteractive.org/problem_r
 <script src="jQuery/jquery.xml.min.js" type="text/javascript" ></script>
 <script src="A2J_Shared.js" type="text/javascript"></script>
 <script src="A2J_SharedSus.js" type="text/javascript"></script>
+<script src="A2J_Types.js" type="text/javascript"></script>
+<script src="A2J_Logic.js" type="text/javascript"></script>
 <script src="A2J_Languages.js" type="text/javascript"></script>
+<script src="A2J_Parser.js" type="text/javascript"></script>
 <script src="A2J_Viewer.js" type="text/javascript"></script>
 <script src="A2J_ViewerApp.js" type="text/javascript"></script>
 <?php

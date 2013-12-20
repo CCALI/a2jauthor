@@ -21,6 +21,12 @@ var REG={
 	,LINK_POP2: /\"POPUP:\/\/(([^\"])+)\"/i
 };
 
+String.prototype.simpleHash=function(){
+	var str=String(this);
+	//http://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
+	return str.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a;},0);
+}
+
 /*jslint eqeq: false  */
 function sortingNaturalCompare(a, b) {//http://my.opera.com/GreyWyvern/blog/show.dml/1671288
   function chunkify(t) {

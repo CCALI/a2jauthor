@@ -574,6 +574,7 @@ TGuide.prototype.updateVarsForAnswerFile=function()
 	this.varSet(CONST.bookmarkVarName,gPage.name);
 	this.varSet(CONST.historyVarName,this.historyToXML());
 	this.varSet(CONST.interviewIDVarName, this.makeHash());
+	alert('Hash is "'+this.makeHash()+'"');
 };
 
 TGuide.prototype.makeHash=function()//InterviewHash
@@ -582,8 +583,7 @@ TGuide.prototype.makeHash=function()//InterviewHash
 		+ String(this.description) + String(this.version) + String(this.language) + String(this.notes);
 		//langID
 	// TODO: MD5 or other function to get a somewhat unique ID to map answer file to interview file.
-	//http://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
-	return String(str.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a;},0));
+	return str.simpleHash();
 };
 
 TGuide.prototype.HotDocsAnswerSetFromXML=function(AnswerSetXML)

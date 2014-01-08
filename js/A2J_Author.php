@@ -288,8 +288,10 @@
 			<h1>Previewer</h1>
 			Show preview interview </div>
 		<div class="panel" id="tabsUpload">
-			<h1>Upload</h1>
-			Option to upload to LHI would be here</div>
+			<h1>Publish/Upload</h1>
+			<p>To publish your interview to another site such as LHI, download the ZIP which contains the interview and its supplemental files.
+			 </p>
+		<button id="guideZIP">Download ZIP</button></div>
 	</div>
 	<div id="cajaheader"><span id="cajainfo" title="About this Authoring System"></span><span id="guidetitle"></span>
 		<button id="settings"/>

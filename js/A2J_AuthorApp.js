@@ -1820,6 +1820,23 @@ function main()
 			ws({cmd:'guide',gid:gid},guideLoaded);
 		}
 	 });
+	
+	
+	
+	$('#guideZIP').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
+	{	// 01/08/2014 ZIP the guide and related files. 
+		function guideZipped(data)
+		{ 
+			setProgress();
+			gGuideID=data.gid;
+			if (data.zip!==''){
+				window.open( data.zip);
+			}
+		}
+		setProgress('Generating ZIP',true);
+		ws({cmd:'guidezip',gid:gGuideID},guideZipped);
+	 });
+	
 	$('#guideClone').button({label:'Clone', disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){
 		//var $li=$('li.guide.'+SELECTED).first();
 		//var gid=$li.attr('gid');

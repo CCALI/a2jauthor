@@ -10,10 +10,11 @@
 <title>CAJA Web Service Tester</title> 
 
 <script src="../jQuery/jquery.1.10.2.min.js">  </script>
-<script src="../jQuery/jquery.ui.1.9.1.custom.min.js" </script>
+<script xsrc="../jQuery/jquery.ui.1.9.1.custom.min.js"> </script>
 <link  href="../jQuery/jquery.ui.custom.css" rel="stylesheet" type="text/css" />
-<script src="../jQuery/jquery.ui.custom.min.js" type="text/javascript" ></script>
-<script src="../CAJA_Utils.js" type="text/javascript" ></script>
+<script xsrc="../jQuery/jquery.ui.custom.min.js" type="text/javascript" ></script>
+<script src="../A2J_Types.js" type="text/javascript" ></script>
+<script src="../A2J_Shared.js" type="text/javascript" ></script>
 <link  href="../A2J_Author.css"  rel="stylesheet" type="text/css"/>
 
 <script>
@@ -71,19 +72,44 @@ $(document).ready(function()
 		+ data.guide.length+" characters<hr>" 
 		+ description +pages.join('<li>')); 
 	}
+	function guideZipped(data)
+	{ 
+		gGuideID=data.gid;
+		if (data.zip!=''){
+			status('ZIpped the guide #'+gGuideID );		
+			html('ZIP File is '+data.zip); 
+			window.open( data.zip);
+		}
+	}
 	function listGuides(data)
 	{
 		gGuideID=0;
 		var items = [];
-	  	$.each(data.guides, function(key,g) { items.push('<li class=guide gid="' + g.id + '">' + g.title + ' '+(g.owned?'mine':'other') + '</li>');});
+	  	$.each(data.guides, function(key,g) { items.push('<li class=guide gid="' + g.id + '">' + 
+			'<span>XML</span> <span>ZIP</span> ' + g.title + ' '+(g.owned?'mine':'other') + '</li>');});
 		status('Listing '+items.length+' guides.');
 		html("Guides <ol>"+items.join('')+"</ol>");
-		$('li.guide').click(function(){
-			//html('Loading guide '+$(this).text()+AJAXLoader);
-			setProgress('Loading guide '+$(this).text(),true);
-			ws({cmd:'guide',gid:$(this).attr('gid')},guideLoaded);		
+		$('li.guide span:first-child').click(function(){
+			var gid =  $(this).parent().attr('gid');
+			setProgress('Loading guide '+$(this).parent().text(),true);
+			ws({cmd:'guide',gid:gid } ,guideLoaded);		
+		});
+		$('li.guide span:last-child').click(function(){
+			var gid =  $(this).parent().attr('gid');
+			setProgress('Loading ZIP '+$(this).parent().text(),true);
+			ws({cmd:'guidezip',gid:gid},guideZipped);		
 		});
 	}
+	function setProgress(stat , showSpinner)
+	{
+		if (typeof stat==='undefined'){
+			stat ='';
+		}
+		if (stat !==''){
+			status(stat); 
+		}
+	}
+
 	function statusupdate(data)
 	{
 		if (typeof data.error!=="undefined")
@@ -166,14 +192,19 @@ function loadFile(bookFile)
 
 <style type="text/css">
 <!--
+body {
+	background-color:#88f;
+	color:#fff;
+	font-size: 8pt;
+	font-family: Arial, Helvetica, sans-serif;
+}
 td {
 	vertical-align: top;
 	text-align: left;
 	padding: 2px;
 }
 form {
-	border: 2px;
-	background-color:#fff;
+	border: 2px; 
 	}
 .header {
 	height: 45px;
@@ -185,8 +216,8 @@ li.guide:hover {
 	background-color:#C0DCC0;
 }
 div.trace { padding: 5px;}
-div.trace:nth-child(even) {background-color:#fff;}
-div.trace:nth-child(odd)  {background-color:#eee;}
+div.trace:nth-child(even) {background-color:#282;}
+div.trace:nth-child(odd)  {background-color:#288;}
 
 -->
 </style>
@@ -194,54 +225,56 @@ div.trace:nth-child(odd)  {background-color:#eee;}
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></HEAD>
 
 
-<BODY BGCOLOR="#FFFFFF"  >
+<BODY  >
 <div class="header">CAJA Web Service Tester</div> <form>
 <table width="100%" height="100%" border="0" cellpadding="5" cellspacing="0">
 	<tr>
-		<th width="33%" height="30" nowrap="nowrap">Commands</th>
-		<th width="33%" height="30" nowrap="nowrap">Current Results</th>
-		<th width="33%" height="30" nowrap="nowrap">Trace</th>
+		<th width="33%" height="30" nowrap="nowrap"><font size="+1">Commands</font></th>
+		<th width="33%" height="30" nowrap="nowrap"><font size="+1">Current Results</font></th>
+		<th width="33%" height="30" nowrap="nowrap"><font size="+1">Trace</font></th>
 	</tr>
 	<tr>
-		<td width="33%"><table border="1" cellpadding="5" cellspacing="0" bgcolor="#FFFFCC">
+		<td width="33%"><table border="0" align="center" cellpadding="0" cellspacing="6" bordercolor="#0000FF" bgcolor="#A0A0A4">
 			<tr>
 				<th valign="top">Command</th>
-				<th valign="top">Data</th>
+				<th align="center" valign="top" nowrap="nowrap">Data </th>
 			</tr>
 			<tr>
-				<td align="right" valign="middle"><p align="right">Good Login</p></td>
-				<td valign="middle">
-User:	<input type="text" id="username" name="username"    />
-Pass:	<input type="password" id="userpass" name="password"    />
+				<td>Good Login</td>
+				<td nowrap="nowrap">
+User:	<input name="username" type="text" id="username" value="dev"    />
+Pass:
+<input name="password" type="password" id="userpass"    />
 	<input type="button" id="signin1" value="Sign in" />			</td>
 			</tr>
 			<tr>
-				<td align="right" valign="middle"><p align="right">Bad Login</p></td>
-				<td valign="middle"> User:
+				<td>Bad Login</td>
+				<td nowrap="nowrap"> User:
 					<input id="username2" type="text" value="DEMO '); drop table Guides;" />
 					Pass:
 					<input id="userpass2" type="password" value="bad password" />
 					<input type="button" id="signin2" value="Sign in" />				</td>
 			</tr>
 			<tr>
-				<td align="right" valign="middle"><p align="right">Logout </p></td>
-				<td valign="middle"><input type="button" id="signout" value="Sign out" /></td>
+				<td>Logout </td>
+				<td nowrap="nowrap"><input type="button" id="signout" value="Sign out" /></td>
 			</tr>
 			<tr>
-				<td align="right" valign="middle"><p align="right">  Author Guides </p></td>
-				<td valign="middle"> 
+				<td>  Author Guides </td>
+				<td nowrap="nowrap"> 
 						<input type="button" id="guides_owned" value="My Guides" />
 						<input type="button" id="guides_all" value="All Guides" /></td>
 			</tr>
 			<tr>
-				<td align="right" valign="middle">Editing Guide</td>
-				<td valign="middle"><input type="button" id="guidesave" value="Save Guide" /> <input type="button" id="guidesaveas" value="Save As Guide" /></td>
+				<td>Editing Guide</td>
+				<td nowrap="nowrap"><input type="button" id="guidesave" value="Save Guide" /> <input type="button" id="guidesaveas" value="Save As Guide" /></td>
 			</tr>
 		</table></td>
 		<td><div id="status">Status</div><div id="results">Results</div></td>
 		<td width="33%"><div id="trace"></div></td>
 	</tr>
-</table>	</form>
+</table>	
+</form>
 </BODY>
 </HTML>
 

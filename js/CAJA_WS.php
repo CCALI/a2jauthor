@@ -51,10 +51,14 @@ else
 	session_start();//  09/05/2013 WARNING! LEAVE session_start() OFF TO ACCESS DRUPAL SESSIONS!
 	define("LOCAL_AS_DEV_USER", 1);
 	if ( LOCAL_AS_DEV_USER )
+	{
 		//$userid=26;// Demo Author
 		$userid=45;// DEV Author
+	}
 	else
+	{
 		$userid=0;
+	}
 }
 
 
@@ -137,7 +141,8 @@ switch ($command)
 		// return XML of guide if it's public, free or user owned.
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$res=$mysqli->query("select * from guides where gid=$gid   and (isPublic=1  or isFree=1  or editoruid=$userid)");
-		if ($row=$res->fetch_assoc()){
+		if ($row=$res->fetch_assoc())
+		{
 			$result['gid']=$row['gid'];
 			$result['editoruid']=$row['editoruid'];
 			$result['guide']= file_get_contents(GUIDES_DIR.$row['filename'],TRUE);
@@ -150,6 +155,7 @@ switch ($command)
 		{// not found
 		}
 		break;
+	 
 		
 	case 'guidesave':
 		// update the guide (only if user matches guide's editor
@@ -165,7 +171,8 @@ switch ($command)
 		  $path_parts = pathinfo($filename);
 		  $filedir = $path_parts['dirname'];
 		  $filenameonly=$path_parts['filename'];
-		  if (file_exists($filename)){ 
+		  if (file_exists($filename))
+		  { 
 				//trace(filemtime($filename));
 				$verdir = $filedir.'/Versions';
 				if (!file_exists($verdir))
@@ -200,7 +207,8 @@ switch ($command)
 		trace($oldgid);
 		// Create new entry in guide table including a reference to the cloned guide.
 		$sql="insert into guides (title,editoruid,clonedfromgid) values ('".$mysqli->real_escape_string($title)."', ".$userid.",".$oldgid.")";
-		if ($res=$mysqli->query($sql)){
+		if ($res=$mysqli->query($sql))
+		{
 			// Save as content to new folder owned by editor
 			$newgid=$mysqli->insert_id;
 			
@@ -217,7 +225,8 @@ switch ($command)
 			trace('saving to '.$filename);
 			file_put_contents($filename,$xml);
 			$sql="update guides set filename='".$mysqli->real_escape_string($newfile)."' where gid = $newgid";
-			if ($res=$mysqli->query($sql)){
+			if ($res=$mysqli->query($sql))
+			{
 			}
 			//chmod($newlocation,0775);
 			//copy($oldlocation,$newlocation) or trace("Error copy");
@@ -242,7 +251,8 @@ switch ($command)
 		
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$res=$mysqli->query("select * from guides where gid=$gid and editoruid=$userid");
-		if ($row=$res->fetch_assoc()){
+		if ($row=$res->fetch_assoc())
+		{
 			$result['info']="OK";
 			$filename=$row['filename'];
 			$path_parts = pathinfo($filename);
@@ -318,6 +328,49 @@ switch ($command)
 		
 
 		
+	 case 'guidezip':
+		// 01/08/2014 Zip guide XML and attached files.
+		// Security Warning: Zip file is available to all users knowing the URL.
+		$result['zip']='';
+	 	$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+		$res=$mysqli->query("select * from guides where gid=$gid and (isPublic=1  or isFree=1  or editoruid=$userid)");
+		if ($row=$res->fetch_assoc())
+		{
+			$result['gid']=$row['gid'];
+			$guideName = $row['filename'];
+			$path_parts = pathinfo($guideName);
+			$guideDir = $path_parts['dirname'];
+			$guideNameOnly = $path_parts['filename'];
+			$zip  = new ZipArchive();
+			$zipNameOnly = 'A2J5 Guide'.$gid.' Archive'./*' '.date('Y-m-d-H-i-s').*/'.zip';
+			$zipName = $guideDir.'/'.$zipNameOnly;
+			$zipFull = GUIDES_DIR.$zipName;
+			if ($zip->open($zipFull,ZipArchive::OVERWRITE)!==TRUE)
+			{
+				trace("cannot open $zipFull");
+			}
+			else
+			{
+				trace("created $zipFull");
+				$zip->addFile(GUIDES_DIR.$guideName,'Guide.xml');
+				$files = scandir(GUIDES_DIR.$guideDir);
+				// Ideally, scan Guide and only zip files used in the interview.
+				// Currently, just add all files in the folder of the guide.
+				//$zip->addPattern('/\.(?:jpg|xml|png|gif)$/', GUIDES_DIR.$guideDir);
+				foreach($files as $file)
+				{
+					$ext = pathinfo($file,PATHINFO_EXTENSION);
+					if( ($ext!='') && ($file!=$guideNameOnly) AND ($ext!='zip'))
+					{
+						$zip->addFile(GUIDES_DIR.$guideDir.'/'.$file,$file);						
+					}
+				}				
+				$zip->close();
+				$result['zip']=GUIDES_URL.$guideDir.'/'.$zipNameOnly;
+				// Caller will redirect to download the zip.
+			}
+		}
+		break;
 		
 	default:
 		$err="Unknown command";
@@ -355,7 +408,8 @@ function listGuides($sql)
 	if ($userid!=0)
 	{
 		$res=$mysqli->query($sql);
-		while($row=$res->fetch_assoc()){
+		while($row=$res->fetch_assoc())
+		{
 			$guides[]=array( "id"=> $row['gid'], "title"=> $row['title'],
 				"owned"=> $row["editoruid"]==$userid,
 				"details"=> getGuideFileDetails( $row['filename'])); 

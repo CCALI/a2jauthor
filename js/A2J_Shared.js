@@ -122,7 +122,7 @@ function traceTag(cname,chtml)
 		}
 		else
 		if (chtml == false || chtml=='false') {
-			cname='valF';;//any thing like False, use the False styling
+			cname='valF';//any thing like False, use the False styling
 		}
 	}
 	return "<span class="+cname+">"+htmlEscape(chtml)+"</span>";

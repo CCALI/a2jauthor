@@ -3,7 +3,6 @@
 	CALI Author 5 / A2J Author 5 (CAJA) công lý
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
-	
 	Logic
 	06/15/2012  10/25/11
 	04/15/2013
@@ -47,14 +46,14 @@ function TLogic()
 		;
 	this.tracerID="#tracer";
 	this.userFunctions =  [];
-	this.indent=0;
-	this.GOTOPAGE=null;
+	this.indent=0; // Tracing indent level/shows nesting code.
+	this.GOTOPAGE=null;// Optionally set by GOTO commmand in script. Allows us to breakout when needed.
 	return this;
 }
 
 
 TLogic.prototype.pageExists = function(pageName)
-{	// return true if page name exists (Case-sensitive check)
+{	// Return true if page name exists (Case-sensitive check)
 	return gGuide.pages[pageName]!==null;
 };
 
@@ -445,8 +444,7 @@ TLogic.prototype._deltaVars = function()
 };
 
 TLogic.prototype.executeScript = function(CAJAScriptHTML)
-{
-	// Execute lines of CAJA script. Syntax/runtime errors go into logic tracer, error causes all logic to cease.
+{	// Execute lines of CAJA script. Syntax/runtime errors go into logic tracer, error causes all logic to cease.
 	// GOTO's cause immediate break out of script and the caller is responsible for changing page.
 	// Script statement lines separated <BR/> tags.
 	if (typeof CAJAScriptHTML==='undefined'){

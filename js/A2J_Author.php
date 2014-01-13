@@ -3,6 +3,7 @@
 	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	04/15/2013
+	01/13/2014
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -60,7 +61,7 @@
 			<script src="A2J_Mapper.js?jsver=5013" type="text/javascript"></script>
 			<script src="A2J_Dev.js?jsver=5013" type="text/javascript"></script>
 			<script src="A2J_AuthorApp.js?jsver=5013" type="text/javascript"></script>
-			<script src="A2J_Debug.js?jsver=5013" type="text/javascript"></script>
+			<script xsrc="A2J_Debug.js?jsver=5013" type="text/javascript"></script>
 		<?php
 			break;
 		case 2:

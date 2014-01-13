@@ -11,6 +11,9 @@
 	Language blocks for each supported language.
 	There's a Languages[] structure for A2J Viewer specific code.
 	And jQuery UI structs for Calendar.
+	
+	Currently supported languages:
+		English, Spanish, Vietnamese, Chinse-Simplified
 ******************************************************************************/
 
 var lang = {

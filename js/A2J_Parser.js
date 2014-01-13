@@ -13,7 +13,7 @@
 ******************************************************************************/
 
 function fixPath(file)
-{	// keep fully qualified path, otherwise default to file within guide's folder
+{	// Keep fully qualified path, otherwise default to file within guide's folder
 	if (file.indexOf('http')===0)
 	{
 		return file;
@@ -23,14 +23,16 @@ function fixPath(file)
 	return fileFixed;
 }
 function loadXMLList(opts)
-{	// opts.elt, opts.data, opts.val
+{	// Load pick list elements from XML file. e.g., county names
+	// opts.elt, opts.data, opts.val
 	var $select=$(opts.data);
 	$($select,'option:first').prepend('<option value="">Choose from this list</option>');
 	$(opts.elt).html($select.html()).val(opts.val);
 }
+
 function loadXMLListExternal(opts)
-/* Load a XML based pick list. */
-{	// Load list from opts.url, default list value will be opts.val, and XML stored in opts.elt.
+{	// Load a XML based pick list.
+	// Load list from opts.url, default list value will be opts.val, and XML stored in opts.elt.
    $.ajax({
       url:  fixPath(opts.url),
       dataType:  "text",

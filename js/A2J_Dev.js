@@ -4,7 +4,6 @@
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	Developer coding.
-
 ******************************************************************************/
 
 

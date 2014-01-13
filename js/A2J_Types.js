@@ -19,6 +19,7 @@ var CONST = {
 	showXML: 0,
 	uploadURL: 'CAJA_WS.php?cmd=uploadfile&gid=',
 	uploadGuideURL: 'CAJA_WS.php?cmd=uploadguide',
+	// Spinnner for loading wait
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
 	A2JVersionNum:"5.0.1.5",//VersionInfo.verNum

@@ -202,7 +202,7 @@ function focusPage()
 */
 
 function mapZoomClick()
-{ 
+{	// Zoom in or out. 
 	var zoom=parseFloat($(this).attr('zoom'));
 	if (zoom>0){
 		gMapperScale = gMapperScale * zoom;

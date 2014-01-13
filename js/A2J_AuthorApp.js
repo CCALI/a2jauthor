@@ -1134,7 +1134,7 @@ function updateTOC()
 		});
 }
 function guideLoaded(data)
-{
+{	// When guide file is finally downloaded, we can parse it and update the UI.
 	gGuideID=data.gid;
 	var cajaDataXML=$(jQuery.parseXML(data.guide));
 	gGuide =  parseXML_Auto_to_CAJA(cajaDataXML);

@@ -3,7 +3,9 @@
 	CALI Author 5 / A2J Author 5 (CAJA) công lý
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
+	10/2013
 	JavaScript functions with JSLint complaints.
+	Companion to A2J_Shared.js.
 ******************************************************************************/
 
 
@@ -21,7 +23,9 @@ var REG={
 	,LINK_POP2: /\"POPUP:\/\/(([^\"])+)\"/i
 };
 
-String.prototype.simpleHash=function(){
+String.prototype.simpleHash=function()
+{	// Return a simple hash of string. MD5 or other preferred but will do in a pinch.
+	// 
 	var str=String(this);
 	//http://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
 	return str.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a;},0);

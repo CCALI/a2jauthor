@@ -7,7 +7,7 @@
 	Not for use in production.
 ******************************************************************************/
 
-/*   */
+/*  */
 //var gGuideID, gPage, gUserID, gUserNickName;
 
 // Comment DEBUGSTART() function out when NOT testing locally.

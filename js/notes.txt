@@ -1,9 +1,8 @@
 ### CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие ###
 ### CALI Author 5 / A2J Author 5 (CAJA) ###
-### 2012-2013  -  Sam's Design notes ###
+### 2012-2014  -  Sam's Design notes ###
 
-
-			//http://stackoverflow.com/questions/2525524/jquery-ui-dialog-button-icons
+//http://stackoverflow.com/questions/2525524/jquery-ui-dialog-button-icons
 			
 			
 			

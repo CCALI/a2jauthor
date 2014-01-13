@@ -6,7 +6,9 @@
 	10/05/2012 Simple CAJA Author Web Service API
 	A Fuse to handle all a2j author editing stuff
 	07/01/2013 HACK to login to demo
-	7/15/2013 Directory restructure
+	07/15/2013 Directory restructure
+	
+	01/13/2014
 */
 
 
@@ -331,6 +333,7 @@ switch ($command)
 	 case 'guidezip':
 		// 01/08/2014 Zip guide XML and attached files.
 		// Security Warning: Zip file is available to all users knowing the URL.
+		// Improvement: ZIP on demand rather than via AJAX and then loading a static file?
 		$result['zip']='';
 	 	$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$res=$mysqli->query("select * from guides where gid=$gid and (isPublic=1  or isFree=1  or editoruid=$userid)");

@@ -31,7 +31,7 @@ var A2JViewer={
 	},
 	
 	refreshVariables : function ( )
-	{
+	{	// Update the variables table with latest values
 		var $t=$('.varvalpanel');
 		/** @type {TGuide} */
 		var g = gGuide;
@@ -78,7 +78,7 @@ var A2JViewer={
 	},
 	
 	fillSample: function()
-	{
+	{	// Populate fields with 'sample' values, if specified or applicable.
 		var page = gPage;
 		for (var fi=0;fi<page.fields.length;fi++)
 		{
@@ -114,7 +114,7 @@ var A2JViewer={
 	
 	/** @param {TPage} page  */
 	layoutPage:function(div,page)
-	{	// layout page into interactive viewer. attach event handlers.
+	{	// Layout page into interactive viewer. attach event handlers.
 	
 		 
 	
@@ -162,6 +162,7 @@ var A2JViewer={
 				});//,function(){$('.license').slideUp()});
 			}
 			$('#history').change(function(){
+				// TODO Handle history navigation from drop down.
 				trace($(this).val());
 			});
 		}

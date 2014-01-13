@@ -5,6 +5,13 @@
 	
 	Developer debugging.
 	Not for use in production.
+	For production, do not include A2J_Debug.js in the .php host file.
+	
+	Options: 
+	1. Comment out this code to run normally.
+	2. Set auto-loading interview in DEBUGSTART
+	2a. Set TESTMODE to 1 to run locally without DB access.
+	2b. Set TESTMODE to 2 to login as DEV user automatically
 ******************************************************************************/
 
 /*  */
@@ -36,14 +43,15 @@ function DEBUGSTART(){
 	trace("DEBUGSTART");
 	gUserNickName='Tester';
 	gUserID=0;
-	var TESTMODE = 2;
+	var TESTMODE = 1 ;
 	if ( TESTMODE===2 ) {
 		// Hard code load db, skip login/interview selection steps.
 		gGuideID =252;//238;//133;
 		ws({cmd:'guide',gid:gGuideID},guideLoaded);
 	}
 	else
-	{	// Load a local interview (can't be saved, used for quick UI testing 
+	{	// Load a local interview (can't be saved, used for quick UI testing)
+		// Default loads the first interview in SAMPLES and starts on Pages tab.
 		gGuideID=0;
 		$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist"></p>');
 		var SAMPLES = [
@@ -69,11 +77,10 @@ function DEBUGSTART(){
 		$(SAMPLES).each(function(i,elt){
 			$('#samples, #guidelist').append('<li><a href="#sample">'+elt+'</a></li>');		
 		});
-		loadGuideFile(SAMPLES[0],'tabsGuides');
-		//gotoTabOrPage('tabsGuides');
+		loadGuideFile(SAMPLES[0],'tabsPages');
 	}
-	$('#splash').hide();
-	$('#authortool').removeClass('hidestart');//.addClass('authortool').show
+	//$('#splash').hide();
+	//$('#authortool').removeClass('hidestart');//.addClass('authortool').show
 }
 
 

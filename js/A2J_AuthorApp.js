@@ -1010,8 +1010,10 @@ function guideStart(startTabOrPage)
 		startTabOrPage='tabsPages';//'tabsAbout';
 	}
 	
-	//$('#authortool').removeClass('hidestart').addClass('authortool').show();
-	//$('#welcome').dialog('close');
+	
+	
+	$('#splash').hide();
+	$('#authortool').removeClass('hidestart');//.addClass('authortool').show
 	
 	//$('#tabviews').tabs( { disabled:false});
 	$('#tabsVariables .tabContent, #tabsLogic  .tabContent, #tabsSteps .tabContent, #tabsAbout .tabContent, #tabsConstants .tabContent, #tabsText .tabContent').html("");

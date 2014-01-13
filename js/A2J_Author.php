@@ -61,7 +61,7 @@
 			<script src="A2J_Mapper.js?jsver=5013" type="text/javascript"></script>
 			<script src="A2J_Dev.js?jsver=5013" type="text/javascript"></script>
 			<script src="A2J_AuthorApp.js?jsver=5013" type="text/javascript"></script>
-			<script xsrc="A2J_Debug.js?jsver=5013" type="text/javascript"></script>
+			<script src="A2J_Debug.js?jsver=5013" type="text/javascript"></script>
 		<?php
 			break;
 		case 2:

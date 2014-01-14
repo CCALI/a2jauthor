@@ -19,7 +19,7 @@
 
 // Comment DEBUGSTART() function out when NOT testing locally.
 function DEBUGFIRST ()
-{
+{	
 	switch ( 1 ){
 		
 		case 1:
@@ -39,13 +39,14 @@ function DEBUGFIRST ()
 			break;
 	}
 }
-function DEBUGSTART(){
+ 
+function DEBUGSTART()
+{
 	trace("DEBUGSTART");
 	gUserNickName='Tester';
 	gUserID=0;
-	var TESTMODE = 1 ;
-	if ( TESTMODE===2 ) {
-		// Hard code load db, skip login/interview selection steps.
+	if ( 0 ===1)
+	{	// Uses DB. Hard code load db, skip login/interview selection steps.
 		gGuideID =252;//238;//133;
 		ws({cmd:'guide',gid:gGuideID},guideLoaded);
 	}

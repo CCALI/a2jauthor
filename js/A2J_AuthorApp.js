@@ -5,7 +5,8 @@
 	
 	Authoring App GUI
 	04/15/2013
-
+	
+	
 ******************************************************************************/
 
 /* global gGuidePath,gPage,gGuide,gUserID,gGuideID,gUserNickName */
@@ -21,12 +22,11 @@ var $pageEditDialog=null;
 var SELECTED = 'ui-state-active';
 
 
-TGuide.prototype.noviceTab = function(tab,clear) //function noviceTab(guide,tab,clear)
+TGuide.prototype.noviceTab = function(tab,clear)
 {	// 08/03/2012 Edit panel for guide sections 
 	/** @type {TGuide} */
 	var guide = this;
 	var div = $('#'+tab);
-	//if (div.html()!="") return;
 	var t = $('.tabContent',div);
 	if (clear){
 		t.html("");
@@ -36,7 +36,6 @@ TGuide.prototype.noviceTab = function(tab,clear) //function noviceTab(guide,tab,
 	}
 	form.clear();
 	var fs;
-	//var ff;
 	var p;
 	var page;
 	var pagefs;
@@ -268,8 +267,6 @@ function authorViewerHook()
 
 
 function signin(){
-	//ws({cmd:'login',username:$('#username').val(),userpass:$('#password').val()},
-	//$('#splash').show();
 	if (typeof DEBUGSTART !== 'undefined'){
 		DEBUGSTART();
 		return;
@@ -1135,8 +1132,14 @@ function updateTOC()
 			gotoTabOrPage(rel);
 		});
 }
+
+
+/**
+ * Parses data returned from the server
+ * When guide file is finally downloaded, we can parse it and update the UI.
+*/
 function guideLoaded(data)
-{	// When guide file is finally downloaded, we can parse it and update the UI.
+{
 	gGuideID=data.gid;
 	var cajaDataXML=$(jQuery.parseXML(data.guide));
 	gGuide =  parseXML_Auto_to_CAJA(cajaDataXML);
@@ -1779,9 +1782,18 @@ function ws(data,results)
 
 function main()
 {   // Everything loaded, execute.
-
    Languages.set(Languages.defaultLanguage);
 
+	// Determine what stage we're in and display a notice. 
+	gEnv=window.location=='http://author.a2jauthor.org/js/A2J_Author.php'?'':
+			window.location=='http://caja.a2jauthor.org/beta/js/A2J_Author.php'?'BETA':
+			window.location=='http://caja.a2jauthor.org/dev/js/A2J_Author.php'?'DEV':'LOCAL';
+	if (gEnv!=='LOCAL') {
+		DEBUGFIRST=undefined;
+		DEBUGSTART=undefined;
+	}
+	$('.authorenv').text(gEnv);
+	$('.authorver').html(CONST.A2JVersionNum+"<br/>"+CONST.A2JVersionDate);
 	$('#cajainfo').attr('title',versionString());
 
 	//$('#welcome, #texttoolbar').hide();

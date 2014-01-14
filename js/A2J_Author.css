@@ -129,6 +129,21 @@ html, body {
 	width: 112px;
 	border : 1px solid #c0c0c0;
 }
+.authorenv {
+	position:  absolute;
+	left:10px;
+	bottom: 60px;
+	font-size:3em;
+	color: #800;
+	text-shadow: 2px 2px 8px #0000FF;
+}
+.authorver {
+	position:  absolute;
+	left:10px;
+	bottom: 20px;
+	font-size:1em;
+	text-shadow: 2px 2px 4px #222;
+}
 .guidemenu ul {
 	font-size: 15px;
 	margin: 1px;

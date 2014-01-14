@@ -110,6 +110,8 @@
 			<li ref="tabsGuides">Interviews</a></li>
 		</ul>
 	</div>
+	<div class="authorenv"></div>
+	<div class="authorver"></div>
 	<div class="guidepanels ui-widget xui-widget-content">
 		<div class="panel" id="tabsAbout">
 			<div class="tabHeader">Information about this guide. </div>

@@ -669,6 +669,8 @@ var gUserID=0;
 var gUserNickName="User";
 /** @type {string} */
 var gGuidePath;
+/** @type {string} */
+var gEnv=''; // Where are we running? Locally, on a2jauthor.org, as beta or dev?
 
 // User Session
 //var amode=0;

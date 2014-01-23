@@ -956,8 +956,10 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 					}
 					if (varName!=="")
 					{
-						// Version 1: statement = 'SET ['+varName+'] TO '+varVal;
-						statement = 'SET '+varName+' TO '+varVal;
+						// Version 1:
+						statement = 'SET ['+varName+'] TO '+varVal;
+						// Version 2:(unused)
+						// statement = 'SET '+varName+' TO '+varVal;
 					}
 					else{
 						statement = "";

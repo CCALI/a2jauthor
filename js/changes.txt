@@ -1,8 +1,11 @@
 ### CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие ###
 
 
+# 5.0.1.7
+Fixed: proper brackets for A2J 4 imported SET variable function
 
-# Version 5.0.1.1
+
+# 5.0.1.1
 * Interview selection on separate tab
 
 

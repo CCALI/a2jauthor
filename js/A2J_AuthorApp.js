@@ -1785,7 +1785,7 @@ function main()
    Languages.set(Languages.defaultLanguage);
 
 	// Determine what stage we're in and display a notice. 
-	gEnv=window.location=='http://author.a2jauthor.org/js/A2J_Author.php'?'':
+	gEnv= (String(window.location).indexOf('http://author.a2jauthor.org/')===0)?'':
 			window.location=='http://caja.a2jauthor.org/beta/js/A2J_Author.php'?'BETA':
 			window.location=='http://caja.a2jauthor.org/dev/js/A2J_Author.php'?'DEV':'LOCAL';
 	if (gEnv!=='LOCAL') {

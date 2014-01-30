@@ -37,8 +37,8 @@
 	switch ( 1 ){
 		case 0:	// include minimized code
 		?>
-			<script src="jQuery/jquery.custom.min.js?jsver=5013" type="text/javascript" ></script>
-			<script src="A2J_AuthorApp.min.js?jsver=5013" type="text/javascript"></script>
+			<script src="jQuery/jquery.custom.min.js?jsver=5017" type="text/javascript" ></script>
+			<script src="A2J_AuthorApp.min.js?jsver=5017" type="text/javascript"></script>
 		<?php
 			break;
 		
@@ -51,23 +51,23 @@
 			<script src="jQuery/jquery.ui.combobox.js" type="text/javascript" ></script>
 			<script src="jQuery/jquery.ui.traggable.js" type="text/javascript" ></script>
 			
-			<script src="A2J_Types.js?jsver=5013" type="text/javascript"></script>
-			<script src="A2J_Shared.js?jsver=5013" type="text/javascript"></script>
-			<script src="A2J_SharedSus.js?jsver=5013" type="text/javascript"></script>
-			<script src="A2J_Languages.js?jsver=5013" type="text/javascript"></script>
-			<script src="A2J_Logic.js?jsver=5013" type="text/javascript"></script>
-			<script src="A2J_Parser.js?jsver=5013" type="text/javascript"></script>
-			<script src="A2J_Viewer.js?jsver=5013" type="text/javascript"></script>
-			<script src="A2J_Mapper.js?jsver=5013" type="text/javascript"></script>
-			<script src="A2J_Dev.js?jsver=5013" type="text/javascript"></script>
-			<script src="A2J_AuthorApp.js?jsver=5013" type="text/javascript"></script>
-			<script src="A2J_Debug.js?jsver=5013" type="text/javascript"></script>
+			<script src="A2J_Types.js?jsver=5017" type="text/javascript"></script>
+			<script src="A2J_Shared.js?jsver=5017" type="text/javascript"></script>
+			<script src="A2J_SharedSus.js?jsver=5017" type="text/javascript"></script>
+			<script src="A2J_Languages.js?jsver=5017" type="text/javascript"></script>
+			<script src="A2J_Logic.js?jsver=5017" type="text/javascript"></script>
+			<script src="A2J_Parser.js?jsver=5017" type="text/javascript"></script>
+			<script src="A2J_Viewer.js?jsver=5017" type="text/javascript"></script>
+			<script src="A2J_Mapper.js?jsver=5017" type="text/javascript"></script>
+			<script src="A2J_Dev.js?jsver=5017" type="text/javascript"></script>
+			<script src="A2J_AuthorApp.js?jsver=5017" type="text/javascript"></script>
+			<script src="A2J_Debug.js?jsver=5017" type="text/javascript"></script>
 		<?php
 			break;
 		case 2:
 		?>
-			<script src="jQuery/jquery.custom.min.js?jsver=5013" type="text/javascript" ></script>
-			<script src="A2J_AuthorOne.js?jsver=5013" type="text/javascript"></script>
+			<script src="jQuery/jquery.custom.min.js?jsver=5017" type="text/javascript" ></script>
+			<script src="A2J_AuthorOne.js?jsver=5017" type="text/javascript"></script>
 		<?php
 			break;
 	}

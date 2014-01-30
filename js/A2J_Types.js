@@ -671,7 +671,10 @@ var gUserNickName="User";
 var gGuidePath;
 /** @type {string} */
 var gEnv=''; // Where are we running? Locally, on a2jauthor.org, as beta or dev?
-
+// Determine what stage we're in and display a notice. 
+gEnv= (String(window.location).indexOf('http://author.a2jauthor.org/')===0)?'':
+		(String(window.location).indexOf('http://caja.a2jauthor.org/beta/js/')===0)?'BETA':
+		(String(window.location).indexOf('http://caja.a2jauthor.org/dev/js/')===0)?'DEV':'LOCAL';
 // User Session
 //var amode=0;
 //var username=""

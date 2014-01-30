@@ -497,6 +497,14 @@ function gotoPageEdit(pageName)
 
 	$pageEditDialog.dialog('open' );
 	$pageEditDialog.dialog('moveToTop');
+	
+	
+	//if (1) {
+	//$embed=pageNameRelFilter('.pageoutline li',pageName);
+	//$embed.append('<div class="page-edit-form-panel"></div>');
+	//guidePageEditForm(page,$('.page-edit-form-panel',$embed).html(''),page.name);
+	//}
+	
 }
 function gotoTabOrPage(target)
 {	// Go to a tab or popup a page.
@@ -683,7 +691,8 @@ function guidePageEditForm(page, div, pagename)//novicePage
 		t.append(form.h2( "Page not found " + pagename)); 
 	}
 	else 
-	if (page.type === CONST.ptPopup ) {
+	if (page.type === CONST.ptPopup )
+	{	// Popup pages have only a few options - text, video, audio
 		fs=form.fieldset('Popup info',page);
 		fs.append(form.text({label:'Name:',name:'pagename', value:page.name,change:function(val,page,form){
 			if (pageRename(page,val)===false){
@@ -700,7 +709,9 @@ function guidePageEditForm(page, div, pagename)//novicePage
 	{
 		fs=form.fieldset('Page info',page);
 		fs.append(form.pickStep({label:'Step:',value: page.step, change:function(val,page){
-			page.step=parseInt(val,10);/* TODO Move page to new outline location */}} ));
+			page.step=parseInt(val,10);
+			updateTOC();
+		}} ));
 		fs.append(form.text({label:'Name:', value:page.name,change:function(val,page,form){
 			val = jQuery.trim(val);
 			if (pageRename(page,val)===false){
@@ -1784,10 +1795,6 @@ function main()
 {   // Everything loaded, execute.
    Languages.set(Languages.defaultLanguage);
 
-	// Determine what stage we're in and display a notice. 
-	gEnv= (String(window.location).indexOf('http://author.a2jauthor.org/')===0)?'':
-			window.location=='http://caja.a2jauthor.org/beta/js/A2J_Author.php'?'BETA':
-			window.location=='http://caja.a2jauthor.org/dev/js/A2J_Author.php'?'DEV':'LOCAL';
 	if (gEnv!=='LOCAL') {
 		DEBUGFIRST=undefined;
 		DEBUGSTART=undefined;

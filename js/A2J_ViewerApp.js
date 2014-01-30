@@ -82,6 +82,7 @@ function gotoPageView(destPageName)
 }
 
 function main(){
+	$('.viewerenv').text(gEnv+' '+CONST.A2JVersionNum+" "+CONST.A2JVersionDate);
 	loadGuideFile(templateURL,"");
 }
 $(document).ready(main);

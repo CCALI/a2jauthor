@@ -1,0 +1,5 @@
+<SELECT>
+<option value="#ff000">Red</option>
+<option value="#00ff00">Green</option>
+<option value="#0000ff">Blue</option>
+</SELECT>

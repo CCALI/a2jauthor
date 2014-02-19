@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--
-	CALI Author 5 / A2J Author 5 (CAJA)
+	CALI Author 5 / A2J Author 5 (CAJA) * Justice * 正义 * công lý * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 -->
 <HTML xmlns="http://www.w3.org/1999/xhtml">
@@ -9,13 +9,11 @@
 
 <title>CAJA Web Service Tester</title> 
 
-<script src="../jQuery/jquery.1.10.2.min.js">  </script>
-<script xsrc="../jQuery/jquery.ui.1.9.1.custom.min.js"> </script>
-<link  href="../jQuery/jquery.ui.custom.css" rel="stylesheet" type="text/css" />
-<script xsrc="../jQuery/jquery.ui.custom.min.js" type="text/javascript" ></script>
-<script src="../A2J_Types.js" type="text/javascript" ></script>
-<script src="../A2J_Shared.js" type="text/javascript" ></script>
-<link  href="../A2J_Author.css"  rel="stylesheet" type="text/css"/>
+<script src="../viewer/jquery.1.8.2.min.js">  </script>
+<link  href="../viewer/viewer.jquery-ui.css" rel="stylesheet" type="text/css" />
+<script src="../viewer/A2J_Types.js" type="text/javascript" ></script>
+<script src="../viewer/A2J_Shared.js" type="text/javascript" ></script>
+<link  href="../author/A2J_Author.css"  rel="stylesheet" type="text/css"/>
 
 <script>
 var gUserID;
@@ -156,7 +154,7 @@ function ws(data,results)
 	//$.getJSON( '../CAJA_WS.php',data,results).error(function(err,xhr) { alert("error:"+xhr.responseText ); })
 	trace(JSON.stringify(data));
 	$.ajax({
-		url:'../CAJA_WS.php',
+		url:'../author/CAJA_WS.php',
 		dataType:'json',
 		type: 'POST',
 		data: data,

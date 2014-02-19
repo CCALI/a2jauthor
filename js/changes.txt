@@ -1,16 +1,20 @@
-### CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие ###
+##################################################################################
+### A2J Author 5 * Justice * 正义 * công lý * правосудие                        ###
+### All Contents Copyright The Center for Computer-Assisted Legal Instruction  ###
+##################################################################################
+
+
+
+# 5.0.1.8
+* Split author and viewer into separate folders
+viewer contains all files required to run in viewer mode
+author contains author-only files but incorporates the viewer folder as well
+tests contains testing harnesses and sample data
 
 
 # 5.0.1.7
 Fixed: proper brackets for A2J 4 imported SET variable function
 
-
 # 5.0.1.1
 * Interview selection on separate tab
 
-
-
-
-
-
-All Contents Copyright The Center for Computer-Assisted Legal Instruction

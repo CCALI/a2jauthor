@@ -1,5 +1,5 @@
 /*
-	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
+	CALI Author 5 / A2J Author 5 (CAJA) * Justice * 正义 * công lý * правосудие
 	External declarations for use by Google Closure compiler
 	Used for the author side.
 */
@@ -26,6 +26,7 @@ $.find=function(a){};
 $.ajax=function(a){};
 $.fileupload=function(a){};
 $.each=function(a,b){};
+$.change=function(a,b){};
 $.first=function(a){};
 $.fadeIn=function(a){};
 $.fadeTo=function(a){};

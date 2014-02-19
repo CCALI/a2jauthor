@@ -1,6 +1,8 @@
-### CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие ###
-### CALI Author 5 / A2J Author 5 (CAJA) ###
-### 2012-2014  -  Sam's Design notes ###
+##################################################################################
+### CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие             ###
+### All Contents Copyright The Center for Computer-Assisted Legal Instruction  ###
+### 2012-2014  -  Sam's Design notes                                           ###
+##################################################################################
 
 //http://stackoverflow.com/questions/2525524/jquery-ui-dialog-button-icons
 			

@@ -3,9 +3,10 @@
 ### All Contents Copyright The Center for Computer-Assisted Legal Instruction  ###
 ##################################################################################
 
+# 5.0.1.9 2014-02-25
+* Updates
 
-
-# 5.0.1.8
+# 5.0.1.8 2014-02-19
 * Split author and viewer into separate folders
 viewer contains all files required to run in viewer mode
 author contains author-only files but incorporates the viewer folder as well

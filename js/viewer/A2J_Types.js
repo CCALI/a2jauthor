@@ -21,8 +21,8 @@ var CONST = {
 	// Spinnner for loading wait
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
-	A2JVersionNum:"5.0.1.7",//VersionInfo.verNum
-	A2JVersionDate:"2014-01-23",
+	A2JVersionNum:"5.0.1.9",//VersionInfo.verNum
+	A2JVersionDate:"2014-02-25",
 	
 	
 	CAVersionNum:"5.0.0",
@@ -671,9 +671,9 @@ var gGuidePath;
 /** @type {string} */
 var gEnv=''; // Where are we running? Locally, on a2jauthor.org, as beta or dev?
 // Determine what stage we're in and display a notice. 
-gEnv= (String(window.location).indexOf('http://author.a2jauthor.org/')===0)?'':
-		(String(window.location).indexOf('http://caja.a2jauthor.org/beta/js/')===0)?'BETA':
-		(String(window.location).indexOf('http://caja.a2jauthor.org/dev/js/')===0)?'DEV':'LOCAL';
+gEnv= (String(window.location).indexOf('http://authorbeta.a2jauthor.org')===0)?'BETA':
+		(String(window.location).indexOf('http://authordev.a2jauthor.org')===0)?'DEV':
+		(String(window.location).indexOf('http://localhost/')===0)?'LOCAL':'';
 // User Session
 //var amode=0;
 //var username=""

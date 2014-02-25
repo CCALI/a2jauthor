@@ -37,8 +37,6 @@ if ($isProductionServer)
 {
 	//	09/05/2013 SJG Get Drupal userid from session
 	// If user not signed in, userid will be 0.
-	define('DRUPAL_ROOT_DIR','/vol/data/sites/commons7');
-	// Set the working directory to your Drupal root
 	chdir(DRUPAL_ROOT_DIR);
 	define('DRUPAL_ROOT', getcwd());
 	// Require the bootstrap include

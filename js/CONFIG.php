@@ -3,7 +3,7 @@
  	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
 	09/07/2013 - 10/05/2012 SJG Customize db and folder paths depending on server.
 */
-	$isProductionServer = $_SERVER['HTTP_HOST']=="author.a2jauthor.org" || $_SERVER['HTTP_HOST']=="caja.a2jauthor.org";
+	$isProductionServer = $_SERVER['HTTP_HOST']=="author.a2jauthor.org" ;
 	
 	if ($isProductionServer)
 	{	// Production/staging server
@@ -11,6 +11,8 @@
 		define("GUIDES_URL",'/userfiles/');
 		$mysqli = new mysqli("localhost","z","z","caja");
 		$drupaldb = new mysqli("localhost","z","z","D7commons"); //Drupal for user auth
+		// Set the working directory to your Drupal root
+		define('DRUPAL_ROOT_DIR','/vol/data/sites/commons7_beta');
 	}
 	else
 	{	// Local host

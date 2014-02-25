@@ -117,7 +117,11 @@ var A2JViewer={
 	
 		if (div.html()==="")
 		{	// First time rendering, attach handlers.
-			div.html( '<ul class="NavBar"> <li><a href="#navback">'+lang.GoBack+'</a></li> <li><a href="#">'+lang.GoNext+'</a></li> <li>'+lang.MyProgress+' <select id="history"><option>Question 1</option><option>Question 2</option></select></li>  <li class="right size2"><a href="#">A+</a></li> <li class="right size1"><a href="#">A-</a></li> <li class="right"><a href="#">Exit</a></li> <li class="right"><a href="#">Save</a></li> </ul><div class="interact"></div> <div id="a2jbtn"></div> '
+			div.html( '<ul class="NavBar">'
+						//+' <li><button id="navback">'+'</button></li>'
+						+' <li><a href="#navback">'+lang.GoBack+'</a></li>'
+						+' <li><a href="#navnext">'+lang.GoNext+'</a></li>'
+						+' <li>'+lang.MyProgress+' <select id="history"><option>Question 1</option><option>Question 2</option></select></li>  <li class="right size2"><a href="#">A+</a></li> <li class="right size1"><a href="#">A-</a></li> <li class="right"><a href="#">Exit</a></li> <li class="right"><a href="#">Save</a></li> </ul><div class="interact"></div> <div id="a2jbtn"></div> '
 			+'<div class="notice">'
 				+'<div class="license"><p ><span class="SJILogo"/>This program was developed under grants from the State Justice Institute (SJI grant number SJI-04-N-121), Center for Access to the Courts through Technology; Chicago Kent College of Law, Center for Computer-Assisted Legal Instruction (CALI), and Legal Services Corporation (LSC).  The points of view expressed are those of the authors and do not necessarily represent the official position or policies of the SJI, Center for Access to the Courts through Technology, Chicago-Kent, CALI, or the LSC.</p><p>&quot;A2J Author&quot; and &quot;A2J Guided Interviews&quot; are federally registered trademarks of Illinois Institute of Technology, Chicago Kent College of Law &amp; Center for Computer-Assisted Legal Instruction.  Any use of either mark must include the full name of the mark, along with the registration circle - ®.  Use of either mark on your webpage, or in any publications, presentations or materials must also prominently display the following sentence, &quot;[insert mark name here]® is a US federally registered trademark owned by Illinois Institute of Technology, Chicago Kent College of Law &amp; Center for Computer-Assisted Legal Instruction. &lt;www.a2jauthor.org&gt; </p></div>'
 				+'<div class="copyright">'
@@ -144,6 +148,10 @@ var A2JViewer={
 				.next().button({label:'Reload',icons:{primary:'ui-icon-arrowrefresh-1-e'}})
 				;
 			$('#viewer-var-filter').keyup(A2JViewer.filterVariables);
+			
+			//$('#navback').button({label: lang.GoBack,icons:{primary:'ui-icon-folder-open'},disabled:true});
+			//$('#navback').button("disable");
+			//$('#navnext').button("disable");
 			
 			$('.NavBar a').click(function(){
 				switch ($(this).attr('href')){

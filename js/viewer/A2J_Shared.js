@@ -178,7 +178,9 @@ $.fn.showit = function(yes) { // show/hide via class rather than .toggle to avoi
 String.prototype.asHTML=function(){
 	return htmlEscape(this);
 };
-
+String.prototype.stripHTML=function(){
+	return $('<div>'+(this)+'</div>').text();
+}
 String.prototype.ellipsis=function(limit){
 	return this.substring(0,limit);
 };

@@ -25,7 +25,7 @@
 //var templateURL="tests/data/Field Types Test.a2j#2-1-0 Pick Colors";
 //var templateURL="tests/data/A2J_FieldTypesTest_Interview.xml";
 var templateURL="<?=$gid?>";
-var fileDataURL="tests/data/";
+var fileDataURL="../tests/data/";
 var getDataURL= "A2J_ViewerGetData.php?answersID=<?=$aid?>";
 var setDataURL= "A2J_ViewerSetData.php?interviewID=<?=$gid?>";
 var exitURL=   "A2J_ViewerExit.php?interviewID=<?=$gid?>";
@@ -37,8 +37,8 @@ var errRepURL="A2J_ViewerErrRep.php";//"https://lawhelpinteractive.org/problem_r
 <script src="jquery.1.8.2.min.js" type="text/javascript"></script>
 <script src="jquery.ui.1.9.1.min.js" type="text/javascript"></script>
 
-<script xsrc="jQuery/jquery.1.10.2.min.js" type="text/javascript"></script>
-<script xsrc="jQuery/jquery.ui.1.10.3.min.js" type="text/javascript"></script>
+<script xsrc="jquery.1.10.2.min.js" type="text/javascript"></script>
+<script xsrc="jquery.ui.1.10.3.min.js" type="text/javascript"></script>
 
 <?php
 	if ( 1 == true ) { // include full source code for testing
@@ -63,7 +63,7 @@ var errRepURL="A2J_ViewerErrRep.php";//"https://lawhelpinteractive.org/problem_r
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
-<body>
+<body class="a2jv ui-widget-content">
 
 <div id="splash" class="welcome">
 	<div align="center">
@@ -78,7 +78,7 @@ var errRepURL="A2J_ViewerErrRep.php";//"https://lawhelpinteractive.org/problem_r
 	</div>
 	<div class="A2JViewer"></div>
 </div>
-<div id="dialog-confirm" title=""></div>
+<div id="dialog-confirm" class="a2jv" title=""></div>
 <noscript>
 	<div  class="NoJS">JavaScript is disabled. Please enable JavaScript to continue.</div>
 </noscript>

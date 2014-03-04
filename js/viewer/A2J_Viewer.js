@@ -134,6 +134,8 @@ var A2JViewer={
 			{
 				$(div).toggleClass('test',500);//$('.A2JViewer')
 			});
+			
+			//### Varaible debugging
 			$('#viewer-var-form').append('<div><button/><button/><button/>'
 												  +'<label for="viewer-var-filter">Filter:</label><input type=text id="viewer-var-filter" size="5"/></div>'
 												  +'<div class=varvalpanel></div></div>');
@@ -189,17 +191,19 @@ var A2JViewer={
 		}
 		
 		
-		$('#history').prepend('<option value="'+ page.name.asHTML() +'">'+ String(page.text).ellipsis(40) +'</option>');
 		
 	
 	
 		
 		var curstep = page.step;
-		var question = gLogic.evalLogicHTML( page.text );
-		var help = gLogic.evalLogicHTML( page.help);
+		var questionHTML = gLogic.evalLogicHTML( page.text );
+		var helpHTML = gLogic.evalLogicHTML( page.help);
+		var opt='<option value="'+ page.name.asHTML() +'">'+ String(questionHTML).stripHTML().ellipsis(40) +'</option>';
+		$('#history').prepend(opt);
+		
 		$('.interact',div).html(A2JViewer.layoutStep(curstep));
 		
-		$('.ui-form.question',div).html(question + '<div class="form"></div><div class="buttonlist"></div>');
+		$('.ui-form.question',div).html(questionHTML + '<div class="form"></div><div class="buttonlist"></div>');
 		for (var bi=0;bi<page.buttons.length;bi++)
 		{
 			var b = page.buttons[bi];
@@ -301,10 +305,12 @@ var A2JViewer={
 			}
 			fs.append($row);
 		} 
-		$('.ui-form.learnmore',div).html(help + '<div class="buttonlist"><button>Close</button></div>').parent().hide().filter(
+		$('.ui-form.learnmore',div).html(helpHTML + '<div class="buttonlist"><button>Close</button></div>').parent().hide().filter(
 			function(){
-				return help!=="";
+				return helpHTML!=="";
 			}).fadeIn(1000);
+		
+		
 		var h=$('.question.ui-form',div).height();
 		if (h>400){
 			$('.question.bubble',div).css({top:50});

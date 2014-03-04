@@ -709,6 +709,7 @@ function loadGuideFile(guideFile,startTabOrPage)
 {  // Load guide file and start on specified page
 	/** @type {Object} */
 	if (guideFile==='') {
+		$('#splash').empty();
 		dialogAlert({title:'No guide file specified'});
 		return;
 	}
@@ -732,6 +733,7 @@ function loadGuideFile(guideFile,startTabOrPage)
 				error:
 					/*** @this {{url}} */
 					function(data,textStatus,thrownError){
+					$('#splash').empty();
 					  dialogAlert({title:'Error occurred loading file',body:'Unable to load XML from '+guideFile+"\n"+textStatus});
 					 },
 				success: function(data){

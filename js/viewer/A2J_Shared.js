@@ -182,7 +182,7 @@ String.prototype.stripHTML=function(){
 	return $('<div>'+(this)+'</div>').text();
 }
 String.prototype.ellipsis=function(limit){
-	return this.substring(0,limit);
+	return this.substring(0,limit)+(this.length>limit?"…":"");
 };
 
 /*

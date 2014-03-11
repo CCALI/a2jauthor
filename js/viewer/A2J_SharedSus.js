@@ -20,8 +20,7 @@ var REG={
 	,LOGIC_NE: /\<\>/gi
 	,LINK_POP:  /\"POPUP:\/\/(([^\"])+)\"/ig
 	,LINK_POP2: /\"POPUP:\/\/(([^\"])+)\"/i
-};
-
+}; 
 String.prototype.simpleHash=function()
 {	// Return a simple hash of string. MD5 or other preferred but will do in a pinch.
 	// 

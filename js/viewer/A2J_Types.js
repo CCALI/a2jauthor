@@ -435,7 +435,17 @@ function TGuide()
 	
 	return this;
 }
+TGuide.prototype.genderVarName="User Gender";
 
+TGuide.prototype.goodGender=function(g)
+{	// Return M, F or blank (if no client gender known)
+	if (g==='Male'){ g='M';} else if (g==='Female') {g='F';} else {g='';}
+	return g;
+}
+TGuide.prototype.getClientGender=function()
+{	// Return M, F or blank (if no client gender known)
+	return this.goodGender(this.varGet(this.genderVarName));
+}
 
 
 TGuide.prototype.sortPages=function()

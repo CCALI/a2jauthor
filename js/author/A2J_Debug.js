@@ -13,7 +13,7 @@
 	2b. Set TESTMODE to 2 to login as DEV user automatically
 ******************************************************************************/
 
-/*  * /
+/*  */
 //var gGuideID, gPage, gUserID, gUserNickName;
 
 // Comment DEBUGSTART() function out when NOT testing locally.
@@ -44,7 +44,7 @@ function DEBUGSTART()
 	trace("DEBUGSTART");
 	gUserNickName='Tester';
 	gUserID=0;
-	if ( 1 === 1)
+	if ( 1 === 0)
 	{	// Uses DB. Hard code load db, skip login/interview selection steps.
 		gGuideID =252;//238;//133;
 		ws({cmd:'guide',gid:gGuideID},guideLoaded);

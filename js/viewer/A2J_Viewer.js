@@ -110,6 +110,7 @@ var A2JViewer={
 	},
 	
 	history:[], // Array of {title,pagename}
+	skipHistory: false,
 	
 	/** @param {TPage} page  */
 	layoutPage:function(div,page)
@@ -117,11 +118,29 @@ var A2JViewer={
 	
 		if (div.html()==="")
 		{	// First time rendering, attach handlers.
-			div.html( '<ul class="NavBar">'
-						//+' <li><button id="navback">'+'</button></li>'
-						+' <li><a href="#navback">'+lang.GoBack+'</a></li>'
-						+' <li><a href="#navnext">'+lang.GoNext+'</a></li>'
-						+' <li>'+lang.MyProgress+' <select id="history"><option>Question 1</option><option>Question 2</option></select></li>  <li class="right size2"><a href="#">A+</a></li> <li class="right size1"><a href="#">A-</a></li> <li class="right"><a href="#">Exit</a></li> <li class="right"><a href="#">Save</a></li> </ul><div class="interact"></div> <div id="a2jbtn"></div> '
+			div.html(
+						'<div class="interact"></div>'
+						+'<div id="a2jbtn"></div> '
+						+'<ul class="NavBar">'
+/*						//+' <li><button id="navback">'+'</button></li>'
+						+'<li><a href="#navback"><span class="ui-icon ui-icon-circle-triangle-w"></span>'+lang.GoBack+'</a></li>'
+						+'<li><a href="#navnext"><span class="ui-icon ui-icon-circle-triangle-w"></span>'+lang.GoNext+'</a></li>'
+						+'<li><a href="#">'+lang.MyProgress+': <span id=pageName></span></a><ul id="history"></ul></li>'
+						+'<li><a href="#"><span class="ui-icon ui-icon-comment"></span>Feedback</a></li>'
+						+'<li><a href="#"><span class="ui-icon ui-icon-extlink"></span>Exit</a></li>'
+						+'<li><a href="#"><span class="ui-icon ui-icon-disk"></span>Save for Later</a></li>'
+						+'</ul>'
+	*/
+						
+						+' <li><button id="navBack">'+lang.GoBack+'</button></li>'
+						+' <li><button id="navNext">'+lang.GoNext+'</button></li>'
+						+' <li><div class="ui-widget">'+lang.MyProgress	+ ': <select  id="history"></select>'+ '</div></li>'
+						//+'<li class="right size2"><a href="#">A+</a></li> <li class="right size1"><a href="#">A-</a></li> '
+						+'<li class="right"><button id="navFeedback">Feedback</button></li>'
+						+'<li class="right"><button id="navSaveAndExit">Save &amp; Exit</button></li>'
+						+'<li class="right"><button id="navResumeExit">Resume</button></li>'
+						//+'<li class="right"><a href="#">Exit</a></li> <li class="right"><a href="#">Save</a></li> '
+						+'</ul>'
 			+'<div class="notice">'
 				+'<div class="license"><p ><span class="SJILogo"/>This program was developed under grants from the State Justice Institute (SJI grant number SJI-04-N-121), Center for Access to the Courts through Technology; Chicago Kent College of Law, Center for Computer-Assisted Legal Instruction (CALI), and Legal Services Corporation (LSC).  The points of view expressed are those of the authors and do not necessarily represent the official position or policies of the SJI, Center for Access to the Courts through Technology, Chicago-Kent, CALI, or the LSC.</p><p>&quot;A2J Author&quot; and &quot;A2J Guided Interviews&quot; are federally registered trademarks of Illinois Institute of Technology, Chicago Kent College of Law &amp; Center for Computer-Assisted Legal Instruction.  Any use of either mark must include the full name of the mark, along with the registration circle - ®.  Use of either mark on your webpage, or in any publications, presentations or materials must also prominently display the following sentence, &quot;[insert mark name here]® is a US federally registered trademark owned by Illinois Institute of Technology, Chicago Kent College of Law &amp; Center for Computer-Assisted Legal Instruction. &lt;www.a2jauthor.org&gt; </p></div>'
 				+'<div class="copyright">'
@@ -134,8 +153,9 @@ var A2JViewer={
 			{
 				$(div).toggleClass('test',500);//$('.A2JViewer')
 			});
+			//$( ".NavBar" ).menu({position:{my:'left top',at:'left bottom'}});
 			
-			//### Varaible debugging
+			//### Variable debugging
 			$('#viewer-var-form').append('<div><button/><button/><button/>'
 												  +'<label for="viewer-var-filter">Filter:</label><input type=text id="viewer-var-filter" size="5"/></div>'
 												  +'<div class=varvalpanel></div></div>');
@@ -150,20 +170,34 @@ var A2JViewer={
 				.next().button({label:'Reload',icons:{primary:'ui-icon-arrowrefresh-1-e'}})
 				;
 			$('#viewer-var-filter').keyup(A2JViewer.filterVariables);
-			
-			//$('#navback').button({label: lang.GoBack,icons:{primary:'ui-icon-folder-open'},disabled:true});
-			//$('#navback').button("disable");
-			//$('#navnext').button("disable");
-			
-			$('.NavBar a').click(function(){
-				switch ($(this).attr('href')){
-					case '#navback':
-						break;
-					default:
-						// ($(this).attr('href'));
-				}
+			//ui-icon-extlink
+			$('#history').change(function(){
+				// Handle history navigation from drop down.
+				A2JViewer.skipHistory=true;
+				gotoPageView($(this).val());
 			});
-			
+			$('#navBack').button({label:  lang.GoBack,icons:{primary:'ui-icon-circle-triangle-w'},disabled:true}).click(function(){
+				trace('navBack');
+				$('#history').prop('selectedIndex',$('#history').prop('selectedIndex')+1);
+				A2JViewer.skipHistory=true;
+				gotoPageView($('#history').val());
+			});
+			$('#navNext').button({label:  lang.GoNext,icons:{primary:'ui-icon-circle-triangle-e'},disabled:true}).click(function(){
+				trace('navNext');
+				$('#history').prop('selectedIndex',$('#history').prop('selectedIndex')-1);
+				A2JViewer.skipHistory=true;
+				gotoPageView($('#history').val());
+			});
+			$('#navFeedback').button({label:  lang.SendFeedback,icons:{primary:'ui-icon-comment'},disabled:0}).click(function(){
+				trace('navFeedback');
+			});
+			$('#navSaveAndExit').button({label:  lang.SaveAndExit,icons:{primary:'ui-icon-disk'},disabled:0}).click(function(){
+				trace('navSaveAndExit');
+			});
+			$('#navResumeExit').button({label:  lang.ResumeExit,icons:{primary:'ui-icon-arrowreturnthick-1-w'},disabled:true}).click(function(){
+				trace('navResumeExit');
+			});
+		
 			if (typeof authorViewerHook !== 'undefined'){
 				authorViewerHook();
 			}
@@ -174,10 +208,6 @@ var A2JViewer={
 					$('.license').toggle();
 				});//,function(){$('.license').slideUp()});
 			}
-			$('#history').change(function(){
-				// TODO Handle history navigation from drop down.
-				trace($(this).val());
-			});
 		}
 		traceLogic( 'Page ' + traceTag('page', page.name));
 		//TODO loopcounter; break out if we are in infinite loop
@@ -198,8 +228,20 @@ var A2JViewer={
 		var curstep = page.step;
 		var questionHTML = gLogic.evalLogicHTML( page.text );
 		var helpHTML = gLogic.evalLogicHTML( page.help);
-		var opt='<option value="'+ page.name.asHTML() +'">'+ String(questionHTML).stripHTML().ellipsis(40) +'</option>';
-		$('#history').prepend(opt);
+		// Save quesetion to history (my progress)
+		//<li><a href="#"><span class="ui-icon ui-icon-document"></span>Question 1<div>Should you use this form?</div></a></li>
+		if (!A2JViewer.skipHistory)
+		{
+			trace('Save in history');
+			var opt='<option value="'+ page.name.asHTML() +'">'+ String(questionHTML).stripHTML().ellipsis(40) +'</option>';
+			//var opt = '<li><a href="#"><span class="ui-icon ui-icon-document"></span>'+  page.name.asHTML() +'<div>'+ String(questionHTML).stripHTML().ellipsis(40)+'</div></a></li>';
+			$('#history').prepend(opt).prop('selectedIndex',0);
+		}
+		var hist_size=$('#history').children('option').length;
+		$('#navBack').button({disabled:$('#history').prop('selectedIndex')===hist_size-1});
+		$('#navNext').button({disabled:$('#history').prop('selectedIndex')===0});
+		A2JViewer.skipHistory=false;
+		
 		
 		$('.interact',div).html(A2JViewer.layoutStep(curstep));
 		
@@ -283,14 +325,17 @@ var A2JViewer={
 					//row.append($('<div/>').html(label));
 					var fidM=fid+"M";
 					var fidF=fid+"F";
-				   $input=$('<div/>').append($('<input type=radio id="'+fidM+'" name="'+fname+'"></input>')).append($('<label/>').attr('for',fidM).html(lang.Male))
-						.append($('<br/><input type=radio id="'+fidF+'" name="'+fname+'"></input>')).append($('<label/>').attr('for',fidF).html(lang.Female));
+					var g = gGuide.goodGender(defval);
+				   $input=$('<div/>')
+						.append($('<input type=radio id="'+fidM+'" name="'+fname+'"></input>').prop('checked',g==='M')).append($('<label/>').attr('for',fidM).html(lang.Male))
+						.append('<br/>')
+						.append($('<input type=radio id="'+fidF+'" name="'+fname+'"></input>').prop('checked',g==='F')).append($('<label/>').attr('for',fidF).html(lang.Female));
 				   break;
 				case CONST.ftRadioButton://"Radio Button"
-				   $labelinput=($('<input type=radio id="'+fid+'" name="'+fname+'"></input>'));//.append($('<label/>').attr('for',fid).html(label));
+				   $labelinput=($('<input type=radio id="'+fid+'" name="'+fname+'"></input>')).prop('checked',defval===f.value);//.append($('<label/>').attr('for',fid).html(label));
 				   break;
 				case CONST.ftCheckBox://"Check box"
-				   $labelinput=($('<input type=checkbox id="'+fid+'"  name="'+fname+'"></input>'));//.append($('<label/>').attr('for',fid).html(label));
+				   $labelinput=($('<input type=checkbox id="'+fid+'"  name="'+fname+'"></input>')).prop('checked',defval);//.append($('<label/>').attr('for',fid).html(label));
 				   break;
 				case CONST.ftCheckBoxNOTA://"Check Box (None of the Above)"
 				   $labelinput=($('<input type=checkbox id="'+fid+'"  name="'+fname+'"></input>'));//.append($('<label/>').attr('for',fid).html(label));
@@ -430,16 +475,14 @@ var A2JViewer={
 		
 		// Setup guide and client avatars		
 		var avatarVarName="User Avatar"; // "blank" or "tan" or ""
-		var genderVarName="User Gender"; // "Male" or "Female" or ""
+		//var genderVarName="User Gender"; // "Male" or "Female" or ""
 		
 		var gg=gGuide.guideGender;// Guide's gender
 		gg = (gg ==='Male') ? 'M' : 'F';//M or F
 		
-		var cg=gGuide.varGet(genderVarName); // Client's gender (blank means only show guide)
-		if (cg==='Male'){ cg='M';} else if (cg==='Female') {cg='F';} else {cg='';}
-		
-		
-		cg='F';//TEST
+		var cg = gGuide.getClientGender();
+		//var cg=gGuide.varGet(genderVarName); // Client's gender (blank means only show guide)
+		//if (cg==='Male'){ cg='M';} else if (cg==='Female') {cg='F';} else {cg='';}
 		
 		
 		var av=gGuide.varGet(avatarVarName);// Avatar style, originally blank or tan. Also support number.

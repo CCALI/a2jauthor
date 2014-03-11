@@ -1,9 +1,13 @@
-..\A2J_Debug.js:24: WARNING - unreachable code
-			if(0){
-			     ^
+..\author\A2J_AuthorApp.js:1853: WARNING - Property zip never defined on data
+			if (data.zip!==''){
+			    ^
 
-..\A2J_Parser.js:45: WARNING - dangerous use of the global this object
+..\author\A2J_AuthorApp.js:1854: WARNING - Property zip never defined on data
+				window.open( data.zip);
+				             ^
+
+..\viewer\A2J_Parser.js:46: WARNING - dangerous use of the global this object
 			var opts=this.opts;
 			         ^
 
-0 error(s), 2 warning(s), 69.6% typed
+0 error(s), 3 warning(s), 69.8% typed

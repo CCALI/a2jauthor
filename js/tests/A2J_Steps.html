@@ -4,6 +4,7 @@
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 -->
 <HTML xmlns="http://www.w3.org/1999/xhtml">
+<title>A2J Steps</title>
 <link href="../viewer/viewer.jquery-ui.css" rel="stylesheet" type="text/css" />
 <link href="../viewer/jquery-ui.extra.css"  rel="stylesheet" type="text/css" title="style" />
 <link href="../viewer/A2J_Viewer.css" rel="stylesheet" type="text/css" />
@@ -35,7 +36,10 @@ body {
 }
 -->
 </style>
-<script type='text/javascript'> 
+
+
+<script type='text/javascript'>
+	
 // 10/2012 Test A2J's road signs
 var IMG="../viewer/images/";
 
@@ -84,7 +88,9 @@ function teststep(curstep)
 	var steps=gGuide.steps;
 	page.step=curstep;
 	var text='<p>Question text #'+page.step+' appears here:</p>';
-	for (var i=0;i<page.step*4;i++) text+='<p>Line #' + i + '</p>';
+	for (var i=0;i<page.step*4;i++){
+		text+='<p>Line #' + i + '</p>';
+	}
 	page.name="Page "+curstep;
 	page.text=text;
 	if (page.step === steps.length-1)
@@ -105,11 +111,14 @@ function teststep(curstep)
 	//var learnmore=('Learn more text: '+text + '<div class="buttonlist"><button>Close</button></div>');
 	//A2JViewer.layout($('#demostep'),curstep,steps,question,learnmore);
 }
+
 $(document).ready(ready);
 </script>
-<title>A2J Steps</title>
+
+
 <BODY>
 <div class="a2jv">
+	
 <h1>A2J Steps</h1>
 <p>Steps show the user progress to the courthouse. There are 7 layouts in A2J Author. </p>
 <p>For now just do 2 steps.. First  shows 1 step (the final step). Last is showing  2 steps. If there are more than 2 steps, just show the current and next.</p>

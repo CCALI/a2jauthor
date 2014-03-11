@@ -704,10 +704,11 @@ TGuide.prototype.loadXMLAnswerExternal = function (opts)
 }
 
 
-/** @param {String} guideFile */
+/** @param {string} guideFile */
+/** @param {string} startTabOrPage */
 function loadGuideFile(guideFile,startTabOrPage)
 {  // Load guide file and start on specified page
-	/** @type {Object} */
+	
 	if (guideFile==='') {
 		$('#splash').empty();
 		dialogAlert({title:'No guide file specified'});

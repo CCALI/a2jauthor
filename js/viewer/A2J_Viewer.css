@@ -26,10 +26,10 @@ html, body{
 	/*overflow: none;*/
 }
 #a2jbtn {
-	position: relative;
+	position: absolute;
 	width: 200px;
 	height: 32px;
-	top: 5px;
+	top: 45px;
 	left: 5px;
 	background-image: url(images/A2J5_Viewer_Logo.png);
 }
@@ -84,10 +84,11 @@ html, body{
 .A2JViewer .license {
 	background-color: rgba(255,255,255,.8);
 }
+
 .A2JViewer .NavBar {
 	margin: 0px;
 	padding: 5px;
-	height: 20px;
+	height: 32px;/* 20px; */
 	background-color: #eee;
 	border-top-width: 0px;
 	border-right-width: 0px;
@@ -101,17 +102,17 @@ html, body{
 	width: auto;
 }
 .A2JViewer .NavBar li {
+	float: left;
 	display:inline;
 	margin-left: 1em;
 	margin-right: 1em;
-	padding: 5px;
+	padding: 1px;
 	vertical-align: middle;
 	list-style: none;
 }
 .A2JViewer .NavBar li a {
 	border-radius:5px;
 	text-decoration:none;
-	/*background: url(../images/button_gradient_blue.png) repeat-x;*/
 	font-style: normal;
 	font-weight: normal;
 	padding: 2px;
@@ -135,8 +136,6 @@ html, body{
 }
 .A2JViewer .NavBar li a:hover, .Viewer .NavBar li a:focus{
 	margin: 2px;
-	/*color:#fff;
-	background:#727454;*/
 	border-top-color: #FCFCFC;
 	border-top-style: outset;
 	border-right-color: #FCFCFC;
@@ -146,6 +145,44 @@ html, body{
 	border-left-color: #FCFCFC;
 	border-left-style: outset;
 }
+.NavBar button.ui-state-default {
+	background: transparent;
+	color: #000;
+}
+.NavBar button.ui-button-disabled {
+	background: transparent;
+	color: #888;
+}
+.NavBar button.ui-state-default .ui-icon {
+	background-image: url(images/ui-icons_222222_256x240.png);
+}
+/*
+.NavBar > li { float: left; display: block; width: auto !important; }
+.NavBar > li > a > span { float: left; display: block; clear: both; overflow: hidden;}
+.NavBar > li > a { float: left; display: block; clear: both; overflow: hidden;}
+*/
+.customSelect { 
+/* This is the default class that is used */
+/* Put whatever custom styles you want here */
+}
+/*
+.ui-menu { overflow: hidden;  }
+.ui-menu .ui-menu { overflow: visible !important; }
+.ui-menu > li { float: left; display: block; width: auto !important; }
+.ui-menu > li { margin: 5px 5px !important; padding: 0 0 !important; }
+
+.ui-menu > li > a { float: left; display: block; clear: both; overflow: hidden;}
+.ui-menu > li > span { float: left; display: block; clear: both; overflow: hidden;}
+.ui-menu > li > div {  display: block; clear: both; overflow: hidden;}
+.ui-menu .ui-menu-icon { margin-top: 0.3em !important;}
+
+.ui-menu .ui-menu .ui-menu li { float: left; display: block;}
+.ui-menu .ui-menu > li {float: none;  margin: 5px 5px !important; padding: 0 0 !important; }
+
+.A2JViewer .NavBar.ui-menu { overflow: visible  !important; height:2.0em;}
+*/
+
+
 
 .left {
 	float: left;
@@ -174,7 +211,7 @@ html, body{
 .A2JViewer .interact {
 	overflow: auto;
 	position: absolute;
-	top:34px;
+	top:43px;
 	bottom:00;
 	width: 100%;
 }

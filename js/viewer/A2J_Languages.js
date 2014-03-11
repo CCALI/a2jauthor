@@ -24,6 +24,8 @@ var lang = {
 	MyProgress:'',
 	SaveAndExit:'',
 	ResumeExit:'',
+	Comment:'',
+	SendFeedback:'',
 	
 	qIDNOWHERE:'',
 	qIDSUCCESS:'',

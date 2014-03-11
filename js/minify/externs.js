@@ -23,6 +23,7 @@ $.closest=function(a){};
 $.html=function(a){};
 $.css=function(a){};
 $.find=function(a){};
+$.prop=function(a){};
 $.ajax=function(a){};
 $.fileupload=function(a){};
 $.each=function(a,b){};

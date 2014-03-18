@@ -8,6 +8,10 @@
 	04/15/2013
 */
 
+.a2jv , .A2JViewer{
+	font-family:  "Open Sans",​sans-serif;
+	font-size: 1em;
+}
 div.question.bubble, div.learnmore.bubble {
 	font-size: 1em;
 }
@@ -25,7 +29,7 @@ html, body{
 	padding: 0px;
 	/*overflow: none;*/
 }
-#a2jbtn {
+.a2jbtn {
 	position: absolute;
 	width: 200px;
 	height: 32px;
@@ -100,6 +104,9 @@ html, body{
 	border-left-style: none;
 	border-left-color: #000;
 	width: auto;
+	overflow: hidden;
+	min-width: 960px;
+	white-space: nowrap;
 }
 .A2JViewer .NavBar li {
 	float: left;
@@ -328,20 +335,23 @@ div.question.bubble div fieldset{
 
 
 .Step0 { background-color: #ffffff; }
-.Step1, .Step7 { background-color: #BDD6D6; }
-.Step2, .Step8  { background-color: #B7DDB7; }
-.Step3, .Step9  { background-color: #EFC68C; }
+.Step1, .Step7  { background-color:#BDD6D6; }
+.Step2, .Step8  { background-color:#B7DDB7; }
+.Step3, .Step9  { background-color:#EFC68C; }
 .Step4, .Step10 { background-color:#E7E7B5; }
 .Step5, .Step11 { background-color:#EFDED6; }
 .Step6, .Step12 { background-color:#ECD8EA; }
 
 div.step  {
-	border: 1px solid #808;
 	position: relative;
-	background-color:#eef;
+	/*background-color:#eef;
+	border: 1px solid #808;
+	height: 660px;*/
 	width: 960px;
 	height: 660px;
 	overflow: hidden;
+	margin-left: auto;
+	margin-right: auto;
 }
 div.stepsign {
 	/*-moz-transform: scale( 1);*/
@@ -371,19 +381,22 @@ div.stepnumber {
 	margin: 2px;
 	border: 3px solid #000;
 }
-div.steptext {
-	font-size: 22px;
+table.steptextdiv {
 	position: absolute;
 	left: 70px;
 	top: 10px;
-	right: 120px;
-	bottom: 10px;
+	width: 270px;
+	height: 70px;
 }
+span.steptext {
+	font-size: 22px;
+}
+/*
 div.stepnumber.step1 { 	font-size:1em; }
 div.stepnumber.step2 { 	font-size: 1em; }
 div.steptext.step1 { 	font-size: 1.5em; }
 div.steptext.step2 { 	font-size: 1em; }
-
+*/
 
 /* Debugging Aids */
 

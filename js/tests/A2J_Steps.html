@@ -8,6 +8,7 @@
 <link href="../viewer/viewer.jquery-ui.css" rel="stylesheet" type="text/css" />
 <link href="../viewer/jquery-ui.extra.css"  rel="stylesheet" type="text/css" title="style" />
 <link href="../viewer/A2J_Viewer.css" rel="stylesheet" type="text/css" />
+
 <script src="../viewer/jquery.1.8.2.min.js" type="text/javascript"></script>
 <script src="../viewer/jquery.ui.1.9.1.min.js" type="text/javascript"></script>
 <script src="../viewer/A2J_Types.js" type="text/javascript" ></script>
@@ -47,6 +48,7 @@ function ready()
 {  
 	$('.templates').hide();
 	A2JViewer.IMG = IMG;
+	Languages.set(Languages.defaultLanguage);
 	
 	//### Construct simple Guide
 	gGuide=new TGuide();
@@ -65,7 +67,10 @@ function ready()
 		 $('#tests').append('<button>'+s+'</button>');
 	 }
 	$('#tests').append('<h2>Zoom factor</h2>');
-	$('#tests button').button().click(function(){teststep(parseInt($(this).text()))});
+	$('#tests button').button().click(function(){
+		$('#DemoSteps').empty();
+		teststep(parseInt($(this).text()))
+	});
 
 	
 	for (var s=0;s<gGuide.steps.length;s++)

@@ -51,7 +51,7 @@ function guideStart(start)
 	traceLogic('Starting on page '+traceTag('page',start));
 	gotoPageView(start);
    $('#page-viewer').removeClass('hidestart');
-   //$('#splash').empty();
+   $('#splash').empty();
 	if (CONST.devShowTesting)
 	{
 		$('.A2JViewer').toggleClass('test',500);

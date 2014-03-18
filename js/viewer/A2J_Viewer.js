@@ -120,25 +120,16 @@ var A2JViewer={
 		{	// First time rendering, attach handlers.
 			div.html(
 						'<div class="interact"></div>'
-						+'<div id="a2jbtn"></div> '
+						+'<div class="a2jbtn"></div> '
 						+'<ul class="NavBar">'
-/*						//+' <li><button id="navback">'+'</button></li>'
-						+'<li><a href="#navback"><span class="ui-icon ui-icon-circle-triangle-w"></span>'+lang.GoBack+'</a></li>'
-						+'<li><a href="#navnext"><span class="ui-icon ui-icon-circle-triangle-w"></span>'+lang.GoNext+'</a></li>'
-						+'<li><a href="#">'+lang.MyProgress+': <span id=pageName></span></a><ul id="history"></ul></li>'
-						+'<li><a href="#"><span class="ui-icon ui-icon-comment"></span>Feedback</a></li>'
-						+'<li><a href="#"><span class="ui-icon ui-icon-extlink"></span>Exit</a></li>'
-						+'<li><a href="#"><span class="ui-icon ui-icon-disk"></span>Save for Later</a></li>'
-						+'</ul>'
-	*/
 						
-						+' <li><button id="navBack">'+lang.GoBack+'</button></li>'
-						+' <li><button id="navNext">'+lang.GoNext+'</button></li>'
+						+' <li><button class="navBack">'+lang.GoBack+'</button></li>'
+						+' <li><button class="navNext">'+lang.GoNext+'</button></li>'
 						+' <li><div class="ui-widget">'+lang.MyProgress	+ ': <select  id="history"></select>'+ '</div></li>'
 						//+'<li class="right size2"><a href="#">A+</a></li> <li class="right size1"><a href="#">A-</a></li> '
-						+'<li class="right"><button id="navFeedback">Feedback</button></li>'
-						+'<li class="right"><button id="navSaveAndExit">Save &amp; Exit</button></li>'
-						+'<li class="right"><button id="navResumeExit">Resume</button></li>'
+						+'<li class="right"><button class="navFeedback">Feedback</button></li>'
+						+'<li class="right"><button class="navSaveAndExit">Save &amp; Exit</button></li>'
+						+'<li class="right"><button class="navResumeExit">Resume</button></li>'
 						//+'<li class="right"><a href="#">Exit</a></li> <li class="right"><a href="#">Save</a></li> '
 						+'</ul>'
 			+'<div class="notice">'
@@ -149,7 +140,7 @@ var A2JViewer={
 			+'</div></div>');
 			//<img src="images/SJILogo.gif" width="90" height="55" hspace="3" vspace="3" align="left" />
 			
-			$('#a2jbtn').attr('title',versionString()).click(function()
+			$('div.a2jbtn',div).attr('title',versionString()).click(function()
 			{
 				$(div).toggleClass('test',500);//$('.A2JViewer')
 			});
@@ -176,25 +167,25 @@ var A2JViewer={
 				A2JViewer.skipHistory=true;
 				gotoPageView($(this).val());
 			});
-			$('#navBack').button({label:  lang.GoBack,icons:{primary:'ui-icon-circle-triangle-w'},disabled:true}).click(function(){
+			$('button.navBack',div).button({label:  lang.GoBack,icons:{primary:'ui-icon-circle-triangle-w'},disabled:true}).click(function(){
 				trace('navBack');
 				$('#history').prop('selectedIndex',$('#history').prop('selectedIndex')+1);
 				A2JViewer.skipHistory=true;
 				gotoPageView($('#history').val());
 			});
-			$('#navNext').button({label:  lang.GoNext,icons:{primary:'ui-icon-circle-triangle-e'},disabled:true}).click(function(){
+			$('button.navNext',div).button({label:  lang.GoNext,icons:{primary:'ui-icon-circle-triangle-e'},disabled:true}).click(function(){
 				trace('navNext');
 				$('#history').prop('selectedIndex',$('#history').prop('selectedIndex')-1);
 				A2JViewer.skipHistory=true;
 				gotoPageView($('#history').val());
 			});
-			$('#navFeedback').button({label:  lang.SendFeedback,icons:{primary:'ui-icon-comment'},disabled:0}).click(function(){
+			$('button.navFeedback',div).button({label:  lang.SendFeedback,icons:{primary:'ui-icon-comment'},disabled:0}).click(function(){
 				trace('navFeedback');
 			});
-			$('#navSaveAndExit').button({label:  lang.SaveAndExit,icons:{primary:'ui-icon-disk'},disabled:0}).click(function(){
+			$('button.navSaveAndExit',div).button({label:  lang.SaveAndExit,icons:{primary:'ui-icon-disk'},disabled:0}).click(function(){
 				trace('navSaveAndExit');
 			});
-			$('#navResumeExit').button({label:  lang.ResumeExit,icons:{primary:'ui-icon-arrowreturnthick-1-w'},disabled:true}).click(function(){
+			$('button.navResumeExit',div).button({label:  lang.ResumeExit,icons:{primary:'ui-icon-arrowreturnthick-1-w'},disabled:true}).click(function(){
 				trace('navResumeExit');
 			});
 		
@@ -203,7 +194,7 @@ var A2JViewer={
 			}
 			else
 			{
-				$('.license',div).delay(5000).slideUp( );
+				$('.license',div).hide();//delay(5000).slideUp( );
 				$('.copyright',div).click(function(){
 					$('.license').toggle();
 				});//,function(){$('.license').slideUp()});
@@ -238,8 +229,8 @@ var A2JViewer={
 			$('#history').prepend(opt).prop('selectedIndex',0);
 		}
 		var hist_size=$('#history').children('option').length;
-		$('#navBack').button({disabled:$('#history').prop('selectedIndex')===hist_size-1});
-		$('#navNext').button({disabled:$('#history').prop('selectedIndex')===0});
+		$('button.navBack',div).button({disabled:$('#history').prop('selectedIndex')===hist_size-1});
+		$('button.navNext',div).button({disabled:$('#history').prop('selectedIndex')===0});
 		A2JViewer.skipHistory=false;
 		
 		
@@ -469,7 +460,8 @@ var A2JViewer={
 			txt +=  posimg('step_circle_'+ color +'.png',s1[0],s1[1],s1[2],s1[3]) ;
 			s1=si.signs[s];
 			var zoom = s1[2];zoom = '-moz-transform: scale('+zoom+');';
-			txt += '<div class="stepsign" style="position:absolute; left:'+s1[0]+'px; top: '+s1[1]+'px;'+zoom+'"><div class="stepsigncolor Step'+color+'" ></div>	<div class="stepnumber" >'+steps[cs].number+'</div><div class="steptext">'+steps[cs].text+'!</div></div>';
+			txt += '<div class="stepsign" style="position:absolute; left:'+s1[0]+'px; top: '+s1[1]+'px;'+zoom+'"><div class="stepsigncolor Step'+color+'" ></div>	<div class="stepnumber" >'+steps[cs].number+'</div>'
+			+'<table class="steptextdiv"><tr valign=true><td><span class="steptext">'+steps[cs].text+'</span></tr></tr></table></div>';
 			// step'+s+'
 		}
 		
@@ -508,7 +500,9 @@ var A2JViewer={
 			qx=si.gf[0]-300;
 			txt += posimg('A2JAvatar-Guide-Front-'+gg+av+'.png',si.gf[0],si.gf[1]);
 		}
-		txt +='<div class="question bubble" style="position:absolute; left:'+qx+'px; top: 140px; width: 300px; "><div class="question ui-form"><div class="buttonlist"></div></div></div><img style="position:absolute; left: '+(qx+299)+'px; top: 240px; " src="'+IMG+'guide_bubble_tip.png"   />';
+		txt +='<div class="question bubble" style="position:absolute; left:'+qx+'px; top: 140px; width: 300px; "><div class="question ui-form"></div></div><img style="position:absolute; left: '+(qx+299)+'px; top: 240px; " src="'+IMG+'guide_bubble_tip.png"   />';
+		//txt += '<div class="buttonlist" style="position:absolute; left:'+qx+'px;top: ></div>';
+		
 
 		var shared = '<div class="learnmore bubble" style="position:absolute; left:604px; top: 93px; width: 285px;"><div class="ui-form learnmore"><div class="buttonlist"><button>Close</button></div></div></div>';
 

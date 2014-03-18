@@ -9,6 +9,7 @@
 	Required by Author and Viewers
 ******************************************************************************/
 
+
 // Elements: navbar, road step area, question, guide avatar, user avatar, learn more prompt, learn more bubble.
 //var gLogic;
 
@@ -253,22 +254,27 @@ var A2JViewer={
 		}
 		for (var fi=0;fi<page.fields.length;fi++)
 		{
+			
+			/** @type {TField} */
 			var f = page.fields[fi];// field record
+			/*
+				this.type ="";
+				this.label ="";
+				this.name ="";//reference TVar.name
+				this.required =false;
+				this.invalidPrompt ="";
+				this.order ="";//default, ASC, DESC
+				this.min="";
+				this.max="";
+				this.calendar=false;
+				this.calculator=false;
+				this.maxChars="";
+			*/
+			
 			var fid = "FID_"+fi;//field id - unique
 			var fname = "FID_"+f.name;//field name - possible duplicates, i.e., radio buttons
-/*
-   this.type ="";
-   this.label ="";
-   this.name ="";//reference TVar.name
-   this.required =false;
-   this.invalidPrompt ="";
-   this.order ="";//default, ASC, DESC
-   this.min="";
-   this.max="";
-   this.calendar=false;
-   this.calculator=false;
-   this.maxChars="";
-*/
+
+
 			var defval=gGuide.varGet(f.name,varIndex);
 			var label = gLogic.evalLogicHTML(f.label);
 			var $label=$('<label/>').attr('for',fid).html(label);
@@ -291,29 +297,51 @@ var A2JViewer={
 						loadXMLList({elt:$input,data:'<select>'+f.listData+'</select>',val:defval});
 					}
 				   break;
+				
 				case CONST.ftNumber://"Number"
 				    $input=($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
+				
 				case CONST.ftNumberDollar://"Number Dollar"
 				   $input=($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
+				
 				case CONST.ftNumberSSN://"Number SSN"
 				   $input=($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
+				
 				case CONST.ftNumberPhone://"Number Phone"
 				   $input=($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
+				
 				case CONST.ftNumberZIP://"Number ZIP Code"
 				   $input=($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
+				
 				case CONST.ftNumberPick://"Number (Pick from list)"
 				   $input=($('<input type=text id='+fid+'></input>').val(defval));
 				   break;
+				
 				case CONST.ftDateMDY://"Date MM/DD/YYYY"
 				   $input=($('<input type=text id='+fid+'></input>').val(defval));
+					trace(CONST.ftDateMDY,gGuide.language);
+					var dateOpts = {
+						changeMonth: true,
+						changeYear: true
+					};
+					if (!isBlankOrNull(f.min)) {
+						trace('minDate',f.min);
+						dateOpts.minDate = f.min;
+					}
+					if (!isBlankOrNull(f.max)) {
+						trace('maxDate',f.max);
+						dateOpts.maxDate = f.max;
+					}
+					$.datepicker.setDefaults($.datepicker.regional[ gGuide.language ]);
+					$input.datepicker( dateOpts);
 				   break;
+				
 				case CONST.ftGender://"Gender"
-					//row.append($('<div/>').html(label));
 					var fidM=fid+"M";
 					var fidF=fid+"F";
 					var g = gGuide.goodGender(defval);
@@ -322,6 +350,7 @@ var A2JViewer={
 						.append('<br/>')
 						.append($('<input type=radio id="'+fidF+'" name="'+fname+'"></input>').prop('checked',g==='F')).append($('<label/>').attr('for',fidF).html(lang.Female));
 				   break;
+				
 				case CONST.ftRadioButton://"Radio Button"
 				   $labelinput=($('<input type=radio id="'+fid+'" name="'+fname+'"></input>')).prop('checked',defval===f.value);//.append($('<label/>').attr('for',fid).html(label));
 				   break;

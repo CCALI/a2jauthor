@@ -461,13 +461,15 @@ TLogic.prototype.executeScript = function(CAJAScriptHTML)
 		}
 		catch (e) {
 			// Trace runtime errors
-			this.trace("ERROR: " +e.message +" " + e.lineNumber);
+			this.trace("executeScript.error: " + e.lineNumber+": "+e.message  );
+			trace(CAJAScriptHTML);
+			trace(js);
 			return false;
 		}
 	}
 	else
 	{
-		this.trace("ERROR: "+"syntax error in logic");
+		this.trace("executeScript.error: "+"syntax error in logic");
 		return false;
 	}
 	this.indent=0;

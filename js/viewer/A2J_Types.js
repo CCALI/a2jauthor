@@ -438,7 +438,8 @@ function TGuide()
 TGuide.prototype.genderVarName="User Gender";
 
 TGuide.prototype.goodGender=function(g)
-{	// Return M, F or blank (if no client gender known)
+{	// Return M, F or blank (if no client gender known).
+	// If blank, guide will face viewer (no client avatar appears).
 	if (g==='Male'){ g='M';} else if (g==='Female') {g='F';} else {g='';}
 	return g;
 }

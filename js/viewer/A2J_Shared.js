@@ -200,6 +200,11 @@ function htmlEscape(str){
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
 }
+function isBlankOrNull(v)
+{	// Return true if v is blank or null.
+	return (v===null || typeof v === "undefined" || v === '');
+}
+
 function makestr(s)
 {	// lazy test to make sure s is a string or blank, not "null" or "undefined"
 	return (s===null || typeof s === "undefined" ) ? '' : s;

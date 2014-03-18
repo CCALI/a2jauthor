@@ -458,6 +458,11 @@ Languages.regional['zh-cn']= {
 };
 
 if ($.datepicker) {
+ 
+jQuery(function($){
+	/* Save the English in case author switches back */
+	$.datepicker.regional['en'] = $.datepicker.regional[''];
+});
 
 /* Inicialización en español para la extensión 'UI date picker' para jQuery. */
 /* Traducido por Vester (xvester@gmail.com). */
@@ -480,7 +485,7 @@ jQuery(function($){
 		isRTL: false,
 		showMonthAfterYear: false,
 		yearSuffix: ''};
-	$.datepicker.setDefaults($.datepicker.regional['es']);
+	//$.datepicker.setDefaults($.datepicker.regional['es']);
 });
 
 
@@ -505,14 +510,14 @@ jQuery(function($){
 		isRTL: false,
 		showMonthAfterYear: false,
 		yearSuffix: ''};
-	$.datepicker.setDefaults($.datepicker.regional['vi']);
+	//$.datepicker.setDefaults($.datepicker.regional['vi']);
 });
 
 
 /* Chinese initialisation for the jQuery UI date picker plugin. */
 /* Written by Cloudream (cloudream@gmail.com). */
 jQuery(function($){
-	$.datepicker.regional['zh-CN'] = {
+	$.datepicker.regional['zh-cn'] = {
 		closeText: '关闭',
 		prevText: '&#x3c;上月',
 		nextText: '下月&#x3e;',
@@ -530,7 +535,7 @@ jQuery(function($){
 		isRTL: false,
 		showMonthAfterYear: true,
 		yearSuffix: '年'};
-	$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
+	//$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
 });
 
 	//code

@@ -338,6 +338,8 @@ var A2JViewer={
 						dateOpts.maxDate = f.max;
 					}
 					$.datepicker.setDefaults($.datepicker.regional[ gGuide.language ]);
+					// 3/21/2014 Format dates for any language in USA m/d/y format. 
+					dateOpts.dateFormat = 'mm/dd/yyyy';
 					$input.datepicker( dateOpts);
 				   break;
 				

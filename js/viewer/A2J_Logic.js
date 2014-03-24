@@ -290,7 +290,8 @@ TLogic.prototype.translateCAJAtoJSExpression = function(CAJAExpression, lineNum,
 	for (j=0;j<js.length;j+=2)
 	{
 		var jj=js[j];
-		//	A2J variables support spaces and other symbols using [] notation
+		//	A2J variables support spaces and other symbols using [] delimiter notation.
+		//		Examples: Name, Child Name, Child Name 2, Child Name#2, Child Name#Child Index
 		// Variable formats:
 		//		Variable name with possible spaces
 		//			[child name] converts to GetVar("child name")
@@ -322,7 +323,7 @@ TLogic.prototype.translateCAJAtoJSExpression = function(CAJAExpression, lineNum,
 		var vn = /(\d[\d|\,]+)/gi;
 		jj = jj.replace(vn,comma_fnc);//function(s){return s.replace(",","");});
 		
-		//	A2J uses AND, OR and NOT while JS uses &&, || and !
+		//	A2J uses IS, AND, OR and NOT while JS uses ==, &&, || and !
 		jj = jj.replace(/\band\b/gi,"&&");
 		jj = jj.replace(/\bor\b/gi,"||");
 		jj = jj.replace(/\bnot\b/gi,"!");
@@ -332,6 +333,7 @@ TLogic.prototype.translateCAJAtoJSExpression = function(CAJAExpression, lineNum,
 		jj = jj.replace(/\>\=\=/gi,">=");
 		jj = jj.replace(REG.LOGIC_LE ,"<=");
 		jj = jj.replace(REG.LOGIC_NE,"!=");
+		jj = jj.replace(/\bis\b/gi,"==");
 		
 		// Constants 
 		jj = jj.replace(/\btrue\b/gi,"1");

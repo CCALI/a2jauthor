@@ -1,0 +1,124 @@
+﻿@charset "utf-8";
+/*
+	A2J Author 5 * Justice * 正义 * công lý * правосудие
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+	
+	A2J Viewer Stylesheet 
+	02/02/2012  (03/10/2011 SJG)
+	04/15/2013
+*/
+
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+P.Script, LI.Script, BLOCKQUOTE.Script {
+	border: thin solid #CC9966;
+	background-color: #efe;
+	margin: 2px;
+	padding: 3px;
+}
+
+
+.Script {
+	font-weight: normal;
+	font-family: "Courier New", Courier, monospace;
+	font-size: 12px;
+	color: #00f;
+}
+.Script B {
+	font-weight: bold;
+	font-family: "Courier New", Courier, monospace;
+	color: #093;
+}
+.Script I {
+	font-style: italic;
+	font-family:  Arial, Helvetica, sans-serif;
+	color: #999999;
+}
+.ScriptTrace{
+	font-weight: normal;
+	font-family: "Courier New", Courier, monospace;
+	font-size: 8pt; 
+	border: thin solid #CC9966;
+	background-color: #CCFFCC;
+}
+.ScriptVariables table tr td{
+	border: thin solid #CC9966;
+	background-color: #CCFFCC;
+	font-size: 8pt; 
+	margin: 1px;
+	padding: 2px;
+}
+.Macro {
+	border: thin solid #CC9966;
+	background-color: #CCFFCC;
+	padding: 15px;
+	font-size: smaller;
+}
+.ScriptErr{
+	font-weight: bold;
+	color: #FF0000;
+}
+
+
+
+.ScriptTrace li{
+	font-weight: normal;
+	font-family: "Courier New", Courier, monospace;
+	font-size: 1em;
+	line-height: normal;
+	border: none;
+	background-color: #ddd;
+	margin: 3px;
+	padding: 2px;
+}
+span.code, span.var, span.varidx, span.val, span.page {  
+}
+span.code {
+	border: thin solid #CC9966;
+	background-color: #ddd;
+}
+span.var {
+	border: thin solid #CC9966;
+	background-color: #ffc;
+}
+span.varidx {
+	border: thin solid #CC9966;
+	background-color: #fcc
+}
+span.val{
+	border: thin solid #CC9966;
+	background-color: #fcf;
+}
+span.page {
+	border: thin solid #CC9966;
+	background-color: #ccf;
+}
+span.err {
+	text-decoration: none;
+	border-bottom: dashed  1px #f00;
+	padding-bottom: 0px;
+ }
+th {
+	font-weight: normal;
+}
+td.colVar {
+	color:#022;
+}
+td.colIndex {
+	color:#220;
+}
+td.colValue {
+	color:#202;
+}
+td.varnew {
+	color:#080;
+}
+td.varsame {
+	color:#000;
+}
+td.vardiff {
+	color:#800;
+} 
+
+/* */

@@ -1,3 +1,8 @@
+/* 
+	A2J Author 5 * Justice * 正义 * công lý * правосудие
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+*/
+
 
 var testunit={}
 function parseUnit(unitText)
@@ -11,23 +16,23 @@ function parseUnit(unitText)
 	for (var l=0;l<lines.length;l++)
 	{	// Extract variables and page names and attach scripts to pages
 		var line=jQuery.trim(lines[l]).split("//")[0];
-		if ((args = line.match(/@page\s+(.+)/i))!=null) //p;d /@page\s+([\w[\w|\s]+)/i
+		if ((args = line.match(/@PAGE\s+(.+)/i))!=null) //p;d /@page\s+([\w[\w|\s]+)/i
 		{
 			var pageName = jQuery.trim(args[1]);
-			testunit.pages[pageName.toLowerCase()] = { name:pageName, lines:[]};
+			gGuide.pages[pageName.toLowerCase()] = { name:pageName, lines:[]};
 			if (pfirst=="") pfirst=pageName;
 			plast=pageName;
 			if (curpage != null) curpage.next=pageName;
 			
-			curpage= testunit.pages[pageName.toLowerCase()];
-			testunit.trace("Define page "+traceTag('page',pageName));
+			curpage= gGuide.pages[pageName.toLowerCase()];
+			//testunit.trace("Define page "+traceTag('page',pageName));
 		}
 		else
-		if ((args = line.match(/@var\s+(.+)/i))!=null)
+		if ((args = line.match(/@VAR\s+(.+)/i))!=null)
 		{
 			var varName =jQuery.trim(args[1]);
-			testunit.trace("Define variable "+varName);
-			testunit.setVar(varName,0,"");
+			//testunit.trace("Define variable "+varName);
+			//testunit.setVar(varName,0,"");
 //			testunit.vars[varName.toLowerCase()] = { name:varName, len:0, elts:[]};
 		}
 		else
@@ -37,17 +42,24 @@ function parseUnit(unitText)
 	}
 	lines=null;//delete lines;
 	
-	testunit.trace("<h1>Syntax errors</h1>");
+	testunit.trace("<h1>Variables</h1>");
+	testunit.varsOld={}; 
+	testunit.deltaVars();
+	
+	gLogic.showCAJAScript=2;
+	
+	testunit.trace("<h1>Syntax check</h1>");
 	// Parse the syntax of each page's scripts
-	for (var p in testunit.pages)
+	for (var p in gGuide.pages)
 	{
-		var page=testunit.pages[ p ];
+		var page=gGuide.pages[ p ];
 		var lines = page.lines;
-		var script = gLogic.translateCAJAtoJS(lines.join("\n"));
+		var script = gLogic.translateCAJAtoJS(lines.join(CONST.ScriptLineBreak));
 		//alert(lines.join("\n"));
-		if (script.errors.length>0)
+		testunit.trace( 'Page ' + traceTag('page',page.name)) ; 
+		testunit.indent++;
+		if (1 || script.errors.length>0)
 		{
-			testunit.trace( '<hr>page ' + traceTag('page',page.name)) ; 
 			var t=[];
 			for (l=0;l<lines.length;l++)
 			{
@@ -70,12 +82,7 @@ function parseUnit(unitText)
 				err=script.errors[e];
 				testunit.trace("<b>"+err.line+":"+err.text+"</b>");
 			}
-			testunit.indent--;
-			
-			
-			
-			
-			
+			testunit.indent--;			
 			
 			testunit.trace("Javascript (with CAJA Script commented)");
 			testunit.indent++;
@@ -84,52 +91,15 @@ function parseUnit(unitText)
 			{
 				t.push(script.js[l]);
 			}
-			testunit.trace("<BLOCKQUOTE class=Script>"+t.join("<BR/>")+"</BLOCKQUOTE>");
+			testunit.trace("<BLOCKQUOTE class=Script>"+t.join("<hr>")+"</BLOCKQUOTE>");
 			testunit.indent--; 
 		}
 		else
 		{
-		 /*
-			if(0)
-			{
-				testunit.trace("CAJAScript Evaluate");
-				testunit.indent++;
-				for (l=0;l<lines.length;l++)
-				{
-					testunit.trace(lines[l]);
-				}
-				testunit.indent--;
-				testunit.trace("Javascript");
-				testunit.indent++;
-				for (l=0;l<script.js.length;l++)
-				{
-					testunit.trace(script.js[l]);
-				}
-				testunit.indent--; 
-				
-				testunit._VS=testunit.setVar;//function(v){ testunit.trace("SET VAR "+v);}
-				testunit._VG=testunit.getVar;//function(v){ testunit.trace("SET VAR "+v);}
-				testunit._CF=function(f){ testunit.trace("Call function "+f); return 0;}
-				testunit._ED=function(f){ return 0;}
-				testunit._GO=function(pageName){ testunit.pageName=pageName;testunit.trace("Going to page "+pageName);}
-				testunit._deltaVars=testunit.deltaVars;
-				var js = "with (testunit) {"+ script.js.join("\n") +"}";
-				//var js = 'with (testunit) { _VS("name",55); _VS("first",22); }';
-				//testunit.trace(js);
-	
-				try {
-					var f=(new Function( js ));
-					var result = f();//execute the javascript code.
-	//				testunit.trace(f());
-	//				eval(js);
-				}
-				catch (e) { 
-					testunit.trace("ERROR: " +e.message +" " + e.lineNumber);
-				}
-					
-				}*/
-				}
-			}
+		 
+		}
+		testunit.indent--; 
+	}
 
 	testunit.trace("<h1>Script execution</h1>");
 	// start on first page and execute, following GOTO and falling through to next page. terminate after 20 loops or fall off last page.
@@ -137,7 +107,7 @@ function parseUnit(unitText)
 	var loop=0;
 	while (loop++<25 && (typeof testunit.nextpage!=="undefined"))
 	{
-		var page=testunit.pages[ testunit.nextpage.toLowerCase() ];
+		var page=gGuide.pages[ testunit.nextpage.toLowerCase() ];
 		testunit.trace( '<hr>page '+traceTag('page',page.name)+'<span>'); 
 		testunit.nextpage = page.next; //default next goto page
 		if (page==null)
@@ -215,36 +185,6 @@ function parseUnit(unitText)
 
 
 
-traceScript=trace=function(msg)
-{
-	$('.ScriptTrace').append('<li>'+  Array.prototype.slice.call(arguments).join(", ")); 
-}
-$(document).ready(function()
-{  
-	trace("Ready");
-	Languages.set(Languages.defaultLanguage);
-	
-	var childInterface = document.getElementById("AIRSandBox").childSandboxBridge;
-	//alert(childInterface.info())
-
-	
-//	testunit.traceDepth=0;
-	testunit.trace=function(msg){
-		//var nbsp="";for (var i=0;i<3*this.indent;i++){nbsp+="&nbsp;";}
-		//$('.ScriptTrace').append( nbsp + Array.prototype.slice.call(arguments).join(", ")+"<br>");
-		$('.ScriptTrace').append( '<li style="margin-left:'+(this.indent*50)+'px">'+ Array.prototype.slice.call(arguments).join(", "));
-		};
-//	testunit.traceIndent=function(delta){ this.traceDepth+=delta;}
-	testunit.indent=0;
-	testunit.pageName="";
-	testunit.vars={}
-	testunit.varsOld={};
-	testunit.pages={};
-	$("ul.testunits li a").each(function(){
-		loadFile($(this).attr('href')); 
-	//	loadFile("CAJA_Test_Script_Unit1.txt"); 
-	});
-});
 
 function loadFile(bookFile)
 {
@@ -268,7 +208,7 @@ function traceTag(cname,chtml){
 }
 
 
-
+/*
 testunit.setVar=function(varName,varIndex,varVal)
 {
 	if (varIndex==null || varIndex=='') varIndex=0;
@@ -307,22 +247,23 @@ testunit.getVar=function(varName,varIndex)
 		return v.values[varIndex]; 
 	}
 }
+*/
+
 testunit.deltaVars=function()
 {	// Display variables indicating changed/new.
 	var html='<table   border="2"  cellpadding="1" cellspacing="0"><tr><th nowrap="nowrap" class="colVar">Variable</th><th nowrap="nowrap" class="colIndex">Index</th><th nowrap="nowrap" class="colValue">Value</th><th  class="colValue">Old Value</th></tr>';
 
-	//trace(props(testunit.varsOld));
-
-	for (var varName_i in this.vars)
+	//console.log(testunit.vars);
+	for (var varName_i in testunit.vars)
 	{
-		var v = this.vars[varName_i]
+		var v = testunit.vars[varName_i]
 		var varName=v.name;
 		for (var vi=0;vi<v.values.length;vi++)
 		{
 			var stat=""; 
 			var varVal=v.values[vi];
-			var vOld=this.varsOld[varName_i+"."+vi];
-			if (typeof vOld!="undefined")
+			var vOld=testunit.varsOld[varName_i+"."+vi];
+			if (1 || typeof vOld!="undefined")
 			{
 				html += '<TR rel="'+varName_i+'">'
 					//+'<td class="colVar">'+varName+'</td><td class="colIndex">'+vi+'</td><td class="colValue '+''+'">'+varVal+'</td><td class="colValue">'+vOld.join(" , ")+'</td>'
@@ -331,9 +272,9 @@ testunit.deltaVars=function()
 		}
 	}
 	html += '</table><br/>';
-	this.trace(html);
+	testunit.trace(html);
 	
-	this.varsOld={}; 
+	testunit.varsOld={}; 
 }
 
 testunit.evalExpression = function(expr)
@@ -362,3 +303,37 @@ testunit.evalHTML=function(html)
 	}
 	return html;
 }
+
+
+
+
+traceScript=trace=function(msg)
+{
+	$('.ScriptTrace').append('<li>'+  Array.prototype.slice.call(arguments).join(", ")); 
+}
+$(document).ready(function()
+{  
+	trace("Ready");
+	Languages.set(Languages.defaultLanguage);
+	
+	var childInterface = document.getElementById("AIRSandBox").childSandboxBridge;
+//	testunit.traceDepth=0;
+	testunit.trace=function(msg){
+		//var nbsp="";for (var i=0;i<3*this.indent;i++){nbsp+="&nbsp;";}
+		//$('.ScriptTrace').append( nbsp + Array.prototype.slice.call(arguments).join(", ")+"<br>");
+		$('.ScriptTrace').append( '<li style="margin-left:'+(this.indent*50)+'px">'+ Array.prototype.slice.call(arguments).join(", "));
+		};
+//	testunit.traceIndent=function(delta){ this.traceDepth+=delta;}
+	testunit.indent=0;
+	testunit.pageName="";
+	testunit.vars={}
+	testunit.varsOld={};
+	gGuide=new TGuide();
+	gGuide.pages={};
+	
+	$("ul.testunits li a").each(function(){
+		loadFile($(this).attr('href')); 
+	//	loadFile("CAJA_Test_Script_Unit1.txt"); 
+	});
+});
+

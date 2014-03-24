@@ -560,6 +560,9 @@ TGuide.prototype.varGet=function(varName,varIndex)
 		case CONST.vtNumber:
 			 val=parseFloat(val);
 			break;
+		case CONST.vtDate:
+			// TODO: do we convert date's into daysSince1970, like A2J 4 so we can add? or require specific date operators?
+			break;
 		case CONST.vtTF:
 			 val= (val>0) || (val===true) || (val==='true');
 			break;

@@ -505,6 +505,7 @@ P.CAJATest {
 .macro {
 	background-color:#eee;
 }
+/*
 .warning {
 	background-image: url(images/warning.png);
 	background-repeat: no-repeat;
@@ -529,6 +530,7 @@ P.CAJATest {
 	font-size: .9em;
 	font-style: italic;
 }
+*/
 table.CAJAReportDump {
 	border-collapse:collapse;
 }

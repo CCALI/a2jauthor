@@ -7,6 +7,18 @@
 * To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Lucida%20Grande%2CLucida%20Sans%2CArial%2Csans-serif&fwDefault=bold&fsDefault=1.1em&cornerRadius=6px&bgColorHeader=deedf7&bgTextureHeader=highlight_soft&bgImgOpacityHeader=100&borderColorHeader=aed0ea&fcHeader=222222&iconColorHeader=72a7cf&bgColorContent=f2f5f7&bgTextureContent=highlight_hard&bgImgOpacityContent=100&borderColorContent=dddddd&fcContent=362b36&iconColorContent=72a7cf&bgColorDefault=d7ebf9&bgTextureDefault=glass&bgImgOpacityDefault=80&borderColorDefault=aed0ea&fcDefault=2779aa&iconColorDefault=3d80b3&bgColorHover=e4f1fb&bgTextureHover=glass&bgImgOpacityHover=100&borderColorHover=74b2e2&fcHover=0070a3&iconColorHover=2694e8&bgColorActive=3baae3&bgTextureActive=glass&bgImgOpacityActive=50&borderColorActive=2694e8&fcActive=ffffff&iconColorActive=ffffff&bgColorHighlight=ffef8f&bgTextureHighlight=highlight_soft&bgImgOpacityHighlight=25&borderColorHighlight=f9dd34&fcHighlight=363636&iconColorHighlight=2e83ff&bgColorError=cd0a0a&bgTextureError=flat&bgImgOpacityError=15&borderColorError=cd0a0a&fcError=ffffff&iconColorError=ffffff&bgColorOverlay=eeeeee&bgTextureOverlay=diagonals_thick&bgImgOpacityOverlay=90&opacityOverlay=80&bgColorShadow=000000&bgTextureShadow=highlight_hard&bgImgOpacityShadow=70&opacityShadow=30&thicknessShadow=7px&offsetTopShadow=-7px&offsetLeftShadow=-7px&cornerRadiusShadow=8px
 * Copyright 2013 jQuery Foundation and other contributors Licensed MIT */
 
+/* Things that need work in CSS, design, colors, etc. 
+
+- color scheme of the 12 (and more) steps leading to the court house
+- fix the logo - should be larger and use the new A2J5 logo
+- put the credits for SJI, LSC, etc under a popup or slide-up. 
+- 
+*/ 
+
+
+
+
+
 /* Layout helpers
 ----------------------------------*/
 .ui-helper-hidden {
@@ -1191,7 +1203,8 @@ body .ui-tooltip {
     opacity: 0.50;
 }
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-    background: repeat-x scroll 50% 50% #0066CC;
+    background: repeat-x scroll 50% 50% #ecf0f1;
+/*    background: repeat-x scroll 50% 50% #0066CC; */
     color: #fff;
     font-weight: normal;
 }
@@ -1225,13 +1238,13 @@ body .ui-tooltip {
 ,table.A2JFiles tr:nth-child(even)
 ,table.list tr:nth-child(even)
 ,.guidelist li:nth-child(even)
-{	background-color:rgba(240,240,240,0.5);}
+{	background-color:#ECF0F1 ;}
 .pagelist ul * li:nth-child(odd)
 ,table.A2JVars tr:nth-child(odd)
 ,table.A2JFiles tr:nth-child(odd)
 ,table.list tr:nth-child(odd)
 ,.guidelist li:nth-child(odd)
-{	background-color:rgba(255,255,255,0.5);}
+{	background-color:#BDC3C7 ;}
 
 
 /* END */
@@ -1284,3 +1297,59 @@ html, body, input, select, textarea , .htmledit, .codeedit {
 */
 
 /* */
+
+.guidemenu ul li[ref^="tabs"]		{
+	list-style-position:inside;
+    border: 1px solid #E5E5E5;
+}
+.guidemenu ul li[ref="tabsAbout"]		{background:#2C3E50; } /* MIDNIGHT BLUE */
+.guidemenu ul li[ref="tabsVariables"]	{background:#34495E; } /* WET ASPHALT */
+.guidemenu ul li[ref="tabsSteps"]		{background:#8E44AD; } /* WISTERIA */
+.guidemenu ul li[ref="tabsPages"]		{background:#9B59B6; } /* AMETHYST */
+.guidemenu ul li[ref="tabsMap"]			{background:#2980B9; } /* BELIZE HOLE */
+.guidemenu ul li[ref="tabsFiles"]		{background:#3498DB; } /* PETER RIVER */
+.guidemenu ul li[ref="tabsLogic"]		{background:#27AE60; } /* NEPHRITIS */
+.guidemenu ul li[ref="tabsText"]		{background:#2ECC71; } /* EMERLAND */
+.guidemenu ul li[ref="tabsPreview"]		{background:#F1C40F; } /* SUN FLOWER */
+.guidemenu ul li[ref="tabsReport"]		{background:#F39C12; } /* ORANGE */    
+.guidemenu ul li[ref="tabsUpload"]		{background:#E67E22; } /* CARROT */
+.guidemenu ul li[ref="tabsGuides"]		{ background:#D35400; } /* PUMPKIN */
+
+
+/* More colors as we add items to the menu. 
+    ALIZARIN -     #E74C3C
+    POMEGRANATE -     #C0392B
+    CLOUDS -     #ECF0F1
+    SILVER -     #BDC3C7
+    CONCRETE -     #95A5A6
+    ASBESTOS -     #7F8C8D
+*/
+
+.pagelist li[rel^="STEP "] {
+	list-style-position:inside;
+    border: 1px solid #000;
+}
+
+.pagelist li[rel="STEP 0"] {
+	background:#ffffff;
+}
+.pagelist li[rel="STEP 1"], .pagelist li[rel="STEP 7"] {
+	background:#BDD6D6;
+}
+.pagelist li[rel="STEP 2"], .pagelist li[rel="STEP 8"] {
+	background:#B7DDB7;
+}
+.pagelist li[rel="STEP 3"], .pagelist li[rel="STEP 9"] {
+	background:#EFC68C;
+}
+.pagelist li[rel="STEP 4"], .pagelist li[rel="STEP 10"] {
+	background:#E7E7B5;
+}
+.pagelist li[rel="STEP 5"], .pagelist li[rel="STEP 11"] {
+	background:#EFDED6;
+}
+.pagelist li[rel="STEP 6"], .pagelist li[rel="STEP 12"] {
+	background:#ECD8EA;
+}
+
+

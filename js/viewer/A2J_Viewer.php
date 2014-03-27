@@ -9,7 +9,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body onload='sendArgsToFrame();'>
-	<iframe id="A2JViewerFrame" width="100%" height="100%" src="A2J_ViewerFrame.php"></iframe> 
+	<iframe id="A2JViewerFrame" width="100%" height="100%" src="A2J_ViewerApp.html"></iframe> 
 </body>
 
 <SCRIPT LANGUAGE=JavaScript>

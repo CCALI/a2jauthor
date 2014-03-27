@@ -9,6 +9,8 @@
 ******************************************************************************/
 
 /* global gGuidePath,gPage,gGuide,gUserID,gGuideID,gUserNickName */
+CONST.uploadURL = 'CAJA_WS.php?cmd=uploadfile&gid=';
+CONST.uploadGuideURL= 'CAJA_WS.php?cmd=uploadguide';
 
 var gPrefs = {
 	showLogic : 1
@@ -266,8 +268,9 @@ function authorViewerHook()
 
 
 
-function signin(){
-	if (typeof DEBUGSTART !== 'undefined'){
+function signin()
+{
+	if (gEnv!='' && gEnv!='BETA' && (typeof DEBUGSTART !== 'undefined')){
 		DEBUGSTART();
 		return;
 	}
@@ -1070,7 +1073,7 @@ function guideStart(startTabOrPage)
 	buildMap();
 	
 	
-	if (typeof DEBUGFIRST !== 'undefined'){
+	if (gEnv!='' && gEnv!='BETA' && (typeof DEBUGFIRST !== 'undefined')){
 		DEBUGFIRST();
 	}
 }

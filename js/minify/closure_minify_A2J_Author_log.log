@@ -1,13 +1,9 @@
-..\author\A2J_AuthorApp.js:1853: WARNING - Property zip never defined on data
-			if (data.zip!==''){
-			    ^
-
-..\author\A2J_AuthorApp.js:1854: WARNING - Property zip never defined on data
-				window.open( data.zip);
-				             ^
-
 ..\viewer\A2J_Parser.js:46: WARNING - dangerous use of the global this object
 			var opts=this.opts;
 			         ^
 
-0 error(s), 3 warning(s), 69.8% typed
+..\author\A2J_AuthorApp.js:12: ERROR - variable CONSt is undeclared
+CONSt.uploadURL = 'CAJA_WS.php?cmd=uploadfile&gid=';
+^
+
+1 error(s), 1 warning(s)

@@ -15,7 +15,9 @@ REM java -jar %JAR% --externs externs.js --externs externs_viewer.js --js ..\CAJ
 REM Open log file
 closure_minify_a2j_viewer_log.log 
 REM Copy raw min to correct path with copyright header.
+goto header
 echo {} > A2J_ViewerApp.min.raw.js
+:header
 copy/b CAJA_min_header.js+A2J_ViewerApp.min.raw.js ..\viewer\A2J_ViewerApp.min.js
 REM Clear .js files so Komodo Edit doesn't confuse .js locations
 del A2J_ViewerApp.min.raw.js

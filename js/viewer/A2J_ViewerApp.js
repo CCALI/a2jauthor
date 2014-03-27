@@ -82,7 +82,7 @@ function gotoPageView(destPageName)
 }
 
 function main(){
-	loadGuideFile(templateURL,"");
+	loadGuideFile(gStartArgs.templateURL,"");
 }
-$(document).ready(main);
+//$(document).ready(main);
 /* */

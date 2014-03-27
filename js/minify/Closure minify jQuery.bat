@@ -1,4 +1,4 @@
-REM @echo off
+@echo off
 echo 2/2013 Minifying custom and extra jQuery .js using google closure compiler.
 rem 8/2013
 set JAR=../../../../js/closure/compiler.jar
@@ -8,13 +8,16 @@ REM DO NOT USE : set LEVEL=ADVANCED_OPTIMIZATIONS
 REM 
 set OPTIONS=--warning_level QUIET  --compilation_level %LEVEL% --summary_detail_level 3 --charset UTF-8
 :start
-REM Merge/minify .js files required for A2J Author
-java -jar %JAR% --externs externs.js --js ..\jQuery\jquery.xml.min.js --js ..\jQuery\jquery.fileupload.js --js ..\jQuery\jquery.fileupload-process.js --js ..\jQuery\jquery.fileupload-validate.js --js ..\jQuery\jquery.ui.combobox.js --js ..\jQuery\jquery.ui.traggable.js %OPTIONS% --js_output_file jquery.custom.min.raw.js > closure_minify_jQuery_log.log 2>&1
-type closure_minify_jquery_log.log
-copy/b CAJA_min_header.js + jquery.custom.min.raw.js ..\jQuery\jquery.custom.min.js
-REM ..\jQuery\jquery.custom.min.js
-REM del jquery.custom.min.raw.js
-del jquery.custom.min.raw.js
-dir ..\jQuery\jquery.custom.min.js 
+REM Merge/minify .js files required for A2J Author and A2J Viewer
+java -jar %JAR% --externs externs.js --js ..\viewer\jquery.xml.min.js  --js ..\viewer\jquery.ui.combobox.js --js ..\viewer\jquery.ui.traggable.js %OPTIONS% --js_output_file ../viewer/jquery.custom.min.raw.js > closure_minify_viewer_jQuery_log.log 2>&1
+java -jar %JAR% --externs externs.js --js ..\author\jquery.fileupload.js --js ..\author\jquery.fileupload-process.js --js ..\author\jquery.fileupload-validate.js  %OPTIONS% --js_output_file ../author/jquery.custom.min.raw.js > closure_minify_author_jQuery_log.log 2>&1
+closure_minify_viewer_jquery_log.log
+closure_minify_author_jquery_log.log
+copy/b CAJA_min_header.js + ..\author\jquery.custom.min.raw.js ..\author\jquery.custom.min.js
+copy/b CAJA_min_header.js + ..\viewer\jquery.custom.min.raw.js ..\viewer\jquery.custom.min.js
+del ..\viewer\jquery.custom.min.raw.js
+del ..\author\jquery.custom.min.raw.js
+dir ..\viewer\jquery.custom.min.js 
+dir ..\author\jquery.custom.min.js 
 REM
-pause
+REM pause

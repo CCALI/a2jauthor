@@ -21,8 +21,8 @@ var CONST = {
 	// Spinnner for loading wait
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
-	A2JVersionNum:"5.0.1.11",//VersionInfo.verNum
-	A2JVersionDate:"2014-03-18",
+	A2JVersionNum:"5.0.1.12",//VersionInfo.verNum
+	A2JVersionDate:"2014-03-24",
 	
 	
 	CAVersionNum:"5.0.0",
@@ -442,11 +442,11 @@ TGuide.prototype.goodGender=function(g)
 	// If blank, guide will face viewer (no client avatar appears).
 	if (g==='Male'){ g='M';} else if (g==='Female') {g='F';} else {g='';}
 	return g;
-}
+};
 TGuide.prototype.getClientGender=function()
 {	// Return M, F or blank (if no client gender known)
 	return this.goodGender(this.varGet(this.genderVarName));
-}
+};
 
 
 TGuide.prototype.sortPages=function()
@@ -696,5 +696,18 @@ gEnv= (String(window.location).indexOf('http://authorbeta.a2jauthor.org')===0)?'
 //var resumeScoreURL=null;
 
 
+var gStartArgs = {
+	templateURL:"",
+	fileDataURL:"",
+	getDataURL:	"",
+	setDataURL:	"",
+	exitURL: 	"",
+	logURL:   	"", //e.g., "https://lawhelpinteractive.org/a2j_logging";
+	errRepURL:	"" //e.g., "https://lawhelpinteractive.org/problem_reporting_form";
+};
+
 
 /* */
+
+
+

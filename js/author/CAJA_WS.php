@@ -7,8 +7,7 @@
 	A Fuse to handle all a2j author editing stuff
 	07/01/2013 HACK to login to demo
 	07/15/2013 Directory restructure
-	
-	01/13/2014
+	04/2014 Loads author system only if user is logged into Drupal with an 'a2j author' role setting.
 */
 
 
@@ -45,13 +44,15 @@ if ($isProductionServer)
 	// Minimum bootstrap to get user's session info is DRUPAL_BOOTSTRAP_SESSION.
 	drupal_bootstrap(DRUPAL_BOOTSTRAP_SESSION);	
 	$userid =intval($user->uid);
+	$canAuthor = in_array('a2j author', array_values($user->roles));
 }
 else
 {	// Running locally, just use demo or devuser (26 ,45 for a2jauthor.org).
 	session_start();//  09/05/2013 WARNING! LEAVE session_start() OFF TO ACCESS DRUPAL SESSIONS!
 	//$usertest=$_REQUEST['u'];
 	//if ($usertest == 'dev') $userid=45;
-	define("LOCAL_AS_DEV_USER", 1 );
+	$canAuthor=false;
+	define("LOCAL_AS_DEV_USER", 0 );
 	if ( LOCAL_AS_DEV_USER )
 	{
 		//$userid=26;// Demo Author
@@ -73,15 +74,22 @@ switch ($command)
 {
 	case 'test':
 		var_dump($_SESSION);
+		var_dump($user);
+		var_dump( array_values($user->roles));
 		break;
 	
+	
 	case 'login':
+		$username='';
+		$userdir='';
 		if ($isProductionServer)
 		{
-			if ($userid>0)
+			if ( ($userid>0) && ($canAuthor))
 			{	// User logged in to Drupal, get their user id, etc.
 				// Can also get Roles here.
+				// 03/31/2014  Only A2J Author role permitted to access author.
 				$username = $user->name;
+	
 	
 				// Get user's A2J user entry. 
 				$checkuser=$mysqli->query("select * from users where uid=$userid");
@@ -103,6 +111,10 @@ switch ($command)
 				$userrow=$checkuser->fetch_assoc();
 				$result['nickname']=$userrow['nickname'];
 				$userdir=$userrow['folder'];
+			}
+			else
+			{
+				$userid=0;
 			}
 		}
 		else

@@ -5,10 +5,12 @@
 	Authoring system Stylesheet
 	Coloring moved into the A2J jQuery theme
 	04/15/2013
+	
+	JPM 3/21/14 color pallette from http://codepen.io/cobblucas/pen/iGpIf 
+	JPM http://flatuicolors.com/ 
+
 */
 
-/* JPM 3/21/14 color pallette from http://codepen.io/cobblucas/pen/iGpIf */
-/* JPM http://flatuicolors.com/ */
 
 .ui-widget-header, 
 .ui-state-default, 
@@ -132,17 +134,17 @@ html, body {
 }
 .authorenv {
 	position:  absolute;
-	left:10px;
-	bottom: 60px;
-	font-size:3em;
+	left: 180px;
+	top: 20px;
+	font-size:2em;
 	color: #800;
-	text-shadow: 2px 2px 8px #0000FF;
+	text-shadow: 2px 2px 0px #0000FF;
 }
 .authorver {
 	position:  absolute;
-	left:10px;
-	bottom: 20px;
-	font-size:1em;
+	left:60px;
+	top: 50px;
+	font-size:10px;
 	text-shadow: 2px 2px 4px #222;
 }
 .guidemenu ul {
@@ -169,7 +171,7 @@ html, body {
 	font-weight:bold;
 	border:thick;
 	border:#0066CC;
-	text-transform:uppercase;
+	/*text-transform:uppercase; SJG no. */
 	background-color: #E5E5E5;
 	overflow: visible;
 	background: url(images/menu_selected.png) 99% center no-repeat;

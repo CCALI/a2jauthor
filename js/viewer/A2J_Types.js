@@ -3,8 +3,9 @@
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	Type/constant declarations
-	04/2012
 	Required by Author and Viewers
+	04/2012
+	04/2014
 ******************************************************************************/
 
 
@@ -21,8 +22,8 @@ var CONST = {
 	// Spinnner for loading wait
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
-	A2JVersionNum:"5.0.1.13",//VersionInfo.verNum
-	A2JVersionDate:"2014-03-27",
+	A2JVersionNum:"5.0.1.14",//VersionInfo.verNum
+	A2JVersionDate:"2014-04-03",
 	
 	
 	CAVersionNum:"5.0.0",
@@ -695,7 +696,7 @@ gEnv= (String(window.location).indexOf('http://authorbeta.a2jauthor.org')===0)?'
 //var runid=0;
 //var resumeScoreURL=null;
 
-
+// gStartArgs is populated by the parent IFRAME  Viewer (or A2J Author directly)
 var gStartArgs = {
 	templateURL:"",
 	fileDataURL:"",
@@ -708,6 +709,4 @@ var gStartArgs = {
 
 
 /* */
-
-
 

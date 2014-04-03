@@ -4,7 +4,7 @@
 	
 	Authoring App GUI
 	04/15/2013
-	
+	04/2014
 	
 ******************************************************************************/
 
@@ -270,8 +270,9 @@ function authorViewerHook()
 
 function signin()
 {
-	if (gEnv!='' && gEnv!='BETA' && (typeof DEBUGSTART !== 'undefined')){
-		DEBUGSTART();
+	if (gEnv!='' && gStartArgs.templateURL!=='') {
+		// Debug start option
+		LocalGuideStart();
 		return;
 	}
 	ws({cmd:'login'},
@@ -1073,8 +1074,9 @@ function guideStart(startTabOrPage)
 	buildMap();
 	
 	
-	if (gEnv!='' && gEnv!='BETA' && (typeof DEBUGFIRST !== 'undefined')){
-		DEBUGFIRST();
+	if (gEnv!='' && gStartArgs.getDataURL!=='') {
+		LocalGuidePlay();
+		return;
 	}
 }
 
@@ -1803,28 +1805,9 @@ function main()
 //		DEBUGSTART=undefined;
 //	}
 	$('.authorenv').text(gEnv);
-	$('.authorver').html(CONST.A2JVersionNum+"<br/>"+CONST.A2JVersionDate);
+	$('.authorver').html(CONST.A2JVersionNum+" "+CONST.A2JVersionDate);
 	$('#cajainfo').attr('title',versionString());
-
-	//$('#welcome, #texttoolbar').hide();
-	//$('#welcome').dialog({autoOpen: false,modal:true, height: 500, width: 700, close: function(event, ui){if (typeof event.originalEvent==='object'){signin();}}});
-
-
-//	$('.tabset').tabs();
-	//$('#guidepanel').tabs();
-	//$('table.list').hover(function(){$('.editicons',this).showIt(1);},function(){$('.editicons',this).showIt(0);});
-	
-	//$('#guidepanel > ul').append('<span><button id="guideSave">Save</button><button id="settings">Settings</button></span>'
-	//	+'<a href="#" id="guideClose" class="ui-dialog-titlebar-close ui-corner-all"><span class="ui-icon ui-icon-close"></span></a>'
-		//+'<a href="#" id="settings" class="ui-dialog-titlebar-close ui-corner-all"><span class="ui-icon ui-icon-gear"></span></a>'
-	//	);
-//	$('#guideSave').button({icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
-//	$('#settings').button({icons:{primary:"ui-icon-gear"}}).click(function(){$('#settings-form').dialog('open');});
 	$('#guideSave').button({label:'Save Now',icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
-	//$('#guideSaveAs').button({label:'Save as',disabled:true,  icons:{primary:"ui-icon-disk"}}).click(function(){      });
-	//$('#guideNew').button({label:'New', disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){      });
-	//$('#guideOpen').button({label:'Open',disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){    });
-	//$('#guideClose').button({label:'Close',icons:{primary:"ui-icon-close"}}).click(function(){guideClose();});
 	$('#settings').button({label:'Settings',icons:{primary:"ui-icon-gear"}}).click(function(){$('#settings-form').dialog('open');});
 	
 	//$('#guideCreate').button({icons:{primary:"ui-icon-document"}}).click(function(){createBlankGuide();	});

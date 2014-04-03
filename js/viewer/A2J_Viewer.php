@@ -2,6 +2,7 @@
 	A2J Author 5 * Justice * 正义 * công lý * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	2012-2014
+	Shell for integrating A2J Viewer into an existing web page.
 -->
 <html>
 <head>
@@ -13,7 +14,7 @@
 </body>
 
 <SCRIPT LANGUAGE=JavaScript>
-// Override these Javascript variables as needed to setup default interview/answer file loading.
+// This demo page will send starting arguments to the IFRAME which contains the Viewer.
 function sendArgsToFrame(){
 <?php
 	// For demo purposes, we extract guide and answer file ids from the querystring and pass them on to the Viewer.
@@ -21,6 +22,7 @@ function sendArgsToFrame(){
 	$aid=$_GET["aid"];
 ?>
 	A2JViewerFrame.contentWindow.postMessage({
+// Override these Javascript variables as needed to setup default interview/answer file loading.
 		templateURL:"<?=$gid?>",
 		fileDataURL:"../tests/data/",
 		getDataURL:	"A2J_ViewerGetData.php?answersID=<?=$aid?>",
@@ -30,7 +32,6 @@ function sendArgsToFrame(){
 		errRepURL:	"A2J_ViewerErrRep.php",//"https://lawhelpinteractive.org/problem_reporting_form";
 		'':''
 	}, "*")
-	//alert('A2JViewerFrame.contentWindow.postMessage');
 }
 </SCRIPT>
 

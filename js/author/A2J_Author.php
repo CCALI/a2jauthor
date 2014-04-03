@@ -3,7 +3,7 @@
 	A2J Author 5 * Justice * 正义 * công lý * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	04/15/2013
-	01/13/2014
+	4/2014
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -28,7 +28,6 @@
 
 <script xsrc="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 <script xsrc="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js" type="text/javascript"></script>
-
 
 
 
@@ -73,7 +72,16 @@
 			break;
 	}
 ?>
-
+<script>
+<?php
+	// 4/2014 For demo purposes, we CAN extract guide and answer file urls from the querystring and pass them on to the Viewer.
+	// Normally only the Viewer will use these startups values.
+	$gid=$_GET["gid"];if (!isset($gid)) $gid = '';
+	$aid=$_GET["aid"];if (!isset($aid)) $aid = '';
+?> 
+	gStartArgs.templateURL = "<?=$gid?>";
+	gStartArgs.getDataURL = "<?=$aid?>";
+</script>
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -111,8 +119,6 @@
 			<li ref="tabsGuides">Interviews</a></li>
 		</ul>
 	</div>
-	<div class="authorenv"></div>
-	<div class="authorver"></div>
 	<div class="guidepanels ui-widget xui-widget-content">
 		<div class="panel" id="tabsAbout">
 			<div class="tabHeader">Information about this guide. </div>
@@ -297,7 +303,9 @@
 			 </p>
 		<button id="guideZIP">Download ZIP</button></div>
 	</div>
-	<div id="cajaheader"><span id="cajainfo" title="About this Authoring System"></span><span id="guidetitle"></span>
+	<div id="cajaheader"><span id="cajainfo" title="About this Authoring System"></span>
+	<div class="authorver"></div>
+	<div class="authorenv"></div><span id="guidetitle"></span>
 		<button id="settings"/>
 	</div>
 	<div id="cajafooter"><span id="saveStatus"></span><span id="CAJAStatus"></span><span style="float:right;text-align:right">All Contents &copy; CALI, The Center for Computer-Assisted Legal

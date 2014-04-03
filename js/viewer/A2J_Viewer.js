@@ -4,11 +4,10 @@
 
 	A2J Viewer embedding
 	10/12/2012
-	04/15/2013
+	04/2014
 
 	Required by Author and Viewers
 ******************************************************************************/
-
 
 // Elements: navbar, road step area, question, guide avatar, user avatar, learn more prompt, learn more bubble.
 //var gLogic;
@@ -488,7 +487,8 @@ var A2JViewer={
 			var cs = curstep + s;
 			var s1=si.steps[s];
 			var color = (cs===0) ? 0 : (cs-1) % COLORS +1;
-			txt +=  posimg('step_circle_'+ color +'.png',s1[0],s1[1],s1[2],s1[3]) ;
+			//txt +=  posimg('step_circle_'+ color +'.png',s1[0],s1[1],s1[2],s1[3]) ;
+			txt +=  posimg('step_circle_'+ 0 +'.png',s1[0],s1[1],s1[2],s1[3]) ;
 			s1=si.signs[s];
 			var zoom = s1[2];zoom = '-moz-transform: scale('+zoom+');';
 			txt += '<div class="stepsign" style="position:absolute; left:'+s1[0]+'px; top: '+s1[1]+'px;'+zoom+'"><div class="stepsigncolor Step'+color+'" ></div>	<div class="stepnumber" >'+steps[cs].number+'</div>'

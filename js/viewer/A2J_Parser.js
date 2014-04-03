@@ -3,12 +3,14 @@
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	CAJA Parser
-	02/20/2012
-	04/15/2013
 
 	Parse native CAJA into CAJA structure
 	Parse A2J 4 Interview
 	Parses .a2j/xml XML into CAJA format
+
+	02/20/2012
+	04/2014
+
 ******************************************************************************/
 
 function fixPath(file)
@@ -721,7 +723,7 @@ function loadGuideFile(guideFile,startTabOrPage)
 	{
       startTabOrPage= "PAGE " +url.hash;
 	}
-	trace(guideFile,url,gGuidePath);
+	trace(guideFile,url,gGuidePath,startTabOrPage);
    loadNewGuidePrep(guideFile,startTabOrPage);
 	
    window.setTimeout(function()
@@ -744,7 +746,8 @@ function loadGuideFile(guideFile,startTabOrPage)
 					// global variable guide
 					gGuide =  parseXML_Auto_to_CAJA(cajaDataXML);
 					gGuide.filename=guideFile;
-					guideStart(startTabOrPage);         
+					guideStart(startTabOrPage);
+					setProgress('');     
 				}
 			});
 		},500);

@@ -156,7 +156,7 @@ function buildMap()
 			var nodeLeft=page.mapx;
 			var nodeTop= page.mapy;
 			var stepc;//stepcolor
-			stepc = (page.step===0) ? 0  :  (page.step%4)+1;
+			stepc = page.step;
 			$map.append(' '
 				+'<div class="node Step'+(stepc)+'" rel="'+page.name.asHTML()+'" style="z-index:1; left:'+nodeLeft+'px;top:'+nodeTop+'px;">'
 				+(page.type===CONST.ptPopup ? '':'<div class="arrow"></div>')

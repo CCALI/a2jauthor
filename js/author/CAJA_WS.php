@@ -75,7 +75,7 @@ switch ($command)
 	case 'test':
 		var_dump($_SESSION);
 		var_dump($user);
-		var_dump( array_values($user->roles));
+		//var_dump( array_values($user->roles));
 		break;
 	
 	
@@ -284,7 +284,7 @@ switch ($command)
 			define(UPLOAD_DIR, GUIDES_DIR.$filedir.'/');
 			define(UPLOAD_URL, GUIDES_URL.$filedir.'/');
 			error_reporting(E_ALL | E_STRICT);
-			include('jQuery/UploadHandler.php');
+			include('UploadHandler.php');
 			$upload_handler = new UploadHandler();
 			exit();//Return immediately with upload info.
 		}

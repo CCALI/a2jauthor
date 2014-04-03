@@ -134,8 +134,8 @@ html, body {
 }
 .authorenv {
 	position:  absolute;
-	left: 180px;
-	top: 20px;
+	right: 10px;
+	top: 30px;
 	font-size:2em;
 	color: #800;
 	text-shadow: 2px 2px 0px #0000FF;

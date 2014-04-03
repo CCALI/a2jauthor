@@ -20,7 +20,7 @@ function LocalGuideStart()
 	gUserID=0;
 	gGuideID=0;
 	$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist"></p>');
-	loadGuideFile(gStartArgs.templateURL,'');
+	loadGuideFile(gStartArgs.templateURL,'tabsPages');
 }
 function LocalGuidePlay()
 {	// Load up command line specified answer file and switch to play mode

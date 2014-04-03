@@ -66,7 +66,7 @@
 			break;
 		case 2:
 		?>
-			<script src="jQuery/jquery.custom.min.js?jsver=5017" type="text/javascript" ></script>
+			<script src="jquery.custom.min.js?jsver=5017" type="text/javascript" ></script>
 			<script src="A2J_AuthorOne.js?jsver=5017" type="text/javascript"></script>
 		<?php
 			break;

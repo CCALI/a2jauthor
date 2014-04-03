@@ -1057,18 +1057,20 @@ function guideStart(startTabOrPage)
 	
 	
 	$('#fileupload').addClass('fileupload-processing');
-	$('#fileupload').fileupload({
-		 url:CONST.uploadURL+gGuideID,
-		 dataType: 'json',
-		 done: function (e, data) {setTimeout(updateAttachmentFiles,1);
-		 },
-		 progressall: function (e, data) {
-			  var progress = parseInt(data.loaded / data.total * 100, 10);
-			  $('#progress .bar').css('width',	progress + '%'
-			);
-		}
-	});
-	updateAttachmentFiles();
+	if (gGuideID!==0) {
+		$('#fileupload').fileupload({
+			 url:CONST.uploadURL+gGuideID,
+			 dataType: 'json',
+			 done: function (e, data) {setTimeout(updateAttachmentFiles,1);
+			 },
+			 progressall: function (e, data) {
+				  var progress = parseInt(data.loaded / data.total * 100, 10);
+				  $('#progress .bar').css('width',	progress + '%'
+				);
+			}
+		});
+		updateAttachmentFiles();
+	}
 
 	
 	buildMap();
@@ -1477,23 +1479,25 @@ var form={
 	{	
 		var e=$('<span class="fileinput-button"><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary"><span class="ui-button-icon-primary ui-icon ui-icon-plus"></span><span class="ui-button-text" >Upload...</span></button><input class="fileupload" type="file" name="files[]"/></span>');
 		//.addClass('fileupload-processing')
-		$('.fileupload',e).fileupload({
-			 url:CONST.uploadURL + gGuideID,
-			 dataType: 'json',
-			 done: function (e, data) {
-				var filename = data.result.files[0].name;
-				$(e.target).closest('div').find('input[type=text]').val(filename);
-				//form.change($(this),filename);
-				setTimeout(updateAttachmentFiles,250);
-			 },
-			 progressall: function (e, data) {
-				  var progress = parseInt(data.loaded / data.total * 100, 10);
-				  $('#progress .bar').css(
-						'width',
-						progress + '%'
-				  );
-			 }
-		});
+		if (gGuideID!==0) {
+			$('.fileupload',e).fileupload({
+				 url:CONST.uploadURL + gGuideID,
+				 dataType: 'json',
+				 done: function (e, data) {
+					var filename = data.result.files[0].name;
+					$(e.target).closest('div').find('input[type=text]').val(filename);
+					//form.change($(this),filename);
+					setTimeout(updateAttachmentFiles,250);
+				 },
+				 progressall: function (e, data) {
+					  var progress = parseInt(data.loaded / data.total * 100, 10);
+					  $('#progress .bar').css(
+							'width',
+							progress + '%'
+					  );
+				 }
+			});
+		}
 		return e;
 	}
 	

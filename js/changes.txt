@@ -3,6 +3,9 @@
 ### All Contents Copyright The Center for Computer-Assisted Legal Instruction  ###
 ##################################################################################
 
+# 5.0.1.14 2014-04-03
+* New color scheme, internal debug switches
+
 # 5.0.1.9 2014-02-25
 * Updates
 

@@ -310,6 +310,10 @@ div.question.bubble fieldset div.row input[type=text].number {
 	vertical-align: bottom;
 	width: 65%;
 }
+.required {
+	color:#a00;
+	font-weight: bold;
+}
 div.question.ui-form input {
 	display: inline;
 }

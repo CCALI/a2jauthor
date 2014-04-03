@@ -363,6 +363,9 @@ var A2JViewer={
 					break;
 			}
 			var $row=$('<div class="field"/>');
+			if (f.required) {
+				$row.addClass('required');
+			}
 			if ($labelinput!==null){
 				$row.append($('<div class="labelinput"/>').append([$labelinput,$label]));
 			}

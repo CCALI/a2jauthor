@@ -8,6 +8,7 @@
 */
 
 /* JPM 3/21/14 color pallette from http://codepen.io/cobblucas/pen/iGpIf */
+/* JPM http://flatuicolors.com/ */
 
 .ui-widget-header, 
 .ui-state-default, 
@@ -165,16 +166,17 @@ html, body {
 	color:#666666;
 }
 .guidemenu ul li.selected {
-	font-weight: bold;
+	font-weight:bold;
+	border:thick;
+	border:#0066CC;
+	text-transform:uppercase;
 	background-color: #E5E5E5;
-	/*background-color:rgb(0,0,0);
-	background: url("images/main_tab_selected_03.png") no-repeat scroll -65px center;
-	(transparent;
-	width: 200px;*/
 	overflow: visible;
+	background: url(images/menu_selected.png) 99% center no-repeat;
 /* JPM */	
 	color:#0066CC;
 /* JPM */	
+	margin:3px;
 	
 }
 /*.ui-tabs .ui-tabs-nav li { 
@@ -504,7 +506,6 @@ P.CAJATest {
 .macro {
 	background-color:#eee;
 }
-/*
 .warning {
 	background-image: url(images/warning.png);
 	background-repeat: no-repeat;
@@ -529,7 +530,6 @@ P.CAJATest {
 	font-size: .9em;
 	font-style: italic;
 }
-*/
 table.CAJAReportDump {
 	border-collapse:collapse;
 }
@@ -681,9 +681,10 @@ input.text { margin-bottom:12px; width:95%; padding: .4em; }
 */
 
 .ui-dialog .ui-state-error { padding: .3em; }
+
 .ui-dialog {
 /* JPM*/
-	box-shadow: 2px 2px 10px 10px #888888;
+	box-shadow: 10px 10px #888888;
 /* JPM*/
 }
 
@@ -823,7 +824,7 @@ li.guide:hover {
 	overflow: auto;
 	border: none;
 }
-.PagesPanel, #MapperPanel {
+.PagesPanel {
 	position: absolute;
 	top: 5px;
 	left: 10px;
@@ -833,6 +834,17 @@ li.guide:hover {
 /* START 2013/7/1 JPM EDITS */	
 	border: 1px solid #c0c0c0 ;
 /* START 2013/7/1 JPM EDITS */	
+}
+
+#MapperPanel {
+	position: absolute;
+	top: 5px;
+	left: 10px;
+	right:10px;
+	bottom:35px;	
+	overflow: auto;
+	border: 1px solid #c0c0c0 ;
+	background-color: #FFFFFF;
 }
 
 .map {

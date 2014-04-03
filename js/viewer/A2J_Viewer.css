@@ -333,7 +333,7 @@ div.question.bubble div fieldset{
 	text-align:left;
 }
 
-
+/* removed by JPM
 .Step0 { background-color: #ffffff; }
 .Step1, .Step7  { background-color:#BDD6D6; }
 .Step2, .Step8  { background-color:#B7DDB7; }
@@ -341,6 +341,27 @@ div.question.bubble div fieldset{
 .Step4, .Step10 { background-color:#E7E7B5; }
 .Step5, .Step11 { background-color:#EFDED6; }
 .Step6, .Step12 { background-color:#ECD8EA; }
+*/
+
+.Step0 { background-color:#EFEFC6; }
+.Step1 { background-color:#EFEF8C; }
+.Step2 { background-color:#EFC6EF; }
+.Step3 { background-color:#EFC6C6; }
+.Step4 { background-color:#EF8CEF; }
+.Step5 { background-color:#EF8C8C; }
+.Step6 { background-color:#C6EFEF; }
+.Step7 { background-color:#C6EFC6; }
+.Step8 { background-color:#C6C6EF; }
+.Step9 { background-color:#C6C68C; }
+.Step10 { background-color:#C68CC6; }
+.Step11 { background-color:#C68C8C; }
+.Step12 { background-color:#8CEFEF; }
+.Step13 { background-color:#8CEF8C; }
+.Step14 { background-color:#8CC6C6; }
+.Step15 { background-color:#8CC68C; }
+
+
+
 
 div.step  {
 	position: relative;

@@ -1,7 +1,7 @@
 /******************************************************************************
-	A2J Author 5 * Justice * 正义 * công lý * правосудие
+	A2J Author 5 * Justice * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	
+
 	Language (INCOMPLETE)
 	07/14/2012
 	04/15/2013
@@ -457,9 +457,80 @@ Languages.regional['zh-cn']= {
 	Ordinals13:'第十三'
 };
 
+// English
+Languages.regional['ko']= {
+	locale:'ko',
+	
+	Language: '영어', 
+	LanguageEN: 'Korean',
+	AskYesNo_Yes:'예',
+	AskYesNo_No:'아니요',
+	Close:'종료',
+	Comment:'의견',
+	GoBack:'뒤로',
+	GoNext:'다음',
+	LearnMore:'자세히',
+	MyProgress:'내 진행 상황',
+	ProvideFeedbackOrComment:'z',
+	SaveAndExit:'나가기',
+	ResumeExit:'다시 하기',
+	SendFeedback:'피드백 보내기',
+	SoundIsOff:'소리 끄기',
+	SoundIsOn:'소리 켜기',
+	SoundPlay:'재생',
+	SoundStop:'정지',
+	WhatDoYouMean:'어떤 의미입니까?',
+	Continue:'계속',
+	Exit:'나가기',
+	Male:'남성',
+	Female:'여성',	
+	ChooseListNumber:'선택:',
+	ChooseListText:'이 목록에서 선택:',
+	CheckBoxNOTALabel:'내용 중 해당 사항 없음',
+	ZoomNormal:'정상 크기',
+	ZoomFull:'전체 화면',
+	TextEnlarge:'글 상자 확대',
+	TextShrink:'글 상자 축소',
+	TextSizeLetter:'A',
+	UploadAnswers:'나가는 중입니다. 기다려 주십시오…',
+	CalcClear:'지우기',
+	CalcEnter:'입력',	
+	MonthNamesShort:'1월,2월,3월,4월,5월,6월,7월,8월,9월,10월,11월,12월',
+	MonthNamesLong:'1월,2월,3월,4월,5월,6월,7월,8월,9월,10월,11월,12월',
+	FieldPrompts_ResponseRequired:'계속하기 전에 적색 라벨 옆의 공란에 응답해야 합니다.',
+	FieldPrompts_SelectionRequired:'계속하기 전에 선택해야 합니다.',
+	FieldPrompts_text:'계속하기 전에 강조 표시된 공간에 응답을 입력해야 합니다.',
+	FieldPrompts_textlong:'계속하기 전에 강조 표시된 공간에 응답을 입력해야 합니다.',
+	FieldPrompts_textpick:'계속하기 전에 강조 표시된 공간에서 선택해야 합니다.',
+	FieldPrompts_number:'계속하기 전에 강조 표시된 공간에 숫자를 입력해야 합니다.',
+	FieldPrompts_numberdollar:'계속하기 전에 강조 표시된 공간에 달러 액수를 입력해야 합니다.',
+	FieldPrompts_numberssn:'계속하기 전에 강조 표시된 공간에 사회보장번호를 입력해야 합니다.',
+	FieldPrompts_numberphone:'계속하기 전에 강조 표시된 공간에 전화번호를 입력해야 합니다.',
+	FieldPrompts_numberzip:'계속하기 전에 강조 표시된 공간에 우편번호를 입력해야 합니다.',
+	FieldPrompts_numberpick:'계속하기 전에 강조 표시된 공간에 숫자를 선택해야 합니다.',
+	FieldPrompts_datemdy:'계속하기 전에 강조 표시된 공간에 월, 일, 연도를 입력해야 합니다.',
+	FieldPrompts_gender:'계속하기 전에 강조 표시된 선택란에서 남성 또는 여성을 선택해야 합니다.',
+	FieldPrompts_radio:'계속하기 전에 강조 표시된 선택란에서 응답을 선택해야 합니다.',
+	FieldPrompts_checkbox:'계속하려면 1개 이상의 체크박스를 선택해야 합니다.',
+	FieldPrompts_checkboxNOTA:'계속하려면 2개 이상의 체크박스를 선택하거나 "위 내용 중 해당 사항 없음"을 선택하십시오.',
+	Ordinals1:'첫째',
+	Ordinals2:'둘째',
+	Ordinals3:'셋째',
+	Ordinals4:'넷째',
+	Ordinals5:'다섯째',
+	Ordinals6:'여섯째',
+	Ordinals7:'일곱째',
+	Ordinals8:'여덟째',
+	Ordinals9:'아홉째',
+	Ordinals10:'열 번째',
+	Ordinals11:'열한 번째',
+	Ordinals12:'열두 번째',
+	Ordinals13:'열세 번째'
+};
+
 if ($.datepicker) {
- 
-jQuery(function($){
+
+jQuery(function($){ 
 	/* Save the English in case author switches back */
 	$.datepicker.regional['en'] = $.datepicker.regional[''];
 });
@@ -538,8 +609,34 @@ jQuery(function($){
 	//$.datepicker.setDefaults($.datepicker.regional['zh-CN']);
 });
 
-	//code
+/* Korean initialisation for the jQuery calendar extension. */
+/* Written by DaeKwon Kang (ncrash.dk@gmail.com). */
+jQuery(function($){
+	$.datepicker.regional['ko'] = {
+		closeText: '닫기',
+		prevText: '이전달',
+		nextText: '다음달',
+		currentText: '오늘',
+		monthNames: ['1월(JAN)','2월(FEB)','3월(MAR)','4월(APR)','5월(MAY)','6월(JUN)',
+		'7월(JUL)','8월(AUG)','9월(SEP)','10월(OCT)','11월(NOV)','12월(DEC)'],
+		monthNamesShort: ['1월(JAN)','2월(FEB)','3월(MAR)','4월(APR)','5월(MAY)','6월(JUN)',
+		'7월(JUL)','8월(AUG)','9월(SEP)','10월(OCT)','11월(NOV)','12월(DEC)'],
+		dayNames: ['일','월','화','수','목','금','토'],
+		dayNamesShort: ['일','월','화','수','목','금','토'],
+		dayNamesMin: ['일','월','화','수','목','금','토'],
+		weekHeader: 'Wk',
+		dateFormat: 'yy-mm-dd',
+		firstDay: 0,
+		isRTL: false,
+		showMonthAfterYear: false,
+		yearSuffix: '년'};
+	//$.datepicker.setDefaults($.datepicker.regional['ko']);
+});
+
 }
 
 
 /* */
+
+
+

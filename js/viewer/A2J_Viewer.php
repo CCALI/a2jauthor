@@ -9,8 +9,8 @@
 	<title>Access to Justice Author 5 - Viewer Sampler</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
-<body onload='sendArgsToFrame();'>
-	<iframe id="A2JViewerFrame" width="100%" height="100%" src="A2J_ViewerApp.html"></iframe> 
+<body>
+	<iframe id="A2JViewerFrame" width="100%" height="100%" src="A2J_ViewerApp.html" onload='sendArgsToFrame();'></iframe> 
 </body>
 
 <SCRIPT LANGUAGE=JavaScript>
@@ -26,7 +26,7 @@ function sendArgsToFrame(){
 		templateURL:"<?=$gid?>",
 		fileDataURL:"../tests/data/",
 		getDataURL:	"A2J_ViewerGetData.php?answersID=<?=$aid?>",
-		setDataURL:	"A2J_ViewerSetData.php?interviewID=<?=$gid?>",
+		setDataURL:	"A2J_ViewerSetData.php?answersID=<?=$aid?>",
 		exitURL: 	"A2J_ViewerExit.php?interviewID=<?=$gid?>",
 		logURL:   	"A2J_ViewerLog.php", //"https://lawhelpinteractive.org/a2j_logging";
 		errRepURL:	"A2J_ViewerErrRep.php",//"https://lawhelpinteractive.org/problem_reporting_form";

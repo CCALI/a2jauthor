@@ -84,5 +84,12 @@ function gotoPageView(destPageName)
 function main(){
 	loadGuideFile(gStartArgs.templateURL,"");
 }
-//$(document).ready(main);
+
+window.addEventListener("message",receiveMessage,false);
+
+function receiveMessage(event) {
+	gStartArgs  = event.data;
+	main();
+}
+
 /* */

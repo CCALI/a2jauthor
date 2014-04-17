@@ -14,7 +14,11 @@
 <link xhref="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-darkness/jquery-ui.css"  title="style" rel="stylesheet" type="text/css"/>
 <link xhref="http://code.jquery.com/ui/1.9.0/themes/sunny/jquery-ui.css" title="style"  rel="stylesheet" type="text/css"/>
 
+<!--
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic&subset=latin,vietnamese,latin-ext' rel='stylesheet' type='text/css'>
+-->
+<link href='../viewer/A2J_Fonts.css' rel='stylesheet' type='text/css'>
+
 
 <link href="author.jquery-ui.css" title="style"  rel="stylesheet" type="text/css"/>
 <link href="jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />

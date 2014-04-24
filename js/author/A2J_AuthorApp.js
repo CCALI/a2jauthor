@@ -253,12 +253,12 @@ function pageNameFields(pagefs,page)
 
 
 function authorViewerHook()
-{	//	Attach Author editing buttons to the A2J viewer
+{	//	### Attach Author editing buttons to the A2J viewer
 	A2JViewer.IMG = "../viewer/images/";
 	$('.A2JViewer').append('<div class="debugmenu"><button/><button/><button/></div>');
 	$('.A2JViewer div.debugmenu button').first()
 		.button({label:'Edit',icons:{primary:'ui-icon-arrowreturnthick-1-w'}}).click(function(){resumeEdit();})
-//					.next().button({label:'Edit this page',icons:{primary:'ui-icon-pencil'}}).click(function(){gotoPageEdit(page.name)});//ui-icon-document-b
+//	.next().button({label:'Edit this page',icons:{primary:'ui-icon-pencil'}}).click(function(){gotoPageEdit(page.name)});//ui-icon-document-b
 		.next()
 		.button({label:'Test',icons:{primary:'ui-icon-pencil'}}).click(function(){$('.A2JViewer').toggleClass('test',100);})
 		.next()
@@ -270,8 +270,9 @@ function authorViewerHook()
 
 function signin()
 {
-	if (gEnv!='' && gStartArgs.templateURL!=='') {
-		// Debug start option
+	if (gEnv!='' && gStartArgs.templateURL!=='')
+	{
+		// ### Debug start option
 		LocalGuideStart();
 		return;
 	}
@@ -282,27 +283,34 @@ function signin()
 			gGuideID=0;
 			gUserNickName=data.nickname;
 			if (gUserID!==0)
-			{	// Successful signin.
-				//$('#memenu').text(gUserNickName);
-				//$('#welcome .tabContent .name').html("Welcome "+gUserNickName+" user#"+gUserID);
-				//$('#welcome').show();
+			{	// ### Successful signin.
 				gotoTabOrPage('tabsGuides');
-				//$('#tabviews').tabs( { disabled: [1,2,3,4,5,6,7,8,9]});
 				ws({cmd:'guides'},listGuides);
 				$('#splash').hide();
 				$('#authortool').removeClass('hidestart');//.addClass('authortool').show();	
 			}
 			else
-			{
-				//$('#login-form').dialog();
-				trace('');
+			{	// ### If user not logged in inform them and redirect to main site.
+				var $d=$( "#dialog-confirm" );
+				$d.html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>'
+							+'Please login through the main site first.'
+							+'</p>');
+			   $d.dialog( {
+					width: 400, height:300, modal: true,
+					buttons: {
+						 Login: function()
+						 {
+							  window.location = '/';
+						}
+					}
+				});
 			}
 		}
   );
 }
 
 function gotoPageView(destPageName)
-{  // navigate to given page (after tiny delay)
+{  // ### Navigate to given page (after tiny delay)
    window.setTimeout(function(){
       var page = gGuide.pages[destPageName]; 
       if (page === null || typeof page === "undefined")

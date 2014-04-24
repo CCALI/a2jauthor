@@ -54,24 +54,24 @@
 			<script src="jquery.fileupload-process.js"></script><!-- The File Upload processing plugin -->
 			<script src="jquery.fileupload-validate.js"></script><!-- The File Upload validation plugin -->
 			
-			<script src="../viewer/A2J_Types.js?jsver=5017" type="text/javascript"></script>
-			<script src="../viewer/A2J_Shared.js?jsver=5017" type="text/javascript"></script>
-			<script src="../viewer/A2J_SharedSus.js?jsver=5017" type="text/javascript"></script>
-			<script src="../viewer/A2J_Languages.js?jsver=5017" type="text/javascript"></script>
-			<script src="../viewer/A2J_Logic.js?jsver=5017" type="text/javascript"></script>
-			<script src="../viewer/A2J_Parser.js?jsver=5017" type="text/javascript"></script>
-			<script src="../viewer/A2J_Viewer.js?jsver=5017" type="text/javascript"></script>
+			<script src="../viewer/A2J_Types.js?jsver=5" type="text/javascript"></script>
+			<script src="../viewer/A2J_Shared.js?jsver=5" type="text/javascript"></script>
+			<script src="../viewer/A2J_SharedSus.js?jsver=5" type="text/javascript"></script>
+			<script src="../viewer/A2J_Languages.js?jsver=5" type="text/javascript"></script>
+			<script src="../viewer/A2J_Logic.js?jsver=5" type="text/javascript"></script>
+			<script src="../viewer/A2J_Parser.js?jsver=5" type="text/javascript"></script>
+			<script src="../viewer/A2J_Viewer.js?jsver=5" type="text/javascript"></script>
 			
-			<script src="A2J_Mapper.js?jsver=5017" type="text/javascript"></script>
-			<script src="A2J_Dev.js?jsver=5017" type="text/javascript"></script>
-			<script src="A2J_AuthorApp.js?jsver=5017" type="text/javascript"></script>
-			<script src="A2J_Debug.js?jsver=5017" type="text/javascript"></script>
+			<script src="A2J_Mapper.js?jsver=5" type="text/javascript"></script>
+			<script src="A2J_Dev.js?jsver=5" type="text/javascript"></script>
+			<script src="A2J_AuthorApp.js?jsver=5" type="text/javascript"></script>
+			<script src="A2J_Debug.js?jsver=5" type="text/javascript"></script>
 		<?php
 			break;
 		case 2:
 		?>
-			<script src="jquery.custom.min.js?jsver=5017" type="text/javascript" ></script>
-			<script src="A2J_AuthorOne.js?jsver=5017" type="text/javascript"></script>
+			<script src="jquery.custom.min.js?jsver=5" type="text/javascript" ></script>
+			<script src="A2J_AuthorOne.js?jsver=5" type="text/javascript"></script>
 		<?php
 			break;
 	}

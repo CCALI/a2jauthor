@@ -1179,9 +1179,7 @@ function guideLoaded(data)
 			pages.push(QUESTION.attr("ID")+" "+ QUESTION.attr("NAME"));
 		});
 	*/
-	//gGuide.filename=guideFile; 
 	gGuidePath=urlSplit(data.path).path; 
-	
 	guideStart('');
 	setProgress('');
 }
@@ -1201,7 +1199,7 @@ function styleSheetSwitch(theme)
 }
 
 function editButton()
-{
+{	// ### For the simple editor, handle simple styles. 
 	switch ($(this).attr('id')){
 		case 'bold': document.execCommand('bold', false, null); break;
 		case 'italic': document.execCommand('italic', false, null); break;

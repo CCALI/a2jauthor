@@ -14,13 +14,13 @@
 ******************************************************************************/
 
 function fixPath(file)
-{	// Keep fully qualified path, otherwise default to file within guide's folder
+{	// ### Keep fully qualified web path, otherwise default to file within guide's folder (no subfolders)
 	if (file.indexOf('http')===0)
 	{
 		return file;
 	}
 	var fileFixed = gGuidePath+urlSplit(file).file;
-	trace('fixPath',file,fileFixed);
+	//trace('fixPath',gGuidePath,file,fileFixed);
 	return fileFixed;
 }
 function loadXMLList(opts)

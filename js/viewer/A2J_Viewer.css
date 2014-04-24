@@ -244,7 +244,7 @@ div.question.bubble > div, div.learnmore.bubble > div{ /* form with viewer's fie
 	width: 100%;
 	overflow: auto;
 	min-height: 150px;
-	max-height: 500px; 
+	max-height: 400px; 
 	position: relative;  
 }
 div.learnmore.bubble, div.learnmore.bubble > div {
@@ -320,19 +320,22 @@ div.question.ui-form input {
 div.question.bubble fieldset div.row input[type=text] {
 	background-color:#fff;
 }
-
-div.question.bubble div div.buttonlist, div.learnmore.bubble div div.buttonlist{
+/* Buttons below the question/learn more bubbles */
+div.question.panel div.buttonlist, div.learnmore.bubble div div.buttonlist{
+	margin-top: 1.0em;
 	bottom: 4px;
-	right: 4px;
+	margin-right: 2em;
 	width: 100%; 
-	min-height:  1px; 
+	min-height:  2em; 
 }
-div.question.bubble div div.buttonlist{
+div.question.panel div.buttonlist{
 	text-align:right;
 }
 div.learnmore.bubble div div.buttonlist{
 	text-align:center;
 }
+
+
 div.question.bubble div fieldset{
 	text-align:left;
 }
@@ -577,3 +580,9 @@ span.err {
 }
 
 /* */
+
+x.question.panel {
+	background-color:#f00;
+}
+
+

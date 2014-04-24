@@ -18,6 +18,8 @@
 <script src="../viewer/A2J_Logic.js" type="text/javascript" ></script>
 <script src="../viewer/A2J_Parser.js" type="text/javascript" ></script>
 <script src="../viewer/A2J_Viewer.js" type="text/javascript" ></script>
+
+
 <style type="text/css">
 <!--
 body {
@@ -31,6 +33,10 @@ body {
 	overflow: hidden;
 	background-color:#aaf;
 }
+.A2JViewer .interact {
+	overflow: hidden;
+}
+
 .zoomed-element {
 	-moz-transform: scale(.75);
 	-webkit-transform: scale(.75);
@@ -69,13 +75,13 @@ function ready()
 	$('#tests').append('<h2>Zoom factor</h2>');
 	$('#tests button').button().click(function(){
 		$('#DemoSteps').empty();
-		teststep(parseInt($(this).text()))
+		testStep(parseInt($(this).text()))
 	});
 
 	
 	for (var s=0;s<gGuide.steps.length;s++)
 	{
-		teststep(s);
+		testStep(s);
 	}
 	//A2JViewer.layout($('#demostep'),0,steps);
 	
@@ -84,7 +90,7 @@ function ready()
 		$('#DemoSteps .A2JViewer').css({zoom:scale,"-moz-transform":"scale("+scale+")","-webkit-transform":"scale("+scale+")"});
 	 });
 }
-function teststep(curstep)
+function testStep(curstep)
 {	// create layout for step with sample question/learnmore filler.
 	/** @type TPage */
 	var demo =$('<div class="A2JViewer"/>');
@@ -92,12 +98,21 @@ function teststep(curstep)
 	var page=new TPage();
 	var steps=gGuide.steps;
 	page.step=curstep;
-	var text='<p>Question text #'+page.step+' appears here:</p>';
+	var text='<p>Question text page/step#'+page.step+' appears here:</p>';
 	for (var i=0;i<page.step*4;i++){
 		text+='<p>Line #' + i + '</p>';
 	}
 	page.name="Page "+curstep;
 	page.text=text;
+	/** @type TField */
+	var f = new TField();
+	f.type=CONST.ftText;
+	f.name= 'VAR '+page.step;
+	f.label='Field#'+page.step+':';
+	f.default='Default value';
+	
+	page.fields=[f];
+	
 	if (page.step === steps.length-1)
 	{
 		page.buttons=[{label:'Done!'}];

@@ -219,8 +219,8 @@ var A2JViewer={
 		var curstep = page.step;
 		var questionHTML = gLogic.evalLogicHTML( page.text );
 		var helpHTML = gLogic.evalLogicHTML( page.help);
-		// Save quesetion to history (my progress)
-		//<li><a href="#"><span class="ui-icon ui-icon-document"></span>Question 1<div>Should you use this form?</div></a></li>
+		// ### Save quesetion to history (my progress)
+		// ### e.g., <li><a href="#"><span class="ui-icon ui-icon-document"></span>Question 1<div>Should you use this form?</div></a></li>
 		if (!A2JViewer.skipHistory)
 		{
 			trace('Save in history');
@@ -236,13 +236,20 @@ var A2JViewer={
 		
 		$('.interact',div).html(A2JViewer.layoutStep(curstep));
 		
-		$('.ui-form.question',div).html(questionHTML + '<div class="form"></div><div class="buttonlist"></div>');
+		$('.ui-form.question',div).html(questionHTML+'<div class="form"></div>');
+		$('.question.panel',div).append('<div class="buttonlist"></div>');
+		
 		for (var bi=0;bi<page.buttons.length;bi++)
 		{
 			var b = page.buttons[bi];
-			$('.ui-form.question  .buttonlist',div).append('<button num='+bi+' title="Go to page '+gGuide.pageDisplayName(b.next).asHTML()+'">'+b.label+'</button>'); //.A2JViewer .ui-form.question  .buttonlist'
+			//$('.ui-form.question  .buttonlist',div).
+			$('.question.panel > .buttonlist',div).append(
+				'<button num='+bi+' title="Go to page '+gGuide.pageDisplayName(b.next).asHTML()+'">'+b.label
+				+'</button>'); //.A2JViewer .ui-form.question  .buttonlist'
 		}
-		var fs=$('.ui-form.question .form',div);//'.A2JViewer .ui-form.question .form'
+		
+		// ### FieldSet to attach custom fields.
+		var fs=$('.ui-form.question .form',div);
 	
 		/*
 		 * @type {string|number}
@@ -252,8 +259,7 @@ var A2JViewer={
 			varIndex = gGuide.varGet(page.repeatVar);
 		}
 		for (var fi=0;fi<page.fields.length;fi++)
-		{
-			
+		{			
 			/** @type {TField} */
 			var f = page.fields[fi];// field record
 			/*
@@ -388,7 +394,8 @@ var A2JViewer={
 		$('.ui-form.learnmore button',div).button().click(function(){
 			$('.A2JViewer .learnmore.bubble').hide();
 		});
-		$('.ui-form.question button',div).button().click(function()
+		//$('.ui-form.question button',div).button().click(function()
+		$('.question.panel .buttonlist button',div).button().click(function()
 		{	// Validation of form data before proceeding
 			/*
 			 * @type {string|number}
@@ -534,9 +541,8 @@ var A2JViewer={
 			qx=si.gf[0]-300;
 			txt += posimg('A2JAvatar-Guide-Front-'+gg+av+'.png',si.gf[0],si.gf[1]);
 		}
-		txt +='<div class="question bubble" style="position:absolute; left:'+qx+'px; top: 140px; width: 300px; "><div class="question ui-form"></div></div><img style="position:absolute; left: '+(qx+299)+'px; top: 240px; " src="'+IMG+'guide_bubble_tip.png"   />';
-		//txt += '<div class="buttonlist" style="position:absolute; left:'+qx+'px;top: ></div>';
-		
+		txt +='<div class="question panel" style="position:absolute; left:'+qx+'px; top: 140px; width: 300px; "><div class="question bubble"><div class="question ui-form"></div></div></div><img style="position:absolute; left: '+(qx+299)+'px; top: 240px; " src="'+IMG+'guide_bubble_tip.png"   />';
+	
 
 		var shared = '<div class="learnmore bubble" style="position:absolute; left:604px; top: 93px; width: 285px;"><div class="ui-form learnmore"><div class="buttonlist"><button>Close</button></div></div></div>';
 

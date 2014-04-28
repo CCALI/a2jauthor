@@ -218,7 +218,8 @@ var A2JViewer={
 		
 		var curstep = page.step;
 		var questionHTML = gLogic.evalLogicHTML( page.text );
-		var helpHTML = gLogic.evalLogicHTML( page.help);
+		var helpHTML =  gLogic.evalLogicHTML( page.help);
+		var learnHTML = page.learn; 
 		// ### Save quesetion to history (my progress)
 		// ### e.g., <li><a href="#"><span class="ui-icon ui-icon-document"></span>Question 1<div>Should you use this form?</div></a></li>
 		if (!A2JViewer.skipHistory)
@@ -369,7 +370,9 @@ var A2JViewer={
 					break;
 			}
 			var $row=$('<div class="field"/>');
+			$row.attr('fname',f.name);
 			if (f.required) {
+				//### Add 'required' indicator (mark as red text)
 				$row.addClass('required');
 			}
 			if ($labelinput!==null){
@@ -379,24 +382,43 @@ var A2JViewer={
 				$row.append([$('<div class="label"/>').append($label),$('<div class="input"/>').append($input)]);
 			}
 			fs.append($row);
-		} 
-		$('.ui-form.learnmore',div).html(helpHTML + '<div class="buttonlist"><button>Close</button></div>').parent().hide().filter(
-			function(){
-				return helpHTML!=="";
-			}).fadeIn(1000);
+		}
 		
+		// ### Learn more Prompt
+		$('.ui-form.learnmore',div).html(learnHTML );
+		$('.learnmore button',div).button().click(function(){
+			$('.A2JViewer .learnmore.panel').hide();
+			$('.A2JViewer .help.panel').show();
+		});
+		$('.panel.learnmore',div).hide();
+		if (learnHTML!=="") {
+			$('.panel.learnmore',div).delay(3000).fadeIn(1000);
+		}
 		
+		// ### Learn more Help		
+		$('.ui-form.help',div).html(helpHTML );
+		$('.panel.help',div).hide();
+		//+ '<div class="buttonlist"><button>Close</button></div>'
+		$('.panel.help button',div).button().click(function(){
+			$('.help.panel',div).hide();
+			$('.learnmore.panel',div).show();
+		});
+		
+		// ### Error prompt
+		$('.panel.formerror',div).hide();
+		$('.panel.formerror button',div).button().click(function(){
+			$('.formerror.panel',div).hide();
+		});
+		
+		//### Position question bubble
 		var h=$('.question.ui-form',div).height();
-		if (h>400){
+		if (h>400)
+		{	// TODO Handle via CSS instead of script
 			$('.question.bubble',div).css({top:50});
 		}
 		
-		$('.ui-form.learnmore button',div).button().click(function(){
-			$('.A2JViewer .learnmore.bubble').hide();
-		});
-		//$('.ui-form.question button',div).button().click(function()
 		$('.question.panel .buttonlist button',div).button().click(function()
-		{	// Validation of form data before proceeding
+		{	//### Question validation of form data before proceeding
 			/*
 			 * @type {string|number}
 			* */
@@ -405,66 +427,132 @@ var A2JViewer={
 			{
 				varIndex=gGuide.varGet(page.repeatVar);
 			}
-			for (var fi=0;fi<page.fields.length;fi++)
+			var invalid=false;
+			$('.question.panel .ui-form div').removeClass('error');
+			for (var fi=0; (!invalid ) && (fi<page.fields.length);fi++)
 			{
-				var f = page.fields[fi];// field record
+				/** @type TField */
+				var f = page.fields[fi];// field record				
 				var fid = "FID_"+fi;//field id - unique
 				//var fname = "FID_"+f.name;//field name - possible duplicates, i.e., radio buttons
-
+				var val = '';
 				switch (f.type)
-				{
-					case CONST.ftText://"Text"
+				{	// Get the field Value, validate it, store in variables if valid.
+					
+					case CONST.ftText:	//	"Text"
+						val = $('#'+fid).val();
+						if (val==='' && f.required) {
+							invalid=true;
+						}
+						else{
+							gGuide.varSet(f.name,val,varIndex);
+						}
+					   break;
+					
 					case CONST.ftTextLong://"Text (Long)"
-					case CONST.ftNumber://"Number"
+						val = $('#'+fid).val();
+						if (val==='' && f.required) {
+							invalid=true;
+						}
+						else{
+							gGuide.varSet(f.name,val,varIndex);
+						}
+					   break;
+					
+					case CONST.ftNumber://"Number"				
 					case CONST.ftNumberDollar://"Numbfer Dollar"
+						val = $('#'+fid).val();
+						if (val==='' && f.required) {
+							invalid=true;
+						}
+						else
+						{ 
+							val = textToNumber(val);
+							if (f.min !=='' && val < f.min){
+								invalid=true;
+							}
+							if (f.max !=='' && val > f.max){
+								invalid=true;
+							}
+						}
+						if (!invalid) {
+							gGuide.varSet(f.name,val,varIndex);
+						}
+					   break;
 					case CONST.ftNumberSSN://"Number SSN"
+						val = $('#'+fid).val();
+						gGuide.varSet(f.name,val,varIndex);
+					   break;
 					case CONST.ftNumberPhone://"Number Phone"
+						val = $('#'+fid).val();
+						gGuide.varSet(f.name,val,varIndex);
+					   break;
 					case CONST.ftNumberZIP://"Number ZIP Code"
+						val = $('#'+fid).val();
+						gGuide.varSet(f.name,val,varIndex);
+					   break;
 					case CONST.ftDateMDY://"Date MM/DD/YYYY"
-						gGuide.varSet(f.name,$('#'+fid).val(),varIndex);
+						val = $('#'+fid).val();
+						gGuide.varSet(f.name,val,varIndex);
 					   break;
 					case CONST.ftTextPick://"Text (Pick from list)"
-						gGuide.varSet(f.name,$('#'+fid).val(),varIndex);						
+						val = $('#'+fid).val();
+						gGuide.varSet(f.name,val,varIndex);
 					   break;
 					case CONST.ftNumberPick://"Number (Pick from list)"
-						gGuide.varSet(f.name,$('#'+fid).val(),varIndex);
+						val = $('#'+fid).val();
+						gGuide.varSet(f.name,val,varIndex);
 					   break;
 					case CONST.ftGender://"Gender"
 						if ($('#'+fid+'M').is(':checked')){
-							gGuide.varSet(f.name,lang.Male,varIndex);
+							val = lang.Male;
 						}
 						if ($('#'+fid+'F').is(':checked')){
-							gGuide.varSet(f.name,lang.Female,varIndex);
+							val = lang.Female;
 						}
+						gGuide.varSet(f.name,val,varIndex);
 					   break;
 					case CONST.ftRadioButton://"Radio Button"
 						if ($('#'+fid).is(':checked')){
-							gGuide.varSet(f.name,f.value,varIndex);
+							val =  f.value;
 						}
+						gGuide.varSet(f.name,val,varIndex);
 					   break;
 					case CONST.ftCheckBox://"Check box"
-						gGuide.varSet(f.name,$('#'+fid).is(':checked'),varIndex);
+						val  =  $('#'+fid).is(':checked');
+						gGuide.varSet(f.name,val,varIndex);
 					   break;
 					case CONST.ftCheckBoxNOTA://"Check Box (None of the Above)" 
 						break;
+				}//end case
+				trace('Field '+f.name+' '+val);
+				if (invalid)
+				{
+					$('.ui-form.formerror',div).html(f.invalidPrompt);
+					$('.panel.formerror',div).show();
+					$('.ui-form [fname="'+f.name+'"]').addClass('error');
 				}
-			}
+				
+			}//end for
 			
-			var bi=parseInt($(this).attr('num'),10);
-			var b=page.buttons[bi];
-			
-			traceLogic( 'You pressed ' + traceTag('ui',b.label));
-			trace('ButtonPress',b.label,b.name,b.value);
-			if (b.name!=="")
-			{	// Set button's variable 
-				gGuide.varSet(b.name,b.value,varIndex);
-			}
-			
-			// execute the logic
-			gLogic.GOTOPAGE=b.next;
-			gLogic.executeScript(page.codeAfter);
-			// TODO HANDLE LOOPS
-			gotoPageView(b.next);		
+			if (!invalid)
+			{
+				var bi=parseInt($(this).attr('num'),10);
+				var b=page.buttons[bi];
+				
+				traceLogic( 'You pressed ' + traceTag('ui',b.label));
+				trace('ButtonPress',b.label,b.name,b.value);
+				if (b.name!=="")
+				{	// Set button's variable 
+					gGuide.varSet(b.name,b.value,varIndex);
+				}
+				
+				// execute the logic
+				gLogic.GOTOPAGE=b.next;
+				gLogic.executeScript(page.codeAfter);
+				// TODO HANDLE LOOPS
+				gotoPageView(b.next);
+		}
 		});//button click
 		
 	},
@@ -544,7 +632,13 @@ var A2JViewer={
 		txt +='<div class="question panel" style="position:absolute; left:'+qx+'px; top: 140px; width: 300px; "><div class="question bubble"><div class="question ui-form"></div></div></div><img style="position:absolute; left: '+(qx+299)+'px; top: 240px; " src="'+IMG+'guide_bubble_tip.png"   />';
 	
 
-		var shared = '<div class="learnmore bubble" style="position:absolute; left:604px; top: 93px; width: 285px;"><div class="ui-form learnmore"><div class="buttonlist"><button>Close</button></div></div></div>';
+		// HTML for Learn More and LearnMore Help bubbles. 
+		var shared = '<div class="learnmore panel" style="position:absolute; left:604px; top: 153px; width: 285px;"><div class="learnmore bubble"><div class="ui-form learnmore"></div></div>'
+			+'<div class="buttonlist"><button>'+lang.LearnMore+'</button></div></div>';
+		shared += '<div class="help panel" style="position:absolute; left:604px; top: 93px; width: 285px;"><div class="help bubble"><div class="ui-form help"></div></div>'
+			+'<div class="buttonlist"><button>'+ lang.Close+'</button></div></div>';
+		shared += '<div class="formerror panel" style="position:absolute; left:604px; top: 93px; width: 285px;"><div class="formerror bubble"><div class="ui-form formerror"></div></div>'
+			+'<div class="buttonlist"><button>'+ lang.Close+'</button></div></div>';
 
 		return '<div class="step" >' + txt + shared + '</div>';
 	}

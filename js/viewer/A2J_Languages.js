@@ -26,6 +26,8 @@ var lang = {
 	ResumeExit:'',
 	Comment:'',
 	SendFeedback:'',
+	Close:'',
+	LearnMore:'',
 	
 	qIDNOWHERE:'',
 	qIDSUCCESS:'',

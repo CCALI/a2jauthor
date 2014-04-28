@@ -217,6 +217,21 @@ function textToBool(b, defaultb)
 	}
 	return (b===1) || (b==='1') || (String(b).toLowerCase()==="true");
 }
+function textToNumber(n)
+{	// convert to number even with commas.
+	if (n==='' || n===null || typeof n === "undefined" )
+	{
+		return 0;
+	}
+	n=n.replace(',','');//English Only
+	return parseFloat(n);
+}
+function isNumber(n)
+{	//http://stackoverflow.com/questions/18082/validate-numbers-in-javascript-isnumeric
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+
 function aie(obj,attr,val)
 {	// set obj's attr to val, only if value exists 
 	if (val===null){
@@ -249,12 +264,6 @@ function strcmp(a,b)//Number
 	if (a>b)	{return 1;}
 	return 0;
 }
-
-function isNumber(n)
-{//http://stackoverflow.com/questions/18082/validate-numbers-in-javascript-isnumeric
-  return !isNaN(parseFloat(n)) && isFinite(n);
-}
-
 
 function jquote(str)
 {

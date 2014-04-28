@@ -12,9 +12,6 @@
 	font-family:  "Open Sans",​sans-serif;
 	font-size: 1em;
 }
-div.question.bubble, div.learnmore.bubble {
-	font-size: 1em;
-}
 
 .hidestart { /* hide some elements initially */
 	display: none;
@@ -232,26 +229,70 @@ div.bubble {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
-div.question.bubble, div.learnmore.bubble {/* question bubble */
+/*div.question.bubble, div.learnmore.bubble , div.help.bubble {*/
+.bubble {
+	font-size: 1em;
+}
+div.question.bubble,
+div.learnmore.bubble ,
+div.help.bubble,
+div.formerror.bubble {/* question bubble */
 	margin:  0px;
 	padding:  10px;
 	/*min-height: 150px;*/
 	/*max-height: 500px;*/
 }
-div.question.bubble > div, div.learnmore.bubble > div{ /* form with viewer's field inputs */
+div.question.bubble > div,
+div.formerror.bubble > div,
+div.help.bubble > div { /* form with viewer's field inputs */
 	margin: 0px;
 	padding: 0px;
 	width: 100%;
 	overflow: auto;
+	position: relative;  
 	min-height: 150px;
 	max-height: 400px; 
-	position: relative;  
 }
-div.learnmore.bubble, div.learnmore.bubble > div {
+div.question.bubble > div {
+	max-height: 350px;/* Must preserve room for drop down calendar */
+}
+.learnmore.bubble > div {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	overflow: auto;
+	position: relative;  
+	min-height: 1em;
+	max-height: auto;
+}
+.help.bubble,
+.help.bubble > div {
 	min-height: 50px;
 	max-height: 500px; 
 }
 
+/* Buttons below the question/learn more bubbles */
+.question.panel .buttonlist,
+.formerror.panel .buttonlist,
+.learnmore.panel .buttonlist,
+.help.panel .buttonlist {
+	margin-top: 1.0em;
+	bottom: 4px;
+	margin-right: 2em;
+	width: 100%; 
+	min-height:  2em; 
+}
+.question.panel .buttonlist{
+	text-align:right;
+}
+.learnmore.panel .buttonlist,
+.formerror.panel .buttonlist,
+.help.panel .buttonlist{
+	text-align:center;
+}
+.field.error {
+	background-color: #ff0;
+}
 /*
 .A2JViewer input[type=radio], .A2JViewer input[type=checkbox] {
 	display: inline;
@@ -320,21 +361,6 @@ div.question.ui-form input {
 div.question.bubble fieldset div.row input[type=text] {
 	background-color:#fff;
 }
-/* Buttons below the question/learn more bubbles */
-div.question.panel div.buttonlist, div.learnmore.bubble div div.buttonlist{
-	margin-top: 1.0em;
-	bottom: 4px;
-	margin-right: 2em;
-	width: 100%; 
-	min-height:  2em; 
-}
-div.question.panel div.buttonlist{
-	text-align:right;
-}
-div.learnmore.bubble div div.buttonlist{
-	text-align:center;
-}
-
 
 div.question.bubble div fieldset{
 	text-align:left;

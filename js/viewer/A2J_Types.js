@@ -321,7 +321,7 @@ function TPage()
 	this.text= "";// Text of question
 	this.textAudioURL= "";
 	this.notes= "";
-	this.learn= "";
+	this.learn= "";//Learn More prompt
 	this.help= "";// Optional help text from Learn More button
 	
 	this.helpAudioURL = "";
@@ -702,8 +702,8 @@ var gStartArgs = {
 	fileDataURL:"",
 	getDataURL:	"",
 	setDataURL:	"",
-	exitURL: 	"",
-	logURL:   	"", //e.g., "https://lawhelpinteractive.org/a2j_logging";
+	exitURL:		"",
+	logURL:		"", //e.g., "https://lawhelpinteractive.org/a2j_logging";
 	errRepURL:	"" //e.g., "https://lawhelpinteractive.org/problem_reporting_form";
 };
 

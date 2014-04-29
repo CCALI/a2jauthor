@@ -70,6 +70,12 @@ $(document).ready(function()
 		+ data.guide.length+" characters<hr>" 
 		+ description +pages.join('<li>')); 
 	}
+	function answersetLoaded(data)
+	{ 
+		gGuideID=data.gid;
+		status('Loaded the answerset #'+gGuideID );		
+		html("<textarea rows=20 id=guidexml>"+ htmlEscape(data.answerset) + "</textarea>" ); 
+	}
 	function guideZipped(data)
 	{ 
 		gGuideID=data.gid;
@@ -84,15 +90,20 @@ $(document).ready(function()
 		gGuideID=0;
 		var items = [];
 	  	$.each(data.guides, function(key,g) { items.push('<li class=guide gid="' + g.id + '">' + 
-			'<span>XML</span> <span>ZIP</span> ' + g.title + ' '+(g.owned?'mine':'other') + '</li>');});
+			'<span>XML</span> <span>ANX</span> <span>ZIP</span> ' + g.title + ' '+(g.owned?'mine':'other') + '</li>');});
 		status('Listing '+items.length+' guides.');
 		html("Guides <ol>"+items.join('')+"</ol>");
-		$('li.guide span:first-child').click(function(){
+		$('li.guide span:nth-child(1)').click(function(){
 			var gid =  $(this).parent().attr('gid');
 			setProgress('Loading guide '+$(this).parent().text(),true);
 			ws({cmd:'guide',gid:gid } ,guideLoaded);		
 		});
-		$('li.guide span:last-child').click(function(){
+		$('li.guide span:nth-child(2)').click(function(){
+			var gid =  $(this).parent().attr('gid');
+			setProgress('Loading AnswerSet '+$(this).parent().text(),true);
+			ws({cmd:'answerset',gid:gid},answersetLoaded);		
+		});
+		$('li.guide span:nth-child(3)').click(function(){
 			var gid =  $(this).parent().attr('gid');
 			setProgress('Loading ZIP '+$(this).parent().text(),true);
 			ws({cmd:'guidezip',gid:gid},guideZipped);		
@@ -144,9 +155,9 @@ $(document).ready(function()
 	$('#guides_owned').click(function(){ws({cmd:'guides/owned'},listGuides)});
 	$('#guides_all').click(function(){ws({cmd:'guides'},listGuides)});
 	$('#guidesave').click(function()	{if (gGuideID==0) return; ws({cmd:'guidesave',gid:gGuideID, guide:$('#guidexml').val()},statusupdate)});
+	$('#answersetsave').click(function()	{if (gGuideID==0) return; ws({cmd:'answersetsave',gid:gGuideID, answerset:$('#guidexml').val()},statusupdate)});
 	$('#guidesaveas').click(function(){if (gGuideID==0) return; ws({cmd:'guidesaveas',gid:gGuideID, guide:$('#guidexml').val()},guidesaveas)});
 	$('#guideclone').click(function(){if (gGuideID==0) return; ws({cmd:'guideclone',gid:gGuideID},guideclone)});
-	
 });
 
 function ws(data,results)
@@ -266,6 +277,11 @@ Pass:
 			<tr>
 				<td>Editing Guide</td>
 				<td nowrap="nowrap"><input type="button" id="guidesave" value="Save Guide" /> <input type="button" id="guidesaveas" value="Save As Guide" /></td>
+			</tr>
+			<tr>
+				<td>Saving Answers</td>
+				<td nowrap="nowrap"><input type="button" id="answersetsave" value="Save Answer" />
+					 </td>
 			</tr>
 		</table></td>
 		<td><div id="status">Status</div><div id="results">Results</div></td>

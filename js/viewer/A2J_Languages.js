@@ -28,6 +28,7 @@ var lang = {
 	SendFeedback:'',
 	Close:'',
 	LearnMore:'',
+	FieldPrompts_text:'',
 	
 	qIDNOWHERE:'',
 	qIDSUCCESS:'',

@@ -90,11 +90,14 @@ function ready()
 		$('#DemoSteps .A2JViewer').css({zoom:scale,"-moz-transform":"scale("+scale+")","-webkit-transform":"scale("+scale+")"});
 	 });
 }
+function gotoPageView(args) {
+	
+}
 function testStep(curstep)
 {	// create layout for step with sample question/learnmore filler.
-	/** @type TPage */
 	var demo =$('<div class="A2JViewer"/>');
 	$('#DemoSteps').append('<h2>Test Step '+curstep+'</h2>').append(demo);
+	/** @type TPage */
 	var page=new TPage();
 	var steps=gGuide.steps;
 	page.step=curstep;
@@ -105,13 +108,52 @@ function testStep(curstep)
 	page.name="Page "+curstep;
 	page.text=text;
 	/** @type TField */
-	var f = new TField();
-	f.type=CONST.ftText;
-	f.name= 'VAR '+page.step;
-	f.label='Field#'+page.step+':';
-	f.default='Default value';
+	var f;
 	
-	page.fields=[f];
+	f = new TField();
+	f.type=CONST.ftText;
+	f.name= 'TXTa '+page.step;
+	f.label='TXTa#'+page.step+':';
+	f.default='my value';
+	page.fields.push(f);
+	
+	f = new TField();
+	f.type=CONST.ftText;
+	f.name= 'TXTb '+page.step;
+	f.label='TXTb#'+page.step+':';
+	f.required=true;
+	f.default='';
+	page.fields.push(f);
+	
+	f = new TField();
+	f.type=CONST.ftNumber;
+	f.name= 'numA'+page.step;
+	f.label='Num1-10#'+page.step+':';
+	f.min='1';
+	f.max='10';
+	f.invalidPrompt='Enter a number from 1 to 10.'
+	f.default='';
+	page.fields.push(f);
+	
+	f = new TField();
+	f.type=CONST.ftNumber;
+	f.name= 'numB'+page.step;
+	f.label='Num1-100#'+page.step+':';
+	f.min='1';
+	f.max='100';
+	f.invalidPrompt='Enter a number from 1 to 100.'
+	f.default=77;
+	page.fields.push(f);
+	
+	f = new TField();
+	f.type=CONST.ftDateMDY;
+	f.name= 'dateA'+page.step;
+	f.label='Birthday';
+	//f.min='1';
+	//f.max='100';
+	f.invalidPrompt='Enter a valid birthday.'
+	page.fields.push(f);
+	
 	
 	if (page.step === steps.length-1)
 	{
@@ -121,7 +163,8 @@ function testStep(curstep)
 	else
 	{
 		page.buttons=[ {label:'Next'},{label:'Skip to '+(page.step+1)}];
-		page.help = 'Learn more text: '+text;
+		page.learn = 'Please explain';
+		page.help = 'Learn more text: <p>'+text;
 	}
 	
 	

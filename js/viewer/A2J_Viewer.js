@@ -161,20 +161,21 @@ var A2JViewer={
 				.next().button({label:'Reload',icons:{primary:'ui-icon-arrowrefresh-1-e'}})
 				;
 			$('#viewer-var-filter').keyup(A2JViewer.filterVariables);
-			//ui-icon-extlink
+			
+			// Navigation
 			$('#history').change(function(){
 				// Handle history navigation from drop down.
 				A2JViewer.skipHistory=true;
 				gotoPageView($(this).val());
 			});
 			$('button.navBack',div).button({label:  lang.GoBack,icons:{primary:'ui-icon-circle-triangle-w'},disabled:true}).click(function(){
-				trace('navBack');
+				//trace('navBack');
 				$('#history').prop('selectedIndex',$('#history').prop('selectedIndex')+1);
 				A2JViewer.skipHistory=true;
 				gotoPageView($('#history').val());
 			});
 			$('button.navNext',div).button({label:  lang.GoNext,icons:{primary:'ui-icon-circle-triangle-e'},disabled:true}).click(function(){
-				trace('navNext');
+				//trace('navNext');
 				$('#history').prop('selectedIndex',$('#history').prop('selectedIndex')-1);
 				A2JViewer.skipHistory=true;
 				gotoPageView($('#history').val());
@@ -330,23 +331,24 @@ var A2JViewer={
 				
 				case CONST.ftDateMDY://"Date MM/DD/YYYY"
 				   $input=($('<input type=text id='+fid+'></input>').val(defval));
-					trace(CONST.ftDateMDY,gGuide.language);
+					//trace(CONST.ftDateMDY,gGuide.language);
 					var dateOpts = {
 						changeMonth: true,
 						changeYear: true
 					};
 					if (!isBlankOrNull(f.min)) {
-						trace('minDate',f.min);
+						//trace('minDate',f.min);
 						dateOpts.minDate = f.min;
 					}
 					if (!isBlankOrNull(f.max)) {
-						trace('maxDate',f.max);
+						//trace('maxDate',f.max);
 						dateOpts.maxDate = f.max;
 					}
 					$.datepicker.setDefaults($.datepicker.regional[ gGuide.language ]);
 					// 3/21/2014 Format dates for any language in USA m/d/y format. 
 					dateOpts.dateFormat = 'mm/dd/yyyy';
 					$input.datepicker( dateOpts);
+					$('#ui-datepicker-div').addClass('bubble');
 				   break;
 				
 				case CONST.ftGender://"Gender"
@@ -479,29 +481,44 @@ var A2JViewer={
 							gGuide.varSet(f.name,val,varIndex);
 						}
 					   break;
+					
 					case CONST.ftNumberSSN://"Number SSN"
-						val = $('#'+fid).val();
-						gGuide.varSet(f.name,val,varIndex);
-					   break;
 					case CONST.ftNumberPhone://"Number Phone"
-						val = $('#'+fid).val();
-						gGuide.varSet(f.name,val,varIndex);
-					   break;
 					case CONST.ftNumberZIP://"Number ZIP Code"
 						val = $('#'+fid).val();
-						gGuide.varSet(f.name,val,varIndex);
+						if (val==='' && f.required) {
+							invalid=true;
+						}
+						else{
+							gGuide.varSet(f.name,val,varIndex);
+						}
 					   break;
 					case CONST.ftDateMDY://"Date MM/DD/YYYY"
 						val = $('#'+fid).val();
-						gGuide.varSet(f.name,val,varIndex);
+						if (val==='' && f.required) {
+							invalid=true;
+						}
+						else{
+							gGuide.varSet(f.name,val,varIndex);
+						}
 					   break;
 					case CONST.ftTextPick://"Text (Pick from list)"
 						val = $('#'+fid).val();
-						gGuide.varSet(f.name,val,varIndex);
+						if (val==='' && f.required) {
+							invalid=true;
+						}
+						else{
+							gGuide.varSet(f.name,val,varIndex);
+						}
 					   break;
 					case CONST.ftNumberPick://"Number (Pick from list)"
 						val = $('#'+fid).val();
-						gGuide.varSet(f.name,val,varIndex);
+						if (val==='' && f.required) {
+							invalid=true;
+						}
+						else{
+							gGuide.varSet(f.name,val,varIndex);
+						}
 					   break;
 					case CONST.ftGender://"Gender"
 						if ($('#'+fid+'M').is(':checked')){
@@ -528,7 +545,8 @@ var A2JViewer={
 				trace('Field '+f.name+' '+val);
 				if (invalid)
 				{
-					$('.ui-form.formerror',div).html(f.invalidPrompt);
+					
+					$('.ui-form.formerror',div).html(isBlankOrNull( f.invalidPrompt)?lang.FieldPrompts_text:f.invalidPrompt);
 					$('.panel.formerror',div).show();
 					$('.ui-form [fname="'+f.name+'"]').addClass('error');
 				}

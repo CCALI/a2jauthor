@@ -51,17 +51,8 @@ else
 	session_start();//  09/05/2013 WARNING! LEAVE session_start() OFF TO ACCESS DRUPAL SESSIONS!
 	//$usertest=$_REQUEST['u'];
 	//if ($usertest == 'dev') $userid=45;
-	$canAuthor=false;
-	define("LOCAL_AS_DEV_USER", 0 );
-	if ( LOCAL_AS_DEV_USER )
-	{
-		//$userid=26;// Demo Author
-		$userid=45;// DEV Author
-	}
-	else
-	{
-		$userid=0;
-	}
+	$canAuthor=true;
+	$userid=LOCAL_USER;
 }
 
 
@@ -73,8 +64,8 @@ header("Content-type: text/plain; charset=utf-8");
 switch ($command)
 {
 	case 'test':
-		var_dump($_SESSION);
-		var_dump($user);
+		//var_dump($_SESSION);
+		//var_dump($user);
 		//var_dump( array_values($user->roles));
 		break;
 	
@@ -179,7 +170,43 @@ switch ($command)
 		{// not found
 		}
 		break;
-	 
+
+	case 'answerset':
+		// INCOMPLETE return XML of answerfile given answer id. No security check currently.
+		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+		//$aid=intval($mysqli->real_escape_string($_REQUEST['aid']));
+		$res=$mysqli->query("select * from guides where gid=$gid   and (isPublic=1  or isFree=1  or editoruid=$userid)");
+		if ($row=$res->fetch_assoc())
+		{
+			$result['gid']=$row['gid'];
+			$result['editoruid']=$row['editoruid'];
+			$guideName = $row['filename'];
+			$path_parts = pathinfo($guideName);
+			$guideDir = $path_parts['dirname'];
+			$guideNameOnly = $path_parts['filename'];
+			$answerset=GUIDES_DIR.$guideDir.'/answerset.anx';
+			$result['answerset']= file_get_contents($answerset,TRUE);
+			// 11/26/2013 Include guide's path so we can access local files.
+			//$result['path']=GUIDES_URL.$row['filename'];
+		}
+		else
+		{// not found
+		}
+		
+	/*
+		$aid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+		$res=$mysqli->query("select * from answer_files where aid=$aid ");
+		if ($row=$res->fetch_assoc()){
+			$result['aid']=$row['aid'];
+			//$result['editoruid']=$row['editoruid'];
+			$result['answers']= $row['xml'];
+		}
+		else
+		{// not found
+		}
+		*/
+		break;
+	 	 
 		
 	case 'guidesave':
 		// update the guide (only if user matches guide's editor
@@ -217,6 +244,45 @@ switch ($command)
 		else
 			$err="No permission to update this guide";
 		break;
+	
+
+	
+	case 'answersetsave':
+		// Save answerset into guide's folder. overwrite anything else.
+		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+		$res=$mysqli->query("select * from guides where gid=$gid   and (isPublic=1  or isFree=1  or editoruid=$userid)");
+		$xml=$_REQUEST['answerset'];
+		if ($row=$res->fetch_assoc())
+		{
+			$result['info']="Will update!";
+			$result['gid']=$row['gid'];
+			$result['editoruid']=$row['editoruid'];
+			$guideName = GUIDES_DIR.$row['filename'];
+			$path_parts = pathinfo($guideName);
+			$guideDir = $path_parts['dirname'];
+			$filename=$guideDir.'/answerset.anx';
+			if (file_exists($filename))
+			{
+				$verdir = $guideDir.'/Versions_Answersets';
+				if (!file_exists($verdir))
+				{
+					mkdir($verdir);
+				}
+				$revname=$verdir.'/answerset Version_'.date('Y-m-d-H-i-s',filemtime($filename)).'.anx';
+				trace("renaming $filename to $revname");
+				rename($filename, $revname);
+			}
+			
+			trace('saving to '.$filename);
+			file_put_contents($filename,$xml);
+		}
+		else
+		{// not found
+			$err="No permission to update this answerset";
+		}
+		break;
+	
+	
 
 	case 'guidesaveas':
 		// Saving XML to new record. if gid > 0 we're cloning. if = 0 we've got a new guide.
@@ -228,7 +294,7 @@ switch ($command)
 		{ 
 			if ($title=="") $title = $row['title'];
 		} 
-		trace($oldgid);
+		//trace($oldgid);
 		// Create new entry in guide table including a reference to the cloned guide.
 		$sql="insert into guides (title,editoruid,clonedfromgid) values ('".$mysqli->real_escape_string($title)."', ".$userid.",".$oldgid.")";
 		if ($res=$mysqli->query($sql))
@@ -238,15 +304,15 @@ switch ($command)
 			
 			$userdir=$_SESSION['userdir'];if (!isset($userdir))$userdir='00000';
 			$newdirbase = $userdir.'/guides/'."Guide".$newgid;
-			trace($newdirbase);
+			//trace($newdirbase);
 			$newdir = $newdirbase;
 			$newfile = "Guide.xml";
 			$newfile = $newdirbase.'/'.$newfile;
 			$newlocation=GUIDES_DIR.$newfile;
-			trace($newlocation);
+			//trace($newlocation);
 			mkdir(GUIDES_DIR.$newdir);
 			$filename=GUIDES_DIR.$newfile;
-			trace('saving to '.$filename);
+			//trace('saving to '.$filename);
 			file_put_contents($filename,$xml);
 			$sql="update guides set filename='".$mysqli->real_escape_string($newfile)."' where gid = $newgid";
 			if ($res=$mysqli->query($sql))
@@ -258,6 +324,7 @@ switch ($command)
 			$result['gid']=$newgid;
 		}
 		break;
+	
 
 	case 'uploadfile':
 		/*
@@ -334,22 +401,8 @@ switch ($command)
 			exit();//Return immediately with upload info.
 		}
 		break;		
-/*
-	case 'answerfile':
-		// INCOMPLETE return XML of answerfile given answer id. No security check currently.
-		$aid=intval($mysqli->real_escape_string($_REQUEST['gid']));
-		$res=$mysqli->query("select * from answer_files where aid=$aid ");
-		if ($row=$res->fetch_assoc()){
-			$result['aid']=$row['aid'];
-			//$result['editoruid']=$row['editoruid'];
-			$result['answers']= $row['xml'];
-		}
-		else
-		{// not found
-		}
-		break;				
-		*/
-		
+
+
 
 		
 	 case 'guidezip':

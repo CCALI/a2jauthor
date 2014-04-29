@@ -1084,8 +1084,8 @@ function guideStart(startTabOrPage)
 	buildMap();
 	
 	
-	if (gEnv!='' && gStartArgs.getDataURL!=='') {
-		LocalGuidePlay();
+	if (gEnv!=='' && gStartArgs.getDataURL!=='') {
+		localGuidePlay();
 		return;
 	}
 }
@@ -1106,7 +1106,9 @@ function updateAttachmentFiles( )
 		  gGuide.attachedFiles = result.files;
 		  $('#attachmentFiles').empty();
 			$.each(gGuide.attachedFiles, function (index, file) {
-				 $('<tr><td>'+(file.name)+'</td><td>'+file.size+'</td></tr>').appendTo('#attachmentFiles');
+				 $('<tr><td>'+
+					'<a target=_blank href="'+gGuidePath+(file.name)+'">'+file.name+'</a>'
+					+'</td><td>'+file.size+'</td></tr>').appendTo('#attachmentFiles');
 			});	
 	 });
 }

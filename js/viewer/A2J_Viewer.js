@@ -153,12 +153,13 @@ var A2JViewer={
 			$('#viewer-var-form div button').first()
 				.button({label:'Save',icons:{primary:'ui-icon-folder-open'}}).click(
 					function(){
-						dialogAlert({title:'Save XML',body:prettyXML(gGuide.HotDocsAnswerSetXML())});
-					})
-				.next().button({label:'Refresh',icons:{primary:'ui-icon-zoomin' } } ).click(function(){
-						A2JViewer.refreshVariables();
+						//dialogAlert({title:'Save XML',body:prettyXML(gGuide.HotDocsAnswerSetXML())});
+						ws({cmd:'answersetsave',gid:gGuideID, answerset:gGuide.HotDocsAnswerSetXML()},function(){});	
 					})
 				.next().button({label:'Reload',icons:{primary:'ui-icon-arrowrefresh-1-e'}})
+				.next().button({label:'Refresh',title:'Refresh the table view',icons:{  } } ).click(function(){
+						A2JViewer.refreshVariables();
+					})
 				;
 			$('#viewer-var-filter').keyup(A2JViewer.filterVariables);
 			

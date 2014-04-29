@@ -172,7 +172,7 @@ switch ($command)
 		break;
 
 	case 'answerset':
-		// INCOMPLETE return XML of answerfile given answer id. No security check currently.
+		// 4/29/2014 INCOMPLETE return XML of answerfile given answer id. No security check currently.
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		//$aid=intval($mysqli->real_escape_string($_REQUEST['aid']));
 		$res=$mysqli->query("select * from guides where gid=$gid   and (isPublic=1  or isFree=1  or editoruid=$userid)");
@@ -248,7 +248,7 @@ switch ($command)
 
 	
 	case 'answersetsave':
-		// Save answerset into guide's folder. overwrite anything else.
+		// 4/29/2014 Save answerset into guide's folder. overwrite anything else.
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$res=$mysqli->query("select * from guides where gid=$gid   and (isPublic=1  or isFree=1  or editoruid=$userid)");
 		$xml=$_REQUEST['answerset'];

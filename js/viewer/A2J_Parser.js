@@ -577,7 +577,7 @@ TGuide.prototype.updateVarsForAnswerFile=function()
 	this.varSet(CONST.bookmarkVarName,gPage.name);
 	this.varSet(CONST.historyVarName,this.historyToXML());
 	this.varSet(CONST.interviewIDVarName, this.makeHash());
-	alert('Hash is "'+this.makeHash()+'"');
+	//alert('Hash is "'+this.makeHash()+'"');
 };
 
 TGuide.prototype.makeHash=function()//InterviewHash
@@ -592,7 +592,7 @@ TGuide.prototype.makeHash=function()//InterviewHash
 TGuide.prototype.HotDocsAnswerSetFromXML=function(AnswerSetXML)
 {	// 11/13 Parse HotDocs answer file XML string into guide's variables.
 	// Add to existing variables. Do NOT override variable types.
-	
+
 	var mapANX2Var={};
 	mapANX2Var["Unknown"]= CONST.vtUnknown;
 	mapANX2Var["TextValue"]=CONST.vtText;
@@ -676,9 +676,12 @@ TGuide.prototype.HotDocsAnswerSetFromXML=function(AnswerSetXML)
 				v.comment += 'Type not in answer file, assuming '+v.type;
 			}
 		}
+		
 		v.trace(vNew ? 'Creating new:' : 'Replacing:');
 	});
 };
+
+
 
 TGuide.prototype.loadXMLAnswerExternal = function (opts) 
 /*	Load a XML based answer file. */

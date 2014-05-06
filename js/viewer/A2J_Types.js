@@ -97,9 +97,10 @@ var CONST = {
 // 4/8/04 This is the DTD for the HotDocs ANX file format.
 // It's prepended to the answer set for upload.
 	HotDocsANXHeader_UTF8_str : 
-	"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
-	/*
-	+ "<!DOCTYPE AnswerSet [\n"+
+	"<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\n"
+	 
+	+
+	"<!DOCTYPE AnswerSet [\n"+
 	"<!ELEMENT AnswerSet (Answer*)>\n"+
 	"<!ELEMENT Answer (TextValue | NumValue | DateValue | TFValue | MCValue | ClauseLibValue | DBValue | RptValue)>\n"+
 	"\n"+
@@ -139,7 +140,7 @@ var CONST = {
 	"	fileName    CDATA   #REQUIRED\n"+
 	"	description CDATA   #IMPLIED>\n"+
 	"<!ATTLIST DBColumn name CDATA #REQUIRED>]>\n"
-	*/
+	
 	,
 	ScriptLineBreak : '<BR/>'
 };

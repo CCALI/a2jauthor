@@ -147,20 +147,54 @@ var A2JViewer={
 			//$( ".NavBar" ).menu({position:{my:'left top',at:'left bottom'}});
 			
 			//### Variable debugging
-			$('#viewer-var-form').append('<div><button/><button/><button/>'
+			$('#viewer-var-form').append('<div class="relative"><button id="uploadAnswer"></button><input type="file" id="uploadAnswerFileInput"> <button id="downloadAnswer"></button><button id="refreshAnswer"></button>'
 												  +'<label for="viewer-var-filter">Filter:</label><input type=text id="viewer-var-filter" size="5"/></div>'
 												  +'<div class=varvalpanel></div></div>');
-			$('#viewer-var-form div button').first()
-				.button({label:'Save',icons:{primary:'ui-icon-folder-open'}}).click(
-					function(){
+			$('#uploadAnswer').button({label:'Open'/*,icons:{primary:'ui-icon-folder-open'}*/}).click(function(){
 						//dialogAlert({title:'Save XML',body:prettyXML(gGuide.HotDocsAnswerSetXML())});
-						ws({cmd:'answersetsave',gid:gGuideID, answerset:gGuide.HotDocsAnswerSetXML()},function(){});	
-					})
-				.next().button({label:'Reload',icons:{primary:'ui-icon-arrowrefresh-1-e'}})
-				.next().button({label:'Refresh',title:'Refresh the table view',icons:{  } } ).click(function(){
+						//ws({cmd:'answersetsave',gid:gGuideID, answerset:gGuide.HotDocsAnswerSetXML()},function(){});
+						//alert(ws);
+					});
+			$('#downloadAnswer').button({label:'Save'/*icons:{primary:'ui-icon-arrowrefresh-1-e'}*/}).click(function(){
+						//ws({cmd:'answerset',gid:gGuideID, answerset:gGuide.HotDocsAnswerSetXML()},function(){});
+						// Download answer file directly from client to desktop.
+						var a =  window.document.createElement('a');
+						var txt = gGuide.HotDocsAnswerSetXML();
+						a.href = window.URL.createObjectURL(new Blob([txt], {type: 'application/octet-stream'}));
+						a.download = 'answer.anx';
+						// Append anchor to body.
+						document.body.appendChild(a);
+						a.click();
+						// Remove anchor from body
+						document.body.removeChild(a);
+					});
+			$('#refreshAnswer').button({label:'Update',icons:{  } } ).click(function(){
 						A2JViewer.refreshVariables();
-					})
-				;
+					});				
+			$('#uploadAnswerFileInput').on('change',function()			
+			{	// Browse for answer file on local desktop to upload to client (no server).
+				var file = $('#uploadAnswerFileInput')[0].files[0];
+				var textType = /text.*/;
+				setProgress("Loading..."); 
+				if (file.type==='' || file.type.match(textType))
+				{
+					var reader = new FileReader();
+					reader.onload = function(e)
+					{
+						var data = jQuery.parseXML(reader.result);
+						gGuide.HotDocsAnswerSetFromXML($(data));
+						setProgress('');
+						A2JViewer.refreshVariables();
+					};
+					reader.readAsText(file);	
+				} 
+				else
+				{
+					setProgress("File not supported!"); 
+				}
+			});
+			
+				
 			$('#viewer-var-filter').keyup(A2JViewer.filterVariables);
 			
 			// Navigation
@@ -662,6 +696,7 @@ var A2JViewer={
 		return '<div class="step" >' + txt + shared + '</div>';
 	}
 };
+
 
 
 /* */

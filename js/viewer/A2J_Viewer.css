@@ -552,6 +552,15 @@ span.err {
 .ViewerVarForm div input {
 	display: inline;
 }
+.relative {
+	position: relative;
+}
+#uploadAnswerFileInput {
+	opacity:  0;
+	position: absolute;
+	left: 0;
+	height: 30px;
+}
 
 .ViewerLogicForm .tracepanel{
 	position:absolute;

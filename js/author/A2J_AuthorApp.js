@@ -1,14 +1,17 @@
 ﻿/*******************************************************************************
-	A2J Author 5 * Justice * 正义 * công lý * правосудие
+	A2J Author 5 * Justice * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	Authoring App GUI
 	04/15/2013
-	04/2014
+	05/2014
 	
 ******************************************************************************/
 
 /* global gGuidePath,gPage,gGuide,gUserID,gGuideID,gUserNickName */
+
+
+//### File upload URLs for a guide's files and a new guide.
 CONST.uploadURL = 'CAJA_WS.php?cmd=uploadfile&gid=';
 CONST.uploadGuideURL= 'CAJA_WS.php?cmd=uploadguide';
 
@@ -24,7 +27,7 @@ var SELECTED = 'ui-state-active';
 
 
 TGuide.prototype.noviceTab = function(tab,clear)
-{	// 08/03/2012 Edit panel for guide sections 
+{	//### 08/03/2012 Edit panel for guide sections 
 	/** @type {TGuide} */
 	var guide = this;
 	var div = $('#'+tab);
@@ -270,10 +273,10 @@ function authorViewerHook()
 
 function signin()
 {
-	if (gEnv!='' && gStartArgs.templateURL!=='')
+	if (gEnv!=='' && gStartArgs.templateURL!=='')
 	{
 		// ### Debug start option
-		LocalGuideStart();
+		localGuideStart();
 		return;
 	}
 	ws({cmd:'login'},
@@ -1048,28 +1051,16 @@ function guideStart(startTabOrPage)
 	
 	//$('#guidepanel ul li a:first').html(gGuide.title);
 	$('#guidetitle').html(gGuide.title);
-	/*
-	$('#guidepanel').dialog({
-		title: gGuide.title,
-		autoopen:true,width:800,height:700,
-		buttons: {
-			 "Save": function() {
-			 },
-			 Close: function() {
-				  $( this ).dialog( "close" );
-			 }
-		},
-		close: function() {
-		}});
-		*/
 	
 	
+	// ### Upload file(s) to current guide
 	$('#fileupload').addClass('fileupload-processing');
 	if (gGuideID!==0) {
 		$('#fileupload').fileupload({
 			 url:CONST.uploadURL+gGuideID,
 			 dataType: 'json',
-			 done: function (e, data) {setTimeout(updateAttachmentFiles,1);
+			 done: function (e, data) {
+				setTimeout(updateAttachmentFiles,1);
 			 },
 			 progressall: function (e, data) {
 				  var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -1812,14 +1803,10 @@ function main()
 {   // Everything loaded, execute.
    Languages.set(Languages.defaultLanguage);
 
-//	if (gEnv!=='LOCAL') {
-//		DEBUGFIRST=undefined;
-//		DEBUGSTART=undefined;
-//	}
 	$('.authorenv').text(gEnv);
 	$('.authorver').html(CONST.A2JVersionNum+" "+CONST.A2JVersionDate);
 	$('#cajainfo').attr('title',versionString());
-	$('#guideSave').button({label:'Save Now',icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
+	//$('#guideSave').button({label:'Save Now',icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
 	$('#settings').button({label:'Settings',icons:{primary:"ui-icon-gear"}}).click(function(){$('#settings-form').dialog('open');});
 	
 	//$('#guideCreate').button({icons:{primary:"ui-icon-document"}}).click(function(){createBlankGuide();	});
@@ -1855,6 +1842,14 @@ function main()
 		setProgress('Generating ZIP',true);
 		ws({cmd:'guidezip',gid:gGuideID},guideZipped);
 	 });
+	
+	
+	$('#guideDownload').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
+	{	// 05/08/2014 Download as .a2j file
+		downloadTextFile( exportXML_CAJA_from_CAJA(gGuide), gGuide.filename);
+	 });
+	
+	
 	
 	$('#guideClone').button({label:'Clone', disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){
 		//var $li=$('li.guide.'+SELECTED).first();
@@ -2012,7 +2007,7 @@ function main()
 		 url:CONST.uploadGuideURL,
 		 dataType: 'json',
 		 done: function (e, data) {
-			setTimeout(signin,50);
+			setTimeout(signin,500);
 		 },
 		 progressall: function (e, data) {
 			  var progress = parseInt(data.loaded / data.total * 100, 10);

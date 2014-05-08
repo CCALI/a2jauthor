@@ -1,11 +1,10 @@
 /*******************************************************************************
-	A2J Author 5 * Justice * 正义 * công lý * правосудие
+	A2J Author 5 * Justice * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	Shared GUI/IO
 	12/12/2012
-	02/20/2012
-	04/15/2013
+	05/2014
 	Required by Author and Viewers
 ******************************************************************************/
 
@@ -461,6 +460,19 @@ function mdyTodmy(DMY)
 		result =parts[1]+"/"+parts[0]+"/"+parts[2];
 	}
 	return result;
+}
+
+function downloadTextFile(fileTextContent, fileName)
+{	// 05/08/2014 Download generic text file directly from client to desktop.
+	// Create an anchor, set its url to the data, use type application/octet-stream to force download rather than view in browser.
+	var a =  window.document.createElement('a');
+	a.href = window.URL.createObjectURL(new Blob([fileTextContent], {type: 'application/octet-stream'}));
+	a.download = fileName;
+	// Append anchor to body.
+	document.body.appendChild(a);
+	a.click();
+	// Remove anchor from body
+	document.body.removeChild(a);
 }
 
 

@@ -5,7 +5,7 @@
 	Type/constant declarations
 	Required by Author and Viewers
 	04/2012
-	04/2014
+	05/2014
 ******************************************************************************/
 
 
@@ -22,8 +22,8 @@ var CONST = {
 	// Spinnner for loading wait
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
-	A2JVersionNum:"5.0.1.15",//VersionInfo.verNum
-	A2JVersionDate:"2014-04-17",
+	A2JVersionNum:"5.0.1.16",//VersionInfo.verNum
+	A2JVersionDate:"2014-05-08",
 	
 	
 	CAVersionNum:"5.0.0",
@@ -428,7 +428,7 @@ function TGuide()
 	this.templates="";	//Origin A2J - notes about source template files
 	this.vars={};			//Origin A2J - associative array of TVariables()
 
-	this.filename="";
+	this.filename="interview.a2j";
 	//this.mapids=[];// array of mapids indices	- maps a page.id to page while .pages uses page.name.
 	this.sortedPages=[];//array of pages sorted by name (natural order)
 	this.lastSaveXML="";
@@ -662,8 +662,6 @@ TGuide.prototype.variableToField = function (varName)
 };
 
 
-// ### Steps ###
-// colors: 0xffffff,0xBDD6D6, 0xB7DDB7, 0xEFC68C, 0xE7E7B5, 0xEFDED6, 0xECD8EA,0xBDD6D6, 0xB7DDB7, 0xEFC68C, 0xE7E7B5, 0xEFDED6, 0xECD8EA];
 
 // ### Global variables ### //
 

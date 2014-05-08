@@ -3,7 +3,7 @@
 	A2J Author 5 * Justice * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	04/15/2013
-	4/2014
+	05/2014
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -258,7 +258,7 @@
 				<input id="fileupload" type="file" name="files[]" multiple />
 			</span>
 			<div id="progress" class="progress progress-success progress-striped"><div class="bar"></div></div>
-		</div><button id="guideSave" />
+		</div><!--<button id="guideSave" />-->
 	</div>
 </div>
 
@@ -286,7 +286,7 @@
 			<span class="fileinput-button">
 			<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
 				<span class="ui-button-icon-primary ui-icon ui-icon-plus"></span>
-				<span class="ui-button-text" >Upload A2J 4 Guide...</span>
+				<span class="ui-button-text" >Upload A2J Guide...</span>
 			</button>	
 				<!-- The file input field used as target for the file upload widget -->
 				<input id="guideupload" type="file" name="files[]" multiple />
@@ -305,7 +305,7 @@
 			<h1>Publish/Upload</h1>
 			<p>To publish your interview to another site such as LHI, download the ZIP which contains the interview and its supplemental files.
 			 </p>
-		<button id="guideZIP">Download ZIP</button></div>
+		<button id="guideZIP">Download ZIP</button><button id="guideDownload">Download A2J</button></div>
 	</div>
 	<div id="cajaheader"><span id="cajainfo" title="About this Authoring System"></span>
 	<div class="authorver"></div>

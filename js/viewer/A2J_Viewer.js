@@ -4,7 +4,7 @@
 
 	A2J Viewer embedding
 	10/12/2012
-	04/2014
+	05/2014
 
 	Required by Author and Viewers
 ******************************************************************************/
@@ -151,26 +151,18 @@ var A2JViewer={
 												  +'<label for="viewer-var-filter">Filter:</label><input type=text id="viewer-var-filter" size="5"/></div>'
 												  +'<div class=varvalpanel></div></div>');
 			$('#uploadAnswer').button({label:'Open'/*,icons:{primary:'ui-icon-folder-open'}*/}).click(function(){
-						//dialogAlert({title:'Save XML',body:prettyXML(gGuide.HotDocsAnswerSetXML())});
-						//ws({cmd:'answersetsave',gid:gGuideID, answerset:gGuide.HotDocsAnswerSetXML()},function(){});
-						//alert(ws);
-					});
+					//dialogAlert({title:'Save XML',body:prettyXML(gGuide.HotDocsAnswerSetXML())});
+					//ws({cmd:'answersetsave',gid:gGuideID, answerset:gGuide.HotDocsAnswerSetXML()},function(){});
+					//alert(ws);
+				});
 			$('#downloadAnswer').button({label:'Save'/*icons:{primary:'ui-icon-arrowrefresh-1-e'}*/}).click(function(){
-						//ws({cmd:'answerset',gid:gGuideID, answerset:gGuide.HotDocsAnswerSetXML()},function(){});
-						// Download answer file directly from client to desktop.
-						var a =  window.document.createElement('a');
-						var txt = gGuide.HotDocsAnswerSetXML();
-						a.href = window.URL.createObjectURL(new Blob([txt], {type: 'application/octet-stream'}));
-						a.download = 'answer.anx';
-						// Append anchor to body.
-						document.body.appendChild(a);
-						a.click();
-						// Remove anchor from body
-						document.body.removeChild(a);
-					});
+					//ws({cmd:'answerset',gid:gGuideID, answerset:gGuide.HotDocsAnswerSetXML()},function(){});
+					// Download answer file directly from client to desktop.
+					downloadTextFile ( gGuide.HotDocsAnswerSetXML(),  'answer.anx');
+				});
 			$('#refreshAnswer').button({label:'Update',icons:{  } } ).click(function(){
-						A2JViewer.refreshVariables();
-					});				
+					A2JViewer.refreshVariables();
+				});				
 			$('#uploadAnswerFileInput').on('change',function()			
 			{	// Browse for answer file on local desktop to upload to client (no server).
 				var file = $('#uploadAnswerFileInput')[0].files[0];

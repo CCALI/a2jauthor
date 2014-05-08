@@ -1,13 +1,13 @@
 <?php
 /*
-	CALI Author 5 / A2J Author 5 (CAJA) * Justice * 正义 * công lý * правосудие
+	CALI Author 5 / A2J Author 5 (CAJA) * Justice * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	10/05/2012 Simple CAJA Author Web Service API
 	A Fuse to handle all a2j author editing stuff
 	07/01/2013 HACK to login to demo
 	07/15/2013 Directory restructure
-	04/2014 Loads author system only if user is logged into Drupal with an 'a2j author' role setting.
+	05/2014 Loads author system only if user is logged into Drupal with an 'a2j author' role setting.
 */
 
 
@@ -360,7 +360,7 @@ switch ($command)
 
 	case 'uploadguide':
 		// 10/03/2013 Upload existing XML/A2J file to a new guide.
-		$title=($mysqli->real_escape_string('Untitled'));
+		$title=($mysqli->real_escape_string('Untitled uploaded guide'));
 		// Create new entry in guide table.
 		$sql="insert into guides (title,editoruid) values ('".$mysqli->real_escape_string($title)."', ".$userid.")";
 		if ($res=$mysqli->query($sql))
@@ -380,7 +380,7 @@ switch ($command)
 			define(UPLOAD_DIR, GUIDES_DIR.$filedir.'/');
 			define(UPLOAD_URL, GUIDES_URL.$filedir.'/');
 			error_reporting(E_ALL | E_STRICT);
-			include('jQuery/UploadHandler.php');
+			include('UploadHandler.php');
 			$upload_handler = new UploadHandler();
 			$sql="update guides set filename='".$mysqli->real_escape_string($newfile)."' where gid = $newgid";
 			if ($res=$mysqli->query($sql)){}

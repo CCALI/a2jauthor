@@ -1118,8 +1118,16 @@ function updateTOC()
 	for (p in gGuide.sortedPages)
 	{
 		var page = gGuide.sortedPages[p];
+		var f;
+		var ft='';
+		for (var f in page.fields) {
+			// List the field types.
+			var field = page.fields[f];
+			ft += '<span class=info>' + field.type +'</span>';
+		}
+		var tip = decodeEntities(page.text).substr(0,64) + ft;
 		var plink= '<li class="unselectable" rel="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()
-			+' <span class="tip">'+decodeEntities(page.text).substr(0,64)+'</span>' +'</li>';
+			+' <span class="tip">'+tip+'</span>' +'</li>';
 		if (page.type===CONST.ptPopup){
 			popups += plink;
 		}

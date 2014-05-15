@@ -373,7 +373,7 @@ var A2JViewer={
 					}
 					$.datepicker.setDefaults($.datepicker.regional[ gGuide.language ]);
 					// 3/21/2014 Format dates for any language in USA m/d/y format. 
-					dateOpts.dateFormat = 'mm/dd/yyyy';
+					dateOpts.dateFormat = 'mm/dd/yy';
 					$input.datepicker( dateOpts);
 					$('#ui-datepicker-div').addClass('bubble');
 				   break;

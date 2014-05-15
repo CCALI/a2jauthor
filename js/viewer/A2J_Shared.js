@@ -28,12 +28,12 @@ function dialogConfirmYesNo(args)
 		height:args.height!==null?args.height : 240,
 		modal: true,
 		buttons: {
-			 Yes: function() {
-				  $( this ).dialog( "close" );
-				  args.Yes(args);
+			Yes: function() {
+				$( this ).dialog( "close" );
+				args.Yes(args);
 			 },
-			 No: function() {
-				  $( this ).dialog( "close" );
+			No: function() {
+				$( this ).dialog( "close" );
 			 }
 		}
 	});

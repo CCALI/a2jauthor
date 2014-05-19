@@ -1138,38 +1138,20 @@ function updateTOC()
 	var ts="";
 	for (s in gGuide.steps)
 	{
-/* JPM
 		ts+='<li rel="STEP '+s+'">STEP '+gGuide.steps[s].number+". "+gGuide.steps[s].text+"</li><ul>"+inSteps[s]+"</ul>";
-*/
-		ts+='<li rel="STEP '+s+'" id="ecStep'+gGuide.steps[s].number+'" ecstate="expanded">STEP '+gGuide.steps[s].number+". "+gGuide.steps[s].text+"</li><ul>"+inSteps[s]+"</ul>";
-
 	}
 	$('.pageoutline').html("<ul>"
 		+ ts //'<li target="tabsSteps">'+lang.tabSteps+'</li><ul>'+ts+'</ul>'
 		+ '<li rel="tabsPopups">'+Languages.en('Popups')+'</li><ul>'+popups+'</ul>'
 		+"</ul>");
-
-/* JPM
-Click function to handle expand/collapse of individual STEPS in the page list view
-*/
+	
+	// JM Clicking a step toggle slides step's page list.
 	$('.pageoutline li[rel^="STEP "]').click(function(){
-		  var x = "'" + $(this).attr('rel') + "'";
-		  var ecState = $(this).attr("ecstate");
-		  if (ecState == "expanded") {
-		  		  $(this).attr("ecstate", "collapsed");
-		  		  $("#CAJAOutline > ul > li[rel=" + x + "] + ul").slideUp(300);
-		  }
-		  else {
-		  		  $(this).attr("ecstate", "expanded");
-		  		  $("#CAJAOutline > ul > li[rel=" + x + "] + ul").slideDown(300);
-		  }
-		  });
+		$(this).next().slideToggle(300);
+	});
 
-/* JPM
-Changed this to only apply to PAGES in the page list so that STEPS could be click-able.
-*/
+	// JM Only 'select' Pages, not Steps
 	$('.pageoutline li[rel^="PAGE "]')
-//	$('.pageoutline li')
 		.click(function(e){
 			if (!e.ctrlKey){
 				$('.pageoutline li').removeClass(SELECTED);
@@ -1840,12 +1822,31 @@ function main()
 	$('#cajainfo').attr('title',versionString());
 	//$('#guideSave').button({label:'Save Now',icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
 	$('#settings').button({label:'Settings',icons:{primary:"ui-icon-gear"}}).click(function(){$('#settings-form').dialog('open');});
-/* JPM
-Expand/Collapse button for pages list.  
-*/
+	
+	/* JPM
+	Expand/Collapse button for pages list.  
+	*/
 	$('#expandCollapse')
-		  .button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}})
-		  .click(function(){expandCollapsePageList();});
+		.button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}})
+		.click(function(){
+			expandCollapsePageList();
+		});
+	
+	// JPM Handles Expand/Collapse button on pages list
+	function expandCollapsePageList() {
+		var ecText = $("#expandCollapse").text();
+		if (ecText == "Collapse All") {
+			$("#expandCollapse").html("Expand All");
+			$("#CAJAOutline > ul > li + ul").slideUp(300);
+			$('#expandCollapse').button({label:'Expand All',icons:{primary:"ui-icon-circle-plus"}});
+		}
+		else {
+			$("#expandCollapse").html("Collapse All");
+			$("#CAJAOutline > ul > li + ul").slideDown(300);
+			$('#expandCollapse').button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}});
+		}
+	}
+	
 	
 	//$('#guideCreate').button({icons:{primary:"ui-icon-document"}}).click(function(){createBlankGuide();	});
 	$('#guideOpen').button({label:'Open', disabled:false, icons:{primary:"ui-icon-disk"}}).click(function(){
@@ -2054,49 +2055,6 @@ Expand/Collapse button for pages list.
 		}
 	});
 	
-/* JPM
-functions to handles Expand/Collapse button on pages list
-*/
-function expandCollapsePageList() {
-	var ecText = $("#expandCollapse").text();
-	if (ecText == "Collapse All") {
-		$("#expandCollapse").html("Expand All");
-		$("#CAJAOutline > ul > li + ul").slideUp(300);
-		$('#expandCollapse').button({label:'Expand All',icons:{primary:"ui-icon-circle-plus"}});
-		$('#ecStep0').attr("ecstate","collapsed");
-		$('#ecStep1').attr("ecstate","collapsed");
-		$('#ecStep2').attr("ecstate","collapsed");
-		$('#ecStep3').attr("ecstate","collapsed");
-		$('#ecStep4').attr("ecstate","collapsed");
-		$('#ecStep5').attr("ecstate","collapsed");
-		$('#ecStep6').attr("ecstate","collapsed");
-		$('#ecStep7').attr("ecstate","collapsed");
-		$('#ecStep8').attr("ecstate","collapsed");
-		$('#ecStep9').attr("ecstate","collapsed");
-		$('#ecStep10').attr("ecstate","collapsed");
-		$('#ecStep11').attr("ecstate","collapsed");
-		$('#ecStep12').attr("ecstate","collapsed");
-	}
-	else {
-		$("#expandCollapse").html("Collapse All");
-		$("#CAJAOutline > ul > li + ul").slideDown(300);
-		$('#expandCollapse').button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}});
-		$('#ecStep0').attr("ecstate","expanded");
-		$('#ecStep1').attr("ecstate","expanded");
-		$('#ecStep2').attr("ecstate","expanded");
-		$('#ecStep3').attr("ecstate","expanded");
-		$('#ecStep4').attr("ecstate","expanded");
-		$('#ecStep5').attr("ecstate","expanded");
-		$('#ecStep6').attr("ecstate","expanded");
-		$('#ecStep7').attr("ecstate","expanded");
-		$('#ecStep8').attr("ecstate","expanded");
-		$('#ecStep9').attr("ecstate","expanded");
-		$('#ecStep10').attr("ecstate","expanded");
-		$('#ecStep11').attr("ecstate","expanded");
-		$('#ecStep12').attr("ecstate","expanded");
-	}
-}
-
 	signin();
 }
 

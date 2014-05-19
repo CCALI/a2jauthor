@@ -145,10 +145,10 @@
 				<div class="tabContent editq"></div>
 			</div>
 		</div>
-		<div class="panel" id="tabsPages">		
+		<div class="panel" id="tabsPages">
 			<div class="tabHeader">
-				<button id="expandCollapse" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button" aria-disabled="false"></button>
-				Double-click a page to edit. Select one or more to copy, delete or clone. 
+			<button id="expandCollapse"></button>
+			Double-click a page to edit. Select one or more to copy, delete or clone. 
 				<!--<form>
 					<div id="showpagelist">
 						<input checked="checked" 	type="radio" id="showpagelist1" name="showpagelist" /><label for="showpagelist1">Outline</label>

@@ -284,8 +284,14 @@ table.A2JSteps, table.A2JVars ,table.A2JFiles {
 	border-style:solid;
 	border-width:thin;
 	border-color:#fff;
-/* JPM */
-	
+/* JPM */	
+}
+
+/* JPM expandCollapse button */
+#expandCollapse {
+		  font-size: small;
+		  top: -5px;
+
 }
 
 

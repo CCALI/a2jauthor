@@ -147,6 +147,7 @@
 		</div>
 		<div class="panel" id="tabsPages">		
 			<div class="tabHeader">
+				<button id="expandCollapse" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" role="button" aria-disabled="false"></button>
 				Double-click a page to edit. Select one or more to copy, delete or clone. 
 				<!--<form>
 					<div id="showpagelist">

@@ -288,12 +288,6 @@ table.A2JSteps, table.A2JVars ,table.A2JFiles {
 }
 
 
-/* JPM expandCollapse button */
-#expandCollapse, #ecPanelButton {
-	font-size: small;
-	top: -5px;
-}
-
 
 table.A2JSteps tr td, table.A2JVars tr td, table.A2JFiles tr td {
 /* JPM */	
@@ -959,6 +953,14 @@ div.codeedit span.err {
 	margin: 0px;
 	padding: 0px;
 	/*background-color: #ddd;*/
+}
+
+/* JPM expandCollapse button */
+#expandCollapse, .tabHeader button.ecPanelButton {
+	font-size: small;
+	top: -5px;
+	float: right;
+	
 }
 
 /* */

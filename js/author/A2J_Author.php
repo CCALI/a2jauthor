@@ -127,7 +127,7 @@
 		<div class="panel" id="tabsAbout">
 			<div class="tabHeader">
 <!-- JPM expand/collapse for about tab panel -->
-					<button id="ecPanelButton"></button> Information about this guide. </div>
+					<button class="ecPanelButton"></button> Information about this guide. </div>
 			<div class="tabContentFrame">
 				<div class="tabContent editq"></div>
 			</div>
@@ -212,7 +212,7 @@
 			</div>			 
 		</div>
 		<div class="panel" id="tabsLogic">
-			<div class="tabHeader">
+			<div class="tabHeader"><button class="ecPanelButton"></button> 
 				<form>
 					<div id="showlogic">
 						<input checked="checked" type="radio" id="showlogic1" name="showlogic" />
@@ -227,7 +227,7 @@
 			</div>
 		</div>
 		<div class="panel" id="tabsText">
-			<div class="tabHeader">
+			<div class="tabHeader"><button class="ecPanelButton"></button> 
 				<form>
 					<div id="showtext">
 						<input checked="checked" type="radio" id="showtext1" name="showtext" />

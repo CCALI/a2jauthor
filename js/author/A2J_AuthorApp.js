@@ -161,25 +161,6 @@ TGuide.prototype.noviceTab = function(tab,clear)
 				
 			t.append(fs);
 
-		  // JPM expand/collapse all panel buttons on various tabs/popups
-		  $("#ecPanelButton")
-				 .button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}})
-				 .click(function(){
-					 if ($(this).text() == "Collapse All") {
-								$("legend ~ div", this.sibling).slideUp(300);
-								$(this).button({label:'Expand All',icons:{primary:"ui-icon-circle-plus"}});
-					 }
-					 else {
-								$("legend ~ div", this.sibling).slideDown(300);
-								$(this).button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}});
-					 }
-		  });
-
-		$("legend").click(function(){
-				$(this).siblings('div').slideToggle(300);
-		});
-			
-
 			break;
 
 		case 'tabsSteps':
@@ -212,6 +193,15 @@ TGuide.prototype.noviceTab = function(tab,clear)
 			break;
 	}
 	form.finish(t);
+
+
+
+	 $("legend",t).click(function(){
+			 $(this).siblings('div').slideToggle(300);
+	 });
+	 
+	
+	
 };
 
 function pageNameFields(pagefs,page)
@@ -1832,7 +1822,7 @@ function ws(data,results)
 
 
 function main()
-{   // Everything loaded, execute.
+{   // Everything loaded, now execute code.
    Languages.set(Languages.defaultLanguage);
 
 	$('.authorenv').text(gEnv);
@@ -1841,9 +1831,7 @@ function main()
 	//$('#guideSave').button({label:'Save Now',icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
 	$('#settings').button({label:'Settings',icons:{primary:"ui-icon-gear"}}).click(function(){$('#settings-form').dialog('open');});
 	
-	/* JPM
-	Expand/Collapse button for pages list.  
-	*/
+	// JPM 	Expand/Collapse button for pages list.   
 	$('#expandCollapse')
 		.button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}})
 		.click(function(){
@@ -1864,23 +1852,19 @@ function main()
 			$('#expandCollapse').button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}});
 		}
 	}
-
-/* JPM expand/collapse for panel button
-function ecPanelButton() {
-	var ecText = $(this).text();
-	trace("ecPanelButton fired");
-	if (ecText == "Collapse All") {
-		trace("ecAbout Collapse fired");
-		$("legend ~ div", this.sibling).toggleSlide(300);
-		$(this).button({label:'Expand All',icons:{primary:"ui-icon-circle-plus"}});
-	}
-	else {
-		$("legend ~ div", this.sibling).toggleSlide(300);
-		$(this).button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}});
-	}
-}
-	
-	*/
+	// JPM expand/collapse all panel buttons on various tabs/popups
+	$(".ecPanelButton") // SJG apply to all ec buttons operating on LEGEND tags
+		  .button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}})
+		  .click(function(){
+			  if ($(this).text() == "Collapse All") {
+						 $(this).parents('.panel').find("legend ~ div").slideToggle(300);
+						 $(this).button({label:'Expand All',icons:{primary:"ui-icon-circle-plus"}});
+			  }
+			  else {
+						 $(this).parents('.panel').find("legend ~ div").slideDown(300);
+						 $(this).button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}});
+			  }
+	});
 
 	//$('#guideCreate').button({icons:{primary:"ui-icon-document"}}).click(function(){createBlankGuide();	});
 	$('#guideOpen').button({label:'Open', disabled:false, icons:{primary:"ui-icon-disk"}}).click(function(){

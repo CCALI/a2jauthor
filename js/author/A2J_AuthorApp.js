@@ -160,6 +160,24 @@ TGuide.prototype.noviceTab = function(tab,clear)
 				}}));
 				
 			t.append(fs);
+
+		  // JPM expand/collapse all panel buttons on various tabs/popups
+		  $("#ecPanelButton")
+				 .button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}})
+				 .click(function(){
+					 if ($(this).text() == "Collapse All") {
+								$("legend ~ div", this.sibling).slideUp(300);
+								$(this).button({label:'Expand All',icons:{primary:"ui-icon-circle-plus"}});
+					 }
+					 else {
+								$("legend ~ div", this.sibling).slideDown(300);
+								$(this).button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}});
+					 }
+		  });
+
+		$("legend").click(function(){
+				$(this).siblings('div').slideToggle(300);
+		});
 			
 
 			break;
@@ -1145,12 +1163,12 @@ function updateTOC()
 		+ '<li rel="tabsPopups">'+Languages.en('Popups')+'</li><ul>'+popups+'</ul>'
 		+"</ul>");
 	
-	// JM Clicking a step toggle slides step's page list.
+	// JPM Clicking a step toggle slides step's page list.
 	$('.pageoutline li[rel^="STEP "]').click(function(){
 		$(this).next().slideToggle(300);
 	});
 
-	// JM Only 'select' Pages, not Steps
+	// JPM Only 'select' Pages, not Steps
 	$('.pageoutline li[rel^="PAGE "]')
 		.click(function(e){
 			if (!e.ctrlKey){
@@ -1846,8 +1864,24 @@ function main()
 			$('#expandCollapse').button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}});
 		}
 	}
+
+/* JPM expand/collapse for panel button
+function ecPanelButton() {
+	var ecText = $(this).text();
+	trace("ecPanelButton fired");
+	if (ecText == "Collapse All") {
+		trace("ecAbout Collapse fired");
+		$("legend ~ div", this.sibling).toggleSlide(300);
+		$(this).button({label:'Expand All',icons:{primary:"ui-icon-circle-plus"}});
+	}
+	else {
+		$("legend ~ div", this.sibling).toggleSlide(300);
+		$(this).button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}});
+	}
+}
 	
-	
+	*/
+
 	//$('#guideCreate').button({icons:{primary:"ui-icon-document"}}).click(function(){createBlankGuide();	});
 	$('#guideOpen').button({label:'Open', disabled:false, icons:{primary:"ui-icon-disk"}}).click(function(){
 		//alert('guideOpen');

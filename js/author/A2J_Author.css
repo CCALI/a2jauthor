@@ -289,7 +289,7 @@ table.A2JSteps, table.A2JVars ,table.A2JFiles {
 
 
 /* JPM expandCollapse button */
-#expandCollapse {
+#expandCollapse, #ecPanelButton {
 	font-size: small;
 	top: -5px;
 }

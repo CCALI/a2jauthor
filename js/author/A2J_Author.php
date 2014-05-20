@@ -125,7 +125,9 @@
 	</div>
 	<div class="guidepanels ui-widget xui-widget-content">
 		<div class="panel" id="tabsAbout">
-			<div class="tabHeader">Information about this guide. </div>
+			<div class="tabHeader">
+<!-- JPM expand/collapse for about tab panel -->
+					<button id="ecPanelButton"></button> Information about this guide. </div>
 			<div class="tabContentFrame">
 				<div class="tabContent editq"></div>
 			</div>

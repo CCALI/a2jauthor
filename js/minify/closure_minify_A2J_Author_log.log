@@ -1,9 +1,0 @@
-..\viewer\A2J_Parser.js:46: WARNING - dangerous use of the global this object
-			var opts=this.opts;
-			         ^
-
-..\author\A2J_AuthorApp.js:12: ERROR - variable CONSt is undeclared
-CONSt.uploadURL = 'CAJA_WS.php?cmd=uploadfile&gid=';
-^
-
-1 error(s), 1 warning(s)

@@ -3,6 +3,7 @@
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	12/12/2012
 	04/15/2013
+	This is superceded by the IFRAME design
 -->
 <html>
 <head>

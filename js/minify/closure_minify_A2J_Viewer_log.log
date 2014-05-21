@@ -1,5 +1,0 @@
-..\viewer\A2J_Parser.js:46: WARNING - dangerous use of the global this object
-			var opts=this.opts;
-			         ^
-
-0 error(s), 1 warning(s), 72.9% typed

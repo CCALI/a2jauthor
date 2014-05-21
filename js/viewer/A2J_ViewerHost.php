@@ -1,4 +1,4 @@
-﻿<!--
+<!--
 	A2J Author 5 * Justice * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	2012-2014
@@ -9,11 +9,11 @@
 -->
 <html>
 <head>
-	<title>Access to Justice Author 5 - Viewer</title>
+	<title>Access to Justice Author 5 - Hosted Viewer Sampler</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
-	<iframe id="A2JViewerFrame" width="100%" height="100%" src="A2J_ViewerApp.html" onload='sendArgsToFrame();'></iframe> 
+	<iframe id="A2JViewerFrame" width="100%" height="100%" src="A2J_ViewerHost.html" onload='sendArgsToFrame();'></iframe> 
 </body>
 
 <SCRIPT LANGUAGE=JavaScript>

@@ -633,7 +633,14 @@ var A2JViewer={
 			//txt +=  posimg('step_circle_'+ color +'.png',s1[0],s1[1],s1[2],s1[3]) ;
 			txt +=  posimg('step_circle_'+ 0 +'.png',s1[0],s1[1],s1[2],s1[3]) ;
 			s1=si.signs[s];
-			var zoom = s1[2];zoom = '-moz-transform: scale('+zoom+');';
+			var zoom = s1[2];
+			var scale = 'scale('+zoom+')';
+			zoom =
+				'-moz-transform: '+scale+';'
+				+'-webkit-transform: '+scale+';'
+				+'-ms-transform: '+scale+';'
+				+'transform: '+scale+';';
+				
 			txt += '<div class="stepsign" style="position:absolute; left:'+s1[0]+'px; top: '+s1[1]+'px;'+zoom+'"><div class="stepsigncolor Step'+color+'" ></div>	<div class="stepnumber" >'+steps[cs].number+'</div>'
 			+'<table class="steptextdiv"><tr valign=true><td><span class="steptext">'+steps[cs].text+'</span></tr></tr></table></div>';
 			// step'+s+'

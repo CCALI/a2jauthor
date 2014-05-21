@@ -23,7 +23,7 @@ $data="\n".
 	"FileDataURL: ".$_POST["FileDataURL"]."\n".
 	"ViewerURL: ".$_POST["ViewerURL"]."\n";
 	$logID=date("Y-m-d-H-i-s");
-	require "MissingFunctions.php";
+
 
 if ($_REQUEST['user']=='1')
 {

@@ -56,32 +56,84 @@ function guideStart(start)
 	{
 		$('.A2JViewer').toggleClass('test',500);
 	}
-
+	
+	
+	// Auto load answer file when starting Viewer only. 
+	gGuide.loadXMLAnswerExternal({
+		url:gStartArgs.getDataURL 
+		,success:function(){
+			//dialogAlert({title:'DEBUG Answer files answers',body:prettyXML(gGuide.HotDocsAnswerSetXML()),width:800,height:600});
+		}});
 }
+
 function loadNewGuidePrep(guideFile,startTabOrPage)
 {
 	// Place holder
 }
 
+
+
+
+function doSetDataURL(target)
+{	// Upload data to server.
+	// target is either "_self" or "_blank"
+
+	if (gStartArgs.localClient===1)
+	{	// 5/5/10  3.6
+		// Running viewer in local mode. Send answer file to caller to save.
+		//var RawXML:String=Global.curTemplate.HotDocsAnswerSetXML().toString();
+		//External.saveAnswer(RawXML,this);
+	}
+	else
+	{	// Post as AnswerKey variable.
+		var $form = $('<form action="'+gStartArgs.setDataURL+'" method=POST target=_parent><input type=hidden id="AnswerKey" name="AnswerKey"/></form>');
+		//<input type="submit"/>
+		$('body').append($form);
+		$('#AnswerKey').val(gGuide.HotDocsAnswerSetXML());
+		$form.submit();
+	}
+}
+
+
 function gotoPageView(destPageName)
-{  // navigate to given page (after tiny delay)
-   window.setTimeout(function(){
-      /** @type TPage */
-		var page = gGuide.pages[destPageName];
-      if (typeof page === 'undefined')
-      {
-         dialogAlert( 'Page is missing: '+ destPageName );
-         traceLogic('Page is missing: '+ traceTag('page',destPageName));
-      }
-      else
-      {
-         gPage=page;
-         A2JViewer.layoutPage($('#page-viewer .A2JViewer'),gPage);//$('.A2JViewer',$('#page-viewer')
-      }
+{  // Viewer-only navigate to given page (after tiny delay)
+   window.setTimeout(function()
+	{
+		var url;
+		if (destPageName === CONST.qIDSUCCESS)
+		{	// On success exit, flag interview as Complete.
+			// Save data
+			gGuide.varSet(CONST.interviewIncompleteVarName,false);
+			// 9/01/09 3.0.3 Display an progress dialog when submitting data.
+			doSetDataURL('_self');
+		}
+		else
+		if (destPageName === CONST.qIDFAIL)
+		{
+			url=gStartArgs.exitURL;
+			window.parent.location = url; // Replace parent, not just this IFRAME.
+		}
+		else
+		{
+			/** @type TPage */
+			var page = gGuide.pages[destPageName];
+			if (typeof page === 'undefined')
+			{
+				dialogAlert( 'Page is missing: '+ destPageName );
+				traceLogic('Page is missing: '+ traceTag('page',destPageName));
+			}
+			else
+			{
+				gPage=page;
+				A2JViewer.layoutPage($('#page-viewer .A2JViewer'),gPage);//$('.A2JViewer',$('#page-viewer')
+			}
+		}
+		
    },1);
 }
 
 function main(){
+	inAuthor=false;
 	loadGuideFile(gStartArgs.templateURL,"");
 }
 

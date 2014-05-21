@@ -6,6 +6,8 @@
 	The viewer runs standalone in an IFRAME. We can pass parameters for interview
 	file, interview asset folder, answer file saving/loading and error reporting
 	from this page to the viewer's IFRAME.
+	
+	For demoing, there's a clone of this page in .html format (no PHP code). 
 -->
 <html>
 <head>
@@ -23,7 +25,7 @@ function sendArgsToFrame(){
 	// For demo purposes, extract guide and answer file ids from the querystring and pass them on to the Viewer.
 	$gid=$_GET["gid"];
 	$aid=$_GET["aid"];
-?>
+?> 
 	A2JViewerFrame=document.getElementById('A2JViewerFrame');
 	A2JViewerFrame.contentWindow.postMessage({
 		// Override these Javascript variables as needed to setup default interview/answer file loading.
@@ -35,13 +37,17 @@ function sendArgsToFrame(){
 		fileDataURL:"../tests/data/", 
 		
 		 // getDataURL loads an answer file at start, used for RESUME
-		getDataURL:	"A2J_ViewerGetData.php?answersID=<?=$aid?>",
+		getDataURL:	"../tests/data/Sample Short Interview Answers.anx",
+		//getDataURL: "A2J_ViewerGetData.php?answersID=<?=$aid?>",
 		
 		// setDataURL saves answer file and leaves the viewer (its response replaces viewer's frame)
-		setDataURL:	"A2J_ViewerSetData.php?answersID=<?=$aid?>", 
+		setDataURL:	"A2J_ViewerAnswerSet.php?answersID=<?=$aid?>", 
+
+		// autoSetDataURL silently saves answer file periodically. (Optional).
+		autoSetDataURL:	"A2J_ViewerAutoSetData.php?answersID=<?=$aid?>",
 		
 		// exitURL replaces the viewer's frame with this URL on EXIT (user 'fails' interview)
-		exitURL: 	"A2J_ViewerExit.php?interviewID=<?=$gid?>",
+		exitURL: 	"A2J_ViewerExit.html", //"A2J_ViewerExit.php?interviewID=<?=$gid?>",
 		
 		// logURL accepts silent logging data.
 		// E.g., https://lawhelpinteractive.org/a2j_logging

@@ -674,6 +674,7 @@ var gPage; // global reference to current edit/viewed TPage
 /** @type {number|string} */
 var gGuideID; // unique service side id for this guide
 
+var inAuthor; // True if author+viewer, false if just viewer.
 
 // User 
 /** @type {number} */
@@ -701,6 +702,7 @@ var gStartArgs = {
 	fileDataURL:"",
 	getDataURL:	"",
 	setDataURL:	"",
+	autoSetDataURL:"",
 	exitURL:		"",
 	logURL:		"", //e.g., "https://lawhelpinteractive.org/a2j_logging";
 	errRepURL:	"" //e.g., "https://lawhelpinteractive.org/problem_reporting_form";

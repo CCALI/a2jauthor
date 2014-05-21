@@ -1,22 +1,26 @@
 <?php	
 /*
-	A2J Author 5 * Justice * 正义 * công lý * правосудие
+	A2J Author 5 * Justice * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
-	04/15/2013
-
+	05/21/2014
 */
-	session_start();
-	header("Content-Type: text/html; charset=utf-8"); 
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <HTML>
 <HEAD>
-<TITLE>Save Data | A2J Viewer Test</TITLE>
+<TITLE>setDataURL | A2J Viewer 5</TITLE>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"/>
 </HEAD>
 
 <BODY>
-TODO Data will be saved
+<h1>setDataURL | A2J Viewer 5</h1>
+<ul>
+	<li>At this point, data will be saved and we can continue with our non-A2J Viewer interaction.
+	<li>Below is the value submitted via POST in variable AnswerKey.
+</ul>
+<hr>
+<div style="margin:2em;"><?=htmlentities($_POST['AnswerKey'])?></div>
+
+<cite>Justice * 正义 * công lý * 사법 * правосудие</cite>
 </BODY>
 </HTML>

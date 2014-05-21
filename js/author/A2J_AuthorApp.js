@@ -323,6 +323,10 @@ function signin()
 function gotoPageView(destPageName)
 {  // ### Navigate to given page (after tiny delay)
    window.setTimeout(function(){
+		
+		//"Author note: Users's data would upload to server."
+		
+		
       var page = gGuide.pages[destPageName]; 
       if (page === null || typeof page === "undefined")
       {
@@ -1823,6 +1827,9 @@ function ws(data,results)
 
 function main()
 {   // Everything loaded, now execute code.
+	
+	inAuthor=true;
+	
    Languages.set(Languages.defaultLanguage);
 
 	$('.authorenv').text(gEnv);

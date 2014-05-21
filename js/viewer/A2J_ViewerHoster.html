@@ -19,29 +19,27 @@
 <SCRIPT LANGUAGE=JavaScript>
 // This demo page will send starting arguments to the IFRAME which contains the Viewer.
 function sendArgsToFrame(){
-<?php
-	// For demo purposes, extract guide and answer file ids from the querystring and pass them on to the Viewer.
-	$gid=$_GET["gid"];
-	$aid=$_GET["aid"];
-?>
 	A2JViewerFrame=document.getElementById('A2JViewerFrame');
 	A2JViewerFrame.contentWindow.postMessage({
 		// Override these Javascript variables as needed to setup default interview/answer file loading.
 		
 		// templateURL points to the interview XML. This demo just passes what's on the querystring.
-		templateURL:"<?=$gid?>", 
+		templateURL:"../tests/data/Sample Short Interview.a2j", 
 		
 		// fileDataURL is the folder of interview's assets, usually the folder of the interview XML
 		fileDataURL:"../tests/data/", 
 		
 		 // getDataURL loads an answer file at start, used for RESUME
-		getDataURL:	"A2J_ViewerGetData.php?answersID=<?=$aid?>",
+		getDataURL:	"../tests/data/Sample Short Interview Answers.anx",
 		
 		// setDataURL saves answer file and leaves the viewer (its response replaces viewer's frame)
-		setDataURL:	"A2J_ViewerSetData.php?answersID=<?=$aid?>", 
+		setDataURL:			"A2J_ViewerAnswerSet.php", 
 		
+		// autoSetDataURL silently saves answer file periodically. (Optional).
+		autoSetDataURL:	"A2J_ViewerAutoSetData.php", 
+
 		// exitURL replaces the viewer's frame with this URL on EXIT (user 'fails' interview)
-		exitURL: 	"A2J_ViewerExit.php?interviewID=<?=$gid?>",
+		exitURL: 	"A2J_ViewerExit.html",
 		
 		// logURL accepts silent logging data.
 		// E.g., https://lawhelpinteractive.org/a2j_logging

@@ -635,11 +635,8 @@ var A2JViewer={
 			s1=si.signs[s];
 			var zoom = s1[2];
 			var scale = 'scale('+zoom+')';
-			zoom =
-				'-moz-transform: '+scale+';'
-				+'-webkit-transform: '+scale+';'
-				+'-ms-transform: '+scale+';'
-				+'transform: '+scale+';';
+			zoom = 'transform: '+scale+';'
+				+'-webkit-transform: '+scale+';';
 				
 			txt += '<div class="stepsign" style="position:absolute; left:'+s1[0]+'px; top: '+s1[1]+'px;'+zoom+'"><div class="stepsigncolor Step'+color+'" ></div>	<div class="stepnumber" >'+steps[cs].number+'</div>'
 			+'<table class="steptextdiv"><tr valign=true><td><span class="steptext">'+steps[cs].text+'</span></tr></tr></table></div>';

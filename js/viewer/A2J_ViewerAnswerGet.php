@@ -10,19 +10,17 @@
 	If there's no data, return a blank document. 
 */
 
-
-/*	Sample code to be completed:
 	$answersID=$_GET["answersID"];
-	if (isset($answersID))
-		if ($answerID
-		$getData="answers/$answersID";
-	else
-		$getData="blank_answerset";
-*/		
+	if (isset($answersID) && $answersID!=''){
+		$getData="$answersID";
+	}
+	else{
+		$getData="blank_answerset.xml";
+	}
+
 		
 	header("Content-type: text/plain");	//header("mime-type","plaintext/xml");
-	echo file_get_contents("../tests/data/sample_answers-1.anx");
-	//echo file_get_contents($getData.'.xml');	
-	
+	//echo file_get_contents("../tests/data/sample_answers-1.anx");
+	echo file_get_contents($getData);	
 	
 ?>

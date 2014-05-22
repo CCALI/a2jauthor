@@ -28,8 +28,8 @@ html, body{
 }
 .a2jbtn {
 	position: absolute;
-	width: 200px;
-	height: 32px;
+	width: 260px;
+	height: 64px;
 	top: 45px;
 	left: 5px;
 	background-image: url(images/A2J5_Viewer_Logo.png);
@@ -236,6 +236,7 @@ div.bubble {
 div.question.bubble,
 div.learnmore.bubble ,
 div.help.bubble,
+div.popup.bubble,
 div.formerror.bubble {/* question bubble */
 	margin:  0px;
 	padding:  10px;
@@ -244,6 +245,7 @@ div.formerror.bubble {/* question bubble */
 }
 div.question.bubble > div,
 div.formerror.bubble > div,
+div.popup.bubble > div,
 div.help.bubble > div { /* form with viewer's field inputs */
 	margin: 0px;
 	padding: 0px;
@@ -265,6 +267,9 @@ div.question.bubble > div {
 	min-height: 1em;
 	max-height: auto;
 }
+
+.popup.bubble,
+.popup.bubble > div,
 .help.bubble,
 .help.bubble > div {
 	min-height: 50px;
@@ -275,6 +280,7 @@ div.question.bubble > div {
 .question.panel .buttonlist,
 .formerror.panel .buttonlist,
 .learnmore.panel .buttonlist,
+.popup.panel .buttonlist,
 .help.panel .buttonlist {
 	margin-top: 1.0em;
 	bottom: 4px;
@@ -287,6 +293,7 @@ div.question.bubble > div {
 }
 .learnmore.panel .buttonlist,
 .formerror.panel .buttonlist,
+.popup.panel .buttonlist,
 .help.panel .buttonlist{
 	text-align:center;
 }

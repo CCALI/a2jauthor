@@ -241,13 +241,24 @@ var A2JViewer={
 		
 		
 		
-	
+		function prepHTML(htmlText)
+		{	// Take question text/learn text HTML and parse for logic blocks.
+			// Ensure hyperlinks target separate windows.
+			htmlText = gLogic.evalLogicHTML( htmlText );
+			var htmDiv = $('<div>'+htmlText+'</div>');
+			$('a',htmDiv).each(function(){
+				$(this).attr('TARGET','_BLANK');
+			});
+			htmlText = htmDiv.html();
+			trace(htmlText);
+			return  htmlText;
+		}
 	
 		
 		var curstep = page.step;
-		var questionHTML = gLogic.evalLogicHTML( page.text );
-		var helpHTML =  gLogic.evalLogicHTML( page.help);
-		var learnHTML = page.learn; 
+		var questionHTML = prepHTML( page.text );
+		var learnHTML = page.learn; // Learn more prompt (optional)
+		var helpHTML =  prepHTML( page.help); // Help popup (optional)
 		// ### Save quesetion to history (my progress)
 		// ### e.g., <li><a href="#"><span class="ui-icon ui-icon-document"></span>Question 1<div>Should you use this form?</div></a></li>
 		if (!A2JViewer.skipHistory)
@@ -414,13 +425,17 @@ var A2JViewer={
 		}
 		
 		// ### Learn more Prompt
+		if (helpHTML!==''  && learnHTML==='') {
+			// If learn more help exists but the prompt is blank, use the default prompt.
+			learnHTML=lang.LearnMore;
+		}
 		$('.ui-form.learnmore',div).html(learnHTML );
 		$('.learnmore button',div).button().click(function(){
 			$('.A2JViewer .learnmore.panel').hide();
 			$('.A2JViewer .help.panel').show();
 		});
 		$('.panel.learnmore',div).hide();
-		if (learnHTML!=="") {
+		if (learnHTML!=="") {			
 			$('.panel.learnmore',div).delay(3000).fadeIn(1000);
 		}
 		
@@ -432,6 +447,28 @@ var A2JViewer={
 			$('.help.panel',div).hide();
 			$('.learnmore.panel',div).show();
 		});
+		
+		// For Popups, intercept click and display.
+		// Popups appear over the learn more help.
+		// If there are popups within popups, they are not nested, just overwrite.
+		$('.ui-form.popup',div).html('');
+		$('.panel.popup',div).hide();
+		$('.panel.popup button',div).button().click(function(){
+			$('.popup.panel',div).hide();
+		});
+		$('a[href^=POPUP]',div).click(function()
+		{	// Used for hyperlink internal popup, like POPUP://EstateNotes.
+			var popupID = String($(this).attr('href')).substr(8);
+			var page = gGuide.pages[popupID];
+			if (page) {
+			  var htmlText = page.text;
+			  $('.ui-form.popup',div).html(htmlText);
+			  $('.popup.panel',div).show();
+			}
+			return false;
+		});
+
+
 		
 		// ### Error prompt
 		$('.panel.formerror',div).hide();
@@ -686,6 +723,8 @@ var A2JViewer={
 			+'<div class="buttonlist"><button>'+lang.LearnMore+'</button></div></div>';
 		shared += '<div class="help panel" style="position:absolute; left:604px; top: 93px; width: 285px;"><div class="help bubble"><div class="ui-form help"></div></div>'
 			+'<div class="buttonlist"><button>'+ lang.Close+'</button></div></div>';
+		shared += '<div class="popup panel" style="position:absolute; left:550px; top: 80px; width: 300px;"><div class="popup bubble"><div class="ui-form popup"></div></div>'
+			+'<div class="buttonlist"><button>'+ lang.Close+'</button></div></div>';			
 		shared += '<div class="formerror panel" style="position:absolute; left:604px; top: 93px; width: 285px;"><div class="formerror bubble"><div class="ui-form formerror"></div></div>'
 			+'<div class="buttonlist"><button>'+ lang.Close+'</button></div></div>';
 

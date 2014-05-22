@@ -38,7 +38,7 @@ function sendArgsToFrame(){
 		
 		 // getDataURL loads an answer file at start, used for RESUME
 		//getDataURL:	"../tests/data/Sample Short Interview Answers.anx",
-		getDataURL: "A2J_ViewerAnswerGet.php?answersID=<?=$aid?>",
+		getDataURL: "A2J_ViewerAnswerGet.php?answersID=<?=$aid?>&rnd="+Math.random(),
 		
 		// setDataURL saves answer file and leaves the viewer (its response replaces viewer's frame)
 		setDataURL:	"A2J_ViewerAnswerSet.php?answersID=<?=$aid?>", 

@@ -1,4 +1,4 @@
-<?xml version="1.0" standalone="yes" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!DOCTYPE AnswerSet [
 <!ELEMENT AnswerSet (Answer*)>
 <!ELEMENT Answer (TextValue | NumValue | DateValue | TFValue | MCValue | ClauseLibValue | DBValue | RptValue)>

@@ -687,7 +687,7 @@ TGuide.prototype.loadXMLAnswerExternal = function (opts)
 /*	Load a XML based answer file. */
 {	// Load list from opts.url, default list value will be opts.val, and XML stored in opts.elt.
    $.ajax({
-      url:  fixPath(opts.url),
+      url:  (opts.url),
       dataType:  "xml",
       timeout: 15000,
 		opts: opts,

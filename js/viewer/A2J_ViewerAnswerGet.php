@@ -21,7 +21,7 @@
 */		
 		
 	header("Content-type: text/plain");	//header("mime-type","plaintext/xml");
-	echo file_get_contents("tests/data/sample_answers-1.anx");
+	echo file_get_contents("../tests/data/sample_answers-1.anx");
 	//echo file_get_contents($getData.'.xml');	
 	
 	

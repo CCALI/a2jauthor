@@ -19,7 +19,7 @@
 	<li>Below is the value submitted via POST in variable AnswerKey.
 </ul>
 <hr>
-<div style="margin:2em;"><?=htmlentities($_POST['AnswerKey'])?></div>
+<div style="margin:2em;"><?=htmlspecialchars ($_POST['AnswerKey'])?></div>
 
 <cite>Justice * 正义 * công lý * 사법 * правосудие</cite>
 </BODY>

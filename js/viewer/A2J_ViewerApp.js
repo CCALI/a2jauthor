@@ -86,10 +86,10 @@ function doSetDataURL(target)
 	}
 	else
 	{	// Post as AnswerKey variable.
-		var $form = $('<form action="'+gStartArgs.setDataURL+'" method=POST target=_parent><input type=hidden id="AnswerKey" name="AnswerKey"/></form>');
-		//<input type="submit"/>
+		var $form = $('<form action="'+gStartArgs.setDataURL+'" method=POST accept-charset="UTF-8" target=_parent><input type=hidden id="AnswerKey" name="AnswerKey"/></form>');
 		$('body').append($form);
-		$('#AnswerKey').val(gGuide.HotDocsAnswerSetXML());
+		var answers = gGuide.HotDocsAnswerSetXML();
+		$('#AnswerKey').val(answers);
 		$form.submit();
 	}
 }

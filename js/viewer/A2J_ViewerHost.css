@@ -1258,8 +1258,8 @@ html, body{
 }
 .a2jbtn {
 	position: absolute;
-	width: 200px;
-	height: 32px;
+	width: 260px;
+	height: 64px;
 	top: 45px;
 	left: 5px;
 	background-image: url(images/A2J5_Viewer_Logo.png);

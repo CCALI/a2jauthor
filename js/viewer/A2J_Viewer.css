@@ -477,7 +477,7 @@ div.steptext.step2 { 	font-size: 1em; }
 	margin: 1px;
 	padding: 2px;
 }
-span.code, span.var, span.varidx, span.val, span.page, span.valT,span.valF,span.info {
+span.code, span.var, span.varidx, span.val, span.page, span.valT,span.valF,span.info, span.info-req {
 	padding: 2px;
 	margin: 2px;
 }
@@ -487,6 +487,10 @@ span.ui { /* color button pressed by client */
 }
 span.info { /* color comment */
 	border: thin solid #fea;
+	background-color: #ddd;
+}
+span.info-req { /* color comment */
+	border: solid #FFFF00;
 	background-color: #ddd;
 }
 span.code {

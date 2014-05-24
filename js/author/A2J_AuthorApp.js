@@ -1132,11 +1132,23 @@ function updateTOC()
 		var page = gGuide.sortedPages[p];
 		var f;
 		var ft='';
+
+// JPM adding a span to right align the tags in the page list
+		ft+="<div class='pagetags'>";
 		for (var f in page.fields) {
 			// List the field types.
 			var field = page.fields[f];
-			ft += '<span class=info>' + field.type +'</span>';
-		}
+
+		  // JPM - yellow highlight the required fields
+			if (field.required) {
+		  		  ft += '<span class=info-req>' + field.type +'</span>';
+			} else {
+		  		  ft += '<span class=info>' + field.type +'</span>';
+			}
+		  		}
+		ft+="</div>";
+		
+		
 		var tip = decodeEntities(page.text).substr(0,64) + ft;
 		var plink= '<li class="unselectable" rel="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()
 			+' <span class="tip">'+tip+'</span>' +'</li>';

@@ -1134,7 +1134,18 @@ function updateTOC()
 		var ft='';
 
 // JPM adding a span to right align the tags in the page list
+
 		ft+="<div class='pagetags'>";
+		// JPM add a tag if this page has a learn more
+		  if (page.learn != "") {
+		  		  ft += '<span class=info-learnmore>LM</span> ';
+		  }
+
+		// JPM add a tag if this page has any logic in it
+		  if (page.codebefore != "" && page.codeafter !="") {
+		  		  ft += '<span class=info-logic>Logic</span> ';
+		  }
+
 		for (var f in page.fields) {
 			// List the field types.
 			var field = page.fields[f];

@@ -963,17 +963,5 @@ div.codeedit span.err {
 	
 }
 
-/* JPM page tags on page lists
- */
-
-.pagetags {
-		  float:right;
-}
-
-.reqYN {
-		  background-color:yellow;
-		  font-weight: bold;
-}
-		  
 
 /* */

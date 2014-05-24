@@ -22,12 +22,12 @@ var CONST = {
 	// Spinnner for loading wait
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
-	A2JVersionNum:"5.0.1.17",//VersionInfo.verNum
-	A2JVersionDate:"2014-05-21",
+	A2JVersionNum:"5.0.1.18",//VersionInfo.verNum
+	A2JVersionDate:"2014-05-22",
 	
 	
-	CAVersionNum:"5.0.0",
-	CAVersionDate:"2013-04-15",
+	//CAVersionNum:"5.0.0",
+	//CAVersionDate:"2013-04-15",
 	
 	navigationVarName:"A2J Navigation TF",//11/24/08 2.6 Navigation button toggler.
 		// if FALSE, navigation next/back/my progress are turned off.
@@ -259,6 +259,36 @@ TField.prototype.fieldTypeToVariableType = function()//:Number
 };
 
 
+
+TField.prototype.fieldTypeToTagName = function()
+{	// Return variable type corresponding to this field type.
+	// Since they are wordy, we abbreviate.
+	if (TField.prototype.tagNames == null)
+	{
+		var tn={};
+		tn[CONST.ftText]='Txt';
+		tn[CONST.ftTextLong]='TxtLong';
+		tn[CONST.ftTextPick]='TxtPick';
+		tn[CONST.ftNumber]='Num';
+		tn[CONST.ftNumberDollar]='$Num';
+		tn[CONST.ftNumberPick]='NumPick';
+		tn[CONST.ftNumberSSN]='SSN';
+		tn[CONST.ftNumberPhone]='Phone';
+		tn[CONST.ftNumberZIP]='ZIP';
+		tn[CONST.ftRadioButton]='RB';
+		tn[CONST.ftGender]='Gender';
+		tn[CONST.ftCheckBoxMultiple]='CBMulti';
+		tn[CONST.ftCheckBox]='CB';
+		tn[CONST.ftCheckBoxNOTA]='CBNOTA';
+		tn[CONST.ftDateMDY]='Date';
+		TField.prototype.tagNames = tn;
+	}
+	var tag = this.tagNames[this.type];
+	if (!tag) {
+		tag=this.type;
+	}
+	return tag;
+};
 
 
 

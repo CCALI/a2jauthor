@@ -477,7 +477,8 @@ div.steptext.step2 { 	font-size: 1em; }
 	margin: 1px;
 	padding: 2px;
 }
-span.code, span.var, span.varidx, span.val, span.page, span.valT,span.valF,span.info, span.info-reqm span.info-learnmore, span.info-logic {
+span.code, span.var, span.varidx, span.val, span.page, span.valT,span.valF,span.info,
+span.tag,span.field,span.field.required,span.learnmore,span.logic {
 	padding: 2px;
 	margin: 2px;
 }
@@ -489,17 +490,28 @@ span.info { /* color comment */
 	border: thin solid #fea;
 	background-color: #ddd;
 }
-span.info-req { /* color comment */
+span.tag { /* general tag */
+	border: thin solid #fea;
+	color: #000;
+	background-color: #fff;
+}
+span.tag.field {
+	background-color: #efe;	
+}
+span.tag.field.required {
 	border: solid #FFFF00;
 	background-color: #ddd;
 }
-span.info-learnmore { /* color comment */
+span.tag.logic {
+	border: thin solid #fea;
+	background-color: #CC9966;
+}
+span.tag.learnmore {
 	border: thin solid #fea;
 	background-color: #FFCC66;
 }
-span.info-logic { /* color comment */
-	border: thin solid #fea;
-	background-color: #CC9966;
+span.taglist { /* list of tags will be right side */
+	float:right;
 }
 span.code {
 	border: thin solid #CC9966;

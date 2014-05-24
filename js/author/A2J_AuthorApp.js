@@ -1129,38 +1129,27 @@ function updateTOC()
 	var p;
 	for (p in gGuide.sortedPages)
 	{
+		/** @type {TPage} */
 		var page = gGuide.sortedPages[p];
-		var f;
-		var ft='';
-
-// JPM adding a span to right align the tags in the page list
-
-		ft+="<div class='pagetags'>";
-		// JPM add a tag if this page has a learn more
-		  if (page.learn != "") {
-		  		  ft += '<span class=info-learnmore>LM</span> ';
-		  }
-
-		// JPM add a tag if this page has any logic in it
-		  if (page.codebefore != "" && page.codeafter !="") {
-		  		  ft += '<span class=info-logic>Logic</span> ';
-		  }
-
-		for (var f in page.fields) {
-			// List the field types.
+		var tags='';
+		// List the field types as tags.
+		for (var f in page.fields)
+		{
+			/** @type {TField} */
 			var field = page.fields[f];
-
-		  // JPM - yellow highlight the required fields
 			if (field.required) {
-		  		  ft += '<span class=info-req>' + field.type +'</span>';
-			} else {
-		  		  ft += '<span class=info>' + field.type +'</span>';
+				tags += '<span class="tag field">' + field.fieldTypeToTagName() + '</span>';
+			}else{
+				tags += '<span class="tag field required">' + field.fieldTypeToTagName() + '</span>';
 			}
-		  		}
-		ft+="</div>";
-		
-		
-		var tip = decodeEntities(page.text).substr(0,64) + ft;
+		}
+		if (page.help!=='') {
+			tags += '<span class="tag help">' + 'Help' + '</span>'; 
+		}
+		if (page.codeAfter!=='' || page.codeBefore!=='') {
+			tags += '<span class="tag logic">' + 'Logic' + '</span>'; 
+		}
+		var tip = decodeEntities(page.text).substr(0,64) + '<span class=taglist>' + tags + '</span>';
 		var plink= '<li class="unselectable" rel="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()
 			+' <span class="tip">'+tip+'</span>' +'</li>';
 		if (page.type===CONST.ptPopup){

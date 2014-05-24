@@ -160,7 +160,9 @@ function buildMap()
 			$map.append(' '
 				+'<div class="node Step'+(stepc)+'" rel="'+page.name.asHTML()+'" style="z-index:1; left:'+nodeLeft+'px;top:'+nodeTop+'px;">'
 				+(page.type===CONST.ptPopup ? '':'<div class="arrow"></div>')
-				+'<div class="text">'+page.name+'</div></div>'
+				+'<div class="text">'+page.name+'</div>'
+				+'<div class="taglist">'+page.tagList()+'</div>'
+				+'</div>'
 				);
 			//$map.append(''
 				//+(page.type=="Pop-up page" ? '':'<div class="arrow" style="left:'+(nodeLeft+NW/2-7)+'px; top:'+(nodeTop-16)+'px;"></div>')

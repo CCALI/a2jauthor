@@ -1116,6 +1116,30 @@ function updateAttachmentFiles( )
 	 });
 }
 
+TPage.prototype.tagList=function()
+{	// 05/23/2014 Return list of tags to add to TOC or Mapper.
+	/** @type {TPage} */
+	var page=this;
+	var tags='';
+	// List the field types as tags.
+	for (var f in page.fields)
+	{
+		/** @type {TField} */
+		var field = page.fields[f];
+		if (field.required) {
+			tags += ' <span class="tag field">' + field.fieldTypeToTagName() + '</span>';
+		}else{
+			tags += ' <span class="tag field required">' + field.fieldTypeToTagName() + '</span>';
+		}
+	}
+	if (page.help!=='') {
+		tags += ' <span class="tag help">' + 'Help' + '</span>'; 
+	}
+	if (page.codeAfter!=='' || page.codeBefore!=='') {
+		tags += ' <span class="tag logic">' + 'Logic' + '</span>'; 
+	}
+	return tags;
+}
 
 function updateTOC()
 {	// Build outline for entire interview includes meta, step and question sections.
@@ -1131,25 +1155,7 @@ function updateTOC()
 	{
 		/** @type {TPage} */
 		var page = gGuide.sortedPages[p];
-		var tags='';
-		// List the field types as tags.
-		for (var f in page.fields)
-		{
-			/** @type {TField} */
-			var field = page.fields[f];
-			if (field.required) {
-				tags += '<span class="tag field">' + field.fieldTypeToTagName() + '</span>';
-			}else{
-				tags += '<span class="tag field required">' + field.fieldTypeToTagName() + '</span>';
-			}
-		}
-		if (page.help!=='') {
-			tags += '<span class="tag help">' + 'Help' + '</span>'; 
-		}
-		if (page.codeAfter!=='' || page.codeBefore!=='') {
-			tags += '<span class="tag logic">' + 'Logic' + '</span>'; 
-		}
-		var tip = decodeEntities(page.text).substr(0,64) + '<span class=taglist>' + tags + '</span>';
+		var tip = decodeEntities(page.text).substr(0,64) + '<span class=taglist>' + page.tagList()  + '</span>';
 		var plink= '<li class="unselectable" rel="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()
 			+' <span class="tip">'+tip+'</span>' +'</li>';
 		if (page.type===CONST.ptPopup){

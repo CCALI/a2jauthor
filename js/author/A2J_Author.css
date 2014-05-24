@@ -856,11 +856,10 @@ li.guide:hover {
 
 .map  .node {
 	font-size: 12px;
-	/*background-color: #D0F0F0;*/
 	margin: 0px;
 	padding: 4px;
 	width: 130px;
-	height: 36px;
+	/*height: 36px;*/
 	border: 1px outset #006699;
 	text-align: center;
 	position: absolute;
@@ -893,6 +892,12 @@ li.guide:hover {
 .node .text {
 	height: 100%;
 	overflow: hidden;
+}
+.node .taglist {
+	text-align:center;
+	width:100%;
+	line-height: 1.5em;
+	margin-top: 0.5em;
 }
 .map .branch {
 	font-size: 8px;

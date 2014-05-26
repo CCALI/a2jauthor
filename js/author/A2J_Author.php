@@ -204,6 +204,8 @@
 						<div class="map"></div>
 					</div>
 					<div class="tabFooter">
+<!-- JPM added button to hide/show page list -->
+						<button zoom="fit"></button>
 						<button zoom="fit"></button>
 						<button zoom="1.25"></button>
 						<button zoom="0.75"></button>

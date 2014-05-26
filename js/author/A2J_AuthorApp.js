@@ -1960,12 +1960,18 @@ function main()
 		$(this).closest('tr').remove();
 		form.listManagerSave($tbl);
 	});
-	
+
+// JPM - added button to slide/hide page list on mapper	
 	$('#tabsMapper button').first()
+		.button({disabled:false,label:'Hide Page List',icons:{primary:'ui-icon-arrowthick-1-w'}}).next()
 		.button({disabled:true,label:'Fit',icons:{primary:'ui-icon-arrow-4-diag'}}).next()
 		.button({label:'Zoom in',icons:{primary:'ui-icon-zoomin'}}).next()
 		.button({label:'Zoom out',icons:{primary:'ui-icon-zoomout'}});
-	$('#tabsMapper button').click(mapZoomClick);
+		
+	$('#tabsMapper button:eq(0)').click(mapZoomSlide);
+	$('#tabsMapper button:eq(1)').click(mapZoomClick);
+	$('#tabsMapper button:eq(2)').click(mapZoomClick);
+	$('#tabsMapper button:eq(3)').click(mapZoomClick);
 	
 	$('.tabsPages .tabFooter button').first()
 		.button({label:'Edit',icons:{primary:'ui-icon-pencil'}}).click(function(){

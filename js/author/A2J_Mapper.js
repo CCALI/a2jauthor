@@ -202,9 +202,27 @@ function focusPage()
 }
 */
 
+// JPM if showing/hiding page list, do that and zoom to fit
+function mapZoomSlide()
+{
+//	trace("pagesfit " + $('#tabsMapper').css('left') );
+	$('.tabsMapPages').animate({width: 'toggle'});
+	if ($('#tabsMapper').css("left")=="0px") {
+		$('#tabsMapper').css("left", "33%");
+	$('#tabsMapper button').first()
+		.button({disabled:false,label:'Hide Page List',icons:{primary:'ui-icon-arrowthick-1-w'}});
+	} else {
+		$('#tabsMapper').css("left", "0px");
+	$('#tabsMapper button').first()
+		.button({disabled:false,label:'Show Page List',icons:{primary:'ui-icon-arrowthick-1-e'}});
+		
+	}	
+}
+
 function mapZoomClick()
 {	// Zoom in or out. 
 	var zoom=parseFloat($(this).attr('zoom'));
+
 	if (zoom>0){
 		gMapperScale = gMapperScale * zoom;
 	}

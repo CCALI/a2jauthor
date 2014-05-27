@@ -106,57 +106,6 @@ function propCount(obj)
 	return cnt;
 }
 
-function traceTag(cname,chtml)
-{	// cname is tag name, chtml is htmlized value
-	if (cname==='val')
-	{
-		if (chtml === "" || chtml===null )
-		{
-			chtml = "blank";
-			cname = 'valBlank';
-		}
-		else
-		if (chtml == true || chtml=='true') {
-			cname='valT';//any thing like True, use the True styling
-		}
-		else
-		if (chtml == false || chtml=='false') {
-			cname='valF';//any thing like False, use the False styling
-		}
-	}
-	return "<span class="+cname+">"+htmlEscape(chtml)+"</span>";
-}
-
-/** @param {...} var_args */
-function trace(var_args)
-{
-	if (typeof console!=="undefined"){
-		var msg="";
-		var a;
-		for (a=0;a<arguments.length;a++)
-		{
-			var arg = arguments[a];
-			if (typeof arg==="object"){
-				msg += arg;//props(arg);
-			}
-			else
-			if (typeof arg !=="function"){
-				msg += arg;
-			}
-			if (msg!=="") {
-				msg += ", ";
-			}
-		}
-		console.log(msg);
-	}
-}
-function prettyXML(xml) {
-	var html = htmlEscape(xml);
-	html = html.split("&lt;A").join("<BR>&lt;A");
-	//trace(html);
-	return html;
-}
-
 function cloneObject(obj) {
 	var clone = {};
 	var i;
@@ -174,22 +123,6 @@ $.fn.showit = function(yes) { // show/hide via class rather than .toggle to avoi
     return $(this).removeClass('hidden').addClass(yes ? '' : 'hidden');
 };
 
-String.prototype.asHTML=function(){
-	return htmlEscape(this);
-};
-String.prototype.stripHTML=function(){
-	return $('<div>'+(this)+'</div>').text();
-}
-String.prototype.ellipsis=function(limit){
-	return this.substring(0,limit)+(this.length>limit?"…":"");
-};
-
-/*
-String.prototype.asATTR=function(){
-	return this.replace(/'/g, "&#39;");
-}
-*/
-
 // http://stackoverflow.com/questions/1219860/javascript-jquery-html-encoding
 function htmlEscape(str){
     return String(str)
@@ -199,6 +132,24 @@ function htmlEscape(str){
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
 }
+String.prototype.asHTML=function(){
+	return htmlEscape(this);
+};
+String.prototype.stripHTML=function(){
+	return $('<div>'+(this)+'</div>').text();
+};
+String.prototype.ellipsis=function(limit){
+	return this.substring(0,limit)+(this.length>limit?"…":"");
+};
+
+function prettyXML(xml) {
+	var html = htmlEscape(xml);
+	html = html.split("&lt;A").join("<BR>&lt;A");
+	//trace(html);
+	return html;
+}
+
+
 function isBlankOrNull(v)
 {	// Return true if v is blank or null.
 	return (v===null || typeof v === "undefined" || v === '');
@@ -369,10 +320,6 @@ function props(o)
 }
 
 
-function propsJSON(name,o)
-{
-	return propsJSON_(name,0,o);
-}
 function propsJSON_(name,d,o)
 {	// 10/17/2012 Sam's simple JSON to XML. 
 	var body = "";
@@ -429,6 +376,10 @@ function propsJSON_(name,d,o)
 	body += "</div>";
 	return body;
 }
+function propsJSON(name,o)
+{
+	return propsJSON_(name,0,o);
+}
 /*
 //http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values
 var urlParams;
@@ -475,5 +426,49 @@ function downloadTextFile(fileTextContent, fileName)
 	document.body.removeChild(a);
 }
 
+function traceTag(cname,chtml)
+{	// cname is tag name, chtml is htmlized value
+	if (cname==='val')
+	{
+		if (chtml === "" || chtml===null )
+		{
+			chtml = "blank";
+			cname = 'valBlank';
+		}
+		else
+		if (chtml == true || chtml=='true') {
+			cname='valT';//any thing like True, use the True styling
+		}
+		else
+		if (chtml == false || chtml=='false') {
+			cname='valF';//any thing like False, use the False styling
+		}
+	}
+	return "<span class="+cname+">"+htmlEscape(chtml)+"</span>";
+}
+
+/** @param {...} var_args */
+function trace(var_args)
+{
+	if (typeof console!=="undefined"){
+		var msg="";
+		var a;
+		for (a=0;a<arguments.length;a++)
+		{
+			var arg = arguments[a];
+			if (typeof arg==="object"){
+				msg += arg;//props(arg);
+			}
+			else
+			if (typeof arg !=="function"){
+				msg += arg;
+			}
+			if (msg!=="") {
+				msg += ", ";
+			}
+		}
+		console.log(msg);
+	}
+}
 
 /* */

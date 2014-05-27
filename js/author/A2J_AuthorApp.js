@@ -1139,7 +1139,7 @@ TPage.prototype.tagList=function()
 		tags += ' <span class="tag logic">' + 'Logic' + '</span>'; 
 	}
 	return tags;
-}
+};
 
 function updateTOC()
 {	// Build outline for entire interview includes meta, step and question sections.
@@ -1856,7 +1856,7 @@ function main()
 	//$('#guideSave').button({label:'Save Now',icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
 	$('#settings').button({label:'Settings',icons:{primary:"ui-icon-gear"}}).click(function(){$('#settings-form').dialog('open');});
 	
-	// JPM 	Expand/Collapse button for pages list.   
+	// JPM Expand/Collapse button for pages list.   
 	$('#expandCollapse')
 		.button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}})
 		.click(function(){
@@ -1866,7 +1866,7 @@ function main()
 	// JPM Handles Expand/Collapse button on pages list
 	function expandCollapsePageList() {
 		var ecText = $("#expandCollapse").text();
-		if (ecText == "Collapse All") {
+		if (ecText === "Collapse All") {
 			$("#expandCollapse").html("Expand All");
 			$("#CAJAOutline > ul > li + ul").slideUp(300);
 			$('#expandCollapse').button({label:'Expand All',icons:{primary:"ui-icon-circle-plus"}});
@@ -1881,7 +1881,7 @@ function main()
 	$(".ecPanelButton") // SJG apply to all ec buttons operating on LEGEND tags
 		  .button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}})
 		  .click(function(){
-			  if ($(this).text() == "Collapse All") {
+			  if ($(this).text() === "Collapse All") {
 						 $(this).parents('.panel').find("legend ~ div").slideToggle(300);
 						 $(this).button({label:'Expand All',icons:{primary:"ui-icon-circle-plus"}});
 			  }
@@ -1909,8 +1909,6 @@ function main()
 		}
 	 });
 	
-	
-	
 	$('#guideZIP').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
 	{	// 01/08/2014 ZIP the guide and related files. 
 		function guideZipped(data)
@@ -1925,13 +1923,10 @@ function main()
 		ws({cmd:'guidezip',gid:gGuideID},guideZipped);
 	 });
 	
-	
 	$('#guideDownload').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
 	{	// 05/08/2014 Download as .a2j file
 		downloadTextFile( exportXML_CAJA_from_CAJA(gGuide), gGuide.filename);
 	 });
-	
-	
 	
 	$('#guideClone').button({label:'Clone', disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){
 		//var $li=$('li.guide.'+SELECTED).first();
@@ -1939,7 +1934,6 @@ function main()
 		dialogAlert({title:'Clone interview'});
 	 });
 
-	
 	$('.guidemenu ul li').click(function(){
 		gotoTabOrPage($(this).attr('ref'));
 	});
@@ -2001,15 +1995,6 @@ function main()
 	$('#showtext1').click(function(){gPrefs.showText=1;gGuide.noviceTab("tabsText",true);});
 	$('#showtext2').click(function(){gPrefs.showText=2;gGuide.noviceTab("tabsText",true);});
 	
-	//$('#showpagelist').buttonset();
-	//$('#showpagelist1').click(function(){gPrefs.showPageList=1;$('#CAJAOutline, #CAJAIndex').hide();$('#CAJAOutline').show();});
-	//$('#showpagelist2').click(function(){gPrefs.showPageList=2;$('#CAJAOutline, #CAJAIndex').hide();$('#CAJAIndex').show();});
-
-
-   //   if (typeof initAdvanced != "undefined")      initAdvanced();
-
-
-
 
    //Ensure HTML possible for combo box pick list
    //https://github.com/scottgonzalez/jquery-ui-extensions/blob/master/autocomplete/jquery.ui.autocomplete.html.js

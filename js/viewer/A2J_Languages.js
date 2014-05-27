@@ -12,9 +12,10 @@
 	And jQuery UI structs for Calendar.
 	
 	Currently supported languages:
-		English, Spanish, Vietnamese, Chinse-Simplified
+		English, Spanish, Vietnamese, Chinese-Simplified, Korean
 ******************************************************************************/
 
+// Language elements that are translatable
 var lang = {
 	Language: '',
 	Male:'',
@@ -42,21 +43,21 @@ var lang = {
 	scriptErrorUnhandled : '',
 	scriptErrorEndMissing : ''
 };
-/** 
+/**
  * @constructor
  * @struct
- * @this {TLanguages} 
+ * @this {TLanguages}
  */
 function TLanguages()
 {
 	this.defaultLanguage ='en';
 	this.regional =[];
-	this.set = /** @this {TLanguages} */ function(languageID)	
+	this.set = /** @this {TLanguages} */ function(languageID)
 	{
 		if (typeof this.regional[languageID]==='undefined'){
 			languageID='en';
 		}
-		trace("TLanguages.set",languageID);
+		//trace("TLanguages.set",languageID);
 		var region;
 		
 		region = this.regional[languageID];
@@ -464,7 +465,7 @@ Languages.regional['zh-cn']= {
 Languages.regional['ko']= {
 	locale:'ko',
 	
-	Language: '영어', 
+	Language: '영어',
 	LanguageEN: 'Korean',
 	AskYesNo_Yes:'예',
 	AskYesNo_No:'아니요',
@@ -486,7 +487,7 @@ Languages.regional['ko']= {
 	Continue:'계속',
 	Exit:'나가기',
 	Male:'남성',
-	Female:'여성',	
+	Female:'여성',
 	ChooseListNumber:'선택:',
 	ChooseListText:'이 목록에서 선택:',
 	CheckBoxNOTALabel:'내용 중 해당 사항 없음',
@@ -497,7 +498,7 @@ Languages.regional['ko']= {
 	TextSizeLetter:'A',
 	UploadAnswers:'나가는 중입니다. 기다려 주십시오…',
 	CalcClear:'지우기',
-	CalcEnter:'입력',	
+	CalcEnter:'입력',
 	MonthNamesShort:'1월,2월,3월,4월,5월,6월,7월,8월,9월,10월,11월,12월',
 	MonthNamesLong:'1월,2월,3월,4월,5월,6월,7월,8월,9월,10월,11월,12월',
 	FieldPrompts_ResponseRequired:'계속하기 전에 적색 라벨 옆의 공란에 응답해야 합니다.',
@@ -533,7 +534,7 @@ Languages.regional['ko']= {
 
 if ($.datepicker) {
 
-jQuery(function($){ 
+jQuery(function($){
 	/* Save the English in case author switches back */
 	$.datepicker.regional['en'] = $.datepicker.regional[''];
 });

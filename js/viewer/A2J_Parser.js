@@ -188,6 +188,78 @@ function exportXML_CAJA_from_CAJA(guide)
 	var xml = '<?xml version="1.0" encoding="UTF-8" ?>' + js2xml('GUIDE',JSON.GUIDE);
 	return xml;
 }
+
+
+function parseXML2Page(PAGE, page)
+{
+	page.xml = PAGE.xml(); 
+	
+	page.type=PAGE.attr("TYPE");
+	page.style=makestr(PAGE.attr("STYLE"));
+	if (page.type===CONST.ptPopup || page.type==="Pop-up page")
+	{
+		page.type=CONST.ptPopup;
+		page.mapx=null;
+	}
+	else
+	{
+		page.mapx=parseInt(PAGE.attr("MAPX"),10);
+		page.mapy=parseInt(PAGE.attr("MAPY"),10);
+	}
+	page.repeatVar=makestr(PAGE.attr("REPEATVAR"));
+	page.nextPage="";
+	page.nextPageDisabled = false;
+	page.alignText="";
+	page.step=parseInt(PAGE.attr("STEP"),10);
+	page.text=PAGE.find("TEXT").xml();
+	page.textAudioURL=makestr(PAGE.find("TEXTAUDIO").text());
+	page.learn=makestr(PAGE.find("LEARN").xml());
+	page.help=makestr(PAGE.find("HELP").xml());
+	page.helpAudioURL=makestr(PAGE.find("HELPAUDIO").text());
+	page.helpReader=makestr(PAGE.find("HELPREADER").xml());
+	page.helpImageURL=makestr(PAGE.find("HELPIMAGE").text());
+	page.helpVideoURL=makestr(PAGE.find("HELPVIDEO").text());
+	page.notes=makestr(PAGE.find("NOTES").xml());
+	page.codeBefore = makestr(PAGE.find("CODEBEFORE").xml());
+	page.codeAfter =	makestr(PAGE.find("CODEAFTER").xml());
+	
+	PAGE.find('BUTTONS > BUTTON').each(function(){
+		var button=new TButton();
+		button.label =jQuery.trim($(this).find("LABEL").xml());
+		button.next = makestr($(this).attr("NEXT"));
+		button.name =jQuery.trim($(this).find("NAME").xml());
+		button.value = jQuery.trim($(this).find("VALUE").xml());
+		page.buttons.push(button);
+	});
+	PAGE.find('FIELDS > FIELD').each(function(){
+		var field=new TField();
+		var $field=$(this);
+		field.type =$field.attr("TYPE");
+		field.required = textToBool($field.attr("REQUIRED"),true);
+		field.order = makestr($field.attr("ORDER"));
+		field.label =makestr(jQuery.trim($field.find("LABEL").xml()));
+		field.name =jQuery.trim($field.find("NAME").xml());
+		field.value = makestr(jQuery.trim($field.find("VALUE").xml()));
+		field.sample = makestr(jQuery.trim($field.find("SAMPLE").xml()));
+		field.min = makestr($field.attr("MIN"));//could be a number or a date so don't convert to number
+		field.max = makestr($field.attr("MAX"));
+		field.calendar = textToBool($field.attr("CALENDAR"),false);
+		field.calculator=textToBool($field.attr("CALCULATOR"),false);
+		
+		field.invalidPrompt =makestr(jQuery.trim($field.find("INVALIDPROMPT").xml()));
+		field.invalidPromptAudio =makestr(jQuery.trim($field.find("INVALIDPROMPTAUDIO").xml()));
+		
+		field.listSrc =	makestr($field.find("LISTSRC").xml());
+		if (field.listSrc===""){
+			field.listData =	$field.find("LISTDATA").xml();
+		}
+	
+		page.fields.push(field);
+	});
+	return page;
+}
+
+
 function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 {	// Parse parseCAJA
 	var guide=new TGuide();
@@ -243,7 +315,7 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		//v.name=VARIABLE.attr("NAME");
 		//v.type=VARIABLE.attr("TYPE");
 		//v.repeating = textToBool(VARIABLE.attr('REPEATING'),false);
-		var v=guide.varCreate(VARIABLE.attr("NAME"),VARIABLE.attr("TYPE"),textToBool(VARIABLE.attr('REPEATING'),false),makestr(VARIABLE.attr("COMMENT")));
+		guide.varCreate(VARIABLE.attr("NAME"),VARIABLE.attr("TYPE"),textToBool(VARIABLE.attr('REPEATING'),false),makestr(VARIABLE.attr("COMMENT")));
 		//v.trace('Create variable');
 		//guide.vars[v.name.toLowerCase()]=v;
 	 });/*
@@ -332,6 +404,8 @@ function page2XML(page)/* return XML */
 {
 	return '<?xml version="1.0" encoding="UTF-8" ?>' + js2xml('PAGE', page2JSON(page));
 }
+
+
 function pageFromXML(xml)/* return TPage */
 {
 	var $xml =  $(jQuery.parseXML(xml));
@@ -340,99 +414,6 @@ function pageFromXML(xml)/* return TPage */
 	parseXML2Page(PAGE,page);
 	return page;
 }
-
-
-
-function parseXML2Page(PAGE, page)
-{
-	page.xml = PAGE.xml(); 
-	
-	page.type=PAGE.attr("TYPE");
-	page.style=makestr(PAGE.attr("STYLE"));
-	if (page.type===CONST.ptPopup || page.type==="Pop-up page")
-	{
-		page.type=CONST.ptPopup;
-		page.mapx=null;
-	}
-	else
-	{
-		page.mapx=parseInt(PAGE.attr("MAPX"),10);
-		page.mapy=parseInt(PAGE.attr("MAPY"),10);
-	}
-	page.repeatVar=makestr(PAGE.attr("REPEATVAR"));
-	page.nextPage="";
-	page.nextPageDisabled = false;
-	page.alignText="";
-	page.step=parseInt(PAGE.attr("STEP"),10);
-	page.text=PAGE.find("TEXT").xml();
-	page.textAudioURL=makestr(PAGE.find("TEXTAUDIO").text());
-	page.learn=makestr(PAGE.find("LEARN").xml());
-	page.help=makestr(PAGE.find("HELP").xml());
-	page.helpAudioURL=makestr(PAGE.find("HELPAUDIO").text());
-	page.helpReader=makestr(PAGE.find("HELPREADER").xml());
-	page.helpImageURL=makestr(PAGE.find("HELPIMAGE").text());
-	page.helpVideoURL=makestr(PAGE.find("HELPVIDEO").text());
-	page.notes=makestr(PAGE.find("NOTES").xml());
-	page.codeBefore = makestr(PAGE.find("CODEBEFORE").xml());
-	page.codeAfter =	makestr(PAGE.find("CODEAFTER").xml());
-	
-	PAGE.find('BUTTONS > BUTTON').each(function(){
-		var button=new TButton();
-		button.label =jQuery.trim($(this).find("LABEL").xml());
-		button.next = makestr($(this).attr("NEXT"));
-		button.name =jQuery.trim($(this).find("NAME").xml());
-		button.value = jQuery.trim($(this).find("VALUE").xml());
-		page.buttons.push(button);
-	});
-	PAGE.find('FIELDS > FIELD').each(function(){
-		var field=new TField();
-		var $field=$(this);
-		field.type =$field.attr("TYPE");
-		field.required = textToBool($field.attr("REQUIRED"),true);
-		field.order = makestr($field.attr("ORDER"));
-		field.label =makestr(jQuery.trim($field.find("LABEL").xml()));
-		field.name =jQuery.trim($field.find("NAME").xml());
-		field.value = makestr(jQuery.trim($field.find("VALUE").xml()));
-		field.sample = makestr(jQuery.trim($field.find("SAMPLE").xml()));
-		field.min = makestr($field.attr("MIN"));//could be a number or a date so don't convert to number
-		field.max = makestr($field.attr("MAX"));
-		field.calendar = textToBool($field.attr("CALENDAR"),false);
-		field.calculator=textToBool($field.attr("CALCULATOR"),false);
-		
-		field.invalidPrompt =makestr(jQuery.trim($field.find("INVALIDPROMPT").xml()));
-		field.invalidPromptAudio =makestr(jQuery.trim($field.find("INVALIDPROMPTAUDIO").xml()));
-		
-		field.listSrc =	makestr($field.find("LISTSRC").xml());
-		if (field.listSrc===""){
-			field.listData =	$field.find("LISTDATA").xml();
-		}
-	
-		page.fields.push(field);
-	});
-	return page;
-}
-
-
-function parseXML_Auto_to_CAJA(cajaData)
-{	// Parse XML into CAJA
-	var guide;
-	if ((cajaData.find('A2JVERSION').text())!==""){
-		guide=parseXML_A2J_to_CAJA(cajaData);// Parse A2J into CAJA
-	}
-	else
-	if ((cajaData.find('CALIDESCRIPTION').text())!==""){
-		if (typeof parseXML_CA_to_CAJA !== 'undefined'){
-			guide=parseXML_CA_to_CAJA(cajaData);// Parse CALI Author into CAJA
-		}
-	}
-	else{
-		guide=parseXML_CAJA_to_CAJA(cajaData);// Parse Native CAJA
-	}
-	
-	guide.sortPages();
-	return guide;
-}
-
 
 
 
@@ -667,11 +648,11 @@ TGuide.prototype.HotDocsAnswerSetFromXML=function(AnswerSetXML)
 			if (v.type===CONST.vtUnknown) {
 				varName=varName.split(" ");
 				varName=varName[varName.length-1];
-				if (varName=='MC') {	v.type=CONST.vtMC;}
+				if (varName==='MC') {	v.type=CONST.vtMC;}
 				else
-				if (varName=='TF') {	v.type=CONST.vtTF;}
+				if (varName==='TF') {	v.type=CONST.vtTF;}
 				else
-				if (varName=='NU') {	v.type=CONST.vtNumber;}
+				if (varName==='NU') {	v.type=CONST.vtNumber;}
 				else					{	v.type=CONST.vtText;	}
 				v.comment += 'Type not in answer file, assuming '+v.type;
 			}
@@ -706,55 +687,7 @@ TGuide.prototype.loadXMLAnswerExternal = function (opts)
 				}
 			}
    });
-}
-
-
-/** @param {string} guideFile */
-/** @param {string} startTabOrPage */
-function loadGuideFile(guideFile,startTabOrPage)
-{  // Load guide file and start on specified page
-	
-	if (guideFile==='') {
-		$('#splash').empty();
-		dialogAlert({title:'No guide file specified'});
-		return;
-	}
-	var url=urlSplit(guideFile);
-	guideFile = url.path+url.file;
-	gGuidePath = url.path;
-	if (url.hash!=="")
-	{
-      startTabOrPage= "PAGE " +url.hash;
-	}
-	trace(guideFile,url,gGuidePath,startTabOrPage);
-   loadNewGuidePrep(guideFile,startTabOrPage);
-	
-   window.setTimeout(function()
-		//{loadGuideFile2(guideFile,startTabOrPage);}
-		{	// Load guide file and start on specified page. 
-			$.ajax({
-				url: guideFile,
-				dataType:  "xml", // IE will only load XML file from local disk as text, not xml.
-				timeout: 45000,
-				error:
-					/*** @this {{url}} */
-					function(data,textStatus,thrownError){
-					$('#splash').empty();
-					  dialogAlert({title:'Error occurred loading file',body:'Unable to load XML from '+guideFile+"\n"+textStatus});
-					 },
-				success: function(data){
-					var cajaDataXML;
-					cajaDataXML = data;
-					cajaDataXML=$(cajaDataXML); 
-					// global variable guide
-					gGuide =  parseXML_Auto_to_CAJA(cajaDataXML);
-					gGuide.filename=guideFile;
-					guideStart(startTabOrPage);
-					setProgress('');     
-				}
-			});
-		},500);
-}
+};
 
 
 
@@ -826,7 +759,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		//Obsolete, discard: VARIABLE.attr("SCOPE");
 		//guide.vars[v.name.toLowerCase()]=v;
 		//v.repeating = textToBool(VARIABLE.attr('REPEATING'),false);
-		var v=guide.varCreate(VARIABLE.attr("NAME"),VARIABLE.attr("TYPE"),textToBool(VARIABLE.attr('REPEATING'),false),makestr(VARIABLE.find("COMMENT").xml()));
+		guide.varCreate(VARIABLE.attr("NAME"),VARIABLE.attr("TYPE"),textToBool(VARIABLE.attr('REPEATING'),false),makestr(VARIABLE.find("COMMENT").xml()));
 		//v.trace('Import variable');
 	 });
 	// guide's default avatar/guide settings aren't set here. 
@@ -1081,6 +1014,76 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	
 	//return guide;
 	return parseXML_CAJA_to_CAJA( $(jQuery.parseXML(exportXML_CAJA_from_CAJA(guide))) ); // force complete IO
+}
+
+
+function parseXML_Auto_to_CAJA(cajaData)
+{	// Parse XML into CAJA
+	var guide;
+	if ((cajaData.find('A2JVERSION').text())!==""){
+		guide=parseXML_A2J_to_CAJA(cajaData);// Parse A2J into CAJA
+	}
+	else
+	if ((cajaData.find('CALIDESCRIPTION').text())!==""){
+		if (typeof parseXML_CA_to_CAJA !== 'undefined'){
+			guide=parseXML_CA_to_CAJA(cajaData);// Parse CALI Author into CAJA
+		}
+	}
+	else{
+		guide=parseXML_CAJA_to_CAJA(cajaData);// Parse Native CAJA
+	}
+	
+	guide.sortPages();
+	return guide;
+}
+
+
+
+/** @param {string} guideFile */
+/** @param {string} startTabOrPage */
+function loadGuideFile(guideFile,startTabOrPage)
+{  // Load guide file and start on specified page
+	
+	if (guideFile==='') {
+		$('#splash').empty();
+		dialogAlert({title:'No guide file specified'});
+		return;
+	}
+	var url=urlSplit(guideFile);
+	guideFile = url.path+url.file;
+	gGuidePath = url.path;
+	if (url.hash!=="")
+	{
+      startTabOrPage= "PAGE " +url.hash;
+	}
+	trace(guideFile,url,gGuidePath,startTabOrPage);
+   loadNewGuidePrep(guideFile,startTabOrPage);
+	
+   window.setTimeout(function()
+		//{loadGuideFile2(guideFile,startTabOrPage);}
+		{	// Load guide file and start on specified page. 
+			$.ajax({
+				url: guideFile,
+				dataType:  "xml", // IE will only load XML file from local disk as text, not xml.
+				timeout: 45000,
+				error:
+					/*** @this {{url}} */
+					function(data,textStatus,thrownError){
+					$('#splash').empty();
+					  dialogAlert({title:'Error occurred loading file',body:'Unable to load XML from '+guideFile+"\n"+textStatus});
+					 },
+				success: function(data){
+					var cajaDataXML;
+					cajaDataXML = data;
+					cajaDataXML=$(cajaDataXML); 
+					// global variable guide
+					gGuide =  parseXML_Auto_to_CAJA(cajaDataXML);
+					gGuide.filename=guideFile;
+					guideStart(startTabOrPage);
+					setProgress('');     
+				}
+			});
+		},500);
 }
 
 

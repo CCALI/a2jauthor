@@ -812,7 +812,7 @@ li.guide:hover {
 .tabContent {
 	position: absolute;
 	overflow: hidden;
-	border: 2px thick #0f0;
+	border: 2px #0f0;
 }
 
 
@@ -850,7 +850,7 @@ li.guide:hover {
 }
 
 .map {
-	border: 2px thick #0f0;
+	border: 2px #0f0;
 	position: relative;
 }
 

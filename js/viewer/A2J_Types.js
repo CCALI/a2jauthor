@@ -615,7 +615,7 @@ TGuide.prototype.varGet=function(varName,varIndex)
 TGuide.prototype.varCreate=function(varName,varType,varRepeat,varComment)
 {
 	if (varName.length>CONST.MAXVARNAMELENGTH) {
-		traceAlert('Variable name "' + varNme+'" exceeds maximum length of '+CONST.MAXVARNAMELENGTH +' characters.');
+		traceAlert('Variable name "' + varName +'" exceeds maximum length of '+CONST.MAXVARNAMELENGTH +' characters.');
 	}
 	varName = jQuery.trim(varName);
 	var varName_i=varName.toLowerCase();

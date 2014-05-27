@@ -149,6 +149,29 @@ html, body{
 	border-left-color: #FCFCFC;
 	border-left-style: outset;
 }
+.alertPanel {
+	/* Spammy alerts for user go here. */
+	margin: 1em;
+	margin-right: 2em;
+	margin-left: 2em;
+	max-height: 250px;
+	background-color: #ffa;
+	overflow: auto;
+}
+.alertCounter {
+	position: absolute;
+	right: 1em;
+	bottom: 1em;
+	width: 32px;
+	height: 32px;
+	text-align:  center;
+	border: 3px solid #f00;
+	border-radius: 32px;
+	background-color:#fff;
+	color: #f00;
+	font-size: 24px;
+	cursor:pointer;
+}
 .NavBar button.ui-state-default {
 	background: transparent;
 	color: #000;

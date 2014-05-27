@@ -29,6 +29,7 @@ var A2JViewer={
 		});
 	},
 	
+	
 	refreshVariables : function ( )
 	{	// Update the variables table with latest values
 		var $t=$('.varvalpanel');
@@ -133,11 +134,14 @@ var A2JViewer={
 						//+'<li class="right"><a href="#">Exit</a></li> <li class="right"><a href="#">Save</a></li> '
 						+'</ul>'
 			+'<div class="notice">'
+				+'<div class="alertPanel"></div> '
 /*				+'<div class="license"><p ><span class="SJILogo"/>This program was developed under grants from the State Justice Institute (SJI grant number SJI-04-N-121), Center for Access to the Courts through Technology; Chicago Kent College of Law, Center for Computer-Assisted Legal Instruction (CALI), and Legal Services Corporation (LSC).  The points of view expressed are those of the authors and do not necessarily represent the official position or policies of the SJI, Center for Access to the Courts through Technology, Chicago-Kent, CALI, or the LSC.</p><p>&quot;A2J Author&quot; and &quot;A2J Guided Interviews&quot; are federally registered trademarks of Illinois Institute of Technology, Chicago Kent College of Law &amp; Center for Computer-Assisted Legal Instruction.  Any use of either mark must include the full name of the mark, along with the registration circle - ®.  Use of either mark on your webpage, or in any publications, presentations or materials must also prominently display the following sentence, &quot;[insert mark name here]® is a US federally registered trademark owned by Illinois Institute of Technology, Chicago Kent College of Law &amp; Center for Computer-Assisted Legal Instruction. &lt;www.a2jauthor.org&gt; </p></div>'*/
 				+'<div class="copyright">'
 					+'<span class="viewerenv">'+gEnv+' '+CONST.A2JVersionNum+" ("+CONST.A2JVersionDate+') </span>'
 					+'© 2000-2014 Illinois Institute of Technology - Chicago-Kent College of Law and the Center for Computer-Assisted Legal Instruction'
-			+'</div></div>');
+					+'</div>'
+			+'<div class="alertCounter"></div>'
+			+'</div>');
 			//<img src="images/SJILogo.gif" width="90" height="55" hspace="3" vspace="3" align="left" />
 			
 			$('div.a2jbtn',div).attr('title',versionString()).click(function()
@@ -186,7 +190,9 @@ var A2JViewer={
 				}
 			});
 			
-				
+			$('.alertPanel').click(  function(){$('.alertPanel').slideToggle();});
+			$('.alertCounter').hide().click(function(){$('.alertPanel').slideToggle();});
+			
 			$('#viewer-var-filter').keyup(A2JViewer.filterVariables);
 			
 			// Navigation
@@ -196,25 +202,26 @@ var A2JViewer={
 				gotoPageView($(this).val());
 			});
 			$('button.navBack',div).button({label:  lang.GoBack,icons:{primary:'ui-icon-circle-triangle-w'},disabled:true}).click(function(){
-				//trace('navBack');
+				//traceInfo('navBack');
 				$('#history').prop('selectedIndex',$('#history').prop('selectedIndex')+1);
 				A2JViewer.skipHistory=true;
 				gotoPageView($('#history').val());
 			});
 			$('button.navNext',div).button({label:  lang.GoNext,icons:{primary:'ui-icon-circle-triangle-e'},disabled:true}).click(function(){
-				//trace('navNext');
+				//traceInfo('navNext');
 				$('#history').prop('selectedIndex',$('#history').prop('selectedIndex')-1);
 				A2JViewer.skipHistory=true;
 				gotoPageView($('#history').val());
 			});
 			$('button.navFeedback',div).button({label:  lang.SendFeedback,icons:{primary:'ui-icon-comment'},disabled:0}).click(function(){
-				trace('navFeedback');
+				traceInfo('navFeedback');
+				traceAlert('navFeedback not implemented');
 			});
 			$('button.navSaveAndExit',div).button({label:  lang.SaveAndExit,icons:{primary:'ui-icon-disk'},disabled:0}).click(function(){
-				trace('navSaveAndExit');
+				traceInfo('navSaveAndExit');
 			});
 			$('button.navResumeExit',div).button({label:  lang.ResumeExit,icons:{primary:'ui-icon-arrowreturnthick-1-w'},disabled:true}).click(function(){
-				trace('navResumeExit');
+				traceInfo('navResumeExit');
 			});
 		
 			if (typeof authorViewerHook !== 'undefined'){
@@ -250,7 +257,7 @@ var A2JViewer={
 				$(this).attr('TARGET','_BLANK');
 			});
 			htmlText = htmDiv.html();
-			trace(htmlText);
+			traceInfo(htmlText);
 			return  htmlText;
 		}
 	
@@ -263,7 +270,7 @@ var A2JViewer={
 		// ### e.g., <li><a href="#"><span class="ui-icon ui-icon-document"></span>Question 1<div>Should you use this form?</div></a></li>
 		if (!A2JViewer.skipHistory)
 		{
-			trace('Save in history');
+			traceInfo('Save in history');
 			var opt='<option value="'+ page.name.asHTML() +'">'+ String(questionHTML).stripHTML().ellipsis(40) +'</option>';
 			//var opt = '<li><a href="#"><span class="ui-icon ui-icon-document"></span>'+  page.name.asHTML() +'<div>'+ String(questionHTML).stripHTML().ellipsis(40)+'</div></a></li>';
 			$('#history').prepend(opt).prop('selectedIndex',0);
@@ -369,17 +376,17 @@ var A2JViewer={
 				
 				case CONST.ftDateMDY://"Date MM/DD/YYYY"
 				   $input=($('<input type=text id='+fid+'></input>').val(defval));
-					//trace(CONST.ftDateMDY,gGuide.language);
+					//traceInfo(CONST.ftDateMDY,gGuide.language);
 					var dateOpts = {
 						changeMonth: true,
 						changeYear: true
 					};
 					if (!isBlankOrNull(f.min)) {
-						//trace('minDate',f.min);
+						//traceInfo('minDate',f.min);
 						dateOpts.minDate = f.min;
 					}
 					if (!isBlankOrNull(f.max)) {
-						//trace('maxDate',f.max);
+						//traceInfo('maxDate',f.max);
 						dateOpts.maxDate = f.max;
 					}
 					$.datepicker.setDefaults($.datepicker.regional[ gGuide.language ]);
@@ -606,7 +613,7 @@ var A2JViewer={
 					case CONST.ftCheckBoxNOTA://"Check Box (None of the Above)" 
 						break;
 				}//end case
-				trace('Field '+f.name+' '+val);
+				traceInfo('Field '+f.name+' '+val);
 				if (invalid)
 				{
 					
@@ -623,7 +630,7 @@ var A2JViewer={
 				var b=page.buttons[bi];
 				
 				traceLogic( 'You pressed ' + traceTag('ui',b.label));
-				trace('ButtonPress',b.label,b.name,b.value);
+				traceInfo('ButtonPress',b.label,b.name,b.value);
 				if (b.name!=="")
 				{	// Set button's variable 
 					gGuide.varSet(b.name,b.value,varIndex);
@@ -732,6 +739,19 @@ var A2JViewer={
 	}
 };
 
+var alertCounter=0;
+
+function traceAlert(html)
+{	// 2014-05-27 Print error message into viewer space.
+	// These are errors that an author might need to deal with such as variables too long or script syntax error.
+	// Displayed publicly so users will be alerted that something bad is happening. The logic tracer may be hidden
+	// to users so logging only there may hide a defect.
+	// Since there may be more than one error, dump them into a scrollable list. 
+	$('.alertPanel').append('<div class="ui-widget"><div style="padding: 0 .7em;" class="ui-state-error ui-corner-all"><p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>'+html+'</div></div>');
+	$('.alertCounter').text( ++alertCounter ).show();	
+	if(1) {traceInfo(String(html).stripHTML()); }
+}
 
 
 /* */
+

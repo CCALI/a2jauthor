@@ -404,7 +404,7 @@ function pageEditClone(pageName)
 
 function pageRename(page,newName){
 /* TODO Rename all references to this page in POPUPs, JUMPs and GOTOs */
-	//trace("Renaming page "+page.name+" to "+newName);
+	//traceInfo("Renaming page "+page.name+" to "+newName);
 	if (page.name===newName) {return true;}
 	if (page.name.toLowerCase() !== newName.toLowerCase())
 	{
@@ -481,7 +481,7 @@ function gotoPageEdit(pageName)
 		return;
 	}
 	
-	//trace(page2XML(pageFromXML(page2XML(page))));
+	//traceInfo(page2XML(pageFromXML(page2XML(page))));
 	
 	
 	$('#tabsLogic  .tabContent, #tabsText .tabContent').html("");//clear these so they refresh with new data. TODO - update in place
@@ -535,7 +535,7 @@ function gotoPageEdit(pageName)
 }
 function gotoTabOrPage(target)
 {	// Go to a tab or popup a page.
-	trace('gotoTabOrPage',target);
+	traceInfo('gotoTabOrPage',target);
 
 	//$('#CAJAOutline li, #CAJAIndex li').each(function(){$(this).removeClass('ui-state-active')});
 	//$('li').filter(function(){ return target == $(this).attr('target')}).each(function(){$(this).addClass('ui-state-active')});	
@@ -1025,7 +1025,7 @@ function setProgress(status, showSpinner)
 		status='';
 	}
 	if (status!==''){
-		trace('setProgress',status);
+		traceInfo('setProgress',status);
 	}
 	if (showSpinner===true) {
 		status += CONST.AJAXLoader;
@@ -1056,7 +1056,7 @@ function guideStart(startTabOrPage)
 	if (makestr(startTabOrPage)===""){
 		startTabOrPage="PAGE "+(gGuide.firstPage);
 	}
-	//trace("Starting location "+startTabOrPage);
+	//traceInfo("Starting location "+startTabOrPage);
 	
 	gotoTabOrPage(startTabOrPage);
 	updateTOC();
@@ -1224,7 +1224,7 @@ function guideLoaded(data)
 function styleSheetSwitch(theme)
 {
 	//<link href="cavmobile.css" title="cavmobile" media="screen" rel="stylesheet" type="text/css" />
-	trace('styleSheetSwitch',theme); 
+	traceInfo('styleSheetSwitch',theme); 
 	if (theme==='A2J') {
 		theme = "jQuery/themes/"+theme.toLowerCase()+"/jquery-ui.css";
 	}
@@ -1462,7 +1462,7 @@ var form={
 	      change: function () { // if didn't match, restore to original value
 	         var matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex($(this).val().split("\t")[0]) + "$", "i");
 	         var newvalue = $(this).val();//.split("\t")[0];
-				//trace(newvalue);
+				//traceInfo(newvalue);
 	         $.each(gGuide.sortedPages, function (p, page) {
 					if ((page.type!==CONST.ptPopup) && (matcher.test(page.name)))
 					{
@@ -1488,7 +1488,7 @@ var form={
 		//if (typeof data.width!=='undefined') $('input',e).css('width',data.class);
 		$('input',e).blur(function(){
 			form.change($(this),$(this).val());
-			trace('Saving text',$(this).val());
+			traceInfo('Saving text',$(this).val());
 			}).val(decodeEntities(data.value)).data('data',data);
 		return e;
 	}
@@ -1662,7 +1662,7 @@ var form={
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
 			+'<span class=editspan><select class="     ui-select-input">'+c+'</select></span></div>');
 		$('.ui-select-input',e).change(function(){form.change($(this),$('option:selected',this).val());}).data('data',data).val(data.value);
-		//trace(data.value,$('.ui-select-input',e).val());
+		//traceInfo(data.value,$('.ui-select-input',e).val());
 		if ($('.ui-select-input',e).val()!==String(data.value))
 		{
 			$('select',e).append($('<option value="'+data.value+'">{'+data.value+'}</option>'));
@@ -1772,11 +1772,11 @@ var form={
 		var $tbl=$('<table/>').addClass('list').data('settings',settings).attr('list',settings.name);
 		div.append(form.tableRowCounter(settings.name,settings.picker,settings.min,settings.max,settings.list.length));
 		var i;
-		//trace(div.html());
+		//traceInfo(div.html());
 		for (i=0;i<settings.list.length;i++){
 			form.listManagerAddRow($tbl,settings.list[i]);
 		}
-		//trace(settings.list);
+		//traceInfo(settings.list);
 		$('tbody',$tbl).sortable({
 			handle:"td .sorthandle",
 			update:function(event,ui){
@@ -1830,7 +1830,7 @@ function ws(data,results)
 		type: 'POST',
 		data: data,
 		success: function(data){ 
-			//trace(String.substr(JSON.stringify(data),0,299));
+			//traceInfo(String.substr(JSON.stringify(data),0,299));
 			results(data);
 		},
 		error: function(err,xhr) {
@@ -2031,7 +2031,7 @@ function main()
 					styleSheetSwitch($(this).text());
 					break;
 				default:
-					//trace('Unhandled ' + attr);
+					//traceInfo('Unhandled ' + attr);
 			}
 			return false;
 		});

@@ -57,7 +57,7 @@ function TLanguages()
 		if (typeof this.regional[languageID]==='undefined'){
 			languageID='en';
 		}
-		//trace("TLanguages.set",languageID);
+		traceInfo("TLanguages.set",languageID);
 		var region;
 		
 		region = this.regional[languageID];
@@ -66,7 +66,6 @@ function TLanguages()
 		for (e in region){
 			if (region.hasOwnProperty(e)) {
 				lang[e]= String(region[e]);
-				//trace(e+"="+region[e]);
 			}
 		}
 		region = this.regional['en'];
@@ -75,7 +74,7 @@ function TLanguages()
 				if (makestr(lang[e])==='')
 				{
 					lang[e]= String(region[e]);
-					//trace('Missing '+e+"="+lang[e]);
+					traceInfo('Missing '+e+"="+lang[e]);
 				}
 			}
 		}

@@ -18,7 +18,7 @@ function setProgress(status)
 	if (status===null){
 		status='';
 	}
-	trace('setProgress',status);
+	traceInfo('setProgress',status);
 }/*
   *
 	// 05/24/11 Check for answer interview ID hash. If not present or no match current interview ALWAYS start on first question.

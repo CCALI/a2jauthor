@@ -145,7 +145,7 @@ String.prototype.ellipsis=function(limit){
 function prettyXML(xml) {
 	var html = htmlEscape(xml);
 	html = html.split("&lt;A").join("<BR>&lt;A");
-	//trace(html);
+	//traceInfo(html);
 	return html;
 }
 
@@ -447,10 +447,12 @@ function traceTag(cname,chtml)
 	return "<span class="+cname+">"+htmlEscape(chtml)+"</span>";
 }
 
+
 /** @param {...} var_args */
-function trace(var_args)
-{
-	if (typeof console!=="undefined"){
+function traceInfo(var_args) //was just trace
+{	// Send message to brower's console. Mainly for internal developers.
+	if (typeof console!=="undefined")
+	{
 		var msg="";
 		var a;
 		for (a=0;a<arguments.length;a++)
@@ -470,5 +472,6 @@ function trace(var_args)
 		console.log(msg);
 	}
 }
+
 
 /* */

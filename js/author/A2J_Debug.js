@@ -15,7 +15,7 @@
 
 function localGuideStart()
 {	// Load up command line specified local test file
-	trace("localGuideStart");
+	traceInfo("localGuideStart");
 	gUserNickName='Tester';
 	gUserID=0;
 	gGuideID=0;

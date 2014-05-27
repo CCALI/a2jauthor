@@ -168,8 +168,6 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 			if ((args = line.match(REG.LOGIC_PRINT))!==null)
 			{
 				js="";
-				//script.trace("PRINT "+args[1]);
-				//script.trace("RESULT "+script.evalHTML(args[1]));
 			}
 			else
 			if ((args = line.match(REG.LOGIC_IF ))!==null)
@@ -257,7 +255,7 @@ TLogic.prototype.evalBlock = function(expressionInText)
 			txt = result;
 		}
 		catch (e) {
-			// Trace runtime errors
+			// Collect runtime errors
 			txt='<span class="code">'+expressionInText+'</span><span class="err">' + e.message + '</span>';
 		}
 	}
@@ -383,24 +381,24 @@ TLogic.prototype.addUserFunction = function(funcName,numArgs,func)
 };
 
 
-TLogic.prototype.trace = function(html)
+TLogic.prototype.traceLogic = function(html)
 {
 	$(this.tracerID).append('<li style="text-indent:'+(this.indent)+'em">'+html+"</li>");
-	if(1) {trace(String(html).stripHTML()); }
+	if(1) {traceInfo(String(html).stripHTML()); }
 };
 
 // Functions called by JS translation of CAJA code. 
 TLogic.prototype._CAJA = function(c)
 {
-	this.trace( traceTag('code',c));
+	this.traceLogic( traceTag('code',c));
 };
 TLogic.prototype._IF = function(d,c,e)
 {
 	if ( (e) === true ) {
-		this.trace( "IF "+traceTag('valT',c) +' ' +  '\u2714'  );
+		this.traceLogic( "IF "+traceTag('valT',c) +' ' +  '\u2714'  );
 	}
 	else{
-		this.trace( "<strike>IF "+traceTag('valF',c)+'</strike>');
+		this.traceLogic( "<strike>IF "+traceTag('valF',c)+'</strike>');
 	}
 	this.indent=d;
 	return (e===true);
@@ -409,12 +407,12 @@ TLogic.prototype._ENDIF = function(d)
 {
 	//if (this.indent!==d){
 		this.indent=d;
-		//this.trace( "ENDIF");
+		//this.traceLogic( "ENDIF");
 	//}
 };
 TLogic.prototype._VS = function(c,varname,varidx,val)
 {
-	this.trace(c);
+	this.traceLogic(c);
 	return gGuide.varSet(varname,val,varidx);
 };
 TLogic.prototype._VG=function( varname,varidx)
@@ -424,7 +422,7 @@ TLogic.prototype._VG=function( varname,varidx)
 TLogic.prototype._CF=function(f)
 { 
 	//this.indent++;
-	this.trace("Call function "+f); 
+	this.traceLogic("Call function "+f); 
 	//this.indent--;
 	return 0;
 };
@@ -437,8 +435,8 @@ TLogic.prototype._ED=function(dstr)
 TLogic.prototype._GO = function(c,pageName)
 {
 	this.GOTOPAGE=pageName;
-	this.trace(c);
-	//this.trace("Going to page "+traceTag('page',this.GOTOPAGE));
+	this.traceLogic(c);
+	//this.traceLogic("Going to page "+traceTag('page',this.GOTOPAGE));
 };
 TLogic.prototype._deltaVars = function()
 {
@@ -457,21 +455,21 @@ TLogic.prototype.executeScript = function(CAJAScriptHTML)
 	{
 		var js = "with (gLogic) {"+ script.js.join("\n") +"}";
 		try {
-			var f=(new Function( js ));
+			var f=(new Function( js )); // This is an EVAL (but constrained in WITH)
 			var result = f(); // Execute the javascript code.
 			result = null;
 		}
 		catch (e) {
 			// Trace runtime errors
-			this.trace("executeScript.error: " + e.lineNumber+": "+e.message  );
-			trace(CAJAScriptHTML);
-			trace(js);
+			this.traceLogic("executeScript.error: " + e.lineNumber+": "+e.message  );
+			traceInfo(CAJAScriptHTML);
+			traceInfo(js);
 			return false;
 		}
 	}
 	else
 	{
-		this.trace("executeScript.error: "+"syntax error in logic");
+		this.traceLogic("executeScript.error: "+"syntax error in logic");
 		return false;
 	}
 	this.indent=0;
@@ -494,7 +492,7 @@ gLogic.addUserFunction('dateMDY',1,function(val){ var d=new Date(); d.setTime(va
 
 function traceLogic(html)
 {
-	gLogic.trace(html);
+	gLogic.traceLogic(html);
 }
 
 /* */

@@ -13,9 +13,14 @@ function br2cr(txt){
 	return txt.replace(/&lt;BR \/&gt;/g,"\n");
 }
 
+function fbIndex(button,detail)
+{
+	return parseInt(button,10)+"_"+ parseInt(detail,10);
+}
+
 function parseXML_CA_to_CAJA(BOOK)
 {	// Parse CALI Author into CAJA
-	trace("Converting from CALI Author");
+	traceInfo("Converting from CALI Author");
 
 	var guide=new TGuide();
 
@@ -138,7 +143,7 @@ function parseXML_CA_to_CAJA(BOOK)
 		{	// skip placeholder pages
 			guide.pages[page.name] = page;
 			//guide.mapids[page.id]=page;
-			//if (page.name!=page.id) trace("mismatch");
+			//if (page.name!=page.id) traceInfo("mismatch");
 		}
 	}); 
 
@@ -163,8 +168,10 @@ function parseXML_CA_to_CAJA(BOOK)
 		}
 		guide.steps.push(step);
 	});
-	//trace(guide.TOC);
-	//trace(propsJSON('guide.steps',guide.steps));
+	
+	
+	//traceInfo(guide.TOC);
+	//traceInfo(propsJSON('guide.steps',guide.steps));
 	//var step = new TStep();
 	//step.number="1";
 	//step.text.eoOutline
@@ -192,12 +199,8 @@ function parseXML_CA_to_CAJA(BOOK)
 		page.nextPageDisabled=false;
 	}
 	*/
+
 	return parseXML_CAJA_to_CAJA( $(jQuery.parseXML(exportXML_CAJA_from_CAJA(guide))) );
 }
-function fbIndex(button,detail)
-{
-	return parseInt(button,10)+"_"+ parseInt(detail,10);
-}
-
 
 /* */

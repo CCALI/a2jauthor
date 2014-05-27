@@ -73,20 +73,24 @@ var CONST = {
 	//vtStringsGrid: ["Unknown","Text","True/False","Number","Date","Multiple Choice","Other"],
 	
 	// Limits
+	// 2014-05-27 HotDocs has 50 character limit on variable name length
+	MAXVARNAMELENGTH: 50,
+	// Arbitrarily chosen limit on fields per question
 	MAXFIELDS: 9,
+	// Reasonable limit on buttons per question
 	MAXBUTTONS: 3,
 	MAXSTEPS: 12,
 	kMinYear: 1900,
 	
-	// 11/27/07 1.7.7 Ordering options
+	// 11/27/07 1.7.7 Ordering options for lists such as a county list
 	ordDefault:"",
 	ordAscending:"ASC",
 	ordDescending:"DESC",
 	
-// Navigation page destinations
+	// Navigation page destinations
 	qIDNOWHERE:"",
-	qIDSUCCESS:"SUCCESS",
-	qIDFAIL:"FAIL",
+	qIDSUCCESS:"SUCCESS", // Posts data to server and exits viewer
+	qIDFAIL:"FAIL", // Discards any data and exits viewer
 	qIDEXIT:"EXIT", //8/17/09 3.0.1 Save like SUCCESS but flag incomplete true.
 	qIDBACK:"BACK", //8/17/09 3.0.1 Same as history Back button.
 	qIDRESUME:"RESUME", //8/24/09 3.0.2
@@ -94,8 +98,8 @@ var CONST = {
 	
 	
 	// HotDocs ANX
-// 4/8/04 This is the DTD for the HotDocs ANX file format.
-// It's prepended to the answer set for upload.
+	// 4/8/04 This is the DTD for the HotDocs ANX file format.
+	// It's prepended to the answer set for upload.
 	HotDocsANXHeader_UTF8_str : 
 	"<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\n"
 	 
@@ -550,9 +554,9 @@ TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 };
 
 
-TVariable.prototype.trace=function(msg)
+TVariable.prototype.traceLogic=function(msg)
 {
-	gLogic.trace(msg+':'+traceTag("var",this.name)+', '+ (this.type) +', ' +(this.repeating?'REPEATING':'')+', '+this.comment);	
+	traceLogic(msg+':'+traceTag("var",this.name)+', '+ (this.type) +', ' +(this.repeating?'REPEATING':'')+', '+this.comment);	
 };
 
 TGuide.prototype.varExists=function(varName)
@@ -584,7 +588,7 @@ TGuide.prototype.varGet=function(varName,varIndex)
 	}
 	if (v === null)
 	{
-		gLogic.trace('Undefined variable: '+ traceTag('var',varName)+ ((varIndex===0)?'':traceTag('varidx',varIndex) ));
+		traceLogic('Undefined variable: '+ traceTag('var',varName)+ ((varIndex===0)?'':traceTag('varidx',varIndex) ));
 		return v;//'undefined';
 	}
 	var val = v.values[varIndex]; 
@@ -610,6 +614,9 @@ TGuide.prototype.varGet=function(varName,varIndex)
 */
 TGuide.prototype.varCreate=function(varName,varType,varRepeat,varComment)
 {
+	if (varName.length>CONST.MAXVARNAMELENGTH) {
+		traceAlert('Variable name "' + varNme+'" exceeds maximum length of '+CONST.MAXVARNAMELENGTH +' characters.');
+	}
 	varName = jQuery.trim(varName);
 	var varName_i=varName.toLowerCase();
 	/** @type {TVariable} */
@@ -637,7 +644,7 @@ TGuide.prototype.varSet=function(varName,varVal,varIndex)//setVariableLoop
 	if (v === null)
 	{	// Create variable at runtime
 		v=guide.varCreate(varName,CONST.vtText,!((typeof varIndex==='undefined') || (varIndex===null) || (varIndex==='') || (varIndex===0)),'');
-		//v.trace('Creating immediate');
+		//v.traceLogic('Creating immediate');
 	}
 	if ((typeof varIndex==='undefined') || (varIndex===null) || (varIndex==='')){
 		varIndex=0;		
@@ -647,7 +654,7 @@ TGuide.prototype.varSet=function(varName,varVal,varIndex)//setVariableLoop
 	{
 		if (v.values[1]!==varVal) {
 			gLogic.indent++;
-			gLogic.trace(traceTag('var',varName)+'='+traceTag('val',varVal));
+			gLogic.traceLogic(traceTag('var',varName)+'='+traceTag('val',varVal));
 			gLogic.indent--;
 		}
 		v.values[1]=varVal;
@@ -657,7 +664,7 @@ TGuide.prototype.varSet=function(varName,varVal,varIndex)//setVariableLoop
 		if (v.values[varIndex]!==varVal)
 		{	
 			gLogic.indent++;
-			gLogic.trace(traceTag('var',varName+'#'+varIndex)+traceTag('val',varVal));
+			gLogic.traceLogic(traceTag('var',varName+'#'+varIndex)+traceTag('val',varVal));
 			gLogic.indent--;
 		}
 		v.values[varIndex]=varVal;

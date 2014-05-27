@@ -20,7 +20,7 @@ function fixPath(file)
 		return file;
 	}
 	var fileFixed = gGuidePath+urlSplit(file).file;
-	//trace('fixPath',gGuidePath,file,fileFixed);
+	//traceInfo('fixPath',gGuidePath,file,fileFixed);
 	return fileFixed;
 }
 function loadXMLList(opts)
@@ -316,7 +316,7 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		//v.type=VARIABLE.attr("TYPE");
 		//v.repeating = textToBool(VARIABLE.attr('REPEATING'),false);
 		guide.varCreate(VARIABLE.attr("NAME"),VARIABLE.attr("TYPE"),textToBool(VARIABLE.attr('REPEATING'),false),makestr(VARIABLE.attr("COMMENT")));
-		//v.trace('Create variable');
+		//v.traceLogic('Create variable');
 		//guide.vars[v.name.toLowerCase()]=v;
 	 });/*
 	GUIDE.find("POPUP").each(function() {//TODO discard unused popups
@@ -444,7 +444,7 @@ TGuide.prototype.HotDocsAnswerSetXML=function()
 		}
 	}
 	xml_str+="</AnswerSet>";
-	trace(xml_str);
+	traceInfo(xml_str);
 	return xml_str;
 };
 
@@ -590,7 +590,7 @@ TGuide.prototype.HotDocsAnswerSetFromXML=function(AnswerSetXML)
 		var varName = makestr($(this).attr("name"));
 		if (varName.indexOf('#')>=0) {
 			// 12/03/2013 Do not allow # in variable names. We discard them.
-			trace("Discarding invalidly named variable '"+varName+"'");
+			traceInfo("Discarding invalidly named variable '"+varName+"'");
 			return;
 		}
 		//var varName_i=varName.toLowerCase();
@@ -658,7 +658,7 @@ TGuide.prototype.HotDocsAnswerSetFromXML=function(AnswerSetXML)
 			}
 		}
 		
-		v.trace(vNew ? 'Creating new:' : 'Replacing:');
+		v.traceLogic(vNew ? 'Creating new:' : 'Replacing:');
 	});
 };
 
@@ -693,7 +693,7 @@ TGuide.prototype.loadXMLAnswerExternal = function (opts)
 
 function parseXML_A2J_to_CAJA(TEMPLATE)
 {	// Parse A2J into CAJA
-	trace("Converting from A2J Author 4");
+	traceInfo("Converting from A2J Author 4");
 	//var VARIABLE, v, STEP,step,POPUP,popup,	QUESTION, page
 	//var button, field, script, condition, comment, condT, condF, tf, statement, args, p
 	var LINEDEL="\n"; //"<BR>xxxx";
@@ -760,7 +760,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		//guide.vars[v.name.toLowerCase()]=v;
 		//v.repeating = textToBool(VARIABLE.attr('REPEATING'),false);
 		guide.varCreate(VARIABLE.attr("NAME"),VARIABLE.attr("TYPE"),textToBool(VARIABLE.attr('REPEATING'),false),makestr(VARIABLE.find("COMMENT").xml()));
-		//v.trace('Import variable');
+		//v.traceLogic('Import variable');
 	 });
 	// guide's default avatar/guide settings aren't set here. 
 	
@@ -790,7 +790,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 				var popup = popups[popid];
 				popup.page=guide.addUniquePage(pageName+" popup");
 				popup.page.type="Popup";
-				//trace("Creating popup ["+popup.page.name+"]");
+				//traceInfo("Creating popup ["+popup.page.name+"]");
 				popup.page.text = replacePopups(pageName,popup.text); 
 				return '"POPUP://' + htmlEscape(popup.page.name)+ '"';
 		});
@@ -862,7 +862,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			if (field.listSrc===""){
 				field.listData = $(this).find("SELECT").xml();
 			}
-			//trace(field.listDATA);
+			//traceInfo(field.listDATA);
 			/*
 			if (typeof DefaultPrompts[field.invalidPrompt]!="undefined")
 			{
@@ -1056,7 +1056,7 @@ function loadGuideFile(guideFile,startTabOrPage)
 	{
       startTabOrPage= "PAGE " +url.hash;
 	}
-	trace(guideFile,url,gGuidePath,startTabOrPage);
+	traceInfo(guideFile,url,gGuidePath,startTabOrPage);
    loadNewGuidePrep(guideFile,startTabOrPage);
 	
    window.setTimeout(function()

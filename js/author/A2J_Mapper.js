@@ -98,7 +98,7 @@ function mapLines()
 			}
 		}
 	}
-	//trace('widths:',$map.css('width'),$map.width(),$map.innerWidth());
+	//traceInfo('widths:',$map.css('width'),$map.width(),$map.innerWidth());
 	//$map.width($map.width()+100).height($map.height()+100);
 	//	$('.branch',$map).click(function(){focusNode($('.map > .node[rel="'+$(this).attr('rel')+'"]'));	});
 }
@@ -205,7 +205,7 @@ function focusPage()
 // JPM if showing/hiding page list, do that and zoom to fit
 function mapZoomSlide()
 {
-//	trace("pagesfit " + $('#tabsMapper').css('left') );
+	//	traceInfo("pagesfit " + $('#tabsMapper').css('left') );
 	$('.tabsMapPages').animate({width: 'toggle'});
 	if ($('#tabsMapper').css("left")=="0px") {
 		$('#tabsMapper').css("left", "33%");

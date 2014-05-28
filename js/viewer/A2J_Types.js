@@ -101,49 +101,8 @@ var CONST = {
 	// 4/8/04 This is the DTD for the HotDocs ANX file format.
 	// It's prepended to the answer set for upload.
 	HotDocsANXHeader_UTF8_str : 
-	"<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>\n"
+	"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
 	 
-	+
-	"<!DOCTYPE AnswerSet [\n"+
-	"<!ELEMENT AnswerSet (Answer*)>\n"+
-	"<!ELEMENT Answer (TextValue | NumValue | DateValue | TFValue | MCValue | ClauseLibValue | DBValue | RptValue)>\n"+
-	"\n"+
-	"<!-- While the DTD allows DBValue in nested repeats, the current implementation does not. -->\n"+
-	"<!ELEMENT RptValue (TextValue* | NumValue* | DateValue* | TFValue* | MCValue* | ClauseLibValue* | DBValue* | RptValue*)>\n"+
-	"\n"+
-	"<!ELEMENT TextValue      (#PCDATA)         >\n"+
-	"<!ELEMENT NumValue       (#PCDATA)         >\n"+
-	"<!ELEMENT DateValue      (#PCDATA)         >\n"+
-	"<!ELEMENT TFValue        (#PCDATA)         >\n"+
-	"<!ELEMENT MCValue        (SelValue*)       >\n"+
-	"<!ELEMENT ClauseLibValue (ClauseSelValue*) >\n"+
-	"<!ELEMENT DBValue        (DBColumn*)       >\n"+
-	"\n"+
-	"<!ELEMENT DBColumn (TextValue | NumValue | DateValue | TFValue | MCValue)>\n"+
-	"<!ELEMENT SelValue       (#PCDATA)         >\n"+
-	"<!ELEMENT ClauseSelValue  EMPTY            >\n"+
-	"\n"+
-	"<!ATTLIST AnswerSet\n"+
-	"	title CDATA #IMPLIED\n"+
-	"	save (true | false | nochange) #IMPLIED\n"+
-	"	useMangledNames (true | false) #IMPLIED>\n"+
-	"\n"+
-	"<!-- The name attribute of an Answer element is the name of the component it maps to. -->\n"+
-	"<!ATTLIST Answer\n"+
-	"	name CDATA #REQUIRED\n"+
-	"	save (true | false | nochange) #IMPLIED>\n"+
-	"\n"+
-	"<!ATTLIST TextValue      unans (true | false) #IMPLIED>\n"+
-	"<!ATTLIST NumValue       unans (true | false) #IMPLIED>\n"+
-	"<!ATTLIST DateValue      unans (true | false) #IMPLIED>\n"+
-	"<!ATTLIST TFValue        unans (true | false) #IMPLIED>\n"+
-	"<!ATTLIST MCValue        unans (true | false) #IMPLIED>\n"+
-	"<!ATTLIST ClauseLibValue unans (true | false) #IMPLIED>\n"+
-	"<!ATTLIST ClauseSelValue\n"+
-	"	title       CDATA   #REQUIRED\n"+
-	"	fileName    CDATA   #REQUIRED\n"+
-	"	description CDATA   #IMPLIED>\n"+
-	"<!ATTLIST DBColumn name CDATA #REQUIRED>]>\n"
 	
 	,
 	ScriptLineBreak : '<BR/>'
@@ -613,7 +572,10 @@ TGuide.prototype.varGet=function(varName,varIndex)
 * @param {string} varComment
 */
 TGuide.prototype.varCreate=function(varName,varType,varRepeat,varComment)
-{
+{	// Create variable of specified type.
+	// varType must match one of the CONST.vt??? strings
+	// varRepeat is t/f. T indicates a REPEAT (or array).
+	// varComment is author comment about purpose of variable, usually just blank string.
 	if (varName.length>CONST.MAXVARNAMELENGTH) {
 		traceAlert('Variable name "' + varName +'" exceeds maximum length of '+CONST.MAXVARNAMELENGTH +' characters.');
 	}

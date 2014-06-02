@@ -328,6 +328,12 @@
 			</fieldset>
 		</form>
 	</div>
+	<div id="page-picker-dialog" title="Pick a destination page" class="">
+		<form>
+			<div id="page-picker-list" class="pageoutline pagelist">
+			</div>
+		</form>
+	</div>
 	<div class="page-edit-form">
 		<div class="page-edit-form-panel"></div>
 	</div>

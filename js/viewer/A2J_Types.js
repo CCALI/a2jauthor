@@ -485,6 +485,8 @@ TGuide.prototype.historyToXML=function()
 
 TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 {	// Convert a page name or reserved word into readable text.
+	// Regular pages just have their name.
+	// Special branches like SUCCESS or EXIT have a more user friendly description.
 	var guide=this;
 	var dval="";
 	if (guide.pages[name])

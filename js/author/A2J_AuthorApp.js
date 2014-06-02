@@ -570,21 +570,7 @@ function gotoTabOrPage(target)
 	}
 }
 
-function pageGOTOList()
-{	// List of page ids we can go to including the built-ins like no where, exit.
-	var pages=[CONST.qIDNOWHERE,CONST.qIDSUCCESS,CONST.qIDFAIL,CONST.qIDEXIT,CONST.qIDBACK,CONST.qIDRESUME];
-	var p;
-	for (p in gGuide.sortedPages)
-	{
-		var page=gGuide.sortedPages[p];
-		if (page.type!==CONST.ptPopup){
-			pages.push(page.name);
-		}
-	}
-	return pages;
-}
-
-
+/*
 function pickPage(request,response)
 {	// autocomplete page lists including internal text
 	request.term = request.term.split("\t")[0];
@@ -625,7 +611,7 @@ function pickPage(request,response)
 	}
 	response(lists[0].concat(lists[1]).slice(0,30));
 }
-
+*/
 
 
 
@@ -1146,6 +1132,61 @@ TPage.prototype.tagList=function()
 	return tags;
 };
 
+function getTOCStepPages(includePops,includeSpecial)
+{	// List of pages within their steps. 
+	var inSteps=[];
+	var popups="";
+	var s;
+	for (s in gGuide.steps)
+	{
+		inSteps[s]="";
+	}
+	var p, plink;
+	for (p in gGuide.sortedPages)
+	{
+		/** @type {TPage} */
+		var page = gGuide.sortedPages[p];
+		var tip = decodeEntities(page.text).substr(0,64) + '<span class=taglist>' + page.tagList()  + '</span>';
+		plink= '<li class="unselectable" rel="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()
+			+' <span class="tip">'+tip+'</span>' +'</li>';
+		if (page.type===CONST.ptPopup)
+		{
+			popups += plink;
+		}
+		else
+		{
+			inSteps[page.step] += plink;
+		}
+	}	
+	var ts="";
+	for (s in inSteps)
+	{	// List all steps including those for pages that are in steps that we may have removed. 
+		if (s > gGuide.steps.length){
+			ts+='<li rel="STEP '+s+'">STEP '+'?'+". "+'?'+"</li><ul>"+inSteps[s]+"</ul>";
+		}
+		else{
+			ts+='<li rel="STEP '+s+'">STEP '+gGuide.steps[s].number+". "+gGuide.steps[s].text+"</li><ul>"+inSteps[s]+"</ul>";
+		}
+	}
+	if (includePops===true)
+	{	// Popups as destinations. 
+		ts += '<li rel="tabsPopups">'+Languages.en('Popups')+'</li><ul>'+popups+'</ul>';
+	}
+	if (includeSpecial===true)
+	{	// Special branch destinations. 
+		var branchIDs=[CONST.qIDNOWHERE,CONST.qIDSUCCESS,CONST.qIDFAIL,CONST.qIDEXIT,CONST.qIDBACK,CONST.qIDRESUME];
+		var i;
+		var tss='';
+		for (i in branchIDs)
+		{
+			var branchID = branchIDs[i];
+			plink= '<li class="unselectable" rel="PAGE '+branchID +'">'+ gGuide.pageDisplayName(branchID) +'</li>';
+			tss += plink;
+		}
+		ts += '<li>Special Branching</li><ul>'+tss+'</ul>';
+	}
+	return ts;
+}
 function updateTOCOnePage()
 {	// TODO - just update only this page's TOC and Mapper entry.
 	updateTOC();
@@ -1154,37 +1195,9 @@ function updateTOC()
 {	// Build outline for entire interview includes meta, step and question sections.
 	// 2014-06-02 TOC updates when page name, text, fields change. Or page is added/deleted.
 	// Also we update the mapper since it also displays this info.
-	var inSteps=[];
-	var popups="";
-	var s;
-	for (s in gGuide.steps)
-	{
-		inSteps[s]="";
-	}
-	var p;
-	for (p in gGuide.sortedPages)
-	{
-		/** @type {TPage} */
-		var page = gGuide.sortedPages[p];
-		var tip = decodeEntities(page.text).substr(0,64) + '<span class=taglist>' + page.tagList()  + '</span>';
-		var plink= '<li class="unselectable" rel="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()
-			+' <span class="tip">'+tip+'</span>' +'</li>';
-		if (page.type===CONST.ptPopup){
-			popups += plink;
-		}
-		else{
-			inSteps[page.step] += plink;
-		}
-	}	
-	var ts="";
-	for (s in gGuide.steps)
-	{
-		ts+='<li rel="STEP '+s+'">STEP '+gGuide.steps[s].number+". "+gGuide.steps[s].text+"</li><ul>"+inSteps[s]+"</ul>";
-	}
-	$('.pageoutline').html("<ul>"
-		+ ts //'<li target="tabsSteps">'+lang.tabSteps+'</li><ul>'+ts+'</ul>'
-		+ '<li rel="tabsPopups">'+Languages.en('Popups')+'</li><ul>'+popups+'</ul>'
-		+"</ul>");
+	var ts = getTOCStepPages();
+	$('.pageoutline').html("<ul>" + getTOCStepPages(true) + "</ul>");
+	
 	
 	// JPM Clicking a step toggle slides step's page list.
 	$('.pageoutline li[rel^="STEP "]').click(function(){
@@ -1463,9 +1476,81 @@ var form={
 	}
 	
 	
-	,pickpage:function(data){ 
-		//data.value = gGuide.pageDisplayName(data.value); 
-
+	,pickpage:function(data)
+	{	// 2014-06-02 Pick page via popup picker instead. 
+		var pageDispName = gGuide.pageDisplayName(data.value);
+		var e=$('<div name="'+data.name+'">' + (typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '') + ('<button/>')+'</div>');
+		$('button',e).button({label:pageDispName,icons:{primary:'ui-icon-link'}}).data('data',data).click(function(){
+			//alert(data.value);
+			form.pickPageDialog($(this),data);
+		});
+		return e;
+	}
+	
+	,pickPageDialog:function(pageButton,data)
+	{	// Display page picker modal dialog, default selecting page named data.value.
+		// Clone the TOC, select the default page name, scroll into view, remove popups.
+		var pageName=data.value;
+		
+		
+		// Special destinations of page ids we can go to including the built-ins like no where, exit.
+		var ts = getTOCStepPages(false,true);
+		
+		//$('#CAJAOutline').clone().appendTo('#page-picker-list');
+		//$('#page-picker-list li[rel^="tabsPopups"],#page-picker-list li[rel^="tabsPopups"] + ul').empty();
+		//$('#page-picker-list .pageoutline li').removeClass(SELECTED);
+		$('#page-picker-list').html('<ul>' + ts + '</ul>');
+	
+		var e=pageNameRelFilter('#page-picker-list li',pageName);
+		e.toggleClass(SELECTED);
+		// TODO SJG Scrolling to focus the selected page is not working. Why!?!?
+		//$('#page-picker-list .pageoutline').scrollTop(0);
+		//scrollToElt($('#page-picker-list .pageoutline'),e);
+	
+		// JPM Only 'select' Pages, not Steps
+		$('#page-picker-list  li[rel^="PAGE "]')
+			.click(function(e){
+				$('#page-picker-list li').removeClass(SELECTED);
+				$(this).toggleClass(SELECTED);
+				//var rel=$(this).attr('rel');
+				//traceInfo(rel);
+			})
+			.dblclick(function (){
+				// TODO - double click to select and set
+				//var name= $(this).data().value;
+				//$('page-picker-dialog').dialog( "close" );
+			}); 
+		$('#page-picker-dialog').data(data).dialog({
+			autoOpen:true,
+				width: 700,
+				height: 500,
+				modal:true,
+				close:function(){
+					$('#page-picker-list').empty();
+				},
+				buttons:[
+				{text:'Change', click:function()
+					{
+						var newPageDest = makestr($('#page-picker-list li.'+SELECTED).first().attr('rel')).substr(5);
+						data.value = newPageDest;
+						var pageDispName = gGuide.pageDisplayName(newPageDest);
+						pageButton.button({label:pageDispName});
+						//data.change.call(rel,data);						
+						form.change(pageButton, newPageDest);
+						traceInfo('Changing destination  to "'+newPageDest+'"');
+						$(this).dialog("close");
+					}
+				},
+				{text:'Cancel',click:function()
+					{
+						$(this).dialog("close");
+					}
+				}
+			]});
+	}
+	/*
+	,pickpageComboBox:function(data)
+	{ 
 		var dval = gGuide.pageDisplayName(data.value);
 			
 		var e =$((typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
@@ -1494,6 +1579,7 @@ var form={
 			});
 		return e;
 	}
+	*/
 	,text: function(data){
 		var e=$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')

@@ -413,6 +413,17 @@ function mdyTodmy(DMY)
 	return result;
 }
 
+function scrollToElt(container,scrollTo)
+{	// Scroll container so that element scrollTo is visible.
+	// e.g., var container = $('div'), scrollTo = $('#row_8');
+	//container.scrollTop(scrollTo.offset().top - container.offset().top + container.scrollTop());
+	traceInfo(scrollTo.offset().top , container.offset().top , container.scrollTop());
+	container.animate({
+    scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
+		});
+}
+
+
 function downloadTextFile(fileTextContent, fileName)
 {	// 05/08/2014 Download generic text file directly from client to desktop.
 	// Create an anchor, set its url to the data, use type application/octet-stream to force download rather than view in browser.

@@ -324,8 +324,7 @@ function gotoPageView(destPageName)
 {  // ### Navigate to given page (after tiny delay)
    window.setTimeout(function(){
 		
-		//"Author note: Users's data would upload to server."
-		
+		//"Author note: Users's data would upload to server."	
 		
       var page = gGuide.pages[destPageName]; 
       if (page === null || typeof page === "undefined")
@@ -344,7 +343,6 @@ function gotoPageView(destPageName)
 		}
    },1);
 }
-
 
 function resumeEdit()
 {
@@ -428,12 +426,11 @@ function pageRename(page,newName){
 		})
 		*/
 	gGuide.pageFindReferences(page.name,newName);
-		
 	delete gGuide.pages[page.name];
 	page.name = newName;
 	gGuide.pages[page.name]=page;
 	gGuide.sortPages();
-	updateTOC();
+	//updateTOC(); update now handled when page dialog is closed. 
 	pageEditSelect(newName);
 	return true;
 }
@@ -463,7 +460,6 @@ function pageEditDelete(name)
 			delete gGuide.pages[page.name];
 			gGuide.sortPages();
 			updateTOC();
-			
 			if ($pageEditDialog!==null){
 				$pageEditDialog.dialog("close");
 				$pageEditDialog = null;
@@ -489,9 +485,10 @@ function gotoPageEdit(pageName)
 	//if ($page.length==0)
 	//$page = $('.page-edit-form:first').clone(false,false);
 	$pageEditDialog.attr('rel',page.name);
-	$pageEditDialog.attr('title',page.name);
+	$pageEditDialog.attr('title','Question Editor');//page.name);
 	$pageEditDialog.dialog({ 
 		autoOpen:false,
+		title: page.name,
 		width: 750,
 		height: 500,
 		modal: false,
@@ -518,6 +515,7 @@ function gotoPageEdit(pageName)
 		}},
 		{text:'Close',click:function(){ 
 			$(this).dialog("close");
+			updateTOCOnePage();
 		 }}
 	]});
 	guidePageEditForm(page,$('.page-edit-form-panel',$pageEditDialog).html(''),page.name);
@@ -721,7 +719,9 @@ function guidePageEditForm(page, div, pagename)//novicePage
 	if (page.type === CONST.ptPopup )
 	{	// Popup pages have only a few options - text, video, audio
 		fs=form.fieldset('Popup info',page);
-		fs.append(form.text({label:'Name:',name:'pagename', value:page.name,change:function(val,page,form){
+		fs.append(form.text({label:'Name:',name:'pagename', value:page.name,change:function(val,page,form)
+		{	// Renaming a popup page. Rename all references to the page. Use the new name only if it's unique. 
+			val = jQuery.trim(val);
 			if (pageRename(page,val)===false){
 				$(this).val(page.name);
 			}
@@ -739,7 +739,8 @@ function guidePageEditForm(page, div, pagename)//novicePage
 			page.step=parseInt(val,10);
 			updateTOC();
 		}} ));
-		fs.append(form.text({label:'Name:', value:page.name,change:function(val,page,form){
+		fs.append(form.text({label:'Name:', value:page.name,change:function(val,page,form)
+		{	// Renaming a page. Rename all references to the page. Use the new name only if it's unique. 
 			val = jQuery.trim(val);
 			if (pageRename(page,val)===false){
 				$(this).val(page.name);
@@ -1127,9 +1128,9 @@ TPage.prototype.tagList=function()
 		/** @type {TField} */
 		var field = page.fields[f];
 		if (field.required) {
-			tags += ' <span class="tag field">' + field.fieldTypeToTagName() + '</span>';
-		}else{
 			tags += ' <span class="tag field required">' + field.fieldTypeToTagName() + '</span>';
+		}else{
+			tags += ' <span class="tag field">' + field.fieldTypeToTagName() + '</span>';
 		}
 	}
 	if (page.help!=='') {
@@ -1141,8 +1142,14 @@ TPage.prototype.tagList=function()
 	return tags;
 };
 
+function updateTOCOnePage()
+{	// TODO - just update only this page's TOC and Mapper entry.
+	updateTOC();
+}
 function updateTOC()
 {	// Build outline for entire interview includes meta, step and question sections.
+	// 2014-06-02 TOC updates when page name, text, fields change. Or page is added/deleted.
+	// Also we update the mapper since it also displays this info.
 	var inSteps=[];
 	var popups="";
 	var s;
@@ -1194,6 +1201,9 @@ function updateTOC()
 			$(this).addClass(SELECTED);
 			gotoTabOrPage(rel);
 		});
+		
+	// 2014-06-02 Sync mapper to TOC.
+	buildMap();
 }
 
 
@@ -1307,7 +1317,9 @@ TGuide.prototype.pageFindReferences=function(findName,newName){
 		for (var bi in page.buttons)
 		{
 			var b=page.buttons[bi];
-			if (b.next===findName){
+			if (b.next===findName)
+			{	// 2014-06-02 Make button point to renamed page.
+				b.next = newName; 
 				matches.push({name:page.name,field:'Button '+b.label,text:b.label});
 			}
 		}

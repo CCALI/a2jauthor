@@ -21,19 +21,22 @@ var gMapSize= 1 ; //0 is small, 1 is normal
 /** @const */ //var GRID_MAP =  {x : 50 , y : 20 };
 /** @const */ var NODE_SIZE = {w : 150, h : 36+8};
 
-function lineV(left,top,height)
-{
-	return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:2px;height:'+height+'px;"></div>';
-}
-function lineH(left,top,width)
-{
-	return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:'+width+'px;height:2px;"></div>';
-}
-
 function mapLines()
 {
 	var NW=NODE_SIZE.w;
 	var NH=NODE_SIZE.h;
+		
+		
+	function lineV(left,top,height)
+	{
+		return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:2px;height:'+height+'px;"></div>';
+	}
+	function lineH(left,top,width)
+	{
+		return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:'+width+'px;height:2px;"></div>';
+	}
+
+
 	var $map = $('.map');
 	$('.branch, .line',$map).remove();
 	var p;
@@ -108,7 +111,7 @@ function showPageOnMap()
 }
 
 function buildMap()
-{	// Contruct mapper flowcharts.
+{	// Construct mapper flowcharts.
 	var $map = $('.map');
 	$map.empty();
 	//$('.MapViewer').removeClass('big').addClass(gMapSize==1 ? 'big':'');
@@ -158,7 +161,7 @@ function buildMap()
 			var stepc;//stepcolor
 			stepc = page.step;
 			$map.append(' '
-				+'<div class="node Step'+(stepc)+'" rel="'+page.name.asHTML()+'" style="z-index:1; left:'+nodeLeft+'px;top:'+nodeTop+'px;">'
+				+'<div class="node Step'+(stepc)+'" pagename="'+page.name.asHTML()+'" style="z-index:1; left:'+nodeLeft+'px;top:'+nodeTop+'px;">'
 				+(page.type===CONST.ptPopup ? '':'<div class="arrow"></div>')
 				+'<div class="text">'+page.name+'</div>'
 				+'<div class="taglist">'+page.tagList()+'</div>'
@@ -171,7 +174,7 @@ function buildMap()
 	}
 	//$('.branch',$map).click(function(){focusNode($('.map > .node[rel="'+$(this).attr('rel')+'"]'));	});
 	$('.node',$map).dblclick(function(){
-		var target=$(this).attr('rel');
+		var target=$(this).attr('pagename');
 		//$('#CAJAOutline li, #CAJAIndex li').removeClass('ui-state-active');
 		//$(this).addClass('ui-state-active')
 		gotoPageEdit(target);
@@ -185,9 +188,10 @@ function buildMap()
 		},
 		stop:
 		/*** @param {{node,position}} ui */
-		function(event,ui){
+		function(event,ui)
+		{	// After moving a page map node, redraw lines.
 			var node=ui.node;
-			var page = gGuide.pages[$(node).attr('rel')];
+			var page = gGuide.pages[$(node).attr('pagename')];
 			page.mapx=ui.position.left;
 			page.mapy=ui.position.top;
 			mapLines();

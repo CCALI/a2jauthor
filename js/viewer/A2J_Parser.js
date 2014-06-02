@@ -517,13 +517,14 @@ TGuide.prototype.HotDocsAnswerSetVariable = function(variable) //CVariable
 	
 	function getXMLValue(value)
 	{
-		if (varType===CONST.vtDate){
+		if (varType===CONST.vtDate)
+		{
+			// Ensure our m/d/y is converted to HotDocs d/m/y
 			value=mdyTodmy(value);
 		}
 		var xmlV;
-		
-		
-		if (typeof value==='undefined' || value===null || value===""){
+		if (typeof value==='undefined' || value===null || value==="")
+		{	// 2014-06-02 SJG Blank value for Repeating variables MUST be in answer file (acting as placeholders.)
 			xmlV  = '<'+ansType+' UNANS="true">' +  '' + '</'+ ansType+'>';
 		}
 		else{
@@ -537,7 +538,7 @@ TGuide.prototype.HotDocsAnswerSetVariable = function(variable) //CVariable
 	var vi;
 	var xml='';
 	if (variable.repeating===true)
-	{
+	{	// Repeating variables are nested in RptValue tag. 
 		for (vi=1 ; vi< variable.values.length; vi++)
 		{
 			xml += getXMLValue(variable.values[vi]);
@@ -545,10 +546,16 @@ TGuide.prototype.HotDocsAnswerSetVariable = function(variable) //CVariable
 		xml = '<RptValue>' + xml + '</RptValue>';
 	}
 	else
-	{
+	if (!(typeof value==='undefined' || value===null || value===""))
+	{	// 2014-06-02 SJG Blank value for non-repeating must NOT be in the answer file.
 		xml = getXMLValue(variable.values[1]);
 	}
-	xml = '<Answer name="' + variable.name + '">' + xml + '</Answer>';
+	if (xml!='') {
+		xml = '<Answer name="' + variable.name + '">' + xml + '</Answer>';
+	}
+	else{
+		//traceInfo("Skipping "+variable.name);
+	}
 	return xml;
 };
 
@@ -558,11 +565,10 @@ TGuide.prototype.updateVarsForAnswerFile=function()
 	this.varSet(CONST.bookmarkVarName,gPage.name);
 	this.varSet(CONST.historyVarName,this.historyToXML());
 	this.varSet(CONST.interviewIDVarName, this.makeHash());
-	//alert('Hash is "'+this.makeHash()+'"');
 };
 
 TGuide.prototype.makeHash=function()//InterviewHash
-{	// 05/24/11 Make MD5 style hash of this interview
+{	// 2011-05-24 Make MD5 style hash of this interview
 	var str = String(this.title)  + String(this.jurisdiction) +String(propCount(this.pages))
 		+ String(this.description) + String(this.version) + String(this.language) + String(this.notes);
 		//langID

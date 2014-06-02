@@ -1139,6 +1139,10 @@ TPage.prototype.tagList=function()
 	if (page.codeAfter!=='' || page.codeBefore!=='') {
 		tags += ' <span class="tag logic">' + 'Logic' + '</span>'; 
 	}
+	if (page.repeatVar!=='')
+	{
+		tags += ' <span class="tag repeat">&nbsp</span>'; 		
+	}
 	return tags;
 };
 

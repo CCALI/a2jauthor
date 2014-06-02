@@ -137,6 +137,7 @@ function buildMap()
 	}*/
 
 	var p;
+	/** @type TPage */
 	var page;
 	// Snap to grid
 	for (p in gGuide.pages)

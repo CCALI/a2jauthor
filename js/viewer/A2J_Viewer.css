@@ -529,6 +529,16 @@ span.tag.logic {
 	border: thin solid #fea;
 	background-color: #CC9966;
 }
+span.tag.repeat {
+	background: transparent;
+	background-image: url(../author/images/MapperNodeRepeat.png);
+	background-repeat: no-repeat;
+	border: none; 
+	padding:0px;
+	width: 12px;
+	height: 12px;
+	display: inline-block;
+}
 span.tag.learnmore {
 	border: thin solid #fea;
 	background-color: #FFCC66;

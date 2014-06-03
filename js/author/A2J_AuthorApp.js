@@ -255,7 +255,7 @@ function pageNameFields(pagefs,page)
 			}
 			if (gPrefs.showText===2 || b.value!=="")
 			{
-				bf.append(form.text({value: b.value,label:'Default value',placeholder:'Default value',change:bntDevValChangeFnc}));
+				bf.append(form.text({value: b.value,label:'Default value:',placeholder:'Default value',change:bntDevValChangeFnc}));
 			}
 			pagefs.append(bf);
 		}
@@ -928,7 +928,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
 						change:function(val,b){b.label=val;}}));
 					ff.append(form.text({value: b.name, label:'Variable Name:',placeholder:'variable',
 						change:function(val,b){b.name=val;}}));
-					ff.append(form.text({value: b.value,label:'Default value',placeholder:'Default value',
+					ff.append(form.text({value: b.value,label:'Default value:',placeholder:'Default value',
 						change:function(val,b){b.value=val;}}));
 					ff.append(form.pickpage({value: b.next,label:'Destination:',
 						change:function(val,b){

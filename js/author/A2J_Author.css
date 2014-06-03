@@ -356,7 +356,8 @@ div.editq {
 	float: left;
 	width: 12em;
 	margin: 5px 0 0;
-	text-align: right; 
+	text-align: right;
+	padding: 5px;
 } 
 
 .editq fieldset { 

@@ -484,5 +484,10 @@ function traceInfo(var_args) //was just trace
 	}
 }
 
+function audioPlayerHTML(audiofile)
+{	// 2014-06-03 Construct HTML 5 audio HTML. Currently only MP3 supported.
+	return '<audio controls><source src="' +fixPath(audiofile) + '" type="audio/mpeg"></audio>';
+}
 
 /* */
+

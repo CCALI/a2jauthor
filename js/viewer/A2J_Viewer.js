@@ -281,7 +281,13 @@ var A2JViewer={
 		$('.interact',div).html(A2JViewer.layoutStep(curstep));
 		
 		$('.ui-form.question',div).html(questionHTML+'<div class="form"></div>');
-		$('.question.panel',div).append('<div class="buttonlist"></div>');
+		
+		// Add audio player elements to question and help panels.
+		$('.question.panel',div).append('<div class="audio"></div><div class="buttonlist"></div>');
+		if (page.textAudioURL!=='')
+		{
+			$('.question .audio',div).html(audioPlayerHTML(page.textAudioURL));
+		}
 		
 		for (var bi=0;bi<page.buttons.length;bi++)
 		{
@@ -446,7 +452,10 @@ var A2JViewer={
 		// ### Learn more Help		
 		$('.ui-form.help',div).html(helpHTML );
 		$('.panel.help',div).hide();
-		//+ '<div class="buttonlist"><button>Close</button></div>'
+		if (page.helpAudioURL!=='')
+		{
+			$('.help .audio',div).html(audioPlayerHTML(page.helpAudioURL));
+		}
 		$('.panel.help button',div).button().click(function(){
 			$('.help.panel',div).hide();
 			$('.learnmore.panel',div).show();
@@ -778,12 +787,16 @@ var A2JViewer={
 	
 
 		// HTML for Learn More and LearnMore Help bubbles. 
+		// Learnmore button
 		var shared = '<div class="learnmore panel" style="position:absolute; left:604px; top: 153px; width: 285px;"><div class="learnmore bubble"><div class="ui-form learnmore"></div></div>'
 			+'<div class="buttonlist"><button>'+lang.LearnMore+'</button></div></div>';
+		// Help panel
 		shared += '<div class="help panel" style="position:absolute; left:604px; top: 93px; width: 285px;"><div class="help bubble"><div class="ui-form help"></div></div>'
-			+'<div class="buttonlist"><button>'+ lang.Close+'</button></div></div>';
+			+'<div class="audio"></div><div class="buttonlist"><button>'+ lang.Close+'</button></div></div>';
+		// Popup panel
 		shared += '<div class="popup panel" style="position:absolute; left:550px; top: 80px; width: 300px;"><div class="popup bubble"><div class="ui-form popup"></div></div>'
-			+'<div class="buttonlist"><button>'+ lang.Close+'</button></div></div>';			
+			+'<div class="audio"></div><div class="buttonlist"><button>'+ lang.Close+'</button></div></div>';			
+		// Form errors panel
 		shared += '<div class="formerror panel" style="position:absolute; left:604px; top: 93px; width: 285px;"><div class="formerror bubble"><div class="ui-form formerror"></div></div>'
 			+'<div class="buttonlist"><button>'+ lang.Close+'</button></div></div>';
 

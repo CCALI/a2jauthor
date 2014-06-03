@@ -678,10 +678,14 @@ span.err {
    user-select: none;
 }
 
-/* */
+
 
 x.question.panel {
 	background-color:#f00;
 }
 
+.audio {
+	margin-top: 1em;
+}
 
+/* */

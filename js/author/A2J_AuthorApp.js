@@ -321,28 +321,59 @@ function signin()
 }
 
 function gotoPageView(destPageName)
-{  // ### Navigate to given page (after tiny delay)
-   window.setTimeout(function(){
+{  // Navigate to given page (after tiny delay). This version only used for Author.
+   window.setTimeout(function()
+	{
 		
-		//"Author note: Users's data would upload to server."	
-		
-      var page = gGuide.pages[destPageName]; 
-      if (page === null || typeof page === "undefined")
-      {
-         dialogAlert({title:'Missing page', body:'Page is missing: '+ destPageName});
-         traceLogic('Page is missing: '+ destPageName);
-      }
-      else
-      {
-         gPage=page;
-			$('#authortool').hide();
-         A2JViewer.layoutPage($('.A2JViewer','#page-viewer'),gPage);
-         $('#page-viewer').removeClass('hidestart').show();
-			A2JViewer.refreshVariables();//TODO more efficient updates
-			//$('.A2JViewer').addClass('test',500);
+		if (destPageName === CONST.qIDSUCCESS)
+		{	// On success exit, flag interview as Complete.
+			gGuide.varSet(CONST.interviewIncompleteVarName,false);
+			dialogAlert("Author note: User's data would upload to server.");
+		}
+		else
+		if (destPageName === CONST.qIDEXIT)
+		{	//Exit/Resume
+			dialogAlert("Author note: User's INCOMPLETE data would upload to server.");
+		}
+		else
+		if (destPageName === CONST.qIDFAIL)
+		{
+			dialogAlert("Author note: User would be redirected to another page.");
+		}
+		else
+		if (destPageName === CONST.qIDRESUME)
+		{	// 8/17/09 3.0.1 Execute the Resume button.
+			traceLogic("Scripted 'Resume'");
+			A2JViewer.goExitResume();
+		}
+		else
+		if (destPageName === CONST.qIDBACK)
+		{	// 8/17/09 3.0.1 Execute the Back button.
+			traceLogic("Scripted 'Go Back'");
+			A2JViewer.goBack();
+		}
+		else
+		{			
+			var page = gGuide.pages[destPageName]; 
+			if (page === null || typeof page === "undefined")
+			{
+				traceAlert('Page is missing: '+ destPageName);
+				traceLogic('Page is missing: '+ destPageName);
+			}
+			else
+			{
+				gPage=page;
+				$('#authortool').hide();
+				A2JViewer.layoutPage($('.A2JViewer','#page-viewer'),gPage);
+				$('#page-viewer').removeClass('hidestart').show();
+				A2JViewer.refreshVariables();//TODO more efficient updates
+				//$('.A2JViewer').addClass('test',500);
+			}
 		}
    },1);
 }
+
+		
 
 function resumeEdit()
 {

@@ -108,10 +108,28 @@ function gotoPageView(destPageName)
 			doSetDataURL('_self');
 		}
 		else
+		if (destPageName === CONST.qIDEXIT)
+		{	//Exit/Resume
+			gGuide.varSet(CONST.interviewIncompleteVarName,true);
+			doSetDataURL('_self');
+		}
+		else
 		if (destPageName === CONST.qIDFAIL)
 		{
 			url=gStartArgs.exitURL;
 			window.parent.location = url; // Replace parent, not just this IFRAME.
+		}
+		else
+		if (destPageName === CONST.qIDRESUME)
+		{	// 8/17/09 3.0.1 Execute the Resume button.
+			traceLogic("Scripted 'Resume'");
+			A2JViewer.goExitResume();
+		}
+		else
+		if (destPageName === CONST.qIDBACK)
+		{	// 8/17/09 3.0.1 Execute the Back button.
+			traceLogic("Scripted 'Go Back'");
+			A2JViewer.goBack();
 		}
 		else
 		{

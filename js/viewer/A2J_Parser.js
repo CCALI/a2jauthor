@@ -546,15 +546,18 @@ TGuide.prototype.HotDocsAnswerSetVariable = function(variable) //CVariable
 		xml = '<RptValue>' + xml + '</RptValue>';
 	}
 	else
-	if (!(typeof value==='undefined' || value===null || value===""))
-	{	// 2014-06-02 SJG Blank value for non-repeating must NOT be in the answer file.
-		xml = getXMLValue(variable.values[1]);
+	{
+		value=variable.values[1];
+		if (!(typeof value==='undefined' || value===null || value===""))
+		{	// 2014-06-02 SJG Blank value for non-repeating must NOT be in the answer file.
+			xml = getXMLValue(value);
+		}
 	}
 	if (xml!='') {
 		xml = '<Answer name="' + variable.name + '">' + xml + '</Answer>';
 	}
 	else{
-		//traceInfo("Skipping "+variable.name);
+		traceInfo("Skipping "+variable.name);
 	}
 	return xml;
 };

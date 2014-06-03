@@ -202,10 +202,7 @@ var A2JViewer={
 				gotoPageView($(this).val());
 			});
 			$('button.navBack',div).button({label:  lang.GoBack,icons:{primary:'ui-icon-circle-triangle-w'},disabled:true}).click(function(){
-				//traceInfo('navBack');
-				$('#history').prop('selectedIndex',$('#history').prop('selectedIndex')+1);
-				A2JViewer.skipHistory=true;
-				gotoPageView($('#history').val());
+				A2JViewer.goBack();
 			});
 			$('button.navNext',div).button({label:  lang.GoNext,icons:{primary:'ui-icon-circle-triangle-e'},disabled:true}).click(function(){
 				//traceInfo('navNext');
@@ -218,10 +215,10 @@ var A2JViewer={
 				traceAlert('navFeedback not implemented');
 			});
 			$('button.navSaveAndExit',div).button({label:  lang.SaveAndExit,icons:{primary:'ui-icon-disk'},disabled:0}).click(function(){
-				traceInfo('navSaveAndExit');
+				A2JViewer.goSaveExit();
 			});
-			$('button.navResumeExit',div).button({label:  lang.ResumeExit,icons:{primary:'ui-icon-arrowreturnthick-1-w'},disabled:true}).click(function(){
-				traceInfo('navResumeExit');
+			$('button.navResumeExit',div).button({label:  lang.ResumeExit,icons:{primary:'ui-icon-arrowreturnthick-1-w'}}).click(function(){
+				A2JViewer.goExitResume();
 			});
 		
 			if (typeof authorViewerHook !== 'undefined'){
@@ -275,9 +272,9 @@ var A2JViewer={
 			//var opt = '<li><a href="#"><span class="ui-icon ui-icon-document"></span>'+  page.name.asHTML() +'<div>'+ String(questionHTML).stripHTML().ellipsis(40)+'</div></a></li>';
 			$('#history').prepend(opt).prop('selectedIndex',0);
 		}
-		var hist_size=$('#history').children('option').length;
-		$('button.navBack',div).button({disabled:$('#history').prop('selectedIndex')===hist_size-1});
-		$('button.navNext',div).button({disabled:$('#history').prop('selectedIndex')===0});
+		A2JViewer.updateNavigationButtons();
+		
+		
 		A2JViewer.skipHistory=false;
 		
 		
@@ -645,6 +642,61 @@ var A2JViewer={
 		});//button click
 		
 	},
+	
+	saveExitQ:'', // Remember the point we left normal path and entered the Save/Resume path
+	saveExitActive:false, // True when we're in the Save path.
+	
+	updateNavigationButtons:function()
+	{	// Ensure navigation button states reflect application state
+		// 11/24/08 2.6 if history variable has value of false, grayout.
+		// 04/08/09 2.7.6 if navigation is false Hide.
+	
+		var navOn=true;// !(Global.curTemplate.getVariableValue(CVariable.navigationVarName)==false);
+		if (A2JViewer.saveExitActive){
+			navOn=false;
+		}
+		var hist_size=$('#history').children('option').length;
+		$('button.navBack').button({disabled:navOn && ($('#history').prop('selectedIndex')===hist_size-1)});
+		$('button.navNext').button({disabled:navOn && ($('#history').prop('selectedIndex')===0)});
+		//historyComboBox.visible = navOn;
+		//myProgress_label._visible=navOn;
+		$('button.navFeedback').button({disabled:gGuide.sendfeedback===false});
+		$('button.navSaveAndExit').toggle(true === ((gGuide.exitPage !== CONST.qIDNOWHERE) && (!A2JViewer.saveExitActive)));
+		$('button.navResumeExit').toggle(true === A2JViewer.saveExitActive);
+	},
+	
+	goBack:function()
+	{	// User hit the back button or scripted go back was executed.
+		// traceInfo('navBack');
+		$('#history').prop('selectedIndex',$('#history').prop('selectedIndex')+1);
+		A2JViewer.skipHistory=true;
+		gotoPageView($('#history').val());
+	},
+	
+	goSaveExit:function()
+	{	// When user chooses Exit we first jump to the Exit page where we can present info and let them back out.
+		// Exit button will be replaced with a Resume button. 
+		// 08/17/09 3.0.1
+		traceInfo('navSaveAndExit');
+		A2JViewer.saveExitQ=gPage.name;
+		A2JViewer.saveExitActive=true;
+		gotoPageView(gGuide.exitPage);
+		//updateNavigationButtons();
+	},
+
+	goExitResume:function()				
+	{	// User in the Exit path and pressed Resume. 
+		// 8/24/09 3.0.2 Resume from exit
+		traceInfo('navResumeExit');
+		A2JViewer.saveExitActive=false;
+		//updateNavigationButtons();
+		if (A2JViewer.saveExitQ!=='')
+		{
+			gotoPageView(A2JViewer.saveExitQ);
+			A2JViewer.saveExitQ='';
+		}
+	},
+	
 	layoutStep:function(curstep)
 	{
 		var steps=gGuide.steps;

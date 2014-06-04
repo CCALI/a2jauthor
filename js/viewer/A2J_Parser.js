@@ -444,7 +444,7 @@ TGuide.prototype.HotDocsAnswerSetXML=function()
 		}
 	}
 	xml_str+="</AnswerSet>";
-	traceInfo(xml_str);
+	//traceInfo(xml_str);
 	return xml_str;
 };
 
@@ -557,7 +557,7 @@ TGuide.prototype.HotDocsAnswerSetVariable = function(variable) //CVariable
 		xml = '<Answer name="' + variable.name + '">' + xml + '</Answer>';
 	}
 	else{
-		traceInfo("Skipping "+variable.name);
+		//traceInfo("Skipping "+variable.name);
 	}
 	return xml;
 };
@@ -599,7 +599,7 @@ TGuide.prototype.HotDocsAnswerSetFromXML=function(AnswerSetXML)
 		var varName = makestr($(this).attr("name"));
 		if (varName.indexOf('#')>=0) {
 			// 12/03/2013 Do not allow # in variable names. We discard them.
-			traceInfo("Discarding invalidly named variable '"+varName+"'");
+			//traceInfo("Discarding invalidly named variable '"+varName+"'");
 			return;
 		}
 		//var varName_i=varName.toLowerCase();
@@ -702,7 +702,7 @@ TGuide.prototype.loadXMLAnswerExternal = function (opts)
 
 function parseXML_A2J_to_CAJA(TEMPLATE)
 {	// Parse A2J into CAJA
-	traceInfo("Converting from A2J Author 4");
+	//traceInfo("Converting from A2J Author 4");
 	//var VARIABLE, v, STEP,step,POPUP,popup,	QUESTION, page
 	//var button, field, script, condition, comment, condT, condF, tf, statement, args, p
 	var LINEDEL="\n"; //"<BR>xxxx";
@@ -1065,7 +1065,7 @@ function loadGuideFile(guideFile,startTabOrPage)
 	{
       startTabOrPage= "PAGE " +url.hash;
 	}
-	traceInfo(guideFile,url,gGuidePath,startTabOrPage);
+	//traceInfo(guideFile,url,gGuidePath,startTabOrPage);
    loadNewGuidePrep(guideFile,startTabOrPage);
 	
    window.setTimeout(function()

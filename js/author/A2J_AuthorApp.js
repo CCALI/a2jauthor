@@ -564,7 +564,7 @@ function gotoPageEdit(pageName)
 }
 function gotoTabOrPage(target)
 {	// Go to a tab or popup a page.
-	traceInfo('gotoTabOrPage',target);
+	//traceInfo('gotoTabOrPage',target);
 
 	//$('#CAJAOutline li, #CAJAIndex li').each(function(){$(this).removeClass('ui-state-active')});
 	//$('li').filter(function(){ return target == $(this).attr('target')}).each(function(){$(this).addClass('ui-state-active')});	
@@ -1043,7 +1043,7 @@ function setProgress(status, showSpinner)
 		status='';
 	}
 	if (status!==''){
-		traceInfo('setProgress',status);
+		//traceInfo('setProgress',status);
 	}
 	if (showSpinner===true) {
 		status += CONST.AJAXLoader;
@@ -1282,7 +1282,7 @@ function guideLoaded(data)
 function styleSheetSwitch(theme)
 {
 	//<link href="cavmobile.css" title="cavmobile" media="screen" rel="stylesheet" type="text/css" />
-	traceInfo('styleSheetSwitch',theme); 
+	//traceInfo('styleSheetSwitch',theme); 
 	if (theme==='A2J') {
 		theme = "jQuery/themes/"+theme.toLowerCase()+"/jquery-ui.css";
 	}
@@ -1568,7 +1568,7 @@ var form={
 						pageButton.button({label:pageDispName});
 						//data.change.call(rel,data);						
 						form.change(pageButton, newPageDest);
-						traceInfo('Changing destination  to "'+newPageDest+'"');
+						//traceInfo('Changing destination  to "'+newPageDest+'"');
 						$(this).dialog("close");
 					}
 				},
@@ -1621,7 +1621,7 @@ var form={
 		//if (typeof data.width!=='undefined') $('input',e).css('width',data.class);
 		$('input',e).blur(function(){
 			form.change($(this),$(this).val());
-			traceInfo('Saving text',$(this).val());
+			//traceInfo('Saving text',$(this).val());
 			}).val(decodeEntities(data.value)).data('data',data);
 		return e;
 	}

@@ -20,7 +20,7 @@ function fbIndex(button,detail)
 
 function parseXML_CA_to_CAJA(BOOK)
 {	// Parse CALI Author into CAJA
-	traceInfo("Converting from CALI Author");
+	//traceInfo("Converting from CALI Author");
 
 	var guide=new TGuide();
 

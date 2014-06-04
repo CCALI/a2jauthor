@@ -57,7 +57,7 @@ function TLanguages()
 		if (typeof this.regional[languageID]==='undefined'){
 			languageID='en';
 		}
-		traceInfo("TLanguages.set",languageID);
+		//traceInfo("TLanguages.set",languageID);
 		var region;
 		
 		region = this.regional[languageID];
@@ -74,7 +74,7 @@ function TLanguages()
 				if (makestr(lang[e])==='')
 				{
 					lang[e]= String(region[e]);
-					traceInfo('Missing '+e+"="+lang[e]);
+					traceAlert('Missing '+e+"="+lang[e]);
 				}
 			}
 		}

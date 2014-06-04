@@ -417,7 +417,7 @@ function scrollToElt(container,scrollTo)
 {	// Scroll container so that element scrollTo is visible.
 	// e.g., var container = $('div'), scrollTo = $('#row_8');
 	//container.scrollTop(scrollTo.offset().top - container.offset().top + container.scrollTop());
-	traceInfo(scrollTo.offset().top , container.offset().top , container.scrollTop());
+	//traceInfo(scrollTo.offset().top , container.offset().top , container.scrollTop());
 	container.animate({
     scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
 		});

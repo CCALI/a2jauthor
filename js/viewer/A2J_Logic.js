@@ -384,7 +384,9 @@ TLogic.prototype.addUserFunction = function(funcName,numArgs,func)
 TLogic.prototype.traceLogic = function(html)
 {
 	$(this.tracerID).append('<li style="text-indent:'+(this.indent)+'em">'+html+"</li>");
-	if(1) {traceInfo(String(html).stripHTML()); }
+	if(1) {
+		//traceInfo(String(html).stripHTML());
+	}
 };
 
 // Functions called by JS translation of CAJA code. 
@@ -462,8 +464,8 @@ TLogic.prototype.executeScript = function(CAJAScriptHTML)
 		catch (e) {
 			// Trace runtime errors
 			this.traceLogic("executeScript.error: " + e.lineNumber+": "+e.message  );
-			traceInfo(CAJAScriptHTML);
-			traceInfo(js);
+			//traceInfo(CAJAScriptHTML);
+			//traceInfo(js);
 			return false;
 		}
 	}

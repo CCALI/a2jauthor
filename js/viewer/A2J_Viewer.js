@@ -211,7 +211,7 @@ var A2JViewer={
 				gotoPageView($('#history').val());
 			});
 			$('button.navFeedback',div).button({label:  lang.SendFeedback,icons:{primary:'ui-icon-comment'},disabled:0}).click(function(){
-				traceInfo('navFeedback');
+				//traceInfo('navFeedback');
 				traceAlert('navFeedback not implemented');
 			});
 			$('button.navSaveAndExit',div).button({label:  lang.SaveAndExit,icons:{primary:'ui-icon-disk'},disabled:0}).click(function(){
@@ -254,7 +254,7 @@ var A2JViewer={
 				$(this).attr('TARGET','_BLANK');
 			});
 			htmlText = htmDiv.html();
-			traceInfo(htmlText);
+			//traceInfo(htmlText);
 			return  htmlText;
 		}
 	
@@ -267,7 +267,7 @@ var A2JViewer={
 		// ### e.g., <li><a href="#"><span class="ui-icon ui-icon-document"></span>Question 1<div>Should you use this form?</div></a></li>
 		if (!A2JViewer.skipHistory)
 		{
-			traceInfo('Save in history');
+			//traceInfo('Save in history');
 			var opt='<option value="'+ page.name.asHTML() +'">'+ String(questionHTML).stripHTML().ellipsis(40) +'</option>';
 			//var opt = '<li><a href="#"><span class="ui-icon ui-icon-document"></span>'+  page.name.asHTML() +'<div>'+ String(questionHTML).stripHTML().ellipsis(40)+'</div></a></li>';
 			$('#history').prepend(opt).prop('selectedIndex',0);
@@ -619,7 +619,7 @@ var A2JViewer={
 					case CONST.ftCheckBoxNOTA://"Check Box (None of the Above)" 
 						break;
 				}//end case
-				traceInfo('Field '+f.name+' '+val);
+				//traceInfo('Field '+f.name+' '+val);
 				if (invalid)
 				{
 					
@@ -636,7 +636,7 @@ var A2JViewer={
 				var b=page.buttons[bi];
 				
 				traceLogic( 'You pressed ' + traceTag('ui',b.label));
-				traceInfo('ButtonPress',b.label,b.name,b.value);
+				//traceInfo('ButtonPress',b.label,b.name,b.value);
 				if (b.name!=="")
 				{	// Set button's variable 
 					gGuide.varSet(b.name,b.value,varIndex);
@@ -686,7 +686,7 @@ var A2JViewer={
 	{	// When user chooses Exit we first jump to the Exit page where we can present info and let them back out.
 		// Exit button will be replaced with a Resume button. 
 		// 08/17/09 3.0.1
-		traceInfo('navSaveAndExit');
+		//traceInfo('navSaveAndExit');
 		A2JViewer.saveExitQ=gPage.name;
 		A2JViewer.saveExitActive=true;
 		gotoPageView(gGuide.exitPage);
@@ -696,7 +696,7 @@ var A2JViewer={
 	goExitResume:function()				
 	{	// User in the Exit path and pressed Resume. 
 		// 8/24/09 3.0.2 Resume from exit
-		traceInfo('navResumeExit');
+		//traceInfo('navResumeExit');
 		A2JViewer.saveExitActive=false;
 		//updateNavigationButtons();
 		if (A2JViewer.saveExitQ!=='')
@@ -814,7 +814,9 @@ function traceAlert(html)
 	// Since there may be more than one error, dump them into a scrollable list. 
 	$('.alertPanel').append('<div class="ui-widget"><div style="padding: 0 .7em;" class="ui-state-error ui-corner-all"><p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>'+html+'</div></div>');
 	$('.alertCounter').text( ++alertCounter ).show();	
-	if(1) {traceInfo(String(html).stripHTML()); }
+	if(1) {
+		traceInfo(String(html).stripHTML());
+	}
 }
 
 

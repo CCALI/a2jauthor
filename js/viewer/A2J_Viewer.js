@@ -301,12 +301,11 @@ var A2JViewer={
 		// ### FieldSet to attach custom fields.
 		var fs=$('.ui-form.question .form',div);
 	
-		/*
-		 * @type {string|number}
-		* */
+		// varIndex is null or an array index number.
 		var varIndex=null;
 		if (page.repeatVar!==''){
-			varIndex = gGuide.varGet(page.repeatVar);
+			// If a repeat var is defined, all field variables will be treated as array with repeatVar as the index.
+			varIndex = textToNumber(gGuide.varGet(page.repeatVar));
 		}
 		for (var fi=0;fi<page.fields.length;fi++)
 		{			
@@ -498,13 +497,11 @@ var A2JViewer={
 		
 		$('.question.panel .buttonlist button',div).button().click(function()
 		{	//### Question validation of form data before proceeding
-			/*
-			 * @type {string|number}
-			* */
+			// If we have an repeat var, be sure to use array indexing.
 			var varIndex=null;
 			if (page.repeatVar!=='')
 			{
-				varIndex=gGuide.varGet(page.repeatVar);
+				varIndex=textToNumber(gGuide.varGet(page.repeatVar));
 			}
 			var invalid=false;
 			$('.question.panel .ui-form div').removeClass('error');
@@ -646,6 +643,30 @@ var A2JViewer={
 				gLogic.GOTOPAGE=b.next;
 				gLogic.executeScript(page.codeAfter);
 				// TODO HANDLE LOOPS
+				
+				// 2014-06-03 Button repeat/counters.
+				switch (b.repeatVarSet)
+				{
+					case CONST.RepeatVarSetOne:
+						// Set the repeat variable to 1.
+						traceLogic("Setting repeat variable to 1");
+						if (!gGuide.varExists(b.repeatVar)) {
+							gGuide.varCreate(b.repeatVar,CONST.vtNumber,false);
+						}
+						gGuide.varSet(b.repeatVar,1);
+						break;
+					case CONST.RepeatVarSetPlusOne:
+						// Increment the repeat variable or set to 1 if doesn't exist.
+						if (!gGuide.varExists(b.repeatVar)) {
+							gGuide.varCreate(b.repeatVar,CONST.vtNumber,false);
+						}
+						var value=  textToNumber(gGuide.varGet(b.repeatVar));
+						// Note, if value is 0, a logic error. Would be 0 only if we skipped over the RepeatVarSetOne.
+						traceLogic("Incrementing repeat variable");
+						gGuide.varSet(b.repeatVar, value + 1);
+						break;
+				}
+				
 				gotoPageView(b.next);
 		}
 		});//button click

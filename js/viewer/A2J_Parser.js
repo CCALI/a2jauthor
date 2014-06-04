@@ -88,8 +88,11 @@ function page2JSON(page)
 		PAGE.BUTTONS.push({BUTTON:{
 			XML_LABEL:	b.label,
 			_NEXT:	b.next,
+			_REPEATVAR:	b.repeatVar,
+			_REPEATVARSET:	b.repeatVarSet,
 			NAME:		b.name,
-			VALUE:	b.value}});
+			VALUE:	b.value
+			}});
 	}
 	var fi;
 	for (fi in page.fields){
@@ -227,8 +230,10 @@ function parseXML2Page(PAGE, page)
 		var button=new TButton();
 		button.label =jQuery.trim($(this).find("LABEL").xml());
 		button.next = makestr($(this).attr("NEXT"));
+		button.repeatVar=makestr($(this).attr("REPEATVAR"));
+		button.repeatVarSet=makestr($(this).attr("REPEATVARSET"));		
 		button.name =jQuery.trim($(this).find("NAME").xml());
-		button.value = jQuery.trim($(this).find("VALUE").xml());
+		button.value = jQuery.trim($(this).find("VALUE").xml());	
 		page.buttons.push(button);
 	});
 	PAGE.find('FIELDS > FIELD').each(function(){
@@ -849,6 +854,8 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			button.label =jQuery.trim($(this).find("LABEL").xml());
 			button.next = fixID(makestr($(this).attr("NEXT")));
 			button.name =jQuery.trim($(this).attr("NAME"));
+			button.repeatVar=makestr($(this).attr("REPEATVAR"));
+			button.repeatVarSet=makestr($(this).attr("REPEATVARSET"));
 			button.value = jQuery.trim($(this).find("VALUE").xml()); 
 			page.buttons.push(button);
 		});

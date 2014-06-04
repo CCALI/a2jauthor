@@ -168,13 +168,20 @@ function textToBool(b, defaultb)
 	return (b===1) || (b==='1') || (String(b).toLowerCase()==="true");
 }
 function textToNumber(n)
-{	// convert to number even with commas.
+{	// Convert to number even with commas.
+	// If it's text, return 0. 
 	if (n==='' || n===null || typeof n === "undefined" )
 	{
 		return 0;
 	}
-	n=n.replace(',','');//English Only
-	return parseFloat(n);
+	if (isNumber(n)) {
+		return parseFloat(n);
+	}
+	n=String(n).replace(',','');//English Only
+	if (isNumber(n)) {
+		return parseFloat(n);
+	}
+	return 0;
 }
 function isNumber(n)
 {	//http://stackoverflow.com/questions/18082/validate-numbers-in-javascript-isnumeric

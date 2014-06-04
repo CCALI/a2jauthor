@@ -95,7 +95,9 @@ var CONST = {
 	qIDBACK:"BACK", //8/17/09 3.0.1 Same as history Back button.
 	qIDRESUME:"RESUME", //8/24/09 3.0.2
 
-	
+	// 2014-06-04 Button-based repeat options
+	RepeatVarSetOne:'=1', 
+	RepeatVarSetPlusOne: '+=1',
 	
 	// HotDocs ANX
 	// 4/8/04 This is the DTD for the HotDocs ANX file format.
@@ -154,6 +156,8 @@ function TButton()
 	this.next = ""; // Name of default page to jump to
 	this.name = ""; // Variable name
 	this.value = ""; // Value - when clicked, variable 'name' gets value 'value'
+	this.repeatVar=""; // Old style repeat var - button option
+	this.repeatVarSet="";// Old style repeat var counter adjustments - button option
 	return this;
 }
 
@@ -323,7 +327,6 @@ function TPage()
 	this.helpImageURL="";
 	this.helpVideoURL="";
 	this.repeatVar="";// built-in for attaching Field variables to array
-	
 	this.codeBefore="";
 	this.codeAfter="";
 	this.fields=[];
@@ -628,7 +631,7 @@ TGuide.prototype.varSet=function(varName,varVal,varIndex)//setVariableLoop
 		if (v.values[varIndex]!==varVal)
 		{	
 			gLogic.indent++;
-			gLogic.traceLogic(traceTag('var',varName+'#'+varIndex)+traceTag('val',varVal));
+			gLogic.traceLogic(traceTag('var',varName+' # '+varIndex)+traceTag('val',varVal));
 			gLogic.indent--;
 		}
 		v.values[varIndex]=varVal;

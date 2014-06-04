@@ -803,7 +803,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
 			change:function(val,page){page.helpVideoURL=val;}} ));
 		pagefs.append(form.htmlarea(	{name:'helpReader', label:'Help Text Reader:', value:page.helpReader,
 			change:function(val,page){page.helpReader=val;}} ));
-		pagefs.append(form.text(		{label:'Repeating Variable:',placeholder:'',	value:page.repeatVar,
+		pagefs.append(form.text(		{label:'Counting Variable:',placeholder:'',	value:page.repeatVar,
 			change:function(val,page){page.repeatVar=val;}} ));
 		t.append(pagefs);
 		updateShowMe(pagefs,getShowMe());
@@ -933,6 +933,18 @@ function guidePageEditForm(page, div, pagename)//novicePage
 					ff.append(form.pickpage({value: b.next,label:'Destination:',
 						change:function(val,b){
 						b.next=val;}}));
+
+					ff.append(form.pickList({label:'Repeat Options:',value: b.repeatVarSet,
+									change:function(val,b,form){
+										b.repeatVarSet = val;
+									}},
+						['','Normal',
+						 CONST.RepeatVarSetOne,'Set Counting Variable to 1',
+						 CONST.RepeatVarSetPlusOne,'Increment Counting Variable'] ));
+					ff.append(form.text(		{label:'Counting Variable:',placeholder:'',	value:b.repeatVar,
+						change:function(val,b){b.repeatVar=val;}} ));
+					
+					
 				return ff;
 				}}));
 			t.append(fs);

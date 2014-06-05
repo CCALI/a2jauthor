@@ -57,7 +57,7 @@ function TLanguages()
 		if (typeof this.regional[languageID]==='undefined'){
 			languageID='en';
 		}
-		//traceInfo("TLanguages.set",languageID);
+		//trace("TLanguages.set",languageID);
 		var region;
 		
 		region = this.regional[languageID];

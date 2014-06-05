@@ -145,7 +145,7 @@ String.prototype.ellipsis=function(limit){
 function prettyXML(xml) {
 	var html = htmlEscape(xml);
 	html = html.split("&lt;A").join("<BR>&lt;A");
-	//traceInfo(html);
+	//trace(html);
 	return html;
 }
 
@@ -424,7 +424,7 @@ function scrollToElt(container,scrollTo)
 {	// Scroll container so that element scrollTo is visible.
 	// e.g., var container = $('div'), scrollTo = $('#row_8');
 	//container.scrollTop(scrollTo.offset().top - container.offset().top + container.scrollTop());
-	//traceInfo(scrollTo.offset().top , container.offset().top , container.scrollTop());
+	//trace(scrollTo.offset().top , container.offset().top , container.scrollTop());
 	container.animate({
     scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
 		});
@@ -467,7 +467,7 @@ function traceTag(cname,chtml)
 
 
 /** @param {...} var_args */
-function traceInfo(var_args) //was just trace
+function trace(var_args) //was just trace
 {	// Send message to brower's console. Mainly for internal developers.
 	if (typeof console!=="undefined")
 	{

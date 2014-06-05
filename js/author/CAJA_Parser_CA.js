@@ -20,7 +20,7 @@ function fbIndex(button,detail)
 
 function parseXML_CA_to_CAJA(BOOK)
 {	// Parse CALI Author into CAJA
-	//traceInfo("Converting from CALI Author");
+	//trace("Converting from CALI Author");
 
 	var guide=new TGuide();
 
@@ -143,7 +143,7 @@ function parseXML_CA_to_CAJA(BOOK)
 		{	// skip placeholder pages
 			guide.pages[page.name] = page;
 			//guide.mapids[page.id]=page;
-			//if (page.name!=page.id) traceInfo("mismatch");
+			//if (page.name!=page.id) trace("mismatch");
 		}
 	}); 
 
@@ -170,8 +170,8 @@ function parseXML_CA_to_CAJA(BOOK)
 	});
 	
 	
-	//traceInfo(guide.TOC);
-	//traceInfo(propsJSON('guide.steps',guide.steps));
+	//trace(guide.TOC);
+	//trace(propsJSON('guide.steps',guide.steps));
 	//var step = new TStep();
 	//step.number="1";
 	//step.text.eoOutline

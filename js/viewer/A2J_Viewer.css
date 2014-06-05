@@ -687,5 +687,7 @@ x.question.panel {
 .audio {
 	margin-top: 1em;
 }
-
+#history {
+	width: 20em;
+}
 /* */

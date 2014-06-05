@@ -433,7 +433,7 @@ function pageEditClone(pageName)
 
 function pageRename(page,newName){
 /* TODO Rename all references to this page in POPUPs, JUMPs and GOTOs */
-	//traceInfo("Renaming page "+page.name+" to "+newName);
+	//trace("Renaming page "+page.name+" to "+newName);
 	if (page.name===newName) {return true;}
 	if (page.name.toLowerCase() !== newName.toLowerCase())
 	{
@@ -508,7 +508,7 @@ function gotoPageEdit(pageName)
 		return;
 	}
 	
-	//traceInfo(page2XML(pageFromXML(page2XML(page))));
+	//trace(page2XML(pageFromXML(page2XML(page))));
 	
 	
 	$('#tabsLogic  .tabContent, #tabsText .tabContent').html("");//clear these so they refresh with new data. TODO - update in place
@@ -564,7 +564,7 @@ function gotoPageEdit(pageName)
 }
 function gotoTabOrPage(target)
 {	// Go to a tab or popup a page.
-	//traceInfo('gotoTabOrPage',target);
+	//trace('gotoTabOrPage',target);
 
 	//$('#CAJAOutline li, #CAJAIndex li').each(function(){$(this).removeClass('ui-state-active')});
 	//$('li').filter(function(){ return target == $(this).attr('target')}).each(function(){$(this).addClass('ui-state-active')});	
@@ -1055,7 +1055,7 @@ function setProgress(status, showSpinner)
 		status='';
 	}
 	if (status!==''){
-		//traceInfo('setProgress',status);
+		//trace('setProgress',status);
 	}
 	if (showSpinner===true) {
 		status += CONST.AJAXLoader;
@@ -1086,7 +1086,7 @@ function guideStart(startTabOrPage)
 	if (makestr(startTabOrPage)===""){
 		startTabOrPage="PAGE "+(gGuide.firstPage);
 	}
-	//traceInfo("Starting location "+startTabOrPage);
+	//trace("Starting location "+startTabOrPage);
 	
 	gotoTabOrPage(startTabOrPage);
 	updateTOC();
@@ -1294,7 +1294,7 @@ function guideLoaded(data)
 function styleSheetSwitch(theme)
 {
 	//<link href="cavmobile.css" title="cavmobile" media="screen" rel="stylesheet" type="text/css" />
-	//traceInfo('styleSheetSwitch',theme); 
+	//trace('styleSheetSwitch',theme); 
 	if (theme==='A2J') {
 		theme = "jQuery/themes/"+theme.toLowerCase()+"/jquery-ui.css";
 	}
@@ -1556,7 +1556,7 @@ var form={
 				$('#page-picker-list li').removeClass(SELECTED);
 				$(this).toggleClass(SELECTED);
 				//var rel=$(this).attr('rel');
-				//traceInfo(rel);
+				//trace(rel);
 			})
 			.dblclick(function (){
 				// TODO - double click to select and set
@@ -1580,7 +1580,7 @@ var form={
 						pageButton.button({label:pageDispName});
 						//data.change.call(rel,data);						
 						form.change(pageButton, newPageDest);
-						//traceInfo('Changing destination  to "'+newPageDest+'"');
+						//trace('Changing destination  to "'+newPageDest+'"');
 						$(this).dialog("close");
 					}
 				},
@@ -1606,7 +1606,7 @@ var form={
 	      change: function () { // if didn't match, restore to original value
 	         var matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex($(this).val().split("\t")[0]) + "$", "i");
 	         var newvalue = $(this).val();//.split("\t")[0];
-				//traceInfo(newvalue);
+				//trace(newvalue);
 	         $.each(gGuide.sortedPages, function (p, page) {
 					if ((page.type!==CONST.ptPopup) && (matcher.test(page.name)))
 					{
@@ -1633,7 +1633,7 @@ var form={
 		//if (typeof data.width!=='undefined') $('input',e).css('width',data.class);
 		$('input',e).blur(function(){
 			form.change($(this),$(this).val());
-			//traceInfo('Saving text',$(this).val());
+			//trace('Saving text',$(this).val());
 			}).val(decodeEntities(data.value)).data('data',data);
 		return e;
 	}
@@ -1807,7 +1807,7 @@ var form={
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
 			+'<span class=editspan><select class="     ui-select-input">'+c+'</select></span></div>');
 		$('.ui-select-input',e).change(function(){form.change($(this),$('option:selected',this).val());}).data('data',data).val(data.value);
-		//traceInfo(data.value,$('.ui-select-input',e).val());
+		//trace(data.value,$('.ui-select-input',e).val());
 		if ($('.ui-select-input',e).val()!==String(data.value))
 		{
 			$('select',e).append($('<option value="'+data.value+'">{'+data.value+'}</option>'));
@@ -1917,11 +1917,11 @@ var form={
 		var $tbl=$('<table/>').addClass('list').data('settings',settings).attr('list',settings.name);
 		div.append(form.tableRowCounter(settings.name,settings.picker,settings.min,settings.max,settings.list.length));
 		var i;
-		//traceInfo(div.html());
+		//trace(div.html());
 		for (i=0;i<settings.list.length;i++){
 			form.listManagerAddRow($tbl,settings.list[i]);
 		}
-		//traceInfo(settings.list);
+		//trace(settings.list);
 		$('tbody',$tbl).sortable({
 			handle:"td .sorthandle",
 			update:function(event,ui){
@@ -1975,7 +1975,7 @@ function ws(data,results)
 		type: 'POST',
 		data: data,
 		success: function(data){ 
-			//traceInfo(String.substr(JSON.stringify(data),0,299));
+			//trace(String.substr(JSON.stringify(data),0,299));
 			results(data);
 		},
 		error: function(err,xhr) {
@@ -2103,7 +2103,7 @@ function main()
 // JPM - added button to slide/hide page list on mapper	
 	$('#tabsMapper button').first()
 		.button({disabled:false,label:'Hide Page List',icons:{primary:'ui-icon-arrowthick-1-w'}}).next()
-		.button({disabled:true,label:'Fit',icons:{primary:'ui-icon-arrow-4-diag'}}).next()
+		.button({disabled:false,label:'Fit',icons:{primary:'ui-icon-arrow-4-diag'}}).next()
 		.button({label:'Zoom in',icons:{primary:'ui-icon-zoomin'}}).next()
 		.button({label:'Zoom out',icons:{primary:'ui-icon-zoomout'}});
 		
@@ -2176,7 +2176,7 @@ function main()
 					styleSheetSwitch($(this).text());
 					break;
 				default:
-					//traceInfo('Unhandled ' + attr);
+					//trace('Unhandled ' + attr);
 			}
 			return false;
 		});

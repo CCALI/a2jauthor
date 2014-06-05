@@ -19,10 +19,11 @@ var gMapSize= 1 ; //0 is small, 1 is normal
 
 /** @const */ var GRID_MAP =  {x : 10 , y : 10 };
 /** @const */ //var GRID_MAP =  {x : 50 , y : 20 };
-/** @const */ var NODE_SIZE = {w : 150, h : 36+8};
+/** @const */ var NODE_SIZE = {w : 150, h : 100 /*36+8*/ };
 
 function mapLines()
-{
+{	// Create lines. This is called after generating the map or after a page is moved.
+
 	var NW=NODE_SIZE.w;
 	var NH=NODE_SIZE.h;
 		
@@ -98,10 +99,10 @@ function mapLines()
 					}
 				}
 				// $(".map").append('<div class="branch" rel="'+branch.dest+'" style="left:'+(branchLeft)+'px; top:'+branchTop+'px; width:'+branchWidth+'px;">'+branch.text+'</div>');
-			}
+			}//end of buttons
 		}
 	}
-	//traceInfo('widths:',$map.css('width'),$map.width(),$map.innerWidth());
+	//trace('widths:',$map.css('width'),$map.width(),$map.innerWidth());
 	//$map.width($map.width()+100).height($map.height()+100);
 	//	$('.branch',$map).click(function(){focusNode($('.map > .node[rel="'+$(this).attr('rel')+'"]'));	});
 }
@@ -109,6 +110,12 @@ function showPageOnMap()
 {	// TODO 
 	//var target=$(this).attr('target');
 }
+/*
+function focusPage()
+{
+	focusNode($('.map > .node[rel="'+page.mapid+'"]'))
+}
+*/
 
 function buildMap()
 {	// Construct mapper flowcharts.
@@ -163,7 +170,9 @@ function buildMap()
 			stepc = page.step;
 			$map.append(' '
 				+'<div class="node Step'+(stepc)+'" pagename="'+page.name.asHTML()+'" style="z-index:1; left:'+nodeLeft+'px;top:'+nodeTop+'px;">'
-				+(page.type===CONST.ptPopup ? '':'<div class="arrow"></div>')
+				+(page.type===CONST.ptPopup ? '':'<div class="mapper icon arrow"></div>')
+				+(page.name == gGuide.firstPage ? '<div class="mapper icon start"></div>':'')
+				+(page.name == gGuide.exitPage ? '<div class="mapper icon exit"></div>':'')
 				+'<div class="text">'+page.name+'</div>'
 				+'<div class="taglist">'+page.tagList()+'</div>'
 				+'</div>'
@@ -200,17 +209,10 @@ function buildMap()
 		
 	});
 }
-/*
-function focusPage()
-{
-	focusNode($('.map > .node[rel="'+page.mapid+'"]'))
-}
-*/
 
 // JPM if showing/hiding page list, do that and zoom to fit
 function mapZoomSlide()
 {
-	//	traceInfo("pagesfit " + $('#tabsMapper').css('left') );
 	$('.tabsMapPages').animate({width: 'toggle'});
 	if ($('#tabsMapper').css("left")=="0px") {
 		$('#tabsMapper').css("left", "33%");
@@ -220,22 +222,67 @@ function mapZoomSlide()
 		$('#tabsMapper').css("left", "0px");
 	$('#tabsMapper button').first()
 		.button({disabled:false,label:'Show Page List',icons:{primary:'ui-icon-arrowthick-1-e'}});
-		
 	}	
 }
 
 function mapZoomClick()
-{	// Zoom in or out. 
-	var zoom=parseFloat($(this).attr('zoom'));
+{	// Zoom in or out or fit. 
+	var zoom=$(this).attr('zoom');
+	if (zoom==='fit') {
+		// TODO must be an easy function to get map's true width,height (children bounds).
+		//	trace('Map size',$('.map').css('width'),$('.map').css('height'));
+		//trace('Map size',$('#MapperPanel').css('width'),$('#MapperPanel').css('height'));
+		//$('.map').css({zoom:"scale(1)"});
+		var minx,miny,maxx,maxy;
+		minx=miny=999;
+		maxx=maxy=0;
 
-	if (zoom>0){
+		var p;
+		for (p in gGuide.pages)
+		{	// Get bounds of all pages
+			var page=gGuide.pages[p];
+			if (page.mapx!==null)
+			{
+				minx = Math.min(minx,page.mapx);
+				miny = Math.min(miny,page.mapy);
+				maxx = Math.max(maxx,page.mapx+500);
+				maxy = Math.max(maxy,page.mapy+500);
+			}
+		}
+
+		// trace(minx,miny,maxx,maxy);
+		kMINY=200;// let no node be less than 200 (so our Start icon is visible)
+		if (  (minx<0 || miny< kMINY))
+		{	// If left or top is less than 0, push all down/right since our scrollbars don't go negative.
+			// Keeps questions from disappearing too.
+			miny -= kMINY;
+			var p;
+			for (p in gGuide.pages)
+			{
+				var page=gGuide.pages[p];
+				if (page.mapx!==null)
+				{
+					page.mapx -= minx;
+					page.mapy -= miny;
+				}
+			}
+			buildMap();
+		}
+		var scalex=$('#MapperPanel').width()  / (maxx-minx);
+		var scaley=$('#MapperPanel').height() / (maxy-miny);
+		gMapperScale=Math.min(scalex,scaley);// scale to fit
+		
+	}
+	else
+	{
+		zoom = parseFloat(zoom);
 		gMapperScale = gMapperScale * zoom;
 	}
 	if (gMapperScale>=0.9){
 		gMapperScale=1;
 	}
+	// traggable lets us drag things around.
 	$('.map').traggable('changeScale',gMapperScale);
-	//$('.map').css({zoom:gMapperScale,"-moz-transform":"scale("+gMapperScale+")","-webkit-transform":"scale("+gMapperScale+")"});
 }
 
 

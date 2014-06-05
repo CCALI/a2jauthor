@@ -385,7 +385,7 @@ TLogic.prototype.traceLogic = function(html)
 {
 	$(this.tracerID).append('<li style="text-indent:'+(this.indent)+'em">'+html+"</li>");
 	if(1) {
-		//traceInfo(String(html).stripHTML());
+		//trace(String(html).stripHTML());
 	}
 };
 
@@ -464,8 +464,8 @@ TLogic.prototype.executeScript = function(CAJAScriptHTML)
 		catch (e) {
 			// Trace runtime errors
 			this.traceLogic("executeScript.error: " + e.lineNumber+": "+e.message  );
-			//traceInfo(CAJAScriptHTML);
-			//traceInfo(js);
+			//trace(CAJAScriptHTML);
+			//trace(js);
 			return false;
 		}
 	}

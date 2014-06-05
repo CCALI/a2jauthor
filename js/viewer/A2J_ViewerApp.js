@@ -18,7 +18,7 @@ function setProgress(status)
 	if (status===null){
 		status='';
 	}
-	//traceInfo('setProgress',status);
+	//trace('setProgress',status);
 }/*
   *
 	// 05/24/11 Check for answer interview ID hash. If not present or no match current interview ALWAYS start on first question.
@@ -28,7 +28,6 @@ function setProgress(status)
 	if (Strings.isBlankOrNull(historyStr) || (hashAnswer != hashInterview))
 	{	// No history or interview hash doesn't match answer hash (or no answer hash),
 		//	start on first question.
-		//ScriptTracer.trace(0,ScriptTracer.blue,false,'Restarting (no history)');
 		sb.gotoQuestion(Global.curTemplate.firstQuestion);
 	}
   */

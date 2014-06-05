@@ -20,7 +20,7 @@ function fixPath(file)
 		return file;
 	}
 	var fileFixed = gGuidePath+urlSplit(file).file;
-	//traceInfo('fixPath',gGuidePath,file,fileFixed);
+	//trace('fixPath',gGuidePath,file,fileFixed);
 	return fileFixed;
 }
 function loadXMLList(opts)
@@ -449,7 +449,7 @@ TGuide.prototype.HotDocsAnswerSetXML=function()
 		}
 	}
 	xml_str+="</AnswerSet>";
-	//traceInfo(xml_str);
+	//trace(xml_str);
 	return xml_str;
 };
 
@@ -562,7 +562,7 @@ TGuide.prototype.HotDocsAnswerSetVariable = function(variable) //CVariable
 		xml = '<Answer name="' + variable.name + '">' + xml + '</Answer>';
 	}
 	else{
-		//traceInfo("Skipping "+variable.name);
+		//trace("Skipping "+variable.name);
 	}
 	return xml;
 };
@@ -604,7 +604,7 @@ TGuide.prototype.HotDocsAnswerSetFromXML=function(AnswerSetXML)
 		var varName = makestr($(this).attr("name"));
 		if (varName.indexOf('#')>=0) {
 			// 12/03/2013 Do not allow # in variable names. We discard them.
-			//traceInfo("Discarding invalidly named variable '"+varName+"'");
+			//trace("Discarding invalidly named variable '"+varName+"'");
 			return;
 		}
 		//var varName_i=varName.toLowerCase();
@@ -707,7 +707,7 @@ TGuide.prototype.loadXMLAnswerExternal = function (opts)
 
 function parseXML_A2J_to_CAJA(TEMPLATE)
 {	// Parse A2J into CAJA
-	//traceInfo("Converting from A2J Author 4");
+	//trace("Converting from A2J Author 4");
 	//var VARIABLE, v, STEP,step,POPUP,popup,	QUESTION, page
 	//var button, field, script, condition, comment, condT, condF, tf, statement, args, p
 	var LINEDEL="\n"; //"<BR>xxxx";
@@ -804,7 +804,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 				var popup = popups[popid];
 				popup.page=guide.addUniquePage(pageName+" popup");
 				popup.page.type="Popup";
-				//traceInfo("Creating popup ["+popup.page.name+"]");
+				//trace("Creating popup ["+popup.page.name+"]");
 				popup.page.text = replacePopups(pageName,popup.text); 
 				return '"POPUP://' + htmlEscape(popup.page.name)+ '"';
 		});
@@ -878,7 +878,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			if (field.listSrc===""){
 				field.listData = $(this).find("SELECT").xml();
 			}
-			//traceInfo(field.listDATA);
+			//trace(field.listDATA);
 			/*
 			if (typeof DefaultPrompts[field.invalidPrompt]!="undefined")
 			{
@@ -1072,7 +1072,7 @@ function loadGuideFile(guideFile,startTabOrPage)
 	{
       startTabOrPage= "PAGE " +url.hash;
 	}
-	//traceInfo(guideFile,url,gGuidePath,startTabOrPage);
+	//trace(guideFile,url,gGuidePath,startTabOrPage);
    loadNewGuidePrep(guideFile,startTabOrPage);
 	
    window.setTimeout(function()

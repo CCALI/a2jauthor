@@ -22,10 +22,10 @@
 
 <link href="author.jquery-ui.css" title="style"  rel="stylesheet" type="text/css"/>
 <link href="jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
-<link href="A2J_Author.css?ver=5.0.1.20"  rel="stylesheet" type="text/css"/>
+<link href="A2J_Author.css?ver=<?=time()?>"  rel="stylesheet" type="text/css"/>
 <link href="../viewer/jquery-ui.extra.css" rel="stylesheet" type="text/css" />
 <link href="../viewer/viewer.jquery-ui.css" rel="stylesheet" type="text/css" />
-<link href="../viewer/A2J_Viewer.css?ver=5.0.1.20"  rel="stylesheet" type="text/css"/>
+<link href="../viewer/A2J_Viewer.css?ver=<?=time()?>"  rel="stylesheet" type="text/css"/>
 
 <script src="../viewer/jquery.1.8.2.min.js" type="text/javascript"></script>
 <script src="../viewer/jquery.ui.1.9.1.min.js" type="text/javascript"></script>
@@ -54,18 +54,18 @@
 			<script src="jquery.fileupload-process.js"></script><!-- The File Upload processing plugin -->
 			<script src="jquery.fileupload-validate.js"></script><!-- The File Upload validation plugin -->
 			
-			<script src="../viewer/A2J_Types.js?jsver=5.0.1.20" type="text/javascript"></script>
-			<script src="../viewer/A2J_Shared.js?jsver=5.0.1.20" type="text/javascript"></script>
-			<script src="../viewer/A2J_SharedSus.js?jsver=5.0.1.20" type="text/javascript"></script>
-			<script src="../viewer/A2J_Languages.js?jsver=5.0.1.20" type="text/javascript"></script>
-			<script src="../viewer/A2J_Logic.js?jsver=5.0.1.20" type="text/javascript"></script>
-			<script src="../viewer/A2J_Parser.js?jsver=5.0.1.20" type="text/javascript"></script>
-			<script src="../viewer/A2J_Viewer.js?jsver=5.0.1.20" type="text/javascript"></script>
+			<script src="../viewer/A2J_Types.js?jsver=<?=time()?>" type="text/javascript"></script>
+			<script src="../viewer/A2J_Shared.js?jsver=<?=time()?>" type="text/javascript"></script>
+			<script src="../viewer/A2J_SharedSus.js?jsver=<?=time()?>" type="text/javascript"></script>
+			<script src="../viewer/A2J_Languages.js?jsver=<?=time()?>" type="text/javascript"></script>
+			<script src="../viewer/A2J_Logic.js?jsver=<?=time()?>" type="text/javascript"></script>
+			<script src="../viewer/A2J_Parser.js?jsver=<?=time()?>" type="text/javascript"></script>
+			<script src="../viewer/A2J_Viewer.js?jsver=<?=time()?>" type="text/javascript"></script>
 			
-			<script src="A2J_Mapper.js?jsver=5.0.1.20" type="text/javascript"></script>
-			<script src="A2J_Dev.js?jsver=5.0.1.20" type="text/javascript"></script>
-			<script src="A2J_AuthorApp.js?jsver=5.0.1.20" type="text/javascript"></script>
-			<script src="A2J_Debug.js?jsver=5.0.1.20" type="text/javascript"></script>
+			<script src="A2J_Mapper.js?jsver=<?=time()?>" type="text/javascript"></script>
+			<script src="A2J_Dev.js?jsver=<?=time()?>" type="text/javascript"></script>
+			<script src="A2J_AuthorApp.js?jsver=<?=time()?>" type="text/javascript"></script>
+			<script src="A2J_Debug.js?jsver=<?=time()?>" type="text/javascript"></script>
 		<?php
 			break;
 		case 2:
@@ -205,7 +205,7 @@
 					</div>
 					<div class="tabFooter">
 <!-- JPM added button to hide/show page list -->
-						<button zoom="fit"></button>
+						<button></button>
 						<button zoom="fit"></button>
 						<button zoom="1.25"></button>
 						<button zoom="0.75"></button>

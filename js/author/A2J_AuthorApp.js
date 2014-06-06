@@ -2069,7 +2069,11 @@ function main()
 	 });
 	
 	$('#guideDownload').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
-	{	// 05/08/2014 Download as .a2j file
+	{	// 05/08/2014 Download as .a2j file.
+		// 06/06/2014 Use .a2j5 extension so A2J4 doesn't try to open it.
+		if (gGuide.filename.indexOf('.a2j5')<0) {
+			gGuide.filename+= '.a2j5';
+		}
 		downloadTextFile( exportXML_CAJA_from_CAJA(gGuide), gGuide.filename);
 	 });
 	

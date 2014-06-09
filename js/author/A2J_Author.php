@@ -8,7 +8,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>A2J Author 5</title>
-
+<?php
+function ts($filename)
+{	// To avoid constantly reloading everything every time during testing, add file's modified time as the timestamp.
+	// Then cache always only updates for changes.
+	return '"'.$filename.'?ver='.date("Y-m-d-H-i-s",filemtime($filename)).'"';
+}
+?>
 
 <link xhref="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/sunny/jquery-ui.css"  title="style" rel="stylesheet" type="text/css"/>
 <link xhref="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-darkness/jquery-ui.css"  title="style" rel="stylesheet" type="text/css"/>
@@ -22,10 +28,10 @@
 
 <link href="author.jquery-ui.css" title="style"  rel="stylesheet" type="text/css"/>
 <link href="jquery.fileupload-ui.css" rel="stylesheet" type="text/css" />
-<link href="A2J_Author.css?ver=<?=time()?>"  rel="stylesheet" type="text/css"/>
+<link href=<?=ts('A2J_Author.css')?>  rel="stylesheet" type="text/css"/>
 <link href="../viewer/jquery-ui.extra.css" rel="stylesheet" type="text/css" />
 <link href="../viewer/viewer.jquery-ui.css" rel="stylesheet" type="text/css" />
-<link href="../viewer/A2J_Viewer.css?ver=<?=time()?>"  rel="stylesheet" type="text/css"/>
+<link href=<?=ts('../viewer/A2J_Viewer.css')?>  rel="stylesheet" type="text/css"/>
 
 <script src="../viewer/jquery.1.8.2.min.js" type="text/javascript"></script>
 <script src="../viewer/jquery.ui.1.9.1.min.js" type="text/javascript"></script>
@@ -54,21 +60,21 @@
 			<script src="jquery.fileupload-process.js"></script><!-- The File Upload processing plugin -->
 			<script src="jquery.fileupload-validate.js"></script><!-- The File Upload validation plugin -->
 			
-			<script src="../viewer/A2J_Types.js?jsver=<?=time()?>" type="text/javascript"></script>
-			<script src="../viewer/A2J_Shared.js?jsver=<?=time()?>" type="text/javascript"></script>
-			<script src="../viewer/A2J_SharedSus.js?jsver=<?=time()?>" type="text/javascript"></script>
-			<script src="../viewer/A2J_Languages.js?jsver=<?=time()?>" type="text/javascript"></script>
-			<script src="../viewer/A2J_Logic.js?jsver=<?=time()?>" type="text/javascript"></script>
-			<script src="../viewer/A2J_Parser.js?jsver=<?=time()?>" type="text/javascript"></script>
-			<script src="../viewer/A2J_Viewer.js?jsver=<?=time()?>" type="text/javascript"></script>
+			<script src=<?=ts('../viewer/A2J_Types.js')?> type="text/javascript"></script>
+			<script src=<?=ts('../viewer/A2J_Shared.js')?> type="text/javascript"></script>
+			<script src=<?=ts('../viewer/A2J_SharedSus.js')?> type="text/javascript"></script>
+			<script src=<?=ts('../viewer/A2J_Languages.js')?> type="text/javascript"></script>
+			<script src=<?=ts('../viewer/A2J_Logic.js')?> type="text/javascript"></script>
+			<script src=<?=ts('../viewer/A2J_Parser.js')?> type="text/javascript"></script>
+			<script src=<?=ts('../viewer/A2J_Viewer.js')?> type="text/javascript"></script>
 			
-			<script src="A2J_Pages.js?jsver=<?=time()?>" type="text/javascript"></script>
-			<script src="A2J_Guides.js?jsver=<?=time()?>" type="text/javascript"></script>
-			<script src="A2J_Tabs.js?jsver=<?=time()?>" type="text/javascript"></script>
-			<script src="A2J_Mapper.js?jsver=<?=time()?>" type="text/javascript"></script>
-			<script src="A2J_Dev.js?jsver=<?=time()?>" type="text/javascript"></script>
-			<script src="A2J_AuthorApp.js?jsver=<?=time()?>" type="text/javascript"></script>
-			<script src="A2J_Debug.js?jsver=<?=time()?>" type="text/javascript"></script>
+			<script src=<?=ts('A2J_Pages.js')?> type="text/javascript"></script>
+			<script src=<?=ts('A2J_Guides.js')?> type="text/javascript"></script>
+			<script src=<?=ts('A2J_Tabs.js')?> type="text/javascript"></script>
+			<script src=<?=ts('A2J_Mapper.js')?> type="text/javascript"></script>
+			<script src=<?=ts('A2J_Dev.js')?> type="text/javascript"></script>
+			<script src=<?=ts('A2J_AuthorApp.js')?> type="text/javascript"></script>
+			<script src=<?=ts('A2J_Debug.js')?> type="text/javascript"></script>
 		<?php
 			break;
 		case 2:
@@ -130,13 +136,17 @@
 		<div class="panel" id="tabsAbout">
 			<div class="tabHeader">
 <!-- JPM expand/collapse for about tab panel -->
-					<button class="ecPanelButton"></button> Information about this guide. </div>
+					<button class="ecPanelButton"></button> Information about this guide.
+			<button CSH="About" class="CSH"/></div>
+			
 			<div class="tabContentFrame">
 				<div class="tabContent editq"></div>
 			</div>
 		</div>
 		<div class="panel" id="tabsVariables">
-			<div class="tabHeader">Variables used in this guide</div>
+			<div class="tabHeader">Variables used in this guide
+			<button CSH="Variables" class="CSH"/></div>
+			
 			<div class="tabContentFrame">
 				<div class="tabContent editq"></div>
 			</div>
@@ -145,7 +155,7 @@
 			</div>
 		</div>
 		<div class="panel" id="tabsSteps">
-			<div class="tabHeader">Steps</div>
+			<div class="tabHeader">Steps <button CSH="Steps" class="CSH"/> </div>
 			<div class="tabContentFrame">
 				<div class="tabContent editq"></div>
 			</div>
@@ -153,7 +163,8 @@
 		<div class="panel" id="tabsPages">
 			<div class="tabHeader">
 			<button id="expandCollapse"></button>
-			Double-click a page to edit. Select one or more to copy, delete or clone. 
+			Pages and popups
+			<button CSH="Pages" class="CSH"/> 
 				<!--<form>
 					<div id="showpagelist">
 						<input checked="checked" 	type="radio" id="showpagelist1" name="showpagelist" /><label for="showpagelist1">Outline</label>
@@ -212,12 +223,14 @@
 						<button zoom="fit"></button>
 						<button zoom="1.25"></button>
 						<button zoom="0.75"></button>
+						<button CSH="Map" class="CSH"/> 
 					</div>
 				</div>
 			</div>			 
 		</div>
 		<div class="panel" id="tabsLogic">
 			<div class="tabHeader"><button class="ecPanelButton"></button> 
+						<button CSH="AllLogic" class="CSH"/> 
 				<form>
 					<div id="showlogic">
 						<input checked="checked" type="radio" id="showlogic1" name="showlogic" />
@@ -232,7 +245,8 @@
 			</div>
 		</div>
 		<div class="panel" id="tabsText">
-			<div class="tabHeader"><button class="ecPanelButton"></button> 
+			<div class="tabHeader"><button class="ecPanelButton"></button>
+				<button CSH="AllText" class="CSH"/> 
 				<form>
 					<div id="showtext">
 						<input checked="checked" type="radio" id="showtext1" name="showtext" />
@@ -249,7 +263,8 @@
 		
 		
 <div class="panel" id="tabsFiles">
-	<div class="tabHeader">Files currently attached to this guide</div>
+	<div class="tabHeader">Files currently attached to this guide
+		<button CSH="Files" class="CSH"/> </div>
 	<div class="tabContentFrame">
 		<div class="tabContent editq"><table class="A2JFiles"><tbody id="attachmentFiles" class="files"></tbody></table>
 		</div>
@@ -271,7 +286,8 @@
 </div>
 
 <div class="panel" id="tabsGuides">
-	<div class="tabHeader">Interviews</div>
+	<div class="tabHeader">Interviews
+	<button CSH="Interviews" class="CSH"/></div>
 	<div class="tabContentFrame">
 		<div class="tabContent editq">
 				<p class="name"></p>
@@ -303,14 +319,14 @@
 		</div></div>
 	</div>
 </div>
-		<div class="panel" id="tabsReport">
-			<h1>Report</h1>
+		<div class="panel" id="tabsReport"> 
+	<div class="tabHeader">Report <button CSH="Report" class="CSH"/></div>
 			Report of text in a print-friendly layout, also useful for translation projects</div>
 		<div class="panel" id="tabsPreview">
 			<h1>Previewer</h1>
 			Show preview interview </div>
 		<div class="panel" id="tabsUpload">
-			<h1>Publish/Upload</h1>
+	<div class="tabHeader">Publish/Upload <button CSH="Publish" class="CSH"/></div> 
 			<p>To publish your interview to another site such as LHI, download the ZIP which contains the interview and its supplemental files.
 			 </p>
 		<button id="guideZIP">Download ZIP</button><button id="guideDownload">Download A2J</button></div>

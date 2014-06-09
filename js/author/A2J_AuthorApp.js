@@ -142,6 +142,14 @@ function main()
 	//$('#guideSave').button({label:'Save Now',icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
 	$('#settings').button({label:'Settings',icons:{primary:"ui-icon-gear"}}).click(function(){$('#settings-form').dialog('open');});
 	
+	// 2014-06-09 SJG adding context-sensitive help links.
+	//$('.tabHeader, #tabsMapper .tabFooter').append('<button class="CSH"/>');
+	$('.CSH').button({label:'Help'}).click(function(){
+		var csh = $(this).attr('CSH');//parent().parent().attr('id');
+		var url = 'http://author.a2jauthor.org/csh5/' + csh;
+		window.open( url );
+	});
+	
 	// JPM Expand/Collapse button for pages list.   
 	$('#expandCollapse')
 		.button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}})
@@ -177,6 +185,7 @@ function main()
 			  }
 	});
 
+	
 	//$('#guideCreate').button({icons:{primary:"ui-icon-document"}}).click(function(){createBlankGuide();	});
 	$('#guideOpen').button({label:'Open', disabled:false, icons:{primary:"ui-icon-disk"}}).click(function(){
 		//alert('guideOpen');
@@ -270,7 +279,6 @@ function main()
 		.button({label:'Delete',icons:{primary:'ui-icon-trash'}}).click(function(){
 			pageEditDelete(pageEditSelected());
 		});
-	 
 	 
 	 
 	

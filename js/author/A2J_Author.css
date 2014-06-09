@@ -989,5 +989,10 @@ div.codeedit span.err {
 	
 }
 
+.tabHeader button.CSH {
+	font-size: small;
+	top: -5px;
+	float: right;
+}
 
 /* */

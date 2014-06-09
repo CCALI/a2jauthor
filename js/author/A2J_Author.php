@@ -62,6 +62,9 @@
 			<script src="../viewer/A2J_Parser.js?jsver=<?=time()?>" type="text/javascript"></script>
 			<script src="../viewer/A2J_Viewer.js?jsver=<?=time()?>" type="text/javascript"></script>
 			
+			<script src="A2J_Pages.js?jsver=<?=time()?>" type="text/javascript"></script>
+			<script src="A2J_Guides.js?jsver=<?=time()?>" type="text/javascript"></script>
+			<script src="A2J_Tabs.js?jsver=<?=time()?>" type="text/javascript"></script>
 			<script src="A2J_Mapper.js?jsver=<?=time()?>" type="text/javascript"></script>
 			<script src="A2J_Dev.js?jsver=<?=time()?>" type="text/javascript"></script>
 			<script src="A2J_AuthorApp.js?jsver=<?=time()?>" type="text/javascript"></script>

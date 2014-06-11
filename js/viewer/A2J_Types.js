@@ -511,7 +511,7 @@ TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 			dval = lang.UnknownID.printf( name, name );//,props(autoIDs)) //"[Unknown id "+id+"]" + props(autoIDs);
 		}
 		else{
-			dval = name+"\t"+autoIDs[ name ];
+			dval = autoIDs[ name ];
 		}
 	}
 	return dval;

@@ -134,13 +134,13 @@ var A2JViewer={
 						//+'<li class="right"><a href="#">Exit</a></li> <li class="right"><a href="#">Save</a></li> '
 						+'</ul>'
 			+'<div class="notice">'
-				+'<div class="alertPanel"></div> '
+				//+'<div class="alertPanel"></div> '
 /*				+'<div class="license"><p ><span class="SJILogo"/>This program was developed under grants from the State Justice Institute (SJI grant number SJI-04-N-121), Center for Access to the Courts through Technology; Chicago Kent College of Law, Center for Computer-Assisted Legal Instruction (CALI), and Legal Services Corporation (LSC).  The points of view expressed are those of the authors and do not necessarily represent the official position or policies of the SJI, Center for Access to the Courts through Technology, Chicago-Kent, CALI, or the LSC.</p><p>&quot;A2J Author&quot; and &quot;A2J Guided Interviews&quot; are federally registered trademarks of Illinois Institute of Technology, Chicago Kent College of Law &amp; Center for Computer-Assisted Legal Instruction.  Any use of either mark must include the full name of the mark, along with the registration circle - ®.  Use of either mark on your webpage, or in any publications, presentations or materials must also prominently display the following sentence, &quot;[insert mark name here]® is a US federally registered trademark owned by Illinois Institute of Technology, Chicago Kent College of Law &amp; Center for Computer-Assisted Legal Instruction. &lt;www.a2jauthor.org&gt; </p></div>'*/
 				+'<div class="copyright">'
 					+'<span class="viewerenv">'+gEnv+' '+CONST.A2JVersionNum+" ("+CONST.A2JVersionDate+') </span>'
 					+'© 2000-2014 Illinois Institute of Technology - Chicago-Kent College of Law and the Center for Computer-Assisted Legal Instruction'
 					+'</div>'
-			+'<div class="alertCounter"></div>'
+			//+'<div class="alertCounter"></div>'
 			+'</div>');
 			//<img src="images/SJILogo.gif" width="90" height="55" hspace="3" vspace="3" align="left" />
 			
@@ -148,6 +148,9 @@ var A2JViewer={
 			{
 				$(div).toggleClass('test',500);//$('.A2JViewer')
 			});
+			
+			$('.alertCounter').hide().click(function(){$('.alertPanel').slideToggle();});
+	
 			//$( ".NavBar" ).menu({position:{my:'left top',at:'left bottom'}});
 			
 			//### Variable debugging
@@ -189,9 +192,6 @@ var A2JViewer={
 					setProgress("File not supported!"); 
 				}
 			});
-			
-			$('.alertPanel').click(  function(){$('.alertPanel').slideToggle();});
-			$('.alertCounter').hide().click(function(){$('.alertPanel').slideToggle();});
 			
 			$('#viewer-var-filter').keyup(A2JViewer.filterVariables);
 			
@@ -833,11 +833,20 @@ function traceAlert(html)
 	// Displayed publicly so users will be alerted that something bad is happening. The logic tracer may be hidden
 	// to users so logging only there may hide a defect.
 	// Since there may be more than one error, dump them into a scrollable list. 
-	$('.alertPanel').append('<div class="ui-widget"><div style="padding: 0 .7em;" class="ui-state-error ui-corner-all"><p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>'+html+'</div></div>');
+	var div = $('<div class="ui-widget"><div style="padding: 0 .7em;" class="ui-state-error ui-corner-all"><p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>'+html+'<button/></div></div>');
+	$('button',div).button({label:'x'}).click(function()
+	{	// When closing an alert note, remove it, reduce counter, hide if counter back to 0. 
+		$(this).parentsUntil('.ui-widget').remove();
+		$('.alertCounter').text( --alertCounter );
+		$('.alertPanel,.alertCounter').toggle(alertCounter>0);
+	});
+	$('.alertPanel').append(div);
 	$('.alertCounter').text( ++alertCounter ).show();	
+	$('.alertPanel').toggle(alertCounter>0);
 	if(1) {
 		trace(String(html).stripHTML());
 	}
+	
 }
 
 

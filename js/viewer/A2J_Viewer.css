@@ -151,12 +151,19 @@ html, body{
 }
 .alertPanel {
 	/* Spammy alerts for user go here. */
-	margin: 1em;
-	margin-right: 2em;
-	margin-left: 2em;
+	position: absolute;
+	margin: 3em;
+	margin-right: 3em;
+	margin-left: 3em;
 	max-height: 250px;
 	background-color: #ffa;
 	overflow: auto;
+	right: 1em;
+	bottom: 1em;
+	left: 1em;
+}
+.alertPanel button {
+	float:right;
 }
 .alertCounter {
 	position: absolute;

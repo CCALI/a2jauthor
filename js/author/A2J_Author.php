@@ -110,6 +110,7 @@ function ts($filename)
 		<div id="viewer-var-form" class="ViewerVarForm" ></div>
 	</div>
 	<div class="A2JViewer"></div>
+	<div class="alertPanel"></div><div class="alertCounter"></div>
 </div>
 	
 	

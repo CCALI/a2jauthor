@@ -189,9 +189,8 @@ Languages.regional['en']= {
 	
 	scriptErrorMissingPage :'Page "{1}" does not exist.',
 	scriptErrorUnhandled : 'Unknown command: {1}',
-	scriptErrorEndMissing : 'Missing an EndIf',
+	scriptErrorEndMissing : 'Missing an EndIf'
 
-	app:''
 };
 
 

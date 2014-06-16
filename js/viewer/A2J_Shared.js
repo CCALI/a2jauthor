@@ -408,6 +408,24 @@ function cr2P(txt){
 	return txt === "" ?"":"<P>" + txt.split("\n").join("</P><P>")+"</P>";//replace("\n\n","\n")
 }
 
+function mdy2jsDate(MDY)
+{	//  2014-06-16 Convert a2j m/d/y date to JavaScript date object for use in calculations
+	if (makestr(MDY)!=='')
+	{
+		var parts = MDY.split("/");
+		return new Date(parts[2], parts[0]-1,parts[1]);
+	}
+	else{
+		// return today if we don't recognize it.
+		return new Date();
+	}
+}
+
+function jsDate2mdy(d)
+{	// 2014-06-16 Convert js date to A2J's M/D/Y format
+	return (d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear();
+}
+
 
 function mdyTodmy(DMY)
 {	// 7/1/05 convert internal month/day/year format to HotDocs day/month/year format.

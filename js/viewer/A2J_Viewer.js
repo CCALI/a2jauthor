@@ -387,14 +387,19 @@ var A2JViewer={
 						changeMonth: true,
 						changeYear: true
 					};
+					var minYear=1900;
+					var maxYear=2050;
 					if (!isBlankOrNull(f.min)) {
-						//trace('minDate',f.min);
-						dateOpts.minDate = f.min;
+						dateOpts.minDate = mdy2jsDate(f.min);
+						minYear = dateOpts.minDate.getFullYear();
 					}
 					if (!isBlankOrNull(f.max)) {
-						//trace('maxDate',f.max);
-						dateOpts.maxDate = f.max;
+						dateOpts.maxDate = mdy2jsDate(f.max);
+						maxYear = dateOpts.maxDate.getFullYear();
 					}
+					// 2014-06-16 Override year jQuery ui pick list to show entire valid range.
+					dateOpts.yearRange=minYear  +':' + maxYear;
+					
 					$.datepicker.setDefaults($.datepicker.regional[ gGuide.language ]);
 					// 3/21/2014 Format dates for any language in USA m/d/y format. 
 					dateOpts.dateFormat = 'mm/dd/yy';
@@ -576,8 +581,19 @@ var A2JViewer={
 						if (val==='' && f.required) {
 							invalid=true;
 						}
-						else{
-							gGuide.varSet(f.name,val,varIndex);
+						else
+						{	// 2014-06-16 Ensure date is in valid range.
+							var valDate = mdy2jsDate(val);
+							if (!isBlankOrNull(f.min)) {
+								invalid = valDate <  mdy2jsDate(f.min);
+							}
+							if (!isBlankOrNull(f.max)) {
+								invalid = (valDate > mdy2jsDate(f.max)) || invalid;
+							}
+							if (!invalid) {
+								val = jsDate2mdy(valDate);
+								gGuide.varSet(f.name,val,varIndex);
+							}
 						}
 					   break;
 					case CONST.ftTextPick://"Text (Pick from list)"

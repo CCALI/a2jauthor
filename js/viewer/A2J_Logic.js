@@ -489,7 +489,13 @@ if ($.formatNumber){
 	gLogic.addUserFunction('Dollar',1,function(val){		return $.formatNumber(val,{format:"#,###.00", locale:"us"});});
 	gLogic.addUserFunction('DollarRound',1,function(val){	return $.formatNumber(Math.round(val),{format:"#,##0", locale:"us"});});
 }
-gLogic.addUserFunction('dateMDY',1,function(val){ var d=new Date(); d.setTime(val*1000*60*60*24);return (d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear();});
+gLogic.addUserFunction('dateMDY',1,function(val)
+	{	// Assuming internal date is stored as time stamp since some offset.
+		// How can we switch to JS date?
+		var d=new Date();
+		d.setTime(val*1000*60*60*24);
+		return jsDate2mdy(d);
+	});
 
 
 function traceLogic(html)

@@ -44,6 +44,9 @@ function sortingNaturalCompare(a, b) {//http://my.opera.com/GreyWyvern/blog/show
     }
     return tz;
   }
+  // 2014-06-16 we want case-insensitive comparisons.
+a=a.toUpperCase();
+b=b.toUpperCase();
 
   var aa = chunkify(a);
   var bb = chunkify(b);

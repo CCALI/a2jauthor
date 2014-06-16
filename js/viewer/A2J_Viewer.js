@@ -54,7 +54,11 @@ var A2JViewer={
 				} 
 			}
 		}
-		sortvars.sort(function (a,b){return a.name.toLowerCase()>b.name.toLowerCase();/* sortingNaturalCompare(a.name,b.name);*/});
+		sortvars.sort(function (a,b){
+			// 2014-06-16 Sort variables 'natural'
+			return sortingNaturalCompare(a.name,b.name);
+			 /*a.name.toLowerCase()>b.name.toLowerCase();*/
+			});
 		
 		var tb='';
 		for (var vi=0;vi<sortvars.length;vi++)

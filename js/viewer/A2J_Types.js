@@ -22,8 +22,8 @@ var CONST = {
 	// Spinnner for loading wait
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
-	A2JVersionNum:"5.0.1.23",//VersionInfo.verNum
-	A2JVersionDate:"2014-06-11",
+	A2JVersionNum:"5.0.1.25",//VersionInfo.verNum
+	A2JVersionDate:"2014-06-25",
 	
 	
 	//CAVersionNum:"5.0.0",
@@ -384,7 +384,7 @@ function TGuide()
 {	// This is the Guide representing a CALI lesson Book or an A2J Author Interview.
 
 	this.tool="CAJA";
-	this.toolversion="2012-12-12";
+	this.toolversion="2014-06-24";
 	this.avatar="";				//Origin A2J - default avatar to use (blank or tan)
 	this.guideGender='Female';	//A2J5 - default avatar gender to use (M or F)
 	this.completionTime="";		//Origin CA - author's estimated completion time including section breakdown
@@ -446,6 +446,21 @@ TGuide.prototype.getClientGender=function()
 	return this.goodGender(this.varGet(this.genderVarName));
 };
 
+TGuide.prototype.stepDisplayName=function(s)
+{	// Return text for displaying step.
+	var txt;
+	if ( s<this.steps.length ) {
+		txt= this.steps[s].number+'. '+this.steps[s].text;
+		if (txt=='. ') {
+			txt='[Step#'+s+']';
+		}
+	}
+	else{
+		txt= '? (Unknown Step #'+s+')';
+	}
+	//trace('stepDisplayName',s,txt);
+	return txt;
+}
 
 TGuide.prototype.sortPages=function()
 {

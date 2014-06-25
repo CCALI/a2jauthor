@@ -1428,53 +1428,56 @@ C68C8C
 8C8CC6
 */
 
-.pagelist li[rel="STEP 0"] {
-	background:#EFEFC6;
+.Step0, .pagelist li[rel="STEP 0"] {
+	background:#EFEFC6 !important;
 }
-.pagelist li[rel="STEP 1"] {
-	background:#EFEF8C;
+.Step1, .pagelist li[rel="STEP 1"] {
+	background:#EFEF8C !important;
 }
-.pagelist li[rel="STEP 2"] {
-	background:#EFC6EF;
+.Step2, .pagelist li[rel="STEP 2"] {
+	background:#EFC6EF !important;
 }
-.pagelist li[rel="STEP 3"] {
-	background:#EFC6C6;
+.Step3, .pagelist li[rel="STEP 3"] {
+	background:#EFC6C6 !important;
 }
-.pagelist li[rel="STEP 4"] {
-	background:#EF8CEF;
+.Step4, .pagelist li[rel="STEP 4"] {
+	background:#EF8CEF !important;
 }
-.pagelist li[rel="STEP 5"] {
-	background:#EF8C8C;
+.Step5, .pagelist li[rel="STEP 5"] {
+	background:#EF8C8C !important;
 }
-.pagelist li[rel="STEP 6"] {
-	background:#C6EFEF;
+.Step6, .pagelist li[rel="STEP 6"] {
+	background:#C6EFEF !important;
 }
-.pagelist li[rel="STEP 7"] {
-	background:#C6EFC6;
+.Step7, .pagelist li[rel="STEP 7"] {
+	background:#C6EFC6 !important;
 }
-.pagelist li[rel="STEP 8"] {
-	background:#C6C6EF;
+.Step8, .pagelist li[rel="STEP 8"] {
+	background:#C6C6EF !important;
 }
-.pagelist li[rel="STEP 9"] {
-	background:#C6C68C;
+.Step9, .pagelist li[rel="STEP 9"] {
+	background:#C6C68C !important;
 }
-.pagelist li[rel="STEP 10"] {
-	background:#C68CC6;
+.Step10, .pagelist li[rel="STEP 10"] {
+	background:#C68CC6 !important;
 }
-.pagelist li[rel="STEP 11"] {
-	background:#C68C8C;
+.Step11, .pagelist li[rel="STEP 11"] {
+	background:#C68C8C !important;
 }
-.pagelist li[rel="STEP 12"] {
-	background:#8CEFEF;
+.Step12, .pagelist li[rel="STEP 12"] {
+	background:#8CEFEF !important;
 }
-.pagelist li[rel="STEP 13"] {
-	background:#8CEF8C;
+.Step13, .pagelist li[rel="STEP 13"] {
+	background:#8CEF8C !important;
 }
-.pagelist li[rel="STEP 14"] {
-	background:#8CC6C6;
+.Step14, .pagelist li[rel="STEP 14"] {
+	background:#8CC6C6 !important;
 }
-.pagelist li[rel="STEP 15"] {
-	background:#8CC68C;
+.Step15, .pagelist li[rel="STEP 15"] {
+	background:#8CC68C !important;
 }
+
+
+/* */
 
 

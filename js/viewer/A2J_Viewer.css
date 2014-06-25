@@ -403,16 +403,6 @@ div.question.bubble div fieldset{
 	text-align:left;
 }
 
-/* removed by JPM
-.Step0 { background-color: #ffffff; }
-.Step1, .Step7  { background-color:#BDD6D6; }
-.Step2, .Step8  { background-color:#B7DDB7; }
-.Step3, .Step9  { background-color:#EFC68C; }
-.Step4, .Step10 { background-color:#E7E7B5; }
-.Step5, .Step11 { background-color:#EFDED6; }
-.Step6, .Step12 { background-color:#ECD8EA; }
-*/
-
 .Step0 { background-color:#EFEFC6; }
 .Step1 { background-color:#EFEF8C; }
 .Step2 { background-color:#EFC6EF; }

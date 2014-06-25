@@ -71,6 +71,7 @@ function ts($filename)
 			<script src=<?=ts('A2J_Pages.js')?> type="text/javascript"></script>
 			<script src=<?=ts('A2J_Guides.js')?> type="text/javascript"></script>
 			<script src=<?=ts('A2J_Tabs.js')?> type="text/javascript"></script>
+			<script src=<?=ts('A2J_Reports.js')?> type="text/javascript"></script>
 			<script src=<?=ts('A2J_Mapper.js')?> type="text/javascript"></script>
 			<script src=<?=ts('A2J_Dev.js')?> type="text/javascript"></script>
 			<script src=<?=ts('A2J_AuthorApp.js')?> type="text/javascript"></script>
@@ -230,32 +231,30 @@ function ts($filename)
 			</div>			 
 		</div>
 		<div class="panel" id="tabsLogic">
-			<div class="tabHeader"><button class="ecPanelButton"></button> 
-						<button CSH="AllLogic" class="CSH"/> 
-				<form>
+			<div class="tabHeader"> 
 					<div id="showlogic">
 						<input checked="checked" type="radio" id="showlogic1" name="showlogic" />
 						<label for="showlogic1">Show only active code</label>
 						<input type="radio" id="showlogic2" name="showlogic" />
 						<label for="showlogic2">Show all code blocks</label>
-					</div>
-				</form>
+					</div> 
+					<button class="ecPanelButton"/>
+					<button CSH="AllLogic" class="CSH"/>
 			</div>
 			<div class="tabContentFrame">
 				<div class="tabContent editq"></div>
 			</div>
 		</div>
 		<div class="panel" id="tabsText">
-			<div class="tabHeader"><button class="ecPanelButton"></button>
-				<button CSH="AllText" class="CSH"/> 
-				<form>
+			<div class="tabHeader">
 					<div id="showtext">
 						<input checked="checked" type="radio" id="showtext1" name="showtext" />
 						<label for="showtext1">Filled fields</label>
 						<input type="radio" id="showtext2" name="showtext" />
 						<label for="showtext2">All fields</label>
 					</div>
-				</form>
+					<button class="ecPanelButton"/>
+					<button CSH="AllText" class="CSH"/> 
 			</div>
 			<div class="tabContentFrame">
 				<div class="tabContent editq"></div>
@@ -286,47 +285,59 @@ function ts($filename)
 	</div>
 </div>
 
-<div class="panel" id="tabsGuides">
-	<div class="tabHeader">Interviews
-	<button CSH="Interviews" class="CSH"/></div>
-	<div class="tabContentFrame">
-		<div class="tabContent editq">
-				<p class="name"></p>
-				<p>What would you like to do? </p>
-				
-				
-<fieldset name="record"><legend>Create a new interview</legend><ul  class="guidelist" id="guideListNew"></ul></fieldset>
-<fieldset name="record"><legend>Edit one of my interviews</legend><ul  class="guidelist" id="guideListMy"></ul></fieldset>
-<fieldset name="record"><legend>Open a Sample interview</legend><ul class="guidelist" id="guideListSamples"></ul></fieldset>
-
+	<div class="panel" id="tabsGuides">
+		<div class="tabHeader">Interviews
+		<button CSH="Interviews" class="CSH"/></div>
+		<div class="tabContentFrame">
+			<div class="tabContent editq">
+					<p class="name"></p>
+					<p>What would you like to do? </p>
+					
+					
+			<fieldset name="record"><legend>Create a new interview</legend><ul  class="guidelist" id="guideListNew"></ul></fieldset>
+			<fieldset name="record"><legend>Edit one of my interviews</legend><ul  class="guidelist" id="guideListMy"></ul></fieldset>
+			<fieldset name="record"><legend>Open a Sample interview</legend><ul class="guidelist" id="guideListSamples"></ul></fieldset>
+	
+			</div>
+		</div>
+		<div class="tabFooter">
+			<div > 
+				<!--	<button id="guideCreate">New</button>-->
+					<button id="guideClone">Clone</button>
+					<button id="guideOpen">Open</button>
+				<div class="fileuploader">
+				<!-- The fileinput-button span is used to style the file input field as button -->
+				<span class="fileinput-button">
+				<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
+					<span class="ui-button-icon-primary ui-icon ui-icon-plus"></span>
+					<span class="ui-button-text" >Upload A2J Guide...</span>
+				</button>	
+					<!-- The file input field used as target for the file upload widget -->
+					<input id="guideupload" type="file" name="files[]" multiple />
+				</span>
+				<div id="guideuploadprogress" class="progress progress-success progress-striped"><div class="bar"></div></div>
+			</div></div>
 		</div>
 	</div>
-	<div class="tabFooter">
-		<div > 
-			<!--	<button id="guideCreate">New</button>-->
-				<button id="guideClone">Clone</button>
-				<button id="guideOpen">Open</button>
-			<div class="fileuploader">
-			<!-- The fileinput-button span is used to style the file input field as button -->
-			<span class="fileinput-button">
-			<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
-				<span class="ui-button-icon-primary ui-icon ui-icon-plus"></span>
-				<span class="ui-button-text" >Upload A2J Guide...</span>
-			</button>	
-				<!-- The file input field used as target for the file upload widget -->
-				<input id="guideupload" type="file" name="files[]" multiple />
-			</span>
-			<div id="guideuploadprogress" class="progress progress-success progress-striped"><div class="bar"></div></div>
-		</div></div>
-	</div>
-</div>
+
 		<div class="panel" id="tabsReport"> 
-	<div class="tabHeader">Report <button CSH="Report" class="CSH"/></div>
-			Report of text in a print-friendly layout, also useful for translation projects</div>
+			<div class="tabHeader">
+				<button id="reportFull">Full Report</button> <button id="reportTranscript">Transcript Report</button>  <button CSH="Report" class="CSH"/>
+			</div>
+			
+			<div class="tabContentFrame">
+				<div class="tabContent editq">
+					Report of text in a print-friendly layout, also useful for translation projects
+				</div>
+			</div>
+		</div>
+	
 		<div class="panel" id="tabsPreview">
 			<h1>Previewer</h1>
-			Show preview interview </div>
+			Show preview interview
+		</div>
 		<div class="panel" id="tabsUpload">
+			
 	<div class="tabHeader">Publish/Upload <button CSH="Publish" class="CSH"/></div> 
 			<p>To publish your interview to another site such as LHI, download the ZIP which contains the interview and its supplemental files.
 			 </p>

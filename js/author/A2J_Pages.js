@@ -10,8 +10,9 @@
 
 /* global gGuidePath,gPage,gGuide,gUserID,gGuideID,gUserNickName */
 
-function pageNameFields(pagefs,page)
-{
+function pageNameFieldsForTextTab(pagefs,page)
+{	// Used by the Text tab.
+	// Include editable fields of all a page's text blocks.
 	pagefs.append(form.htmlarea({label:'Text:',value:page.text,change:function(val,page){page.text=val; }} ));
 	if (page.type!==CONST.ptPopup){
 		if (gPrefs.showText===2 || page.learn!=="")

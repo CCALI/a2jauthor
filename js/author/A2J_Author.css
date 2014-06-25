@@ -535,20 +535,33 @@ P.CAJATest {
 }
 table.CAJAReportDump {
 	border-collapse:collapse;
+	width: 100%;
+}
+table.CAJAReportDump tr  {
+	vertical-align: top;
+}
+#tabsReport .tabContent legend {
+	color: #000;
+	background-color:#eee;
 }
 table.CAJAReportDump tr td {
-	border:1px solid #111;
+	border:1px solid #888;
 	padding:1em;
 }
+table.CAJAReportDump * tr td:first-child {
+	text-align: right;
+	width: 5em;
+}
 table.CAJAReportDump tr:nth-child(3n+1) {
-background-color:#fdd;
+	background-color:rgba(240,240,240,0.5);
 }
 table.CAJAReportDump tr:nth-child(3n+2) {
-background-color:#dfd;
+	background-color:rgba(248,248,248,0.5);
 }
 table.CAJAReportDump tr:nth-child(3n+3) {
-background-color:#ddf;
+	background-color:rgba(255,255,255,0.5);
 }
+
 .loader {
 	display: inline-block;
 	background-image: url(../viewer/images/ajax-loader.gif);
@@ -765,7 +778,7 @@ li.guide:hover {
 
 
 .tabHeader {
-	font-size: 1.5em;
+	font-size: 1.0em;
 	margin-top: 5px;
 	margin-left: 10px;
 	margin-right: 10px;
@@ -815,7 +828,9 @@ li.guide:hover {
 	overflow: hidden;
 	border: 2px #0f0;
 }
-
+#showlogic, #showtext {
+	display: inline;
+}
 
 /* Mapper */
 #tabsMapper{

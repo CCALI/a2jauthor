@@ -218,6 +218,9 @@ function main()
 		ws({cmd:'guidezip',gid:gGuideID},guideZipped);
 	 });
 	
+	$('#reportFull').button().click(reportFull);
+	$('#reportTranscript').button().click(reportTranscript);
+	
 	$('#guideDownload').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
 	{	// 05/08/2014 Download as .a2j file.
 		// 06/06/2014 Use .a2j5 extension so A2J4 doesn't try to open it.

@@ -16,7 +16,7 @@ var gPrefs = {
 	,showPageList : 1
 	,showJS : 0
 };
-			
+
 TGuide.prototype.noviceTab = function(tab,clear)
 {	//### 08/03/2012 Edit panel for guide sections 
 	/** @type {TGuide} */
@@ -36,6 +36,7 @@ TGuide.prototype.noviceTab = function(tab,clear)
 	var pagefs;
 	switch (tab){
 			
+		
 		case "tabsVariables":
 			guide.buildTabVariables(t);
 			break;
@@ -84,11 +85,17 @@ TGuide.prototype.noviceTab = function(tab,clear)
 			{
 				page=guide.sortedPages[p];
 				pagefs=form.fieldset(page.name, page);
-				pageNameFields(pagefs,page);
+				pageNameFieldsForTextTab(pagefs,page);
 				t.append(pagefs);
 			}
 			
 			break;
+		
+		case 'tabsReports':
+			// Generate read-only report. Guide info, variable list, step info, pages. 
+			
+			break;
+		
 		
 		case "tabsAbout":
 			fs = form.fieldset('About');
@@ -154,6 +161,7 @@ TGuide.prototype.noviceTab = function(tab,clear)
 
 			break;
 
+		
 		case 'tabsSteps':
 		
 			fs=form.fieldset('Start/Exit points');
@@ -250,7 +258,7 @@ function getTOCStepPages(includePops,includeSpecial)
 	var inSteps=[];
 	var popups="";
 	var s;
-	for (s in gGuide.steps)
+	for (var s=0;s<CONST.MAXSTEPS;s++) 
 	{
 		inSteps[s]="";
 	}
@@ -273,12 +281,14 @@ function getTOCStepPages(includePops,includeSpecial)
 	}	
 	var ts="";
 	for (s in inSteps)
-	{	// List all steps including those for pages that are in steps that we may have removed. 
-		if (s > gGuide.steps.length){
-			ts+='<li rel="STEP '+s+'">STEP '+'?'+". "+'?'+"</li><ul>"+inSteps[s]+"</ul>";
-		}
-		else{
-			ts+='<li rel="STEP '+s+'">STEP '+gGuide.steps[s].number+". "+gGuide.steps[s].text+"</li><ul>"+inSteps[s]+"</ul>";
+	{	// List all steps including those for pages that are in steps that we may have removed.
+		if (inSteps[s]!='') {
+		//if (s > gGuide.steps.length){
+			ts+='<li rel="STEP '+s+'">Step ' + gGuide.stepDisplayName(s) +"</li><ul>"+inSteps[s]+"</ul>"; // STEP '+'?'+". "+'?'
+		//}
+		//else{
+//			ts+='<li rel="STEP '+s+'">Step ' + gGuide.stepDisplayName(s) +"</li><ul>"+inSteps[s]+"</ul>"; //'STEP '+gGuide.steps[s].number+". "+gGuide.steps[s].text
+	//	}
 		}
 	}
 	if (includePops===true)
@@ -445,13 +455,15 @@ var form={
 		var form= $(elt).closest('[name="record"]');
 		$(elt).data('data').change.call(elt,val,form.data('record'),form);
 	}
-	 ,h1:function(h){
-		return $("<h1>"+h+"</h1>");}
-		
+	,h1:function(h){
+		return $("<h1>"+h+"</h1>");
+	}		
 	,h2:function(h){
 		return $("<h2>"+h+"</h2>").click(function(){$(this).next().toggle();});
 	}
-		
+	,tuple:function(label,value){
+		return '<tr><td>'+label+'</td><td>'+value+'</td></tr>';
+	}
 	,noteHTML:function(kind,t){
 		return '<div class="ui-widget"><div style="margin-top: 20px; padding: 0 .7em;" class="ui-state-highlight ui-corner-all"><p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-'+kind+'"></span>'+t+'</div></div>';
 	}
@@ -783,9 +795,10 @@ var form={
 		var list=[];
 		var s;
 		for (s=0;s<gGuide.steps.length;s++){
-			var step = gGuide.steps[s];
-			list.push(s,step.number+". "+ (step.text));
+			//var step = gGuide.steps[s];
+			list.push(s, gGuide.stepDisplayName(s)); // s,step.number+". "+ (step.text));
 		}
+		//(list);
 		return form.pickList(data,list);
 	}
 /*
@@ -828,7 +841,7 @@ var form={
 	}
 */
 	,tableRowCounter:function(name,label,minelts,maxelts,value)
-	{	//let user choose number of said item
+	{	// Let user choose number of said item
 		var c=$('<label/>').text(label);
 		var s='<select list="'+name+'" class="  ui-select">';
 		var o;

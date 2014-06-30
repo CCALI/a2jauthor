@@ -20,14 +20,15 @@ function textStatisticsReport(text)
 	var gradeFK = t.fleschKincaidGradeLevel();
 	return {
 		// If good, then we'd display text normally otherwise we might include the stat info for reference.
+		gradeFK:gradeFK,
 		good: gradeFK < 7,
 		css: (gradeFK < 7 ? 'FleschKincaidUnder7' : (gradeFK<10 ? 'FleschKincaidUnder10' : 'FleschKincaid10OrHigher')),
 		//text:text,
 		info: 
 		 ' Flesch Kincaid Grade Level: '+gradeFK
 		//+' Flesch Kincaid Reading Ease: '+t.fleschKincaidReadingEase()
-		+' Word Count: ' + t.wordCount()
-		+' Average Words Per Sentence: ' + t.averageWordsPerSentence()
+		+'; Word Count: ' + t.wordCount()
+		+'; Average Words Per Sentence: ' + t.averageWordsPerSentence()
 		// Other stats we might use:
 		// 	gunningFogScore
 		// 	colemanLiauIndex
@@ -95,6 +96,9 @@ function reportFull()
 	
 	var html='';
 	
+	// Glom all F-K gradable text. 
+	var guideGradeText = '';
+	
 	// Meta section
 	var t = '';
 	
@@ -138,7 +142,6 @@ function reportFull()
 		t += tuple('Step "'+step.number+'":',  step.text,'Step'+parseInt(si));
 	}
 	html +=  fieldSetWrap('Interview Steps',tableWrap(t));
-	
 	// Pages section
 	for (p in guide.sortedPages)
 	{
@@ -147,9 +150,11 @@ function reportFull()
 		html +=  '<a name="'+p+'"/>';
 		t = '';
 		t += tuple('Step',	guide.stepDisplayName(si)); //steps[si].number+':'+guide.steps[si].text);
+		guideGradeText += ' ' + page.text;
 		t += (tuple('Text',	gradeText(page.text)));
 		t += (tupleAuto('Text audio',	page.textAudioURL));
 		t += (tupleAuto('Learn prompt',	page.learn));
+		guideGradeText += ' ' + page.help;
 		t += (tupleAuto('Help',	 gradeText(page.help)));
 		t += (tupleAuto('Help audio',	page.helpAudioURL));
 		t += (tupleAuto('Help reader',	page.helpReader));
@@ -165,6 +170,7 @@ function reportFull()
 			fft += tuple('Type',	field.type);
 			fft += tuple('Label',field.label);
 			fft += tupleAuto('Name',	field.name);
+			guideGradeText += ' ' + field.invalidPrompt;
 			fft += tupleAuto('Invalid Prompt',gradeText(field.invalidPrompt));
 			fft += tupleAuto('Invalid Prompt audio',field.invalidPromptAudio);
 			fft += tupleAuto('Min',	field.min);
@@ -191,8 +197,15 @@ function reportFull()
 		html +=  fieldSetWrap('Page '+ page.name, tableWrap(t) , 'Step'+parseInt(si));
 	}
 	
+	
+	var tsr = textStatisticsReport(guideGradeText);
+	guideGradeText = '<div class="GradeReport ' + tsr.css+'">F-K Grade is '+tsr.gradeFK
+	+'(< 7 is Good)'
+	+' <div class=TextStats>' + tsr.info + '</div></div>';
+	
 	$('.tabContent','#tabsReport').html(
 		'<h1>Full Report for ' + gGuide.title+'</h1>'
+		+guideGradeText
 		+html );
 }
 

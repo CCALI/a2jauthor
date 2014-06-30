@@ -570,6 +570,9 @@ table.CAJAReportDump tr:nth-child(3n+3) {
 	/* if good just leave it untouched, less cluttered.
 	background-color: #8f8; */
 }
+.GradeReport.FleschKincaidUnder7 {
+	background-color: #8f8;
+}
 .FleschKincaidUnder10 {
 	background-color: #ff8;
 }
@@ -579,7 +582,8 @@ table.CAJAReportDump tr:nth-child(3n+3) {
 .TextStats {
 	background-color: #ccc;
 	font-size: smaller;
-	border: dotted;
+	border: thin;
+	padding: 5px;
 }
 
 .loader {

@@ -147,14 +147,76 @@ function reportFull()
 		html +=  fieldSetWrap('Page '+ page.name, tableWrap(t) , 'Step'+parseInt(si));
 	}
 	
-	$('.tabContent','#tabsReport').html( html );
+	$('.tabContent','#tabsReport').html(
+		'<h1>Full Report for ' + gGuide.title+'</h1>'
+		+html );
 }
 
 function reportTranscript()
 {	//  2016-06-24 List all text blocks for translation. 
-	var t = $('.tabContent','#tabsReport');
-	t.html("");
-	t.append('No implemented');
+	/** @type {TGuide} */
+	var guide = gGuide;
+	/** @type {TPage} */
+	var page;
+	/** @type {TStep} */
+	var step;
+	/** @type {TAuthor} */
+	var author;
+	/** @type {TField} */
+	var field;
+	/** @type {TButton} */
+	var button;
+	
+	var html = '';
+	
+	function tuples(colType,colsArray)
+	{
+		var t='';
+		for (var c in colsArray)
+		{
+			t += '<'+colType+'>' + colsArray[c] + '</'+colType+'>';
+		}
+		return '<tr>' + t + '</tr>';
+	}
+	
+	html += tuples('TH',['#','Page','Section','Text']);
+	var pnum=0;
+	var phcnt=0;
+	var fpcnt=0;
+	var PH='&nbsp;';
+	// Pages section
+	for (p in guide.sortedPages)
+	{	// Spreadsheet format: page name, chunk/field, text 
+		page=guide.sortedPages[p];
+		pnum ++;
+		var name = guide.pageDisplayName(page.name);
+		//var si = page.step;
+		if (page.type == CONST.ptPopup) {
+			html+= tuples('TD',[pnum,name,'Popup Text',page.text]);
+		}
+		else{
+			html+= tuples('TD',[pnum,name,'Page Text',page.text]);
+			if (page.help!='') {
+				phcnt++;
+				html += tuples('TD',[PH ,PH,'Page Help',page.help]);
+			}
+		}
+		for (var fi in page.fields)
+		{
+			fpcnt++;
+			field = page.fields[fi];
+			html += tuples('TD',[PH ,PH, 'Field Prompt <br>'+field.label+' ('+field.type+')',field.invalidPrompt]);
+		}
+	}
+	
+	$('.tabContent','#tabsReport').html(
+		'<h1>Audio Transcripts for ' + gGuide.title+'</h1>'
+		+'<ul>'
+			+'<li>Number of pages: '+pnum
+			+'<li>Number of page helps: '+phcnt
+			+'<li>Number of field prompts: '+ fpcnt
+		+'</ul>'
+		+'<table class="CAJAReportDump CAJATranscriptDump">'+html+'</table>' );
 }
 
 /* */

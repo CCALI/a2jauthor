@@ -552,6 +552,10 @@ table.CAJAReportDump * tr td:first-child {
 	text-align: right;
 	width: 5em;
 }
+table.CAJATranscriptDump * tr td:first-child {
+	text-align: left;
+	width: auto;
+}
 table.CAJAReportDump tr:nth-child(3n+1) {
 	background-color:rgba(240,240,240,0.5);
 }

@@ -100,6 +100,9 @@ function editButton()
 		case 'italic': document.execCommand('italic', false, null); break;
 		case 'indent': document.execCommand('indent', false, null); break;
 		case 'outdent': document.execCommand('outdent', false, null); break;
+		case 'link':
+			trace('link');
+			break;
 	}
 }
 

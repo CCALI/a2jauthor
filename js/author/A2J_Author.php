@@ -76,6 +76,7 @@ function ts($filename)
 			<script src=<?=ts('A2J_Dev.js')?> type="text/javascript"></script>
 			<script src=<?=ts('A2J_AuthorApp.js')?> type="text/javascript"></script>
 			<script src=<?=ts('A2J_Debug.js')?> type="text/javascript"></script>
+			<script src=<?=ts('TextStatistics.js')?> type="text/javascript"></script>
 		<?php
 			break;
 		case 2:

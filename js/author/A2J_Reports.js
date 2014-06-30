@@ -9,6 +9,34 @@
 
 /* global gGuide */
 
+function textStatisticsReport(text)
+{	// 2014-06-30 Return suitable class to use and information block about text complexity.
+	// This is an API wrapper to the https://github.com/cgiffard/TextStatistics.js module.
+	// Also suggested is that the text background turn green if grade level < 7, Yellow < 10 and red for >=10. 
+	// Returns object with {good:bool, css:'class', info:'info'}
+	
+	var t=textstatistics(text); // Pulled form https://github.com/cgiffard/TextStatistics.js
+	// We use fleschKincaidGradeLevel to determine colors.
+	var gradeFK = t.fleschKincaidGradeLevel();
+	return {
+		// If good, then we'd display text normally otherwise we might include the stat info for reference.
+		good: gradeFK < 7,
+		css: (gradeFK < 7 ? 'FleschKincaidUnder7' : (gradeFK<10 ? 'FleschKincaidUnder10' : 'FleschKincaid10OrHigher')),
+		//text:text,
+		info: 
+		 ' Flesch Kincaid Grade Level: '+gradeFK
+		//+' Flesch Kincaid Reading Ease: '+t.fleschKincaidReadingEase()
+		+' Word Count: ' + t.wordCount()
+		+' Average Words Per Sentence: ' + t.averageWordsPerSentence()
+		// Other stats we might use:
+		// 	gunningFogScore
+		// 	colemanLiauIndex
+		// 	smogIndex
+		//		automatedReadabilityIndex
+	};
+}
+
+
 function reportFull()
 {	// 2016-06-24 Generate full report, ala LessonText. 
 	/** @type {TGuide} */
@@ -53,11 +81,27 @@ function reportFull()
 	function fieldSetWrap(legend,html,styleclass) {
 		return '<fieldset><legend' + (styleclass?' class='+styleclass:'')+'>'+legend+'</legend>' + html +'</fieldset>';
 	}
+	function gradeText(text)
+	{	// Calc text stats, color based on grade level, show stats if not good.
+		if (text!=''){
+			var tsr = textStatisticsReport(text);
+			text = '<div class=' + tsr.css+'>' + text  + '</div>';
+			if (!tsr.good) {
+				text += '<div class=TextStats>' + tsr.info + '</div>';
+			}
+		}
+		return text;
+	}
 	
 	var html='';
 	
 	// Meta section
 	var t = '';
+	
+	
+	//var tr = textStatisticsReport('Enabling the Script panel causes a Firefox slow-down due to a platform bug. This will be fixed with the next major Firefox and Firebug versions.');
+	//t= 'Stats: <blockquote>' + tr.text  + '</blockquote><center>'+tr.css+'; '+tr.info+'</center>';
+	
 	t += (tuple('Current Version:',  guide.version));
 	t += (tuple('Title:',  guide.title));
 	t += (tupleAuto('Description:',  guide.description));
@@ -103,10 +147,10 @@ function reportFull()
 		html +=  '<a name="'+p+'"/>';
 		t = '';
 		t += tuple('Step',	guide.stepDisplayName(si)); //steps[si].number+':'+guide.steps[si].text);
-		t += (tuple('Text',	page.text));
+		t += (tuple('Text',	gradeText(page.text)));
 		t += (tupleAuto('Text audio',	page.textAudioURL));
 		t += (tupleAuto('Learn prompt',	page.learn));
-		t += (tupleAuto('Help',	page.help));
+		t += (tupleAuto('Help',	 gradeText(page.help)));
 		t += (tupleAuto('Help audio',	page.helpAudioURL));
 		t += (tupleAuto('Help reader',	page.helpReader));
 		t += (tupleAuto('Help image',	page.helpImageURL));
@@ -121,7 +165,7 @@ function reportFull()
 			fft += tuple('Type',	field.type);
 			fft += tuple('Label',field.label);
 			fft += tupleAuto('Name',	field.name);
-			fft += tupleAuto('Invalid Prompt',field.invalidPrompt);
+			fft += tupleAuto('Invalid Prompt',gradeText(field.invalidPrompt));
 			fft += tupleAuto('Invalid Prompt audio',field.invalidPromptAudio);
 			fft += tupleAuto('Min',	field.min);
 			fft += tupleAuto('Max',	field.max);

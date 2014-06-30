@@ -566,6 +566,22 @@ table.CAJAReportDump tr:nth-child(3n+3) {
 	background-color:rgba(255,255,255,0.5);
 }
 
+.FleschKincaidUnder7 {
+	/* if good just leave it untouched, less cluttered.
+	background-color: #8f8; */
+}
+.FleschKincaidUnder10 {
+	background-color: #ff8;
+}
+.FleschKincaid10OrHigher {
+	background-color: #f88;
+}
+.TextStats {
+	background-color: #ccc;
+	font-size: smaller;
+	border: dotted;
+}
+
 .loader {
 	display: inline-block;
 	background-image: url(../viewer/images/ajax-loader.gif);

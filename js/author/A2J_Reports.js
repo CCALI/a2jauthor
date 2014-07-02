@@ -9,7 +9,7 @@
 
 /* global gGuide */
 
-function textStatisticsReport(text)
+function textStatisticsReport(text, includeAllStats)
 {	// 2014-06-30 Return suitable class to use and information block about text complexity.
 	// This is an API wrapper to the https://github.com/cgiffard/TextStatistics.js module.
 	// Also suggested is that the text background turn green if grade level < 7, Yellow < 10 and red for >=10. 
@@ -18,25 +18,30 @@ function textStatisticsReport(text)
 	var t=textstatistics(text); // Pulled form https://github.com/cgiffard/TextStatistics.js
 	// We use fleschKincaidGradeLevel to determine colors.
 	var gradeFK = t.fleschKincaidGradeLevel();
+	var good = gradeFK < 7;
 	var css = (gradeFK < 7 ? 'FleschKincaidUnder7' : (gradeFK<10 ? 'FleschKincaidUnder10' : 'FleschKincaid10OrHigher'));
-	return {
-		gradeFK:gradeFK,
-		// If good, then we'd display text normally otherwise we might include the stat info for reference.
-		good: gradeFK < 7,
-		css: css,
-		// Statistics summary data
-		info:
-			'<div class=TextStatistics>'
-			+	'  <a target=_blank href="http://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests">Flesch Kincaid</a> Grade Level: <span class='+css+'>'+gradeFK+'</span>'
+	var info = '';
+	if (!good || includeAllStats===true)
+	{
+		// Doing all stats takes some time, so only do them if we've got a bad F-K grade or we specifically wnat them all.
+		info = '<div class=TextStatistics>'
+			+	'<a target=_blank href="http://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests">Flesch Kincaid</a> Grade Level: <span class='+css+'>'+gradeFK+'</span>'
 			+	' and Reading Ease: '+t.fleschKincaidReadingEase()
 			+	'; <a target=_blank href="http://en.wikipedia.org/wiki/Gunning_fog_index">Gunning Fog</a> Score: <span>'+t.gunningFogScore()+'</span>'
 			+	'; <a target=_blank href="http://en.wikipedia.org/wiki/SMOG_%28Simple_Measure_Of_Gobbledygook%29">Smog Index</a>: <span>'+t.smogIndex()+'</span>'
 			+	'; <a target=_blank href="http://en.wikipedia.org/wiki/Coleman-Liau_Index">Coleman–Liau index</a>: <span>'+t.colemanLiauIndex()+'</span>'
 			+	'; Word Count: ' + t.wordCount()
 			+	'; Average Words Per Sentence: ' + t.averageWordsPerSentence()
-			+'</div>'
 		// Other stats we might use:
 		//		automatedReadabilityIndex
+			+'</div>';
+	}
+	return {
+		good: gradeFK < 7,
+		gradeFK:gradeFK,
+		// If good, then we'd display text normally otherwise we might include the stat info for reference.
+		css: css,
+		info: info
 	};
 }
 
@@ -88,11 +93,8 @@ function reportFull()
 	function gradeText(text)
 	{	// Calc text stats, color based on grade level, show stats if not good.
 		if (text!=''){
-			var tsr = textStatisticsReport(text);
-			text = '<div class="TextStatistics ' + tsr.css+'">' + text  + '</div>';
-			if (!tsr.good) {
-				text +=   tsr.info ;
-			}
+			var tsr = textStatisticsReport(text,false);
+			text = '<div class="' + tsr.css+'">' + text  + '</div>' + tsr.info;
 		}
 		return text;
 	}
@@ -201,8 +203,8 @@ function reportFull()
 	}
 	
 	
-	var tsr = textStatisticsReport(guideGradeText);
-	guideGradeText = '<div class="GradeReport ' + tsr.css+'">F-K Grade is '+tsr.gradeFK
+	var tsr = textStatisticsReport(guideGradeText,true);
+	guideGradeText = '<div class="GradeReport ' + tsr.css+'">The F-K Grade for all questions and help in this interview is '+tsr.gradeFK
 		+' (< 7 is Good)'
 		+  tsr.info + '</div>';
 	html +=  fieldSetWrap('Text Statistics', guideGradeText );

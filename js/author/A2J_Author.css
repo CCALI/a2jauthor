@@ -579,7 +579,11 @@ table.CAJAReportDump tr:nth-child(3n+3) {
 .FleschKincaid10OrHigher {
 	background-color: #f88;
 }
-.TextStats {
+.GradeReport {
+	border: thin;
+	padding: 5px;	
+}
+.TextStatistics {
 	background-color: #ccc;
 	font-size: smaller;
 	border: thin;

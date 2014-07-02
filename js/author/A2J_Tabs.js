@@ -14,7 +14,7 @@ var gPrefs = {
 	showLogic : 1
 	,showText : 1
 	,showPageList : 1
-	,showJS : 0
+	,showJS : 1
 };
 
 TGuide.prototype.noviceTab = function(tab,clear)

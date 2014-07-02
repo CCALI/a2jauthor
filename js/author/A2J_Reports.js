@@ -18,21 +18,24 @@ function textStatisticsReport(text)
 	var t=textstatistics(text); // Pulled form https://github.com/cgiffard/TextStatistics.js
 	// We use fleschKincaidGradeLevel to determine colors.
 	var gradeFK = t.fleschKincaidGradeLevel();
+	var css = (gradeFK < 7 ? 'FleschKincaidUnder7' : (gradeFK<10 ? 'FleschKincaidUnder10' : 'FleschKincaid10OrHigher'));
 	return {
-		// If good, then we'd display text normally otherwise we might include the stat info for reference.
 		gradeFK:gradeFK,
+		// If good, then we'd display text normally otherwise we might include the stat info for reference.
 		good: gradeFK < 7,
-		css: (gradeFK < 7 ? 'FleschKincaidUnder7' : (gradeFK<10 ? 'FleschKincaidUnder10' : 'FleschKincaid10OrHigher')),
-		//text:text,
-		info: 
-		 ' Flesch Kincaid Grade Level: '+gradeFK
-		//+' Flesch Kincaid Reading Ease: '+t.fleschKincaidReadingEase()
-		+'; Word Count: ' + t.wordCount()
-		+'; Average Words Per Sentence: ' + t.averageWordsPerSentence()
+		css: css,
+		// Statistics summary data
+		info:
+			'<div class=TextStatistics>'
+			+	'  <a target=_blank href="http://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests">Flesch Kincaid</a> Grade Level: <span class='+css+'>'+gradeFK+'</span>'
+			+	' and Reading Ease: '+t.fleschKincaidReadingEase()
+			+	'; <a target=_blank href="http://en.wikipedia.org/wiki/Gunning_fog_index">Gunning Fog</a> Score: <span>'+t.gunningFogScore()+'</span>'
+			+	'; <a target=_blank href="http://en.wikipedia.org/wiki/SMOG_%28Simple_Measure_Of_Gobbledygook%29">Smog Index</a>: <span>'+t.smogIndex()+'</span>'
+			+	'; <a target=_blank href="http://en.wikipedia.org/wiki/Coleman-Liau_Index">Coleman–Liau index</a>: <span>'+t.colemanLiauIndex()+'</span>'
+			+	'; Word Count: ' + t.wordCount()
+			+	'; Average Words Per Sentence: ' + t.averageWordsPerSentence()
+			+'</div>'
 		// Other stats we might use:
-		// 	gunningFogScore
-		// 	colemanLiauIndex
-		// 	smogIndex
 		//		automatedReadabilityIndex
 	};
 }
@@ -86,9 +89,9 @@ function reportFull()
 	{	// Calc text stats, color based on grade level, show stats if not good.
 		if (text!=''){
 			var tsr = textStatisticsReport(text);
-			text = '<div class=' + tsr.css+'>' + text  + '</div>';
+			text = '<div class="TextStatistics ' + tsr.css+'">' + text  + '</div>';
 			if (!tsr.good) {
-				text += '<div class=TextStats>' + tsr.info + '</div>';
+				text +=   tsr.info ;
 			}
 		}
 		return text;
@@ -200,12 +203,12 @@ function reportFull()
 	
 	var tsr = textStatisticsReport(guideGradeText);
 	guideGradeText = '<div class="GradeReport ' + tsr.css+'">F-K Grade is '+tsr.gradeFK
-	+'(< 7 is Good)'
-	+' <div class=TextStats>' + tsr.info + '</div></div>';
+		+' (< 7 is Good)'
+		+  tsr.info + '</div>';
+	html +=  fieldSetWrap('Text Statistics', guideGradeText );
 	
 	$('.tabContent','#tabsReport').html(
 		'<h1>Full Report for ' + gGuide.title+'</h1>'
-		+guideGradeText
 		+html );
 }
 

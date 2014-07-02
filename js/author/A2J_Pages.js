@@ -736,7 +736,7 @@ TPage.prototype.tagList=function()
 	}
 	if (page.repeatVar!=='')
 	{
-		tags += ' <span class="tag repeat">&nbsp</span>'; 		
+		tags += ' <span class="tag repeat">&nbsp</span>';
 	}
 	return tags;
 };

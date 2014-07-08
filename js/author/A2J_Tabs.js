@@ -416,8 +416,9 @@ function varEdit(v/*TVariable*/)
 		]});
 	
 }
-TGuide.prototype.buildTabVariables = function (t)
-{
+
+TGuide.prototype.variableListHTML = function ()
+{	// Build HTML table of variables, nicely sorted.
 	var guide = this;
 	var th=html.rowheading(["Name","Type","Repeating","Comment"]); 
 	var sortvars=[];
@@ -432,8 +433,11 @@ TGuide.prototype.buildTabVariables = function (t)
 		var v=sortvars[vi];
 		tb+=html.row([v.name,v.type,v.repeating,v.comment]);
 	}
-
-	t.append('<table class="A2JVars">'+th + '<tbody>'+ tb + '</tbody>'+"</table>");
+	return '<table class="A2JVars">'+th + '<tbody>'+ tb + '</tbody>'+"</table>";	
+}
+TGuide.prototype.buildTabVariables = function (t)
+{
+	t.append(this.variableListHTML());
 	$('tr',t).click(function(){
 		varEdit(gGuide.vars[$('td:first',this).text().toLowerCase()]);
 	});

@@ -10,20 +10,31 @@
 
 body {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
+	overflow: scroll;
+}
+body {
+	background-color:#000;
+}
+* {
+	color:#fff;
 }
 P.Script, LI.Script, BLOCKQUOTE.Script {
 	border: thin solid #CC9966;
-	background-color: #efe;
+	background-color: #121;
 	margin: 2px;
 	padding: 3px;
 }
 
+PRE {
+	font-size: 15px;
+	
+}
 
 .Script {
 	font-weight: normal;
 	font-family: "Courier New", Courier, monospace;
 	font-size: 12px;
-	color: #00f;
+	color: #ddf;
 }
 .Script B {
 	font-weight: bold;
@@ -33,31 +44,31 @@ P.Script, LI.Script, BLOCKQUOTE.Script {
 .Script I {
 	font-style: italic;
 	font-family:  Arial, Helvetica, sans-serif;
-	color: #999999;
+	color: #fff;
 }
 .ScriptTrace{
 	font-weight: normal;
 	font-family: "Courier New", Courier, monospace;
 	font-size: 8pt; 
 	border: thin solid #CC9966;
-	background-color: #CCFFCC;
+	background-color: #131;
 }
 .ScriptVariables table tr td{
 	border: thin solid #CC9966;
-	background-color: #CCFFCC;
+	background-color: #121;
 	font-size: 8pt; 
 	margin: 1px;
 	padding: 2px;
 }
 .Macro {
 	border: thin solid #CC9966;
-	background-color: #CCFFCC;
+	background-color: #121;
 	padding: 15px;
 	font-size: smaller;
 }
 .ScriptErr{
 	font-weight: bold;
-	color: #FF0000;
+	color: #f00;
 }
 
 
@@ -68,7 +79,7 @@ P.Script, LI.Script, BLOCKQUOTE.Script {
 	font-size: 1em;
 	line-height: normal;
 	border: none;
-	background-color: #ddd;
+	background-color: #111;
 	margin: 3px;
 	padding: 2px;
 }
@@ -76,23 +87,23 @@ span.code, span.var, span.varidx, span.val, span.page {
 }
 span.code {
 	border: thin solid #CC9966;
-	background-color: #ddd;
+	background-color: #222;
 }
 span.var {
 	border: thin solid #CC9966;
-	background-color: #ffc;
+	background-color: #331;
 }
 span.varidx {
 	border: thin solid #CC9966;
-	background-color: #fcc
+	background-color: #311
 }
 span.val{
 	border: thin solid #CC9966;
-	background-color: #fcf;
+	background-color: #313;
 }
 span.page {
 	border: thin solid #CC9966;
-	background-color: #ccf;
+	background-color: #113;
 }
 span.err {
 	text-decoration: none;
@@ -103,22 +114,24 @@ th {
 	font-weight: normal;
 }
 td.colVar {
-	color:#022;
+	color:#0ff;
 }
 td.colIndex {
-	color:#220;
+	color:#ff0;
 }
 td.colValue {
-	color:#202;
+	color:#f0f;
 }
 td.varnew {
-	color:#080;
+	color:#0f0;
 }
 td.varsame {
-	color:#000;
+	color:#fff;
 }
 td.vardiff {
-	color:#800;
+	color:#fff;
 } 
+table.testPages { 
+}
 
 /* */

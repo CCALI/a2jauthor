@@ -131,9 +131,9 @@ function blankGuide()
 	page.text="Welcome to Access to Justice";
 	page.buttons=[{label:"Continue",next:"",name:"",value:""}];
 	guide.steps=[{number:0,text:"Welcome"}];
-	guide.vars= {}; 
 	guide.sortedPages=[page];
 	guide.firstPage=page.id;
+	guide.varCreateInternals();
 	return guide;
 }
 

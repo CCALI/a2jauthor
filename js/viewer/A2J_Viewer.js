@@ -671,14 +671,14 @@ var A2JViewer={
 						// Set the repeat variable to 1.
 						traceLogic("Setting repeat variable to 1");
 						if (!gGuide.varExists(b.repeatVar)) {
-							gGuide.varCreate(b.repeatVar,CONST.vtNumber,false);
+							gGuide.varCreate(b.repeatVar,CONST.vtNumber,false,'Repeat variable index');
 						}
 						gGuide.varSet(b.repeatVar,1);
 						break;
 					case CONST.RepeatVarSetPlusOne:
 						// Increment the repeat variable or set to 1 if doesn't exist.
 						if (!gGuide.varExists(b.repeatVar)) {
-							gGuide.varCreate(b.repeatVar,CONST.vtNumber,false);
+							gGuide.varCreate(b.repeatVar,CONST.vtNumber,false,'Repeat variable index');
 						}
 						var value=  textToNumber(gGuide.varGet(b.repeatVar));
 						// Note, if value is 0, a logic error. Would be 0 only if we skipped over the RepeatVarSetOne.
@@ -701,7 +701,7 @@ var A2JViewer={
 		// 11/24/08 2.6 if history variable has value of false, grayout.
 		// 04/08/09 2.7.6 if navigation is false Hide.
 	
-		var navOn=true;// !(Global.curTemplate.getVariableValue(CVariable.navigationVarName)==false);
+		var navOn=true;// !(Global.curTemplate.getVariableValue(CVariable.vnNavigationTF)==false);
 		if (A2JViewer.saveExitActive){
 			navOn=false;
 		}

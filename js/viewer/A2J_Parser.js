@@ -312,7 +312,6 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		step.text=STEP.find("TEXT").xml();
 		guide.steps.push(step);
 	 });
-	
 	// Parse pages into book.pages[] records. 
 	GUIDE.find("VARIABLES > VARIABLE").each(function() {
 		var VARIABLE = $(this);
@@ -323,7 +322,10 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		guide.varCreate(VARIABLE.attr("NAME"),VARIABLE.attr("TYPE"),textToBool(VARIABLE.attr('REPEATING'),false),makestr(VARIABLE.attr("COMMENT")));
 		//v.traceLogic('Create variable');
 		//guide.vars[v.name.toLowerCase()]=v;
-	 });/*
+	 });
+	guide.varCreateInternals();
+	
+	/*
 	GUIDE.find("POPUP").each(function() {//TODO discard unused popups
 		var POPUP = $(this);
 		var popup = new TPopup();
@@ -552,7 +554,7 @@ TGuide.prototype.HotDocsAnswerSetVariable = function(variable) //CVariable
 	}
 	else
 	{
-		value=variable.values[1];
+		var value=variable.values[1];
 		if (!(typeof value==='undefined' || value===null || value===""))
 		{	// 2014-06-02 SJG Blank value for non-repeating must NOT be in the answer file.
 			xml = getXMLValue(value);
@@ -567,12 +569,22 @@ TGuide.prototype.HotDocsAnswerSetVariable = function(variable) //CVariable
 	return xml;
 };
 
+TGuide.prototype.varCreateInternals=function()
+{	// Create the A2J internal answer set variables.
+	this.varCreateOverride(CONST.vnVersion, CONST.vtText,false,'A2J Author Version');
+	this.varCreateOverride(CONST.vnInterviewID,  CONST.vtText,false,'Guide ID');
+	this.varCreateOverride(CONST.vnBookmark, 	CONST.vtText,false,'Current Page');
+	this.varCreateOverride(CONST.vnHistory, 	CONST.vtText,false,'Progress History List (XML)');
+	this.varCreateOverride(CONST.vnNavigationTF, 	CONST.vtTF,false,'Allow navigation?');
+	this.varCreateOverride(CONST.vnInterviewIncompleteTF, CONST.vtTF,false,'Reached Successful Exit?');
+};
+
 TGuide.prototype.updateVarsForAnswerFile=function()
 {	// 6/30/10 Update bookmark, history info just before saving the answer file.
-	this.varSet("A2J Version", CONST.A2JVersionNum);
-	this.varSet(CONST.bookmarkVarName,gPage.name);
-	this.varSet(CONST.historyVarName,this.historyToXML());
-	this.varSet(CONST.interviewIDVarName, this.makeHash());
+	this.varSet(CONST.vnVersion, CONST.A2JVersionNum);
+	this.varSet(CONST.vnInterviewID, this.makeHash());
+	this.varSet(CONST.vnBookmark,gPage.name);
+	this.varSet(CONST.vnHistory,this.historyToXML());
 };
 
 TGuide.prototype.makeHash=function()//InterviewHash

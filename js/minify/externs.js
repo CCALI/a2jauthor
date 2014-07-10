@@ -60,6 +60,11 @@ $.find=function(a){};
 $.fn=function(a){};
 $.sortable=function(a){};
 $.find.each=function(a){};
+$.parentsUntil=function(a){};
+$.mouse=function(a){};
+$.mousedown=function(a){};
+$._mouseInit=function(a){};
+$._mouseDestroy=function(a){};
 
 /* jQuery ui */
 $.ui={};
@@ -67,9 +72,6 @@ $.widget={};
 $.ui.autocomplete={};
 $.ui.autocomplete.prototype=function(a){};
 $.ui.autocomplete.escapeRegex=function(a){};
-$.mouse=function(a){};
-$._mouseInit=function(a){};
-$._mouseDestroy=function(a){};
 $.datepicker.regional=[];
 $.buttonset=function(a){};
 $.dialog=function(a){};

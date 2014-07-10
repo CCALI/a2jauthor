@@ -29,13 +29,14 @@ var CONST = {
 	//CAVersionNum:"5.0.0",
 	//CAVersionDate:"2013-04-15",
 	
-	navigationVarName:"A2J Navigation TF",//11/24/08 2.6 Navigation button toggler.
+	vnNavigationTF:"A2J Navigation TF",//11/24/08 2.6 Navigation button toggler.
 		// if FALSE, navigation next/back/my progress are turned off.
-	interviewIncompleteVarName:"A2J Interview Incomplete TF",//08/17/09 3.0.1 Is interview complete?
+	vnInterviewIncompleteTF:"A2J Interview Incomplete TF",//08/17/09 3.0.1 Is interview complete?
 		// If defined to TRUE, user hit Exit before completion of variables.
-	bookmarkVarName:"A2J Bookmark",
-	historyVarName:"A2J History",
-	interviewIDVarName: "A2J Interview ID",
+	vnBookmark:"A2J Bookmark",
+	vnHistory:"A2J History",
+	vnInterviewID: "A2J Interview ID",
+	vnVersion: "A2J Version",
 
 	// Page Types
 	ptPopup:'Popup',
@@ -433,6 +434,8 @@ function TGuide()
 	
 	return this;
 }
+
+
 TGuide.prototype.genderVarName="User Gender";
 
 TGuide.prototype.goodGender=function(g)
@@ -534,7 +537,7 @@ TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 
 
 TVariable.prototype.traceLogic=function(msg)
-{
+{	// Send trace message into viewer's log trace. 
 	traceLogic(msg+':'+traceTag("var",this.name)+', '+ (this.type) +', ' +(this.repeating?'REPEATING':'')+', '+this.comment);	
 };
 
@@ -550,18 +553,19 @@ TGuide.prototype.varExists=function(varName)
 	}
 	return v;
 };
+
 /**
 * @param {string} varName
 * @param {string|number} [varIndex]
 */
 TGuide.prototype.varGet=function(varName,varIndex)
 {
+	/** @type {TGuide} */
 	var guide=this;
+	
 	/** @type {TVariable} */
-	var v=guide.varExists(varName);//vars[varName_i];
-	//varName = jQuery.trim(varName);
-	//var varName_i=varName.toLowerCase();
-	//var v=guide.vars[varName_i];
+	var v=guide.varExists(varName);
+	
 	if (typeof varIndex==='undefined' || varIndex===null || varIndex===''){
 		varIndex=1;
 	}
@@ -613,7 +617,28 @@ TGuide.prototype.varCreate=function(varName,varType,varRepeat,varComment)
 
 /**
 * @param {string} varName
-* @param {string|number} varVal
+* @param {string} varType
+* @param {boolean} varRepeat
+* @param {string} varComment
+*/
+TGuide.prototype.varCreateOverride=function(varName,varType,varRepeat,varComment)
+{	// Create/override existing variable's type,repeat and comment (or create if doesn't exist)
+	// Used for internal A2J answer set variables
+	var v = this.varExists(varName);
+	if (v===null) {
+		this.varCreate(varName,varType,varRepeat,varComment);
+	}
+	else
+	{
+		v.type = varType;
+		v.repeating = varRepeat;
+		v.comment = varComment;
+	}
+}
+
+/**
+* @param {string} varName
+* @param {string|number|boolean} varVal
 * @param {string|number} [varIndex]
 */
 TGuide.prototype.varSet=function(varName,varVal,varIndex)//setVariableLoop
@@ -663,12 +688,12 @@ TGuide.prototype.variableToField = function (varName)
 		if (questions.hasOwnProperty(q))
 		{
 			/** @type {TPage} */
-			var question=questions[q];//CQuestion
+			var question=questions[q];
 			var f;
 			for (f=0;f<question.fields.length;f++)
 			{
 				/** @type {TField} */
-				var field;//CField
+				var field;
 				field=question.fields[f];
 				if (strcmp(field.name,varName)===0)
 				{
@@ -679,7 +704,6 @@ TGuide.prototype.variableToField = function (varName)
 	}
 	return null;
 };
-
 
 
 // ### Global variables ### //
@@ -698,24 +722,23 @@ var inAuthor; // True if author+viewer, false if just viewer.
 // User 
 /** @type {number} */
 var gUserID=0; 
+
 /** @type {string} */
 var gUserNickName="User";
+
 /** @type {string} */
 var gGuidePath;
+
 /** @type {string} */
 var gEnv=''; // Where are we running? Locally, on a2jauthor.org, as beta or dev?
-// Determine what stage we're in and display a notice. 
+// Determine what stage we're in and display watermark. 
 gEnv= (String(window.location).indexOf('http://authorbeta.a2jauthor.org')===0)?'BETA':
 		(String(window.location).indexOf('http://authordev.a2jauthor.org')===0)?'DEV':
 		(String(window.location).indexOf('http://localhost/')===0)?'LOCAL':'';
-// User Session
-//var amode=0;
-//var username=""
-//var orgName="Authoring Org";
-//var runid=0;
-//var resumeScoreURL=null;
 
-// gStartArgs is populated by the parent IFRAME  Viewer (or A2J Author directly)
+
+// gStartArgs is populated by the parent IFRAME Viewer (or A2J Author directly)
+// This is how the host site configures the viewer to handle data and urls.
 var gStartArgs = {
 	templateURL:"",
 	fileDataURL:"",

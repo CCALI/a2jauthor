@@ -22,7 +22,7 @@ function setProgress(status)
 }/*
   *
 	// 05/24/11 Check for answer interview ID hash. If not present or no match current interview ALWAYS start on first question.
-	var hashAnswer = Global.curTemplate.getVariableValue(CVariable.interviewIDVarName);
+	var hashAnswer = Global.curTemplate.getVariableValue(CVariable.vnInterviewID);
 	var hashInterview=Global.curTemplate.InterviewHash();
 
 	if (Strings.isBlankOrNull(historyStr) || (hashAnswer != hashInterview))
@@ -76,7 +76,7 @@ function loadNewGuidePrep(guideFile,startTabOrPage)
 function doSetDataURL(target)
 {	// Upload data to server.
 	// target is either "_self" or "_blank"
-
+/*
 	if (gStartArgs.localClient===1)
 	{	// 5/5/10  3.6
 		// Running viewer in local mode. Send answer file to caller to save.
@@ -84,6 +84,7 @@ function doSetDataURL(target)
 		//External.saveAnswer(RawXML,this);
 	}
 	else
+*/
 	{	// Post as AnswerKey variable.
 		var $form = $('<form action="'+gStartArgs.setDataURL+'" method=POST accept-charset="UTF-8" target=_parent><input type=hidden id="AnswerKey" name="AnswerKey"/></form>');
 		$('body').append($form);
@@ -102,14 +103,14 @@ function gotoPageView(destPageName)
 		if (destPageName === CONST.qIDSUCCESS)
 		{	// On success exit, flag interview as Complete.
 			// Save data
-			gGuide.varSet(CONST.interviewIncompleteVarName,false);
+			gGuide.varSet(CONST.vnInterviewIncompleteTF,false);
 			// 9/01/09 3.0.3 Display an progress dialog when submitting data.
 			doSetDataURL('_self');
 		}
 		else
 		if (destPageName === CONST.qIDEXIT)
 		{	//Exit/Resume
-			gGuide.varSet(CONST.interviewIncompleteVarName,true);
+			gGuide.varSet(CONST.vnInterviewIncompleteTF,true);
 			doSetDataURL('_self');
 		}
 		else
@@ -142,7 +143,7 @@ function gotoPageView(destPageName)
 			else
 			{
 				gPage=page;
-				A2JViewer.layoutPage($('#page-viewer .A2JViewer'),gPage);//$('.A2JViewer',$('#page-viewer')
+				A2JViewer.layoutPage($('#page-viewer .A2JViewer'),gPage);
 			}
 		}
 		

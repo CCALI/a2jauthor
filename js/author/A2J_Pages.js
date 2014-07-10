@@ -78,7 +78,7 @@ function gotoPageView(destPageName)
 		
 		if (destPageName === CONST.qIDSUCCESS)
 		{	// On success exit, flag interview as Complete.
-			gGuide.varSet(CONST.interviewIncompleteVarName,false);
+			gGuide.varSet(CONST.vnInterviewIncompleteTF,false);
 			dialogAlert("Author note: User's data would upload to server.");
 		}
 		else

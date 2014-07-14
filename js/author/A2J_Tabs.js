@@ -431,7 +431,8 @@ TGuide.prototype.variableListHTML = function ()
 	for (vi in sortvars)
 	{
 		var v=sortvars[vi];
-		tb+=html.row([v.name,v.type,v.repeating,v.comment]);
+		tb+=html.row([v.name,v.type,v.repeating,v.comment
+			+ (typeof v.warning==='undefined'?'':'<span class="warning">'+v.warning+'</spab>')]);
 	}
 	return '<table class="A2JVars">'+th + '<tbody>'+ tb + '</tbody>'+"</table>";	
 }

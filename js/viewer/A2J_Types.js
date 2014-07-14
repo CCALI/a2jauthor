@@ -600,9 +600,7 @@ TGuide.prototype.varCreate=function(varName,varType,varRepeat,varComment)
 	// varType must match one of the CONST.vt??? strings
 	// varRepeat is t/f. T indicates a REPEAT (or array).
 	// varComment is author comment about purpose of variable, usually just blank string.
-	if (varName.length>CONST.MAXVARNAMELENGTH) {
-		traceAlert('Variable name "' + varName +'" exceeds maximum length of '+CONST.MAXVARNAMELENGTH +' characters.');
-	}
+
 	varName = jQuery.trim(varName);
 	var varName_i=varName.toLowerCase();
 	/** @type {TVariable} */
@@ -611,6 +609,12 @@ TGuide.prototype.varCreate=function(varName,varType,varRepeat,varComment)
 	v.repeating= varRepeat;
 	v.type=varType;
 	v.comment=varComment;
+	if (varName.length>CONST.MAXVARNAMELENGTH)
+	{
+		var warning = 'Variable name "' + varName +'" exceeds maximum HotDocs length of '+CONST.MAXVARNAMELENGTH +' characters.';
+		v.warning = warning;
+		traceAlert(warning);
+	}
 	this.vars[varName_i]=v;
 	return v;
 };

@@ -671,7 +671,8 @@ TGuide.prototype.HotDocsAnswerSetFromXML=function(AnswerSetXML)
 		}
 		if (v.type === CONST.vtUnknown) {
 			v.type = varType;
-			if (v.type===CONST.vtUnknown) {
+			if (v.type===CONST.vtUnknown)
+			{
 				varName=varName.split(" ");
 				varName=varName[varName.length-1];
 				if (varName==='MC') {	v.type=CONST.vtMC;}
@@ -680,7 +681,7 @@ TGuide.prototype.HotDocsAnswerSetFromXML=function(AnswerSetXML)
 				else
 				if (varName==='NU') {	v.type=CONST.vtNumber;}
 				else					{	v.type=CONST.vtText;	}
-				v.comment += 'Type not in answer file, assuming '+v.type;
+				v.warning = 'Type not in answer file, assuming '+v.type;
 			}
 		}
 		

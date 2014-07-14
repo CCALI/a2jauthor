@@ -7,7 +7,7 @@
 	
 ******************************************************************************/
 
-/* global gGuide */
+/* global gGuide, gLogic */
 
 
 function longProcess(statusPrompt, process)
@@ -32,12 +32,32 @@ function newWindowReport(title,html)
 	reportWindow.document.close();
 }
 
+TLogic.prototype.stripLogicHTML = function(html)
+{	// Replace logic %% declarations with placeholder for Flesh-Kincaid grading.
+	var parts=makestr(html).split("%%");
+	if (parts.length > 0)
+	{
+		html="";
+		var p;
+		for (p=0;p<parts.length;p+=2)
+		{
+			html += parts[p];
+			if (p<parts.length-1)
+			{
+				html += " word "; 
+			}
+		}
+	}
+	return html;
+};
+
 function textStatisticsReport(text, includeAllStats)
 {	// 2014-06-30 Return suitable class to use and information block about text complexity.
 	// This is an API wrapper to the https://github.com/cgiffard/TextStatistics.js module.
 	// Also suggested is that the text background turn green if grade level < 7, Yellow < 10 and red for >=10. 
 	// Returns object with {good:bool, css:'class', info:'info'}
 	
+	text = gLogic.stripLogicHTML(text);
 	var t=textstatistics(text); // Pulled form https://github.com/cgiffard/TextStatistics.js
 	// We use fleschKincaidGradeLevel to determine colors.
 	var gradeFK = t.fleschKincaidGradeLevel();

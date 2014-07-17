@@ -8,14 +8,8 @@
 	
 ******************************************************************************/
 
-/* global gGuidePath,gPage,gGuide,gUserID,gGuideID,gUserNickName */
+/* global gGuidePath,gPage,gGuide,gUserID,gGuideID,gUserNickName, gPrefs*/
 
-var gPrefs = {
-	showLogic : 1 	// show all logic or just filled
-	,showText : 1	// show all text or just filled
-	,showJS : 0 	// show JavaScript translations
-	,FKGradeAll : 0  // include grades for 'good' text as well
-};
 
 TGuide.prototype.noviceTab = function(tab,clear)
 {	//### 08/03/2012 Edit panel for guide sections 

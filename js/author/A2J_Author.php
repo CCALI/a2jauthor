@@ -61,6 +61,7 @@ function ts($filename)
 			<script src="jquery.fileupload-validate.js"></script><!-- The File Upload validation plugin -->
 			
 			<script src=<?=ts('../viewer/A2J_Types.js')?> type="text/javascript"></script>
+			<script src=<?=ts('../viewer/A2J_Prefs.js')?> type="text/javascript"></script>
 			<script src=<?=ts('../viewer/A2J_Shared.js')?> type="text/javascript"></script>
 			<script src=<?=ts('../viewer/A2J_SharedSus.js')?> type="text/javascript"></script>
 			<script src=<?=ts('../viewer/A2J_Languages.js')?> type="text/javascript"></script>
@@ -402,32 +403,42 @@ function ts($filename)
 			</fieldset>
 		</form>
 	</div>
-	<div id="settings-form" title="Settings">
-		<ul id="cajasettings">
-			<li>General Settings
+	
+<div id="settings-form" title="Settings">
+	<ul id="cajasettings">
+		<li>General
 			<ul>
-			<li>  Color Scheme
-				<ul>
-					<li  class="ui-state-disabled"> A2J 5</li>
-				</ul>
-			</li>
-			<li>Text Statistics
-				<ul>
-					<li>Flesh-Kincaid and more
-						<ul>
-							<li>
-								<input name="settingFKGradeAll" type="checkbox" id="settingFKGradeAll"   />
-								Include grade numbers for good text</li>
-						</ul>
-					</li>
+				<li>Color Schemes
+					<ul>
+						<li  class="ui-state-disabled"> A2J 5</li>
 					</ul>
-			</li>
+				</li>
+				<li>Data Settings
+					<ul>
+						<li>
+							<input type=checkbox id="setting_warnHotDocsNameLength"  >
+							Warn when variable name lengths are too long for HotDocs</li>
+					</ul>
+				</li>
+				<li>Text Statistics
+					<ul>
+						<li>Flesh-Kincaid and more
+							<ul>
+								<li>
+									<input  type="checkbox" id="setting_FKGradeAll"/>
+									Include grade numbers for good text</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
 			</ul>
-			<li>Advanced:
-				<ul>
-					<li  > <input name="settingShowJS" type=checkbox id="settingShowJS"  > Show JS					</li>
-				</ul>
-		</ul>
+		<li>Advanced
+			<ul>
+				<li  >
+					<input   type=checkbox id="setting_showJS"  >
+					Show JS</li>
+			</ul>
+	</ul>
 </div>
 	
 <div id="dialog-form-var-val-edit" title="Change value">

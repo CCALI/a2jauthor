@@ -131,7 +131,6 @@ function ws(data,results)
 
 
 
-
 function main()
 {   // Everything loaded, now execute code.
 	
@@ -319,6 +318,26 @@ function main()
    // Draggable
    $('.hotspot').draggable({ containment: 'parent' }).resizable().fadeTo(0.1, 0.9);
 
+	
+	// Load preferences	
+	$('#settings-form').dialog({ 
+		autoOpen:false,
+		width: 600,
+		height: 500,
+		modal: true,
+		buttons:[
+		{text:'Close',click:function(){ 
+			$(this).dialog("close");
+			gPrefs.FKGradeAll =   $('#setting_FKGradeAll').is(':checked');
+			gPrefs.showJS =    $('#setting_showJS').is(':checked');
+			gPrefs.warnHotDocsNameLength =   $('#setting_warnHotDocsNameLength').is(':checked');
+			gPrefs.save();
+		 }}
+	]});
+	gPrefs.load();
+	$('#setting_FKGradeAll').prop( 'checked', gPrefs.FKGradeAll);
+	$('#setting_showJS').prop( 'checked', gPrefs.showJS);
+	$('#setting_warnHotDocsNameLength').prop( 'checked', gPrefs.warnHotDocsNameLength);
 	$('#cajasettings a').click(function(){
 			var attr = $(this).attr('href'); 
 			switch (attr) {
@@ -334,18 +353,6 @@ function main()
 			return false;
 		});
 	
-	$('#settings-form').dialog({ 
-		autoOpen:false,
-		width: 600,
-		height: 500,
-		modal: true,
-		buttons:[
-		{text:'Close',click:function(){ 
-			$(this).dialog("close");
-			gPrefs.FKGradeAll =  $('#settingFKGradeAll').is(':checked');
-			gPrefs.showJS = $('#settingShowJS').is(':checked');
-		 }}
-	]});
 
 
 	$('#page-viewer').hide();

@@ -22,8 +22,8 @@ var CONST = {
 	// Spinnner for loading wait
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
-	A2JVersionNum:"5.0.1.26",//VersionInfo.verNum
-	A2JVersionDate:"2014-06-30",
+	A2JVersionNum:"5.0.1.27",//VersionInfo.verNum
+	A2JVersionDate:"2014-07-17",
 	
 	
 	//CAVersionNum:"5.0.0",
@@ -609,7 +609,7 @@ TGuide.prototype.varCreate=function(varName,varType,varRepeat,varComment)
 	v.repeating= varRepeat;
 	v.type=varType;
 	v.comment=varComment;
-	if (varName.length>CONST.MAXVARNAMELENGTH)
+	if (varName.length>CONST.MAXVARNAMELENGTH && gPrefs.warnHotDocsNameLength)
 	{
 		var warning = 'Variable name "' + varName +'" exceeds maximum HotDocs length of '+CONST.MAXVARNAMELENGTH +' characters.';
 		v.warning = warning;

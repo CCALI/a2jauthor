@@ -319,18 +319,12 @@ function main()
    // Draggable
    $('.hotspot').draggable({ containment: 'parent' }).resizable().fadeTo(0.1, 0.9);
 
-   // Menu bar
-	//$('#cajasettings').menu();
 	$('#cajasettings a').click(function(){
 			var attr = $(this).attr('href'); 
 			switch (attr) {
 				case '#sample': 
 					loadGuideFile($(this).text(), "");
 					break;
-				case '#bold': document.execCommand('bold', false, null); break;
-				case '#italic': document.execCommand('italic', false, null); break;
-				case '#indent': document.execCommand('indent', false, null); break;
-				case '#outdent': document.execCommand('outdent', false, null); break;
 				case '#theme':
 					styleSheetSwitch($(this).text());
 					break;
@@ -348,6 +342,8 @@ function main()
 		buttons:[
 		{text:'Close',click:function(){ 
 			$(this).dialog("close");
+			gPrefs.FKGradeAll =  $('#settingFKGradeAll').is(':checked');
+			gPrefs.showJS = $('#settingShowJS').is(':checked');
 		 }}
 	]});
 

@@ -11,10 +11,10 @@
 /* global gGuidePath,gPage,gGuide,gUserID,gGuideID,gUserNickName */
 
 var gPrefs = {
-	showLogic : 1
-	,showText : 1
-	,showPageList : 1
-	,showJS : 1
+	showLogic : 1 	// show all logic or just filled
+	,showText : 1	// show all text or just filled
+	,showJS : 0 	// show JavaScript translations
+	,FKGradeAll : 0  // include grades for 'good' text as well
 };
 
 TGuide.prototype.noviceTab = function(tab,clear)

@@ -404,28 +404,31 @@ function ts($filename)
 	</div>
 	<div id="settings-form" title="Settings">
 		<ul id="cajasettings">
-			<li> <a href="#">Authoring Color Scheme</a>
+			<li>General Settings
+			<ul>
+			<li>  Color Scheme
 				<ul>
-					<li><a href="#theme">A2J</a></li>
-					<li><a href="#theme">Smoothness</a></li>
-					<li><a href="#theme">UI-Darkness</a></li>
-					<li><a href="#theme">UI-Lightness</a></li>
-					<li><a href="#theme">Sunny</a></li>
-					<li><a href="#theme">Humanity</a></li>
-					<li><a href="#theme">Redmond</a></li>
-					<li><a href="#theme">Cupertino</a></li>
+					<li  class="ui-state-disabled"> A2J 5</li>
 				</ul>
 			</li>
-			<li class="ui-state-disabled"><a href="#">Print...</a></li>
-			<li>System Development tests (removed before final release)
+			<li>Text Statistics
 				<ul>
-					<li  > <a  >Sample Guides for Stress Testing</a>
-						<ul id="samples">
+					<li>Flesh-Kincaid and more
+						<ul>
+							<li>
+								<input name="settingFKGradeAll" type="checkbox" id="settingFKGradeAll"   />
+								Include grade numbers for good text</li>
 						</ul>
 					</li>
+					</ul>
+			</li>
+			</ul>
+			<li>Advanced:
+				<ul>
+					<li  > <input name="settingShowJS" type=checkbox id="settingShowJS"  > Show JS					</li>
 				</ul>
 		</ul>
-	</div>
+</div>
 	
 <div id="dialog-form-var-val-edit" title="Change value">
 <form>

@@ -10,6 +10,7 @@
 /* global gGuide, gLogic */
 
 
+
 function longProcess(statusPrompt, process)
 {	// 
 	setProgress(statusPrompt,true);
@@ -64,7 +65,7 @@ function textStatisticsReport(text, includeAllStats)
 	var good = gradeFK < 7;
 	var css = (gradeFK < 7 ? 'FleschKincaidUnder7' : (gradeFK<10 ? 'FleschKincaidUnder10' : 'FleschKincaid10OrHigher'));
 	var info = '';
-	if (!good || includeAllStats===true)
+	if (!good || includeAllStats===true || gPrefs.FKGradeAll)
 	{
 		// Doing all stats takes some time, so only do them if we've got a bad F-K grade or we specifically wnat them all.
 		info = '<div class=TextStatistics>'

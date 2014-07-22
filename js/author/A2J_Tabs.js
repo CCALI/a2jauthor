@@ -10,221 +10,6 @@
 
 /* global gGuidePath,gPage,gGuide,gUserID,gGuideID,gUserNickName, gPrefs*/
 
-
-TGuide.prototype.noviceTab = function(tab,clear)
-{	//### 08/03/2012 Edit panel for guide sections 
-	/** @type {TGuide} */
-	var guide = this;
-	var div = $('#'+tab);
-	var t = $('.tabContent',div);
-	if (clear){
-		t.html("");
-	}
-	if (t.html()!==""){
-		return;
-	}
-	form.clear();
-	var fs;
-	var p;
-	var page;
-	var pagefs;
-	switch (tab){
-			
-		
-		case "tabsVariables":
-			guide.buildTabVariables(t);
-			break;
-			
-		case "tabsConstants":
-			fs = form.fieldset('Constants');
-			t.append(fs);
-			break;
-		
-		case "tabsLogic":
-			t.append(form.note(
-				gPrefs.showLogic=== 1 ? 'Showing only logic fields containing code' : 'Showing all logic fields'));
-			
-			var codeBeforeChange = function(val,page){
-				page.codeBefore=val; /* TODO Compile for syntax errors */
-			};
-			var codeAfterChange = function(val,page){
-				page.codeAfter=val; /* TODO Compile for syntax errors */
-			};
-			
-			
-			for (p in guide.sortedPages)
-			{
-				page=guide.sortedPages[p];
-				if (page.type!==CONST.ptPopup)
-				{
-					if ((gPrefs.showLogic===2) || (gPrefs.showLogic===1 && (page.codeBefore!=="" || page.codeAfter!=="")))
-					{
-						pagefs=form.fieldset(page.name, page);
-						if (gPrefs.showLogic===2 || page.codeBefore!==""){
-							pagefs.append(form.codearea({label:'Before:',	value:page.codeBefore,change:codeBeforeChange} ));
-						}
-						if (gPrefs.showLogic===2 || page.codeAfter!==""){
-							pagefs.append(form.codearea({label:'After:',	value:page.codeAfter,change:codeAfterChange} ));
-						}
-						t.append(pagefs);
-					}
-				}
-			}
-			
-			break;
-			
-		case "tabsText":
-			t.append(form.note(gPrefs.showText===1 ? 'All non-empty text blocks in this guide' : 'All text blocks in this guide'));
-			for (p in guide.sortedPages)
-			{
-				page=guide.sortedPages[p];
-				pagefs=form.fieldset(page.name, page);
-				pageNameFieldsForTextTab(pagefs,page);
-				t.append(pagefs);
-			}
-			
-			break;
-		
-		case 'tabsReports':
-			// Generate read-only report. Guide info, variable list, step info, pages. 
-			
-			break;
-		
-		
-		case "tabsAbout":
-			fs = form.fieldset('About');
-			fs.append(form.text({label:'Title:', placeholder:'Interview title', value:guide.title, change:function(val){guide.title=val;}}));
-			fs.append(form.htmlarea({label:'Description:',value:guide.description,change:function(val){guide.description=val;}}));
-			fs.append(form.text({label:'Jurisdiction:', value:guide.jurisdiction, change:function(val){guide.jurisdiction=val;}}));
-			
-			var l,list=[];
-			for (l in Languages.regional){
-				list.push(l,Languages.regional[l].Language+' {'+l+'} '+'('+Languages.regional[l].LanguageEN+')');
-			} 
-			fs.append(form.pickList({label:'Language:', value:guide.language, change:function(val){
-				guide.language=val;
-				Languages.set(guide.language);
-				$('.A2JViewer','#page-viewer').html('');
-				}},list));
-			list=['blank','blank','tan','tan','tan2','tan2'];
-			//if (guide.avatar==='tan') guide.avatar=1;
-			if (guide.avatar===''||guide.avatar==='0') {guide.avatar='blank';}
-			fs.append(form.pickList({label:'Avatar:',value:guide.avatar,change:function(val){
-				guide.avatar=val;}},list));
-			list=['Female','Female Guide','Male','Male Guide'];
-			if (guide.guideGender!=='Male') {
-				guide.guideGender='Female';
-			}
-			fs.append(form.pickList({label:'Guide Gender:',value:guide.guideGender,change:function(val){
-				guide.guideGender=val;}},list));
-			fs.append(form.htmlarea({label:'Credits:',value:guide.credits,change:function(val){guide.credits=val;}}));
-			fs.append(form.text({label:'Approximate Completion Time:',placeholder:'',value:guide.completionTime,change:function(val){guide.completionTime=val;}}));
-			t.append(fs);
-			
-			fs = form.fieldset('Layout');
-			fs.append(form.pickImage({label:'Logo graphic:', placeholder: 'Logo URL',value:guide.logoImage, change:function(val){guide.logoImage=val;}}));
-			fs.append(form.pickImage({label:'End graphic:', placeholder:'End (destination graphic) URL',value:guide.endImage, change:function(val){guide.endImage=val;}}));
-			fs.append(form.pickList({label:'Mobile friendly?', value:guide.mobileFriendly, change:function(val){guide.mobileFriendly=val;}},['','Undetermined','false','No','true','Yes']));
-			t.append(fs);
-			
-			fs = form.fieldset('Authors');
-			var blankAuthor=new TAuthor();
-			
-			fs = form.fieldset('Revision History');
-			fs.append(form.text({label:'Current Version:',value:guide.version,change:function(val){guide.version=val;}}));
-			fs.append(form.htmlarea({label:'Revision Notes',value:guide.notes,change:function(val){guide.notes=val;}}));
-			t.append(fs);
-			
-			fs=form.fieldset('Authors');
-			fs.append(form.listManager({name:'Authors',picker:'Number of authors',min:1,max:12,list:guide.authors,blank:blankAuthor
-				,save:function(newlist){
-					guide.authors=newlist; }
-				,create:function(ff,author){
-						ff.append(form.text({  label:"Author's Name:", placeholder:'name',value:author.name,
-							change:function(val,author){author.name=val;}}));
-						ff.append(form.text({  label:"Author's Title:", placeholder:'title',value:author.title,
-							change:function(val,author){author.title=val;}}));
-						ff.append(form.text({  label:"Author's Organization:", placeholder:'organization',value:author.organization,
-							change:function(val,author){author.organization=val;}}));
-						ff.append(form.text({  label:"Author's email:", placeholder:'email',value:author.email,
-							change:function(val,author){author.email=val;}}));
-					return ff;
-				}}));
-				
-			t.append(fs);
-
-			break;
-
-		
-		case 'tabsSteps':
-		
-			fs=form.fieldset('Start/Exit points');
-			fs.append(form.pickpage({	value: guide.firstPage,label:'Starting Point:',	change:function(val){guide.firstPage=val;}}));
-			fs.append(form.pickpage({	value: guide.exitPage,label:'Exit Point:',		change:function(val){guide.exitPage=val;}}));
-			t.append(fs);
-			fs=form.fieldset('Steps');
-			var blankStep=new TStep();
-			
-			fs.append(form.listManager({grid:true,name:'Steps',picker:'Number of Steps',min:1,max:CONST.MAXSTEPS,list:guide.steps,blank:blankStep
-				,save:function(newlist){
-					guide.steps=newlist;
-					updateTOC();
-				}
-				,create:function(ff,step){
-						ff.append(form.text({  label:"Step Number:", placeholder:'#',value:step.number,
-							change:function(val,step){
-								step.number=val;
-								updateTOC();}}));
-						ff.append(form.text({  label:"Step Sign:", placeholder:'title',value:step.text,
-							change:function(val,step){
-								step.text=val;
-								updateTOC();
-							}}));
-					return ff;
-				}}));		
-			t.append(fs);
-			break;
-	}
-	form.finish(t);
-
-
-
-	 $("legend",t).click(function(){
-			 $(this).siblings('div').slideToggle(300);
-	 });
-	 
-	
-	
-};
-
-
-function authorViewerHook()
-{	//	### Attach Author editing buttons to the A2J viewer
-	A2JViewer.IMG = "../viewer/images/";
-	$('.A2JViewer').append('<div class="debugmenu"><button/><button/><button/><button/></div>');
-	$('.A2JViewer div.debugmenu button').first()
-		.button({label:'Variables/Script',icons:{primary:'ui-icon-wrench'}}).click(function(){$('.A2JViewer').toggleClass('test',100);})
-		.next()
-		.button({label:'Fill',icons:{primary:'ui-icon-pencil'}}).click(function(){A2JViewer.fillSample();})
-		.next()
-		.button({label:'Resume Edit',icons:{primary:'ui-icon-arrowreturnthick-1-w'}}).click(function(){resumeEdit();})
-		.next()
-		.button({label:'Edit this',icons:{primary:'ui-icon-pencil'}}).click(function(){gotoPageEdit(gPage.name)});
-
-
-}
-
-
-
-
-function resumeEdit()
-{
-	$('#authortool').show();
-	$('#page-viewer').hide();
-	if ($pageEditDialog!==null){$pageEditDialog.dialog('open');}
-}
-
-
 function updateAttachmentFiles( )
 {	// Load list of uploaded existing files:
 	gGuide.attachedFiles={};
@@ -247,12 +32,13 @@ function updateAttachmentFiles( )
 	 });
 }
 
-function getTOCStepPages(includePops,includeSpecial)
+
+function getTOCStepPages(includePages,includePops,includeSpecial)
 {	// List of pages within their steps. 
 	var inSteps=[];
 	var popups="";
 	var s;
-	for (var s=0;s<CONST.MAXSTEPS;s++) 
+	for (s=0;s<CONST.MAXSTEPS;s++) 
 	{
 		inSteps[s]="";
 	}
@@ -274,15 +60,12 @@ function getTOCStepPages(includePops,includeSpecial)
 		}
 	}	
 	var ts="";
-	for (s in inSteps)
-	{	// List all steps including those for pages that are in steps that we may have removed.
-		if (inSteps[s]!='') {
-		//if (s > gGuide.steps.length){
-			ts+='<li rel="STEP '+s+'">Step ' + gGuide.stepDisplayName(s) +"</li><ul>"+inSteps[s]+"</ul>"; // STEP '+'?'+". "+'?'
-		//}
-		//else{
-//			ts+='<li rel="STEP '+s+'">Step ' + gGuide.stepDisplayName(s) +"</li><ul>"+inSteps[s]+"</ul>"; //'STEP '+gGuide.steps[s].number+". "+gGuide.steps[s].text
-	//	}
+	if (includePages) {
+		for (s in inSteps)
+		{	// List all steps including those for pages that are in steps that we may have removed.
+			if (inSteps[s]!=='') {
+				ts+='<li rel="STEP '+s+'">Step ' + gGuide.stepDisplayName(s) +"</li><ul>"+inSteps[s]+"</ul>"; // STEP '+'?'+". "+'?'
+			}
 		}
 	}
 	if (includePops===true)
@@ -304,16 +87,13 @@ function getTOCStepPages(includePops,includeSpecial)
 	}
 	return ts;
 }
-function updateTOCOnePage()
-{	// TODO - just update only this page's TOC and Mapper entry.
-	updateTOC();
-}
+
 function updateTOC()
 {	// Build outline for entire interview includes meta, step and question sections.
 	// 2014-06-02 TOC updates when page name, text, fields change. Or page is added/deleted.
 	// Also we update the mapper since it also displays this info.
-	var ts = getTOCStepPages();
-	$('.pageoutline').html("<ul>" + getTOCStepPages(true) + "</ul>");
+	var ts = getTOCStepPages(true,true);
+	$('.pageoutline').html("<ul>" + ts + "</ul>");
 	
 	
 	// JPM Clicking a step toggle slides step's page list.
@@ -339,106 +119,6 @@ function updateTOC()
 	// 2014-06-02 Sync mapper to TOC.
 	buildMap();
 }
-
-
-
-/*
-TGuide.prototype.IndexAlphaHTML=function()
-{	// Build outline of just pages
-	var txt="";
-	for (var p in this.sortedPages)
-	{
-		var page = this.sortedPages[p]; 
-		txt += '<li target="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()+'</li>';
-	}
-	return "<ul>" + txt +"</ul>";
-}
-*/
-
-
-
-TGuide.prototype.varDelete=function(name){
-	var guide=this;
-	delete guide.vars[name.toLowerCase()];
-	gGuide.noviceTab('tabsVariables',true);
-};
-function varAdd()
-{  // Add new variable and edit.
-	var v= new TVariable();
-	varEdit(v);
-}
-function varEdit(v/*TVariable*/)
-{
-	$('#varname').val(v.name);
-	$('#vartype').val(v.type);
-	$('#varcomment').val(v.comment);
-	$('#varrepeating').attr('checked', v.repeating);
-	$('#var-edit-form').data(v).dialog({
-		autoOpen:true,
-			width: 450,
-			height: 400,
-			modal:true,
-			close: function(){
-			},
-			buttons:[
-			{text:'Delete', click:function(){
-				var name= $(this).data().name;
-				if (name===""){
-					return;
-				}
-				dialogConfirmYesNo({title:'Delete variable '+name,message:'Delete this variable?',name:name,Yes:
-				/*** @this {{name}} */
-				function(){
-					$('#var-edit-form').dialog("close");
-					gGuide.varDelete(this.name);
-				}});
-			}},
-			{text:'Close',click:function(){ 
-				var name= $('#varname').val();
-				if(name!==v.name)//rename variable
-				{
-					delete gGuide.vars[v.name.toLowerCase()];
-					v.name=name;
-					gGuide.vars[name.toLowerCase()]=v;
-				}
-				v.type=$('#vartype').val();
-				v.comment=$('#varcomment').val();
-				v.repeating=$('#varrepeating').is(':checked');
-				gGuide.noviceTab('tabsVariables',true);
-				$(this).dialog("close");
-			 }}
-		]});
-	
-}
-
-TGuide.prototype.variableListHTML = function ()
-{	// Build HTML table of variables, nicely sorted.
-	var guide = this;
-	var th=html.rowheading(["Name","Type","Repeating","Comment"]); 
-	var sortvars=[];
-	var vi;
-	for (vi in guide.vars){
-		sortvars.push(guide.vars[vi]);
-	}
-	sortvars.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
-	var tb='';
-	for (vi in sortvars)
-	{
-		var v=sortvars[vi];
-		tb+=html.row([v.name,v.type,v.repeating,v.comment
-			+ (typeof v.warning==='undefined'?'':'<span class="warning">'+v.warning+'</spab>')]);
-	}
-	return '<table class="A2JVars">'+th + '<tbody>'+ tb + '</tbody>'+"</table>";	
-}
-TGuide.prototype.buildTabVariables = function (t)
-{
-	t.append(this.variableListHTML());
-	$('tr',t).click(function(){
-		varEdit(gGuide.vars[$('td:first',this).text().toLowerCase()]);
-	});
-};
-
-
 var form={
 	id:0
 	
@@ -505,6 +185,7 @@ var form={
 		return e;
 	}
 	
+	
 	,pickPageDialog:function(pageButton,data)
 	{	// Display page picker modal dialog, default selecting page named data.value.
 		// Clone the TOC, select the default page name, scroll into view, remove popups.
@@ -512,7 +193,7 @@ var form={
 		
 		
 		// Special destinations of page ids we can go to including the built-ins like no where, exit.
-		var ts = getTOCStepPages(false,true);
+		var ts = getTOCStepPages(true,false,true);
 		
 		//$('#CAJAOutline').clone().appendTo('#page-picker-list');
 		//$('#page-picker-list li[rel^="tabsPopups"],#page-picker-list li[rel^="tabsPopups"] + ul').empty();
@@ -566,6 +247,58 @@ var form={
 				}
 			]});
 	}
+	
+	,pickPopupDialog:function(pageButton,data)
+	{	// 2014-07-21 Display popup picker modal dialog, default selecting page named data.value.
+		// Clone the TOC, select the default page name, scroll into view, remove non-popups.
+		var pageName=data.value;
+		
+		// Special destinations of page ids we can go to including the built-ins like no where, exit.
+		var ts = getTOCStepPages (false,true,false ); 
+		
+		$('#page-picker-list').html('<ul>' + ts + '</ul>');
+	
+		var e=pageNameRelFilter('#page-picker-list li',pageName);
+		e.toggleClass(SELECTED);
+		$('#page-picker-list  li[rel^="PAGE "]')
+			.click(function(e){
+				$('#page-picker-list li').removeClass(SELECTED);
+				$(this).toggleClass(SELECTED);
+
+			})
+			.dblclick(function (){
+				// TODO - double click to select and set
+				//var name= $(this).data().value;
+				//$('page-picker-dialog').dialog( "close" );
+			}); 
+		$('#page-picker-dialog').data(data).dialog({
+			autoOpen:true,
+				width: 700,
+				height: 500,
+				modal:true,
+				close:function(){
+					$('#page-picker-list').empty();
+				},
+				buttons:[
+				{text:'Change', click:function()
+					{
+						var newPageDest = makestr($('#page-picker-list li.'+SELECTED).first().attr('rel')).substr(5);
+						data.value = newPageDest;
+						//data.change.call(rel,data);						
+						//form.change(pageButton, newPageDest);
+						trace('Changing destination  to "'+newPageDest+'"');
+						$(this).dialog("close");
+					}
+				},
+				{text:'Cancel',click:function()
+					{
+						$(this).dialog("close");
+					}
+				}
+			]});
+	}
+	
+	
 	/*
 	,pickpageComboBox:function(data)
 	{ 
@@ -800,45 +533,6 @@ var form={
 		//(list);
 		return form.pickList(data,list);
 	}
-/*
-	,tableRows:function(name,headings,rowList){
-		var $tbl=$('<table/>').addClass('list').data('table',name).attr('list',name);
-		var tr;
-		var col;
-		if (typeof headings==="object")
-		{
-			tr="<tr valign=top>";
-			for (col in headings)
-			{
-				tr+="<th>"+headings[col]+"</th>";
-			}
-			tr+="</tr>";
-			$tbl.append($(tr));
-		}
-		var row;
-		for (row in rowList){
-			var $row=$("<tr valign=top/>");
-			if (rowList[row].visible===false){
-				$row.addClass('hidden');
-			}
-			//$row.append($('<td class="editicons"/>').append('<span class="ui-draggable sorthandle ui-icon ui-icon-arrowthick-2-n-s"/><span class="ui-icon ui-icon-circle-plus"/><span class="ui-icon ui-icon-circle-minus"/>'));
-			for (col in rowList[row].row)
-			{
-				$row.append($("<td/>").append(rowList[row].row[col]));
-			}
-			
-			$tbl.append($row);
-			$row.data('record',rowList[row].record);
-			
-		}
-		$('tbody',$tbl).sortable({
-			//handle:"td:eq(0)",
-			handle:"td:eq(0) .sorthandle",
-			update:function(){ }})//.disableSelection();
-		;
-		return $tbl;
-	}
-*/
 	,tableRowCounter:function(name,label,minelts,maxelts,value)
 	{	// Let user choose number of said item
 		var c=$('<label/>').text(label);
@@ -914,5 +608,341 @@ var form={
 	}
 	
 };
+
+TGuide.prototype.noviceTab = function(tab,clear)
+{	//### 08/03/2012 Edit panel for guide sections 
+	/** @type {TGuide} */
+	var guide = this;
+	var div = $('#'+tab);
+	var t = $('.tabContent',div);
+	if (clear){
+		t.html("");
+	}
+	if (t.html()!==""){
+		return;
+	}
+	form.clear();
+	var fs;
+	var p;
+	var page;
+	var pagefs;
+	switch (tab){
+			
+		
+		case "tabsVariables":
+			guide.buildTabVariables(t);
+			break;
+			
+		case "tabsConstants":
+			fs = form.fieldset('Constants');
+			t.append(fs);
+			break;
+		
+		case "tabsLogic":
+			t.append(form.note(
+				gPrefs.showLogic=== 1 ? 'Showing only logic fields containing code' : 'Showing all logic fields'));
+			
+			var codeBeforeChange = function(val,page){
+				page.codeBefore=val; /* TODO Compile for syntax errors */
+			};
+			var codeAfterChange = function(val,page){
+				page.codeAfter=val; /* TODO Compile for syntax errors */
+			};
+			
+			
+			for (p in guide.sortedPages)
+			{
+				page=guide.sortedPages[p];
+				if (page.type!==CONST.ptPopup)
+				{
+					if ((gPrefs.showLogic===2) || (gPrefs.showLogic===1 && (page.codeBefore!=="" || page.codeAfter!=="")))
+					{
+						pagefs=form.fieldset(page.name, page);
+						if (gPrefs.showLogic===2 || page.codeBefore!==""){
+							pagefs.append(form.codearea({label:'Before:',	value:page.codeBefore,change:codeBeforeChange} ));
+						}
+						if (gPrefs.showLogic===2 || page.codeAfter!==""){
+							pagefs.append(form.codearea({label:'After:',	value:page.codeAfter,change:codeAfterChange} ));
+						}
+						t.append(pagefs);
+					}
+				}
+			}
+			
+			break;
+			
+		case "tabsText":
+			t.append(form.note(gPrefs.showText===1 ? 'All non-empty text blocks in this guide' : 'All text blocks in this guide'));
+			for (p in guide.sortedPages)
+			{
+				page=guide.sortedPages[p];
+				pagefs=form.fieldset(page.name, page);
+				pageNameFieldsForTextTab(pagefs,page);
+				t.append(pagefs);
+			}
+			
+			break;
+		
+		case 'tabsReports':
+			// Generate read-only report. Guide info, variable list, step info, pages. 
+			
+			break;
+		
+		
+		case "tabsAbout":
+			fs = form.fieldset('About');
+			fs.append(form.text({label:'Title:', placeholder:'Interview title', value:guide.title, change:function(val){guide.title=val;}}));
+			fs.append(form.htmlarea({label:'Description:',value:guide.description,change:function(val){guide.description=val;}}));
+			fs.append(form.text({label:'Jurisdiction:', value:guide.jurisdiction, change:function(val){guide.jurisdiction=val;}}));
+			
+			var l,list=[];
+			for (l in Languages.regional){
+				list.push(l,Languages.regional[l].Language+' {'+l+'} '+'('+Languages.regional[l].LanguageEN+')');
+			} 
+			fs.append(form.pickList({label:'Language:', value:guide.language, change:function(val){
+				guide.language=val;
+				Languages.set(guide.language);
+				$('.A2JViewer','#page-viewer').html('');
+				}},list));
+			list=['blank','blank','tan','tan','tan2','tan2'];
+			//if (guide.avatar==='tan') guide.avatar=1;
+			if (guide.avatar===''||guide.avatar==='0') {guide.avatar='blank';}
+			fs.append(form.pickList({label:'Avatar:',value:guide.avatar,change:function(val){
+				guide.avatar=val;}},list));
+			list=['Female','Female Guide','Male','Male Guide'];
+			if (guide.guideGender!=='Male') {
+				guide.guideGender='Female';
+			}
+			fs.append(form.pickList({label:'Guide Gender:',value:guide.guideGender,change:function(val){
+				guide.guideGender=val;}},list));
+			fs.append(form.htmlarea({label:'Credits:',value:guide.credits,change:function(val){guide.credits=val;}}));
+			fs.append(form.text({label:'Approximate Completion Time:',placeholder:'',value:guide.completionTime,change:function(val){guide.completionTime=val;}}));
+			t.append(fs);
+			
+			fs = form.fieldset('Layout');
+			fs.append(form.pickImage({label:'Logo graphic:', placeholder: 'Logo URL',value:guide.logoImage, change:function(val){guide.logoImage=val;}}));
+			fs.append(form.pickImage({label:'End graphic:', placeholder:'End (destination graphic) URL',value:guide.endImage, change:function(val){guide.endImage=val;}}));
+			fs.append(form.pickList({label:'Mobile friendly?', value:guide.mobileFriendly, change:function(val){guide.mobileFriendly=val;}},['','Undetermined','false','No','true','Yes']));
+			t.append(fs);
+			
+			fs = form.fieldset('Authors');
+			var blankAuthor=new TAuthor();
+			
+			fs = form.fieldset('Revision History');
+			fs.append(form.text({label:'Current Version:',value:guide.version,change:function(val){guide.version=val;}}));
+			fs.append(form.htmlarea({label:'Revision Notes',value:guide.notes,change:function(val){guide.notes=val;}}));
+			t.append(fs);
+			
+			fs=form.fieldset('Authors');
+			fs.append(form.listManager({name:'Authors',picker:'Number of authors',min:1,max:12,list:guide.authors,blank:blankAuthor
+				,save:function(newlist){
+					guide.authors=newlist; }
+				,create:function(ff,author){
+						ff.append(form.text({  label:"Author's Name:", placeholder:'name',value:author.name,
+							change:function(val,author){author.name=val;}}));
+						ff.append(form.text({  label:"Author's Title:", placeholder:'title',value:author.title,
+							change:function(val,author){author.title=val;}}));
+						ff.append(form.text({  label:"Author's Organization:", placeholder:'organization',value:author.organization,
+							change:function(val,author){author.organization=val;}}));
+						ff.append(form.text({  label:"Author's email:", placeholder:'email',value:author.email,
+							change:function(val,author){author.email=val;}}));
+					return ff;
+				}}));
+				
+			t.append(fs);
+
+			break;
+
+		
+		case 'tabsSteps':
+		
+			fs=form.fieldset('Start/Exit points');
+			fs.append(form.pickpage({	value: guide.firstPage,label:'Starting Point:',	change:function(val){guide.firstPage=val;}}));
+			fs.append(form.pickpage({	value: guide.exitPage,label:'Exit Point:',		change:function(val){guide.exitPage=val;}}));
+			t.append(fs);
+			fs=form.fieldset('Steps');
+			var blankStep=new TStep();
+			
+			fs.append(form.listManager({grid:true,name:'Steps',picker:'Number of Steps',min:1,max:CONST.MAXSTEPS,list:guide.steps,blank:blankStep
+				,save:function(newlist){
+					guide.steps=newlist;
+					updateTOC();
+				}
+				,create:function(ff,step){
+						ff.append(form.text({  label:"Step Number:", placeholder:'#',value:step.number,
+							change:function(val,step){
+								step.number=val;
+								updateTOC();}}));
+						ff.append(form.text({  label:"Step Sign:", placeholder:'title',value:step.text,
+							change:function(val,step){
+								step.text=val;
+								updateTOC();
+							}}));
+					return ff;
+				}}));		
+			t.append(fs);
+			break;
+	}
+	form.finish(t);
+
+
+
+	 $("legend",t).click(function(){
+			 $(this).siblings('div').slideToggle(300);
+	 });
+	 
+	
+	
+};
+
+function resumeEdit()
+{
+	$('#authortool').show();
+	$('#page-viewer').hide();
+	if ($pageEditDialog!==null){$pageEditDialog.dialog('open');}
+}
+
+function authorViewerHook()
+{	//	### Attach Author editing buttons to the A2J viewer
+	A2JViewer.IMG = "../viewer/images/";
+	$('.A2JViewer').append('<div class="debugmenu"><button/><button/><button/><button/></div>');
+	$('.A2JViewer div.debugmenu button').first()
+		.button({label:'Variables/Script',icons:{primary:'ui-icon-wrench'}}).click(function(){$('.A2JViewer').toggleClass('test',100);})
+		.next()
+		.button({label:'Fill',icons:{primary:'ui-icon-pencil'}}).click(function(){
+			A2JViewer.fillSample();
+		})
+		.next()
+		.button({label:'Resume Edit',icons:{primary:'ui-icon-arrowreturnthick-1-w'}}).click(function(){
+			resumeEdit();
+		})
+		.next()
+		.button({label:'Edit this',icons:{primary:'ui-icon-pencil'}}).click(function(){
+			gotoPageEdit(gPage.name);
+		});
+}
+
+
+
+
+
+function updateTOCOnePage()
+{	// TODO - just update only this page's TOC and Mapper entry.
+	updateTOC();
+}
+
+
+TGuide.prototype.varDelete=function(name){
+	var guide=this;
+	delete guide.vars[name.toLowerCase()];
+	gGuide.noviceTab('tabsVariables',true);
+};
+
+function varEdit(v/*TVariable*/)
+{
+	$('#varname').val(v.name);
+	$('#vartype').val(v.type);
+	$('#varcomment').val(v.comment);
+	$('#varrepeating').attr('checked', v.repeating);
+	$('#var-edit-form').data(v).dialog({
+		autoOpen:true,
+			width: 450,
+			height: 400,
+			modal:true,
+			close: function(){
+			},
+			buttons:[
+			{text:'Delete', click:function(){
+				var name= $(this).data().name;
+				if (name===""){
+					return;
+				}
+				dialogConfirmYesNo({title:'Delete variable '+name,message:'Delete this variable?',name:name,Yes:
+				/*** @this {{name}} */
+				function(){
+					$('#var-edit-form').dialog("close");
+					gGuide.varDelete(this.name);
+				}});
+			}},
+			{text:'Close',click:function(){ 
+				var name= $('#varname').val();
+				if(name!==v.name)//rename variable
+				{
+					delete gGuide.vars[v.name.toLowerCase()];
+					v.name=name;
+					gGuide.vars[name.toLowerCase()]=v;
+				}
+				v.type=$('#vartype').val();
+				v.comment=$('#varcomment').val();
+				v.repeating=$('#varrepeating').is(':checked');
+				gGuide.noviceTab('tabsVariables',true);
+				$(this).dialog("close");
+			 }}
+		]});
+	
+}
+
+function varAdd()
+{  // Add new variable and edit.
+	var v= new TVariable();
+	varEdit(v);
+}
+
+TGuide.prototype.variableListHTML = function ()
+{	// Build HTML table of variables, nicely sorted.
+	var guide = this;
+	var th=html.rowheading(["Name","Type","Repeating","Comment"]); 
+	var sortvars=[];
+	var vi;
+	for (vi in guide.vars){
+		sortvars.push(guide.vars[vi]);
+	}
+	sortvars.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
+	var tb='';
+	for (vi in sortvars)
+	{
+		var v=sortvars[vi];
+		tb+=html.row([v.name,v.type,v.repeating,v.comment
+			+ (typeof v.warning==='undefined'?'':'<span class="warning">'+v.warning+'</spab>')]);
+	}
+	return '<table class="A2JVars">'+th + '<tbody>'+ tb + '</tbody>'+"</table>";	
+};
+
+TGuide.prototype.buildTabVariables = function (t)
+{
+	t.append(this.variableListHTML());
+	$('tr',t).click(function(){
+		varEdit(gGuide.vars[$('td:first',this).text().toLowerCase()]);
+	});
+};
+
+
+function editButton()
+{	// ### For the simple editor, handle simple styles. 
+	switch ($(this).attr('id')){
+		case 'bold': document.execCommand('bold', false, null); break;
+		case 'italic': document.execCommand('italic', false, null); break;
+		case 'indent': document.execCommand('indent', false, null); break;
+		case 'outdent': document.execCommand('outdent', false, null); break;
+		case 'link':
+			trace('link');
+			break;
+		case 'popup':
+			/*
+			var sel=window.getSelection();
+			if (sel!='')
+			{
+				var range=sel.getRangeAt(0);
+				div = document.createElement('div')
+				div.appendChild(range.cloneContents())
+				console.log(div.innerHTML);
+			}
+			*/
+			//form.pickPopupDialog('',{value:''});
+			break;
+	}
+}
+
+
 
 /* */

@@ -119,6 +119,7 @@ function cloneObject(obj) {
 	}
 	return clone;
 }
+
 $.fn.showit = function(yes) { // show/hide via class rather than .toggle to avoid issues with TR
     return $(this).removeClass('hidden').addClass(yes ? '' : 'hidden');
 };
@@ -132,12 +133,15 @@ function htmlEscape(str){
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
 }
+
 String.prototype.asHTML=function(){
 	return htmlEscape(this);
 };
+
 String.prototype.stripHTML=function(){
 	return $('<div>'+(this)+'</div>').text();
 };
+
 String.prototype.ellipsis=function(limit){
 	return this.substring(0,limit)+(this.length>limit?"…":"");
 };
@@ -159,6 +163,7 @@ function makestr(s)
 {	// lazy test to make sure s is a string or blank, not "null" or "undefined"
 	return (s===null || typeof s === "undefined" ) ? '' : s;
 }
+
 function textToBool(b, defaultb)
 {
 	if (b===null || typeof b === "undefined" )
@@ -167,6 +172,12 @@ function textToBool(b, defaultb)
 	}
 	return (b===1) || (b==='1') || (String(b).toLowerCase()==="true");
 }
+
+function isNumber(n)
+{	//http://stackoverflow.com/questions/18082/validate-numbers-in-javascript-isnumeric
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
 function textToNumber(n)
 {	// Convert to number even with commas.
 	// If it's text, return 0. 
@@ -183,11 +194,6 @@ function textToNumber(n)
 	}
 	return 0;
 }
-function isNumber(n)
-{	//http://stackoverflow.com/questions/18082/validate-numbers-in-javascript-isnumeric
-  return !isNaN(parseFloat(n)) && isFinite(n);
-}
-
 
 function aie(obj,attr,val)
 {	// set obj's attr to val, only if value exists 

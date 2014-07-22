@@ -540,7 +540,7 @@ TGuide.prototype.HotDocsAnswerSetVariable = function(variable) //CVariable
 		if (varType === CONST.vtMC) {
 			xmlV = '<SelValue>' + xmlV + '</SelValue>';
 		}
-		return xmlV;		
+		return xmlV;
 	}
 	var vi;
 	var xml='';
@@ -563,19 +563,17 @@ TGuide.prototype.HotDocsAnswerSetVariable = function(variable) //CVariable
 	if (xml!='') {
 		xml = '<Answer name="' + variable.name + '">' + xml + '</Answer>';
 	}
-	else{
-		//trace("Skipping "+variable.name);
-	}
+	//else{ trace("Skipping "+variable.name);}
 	return xml;
 };
 
 TGuide.prototype.varCreateInternals=function()
 {	// Create the A2J internal answer set variables.
 	this.varCreateOverride(CONST.vnVersion, CONST.vtText,false,'A2J Author Version');
-	this.varCreateOverride(CONST.vnInterviewID,  CONST.vtText,false,'Guide ID');
-	this.varCreateOverride(CONST.vnBookmark, 	CONST.vtText,false,'Current Page');
-	this.varCreateOverride(CONST.vnHistory, 	CONST.vtText,false,'Progress History List (XML)');
-	this.varCreateOverride(CONST.vnNavigationTF, 	CONST.vtTF,false,'Allow navigation?');
+	this.varCreateOverride(CONST.vnInterviewID, CONST.vtText,false,'Guide ID');
+	this.varCreateOverride(CONST.vnBookmark, CONST.vtText,false,'Current Page');
+	this.varCreateOverride(CONST.vnHistory, CONST.vtText,false,'Progress History List (XML)');
+	this.varCreateOverride(CONST.vnNavigationTF, CONST.vtTF,false,'Allow navigation?');
 	this.varCreateOverride(CONST.vnInterviewIncompleteTF, CONST.vtTF,false,'Reached Successful Exit?');
 };
 

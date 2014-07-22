@@ -343,7 +343,11 @@ function ts($filename)
 	<div class="tabHeader">Publish/Upload <button CSH="Publish" class="CSH"/></div> 
 			<p>To publish your interview to another site such as LHI, download the ZIP which contains the interview and its supplemental files.
 			 </p>
-		<button id="guideZIP">Download ZIP</button><button id="guideDownload">Download A2J</button></div>
+		<button id="guideZIP">Download ZIP</button>
+		<button id="guideDownload">Download A2J</button>
+		<button id="guidePublish">Publish to Public URL</button>
+		
+		</div>
 	</div>
 	<div id="cajaheader"><span id="cajainfo" title="About this Authoring System"></span>
 	<div class="authorver"></div>

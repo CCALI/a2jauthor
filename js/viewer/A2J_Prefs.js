@@ -12,13 +12,25 @@
 var gPrefs =
 {
 	// Persistent for author
-	warnHotDocsNameLength : true, // include warning when var name length exceeds HotDocs length
-	FKGradeAll : false,  // include grades for 'good' text as well
-	showJS : false, 	// show JavaScript translations
+	
+	// Include warning when var name length exceeds HotDocs length
+	warnHotDocsNameLength : true,
+
+	// Include grades for 'good' text as well
+	FKGradeAll : false,
+
+	// Show JavaScript translations	
+	showJS : false,
+	
 	// Non persistent
-	showLogic : 1, 	// show all logic or just filled
-	showText : 1,	// show all text or just filled
-}
+	
+	// Show all logic or just filled
+	showLogic : 1,
+	
+	// Show all text or just filled
+	showText : 1
+	
+};
 
 
 
@@ -35,7 +47,8 @@ gPrefs.save=function()
 			}
 		}
 	 }
-}
+};
+
 gPrefs.load=function()
 {	// Load prefs from HTML5 LocalStorage
 	 if(typeof(Storage) !== "undefined")
@@ -47,12 +60,12 @@ gPrefs.load=function()
 				var v = localStorage.getItem(p);
 				if (v !== null)
 				{
-					if (v=='true') {
+					if (v==='true') {
 						v=true;
 					}
 					else
-					if (v=='false') {
-						v=false
+					if (v==='false') {
+						v=false;
 					}
 					v= Number(v);
 					//trace('Setting loaded: '+p+' = '+v);
@@ -61,7 +74,7 @@ gPrefs.load=function()
 			}
 		}
 	 }	
-}
+};
 
 
 

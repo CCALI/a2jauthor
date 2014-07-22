@@ -11,14 +11,47 @@
 /* global gGuidePath,gPage,gGuide,gUserID,gGuideID,gUserNickName */
 
 
-//### File upload URLs for a guide's files and a new guide.
+// File upload URLs for a guide's files and a new guide.
 CONST.uploadURL = 'CAJA_WS.php?cmd=uploadfile&gid=';
 CONST.uploadGuideURL= 'CAJA_WS.php?cmd=uploadguide';
+// Save interview every 5 minutes (if changed)
+CONST.AutoSaveInterval = 5*60*1000; 
 
 var $pageEditDialog=null;
 var SELECTED = 'ui-state-active';
+ 
 
+/** @param {...}  status */
+/** @param {...boolean}  showSpinner */
+function setProgress(status, showSpinner)
+{
+	if (typeof status==='undefined'){
+		status='';
+	}
+	//if (status!==''){ trace('setProgress',status);}
+	if (showSpinner===true) {
+		status += CONST.AJAXLoader;
+	}
+	$('#CAJAStatus').html( status );
+}
 
+function ws(data,results)
+{	// Contact the webservice to handle user signin, retrieval of guide lists and load/update/cloning guides.
+	$.ajax({
+		url:'CAJA_WS.php',
+		dataType:'json',
+		type: 'POST',
+		data: data,
+		success: function(data){ 
+			//trace(String.substr(JSON.stringify(data),0,299));
+			results(data);
+		},
+		error: function(err,xhr) {
+			dialogAlert({title:'Error loading file',body:xhr.responseText});
+			setProgress('Error: '+xhr.responseText);
+		}
+	});
+}
 
 function signin()
 {
@@ -62,22 +95,6 @@ function signin()
 }
 
 
-/** @param {...}  status */
-/** @param {...boolean}  showSpinner */
-function setProgress(status, showSpinner)
-{
-	if (typeof status==='undefined'){
-		status='';
-	}
-	if (status!==''){
-		//trace('setProgress',status);
-	}
-	if (showSpinner===true) {
-		status += CONST.AJAXLoader;
-	}
-	$('#CAJAStatus').html( status );
-}
-
 
 function styleSheetSwitch(theme)
 {
@@ -93,41 +110,8 @@ function styleSheetSwitch(theme)
 	$('link[title=style]').attr('href',theme);
 }
 
-function editButton()
-{	// ### For the simple editor, handle simple styles. 
-	switch ($(this).attr('id')){
-		case 'bold': document.execCommand('bold', false, null); break;
-		case 'italic': document.execCommand('italic', false, null); break;
-		case 'indent': document.execCommand('indent', false, null); break;
-		case 'outdent': document.execCommand('outdent', false, null); break;
-		case 'link':
-			trace('link');
-			break;
-	}
-}
 
 
-
-
-
-
-function ws(data,results)
-{	// Contact the webservice to handle user signin, retrieval of guide lists and load/update/cloning guides.
-	$.ajax({
-		url:'CAJA_WS.php',
-		dataType:'json',
-		type: 'POST',
-		data: data,
-		success: function(data){ 
-			//trace(String.substr(JSON.stringify(data),0,299));
-			results(data);
-		},
-		error: function(err,xhr) {
-			dialogAlert({title:'Error loading file',body:xhr.responseText});
-			setProgress('Error: '+xhr.responseText);
-		}
-	});
-}  
 
 
 
@@ -152,12 +136,6 @@ function main()
 		window.open( url );
 	});
 	
-	// JPM Expand/Collapse button for pages list.   
-	$('#expandCollapse')
-		.button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}})
-		.click(function(){
-			expandCollapsePageList();
-		});
 	
 	// JPM Handles Expand/Collapse button on pages list
 	function expandCollapsePageList() {
@@ -173,6 +151,12 @@ function main()
 			$('#expandCollapse').button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}});
 		}
 	}
+	// JPM Expand/Collapse button for pages list.   
+	$('#expandCollapse')
+		.button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}})
+		.click(function(){
+			expandCollapsePageList();
+		});
 	// JPM expand/collapse all panel buttons on various tabs/popups
 	$(".ecPanelButton") // SJG apply to all ec buttons operating on LEGEND tags
 		  .button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}})
@@ -219,6 +203,21 @@ function main()
 		setProgress('Generating ZIP',true);
 		ws({cmd:'guidezip',gid:gGuideID},guideZipped);
 	 });
+	
+	$('#guidePublish').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
+	{	// 07/22/2014 Publish guide and related files to unique, permanent URL.
+		function guidePublished(data)
+		{ 
+			setProgress('');
+			trace(data.url);
+			if (data.url!==''){
+				window.open( data.url);
+			}
+		}
+		setProgress('Creating published guide',true);
+		ws({cmd:'guidepublish',gid:gGuideID},guidePublished);
+	 });
+	
 	
 	$('#reportFull').button().click(reportFull);
 	$('#reportTranscript').button().click(reportTranscript);
@@ -358,12 +357,12 @@ function main()
 	$('#page-viewer').hide();
 	$('#var-add').button({icons:{primary:'ui-icon-new'}}).click(varAdd);
 	//$('#var-del').button({icons:{primary:'ui-icon-trash'}}).click(varDel);
-	
-	
+
 	$( "#bold" ).button({label:'B'}).click(editButton);
 	$( "#italic" ).button({label:'I'}).click(editButton);
 	$( "#link" ).button({text:false, icons: {primary:'ui-icon-link'}}).click(editButton);
 	$( "#popup" ).button({label:'P'}).click(editButton);
+	
 	
 	$( document ).tooltip({
 		items: ".htmledit a", //skip title for now [title]",
@@ -380,7 +379,7 @@ function main()
       if (gGuide) {
 			guideSave();
 		}
-	}, 5*60*1000);
+	}, CONST.AutoSaveInterval);
 	
 	
 	$('#guideupload').fileupload({
@@ -402,3 +401,4 @@ function main()
 $(document).ready(main);
 
 /* */
+

@@ -22,6 +22,7 @@ function localGuideStart()
 	$('#welcome .tabContent').html("Welcome "+gUserNickName+" user#"+gUserID+'<p id="guidelist"></p>');
 	loadGuideFile(gStartArgs.templateURL,'tabsPages');
 }
+
 function localGuidePlay()
 {	// Load up command line specified answer file and switch to play mode
 	gotoPageView(gGuide.firstPage);
@@ -39,4 +40,3 @@ function localGuidePlay()
 
 
 /* */
-

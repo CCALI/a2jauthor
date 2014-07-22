@@ -194,10 +194,11 @@ function reportFull()
 		}
 		html +=  fieldSetWrap('Interview Steps',tableWrap(t));
 		// Pages section
+		var p;
 		for (p in guide.sortedPages)
 		{
 			page=guide.sortedPages[p];
-			var si = page.step;
+			si = page.step;
 			html +=  '<a name="'+p+'"/>';
 			t = '';
 			t += tuple('Step',	guide.stepDisplayName(si)); //steps[si].number+':'+guide.steps[si].text);
@@ -235,6 +236,7 @@ function reportFull()
 			
 			t += (tupleAuto('Logic Before',	page.codeBefore));
 			var bt=tuples('TH',[ 'Label','Next page','Variable Name','Default Value']);
+			var bi;
 			for (bi in page.buttons)
 			{
 				button = page.buttons[bi];
@@ -267,13 +269,13 @@ function reportTranscript()
 	/** @type {TPage} */
 	var page;
 	/** @type {TStep} */
-	var step;
+	//var step;
 	/** @type {TAuthor} */
-	var author;
+	//var author;
 	/** @type {TField} */
 	var field;
 	/** @type {TButton} */
-	var button;
+	//var button;
 	
 	var html = '';
 	
@@ -293,6 +295,7 @@ function reportTranscript()
 	var fpcnt=0;
 	var PH='&nbsp;';
 	// Pages section
+	var p;
 	for (p in guide.sortedPages)
 	{	// Spreadsheet format: page name, chunk/field, text 
 		page=guide.sortedPages[p];
@@ -300,7 +303,7 @@ function reportTranscript()
 		pnum ++;
 		var name = guide.pageDisplayName(page.name);
 		//var si = page.step;
-		if (page.type == CONST.ptPopup) {
+		if (page.type === CONST.ptPopup) {
 			html+= tuples('TD',[pnum,name,'Popup Text',page.text]);
 		}
 		else{

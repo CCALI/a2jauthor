@@ -326,6 +326,7 @@ switch ($command)
 		break;
 	
 
+
 	case 'uploadfile':
 		/*
 		 * jQuery File Upload Plugin PHP Example 5.14
@@ -431,6 +432,7 @@ switch ($command)
 			{
 				trace("created $zipFull");
 				$zip->addFile(GUIDES_DIR.$guideName,'Guide.xml');
+
 				$files = scandir(GUIDES_DIR.$guideDir);
 				// Ideally, scan Guide and only zip files used in the interview.
 				// Currently, just add all files in the folder of the guide.
@@ -450,6 +452,45 @@ switch ($command)
 		}
 		break;
 		
+	case 'guidepublish':
+		//### Publish specified existing guide to custom unique public folder.
+	 	$oldgid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+		$res=$mysqli->query("select * from guides where gid=$oldgid  and (isPublic=1  or isFree=1  or editoruid=$userid)");
+		trace('Publishing gid '.$oldgid);
+		
+		if ($row=$res->fetch_assoc())
+		{ 
+			$result['gid']=$row['gid'];
+			$guideName = $row['filename'];
+			//trace('Publishing name '.$guideName);
+			$path_parts = pathinfo($guideName);
+			$guideDir = $path_parts['dirname'];
+			$guideNameOnly = $path_parts['filename'];
+			$newSubGuideDir = "public/".$guideDir."/".date('Y-m-d-H-i-s');
+			$GuidePublicDir =  GUIDES_DIR.$newSubGuideDir;
+			trace('Public dir is "'.$GuidePublicDir.'"');
+			mkdir($GuidePublicDir,0775,true);
+			$files = scandir(GUIDES_DIR.$guideDir);
+			//### Ideally, scan Guide and only zip files used in the interview.
+			foreach($files as $file)
+			{
+				$ext = pathinfo($file,PATHINFO_EXTENSION);
+				if( ($ext!='') && ($file!=$guideNameOnly) && ($ext!='zip') && in_array($ext,array('xml','gif','png','jpg','mp3','mp4')))
+				{
+					copy(GUIDES_DIR.$guideDir.'/'.$file,$GuidePublicDir.'/'.$file);				
+				}
+			}
+			copy(GUIDES_DIR.$guideName, $GuidePublicDir.'/Guide.xml');
+			//http://localhost/caja/userfiles/public/dev/guides/A2JFieldTypes/2014-07-22-14-06-12
+			file_put_contents($GuidePublicDir.'/index.php', '<?php header("Location: /app/js/viewer/A2J_Viewer.php?gid=".$_SERVER["REQUEST_URI"]."Guide.xml"); ?>');
+			
+			$result['url']=GUIDES_URL.$newSubGuideDir;
+			trace($result['url']);
+			// Caller will redirect to download the zip.
+		}
+		break;
+	
+	
 	default:
 		$err="Unknown command";
 		break;

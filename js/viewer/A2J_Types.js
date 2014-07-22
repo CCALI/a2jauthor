@@ -22,8 +22,8 @@ var CONST = {
 	// Spinnner for loading wait
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
-	A2JVersionNum:"5.0.1.27",//VersionInfo.verNum
-	A2JVersionDate:"2014-07-17",
+	A2JVersionNum:"5.0.1.28",//VersionInfo.verNum
+	A2JVersionDate:"2014-07-22",
 	
 	
 	//CAVersionNum:"5.0.0",
@@ -454,7 +454,7 @@ TGuide.prototype.stepDisplayName=function(s)
 	var txt;
 	if ( s<this.steps.length ) {
 		txt= this.steps[s].number+'. '+this.steps[s].text;
-		if (txt=='. ') {
+		if (txt==='. ') {
 			txt='[Step#'+s+']';
 		}
 	}
@@ -463,7 +463,7 @@ TGuide.prototype.stepDisplayName=function(s)
 	}
 	//trace('stepDisplayName',s,txt);
 	return txt;
-}
+};
 
 TGuide.prototype.sortPages=function()
 {
@@ -638,7 +638,7 @@ TGuide.prototype.varCreateOverride=function(varName,varType,varRepeat,varComment
 		v.repeating = varRepeat;
 		v.comment = varComment;
 	}
-}
+};
 
 /**
 * @param {string} varName

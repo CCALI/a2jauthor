@@ -63,6 +63,7 @@ var A2JViewer={
 		var v;
 		var th=html.rowheading(["Name",'Loop',"Value"]); 
 		var sortvars=[];
+		// List of variables *including* array element values such as child name#1, child name#2, etc.
 		var vn;
 		for (vn in g.vars){
 			if (g.vars.hasOwnProperty(vn))
@@ -826,7 +827,7 @@ var A2JViewer={
 		
 		
 		var av=gGuide.varGet(avatarVarName);// Avatar style, originally blank or tan. Also support number.
-		if (typeof av === 'undefined') {av=gGuide.avatar;}
+		if (typeof av === 'undefined' || av===null) {av=gGuide.avatar;}
 		if (av==='tan')
 			{av=1;}
 		else

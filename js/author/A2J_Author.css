@@ -110,7 +110,11 @@ html, body {
 	bottom: 0px;
 	width: 100%;
 }
-
+.copyright {
+	float:right;
+	text-align:right;
+	text-overflow:ellipsis
+}
 .guidepanels {
 	position: fixed;
 	right:4px;

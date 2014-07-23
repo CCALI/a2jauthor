@@ -465,8 +465,18 @@ TGuide.prototype.stepDisplayName=function(s)
 	return txt;
 };
 
+TGuide.prototype.varsSorted = function ()
+{	// Return array of variables sorted naturally.
+	var sortVars=[];
+	var vi;
+	for (vi in this.vars){
+		sortVars.push(this.vars[vi]);
+	}
+	sortVars.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
+	return sortVars;
+}
 TGuide.prototype.sortPages=function()
-{
+{	// Create naturally sorted list of page names
 	this.sortedPages=[];
 	for (var pagename in this.pages){
 		if (this.pages.hasOwnProperty(pagename)) {

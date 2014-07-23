@@ -354,8 +354,10 @@ function ts($filename)
 	<div class="authorenv"></div><span id="guidetitle"></span>
 		<button id="settings"/>
 	</div>
-	<div id="cajafooter"><span id="saveStatus"></span><span id="CAJAStatus"></span><span style="float:right;text-align:right">All Contents &copy; CALI, The Center for Computer-Assisted Legal
-		Instruction. All Rights Reserved.</span> </div>
+	<div id="cajafooter"><span id="saveStatus"></span><span id="CAJAStatus"></span>
+		<span class="copyright">
+			© 2000-2014 Illinois Institute of Technology - Chicago-Kent College of Law and the Center for Computer-Assisted Legal Instruction
+	</span> </div>
 </div>
 <div class="hidestart">
 	<div id="xedit-plain-form" title="Edit" class="">

@@ -467,7 +467,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
 			change:function(val,page){page.helpVideoURL=val;}} ));
 		pagefs.append(form.htmlarea(	{name:'helpReader', label:'Help Text Reader:', value:page.helpReader,
 			change:function(val,page){page.helpReader=val;}} ));
-		pagefs.append(form.text(		{label:'Counting Variable:',placeholder:'',	value:page.repeatVar,
+		pagefs.append(form.varPicker(		{label:'Counting Variable:',placeholder:'',	value:page.repeatVar,
 			change:function(val,page){page.repeatVar=val;}} ));
 		t.append(pagefs);
 		updateShowMe(pagefs,getShowMe());
@@ -547,7 +547,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
 							));
 					ff.append(form.htmlarea({label:'Label:',   value:field.label, 
 						change:function(val,field){field.label=val;}}));
-					ff.append(form.text({label:'Variable:', placeholder:'Variable name', value: field.name,
+					ff.append(form.varPicker({label:'Variable:', placeholder:'Variable name', value: field.name,
 						change:function(val,field){field.name=jQuery.trim(val);}}));
 					ff.append(form.text({label:'Default value:',name:'default', placeholder:'Default value',value:  field.value,
 						change:function(val,field){field.value=jQuery.trim(val);}}));
@@ -590,7 +590,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
 				,create:function(ff,b){
 					ff.append(form.text({value: b.label,label:'Label:',placeholder:'button label',
 						change:function(val,b){b.label=val;}}));
-					ff.append(form.text({value: b.name, label:'Variable Name:',placeholder:'variable',
+					ff.append(form.varPicker({value: b.name, label:'Variable Name:',placeholder:'variable',
 						change:function(val,b){b.name=val;}}));
 					ff.append(form.text({value: b.value,label:'Default value:',placeholder:'Default value',
 						change:function(val,b){b.value=val;}}));
@@ -605,9 +605,9 @@ function guidePageEditForm(page, div, pagename)//novicePage
 						['','Normal',
 						 CONST.RepeatVarSetOne,'Set Counting Variable to 1',
 						 CONST.RepeatVarSetPlusOne,'Increment Counting Variable'] ));
-					ff.append(form.text(		{label:'Counting Variable:',placeholder:'',	value:b.repeatVar,
+					ff.append(form.varPicker(
+						{label:'Counting Variable:',placeholder:'',	value:b.repeatVar,
 						change:function(val,b){b.repeatVar=val;}} ));
-					
 					
 				return ff;
 				}}));

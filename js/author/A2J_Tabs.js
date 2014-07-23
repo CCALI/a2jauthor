@@ -298,6 +298,46 @@ var form={
 			]});
 	}
 	
+	,varPicker: function(data)
+	{	// Pick variable name from list of defined variables
+		var dval = (data.value);
+
+		var e =$((typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
+				+ '<span class=editspan><input class="  ui-combobox-input editable autocomplete picker varname dest" type="text" ></span>');
+
+		$('.picker',e).blur(function(){
+			var val=$(this).val();
+			form.change($(this),val);
+		}).data('data',data).val(decodeEntities(dval));
+		
+		// Create list of sorted variable names with type info.
+		var sortedVars  = gGuide.varsSorted();
+		var source=[];
+		for (var vi in sortedVars) {
+			var v = sortedVars[vi];
+			source.push({label:v.name+' '+v.type,value:v.name});
+		}
+		$('.autocomplete.picker.varname',e).autocomplete({ source: source , 
+	      change: function () { // if didn't match, restore to original value
+	         //var matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex($(this).val().split("\t")[0]) + "$", "i");
+	         var newvalue = $(this).val();
+				/*var sortedVars  = gGuide.varsSorted();
+	         $.each(sortedVars, function (p, v) {
+					if ( (matcher.test(v.name)))
+					{
+						newvalue = (v.name);
+						return false;
+					}
+					return true;
+	         });
+	         */
+	         $(this).val(newvalue); 
+	      }})
+			.focus(function () {
+			   $(this).autocomplete("search");
+			});
+		return e;
+	}
 	
 	/*
 	,pickpageComboBox:function(data)
@@ -331,6 +371,7 @@ var form={
 		return e;
 	}
 	*/
+	
 	,text: function(data){
 		var e=$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
@@ -888,16 +929,19 @@ function varAdd()
 	varEdit(v);
 }
 
+
 TGuide.prototype.variableListHTML = function ()
 {	// Build HTML table of variables, nicely sorted.
 	var guide = this;
 	var th=html.rowheading(["Name","Type","Repeating","Comment"]); 
-	var sortvars=[];
+	var sortvars=guide.varsSorted();//[];
 	var vi;
+	/*
 	for (vi in guide.vars){
 		sortvars.push(guide.vars[vi]);
 	}
 	sortvars.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
+	*/
 	var tb='';
 	for (vi in sortvars)
 	{

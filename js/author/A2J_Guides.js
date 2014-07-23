@@ -116,23 +116,46 @@ function guideStart(startTabOrPage)
 }
 
 function blankGuide()
-{
+{	// Create minimal functioning guide with 3 pages: Welcome, Success and Failure.
 	var guide = new TGuide();
 
 	guide.title="My guide";
 	guide.notes="Guide created on "+new Date();
 	guide.authors=[{name:'My name',organization:"My organization",email:"email@example.com",title:"My title"}];
-	guide.jurisdiction="Description of this guide";
+	guide.description="Description of this guide";
 	guide.jurisdiction="My jurisdiction";
 	guide.version="1";
 	guide.sendfeedback=false;
-	var page=guide.addUniquePage("Welcome");
-	page.type="A2J";
-	page.text="Welcome to Access to Justice";
-	page.buttons=[{label:"Continue",next:"",name:"",value:""}];
-	guide.steps=[{number:0,text:"Welcome"}];
-	guide.sortedPages=[page];
-	guide.firstPage=page.id;
+	guide.language='en';
+	guide.avatar='blank';
+	guide.guideGender='Female';
+	guide.steps=[{number:0,text:"Welcome"},{number:1,text:"Congratulations"}];
+
+	var page1=guide.addUniquePage("1.0. Welcome");
+	var page2=guide.addUniquePage("1.1. I'm Sorry");
+	var page3=guide.addUniquePage("2.0. Congratulations");
+	
+	page1.type="A2J";
+	page1.text="<p>Welcome to Access to Justice</p><p>Do you qualify?</p>";
+	page1.step=0;
+	page1.buttons=[
+		{label:"Yes",next:page3.name,name:"",value:"", repeatVar:"",repeatVarSet:""},
+		{label:"No",next: page2.name,name:"",value:"", repeatVar:"",repeatVarSet:""}];
+	
+	page2.type="A2J";
+	page2.step=0;
+	page2.text="You don't qualify.";
+	page2.buttons=[{label:"Continue",next:CONST.qIDEXIT,name:"",value:"", repeatVar:"",repeatVarSet:""}];
+	
+	page3.type="A2J";
+	page3.step=1;
+	page3.text="Congratulations!";
+	page3.buttons=[{label:"Finish",next:CONST.qIDSUCCESS,name:"",value:"", repeatVar:"",repeatVarSet:""}];
+	
+	guide.firstPage=page1.name;
+	guide.exitPage='';
+	
+	guide.sortPages();
 	guide.varCreateInternals();
 	return guide;
 }

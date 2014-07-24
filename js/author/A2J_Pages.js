@@ -1,10 +1,9 @@
 /*******************************************************************************
-	A2J Author 5 * Justice * 正义 * công lý * 사법 * правосудие
+	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	Authoring App Pages GUI
 	04/15/2013
-	05/2014
 	
 ******************************************************************************/
 

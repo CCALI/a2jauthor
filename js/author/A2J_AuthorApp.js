@@ -1,10 +1,9 @@
 ﻿/*******************************************************************************
-	A2J Author 5 * Justice * 正义 * công lý * 사법 * правосудие
+	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	Authoring App GUI
 	04/15/2013
-	05/2014
 	
 ******************************************************************************/
 
@@ -14,9 +13,11 @@
 // File upload URLs for a guide's files and a new guide.
 CONST.uploadURL = 'CAJA_WS.php?cmd=uploadfile&gid=';
 CONST.uploadGuideURL= 'CAJA_WS.php?cmd=uploadguide';
+
 // Save interview every 5 minutes (if changed)
 CONST.AutoSaveInterval = 5*60*1000; 
 
+// Reference for the page editing dialog box
 var $pageEditDialog=null;
 var SELECTED = 'ui-state-active';
  

@@ -1,10 +1,9 @@
 /*******************************************************************************
-	A2J Author 5 * Justice * 正义 * công lý * правосудие
+	A2J Author 5 * JusticeJustice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	Logic
-	06/15/2012  10/25/11
-	04/15/2013
+	06/15/2012
 
 	Convert CAJA script into JavaScript
 	Required by Author and Viewers

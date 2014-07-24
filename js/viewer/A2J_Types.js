@@ -1,11 +1,11 @@
 /******************************************************************************
-	A2J Author 5 * Justice * 正义 * công lý * 사법 * правосудие
+	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	Type/constant declarations
 	Required by Author and Viewers
 	04/2012
-	05/2014
+	
 ******************************************************************************/
 
 
@@ -231,7 +231,7 @@ TField.prototype.fieldTypeToVariableType = function()//:Number
 TField.prototype.fieldTypeToTagName = function()
 {	// Return variable type corresponding to this field type.
 	// Since they are wordy, we abbreviate.
-	if (TField.prototype.tagNames == null)
+	if (!TField.prototype.tagNames)
 	{
 		var tn={};
 		tn[CONST.ftText]='Txt';
@@ -474,7 +474,8 @@ TGuide.prototype.varsSorted = function ()
 	}
 	sortVars.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
 	return sortVars;
-}
+};
+
 TGuide.prototype.sortPages=function()
 {	// Create naturally sorted list of page names
 	this.sortedPages=[];

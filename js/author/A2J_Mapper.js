@@ -1,14 +1,13 @@
 
 /******************************************************************************
-	A2J Author 5 * Justice * 正义 * công lý * правосудие
+	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	Mapper
 	04/2012
-	04/15/2013
 
 	Uses a simple DOM based map with DIVs for text and lines.
-	TODO - replace with CANVAS/SVG flowcharter.
+	Future feature - replace with CANVAS/SVG flowcharter.
 ******************************************************************************/
 
 //var gGuide;

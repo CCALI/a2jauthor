@@ -1,5 +1,5 @@
 ﻿/******************************************************************************
-	A2J Author 5 * Justice * 正义 * công lý * 사법 * правосудие
+	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	A2J Viewer embedding
@@ -320,11 +320,13 @@ var A2JViewer={
 		
 		for (var bi=0;bi<page.buttons.length;bi++)
 		{
+			/** @type {TButton} */
 			var b = page.buttons[bi];
 			//$('.ui-form.question  .buttonlist',div).
 			$('.question.panel > .buttonlist',div).append(
-				'<button num='+bi+' title="Go to page '+gGuide.pageDisplayName(b.next).asHTML()+'">'+b.label
-				+'</button>'); //.A2JViewer .ui-form.question  .buttonlist'
+				'<button num='+bi+' title="Go to page '+gGuide.pageDisplayName(b.next).asHTML()+'">'
+				+( b.label==='' ? lang.Continue : b.label)
+				+'</button>');
 		}
 		
 		// ### FieldSet to attach custom fields.

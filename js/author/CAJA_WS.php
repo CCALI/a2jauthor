@@ -1,6 +1,6 @@
 <?php
 /*
-	CALI Author 5 / A2J Author 5 (CAJA) * Justice * 正义 * công lý * 사법 * правосудие
+	CALI Author 5 / A2J Author 5 (CAJA) * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	10/05/2012 Simple CAJA Author Web Service API
@@ -8,6 +8,7 @@
 	07/01/2013 HACK to login to demo
 	07/15/2013 Directory restructure
 	05/2014 Loads author system only if user is logged into Drupal with an 'a2j author' role setting.
+	07/2014 Create public versions
 */
 
 

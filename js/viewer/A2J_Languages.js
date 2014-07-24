@@ -22,6 +22,7 @@ var lang = {
 	Female:'',
 	GoBack:'',
 	GoNext:'',
+	Continue:'',
 	MyProgress:'',
 	SaveAndExit:'',
 	ResumeExit:'',

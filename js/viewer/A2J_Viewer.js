@@ -445,7 +445,7 @@ var A2JViewer={
 				   break;
 				
 				case CONST.ftRadioButton://"Radio Button"
-				   $labelinput=($('<input type=radio id="'+fid+'" name="'+fname+'"></input>')).prop('checked',defval===f.value);//.append($('<label/>').attr('for',fid).html(label));
+				   $labelinput=($('<input type=radio id="'+fid+'" name="'+fname+'" value="'+f.value+'"></input>')).prop('checked',defval===f.value);
 				   break;
 				case CONST.ftCheckBox://"Check box"
 				   $labelinput=($('<input type=checkbox id="'+fid+'"  name="'+fname+'"></input>')).prop('checked',defval);//.append($('<label/>').attr('for',fid).html(label));
@@ -546,7 +546,6 @@ var A2JViewer={
 				/** @type TField */
 				var f = page.fields[fi];// field record				
 				var fid = "FID_"+fi;//field id - unique
-				//var fname = "FID_"+f.name;//field name - possible duplicates, i.e., radio buttons
 				var val = '';
 				switch (f.type)
 				{	// Get the field Value, validate it, store in variables if valid.
@@ -642,19 +641,31 @@ var A2JViewer={
 						}
 					   break;
 					case CONST.ftGender://"Gender"
+						val='';
 						if ($('#'+fid+'M').is(':checked')){
 							val = lang.Male;
 						}
 						if ($('#'+fid+'F').is(':checked')){
 							val = lang.Female;
+						}					
+						if (val==='' && f.required) {
+							invalid=true;
 						}
-						gGuide.varSet(f.name,val,varIndex);
+						else{
+							gGuide.varSet(f.name,val,varIndex);
+						}
 					   break;
 					case CONST.ftRadioButton://"Radio Button"
 						if ($('#'+fid).is(':checked')){
-							val =  f.value;
+							gGuide.varSet(f.name,f.value,varIndex);
 						}
-						gGuide.varSet(f.name,val,varIndex);
+						// If a radio button is required but none have been checked, mark all.
+						val = $('input[name=FID_'+f.name+']:checked').val();
+						if (typeof val ==='undefined' && f.required)
+						{
+							invalid=true;
+						}
+		
 					   break;
 					case CONST.ftCheckBox://"Check box"
 						val  =  $('#'+fid).is(':checked');

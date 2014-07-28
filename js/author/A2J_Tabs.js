@@ -881,6 +881,9 @@ TGuide.prototype.varDelete=function(name){
 function varEdit(v/*TVariable*/)
 {
 	$('#varname').val(v.name);
+	if (gPrefs.warnHotDocsNameLength) {
+		$('#varname').attr('maxlength',CONST.MAXVARNAMELENGTH)
+	}
 	$('#vartype').val(v.type);
 	$('#varcomment').val(v.comment);
 	$('#varrepeating').attr('checked', v.repeating);

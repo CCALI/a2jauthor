@@ -75,7 +75,7 @@ function TLanguages()
 				if (makestr(lang[e])==='')
 				{
 					lang[e]= String(region[e]);
-					traceAlert('Missing '+e+"="+lang[e]);
+					//traceAlert('Missing '+e+"="+lang[e]);
 				}
 			}
 		}

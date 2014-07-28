@@ -82,29 +82,46 @@ function loadTestUnit(nth)
 				}
 			}
 			// Parsed script
-			$('td:nth(1)',page.row).html('<BLOCKQUOTE class="Script">'+t.join("<BR/>")+"</BLOCKQUOTE>");
+			var scriptHTML = t.join("<BR/>");
 			
 			// Javascripted version
-			if ( 1 ) {
-				var t=[];
-				for (l=0;l<script.js.length;l++)
-				{
-					t.push(script.js[l]);
-				}
-				$('td:nth(3)',page.row).html("<BLOCKQUOTE class=Script>"+t.join("<hr>")+"</BLOCKQUOTE>");
+			var t=[];
+			for (l=0;l<script.js.length;l++)
+			{
+				t.push(script.js[l]);
 			}
+			var jsScriptHTML = t.join("<hr>");
 			
 			// Syntax errors
+			var errHTML = '';
 			for (var e in script.errors)
 			{
 				err=script.errors[e];
-				$('td:nth(2)',page.row).append("<li><b>"+err.line+":"+err.text+"</b>");
+				errHTML += ("<li>Line "+err.line+": "+err.text);
 			}
+			
+			
+			$('td:nth(1)',page.row).html(
+				 '<h2>Source</h2>' + $('td:nth(1)',page.row).html() 
+				+'<h2>Parsed</h2>' + '<BLOCKQUOTE class="Script">' + scriptHTML + "</BLOCKQUOTE>"
+				+(errHTML!=''? '<h2>Syntax errors</h2><ul>' + errHTML +'</ul>' : '')
+				+'<h2>Javascripted</h2>' + jsScriptHTML 
+				+'<h2>Execution</h2>' + '<ol/>' 
+				);
+													 	//('<BLOCKQUOTE class="Script">'+t.join("<BR/>")+"</BLOCKQUOTE>");
+			
 		} 
 		
 		if(1){
-			testunit.target =  $('td:nth(2)',page.row);
-			execute (script);
+			testunit.target =  $('td:nth(1) ol:last-child',page.row);
+			if (script.errors.length > 0)
+			{
+				testunit.trace('Skipping due to errors');
+			}
+			else
+			{
+				execute (script);
+			}
 		}
 		
 		//testunit.indent--; 

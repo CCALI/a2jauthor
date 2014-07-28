@@ -33,13 +33,31 @@ div {
 
 <script type='text/javascript'>  
 // 2014-07-21 Testing CKEditor Dynamic edit areas
+function load() {
+	$('.questions').empty();
+	for (var q=1;q<= 25 ;q++)
+	{
+//editor question cke_editable cke_editable_inline cke_contents_ltr cke_show_borders
+	$('.questions').append(
+			  '<fieldset><legend>Question '+q + '</legend>'
+				 +'<div contentEditable=true class="editor question  " name="Q'+q+'"><p>Question content for question '+q+'</p></div>'
+				  +'<div contentEditable=true class="editor help  " name="QH'+q+'"><p>Help content for question  '+q+'</p></div>'
+			  +'</fieldset>');
+	}
+	//$( '.editor' ).ckeditor();
+	$( '.editor' ).click(function(){
+		$(this).ckeditor();
+	})
+}
+
 function ready()
 {
-	if (0) {
+	if ( 1 ) {
 	CKEDITOR.config.toolbar = [
-    { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
-    '/',
-    { name: 'basicstyles', items: [ 'Bold', 'Italic' ] }
+    { name: 'basicstyles', items: [ 'Bold', 'Italic' ] },
+	 { name: 'links', items: [ 'Link', 'Unlink'  ] },
+	 { name: 'paragraph', groups: [ 'list', 'indent', 'blocks'  ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'] },
+    { name: 'clipboard', items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] }
 	];
 	}
 	
@@ -58,23 +76,9 @@ function ready()
 		
 	});
 	
-	$('#load').button({label:'Load'}).click(function()
-	{
-		$('.questions').empty();
-		for (var q=1;q<= 25 ;q++)
-		{
-//editor question cke_editable cke_editable_inline cke_contents_ltr cke_show_borders
-		$('.questions').append(
-				  '<fieldset><legend>Question '+q + '</legend>'
-					 +'<div contentEditable=true class="editor question  " name="Q'+q+'"><p>Question content for question '+q+'</p></div>'
-					  +'<div contentEditable=true class="editor help  " name="QH'+q+'"><p>Help content for question  '+q+'</p></div>'
-				  +'</fieldset>');
-		}
-		//$( '.editor' ).ckeditor();
-		$( '.editor' ).click(function(){
-			$(this).ckeditor();
-		})
-	});
+	$('#load').button({label:'Load'}).click(load);
+
+	//load();
 }
 
 

@@ -131,7 +131,23 @@ td.varsame {
 td.vardiff {
 	color:#fff;
 } 
-table.testPages { 
-}
+table.testPages td.logic p   {
+	color: #8f8;
+	border-bottom: dotted 1px;
+	xpadding-bottom: .5em;
+	background-color:#222;
+	xwhite-space: normal;
+	line-spacing: 1em;
+	padding: 2px;
+	margin: 0px;
+	xmargin-top: .5em;
+} 
+table.testPages td.logic blockquote {
+	background-color:#242;
+	line-spacing: 1em;
+	padding: 0px;
+	margin-top: 0;
+	margin-bottom: 0;
+} 
 
 /* */

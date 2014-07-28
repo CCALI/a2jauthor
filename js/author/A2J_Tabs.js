@@ -882,7 +882,8 @@ function varEdit(v/*TVariable*/)
 {
 	$('#varname').val(v.name);
 	if (gPrefs.warnHotDocsNameLength) {
-		$('#varname').attr('maxlength',CONST.MAXVARNAMELENGTH)
+		// 2014-07-28 
+		$('#varname').attr('maxlength',CONST.MAXVARNAMELENGTH);
 	}
 	$('#vartype').val(v.type);
 	$('#varcomment').val(v.comment);

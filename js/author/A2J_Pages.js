@@ -133,7 +133,7 @@ function pageNameRelFilter(e,pageName)
 }
 
 function pageEditSelected()
-{	// Return currently selected page
+{	// Return currently selected page or '' if none selected.
 	var rel = makestr($('.pageoutline li.'+SELECTED).first().attr('rel'));
 	if (rel.indexOf("PAGE ")===0)
 	{
@@ -151,16 +151,45 @@ function pageEditSelect(pageName)
 	pageNameRelFilter('.pageoutline li',pageName).toggleClass(SELECTED);	
 }
 
-function pageEditNew()
-{	
-	pageEditClone(gGuide.firstPage);
-}
 function pageEditClone(pageName)
 {	// Clone named page and return new page's name.
 	var page = gGuide.pages[pageName];
 	if (typeof page === 'undefined') {return '';}
 	var clonePage = pageFromXML(page2XML(page));
 	page = gGuide.addUniquePage(pageName,clonePage);
+	gGuide.sortPages();
+	updateTOC();
+	pageEditSelect(page.name);
+	return page.name;
+}
+
+function pageEditNew()
+{	// Create a new blank page, after selected page. 
+	var newName = pageEditSelected();
+	var newStep;
+	if (newName ==='')
+	{	// No page selected, use first page listed in TOC and in first step.
+		var rel = makestr($('.pageoutline li').first().attr('rel'));
+		if (rel.indexOf("PAGE ")===0)
+		{
+			rel=rel.substr(5);
+		}
+		else
+		{
+			rel='New page';
+		}
+		newName = rel;
+		newStep = 0;
+	}
+	else
+	{	// Create new page in same step as selected page.
+		var selPage = gGuide.pages[newName];
+		newStep = selPage.step;
+	}
+	var page = gGuide.addUniquePage(newName);
+	page.type="A2J";
+	page.text="My text"
+	page.step = newStep;
 	gGuide.sortPages();
 	updateTOC();
 	pageEditSelect(page.name);

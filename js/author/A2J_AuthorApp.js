@@ -233,8 +233,6 @@ function main()
 	 });
 	
 	$('#guideClone').button({label:'Clone', disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){
-		//var $li=$('li.guide.'+SELECTED).first();
-		//var gid=$li.attr('gid');
 		dialogAlert({title:'Clone interview'});
 	 });
 

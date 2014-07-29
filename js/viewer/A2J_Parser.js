@@ -272,6 +272,23 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 	guide.tool =			makestr(INFO.children('TOOL').text());
 	guide.toolversion =  makestr(INFO.children('TOOLVERSION').text());
 	guide.avatar=			makestr(INFO.children('AVATAR').text());
+	switch (guide.avatar)
+	{
+		case 'blank':
+		case 'avatar1':
+			guide.avatar = 'avatar1';
+			break;
+		case 'tan':
+		case 'avatar2':
+			guide.avatar = 'avatar2';
+			break;
+		case 'tan2':
+		case 'avatar3':
+			guide.avatar = 'avatar3';
+			break;
+		default:
+			guide.avatar = 'avatar1';
+	}
 	guide.guideGender=	makestr(INFO.children('GUIDEGENDER').text());
 	guide.completionTime=makestr(INFO.children('COMPLETIONTIME').xml());
 	guide.copyrights=		makestr(INFO.children('COPYRIGHTS').xml());

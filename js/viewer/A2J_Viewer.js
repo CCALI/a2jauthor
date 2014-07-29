@@ -839,15 +839,15 @@ var A2JViewer={
 		//if (cg==='Male'){ cg='M';} else if (cg==='Female') {cg='F';} else {cg='';}
 		
 		
-		var av=gGuide.varGet(avatarVarName);// Avatar style, originally blank or tan. Also support number.
+		var av=gGuide.varGet(avatarVarName);// Avatar style, originally blank or tan. 
 		if (typeof av === 'undefined' || av===null) {av=gGuide.avatar;}
-		if (av==='tan')
+		if (av==='tan' || av==='avatar2')
 			{av=1;}
 		else
-		if (av==='blank' || av==='')
+		if (av==='blank' || av===''  || av==='avatar1')
 			{av=0;}
 		else
-		if (av==='tan2')
+		if (av==='tan2' || av==='avatar3')
 			{av=2;}
 		else
 			{av=parseInt(av,10);}

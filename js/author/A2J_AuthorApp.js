@@ -174,22 +174,8 @@ function main()
 
 	
 	//$('#guideCreate').button({icons:{primary:"ui-icon-document"}}).click(function(){createBlankGuide();	});
-	$('#guideOpen').button({label:'Open', disabled:false, icons:{primary:"ui-icon-disk"}}).click(function(){
-		//alert('guideOpen');
-		var $li=$('li.guide.'+SELECTED).first();
-		var gid=$li.attr('gid');
-		var guideFile=$li.text();
-		//$('li.guide[gid="'+gid+'"]').html('Loading guide '+guideFile+AJAXLoader).addClass('.warning');
-		setProgress('Loading guide '+guideFile,true);
-		loadNewGuidePrep(guideFile,'');
-		$('#splash').hide();
-		if(gid==='a2j'){
-			createBlankGuide();
-		}
-		else{
-			ws({cmd:'guide',gid:gid},guideLoaded);
-		}
-	 });
+	$('#guideOpen').button({label:'Open', disabled:false, icons:{primary:"ui-icon-disk"}}).click(openSelectedGuide);
+
 	
 	$('#guideZIP').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
 	{	// 01/08/2014 ZIP the guide and related files. 

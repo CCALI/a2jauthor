@@ -188,7 +188,7 @@ function pageEditNew()
 	}
 	var page = gGuide.addUniquePage(newName);
 	page.type="A2J";
-	page.text="My text"
+	page.text="My text";
 	page.step = newStep;
 	gGuide.sortPages();
 	updateTOC();
@@ -361,7 +361,13 @@ function gotoTabOrPage(target)
 			if (gGuide) {gotoPageView(gGuide.firstPage);}
 			break;
 		case 'tabsGuides':
-			if (gGuide) {guideSave();}
+			// Ensure author can't load new guide before we've saved the current one. 
+			if (gGuide) {
+				$('#'+target).hide();	
+				guideSave(function(){
+					$('#'+target).show();					
+				});
+			}
 			break;
 	}
 }

@@ -35,8 +35,9 @@ function guideLoaded(data)
 	setProgress('');
 }
 
-function guideSave()
-{	// Save current guide, but only if the XML has changed since last save to avoid upload overhead. 
+function guideSave(onFinished)
+{	// Save current guide, but only if the XML has changed since last save to avoid upload overhead.
+	// If successful/or unsuccesful save, call onFinished.
 	if (gGuide!==null && gGuideID!==0)
 	{
 		setProgress('Saving '+gGuide.title,true);
@@ -45,11 +46,17 @@ function guideSave()
 			gGuide.lastSaveXML=xml;
 			ws( {cmd:'guidesave',gid:gGuideID, guide: xml, title:gGuide.title}, function(response){
 				setProgress((makestr(response.error)!=='') ? response.error : 'Saved');
+				if (onFinished){
+					onFinished();
+				}
 			});
 		}
 		else
 		{
 			setProgress('No changes since last save');
+			if (onFinished){
+				onFinished();
+			}
 		}
 	}
 }
@@ -124,52 +131,6 @@ function blankGuide()
 
 	return parseXML_Auto_to_CAJA($(jQuery.parseXML(A2J4_XML)));
 }
-/*
-function blankGuide()
-{	// Create minimal functioning guide with 3 pages: Welcome, Success and Failure.
-	var guide = new TGuide();
-
-	guide.title="My guide";
-	guide.notes="Guide created on "+new Date();
-	guide.authors=[{name:'My name',organization:"My organization",email:"email@example.com",title:"My title"}];
-	guide.description="Description of this guide";
-	guide.jurisdiction="My jurisdiction";
-	guide.version="1";
-	guide.sendfeedback=false;
-	guide.language='en';
-	guide.avatar='blank';
-	guide.guideGender='Female';
-	guide.steps=[{number:0,text:"Welcome"},{number:1,text:"Congratulations"}];
-
-	var page1=guide.addUniquePage("1.0. Welcome");
-	var page2=guide.addUniquePage("1.1. I'm Sorry");
-	var page3=guide.addUniquePage("2.0. Congratulations");
-	
-	page1.type="A2J";
-	page1.text="<p>Welcome to Access to Justice</p><p>Do you qualify?</p>";
-	page1.step=0;
-	page1.buttons=[
-		{label:"Yes",next:page3.name,name:"",value:"", repeatVar:"",repeatVarSet:""},
-		{label:"No",next: page2.name,name:"",value:"", repeatVar:"",repeatVarSet:""}];
-	
-	page2.type="A2J";
-	page2.step=0;
-	page2.text="You don't qualify.";
-	page2.buttons=[{label:"Continue",next:CONST.qIDEXIT,name:"",value:"", repeatVar:"",repeatVarSet:""}];
-	
-	page3.type="A2J";
-	page3.step=1;
-	page3.text="Congratulations!";
-	page3.buttons=[{label:"Finish",next:CONST.qIDSUCCESS,name:"",value:"", repeatVar:"",repeatVarSet:""}];
-	
-	guide.firstPage=page1.name;
-	guide.exitPage='';
-	
-	guide.sortPages();
-	guide.varCreateInternals();
-	return guide;
-}
-*/
 
 function createBlankGuide()
 {	// create blank guide internally, do Save As to get a server id for future saves.
@@ -187,6 +148,24 @@ function createBlankGuide()
 			 });
 		}
 	});
+}
+function openSelectedGuide()
+{	// Open the currently selected guide (either double click or via Open button)
+	var $li=$('li.guide.'+SELECTED).first();
+	var gid=$li.attr('gid');
+	if (!gid) {
+		return;
+	}
+	var guideFile=$li.text();
+	setProgress('Loading guide '+guideFile,true);
+	loadNewGuidePrep(guideFile,'');
+	$('#splash').hide();
+	if(gid==='a2j'){
+		createBlankGuide();
+	}
+	else{
+		ws({cmd:'guide',gid:gid},guideLoaded);
+	}
 }
 
 /*** @param {{guides}} data */
@@ -215,6 +194,7 @@ function listGuides(data)
 	$('#guideListSamples').html(guideListSamples.join(''));
 
 	$('li.guide').click(function(){$('li.guide').removeClass(SELECTED);$(this).addClass(SELECTED);});
+	$('li.guide').dblclick(openSelectedGuide);
 	
 	//$('#welcome').dialog('open');
 }

@@ -744,11 +744,11 @@ TGuide.prototype.noviceTab = function(tab,clear)
 				Languages.set(guide.language);
 				$('.A2JViewer','#page-viewer').html('');
 				}},list));
-			list=['blank','blank','tan','tan','tan2','tan2'];
-			//if (guide.avatar==='tan') guide.avatar=1;
-			if (guide.avatar===''||guide.avatar==='0') {guide.avatar='blank';}
+			list=['avatar1','Avatar 1','avatar2','Avatar 2','avatar3','Avatar 3'];
+
 			fs.append(form.pickList({label:'Avatar:',value:guide.avatar,change:function(val){
-				guide.avatar=val;}},list));
+				guide.avatar=val;
+				}},list));
 			list=['Female','Female Guide','Male','Male Guide'];
 			if (guide.guideGender!=='Male') {
 				guide.guideGender='Female';

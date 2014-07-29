@@ -140,7 +140,7 @@ function ts($filename)
 		<div class="panel" id="tabsAbout">
 			<div class="tabHeader">
 <!-- JPM expand/collapse for about tab panel -->
-					<button class="ecPanelButton"></button> Information about this guide.
+					<button class="ecPanelButton"></button> Information about this interview
 			<button CSH="About" class="CSH"/></div>
 			
 			<div class="tabContentFrame">
@@ -148,7 +148,7 @@ function ts($filename)
 			</div>
 		</div>
 		<div class="panel" id="tabsVariables">
-			<div class="tabHeader">Variables used in this guide
+			<div class="tabHeader">Variables used in this interview
 			<button CSH="Variables" class="CSH"/></div>
 			
 			<div class="tabContentFrame">
@@ -265,7 +265,7 @@ function ts($filename)
 		
 		
 <div class="panel" id="tabsFiles">
-	<div class="tabHeader">Files currently attached to this guide
+	<div class="tabHeader">Files currently attached to this interview
 		<button CSH="Files" class="CSH"/> </div>
 	<div class="tabContentFrame">
 		<div class="tabContent editq"><table class="A2JFiles"><tbody id="attachmentFiles" class="files"></tbody></table>
@@ -288,7 +288,7 @@ function ts($filename)
 </div>
 
 	<div class="panel" id="tabsGuides">
-		<div class="tabHeader">Interviews
+		<div class="tabHeader">A2J Guided Interviews®
 		<button CSH="Interviews" class="CSH"/></div>
 		<div class="tabContentFrame">
 			<div class="tabContent editq">
@@ -312,7 +312,7 @@ function ts($filename)
 				<span class="fileinput-button">
 				<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
 					<span class="ui-button-icon-primary ui-icon ui-icon-plus"></span>
-					<span class="ui-button-text" >Upload A2J Guide...</span>
+					<span class="ui-button-text" >Upload A2J Guided Interview...</span>
 				</button>	
 					<!-- The file input field used as target for the file upload widget -->
 					<input id="guideupload" type="file" name="files[]" multiple />

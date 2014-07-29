@@ -70,7 +70,7 @@ function pageNameFieldsForTextTab(pagefs,page)
 
 
 
-function gotoPageView(destPageName)
+function gotoPageView(destPageName, url)
 {  // Navigate to given page (after tiny delay). This version only used for Author.
    window.setTimeout(function()
 	{
@@ -88,7 +88,10 @@ function gotoPageView(destPageName)
 		else
 		if (destPageName === CONST.qIDFAIL)
 		{
-			dialogAlert("Author note: User would be redirected to another page.");
+			if (makestr(url)===''){
+				url=gStartArgs.exitURL;
+			}
+			dialogAlert('Author note: User would be redirected to another page: <a target=_blank href="'+url+'">'+url+'</a>');
 		}
 		else
 		if (destPageName === CONST.qIDRESUME)
@@ -614,6 +617,14 @@ function guidePageEditForm(page, div, pagename)//novicePage
 			
 			t.append(fs);
 		}
+		
+		var updateButtonLayout=function(ff,b)
+		//** @param {TButton} b */
+		{	// Choose a URL for failing the interview
+			var showURL =(b.next === CONST.qIDFAIL);
+			ff.find('[name="url"]').showit(showURL);
+		};
+		
 		if (page.type === "A2J" || page.buttons.length > 0) {
 			var blankButton=new TButton();
 			
@@ -628,10 +639,16 @@ function guidePageEditForm(page, div, pagename)//novicePage
 						change:function(val,b){b.name=val;}}));
 					ff.append(form.text({value: b.value,label:'Default value:',placeholder:'Default value',
 						change:function(val,b){b.value=val;}}));
+					
 					ff.append(form.pickpage({value: b.next,label:'Destination:',
-						change:function(val,b){
-						b.next=val;}}));
-
+						change:function(val,b,ff){
+							b.next=val;
+							updateButtonLayout(ff,b);
+						}}));
+					ff.append(form.text({name:'url', value: b.url, label:'URL:',placeholder:'',
+						change:function(val,b,ff){
+							b.url=val;
+						}}));
 					ff.append(form.pickList({label:'Repeat Options:',value: b.repeatVarSet,
 									change:function(val,b,form){
 										b.repeatVarSet = val;
@@ -642,8 +659,8 @@ function guidePageEditForm(page, div, pagename)//novicePage
 					ff.append(form.varPicker(
 						{label:'Counting Variable:',placeholder:'',	value:b.repeatVar,
 						change:function(val,b){b.repeatVar=val;}} ));
-					
-				return ff;
+					updateButtonLayout(ff,b);
+					return ff;
 				}}));
 			t.append(fs);
 		}

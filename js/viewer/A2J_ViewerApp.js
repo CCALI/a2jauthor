@@ -95,11 +95,11 @@ function doSetDataURL(target)
 }
 
 
-function gotoPageView(destPageName)
+function gotoPageView(destPageName, url )
 {  // Viewer-only navigate to given page (after tiny delay)
    window.setTimeout(function()
 	{
-		var url;
+		//var url;
 		if (destPageName === CONST.qIDSUCCESS)
 		{	// On success exit, flag interview as Complete.
 			// Save data
@@ -116,7 +116,9 @@ function gotoPageView(destPageName)
 		else
 		if (destPageName === CONST.qIDFAIL)
 		{
-			url=gStartArgs.exitURL;
+			if (makestr(url)===''){
+				url=gStartArgs.exitURL;
+			}
 			window.parent.location = url; // Replace parent, not just this IFRAME.
 		}
 		else

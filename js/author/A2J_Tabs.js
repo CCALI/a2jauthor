@@ -554,7 +554,9 @@ var form={
 		var e =$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
 			+'<span class=editspan><select class="     ui-select-input">'+c+'</select></span></div>');
-		$('.ui-select-input',e).change(function(){form.change($(this),$('option:selected',this).val());}).data('data',data).val(data.value);
+		$('.ui-select-input',e).change(function(){
+			form.change($(this),$('option:selected',this).val());
+		}).data('data',data).val(data.value);
 		//trace(data.value,$('.ui-select-input',e).val());
 		if ($('.ui-select-input',e).val()!==String(data.value))
 		{

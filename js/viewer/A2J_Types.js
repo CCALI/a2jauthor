@@ -155,6 +155,7 @@ function TButton()
 {	// Guide defined button, 0 or more
 	this.label = "";  // Caption of button
 	this.next = ""; // Name of default page to jump to
+	this.url = ""; // URL if button is an Exit Fail
 	this.name = ""; // Variable name
 	this.value = ""; // Value - when clicked, variable 'name' gets value 'value'
 	this.repeatVar=""; // Old style repeat var - button option

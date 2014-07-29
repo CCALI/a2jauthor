@@ -660,7 +660,7 @@ var A2JViewer={
 							gGuide.varSet(f.name,f.value,varIndex);
 						}
 						// If a radio button is required but none have been checked, mark all.
-						val = $('input[name=FID_'+f.name+']:checked').val();
+						val = $('input[name="FID_'+f.name+'"]:checked').val();
 						if (typeof val ==='undefined' && f.required)
 						{
 							invalid=true;
@@ -725,8 +725,8 @@ var A2JViewer={
 						break;
 				}
 				
-				gotoPageView(b.next);
-		}
+				gotoPageView(b.next,b.url);
+			}
 		});//button click
 		
 	},

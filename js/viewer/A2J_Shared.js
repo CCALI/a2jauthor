@@ -181,9 +181,12 @@ function isNumber(n)
 function textToNumber(n)
 {	// Convert to number even with commas.
 	// If it's text, return 0. 
-	if (n==='' || n===null || typeof n === "undefined" )
+	if (n==='' || n===null || typeof n === "undefined" || n==="false")
 	{
 		return 0;
+	}
+	if (n==="true") {
+		return true;
 	}
 	if (isNumber(n)) {
 		return parseFloat(n);
@@ -433,7 +436,7 @@ function ismdy(str)
 	{
 		var parts=str.split('/');
 		if (parts.length===3) {
-			return (parseInt(parts[0])!=NaN) && (parseInt(parts[1])!=NaN) && (parseInt(parts[2])!=NaN);
+			return isNumber(parts[0])  && isNumber(parts[1])  && isNumber(parts[2]) ;
 		}
 	}
 	return false;

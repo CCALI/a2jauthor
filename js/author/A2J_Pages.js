@@ -68,8 +68,10 @@ function pageNameFieldsForTextTab(pagefs,page)
 	}
 }
 
-
-
+/**
+* @param {String} destPageName
+* @param {String} [url]
+*/
 function gotoPageView(destPageName, url)
 {  // Navigate to given page (after tiny delay). This version only used for Author.
    window.setTimeout(function()

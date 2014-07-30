@@ -38,12 +38,12 @@ gPrefs.save=function()
 {	// Save prefs to HTML5 LocalStorage
 	 if(typeof(Storage) !== "undefined")
 	 {
-		for (var p in this)
+		for (var p in gPrefs)
 		{
-			if (this.hasOwnProperty(p) && typeof this[p]!=='function')
+			if (gPrefs.hasOwnProperty(p) && typeof gPrefs[p]!=='function')
 			{
 				//trace('Setting saved: '+p+' = '+this[p]);
-				localStorage.setItem(p,this[p]); 
+				localStorage.setItem(p,gPrefs[p]); 
 			}
 		}
 	 }
@@ -53,9 +53,9 @@ gPrefs.load=function()
 {	// Load prefs from HTML5 LocalStorage
 	 if(typeof(Storage) !== "undefined")
 	 {
-		for (var p in this)
+		for (var p in gPrefs)
 		{
-			if (this.hasOwnProperty(p) && typeof this[p]!=='function')
+			if (gPrefs.hasOwnProperty(p) && typeof gPrefs[p]!=='function')
 			{
 				var v = localStorage.getItem(p);
 				if (v !== null)
@@ -69,7 +69,7 @@ gPrefs.load=function()
 					}
 					v= Number(v);
 					//trace('Setting loaded: '+p+' = '+v);
-					this[p] =Number(v);
+					gPrefs[p] =Number(v);
 				}
 			}
 		}

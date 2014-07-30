@@ -79,6 +79,7 @@ $.traggable=function(a){};
 
 /* Browser */
 var console;
+var localStorage;
 
 /* CAJA */
 function parseXML_CA_to_CAJA(a){}

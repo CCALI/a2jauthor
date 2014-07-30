@@ -568,6 +568,7 @@ TGuide.prototype.varExists=function(varName)
 /**
 * @param {string} varName
 * @param {string|number} [varIndex]
+* @param {Object} [opts]
 */
 TGuide.prototype.varGet=function(varName,varIndex,opts)
 {

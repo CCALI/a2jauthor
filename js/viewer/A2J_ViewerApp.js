@@ -95,11 +95,14 @@ function doSetDataURL(target)
 }
 
 
+/**
+* @param {string} destPageName
+* @param {string} [url]
+*/
 function gotoPageView(destPageName, url )
 {  // Viewer-only navigate to given page (after tiny delay)
    window.setTimeout(function()
 	{
-		//var url;
 		if (destPageName === CONST.qIDSUCCESS)
 		{	// On success exit, flag interview as Complete.
 			// Save data

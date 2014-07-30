@@ -440,8 +440,8 @@ function ts($filename)
 					</ul>
 				</li>
 			</ul>
-		<li>Advanced
-			<ul>
+		<li>Advanced 
+			<ul> 
 				<li  >
 					<input   type=checkbox id="setting_showJS"  >
 					Show JS</li>

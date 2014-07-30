@@ -9,7 +9,7 @@
 <HEAD> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<title>CALI Author Script Tester</title> 
+<title>A2J Author Script Tester</title> 
 
 <link  xhref="../viewer/a2j-jquery-ui.css" rel="stylesheet" type="text/css" media="all" />
 <link  xhref="../viewer/jquery.ui.custom.css" rel="stylesheet" type="text/css" />
@@ -186,43 +186,75 @@
 <p> Defines a named page for testing - all scripts within that page are parsed as a single block and GOTO will find it.</p>
 <table width="100%" border="3" cellpadding="5" cellspacing="0" class="testPages">
 	<tr>
-		<th width="100" valign="top" nowrap="nowrap">Page Name</th>
+		<th width="200" valign="top">Page Name</th>
 		<th valign="top" class="logic">Page Logic</th>
 	</tr>
+	<tr>
+		<td width="200" valign="top"><p>Syntax Error</p>
+			<p>Author Errors  </p>
+		</td>
+		<td valign="top" class="logic"><p>// Author included the IF in a condition creating double IFs</p>
+			<p>IF If [Client prior contact VLP TF] is &quot;True&quot;</p>
+			<blockquote>
+				<p>GOTO &quot;2-2_1_Disqualification&quot;</p>
+			</blockquote>			<p>END IF</p>
+			<p>// Author didn't include parens for HASANSWERED</p>
+			<p>IF HASANSWERED[Doesn't have alternate guardian TE] </p>
+			<p> END IF</p></td>
+	</tr>
+	<tr>
+		<td width="200" valign="top"><p>Syntax Error</p>
+			<p>Variable Names</p>
+			<p>Single quotes and slashes</p></td>
+		<td valign="top" class="logic"><p>// Single quote in variable name results in &quot;unterminated string literal&quot;</p>
+				<p>IF HASANSWERED([Doesn't have alternate guardian TE] )</p>
+			<p>END IF</p>
+			<p>// Slash / in variable name results in missing ] after element list</p>
+			<p>IF [G/C person age MC] is &quot;Minor&quot;</p>
+			<p> END IF</p>
+			<p>set test_text to  [G/C person age MC] </p>
+			<p>set test_text to [Doesn't have alternate guardian TE] </p>
+			<p>set test_text to [User_name] </p>
+			</div></td>
+	</tr>
 	<tr class="">
-		<td valign="top" nowrap="nowrap" class="macro"><span class="logic">Macro</span></td>
+		<td width="200" valign="top" class="macro">&nbsp;</td>
+		<td valign="top" class="macro">&nbsp;</td>
+	</tr>
+	<tr class="">
+		<td width="200" valign="top" class="macro"><span class="logic">Macro</span></td>
 		<td valign="top" class="macro"><p>Ensuring that variables with HTML tags are property encoded: %%test_name%%. </p></td>
 	</tr>
 	<tr class="">
-		<td valign="top" nowrap="nowrap" class="logic">Macro</td>
+		<td width="200" valign="top" class="logic">Macro</td>
 		<td valign="top" class="macro"><p  >The name of the %%ordinal(1)%% child is  %%[Child first name TE#1]%% and the %%ordinal(2)%% child's name is %%[Child first name TE#2]%%. </p></td>
 	</tr>
 	<tr class="">
-		<td valign="top" nowrap="nowrap"><span class="logic">Macro</span></td>
+		<td width="200" valign="top"><span class="logic">Macro</span></td>
 		<td valign="top" class="macro"><p  >The total of assets is %%sum([asset])%%. </p></td>
 	</tr>
 	<tr class="">
-		<td valign="top" nowrap="nowrap"><p>Macro</p></td>
+		<td width="200" valign="top"><p>Macro</p></td>
 		<td valign="top" class="macro"><p  >What is the name of the %%ordinal([ChildCount])%% child?</p></td>
 	</tr>
 	<tr class="">
-		<td valign="top" nowrap="nowrap">test</td>
+		<td width="200" valign="top">test</td>
 		<td valign="top" class="macro"><p>set test_text to [Child first name TE#1] + &quot; and &quot; + [Child first name TE#2]</p></td>
 	</tr>
 	<tr class="">
-		<td valign="top" nowrap="nowrap"><p>Macro</p>		</td>
+		<td width="200" valign="top"><p>Macro</p>		</td>
 		<td valign="top" class="macro"><p >Is %%[Child first name TE#ChildCount]%% %%[Child last name TE#ChildCount]%% a non-marital child? </p>		</td>
 	</tr>
 	<tr class="">
-		<td valign="top" nowrap="nowrap"><p>Macro</p></td>
+		<td width="200" valign="top"><p>Macro</p></td>
 		<td valign="top" class="macro"><p>English, Spanish: ¿Es Inglés?, Russian: Является?, Vietnamese: Đây có phải Anh?, Portuguese: É isto Inglês?, Haitian Creole: Èske sa se vrèman angle?, Simplified Chinese: 这是真的在另一种语言编写吗？</p></td>
 	</tr>
 	<tr>
-		<td valign="top" nowrap="nowrap"><p>&nbsp; </p></td>
+		<td width="200" valign="top"><p>STOP </p></td>
 		<td valign="top" class="logic">&nbsp;</td>
 	</tr>
 	<tr>
-		<td valign="top" nowrap="nowrap"><p>Function  Tests</p>
+		<td width="200" valign="top"><p>Function  Tests</p>
 				<p>Date</p></td>
 		<td valign="top" class="logic"><p>set test_date to &quot;12/31/1901&quot;</p>
 			<p>set test_date to TODAY</p>
@@ -237,7 +269,7 @@
 		</blockquote>		<p>end if</p></td>
 	</tr>
 	<tr>
-		<td valign="top" nowrap="nowrap"><p>Function Tests</p>
+		<td width="200" valign="top"><p>Function Tests</p>
 		<p>Date</p>
 		<p>NY Sample</p></td>
 		<td valign="top" class="logic"><p>SET [Decedent date of death DA] to &quot;1/1/2001&quot;</p>
@@ -258,21 +290,21 @@
 			</blockquote>			<p>		END IF</p></td>
 	</tr>
 	<tr>
-		<td valign="top" nowrap="nowrap">&nbsp; </td>
+		<td width="200" valign="top">&nbsp; </td>
 		<td valign="top" class="logic">&nbsp;</td>
 	</tr>
 	<tr>
-		<td valign="top" nowrap="nowrap"><p>Function  Tests  </p>
+		<td width="200" valign="top"><p>Function  Tests  </p>
 		<p>with Multiple arguments</p></td>
 		<td valign="top" class="logic"><p>//SET test_max to max(v1, v2, v3)</p></td>
 	</tr>
 	<tr>
-		<td valign="top" nowrap="nowrap"><p>Function  Tests</p>
+		<td width="200" valign="top"><p>Function  Tests</p>
 				<p> Sum</p></td>
 		<td valign="top" class="logic"><p>set test_text to &quot;Your total assets is $&quot; + dollar(sum([asset]) )</p>				 </td>
 	</tr>
 	<tr>
-		<td valign="top" nowrap="nowrap"><p>Function  Tests</p>
+		<td width="200" valign="top"><p>Function  Tests</p>
 		<p> Ordinal</p></td>
 		<td valign="top" class="logic"><p>set test_text to ordinal(0)</p>
 			<p>SET test_text to ordinal(1)</p>
@@ -281,7 +313,7 @@
 			<p>SET test_text to ordinal(2) + &quot; and &quot; + ordinal(7)</p>		</td>
 	</tr>
 	<tr>
-		<td valign="top" nowrap="nowrap"><p>Function  Tests</p>
+		<td width="200" valign="top"><p>Function  Tests</p>
 		<p> dollar</p></td>
 		<td valign="top" class="logic"><p>SET test_text to dollar(0)</p>
 		<p>SET test_text to dollar(15912)</p>
@@ -290,12 +322,12 @@
 		<p>SET test_text to DollarRound(999.25)</p></td>
 	</tr>
 	<tr>
-		<td valign="top" nowrap="nowrap"><p>Function  Tests</p>
+		<td width="200" valign="top"><p>Function  Tests</p>
 		<p> hisher</p></td>
 		<td valign="top" class="logic"><p>SET test_text to hisher(&quot;male&quot;) + &quot; and &quot; + hisher( &quot;female&quot; )</p></td>
 	</tr>
 	<tr>
-		<td valign="top" nowrap="nowrap"><p>Function Tests</p>
+		<td width="200" valign="top"><p>Function Tests</p>
 		<p> HasAnswerd</p></td>
 		<td valign="top" class="logic"><p>set test_name to &quot;&quot;</p>
 			<p>SET test_tf to HasAnswered([test_name])</p>
@@ -303,7 +335,7 @@
 		<p>SET test_tf to HasAnswered([test_name])</p></td>
 	</tr>
 	<tr>
-		<td valign="top" nowrap="nowrap">Test</td>
+		<td width="200" valign="top">Test</td>
 		<td valign="top" class="logic"> 
 				<p>IF [Married TF] = &quot;true&quot;</p>
 				<blockquote>
@@ -319,23 +351,7 @@
 		</div></td>
 	</tr>
 	<tr>
-		<td valign="top" nowrap="nowrap"><p>Syntax Error</p>			</td>
-		<td valign="top" class="logic"> 
-			<p>// Single quote in variable name results in &quot;unterminated string literal&quot;</p>
-			<p>IF HASANSWERED([Has alternate guardian TE])</p>
-			<blockquote>
-				<p> GOTO &quot;28. Name Child alternate guardian&quot;</p>
-			</blockquote>
-			<p>				END IF</p>
-			<p>IF HASANSWERED[Doesn't have alternate guardian TE] </p>
-			<blockquote>
-				<p> GOTO &quot;0.1- Information about witnesses&quot;</p>
-			</blockquote>
-			<p>				END IF</p>
-		</div></td>
-	</tr>
-	<tr>
-		<td valign="top" nowrap="nowrap"><p>Syntax Error</p>		</td>
+		<td width="200" valign="top"><p>Syntax Error</p>		</td>
 		<td valign="top" class="logic"><p>// %% within logic</p>
 			<p>IF  HASANSWERED([Guardian 1 middle name TE]) </p>
 			<blockquote>
@@ -347,7 +363,7 @@
 		</blockquote>			<p>END IF</p></td>
 	</tr>
 	<tr>
-		<td valign="top" nowrap="nowrap"><p>Syntax Error</p>		</td>
+		<td width="200" valign="top"><p>Syntax Error</p>		</td>
 		<td valign="top" class="logic"><p>// Double brackets on variable name</p>
 			<p>IF HASANSWERED([Declarant SSN TE#]) </p>
 			<blockquote>
@@ -355,7 +371,7 @@
 		</blockquote>			<p> END IF</p></td>
 	</tr>
 	<tr>
-		<td valign="top" nowrap="nowrap">Test Numbers</td>
+		<td width="200" valign="top">Test Numbers</td>
 		<td valign="top" class="logic"><p>set [income] to 25000</p>
 			<p>set [income] to 25,000</p>
 			<p>set [income] to $25,000set [income and benefits] to 25,000</p>
@@ -364,14 +380,14 @@
 			<p> set test to 25,000.25 + 65,000 + 125,000 + 5,000</p></td>
 	</tr>
 	<tr>
-		<td width="100" valign="top" nowrap="nowrap">Test Logic operators</td>
+		<td width="200" valign="top">Test Logic operators</td>
 		<td valign="top" class="logic"><p>set v to born or band or anot and not orvil or andy or notty</p>
 			<p>				set v to x = y and not (j &lt;&gt;  55)</p>
 			<p>				set v to age(user_born)  + age([first child birthdate#child counter]) + hisher ( [user gender] )</p>
 			<p>		set v to &quot;this [variable] should not be encoded&quot;</p></td>
 	</tr>
 	<tr>
-		<td width="100" valign="top" nowrap="nowrap"><p>Test Dates</p>			</td>
+		<td width="200" valign="top"><p>Test Dates</p>			</td>
 		<td valign="top" class="logic">			<p>set birthday TO #12/31/1960# // peanut's first strip?</p>
 			<p>				set anniversary to #12/31/2001#</p>
 			<p>				set jobdate to &quot;12/12/2012&quot; // in string form</p>
@@ -379,7 +395,7 @@
 			<p>		set info to datemdy([birthday])+&quot; was birthday and &quot; + diffdays + &quot; til anniversery&quot;</p></td>
 	</tr>
 	<tr>
-		<td width="100" valign="top" nowrap="nowrap"><p>Mobile - Adoption</p>			</td>
+		<td width="200" valign="top"><p>Mobile - Adoption</p>			</td>
 		<td valign="top" class="logic"><p>IF [Adoption child agree MC] is &quot;No&quot; </p>
 			<blockquote>
 				<p> GOTO &quot;9 Adoption dq1&quot;</p>
@@ -391,7 +407,7 @@
 			</blockquote>			<p>		END IF</p></td>
 	</tr>
 	<tr>
-		<td width="100" valign="top" nowrap="nowrap"><p>Syntax Error Test </p>
+		<td width="200" valign="top"><p>Syntax Error Test </p>
 		<p>for Text Block</p></td>
 		<td valign="top" class="logic"><p>			print The user's name is &lt;b&gt;%%Name%%&lt;/b&gt; or %%name%%. He was born on %%dateMDY(Birthday)%%.	25	+	-10 = %%25+-10%%. Your dollars are $%%dollarRound(pd)%% and your dollars and cents are $%%dollar(pd)%%.&lt;br&gt;</p>
 			<p>				// Syntax Error: formatting strange</p>
@@ -400,7 +416,7 @@
 			<p>		set pd  to pd + 5000</p></td>
 	</tr>
 	<tr>
-		<td width="100" valign="top" nowrap="nowrap"> NYTest2</td>
+		<td width="200" valign="top"> NYTest2</td>
 		<td valign="top" class="logic"><p>IF [Client relationship to decedent MC] = &quot;Wife&quot; </p>
 			<blockquote>
 				<p>				SET [Client is distributee spouse TF] TO &quot;true&quot;</p>
@@ -443,7 +459,7 @@
 										</p></td>
 	</tr>
 	<tr>
-		<td width="100" valign="top" nowrap="nowrap"><p>IF Nested</p>			</td>
+		<td width="200" valign="top"><p>IF Nested</p>			</td>
 		<td valign="top" class="logic"><p>set x=14</p>
 			<p>					set y=15</p>
 			<p>if x&gt;5			</p>
@@ -469,7 +485,7 @@
 			</blockquote>			<p>end if</p>		</td>
 	</tr>
 	<tr>
-		<td width="100" valign="top" nowrap="nowrap">Introduction 1 of 4</td>
+		<td width="200" valign="top">Introduction 1 of 4</td>
 		<td valign="top" class="logic"><p> // Set intitial variables</p>
 			<p>				set Name        to  &quot;Charlie&quot;</p>
 			<p>				set paragraph to &quot;English, Spanish: ¿Es Inglés?, Russian: Является?, Vietnamese: Đây có phải Anh?, Portuguese: É isto Inglês?, Haitian Creole: Èske sa se vrèman angle?, Simplified Chinese: 这是真的在另一种语言编写吗？&quot;<br />
@@ -495,11 +511,11 @@
 		<p>deltavars</p></td>
 	</tr>
 	<tr>
-		<td width="100" valign="top" nowrap="nowrap"><p>05b-Grandchild</p>			</td>
+		<td width="200" valign="top"><p>05b-Grandchild</p>			</td>
 		<td valign="top" class="logic">&nbsp;</td>
 	</tr>
 	<tr>
-		<td width="100" valign="top" nowrap="nowrap"> Counter Test</td>
+		<td width="200" valign="top"> Counter Test</td>
 		<td valign="top" class="logic"><p>SET [g_count] TO 0</p>
 			<p>				IF [Decedent has dead children TF] = &quot;true&quot; </p>
 			<blockquote>
@@ -513,18 +529,18 @@
 		<p>deltavars</p></td>
 	</tr>
 	<tr>
-		<td width="100" valign="top" nowrap="nowrap"><p>06-LOGIC STEP</p>
+		<td width="200" valign="top"><p>06-LOGIC STEP</p>
 			<p></p></td>
 		<td valign="top" class="logic"><p>&nbsp;</p>		</td>
 	</tr>
 	<tr>
-		<td width="100" valign="top" nowrap="nowrap"> Birth</td>
+		<td width="200" valign="top"> Birth</td>
 		<td valign="top" class="logic"><p>			set Name to &quot;Mr. Является&quot;</p>
 			<p>set birthday to #1/1/2001#</p>
 			<p>				set pet  to &quot;Snoopy&quot; +&quot; &quot;+ [last name]</p>		</td>
 	</tr>
 	<tr>
-		<td width="100" valign="top" nowrap="nowrap">Birth 2</td>
+		<td width="200" valign="top">Birth 2</td>
 		<td valign="top" class="logic"><p>SET birthday TO #12/31/1960# // peanut's first strip?</p>
 			<p>				set anniversary to #12/31/2001#</p>
 			<p>				set diffdays to anniversary - birthday</p>
@@ -536,7 +552,7 @@
 			<p>		set info to &quot;This value should not be set&quot;</p></td>
 	</tr>
 	<tr>
-		<td width="100" valign="top" nowrap="nowrap"> Child info 1.2</td>
+		<td width="200" valign="top"> Child info 1.2</td>
 		<td valign="top" class="logic"><p>				set c_count to 1</p>
 			<p>				set [Child first name TE#1] to &quot;Jack&quot;</p>
 			<p>				set [Child last name#c_count] to &quot;Smith&quot;</p>
@@ -550,7 +566,7 @@
 		<p>GOTO 'Section 2' // skip to section 2</p></td>
 	</tr>
 	<tr>
-		<td width="100" valign="top" nowrap="nowrap"> Syntax Error - With bad If</td>
+		<td width="200" valign="top"> Syntax Error - With bad If</td>
 		<td valign="top" class="logic"><p>				// Syntax Error: Missing an end if, should be error flagged</p>
 			<p>				if x=5</p>
 			<blockquote>
@@ -562,31 +578,20 @@
 			<p>		eraseAllAnswers</p></td>
 	</tr>
 	<tr>
-		<td width="100" valign="top" nowrap="nowrap"> Bad IF</td>
+		<td width="200" valign="top"> Bad IF</td>
 		<td valign="top" class="logic"><p>// ERROR: missing an endif</p>
 		<p>if missingAnEndif</p></td>
 	</tr>
 	<tr>
-		<td width="100" valign="top" nowrap="nowrap">Section 2</td>
+		<td width="200" valign="top">Section 2</td>
 		<td valign="top" class="logic"><p>			print This is section 2</p>			</td>
 	</tr>
 	<tr>
-		<td width="100" valign="top" nowrap="nowrap"> The End</td>
+		<td width="200" valign="top"> The End</td>
 		<td valign="top" class="logic"><p>deltavars</p>			</td>
 	</tr>
 </table> 
-<h2>Text Block Tests</h2>
-<table width="100%" border="3" cellpadding="5" cellspacing="0" class="testTexts">
-	<tr>
-		<th width="50%" valign="top">  Text</th>
-		<th width="50%" valign="top"> Results</th>
-	</tr>
-	<tr>
-		<td valign="top">&nbsp;</td>
-		<td valign="top">&nbsp;</td>
-	</tr>
-</table>
-<p>&nbsp;</p>
+<h2>&nbsp; </h2>
 <h2>Tests </h2>
 <p>Define testing </p>
 <table class="testTests"  width="100%" border="3" cellspacing="0" cellpadding="5">

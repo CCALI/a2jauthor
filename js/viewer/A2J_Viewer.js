@@ -277,7 +277,7 @@ var A2JViewer={
 		function prepHTML(htmlText)
 		{	// Take question text/learn text HTML and parse for logic blocks.
 			// Ensure hyperlinks target separate windows.
-			htmlText = gLogic.evalLogicHTML( htmlText );
+			htmlText = gLogic.evalLogicHTML( htmlText ).html;
 			var htmDiv = $('<div>'+htmlText+'</div>');
 			$('a',htmDiv).each(function(){
 				$(this).attr('TARGET','_BLANK');
@@ -361,7 +361,7 @@ var A2JViewer={
 
 
 			var defval=gGuide.varGet(f.name,varIndex);
-			var label = gLogic.evalLogicHTML(f.label);
+			var label = gLogic.evalLogicHTML(f.label).html;
 			var $label=$('<label/>').attr('for',fid).html(label);
 			var $input=null;
 			var $labelinput=null;

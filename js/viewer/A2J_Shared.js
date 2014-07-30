@@ -421,17 +421,45 @@ function mdy2jsDate(MDY)
 		var parts = MDY.split("/");
 		return new Date(parts[2], parts[0]-1,parts[1]);
 	}
-	else{
-		// return today if we don't recognize it.
-		return new Date();
+	else
+	{	// return today if we don't recognize it.
+		var d=new Date();
+		return new Date(d.getFullYear(),d.getMonth(),d.getDate());
 	}
+}
+function ismdy(str)
+{	//  Return true if str looks like a date (m/d/y)
+	if (typeof str === "string")
+	{
+		var parts=str.split('/');
+		if (parts.length===3) {
+			return (parseInt(parts[0])!=NaN) && (parseInt(parts[1])!=NaN) && (parseInt(parts[2])!=NaN);
+		}
+	}
+	return false;
+}
+function today2jsDate()
+{
+	return mdy2jsDate('');
+}
+function days2jsDate(numDays)
+{	// Return JS Date based on days since 1/1/1970
+	var d=new Date();
+	//trace('days2jsDate',numDays);
+	d.setTime(numDays*1000*60*60*24);
+	return d;
 }
 
 function jsDate2mdy(d)
 {	// 2014-06-16 Convert js date to A2J's M/D/Y format
+	//trace('jsDate2mdy',d,(d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear());
 	return (d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear();
 }
-
+function jsDate2days(d)
+{	// Convert JS date into days since 1/1/1970
+	//trace('jsDate2days',d);
+	return ( d.getTime() /  (1000*60*60*24));
+}
 
 function mdyTodmy(DMY)
 {	// 7/1/05 convert internal month/day/year format to HotDocs day/month/year format.

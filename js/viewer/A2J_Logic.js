@@ -43,7 +43,7 @@ function TLogic()
 		//+3//tracer
 		;
 	this.tracerID="#tracer";
-	this.userFunctions =  [];
+	this.userFunctions = {}; // list of user functions, property name is function name.
 	this.indent=0; // Tracing indent level/shows nesting code.
 	this.GOTOPAGE=null;// Optionally set by GOTO commmand in script. Allows us to breakout when needed.
 	return this;
@@ -79,24 +79,6 @@ TLogic.prototype.pageFindReferences = function(CAJAScript,findName,newName)
 	return result;
 };
 
-TLogic.prototype.evalLogicHTML = function(html)
-{	// Parse for %% declarations.
-	var parts=html.split("%%");
-	if (parts.length > 0)
-	{
-		html="";
-		var p;
-		for (p=0;p<parts.length;p+=2)
-		{
-			html += parts[p];
-			if (p<parts.length-1)
-			{
-				html += this.evalBlock(parts[p+1]);
-			}
-		}
-	}
-	return html;
-};
 
 TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 {	// Translate CAJA script statements of multiple lines with conditionals into JS script but do NOT evaluate.
@@ -247,11 +229,11 @@ TLogic.prototype.evalBlock = function(expressionInText)
 	var js=this.translateCAJAtoJSExpression(expressionInText, 1, errors);
 	if (errors.length === 0 )
 	{
-		js = "with (gLogic) { return ("+ js +")}";
 		try {
-			var f=(new Function( js ));
+			// This uses JavaScript EVAL. 
+			var f=(new Function( "with (gLogic) { return ("+ js +")}" ));
 			var result = f(); // Execute the javascript code. 
-			txt = result;
+			txt = htmlEscape(result);
 		}
 		catch (e) {
 			// Collect runtime errors
@@ -262,9 +244,30 @@ TLogic.prototype.evalBlock = function(expressionInText)
 	{	// Compile time error
 		txt='<span class="code">'+expressionInText+'</span><span class="err">' +'syntax error' + '</span>';
 	}
-	return txt;
+	return {js:js, text:txt};
 };
 
+TLogic.prototype.evalLogicHTML = function(html)
+{	// Parse for %% declarations. Return html block and js block for debugging.
+	var parts=html.split("%%");
+	var js=[];
+	if (parts.length > 0)
+	{
+		html="";
+		var p;
+		for (p=0;p<parts.length;p+=2)
+		{
+			html += parts[p];
+			if (p<parts.length-1)
+			{
+				var block = this.evalBlock(parts[p+1]);
+				html += block.text;
+				js.push(block.js);
+			}
+		}
+	}
+	return {js:js,html:html};
+};
 
 TLogic.prototype.hds = function(a2j4)
 {	// 08/23/2013 convert A2J4 style expression into new format
@@ -376,7 +379,7 @@ TLogic.prototype.translateCAJAtoJSExpression = function(CAJAExpression, lineNum,
 
 TLogic.prototype.addUserFunction = function(funcName,numArgs,func)
 {	// add a user defined function
-	this.userFunctions.push({name:funcName,numArgs:numArgs,func:func});
+	this.userFunctions[funcName.toLowerCase()] = {name:funcName,numArgs:numArgs,func:func};
 };
 
 
@@ -414,16 +417,30 @@ TLogic.prototype._VS = function(c,varname,varidx,val)
 	this.traceLogic(c);
 	return gGuide.varSet(varname,val,varidx);
 };
+
 TLogic.prototype._VG=function( varname,varidx)
 {
-	return gGuide.varGet(varname,varidx);
+	if (varname === 'TODAY')
+	{
+		//trace('Today',jsDate2days(today2jsDate()));
+		return jsDate2days(today2jsDate());
+	}
+	return gGuide.varGet(varname,varidx,{date2num:true});
 };
-TLogic.prototype._CF=function(f)
+TLogic.prototype._CF=function(fName,val)
 { 
 	//this.indent++;
-	this.traceLogic("Call function "+f); 
+	//this.traceLogic("Call function "+f);
+	var f  = this.userFunctions[fName.toLowerCase()];
+	if (!f) {
+		return 'Unknown function "'+fName+'"';
+	}
+	else
+	{
+		return f.func(val);
+		
+	}
 	//this.indent--;
-	return 0;
 };
 TLogic.prototype._ED=function(dstr)
 {
@@ -475,24 +492,93 @@ TLogic.prototype.executeScript = function(CAJAScriptHTML)
 	return true;
 };
 
+
+function niceNumber(val)
+{	// Return number formatted for human eyes, with commas.
+	return $.formatNumber(val,{format:"#,###", locale:"us"});
+}
+
 var gLogic = new TLogic();
+
+
+
+/* Logic Script functions */
+
 // Default user defined functions used by A2J
-gLogic.addUserFunction('Number',1,function(val){return parseFloat(val);});
+
+if ($.formatNumber)
+{
+	gLogic.addUserFunction('Dollar',1,function(val)
+	{	// Convert to dollar format, commas with 2 digits after 0.
+		return $.formatNumber(val,{format:"#,###.00", locale:"us"});
+	});
+	gLogic.addUserFunction('DollarRound',1,function(val)
+	{	// Convert to dollar format, commas and rounded to nearest dollar. 
+		return $.formatNumber(Math.round(val),{format:"#,##0", locale:"us"});
+	});
+}
+
+gLogic.addUserFunction('Number',1,function(val)
+{	// Convert something to a number or 0. 
+	return parseFloat(val);
+});
+
+gLogic.addUserFunction('HasAnswered',1,function(val)
+{	// Return true if variable answerd (actually if it's not ''.
+	return  (typeof val ==='undefined' || val === null || val === '')===false;
+});
+
+gLogic.addUserFunction('Sum',1,function(valArray)
+{	// Return true if variable answerd (actually if it's not ''.
+	var sum=0;
+	if (  valArray instanceof Array) {
+		var i;
+		for (i=1;i<valArray.length;i++) {
+			sum += parseFloat(valArray[i]);
+		}
+	}
+	return sum;
+});
+
+gLogic.addUserFunction('Ordinal',1,function(ordinal)
+{	// Map number to ordinal: 1 becomes first, 8 becomes eighth.
+	ordinal = parseInt(ordinal,10);
+	var txt = lang["Ordinals_"+ordinal];
+	if (!txt)		
+	{	// If not found in ordinal list, build from scratch in English form.
+		var ending;
+		switch (ordinal % 10)
+		{
+			case 1:
+				ending="st";
+				break;
+			case 2:
+				ending="nd";
+				break;
+			case 3:
+				ending="rd";
+				break;
+			default:
+				ending="th";
+		}
+		txt= niceNumber(ordinal)+ending;
+	}
+	return txt;
+});
+
+gLogic.addUserFunction('Date',1,function(val)
+{	// Assuming internal date is stored as time stamp since some offset.
+	// How can we switch to JS date?
+	return jsDate2mdy(days2jsDate(val));
+});
+
+
+
 gLogic.addUserFunction('String',1,function(val){return String(val);});
+
 gLogic.addUserFunction('HisHer',1,function(gender){return (gender==='male') ? 'his' : 'her';});
 gLogic.addUserFunction('HimHer',1,function(gender){return (gender==='male') ? 'him' : 'her';});
 gLogic.addUserFunction('HeShe',1,function(gender){ return (gender==='male') ? 'he' : 'she';});
-if ($.formatNumber){
-	gLogic.addUserFunction('Dollar',1,function(val){		return $.formatNumber(val,{format:"#,###.00", locale:"us"});});
-	gLogic.addUserFunction('DollarRound',1,function(val){	return $.formatNumber(Math.round(val),{format:"#,##0", locale:"us"});});
-}
-gLogic.addUserFunction('dateMDY',1,function(val)
-	{	// Assuming internal date is stored as time stamp since some offset.
-		// How can we switch to JS date?
-		var d=new Date();
-		d.setTime(val*1000*60*60*24);
-		return jsDate2mdy(d);
-	});
 
 
 function traceLogic(html)

@@ -60,7 +60,7 @@ PRE {
 	margin: 1px;
 	padding: 2px;
 }
-.Macro {
+x.Macro {
 	border: thin solid #CC9966;
 	background-color: #121;
 	padding: 15px;
@@ -131,6 +131,8 @@ td.varsame {
 td.vardiff {
 	color:#fff;
 } 
+td.logic {
+}
 table.testPages td.logic p   {
 	color: #8f8;
 	border-bottom: dotted 1px;
@@ -149,5 +151,14 @@ table.testPages td.logic blockquote {
 	margin-top: 0;
 	margin-bottom: 0;
 } 
-
+td.macro {
+	background-color:#000;
+}
+table.testPages td.macro p   {
+	color: #f8f;
+	background-color:#111;
+	line-spacing: 1em;
+	padding: 2px;
+	margin: 0px;
+} 
 /* */

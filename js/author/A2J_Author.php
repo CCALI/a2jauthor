@@ -18,7 +18,6 @@ function ts($filename)
 
 <link xhref="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/sunny/jquery-ui.css"  title="style" rel="stylesheet" type="text/css"/>
 <link xhref="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-darkness/jquery-ui.css"  title="style" rel="stylesheet" type="text/css"/>
-<link xhref="http://code.jquery.com/ui/1.9.0/themes/sunny/jquery-ui.css" title="style"  rel="stylesheet" type="text/css"/>
 
 <!--
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic&subset=latin,vietnamese,latin-ext' rel='stylesheet' type='text/css'>
@@ -45,7 +44,7 @@ function ts($filename)
 	switch ( 1 ){
 		case 0:	// include minimized code
 		?>
-			<script src="jQuery/jquery.custom.min.js?jsver=" type="text/javascript" ></script>
+			<script src="jQuery/jquery.custom.min.js?jsver=" type="text/javascript"></script>
 			<script src="A2J_AuthorApp.min.js?jsver=" type="text/javascript"></script>
 		<?php
 			break;
@@ -55,6 +54,8 @@ function ts($filename)
 			<script src="../viewer/jquery.xml.min.js" type="text/javascript" ></script>
 			<script src="../viewer/jquery.ui.combobox.js" type="text/javascript" ></script>
 			<script src="../viewer/jquery.ui.traggable.js" type="text/javascript" ></script>
+			<script src="../viewer/jshashtable-2.1.js" type="text/javascript"></script>
+			<script src="../viewer/jquery.numberformatter-1.2.1.jsmin.js" type="text/javascript"></script>
 			
 			<script src="jquery.fileupload.js"></script><!-- The basic File Upload plugin -->
 			<script src="jquery.fileupload-process.js"></script><!-- The File Upload processing plugin -->
@@ -65,6 +66,7 @@ function ts($filename)
 			<script src=<?=ts('../viewer/A2J_Shared.js')?> type="text/javascript"></script>
 			<script src=<?=ts('../viewer/A2J_SharedSus.js')?> type="text/javascript"></script>
 			<script src=<?=ts('../viewer/A2J_Languages.js')?> type="text/javascript"></script>
+			
 			<script src=<?=ts('../viewer/A2J_Logic.js')?> type="text/javascript"></script>
 			<script src=<?=ts('../viewer/A2J_Parser.js')?> type="text/javascript"></script>
 			<script src=<?=ts('../viewer/A2J_Viewer.js')?> type="text/javascript"></script>

@@ -22,8 +22,8 @@ var CONST = {
 	// Spinnner for loading wait
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
-	A2JVersionNum:"5.0.1.29",//VersionInfo.verNum
-	A2JVersionDate:"2014-07-28",
+	A2JVersionNum:"5.0.1.30",//VersionInfo.verNum
+	A2JVersionDate:"2014-07-30",
 	
 	
 	//CAVersionNum:"5.0.0",
@@ -462,7 +462,6 @@ TGuide.prototype.stepDisplayName=function(s)
 	else{
 		txt= '? (Unknown Step #'+s+')';
 	}
-	//trace('stepDisplayName',s,txt);
 	return txt;
 };
 
@@ -570,7 +569,7 @@ TGuide.prototype.varExists=function(varName)
 * @param {string} varName
 * @param {string|number} [varIndex]
 */
-TGuide.prototype.varGet=function(varName,varIndex)
+TGuide.prototype.varGet=function(varName,varIndex,opts)
 {
 	/** @type {TGuide} */
 	var guide=this;
@@ -578,26 +577,53 @@ TGuide.prototype.varGet=function(varName,varIndex)
 	/** @type {TVariable} */
 	var v=guide.varExists(varName);
 	
-	if (typeof varIndex==='undefined' || varIndex===null || varIndex===''){
-		varIndex=1;
-	}
 	if (v === null)
 	{
 		traceLogic('Undefined variable: '+ traceTag('var',varName)+ ((varIndex===0)?'':traceTag('varidx',varIndex) ));
 		return v;//'undefined';
 	}
+	if (typeof varIndex==='undefined' || varIndex===null || varIndex==='')
+	{
+		if (v.repeating)
+		{	// Repeating variable without an index returns array of all values
+			return v.values;
+		}
+		varIndex=1;
+	}
 	var val = v.values[varIndex]; 
-	switch (v.type){
+	switch (v.type)
+	{
 		case CONST.vtNumber:
-			 val=parseFloat(val);
+			val=parseFloat(val);
 			break;
+		
 		case CONST.vtDate:
-			// TODO: do we convert date's into daysSince1970, like A2J 4 so we can add? or require specific date operators?
+			if (opts && opts.date2num===true )
+			{	// For calculations like comparing dates or adding days we convert date to number,
+				//  daysSince1970, like A2J 4.
+				if (val!=='')
+				{	// 11/28/06 If date is blank DON'T convert to number.
+					val = jsDate2days(mdy2jsDate(val));
+					//trace('Date as #',val);
+				}
+			}
 			break;
+		
+		case CONST.vtText:
+			
+			if (opts && opts.date2num===true && ismdy(val))
+			{	// If it's a date type or looks like a date time, convert to number of days.
+				val = jsDate2days(mdy2jsDate(val));
+				//trace('Date as #',val);
+			}
+			break;
+		
+		
 		case CONST.vtTF:
 			 val= (val>0) || (val===true) || (val==='true');
 			break;
 	}
+	//trace('varGet',varName,varIndex,val);
 	return val;
 };
 
@@ -659,9 +685,7 @@ TGuide.prototype.varCreateOverride=function(varName,varType,varRepeat,varComment
 */
 TGuide.prototype.varSet=function(varName,varVal,varIndex)//setVariableLoop
 {
-	//varName = jQuery.trim(varName);
 	var guide=this;
-	//var varName_i=varName.toLowerCase();
 	/** @type {TVariable} */
 	var v=guide.varExists(varName);//guide.vars[varName_i];
 	if (v === null)
@@ -672,10 +696,23 @@ TGuide.prototype.varSet=function(varName,varVal,varIndex)//setVariableLoop
 	if ((typeof varIndex==='undefined') || (varIndex===null) || (varIndex==='')){
 		varIndex=0;		
 	}
+	// Handle type conversion, like number to date.
+	switch (v.type)
+	{		
+		case CONST.vtDate:
+			if (typeof varVal==='number')
+			{
+				varVal =jsDate2mdy(days2jsDate(varVal));
+				//trace('Convert date # back to m/d/y',varVal);
+			}
+			break;
+	}
+	
 	// Set value but only trace if the value actually is different. 
 	if (varIndex===0)
 	{
-		if (v.values[1]!==varVal) {
+		if (v.values[1]!==varVal)
+		{
 			gLogic.indent++;
 			gLogic.traceLogic(traceTag('var',varName)+'='+traceTag('val',varVal));
 			gLogic.indent--;
@@ -692,6 +729,7 @@ TGuide.prototype.varSet=function(varName,varVal,varIndex)//setVariableLoop
 		}
 		v.values[varIndex]=varVal;
 	}
+	//trace('varSet',varName,varIndex,varVal);
 };
 
 

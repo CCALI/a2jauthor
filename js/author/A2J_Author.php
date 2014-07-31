@@ -7,6 +7,7 @@
 -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<link rel="shortcut icon" href="http://www.a2jauthor.org/sites/all/themes/a2j_author/favicon.ico" type="image/jpeg" />
 <title>A2J Author 5</title>
 <?php
 function ts($filename)

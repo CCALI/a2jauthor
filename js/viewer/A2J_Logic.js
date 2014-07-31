@@ -290,6 +290,10 @@ TLogic.prototype.translateCAJAtoJSExpression = function(CAJAExpression, lineNum,
 	for (j=0;j<js.length;j+=2)
 	{
 		var jj=js[j];
+		
+		// Strip out $ from $25,000 and inappropriate %%.
+		jj = jj.replace(/\$|\%\%/gi,'');
+		
 		//	A2J variables support spaces and other symbols using [] delimiter notation.
 		//		Examples: Name, G/C person age MC, Doesn't have alternate guardian TE, Child Name, Child Name 2, Child Name#2, Child Name#Child Index
 		// Variable formats:
@@ -305,6 +309,7 @@ TLogic.prototype.translateCAJAtoJSExpression = function(CAJAExpression, lineNum,
 		//			[child name#child counter] converts to GetVar("child name",GetVar("child counter"))
 		jj = jj.replace(/\[([\w|\s|\-|\'|\/]+)#([\w|\s|\-|\'|\/]+)\]/gi,"$$1(\"$1\",$$1(\"$2\"))");
 
+		
 		//	A2J dates bracketed with # like VB
 		//		#12/25/2012# converts to convertDate("12/25/2012")
 		var date = /#([\d|\/]+)#/gi;

@@ -265,18 +265,27 @@ var A2JViewer={
 		//TODO loopcounter; break out if we are in infinite loop
 		
 		gLogic.GOTOPAGE=null;
-		if (makestr(page.codeBefore)!=='') {
+		if (makestr(page.codeBefore)!=='')
+		{
 			traceLogic(traceTag('info','Logic Before Question'));
 			gLogic.executeScript(page.codeBefore);
 			// TODO code returns immediately after a GOTO PAGE call. Check to see if our page changed.
-			traceLogic(traceTag('info','Asking Question'));
+			if (gLogic.GOTOPAGE!==null && gLogic.GOTOPAGE!==gPage.name)
+			{
+				gotoPageView(gLogic.GOTOPAGE);
+			}
+			else
+			{
+				traceLogic(traceTag('info','Asking Question'));				
+			}
 		}
 		
 		
 		
 		function prepHTML(htmlText)
-		{	// Take question text/learn text HTML and parse for logic blocks.
+		{	// Take question text, learn text, popup text HTML and parse for logic blocks.
 			// Ensure hyperlinks target separate windows.
+			// TODO strip put any bad tags
 			htmlText = gLogic.evalLogicHTML( htmlText ).html;
 			var htmDiv = $('<div>'+htmlText+'</div>');
 			$('a',htmDiv).each(function(){
@@ -509,7 +518,7 @@ var A2JViewer={
 			var popupID = String($(this).attr('href')).substr(8);
 			var page = gGuide.pages[popupID];
 			if (page) {
-			  var htmlText = page.text;
+			  var htmlText = prepHTML(page.text);
 			  $('.ui-form.popup',div).html(htmlText);
 			  $('.popup.panel',div).show();
 			}
@@ -697,10 +706,17 @@ var A2JViewer={
 					gGuide.varSet(b.name,b.value,varIndex);
 				}
 				
+				// Our default next page is derived from the button pressed.
+				// Might be overridden by the After logic.
+				gLogic.GOTOPAGE=b.next;				
 				// execute the logic
-				gLogic.GOTOPAGE=b.next;
-				gLogic.executeScript(page.codeAfter);
-				// TODO HANDLE LOOPS
+				if (makestr(page.codeAfter)!=='')
+				{
+					// TODO HANDLE LOOPS
+					traceLogic(traceTag('info','Logic After Question'));
+					gLogic.executeScript(page.codeAfter);
+				}
+		
 				
 				// 2014-06-03 Button repeat/counters.
 				switch (b.repeatVarSet)
@@ -725,7 +741,16 @@ var A2JViewer={
 						break;
 				}
 				
-				gotoPageView(b.next,b.url);
+				
+				if (gLogic.GOTOPAGE === b.next)
+				{	// If logic didn't change our destination, go with button's choice, including optional url.
+					gotoPageView(b.next,b.url);
+				}
+				else
+				{	// Logic changed our destination so follow that. 
+					gotoPageView(gLogic.GOTOPAGE);
+					
+				}
 			}
 		});//button click
 		

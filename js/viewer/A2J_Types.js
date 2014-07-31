@@ -595,7 +595,11 @@ TGuide.prototype.varGet=function(varName,varIndex,opts)
 	switch (v.type)
 	{
 		case CONST.vtNumber:
-			val=textToNumber(val);
+			
+			if (opts && opts.num2num===true )
+			{	// For calculations for number to be number even if blank.
+				val=textToNumber(val);
+			}
 			break;
 		
 		case CONST.vtDate:

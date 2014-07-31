@@ -430,7 +430,7 @@ TLogic.prototype._VG=function( varname,varidx)
 		//trace('Today',jsDate2days(today2jsDate()));
 		return jsDate2days(today2jsDate());
 	}
-	return gGuide.varGet(varname,varidx,{date2num:true});
+	return gGuide.varGet(varname,varidx,{date2num:true, num2num:true});
 };
 TLogic.prototype._CF=function(fName,val)
 { 

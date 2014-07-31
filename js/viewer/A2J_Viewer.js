@@ -413,7 +413,17 @@ var A2JViewer={
 				   break;
 				
 				case CONST.ftNumberPick://"Number (Pick from list)"
-				   $input=($('<input type=text id='+fid+'></input>').val(defval));
+				   //$input=($('<input type=text id='+fid+'></input>').val(defval));
+					
+				   $input=($('<select id='+fid+'></select>').val(defval));
+					var listData='';
+					var o;
+					for (o=f.min;o<=Math.min(f.max,f.min+2000);o++)
+					{
+						listData += '<option value="'+o+'">'+o+'</option>';
+					}
+					loadXMLList({elt:$input,data:'<select>'+listData+'</select>',val:defval});
+					
 				   break;
 				
 				case CONST.ftDateMDY://"Date MM/DD/YYYY"

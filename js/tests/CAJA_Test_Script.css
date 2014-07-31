@@ -89,6 +89,10 @@ span.code {
 	border: thin solid #CC9966;
 	background-color: #222;
 }
+span.info {
+	border: thin solid #CC9966;
+	background-color: #224;
+}
 span.var {
 	border: thin solid #CC9966;
 	background-color: #331;

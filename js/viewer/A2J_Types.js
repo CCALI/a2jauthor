@@ -595,7 +595,7 @@ TGuide.prototype.varGet=function(varName,varIndex,opts)
 	switch (v.type)
 	{
 		case CONST.vtNumber:
-			val=parseFloat(val);
+			val=textToNumber(val);
 			break;
 		
 		case CONST.vtDate:
@@ -729,6 +729,7 @@ TGuide.prototype.varSet=function(varName,varVal,varIndex)//setVariableLoop
 			gLogic.indent--;
 		}
 		v.values[varIndex]=varVal;
+
 	}
 	//trace('varSet',varName,varIndex,varVal);
 };

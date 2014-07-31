@@ -13,7 +13,7 @@ var REG={
 	,LOGIC_SETTO: /set\s+([\w#]+|\[.+\])\s*?(=|TO)\s?(.+)/i
 	,LOGIC_GOTO: /^goto\s+\"(.+)\"/i
 	,LOGIC_GOTO2: /^goto\s+(.+)/i
-	,LOGIC_PRINT: /print\s+(.+)/i
+	,LOGIC_TRACE: /trace\s+(.+)/i
 	,LOGIC_ELSEIF:  /^else if\s+(.+)/i
 	,LOGIC_IF: /^if\s+(.+)/i
 	,LOGIC_LE: /\<\=\=/gi

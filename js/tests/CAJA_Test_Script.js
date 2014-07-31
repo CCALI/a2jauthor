@@ -7,6 +7,52 @@
 var testunit=gLogic;
 
 
+function createVariable(row)
+{	// Create variable from table row
+	var varName =jQuery.trim( $('td:nth-child(1)',row).text());
+	var varType =jQuery.trim( $('td:nth-child(2)',row).text());
+	var varIndex =jQuery.trim( $('td:nth-child(3)',row).text());
+	var varVal =jQuery.trim( $('td:nth-child(4)',row).text());
+	var varRepeating;
+	if (varIndex!=='') {
+		varRepeating=true;
+		varIndex = parseInt(varIndex);
+	}
+	else{
+		varRepeating=false;
+		varIndex = '';
+	}
+	var mapType={
+		'text':CONST.vtText,
+		'number':CONST.vtNumber,
+		'tf':CONST.vtTF,
+		'date':CONST.vtDate
+	}
+	varType = mapType[varType];
+	
+	if (varName!='')
+	{
+		var v  =gGuide.varExists(varName);
+		if (v === null || v.repeating !== varRepeating || v.type != varType)
+		{	// If variable doesn't exist or isnt' the same type, create/overwrite.
+			v=gGuide.varCreate(varName,varType,varRepeating,'');
+			trace('override',varName);
+		}
+		if (!varRepeating)
+		{
+			gGuide.varSet(varName,varVal);
+			//trace('var',varName,varVal);
+		}
+		else
+		{
+			if (varIndex>0)
+			{
+				gGuide.varSet(varName,varVal,varIndex);
+				//trace('var#',varName,varIndex,varVal);
+			}	
+		}
+	}
+}
 
 function loadTestUnit(nth)
 { 
@@ -15,46 +61,8 @@ function loadTestUnit(nth)
 	testunit.varsOld={}; 
 	$('table.testVariables tr').each(function(i){
 		if (i==0) return;
-		var varName =jQuery.trim( $('td:nth-child(1)',this).text());
-		var varType =jQuery.trim( $('td:nth-child(2)',this).text());
-		var varIndex =jQuery.trim( $('td:nth-child(3)',this).text());
-		var varVal =jQuery.trim( $('td:nth-child(4)',this).text());
-		if (varIndex!=='') {
-			varRepeating=true;
-			varIndex = parseInt(varIndex);
-		}
-		else{
-			varRepeating=false;
-			varIndex = '';
-		}
-		
-		var mapType={
-			'text':CONST.vtText,
-			'number':CONST.vtNumber,
-			'tf':CONST.vtTF,
-			'date':CONST.vtDate
-		}
-		if (varName!='')
-		{
-			var v  =gGuide.varExists(varName);
-			if (v === null)
-			{
-				v=gGuide.varCreate(varName,mapType[varType],varRepeating,'');
-			}
-			if (!varRepeating)
-			{
-				gGuide.varSet(varName,varVal);
-			}
-			else
-			{
-				if (varIndex>0)
-				{
-					gGuide.varSet(varName,varVal,varIndex);
-				}	
-			}
-			
-			//testunit.traceLogic('NewVar',v.name,v.type,v.repeating);
-		}
+		createVariable(this);
+		//testunit.traceLogic('NewVar',v.name,v.type,v.repeating);
 	});
 
 
@@ -67,32 +75,29 @@ function loadTestUnit(nth)
 	var skip=false;
 	var pageList=[];
 	
-	$('table.testPages tr').each(function(i)
+	$('table.testPages > tbody > tr').each(function(i)
 	{
 		if (i==0) return;
 		var pageName =jQuery.trim( $('td:first',this).text());
 		if (pageName == 'STOP') {
 			skip=true;
 		}
-		var isMacro;
-		if (pageName == 'Macro') {
-			isMacro=true;
-		}
-		else
-		{
-			isMacro=false;
-		}
 		
-		
+		//trace('pageName',pageName);
 		if (skip || pageName == '') return;
-		//trace(pageName);
 		
-		var page = { row:this, name:pageName, macro:isMacro,lines:[]};
+		var page = { row:this, name:pageName, chunks:[]};
 		
 		pageList.push(page); 
 		gGuide.pages[pageName.toLowerCase()] = page;
 		
-		var pageLogic =jQuery.trim( $('td:nth(1)',this).text());
+		$('td:nth(1)   table:first > tbody > tr',this).each(function(i){
+			var type =jQuery.trim( $('td:first',this).text());
+			var text =jQuery.trim( $('td:nth(1)',this).text());
+			page.chunks.push({type:type,text:text, row:this});
+			trace('type',type);
+		})
+		/*var pageLogic =jQuery.trim( $('td:nth(1)',this).text());
 		
 		var lines=pageLogic.split("\n");			
 		for (var l=0;l<lines.length;l++)
@@ -106,7 +111,8 @@ function loadTestUnit(nth)
 			//	curpage.lines.push(lines[l]);
 			//}
 			page.lines.push(lines[l]);
-		}
+		}*/
+		
 	});
 	
 
@@ -121,79 +127,95 @@ function loadTestUnit(nth)
 	for (var p in pageList)
 	{
 		var page=pageList[ p ];
-		var lines = page.lines;
 		
-		if (page.macro )
-		{	// Handle Macro
-			$('td:nth(1)',page.row).html(
-				 '<h2>Source</h2>' + $('td:nth(1)',page.row).html()
-				+'<h2>Execution</h2>' + '<ol class="exec"></ol>' 
-				);
-			testunit.target =  $('td:nth(1) ol.exec',page.row);
-			var result = gLogic.evalLogicHTML(lines.join(' '));
-			$('td:nth(1)',page.row).append(
-				'<h2>Expanded</h2>' + '<BLOCKQUOTE class="Script">' + result.html + "</BLOCKQUOTE>"
+		for (c in page.chunks)
+		{
+			var chunk = page.chunks[c];
+			if (chunk.type=='vars')
+			{
 				
-				+'<h2>Javascripted</h2>' + result.js.join('<hr>')
-				);
-		}
-		else
-		{	// Handle Logic
-			var script = page.script  = gLogic.translateCAJAtoJS(lines.join(CONST.ScriptLineBreak));
-			var t=[];
-			for (l=0;l<lines.length;l++)
-			{
-				var err=null;
-				for (var e in script.errors)
-					if (script.errors[e].line == l)
-						err=script.errors[e];
-				if (err == null)
-					t.push(lines[l]);
-				else
-				{
-					t.push('<span class="err">'+lines[l]+"</span>");
-				}
-			}
-			// Parsed script
-			var scriptHTML = t.join("<BR/>");
-			
-			// Javascripted version
-			var t=[];
-			for (l=0;l<script.js.length;l++)
-			{
-				t.push(script.js[l]);
-			}
-			var jsScriptHTML = t.join("<hr>");
-			
-			// Syntax errors
-			var errHTML = '';
-			for (var e in script.errors)
-			{
-				err=script.errors[e];
-				errHTML += ("<li>Line "+err.line+": "+err.text);
-			}
-			
-			
-			$('td:nth(1)',page.row).html(
-				 '<h2>Source</h2>' + $('td:nth(1)',page.row).html() 
-				+'<h2>Parsed</h2>' + '<BLOCKQUOTE class="Script">' + scriptHTML + "</BLOCKQUOTE>"
-				+(errHTML!=''? '<h2>Syntax errors</h2><ul>' + errHTML +'</ul>' : '')
-				+'<h2>Execution</h2>' + '<ol class="exec"></ol>' 
-				+'<h2>Javascripted</h2>' + jsScriptHTML 
-				);
-
-			testunit.target =  $('td:nth(1) ol.exec',page.row);
-			if (script.errors.length > 0)
-			{
-				testunit.trace('Skipping due to errors');
+				$('td:nth(1)',chunk.row).html(
+					 '<h2>Source</h2>' + $('td:nth(1)',chunk.row).html()
+					+'<h2>Execution</h2>' + '<ol class="exec"></ol>' 
+					);
+				testunit.target =  $('td:nth(1) ol.exec',chunk.row); 
+				$('table tbody tr',chunk.row).each(function(i){
+					createVariable(this);
+				});
 			}
 			else
-			{
-				execute (script);
+			if (chunk.type=="macro") 
+			{	// Handle Macro
+				$('td:nth(1)',chunk.row).html(
+					 '<h2>Source Text</h2>' + $('td:nth(1)',chunk.row).html()
+					+'<h2>Execution</h2>' + '<ol class="exec"></ol>' 
+					);
+				testunit.target =  $('td:nth(1) ol.exec',chunk.row);
+				var result = gLogic.evalLogicHTML(chunk.text);//lines.join(' '));
+				$('td:nth(1)',chunk.row).append(
+					'<h2>Expanded</h2>' + '<BLOCKQUOTE class="Script">' + result.html + "</BLOCKQUOTE>"
+					
+					+'<h2>Javascripted</h2>' + result.js.join('<hr>')
+					); 
+			}
+			else
+			{	// Handle Logic
+				var lines = chunk.text.split('\n');//page.lines;
+				var script = page.script  = gLogic.translateCAJAtoJS(lines.join(CONST.ScriptLineBreak));
+				var t=[];
+				for (l=0;l<lines.length;l++)
+				{
+					var err=null;
+					for (var e in script.errors)
+						if (script.errors[e].line == l)
+							err=script.errors[e];
+					if (err == null)
+						t.push(lines[l]);
+					else
+					{
+						t.push('<span class="err">'+lines[l]+"</span>");
+					}
+				}
+				// Parsed script
+				var scriptHTML = t.join("<BR/>");
+				
+				// Javascripted version
+				var t=[];
+				for (l=0;l<script.js.length;l++)
+				{
+					t.push(script.js[l]);
+				}
+				var jsScriptHTML = t.join("<hr>");
+				
+				// Syntax errors
+				var errHTML = '';
+				for (var e in script.errors)
+				{
+					err=script.errors[e];
+					errHTML += ("<li>Line "+err.line+": "+err.text);
+				}
+				
+				
+				$('td:nth(1)',chunk.row).html(
+					 '<h2>Source Logic</h2>' + $('td:nth(1)',chunk.row).html() 
+					+'<h2>Parsed</h2>' + '<BLOCKQUOTE class="Script">' + scriptHTML + "</BLOCKQUOTE>"
+					+(errHTML!=''? '<h2>Syntax errors</h2><ul>' + errHTML +'</ul>' : '')
+					+'<h2>Execution</h2>' + '<ol class="exec"></ol>' 
+					+'<h2>Javascripted</h2>' + jsScriptHTML 
+					);
+	
+				testunit.target =  $('td:nth(1) ol.exec',chunk.row);
+				if (script.errors.length > 0)
+				{
+					testunit.trace('Skipping due to errors');
+				}
+				else
+				{
+					execute (script);
+				}				
 			}
 		}
-
-		
+		 
 	}
 
 	testunit.target = $('.ScriptTrace');

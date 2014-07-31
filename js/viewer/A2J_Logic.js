@@ -146,9 +146,9 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 				js=("_GO("+jquote(line)+","+pageNameExp+");return;");
 			}
 			else
-			if ((args = line.match(REG.LOGIC_PRINT))!==null)
-			{
-				js="";
+			if ((args = line.match(REG.LOGIC_TRACE))!==null)
+			{ 
+				js=("_TRACE("+jquote(line)+","+this.translateCAJAtoJSExpression(args[1], l, errors)+")");
 			}
 			else
 			if ((args = line.match(REG.LOGIC_IF ))!==null)
@@ -454,6 +454,13 @@ TLogic.prototype._GO = function(c,pageName)
 	this.traceLogic(c);
 	//this.traceLogic("Going to page "+traceTag('page',this.GOTOPAGE));
 };
+TLogic.prototype._TRACE = function(c,exp)
+{
+	this.traceLogic(  c );
+	this.indent++;
+	this.traceLogic( traceTag('info', exp));
+	this.indent--;
+};
 TLogic.prototype._deltaVars = function()
 {
 };
@@ -539,6 +546,41 @@ gLogic.addUserFunction('Sum',1,function(valArray)
 	}
 	return sum;
 });
+
+gLogic.addUserFunction('Age',1,function( val )
+{	// 2014-07-30 Return age in years
+	
+	// To test, compare against today's month and day but with an
+	// earlier year and choosing 1 day before and 1 day after.
+	var myDate;
+	if (ismdy(val)) {
+		myDate = mdy2jsDate(val); 
+	}
+	else{
+		myDate = days2jsDate(val);
+	}
+	var nowDate = today2jsDate(); 
+	var y1=myDate.getFullYear();
+	var y2=nowDate.getFullYear();
+	var m1=myDate.getMonth();
+	var m2=nowDate.getMonth();
+	var d1=myDate.getDate();
+	var d2=nowDate.getDate();
+	if (y1===y2)
+	{	// same year, return 0
+		return 0;
+	}
+	else
+	if (m1<m2 || (m1===m2 && d1<=d2))
+	{	// month earlier, or month same but date earlier, return year diff
+		return y2-y1;
+	}
+	else
+	{	// otherwise return year diff plus 1
+		return y2-y1-1;
+	}
+	
+}); 
 
 gLogic.addUserFunction('Ordinal',1,function(ordinal)
 {	// Map number to ordinal: 1 becomes first, 8 becomes eighth.

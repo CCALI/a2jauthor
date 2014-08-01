@@ -980,19 +980,51 @@ TGuide.prototype.buildTabVariables = function (t)
 };
 
 
+// 2014-08-01 Get/restore selected text when setting hyperlink or popup.
+// Chrome forgest selection when using Popup picker. 
+//http://stackoverflow.com/questions/5605401/insert-link-in-contenteditable-element
+function saveSelection() {
+    if (window.getSelection) {
+        sel = window.getSelection();
+        if (sel.getRangeAt && sel.rangeCount) {
+            var ranges = [];
+            for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+                ranges.push(sel.getRangeAt(i));
+            }
+            return ranges;
+        }
+    } else if (document.selection && document.selection.createRange) {
+        return document.selection.createRange();
+    }
+    return null;
+}
+
+function restoreSelection(savedSel) {
+    if (savedSel) {
+        if (window.getSelection) {
+            sel = window.getSelection();
+            sel.removeAllRanges();
+            for (var i = 0, len = savedSel.length; i < len; ++i) {
+                sel.addRange(savedSel[i]);
+            }
+        } else if (document.selection && savedSel.select) {
+            savedSel.select();
+        }
+    }
+}
 function editButton()
 {	// ### For the simple editor, handle simple styles.
 		
 	function editLinkOrPop(preferURL)
-	{
+	{	// 2014-08-01 
 		// Return selected text and url (a href) or blank if none.
 		// Used when setting external link or popup link.
+		// TODO - integrate CKEditor which will need custom Popup handling code
 		var url='';
 		var txt='';
-		var sel=window.getSelection();
-		if (sel!='')
-		{
-			var range=sel.getRangeAt(0);
+		var sel = saveSelection();
+		if (sel) {
+			var range=sel[0];
 			var div = document.createElement('div');
 			div.appendChild(range.cloneContents());
 			url = $('a',div).attr('href');
@@ -1017,7 +1049,11 @@ function editButton()
 				{
 					html = '<a href="'+url+'">'+txt+'</a>';
 				}
+				restoreSelection(sel);
+				trace('window.getSelection', window.getSelection());
+				trace('html',html);
 				document.execCommand('insertHTML',false,  html );
+				trace('window.getSelection', window.getSelection());
 			}
 		}
 		
@@ -1039,10 +1075,11 @@ function editButton()
 			//pop = window.prompt("Popup?", pop);
 			form.pickPopupDialog('',{value:pop},function(newPop)
 			{
-				alert(newPop);
-				if (newPop!=null) {
-					if (newPop=='') {
-						url=='';
+				if (newPop!==null)
+				{
+					if (newPop==='')
+					{
+						url='';
 					}
 					else
 					{

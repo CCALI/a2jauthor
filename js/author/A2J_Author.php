@@ -472,6 +472,8 @@ function ts($filename)
 	<div id="texttoolbar" class="texttoolbar ui-widget-header ui-corner-all">
 		<button id="bold">bold</button>
 		<button id="italic">italic</button>
+		<button id="indent">indent</button>
+		<button id="outdent">outdent</button>
 		<button id="link">link</button>
 		<button id="popup">popup</button>
 	</div>

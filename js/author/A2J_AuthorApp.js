@@ -348,6 +348,10 @@ function main()
 
 	$( "#bold" ).button({label:'B'}).click(editButton);
 	$( "#italic" ).button({label:'I'}).click(editButton);
+	
+	$( "#indent" ).button({text:false, icons: {primary:'ui-icon-arrowstop-1-e'}}).click(editButton);
+	$( "#outdent" ).button({text:false, icons: {primary:'ui-icon-arrowstop-1-w'}}).click(editButton);
+
 	$( "#link" ).button({text:false, icons: {primary:'ui-icon-link'}}).click(editButton);
 	$( "#popup" ).button({label:'P'}).click(editButton);
 	

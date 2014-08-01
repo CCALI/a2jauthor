@@ -247,7 +247,7 @@ var form={
 			]});
 	}
 	
-	,pickPopupDialog:function(pageButton,data)
+	,pickPopupDialog:function(pageButton,data,doneFnc)
 	{	// 2014-07-21 Display popup picker modal dialog, default selecting page named data.value.
 		// Clone the TOC, select the default page name, scroll into view, remove non-popups.
 		var pageName=data.value;
@@ -279,13 +279,26 @@ var form={
 					$('#page-picker-list').empty();
 				},
 				buttons:[
+				/*{text:'New', click:function()
+					{
+						var newPageDest = makestr($('#page-picker-list li.'+SELECTED).first().attr('rel')).substr(5);
+						data.value = newPageDest;
+						//data.change.call(rel,data);
+						//form.change(pageButton, newPageDest);
+						trace('Changing destination  to "'+newPageDest+'"');
+						doneFnc(newPageDest);
+						$(this).dialog("close");
+					}
+				},
+				*/
 				{text:'Change', click:function()
 					{
 						var newPageDest = makestr($('#page-picker-list li.'+SELECTED).first().attr('rel')).substr(5);
 						data.value = newPageDest;
-						//data.change.call(rel,data);						
+						//data.change.call(rel,data);
 						//form.change(pageButton, newPageDest);
 						trace('Changing destination  to "'+newPageDest+'"');
+						doneFnc(newPageDest);
 						$(this).dialog("close");
 					}
 				},
@@ -397,9 +410,10 @@ var form={
 			+'<div contenteditable=true class="  htmledit  text editable taller" id="tinyMCE_'+form.id+'"  name="'+form.id+'" rows='+1+'>'
 			+data.value+'</div></span></div>');
 		$('.editable',e).focus(function(){$(this).addClass('tallest');form.editorAdd($(this));}).blur(function(){
-		//$(this).removeClass('tallest');
-		form.editorRemove(this);
-		form.change($(this), form.htmlFix($(this).html()));}).data('data',data) ;
+			//$(this).removeClass('tallest');
+			form.editorRemove(this);
+			form.change($(this), form.htmlFix($(this).html()));
+		}).data('data',data) ;
 		return e;
 	} 
 	,textArea: function(data){
@@ -967,27 +981,94 @@ TGuide.prototype.buildTabVariables = function (t)
 
 
 function editButton()
-{	// ### For the simple editor, handle simple styles. 
+{	// ### For the simple editor, handle simple styles.
+		
+	function editLinkOrPop(preferURL)
+	{
+		// Return selected text and url (a href) or blank if none.
+		// Used when setting external link or popup link.
+		var url='';
+		var txt='';
+		var sel=window.getSelection();
+		if (sel!='')
+		{
+			var range=sel.getRangeAt(0);
+			var div = document.createElement('div');
+			div.appendChild(range.cloneContents());
+			url = $('a',div).attr('href');
+			txt =$(div).text();//div.innerHTML;
+		}
+		if (txt==='') {
+			return;
+		}
+		
+		var html='';
+		function setHTML( )
+		{
+			if (url!==null && url!=='http://')
+			{
+				if (txt==='') {
+					txt = url;
+				}
+				if (url==='') {
+					html = txt; 
+				}
+				else
+				{
+					html = '<a href="'+url+'">'+txt+'</a>';
+				}
+				document.execCommand('insertHTML',false,  html );
+			}
+		}
+		
+		var pop='';		
+		if ((!url) || url==='') {
+			url='http://';
+		}
+		if (url.indexOf('POPUP')===0)
+		{
+			pop = url.substr(8);
+		}
+		if (pop==='' &&  preferURL)
+		{
+			url = window.prompt("URL?", url);
+			setHTML();
+		}
+		else
+		{
+			//pop = window.prompt("Popup?", pop);
+			form.pickPopupDialog('',{value:pop},function(newPop)
+			{
+				alert(newPop);
+				if (newPop!=null) {
+					if (newPop=='') {
+						url=='';
+					}
+					else
+					{
+						url='POPUP://'+newPop;
+					}
+				}
+				setHTML();
+			});
+
+		}
+		
+	}
+
 	switch ($(this).attr('id')){
 		case 'bold': document.execCommand('bold', false, null); break;
 		case 'italic': document.execCommand('italic', false, null); break;
 		case 'indent': document.execCommand('indent', false, null); break;
 		case 'outdent': document.execCommand('outdent', false, null); break;
+		case 'unlink':document.execCommand('unlink', false, null); break;
 		case 'link':
-			trace('link');
+			// Add new, edit or remove hyperlink.
+			editLinkOrPop(true);
 			break;
 		case 'popup':
-			/*
-			var sel=window.getSelection();
-			if (sel!='')
-			{
-				var range=sel.getRangeAt(0);
-				div = document.createElement('div')
-				div.appendChild(range.cloneContents())
-				console.log(div.innerHTML);
-			}
-			*/
-			//form.pickPopupDialog('',{value:''});
+			// Add new, edit or remove popup.
+			editLinkOrPop(false);
 			break;
 	}
 }

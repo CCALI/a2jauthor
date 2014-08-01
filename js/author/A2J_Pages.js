@@ -201,6 +201,23 @@ function pageEditNew()
 	return page.name;
 }
 
+function pagePopupEditNew()
+{	// Create a new blank popup page, after selected popup. 
+	var newName = pageEditSelected();
+	if (newName ==='')
+	{
+		newName = 'Pop up';
+	}
+	var page = gGuide.addUniquePage(newName);
+	page.type=CONST.ptPopup;
+	page.text="My text";
+	page.step = 0;
+	gGuide.sortPages();
+	updateTOC();
+	pageEditSelect(page.name);
+	return page.name;
+}
+
 function pageRename(page,newName){
 /* TODO Rename all references to this page in POPUPs, JUMPs and GOTOs */
 	//trace("Renaming page "+page.name+" to "+newName);

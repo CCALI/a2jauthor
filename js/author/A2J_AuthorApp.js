@@ -259,8 +259,11 @@ function main()
 		.button({label:'Edit',icons:{primary:'ui-icon-pencil'}}).click(function(){
 			gotoPageEdit(pageEditSelected());
 		}).next()
-		.button({label:'New',icons:{primary:'ui-icon-document'}}).click(function(){
+		.button({label:'New Page',icons:{primary:'ui-icon-document'}}).click(function(){
 			pageEditNew();
+		}).next()
+		.button({label:'New Popup',icons:{primary:'ui-icon-document'}}).click(function(){
+			pagePopupEditNew();
 		}).next()
 		.button({label:'Clone',icons:{primary:'ui-icon-newwin'}}).click(function(){
 			pageEditClone(pageEditSelected());

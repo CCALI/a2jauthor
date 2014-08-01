@@ -532,6 +532,9 @@ var A2JViewer={
 			  $('.ui-form.popup',div).html(htmlText);
 			  $('.popup.panel',div).show();
 			}
+			else{
+				traceAlert('Popup "'+popupID+'" not found');
+			}
 			return false;
 		});
 

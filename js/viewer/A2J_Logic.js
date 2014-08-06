@@ -79,6 +79,12 @@ TLogic.prototype.pageFindReferences = function(CAJAScript,findName,newName)
 	return result;
 };
 
+TLogic.prototype.testVar = function(name,lineNum,errors)
+{	// If variable name not defined in variables list, add error. 
+	if (!gGuide.varExists(name)) {
+		errors.push(new ParseError(lineNum,'','Undefined variable '+name));
+	}
+}
 
 TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 {	// Translate CAJA script statements of multiple lines with conditionals into JS script but do NOT evaluate.
@@ -124,10 +130,16 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 				jj = jj.split("#");// extract array index
 				if (jj.length===1){
 					// Set named variable to evaluated expression
+					gLogic.testVar(jj[0],l,errors);
 					js=('_VS(' + jquote(line)+',"'+jj[0]+'",0,'+this.translateCAJAtoJSExpression(args[3], l, errors)+");");
 				}
 				else{
 					// Set named variable array element to evaluated expression
+					gLogic.testVar(jj[0],l,errors);
+					if (!isNumber(jj[1])) {
+						gLogic.testVar(jj[1],l,errors);
+						jj[1]="["+jj[1]+"]";
+					}
 					js=('_VS(' + jquote(line)+',"'+jj[0]+'",'+ this.translateCAJAtoJSExpression(jj[1], l, errors)+","+this.translateCAJAtoJSExpression(args[3], l, errors)+");");
 				}
 			}
@@ -142,8 +154,8 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 					{
 						errors.push(new ParseError(l,"",lang.scriptErrorMissingPage.printf(pageName)));
 					}
+					js=("_GO("+jquote(line)+","+pageNameExp+");return;");	
 				}
-				js=("_GO("+jquote(line)+","+pageNameExp+");return;");
 			}
 			else
 			if ((args = line.match(REG.LOGIC_TRACE))!==null)
@@ -283,7 +295,26 @@ TLogic.prototype.hds = function(a2j4)
 TLogic.prototype.translateCAJAtoJSExpression = function(CAJAExpression, lineNum, errors)
 {	// Parse a CAJA expression into a JS expression, NOT EVALUATED.
 	// Compiled into JS function to check for errors.
+	// Any syntax errors are pushed onto the errors array.
 	var js = (" " + CAJAExpression +" ");
+	
+	function trackVar(match,p1,offset,string){
+		gLogic.testVar(p1,lineNum,errors);
+		//trace('trackVar',p1);
+		return '$1("' + p1 + '")'; 
+	}
+	function trackVarIndex(match,p1,p2,offset,string){
+		gLogic.testVar(p1,lineNum,errors);
+		//trace('trackVarIndex',p1,p2);
+		return '$1("' + p1 + '",' + p2+')'; 
+	}
+	function trackVarIndexVar(match,p1,p2,offset,string){
+		gLogic.testVar(p1,lineNum,errors);
+		gLogic.testVar(p2,lineNum,errors);
+		//trace('trackVarIndexVar',p1,p2);
+		return '$1("' + p1 + '",$1("'+p2+'"))'; 
+	}
+	
 	// Handle items not in quotes
 	js = js.split('"');
 	var j;
@@ -299,15 +330,20 @@ TLogic.prototype.translateCAJAtoJSExpression = function(CAJAExpression, lineNum,
 		// Variable formats:
 		//		Variable name with possible spaces
 		//			[child name] converts to GetVar("child name")
-		jj = jj.replace(/\[([\w|\s|\-|\'|\/]+)\]/gi,"$$1(\"$1\")"); 
+		//jj = jj.replace(/\[([\w|\s|\-|\'|\/]+)\]/gi,"$$1(\"$1\")");
+		jj = jj.replace(/\[([\w|\s|\-|\'|\/]+)\]/gi,trackVar);
+		
+		
 		
 		//		Variable name with possible spaces#number (array)
 		//			[child name#2] converts to GetVar("child name",2)
-		jj = jj.replace(/\[([\w|\s|\-|\'|\/]+)#([\d]+)\]/gi,"$$1(\"$1\",$2)");
+		//jj = jj.replace(/\[([\w|\s|\-|\'|\/]+)#([\d]+)\]/gi,"$$1(\"$1\",$2)");
+		jj = jj.replace(/\[([\w|\s|\-|\'|\/]+)#([\d]+)\]/gi,trackVarIndex);
 		
 		// Variable name with possible spaces#other variable name that evaluates to a number (array)
 		//			[child name#child counter] converts to GetVar("child name",GetVar("child counter"))
-		jj = jj.replace(/\[([\w|\s|\-|\'|\/]+)#([\w|\s|\-|\'|\/]+)\]/gi,"$$1(\"$1\",$$1(\"$2\"))");
+		//jj = jj.replace(/\[([\w|\s|\-|\'|\/]+)#([\w|\s|\-|\'|\/]+)\]/gi,"$$1(\"$1\",$$1(\"$2\"))");
+		jj = jj.replace(/\[([\w|\s|\-|\'|\/]+)#([\w|\s|\-|\'|\/]+)\]/gi,trackVarIndexVar);
 
 		
 		//	A2J dates bracketed with # like VB
@@ -356,7 +392,10 @@ TLogic.prototype.translateCAJAtoJSExpression = function(CAJAExpression, lineNum,
 		jj=js[j];
 		// Unbracketed variables get final VV treatment
 		//		first_name converts to VV("first_name")
-		jj = jj.replace(/([A-Za-z_][\w]*)/gi,'$$1("$1")');
+		//jj = jj.replace(/([A-Za-z_][\w]*)/gi,'$$1("$1")');
+		jj = jj.replace(/([A-Za-z_][\w]*)/gi,trackVar);
+		
+		
 
 		js[j]=jj;
 	}
@@ -373,7 +412,8 @@ TLogic.prototype.translateCAJAtoJSExpression = function(CAJAExpression, lineNum,
 		var f=(new Function( js ));
 		f=null;
 	}
-	catch ( localTCE) { 
+	catch ( localTCE)
+	{	// Attempt to convert JS errors into A2J errors.
 		if (localTCE.message==="missing ; before statement"){ localTCE.message="syntax error";}
 		errors.push(new ParseError(lineNum,"",localTCE.message));
 	}

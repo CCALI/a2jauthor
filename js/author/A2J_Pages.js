@@ -394,49 +394,6 @@ function gotoTabOrPage(target)
 	}
 }
 
-/*
-function pickPage(request,response)
-{	// autocomplete page lists including internal text
-	request.term = request.term.split("\t")[0];
-	var matcherStarts = new RegExp(  '^'+$.ui.autocomplete.escapeRegex(request.term), "i" );
-	var matcherContains = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
-	var lists=[[],[]];
-	var regex= new RegExp(
-			"(?![^&;]+;)(?!<[^<>]*)(" +
-			$.ui.autocomplete.escapeRegex(request.term) +
-			")(?![^<>]*>)(?![^&;]+;)", "gi"
-		);
-	function hilite(html){return html.replace(regex, "<span class=hilite>$1</span>");}
-	//var pages=pageGOTOList();
-	var p;
-	for (p in gGuide.sortedPages)
-	{
-		var page=gGuide.sortedPages[p];
-		if (page.type!==CONST.ptPopup)
-		{
-			var list;
-			if (matcherStarts.test(page.name)){
-				list=0;
-			}
-			else
-			if (matcherContains.test(page.name)){
-				list=1;
-			}
-			else
-			{
-				list=-1;
-			}
-			if (list>=0)
-			{
-				var label = "<b>"+page.name +"</b>: "+  decodeEntities(page.text);
-				lists[list].push({label:hilite(label),value:page.name});
-			}
-		}
-	}
-	response(lists[0].concat(lists[1]).slice(0,30));
-}
-*/
-
 
 
 

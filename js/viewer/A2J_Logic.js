@@ -45,7 +45,7 @@ function TLogic()
 	this.tracerID="#tracer";
 	this.userFunctions = {}; // list of user functions, property name is function name.
 	this.indent=0; // Tracing indent level/shows nesting code.
-	this.GOTOPAGE=null;// Optionally set by GOTO commmand in script. Allows us to breakout when needed.
+	this.GOTOPAGE='';// Optionally set by GOTO commmand in script. Allows us to breakout when needed.
 	return this;
 }
 

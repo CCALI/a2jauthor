@@ -84,7 +84,7 @@ TLogic.prototype.testVar = function(name,lineNum,errors)
 	if (!gGuide.varExists(name)) {
 		errors.push(new ParseError(lineNum,'','Undefined variable '+name));
 	}
-}
+};
 
 TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 {	// Translate CAJA script statements of multiple lines with conditionals into JS script but do NOT evaluate.
@@ -112,6 +112,28 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 	
 	var ifd=0;//if depth syntax checker
 	var l;
+	
+	var exp; // current expression as string
+	
+	function hackQuote()
+	{	// 2014-08-07 If expression has one quote assume it extends multiple lines and collect them.
+		// Ideally we don't tokenize by lines.
+		// TODO support multi-line expressions too.
+		if (exp.indexOf('"')>=0) {
+			if (exp.split('"').length % 2 == 0)
+			{	// Warning: need to accept embedded quote?
+				var noquote=true;
+				var l2;
+				for (l2=l+1;l2<csLines.length && noquote;l2++)
+				{
+					noquote = csLines[l2].indexOf('"')<0;
+					exp += '\\n' + csLines[l2];//embed line break for display
+					csLines[l2]='';					
+				}
+			}
+		}
+		//trace ('exp',exp);
+	}
 	for (l=0;l<csLines.length;l++)
 	{
 		// Strip trailing comments
@@ -122,7 +144,7 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 		{
 			// SET var TO expression
 			// SET var[index] TO expression
-			//if ((args = line.match(/set\s+([\w#]+|\[[\w|#|\s]+\])\s*?(=|TO)\s?(.+)/i))!=null)
+
 			if ((args = line.match(REG.LOGIC_SETTO))!==null)
 			{	// SET variable name TO expression
 				var jj = args[1];
@@ -131,7 +153,9 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 				if (jj.length===1){
 					// Set named variable to evaluated expression
 					gLogic.testVar(jj[0],l,errors);
-					js=('_VS(' + jquote(line)+',"'+jj[0]+'",0,'+this.translateCAJAtoJSExpression(args[3], l, errors)+");");
+					exp=args[3];
+					hackQuote();
+					js=('_VS(' + jquote(line)+',"'+jj[0]+'",0,'+this.translateCAJAtoJSExpression(exp, l, errors)+");");
 				}
 				else{
 					// Set named variable array element to evaluated expression
@@ -140,7 +164,9 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 						gLogic.testVar(jj[1],l,errors);
 						jj[1]="["+jj[1]+"]";
 					}
-					js=('_VS(' + jquote(line)+',"'+jj[0]+'",'+ this.translateCAJAtoJSExpression(jj[1], l, errors)+","+this.translateCAJAtoJSExpression(args[3], l, errors)+");");
+					exp = jj[1];
+					hackQuote();
+					js=('_VS(' + jquote(line)+',"'+jj[0]+'",'+ this.translateCAJAtoJSExpression(exp, l, errors)+","+this.translateCAJAtoJSExpression(args[3], l, errors)+");");
 				}
 			}
 			else
@@ -159,8 +185,10 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 			}
 			else
 			if ((args = line.match(REG.LOGIC_TRACE))!==null)
-			{ 
-				js=("_TRACE("+jquote(line)+","+this.translateCAJAtoJSExpression(args[1], l, errors)+")");
+			{
+				exp = args[1];
+				hackQuote();
+				js=("_TRACE("+jquote(line)+","+this.translateCAJAtoJSExpression(exp, l, errors)+")");
 			}
 			else
 			if ((args = line.match(REG.LOGIC_IF ))!==null)
@@ -168,7 +196,7 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 				ifd++;
 				if (this.showCAJAScript===3)
 				{
-					line="";//don't print elese?
+					line="";//don't print else?
 				}
 				js=("if (_IF("+ifd+","+jquote(args[1])+","+this.translateCAJAtoJSExpression(args[1], l, errors)+")){");
 				//				js=("if ("+this.translateCAJAtoJSExpression(args[1], l, errors)+"){");
@@ -207,6 +235,8 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 			}
 			else
 			{	// Unknown statement
+				// 2014-08-07 Some authors use multi-line strings or multi-line expressions.
+				// 
 				//js=("// Unhandled: "  + line);
 				js="_CAJA("+ jquote(line)+ ");";
 				errors.push(new ParseError(l,"",lang.scriptErrorUnhandled.printf(line)));
@@ -235,7 +265,7 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 };
 
 TLogic.prototype.evalBlock = function(expressionInText)
-{
+{	// Evaluate a block of expression included in a text block. 
 	var txt = "";
 	var errors=[];
 	var js=this.translateCAJAtoJSExpression(expressionInText, 1, errors);
@@ -246,6 +276,10 @@ TLogic.prototype.evalBlock = function(expressionInText)
 			var f=(new Function( "with (gLogic) { return ("+ js +")}" ));
 			var result = f(); // Execute the javascript code. 
 			txt = htmlEscape(result);
+			//trace("evalBlock",txt);
+			// Ensure line breaks from user long answer or author's multi-line text set appear.
+			txt = txt.replace("\n","<BR>","gi");
+			//trace("evalBlock",txt);
 		}
 		catch (e) {
 			// Collect runtime errors
@@ -259,8 +293,41 @@ TLogic.prototype.evalBlock = function(expressionInText)
 	return {js:js, text:txt};
 };
 
+TLogic.prototype.evalLogicHTMLFull = function(html)
+{	// 2014-08-07 Parse for « » and convert into full JS chunk.
+	// INCOMPLETE
+	var parts=html.split("»");
+	var js=[];
+	if (parts.length > 0)
+	{
+		var logic="";
+		var p;
+		for (p=0;p<parts.length;p++)
+		{
+			var parts2 = parts[p].split("«");
+			html =parts2[0];
+			if (html!=='') {
+				logic += 'write "'+html.split("\n").join(" ")+ '"' + "\n";
+			}
+			if (parts2.length>1)
+			{
+				var block =  parts2[1]  ;
+				//html += block.text;
+				//js.push(block.js);
+				logic += block +"\n";
+			}
+		}
+		
+		js = gLogic.translateCAJAtoJS(logic);
+		//trace("New Logic",html);
+		//alert(logic);
+	}
+	return {js:js,html:html};
+};
+
 TLogic.prototype.evalLogicHTML = function(html)
 {	// Parse for %% declarations. Return html block and js block for debugging.
+	
 	var parts=html.split("%%");
 	var js=[];
 	if (parts.length > 0)

@@ -264,13 +264,13 @@ var A2JViewer={
 		traceLogic( 'Page ' + traceTag('page', page.name));
 		//TODO loopcounter; break out if we are in infinite loop
 		
-		gLogic.GOTOPAGE=null;
+		gLogic.GOTOPAGE='';
 		if (makestr(page.codeBefore)!=='')
 		{
 			traceLogic(traceTag('info','Logic Before Question'));
 			gLogic.executeScript(page.codeBefore);
 			// TODO code returns immediately after a GOTO PAGE call. Check to see if our page changed.
-			if (gLogic.GOTOPAGE!==null && gLogic.GOTOPAGE!==gPage.name)
+			if (gLogic.GOTOPAGE!=='' && gLogic.GOTOPAGE!==gPage.name)
 			{
 				gotoPageView(gLogic.GOTOPAGE);
 			}

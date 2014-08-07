@@ -81,8 +81,15 @@ TLogic.prototype.pageFindReferences = function(CAJAScript,findName,newName)
 
 TLogic.prototype.testVar = function(name,lineNum,errors)
 {	// If variable name not defined in variables list, add error. 
-	if (!gGuide.varExists(name)) {
-		errors.push(new ParseError(lineNum,'','Undefined variable '+name));
+	if (!gGuide.varExists(name))
+	{
+		switch (name)
+		{
+			case 'TODAY':
+				return;
+			default:
+				errors.push(new ParseError(lineNum,'','Undefined variable '+name));
+		}		
 	}
 };
 
@@ -534,7 +541,6 @@ TLogic.prototype._VG=function( varname,varidx)
 {
 	if (varname === 'TODAY')
 	{
-		//trace('Today',jsDate2days(today2jsDate()));
 		return jsDate2days(today2jsDate());
 	}
 	return gGuide.varGet(varname,varidx,{date2num:true, num2num:true});

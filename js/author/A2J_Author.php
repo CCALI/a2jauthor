@@ -112,7 +112,15 @@ function ts($filename)
 	
 <div id="page-viewer" class="hidestart ViewerApp a2jv">
 	<div class="testing ui-widget-content">
-		<div id="viewer-logic-form" class="ViewerLogicForm"><div class="tracepanel"><ol id="tracer" contentEditable="true"></ol></div><div class="immediatepanel"><span><input type="text" id="tracerimm"/></span></div></div>
+		<div id="viewer-logic-form" class="ViewerLogicForm">
+			<div class="tracepanel"><ol id="tracer" contentEditable="true"></ol></div>
+			<div class="immediatepanel">
+				
+				<span>
+				<input type="text" id="tracerimm"/></span>
+				<button id="clearTrace"></button>
+				
+				</div></div>
 		<div id="viewer-var-form" class="ViewerVarForm" ></div>
 	</div>
 	<div class="A2JViewer"></div>

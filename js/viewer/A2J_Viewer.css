@@ -634,17 +634,20 @@ span.err {
 .ViewerLogicForm .immediatepanel{
 	position:absolute;
 	bottom: 0px;
-	height: 20px;
+	height: 24px;
 	left: 0;
 	right: 0;
 	padding: 4px;
 	margin: 4px;
 }
 .ViewerLogicForm .immediatepanel input {
-	width: 100%;
+	width: 50%;
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
+}
+#clearTrace {
+	float:right;
 }
 #page-viewer.ViewerApp  .ViewerVarForm {
 	position: fixed;

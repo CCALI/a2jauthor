@@ -765,6 +765,19 @@ TGuide.prototype.variableToField = function (varName)
 	return null;
 };
 
+TGuide.prototype.varClearAll=function()
+{	// 2014-08-11 Clear all values, arrays reset to 1 element
+	
+	var vi;
+	for (vi in this.vars)
+	{
+		/** @type {TVariable} */
+		var v = this.vars[vi];
+		v.values=[];
+	}
+	
+};
+
 
 // ### Global variables ### //
 

@@ -147,7 +147,7 @@ var A2JViewer={
 	{	// Layout page into interactive viewer. attach event handlers.
 	
 		if (div.html()==="")
-		{	// First time rendering, attach handlers.
+		{	// First time rendering, attach handlers. Only executed once.
 			div.html(
 						'<div class="interact"></div>'
 						+'<div class="a2jbtn"></div> '
@@ -184,21 +184,25 @@ var A2JViewer={
 			
 			//### Variable debugging
 			$('#viewer-var-form').append('<div class="relative"><button id="uploadAnswer"></button><input type="file" id="uploadAnswerFileInput"> <button id="downloadAnswer"></button><button id="refreshAnswer"></button>'
-												  +'<label for="viewer-var-filter">Filter:</label><input type=text id="viewer-var-filter" size="5"/></div>'
+												  +'<button id="clearAnswer"></button>'
+												  +'<label for="viewer-var-filter">Filter:</label><input type=text id="viewer-var-filter" size="5"/>'
+												  +'</div>'
 												  +'<div class=varvalpanel></div></div>');
-			$('#uploadAnswer').button({label:'Open'/*,icons:{primary:'ui-icon-folder-open'}*/}).click(function(){
-					//dialogAlert({title:'Save XML',body:prettyXML(gGuide.HotDocsAnswerSetXML())});
-					//ws({cmd:'answersetsave',gid:gGuideID, answerset:gGuide.HotDocsAnswerSetXML()},function(){});
-					//alert(ws);
-				});
-			$('#downloadAnswer').button({label:'Save'/*icons:{primary:'ui-icon-arrowrefresh-1-e'}*/}).click(function(){
-					//ws({cmd:'answerset',gid:gGuideID, answerset:gGuide.HotDocsAnswerSetXML()},function(){});
-					// Download answer file directly from client to desktop.
-					downloadTextFile ( gGuide.HotDocsAnswerSetXML(),  'answer.anx');
-				});
-			$('#refreshAnswer').button({label:'Update',icons:{  } } ).click(function(){
-					A2JViewer.refreshVariables();
-				});				
+			$('#downloadAnswer').button({label:'Save',icons:{primary:'ui-icon-disk'}}).click(function(){
+				// Download answer file directly from client to desktop.
+				downloadTextFile ( gGuide.HotDocsAnswerSetXML(),  'answer.anx');
+			});
+			$('#refreshAnswer').button({label:'Refresh',icons:{primary:'ui-icon-arrowrefresh-1-w' } } ).click(function(){
+				A2JViewer.refreshVariables();
+			});				
+			$('#clearAnswer').button({label:'Clear',icons:{primary:'ui-icon-trash'}}).click(function(){
+				gGuide.varClearAll();
+				A2JViewer.refreshVariables();
+			});			
+			$('#clearTrace').button({label:'Clear',icons:{primary:'ui-icon-trash'}}).click(function(){
+				$('#tracer').empty();
+			});
+			$('#uploadAnswer').button({label:'Open',icons:{primary:'ui-icon-folder-open'}});
 			$('#uploadAnswerFileInput').on('change',function()			
 			{	// Browse for answer file on local desktop to upload to client (no server).
 				var file = $('#uploadAnswerFileInput')[0].files[0];

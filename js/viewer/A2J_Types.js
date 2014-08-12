@@ -129,6 +129,7 @@ function TVariable()
 	this.comment = "";
 	this.repeating=false;//if false, value is the value. if true, value is array of values.
 	this.values=[null];
+	this.warning= "";
 	return this;
 }
 

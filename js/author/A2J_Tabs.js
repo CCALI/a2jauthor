@@ -96,9 +96,27 @@ function updateTOC()
 	
 	
 	// JPM Clicking a step toggle slides step's page list.
-	$('.pageoutline li[rel^="STEP "]').click(function(){
+	$('#CAJAOutline li[rel^="STEP "]').click(function(){
 		$(this).next().slideToggle(300);
 	});
+	
+	// JPM Clicking a step toggle slides step's page list.
+	$('#CAJAOutlineMap li[rel^="STEP "]').click(function()
+	{	// 2014-08-12 Toggle step's page list and fade in/out it's nodes in the mapper.
+		// Determine which step it is, then fade back if mapper
+		var step = $(this).attr('rel').split(' ')[1];
+		var $nodes=$('.node.Step'+step);
+		if ($(this).next().css("display") !== 'none')
+		{	// If step is collapse, fade it. 
+			$nodes.addClass('faded');
+		}
+		else
+		{	// Step not collapsed, display normally. 
+			$nodes.removeClass('faded');
+		}
+		$(this).next().slideToggle(300);
+	});
+	
 
 	// JPM Only 'select' Pages, not Steps
 	$('.pageoutline li[rel^="PAGE "]')
@@ -618,7 +636,8 @@ var form={
 		form.listManagerSave($tbl);
 	}
 	
-	,listManagerSave:function($tbl){// save revised order or added/removed items
+	,listManagerSave:function($tbl)
+	{	// save revised order or added/removed items
 		var settings=$tbl.data('settings');
 		var list=[];
 		$('tr',$tbl).not(':hidden').each(function(idx){ //:gt(0)
@@ -627,7 +646,8 @@ var form={
 		settings.save(list);
 		$('select[list="'+settings.name+'"]').val(list.length);
 	}
-	,listManagerAddRow:function($tbl,record){
+	,listManagerAddRow:function($tbl,record)
+	{	
 		var settings=$tbl.data('settings');
 		var $row=$('<tr valign=top class="ui-corner-all" name="record"/>');
 		$row.append($('<td class="editicons"/>')
@@ -637,17 +657,15 @@ var form={
 		$row.data('record',record); 
 		$tbl.append($row);
 	}
-	,listManager:function(settings){
-		//###  data.name:'Fields' data.,picker:'Number of fields:',data.min:0,data.max:CONST.MAXFIELDS,data.list:page.fields,data.blank:blankField,data.save=function to save,data.create=create form elts for record
+	,listManager:function(settings)
+	{	//   data.name:'Fields' data.,picker:'Number of fields:',data.min:0,data.max:CONST.MAXFIELDS,data.list:page.fields,data.blank:blankField,data.save=function to save,data.create=create form elts for record
 		var div = $('<div/>');
 		var $tbl=$('<table/>').addClass('list').data('settings',settings).attr('list',settings.name);
 		div.append(form.tableRowCounter(settings.name,settings.picker,settings.min,settings.max,settings.list.length));
 		var i;
-		//trace(div.html());
 		for (i=0;i<settings.list.length;i++){
 			form.listManagerAddRow($tbl,settings.list[i]);
 		}
-		//trace(settings.list);
 		$('tbody',$tbl).sortable({
 			handle:"td .sorthandle",
 			update:function(event,ui){
@@ -819,7 +837,7 @@ TGuide.prototype.noviceTab = function(tab,clear)
 			fs=form.fieldset('Steps');
 			var blankStep=new TStep();
 			
-			fs.append(form.listManager({grid:true,name:'Steps',picker:'Number of Steps',min:1,max:CONST.MAXSTEPS,list:guide.steps,blank:blankStep
+			fs.append(form.listManager({grid:true,name:'Steps',picker:'Number of Steps:',min:1,max:CONST.MAXSTEPS,list:guide.steps,blank:blankStep
 				,save:function(newlist){
 					guide.steps=newlist;
 					updateTOC();

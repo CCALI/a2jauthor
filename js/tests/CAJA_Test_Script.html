@@ -160,16 +160,299 @@
 </table>
 <h2>Page Logic</h2>
 <p> Defines a named page for testing - all scripts within that page are parsed as a single block and GOTO will find it.</p>
+<p>«if » «else»  «end if» </p>
 <table width="100%" border="3" cellpadding="5" cellspacing="0" class="testPages">
 	<tr>
 		<th valign="top">Page Name</th>
 		<th valign="top" class="logic">Page Logic</th>
 	</tr>
+	<tr class="">
+		<td valign="top"><p class="logic">HTML tags</p></td>
+		<td valign="top" class="macro"><table width="100%" border="1" cellspacing="0" cellpadding="5">
+				<tr>
+					<td>vars</td>
+					<td><table border="1" cellpadding="2" cellspacing="0" class="testVariables">
+							<tr>
+								<td nowrap="nowrap">test_html</td>
+								<td>string</td>
+								<td>&nbsp;</td>
+								<td>&lt;hr&gt;&lt;b&gt;Hi&lt;/b&gt;</td>
+							</tr>
+					</table></td>
+				</tr>
+				<tr>
+					<td>macro</td>
+					<td>Ensuring that variables with HTML tags are property encoded: %%test_html%%. </td>
+				</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td valign="top"><p>Test Function</p>
+				<p>Date</p></td>
+		<td valign="top" class="logic"><table width="100%" border="1" cellspacing="0" cellpadding="5">
+				<tr>
+					<td valign="top">logic</td>
+					<td><p>set test_date to &quot;12/31/1901&quot;</p>
+							<p>set test_date to TODAY</p>
+						<p>set test_text to DATE(TODAY)</p>
+						<p>set test_text to &quot;Your birthday is &quot; + [test_date]</p>
+						<p>set test_text to &quot;Your birthday is &quot; + date([test_date])</p>
+						<p>set test_court_date to TODAY + 5</p>
+						<p>set test_text to &quot;Court date is &quot; + date([test_court_date])</p>
+						<p>if test_court_date &lt; TODAY + 5</p>
+						<blockquote>
+								<p>goto &quot;done&quot;</p>
+						</blockquote>
+						<p>end if</p></td>
+				</tr>
+				<tr>
+					<td valign="top">logic</td>
+					<td><p>// NY Sample</p>
+							<p>SET [Decedent date of death DA] to &quot;1/1/2001&quot;</p>
+						<p>SET [Cut off 1996 DA] TO &quot;08/29/1996&quot;</p>
+						<p> SET [Cut off 2008 DA] TO &quot;12/31/2008&quot;</p>
+						<p> IF [Decedent date of death DA] &lt; [Cut off 1996 DA] </p>
+						<blockquote>
+								<p> GOTO &quot;03a-Date of death&quot;</p>
+						</blockquote>
+						<p> END IF</p>
+						<p> IF  ([Decedent date of death DA] &gt;= [Cut off 1996 DA]) AND ([Decedent date of death DA] &lt;= [Cut off 2008 DA]) </p>
+						<blockquote>
+								<p> GOTO &quot;04a-Decedent place of death 1&quot;</p>
+						</blockquote>
+						<p> ELSE</p>
+						<blockquote>
+								<p> GOTO &quot;04a-Decedent place of death 2&quot;</p>
+						</blockquote>
+						<p> END IF</p></td>
+				</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td valign="top"><p>Test Multiple Line</p>
+		<p>For Strings and also Expressions</p></td>
+		<td valign="top" ><table width="100%" border="1" cellpadding="5" cellspacing="0">
+				<tr>
+					<td width="1" valign="top">vars</td>
+					<td valign="top"><table border="1" cellpadding="2" cellspacing="0" class="testVariables">
+							<tr>
+								<td nowrap="nowrap">role</td>
+								<td>number</td>
+								<td>&nbsp;</td>
+								<td>3</td>
+							</tr>
+							<tr>
+								<td nowrap="nowrap">help</td>
+								<td>text</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+							</tr>
+
+					</table></td>
+				</tr>
+				<tr>
+					<td width="1" valign="top">logic</td>
+					<td valign="top" class="logic"><p>if true </p>
+						<p>set help to &quot;Your options are</p>
+						<p>* Eating out</p>
+						<p>* Eating in&quot;</p>
+						<p>else</p>
+						<p>set help to &quot;Your options include:</p>
+						<p>* Driving fast</p>
+						<p>* Driving slow&quot;</p>
+						<p>end if</p>					</td>
+				</tr>
+				<tr>
+					<td valign="top">macro</td>
+					<td valign="top" class="macro"><p>Based on your role:</p>
+							<p>%%help%%</p></td>
+				</tr>
+				<tr>
+					<td valign="top">logic</td>
+					<td valign="top" class="logic"><p>if role = 1 </p>
+						<p>or role=2</p>
+						<p>or role=3</p>
+						<p>or role=5</p>
+						<p>or role=12</p>
+						<p>set help to &quot;Your options are</p>
+						<p>* Eating out</p>
+						<p>* Eating in&quot;</p>
+						<p>else</p>
+						<p>set help to &quot;Your options include:</p>
+						<p>* Driving fast</p>
+						<p>* Driving slow&quot;</p>
+						<p>end if</p></td>
+				</tr>
+				<tr>
+					<td valign="top">macro</td>
+					<td valign="top" class="macro"><p>«if role = 3»</p>
+						<p>Your options are:</p>
+					<p>* &gt; Eating out</p>
+					<p>* &lt; Eating in</p>
+					<p> «else» </p>
+					<p>Your options include:</p>
+					<p>* Driving fast</p>
+					<p>* Driving slow</p>
+					<p>* Driving fast &amp; slow</p>
+					<p> «end if» </p></td>
+				</tr>
+				<tr>
+					<td valign="top">script</td>
+					<td valign="top" class="macro"><p>if role = 3</p>
+					<p>html &quot;Your options are:&quot;</p>
+					<p>html &quot;&lt;P&gt;</p></td>
+				</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td valign="top">Test Var Refs</td>
+		<td valign="top" ><table width="100%" border="1" cellpadding="5" cellspacing="0">
+			<tr>
+				<td width="1" valign="top">vars</td>
+				<td valign="top"><table border="1" cellpadding="2" cellspacing="0" class="testVariables">
+						<tr>
+							<td nowrap="nowrap">ChildCount</td>
+							<td>number</td>
+							<td>&nbsp;</td>
+							<td>2</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">Number of children NU</td>
+							<td>number</td>
+							<td>&nbsp;</td>
+							<td>2</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">Child Name</td>
+							<td>text</td>
+							<td>2</td>
+							<td>Jack</td>
+						</tr>
+				</table></td>
+			</tr>
+			<tr>
+				<td width="1" valign="top">logic</td>
+				<td valign="top" class="logic"><p>trace ChildCount</p>
+					<p>trace [Number of Children NU]</p>
+					<p>trace [Child Name#2]</p>
+					<p>trace [Child Name#Number of Children NU]</p>
+					<p>trace [Child Name#Number of Childrens NU]</p>
+					<p>trace [Childs Name#Number of Children NU]</p>
+					<p>set  [Number of Children NU] to 5</p>
+					<p>set [Child Name#2] to &quot;Fred&quot;</p>
+					<p>set [Childs Name#2] to &quot;Fred&quot;</p>
+					<p>set [Child Name#Number of Children NU] to &quot;Rick&quot;</p>
+					<p>set [Child Name#Number of Childrens NU] to &quot;Rick&quot;</p>					</td>
+			</tr>
+		</table></td>
+	</tr>
+	<tr>
+		<td valign="top"><p>Test </p>
+				<p>Logic operators</p></td>
+		<td valign="top" class="logic"><table width="100%" border="1" cellspacing="0" cellpadding="5">
+			<tr>
+				<td width="1" valign="top">vars</td>
+				<td valign="top"><table border="1" cellpadding="2" cellspacing="0" class="testVariables">
+						<tr>
+							<td nowrap="nowrap">v</td>
+							<td>string</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">born</td>
+							<td>tf</td>
+							<td>&nbsp;</td>
+							<td>true</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">band</td>
+							<td>tf</td>
+							<td>&nbsp;</td>
+							<td>false</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">anot</td>
+							<td>tf</td>
+							<td>&nbsp;</td>
+							<td>false</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">orvil</td>
+							<td>tf</td>
+							<td>&nbsp;</td>
+							<td>true</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">andy</td>
+							<td>tf</td>
+							<td>&nbsp;</td>
+							<td>true</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">notty</td>
+							<td>tf</td>
+							<td>&nbsp;</td>
+							<td>false</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">x</td>
+							<td>number</td>
+							<td>&nbsp;</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">y</td>
+							<td>number</td>
+							<td>&nbsp;</td>
+							<td>2</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">user_born</td>
+							<td>date</td>
+							<td>&nbsp;</td>
+							<td>1/1/1950</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">my child birthdate</td>
+							<td>date</td>
+							<td>2</td>
+							<td>1/1/2001</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">child counter</td>
+							<td>number</td>
+							<td>&nbsp;</td>
+							<td>2</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">user gender</td>
+							<td>string</td>
+							<td>&nbsp;</td>
+							<td>male</td>
+						</tr>
+						<tr>
+							<td nowrap="nowrap">j</td>
+							<td>number</td>
+							<td>&nbsp;</td>
+							<td>900</td>
+						</tr>
+				</table></td>
+			</tr>
+				<tr>
+					<td width="1" valign="top">logic</td>
+					<td><p>set v to born or band or anot and not orvil or andy or notty</p>
+							<p> set v to x = y and not (j &lt;&gt;  55)</p>
+						<p> set v to age(user_born)  + age([my child birthdate#child counter]) + hisher ( [user gender] )</p>
+						<p> set v to &quot;this [variable] should not be encoded&quot;</p></td>
+				</tr>
+		</table></td>
+	</tr>
 	<tr>
 		<td valign="top">Jess 1</td>
 		<td valign="top" ><table width="100%" border="1" cellpadding="5" cellspacing="0">
 			<tr>
-				<td valign="top">vars</td>
+				<td width="1" valign="top">vars</td>
 				<td valign="top"><table border="1" cellpadding="2" cellspacing="0" class="testVariables">
 						<tr>
 							<td nowrap="nowrap">ChildCount</td>
@@ -187,7 +470,7 @@
 				</table></td>
 			</tr>
 			<tr>
-				<td valign="top">logic</td>
+				<td width="1" valign="top">logic</td>
 				<td valign="top" class="logic"><p>IF  ChildCount&gt;=[Number of children NU] </p>
 					<p>						GOTO &quot;1-Asking to Add More at End&quot;</p>
 					<p>						ELSE</p>
@@ -350,10 +633,6 @@
 				</tr>
 		</table></td>
 	</tr>
-	<tr>
-		<td valign="top"><p>STOP</p></td>
-		<td valign="top" class="logic">&nbsp;</td>
-	</tr>
 	<tr class="">
 		<td valign="top"><p>Function  Tests</p>
 		<p> Sum</p>			<p class="logic">Variables Repeat</p></td>
@@ -469,29 +748,13 @@
 
 		</table></td>
 	</tr>
-	<tr class="">
-		<td valign="top" class="macro">&nbsp;</td>
-		<td valign="top" class="macro">&nbsp;</td>
+	<tr>
+		<td valign="top"><p>STOP</p></td>
+		<td valign="top" class="logic">&nbsp;</td>
 	</tr>
 	<tr class="">
-		<td valign="top"><p class="logic">HTML tags</p>		</td>
-		<td valign="top" class="macro"><table width="100%" border="1" cellspacing="0" cellpadding="5">
-			<tr>
-				<td>vars</td>
-				<td><table border="1" cellpadding="2" cellspacing="0" class="testVariables">
-					<tr>
-						<td nowrap="nowrap">test_html</td>
-						<td>string</td>
-						<td>&nbsp;</td>
-						<td>&lt;hr&gt;&lt;b&gt;Hi&lt;/b&gt;</td>
-					</tr>
-				</table>					</td>
-			</tr>
-			<tr>
-				<td>macro</td>
-				<td>Ensuring that variables with HTML tags are property encoded: %%test_html%%. </td>
-			</tr>
-		</table></td>
+		<td valign="top" class="macro">&nbsp;</td>
+		<td valign="top" class="macro">&nbsp;</td>
 	</tr>
 	<tr class="">
 		<td valign="top"><p>Variables Repeat</p>			</td>
@@ -554,49 +817,6 @@
 	</tr>
 	<tr>
 		<td valign="top"><p>Test Function</p>
-				<p>Date</p></td>
-		<td valign="top" class="logic"><table width="100%" border="1" cellspacing="0" cellpadding="5">
-			<tr>
-				<td valign="top">logic</td>
-				<td><p>set test_date to &quot;12/31/1901&quot;</p>
-					<p>set test_date to TODAY</p>
-					<p>set test_text to DATE(TODAY)</p>
-					<p>set test_text to &quot;Your birthday is &quot; + [test_date]</p>
-					<p>set test_text to &quot;Your birthday is &quot; + date([test_date])</p>
-					<p>set test_court_date to TODAY + 5</p>
-					<p>set test_text to &quot;Court date is &quot; + date([test_court_date])</p>
-					<p>if test_court_date &lt; TODAY + 5</p>
-					<blockquote>
-						<p>goto &quot;done&quot;</p>
-					</blockquote>
-					<p>end if</p>					</td>
-			</tr>
-			<tr>
-				<td valign="top">logic</td>
-				<td><p>// NY Sample</p>
-					<p>SET [Decedent date of death DA] to &quot;1/1/2001&quot;</p>
-					<p>SET [Cut off 1996 DA] TO &quot;08/29/1996&quot;</p>
-					<p> SET [Cut off 2008 DA] TO &quot;12/31/2008&quot;</p>
-					<p> IF [Decedent date of death DA] &lt; [Cut off 1996 DA] </p>
-					<blockquote>
-							<p> GOTO &quot;03a-Date of death&quot;</p>
-					</blockquote>
-					<p> END IF</p>
-					<p> IF  ([Decedent date of death DA] &gt;= [Cut off 1996 DA]) AND ([Decedent date of death DA] &lt;= [Cut off 2008 DA]) </p>
-					<blockquote>
-							<p> GOTO &quot;04a-Decedent place of death 1&quot;</p>
-					</blockquote>
-					<p> ELSE</p>
-					<blockquote>
-							<p> GOTO &quot;04a-Decedent place of death 2&quot;</p>
-					</blockquote>
-					<p> END IF</p></td>
-			</tr>
-
-		</table></td>
-	</tr>
-	<tr>
-		<td valign="top"><p>Test Function</p>
 		<p> Ordinal</p></td>
 		<td valign="top" class="logic"><table width="100%" border="1" cellspacing="0" cellpadding="5">
 			<tr>
@@ -636,20 +856,6 @@
 			<tr>
 				<td>logic</td>
 				<td><p>SET test_text to hisher(&quot;male&quot;) + &quot; and &quot; + hisher( &quot;female&quot; ) </p></td>
-			</tr>
-
-		</table></td>
-	</tr>
-	<tr>
-		<td valign="top"><p>Test </p>
-		<p>Logic operators</p></td>
-		<td valign="top" class="logic"><table width="100%" border="1" cellspacing="0" cellpadding="5">
-			<tr>
-				<td valign="top">logic</td>
-				<td><p>set v to born or band or anot and not orvil or andy or notty</p>
-					<p> set v to x = y and not (j &lt;&gt;  55)</p>
-					<p> set v to age(user_born)  + age([first child birthdate#child counter]) + hisher ( [user gender] )</p>
-					<p> set v to &quot;this [variable] should not be encoded&quot;</p>					</td>
 			</tr>
 
 		</table></td>

@@ -925,6 +925,10 @@ li.guide:hover {
 	cursor: pointer;
 	/* overflow: hidden; - don't hide overflow or arrow disappears */
 }
+.node.faded {
+	filter: alpha(opacity=25);
+	opacity: 0.25;
+}
 .map   .tiny {
 	background-image: url(images/map_page.png);
 	background-repeat:no-repeat;

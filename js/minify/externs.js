@@ -47,6 +47,7 @@ $.delay=function(a){};
 $.is=function(a){};
 $.not=function(a){};
 $.before=function(a){};
+$.animate=function(a){};
 $.ready=function(a){};
 $.slideUp=function(a){};
 $.slideDown=function(a){};
@@ -65,6 +66,7 @@ $.mouse=function(a){};
 $.mousedown=function(a){};
 $._mouseInit=function(a){};
 $._mouseDestroy=function(a){};
+$._trigger=function(a){};
 
 /* jQuery ui */
 $.ui={};

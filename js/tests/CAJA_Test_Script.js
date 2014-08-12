@@ -36,7 +36,7 @@ function createVariable(row)
 		if (v === null || v.repeating !== varRepeating || v.type != varType)
 		{	// If variable doesn't exist or isnt' the same type, create/overwrite.
 			v=gGuide.varCreate(varName,varType,varRepeating,'');
-			trace('override',varName);
+			//trace('override',varName);
 		}
 		if (!varRepeating)
 		{
@@ -93,9 +93,15 @@ function loadTestUnit(nth)
 		
 		$('td:nth(1)   table:first > tbody > tr',this).each(function(i){
 			var type =jQuery.trim( $('td:first',this).text());
-			var text =jQuery.trim( $('td:nth(1)',this).text());
+			var text;
+			if (type=='macro') {
+				text =jQuery.trim( $('td:nth(1)',this).html());
+			}
+			else{
+				text =jQuery.trim( $('td:nth(1)',this).text());
+			}
 			page.chunks.push({type:type,text:text, row:this});
-			trace('type',type);
+			//trace('type',type);
 		})
 		/*var pageLogic =jQuery.trim( $('td:nth(1)',this).text());
 		
@@ -151,6 +157,7 @@ function loadTestUnit(nth)
 					+'<h2>Execution</h2>' + '<ol class="exec"></ol>' 
 					);
 				testunit.target =  $('td:nth(1) ol.exec',chunk.row);
+				//trace(chunk.text);
 				var result = gLogic.evalLogicHTML(chunk.text);//lines.join(' '));
 				$('td:nth(1)',chunk.row).append(
 					'<h2>Expanded</h2>' + '<BLOCKQUOTE class="Script">' + result.html + "</BLOCKQUOTE>"
@@ -159,6 +166,7 @@ function loadTestUnit(nth)
 					); 
 			}
 			else
+			if (chunk.type=="logic") 
 			{	// Handle Logic
 				var lines = chunk.text.split('\n');//page.lines;
 				var script = page.script  = gLogic.translateCAJAtoJS(lines.join(CONST.ScriptLineBreak));

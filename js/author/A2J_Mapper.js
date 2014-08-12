@@ -26,14 +26,16 @@ function mapLines()
 	var NW=NODE_SIZE.w;
 	var NH=NODE_SIZE.h;
 		
+	/** @type TPage */
+	var page; 
 		
 	function lineV(left,top,height)
 	{
-		return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:2px;height:'+height+'px;"></div>';
+		return '<div class="line Step'+page.step+'" style="left:'+left+'px;top:'+top+'px;width:2px;height:'+height+'px;"></div>';
 	}
 	function lineH(left,top,width)
 	{
-		return '<div class="line" style="left:'+left+'px;top:'+top+'px;width:'+width+'px;height:2px;"></div>';
+		return '<div class="line Step'+page.step+'" style="left:'+left+'px;top:'+top+'px;width:'+width+'px;height:2px;"></div>';
 	}
 
 
@@ -42,8 +44,7 @@ function mapLines()
 	var p;
 	for (p in gGuide.pages)
 	{
-		/** @type TPage */
-		var page=gGuide.pages[p];
+		page=gGuide.pages[p];
 		if (page.mapx!==null)
 		{
 			var nodeLeft=page.mapx;

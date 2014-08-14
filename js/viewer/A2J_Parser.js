@@ -37,15 +37,14 @@ function loadXMLListExternal(opts)
       url:  fixPath(opts.url),
       dataType:  "text",
       timeout: 15000,
-		opts: opts,
       error:
 			/*** @this {{url}} */
-			function(data,textStatus,thrownError){
-			  dialogAlert({title:'Error loading external list',body:'Unable to load a list of items from '+this.url+"\n"+textStatus});
+			function(data,textStatus,thrownError)
+			{
+			  //dialogAlert({title:'Error loading external list',body:'Unable to load a list of items from '+this.url+"\n"+textStatus});
+			  traceAlert( 'Unable to load a list of items from '+this.url+"\n"+textStatus);
 			 },
       success: function(data){
-			var opts=this.opts;
-			//if (!opts) opts=$(this).opts;//8/2013 this.opts;
 			opts.data=data;
 			loadXMLList(opts);
       }

@@ -24,7 +24,8 @@
 * jquery.ui.mouse.js
 * jquery.ui.widget.js
 */
-(function($, undefined) {
+//(function($, undefined) {
+(function($) {
 
     $.widget("ui.traggable", $.ui.mouse, {
         version: "1",

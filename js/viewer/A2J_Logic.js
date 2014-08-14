@@ -195,7 +195,7 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 			{
 				exp = args[1];
 				hackQuote();
-				js=("_TRACE("+jquote(line)+","+this.translateCAJAtoJSExpression(exp, l, errors)+")");
+				js=("_TRACE("+jquote(exp)+","+this.translateCAJAtoJSExpression(exp, l, errors)+")");
 			}
 			else
 			if ((args = line.match(REG.LOGIC_IF ))!==null)
@@ -241,10 +241,21 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 				js=("_deltaVars("+jquote(line)+");");
 			}
 			else
+			if ((args = line.match(REG.LOGIC_WRITE))!==null)
+			{
+				exp = args[1];
+				hackQuote();
+				js=("_W("+jquote(exp)+","+this.translateCAJAtoJSExpression(exp, l, errors)+")");
+			}
+			else
 			{	// Unknown statement
-				// 2014-08-07 Some authors use multi-line strings or multi-line expressions.
-				// 
-				//js=("// Unhandled: "  + line);
+				// 2014-08-07 Some authors use multi-line expressions.
+				
+				
+				//exp = line;
+				//hackQuote();
+				//js=("_W("+jquote(exp)+","+this.translateCAJAtoJSExpression(exp, l, errors)+")");
+				
 				js="_CAJA("+ jquote(line)+ ");";
 				errors.push(new ParseError(l,"",lang.scriptErrorUnhandled.printf(line)));
 			}
@@ -283,10 +294,8 @@ TLogic.prototype.evalBlock = function(expressionInText)
 			var f=(new Function( "with (gLogic) { return ("+ js +")}" ));
 			var result = f(); // Execute the javascript code. 
 			txt = htmlEscape(result);
-			//trace("evalBlock",txt);
 			// Ensure line breaks from user long answer or author's multi-line text set appear.
 			txt = txt.replace("\n","<BR>","gi");
-			//trace("evalBlock",txt);
 		}
 		catch (e) {
 			// Collect runtime errors
@@ -298,38 +307,6 @@ TLogic.prototype.evalBlock = function(expressionInText)
 		txt='<span class="code">'+expressionInText+'</span><span class="err">' +'syntax error' + '</span>';
 	}
 	return {js:js, text:txt};
-};
-
-TLogic.prototype.evalLogicHTMLFull = function(html)
-{	// 2014-08-07 Parse for « » and convert into full JS chunk.
-	// INCOMPLETE
-	var parts=html.split("»");
-	var js=[];
-	if (parts.length > 0)
-	{
-		var logic="";
-		var p;
-		for (p=0;p<parts.length;p++)
-		{
-			var parts2 = parts[p].split("«");
-			html =parts2[0];
-			if (html!=='') {
-				logic += 'write "'+html.split("\n").join(" ")+ '"' + "\n";
-			}
-			if (parts2.length>1)
-			{
-				var block =  parts2[1]  ;
-				//html += block.text;
-				//js.push(block.js);
-				logic += block +"\n";
-			}
-		}
-		
-		js = gLogic.translateCAJAtoJS(logic);
-		//trace("New Logic",html);
-		//alert(logic);
-	}
-	return {js:js,html:html};
 };
 
 TLogic.prototype.evalLogicHTML = function(html)
@@ -354,6 +331,72 @@ TLogic.prototype.evalLogicHTML = function(html)
 	}
 	return {js:js,html:html};
 };
+
+TLogic.prototype.evalLogicHTML2 = function(html)
+{	// 2014-08-13 Parse for %% declarations. Return html block and js block for debugging.
+	// INCOMPLETE
+	// Support conditionals as well. 
+	var parts=html.split("%%");
+	var script;
+	//trace('evalLogicHTML2',html);
+	if (parts.length > 1)
+	{
+		var logic="";
+		var p;
+		for (p=0;p<parts.length;p+=2)
+		{
+			html = parts[p];
+			trace(html);
+			logic += ('write "'+ html.split('\n').join(" ")+ '"' + CONST.ScriptLineBreak);
+			if (p<parts.length-1)
+			{
+				logic += (parts[p+1] + CONST.ScriptLineBreak);
+			}
+		}
+		script =  gLogic.translateCAJAtoJS(logic);
+		script.html = logic;
+	}
+	else
+	{
+		script={js:[],errors:[],html:html};
+	}
+	trace('evalLogicHTML2',script.html);
+	return script;
+};
+/*
+TLogic.prototype.evalLogicHTMLFull = function(html)
+{	// 2014-08-07 Parse for « » and convert into full JS chunk.
+	// INCOMPLETE
+	trace('evalLogicHTMLFull',html);
+	var parts=html.split("»");
+	if (parts.length > 0)
+	{
+		var p;
+		var logic='';
+		for (p=0;p<parts.length;p++)
+		{
+			var parts2 = parts[p].split("«");
+			html =parts2[0];
+			if (html!=='') {
+				logic += ('write "'+html.split("\n").join(" ")+ '"' +'\n');
+			}
+			if (parts2.length>1)
+			{
+				var block =  parts2[1]  ;
+				logic += (block + '\n');
+			}
+		}
+		
+		script =  gLogic.translateCAJAtoJS(logic);
+		script.html = logic;
+	}
+	else{
+		script={js:[],errors:[],html:html};
+	}
+	trace('evalLogicHTMLFull',html);
+	return script; 
+};*/
+
 
 TLogic.prototype.hds = function(a2j4)
 {	// 08/23/2013 convert A2J4 style expression into new format

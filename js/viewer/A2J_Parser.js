@@ -976,7 +976,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 				}
 			}); 
 			
-			if ((condition.toLowerCase()==="true" || condition==="1" || condition==="1=1"))
+			if ((condition.toLowerCase()==="true" || condition==="1" || condition==="1=1" || condition ==="If 1=1"))
 			{
 				script.code = condT.join(LINEDEL)+LINEDEL;
 			}

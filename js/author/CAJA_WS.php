@@ -388,6 +388,14 @@ switch ($command)
 			if ($res=$mysqli->query($sql)){}
 			// Extract title from uploaded XML. 
 			$xml=file_get_contents($newlocation);
+			
+			if (stripos($xml,'encoding="UTF-8"')==FALSE)
+			{	// A2J Guide without the UTF-8 encoding is probably Windows-1252.
+				// Convert to UTF-8.
+				$xml = iconv('Windows-1252','UTF-8',$xml);
+				file_put_contents($newlocation,$xml);
+			}
+			
 			$guideXML = new SimpleXMLElement($xml);
 			$title = $guideXML->TITLE;//A2J 4 format
 			if ($title=='')

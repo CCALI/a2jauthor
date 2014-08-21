@@ -22,8 +22,8 @@ var CONST = {
 	// Spinnner for loading wait
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
-	A2JVersionNum:"5.0.1.33",//VersionInfo.verNum
-	A2JVersionDate:"2014-08-06",
+	A2JVersionNum:"5.0.1.34",//VersionInfo.verNum
+	A2JVersionDate:"2014-08-15",
 	
 	
 	//CAVersionNum:"5.0.0",
@@ -805,7 +805,7 @@ var gGuidePath;
 
 /** @type {string} */
 var gEnv=''; // Where are we running? Locally, on a2jauthor.org, as beta or dev?
-// Determine what stage we're in and display watermark. 
+// Determine what stage we're in and display watermark.
 gEnv= (String(window.location).indexOf('http://authorbeta.a2jauthor.org')===0)?'BETA':
 		(String(window.location).indexOf('http://authordev.a2jauthor.org')===0)?'DEV':
 		(String(window.location).indexOf('http://localhost/')===0)?'LOCAL':'';

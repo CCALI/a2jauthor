@@ -151,6 +151,7 @@ var A2JViewer={
 	
 		if (div.html()==="")
 		{	// First time rendering, attach handlers. Only executed once.
+			var watermark = (  (String(window.location).indexOf('.a2jauthor.org') < 0) ? '' : '<div class="demoWatermark">For demonstration and testing purposes only. Not intended for use by the public. This A2J Guided Interview will not generate a form.</div>');
 			div.html(
 						'<div class="interact"></div>'
 						+'<div class="a2jbtn"></div> '
@@ -171,9 +172,10 @@ var A2JViewer={
 				+'<div class="copyright">'
 					+'<span class="viewerenv">'+gEnv+' '+CONST.A2JVersionNum+" ("+CONST.A2JVersionDate+') </span>'
 					+'© 2000-2014 Illinois Institute of Technology - Chicago-Kent College of Law and the Center for Computer-Assisted Legal Instruction'
-					+'</div>'
-			//+'<div class="alertCounter"></div>'
-			+'</div>');
+				+'</div>'
+			+'</div>'
+			+ watermark
+			);
 			//<img src="images/SJILogo.gif" width="90" height="55" hspace="3" vspace="3" align="left" />
 			
 			$('div.a2jbtn',div).attr('title',versionString()).click(function()

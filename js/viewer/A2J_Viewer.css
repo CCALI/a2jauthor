@@ -149,6 +149,17 @@ html, body{
 	border-left-color: #FCFCFC;
 	border-left-style: outset;
 }
+.demoWatermark {
+	position: absolute;
+	background: none repeat scroll 0 0 rgba(255,255,255,.5);
+	left: 25%;
+	right: 25%;
+	top: 50px;
+   margin: 2px;
+   padding: 5px;
+	font-size: 12pt;
+}
+
 .alertPanel {
 	/* Spammy alerts for user go here. */
 	position: absolute;

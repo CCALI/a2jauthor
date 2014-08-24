@@ -79,7 +79,7 @@ function loadTestUnit(nth)
 	{
 		if (i==0) return;
 		var pageName =jQuery.trim( $('td:first',this).text());
-		if (pageName == 'STOP') {
+		if (pageName == 'STOP' || pageName=='') {
 			skip=true;
 		}
 		
@@ -157,13 +157,20 @@ function loadTestUnit(nth)
 					+'<h2>Execution</h2>' + '<ol class="exec"></ol>' 
 					);
 				testunit.target =  $('td:nth(1) ol.exec',chunk.row);
-				//trace(chunk.text);
-				var result = gLogic.evalLogicHTML(chunk.text);//lines.join(' '));
-				$('td:nth(1)',chunk.row).append(
-					'<h2>Expanded</h2>' + '<BLOCKQUOTE class="Script">' + result.html + "</BLOCKQUOTE>"
-					
-					+'<h2>Javascripted</h2>' + result.js.join('<hr>')
-					); 
+				
+				
+				var script = gLogic.evalLogicHTML(chunk.text);
+				//var script = gLogic.evalLogicHTML2(chunk.text);//lines.join(' '));
+				
+				//if (script.js.length==0)
+				//alert(script.html);
+				{
+					$('td:nth(1)',chunk.row).append(
+						'<h2>Expanded</h2>' + '<BLOCKQUOTE class="Script">' + script.html + "</BLOCKQUOTE>"
+						
+						+'<h2>Javascripted</h2>' + script.js.join('<hr>')
+						); 
+				}
 			}
 			else
 			if (chunk.type=="logic") 

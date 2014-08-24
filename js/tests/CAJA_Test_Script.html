@@ -166,6 +166,154 @@
 		<th valign="top">Page Name</th>
 		<th valign="top" class="logic">Page Logic</th>
 	</tr>
+	<tr>
+		<td valign="top"><p>Test Multiple Line</p>
+				<p>For Strings and also Expressions</p></td>
+		<td valign="top" ><table width="100%" border="1" cellpadding="5" cellspacing="0">
+				<tr>
+					<td width="1" valign="top">vars</td>
+					<td valign="top"><table border="1" cellpadding="2" cellspacing="0" class="testVariables">
+							<tr>
+								<td nowrap="nowrap">role</td>
+								<td>number</td>
+								<td>&nbsp;</td>
+								<td>3</td>
+							</tr>
+							<tr>
+								<td nowrap="nowrap">help</td>
+								<td>text</td>
+								<td>&nbsp;</td>
+								<td>Some help info</td>
+							</tr>
+							<tr>
+								<td nowrap="nowrap">guest</td>
+								<td>test</td>
+								<td>&nbsp;</td>
+								<td>Dana</td>
+							</tr>
+					</table></td>
+				</tr>
+				<tr>
+					<td valign="top">macro</td>
+					<td valign="top" class="macro"><p>Macro with conditionals and expressions</p>
+							<p>%% if role = 3 %%</p>
+						<p>Your <b>options</b> for eating are:</p>
+						<ul>
+								<li> Eating out with %%guest%%</li>
+							<li> Eating in</li>
+						</ul>
+						<p> %% else %%</p>
+						<p>Your <i>options</i> for diving include:</p>
+						<ul>
+								<li> Driving fast with %%guest%%</li>
+							<li> Driving slow</li>
+							<li> Driving fast &amp; slow</li>
+						</ul>
+						<p> %% end if %% </p></td>
+				</tr>
+				<tr>
+					<td valign="top">macro</td>
+					<td valign="top" class="macro"><p>No macro here. </p>
+					<p>For this <b>role</b>.</p></td>
+				</tr>
+				<tr>
+					<td valign="top">macro</td>
+					<td valign="top" class="macro"><p>Macro with expressions</p>
+						<p> Based on your <b>role which is %%role%%</b>: %%help%%</p></td>
+				</tr>
+
+		</table></td>
+	</tr>
+	<tr>
+		<td valign="top">&nbsp;</td>
+		<td valign="top" >&nbsp;</td>
+	</tr>
+	<tr>
+		<td valign="top"><p>Test Multiple Line</p>
+				<p>For Strings and also Expressions</p></td>
+		<td valign="top" ><table width="100%" border="1" cellpadding="5" cellspacing="0">
+				<tr>
+					<td width="1" valign="top">vars</td>
+					<td valign="top"><table border="1" cellpadding="2" cellspacing="0" class="testVariables">
+							<tr>
+								<td nowrap="nowrap">role</td>
+								<td>number</td>
+								<td>&nbsp;</td>
+								<td>3</td>
+							</tr>
+							<tr>
+								<td nowrap="nowrap">help</td>
+								<td>text</td>
+								<td>&nbsp;</td>
+								<td>Some help info</td>
+							</tr>
+							<tr>
+								<td nowrap="nowrap">guest</td>
+								<td>test</td>
+								<td>&nbsp;</td>
+								<td>Dana</td>
+							</tr>
+					</table></td>
+				</tr>
+
+				<tr>
+					<td valign="top">macro</td>
+					<td valign="top" class="macro"><p>«if role = 3»</p>
+							<p>Your <b>options</b> for eating are:</p>
+						<ul>
+								<li> Eating out with «guest»</li>
+							<li> Eating in</li>
+						</ul>
+						<p> «else» </p>
+						<p>Your <i>options</i> for diving include:</p>
+						<ul>
+								<li> Driving fast with  «guest»</li>
+							<li> Driving slow</li>
+							<li> Driving fast &amp; slow</li>
+						</ul>
+						<p> «end if» </p></td>
+				</tr>
+				<tr>
+					<td width="1" valign="top">logic</td>
+					<td valign="top" class="logic"><p>if true </p>
+							<p>set help to &quot;Your options are</p>
+						<p>* Eating out</p>
+						<p>* Eating in&quot;</p>
+						<p>help</p>
+						<p>else</p>
+						<p>set help to &quot;Your options include:</p>
+						<p>* Driving fast</p>
+						<p>* Driving slow&quot;</p>
+						<p>end if</p></td>
+				</tr>
+				<tr>
+					<td valign="top">logic</td>
+					<td valign="top" class="logic"><p>if role = 1 </p>
+							<p>or role=2</p>
+						<p>or role=3</p>
+						<p>or role=5</p>
+						<p>or role=12</p>
+						<p>set help to &quot;Your options are</p>
+						<p>* Eating out</p>
+						<p>* Eating in&quot;</p>
+						<p>else</p>
+						<p>set help to &quot;Your options include:</p>
+						<p>* Driving fast</p>
+						<p>* Driving slow&quot;</p>
+						<p>end if</p></td>
+				</tr>
+				<tr>
+					<td valign="top">script</td>
+					<td valign="top" class="macro"><p>if role = 3</p>
+							<p>html &quot;Your options are:&quot;</p>
+						<p>html &quot;&lt;P&gt;</p></td>
+				</tr>
+		</table></td>
+	</tr>
+	<tr class="">
+		<td valign="top">&nbsp;</td>
+		<td valign="top" class="macro">&nbsp;</td>
+	</tr>
 	<tr class="">
 		<td valign="top"><p class="logic">HTML tags</p></td>
 		<td valign="top" class="macro"><table width="100%" border="1" cellspacing="0" cellpadding="5">
@@ -225,82 +373,6 @@
 								<p> GOTO &quot;04a-Decedent place of death 2&quot;</p>
 						</blockquote>
 						<p> END IF</p></td>
-				</tr>
-		</table></td>
-	</tr>
-	<tr>
-		<td valign="top"><p>Test Multiple Line</p>
-		<p>For Strings and also Expressions</p></td>
-		<td valign="top" ><table width="100%" border="1" cellpadding="5" cellspacing="0">
-				<tr>
-					<td width="1" valign="top">vars</td>
-					<td valign="top"><table border="1" cellpadding="2" cellspacing="0" class="testVariables">
-							<tr>
-								<td nowrap="nowrap">role</td>
-								<td>number</td>
-								<td>&nbsp;</td>
-								<td>3</td>
-							</tr>
-							<tr>
-								<td nowrap="nowrap">help</td>
-								<td>text</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-							</tr>
-
-					</table></td>
-				</tr>
-				<tr>
-					<td width="1" valign="top">logic</td>
-					<td valign="top" class="logic"><p>if true </p>
-						<p>set help to &quot;Your options are</p>
-						<p>* Eating out</p>
-						<p>* Eating in&quot;</p>
-						<p>else</p>
-						<p>set help to &quot;Your options include:</p>
-						<p>* Driving fast</p>
-						<p>* Driving slow&quot;</p>
-						<p>end if</p>					</td>
-				</tr>
-				<tr>
-					<td valign="top">macro</td>
-					<td valign="top" class="macro"><p>Based on your role:</p>
-							<p>%%help%%</p></td>
-				</tr>
-				<tr>
-					<td valign="top">logic</td>
-					<td valign="top" class="logic"><p>if role = 1 </p>
-						<p>or role=2</p>
-						<p>or role=3</p>
-						<p>or role=5</p>
-						<p>or role=12</p>
-						<p>set help to &quot;Your options are</p>
-						<p>* Eating out</p>
-						<p>* Eating in&quot;</p>
-						<p>else</p>
-						<p>set help to &quot;Your options include:</p>
-						<p>* Driving fast</p>
-						<p>* Driving slow&quot;</p>
-						<p>end if</p></td>
-				</tr>
-				<tr>
-					<td valign="top">macro</td>
-					<td valign="top" class="macro"><p>«if role = 3»</p>
-						<p>Your options are:</p>
-					<p>* &gt; Eating out</p>
-					<p>* &lt; Eating in</p>
-					<p> «else» </p>
-					<p>Your options include:</p>
-					<p>* Driving fast</p>
-					<p>* Driving slow</p>
-					<p>* Driving fast &amp; slow</p>
-					<p> «end if» </p></td>
-				</tr>
-				<tr>
-					<td valign="top">script</td>
-					<td valign="top" class="macro"><p>if role = 3</p>
-					<p>html &quot;Your options are:&quot;</p>
-					<p>html &quot;&lt;P&gt;</p></td>
 				</tr>
 		</table></td>
 	</tr>

@@ -510,7 +510,7 @@ var A2JViewer={
 		}
 		
 		// ### Learn more Prompt
-		if (helpHTML!==''  && learnHTML==='') {
+		if ((helpHTML!=='' || page.helpAudioURL!=='' || page.helpVideoURL!=='')  && learnHTML==='') {
 			// If learn more help exists but the prompt is blank, use the default prompt.
 			learnHTML=lang.LearnMore;
 		}
@@ -520,7 +520,7 @@ var A2JViewer={
 			$('.A2JViewer .help.panel').show();
 		});
 		$('.panel.learnmore',div).hide();
-		if (learnHTML!=="") {			
+		if (learnHTML!=="" ) {			
 			$('.panel.learnmore',div).delay(3000).fadeIn(1000);
 		}
 		
@@ -530,6 +530,9 @@ var A2JViewer={
 		if (page.helpAudioURL!=='')
 		{
 			$('.help .audio',div).html(audioPlayerHTML(page.helpAudioURL));
+		}
+		if (page.helpVideoURL!=='') {
+			$('.ui-form.help',div).append(videoPlayerHTML(page.helpVideoURL));
 		}
 		$('.panel.help button',div).button().click(function(){
 			$('.help.panel',div).hide();

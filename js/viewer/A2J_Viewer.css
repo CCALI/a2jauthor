@@ -698,6 +698,13 @@ x.question.panel {
 .audio {
 	margin-top: 1em;
 }
+
+.A2JViewer audio,
+.A2JViewer video {
+  max-width: 270px;
+}
+
+
 #history {
 	width: 20em;
 }

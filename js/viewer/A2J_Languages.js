@@ -169,15 +169,6 @@ Languages.regional['en']= {
 	tabVariables:'Variables',
 	tabConstants:'Constants',
 	tabSteps:'Steps',
-	/*
-	// Edit Interview labels
-	eiTitle:'Title',
-	eiDescription:'Description',
-	eoOutline:"Outline",
-	eiJurisdiction:'Jurisdiction',
-	eiAuthor:'Author',
-	eiLogoGraphic:'Logo graphic',
-	*/
 	// Question branching types
 	qIDNOWHERE:"[no where]",
 	qIDSUCCESS:"[Success - Process Form]",
@@ -304,6 +295,87 @@ Languages.regional['es']= {
 	Ordinals48:'cuadragésimooctavo',
 	Ordinals49:'cuadragésimonoveno',
 	Ordinals50:'quincuagésimo'
+};
+
+
+
+
+// French
+Languages.regional['fr']= {
+	locale:'fr',
+		
+	Language:'Français',
+	LanguageEN: 'French',
+	//[Captions]
+	AskYesNo_Yes :'Oui',
+	AskYesNo_No :'Non',
+	Close:'Fermer',
+	Comment:'Commenter',
+	GoBack:'Retour',
+	GoNext:'Prochain',
+	//GoNext:'En apprendre plus',
+	MyProgress:'MON PROGRÈS',
+	ProvideFeedbackOrComment:'Fournir des suggestions ou des commentaires sur cette page',
+	SaveAndExit:'Sortir',
+	ResumeExit:'Reprendre',
+	SendFeedback:'Envoyer la suggestion',
+	SoundIsOff:'Audio désactivé',
+	SoundIsOn:'Audio activé',
+	SoundPlay:'Jouer',
+	SoundStop:'Arrêt',
+	WhatDoYouMean:'Qu’est- ce que ça signifie?',
+	Continue:'Continuer',
+	Exit:'Sortir',
+	Male:'Mâle',
+	Female:'Femelle',
+	ChooseListNumber:'Choisissez:',
+	//ChooseListText:'Faites un choix à partir de la liste:',
+	ChooseListText:'Aucun des énoncés ',
+	ZoomNormal:'Taille normale',
+	ZoomFull:'Image complète',
+	TextEnlarge:'Agrandir la casse du texte',
+	TextShrink:'Réduire la casse du texte',
+	TextSizeLetter:'A',
+	UploadAnswers:'Veuillez patienter…',
+	CalcClear:'Effacer',
+	CalcEnter:'Entrer',
+	//[Date]
+	MonthNamesShort:'Janv,Fév,Mars,Avr,Mai,Juin,Juil,Août,Sept,Oct,Nov,Déc',
+	MonthNamesLong:'Janvier,Février,Mars,Avril,Mai,Juin,Juillet,Août,Septembre,Octobre,Novembre,Décembre',
+	//[FieldPrompts]',
+	ResponseRequired:'Remplissez les champs vides à côté des étiquettes rouges pour pouvoir continuer. ',
+	SelectionRequired:'Faites un choix pour pouvoir continuer.',
+	text:'Entrez une réponse dans le champ surligné pour pouvoir continuer.',
+	textlong:'Entrez une réponse dans le champ surligné pour pouvoir continuer.',
+	//;Text (Pick from list)',
+	textpick:'Faites un choix à partir de la liste du champ surligné pour pouvoir continuer. ',
+	number:'Entrez un numéro dans le champ surligné pour pouvoir continuer.',
+	numberdollar:'Entrez un montant dans le champ surligné pour pouvoir continuer. ',
+	numberssn:'Entrez votre numéro de sécurité sociale dans le champ surligné pour pouvoir continuer.',
+	numberphone:'Entrez votre numéro de téléphone dans le champ surligné pour pouvoir continuer.',
+	numberzip:'Entrez votre code postal dans le champ surligné pour pouvoir continuer.',
+	//;Number (Pick from List)',
+	numberpick:'Faites un choix à partir de la liste du champ surligné pour pouvoir continuer.',
+	datemdy:'Entrez l’année, le mois et le jour dans le champ surligné pour pouvoir continuer.',
+	gender:'Choisissez soit mâle soit femelle dans le champ surligné pour pouvoir continuer.',
+	radio:'Faites un choix à partir de la liste du champ surligné pour pouvoir continuer.',
+	checkbox:'Sélectionnez une ou plusieurs cases pour pouvoir continuer.',
+	checkboxNOTA:'Sélectionnez une ou plusieurs cases, ou « aucun des énoncés » pour pouvoir continuer.',
+	//[Ordinals]
+	Ordinals1:'premier',
+	Ordinals2:'deuxième',
+	Ordinals3:'troisième',
+	Ordinals4:'quatrième',
+	Ordinals5:'cinquième',
+	Ordinals6:'sixième',
+	Ordinals7:'septième',
+	Ordinals8:'huitième',
+	Ordinals9:'neuvième',
+	Ordinals10:'dixième',
+	Ordinals11:'onzième',
+	Ordinals12:'douzième',
+	Ordinals13:'treizième'
+
 };
 
 
@@ -460,7 +532,7 @@ Languages.regional['zh-cn']= {
 	Ordinals13:'第十三'
 };
 
-// English
+// Korean
 Languages.regional['ko']= {
 	locale:'ko',
 	

@@ -96,7 +96,17 @@ function urlSplit(url)
 	}
 	return parts;
 }
-
+function pathExt(path)
+{	// Return extention file type
+	var p=path.lastIndexOf('.');
+	if (p>=0) {
+		return path.substr(p+1);
+	}
+	else
+	{
+		return '';
+	}
+}
 
 function propCount(obj)
 {
@@ -548,7 +558,19 @@ function trace(var_args) //was just trace
 
 function audioPlayerHTML(audiofile)
 {	// 2014-06-03 Construct HTML 5 audio HTML. Currently only MP3 supported.
+
 	return '<audio controls><source src="' +fixPath(audiofile) + '" type="audio/mpeg"></audio>';
+}
+function videoPlayerHTML(videoFile)
+{	// 2014-06-03 Construct HTML 5 video HTML. FLV no longer supported.
+	// Convert to webm? Mp4 is licensed.
+	// For size restrictions, allow youtube embedding?
+	videoFile = fixPath(videoFile);
+	var ext=pathExt(videoFile);
+	//if (ext == 'flv') {
+	//	ext='webm';
+	//}
+	return '<video controls><source src="' + videoFile + '"  type="video/mp4"><source src="' + videoFile + '"  type="video/webm"></video>';
 }
 
 /* */

@@ -441,6 +441,7 @@ function pageFromXML(xml)/* return TPage */
 
 
 
+
 TGuide.prototype.HotDocsAnswerSetXML=function()
 {	// 2/28/05 Bug in HotDocs requires empty variable to NOT be included.
 

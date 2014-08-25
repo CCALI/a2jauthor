@@ -11,6 +11,7 @@
 /* global gGuidePath,gPage,gGuide,gUserID,gGuideID,gUserNickName */
 
 
+
 /**
  * Parses data returned from the server
  * When guide file is finally downloaded, we can parse it and update the UI.

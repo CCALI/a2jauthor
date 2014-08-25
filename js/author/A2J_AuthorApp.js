@@ -344,6 +344,30 @@ function main()
 
 	$('#page-viewer').hide();
 	$('#var-add').button({icons:{primary:'ui-icon-new'}}).click(varAdd);
+	
+	$('#uploadCMPFile').button({xlabel:'Open',icons:{primary:'ui-icon-folder-open'}});
+	$('#uploadCMPFileInput').on('change',function()			
+	{	// Browse for HotDocs .CMP file on local desktop to upload to client (no server).
+		var file = $('#uploadCMPFileInput')[0].files[0];
+		var textType = /text.*/;
+		setProgress("Loading..."); 
+		if (file.type==='' || file.type.match(textType))
+		{
+			var reader = new FileReader();
+			reader.onload = function(e)
+			{
+				var data = $.parseXML(reader.result);
+				gGuide.HotDocsAnswerSetFromCMPXML($(data));
+				setProgress('');
+				A2JViewer.refreshVariables();
+			};
+			reader.readAsText(file);	
+		} 
+		else
+		{
+			setProgress("File not supported!"); 
+		}
+	});
 	//$('#var-del').button({icons:{primary:'ui-icon-trash'}}).click(varDel);
 
 	$( "#bold" ).button({label:'B'}).click(editButton);

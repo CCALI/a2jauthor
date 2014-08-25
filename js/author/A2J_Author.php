@@ -166,7 +166,10 @@ function ts($filename)
 				<div class="tabContent editq"></div>
 			</div>
 			<div class="tabFooter">
-				<button id="var-add">Add</button>				
+				<button id="var-add">Add</button>
+			<span class="fileinput-button">
+				<button id="uploadCMPFile">Add from HotDocs .CMP</button><input type="file" id="uploadCMPFileInput">
+			</span>
 			</div>
 		</div>
 		<div class="panel" id="tabsSteps">

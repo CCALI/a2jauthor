@@ -57,6 +57,11 @@ var A2JViewer={
 	refreshVariables : function ( )
 	{	// Update the variables table with latest values
 		var $t=$('.varvalpanel');
+		
+		if ($t.length==0) {
+			return;
+		}
+		
 		/** @type {TGuide} */
 		var g = gGuide;
 		/** @type {TVariable} */

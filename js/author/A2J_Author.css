@@ -1047,4 +1047,11 @@ div.codeedit span.err {
 	float: right;
 }
 
+#uploadCMPFileInput {
+	opacity:  0;
+	position: absolute;
+	left: 0px;
+	height: 30px;
+}
+
 /* */

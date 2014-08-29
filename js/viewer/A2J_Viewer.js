@@ -41,6 +41,9 @@ function traceAlert(html)
 	}
 }
 
+
+
+
 var A2JViewer={
 
 	IMG : "images/",
@@ -951,6 +954,7 @@ var A2JViewer={
 };
 
 
+window.onbeforeunload=function(){return 'Leave A2J Author?';};
 
 /* */
 

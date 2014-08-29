@@ -167,13 +167,20 @@ function openSelectedGuide()
 }
 
 function archiveSelectedGuide()
-{	// 2014-08-28 Delete the currently selected guide 
+{	// 2014-08-28 Delete the currently selected guide	
 	var $li=$('li.guide.'+SELECTED).first();
-	var gid=$li.attr('gid');
-	if (!gid) {
-		return;
-	}
-	ws({cmd:'guidearchive',gid:gid},wsListGuides);
+	var name = $('span.title',$li).text();
+	dialogConfirmYesNo({title:'Delete interview',message:'Would you like to delete '+name+'?',height:300,name:name,
+		Yes:
+		function()
+		{
+			var gid=$li.attr('gid');
+			if (!gid) {
+				return;
+			}
+			ws({cmd:'guidearchive',gid:gid},wsListGuides);
+		}});
+	
 }
 function wsListGuides()
 {

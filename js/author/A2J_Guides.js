@@ -21,16 +21,8 @@ function guideLoaded(data)
 	gGuideID=data.gid;
 	var cajaDataXML=$(jQuery.parseXML(data.guide));
 	gGuide =  parseXML_Auto_to_CAJA(cajaDataXML);
-	$('li.guide[gid="'+gGuideID+'"]').html(gGuide.title);
-	/*
-		var cajaDataXML=$(data.guide);  
-		var description = makestr(cajaDataXML.find('DESCRIPTION').text());
-		var pages=[];
-		cajaDataXML.find("QUESTION").each(function() {
-			QUESTION = $(this);
-			pages.push(QUESTION.attr("ID")+" "+ QUESTION.attr("NAME"));
-		});
-	*/
+	//$('li.guide[gid="'+gGuideID+'"]').html(gGuide.title);
+
 	gGuidePath=urlSplit(data.path).path; 
 	guideStart('');
 	setProgress('');
@@ -137,19 +129,24 @@ function createBlankGuide()
 {	// create blank guide internally, do Save As to get a server id for future saves.
 	var guide = blankGuide();
 
-	ws({cmd:'guidesaveas',gid:0, guide: exportXML_CAJA_from_CAJA(guide), title: guide.title},function(data){
-		if (data.error!==undefined){
+	ws({cmd:'guidesaveas',gid:0, guide: exportXML_CAJA_from_CAJA(guide), title: guide.title},function(data)
+	{
+		if (data.error!==undefined)
+		{
 			setProgress(data.error);
 		}
-		else{
+		else
+		{
 			var newgid = data.gid;//new guide id
-			ws({cmd:'guides'},function (data){
+			ws({cmd:'guides'},function (data)
+			{
 				listGuides(data);
 				ws({cmd:'guide',gid:newgid},guideLoaded);
-			 });
+			});
 		}
 	});
 }
+
 function openSelectedGuide()
 {	// Open the currently selected guide (either double click or via Open button)
 	var $li=$('li.guide.'+SELECTED).first();
@@ -169,6 +166,20 @@ function openSelectedGuide()
 	}
 }
 
+function archiveSelectedGuide()
+{	// 2014-08-28 Delete the currently selected guide 
+	var $li=$('li.guide.'+SELECTED).first();
+	var gid=$li.attr('gid');
+	if (!gid) {
+		return;
+	}
+	ws({cmd:'guidearchive',gid:gid},wsListGuides);
+}
+function wsListGuides()
+{
+	ws({cmd:'guides'},listGuides);
+}
+
 /*** @param {{guides}} data */
 function listGuides(data)
 {
@@ -182,16 +193,38 @@ function listGuides(data)
 		/*** @param {{owned,id,title}} g */
 		function(key,g)
 		{
-			var str='<li class=guide gid="' + g.id + '">' + g.title + '('+g.id+')'+  '</li>';
+			
+			var size='?';
+			var modified='?';
+			//var pagecount='?';
+			if (g.details!=='')
+			{
+				size=Math.ceil(g.details.size/1024)+'K';
+				modified= g.details.modified;
+				//pagecount=g.details.pagecount;
+			}
+			if (g.title==='') {
+				g.title='Untitled';
+			}
+			var str='<li class=guide gid="' + g.id + '">'
+				+'<span class=title>' + g.title +'</span>'
+				+'<span class=id>#' + g.id+ '</span>'
+				+'<span class=size>' + size + '</span>'
+				+'<span class=modified>' + modified + '</span>'
+				//+'<span class=pagecount>' + pagecount + '</span>'
+				//+(g.owned?  '<pan class=delete></span>' : '')
+			+ '</li>';
 			if (g.owned)
 			{
 				guideListMy.push(str);
 			} else {
 				guideListSamples.push(str);
 			}
-	});
+		}
+	);
 	$('#guideListNew').html(guideListNew.join(''));
 	$('#guideListMy').html(guideListMy.join(''));
+	
 	$('#guideListSamples').html(guideListSamples.join(''));
 
 	$('li.guide').click(function(){$('li.guide').removeClass(SELECTED);$(this).addClass(SELECTED);});

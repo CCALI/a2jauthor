@@ -71,7 +71,6 @@ function signin()
 			if (gUserID!==0)
 			{	// ### Successful signin.
 				gotoTabOrPage('tabsGuides');
-				ws({cmd:'guides'},listGuides);
 				$('#splash').hide();
 				$('#authortool').removeClass('hidestart');//.addClass('authortool').show();	
 			}
@@ -175,7 +174,9 @@ function main()
 	
 	//$('#guideCreate').button({icons:{primary:"ui-icon-document"}}).click(function(){createBlankGuide();	});
 	$('#guideOpen').button({label:'Open', disabled:false, icons:{primary:"ui-icon-disk"}}).click(openSelectedGuide);
+	$('#guideArchive').button({label:'Delete', disabled:false, icons:{primary:"ui-icon-trash"}}).click(archiveSelectedGuide);
 
+	
 	
 	$('#guideZIP').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
 	{	// 01/08/2014 ZIP the guide and related files. 

@@ -215,6 +215,35 @@ html, body {
 ul.guidelist li {
 	padding: 4px;
 }
+ul.guidelist li span.id {
+	background-color: rgba(255,240,255,0.5);
+	width: 5em;
+	font-style: italic;
+	float:right;
+	text-align:center;
+	display: inline-block;
+}
+ul.guidelist li span.size {
+	background-color: rgba(240,255,240,0.5);
+	float:right;
+	width: 4em;
+	text-align:right;
+	display: inline-block;
+}
+ul.guidelist li span.modified {
+	background-color: rgba(255,255,240,0.5);
+	width: 12em;
+	float:right;
+	text-align:center;
+	display: inline-block;
+}
+ul.guidelist li span.pagecount {
+	background-color: rgba(255,255,240,0.5);
+	width: 4em;
+	float:right;
+	text-align:center;
+	display: inline-block;
+}
 
 #CAJAIndex.pagelist ul { 
 	list-style-type: bullet;

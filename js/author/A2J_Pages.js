@@ -384,11 +384,18 @@ function gotoTabOrPage(target)
 			break;
 		case 'tabsGuides':
 			// Ensure author can't load new guide before we've saved the current one. 
-			if (gGuide) {
+			if (gGuide)
+			{	// Ensure existing guide is saved.
 				$('#'+target).hide();	
-				guideSave(function(){
-					$('#'+target).show();					
+				guideSave(function()
+				{
+					$('#'+target).show();
+					wsListGuides();
 				});
+			}
+			else
+			{
+				wsListGuides();
 			}
 			break;
 	}

@@ -9,8 +9,11 @@
 	07/15/2013 Directory restructure
 	05/2014 Loads author system only if user is logged into Drupal with an 'a2j author' role setting.
 	07/2014 Create public versions
+	08/2014 add more file details
 */
 
+define(DATE_FORMAT,	  'Y-m-d-H-i-s'); // date stamp for file names
+define(DATE_FORMAT_UI, 'Y-m-d H:i:s'); // date stamp for human reading
 
 $command=$_REQUEST['cmd'];
 $result=array();
@@ -142,7 +145,7 @@ switch ($command)
 		
 	case 'guides':
 		// list of free, public or user owned guides
-		listGuides("select * from guides where isPublic=1 or isFree=1  or (editoruid=$userid) order by (editoruid=$userid) desc, title asc ");
+		listGuides("select * from guides where archive=0 and (isPublic=1 or isFree=1  or (editoruid=$userid)) order by (editoruid=$userid) desc, title asc ");
 		break;
 	case 'guidessys':
 		//array scandir ( string $directory [, int $sorting_order = SCANDIR_SORT_ASCENDING [, resource $context ]] )
@@ -150,7 +153,12 @@ switch ($command)
 
 	case 'guides/owned':
 		// list of user owned guides
-		listGuides("select * from guides where editoruid=$userid order by title asc");
+		listGuides("select * from guides where archive=0 and (editoruid=$userid) order by title asc");
+		break;
+	 
+	case 'guides/owned/archive':
+		// list of user owned guides that were archived
+		listGuides("select * from guides where archive=1 and (editoruid=$userid) order by title asc");
 		break;
 
 	case 'guide':
@@ -231,7 +239,7 @@ switch ($command)
 				{
 				  mkdir($verdir);
 				}
-				$revname=$verdir.'/'.$filenameonly.' Version_'.date('Y-m-d-H-i-s',filemtime($filename)).'.xml';
+				$revname=$verdir.'/'.$filenameonly.' Version_'.date(DATE_FORMAT,filemtime($filename)).'.xml';
 				rename($filename, $revname);
 				if ($title!="" && $title != $oldtitle)
 				{
@@ -246,6 +254,24 @@ switch ($command)
 			$err="No permission to update this guide";
 		break;
 	
+	case 'guidearchive':
+		// 2014-08-26 archive the guide (only if user matches guide's editor
+		// Archive bit is set in table row, files are NOT removed. 
+		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+		$title=($mysqli->real_escape_string($_REQUEST['title']));
+		$xml=$_REQUEST['guide'];
+		$res=$mysqli->query("select * from guides where gid=$gid and editoruid=$userid");
+		if ($row=$res->fetch_assoc())
+		{
+			$result['info']="Will archive!";
+			$sql="update guides set archive=1 where gid=$gid";
+			if ($res=$mysqli->query($sql))
+			{
+			}
+		}
+		else
+			$err="No permission to archive this guide";
+		break;
 
 	
 	case 'answersetsave':
@@ -269,7 +295,7 @@ switch ($command)
 				{
 					mkdir($verdir);
 				}
-				$revname=$verdir.'/answerset Version_'.date('Y-m-d-H-i-s',filemtime($filename)).'.anx';
+				$revname=$verdir.'/answerset Version_'.date(DATE_FORMAT,filemtime($filename)).'.anx';
 				trace("renaming $filename to $revname");
 				rename($filename, $revname);
 			}
@@ -430,7 +456,7 @@ switch ($command)
 			$guideDir = $path_parts['dirname'];
 			$guideNameOnly = $path_parts['filename'];
 			$zip  = new ZipArchive();
-			$zipNameOnly = 'A2J5 Guide'.$gid.' Archive'./*' '.date('Y-m-d-H-i-s').*/'.zip';
+			$zipNameOnly = 'A2J5 Guide'.$gid.' Archive'./*' '.date(DATE_FORMAT).*/'.zip';
 			$zipName = $guideDir.'/'.$zipNameOnly;
 			$zipFull = GUIDES_DIR.$zipName;
 			if ($zip->open($zipFull,ZipArchive::OVERWRITE)!==TRUE)
@@ -475,7 +501,7 @@ switch ($command)
 			$path_parts = pathinfo($guideName);
 			$guideDir = $path_parts['dirname'];
 			$guideNameOnly = $path_parts['filename'];
-			$newSubGuideDir = "public/".$guideDir."/".date('Y-m-d-H-i-s');
+			$newSubGuideDir = "public/".$guideDir."/".date(DATE_FORMAT);
 			$GuidePublicDir =  GUIDES_DIR.$newSubGuideDir;
 			trace('Public dir is "'.$GuidePublicDir.'"');
 			mkdir($GuidePublicDir,0775,true);
@@ -513,13 +539,35 @@ echo $return;
 
 
 function getGuideFileDetails($filename)
-{
+{	// 2014-08-26 Get info about guide
 	$filename=GUIDES_DIR.$filename;
-	//		file_put_contents($filename,$xml);
-	//$xml=simplexml_load_file($filename,null, LIBXML_NOCDATA);
-	//trace($xml);
-	//$details = $xml->xpath('/description');
 	$details="";
+	if (file_exists($filename))
+	{
+		$details = Array();
+		$details['modified' ] = date (DATE_FORMAT_UI, filemtime($filename));
+		$details['size'] = filesize($filename);
+		// Get XML info - XML could be A2J version 4. ignore for now.
+		/*($olderr=error_reporting(0);
+		$xml = simplexml_load_file($filename);
+		error_reporting($olderr);
+		if ($xml!=FALSE)
+		{
+		  $details['pagecount'] = count($xml->PAGES->PAGE);
+		  $details['version' ] =  (string)$xml->INFO->VERSION;
+			//,'description' => (string) $xml->INFO->DESCRIPTION
+		}
+		else{
+			trace('getGuideFileDetails XML parsing error:'.$filename);		
+			
+		}
+		*/
+		//trace('Details:'.$details);
+	}
+	else
+	{
+	  //trace('getGuideFileDetails file not found:'.$filename);		
+	}
 	return $details;
 }
 /*
@@ -538,7 +586,9 @@ function listGuides($sql)
 		$res=$mysqli->query($sql);
 		while($row=$res->fetch_assoc())
 		{
-			$guides[]=array( "id"=> $row['gid'], "title"=> $row['title'],
+			$guides[]=array(
+				"id"=> $row['gid'],
+				"title"=> $row['title'],
 				"owned"=> $row["editoruid"]==$userid,
 				"details"=> getGuideFileDetails( $row['filename'])); 
 		  } 

@@ -321,6 +321,7 @@ function ts($filename)
 				<!--	<button id="guideCreate">New</button>-->
 					<button id="guideClone">Clone</button>
 					<button id="guideOpen">Open</button>
+					<button id="guideArchive">Delete</button>
 				<div class="fileuploader">
 				<!-- The fileinput-button span is used to style the file input field as button -->
 				<span class="fileinput-button">

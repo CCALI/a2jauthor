@@ -11,7 +11,7 @@ TGuide.prototype.HotDocsAnswerSetFromCMPXML=function(cmp)
 {	// 2014-08-25 Extract variables from HotDocs .CMP file (XML format)
 	// Lots of handy settings that could be imported to A2J in addition to variable name/type
 	/*
-	 	<hd:components>
+		<hd:components>
 		<hd:text name="AGR Petitioner Mother-Father-TE" askAutomatically="false" saveAnswer="false" warnIfUnanswered="false"/>
 		<hd:text name="Abuse TE" askAutomatically="false">
 			<hd:prompt>List the date of every incident, the allegation, whether «Petitioner full name CO» was required to attend court, and the disposition.</hd:prompt>
@@ -20,10 +20,11 @@ TGuide.prototype.HotDocsAnswerSetFromCMPXML=function(cmp)
 	*/
 	/** @type {TGuide} */
 	var guide=this;
-	trace('HotDocsAnswerSetFromCMPXML');
-	cmp.find('hd\\:components').children().each(function()
-	{
-		
+	
+	//cmp.find('hd\\:components').children().each(function() //  doesn't work in chrome
+
+	cmp.find("*").each(function()
+	{	// Search for components A2J can handle
 		var name = makestr($(this).attr("name"));
 		var comment=''; // TODO? get prompt info as a comment?
 		var repeating=false;
@@ -63,7 +64,7 @@ TGuide.prototype.HotDocsAnswerSetFromCMPXML=function(cmp)
 			case 'hd:computation':
 				//	<hd:computation name="Any parent address not known CO" resultType="trueFalse">
 				// <hd:computation name="A minor/minors aff of due dliligence CO" resultType="text">
-				var resultType=$(this).attr("resultType")
+				var resultType=$(this).attr("resultType");
 				switch (resultType)
 				{
 					case 'text':

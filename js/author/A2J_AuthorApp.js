@@ -346,7 +346,7 @@ function main()
 	$('#page-viewer').hide();
 	$('#var-add').button({icons:{primary:'ui-icon-new'}}).click(varAdd);
 	
-	$('#uploadCMPFile').button({xlabel:'Open',icons:{primary:'ui-icon-folder-open'}});
+	$('#uploadCMPFile').button({icons:{primary:'ui-icon-folder-open'}});
 	$('#uploadCMPFileInput').on('change',function()			
 	{	// Browse for HotDocs .CMP file on local desktop to upload to client (no server).
 		var file = $('#uploadCMPFileInput')[0].files[0];

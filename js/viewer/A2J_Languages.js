@@ -44,6 +44,25 @@ var lang = {
 	scriptErrorUnhandled : '',
 	scriptErrorEndMissing : ''
 };
+
+function readableList(list)
+{	// 2014-09-03 Return comma separated, optional 'and' for array.
+	var items=[];
+	for (var i in list)
+	{	// Remove null or blanks.
+		var item = list[i];
+		if (!isBlankOrNull(item))
+		{
+			items.push(item);
+		}
+	}
+	var text=items.pop();
+	if (items.length>0)
+	{
+		text=items.join(', ')+' and ' + text; 
+	}
+	return text;
+}
 /**
  * @constructor
  * @struct

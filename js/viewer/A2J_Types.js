@@ -22,8 +22,8 @@ var CONST = {
 	// Spinnner for loading wait
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
-	A2JVersionNum:"5.0.1.36",//VersionInfo.verNum
-	A2JVersionDate:"2014-08-29",
+	A2JVersionNum:"5.0.1.37",//VersionInfo.verNum
+	A2JVersionDate:"2014-09-04",
 	
 	
 	//CAVersionNum:"5.0.0",
@@ -572,7 +572,7 @@ TGuide.prototype.varExists=function(varName)
 * @param {Object} [opts]
 */
 TGuide.prototype.varGet=function(varName,varIndex,opts)
-{
+{	// opts has optionsl modifiers including forcing value to number or date.
 	/** @type {TGuide} */
 	var guide=this;
 	
@@ -588,7 +588,7 @@ TGuide.prototype.varGet=function(varName,varIndex,opts)
 	{
 		if (v.repeating)
 		{	// Repeating variable without an index returns array of all values
-			return v.values;
+			return readableList(v.values);
 		}
 		varIndex=1;
 	}

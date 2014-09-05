@@ -515,6 +515,14 @@ TGuide.prototype.historyToXML=function()
 	return '<LABELS/>';
 };
 
+TGuide.prototype.stepDisplayNumber =function( step )
+{	// 2014-09-05 For step 0 display arrow.
+	var number = step.number;
+	if (number==='' || number=='0') {
+		number='↖';
+	}
+	return number;
+}
 
 TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 {	// Convert a page name or reserved word into readable text.

@@ -254,7 +254,7 @@ html, body{
 }
 
 .A2JViewer .interact {
-	overflow: auto;
+	overflow: hidden;
 	position: absolute;
 	top:43px;
 	bottom:00;
@@ -337,6 +337,10 @@ div.question.bubble > div {
 .popup.panel .buttonlist,
 .help.panel .buttonlist{
 	text-align:center;
+}
+.a2jv .buttonlist  .ui-button   {
+	border: 2px solid #000;
+	font-weight: bold;
 }
 .field.error {
 	background-color: #ff0;

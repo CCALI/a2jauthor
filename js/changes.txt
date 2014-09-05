@@ -1,7 +1,18 @@
-##################################################################################
-### A2J Author 5 * Justice * 正义 * công lý * 사법 * правосудие                   ###
-### All Contents Copyright The Center for Computer-Assisted Legal Instruction  ###
-##################################################################################
+### A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
+### All Contents Copyright The Center for Computer-Assisted Legal Instruction
+
+
+
+2014-09-05
+Viewer. Button border black, caption bold
+Viewer. Scrollbars now removed when too narrow.
+Viewer. Step 0 now has arrow pointing down road
+
+
+2014-08-12
+Collapse/expand mapper outline fades related map points
+
+
 
 # 5.0.1.16 2014-05-08
 # Guide upload/download

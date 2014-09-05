@@ -892,7 +892,7 @@ var A2JViewer={
 			zoom = 'transform: '+scale+';'
 				+'-webkit-transform: '+scale+';';
 				
-			txt += '<div class="stepsign" style="position:absolute; left:'+s1[0]+'px; top: '+s1[1]+'px;'+zoom+'"><div class="stepsigncolor Step'+color+'" ></div>	<div class="stepnumber" >'+steps[cs].number+'</div>'
+			txt += '<div class="stepsign" style="position:absolute; left:'+s1[0]+'px; top: '+s1[1]+'px;'+zoom+'"><div class="stepsigncolor Step'+color+'" ></div>	<div class="stepnumber" >'+gGuide.stepDisplayNumber(steps[cs])+'</div>'
 			+'<table class="steptextdiv"><tr valign=true><td><span class="steptext">'+steps[cs].text+'</span></tr></tr></table></div>';
 			// step'+s+'
 		}
@@ -932,8 +932,8 @@ var A2JViewer={
 			qx=si.gf[0]-300;
 			txt += posimg('A2JAvatar-Guide-Front-'+gg+av+'.png',si.gf[0],si.gf[1]);
 		}
-		txt +='<div class="question panel" style="position:absolute; left:'+qx+'px; top: 140px; width: 300px; "><div class="question bubble"><div class="question ui-form"></div></div></div><img style="position:absolute; left: '+(qx+299)+'px; top: 240px; " src="'+IMG+'guide_bubble_tip.png"   />';
-	
+		txt +='<div class="question panel" style="position:absolute; left:'+qx+'px; top: 140px; "><div class="question bubble"><div class="question ui-form"></div></div></div><img class="bubbleTip" style="position:absolute; left: '+(qx+299)+'px; top: 240px; " src="'+IMG+'guide_bubble_tip.png"   />';
+			//width: 300px; 
 
 		// HTML for Learn More and LearnMore Help bubbles. 
 		// Learnmore button

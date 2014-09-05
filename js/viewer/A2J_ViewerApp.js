@@ -160,6 +160,7 @@ function main(){
 	loadGuideFile(gStartArgs.templateURL,"");
 }
 
+window.onbeforeunload=function(){return 'Leave A2J Author?';};
 window.addEventListener("message",receiveMessage,false);
 
 function receiveMessage(event) {

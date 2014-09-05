@@ -954,7 +954,6 @@ var A2JViewer={
 };
 
 
-window.onbeforeunload=function(){return 'Leave A2J Author?';};
 
 /* */
 

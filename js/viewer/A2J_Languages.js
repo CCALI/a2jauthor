@@ -31,6 +31,7 @@ var lang = {
 	Close:'',
 	LearnMore:'',
 	FieldPrompts_text:'',
+	RepeatAnd:'', // Used in building comma list from REPEAT. 
 	
 	qIDNOWHERE:'',
 	qIDSUCCESS:'',
@@ -59,7 +60,7 @@ function readableList(list)
 	var text=items.pop();
 	if (items.length>0)
 	{
-		text=items.join(', ')+' and ' + text; 
+		text=items.join(', ')+' ' + lang.RepeatAnd +' ' + text; 
 	}
 	return text;
 }
@@ -167,6 +168,7 @@ Languages.regional['en']= {
 	FieldPrompts_radio:'You must choose a response from the highlighted selection before you can continue.',
 	FieldPrompts_checkbox:'You must select one or more checkboxes to continue.',
 	FieldPrompts_checkboxNOTA:'Please select one or more checkboxes or "None of the above" to continue.',
+	RepeatAnd: 'and',
 	Ordinals_1:'first',
 	Ordinals_2:'second',
 	Ordinals_3:'third',
@@ -264,6 +266,7 @@ Languages.regional['es']= {
 	FieldPrompts_radio:'You must choose a response from the highlighted selection before you can continue.',
 	FieldPrompts_checkbox:'Please select one or more checkboxes to continue.',
 	FieldPrompts_checkboxNOTA:'Please select one or more checkboxes or "None of the above" to continue.',
+	RepeatAnd: 'y',
 	Ordinals1:'primero',
 	Ordinals2:'segundo',
 	Ordinals3:'tercero',
@@ -380,6 +383,7 @@ Languages.regional['fr']= {
 	radio:'Faites un choix à partir de la liste du champ surligné pour pouvoir continuer.',
 	checkbox:'Sélectionnez une ou plusieurs cases pour pouvoir continuer.',
 	checkboxNOTA:'Sélectionnez une ou plusieurs cases, ou « aucun des énoncés » pour pouvoir continuer.',
+	RepeatAnd: 'et',
 	//[Ordinals]
 	Ordinals1:'premier',
 	Ordinals2:'deuxième',
@@ -458,6 +462,7 @@ Languages.regional['vi']= {
 	FieldPrompts_radio:'Quý vị phải chọn một câu trả lời từ chỗ được tô đậm trước khi quý vị tiếp tục.',
 	FieldPrompts_checkbox:'Quý vị phải đánh dấu vào một ô trống hoặc nhiều hơn để tiếp tục. ',
 	FieldPrompts_checkboxNOTA:'Xin đánh dấu vào một ô trống hoặc nhiều hơn hoặc chọn "Không có câu nào áp dụng" để tiếp tục. ',
+	RepeatAnd: 'và',
 	Ordinals1:'Một',
 	Ordinals2:'Hai',
 	Ordinals3:'Ba',
@@ -536,6 +541,7 @@ Languages.regional['zh-cn']= {
 	FieldPrompts_radio:'你必须先在黃色标记的栏位上选择一项回应才能继续下去',
 	FieldPrompts_checkbox:'你必须先在复选框里选择一项或以上才能继续下去',
 	FieldPrompts_checkboxNOTA:'请在复选框选择一项或以上，或选择“以上皆非”以继续下去',
+	RepeatAnd: '和',
 	Ordinals1:'第一',
 	Ordinals2:'第二',
 	Ordinals3:'第三',
@@ -607,6 +613,7 @@ Languages.regional['ko']= {
 	FieldPrompts_radio:'계속하기 전에 강조 표시된 선택란에서 응답을 선택해야 합니다.',
 	FieldPrompts_checkbox:'계속하려면 1개 이상의 체크박스를 선택해야 합니다.',
 	FieldPrompts_checkboxNOTA:'계속하려면 2개 이상의 체크박스를 선택하거나 "위 내용 중 해당 사항 없음"을 선택하십시오.',
+	RepeatAnd: '및',
 	Ordinals1:'첫째',
 	Ordinals2:'둘째',
 	Ordinals3:'셋째',

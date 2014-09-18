@@ -12,8 +12,8 @@
 	08/2014 add more file details
 */
 
-define(DATE_FORMAT,	  'Y-m-d-H-i-s'); // date stamp for file names
-define(DATE_FORMAT_UI, 'Y-m-d H:i:s'); // date stamp for human reading
+define('DATE_FORMAT',	  'Y-m-d-H-i-s'); // date stamp for file names
+define('DATE_FORMAT_UI', 'Y-m-d H:i:s'); // date stamp for human reading
 
 $command=$_REQUEST['cmd'];
 $result=array();

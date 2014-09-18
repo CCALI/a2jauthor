@@ -417,7 +417,7 @@ function main()
 
 window.onbeforeunload=function()
 {
-	if (gGuide!==null && gGuideID!==0)
+	if (gGuide  && gGuideID && (gGuideID!==0))
 	{	// If we've got a guide loaded, ask if we want to leave.
 		return 'Leave A2J Author?';
 	}

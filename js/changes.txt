@@ -1,43 +1,38 @@
 ### A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 ### All Contents Copyright The Center for Computer-Assisted Legal Instruction
+### This change log is also displayed via changes.php. Formatting here matters.
+
+# 2014-09-04 5.0.1.37
+* Fixed - Warning when leaving viewer or author with unsaved data
+* Fixed - Viewer scrollbars now removed when too narrow.
+* Changed - internal - A2J 4 import code separate module
+* Changed - Viewer button border black, caption bold
+* New - Step 0 now has arrow pointing down road
 
 
-
-2014-09-05
-Viewer. Button border black, caption bold
-Viewer. Scrollbars now removed when too narrow.
-Viewer. Step 0 now has arrow pointing down road
+# 2014-08-12
+* New - Collapse/expand mapper outline now fades related map points
 
 
-2014-08-12
-Collapse/expand mapper outline fades related map points
+# 2014-05-08 5.0.1.16 
+* New - Guide upload/download
+* New - Answer upload/download
 
+# 2014-04-03 5.0.1.14 
+* Fixed - Mapper color
+* New - New color scheme, internal debug switches
+* New - Viewer as IFRAME embedable
 
-
-# 5.0.1.16 2014-05-08
-# Guide upload/download
-# Answer upload/download
-
-# 5.0.1.14 2014-04-03
-* New color scheme, internal debug switches
-# Viewer as IFRAME embedable
-# Mapper color fix
-
-# 5.0.1.9 2014-02-25
-* Updates
-
-# 5.0.1.8 2014-02-19
-* Split author and viewer into separate folders
+# 2014-02-19 5.0.1.8 
+* Changed - Split author and viewer into separate folders. 
 viewer contains all files required to run in viewer mode
 author contains author-only files but incorporates the viewer folder as well
 tests contains testing harnesses and sample data
 
 
-# 5.0.1.7
-Fixed: proper brackets for A2J 4 imported SET variable function
-
-# 5.0.1.1
-* Interview selection on separate tab
+# 2014-01-01 5.0.1.7
+* Fixed - proper brackets for A2J 4 imported SET variable function
+* Changed - Interview selection on separate tab
 
 
-
+# 2013-08-01

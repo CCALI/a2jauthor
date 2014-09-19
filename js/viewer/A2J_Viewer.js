@@ -256,9 +256,16 @@ var A2JViewer={
 				A2JViewer.skipHistory=true;
 				gotoPageView($('#history').val());
 			});
-			$('button.navFeedback',div).button({label:  lang.SendFeedback,icons:{primary:'ui-icon-comment'},disabled:0}).click(function(){
-				//trace('navFeedback');
-				traceAlert('navFeedback not implemented');
+			$('button.navFeedback',div).button({label:  lang.SendFeedback,icons:{primary:'ui-icon-comment'}}).click(function(){
+				var url = "http://www.a2jauthor.org/A2JFeedbackForm.php?"
+					+"emailto="+ encodeURIComponent(gGuide.emailContact)
+					+"&questionid=" + encodeURIComponent(page.name)
+					+"&interviewid=" + encodeURIComponent(gGuide.version)
+					+"&viewerversion=" + CONST.A2JVersionNum
+					+"&interviewtitle="+ encodeURIComponent(gGuide.title)
+					+"&questiontext=" + encodeURIComponent(decodeEntities(page.text));
+				//traceAlert('navFeedback not implemented');
+				window.open( url);
 			});
 			$('button.navSaveAndExit',div).button({label:  lang.SaveAndExit,icons:{primary:'ui-icon-disk'},disabled:0}).click(function(){
 				A2JViewer.goSaveExit();

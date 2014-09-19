@@ -22,8 +22,8 @@ var CONST = {
 	// Spinnner for loading wait
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
-	A2JVersionNum:"5.0.1.37",//VersionInfo.verNum
-	A2JVersionDate:"2014-09-04",
+	A2JVersionNum:"5.0.1.38",//VersionInfo.verNum
+	A2JVersionDate:"2014-09-19",
 	
 	
 	//CAVersionNum:"5.0.0",
@@ -343,21 +343,6 @@ function TPage()
 	this.mapy=0;
 	this.mapBranches=null;
 	
-//	this.nextPage="";//default for next page
-//	this.nextPageDisabled=false;//boolean - if true, next page button is disabled.
-//	this.destPage=null;
-//	this.columns=0;
-//	this.alignText="";
-//	this.details=[];
-//	this.captions=[];
-//	this.feedbacks=[];
-//	this.feedbackShared="";
-//	this.attempts=0;//number of attempts to answer this question
-//	this.scores=[];//array of TScore.
-//	this.textMatches=null;//array of TextMatch
-//	this.subq=null;//
-//	this.timeSpent=0;//seconds spent on this page
-//	this.startSeconds=null;
 
 	this.xml=null;
 	return this;

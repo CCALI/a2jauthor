@@ -792,11 +792,18 @@ TGuide.prototype.noviceTab = function(tab,clear)
 			fs.append(form.htmlarea({label:'Credits:',value:guide.credits,change:function(val){guide.credits=val;}}));
 			fs.append(form.text({label:'Approximate Completion Time:',placeholder:'',value:guide.completionTime,change:function(val){guide.completionTime=val;}}));
 			t.append(fs);
+
 			
 			fs = form.fieldset('Layout');
 			fs.append(form.pickImage({label:'Logo graphic:', placeholder: 'Logo URL',value:guide.logoImage, change:function(val){guide.logoImage=val;}}));
 			fs.append(form.pickImage({label:'End graphic:', placeholder:'End (destination graphic) URL',value:guide.endImage, change:function(val){guide.endImage=val;}}));
 			fs.append(form.pickList({label:'Mobile friendly?', value:guide.mobileFriendly, change:function(val){guide.mobileFriendly=val;}},['','Undetermined','false','No','true','Yes']));
+			t.append(fs);
+			
+			fs = form.fieldset('Feedback');
+			fs.append(form.checkbox({label:'Allow Send feedback?', checkbox:'', value:guide.sendfeedback,
+						change:function(val,field){guide.sendfeedback=val;}}));
+			fs.append(form.text({label:'Feedback email:',value:guide.emailContact,change:function(val){guide.emailContact=val;}}));
 			t.append(fs);
 			
 			fs = form.fieldset('Authors');

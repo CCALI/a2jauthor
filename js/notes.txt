@@ -1,9 +1,19 @@
 ##################################################################################
 ### CALI Author 5 / A2J Author 5 (CAJA) * Justice * 正义 * công lý * правосудие ###
 ### All Contents Copyright The Center for Computer-Assisted Legal Instruction  ###
-### 2012-2014  -  Sam's Design notes                                           ###
+### 2012-2014  -  Sam's notes                                                  ###
 ##################################################################################
 
+
+2014-09-23
+To quick start the viewer with a sample interview visit this page:
+/js/viewer/A2J_ViewerHoster.html
+
+
+
+
+
+################################
 //http://stackoverflow.com/questions/2525524/jquery-ui-dialog-button-icons
 			
 			

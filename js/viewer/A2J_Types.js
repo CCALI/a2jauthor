@@ -22,8 +22,8 @@ var CONST = {
 	// Spinnner for loading wait
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
-	A2JVersionNum:"5.0.1.38",//VersionInfo.verNum
-	A2JVersionDate:"2014-09-19",
+	A2JVersionNum:"5.0.1.39",//VersionInfo.verNum
+	A2JVersionDate:"2014-09-23",
 	
 	
 	//CAVersionNum:"5.0.0",
@@ -36,6 +36,7 @@ var CONST = {
 	vnBookmark:"A2J Bookmark",
 	vnHistory:"A2J History",
 	vnInterviewID: "A2J Interview ID",
+	vnStepPrefix: "A2J Step ", // Step sign replacements (A2J Step 0 through MAXSTEPS )
 	vnVersion: "A2J Version",
 
 	// Page Types
@@ -288,7 +289,6 @@ function TStep()
 	return this;
 }
 
-
 /** 
  * @constructor
  * @struct
@@ -437,7 +437,7 @@ TGuide.prototype.getClientGender=function()
 };
 
 TGuide.prototype.stepDisplayName=function(s)
-{	// Return text for displaying step.
+{	// Return text for displaying step number and text in author mode.
 	var txt;
 	if ( s<this.steps.length ) {
 		txt= this.steps[s].number+'. '+this.steps[s].text;
@@ -450,6 +450,25 @@ TGuide.prototype.stepDisplayName=function(s)
 	}
 	return txt;
 };
+
+TGuide.prototype.stepDisplayNameViewer=function(s)
+{	// Text for step sign for viewer.
+	var txt;
+	if ( s<this.steps.length )
+	{
+		txt = this.varGet(CONST.vnStepPrefix +s);
+		if (isBlankOrNull(txt))
+		{	// If step variable is blank use default text.
+			txt  = this.steps[s].text;
+		}
+	}
+	else{
+		txt= '? (Unknown Step #'+s+')';
+	}
+	return txt;
+};
+
+
 
 TGuide.prototype.varsSorted = function ()
 {	// Return array of variables sorted naturally.
@@ -546,6 +565,8 @@ TVariable.prototype.traceLogic=function(msg)
 	traceLogic(msg+':'+traceTag("var",this.name)+', '+ (this.type) +', ' +(this.repeating?'REPEATING':'')+', '+this.comment);	
 };
 
+
+	
 TGuide.prototype.varExists=function(varName)
 {
 	varName = jQuery.trim(varName);

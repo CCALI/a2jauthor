@@ -535,6 +535,10 @@ TGuide.prototype.varCreateInternals=function()
 	this.varCreateOverride(CONST.vnHistory, CONST.vtText,false,'Progress History List (XML)');
 	this.varCreateOverride(CONST.vnNavigationTF, CONST.vtTF,false,'Allow navigation?');
 	this.varCreateOverride(CONST.vnInterviewIncompleteTF, CONST.vtTF,false,'Reached Successful Exit?');
+	for (var s=0;s<CONST.MAXSTEPS;s++)
+	{
+		this.varCreateOverride(CONST.vnStepPrefix+s, CONST.vtText,false,'');
+	}
 };
 
 TGuide.prototype.updateVarsForAnswerFile=function()

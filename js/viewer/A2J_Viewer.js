@@ -898,10 +898,9 @@ var A2JViewer={
 			var scale = 'scale('+zoom+')';
 			zoom = 'transform: '+scale+';'
 				+'-webkit-transform: '+scale+';';
-				
+
 			txt += '<div class="stepsign" style="position:absolute; left:'+s1[0]+'px; top: '+s1[1]+'px;'+zoom+'"><div class="stepsigncolor Step'+color+'" ></div>	<div class="stepnumber" >'+gGuide.stepDisplayNumber(steps[cs])+'</div>'
-			+'<table class="steptextdiv"><tr valign=true><td><span class="steptext">'+steps[cs].text+'</span></tr></tr></table></div>';
-			// step'+s+'
+			+'<table class="steptextdiv"><tr valign=true><td><span class="steptext">'+gGuide.stepDisplayNameViewer(cs)+'</span></tr></tr></table></div>';
 		}
 		
 		// Setup guide and client avatars		

@@ -422,6 +422,13 @@ function ts($filename)
 				<span class="editspan">
 				<input type="textarea" name="varcomment" id="varcomment" class="editable taller text ui-widget-content ui-corner-all"  />
 				</span></div>
+			<div>
+				<label for="varusage">Used by:</label>
+				<input type="button" name="varusage" id="varusage" />
+			</div>
+			<div>
+				<div id="varUsageList"></div>
+			</div>
 			</fieldset>
 		</form>
 	</div>

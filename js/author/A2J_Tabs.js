@@ -929,10 +929,49 @@ function varEdit(v/*TVariable*/)
 	$('#vartype').val(v.type);
 	$('#varcomment').val(v.comment);
 	$('#varrepeating').attr('checked', v.repeating);
+	$('#varUsageList').html('...');
+	$('#varusage').button({label:'Quick Find',icons:{primary:'ui-icon-link'}}).click(function()
+	{	// 2014-09-24 List all references to this variable.
+		// This is a Lazy search so plain text words are also found.
+		// TODO - exclude non-macro/logic bits. 
+		var html='';
+		var count=0;
+		var p;
+		var nameL=v.name.toLowerCase();
+		for (p in gGuide.pages)
+		{	// Search text, help, fields and logic for variable name.
+			/** @type TPage */
+			var where=[]; //  list where it's on this page
+			var page=gGuide.pages[p];
+			for (var f in page.fields)
+			{	// Search fields
+				/** @type TField */
+				var field=page.fields[f];
+				if (field.name.toLowerCase() == nameL)
+				{
+					where.push('Field '+field.label);
+				}
+			}
+			if ((page.text + ' ' + page.help).toLowerCase().indexOf(nameL)>=0)
+			{
+				where.push('Text/Help');
+			}
+			if ((  page.codeBefore + ' '+ page.codeAfter).toLowerCase().indexOf(nameL)>=0)
+			{
+				where.push('Logic');
+			}
+			if (where.length>0)
+			{	// If we foudn anything, we'll list the page and its location.
+				count++;
+				html += ('<li>'+page.name +'</li><ul>'+'<li>'+where.join('<li>')+'</ul>');				
+			}
+		}
+		$('#varUsageList').html('Used in '+count+' pages' + '<ul>'+html+'</ul>');
+	});
 	$('#var-edit-form').data(v).dialog({
 		autoOpen:true,
 			width: 450,
-			height: 400,
+			height: 500,
 			modal:true,
 			close: function(){
 			},

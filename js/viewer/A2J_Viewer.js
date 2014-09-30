@@ -612,7 +612,7 @@ var A2JViewer={
 				{	// Get the field Value, validate it, store in variables if valid.
 					
 					case CONST.ftText:	//	"Text"
-						val = $('#'+fid).val();
+						val = jQuery.trim($('#'+fid).val());
 						if (val==='' && f.required) {
 							invalid=true;
 						}
@@ -622,7 +622,7 @@ var A2JViewer={
 					   break;
 					
 					case CONST.ftTextLong://"Text (Long)"
-						val = $('#'+fid).val();
+						val =  $('#'+fid).val(); // Don't trim. 
 						if (val==='' && f.required) {
 							invalid=true;
 						}
@@ -633,7 +633,7 @@ var A2JViewer={
 					
 					case CONST.ftNumber://"Number"				
 					case CONST.ftNumberDollar://"Numbfer Dollar"
-						val = $('#'+fid).val();
+						val = jQuery.trim($('#'+fid).val());
 						if (val==='' && f.required) {
 							invalid=true;
 						}
@@ -655,7 +655,7 @@ var A2JViewer={
 					case CONST.ftNumberSSN://"Number SSN"
 					case CONST.ftNumberPhone://"Number Phone"
 					case CONST.ftNumberZIP://"Number ZIP Code"
-						val = $('#'+fid).val();
+						val = jQuery.trim($('#'+fid).val());
 						if (val==='' && f.required) {
 							invalid=true;
 						}

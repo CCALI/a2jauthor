@@ -26,6 +26,7 @@ if (mysqli_connect_errno()) {
   exit('Connect failed: '. mysqli_connect_error());
 }
 
+date_default_timezone_set("America/Chicago");
 /*
 {	// One COULD get user id from Drupal's session cookie then lookup that user in Drupal User table but needs more research.
 	//$prefix = ini_get('session.cookie_secure') ? 'SSESS' : 'SESS';
@@ -376,8 +377,8 @@ switch ($command)
 			$filename=$row['filename'];
 			$path_parts = pathinfo($filename);
 			$filedir =  $path_parts['dirname'];
-			define(UPLOAD_DIR, GUIDES_DIR.$filedir.'/');
-			define(UPLOAD_URL, GUIDES_URL.$filedir.'/');
+			define('UPLOAD_DIR', GUIDES_DIR.$filedir.'/');
+			define('UPLOAD_URL', GUIDES_URL.$filedir.'/');
 			error_reporting(E_ALL | E_STRICT);
 			include('UploadHandler.php');
 			$upload_handler = new UploadHandler();
@@ -405,8 +406,8 @@ switch ($command)
 			$path_parts = pathinfo($filename);
 			$filedir =  $path_parts['dirname'];
 			$_FILES['files']['name'][0]=$guideName;
-			define(UPLOAD_DIR, GUIDES_DIR.$filedir.'/');
-			define(UPLOAD_URL, GUIDES_URL.$filedir.'/');
+			define('UPLOAD_DIR', GUIDES_DIR.$filedir.'/');
+			define('UPLOAD_URL', GUIDES_URL.$filedir.'/');
 			error_reporting(E_ALL | E_STRICT);
 			include('UploadHandler.php');
 			$upload_handler = new UploadHandler();

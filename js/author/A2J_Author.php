@@ -10,6 +10,8 @@
 <link rel="shortcut icon" href="http://www.a2jauthor.org/sites/all/themes/a2j_author/favicon.ico" type="image/jpeg" />
 <title>A2J Author 5</title>
 <?php
+
+date_default_timezone_set("America/Chicago");
 function ts($filename)
 {	// To avoid constantly reloading everything every time during testing, add file's modified time as the timestamp.
 	// Then cache always only updates for changes.
@@ -96,8 +98,10 @@ function ts($filename)
 <?php
 	// 4/2014 For demo purposes, we CAN extract guide and answer file urls from the querystring and pass them on to the Viewer.
 	// Normally only the Viewer will use these startups values.
-	$gid=$_GET["gid"];if (!isset($gid)) $gid = '';
-	$aid=$_GET["aid"];if (!isset($aid)) $aid = '';
+	$gid = '';
+	$aid = '';
+	if (isset($_GET['gid'])){$gid=$_GET['gid'];}
+	if (isset($_GET['aid'])){$aid=$_GET['aid'];}
 ?> 
 	gStartArgs.templateURL = "<?=$gid?>";
 	gStartArgs.getDataURL = "<?=$aid?>";

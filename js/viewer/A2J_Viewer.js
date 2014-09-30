@@ -150,8 +150,6 @@ var A2JViewer={
 	history:[], // Array of {title,pagename}
 	skipHistory: false,
 	
-	infiniteLoopCounter: 0, // Counts GOTO Pages without an interaction. If we hit too many, probable infinite loop. 
-	infiniteLoopCounterMax: 100,
 	
 	/** @param {TPage} page  */
 	layoutPage:function(div,page)
@@ -286,8 +284,7 @@ var A2JViewer={
 			}
 		}
 		traceLogic( 'Page ' + traceTag('page', page.name));
-		A2JViewer.infiniteLoopCounter++;
-		
+		gLogic.infiniteLoopCounter++;		
 		gLogic.GOTOPAGE='';
 		if (makestr(page.codeBefore)!=='')
 		{
@@ -296,7 +293,7 @@ var A2JViewer={
 			// Code returns immediately after a GOTO PAGE call. Check to see if our page changed.
 			if (gLogic.GOTOPAGE!=='' && gLogic.GOTOPAGE!==gPage.name)
 			{
-				if (A2JViewer.infiniteLoopCounter< A2JViewer.infiniteLoopCounterMax )
+				if (gLogic.infiniteLoopCounter< gLogic.infiniteLoopCounterMax )
 				{	// Jump to next page without displaying this page. 
 					gotoPageView(gLogic.GOTOPAGE);
 					return;
@@ -315,7 +312,7 @@ var A2JViewer={
 		}
 		
 		// Displaying the question. Set our infiniteLoopCounter to 0
-		A2JViewer.infiniteLoopCounter=0;
+		gLogic.infiniteLoopCounter=0;
 		
 		
 		function prepHTML(htmlText)

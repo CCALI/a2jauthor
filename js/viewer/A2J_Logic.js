@@ -46,6 +46,9 @@ function TLogic()
 	this.userFunctions = {}; // list of user functions, property name is function name.
 	this.indent=0; // Tracing indent level/shows nesting code.
 	this.GOTOPAGE='';// Optionally set by GOTO commmand in script. Allows us to breakout when needed.
+	
+	this.infiniteLoopCounter = 0; // Counts GOTO Pages without an interaction. If we hit too many, probable infinite loop. 
+	this.infiniteLoopCounterMax= 100;
 	return this;
 }
 

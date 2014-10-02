@@ -505,13 +505,18 @@ var form={
 			form.codeCheck(form.codeCheckList.pop());
 		}
 	}
-	,codeFix:function(html){
-		return html.replace(/<br\>/gi,"<BR/>");
+	,codeFix:function(html)
+	{	// Convert HTML into correctly formatted/line broken code.
+		// Remove extraneous DIV markup due to copy/paste. 
+		var code=html.replace(/<br/gi,"\n<br").replace(/<div/gi,"\n<div").stripHTML().replace(/[\n]/gi,"<BR/>");
+		//return html.replace(/<br\>/gi,"<BR/>");
+		return code;
 	}
 	,codeCheck:function(elt){
 		$(elt).removeClass('haserr');
 		$('SPAN',$(elt)).remove();
 		var code=form.codeFix($(elt).html());
+		//trace('codeCheck',code);
 		//TODO remove markup
 		var script = gLogic.translateCAJAtoJS(code);
 		var tt="";

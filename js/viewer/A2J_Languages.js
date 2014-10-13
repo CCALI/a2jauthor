@@ -12,7 +12,7 @@
 	And jQuery UI structs for Calendar.
 	
 	Currently supported languages:
-		English, Spanish, Vietnamese, Chinese-Simplified, Korean
+		English, Spanish, Vietnamese, Chinese-Simplified, Korean, French, Polish
 ******************************************************************************/
 
 // Language elements that are translatable
@@ -401,6 +401,77 @@ Languages.regional['fr']= {
 
 };
 
+
+// Polish
+Languages.regional['pl']= {
+	locale:'pl',
+	
+	Language:'Polish',
+	LanguageEN: 'Polish',
+	AskYesNo_Yes:'Tak',
+	AskYesNo_No:'Nie',
+	Close:'Zamknij',
+	Comment:'Komantarz',
+	GoBack:'Powrót',
+	GoNext:'Następny',
+	LearnMore:'Zobacz więcej',
+	MyProgress:'Mój postęp',
+	ProvideFeedbackOrComment:'Zostaw opinię lub komentarz ',
+	SaveAndExit:'Wyjście',
+	ResumeExit:'Podsumowanie',
+	SendFeedback:'Wyślij podsumowanie',
+	SoundIsOff:'Dźwięk wyłączony',
+	SoundIsOn:'Dżwięk włączony',
+	SoundPlay:'Odtwarzaj',
+	SoundStop:'Stop',
+	WhatDoYouMean:'Co masz na myśli?',
+	Continue:'Dalej',
+	Exit:'Wyjście',
+	Male:'Mężczyzna',
+	Female:'Kobieta',
+	ChooseListNumber:'Wybierz',
+	ChooseListText:'Wybierz z listy',
+	CheckBoxNOTALabel:'Żadne z powyższych',
+	ZoomNormal:'Normalny rozmiar',
+	ZoomFull:'Pełen ekran',
+	TextEnlarge:'Powiększ',
+	TextShrink:'Pominiejsz',
+	TextSizeLetter:'A',
+	UploadAnswers:'Proszę czekać...',
+	CalcClear:'Wyczyść',
+	CalcEnter:'Akceptuj',
+	MonthNamesShort:'1,2,3,4,5,6,7,8,9,10,11,12',
+	MonthNamesLong:'Styczeń, Luty, Marzec. Kwiecień, Maj, Cerwiec, Lipiec, Sierpień, Wrzesień, Październik, Listopad, Grudzień',
+	ResponseRequired:'Musisz najpierw wybrać odpowiedź w pustych polach obok czerwonych napisów zanim będziesz mógł kontynuować.',
+	SelectionRequired:'Musisz wybrać zanim będziesz mógł kontynuować.',
+	text:'Musisz podać odpowiedź w zaznaczonym miejscu zanim będziesz mógł kontynuować.',
+	textlong:' Musisz podać odpowiedź w zaznaczonym miejscu zanim będziesz mógł kontynuować.',
+	textpick:'Musisz wybrać zanim będziesz mógł kontynuować.',
+	number:'Musisz wpisać numer w zanaczonym polu zanim będziesz mógł kontynuować.',
+	numberdollar:'Musisz wpisać kwotę dolarów w zaznaczonym polu zanim będziesz mógł kontynuować.',
+	numberssn:'Musisz wypisać Social Security Number zanim będziesz mógł kontynuować.',
+	numberphone:'Musisz wpisać numer telefonu w zaznaczonym polu zanim będziesz mógł kontynuować.',
+	numberzip:'Musisz wpisać kod pocztowy w zaznaczonym polu zanim będziesz mógł kontynuować.',
+	numberpick:'Musisz wybrać numer z zaznaczonego pola zanim będziesz mógł kontynuować. ',
+	datemdy:'Musisz wpisać miesiąc, dzień i rok w zaznaczonym polu zanim będziesz mógł kontynuować. ',
+	gender:'Musisz wybrać płeć z zaznaczonego pola zanim będziesz mógł kontynuować.',
+	radio:'Musisz wybrać odpowiedź z zaznaczonego pola zanim będziesz mógł kontynuować.',
+	checkbox:'Musisz wybrać jedną lub kilka odpowiedzi zanim będziesz mógł kontynuować. ',
+	checkboxNOTA:'Proszę wybrać jedną lub więcej odpowiedzi albo zaznaczyć „żadne z powyższych“ aby kontynuować. ',
+	Ordinals1:'Lierwszy',
+	Ordinals2:'drugi',
+	Ordinals3:'trzeci',
+	Ordinals4:'czwarty',
+	Ordinals5:'piąty',
+	Ordinals6:'szósty',
+	Ordinals7:'siódmy',
+	Ordinals8:'ósmy',
+	Ordinals9:'dziewiąty',
+	Ordinals10:'dziesiąty',
+	Ordinals11:'jedenasty',
+	Ordinals12:'dwunasty',
+	Ordinals13:'rzynasty'
+};
 
 
 // Vietnamese

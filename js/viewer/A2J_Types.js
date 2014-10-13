@@ -601,8 +601,9 @@ TGuide.prototype.varGet=function(varName,varIndex,opts)
 	if (typeof varIndex==='undefined' || varIndex===null || varIndex==='')
 	{
 		if (v.repeating)
-		{	// Repeating variable without an index returns array of all values
-			return readableList(v.values);
+		{	// 2014-10-13 Repeating variable without an index returns array of all values.
+			// Caller needs to process array for calculations or display. 
+			return v.values; 
 		}
 		varIndex=1;
 	}

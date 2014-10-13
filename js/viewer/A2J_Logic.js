@@ -295,7 +295,14 @@ TLogic.prototype.evalBlock = function(expressionInText)
 		try {
 			// This uses JavaScript EVAL. 
 			var f=(new Function( "with (gLogic) { return ("+ js +")}" ));
-			var result = f(); // Execute the javascript code. 
+			var result = f(); // Execute the javascript code.
+			
+			if (result instanceof Array)
+			{	// 2014-10-13 If got back array (such as from a Repeat variable without index)
+				// turn into human readable list.
+				result =  readableList(result);
+			}
+			
 			txt = htmlEscape(result);
 			// Ensure line breaks from user long answer or author's multi-line text set appear.
 			txt = txt.replace("\n","<BR>","gi");

@@ -671,10 +671,6 @@ TLogic.prototype.executeScript = function(CAJAScriptHTML)
 };
 
 
-function niceNumber(val)
-{	// Return number formatted for human eyes, with commas.
-	return $.formatNumber(val,{format:"#,###", locale:"us"});
-}
 
 var gLogic = new TLogic();
 
@@ -684,22 +680,33 @@ var gLogic = new TLogic();
 
 // Default user defined functions used by A2J
 
-if ($.formatNumber)
-{
-	gLogic.addUserFunction('Dollar',1,function(val)
-	{	// Convert to dollar format, commas with 2 digits after 0.
-		return $.formatNumber(val,{format:"#,###.00", locale:"us"});
-	});
-	gLogic.addUserFunction('DollarRound',1,function(val)
-	{	// Convert to dollar format, commas and rounded to nearest dollar. 
-		return $.formatNumber(Math.round(val),{format:"#,##0", locale:"us"});
-	});
+function niceNumber(val)
+{	// Return number formatted for human eyes, with commas.
+	return $.formatNumber(val,{format:"#,###", locale:"us"});
 }
+
+gLogic.addUserFunction('Dollar',1,function(val)
+{	// Convert to dollar format, commas with 2 digits after 0.
+	return $.formatNumber(val,{format:"#,###.00", locale:"us"});
+});
+gLogic.addUserFunction('DollarRound',1,function(val)
+{	// Convert to dollar format, commas and rounded to nearest dollar. 
+	return $.formatNumber(Math.round(val),{format:"#,##0", locale:"us"});
+});
+gLogic.addUserFunction('Round',1,function(val)
+{	// Return integer, rounded.
+	return $.formatNumber(Math.round(val),{format:"#,##0", locale:"us"});
+});
+gLogic.addUserFunction('Trunc',1,function(val)
+{	// Return integer (esentially, floor)
+	return $.formatNumber(Math.floor(val),{format:"#,##0", locale:"us"});
+});
 
 gLogic.addUserFunction('Number',1,function(val)
 {	// Convert something to a number or 0. 
 	return parseFloat(val);
 });
+
 
 gLogic.addUserFunction('HasAnswered',1,function(val)
 {	// Return true if variable answerd (actually if it's not ''.

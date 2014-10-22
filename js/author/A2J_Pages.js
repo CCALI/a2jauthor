@@ -195,6 +195,10 @@ function pageEditNew()
 	page.type="A2J";
 	page.text="My text";
 	page.step = newStep;
+	// 2014-10-22 Ensure a new page has at least one button
+	var cnt= new TButton();
+	cnt.label = lang.Continue;
+	page.buttons=[cnt];
 	gGuide.sortPages();
 	updateTOC();
 	pageEditSelect(page.name);

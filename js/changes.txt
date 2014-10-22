@@ -2,6 +2,12 @@
 ### All Contents Copyright The Center for Computer-Assisted Legal Instruction
 ### This change log is also displayed via changes.php. Formatting here matters.
 
+# 2014-10-21
+* Fixed - a new page now has a button
+
+# 2014-09-24 5.0.1.40
+* New - Varable edit popup displays pages using said variable
+
 # 2014-09-23 5.0.1.39
 * New - A2J Step # variables for the sign text
 
@@ -15,10 +21,8 @@
 * Changed - Viewer button border black, caption bold
 * New - Step 0 now has arrow pointing down road
 
-
 # 2014-08-12
 * New - Collapse/expand mapper outline now fades related map points
-
 
 # 2014-05-08 5.0.1.16 
 * New - Guide upload/download
@@ -39,6 +43,5 @@ tests contains testing harnesses and sample data
 # 2014-01-01 5.0.1.7
 * Fixed - proper brackets for A2J 4 imported SET variable function
 * Changed - Interview selection on separate tab
-
 
 # 2013-08-01

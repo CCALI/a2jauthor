@@ -871,25 +871,36 @@ var A2JViewer={
 		function posimg(src,x,y,w,h){
 			if (typeof w!==undefined) {w=' width='+w;}
 			if (typeof h!==undefined) {h=' height='+h;}
-			return '<img src="'+IMG+src+'" '+w+h+' style="position:absolute; left:'+x+'px; top:'+y+'px;">';
+			return '<img src="'+src+'" '+w+h+' style="position:absolute; left:'+x+'px; top:'+y+'px;">';
 		}
 		var stepcount=steps.length-curstep;
 		var stepInfos = [//ch=courthouse, gl=guide left, gf=guide front, cr=client right
 		  {ground:'step1.png',ch:[322,5,550,350],  gl:[351,204],gf:[451,200],cr:[523,198],
 			steps:[[288,430,432,131]],signs:[[629,277,1]]}
-		,{ground:'step7.png', ch:[579,66,143,61], gl:[351,204],gf:[451,200],cr:[523,198],
+		,{ground:'step7.png', ch:[589,66,143,61], gl:[351,204],gf:[451,200],cr:[523,198],
 			steps:[[288,430,432,131],[448,236,197,24]],signs:[[619,438,1],[550,200,0.6]]}
 		];
 		var COLORS=4;
 		var si = (stepcount<=1) ? stepInfos[0] : stepInfos[1];
-		var txt = posimg(si.ground,0,0) + posimg('A2J5_CourtHouse.png',si.ch[0],si.ch[1],si.ch[2],si.ch[3]);
+		// 2014-10-23 Display Author-defined courthouse replacement image.
+		var endImage=gGuide.endImage;
+		if (endImage =='')
+		{
+			// Use Court house if author didn't specify.
+			endImage=IMG + 'A2J5_CourtHouse.png';	
+		}
+		else
+		{
+			endImage = fixPath(endImage);
+		}
+		var txt = posimg(IMG+si.ground,0,0) + posimg( endImage,si.ch[0],si.ch[1],si.ch[2],si.ch[3]);
 		var s;
 		for (s=0;s<si.steps.length;s++) {
 			var cs = curstep + s;
 			var s1=si.steps[s];
 			var color = (cs===0) ? 0 : (cs-1) % COLORS +1;
 			//txt +=  posimg('step_circle_'+ color +'.png',s1[0],s1[1],s1[2],s1[3]) ;
-			txt +=  posimg('step_circle_'+ 0 +'.png',s1[0],s1[1],s1[2],s1[3]) ;
+			txt +=  posimg(IMG+'step_circle_'+ 0 +'.png',s1[0],s1[1],s1[2],s1[3]) ;
 			s1=si.signs[s];
 			var zoom = s1[2];
 			var scale = 'scale('+zoom+')';
@@ -928,12 +939,12 @@ var A2JViewer={
 		if (cg!=='')
 		{
 			qx=si.gl[0]-300;
-			txt += posimg('A2JAvatar-Guide-'+gg+av+'.png',si.gl[0],si.gl[1])+posimg('A2JAvatar-Client-'+cg+av+'.png',si.cr[0],si.cr[1]);
+			txt += posimg(IMG+'A2JAvatar-Guide-'+gg+av+'.png',si.gl[0],si.gl[1])+posimg(IMG+'A2JAvatar-Client-'+cg+av+'.png',si.cr[0],si.cr[1]);
 		}
 		else
 		{	// No client gender, just guide facing screen.
 			qx=si.gf[0]-300;
-			txt += posimg('A2JAvatar-Guide-Front-'+gg+av+'.png',si.gf[0],si.gf[1]);
+			txt += posimg(IMG+'A2JAvatar-Guide-Front-'+gg+av+'.png',si.gf[0],si.gf[1]);
 		}
 		txt +='<div class="question panel" style="position:absolute; left:'+qx+'px; top: 140px; "><div class="question bubble"><div class="question ui-form"></div></div></div><img class="bubbleTip" style="position:absolute; left: '+(qx+299)+'px; top: 240px; " src="'+IMG+'guide_bubble_tip.png"   />';
 			//width: 300px; 

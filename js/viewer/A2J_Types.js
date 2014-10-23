@@ -521,6 +521,10 @@ TGuide.prototype.historyToXML=function()
 
 TGuide.prototype.stepDisplayNumber =function( step )
 {	// 2014-09-05 For step 0 display arrow.
+	if (!step) {
+		// 2014-10-23 It's possible for a page to have a step number larger than current number of steps (which is invalid).
+		return '';
+	}
 	var number = step.number;
 	if (number==='' || number=='0') {
 		number='↖';

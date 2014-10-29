@@ -258,22 +258,29 @@ function pageRename(page,newName){
 }
 
 function pageEditDelete(name)
-{	// Delete named page after confirmation that lists all references to it. 
+{	// Delete named page after confirmation that lists all references to it.
+	if (name=='') {
+		return
+	}
 	var refs=gGuide.pageFindReferences(name,null);
 	var txt='';
 	var r;
 	if (refs.length>0)
 	{
-		txt=refs.length+' references to this page.<ul>';
+		txt='References to this page: ' + refs.length+'<ul>';
 		for (r in refs){
 			txt+='<li>'+refs[r].name+' <i>'+refs[r].field+'</i></li>';
 		}
 		txt += "</ul>";
 	}
 	else{
-		txt='No references';
+		txt='No references to this page.';
 	}
-	dialogConfirmYesNo({title:'Delete page '+name,message:'Permanently delete this page?<hr>'+txt,height:300,name:name,
+	dialogConfirmYesNo({title:'Deleting page',
+							 message:'Permanently delete page "' + name+'"?<hr>'+txt,
+							 height:400,
+							 width: 600,
+							 name:name,
 		Yes:
 		/*** @this {{name}} */
 		function(){

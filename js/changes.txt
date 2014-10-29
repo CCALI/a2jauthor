@@ -2,6 +2,9 @@
 ### All Contents Copyright The Center for Computer-Assisted Legal Instruction
 ### This change log is also displayed via changes.php. Formatting here matters.
 
+# 2014-10-29
+* Added - delete pages
+
 # 2014-10-23
 * Fixed - display court house replacement image  
 

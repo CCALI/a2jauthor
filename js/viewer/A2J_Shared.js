@@ -20,12 +20,11 @@ function dialogConfirmYesNo(args)
 {
 	var $d=$( "#dialog-confirm" );
 	$d.html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>'+args.message+'</p>');
-	
 	$d.dialog({
 		title: args.title,
 		resizable: false,
-		width: 350,
-		height:args.height!==null?args.height : 240,
+		width: args.width ?args.width : 350,
+		height:args.height?args.height : 240,
 		modal: true,
 		buttons: {
 			Yes: function() {

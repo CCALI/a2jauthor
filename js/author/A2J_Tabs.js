@@ -416,9 +416,41 @@ var form={
 			}).val(decodeEntities(data.value)).data('data',data);
 		return e;
 	}
-	,htmlFix:function(html){
-		return html.replace(/<br\>/gi,"<BR/>"); ///\<br\>/gi
-		//return html.replace("<br>","<BR/>","gi");
+	,htmlFix:function(html)
+	{	// Strip out HTML comments and any other unapproved code that Word usually adds.
+		// TODO strip out other irrelevant code
+		//trace('htmlFix before',html);
+		html = html.replace(/<!--(.|\s)*?-->/g,''); // strip HTML comments
+		var ALLOWED_TAGS =['P','BR','UL','OL','LI','A','B','I','BLOCKQUOTE'];
+		var parts = html.split('<');
+		var html=makestr(parts[0]);
+		for (var p in parts)
+		{
+			var part2=parts[p].split('>');
+			var ta=part2[0].toUpperCase();
+			
+			for (var t in ALLOWED_TAGS)
+			{
+				var tag = ALLOWED_TAGS [t];
+				if (ta== tag   || ta=='/'+tag )
+				{
+					html += '<' + ta + '>'; 
+				}
+				else
+				if (ta.indexOf(tag+' ')==0)
+				{
+					if (tag=='A') {
+						html += '<' +  part2[0] + '>';
+					}
+					else{
+						html += '<' + tag + '>'; 
+					}
+				}
+			}
+			html += makestr(part2[1]);
+		}
+		//trace('htmlFix after ',html);
+		return html;
 	}
 	,htmlarea: function(data){//label,value,handler,name){ 
 		form.id++;
@@ -430,16 +462,19 @@ var form={
 		$('.editable',e).focus(function(){$(this).addClass('tallest');form.editorAdd($(this));}).blur(function(){
 			//$(this).removeClass('tallest');
 			form.editorRemove(this);
-			form.change($(this), form.htmlFix($(this).html()));
+			var html=form.htmlFix($(this).html());
+			$(this).html(html);
+			form.change($(this), html);
 		}).data('data',data) ;
 		return e;
 	} 
-	,textArea: function(data){
+	,textArea: function(data)
+	{
 		var rows=2;
 		var e=$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
 			+'<span class=editspan><textarea  class="     text editable taller" rows='+rows+'>'+data.value+'</textarea></span></div>');
-		$('.editable',e).blur(function(){form.change($(this),$(this).html());}).data('data',data);
+		$('.editable',e).blur(function(){form.change($(this),form.htmlFix($(this).html()));}).data('data',data);
 		return e;
 	}
 	

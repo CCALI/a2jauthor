@@ -18,8 +18,16 @@
 */
 function guideLoaded(data)
 {
+	var cajaDataXML;
+	try {
+		cajaDataXML=$(jQuery.parseXML(data.guide));
+	}
+	catch (e) { 
+		setProgress('');
+		dialogAlert({title:'Error occurred loading guide #'+data.gid,body:'Unable to load XML' +"\n"+String.substr(String(e).asHTML(),0,99)});
+		return;
+	}
 	gGuideID=data.gid;
-	var cajaDataXML=$(jQuery.parseXML(data.guide));
 	gGuide =  parseXML_Auto_to_CAJA(cajaDataXML);
 	//$('li.guide[gid="'+gGuideID+'"]').html(gGuide.title);
 

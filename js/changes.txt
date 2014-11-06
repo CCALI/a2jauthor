@@ -2,6 +2,9 @@
 ### All Contents Copyright The Center for Computer-Assisted Legal Instruction
 ### This change log is also displayed via changes.php. Formatting here matters.
 
+# 2014-11-05
+* Added - filter Word paste
+
 # 2014-10-29
 * Added - delete pages
 

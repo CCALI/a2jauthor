@@ -416,19 +416,18 @@ var form={
 			}).val(decodeEntities(data.value)).data('data',data);
 		return e;
 	}
-	,htmlFix:function(html)
-	{	// Strip out HTML comments and any other unapproved code that Word usually adds.
+	
+	,pasteFix:function(html,ALLOWED_TAGS)
+	{	// 2014-11-06 Strip out HTML comments and any other unapproved code that Word usually adds.
 		// TODO strip out other irrelevant code
-		//trace('htmlFix before',html);
+		html =$('<div>'+(html)+'</div>').html(); // ensure valid HTML tags
 		html = html.replace(/<!--(.|\s)*?-->/g,''); // strip HTML comments
-		var ALLOWED_TAGS =['P','BR','UL','OL','LI','A','B','I','BLOCKQUOTE'];
 		var parts = html.split('<');
 		var html=makestr(parts[0]);
 		for (var p in parts)
 		{
 			var part2=parts[p].split('>');
-			var ta=part2[0].toUpperCase();
-			
+			var ta=part2[0].toUpperCase();			
 			for (var t in ALLOWED_TAGS)
 			{
 				var tag = ALLOWED_TAGS [t];
@@ -439,8 +438,9 @@ var form={
 				else
 				if (ta.indexOf(tag+' ')==0)
 				{
-					if (tag=='A') {
-						html += '<' +  part2[0] + '>';
+					if (tag=='A'  ) {
+						// Only Anchor tags will allow attributes
+						html += '<' +  tag + part2[0].substr(1) + '>';
 					}
 					else{
 						html += '<' + tag + '>'; 
@@ -449,7 +449,25 @@ var form={
 			}
 			html += makestr(part2[1]);
 		}
-		//trace('htmlFix after ',html);
+		html = html.replace(/<BR\>/gi,"<BR/>"); // Matched tags fix.
+		return html;
+	}
+	,codeFix:function(html)
+	{	// Convert HTML into correctly formatted/line broken code.
+		// Remove extraneous DIV markup due to copy/paste. 
+		//trace('codefix before',html);
+		html = html.replace(/<BR/gi,"\n<BR").replace(/<DIV/gi,"\n<DIV");// preserve line breaks
+		html = form.pasteFix(html,[ 'A']);
+		//var code=html.replace(/<br/gi,"\n<br").replace(/<div/gi,"\n<div").stripHTML().replace(/[\n]/gi,"<BR/>");
+		html = html.replace(/[\n]/gi,"<BR/>");
+		//trace('codefix after',html);
+		return html;
+	}
+	,htmlFix:function(html)
+	{	
+		//trace('htmlFix before',html);
+		html = form.pasteFix(html,['P','BR','UL','OL','LI','A','B','I','BLOCKQUOTE']);
+ 		//trace('htmlFix after ',html);
 		return html;
 	}
 	,htmlarea: function(data){//label,value,handler,name){ 
@@ -463,7 +481,7 @@ var form={
 			//$(this).removeClass('tallest');
 			form.editorRemove(this);
 			var html=form.htmlFix($(this).html());
-			$(this).html(html);
+			//$(this).html(html);
 			form.change($(this), html);
 		}).data('data',data) ;
 		return e;
@@ -540,17 +558,11 @@ var form={
 			form.codeCheck(form.codeCheckList.pop());
 		}
 	}
-	,codeFix:function(html)
-	{	// Convert HTML into correctly formatted/line broken code.
-		// Remove extraneous DIV markup due to copy/paste. 
-		var code=html.replace(/<br/gi,"\n<br").replace(/<div/gi,"\n<div").stripHTML().replace(/[\n]/gi,"<BR/>");
-		//return html.replace(/<br\>/gi,"<BR/>");
-		return code;
-	}
 	,codeCheck:function(elt){
 		$(elt).removeClass('haserr');
 		$('SPAN',$(elt)).remove();
 		var code=form.codeFix($(elt).html());
+		$(elt).html(code);
 		//trace('codeCheck',code);
 		//TODO remove markup
 		var script = gLogic.translateCAJAtoJS(code);
@@ -758,9 +770,11 @@ TGuide.prototype.noviceTab = function(tab,clear)
 			
 			var codeBeforeChange = function(val,page){
 				page.codeBefore=val; /* TODO Compile for syntax errors */
+				//trace('page.codeBefore',page.codeBefore);
 			};
 			var codeAfterChange = function(val,page){
 				page.codeAfter=val; /* TODO Compile for syntax errors */
+				//trace('page.codeAfter',page.codeAfter);
 			};
 			
 			
@@ -1154,10 +1168,10 @@ function editButton()
 					html = '<a href="'+url+'">'+txt+'</a>';
 				}
 				restoreSelection(sel);
-				trace('window.getSelection', window.getSelection());
-				trace('html',html);
+				//trace('window.getSelection', window.getSelection());
+				//trace('html',html);
 				document.execCommand('insertHTML',false,  html );
-				trace('window.getSelection', window.getSelection());
+				//trace('window.getSelection', window.getSelection());
 			}
 		}
 		

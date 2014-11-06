@@ -197,7 +197,7 @@ function main()
 		function guidePublished(data)
 		{ 
 			setProgress('');
-			trace(data.url);
+			//trace(data.url);
 			if (data.url!==''){
 				window.open( data.url);
 			}

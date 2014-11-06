@@ -417,10 +417,10 @@ var form={
 		return e;
 	}
 	
-	,pasteFix:function(html,ALLOWED_TAGS)
+	,pasteFix:function(srchtml,ALLOWED_TAGS)
 	{	// 2014-11-06 Strip out HTML comments and any other unapproved code that Word usually adds.
 		// TODO strip out other irrelevant code
-		html =$('<div>'+(html)+'</div>').html(); // ensure valid HTML tags
+		var html =$('<div>'+(srchtml)+'</div>').html(); // ensure valid HTML tags
 		html = html.replace(/<!--(.|\s)*?-->/g,''); // strip HTML comments
 		var parts = html.split('<');
 		var html=makestr(parts[0]);
@@ -450,6 +450,7 @@ var form={
 			html += makestr(part2[1]);
 		}
 		html = html.replace(/<BR\>/gi,"<BR/>"); // Matched tags fix.
+		//if (html!=srchtml) {	trace(srchtml);trace(html);}
 		return html;
 	}
 	,codeFix:function(html)
@@ -466,7 +467,7 @@ var form={
 	,htmlFix:function(html)
 	{	
 		//trace('htmlFix before',html);
-		html = form.pasteFix(html,['P','BR','UL','OL','LI','A','B','I','BLOCKQUOTE']);
+		html = form.pasteFix(html,['P','BR','UL','OL','LI','A','B','I','U','BLOCKQUOTE']);
  		//trace('htmlFix after ',html);
 		return html;
 	}

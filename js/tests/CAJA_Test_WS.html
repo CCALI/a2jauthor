@@ -89,24 +89,45 @@ $(document).ready(function()
 	{
 		gGuideID=0;
 		var items = [];
-	  	$.each(data.guides, function(key,g) { items.push('<li class=guide gid="' + g.id + '">' + 
-			'<span>XML</span> <span>ANX</span> <span>ZIP</span> ' + g.title + ' '+(g.owned?'mine':'other') + '</li>');});
+	  	$.each(data.guides, function(key,g) 
+		{
+			var size='n/a';
+			var modified='n/a';
+			if (g.details!='')
+			{
+				size=Math.ceil(g.details.size/1024)+'K';
+				modified= g.details.modified;
+			}
+			items.push(
+				'<tr class=guide gid="' + g.id + '">'
+				+'<td>' + size + '</td> '
+				+'<td>XML</td> <td>ANX</td> <td>ZIP</td> <td>' + g.title  + '</td>' + '<td>' + (g.owned?'mine':'other') + '</td>' 
+				+'<td>' + modified + '</td> '
+				+'<td>Delete</td>'
+				+'<td>' + g.id + '</td>'
+				+ '</tr>');
+		});
 		status('Listing '+items.length+' guides.');
-		html("Guides <ol>"+items.join('')+"</ol>");
-		$('li.guide span:nth-child(1)').click(function(){
+		html("Guides for user#" + data.userid+ "<table>"+items.join('')+"</table>");
+		$('tr.guide td:nth-child(2)').click(function(){
 			var gid =  $(this).parent().attr('gid');
 			setProgress('Loading guide '+$(this).parent().text(),true);
 			ws({cmd:'guide',gid:gid } ,guideLoaded);		
 		});
-		$('li.guide span:nth-child(2)').click(function(){
+		$('tr.guide td:nth-child(3)').click(function(){
 			var gid =  $(this).parent().attr('gid');
 			setProgress('Loading AnswerSet '+$(this).parent().text(),true);
 			ws({cmd:'answerset',gid:gid},answersetLoaded);		
 		});
-		$('li.guide span:nth-child(3)').click(function(){
+		$('tr.guide td:nth-child(4)').click(function(){
 			var gid =  $(this).parent().attr('gid');
 			setProgress('Loading ZIP '+$(this).parent().text(),true);
 			ws({cmd:'guidezip',gid:gid},guideZipped);		
+		});
+		$('tr.guide td:nth-child(8)').click(function(){
+			var gid =  $(this).parent().attr('gid');
+			setProgress('Deleting '+$(this).parent().text(),true);
+			ws({cmd:'guidearchive',gid:gid},wsListGuides);		
 		});
 	}
 	function setProgress(stat , showSpinner)
@@ -152,9 +173,16 @@ $(document).ready(function()
 		gGuideID=0;
 		status('Signed out');
 		html("Goodbye user#"+gUserID)})});
-	$('#guides_owned').click(function(){ws({cmd:'guides/owned'},listGuides)});
+	function wsListGuides()
+	{
+		ws({cmd:'guides/owned'},listGuides);
+	};
+	$('#guides_owned').click( wsListGuides);
+	$('#guides_owned_archive').click(function(){ws({cmd:'guides/owned/archive'},listGuides)});
+	
 	$('#guides_all').click(function(){ws({cmd:'guides'},listGuides)});
 	$('#guidesave').click(function()	{if (gGuideID==0) return; ws({cmd:'guidesave',gid:gGuideID, guide:$('#guidexml').val()},statusupdate)});
+	$('#guidearchive').click(function()	{if (gGuideID==0) return; ws({cmd:'guidearchive',gid:gGuideID},statusupdate)});
 	$('#answersetsave').click(function()	{if (gGuideID==0) return; ws({cmd:'answersetsave',gid:gGuideID, answerset:$('#guidexml').val()},statusupdate)});
 	$('#guidesaveas').click(function(){if (gGuideID==0) return; ws({cmd:'guidesaveas',gid:gGuideID, guide:$('#guidexml').val()},guidesaveas)});
 	$('#guideclone').click(function(){if (gGuideID==0) return; ws({cmd:'guideclone',gid:gGuideID},guideclone)});
@@ -163,6 +191,7 @@ $(document).ready(function()
 function ws(data,results)
 {
 	//$.getJSON( '../CAJA_WS.php',data,results).error(function(err,xhr) { alert("error:"+xhr.responseText ); })
+	html(JSON.stringify(data));
 	trace(JSON.stringify(data));
 	$.ajax({
 		url:'../author/CAJA_WS.php',
@@ -170,7 +199,7 @@ function ws(data,results)
 		type: 'POST',
 		data: data,
 		success: function(data){ 
-			trace(String.substr(JSON.stringify(data),0,299));
+			trace(String.substr(JSON.stringify(data),0,1299));
 			results(data);
 		},
 		error: function(err,xhr) {
@@ -202,10 +231,11 @@ function loadFile(bookFile)
 <style type="text/css">
 <!--
 body {
-	background-color:#88f;
+	background-color:#112;
 	color:#fff;
 	font-size: 8pt;
 	font-family: Arial, Helvetica, sans-serif;
+	overflow: scroll;
 }
 td {
 	vertical-align: top;
@@ -228,6 +258,9 @@ div.trace { padding: 5px;}
 div.trace:nth-child(even) {background-color:#282;}
 div.trace:nth-child(odd)  {background-color:#288;}
 
+tr.guide td:hover {
+	background-color:#ccc;
+}
 -->
 </style>
 
@@ -236,14 +269,14 @@ div.trace:nth-child(odd)  {background-color:#288;}
 
 <BODY  >
 <div class="header">CAJA Web Service Tester</div> <form>
-<table width="100%" height="100%" border="0" cellpadding="5" cellspacing="0">
+<table width="100%" height="100%" border="1" cellpadding="5" cellspacing="0">
 	<tr>
-		<th width="33%" height="30" nowrap="nowrap"><font size="+1">Commands</font></th>
-		<th width="33%" height="30" nowrap="nowrap"><font size="+1">Current Results</font></th>
-		<th width="33%" height="30" nowrap="nowrap"><font size="+1">Trace</font></th>
+		<th width="250" height="30" nowrap="nowrap"><font size="+1">Commands</font></th>
+		<th width="100%" height="30" nowrap="nowrap"><font size="+1">Current Results</font></th>
+		<th width="300" height="30" nowrap="nowrap"><font size="+1">Trace</font></th>
 	</tr>
 	<tr>
-		<td width="33%"><table border="0" align="center" cellpadding="0" cellspacing="6" bordercolor="#0000FF" bgcolor="#A0A0A4">
+		<td width="250"><table width="250" border="0" align="center" cellpadding="0" cellspacing="6" bordercolor="#0000FF" bgcolor="#A0A0A4">
 			<tr>
 				<th valign="top">Command</th>
 				<th align="center" valign="top" nowrap="nowrap">Data </th>
@@ -251,18 +284,27 @@ div.trace:nth-child(odd)  {background-color:#288;}
 			<tr>
 				<td>Good Login</td>
 				<td nowrap="nowrap">
-User:	<input name="username" type="text" id="username" value="dev"    />
-Pass:
-<input name="password" type="password" id="userpass"    />
-	<input type="button" id="signin1" value="Sign in" />			</td>
+					<p>User:	
+						<input name="username" type="text" id="username" value="dev"    />
+						</p>
+					<p>Pass:
+						<input name="password" type="password" id="userpass"    />
+						</p>
+					<p>
+						<input type="button" id="signin1" value="Sign in" />			
+									</p></td>
 			</tr>
 			<tr>
 				<td>Bad Login</td>
-				<td nowrap="nowrap"> User:
+				<td nowrap="nowrap"> <p>User:
 					<input id="username2" type="text" value="DEMO '); drop table Guides;" />
-					Pass:
-					<input id="userpass2" type="password" value="bad password" />
-					<input type="button" id="signin2" value="Sign in" />				</td>
+					</p>
+					<p>Pass:
+						<input id="userpass2" type="password" value="bad password" />
+							</p>
+					<p>
+						<input type="button" id="signin2" value="Sign in" />				
+						</p></td>
 			</tr>
 			<tr>
 				<td>Logout </td>
@@ -271,12 +313,27 @@ Pass:
 			<tr>
 				<td>  Author Guides </td>
 				<td nowrap="nowrap"> 
-						<input type="button" id="guides_owned" value="My Guides" />
-						<input type="button" id="guides_all" value="All Guides" /></td>
+						<p>
+							<input type="button" id="guides_owned" value="My Guides" />
+							</p>
+						<p>
+							<input type="button" id="guides_all" value="All Guides" />
+						</p>
+						<p>
+							<input type="button" id="guides_owned_archive" value="My Guides (archive)" />
+						</p></td>
 			</tr>
 			<tr>
 				<td>Editing Guide</td>
-				<td nowrap="nowrap"><input type="button" id="guidesave" value="Save Guide" /> <input type="button" id="guidesaveas" value="Save As Guide" /></td>
+				<td nowrap="nowrap"><p>
+					<input type="button" id="guidesave" value="Save Guide" />
+					</p>
+					<p>
+						<input type="button" id="guidesaveas" value="Save As Guide" />
+					</p>
+					<p>
+						<input type="button" id="guidearchive" value="Archive Guide" />
+						</p></td>
 			</tr>
 			<tr>
 				<td>Saving Answers</td>
@@ -284,8 +341,8 @@ Pass:
 					 </td>
 			</tr>
 		</table></td>
-		<td><div id="status">Status</div><div id="results">Results</div></td>
-		<td width="33%"><div id="trace"></div></td>
+		<td width="100%"><div id="status">Status</div><div id="results">Results</div></td>
+		<td width="300"><div id="trace"></div></td>
 	</tr>
 </table>	
 </form>

@@ -18,7 +18,7 @@
 	border-color: #009F00;
 }
 .New {
-	border-color: #FF7F55;
+	border-color: #008;
 }
 .Changed {
 	border-color: #AA3FAA;

@@ -826,7 +826,8 @@ TGuide.prototype.noviceTab = function(tab,clear)
 			
 			var l,list=[];
 			for (l in Languages.regional){
-				list.push(l,Languages.regional[l].Language+' {'+l+'} '+'('+Languages.regional[l].LanguageEN+')');
+				// l is language code like en or es.
+				list.push(l, Languages.regional[l].LanguageEN + ' (' + Languages.regional[l].Language+') {'+l+'}');
 			} 
 			fs.append(form.pickList({label:'Language:', value:guide.language, change:function(val){
 				guide.language=val;

@@ -1,10 +1,9 @@
 /******************************************************************************
-	A2J Author 5 * Justice * 正义 * công lý * 사법 * правосудие
+	A2J Author 5 * Justice * 正义 * công lý * 사법 * правосудие * sprawiedliwość
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	Language (INCOMPLETE)
 	07/14/2012
-	04/15/2013
 
 	Language file for the authoring tool
 	Language blocks for each supported language.
@@ -12,9 +11,18 @@
 	And jQuery UI structs for Calendar.
 	
 	Currently supported languages:
-		English, Spanish, Vietnamese, Chinese-Simplified, Korean, French, Polish
-	Pending:
+		English
+		Spanish
+		Vietnamese
+		Chinese-Simplified 
+		Korean
+		French
+		Polish
 		Russian
+		Dutch
+		
+	Pending:
+		 
 ******************************************************************************/
 
 // Language elements that are translatable
@@ -91,7 +99,7 @@ function TLanguages()
 				lang[e]= String(region[e]);
 			}
 		}
-		region = this.regional['en'];
+		region = this.regional.en;
 		for (e in region){
 			if (region.hasOwnProperty(e)) {
 				if (makestr(lang[e])==='')
@@ -112,12 +120,10 @@ function TLanguages()
 
 var Languages = new TLanguages();
 
-// English
-Languages.regional['en']= {
+
+/* 05/05/2005, 03/11/2010 English language file used with A2J Viewer'*/
+Languages.regional.en= {
 	locale:'en',
-	
-	/* VIEWER */
-	/* 05/05/2005, 03/11/2010 External English language file used with A2J Viewer'*/
 	Language:'English',
 	LanguageEN: 'English',
 	AskYesNo_Yes:'Yes',
@@ -170,7 +176,6 @@ Languages.regional['en']= {
 	FieldPrompts_radio:'You must choose a response from the highlighted selection before you can continue.',
 	FieldPrompts_checkbox:'You must select one or more checkboxes to continue.',
 	FieldPrompts_checkboxNOTA:'Please select one or more checkboxes or "None of the above" to continue.',
-	RepeatAnd: 'and',
 	Ordinals_1:'first',
 	Ordinals_2:'second',
 	Ordinals_3:'third',
@@ -184,8 +189,10 @@ Languages.regional['en']= {
 	Ordinals_11:'eleventh',
 	Ordinals_12:'twelfth',
 	Ordinals_13:'13th',
+	RepeatAnd: 'and',
 	
 	
+	// Authoring system, non-translated elements.
 	// Tab names
 	tabAbout:'About',
 	tabInterview:'Interview',
@@ -210,12 +217,9 @@ Languages.regional['en']= {
 
 
 
-// Spanish
-Languages.regional['es']= {
+// Spanish language file used with A2J Viewer'
+Languages.regional.es= {
 	locale:'es',
-	
-	/* VIEWER */
-	// 05/05/2005, 03/11/2010 External Spanish language file used with A2J Viewer'
 	Language:'Español',
 	LanguageEN: 'Spanish',
 	AskYesNo_Yes:'Si',
@@ -268,7 +272,6 @@ Languages.regional['es']= {
 	FieldPrompts_radio:'You must choose a response from the highlighted selection before you can continue.',
 	FieldPrompts_checkbox:'Please select one or more checkboxes to continue.',
 	FieldPrompts_checkboxNOTA:'Please select one or more checkboxes or "None of the above" to continue.',
-	RepeatAnd: 'y',
 	Ordinals1:'primero',
 	Ordinals2:'segundo',
 	Ordinals3:'tercero',
@@ -318,19 +321,18 @@ Languages.regional['es']= {
 	Ordinals47:'cuadragésimoséptimo',
 	Ordinals48:'cuadragésimooctavo',
 	Ordinals49:'cuadragésimonoveno',
-	Ordinals50:'quincuagésimo'
+	Ordinals50:'quincuagésimo',
+	RepeatAnd: 'y'
 };
 
 
 
 
 // French
-Languages.regional['fr']= {
+Languages.regional.fr= {
 	locale:'fr',
-		
 	Language:'Français',
 	LanguageEN: 'French',
-	//[Captions]
 	AskYesNo_Yes :'Oui',
 	AskYesNo_No :'Non',
 	Close:'Fermer',
@@ -363,30 +365,24 @@ Languages.regional['fr']= {
 	UploadAnswers:'Veuillez patienter…',
 	CalcClear:'Effacer',
 	CalcEnter:'Entrer',
-	//[Date]
 	MonthNamesShort:'Janv,Fév,Mars,Avr,Mai,Juin,Juil,Août,Sept,Oct,Nov,Déc',
 	MonthNamesLong:'Janvier,Février,Mars,Avril,Mai,Juin,Juillet,Août,Septembre,Octobre,Novembre,Décembre',
-	//[FieldPrompts]',
 	ResponseRequired:'Remplissez les champs vides à côté des étiquettes rouges pour pouvoir continuer. ',
 	SelectionRequired:'Faites un choix pour pouvoir continuer.',
 	text:'Entrez une réponse dans le champ surligné pour pouvoir continuer.',
 	textlong:'Entrez une réponse dans le champ surligné pour pouvoir continuer.',
-	//;Text (Pick from list)',
 	textpick:'Faites un choix à partir de la liste du champ surligné pour pouvoir continuer. ',
 	number:'Entrez un numéro dans le champ surligné pour pouvoir continuer.',
 	numberdollar:'Entrez un montant dans le champ surligné pour pouvoir continuer. ',
 	numberssn:'Entrez votre numéro de sécurité sociale dans le champ surligné pour pouvoir continuer.',
 	numberphone:'Entrez votre numéro de téléphone dans le champ surligné pour pouvoir continuer.',
 	numberzip:'Entrez votre code postal dans le champ surligné pour pouvoir continuer.',
-	//;Number (Pick from List)',
 	numberpick:'Faites un choix à partir de la liste du champ surligné pour pouvoir continuer.',
 	datemdy:'Entrez l’année, le mois et le jour dans le champ surligné pour pouvoir continuer.',
 	gender:'Choisissez soit mâle soit femelle dans le champ surligné pour pouvoir continuer.',
 	radio:'Faites un choix à partir de la liste du champ surligné pour pouvoir continuer.',
 	checkbox:'Sélectionnez une ou plusieurs cases pour pouvoir continuer.',
 	checkboxNOTA:'Sélectionnez une ou plusieurs cases, ou « aucun des énoncés » pour pouvoir continuer.',
-	RepeatAnd: 'et',
-	//[Ordinals]
 	Ordinals1:'premier',
 	Ordinals2:'deuxième',
 	Ordinals3:'troisième',
@@ -399,16 +395,15 @@ Languages.regional['fr']= {
 	Ordinals10:'dixième',
 	Ordinals11:'onzième',
 	Ordinals12:'douzième',
-	Ordinals13:'treizième'
-
+	Ordinals13:'treizième',
+	RepeatAnd: 'et'
 };
 
 
 // Polish
-Languages.regional['pl']= {
+Languages.regional.pl= {
 	locale:'pl',
-	
-	Language:'Polish',
+	Language:'Polski',
 	LanguageEN: 'Polish',
 	AskYesNo_Yes:'Tak',
 	AskYesNo_No:'Nie',
@@ -476,13 +471,9 @@ Languages.regional['pl']= {
 };
 
 
-// Vietnamese
-Languages.regional['vi']= {
+// Vietnamese language file used with A2J Viewer'
+Languages.regional.vi= {
 	locale:'vi',
-	
-	
-		/* VIEWER */
-	// 11/23/2011 External Vietnamese language file used with A2J Viewer',
 	Language:'Tiếng Anh',
 	LanguageEN: 'Vietnamese',
 	AskYesNo_Yes:'Có',
@@ -535,7 +526,6 @@ Languages.regional['vi']= {
 	FieldPrompts_radio:'Quý vị phải chọn một câu trả lời từ chỗ được tô đậm trước khi quý vị tiếp tục.',
 	FieldPrompts_checkbox:'Quý vị phải đánh dấu vào một ô trống hoặc nhiều hơn để tiếp tục. ',
 	FieldPrompts_checkboxNOTA:'Xin đánh dấu vào một ô trống hoặc nhiều hơn hoặc chọn "Không có câu nào áp dụng" để tiếp tục. ',
-	RepeatAnd: 'và',
 	Ordinals1:'Một',
 	Ordinals2:'Hai',
 	Ordinals3:'Ba',
@@ -548,20 +538,158 @@ Languages.regional['vi']= {
 	Ordinals10:'Mười',
 	Ordinals11:'Mười một',
 	Ordinals12:'Mười hai',
-	Ordinals13:'Mười ba'
-	
-	
-	
+	Ordinals13:'Mười ba',
+	RepeatAnd: 'và'
 };
 
 
 
-// Simplified Chinese
+// Russian
+Languages.regional.ru= {
+	locale:'ru',
+	LanguageEN: 'Russian',
+	Language:'Русский',
+	AskYesNo_Yes:'Да',
+	AskYesNo_No:'Нет',
+	Close:'Закрыть',
+	Comment:'Комментарии',
+	GoBack:'НАЗАД',
+	GoNext:'ДАЛЕЕ',
+	LearnMore:'Дополнительные Сведения',
+	MyProgress:'МОЙ ХОД РАБОТЫ',
+	ProvideFeedbackOrComment:'Страница для отзывов или комментариев',
+	SaveAndExit:'ВЫХОД',
+	ResumeExit:'ПРОДОЛЖЕНИЕ',
+	SendFeedback:'ОТЗЫВЫ',
+	SoundIsOff:'ЗВУК ВЫКЛЮЧЕН',
+	SoundIsOn:'ЗВУК ВКЛЮЧЕН',
+	SoundPlay:'Пуск',
+	SoundStop:'Стоп',
+	WhatDoYouMean:'Что это означает?',
+	Continue:'Продолжить ',
+	Exit:'Выйти',
+	Male:'Мужской',
+	Female:'Женский',
+	ChooseListNumber:'Выбор:',
+	ChooseListText:'Выберите из этого списка:',
+	CheckBoxNOTALabel:'Ничего из перечисленного',
+	ZoomNormal:'Обычный размер',
+	ZoomFull:'Во весь экран',
+	TextEnlarge:'Увеличить текстовое поле',
+	TextShrink:'Уменьшить текстовое поле',
+	TextSizeLetter:'A',
+	UploadAnswers:'Выход. Пожалуйста, подождите...',
+	CalcClear:'Очистка',
+	CalcEnter:'Ввод',
+	MonthNamesShort:'Янв,Фев,Март,Апр,Май,Июнъ,Июль,Авг,Сент,Окт,Нояб,Дек',
+	MonthNamesLong:'Январь,Февраль,Март,Апрель,Май,Июнь,Июль,Август,Сентябрь,Октябрь,Ноябрь,Декабрь',
+	ResponseRequired:'Поля с красной пометкой обязательные для заполнения. Введите данные перед тем, как продолжить.',
+	SelectionRequired:'Перед тем, как продолжить, необходимо сделать выбор. ',
+	text:'Перед тем, как продолжить, необходимо ответить в выделенном поле.',
+	textlong:'Перед тем, как продолжить, необходимо ответить в выделенном поле.',
+	textpick:'Перед тем, как продолжить, необходимо сделать выбор из выделенного.',
+	number:'Перед тем, как продолжить, необходимо ввести число в выделенное поле.',
+	numberdollar:'Перед тем, как продолжить, необходимо ввести сумму в долларах в выделенное поле.',
+	numberssn:'Перед тем, как продолжить, необходимо ввести номер социального страхования (Social Security Number) в выделенное поле.',
+	numberphone:'Перед тем, как продолжить, необходимо ввести номер телефона в выделенное поле.',
+	numberzip:'Перед тем, как продолжить, необходимо ввести почтовый индекс в выделенное поле.',
+	numberpick:'Перед тем, как продолжить, необходимо выбрать число из выделенного.',
+	datemdy:'Перед тем, как продолжить, необходимо ввести месяц, день, и год в выделенные поля.',
+	gender:'Перед тем, как продолжить, необходимо выбрать мужской или женский пол из выделенных вариантов.',
+	radio:'Перед тем, как продолжить, необходимо выбрать ответ из выделенных вариантов.',
+	checkbox:'Чтобы продолжить, необходимо отметить один или несколько флажков.',
+	checkboxNOTA:'Чтобы продолжить, отметьте один или несколько флажков или "Ничего из перечисленного".',
+	Ordinals1:'первый',
+	Ordinals2:'второй',
+	Ordinals3:'третий',
+	Ordinals4:'четвертый',
+	Ordinals5:'пятый',
+	Ordinals6:'шестой',
+	Ordinals7:'седьмой',
+	Ordinals8:'восьмой',
+	Ordinals9:'девятый',
+	Ordinals10:'десятый',
+	Ordinals11:'одиннадцатый',
+	Ordinals12:'двенадцатый',
+	Ordinals13:'13ый'
+};
+
+
+
+// Nederlands (Dutch)
+Languages.regional.nl= {
+	locale:'nl',
+	Language:'Nederlands',
+	LanguageEN: 'Dutch',
+	AskYesNo_Yes:'Ja',
+	AskYesNo_No:'Nee',
+	Close:'Sluiten',
+	Comment:'Commentaar',
+	GoBack:'TERUG',
+	GoNext:'VOLGENDE',
+	LearnMore:'Kom meer te weten',
+	MyProgress:'Mijn voortgang',
+	ProvideFeedbackOrComment:'Geef feedback of commentaar op deze pagina',
+	SaveAndExit:'Afronden',
+	ResumeExit:'Hervatten',
+	SendFeedback:'VERZEND FEEDBACK',
+	SoundIsOff:'GELUID IS UIT',
+	SoundIsOn:'GELUID IS AAN',
+	SoundPlay:'Afspelen',
+	SoundStop:'Stop',
+	WhatDoYouMean:'Wat bedoelt U?',
+	Continue:'Doorgaan',
+	Exit:'Uitgang',
+	Male:'Mannelijk',
+	Female:'Vrouwelijk',
+	ChooseListNumber:'Kies:',
+	ChooseListText:'Kies uit deze lijst:',
+	CheckBoxNOTALabel:'Geen van de voorgaande',
+	ZoomNormal:'Normale afmetingen',
+	ZoomFull:'Volledig scherm',
+	TextEnlarge:'Vergroot tekstvak',
+	TextShrink:'Verklein tekstvak',
+	TextSizeLetter:'A',
+	UploadAnswers:'Interessant. Even geduld alstublieft...',
+	CalcClear:'Wissen',
+	CalcEnter:'Invoeren',
+	MonthNamesShort:'Jan,Feb,Mrt,Apr,Mei,Jun,Jul,Aug,Sep,Okt,Nov,Dec',
+	MonthNamesLong:'Januari,Februari,Maart,April,Mei,Juni,Juli,Augustus,September,Oktober,November,December',
+	ResponseRequired:'Voordat U door kunt gaan moet U een antwoord invullen in het lege veld naast de rode labels.',
+	SelectionRequired:'Voordat U door kunt gaan  moet U een keuze maken.',
+	text:'Voordat U door kunt gaan moet U een antwoord typen in het gearceerde gedeelte.',
+	textlong:'Voordat U door kunt gaan moet U een antwoord typen in het gearceerde gedeelte.',
+	textpick:'Voordat U door kunt gaan moet U een keuze maken uit het gearceerde gedeelte.',
+	number:'Voordat U door kunt gaan moet U een getal typen in het gearceerde gedeelte.',
+	numberdollar:'Voordat U door kunt gaan moet U een bedrag (in dollars) typen in het gearceerde gedeelte.',
+	numberssn:'Voordat U door kunt gaan moet U een BurgerServiceNummer typen in het gearceerde gedeelte.',
+	numberphone:'Voordat U door kunt gaan moet U een telefoonnummer typen in het gearceerde gedeelte.',
+	numberzip:'Voordat U door kunt gaan moet U een postcode typen in het gearceerde gedeelte.',
+	numberpick:'Voordat U door kunt gaan moet U een getal selecteren uit het gearceerde gedeele.',
+	datemdy:'Voordat U door kunt gaan moet U een maand, dag en jaar typen in de gearceerde gedeelten.',
+	gender:'Voordat U door kunt gaan moet U ofwel man ofwel vrouw kiezen in het gearceerde gedeelte.',
+	radio:'Voordat U door kunt gaan moet U een antwoord kiezen uit het gearceerde gedeelte.',
+	checkbox:'Voordat U door kunt gaan moet U een of meer vakjes aanvinken.',
+	checkboxNOTA:'Vink alstublieft een of meerdere vakjes of het vakje "Geen van de voorgaande" aan om door te gaan.',
+	Ordinals1:'eerste',
+	Ordinals2:'tweede',
+	Ordinals3:'derde',
+	Ordinals4:'vierde',
+	Ordinals5:'vijfde',
+	Ordinals6:'zesde',
+	Ordinals7:'zevende',
+	Ordinals8:'achtste',
+	Ordinals9:'negende',
+	Ordinals10:'tiende',
+	Ordinals11:'elfde',
+	Ordinals12:'twaalfde',
+	Ordinals13:'dertiende'	
+};
+
+
+// Simplified Chinese language file used with A2J Viewer
 Languages.regional['zh-cn']= {
 	locale:'zh-cn',
-	
-	/* VIEWER */
-	//   11/23/2011 External Simplified Chinese language file used with A2J Viewer',
 	Language:'英语',
 	LanguageEN: 'Simplified Chinese',
 	AskYesNo_Yes:'是',
@@ -614,7 +742,6 @@ Languages.regional['zh-cn']= {
 	FieldPrompts_radio:'你必须先在黃色标记的栏位上选择一项回应才能继续下去',
 	FieldPrompts_checkbox:'你必须先在复选框里选择一项或以上才能继续下去',
 	FieldPrompts_checkboxNOTA:'请在复选框选择一项或以上，或选择“以上皆非”以继续下去',
-	RepeatAnd: '和',
 	Ordinals1:'第一',
 	Ordinals2:'第二',
 	Ordinals3:'第三',
@@ -627,11 +754,12 @@ Languages.regional['zh-cn']= {
 	Ordinals10:'第十',
 	Ordinals11:'第十一',
 	Ordinals12:'第十二',
-	Ordinals13:'第十三'
+	Ordinals13:'第十三',
+	RepeatAnd: '和'
 };
 
 // Korean
-Languages.regional['ko']= {
+Languages.regional.ko= {
 	locale:'ko',
 	
 	Language: '영어',
@@ -686,7 +814,6 @@ Languages.regional['ko']= {
 	FieldPrompts_radio:'계속하기 전에 강조 표시된 선택란에서 응답을 선택해야 합니다.',
 	FieldPrompts_checkbox:'계속하려면 1개 이상의 체크박스를 선택해야 합니다.',
 	FieldPrompts_checkboxNOTA:'계속하려면 2개 이상의 체크박스를 선택하거나 "위 내용 중 해당 사항 없음"을 선택하십시오.',
-	RepeatAnd: '및',
 	Ordinals1:'첫째',
 	Ordinals2:'둘째',
 	Ordinals3:'셋째',
@@ -699,20 +826,23 @@ Languages.regional['ko']= {
 	Ordinals10:'열 번째',
 	Ordinals11:'열한 번째',
 	Ordinals12:'열두 번째',
-	Ordinals13:'열세 번째'
+	Ordinals13:'열세 번째',
+	RepeatAnd: '및'
 };
+
+
 
 if ($.datepicker) {
 
 jQuery(function($){
 	/* Save the English in case author switches back */
-	$.datepicker.regional['en'] = $.datepicker.regional[''];
+	$.datepicker.regional.en = $.datepicker.regional[''];
 });
 
 /* Inicialización en español para la extensión 'UI date picker' para jQuery. */
 /* Traducido por Vester (xvester@gmail.com). */
 jQuery(function($){
-	$.datepicker.regional['es'] = {
+	$.datepicker.regional.es = {
 		closeText: 'Cerrar',
 		prevText: '&#x3c;Ant',
 		nextText: 'Sig&#x3e;',
@@ -736,7 +866,7 @@ jQuery(function($){
 /* Vietnamese initialisation for the jQuery UI date picker plugin. */
 /* Translated by Le Thanh Huy (lthanhhuy@cit.ctu.edu.vn). */
 jQuery(function($){
-	$.datepicker.regional['vi'] = {
+	$.datepicker.regional.vi = {
 		closeText: 'Đóng',
 		prevText: '&#x3c;Trước',
 		nextText: 'Tiếp&#x3e;',
@@ -785,7 +915,7 @@ jQuery(function($){
 /* Korean initialisation for the jQuery calendar extension. */
 /* Written by DaeKwon Kang (ncrash.dk@gmail.com). */
 jQuery(function($){
-	$.datepicker.regional['ko'] = {
+	$.datepicker.regional.ko = {
 		closeText: '닫기',
 		prevText: '이전달',
 		nextText: '다음달',
@@ -811,7 +941,7 @@ jQuery(function($){
 /* Polish initialisation for the jQuery UI date picker plugin. */
 /* Written by Jacek Wysocki (jacek.wysocki@gmail.com). */
 jQuery(function($){
-	$.datepicker.regional['pl'] = {
+	$.datepicker.regional.pl = {
 		closeText: 'Zamknij',
 		prevText: '&#x3c;Poprzedni',
 		nextText: 'Następny&#x3e;',
@@ -829,13 +959,13 @@ jQuery(function($){
 		isRTL: false,
 		showMonthAfterYear: false,
 		yearSuffix: ''};
-	$.datepicker.setDefaults($.datepicker.regional['pl']);
+	//$.datepicker.setDefaults($.datepicker.regional.pl);
 });
 
 /* Russian (UTF-8) initialisation for the jQuery UI date picker plugin. */
 /* Written by Andrew Stromnov (stromnov@gmail.com). */
 jQuery(function($){
-	$.datepicker.regional['ru'] = {
+	$.datepicker.regional.ru = {
 		closeText: 'Закрыть',
 		prevText: '&#x3c;Пред',
 		nextText: 'След&#x3e;',
@@ -853,7 +983,31 @@ jQuery(function($){
 		isRTL: false,
 		showMonthAfterYear: false,
 		yearSuffix: ''};
-	$.datepicker.setDefaults($.datepicker.regional['ru']);
+	//$.datepicker.setDefaults($.datepicker.regional.ru);
+});
+
+/* Dutch (UTF-8) initialisation for the jQuery UI date picker plugin. */
+/* Written by Mathias Bynens <http://mathiasbynens.be/> */
+jQuery(function($){
+	$.datepicker.regional.nl = {
+		closeText: 'Sluiten',
+		prevText: '←',
+		nextText: '→',
+		currentText: 'Vandaag',
+		monthNames: ['januari', 'februari', 'maart', 'april', 'mei', 'juni',
+		'juli', 'augustus', 'september', 'oktober', 'november', 'december'],
+		monthNamesShort: ['jan', 'feb', 'maa', 'apr', 'mei', 'jun',
+		'jul', 'aug', 'sep', 'okt', 'nov', 'dec'],
+		dayNames: ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'],
+		dayNamesShort: ['zon', 'maa', 'din', 'woe', 'don', 'vri', 'zat'],
+		dayNamesMin: ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'],
+		weekHeader: 'Wk',
+		dateFormat: 'dd/mm/yy',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: false,
+		yearSuffix: ''};
+	//$.datepicker.setDefaults($.datepicker.regional.nl);
 });
 
 }

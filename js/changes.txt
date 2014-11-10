@@ -2,18 +2,21 @@
 ### All Contents Copyright The Center for Computer-Assisted Legal Instruction
 ### This change log is also displayed via changes.php. Formatting here matters.
 
+# 2014-11-10
+* New - Dutch and Russian
+
 # 2014-11-05
-* Added - filter Word paste
+* New - filter Word paste
 
 # 2014-10-29
-* Added - delete pages
+* New - delete pages
 
 # 2014-10-23
 * Fixed - display court house replacement image  
 
 # 2014-10-22
 * Fixed - a new page now has a button
-* Added - Polish language
+* New - Polish language
 
 # 2014-09-24 5.0.1.40
 * New - Varable edit popup displays pages using said variable

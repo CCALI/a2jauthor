@@ -22,8 +22,8 @@ var CONST = {
 	// Spinnner for loading wait
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
-	A2JVersionNum:"5.0.1.43",//VersionInfo.verNum
-	A2JVersionDate:"2014-11-10",
+	A2JVersionNum:"5.0.1.44",//VersionInfo.verNum
+	A2JVersionDate:"2014-11-17",
 	
 	
 	//CAVersionNum:"5.0.0",
@@ -530,7 +530,7 @@ TGuide.prototype.stepDisplayNumber =function( step )
 		number='↖';
 	}
 	return number;
-}
+};
 
 TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 {	// Convert a page name or reserved word into readable text.

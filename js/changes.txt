@@ -2,6 +2,9 @@
 ### All Contents Copyright The Center for Computer-Assisted Legal Instruction
 ### This change log is also displayed via changes.php. Formatting here matters.
 
+# 2014-11-17 5.0.1.44
+* Fix - Editing codes
+
 # 2014-11-10
 * New - Dutch and Russian
 

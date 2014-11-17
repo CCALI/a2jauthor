@@ -421,7 +421,7 @@ var form={
 	{	// 2014-11-06 Strip out HTML comments and any other unapproved code that Word usually adds.
 		// TODO strip out other irrelevant code
 		var html =$('<div>'+(srchtml)+'</div>').html(); // ensure valid HTML tags
-		html = html.replace(/<!--(.|\s)*?-->/g,''); // strip HTML comments
+		html = ' '+html.replace(/<!--(.|\s)*?-->/g,'')+' '; // strip HTML comments
 		var parts = html.split('<');
 		var html=makestr(parts[0]);
 		for (var p in parts)
@@ -449,8 +449,8 @@ var form={
 			}
 			html += makestr(part2[1]);
 		}
-		html = html.replace(/<BR\>/gi,"<BR/>"); // Matched tags fix.
-		//if (html!=srchtml) {	trace(srchtml);trace(html);}
+		html = jQuery.trim(html.replace(/<BR\>/gi,"<BR/>")); // Matched tags fix.
+		if (html!=srchtml) {	trace(srchtml);trace(html);}
 		return html;
 	}
 	,codeFix:function(html)

@@ -1,6 +1,16 @@
-﻿@charset "utf-8";
+﻿/*
+	 <link href='A2J_Fonts.css' rel='stylesheet' type='text/css'>
+	 <link href="viewer.jquery-ui.css" title="style"  rel="stylesheet" type="text/css"/>
+	 <link href="jquery-ui.extra.css" rel="stylesheet" type="text/css" />
+	 <link href="A2J_Viewer.css" rel="stylesheet" type="text/css" />
+
+	A2J Author 5 * JusticeJustice * justicia * 正义 * công lý * 사법 * правосудие
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction 
+*/
+
 /*
-	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
+	@charset "utf-8";
+	A2J Author 5 * JusticeJustice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction 
 
 	This style sheet derived from:
@@ -1202,7 +1212,6 @@ body .ui-tooltip {
 	filter: Alpha(Opacity=30);
 	border-radius: 8px;
 }
-
 /*
 	CALI Author 5 / A2J Author 5 (CAJA) * Justice * 正义 * công lý * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
@@ -1228,9 +1237,9 @@ body .ui-tooltip {
 	padding: 0.3em;
 }
 
-@charset "utf-8";
 /*
-	A2J Author 5 * Justice * 正义 * công lý * 사법 * правосудие
+	@charset "utf-8";
+	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	A2J Viewer Stylesheet 
@@ -1379,6 +1388,47 @@ html, body{
 	border-left-color: #FCFCFC;
 	border-left-style: outset;
 }
+.demoWatermark {
+	position: absolute;
+	background: none repeat scroll 0 0 rgba(255,255,255,.5);
+	left: 25%;
+	right: 25%;
+	top: 50px;
+   margin: 2px;
+   padding: 5px;
+	font-size: 12pt;
+}
+
+.alertPanel {
+	/* Spammy alerts for user go here. */
+	position: absolute;
+	margin: 3em;
+	margin-right: 3em;
+	margin-left: 3em;
+	max-height: 250px;
+	background-color: #ffa;
+	overflow: auto;
+	right: 1em;
+	bottom: 1em;
+	left: 1em;
+}
+.alertPanel button {
+	float:right;
+}
+.alertCounter {
+	position: absolute;
+	right: 1em;
+	bottom: 1em;
+	width: 32px;
+	height: 32px;
+	text-align:  center;
+	border: 3px solid #f00;
+	border-radius: 32px;
+	background-color:#fff;
+	color: #f00;
+	font-size: 24px;
+	cursor:pointer;
+}
 .NavBar button.ui-state-default {
 	background: transparent;
 	color: #000;
@@ -1443,7 +1493,7 @@ html, body{
 }
 
 .A2JViewer .interact {
-	overflow: auto;
+	overflow: hidden;
 	position: absolute;
 	top:43px;
 	bottom:00;
@@ -1466,6 +1516,7 @@ div.bubble {
 div.question.bubble,
 div.learnmore.bubble ,
 div.help.bubble,
+div.popup.bubble,
 div.formerror.bubble {/* question bubble */
 	margin:  0px;
 	padding:  10px;
@@ -1474,6 +1525,7 @@ div.formerror.bubble {/* question bubble */
 }
 div.question.bubble > div,
 div.formerror.bubble > div,
+div.popup.bubble > div,
 div.help.bubble > div { /* form with viewer's field inputs */
 	margin: 0px;
 	padding: 0px;
@@ -1495,6 +1547,9 @@ div.question.bubble > div {
 	min-height: 1em;
 	max-height: auto;
 }
+
+.popup.bubble,
+.popup.bubble > div,
 .help.bubble,
 .help.bubble > div {
 	min-height: 50px;
@@ -1505,6 +1560,7 @@ div.question.bubble > div {
 .question.panel .buttonlist,
 .formerror.panel .buttonlist,
 .learnmore.panel .buttonlist,
+.popup.panel .buttonlist,
 .help.panel .buttonlist {
 	margin-top: 1.0em;
 	bottom: 4px;
@@ -1517,8 +1573,13 @@ div.question.bubble > div {
 }
 .learnmore.panel .buttonlist,
 .formerror.panel .buttonlist,
+.popup.panel .buttonlist,
 .help.panel .buttonlist{
 	text-align:center;
+}
+.a2jv .buttonlist  .ui-button   {
+	border: 2px solid #000;
+	font-weight: bold;
 }
 .field.error {
 	background-color: #ff0;
@@ -1595,16 +1656,6 @@ div.question.bubble fieldset div.row input[type=text] {
 div.question.bubble div fieldset{
 	text-align:left;
 }
-
-/* removed by JPM
-.Step0 { background-color: #ffffff; }
-.Step1, .Step7  { background-color:#BDD6D6; }
-.Step2, .Step8  { background-color:#B7DDB7; }
-.Step3, .Step9  { background-color:#EFC68C; }
-.Step4, .Step10 { background-color:#E7E7B5; }
-.Step5, .Step11 { background-color:#EFDED6; }
-.Step6, .Step12 { background-color:#ECD8EA; }
-*/
 
 .Step0 { background-color:#EFEFC6; }
 .Step1 { background-color:#EFEF8C; }
@@ -1700,7 +1751,8 @@ div.steptext.step2 { 	font-size: 1em; }
 	margin: 1px;
 	padding: 2px;
 }
-span.code, span.var, span.varidx, span.val, span.page, span.valT,span.valF,span.info {
+span.code, span.var, span.varidx, span.val, span.page, span.valT,span.valF,span.info,
+span.tag,span.field,span.field.required,span.learnmore,span.logic {
 	padding: 2px;
 	margin: 2px;
 }
@@ -1711,6 +1763,39 @@ span.ui { /* color button pressed by client */
 span.info { /* color comment */
 	border: thin solid #fea;
 	background-color: #ddd;
+}
+span.tag { /* general tag */
+	border: thin solid #fea;
+	color: #000;
+	background-color: #fff;
+}
+span.tag.field {
+	background-color: #efe;	
+}
+span.tag.field.required {
+	border: solid #FFFF00;
+	background-color: #ddd;
+}
+span.tag.logic {
+	border: thin solid #fea;
+	background-color: #CC9966;
+}
+span.tag.repeat {
+	background: transparent;
+	background-image: url(../author/images/MapperNodeRepeat.png);
+	background-repeat: no-repeat;
+	border: none; 
+	padding:0px;
+	width: 12px;
+	height: 12px;
+	display: inline-block;
+}
+span.tag.learnmore {
+	border: thin solid #fea;
+	background-color: #FFCC66;
+}
+span.taglist { /* list of tags will be right side */
+	float:right;
 }
 span.code {
 	border: thin solid #CC9966;
@@ -1785,7 +1870,7 @@ span.err {
 .relative {
 	position: relative;
 }
-#uploadAnswerFileInput {
+#uploadAnswerFileInput  {
 	opacity:  0;
 	position: absolute;
 	left: 0;
@@ -1803,17 +1888,20 @@ span.err {
 .ViewerLogicForm .immediatepanel{
 	position:absolute;
 	bottom: 0px;
-	height: 20px;
+	height: 24px;
 	left: 0;
 	right: 0;
 	padding: 4px;
 	margin: 4px;
 }
 .ViewerLogicForm .immediatepanel input {
-	width: 100%;
+	width: 50%;
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
+}
+#clearTrace {
+	float:right;
 }
 #page-viewer.ViewerApp  .ViewerVarForm {
 	position: fixed;
@@ -1844,10 +1932,23 @@ span.err {
    user-select: none;
 }
 
-/* */
+
 
 x.question.panel {
 	background-color:#f00;
 }
 
+.audio {
+	margin-top: 1em;
+}
 
+.A2JViewer audio,
+.A2JViewer video {
+  max-width: 270px;
+}
+
+
+#history {
+	width: 20em;
+}
+/* */

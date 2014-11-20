@@ -230,7 +230,7 @@ function mapZoomClick()
 	var zoom=$(this).attr('zoom');
 	if (zoom==='fit') {
 		// TODO must be an easy function to get map's true width,height (children bounds).
-		//	trace('Map size',$('.map').css('width'),$('.map').css('height'));
+		//trace('Map size',$('.map').css('width'),$('.map').css('height'));
 		//trace('Map size',$('#MapperPanel').css('width'),$('#MapperPanel').css('height'));
 		//$('.map').css({zoom:"scale(1)"});
 		var minx,miny,maxx,maxy;
@@ -250,7 +250,7 @@ function mapZoomClick()
 			}
 		}
 
-		// trace(minx,miny,maxx,maxy);
+		//trace(minx,miny,maxx,maxy);
 		kMINY=200;// let no node be less than 200 (so our Start icon is visible)
 		if (  (minx<0 || miny< kMINY))
 		{	// If left or top is less than 0, push all down/right since our scrollbars don't go negative.

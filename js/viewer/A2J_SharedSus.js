@@ -46,9 +46,10 @@ function sortingNaturalCompare(a, b) {//http://my.opera.com/GreyWyvern/blog/show
     }
     return tz;
   }
-  // 2014-06-16 we want case-insensitive comparisons.
-a=a.toUpperCase();
-b=b.toUpperCase();
+	// 2014-06-16 we want case-insensitive comparisons.
+	
+	a = (a===null || typeof a === "undefined" ) ? '' : String(a).toUpperCase();
+	b = (b===null || typeof b === "undefined" ) ? '' : String(b).toUpperCase();
 
   var aa = chunkify(a);
   var bb = chunkify(b);

@@ -356,7 +356,7 @@ TLogic.prototype.evalLogicHTML2 = function(html)
 		for (p=0;p<parts.length;p+=2)
 		{
 			html = parts[p];
-			trace(html);
+			//trace(html);
 			logic += ('write "'+ html.split('\n').join(" ")+ '"' + CONST.ScriptLineBreak);
 			if (p<parts.length-1)
 			{
@@ -370,7 +370,7 @@ TLogic.prototype.evalLogicHTML2 = function(html)
 	{
 		script={js:[],errors:[],html:html};
 	}
-	trace('evalLogicHTML2',script.html);
+	//trace('evalLogicHTML2',script.html);
 	return script;
 };
 /*

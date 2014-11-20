@@ -107,6 +107,46 @@ function reportFull()
 		var button;
 		
 		
+		function pageLink(pageName) {
+			if (pageName && pageName != '' ) {
+				return "PAGE_"+pageName;
+			}
+			else
+			{
+				return '';
+			}
+		}
+		function anchor(link) {
+			if (link!='') {
+				return '<a name="'+link+'"/>';
+			}
+			else
+			{
+				return '';
+			}			
+		}
+		function jumpAnchor(link,label)
+		{
+			if (link!='') {
+				return '<a class=jump href="#'+link+'">'+label+'</a>';
+			}
+			else{
+				return label;
+			}
+		}
+		function fixHTML4Report(html)
+		{
+			// All external links, display link URL after.
+			// All Popup links, display popup name after and rename link to jump to anchor tag.
+			html=html.replace(REG.LINK_POP,function(match,p1,offset,string) // jslint nolike: /\"POPUP:\/\/(([^\"])+)\"/ig
+			{	
+				// HREF="POPUP://MyPopup" becomes HREF="#PAGE_MyPopup"
+				var popupid=match.match(REG.LINK_POP2)[1];
+				// popupid= htmlEscape(newName);
+				return   '"#' + pageLink(popupid) + '"' + 'title="Popup page ' + (popupid) +'"';
+			});
+			return html;
+		}
 		function tuple(label,value,styleclass)
 		{	// return table row columns
 			return '<tr' + (styleclass?' class='+styleclass:'')+'><td>' + label + '</td><td>' + value + '&nbsp;</td></tr>';
@@ -153,6 +193,8 @@ function reportFull()
 		var t = '';
 		
 		
+		var stepHTML=[]; // 11/19/2014 Group pages to their steps
+		var popHTML= '';
 		//var tr = textStatisticsReport('Enabling the Script panel causes a Firefox slow-down due to a platform bug. This will be fixed with the next major Firefox and Firebug versions.');
 		//t= 'Stats: <blockquote>' + tr.text  + '</blockquote><center>'+tr.css+'; '+tr.info+'</center>';
 		
@@ -176,80 +218,109 @@ function reportFull()
 			ta += tuples('TD',[ author.name, author.title,  author.organization,author.email]);
 		}
 		t += tupleAuto('Authors',tableWrap(ta));
-		t += tupleAuto('Revision Notes:',  guide.notes); 
+		t += tupleAuto('Revision Notes:',  guide.notes);
+		
+		// Variable count
+		var vi;
+		var varCnt=0;
+		for (vi in guide.vars){
+			varCnt++; 
+		}
+		t += tuple('Variables:',  varCnt + ' ' + jumpAnchor('VARS','Variables list'));
+		
+		t += tuple('Starting Page:',  jumpAnchor(pageLink( guide.firstPage),guide.firstPage)  );
+		t += tuple('Exit Page:',    jumpAnchor(pageLink( guide.exitPage),guide.exitPage)  );
+		var ts='';
+		for (var si in guide.steps)
+		{
+			step = guide.steps[si];
+			ts+= tuple('Step "'+step.number+'":',  jumpAnchor('STEP'+si, step.text),'Step'+parseInt(si));
+			stepHTML[si] = '';
+		}
+		t += tuple('Steps',fieldSetWrap('Interview Steps',tableWrap(ts)));
+		t += tuple('Popups',jumpAnchor('POPUPS','Popup pages'),'Step0');
 		html += fieldSetWrap('Interview Information',tableWrap(t));
 		
+		// Variable list
 		t = guide.variableListHTML();
-		html += fieldSetWrap('Interview Variables',t);
+		html += anchor('VARS')+fieldSetWrap('Interview Variables',t);
 
 		
 		// Steps section
 		t = '';	
-		t += tuple('Starting Page:',  guide.firstPage);
-		t += tuple('Exit Page:',  guide.exitPage);
-		for (var si in guide.steps)
-		{
-			step = guide.steps[si];
-			t += tuple('Step "'+step.number+'":',  step.text,'Step'+parseInt(si));
-		}
-		html +=  fieldSetWrap('Interview Steps',tableWrap(t));
 		// Pages section
 		var p;
 		for (p in guide.sortedPages)
 		{
 			page=guide.sortedPages[p];
 			si = page.step;
-			html +=  '<a name="'+p+'"/>';
-			t = '';
-			t += tuple('Step',	guide.stepDisplayName(si)); //steps[si].number+':'+guide.steps[si].text);
-			guideGradeText += ' ' + page.text;
-			t += (tuple('Text',	gradeText(page.text)));
-			t += (tupleAuto('Text audio',	page.textAudioURL));
-			t += (tupleAuto('Learn prompt',	page.learn));
-			guideGradeText += ' ' + page.help;
-			t += (tupleAuto('Help',	 gradeText(page.help)));
-			t += (tupleAuto('Help audio',	page.helpAudioURL));
-			t += (tupleAuto('Help reader',	page.helpReader));
-			t += (tupleAuto('Help image',	page.helpImageURL));
-			t += (tupleAuto('Help video',	page.helpVideoURL));
-			t += (tupleAuto('Variable Repeater',	page.repeatVar));
-			t += (tupleAuto('Notes',	page.notes));
-			
-			var ft='';
-			for (var fi in page.fields) {
-				field = page.fields[fi];
-				var fft = '';
-				fft += tuple('Type',	field.type);
-				fft += tuple('Label',field.label);
-				fft += tupleAuto('Name',	field.name);
-				guideGradeText += ' ' + field.invalidPrompt;
-				fft += tupleAuto('Invalid Prompt',gradeText(field.invalidPrompt));
-				fft += tupleAuto('Invalid Prompt audio',field.invalidPromptAudio);
-				fft += tupleAuto('Min',	field.min);
-				fft += tupleAuto('Max',	field.max);
-				fft += tupleAuto('Max chars',	field.maxChars);
-				fft += tupleAuto('List', decodeEntities(	field.listData));
-				fft += tupleAuto('List',field.listSrc);
-				ft+= tuple('Field#'+(parseInt(fi)+1),tableWrap(fft));
+			t =  ''
+			if (page.type === CONST.ptPopup) {
+				t += (tuple('Text',	gradeText(fixHTML4Report(page.text))));
+				guideGradeText += ' ' + page.text;
+				popHTML +=anchor( pageLink(page.name)) + fieldSetWrap('Popup Page '+ page.name, tableWrap(t) , 'Step0');
 			}
-			t+= tuple('Fields',tableWrap(ft));
-			
-			t += (tupleAuto('Logic Before',	page.codeBefore));
-			var bt=tuples('TH',[ 'Label','Next page','Variable Name','Default Value']);
-			var bi;
-			for (bi in page.buttons)
+			else
 			{
-				button = page.buttons[bi];
-				bt += tuples('TD', [ button.label,button.next,button.name,button.value]);
+				t += tuple('Step',	guide.stepDisplayName(si)); //steps[si].number+':'+guide.steps[si].text);
+				guideGradeText += ' ' + page.text;
+				t += (tuple('Text',	gradeText(fixHTML4Report(page.text))));
+				t += (tupleAuto('Text audio',	page.textAudioURL));
+				t += (tupleAuto('Learn prompt',	page.learn));
+				guideGradeText += ' ' + page.help;
+				t += (tupleAuto('Help',	 gradeText(fixHTML4Report(page.help))));
+				t += (tupleAuto('Help audio',	page.helpAudioURL));
+				t += (tupleAuto('Help reader',	page.helpReader));
+				t += (tupleAuto('Help image',	page.helpImageURL));
+				t += (tupleAuto('Help video',	page.helpVideoURL));
+				t += (tupleAuto('Variable Repeater',	page.repeatVar));
+				t += (tupleAuto('Notes',	page.notes));
+				
+				var ft='';
+				for (var fi in page.fields) {
+					field = page.fields[fi];
+					var fft = '';
+					fft += tuple('Type',	field.type);
+					fft += tuple('Label',fixHTML4Report(field.label));
+					fft += tupleAuto('Name',	field.name);
+					guideGradeText += ' ' + field.invalidPrompt;
+					fft += tupleAuto('Invalid Prompt',gradeText(field.invalidPrompt));
+					fft += tupleAuto('Invalid Prompt audio',field.invalidPromptAudio);
+					fft += tupleAuto('Min',	field.min);
+					fft += tupleAuto('Max',	field.max);
+					fft += tupleAuto('Max chars',	field.maxChars);
+					fft += tupleAuto('List', decodeEntities(	field.listData));
+					fft += tupleAuto('List',field.listSrc);
+					ft+= tuple('Field#'+(parseInt(fi)+1),tableWrap(fft));
+				}
+				t+= tuple('Fields',tableWrap(ft));
+				
+				t += (tupleAuto('Logic Before',	page.codeBefore));
+				var bt=tuples('TH',[ 'Label','Next page','Variable Name','Default Value']);
+				var bi;
+				for (bi in page.buttons)
+				{
+					button = page.buttons[bi];
+					bt += tuples('TD', [ button.label, jumpAnchor(pageLink( button.next),button.next),button.name,button.value]);
+				}
+				t += tuple('Buttons',tableWrap(bt)); 	
+					
+				t += tupleAuto('Logic After',	page.codeAfter);
+				stepHTML[si] += anchor( pageLink(page.name)) + fieldSetWrap('Page '+ page.name, tableWrap(t) , 'Step'+parseInt(si));
 			}
-			t += tuple('Buttons',tableWrap(bt)); 
-	
-				
-			t += tupleAuto('Logic After',	page.codeAfter);
-				
-			html +=  fieldSetWrap('Page '+ page.name, tableWrap(t) , 'Step'+parseInt(si));
 		}
-		
+		for (var si in guide.steps)
+		{
+			step = guide.steps[si];
+			if (stepHTML[si]=='') {
+				stepHTML[si]='No pages for this step';
+			}
+			html += anchor('STEP'+si)+'<h2>Step '+ step.number+' ' + step.text + '</h2>' +  stepHTML[si];
+		}
+		if (popHTML=='') {
+			popHTML = 'No popups in this interview';
+		}
+		html += anchor('POPUPS') + '<h2>Popups</h2>' + popHTML;
 		
 		var tsr = textStatisticsReport(guideGradeText,true);
 		guideGradeText = '<div class="GradeReport ' + tsr.css+'">The F-K Grade for all questions and help in this interview is '+tsr.gradeFK

@@ -297,25 +297,13 @@ var form={
 					$('#page-picker-list').empty();
 				},
 				buttons:[
-				/*{text:'New', click:function()
-					{
-						var newPageDest = makestr($('#page-picker-list li.'+SELECTED).first().attr('rel')).substr(5);
-						data.value = newPageDest;
-						//data.change.call(rel,data);
-						//form.change(pageButton, newPageDest);
-						trace('Changing destination  to "'+newPageDest+'"');
-						doneFnc(newPageDest);
-						$(this).dialog("close");
-					}
-				},
-				*/
 				{text:'Change', click:function()
 					{
 						var newPageDest = makestr($('#page-picker-list li.'+SELECTED).first().attr('rel')).substr(5);
 						data.value = newPageDest;
 						//data.change.call(rel,data);
 						//form.change(pageButton, newPageDest);
-						trace('Changing destination  to "'+newPageDest+'"');
+						//trace('Changing destination  to "'+newPageDest+'"');
 						doneFnc(newPageDest);
 						$(this).dialog("close");
 					}
@@ -450,7 +438,7 @@ var form={
 			html += makestr(part2[1]);
 		}
 		html = jQuery.trim(html.replace(/<BR\>/gi,"<BR/>")); // Matched tags fix.
-		if (html!=srchtml) {	trace(srchtml);trace(html);}
+		//if (html!=srchtml) {	trace(srchtml);trace(html);}
 		return html;
 	}
 	,codeFix:function(html)

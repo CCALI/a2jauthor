@@ -735,6 +735,9 @@ TGuide.prototype.addUniquePage=function(preferredName,clonePage)
 {	// create new page, attach to guide. ensure name is unique
 	var guide=this;
 	var counter=1;
+	if (preferredName==='' || typeof preferredName==='undefined') {
+		preferredName='Page'; // in case of blank page names, start with something.
+	}
 	var name=preferredName;
 	while (typeof guide.pages[name]!=='undefined')
 	{
@@ -748,7 +751,8 @@ TGuide.prototype.addUniquePage=function(preferredName,clonePage)
 	else{
 		page=new TPage();
 	}
-	page.name = name; 
+	//trace(name,page.name);
+	page.name = name;
 	guide.pages[page.name] = page;  
 	return page;
 };

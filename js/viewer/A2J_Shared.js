@@ -531,7 +531,7 @@ function traceTag(cname,chtml)
 
 
 /** @param {...} var_args */
-function trace(var_args) //was just trace
+function trace(var_args)
 {	// Send message to brower's console. Mainly for internal developers.
 	if (typeof console!=="undefined")
 	{

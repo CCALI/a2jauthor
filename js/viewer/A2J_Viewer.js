@@ -36,9 +36,7 @@ function traceAlert(html)
 	$('.alertPanel').append(div);
 	$('.alertCounter').text( ++alertCounter ).show();	
 	$('.alertPanel').toggle(alertCounter>0);
-	if(1) {
-		trace(String(html).stripHTML());
-	}
+	trace(String(html).stripHTML()); // trace alert into console too.
 }
 
 

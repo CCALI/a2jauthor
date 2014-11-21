@@ -179,6 +179,7 @@ var A2JViewer={
 				+'</div>'
 			+'</div>'
 			+ watermark
+			+ '<div class="logo"/>'
 			);
 			//<img src="images/SJILogo.gif" width="90" height="55" hspace="3" vspace="3" align="left" />
 			
@@ -344,10 +345,19 @@ var A2JViewer={
 		A2JViewer.updateNavigationButtons();
 		
 		
-		A2JViewer.skipHistory=false;
-		
+		A2JViewer.skipHistory=false;		
 		
 		$('.interact',div).html(A2JViewer.layoutStep(curstep));
+		
+		
+		// 2014-11-21 Display option author-defined branding image
+		var logoImage = gGuide.logoImage;
+		if (logoImage!='')
+		{
+			logoImage = fixPath(logoImage);
+			$('.logo',div).css('background-image','url('+logoImage+')');
+		}
+		
 		
 		$('.ui-form.question',div).html(questionHTML+'<div class="form"></div>');
 		
@@ -884,11 +894,12 @@ var A2JViewer={
 		];
 		var COLORS=4;
 		var si = (stepcount<=1) ? stepInfos[0] : stepInfos[1];
+		
+		
 		// 2014-10-23 Display Author-defined courthouse replacement image.
 		var endImage=gGuide.endImage;
 		if (endImage =='')
-		{
-			// Use Court house if author didn't specify.
+		{	// Use Court house if author didn't specify.
 			endImage=IMG + 'A2J5_CourtHouse.png';	
 		}
 		else

@@ -159,6 +159,16 @@ html, body{
    padding: 5px;
 	font-size: 12pt;
 }
+.A2JViewer .logo {
+	position: absolute;
+	display: block;
+	width: 120px;
+	height: 120px;
+	padding: 0px;
+	margin: 0px;
+	bottom: 5px;
+	right: 5px;
+}
 
 .alertPanel {
 	/* Spammy alerts for user go here. */

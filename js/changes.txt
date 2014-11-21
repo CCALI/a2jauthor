@@ -2,6 +2,12 @@
 ### All Contents Copyright The Center for Computer-Assisted Legal Instruction
 ### This change log is also displayed via changes.php. Formatting here matters.
 
+# 2014-11-21
+* Fix - default values for fields
+
+# 2014-11-19
+* Fix - Report
+
 # 2014-11-17 5.0.1.44
 * Fix - Editing codes
 

@@ -401,6 +401,10 @@ var A2JViewer={
 
 
 			var defval=gGuide.varGet(f.name,varIndex);
+			if (isBlankOrNull(defval)  && (f.type != CONST.ftRadioButton)) {
+				// 11/21/2014 If answer value is blank and not a radio button, set to default value.
+				defval = f.value;
+			}
 			var label = gLogic.evalLogicHTML(f.label).html;
 			var $label=$('<label/>').attr('for',fid).html(label);
 			var $input=null;

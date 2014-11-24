@@ -481,7 +481,10 @@ var form={
 		var e=$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
 			+'<span class=editspan><textarea  class="     text editable taller" rows='+rows+'>'+data.value+'</textarea></span></div>');
-		$('.editable',e).blur(function(){form.change($(this),form.htmlFix($(this).html()));}).data('data',data);
+		$('.editable',e).blur(function(){
+			var val=$(this).val();//form.htmlFix($(this).html());
+			form.change($(this), val);
+		}).data('data',data);
 		return e;
 	}
 	
@@ -495,7 +498,9 @@ var form={
 				 dataType: 'json',
 				 done: function (e, data) {
 					var filename = data.result.files[0].name;
-					$(e.target).closest('div').find('input[type=text]').val(filename);
+					// 2014-11-24 after loading file, blur calls update. 
+					$(e.target).closest('div').find('input[type=text]').val(filename).blur();
+					//trace('filename',filename);
 					//form.change($(this),filename);
 					setTimeout(updateAttachmentFiles,250);
 				 },

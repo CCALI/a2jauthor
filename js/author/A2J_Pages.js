@@ -595,9 +595,26 @@ function guidePageEditForm(page, div, pagename)//novicePage
 					ff.append(form.text({label:'Max value:',name:'max',placeholder:'max', value: field.max,
 						change:function(val,field){field.max=val;}}));
 					ff.append(form.pickXML({label:'External list:',name:'listext',value: field.listSrc,
-						change:function(val,field){field.listSrc=val;}}));
-					ff.append(form.textArea({label:'Internal list:',name:'listint',value: field.listData,
-						change:function(val,field){field.listData=val; }}));
+						change:function(val,field){
+							field.listSrc=val;
+							// trace('List source is '+field.listSrc);
+						}}));
+					// 2014-11-24 For internal lists, convert select list OPTIONS into plain text with line breaks
+					var listText = makestr(field.listData).replace('</OPTION>','</OPTION>\n','gi').stripHTML();
+					ff.append(form.textArea({label:'Internal list:',name:'listint',value: listText,
+						change:function(val,field){
+							// 2014-11-24 Convert line break items into pairs like <OPTION VALUE="Purple">Purple</OPTION>
+							val = val.split('\n');
+							var select=$('<SELECT/>');
+							for (var vi in val) {
+								var optText =jQuery.trim(val[vi]);
+								if (optText !== '') {
+									select.append( $('<OPTION/>').attr('value',optText).text(optText));
+								}
+							}
+							var html = select.html();
+							field.listData=html;
+							}}));
 					ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,
 						change:function(val,field){field.invalidPrompt=val;}}));
 					ff.append(form.text({label:'Sample value:',name:'sample',value: field.sample,

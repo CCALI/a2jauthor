@@ -355,7 +355,9 @@ var A2JViewer={
 		if (logoImage!='')
 		{
 			logoImage = fixPath(logoImage);
-			$('.logo',div).css('background-image','url('+logoImage+')');
+			$('.logo',div).empty().append($('<img/>').attr('src',logoImage));
+			// css URL requires escaping spaces, parens and more from image name. Instead do an img with src.
+			// css('background-image','url('+logoImage+')');
 		}
 		
 		

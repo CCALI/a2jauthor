@@ -84,7 +84,7 @@ function page2JSON(page)
 	for (bi in page.buttons){
 		var b=page.buttons[bi];
 		PAGE.BUTTONS.push({BUTTON:{
-			XML_LABEL:	b.label,
+			LABEL:	b.label, // XML_LABEL
 			_NEXT:	b.next,
 			_URL:		b.url,
 			_REPEATVAR:	b.repeatVar,

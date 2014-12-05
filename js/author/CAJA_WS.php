@@ -346,7 +346,7 @@ switch ($command)
 			if ($res=$mysqli->query($sql))
 			{
 			}
-			//chmod($newlocation,0775);
+			chmod($newlocation,0775);
 			//copy($oldlocation,$newlocation) or trace("Error copy");
 			$result['url']=$newlocation;
 			$result['gid']=$newgid;
@@ -430,7 +430,7 @@ switch ($command)
 				$title= $guideXML->INFO->TITLE;
 			$sql="update guides set title='".$mysqli->real_escape_string($title)."' where gid = $newgid";
 			if ($res=$mysqli->query($sql)){}
-			//chmod($newlocation,0775);
+			chmod($newlocation,0775);
 			//copy($oldlocation,$newlocation) or trace("Error copy");
 			//$result['url']=$newlocation;
 			//$result['gid']=$newgid;

@@ -70,6 +70,8 @@ function ts($filename)
 			<script src=<?=ts('../viewer/A2J_SharedSus.js')?> type="text/javascript"></script>
 			<script src=<?=ts('../viewer/A2J_Languages.js')?> type="text/javascript"></script>
 			
+			<script src=<?=ts('../viewer/A2J_AnswerFile.js')?> type="text/javascript"></script>
+			<script src=<?=ts('../viewer/A2J_MobileFile.js')?> type="text/javascript"></script>
 			<script src=<?=ts('../viewer/A2J_Logic.js')?> type="text/javascript"></script>
 			<script src=<?=ts('../viewer/A2J_Parser.js')?> type="text/javascript"></script>
 			<script src=<?=ts('../viewer/A2J_ParserConvert.js')?> type="text/javascript"></script>

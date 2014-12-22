@@ -473,8 +473,19 @@ function jsDate2days(d)
 	return ( d.getTime() /  (1000*60*60*24));
 }
 
-function mdyTodmy(DMY)
+function mdyTodmy(MDY)
 {	// 7/1/05 convert internal month/day/year format to HotDocs day/month/year format.
+	var result='';
+	if (makestr(MDY)!=='')
+	{
+		var parts = MDY.split("/");
+		result =parts[1]+"/"+parts[0]+"/"+parts[2];
+	}
+	return result;
+}
+
+function dmyTomdy(DMY)
+{	// 12/22/2014 convert HotDocs day/month/year format internal month/day/year format.
 	var result='';
 	if (makestr(DMY)!=='')
 	{

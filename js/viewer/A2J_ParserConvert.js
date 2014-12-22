@@ -137,8 +137,8 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		page.mapx=parseInt(0.5*QUESTION.attr("MAPX"),10);
 		page.mapy=parseInt(0.7*QUESTION.attr("MAPY"),10) + 100;
 		page.repeatVar=makestr(QUESTION.attr("REPEATVAR"));
-		page.nextPage="";
-		page.nextPageDisabled = false;
+		//page.nextPage="";
+		//page.nextPageDisabled = false;
 		page.text=replacePopups(page.name,makestr(QUESTION.find("TEXT").xml()));
 		page.textAudioURL= replacePopups(page.name,makestr(QUESTION.find("TEXTAUDIO").xml()));
 		page.learn=makestr(QUESTION.find("LEARN").xml());
@@ -152,7 +152,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		if (CONST.showXML) {
 			page.xml = $(this).xml();
 		}
-		page.alignText="";
+		//page.alignText="";
 		var scripts=[];
 
 		QUESTION.find('BUTTON').each(function(){
@@ -329,8 +329,8 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	if (book.lastPage!=pageLessonCompleted)
 	{
 		page=book.pages[book.lastPage];
-		page.nextPage=pageLessonCompleted;
-		page.nextPageDisabled=false;
+		//page.nextPage=pageLessonCompleted;
+		//page.nextPageDisabled=false;
 	}
 	*/
 	

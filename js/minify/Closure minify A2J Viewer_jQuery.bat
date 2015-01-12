@@ -8,7 +8,7 @@ REM DO NOT USE : set LEVEL=ADVANCED_OPTIMIZATIONS
 set OPTIONS=--warning_level VERBOSE --compilation_level %LEVEL% --summary_detail_level 3 --charset UTF-8
 :start
 echo Merge/minify .js files required for A2J Viewer/jQuery
-java -jar %JAR% --externs externs.js --externs externs_viewer.js --js ..\viewer\jquery.ui.traggable.js   --js ..\viewer\jquery.ui.combobox.js --js ..\viewer\A2J_Types.js --js ..\viewer\A2J_Prefs.js --js ..\viewer\A2J_Shared.js --js ..\viewer\A2J_SharedSus.js --js ..\viewer\A2J_Languages.js --js ..\viewer\A2J_Parser.js --js ..\viewer\A2J_Viewer.js --js ..\viewer\A2J_ParserConvert.js --js ..\viewer\A2J_Logic.js --js ..\viewer\A2J_ViewerApp.js %OPTIONS% --js_output_file A2J_ViewerApp.min.raw.js > closure_minify_A2J_Viewer_log.log 2>&1
+java -jar %JAR% --externs externs.js --externs externs_viewer.js --js ..\viewer\jquery.ui.traggable.js   --js ..\viewer\jquery.ui.combobox.js --js ..\viewer\A2J_Types.js --js ..\viewer\A2J_Prefs.js --js ..\viewer\A2J_Shared.js --js ..\viewer\A2J_SharedSus.js --js ..\viewer\A2J_Languages.js --js ..\viewer\A2J_Parser.js --js ..\viewer\A2J_Viewer.js --js ..\viewer\A2J_ParserConvert.js  --js ..\viewer\A2J_AnswerFile.js  --js ..\viewer\A2J_MobileFile.js --js ..\viewer\A2J_Logic.js --js ..\viewer\A2J_ViewerApp.js %OPTIONS% --js_output_file A2J_ViewerApp.min.raw.js > closure_minify_A2J_Viewer_log.log 2>&1
 REM Open log file
 closure_minify_a2j_viewer_log.log 
 REM Copy raw min to correct path with copyright header.

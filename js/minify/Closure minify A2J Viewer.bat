@@ -1,4 +1,4 @@
-@echo off
+REM @echo off
 echo 2/2013 Minifying CAJA's .js and .css files using google closure compiler.
 rem 8/2013
 set JAR=../../../../js/closure/compiler.jar
@@ -10,7 +10,7 @@ REM java -jar %JAR% --help > closure_help.txt 2>&1
 :start
 
 echo Merge/minify .js files required for A2J Viewer 
-java -jar %JAR% --externs externs.js --externs externs_viewer.js --js ..\viewer\A2J_Types.js --js ..\viewer\A2J_Shared.js --js ..\viewer\A2J_SharedSus.js --js ..\viewer\A2J_Languages.js --js ..\viewer\A2J_Parser.js --js ..\viewer\A2J_Viewer.js --js ..\viewer\A2J_Logic.js --js ..\viewer\A2J_ViewerApp.js %OPTIONS% --js_output_file A2J_ViewerApp.min.raw.js > closure_minify_A2J_Viewer_log.log 2>&1
+java -jar %JAR% --externs externs.js --externs externs_viewer.js --js ..\viewer\A2J_Types.js --js ..\viewer\A2J_AnswerFile.js --js ..\viewer\A2J_Shared.js --js ..\viewer\A2J_SharedSus.js --js ..\viewer\A2J_Languages.js --js ..\viewer\A2J_Parser.js --js ..\viewer\A2J_Viewer.js --js ..\viewer\A2J_MobileFile.js --js ..\viewer\A2J_Logic.js --js ..\viewer\A2J_ViewerApp.js %OPTIONS% --js_output_file A2J_ViewerApp.min.raw.js > closure_minify_A2J_Viewer_log.log 2>&1
 REM java -jar %JAR% --externs externs.js --externs externs_viewer.js --js ..\CAJA_Utils.js --js ..\CAJA_IO.js --js ..\CAJA_Languages.js --js ..\CAJA_Types.js --js ..\CAJA_Parser.js --js ..\CAJA_Parser_A2J.js  --js ..\A2J_Viewer.js --js ..\CAJA_Shared.js --js ..\CAJA_Logic.js --js ..\A2J_ViewerApp.js %OPTIONS% --js_output_file A2J_ViewerApp.min.raw.js > closure_minify_A2J_Viewer_log.log 2>&1
 REM Open log file
 closure_minify_a2j_viewer_log.log 
@@ -26,3 +26,4 @@ REM
 REM echo Press key to run again...
 REM pause
 REM goto start
+pause

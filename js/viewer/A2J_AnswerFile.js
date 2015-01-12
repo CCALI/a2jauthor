@@ -119,11 +119,14 @@ TGuide.prototype.HotDocsAnswerSetVariable = function(variable) //CVariable
 		{	// 2014-06-02 SJG Blank value for Repeating variables MUST be in answer file (acting as placeholders.)
 			xmlV  = '<'+ansType+' UNANS="true">' +  '' + '</'+ ansType+'>';
 		}
-		else{
-			xmlV  = '<'+ansType+'>' +  htmlEscape(value) + '</'+ ansType+'>';
-		}
-		if (varType === CONST.vtMC) {
-			xmlV = '<SelValue>' + xmlV + '</SelValue>';
+		else
+		{
+			var val = htmlEscape(value);
+			if (varType === CONST.vtMC)
+			{	// 2015-01-12 MCValue > SelValue
+				val = '<SelValue>' + val + '</SelValue>';
+			}
+			xmlV  = '<'+ansType+'>' +  val + '</'+ ansType+'>';
 		}
 		return xmlV;
 	}

@@ -135,7 +135,9 @@ function guide2JSON_Mobile (guide)
 	for (vi in guide.vars)
 	{
 		var v=guide.vars[vi];
-		newGuide.vars[v.name]= {
+		// 2015-01-12 mobile needs variaable keys in lowercase
+		newGuide.vars[v.name.toLowerCase()]=
+		{
 		  name:v.name,
 		  type:v.type,
 		  repeating: ((v.repeating===true )? v.repeating : false),

@@ -1,0 +1,48 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="1019" measuredH="654" mockupW="959" mockupH="634">
+  <controls>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="60" y="20" w="959" h="634" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>A%20Web%20Page%0Ahttp%3A//www.a2jauthor%2Corg</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::VerticalTabBar" x="75" y="138" w="929" h="478" measuredW="200" measuredH="524" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>true</bold>
+        <position>left</position>
+        <selectedIndex>13</selectedIndex>
+        <size>16</size>
+        <text>About%0AVariables%0ASteps%0APages%0AMap%0AFiles%0AAll%20Logic%0AAll%20Text%0APreview%0AReport%0APublish%0AInterviews%0AClauses%0ADocuments</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Image" x="75" y="98" w="151" h="40" measuredW="222" measuredH="86" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <filter>true</filter>
+        <src>./a2jlogo.png</src>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Label" x="254" y="105" w="219" h="-1" measuredW="116" measuredH="26" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bold>true</bold>
+        <size>18</size>
+        <text>DOCUMENTS</text>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::DataGrid" x="167" y="140" w="837" h="428" measuredW="513" measuredH="239" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <hasHeader>true</hasHeader>
+        <text>Action%2CDocument%20ID%20%5Ev%2CDescription/%5CrClauses%20Inside%2C%20Date%20%5Ev%0A%5B%5D%2CMain%20Letter%20to%20Counsel%2C%20Letter%20to%20Counsel%20about%20matter%20at%20hand%5CrAddress_Chunk%5CrSalutation%20Only%5CrBody%20of%20Letter%5CrCloser%2C1/15/2015%0A%5B%5D%2CAppendix%201%2CList%20of%20items%20to%20be%20discussed.%5CrList%20pretext%5CrList%20itself%5Crlist%20posttext%2C1/29/15%0A%5B%5D%2CAppendix%202%2CDescription%20of%20items%2C2/5/15%0A%5B%5D%2CSignature%20Page%2C%2C1/15/15</text>
+        <verticalScrollbar>false</verticalScrollbar>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Button" x="193" y="574" w="125" h="27" measuredW="109" measuredH="27" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Add%20Document</text>
+      </controlProperties>
+    </control>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::Button" x="324" y="574" w="202" h="27" measuredW="189" measuredH="27" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Delete%20Selected%20Documents</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

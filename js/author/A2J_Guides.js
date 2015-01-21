@@ -45,7 +45,15 @@ function guideSave(onFinished)
 		var xml = exportXML_CAJA_from_CAJA(gGuide);
 		if (xml!==gGuide.lastSaveXML) {
 			gGuide.lastSaveXML=xml;
-			ws( {cmd:'guidesave',gid:gGuideID, guide: xml, title:gGuide.title}, function(response){
+			
+			// 01/14/2015 included JSON form of guide XML
+			var guideJSON_str=guide2JSON_Mobile(gGuide);	
+			
+			ws( {cmd:'guidesave',
+				gid:gGuideID,
+				guide: xml,
+				title:gGuide.title,
+				json: guideJSON_str}, function(response){
 				setProgress((makestr(response.error)!=='') ? response.error : 'Saved');
 				if (onFinished){
 					onFinished();

@@ -935,7 +935,7 @@ function resumeEdit()
 function authorViewerHook()
 {	//	### Attach Author editing buttons to the A2J viewer
 	A2JViewer.IMG = "../viewer/images/";
-	$('.A2JViewer').append('<div class="debugmenu"><button/><button/><button/><button/><button/></div>');
+	$('.A2JViewer').append('<div class="debugmenu"><button/><button/><button/><button/></div>');
 	$('.A2JViewer div.debugmenu button').first()
 		.button({label:'Variables/Script',icons:{primary:'ui-icon-wrench'}}).click(function(){$('.A2JViewer').toggleClass('test',100);})
 		.next()
@@ -949,11 +949,6 @@ function authorViewerHook()
 		.next()
 		.button({label:'Edit this',icons:{primary:'ui-icon-pencil'}}).click(function(){
 			gotoPageEdit(gPage.name);
-		})
-		.next()
-		.button({label:'Preview Mobile',icons:{primary:'ui-icon-pencil'}}).click(function(){
-		// E.g., http://localhost/app/js/viewer/mobile/mobile.min.html?templateURL=/app/userfiles/public/dev/guides/Guide334/2015-01-12-12-46-35/Guide.xml&fileDataURL=images%2F&getDataURL=%2Fresume.aspx&setDataURL=%2Fsave.aspx&autoSetDataURL=%2Fautosave.aspx&exitURL=https%3A%2F%2Fgoogle.com&logURL=&errRepURL=&desktopURL=index.html#!view/pages/page/06-Where%20will%20you%20file%20the%20affidavit%3F
-		
 		});
 }
 

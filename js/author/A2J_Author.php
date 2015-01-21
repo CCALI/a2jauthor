@@ -369,6 +369,7 @@ function ts($filename)
 		<button id="guideZIP">Download ZIP</button>
 		<button id="guideDownload">Download A2J</button>
 		<button id="guidePublish">Publish to Public URL</button>
+		<button id="guideMobile">Test Mobile</button>
 		
 		</div>
 	</div>

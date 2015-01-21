@@ -10,6 +10,9 @@
 	05/2014 Loads author system only if user is logged into Drupal with an 'a2j author' role setting.
 	07/2014 Create public versions
 	08/2014 add more file details
+	01/2015 add mobile JSON handler
+	 all guide saves should include a JSON form
+	 zip/publish should ensure guide.json also exists for each guide.xml.
 */
 
 define('DATE_FORMAT',	  'Y-m-d-H-i-s'); // date stamp for file names
@@ -202,19 +205,6 @@ switch ($command)
 		else
 		{// not found
 		}
-		
-	/*
-		$aid=intval($mysqli->real_escape_string($_REQUEST['gid']));
-		$res=$mysqli->query("select * from answer_files where aid=$aid ");
-		if ($row=$res->fetch_assoc()){
-			$result['aid']=$row['aid'];
-			//$result['editoruid']=$row['editoruid'];
-			$result['answers']= $row['xml'];
-		}
-		else
-		{// not found
-		}
-		*/
 		break;
 	 	 
 		
@@ -223,6 +213,8 @@ switch ($command)
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$title=($mysqli->real_escape_string($_REQUEST['title']));
 		$xml=$_REQUEST['guide'];
+		$json=$_REQUEST['json'];//01/14/2015
+		
 		$res=$mysqli->query("select * from guides where gid=$gid and editoruid=$userid");
 		if ($row=$res->fetch_assoc()){
 		  $result['info']="Will update!";
@@ -250,6 +242,7 @@ switch ($command)
 			}
 			trace('saving to '.$filename);
 			file_put_contents($filename,$xml);
+			file_put_contents(replace_extension($filename,'json'),$json);//01/14/2015
 		}
 		else
 			$err="No permission to update this guide";
@@ -260,7 +253,6 @@ switch ($command)
 		// Archive bit is set in table row, files are NOT removed. 
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$title=($mysqli->real_escape_string($_REQUEST['title']));
-		$xml=$_REQUEST['guide'];
 		$res=$mysqli->query("select * from guides where gid=$gid and editoruid=$userid");
 		if ($row=$res->fetch_assoc())
 		{
@@ -317,6 +309,7 @@ switch ($command)
 		$oldgid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$title=($mysqli->real_escape_string($_REQUEST['title']));
 		$xml=$_REQUEST['guide'];
+		$json=$_REQUEST['json'];//01/14/2015
 		$res=$mysqli->query("select * from guides where gid=$oldgid");
 		if ($row=$res->fetch_assoc())
 		{ 
@@ -342,6 +335,7 @@ switch ($command)
 			$filename=GUIDES_DIR.$newfile;
 			//trace('saving to '.$filename);
 			file_put_contents($filename,$xml);
+			file_put_contents(replace_extension($filename,'json'),$json);//01/14/2015
 			$sql="update guides set filename='".$mysqli->real_escape_string($newfile)."' where gid = $newgid";
 			if ($res=$mysqli->query($sql))
 			{
@@ -468,6 +462,7 @@ switch ($command)
 			{
 				trace("created $zipFull");
 				$zip->addFile(GUIDES_DIR.$guideName,'Guide.xml');
+				$zip->addFile(replace_extension(GUIDES_DIR.$guideName,'json'),'Guide.json');
 
 				$files = scandir(GUIDES_DIR.$guideDir);
 				// Ideally, scan Guide and only zip files used in the interview.
@@ -517,6 +512,8 @@ switch ($command)
 				}
 			}
 			copy(GUIDES_DIR.$guideName, $GuidePublicDir.'/Guide.xml');
+			copy(replace_extension(GUIDES_DIR.$guideName,'json'), $GuidePublicDir.'/Guide.json');//01/14/2015
+			
 			//http://localhost/caja/userfiles/public/dev/guides/A2JFieldTypes/2014-07-22-14-06-12
 			file_put_contents($GuidePublicDir.'/index.php', '<?php header("Location: /app/js/viewer/A2J_Viewer.php?gid=".$_SERVER["REQUEST_URI"]."Guide.xml"); ?>');
 			
@@ -525,6 +522,29 @@ switch ($command)
 			// Caller will redirect to download the zip.
 		}
 		break;
+	
+  
+  
+		/*
+	case 'guidemobilesave':
+		// 01/14/2015 Save json form of guide into guide's folder
+		// TODO ensure json is updated for ZIP creation.
+		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+		$json=$_REQUEST['json'];
+		$res=$mysqli->query("select * from guides where gid=$gid and editoruid=$userid");
+		if ($row=$res->fetch_assoc()){
+		  $result['info']="Will create json!";
+		  $filename=GUIDES_DIR.'interview.json';
+		  $path_parts = pathinfo($filename);
+		  $filedir = $path_parts['dirname'];
+		  $filenameonly=$path_parts['filename'];
+			trace('saving json to '.$filename);
+			file_put_contents($filename,$json);
+		}
+		else
+			$err="No permission to update this guide";
+		break;
+		*/
 	
 	
 	default:
@@ -598,7 +618,11 @@ function listGuides($sql)
 }
 
 
-
+function replace_extension($filename, $new_extension)
+{
+    $info = pathinfo($filename);
+    return $info['dirname'] . '/' . $info['filename'] . '.' . $new_extension;
+}
 
 function trace($msg)
 {

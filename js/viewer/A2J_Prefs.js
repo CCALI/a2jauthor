@@ -57,19 +57,25 @@ gPrefs.load=function()
 		{
 			if (gPrefs.hasOwnProperty(p) && typeof gPrefs[p]!=='function')
 			{
-				var v = localStorage.getItem(p);
-				if (v !== null)
+				try {
+					var v = localStorage.getItem(p);
+					if (v !== null)
+					{
+						if (v==='true') {
+							v=true;
+						}
+						else
+						if (v==='false') {
+							v=false;
+						}
+						v= Number(v);
+						//trace('Setting loaded: '+p+' = '+v);
+						gPrefs[p] =Number(v);
+					}
+				}
+				catch (e)
 				{
-					if (v==='true') {
-						v=true;
-					}
-					else
-					if (v==='false') {
-						v=false;
-					}
-					v= Number(v);
-					//trace('Setting loaded: '+p+' = '+v);
-					gPrefs[p] =Number(v);
+					
 				}
 			}
 		}

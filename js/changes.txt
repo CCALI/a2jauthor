@@ -2,8 +2,15 @@
 ### All Contents Copyright The Center for Computer-Assisted Legal Instruction
 ### This change log is also displayed via changes.php. Formatting here matters.
 
+# 2014-01-21
+* New - Mobile alpha preview
+
+# 2014-11-24
+* Fix - button caption
+
 # 2014-11-21
 * Fix - default values for fields
+* Fix - branding logo visible
 
 # 2014-11-19
 * Fix - Report

@@ -2,6 +2,9 @@
 ### All Contents Copyright The Center for Computer-Assisted Legal Instruction
 ### This change log is also displayed via changes.php. Formatting here matters.
 
+# 2014-02-05
++ New - Mobile/Desktop switch
+
 # 2014-01-21
 * New - Mobile alpha preview
 

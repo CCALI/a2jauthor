@@ -16,11 +16,11 @@ goto header
 echo {} > A2J_ViewerApp.min.raw.js
 :header
 copy/b  ..\viewer\jquery.1.8.2.min.js+..\viewer\jquery.xml.min.js+..\viewer\jshashtable-2.1.js+..\viewer\jquery.numberformatter-1.2.1.jsmin.js+..\viewer\jquery.ui.1.9.1.min.js+A2J_ViewerApp.min.raw.js A2J_ViewerApp.min.raw2.js
-copy/b CAJA_min_header.js+A2J_ViewerApp.min.raw2.js ..\viewer\A2J_ViewerHost.js
+copy/b CAJA_min_header.js+A2J_ViewerApp.min.raw2.js ..\viewer\desktop_app.min.js
 REM Clear .js files so Komodo Edit doesn't confuse .js locations
 del A2J_ViewerApp.min.raw.js
 del A2J_ViewerApp.min.raw2.js
-dir ..\viewer\A2J_ViewerApp.min.js
+dir ..\viewer\desktop_app.min.js
 REM
 REM echo Press key to run again...
 REM pause

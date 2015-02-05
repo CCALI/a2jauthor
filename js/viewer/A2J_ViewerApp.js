@@ -122,7 +122,8 @@ function gotoPageView(destPageName, url )
 			if (makestr(url)===''){
 				url=gStartArgs.exitURL;
 			}
-			window.parent.location = url; // Replace parent, not just this IFRAME.
+			//window.parent.location = url; // Replace parent, not just this IFRAME.
+			window.location = url; // 2/2015 Replace the window (no IFRAME used)
 		}
 		else
 		if (destPageName === CONST.qIDRESUME)
@@ -155,17 +156,43 @@ function gotoPageView(destPageName, url )
    },1);
 }
 
-function main(){
+function main()
+{	// Viewer App starting point.
+	// 2/4/2015 Since not in IFRAME, extract configuration settings from query string.
+	//http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values
+	var urlParams;
+	var match,
+		pl     = /\+/g,  // Regex for replacing addition symbol with a space
+		search = /([^&=]+)=?([^&]*)/g,
+		decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+		query  = window.location.search.substring(1);
+	urlParams = {};
+	while (match = search.exec(query)){
+		urlParams[decode(match[1])] = decode(match[2]);
+	}
+	 
+	gStartArgs = urlParams;
+
 	inAuthor=false;
 	loadGuideFile(gStartArgs.templateURL,"");
 }
 
 window.onbeforeunload=function(){return 'Leave A2J Author?';};
+
+/* // Used for IFRAME model
 window.addEventListener("message",receiveMessage,false);
 
 function receiveMessage(event) {
 	gStartArgs  = event.data;
 	main();
 }
+*/
+
+
+
+$(document).ready(main);
+
+
+
 
 /* */

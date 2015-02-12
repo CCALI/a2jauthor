@@ -29,20 +29,17 @@ Answer files saved in guide folders. Use same version control system? For repeat
 02/01/2013 jsdoc used for some types for code intelligence
 
 /** @const */ var x=1;
-
 /** @param {TPage} page The page to parse */
-
 /** @type {TField} */
 
 ################################
-
 for (var name in myObject) {
   if (myObject.hasOwnProperty(name)) {
     alert(name);
   }
 }
-################################
 
+################################
 * @param {string} varName
 * @param {string} varType
 * @param {boolean} varRepeat

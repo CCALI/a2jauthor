@@ -359,6 +359,7 @@ var A2JViewer={
 			// css URL requires escaping spaces, parens and more from image name. Instead do an img with src.
 			// css('background-image','url('+logoImage+')');
 		}
+		//$('.mobile',div).empty().append($('<a href=/>').attr('src',logoImage));
 		
 		
 		$('.ui-form.question',div).html(questionHTML+'<div class="form"></div>');

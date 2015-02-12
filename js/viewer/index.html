@@ -15,6 +15,11 @@
 	</head>
 
 	<body>
+	
+		<div align="center">
+			<img src="images/A2J5_Icon_512.png"/>
+			<P>Loading... <img alt="Loading..." src="images/ajax-loader.gif" width="16" height="16" /></P>
+		</div>
 		<script type="text/javascript">
 			var config = {
 				// Override these Javascript variables as needed to setup default interview/answer file loading.
@@ -54,13 +59,14 @@
 				//errRepURL: ''
 				errRepURL:	"A2J_ViewerErrRep.php"
 			};
+			//alert($.cookie('useDesktop'));
 
-			if (0 || Modernizr.touch && !$.cookie('useDesktop')) {
+			if ( ( 0|| Modernizr.touch )&& ('true'!==$.cookie('useDesktop'))) {
 				//This is a touch enabled device, we'll redirect to mobile site.
 
 				//desktopURL will redirect a mobile user back to
 				//the desktop landing page.
-				config.desktopURL = 'index.html';
+				config.desktopURL = 'desktop.min.html';
 				window.location = 'mobile.min.html?' + $.param(config);
 			}
 			else {

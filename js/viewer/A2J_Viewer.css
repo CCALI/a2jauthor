@@ -169,6 +169,12 @@ html, body{
 	bottom: 5px;
 	right: 5px;
 }
+.A2JViewer .mobile {
+	position: absolute;
+	display: block;
+	bottom: 5px;
+	right: 5px;
+}
 
 .alertPanel {
 	/* Spammy alerts for user go here. */

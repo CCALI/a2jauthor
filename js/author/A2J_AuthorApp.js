@@ -215,7 +215,7 @@ function main()
 			// open a new window pointing to the interview specifically.
 			// Short url as possible?
 			// security needed or just browse directly??
-			window.open('../deploy/mobile/mobile.min.html?templateURL=' +
+			window.open('../viewer/mobile.min.html?templateURL=' +
 							gGuidePath +'Guide.xml');
 		});
 	});

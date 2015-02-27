@@ -601,6 +601,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
 						}}));
 					// 2014-11-24 For internal lists, convert select list OPTIONS into plain text with line breaks
 					var listText = makestr(field.listData).replace('</OPTION>','</OPTION>\n','gi').stripHTML();
+					//trace(listText);
 					ff.append(form.textArea({label:'Internal list:',name:'listint',value: listText,
 						change:function(val,field){
 							// 2014-11-24 Convert line break items into pairs like <OPTION VALUE="Purple">Purple</OPTION>
@@ -609,10 +610,12 @@ function guidePageEditForm(page, div, pagename)//novicePage
 							for (var vi in val) {
 								var optText =jQuery.trim(val[vi]);
 								if (optText !== '') {
-									select.append( $('<OPTION/>').attr('value',optText).text(optText));
+									//02/27/2015 <> don't encode as values and break xml. so for now, just use the text as the value.
+									select.append( $('<OPTION/>').text(optText));
 								}
 							}
 							var html = select.html();
+							//trace(html);
 							field.listData=html;
 							}}));
 					ff.append(form.htmlarea({label:'If invalid say:',value: field.invalidPrompt,

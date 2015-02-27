@@ -68,7 +68,7 @@ function page2JSON(page)
 		//_alignText:	page.alignText==='' ? gJS2XML_SKIP : page.alignText,
 		XML_TEXT:	page.text, 
 		TEXTAUDIO:	page.textAudioURL, 
-		XML_LEARN:	page.learn,
+		LEARN:	page.learn,
 		XML_HELP:	page.help,
 		HELPAUDIO:	page.helpAudioURL,
 		XML_HELPREADER:	page.helpReader, 
@@ -129,7 +129,7 @@ function exportXML_CAJA_from_CAJA(guide)
 	JSON.GUIDE.INFO.toolversion=guide.toolversion;
 	JSON.GUIDE.INFO.avatar=guide.avatar;
 	JSON.GUIDE.INFO.guideGender=guide.guideGender;
-	JSON.GUIDE.INFO.XML_completionTime=guide.completionTime;
+	JSON.GUIDE.INFO.completionTime=guide.completionTime;
 	JSON.GUIDE.INFO.XML_copyrights=guide.copyrights;
 	JSON.GUIDE.INFO.createdate=guide.createdate;
 	JSON.GUIDE.INFO.XML_credits=guide.credits;
@@ -216,7 +216,7 @@ function parseXML2Page(PAGE, page)
 	page.step=parseInt(PAGE.attr("STEP"),10);
 	page.text=PAGE.find("TEXT").xml();
 	page.textAudioURL=makestr(PAGE.find("TEXTAUDIO").text());
-	page.learn=makestr(PAGE.find("LEARN").xml());
+	page.learn=makestr(PAGE.find("LEARN").text());
 	page.help=makestr(PAGE.find("HELP").xml());
 	page.helpAudioURL=makestr(PAGE.find("HELPAUDIO").text());
 	page.helpReader=makestr(PAGE.find("HELPREADER").xml());
@@ -228,7 +228,7 @@ function parseXML2Page(PAGE, page)
 	
 	PAGE.find('BUTTONS > BUTTON').each(function(){
 		var button=new TButton();
-		button.label =jQuery.trim($(this).find("LABEL").xml());
+		button.label =jQuery.trim($(this).find("LABEL").text());
 		button.next = makestr($(this).attr("NEXT"));
 		button.url = makestr($(this).attr("URL"));
 		button.repeatVar=makestr($(this).attr("REPEATVAR"));
@@ -292,7 +292,7 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 			guide.avatar = 'avatar1';
 	}
 	guide.guideGender=	makestr(INFO.children('GUIDEGENDER').text());
-	guide.completionTime=makestr(INFO.children('COMPLETIONTIME').xml());
+	guide.completionTime=makestr(INFO.children('COMPLETIONTIME').text());
 	guide.copyrights=		makestr(INFO.children('COPYRIGHTS').xml());
 	guide.createdate=		makestr(INFO.children('CREATEDATE').text());
 	guide.credits =		makestr(INFO.children('CREDITS').xml());

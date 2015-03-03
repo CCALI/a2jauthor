@@ -38,7 +38,8 @@ function page2JSON_Mobile(page)
 	{
 		var b=page.buttons[bi];
 		PAGE.buttons.push({
-			label:	b.label, 
+			// 2015-03-03 Ensure a blank button shows something.
+			label:	(''==b.label) ? lang.Continue : b.label, 
 			next:		b.next,
 			url:		b.url,
 			repeatVar:		b.repeatVar,

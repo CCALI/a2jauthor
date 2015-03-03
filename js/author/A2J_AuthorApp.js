@@ -211,6 +211,7 @@ function main()
 		// Open new window with a unique URL that author can test on mobile.
 		// URL needs to load a JSON so we do a save first to ensure our json is updated.
 		setProgress('Generating Mobile files',true);
+		gGuide.lastSaveXML=''; //force a save.
 		guideSave(function(){
 			// open a new window pointing to the interview specifically.
 			// Short url as possible?

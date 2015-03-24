@@ -333,6 +333,10 @@ var A2JViewer={
 		var questionHTML = prepHTML( page.text );
 		var learnHTML = page.learn; // Learn more prompt (optional)
 		var helpHTML =  prepHTML( page.help); // Help popup (optional)
+		if (page.helpImageURL!='')
+		{	// 3/24/2015 Graphic help
+			helpHTML += $('<div/>').append($('<img/>').attr('src',fixPath(page.helpImageURL))).html();
+		}
 		// ### Save quesetion to history (my progress)
 		// ### e.g., <li><a href="#"><span class="ui-icon ui-icon-document"></span>Question 1<div>Should you use this form?</div></a></li>
 		if (!A2JViewer.skipHistory)

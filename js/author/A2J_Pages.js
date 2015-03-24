@@ -481,6 +481,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
 		};
 		var updateShowMe=function(form,showMe)
 		{
+			showMe = Number(showMe);
 			form.find('[name="helpAudio"]').showit(showMe!==2);
 			form.find('[name="helpGraphic"]').showit(showMe===1);
 			form.find('[name="helpReader"]').showit(showMe>=1);

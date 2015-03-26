@@ -15,7 +15,6 @@
 var gMapperScale=1.0;
 var gMapSize= 1 ; //0 is small, 1 is normal
 
-
 /** @const */ var GRID_MAP =  {x : 10 , y : 10 };
 /** @const */ //var GRID_MAP =  {x : 50 , y : 20 };
 /** @const */ var NODE_SIZE = {w : 150, h : 100 /*36+8*/ };

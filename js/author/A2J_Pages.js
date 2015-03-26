@@ -158,10 +158,14 @@ function pageEditSelect(pageName)
 
 function pageEditClone(pageName)
 {	// Clone named page and return new page's name.
+	/** @type {TPage} */	
 	var page = gGuide.pages[pageName];
 	if (typeof page === 'undefined') {return '';}
 	var clonePage = pageFromXML(page2XML(page));
 	page = gGuide.addUniquePage(pageName,clonePage);
+	// Fix Git Issue #272 Stagger cloned question on mapper
+	page.mapy += 30;
+	page.mapx += 30;
 	gGuide.sortPages();
 	updateTOC();
 	pageEditSelect(page.name);

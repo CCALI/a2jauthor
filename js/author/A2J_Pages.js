@@ -218,6 +218,7 @@ function pagePopupEditNew()
 	}
 	var page = gGuide.addUniquePage(newName);
 	page.type=CONST.ptPopup;
+	page.mapx=null;
 	page.text="My popup text";
 	page.step = 0;
 	gGuide.sortPages();

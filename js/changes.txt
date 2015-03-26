@@ -2,6 +2,11 @@
 ### All Contents Copyright The Center for Computer-Assisted Legal Instruction
 ### This change log is also displayed via changes.php. Formatting here matters.
 
+# 2015-03-26 5.0.2.4
+* Fix - popup names
+* Fix - popups in map
+* Fix - cloned pages staggered in mapper
+
 # 2015-03-24
 * Fix - Help Graphic
 

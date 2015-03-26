@@ -210,11 +210,15 @@ function pagePopupEditNew()
 	var newName = pageEditSelected();
 	if (newName ==='')
 	{
-		newName = 'Pop up';
+		newName = 'Popup';
+	}
+	else
+	{	// Git Issue #268 - add Popup to new popup name
+		newName += ' - Popup';
 	}
 	var page = gGuide.addUniquePage(newName);
 	page.type=CONST.ptPopup;
-	page.text="My text";
+	page.text="My popup text";
 	page.step = 0;
 	gGuide.sortPages();
 	updateTOC();

@@ -360,14 +360,7 @@ function gotoPageEdit(pageName)
 
 	$pageEditDialog.dialog('open' );
 	$pageEditDialog.dialog('moveToTop');
-	
-	
-	//if (1) {
-	//$embed=pageNameRelFilter('.pageoutline li',pageName);
-	//$embed.append('<div class="page-edit-form-panel"></div>');
-	//guidePageEditForm(page,$('.page-edit-form-panel',$embed).html(''),page.name);
-	//}
-	
+
 }
 function gotoTabOrPage(target)
 {	// Go to a tab or popup a page.
@@ -396,7 +389,7 @@ function gotoTabOrPage(target)
 		case 'tabsSteps':
 		case 'tabsLogic':
 		case 'tabsText':
-		case 'tabsConstants':
+		case 'tabsClauses':
 			if (gGuide) {gGuide.noviceTab(target,false);}
 			break;
 		case 'tabsPreview':
@@ -695,83 +688,6 @@ function guidePageEditForm(page, div, pagename)//novicePage
 			change:function(val){page.codeAfter=val; /* TODO Compile for syntax errors */	}} ));
 		t.append(fs);
 
-		/*
-		if (page.type !== "Book page") 
-		{
-			if (page.type == "Multiple Choice" && page.style == "Choose Buttons") {
-				for (var b in page.buttons) {
-					//				t1+=form.short(page.
-					t.append(text2P("Feedback for Button(" + (parseInt(b) + 1) + ")"));
-					fb = page.feedbacks[fbIndex(b, 0)];
-					pageText += html2P(fb.text);
-				}
-			}
-			else if (page.type == "Multiple Choice" && page.style == "Choose List") {
-				var clist = [];
-				var dlist = [];
-				for (var d in page.details) {
-					var detail = page.details[d];
-					var fb = page.feedbacks[fbIndex(0, d)];
-					var $fb = $('<div/>').append(form.pickbranch())
-				 .append(form.pickpage('', fb.next, {}))
-				 .append(form.htmlarea("", GROUP + "CHOICE" + d, "fb" + d, fb.text));
-					var brtype = makestr(fb.next) == "" ? 0 : (makestr(fb.text) == "" ? 2 : 1);
-					$('select.branch', $fb).val(brtype).change();
-					clist.push({ row: [detail.label, form.picksSore(fb.grade), form.htmlarea("", GROUP + "CHOICE" + d, "detail" + d, detail.text)] });
-					dlist.push({ row: [detail.label, form.picksSore(fb.grade), $fb] });
-				}
-				t.append(form.h1('Choices'));
-				t.append(form.tableRowCounter("Number of choices", 2, 7, 'choices').after(form.tablerange('choices', clist)));
-
-				t.append(form.h1('Feedback'));
-				t.append(form.tablerange(dlist));
-
-			}
-			else if (page.type == "Multiple Choice" && page.style == "Choose MultiButtons") {
-				for (d in page.details) {
-					var detail = page.details[d];
-					t.append(form.h1("Subquestion " + (parseInt(d) + 1)));
-					t.append(form.htmlarea("","","", detail.text));
-				}
-				for (d in page.details) {
-					for (b in page.buttons) {
-						var button = page.buttons[b];
-						fb = page.feedbacks[fbIndex(b, d)];
-						t.append(form.h1("Feedback for subquestion " + (parseInt(d) + 1) + ", Choice(" + button.label + ")"));
-						t.append(form.htmlarea("","G",b,fb.text));
-					}
-				}
-			}
-			else if (page.type == "Multiple Choice" && page.style == "Radio Buttons") { }
-			else if (page.type == "Multiple Choice" && page.style == "Check Boxes") { }
-			else if (page.type == "Multiple Choice" && page.style == "Check Boxes Set") { }
-			else if (page.type == "Text Entry" && page.style == "Text Short Answer") { }
-			else if (page.type == "Text Entry" && page.style == "Text Select") {
-				t.append(form.htmlarea("Text user will select from", "SELECT", "textselect", page.initialText, 8));
-				list = [];
-				for (ti in page.tests) {
-					var test = page.tests[ti];
-					list.push({ row: [
-								 form.number("", "", "test" + ti, test.slackWordsBefore, 0, 9999),
-							  form.number("", "", "test" + ti, test.slackWordsAfter, 0, 9999),
-											  form.htmlarea("", GROUP + "test" + ti, "test" + ti, test.text, 4)
-			 ]
-					});
-				}
-				t.append(form.h2('Selection matches'));
-				t.append(form.tablecount("Number of tests", 1, 5) + form.tablerange(list, ["Slack words before", "Slack words after", "Words to match"]));
-
-				t.append(form.textArea("script"));
-			}
-			else if (page.type == "Text Entry" && page.style == "Text Essay") { }
-			else if (page.type == "Prioritize" && page.style == "PDrag") { }
-			else if (page.type == "Prioritize" && page.style == "PMatch") { }
-			else if (page.type == "Slider") { }
-			else if (page.type == "GAME" && page.style == "FLASHCARD") { }
-			else if (page.type == "GAME" && page.style == "HANGMAN") { }
-
-*/
-		//pageText += html2P(expandPopups(this,page.text));
 
 	}
 

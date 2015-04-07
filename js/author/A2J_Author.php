@@ -77,6 +77,8 @@ function ts($filename)
 			<script src=<?=ts('../viewer/A2J_ParserConvert.js')?> type="text/javascript"></script>
 			<script src=<?=ts('../viewer/A2J_Viewer.js')?> type="text/javascript"></script>
 			
+			<script src=<?=ts('A2J_Vars.js')?> type="text/javascript"></script>
+			<script src=<?=ts('A2J_Clauses.js')?> type="text/javascript"></script>
 			<script src=<?=ts('A2J_Pages.js')?> type="text/javascript"></script>
 			<script src=<?=ts('A2J_Guides.js')?> type="text/javascript"></script>
 			<script src=<?=ts('A2J_Tabs.js')?> type="text/javascript"></script>
@@ -142,6 +144,7 @@ function ts($filename)
 		<ul>
 			<li ref="tabsAbout">About</a></li>
 			<li ref="tabsVariables">Variables</a></li>
+			<!--<li ref="tabsClauses">Clauses</a></li>-->
 			<li ref="tabsSteps">Steps</a></li>
 			<li ref="tabsPages">Pages</a></li>
 			<li ref="tabsMap">Map</a></li>
@@ -177,6 +180,17 @@ function ts($filename)
 			<span class="fileinput-button">
 				<button id="uploadCMPFile">Add from HotDocs .CMP</button><input type="file" id="uploadCMPFileInput"/>
 			</span>
+			</div>
+		</div>
+		<div class="panel" id="tabsClauses">
+			<div class="tabHeader">Clauses used in this interview
+			<button CSH="Clauses" class="CSH"/></div>
+			
+			<div class="tabContentFrame">
+				<div class="tabContent editq"></div>
+			</div>
+			<div class="tabFooter">
+				<button id="clause-add">Add</button>
 			</div>
 		</div>
 		<div class="panel" id="tabsSteps">
@@ -217,13 +231,7 @@ function ts($filename)
 						<button ></button>
 					</div>
 					</div>
-		<!--<div id="tabsConstants">
-					<div class="tabHeader"></div>
-					<div class="tabContentFrame">
-						<div class="tabContent editq"></div>
-					</div>
-				</div>
-				-->
+	
 			</div>			 
 		</div>
 		<div class="panel" id="tabsMap">		
@@ -422,8 +430,10 @@ function ts($filename)
 				</select>
 				</span></div>
 			<div>
-				<label for="varrepeating">Repeating:</label>
-				<input type="checkbox" name="varrepeating" id="varrepeating" />
+				<label for="varrepeating">Repeating:</label> 
+					<span class="editspan">
+					<input type="checkbox" name="varrepeating" id="varrepeating">Check if multiple values
+				</span>
 			</div>
 			<div>
 				<label for="varcomment">Comment:</label>
@@ -441,6 +451,20 @@ function ts($filename)
 		</form>
 	</div>
 	
+	<div id="clause-edit-form" title="Clause">
+		<div class="editq">
+			<div id=clausefs></div>
+			<fieldset>
+			<div>
+				<label for="clauseusage">Used by:</label>
+				<input type="button" name="clauseusage" id="clauseusage" />
+			</div>
+			<div>
+				<div id="clauseUsageList"></div>
+			</div>
+			</fieldset>
+		</div>
+	</div>
 <div id="settings-form" title="Settings">
 	<ul id="cajasettings">
 		<li>General

@@ -753,9 +753,8 @@ TGuide.prototype.noviceTab = function(tab,clear)
 			guide.buildTabVariables(t);
 			break;
 			
-		case "tabsConstants":
-			fs = form.fieldset('Constants');
-			t.append(fs);
+		case "tabsClauses":
+			guide.buildTabClauses(t);
 			break;
 		
 		case "tabsLogic":
@@ -962,135 +961,46 @@ function updateTOCOnePage()
 }
 
 
-TGuide.prototype.varDelete=function(name){
-	var guide=this;
-	delete guide.vars[name.toLowerCase()];
-	gGuide.noviceTab('tabsVariables',true);
-};
-
-function varEdit(v/*TVariable*/)
-{
-	$('#varname').val(v.name);
-	if (gPrefs.warnHotDocsNameLength) {
-		// 2014-07-28 
-		$('#varname').attr('maxlength',CONST.MAXVARNAMELENGTH);
-	}
-	$('#vartype').val(v.type);
-	$('#varcomment').val(v.comment);
-	$('#varrepeating').attr('checked', v.repeating);
-	$('#varUsageList').html('...');
-	$('#varusage').button({label:'Quick Find',icons:{primary:'ui-icon-link'}}).click(function()
-	{	// 2014-09-24 List all references to this variable.
-		// This is a Lazy search so plain text words are also found.
-		// TODO - exclude non-macro/logic bits. 
-		var html='';
-		var count=0;
-		var p;
-		var nameL=v.name.toLowerCase();
-		for (p in gGuide.pages)
-		{	// Search text, help, fields and logic for variable name.
-			/** @type TPage */
-			var where=[]; //  list where it's on this page
-			var page=gGuide.pages[p];
-			for (var f in page.fields)
-			{	// Search fields
-				/** @type TField */
-				var field=page.fields[f];
-				if (field.name.toLowerCase() == nameL)
-				{
-					where.push('Field '+field.label);
-				}
-			}
-			if ((page.text + ' ' + page.help).toLowerCase().indexOf(nameL)>=0)
+function vcGatherUsage( name )
+{	// 2015-03-27 Search for variable or constant
+	// This is a Lazy search so plain text words are also found.
+	// TODO - exclude non-macro/logic bits. 
+	var html='';
+	var count=0;
+	var p;
+	var nameL=name.toLowerCase();
+	for (p in gGuide.pages)
+	{	// Search text, help, fields and logic for variable name.
+		/** @type TPage */
+		var where=[]; //  list where it's on this page
+		var page=gGuide.pages[p];
+		for (var f in page.fields)
+		{	// Search fields
+			/** @type TField */
+			var field=page.fields[f];
+			if (field.name.toLowerCase() == nameL)
 			{
-				where.push('Text/Help');
-			}
-			if ((  page.codeBefore + ' '+ page.codeAfter).toLowerCase().indexOf(nameL)>=0)
-			{
-				where.push('Logic');
-			}
-			if (where.length>0)
-			{	// If we foudn anything, we'll list the page and its location.
-				count++;
-				html += ('<li>'+page.name +'</li><ul>'+'<li>'+where.join('<li>')+'</ul>');				
+				where.push('Field '+field.label);
 			}
 		}
-		$('#varUsageList').html('Used in '+count+' pages' + '<ul>'+html+'</ul>');
-	});
-	$('#var-edit-form').data(v).dialog({
-		autoOpen:true,
-			width: 450,
-			height: 500,
-			modal:true,
-			close: function(){
-			},
-			buttons:[
-			{text:'Delete', click:function(){
-				var name= $(this).data().name;
-				if (name===""){
-					return;
-				}
-				dialogConfirmYesNo({title:'Delete variable '+name,message:'Delete this variable?',name:name,Yes:
-				/*** @this {{name}} */
-				function(){
-					$('#var-edit-form').dialog("close");
-					gGuide.varDelete(this.name);
-				}});
-			}},
-			{text:'Close',click:function(){ 
-				var name= $('#varname').val();
-				if(name!==v.name)//rename variable
-				{
-					delete gGuide.vars[v.name.toLowerCase()];
-					v.name=name;
-					gGuide.vars[name.toLowerCase()]=v;
-				}
-				v.type=$('#vartype').val();
-				v.comment=$('#varcomment').val();
-				v.repeating=$('#varrepeating').is(':checked');
-				gGuide.noviceTab('tabsVariables',true);
-				$(this).dialog("close");
-			 }}
-		]});
-	
-}
-
-function varAdd()
-{  // Add new variable and edit.
-	var v= new TVariable();
-	varEdit(v);
+		if ((page.text + ' ' + page.help).toLowerCase().indexOf(nameL)>=0)
+		{
+			where.push('Text/Help');
+		}
+		if ((  page.codeBefore + ' '+ page.codeAfter).toLowerCase().indexOf(nameL)>=0)
+		{
+			where.push('Logic');
+		}
+		if (where.length>0)
+		{	// If we foudn anything, we'll list the page and its location.
+			count++;
+			html += ('<li>'+page.name +'</li><ul>'+'<li>'+where.join('<li>')+'</ul>');				
+		}
+	}
+	return 'Used in '+count+' pages' + '<ul>'+html+'</ul>';
 }
 
 
-TGuide.prototype.variableListHTML = function ()
-{	// Build HTML table of variables, nicely sorted.
-	var guide = this;
-	var th=html.rowheading(["Name","Type","Repeating","Comment"]); 
-	var sortvars=guide.varsSorted();//[];
-	var vi;
-	/*
-	for (vi in guide.vars){
-		sortvars.push(guide.vars[vi]);
-	}
-	sortvars.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
-	*/
-	var tb='';
-	for (vi in sortvars)
-	{
-		var v=sortvars[vi];
-		tb+=html.row([v.name,v.type,v.repeating,v.comment
-			+ (typeof v.warning==='undefined'?'':'<span class="warning">'+v.warning+'</spab>')]);
-	}
-	return '<table class="A2JVars">'+th + '<tbody>'+ tb + '</tbody>'+"</table>";	
-};
-
-TGuide.prototype.buildTabVariables = function (t)
-{
-	t.append(this.variableListHTML());
-	$('tr',t).click(function(){
-		varEdit(gGuide.vars[$('td:first',this).text().toLowerCase()]);
-	});
-};
 
 
 // 2014-08-01 Get/restore selected text when setting hyperlink or popup.

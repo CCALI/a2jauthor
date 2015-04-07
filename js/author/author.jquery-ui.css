@@ -1247,12 +1247,14 @@ body .ui-tooltip {
 /* SJG Theme friendly row alternator: */
 .pagelist ul * li:nth-child(even)
 ,table.A2JVars tr:nth-child(even)
+,table.A2JClauses tr:nth-child(even)
 ,table.A2JFiles tr:nth-child(even)
 ,table.list tr:nth-child(even)
 ,.guidelist li:nth-child(even)
 {	background-color:#ECF0F1 ;}
 .pagelist ul * li:nth-child(odd)
 ,table.A2JVars tr:nth-child(odd)
+,table.A2JClauses tr:nth-child(odd)
 ,table.A2JFiles tr:nth-child(odd)
 ,table.list tr:nth-child(odd)
 ,.guidelist li:nth-child(odd)
@@ -1308,7 +1310,9 @@ table.A2JVars tr:nth-child(odd),table.A2JFiles tr:nth-child(odd) { background-co
 }
 
 /* JPM */	
-table.A2JSteps th, table.A2JVars th {
+table.A2JSteps th,
+table.A2JVars th ,
+table.A2JClauses th {
 	border-style:solid;
 	border-width:thick;
 	border-color:#F0F7FA;

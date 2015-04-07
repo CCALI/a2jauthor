@@ -360,6 +360,7 @@ function main()
 
 	$('#page-viewer').hide();
 	$('#var-add').button({icons:{primary:'ui-icon-new'}}).click(varAdd);
+	$('#clause-add').button({icons:{primary:'ui-icon-new'}}).click(clauseAdd);
 	
 	$('#uploadCMPFile').button({icons:{primary:'ui-icon-folder-open'}});
 	$('#uploadCMPFileInput').on('change',function()			

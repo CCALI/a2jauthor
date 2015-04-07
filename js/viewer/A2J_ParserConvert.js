@@ -321,7 +321,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	for (p in DefaultPrompts)
 	{
 		if (DefaultPromptsUsed[p]===1){
-			guide.constants[DefaultPrompts[p]] =p;
+			guide.clauses[DefaultPrompts[p]] =p;
 		}
 	} 
 	/* 

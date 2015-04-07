@@ -310,7 +310,7 @@ ul.guidelist li span.pagecount {
 
 
 /*********** A2J ***************/
-table.A2JSteps, table.A2JVars ,table.A2JFiles {
+table.A2JSteps, table.A2JVars , table.A2JClauses, table.A2JFiles {
 /*	border-collapse:collapse; */
 	width:100%;
 /* JPM */
@@ -322,14 +322,14 @@ table.A2JSteps, table.A2JVars ,table.A2JFiles {
 
 
 
-table.A2JSteps tr td, table.A2JVars tr td, table.A2JFiles tr td {
+table.A2JSteps tr td, table.A2JVars tr td , table.A2JClauses tr td, table.A2JFiles tr td {
 /* JPM */	
  	padding:.33em; 
 /* JPM */	
 }
 
 /* JPM */	
-table.A2JSteps tr, table.A2JVars tr {
+table.A2JSteps tr, table.A2JVars tr , table.A2JClauses tr {
 	cursor:pointer;
 }
 /* JPM */	
@@ -800,7 +800,10 @@ li.guide:hover {
 	background-color:#C0DCC0;
 }
 */
-.pagelist * li:hover, li.guide:hover, table.A2JVars tr:hover, table.A2JFiles tr:hover{
+.pagelist * li:hover, li.guide:hover,
+table.A2JVars tr:hover,
+table.A2JClauses tr:hover,
+table.A2JFiles tr:hover{
 	background-color:rgba(88,88,88,0.75) !important;
 	color: #fff !important;
 	cursor: pointer;

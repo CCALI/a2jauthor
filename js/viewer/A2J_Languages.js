@@ -197,7 +197,7 @@ Languages.regional.en= {
 	tabAbout:'About',
 	tabInterview:'Interview',
 	tabVariables:'Variables',
-	tabConstants:'Constants',
+	//tabConstants:'Clauses',
 	tabSteps:'Steps',
 	// Question branching types
 	qIDNOWHERE:"[no where]",

@@ -122,7 +122,7 @@ function page2JSON(page)
 /** @param {TGuide} guide */
 function exportXML_CAJA_from_CAJA(guide)
 {	// Convert Guide structure into XML
-	var JSON={GUIDE:{INFO:{AUTHORS:[]},PAGES:[] ,STEPS:[],VARIABLES:[] }};
+	var JSON={GUIDE:{INFO:{AUTHORS:[]},PAGES:[] ,STEPS:[],VARIABLES:[],CLAUSES:[] }};
 	
 	
 	JSON.GUIDE.INFO.tool=guide.tool;
@@ -181,6 +181,17 @@ function exportXML_CAJA_from_CAJA(guide)
 			  _COMMENT: v.comment
 			 };
 		JSON.GUIDE.VARIABLES.push({VARIABLE:VARIABLE}); 
+	}
+	var ci;
+	for (ci in guide.clauses)
+	{
+		var c=guide.clauses[ci];
+		var CLAUSE = {
+			  _NAME:c.name,
+			  _COMMENT: c.comment,
+			  XML_TEXT:c.text
+			 };
+		JSON.GUIDE.CLAUSES.push({CLAUSE:CLAUSE}); 
 	}
 	for (var pi in guide.pages)
 	{
@@ -352,12 +363,13 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		popup.text=POPUP.find("TEXT").xml();
 		guide.popups[popup.id]=popup;
 	});*/
-	GUIDE.find("CONSTANTS").each(function() {
-		var CONSTANT = $(this);
-		var constant = new TConstant(); 
-		constant.name=CONSTANT.attr("NAME");
-		constant.text=CONSTANT.find("VAL").xml();
-		guide.constants[constant.name]=constant;
+	GUIDE.find("CLAUSES > CLAUSE").each(function() {
+		var CLAUSE = $(this);
+		var clause = new TClause(); 
+		clause.name=CLAUSE.attr("NAME");
+		clause.comment=makestr(CLAUSE.attr("COMMENT"));
+		clause.text=makestr(CLAUSE.find("TEXT").xml());
+		guide.clauses[clause.name.toLowerCase()]=clause;
 	});
 	GUIDE.find("PAGES > PAGE").each(function() {
 		var PAGE = $(this);

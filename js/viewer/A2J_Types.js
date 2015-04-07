@@ -292,12 +292,13 @@ function TStep()
 /** 
  * @constructor
  * @struct
- * @this {TConstant}
+ * @this {TClause}
  */
-function TConstant()
+function TClause()
 {
 	this.name ="";
 	this.text ="";
+	this.comment="";
 	return this;
 }
 
@@ -405,7 +406,7 @@ function TGuide()
 	
 	
 	this.pages={};			//Origin both - associative array of pages TPage() by page name. E.g., pages["Contents"] = TPage()
-	this.constants={};	//Origin CAJA - associative array of contants, MAXINCOME:25000
+	this.clauses={};	//Origin CAJA - associative array of contants, MAXINCOME:25000
 	//this.popups=[];		//Origin A2J - array of embedded text popups (these are anonymous unlike CA where they are named)
 	this.assets=[];		//Origin CAJA - array of images for preloading.
 
@@ -468,17 +469,29 @@ TGuide.prototype.stepDisplayNameViewer=function(s)
 	return txt;
 };
 
+//
+		  
+		  
 
+TGuide.prototype.collectionSorted = function (collection)
+{	// Return array of variables sorted naturally.
+	var sorted=[];
+	var i;
+	for (i in collection){
+		sorted.push(collection[i]);
+	}
+	sorted.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
+	return sorted;
+};
 
 TGuide.prototype.varsSorted = function ()
 {	// Return array of variables sorted naturally.
-	var sortVars=[];
-	var vi;
-	for (vi in this.vars){
-		sortVars.push(this.vars[vi]);
-	}
-	sortVars.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
-	return sortVars;
+	return this.collectionSorted(this.vars);
+};
+
+TGuide.prototype.clausesSorted = function ()
+{	// Return array of clauses sorted naturally.
+	return this.collectionSorted(this.clauses);
 };
 
 TGuide.prototype.sortPages=function()

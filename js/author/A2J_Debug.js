@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
@@ -10,7 +10,7 @@
 	If only guide - loads guide directly, starts on author pane.
 	Guide and answer - loads guide, starts in player mode after loading answers.
 	
-******************************************************************************/
+*/
 
 
 function localGuideStart()

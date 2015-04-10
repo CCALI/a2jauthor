@@ -1,12 +1,12 @@
-/******************************************************************************
+/*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
-	Global Preferences
+	Global Preferences for Authoring, referenced by Viewer in Author.
 	Required by Author and Viewers
 	07/2014
 	
-******************************************************************************/
+*/
 
 
 var gPrefs =

@@ -1,15 +1,12 @@
-/******************************************************************************
+/*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
-	A2J Viewer app
-	12/12/2012
-	04/15/2013
+	A2J Viewer app - handles user's Viewer side of things - I/o for a user.
+	2015 - 12/12/2012, 04/15/2013	
 
 	Used by A2J Viewer only.
 */
-
-
 
 
 /** @param {...string} status */

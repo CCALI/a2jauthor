@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*
 	A2J Author 5 * JusticeJustice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
@@ -11,7 +11,8 @@
 	Phase 2: If compile ie successful, execute the JS version.
 
 	Dependencies: jqhashtable-2.1.js, jquery.numberformatter-1.2.1.jsmin.js
-******************************************************************************/
+
+*/
 
 
 // Classes

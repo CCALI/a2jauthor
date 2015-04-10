@@ -1,10 +1,8 @@
-/******************************************************************************
+/*
 	A2J Author 5 * Justice * 正义 * công lý * 사법 * правосудие * sprawiedliwość
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	Language (INCOMPLETE)
-	07/14/2012
-
 	Language file for the authoring tool
 	Language blocks for each supported language.
 	There's a Languages[] structure for A2J Viewer specific code.
@@ -23,7 +21,9 @@
 		
 	Pending:
 		 
-******************************************************************************/
+	2015 - 07/14/2012
+
+*/
 
 // Language elements that are translatable
 var lang = {

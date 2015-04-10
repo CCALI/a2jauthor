@@ -1,15 +1,12 @@
-/*******************************************************************************
+/*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
-	CAJA Parser Convert
-
 	Parse A2J 4 Interview into A2J 5 format
 
 	02/20/2012
 
-******************************************************************************/
-
+*/
 
 function parseXML_A2J_to_CAJA(TEMPLATE)
 {	// Parse A2J into CAJA

@@ -1,13 +1,13 @@
-﻿/******************************************************************************
+﻿/*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	A2J Viewer embedding
-	10/12/2012
-	05/2014
+	2015 - 05/2014, 10/12/2012
 
-	Required by Author and Viewers
-******************************************************************************/
+	Required by Author and Desktop Viewer
+
+*/
 
 // Elements: navbar, road step area, question, guide avatar, user avatar, learn more prompt, learn more bubble.
 //var gLogic;

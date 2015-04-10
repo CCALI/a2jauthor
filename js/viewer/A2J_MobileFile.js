@@ -1,14 +1,12 @@
-/*******************************************************************************
+/*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
-	CAJA Parser
+	Convert guide into JSON for Mobile viewer 
 
-	Convert guide into JSON for Mobile
+	2015 - 12/22/2014  02/20/2012
 
-	12/22/2014  02/20/2012
-
-******************************************************************************/
+*/
 
 /** @param {TPage} page The page to parse */
 function page2JSON_Mobile(page)

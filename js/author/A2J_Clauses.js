@@ -1,11 +1,12 @@
-/*******************************************************************************
+/*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	2015-03-30 Clauses/Clause library
 	Behave like Variables but are effectively Constants.
 	Also can contain conditionals.
-******************************************************************************/
+
+*/
 
 
 

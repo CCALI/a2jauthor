@@ -1,11 +1,12 @@
-﻿/*******************************************************************************
+﻿/*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	Authoring App GUI
+	Shell for the author app (the Main())
 	04/15/2013
 	
-******************************************************************************/
+*/
 
 /* global gGuidePath,gPage,gGuide,gUserID,gGuideID,gUserNickName */
 

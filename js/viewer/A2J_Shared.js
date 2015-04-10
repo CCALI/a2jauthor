@@ -1,12 +1,15 @@
-/*******************************************************************************
+/*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	Shared GUI/IO
-	12/12/2012
-	05/2014
+	Library of common functions used by author and viewer
+	See more functions in A2J_SharedSus.js
+	2015 - 05/2014, 12/12/2012
+	
 	Required by Author and Viewers
-******************************************************************************/
+
+*/
 
 
 var html={

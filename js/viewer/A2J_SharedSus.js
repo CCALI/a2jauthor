@@ -1,11 +1,12 @@
-/*******************************************************************************
+/*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
 	10/2013
 	JavaScript functions with JSLint complaints.
-	Companion to A2J_Shared.js - contains Lint-unfriendly code
-******************************************************************************/
+	Companion to A2J_Shared.js - contains Lint-unfriendly but valid code
+
+*/
 
 
 var REG={

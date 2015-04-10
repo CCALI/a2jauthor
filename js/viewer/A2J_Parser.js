@@ -1,16 +1,15 @@
-/*******************************************************************************
+/*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
-	CAJA Parser
+	A2J Parser for XML
 
 	Parse native CAJA into CAJA structure
-	Parse A2J 4 Interview
 	Parses .a2j/xml XML into CAJA format
 
 	02/20/2012
 
-******************************************************************************/
+*/
 
 function fixPath(file)
 {	// ### Keep fully qualified web path, otherwise default to file within guide's folder (no subfolders)

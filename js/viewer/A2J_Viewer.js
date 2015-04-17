@@ -552,7 +552,7 @@ var A2JViewer={
 		});
 		$('.panel.learnmore',div).hide();
 		if (learnHTML!=="" ) {			
-			$('.panel.learnmore',div).delay(3000).fadeIn(1000);
+			$('.panel.learnmore',div).delay(500).fadeIn(500);
 		}
 		
 		// ### Learn more Help		

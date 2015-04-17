@@ -1,3 +1,4 @@
+@charset "utf-8";
 /* jQuery UI A2J Theme - custom A2J CSS at the bottom */
 
 
@@ -1295,7 +1296,6 @@ table.list tr:nth-child(even) {	background-color:rgba(240,240,240,0.5);}
 table.list tr:nth-child(odd) {	background-color:rgba(255,255,255,0.5);}
 table.A2JVars tr:nth-child(even) ,table.A2JFiles tr:nth-child(even) { background-color:#fff; }
 table.A2JVars tr:nth-child(odd),table.A2JFiles tr:nth-child(odd) { background-color:#eee; }
-*/
 .pagelist ul {
 	xbackground-color:#fff;
 }
@@ -1305,6 +1305,7 @@ table.A2JVars tr:nth-child(odd),table.A2JFiles tr:nth-child(odd) { background-co
 .pagelist > ul > li {
 	xbackground-color:#F0F7FA;
 }
+*/
 .editq fieldset {
 	background:#f8fcff;
 }

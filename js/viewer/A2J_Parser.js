@@ -13,12 +13,15 @@
 
 function fixPath(file)
 {	// ### Keep fully qualified web path, otherwise default to file within guide's folder (no subfolders)
+	// 04/30/2015 Map data files to the fileDataURL instead of guide's path. 
 	if (file.indexOf('http')===0)
-	{
+	{	// file's starting with http or https are not modified. 
 		return file;
 	}
-	var fileFixed = gGuidePath+urlSplit(file).file;
-	//trace('fixPath',gGuidePath,file,fileFixed);
+
+	var filesPath = gStartArgs.fileDataURL; // was gGuidePath
+	var fileFixed = filesPath+urlSplit(file).file;
+	trace('fixPath',gStartArgs.fileDataURL,filesPath,file,fileFixed);
 	return fileFixed;
 }
 function loadXMLList(opts)
@@ -101,9 +104,9 @@ function page2JSON(page)
 			_REQUIRED:		f.required, //==true ? true : gJS2XML_SKIP,
 			_MIN:				f.min, 
 			_MAX:				f.max, 
+			_MAXCHARS:		f.maxChars,
 			_CALENDAR:		f.calendar===true ? true : gJS2XML_SKIP, 
 			_CALCULATOR:	f.calculator===true ? true : gJS2XML_SKIP, 
-			_MAXCHARS:		f.maxChars,
 			LISTSRC:			f.listSrc,
 			XML_LISTDATA:	f.listData,
 			XML_LABEL:		f.label,
@@ -259,6 +262,7 @@ function parseXML2Page(PAGE, page)
 		field.sample = makestr(jQuery.trim($field.find("SAMPLE").xml()));
 		field.min = makestr($field.attr("MIN"));//could be a number or a date so don't convert to number
 		field.max = makestr($field.attr("MAX"));
+		field.maxChars = makestr($field.attr("MAXCHARS"));
 		field.calendar = textToBool($field.attr("CALENDAR"),false);
 		field.calculator=textToBool($field.attr("CALCULATOR"),false);
 		
@@ -412,7 +416,7 @@ function loadGuideFile(guideFile,startTabOrPage)
 	{
       startTabOrPage= "PAGE " +url.hash;
 	}
-	//trace(guideFile,url,gGuidePath,startTabOrPage);
+	trace(guideFile,url,gGuidePath,startTabOrPage);
    loadNewGuidePrep(guideFile,startTabOrPage);
 	
    window.setTimeout(function()

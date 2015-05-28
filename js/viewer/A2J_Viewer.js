@@ -430,9 +430,18 @@ var A2JViewer={
 			{
 				case CONST.ftText://"Text"
 				   $input=($('<input type=text class=text id='+fid+'></input>').val(defval));
+					if (f.maxChars>0) {
+						// 05/28/2015 Max length check.
+						$($input).attr('maxlength',f.maxChars);
+					}
 				   break;
+				
 				case CONST.ftTextLong://"Text (Long)"
 				   $input=($('<textarea type=text class=textarea id='+fid+'></textarea>').val(defval));
+					if (f.maxChars>0) {
+						// 05/28/2015 Max length check.
+						$($input).attr('maxlength',f.maxChars);
+					}
 				   break;
 				case CONST.ftTextPick://"Text (Pick from list)"
 				   $input=($('<select id='+fid+'></select>').val(defval));

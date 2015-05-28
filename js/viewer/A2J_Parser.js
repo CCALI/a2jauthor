@@ -19,8 +19,8 @@ function fixPath(file)
 		return file;
 	}
 
-	var filesPath = gStartArgs.fileDataURL; // was gGuidePath
-	var fileFixed = filesPath+urlSplit(file).file;
+	var filesPath = gStartArgs.fileDataURL;
+	var fileFixed = (filesPath == '') ? gGuidePath+urlSplit(file).file : filesPath+urlSplit(file).file;
 	trace('fixPath',gStartArgs.fileDataURL,filesPath,file,fileFixed);
 	return fileFixed;
 }

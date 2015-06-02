@@ -41,6 +41,7 @@ var lang = {
 	Close:'',
 	LearnMore:'',
 	FieldPrompts_text:'',
+	FieldPrompts_gender:'',
 	RepeatAnd:'', // Used in building comma list from REPEAT. 
 	
 	qIDNOWHERE:'',
@@ -172,7 +173,8 @@ Languages.regional.en= {
 	FieldPrompts_numberzip:'You must type a zip code in the highlighted space before you can continue.',
 	FieldPrompts_numberpick:'You must select a number from the highlighted space before you can continue.',
 	FieldPrompts_datemdy:'You must enter a month, day and year in the highlighted spaces before you can continue.',
-	FieldPrompts_gender:'You must choose either male or female from the highlighted selection before you can continue.',
+	FieldPrompts_gender:'Select an avatar to represent you.',
+	//FieldPrompts_gender:'You must choose either male or female from the highlighted selection before you can continue.',
 	FieldPrompts_radio:'You must choose a response from the highlighted selection before you can continue.',
 	FieldPrompts_checkbox:'You must select one or more checkboxes to continue.',
 	FieldPrompts_checkboxNOTA:'Please select one or more checkboxes or "None of the above" to continue.',

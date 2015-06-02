@@ -766,8 +766,15 @@ var A2JViewer={
 				//trace('Field '+f.name+' '+val);
 				if (invalid)
 				{
-					
-					$('.ui-form.formerror',div).html(isBlankOrNull( f.invalidPrompt)?lang.FieldPrompts_text:f.invalidPrompt);
+					var defaultFieldPrompt;
+					switch (f.type){
+						case CONST.ftGender:
+							defaultFieldPrompt=lang.FieldPrompts_gender;
+							break;					
+						default:
+							defaultFieldPrompt=lang.FieldPrompts_text;
+					}
+					$('.ui-form.formerror',div).html(isBlankOrNull( f.invalidPrompt)?defaultFieldPrompt:f.invalidPrompt);
 					$('.panel.formerror',div).show();
 					$('.ui-form [fname="'+f.name+'"]').addClass('error');
 				}

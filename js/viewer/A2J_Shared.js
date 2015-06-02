@@ -425,16 +425,29 @@ var urlParams;
 */
 
 
-function cr2P(txt){
+function cr2P(txt)
+{	//
 	return txt === "" ?"":"<P>" + txt.split("\n").join("</P><P>")+"</P>";//replace("\n\n","\n")
 }
-
+function isValidDate(d)
+{	// 06/02/2015 Test if JS date is valid	
+	// http://stackoverflow.com/questions/1353684/detecting-an-invalid-date-date-instance-in-javascript
+  if ( Object.prototype.toString.call(d) !== "[object Date]" )
+    return false;
+  return !isNaN(d.getTime());
+}
 function mdy2jsDate(MDY)
 {	//  2014-06-16 Convert a2j m/d/y date to JavaScript date object for use in calculations
 	if (makestr(MDY)!=='')
 	{
 		var parts = MDY.split("/");
-		return new Date(parts[2], parts[0]-1,parts[1]);
+		if (parts[0]>100) {
+			//  6/2/2015 If first part large, likely y/m/d input instead of m/d/y
+			return new Date(parts[0], parts[1]-1,parts[2]);
+		}
+		else{
+			return new Date(parts[2], parts[0]-1,parts[1]);
+		}
 	}
 	else
 	{	// return today if we don't recognize it.

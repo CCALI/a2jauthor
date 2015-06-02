@@ -488,7 +488,8 @@ var A2JViewer={
 				   break;
 				
 				case CONST.ftDateMDY://"Date MM/DD/YYYY"
-				   $input=($('<input type=text id='+fid+'></input>').val(defval));
+					// Ideally use input type=date - not supported by non-Chrome desktop browsers.
+				   $input=($('<input type=text id='+fid+' placeholder="mm/dd/yyyy"></input>').val(defval));
 					//trace(CONST.ftDateMDY,gGuide.language);
 					var dateOpts = {
 						changeMonth: true,
@@ -674,6 +675,7 @@ var A2JViewer={
 						}
 						if (!invalid) {
 							gGuide.varSet(f.name,val,varIndex);
+							$('#'+fid).val(val);
 						}
 					   break;
 					
@@ -696,11 +698,12 @@ var A2JViewer={
 						else
 						{	// 2014-06-16 Ensure date is in valid range.
 							var valDate = mdy2jsDate(val);
+							invalid = !isValidDate(valDate); // 06/2/2015 ensure some sort of date
 							if (!isBlankOrNull(f.min)) {
-								invalid = valDate <  mdy2jsDate(f.min);
+								invalid = invalid || (valDate <  mdy2jsDate(f.min));
 							}
 							if (!isBlankOrNull(f.max)) {
-								invalid = (valDate > mdy2jsDate(f.max)) || invalid;
+								invalid = invalid || (valDate > mdy2jsDate(f.max));
 							}
 							if (!invalid) {
 								val = jsDate2mdy(valDate);

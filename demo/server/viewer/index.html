@@ -26,44 +26,49 @@
 
 				// templateURL points to the interview XML. This demo just passes what's on the querystring.
 				//templateURL: '/interview.xml',
-				templateURL:"../tests/data/Sample Short Interview.xml", 
+				//templateURL:"../tests/data/Sample Short Interview.xml?data=ExtraData4templateURL",
+				templateURL:"../../A2JGetInterview.aspx?data=2417^b4e01b9c-4573-4776-b195-cb9490ac0c3b^1c725dd1-8bf6-4dc5-955d-b0cfb94600a5",
+				//templateURL:"../tests/data/Sample Short Interview Answers.anx?data=something", 
 
 				// fileDataURL is the folder of interview's assets, usually the folder of the interview XML
 				//fileDataURL: 'images/', 
-				fileDataURL:"../tests/data/", 
+				//fileDataURL:"../tests/data/", 
+				//fileDataURL:"http://localhost:54583/Assets/A2J_Modules/New York/Vacate_Judgment_Consumer_Debt_2417/",
+				fileDataURL:"http://localhost/54583/Assets/A2J_Modules/New York/Vacate_Judgment_Consumer_Debt_2417/",
 
 				// getDataURL loads an answer file at start, used for RESUME
 				//getDataURL:	"../tests/data/Sample Short Interview Answers.anx",
 				//getDataURL: '/resume.aspx',
-				getDataURL:	"../tests/data/Sample Short Interview Answers.anx",
+				//getDataURL:	"../tests/data/Sample Short Interview Answers.anx?data=ExtraData4getDataURL",
+				getDataURL:	"A2JGetData.aspx?data=0^b4e01b9c-4573-4776-b195-cb9490ac0c3b^2417^dcb160b4-7321-44c5-a99a-92d3e3efc1d6",
+				//getDataURL:"A2J_ViewerExit.html", 
 
 				// setDataURL saves answer file and leaves the viewer (its response replaces viewer's frame)
 				//setDataURL: '/save.aspx',
-				setDataURL:			"A2J_ViewerAnswerSet.php", 
-
+				//setDataURL:	"A2J_ViewerAnswerSet.php?data=ExtraData4setDataURL", 
+				setDataURL:	"../Engine/Index?q=6ick6e1t9CGdhvn+4ZDvkluGkgjfo/WZ9JkfJHXuyVKOBFj8ImxjPEfdygh4isgV7aDXg4hf5pKqRDHkQ/LZh1CBeIp9fuPfDT3jRXSaxrMEcuLrOVKIOfIyu6ceh9gTGkkbNFjDhQ+sLDrKt2jRnDaxpszkvXjFhhgqNtqM9V37wMgJq72zEoRPIUbEjRwHPg6i8g812pzK9gFIRHkVHcVAhM/dWQsqof9bXQ3azmANnQz6yXw1rJ75RpjlJ+KY7UGCwLxu86a5fLHzXWLwbg==",
 				// autoSetDataURL silently saves answer file periodically. (Optional).
 				//autoSetDataURL: '/autosave.aspx',
-				autoSetDataURL:	"A2J_ViewerAutoSetData.php", 
+				autoSetDataURL:	"A2J_ViewerAutoSetData.php?data=ExtraData4autoSetDataURL", 
 
 				// exitURL replaces the viewer's frame with this URL on EXIT (user 'fails' interview)
 				//exitURL: 'https://google.com', //"A2J_ViewerExit.php?interviewID=<?=$gid?>",
-				exitURL: 	"A2J_ViewerExit.html",
+				exitURL:		"A2J_ViewerExit.html",
 
 				// logURL accepts silent logging data.
 				// E.g., https://lawhelpinteractive.org/a2j_logging
 				//	logURL: '',
-				logURL:   	"A2J_ViewerLog.php", 
+				logURL: "A2J_ViewerLog.php?data=ExtraData4logURL", 
 
 				// errRepURL accepts user's public submission of an error to which they can add an optional comment.
 				// E.g., "https://lawhelpinteractive.org/problem_reporting_form",
 				//errRepURL: ''
-				errRepURL:	"A2J_ViewerErrRep.php"
+				errRepURL:	"A2J_ViewerErrRep.php?data=ExtraData4errRepURL"
 			};
 			//alert($.cookie('useDesktop'));
 
 			if ( ( 0|| Modernizr.touch )&& ('true'!==$.cookie('useDesktop'))) {
 				//This is a touch enabled device, we'll redirect to mobile site.
-
 				//desktopURL will redirect a mobile user back to
 				//the desktop landing page.
 				config.desktopURL = 'desktop.min.html';
@@ -71,8 +76,11 @@
 			}
 			else {
 				window.location = 'desktop.min.html?' + $.param(config);
-				//A2JViewerFrame = document.getElementById('A2JViewerFrame');
-				//A2JViewerFrame.contentWindow.postMessage(config, '*');
+				//window.location = 'A2J_ViewerApp.html?' + $.param(config);
+				
+				//window.location = http://localhost:54583/Interview/A2J5/viewer/desktop.min.html?templateURL=..%2F..%2FA2JGetInterview.aspx%3Fdata%3D2417^b4e01b9c-4573-4776-b195-cb9490ac0c3b^1c725dd1-8bf6-4dc5-955d-b0cfb94600a5&fileDataURL=http%3A%2F%2Flocalhost%3A54583%2FAssets%2FA2J_Modules%2FNew+York%2FVacate_Judgment_Consumer_Debt_2417%2F&getDataURL=A2JGetData.aspx%3Fdata%3D0^b4e01b9c-4573-4776-b195-cb9490ac0c3b^2417^dcb160b4-7321-44c5-a99a-92d3e3efc1d6&setDataURL=..%2FEngine%2FIndex%3Fq%3D6ick6e1t9CGdhvn%2B4ZDvkluGkgjfo%2FWZ9JkfJHXuyVKOBFj8ImxjPEfdygh4isgV7aDXg4hf5pKqRDHkQ%2FLZh1CBeIp9fuPfDT3jRXSaxrMEcuLrOVKIOfIyu6ceh9gTGkkbNFjDhQ%2BsLDrKt2jRnDaxpszkvXjFhhgqNtqM9V37wMgJq72zEoRPIUbEjRwHPg6i8g812pzK9gFIRHkVHcVAhM%2FdWQsqof9bXQ3azmANnQz6yXw1rJ75RpjlJ%2BKY7UGCwLxu86a5fLHzXWLwbg%3D%3D&exitURL=A2JExit.aspx
+				//window.location = 'desktop.min.html?templateURL=..%2F..%2FA2JGetInterview.aspx%3Fdata%3D2417^b4e01b9c-4573-4776-b195-cb9490ac0c3b^1c725dd1-8bf6-4dc5-955d-b0cfb94600a5&fileDataURL=http%3A%2F%2Flocalhost%3A54583%2FAssets%2FA2J_Modules%2FNew+York%2FVacate_Judgment_Consumer_Debt_2417%2F&getDataURL=A2JGetData.aspx%3Fdata%3D0^b4e01b9c-4573-4776-b195-cb9490ac0c3b^2417^dcb160b4-7321-44c5-a99a-92d3e3efc1d6&setDataURL=..%2FEngine%2FIndex%3Fq%3D6ick6e1t9CGdhvn%2B4ZDvkluGkgjfo%2FWZ9JkfJHXuyVKOBFj8ImxjPEfdygh4isgV7aDXg4hf5pKqRDHkQ%2FLZh1CBeIp9fuPfDT3jRXSaxrMEcuLrOVKIOfIyu6ceh9gTGkkbNFjDhQ%2BsLDrKt2jRnDaxpszkvXjFhhgqNtqM9V37wMgJq72zEoRPIUbEjRwHPg6i8g812pzK9gFIRHkVHcVAhM%2FdWQsqof9bXQ3azmANnQz6yXw1rJ75RpjlJ%2BKY7UGCwLxu86a5fLHzXWLwbg%3D%3D&exitURL=A2JExit.aspx';
+				//window.location = 'A2J_ViewerApp.html?templateURL=..%2F..%2FA2JGetInterview.aspx%3Fdata%3D2417^b4e01b9c-4573-4776-b195-cb9490ac0c3b^1c725dd1-8bf6-4dc5-955d-b0cfb94600a5&fileDataURL=http%3A%2F%2Flocalhost%3A54583%2FAssets%2FA2J_Modules%2FNew+York%2FVacate_Judgment_Consumer_Debt_2417%2F&getDataURL=A2JGetData.aspx%3Fdata%3D0^b4e01b9c-4573-4776-b195-cb9490ac0c3b^2417^dcb160b4-7321-44c5-a99a-92d3e3efc1d6&setDataURL=..%2FEngine%2FIndex%3Fq%3D6ick6e1t9CGdhvn%2B4ZDvkluGkgjfo%2FWZ9JkfJHXuyVKOBFj8ImxjPEfdygh4isgV7aDXg4hf5pKqRDHkQ%2FLZh1CBeIp9fuPfDT3jRXSaxrMEcuLrOVKIOfIyu6ceh9gTGkkbNFjDhQ%2BsLDrKt2jRnDaxpszkvXjFhhgqNtqM9V37wMgJq72zEoRPIUbEjRwHPg6i8g812pzK9gFIRHkVHcVAhM%2FdWQsqof9bXQ3azmANnQz6yXw1rJ75RpjlJ%2BKY7UGCwLxu86a5fLHzXWLwbg%3D%3D&exitURL=A2JExit.aspx';
 			}
 		</script>
 	</body>

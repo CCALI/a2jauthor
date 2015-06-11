@@ -2,6 +2,10 @@
 <!--
 	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+	
+	Notes:
+		04/03/2015 CKEditor with floating option is problemative or requires newer jQuery than A2J5 is using
+	
 -->
 <HTML xmlns="http://www.w3.org/1999/xhtml">
 <title>CKEditor UI Tests</title>
@@ -10,8 +14,12 @@
 <link href="../viewer/A2J_Viewer.css" rel="stylesheet" type="text/css" />
 <script src="../viewer/jquery.1.8.2.min.js" type="text/javascript"></script>
 <script src="../viewer/jquery.ui.1.9.1.min.js" type="text/javascript"></script>
-<script src="http://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
-<script src="http://cdn.ckeditor.com/4.4.3/standard/adapters/jquery.js"></script>
+
+<xscript src="http://cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>
+<script src="../../../../js/editors/ckeditor/ckeditor.js"></script>
+<script src="http://cdn.ckeditor.com/4.4.7/standard/adapters/jquery.js"></script>
+
+
 
 <style type="text/css">
 <!--
@@ -33,20 +41,29 @@ div {
 
 <script type='text/javascript'>  
 // 2014-07-21 Testing CKEditor Dynamic edit areas
-function load() {
+function load()
+{
 	$('.questions').empty();
 	for (var q=1;q<= 25 ;q++)
 	{
-//editor question cke_editable cke_editable_inline cke_contents_ltr cke_show_borders
-	$('.questions').append(
-			  '<fieldset><legend>Question '+q + '</legend>'
-				 +'<div contentEditable=true class="editor question  " name="Q'+q+'"><p>Question content for question '+q+'</p></div>'
-				  +'<div contentEditable=true class="editor help  " name="QH'+q+'"><p>Help content for question  '+q+'</p></div>'
-			  +'</fieldset>');
-	}
-	//$( '.editor' ).ckeditor();
+	//editor question cke_editable cke_editable_inline cke_contents_ltr cke_show_borders
+		$('.questions').append(
+				  '<fieldset><legend>Question '+q + '</legend>'
+					 +'<div contentEditable=true class="editor question  " name="Q'+q+'"><p>Question content for question '+q+'. </p></div>'
+					  +'<div contentEditable=true class="editor help  " name="QH'+q+'"><p>Help content for question  '+q+'</p></div>'
+				  +'</fieldset>');
+		}
+	//CKEDITOR.inlineAll(); // 04/03/2015 super slow when FireBug active.
+	
+	// Turn off automatic editor creation first.
+	CKEDITOR.disableAutoInline = true;
+
+	// Attach as user clicks is faster.
 	$( '.editor' ).click(function(){
-		$(this).ckeditor();
+		if (!$(this).hasClass('cke_editable')) {
+			//$(this).ckeditor();
+			console.log(CKEDITOR.inline( this ));
+		}
 	})
 }
 
@@ -65,11 +82,13 @@ function ready()
 	{
 		$('.editor').each(function(){
 			if ($(this).hasClass('cke_editable')) {
+				console.log($(this).html());
+				/*
 				var editor = $(this).ckeditor().editor;
 				if (editor.checkDirty()) {
 					console.log('Editor for '+$(this).attr('name')+' edited');
 					console.log('Data: '+ editor.getData());
-			}
+			}*/
 
 			}
 		})

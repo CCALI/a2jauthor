@@ -54,6 +54,7 @@ function ts($filename)
 		
 		case 1:	// include full source code
 		?>
+		
 			<script src="../viewer/jquery.xml.min.js" type="text/javascript" ></script>
 			<script src="../viewer/jquery.ui.combobox.js" type="text/javascript" ></script>
 			<script src="../viewer/jquery.ui.traggable.js" type="text/javascript" ></script>
@@ -64,6 +65,7 @@ function ts($filename)
 			<script src="jquery.fileupload-process.js"></script><!-- The File Upload processing plugin -->
 			<script src="jquery.fileupload-validate.js"></script><!-- The File Upload validation plugin -->
 			
+			<script src=<?=ts('../viewer/desktop_app.config.js')?> type="text/javascript"></script>
 			<script src=<?=ts('../viewer/A2J_Types.js')?> type="text/javascript"></script>
 			<script src=<?=ts('../viewer/A2J_Prefs.js')?> type="text/javascript"></script>
 			<script src=<?=ts('../viewer/A2J_Shared.js')?> type="text/javascript"></script>
@@ -388,7 +390,7 @@ function ts($filename)
 	</div>
 	<div id="cajafooter"><span id="saveStatus"></span><span id="CAJAStatus"></span>
 		<span class="copyright">
-			© 2000-2014 Illinois Institute of Technology - Chicago-Kent College of Law and the Center for Computer-Assisted Legal Instruction
+			© 2000-2015 Illinois Institute of Technology - Chicago-Kent College of Law and the Center for Computer-Assisted Legal Instruction
 	</span> </div>
 </div>
 <div class="hidestart">

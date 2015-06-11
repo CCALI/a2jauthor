@@ -8,20 +8,27 @@
 	Parses .a2j/xml XML into CAJA format
 
 	02/20/2012
+	06/2015
 
 */
 
 function fixPath(file)
 {	// ### Keep fully qualified web path, otherwise default to file within guide's folder (no subfolders)
-	// 04/30/2015 Map data files to the fileDataURL instead of guide's path. 
+	// 04/30/2015 Map data files to the fileDataURL instead of guide's path.
+	// File could be http://site/myfile or myfile or somepath/myfile
 	if (file.indexOf('http')===0)
-	{	// file's starting with http or https are not modified. 
+	{	// Files starting with http or https are not modified. 
 		return file;
 	}
-
+	
 	var filesPath = gStartArgs.fileDataURL;
-	var fileFixed = (filesPath == '') ? gGuidePath+urlSplit(file).file : filesPath+urlSplit(file).file;
-	trace('fixPath',gStartArgs.fileDataURL,filesPath,file,fileFixed);
+	if (filesPath == '') {
+		// 2015-06-10 If path not specified (likely for an Authoring installation), try to use guide's path. 
+		filesPath = gGuidePath;
+	}
+	var fileFixed = filesPath + urlSplit(file).file;
+	//var fileFixed = (filesPath == '') ? gGuidePath+urlSplit(file).file : filesPath+urlSplit(file).file;
+	trace('fixPath',file,fileFixed, gStartArgs.fileDataURL);
 	return fileFixed;
 }
 function loadXMLList(opts)
@@ -38,7 +45,7 @@ function loadXMLListExternal(opts)
    $.ajax({
       url:  fixPath(opts.url),
       dataType:  "text",
-      timeout: 15000,
+      timeout: gConfig.AJAXLoadingTimeout,
       error:
 			/*** @this {{url}} */
 			function(data,textStatus,thrownError)
@@ -409,6 +416,7 @@ function loadGuideFile(guideFile,startTabOrPage)
 		dialogAlert({title:'No guide file specified'});
 		return;
 	}
+	/*
 	var url=urlSplit(guideFile);
 	guideFile = url.path+url.file;
 	gGuidePath = url.path;
@@ -416,7 +424,8 @@ function loadGuideFile(guideFile,startTabOrPage)
 	{
       startTabOrPage= "PAGE " +url.hash;
 	}
-	trace(guideFile,url,gGuidePath,startTabOrPage);
+	*/
+	//trace(guideFile,url,gGuidePath,startTabOrPage);
    loadNewGuidePrep(guideFile,startTabOrPage);
 	
    window.setTimeout(function()
@@ -425,14 +434,15 @@ function loadGuideFile(guideFile,startTabOrPage)
 			$.ajax({
 				url: guideFile,
 				dataType:  "xml", // IE will only load XML file from local disk as text, not xml.
-				timeout: 45000,
+				timeout: gConfig.AJAXLoadingTimeout,
 				error:
 					/*** @this {{url}} */
 					function(data,textStatus,thrownError){
-					$('#splash').empty();
-					  dialogAlert({title:'Error occurred loading file',body:'Unable to load XML from '+guideFile+"\n"+textStatus});
+						$('#splash').empty();
+						dialogAlert({title:'Error occurred loading file',body:'Unable to load XML from '+guideFile+"\n"+textStatus});
 					 },
-				success: function(data){
+				success: function(data)
+				{
 					var cajaDataXML;
 					cajaDataXML = data;
 					cajaDataXML=$(cajaDataXML); 

@@ -10,11 +10,12 @@
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction 
 */
 
-/*
+/* *************************
 	@charset "utf-8";
 	A2J Author 5 * JusticeJustice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction 
 
+	A2J Font CSS (for non-google site)
 	This style sheet derived from:
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic&subset=latin,vietnamese,latin-ext' rel='stylesheet' type='text/css'>
 
@@ -36,6 +37,9 @@
 }
 
 /* */
+
+
+
 /*! jQuery UI - v1.10.4 - 2014-02-17
 * http://jqueryui.com
 * Includes: jquery.ui.core.css, jquery.ui.resizable.css, jquery.ui.selectable.css, jquery.ui.accordion.css, jquery.ui.autocomplete.css, jquery.ui.button.css, jquery.ui.datepicker.css, jquery.ui.dialog.css, jquery.ui.menu.css, jquery.ui.progressbar.css, jquery.ui.slider.css, jquery.ui.spinner.css, jquery.ui.tabs.css, jquery.ui.tooltip.css, jquery.ui.theme.css
@@ -1239,12 +1243,17 @@ body .ui-tooltip {
 	padding: 0.3em;
 }
 
-/*
+
+
+
+
+
+/* *****************
 	@charset "utf-8";
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 	
-	A2J Viewer Stylesheet 
+	A2J 5 Viewer Stylesheet 
 	02/02/2012
 	05/2014
 */
@@ -1399,6 +1408,22 @@ html, body{
    margin: 2px;
    padding: 5px;
 	font-size: 12pt;
+}
+.A2JViewer .logo {
+	position: absolute;
+	display: block;
+	width: 120px;
+	height: 120px;
+	padding: 0px;
+	margin: 0px;
+	bottom: 5px;
+	right: 5px;
+}
+.A2JViewer .mobile {
+	position: absolute;
+	display: block;
+	bottom: 5px;
+	right: 5px;
 }
 
 .alertPanel {
@@ -1953,4 +1978,16 @@ x.question.panel {
 #history {
 	width: 20em;
 }
+
+/* 05/22/2015 Hyperlinks and Popups have different colors */
+div.bubble * a {
+	color: #00f; 
+}
+div.bubble * a[href^="POPUP"]
+{
+	color: #f00; 
+}
+	
+	
 /* */
+ 

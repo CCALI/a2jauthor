@@ -10,6 +10,9 @@ function jQuery(var_args){}
 jQuery.trim=function(a){};
 jQuery.parseXML=function(a){};
 var JSON;
+//var gConfig;
+//gConfig.AJAXLoadingTimeout="";
+//var gStartArgs;
 
 /** @param {...} var_args */
 function $(var_args){}

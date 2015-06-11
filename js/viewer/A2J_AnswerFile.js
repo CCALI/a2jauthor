@@ -287,7 +287,7 @@ TGuide.prototype.loadXMLAnswerExternal = function (opts)
    $.ajax({
       url:  (opts.url),
       dataType:  "xml",
-      timeout: 15000,
+      timeout: gConfig.AJAXLoadingTimeout,
 		opts: opts,
       error:
 			/*** @this {{url}} */

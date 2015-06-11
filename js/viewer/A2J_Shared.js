@@ -584,9 +584,10 @@ function trace(var_args)
 
 function audioPlayerHTML(audiofile)
 {	// 2014-06-03 Construct HTML 5 audio HTML. Currently only MP3 supported.
-
 	return '<audio controls><source src="' +fixPath(audiofile) + '" type="audio/mpeg"></audio>';
 }
+
+
 function videoPlayerHTML(videoFile)
 {	// 2014-06-03 Construct HTML 5 video HTML. FLV no longer supported.
 	// Convert to webm? Mp4 is licensed.

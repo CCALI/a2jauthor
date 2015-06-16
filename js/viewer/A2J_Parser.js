@@ -28,7 +28,7 @@ function fixPath(file)
 	}
 	var fileFixed = filesPath + urlSplit(file).file;
 	//var fileFixed = (filesPath == '') ? gGuidePath+urlSplit(file).file : filesPath+urlSplit(file).file;
-	trace('fixPath',file,fileFixed, gStartArgs.fileDataURL);
+	//trace('fixPath',file,fileFixed, gStartArgs.fileDataURL);
 	return fileFixed;
 }
 function loadXMLList(opts)

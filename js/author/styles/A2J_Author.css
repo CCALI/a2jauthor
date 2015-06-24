@@ -5,25 +5,25 @@
 	Authoring system Stylesheet
 	Coloring moved into the A2J jQuery theme
 	04/15/2013
-	
-	JPM 3/21/14 color pallette from http://codepen.io/cobblucas/pen/iGpIf 
-	JPM http://flatuicolors.com/ 
+
+	JPM 3/21/14 color pallette from http://codepen.io/cobblucas/pen/iGpIf
+	JPM http://flatuicolors.com/
 
 */
 
 
-.ui-widget-header, 
-.ui-state-default, 
+.ui-widget-header,
+.ui-state-default,
 .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default,
-.ui-state-hover, 
-.ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, 
-.ui-state-focus, 
-.ui-widget-content .ui-state-focus, 
+.ui-state-hover,
+.ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
 .ui-widget-header .ui-state-focus,
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active,
-.ui-priority-primary, 
-.ui-widget-content .ui-priority-primary, 
-.ui-widget-header .ui-priority-primary 
+.ui-priority-primary,
+.ui-widget-content .ui-priority-primary,
+.ui-widget-header .ui-priority-primary
  { font-weight: normal; }
 
 
@@ -46,7 +46,7 @@ html, body {
 
 
 #welcome > div {
-	background-image: url(../viewer/images/A2JAvatar-Guide-Front-F0.png);
+	background-image: url(../../viewer/images/A2JAvatar-Guide-Front-F0.png);
 	background-repeat: no-repeat;
 	padding-left: 150px;
 }
@@ -69,8 +69,8 @@ html, body {
 	position: fixed;
 	width: 260px;
 	height: 64px;
-/* JPM */	
-	background-image: url(../viewer/images/A2J5_Author_Icon.png);
+/* JPM */
+	background-image: url(../../viewer/images/A2J5_Author_Icon.png);
 /* JPM */
 }
 #guidetitle  {
@@ -81,7 +81,7 @@ html, body {
 	right:130px;
 	overflow:hidden;
 	font-size:2em;
-	
+
 }
 #settings {
 	position: fixed;
@@ -131,7 +131,7 @@ html, body {
 	left:10px;
 /* JPM */
 	top: 70px;
-/* JPM */	
+/* JPM */
 	right:150px;
 	width: 112px;
 	border : 1px solid #c0c0c0;
@@ -165,7 +165,7 @@ html, body {
 	margin: 0px;
 	background-repeat: no-repeat;
 	cursor: default;
-} 
+}
 .guidemenu ul li:hover {
 	font-weight: bold;
 	background-color: #DEF4FF;
@@ -178,14 +178,14 @@ html, body {
 	/*text-transform:uppercase; SJG no. */
 	background-color: #E5E5E5;
 	overflow: visible;
-	background: url(images/menu_selected.png) 99% center no-repeat;
-/* JPM */	
+	background: url(../images/menu_selected.png) 99% center no-repeat;
+/* JPM */
 	color:#0066CC;
-/* JPM */	
+/* JPM */
 	margin:3px;
-	
+
 }
-/*.ui-tabs .ui-tabs-nav li { 
+/*.ui-tabs .ui-tabs-nav li {
 	font-size: .9em;
 }
 */
@@ -195,18 +195,18 @@ html, body {
 	font-style: normal;
 	padding: 0px;
 	padding-left: 2em;
-/* 
+/*
 	margin-top: -.25em; */
-	margin-bottom: 2em;	
-/* */	
+	margin-bottom: 2em;
+/* */
 }
 .pageoutline {
 	margin: 0px;
-/* */	
+/* */
 	padding: 10px 0px 5px;
-/* */	
+/* */
 }
-.pageoutline ul, .guidelist { 
+.pageoutline ul, .guidelist {
 	list-style-type:  none;
 	margin-left: 0;
 	text-indent: 0;
@@ -245,7 +245,7 @@ ul.guidelist li span.pagecount {
 	display: inline-block;
 }
 
-#CAJAIndex.pagelist ul { 
+#CAJAIndex.pagelist ul {
 	list-style-type: bullet;
 	margin-left: 1em;
 }
@@ -278,9 +278,9 @@ ul.guidelist li span.pagecount {
 	right: 0px;
 	bottom:0px;
 	overflow: auto;
-/* */	
+/* */
 	padding: .5em;
-/* */	
+/* */
 
 }
 .tabsMapPages {
@@ -295,12 +295,12 @@ ul.guidelist li span.pagecount {
 
 .editicons {
 	border-collapse:collapse;
-/* */	
+/* */
 	border-style:dotted;
 	border-color:#CCCCCC;
 	border-width:thin;
-/* */	
-	margin: 0px; 
+/* */
+	margin: 0px;
 	padding: 0px;
 	width: 50px;
 }
@@ -323,16 +323,16 @@ table.A2JSteps, table.A2JVars , table.A2JClauses, table.A2JFiles {
 
 
 table.A2JSteps tr td, table.A2JVars tr td , table.A2JClauses tr td, table.A2JFiles tr td {
-/* JPM */	
- 	padding:.33em; 
-/* JPM */	
+/* JPM */
+ 	padding:.33em;
+/* JPM */
 }
 
-/* JPM */	
+/* JPM */
 table.A2JSteps tr, table.A2JVars tr , table.A2JClauses tr {
 	cursor:pointer;
 }
-/* JPM */	
+/* JPM */
 
 
 
@@ -354,12 +354,12 @@ input.narrow {
 }
 
 
-.CAJAEditor { 
+.CAJAEditor {
 	padding: 0;
 	margin: 0;
 	width: 100%;
 }
-.CAJAContent { 
+.CAJAContent {
 	padding: 0;
 	margin: 0;
 	width: 100%;
@@ -382,7 +382,7 @@ div.editq {
 	padding-top: 1em;
 	margin-left: 0em;
 }
-.editq fieldset label { 
+.editq fieldset label {
 	clear: both;
 	display: block;
 	vertical-align: top;
@@ -391,10 +391,10 @@ div.editq {
 	margin: 5px 0 0;
 	text-align: right;
 	padding: 5px;
-} 
+}
 
-.editq fieldset { 
-	padding:0; 
+.editq fieldset {
+	padding:0;
 	margin-top:25px;
 }
 .editq fieldset {
@@ -404,7 +404,7 @@ div.editq {
 }
 .editq fieldset {
 	padding: inherit;
-	margin-top:25px; 
+	margin-top:25px;
 /* */
 	padding-bottom: 1.3em;
 /* */
@@ -421,24 +421,24 @@ div.editq {
 }
 .editable.taller {
 	margin-top: 0em;
-	min-height: 2em; 
+	min-height: 2em;
 }
 .editable.tallest {
-	min-height: 5em; 
+	min-height: 5em;
 }
 /*.editable:focus {
 	min-width: 20em;
 }
 */
 
-.editable { /* authoring text fields */ 
+.editable { /* authoring text fields */
 	min-width: 10em;
 	margin-top: 1px;
 	margin-bottom: 1px;
-	padding: 5px; 
+	padding: 5px;
 	border: 1px solid #ccc;
 	min-height: 1em;
-	width:100%; 
+	width:100%;
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
@@ -462,7 +462,7 @@ div.editq {
 	background-color: #1ff;
 }
 x.autocomplete.picker.page {
-	width:100%; 
+	width:100%;
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
@@ -615,7 +615,7 @@ table.CAJAReportDump tr:nth-child(3n+3) {
 }
 .GradeReport {
 	border: thin;
-	padding: 5px;	
+	padding: 5px;
 }
 .TextStatistics {
 	background-color: #ddd;
@@ -631,7 +631,7 @@ table.CAJAReportDump tr:nth-child(3n+3) {
 	width:16px;
 	height:16px;
 	padding: 0px;
-	margin: 0px; 
+	margin: 0px;
 }
 .pageedit {
 	padding: 5px;
@@ -766,7 +766,7 @@ input.text { margin-bottom:12px; width:95%; padding: .4em; }
 /* JPM*/
 }
 
-#guidepanel > ul > span {	
+#guidepanel > ul > span {
 	float: right;
 	padding-right: 50px;
 }
@@ -831,7 +831,7 @@ table.A2JFiles tr:hover{
 /* JPM */
 
 
-.tabsPanel { 
+.tabsPanel {
 	height: 100%;
 	overflow: scroll;
 	border: 2px #f00 ;
@@ -848,12 +848,12 @@ table.A2JFiles tr:hover{
 	margin-left: 10px;
 	margin-right: 10px;
 }
-.tabContentFrame { 
+.tabContentFrame {
 	position: absolute;
 	top: 55px;
 	left: 15px;
 	right:10px;
-	bottom:10px;	
+	bottom:10px;
 	overflow: auto;
 }
 
@@ -861,7 +861,7 @@ table.A2JFiles tr:hover{
 	top: 3em;
 	bottom: 5px;
 }
-#tabsPages .tabContentFrame .tabContent  { 
+#tabsPages .tabContentFrame .tabContent  {
 	background-color: #fff;
 }
 #tabsMap .tabContentFrame {
@@ -903,7 +903,7 @@ table.A2JFiles tr:hover{
 	top: 0px;
 	left: 33%;
 	right:10px;
-	bottom:0px;	
+	bottom:0px;
 	overflow: auto;
 	border: none;
 }
@@ -912,11 +912,11 @@ table.A2JFiles tr:hover{
 	top: 5px;
 	left: 10px;
 	right:10px;
-	bottom:35px;	
+	bottom:35px;
 	overflow: auto;
-/* START 2013/7/1 JPM EDITS */	
+/* START 2013/7/1 JPM EDITS */
 	border: 1px solid #c0c0c0 ;
-/* START 2013/7/1 JPM EDITS */	
+/* START 2013/7/1 JPM EDITS */
 }
 
 #MapperPanel {
@@ -924,7 +924,7 @@ table.A2JFiles tr:hover{
 	top: 5px;
 	left: 10px;
 	right:10px;
-	bottom:35px;	
+	bottom:35px;
 	overflow: auto;
 	border: 1px solid #c0c0c0 ;
 	background-color: #FFFFFF;
@@ -1017,7 +1017,7 @@ table.A2JFiles tr:hover{
 }
 .mapper.icon.arrow {
 	position: absolute;
-	background-image: url(images/map_arrow_down.png);
+	background-image: url(../images/map_arrow_down.png);
 	background-repeat:no-repeat;
 	width:16px;
 	height:20px;
@@ -1026,7 +1026,7 @@ table.A2JFiles tr:hover{
 }
 .mapper.icon.start {
 	position: absolute;
-	background-image: url(images/MapperIconStart.png);
+	background-image: url(../images/MapperIconStart.png);
 	background-repeat:no-repeat;
 	width:100px;
 	height:150px;
@@ -1035,7 +1035,7 @@ table.A2JFiles tr:hover{
 }
 .mapper.icon.exit {
 	position: absolute;
-	background-image: url(images/MapperIconExit.png);
+	background-image: url(../images/MapperIconExit.png);
 	background-repeat:no-repeat;
 	width:100px;
 	height:150px;
@@ -1070,7 +1070,7 @@ div.codeedit span.err {
 	font-size: small;
 	top: -5px;
 	float: right;
-	
+
 }
 
 .tabHeader button.CSH {

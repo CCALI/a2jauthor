@@ -8,11 +8,11 @@
 * To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Lucida%20Grande%2CLucida%20Sans%2CArial%2Csans-serif&fwDefault=bold&fsDefault=1.1em&cornerRadius=6px&bgColorHeader=deedf7&bgTextureHeader=highlight_soft&bgImgOpacityHeader=100&borderColorHeader=aed0ea&fcHeader=222222&iconColorHeader=72a7cf&bgColorContent=f2f5f7&bgTextureContent=highlight_hard&bgImgOpacityContent=100&borderColorContent=dddddd&fcContent=362b36&iconColorContent=72a7cf&bgColorDefault=d7ebf9&bgTextureDefault=glass&bgImgOpacityDefault=80&borderColorDefault=aed0ea&fcDefault=2779aa&iconColorDefault=3d80b3&bgColorHover=e4f1fb&bgTextureHover=glass&bgImgOpacityHover=100&borderColorHover=74b2e2&fcHover=0070a3&iconColorHover=2694e8&bgColorActive=3baae3&bgTextureActive=glass&bgImgOpacityActive=50&borderColorActive=2694e8&fcActive=ffffff&iconColorActive=ffffff&bgColorHighlight=ffef8f&bgTextureHighlight=highlight_soft&bgImgOpacityHighlight=25&borderColorHighlight=f9dd34&fcHighlight=363636&iconColorHighlight=2e83ff&bgColorError=cd0a0a&bgTextureError=flat&bgImgOpacityError=15&borderColorError=cd0a0a&fcError=ffffff&iconColorError=ffffff&bgColorOverlay=eeeeee&bgTextureOverlay=diagonals_thick&bgImgOpacityOverlay=90&opacityOverlay=80&bgColorShadow=000000&bgTextureShadow=highlight_hard&bgImgOpacityShadow=70&opacityShadow=30&thicknessShadow=7px&offsetTopShadow=-7px&offsetLeftShadow=-7px&cornerRadiusShadow=8px
 * Copyright 2013 jQuery Foundation and other contributors Licensed MIT */
 
-/* Things that need work in CSS, design, colors, etc. 
+/* Things that need work in CSS, design, colors, etc.
 
-- put the credits for SJI, LSC, etc under a popup or slide-up. 
-- 
-*/ 
+- put the credits for SJI, LSC, etc under a popup or slide-up.
+-
+*/
 
 
 
@@ -815,7 +815,7 @@ body .ui-tooltip {
 }
 .ui-widget-content {
 	border: 1px solid #dddddd;
-	background: #f2f5f7 url(images/ui-bg_highlight-hard_100_f2f5f7_1x100.png) 50% top repeat-x;
+	background: #f2f5f7 url(../images/ui-bg_highlight-hard_100_f2f5f7_1x100.png) 50% top repeat-x;
 	color: #362b36;
 }
 .ui-widget-content a {
@@ -840,7 +840,7 @@ body .ui-tooltip {
 .ui-widget-content .ui-state-default,
 .ui-widget-header .ui-state-default {
 	border: 1px solid #aed0ea;
-	background: #d7ebf9 url(images/ui-bg_glass_80_d7ebf9_1x400.png) 50% 50% repeat-x;
+	background: #d7ebf9 url(../images/ui-bg_glass_80_d7ebf9_1x400.png) 50% 50% repeat-x;
 	font-weight: bold;
 	color: #2779aa;
 }
@@ -857,7 +857,7 @@ body .ui-tooltip {
 .ui-widget-content .ui-state-focus,
 .ui-widget-header .ui-state-focus {
 	border: 1px solid #74b2e2;
-	background: #e4f1fb url(images/ui-bg_glass_100_e4f1fb_1x400.png) 50% 50% repeat-x;
+	background: #e4f1fb url(../images/ui-bg_glass_100_e4f1fb_1x400.png) 50% 50% repeat-x;
 	font-weight: bold;
 	color: #0070a3;
 }
@@ -872,7 +872,7 @@ body .ui-tooltip {
 .ui-widget-content .ui-state-active,
 .ui-widget-header .ui-state-active {
 	border: 1px solid #2694e8;
-	background: #3baae3 url(images/ui-bg_glass_50_3baae3_1x400.png) 50% 50% repeat-x;
+	background: #3baae3 url(../images/ui-bg_glass_50_3baae3_1x400.png) 50% 50% repeat-x;
 	font-weight: bold;
 	color: #ffffff;
 }
@@ -889,7 +889,7 @@ body .ui-tooltip {
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
 	border: 1px solid #f9dd34;
-	background: #ffef8f url(images/ui-bg_highlight-soft_25_ffef8f_1x100.png) 50% top repeat-x;
+	background: #ffef8f url(../images/ui-bg_highlight-soft_25_ffef8f_1x100.png) 50% top repeat-x;
 	color: #363636;
 }
 .ui-state-highlight a,
@@ -901,7 +901,7 @@ body .ui-tooltip {
 .ui-widget-content .ui-state-error,
 .ui-widget-header .ui-state-error {
 	border: 1px solid #cd0a0a;
-	background: #cd0a0a url(images/ui-bg_flat_15_cd0a0a_40x100.png) 50% 50% repeat-x;
+	background: #cd0a0a url(../images/ui-bg_flat_15_cd0a0a_40x100.png) 50% 50% repeat-x;
 	color: #ffffff;
 }
 .ui-state-error a,
@@ -947,28 +947,28 @@ body .ui-tooltip {
 }
 .ui-icon,
 .ui-widget-content .ui-icon {
-	background-image: url(images/ui-icons_72a7cf_256x240.png); 
+	background-image: url(../images/ui-icons_72a7cf_256x240.png);
 }
 .ui-widget-header .ui-icon {
-	background-image: url(images/ui-icons_72a7cf_256x240.png); 
+	background-image: url(../images/ui-icons_72a7cf_256x240.png);
 }
 .ui-state-default .ui-icon {
-	background-image: url(images/ui-icons_ffffff_256x240.png);
+	background-image: url(../images/ui-icons_ffffff_256x240.png);
 	/*background-image: url(images/ui-icons_3d80b3_256x240.png);*/
 }
 .ui-state-hover .ui-icon,
 .ui-state-focus .ui-icon {
-	background-image: url(images/ui-icons_2694e8_256x240.png);
+	background-image: url(../images/ui-icons_2694e8_256x240.png);
 }
 .ui-state-active .ui-icon {
-	background-image: url(images/ui-icons_ffffff_256x240.png);
+	background-image: url(../images/ui-icons_ffffff_256x240.png);
 }
 .ui-state-highlight .ui-icon {
-	background-image: url(images/ui-icons_2e83ff_256x240.png);
+	background-image: url(../images/ui-icons_2e83ff_256x240.png);
 }
 .ui-state-error .ui-icon,
 .ui-state-error-text .ui-icon {
-	background-image: url(images/ui-icons_ffffff_256x240.png);
+	background-image: url(../images/ui-icons_ffffff_256x240.png);
 }
 
 /* positioning */
@@ -1179,17 +1179,17 @@ body .ui-tooltip {
 	border-bottom-right-radius: 6px;
 }
 */
- 
+
 /* Overlays */
 .ui-widget-overlay {
-	background: #eeeeee url(images/ui-bg_diagonals-thick_90_eeeeee_40x40.png) 50% 50% repeat;
+	background: #eeeeee url(../images/ui-bg_diagonals-thick_90_eeeeee_40x40.png) 50% 50% repeat;
 	opacity: .8;
 	filter: Alpha(Opacity=80);
 }
 .ui-widget-shadow {
 	margin: -7px 0 0 -7px;
 	padding: 7px;
-	background: #000000 url(images/ui-bg_highlight-hard_70_000000_1x100.png) 50% top repeat-x;
+	background: #000000 url(../images/ui-bg_highlight-hard_70_000000_1x100.png) 50% top repeat-x;
 	opacity: .3;
 	filter: Alpha(Opacity=30);
 	border-radius: 8px;
@@ -1200,14 +1200,14 @@ body .ui-tooltip {
 
 ::-webkit-input-placeholder, ::-moz-placeholder , ::-ms-input-placeholder {
 	color: #555;font-style:italic
-} 
+}
 .ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
     background-image: none;
     opacity: 0.50;
 }
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
 /*     background: repeat-x scroll 50% 50% #7f8c8d; */
-    background: repeat-x scroll 50% 50% #0066CC; 
+    background: repeat-x scroll 50% 50% #0066CC;
     color: #fff;
     font-weight: normal;
 }
@@ -1263,29 +1263,29 @@ body .ui-tooltip {
 
 
 /* JPM TEST */
-table.list tr:nth-child(12n+1) 
+table.list tr:nth-child(12n+1)
 {	background-color:#EFEFC6 ;}
-table.list tr:nth-child(12n+2) 
+table.list tr:nth-child(12n+2)
 {	background-color:#EFEF8C ;}
-table.list tr:nth-child(12n+3) 
+table.list tr:nth-child(12n+3)
 {	background-color:#EFC6EF ;}
-table.list tr:nth-child(12n+4) 
+table.list tr:nth-child(12n+4)
 {	background-color:#EFC6C6 ;}
-table.list tr:nth-child(12n+5) 
+table.list tr:nth-child(12n+5)
 {	background-color:#EF8CEF ;}
-table.list tr:nth-child(12n+6) 
+table.list tr:nth-child(12n+6)
 {	background-color:#EF8C8C ;}
-table.list tr:nth-child(12n+7) 
+table.list tr:nth-child(12n+7)
 {	background-color:#C6EFEF ;}
-table.list tr:nth-child(12n+8) 
+table.list tr:nth-child(12n+8)
 {	background-color:#C6EFC6 ;}
-table.list tr:nth-child(12n+9) 
+table.list tr:nth-child(12n+9)
 {	background-color:#C6C6EF ;}
-table.list tr:nth-child(12n+10) 
+table.list tr:nth-child(12n+10)
 {	background-color:#C6C68C ;}
-table.list tr:nth-child(12n+11) 
+table.list tr:nth-child(12n+11)
 {	background-color:#C68CC6 ;}
-table.list tr:nth-child(12n+12) 
+table.list tr:nth-child(12n+12)
 {	background-color:#C68C8C ;}
 
 
@@ -1310,18 +1310,18 @@ table.A2JVars tr:nth-child(odd),table.A2JFiles tr:nth-child(odd) { background-co
 	background:#f8fcff;
 }
 
-/* JPM */	
+/* JPM */
 table.A2JSteps th,
 table.A2JVars th ,
 table.A2JClauses th {
 	border-style:solid;
 	border-width:thick;
 	border-color:#F0F7FA;
- 	padding:.8em; 
+ 	padding:.8em;
 	font-size: 1.1em;
 	background-color:#F0F7FA;
 }
-/* JPM */	
+/* JPM */
 /* */
 
 html, body, input, select, textarea , .htmledit, .codeedit {
@@ -1351,7 +1351,7 @@ html, body, input, select, textarea , .htmledit, .codeedit {
 */
 
 
-/* 
+/*
 EFEFC6
 EFEF8C
 EFC6EF
@@ -1371,17 +1371,17 @@ C68C8C
 8C8CEF
 8C8CC6
 */
-.guidemenu ul li[ref="tabsAbout"]		{background:#EFEFC6; } 
-.guidemenu ul li[ref="tabsVariables"]	{background:#EFEF8C; } 
-.guidemenu ul li[ref="tabsSteps"]		{background:#EFC6EF; } 
-.guidemenu ul li[ref="tabsPages"]		{background:#EFC6C6; } 
-.guidemenu ul li[ref="tabsMap"]			{background:#EF8CEF; } 
-.guidemenu ul li[ref="tabsFiles"]		{background:#EF8C8C; } 
-.guidemenu ul li[ref="tabsLogic"]		{background:#C6EFEF; } 
-.guidemenu ul li[ref="tabsText"]		{background:#C6EFC6; } 
-.guidemenu ul li[ref="tabsPreview"]		{background:#C6C6EF; } 
-.guidemenu ul li[ref="tabsReport"]		{background:#C6C68C; } 
-.guidemenu ul li[ref="tabsUpload"]		{background:#C68CC6; } 
+.guidemenu ul li[ref="tabsAbout"]		{background:#EFEFC6; }
+.guidemenu ul li[ref="tabsVariables"]	{background:#EFEF8C; }
+.guidemenu ul li[ref="tabsSteps"]		{background:#EFC6EF; }
+.guidemenu ul li[ref="tabsPages"]		{background:#EFC6C6; }
+.guidemenu ul li[ref="tabsMap"]			{background:#EF8CEF; }
+.guidemenu ul li[ref="tabsFiles"]		{background:#EF8C8C; }
+.guidemenu ul li[ref="tabsLogic"]		{background:#C6EFEF; }
+.guidemenu ul li[ref="tabsText"]		{background:#C6EFC6; }
+.guidemenu ul li[ref="tabsPreview"]		{background:#C6C6EF; }
+.guidemenu ul li[ref="tabsReport"]		{background:#C6C68C; }
+.guidemenu ul li[ref="tabsUpload"]		{background:#C68CC6; }
 .guidemenu ul li[ref="tabsGuides"]		{ background:#C68C8C; }
 
 
@@ -1394,12 +1394,12 @@ C68C8C
 /*.guidemenu ul li[ref="tabsLogic"]		{background:#27AE60; } /* NEPHRITIS */
 /*.guidemenu ul li[ref="tabsText"]		{background:#2ECC71; } /* EMERLAND */
 /*.guidemenu ul li[ref="tabsPreview"]		{background:#F1C40F; } /* SUN FLOWER */
-/*.guidemenu ul li[ref="tabsReport"]		{background:#F39C12; } /* ORANGE */    
+/*.guidemenu ul li[ref="tabsReport"]		{background:#F39C12; } /* ORANGE */
 /*.guidemenu ul li[ref="tabsUpload"]		{background:#E67E22; } /* CARROT */
 /*.guidemenu ul li[ref="tabsGuides"]		{ background:#D35400; } /* PUMPKIN */
 
 
-/* More colors as we add items to the menu. 
+/* More colors as we add items to the menu.
     ALIZARIN -     #E74C3C
     POMEGRANATE -     #C0392B
     CLOUDS -     #ECF0F1

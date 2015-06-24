@@ -4,11 +4,13 @@
   "description": "Authoring and viewer App GUI.",
   "main": "A2J_AuthorApp.js",
   "scripts": {
+    "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "blueimp-file-upload": "^9.10.1"
+    "blueimp-file-upload": "^9.10.1",
+    "express": "^4.13.0"
   }
 }

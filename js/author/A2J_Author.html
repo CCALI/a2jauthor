@@ -92,39 +92,27 @@
     <div class="alertCounter"></div>
   </div>
 
-
   <div id="authortool" class="hidestart authortool">
-    <div class="guideio">
-    </div>
+    <div class="guideio"></div>
+
     <div class="guidemenu ui-state-default">
       <ul>
-        <li ref="tabsAbout">About</a>
-        </li>
-        <li ref="tabsVariables">Variables</a>
-        </li>
-        <!--<li ref="tabsClauses">Clauses</a></li>-->
-        <li ref="tabsSteps">Steps</a>
-        </li>
-        <li ref="tabsPages">Pages</a>
-        </li>
-        <li ref="tabsMap">Map</a>
-        </li>
-        <li ref="tabsFiles">Files</a>
-        </li>
-        <li ref="tabsLogic">All Logic</a>
-        </li>
-        <li ref="tabsText">All Text</a>
-        </li>
-        <li ref="tabsPreview">Preview</a>
-        </li>
-        <li ref="tabsReport">Report</a>
-        </li>
-        <li ref="tabsUpload">Publish</a>
-        </li>
-        <li ref="tabsGuides">Interviews</a>
-        </li>
+        <li ref="tabsAbout">About</li>
+        <li ref="tabsVariables">Variables</li>
+        <li ref="tabsSteps">Steps</li>
+        <li ref="tabsPages">Pages</li>
+        <li ref="tabsMap">Map</li>
+        <li ref="tabsFiles">Files</li>
+        <li ref="tabsLogic">All Logic</li>
+        <li ref="tabsText">All Text</li>
+        <li ref="tabsPreview">Preview</li>
+        <li ref="tabsReport">Report</li>
+        <li ref="tabsUpload">Publish</li>
+        <li ref="tabsGuides">Interviews</li>
+        <li ref="tabsTemplate">Templates</li>
       </ul>
     </div>
+
     <div class="guidepanels ui-widget xui-widget-content">
       <div class="panel" id="tabsAbout">
         <div class="tabHeader">
@@ -137,6 +125,7 @@
           <div class="tabContent editq"></div>
         </div>
       </div>
+
       <div class="panel" id="tabsVariables">
         <div class="tabHeader">Variables used in this interview
           <button CSH="Variables" class="CSH" />
@@ -148,10 +137,11 @@
         <div class="tabFooter">
           <button id="var-add">Add</button>
           <span class="fileinput-button">
-        <button id="uploadCMPFile">Add from HotDocs .CMP</button><input type="file" id="uploadCMPFileInput"/>
-      </span>
+            <button id="uploadCMPFile">Add from HotDocs .CMP</button><input type="file" id="uploadCMPFileInput"/>
+          </span>
         </div>
       </div>
+
       <div class="panel" id="tabsClauses">
         <div class="tabHeader">Clauses used in this interview
           <button CSH="Clauses" class="CSH" />
@@ -164,6 +154,7 @@
           <button id="clause-add">Add</button>
         </div>
       </div>
+
       <div class="panel" id="tabsSteps">
         <div class="tabHeader">Steps
           <button CSH="Steps" class="CSH" /> </div>
@@ -171,6 +162,7 @@
           <div class="tabContent editq"></div>
         </div>
       </div>
+
       <div class="panel" id="tabsPages">
         <div class="tabHeader">
           <button id="expandCollapse"></button>
@@ -207,6 +199,7 @@
 
         </div>
       </div>
+
       <div class="panel" id="tabsMap">
         <div class="tabHeader">
         </div>
@@ -236,6 +229,7 @@
           </div>
         </div>
       </div>
+
       <div class="panel" id="tabsLogic">
         <div class="tabHeader">
           <div id="showlogic">
@@ -251,6 +245,7 @@
           <div class="tabContent editq"></div>
         </div>
       </div>
+
       <div class="panel" id="tabsText">
         <div class="tabHeader">
           <div id="showtext">
@@ -267,10 +262,10 @@
         </div>
       </div>
 
-
       <div class="panel" id="tabsFiles">
         <div class="tabHeader">Files currently attached to this interview
-          <button CSH="Files" class="CSH" /> </div>
+          <button CSH="Files" class="CSH" />
+        </div>
         <div class="tabContentFrame">
           <div class="tabContent editq">
             <table class="A2JFiles">
@@ -282,13 +277,15 @@
           <div class="fileuploader">
             <!-- The fileinput-button span is used to style the file input field as button -->
             <span class="fileinput-button">
-      <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
-        <span class="ui-button-icon-primary ui-icon ui-icon-plus"></span>
+              <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
+                <span class="ui-button-icon-primary ui-icon ui-icon-plus"></span>
             <span class="ui-button-text">Upload files...</span>
             </button>
+
             <!-- The file input field used as target for the file upload widget -->
             <input id="fileupload" type="file" name="files[]" multiple />
             </span>
+
             <div id="progress" class="progress progress-success progress-striped">
               <div class="bar"></div>
             </div>
@@ -346,6 +343,9 @@
         </div>
       </div>
 
+      <div class="panel bootstrap-styles" id="tabsTemplate">
+      </div>
+
       <div class="panel" id="tabsReport">
         <div class="tabHeader">
           <button id="reportFull">Full Report</button>
@@ -363,30 +363,32 @@
       <div class="panel" id="tabsPreview">
         <h1>Previewer</h1> Show preview interview
       </div>
-      <div class="panel" id="tabsUpload">
 
+      <div class="panel" id="tabsUpload">
         <div class="tabHeader">Publish/Upload
           <button CSH="Publish" class="CSH" />
         </div>
-        <p>To publish your interview to another site such as LHI, download the ZIP which contains the interview and its supplemental files.
-        </p>
+        <p>To publish your interview to another site such as LHI, download the ZIP which contains the interview and its supplemental files.</p>
         <button id="guideZIP">Download ZIP</button>
         <button id="guideDownload">Download A2J</button>
         <button id="guidePublish">Publish to Public URL</button>
         <button id="guideMobile">Test Mobile</button>
-
       </div>
     </div>
+
     <div id="cajaheader"><span id="cajainfo" title="About this Authoring System"></span>
       <div class="authorver"></div>
       <div class="authorenv"></div><span id="guidetitle"></span>
       <button id="settings" />
     </div>
-    <div id="cajafooter"><span id="saveStatus"></span><span id="CAJAStatus"></span>
-      <span class="copyright">
-      © 2000-2015 Illinois Institute of Technology - Chicago-Kent College of Law and the Center for Computer-Assisted Legal Instruction
-  </span> </div>
+
+    <div id="cajafooter">
+      <span id="saveStatus"></span>
+      <span id="CAJAStatus"></span>
+      <span class="copyright">© 2000-2015 Illinois Institute of Technology - Chicago-Kent College of Law and the Center for Computer-Assisted Legal Instruction</span>
+    </div>
   </div>
+
   <div class="hidestart">
     <div id="xedit-plain-form" title="Edit" class="">
       <form>
@@ -411,7 +413,8 @@
             <label for="varname">Name:</label>
             <span class="editspan">
         <input type="text" name="varname" id="varname" class="editable text ui-widget-content ui-corner-all"  />
-        </span></div>
+        </span>
+          </div>
           <div>
             <label for="vartype">Type:</label>
             <span class="editspan">
@@ -424,7 +427,8 @@
           <option value="MC">Multiple choice</option>
           <option value="Other">Other</option>
         </select>
-        </span></div>
+        </span>
+          </div>
           <div>
             <label for="varrepeating">Repeating:</label>
             <span class="editspan">
@@ -435,7 +439,8 @@
             <label for="varcomment">Comment:</label>
             <span class="editspan">
         <input type="textarea" name="varcomment" id="varcomment" class="editable taller text ui-widget-content ui-corner-all"  />
-        </span></div>
+        </span>
+          </div>
           <div>
             <label for="varusage">Used by:</label>
             <input type="button" name="varusage" id="varusage" />
@@ -539,6 +544,15 @@
     </div>
   </div>
   </div>
+
+  <script>
+    window.less = {
+      async: true,
+      fileSync: true
+    };
+  </script>
+
+  <script src="../node_modules/steal/steal.js" data-main="author/main"></script>
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-(function(){
+steal('can/util/fixture', function(){
 
   var userData = {
     'userid': 78740,
@@ -123,7 +123,4 @@
     }
   });
 
-}());
-
-
-
+});

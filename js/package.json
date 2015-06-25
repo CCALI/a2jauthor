@@ -15,6 +15,37 @@
     "can": "^2.3.0-pre.1",
     "express": "^4.13.0",
     "jquery": "^2.1.4",
+    "jquery-ui": "^1.10.5",
     "steal": "^0.10.5"
+  },
+  "system": {
+    "paths": {
+      "jquery.ui.widget": "node_modules/jquery-ui/widget.js"
+    },
+    "meta": {
+      "viewer/jquery.ui.combobox": {
+        "deps": [
+          "node_modules/jquery-ui/widget"
+        ]
+      },
+      "viewer/jquery.ui.traggable": {
+        "deps": [
+          "node_modules/jquery-ui/core",
+          "node_modules/jquery-ui/mouse",
+          "node_modules/jquery-ui/widget"
+        ]
+      },
+      "author/src/A2J_AuthorApp": {
+        "deps": [
+          "node_modules/jquery-ui/button",
+          "node_modules/jquery-ui/autocomplete",
+          "node_modules/jquery-ui/draggable",
+          "node_modules/jquery-ui/resizable",
+          "node_modules/jquery-ui/dialog",
+          "node_modules/jquery-ui/tooltip",
+          "node_modules/blueimp-file-upload/js/jquery.fileupload"
+        ]
+      }
+    }
   }
 }

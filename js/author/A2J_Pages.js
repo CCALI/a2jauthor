@@ -526,7 +526,6 @@ function guidePageEditForm(page, div, pagename)//novicePage
 				var canOrder =   field.type===CONST.ftTextPick || field.type===CONST.ftNumberPick || field.type===CONST.ftDateMDY;
 				var canUseCalc = (field.type === CONST.ftNumber) || (field.type === CONST.ftNumberDollar);
 				var canMaxChars= field.type===CONST.ftText || field.type===CONST.ftTextLong || field.type===CONST.ftNumber || field.type===CONST.ftNumberDollar || field.type===CONST.ftNumberPhone || field.type===CONST.ftNumberZIP;				
-				var canCalendar = field.type===CONST.ftDateMDY;
 				var canUseSample = field.type===CONST.ftText || field.type===CONST.ftTextLong  
 					|| field.type === CONST.ftTextPick  || field.type === CONST.ftNumberPick
 					|| field.type===CONST.ftNumber || field.type === CONST.ftNumberZIP || field.type === CONST.ftNumberSSN || field.type === CONST.ftNumberDollar
@@ -541,7 +540,6 @@ function guidePageEditForm(page, div, pagename)//novicePage
 				ff.find('[name="max"]').showit(canMinMax );
 				ff.find('[name="default"]').showit(canDefaultValue);
 				ff.find('[name="calculator"]').showit(canUseCalc);
-				ff.find('[name="calendar"]').showit(canCalendar);
 				
 				ff.find('[name="listext"]').showit(canList);
 				ff.find('[name="listint"]').showit(canList);
@@ -593,8 +591,6 @@ function guidePageEditForm(page, div, pagename)//novicePage
 						change:function(val,field){field.maxChars=val;}}));
 					ff.append(form.checkbox({label:'Show Calculator:',name:'calculator',checkbox:'Calculator available?', value:field.calculator,
 						change:function(val,field){field.calculator=val;}}));
-					ff.append(form.checkbox({label:'Show Calendar:', name:'calendar',checkbox:'Calendar available?', value:field.calendar,
-						change:function(val,field){field.calendar=val;}}));
 					ff.append(form.text({label:'Min value:',name:'min',placeholder:'min', value: field.min,
 						change:function(val,field){field.min=val;}}));
 					ff.append(form.text({label:'Max value:',name:'max',placeholder:'max', value: field.max,

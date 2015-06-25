@@ -112,7 +112,6 @@ function page2JSON(page)
 			_MIN:				f.min, 
 			_MAX:				f.max, 
 			_MAXCHARS:		f.maxChars,
-			_CALENDAR:		f.calendar===true ? true : gJS2XML_SKIP, 
 			_CALCULATOR:	f.calculator===true ? true : gJS2XML_SKIP, 
 			LISTSRC:			f.listSrc,
 			XML_LISTDATA:	f.listData,
@@ -270,7 +269,6 @@ function parseXML2Page(PAGE, page)
 		field.min = makestr($field.attr("MIN"));//could be a number or a date so don't convert to number
 		field.max = makestr($field.attr("MAX"));
 		field.maxChars = makestr($field.attr("MAXCHARS"));
-		field.calendar = textToBool($field.attr("CALENDAR"),false);
 		field.calculator=textToBool($field.attr("CALCULATOR"),false);
 		
 		field.invalidPrompt =makestr(jQuery.trim($field.find("INVALIDPROMPT").xml()));

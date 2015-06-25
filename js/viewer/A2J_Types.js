@@ -183,7 +183,6 @@ function TField()
 	this.order ="";//default, ASC, DESC
 	this.min="";
 	this.max="";
-	this.calendar=false;
 	this.calculator=false;
 	this.maxChars="";
 	this.listSrc="";

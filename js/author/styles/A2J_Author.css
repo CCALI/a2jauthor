@@ -556,7 +556,7 @@ P.CAJATest {
 	font-style: italic;
 }
 .inform {
-	background-image: url(images/inform.png);
+	background-image: url(../images/inform.png);
 	background-repeat: no-repeat;
 	padding: 0;
 	margin: 0;
@@ -626,7 +626,7 @@ table.CAJAReportDump tr:nth-child(3n+3) {
 
 .loader {
 	display: inline-block;
-	background-image: url(../viewer/images/ajax-loader.gif);
+	background-image: url(../../viewer/images/ajax-loader.gif);
 	background-repeat: no-repeat;
 	width:16px;
 	height:16px;
@@ -962,7 +962,7 @@ table.A2JFiles tr:hover{
 	opacity: 0.25;
 }
 .map   .tiny {
-	background-image: url(images/map_page.png);
+	background-image: url(../images/map_page.png);
 	background-repeat:no-repeat;
 	background-color:  inherit;
 	border: 0px hidden;

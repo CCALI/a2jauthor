@@ -1,0 +1,8 @@
+@import './author.jquery-ui.css';
+@import './jquery.fileupload-ui.css';
+@import './A2J_Author.css';
+
+@import '../../viewer/A2J_Fonts.css';
+@import '../../viewer/jquery-ui.extra.css';
+@import '../../viewer/viewer.jquery-ui.css';
+@import '../../viewer/A2J_Viewer.css';

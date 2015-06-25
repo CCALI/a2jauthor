@@ -485,8 +485,8 @@ function jsDate2mdy(d)
 }
 function jsDate2days(d)
 {	// Convert JS date into days since 1/1/1970
-	//trace('jsDate2days',d);
-	return ( d.getTime() /  (1000*60*60*24));
+	// 2015-06-25 Git Issue #259 Ensure no time element.
+	return Math.floor( d.getTime() /  (1000*60*60*24));
 }
 
 function mdyTodmy(MDY)

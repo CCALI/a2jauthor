@@ -47,5 +47,8 @@
         ]
       }
     }
+  },
+  "dependencies": {
+    "documentjs": "^0.3.0-pre.5"
   }
 }

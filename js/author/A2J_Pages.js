@@ -296,7 +296,9 @@ function pageEditDelete(name)
 		/*** @this {{name}} */
 		function(){
 			var page=gGuide.pages[this.name];
-			// TODO Anything pointing to this page is redirect to NOWHERE
+			// 2015-06-29 Git ISsue #273 Anything pointing to this page is redirect to NOWHERE
+			// Handle direct button branches and GOTO's in Logic blocks. 
+			gGuide.pageFindReferences(name,CONST.qIDNOWHERE);
 			delete gGuide.pages[page.name];
 			gGuide.sortPages();
 			updateTOC();
@@ -779,7 +781,10 @@ TGuide.prototype.pageFindReferences=function(findName,newName){
 			var b=page.buttons[bi];
 			if (b.next===findName)
 			{	// 2014-06-02 Make button point to renamed page.
-				b.next = newName; 
+				if ( newName!==null )
+				{	// if newName is null we're not doing replacement.
+					b.next = newName;
+				}
 				matches.push({name:page.name,field:'Button '+b.label,text:b.label});
 			}
 		}

@@ -1,0 +1,14 @@
+{
+  "sites": {
+    "docs": {
+      "parent": "author",
+      "glob": {
+        "ignore": "{docs,viewer,node_modules,tests,minify,author/{src,libs,styles}}/**/*"
+      }
+    },
+    "styles": {
+      "parent": "styles",
+      "glob": "author/**/*.{less,css}"
+    }
+  }
+}

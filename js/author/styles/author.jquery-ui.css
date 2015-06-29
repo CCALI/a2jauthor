@@ -1182,10 +1182,6 @@ body .ui-tooltip {
     color: #000;
 	border-color:#E5E5E5;
 }
-
-.guidepanels {
-	background-color: #e5e5e5;
-}
 .guidemenu {
 	background-color: #c0c0c0;
 	border-color: #c0c0c0;
@@ -1194,29 +1190,12 @@ body .ui-tooltip {
 .tabContent legend, .ui-widget-content legend  {
 	font-size: 1.1em;
 	font-weight:bold;
-	color:#f8fcff;
+	color:#000;
 }
 .ui-dialog-titlebar {
 	font-size: 1.3em;
 	font-weight:bold;
 }
-
-
-/* SJG Theme friendly row alternator: */
-.pagelist ul * li:nth-child(even)
-,table.A2JVars tr:nth-child(even)
-,table.A2JClauses tr:nth-child(even)
-,table.A2JFiles tr:nth-child(even)
-,table.list tr:nth-child(even)
-,.guidelist li:nth-child(even)
-{	background-color:#ECF0F1 ;}
-.pagelist ul * li:nth-child(odd)
-,table.A2JVars tr:nth-child(odd)
-,table.A2JClauses tr:nth-child(odd)
-,table.A2JFiles tr:nth-child(odd)
-,table.list tr:nth-child(odd)
-,.guidelist li:nth-child(odd)
-{	background-color:#BDC3C7 ;}
 
 
 /* JPM TEST */
@@ -1244,11 +1223,6 @@ table.list tr:nth-child(12n+11)
 {	background-color:#C68CC6 ;}
 table.list tr:nth-child(12n+12)
 {	background-color:#C68C8C ;}
-
-
-.editq fieldset {
-	background:#f8fcff;
-}
 
 table.A2JSteps th,
 table.A2JVars th ,

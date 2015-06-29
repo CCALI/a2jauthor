@@ -161,20 +161,16 @@ html, body {
 	cursor: default;
 }
 .guidemenu ul li:hover {
-	font-weight: bold;
-	background-color: #DEF4FF;
-	color:#666666;
+	background-color: #fffee6;
+	color:#000;
 }
 .guidemenu ul li.selected {
-	font-weight:bold;
 	border:thick;
 	border:#0066CC;
 	background-color: #E5E5E5;
 	overflow: visible;
 	background: url(../images/menu_selected.png) 99% center no-repeat;
-/* JPM */
 	color:#0066CC;
-/* JPM */
 	margin:3px;
 
 }
@@ -193,15 +189,15 @@ html, body {
 }
 .pageoutline ul, .guidelist {
 	list-style-type:  none;
-	margin-left: 0;
+	margin: 0;
 	text-indent: 0;
+	padding: 0;
 }
 
 ul.guidelist li {
 	padding: 4px;
 }
 ul.guidelist li span.id {
-	background-color: rgba(255,240,255,0.5);
 	width: 5em;
 	font-style: italic;
 	float:right;
@@ -209,21 +205,18 @@ ul.guidelist li span.id {
 	display: inline-block;
 }
 ul.guidelist li span.size {
-	background-color: rgba(240,255,240,0.5);
 	float:right;
 	width: 4em;
 	text-align:right;
 	display: inline-block;
 }
 ul.guidelist li span.modified {
-	background-color: rgba(255,255,240,0.5);
 	width: 12em;
 	float:right;
 	text-align:center;
 	display: inline-block;
 }
 ul.guidelist li span.pagecount {
-	background-color: rgba(255,255,240,0.5);
 	width: 4em;
 	float:right;
 	text-align:center;

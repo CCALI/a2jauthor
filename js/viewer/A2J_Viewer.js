@@ -626,6 +626,7 @@ var A2JViewer={
 				varIndex=textToNumber(gGuide.varGet(page.repeatVar));
 			}
 			var invalid=false;
+			var checkBoxCount=0; //  Checkbox tally foruse with CheckBoxNOTA. 2015-06-29 Git Issue #315 
 			$('.question.panel .ui-form div').removeClass('error');
 			for (var fi=0; (!invalid ) && (fi<page.fields.length);fi++)
 			{
@@ -758,8 +759,19 @@ var A2JViewer={
 					case CONST.ftCheckBox://"Check box"
 						val  =  $('#'+fid).is(':checked');
 						gGuide.varSet(f.name,val,varIndex);
+						// 2015-06-29 Git Issue #315 
+						if (val) {
+							checkBoxCount ++;
+						}
 					   break;
 					case CONST.ftCheckBoxNOTA://"Check Box (None of the Above)" 
+						val  =  $('#'+fid).is(':checked');
+						// 2015-06-29 Git Issue #315 
+						if ((val && checkBoxCount > 0) || (!val && checkBoxCount == 0))
+						{	// If a CheckbxNOTA exists, either it is checked or one or more other checkboxes are.
+							invalid = true;
+						}
+						gGuide.varSet(f.name,val,varIndex);
 						break;
 				}//end case
 				//trace('Field '+f.name+' '+val);

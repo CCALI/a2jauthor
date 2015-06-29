@@ -1197,6 +1197,21 @@ body .ui-tooltip {
 	font-weight:bold;
 }
 
+/* SJG Theme friendly row alternator: */
+.pagelist ul * li:nth-child(even)
+,table.A2JVars tr:nth-child(even)
+,table.A2JClauses tr:nth-child(even)
+,table.A2JFiles tr:nth-child(even)
+,table.list tr:nth-child(even)
+,.guidelist li:nth-child(even)
+{	background-color:#ECF0F1 ;}
+.pagelist ul * li:nth-child(odd)
+,table.A2JVars tr:nth-child(odd)
+,table.A2JClauses tr:nth-child(odd)
+,table.A2JFiles tr:nth-child(odd)
+,table.list tr:nth-child(odd)
+,.guidelist li:nth-child(odd)
+{	background-color:#BDC3C7 ;}
 
 /* JPM TEST */
 table.list tr:nth-child(12n+1)

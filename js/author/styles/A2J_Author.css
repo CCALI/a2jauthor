@@ -189,9 +189,8 @@ html, body {
 }
 .pageoutline ul, .guidelist {
 	list-style-type:  none;
-	margin: 0;
+	margin-left: 0;
 	text-indent: 0;
-	padding: 0;
 }
 
 ul.guidelist li {
@@ -199,24 +198,28 @@ ul.guidelist li {
 }
 ul.guidelist li span.id {
 	width: 5em;
+	background-color: rgba(255,240,255,0.5);
 	font-style: italic;
 	float:right;
 	text-align:center;
 	display: inline-block;
 }
 ul.guidelist li span.size {
+  background-color: rgba(240,255,240,0.5);
 	float:right;
 	width: 4em;
 	text-align:right;
 	display: inline-block;
 }
 ul.guidelist li span.modified {
+  background-color: rgba(255,255,240,0.5);
 	width: 12em;
 	float:right;
 	text-align:center;
 	display: inline-block;
 }
 ul.guidelist li span.pagecount {
+  background-color: rgba(255,255,240,0.5);
 	width: 4em;
 	float:right;
 	text-align:center;
@@ -358,18 +361,13 @@ div.editq {
 	padding:0;
 	margin-top:25px;
 }
-.editq fieldset {
-}
 .editq fieldset div  {
 	margin-top: 1em;
 }
 .editq fieldset {
 	padding: inherit;
 	margin-top:25px;
-/* */
 	padding-bottom: 1.3em;
-/* */
-
 }
 .sorthandle {
 	cursor: move;

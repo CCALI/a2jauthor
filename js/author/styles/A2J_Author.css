@@ -31,13 +31,9 @@
 
 html, body {
 	font-family:  "Open Sans",​sans-serif;
-	/*Verdana, Arial, Helvetica, sans-serif;*/
 	font-size: 12px;
-	height:100%;
-	width:100%;
 	margin:0;
 	padding:0;
-	overflow: hidden;
 }
 
 
@@ -52,11 +48,10 @@ html, body {
 }
 
 .authortool {
-	height:100%;
-	width:100%;
 	margin:0;
 	padding:0;
-	overflow: hidden;
+	padding-left: 125px;
+	/* overflow: hidden; */
 }
 
 #cajaheader {
@@ -66,7 +61,7 @@ html, body {
 	height: 32px;
 }
 #cajainfo  {
-	position: fixed;
+	/* position: fixed; */
 	width: 260px;
 	height: 64px;
 /* JPM */
@@ -76,7 +71,7 @@ html, body {
 #guidetitle  {
 	text-align: center;
 	top:10px;
-	position: fixed;
+	/* position: fixed; */
 	left:130px;
 	right:130px;
 	overflow:hidden;
@@ -84,12 +79,12 @@ html, body {
 
 }
 #settings {
-	position: fixed;
+	/* position: fixed; */
 	right: 5px;
 	z-index: 2;
 }
 .guideio {
-	position: fixed;
+	/* position: fixed; */
 	left: 5px;
 	top: 35px;
 }
@@ -97,7 +92,7 @@ html, body {
 #cajafooter {
 	border-top : 2px solid #cccccc;
 	font-size: 9px;
-	position: fixed;
+	/* position: fixed; */
 	padding:0px;
 	margin: 0px;
 	height: 16px;
@@ -110,7 +105,7 @@ html, body {
 	text-overflow:ellipsis
 }
 .guidepanels {
-	position: fixed;
+	/* position: fixed; */
 	right:4px;
 	top: 70px;
 	bottom:24px;
@@ -121,7 +116,7 @@ html, body {
 }
 .guidemenu {
 	margin: 0px;
-	position:  fixed;
+	 position:  fixed;
 	left:10px;
 /* JPM */
 	top: 70px;
@@ -131,7 +126,7 @@ html, body {
 	border : 1px solid #c0c0c0;
 }
 .authorenv {
-	position:  absolute;
+	/* position:  absolute; */
 	right: 10px;
 	top: 30px;
 	font-size:2em;
@@ -139,7 +134,7 @@ html, body {
 	text-shadow: 2px 2px 0px #0000FF;
 }
 .authorver {
-	position:  absolute;
+	/* position:  absolute; */
 	left:60px;
 	top: 50px;
 	font-size:10px;
@@ -250,22 +245,22 @@ ul.guidelist li span.pagecount {
 }
 
 .tabsPages {
-	position: absolute;
+	/* position: absolute; */
 	top:0px;
 	left:0px;
 	right: 0px;
 	bottom:0px;
-	overflow: auto;
+	/* overflow: auto; */
 	padding: .5em;
 
 }
 .tabsMapPages {
-	position: absolute;
+	/* position: absolute; */
 	top:0px;
 	left:0px;
 	right: 70%;
 	bottom:0px;
-	overflow: auto;
+	/* overflow: auto; */
 }
 
 
@@ -670,7 +665,7 @@ table.list tr td  {
    height: 18px;
    width: 19px;
    padding: 1px;
-   position: absolute;
+   /* position: absolute; */
    right: 23px;
    top: 9px;
 }
@@ -683,7 +678,7 @@ table.list tr td  {
 }
 
 #dialog_window_minimized_container {
-   position: fixed;
+   /* position: fixed; */
    bottom: 0px;
    right: 0px;
 	z-index: 9999;
@@ -698,7 +693,7 @@ table.A2JFiles tr:hover{
 }
 
 .example{
-	overflow: auto;
+	/* overflow: auto; */
 	height: 100%;
 }
 .tabsVariables {
@@ -722,12 +717,12 @@ table.A2JFiles tr:hover{
 	margin-right: 10px;
 }
 .tabContentFrame {
-	position: absolute;
+	/* position: absolute; */
 	top: 55px;
 	left: 15px;
 	right:10px;
 	bottom:10px;
-	overflow: auto;
+	/* overflow: auto; */
 }
 
 #tabsPages .tabContentFrame {
@@ -758,11 +753,11 @@ table.A2JFiles tr:hover{
 	bottom: 4em;
 }
 .tabFooter {
-	position: absolute;
+	/* position: absolute; */
 	bottom: 2px;
 }
 .tabContent {
-	position: absolute;
+	/* position: absolute; */
 	overflow: hidden;
 	border: 2px #0f0;
 }
@@ -772,31 +767,31 @@ table.A2JFiles tr:hover{
 
 /* Mapper */
 #tabsMapper{
-	position: absolute;
+	/* position: absolute; */
 	top: 0px;
 	left: 33%;
 	right:10px;
 	bottom:0px;
-	overflow: auto;
+	/* overflow: auto; */
 	border: none;
 }
 .PagesPanel {
-	position: absolute;
+	/* position: absolute; */
 	top: 5px;
 	left: 10px;
 	right:10px;
 	bottom:35px;
-	overflow: auto;
+	/* overflow: auto; */
 	border: 1px solid #c0c0c0 ;
 }
 
 #MapperPanel {
-	position: absolute;
+	/* position: absolute; */
 	top: 5px;
 	left: 10px;
 	right:10px;
 	bottom:35px;
-	overflow: auto;
+	/* overflow: auto; */
 	border: 1px solid #c0c0c0 ;
 	background-color: #FFFFFF;
 }
@@ -815,7 +810,7 @@ table.A2JFiles tr:hover{
 	height: 100px;
 	border: 1px outset #006699;
 	text-align: center;
-	position: absolute;
+	/* position: absolute; */
 	font-family: Arial, Helvetica, sans-serif;
 	font-style: normal;
 	line-height: normal;
@@ -863,7 +858,7 @@ table.A2JFiles tr:hover{
 	width: 15px;
 	border: 0px none;
 	text-align: center;
-	position: absolute;
+	/* position: absolute; */
 	font-family: Arial, Helvetica, sans-serif;
 	font-style: normal;
 	line-height: normal;
@@ -882,10 +877,10 @@ table.A2JFiles tr:hover{
 .map   .line {
 	background-color: #000;
 	border: 0px #000;
-	position: absolute;
+	/* position: absolute; */
 }
 .mapper.icon.arrow {
-	position: absolute;
+	/* position: absolute; */
 	background-image: url(../images/map_arrow_down.png);
 	background-repeat:no-repeat;
 	width:16px;
@@ -894,7 +889,7 @@ table.A2JFiles tr:hover{
 	top: -21px;
 }
 .mapper.icon.start {
-	position: absolute;
+	/* position: absolute; */
 	background-image: url(../images/MapperIconStart.png);
 	background-repeat:no-repeat;
 	width:100px;
@@ -903,7 +898,7 @@ table.A2JFiles tr:hover{
 	top: -150px;
 }
 .mapper.icon.exit {
-	position: absolute;
+	/* position: absolute; */
 	background-image: url(../images/MapperIconExit.png);
 	background-repeat:no-repeat;
 	width:100px;
@@ -948,7 +943,7 @@ div.codeedit span.err {
 
 #uploadCMPFileInput {
 	opacity:  0;
-	position: absolute;
+	/* position: absolute; */
 	left: 0px;
 	height: 30px;
 }

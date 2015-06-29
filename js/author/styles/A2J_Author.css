@@ -93,13 +93,7 @@ html, body {
 	left: 5px;
 	top: 35px;
 }
-/*
-#guideClose {
-	position: fixed;
-	right: 5px;
-	top: 35px;
-}
-*/
+
 #cajafooter {
 	border-top : 2px solid #cccccc;
 	font-size: 9px;
@@ -175,7 +169,6 @@ html, body {
 	font-weight:bold;
 	border:thick;
 	border:#0066CC;
-	/*text-transform:uppercase; SJG no. */
 	background-color: #E5E5E5;
 	overflow: visible;
 	background: url(../images/menu_selected.png) 99% center no-repeat;
@@ -185,26 +178,18 @@ html, body {
 	margin:3px;
 
 }
-/*.ui-tabs .ui-tabs-nav li {
-	font-size: .9em;
-}
-*/
+
 .pagelist ul {
 	font-weight: normal;
 	list-style-type: square;
 	font-style: normal;
 	padding: 0px;
 	padding-left: 2em;
-/*
-	margin-top: -.25em; */
 	margin-bottom: 2em;
-/* */
 }
 .pageoutline {
 	margin: 0px;
-/* */
 	padding: 10px 0px 5px;
-/* */
 }
 .pageoutline ul, .guidelist {
 	list-style-type:  none;
@@ -253,10 +238,7 @@ ul.guidelist li span.pagecount {
 	font-size: 1em;
 	max-height: 2.5em;
 	overflow: hidden;
-/* START JPM edits 7/1/2013 */
-	/*background-color: #fff;*/
 	padding: .5em;
-/* END */
 }
 
 .pagelist > ul > li {
@@ -278,9 +260,7 @@ ul.guidelist li span.pagecount {
 	right: 0px;
 	bottom:0px;
 	overflow: auto;
-/* */
 	padding: .5em;
-/* */
 
 }
 .tabsMapPages {
@@ -295,11 +275,9 @@ ul.guidelist li span.pagecount {
 
 .editicons {
 	border-collapse:collapse;
-/* */
 	border-style:dotted;
 	border-color:#CCCCCC;
 	border-width:thin;
-/* */
 	margin: 0px;
 	padding: 0px;
 	width: 50px;
@@ -311,13 +289,10 @@ ul.guidelist li span.pagecount {
 
 /*********** A2J ***************/
 table.A2JSteps, table.A2JVars , table.A2JClauses, table.A2JFiles {
-/*	border-collapse:collapse; */
 	width:100%;
-/* JPM */
 	border-style:solid;
 	border-width:thin;
 	border-color:#fff;
-/* JPM */
 }
 
 
@@ -334,12 +309,6 @@ table.A2JSteps tr, table.A2JVars tr , table.A2JClauses tr {
 }
 /* JPM */
 
-
-
-/*.Step1, .Step7, table.A2JSteps tr:nth-child(3n+1) { background-color: #BDD6D6; }
-.Step2, .Step8, table.A2JSteps tr:nth-child(3n+2)  { background-color: #B7DDB7; }
-.Step3, .Step9, table.A2JSteps tr:nth-child(3n+3)  { background-color: #EFC68C; }
-*/
 
 input.narrow {
 	width: 5em;
@@ -369,7 +338,6 @@ input.narrow {
 
 div.editq {
 	width: 100%;
-	/*-moz-border-radius:12px; border-radius:12px;*/
 	margin: 0px;
 	padding: 5px;
 }
@@ -426,10 +394,6 @@ div.editq {
 .editable.tallest {
 	min-height: 5em;
 }
-/*.editable:focus {
-	min-width: 20em;
-}
-*/
 
 .editable { /* authoring text fields */
 	min-width: 10em;
@@ -453,21 +417,7 @@ div.editq {
 	/* prevent horizontal scrollbar */
 	overflow-x: hidden;
  }
-/*.widetext {
-	width: 20em;
-	padding: 0;
-	margin: 0;
-	padding-left: 3px;
-	padding-right: 3px;
-	background-color: #1ff;
-}
-x.autocomplete.picker.page {
-	width:100%;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-}
-*/
+
 .codeedit, .xml {
 	white-space: pre-wrap;
 }
@@ -478,16 +428,6 @@ x.autocomplete.picker.page {
 	height: 1.5em;
 	overflow: hidden;
 }
-
-/*
-x.bubble {
-	border-radius:15px 15px 15px 15px;
-	border: 3px solid #06c;
-	background-color: #C4E1FF;
-	margin-bottom: 1em;
-	padding: 1em;
-}
-*/
 
 .CAJAContent P {
 	padding: 0;
@@ -543,11 +483,6 @@ P.CAJATest {
 	background-color:#eee;
 }
 .warning {
-	/*background-image: url(images/warning.png);
-	background-repeat: no-repeat;
-	padding-left: 20px;
-	height: 16px;
-	*/
 	padding: 0;
 	margin: 0;
 	background-color:#fdd;
@@ -598,11 +533,6 @@ table.CAJAReportDump tr:nth-child(3n+2) {
 }
 table.CAJAReportDump tr:nth-child(3n+3) {
 	background-color:rgba(255,255,255,0.5);
-}
-
-.FleschKincaidUnder7 {
-	/* if good just leave it untouched, less cluttered.
-	background-color: #8f8; */
 }
 .GradeReport.FleschKincaidUnder7 {
 	background-color: #8f8;
@@ -671,7 +601,6 @@ table.CAJAReportDump tr:nth-child(3n+3) {
 	border-left-width: 1px;
 }
 .section .header .hintinfo {
-	/*xfont-size: 12px;*/
 	color:#999999;
 	font-weight: bold;
 	font-style: italic;
@@ -689,12 +618,8 @@ table.CAJAReportDump tr:nth-child(3n+3) {
 	background: url(jQuery/images/folder.gif) 0 0 no-repeat;
 }
 .editInPlace {
-	padding:5px;/*border: 1px solid #00CC99;*/
+	padding:5px;
 }
-/*.editable, textarea {
-	background-color: #ffffd3;
-}
-*/
 textarea {
 	width: 95%;
 	font-size: 1em;
@@ -730,15 +655,8 @@ table.list tr   {
 	border-collapse:separate;
 }
 table.list tr td  {
-	/*font-size: .8em;*/
 	padding:.1em;
 }
-/*
-select {
-	width: 10em;
-}
-*/
-
 .hidden {
 	display: none;
 }
@@ -747,23 +665,10 @@ select {
 .hidestart {
 	visibility: hidden;
 }
-
-
-
-/*
-#login-form label, input { display:block; }
-#login-form input.text { margin-bottom:12px; width:95%; padding: .4em; }
-
-.validateTips { border: 1px solid transparent; padding: 0.3em; }
-input.text { margin-bottom:12px; width:95%; padding: .4em; }
-*/
-
 .ui-dialog .ui-state-error { padding: .3em; }
 
 .ui-dialog {
-/* JPM*/
 	box-shadow: 10px 10px #888888;
-/* JPM*/
 }
 
 #guidepanel > ul > span {
@@ -792,14 +697,6 @@ input.text { margin-bottom:12px; width:95%; padding: .4em; }
    right: 0px;
 	z-index: 9999;
 }
-/*
-li.guide {
-	cursor: pointer;
-}
-li.guide:hover {
-	background-color:#C0DCC0;
-}
-*/
 .pagelist * li:hover, li.guide:hover,
 table.A2JVars tr:hover,
 table.A2JClauses tr:hover,
@@ -813,24 +710,9 @@ table.A2JFiles tr:hover{
 	overflow: auto;
 	height: 100%;
 }
-
-/*#tabsAbout, #tabsPageEdit, #tabsGuide, #tabsPageView, #tabsVariables, #tabsMapper, #tabsConstants, #tabsSteps, #tabsLogic, #tabsText {
-	overflow: hidden;
-	margin:0;
-	padding:0;
-	width: 100%;
-	height: 100%;
-	border: none;
-}
-*/
-
-/* JPM */
 .tabsVariables {
 	border:#666666;
 }
-/* JPM */
-
-
 .tabsPanel {
 	height: 100%;
 	overflow: scroll;
@@ -914,9 +796,7 @@ table.A2JFiles tr:hover{
 	right:10px;
 	bottom:35px;
 	overflow: auto;
-/* START 2013/7/1 JPM EDITS */
 	border: 1px solid #c0c0c0 ;
-/* START 2013/7/1 JPM EDITS */
 }
 
 #MapperPanel {
@@ -940,7 +820,6 @@ table.A2JFiles tr:hover{
 	margin: 0px;
 	padding: 4px;
 	width: 150px;
-	/*height: 36px;*/
 	min-height: 100px;
 	height: 100px;
 	border: 1px outset #006699;
@@ -977,7 +856,6 @@ table.A2JFiles tr:hover{
 	border: 2px double;
 }
 .node .text {
-	/*height: 100%;*/
 	overflow: hidden;
 }
 .node .taglist {
@@ -1050,7 +928,6 @@ div.codeedit span.err {
 	text-decoration: none;
 	background-color: #f88;
 	border: 1px;
-	/*border-bottom: dashed  1px #f00;*/
 	padding-bottom: 0px;
 }
 
@@ -1062,7 +939,6 @@ div.codeedit span.err {
 	height: 2em;
 	margin: 0px;
 	padding: 0px;
-	/*background-color: #ddd;*/
 }
 
 /* JPM expandCollapse button */
@@ -1085,5 +961,3 @@ div.codeedit span.err {
 	left: 0px;
 	height: 30px;
 }
-
-/* */

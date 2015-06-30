@@ -433,6 +433,12 @@ button.ui-button::-moz-focus-inner {
 	margin: -10px 0 0 0;
 	padding: 1px;
 	height: 20px;
+	background: transparent;
+	border: none;
+}
+.ui-dialog .ui-dialog-titlebar-close:hover {
+	background: transparent;
+	border: none;
 }
 .ui-dialog .ui-dialog-content {
 	position: relative;
@@ -812,6 +818,7 @@ body .ui-tooltip {
 	font-size: 1em;
 }
 .ui-widget-content {
+  background-color: #fff;
 	color: #362b36;
 }
 .ui-widget-content a {

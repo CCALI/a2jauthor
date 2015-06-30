@@ -27,8 +27,6 @@
  { font-weight: normal; }
 
 
-
-
 html, body {
 	font-family:  "Open Sans",​sans-serif;
 	font-size: 12px;
@@ -66,7 +64,7 @@ html, body {
   top: 0;
   left: 0;
   background: #fff;
-  z-index: 1000;
+  z-index: 98;
 }
 #cajafooter {
 	font-size: 9px;
@@ -80,13 +78,14 @@ html, body {
 	left: 0;
 	background: #fff;
 	border-top: 1px solid #eee;
-	z-index: 1000;
+	z-index: 98;
 }
 .copyright {
 	float:right;
 	text-align:right;
 	text-overflow:ellipsis
 }
+
 .guidemenu {
   margin: 0;
   padding: 0;
@@ -94,7 +93,13 @@ html, body {
   top: 0;
   left: 0;
   width: 125px;
-  z-index: 1001;
+  z-index: 99;
+}
+.guidemenu .logo {
+  margin: 8px auto;
+  width: 51px;
+  height: 53px;
+  display: block;
 }
 .authorenv {
 	font-size:2em;
@@ -207,24 +212,8 @@ ul.guidelist li span.pagecount {
 	font-style: italic;
 }
 
-.tabsPages {
-	/* position: absolute; */
-	top:0px;
-	left:0px;
-	right: 0px;
-	bottom:0px;
-	/* overflow: auto; */
-	padding: .5em;
 
-}
-.tabsMapPages {
-	/* position: absolute; */
-	top:0px;
-	left:0px;
-	right: 70%;
-	bottom:0px;
-	/* overflow: auto; */
-}
+
 
 
 .editicons {
@@ -628,9 +617,9 @@ table.list tr td  {
    height: 18px;
    width: 19px;
    padding: 1px;
-   /* position: absolute; */
+   /* position: absolute;
    right: 23px;
-   top: 9px;
+   top: 9px;*/
 }
 #guidepanel .ui-widget-header  .ui-dialog-titlebar-close .ui-icon {
    display: block;
@@ -641,9 +630,9 @@ table.list tr td  {
 }
 
 #dialog_window_minimized_container {
-   /* position: fixed; */
+   /* position: fixed;
    bottom: 0px;
-   right: 0px;
+   right: 0px;*/
 	z-index: 9999;
 }
 .pagelist * li:hover, li.guide:hover,
@@ -673,51 +662,27 @@ table.A2JFiles tr:hover{
 }
 .tabHeader {
 	font-size: 1.0em;
+	padding-bottom: 15px;
+}
+.tabHeader.bootstrap-styles h3 {
+  font-size: 20px;
+  margin: 0;
 }
 .tabContentFrame {
-	/* position: absolute; */
-	top: 55px;
-	left: 15px;
-	right:10px;
-	bottom:10px;
-	/* overflow: auto; */
-}
 
-#tabsPages .tabContentFrame {
-	top: 3em;
-	bottom: 5px;
 }
 #tabsPages .tabContentFrame .tabContent  {
 	background-color: #fff;
 }
-#tabsMap .tabContentFrame {
-	top: 5px;
-	bottom: 5px;
-}
-#tabsVariables .tabContentFrame {
-	top: 5em;
-	bottom: 4em;
-}
-#tabsLogic .tabContentFrame, #tabsText .tabContentFrame {
-	top: 7em;
-	bottom:10px;
-}
-#tabsFiles .tabContentFrame {
-	top: 3em;
-	bottom: 3em;
-}
-#tabsGuides .tabContentFrame {
-	top: 5em;
-	bottom: 4em;
-}
+
 .tabFooter {
 	/* position: absolute; */
-	bottom: 2px;
+	padding-top: 15px;
+	padding-bottom: 15px;
 }
 .tabContent {
 	/* position: absolute; */
-	overflow: hidden;
-	border: 2px #0f0;
+	border: none;
 }
 #showlogic, #showtext {
 	display: inline;
@@ -725,35 +690,79 @@ table.A2JFiles tr:hover{
 
 /* Mapper */
 #tabsMapper{
-	/* position: absolute; */
+	/*position: absolute;
 	top: 0px;
 	left: 33%;
 	right:10px;
 	bottom:0px;
-	/* overflow: auto; */
+	 overflow: auto; */
 	border: none;
+	float: left;
+	width: 60%;
+	height: 100%;
+
+	position: absolute;
+  left: 30%;
+  box-sizing: border-box;
+  overflow: auto;
+}
+.tabsMapPages {
+	/*position: absolute;
+	top:0px;
+	left:0px;
+	right: 70%;
+	bottom:0px; */
+	overflow: auto;
+	float: left;
+	width: 30%;
+	height: 100%;
+
+	position: absolute;
+  left: 0;
+  box-sizing: border-box;
+  overflow-x: scroll;
 }
 .PagesPanel {
-	/* position: absolute; */
+	/* position: absolute;
 	top: 5px;
 	left: 10px;
 	right:10px;
 	bottom:35px;
-	/* overflow: auto; */
-	border: 1px solid #c0c0c0 ;
+	overflow: auto; */
+	border: 1px solid #c0c0c0;
+}
+#tabsMap {
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+  height: auto;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-left: 150px;
+  margin-top: 75px;
+  box-sizing: border-box;
 }
 
 #MapperPanel {
-	/* position: absolute; */
+	/*position: absolute;
 	top: 5px;
 	left: 10px;
 	right:10px;
-	bottom:35px;
-	/* overflow: auto; */
+	bottom:35px; */
+	overflow: auto;
 	border: 1px solid #c0c0c0 ;
 	background-color: #FFFFFF;
-}
 
+	height: 100%;
+}
+#mapsTabber .tabFooter {
+  position: absolute;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  z-index: 99;
+}
 .map {
 	border: 2px #0f0;
 	position: relative;
@@ -768,7 +777,7 @@ table.A2JFiles tr:hover{
 	height: 100px;
 	border: 1px outset #006699;
 	text-align: center;
-	/* position: absolute; */
+	position: absolute;
 	font-family: Arial, Helvetica, sans-serif;
 	font-style: normal;
 	line-height: normal;
@@ -816,7 +825,7 @@ table.A2JFiles tr:hover{
 	width: 15px;
 	border: 0px none;
 	text-align: center;
-	/* position: absolute; */
+	position: absolute;
 	font-family: Arial, Helvetica, sans-serif;
 	font-style: normal;
 	line-height: normal;
@@ -835,10 +844,10 @@ table.A2JFiles tr:hover{
 .map   .line {
 	background-color: #000;
 	border: 0px #000;
-	/* position: absolute; */
+	 position: absolute;
 }
 .mapper.icon.arrow {
-	/* position: absolute; */
+	position: absolute;
 	background-image: url(../images/map_arrow_down.png);
 	background-repeat:no-repeat;
 	width:16px;
@@ -847,7 +856,7 @@ table.A2JFiles tr:hover{
 	top: -21px;
 }
 .mapper.icon.start {
-	/* position: absolute; */
+	position: absolute;
 	background-image: url(../images/MapperIconStart.png);
 	background-repeat:no-repeat;
 	width:100px;
@@ -856,7 +865,7 @@ table.A2JFiles tr:hover{
 	top: -150px;
 }
 .mapper.icon.exit {
-	/* position: absolute; */
+	position: absolute;
 	background-image: url(../images/MapperIconExit.png);
 	background-repeat:no-repeat;
 	width:100px;
@@ -889,19 +898,17 @@ div.codeedit span.err {
 #expandCollapse, .tabHeader button.ecPanelButton {
 	font-size: small;
 	/* top: -5px; */
-	float: right;
-
+	/* float: right; */
 }
 
 .tabHeader button.CSH {
 	font-size: small;
-	top: -5px;
 	/* float: right; */
 }
 
 #uploadCMPFileInput {
 	opacity:  0;
-	/* position: absolute; */
+	/* position: absolute;
 	left: 0px;
-	height: 30px;
+	height: 30px;*/
 }

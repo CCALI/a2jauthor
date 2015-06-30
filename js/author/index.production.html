@@ -502,7 +502,19 @@
       fileSync: true
     };
   </script>
-  <script src="../node_modules/steal/steal.js" data-main="author/main"></script>
+  <script src="../node_modules/steal/steal.js" data-env="production" data-main="author/main"></script>
+  <script type="text/javascript">
+    parents = {};
+
+    var normalize = System.normalize;
+    System.normalize = function(name, parentName, parentAddress){
+      return Promise.resolve(normalize.apply(this, arguments)).then(function(name){
+        var p = parents[name] = parents[name] || [];
+        p.push(parentName);
+        return name;
+      });
+    };
+  </script>
 </body>
 
 </html>

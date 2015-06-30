@@ -23,7 +23,6 @@
   "disallowSpaceBeforeBinaryOperators": [ "," ],
   "disallowMixedSpacesAndTabs": true,
   "disallowTrailingWhitespace": true,
-  "requireTrailingComma": false,
   "disallowYodaConditions": true,
   "disallowKeywords": [ "with" ],
   "disallowKeywordsOnNewLine": ["else"],

@@ -1,8 +1,8 @@
-{
+ {
   "name": "a2j-author-viewer-gui",
   "version": "0.0.1",
   "description": "Authoring and viewer App GUI.",
-  "main": "A2J_AuthorApp.js",
+  "main": "author/main",
   "scripts": {
     "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,37 +17,53 @@
     "express": "^4.13.0",
     "grunt": "^0.4.5",
     "jquery": "^2.1.4",
-    "jquery-ui": "^1.10.5",
-    "steal": "^0.10.5"
+    "jquery-ui": "git://github.com/jquery/jquery-ui.git#1.11.4",
+    "steal": "^0.10.5",
+    "steal-tools": "^0.11.0-pre.1"
   },
   "system": {
     "npmIgnore": [ "documentjs" ],
-    "paths": {
-      "jquery.ui.widget": "node_modules/jquery-ui/widget.js"
+    "map": {
+      "jquery.ui.widget": "jquery-ui/ui/widget"
     },
     "meta": {
+      "viewer/A2J_Types": {
+        "format": "global"
+      },
       "viewer/jquery.ui.combobox": {
-        "deps": [
-          "node_modules/jquery-ui/widget"
-        ]
+        "deps": [ "jquery-ui/ui/widget" ]
       },
       "viewer/jquery.ui.traggable": {
         "deps": [
-          "node_modules/jquery-ui/core",
-          "node_modules/jquery-ui/mouse",
-          "node_modules/jquery-ui/widget"
+          "jquery-ui/ui/mouse",
+          "jquery-ui/ui/widget"
         ]
       },
+      "viewer/A2J_AnswerFile": {
+        "format": "global",
+        "deps": [ "viewer/A2J_Types" ]
+      },
+      "author/src/A2J_Tabs": {
+        "format": "global",
+        "deps": [ "jquery-ui/ui/sortable" ]
+      },
+      "author/src/TextStatistics": {
+        "format": "global"
+      },
       "author/src/A2J_AuthorApp": {
+        "format": "global",
         "deps": [
-          "node_modules/jquery-ui/button",
-          "node_modules/jquery-ui/autocomplete",
-          "node_modules/jquery-ui/draggable",
-          "node_modules/jquery-ui/resizable",
-          "node_modules/jquery-ui/dialog",
-          "node_modules/jquery-ui/tooltip",
-          "node_modules/blueimp-file-upload/js/jquery.fileupload"
+          "jquery-ui/ui/button",
+          "jquery-ui/ui/autocomplete",
+          "jquery-ui/ui/draggable",
+          "jquery-ui/ui/resizable",
+          "jquery-ui/ui/dialog",
+          "jquery-ui/ui/tooltip",
+          "blueimp-file-upload/js/jquery.fileupload"
         ]
+      },
+      "blueimp-file-upload/js/jquery.fileupload": {
+        "deps": [ "jquery" ]
       }
     }
   }

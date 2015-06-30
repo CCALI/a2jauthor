@@ -1,9 +1,7 @@
 import $ from 'jquery';
 import template from './index.stache!';
 
-// import fixtures and app source files.
 import 'author/styles/';
-import 'author/models/fixtures/';
 import 'author/src/';
 
 import 'author/main.less!';

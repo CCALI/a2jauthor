@@ -22,7 +22,12 @@
     "steal-tools": "^0.11.0-pre.1"
   },
   "system": {
-    "npmIgnore": [ "documentjs" ],
+    "npmIgnore": [
+      "documentjs"
+    ],
+    "configDependencies": [
+      "author/load_fixtures"
+    ],
     "map": {
       "jquery.ui.widget": "jquery-ui/ui/widget"
     },

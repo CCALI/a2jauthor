@@ -689,48 +689,6 @@ table.A2JFiles tr:hover{
 }
 
 /* Mapper */
-#tabsMapper{
-	/*position: absolute;
-	top: 0px;
-	left: 33%;
-	right:10px;
-	bottom:0px;
-	 overflow: auto; */
-	border: none;
-	float: left;
-	width: 60%;
-	height: 100%;
-
-	position: absolute;
-  left: 30%;
-  box-sizing: border-box;
-  overflow: auto;
-}
-.tabsMapPages {
-	/*position: absolute;
-	top:0px;
-	left:0px;
-	right: 70%;
-	bottom:0px; */
-	overflow: auto;
-	float: left;
-	width: 30%;
-	height: 100%;
-
-	position: absolute;
-  left: 0;
-  box-sizing: border-box;
-  overflow-x: scroll;
-}
-.PagesPanel {
-	/* position: absolute;
-	top: 5px;
-	left: 10px;
-	right:10px;
-	bottom:35px;
-	overflow: auto; */
-	border: 1px solid #c0c0c0;
-}
 #tabsMap {
   width: 100%;
   overflow: hidden;
@@ -740,9 +698,70 @@ table.A2JFiles tr:hover{
   top: 0;
   left: 0;
   right: 0;
-  margin-left: 150px;
-  margin-top: 75px;
+  /*margin-left: 150px;
+  margin-top: 75px;*/
+  padding-left: 150px;
+  padding-top: 75px;
   box-sizing: border-box;
+}
+.tabContentFrame {
+  height: 100%;
+}
+.tabContentFrame .col-8 {
+  float: left;
+  width: 70%;
+  height: 100%;
+  overflow: auto;
+}
+.tabContentFrame .col-4 {
+  float: left;
+  width: 30%;
+  height: 100%;
+  overflow: auto;
+  background: #eee;
+}
+#tabsMapper{
+  margin-left: 15px;
+	/*position: absolute;
+	top: 0px;
+	left: 33%;
+	right:10px;
+	bottom:0px;
+	 overflow: auto;
+	border: none;
+	float: left;
+	width: 60%;
+	height: 100%;
+
+	position: absolute;
+  left: 30%;
+  box-sizing: border-box;
+  overflow: auto;*/
+}
+.tabsMapPages {
+	/*position: absolute;
+	top:0px;
+	left:0px;
+	right: 70%;
+	bottom:0px;
+	overflow: auto;
+	float: left;
+	width: 30%;
+	height: 100%;
+
+	position: absolute;
+  left: 0;
+  box-sizing: border-box;
+  overflow-x: scroll;*/
+}
+.PagesPanel {
+	/* position: absolute;
+	top: 5px;
+	left: 10px;
+	right:10px;
+	bottom:35px;
+	overflow: auto;
+	border: 1px solid #c0c0c0;*/
 }
 
 #MapperPanel {
@@ -750,18 +769,19 @@ table.A2JFiles tr:hover{
 	top: 5px;
 	left: 10px;
 	right:10px;
-	bottom:35px; */
+	bottom:35px;
 	overflow: auto;
 	border: 1px solid #c0c0c0 ;
 	background-color: #FFFFFF;
 
-	height: 100%;
+	height: 100%;*/
 }
-#mapsTabber .tabFooter {
+#tabsMapper .tabFooter {
   position: absolute;
   background: #fff;
   border-bottom: 1px solid #eee;
   z-index: 99;
+  width: 100%;
 }
 .map {
 	border: 2px #0f0;

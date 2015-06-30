@@ -19,14 +19,14 @@
     <div align="center"> <img src="../viewer/images/A2J5_Icon_512.png" /> </div>
   </div>
 
-    <div id="cajaheader" class="bootstrap-styles">
+    <div id="cajaheader" class="hidestart bootstrap-styles">
       <header>
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-8">
               <h1 id="guidetitle">A2J Guided Interviews<sup>®</sup></h1>
             </div>
-            <div class="col-md-4 text-right">
+            <div class="col-md-4">
               <button id="settings" /></button><br />
               <span class="authorver"></span>
               <span class="authorenv"></span>
@@ -205,32 +205,35 @@
         <div class="tabHeader bootstrap-styles">
         </div>
         <div class="tabContentFrame">
-          <div class="tabsMapPages">
-            <div class="PagesPanel">
-              <div id="CAJAOutlineMap" class="pageoutline pagelist">
-                <ul>
-                </ul>
+          <div class="col-4">
+            <div class="tabsMapPages">
+              <div class="PagesPanel">
+                <div id="CAJAOutlineMap" class="pageoutline pagelist">
+                  <ul>
+                  </ul>
+                </div>
+              </div>
+              <div class="tabFooter">
               </div>
             </div>
-            <div class="tabFooter">
-            </div>
-          </div>
-          <div id="tabsMapper">
+          </div><!-- col-4 -->
+          <div class="col-8">
+           <div id="tabsMapper">
 
-            <div class="tabFooter">
-              <!-- JPM added button to hide/show page list -->
-              <button></button>
-              <button zoom="fit"></button>
-              <button zoom="1.25"></button>
-              <button zoom="0.75"></button>
-              <button CSH="Map" class="CSH" />
-            </div>
+              <div class="tabFooter">
+                <button></button>
+                <button zoom="fit"></button>
+                <button zoom="1.25"></button>
+                <button zoom="0.75"></button>
+                <button CSH="Map" class="CSH" />
+              </div>
 
-            <div id="MapperPanel">
-              <div class="map"></div>
-            </div>
+              <div id="MapperPanel">
+                <div class="map"></div>
+              </div>
 
-          </div>
+            </div>
+          </div><!-- col-8 -->
         </div>
       </div>
 

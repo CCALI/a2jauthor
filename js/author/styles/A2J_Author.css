@@ -212,10 +212,6 @@ ul.guidelist li span.pagecount {
 	font-style: italic;
 }
 
-
-
-
-
 .editicons {
 	border-collapse:collapse;
 	border-style:dotted;
@@ -617,9 +613,6 @@ table.list tr td  {
    height: 18px;
    width: 19px;
    padding: 1px;
-   /* position: absolute;
-   right: 23px;
-   top: 9px;*/
 }
 #guidepanel .ui-widget-header  .ui-dialog-titlebar-close .ui-icon {
    display: block;
@@ -630,9 +623,6 @@ table.list tr td  {
 }
 
 #dialog_window_minimized_container {
-   /* position: fixed;
-   bottom: 0px;
-   right: 0px;*/
 	z-index: 9999;
 }
 .pagelist * li:hover, li.guide:hover,
@@ -645,7 +635,6 @@ table.A2JFiles tr:hover{
 }
 
 .example{
-	/* overflow: auto; */
 	height: 100%;
 }
 .tabsVariables {
@@ -676,12 +665,10 @@ table.A2JFiles tr:hover{
 }
 
 .tabFooter {
-	/* position: absolute; */
 	padding-top: 15px;
 	padding-bottom: 15px;
 }
 .tabContent {
-	/* position: absolute; */
 	border: none;
 }
 #showlogic, #showtext {
@@ -698,8 +685,6 @@ table.A2JFiles tr:hover{
   top: 0;
   left: 0;
   right: 0;
-  /*margin-left: 150px;
-  margin-top: 75px;*/
   padding-left: 150px;
   padding-top: 75px;
   box-sizing: border-box;
@@ -722,59 +707,6 @@ table.A2JFiles tr:hover{
 }
 #tabsMapper{
   margin-left: 15px;
-	/*position: absolute;
-	top: 0px;
-	left: 33%;
-	right:10px;
-	bottom:0px;
-	 overflow: auto;
-	border: none;
-	float: left;
-	width: 60%;
-	height: 100%;
-
-	position: absolute;
-  left: 30%;
-  box-sizing: border-box;
-  overflow: auto;*/
-}
-.tabsMapPages {
-	/*position: absolute;
-	top:0px;
-	left:0px;
-	right: 70%;
-	bottom:0px;
-	overflow: auto;
-	float: left;
-	width: 30%;
-	height: 100%;
-
-	position: absolute;
-  left: 0;
-  box-sizing: border-box;
-  overflow-x: scroll;*/
-}
-.PagesPanel {
-	/* position: absolute;
-	top: 5px;
-	left: 10px;
-	right:10px;
-	bottom:35px;
-	overflow: auto;
-	border: 1px solid #c0c0c0;*/
-}
-
-#MapperPanel {
-	/*position: absolute;
-	top: 5px;
-	left: 10px;
-	right:10px;
-	bottom:35px;
-	overflow: auto;
-	border: 1px solid #c0c0c0 ;
-	background-color: #FFFFFF;
-
-	height: 100%;*/
 }
 #tabsMapper .tabFooter {
   position: absolute;
@@ -917,18 +849,12 @@ div.codeedit span.err {
 /* JPM expandCollapse button */
 #expandCollapse, .tabHeader button.ecPanelButton {
 	font-size: small;
-	/* top: -5px; */
-	/* float: right; */
 }
 
 .tabHeader button.CSH {
 	font-size: small;
-	/* float: right; */
 }
 
 #uploadCMPFileInput {
 	opacity:  0;
-	/* position: absolute;
-	left: 0px;
-	height: 30px;*/
 }

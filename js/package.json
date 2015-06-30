@@ -21,6 +21,7 @@
     "steal": "^0.10.5"
   },
   "system": {
+    "npmIgnore": [ "documentjs" ],
     "paths": {
       "jquery.ui.widget": "node_modules/jquery-ui/widget.js"
     },

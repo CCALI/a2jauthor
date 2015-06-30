@@ -16,6 +16,17 @@ npm install
 
 Then visit `http://localhost:3000`
 
+## To build:
+
+```
+cd js
+grunt build
+```
+
+If you want to view the app in production mode, just start the server (`npm start`)
+and go to `http://localhost:3000/author/index.production.html`.
+
+
 ## To generate the documentation:
 
 ```

@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'justice';
-  src: url('../font/justice.eot?97341517');
-  src: url('../font/justice.eot?97341517#iefix') format('embedded-opentype'),
-       url('../font/justice.woff?97341517') format('woff'),
-       url('../font/justice.ttf?97341517') format('truetype'),
-       url('../font/justice.svg?97341517#justice') format('svg');
+  src: url('../font/justice.eot?28811140');
+  src: url('../font/justice.eot?28811140#iefix') format('embedded-opentype'),
+       url('../font/justice.woff?28811140') format('woff'),
+       url('../font/justice.ttf?28811140') format('truetype'),
+       url('../font/justice.svg?28811140#justice') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -14,12 +14,12 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'justice';
-    src: url('../font/justice.svg?97341517#justice') format('svg');
+    src: url('../font/justice.svg?28811140#justice') format('svg');
   }
 }
 */
  
- [class^="glyphicon-"]:before, [class*=" glyphicon-"]:before {
+ [class^="icon-"]:before, [class*=" icon-"]:before {
   font-family: "justice";
   font-style: normal;
   font-weight: normal;
@@ -54,58 +54,58 @@
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
  
-.glyphicon-trash:before { content: '\e801'; } /* '' */
-.glyphicon-plus:before { content: '\e802'; } /* '' */
-.glyphicon-cancel:before { content: '\e803'; } /* '' */
-.glyphicon-cancel-circled:before { content: '\e804'; } /* '' */
-.glyphicon-pencil:before { content: '\e805'; } /* '' */
-.glyphicon-eye:before { content: '\e806'; } /* '' */
-.glyphicon-search:before { content: '\e807'; } /* '' */
-.glyphicon-docs:before { content: '\e808'; } /* '' */
-.glyphicon-doc:before { content: '\e809'; } /* '' */
-.glyphicon-doc-text:before { content: '\e80a'; } /* '' */
-.glyphicon-folder-open-empty:before { content: '\e80b'; } /* '' */
-.glyphicon-folder-empty:before { content: '\e80c'; } /* '' */
-.glyphicon-down-open:before { content: '\e80d'; } /* '' */
-.glyphicon-left-open:before { content: '\e80e'; } /* '' */
-.glyphicon-right-open:before { content: '\e80f'; } /* '' */
-.glyphicon-up-open:before { content: '\e810'; } /* '' */
-.glyphicon-arrow-combo:before { content: '\e811'; } /* '' */
-.glyphicon-down-dir:before { content: '\e812'; } /* '' */
-.glyphicon-left-dir:before { content: '\e813'; } /* '' */
-.glyphicon-right-dir:before { content: '\e814'; } /* '' */
-.glyphicon-up-dir:before { content: '\e815'; } /* '' */
-.glyphicon-plus-circled:before { content: '\e816'; } /* '' */
-.glyphicon-minus:before { content: '\e817'; } /* '' */
-.glyphicon-minus-circled:before { content: '\e818'; } /* '' */
-.glyphicon-help-circled:before { content: '\e819'; } /* '' */
-.glyphicon-info-circled:before { content: '\e81a'; } /* '' */
-.glyphicon-link:before { content: '\e81b'; } /* '' */
-.glyphicon-attach:before { content: '\e81c'; } /* '' */
-.glyphicon-attention:before { content: '\e81d'; } /* '' */
-.glyphicon-flag:before { content: '\e81e'; } /* '' */
-.glyphicon-check:before { content: '\e81f'; } /* '' */
-.glyphicon-move:before { content: '\e820'; } /* '' */
-.glyphicon-file-audio:before { content: '\e821'; } /* '' */
-.glyphicon-volume:before { content: '\e822'; } /* '' */
-.glyphicon-download:before { content: '\e823'; } /* '' */
-.glyphicon-down-circled:before { content: '\e824'; } /* '' */
-.glyphicon-export:before { content: '\e825'; } /* '' */
-.glyphicon-cc-share:before { content: '\e826'; } /* '' */
-.glyphicon-file-archive:before { content: '\e827'; } /* '' */
-.glyphicon-file-pdf:before { content: '\e828'; } /* '' */
-.glyphicon-file-code:before { content: '\e829'; } /* '' */
-.glyphicon-zoom-out:before { content: '\e82a'; } /* '' */
-.glyphicon-zoom-in:before { content: '\e82b'; } /* '' */
-.glyphicon-resize-full:before { content: '\e82c'; } /* '' */
-.glyphicon-resize-small:before { content: '\e82d'; } /* '' */
-.glyphicon-popup:before { content: '\e82e'; } /* '' */
-.glyphicon-left-thin:before { content: '\e82f'; } /* '' */
-.glyphicon-right-thin:before { content: '\e830'; } /* '' */
-.glyphicon-list:before { content: '\e831'; } /* '' */
-.glyphicon-lifebuoy:before { content: '\e832'; } /* '' */
-.glyphicon-publish:before { content: '\e833'; } /* '' */
-.glyphicon-spin6:before { content: '\e834'; } /* '' */
-.glyphicon-resize-full-1:before { content: '\e835'; } /* '' */
-.glyphicon-move-1:before { content: '\e836'; } /* '' */
-.glyphicon-cog-1:before { content: '\e837'; } /* '' */
+.icon-trash:before { content: '\e801'; } /* '' */
+.icon-plus:before { content: '\e802'; } /* '' */
+.icon-cancel:before { content: '\e803'; } /* '' */
+.icon-cancel-circled:before { content: '\e804'; } /* '' */
+.icon-pencil:before { content: '\e805'; } /* '' */
+.icon-eye:before { content: '\e806'; } /* '' */
+.icon-search:before { content: '\e807'; } /* '' */
+.icon-docs:before { content: '\e808'; } /* '' */
+.icon-doc:before { content: '\e809'; } /* '' */
+.icon-doc-text:before { content: '\e80a'; } /* '' */
+.icon-folder-open-empty:before { content: '\e80b'; } /* '' */
+.icon-folder-empty:before { content: '\e80c'; } /* '' */
+.icon-down-open:before { content: '\e80d'; } /* '' */
+.icon-left-open:before { content: '\e80e'; } /* '' */
+.icon-right-open:before { content: '\e80f'; } /* '' */
+.icon-up-open:before { content: '\e810'; } /* '' */
+.icon-arrow-combo:before { content: '\e811'; } /* '' */
+.icon-down-dir:before { content: '\e812'; } /* '' */
+.icon-left-dir:before { content: '\e813'; } /* '' */
+.icon-right-dir:before { content: '\e814'; } /* '' */
+.icon-up-dir:before { content: '\e815'; } /* '' */
+.icon-plus-circled:before { content: '\e816'; } /* '' */
+.icon-minus:before { content: '\e817'; } /* '' */
+.icon-minus-circled:before { content: '\e818'; } /* '' */
+.icon-help-circled:before { content: '\e819'; } /* '' */
+.icon-info-circled:before { content: '\e81a'; } /* '' */
+.icon-link:before { content: '\e81b'; } /* '' */
+.icon-attach:before { content: '\e81c'; } /* '' */
+.icon-attention:before { content: '\e81d'; } /* '' */
+.icon-flag:before { content: '\e81e'; } /* '' */
+.icon-check:before { content: '\e81f'; } /* '' */
+.icon-move:before { content: '\e820'; } /* '' */
+.icon-file-audio:before { content: '\e821'; } /* '' */
+.icon-volume:before { content: '\e822'; } /* '' */
+.icon-download:before { content: '\e823'; } /* '' */
+.icon-down-circled:before { content: '\e824'; } /* '' */
+.icon-export:before { content: '\e825'; } /* '' */
+.icon-cc-share:before { content: '\e826'; } /* '' */
+.icon-file-archive:before { content: '\e827'; } /* '' */
+.icon-file-pdf:before { content: '\e828'; } /* '' */
+.icon-file-code:before { content: '\e829'; } /* '' */
+.icon-zoom-out:before { content: '\e82a'; } /* '' */
+.icon-zoom-in:before { content: '\e82b'; } /* '' */
+.icon-resize-full:before { content: '\e82c'; } /* '' */
+.icon-resize-small:before { content: '\e82d'; } /* '' */
+.icon-popup:before { content: '\e82e'; } /* '' */
+.icon-left-thin:before { content: '\e82f'; } /* '' */
+.icon-right-thin:before { content: '\e830'; } /* '' */
+.icon-list:before { content: '\e831'; } /* '' */
+.icon-lifebuoy:before { content: '\e832'; } /* '' */
+.icon-publish:before { content: '\e833'; } /* '' */
+.icon-spin6:before { content: '\e834'; } /* '' */
+.icon-resize-full-1:before { content: '\e835'; } /* '' */
+.icon-move-1:before { content: '\e836'; } /* '' */
+.icon-cog-1:before { content: '\e837'; } /* '' */

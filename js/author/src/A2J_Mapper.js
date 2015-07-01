@@ -228,67 +228,66 @@ function mapZoomSlide()
 	}
 }
 
-function mapZoomClick()
-{	// Zoom in or out or fit.
-	var zoom=$(this).attr('zoom');
-	if (zoom==='fit') {
+// Zoom in or out or fit.
+function mapZoomClick() {
+	var zoom = $(this).attr('zoom');
+	var $mapperPanel = $('#MapperPanel');
+
+	// make sure the #MapperPanel has height, otherwise the Fit button
+	// won't work propertly https://github.com/bitovi/CAJA/issues/25.
+	var $mapperPanelParent = $mapperPanel.parents('.col-8').first();
+	$mapperPanel.height($mapperPanelParent.height());
+
+	if (zoom === 'fit') {
 		// TODO must be an easy function to get map's true width,height (children bounds).
 		//trace('Map size',$('.map').css('width'),$('.map').css('height'));
 		//trace('Map size',$('#MapperPanel').css('width'),$('#MapperPanel').css('height'));
 		//$('.map').css({zoom:"scale(1)"});
-		var minx,miny,maxx,maxy;
-		minx=miny=999;
-		maxx=maxy=0;
+		var minx, miny, maxx, maxy, p;
+		minx = miny = 999;
+		maxx = maxy =0;
 
-		var p;
-		for (p in gGuide.pages)
-		{	// Get bounds of all pages
-			var page=gGuide.pages[p];
-			if (page.mapx!==null)
-			{
-				minx = Math.min(minx,page.mapx);
-				miny = Math.min(miny,page.mapy);
-				maxx = Math.max(maxx,page.mapx+500);
-				maxy = Math.max(maxy,page.mapy+500);
+		for (p in gGuide.pages) {
+			// Get bounds of all pages
+			var page = gGuide.pages[p];
+
+			if (page.mapx !== null) {
+				minx = Math.min(minx, page.mapx);
+				miny = Math.min(miny, page.mapy);
+				maxx = Math.max(maxx, page.mapx + 500);
+				maxy = Math.max(maxy, page.mapy + 500);
 			}
 		}
 
-		//trace(minx,miny,maxx,maxy);
-		kMINY=200;// let no node be less than 200 (so our Start icon is visible)
-		if (  (minx<0 || miny< kMINY))
-		{	// If left or top is less than 0, push all down/right since our scrollbars don't go negative.
+		kMINY = 200; // let no node be less than 200 (so our Start icon is visible)
+
+		// If left or top is less than 0, push all down/right since our scrollbars don't go negative.
+		if (minx < 0 || miny < kMINY) {
 			// Keeps questions from disappearing too.
+			p = null;
 			miny -= kMINY;
-			var p;
-			for (p in gGuide.pages)
-			{
-				var page=gGuide.pages[p];
-				if (page.mapx!==null)
-				{
+
+			for (p in gGuide.pages) {
+				var page = gGuide.pages[p];
+
+				if (page.mapx !== null) {
 					page.mapx -= minx;
 					page.mapy -= miny;
 				}
 			}
 			buildMap();
 		}
-		var scalex=$('#MapperPanel').width()  / (maxx-minx);
-		var scaley=$('#MapperPanel').height() / (maxy-miny);
-		gMapperScale=Math.min(scalex,scaley);// scale to fit
+		var scalex = $mapperPanel.width()  / (maxx-minx);
+		var scaley = $mapperPanel.height() / (maxy-miny);
+		gMapperScale = Math.min(scalex, scaley);// scale to fit
 
-	}
-	else
-	{
+	} else {
 		zoom = parseFloat(zoom);
 		gMapperScale = gMapperScale * zoom;
 	}
-	if (gMapperScale>=0.9){
+	if (gMapperScale >= 0.9){
 		gMapperScale=1;
 	}
 	// traggable lets us drag things around.
-	$('.map').traggable('changeScale',gMapperScale);
+	$('.map').traggable('changeScale', gMapperScale);
 }
-
-
-
-
-/* */

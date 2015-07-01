@@ -415,6 +415,12 @@ button.ui-button::-moz-focus-inner {
 	margin: -10px 0 0 0;
 	padding: 1px;
 	height: 20px;
+	background: transparent;
+	border: none;
+}
+.ui-dialog .ui-dialog-titlebar-close:hover {
+	background: transparent;
+	border: none;
 }
 .ui-dialog .ui-dialog-content {
 	position: relative;
@@ -782,7 +788,6 @@ body .ui-tooltip {
 /* Component containers
 ----------------------------------*/
 .ui-widget {
-	/*font-family: Verdana,Arial,Helvetica,sans-serif;*/
 	font-size: 1.1em;
 }
 .ui-widget .ui-widget {
@@ -792,12 +797,10 @@ body .ui-tooltip {
 .ui-widget select,
 .ui-widget textarea,
 .ui-widget button {
-	/*font-family: Verdana,Arial,Helvetica,sans-serif;*/
 	font-size: 1em;
 }
 .ui-widget-content {
-	border: 1px solid #dddddd;
-	background: #f2f5f7 url(../images/ui-bg_highlight-hard_100_f2f5f7_1x100.png) 50% top repeat-x;
+  background-color: #fff;
 	color: #362b36;
 }
 .ui-widget-content a {
@@ -806,9 +809,6 @@ body .ui-tooltip {
 .ui-widget-header {
 	border: 1px solid #aed0ea;
 	background-color:#aed0ea;
-
-/*	background: #deedf7 url(images/ui-bg_highlight-soft_100_deedf7_1x100.png) 50% 50% repeat-x;
-*/
 	color: #222222;
 	font-weight: bold;
 }
@@ -936,7 +936,6 @@ body .ui-tooltip {
 }
 .ui-state-default .ui-icon {
 	background-image: url(../images/ui-icons_ffffff_256x240.png);
-	/*background-image: url(images/ui-icons_3d80b3_256x240.png);*/
 }
 .ui-state-hover .ui-icon,
 .ui-state-focus .ui-icon {
@@ -1091,7 +1090,6 @@ body .ui-tooltip {
 .ui-icon-seek-prev { background-position: -48px -160px; }
 .ui-icon-seek-end { background-position: -64px -160px; }
 .ui-icon-seek-start { background-position: -80px -160px; }
-/* ui-icon-seek-first is deprecated, use ui-icon-seek-start instead */
 .ui-icon-seek-first { background-position: -80px -160px; }
 .ui-icon-stop { background-position: -96px -160px; }
 .ui-icon-eject { background-position: -112px -160px; }
@@ -1135,33 +1133,6 @@ body .ui-tooltip {
 /* Misc visuals
 ----------------------------------*/
 
-/* Corner radius
-.ui-corner-all,
-.ui-corner-top,
-.ui-corner-left,
-.ui-corner-tl {
-	border-top-left-radius: 6px;
-}
-.ui-corner-all,
-.ui-corner-top,
-.ui-corner-right,
-.ui-corner-tr {
-	border-top-right-radius: 6px;
-}
-.ui-corner-all,
-.ui-corner-bottom,
-.ui-corner-left,
-.ui-corner-bl {
-	border-bottom-left-radius: 6px;
-}
-.ui-corner-all,
-.ui-corner-bottom,
-.ui-corner-right,
-.ui-corner-br {
-	border-bottom-right-radius: 6px;
-}
-*/
-
 /* Overlays */
 .ui-widget-overlay {
 	background: #eeeeee url(../images/ui-bg_diagonals-thick_90_eeeeee_40x40.png) 50% 50% repeat;
@@ -1188,7 +1159,6 @@ body .ui-tooltip {
     opacity: 0.50;
 }
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-/*     background: repeat-x scroll 50% 50% #7f8c8d; */
     background: repeat-x scroll 50% 50% #0066CC;
     color: #fff;
     font-weight: normal;
@@ -1199,10 +1169,6 @@ body .ui-tooltip {
     color: #000;
 	border-color:#E5E5E5;
 }
-
-.guidepanels {
-	background-color: #e5e5e5;
-}
 .guidemenu {
 	background-color: #c0c0c0;
 	border-color: #c0c0c0;
@@ -1211,21 +1177,12 @@ body .ui-tooltip {
 .tabContent legend, .ui-widget-content legend  {
 	font-size: 1.1em;
 	font-weight:bold;
-	color:#f8fcff;
-	border-width:thin;
-	background-color:#808080;
-	border-color:#808080;
-	border-style:solid;
-	padding: .75em;
+	color:#000;
 }
 .ui-dialog-titlebar {
 	font-size: 1.3em;
 	font-weight:bold;
 }
-
-/* START JPM edits 7/1/2013 */
-/*.pagelist * li:nth-child(even) {background-color:#F0F5F7}; */
-
 
 /* SJG Theme friendly row alternator: */
 .pagelist ul * li:nth-child(even)
@@ -1242,7 +1199,6 @@ body .ui-tooltip {
 ,table.list tr:nth-child(odd)
 ,.guidelist li:nth-child(odd)
 {	background-color:#BDC3C7 ;}
-
 
 /* JPM TEST */
 table.list tr:nth-child(12n+1)
@@ -1270,29 +1226,6 @@ table.list tr:nth-child(12n+11)
 table.list tr:nth-child(12n+12)
 {	background-color:#C68C8C ;}
 
-
-
-/* END */
-/*
-table.list tr:nth-child(even) {	background-color:rgba(240,240,240,0.5);}
-table.list tr:nth-child(odd) {	background-color:rgba(255,255,255,0.5);}
-table.A2JVars tr:nth-child(even) ,table.A2JFiles tr:nth-child(even) { background-color:#fff; }
-table.A2JVars tr:nth-child(odd),table.A2JFiles tr:nth-child(odd) { background-color:#eee; }
-.pagelist ul {
-	xbackground-color:#fff;
-}
-.pageoutline {
-	xbackground-color:#fff;
-}
-.pagelist > ul > li {
-	xbackground-color:#F0F7FA;
-}
-*/
-.editq fieldset {
-	background:#f8fcff;
-}
-
-/* JPM */
 table.A2JSteps th,
 table.A2JVars th ,
 table.A2JClauses th {
@@ -1303,56 +1236,12 @@ table.A2JClauses th {
 	font-size: 1.1em;
 	background-color:#F0F7FA;
 }
-/* JPM */
-/* */
 
 html, body, input, select, textarea , .htmledit, .codeedit {
 	background-color: #fff;
 	color: #000;
 }
-/*
-.authortool {
-	background-color:#fff;
-}
 
-#cajaheader {
-	background-color: #fff;
-}
-#cajafooter {
-	background-color: #fff;
-}
-*/
-
-/* */
-
-/*
-.guidemenu ul li[ref^="tabs"]		{
-	list-style-position:inside;
-    border: 1px solid #E5E5E5;
-}
-*/
-
-
-/*
-EFEFC6
-EFEF8C
-EFC6EF
-EFC6C6
-EF8CEF
-EF8C8C
-C6EFEF
-C6EFC6
-C6C6EF
-C6C68C
-C68CC6
-C68C8C
-8CEFEF
-8CEF8C
-8CC6C6
-8CC68C
-8C8CEF
-8C8CC6
-*/
 .guidemenu ul li[ref="tabsAbout"]		{background:#EFEFC6; }
 .guidemenu ul li[ref="tabsVariables"]	{background:#EFEF8C; }
 .guidemenu ul li[ref="tabsSteps"]		{background:#EFC6EF; }
@@ -1367,53 +1256,10 @@ C68C8C
 .guidemenu ul li[ref="tabsGuides"]		{ background:#C68C8C; }
 
 
-/*.guidemenu ul li[ref="tabsAbout"]		{background:#2C3E50; } /* MIDNIGHT BLUE */
-/*.guidemenu ul li[ref="tabsVariables"]	{background:#34495E; } /* WET ASPHALT */
-/*.guidemenu ul li[ref="tabsSteps"]		{background:#8E44AD; } /* WISTERIA */
-/*.guidemenu ul li[ref="tabsPages"]		{background:#9B59B6; } /* AMETHYST */
-/*.guidemenu ul li[ref="tabsMap"]			{background:#2980B9; } /* BELIZE HOLE */
-/*.guidemenu ul li[ref="tabsFiles"]		{background:#3498DB; } /* PETER RIVER */
-/*.guidemenu ul li[ref="tabsLogic"]		{background:#27AE60; } /* NEPHRITIS */
-/*.guidemenu ul li[ref="tabsText"]		{background:#2ECC71; } /* EMERLAND */
-/*.guidemenu ul li[ref="tabsPreview"]		{background:#F1C40F; } /* SUN FLOWER */
-/*.guidemenu ul li[ref="tabsReport"]		{background:#F39C12; } /* ORANGE */
-/*.guidemenu ul li[ref="tabsUpload"]		{background:#E67E22; } /* CARROT */
-/*.guidemenu ul li[ref="tabsGuides"]		{ background:#D35400; } /* PUMPKIN */
-
-
-/* More colors as we add items to the menu.
-    ALIZARIN -     #E74C3C
-    POMEGRANATE -     #C0392B
-    CLOUDS -     #ECF0F1
-    SILVER -     #BDC3C7
-    CONCRETE -     #95A5A6
-    ASBESTOS -     #7F8C8D
-*/
-
 .pagelist li[rel^="STEP "] {
 	list-style-position:inside;
     border: 1px solid #000;
 }
-/* unused colors
-EFEFC6
-EFEF8C
-EFC6EF
-EFC6C6
-EF8CEF
-EF8C8C
-C6EFEF
-C6EFC6
-C6C6EF
-C6C68C
-C68CC6
-C68C8C
-8CEFEF
-8CEF8C
-8CC6C6
-8CC68C
-8C8CEF
-8C8CC6
-*/
 
 .Step0, .pagelist li[rel="STEP 0"] {
 	background:#EFEFC6 !important;
@@ -1463,8 +1309,3 @@ C68C8C
 .Step15, .pagelist li[rel="STEP 15"] {
 	background:#8CC68C !important;
 }
-
-
-/* */
-
-

@@ -15,17 +15,11 @@
  { font-weight: normal; }
 
 
-
-
 html, body {
 	font-family:  "Open Sans",​sans-serif;
-	/*Verdana, Arial, Helvetica, sans-serif;*/
 	font-size: 12px;
-	height:100%;
-	width:100%;
 	margin:0;
 	padding:0;
-	overflow: hidden;
 }
 
 
@@ -40,104 +34,67 @@ html, body {
 }
 
 .authortool {
-	height:100%;
-	width:100%;
 	margin:0;
-	padding:0;
-	overflow: hidden;
+	padding:20px;
+	margin-left: 125px;
+	margin-top: 71px;
 }
 
-#cajaheader {
-/*	border-bottom : 2px solid #cccccc;  */
-	padding:0px;
-	margin: 0px;
-	height: 32px;
-}
-#cajainfo  {
-	position: fixed;
-	width: 260px;
-	height: 64px;
-/* JPM */
-	background-image: url(../../viewer/images/A2J5_Author_Icon.png);
-/* JPM */
-}
 #guidetitle  {
-	text-align: center;
-	top:10px;
-	position: fixed;
-	left:130px;
-	right:130px;
-	overflow:hidden;
 	font-size:2em;
-
 }
-#settings {
-	position: fixed;
-	right: 5px;
-	z-index: 2;
+#cajaheader header {
+  position: fixed;
+  width: 100%;
+  height: 71px;
+  border-bottom: 1px solid #eee;
+  margin-left: 125px;
+  top: 0;
+  left: 0;
+  background: #fff;
+  z-index: 98;
 }
-.guideio {
-	position: fixed;
-	left: 5px;
-	top: 35px;
-}
-/*
-#guideClose {
-	position: fixed;
-	right: 5px;
-	top: 35px;
-}
-*/
 #cajafooter {
-	border-top : 2px solid #cccccc;
 	font-size: 9px;
-	position: fixed;
 	padding:0px;
 	margin: 0px;
 	height: 16px;
-	bottom: 0px;
 	width: 100%;
+	position: fixed;
+	overflow: hidden;
+	bottom: 0;
+	left: 0;
+	background: #fff;
+	border-top: 1px solid #eee;
+	z-index: 98;
 }
 .copyright {
 	float:right;
 	text-align:right;
 	text-overflow:ellipsis
 }
-.guidepanels {
-	position: fixed;
-	right:4px;
-	top: 70px;
-	bottom:24px;
-	left:125px;
-	padding: 15px;
-	padding-left: 40px;
 
-}
 .guidemenu {
-	margin: 0px;
-	position:  fixed;
-	left:10px;
-/* JPM */
-	top: 70px;
-/* JPM */
-	right:150px;
-	width: 112px;
-	border : 1px solid #c0c0c0;
+  margin: 0;
+  padding: 0;
+  position:  fixed;
+  top: 0;
+  left: 0;
+  width: 125px;
+  z-index: 99;
+}
+.guidemenu .logo {
+  margin: 8px auto;
+  width: 51px;
+  height: 53px;
+  display: block;
 }
 .authorenv {
-	position:  absolute;
-	right: 10px;
-	top: 30px;
 	font-size:2em;
 	color: #800;
-	text-shadow: 2px 2px 0px #0000FF;
 }
 .authorver {
-	position:  absolute;
-	left:60px;
-	top: 50px;
 	font-size:10px;
-	text-shadow: 2px 2px 4px #222;
 }
 .guidemenu ul {
 	font-size: 15px;
@@ -155,44 +112,31 @@ html, body {
 	cursor: default;
 }
 .guidemenu ul li:hover {
-	font-weight: bold;
-	background-color: #DEF4FF;
-	color:#666666;
+	background-color: #fffee6;
+	color:#000;
 }
 .guidemenu ul li.selected {
-	font-weight:bold;
 	border:thick;
 	border:#0066CC;
-	/*text-transform:uppercase; SJG no. */
 	background-color: #E5E5E5;
 	overflow: visible;
 	background: url(../images/menu_selected.png) 99% center no-repeat;
-/* JPM */
 	color:#0066CC;
-/* JPM */
 	margin:3px;
 
 }
-/*.ui-tabs .ui-tabs-nav li {
-	font-size: .9em;
-}
-*/
+
 .pagelist ul {
 	font-weight: normal;
 	list-style-type: square;
 	font-style: normal;
 	padding: 0px;
 	padding-left: 2em;
-/*
-	margin-top: -.25em; */
 	margin-bottom: 2em;
-/* */
 }
 .pageoutline {
 	margin: 0px;
-/* */
 	padding: 10px 0px 5px;
-/* */
 }
 .pageoutline ul, .guidelist {
 	list-style-type:  none;
@@ -204,29 +148,29 @@ ul.guidelist li {
 	padding: 4px;
 }
 ul.guidelist li span.id {
-	background-color: rgba(255,240,255,0.5);
 	width: 5em;
+	background-color: rgba(255,240,255,0.5);
 	font-style: italic;
 	float:right;
 	text-align:center;
 	display: inline-block;
 }
 ul.guidelist li span.size {
-	background-color: rgba(240,255,240,0.5);
+  background-color: rgba(240,255,240,0.5);
 	float:right;
 	width: 4em;
 	text-align:right;
 	display: inline-block;
 }
 ul.guidelist li span.modified {
-	background-color: rgba(255,255,240,0.5);
+  background-color: rgba(255,255,240,0.5);
 	width: 12em;
 	float:right;
 	text-align:center;
 	display: inline-block;
 }
 ul.guidelist li span.pagecount {
-	background-color: rgba(255,255,240,0.5);
+  background-color: rgba(255,255,240,0.5);
 	width: 4em;
 	float:right;
 	text-align:center;
@@ -241,10 +185,7 @@ ul.guidelist li span.pagecount {
 	font-size: 1em;
 	max-height: 2.5em;
 	overflow: hidden;
-/* START JPM edits 7/1/2013 */
-	/*background-color: #fff;*/
 	padding: .5em;
-/* END */
 }
 
 .pagelist > ul > li {
@@ -259,35 +200,11 @@ ul.guidelist li span.pagecount {
 	font-style: italic;
 }
 
-.tabsPages {
-	position: absolute;
-	top:0px;
-	left:0px;
-	right: 0px;
-	bottom:0px;
-	overflow: auto;
-/* */
-	padding: .5em;
-/* */
-
-}
-.tabsMapPages {
-	position: absolute;
-	top:0px;
-	left:0px;
-	right: 70%;
-	bottom:0px;
-	overflow: auto;
-}
-
-
 .editicons {
 	border-collapse:collapse;
-/* */
 	border-style:dotted;
 	border-color:#CCCCCC;
 	border-width:thin;
-/* */
 	margin: 0px;
 	padding: 0px;
 	width: 50px;
@@ -299,13 +216,10 @@ ul.guidelist li span.pagecount {
 
 /*********** A2J ***************/
 table.A2JSteps, table.A2JVars , table.A2JClauses, table.A2JFiles {
-/*	border-collapse:collapse; */
 	width:100%;
-/* JPM */
 	border-style:solid;
 	border-width:thin;
 	border-color:#fff;
-/* JPM */
 }
 
 
@@ -322,12 +236,6 @@ table.A2JSteps tr, table.A2JVars tr , table.A2JClauses tr {
 }
 /* JPM */
 
-
-
-/*.Step1, .Step7, table.A2JSteps tr:nth-child(3n+1) { background-color: #BDD6D6; }
-.Step2, .Step8, table.A2JSteps tr:nth-child(3n+2)  { background-color: #B7DDB7; }
-.Step3, .Step9, table.A2JSteps tr:nth-child(3n+3)  { background-color: #EFC68C; }
-*/
 
 input.narrow {
 	width: 5em;
@@ -357,7 +265,6 @@ input.narrow {
 
 div.editq {
 	width: 100%;
-	/*-moz-border-radius:12px; border-radius:12px;*/
 	margin: 0px;
 	padding: 5px;
 }
@@ -385,18 +292,13 @@ div.editq {
 	padding:0;
 	margin-top:25px;
 }
-.editq fieldset {
-}
 .editq fieldset div  {
 	margin-top: 1em;
 }
 .editq fieldset {
 	padding: inherit;
 	margin-top:25px;
-/* */
 	padding-bottom: 1.3em;
-/* */
-
 }
 .sorthandle {
 	cursor: move;
@@ -414,10 +316,6 @@ div.editq {
 .editable.tallest {
 	min-height: 5em;
 }
-/*.editable:focus {
-	min-width: 20em;
-}
-*/
 
 .editable { /* authoring text fields */
 	min-width: 10em;
@@ -441,21 +339,7 @@ div.editq {
 	/* prevent horizontal scrollbar */
 	overflow-x: hidden;
  }
-/*.widetext {
-	width: 20em;
-	padding: 0;
-	margin: 0;
-	padding-left: 3px;
-	padding-right: 3px;
-	background-color: #1ff;
-}
-x.autocomplete.picker.page {
-	width:100%;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-}
-*/
+
 .codeedit, .xml {
 	white-space: pre-wrap;
 }
@@ -466,16 +350,6 @@ x.autocomplete.picker.page {
 	height: 1.5em;
 	overflow: hidden;
 }
-
-/*
-x.bubble {
-	border-radius:15px 15px 15px 15px;
-	border: 3px solid #06c;
-	background-color: #C4E1FF;
-	margin-bottom: 1em;
-	padding: 1em;
-}
-*/
 
 .CAJAContent P {
 	padding: 0;
@@ -531,11 +405,6 @@ P.CAJATest {
 	background-color:#eee;
 }
 .warning {
-	/*background-image: url(images/warning.png);
-	background-repeat: no-repeat;
-	padding-left: 20px;
-	height: 16px;
-	*/
 	padding: 0;
 	margin: 0;
 	background-color:#fdd;
@@ -586,11 +455,6 @@ table.CAJAReportDump tr:nth-child(3n+2) {
 }
 table.CAJAReportDump tr:nth-child(3n+3) {
 	background-color:rgba(255,255,255,0.5);
-}
-
-.FleschKincaidUnder7 {
-	/* if good just leave it untouched, less cluttered.
-	background-color: #8f8; */
 }
 .GradeReport.FleschKincaidUnder7 {
 	background-color: #8f8;
@@ -659,7 +523,6 @@ table.CAJAReportDump tr:nth-child(3n+3) {
 	border-left-width: 1px;
 }
 .section .header .hintinfo {
-	/*xfont-size: 12px;*/
 	color:#999999;
 	font-weight: bold;
 	font-style: italic;
@@ -677,12 +540,8 @@ table.CAJAReportDump tr:nth-child(3n+3) {
 	background: url(jQuery/images/folder.gif) 0 0 no-repeat;
 }
 .editInPlace {
-	padding:5px;/*border: 1px solid #00CC99;*/
+	padding:5px;
 }
-/*.editable, textarea {
-	background-color: #ffffd3;
-}
-*/
 textarea {
 	width: 95%;
 	font-size: 1em;
@@ -718,15 +577,8 @@ table.list tr   {
 	border-collapse:separate;
 }
 table.list tr td  {
-	/*font-size: .8em;*/
 	padding:.1em;
 }
-/*
-select {
-	width: 10em;
-}
-*/
-
 .hidden {
 	display: none;
 }
@@ -735,23 +587,10 @@ select {
 .hidestart {
 	visibility: hidden;
 }
-
-
-
-/*
-#login-form label, input { display:block; }
-#login-form input.text { margin-bottom:12px; width:95%; padding: .4em; }
-
-.validateTips { border: 1px solid transparent; padding: 0.3em; }
-input.text { margin-bottom:12px; width:95%; padding: .4em; }
-*/
-
 .ui-dialog .ui-state-error { padding: .3em; }
 
 .ui-dialog {
-/* JPM*/
 	box-shadow: 10px 10px #888888;
-/* JPM*/
 }
 
 #guidepanel > ul > span {
@@ -762,9 +601,6 @@ input.text { margin-bottom:12px; width:95%; padding: .4em; }
    height: 18px;
    width: 19px;
    padding: 1px;
-   position: absolute;
-   right: 23px;
-   top: 9px;
 }
 #guidepanel .ui-widget-header  .ui-dialog-titlebar-close .ui-icon {
    display: block;
@@ -775,19 +611,8 @@ input.text { margin-bottom:12px; width:95%; padding: .4em; }
 }
 
 #dialog_window_minimized_container {
-   position: fixed;
-   bottom: 0px;
-   right: 0px;
 	z-index: 9999;
 }
-/*
-li.guide {
-	cursor: pointer;
-}
-li.guide:hover {
-	background-color:#C0DCC0;
-}
-*/
 .pagelist * li:hover, li.guide:hover,
 table.A2JVars tr:hover,
 table.A2JClauses tr:hover,
@@ -798,27 +623,11 @@ table.A2JFiles tr:hover{
 }
 
 .example{
-	overflow: auto;
 	height: 100%;
 }
-
-/*#tabsAbout, #tabsPageEdit, #tabsGuide, #tabsPageView, #tabsVariables, #tabsMapper, #tabsConstants, #tabsSteps, #tabsLogic, #tabsText {
-	overflow: hidden;
-	margin:0;
-	padding:0;
-	width: 100%;
-	height: 100%;
-	border: none;
-}
-*/
-
-/* JPM */
 .tabsVariables {
 	border:#666666;
 }
-/* JPM */
-
-
 .tabsPanel {
 	height: 100%;
 	overflow: scroll;
@@ -828,96 +637,72 @@ table.A2JFiles tr:hover{
 .page-edit-form-panel .tabsPanel{
 	overflow: hidden;
 }
-
-
 .tabHeader {
 	font-size: 1.0em;
-	margin-top: 5px;
-	margin-left: 10px;
-	margin-right: 10px;
+	padding-bottom: 15px;
+}
+.tabHeader.bootstrap-styles h3 {
+  font-size: 20px;
+  margin: 0;
 }
 .tabContentFrame {
-	position: absolute;
-	top: 55px;
-	left: 15px;
-	right:10px;
-	bottom:10px;
-	overflow: auto;
-}
 
-#tabsPages .tabContentFrame {
-	top: 3em;
-	bottom: 5px;
 }
 #tabsPages .tabContentFrame .tabContent  {
 	background-color: #fff;
 }
-#tabsMap .tabContentFrame {
-	top: 5px;
-	bottom: 5px;
-}
-#tabsVariables .tabContentFrame {
-	top: 5em;
-	bottom: 4em;
-}
-#tabsLogic .tabContentFrame, #tabsText .tabContentFrame {
-	top: 7em;
-	bottom:10px;
-}
-#tabsFiles .tabContentFrame {
-	top: 3em;
-	bottom: 3em;
-}
-#tabsGuides .tabContentFrame {
-	top: 5em;
-	bottom: 4em;
-}
+
 .tabFooter {
-	position: absolute;
-	bottom: 2px;
+	padding-top: 15px;
+	padding-bottom: 15px;
 }
 .tabContent {
-	position: absolute;
-	overflow: hidden;
-	border: 2px #0f0;
+	border: none;
 }
 #showlogic, #showtext {
 	display: inline;
 }
 
 /* Mapper */
+#tabsMap {
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+  height: auto;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-left: 150px;
+  padding-top: 75px;
+  box-sizing: border-box;
+}
+.tabContentFrame {
+  height: 100%;
+}
+.tabContentFrame .col-8 {
+  float: left;
+  width: 70%;
+  height: 100%;
+  overflow: auto;
+}
+.tabContentFrame .col-4 {
+  float: left;
+  width: 30%;
+  height: 100%;
+  overflow: auto;
+  background: #eee;
+}
 #tabsMapper{
-	position: absolute;
-	top: 0px;
-	left: 33%;
-	right:10px;
-	bottom:0px;
-	overflow: auto;
-	border: none;
+  margin-left: 15px;
 }
-.PagesPanel {
-	position: absolute;
-	top: 5px;
-	left: 10px;
-	right:10px;
-	bottom:35px;
-	overflow: auto;
-/* START 2013/7/1 JPM EDITS */
-	border: 1px solid #c0c0c0 ;
-/* START 2013/7/1 JPM EDITS */
+#tabsMapper .tabFooter {
+  position: absolute;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  z-index: 99;
+  width: 100%;
 }
-
-#MapperPanel {
-	position: absolute;
-	top: 5px;
-	left: 10px;
-	right:10px;
-	bottom:35px;
-	overflow: auto;
-	border: 1px solid #c0c0c0 ;
-	background-color: #FFFFFF;
-}
-
 .map {
 	border: 2px #0f0;
 	position: relative;
@@ -928,7 +713,6 @@ table.A2JFiles tr:hover{
 	margin: 0px;
 	padding: 4px;
 	width: 150px;
-	/*height: 36px;*/
 	min-height: 100px;
 	height: 100px;
 	border: 1px outset #006699;
@@ -965,7 +749,6 @@ table.A2JFiles tr:hover{
 	border: 2px double;
 }
 .node .text {
-	/*height: 100%;*/
 	overflow: hidden;
 }
 .node .taglist {
@@ -1001,7 +784,7 @@ table.A2JFiles tr:hover{
 .map   .line {
 	background-color: #000;
 	border: 0px #000;
-	position: absolute;
+	 position: absolute;
 }
 .mapper.icon.arrow {
 	position: absolute;
@@ -1038,7 +821,6 @@ div.codeedit span.err {
 	text-decoration: none;
 	background-color: #f88;
 	border: 1px;
-	/*border-bottom: dashed  1px #f00;*/
 	padding-bottom: 0px;
 }
 
@@ -1050,28 +832,17 @@ div.codeedit span.err {
 	height: 2em;
 	margin: 0px;
 	padding: 0px;
-	/*background-color: #ddd;*/
 }
 
 /* JPM expandCollapse button */
 #expandCollapse, .tabHeader button.ecPanelButton {
 	font-size: small;
-	top: -5px;
-	float: right;
-
 }
 
 .tabHeader button.CSH {
 	font-size: small;
-	top: -5px;
-	float: right;
 }
 
 #uploadCMPFileInput {
 	opacity:  0;
-	position: absolute;
-	left: 0px;
-	height: 30px;
 }
-
-/* */

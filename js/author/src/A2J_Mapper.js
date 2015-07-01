@@ -2,7 +2,7 @@
 /*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	
+
 	Mapper
 	04/2012
 
@@ -25,10 +25,10 @@ function mapLines()
 
 	var NW=NODE_SIZE.w;
 	var NH=NODE_SIZE.h;
-		
+
 	/** @type TPage */
-	var page; 
-		
+	var page;
+
 	function lineV(left,top,height)
 	{
 		return '<div class="line Step'+page.step+'" style="left:'+left+'px;top:'+top+'px;width:2px;height:'+height+'px;"></div>';
@@ -50,7 +50,7 @@ function mapLines()
 			var nodeLeft=page.mapx;
 			var nodeTop= page.mapy;
 			//var downlines=false;
-			/* Outgoing branches to show:  
+			/* Outgoing branches to show:
 					A2J - Buttons with Destination, Script GOTOs
 					CA - Next page, Feedback branches, Script GOTOs
 			*/
@@ -94,7 +94,7 @@ function mapLines()
 						x3 = (x2 + destX)/2; y3 = y2;
 						x4 = x3;		y4 = destTop - 15 ;
 						var x5 = destX;// var y5=y4;
-						$map.append( lineV(x1,y1,y2-y1) + ( (x2<x3) ? lineH(x2,y2,x3-x2):lineH(x3,y2,x2-x3)) +  lineV( x4,y4, y3-y4) 
+						$map.append( lineV(x1,y1,y2-y1) + ( (x2<x3) ? lineH(x2,y2,x3-x2):lineH(x3,y2,x2-x3)) +  lineV( x4,y4, y3-y4)
 							+ ( (x4<x5) ? lineH(x4,y4,x5-x4):lineH(x5,y4,x4-x5)) );
 					}
 				}
@@ -107,7 +107,7 @@ function mapLines()
 	//	$('.branch',$map).click(function(){focusNode($('.map > .node[rel="'+$(this).attr('rel')+'"]'));	});
 }
 function showPageOnMap()
-{	// TODO 
+{	// TODO
 	//var target=$(this).attr('target');
 }
 /*
@@ -150,13 +150,13 @@ function buildMap()
 	for (p in gGuide.pages)
 	{
 		page=gGuide.pages[p];
-		if (page.mapx!==null) 
+		if (page.mapx!==null)
 		{
 			page.mapx=Math.round(1+page.mapx / GRID_MAP.x)*GRID_MAP.x;
 			page.mapy=Math.round(1+page.mapy / GRID_MAP.y)*GRID_MAP.y;
 		}
 	}
-	
+
 	// Full size boxes with question names and simple lines connecting boxes.
 	//var NW=NODE_SIZE.w; var NH=NODE_SIZE.h;
 	for (p in gGuide.pages)
@@ -189,9 +189,9 @@ function buildMap()
 		//$(this).addClass('ui-state-active')
 		gotoPageEdit(target);
 	});
-	
+
 	mapLines();
-	//$( ".node" ).draggable({	
+	//$( ".node" ).draggable({
 	$map.traggable({
 		grid: [GRID_MAP.x, GRID_MAP.y],
 		start: function(event,ui){
@@ -206,7 +206,7 @@ function buildMap()
 			page.mapy=ui.position.top;
 			mapLines();
 		}
-		
+
 	});
 }
 
@@ -214,19 +214,22 @@ function buildMap()
 function mapZoomSlide()
 {
 	$('.tabsMapPages').animate({width: 'toggle'});
-	if ($('#tabsMapper').css("left")=="0px") {
-		$('#tabsMapper').css("left", "33%");
+	if ($('#tabsMap .col-4').css("width")=="0px") {
+		$('#tabsMap .col-4').css("width", "30%");
+		$('#tabsMap .col-8').css("width", "70%");
+		//col-4
 	$('#tabsMapper button').first()
 		.button({disabled:false,label:'Hide Page List',icons:{primary:'ui-icon-arrowthick-1-w'}});
 	} else {
-		$('#tabsMapper').css("left", "0px");
+		$('#tabsMap .col-4').css("width", "0px");
+		$('#tabsMap .col-8').css("width", "100%");
 	$('#tabsMapper button').first()
 		.button({disabled:false,label:'Show Page List',icons:{primary:'ui-icon-arrowthick-1-e'}});
-	}	
+	}
 }
 
 function mapZoomClick()
-{	// Zoom in or out or fit. 
+{	// Zoom in or out or fit.
 	var zoom=$(this).attr('zoom');
 	if (zoom==='fit') {
 		// TODO must be an easy function to get map's true width,height (children bounds).
@@ -271,7 +274,7 @@ function mapZoomClick()
 		var scalex=$('#MapperPanel').width()  / (maxx-minx);
 		var scaley=$('#MapperPanel').height() / (maxy-miny);
 		gMapperScale=Math.min(scalex,scaley);// scale to fit
-		
+
 	}
 	else
 	{

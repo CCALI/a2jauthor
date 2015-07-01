@@ -73,6 +73,7 @@ function signin()
       { // ### Successful signin.
         gotoTabOrPage('tabsGuides');
         $('#splash').hide();
+        $('#cajaheader').removeClass('hidestart');
         $('#authortool').removeClass('hidestart');//.addClass('authortool').show();
       }
       else

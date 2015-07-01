@@ -1,12 +1,13 @@
-<h1><i class="demo-icon icon-arrow-combo"></i></h1>
-<div class="container-fluid bootstrap-styles">
-      <div class="row">
-        <div title="Code: 0xe811" class="the-icons span3"><i class="demo-icon icon-arrow-combo">&#xe811;</i> <span class="i-name">icon-arrow-combo</span><span class="i-code">0xe811</span></div>
-        <div title="Code: 0xe812" class="the-icons span3"><i class="demo-icon icon-down-dir">&#xe812;</i> <span class="i-name">icon-down-dir</span><span class="i-code">0xe812</span></div>
-        <div title="Code: 0xe813" class="the-icons span3"><i class="demo-icon icon-left-dir">&#xe813;</i> <span class="i-name">icon-left-dir</span><span class="i-code">0xe813</span></div>
-        <div title="Code: 0xe814" class="the-icons span3"><i class="demo-icon icon-right-dir">&#xe814;</i> <span class="i-name">icon-right-dir</span><span class="i-code">0xe814</span></div>
-      </div>
+<h1>
+  <i class="demo-icon icon-arrow-combo text-muted"></i>
+  <i class="demo-icon glyphicon-eye text-primary"></i>
+  <i class="demo-icon glyphicon-attach text-muted"></i>
+  <i class="demo-icon glyphicon-attention text-warning"></i>
+  <i class="demo-icon glyphicon-flag text-danger"></i>
+</h1>
 <hr />
+
+<div class="container-fluid bootstrap-styles">
   <div class="vertical-navbar vertical-navbar-inverse pull-left">
     <nav class="nav navbar-nav">
       <li class="disabled"><a href="">About</a></li>

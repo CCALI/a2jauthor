@@ -1,10 +1,9 @@
 <div class="container-fluid bootstrap-styles">
-<i class="glyphicon-file-audio">&#xe821;</i>
-<div class="row">
-        <div title="Code: 0xe821" class="the-icons span3"><i class="glyphicon-file-audio">&#xe821;</i> <span class="i-name">glyphicon-file-audio</span><span class="i-code">0xe821</span></div>
-        <div title="Code: 0xe822" class="the-icons span3"><i class="glyphicon-volume">&#xe822;</i> <span class="i-name">glyphicon-volume</span><span class="i-code">0xe822</span></div>
-        <div title="Code: 0xe823" class="the-icons span3"><i class="glyphicon-download">&#xe823;</i> <span class="i-name">glyphicon-download</span><span class="i-code">0xe823</span></div>
-        <div title="Code: 0xe824" class="the-icons span3"><i class="glyphicon-down-circled">&#xe824;</i> <span class="i-name">glyphicon-down-circled</span><span class="i-code">0xe824</span></div>
+      <div class="row">
+        <div title="Code: 0xe811" class="the-icons span3"><i class="demo-icon icon-arrow-combo">&#xe811;</i> <span class="i-name">icon-arrow-combo</span><span class="i-code">0xe811</span></div>
+        <div title="Code: 0xe812" class="the-icons span3"><i class="demo-icon icon-down-dir">&#xe812;</i> <span class="i-name">icon-down-dir</span><span class="i-code">0xe812</span></div>
+        <div title="Code: 0xe813" class="the-icons span3"><i class="demo-icon icon-left-dir">&#xe813;</i> <span class="i-name">icon-left-dir</span><span class="i-code">0xe813</span></div>
+        <div title="Code: 0xe814" class="the-icons span3"><i class="demo-icon icon-right-dir">&#xe814;</i> <span class="i-name">icon-right-dir</span><span class="i-code">0xe814</span></div>
       </div>
 <hr />
   <div class="vertical-navbar vertical-navbar-inverse pull-left">

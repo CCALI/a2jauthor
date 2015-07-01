@@ -22,6 +22,23 @@
     <div align="center"> <img src="../viewer/images/A2J5_Icon_512.png" /> </div>
   </div>
 
+    <div id="cajaheader" class="hidestart bootstrap-styles">
+      <header>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-xs-8">
+              <h1 id="guidetitle">A2J Guided Interviews<sup>®</sup></h1>
+            </div>
+            <div class="col-xs-4">
+              <button id="settings" /></button><br />
+              <span class="authorver"></span>
+              <span class="authorenv"></span>
+            </div>
+        </div>
+        </div>
+      </header>
+    </div>
+
   <div id="page-viewer" class="hidestart ViewerApp a2jv">
     <div class="testing ui-widget-content">
       <div id="viewer-logic-form" class="ViewerLogicForm">
@@ -44,9 +61,11 @@
   </div>
 
   <div id="authortool" class="hidestart authortool">
+
     <div class="guideio"></div>
 
     <div class="guidemenu ui-state-default">
+      <img class="logo" src="images/a2j-logo85x89.png" />
       <ul>
         <li ref="tabsAbout">About</li>
         <li ref="tabsVariables">Variables</li>
@@ -59,18 +78,24 @@
         <li ref="tabsPreview">Preview</li>
         <li ref="tabsReport">Report</li>
         <li ref="tabsUpload">Publish</li>
-        <li ref="tabsGuides">Interviews</li>
         <li ref="tabsTemplate">Templates</li>
+        <li ref="tabsGuides">Interviews</li>
       </ul>
     </div>
 
     <div class="guidepanels ui-widget xui-widget-content">
       <div class="panel" id="tabsAbout">
-        <div class="tabHeader">
-          <!-- JPM expand/collapse for about tab panel -->
-          <button class="ecPanelButton"></button> Information about this interview
-          <button CSH="About" class="CSH" />
+        <div class="tabHeader bootstrap-styles">
+          <div class="row">
+            <div class="col-md-8">
+              <h3>Information about this interview</h3>
+            </div>
+            <div class="col-md-4 text-right">
+              <button class="ecPanelButton"></button> <button CSH="About" class="CSH" />
+            </div>
+          </div>
         </div>
+        <br />
 
         <div class="tabContentFrame">
           <div class="tabContent editq"></div>
@@ -78,9 +103,17 @@
       </div>
 
       <div class="panel" id="tabsVariables">
-        <div class="tabHeader">Variables used in this interview
-          <button CSH="Variables" class="CSH" />
+        <div class="tabHeader bootstrap-styles">
+          <div class="row">
+            <div class="col-md-8">
+              <h3>Variables used in this interview</h3>
+            </div>
+            <div class="col-md-4 text-right">
+              <button CSH="Variables" class="CSH" />
+            </div>
+          </div>
         </div>
+        <br />
 
         <div class="tabContentFrame">
           <div class="tabContent editq"></div>
@@ -94,9 +127,18 @@
       </div>
 
       <div class="panel" id="tabsClauses">
-        <div class="tabHeader">Clauses used in this interview
-          <button CSH="Clauses" class="CSH" />
+
+        <div class="tabHeader bootstrap-styles">
+          <div class="row">
+            <div class="col-md-8">
+              <h3>Clauses used in this interview</h3>
+            </div>
+            <div class="col-md-4 text-right">
+              <button CSH="Clauses" class="CSH" />
+            </div>
+          </div>
         </div>
+        <br />
 
         <div class="tabContentFrame">
           <div class="tabContent editq"></div>
@@ -107,25 +149,36 @@
       </div>
 
       <div class="panel" id="tabsSteps">
-        <div class="tabHeader">Steps
-          <button CSH="Steps" class="CSH" /> </div>
+        <div class="tabHeader bootstrap-styles">
+          <div class="row">
+            <div class="col-md-8">
+              <h3>Steps</h3>
+            </div>
+            <div class="col-md-4 text-right">
+              <button CSH="Steps" class="CSH" />
+            </div>
+          </div>
+        </div>
+        <br />
+
         <div class="tabContentFrame">
           <div class="tabContent editq"></div>
         </div>
       </div>
 
       <div class="panel" id="tabsPages">
-        <div class="tabHeader">
-          <button id="expandCollapse"></button>
-          Pages and popups
-          <button CSH="Pages" class="CSH" />
-          <!--<form>
-          <div id="showpagelist">
-            <input checked="checked"  type="radio" id="showpagelist1" name="showpagelist" /><label for="showpagelist1">Outline</label>
-            <input              type="radio" id="showpagelist2" name="showpagelist" /><label for="showpagelist2">Alphabetical</label>
+        <div class="tabHeader bootstrap-styles">
+          <div class="row">
+            <div class="col-md-8">
+              <h3>Pages and popups</h3>
+            </div>
+            <div class="col-md-4 text-right">
+              <button id="expandCollapse"></button> <button CSH="Pages" class="CSH" />
+            </div>
           </div>
-        </form>-->
         </div>
+        <br />
+
         <div class="tabContentFrame">
           <div class="tabsPages">
             <div class="PagesPanel">
@@ -152,71 +205,101 @@
       </div>
 
       <div class="panel" id="tabsMap">
-        <div class="tabHeader">
+        <div class="tabHeader bootstrap-styles">
         </div>
         <div class="tabContentFrame">
-          <div class="tabsMapPages">
-            <div class="PagesPanel">
-              <div id="CAJAOutlineMap" class="pageoutline pagelist">
-                <ul>
-                </ul>
+          <div class="col-4">
+            <div class="tabsMapPages">
+              <div class="PagesPanel">
+                <div id="CAJAOutlineMap" class="pageoutline pagelist">
+                  <ul>
+                  </ul>
+                </div>
+              </div>
+              <div class="tabFooter">
               </div>
             </div>
-            <div class="tabFooter">
+          </div><!-- col-4 -->
+          <div class="col-8">
+           <div id="tabsMapper">
+
+              <div class="tabFooter">
+                <button></button>
+                <button zoom="fit"></button>
+                <button zoom="1.25"></button>
+                <button zoom="0.75"></button>
+                <button CSH="Map" class="CSH" />
+              </div>
+
+              <div id="MapperPanel">
+                <div class="map"></div>
+              </div>
+
             </div>
-          </div>
-          <div id="tabsMapper">
-            <div id="MapperPanel">
-              <div class="map"></div>
-            </div>
-            <div class="tabFooter">
-              <!-- JPM added button to hide/show page list -->
-              <button></button>
-              <button zoom="fit"></button>
-              <button zoom="1.25"></button>
-              <button zoom="0.75"></button>
-              <button CSH="Map" class="CSH" />
-            </div>
-          </div>
+          </div><!-- col-8 -->
         </div>
       </div>
 
       <div class="panel" id="tabsLogic">
-        <div class="tabHeader">
-          <div id="showlogic">
-            <input checked="checked" type="radio" id="showlogic1" name="showlogic" />
-            <label for="showlogic1">Show only active code</label>
-            <input type="radio" id="showlogic2" name="showlogic" />
-            <label for="showlogic2">Show all code blocks</label>
+       <div class="tabHeader bootstrap-styles">
+          <div class="row">
+            <div class="col-md-8">
+              <div id="showlogic">
+                <input checked="checked" type="radio" id="showlogic1" name="showlogic" />
+                <label for="showlogic1">Show only active code</label>
+
+                <input type="radio" id="showlogic2" name="showlogic" />
+                <label for="showlogic2">Show all code blocks</label>
+              </div>
+            </div>
+            <div class="col-md-4 text-right">
+              <button class="ecPanelButton" /> <button CSH="AllLogic" class="CSH" />
+            </div>
           </div>
-          <button class="ecPanelButton" />
-          <button CSH="AllLogic" class="CSH" />
         </div>
+        <br />
+
         <div class="tabContentFrame">
           <div class="tabContent editq"></div>
         </div>
       </div>
 
       <div class="panel" id="tabsText">
-        <div class="tabHeader">
-          <div id="showtext">
-            <input checked="checked" type="radio" id="showtext1" name="showtext" />
-            <label for="showtext1">Filled fields</label>
-            <input type="radio" id="showtext2" name="showtext" />
-            <label for="showtext2">All fields</label>
+        <div class="tabHeader bootstrap-styles">
+          <div class="row">
+            <div class="col-md-8">
+              <div id="showtext">
+                <input checked="checked" type="radio" id="showtext1" name="showtext" />
+                <label for="showtext1">Filled fields</label>
+                <input type="radio" id="showtext2" name="showtext" />
+                <label for="showtext2">All fields</label>
+              </div>
+            </div>
+            <div class="col-md-4 text-right">
+              <button class="ecPanelButton" /> <button CSH="AllText" class="CSH" />
+            </div>
           </div>
-          <button class="ecPanelButton" />
-          <button CSH="AllText" class="CSH" />
         </div>
+        <br />
+
         <div class="tabContentFrame">
           <div class="tabContent editq"></div>
         </div>
       </div>
 
       <div class="panel" id="tabsFiles">
-        <div class="tabHeader">Files currently attached to this interview
-          <button CSH="Files" class="CSH" />
+        <div class="tabHeader bootstrap-styles">
+          <div class="row">
+            <div class="col-md-8">
+              <h3>Files currently attached to this interview</h3>
+            </div>
+            <div class="col-md-4 text-right">
+              <button CSH="Files" class="CSH" />
+            </div>
+          </div>
         </div>
+        <br />
+
         <div class="tabContentFrame">
           <div class="tabContent editq">
             <table class="A2JFiles">
@@ -246,13 +329,19 @@
       </div>
 
       <div class="panel" id="tabsGuides">
-        <div class="tabHeader">A2J Guided Interviews®
-          <button CSH="Interviews" class="CSH" />
+        <div class="tabHeader bootstrap-styles">
+          <div class="row">
+            <div class="col-md-12 text-right">
+              <button CSH="Interviews" class="CSH" />
+            </div>
+          </div>
         </div>
+        <br />
+
         <div class="tabContentFrame">
           <div class="tabContent editq">
             <p class="name"></p>
-            <p>What would you like to do? </p>
+            <h2>What would you like to do?</h2>
 
 
             <fieldset name="record">
@@ -298,11 +387,19 @@
       </div>
 
       <div class="panel" id="tabsReport">
-        <div class="tabHeader">
-          <button id="reportFull">Full Report</button>
-          <button id="reportTranscript">Transcript Report</button>
-          <button CSH="Report" class="CSH" />
+
+        <div class="tabHeader bootstrap-styles">
+          <div class="row">
+            <div class="col-md-8">
+              <button id="reportFull">Full Report</button>
+              <button id="reportTranscript">Transcript Report</button>
+            </div>
+            <div class="col-md-4 text-right">
+              <button CSH="Report" class="CSH" />
+            </div>
+          </div>
         </div>
+        <br />
 
         <div class="tabContentFrame">
           <div class="tabContent editq">
@@ -311,26 +408,33 @@
         </div>
       </div>
 
+
+
       <div class="panel" id="tabsPreview">
         <h1>Previewer</h1> Show preview interview
       </div>
 
       <div class="panel" id="tabsUpload">
-        <div class="tabHeader">Publish/Upload
-          <button CSH="Publish" class="CSH" />
-        </div>
+
+        <div class="tabHeader bootstrap-styles">
+          <div class="row">
+            <div class="col-md-8">
+              <h3>Publish/Upload</h3>
+            </div>
+            <div class="col-md-4 text-right">
+              <button CSH="Publish" class="CSH" />
+            </div>
+          </div><!-- row -->
+        </div><!-- tabHeader bootstrap-styles -->
+        <br />
+
         <p>To publish your interview to another site such as LHI, download the ZIP which contains the interview and its supplemental files.</p>
         <button id="guideZIP">Download ZIP</button>
         <button id="guideDownload">Download A2J</button>
         <button id="guidePublish">Publish to Public URL</button>
         <button id="guideMobile">Test Mobile</button>
-      </div>
-    </div>
+      </div><!-- id="tabsUpload" -->
 
-    <div id="cajaheader"><span id="cajainfo" title="About this Authoring System"></span>
-      <div class="authorver"></div>
-      <div class="authorenv"></div><span id="guidetitle"></span>
-      <button id="settings" />
     </div>
 
     <div id="cajafooter">
@@ -482,7 +586,7 @@
       <div class="tabContentFrame">
         <div class="tabContent ">
           <p class="name"></p>
-          <p>What would you like to do? </p>
+          <h2>What would you like to do?</h2>
           <div id="guidelist">
           </div>
         </div>
@@ -502,19 +606,7 @@
       fileSync: true
     };
   </script>
-  <script src="../node_modules/steal/steal.js" data-env="production" data-main="author/main"></script>
-  <script type="text/javascript">
-    parents = {};
-
-    var normalize = System.normalize;
-    System.normalize = function(name, parentName, parentAddress){
-      return Promise.resolve(normalize.apply(this, arguments)).then(function(name){
-        var p = parents[name] = parents[name] || [];
-        p.push(parentName);
-        return name;
-      });
-    };
-  </script>
+  <script src="../node_modules/steal/steal.production.js" data-main="author/main"></script>
 </body>
 
 </html>

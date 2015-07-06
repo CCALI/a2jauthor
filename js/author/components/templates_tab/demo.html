@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;templates-tab&gt;</title>
+  </head>
+
+  <body>
+    <script type="text/stache" can-autorender>
+      <can-import from="author/main.less!" />
+      <can-import from="author/components/templates_tab/" />
+
+      <div class="bootstrap-styles">
+        <templates-tab></templates-tab>
+      </div>
+    </script>
+
+
+    <script src="../../../node_modules/steal/steal.js"
+      data-main="can/view/autorender/">
+      window.less = {
+        async: true,
+        fileSync: true
+      };
+    </script>
+  </body>
+</html>

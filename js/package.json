@@ -1,11 +1,11 @@
- {
+{
   "name": "a2j-author-viewer-gui",
   "version": "0.0.1",
   "description": "Authoring and viewer App GUI.",
   "main": "author/main",
   "scripts": {
     "start": "node server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt test"
   },
   "author": "",
   "license": "ISC",
@@ -13,22 +13,28 @@
     "blueimp-file-upload": "^9.10.1",
     "bootstrap": "^3.3.5",
     "can": "^2.3.0-pre.1",
+    "chai": "^3.0.0",
     "documentjs": "0.3.0-pre.2",
     "express": "^4.13.0",
     "grunt": "^0.4.5",
     "jquery": "^2.1.4",
     "jquery-ui": "git://github.com/jquery/jquery-ui.git#1.11.4",
     "steal": "^0.10.5",
-    "steal-tools": "^0.11.0-pre.1"
+    "steal-mocha": "0.0.2",
+    "steal-tools": "^0.11.0-pre.1",
+    "testee": "^0.2.0"
   },
   "system": {
     "npmIgnore": [
+      "testee",
       "documentjs"
     ],
     "configDependencies": [
       "author/load_fixtures"
     ],
     "map": {
+      "chai": "chai/chai",
+      "assert": "author/test/assert",
       "jquery.ui.widget": "jquery-ui/ui/widget"
     },
     "meta": {
@@ -36,7 +42,9 @@
         "format": "global"
       },
       "viewer/jquery.ui.combobox": {
-        "deps": [ "jquery-ui/ui/widget" ]
+        "deps": [
+          "jquery-ui/ui/widget"
+        ]
       },
       "viewer/jquery.ui.traggable": {
         "deps": [
@@ -46,11 +54,15 @@
       },
       "viewer/A2J_AnswerFile": {
         "format": "global",
-        "deps": [ "viewer/A2J_Types" ]
+        "deps": [
+          "viewer/A2J_Types"
+        ]
       },
       "author/src/A2J_Tabs": {
         "format": "global",
-        "deps": [ "jquery-ui/ui/sortable" ]
+        "deps": [
+          "jquery-ui/ui/sortable"
+        ]
       },
       "author/src/TextStatistics": {
         "format": "global"
@@ -68,7 +80,9 @@
         ]
       },
       "blueimp-file-upload/js/jquery.fileupload": {
-        "deps": [ "jquery" ]
+        "deps": [
+          "jquery"
+        ]
       }
     }
   }

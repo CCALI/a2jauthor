@@ -80,6 +80,7 @@
     position: fixed;
     z-index: @zindex-navbar;
     .border-radius(0);
+    top: 0;
     margin: 0;
   }
   &.navbar-fixed-right {
@@ -119,5 +120,29 @@
     > li {
       float: none;
     }
+  }
+}
+
+//This will need to be moved into the component folder once it's created
+.vertical-navbar {
+  .navbar-nav {
+
+    > li > a {
+      [class^="glyphicon-"]:before, [class*=" glyphicon-"]:before {
+        font-size: 130%;
+      }
+    }
+  }
+  .logo {
+    margin: 8px auto;
+    width: 51px;
+    height: 53px;
+    display: block;
+  }
+  .authorver {
+    .text-center;
+    padding-top: @vert-navbar-padding-horizontal;
+    padding-bottom: @vert-navbar-padding-horizontal;
+    margin-top: @vert-navbar-padding-horizontal;
   }
 }

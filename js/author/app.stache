@@ -12,7 +12,6 @@
           </div>
           <div class="col-xs-4">
             <button id="settings" /></button><br />
-            <span class="authorver"></span>
             <span class="authorenv"></span>
           </div>
       </div>
@@ -44,24 +43,29 @@
 <div id="authortool" class="hidestart authortool">
 
   <div class="guideio"></div>
+  <div class="bootstrap-styles">
+    <div class="vertical-navbar vertical-navbar-inverse navbar-fixed-left guidemenu">
 
-  <div class="guidemenu ui-state-default">
-    <img class="logo" src="images/a2j-logo85x89.png" />
-    <ul>
-      <li ref="tabsAbout">About</li>
-      <li ref="tabsVariables">Variables</li>
-      <li ref="tabsSteps">Steps</li>
-      <li ref="tabsPages">Pages</li>
-      <li ref="tabsMap">Map</li>
-      <li ref="tabsFiles">Files</li>
-      <li ref="tabsLogic">All Logic</li>
-      <li ref="tabsText">All Text</li>
-      <li ref="tabsPreview">Preview</li>
-      <li ref="tabsReport">Report</li>
-      <li ref="tabsUpload">Publish</li>
-      <li ref="tabsTemplate">Templates</li>
-      <li ref="tabsGuides">Interviews</li>
-    </ul>
+      <img class="logo" src="images/a2j-logo85x89.png" />
+
+      <nav class="nav navbar-nav">
+        <li ref="tabsAbout"><a href="#"><span class="glyphicon-info-circled"></span> About</a></li>
+        <li ref="tabsVariables"><a href="#"><span class="glyphicon-variables"></span> Variables</a></li>
+        <li ref="tabsSteps"><a href="#"><span class="glyphicon-list-numbered"></span> Steps</a></li>
+        <li ref="tabsPages"><a href="#"><span class="glyphicon-docs"></span> Pages</a></li>
+        <li ref="tabsMap"><a href="#"><span class="glyphicon-sitemap"></span> Map</a></li>
+        <li ref="tabsFiles"><a href="#"><span class="glyphicon-attach"></span> Files</a></li>
+        <li ref="tabsLogic"><a href="#"><span class="glyphicon-split"></span> All Logic</a></li>
+        <li ref="tabsText"><a href="#"><span class="glyphicon-pencil"></span> All Text</a></li>
+        <li ref="tabsPreview"><a href="#"><span class="glyphicon-eye"></span> Preview</a></li>
+        <li ref="tabsReport"><a href="#"><span class="glyphicon-clipboard"></span> Report</a></li>
+        <li ref="tabsUpload"><a href="#"><span class="glyphicon-publish"></span> Publish</a></li>
+        <li ref="tabsTemplate"><a href="#"><span class="glyphicon-doc-text"></span> Templates</a></li>
+        <li ref="tabsGuides" class="active"><a href="#"><span class="glyphicon-court"></span> Interviews</a></li>
+      </nav>
+
+      <p class="authorver"></p>
+    </div>
   </div>
 
   <div class="guidepanels ui-widget xui-widget-content">

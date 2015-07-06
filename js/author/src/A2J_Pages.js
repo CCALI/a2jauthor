@@ -1,7 +1,7 @@
 /*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	
+
 	Authoring App Pages GUI
 	Page editing dialog box
 	Editable page text for display in All Text
@@ -78,7 +78,7 @@ function gotoPageView(destPageName, url)
 {  // Navigate to given page (after tiny delay). This version only used for Author.
    window.setTimeout(function()
 	{
-		
+
 		if (destPageName === CONST.qIDSUCCESS)
 		{	// On success exit, flag interview as Complete.
 			gGuide.varSet(CONST.vnInterviewIncompleteTF,false);
@@ -110,8 +110,8 @@ function gotoPageView(destPageName, url)
 			A2JViewer.goBack();
 		}
 		else
-		{			
-			var page = gGuide.pages[destPageName]; 
+		{
+			var page = gGuide.pages[destPageName];
 			if (page === null || typeof page === "undefined")
 			{
 				traceAlert('Page is missing: '+ destPageName);
@@ -155,12 +155,12 @@ function pageEditSelected()
 function pageEditSelect(pageName)
 {	// Select named page in our list
 	$('.pageoutline li').removeClass(SELECTED);
-	pageNameRelFilter('.pageoutline li',pageName).toggleClass(SELECTED);	
+	pageNameRelFilter('.pageoutline li',pageName).toggleClass(SELECTED);
 }
 
 function pageEditClone(pageName)
 {	// Clone named page and return new page's name.
-	/** @type {TPage} */	
+	/** @type {TPage} */
 	var page = gGuide.pages[pageName];
 	if (typeof page === 'undefined') {return '';}
 	var clonePage = pageFromXML(page2XML(page));
@@ -175,7 +175,7 @@ function pageEditClone(pageName)
 }
 
 function pageEditNew()
-{	// Create a new blank page, after selected page. 
+{	// Create a new blank page, after selected page.
 	var newName = pageEditSelected();
 	var newStep;
 	if (newName ==='')
@@ -212,7 +212,7 @@ function pageEditNew()
 }
 
 function pagePopupEditNew()
-{	// Create a new blank popup page, after selected popup. 
+{	// Create a new blank popup page, after selected popup.
 	var newName = pageEditSelected();
 	if (newName ==='')
 	{
@@ -263,7 +263,7 @@ function pageRename(page,newName){
 	page.name = newName;
 	gGuide.pages[page.name]=page;
 	gGuide.sortPages();
-	//updateTOC(); update now handled when page dialog is closed. 
+	//updateTOC(); update now handled when page dialog is closed.
 	pageEditSelect(newName);
 	return true;
 }
@@ -312,21 +312,21 @@ function gotoPageEdit(pageName)
 	$pageEditDialog =  $('.page-edit-form');
 	$('#authortool').show();
 	$('#page-viewer').hide();
-   var page = gGuide.pages[pageName]; 
+   var page = gGuide.pages[pageName];
 	if (page === null || typeof page === "undefined"){
 		return;
 	}
-	
+
 	//trace(page2XML(pageFromXML(page2XML(page))));
-	
-	
+
+
 	$('#tabsLogic  .tabContent, #tabsText .tabContent').html("");//clear these so they refresh with new data. TODO - update in place
 	//var $page =	findPageDialog(pageName);
 	//if ($page.length==0)
 	//$page = $('.page-edit-form:first').clone(false,false);
 	$pageEditDialog.attr('rel',page.name);
 	$pageEditDialog.attr('title','Question Editor');//page.name);
-	$pageEditDialog.dialog({ 
+	$pageEditDialog.dialog({
 		autoOpen:false,
 		title: page.name,
 		width: 750,
@@ -334,7 +334,7 @@ function gotoPageEdit(pageName)
 		modal: false,
 		minWidth: 200,
 		minHeight: 500, maxHeight: 700,
-		
+
 		close: function(){
 		},
 		buttons:[
@@ -349,11 +349,11 @@ function gotoPageEdit(pageName)
 			pageEditClone($(this).attr('rel'));
 		}},*/
 		{text:'Preview', click:function(){
-			var pageName=$(this).attr('rel');			
+			var pageName=$(this).attr('rel');
 			gotoPageView(pageName);
 			$pageEditDialog.dialog("close");
 		}},
-		{text:'Close',click:function(){ 
+		{text:'Close',click:function(){
 			$(this).dialog("close");
 			updateTOCOnePage();
 		 }}
@@ -369,8 +369,8 @@ function gotoTabOrPage(target)
 	//trace('gotoTabOrPage',target);
 
 	//$('#CAJAOutline li, #CAJAIndex li').each(function(){$(this).removeClass('ui-state-active')});
-	//$('li').filter(function(){ return target == $(this).attr('target')}).each(function(){$(this).addClass('ui-state-active')});	
-	
+	//$('li').filter(function(){ return target == $(this).attr('target')}).each(function(){$(this).addClass('ui-state-active')});
+
 	if (target.indexOf("PAGE ")===0)
 	{
 		gotoPageEdit(target.substr(5));
@@ -380,8 +380,8 @@ function gotoTabOrPage(target)
 	{
 		target='tabsSteps';
 	}
-	$('.guidemenu ul li').removeClass('selected');
-	$('.guidemenu ul li[ref="'+target+'"]').addClass('selected');
+	$('.guidemenu nav li').removeClass('active');
+	$('.guidemenu nav li[ref="'+target+'"]').addClass('active');
 	$('.panel').hide();
 	$('#'+target).show();
 	switch (target)
@@ -398,10 +398,10 @@ function gotoTabOrPage(target)
 			if (gGuide) {gotoPageView(gGuide.firstPage);}
 			break;
 		case 'tabsGuides':
-			// Ensure author can't load new guide before we've saved the current one. 
+			// Ensure author can't load new guide before we've saved the current one.
 			if (gGuide)
 			{	// Ensure existing guide is saved.
-				$('#'+target).hide();	
+				$('#'+target).hide();
 				guideSave(function()
 				{
 					$('#'+target).show();
@@ -423,20 +423,20 @@ function gotoTabOrPage(target)
 function guidePageEditForm(page, div, pagename)//novicePage
 {	// Create editing wizard for given page.
    var t = "";
-  // var page = gGuide.pages[pagename]; 
+  // var page = gGuide.pages[pagename];
 	t=$('<div/>').addClass('tabsPanel editq');
 	var fs;
-	
+
 	form.clear();
 	if (page === null || typeof page === "undefined") {
-		t.append(form.h2( "Page not found " + pagename)); 
+		t.append(form.h2( "Page not found " + pagename));
 	}
-	else 
+	else
 	if (page.type === CONST.ptPopup )
 	{	// Popup pages have only a few options - text, video, audio
 		fs=form.fieldset('Popup info',page);
 		fs.append(form.text({label:'Name:',name:'pagename', value:page.name,change:function(val,page,form)
-		{	// Renaming a popup page. Rename all references to the page. Use the new name only if it's unique. 
+		{	// Renaming a popup page. Rename all references to the page. Use the new name only if it's unique.
 			val = jQuery.trim(val);
 			if (pageRename(page,val)===false){
 				$(this).val(page.name);
@@ -456,7 +456,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
 			updateTOC();
 		}} ));
 		fs.append(form.text({label:'Name:', value:page.name,change:function(val,page,form)
-		{	// Renaming a page. Rename all references to the page. Use the new name only if it's unique. 
+		{	// Renaming a page. Rename all references to the page. Use the new name only if it's unique.
 			val = jQuery.trim(val);
 			if (pageRename(page,val)===false){
 				$(this).val(page.name);
@@ -467,19 +467,19 @@ function guidePageEditForm(page, div, pagename)//novicePage
 		}
 		fs.append(form.htmlarea({label:'Notes:',value: page.notes,change:function(val,page){page.notes=val;}} ));
 		t.append(fs);
-		
-		var pagefs=form.fieldset('Question text',page);  
-		
+
+		var pagefs=form.fieldset('Question text',page);
+
 		pagefs.append(form.htmlarea(	{label:'Text:',value:page.text,change:function(val,page){page.text=val;}} ));
 		pagefs.append(form.pickAudio(	{label:'Text audio:', placeholder:'mp3 file',	value:	page.textAudioURL,change:function(val,page){page.textAudioURL=val;}} ));
 		pagefs.append(form.text(		{label:'Learn More prompt:',placeholder:'Learn more',	value:page.learn,	change:function(val,page){page.learn=val;}} ));
 		var getShowMe=function()
 		{
 			if (page.helpVideoURL!==""){
-				return 2; 
+				return 2;
 			}
 			if (page.helpImageURL!==""){
-				return 1; 
+				return 1;
 			}
 			return 0;
 		};
@@ -489,7 +489,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
 			form.find('[name="helpAudio"]').showit(showMe!==2);
 			form.find('[name="helpGraphic"]').showit(showMe===1);
 			form.find('[name="helpReader"]').showit(showMe>=1);
-			form.find('[name="helpVideo"]').showit(showMe===2);			
+			form.find('[name="helpVideo"]').showit(showMe===2);
 		};
 		pagefs.append(form.pickList({label:'Help style:',value:getShowMe(), change:function(val,page,form){
 			updateShowMe(form, (val));
@@ -508,15 +508,15 @@ function guidePageEditForm(page, div, pagename)//novicePage
 		t.append(pagefs);
 		updateShowMe(pagefs,getShowMe());
 		pagefs=null;
-		
-		
+
+
 		if (page.type === "A2J" || page.fields.length > 0) {
-		
+
 			var blankField=new TField();
 			blankField.type=CONST.ftText;
 			blankField.label="Label";
-			
-			
+
+
 			var updateFieldLayout= function(ff,field)
 			//** @param {TField} field */
 			{
@@ -525,9 +525,9 @@ function guidePageEditForm(page, div, pagename)//novicePage
 				var canDefaultValue=	field.type!==CONST.ftCheckBox && field.type!==CONST.ftCheckBoxNOTA && field.type!==CONST.ftGender;
 				var canOrder =   field.type===CONST.ftTextPick || field.type===CONST.ftNumberPick || field.type===CONST.ftDateMDY;
 				var canUseCalc = (field.type === CONST.ftNumber) || (field.type === CONST.ftNumberDollar);
-				var canMaxChars= field.type===CONST.ftText || field.type===CONST.ftTextLong || field.type===CONST.ftNumber || field.type===CONST.ftNumberDollar || field.type===CONST.ftNumberPhone || field.type===CONST.ftNumberZIP;				
+				var canMaxChars= field.type===CONST.ftText || field.type===CONST.ftTextLong || field.type===CONST.ftNumber || field.type===CONST.ftNumberDollar || field.type===CONST.ftNumberPhone || field.type===CONST.ftNumberZIP;
 				var canCalendar = field.type===CONST.ftDateMDY;
-				var canUseSample = field.type===CONST.ftText || field.type===CONST.ftTextLong  
+				var canUseSample = field.type===CONST.ftText || field.type===CONST.ftTextLong
 					|| field.type === CONST.ftTextPick  || field.type === CONST.ftNumberPick
 					|| field.type===CONST.ftNumber || field.type === CONST.ftNumberZIP || field.type === CONST.ftNumberSSN || field.type === CONST.ftNumberDollar
 					|| field.type === CONST.ftDateMDY;
@@ -535,20 +535,20 @@ function guidePageEditForm(page, div, pagename)//novicePage
 				// Can it use extra long labels instead of single line?
 				//	useLongLabel = curField.type==CField.ftCheckBox ||	curField.type==CField.ftCheckBoxNOTA ||curField.type==CField.ftRadioButton ||urField.type==CField.ftCheckBoxMultiple;
 				//	useLongText =curField.type==CField.ftTextLong;
-				
+
 				ff.find('[name="maxchars"]').showit(canMaxChars);
 				ff.find('[name="min"]').showit(canMinMax );
 				ff.find('[name="max"]').showit(canMinMax );
 				ff.find('[name="default"]').showit(canDefaultValue);
 				ff.find('[name="calculator"]').showit(canUseCalc);
 				ff.find('[name="calendar"]').showit(canCalendar);
-				
+
 				ff.find('[name="listext"]').showit(canList);
 				ff.find('[name="listint"]').showit(canList);
 				ff.find('[name="orderlist"]').showit(canOrder);
 				ff.find('[name="sample"]').showit(canUseSample);
 			};
-			
+
 			fs=form.fieldset('Fields');
 			fs.append(form.listManager({name:'Fields',picker:'Number of fields:',min:0,max:CONST.MAXFIELDS,list:page.fields,blank:blankField
 				,save:function(newlist){
@@ -579,9 +579,9 @@ function guidePageEditForm(page, div, pagename)//novicePage
 								CONST.ftCheckBox,"Check box",
 								CONST.ftCheckBoxNOTA,"Check Box (None of the Above)"
 							]
-							
+
 							));
-					ff.append(form.htmlarea({label:'Label:',   value:field.label, 
+					ff.append(form.htmlarea({label:'Label:',   value:field.label,
 						change:function(val,field){field.label=val;}}));
 					ff.append(form.varPicker({label:'Variable:', placeholder:'Variable name', value: field.name,
 						change:function(val,field){field.name=jQuery.trim(val);}}));
@@ -627,26 +627,26 @@ function guidePageEditForm(page, div, pagename)//novicePage
 						change:function(val,field){field.invalidPrompt=val;}}));
 					ff.append(form.text({label:'Sample value:',name:'sample',value: field.sample,
 						change:function(val,field){field.sample=val;}}));
-					
+
 					updateFieldLayout(ff,field);
 					return ff;
 				}
 				}));
-			
-			
+
+
 			t.append(fs);
 		}
-		
+
 		var updateButtonLayout=function(ff,b)
 		//** @param {TButton} b */
 		{	// Choose a URL for failing the interview
 			var showURL =(b.next === CONST.qIDFAIL);
 			ff.find('[name="url"]').showit(showURL);
 		};
-		
+
 		if (page.type === "A2J" || page.buttons.length > 0) {
 			var blankButton=new TButton();
-			
+
 			fs=form.fieldset('Buttons');
 			fs.append(form.listManager({name:'Buttons',picker:'Number of buttons',min:1,max:CONST.MAXBUTTONS,list:page.buttons,blank:blankButton
 				,save:function(newlist){
@@ -658,7 +658,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
 						change:function(val,b){b.name=val;}}));
 					ff.append(form.text({value: b.value,label:'Default value:',placeholder:'Default value',
 						change:function(val,b){b.value=val;}}));
-					
+
 					ff.append(form.pickpage({value: b.next,label:'Destination:',
 						change:function(val,b,ff){
 							b.next=val;
@@ -699,7 +699,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
 		div.append('<div class=xml>'+htmlEscape(page.xml)+'</div>');
 		div.append('<div class=xml>'+htmlEscape(page.xmla2j)+'</div>');
 	}
-	
+
 	gPage = page;
 	return page;
 }
@@ -722,10 +722,10 @@ TPage.prototype.tagList=function()
 		}
 	}
 	if (page.help!=='') {
-		tags += ' <span class="tag help">' + 'Help' + '</span>'; 
+		tags += ' <span class="tag help">' + 'Help' + '</span>';
 	}
 	if (page.codeAfter!=='' || page.codeBefore!=='') {
-		tags += ' <span class="tag logic">' + 'Logic' + '</span>'; 
+		tags += ' <span class="tag logic">' + 'Logic' + '</span>';
 	}
 	if (page.repeatVar!=='')
 	{
@@ -744,7 +744,7 @@ TGuide.prototype.pageFindReferences=function(findName,newName){
 	{
 		var add=false;
 		page[field]=page[field].replace(REG.LINK_POP,function(match,p1,offset,string) // jslint nolike: /\"POPUP:\/\/(([^\"])+)\"/ig
-												 
+
 		{
 			var popupid=match.match(REG.LINK_POP2)[1];
 			if (popupid===findName)
@@ -772,7 +772,7 @@ TGuide.prototype.pageFindReferences=function(findName,newName){
 	for (var p in guide.pages)
 	{
 		var page=guide.pages[p];
-		
+
 		//text, help, codeBefore, codeAfter
 		testtext(page,'text','Text');
 		testtext(page,'help','Help');
@@ -783,7 +783,7 @@ TGuide.prototype.pageFindReferences=function(findName,newName){
 			var b=page.buttons[bi];
 			if (b.next===findName)
 			{	// 2014-06-02 Make button point to renamed page.
-				b.next = newName; 
+				b.next = newName;
 				matches.push({name:page.name,field:'Button '+b.label,text:b.label});
 			}
 		}

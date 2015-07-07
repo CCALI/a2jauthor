@@ -1,6 +1,6 @@
 /**
  * @module {{}} author/app_template app_template
- * @parent api
+ * @parent api-components
  *
  * This module exposes the author app renderer function and it is needed because
  * this template is loaded dynamically using `System.import` and a bundle was

@@ -1,3 +1,7 @@
+/*
+ *  @group styleguide-theme Theme 0
+ */
+
 //
 // Variables
 // --------------------------------------------------
@@ -42,6 +46,13 @@
 //
 //## Font, line-height, and color for body text, headings, and more.
 
+/*
+ *  @stylesheet variables.less Typography
+ *  @parent styleguide-baseline 0
+ *
+ *  Global style definitions for all typographic elements
+ *  including headings, paragraphs, lists, and blockquotes.
+ */
 
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
 
@@ -54,6 +65,11 @@
 @font-size-base:          14px;
 @font-size-large:         ceil((@font-size-base * 1.25)); // ~18px
 @font-size-small:         ceil((@font-size-base * 0.85)); // ~12px
+
+/* @styles headings Headings
+ *
+ * H tags defining a typographical heirarchy
+ */
 
 @font-size-h1:            floor((@font-size-base * 2.6)); // ~36px
 @font-size-h2:            floor((@font-size-base * 2.15)); // ~30px

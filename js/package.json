@@ -25,12 +25,17 @@
     "testee": "^0.2.0"
   },
   "system": {
+    "transpiler": "babel",
     "npmIgnore": [
       "testee",
       "documentjs"
     ],
     "configDependencies": [
       "author/load_fixtures"
+    ],
+    "bundle": [
+      "author/app_template",
+      "author/src/src"
     ],
     "map": {
       "chai": "chai/chai",

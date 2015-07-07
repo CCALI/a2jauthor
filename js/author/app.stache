@@ -3,21 +3,7 @@
   <div align="center"> <img src="../viewer/images/A2J5_Icon_512.png" /> </div>
 </div>
 
-  <div id="cajaheader" class="hidestart bootstrap-styles">
-    <header>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-8">
-            <h1 id="guidetitle">A2J Guided Interviews<sup>®</sup></h1>
-          </div>
-          <div class="col-xs-4">
-            <button id="settings" /></button><br />
-            <span class="authorenv"></span>
-          </div>
-      </div>
-      </div>
-    </header>
-  </div>
+
 
 <div id="page-viewer" class="hidestart ViewerApp a2jv">
   <div class="testing ui-widget-content">
@@ -41,6 +27,22 @@
 </div>
 
 <div id="authortool" class="hidestart authortool">
+
+  <div id="cajaheader" class="hidestart bootstrap-styles">
+    <header>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-8">
+            <h1 id="guidetitle">A2J Guided Interviews<sup>®</sup></h1>
+          </div>
+          <div class="col-xs-4">
+            <button id="settings" /></button><br />
+            <span class="authorenv"></span>
+          </div>
+      </div>
+      </div>
+    </header>
+  </div>
 
   <div class="guideio"></div>
   <div class="bootstrap-styles">

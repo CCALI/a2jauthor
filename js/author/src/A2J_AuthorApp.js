@@ -240,7 +240,9 @@ function main()
     dialogAlert({title:'Clone interview'});
    });
 
-  $('.guidemenu ul li').click(function(){
+  $('.guidemenu nav li').click(function(){
+    $('.guidemenu nav li').removeClass('active');
+    $(this).addClass('active');
     gotoTabOrPage($(this).attr('ref'));
   });
 

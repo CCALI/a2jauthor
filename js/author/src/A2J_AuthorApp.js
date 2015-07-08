@@ -161,15 +161,20 @@ function main()
     });
   // JPM expand/collapse all panel buttons on various tabs/popups
   $(".ecPanelButton") // SJG apply to all ec buttons operating on LEGEND tags
-      .button({label:'<span class="glyphicon-minus"></span> Collapse All'})
+      //.button({label:'<span class="glyphicon-minus"></span> Collapse All'})
+
       .click(function(){
-        if ($(this).text() === '<span class="glyphicon-minus"></span> Collapse All') {
+        var ecPanelButtonState = $(this).attr('data-state');
+
+        if (ecPanelButtonState === 'collapsed') {
              $(this).parents('.panel').find("legend ~ div").slideToggle(300);
              $(this).button({label:'<span class="glyphicon-plus"></span> Expand All'});
+             $(this).attr("data-state", "expanded");
         }
         else {
              $(this).parents('.panel').find("legend ~ div").slideDown(300);
              $(this).button({label:'<span class="glyphicon-minus"></span> Collapse All'});
+             $(this).attr("data-state", "collapsed");
         }
   });
 

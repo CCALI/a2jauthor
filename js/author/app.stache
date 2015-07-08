@@ -235,14 +235,14 @@
           <div class="col-md-8">
             <div id="showlogic">
               <input checked="checked" type="radio" id="showlogic1" name="showlogic" />
-              <label for="showlogic1">Show only active code</label>
+              <label for="showlogic1" class="btn btn-primary">Show only active code</label>
 
               <input type="radio" id="showlogic2" name="showlogic" />
-              <label for="showlogic2">Show all code blocks</label>
+              <label for="showlogic2" class="btn btn-primary">Show all code blocks</label>
             </div>
           </div>
           <div class="col-md-4 text-right">
-            <button class="ecPanelButton" /> <button CSH="AllLogic" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+            <button class="ecPanelButton btn btn-primary" data-state="collapsed"><span class="glyphicon-minus"></span> Collapse All</button> <button CSH="AllLogic" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
           </div>
         </div>
       </div>
@@ -259,13 +259,13 @@
           <div class="col-md-8">
             <div id="showtext">
               <input checked="checked" type="radio" id="showtext1" name="showtext" />
-              <label for="showtext1">Filled fields</label>
+              <label for="showtext1" class="btn btn-primary">Filled fields</label>
               <input type="radio" id="showtext2" name="showtext" />
-              <label for="showtext2">All fields</label>
+              <label for="showtext2" class="btn btn-primary">All fields</label>
             </div>
           </div>
           <div class="col-md-4 text-right">
-            <button class="ecPanelButton" /> <button CSH="AllText" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+            <button class="ecPanelButton btn btn-primary" data-state="collapsed"><span class="glyphicon-minus"></span> Collapse All</button> <button CSH="AllText" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
           </div>
         </div>
       </div>
@@ -382,8 +382,8 @@
       <div class="tabHeader bootstrap-styles">
         <div class="row">
           <div class="col-md-8">
-            <button id="reportFull">Full Report</button>
-            <button id="reportTranscript">Transcript Report</button>
+            <button id="reportFull" class="btn btn-primary">Full Report</button>
+            <button id="reportTranscript" class="btn btn-primary">Transcript Report</button>
           </div>
           <div class="col-md-4 text-right">
             <button CSH="Report" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>

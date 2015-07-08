@@ -161,7 +161,6 @@ function main()
     });
   // JPM expand/collapse all panel buttons on various tabs/popups
   $(".ecPanelButton") // SJG apply to all ec buttons operating on LEGEND tags
-      //.button({label:'<span class="glyphicon-minus"></span> Collapse All'})
 
       .click(function(){
         var ecPanelButtonState = $(this).attr('data-state');

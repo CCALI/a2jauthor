@@ -46,7 +46,7 @@
 
   <div class="guideio"></div>
   <div class="bootstrap-styles">
-    <div class="vertical-navbar vertical-navbar-inverse navbar-fixed-left guidemenu">
+    <div class="vertical-navbar navbar-inverse navbar-fixed-left guidemenu">
 
       <img class="logo" src="images/a2j-logo85x89.png" />
 

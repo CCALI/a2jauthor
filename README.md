@@ -31,7 +31,7 @@ and go to [http://localhost:3000/author/index.production.html](http://localhost:
 ## To run tests:
 
 ```
-grunt test
+$ grunt test
 ```
 
 or, if your local server is running (you ran `npm start` before) you can run tests in your browser
@@ -44,17 +44,9 @@ $ cd js
 $ grunt documentjs
 ```
 
-The JS documentation will be written to `/docs` and the styles documentation will live in `/styles`.
+The static html documentation will be generated into the `author/docs` folder, for
+both the JavaScript files and CSS/less styles.
 
-If you want to view the generated docs in your brower just do:
-
-```
-$ cd ../docs  (or cd ../styles if you want to see the live style guide)
-$ python -m SimpleHTTPServer
-```
-
-You should see something like the following:
-
-`Serving HTTP on 0.0.0.0 port 8000 ...`
-
-Finally, open up a brower and navigate to [http://localhost:8000](http://localhost:8000); you should see the docs page!
+If you want to view the generated docs in your brower just navigate to
+[http://localhost:3000/author/docs/](http://localhost:3000/author/docs/)
+you should see the docs page!

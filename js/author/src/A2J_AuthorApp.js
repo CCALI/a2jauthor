@@ -141,16 +141,16 @@ function main()
 
   // JPM Handles Expand/Collapse button on pages list
   function expandCollapsePageList() {
-    var ecText = $("#expandCollapse").text();
-    if (ecText === '<span class="glyphicon-minus"></span> Collapse All') {
-      $("#expandCollapse").html('<span class="glyphicon-plus"></span> Expand All');
+    var ecText = $("#expandCollapse").attr('data-state');
+    if (ecText === 'collapsed') {
       $("#CAJAOutline > ul > li + ul").slideUp(300);
       $('#expandCollapse').button({label:'<span class="glyphicon-plus"></span> Expand All'});
+      $('#expandCollapse').attr("data-state", "expanded");
     }
     else {
-      $("#expandCollapse").html('<span class="glyphicon-minus"></span> Collapse All');
       $("#CAJAOutline > ul > li + ul").slideDown(300);
       $('#expandCollapse').button({label:'<span class="glyphicon-minus"></span> Collapse All'});
+      $('#expandCollapse').attr("data-state", "collapsed");
     }
   }
   // JPM Expand/Collapse button for pages list.

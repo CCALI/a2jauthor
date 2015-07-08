@@ -7,7 +7,8 @@
       },
       "dest": "./author/docs",
       "parent": "author",
-      "templates": "./author/styles/documentjs-theme/templates"
+      "templates": "./author/styles/documentjs-theme/templates",
+      "static": "./author/styles/documentjs-theme/static"
     }
   }
 }

@@ -162,7 +162,7 @@
             <h3>Pages and popups</h3>
           </div>
           <div class="col-md-4 text-right">
-            <button id="expandCollapse" class="btn btn-primary"></button> <button CSH="Pages" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+            <button id="expandCollapse" data-state="collapsed" class="btn btn-primary"></button> <button CSH="Pages" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
           </div>
         </div>
       </div>

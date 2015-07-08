@@ -10,6 +10,15 @@ module.exports = function(grunt) {
       firefox: ['author/test/index.html']
     },
 
+    copy: {
+      'icon-font': {
+        expand: true,
+        cwd: 'author/styles/',
+        src: 'icon-font/**/*',
+        dest: 'author/docs/demos/'
+      }
+    },
+
     'steal-build': {
       bundle: {
         options: {
@@ -24,8 +33,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('testee');
   grunt.loadNpmTasks('documentjs');
   grunt.loadNpmTasks('steal-tools');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+
+  grunt.renameTask('documentjs', 'documentjs-orig');
 
   grunt.registerTask('build', ['steal-build']);
   grunt.registerTask('test', ['testee:firefox']);
+  grunt.registerTask('documentjs', ['documentjs-orig', 'copy:icon-font']);
 
 };

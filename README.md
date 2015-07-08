@@ -44,9 +44,16 @@ $ cd js
 $ grunt documentjs
 ```
 
-The static html documentation will be generated into the `author/docs` folder, for
-both the JavaScript files and CSS/less styles.
+If you want to view the generated docs in your brower just do:
 
-If you want to view the generated docs in your brower just navigate to
-[http://localhost:3000/author/docs/](http://localhost:3000/author/docs/)
+```
+$ cd author/docs
+$ python -m SimpleHTTPServer
+```
+
+You should see something like the following:
+
+`Serving HTTP on 0.0.0.0 port 8000 ...`
+
+Open up a brower and navigate to [http://localhost:8000](http://localhost:8000)
 you should see the docs page!

@@ -36,7 +36,7 @@
             <h1 id="guidetitle">A2J Guided Interviews<sup>®</sup></h1>
           </div>
           <div class="col-xs-4">
-            <button id="settings" /></button><br />
+            <button id="settings" class="btn btn-link"><span class="glyphicon-cog-1"></span> Settings</button><br />
             <span class="authorenv"></span>
           </div>
       </div>
@@ -78,7 +78,7 @@
             <h3>Information about this interview</h3>
           </div>
           <div class="col-md-4 text-right">
-            <button class="ecPanelButton"></button> <button CSH="About" class="CSH" />
+            <button class="ecPanelButton"></button> <button CSH="About" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
           </div>
         </div>
       </div>
@@ -96,7 +96,7 @@
             <h3>Variables used in this interview</h3>
           </div>
           <div class="col-md-4 text-right">
-            <button CSH="Variables" class="CSH" />
+            <button CSH="Variables" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
           </div>
         </div>
       </div>
@@ -123,7 +123,7 @@
             <h3>Clauses used in this interview</h3>
           </div>
           <div class="col-md-4 text-right">
-            <button CSH="Clauses" class="CSH" />
+            <button CSH="Clauses" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
           </div>
         </div>
       </div>
@@ -144,7 +144,7 @@
             <h3>Steps</h3>
           </div>
           <div class="col-md-4 text-right">
-            <button CSH="Steps" class="CSH" />
+            <button CSH="Steps" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
           </div>
         </div>
       </div>
@@ -162,7 +162,7 @@
             <h3>Pages and popups</h3>
           </div>
           <div class="col-md-4 text-right">
-            <button id="expandCollapse"></button> <button CSH="Pages" class="CSH" />
+            <button id="expandCollapse" class="btn btn-primary"></button> <button CSH="Pages" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
           </div>
         </div>
       </div>
@@ -217,7 +217,7 @@
               <button zoom="fit"></button>
               <button zoom="1.25"></button>
               <button zoom="0.75"></button>
-              <button CSH="Map" class="CSH" />
+              <button CSH="Map" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
             </div>
 
             <div id="MapperPanel">
@@ -242,7 +242,7 @@
             </div>
           </div>
           <div class="col-md-4 text-right">
-            <button class="ecPanelButton" /> <button CSH="AllLogic" class="CSH" />
+            <button class="ecPanelButton" /> <button CSH="AllLogic" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
           </div>
         </div>
       </div>
@@ -265,7 +265,7 @@
             </div>
           </div>
           <div class="col-md-4 text-right">
-            <button class="ecPanelButton" /> <button CSH="AllText" class="CSH" />
+            <button class="ecPanelButton" /> <button CSH="AllText" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
           </div>
         </div>
       </div>
@@ -283,7 +283,7 @@
             <h3>Files currently attached to this interview</h3>
           </div>
           <div class="col-md-4 text-right">
-            <button CSH="Files" class="CSH" />
+            <button CSH="Files" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
           </div>
         </div>
       </div>
@@ -321,7 +321,7 @@
       <div class="tabHeader bootstrap-styles">
         <div class="row">
           <div class="col-md-12 text-right">
-            <button CSH="Interviews" class="CSH" />
+            <button CSH="Interviews" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
           </div>
         </div>
       </div>
@@ -348,18 +348,17 @@
 
         </div>
       </div>
-      <div class="tabFooter">
+      <div class="tabFooter bootstrap-styles">
         <div>
           <!--  <button id="guideCreate">New</button>-->
-          <button id="guideClone">Clone</button>
-          <button id="guideOpen">Open</button>
-          <button id="guideArchive">Delete</button>
+          <button id="guideClone" class="btn btn-default"><span class="glyphicon-docs"></span> Clone</button>
+          <button id="guideOpen" class="btn btn-default"><span class="glyphicon-folder-open"></span> Open</button>
+          <button id="guideArchive" class="btn btn-default"><span class="glyphicon-trash"></span> Delete</button>
           <div class="fileuploader">
             <!-- The fileinput-button span is used to style the file input field as button -->
             <a href="javascript:void(0)" class="fileinput-button">
-              <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
-                <span class="ui-button-icon-primary ui-icon ui-icon-plus"></span>
-                <span class="ui-button-text">Upload A2J Guided Interview...</span>
+              <button class="btn btn-primary">
+                <span class="glyphicon-plus"></span> Upload A2J Guided Interview...
               </button>
 
               <!-- The file input field used as target for the file upload widget -->
@@ -387,7 +386,7 @@
             <button id="reportTranscript">Transcript Report</button>
           </div>
           <div class="col-md-4 text-right">
-            <button CSH="Report" class="CSH" />
+            <button CSH="Report" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
           </div>
         </div>
       </div>
@@ -414,7 +413,7 @@
             <h3>Publish/Upload</h3>
           </div>
           <div class="col-md-4 text-right">
-            <button CSH="Publish" class="CSH" />
+            <button CSH="Publish" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
           </div>
         </div><!-- row -->
       </div><!-- tabHeader bootstrap-styles -->

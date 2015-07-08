@@ -2,8 +2,8 @@
   "sites": {
     "docs": {
       "glob": {
-          "pattern": "author/**/*.{js,md,less,css}",
-          "ignore": "{docs,viewer,node_modules,tests,minify,author/{src,libs}}/**/*"
+        "pattern": "author/**/*.{js,md,less,css}",
+        "ignore": "{docs,viewer,node_modules,tests,minify,author/{src,libs}}/**/*"
       },
       "dest": "./author/docs",
       "parent": "author",

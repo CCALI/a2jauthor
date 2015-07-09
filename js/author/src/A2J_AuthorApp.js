@@ -184,7 +184,7 @@ function main()
 
 
 
-  $('#guideZIP').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
+  $('#guideZIP').button({  disabled:false}).click(function()
   { // 01/08/2014 ZIP the guide and related files.
     function guideZipped(data)
     {
@@ -198,7 +198,7 @@ function main()
     ws({cmd:'guidezip',gid:gGuideID},guideZipped);
    });
 
-  $('#guidePublish').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
+  $('#guidePublish').button({  disabled:false}).click(function()
   { // 07/22/2014 Publish guide and related files to unique, permanent URL.
     function guidePublished(data)
     {
@@ -211,7 +211,7 @@ function main()
     setProgress('Creating published guide',true);
     ws({cmd:'guidepublish',gid:gGuideID},guidePublished);
    });
-  $('#guideMobile').button({label:'Test in Mobile',icons:{primary:'ui-icon-pencil'}}).click(function(){
+  $('#guideMobile').button().click(function(){
     // 2015-01-14
     // E.g., http://localhost/app/js/viewer/mobile/mobile.min.html?templateURL=/app/userfiles/public/dev/guides/Guide334/2015-01-12-12-46-35/Guide.xml&fileDataURL=images%2F&getDataURL=%2Fresume.aspx&setDataURL=%2Fsave.aspx&autoSetDataURL=%2Fautosave.aspx&exitURL=https%3A%2F%2Fgoogle.com&logURL=&errRepURL=&desktopURL=index.html#!view/pages/page/06-Where%20will%20you%20file%20the%20affidavit%3F
     // Open new window with a unique URL that author can test on mobile.
@@ -231,7 +231,7 @@ function main()
   $('#reportFull').button().click(reportFull);
   $('#reportTranscript').button().click(reportTranscript);
 
-  $('#guideDownload').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
+  $('#guideDownload').button({  disabled:false }).click(function()
   { // 05/08/2014 Download as .a2j file.
     // 06/06/2014 Use .a2j5 extension so A2J4 doesn't try to open it.
     if (gGuide.filename.indexOf('.a2j5')<0) {

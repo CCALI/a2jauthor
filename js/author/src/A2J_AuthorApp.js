@@ -269,10 +269,10 @@ function main()
 
 // JPM - added button to slide/hide page list on mapper
   $('#tabsMapper button').first()
-    .button({disabled:false,label:'Hide Page List',icons:{primary:'ui-icon-arrowthick-1-w'}}).next()
-    .button({disabled:false,label:'Fit',icons:{primary:'ui-icon-arrow-4-diag'}}).next()
-    .button({label:'Zoom in',icons:{primary:'ui-icon-zoomin'}}).next()
-    .button({label:'Zoom out',icons:{primary:'ui-icon-zoomout'}});
+    .button({disabled:false,label:'<span class="glyphicon-left-thin"></span> Hide Page List'}).next()
+    .button({disabled:false}).next()
+    .button().next()
+    .button();
 
   $('#tabsMapper button:eq(0)').click(mapZoomSlide);
   $('#tabsMapper button:eq(1)').click(mapZoomClick);

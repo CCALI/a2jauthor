@@ -491,7 +491,7 @@ var form={
 
 	,pickFile : function(mask)
 	{
-		var e=$('<span class="fileinput-button"><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary"><span class="ui-button-icon-primary ui-icon ui-icon-plus"></span><span class="ui-button-text" >Upload...</span></button><input class="fileupload" type="file" name="files[]"/></span>');
+		var e=$('<span class="fileinput-button bootstrap-styles"><button class="btn btn-primary"><span class="glyphicon-plus"></span> Upload...</button><input class="fileupload" type="file" name="files[]"/></span>');
 		//.addClass('fileupload-processing')
 		if (gGuideID!==0) {
 			$('.fileupload',e).fileupload({

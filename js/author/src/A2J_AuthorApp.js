@@ -144,18 +144,18 @@ function main()
     var ecText = $("#expandCollapse").attr('data-state');
     if (ecText === 'collapsed') {
       $("#CAJAOutline > ul > li + ul").slideUp(300);
-      $('#expandCollapse').button({label:'<span class="glyphicon-plus"></span> Expand All'});
+      $('#expandCollapse').button({label:'<span class="glyphicon-expand"></span> Expand All'});
       $('#expandCollapse').attr("data-state", "expanded");
     }
     else {
       $("#CAJAOutline > ul > li + ul").slideDown(300);
-      $('#expandCollapse').button({label:'<span class="glyphicon-minus"></span> Collapse All'});
+      $('#expandCollapse').button({label:'<span class="glyphicon-collapse"></span> Collapse All'});
       $('#expandCollapse').attr("data-state", "collapsed");
     }
   }
   // JPM Expand/Collapse button for pages list.
   $('#expandCollapse')
-    .button({label:'<span class="glyphicon-minus"></span> Collapse All'})
+    .button({label:'<span class="glyphicon-collapse"></span> Collapse All'})
     .click(function(){
       expandCollapsePageList();
     });
@@ -167,12 +167,12 @@ function main()
 
         if (ecPanelButtonState === 'collapsed') {
              $(this).parents('.panel').find("legend ~ div").slideToggle(300);
-             $(this).button({label:'<span class="glyphicon-plus"></span> Expand All'});
+             $(this).button({label:'<span class="glyphicon-expand"></span> Expand All'});
              $(this).attr("data-state", "expanded");
         }
         else {
              $(this).parents('.panel').find("legend ~ div").slideDown(300);
-             $(this).button({label:'<span class="glyphicon-minus"></span> Collapse All'});
+             $(this).button({label:'<span class="glyphicon-collapse"></span> Collapse All'});
              $(this).attr("data-state", "collapsed");
         }
   });
@@ -259,7 +259,7 @@ function main()
     row.data('record',$.extend({},row.data('record')));
     form.listManagerSave($(this).closest('table'));
   });
-  $(document).on("click", ".editicons .ui-icon-circle-minus",  function(){// delete a table row
+  $(document).on("click", ".editicons .ui-icon-circle-collapse",  function(){// delete a table row
     var $tbl=$(this).closest('table');
     var settings=$tbl.data('settings');
     if ($('tbody tr',$tbl).length<=settings.min) {return;}

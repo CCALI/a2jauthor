@@ -181,12 +181,12 @@
           </ul>
         </div>-->
             <!--      <div id="tabsfind"> Find? </div>--></div>
-          <div class="tabFooter">
-            <button></button>
-            <button></button>
-            <button></button>
-            <button></button>
-            <button></button>
+          <div class="tabFooter bootstrap-styles">
+            <button class="btn btn-default"><span class="glyphicon-new-message"></span> Edit</button>
+            <button class="btn btn-default"><span class="glyphicon-doc"></span> New Page</button>
+            <button class="btn btn-default"><span class="glyphicon-popup"></span> New Popup</button>
+            <button class="btn btn-default"><span class="glyphicon-docs"></span> Clone</button>
+            <button class="btn btn-default"><span class="glyphicon-trash"></span> Delete</button>
           </div>
         </div>
 

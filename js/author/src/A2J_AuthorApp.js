@@ -280,19 +280,19 @@ function main()
   $('#tabsMapper button:eq(3)').click(mapZoomClick);
 
   $('.tabsPages .tabFooter button').first()
-    .button({label:'Edit',icons:{primary:'ui-icon-pencil'}}).click(function(){
+    .button().click(function(){
       gotoPageEdit(pageEditSelected());
     }).next()
-    .button({label:'New Page',icons:{primary:'ui-icon-document'}}).click(function(){
+    .button().click(function(){
       pageEditNew();
     }).next()
-    .button({label:'New Popup',icons:{primary:'ui-icon-document'}}).click(function(){
+    .button().click(function(){
       pagePopupEditNew();
     }).next()
-    .button({label:'Clone',icons:{primary:'ui-icon-newwin'}}).click(function(){
+    .button().click(function(){
       pageEditClone(pageEditSelected());
     }).next()
-    .button({label:'Delete',icons:{primary:'ui-icon-trash'}}).click(function(){
+    .button().click(function(){
       pageEditDelete(pageEditSelected());
     });
 

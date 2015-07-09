@@ -367,10 +367,10 @@ function main()
 
 
   $('#page-viewer').hide();
-  $('#var-add').button({icons:{primary:'ui-icon-new'}}).click(varAdd);
-  $('#clause-add').button({icons:{primary:'ui-icon-new'}}).click(clauseAdd);
+  $('#var-add').button().click(varAdd);
+  $('#clause-add').button().click(clauseAdd);
 
-  $('#uploadCMPFile').button({icons:{primary:'ui-icon-folder-open'}});
+  $('#uploadCMPFile').button();
   $('#uploadCMPFileInput').on('change',function()
   { // Browse for HotDocs .CMP file on local desktop to upload to client (no server).
     var file = $('#uploadCMPFileInput')[0].files[0];
@@ -443,10 +443,12 @@ function main()
       'ui-button',
       'ui-state-default',
       'ui-corner-all',
-      'ui-button-text-only'
+      'ui-button-text-only',
+      'ui-button-icon-primary',
+      'ui-icon'
     ];
 
-    $('.bootstrap-styles button').removeClass(classes.join(' '));
+    $('.bootstrap-styles button, .bootstrap-styles span').removeClass(classes.join(' '));
   }());
 
   signin();

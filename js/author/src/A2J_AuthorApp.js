@@ -436,13 +436,18 @@ function main()
     }
   });
 
-  $('.bootstrap-styles button').removeClass("ui-widget");
-  $('.bootstrap-styles button').removeClass("ui-button");
-  $('.bootstrap-styles button').removeClass("ui-state-default");
-  $('.bootstrap-styles button').removeClass("ui-corner-all");
-  $('.bootstrap-styles button').removeClass("ui-button-text-only");
-  //$('.bootstrap-styles span.ui-button-text').unwrap();
-  //$('.bootstrap-styles span.ui-button-text').replaceWith($('.bootstrap-styles span.ui-button-text').html());
+  // remove jquery-ui classes from buttons.
+  (function() {
+    var classes = [
+      'ui-widget',
+      'ui-button',
+      'ui-state-default',
+      'ui-corner-all',
+      'ui-button-text-only'
+    ];
+
+    $('.bootstrap-styles button').removeClass(classes.join(' '));
+  }());
 
   signin();
 }

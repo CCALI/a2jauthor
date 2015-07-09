@@ -76,6 +76,7 @@
 <glyph glyph-name="folder-upload" unicode="&#xe843;" d="m563 600l-125 125h-438v-813h1000v688h-437z m-63-219l219-218h-156v-251h-125v251h-157l219 218z" horiz-adv-x="1000" />
 <glyph glyph-name="folder" unicode="&#xe844;" d="m438 725l125-125h437v-688h-1000v813z" horiz-adv-x="1000" />
 <glyph glyph-name="collapse" unicode="&#xe845;" d="m200 300v100h600v-100h-600z m770 520h-940v-945h945v945z m-865-75h795v-795h-795v795z" horiz-adv-x="1000" />
+<glyph glyph-name="mobile" unicode="&#xe846;" d="m480 840q42 0 71-29t29-71l0-780q0-40-29-70t-71-30l-380 0q-40 0-70 30t-30 70l0 780q0 42 30 71t70 29l380 0z m-190-940q30 0 50 15t20 35q0 22-20 36t-50 14q-28 0-49-15t-21-35 21-35 49-15z m210 150l0 660-420 0 0-660 420 0z" horiz-adv-x="580" />
 </font>
 </defs>
 </svg>

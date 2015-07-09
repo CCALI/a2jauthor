@@ -35,7 +35,7 @@
           <div class="col-xs-8">
             <h1 id="guidetitle">A2J Guided Interviews<sup>®</sup></h1>
           </div>
-          <div class="col-xs-4">
+          <div class="col-xs-4 text-right">
             <button id="settings" class="btn btn-link"><span class="glyphicon-cog-1"></span> Settings</button><br />
             <span class="authorenv"></span>
           </div>

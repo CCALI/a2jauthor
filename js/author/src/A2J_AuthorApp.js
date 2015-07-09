@@ -128,11 +128,11 @@ function main()
   $('.authorver').html(CONST.A2JVersionNum+" "+CONST.A2JVersionDate);
   $('#cajainfo').attr('title',versionString());
   //$('#guideSave').button({label:'Save Now',icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
-  $('#settings').button({label:'Settings',icons:{primary:"ui-icon-gear"}}).click(function(){$('#settings-form').dialog('open');});
+  $('#settings').click(function(){$('#settings-form').dialog('open');});
 
   // 2014-06-09 SJG adding context-sensitive help links.
   //$('.tabHeader, #tabsMapper .tabFooter').append('<button class="CSH"/>');
-  $('.CSH').button({label:'Help'}).click(function(){
+  $('.CSH').click(function(){
     var csh = $(this).attr('CSH');//parent().parent().attr('id');
     var url = 'http://author.a2jauthor.org/csh5/' + csh;
     window.open( url );
@@ -141,42 +141,46 @@ function main()
 
   // JPM Handles Expand/Collapse button on pages list
   function expandCollapsePageList() {
-    var ecText = $("#expandCollapse").text();
-    if (ecText === "Collapse All") {
-      $("#expandCollapse").html("Expand All");
+    var ecText = $("#expandCollapse").attr('data-state');
+    if (ecText === 'collapsed') {
       $("#CAJAOutline > ul > li + ul").slideUp(300);
-      $('#expandCollapse').button({label:'Expand All',icons:{primary:"ui-icon-circle-plus"}});
+      $('#expandCollapse').button({label:'<span class="glyphicon-expand"></span> Expand All'});
+      $('#expandCollapse').attr("data-state", "expanded");
     }
     else {
-      $("#expandCollapse").html("Collapse All");
       $("#CAJAOutline > ul > li + ul").slideDown(300);
-      $('#expandCollapse').button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}});
+      $('#expandCollapse').button({label:'<span class="glyphicon-collapse"></span> Collapse All'});
+      $('#expandCollapse').attr("data-state", "collapsed");
     }
   }
   // JPM Expand/Collapse button for pages list.
   $('#expandCollapse')
-    .button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}})
+    .button({label:'<span class="glyphicon-collapse"></span> Collapse All'})
     .click(function(){
       expandCollapsePageList();
     });
   // JPM expand/collapse all panel buttons on various tabs/popups
   $(".ecPanelButton") // SJG apply to all ec buttons operating on LEGEND tags
-      .button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}})
+
       .click(function(){
-        if ($(this).text() === "Collapse All") {
+        var ecPanelButtonState = $(this).attr('data-state');
+
+        if (ecPanelButtonState === 'collapsed') {
              $(this).parents('.panel').find("legend ~ div").slideToggle(300);
-             $(this).button({label:'Expand All',icons:{primary:"ui-icon-circle-plus"}});
+             $(this).button({label:'<span class="glyphicon-expand"></span> Expand All'});
+             $(this).attr("data-state", "expanded");
         }
         else {
              $(this).parents('.panel').find("legend ~ div").slideDown(300);
-             $(this).button({label:'Collapse All',icons:{primary:"ui-icon-circle-minus"}});
+             $(this).button({label:'<span class="glyphicon-collapse"></span> Collapse All'});
+             $(this).attr("data-state", "collapsed");
         }
   });
 
 
   //$('#guideCreate').button({icons:{primary:"ui-icon-document"}}).click(function(){createBlankGuide(); });
-  $('#guideOpen').button({label:'Open', disabled:false, icons:{primary:"ui-icon-disk"}}).click(openSelectedGuide);
-  $('#guideArchive').button({label:'Delete', disabled:false, icons:{primary:"ui-icon-trash"}}).click(archiveSelectedGuide);
+  $('#guideOpen').button({disabled:false}).click(openSelectedGuide);
+  $('#guideArchive').button({disabled:false}).click(archiveSelectedGuide);
 
 
 
@@ -236,7 +240,7 @@ function main()
     downloadTextFile( exportXML_CAJA_from_CAJA(gGuide), gGuide.filename);
    });
 
-  $('#guideClone').button({label:'Clone', disabled:true, icons:{primary:"ui-icon-disk"}}).click(function(){
+  $('#guideClone').button({disabled:true}).click(function(){
     dialogAlert({title:'Clone interview'});
    });
 
@@ -255,7 +259,7 @@ function main()
     row.data('record',$.extend({},row.data('record')));
     form.listManagerSave($(this).closest('table'));
   });
-  $(document).on("click", ".editicons .ui-icon-circle-minus",  function(){// delete a table row
+  $(document).on("click", ".editicons .ui-icon-circle-collapse",  function(){// delete a table row
     var $tbl=$(this).closest('table');
     var settings=$tbl.data('settings');
     if ($('tbody tr',$tbl).length<=settings.min) {return;}
@@ -276,19 +280,19 @@ function main()
   $('#tabsMapper button:eq(3)').click(mapZoomClick);
 
   $('.tabsPages .tabFooter button').first()
-    .button({label:'Edit',icons:{primary:'ui-icon-pencil'}}).click(function(){
+    .button().click(function(){
       gotoPageEdit(pageEditSelected());
     }).next()
-    .button({label:'New Page',icons:{primary:'ui-icon-document'}}).click(function(){
+    .button().click(function(){
       pageEditNew();
     }).next()
-    .button({label:'New Popup',icons:{primary:'ui-icon-document'}}).click(function(){
+    .button().click(function(){
       pagePopupEditNew();
     }).next()
-    .button({label:'Clone',icons:{primary:'ui-icon-newwin'}}).click(function(){
+    .button().click(function(){
       pageEditClone(pageEditSelected());
     }).next()
-    .button({label:'Delete',icons:{primary:'ui-icon-trash'}}).click(function(){
+    .button().click(function(){
       pageEditDelete(pageEditSelected());
     });
 
@@ -431,6 +435,19 @@ function main()
       );
     }
   });
+
+  // remove jquery-ui classes from buttons.
+  (function() {
+    var classes = [
+      'ui-widget',
+      'ui-button',
+      'ui-state-default',
+      'ui-corner-all',
+      'ui-button-text-only'
+    ];
+
+    $('.bootstrap-styles button').removeClass(classes.join(' '));
+  }());
 
   signin();
 }

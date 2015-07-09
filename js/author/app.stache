@@ -296,13 +296,12 @@
           </table>
         </div>
       </div>
-      <div class="tabFooter">
+      <div class="tabFooter bootstrap-styles">
         <div class="fileuploader">
           <!-- The fileinput-button span is used to style the file input field as button -->
           <a href="javascript:void(0)" class="fileinput-button">
-            <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
-              <span class="ui-button-icon-primary ui-icon ui-icon-plus"></span>
-              <span class="ui-button-text">Upload files...</span>
+            <button class="btn btn-primary">
+              <span class="glyphicon-folder-upload"></span> Upload files...
             </button>
 
             <!-- The file input field used as target for the file upload widget -->

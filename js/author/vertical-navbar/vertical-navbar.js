@@ -4,6 +4,7 @@ import Component from 'can/component/';
 import template from './vertical-navbar.stache!';
 
 import 'can/map/define/';
+import './vertical-navbar.less!';
 
 export let VerticalNavbar = Map.extend({
   define: {

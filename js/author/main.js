@@ -3,7 +3,9 @@ import loader from '@loader';
 
 import 'author/styles/';
 import 'author/main.less!';
+
 import './components/templates_tab/';
+import './components/vertical_navbar/';
 
 function loadLegacyCode() {
   return loader.import('author/src/');

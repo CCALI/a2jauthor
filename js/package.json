@@ -32,7 +32,7 @@
       "documentjs"
     ],
     "configDependencies": [
-      "author/load_fixtures"
+      "author/load-fixtures"
     ],
     "bundle": [
       "author/app_template",

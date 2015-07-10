@@ -1,6 +1,6 @@
 import 'steal-mocha';
 import assert from 'assert';
-import {VerticalNavbar} from './vertical_navbar';
+import {VerticalNavbar} from './vertical-navbar';
 
 describe('<vertical-navbar>', function() {
 

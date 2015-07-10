@@ -1,7 +1,7 @@
 import Component from 'can/component/';
-import template from './templates_tab.stache!';
+import template from './templates-tab.stache!';
 
-import './templates_tab.less!';
+import './templates-tab.less!';
 
 
 /**

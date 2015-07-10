@@ -1,7 +1,7 @@
 import Map from 'can/map/';
-import items from './navbar_items';
+import items from './navbar-items';
 import Component from 'can/component/';
-import template from './vertical_navbar.stache!';
+import template from './vertical-navbar.stache!';
 
 import 'can/map/define/';
 
@@ -38,7 +38,7 @@ export let VerticalNavbar = Map.extend({
 });
 
 /**
- * @module {function} components/vertical_navbar/ <vertical-navbar>
+ * @module {function} components/vertical-navbar/ <vertical-navbar>
  * @parent api-components
  * @signature `<vertical-navbar>`
  *

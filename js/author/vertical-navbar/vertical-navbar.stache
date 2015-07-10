@@ -1,5 +1,5 @@
 <div class="vertical-navbar guidemenu
-  {{#is theme 'inverse'}}vertical-navbar-inverse{{/is}}
+  {{#is theme 'inverse'}}navbar-inverse{{/is}}
   {{#is position 'left'}}navbar-fixed-left{{else}}navbar-fixed-right{{/if}}">
 
   <img class="logo" src="/author/images/a2j-logo85x89.png" />

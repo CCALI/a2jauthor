@@ -219,12 +219,12 @@ function mapZoomSlide()
 		$('#tabsMap .col-8').css("width", "70%");
 		//col-4
 	$('#tabsMapper button').first()
-		.button({disabled:false,label:'Hide Page List',icons:{primary:'ui-icon-arrowthick-1-w'}});
+		.button({disabled:false,label:'<span class="glyphicon-left-thin"></span> Hide Page List'});
 	} else {
 		$('#tabsMap .col-4').css("width", "0px");
 		$('#tabsMap .col-8').css("width", "100%");
 	$('#tabsMapper button').first()
-		.button({disabled:false,label:'Show Page List',icons:{primary:'ui-icon-arrowthick-1-e'}});
+		.button({disabled:false,label:'<span class="glyphicon-right-thin"></span> Show Page List'});
 	}
 }
 

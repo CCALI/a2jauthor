@@ -403,14 +403,9 @@
       <button id="guidePublish" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to Public URL</button>
       <button id="guideMobile" class="btn btn-default"><span class="glyphicon-mobile"></span> Test Mobile</button>
     </div><!-- id="tabsUpload" -->
-
   </div>
 
-  <div id="cajafooter">
-    <span id="saveStatus"></span>
-    <span id="CAJAStatus"></span>
-    <span class="copyright">© 2000-2015 Illinois Institute of Technology - Chicago-Kent College of Law and the Center for Computer-Assisted Legal Instruction</span>
-  </div>
+  <app-footer></app-footer>
 </div>
 
 <div class="hidestart">

@@ -44,26 +44,6 @@ html, body {
 	font-size:2em;
 }
 
-#cajafooter {
-	font-size: 9px;
-	padding:0px;
-	margin: 0px;
-	height: 16px;
-	width: 100%;
-	position: fixed;
-	overflow: hidden;
-	bottom: 0;
-	left: 0;
-	background: #fff;
-	border-top: 1px solid #eee;
-	z-index: 98;
-}
-.copyright {
-	float:right;
-	text-align:right;
-	text-overflow:ellipsis
-}
-
 .guidemenu {
   margin: 0;
   padding: 0;

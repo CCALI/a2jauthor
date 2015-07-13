@@ -1,0 +1,570 @@
+
+<div id="splash" class="welcome">
+  <div align="center"> <img src="../viewer/images/A2J5_Icon_512.png" /> </div>
+</div>
+
+
+
+<div id="page-viewer" class="hidestart ViewerApp a2jv">
+  <div class="testing ui-widget-content">
+    <div id="viewer-logic-form" class="ViewerLogicForm">
+      <div class="tracepanel">
+        <ol id="tracer" contentEditable="true"></ol>
+      </div>
+      <div class="immediatepanel">
+
+        <span>
+      <input type="text" id="tracerimm"/></span>
+        <button id="clearTrace"></button>
+
+      </div>
+    </div>
+    <div id="viewer-var-form" class="ViewerVarForm"></div>
+  </div>
+  <div class="A2JViewer"></div>
+  <div class="alertPanel"></div>
+  <div class="alertCounter"></div>
+</div>
+
+<div id="authortool" class="hidestart authortool">
+
+  <div id="cajaheader" class="hidestart bootstrap-styles">
+    <header>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-8">
+            <h1 id="guidetitle">A2J Guided Interviews<sup>®</sup></h1>
+          </div>
+          <div class="col-xs-4 text-right">
+            <button id="settings" class="btn btn-link"><span class="glyphicon-cog"></span> Settings</button><br />
+            <span class="authorenv"></span>
+          </div>
+      </div>
+      </div>
+    </header>
+  </div>
+
+  <div class="guideio"></div>
+  <div class="bootstrap-styles">
+    <vertical-navbar theme="inverse"></vertical-nabvar>
+  </div>
+
+  <div class="guidepanels ui-widget xui-widget-content">
+    <div class="panel" id="tabsAbout">
+      <div class="tabHeader bootstrap-styles">
+        <div class="row">
+          <div class="col-md-8">
+            <h3>Information about this interview</h3>
+          </div>
+          <div class="col-md-4 text-right">
+            <button class="ecPanelButton btn btn-primary" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button> <button CSH="About" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div class="tabContentFrame">
+        <div class="tabContent editq"></div>
+      </div>
+    </div>
+
+    <div class="panel" id="tabsVariables">
+      <div class="tabHeader bootstrap-styles">
+        <div class="row">
+          <div class="col-md-8">
+            <h3>Variables used in this interview</h3>
+          </div>
+          <div class="col-md-4 text-right">
+            <button CSH="Variables" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div class="tabContentFrame">
+        <div class="tabContent editq"></div>
+      </div>
+
+      <div class="tabFooter bootstrap-styles">
+        <button id="var-add" class="btn btn-default"><span class="glyphicon-plus"></span> Add</button>
+        <a href="javascript:void(0)" class="fileinput-button">
+          <button id="uploadCMPFile" class="btn btn-primary"><span class="glyphicon-folder-open"></span> Add from HotDocs .CMP</button>
+          <input type="file" id="uploadCMPFileInput"/>
+        </a>
+      </div>
+    </div>
+
+    <div class="panel" id="tabsClauses">
+
+      <div class="tabHeader bootstrap-styles">
+        <div class="row">
+          <div class="col-md-8">
+            <h3>Clauses used in this interview</h3>
+          </div>
+          <div class="col-md-4 text-right">
+            <button CSH="Clauses" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div class="tabContentFrame">
+        <div class="tabContent editq"></div>
+      </div>
+      <div class="tabFooter">
+        <button id="clause-add">Add</button>
+      </div>
+    </div>
+
+    <div class="panel" id="tabsSteps">
+      <div class="tabHeader bootstrap-styles">
+        <div class="row">
+          <div class="col-md-8">
+            <h3>Steps</h3>
+          </div>
+          <div class="col-md-4 text-right">
+            <button CSH="Steps" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div class="tabContentFrame">
+        <div class="tabContent editq"></div>
+      </div>
+    </div>
+
+    <div class="panel" id="tabsPages">
+      <div class="tabHeader bootstrap-styles">
+        <div class="row">
+          <div class="col-md-8">
+            <h3>Pages and popups</h3>
+          </div>
+          <div class="col-md-4 text-right">
+            <button id="expandCollapse" data-state="collapsed" class="btn btn-primary"></button> <button CSH="Pages" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div class="tabContentFrame">
+        <div class="tabsPages">
+          <div class="PagesPanel">
+            <div id="CAJAOutline" class="pageoutline pagelist">
+              <ul>
+              </ul>
+            </div>
+            <!--
+        <div id="CAJAIndex" class="pagelist">
+          <ul>
+          </ul>
+        </div>-->
+            <!--      <div id="tabsfind"> Find? </div>--></div>
+          <div class="tabFooter bootstrap-styles">
+            <button class="btn btn-default"><span class="glyphicon-new-message"></span> Edit</button>
+            <button class="btn btn-default"><span class="glyphicon-doc"></span> New Page</button>
+            <button class="btn btn-default"><span class="glyphicon-popup"></span> New Popup</button>
+            <button class="btn btn-default"><span class="glyphicon-docs"></span> Clone</button>
+            <button class="btn btn-default"><span class="glyphicon-trash"></span> Delete</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="panel" id="tabsMap">
+      <div class="tabHeader bootstrap-styles">
+      </div>
+      <div class="tabContentFrame">
+        <div class="col-4">
+          <div class="tabsMapPages">
+            <div class="PagesPanel">
+              <div id="CAJAOutlineMap" class="pageoutline pagelist">
+                <ul>
+                </ul>
+              </div>
+            </div>
+            <div class="tabFooter">
+            </div>
+          </div>
+        </div><!-- col-4 -->
+        <div class="col-8">
+         <div id="tabsMapper">
+
+            <div class="tabFooter bootstrap-styles">
+              <button class="btn btn-default"></button>
+              <button zoom="fit" class="btn btn-default"><span class="glyphicon-resize"></span> Fit</button>
+              <button zoom="1.25" class="btn btn-default"><span class="glyphicon-zoom-in"></span> Zoom In</button>
+              <button zoom="0.75" class="btn btn-default"><span class="glyphicon-zoom-out"></span> Zoom Out</button>
+              <button CSH="Map" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+            </div>
+
+            <div id="MapperPanel">
+              <div class="map"></div>
+            </div>
+
+          </div>
+        </div><!-- col-8 -->
+      </div>
+    </div>
+
+    <div class="panel" id="tabsLogic">
+     <div class="tabHeader bootstrap-styles">
+        <div class="row">
+          <div class="col-md-8">
+            <div id="showlogic">
+              <input checked="checked" type="radio" id="showlogic1" name="showlogic" />
+              <label for="showlogic1" class="btn btn-default">Show only active code</label>
+
+              <input type="radio" id="showlogic2" name="showlogic" />
+              <label for="showlogic2" class="btn btn-default">Show all code blocks</label>
+            </div>
+          </div>
+          <div class="col-md-4 text-right">
+            <button class="ecPanelButton btn btn-primary" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button> <button CSH="AllLogic" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div class="tabContentFrame">
+        <div class="tabContent editq"></div>
+      </div>
+    </div>
+
+    <div class="panel" id="tabsText">
+      <div class="tabHeader bootstrap-styles">
+        <div class="row">
+          <div class="col-md-8">
+            <div id="showtext">
+              <input checked="checked" type="radio" id="showtext1" name="showtext" />
+              <label for="showtext1" class="btn btn-default">Filled fields</label>
+              <input type="radio" id="showtext2" name="showtext" />
+              <label for="showtext2" class="btn btn-default">All fields</label>
+            </div>
+          </div>
+          <div class="col-md-4 text-right">
+            <button class="ecPanelButton btn btn-primary" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button> <button CSH="AllText" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div class="tabContentFrame">
+        <div class="tabContent editq"></div>
+      </div>
+    </div>
+
+    <div class="panel" id="tabsFiles">
+      <div class="tabHeader bootstrap-styles">
+        <div class="row">
+          <div class="col-md-8">
+            <h3>Files currently attached to this interview</h3>
+          </div>
+          <div class="col-md-4 text-right">
+            <button CSH="Files" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div class="tabContentFrame">
+        <div class="tabContent editq">
+          <table class="A2JFiles">
+            <tbody id="attachmentFiles" class="files"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tabFooter bootstrap-styles">
+        <div class="fileuploader">
+          <!-- The fileinput-button span is used to style the file input field as button -->
+          <a href="javascript:void(0)" class="fileinput-button">
+            <button class="btn btn-primary">
+              <span class="glyphicon-folder-upload"></span> Upload files...
+            </button>
+
+            <!-- The file input field used as target for the file upload widget -->
+            <input id="fileupload" type="file" name="files[]" multiple />
+          </a>
+
+          <div id="progress" class="progress progress-success progress-striped">
+            <div class="bar"></div>
+          </div>
+        </div>
+        <!--<button id="guideSave" />-->
+      </div>
+    </div>
+
+    <div class="panel" id="tabsGuides">
+      <div class="tabHeader bootstrap-styles">
+        <div class="row">
+          <div class="col-md-12 text-right">
+            <button CSH="Interviews" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div class="tabContentFrame">
+        <div class="tabContent editq">
+          <p class="name"></p>
+          <h2>What would you like to do?</h2>
+
+
+          <fieldset name="record">
+            <legend>Create a new interview</legend>
+            <ul class="guidelist" id="guideListNew"></ul>
+          </fieldset>
+          <fieldset name="record">
+            <legend>Edit one of my interviews</legend>
+            <ul class="guidelist" id="guideListMy"></ul>
+          </fieldset>
+          <fieldset name="record">
+            <legend>Open a Sample interview</legend>
+            <ul class="guidelist" id="guideListSamples"></ul>
+          </fieldset>
+
+        </div>
+      </div>
+      <div class="tabFooter bootstrap-styles">
+        <div>
+          <!--  <button id="guideCreate">New</button>-->
+          <button id="guideClone" class="btn btn-default"><span class="glyphicon-docs"></span> Clone</button>
+          <button id="guideOpen" class="btn btn-default"><span class="glyphicon-folder-open"></span> Open</button>
+          <button id="guideArchive" class="btn btn-default"><span class="glyphicon-trash"></span> Delete</button>
+          <div class="fileuploader">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+            <a href="javascript:void(0)" class="fileinput-button">
+              <button class="btn btn-primary">
+                <span class="glyphicon-plus"></span> Upload A2J Guided Interview...
+              </button>
+
+              <!-- The file input field used as target for the file upload widget -->
+              <input id="guideupload" type="file" name="files[]" multiple />
+            </a>
+
+            <div id="guideuploadprogress" class="progress progress-success progress-striped">
+              <div class="bar"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel bootstrap-styles" id="tabsTemplate">
+      <templates-tab></templates-tab>
+    </div>
+
+    <div class="panel" id="tabsReport">
+
+      <div class="tabHeader bootstrap-styles">
+        <div class="row">
+          <div class="col-md-8">
+            <button id="reportFull" class="btn btn-primary">Full Report</button>
+            <button id="reportTranscript" class="btn btn-primary">Transcript Report</button>
+          </div>
+          <div class="col-md-4 text-right">
+            <button CSH="Report" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div class="tabContentFrame">
+        <div class="tabContent editq">
+          Report of text in a print-friendly layout, also useful for translation projects
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="panel" id="tabsPreview">
+      <h1>Previewer</h1> Show preview interview
+    </div>
+
+    <div class="panel bootstrap-styles" id="tabsUpload">
+
+      <div class="tabHeader">
+        <div class="row">
+          <div class="col-md-8">
+            <h3>Publish/Upload</h3>
+          </div>
+          <div class="col-md-4 text-right">
+            <button CSH="Publish" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+          </div>
+        </div><!-- row -->
+      </div><!-- tabHeader bootstrap-styles -->
+      <br />
+
+      <p>To publish your interview to another site such as LHI, download the ZIP which contains the interview and its supplemental files.</p>
+      <button id="guideZIP" class="btn btn-default"><span class="glyphicon-file-archive"></span> Download ZIP</button>
+      <button id="guideDownload" class="btn btn-default"><span class="glyphicon-folder-download"></span> Download A2J</button>
+      <button id="guidePublish" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to Public URL</button>
+      <button id="guideMobile" class="btn btn-default"><span class="glyphicon-mobile"></span> Test Mobile</button>
+    </div><!-- id="tabsUpload" -->
+
+  </div>
+
+  <div id="cajafooter">
+    <span id="saveStatus"></span>
+    <span id="CAJAStatus"></span>
+    <span class="copyright">© 2000-2015 Illinois Institute of Technology - Chicago-Kent College of Law and the Center for Computer-Assisted Legal Instruction</span>
+  </div>
+</div>
+
+<div class="hidestart">
+  <div id="xedit-plain-form" title="Edit" class="">
+    <form>
+      <fieldset>
+        <textarea name="text" class="text ui-widget-content ui-corner-all"></textarea>
+      </fieldset>
+    </form>
+  </div>
+  <div id="page-picker-dialog" title="Pick a destination page" class="">
+    <form>
+      <div id="page-picker-list" class="pageoutline pagelist">
+      </div>
+    </form>
+  </div>
+  <div class="page-edit-form">
+    <div class="page-edit-form-panel"></div>
+  </div>
+  <div id="var-edit-form" title="Variable">
+    <form class="editq">
+      <fieldset>
+        <div>
+          <label for="varname">Name:</label>
+          <span class="editspan">
+      <input type="text" name="varname" id="varname" class="editable text ui-widget-content ui-corner-all"  />
+      </span>
+        </div>
+        <div>
+          <label for="vartype">Type:</label>
+          <span class="editspan">
+      <select name="vartype" id="vartype" class="editable">
+        <option value="Unknown">Unknown</option>
+        <option value="Text">Text</option>
+        <option value="TF">TF - True/False</option>
+        <option value="Number">Number</option>
+        <option value="Date">Date</option>
+        <option value="MC">Multiple choice</option>
+        <option value="Other">Other</option>
+      </select>
+      </span>
+        </div>
+        <div>
+          <label for="varrepeating">Repeating:</label>
+          <span class="editspan">
+        <input type="checkbox" name="varrepeating" id="varrepeating">Check if multiple values
+      </span>
+        </div>
+        <div>
+          <label for="varcomment">Comment:</label>
+          <span class="editspan">
+      <input type="textarea" name="varcomment" id="varcomment" class="editable taller text ui-widget-content ui-corner-all"  />
+      </span>
+        </div>
+        <div>
+          <label for="varusage">Used by:</label>
+          <input type="button" name="varusage" id="varusage" />
+        </div>
+        <div>
+          <div id="varUsageList"></div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+
+  <div id="clause-edit-form" title="Clause">
+    <div class="editq">
+      <div id=clausefs></div>
+      <fieldset>
+        <div>
+          <label for="clauseusage">Used by:</label>
+          <input type="button" name="clauseusage" id="clauseusage" />
+        </div>
+        <div>
+          <div id="clauseUsageList"></div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div id="settings-form" title="Settings">
+    <ul id="cajasettings">
+      <li>General
+        <ul>
+          <li>Color Schemes
+            <ul>
+              <li class="ui-state-disabled"> A2J 5</li>
+            </ul>
+          </li>
+          <li>Data Settings
+            <ul>
+              <li>
+                <input type=checkbox id="setting_warnHotDocsNameLength"> Warn when variable name lengths are too long for HotDocs</li>
+            </ul>
+          </li>
+          <li>Text Statistics
+            <ul>
+              <li>Flesh-Kincaid and more
+                <ul>
+                  <li>
+                    <input type="checkbox" id="setting_FKGradeAll" /> Include grade numbers for good text</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <li>Advanced
+          <ul>
+            <li>
+              <input type=checkbox id="setting_showJS"> Show JS</li>
+          </ul>
+    </ul>
+  </div>
+
+  <div id="dialog-form-var-val-edit" title="Change value">
+    <form>
+      <fieldset>
+        <label for="value">Value</label>
+        <input type="text" name="value" id="var-value" class="text ui-widget-content ui-corner-all">
+      </fieldset>
+    </form>
+  </div>
+
+  <div id="xviewer-logic-form" title="Viewer logic" class="ViewerLogicForm">
+    <div class="tracepanel">
+      <ul id="tracer">
+      </ul>
+    </div>
+    <div class="immediatepanel">
+      <input type="text" id="tracerimm" />
+    </div>
+  </div>
+  <div id="xviewer-var-form" title="Viewer Variables" class="ViewerVarForm"></div>
+  <div id="texttoolbar" class="texttoolbar ui-widget-header ui-corner-all">
+    <button id="bold">bold</button>
+    <button id="italic">italic</button>
+    <button id="indent">indent</button>
+    <button id="outdent">outdent</button>
+    <button id="link">link</button>
+    <button id="popup">popup</button>
+  </div>
+  <div id="welcome" title="Welcome to Access to Justice Author (v5)">
+    <div class="tabContentFrame">
+      <div class="tabContent ">
+        <p class="name"></p>
+        <h2>What would you like to do?</h2>
+        <div id="guidelist">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="dialog_window_minimized_container"></div>
+  <div id="dialog-confirm" title=""></div>
+  <div id="login-form" title="Access To Justice 5">
+    Please sign in at <a href="http://a2j02.a2jauthor.org">A2J Author.org</a>.
+  </div>
+</div>
+</div>

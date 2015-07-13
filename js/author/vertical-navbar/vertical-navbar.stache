@@ -1,0 +1,16 @@
+<div class="vertical-navbar guidemenu
+  {{#is theme 'inverse'}}navbar-inverse{{/is}}
+  {{#is position 'left'}}navbar-fixed-left{{else}}navbar-fixed-right{{/if}}">
+
+  <img class="logo" src="/author/images/a2j-logo85x89.png" />
+
+  <nav class="nav navbar-nav">
+    {{#each items}}
+      <li ref="{{ref}}" class="{{#if active}}active{{/if}}">
+        <a href="#"><span class="{{icon}}"></span> {{title}}</a>
+      </li>
+    {{/each}}
+  </nav>
+
+  <p class="authorver"></p>
+</div>

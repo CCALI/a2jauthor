@@ -88,7 +88,7 @@
 		decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
 		query  = window.location.search.substring(1);
 	urlParams = {templateURL:""};
-	while (match = search.exec(query)){
+	while (match == search.exec(query)){
 		urlParams[decode(match[1])] = decode(match[2]);
 	}
 

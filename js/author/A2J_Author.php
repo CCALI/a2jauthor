@@ -26,6 +26,9 @@
       };
     </script>
 
-    <script src="../node_modules/steal/steal.production.js" data-main="author/main"></script>
+    <script src="../dist/bundles/author/main.js"
+      data-root="/"
+      data-env="production">
+    </script>
   </body>
 </html>

@@ -17,6 +17,7 @@
     "documentjs": "0.3.0-pre.2",
     "express": "^4.13.0",
     "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-copy": "^0.8.0",
     "jquery": "^2.1.4",
     "jquery-ui": "git://github.com/jquery/jquery-ui.git#1.11.4",
@@ -35,7 +36,7 @@
       "author/load-fixtures"
     ],
     "bundle": [
-      "author/app_template",
+      "author/app-template",
       "author/src/src"
     ],
     "map": {

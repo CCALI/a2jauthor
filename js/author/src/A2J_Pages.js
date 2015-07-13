@@ -297,7 +297,7 @@ function pageEditDelete(name)
 		function(){
 			var page=gGuide.pages[this.name];
 			// 2015-06-29 Git ISsue #273 Anything pointing to this page is redirect to NOWHERE
-			// Handle direct button branches and GOTO's in Logic blocks. 
+			// Handle direct button branches and GOTO's in Logic blocks.
 			gGuide.pageFindReferences(name,CONST.qIDNOWHERE);
 			delete gGuide.pages[page.name];
 			gGuide.sortPages();
@@ -527,14 +527,9 @@ function guidePageEditForm(page, div, pagename)//novicePage
 				var canDefaultValue=	field.type!==CONST.ftCheckBox && field.type!==CONST.ftCheckBoxNOTA && field.type!==CONST.ftGender;
 				var canOrder =   field.type===CONST.ftTextPick || field.type===CONST.ftNumberPick || field.type===CONST.ftDateMDY;
 				var canUseCalc = (field.type === CONST.ftNumber) || (field.type === CONST.ftNumberDollar);
-<<<<<<< HEAD:js/author/A2J_Pages.js
-				var canMaxChars= field.type===CONST.ftText || field.type===CONST.ftTextLong || field.type===CONST.ftNumber || field.type===CONST.ftNumberDollar || field.type===CONST.ftNumberPhone || field.type===CONST.ftNumberZIP;				
-				var canUseSample = field.type===CONST.ftText || field.type===CONST.ftTextLong  
-=======
-				var canMaxChars= field.type===CONST.ftText || field.type===CONST.ftTextLong || field.type===CONST.ftNumber || field.type===CONST.ftNumberDollar || field.type===CONST.ftNumberPhone || field.type===CONST.ftNumberZIP;
-				var canCalendar = field.type===CONST.ftDateMDY;
-				var canUseSample = field.type===CONST.ftText || field.type===CONST.ftTextLong
->>>>>>> 6f894dd75c8f57528c3dc3828d33857b8aea70f0:js/author/src/A2J_Pages.js
+        var canMaxChars= field.type===CONST.ftText || field.type===CONST.ftTextLong || field.type===CONST.ftNumber || field.type===CONST.ftNumberDollar || field.type===CONST.ftNumberPhone || field.type===CONST.ftNumberZIP;
+        var canCalendar = field.type===CONST.ftDateMDY;
+        var canUseSample = field.type===CONST.ftText || field.type===CONST.ftTextLong
 					|| field.type === CONST.ftTextPick  || field.type === CONST.ftNumberPick
 					|| field.type===CONST.ftNumber || field.type === CONST.ftNumberZIP || field.type === CONST.ftNumberSSN || field.type === CONST.ftNumberDollar
 					|| field.type === CONST.ftDateMDY;
@@ -544,20 +539,16 @@ function guidePageEditForm(page, div, pagename)//novicePage
 				//	useLongText =curField.type==CField.ftTextLong;
 
 				ff.find('[name="maxchars"]').showit(canMaxChars);
-				ff.find('[name="min"]').showit(canMinMax );
-				ff.find('[name="max"]').showit(canMinMax );
-				ff.find('[name="default"]').showit(canDefaultValue);
-				ff.find('[name="calculator"]').showit(canUseCalc);
-<<<<<<< HEAD:js/author/A2J_Pages.js
-				
-=======
-				ff.find('[name="calendar"]').showit(canCalendar);
+        ff.find('[name="min"]').showit(canMinMax );
+        ff.find('[name="max"]').showit(canMinMax );
+        ff.find('[name="default"]').showit(canDefaultValue);
+        ff.find('[name="calculator"]').showit(canUseCalc);
+        ff.find('[name="calendar"]').showit(canCalendar);
 
->>>>>>> 6f894dd75c8f57528c3dc3828d33857b8aea70f0:js/author/src/A2J_Pages.js
-				ff.find('[name="listext"]').showit(canList);
-				ff.find('[name="listint"]').showit(canList);
-				ff.find('[name="orderlist"]').showit(canOrder);
-				ff.find('[name="sample"]').showit(canUseSample);
+        ff.find('[name="listext"]').showit(canList);
+        ff.find('[name="listint"]').showit(canList);
+        ff.find('[name="orderlist"]').showit(canOrder);
+        ff.find('[name="sample"]').showit(canUseSample);
 			};
 
 			fs=form.fieldset('Fields');
@@ -792,7 +783,7 @@ TGuide.prototype.pageFindReferences=function(findName,newName){
 			var b=page.buttons[bi];
 			if (b.next===findName)
 			{	// 2014-06-02 Make button point to renamed page.
-				
+
 				b.next = newName;
 
 				matches.push({name:page.name,field:'Button '+b.label,text:b.label});

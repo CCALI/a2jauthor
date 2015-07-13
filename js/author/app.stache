@@ -352,7 +352,7 @@
     </div>
 
     <div class="panel bootstrap-styles" id="tabsTemplate">
-      <templates-tab></templates-tab>
+      <templates-page></templates-page>
     </div>
 
     <div class="panel" id="tabsReport">

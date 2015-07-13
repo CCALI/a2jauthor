@@ -1,2 +1,2 @@
-import 'author/templates-tab/test';
+import 'author/templates/test';
 import 'author/vertical-navbar/test';

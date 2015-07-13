@@ -4,7 +4,7 @@ import loader from '@loader';
 import 'author/styles/';
 import 'author/main.less!';
 
-import './templates-tab/';
+import './templates/';
 import './vertical-navbar/';
 
 function loadLegacyCode() {

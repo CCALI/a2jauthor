@@ -1,0 +1,24 @@
+@import '../styles/a2j-custom/a2j-mixins.less';
+
+.vertical-navbar {
+  .navbar-nav {
+
+    > li > a {
+      [class^="glyphicon-"]:before, [class*=" glyphicon-"]:before {
+        font-size: 130%;
+      }
+    }
+  }
+  .logo {
+    margin: 8px auto;
+    width: 51px;
+    height: 53px;
+    display: block;
+  }
+  .authorver {
+    .text-center;
+    padding-top: @vert-navbar-padding-horizontal;
+    padding-bottom: @vert-navbar-padding-horizontal;
+    margin-top: @vert-navbar-padding-horizontal;
+  }
+}

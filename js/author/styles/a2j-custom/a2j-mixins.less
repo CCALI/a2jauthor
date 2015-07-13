@@ -1,0 +1,98 @@
+/**
+ *  @stylesheet a2j-mixins.less Mixins
+ *  @parent styles-utilities 0
+ *
+ *  Helpful mixins for use as a class in HTML or as a mixin in Less CSS.
+ */
+
+@import '../bootstrap-overrides/variables.less';
+
+.strong, strong, b {
+  font-weight: 700;
+}
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.text-center {
+  text-align: center;
+}
+.border {
+  border: 1px solid @gray-lighter;
+}
+.nowrap {
+  white-space: nowrap;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+.box-shadow(@horiz: 2px, @vert: 2px, @size: 5px, @opacity: 0.1) {
+  -moz-box-shadow: @horiz @vert @size rgba(0, 0, 0, @opacity);
+  -webkit-box-shadow: @horiz @vert @size rgba(0, 0, 0, @opacity);
+  box-shadow: @horiz @vert @size rgba(0, 0, 0, @opacity);
+}
+.no-box-shadow {
+  -moz-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0) !important;
+  -webkit-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0) !important;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0) !important;
+}
+.box-sizing, .border-box {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  // Below are for IE compatibility, if needed.
+  //*behavior: url(/safetyportal-html/scripts/boxsizing.htc);
+  //I usually prefer the boxsizing script, but it seemed to cause strangeness with the accordions. Maybe it will work once the app is together.
+  //*zoom: ~"expression( this.runtimeStyle.zoom='1',this.className=this.className + ' add-box-sizing')";
+}
+.text-smoothing, .font-smoothing {
+  -webkit-font-smoothing: antialiased;
+}
+.border-radius (@radius: @baseBorderRadius) {
+  border-radius: @radius;
+  -moz-border-radius: @radius;
+  -webkit-border-radius: @radius;
+}
+.border-radius-left (@radius: @baseBorderRadius) {
+  -webkit-border-top-left-radius: @radius;
+  -webkit-border-bottom-left-radius: @radius;
+  -moz-border-radius-topleft: @radius;
+  -moz-border-radius-bottomleft: @radius;
+  border-top-left-radius: @radius;
+  border-bottom-left-radius: @radius;
+}
+.border-radius-right (@radius: @baseBorderRadius) {
+  -webkit-border-top-right-radius: @radius;
+  -webkit-border-bottom-right-radius: @radius;
+  -moz-border-radius-topright: @radius;
+  -moz-border-radius-bottomright: @radius;
+  border-top-right-radius: @radius;
+  border-bottom-right-radius: @radius;
+}
+.text-shadow-light(@opacity: .5) {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, @opacity);
+}
+.text-shadow(@opacity: .2) {
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, @opacity);
+}
+.no-text-shadow {
+  text-shadow: none;
+}
+.hide {
+  display: none;
+}
+br, .clear {
+  float: none;
+  clear: both;
+}
+.transition(@property: all, @function: linear, @timing: 0.25s, @delay: 0s) {
+  -webkit-transition: @property @timing @function @delay;
+  -moz-transition: @property @timing @function @delay;
+  -ms-transition: @property @timing @function @delay;
+  -o-transition: @property @timing @function @delay;
+  transition: @property @timing @function @delay;
+ }
+ // Retina displays
+ @retina: ~"only screen and (-webkit-min-device-pixel-ratio: 2),  only screen and (min--moz-device-pixel-ratio: 2),  only screen and (-o-min-device-pixel-ratio: 2/1),  only screen and (min-device-pixel-ratio: 2),only screen and (-webkit-device-pixel-ratio:1.5)";

@@ -1,0 +1,11 @@
+{
+  "maxerr": 50,
+  "camelcase": true,
+  "eqeqeq": true,
+  "indent": 2,
+  "plusplus": true,
+  "esnext": true,
+  "browser": true,
+  "unused": true,
+  "globals": {}
+}

@@ -1,0 +1,838 @@
+@charset "utf-8";
+
+.ui-widget-header,
+.ui-state-default,
+.ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default,
+.ui-state-hover,
+.ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus,
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active,
+.ui-priority-primary,
+.ui-widget-content .ui-priority-primary,
+.ui-widget-header .ui-priority-primary
+ { font-weight: normal; }
+
+
+html, body {
+	font-family:  "Open Sans",​sans-serif;
+	font-size: 12px;
+	margin:0;
+	padding:0;
+}
+
+
+/**************************/
+/* Sam's custom */
+
+
+#welcome > div {
+	background-image: url(../../viewer/images/A2JAvatar-Guide-Front-F0.png);
+	background-repeat: no-repeat;
+	padding-left: 150px;
+}
+
+.authortool {
+	margin:0;
+	padding:20px;
+	margin-left: 125px;
+	margin-top: 71px;
+}
+
+#guidetitle  {
+	font-size:2em;
+}
+
+#cajafooter {
+	font-size: 9px;
+	padding:0px;
+	margin: 0px;
+	height: 16px;
+	width: 100%;
+	position: fixed;
+	overflow: hidden;
+	bottom: 0;
+	left: 0;
+	background: #fff;
+	border-top: 1px solid #eee;
+	z-index: 98;
+}
+.copyright {
+	float:right;
+	text-align:right;
+	text-overflow:ellipsis
+}
+
+.guidemenu {
+  margin: 0;
+  padding: 0;
+  position:  fixed;
+  top: 0;
+  left: 0;
+  width: 125px;
+  z-index: 99;
+}
+.guidemenu .logo {
+  margin: 8px auto;
+  width: 51px;
+  height: 53px;
+  display: block;
+}
+.authorenv {
+	font-size:2em;
+	color: #800;
+}
+.authorver {
+	font-size:10px;
+}
+.guidemenu ul {
+	font-size: 15px;
+	margin: 1px;
+	padding: 1px;
+}
+.guidemenu ul li {
+	height: 25px;
+	padding: 5px;
+	padding-top: 8px;
+	padding-bottom: 0px;
+	list-style: none;
+	margin: 0px;
+	background-repeat: no-repeat;
+	cursor: default;
+}
+.guidemenu ul li:hover {
+	background-color: #fffee6;
+	color:#000;
+}
+.guidemenu ul li.selected {
+	border:thick;
+	border:#0066CC;
+	background-color: #E5E5E5;
+	overflow: visible;
+	background: url(../images/menu_selected.png) 99% center no-repeat;
+	color:#0066CC;
+	margin:3px;
+
+}
+
+.pagelist ul {
+	font-weight: normal;
+	list-style-type: square;
+	font-style: normal;
+	padding: 0px;
+	padding-left: 2em;
+	margin-bottom: 2em;
+}
+.pageoutline {
+	margin: 0px;
+	padding: 10px 0px 5px;
+}
+.pageoutline ul, .guidelist {
+	list-style-type:  none;
+	margin-left: 0;
+	text-indent: 0;
+}
+
+ul.guidelist li {
+	padding: 4px;
+}
+ul.guidelist li span.id {
+	width: 5em;
+	background-color: rgba(255,240,255,0.5);
+	font-style: italic;
+	float:right;
+	text-align:center;
+	display: inline-block;
+}
+ul.guidelist li span.size {
+  background-color: rgba(240,255,240,0.5);
+	float:right;
+	width: 4em;
+	text-align:right;
+	display: inline-block;
+}
+ul.guidelist li span.modified {
+  background-color: rgba(255,255,240,0.5);
+	width: 12em;
+	float:right;
+	text-align:center;
+	display: inline-block;
+}
+ul.guidelist li span.pagecount {
+  background-color: rgba(255,255,240,0.5);
+	width: 4em;
+	float:right;
+	text-align:center;
+	display: inline-block;
+}
+
+#CAJAIndex.pagelist ul {
+	list-style-type: bullet;
+	margin-left: 1em;
+}
+.pagelist * li {
+	font-size: 1em;
+	max-height: 2.5em;
+	overflow: hidden;
+	padding: .5em;
+}
+
+.pagelist > ul > li {
+	cursor: default;
+	font-size: 1.25em;
+	max-height: 2.5em;
+	overflow: hidden;
+}
+
+.pagelist * li .tip {
+	color: #666;
+	font-style: italic;
+}
+
+.editicons {
+	border-collapse:collapse;
+	border-style:dotted;
+	border-color:#CCCCCC;
+	border-width:thin;
+	margin: 0px;
+	padding: 0px;
+	width: 50px;
+}
+.editicons .ui-icon {
+	display: inline-block;
+}
+
+
+/*********** A2J ***************/
+table.A2JSteps, table.A2JVars , table.A2JClauses, table.A2JFiles {
+	width:100%;
+	border-style:solid;
+	border-width:thin;
+	border-color:#fff;
+}
+
+
+
+table.A2JSteps tr td, table.A2JVars tr td , table.A2JClauses tr td, table.A2JFiles tr td {
+/* JPM */
+ 	padding:.33em;
+/* JPM */
+}
+
+/* JPM */
+table.A2JSteps tr, table.A2JVars tr , table.A2JClauses tr {
+	cursor:pointer;
+}
+/* JPM */
+
+
+input.narrow {
+	width: 5em;
+}
+/*let ui-layout handle scrolling // .ui-tab-content, .ui-tabs-panel{overflow: scroll;} */
+
+/* Shared */
+.boxsizingBorder , .CAJAEditor, div.editq{
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+
+.CAJAEditor {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+}
+.CAJAContent {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+}
+
+ /*********** Editor ***************/
+
+div.editq {
+	width: 100%;
+	margin: 0px;
+	padding: 5px;
+}
+.editq h1 {
+	font-size: 1.5em;
+	margin-left: 0em;
+}
+.editq h2 {
+	font-size: 1.25em;
+	padding-top: 1em;
+	margin-left: 0em;
+}
+.editq fieldset label {
+	clear: both;
+	display: block;
+	vertical-align: top;
+	float: left;
+	width: 12em;
+	margin: 5px 0 0;
+	text-align: right;
+	padding: 5px;
+}
+
+.editq fieldset {
+	padding:0;
+	margin-top:25px;
+}
+.editq fieldset div  {
+	margin-top: 1em;
+}
+.editq fieldset {
+	padding: inherit;
+	margin-top:25px;
+	padding-bottom: 1.3em;
+}
+.sorthandle {
+	cursor: move;
+}
+
+.editspan { /* wrap around fields for fluid width */
+	display: block;
+	overflow: hidden;
+	padding: 5px 5px 5px 5px;
+}
+.editable.taller {
+	margin-top: 0em;
+	min-height: 2em;
+}
+.editable.tallest {
+	min-height: 5em;
+}
+
+.editable { /* authoring text fields */
+	min-width: 10em;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	padding: 5px;
+	border: 1px solid #ccc;
+	min-height: 1em;
+	width:100%;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+.ui-autocomplete .ui-menu-item {
+	max-height: 2em;
+	overflow: hidden;
+}
+.ui-autocomplete{
+	max-height: 10em;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+ }
+
+.codeedit, .xml {
+	white-space: pre-wrap;
+}
+.xml {
+	font-size: .5em;
+}
+.collapse {
+	height: 1.5em;
+	overflow: hidden;
+}
+
+.CAJAContent P {
+	padding: 0;
+	margin: 0;
+	margin-top: .5em;
+	margin-bottom: .5em;
+	line-height: 1.0em;
+}
+P.CAJASection {
+	font-size: 2em;
+	font-weight: bold;
+	border-left: dashed;
+	margin-top: 2em;
+	border-width: thin;
+	padding-left: 5px;
+}
+P.CAJAPage {
+	font-size: 1.5em;
+	border-top: dashed;
+	border-left: dashed;
+	border-width:thin;
+	margin-top: 1em;
+	padding-left: 5px;
+}
+P.CAJAStep {
+	margin-top: 2em;
+	margin-bottom: 2em;
+	font-size: 2em;
+	padding: .5em;
+	border: 1px solid #000;
+}
+
+P.CAJAComment {
+	font-style: italic;
+	background-color:#eee;
+}
+P.CAJAAsk {
+	background-color:#ffFFCC;
+}
+P.CAJATest {
+	background-color:#efe;
+	text-indent: -3em;
+	padding-left: 3em;
+	width: auto;
+}
+.hilite {
+	background-color:#ff8;
+}
+.hilite.slack {
+	background-color:#ff0;
+}
+.macro {
+	background-color:#eee;
+}
+.warning {
+	padding: 0;
+	margin: 0;
+	background-color:#fdd;
+	border: thin;
+	font-size: .9em;
+	font-style: italic;
+}
+.inform {
+	background-image: url(../images/inform.png);
+	background-repeat: no-repeat;
+	padding: 0;
+	margin: 0;
+	padding-left: 20px;
+	height: 16px;
+	background-color:#fdd;
+	border: thin;
+	font-size: .9em;
+	font-style: italic;
+}
+table.CAJAReportDump {
+	border-collapse:collapse;
+	width: 100%;
+}
+table.CAJAReportDump tr  {
+	vertical-align: top;
+}
+#tabsReport .tabContent legend {
+	color: #000;
+	background-color:#eee;
+}
+table.CAJAReportDump tr td {
+	border:1px solid #888;
+	padding:1em;
+}
+table.CAJAReportDump * tr td:first-child {
+	text-align: right;
+	width: 5em;
+}
+table.CAJATranscriptDump * tr td:first-child {
+	text-align: left;
+	width: auto;
+}
+table.CAJAReportDump tr:nth-child(3n+1) {
+	background-color:rgba(240,240,240,0.5);
+}
+table.CAJAReportDump tr:nth-child(3n+2) {
+	background-color:rgba(248,248,248,0.5);
+}
+table.CAJAReportDump tr:nth-child(3n+3) {
+	background-color:rgba(255,255,255,0.5);
+}
+.GradeReport.FleschKincaidUnder7 {
+	background-color: #8f8;
+}
+.FleschKincaidUnder10 {
+	background-color: #ff8;
+}
+.FleschKincaid10OrHigher {
+	background-color: #f88;
+}
+.GradeReport {
+	border: thin;
+	padding: 5px;
+}
+.TextStatistics {
+	background-color: #ddd;
+	font-size: smaller;
+	border: thin;
+	padding: 5px;
+}
+
+.loader {
+	display: inline-block;
+	background-image: url(../../viewer/images/ajax-loader.gif);
+	background-repeat: no-repeat;
+	width:16px;
+	height:16px;
+	padding: 0px;
+	margin: 0px;
+}
+.pageedit {
+	padding: 5px;
+	margin: 25px;
+}
+.pagelink {
+	background-color:#FFFFCC;
+}
+.section {
+	padding: 5px;
+	margin: 2px;
+}
+
+.section .header {
+	font-style: normal;
+	padding: 4px;
+	font-weight: bold;
+	float: none;
+	clear: none;
+	position: relative;
+	cursor: default;
+	background-position: center;
+	display: block;
+}
+.section .body {
+	border: 1px none #00CC99;
+	padding: 4px;
+	margin-left:20px;
+	display: block;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+}
+.section .header .hintinfo {
+	color:#999999;
+	font-weight: bold;
+	font-style: italic;
+}
+.section .header .hover {
+	color: red;
+	cursor: pointer;
+}
+.section .header span.folder, .section .header span.file {
+	padding-left: 26px;
+	display:inline;
+	height: 15px;
+}
+.section .header span.folder {
+	background: url(jQuery/images/folder.gif) 0 0 no-repeat;
+}
+.editInPlace {
+	padding:5px;
+}
+textarea {
+	width: 95%;
+	font-size: 1em;
+}
+#outline {
+	border:thin solid #00FF99;
+}
+.TabOption {
+	float:right;
+	color:#FF0000;
+	padding:5px;
+}
+.hotspot {
+	height: 100px;
+}
+
+
+
+
+/************** Tracer ************/
+#tracer li {
+	font-size: 8pt;
+	padding:1px;
+	margin-left: -2em;
+}
+
+/************** List Table ************/
+table.list {
+	width:100%;
+}
+table.list tr   {
+	border:5px solid #888;
+	border-collapse:separate;
+}
+table.list tr td  {
+	padding:.1em;
+}
+.hidden {
+	display: none;
+}
+
+
+.hidestart {
+	visibility: hidden;
+}
+.ui-dialog .ui-state-error { padding: .3em; }
+
+.ui-dialog {
+	box-shadow: 10px 10px #888888;
+}
+
+#guidepanel > ul > span {
+	float: right;
+	padding-right: 50px;
+}
+#guidepanel .ui-widget-header  .ui-dialog-titlebar-close {
+   height: 18px;
+   width: 19px;
+   padding: 1px;
+}
+#guidepanel .ui-widget-header  .ui-dialog-titlebar-close .ui-icon {
+   display: block;
+   margin: 1px;
+}
+#guidepanel .ui-widget-header .ui-dialog-titlebar-close:hover, .ui-widget-header .ui-dialog-titlebar-close:focus {
+   padding: 0;
+}
+
+#dialog_window_minimized_container {
+	z-index: 9999;
+}
+.pagelist * li:hover, li.guide:hover,
+table.A2JVars tr:hover,
+table.A2JClauses tr:hover,
+table.A2JFiles tr:hover{
+	background-color:rgba(88,88,88,0.75) !important;
+	color: #fff !important;
+	cursor: pointer;
+}
+
+.example{
+	height: 100%;
+}
+.tabsVariables {
+	border:#666666;
+}
+.tabsPanel {
+	height: 100%;
+	overflow: scroll;
+	border: 2px #f00 ;
+}
+
+.page-edit-form-panel .tabsPanel{
+	overflow: hidden;
+}
+.tabHeader {
+	font-size: 1.0em;
+	padding-bottom: 15px;
+}
+.tabHeader.bootstrap-styles h3 {
+  font-size: 20px;
+  margin: 0;
+}
+.tabContentFrame {
+
+}
+#tabsPages .tabContentFrame .tabContent  {
+	background-color: #fff;
+}
+
+.tabFooter {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+.tabContent {
+	border: none;
+}
+#showlogic, #showtext {
+	display: inline;
+}
+
+/* Mapper */
+#tabsMap {
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+  height: auto;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-left: 150px;
+  padding-top: 75px;
+  box-sizing: border-box;
+}
+.tabContentFrame {
+  height: 100%;
+}
+.tabContentFrame .col-8 {
+  float: left;
+  width: 70%;
+  height: 100%;
+  overflow: auto;
+}
+.tabContentFrame .col-4 {
+  float: left;
+  width: 30%;
+  height: 100%;
+  overflow: auto;
+  background: #eee;
+}
+#tabsMapper{
+  margin-left: 15px;
+}
+#tabsMapper .tabFooter {
+  position: absolute;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  z-index: 99;
+  width: 100%;
+}
+.map {
+	border: 2px #0f0;
+	position: relative;
+}
+
+.map  .node {
+	font-size: 12px;
+	margin: 0px;
+	padding: 4px;
+	width: 150px;
+	min-height: 100px;
+	height: 100px;
+	border: 1px outset #006699;
+	text-align: center;
+	position: absolute;
+	font-family: Arial, Helvetica, sans-serif;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	color: #000000;
+	-webkit-border-radius:5px;
+	border-radius: 5px;
+	cursor: pointer;
+	/* overflow: hidden; - don't hide overflow or arrow disappears */
+}
+.node.faded {
+	filter: alpha(opacity=25);
+	opacity: 0.25;
+}
+.map   .tiny {
+	background-image: url(../images/map_page.png);
+	background-repeat:no-repeat;
+	background-color:  inherit;
+	border: 0px hidden;
+	margin: 1px;
+	padding: 0px;
+	cursor: pointer;
+	width: 12px;
+	height: 8px;
+	border-radius: 0px;
+}
+.map .mark {
+	border: 2px double;
+}
+.node .text {
+	overflow: hidden;
+}
+.node .taglist {
+	text-align:center;
+	width:100%;
+	line-height: 1.5em;
+	margin-top: 0.5em;
+}
+.map .branch {
+	font-size: 8px;
+	background-color: #fff;
+	margin: 1px;
+	padding: 1px;
+	width: 15px;
+	border: 0px none;
+	text-align: center;
+	position: absolute;
+	font-family: Arial, Helvetica, sans-serif;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	color: #000000;
+	overflow: hidden;
+	cursor: pointer;
+}
+.map   .branch.RIGHT {
+	color: #080;
+}
+.map   .branch.WRONG {
+	color: #f00;
+}
+.map   .line {
+	background-color: #000;
+	border: 0px #000;
+	 position: absolute;
+}
+.mapper.icon.arrow {
+	position: absolute;
+	background-image: url(../images/map_arrow_down.png);
+	background-repeat:no-repeat;
+	width:16px;
+	height:20px;
+	left: 67px;
+	top: -21px;
+}
+.mapper.icon.start {
+	position: absolute;
+	background-image: url(../images/MapperIconStart.png);
+	background-repeat:no-repeat;
+	width:100px;
+	height:150px;
+	left: 25px;
+	top: -150px;
+}
+.mapper.icon.exit {
+	position: absolute;
+	background-image: url(../images/MapperIconExit.png);
+	background-repeat:no-repeat;
+	width:100px;
+	height:150px;
+	left: 25px;
+	top: 72px;
+}
+
+div.codeedit.haserr {
+	background-color: #fbb;
+}
+div.codeedit span.err {
+	text-decoration: none;
+	background-color: #f88;
+	border: 1px;
+	padding-bottom: 0px;
+}
+
+
+.fileuploader {
+	display: inline-block;
+	position: relative;
+	width: 250px;
+	height: 2em;
+	margin: 0px;
+	padding: 0px;
+}
+
+/* JPM expandCollapse button */
+#expandCollapse, .tabHeader button.ecPanelButton {
+	font-size: small;
+}
+
+.tabHeader button.CSH {
+	font-size: small;
+}
+
+#uploadCMPFileInput {
+	opacity:  0;
+}

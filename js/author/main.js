@@ -4,6 +4,7 @@ import loader from '@loader';
 import 'author/styles/';
 import 'author/main.less!';
 
+import './header/';
 import './footer/';
 import './templates/';
 import './vertical-navbar/';

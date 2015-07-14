@@ -29,19 +29,7 @@
 <div id="authortool" class="hidestart authortool">
 
   <div id="cajaheader" class="hidestart bootstrap-styles">
-    <header>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-8">
-            <h1 id="guidetitle">A2J Guided Interviews<sup>®</sup></h1>
-          </div>
-          <div class="col-xs-4 text-right">
-            <button id="settings" class="btn btn-link"><span class="glyphicon-cog"></span> Settings</button><br />
-            <span class="authorenv"></span>
-          </div>
-      </div>
-      </div>
-    </header>
+    <app-header></app-header>
   </div>
 
   <div class="guideio"></div>

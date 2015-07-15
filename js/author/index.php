@@ -26,9 +26,6 @@
       };
     </script>
 
-    <script src="../dist/bundles/author/main.js"
-      data-root="/"
-      data-env="production">
-    </script>
+    <script src="../dist/bundles/author/main.js" data-root="/js" data-env="production"></script>
   </body>
 </html>

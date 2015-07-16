@@ -40,8 +40,7 @@ date_default_timezone_set("America/Chicago");
 */
 
 
-if ($isProductionServer)
-{
+if ($isProductionServer) {
 	//	09/05/2013 SJG Get Drupal userid from session
 	// If user not signed in, userid will be 0.
 	chdir(DRUPAL_ROOT_DIR);
@@ -51,19 +50,16 @@ if ($isProductionServer)
 	//Load Drupal
 	// Minimum bootstrap to get user's session info is DRUPAL_BOOTSTRAP_SESSION.
 	drupal_bootstrap(DRUPAL_BOOTSTRAP_SESSION);
-	$userid =intval($user->uid);
-	$canAuthor = in_array('a2j author', array_values($user->roles));
-}
-else
-{	// Running locally, just use demo or devuser (26 ,45 for a2jauthor.org).
+	$userid = $isBitoviServer ? 45 : intval($user->uid);
+	$canAuthor = $isBitoviServer ? true : in_array('a2j author', array_values($user->roles));
+} else {
+	// Running locally, just use demo or devuser (26 ,45 for a2jauthor.org).
 	session_start();//  09/05/2013 WARNING! LEAVE session_start() OFF TO ACCESS DRUPAL SESSIONS!
 	//$usertest=$_REQUEST['u'];
 	//if ($usertest == 'dev') $userid=45;
 	$canAuthor=true;
 	$userid=LOCAL_USER;
 }
-
-
 
 
 header("Content-type: text/plain; charset=utf-8");
@@ -82,61 +78,41 @@ switch ($command)
 		$username='';
 		$userdir='';
 
-    if ($isBitoviServer) {
-      $userid = 45;
-    } else {
-  		if ($isProductionServer)
-  		{
-  			if (($userid>0) && ($canAuthor))
-  			{	// User logged in to Drupal, get their user id, etc.
-  				// Can also get Roles here.
-  				// 03/31/2014  Only A2J Author role permitted to access author.
-  				$username = $user->name;
+		if ($isProductionServer && !$isBitoviServer) {
+			if (($userid>0) && ($canAuthor)) {
+				// User logged in to Drupal, get their user id, etc.
+				// Can also get Roles here.
+				// 03/31/2014  Only A2J Author role permitted to access author.
+				$username = $user->name;
 
-
-  				// Get user's A2J user entry.
-  				$checkuser=$mysqli->query("select * from users where uid=$userid");
-  				$numrows=$checkuser->num_rows;
-  				if (!$numrows)
-  				{	// No entry, create their user file folder and A2J user record.
-  					mkdir(GUIDES_DIR.$username, 0775);//0700);
-  					mkdir(GUIDES_DIR.$username.'/guides', 0775);//0700);
-  					//the next lines do a deep dive into Drupal profiles
-  					//and will need to be custom to each server install
-  					//Drupal 6: $nameres=$drupaldb->query("SELECT group_concat(pv.value SEPARATOR ' ') AS fullname from profile_values pv where pv.uid = $userid and pv.fid in (1,2)");
-  					$nameres=$drupaldb->query("SELECT * from realname where uid = $userid");
-  					$namerow=$nameres->fetch_assoc();
-  					$fullname=$namerow['realname'];
-  					//end Drupal profile stuff
-  					$mysqli->query("insert into users (uid, username,   nickname, folder) values ($userid, '$username',   '$fullname', '$username')");
-  					$checkuser=$mysqli->query("select * from users where uid=$userid");
-  				}
-  				$userrow=$checkuser->fetch_assoc();
-  				$result['nickname']=$userrow['nickname'];
-  				$userdir=$userrow['folder'];
-  			}
-  			else
-  			{
-  				$userid=0;
-  			}
-  		}
-  		else
-  		/*
-  		if (isset($_GET['gid']))
-  		{
-  			$username='LOCAL';
-  			$result['nickname']='Local Test User';
-  			$userdir='tests';
-
-  		}
-  		else
-  		*/
-  		{
-  			$username='DEV';
-  			$result['nickname']='Dev User';
-  			$userdir='dev';
-  		}
-    }
+				// Get user's A2J user entry.
+				$checkuser=$mysqli->query("select * from users where uid=$userid");
+				$numrows=$checkuser->num_rows;
+				if (!$numrows)
+				{	// No entry, create their user file folder and A2J user record.
+					mkdir(GUIDES_DIR.$username, 0775);//0700);
+					mkdir(GUIDES_DIR.$username.'/guides', 0775);//0700);
+					//the next lines do a deep dive into Drupal profiles
+					//and will need to be custom to each server install
+					//Drupal 6: $nameres=$drupaldb->query("SELECT group_concat(pv.value SEPARATOR ' ') AS fullname from profile_values pv where pv.uid = $userid and pv.fid in (1,2)");
+					$nameres=$drupaldb->query("SELECT * from realname where uid = $userid");
+					$namerow=$nameres->fetch_assoc();
+					$fullname=$namerow['realname'];
+					//end Drupal profile stuff
+					$mysqli->query("insert into users (uid, username,   nickname, folder) values ($userid, '$username',   '$fullname', '$username')");
+					$checkuser=$mysqli->query("select * from users where uid=$userid");
+				}
+				$userrow=$checkuser->fetch_assoc();
+				$result['nickname']=$userrow['nickname'];
+				$userdir=$userrow['folder'];
+			} else {
+				$userid=0;
+			}
+		} else {
+			$username='DEV';
+			$result['nickname']='Dev User';
+			$userdir='dev';
+		}
 
 		$result['userid']=$userid;
 		$result['username']=$username;

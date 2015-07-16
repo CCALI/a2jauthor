@@ -1,7 +1,7 @@
 {
   "maxerr": 50,
   "camelcase": true,
-  "eqeqeq": true,
+  "eqnull": true,
   "indent": 2,
   "plusplus": true,
   "esnext": true,

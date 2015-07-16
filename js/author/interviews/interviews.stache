@@ -1,0 +1,56 @@
+<div class="tabHeader bootstrap-styles">
+  <div class="row">
+    <div class="col-md-12 text-right">
+      <button CSH="Interviews" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+    </div>
+  </div>
+</div>
+
+<br />
+
+<div class="tabContentFrame">
+  <div class="tabContent editq">
+    <p class="name"></p>
+    <h2>What would you like to do?</h2>
+
+    <fieldset name="record">
+      <legend>Create a new interview</legend>
+
+      <ul class="guidelist" id="guideListNew">
+        {{#with blankInterview}}
+          <li class="guide" gid="{{id}}">{{title}}</li>
+        {{/with}}
+      </ul>
+    </fieldset>
+
+    <fieldset name="record">
+      <legend>Edit one of my interviews</legend>
+
+      <ul class="guidelist" id="guideListMy">
+        {{#each interviews.value.owned}}
+          <li class="guide" gid="{{id}}">
+            <span class="title">{{title}}</span>
+            <span class="id">#{{id}}</span>
+            <span class="size">{{fileSize}}</span>
+            <span class="modified">{{lastModified}}</span>
+          </li>
+        {{/each}}
+      </ul>
+    </fieldset>
+
+    <fieldset name="record">
+      <legend>Open a Sample interview</legend>
+
+      <ul class="guidelist" id="guideListSamples">
+        {{#each interviews.value.samples}}
+          <li class="guide" gid="{{id}}">
+            <span class="title">{{title}}</span>
+            <span class="id">#{{id}}</span>
+            <span class="size">{{fileSize}}</span>
+            <span class="modified">{{lastModified}}</span>
+          </li>
+        {{/each}}
+      </ul>
+    </fieldset>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;interviews-page&gt;</title>
+  </head>
+
+  <body>
+    <script type="text/stache" can-autorender>
+      <can-import from="author/styles/" />
+      <can-import from="author/main.less!" />
+      <can-import from="author/models/fixtures/" />
+      <can-import from="author/interviews/" />
+
+      <div>
+        <interviews-page></interviews-page>
+      </div>
+    </script>
+
+    <script src="../../node_modules/steal/steal.js"
+      data-main="can/view/autorender/">
+      window.less = {
+        async: true,
+        fileSync: true
+      };
+    </script>
+  </body>
+</html>

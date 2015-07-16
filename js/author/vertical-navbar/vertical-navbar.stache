@@ -7,7 +7,7 @@
   <nav class="nav navbar-nav">
     {{#each items}}
       <li ref="{{ref}}" class="{{#if active}}active{{/if}}">
-        <a href="#"><span class="{{icon}}"></span> {{title}}</a>
+        <a can-click="setPage" href="#"><span class="{{icon}}"></span> {{title}}</a>
       </li>
     {{/each}}
   </nav>

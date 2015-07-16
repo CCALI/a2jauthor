@@ -1,24 +1,35 @@
 import $ from 'jquery';
 import loader from '@loader';
+import AppState from './models/app-state';
 
+import 'can/route/';
 import 'author/styles/';
 import 'author/main.less!';
 
 import './header/';
 import './footer/';
 import './templates/';
+import './interviews/';
 import './vertical-navbar/';
 
-function loadLegacyCode() {
-  return loader.import('author/src/');
-}
+let appState = new AppState();
 
-function render({template}) {
-  $('#author-app').html(template());
-}
+can.route.map(appState);
+can.route(':page', {page: 'interviews'});
+can.route.ready();
+
+$('body').on('click', 'a[href="#"]', ev => ev.preventDefault());
 
 // The legacy code in src/src requires the dom to be populated in order to work,
 // so we first render the main app's template and then load the code.
+let loadLegacyCode = function() {
+  return loader.import('author/src/');
+};
+
+let render = function({template}) {
+  $('#author-app').html(template({appState}));
+};
+
 loader.import('author/app-template')
   .then(render)
   .then(loadLegacyCode);

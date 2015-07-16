@@ -35,6 +35,10 @@ export let VerticalNavbar = Map.extend({
         return val;
       }
     }
+  },
+
+  setPage: function(item) {
+    this.attr('page', item.attr('page'));
   }
 });
 

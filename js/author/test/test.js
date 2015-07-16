@@ -1,4 +1,5 @@
 import 'author/templates/test';
+import 'author/interviews/test';
 import 'author/vertical-navbar/test';
 
 import 'author/models/fixtures/';

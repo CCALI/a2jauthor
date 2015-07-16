@@ -139,7 +139,7 @@ function blankGuide()
 	var A2J4_XML='<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE Access2Justice_1><TEMPLATE><TITLE>My Interview</TITLE><AUTHOR>Anonymous</AUTHOR><SENDFEEDBACK>false</SENDFEEDBACK><DESCRIPTION>This is a description of my interview.</DESCRIPTION><JURISDICTION>Jurisdiction of my interview</JURISDICTION><LANGUAGE>en</LANGUAGE><AVATAR>blank</AVATAR><VERSION>7/24/2014</VERSION><A2JVERSION>2012-04-19</A2JVERSION><HISTORY>Interview created 7/24/2014</HISTORY><QUESTIONCOUNTER>4</QUESTIONCOUNTER><FIRSTQUESTION>1</FIRSTQUESTION><VARIABLES><VARIABLE SCOPE="Interview" NAME="User Gender" TYPE="Text"><COMMENT>User&apos;s gender will be used to display appopriate avatar.</COMMENT></VARIABLE><VARIABLE SCOPE="Interview" NAME="User Avatar" TYPE="Text" /><VARIABLE SCOPE="Interview" NAME="Client first name TE" TYPE="Text" /><VARIABLE SCOPE="Interview" NAME="Client middle name TE" TYPE="Text" /><VARIABLE SCOPE="Interview" NAME="Client last name TE" TYPE="Text" /></VARIABLES><STEPS><STEP NUMBER="0"><TEXT>ACCESS TO JUSTICE</TEXT></STEP><STEP NUMBER="1"><TEXT>DO YOU QUALIFY?</TEXT></STEP><STEP NUMBER="2"><TEXT>DO YOU AGREE?</TEXT></STEP><STEP NUMBER="3"><TEXT>YOUR INFORMATION</TEXT></STEP></STEPS><QUESTIONS><QUESTION ID="1" STEP="0" MAPX="13.25" MAPY="155.45" NAME="1-Introduction"><TEXT><P><FONT>This is the introduction.</FONT></P></TEXT><BUTTONS><BUTTON NEXT="2"><LABEL>Continue</LABEL></BUTTON></BUTTONS></QUESTION><QUESTION ID="2" STEP="0" MAPX="22.75" MAPY="401.85" NAME="2-Name"><TEXT><P><FONT>Enter your name.</FONT></P></TEXT><FIELDS><FIELD TYPE="text" ORDER="ASC"><LABEL>First:</LABEL><NAME>Client first name TE</NAME><INVALIDPROMPT>You must type a response in the highlighted space before you can continue.</INVALIDPROMPT></FIELD><FIELD TYPE="text" OPTIONAL="true" ORDER="ASC"><LABEL>Middle:</LABEL><NAME>Client middle name TE</NAME><INVALIDPROMPT>You must type a response in the highlighted space before you can continue.</INVALIDPROMPT></FIELD><FIELD TYPE="text" ORDER="ASC"><LABEL>Last:</LABEL><NAME>Client last name TE</NAME><INVALIDPROMPT>You must type a response in the highlighted space before you can continue.</INVALIDPROMPT></FIELD></FIELDS><BUTTONS><BUTTON NEXT="3" ><LABEL>Continue</LABEL></BUTTON></BUTTONS></QUESTION><QUESTION ID="3" STEP="0" MAPX="498.9" MAPY="19.9" NAME="3-Gender"><TEXT>Choose your gender.</TEXT><FIELDS><FIELD TYPE="gender"><LABEL>Gender:</LABEL><NAME>User Gender</NAME></FIELD></FIELDS><BUTTONS><BUTTON NEXT="4"><LABEL>Continue</LABEL></BUTTON></BUTTONS></QUESTION><QUESTION ID="4" STEP="1" MAPX="510.15" MAPY="396.9" NAME="1-Question 1"><TEXT><P><FONT>Text of my first question goes here.</FONT></P></TEXT><BUTTONS><BUTTON NEXT="SUCCESS"><LABEL>Save</LABEL></BUTTON></BUTTONS></QUESTION></QUESTIONS><POPUPS /></TEMPLATE>';
 	// 2015-06-29 Git Issue #276 - Buttons properly labeled with 'Continue'.
 
-	
+
 	/** @type {TGuide} */
 	var guide = parseXML_Auto_to_CAJA($(jQuery.parseXML(A2J4_XML)));
 	var today = jsDate2mdy(today2jsDate());
@@ -149,24 +149,23 @@ function blankGuide()
 	return guide;
 }
 
-function createBlankGuide()
-{	// create blank guide internally, do Save As to get a server id for future saves.
+// create blank guide internally, do Save As to get a server id for future saves.
+function createBlankGuide() {
 	var guide = blankGuide();
 
-	ws({cmd:'guidesaveas',gid:0, guide: exportXML_CAJA_from_CAJA(guide), title: guide.title},function(data)
-	{
-		if (data.error!==undefined)
-		{
+  var saveAsParams = {
+    gid: 0,
+    cmd: 'guidesaveas',
+    title: guide.title,
+    guide: exportXML_CAJA_from_CAJA(guide)
+  };
+
+	ws(saveAsParams, function(data) {
+		if (data.error !== undefined) {
 			setProgress(data.error);
-		}
-		else
-		{
-			var newgid = data.gid;//new guide id
-			ws({cmd:'guides'},function (data)
-			{
-				listGuides(data);
-				ws({cmd:'guide',gid:newgid},guideLoaded);
-			});
+		} else {
+			var newgid = data.gid; //new guide id
+      ws({cmd: 'guide', gid: newgid}, guideLoaded);
 		}
 	});
 }
@@ -190,80 +189,25 @@ function openSelectedGuide()
 	}
 }
 
-function archiveSelectedGuide()
-{	// 2014-08-28 Delete the currently selected guide
-	var $li=$('li.guide.'+SELECTED).first();
-	var name = $('span.title',$li).text();
-	dialogConfirmYesNo({title:'Delete interview',message:'Would you like to delete '+name+'?',height:300,name:name,
-		Yes:
-		function()
-		{
-			var gid=$li.attr('gid');
-			if (!gid) {
-				return;
-			}
-			ws({cmd:'guidearchive',gid:gid},wsListGuides);
-		}});
+function archiveSelectedGuide() {
+  // 2014-08-28 Delete the currently selected guide
+	var $li = $('li.guide.' + SELECTED).first();
+	var name = $('span.title', $li).text();
 
-}
-function wsListGuides()
-{
-	ws({cmd:'guides'},listGuides);
-}
+	dialogConfirmYesNo({
+    title: 'Delete interview',
+    message: 'Would you like to delete ' + name + '?',
+    height: 300,
+    name: name,
+		Yes: function() {
+		  var gid = $li.attr('gid');
 
-/*** @param {{guides}} data */
-function listGuides(data)
-{
-	var blank = {id:'a2j', title:'Blank Interview'};
-	//gGuideID=0;
-
-	var guideListNew =['<li class=guide gid="' + blank.id + '">' + blank.title + '</li>'];
-	var guideListMy = [];
-	var guideListSamples = [];
-	$.each(data.guides,
-		/*** @param {{owned,id,title}} g */
-		function(key,g)
-		{
-
-			var size='?';
-			var modified='?';
-			//var pagecount='?';
-			if (g.details!=='')
-			{
-				size=Math.ceil(g.details.size/1024)+'K';
-				modified= g.details.modified;
-				//pagecount=g.details.pagecount;
-			}
-			if (g.title==='') {
-				g.title='Untitled';
-			}
-			var str='<li class=guide gid="' + g.id + '">'
-				+'<span class=title>' + g.title +'</span>'
-				+'<span class=id>#' + g.id+ '</span>'
-				+'<span class=size>' + size + '</span>'
-				+'<span class=modified>' + modified + '</span>'
-				//+'<span class=pagecount>' + pagecount + '</span>'
-				//+(g.owned?  '<pan class=delete></span>' : '')
-			+ '</li>';
-			if (g.owned)
-			{
-				guideListMy.push(str);
-			} else {
-				guideListSamples.push(str);
-			}
+			if (gid) {
+        ws({cmd: 'guidearchive', gid: gid});
+      }
 		}
-	);
-	$('#guideListNew').html(guideListNew.join(''));
-	$('#guideListMy').html(guideListMy.join(''));
-
-	$('#guideListSamples').html(guideListSamples.join(''));
-
-	$('li.guide').click(function(){$('li.guide').removeClass(SELECTED);$(this).addClass(SELECTED);});
-	$('li.guide').dblclick(openSelectedGuide);
-
-	//$('#welcome').dialog('open');
+  });
 }
-
 
 TGuide.prototype.HotDocsAnswerSetFromCMPXML=function(cmp)
 {	// 2014-08-25 Extract variables from HotDocs .CMP file (XML format)

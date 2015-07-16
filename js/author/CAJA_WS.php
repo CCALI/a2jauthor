@@ -2,7 +2,7 @@
 /*
 	CALI Author 5 / A2J Author 5 (CAJA) * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	
+
 	10/05/2012 Simple CAJA Author Web Service API
 	A Fuse to handle all a2j author editing stuff
 	07/01/2013 HACK to login to demo
@@ -50,7 +50,7 @@ if ($isProductionServer)
 	require_once DRUPAL_ROOT . '/includes/bootstrap.inc';
 	//Load Drupal
 	// Minimum bootstrap to get user's session info is DRUPAL_BOOTSTRAP_SESSION.
-	drupal_bootstrap(DRUPAL_BOOTSTRAP_SESSION);	
+	drupal_bootstrap(DRUPAL_BOOTSTRAP_SESSION);
 	$userid =intval($user->uid);
 	$canAuthor = in_array('a2j author', array_values($user->roles));
 }
@@ -67,8 +67,8 @@ else
 
 
 header("Content-type: text/plain; charset=utf-8");
-	
-		
+
+
 switch ($command)
 {
 	case 'test':
@@ -76,68 +76,74 @@ switch ($command)
 		//var_dump($user);
 		//var_dump( array_values($user->roles));
 		break;
-	
-	
+
+
 	case 'login':
 		$username='';
 		$userdir='';
-		if ($isProductionServer)
-		{
-			if ( ($userid>0) && ($canAuthor))
-			{	// User logged in to Drupal, get their user id, etc.
-				// Can also get Roles here.
-				// 03/31/2014  Only A2J Author role permitted to access author.
-				$username = $user->name;
-	
-	
-				// Get user's A2J user entry. 
-				$checkuser=$mysqli->query("select * from users where uid=$userid");
-				$numrows=$checkuser->num_rows;
-				if (!$numrows)
-				{	// No entry, create their user file folder and A2J user record.
-					mkdir(GUIDES_DIR.$username, 0775);//0700);
-					mkdir(GUIDES_DIR.$username.'/guides', 0775);//0700);
-					//the next lines do a deep dive into Drupal profiles
-					//and will need to be custom to each server install
-					//Drupal 6: $nameres=$drupaldb->query("SELECT group_concat(pv.value SEPARATOR ' ') AS fullname from profile_values pv where pv.uid = $userid and pv.fid in (1,2)");
-					$nameres=$drupaldb->query("SELECT * from realname where uid = $userid");
-					$namerow=$nameres->fetch_assoc();
-					$fullname=$namerow['realname'];
-					//end Drupal profile stuff
-					$mysqli->query("insert into users (uid, username,   nickname, folder) values ($userid, '$username',   '$fullname', '$username')");
-					$checkuser=$mysqli->query("select * from users where uid=$userid");
-				}
-				$userrow=$checkuser->fetch_assoc();
-				$result['nickname']=$userrow['nickname'];
-				$userdir=$userrow['folder'];
-			}
-			else
-			{
-				$userid=0;
-			}
-		}
-		else
-		/*
-		if (isset($_GET['gid']))
-		{
-			$username='LOCAL';
-			$result['nickname']='Local Test User';
-			$userdir='tests';
-			
-		}
-		else
-		*/
-		{
-			$username='DEV';
-			$result['nickname']='Dev User';
-			$userdir='dev';
-		}
+
+    if ($isBitoviServer) {
+      $userid = 45;
+    } else {
+  		if ($isProductionServer)
+  		{
+  			if (($userid>0) && ($canAuthor))
+  			{	// User logged in to Drupal, get their user id, etc.
+  				// Can also get Roles here.
+  				// 03/31/2014  Only A2J Author role permitted to access author.
+  				$username = $user->name;
+
+
+  				// Get user's A2J user entry.
+  				$checkuser=$mysqli->query("select * from users where uid=$userid");
+  				$numrows=$checkuser->num_rows;
+  				if (!$numrows)
+  				{	// No entry, create their user file folder and A2J user record.
+  					mkdir(GUIDES_DIR.$username, 0775);//0700);
+  					mkdir(GUIDES_DIR.$username.'/guides', 0775);//0700);
+  					//the next lines do a deep dive into Drupal profiles
+  					//and will need to be custom to each server install
+  					//Drupal 6: $nameres=$drupaldb->query("SELECT group_concat(pv.value SEPARATOR ' ') AS fullname from profile_values pv where pv.uid = $userid and pv.fid in (1,2)");
+  					$nameres=$drupaldb->query("SELECT * from realname where uid = $userid");
+  					$namerow=$nameres->fetch_assoc();
+  					$fullname=$namerow['realname'];
+  					//end Drupal profile stuff
+  					$mysqli->query("insert into users (uid, username,   nickname, folder) values ($userid, '$username',   '$fullname', '$username')");
+  					$checkuser=$mysqli->query("select * from users where uid=$userid");
+  				}
+  				$userrow=$checkuser->fetch_assoc();
+  				$result['nickname']=$userrow['nickname'];
+  				$userdir=$userrow['folder'];
+  			}
+  			else
+  			{
+  				$userid=0;
+  			}
+  		}
+  		else
+  		/*
+  		if (isset($_GET['gid']))
+  		{
+  			$username='LOCAL';
+  			$result['nickname']='Local Test User';
+  			$userdir='tests';
+
+  		}
+  		else
+  		*/
+  		{
+  			$username='DEV';
+  			$result['nickname']='Dev User';
+  			$userdir='dev';
+  		}
+    }
+
 		$result['userid']=$userid;
 		$result['username']=$username;
 		$result['userdir']=$userdir;
 		$_SESSION['userdir']=$userdir;
 		break;
-	
+
 
 	case 'logout':
 		// do logout, clear seession user id
@@ -146,7 +152,7 @@ switch ($command)
 		$_SESSION['userid']=$userid;
 		break;
 
-		
+
 	case 'guides':
 		// list of free, public or user owned guides
 		listGuides("select * from guides where archive=0 and (isPublic=1 or isFree=1  or (editoruid=$userid)) order by (editoruid=$userid) desc, title asc ");
@@ -159,7 +165,7 @@ switch ($command)
 		// list of user owned guides
 		listGuides("select * from guides where archive=0 and (editoruid=$userid) order by title asc");
 		break;
-	 
+
 	case 'guides/owned/archive':
 		// list of user owned guides that were archived
 		listGuides("select * from guides where archive=1 and (editoruid=$userid) order by title asc");
@@ -206,15 +212,15 @@ switch ($command)
 		{// not found
 		}
 		break;
-	 	 
-		
+
+
 	case 'guidesave':
 		// update the guide (only if user matches guide's editor
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$title=($mysqli->real_escape_string($_REQUEST['title']));
 		$xml=$_REQUEST['guide'];
 		$json=$_REQUEST['json'];//01/14/2015
-		
+
 		$res=$mysqli->query("select * from guides where gid=$gid and editoruid=$userid");
 		if ($row=$res->fetch_assoc()){
 		  $result['info']="Will update!";
@@ -225,7 +231,7 @@ switch ($command)
 		  $filedir = $path_parts['dirname'];
 		  $filenameonly=$path_parts['filename'];
 		  if (file_exists($filename))
-		  { 
+		  {
 				//trace(filemtime($filename));
 				$verdir = $filedir.'/Versions';
 				if (!file_exists($verdir))
@@ -247,10 +253,10 @@ switch ($command)
 		else
 			$err="No permission to update this guide";
 		break;
-	
+
 	case 'guidearchive':
 		// 2014-08-26 archive the guide (only if user matches guide's editor
-		// Archive bit is set in table row, files are NOT removed. 
+		// Archive bit is set in table row, files are NOT removed.
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$title=($mysqli->real_escape_string($_REQUEST['title']));
 		$res=$mysqli->query("select * from guides where gid=$gid and editoruid=$userid");
@@ -266,7 +272,7 @@ switch ($command)
 			$err="No permission to archive this guide";
 		break;
 
-	
+
 	case 'answersetsave':
 		// 4/29/2014 Save answerset into guide's folder. overwrite anything else.
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
@@ -292,7 +298,7 @@ switch ($command)
 				trace("renaming $filename to $revname");
 				rename($filename, $revname);
 			}
-			
+
 			trace('saving to '.$filename);
 			file_put_contents($filename,$xml);
 		}
@@ -301,8 +307,8 @@ switch ($command)
 			$err="No permission to update this answerset";
 		}
 		break;
-	
-	
+
+
 
 	case 'guidesaveas':
 		// Saving XML to new record. if gid > 0 we're cloning. if = 0 we've got a new guide.
@@ -312,9 +318,9 @@ switch ($command)
 		$json=$_REQUEST['json'];//01/14/2015
 		$res=$mysqli->query("select * from guides where gid=$oldgid");
 		if ($row=$res->fetch_assoc())
-		{ 
+		{
 			if ($title=="") $title = $row['title'];
-		} 
+		}
 		//trace($oldgid);
 		// Create new entry in guide table including a reference to the cloned guide.
 		$sql="insert into guides (title,editoruid,clonedfromgid) values ('".$mysqli->real_escape_string($title)."', ".$userid.",".$oldgid.")";
@@ -322,7 +328,7 @@ switch ($command)
 		{
 			// Save as content to new folder owned by editor
 			$newgid=$mysqli->insert_id;
-			
+
 			$userdir=$_SESSION['userdir'];if (!isset($userdir))$userdir='00000';
 			$newdirbase = $userdir.'/guides/'."Guide".$newgid;
 			//trace($newdirbase);
@@ -346,7 +352,7 @@ switch ($command)
 			$result['gid']=$newgid;
 		}
 		break;
-	
+
 
 
 	case 'uploadfile':
@@ -360,9 +366,9 @@ switch ($command)
 		 * Licensed under the MIT license:
 		 * http://www.opensource.org/licenses/MIT
 		 */
-		
+
 		// 07/2013 SJG - setup to save to user's guide's folder only.
-		
+
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$res=$mysqli->query("select * from guides where gid=$gid and editoruid=$userid");
 		if ($row=$res->fetch_assoc())
@@ -379,7 +385,7 @@ switch ($command)
 			exit();//Return immediately with upload info.
 		}
 		break;
-		
+
 
 	case 'uploadguide':
 		// 10/03/2013 Upload existing XML/A2J file to a new guide.
@@ -407,16 +413,16 @@ switch ($command)
 			$upload_handler = new UploadHandler();
 			$sql="update guides set filename='".$mysqli->real_escape_string($newfile)."' where gid = $newgid";
 			if ($res=$mysqli->query($sql)){}
-			// Extract title from uploaded XML. 
+			// Extract title from uploaded XML.
 			$xml=file_get_contents($newlocation);
-			
+
 			if (stripos($xml,'encoding="UTF-8"')==FALSE)
 			{	// A2J Guide without the UTF-8 encoding is probably Windows-1252.
 				// Convert to UTF-8.
 				$xml = iconv('Windows-1252','UTF-8',$xml);
 				file_put_contents($newlocation,$xml);
 			}
-			
+
 			$guideXML = new SimpleXMLElement($xml);
 			$title = $guideXML->TITLE;//A2J 4 format
 			if ($title=='')
@@ -431,11 +437,11 @@ switch ($command)
 			writelognow();
 			exit();//Return immediately with upload info.
 		}
-		break;		
+		break;
 
 
 
-		
+
 	 case 'guidezip':
 		// 01/08/2014 Zip guide XML and attached files.
 		// Security Warning: Zip file is available to all users knowing the URL.
@@ -473,24 +479,24 @@ switch ($command)
 					$ext = pathinfo($file,PATHINFO_EXTENSION);
 					if( ($ext!='') && ($file!=$guideNameOnly) AND ($ext!='zip'))
 					{
-						$zip->addFile(GUIDES_DIR.$guideDir.'/'.$file,$file);						
+						$zip->addFile(GUIDES_DIR.$guideDir.'/'.$file,$file);
 					}
-				}				
+				}
 				$zip->close();
 				$result['zip']=GUIDES_URL.$guideDir.'/'.$zipNameOnly;
 				// Caller will redirect to download the zip.
 			}
 		}
 		break;
-		
+
 	case 'guidepublish':
 		//### Publish specified existing guide to custom unique public folder.
 	 	$oldgid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$res=$mysqli->query("select * from guides where gid=$oldgid  and (isPublic=1  or isFree=1  or editoruid=$userid)");
 		trace('Publishing gid '.$oldgid);
-		
+
 		if ($row=$res->fetch_assoc())
-		{ 
+		{
 			$result['gid']=$row['gid'];
 			$guideName = $row['filename'];
 			//trace('Publishing name '.$guideName);
@@ -508,23 +514,23 @@ switch ($command)
 				$ext = pathinfo($file,PATHINFO_EXTENSION);
 				if( ($ext!='') && ($file!=$guideNameOnly) && ($ext!='zip') && in_array($ext,array('xml','gif','png','jpg','mp3','mp4')))
 				{
-					copy(GUIDES_DIR.$guideDir.'/'.$file,$GuidePublicDir.'/'.$file);				
+					copy(GUIDES_DIR.$guideDir.'/'.$file,$GuidePublicDir.'/'.$file);
 				}
 			}
 			copy(GUIDES_DIR.$guideName, $GuidePublicDir.'/Guide.xml');
 			copy(replace_extension(GUIDES_DIR.$guideName,'json'), $GuidePublicDir.'/Guide.json');//01/14/2015
-			
+
 			//http://localhost/caja/userfiles/public/dev/guides/A2JFieldTypes/2014-07-22-14-06-12
 			file_put_contents($GuidePublicDir.'/index.php', '<?php header("Location: /app/js/viewer/A2J_Viewer.php?gid=".$_SERVER["REQUEST_URI"]."Guide.xml"); ?>');
-			
+
 			$result['url']=GUIDES_URL.$newSubGuideDir;
 			trace($result['url']);
 			// Caller will redirect to download the zip.
 		}
 		break;
-	
-  
-  
+
+
+
 		/*
 	case 'guidemobilesave':
 		// 01/14/2015 Save json form of guide into guide's folder
@@ -545,8 +551,8 @@ switch ($command)
 			$err="No permission to update this guide";
 		break;
 		*/
-	
-	
+
+
 	default:
 		$err="Unknown command";
 		break;
@@ -579,15 +585,15 @@ function getGuideFileDetails($filename)
 			//,'description' => (string) $xml->INFO->DESCRIPTION
 		}
 		else{
-			trace('getGuideFileDetails XML parsing error:'.$filename);		
-			
+			trace('getGuideFileDetails XML parsing error:'.$filename);
+
 		}
 		*/
 		//trace('Details:'.$details);
 	}
 	else
 	{
-	  //trace('getGuideFileDetails file not found:'.$filename);		
+	  //trace('getGuideFileDetails file not found:'.$filename);
 	}
 	return $details;
 }
@@ -611,8 +617,8 @@ function listGuides($sql)
 				"id"=> $row['gid'],
 				"title"=> $row['title'],
 				"owned"=> $row["editoruid"]==$userid,
-				"details"=> getGuideFileDetails( $row['filename'])); 
-		  } 
+				"details"=> getGuideFileDetails( $row['filename']));
+		  }
 	}
 	$result['guides']=$guides;
 }

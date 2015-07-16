@@ -3,8 +3,10 @@
  	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
 	09/07/2013 - 10/05/2012 SJG Customize db and folder paths depending on server.
 */
-	$isProductionServer = $_SERVER['HTTP_HOST']=="author.a2jauthor.org" ;
-	
+
+  $isBitoviServer = $_SERVER['HTTP_HOST'] == "bitovi.a2jauthor.org";
+  $isProductionServer = true;
+
 	if ($isProductionServer)
 	{	// Production/staging server
 		define("GUIDES_DIR",'/vol/data/sites/author/userfiles/'); //requires trailing slash

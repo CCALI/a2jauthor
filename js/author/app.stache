@@ -29,7 +29,7 @@
   <div id="authortool" class="hidestart authortool">
 
     <div id="cajaheader" class="hidestart bootstrap-styles">
-      <app-header></app-header>
+      <app-header page="{{page}}"></app-header>
     </div>
 
     <div class="guideio"></div>
@@ -45,7 +45,7 @@
               <h3>Information about this interview</h3>
             </div>
             <div class="col-md-4 text-right">
-              <button class="ecPanelButton btn btn-primary" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button> <button CSH="About" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+              <button class="ecPanelButton btn btn-primary" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
             </div>
           </div>
         </div>
@@ -59,11 +59,8 @@
       <div class="panel" id="tabsVariables">
         <div class="tabHeader bootstrap-styles">
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
               <h3>Variables used in this interview</h3>
-            </div>
-            <div class="col-md-4 text-right">
-              <button CSH="Variables" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
             </div>
           </div>
         </div>
@@ -86,11 +83,8 @@
 
         <div class="tabHeader bootstrap-styles">
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
               <h3>Clauses used in this interview</h3>
-            </div>
-            <div class="col-md-4 text-right">
-              <button CSH="Clauses" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
             </div>
           </div>
         </div>
@@ -107,11 +101,8 @@
       <div class="panel" id="tabsSteps">
         <div class="tabHeader bootstrap-styles">
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
               <h3>Steps</h3>
-            </div>
-            <div class="col-md-4 text-right">
-              <button CSH="Steps" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
             </div>
           </div>
         </div>
@@ -129,7 +120,7 @@
               <h3>Pages and popups</h3>
             </div>
             <div class="col-md-4 text-right">
-              <button id="expandCollapse" data-state="collapsed" class="btn btn-primary"></button> <button CSH="Pages" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+              <button id="expandCollapse" data-state="collapsed" class="btn btn-primary"></button>
             </div>
           </div>
         </div>
@@ -184,7 +175,6 @@
                 <button zoom="fit" class="btn btn-default"><span class="glyphicon-resize"></span> Fit</button>
                 <button zoom="1.25" class="btn btn-default"><span class="glyphicon-zoom-in"></span> Zoom In</button>
                 <button zoom="0.75" class="btn btn-default"><span class="glyphicon-zoom-out"></span> Zoom Out</button>
-                <button CSH="Map" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
               </div>
 
               <div id="MapperPanel">
@@ -209,7 +199,7 @@
               </div>
             </div>
             <div class="col-md-4 text-right">
-              <button class="ecPanelButton btn btn-primary" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button> <button CSH="AllLogic" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+              <button class="ecPanelButton btn btn-primary" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
             </div>
           </div>
         </div>
@@ -232,7 +222,7 @@
               </div>
             </div>
             <div class="col-md-4 text-right">
-              <button class="ecPanelButton btn btn-primary" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button> <button CSH="AllText" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
+              <button class="ecPanelButton btn btn-primary" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
             </div>
           </div>
         </div>
@@ -246,11 +236,8 @@
       <div class="panel" id="tabsFiles">
         <div class="tabHeader bootstrap-styles">
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
               <h3>Files currently attached to this interview</h3>
-            </div>
-            <div class="col-md-4 text-right">
-              <button CSH="Files" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
             </div>
           </div>
         </div>
@@ -322,12 +309,9 @@
 
         <div class="tabHeader bootstrap-styles">
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
               <button id="reportFull" class="btn btn-primary">Full Report</button>
               <button id="reportTranscript" class="btn btn-primary">Transcript Report</button>
-            </div>
-            <div class="col-md-4 text-right">
-              <button CSH="Report" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
             </div>
           </div>
         </div>
@@ -350,11 +334,8 @@
 
         <div class="tabHeader">
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
               <h3>Publish/Upload</h3>
-            </div>
-            <div class="col-md-4 text-right">
-              <button CSH="Publish" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
             </div>
           </div><!-- row -->
         </div><!-- tabHeader bootstrap-styles -->

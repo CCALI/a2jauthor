@@ -31,7 +31,7 @@
           <li class="guide" gid="{{id}}">
             <span class="title">{{title}}</span>
             <span class="id">#{{id}}</span>
-            <span class="size">{{fileSize}}</span>
+            <span class="size">{{formatFileSize fileSize}}</span>
             <span class="modified">{{lastModified}}</span>
           </li>
         {{/each}}
@@ -46,7 +46,7 @@
           <li class="guide" gid="{{id}}">
             <span class="title">{{title}}</span>
             <span class="id">#{{id}}</span>
-            <span class="size">{{fileSize}}</span>
+            <span class="size">{{formatFileSize fileSize}}</span>
             <span class="modified">{{lastModified}}</span>
           </li>
         {{/each}}

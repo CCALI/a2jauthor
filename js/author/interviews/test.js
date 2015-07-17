@@ -45,6 +45,17 @@ describe('<interviews-page>', function() {
       assert.equal($(`.${activeClass}`).length, 1);
       assert.isTrue(interviews.eq(1).hasClass(activeClass));
     });
+
+    it('interview file size should be in kilobytes', function() {
+      return vm.attr('interviews').then(interviews => {
+        let interview = interviews.attr(0);
+        let id = interview.attr('id');
+        let size = $(`[gid=${id}] .size`).text();
+
+        assert.equal(interview.attr('fileSize'), 3551);
+        assert.equal(size, '4K');
+      });
+    });
   });
 
 });

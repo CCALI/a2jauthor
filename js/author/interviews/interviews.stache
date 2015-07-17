@@ -1,13 +1,3 @@
-<div class="tabHeader bootstrap-styles">
-  <div class="row">
-    <div class="col-md-12 text-right">
-      <button CSH="Interviews" class="CSH btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</button>
-    </div>
-  </div>
-</div>
-
-<br />
-
 <div class="tabContentFrame">
   <div class="tabContent editq">
     <p class="name"></p>

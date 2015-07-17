@@ -130,15 +130,6 @@ function main()
   //$('#guideSave').button({label:'Save Now',icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
   $('#settings').click(function(){$('#settings-form').dialog('open');});
 
-  // 2014-06-09 SJG adding context-sensitive help links.
-  //$('.tabHeader, #tabsMapper .tabFooter').append('<button class="CSH"/>');
-  $('.CSH').click(function(){
-    var csh = $(this).attr('CSH');//parent().parent().attr('id');
-    var url = 'http://author.a2jauthor.org/csh5/' + csh;
-    window.open( url );
-  });
-
-
   // JPM Handles Expand/Collapse button on pages list
   function expandCollapsePageList() {
     var ecText = $("#expandCollapse").attr('data-state');

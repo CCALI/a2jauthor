@@ -38,5 +38,12 @@ export default Component.extend({
     '.guide dblclick': function() {
       window.openSelectedGuide();
     }
+  },
+  helpers: {
+    formatFileSize: function(sizeInBytes) {
+      sizeInBytes = sizeInBytes();
+      let sizeInKB = Math.ceil(sizeInBytes / 1024);
+      return `${sizeInKB}K`;
+    }
   }
 });

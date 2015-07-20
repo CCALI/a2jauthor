@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import loader from '@loader';
 import AppState from './models/app-state';
+import tabsRouting from 'author/utils/tabs-routing';
 
 import 'can/route/';
 import 'author/styles/';
@@ -32,4 +33,5 @@ let render = function({template}) {
 
 loader.import('author/app-template')
   .then(render)
-  .then(loadLegacyCode);
+  .then(loadLegacyCode)
+  .then(() => tabsRouting(appState));

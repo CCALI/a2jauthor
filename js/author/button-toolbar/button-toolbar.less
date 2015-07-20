@@ -1,0 +1,23 @@
+@import '../styles/bootstrap-overrides/variables';
+
+button-toolbar {
+  display: block;
+  border: 1px solid @gray-lighter;
+
+  .btn-toolbar {
+    padding: 10px 0;
+  }
+
+  .btn.btn-default {
+    border-radius: 0;
+    border-color: #fff;
+
+    &:disabled {
+      border-color: #fff;
+    }
+
+    &.btn-divider {
+      border-left: 1px solid @gray-light;
+    }
+  }
+}

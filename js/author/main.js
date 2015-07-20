@@ -12,6 +12,7 @@ import './footer/';
 import './templates/';
 import './interviews/';
 import './vertical-navbar/';
+import './interviews/toolbar/';
 
 let appState = new AppState();
 

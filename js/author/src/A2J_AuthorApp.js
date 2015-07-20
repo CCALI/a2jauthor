@@ -71,7 +71,6 @@ function signin()
       gUserNickName=data.nickname;
       if (gUserID!==0)
       { // ### Successful signin.
-        gotoTabOrPage('tabsGuides');
         $('#splash').hide();
         $('#cajaheader').removeClass('hidestart');
         $('#authortool').removeClass('hidestart');//.addClass('authortool').show();
@@ -233,12 +232,6 @@ function main()
 
   $('#guideClone').button({disabled:true}).click(function(){
     dialogAlert({title:'Clone interview'});
-   });
-
-  $('.guidemenu nav li').click(function(){
-    $('.guidemenu nav li').removeClass('active');
-    $(this).addClass('active');
-    gotoTabOrPage($(this).attr('ref'));
   });
 
   $(document).on("click", '.editicons .ui-icon-circle-plus',function(){// clone a table row

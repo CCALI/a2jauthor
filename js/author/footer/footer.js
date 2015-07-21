@@ -3,7 +3,8 @@ import template from './footer.stache!';
 
 import './footer.less!';
 
-Component.extend({
+export default Component.extend({
   template,
+  leakScope: false,
   tag: 'app-footer'
-})
+});

@@ -13,5 +13,6 @@ import 'author/button-toolbar/';
  */
 export default Component.extend({
   template,
+  leakScope: false,
   tag: 'interviews-toolbar'
 });

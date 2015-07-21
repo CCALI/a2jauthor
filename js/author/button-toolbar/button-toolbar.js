@@ -13,5 +13,6 @@ import './button-toolbar.less!';
  */
 export default Component.extend({
   template,
+  leakScope: false,
   tag: 'button-toolbar'
 });

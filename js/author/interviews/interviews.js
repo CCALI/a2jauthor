@@ -34,6 +34,7 @@ let Interviews = Map.extend({
  */
 export default Component.extend({
   template,
+  leakScope: false,
   tag: 'interviews-page',
   viewModel: Interviews,
   events: {

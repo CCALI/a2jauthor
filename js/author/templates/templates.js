@@ -13,5 +13,6 @@ import './templates.less!';
  */
 Component.extend({
   template,
+  leakScope: false,
   tag: 'templates-page'
 });

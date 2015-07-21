@@ -19,6 +19,7 @@ export let Header = Map.extend({
 
 export default Component.extend({
   template,
+  leakScope: false,
   tag: 'app-header',
   viewModel: Header
 });

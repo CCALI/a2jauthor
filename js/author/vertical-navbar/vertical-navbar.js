@@ -51,6 +51,7 @@ export let VerticalNavbar = Map.extend({
  */
 export default Component.extend({
   template,
+  leakScope: false,
   tag: 'vertical-navbar',
   viewModel: VerticalNavbar
 });

@@ -1,0 +1,7 @@
+<ul>
+  {{#each templates}}
+    <li>
+      <templates-list-item template="{.}"></templates-list-item>
+    </li>
+  {{/each}}
+</ul>

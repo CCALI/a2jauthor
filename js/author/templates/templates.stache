@@ -1,48 +1,11 @@
-<h1>
-  <i class="demo-icon icon-arrow-combo text-muted"></i>
-  <i class="demo-icon glyphicon-eye text-primary"></i>
-  <i class="demo-icon glyphicon-attach text-muted"></i>
-  <i class="demo-icon glyphicon-attention text-warning"></i>
-  <i class="demo-icon glyphicon-flag text-danger"></i>
-</h1>
-<hr />
-
-<div class="container-fluid bootstrap-styles">
-  <div class="vertical-navbar vertical-navbar-inverse pull-left">
-    <nav class="nav navbar-nav">
-      <li class="disabled"><a href="">About</a></li>
-      <li><a href="">Variables</a></li>
-      <li><a href="">Steps</a></li>
-      <li><a href="">Pages</a></li>
-      <li><a href="">Map</a></li>
-      <li><a href="">Files</a></li>
-      <li><a href="">All Logic</a></li>
-      <li><a href="">All Text</a></li>
-      <li><a href="">Preview</a></li>
-      <li><a href="">Report</a></li>
-      <li><a href="">Publish</a></li>
-      <li><a href="">Templates</a></li>
-      <li class="active"><a href="">Interviews</a></li>
-    </nav>
-  </div>
-
-  <div class="vertical-navbar pull-left">
-    <nav class="nav navbar-nav">
-      <li class="disabled"><a href="">About</a></li>
-      <li><a href="">Variables</a></li>
-      <li><a href="">Steps</a></li>
-      <li><a href="">Pages</a></li>
-      <li><a href="">Map</a></li>
-      <li><a href="">Files</a></li>
-      <li><a href="">All Logic</a></li>
-      <li><a href="">All Text</a></li>
-      <li><a href="">Preview</a></li>
-      <li><a href="">Report</a></li>
-      <li><a href="">Publish</a></li>
-      <li><a href="">Templates</a></li>
-      <li class="active"><a href="">Interviews</a></li>
-    </nav>
-  </div>
-
+<div class="container-fluid">
+  {{#if templates.isPending}}
+    <span>loading...</span>
+  {{/else}}
+    <templates-list templates="{templates.value}"></templates-list>
+  {{/if}}
 </div>
+
+
+
 

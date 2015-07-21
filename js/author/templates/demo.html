@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>&lt;templates-tab&gt;</title>
+    <title>&lt;templates-page&gt;</title>
   </head>
 
   <body>
     <script type="text/stache" can-autorender>
       <can-import from="author/main.less!" />
-      <can-import from="author/components/templates_tab/" />
+      <can-import from="author/templates/" />
+      <can-import from="author/models/fixtures/" />
 
       <div class="bootstrap-styles">
-        <templates-tab></templates-tab>
+        <templates-page></templates-page>
       </div>
     </script>
 

@@ -1,0 +1,47 @@
+@import '../../../styles/a2j-custom/a2j-mixins';
+
+template-list-item {
+  display: block;
+  margin-bottom: 20px;
+
+  .build-order {
+    .text-center;
+    padding: 15px 0;
+    font-weight: 400;
+    font-size: @font-size-h3;
+  }
+
+  .template-details {
+    .border;
+
+    &:hover {
+      border-color: @gray;
+      background-color: #E5F2FE;
+    }
+
+    .title {
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    .description {
+      max-width: 600px;
+      .truncate;
+    }
+
+    .date-wrapper {
+      font-size: 90%;
+      text-align: right;
+    }
+
+    .last-modified {
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .delete {
+      color: #138FFE;
+    }
+  }
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;button-toolbar&gt;</title>
+  </head>
+
+  <body>
+    <script type="text/stache" can-autorender>
+      <can-import from="author/styles/" />
+      <can-import from="author/main.less!" />
+      <can-import from="author/button-toolbar/" />
+
+      <div class="bootstrap-styles" style="margin-top: 20px;">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <button-toolbar>
+              <button class="btn btn-default">Foo</button>
+              <button class="btn btn-default">Bar</button>
+              <button class="btn btn-default">Baz</button>
+              <button class="btn btn-default btn-divider">Qux</button>
+            </button-toolbar>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script src="../../node_modules/steal/steal.js"
+      data-main="can/view/autorender/">
+      window.less = {
+        async: true,
+        fileSync: true
+      };
+    </script>
+  </body>
+</html>

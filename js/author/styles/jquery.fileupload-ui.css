@@ -17,6 +17,7 @@
   */ /* CAJA */
   direction: ltr;
   cursor: pointer;
+  height: 100%;
 }
 .fileupload-buttonbar .btn,
 .fileupload-buttonbar .toggle {

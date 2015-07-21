@@ -25,6 +25,13 @@ let Interviews = Map.extend({
   }
 });
 
+/**
+ * @module {function} components/interviews/ <interviews-page>
+ * @parent api-components
+ * @signature `<interviews-page>`
+ *
+ * Displays a list of existing interviews.
+ */
 export default Component.extend({
   template,
   tag: 'interviews-page',

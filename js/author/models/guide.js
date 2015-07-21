@@ -3,7 +3,7 @@ import Model from 'can/model/';
 import 'can/map/define/';
 
 /**
- * @constructor Guide
+ * @module {function} Guide
  * @inherits can.Model
  * @parent api-models
  *

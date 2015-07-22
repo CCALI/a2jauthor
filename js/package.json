@@ -21,6 +21,7 @@
     "grunt-contrib-copy": "^0.8.0",
     "jquery": "^2.1.4",
     "jquery-ui": "git://github.com/jquery/jquery-ui.git#1.11.4",
+    "moment": "^2.10.3",
     "steal": "^0.10.5",
     "steal-mocha": "0.0.2",
     "steal-tools": "^0.11.0-pre.1",

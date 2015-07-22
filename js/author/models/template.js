@@ -1,6 +1,9 @@
+import moment from 'moment';
 import Model from 'can/model/';
 
 import 'can/map/define/';
+
+export const lastModifiedFormat = 'YYYY-M-D H:m:s';
 
 /**
  * @module {function} Template
@@ -17,5 +20,12 @@ import 'can/map/define/';
 export default Model.extend({
   findAll: 'GET /templates'
 }, {
-  define: {}
+  define: {
+    lastModifiedFromNow: {
+      get() {
+        let lastModified = moment(this.attr('lastModified'), lastModifiedFormat);
+        return lastModified.isValid() ? lastModified.fromNow() : '';
+      }
+    }
+  }
 });

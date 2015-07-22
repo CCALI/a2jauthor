@@ -1,6 +1,8 @@
 import assert from 'assert';
 import Guide from '../guide';
 
+import 'steal-mocha';
+
 describe('Guide Model', () => {
 
   it('retrieves a list of guides properly', () => {

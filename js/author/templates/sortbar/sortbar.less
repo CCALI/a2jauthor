@@ -1,0 +1,41 @@
+@import '../../styles/a2j-custom/a2j-mixins';
+
+templates-sortbar {
+  display: block;
+  margin-bottom: 15px;
+
+  .build-order {
+    .text-center;
+  }
+
+  .last-modified {
+    text-align: right;
+  }
+
+  // qualifying was needed to increase specificity
+  a.sort-flag {
+    color: @gray-light;
+
+    &:hover,
+    &:focus {
+      color: @gray-light;
+      text-decoration: none;
+    }
+  }
+
+  .arrow {
+    width: 0;
+    height: 0;
+    display: inline-block;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+
+    &.arrow-up {
+      border-bottom: 5px solid black;
+    }
+
+    &.arrow-down {
+      border-top: 5px solid black;
+    }
+  }
+}

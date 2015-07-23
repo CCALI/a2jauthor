@@ -4,6 +4,7 @@ import template from './templates.stache!';
 import Template from 'author/models/template';
 
 import './list/';
+import './sortbar/';
 import 'can/map/define/';
 import './templates.less!';
 
@@ -38,5 +39,17 @@ export default Component.extend({
   template,
   leakScope: false,
   viewModel: Templates,
-  tag: 'templates-page'
+  tag: 'templates-page',
+  events: {
+    '{viewModel} sortCriteria': function() {
+      let def = this.viewModel.attr('templates');
+
+      let sort = (templates) => {
+        let {key, direction} = this.viewModel.attr('sortCriteria').attr();
+        templates.sortBy(key, direction);
+      };
+
+      def.then(sort);
+    }
+  }
 });

@@ -2,6 +2,7 @@
   {{#if templates.isPending}}
     <span>loading...</span>
   {{/else}}
+    <templates-sortbar criteria="{sortCriteria}"></templates-sortbar>
     <templates-list templates="{templates.value}"></templates-list>
   {{/if}}
 </div>

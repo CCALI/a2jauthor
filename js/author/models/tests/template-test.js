@@ -20,4 +20,11 @@ describe('Template model', function() {
     assert.equal(fromNow, 'a day ago');
   });
 
+  it('list of templates is sorted by buildOrder asc', function() {
+    return Template.findAll().then(function(templates) {
+      let orderSeq = templates.attr().map(template => template.buildOrder);
+      assert.deepEqual(orderSeq, [1, 2, 3, 4]);
+    });
+  });
+
 });

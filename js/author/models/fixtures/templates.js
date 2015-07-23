@@ -28,5 +28,5 @@ export default can.fixture('GET /templates', function(req, res) {
     description: 'Ut cum cibo scriptorem. Te sit vivendum convenire interpretaris, sed eu cibo virtute scribentur. Dicunt commune comprehensam est ea, an nec error omittantur. His fabulas voluptaria appellantur te.'
   }];
 
-  res(templates);
+  res(templates.reverse());
 });

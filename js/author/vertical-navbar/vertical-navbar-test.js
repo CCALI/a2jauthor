@@ -4,7 +4,7 @@ import {VerticalNavbar} from './vertical-navbar';
 
 describe('<vertical-navbar>', function() {
 
-  describe('ViewModel', function() {
+  describe('viewModel', function() {
     var vm;
 
     beforeEach(function() {

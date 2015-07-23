@@ -34,10 +34,16 @@ html, body {
 }
 
 .authortool {
-	margin:0;
-	padding:20px;
+	margin: 0;
+	padding: 20px;
 	margin-left: 125px;
 	margin-top: 71px;
+}
+
+/* This is meant to neutralize the padding applied to the wrapper .authortool
+which prevents the button-toolbar to position correctly below the header. */
+.panel.has-toolbar {
+  margin: -20px;
 }
 
 #guidetitle  {

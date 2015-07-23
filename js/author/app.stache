@@ -270,14 +270,14 @@
         </div>
       </div>
 
-      <div class="panel" id="tabsGuides">
+      <div class="panel has-toolbar" id="tabsGuides">
         {{#is page "interviews"}}
           <interviews-toolbar></interviews-toolbar>
           <interviews-page></interviews-page>
         {{/is}}
       </div>
 
-      <div class="panel bootstrap-styles" id="tabsTemplate">
+      <div class="panel bootstrap-styles has-toolbar" id="tabsTemplate">
         <templates-page></templates-page>
       </div>
 
@@ -299,8 +299,6 @@
           </div>
         </div>
       </div>
-
-
 
       <div class="panel" id="tabsPreview">
         <h1>Previewer</h1> Show preview interview

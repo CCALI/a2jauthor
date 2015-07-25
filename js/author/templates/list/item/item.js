@@ -16,8 +16,8 @@ import 'can/map/define/';
  */
 export let Item = Map.extend({
   define: {
-    showDeleteLink: {
-      value: false
+    hovered: {
+      value: false,
     }
   }
 });
@@ -32,11 +32,11 @@ export default Component.extend({
   tag: 'templates-list-item',
   events: {
     '.template-details mouseenter': function() {
-      this.scope.attr('showDeleteLink', true);
+      this.scope.attr('hovered', true);
     },
 
     '.template-details mouseleave': function() {
-      this.scope.attr('showDeleteLink', false);
+      this.scope.attr('hovered', false);
     }
   }
 });

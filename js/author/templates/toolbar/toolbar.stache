@@ -1,0 +1,33 @@
+<div class="row clearfix">
+  <div class="col-md-3 list-filters">
+    <span>View:</span>
+
+    <a href="#"
+      can-click="{setFilter 'all'}"
+      class="{{#is filter 'all'}}active{{/is}}">All</a>
+
+    <a href="#"
+      can-click="{setFilter 'active'}"
+      class="{{#is filter 'active'}}active{{/is}}">Active</a>
+
+    <a href="#"
+      can-click="{setFilter 'deleted'}"
+      class="{{#is filter 'deleted'}}active{{/is}}">Deleted</a>
+  </div>
+
+  <div class="col-md-6 search-form">
+    <form class="form-inline">
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="search for a template...">
+          <div class="input-group-addon"><i class="glyphicon-search"></i></div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-md-3 toolbar-buttons">
+    <button class="btn btn-default">Test Compile</button>
+    <button class="btn btn-primary">+New Template</button>
+  </div>
+</div>

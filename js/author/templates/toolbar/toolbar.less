@@ -1,0 +1,43 @@
+@import '../../styles/bootstrap-overrides/variables';
+
+templates-toolbar {
+  display: block;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: @gray-lighter;
+
+  .list-filters {
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    a {
+      margin-left: 10px;
+      color: @gray-light;
+
+      &:hover {
+        color: @gray;
+      }
+    }
+
+    .active {
+      color: @link-active-color;
+
+      &:focus,
+      &:hover {
+        text-decoration: none;
+        color: @link-active-color;
+      }
+    }
+  }
+
+  .search-form {
+    border-left: 1px solid @gray-light;
+  }
+
+  .toolbar-buttons {
+    text-align: right;
+    button {
+      margin-right: 10px;
+    }
+  }
+}

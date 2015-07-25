@@ -9,8 +9,10 @@ import 'steal-mocha';
 describe('<templates-list-item>', function() {
 
   describe('Component', function() {
+    let template;
+
     beforeEach(function() {
-      let template = new Template({
+      template = new Template({
         active: true,
         buildOrder: 1,
         lastModified: '',
@@ -26,12 +28,25 @@ describe('<templates-list-item>', function() {
 
     afterEach(() => $('#test-area').empty());
 
-    it('shows/hides delete link on mouseenter/mouseleave', function() {
+    it('shows/hides delete link on hover for active templates', function() {
+      assert.isTrue(template.attr('active'), 'should be active');
+
       $('.template-details').mouseenter();
-      assert.isTrue($('.delete').is(':visible'));
+      assert.isTrue($('.delete').is(':visible'), 'should be visible');
 
       $('.template-details').mouseleave();
-      assert.isFalse($('.delete').is(':visible'));
+      assert.isFalse($('.delete').is(':visible'), 'should be hidden');
+    });
+
+    it('shows/hides restore link on hover for deleted templates', function() {
+      template.attr('active', false);
+      assert.isFalse(template.attr('active'), 'should be deleted');
+
+      $('.template-details').mouseenter();
+      assert.isTrue($('.restore').is(':visible'), 'should be visible');
+
+      $('.template-details').mouseleave();
+      assert.isFalse($('.restore').is(':visible'), 'should be hidden');
     });
   });
 

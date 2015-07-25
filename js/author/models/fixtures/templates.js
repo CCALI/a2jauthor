@@ -26,6 +26,24 @@ export default can.fixture('GET /templates', function(req, res) {
     lastModified: '2015-04-22 11:16:36',
     title: 'Appendix 1',
     description: 'Ut cum cibo scriptorem. Te sit vivendum convenire interpretaris, sed eu cibo virtute scribentur. Dicunt commune comprehensam est ea, an nec error omittantur. His fabulas voluptaria appellantur te.'
+  }, {
+    active: false,
+    buildOrder: 1,
+    lastModified: '2015-03-22 11:16:36',
+    title: 'Letters of horning',
+    description: 'No eam scripta delectus definiebas, mel dolor euripidis omittantur ne, nostrum pertinax contentiones pro ne. In qui impetus nominati, eam tota discere epicurei no, cu eum omnis euripidis conclusionemque. Te quo possim feugiat, ex nam amet consul adversarium.'
+  }, {
+    active: false,
+    buildOrder: 3,
+    lastModified: '2015-03-22 11:16:36',
+    title: 'Appendix 1.1',
+    description: 'Te sit vivendum convenire interpretaris, sed eu cibo virtute scribentur. Dicunt commune comprehensam est ea, an nec error omittantur. His fabulas voluptaria appellantur te.'
+  }, {
+    active: false,
+    buildOrder: 3,
+    lastModified: '2015-03-22 11:16:36',
+    title: 'Table of authorities',
+    description: 'Habeo tincidunt reprimique vix ut. No eum eruditi nostrum disputationi. Clita virtute scriptorem an vix, eu cum veniam utroque gubergren. Velit disputando ei ius, putent sanctus intellegebat ut qui. Novum exerci constituto ei vel, ne munere tractatos vix.'
   }];
 
   res(templates.reverse());

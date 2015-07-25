@@ -1,9 +1,13 @@
+{{#if displayList.isResolved}}
+  <templates-toolbar filter="{activeFilter}"></templates-toolbar>
+{{/if}}
+
 <div class="container">
-  {{#if templates.isPending}}
+  {{#if displayList.isPending}}
     <span>loading...</span>
   {{/else}}
     <templates-sortbar criteria="{sortCriteria}"></templates-sortbar>
-    <templates-list templates="{templates.value}"></templates-list>
+    <templates-list templates="{displayList.value}"></templates-list>
   {{/if}}
 </div>
 

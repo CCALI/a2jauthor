@@ -5,6 +5,7 @@ import Template from 'author/models/template';
 
 import './list/';
 import './sortbar/';
+import './toolbar/';
 import 'can/map/define/';
 import './templates.less!';
 
@@ -23,11 +24,59 @@ import './templates.less!';
  */
 export let Templates = Map.extend({
   define: {
+    activeFilter: {
+      value: 'active'
+    },
+
+    sortCriteria: {
+      value: {
+        key: 'buildOrder',
+        direction: 'asc'
+      }
+    },
+
     templates: {
       get() {
         return Template.findAll();
       }
+    },
+
+    displayList: {
+      get: function() {
+        let def = this.attr('templates');
+        let filter = this.attr('activeFilter');
+        let criteria = this.attr('sortCriteria');
+
+        return def.then(templates => this.filterList(templates, filter))
+          .then(templates => this.sortList(templates, criteria));
+      }
     }
+  },
+
+  sortList(templates, criteria) {
+    let {key, direction} = criteria.attr();
+    templates.sortBy(key, direction);
+    return templates;
+  },
+
+  filterList(templates, filter) {
+    let filtered;
+
+    switch (filter) {
+      case 'all':
+        filtered = templates.slice();
+        break;
+
+      case 'active':
+        filtered = templates.filter(template => template.attr('active'));
+        break;
+
+      case 'deleted':
+        filtered = templates.filter(template => !template.attr('active'));
+        break;
+    }
+
+    return filtered;
   }
 });
 
@@ -39,17 +88,5 @@ export default Component.extend({
   template,
   leakScope: false,
   viewModel: Templates,
-  tag: 'templates-page',
-  events: {
-    '{viewModel} sortCriteria': function() {
-      let def = this.viewModel.attr('templates');
-
-      let sort = (templates) => {
-        let {key, direction} = this.viewModel.attr('sortCriteria').attr();
-        templates.sortBy(key, direction);
-      };
-
-      def.then(sort);
-    }
-  }
+  tag: 'templates-page'
 });

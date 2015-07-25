@@ -19,6 +19,11 @@ templates-list-item {
       background-color: #E5F2FE;
     }
 
+    &.deleted {
+      border-color: @gray;
+      background-color: #d4d4d4;
+    }
+
     .title {
       font-weight: 500;
       margin-bottom: 5px;
@@ -40,8 +45,9 @@ templates-list-item {
       margin-bottom: 10px;
     }
 
-    .delete {
-      color: #138FFE;
+    .delete,
+    .restore {
+      color: @link-active-color;
     }
   }
 }

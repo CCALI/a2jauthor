@@ -61,6 +61,14 @@ Template.List = Template.List.extend({
         this.attr('comparator', comparator.moment(key, direction));
         break;
     }
+  },
+
+  search(token) {
+    return this.filter(function(template) {
+      token = token.toLowerCase();
+      let title = template.attr('title').toLowerCase();
+      return title.indexOf(token) !== -1;
+    });
   }
 });
 

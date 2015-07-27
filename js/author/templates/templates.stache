@@ -1,5 +1,5 @@
 {{#if displayList.isResolved}}
-  <templates-toolbar filter="{activeFilter}"></templates-toolbar>
+  <templates-toolbar filter="{activeFilter}" search-token="{searchToken}"></templates-toolbar>
 {{/if}}
 
 <div class="container">

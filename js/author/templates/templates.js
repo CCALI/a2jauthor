@@ -35,6 +35,11 @@ export let Templates = Map.extend({
       }
     },
 
+    searchToken: {
+      type: 'string',
+      value: ''
+    },
+
     templates: {
       get() {
         return Template.findAll();
@@ -43,12 +48,15 @@ export let Templates = Map.extend({
 
     displayList: {
       get: function() {
-        let def = this.attr('templates');
+        let promise = this.attr('templates');
         let filter = this.attr('activeFilter');
         let criteria = this.attr('sortCriteria');
+        let searchToken = this.attr('searchToken');
 
-        return def.then(templates => this.filterList(templates, filter))
-          .then(templates => this.sortList(templates, criteria));
+        return promise
+          .then(templates => this.filterList(templates, filter))
+          .then(templates => this.sortList(templates, criteria))
+          .then(templates => this.performSearch(templates, searchToken));
       }
     }
   },
@@ -77,6 +85,10 @@ export let Templates = Map.extend({
     }
 
     return filtered;
+  },
+
+  performSearch(templates, searchToken) {
+    return searchToken ? templates.search(searchToken) : templates;
   }
 });
 

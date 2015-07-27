@@ -17,11 +17,18 @@
 
   <div class="col-md-6 search-form">
     <form class="form-inline">
-      <div class="form-group">
+      <div class="form-group {{#if showClearButton}}has-feedback{{/if}}">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="search for a template...">
+          <label class="control-label sr-only">Search input</label>
+          <input type="text"
+            value="{{searchToken}}"
+            class="form-control search-input"
+            placeholder="search for a template...">
           <div class="input-group-addon"><i class="glyphicon-search"></i></div>
         </div>
+        {{#if showClearButton}}
+          <span (click)="clearSearchToken" class="glyphicon glyphicon-cancel-circled form-control-feedback form-control-clear" aria-hidden="true"></span>
+        {{/if}}
       </div>
     </form>
   </div>

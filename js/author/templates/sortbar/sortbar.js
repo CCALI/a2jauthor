@@ -9,10 +9,7 @@ import 'can/map/define/';
 export let Sortbar = Map.extend({
   define: {
     criteria: {
-      value: {
-        key: 'buildOrder',
-        direction: 'asc'
-      }
+      value: {}
     }
   },
 

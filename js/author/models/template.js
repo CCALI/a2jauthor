@@ -1,17 +1,13 @@
 import moment from 'moment';
 import Model from 'can/model/';
-import comparator from 'author/utils/sort-comparator';
+import comparator from './template-comparator';
 
 import 'can/map/define/';
 
 export const lastModifiedFormat = 'YYYY-M-D H:m:s';
 
 let Template = Model.extend({
-  findAll: 'GET /templates',
-
-  parseModels(data) {
-    return data.sort((a, b) => a.buildOrder - b.buildOrder);
-  }
+  findAll: 'GET /templates'
 }, {
   define: {
     lastModified: {
@@ -30,7 +26,28 @@ let Template = Model.extend({
 });
 
 Template.List = Template.List.extend({
-  sortBy: function(key, direction='asc') {
+  active() {
+    return this.filter(template => template.attr('active'));
+  },
+
+  deleted() {
+    return this.filter(template => !template.attr('active'));
+  },
+
+  // overriding filter due to a bug in the base implementation
+  filter(predicate) {
+    let filtered = new this.constructor();
+
+    this.each((item, index) => {
+      if (predicate.call(this, item, index, this)) {
+        filtered.push(item);
+      }
+    });
+
+    return filtered;
+  },
+
+  sortBy(key, direction = 'asc') {
     switch (key) {
       case 'buildOrder':
         this.attr('comparator', comparator.number(key, direction));

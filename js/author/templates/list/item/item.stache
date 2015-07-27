@@ -2,8 +2,8 @@
   <div class="row clearfix">
     <div class="col-md-1 build-order">{{buildOrder}}</div>
 
-    <div class="col-md-11 template-details">
-      <div class="row">
+    <div class="col-md-11 template-details {{#unless active}}deleted{{/unless}}">
+      <div class="row clearfix">
         <div class="col-md-9">
           <h4 class="title">{{title}}</h4>
           <p class="description">{{description}}</p>
@@ -11,8 +11,12 @@
 
         <div class="col-md-3 date-wrapper">
           <span class="last-modified">{{lastModifiedFromNow}}</span>
-          {{#if showDeleteLink}}
-            <a class="delete" href="#">Delete</a>
+          {{#if hovered}}
+            {{#if active}}
+              <a class="delete" href="#">Delete</a>
+            {{else}}
+              <a class="restore" href="#">Restore</a>
+            {{/if}}
           {{/if}}
         </div>
       </div>

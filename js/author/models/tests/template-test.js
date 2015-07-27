@@ -20,4 +20,18 @@ describe('Template model', function() {
     assert.equal(fromNow, 'a day ago');
   });
 
+  it('search - filters list that matches title', function() {
+    let result;
+    let templates = new Template.List([{title: 'foo'}, {title: 'bar o'}]);
+
+    result = templates.search('baz');
+    assert.equal(result.attr('length'), 0, 'no templates with baz title');
+
+    result = templates.search('foo');
+    assert.equal(result.attr('length'), 1, 'there is one match');
+
+    result = templates.search('o');
+    assert.equal(result.attr('length'), 2, 'there are two matches');
+  });
+
 });

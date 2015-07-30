@@ -1,8 +1,32 @@
+@import '../../styles/a2j-custom/a2j-mixins';
+
 templates-list {
   display: block;
 
   ul {
     padding: 0;
     list-style: none;
+  }
+
+  &.active-templates {
+    templates-list-item > div {
+      opacity: 1;
+      .transition(all, linear, 1s);
+
+      &.deleting {
+        opacity: 0;
+      }
+    }
+  }
+
+  &.deleted-templates {
+    templates-list-item > div {
+      opacity: 1;
+      .transition(all, linear, 1s);
+
+      &.restoring {
+        opacity: 0;
+      }
+    }
   }
 }

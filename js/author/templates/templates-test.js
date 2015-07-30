@@ -1,3 +1,4 @@
+import F from 'funcunit';
 import assert from 'assert';
 import {Templates} from './templates';
 
@@ -22,22 +23,40 @@ describe('<templates-page>', function() {
         direction: 'asc'
       });
     });
+  });
 
-    it('displayList - should contain only active templates by default', function() {
-      return vm.attr('displayList').then(function(templates) {
+  describe('Component', function() {
+    beforeEach(function() {
+      let frag = can.view.stache(
+        '<templates-page></templates-page>'
+      );
+      $('#test-area').html(frag());
+    });
+
+    afterEach(() => $('#test-area').empty());
+
+    it('renders a list of active templates by default', function(done) {
+      F('templates-list-item').size(size => size > 0);
+
+      F(function() {
+        let templates = $('templates-page').viewModel().attr('displayList');
         let deleted = templates.filter(template => !template.attr('active'));
         assert.equal(deleted.attr('length'), 0, 'should not have deleted templates');
       });
+
+      F(done);
     });
 
-    it('displayList - should be sorted by buildOrder asc by default', function() {
-      return vm.attr('displayList').then(function(templates) {
-        let buildOrder = templates
-          .filter(template => template.attr('active')).attr()
-          .map(template => template.buildOrder);
+    it('rendered list is sorted by buildOrder asc by default', function(done) {
+      F('templates-list-item').size(size => size > 0);
 
-        assert.deepEqual(buildOrder, [1, 2, 3, 4]);
+      F(function() {
+        let templates = $('templates-page').viewModel().attr('displayList');
+        let buildOrder = templates.attr().map(template => template.buildOrder);
+        assert.deepEqual(buildOrder, [1, 2, 3, 4], 'should be sorted asc');
       });
+
+      F(done);
     });
   });
 

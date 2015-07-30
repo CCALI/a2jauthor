@@ -1,5 +1,6 @@
 {{#with template}}
-  <div class="row clearfix">
+  <div class="row clearfix{{#if deleting}} deleting{{/if}}{{#if restoring}} restoring{{/if}}">
+
     <div class="col-md-1 build-order">{{buildOrder}}</div>
 
     <div class="col-md-11 template-details {{#unless active}}deleted{{/unless}}">
@@ -13,9 +14,9 @@
           <span class="last-modified">{{lastModifiedFromNow}}</span>
           {{#if hovered}}
             {{#if active}}
-              <a class="delete" href="#">Delete</a>
+              <a class="delete" (click)="deleteTemplate" href="#">Delete</a>
             {{else}}
-              <a class="restore" href="#">Restore</a>
+              <a class="restore" (click)="restoreTemplate" href="#">Restore</a>
             {{/if}}
           {{/if}}
         </div>

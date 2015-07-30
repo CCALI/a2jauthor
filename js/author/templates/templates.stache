@@ -1,16 +1,28 @@
-{{#if displayList.isResolved}}
+{{#if templatesPromise.isResolved}}
   <templates-toolbar filter="{activeFilter}" search-token="{searchToken}"></templates-toolbar>
+
+  <app-alert state="{deletedAlertState}" transition-time="{alertTransitionTime}">
+    {{#each deletedTemplates}}
+      <div>
+        {{title}} - has been deleted - <a href="#" (click)="{restoreTemplate .}">Restore</a>
+      </div>
+    {{/each}}
+  </app-alert>
+
+  <app-alert state="{restoredAlertState}" transition-time="{alertTransitionTime}">
+    {{#each restoredTemplates}}
+      <div>
+        {{title}} - has been restored - <a href="#" (click)="{deleteTemplate .}">Delete</a>
+      </div>
+    {{/each}}
+  </app-alert>
 {{/if}}
 
 <div class="container">
-  {{#if displayList.isPending}}
+  {{#if templatesPromise.isPending}}
     <span>loading...</span>
   {{/else}}
     <templates-sortbar criteria="{sortCriteria}"></templates-sortbar>
-    <templates-list templates="{displayList.value}"></templates-list>
+    <templates-list class="{{listStateClassName}}" templates="{displayList}"></templates-list>
   {{/if}}
 </div>
-
-
-
-

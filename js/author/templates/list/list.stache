@@ -1,6 +1,6 @@
 <ul>
   {{#each templates}}
-    <li>
+    <li {{#if isDraggable}}draggable="true"{{/if}} data-index="{{@index}}">
       <templates-list-item template="{.}"></templates-list-item>
     </li>
   {{/each}}

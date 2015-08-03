@@ -11,7 +11,7 @@ templates-list {
   &.active-templates {
     templates-list-item > div {
       opacity: 1;
-      .transition(all, linear, 1s);
+      .transition(opacity, linear, 1s);
 
       &.deleting {
         opacity: 0;
@@ -22,11 +22,22 @@ templates-list {
   &.deleted-templates {
     templates-list-item > div {
       opacity: 1;
-      .transition(all, linear, 1s);
+      .transition(opacity, linear, 1s);
 
       &.restoring {
         opacity: 0;
       }
+    }
+  }
+
+  .drag-placeholder {
+    .template-details {
+      border: 1px dashed @gray-light;
+      background-color: @gray-lighter;
+    }
+
+    .template-details > .row {
+      visibility: hidden;
     }
   }
 }

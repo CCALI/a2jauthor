@@ -94,27 +94,15 @@ export let Templates = Map.extend({
     },
 
     /**
-     * @property {Template.List} TemplatesPageViewModel.prototype.define.displayList displayList
+     * @property {Boolean} TemplatesPageViewModel.prototype.define.listIsDraggable listIsDraggable
      *
-     * The list of templates to be rendered, this async getter takes care of processing
-     * the list containing all templates to make sure it's properly sorted/filtered and
-     * that it matches the search string typed by the user.
+     * Whether the templates list can be sorted using drag & drop. Since drag & drop
+     * only makes sense to define the `buildOrder`, the items can't be dragged if the
+     * plates are sorted by any other criteria.
      */
-    displayList: {
-      get(lastVal, setVal) {
-        let deferred = can.Deferred();
-        let templates = this.attr('templates');
-        let filter = this.attr('activeFilter');
-        let criteria = this.attr('sortCriteria');
-        let searchToken = this.attr('searchToken');
-
-        deferred
-          .then(templates => this.filterList(templates, filter))
-          .then(templates => this.sortList(templates, criteria))
-          .then(templates => this.performSearch(templates, searchToken))
-          .then(setVal);
-
-        deferred.resolve(templates);
+    listIsDraggable: {
+      get() {
+        return this.attr('sortCriteria.key') === 'buildOrder';
       }
     }
   },
@@ -123,25 +111,28 @@ export let Templates = Map.extend({
    * @function TemplatesPageViewModel.prototype.init init
    *
    * Function executed when the viewmodel is instantiated, it takes care of
-   * fetching the templates and setting `templatesPromise` and `templates` when
-   * it's done.
+   * fetching the templates and setting `templatesPromise`, `templates` and
+   * `displayList` when it's done.
    */
   init() {
     let promise = Template.findAll().then(templates => {
       this.attr('templates', templates);
+      this.attr('displayList', this.makeDisplayList());
     });
 
     this.attr('templatesPromise', promise);
   },
 
-  sortList(templates, criteria) {
+  sortList(templates) {
+    let criteria = this.attr('sortCriteria');
     let {key, direction} = criteria.attr();
     templates.sortBy(key, direction);
     return templates;
   },
 
-  filterList(templates, filter) {
+  filterList(templates) {
     let filtered;
+    let filter = this.attr('activeFilter');
 
     switch (filter) {
       case 'all':
@@ -160,8 +151,19 @@ export let Templates = Map.extend({
     return filtered;
   },
 
-  performSearch(templates, searchToken) {
+  performSearch(templates) {
+    let searchToken = this.attr('searchToken');
     return searchToken ? templates.search(searchToken) : templates;
+  },
+
+  makeDisplayList() {
+    let templates = this.attr('templates');
+
+    return this.performSearch(
+      this.sortList(
+        this.filterList(templates)
+      )
+    );
   },
 
   restoreTemplate(template) {
@@ -262,6 +264,22 @@ export default Component.extend({
     '{templates} change': function() {
       this.viewModel.handleDeletedTemplates();
       this.viewModel.handleRestoredTemplates();
+    },
+
+    '{viewModel} activeFilter': function() {
+      let list = this.viewModel.makeDisplayList();
+      this.viewModel.attr('displayList', list);
+    },
+
+    '{viewModel} sortCriteria': function() {
+      let list = this.viewModel.attr('displayList');
+      this.viewModel.sortList(list);
+    },
+
+    '{viewModel} searchToken': function() {
+      let list = this.viewModel.makeDisplayList();
+      let result = this.viewModel.performSearch(list);
+      this.viewModel.attr('displayList', result);
     }
   }
 });

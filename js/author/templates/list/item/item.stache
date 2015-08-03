@@ -1,11 +1,13 @@
 {{#with template}}
-  <div class="row clearfix{{#if deleting}} deleting{{/if}}{{#if restoring}} restoring{{/if}}">
+  <div class="row clearfix template-wrapper{{#if deleting}} deleting{{/if}}{{#if restoring}} restoring{{/if}}">
 
     <div class="col-md-1 build-order">
       {{buildOrder}}<br>
 
       {{#if hovered}}
-        <i class="glyphicon glyphicon-list-bullet"></i>
+        {{#if isDraggable}}
+          <i class="glyphicon glyphicon-list-bullet"></i>
+        {{/if}}
       {{/if}}
     </div>
 

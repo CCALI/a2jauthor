@@ -114,12 +114,12 @@ export default Component.extend({
   viewModel: Item,
   tag: 'templates-list-item',
   events: {
-    '.template-details mouseenter': function() {
-      this.scope.attr('hovered', true);
+    '.template-wrapper mouseenter': function() {
+      this.viewModel.attr('hovered', true);
     },
 
-    '.template-details mouseleave': function() {
-      this.scope.attr('hovered', false);
+    '.template-wrapper mouseleave': function() {
+      this.viewModel.attr('hovered', false);
     }
   }
 });

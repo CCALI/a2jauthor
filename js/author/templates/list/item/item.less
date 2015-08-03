@@ -15,13 +15,17 @@ templates-list-item {
     }
   }
 
+  .template-wrapper {
+    &:hover {
+      .template-details {
+        border-color: @gray;
+        background-color: #E5F2FE;
+      }
+    }
+  }
+
   .template-details {
     .border;
-
-    &:hover {
-      border-color: @gray;
-      background-color: #E5F2FE;
-    }
 
     &.deleted {
       border-color: @gray;

@@ -23,6 +23,10 @@
     <span>loading...</span>
   {{/else}}
     <templates-sortbar criteria="{sortCriteria}"></templates-sortbar>
-    <templates-list class="{{listStateClassName}}" templates="{displayList}"></templates-list>
+    <templates-list
+      templates="{displayList}"
+      class="{{listStateClassName}}"
+      is-draggable="{listIsDraggable}">
+    </templates-list>
   {{/if}}
 </div>

@@ -6,18 +6,26 @@ templates-list-item {
 
   .build-order {
     .text-center;
-    padding: 15px 0;
+    padding: 5px 0;
     font-weight: 400;
-    font-size: @font-size-h3;
+    font-size: @font-size-h4;
+
+    .glyphicon-list-bullet {
+      font-size: 60%;
+    }
+  }
+
+  .template-wrapper {
+    &:hover {
+      .template-details {
+        border-color: @gray;
+        background-color: #E5F2FE;
+      }
+    }
   }
 
   .template-details {
     .border;
-
-    &:hover {
-      border-color: @gray;
-      background-color: #E5F2FE;
-    }
 
     &.deleted {
       border-color: @gray;

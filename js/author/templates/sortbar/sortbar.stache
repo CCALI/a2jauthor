@@ -1,6 +1,6 @@
 <div class="row clearfix">
   <div class="col-md-1 build-order">
-    <a class="sort-flag" can-click="{setSortCriteria 'buildOrder'}" href="#">Order</a>
+    <a class="sort-flag" (click)="{setSortCriteria 'buildOrder'}" href="#">#</a>
     {{#with criteria}}
       {{#is key 'buildOrder'}}
         <div class="arrow {{#is direction 'asc'}}arrow-down{{else}}arrow-up{{/is}}"></div>
@@ -9,7 +9,7 @@
   </div>
 
   <div class="col-md-8">
-    <a class="sort-flag" can-click="{setSortCriteria 'title'}" href="#">Title</a>
+    <a class="sort-flag" (click)="{setSortCriteria 'title'}" href="#">Title</a>
     {{#with criteria}}
       {{#is key 'title'}}
         <div class="arrow {{#is direction 'asc'}}arrow-down{{else}}arrow-up{{/is}}"></div>
@@ -18,7 +18,7 @@
   </div>
 
   <div class="col-md-3 last-modified">
-    <a class="sort-flag" can-click="{setSortCriteria 'lastModified'}" href="#">Date Modified</a>
+    <a class="sort-flag" (click)="{setSortCriteria 'lastModified'}" href="#">Date Modified</a>
     {{#with criteria}}
       {{#is key 'lastModified'}}
         <div class="arrow {{#is direction 'asc'}}arrow-down{{else}}arrow-up{{/is}}"></div>

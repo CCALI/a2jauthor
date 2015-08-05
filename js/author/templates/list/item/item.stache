@@ -1,34 +1,38 @@
 {{#with template}}
-  <div class="row clearfix template-wrapper{{#if deleting}} deleting{{/if}}{{#if restoring}} restoring{{/if}}">
-
-    <div class="col-md-1 build-order">
-      {{buildOrder}}<br>
-
-      {{#if hovered}}
-        {{#if isDraggable}}
-          <i class="glyphicon glyphicon-list-bullet"></i>
-        {{/if}}
-      {{/if}}
-    </div>
-
-    <div class="col-md-11 template-details {{#unless active}}deleted{{/unless}}">
+  <div class="template-wrapper{{#if deleting}} deleting{{/if}}{{#if restoring}} restoring{{/if}}">
+    <a class="template-link" can-href="{page='templates' id=id}">
       <div class="row clearfix">
-        <div class="col-md-9">
-          <h4 class="title">{{title}}</h4>
-          <p class="description">{{description}}</p>
-        </div>
 
-        <div class="col-md-3 date-wrapper">
-          <span class="last-modified">{{lastModifiedFromNow}}</span>
+        <div class="col-md-1 build-order">
+          {{buildOrder}}<br>
+
           {{#if hovered}}
-            {{#if active}}
-              <a class="delete" (click)="deleteTemplate" href="#">Delete</a>
-            {{else}}
-              <a class="restore" (click)="restoreTemplate" href="#">Restore</a>
+            {{#if isDraggable}}
+              <i class="glyphicon glyphicon-list-bullet"></i>
             {{/if}}
           {{/if}}
         </div>
+
+        <div class="col-md-11 template-details {{#unless active}}deleted{{/unless}}">
+          <div class="row clearfix">
+            <div class="col-md-9">
+              <h4 class="title">{{title}}</h4>
+              <p class="description">{{description}}</p>
+            </div>
+
+            <div class="col-md-3 date-wrapper">
+              <span class="last-modified">{{lastModifiedFromNow}}</span>
+              {{#if hovered}}
+                {{#if active}}
+                  <a class="delete" (click)="deleteTemplate" href="#">Delete</a>
+                {{else}}
+                  <a class="restore" (click)="restoreTemplate" href="#">Restore</a>
+                {{/if}}
+              {{/if}}
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </a>
   </div>
 {{/with}}

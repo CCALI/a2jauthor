@@ -278,7 +278,13 @@
       </div>
 
       <div class="panel bootstrap-styles has-toolbar" id="tabsTemplate">
-        <templates-page></templates-page>
+        {{#is page "templates"}}
+          {{#if id}}
+            <template-edit-page></template-edit-page>
+          {{else}}
+            <templates-page template-id="{templateId}"></templates-page>
+          {{/if}}
+        {{/is}}
       </div>
 
       <div class="panel" id="tabsReport">

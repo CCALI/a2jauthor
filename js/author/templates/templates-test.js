@@ -2,6 +2,7 @@ import F from 'funcunit';
 import assert from 'assert';
 import {Templates} from './templates';
 
+import 'can/route/';
 import 'steal-mocha';
 
 describe('<templates-page>', function() {

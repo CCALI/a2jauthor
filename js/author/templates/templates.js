@@ -4,8 +4,8 @@ import template from './templates.stache!';
 import Template from 'author/models/template';
 
 import './list/';
-import './sortbar/';
-import './toolbar/';
+import './list/sortbar/';
+import './list/toolbar/';
 import 'author/alert/';
 import 'can/map/define/';
 import './templates.less!';

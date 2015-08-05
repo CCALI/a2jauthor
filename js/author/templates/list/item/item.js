@@ -3,6 +3,7 @@ import template from './item.stache!';
 import Map from 'can/map/';
 
 import './item.less!';
+import 'can/view/href/';
 import 'can/map/define/';
 
 /**

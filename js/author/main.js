@@ -11,6 +11,7 @@ import './header/';
 import './footer/';
 import './templates/';
 import './interviews/';
+import './templates/edit/';
 import './vertical-navbar/';
 import './interviews/toolbar/';
 
@@ -18,6 +19,7 @@ let appState = new AppState();
 
 can.route.map(appState);
 can.route(':page', {page: 'interviews'});
+can.route(':page/:id');
 can.route.ready();
 
 $('body').on('click', 'a[href="#"]', ev => ev.preventDefault());

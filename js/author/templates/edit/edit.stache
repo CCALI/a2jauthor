@@ -1,0 +1,17 @@
+{{#if template.isPending}}
+  <span>loading...</span>
+{{else}}
+  <template-edit-toolbar></template-edit-toolbar>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div>template elements list...</div>
+      </div>
+
+      <div class="col-md-4">
+        <div>template options tabs...</div>
+      </div>
+    </div>
+  </div>
+{{/if}}

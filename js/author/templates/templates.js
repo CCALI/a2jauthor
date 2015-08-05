@@ -183,6 +183,23 @@ export let Templates = Map.extend({
   },
 
   /**
+   * @function TemplatesPageViewModel.prototype.updateDisplayList updateDisplayList
+   *
+   * This function is meant to update the list when templates are removed or
+   * restored, it generates the `displayList` again and compares it to the list
+   * currently being display, the bound list is updated if there is a difference
+   * between them (length).
+   */
+  updateDisplayList() {
+    let displayList = this.makeDisplayList();
+    let currentDisplayList = this.attr('displayList');
+
+    if (displayList.attr('length') !== currentDisplayList.attr('length')) {
+      this.attr('displayList', displayList);
+    }
+  },
+
+  /**
    * @function TemplatesPageViewModel.prototype.handleDeletedTemplates handleDeletedTemplates
    *
    * This function is executed when the list of templates changes, it observes the
@@ -262,8 +279,11 @@ export default Component.extend({
 
   events: {
     '{templates} change': function() {
-      this.viewModel.handleDeletedTemplates();
-      this.viewModel.handleRestoredTemplates();
+      let vm = this.viewModel;
+
+      vm.updateDisplayList();
+      vm.handleDeletedTemplates();
+      vm.handleRestoredTemplates();
     },
 
     '{viewModel} activeFilter': function() {

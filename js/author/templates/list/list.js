@@ -25,6 +25,11 @@ export let List = Map.extend({
   define: {
     isDraggable: {
       value: true
+    },
+
+    itemTransitionTime: {
+      type: 'number',
+      value: 1000
     }
   },
 

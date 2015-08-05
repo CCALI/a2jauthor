@@ -5,11 +5,6 @@ import template from './alert.stache!';
 import './alert.less!';
 import 'can/map/define/';
 
-const alertStates = {
-  opened: 'opened',
-  closed: 'closed'
-};
-
 const alertTypeClasses = {
   info: 'alert-info',
   danger: 'alert-danger',
@@ -69,23 +64,23 @@ export let Alert = Map.extend({
     },
 
     /**
-     * @property {String} AlertViewModel.prototype.define.state state
+     * @property {Boolean} AlertViewModel.prototype.define.open open
      *
-     * It holds the current state of the alert, which can be either `opened` or
-     * `closed`. Setting it will cause the alert to slide down or up based on its
-     * previous value, also, when set to `opened` it will automatically change itself
-     * to `closed` after the time specified by `transitionTime`.
+     * Whether the alert is opened or closed. Setting it will cause the alert
+     * to slide down or up based on its previous value, also, when set to `true`
+     * a timeout will be created to set its value back to `false` which closes
+     * the alert.
      */
-    state: {
-      type: 'string',
+    open: {
+      type: 'boolean',
       set(newVal) {
-        if (newVal === alertStates.opened) {
+        if (newVal) {
           let delay = this.attr('transitionTime');
 
           this.clearTransition();
 
           let timeoutId = setTimeout(() => {
-            this.attr('state', alertStates.closed);
+            this.attr('open', false);
           }, delay);
 
           this.attr('transitionId', timeoutId);
@@ -105,7 +100,7 @@ export let Alert = Map.extend({
    */
   closeAlert() {
     this.clearTransition();
-    this.attr('state', alertStates.closed);
+    this.attr('open', false);
   },
 
   clearTransition() {
@@ -126,11 +121,11 @@ export default Component.extend({
   viewModel: Alert,
 
   events: {
-    '{viewModel} state': function() {
-      let state = this.viewModel.attr('state');
+    '{viewModel} open': function() {
+      let open = this.viewModel.attr('open');
       let $wrapper = this.element.find('.alert-wrapper');
 
-      if (state === alertStates.opened) {
+      if (open) {
         $wrapper.slideDown();
       } else {
         $wrapper.slideUp();

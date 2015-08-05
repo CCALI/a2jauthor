@@ -1,7 +1,7 @@
 {{#if templatesPromise.isResolved}}
   <templates-toolbar filter="{activeFilter}" search-token="{searchToken}"></templates-toolbar>
 
-  <app-alert state="{deletedAlertState}" transition-time="{alertTransitionTime}">
+  <app-alert open="{openDeletedAlert}" transition-time="{alertTransitionTime}">
     {{#each deletedTemplates}}
       <div>
         {{title}} - has been deleted - <a href="#" (click)="{restoreTemplate .}">Restore</a>
@@ -9,7 +9,7 @@
     {{/each}}
   </app-alert>
 
-  <app-alert state="{restoredAlertState}" transition-time="{alertTransitionTime}">
+  <app-alert open="{openRestoredAlert}" transition-time="{alertTransitionTime}">
     {{#each restoredTemplates}}
       <div>
         {{title}} - has been restored - <a href="#" (click)="{deleteTemplate .}">Delete</a>

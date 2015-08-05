@@ -59,27 +59,27 @@ export let Templates = Map.extend({
     },
 
     /**
-     * @property {Boolen} TemplatesPageViewModel.prototype.define.deletedAlertState deletedAlertState
+     * @property {Boolen} TemplatesPageViewModel.prototype.define.openDeletedAlert openDeletedAlert
      *
-     * Each time a template is deleted, a small alert should be displayed to indicate
-     * the user that the template is actually being deleted and it also allows the user
-     * to restore it back, this property controls whether the alert is `opened` (visible)
-     * or `closed`.
+     * Each time a template is deleted, a small alert should be displayed to
+     * indicate the user that the template is actually being deleted and it
+     * also allows the user to restore it back, this property controls whether
+     * the alert is visible or not.
      */
-    deletedAlertState: {
-      type: 'string',
-      value: 'closed'
+    openDeletedAlert: {
+      type: 'boolean',
+      value: false
     },
 
     /**
-     * @property {Boolean} TemplatesPageViewModel.prototype.define.restoredAlertState restoredAlertState
+     * @property {Boolean} TemplatesPageViewModel.prototype.define.openRestoredAlert openRestoredAlert
      *
-     * Same as `deletedAlertState` but this one controls the alert shown for templates
-     * that are being restored.
+     * Same as `openDeletedAlert` but this one controls the alert shown for
+     * templates that are being restored.
      */
-    restoredAlertState: {
-      type: 'string',
-      value: 'closed'
+    openRestoredAlert: {
+      type: 'boolean',
+      value: false
     },
 
     /**
@@ -171,7 +171,7 @@ export let Templates = Map.extend({
       deleted: false,
       active: true
     });
-    this.attr('deletedAlertState', 'closed');
+    this.attr('openDeletedAlert', false);
   },
 
   deleteTemplate(template) {
@@ -179,7 +179,7 @@ export let Templates = Map.extend({
       restored: false,
       active: false
     });
-    this.attr('restoredAlertState', 'closed');
+    this.attr('openRestoredAlert', false);
   },
 
   /**
@@ -202,7 +202,7 @@ export let Templates = Map.extend({
 
     if (beingDeleted.attr('length')) {
       this.attr('deletedTemplates', beingDeleted);
-      this.attr('deletedAlertState', 'opened');
+      this.attr('openDeletedAlert', true);
     }
   },
 
@@ -222,7 +222,7 @@ export let Templates = Map.extend({
 
     if (beingRestored.attr('length')) {
       this.attr('restoredTemplates', beingRestored);
-      this.attr('restoredAlertState', 'opened');
+      this.attr('openRestoredAlert', true);
     }
   }
 });

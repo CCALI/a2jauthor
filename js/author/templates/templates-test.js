@@ -58,6 +58,35 @@ describe('<templates-page>', function() {
 
       F(done);
     });
+
+    it('deleted templates are filtered out properly', function(done) {
+      let delay = 0;
+      let totalActive;
+
+      // wait for the list to be rendered
+      F('templates-list-item').size(size => size > 0);
+
+      F(function() {
+        totalActive = $('templates-list-item').length;
+
+        // set transition time to 0ms, to speed up the test
+        $('templates-list').viewModel().attr('itemTransitionTime', delay);
+
+        // set hovered to true to display the delete template link
+        $('templates-list-item').first().viewModel().attr('hovered', true);
+      });
+
+      F('templates-list-item .delete').size(1, 'delete link should be on screen');
+
+      F('templates-list-item .delete').click();
+
+      F(function() {
+        let current = $('templates-list-item').length;
+        assert.equal(current, totalActive - 1, 'there should be one less');
+      });
+
+      F(done);
+    });
   });
 
 });

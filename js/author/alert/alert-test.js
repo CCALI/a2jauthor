@@ -16,16 +16,16 @@ describe('<app-alert>', function() {
       assert.equal(vm.attr('transitionTime'), 5000);
     });
 
-    it('sets state back to closed after transitionTime if set to opened', function(done) {
+    it('sets "open" back to "false" after "transitionTime"', function(done) {
       let delay = 0;
 
       vm.attr('transitionTime', delay);
-      vm.attr('state', 'opened');
+      vm.attr('open', true);
 
-      assert.equal(vm.attr('state'), 'opened', 'should be opened');
+      assert.isTrue(vm.attr('open'), 'should be opened');
 
       setTimeout(function() {
-        assert.equal(vm.attr('state'), 'closed', 'should be closed');
+        assert.isFalse(vm.attr('open'), 'should not be opened');
         done();
       }, delay);
     });

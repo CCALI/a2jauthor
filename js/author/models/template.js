@@ -7,7 +7,8 @@ import 'can/map/define/';
 export const lastModifiedFormat = 'YYYY-M-D H:m:s';
 
 let Template = Model.extend({
-  findAll: 'GET /templates'
+  findAll: 'GET /templates',
+  findOne: 'GET /templates/:id'
 }, {
   define: {
     lastModified: {

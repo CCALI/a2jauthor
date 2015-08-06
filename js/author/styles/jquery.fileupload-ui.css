@@ -3,7 +3,6 @@
 .fileinput-button {
   position: relative;
   overflow: hidden;
-  left: 64px; /* CAJA */
 }
 .fileinput-button input { /* cover file selector with button */
   position: absolute;

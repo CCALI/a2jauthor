@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-xs-8">
-        <h1 id="guidetitle">A2J Guided Interviews<sup>®</sup></h1>
+        <h1 id="guidetitle" class="guidetitle">A2J Guided Interviews<sup>®</sup></h1>
       </div>
 
       <div class="col-xs-4 text-right">

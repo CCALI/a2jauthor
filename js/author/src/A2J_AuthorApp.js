@@ -429,10 +429,13 @@ function main()
       'ui-corner-all',
       'ui-button-text-only',
       'ui-button-icon-primary',
-      'ui-icon'
+      'ui-icon',
+      'ui-button-text',
+      'ui-state-hover',
+      'ui-state-active'
     ];
 
-    $('.bootstrap-styles button, .bootstrap-styles span').removeClass(classes.join(' '));
+    $('.bootstrap-styles button, .bootstrap-styles span, .bootstrap-styles a, .bootstrap-styles a:hover').removeClass(classes.join(' '));
   }());
 
   signin();

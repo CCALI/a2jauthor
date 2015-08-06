@@ -17,7 +17,7 @@
 
 html, body {
 	font-family:  "Open Sans",​sans-serif;
-	font-size: 12px;
+	font-size: 14px;
 	margin:0;
 	padding:0;
 }
@@ -35,21 +35,15 @@ html, body {
 
 .authortool {
 	margin: 0;
-	padding: 20px;
 	margin-left: 125px;
-	margin-top: 71px;
+	margin-top: 80px;
 }
-
-/* This is meant to neutralize the padding applied to the wrapper .authortool
-which prevents the button-toolbar to position correctly below the header. */
+.panel {
+  padding: 20px;
+}
 .panel.has-toolbar {
-  margin: -20px;
+  padding: 0;
 }
-
-#guidetitle  {
-	font-size:2em;
-}
-
 .guidemenu {
   margin: 0;
   padding: 0;

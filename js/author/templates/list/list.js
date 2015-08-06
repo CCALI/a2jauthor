@@ -1,11 +1,40 @@
 import Map from 'can/map/';
 import template from './list.stache!';
 import Component from 'can/component/';
-import debounce from 'lodash/function/debounce';
+import _range from 'lodash/utility/range';
 
 import './item/';
 import './list.less!';
 import 'can/map/define/';
+
+/**
+ * @function move
+ * @hide true
+ * @description
+ *
+ * Moves the item at the `start` index to the `end` index, it does not mutate
+ * the provided array, it returns a new reference.
+ *
+ * Usage:
+ *   @codestart
+ *   let a = [1, 2, 3];
+ *   let b = move(a, 0, 2);
+ *
+ *   assert.deepEqual(a, [1, 2, 3]);
+ *   assert.deepEqual(b, [2, 3, 1]);
+ *   @codeend
+ *
+ * @param {Array} array An array object
+ * @param {Number} start Index of the element that will be moved
+ * @param {Number} end Index at which element will be moved
+ * @return {Array} The modified array
+ */
+function move(array, start, end) {
+  var copy = array.slice(0);
+  var item = copy.splice(start, 1)[0];
+  copy.splice(end, 0, item);
+  return copy;
+}
 
 /**
  * @module {Module} author/templates/list/
@@ -34,29 +63,26 @@ export let List = Map.extend({
   },
 
   updateSortOrder() {
+    let templates = this.attr('templates');
     let dragPos = this.attr('dragItemIndex');
     let dropPos = this.attr('dropItemIndex');
-    let templates = this.attr('templates').attr();
 
     if (dragPos !== dropPos) {
-      // swap the item being dragged to the current dragover position.
-      let temp = templates[dragPos];
-      templates[dragPos] = templates[dropPos];
-      templates[dropPos] = temp;
+      can.batch.start();
+
+      let positions = _range(templates.attr('length'));
+      let newPositions = move(positions, dragPos, dropPos);
+
+      newPositions.forEach(function(pos, index) {
+        templates.attr(pos).attr('buildOrder', index + 1);
+      });
+
+      can.batch.stop();
 
       // since the list is sorted automatically when it's mutated
       // we need to keep track of the current index of the dragged
       // template to move it properly while it is dragged.
       this.attr('dragItemIndex', dropPos);
-
-      // Once the templates are placed at the right indexes, we
-      // need to fix the build order
-      templates.forEach(function(template, index) {
-        template.buildOrder = index + 1;
-      });
-
-      // finally replace the sorted template to update the UI.
-      this.attr('templates').replace(templates);
     }
   }
 });
@@ -78,13 +104,32 @@ export default Component.extend({
       dt.effectAllowed = 'move';
       dt.setData('text/html', null);
 
-      this.viewModel.attr('dragItemIndex', el.data('index'));
+      this.viewModel.attr('dragItemIndex', el.index());
     },
 
     'li dragenter': function(el) {
-      el.addClass('drag-placeholder');
+      let dropIndex = this.viewModel.attr('dropItemIndex');
 
-      this.viewModel.attr('dropItemIndex', el.data('index'));
+      // dragenter is fired multiple times, we need to make sure the class is
+      // only added when `dropItemIndex` is different from the element's index
+      // that receives the dragenter event; the first condition makes sure the
+      // class is added for the element being dragged.
+      if (dropIndex == null && dropIndex !== el.index()) {
+        el.addClass('drag-placeholder');
+      }
+
+      this.viewModel.attr('dropItemIndex', el.index());
+    },
+
+    'li dragleave': function(el) {
+      let dropIndex = this.viewModel.attr('dropItemIndex');
+
+      // similar to dragenter, this event is fired multiple times, we only
+      // remove the class when the 'leaved' element's index is different from
+      // the position where the dragged element might be dropped (`dropItemIndex`).
+      if (dropIndex !== el.index()) {
+        el.removeClass('drag-placeholder');
+      }
     },
 
     'li dragover': function(el, evt) {
@@ -99,6 +144,11 @@ export default Component.extend({
     // dropped.
     'li dragend': function(el) {
       el.removeClass('drag-placeholder');
+
+      this.viewModel.attr({
+        dragItemIndex: null,
+        dropItemIndex: null
+      });
     },
 
     // we stop the propagation of this event to avoid the listener on the
@@ -106,6 +156,11 @@ export default Component.extend({
     'li drop': function(el, evt) {
       evt.stopPropagation();
       el.removeClass('drag-placeholder');
+
+      this.viewModel.attr({
+        dragItemIndex: null,
+        dropItemIndex: null
+      });
     },
 
     // to workaround the issue with the `dragend` event not being dispatched,
@@ -126,8 +181,7 @@ export default Component.extend({
     },
 
     '{viewModel} dropItemIndex': function() {
-      let debounced = debounce(this.viewModel.updateSortOrder, 100);
-      debounced.call(this.viewModel);
+      this.viewModel.updateSortOrder();
     }
   }
 });

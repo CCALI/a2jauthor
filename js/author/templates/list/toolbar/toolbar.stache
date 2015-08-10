@@ -1,9 +1,8 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
 
-
     <ul class="nav navbar-nav">
-      <p class="navbar-text">View:</p>
+      <p class="navbar-text hidden-xs">View:</p>
 
       <li class="{{#is filter 'all'}}active{{/is}}">
         <a href="#" can-click="{setFilter 'all'}">All</a>
@@ -20,7 +19,12 @@
       <li role="separator" class="divider hidden-xs"></li>
     </ul>
 
-    <form class="navbar-form navbar-left" role="search">
+    <div class="nav navbar-nav navbar-right">
+      <button class="btn btn-primary navbar-btn new-template"><span class="glyphicon-plus"></span> New Template</button>
+      <button class="btn btn-default navbar-btn test-compile"><span class="glyphicon-file-pdf"></span> Test Compile</button>
+    </div>
+
+    <form class="navbar-form" role="search">
       <div class="form-group {{#if showClearButton}}has-feedback{{/if}}">
         <div class="input-group">
           <input type="text"
@@ -34,11 +38,6 @@
         </div>
       </div>
     </form>
-
-    <div class="nav navbar-nav navbar-right">
-      <button class="btn btn-primary navbar-btn new-template"><span class="glyphicon-plus"></span> New Template</button>
-      <button class="btn btn-default navbar-btn test-compile"><span class="glyphicon-file-pdf"></span> Test Compile</button>
-    </div>
 
   </div>
 </nav>

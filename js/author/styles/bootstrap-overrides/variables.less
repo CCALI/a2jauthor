@@ -389,7 +389,7 @@
 @navbar-default-link-color:                #494848;
 @navbar-default-link-hover-color:          @link-color;
 @navbar-default-link-hover-bg:             transparent;
-@navbar-default-link-active-color:         #555;
+@navbar-default-link-active-color:         @link-active-color;
 @navbar-default-link-active-bg:            darken(@navbar-default-bg, 6.5%);
 @navbar-default-link-disabled-color:       #ccc;
 @navbar-default-link-disabled-bg:          transparent;
@@ -437,7 +437,7 @@
 //##
 
 //=== Shared nav styles
-@nav-link-padding:                          10px;
+@nav-link-padding:                          floor(@grid-gutter-width/3);
 @nav-link-hover-bg:                         #f1f1f1;
 
 @nav-disabled-link-color:                   #999;

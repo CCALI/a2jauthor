@@ -1,38 +1,36 @@
 {{#with template}}
   <div class="template-wrapper{{#if deleting}} deleting{{/if}}{{#if restoring}} restoring{{/if}}">
     <a class="template-link" can-href="{page='templates' id=id}">
-      <div class="row clearfix">
 
-        <div class="col-xs-1 build-order">
-          {{buildOrder}}<br>
+      <div class="template-order">
+        <span class="build-order">{{buildOrder}}</span><br>
 
           {{#if hovered}}
             {{#if isDraggable}}
-              <i class="glyphicon glyphicon-list-bullet"></i>
+              <span class="glyphicon-move small text-muted"></span>
             {{/if}}
           {{/if}}
-        </div>
+      </div>
 
-        <div class="col-xs-11 template-details {{#unless active}}deleted{{/unless}}">
-          <div class="row clearfix">
-            <div class="col-md-9">
-              <h4 class="title">{{title}}</h4>
-              <p class="description">{{description}}</p>
-            </div>
-
-            <div class="col-xs-3 date-wrapper">
-              <span class="last-modified">{{lastModifiedFromNow}}</span>
-              {{#if hovered}}
-                {{#if active}}
-                  <a class="delete" (click)="deleteTemplate" href="#">Delete</a>
-                {{else}}
-                  <a class="restore" (click)="restoreTemplate" href="#">Restore</a>
-                {{/if}}
+      <div class="template-panel {{#unless active}}deleted{{/unless}}">
+        <div class="row">
+          <div class="col-sm-9">
+            <h4 class="title">{{title}}</h4>
+            <p class="description">{{description}}</p>
+          </div>
+          <div class="col-md-3 template-date small text-right">
+            <span class="last-modified">{{lastModifiedFromNow}}</span><br class="hidden-xs" />
+            {{#if hovered}}
+              {{#if active}}
+                <a class="delete" (click)="deleteTemplate" href="#">Delete</a>
+              {{else}}
+                <a class="restore" (click)="restoreTemplate" href="#">Restore</a>
               {{/if}}
-            </div>
+            {{/if}}
           </div>
         </div>
       </div>
+
     </a>
   </div>
 {{/with}}

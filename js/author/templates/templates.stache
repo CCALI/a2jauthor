@@ -18,15 +18,17 @@
   </app-alert>
 {{/if}}
 
-<div class="container-fluid">
-  {{#if templatesPromise.isPending}}
-    <span>loading...</span>
-  {{/else}}
-    <templates-sortbar criteria="{sortCriteria}"></templates-sortbar>
-    <templates-list
-      templates="{displayList}"
-      class="{{listStateClassName}}"
-      is-draggable="{listIsDraggable}">
-    </templates-list>
-  {{/if}}
+<div class="page">
+  <div class="container-fluid">
+    {{#if templatesPromise.isPending}}
+      <span>loading...</span>
+    {{/else}}
+      <templates-sortbar criteria="{sortCriteria}"></templates-sortbar>
+      <templates-list
+        templates="{displayList}"
+        class="{{listStateClassName}}"
+        is-draggable="{listIsDraggable}">
+      </templates-list>
+    {{/if}}
+  </div>
 </div>

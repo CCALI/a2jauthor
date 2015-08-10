@@ -2,27 +2,6 @@
 
 templates-list-item {
   display: block;
-  margin-bottom: 20px;
-
-  .build-order {
-    .text-center;
-    padding: 5px 0;
-    font-weight: 400;
-    font-size: @font-size-h4;
-
-    .glyphicon-list-bullet {
-      font-size: 60%;
-    }
-  }
-
-  .template-wrapper {
-    &:hover {
-      .template-details {
-        border-color: @gray;
-        background-color: #E5F2FE;
-      }
-    }
-  }
 
   // specificity issues :/
   a.template-link {
@@ -30,41 +9,51 @@ templates-list-item {
 
     &:hover {
       color: @text-color;
+      text-decoration: none;
     }
   }
 
-  .template-details {
+  &:hover {
+    .template-panel {
+      border-color: lighten(@gray-light,10%);
+      background-color: lighten(@state-info-bg,5%);
+    }
+  }
+
+  .template-order {
+    float: left;
+    width: 30px;
+    display: inline-block;
+    padding: @grid-gutter-width/2;
+    padding-left: 0;
+
+    .build-order {
+      font-size: @font-size-h4;
+      font-weight: @headings-font-weight;
+      line-height: @font-size-h4;
+    }
+  }
+  .template-panel {
+    position: relative;
+    overflow: hidden;
     .border;
+    padding: @grid-gutter-width/2;
+    margin-bottom: @grid-gutter-width/2;
 
-    &.deleted {
-      border-color: @gray;
-      background-color: #d4d4d4;
-    }
-
-    .title {
-      font-weight: 500;
-      margin-bottom: 5px;
-    }
-
-    .description {
-      max-width: 600px;
+    h4, p {
+      margin: 0;
       .truncate;
     }
-
-    .date-wrapper {
-      font-size: 90%;
-      text-align: right;
+    h4 {
+      overflow: visible;
     }
-
-    .last-modified {
-      display: block;
-      margin-top: 10px;
-      margin-bottom: 10px;
+    .title {
+      margin-bottom: 5px;
     }
-
-    .delete,
-    .restore {
-      color: @link-active-color;
+    &.deleted {
+      .border;
+      background-color: lighten(@gray-lighter,10%);
+      color: lighten(@gray-light,10%);
     }
   }
 }

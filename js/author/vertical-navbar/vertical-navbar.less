@@ -8,11 +8,19 @@
     width: 51px;
     height: 53px;
     display: block;
+
+    @media (max-width: @screen-sm) {
+      max-width: 80% !important;
+    }
   }
   .authorver {
     .text-center;
     padding-top: @vert-navbar-padding-horizontal;
     padding-bottom: @vert-navbar-padding-horizontal;
     margin-top: @vert-navbar-padding-horizontal;
+
+    @media (max-width: @screen-sm) {
+      display: none;
+    }
   }
 }

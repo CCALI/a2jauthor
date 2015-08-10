@@ -143,4 +143,23 @@ Add `.navbar-fixed-right` to fix to the right side of the browser.
       float: none;
     }
   }
-}
+
+  @media (max-width: @screen-sm) {
+    width: @vert-navbar-collapsed;
+
+    .navbar-nav {
+      margin: 0;
+    }
+   .navbar-nav > li {
+      > a {
+        .title {
+          display: none;
+        }
+        .icon {
+          font-size: 18px;
+        }
+      }
+    }
+  } // media query
+
+} // vertical-navbar

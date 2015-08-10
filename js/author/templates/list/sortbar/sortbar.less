@@ -2,40 +2,32 @@
 
 templates-sortbar {
   display: block;
-  margin-bottom: 15px;
+  margin-bottom: @grid-gutter-width/2;
+  font-size: @font-size-small;
 
-  .build-order {
-    .text-center;
+  .sort-order {
+    float: left;
+    width: 30px;
+    display: inline-block;
   }
-
-  .last-modified {
-    text-align: right;
+  .sort-columns {
+    padding-left: @grid-gutter-width/2;
+    position: relative;
+    overflow: hidden;
   }
 
   // qualifying was needed to increase specificity
   a.sort-flag {
     color: @gray-light;
+    padding-top: @grid-gutter-width/2 0;
 
     &:hover,
     &:focus {
       color: @gray-light;
       text-decoration: none;
     }
-  }
-
-  .arrow {
-    width: 0;
-    height: 0;
-    display: inline-block;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-
-    &.arrow-up {
-      border-bottom: 5px solid black;
-    }
-
-    &.arrow-down {
-      border-top: 5px solid black;
+    &.active {
+      color: @link-active-color;
     }
   }
 }

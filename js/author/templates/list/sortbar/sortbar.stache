@@ -1,28 +1,30 @@
-<div class="row clearfix">
-  <div class="col-xs-1 build-order">
-    <a class="sort-flag" (click)="{setSortCriteria 'buildOrder'}" href="#">#</a>
+<div class="sort-order clearfix">
+  <a class="sort-flag {{#with criteria}}{{#is key 'buildOrder'}}active{{/is}}{{/width}}" (click)="{setSortCriteria 'buildOrder'}" href="#">#</a>
     {{#with criteria}}
       {{#is key 'buildOrder'}}
-        <div class="arrow {{#is direction 'asc'}}arrow-down{{else}}arrow-up{{/is}}"></div>
+        <span class="caret {{#is direction 'asc'}}caret-down{{else}}caret-up{{/is}}"></span>
       {{/is}}
     {{/width}}
-  </div>
-
-  <div class="col-xs-8">
-    <a class="sort-flag" (click)="{setSortCriteria 'title'}" href="#">Title</a>
-    {{#with criteria}}
-      {{#is key 'title'}}
-        <div class="arrow {{#is direction 'asc'}}arrow-down{{else}}arrow-up{{/is}}"></div>
-      {{/is}}
-    {{/width}}
-  </div>
-
-  <div class="col-xs-3 last-modified">
-    <a class="sort-flag" (click)="{setSortCriteria 'lastModified'}" href="#">Date Modified</a>
-    {{#with criteria}}
-      {{#is key 'lastModified'}}
-        <div class="arrow {{#is direction 'asc'}}arrow-down{{else}}arrow-up{{/is}}"></div>
-      {{/is}}
-    {{/width}}
+</div>
+<div class="sort-columns">
+  <div class="row">
+    <div class="col-xs-9">
+      <a class="sort-flag {{#with criteria}}{{#is key 'title'}}active{{/is}}{{/width}}" (click)="{setSortCriteria 'title'}" href="#">Title</a>
+      {{#with criteria}}
+        {{#is key 'title'}}
+          <span class="caret {{#is direction 'asc'}}caret-down{{else}}caret-up{{/is}}"></span>
+        {{/is}}
+      {{/width}}
+    </div>
+    <div class="col-xs-3 text-right">
+      <a class="sort-flag {{#with criteria}}{{#is key 'lastModified'}}active{{/is}}{{/width}}" (click)="{setSortCriteria 'lastModified'}" href="#">Date Modified</a>
+      {{#with criteria}}
+        {{#is key 'lastModified'}}
+          <span class="caret {{#is direction 'asc'}}caret-down{{else}}caret-up{{/is}}"></span>
+          {{else}}
+          <span class="caret invisible"></span>
+        {{/is}}
+      {{/width}}
+    </div>
   </div>
 </div>

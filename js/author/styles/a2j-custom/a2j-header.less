@@ -1,7 +1,9 @@
+@header-height: 80px;
+
 header {
   position: fixed;
   width: 100%;
-  height: @navbar-height;
+  height: @header-height;
   .border;
   border-top: none;
   border-left: none;
@@ -11,9 +13,14 @@ header {
   left: 0;
   background: @navbar-default-bg;
   z-index: @zindex-navbar;
+  line-height: @header-height;
 
   .btn.btn-link {
-     line-height: @navbar-height;
      padding: 0;
+  }
+  .guidetitle {
+    margin: 0;
+    line-height: @header-height;
+    font-size: @font-size-h3;
   }
 }

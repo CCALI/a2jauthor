@@ -787,18 +787,6 @@ body .ui-tooltip {
 
 /* Component containers
 ----------------------------------*/
-.ui-widget {
-	font-size: 1.1em;
-}
-.ui-widget .ui-widget {
-	font-size: 1em;
-}
-.ui-widget input,
-.ui-widget select,
-.ui-widget textarea,
-.ui-widget button {
-	font-size: 1em;
-}
 .ui-widget-content {
   background-color: #fff;
 	color: #362b36;

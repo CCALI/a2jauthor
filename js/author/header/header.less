@@ -3,12 +3,21 @@
 app-header {
   display: block;
 
-  header .btn.btn-link {
-    color: @navbar-default-link-color;
-    margin-right: 10px;
+  header {
+    background: #fff;
 
-    &:hover {
+    .btn.btn-link {
       color: @navbar-default-link-color;
+      margin-right: 10px;
+
+      &:hover {
+        color: @link-color;
+        text-decoration: none;
+      }
+    }
+    .guidetitle {
+      overflow: hidden;
     }
   }
+
 }

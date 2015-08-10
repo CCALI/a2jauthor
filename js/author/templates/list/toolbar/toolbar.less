@@ -1,49 +1,17 @@
-@import '../../../styles/bootstrap-overrides/variables';
+@import '../../../main';
 
 templates-toolbar {
   display: block;
-  padding: 20px;
-  margin-bottom: 20px;
-  background-color: @gray-lighter;
 
-  .list-filters {
-    padding-top: 10px;
-    padding-bottom: 10px;
-
-    a {
-      margin-left: 10px;
-      color: @gray-light;
-
-      &:hover {
-        color: @gray;
-      }
-    }
-
-    .active {
-      color: @link-active-color;
-
-      &:focus,
-      &:hover {
-        text-decoration: none;
-        color: @link-active-color;
-      }
-    }
+  .btn.new-template, .btn.test-compile {
+    margin-right: @grid-gutter-width/4;
   }
-
-  .search-form {
-    border-left: 1px solid @gray-light;
+  .navbar.navbar-default {
+    border-width: 0 0 1px 0;
   }
-
-  .toolbar-buttons {
-    text-align: right;
-    button {
-      margin-right: 10px;
-    }
-  }
-
   .has-feedback {
     .form-control-clear {
-      right: 45px;
+      right: 48px;
       pointer-events: auto;
     }
   }

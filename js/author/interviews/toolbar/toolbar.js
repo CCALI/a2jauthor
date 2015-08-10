@@ -14,5 +14,21 @@ import 'author/button-toolbar/';
 export default Component.extend({
   template,
   leakScope: false,
-  tag: 'interviews-toolbar'
+  tag: 'interviews-toolbar',
+
+  events: {
+    '.open-guide click': function() {
+      window.openSelectedGuide();
+    },
+
+    '.clone-guide click': function() {
+      window.dialogAlert({
+        title:'Clone interview'
+      });
+    },
+
+    '.delete-guide click': function() {
+      window.archiveSelectedGuide();
+    }
+  }
 });

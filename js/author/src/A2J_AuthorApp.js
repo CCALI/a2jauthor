@@ -167,13 +167,6 @@ function main()
         }
   });
 
-
-  //$('#guideCreate').button({icons:{primary:"ui-icon-document"}}).click(function(){createBlankGuide(); });
-  $('#guideOpen').button({disabled:false}).click(openSelectedGuide);
-  $('#guideArchive').button({disabled:false}).click(archiveSelectedGuide);
-
-
-
   $('#guideZIP').button({  disabled:false}).click(function()
   { // 01/08/2014 ZIP the guide and related files.
     function guideZipped(data)
@@ -229,10 +222,6 @@ function main()
     }
     downloadTextFile( exportXML_CAJA_from_CAJA(gGuide), gGuide.filename);
    });
-
-  $('#guideClone').button({disabled:true}).click(function(){
-    dialogAlert({title:'Clone interview'});
-  });
 
   $(document).on("click", '.editicons .ui-icon-circle-plus',function(){// clone a table row
     var $tbl=$(this).closest('table');

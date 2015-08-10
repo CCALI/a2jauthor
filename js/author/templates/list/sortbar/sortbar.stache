@@ -1,5 +1,5 @@
 <div class="row clearfix">
-  <div class="col-md-1 build-order">
+  <div class="col-xs-1 build-order">
     <a class="sort-flag" (click)="{setSortCriteria 'buildOrder'}" href="#">#</a>
     {{#with criteria}}
       {{#is key 'buildOrder'}}
@@ -8,7 +8,7 @@
     {{/width}}
   </div>
 
-  <div class="col-md-8">
+  <div class="col-xs-8">
     <a class="sort-flag" (click)="{setSortCriteria 'title'}" href="#">Title</a>
     {{#with criteria}}
       {{#is key 'title'}}
@@ -17,7 +17,7 @@
     {{/width}}
   </div>
 
-  <div class="col-md-3 last-modified">
+  <div class="col-xs-3 last-modified">
     <a class="sort-flag" (click)="{setSortCriteria 'lastModified'}" href="#">Date Modified</a>
     {{#with criteria}}
       {{#is key 'lastModified'}}

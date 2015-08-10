@@ -1,40 +1,43 @@
-<div class="row clearfix">
-  <div class="col-md-3 list-filters">
-    <span>View:</span>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
 
-    <a href="#"
-      can-click="{setFilter 'all'}"
-      class="{{#is filter 'all'}}active{{/is}}">All</a>
+    <ul class="nav navbar-nav">
+      <p class="navbar-text hidden-xs">View:</p>
 
-    <a href="#"
-      can-click="{setFilter 'active'}"
-      class="{{#is filter 'active'}}active{{/is}}">Active</a>
+      <li class="{{#is filter 'all'}}active{{/is}}">
+        <a href="#" can-click="{setFilter 'all'}">All</a>
+      </li>
 
-    <a href="#"
-      can-click="{setFilter 'deleted'}"
-      class="{{#is filter 'deleted'}}active{{/is}}">Deleted</a>
-  </div>
+      <li class="{{#is filter 'active'}}active{{/is}}">
+        <a href="#" can-click="{setFilter 'active'}">Active</a>
+      </li>
 
-  <div class="col-md-6 search-form">
-    <form class="form-inline">
+      <li class="{{#is filter 'deleted'}}active{{/is}}">
+        <a href="#" can-click="{setFilter 'deleted'}">Deleted</a>
+      </li>
+
+      <li role="separator" class="divider hidden-xs"></li>
+    </ul>
+
+    <div class="nav navbar-nav navbar-right">
+      <button class="btn btn-primary navbar-btn new-template"><span class="glyphicon-plus"></span> New Template</button>
+      <button class="btn btn-default navbar-btn test-compile"><span class="glyphicon-file-pdf"></span> Test Compile</button>
+    </div>
+
+    <form class="navbar-form" role="search">
       <div class="form-group {{#if showClearButton}}has-feedback{{/if}}">
         <div class="input-group">
-          <label class="control-label sr-only">Search input</label>
           <input type="text"
-            value="{{searchToken}}"
-            class="form-control search-input"
-            placeholder="search for a template...">
-          <div class="input-group-addon"><i class="glyphicon-search"></i></div>
+                value="{{searchToken}}"
+                class="form-control search-input"
+                placeholder="search for a template...">
+          <span class="input-group-addon"><span class="glyphicon-search"></span><span class="sr-only">Search</span></span>
+          {{#if showClearButton}}
+              <span (click)="clearSearchToken" class="glyphicon glyphicon-cancel-circled form-control-feedback form-control-clear" aria-hidden="true"></span>
+          {{/if}}
         </div>
-        {{#if showClearButton}}
-          <span (click)="clearSearchToken" class="glyphicon glyphicon-cancel-circled form-control-feedback form-control-clear" aria-hidden="true"></span>
-        {{/if}}
       </div>
     </form>
-  </div>
 
-  <div class="col-md-3 toolbar-buttons">
-    <button class="btn btn-default">Test Compile</button>
-    <button class="btn btn-primary">+New Template</button>
   </div>
-</div>
+</nav>

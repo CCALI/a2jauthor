@@ -208,7 +208,7 @@
 @input-border-radius-small:      @border-radius-small;
 
 //* Border color for inputs on focus
-@input-border-focus:             #66afe9;
+@input-border-focus:             @link-color;
 
 //* Placeholder text color
 @input-color-placeholder:        #999;
@@ -365,7 +365,7 @@
 //##
 
 // Basics of a navbar
-@navbar-height:                    39px;
+@navbar-height:                    50px;
 @navbar-margin-bottom:             @line-height-computed;
 @navbar-border-radius:             0;
 @navbar-padding-horizontal:        floor((@grid-gutter-width / 2));
@@ -379,7 +379,7 @@
 @vert-navbar-collapse-max-width:    35px;
 
 @navbar-default-color:             #777;
-@navbar-default-bg:                #fff;
+@navbar-default-bg:                #f8f8f8;
 @navbar-default-border:            darken(@navbar-default-bg, 6.5%);
 @navbar-active-caret-height:       (@vert-navbar-padding-horizontal*2);
 @navbar-active-caret-offset:        3px;
@@ -387,9 +387,9 @@
 
 // Navbar links
 @navbar-default-link-color:                #494848;
-@navbar-default-link-hover-color:          @gray-darker;
+@navbar-default-link-hover-color:          @link-color;
 @navbar-default-link-hover-bg:             transparent;
-@navbar-default-link-active-color:         #555;
+@navbar-default-link-active-color:         @link-active-color;
 @navbar-default-link-active-bg:            darken(@navbar-default-bg, 6.5%);
 @navbar-default-link-disabled-color:       #ccc;
 @navbar-default-link-disabled-bg:          transparent;
@@ -437,7 +437,7 @@
 //##
 
 //=== Shared nav styles
-@nav-link-padding:                          10px;
+@nav-link-padding:                          floor(@grid-gutter-width/3);
 @nav-link-hover-bg:                         #f1f1f1;
 
 @nav-disabled-link-color:                   #999;
@@ -460,6 +460,10 @@
 @nav-pills-active-link-hover-bg:            #fff;
 @nav-pills-active-link-hover-color:         @link-active-color;
 
+
+//== Toolbars
+@nav-toolbar-height:                        39px;
+@nav-toolbar-default-bg:                  #fff;
 
 //== Pagination
 //

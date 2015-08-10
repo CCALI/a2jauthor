@@ -1,5 +1,5 @@
 {{#if templatesPromise.isResolved}}
-  <templates-toolbar filter="{activeFilter}" search-token="{searchToken}"></templates-toolbar>
+  <templates-toolbar class="clearfix" filter="{activeFilter}" search-token="{searchToken}"></templates-toolbar>
 
   <app-alert open="{openDeletedAlert}" transition-time="{alertTransitionTime}">
     {{#each deletedTemplates}}

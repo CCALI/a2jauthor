@@ -1,3 +1,7 @@
 <div class="bootstrap-styles">
-  <content />
+  <nav class="navbar navbar-default navbar-toolbar">
+    <div class="container-fluid">
+      <content />
+    </div>
+  </nav>
 </div>

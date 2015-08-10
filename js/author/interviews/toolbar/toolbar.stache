@@ -1,12 +1,12 @@
 <button-toolbar>
-  <ul class="nav nav-pills">
+  <ul class="nav navbar-nav">
     <li><a href="#" class="open-guide"><span class="glyphicon-folder-open"></span> Open</a></li>
     <li><a href="#" class="clone-guide"><span class="glyphicon-docs"></span> Clone</a></li>
     <li><a href="#" class="delete-guide"><span class="glyphicon-trash"></span> Delete</a></li>
   </ul>
 
-  <div class="fileuploader nav nav-pills">
-    <li role="separator" class="divider"></li>
+  <div class="fileuploader nav navbar-nav">
+    <li role="separator" class="divider hidden-xs"></li>
     <!-- The fileinput-button span is used to style the file input field as button -->
     <li>
     <a href="javascript:void(0)" class="fileinput-button">

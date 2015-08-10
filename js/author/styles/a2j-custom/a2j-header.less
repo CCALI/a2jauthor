@@ -22,5 +22,24 @@ header {
     margin: 0;
     line-height: @header-height;
     font-size: @font-size-h3;
+    height: @header-height;
+    .truncate;
+  }
+
+  @media only screen and (max-width: 692px)  {
+    .row {
+      .utility-links {
+        height: @header-height;
+        width: 190px;
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+      .title-column {
+        overflow: hidden;
+        width: 50%;
+      }
+    }
   }
 }

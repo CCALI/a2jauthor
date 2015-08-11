@@ -55,5 +55,38 @@ templates-list-item {
       background-color: lighten(@gray-lighter,10%);
       color: lighten(@gray-light,10%);
     }
+    .template-menu {
+      font-size: floor(@font-size-small);
+      text-align: right;
+
+      .divider {
+        height: floor(@font-size-small*.75);
+      }
+      .options {
+        display: none;
+      }
+    }
+  }
+  &:hover {
+    .template-panel .template-menu .options {
+      display: inline-block;
+    }
+  }
+
+  @media (max-width: @screen-sm) {
+    .template-panel .template-menu {
+
+      li {
+        display: inline-block;
+        margin-left: @grid-gutter-width/4;
+      }
+      .divider {
+        //height: floor(@font-size-small);
+        border-left: 1px solid @gray-light;
+      }
+      .options {
+        display: inline-block;
+      }
+    }
   }
 }

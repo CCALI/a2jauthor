@@ -18,16 +18,17 @@
             <h4 class="title">{{title}}</h4>
             <p class="description">{{description}}</p>
           </div>
-          <div class="col-md-3 template-date small text-right">
-            <span class="last-modified">{{lastModifiedFromNow}}</span><br class="hidden-xs" />
-            {{#if hovered}}
+
+          <ul class="template-menu col-sm-3">
+            <li class="last-modified">{{lastModifiedFromNow}}</li>
+            <li class="divider"></li>
               {{#if active}}
-                <a class="delete" (click)="deleteTemplate" href="#">Delete</a>
+                <li class="options"><a class="delete" (click)="deleteTemplate" href="#">Delete</a></li>
               {{else}}
-                <a class="restore" (click)="restoreTemplate" href="#">Restore</a>
+                <li class="options"><a class="restore" (click)="restoreTemplate" href="#">Restore</a></li>
               {{/if}}
-            {{/if}}
-          </div>
+          </ul>
+
         </div>
       </div>
 

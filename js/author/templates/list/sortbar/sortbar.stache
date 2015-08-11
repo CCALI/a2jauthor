@@ -1,19 +1,21 @@
 <div class="sort-order clearfix">
-  <a class="sort-flag
-  {{#with criteria}}{{#is key 'buildOrder'}}active {{#is direction 'asc'}}caret-down{{else}}caret-up{{/is}}{{/is}}{{/with}}
-  " (click)="{setSortCriteria 'buildOrder'}" href="#">#</a>
+  <a href="#"
+    class="sort-flag {{sortCaretClasses 'buildOrder'}}"
+    (click)="{setSortCriteria 'buildOrder'}">#</a>
 </div>
+
 <div class="sort-columns">
   <div class="row">
     <div class="col-xs-9">
-      <a class="sort-flag
-      {{#with criteria}}{{#is key 'title'}}active {{#is direction 'asc'}}caret-down{{else}}caret-up{{/is}}{{/is}}{{/with}}
-      " (click)="{setSortCriteria 'title'}" href="#">Title</a>
+      <a href="#"
+        class="sort-flag {{sortCaretClasses 'title'}}"
+        (click)="{setSortCriteria 'title'}">Title</a>
     </div>
+
     <div class="col-xs-3 text-right">
-      <a class="sort-flag
-      {{#with criteria}}{{#is key 'lastModified'}}active {{#is direction 'asc'}}caret-down{{else}}caret-up{{/is}}{{/is}}{{/with}}
-      " (click)="{setSortCriteria 'lastModified'}" href="#">Date Modified</a>
+      <a href="#"
+        class="sort-flag {{sortCaretClasses 'lastModified'}}"
+        (click)="{setSortCriteria 'lastModified'}">Date Modified</a>
     </div>
   </div>
 </div>

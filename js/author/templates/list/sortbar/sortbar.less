@@ -1,41 +1,49 @@
-@import '../../../styles/a2j-custom/a2j-mixins';
+@import '../../../main';
 
 templates-sortbar {
   display: block;
-  margin-bottom: 15px;
+  margin-bottom: @grid-gutter-width/2;
+  font-size: @font-size-small;
 
-  .build-order {
-    .text-center;
+  .sort-order {
+    float: left;
+    width: 30px;
+    display: inline-block;
   }
-
-  .last-modified {
-    text-align: right;
+  .sort-columns {
+    padding-left: @grid-gutter-width/2;
+    position: relative;
+    overflow: hidden;
   }
 
   // qualifying was needed to increase specificity
   a.sort-flag {
     color: @gray-light;
+    padding: @grid-gutter-width/2;
+    margin-left: -(@grid-gutter-width/2);
+    position: relative;
 
     &:hover,
     &:focus {
       color: @gray-light;
       text-decoration: none;
     }
-  }
-
-  .arrow {
-    width: 0;
-    height: 0;
-    display: inline-block;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-
-    &.arrow-up {
-      border-bottom: 5px solid black;
+    &.active {
+      color: @link-active-color;
     }
-
-    &.arrow-down {
-      border-top: 5px solid black;
+    &.caret-down:before, &.caret-up:before {
+      position: absolute;
+      content: '';
+      .caret;
+      border-top-color: @gray-light;
+      right: 0;
+      top: 22px;
+    }
+    &.caret-up:before {
+      border-top: 0;
+      border-bottom: @caret-width-base dashed;
+      border-bottom: @caret-width-base solid ~"\9"; // IE8
+      border-bottom-color: @gray-light;
     }
   }
 }

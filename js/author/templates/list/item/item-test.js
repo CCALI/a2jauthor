@@ -94,10 +94,10 @@ describe('<templates-list-item>', function() {
     it('shows/hides delete link on hover for active templates', function() {
       assert.isTrue(template.attr('active'), 'should be active');
 
-      $('.template-details').mouseenter();
+      $('.template-wrapper').mouseenter();
       assert.isTrue($('.delete').is(':visible'), 'should be visible');
 
-      $('.template-details').mouseleave();
+      $('.template-wrapper').mouseleave();
       assert.isFalse($('.delete').is(':visible'), 'should be hidden');
     });
 
@@ -105,10 +105,10 @@ describe('<templates-list-item>', function() {
       template.attr('active', false);
       assert.isFalse(template.attr('active'), 'should be deleted');
 
-      $('.template-details').mouseenter();
+      $('.template-wrapper').mouseenter();
       assert.isTrue($('.restore').is(':visible'), 'should be visible');
 
-      $('.template-details').mouseleave();
+      $('.template-wrapper').mouseleave();
       assert.isFalse($('.restore').is(':visible'), 'should be hidden');
     });
   });

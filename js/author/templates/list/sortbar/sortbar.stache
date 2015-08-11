@@ -1,28 +1,21 @@
-<div class="row clearfix">
-  <div class="col-md-1 build-order">
-    <a class="sort-flag" (click)="{setSortCriteria 'buildOrder'}" href="#">#</a>
-    {{#with criteria}}
-      {{#is key 'buildOrder'}}
-        <div class="arrow {{#is direction 'asc'}}arrow-down{{else}}arrow-up{{/is}}"></div>
-      {{/is}}
-    {{/width}}
-  </div>
+<div class="sort-order clearfix">
+  <a href="#"
+    class="sort-flag {{sortCaretClasses 'buildOrder'}}"
+    (click)="{setSortCriteria 'buildOrder'}">#</a>
+</div>
 
-  <div class="col-md-8">
-    <a class="sort-flag" (click)="{setSortCriteria 'title'}" href="#">Title</a>
-    {{#with criteria}}
-      {{#is key 'title'}}
-        <div class="arrow {{#is direction 'asc'}}arrow-down{{else}}arrow-up{{/is}}"></div>
-      {{/is}}
-    {{/width}}
-  </div>
+<div class="sort-columns">
+  <div class="row">
+    <div class="col-xs-9">
+      <a href="#"
+        class="sort-flag {{sortCaretClasses 'title'}}"
+        (click)="{setSortCriteria 'title'}">Title</a>
+    </div>
 
-  <div class="col-md-3 last-modified">
-    <a class="sort-flag" (click)="{setSortCriteria 'lastModified'}" href="#">Date Modified</a>
-    {{#with criteria}}
-      {{#is key 'lastModified'}}
-        <div class="arrow {{#is direction 'asc'}}arrow-down{{else}}arrow-up{{/is}}"></div>
-      {{/is}}
-    {{/width}}
+    <div class="col-xs-3 text-right">
+      <a href="#"
+        class="sort-flag {{sortCaretClasses 'lastModified'}}"
+        (click)="{setSortCriteria 'lastModified'}">Date Modified</a>
+    </div>
   </div>
 </div>

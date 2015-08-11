@@ -36,5 +36,19 @@ export default Component.extend({
   template,
   leakScope: false,
   viewModel: Sortbar,
-  tag: 'templates-sortbar'
+  tag: 'templates-sortbar',
+
+  helpers: {
+    sortCaretClasses(sortKey) {
+      let classes = [];
+      let {key, direction} = this.attr('criteria').attr();
+
+      if (key === sortKey) {
+        classes.push('active');
+        classes.push(direction === 'asc' ? 'caret-down' : 'caret-up');
+      }
+
+      return classes.join(' ');
+    }
+  }
 });

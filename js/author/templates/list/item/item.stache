@@ -1,38 +1,39 @@
 {{#with template}}
   <div class="template-wrapper{{#if deleting}} deleting{{/if}}{{#if restoring}} restoring{{/if}}">
     <a class="template-link" can-href="{page='templates' id=id}">
-      <div class="row clearfix">
 
-        <div class="col-md-1 build-order">
-          {{buildOrder}}<br>
+      <div class="template-order">
+        <span class="build-order">{{buildOrder}}</span><br>
 
-          {{#if hovered}}
-            {{#if isDraggable}}
-              <i class="glyphicon glyphicon-list-bullet"></i>
-            {{/if}}
+        {{#if hovered}}
+          {{#if isDraggable}}
+            <span class="glyphicon-move small text-muted"></span>
           {{/if}}
-        </div>
+        {{/if}}
+      </div>
 
-        <div class="col-md-11 template-details {{#unless active}}deleted{{/unless}}">
-          <div class="row clearfix">
-            <div class="col-md-9">
-              <h4 class="title">{{title}}</h4>
-              <p class="description">{{description}}</p>
-            </div>
-
-            <div class="col-md-3 date-wrapper">
-              <span class="last-modified">{{lastModifiedFromNow}}</span>
-              {{#if hovered}}
-                {{#if active}}
-                  <a class="delete" (click)="deleteTemplate" href="#">Delete</a>
-                {{else}}
-                  <a class="restore" (click)="restoreTemplate" href="#">Restore</a>
-                {{/if}}
-              {{/if}}
-            </div>
+      <div class="template-panel {{#unless active}}deleted{{/unless}}">
+        <div class="row">
+          <div class="col-sm-9">
+            <h4 class="title">{{title}}</h4>
+            <p class="description">{{description}}</p>
           </div>
+
+          <ul class="template-menu col-sm-3">
+            <li class="last-modified">{{lastModifiedFromNow}}</li>
+            <li class="divider"></li>
+            {{#if hovered}}
+              {{#if active}}
+                <li class="options"><a class="delete" (click)="deleteTemplate" href="#">Delete</a></li>
+              {{else}}
+                <li class="options"><a class="restore" (click)="restoreTemplate" href="#">Restore</a></li>
+              {{/if}}
+            {{/if}}
+          </ul>
+
         </div>
       </div>
+
     </a>
   </div>
 {{/with}}

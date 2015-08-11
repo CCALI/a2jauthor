@@ -1,4 +1,4 @@
-@import '../../../styles/a2j-custom/a2j-mixins';
+@import '../../../main';
 
 templates-sortbar {
   display: block;
@@ -19,7 +19,9 @@ templates-sortbar {
   // qualifying was needed to increase specificity
   a.sort-flag {
     color: @gray-light;
-    padding-top: @grid-gutter-width/2 0;
+    padding: @grid-gutter-width/2;
+    margin-left: -(@grid-gutter-width/2);
+    position: relative;
 
     &:hover,
     &:focus {
@@ -28,6 +30,20 @@ templates-sortbar {
     }
     &.active {
       color: @link-active-color;
+    }
+    &.caret-down:before, &.caret-up:before {
+      position: absolute;
+      content: '';
+      .caret;
+      border-top-color: @gray-light;
+      right: 0;
+      top: 22px;
+    }
+    &.caret-up:before {
+      border-top: 0;
+      border-bottom: @caret-width-base dashed;
+      border-bottom: @caret-width-base solid ~"\9"; // IE8
+      border-bottom-color: @gray-light;
     }
   }
 }

@@ -1,30 +1,19 @@
 <div class="sort-order clearfix">
-  <a class="sort-flag {{#with criteria}}{{#is key 'buildOrder'}}active{{/is}}{{/width}}" (click)="{setSortCriteria 'buildOrder'}" href="#">#</a>
-    {{#with criteria}}
-      {{#is key 'buildOrder'}}
-        <span class="caret {{#is direction 'asc'}}caret-down{{else}}caret-up{{/is}}"></span>
-      {{/is}}
-    {{/width}}
+  <a class="sort-flag
+  {{#with criteria}}{{#is key 'buildOrder'}}active {{#is direction 'asc'}}caret-down{{else}}caret-up{{/is}}{{/is}}{{/with}}
+  " (click)="{setSortCriteria 'buildOrder'}" href="#">#</a>
 </div>
 <div class="sort-columns">
   <div class="row">
     <div class="col-xs-9">
-      <a class="sort-flag {{#with criteria}}{{#is key 'title'}}active{{/is}}{{/width}}" (click)="{setSortCriteria 'title'}" href="#">Title</a>
-      {{#with criteria}}
-        {{#is key 'title'}}
-          <span class="caret {{#is direction 'asc'}}caret-down{{else}}caret-up{{/is}}"></span>
-        {{/is}}
-      {{/width}}
+      <a class="sort-flag
+      {{#with criteria}}{{#is key 'title'}}active {{#is direction 'asc'}}caret-down{{else}}caret-up{{/is}}{{/is}}{{/with}}
+      " (click)="{setSortCriteria 'title'}" href="#">Title</a>
     </div>
     <div class="col-xs-3 text-right">
-      <a class="sort-flag {{#with criteria}}{{#is key 'lastModified'}}active{{/is}}{{/width}}" (click)="{setSortCriteria 'lastModified'}" href="#">Date Modified</a>
-      {{#with criteria}}
-        {{#is key 'lastModified'}}
-          <span class="caret {{#is direction 'asc'}}caret-down{{else}}caret-up{{/is}}"></span>
-          {{else}}
-          <span class="caret invisible"></span>
-        {{/is}}
-      {{/width}}
+      <a class="sort-flag
+      {{#with criteria}}{{#is key 'lastModified'}}active {{#is direction 'asc'}}caret-down{{else}}caret-up{{/is}}{{/is}}{{/with}}
+      " (click)="{setSortCriteria 'lastModified'}" href="#">Date Modified</a>
     </div>
   </div>
 </div>

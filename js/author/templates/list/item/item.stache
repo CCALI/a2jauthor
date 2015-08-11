@@ -5,11 +5,11 @@
       <div class="template-order">
         <span class="build-order">{{buildOrder}}</span><br>
 
-          {{#if hovered}}
-            {{#if isDraggable}}
-              <span class="glyphicon-move small text-muted"></span>
-            {{/if}}
+        {{#if hovered}}
+          {{#if isDraggable}}
+            <span class="glyphicon-move small text-muted"></span>
           {{/if}}
+        {{/if}}
       </div>
 
       <div class="template-panel {{#unless active}}deleted{{/unless}}">
@@ -22,11 +22,13 @@
           <ul class="template-menu col-sm-3">
             <li class="last-modified">{{lastModifiedFromNow}}</li>
             <li class="divider"></li>
+            {{#if hovered}}
               {{#if active}}
                 <li class="options"><a class="delete" (click)="deleteTemplate" href="#">Delete</a></li>
               {{else}}
                 <li class="options"><a class="restore" (click)="restoreTemplate" href="#">Restore</a></li>
               {{/if}}
+            {{/if}}
           </ul>
 
         </div>

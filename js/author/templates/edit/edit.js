@@ -3,6 +3,7 @@ import Component from 'can/component/';
 import template from './edit.stache!';
 import Template from 'author/models/template';
 
+import './tabs/';
 import './toolbar/';
 import './edit.less!';
 import 'can/map/define/';

@@ -1,0 +1,9 @@
+<bit-tabs>
+  <bit-panel title="Add Elements">
+    <h3>Standard</h3>
+    <button>Element</button>
+  </bit-panel>
+
+  <bit-panel title="Template Options">
+  </bit-panel>
+</bit-tabs>

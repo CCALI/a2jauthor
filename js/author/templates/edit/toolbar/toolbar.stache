@@ -1,1 +1,24 @@
-<div class="text-center">Templates edit page toolbar</div>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-6">
+        <form class="navbar-form">
+          <div class="form-group">
+            <input type="text" class="form-control">
+          </div>
+        </form>
+      </div>
+
+      <div class="col-xs-6">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">All Elements</a></li>
+          <li><a href="#">Outline</a></li>
+        </ul>
+
+        <div class="nav navbar-nav navbar-right">
+          <button class="btn btn-default navbar-btn test-assemble"><span class="glyphicon-file-pdf"></span> Test Assemble</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

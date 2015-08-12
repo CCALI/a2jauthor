@@ -1,4 +1,5 @@
 import 'author/models/fixtures/';
+import 'author/models/tests/cali-document-test';
 import 'author/models/tests/guide-test';
 import 'author/models/tests/template-test';
 

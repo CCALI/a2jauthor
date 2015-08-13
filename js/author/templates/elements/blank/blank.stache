@@ -1,0 +1,5 @@
+<div class="text-center">
+  <h2>This template is empty!</h2>
+  <p>Add some elements by clicking on the buttons to the right or dragging them onto here.</p>
+  <button class="btn btn-primary btn-add-element">Add an Element</button>
+</div>

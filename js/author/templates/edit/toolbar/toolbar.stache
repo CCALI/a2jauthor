@@ -1,8 +1,12 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-6">
-        <form class="navbar-form">
+      <div class="col-xs-6 form-container">
+        <a class="back-to-list" can-href="{page='templates'}">
+          <i class="glyphicon glyphicon-left-open"></i>
+        </a>
+
+        <form class="navbar-form template-name-form">
           <div class="form-group">
             <input type="text" class="form-control">
           </div>

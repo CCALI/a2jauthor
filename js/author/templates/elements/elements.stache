@@ -1,0 +1,4 @@
+{{#unless elements.length}}
+  <blank-element></blank-element>
+{{/unless}}
+

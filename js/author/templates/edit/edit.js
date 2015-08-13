@@ -5,6 +5,7 @@ import Template from 'author/models/template';
 
 import './tabs/';
 import './toolbar/';
+import '../elements/';
 import './edit.less!';
 import 'author/loading/';
 import 'can/map/define/';

@@ -6,7 +6,7 @@
   <div class="container">
     <div class="row clearfix">
       <div class="col-md-8">
-        <div>template elements list...</div>
+        <template-elements elements="{template.value.elements}"></template-elements>
       </div>
 
       <div class="col-md-4">

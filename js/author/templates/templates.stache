@@ -21,7 +21,7 @@
 <div class="page">
   <div class="container-fluid">
     {{#if templatesPromise.isPending}}
-      <span>loading...</span>
+      <app-loading></app-loading>
     {{/else}}
       <templates-sortbar criteria="{sortCriteria}"></templates-sortbar>
       <templates-list

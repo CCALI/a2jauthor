@@ -7,6 +7,7 @@ import './list/';
 import './list/sortbar/';
 import './list/toolbar/';
 import 'author/alert/';
+import 'author/loading/';
 import 'can/map/define/';
 import './templates.less!';
 

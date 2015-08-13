@@ -14,11 +14,11 @@ describe('<templates-page>', function() {
       vm = new Templates();
     });
 
-    it('defaults activeFilter to \'active\' status', function() {
+    it('defaults activeFilter to "active" status', function() {
       assert.equal(vm.attr('activeFilter'), 'active');
     });
 
-    it('defaults sortCriteria to buildOrder asc', function() {
+    it('defaults "sortCriteria" to "buildOrder" asc', function() {
       assert.deepEqual(vm.attr('sortCriteria').attr(), {
         key: 'buildOrder',
         direction: 'asc'
@@ -86,6 +86,18 @@ describe('<templates-page>', function() {
         assert.equal(current, totalActive - 1, 'there should be one less');
       });
 
+      F(done);
+    });
+
+    it('display alert when there are no search results', function(done) {
+      F('templates-list-item').size(size => size > 0);
+
+      F(function() {
+        $('templates-page').viewModel().attr('searchToken', '123456789');
+      });
+
+      F('templates-list-item').size(0);
+      F('.no-results').visible('no results message should be visible');
       F(done);
     });
   });

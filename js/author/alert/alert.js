@@ -31,6 +31,26 @@ const alertTypeClasses = {
 export let Alert = Map.extend({
   define: {
     /**
+     * @property {Boolean} AlertViewModel.prototype.define.autoClose autoClose
+     *
+     * Whether the alert will close itself automatically after `autoCloseTime`.
+     */
+    autoClose: {
+      type: 'boolean',
+      value: false
+    },
+
+    /**
+     * @property {Boolean} AlertViewModel.prototype.define.dismissible dismissible
+     *
+     * Whether user is allowed to dismiss the alert through a close (x) button.
+     */
+    dismissible: {
+      type: 'boolean',
+      value: false
+    },
+
+    /**
      * @property {String} AlertViewModel.prototype.define.alertType alertType
      *
      * It controls how the alert looks, there are five possible options, four of
@@ -44,21 +64,21 @@ export let Alert = Map.extend({
     },
 
     /**
-     * @property {Number} AlertViewModel.prototype.define.transitionId transitionId
+     * @property {Number} AlertViewModel.prototype.define.autoCloseTimeoutId autoCloseTimeoutId
      *
-     * It holds the numerical id returned by `setTimeout`, it's used to clear
-     * the timeout when user closes the alert by using the close button.
+     * Numerical id returned by `setTimeout`, it's used to clear the timeout
+     * when user closes the alert through the close button.
      */
-    transitionId: {
+    autoCloseTimeoutId: {
       type: 'number'
     },
 
     /**
-     * @property {Number} AlertViewModel.prototype.define.transitionTime transitionTime
+     * @property {Number} AlertViewModel.prototype.define.autoCloseTime autoCloseTime
      *
-     * It holds the number of miliseconds after which the alert will close itself.
+     * Number of miliseconds after which the alert will close itself.
      */
-    transitionTime: {
+    autoCloseTime: {
       type: 'number',
       value: 5000
     },
@@ -68,22 +88,16 @@ export let Alert = Map.extend({
      *
      * Whether the alert is opened or closed. Setting it will cause the alert
      * to slide down or up based on its previous value, also, when set to `true`
-     * a timeout will be created to set its value back to `false` which closes
-     * the alert.
+     * a timeout will be created to set its value back to `false`  (if `autoClose`
+     * is `true`).
      */
     open: {
       type: 'boolean',
       set(newVal) {
-        if (newVal) {
-          let delay = this.attr('transitionTime');
+        let autoClose = this.attr('autoClose');
 
-          this.clearTransition();
-
-          let timeoutId = setTimeout(() => {
-            this.attr('open', false);
-          }, delay);
-
-          this.attr('transitionId', timeoutId);
+        if (autoClose && newVal) {
+          this.setAutoCloseTimeout();
         }
 
         return newVal;
@@ -91,21 +105,35 @@ export let Alert = Map.extend({
     },
   },
 
+  setAutoCloseTimeout() {
+    let delay = this.attr('autoCloseTime');
+
+    this.clearAutoCloseTimeout();
+
+    let timeoutId = setTimeout(() => {
+      this.attr('open', false);
+    }, delay);
+
+    this.attr('autoCloseTimeoutId', timeoutId);
+  },
+
   /**
    * @property {function} AlertViewModel.prototype.closeAlert closeAlert
    *
    * Closes the alert (slides it up) when called, and makes sure to clear up
-   * the `transitionId` stored. This method is called when user clicks the close
+   * the timeout id stored. This method is called when user clicks the close
    * button.
    */
   closeAlert() {
-    this.clearTransition();
+    this.clearAutoCloseTimeout();
     this.attr('open', false);
   },
 
-  clearTransition() {
-    let timeoutId = this.attr('transitionId');
+  clearAutoCloseTimeout() {
+    let timeoutId = this.attr('autoCloseTimeoutId');
+
     clearTimeout(timeoutId);
+    this.attr('autoCloseTimeoutId', null);
   }
 });
 
@@ -121,6 +149,12 @@ export default Component.extend({
   viewModel: Alert,
 
   events: {
+    inserted() {
+      if (this.viewModel.attr('open')) {
+        this.element.find('.alert-wrapper').show();
+      }
+    },
+
     '{viewModel} open': function() {
       let open = this.viewModel.attr('open');
       let $wrapper = this.element.find('.alert-wrapper');
@@ -129,6 +163,7 @@ export default Component.extend({
         $wrapper.slideDown();
       } else {
         $wrapper.slideUp();
+        this.viewModel.clearAutoCloseTimeout();
       }
     }
   },

@@ -84,12 +84,12 @@ export let Templates = Map.extend({
     },
 
     /**
-     * @property {Number} TemplatesPageViewModel.prototype.define.alertTransitionTime alertTransitionTime
+     * @property {Number} TemplatesPageViewModel.prototype.define.alertAutoCloseTime alertAutoCloseTime
      *
      * The number of miliseconds after which the alert messages when user deletes/restores
      * templates are visible before they hide themselves.
      */
-    alertTransitionTime: {
+    alertAutoCloseTime: {
       type: 'number',
       value: 5000
     },
@@ -99,11 +99,27 @@ export let Templates = Map.extend({
      *
      * Whether the templates list can be sorted using drag & drop. Since drag & drop
      * only makes sense to define the `buildOrder`, the items can't be dragged if the
-     * plates are sorted by any other criteria.
+     * templates are sorted by any other criteria.
      */
     listIsDraggable: {
       get() {
         return this.attr('sortCriteria.key') === 'buildOrder';
+      }
+    },
+
+    /**
+     * @property {Boolean} TemplatesPageViewModel.prototype.define.noSearchResults noSearchResults
+     *
+     * Whether the search performed by the user has no matches, this property
+     * checks if there is a truthy `searchToken` which means user has performed
+     * a search and `displayList`'s length is falsy which indicates there are no
+     * matches for that `searchToken`.
+     */
+    noSearchResults: {
+      get() {
+        let searchToken = this.attr('searchToken');
+        let displayList = this.attr('displayList');
+        return searchToken.length && !displayList.attr('length');
       }
     }
   },
@@ -188,7 +204,7 @@ export let Templates = Map.extend({
    *
    * This function is meant to update the list when templates are removed or
    * restored, it generates the `displayList` again and compares it to the list
-   * currently being display, the bound list is updated if there is a difference
+   * currently being displayed, the bound list is updated if there is a difference
    * between them (length).
    */
   updateDisplayList() {

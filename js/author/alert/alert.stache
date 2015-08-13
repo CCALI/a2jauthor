@@ -1,11 +1,12 @@
 
 <div class="row alert-wrapper clearfix">
   <div class="col-md-8 col-md-offset-2">
-    <div class="alert {{alertTypeClass}} alert-dismissible" role="alert">
-      <button (click)="closeAlert" type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-
+    <div class="alert {{alertTypeClass}} {{#if dismissible}}alert-dismissible{{/if}}" role="alert">
+      {{#if dismissible}}
+        <button (click)="closeAlert" type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      {{/if}}
       <content />
     </div>
   </div>

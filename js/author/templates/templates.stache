@@ -1,7 +1,12 @@
 {{#if templatesPromise.isResolved}}
   <templates-toolbar class="clearfix" filter="{activeFilter}" search-token="{searchToken}"></templates-toolbar>
 
-  <app-alert open="{openDeletedAlert}" transition-time="{alertTransitionTime}">
+  <app-alert
+    auto-close="true"
+    dismissible="true"
+    open="{openDeletedAlert}"
+    auto-close-time="{alertAutoCloseTime}">
+
     {{#each deletedTemplates}}
       <div>
         {{title}} - has been deleted - <a href="#" (click)="{restoreTemplate .}">Restore</a>
@@ -9,7 +14,12 @@
     {{/each}}
   </app-alert>
 
-  <app-alert open="{openRestoredAlert}" transition-time="{alertTransitionTime}">
+  <app-alert
+    auto-close="true"
+    dismissible="true"
+    open="{openRestoredAlert}"
+    auto-close-time="{alertAutoCloseTime}">
+
     {{#each restoredTemplates}}
       <div>
         {{title}} - has been restored - <a href="#" (click)="{deleteTemplate .}">Delete</a>
@@ -23,12 +33,17 @@
     {{#if templatesPromise.isPending}}
       <app-loading></app-loading>
     {{/else}}
-      <templates-sortbar criteria="{sortCriteria}"></templates-sortbar>
-      <templates-list
-        templates="{displayList}"
-        class="{{listStateClassName}}"
-        is-draggable="{listIsDraggable}">
-      </templates-list>
+      {{#if noSearchResults}}
+        <app-alert class="no-results" open="true" alert-type="warning">No templates match</app-alert>
+      {{else}}
+        <templates-sortbar criteria="{sortCriteria}"></templates-sortbar>
+
+        <templates-list
+          templates="{displayList}"
+          class="{{listStateClassName}}"
+          is-draggable="{listIsDraggable}">
+        </templates-list>
+      {{/if}}
     {{/if}}
   </div>
 </div>

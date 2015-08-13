@@ -21,7 +21,7 @@
 
     <div class="nav navbar-nav navbar-right">
       <button class="btn btn-primary navbar-btn new-template"><span class="glyphicon-plus"></span> New Template</button>
-      <button class="btn btn-default navbar-btn test-compile"><span class="glyphicon-file-pdf"></span> Test Compile</button>
+      <button class="btn btn-default navbar-btn test-compile"><span class="glyphicon-file-pdf"></span> Test Assemble</button>
     </div>
 
     <form class="navbar-form" role="search">

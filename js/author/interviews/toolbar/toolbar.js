@@ -2,6 +2,7 @@ import Component from 'can/component/';
 import template from './toolbar.stache!';
 
 import './toolbar.less!';
+import 'can/view/href/';
 import 'author/button-toolbar/';
 
 /**

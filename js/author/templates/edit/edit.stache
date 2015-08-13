@@ -1,10 +1,10 @@
 {{#if template.isPending}}
-  <span>loading...</span>
+  <app-loading></app-loading>
 {{else}}
   <template-edit-toolbar></template-edit-toolbar>
 
   <div class="container">
-    <div class="row">
+    <div class="row clearfix">
       <div class="col-md-8">
         <div>template elements list...</div>
       </div>

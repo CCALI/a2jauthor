@@ -1,9 +1,10 @@
 import F from 'funcunit';
 import assert from 'assert';
-import {Templates} from './templates';
+import Templates from './templates-vm';
 
 import 'can/route/';
 import 'steal-mocha';
+import './templates';
 
 describe('<templates-page>', function() {
 

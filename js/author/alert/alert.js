@@ -14,24 +14,32 @@ const alertTypeClasses = {
 };
 
 /**
- * @module {Module} author/alert/
+ * @module {Module} alert <app-alert>
  * @parent api-components
  *
- * Provides the view model and component constructors for the `<app-alert>`
- * custom tag which takes care of displaying simple alert messages based on
- * the bootstrap alert component. It will automatically close itself after some
- * time that can be provided by the ser.
+ * Wrapper component for bootstrap's alert elements. It adds the ability to
+ * auto close the alert after a certain amount of time defined by the user.
+ *
+ * ## Use
+ *
+ * @codestart
+ *  <app-alert open="true">
+ *    Alert content goes here!
+ *  </app-alert>
+ * @codeend
  */
 
-
 /**
- * @function AlertViewModel
- * Constructor used as the viewModel of the `<app-alert>` component.
+ * @property {can.Map} alert.ViewModel
+ * @parent alert
+ *
+ * `<app-alert>`'s viewModel.
  */
 export let Alert = Map.extend({
   define: {
     /**
-     * @property {Boolean} AlertViewModel.prototype.define.autoClose autoClose
+     * @property {Boolean} alert.ViewModel.prototype.define.autoClose autoClose
+     * @parent alert.ViewModel
      *
      * Whether the alert will close itself automatically after `autoCloseTime`.
      */
@@ -41,7 +49,8 @@ export let Alert = Map.extend({
     },
 
     /**
-     * @property {Boolean} AlertViewModel.prototype.define.dismissible dismissible
+     * @property {Boolean} alert.ViewModel.prototype.define.dismissible dismissible
+     * @parent alert.ViewModel
      *
      * Whether user is allowed to dismiss the alert through a close (x) button.
      */
@@ -51,12 +60,19 @@ export let Alert = Map.extend({
     },
 
     /**
-     * @property {String} AlertViewModel.prototype.define.alertType alertType
+     * @property {String} alert.ViewModel.prototype.define.alertType alertType
+     * @parent alert.ViewModel
      *
      * It controls how the alert looks, there are five possible options, four of
      * them are the default provided by bootstrap (success, info, warning, and
      * danger) and there is a `default` type which just adds a border to the
      * `.alert` element.
+     *
+     * @codestart
+     * <app-alert open="true" alert-type="warning">
+     *   Something happened!
+     * </app-alert>
+     * @codeend
      */
     alertType: {
       type: 'string',
@@ -64,7 +80,8 @@ export let Alert = Map.extend({
     },
 
     /**
-     * @property {Number} AlertViewModel.prototype.define.autoCloseTimeoutId autoCloseTimeoutId
+     * @property {Number} alert.ViewModel.prototype.define.autoCloseTimeoutId autoCloseTimeoutId
+     * @parent alert.ViewModel
      *
      * Numerical id returned by `setTimeout`, it's used to clear the timeout
      * when user closes the alert through the close button.
@@ -74,7 +91,8 @@ export let Alert = Map.extend({
     },
 
     /**
-     * @property {Number} AlertViewModel.prototype.define.autoCloseTime autoCloseTime
+     * @property {Number} alert.ViewModel.prototype.define.autoCloseTime autoCloseTime
+     * @parent alert.ViewModel
      *
      * Number of miliseconds after which the alert will close itself.
      */
@@ -84,7 +102,8 @@ export let Alert = Map.extend({
     },
 
     /**
-     * @property {Boolean} AlertViewModel.prototype.define.open open
+     * @property {Boolean} alert.ViewModel.prototype.define.open open
+     * @parent alert.ViewModel
      *
      * Whether the alert is opened or closed. Setting it will cause the alert
      * to slide down or up based on its previous value, also, when set to `true`
@@ -118,7 +137,8 @@ export let Alert = Map.extend({
   },
 
   /**
-   * @property {function} AlertViewModel.prototype.closeAlert closeAlert
+   * @property {function} alert.ViewModel.prototype.closeAlert closeAlert
+   * @parent alert.ViewModel
    *
    * Closes the alert (slides it up) when called, and makes sure to clear up
    * the timeout id stored. This method is called when user clicks the close
@@ -137,11 +157,6 @@ export let Alert = Map.extend({
   }
 });
 
-
-/**
- * @function AppAlertComponent
- * Constructor function that defines the custom `<app-alert>` tag behavior.
- */
 export default Component.extend({
   template,
   tag: 'app-alert',

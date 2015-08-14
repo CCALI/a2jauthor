@@ -282,7 +282,7 @@
           {{#if id}}
             <template-edit-page></template-edit-page>
           {{else}}
-            <templates-page template-id="{templateId}"></templates-page>
+            <templates-page></templates-page>
           {{/if}}
         {{/is}}
       </div>

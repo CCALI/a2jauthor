@@ -2,7 +2,7 @@ const basePath = 'http://author.a2jauthor.org/csh5/';
 
 /**
  * @module {{}} author/utils/help-page-url help-page-url
- * @parent api
+ * @parent api-utils
  *
  * @option {function} pageToHelpUrl
  *

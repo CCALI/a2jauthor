@@ -12,22 +12,31 @@ import 'can/map/define/';
 import './templates.less!';
 
 /**
- * @module {Module} author/templates/list/
+ * @module {Module} templatesPage <templates-page>
  * @parent api-components
  *
- * Provides the view model and component constructor for the `<templates-page>`
- * custom tag which takes care of displaying the templates list and options to
- * operate on the list (like filtering and sorting).
+ * This component takes care of displaying the templates list and other child
+ * components that allow the user to filter, sort or search particular templates
+ * in the list.
+ *
+ * ## Use
+ *
+ * @codestart
+ * <templates-page></templates-page>
+ * @codeend
  */
 
 /**
- * @function TemplatesPageViewModel
- * Constructor used as the viewModel of the `<templates-page>` component.
+ * @property {can.Map} templatesPage.ViewModel
+ * @parent templatesPage
+ *
+ * `<templates-page>`'s viewModel.
  */
 export let Templates = Map.extend({
   define: {
     /**
-     * @property {String} TemplatesPageViewModel.prototype.define.activeFilter activeFilter
+     * @property {String} templatesPage.ViewModel.prototype.define.activeFilter activeFilter
+     * @parent templatesPage.ViewModel
      *
      * It holds the value of the state by which the templates list is being
      * filtered, the possible values are `all`, `active` and `deleted`.
@@ -37,7 +46,8 @@ export let Templates = Map.extend({
     },
 
     /**
-     * @property {{}} TemplatesPageViewModel.prototype.define.sortCriteria sortCriteria
+     * @property {{}} templatesPage.ViewModel.prototype.define.sortCriteria sortCriteria
+     * @parent templatesPage.ViewModel
      *
      * It holds the key and the direction by which the templates list is sorted,
      * by default the list is sorted by `buildOrder` asc.
@@ -50,7 +60,8 @@ export let Templates = Map.extend({
     },
 
     /**
-     * @property {String} TemplatesPageViewModel.prototype.define.searchToken searchToken
+     * @property {String} templatesPage.ViewModel.prototype.define.searchToken searchToken
+     * @parent templatesPage.ViewModel
      *
      * It holds the search string typed by the user in the search form.
      */
@@ -60,7 +71,8 @@ export let Templates = Map.extend({
     },
 
     /**
-     * @property {Boolen} TemplatesPageViewModel.prototype.define.openDeletedAlert openDeletedAlert
+     * @property {Boolen} templatesPage.ViewModel.prototype.define.openDeletedAlert openDeletedAlert
+     * @parent templatesPage.ViewModel
      *
      * Each time a template is deleted, a small alert should be displayed to
      * indicate the user that the template is actually being deleted and it
@@ -73,7 +85,8 @@ export let Templates = Map.extend({
     },
 
     /**
-     * @property {Boolean} TemplatesPageViewModel.prototype.define.openRestoredAlert openRestoredAlert
+     * @property {Boolean} templatesPage.ViewModel.prototype.define.openRestoredAlert openRestoredAlert
+     * @parent templatesPage.ViewModel
      *
      * Same as `openDeletedAlert` but this one controls the alert shown for
      * templates that are being restored.
@@ -84,7 +97,8 @@ export let Templates = Map.extend({
     },
 
     /**
-     * @property {Number} TemplatesPageViewModel.prototype.define.alertAutoCloseTime alertAutoCloseTime
+     * @property {Number} templatesPage.ViewModel.prototype.define.alertAutoCloseTime alertAutoCloseTime
+     * @parent templatesPage.ViewModel
      *
      * The number of miliseconds after which the alert messages when user deletes/restores
      * templates are visible before they hide themselves.
@@ -95,7 +109,8 @@ export let Templates = Map.extend({
     },
 
     /**
-     * @property {Boolean} TemplatesPageViewModel.prototype.define.listIsDraggable listIsDraggable
+     * @property {Boolean} templatesPage.ViewModel.prototype.define.listIsDraggable listIsDraggable
+     * @parent templatesPage.ViewModel
      *
      * Whether the templates list can be sorted using drag & drop. Since drag & drop
      * only makes sense to define the `buildOrder`, the items can't be dragged if the
@@ -108,7 +123,8 @@ export let Templates = Map.extend({
     },
 
     /**
-     * @property {Boolean} TemplatesPageViewModel.prototype.define.noSearchResults noSearchResults
+     * @property {Boolean} templatesPage.ViewModel.prototype.define.noSearchResults noSearchResults
+     * @parent templatesPage.ViewModel
      *
      * Whether the search performed by the user has no matches, this property
      * checks if there is a truthy `searchToken` which means user has performed
@@ -125,7 +141,8 @@ export let Templates = Map.extend({
   },
 
   /**
-   * @function TemplatesPageViewModel.prototype.init init
+   * @function templatesPage.ViewModel.prototype.init init
+   * @parent templatesPage.ViewModel
    *
    * Function executed when the viewmodel is instantiated, it takes care of
    * fetching the templates and setting `templatesPromise`, `templates` and
@@ -200,7 +217,8 @@ export let Templates = Map.extend({
   },
 
   /**
-   * @function TemplatesPageViewModel.prototype.updateDisplayList updateDisplayList
+   * @function templatesPage.ViewModel.prototype.updateDisplayList updateDisplayList
+   * @parent templatesPage.ViewModel
    *
    * This function is meant to update the list when templates are removed or
    * restored, it generates the `displayList` again and compares it to the list
@@ -217,7 +235,8 @@ export let Templates = Map.extend({
   },
 
   /**
-   * @function TemplatesPageViewModel.prototype.handleDeletedTemplates handleDeletedTemplates
+   * @function templatesPage.ViewModel.prototype.handleDeletedTemplates handleDeletedTemplates
+   * @parent templatesPage.ViewModel
    *
    * This function is executed when the list of templates changes, it observes the
    * templates set as `deleted` in order to show/hide the alert messages.
@@ -241,7 +260,8 @@ export let Templates = Map.extend({
   },
 
   /**
-   * @function TemplatesPageViewModel.prototype.handleRestoredTemplates handleRestoredTemplates
+   * @function templatesPage.ViewModel.prototype.handleRestoredTemplates handleRestoredTemplates
+   * @parent templatesPage.ViewModel
    *
    * Same as `handleDeletedTemplates` but for templates being restored.
    */
@@ -261,10 +281,6 @@ export let Templates = Map.extend({
   }
 });
 
-/**
- * @function TemplatesPageComponent
- * Constructor function that defines the custom `<templates-page>` tag behavior.
- */
 export default Component.extend({
   template,
   leakScope: false,

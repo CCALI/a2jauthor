@@ -26,6 +26,8 @@ const placements = ['top', 'right', 'bottom', 'left', 'auto'];
 /**
  * @property {can.Map} popover.ViewModel
  * @parent popover
+ *
+ * `<app-popover>`'s viewModel.
  */
 export let Popover = Map.extend({
   define: {
@@ -46,6 +48,10 @@ export let Popover = Map.extend({
      *
      * The position of the popover, possible values are `top`, `bottom`, `left`,
      * `right`, or `auto`. Defaults to `right`.
+     *
+     * @codestart
+     * <app-popover placement="top"></app-popover>
+     * @codeend
      */
     placement: {
       value: 'right',

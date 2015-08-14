@@ -2,7 +2,7 @@ import navbarItems from 'author/vertical-navbar/navbar-items';
 
 /**
  * @module {{}} author/utils/tabs-routing tabs-routing
- * @parent api
+ * @parent api-utils
  *
  * @option {function} tabsRouting
  *

@@ -37,18 +37,26 @@ function move(array, start, end) {
 }
 
 /**
- * @module {Module} author/templates/list/
+ * @module {Module} templatesList <templates-list>
  * @parent api-components
  *
- * Provides the view model and component constructors for the `<templates-list>`
- * custom tag, which takes care of displaying a list of templates created by the
+ * This component takes care of displaying a list of templates created by the
  * logged in user.
+ *
+ * ## Use
+ *
+ * @codestart
+ * <templates-list is-draggable="true" templates="{templates}">
+ * </templates-list>
+ * @codeend
  */
 
 
 /**
- * @function TemplatesListViewModel
- * Constructor function used as the `viewModel` of the `<templates-list>` component.
+ * @property {can.Map} templatesList.ViewModel
+ * @parent templatesList
+ *
+ * `<templates-list>`'s viewModel.
  */
 export let List = Map.extend({
   define: {
@@ -87,10 +95,6 @@ export let List = Map.extend({
   }
 });
 
-/**
- * @function TemplatesListComponent
- * Constructor function that defines the custom `<templates-list>` tag behavior.
- */
 export default Component.extend({
   template,
   viewModel: List,

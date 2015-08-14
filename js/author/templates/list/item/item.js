@@ -7,18 +7,34 @@ import 'can/view/href/';
 import 'can/map/define/';
 
 /**
- * @module {Module} author/templates/list/item/
+ * @module {Module} templatesListItem <templates-list-item>
  * @parent api-components
+ *
+ * This component takes care of rendering the details of a given template (e.g
+ * title, last modified date). It also allows the user to delete the template
+ * or restore it.
+ *
+ * ## Use
+ *
+ * @codestart
+ * <templates-list-item
+ *   is-draggable="true"
+ *   template="{template}">
+ * </templates-list-item>
+ * @codeend
  */
 
 /**
- * @function TemplatesListItemViewModel
- * Constructor function used as the viewModel of the `<templates-list-item>` component.
+ * @property {can.Map} templatesListItem.ViewModel
+ * @parent templatesListItem
+ *
+ * `<templates-list-item>`'s viewModel.
  */
 export let Item = Map.extend({
   define: {
     /**
-     * @property {Boolean} TemplatesListItemViewModel.prototype.define.hovered hovered
+     * @property {Boolean} templatesListItem.ViewModel.prototype.define.hovered hovered
+     * @parent templatesListItem.ViewModel
      *
      * Whether the mouse pointer is over the section of the component where the
      * details of the template are rendered, it is used to show/hide the delete/restore
@@ -29,7 +45,8 @@ export let Item = Map.extend({
     },
 
     /**
-     * @property {Number} TemplatesListItemViewModel.prototype.define.transitionTime transitionTime
+     * @property {Number} templatesListItem.ViewModel.prototype.define.transitionTime transitionTime
+     * @parent templatesListItem.ViewModel
      *
      * The number of ms after which the delete/restore action sets `template.active`
      * to its final value, it's done async to be able to animate out the component.
@@ -40,7 +57,8 @@ export let Item = Map.extend({
     },
 
     /**
-     * @property {Boolean} TemplatesListItemViewModel.prototype.define.deleting deleting
+     * @property {Boolean} templatesListItem.ViewModel.prototype.define.deleting deleting
+     * @parent templatesListItem.ViewModel
      *
      * Whether the user deletes this template, when set it adds/removes a `deleting`
      * css class to the element to fire up the delete animation.
@@ -51,7 +69,8 @@ export let Item = Map.extend({
     },
 
     /**
-     * @property {Boolean} TemplatesListItemViewModel.prototype.define.restoring restoring
+     * @property {Boolean} templatesListItem.ViewModel.prototype.define.restoring restoring
+     * @parent templatesListItem.ViewModel
      *
      * Whether the user restores this template, when set it adds/remove a `restoring`
      * css class to the element to fire up the restore animation
@@ -63,7 +82,8 @@ export let Item = Map.extend({
   },
 
   /**
-   * @function TemplatesListItemViewModel.prototype.deleteTemplate deleteTemplate
+   * @function templatesListItem.ViewModel.prototype.deleteTemplate deleteTemplate
+   * @parent templatesListItem.ViewModel
    *
    * It sets up the proper flags to animate out the component and make sure its
    * `active` state is set to `false` after `transitionTime` has passed.
@@ -84,7 +104,8 @@ export let Item = Map.extend({
   },
 
   /**
-   * @function TemplatesListItemViewModel.prototype.restoreTemplate restoreTemplate
+   * @function templatesListItem.ViewModel.prototype.restoreTemplate restoreTemplate
+   * @parent templatesListItem.ViewModel
    *
    * It sets up the proper flags to animate out the component and make sure its
    * `active` state is set to `true` after `transitionTime` has passed.
@@ -105,15 +126,12 @@ export let Item = Map.extend({
   }
 });
 
-/**
- * @function TemplateListItemComponent
- * Constructor function that defines the custom `<templates-list-item>` tag behavior.
- */
 export default Component.extend({
   template,
   leakScope: false,
   viewModel: Item,
   tag: 'templates-list-item',
+
   events: {
     '.template-wrapper mouseenter': function() {
       this.viewModel.attr('hovered', true);

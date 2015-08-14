@@ -1,5 +1,6 @@
 /**
  * @module {{}} author/utils/sort-comparator
+ * @parent api-utils
  *
  * Provides functions that given a `key` and `direction` (`asc` or `desc`) will
  * generate a comparator function meant to be used to sort `can.List` instances

@@ -110,9 +110,46 @@ export default Map.extend({
      */
     noSearchResults: {
       get() {
+        let templates = this.attr('templates');
         let searchToken = this.attr('searchToken');
         let displayList = this.attr('displayList');
-        return searchToken.length && !displayList.attr('length');
+        return searchToken.length &&
+          templates.attr('length') && !displayList.attr('length');
+      }
+    },
+
+    /**
+     * @property {Boolean} templatesPage.ViewModel.prototype.define.noTemplatesMatchFilter noTemplatesMatchFilter
+     * @parent templatesPage.ViewModel
+     *
+     * Whether the filter selected by the user has no matches, this property
+     * checks if the source list (`templates`) has items, if there is no
+     * `searchToken` and finally if the `displayList` is empty which means, that
+     * there are no matches for `activeFilter`.
+     */
+    noTemplatesMatchFilter: {
+      get() {
+        let templates = this.attr('templates');
+        let searchToken = this.attr('searchToken');
+        let displayList = this.attr('displayList');
+        return !searchToken.length &&
+          templates.attr('length') && !displayList.attr('length');
+      }
+    },
+
+    /**
+     * @property {Boolean} templatesPage.ViewModel.prototype.define.showTemplatesList showTemplatesList
+     * @parent templatesPage.ViewModel
+     *
+     * Whether there are templates to be shown using the `templates-list`
+     * component, this is the case when both the source list (`templates`) and
+     * the filtered list (`displayList`) have items.
+     */
+    showTemplatesList: {
+      get() {
+        let templates = this.attr('templates');
+        let displayList = this.attr('displayList');
+        return templates.attr('length') && displayList.attr('length');
       }
     }
   },

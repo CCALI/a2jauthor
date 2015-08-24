@@ -90,7 +90,7 @@ describe('<templates-page>', function() {
       F(done);
     });
 
-    it('display alert when there are no search results', function(done) {
+    it('displays alert if there are no search results', function(done) {
       F('templates-list-item').size(size => size > 0);
 
       F(function() {
@@ -99,6 +99,49 @@ describe('<templates-page>', function() {
 
       F('templates-list-item').size(0);
       F('.no-results').visible('no results message should be visible');
+      F(done);
+    });
+
+    it('displays alert if there are no templates', function(done) {
+      F('templates-list-item').size(size => size > 0);
+
+      // replace component's template list with an empty array.
+      F(function() {
+        $('templates-page').viewModel().attr('templates').replace([]);
+      });
+
+      F('.no-templates-exist').visible('no templates message should be visible');
+      F(done);
+    });
+
+    it('displays alert if no templates match filters', function(done) {
+      F('templates-list-item').size(size => size > 0);
+
+      F(function() {
+        let vm = $('templates-page').viewModel();
+
+        // mark all templates as deleted
+        vm.attr('templates').each(template => template.attr('active', false));
+      });
+
+      F('.no-match-filter').visible('no templates match "active" filter');
+      F('.no-match-filter').text(/no templates match/i);
+      F(done);
+    });
+
+    it('displays alert if there are no templates in the trash', function(done) {
+      F('templates-list-item').size(size => size > 0);
+
+      F(function() {
+        let vm = $('templates-page').viewModel();
+
+        // mark all templates as active and set filter to deleted.
+        vm.attr('templates').each(template => template.attr('active', true));
+        vm.attr('activeFilter', 'deleted');
+      });
+
+      F('.no-match-filter').visible('no templates match "active" filter');
+      F('.no-match-filter').text(/no templates in the trash/i);
       F(done);
     });
   });

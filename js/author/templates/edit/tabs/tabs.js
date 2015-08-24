@@ -6,5 +6,6 @@ import './tabs.less!';
 
 export default Component.extend({
   template,
+  leakScope: false,
   tag: 'template-edit-tabs'
 });

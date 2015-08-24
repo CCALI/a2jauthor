@@ -1,0 +1,7 @@
+<div class="wrapper{{#if selected}} selected{{/if}}" (click)="toggleSelected">
+  <content />
+</div>
+
+{{#if selected}}
+  <element-toolbar></element-toolbar>
+{{/if}}

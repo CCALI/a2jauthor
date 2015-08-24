@@ -1,0 +1,17 @@
+@import '../../../styles/a2j-custom/a2j-mixins';
+
+element-container {
+  .wrapper {
+    padding: 10px;
+    min-height: 50px;
+
+    &:hover {
+      border: 1px dashed darken(@gray-lighter, 20%);
+    }
+
+    &.selected {
+     border: 1px solid darken(@gray-lighter, 20%);
+     border-bottom: none;
+    }
+  }
+}

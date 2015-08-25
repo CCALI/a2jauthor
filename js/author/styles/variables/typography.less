@@ -1,0 +1,117 @@
+/**
+* @stylesheet typography.less Typography
+* @parent styles-theme 2
+*
+* @description
+* Typography should be used as a baseline to indicate hierarchy on every page of the application.
+* Always choose the appropriate text size for the specific part being laid out, to communicate
+* importance among headlines, content, microcopy and controls.
+*
+* Ensure that sufficient color contrast is provided between the text and the background.
+* Color contrast should be above 4.5 to comply with AA standards.
+*
+* @iframe demos/src/components/base/demos/typography/font-families/demo.html 524
+*
+**/
+@font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-base:        @font-family-sans-serif;
+
+
+// Currently not in use by the framwork. If needed we will evaluate which font-family to use.
+@font-family-serif:       Georgia, "Times New Roman", Times, serif;
+
+// Currently not in use by the framework. If needed we will evaluate which font-family to use.
+// Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
+@font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
+
+
+/**
+* @styles font-hierarchy Font Hierarchy
+* @parent typography.less 1
+*
+* @demo docs/demos/src/components/base/demos/typography/font-hierarchy/demo.html
+**/
+
+// Unit-less `line-height` for use in components like buttons.
+@line-height-base:        1.428571429; // 20/14
+// Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
+@line-height-computed:    floor((@font-size-base * @line-height-base)); // ~20px
+
+// By default, this inherits from the `<body>`.
+@headings-font-family:    inherit;
+@headings-font-weight:    300;
+@headings-line-height:    1.1;
+@headings-color:          inherit;
+
+@headings-small-color:        @gray-light;
+@page-header-border-color:    @pacific;
+
+
+/**
+* @styles font-sizes Font Sizes
+* @parent typography.less 2
+*
+* @iframe demos/src/components/base/demos/typography/font-sizes/demo.html 280
+**/
+@font-size-base:          15px;
+@font-size-large:         ceil((@font-size-base * 1.25)); // ~18px
+@font-size-small:         ceil((@font-size-base * 0.85)); // ~12px
+
+@font-size-h1:            floor((@font-size-base * 2.6)); // ~36px
+@font-size-h2:            floor((@font-size-base * 2.15)); // ~30px
+@font-size-h3:            ceil((@font-size-base * 1.7)); // ~24px
+@font-size-h4:            ceil((@font-size-base * 1.25)); // ~18px
+@font-size-h5:            @font-size-base;
+@font-size-h6:            ceil((@font-size-base * 0.85)); // ~12px
+
+@body-font-weight:             300;
+
+/**
+* @styles font-elements Font Elements
+* @parent typography.less 3
+*
+* @body
+*
+* ### Inline Elements
+* @demo docs/demos/src/components/base/demos/typography/font-elements/inline-elements/demo.html
+*
+* ### Blockquotes
+* @demo docs/demos/src/components/base/demos/typography/font-elements/blockquotes/demo.html
+*
+* ### Addresses
+* @demo docs/demos/src/components/base/demos/typography/font-elements/addresses/demo.html
+*
+* ### Lists
+* @demo docs/demos/src/components/base/demos/typography/font-elements/lists/demo.html
+*
+* ### Code
+* @demo docs/demos/src/components/base/demos/typography/font-elements/code/demo.html
+**/
+
+@blockquote-small-color:      @pacific;
+@blockquote-font-size:        (@font-size-base * 1.25);
+@blockquote-border-color:     @pacific;
+
+@text-muted:                  @thunderCloud;
+@abbr-border-color:           @gray-light;
+
+
+//** Width of horizontal description list titles
+@dl-horizontal-offset:        @component-offset-horizontal;
+//** Horizontal offset for forms and lists.
+@component-offset-horizontal: 180px;
+//** Horizontal line color.
+@hr-border:                   @pacific;
+
+
+
+@code-color:                  #c7254e;
+@code-bg:                     #f9f2f4;
+
+@kbd-color:                   #fff;
+@kbd-bg:                      #333;
+
+@pre-bg:                      #f5f5f5;
+@pre-color:                   @gray-dark;
+@pre-border-color:            #ccc;
+@pre-scrollable-max-height:   340px;

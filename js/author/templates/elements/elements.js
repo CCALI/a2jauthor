@@ -5,6 +5,7 @@ import template from './elements.stache!';
 import './blank/';
 import 'can/map/define/';
 import './elements.less!';
+import './element-container/';
 
 export let Elements = Map.extend({
   define: {
@@ -16,6 +17,7 @@ export let Elements = Map.extend({
 
 export default Component.extend({
   template,
+  leakScope: false,
   viewModel: Elements,
   tag: 'template-elements'
 });

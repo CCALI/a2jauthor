@@ -392,17 +392,17 @@
   li.tab {
     display: inline-block;
     padding: 10px 15px;
-    color: @darkSkies;
+    color: @rain;
     cursor: pointer;
-    border: @border;
+    border: solid 1px transparent;
     margin-bottom: -1px;
-    border-bottom: 0;
-    background-color: @cloud;
     margin-left: 5px;
   }
   li.tab.active {
     font-weight: bold;
-    color: @rain;
+    border: @border;
+    border-bottom: solid 1px #ffffff;
+    color: @darkSkies;
     background-color: white;
   }
   div.tab-content {

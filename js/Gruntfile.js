@@ -20,6 +20,12 @@ module.exports = function(grunt) {
         cwd: 'author/styles/',
         src: 'icon-font/**/*',
         dest: 'author/docs/demos/'
+      },
+      'demos': {
+        expand: true,
+        cwd: 'author/styles/style-guide/',
+        src: 'demos/**/*',
+        dest: 'author/docs/'
       }
     },
 
@@ -47,6 +53,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', ['testee:firefox']);
   grunt.registerTask('build', ['clean:build', 'steal-build']);
-  grunt.registerTask('documentjs', ['documentjs-orig', 'copy:icon-font']);
+  grunt.registerTask('documentjs', ['documentjs-orig', 'copy:icon-font', 'copy:demos']);
 
 };

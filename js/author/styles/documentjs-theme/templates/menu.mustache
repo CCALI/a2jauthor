@@ -1,7 +1,7 @@
-<ul class="api cascading primary-grouping">
+<ul class="api cascading primary-grouping"> 
 	{{#getActiveAndParents}}
 		{{#each parents}}
-		<li class="search-container active parent yes">
+		<li class="search-container active parent">
 			<a class="sidebar-title" href="{{urlTo name}}" data-search="{{#if title}}{{title}}{{else}}{{{name}}}{{/if}}">
 				{{makeTitle}}
 			</a>

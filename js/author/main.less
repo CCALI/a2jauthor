@@ -1,10 +1,13 @@
 /**
  * @page styles Styles
- * @group styles-base 1 Base Elements
- * @group styles-theme 0 Theme
- * @group styles-utilities 0 Utilities
+ * @group styles-start 0 Getting Started
+ * @group styles-theme 1 Theme Basics
+ * @group styles-base 2 Base Elements
+ * @group styles-utilities 3 Utilities
  *
- * This is the Live Style Guide for the A2J Author Framework.
+ * This is the Live Style Guide for the A2J Author Framework. A2J Author is based on the Boostrap 3 CSS framework for all markup and styles.
+ *
+ * The styles defined in this guide are derived from the Bootstrap original documentation, but have been modified as appropriate for the specific UI controls in the A2J Author application.
  */
 
 // Defines the location of the Bootstrap package files
@@ -32,8 +35,8 @@
   @import "@{bootstrap-base}/scaffolding.less";
   @import "@{bootstrap-base}/type.less";
   @import "@{bootstrap-base}/grid.less";
-  @import "@{bootstrap-base}/tables.less";
-  @import "@{bootstrap-base}/forms.less";
+  @import "@{bootstrap-base}/tables.less"; /* need */
+  @import "@{bootstrap-base}/forms.less"; /* need */
   @import "@{bootstrap-base}/buttons.less";
 
   // Components
@@ -45,20 +48,19 @@
   @import "@{bootstrap-base}/labels.less";
   @import "@{bootstrap-base}/badges.less";
   @import "@{bootstrap-base}/alerts.less";
-  @import "@{bootstrap-base}/media.less";
   @import "@{bootstrap-base}/list-group.less";
   @import "@{bootstrap-base}/panels.less";
   @import "@{bootstrap-base}/responsive-embed.less";
-  @import "@{bootstrap-base}/close.less";
+  @import "@{bootstrap-base}/close.less"; /* need */
 
   // Components w/ JavaScript
-  @import "@{bootstrap-base}/modals.less";
+  @import "@{bootstrap-base}/modals.less"; /* need */
   //@import "@{bootstrap-base}/tooltip.less";
-  @import "@{bootstrap-base}/popovers.less";
+  @import "@{bootstrap-base}/popovers.less"; /* need */
 
   // Utility classes
-  @import "@{bootstrap-base}/utilities.less";
-  @import "@{bootstrap-base}/responsive-utilities.less";
+  @import "@{bootstrap-base}/utilities.less"; /* need */
+  @import "@{bootstrap-base}/responsive-utilities.less"; /* need */
 }
 
 // Import all of our overrides for Bootstrap

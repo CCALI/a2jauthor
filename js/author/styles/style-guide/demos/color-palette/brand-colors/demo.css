@@ -1,0 +1,33 @@
+    .gray-base {
+      background-color: #000;
+    }
+    .gray-darker {
+      background-color: #313131;
+    }
+    .gray-dark {
+      background-color: #3D3D3D;
+    }
+    .gray {
+      background-color: #767676;
+    }
+    .gray-light{
+      background-color: #DEDEDE;
+    }
+    .gray-lighter {
+      background-color: #F0F0F0;
+    }
+    .brand-primary {
+      background-color: #0179b5;
+    }
+    .brand-success {
+      background-color: #75A347;
+    }
+    .brand-info {
+      background-color: #009dd9;
+    }
+    .brand-danger {
+      background-color: #CC0024;
+    }
+    .brand-warning {
+      background-color: #DCB64B;
+    }

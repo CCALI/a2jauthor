@@ -1,4 +1,8 @@
 {
+  "siteDefaults": {
+    "templates": "author/styles/documentjs-theme/templates",
+    "static": "author/styles/documentjs-theme/static"
+  },
   "sites": {
     "docs": {
       "glob": {
@@ -6,9 +10,7 @@
         "ignore": "{docs,viewer,node_modules,tests,minify,author/{src,libs}}/**/*"
       },
       "dest": "./author/docs",
-      "parent": "author",
-      "templates": "./author/styles/documentjs-theme/templates",
-      "static": "./author/styles/documentjs-theme/static"
+      "parent": "author"
     }
   }
 }

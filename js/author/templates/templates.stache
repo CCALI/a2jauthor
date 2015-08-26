@@ -32,6 +32,10 @@
   </app-alert>
 {{/if}}
 
+<app-alert alert-type="warning">
+  <p>Your mom - has been restored - <a href="#" (click)="{deleteTemplate .}">Delete</a></p>
+</app-alert>
+
 <div class="page">
   <div class="container-fluid">
     {{#if templatesPromise.isPending}}

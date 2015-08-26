@@ -3,12 +3,12 @@
 app-alert {
   display: block;
 
-  .alert-wrapper {
-    display: none;
+  .alert {
+    padding-left: @grid-gutter-width/4;
+    padding-bottom: @grid-gutter-width/4;
+    padding-top: @grid-gutter-width/4;
   }
-
   .alert.alert-default {
-    .border;
-    border-radius: 0;
+    border: 1px solid @alert-border-color;
   }
 }

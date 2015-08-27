@@ -4,35 +4,45 @@
     filter="{activeFilter}"
     search-token="{searchToken}">
   </templates-toolbar>
+{{/if}}
 
+<div class="page">
+{{#if templatesPromise.isResolved}}
+
+ {{#if openDeletedAlert}}
   <app-alert
     auto-close="true"
+    alert-type="warning"
     dismissible="true"
     open="{openDeletedAlert}"
     auto-close-time="{alertAutoCloseTime}">
 
     {{#each deletedTemplates}}
-      <div>
+      <p>
         {{title}} - has been deleted - <a href="#" (click)="{restoreTemplate .}">Restore</a>
-      </div>
+      </p>
     {{/each}}
   </app-alert>
+ {{/if}}
 
+ {{#if openRestoredAlert}}
   <app-alert
     auto-close="true"
+    alert-type="warning"
     dismissible="true"
     open="{openRestoredAlert}"
     auto-close-time="{alertAutoCloseTime}">
 
     {{#each restoredTemplates}}
-      <div>
+      <p>
         {{title}} - has been restored - <a href="#" (click)="{deleteTemplate .}">Delete</a>
-      </div>
+      </p>
     {{/each}}
   </app-alert>
+ {{/if}}
+
 {{/if}}
 
-<div class="page">
   <div class="container-fluid">
     {{#if templatesPromise.isPending}}
       <app-loading></app-loading>

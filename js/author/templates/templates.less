@@ -1,3 +1,22 @@
+@import '../styles/a2j-custom/a2j-mixins';
+
 templates-page {
   display: block;
+
+  app-alert {
+    position: absolute;
+    z-index: 100;
+    width: 96%;
+    top: -1px;
+    left: 0;
+    margin-left: 2%;
+  }
+  .page {
+    position: relative;
+  }
+  templates-toolbar {
+    nav.navbar.navbar-default, nav.navbar.navbar-inverse {
+      margin-bottom: 0;
+    }
+  }
 }

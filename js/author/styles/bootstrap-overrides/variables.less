@@ -644,25 +644,25 @@
 //
 //## Define alert colors, border radius, and padding.
 
-@alert-padding:               15px;
-@alert-border-radius:         @border-radius-base;
+@alert-padding:               10px;
+@alert-border-radius:         0;
 @alert-link-font-weight:      bold;
 
-@alert-success-bg:            @state-success-bg;
-@alert-success-text:          @state-success-text;
-@alert-success-border:        @state-success-border;
+@alert-success-bg:            lighten(@state-success-bg,4%);
+@alert-success-text:          @gray-light;
+@alert-success-border:        @gray-lighter;
 
-@alert-info-bg:               @state-info-bg;
-@alert-info-text:             @state-info-text;
-@alert-info-border:           @state-info-border;
+@alert-info-bg:               lighten(@state-info-bg,2%);
+@alert-info-text:             @gray-light;
+@alert-info-border:           @gray-lighter;
 
-@alert-warning-bg:            @state-warning-bg;
-@alert-warning-text:          @state-warning-text;
-@alert-warning-border:        @state-warning-border;
+@alert-warning-bg:            lighten(@state-warning-bg,2%);
+@alert-warning-text:          @gray-light;
+@alert-warning-border:        @gray-lighter;
 
-@alert-danger-bg:             @state-danger-bg;
-@alert-danger-text:           @state-danger-text;
-@alert-danger-border:         @state-danger-border;
+@alert-danger-bg:             lighten(@state-danger-bg,2%);
+@alert-danger-text:           @gray-light;
+@alert-danger-border:         @gray-lighter;
 
 
 //== Progress bars

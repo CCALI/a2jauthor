@@ -35,7 +35,8 @@
     "transpiler": "babel",
     "npmIgnore": [
       "testee",
-      "documentjs"
+      "documentjs",
+      "grunt-contrib-less"
     ],
     "configDependencies": [
       "author/utils/load-fixtures"

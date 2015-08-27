@@ -36,6 +36,11 @@
   <p>Your mom - has been restored - <a href="#" (click)="{deleteTemplate .}">Delete</a></p>
 </app-alert>
 
+<div class="alert alert-warning alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+  <strong>Warning!</strong> Better check yourself, you're not looking too good.
+</div>
+
 <div class="page">
   <div class="container-fluid">
     {{#if templatesPromise.isPending}}

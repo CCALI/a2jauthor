@@ -29,6 +29,14 @@ module.exports = function(grunt) {
       }
     },
 
+    less: {
+      'docs': {
+        files: {
+          "author/docs/styles.css": "author/main.less"
+        }
+      }
+    },
+
     'steal-build': {
       bundle: {
         options: {
@@ -48,11 +56,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('steal-tools');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-less');
 
   grunt.renameTask('documentjs', 'documentjs-orig');
 
   grunt.registerTask('test', ['testee:firefox']);
   grunt.registerTask('build', ['clean:build', 'steal-build']);
-  grunt.registerTask('documentjs', ['documentjs-orig', 'copy:icon-font', 'copy:demos']);
+  grunt.registerTask('documentjs', ['documentjs-orig', 'copy:icon-font', 'copy:demos', 'less:docs']);
 
 };

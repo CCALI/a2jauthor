@@ -22,7 +22,7 @@
 // Import our custom variables for Bootstrap
 @import "@{bootstrap-overrides}/variables.less";
 
-// Import all the Bootstrap styles. Styles we don't need yet are commented out for now.
+// Import all the Bootstrap styles.
 .bootstrap-styles {
 
   // Core mixins
@@ -30,6 +30,7 @@
 
   // Reset and dependencies
   @import "@{bootstrap-base}/normalize.less";
+  @import "@{bootstrap-base}/print.less";
 
   // Core CSS
   @import "@{bootstrap-base}/scaffolding.less";
@@ -37,6 +38,8 @@
   @import "@{bootstrap-base}/grid.less";
   @import "@{bootstrap-base}/tables.less"; /* need */
   @import "@{bootstrap-base}/forms.less"; /* need */
+  @import "@{bootstrap-overrides}/forms.less";
+  @import "@{bootstrap-overrides}/form-fieldsets.less";
   @import "@{bootstrap-base}/buttons.less";
 
   // Components
@@ -48,26 +51,26 @@
   @import "@{bootstrap-base}/labels.less";
   @import "@{bootstrap-base}/badges.less";
   @import "@{bootstrap-base}/alerts.less";
+  @import "@{bootstrap-overrides}/alerts.less";
   @import "@{bootstrap-base}/list-group.less";
   @import "@{bootstrap-base}/panels.less";
-  @import "@{bootstrap-base}/responsive-embed.less";
   @import "@{bootstrap-base}/close.less"; /* need */
 
   // Components w/ JavaScript
   @import "@{bootstrap-base}/modals.less"; /* need */
   //@import "@{bootstrap-base}/tooltip.less";
-  @import "@{bootstrap-base}/popovers.less"; /* need */
+  //@import "@{bootstrap-base}/popovers.less"; /* need */
 
   // Utility classes
   @import "@{bootstrap-base}/utilities.less"; /* need */
   @import "@{bootstrap-base}/responsive-utilities.less"; /* need */
+
+  @import "@{bootstrap-overrides}/carets.less";
 }
 
 // Import all of our overrides for Bootstrap
-@import "@{bootstrap-overrides}/forms.less";
-@import "@{bootstrap-overrides}/form-fieldsets.less";
-@import "@{bootstrap-overrides}/carets.less";
 @import "@{bootstrap-overrides}/ui-overrides.less";
+
 
 //Import elements custom to A2J
 @import "@{a2j-custom}/a2j-layout.less";

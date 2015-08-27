@@ -28,7 +28,8 @@
     "steal": "^0.11.0-pre.3",
     "steal-mocha": "0.0.2",
     "steal-tools": "^0.11.0-pre.9",
-    "testee": "^0.2.0"
+    "testee": "^0.2.0",
+    "grunt-contrib-less": "^1.0.1"
   },
   "system": {
     "transpiler": "babel",

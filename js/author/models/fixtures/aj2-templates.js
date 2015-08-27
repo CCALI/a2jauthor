@@ -1,17 +1,17 @@
 import 'can/util/fixture/';
 
-export default can.fixture('/api/documents/{id}', function(request) {
+export default can.fixture('/api/templates/{template_id}', function(request) {
   let data = request.data || {};
 
   return {
-    id: data.id || 42,
+    template_id: data.template_id || 'template-id',
     rootNode: {
-      component: 'cali-document',
+      component: 'aj2-template',
       state: {
       },
       children: [
         {
-          component: 'cali-template',
+          component: 'element-container',
           state: {
           },
           children: [

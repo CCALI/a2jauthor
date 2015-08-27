@@ -1,29 +1,33 @@
 import Model from 'can/model/';
-import CaliNode from './cali-node';
+import AJ2Node from './aj2-node';
 import 'can/map/define/';
 
 /**
- * @module CaliDocument
+ * @module AJ2Template
  * @parent api-models
  *
- * A CaliDocument Model represents the structure of a legal document that
+ * An AJ2 Template Model represents the structure of a legal document that
  * can be rendered with variables collected during a guided interview.
  *
- * It is made up of [CaliNode]s which are made up of authoring components.
+ * It is made up of [AJ2Node]s which are made up of authoring components.
+ *
+ * A guided interview can have one or more AJ2 Templates associated to it.
  */
 export default Model.extend({
-  findOne: '/api/documents/{id}',
+  findAll: '/api/guides/{guide_id}/templates',
+  findOne: '/api/templates/{template_id}',
 
   /**
    * @function makeDocumentTree
    *
-   * Take a rootNode and traverse the tree while making every node a [CaliNode].
+   * Take a rootNode and traverse the tree while making every node an
+   * [AJ2Node].
    *
    * @param {can.Map} node
    */
   makeDocumentTree: function(node) {
     let scope = this;
-    let branch = new CaliNode(node);
+    let branch = new AJ2Node(node);
 
     if(branch.attr('children.length')) {
       branch.attr('children').forEach(function(child, index) {
@@ -37,13 +41,13 @@ export default Model.extend({
   makeFindOne: function(findOneData) {
     return function(params, success, error) {
       return findOneData(params).then((response) => {
-        let caliDocument = this.model(response);
+        let aj2Template = this.model(response);
         let documentTree = this.makeDocumentTree(
-          caliDocument.attr('rootNode'));
+          aj2Template.attr('rootNode'));
 
-        caliDocument.attr('rootNode', documentTree);
+        aj2Template.attr('rootNode', documentTree);
 
-        return caliDocument;
+        return aj2Template;
       })
       .then(success, error);
     };
@@ -52,8 +56,8 @@ export default Model.extend({
   define: {
     rootNode : {
       value: function() {
-        return new CaliNode({
-          type: 'cali-document'
+        return new AJ2Node({
+          type: 'aj2-template'
         });
       }
     }

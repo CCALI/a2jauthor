@@ -3,12 +3,12 @@ import List from 'can/list/';
 import 'can/map/define/';
 
 /**
- * @module CaliNode
+ * @module AJ2Node
  * @parent api-models
  *
- * The CaliNode Map represents a [CaliDocument] node. From its root node
- * out to its branches and leaves, every CaliDocument node is a CaliNode.
- * A CaliNode is a branch if it has child CaliNodes of its own,
+ * The AJ2 Node Map represents an [AJ2Template] node. From its root node
+ * out to its branches and leaves, every AJ2Template node is an AJ2Node.
+ * An AJ2Node is a branch if it has child AJ2Nodes of its own,
  * otherwise it's a leaf.
  */
 export default Map.extend({
@@ -16,9 +16,7 @@ export default Map.extend({
     /**
      * @property {String} component
      *
-     * A component tag name for a cali component.
-     *
-     * e.g. 'cali-document', 'cali-template', 'section-title'
+     * A component tag name for an AJ2 component.
      */
     component: {
       value: ''

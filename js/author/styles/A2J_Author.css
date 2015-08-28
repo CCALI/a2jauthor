@@ -65,37 +65,7 @@ html, body {
 .authorver {
 	font-size:10px;
 }
-/*
-.guidemenu ul {
-	font-size: 15px;
-	margin: 1px;
-	padding: 1px;
-}
-.guidemenu ul li {
-	height: 25px;
-	padding: 5px;
-	padding-top: 8px;
-	padding-bottom: 0px;
-	list-style: none;
-	margin: 0px;
-	background-repeat: no-repeat;
-	cursor: default;
-}
-.guidemenu ul li:hover {
-	background-color: #fffee6;
-	color:#000;
-}
-.guidemenu ul li.selected {
-	border:thick;
-	border:#0066CC;
-	background-color: #E5E5E5;
-	overflow: visible;
-	background: url(../images/menu_selected.png) 99% center no-repeat;
-	color:#0066CC;
-	margin:3px;
 
-}
-*/
 .pagelist ul {
 	font-weight: normal;
 	list-style-type: square;

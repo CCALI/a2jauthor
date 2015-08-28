@@ -1136,30 +1136,7 @@ body .ui-tooltip {
 
 
 /* JPM/SJG A2J Theme Tweaks*/
-/*
-::-webkit-input-placeholder, ::-moz-placeholder , ::-ms-input-placeholder {
-	color: #555;font-style:italic
-}
-.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
-    background-image: none;
-    opacity: 0.50;
-}
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
-    background: repeat-x scroll 50% 50% #0066CC;
-    color: #fff;
-    font-weight: normal;
-}
 
-.guidemenu.ui-state-default {
-    background: repeat-x scroll 50% 50% #E5E5E5;
-    color: #000;
-	border-color:#E5E5E5;
-}
-.guidemenu {
-	background-color: #c0c0c0;
-	border-color: #c0c0c0;
-}
-*/
 .tabContent legend, .ui-widget-content legend  {
 	font-size: 1.1em;
 	font-weight:bold;

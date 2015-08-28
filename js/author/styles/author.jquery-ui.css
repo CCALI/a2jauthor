@@ -1148,6 +1148,7 @@ body .ui-tooltip {
 }
 
 /* SJG Theme friendly row alternator: */
+/*
 .pagelist ul * li:nth-child(even)
 ,table.A2JVars tr:nth-child(even)
 ,table.A2JClauses tr:nth-child(even)
@@ -1161,8 +1162,9 @@ body .ui-tooltip {
 ,table.A2JFiles tr:nth-child(odd)
 ,table.list tr:nth-child(odd)
 {	background-color:#BDC3C7 ;}
-
+*/
 /* JPM TEST */
+/*
 table.list tr:nth-child(12n+1)
 {	background-color:#EFEFC6 ;}
 table.list tr:nth-child(12n+2)
@@ -1187,7 +1189,8 @@ table.list tr:nth-child(12n+11)
 {	background-color:#C68CC6 ;}
 table.list tr:nth-child(12n+12)
 {	background-color:#C68C8C ;}
-
+*/
+/*
 table.A2JSteps th,
 table.A2JVars th ,
 table.A2JClauses th {
@@ -1198,7 +1201,7 @@ table.A2JClauses th {
 	font-size: 1.1em;
 	background-color:#F0F7FA;
 }
-
+*/
 html, body, input, select, textarea , .htmledit, .codeedit {
 	background-color: #fff;
 	color: #000;
@@ -1207,7 +1210,6 @@ html, body, input, select, textarea , .htmledit, .codeedit {
 
 .pagelist li[rel^="STEP "] {
 	list-style-position:inside;
-    border: 1px solid #000;
 }
 
 .Step0, .pagelist li[rel="STEP 0"] {

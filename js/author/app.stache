@@ -38,8 +38,8 @@
     </div>
 
     <div class="guidepanels ui-widget xui-widget-content">
-      <div class="panel" id="tabsAbout">
-        <div class="tabHeader bootstrap-styles">
+      <div class="panel bootstrap-styles" id="tabsAbout">
+        <div class="tabHeader ">
           <div class="row">
             <div class="col-md-8">
               <h3>Information about this interview</h3>

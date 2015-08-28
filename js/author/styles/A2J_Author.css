@@ -108,12 +108,6 @@ html, body {
 }
 
 .editicons {
-	border-collapse:collapse;
-	border-style:dotted;
-	border-color:#CCCCCC;
-	border-width:thin;
-	margin: 0px;
-	padding: 0px;
 	width: 50px;
 }
 .editicons .ui-icon {
@@ -474,16 +468,7 @@ textarea {
 }
 
 /************** List Table ************/
-table.list {
-	width:100%;
-}
-table.list tr   {
-	border:5px solid #888;
-	border-collapse:separate;
-}
-table.list tr td  {
-	padding:.1em;
-}
+
 .hidden {
 	display: none;
 }

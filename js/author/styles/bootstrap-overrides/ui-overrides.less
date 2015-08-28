@@ -1,4 +1,6 @@
 // Temporary styles to override JQuery UI stuff we don't like and will eventually get rid of
+// Once the app is completely refactored, you can probably remove all of this.
+// Much of it is overwriting jqueryui with bootstrap
 
 .bootstrap-styles {
   .ui-button-text {
@@ -16,5 +18,23 @@
     background: transparent;
     border: 0;
     -webkit-appearance: none;
+  }
+  .texttoolbar {
+    button {
+      background: @brand-primary;
+      background-color: @brand-primary;
+      color: #fff;
+      padding-left: 5px;
+      padding-right: 5px;
+      min-width: 34px;
+    }
+  }
+  table.list {
+  	width:100%;
+
+  	tr {
+    	border-top: 1px solid @gray-lighter;
+    	margin-top: @grid-gutter-width/2;
+    }
   }
 }

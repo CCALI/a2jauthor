@@ -1,7 +1,7 @@
 /*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	
+
 	2015-03-30 A2J Variable editing
 	Factoring out Variable editing section
 
@@ -13,7 +13,7 @@ function varEdit(v/*TVariable*/)
 {
 	$('#varname').val(v.name);
 	if (gPrefs.warnHotDocsNameLength) {
-		// 2014-07-28 
+		// 2014-07-28
 		$('#varname').attr('maxlength',CONST.MAXVARNAMELENGTH);
 	}
 	$('#vartype').val(v.type);
@@ -44,7 +44,7 @@ function varEdit(v/*TVariable*/)
 					gGuide.varDelete(this.name);
 				}});
 			}},
-			{text:'Close',click:function(){ 
+			{text:'Close',click:function(){
 				var name= $('#varname').val();
 				if(name!==v.name)//rename variable
 				{
@@ -78,9 +78,9 @@ function varAdd()
 TGuide.prototype.variableListHTML = function ()
 {	// Build HTML table of variables, nicely sorted.
 	var guide = this;
-	var th=html.rowheading(["Name","Type","Repeating","Comment"]); 
+	var th=html.rowheading(["Name","Type","Repeating","Comment"]);
 	var sortvars=guide.varsSorted();
-	var vi; 
+	var vi;
 	var tb='';
 	for (vi in sortvars)
 	{
@@ -88,7 +88,7 @@ TGuide.prototype.variableListHTML = function ()
 		tb+=html.row([v.name,v.type,v.repeating,v.comment
 			+ (typeof v.warning==='undefined'?'':'<span class="warning">'+v.warning+'</spab>')]);
 	}
-	return '<table class="A2JVars">'+th + '<tbody>'+ tb + '</tbody>'+"</table>";	
+	return '<table class="table table-hover">'+th + '<tbody>'+ tb + '</tbody>'+"</table>";
 };
 
 TGuide.prototype.buildTabVariables = function (t)

@@ -38,7 +38,12 @@ export default Component.extend({
   tag: 'interviews-page',
   viewModel: Interviews,
   events: {
-    '.title click': function(target) {
+    '.guide click': function(target) {
+      this.element.find('.guide').removeClass('ui-state-active');
+      target.addClass('ui-state-active');
+    },
+
+    '.guide dblclick': function() {
       window.openSelectedGuide();
     }
   },

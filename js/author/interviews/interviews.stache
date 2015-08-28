@@ -8,7 +8,7 @@
 
       <ul class="guidelist" id="guideListNew">
         {{#with blankInterview}}
-          <li class="guide"><a gid="{{id}}" class="title">{{title}}</a></li>
+          <li class="guide" gid="{{id}}">{{title}}</li>
         {{/with}}
       </ul>
     </fieldset>
@@ -18,12 +18,11 @@
 
       <ul class="guidelist" id="guideListMy">
         {{#each interviews.value.owned}}
-          <li class="guide">
-            <a class="title" gid="{{id}}">{{title}}
-              <span class="id">#{{id}}</span>
-              <span class="size">{{formatFileSize fileSize}}</span>
-              <span class="modified">{{lastModified}}</span>
-            </a>
+          <li class="guide" gid="{{id}}">
+            <span class="title">{{title}}</span>
+            <span class="id">#{{id}}</span>
+            <span class="size">{{formatFileSize fileSize}}</span>
+            <span class="modified">{{lastModified}}</span>
           </li>
         {{/each}}
       </ul>
@@ -34,12 +33,11 @@
 
       <ul class="guidelist" id="guideListSamples">
         {{#each interviews.value.samples}}
-          <li class="guide">
-            <a class="title" gid="{{id}}">{{title}}
-              <span class="id">#{{id}}</span>
-              <span class="size">{{formatFileSize fileSize}}</span>
-              <span class="modified">{{lastModified}}</span>
-            </a>
+          <li class="guide" gid="{{id}}">
+            <span class="title">{{title}}</span>
+            <span class="id">#{{id}}</span>
+            <span class="size">{{formatFileSize fileSize}}</span>
+            <span class="modified">{{lastModified}}</span>
           </li>
         {{/each}}
       </ul>

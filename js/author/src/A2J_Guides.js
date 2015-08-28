@@ -172,12 +172,12 @@ function createBlankGuide() {
 
 function openSelectedGuide()
 {	// Open the currently selected guide (either double click or via Open button)
-	var $a=$('li.guide a').first();
-	var gid=$a.attr('gid');
+	var $li=$('li.guide.'+SELECTED).first();
+	var gid=$li.attr('gid');
 	if (!gid) {
 		return;
 	}
-	var guideFile=$a.text();
+	var guideFile=$li.text();
 	setProgress('Loading guide '+guideFile,true);
 	loadNewGuidePrep(guideFile,'');
 	$('#splash').hide();

@@ -221,6 +221,44 @@ input.narrow {
 	overflow: hidden;
 }
 
+div.editq {
+	width: 100%;
+	margin: 0px;
+	padding: 5px;
+}
+.editq h1 {
+	font-size: 1.5em;
+	margin-left: 0em;
+}
+.editq h2 {
+	font-size: 1.25em;
+	padding-top: 1em;
+	margin-left: 0em;
+}
+.editq fieldset label {
+	clear: both;
+	display: block;
+	vertical-align: top;
+	float: left;
+	width: 12em;
+	margin: 5px 0 0;
+	text-align: right;
+	padding: 5px;
+}
+
+.editq fieldset {
+	padding:0;
+	margin-top:25px;
+}
+.editq fieldset div  {
+	margin-top: 1em;
+}
+.editq fieldset {
+	padding: inherit;
+	margin-top:25px;
+	padding-bottom: 1.3em;
+}
+
 .CAJAContent P {
 	padding: 0;
 	margin: 0;

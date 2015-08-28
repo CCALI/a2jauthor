@@ -98,8 +98,8 @@
         </div>
       </div>
 
-      <div class="panel" id="tabsSteps">
-        <div class="tabHeader bootstrap-styles">
+      <div class="panel bootstrap-styles" id="tabsSteps">
+        <div class="tabHeader">
           <div class="row">
             <div class="col-md-12">
               <h3>Steps</h3>
@@ -210,8 +210,8 @@
         </div>
       </div>
 
-      <div class="panel" id="tabsText">
-        <div class="tabHeader bootstrap-styles">
+      <div class="panel bootstrap-styles" id="tabsText">
+        <div class="tabHeader">
           <div class="row">
             <div class="col-md-8">
               <div id="showtext">

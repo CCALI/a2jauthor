@@ -162,7 +162,7 @@ var form={
 		return '<tr><td>'+label+'</td><td>'+value+'</td></tr>';
 	}
 	,noteHTML:function(kind,t){
-		return '<div class="ui-widget"><div style="margin-top: 20px; padding: 0 .7em;" class="ui-state-highlight ui-corner-all"><p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-'+kind+'"></span>'+t+'</div></div>';
+		return '<div class="alert alert-'+kind+'"><p><span class="glyphicon-attention"></span>'+t+'</p></div>';
 	}
 	,note:function(t){
 		return $(form.noteHTML('info',t));

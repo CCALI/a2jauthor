@@ -270,7 +270,7 @@
         </div>
       </div>
 
-      <div class="panel has-toolbar" id="tabsGuides">
+      <div class="bootstrap-styles panel has-toolbar" id="tabsGuides">
         {{#is page "interviews"}}
           <interviews-toolbar></interviews-toolbar>
           <interviews-page></interviews-page>

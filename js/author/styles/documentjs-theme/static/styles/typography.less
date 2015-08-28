@@ -2,7 +2,7 @@
 * @stylesheet typography.less Typography
 * @parent Styles.baseline-elements 1
 *
-* @description 
+* @description
 * Global style definitions for all typographic elements including headings, paragraphs, lists, and blockquotes.
 **/
 
@@ -119,8 +119,10 @@ sub{
 }
 
 blockquote{
-  margin:0 2.5em;
+  margin: @gutter;
   font-style:normal;
+  border-left: 5px solid @cloud;
+  padding-left: @gutter/2;
 }
 
 blockquote em,blockquote cite{

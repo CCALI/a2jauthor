@@ -65,6 +65,7 @@ html, body {
 .authorver {
 	font-size:10px;
 }
+/*
 .guidemenu ul {
 	font-size: 15px;
 	margin: 1px;
@@ -94,7 +95,7 @@ html, body {
 	margin:3px;
 
 }
-
+*/
 .pagelist ul {
 	font-weight: normal;
 	list-style-type: square;
@@ -107,43 +108,10 @@ html, body {
 	margin: 0px;
 	padding: 10px 0px 5px;
 }
-.pageoutline ul, .guidelist {
+.pageoutline ul {
 	list-style-type:  none;
 	margin-left: 0;
 	text-indent: 0;
-}
-
-ul.guidelist li {
-	padding: 4px;
-}
-ul.guidelist li span.id {
-	width: 5em;
-	background-color: rgba(255,240,255,0.5);
-	font-style: italic;
-	float:right;
-	text-align:center;
-	display: inline-block;
-}
-ul.guidelist li span.size {
-  background-color: rgba(240,255,240,0.5);
-	float:right;
-	width: 4em;
-	text-align:right;
-	display: inline-block;
-}
-ul.guidelist li span.modified {
-  background-color: rgba(255,255,240,0.5);
-	width: 12em;
-	float:right;
-	text-align:center;
-	display: inline-block;
-}
-ul.guidelist li span.pagecount {
-  background-color: rgba(255,255,240,0.5);
-	width: 4em;
-	float:right;
-	text-align:center;
-	display: inline-block;
 }
 
 #CAJAIndex.pagelist ul {
@@ -232,43 +200,6 @@ input.narrow {
 
  /*********** Editor ***************/
 
-div.editq {
-	width: 100%;
-	margin: 0px;
-	padding: 5px;
-}
-.editq h1 {
-	font-size: 1.5em;
-	margin-left: 0em;
-}
-.editq h2 {
-	font-size: 1.25em;
-	padding-top: 1em;
-	margin-left: 0em;
-}
-.editq fieldset label {
-	clear: both;
-	display: block;
-	vertical-align: top;
-	float: left;
-	width: 12em;
-	margin: 5px 0 0;
-	text-align: right;
-	padding: 5px;
-}
-
-.editq fieldset {
-	padding:0;
-	margin-top:25px;
-}
-.editq fieldset div  {
-	margin-top: 1em;
-}
-.editq fieldset {
-	padding: inherit;
-	margin-top:25px;
-	padding-bottom: 1.3em;
-}
 .sorthandle {
 	cursor: move;
 }
@@ -400,10 +331,7 @@ table.CAJAReportDump {
 table.CAJAReportDump tr  {
 	vertical-align: top;
 }
-#tabsReport .tabContent legend {
-	color: #000;
-	background-color:#eee;
-}
+
 table.CAJAReportDump tr td {
 	border:1px solid #888;
 	padding:1em;
@@ -582,7 +510,7 @@ table.list tr td  {
 #dialog_window_minimized_container {
 	z-index: 9999;
 }
-.pagelist * li:hover, li.guide:hover,
+.pagelist * li:hover,
 table.A2JVars tr:hover,
 table.A2JClauses tr:hover,
 table.A2JFiles tr:hover{

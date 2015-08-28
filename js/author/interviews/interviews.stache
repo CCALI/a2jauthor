@@ -1,6 +1,6 @@
-<div class="tabContentFrame">
-  <div class="tabContent editq">
-    <p class="name"></p>
+<div class="bootstrap-styles tabContentFrame">
+  <div class="tabContent">
+<!--    <p class="name"></p> -->
     <h2>What would you like to do?</h2>
 
     <fieldset name="record">
@@ -29,7 +29,7 @@
     </fieldset>
 
     <fieldset name="record">
-      <legend>Open a Sample interview</legend>
+      <legend>Open a sample interview</legend>
 
       <ul class="guidelist" id="guideListSamples">
         {{#each interviews.value.samples}}

@@ -48,3 +48,26 @@
   *
   * @demo docs/demos/list-group-custom/demo.html
 **/
+.list-group {
+  .border-radius(0);
+  border: none;
+
+  .list-group-item {
+    padding: 5px 10px;
+    margin-bottom: @grid-gutter-width/4;
+    border: 1px solid transparent;
+    .border-radius(0);
+
+    &:hover {
+      .border;
+      cursor: pointer;
+    }
+    &.active {
+      background: @alert-warning-bg;
+      border: 1px solid @alert-warning-border;
+    }
+  }
+  .list-group-item:last-child {
+    margin-bottom: 0;
+  }
+}

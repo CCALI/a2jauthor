@@ -1,46 +1,39 @@
-<div class="bootstrap-styles tabContentFrame">
-  <div class="tabContent">
-<!--    <p class="name"></p> -->
-    <h2>What would you like to do?</h2>
+<div class="bootstrap-styles page">
+  <h3 class="page-title">What would you like to do?</h3>
 
-    <fieldset name="record">
-      <legend>Create a new interview</legend>
+  <fieldset>
+    <legend>Create a new interview</legend>
 
-      <ul class="guidelist" id="guideListNew">
-        {{#with blankInterview}}
-          <li class="guide" gid="{{id}}">{{title}}</li>
-        {{/with}}
-      </ul>
-    </fieldset>
+    <div class="list-group">
+      {{#with blankInterview}}
+        <a class="guide list-group-item" gid="{{id}}"><span class="title">{{title}}</span></a>
+      {{/with}}
+    </div>
+  </fieldset>
 
-    <fieldset name="record">
-      <legend>Edit one of my interviews</legend>
+  <fieldset>
+    <legend>Edit one of my interviews</legend>
 
-      <ul class="guidelist" id="guideListMy">
-        {{#each interviews.value.owned}}
-          <li class="guide" gid="{{id}}">
-            <span class="title">{{title}}</span>
-            <span class="id">#{{id}}</span>
-            <span class="size">{{formatFileSize fileSize}}</span>
-            <span class="modified">{{lastModified}}</span>
-          </li>
-        {{/each}}
-      </ul>
-    </fieldset>
+    <div class="list-group">
+      {{#each interviews.value.owned}}
+        <a class="guide list-group-item" gid="{{id}}">
+          <span class="title">{{title}}</span>
+          <small class="pull-right text-muted">#{{id}} | {{formatFileSize fileSize}} | {{lastModified}}</small>
+        </a>
+      {{/each}}
+    </div>
+  </fieldset>
 
-    <fieldset name="record">
-      <legend>Open a sample interview</legend>
+  <fieldset>
+    <legend>Open a sample interview</legend>
 
-      <ul class="guidelist" id="guideListSamples">
-        {{#each interviews.value.samples}}
-          <li class="guide" gid="{{id}}">
-            <span class="title">{{title}}</span>
-            <span class="id">#{{id}}</span>
-            <span class="size">{{formatFileSize fileSize}}</span>
-            <span class="modified">{{lastModified}}</span>
-          </li>
-        {{/each}}
-      </ul>
-    </fieldset>
-  </div>
+    <div class="list-group">
+      {{#each interviews.value.samples}}
+        <a class="guide list-group-item" gid="{{id}}">
+          <span class="title">{{title}}</span>
+          <small class="pull-right text-muted">#{{id}} | {{formatFileSize fileSize}} | {{lastModified}}</small>
+        </a>
+      {{/each}}
+    </div>
+  </fieldset>
 </div>

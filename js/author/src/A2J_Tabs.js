@@ -322,7 +322,7 @@ var form={
 		var dval = (data.value);
 
 		var e =$((typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-				+ '<span class=editspan><input class=" form-control ui-combobox-input editable autocomplete picker varname dest" type="text" ></span>');
+				+ '<span class=editspan><input class="form-control ui-combobox-input editable autocomplete picker varname dest" type="text" ></span>');
 
 		$('.picker',e).blur(function(){
 			var val=$(this).val();
@@ -465,7 +465,7 @@ var form={
 		var e= $('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
 			+'<span class=editspan>'
-			+'<div contenteditable=true class="  htmledit form-control text editable taller" id="tinyMCE_'+form.id+'"  name="'+form.id+'" rows='+1+'>'
+			+'<div contenteditable=true class="htmledit form-control text editable taller" id="tinyMCE_'+form.id+'"  name="'+form.id+'" rows='+1+'>'
 			+data.value+'</div></span></div>');
 		$('.editable',e).focus(function(){$(this).addClass('tallest');form.editorAdd($(this));}).blur(function(){
 			//$(this).removeClass('tallest');
@@ -614,7 +614,7 @@ var form={
 		form.id++;
 		var e= $('<div>'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<div class=editspan><div spellcheck="false" contenteditable=true spellcheck=false class="text editable taller codeedit"  rows='+4+'>'+data.value+'</div><div class="errors"></div></div></div>');
+			+'<div class=editspan><div spellcheck="false" contenteditable=true spellcheck=false class="form-control text editable taller codeedit"  rows='+4+'>'+data.value+'</div><div class="errors"></div></div></div>');
 		$('.editable',e).blur(function(){
 			form.codeCheckSoon(this);
 			$('SPAN',$(this)).remove();

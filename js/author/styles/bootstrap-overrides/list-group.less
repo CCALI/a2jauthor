@@ -18,6 +18,10 @@
   *
   * @demo docs/demos/list-group/demo.html
   *
+  * List groups are used in the list of interview on the A2J landing page:
+  *
+  * @demo docs/demos/list-group-interviews/demo.html
+  *
   * ## Badges
   * Add the badges component to any list group item and it will automatically be positioned on the right.
   *
@@ -58,13 +62,26 @@
     border: 1px solid transparent;
     .border-radius(0);
 
-    &:hover {
-      .border;
-      cursor: pointer;
-    }
     &.active {
       background: @alert-warning-bg;
       border: 1px solid @alert-warning-border;
+      color: @text-color;
+
+      .list-group-item-text {
+        color: @text-color;
+      }
+    }
+    &.disabled, &.disabled:hover {
+      background: none;
+      color: @gray-lighter;
+      border: none;
+      cursor: not-allowed;
+    }
+  }
+  a.list-group-item, button.list-group-item {
+    &:hover {
+      .border;
+      cursor: pointer;
     }
   }
   .list-group-item:last-child {

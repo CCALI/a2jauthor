@@ -20,7 +20,7 @@ CONST.AutoSaveInterval = 5*60*1000;
 
 // Reference for the page editing dialog box
 var $pageEditDialog=null;
-var SELECTED = 'ui-state-active';
+var SELECTED = 'active';
 
 
 /** @param {...}  status */

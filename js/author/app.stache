@@ -113,41 +113,39 @@
         </div>
       </div>
 
-      <div class="panel" id="tabsPages">
-        <div class="tabHeader bootstrap-styles">
-          <div class="row">
-            <div class="col-md-8">
-              <h3>Pages and popups</h3>
-            </div>
-            <div class="col-md-4 text-right">
-              <button id="expandCollapse" data-state="collapsed" class="btn btn-primary"></button>
-            </div>
-          </div>
-        </div>
-        <br />
+      <div class="panel bootstrap-styles has-toolbar" id="tabsPages">
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
 
-        <div class="tabContentFrame">
-          <div class="tabsPages">
-            <div class="PagesPanel">
-              <div id="CAJAOutline" class="pageoutline pagelist">
-                <ul>
-                </ul>
-              </div>
-              <!--
-          <div id="CAJAIndex" class="pagelist">
-            <ul>
+            <ul class="nav navbar-nav">
+              <li><a href="#" class="open-guide"><span class="glyphicon-new-message"></span> Edit</li>
+              <li><a href="#" class="clone-guide"><span class="glyphicon-doc"></span> New Page</a></li>
+              <li><a href="#" class="delete-guide"><span class="glyphicon-popup"></span> New Popup</a></li>
+
+              <li><a href="#" class="clone-guide"><span class="glyphicon-docs"></span> Clone</a></li>
+              <li><a href="#" class="delete-guide"><span class="glyphicon-trash"></span> Delete</a></li>
             </ul>
-          </div>-->
-              <!--      <div id="tabsfind"> Find? </div>--></div>
-            <div class="tabFooter bootstrap-styles">
-              <button class="btn btn-default"><span class="glyphicon-new-message"></span> Edit</button>
-              <button class="btn btn-default"><span class="glyphicon-doc"></span> New Page</button>
-              <button class="btn btn-default"><span class="glyphicon-popup"></span> New Popup</button>
-              <button class="btn btn-default"><span class="glyphicon-docs"></span> Clone</button>
-              <button class="btn btn-default"><span class="glyphicon-trash"></span> Delete</button>
+
+            <div class="nav navbar-nav navbar-right">
+              <button id="expandCollapse" data-state="collapsed" class="btn btn-primary navbar-btn"></button>
+            </div>
+
+          </div>
+        </nav>
+
+        <div class="page">
+          <h3 class="page-title">Pages</h3>
+
+          <div class="tabContentFrame">
+            <div class="tabsPages">
+              <div class="PagesPanel">
+                <div id="CAJAOutline" class="pageoutline pagelist">
+                  <ul class="outline">
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
-
         </div>
       </div>
 

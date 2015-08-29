@@ -368,10 +368,6 @@ function gotoPageEdit(pageName)
 }
 function gotoTabOrPage(target)
 {	// Go to a tab or popup a page.
-	//trace('gotoTabOrPage',target);
-
-	//$('#CAJAOutline li, #CAJAIndex li').each(function(){$(this).removeClass('ui-state-active')});
-	//$('li').filter(function(){ return target == $(this).attr('target')}).each(function(){$(this).addClass('ui-state-active')});
 
 	if (target.indexOf("PAGE ")===0)
 	{
@@ -385,6 +381,7 @@ function gotoTabOrPage(target)
 	$('.guidemenu nav li').removeClass('active');
 	$('.guidemenu nav li[ref="'+target+'"]').addClass('active');
 	$('.panel').hide();
+	$('.panel.panel-default').show();
 	$('#'+target).show();
 	switch (target)
 	{
@@ -712,20 +709,20 @@ TPage.prototype.tagList=function()
 		/** @type {TField} */
 		var field = page.fields[f];
 		if (field.required) {
-			tags += ' <span class="tag field required">' + field.fieldTypeToTagName() + '</span>';
+			tags += ' <span class="label label-info field">' + field.fieldTypeToTagName() + '<span class="text-danger">*</span></span>';
 		}else{
-			tags += ' <span class="tag field">' + field.fieldTypeToTagName() + '</span>';
+			tags += ' <span class="label label-info field">' + field.fieldTypeToTagName() + '</span>';
 		}
 	}
 	if (page.help!=='') {
-		tags += ' <span class="tag help">' + 'Help' + '</span>';
+		tags += ' <span class="label label-info tag help">' + 'Help' + '</span>';
 	}
 	if (page.codeAfter!=='' || page.codeBefore!=='') {
-		tags += ' <span class="tag logic">' + 'Logic' + '</span>';
+		tags += ' <span class="label label-info tag logic">' + 'Logic' + '</span>';
 	}
 	if (page.repeatVar!=='')
 	{
-		tags += ' <span class="tag repeat">&nbsp</span>';
+		tags += ' <span class="label label-info tag repeat">&nbsp</span>';
 	}
 	return tags;
 };

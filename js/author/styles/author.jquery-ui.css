@@ -1123,7 +1123,7 @@ html, body, input, select, textarea , .htmledit, .codeedit {
 	color: #000;
 }
 
-
+/*
 .pagelist li[rel^="STEP "] {
 	list-style-position:inside;
 }
@@ -1176,3 +1176,4 @@ html, body, input, select, textarea , .htmledit, .codeedit {
 .Step15, .pagelist li[rel="STEP 15"] {
 	background:#8CC68C !important;
 }
+*/

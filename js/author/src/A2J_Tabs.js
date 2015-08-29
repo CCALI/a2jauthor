@@ -47,9 +47,9 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 	{
 		/** @type {TPage} */
 		var page = gGuide.sortedPages[p];
-		var tip = decodeEntities(page.text).substr(0,64) + '<span class=taglist>' + page.tagList()  + '</span>';
-		plink= '<li class="unselectable" rel="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()
-			+' <span class="tip">'+tip+'</span>' +'</li>';
+		var tip = decodeEntities(page.text).substr(0,64) + '<span>' + page.tagList()  + '</span>';
+		plink= '<a class="list-group-item unselectable" rel="PAGE '+page.name.asHTML()+'"><span class="title">'+page.name.asHTML()
+			+'</span> <span class="description">'+tip+'</span>' +'</a>';
 		if (page.type===CONST.ptPopup)
 		{
 			popups += plink;
@@ -64,13 +64,26 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 		for (s in inSteps)
 		{	// List all steps including those for pages that are in steps that we may have removed.
 			if (inSteps[s]!=='') {
-				ts+='<li rel="STEP '+s+'">Step ' + gGuide.stepDisplayName(s) +"</li><ul>"+inSteps[s]+"</ul>"; // STEP '+'?'+". "+'?'
+  			ts+='<div class="panel panel-default">';
+        ts+='<div class="panel-heading" role="tab" id="collapseListGroupHeading1">';
+				ts+='<h4 class="panel-title"><a role="button" class="step" rel="STEP '+s+'">Step ' + gGuide.stepDisplayName(s) +'</a></h4>';
+				ts+='</div>';
+				ts+='<div class="panel-collapse" role="tabpanel" aria-expanded="true">';
+				ts+='<div class="list-group">'+inSteps[s]+'</div>';
+				ts+='</div></div>';
 			}
 		}
 	}
 	if (includePops===true)
 	{	// Popups as destinations.
-		ts += '<li rel="tabsPopups">'+Languages.en('Popups')+'</li><ul>'+popups+'</ul>';
+  	    ts+='<h3 class="page-title">Popups</h3>';
+  			ts+='<div class="panel panel-default">';
+        ts+='<div class="panel-heading" role="tab" id="collapseListGroupHeading1">';
+				ts+='<h4 class="panel-title"><a role="button" class="popup" rel="tabsPopups">' +Languages.en('Popups')+'</a></h4>';
+				ts+='</div>';
+				ts+='<div class="panel-collapse" role="tabpanel" aria-expanded="true">';
+				ts+='<div class="list-group">'+popups+'</div>';
+				ts+='</div></div>';
 	}
 	if (includeSpecial===true)
 	{	// Special branch destinations.
@@ -80,7 +93,7 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 		for (i in branchIDs)
 		{
 			var branchID = branchIDs[i];
-			plink= '<li class="unselectable" rel="PAGE '+branchID +'">'+ gGuide.pageDisplayName(branchID) +'</li>';
+			plink= '<a class="list-group-item unselectable" rel="PAGE '+branchID +'">'+ gGuide.pageDisplayName(branchID) +'</a>';
 			tss += plink;
 		}
 		ts += '<li>Special Branching</li><ul>'+tss+'</ul>';
@@ -93,7 +106,7 @@ function updateTOC()
 	// 2014-06-02 TOC updates when page name, text, fields change. Or page is added/deleted.
 	// Also we update the mapper since it also displays this info.
 	var ts = getTOCStepPages(true,true);
-	$('.pageoutline').html("<ul>" + ts + "</ul>");
+	$('.pageoutline').html("<ul class='list-group steps-pages'>" + ts + "</ul>");
 
 
 	// JPM Clicking a step toggle slides step's page list.
@@ -216,7 +229,7 @@ var form={
 		//$('#CAJAOutline').clone().appendTo('#page-picker-list');
 		//$('#page-picker-list li[rel^="tabsPopups"],#page-picker-list li[rel^="tabsPopups"] + ul').empty();
 		//$('#page-picker-list .pageoutline li').removeClass(SELECTED);
-		$('#page-picker-list').html('<ul>' + ts + '</ul>');
+		$('#page-picker-list').html('<ul class="list-group">' + ts + '</ul>');
 
 		var e=pageNameRelFilter('#page-picker-list li',pageName);
 		e.toggleClass(SELECTED);

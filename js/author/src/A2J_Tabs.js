@@ -47,7 +47,7 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 	{
 		/** @type {TPage} */
 		var page = gGuide.sortedPages[p];
-		var tip = decodeEntities(page.text).substr(0,64) + '<span>' + page.tagList()  + '</span>';
+		var tip = decodeEntities(page.text).substr(0,64) + '<span class="pull-right">' + page.tagList()  + '</span>';
 		plink= '<a class="list-group-item unselectable" rel="PAGE '+page.name.asHTML()+'"><span class="title">'+page.name.asHTML()
 			+'</span> <span class="description">'+tip+'</span>' +'</a>';
 		if (page.type===CONST.ptPopup)
@@ -76,14 +76,8 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 	}
 	if (includePops===true)
 	{	// Popups as destinations.
-  	    ts+='<h3 class="page-title">Popups</h3>';
-  			ts+='<div class="panel panel-default">';
-        ts+='<div class="panel-heading" role="tab" id="collapseListGroupHeading1">';
-				ts+='<h4 class="panel-title"><a role="button" class="popup" rel="tabsPopups">' +Languages.en('Popups')+'</a></h4>';
-				ts+='</div>';
-				ts+='<div class="panel-collapse" role="tabpanel" aria-expanded="true">';
+  	    ts+='<h3 class="page-title">Popups <a href="">+ New popup</a></h3>';
 				ts+='<div class="list-group">'+popups+'</div>';
-				ts+='</div></div>';
 	}
 	if (includeSpecial===true)
 	{	// Special branch destinations.
@@ -96,7 +90,8 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 			plink= '<a class="list-group-item unselectable" rel="PAGE '+branchID +'">'+ gGuide.pageDisplayName(branchID) +'</a>';
 			tss += plink;
 		}
-		ts += '<li>Special Branching</li><ul>'+tss+'</ul>';
+		ts+='<h3 class="page-title">Special Branching</h3>';
+		ts+='<div class="list-group">'+tss+'</div>';
 	}
 	return ts;
 }
@@ -106,7 +101,7 @@ function updateTOC()
 	// 2014-06-02 TOC updates when page name, text, fields change. Or page is added/deleted.
 	// Also we update the mapper since it also displays this info.
 	var ts = getTOCStepPages(true,true);
-	$('.pageoutline').html("<ul class='list-group steps-pages'>" + ts + "</ul>");
+	$('.pageoutline').html(ts);
 
 
 	// JPM Clicking a step toggle slides step's page list.

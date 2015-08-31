@@ -38,8 +38,8 @@
     </div>
 
     <div class="guidepanels ui-widget xui-widget-content">
-      <div class="panel" id="tabsAbout">
-        <div class="tabHeader bootstrap-styles">
+      <div class="panel bootstrap-styles" id="tabsAbout">
+        <div class="tabHeader ">
           <div class="row">
             <div class="col-md-8">
               <h3>Information about this interview</h3>
@@ -56,7 +56,7 @@
         </div>
       </div>
 
-      <div class="panel" id="tabsVariables">
+      <div class="panel bootstrap-styles" id="tabsVariables">
         <div class="tabHeader bootstrap-styles">
           <div class="row">
             <div class="col-md-12">
@@ -98,8 +98,8 @@
         </div>
       </div>
 
-      <div class="panel" id="tabsSteps">
-        <div class="tabHeader bootstrap-styles">
+      <div class="panel bootstrap-styles" id="tabsSteps">
+        <div class="tabHeader">
           <div class="row">
             <div class="col-md-12">
               <h3>Steps</h3>
@@ -186,8 +186,8 @@
         </div>
       </div>
 
-      <div class="panel" id="tabsLogic">
-       <div class="tabHeader bootstrap-styles">
+      <div class="panel bootstrap-styles" id="tabsLogic">
+       <div class="tabHeader">
           <div class="row">
             <div class="col-md-8">
               <div id="showlogic">
@@ -210,8 +210,8 @@
         </div>
       </div>
 
-      <div class="panel" id="tabsText">
-        <div class="tabHeader bootstrap-styles">
+      <div class="panel bootstrap-styles" id="tabsText">
+        <div class="tabHeader">
           <div class="row">
             <div class="col-md-8">
               <div id="showtext">
@@ -270,7 +270,7 @@
         </div>
       </div>
 
-      <div class="panel has-toolbar" id="tabsGuides">
+      <div class="bootstrap-styles panel has-toolbar" id="tabsGuides">
         {{#is page "interviews"}}
           <interviews-toolbar></interviews-toolbar>
           <interviews-page></interviews-page>

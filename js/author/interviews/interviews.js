@@ -39,8 +39,8 @@ export default Component.extend({
   viewModel: Interviews,
   events: {
     '.guide click': function(target) {
-      this.element.find('.guide').removeClass('ui-state-active');
-      target.addClass('ui-state-active');
+      this.element.find('.guide').removeClass('active');
+      target.addClass('active');
     },
 
     '.guide dblclick': function() {

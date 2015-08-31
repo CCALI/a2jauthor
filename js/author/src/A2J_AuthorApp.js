@@ -424,7 +424,7 @@ function main()
       'ui-state-active'
     ];
 
-    $('.bootstrap-styles button, .bootstrap-styles span, .bootstrap-styles a, .bootstrap-styles a:hover').removeClass(classes.join(' '));
+    $('.bootstrap-styles button, .bootstrap-styles span, .bootstrap-styles a, .bootstrap-styles a:hover', '.bootstrap-styles li').removeClass(classes.join(' '));
   }());
 
   signin();

@@ -89,7 +89,7 @@ function guideStart(startTabOrPage)
 	$('#authortool').removeClass('hidestart');//.addClass('authortool').show
 
 	//$('#tabviews').tabs( { disabled:false});
-	$('#tabsVariables .tabContent, #tabsLogic  .tabContent, #tabsSteps .tabContent, #tabsAbout .tabContent, #tabsClauses .tabContent, #tabsText .tabContent').html("");
+	//$('#tabsVariables .tabContent, #tabsLogic  .tabContent, #tabsSteps .tabContent, #tabsAbout .tabContent, #tabsClauses .tabContent, #tabsText .tabContent').html("");
 
 	if (makestr(startTabOrPage)===""){
 		startTabOrPage="PAGE "+(gGuide.firstPage);
@@ -172,12 +172,12 @@ function createBlankGuide() {
 
 function openSelectedGuide()
 {	// Open the currently selected guide (either double click or via Open button)
-	var $li=$('li.guide.'+SELECTED).first();
-	var gid=$li.attr('gid');
+	var $a=$('a.guide.active').first();
+	var gid=$a.attr('gid');
 	if (!gid) {
 		return;
 	}
-	var guideFile=$li.text();
+	var guideFile=$a.text();
 	setProgress('Loading guide '+guideFile,true);
 	loadNewGuidePrep(guideFile,'');
 	$('#splash').hide();
@@ -191,7 +191,7 @@ function openSelectedGuide()
 
 function archiveSelectedGuide() {
   // 2014-08-28 Delete the currently selected guide
-	var $li = $('li.guide.' + SELECTED).first();
+	var $li = $('a.guide.active').first();
 	var name = $('span.title', $li).text();
 
 	dialogConfirmYesNo({

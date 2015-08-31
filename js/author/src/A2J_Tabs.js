@@ -162,7 +162,7 @@ var form={
 		return '<tr><td>'+label+'</td><td>'+value+'</td></tr>';
 	}
 	,noteHTML:function(kind,t){
-		return '<div class="ui-widget"><div style="margin-top: 20px; padding: 0 .7em;" class="ui-state-highlight ui-corner-all"><p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-'+kind+'"></span>'+t+'</div></div>';
+		return '<div class="alert alert-'+kind+'"><p><span class="glyphicon-attention"></span>'+t+'</p></div>';
 	}
 	,note:function(t){
 		return $(form.noteHTML('info',t));
@@ -185,7 +185,7 @@ var form={
 	,checkbox: function(data){
 		var e=$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<span  class=editspan > <input class="ui-state-default ui-checkbox-input" type="checkbox" />'+data.checkbox+'</span></div>');
+			+'<span  class=editspan > <input class="form-control" type="checkbox" />'+data.checkbox+'</span></div>');
 		$('input',e).blur(function(){
 			form.change($(this),$(this).is(':checked'));}).attr( 'checked',data.value===true).data('data',data);
 		return e;
@@ -322,7 +322,7 @@ var form={
 		var dval = (data.value);
 
 		var e =$((typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-				+ '<span class=editspan><input class="  ui-combobox-input editable autocomplete picker varname dest" type="text" ></span>');
+				+ '<span class=editspan><input class="form-control ui-combobox-input editable autocomplete picker varname dest" type="text" ></span>');
 
 		$('.picker',e).blur(function(){
 			var val=$(this).val();
@@ -394,7 +394,7 @@ var form={
 	,text: function(data){
 		var e=$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<span class=editspan> <input class="ui-widget editable" '+
+			+'<span class=editspan> <input class="form-control ui-widget editable" '+
 			//'placeholder="'+data.placeholder+'" '+
 			'type="text" /> </span></div>');
 		//if (typeof data.class!=='undefined') $('input',e).addClass(data.class);
@@ -465,7 +465,7 @@ var form={
 		var e= $('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
 			+'<span class=editspan>'
-			+'<div contenteditable=true class="  htmledit  text editable taller" id="tinyMCE_'+form.id+'"  name="'+form.id+'" rows='+1+'>'
+			+'<div contenteditable=true class="htmledit form-control text editable taller" id="tinyMCE_'+form.id+'"  name="'+form.id+'" rows='+1+'>'
 			+data.value+'</div></span></div>');
 		$('.editable',e).focus(function(){$(this).addClass('tallest');form.editorAdd($(this));}).blur(function(){
 			//$(this).removeClass('tallest');
@@ -481,7 +481,7 @@ var form={
 		var rows=2;
 		var e=$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<span class=editspan><textarea  class="     text editable taller" rows='+rows+'>'+data.value+'</textarea></span></div>');
+			+'<span class=editspan><textarea  class="form-control text editable taller" rows='+rows+'>'+data.value+'</textarea></span></div>');
 		$('.editable',e).blur(function(){
 			var val=$(this).val();//form.htmlFix($(this).html());
 			form.change($(this), val);
@@ -491,7 +491,7 @@ var form={
 
 	,pickFile : function(mask)
 	{
-		var e=$('<span class="fileinput-button bootstrap-styles"><button class="btn btn-primary"><span class="glyphicon-plus"></span> Upload...</button><input class="fileupload" type="file" name="files[]"/></span>');
+		var e=$('<span class="fileinput-button bootstrap-styles"><button class="btn btn-primary"><span class="glyphicon-plus"></span> Upload...</button><input class=" form-control fileupload" type="file" name="files[]"/></span>');
 		//.addClass('fileupload-processing')
 		if (gGuideID!==0) {
 			$('.fileupload',e).fileupload({
@@ -614,7 +614,7 @@ var form={
 		form.id++;
 		var e= $('<div>'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<div class=editspan><div spellcheck="false" contenteditable=true spellcheck=false class="text editable taller codeedit"  rows='+4+'>'+data.value+'</div><div class="errors"></div></div></div>');
+			+'<div class=editspan><div spellcheck="false" contenteditable=true spellcheck=false class="form-control text editable taller codeedit"  rows='+4+'>'+data.value+'</div><div class="errors"></div></div></div>');
 		$('.editable',e).blur(function(){
 			form.codeCheckSoon(this);
 			$('SPAN',$(this)).remove();
@@ -632,7 +632,7 @@ var form={
 		}
 		var e =$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<span class=editspan><select class="     ui-select-input">'+c+'</select></span></div>');
+			+'<span class=editspan><select class="form-control">'+c+'</select></span></div>');
 		$('.ui-select-input',e).change(function(){
 			form.change($(this),$('option:selected',this).val());
 		}).data('data',data).val(data.value);
@@ -657,7 +657,7 @@ var form={
 	,tableRowCounter:function(name,label,minelts,maxelts,value)
 	{	// Let user choose number of said item
 		var c=$('<label/>').text(label);
-		var s='<select list="'+name+'" class="  ui-select">';
+		var s='<select list="'+name+'" class="form-control">';
 		var o;
 		for (o=minelts;o<=maxelts;o++)
 		{
@@ -696,10 +696,10 @@ var form={
 	,listManagerAddRow:function($tbl,record)
 	{
 		var settings=$tbl.data('settings');
-		var $row=$('<tr valign=top class="ui-corner-all" name="record"/>');
+		var $row=$('<tr valign=top class="" name="record"/>');
 		$row.append($('<td class="editicons"/>')
-			.append('<span class="ui-draggable sorthandle ui-icon ui-icon-arrowthick-2-n-s"/>'
-			+'<span class="ui-icon ui-icon-circle-plus"/><span class="ui-icon ui-icon-circle-minus"/>'));
+			.append('<span class="ui-draggable sorthandle glyphicon-move"></span>'
+			+'<span class="ui-icon-circle-plus glyphicon-plus-circled"></span><span class="ui-icon-circle-minus glyphicon-minus-circled"></span>'));
 		$row.append($('<td/>').append(settings.create(form.div(),record)));
 		$row.data('record',record);
 		$tbl.append($row);
@@ -707,7 +707,7 @@ var form={
 	,listManager:function(settings)
 	{	//   data.name:'Fields' data.,picker:'Number of fields:',data.min:0,data.max:CONST.MAXFIELDS,data.list:page.fields,data.blank:blankField,data.save=function to save,data.create=create form elts for record
 		var div = $('<div/>');
-		var $tbl=$('<table/>').addClass('list').data('settings',settings).attr('list',settings.name);
+		var $tbl=$('<table/>').addClass('list table table-striped').data('settings',settings).attr('list',settings.name);
 		div.append(form.tableRowCounter(settings.name,settings.picker,settings.min,settings.max,settings.list.length));
 		var i;
 		for (i=0;i<settings.list.length;i++){

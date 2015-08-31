@@ -1,4 +1,11 @@
+@import '../styles/a2j-custom/a2j-mixins';
+
 interviews-page {
   display: block;
-  padding: 20px;
+
+  .list-group-item {
+    .title {
+      color: @link-color;
+    }
+  }
 }

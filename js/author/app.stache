@@ -116,7 +116,6 @@
       <div class="panel bootstrap-styles has-toolbar" id="tabsPages">
         <nav class="navbar navbar-default">
           <div class="container-fluid">
-
             <ul class="nav navbar-nav">
               <li><a href="#" id="open-guide"><span class="glyphicon-new-message"></span> Open</li>
               <li><a href="#" id="clone-guide"><span class="glyphicon-docs"></span> Clone</a></li>
@@ -129,24 +128,14 @@
             <div class="nav navbar-nav navbar-right">
               <button id="expandCollapse" data-state="collapsed" class="btn btn-primary navbar-btn"></button>
             </div>
-
           </div>
         </nav>
-        <div class="page">
-          <h3 class="page-title">Pages</h3>
 
-          <div class="tabContentFrame">
-            <div class="tabsPages">
-              <div class="PagesPanel">
-                <div id="CAJAOutline" class="pageoutline pagelist">
-                  <ul>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div id="CAJAOutline" class="page pageoutline pagelist">
+          <ul>
+          </ul>
         </div>
-      </div>
+      </div> <!-- panel bootstrap-styles has-toolbar -->
 
       <div class="panel" id="tabsMap">
         <div class="tabHeader bootstrap-styles">

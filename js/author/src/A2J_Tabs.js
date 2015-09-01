@@ -60,11 +60,14 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 		}
 	}
 	var ts="";
+      ts+='<div class="pages-container">';
+      ts+='<h3 class="page-title">Pages</h3>';
+
 	if (includePages) {
 		for (s in inSteps)
 		{	// List all steps including those for pages that are in steps that we may have removed.
 			if (inSteps[s]!=='') {
-  			ts+='<div class="panel panel-default">';
+  			ts+='<div class="panel panel-info">';
         ts+='<div class="panel-heading" role="tab" id="collapseListGroupHeading1">';
 				ts+='<h4 class="panel-title"><a role="button" class="step" rel="STEP '+s+'" data-stepnum="'+s+'">Step ' + gGuide.stepDisplayName(s) +'</a></h4>';
 				ts+='</div>';
@@ -74,10 +77,15 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 			}
 		}
 	}
+
+	ts+='</div>';
+
 	if (includePops===true)
 	{	// Popups as destinations.
+  	    ts+='<div class="popups-container">';
   	    ts+='<h3 class="page-title">Popups</h3>';
 				ts+='<div class="list-group">'+popups+'</div>';
+				ts+='</div>';
 	}
 	if (includeSpecial===true)
 	{	// Special branch destinations.
@@ -90,8 +98,10 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 			plink= '<a class="page-item list-group-item unselectable" rel="PAGE '+branchID +'">'+ gGuide.pageDisplayName(branchID) +'</a>';
 			tss += plink;
 		}
+		ts+='<div class="special-container">';
 		ts+='<h3 class="page-title">Special Branching</h3>';
 		ts+='<div class="list-group">'+tss+'</div>';
+		ts+='</div>';
 	}
 	return ts;
 }

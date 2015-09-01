@@ -13,6 +13,8 @@
 
       .list-group {
         .list-group-item {
+          padding-right: 5px;
+
           .title {
             margin-right: @grid-gutter-width/4;
           }
@@ -20,7 +22,14 @@
             color: lighten(@gray-light,10%);
           }
           .label {
-            padding: 1px 5px;
+            font-size: @font-size-small;
+            padding: 0px 5px;
+            position: relative;
+            top: -1px;
+
+            &:last-child {
+              margin-right: 0;
+            }
           }
           &.active {
             .title {

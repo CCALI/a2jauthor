@@ -381,7 +381,7 @@ function gotoTabOrPage(target)
 	$('.guidemenu nav li').removeClass('active');
 	$('.guidemenu nav li[ref="'+target+'"]').addClass('active');
 	$('.panel').hide();
-	$('.panel.panel-default').show();
+	$('.panel.panel-info').show();
 	$('#'+target).show();
 	switch (target)
 	{

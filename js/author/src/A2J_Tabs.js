@@ -71,7 +71,7 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
         ts+='<div class="panel-heading" role="tab" id="collapseListGroupHeading1">';
 				ts+='<h4 class="panel-title"><a role="button" class="step" rel="STEP '+s+'" data-stepnum="'+s+'">Step ' + gGuide.stepDisplayName(s) +'</a></h4>';
 				ts+='</div>';
-				ts+='<div id="panel'+s+'" class="panel-collapse" role="tabpanel" aria-expanded="true">';
+				ts+='<div id="panel'+s+'" class="panel-body panel-collapse" role="tabpanel" aria-expanded="true">';
 				ts+='<div class="list-group">'+inSteps[s]+'</div>';
 				ts+='</div></div>';
 			}

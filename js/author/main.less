@@ -3,7 +3,8 @@
  * @group styles-start 0 Getting Started
  * @group styles-theme 1 Theme Basics
  * @group styles-base 2 Base Elements
- * @group styles-utilities 3 Utilities
+ * @group styles-custom 3 Custom Styles
+ * @group styles-utilities 4 Utilities
  *
  * This is the Live Style Guide for the A2J Author Framework. A2J Author is based on the Boostrap 3 CSS framework for all markup and styles.
  *
@@ -56,6 +57,7 @@
   @import "@{bootstrap-base}/list-group.less";
   @import "@{bootstrap-overrides}/list-group.less";
   @import "@{bootstrap-base}/panels.less";
+  @import "@{bootstrap-overrides}/panels.less";
   @import "@{bootstrap-base}/close.less"; /* need */
 
   // Components w/ JavaScript
@@ -73,9 +75,10 @@
 @import "@{bootstrap-overrides}/carets.less";
 
 //Import elements custom to A2J
-@import "@{a2j-custom}/a2j-layout.less";
 @import "@{a2j-custom}/a2j-mixins.less";
 @import "@{a2j-custom}/a2j-header.less";
+@import "@{a2j-custom}/a2j-layout.less";
+@import "@{a2j-custom}/a2j-pages-steps.less";
 @import "@{a2j-custom}/vertical-navbar.less";
 
 //Import our custom icon font

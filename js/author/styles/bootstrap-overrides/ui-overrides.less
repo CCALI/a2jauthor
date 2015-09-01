@@ -37,7 +37,14 @@
     	margin-top: @grid-gutter-width/2;
     }
   }
-  .panel.panel-default {
-    padding: 0;
+  .panel {
+    &.panel-default,
+    &.panel-primary,
+    &.panel-success,
+    &.panel-info,
+    &.panel-danger,
+    &.panel-warning {
+      padding: 0;
+    }
   }
 }

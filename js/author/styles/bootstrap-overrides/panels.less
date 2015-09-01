@@ -56,24 +56,28 @@
   &:hover {
     .box-shadow;
   }
-  .panel-title a {
-    display: block;
-
-    &:hover {
-      text-decoration: none;
-    }
-  }
   .panel-heading {
     border: none;
     .border-radius(0);
     color: @text-color;
     margin: -1px;
+
+    .panel-title {
+      font-weight: 400;
+
+      a {
+        display: block;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
   }
-  .panel-body {
+  .panel-body.panel-collapse {
     .list-group {
       .list-group-item, .list-group-item:last-child, .list-group-item:first-child {
-          border-bottom-width: 1px;
-          border-top-width: 1px;
+          border: 1px solid transparent;
 
         &:hover, &.active {
           border: 1px solid @alert-warning-border;
@@ -105,6 +109,7 @@
     &.collapsed {
       .panel-heading {
         background-color: #fff;
+        .border;
 
         a:before {
           content: '\e831';

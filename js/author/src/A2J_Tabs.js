@@ -47,9 +47,9 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 	{
 		/** @type {TPage} */
 		var page = gGuide.sortedPages[p];
-		var tip = decodeEntities(page.text).substr(0,64) + '<span class="pull-right">' + page.tagList()  + '</span>';
+		var tip = '<em class="description">'+decodeEntities(page.text).substr(0,64) + '</em><span class="pull-right">' + page.tagList()  + '</span>';
 		plink= '<a class="page-item list-group-item unselectable" rel="PAGE '+page.name.asHTML()+'"><span class="title">'+page.name.asHTML()
-			+'</span> <em class="description">'+tip+'</em>' +'</a>';
+			+'</span>'+tip+'</a>';
 		if (page.type===CONST.ptPopup)
 		{
 			popups += plink;

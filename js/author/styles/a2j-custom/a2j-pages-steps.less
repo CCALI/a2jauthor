@@ -10,6 +10,28 @@
 
     .panel-body {
       padding: @grid-gutter-width/4;
+
+      .list-group {
+        .list-group-item {
+          .title {
+            margin-right: @grid-gutter-width/4;
+          }
+          .description {
+            color: lighten(@gray-light,10%);
+          }
+          .label {
+            padding: 1px 5px;
+          }
+          &.active {
+            .title {
+              color: @text-color;
+            }
+            .description {
+              color: @gray-light;
+            }
+          }
+        }
+      }
     }
     .panel-heading {
       margin-left: 0;

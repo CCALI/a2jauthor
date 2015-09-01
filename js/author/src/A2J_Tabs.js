@@ -67,7 +67,7 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 		for (s in inSteps)
 		{	// List all steps including those for pages that are in steps that we may have removed.
 			if (inSteps[s]!=='') {
-  			ts+='<div class="panel panel-info">';
+  			ts+='<div class="panel panel-info accordion" id="step'+s+'">';
         ts+='<div class="panel-heading" role="tab" id="collapseListGroupHeading1">';
 				ts+='<h4 class="panel-title"><a role="button" class="step" rel="STEP '+s+'" data-stepnum="'+s+'">Step ' + gGuide.stepDisplayName(s) +'</a></h4>';
 				ts+='</div>';
@@ -117,6 +117,7 @@ function updateTOC()
 	// JPM Clicking a step toggle slides step's page list.
 	$('#CAJAOutline .panel-heading .step').click(function(){
   	var stepNum = $(this).data('stepnum');
+  	$('#step'+stepNum).toggleClass('collapsed');
 		$('#panel'+stepNum).slideToggle(300);
 	});
 

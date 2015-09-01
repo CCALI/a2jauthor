@@ -134,11 +134,13 @@ function main()
     var ecText = $("#expandCollapse").attr('data-state');
     if (ecText === 'collapsed') {
       $("#CAJAOutline .panel-collapse").slideUp(300);
+      $("#CAJAOutline .accordion").addClass('collapsed');
       $('#expandCollapse').button({label:'<span class="glyphicon-expand"></span> Expand All'});
       $('#expandCollapse').attr("data-state", "expanded");
     }
     else {
       $("#CAJAOutline .panel-collapse").slideDown(300);
+      $("#CAJAOutline .accordion").removeClass('collapsed');
       $('#expandCollapse').button({label:'<span class="glyphicon-collapse"></span> Collapse All'});
       $('#expandCollapse').attr("data-state", "collapsed");
     }

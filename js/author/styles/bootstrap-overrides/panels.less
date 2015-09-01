@@ -66,5 +66,42 @@
   .panel-heading {
     border: none;
     .border-radius(0);
+    color: @text-color;
+    margin: -1px;
+  }
+  .panel-body {
+    .list-group {
+      .list-group-item, .list-group-item:last-child, .list-group-item:first-child {
+          border-bottom-width: 1px;
+          border-top-width: 1px;
+
+        &:hover, &.active {
+          border: 1px solid @alert-warning-border;
+        }
+      }
+    }
+  }
+
+  &.accordion {
+    .panel-heading {
+      padding-left: @grid-gutter-width/4;
+
+      a {
+        &:before {
+          .icon-font;
+          content: '\e845';
+          margin-right: @grid-gutter-width/4;
+        }
+      }
+    }
+    &.collapsed {
+      .panel-heading {
+        background-color: #fff;
+
+        a:before {
+          content: '\e831';
+        }
+      }
+    }
   }
 }

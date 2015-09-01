@@ -132,14 +132,6 @@
 
           </div>
         </nav>
-
-        <div class="tabFooter bootstrap-styles">
-            <button class="btn btn-default"><span class="glyphicon-new-message"></span> Edit</button>
-            <button class="btn btn-default"><span class="glyphicon-doc"></span></button>
-            <button class="btn btn-default"><span class="glyphicon-doc"></span></button>
-            <button class="btn btn-default"><span class="glyphicon-docs"></span> Clone</button>
-            <button class="btn btn-default"><span class="glyphicon-trash"></span> Delete</button>
-         </div>
         <div class="page">
           <h3 class="page-title">Pages</h3>
 

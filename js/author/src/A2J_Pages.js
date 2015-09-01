@@ -141,7 +141,7 @@ function pageNameRelFilter(e,pageName)
 
 function pageEditSelected()
 {	// Return currently selected page or '' if none selected.
-	var rel = makestr($('.pageoutline li.'+SELECTED).first().attr('rel'));
+	var rel = makestr($('.pageoutline a.'+SELECTED).first().attr('rel'));
 	if (rel.indexOf("PAGE ")===0)
 	{
 		rel=rel.substr(5);
@@ -154,8 +154,8 @@ function pageEditSelected()
 }
 function pageEditSelect(pageName)
 {	// Select named page in our list
-	$('.pageoutline li').removeClass(SELECTED);
-	pageNameRelFilter('.pageoutline li',pageName).toggleClass(SELECTED);
+	$('.pageoutline a').removeClass(SELECTED);
+	pageNameRelFilter('.pageoutline a',pageName).toggleClass(SELECTED);
 }
 
 function pageEditClone(pageName)

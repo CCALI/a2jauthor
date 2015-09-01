@@ -251,29 +251,14 @@ function main()
   $('#tabsMapper button:eq(1)').click(mapZoomClick);
   $('#tabsMapper button:eq(2)').click(mapZoomClick);
   $('#tabsMapper button:eq(3)').click(mapZoomClick);
-/*
-  $('#tabsPages .tabFooter button').first()
-    .button().click(function(){
-      gotoPageEdit(pageEditSelected());
-    }).next()
-    .button().click(function(){
-      pageEditNew();
-    }).next()
-    .button().click(function(){
-      pagePopupEditNew();
-    }).next()
-    .button().click(function(){
-      pageEditClone(pageEditSelected());
-    }).next()
-    .button().click(function(){
-      pageEditDelete(pageEditSelected());
-    });
-*/
+
   $('#tabsPages #open-guide').click(function(){
       gotoPageEdit(pageEditSelected());
     });
-
-  $('#delete-guide').click(function(){
+  $('#tabsPages #clone-guide').click(function(){
+      pageEditClone(pageEditSelected());
+    });
+  $('#tabsPages #delete-guide').click(function(){
       pageEditDelete(pageEditSelected());
     });
 

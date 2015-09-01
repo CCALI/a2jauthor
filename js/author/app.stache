@@ -118,9 +118,12 @@
           <div class="container-fluid">
 
             <ul class="nav navbar-nav">
-              <li><a href="#" class="open-guide"><span class="glyphicon-new-message"></span> Edit</li>
-              <li class="disabled"><a href="#" class="clone-guide"><span class="glyphicon-docs"></span> Clone</a></li>
-              <li><a href="#" class="delete-guide"><span class="glyphicon-trash"></span> Delete</a></li>
+              <li><a href="#" id="open-guide"><span class="glyphicon-new-message"></span> Open</li>
+              <li><a href="#" id="clone-guide"><span class="glyphicon-docs"></span> Clone</a></li>
+              <li><a href="#" id="delete-guide"><span class="glyphicon-trash"></span> Delete</a></li>
+              <li class="divider"></li>
+              <li><a href="#" id="new-page"><span class="glyphicon-doc"></span> New Page</a></li>
+              <li><a href="#" id="new-popup"><span class="glyphicon-popup"></span> New Popup</a></li>
             </ul>
 
             <div class="nav navbar-nav navbar-right">
@@ -130,14 +133,21 @@
           </div>
         </nav>
 
+        <div class="tabFooter bootstrap-styles">
+            <button class="btn btn-default"><span class="glyphicon-new-message"></span> Edit</button>
+            <button class="btn btn-default"><span class="glyphicon-doc"></span></button>
+            <button class="btn btn-default"><span class="glyphicon-doc"></span></button>
+            <button class="btn btn-default"><span class="glyphicon-docs"></span> Clone</button>
+            <button class="btn btn-default"><span class="glyphicon-trash"></span> Delete</button>
+         </div>
         <div class="page">
-          <h3 class="page-title">Pages <a href="">+ New page</a></h3>
+          <h3 class="page-title">Pages</h3>
 
           <div class="tabContentFrame">
             <div class="tabsPages">
               <div class="PagesPanel">
                 <div id="CAJAOutline" class="pageoutline pagelist">
-                  <ul class="outline">
+                  <ul>
                   </ul>
                 </div>
               </div>

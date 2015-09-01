@@ -48,7 +48,7 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 		/** @type {TPage} */
 		var page = gGuide.sortedPages[p];
 		var tip = decodeEntities(page.text).substr(0,64) + '<span class="pull-right">' + page.tagList()  + '</span>';
-		plink= '<a class="list-group-item unselectable" rel="PAGE '+page.name.asHTML()+'"><span class="title">'+page.name.asHTML()
+		plink= '<a class="page-item list-group-item unselectable" rel="PAGE '+page.name.asHTML()+'"><span class="title">'+page.name.asHTML()
 			+'</span> <span class="description">'+tip+'</span>' +'</a>';
 		if (page.type===CONST.ptPopup)
 		{
@@ -66,9 +66,9 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 			if (inSteps[s]!=='') {
   			ts+='<div class="panel panel-default">';
         ts+='<div class="panel-heading" role="tab" id="collapseListGroupHeading1">';
-				ts+='<h4 class="panel-title"><a role="button" class="step" rel="STEP '+s+'">Step ' + gGuide.stepDisplayName(s) +'</a></h4>';
+				ts+='<h4 class="panel-title"><a role="button" class="step" rel="STEP '+s+'" data-stepnum="'+s+'">Step ' + gGuide.stepDisplayName(s) +'</a></h4>';
 				ts+='</div>';
-				ts+='<div class="panel-collapse" role="tabpanel" aria-expanded="true">';
+				ts+='<div id="panel'+s+'" class="panel-collapse" role="tabpanel" aria-expanded="true">';
 				ts+='<div class="list-group">'+inSteps[s]+'</div>';
 				ts+='</div></div>';
 			}
@@ -76,7 +76,7 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 	}
 	if (includePops===true)
 	{	// Popups as destinations.
-  	    ts+='<h3 class="page-title">Popups <a href="">+ New popup</a></h3>';
+  	    ts+='<h3 class="page-title">Popups</h3>';
 				ts+='<div class="list-group">'+popups+'</div>';
 	}
 	if (includeSpecial===true)
@@ -87,7 +87,7 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 		for (i in branchIDs)
 		{
 			var branchID = branchIDs[i];
-			plink= '<a class="list-group-item unselectable" rel="PAGE '+branchID +'">'+ gGuide.pageDisplayName(branchID) +'</a>';
+			plink= '<a class="page-item list-group-item unselectable" rel="PAGE '+branchID +'">'+ gGuide.pageDisplayName(branchID) +'</a>';
 			tss += plink;
 		}
 		ts+='<h3 class="page-title">Special Branching</h3>';
@@ -105,12 +105,13 @@ function updateTOC()
 
 
 	// JPM Clicking a step toggle slides step's page list.
-	$('#CAJAOutline li[rel^="STEP "]').click(function(){
-		$(this).next().slideToggle(300);
+	$('#CAJAOutline .panel-heading .step').click(function(){
+  	var stepNum = $(this).data('stepnum');
+		$('#panel'+stepNum).slideToggle(300);
 	});
 
 	// JPM Clicking a step toggle slides step's page list.
-	$('#CAJAOutlineMap li[rel^="STEP "]').click(function()
+	$('#CAJAOutlineMap li.step').click(function()
 	{	// 2014-08-12 Toggle step's page list and fade in/out it's nodes in the mapper.
 		// Determine which step it is, then fade back if mapper
 		var step = $(this).attr('rel').split(' ')[1];
@@ -128,16 +129,16 @@ function updateTOC()
 
 
 	// JPM Only 'select' Pages, not Steps
-	$('.pageoutline li[rel^="PAGE "]')
+	$('.pageoutline a.page-item[rel^="PAGE "]')
 		.click(function(e){
 			if (!e.ctrlKey){
-				$('.pageoutline li').removeClass(SELECTED);
+				$('.pageoutline a.page-item').removeClass(SELECTED);
 			}
 			$(this).toggleClass(SELECTED);
 		})
 		.dblclick(function (){
 			var rel=$(this).attr('rel');
-			$('.pageoutline li').removeClass(SELECTED);
+			$('.pageoutline a.page-item').removeClass(SELECTED);
 			$(this).addClass(SELECTED);
 			gotoTabOrPage(rel);
 		});

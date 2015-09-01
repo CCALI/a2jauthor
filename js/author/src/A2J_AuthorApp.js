@@ -133,12 +133,12 @@ function main()
   function expandCollapsePageList() {
     var ecText = $("#expandCollapse").attr('data-state');
     if (ecText === 'collapsed') {
-      $("#CAJAOutline > ul > li + ul").slideUp(300);
+      $("#CAJAOutline .panel-collapse").slideUp(300);
       $('#expandCollapse').button({label:'<span class="glyphicon-expand"></span> Expand All'});
       $('#expandCollapse').attr("data-state", "expanded");
     }
     else {
-      $("#CAJAOutline > ul > li + ul").slideDown(300);
+      $("#CAJAOutline .panel-collapse").slideDown(300);
       $('#expandCollapse').button({label:'<span class="glyphicon-collapse"></span> Collapse All'});
       $('#expandCollapse').attr("data-state", "collapsed");
     }
@@ -251,8 +251,8 @@ function main()
   $('#tabsMapper button:eq(1)').click(mapZoomClick);
   $('#tabsMapper button:eq(2)').click(mapZoomClick);
   $('#tabsMapper button:eq(3)').click(mapZoomClick);
-
-  $('.tabsPages .tabFooter button').first()
+/*
+  $('#tabsPages .tabFooter button').first()
     .button().click(function(){
       gotoPageEdit(pageEditSelected());
     }).next()
@@ -268,8 +268,21 @@ function main()
     .button().click(function(){
       pageEditDelete(pageEditSelected());
     });
+*/
+  $('#tabsPages #open-guide').click(function(){
+      gotoPageEdit(pageEditSelected());
+    });
 
+  $('#delete-guide').click(function(){
+      pageEditDelete(pageEditSelected());
+    });
 
+  $('#tabsPages #new-page').click(function(){
+      pageEditNew();
+    });
+  $('#tabsPages #new-popup').click(function(){
+      pagePopupEditNew();
+    });
 
   $('#vars_load').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
   $('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});

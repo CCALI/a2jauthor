@@ -38,23 +38,18 @@
     </div>
 
     <div class="guidepanels ui-widget xui-widget-content">
-      <div class="panel bootstrap-styles" id="tabsAbout">
-        <div class="tabHeader ">
-          <div class="row">
-            <div class="col-md-8">
-              <h3>Information about this interview</h3>
-            </div>
-            <div class="col-md-4 text-right">
-              <button class="ecPanelButton btn btn-primary" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
-            </div>
-          </div>
-        </div>
-        <br />
+      <div class="panel bootstrap-styles has-toolbar" id="tabsAbout">
+        <nav class="navbar navbar-default">
+          <p class="navbar-text">Information about this interview</p>
+          <div class="nav navbar-nav navbar-right">
+            <button class="ecPanelButton btn btn-default navbar-btn" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
+          </div><!-- nav navbar-nav navbar-right -->
+        </nav>
 
-        <div class="tabContentFrame">
+        <div class="tabContentFrame page">
           <div class="tabContent editq"></div>
         </div>
-      </div>
+      </div><!--panel bootstrap-styles has-toolbar -->
 
       <div class="panel bootstrap-styles" id="tabsVariables">
         <div class="tabHeader bootstrap-styles">
@@ -220,32 +215,25 @@
 
       <div class="panel bootstrap-styles has-toolbar" id="tabsFiles">
       <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <nav class="navbar navbar-default">
-              <p class="navbar-text">Files currently attached to this interview</p>
+        <p class="navbar-text">Files currently attached to this interview</p>
+        <div class="nav navbar-nav navbar-right">
+          <div class="fileuploader">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+            <a href="javascript:void(0)" class="fileinput-button">
+              <button class="btn btn-default navbar-btn">
+                <span class="glyphicon-folder-upload"></span> Upload files...
+              </button>
 
-              <div class="nav navbar-nav navbar-right">
-                <div class="fileuploader">
-                  <!-- The fileinput-button span is used to style the file input field as button -->
-                  <a href="javascript:void(0)" class="fileinput-button">
-                    <button class="btn btn-default navbar-btn">
-                      <span class="glyphicon-folder-upload"></span> Upload files...
-                    </button>
+              <!-- The file input field used as target for the file upload widget -->
+              <input id="fileupload" type="file" name="files[]" multiple />
+            </a>
 
-                    <!-- The file input field used as target for the file upload widget -->
-                    <input id="fileupload" type="file" name="files[]" multiple />
-                  </a>
-
-                  <div id="progress" class="progress progress-success progress-striped">
-                    <div class="bar"></div>
-                  </div>
-                </div>
-              </div>
-
-
-              </nav>
+            <div id="progress" class="progress progress-success progress-striped">
+              <div class="bar"></div>
             </div>
-          </nav>
+          </div>
+        </div><!-- nav navbar-nav navbar-right -->
+      </nav>
 
         <div class="page">
           <div class="tabContentFrame">

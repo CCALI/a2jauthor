@@ -51,28 +51,22 @@
         </div>
       </div><!--panel bootstrap-styles has-toolbar -->
 
-      <div class="panel bootstrap-styles" id="tabsVariables">
-        <div class="tabHeader bootstrap-styles">
-          <div class="row">
-            <div class="col-md-12">
-              <h3>Variables used in this interview</h3>
-            </div>
-          </div>
-        </div>
-        <br />
+      <div class="panel bootstrap-styles has-toolbar" id="tabsVariables">
+        <nav class="navbar navbar-default">
+          <p class="navbar-text">Variables used in this interview</p>
+          <div class="nav navbar-nav navbar-right">
+            <button id="var-add" class="btn btn-default navbar-btn"><span class="glyphicon-plus"></span> Add</button>
+            <a href="javascript:void(0)" class="fileinput-button">
+              <button id="uploadCMPFile" class="btn btn-primary navbar-btn"><span class="glyphicon-folder-open"></span> Add from HotDocs .CMP</button>
+              <input type="file" id="uploadCMPFileInput"/>
+            </a>
+          </div><!-- nav navbar-nav navbar-right -->
+        </nav>
 
-        <div class="tabContentFrame">
+        <div class="page tabContentFrame">
           <div class="tabContent editq"></div>
         </div>
-
-        <div class="tabFooter bootstrap-styles">
-          <button id="var-add" class="btn btn-default"><span class="glyphicon-plus"></span> Add</button>
-          <a href="javascript:void(0)" class="fileinput-button">
-            <button id="uploadCMPFile" class="btn btn-primary"><span class="glyphicon-folder-open"></span> Add from HotDocs .CMP</button>
-            <input type="file" id="uploadCMPFileInput"/>
-          </a>
-        </div>
-      </div>
+      </div><!-- panel bootstrap-styles has-toolbar -->
 
       <div class="panel" id="tabsClauses">
 

@@ -20,7 +20,7 @@ CONST.AutoSaveInterval = 5*60*1000;
 
 // Reference for the page editing dialog box
 var $pageEditDialog=null;
-var SELECTED = 'ui-state-active';
+var SELECTED = 'active';
 
 
 /** @param {...}  status */
@@ -133,12 +133,14 @@ function main()
   function expandCollapsePageList() {
     var ecText = $("#expandCollapse").attr('data-state');
     if (ecText === 'collapsed') {
-      $("#CAJAOutline > ul > li + ul").slideUp(300);
+      $("#CAJAOutline .panel-collapse").slideUp(300);
+      $("#CAJAOutline .accordion").addClass('collapsed');
       $('#expandCollapse').button({label:'<span class="glyphicon-expand"></span> Expand All'});
       $('#expandCollapse').attr("data-state", "expanded");
     }
     else {
-      $("#CAJAOutline > ul > li + ul").slideDown(300);
+      $("#CAJAOutline .panel-collapse").slideDown(300);
+      $("#CAJAOutline .accordion").removeClass('collapsed');
       $('#expandCollapse').button({label:'<span class="glyphicon-collapse"></span> Collapse All'});
       $('#expandCollapse').attr("data-state", "collapsed");
     }
@@ -252,24 +254,22 @@ function main()
   $('#tabsMapper button:eq(2)').click(mapZoomClick);
   $('#tabsMapper button:eq(3)').click(mapZoomClick);
 
-  $('.tabsPages .tabFooter button').first()
-    .button().click(function(){
+  $('#tabsPages #open-guide').click(function(){
       gotoPageEdit(pageEditSelected());
-    }).next()
-    .button().click(function(){
-      pageEditNew();
-    }).next()
-    .button().click(function(){
-      pagePopupEditNew();
-    }).next()
-    .button().click(function(){
+    });
+  $('#tabsPages #clone-guide').click(function(){
       pageEditClone(pageEditSelected());
-    }).next()
-    .button().click(function(){
+    });
+  $('#tabsPages #delete-guide').click(function(){
       pageEditDelete(pageEditSelected());
     });
 
-
+  $('#tabsPages #new-page').click(function(){
+      pageEditNew();
+    });
+  $('#tabsPages #new-popup').click(function(){
+      pagePopupEditNew();
+    });
 
   $('#vars_load').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
   $('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});

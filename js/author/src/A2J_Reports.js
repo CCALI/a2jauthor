@@ -1,12 +1,12 @@
 /*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	
+
 	Authoring App Reports
-	
+
 	Generate both full reports of content and translation lists for translators
 	06/2014
-	
+
 */
 
 /* global gGuide, gLogic */
@@ -14,7 +14,7 @@
 
 
 function longProcess(statusPrompt, process)
-{	// 
+{	//
 	setProgress(statusPrompt,true);
 	setTimeout(function(){
 		process();
@@ -27,10 +27,11 @@ function newWindowReport(title,html)
 {	// Open report in new window. Include CSS for proper formatting.
 	var reportWindow = window.open();//'A2J_Report.html', "");
 	html = '<html><head><title>' + title + '</title>'
-	+'<link rel="stylesheet" type="text/css" href="author.jquery-ui.css">'
-	+'<link rel="stylesheet" type="text/css" href="A2J_Author.css">'
-	+'<link rel="stylesheet" type="text/css" href="A2J_Reports.css">'
-	+'</head>'+'<body class="CAJAReportDump">'+html +'</body></html>';
+	+'<link rel="stylesheet" type="text/css" href="styles/author.jquery-ui.css">'
+	+'<link rel="stylesheet" type="text/css" href="styles/A2J_Author.css">'
+	+'<link rel="stylesheet" type="text/css" href="styles/A2J_Reports.css">'
+	+'</head>'+'<body class="CAJAReportDump bootstrap-styles">'+html +'</body>'
+  +'</html>';
 	reportWindow.document.write(html);
 	reportWindow.document.close();
 }
@@ -47,7 +48,7 @@ TLogic.prototype.stripLogicHTML = function(html)
 			html += parts[p];
 			if (p<parts.length-1)
 			{
-				html += " word "; 
+				html += " word ";
 			}
 		}
 	}
@@ -57,9 +58,9 @@ TLogic.prototype.stripLogicHTML = function(html)
 function textStatisticsReport(text, includeAllStats)
 {	// 2014-06-30 Return suitable class to use and information block about text complexity.
 	// This is an API wrapper to the https://github.com/cgiffard/TextStatistics.js module.
-	// Also suggested is that the text background turn green if grade level < 7, Yellow < 10 and red for >=10. 
+	// Also suggested is that the text background turn green if grade level < 7, Yellow < 10 and red for >=10.
 	// Returns object with {good:bool, css:'class', info:'info'}
-	
+
 	text = gLogic.stripLogicHTML(text);
 	var t=textstatistics(text); // Pulled form https://github.com/cgiffard/TextStatistics.js
 	// We use fleschKincaidGradeLevel to determine colors.
@@ -92,9 +93,9 @@ function textStatisticsReport(text, includeAllStats)
 }
 
 function reportFull()
-{	// 2016-06-24 Generate full report, ala LessonText.	
+{	// 2016-06-24 Generate full report, ala LessonText.
 	longProcess( 'Building report', function ()
-	{	
+	{
 		/** @type {TGuide} */
 		var guide = gGuide;
 		/** @type {TPage} */
@@ -107,8 +108,8 @@ function reportFull()
 		var field;
 		/** @type {TButton} */
 		var button;
-		
-		
+
+
 		function pageLink(pageName) {
 			if (pageName && pageName != '' ) {
 				return "PAGE_"+pageName;
@@ -125,7 +126,7 @@ function reportFull()
 			else
 			{
 				return '';
-			}			
+			}
 		}
 		function jumpAnchor(link,label)
 		{
@@ -141,7 +142,7 @@ function reportFull()
 			// All external links, display link URL after.
 			// All Popup links, display popup name after and rename link to jump to anchor tag.
 			html=html.replace(REG.LINK_POP,function(match,p1,offset,string) // jslint nolike: /\"POPUP:\/\/(([^\"])+)\"/ig
-			{	
+			{
 				// HREF="POPUP://MyPopup" becomes HREF="#PAGE_MyPopup"
 				var popupid=match.match(REG.LINK_POP2)[1];
 				// popupid= htmlEscape(newName);
@@ -172,7 +173,7 @@ function reportFull()
 			return '<tr>' + t + '</tr>';
 		}
 		function tableWrap(html){
-			return '<table class="CAJAReportDump">'+html+'</table>';
+			return '<table class="table CAJAReportDump">'+html+'</table>';
 		}
 		function fieldSetWrap(legend,html,styleclass) {
 			return '<fieldset><legend' + (styleclass?' class='+styleclass:'')+'>'+legend+'</legend>' + html +'</fieldset>';
@@ -185,21 +186,21 @@ function reportFull()
 			}
 			return text;
 		}
-		
+
 		var html='';
-		
-		// Glom all F-K gradable text. 
+
+		// Glom all F-K gradable text.
 		var guideGradeText = '';
-		
+
 		// Meta section
 		var t = '';
-		
-		
+
+
 		var stepHTML=[]; // 11/19/2014 Group pages to their steps
 		var popHTML= '';
 		//var tr = textStatisticsReport('Enabling the Script panel causes a Firefox slow-down due to a platform bug. This will be fixed with the next major Firefox and Firebug versions.');
 		//t= 'Stats: <blockquote>' + tr.text  + '</blockquote><center>'+tr.css+'; '+tr.info+'</center>';
-		
+
 		t += (tuple('Current Version:',  guide.version));
 		t += (tuple('Title:',  guide.title));
 		t += (tupleAuto('Description:',  guide.description));
@@ -221,15 +222,15 @@ function reportFull()
 		}
 		t += tupleAuto('Authors',tableWrap(ta));
 		t += tupleAuto('Revision Notes:',  guide.notes);
-		
+
 		// Variable count
 		var vi;
 		var varCnt=0;
 		for (vi in guide.vars){
-			varCnt++; 
+			varCnt++;
 		}
 		t += tuple('Variables:',  varCnt + ' ' + jumpAnchor('VARS','Variables list'));
-		
+
 		t += tuple('Starting Page:',  jumpAnchor(pageLink( guide.firstPage),guide.firstPage)  );
 		t += tuple('Exit Page:',    jumpAnchor(pageLink( guide.exitPage),guide.exitPage)  );
 		var ts='';
@@ -242,14 +243,14 @@ function reportFull()
 		t += tuple('Steps',fieldSetWrap('Interview Steps',tableWrap(ts)));
 		t += tuple('Popups',jumpAnchor('POPUPS','Popup pages'),'Step0');
 		html += fieldSetWrap('Interview Information',tableWrap(t));
-		
+
 		// Variable list
 		t = guide.variableListHTML();
 		html += anchor('VARS')+fieldSetWrap('Interview Variables',t);
 
-		
+
 		// Steps section
-		t = '';	
+		t = '';
 		// Pages section
 		var p;
 		for (p in guide.sortedPages)
@@ -277,7 +278,7 @@ function reportFull()
 				t += (tupleAuto('Help video',	page.helpVideoURL));
 				t += (tupleAuto('Variable Repeater',	page.repeatVar));
 				t += (tupleAuto('Notes',	page.notes));
-				
+
 				var ft='';
 				for (var fi in page.fields) {
 					field = page.fields[fi];
@@ -296,7 +297,7 @@ function reportFull()
 					ft+= tuple('Field#'+(parseInt(fi)+1),tableWrap(fft));
 				}
 				t+= tuple('Fields',tableWrap(ft));
-				
+
 				t += (tupleAuto('Logic Before',	page.codeBefore));
 				var bt=tuples('TH',[ 'Label','Next page','Variable Name','Default Value']);
 				var bi;
@@ -305,8 +306,8 @@ function reportFull()
 					button = page.buttons[bi];
 					bt += tuples('TD', [ button.label, jumpAnchor(pageLink( button.next),button.next),button.name,button.value]);
 				}
-				t += tuple('Buttons',tableWrap(bt)); 	
-					
+				t += tuple('Buttons',tableWrap(bt));
+
 				t += tupleAuto('Logic After',	page.codeAfter);
 				stepHTML[si] += anchor( pageLink(page.name)) + fieldSetWrap('Page '+ page.name, tableWrap(t) , 'Step'+parseInt(si));
 			}
@@ -323,7 +324,7 @@ function reportFull()
 			popHTML = 'No popups in this interview';
 		}
 		html += anchor('POPUPS') + '<h2>Popups</h2>' + popHTML;
-		
+
 		var tsr = textStatisticsReport(guideGradeText,true);
 		guideGradeText = '<div class="GradeReport ' + tsr.css+'">The F-K Grade for all questions and help in this interview is '+tsr.gradeFK
 			+' (< 7 is Good)'
@@ -336,7 +337,7 @@ function reportFull()
 }
 
 function reportTranscript()
-{	//  2016-06-24 List all text blocks for translation. 
+{	//  2016-06-24 List all text blocks for translation.
 	/** @type {TGuide} */
 	var guide = gGuide;
 	/** @type {TPage} */
@@ -349,9 +350,9 @@ function reportTranscript()
 	var field;
 	/** @type {TButton} */
 	//var button;
-	
+
 	var html = '';
-	
+
 	function tuples(colType,colsArray)
 	{
 		var t='';
@@ -361,7 +362,7 @@ function reportTranscript()
 		}
 		return '<tr>' + t + '</tr>';
 	}
-	
+
 	html += tuples('TH',['#','Page','Section','Text']);
 	var pnum=0;
 	var phcnt=0;
@@ -370,7 +371,7 @@ function reportTranscript()
 	// Pages section
 	var p;
 	for (p in guide.sortedPages)
-	{	// Spreadsheet format: page name, chunk/field, text 
+	{	// Spreadsheet format: page name, chunk/field, text
 		page=guide.sortedPages[p];
 		sub=0;
 		pnum ++;
@@ -394,15 +395,15 @@ function reportTranscript()
 			html += tuples('TD',[pnum+'.'+sub ,PH, 'Field Prompt <br>'+field.label+' ('+field.type+')',field.invalidPrompt]);
 		}
 	}
-	
+
 	html = '<h1>Audio Transcripts for ' + gGuide.title+'</h1>'
 		+'<ul>'
 			+'<li>Number of pages: '+pnum
 			+'<li>Number of page helps: '+phcnt
 			+'<li>Number of field prompts: '+ fpcnt
 		+'</ul>'
-		+'<table class="CAJAReportDump CAJATranscriptDump">'+html+'</table>';
-		
+		+'<table class="table CAJAReportDump CAJATranscriptDump">'+html+'</table>';
+
 	newWindowReport( gGuide.title +' - Transcript Report - A2J 5 Author' ,html);
 	//	$('.tabContent','#tabsReport').html(html);
 }

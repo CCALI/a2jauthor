@@ -25,6 +25,7 @@ function varEdit(v/*TVariable*/)
 		$('#varUsageList').html( vcGatherUsage(v.name) );
 	});
 	$('#var-edit-form').data(v).dialog({
+  	dialogClass: "modal",
 		autoOpen:true,
 			width: 450,
 			height: 500,

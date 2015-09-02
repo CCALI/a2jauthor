@@ -48,3 +48,73 @@
   *
   * @demo docs/demos/panels-list-groups/demo.html
 **/
+.panel {
+  .border;
+  .no-box-shadow;
+  .border-radius(0);
+
+  &:hover {
+    .box-shadow;
+  }
+  .panel-heading {
+    border: none;
+    .border-radius(0);
+    color: @text-color;
+    margin: -1px;
+
+    .panel-title {
+      font-weight: 400;
+
+      a {
+        display: block;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+  .panel-body.panel-collapse {
+    .list-group {
+      .list-group-item, .list-group-item:last-child, .list-group-item:first-child {
+          border: 1px solid transparent;
+
+        &:hover, &.active {
+          border: 1px solid @alert-warning-border;
+        }
+      }
+    }
+  }
+
+  /**
+  * @style accordions Accordions
+  * @parent panels.less
+  *
+  * @description Add the `accordion` class to a panel for additional styles when expanding/collapsing a panel.
+  *
+  **/
+
+  &.accordion {
+    .panel-heading {
+      padding-left: @grid-gutter-width/4;
+
+      a {
+        &:before {
+          .icon-font;
+          content: '\e845';
+          margin-right: @grid-gutter-width/4;
+        }
+      }
+    }
+    &.collapsed {
+      .panel-heading {
+        background-color: #fff;
+        .border;
+
+        a:before {
+          content: '\e831';
+        }
+      }
+    }
+  }
+}

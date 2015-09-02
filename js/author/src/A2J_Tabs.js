@@ -47,9 +47,9 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 	{
 		/** @type {TPage} */
 		var page = gGuide.sortedPages[p];
-		var tip = decodeEntities(page.text).substr(0,64) + '<span class=taglist>' + page.tagList()  + '</span>';
-		plink= '<li class="unselectable" rel="PAGE '+page.name.asHTML()+'">'+page.name.asHTML()
-			+' <span class="tip">'+tip+'</span>' +'</li>';
+		var tip = '<em class="description">'+decodeEntities(page.text).substr(0,64) + '</em><span class="pull-right">' + page.tagList()  + '</span>';
+		plink= '<a class="page-item list-group-item unselectable" rel="PAGE '+page.name.asHTML()+'"><span class="title">'+page.name.asHTML()
+			+'</span>'+tip+'</a>';
 		if (page.type===CONST.ptPopup)
 		{
 			popups += plink;
@@ -60,17 +60,32 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 		}
 	}
 	var ts="";
+      ts+='<div class="pages-container">';
+      ts+='<h3 class="page-title">Pages</h3>';
+
 	if (includePages) {
 		for (s in inSteps)
 		{	// List all steps including those for pages that are in steps that we may have removed.
 			if (inSteps[s]!=='') {
-				ts+='<li rel="STEP '+s+'">Step ' + gGuide.stepDisplayName(s) +"</li><ul>"+inSteps[s]+"</ul>"; // STEP '+'?'+". "+'?'
+  			ts+='<div class="panel panel-info accordion" id="step'+s+'">';
+        ts+='<div class="panel-heading" role="tab" id="collapseListGroupHeading1">';
+				ts+='<h4 class="panel-title"><a role="button" class="step" rel="STEP '+s+'" data-stepnum="'+s+'">Step ' + gGuide.stepDisplayName(s) +'</a></h4>';
+				ts+='</div>';
+				ts+='<div id="panel'+s+'" class="panel-body panel-collapse" role="tabpanel" aria-expanded="true">';
+				ts+='<div class="list-group">'+inSteps[s]+'</div>';
+				ts+='</div></div>';
 			}
 		}
 	}
+
+	ts+='</div>';
+
 	if (includePops===true)
 	{	// Popups as destinations.
-		ts += '<li rel="tabsPopups">'+Languages.en('Popups')+'</li><ul>'+popups+'</ul>';
+  	    ts+='<div class="popups-container">';
+  	    ts+='<h3 class="page-title">Popups</h3>';
+				ts+='<div class="list-group">'+popups+'</div>';
+				ts+='</div>';
 	}
 	if (includeSpecial===true)
 	{	// Special branch destinations.
@@ -80,10 +95,13 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 		for (i in branchIDs)
 		{
 			var branchID = branchIDs[i];
-			plink= '<li class="unselectable" rel="PAGE '+branchID +'">'+ gGuide.pageDisplayName(branchID) +'</li>';
+			plink= '<a class="page-item list-group-item unselectable" rel="PAGE '+branchID +'">'+ gGuide.pageDisplayName(branchID) +'</a>';
 			tss += plink;
 		}
-		ts += '<li>Special Branching</li><ul>'+tss+'</ul>';
+		ts+='<div class="special-container">';
+		ts+='<h3 class="page-title">Special Branching</h3>';
+		ts+='<div class="list-group">'+tss+'</div>';
+		ts+='</div>';
 	}
 	return ts;
 }
@@ -93,16 +111,18 @@ function updateTOC()
 	// 2014-06-02 TOC updates when page name, text, fields change. Or page is added/deleted.
 	// Also we update the mapper since it also displays this info.
 	var ts = getTOCStepPages(true,true);
-	$('.pageoutline').html("<ul>" + ts + "</ul>");
+	$('.pageoutline').html(ts);
 
 
 	// JPM Clicking a step toggle slides step's page list.
-	$('#CAJAOutline li[rel^="STEP "]').click(function(){
-		$(this).next().slideToggle(300);
+	$('#CAJAOutline .panel-heading .step').click(function(){
+  	var stepNum = $(this).data('stepnum');
+  	$('#step'+stepNum).toggleClass('collapsed');
+		$('#panel'+stepNum).slideToggle(300);
 	});
 
 	// JPM Clicking a step toggle slides step's page list.
-	$('#CAJAOutlineMap li[rel^="STEP "]').click(function()
+	$('#CAJAOutlineMap li.step').click(function()
 	{	// 2014-08-12 Toggle step's page list and fade in/out it's nodes in the mapper.
 		// Determine which step it is, then fade back if mapper
 		var step = $(this).attr('rel').split(' ')[1];
@@ -120,16 +140,16 @@ function updateTOC()
 
 
 	// JPM Only 'select' Pages, not Steps
-	$('.pageoutline li[rel^="PAGE "]')
+	$('.pageoutline a.page-item[rel^="PAGE "]')
 		.click(function(e){
 			if (!e.ctrlKey){
-				$('.pageoutline li').removeClass(SELECTED);
+				$('.pageoutline a.page-item').removeClass(SELECTED);
 			}
 			$(this).toggleClass(SELECTED);
 		})
 		.dblclick(function (){
 			var rel=$(this).attr('rel');
-			$('.pageoutline li').removeClass(SELECTED);
+			$('.pageoutline a.page-item').removeClass(SELECTED);
 			$(this).addClass(SELECTED);
 			gotoTabOrPage(rel);
 		});
@@ -216,7 +236,7 @@ var form={
 		//$('#CAJAOutline').clone().appendTo('#page-picker-list');
 		//$('#page-picker-list li[rel^="tabsPopups"],#page-picker-list li[rel^="tabsPopups"] + ul').empty();
 		//$('#page-picker-list .pageoutline li').removeClass(SELECTED);
-		$('#page-picker-list').html('<ul>' + ts + '</ul>');
+		$('#page-picker-list').html('<ul class="list-group">' + ts + '</ul>');
 
 		var e=pageNameRelFilter('#page-picker-list li',pageName);
 		e.toggleClass(SELECTED);

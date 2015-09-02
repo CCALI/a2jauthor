@@ -388,6 +388,7 @@ button.ui-button::-moz-focus-inner {
 	border-right-width: 0;
 	border-left-width: 1px;
 }
+
 .ui-dialog {
 	position: absolute;
 	top: 0;
@@ -789,19 +790,6 @@ body .ui-tooltip {
 ----------------------------------*/
 .ui-widget-content {
   background-color: #fff;
-	color: #362b36;
-}
-.ui-widget-content a {
-	color: #362b36;
-}
-.ui-widget-header {
-	border: 1px solid #aed0ea;
-	background-color:#aed0ea;
-	color: #222222;
-	font-weight: bold;
-}
-.ui-widget-header a {
-	color: #222222;
 }
 
 /* Interaction states
@@ -1121,38 +1109,21 @@ body .ui-tooltip {
 
 /* Overlays */
 .ui-widget-overlay {
-	background: #eeeeee;
+	background: #000000;
 	opacity: .8;
 	filter: Alpha(Opacity=80);
-}
-.ui-widget-shadow {
-	margin: -7px 0 0 -7px;
-	padding: 7px;
-	background: #000000;
-	opacity: .3;
-	filter: Alpha(Opacity=30);
-	border-radius: 8px;
 }
 
 
 /* JPM/SJG A2J Theme Tweaks*/
 
-.tabContent legend, .ui-widget-content legend  {
-	font-size: 1.1em;
-	font-weight:bold;
-	color:#000;
-}
-.ui-dialog-titlebar {
-	font-size: 1.3em;
-	font-weight:bold;
-}
 
 html, body, input, select, textarea , .htmledit, .codeedit {
 	background-color: #fff;
 	color: #000;
 }
 
-
+/*
 .pagelist li[rel^="STEP "] {
 	list-style-position:inside;
 }
@@ -1205,3 +1176,4 @@ html, body, input, select, textarea , .htmledit, .codeedit {
 .Step15, .pagelist li[rel="STEP 15"] {
 	background:#8CC68C !important;
 }
+*/

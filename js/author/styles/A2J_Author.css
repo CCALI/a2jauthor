@@ -23,10 +23,6 @@ html, body {
 }
 
 
-/**************************/
-/* Sam's custom */
-
-
 #welcome > div {
 	background-image: url(../../viewer/images/A2JAvatar-Guide-Front-F0.png);
 	background-repeat: no-repeat;
@@ -64,47 +60,6 @@ html, body {
 }
 .authorver {
 	font-size:10px;
-}
-
-.pagelist ul {
-	font-weight: normal;
-	list-style-type: square;
-	font-style: normal;
-	padding: 0px;
-	padding-left: 2em;
-	margin-bottom: 2em;
-}
-.pageoutline {
-	margin: 0px;
-	padding: 10px 0px 5px;
-}
-.pageoutline ul {
-	list-style-type:  none;
-	margin-left: 0;
-	text-indent: 0;
-}
-
-#CAJAIndex.pagelist ul {
-	list-style-type: bullet;
-	margin-left: 1em;
-}
-.pagelist * li {
-	font-size: 1em;
-	max-height: 2.5em;
-	overflow: hidden;
-	padding: .5em;
-}
-
-.pagelist > ul > li {
-	cursor: default;
-	font-size: 1.25em;
-	max-height: 2.5em;
-	overflow: hidden;
-}
-
-.pagelist * li .tip {
-	color: #666;
-	font-style: italic;
 }
 
 .editicons {
@@ -503,6 +458,7 @@ textarea {
 #dialog_window_minimized_container {
 	z-index: 9999;
 }
+/*
 .pagelist * li:hover,
 table.A2JVars tr:hover,
 table.A2JClauses tr:hover,
@@ -511,7 +467,7 @@ table.A2JFiles tr:hover{
 	color: #fff !important;
 	cursor: pointer;
 }
-
+*/
 .example{
 	height: 100%;
 }

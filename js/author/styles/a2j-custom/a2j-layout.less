@@ -1,8 +1,24 @@
+/**
+  * @stylesheet a2j-layout.less Layout
+  * @parent styles-custom 1
+  *
+  * This defines some global styles that affect the layout of the overall application, specific to A2J Author.
+**/
+
+
 .page {
   padding: @grid-gutter-width;
 
   .page-title {
     margin-top: 0;
     margin-bottom: @grid-gutter-width;
+  }
+}
+.has-toolbar {
+
+  .navbar {
+    margin: 0;
+    border-top: none;
+    padding-right: @grid-gutter-width/2;
   }
 }

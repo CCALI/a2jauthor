@@ -6,7 +6,23 @@
 **/
 .pages-container, .popups-container, .special-container {
   .panel {
-    border-left: 4px solid @btn-default-border;
+    position: relative;
+    border-left:0;
+    padding:.1em .3em;
+
+    &:before, &:after {
+      border: 5px solid #f24495;
+      border-right-width: 0;
+      content: '';
+      position:absolute;
+      left:0;
+      height:100%;
+      top: -1px;
+    }
+    &:after {
+      top:auto;
+      bottom: -1px;
+    }
 
     &:hover {
       .box-shadow;

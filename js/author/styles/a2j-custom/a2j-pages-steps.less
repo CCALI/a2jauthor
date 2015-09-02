@@ -15,37 +15,6 @@
     }
     .panel-body {
       padding: @grid-gutter-width/4;
-
-      .list-group {
-        .list-group-item {
-          padding-right: 5px;
-
-          .title {
-            margin-right: @grid-gutter-width/4;
-          }
-          .description {
-            color: lighten(@gray-light,10%);
-          }
-          .label {
-            font-size: @font-size-small;
-            padding: 0px 5px;
-            position: relative;
-            top: -1px;
-
-            &:last-child {
-              margin-right: 0;
-            }
-          }
-          &.active {
-            .title {
-              color: @text-color;
-            }
-            .description {
-              color: @gray-light;
-            }
-          }
-        }
-      }
     }
     .panel-heading {
       margin-left: 0;
@@ -56,6 +25,37 @@
         .panel-heading:hover {
           color: @text-color;
           border-color: darken(@gray-lighter,10%);
+        }
+      }
+    }
+  }
+
+  .list-group {
+    .list-group-item {
+      padding-right: 5px;
+
+      .title {
+        margin-right: @grid-gutter-width/4;
+      }
+      .description {
+        color: lighten(@gray-light,10%);
+      }
+      .label {
+        font-size: @font-size-small;
+        padding: 0px 5px;
+        position: relative;
+        top: -1px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+      &.active {
+        .title {
+          color: @text-color;
+        }
+        .description {
+          color: @gray-light;
         }
       }
     }

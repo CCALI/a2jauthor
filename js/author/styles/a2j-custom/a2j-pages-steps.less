@@ -8,6 +8,11 @@
   .panel {
     border-left: 4px solid @btn-default-border;
 
+    &:hover {
+      .box-shadow;
+      border-bottom-color: darken(@gray-lighter,10%);
+      border-right-color: darken(@gray-lighter,10%);
+    }
     .panel-body {
       padding: @grid-gutter-width/4;
 
@@ -44,6 +49,15 @@
     }
     .panel-heading {
       margin-left: 0;
+    }
+
+    &.accordion {
+      &.collapsed {
+        .panel-heading:hover {
+          color: @text-color;
+          border-color: darken(@gray-lighter,10%);
+        }
+      }
     }
   }
 }

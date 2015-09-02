@@ -50,12 +50,8 @@
 **/
 .panel {
   .border;
-  .no-box-shadow;
   .border-radius(0);
 
-  &:hover {
-    .box-shadow;
-  }
   .panel-heading {
     border: none;
     .border-radius(0);
@@ -110,6 +106,7 @@
       .panel-heading {
         background-color: #fff;
         .border;
+        color: @gray-light;
 
         a:before {
           content: '\e831';

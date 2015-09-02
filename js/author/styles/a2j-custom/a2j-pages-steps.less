@@ -4,23 +4,26 @@
   *
   * This describes the styles that help define specific CSS components in the A2J application.
 **/
+
+@color-border-width: 5px;
+@color-border: #f24495;
+
 .pages-container, .popups-container, .special-container {
   .panel {
     position: relative;
     border-left:0;
-    padding:.1em .3em;
 
     &:before, &:after {
-      border: 5px solid #f24495;
+      border: @color-border-width solid @color-border;
       border-right-width: 0;
       content: '';
-      position:absolute;
-      left:0;
-      height:100%;
+      position: absolute;
+      left: 0;
+      height: 100%;
       top: -1px;
     }
     &:after {
-      top:auto;
+      top: auto;
       bottom: -1px;
     }
 
@@ -31,6 +34,7 @@
     }
     .panel-body {
       padding: @grid-gutter-width/4;
+      padding-left: @grid-gutter-width/4+@color-border-width/2;
     }
     .panel-heading {
       margin-left: 0;
@@ -38,9 +42,21 @@
 
     &.accordion {
       &.collapsed {
-        .panel-heading:hover {
-          color: @text-color;
-          border-color: darken(@gray-lighter,10%);
+        &.panel {
+          &:before, &:after {
+            border-color: lighten(@color-border,20%);
+          }
+          &:hover {
+            &:before, &:after {
+              border-color: @color-border;
+            }
+          }
+        }
+        .panel-heading {
+          &:hover {
+            color: @text-color;
+            border-color: darken(@gray-lighter,10%);
+          }
         }
       }
     }

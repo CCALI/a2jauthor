@@ -6,7 +6,7 @@
 **/
 
 @color-border-width: 5px;
-@color-border: #f24495;
+@color-border: @step4;
 
 .pages-container, .popups-container, .special-container {
   .panel {
@@ -44,7 +44,7 @@
       &.collapsed {
         &.panel {
           &:before, &:after {
-            border-color: lighten(@color-border,20%);
+            border-color: desaturate(@color-border,30%);
           }
           &:hover {
             &:before, &:after {
@@ -93,3 +93,92 @@
     }
   }
 }
+
+/**
+  * @styles step-colors Step Colors
+  *
+  * We define a variable for each color of the step using an `id="step[num]"` in the HTML and then calling this style in the CSS using `@step0: #EFEFC6;`. Sixteen colors (starting with zero) are defined for sixteen uniquely colored steps. All 16 are put into an array in Less called `@steps` which is used in the following functions.
+**/
+
+//## A2J Specific colors
+@step0: #EFEFC6;
+@step1: #EFEF8C;
+@step2: #EFC6EF;
+@step3: #EFC6C6;
+@step4: #EF8CEF;
+@step5: #EF8C8C;
+@step6: #C6EFEF;
+@step7: #C6EFC6;
+@step8: #C6C6EF;
+@step9: #C6C68C;
+@step10: #C68CC6;
+@step11: #C68C8C;
+@step12: #8CEFEF;
+@step13: #8CEF8C;
+@step14: #8CC6C6;
+@step15: #8CC68C;
+
+// Put all the step color variables into an array
+@steps: step0, step1, step3, step4, step5, step6, step7, step8, step9, step10, step11, step12, step13, step14, step15;
+
+.generate-step-colors(@steps) {
+    .-(@i: length(@steps)) when (@i > 0) {
+        @name: extract(@steps, @i);
+        &#@{name} {.step-colors(@@name);}
+        .-((@i - 1));
+    } .-;
+}
+.generate-step-colors(@steps);
+
+/**
+  * @styles step-color-mixin Step Color Mixin
+  * The `.step-colors()` mixin takes the color passed from the step colors array `@steps` and generates the CSS necessary for the panel left border color, hover, and active states for the Pages panel.
+  *
+  * For example:
+  *
+  * ```
+  *  #step15 {
+  *   .step-colors(@step15);
+  *  }
+  * ```
+  *
+**/
+
+.step-colors(@color) {
+  &.panel {
+    &:before, &:after {
+      border-color: @color;
+    }
+    &.accordion {
+      &.collapsed {
+        &.panel {
+          &:before, &:after {
+            border-color: desaturate(@color,30%);
+          }
+          &:hover {
+            &:before, &:after {
+              border-color: @color;
+            }
+          }
+        }
+      }
+    }
+  }
+} // .step-colors
+
+/**
+  * @styles step-color-backgrounds Step Color Backgrounds
+  *
+  * Contextual classes are also available using the A2J step colors. Just apply the class of the step similar to Bootstrap's convention for contextual backgrounds: `bg-step1`, `bg-step2`, etc...
+  *
+  * @demo docs/demos/step-colors/demo.html
+**/
+
+.generate-bg-steps(@steps) {
+    .-(@i: length(@steps)) when (@i > 0) {
+        @name: extract(@steps, @i);
+        &.bg-@{name} {background: @@name}
+        .-((@i - 1));
+    } .-;
+}
+.generate-bg-steps(@steps);

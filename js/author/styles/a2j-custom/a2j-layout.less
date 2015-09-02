@@ -31,23 +31,34 @@
   * @styles has-toolbar Has Toolbar
   * @parent a2j-layout.less 2
   *
-  * Any `.page` with a class of `.has-toolbar` needs some additional styles to remove the top border from the default navbar and to apply positioning rules so that it's sticky.
+  * A wrapping container with a class of `.has-toolbar` uses some additional styles to remove the top border from the default navbar and to apply positioning rules so that it's sticky. It uses the `@header-height` variable from `a2j-header.less` and `@vert-navbar-width` from `.vertical-navbar.less` to calculate it's position by modifying the padding on `.page`.
   *
   * ```
-  * <div class="page has-toolbar">
+  * <div class="panel has-toolbar">
   *  <nav class="navbar navbar-default">
   *    ...
   *  </nav>
+  *  <div class="page">
+  *   ...
+  *  </div>
   * </div>
   * ```
   *
 **/
 
-.has-toolbar {
-
-  .navbar {
-    margin: 0;
-    border-top: none;
-    padding-right: @grid-gutter-width/2;
+  .has-toolbar {
+    .page {
+      padding-top: @grid-gutter-width+@navbar-height;
+    }
+    .navbar {
+      margin: 0;
+      border-top: none;
+      padding-left: @vert-navbar-width;
+      padding-right: @grid-gutter-width/2;
+      position: fixed;
+      top: @header-height;
+      left: 0;
+      width: 100%;
+      z-index: @zindex-navbar;
+    }
   }
-}

@@ -158,12 +158,12 @@ function main()
         var ecPanelButtonState = $(this).attr('data-state');
 
         if (ecPanelButtonState === 'collapsed') {
-             $(this).parents('.panel').find("legend ~ div").slideToggle(300);
+             $(this).parents('.tab-panel').find("legend ~ div").slideToggle(300);
              $(this).button({label:'<span class="glyphicon-expand"></span> Expand All'});
              $(this).attr("data-state", "expanded");
         }
         else {
-             $(this).parents('.panel').find("legend ~ div").slideDown(300);
+             $(this).parents('.tab-panel').find("legend ~ div").slideDown(300);
              $(this).button({label:'<span class="glyphicon-collapse"></span> Collapse All'});
              $(this).attr("data-state", "collapsed");
         }

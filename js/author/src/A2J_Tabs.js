@@ -262,6 +262,7 @@ var form={
 				//$('page-picker-dialog').dialog( "close" );
 			});
 		$('#page-picker-dialog').data(data).dialog({
+  		dialogClass: "modal bootstrap-styles",
 			autoOpen:true,
 				width: 700,
 				height: 500,
@@ -314,6 +315,7 @@ var form={
 				//$('page-picker-dialog').dialog( "close" );
 			});
 		$('#page-picker-dialog').data(data).dialog({
+  		dialogClass: "modal bootstrap-styles",
 			autoOpen:true,
 				width: 700,
 				height: 500,

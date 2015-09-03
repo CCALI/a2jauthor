@@ -1,7 +1,7 @@
 /*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	
+
 	2015-03-30 Clauses/Clause library
 	Behave like Variables but are effectively Constants.
 	Also can contain conditionals.
@@ -11,17 +11,17 @@
 
 
 
- 
+
 function clauseEdit( clause /*TClause*/)
 {	// 2015-03-27 Clause editor
-	
-	
+
+
 	var fs=form.fieldset('Clause',clause);
-	//$('#clausename').val(clause.name);  
+	//$('#clausename').val(clause.name);
 	//$('#clausecomment').val(clause.comment);
 	trace(clause);
 	fs.append(form.text(	{label:'Name:', 		value:clause.name,	change:function(newname,clause){
-		if(newname !==clause.name)//rename 
+		if(newname !==clause.name)//rename
 		{
 			delete gGuide.clauses[ clause.name.toLowerCase()];
 			clause.name=newname;
@@ -40,6 +40,7 @@ function clauseEdit( clause /*TClause*/)
 	});
 	$('#clause-edit-form').data(  clause ).dialog({
 		autoOpen:true,
+		dialogClass: "modal bootstrap-styles",
 			width: 800,
 			height: 500,
 			modal:true,
@@ -58,7 +59,7 @@ function clauseEdit( clause /*TClause*/)
 					gGuide.clauseDelete(this.name);
 				}});
 			}},
-			{text:'Close',click:function(){ 
+			{text:'Close',click:function(){
 				//var name= clause.name; // $('#clausename').val();
 				//if(name!==c.name)//rename variable
 				//{
@@ -88,16 +89,16 @@ TGuide.prototype.clauseDelete=function(name){
 TGuide.prototype.clauseListHTML = function ()
 {	// Build HTML table of clauses, nicely sorted.
 	var guide = this;
-	var th=html.rowheading(["Name", "Comment", "Content"]); 
+	var th=html.rowheading(["Name", "Comment", "Content"]);
 	var sortclauses=guide.clausesSorted();
-	var ci; 
+	var ci;
 	var tb='';
 	for ( ci in sortclauses)
 	{
 		var c =sortclauses[ ci ];
 		tb+=html.row([ c.name, c.comment, c.text  ]);
 	}
-	return '<table class="A2JClauses">'+th + '<tbody>'+ tb + '</tbody>'+"</table>";	
+	return '<table class="A2JClauses">'+th + '<tbody>'+ tb + '</tbody>'+"</table>";
 };
 
 

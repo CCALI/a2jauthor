@@ -82,6 +82,7 @@ function signin()
               +'Please login to your a2jauthor.org account first. Access to the A2J Author tool requires authentication first. To be authenticated, please fill out the survey that was emailed to you after you first registered for this site. If you have any problems after filling out the survey, please contact webmaster@a2jauthor.org.'
               +'</p>');
          $d.dialog( {
+           dialogClass: "modal bootstrap-styles",
           width: 400, height:300, modal: true,
           buttons: {
              Login: function()

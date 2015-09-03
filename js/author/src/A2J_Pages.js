@@ -329,6 +329,7 @@ function gotoPageEdit(pageName)
 	$pageEditDialog.attr('rel',page.name);
 	$pageEditDialog.attr('title','Question Editor');//page.name);
 	$pageEditDialog.dialog({
+  	dialogClass: "modal bootstrap-styles",
 		autoOpen:false,
 		title: page.name,
 		width: 750,

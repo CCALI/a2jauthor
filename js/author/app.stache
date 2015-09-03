@@ -102,9 +102,7 @@
 
       <!-- Maps Tab -->
       <div class="tab-panel" id="tabsMap">
-        <div class="tabHeader">
-        </div>
-        <div class="tabContentFrame">
+        <div class="tabContentFrame page">
           <div class="col-4">
             <div class="tabsMapPages">
               <div class="PagesPanel">

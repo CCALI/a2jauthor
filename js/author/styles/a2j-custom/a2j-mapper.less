@@ -8,35 +8,50 @@
   top: 0;
   left: 0;
   right: 0;
-  padding-left: 150px;
-  padding-top: 75px;
+  padding-left: @vert-navbar-width;
+  padding-top: @header-height;
   box-sizing: border-box;
 }
+
 .tabContentFrame {
   height: 100%;
+
+  .col-8 {
+    float: left;
+    width: 70%;
+    height: 100%;
+    overflow: auto;
+  }
+  .col-4 {
+    float: left;
+    width: 30%;
+    height: 100%;
+    overflow: auto;
+  }
 }
-.tabContentFrame .col-8 {
-  float: left;
-  width: 70%;
-  height: 100%;
-  overflow: auto;
+
+.tabsMapPages {
+  padding-right: @grid-gutter-width/2;
+  border-right: 1px solid @gray-lighter;
+
+  .field-tags  {
+    display: none;
+  }
 }
-.tabContentFrame .col-4 {
-  float: left;
-  width: 30%;
-  height: 100%;
-  overflow: auto;
+
+#tabsMapper {
+  margin-left: @grid-gutter-width/2;
+
+  .tabFooter {
+    position: absolute;
+    background: #fff;
+    border-bottom: 1px solid @gray-lighter;
+    z-index: 99;
+    width: 100%;
+  }
 }
-#tabsMapper{
-  margin-left: 15px;
-}
-#tabsMapper .tabFooter {
-  position: absolute;
-  background: #fff;
-  border-bottom: 1px solid #eee;
-  z-index: 99;
-  width: 100%;
-}
+
+
 .map {
 	border: 2px #0f0;
 	position: relative;

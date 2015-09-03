@@ -207,8 +207,7 @@
         </div>
       </div>
 
-      <div class="panel" id="tabsFiles">
-        <div class="tabHeader bootstrap-styles">
+      <div class="panel has-toolbar bootstrap-styles" id="tabsFiles">
           <nav class="navbar navbar-default">
             <p class="navbar-text">Files currently attached to this interview</p>
 
@@ -219,7 +218,6 @@
                   <button class="btn btn-default navbar-btn">
                     <span class="glyphicon-folder-upload"></span> Upload files...
                   </button>
-
                   <!-- The file input field used as target for the file upload widget -->
                   <input id="fileupload" type="file" name="files[]" multiple />
                 </a>
@@ -231,22 +229,16 @@
             </div>
           </nav>
 
-          <div class="row">
-            <div class="col-md-12">
-              <h3>Files currently attached to this interview</h3>
-
-                <div class="tabContentFrame">
-                  <div class="tabContent editq">
-                    <table class="A2JFiles">
-                      <tbody id="attachmentFiles" class="files"></tbody>
-                    </table>
-                  </div>
-                </div>
-
+          <div class="page">
+            <div class="tabContentFrame">
+              <div class="tabContent editq">
+                <table class="A2JFiles table table-striped">
+                  <tbody id="attachmentFiles" class="files"></tbody>
+                </table>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
+          </div><!-- page -->
+      </div><!-- panel has-toolbar bootstrap-styles #tabsFiles -->
 
       <div class="bootstrap-styles panel has-toolbar" id="tabsGuides">
         {{#is page "interviews"}}

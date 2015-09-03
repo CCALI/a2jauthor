@@ -88,16 +88,8 @@
       </div>
 
       <div class="panel bootstrap-styles" id="tabsSteps">
-        <div class="tabHeader">
-          <div class="row">
-            <div class="col-md-12">
-              <h3>Steps</h3>
-            </div>
-          </div>
-        </div>
-        <br />
-
-        <div class="tabContentFrame">
+        <div class="tabContentFrame page">
+          <h3 class="page-title">Steps</h3>
           <div class="tabContent editq"></div>
         </div>
       </div>
@@ -275,41 +267,26 @@
         {{/is}}
       </div>
 
-      <div class="panel" id="tabsReport">
-
-        <div class="tabHeader bootstrap-styles">
-          <div class="row">
-            <div class="col-md-12">
-              <button id="reportFull" class="btn btn-primary">Full Report</button>
-              <button id="reportTranscript" class="btn btn-primary">Transcript Report</button>
-            </div>
-          </div>
-        </div>
-        <br />
-
-        <div class="tabContentFrame">
+      <div class="panel bootstrap-styles" id="tabsReport">
+        <div class="tabContentFrame page">
           <div class="tabContent editq">
-            Report of text in a print-friendly layout, also useful for translation projects
+            <h3 class="page-title">Report</h3>
+            <p>Report of text in a print-friendly layout, also useful for translation projects</p>
+            <button id="reportFull" class="btn btn-primary">Full Report</button>
+            <button id="reportTranscript" class="btn btn-primary">Transcript Report</button>
           </div>
         </div>
       </div>
 
-      <div class="panel" id="tabsPreview">
-        <h1>Previewer</h1> Show preview interview
+      <div class="panel bootstrap-styles page" id="tabsPreview">
+        <h3 class="page-title">Previewer</h3>
+        <p>Show a preview of the current interview.</p>
       </div>
 
-      <div class="panel bootstrap-styles" id="tabsUpload">
-
-        <div class="tabHeader">
-          <div class="row">
-            <div class="col-md-12">
-              <h3>Publish/Upload</h3>
-            </div>
-          </div><!-- row -->
-        </div><!-- tabHeader bootstrap-styles -->
-        <br />
-
+      <div class="panel bootstrap-styles page" id="tabsUpload">
+        <h3 class="page-title">Publish/Upload</h3>
         <p>To publish your interview to another site such as LHI, download the ZIP which contains the interview and its supplemental files.</p>
+
         <button id="guideZIP" class="btn btn-default"><span class="glyphicon-file-archive"></span> Download ZIP</button>
         <button id="guideDownload" class="btn btn-default"><span class="glyphicon-folder-download"></span> Download A2J</button>
         <button id="guidePublish" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to Public URL</button>

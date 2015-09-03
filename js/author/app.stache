@@ -207,37 +207,46 @@
         </div>
       </div>
 
-      <div class="panel bootstrap-styles has-toolbar" id="tabsFiles">
-      <nav class="navbar navbar-default">
-        <p class="navbar-text">Files currently attached to this interview</p>
-        <div class="nav navbar-nav navbar-right">
-          <div class="fileuploader">
-            <!-- The fileinput-button span is used to style the file input field as button -->
-            <a href="javascript:void(0)" class="fileinput-button">
-              <button class="btn btn-default navbar-btn">
-                <span class="glyphicon-folder-upload"></span> Upload files...
-              </button>
+      <div class="panel" id="tabsFiles">
+        <div class="tabHeader bootstrap-styles">
+          <nav class="navbar navbar-default">
+            <p class="navbar-text">Files currently attached to this interview</p>
 
-              <!-- The file input field used as target for the file upload widget -->
-              <input id="fileupload" type="file" name="files[]" multiple />
-            </a>
+            <div class="nav navbar-nav navbar-right">
+              <div class="fileuploader">
+                <!-- The fileinput-button span is used to style the file input field as button -->
+                <a href="javascript:void(0)" class="fileinput-button">
+                  <button class="btn btn-default navbar-btn">
+                    <span class="glyphicon-folder-upload"></span> Upload files...
+                  </button>
 
-            <div id="progress" class="progress progress-success progress-striped">
-              <div class="bar"></div>
+                  <!-- The file input field used as target for the file upload widget -->
+                  <input id="fileupload" type="file" name="files[]" multiple />
+                </a>
+
+                <div id="progress" class="progress progress-success progress-striped">
+                  <div class="bar"></div>
+                </div>
+              </div>
+            </div>
+          </nav>
+
+          <div class="row">
+            <div class="col-md-12">
+              <h3>Files currently attached to this interview</h3>
+
+                <div class="tabContentFrame">
+                  <div class="tabContent editq">
+                    <table class="A2JFiles">
+                      <tbody id="attachmentFiles" class="files"></tbody>
+                    </table>
+                  </div>
+                </div>
+
             </div>
           </div>
-        </div><!-- nav navbar-nav navbar-right -->
-      </nav>
-
-        <div class="page">
-          <div class="tabContentFrame">
-            <div class="tabContent editq">
-              <table class="A2JFiles table table-striped">
-                <tbody id="attachmentFiles" class="files"></tbody>
-              </table>
-            </div>
-          </div>
-        </div><!-- .page -->
+        </div>
+      </div>
 
       <div class="bootstrap-styles panel has-toolbar" id="tabsGuides">
         {{#is page "interviews"}}

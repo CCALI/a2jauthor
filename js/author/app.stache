@@ -160,27 +160,36 @@
         </div>
       </div>
 
-      <div class="panel bootstrap-styles" id="tabsLogic">
-       <div class="tabHeader">
-          <div class="row">
-            <div class="col-md-8">
-              <div id="showlogic">
-                <input checked="checked" type="radio" id="showlogic1" name="showlogic" />
-                <label for="showlogic1" class="btn btn-default">Show only active code</label>
+      <div class="panel bootstrap-styles has-toolbar" id="tabsLogic">
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
 
-                <input type="radio" id="showlogic2" name="showlogic" />
-                <label for="showlogic2" class="btn btn-default">Show all code blocks</label>
-              </div>
-            </div>
-            <div class="col-md-4 text-right">
-              <button class="ecPanelButton btn btn-primary" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
+              <ul class="nav navbar-nav" id="showlogic">
+                <p class="navbar-text hidden-xs">Show:</p>
+
+                <li id="showlogic2">
+                  <a href="#" >
+                    All Code Blocks
+                  </a>
+                </li>
+
+                <li id="showlogic1" class="active">
+                  <a href="#" >
+                    Only Active Code
+                  </a>
+                </li>
+              </ul>
+
+            <div class="nav navbar-nav navbar-right">
+              <button class="ecPanelButton btn btn-default navbar-btn" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
             </div>
           </div>
-        </div>
-        <br />
+        </nav>
 
+       <div class="page">
         <div class="tabContentFrame">
           <div class="tabContent editq"></div>
+        </div>
         </div>
       </div>
 

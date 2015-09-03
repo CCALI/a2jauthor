@@ -274,11 +274,19 @@ function main()
   $('#vars_load').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
   $('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
 
-  $('#showlogic').buttonset();
-  $('#showlogic1').click(function(){gPrefs.showLogic=1;gGuide.noviceTab("tabsLogic",true);});
-  $('#showlogic2').click(function(){gPrefs.showLogic=2;gGuide.noviceTab("tabsLogic",true);});
+  $('#showlogic1').click(function(){
+    gPrefs.showLogic=1;
+    gGuide.noviceTab("tabsLogic",true);
+    $('#showlogic2').removeClass('active');
+    $('#showlogic1').addClass('active');
+  });
+  $('#showlogic2').click(function(){
+    gPrefs.showLogic=2;
+    gGuide.noviceTab("tabsLogic",true);
+    $('#showlogic1').removeClass('active');
+    $('#showlogic2').addClass('active');
+  });
 
-  $('#showtext').buttonset();
   $('#showtext1').click(function(){gPrefs.showText=1;gGuide.noviceTab("tabsText",true);});
   $('#showtext2').click(function(){gPrefs.showText=2;gGuide.noviceTab("tabsText",true);});
 
@@ -416,15 +424,18 @@ function main()
       'ui-button',
       'ui-state-default',
       'ui-corner-all',
+      'ui-corner-left',
+      'ui-corner-right',
       'ui-button-text-only',
       'ui-button-icon-primary',
       'ui-icon',
       'ui-button-text',
       'ui-state-hover',
-      'ui-state-active'
+      'ui-state-active',
+      'ui-buttonset'
     ];
 
-    $('.bootstrap-styles button, .bootstrap-styles span, .bootstrap-styles a, .bootstrap-styles a:hover', '.bootstrap-styles li').removeClass(classes.join(' '));
+    $('.bootstrap-styles button, .bootstrap-styles span, .bootstrap-styles a, .bootstrap-styles a:hover, .bootstrap-styles li, .bootstrap-styles label, .bootstrap-styles ul').removeClass(classes.join(' '));
   }());
 
   signin();

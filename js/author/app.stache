@@ -69,24 +69,6 @@
         </div>
       </div><!-- tab-panel has-toolbar -->
 
-      <!-- Clauses Tab -->
-      <div class="tab-panel" id="tabsClauses">
-        <div class="tabHeader">
-          <div class="row">
-            <div class="col-md-12">
-              <h3>Clauses used in this interview</h3>
-            </div>
-          </div>
-        </div>
-        <br />
-        <div class="tabContentFrame">
-          <div class="tabContent editq"></div>
-        </div>
-        <div class="tabFooter">
-          <button id="clause-add">Add</button>
-        </div>
-      </div>
-
       <!-- Steps Tab -->
       <div class="tab-panel" id="tabsSteps">
         <div class="tabContentFrame page">

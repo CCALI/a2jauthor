@@ -26,21 +26,21 @@
     <div class="alertCounter"></div>
   </div>
 
-  <div id="authortool" class="hidestart authortool">
+  <div id="authortool" class="hidestart authortool bootstrap-styles">
 
-    <div id="cajaheader" class="hidestart bootstrap-styles">
+    <div id="cajaheader" class="hidestart">
       <app-header page="{{page}}"></app-header>
     </div>
 
     <div class="guideio"></div>
-    <div class="bootstrap-styles">
+    <div class="">
       <vertical-navbar theme="inverse" page="{page}"></vertical-nabvar>
     </div>
 
     <div class="guidepanels ui-widget xui-widget-content">
 
       <!-- About Tab -->
-      <div class="tab-panel bootstrap-styles has-toolbar" id="tabsAbout">
+      <div class="tab-panel has-toolbar" id="tabsAbout">
         <nav class="navbar navbar-default">
           <p class="navbar-text">Information about this interview</p>
           <div class="nav navbar-nav navbar-right">
@@ -50,10 +50,10 @@
         <div class="tabContentFrame page">
           <div class="tabContent editq"></div>
         </div>
-      </div><!--tab-panel bootstrap-styles has-toolbar -->
+      </div><!--tab-panel has-toolbar -->
 
       <!-- Variables Tab -->
-      <div class="tab-panel bootstrap-styles has-toolbar" id="tabsVariables">
+      <div class="tab-panel has-toolbar" id="tabsVariables">
         <nav class="navbar navbar-default">
           <p class="navbar-text">Variables used in this interview</p>
           <div class="nav navbar-nav navbar-right">
@@ -67,11 +67,11 @@
         <div class="page tabContentFrame">
           <div class="tabContent editq"></div>
         </div>
-      </div><!-- tab-panel bootstrap-styles has-toolbar -->
+      </div><!-- tab-panel has-toolbar -->
 
       <!-- Clauses Tab -->
       <div class="tab-panel" id="tabsClauses">
-        <div class="tabHeader bootstrap-styles">
+        <div class="tabHeader">
           <div class="row">
             <div class="col-md-12">
               <h3>Clauses used in this interview</h3>
@@ -88,7 +88,7 @@
       </div>
 
       <!-- Steps Tab -->
-      <div class="tab-panel bootstrap-styles" id="tabsSteps">
+      <div class="tab-panel" id="tabsSteps">
         <div class="tabContentFrame page">
           <h3 class="page-title">Steps</h3>
           <div class="tabContent editq"></div>
@@ -96,7 +96,7 @@
       </div>
 
       <!-- Pages Tab -->
-      <div class="tab-panel bootstrap-styles has-toolbar" id="tabsPages">
+      <div class="tab-panel has-toolbar" id="tabsPages">
         <nav class="navbar navbar-default">
           <div class="container-fluid">
             <ul class="nav navbar-nav">
@@ -116,11 +116,11 @@
           <ul>
           </ul>
         </div>
-      </div> <!-- tab-panel bootstrap-styles has-toolbar -->
+      </div> <!-- tab-panel has-toolbar -->
 
       <!-- Maps Tab -->
       <div class="tab-panel" id="tabsMap">
-        <div class="tabHeader bootstrap-styles">
+        <div class="tabHeader">
         </div>
         <div class="tabContentFrame">
           <div class="col-4">
@@ -138,7 +138,7 @@
           <div class="col-8">
            <div id="tabsMapper">
 
-              <div class="tabFooter bootstrap-styles">
+              <div class="tabFooter">
                 <button class="btn btn-default"></button>
                 <button zoom="fit" class="btn btn-default"><span class="glyphicon-resize"></span> Fit</button>
                 <button zoom="1.25" class="btn btn-default"><span class="glyphicon-zoom-in"></span> Zoom In</button>
@@ -155,7 +155,7 @@
       </div>
 
       <!-- All Logic Tab -->
-      <div class="tab-panel bootstrap-styles has-toolbar" id="tabsLogic">
+      <div class="tab-panel has-toolbar" id="tabsLogic">
         <nav class="navbar navbar-default">
           <div class="container-fluid">
               <ul class="nav navbar-nav" id="showlogic">
@@ -184,7 +184,7 @@
       </div>
 
       <!-- All Text Tab -->
-      <div class="tab-panel bootstrap-styles has-toolbar" id="tabsText">
+      <div class="tab-panel has-toolbar" id="tabsText">
         <nav class="navbar navbar-default">
           <div class="container-fluid">
               <ul class="nav navbar-nav" id="showlogic">
@@ -211,7 +211,7 @@
       </div>
 
       <!-- All Files Tab -->
-      <div class="tab-panel has-toolbar bootstrap-styles" id="tabsFiles">
+      <div class="tab-panel has-toolbar" id="tabsFiles">
           <nav class="navbar navbar-default">
             <p class="navbar-text">Files currently attached to this interview</p>
 
@@ -242,10 +242,10 @@
               </div>
             </div>
           </div><!-- page -->
-      </div><!-- tab-panel has-toolbar bootstrap-styles #tabsFiles -->
+      </div><!-- tab-panel has-toolbar #tabsFiles -->
 
       <!-- Interview Tab -->
-      <div class="bootstrap-styles tab-panel has-toolbar" id="tabsGuides">
+      <div class="tab-panel has-toolbar" id="tabsGuides">
         {{#is page "interviews"}}
           <interviews-toolbar></interviews-toolbar>
           <interviews-page></interviews-page>
@@ -253,7 +253,7 @@
       </div>
 
       <!-- Template Tab -->
-      <div class="tab-panel bootstrap-styles has-toolbar" id="tabsTemplate">
+      <div class="tab-panel has-toolbar" id="tabsTemplate">
         {{#is page "templates"}}
           {{#if id}}
             <template-edit-page></template-edit-page>
@@ -264,7 +264,7 @@
       </div>
 
       <!-- Report Tab -->
-      <div class="tab-panel bootstrap-styles" id="tabsReport">
+      <div class="tab-panel" id="tabsReport">
         <div class="tabContentFrame page">
           <div class="tabContent editq">
             <h3 class="page-title">Report</h3>
@@ -276,12 +276,12 @@
       </div>
 
       <!-- Preview Tab -->
-      <div class="tab-panel bootstrap-styles page" id="tabsPreview">
+      <div class="tab-panel page" id="tabsPreview">
         <h3 class="page-title">Previewer</h3>
         <p>Show a preview of the current interview.</p>
       </div>
 
-      <div class="tab-panel bootstrap-styles page" id="tabsUpload">
+      <div class="tab-panel page" id="tabsUpload">
         <h3 class="page-title">Publish/Upload</h3>
         <p>To publish your interview to another site such as LHI, download the ZIP which contains the interview and its supplemental files.</p>
 

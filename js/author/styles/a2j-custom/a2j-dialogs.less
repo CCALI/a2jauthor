@@ -6,14 +6,25 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	padding: .2em;
+	padding: 0;
 	outline: 0;
   box-shadow: none;
   .border;
+  .box-shadow;
+  z-index: @zindex-modal;
+  //ui-widget ui-state-default ui-corner-all ui-button-text-only
+  .ui-button  {
+    background: @btn-default-bg;
+    color: @btn-default-color;
+    border: 1px solid @btn-default-border;
+    .border-radius(@btn-border-radius-base);
+    padding: @padding-base-vertical @padding-base-horizontal;
+  }
 }
 .ui-dialog .ui-dialog-titlebar {
 	padding: @grid-gutter-width/2;
 	position: relative;
+  background: #f6f6f6;
 }
 .ui-dialog .ui-dialog-title {
 	float: left;

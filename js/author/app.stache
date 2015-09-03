@@ -352,7 +352,7 @@
         </fieldset>
       </div>
     </div>
-    <div id="settings-form" title="Settings">
+    <div id="settings-form" title="Settings" class="bootstrap-styles">
       <ul id="cajasettings">
         <li>General
           <ul>

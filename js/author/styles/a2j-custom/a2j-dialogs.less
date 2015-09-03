@@ -12,47 +12,61 @@
   .border;
   .box-shadow;
   z-index: @zindex-modal;
-  //ui-widget ui-state-default ui-corner-all ui-button-text-only
+
   .ui-button  {
+    //ui-widget ui-state-default ui-corner-all ui-button-text-only
     background: @btn-default-bg;
     color: @btn-default-color;
     border: 1px solid @btn-default-border;
     .border-radius(@btn-border-radius-base);
     padding: @padding-base-vertical @padding-base-horizontal;
+    font-weight: @btn-font-weight;
+    font-size: @font-size-base;
+
+    .ui-button-text {
+      padding: 0;
+    }
+  }
+
+  .ui-dialog-titlebar {
+  	padding: @grid-gutter-width/2;
+  	position: relative;
+    background: #f6f6f6;
+
+    .ui-dialog-title {
+    	float: left;
+    	margin: 0;
+    	white-space: nowrap;
+    	width: 90%;
+    	overflow: hidden;
+    	text-overflow: ellipsis;
+    	font-size: @font-size-h4;
+    	font-weight: @headings-font-weight;
+    }
+    .ui-dialog-titlebar-close {
+    	position: absolute;
+    	right: .3em;
+    	top: 50%;
+    	width: 21px;
+    	margin: -10px 0 0 0;
+    	padding: 1px;
+    	height: 20px;
+    	background: @brand-primary;
+    	border: none;
+
+    	&:hover {
+      	//background: transparent;
+      	//border: none;
+      }
+    }
   }
 }
-.ui-dialog .ui-dialog-titlebar {
-	padding: @grid-gutter-width/2;
-	position: relative;
-  background: #f6f6f6;
-}
-.ui-dialog .ui-dialog-title {
-	float: left;
-	margin: .1em 0;
-	white-space: nowrap;
-	width: 90%;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-.ui-dialog .ui-dialog-titlebar-close {
-	position: absolute;
-	right: .3em;
-	top: 50%;
-	width: 21px;
-	margin: -10px 0 0 0;
-	padding: 1px;
-	height: 20px;
-	background: transparent;
-	border: none;
-}
-.ui-dialog .ui-dialog-titlebar-close:hover {
-	background: transparent;
-	border: none;
-}
+//ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close
+
 .ui-dialog .ui-dialog-content {
 	position: relative;
 	border: 0;
-	padding: .5em 1em;
+	padding: @grid-gutter-width/4;
 	background: none;
 	overflow: auto;
 }
@@ -62,6 +76,12 @@
 	background-image: none;
 	margin-top: .5em;
 	padding: .3em 1em .5em .4em;
+
+	button:last-child {
+  	background: @btn-primary-bg;
+  	color: @btn-primary-color;
+  	border-color: @btn-primary-border;
+	}
 }
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
 	float: right;

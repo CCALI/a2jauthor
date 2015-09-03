@@ -38,6 +38,8 @@
     </div>
 
     <div class="guidepanels ui-widget xui-widget-content">
+
+      <!-- About Tab -->
       <div class="panel bootstrap-styles has-toolbar" id="tabsAbout">
         <nav class="navbar navbar-default">
           <p class="navbar-text">Information about this interview</p>
@@ -45,12 +47,12 @@
             <button class="ecPanelButton btn btn-default navbar-btn" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
           </div><!-- nav navbar-nav navbar-right -->
         </nav>
-
         <div class="tabContentFrame page">
           <div class="tabContent editq"></div>
         </div>
       </div><!--panel bootstrap-styles has-toolbar -->
 
+      <!-- Variables Tab -->
       <div class="panel bootstrap-styles has-toolbar" id="tabsVariables">
         <nav class="navbar navbar-default">
           <p class="navbar-text">Variables used in this interview</p>
@@ -62,14 +64,13 @@
             </a>
           </div><!-- nav navbar-nav navbar-right -->
         </nav>
-
         <div class="page tabContentFrame">
           <div class="tabContent editq"></div>
         </div>
       </div><!-- panel bootstrap-styles has-toolbar -->
 
+      <!-- Clauses Tab -->
       <div class="panel" id="tabsClauses">
-
         <div class="tabHeader bootstrap-styles">
           <div class="row">
             <div class="col-md-12">
@@ -78,7 +79,6 @@
           </div>
         </div>
         <br />
-
         <div class="tabContentFrame">
           <div class="tabContent editq"></div>
         </div>
@@ -87,6 +87,7 @@
         </div>
       </div>
 
+      <!-- Steps Tab -->
       <div class="panel bootstrap-styles" id="tabsSteps">
         <div class="tabContentFrame page">
           <h3 class="page-title">Steps</h3>
@@ -94,6 +95,7 @@
         </div>
       </div>
 
+      <!-- Pages Tab -->
       <div class="panel bootstrap-styles has-toolbar" id="tabsPages">
         <nav class="navbar navbar-default">
           <div class="container-fluid">
@@ -105,7 +107,6 @@
               <li><a href="#" id="new-page"><span class="glyphicon-doc"></span> New Page</a></li>
               <li><a href="#" id="new-popup"><span class="glyphicon-popup"></span> New Popup</a></li>
             </ul>
-
             <div class="nav navbar-nav navbar-right">
               <button id="expandCollapse" data-state="collapsed" class="btn btn-default navbar-btn"></button>
             </div>
@@ -117,6 +118,7 @@
         </div>
       </div> <!-- panel bootstrap-styles has-toolbar -->
 
+      <!-- Maps Tab -->
       <div class="panel" id="tabsMap">
         <div class="tabHeader bootstrap-styles">
         </div>
@@ -152,32 +154,28 @@
         </div>
       </div>
 
+      <!-- All Logic Tab -->
       <div class="panel bootstrap-styles has-toolbar" id="tabsLogic">
         <nav class="navbar navbar-default">
           <div class="container-fluid">
-
               <ul class="nav navbar-nav" id="showlogic">
                 <p class="navbar-text hidden-xs">Show:</p>
-
                 <li id="showlogic2">
                   <a href="#" >
                     All Code Blocks
                   </a>
                 </li>
-
                 <li id="showlogic1" class="active">
                   <a href="#" >
                     Only Active Code
                   </a>
                 </li>
               </ul>
-
             <div class="nav navbar-nav navbar-right">
               <button class="ecPanelButton btn btn-default navbar-btn" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
             </div>
           </div>
         </nav>
-
        <div class="page">
         <div class="tabContentFrame">
           <div class="tabContent editq"></div>
@@ -185,38 +183,34 @@
         </div>
       </div>
 
+      <!-- All Text Tab -->
       <div class="panel bootstrap-styles has-toolbar" id="tabsText">
         <nav class="navbar navbar-default">
           <div class="container-fluid">
-
               <ul class="nav navbar-nav" id="showlogic">
                 <p class="navbar-text hidden-xs">Show:</p>
-
                 <li id="showtext2">
                   <a href="#" >
                     All Fields
                   </a>
                 </li>
-
                 <li id="showtext1" class="active">
                   <a href="#" >
                     Only Filled Fields
                   </a>
                 </li>
               </ul>
-
             <div class="nav navbar-nav navbar-right">
               <button class="ecPanelButton btn btn-default navbar-btn" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
             </div>
           </div>
         </nav>
-
-
         <div class="tabContentFrame page">
           <div class="tabContent editq"></div>
         </div>
       </div>
 
+      <!-- All Files Tab -->
       <div class="panel has-toolbar bootstrap-styles" id="tabsFiles">
           <nav class="navbar navbar-default">
             <p class="navbar-text">Files currently attached to this interview</p>
@@ -250,6 +244,7 @@
           </div><!-- page -->
       </div><!-- panel has-toolbar bootstrap-styles #tabsFiles -->
 
+      <!-- Interview Tab -->
       <div class="bootstrap-styles panel has-toolbar" id="tabsGuides">
         {{#is page "interviews"}}
           <interviews-toolbar></interviews-toolbar>
@@ -257,6 +252,7 @@
         {{/is}}
       </div>
 
+      <!-- Template Tab -->
       <div class="panel bootstrap-styles has-toolbar" id="tabsTemplate">
         {{#is page "templates"}}
           {{#if id}}
@@ -267,6 +263,7 @@
         {{/is}}
       </div>
 
+      <!-- Report Tab -->
       <div class="panel bootstrap-styles" id="tabsReport">
         <div class="tabContentFrame page">
           <div class="tabContent editq">
@@ -278,6 +275,7 @@
         </div>
       </div>
 
+      <!-- Preview Tab -->
       <div class="panel bootstrap-styles page" id="tabsPreview">
         <h3 class="page-title">Previewer</h3>
         <p>Show a preview of the current interview.</p>

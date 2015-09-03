@@ -287,8 +287,18 @@ function main()
     $('#showlogic2').addClass('active');
   });
 
-  $('#showtext1').click(function(){gPrefs.showText=1;gGuide.noviceTab("tabsText",true);});
-  $('#showtext2').click(function(){gPrefs.showText=2;gGuide.noviceTab("tabsText",true);});
+  $('#showtext1').click(function(){
+    gPrefs.showText=1;
+    gGuide.noviceTab("tabsText",true);
+    $('#showtext2').removeClass('active');
+    $('#showtext1').addClass('active');
+  });
+  $('#showtext2').click(function(){
+    gPrefs.showText=2;
+    gGuide.noviceTab("tabsText",true);
+    $('#showtext1').removeClass('active');
+    $('#showtext2').addClass('active');
+  });
 
 
    //Ensure HTML possible for combo box pick list

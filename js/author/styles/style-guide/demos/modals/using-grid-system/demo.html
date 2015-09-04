@@ -5,17 +5,24 @@
     <meta charset="utf-8" />
     <title></title>
     <link rel="stylesheet" href="/author/docs/styles.css">
+
+  <style>
+      .modal {
+        position: relative;
+        top: auto;
+        right: auto;
+        bottom: auto;
+        left: auto;
+        z-index: 1;
+        display: block;
+        height: 200px;
+      }
+    </style>
 </head>
 
 <body>
-  <div class="bs-example bs-example-padded-bottom">
-  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#gridSystemModal">
-    Launch demo modal
-  </button>
-</div>
-
   <!-- sample modal content -->
-    <div id="gridSystemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" style="display: none;">
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" style="display: block;">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">

@@ -196,7 +196,7 @@ function archiveSelectedGuide() {
 
 	dialogConfirmYesNo({
     title: 'Delete interview',
-    message: 'Would you like to delete ' + name + '?',
+    message: '<div class="alert alert-danger"><span class="glyphicon-attention"></span> Would you like to delete ' + name + '?</div>',
     height: 300,
     name: name,
 		Yes: function() {

@@ -6,7 +6,7 @@
 	Library of common functions used by author and viewer
 	See more functions in A2J_SharedSus.js
 	2015 - 05/2014, 12/12/2012
-	
+
 	Required by Author and Viewers
 
 */
@@ -25,6 +25,7 @@ function dialogConfirmYesNo(args)
 	$d.html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>'+args.message+'</p>');
 	$d.dialog({
 		title: args.title,
+		dialogClass: "modal bootstrap-styles",
 		resizable: false,
 		width: args.width ?args.width : 350,
 		height:args.height?args.height : 240,
@@ -46,7 +47,7 @@ function dialogAlert(args)
 {  // Usage:
 	//	args.title = dialog title,
 	//	args.body = message body
-	
+
    if (typeof args === "string"){args={body:args};	}
    if (typeof args.title==='undefined'){	args.title="Alert";}
    if (typeof args.width==='undefined'){	args.width=350;}
@@ -56,6 +57,7 @@ function dialogAlert(args)
    $d.html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>'+args.body+'</p>');
    $d.dialog({
       title: args.title,
+      dialogClass: "modal bootstrap-styles",
       resizable: true,
       width: args.width,
       height:args.height,
@@ -70,7 +72,7 @@ function dialogAlert(args)
 
 function urlSplit(url)
 {	// given a url like http://www.cali.org/intro/view.php?a=1#start,
-	// return path object with {path:"http://www.cali.org/intro/", file:"view.php", params:"a=1", hash:"start" 
+	// return path object with {path:"http://www.cali.org/intro/", file:"view.php", params:"a=1", hash:"start"
 	var parts={path:"",file:"",params:"",hash:""};
 	var p;
 	url=url.replace("\\","/","gi");
@@ -192,7 +194,7 @@ function isNumber(n)
 
 function textToNumber(n)
 {	// Convert to number even with commas.
-	// If it's text, return 0. 
+	// If it's text, return 0.
 	if (n==='' || n===null || typeof n === "undefined" || n==="false")
 	{
 		return 0;
@@ -211,9 +213,9 @@ function textToNumber(n)
 }
 
 function aie(obj,attr,val)
-{	// set obj's attr to val, only if value exists 
+{	// set obj's attr to val, only if value exists
 	if (val===null){
-		return; 
+		return;
 	}
 	obj[attr]=val;
 }
@@ -264,7 +266,7 @@ function pickHilite(html,term)
 var gJS2XML_SKIP={skip:true};
 
 function js2xml(name,o)
-{	// 10/17/2012 Simple JSON to XML. 
+{	// 10/17/2012 Simple JSON to XML.
 	// If object property name starts with '_' it becomes an attribute.
 	// If object property name starts with 'XML_' it becomes a node that's NOT encoded (PCDATA like)
 	function trim(name,attr,body){
@@ -284,10 +286,10 @@ function js2xml(name,o)
 	{
 		var attr="";
 		var body="";
-		
+
 /*		var sorted=[];
 		for (var p in o) sorted.push(p);
-		sorted.sort();	
+		sorted.sort();
 		for (var pi in sorted)
 		{
 			p=sorted[pi];
@@ -302,7 +304,7 @@ function js2xml(name,o)
 			else
 			if (p.substr(0,1)==='_')
 			{	// embed as attribute if not blank string
-				if (o[p]!=="" && o[p]!==gJS2XML_SKIP)//TODO 
+				if (o[p]!=="" && o[p]!==gJS2XML_SKIP)//TODO
 				{
 					attr += " " + p.substr(1)+"=\""+clean(o[p])+"\"";
 				}
@@ -320,7 +322,7 @@ function js2xml(name,o)
 			}
 		}
 		if (name!==''){
-			body = trim(name,attr,body); 
+			body = trim(name,attr,body);
 		}
 	}
 	else{
@@ -349,7 +351,7 @@ function props(o)
 
 
 function propsJSON_(name,d,o)
-{	// 10/17/2012 Sam's simple JSON to XML. 
+{	// 10/17/2012 Sam's simple JSON to XML.
 	var body = "";
 	//for (var t=0;t<d;t++) body += " ";
 	body = '<div class="json indent">'; //+d+'em">';
@@ -430,7 +432,7 @@ function cr2P(txt)
 	return txt === "" ?"":"<P>" + txt.split("\n").join("</P><P>")+"</P>";//replace("\n\n","\n")
 }
 function isValidDate(d)
-{	// 06/02/2015 Test if JS date is valid	
+{	// 06/02/2015 Test if JS date is valid
 	// http://stackoverflow.com/questions/1353684/detecting-an-invalid-date-date-instance-in-javascript
   if ( Object.prototype.toString.call(d) !== "[object Date]" )
     return false;

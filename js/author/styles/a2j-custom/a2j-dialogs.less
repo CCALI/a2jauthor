@@ -1,6 +1,9 @@
-/*
-  This file should be temporary and can be removed once all modals are using Bootstrap rather than JQueryUI
-*/
+/**
+@styles a2j-dialogs.less Dialogs
+@parent a2j-layout.less 4
+
+A2J Author currently uses JQuery UI for many of the modals, called 'dialogs' by JQueryUI. This file only contains overrides for JQueryUI necessary to style the dialogs the same as the Bootstrap modals. This file should be temporary and can be removed once all modals are using Bootstrap rather than JQueryUI.
+**/
 
 .ui-dialog {
 	position: absolute;
@@ -14,7 +17,6 @@
   z-index: @zindex-modal;
 
   .ui-button  {
-    //ui-widget ui-state-default ui-corner-all ui-button-text-only
     background: @btn-default-bg;
     color: @btn-default-color;
     border: 1px solid @btn-default-border;
@@ -45,23 +47,53 @@
     }
     .ui-dialog-titlebar-close {
     	position: absolute;
-    	right: .3em;
-    	top: 50%;
-    	width: 21px;
-    	margin: -10px 0 0 0;
-    	padding: 1px;
+    	right: @grid-gutter-width/2;
+    	top: @grid-gutter-width/2;
+    	width: 20px;
     	height: 20px;
-    	background: @brand-primary;
+    	margin: 0;
+    	padding: @grid-gutter-width/2;
     	border: none;
+      background: none;
 
-    	&:hover {
-      	//background: transparent;
-      	//border: none;
+      span {
+        display: none;
+      }
+      &:before {
+        .icon-font;
+        content: '\e803';
+        position: absolute;
+        top: 4px;
+        right: 0;
+        font-size: 18px;
+        color: @close-color;
+        opacity: 0.2;
+      }
+      &:hover,
+      &:focus {
+        &:before {
+          color: @close-color;
+          text-decoration: none;
+          cursor: pointer;
+          opacity: 0.5;
+        }
       }
     }
   }
 }
-//ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close
+#dialog-confirm {
+  .ui-icon.ui-icon-alert {
+    display: none;
+  }
+}
+ul#cajasettings {
+  margin: 0;
+  padding: 0 @grid-gutter-width/2;
+
+  label {
+    margin-left: @grid-gutter-width/2;
+  }
+}
 
 .ui-dialog .ui-dialog-content {
 	position: relative;

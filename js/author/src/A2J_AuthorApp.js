@@ -78,9 +78,9 @@ function signin()
       else
       { // ### If user not logged in inform them and redirect to main site.
         var $d=$( "#dialog-confirm" );
-        $d.html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>'
+        $d.html('<div class="alert alert-danger" role="alert"><span class="glyphicon-attention" style="float: left; margin: 0 7px 20px 0;"></span>'
               +'Please login to your a2jauthor.org account first. Access to the A2J Author tool requires authentication first. To be authenticated, please fill out the survey that was emailed to you after you first registered for this site. If you have any problems after filling out the survey, please contact webmaster@a2jauthor.org.'
-              +'</p>');
+              +'</div>');
          $d.dialog( {
            dialogClass: "modal bootstrap-styles",
           width: 400, height:300, modal: true,

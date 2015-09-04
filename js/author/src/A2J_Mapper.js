@@ -171,8 +171,8 @@ function buildMap()
 			$map.append(' '
 				+'<div class="node Step'+(stepc)+'" pagename="'+page.name.asHTML()+'" style="z-index:1; left:'+nodeLeft+'px;top:'+nodeTop+'px;">'
 				+(page.type===CONST.ptPopup ? '':'<div class="mapper icon arrow"></div>')
-				+(page.name == gGuide.firstPage ? '<div class="mapper icon start"></div>':'')
-				+(page.name == gGuide.exitPage ? '<div class="mapper icon exit"></div>':'')
+				+(page.name == gGuide.firstPage ? '<div class="mapper icon start">Start</div>':'')
+				+(page.name == gGuide.exitPage ? '<div class="mapper icon exit">Exit</div>':'')
 				+'<div class="text">'+page.name+'</div>'
 				+'<div class="taglist">'+page.tagList()+'</div>'
 				+'</div>'

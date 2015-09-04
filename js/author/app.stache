@@ -114,14 +114,12 @@
                   </ul>
                 </div>
               </div>
-              <div class="tabFooter">
-              </div>
             </div>
           </div><!-- col-4 -->
           <div class="col-8">
            <div id="tabsMapper">
 
-              <div class="tabFooter">
+              <div class="">
                 <button class="btn btn-default"></button>
                 <button zoom="fit" class="btn btn-default"><span class="glyphicon-resize"></span> Fit</button>
                 <button zoom="1.25" class="btn btn-default"><span class="glyphicon-zoom-in"></span> Zoom In</button>

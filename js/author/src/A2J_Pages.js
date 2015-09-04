@@ -278,20 +278,21 @@ function pageEditDelete(name)
 	var r;
 	if (refs.length>0)
 	{
-		txt='References to this page: ' + refs.length+'<ul>';
+		txt='<h5>References to this page (' + refs.length+')</h5> <ul class="list-group">';
 		for (r in refs){
-			txt+='<li>'+refs[r].name+' <i>'+refs[r].field+'</i></li>';
+			txt+='<li class="list-group-item">'+refs[r].name+' <i>'+refs[r].field+'</i></li>';
 		}
 		txt += "</ul>";
 	}
 	else{
 		txt='No references to this page.';
 	}
-	dialogConfirmYesNo({title:'Deleting page',
-							 message:'Permanently delete page "' + name+'"?<hr>'+txt,
-							 height:400,
-							 width: 600,
-							 name:name,
+	dialogConfirmYesNo({
+    title:'Deleting page',
+    message:'<div class="alert alert-danger"><span class="glyphicon-attention"></span> Permanently delete page "' + name+'"?</div><div>'+txt+'</div>',
+    height: 400,
+    width: 600,
+    name:name,
 		Yes:
 		/*** @this {{name}} */
 		function(){

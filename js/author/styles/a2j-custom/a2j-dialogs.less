@@ -81,7 +81,19 @@ A2J Author currently uses JQuery UI for many of the modals, called 'dialogs' by 
     }
   }
 }
-//ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close
+#dialog-confirm {
+  .ui-icon.ui-icon-alert {
+    display: none;
+  }
+}
+ul#cajasettings {
+  margin: 0;
+  padding: 0 @grid-gutter-width/2;
+
+  label {
+    margin-left: @grid-gutter-width/2;
+  }
+}
 
 .ui-dialog .ui-dialog-content {
 	position: relative;

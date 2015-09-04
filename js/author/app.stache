@@ -354,35 +354,17 @@
     </div>
     <div id="settings-form" title="Settings" class="bootstrap-styles">
       <ul id="cajasettings">
-        <li>General
-          <ul>
-            <li>Color Schemes
-              <ul>
-                <li class="ui-state-disabled"> A2J 5</li>
-              </ul>
-            </li>
-            <li>Data Settings
-              <ul>
-                <li>
-                  <input type=checkbox id="setting_warnHotDocsNameLength"> Warn when variable name lengths are too long for HotDocs</li>
-              </ul>
-            </li>
-            <li>Text Statistics
-              <ul>
-                <li>Flesh-Kincaid and more
-                  <ul>
-                    <li>
-                      <input type="checkbox" id="setting_FKGradeAll" /> Include grade numbers for good text</li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-          <li>Advanced
-            <ul>
-              <li>
-                <input type=checkbox id="setting_showJS"> Show JS</li>
-            </ul>
+        <h3>General</h3>
+        <p>Color Schemes: <span class="text-muted">A2J 5</span></p>
+
+        <p>Data Settings:</p>
+        <p><label><input type=checkbox id="setting_warnHotDocsNameLength"> Warn when variable name lengths are too long for HotDocs</label></p>
+
+        <p>Text Statistics: (Flesh-Kincaid and more)</p>
+        <p><label><input type="checkbox" id="setting_FKGradeAll" /> Include grade numbers for good text</label></p>
+        <hr />
+        <h3>Advanced</h3>
+        <p><label><input type=checkbox id="setting_showJS"> Show JS</label></p>
       </ul>
     </div>
 

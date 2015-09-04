@@ -26,94 +26,59 @@
     <div class="alertCounter"></div>
   </div>
 
-  <div id="authortool" class="hidestart authortool">
+  <div id="authortool" class="hidestart authortool bootstrap-styles">
 
-    <div id="cajaheader" class="hidestart bootstrap-styles">
+    <div id="cajaheader" class="hidestart">
       <app-header page="{{page}}"></app-header>
     </div>
 
     <div class="guideio"></div>
-    <div class="bootstrap-styles">
+    <div class="">
       <vertical-navbar theme="inverse" page="{page}"></vertical-nabvar>
     </div>
 
     <div class="guidepanels ui-widget xui-widget-content">
-      <div class="panel bootstrap-styles" id="tabsAbout">
-        <div class="tabHeader ">
-          <div class="row">
-            <div class="col-md-8">
-              <h3>Information about this interview</h3>
-            </div>
-            <div class="col-md-4 text-right">
-              <button class="ecPanelButton btn btn-primary" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
-            </div>
-          </div>
-        </div>
-        <br />
 
-        <div class="tabContentFrame">
+      <!-- About Tab -->
+      <div class="tab-panel has-toolbar" id="tabsAbout">
+        <nav class="navbar navbar-default">
+          <p class="navbar-text">Information about this interview</p>
+          <div class="nav navbar-nav navbar-right">
+            <button class="ecPanelButton btn btn-default navbar-btn" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
+          </div><!-- nav navbar-nav navbar-right -->
+        </nav>
+        <div class="tabContentFrame page">
+          <div class="tabContent editq"></div>
+        </div>
+      </div><!--tab-panel has-toolbar -->
+
+      <!-- Variables Tab -->
+      <div class="tab-panel has-toolbar" id="tabsVariables">
+        <nav class="navbar navbar-default">
+          <p class="navbar-text">Variables used in this interview</p>
+          <div class="nav navbar-nav navbar-right">
+            <button id="var-add" class="btn btn-default navbar-btn"><span class="glyphicon-plus"></span> Add</button>
+            <a href="javascript:void(0)" class="fileinput-button">
+              <button id="uploadCMPFile" class="btn btn-primary navbar-btn"><span class="glyphicon-folder-open"></span> Add from HotDocs .CMP</button>
+              <input type="file" id="uploadCMPFileInput"/>
+            </a>
+          </div><!-- nav navbar-nav navbar-right -->
+        </nav>
+        <div class="page tabContentFrame">
+          <div class="tabContent editq"></div>
+        </div>
+      </div><!-- tab-panel has-toolbar -->
+
+      <!-- Steps Tab -->
+      <div class="tab-panel" id="tabsSteps">
+        <div class="tabContentFrame page">
+          <h3 class="page-title">Steps</h3>
           <div class="tabContent editq"></div>
         </div>
       </div>
 
-      <div class="panel bootstrap-styles" id="tabsVariables">
-        <div class="tabHeader bootstrap-styles">
-          <div class="row">
-            <div class="col-md-12">
-              <h3>Variables used in this interview</h3>
-            </div>
-          </div>
-        </div>
-        <br />
-
-        <div class="tabContentFrame">
-          <div class="tabContent editq"></div>
-        </div>
-
-        <div class="tabFooter bootstrap-styles">
-          <button id="var-add" class="btn btn-default"><span class="glyphicon-plus"></span> Add</button>
-          <a href="javascript:void(0)" class="fileinput-button">
-            <button id="uploadCMPFile" class="btn btn-primary"><span class="glyphicon-folder-open"></span> Add from HotDocs .CMP</button>
-            <input type="file" id="uploadCMPFileInput"/>
-          </a>
-        </div>
-      </div>
-
-      <div class="panel" id="tabsClauses">
-
-        <div class="tabHeader bootstrap-styles">
-          <div class="row">
-            <div class="col-md-12">
-              <h3>Clauses used in this interview</h3>
-            </div>
-          </div>
-        </div>
-        <br />
-
-        <div class="tabContentFrame">
-          <div class="tabContent editq"></div>
-        </div>
-        <div class="tabFooter">
-          <button id="clause-add">Add</button>
-        </div>
-      </div>
-
-      <div class="panel bootstrap-styles" id="tabsSteps">
-        <div class="tabHeader">
-          <div class="row">
-            <div class="col-md-12">
-              <h3>Steps</h3>
-            </div>
-          </div>
-        </div>
-        <br />
-
-        <div class="tabContentFrame">
-          <div class="tabContent editq"></div>
-        </div>
-      </div>
-
-      <div class="panel bootstrap-styles has-toolbar" id="tabsPages">
+      <!-- Pages Tab -->
+      <div class="tab-panel has-toolbar" id="tabsPages">
         <nav class="navbar navbar-default">
           <div class="container-fluid">
             <ul class="nav navbar-nav">
@@ -124,7 +89,6 @@
               <li><a href="#" id="new-page"><span class="glyphicon-doc"></span> New Page</a></li>
               <li><a href="#" id="new-popup"><span class="glyphicon-popup"></span> New Popup</a></li>
             </ul>
-
             <div class="nav navbar-nav navbar-right">
               <button id="expandCollapse" data-state="collapsed" class="btn btn-default navbar-btn"></button>
             </div>
@@ -134,12 +98,11 @@
           <ul>
           </ul>
         </div>
-      </div> <!-- panel bootstrap-styles has-toolbar -->
+      </div> <!-- tab-panel has-toolbar -->
 
-      <div class="panel" id="tabsMap">
-        <div class="tabHeader bootstrap-styles">
-        </div>
-        <div class="tabContentFrame">
+      <!-- Maps Tab -->
+      <div class="tab-panel" id="tabsMap">
+        <div class="tabContentFrame page">
           <div class="col-4">
             <div class="tabsMapPages">
               <div class="PagesPanel">
@@ -155,7 +118,7 @@
           <div class="col-8">
            <div id="tabsMapper">
 
-              <div class="tabFooter bootstrap-styles">
+              <div class="tabFooter">
                 <button class="btn btn-default"></button>
                 <button zoom="fit" class="btn btn-default"><span class="glyphicon-resize"></span> Fit</button>
                 <button zoom="1.25" class="btn btn-default"><span class="glyphicon-zoom-in"></span> Zoom In</button>
@@ -171,98 +134,106 @@
         </div>
       </div>
 
-      <div class="panel bootstrap-styles" id="tabsLogic">
-       <div class="tabHeader">
-          <div class="row">
-            <div class="col-md-8">
-              <div id="showlogic">
-                <input checked="checked" type="radio" id="showlogic1" name="showlogic" />
-                <label for="showlogic1" class="btn btn-default">Show only active code</label>
-
-                <input type="radio" id="showlogic2" name="showlogic" />
-                <label for="showlogic2" class="btn btn-default">Show all code blocks</label>
-              </div>
-            </div>
-            <div class="col-md-4 text-right">
-              <button class="ecPanelButton btn btn-primary" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
+      <!-- All Logic Tab -->
+      <div class="tab-panel has-toolbar" id="tabsLogic">
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+              <ul class="nav navbar-nav" id="showlogic">
+                <p class="navbar-text hidden-xs">Show:</p>
+                <li id="showlogic2">
+                  <a href="#" >
+                    All Code Blocks
+                  </a>
+                </li>
+                <li id="showlogic1" class="active">
+                  <a href="#" >
+                    Only Active Code
+                  </a>
+                </li>
+              </ul>
+            <div class="nav navbar-nav navbar-right">
+              <button class="ecPanelButton btn btn-default navbar-btn" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
             </div>
           </div>
-        </div>
-        <br />
-
+        </nav>
+       <div class="page">
         <div class="tabContentFrame">
+          <div class="tabContent editq"></div>
+        </div>
+        </div>
+      </div>
+
+      <!-- All Text Tab -->
+      <div class="tab-panel has-toolbar" id="tabsText">
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+              <ul class="nav navbar-nav" id="showlogic">
+                <p class="navbar-text hidden-xs">Show:</p>
+                <li id="showtext2">
+                  <a href="#" >
+                    All Fields
+                  </a>
+                </li>
+                <li id="showtext1" class="active">
+                  <a href="#" >
+                    Only Filled Fields
+                  </a>
+                </li>
+              </ul>
+            <div class="nav navbar-nav navbar-right">
+              <button class="ecPanelButton btn btn-default navbar-btn" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
+            </div>
+          </div>
+        </nav>
+        <div class="tabContentFrame page">
           <div class="tabContent editq"></div>
         </div>
       </div>
 
-      <div class="panel bootstrap-styles" id="tabsText">
-        <div class="tabHeader">
-          <div class="row">
-            <div class="col-md-8">
-              <div id="showtext">
-                <input checked="checked" type="radio" id="showtext1" name="showtext" />
-                <label for="showtext1" class="btn btn-default">Filled fields</label>
-                <input type="radio" id="showtext2" name="showtext" />
-                <label for="showtext2" class="btn btn-default">All fields</label>
+      <!-- All Files Tab -->
+      <div class="tab-panel has-toolbar" id="tabsFiles">
+          <nav class="navbar navbar-default">
+            <p class="navbar-text">Files currently attached to this interview</p>
+
+            <div class="nav navbar-nav navbar-right">
+              <div class="fileuploader">
+                <!-- The fileinput-button span is used to style the file input field as button -->
+                <a href="javascript:void(0)" class="fileinput-button">
+                  <button class="btn btn-default navbar-btn">
+                    <span class="glyphicon-folder-upload"></span> Upload files...
+                  </button>
+                  <!-- The file input field used as target for the file upload widget -->
+                  <input id="fileupload" type="file" name="files[]" multiple />
+                </a>
+
+                <div id="progress" class="progress progress-success progress-striped">
+                  <div class="bar"></div>
+                </div>
               </div>
             </div>
-            <div class="col-md-4 text-right">
-              <button class="ecPanelButton btn btn-primary" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
+          </nav>
+
+          <div class="page">
+            <div class="tabContentFrame">
+              <div class="tabContent editq">
+                <table class="A2JFiles table table-striped">
+                  <tbody id="attachmentFiles" class="files"></tbody>
+                </table>
+              </div>
             </div>
-          </div>
-        </div>
-        <br />
+          </div><!-- page -->
+      </div><!-- tab-panel has-toolbar #tabsFiles -->
 
-        <div class="tabContentFrame">
-          <div class="tabContent editq"></div>
-        </div>
-      </div>
-
-      <div class="panel" id="tabsFiles">
-        <div class="tabHeader bootstrap-styles">
-          <div class="row">
-            <div class="col-md-12">
-              <h3>Files currently attached to this interview</h3>
-            </div>
-          </div>
-        </div>
-        <br />
-
-        <div class="tabContentFrame">
-          <div class="tabContent editq">
-            <table class="A2JFiles">
-              <tbody id="attachmentFiles" class="files"></tbody>
-            </table>
-          </div>
-        </div>
-        <div class="tabFooter bootstrap-styles">
-          <div class="fileuploader">
-            <!-- The fileinput-button span is used to style the file input field as button -->
-            <a href="javascript:void(0)" class="fileinput-button">
-              <button class="btn btn-primary">
-                <span class="glyphicon-folder-upload"></span> Upload files...
-              </button>
-
-              <!-- The file input field used as target for the file upload widget -->
-              <input id="fileupload" type="file" name="files[]" multiple />
-            </a>
-
-            <div id="progress" class="progress progress-success progress-striped">
-              <div class="bar"></div>
-            </div>
-          </div>
-          <!--<button id="guideSave" />-->
-        </div>
-      </div>
-
-      <div class="bootstrap-styles panel has-toolbar" id="tabsGuides">
+      <!-- Interview Tab -->
+      <div class="tab-panel has-toolbar" id="tabsGuides">
         {{#is page "interviews"}}
           <interviews-toolbar></interviews-toolbar>
           <interviews-page></interviews-page>
         {{/is}}
       </div>
 
-      <div class="panel bootstrap-styles has-toolbar" id="tabsTemplate">
+      <!-- Template Tab -->
+      <div class="tab-panel has-toolbar" id="tabsTemplate">
         {{#is page "templates"}}
           {{#if id}}
             <template-edit-page></template-edit-page>
@@ -272,41 +243,28 @@
         {{/is}}
       </div>
 
-      <div class="panel" id="tabsReport">
-
-        <div class="tabHeader bootstrap-styles">
-          <div class="row">
-            <div class="col-md-12">
-              <button id="reportFull" class="btn btn-primary">Full Report</button>
-              <button id="reportTranscript" class="btn btn-primary">Transcript Report</button>
-            </div>
-          </div>
-        </div>
-        <br />
-
-        <div class="tabContentFrame">
+      <!-- Report Tab -->
+      <div class="tab-panel" id="tabsReport">
+        <div class="tabContentFrame page">
           <div class="tabContent editq">
-            Report of text in a print-friendly layout, also useful for translation projects
+            <h3 class="page-title">Report</h3>
+            <p>Report of text in a print-friendly layout, also useful for translation projects</p>
+            <button id="reportFull" class="btn btn-primary">Full Report</button>
+            <button id="reportTranscript" class="btn btn-primary">Transcript Report</button>
           </div>
         </div>
       </div>
 
-      <div class="panel" id="tabsPreview">
-        <h1>Previewer</h1> Show preview interview
+      <!-- Preview Tab -->
+      <div class="tab-panel page" id="tabsPreview">
+        <h3 class="page-title">Previewer</h3>
+        <p>Show a preview of the current interview.</p>
       </div>
 
-      <div class="panel bootstrap-styles" id="tabsUpload">
-
-        <div class="tabHeader">
-          <div class="row">
-            <div class="col-md-12">
-              <h3>Publish/Upload</h3>
-            </div>
-          </div><!-- row -->
-        </div><!-- tabHeader bootstrap-styles -->
-        <br />
-
+      <div class="tab-panel page" id="tabsUpload">
+        <h3 class="page-title">Publish/Upload</h3>
         <p>To publish your interview to another site such as LHI, download the ZIP which contains the interview and its supplemental files.</p>
+
         <button id="guideZIP" class="btn btn-default"><span class="glyphicon-file-archive"></span> Download ZIP</button>
         <button id="guideDownload" class="btn btn-default"><span class="glyphicon-folder-download"></span> Download A2J</button>
         <button id="guidePublish" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to Public URL</button>
@@ -394,7 +352,7 @@
         </fieldset>
       </div>
     </div>
-    <div id="settings-form" title="Settings">
+    <div id="settings-form" title="Settings" class="bootstrap-styles">
       <ul id="cajasettings">
         <li>General
           <ul>

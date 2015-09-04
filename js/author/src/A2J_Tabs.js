@@ -47,7 +47,7 @@ function getTOCStepPages(includePages,includePops,includeSpecial)
 	{
 		/** @type {TPage} */
 		var page = gGuide.sortedPages[p];
-		var tip = '<em class="description">'+decodeEntities(page.text).substr(0,64) + '</em><span class="pull-right">' + page.tagList()  + '</span>';
+		var tip = '<em class="description">'+decodeEntities(page.text).substr(0,64) + '</em><span class="field-tags pull-right hidden-xs">' + page.tagList()  + '</span>';
 		plink= '<a class="page-item list-group-item unselectable" rel="PAGE '+page.name.asHTML()+'"><span class="title">'+page.name.asHTML()
 			+'</span>'+tip+'</a>';
 		if (page.type===CONST.ptPopup)
@@ -122,12 +122,17 @@ function updateTOC()
 	});
 
 	// JPM Clicking a step toggle slides step's page list.
-	$('#CAJAOutlineMap li.step').click(function()
+	$('#CAJAOutlineMap .panel-heading .step').click(function()
 	{	// 2014-08-12 Toggle step's page list and fade in/out it's nodes in the mapper.
 		// Determine which step it is, then fade back if mapper
+		var stepNum = $(this).data('stepnum');
 		var step = $(this).attr('rel').split(' ')[1];
 		var $nodes=$('.node.Step'+step);
-		if ($(this).next().css("display") !== 'none')
+
+		$('#CAJAOutlineMap #step'+stepNum).toggleClass('collapsed');
+		$('#CAJAOutlineMap #panel'+stepNum).slideToggle(300);
+
+		if ($('#CAJAOutlineMap #step'+stepNum).hasClass('collapsed'))
 		{	// If step is collapse, fade it.
 			$nodes.addClass('faded');
 		}
@@ -135,7 +140,6 @@ function updateTOC()
 		{	// Step not collapsed, display normally.
 			$nodes.removeClass('faded');
 		}
-		$(this).next().slideToggle(300);
 	});
 
 
@@ -258,6 +262,7 @@ var form={
 				//$('page-picker-dialog').dialog( "close" );
 			});
 		$('#page-picker-dialog').data(data).dialog({
+  		dialogClass: "modal bootstrap-styles",
 			autoOpen:true,
 				width: 700,
 				height: 500,
@@ -310,6 +315,7 @@ var form={
 				//$('page-picker-dialog').dialog( "close" );
 			});
 		$('#page-picker-dialog').data(data).dialog({
+  		dialogClass: "modal bootstrap-styles",
 			autoOpen:true,
 				width: 700,
 				height: 500,

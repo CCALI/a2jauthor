@@ -82,6 +82,7 @@ function signin()
               +'Please login to your a2jauthor.org account first. Access to the A2J Author tool requires authentication first. To be authenticated, please fill out the survey that was emailed to you after you first registered for this site. If you have any problems after filling out the survey, please contact webmaster@a2jauthor.org.'
               +'</p>');
          $d.dialog( {
+           dialogClass: "modal bootstrap-styles",
           width: 400, height:300, modal: true,
           buttons: {
              Login: function()
@@ -158,12 +159,12 @@ function main()
         var ecPanelButtonState = $(this).attr('data-state');
 
         if (ecPanelButtonState === 'collapsed') {
-             $(this).parents('.panel').find("legend ~ div").slideToggle(300);
+             $(this).parents('.tab-panel').find("legend ~ div").slideToggle(300);
              $(this).button({label:'<span class="glyphicon-expand"></span> Expand All'});
              $(this).attr("data-state", "expanded");
         }
         else {
-             $(this).parents('.panel').find("legend ~ div").slideDown(300);
+             $(this).parents('.tab-panel').find("legend ~ div").slideDown(300);
              $(this).button({label:'<span class="glyphicon-collapse"></span> Collapse All'});
              $(this).attr("data-state", "collapsed");
         }
@@ -274,13 +275,31 @@ function main()
   $('#vars_load').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
   $('#vars_load2').button({label:'Load',icons:{primary:"ui-icon-locked"}}).next().button({label:'Save',icons:{primary:"ui-icon-locked"}});
 
-  $('#showlogic').buttonset();
-  $('#showlogic1').click(function(){gPrefs.showLogic=1;gGuide.noviceTab("tabsLogic",true);});
-  $('#showlogic2').click(function(){gPrefs.showLogic=2;gGuide.noviceTab("tabsLogic",true);});
+  $('#showlogic1').click(function(){
+    gPrefs.showLogic=1;
+    gGuide.noviceTab("tabsLogic",true);
+    $('#showlogic2').removeClass('active');
+    $('#showlogic1').addClass('active');
+  });
+  $('#showlogic2').click(function(){
+    gPrefs.showLogic=2;
+    gGuide.noviceTab("tabsLogic",true);
+    $('#showlogic1').removeClass('active');
+    $('#showlogic2').addClass('active');
+  });
 
-  $('#showtext').buttonset();
-  $('#showtext1').click(function(){gPrefs.showText=1;gGuide.noviceTab("tabsText",true);});
-  $('#showtext2').click(function(){gPrefs.showText=2;gGuide.noviceTab("tabsText",true);});
+  $('#showtext1').click(function(){
+    gPrefs.showText=1;
+    gGuide.noviceTab("tabsText",true);
+    $('#showtext2').removeClass('active');
+    $('#showtext1').addClass('active');
+  });
+  $('#showtext2').click(function(){
+    gPrefs.showText=2;
+    gGuide.noviceTab("tabsText",true);
+    $('#showtext1').removeClass('active');
+    $('#showtext2').addClass('active');
+  });
 
 
    //Ensure HTML possible for combo box pick list
@@ -416,15 +435,18 @@ function main()
       'ui-button',
       'ui-state-default',
       'ui-corner-all',
+      'ui-corner-left',
+      'ui-corner-right',
       'ui-button-text-only',
       'ui-button-icon-primary',
       'ui-icon',
       'ui-button-text',
       'ui-state-hover',
-      'ui-state-active'
+      'ui-state-active',
+      'ui-buttonset'
     ];
 
-    $('.bootstrap-styles button, .bootstrap-styles span, .bootstrap-styles a, .bootstrap-styles a:hover', '.bootstrap-styles li').removeClass(classes.join(' '));
+    $('.bootstrap-styles button, .bootstrap-styles span, .bootstrap-styles a, .bootstrap-styles a:hover, .bootstrap-styles li, .bootstrap-styles label, .bootstrap-styles ul').removeClass(classes.join(' '));
   }());
 
   signin();

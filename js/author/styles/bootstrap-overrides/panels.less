@@ -50,12 +50,8 @@
 **/
 .panel {
   .border;
-  .no-box-shadow;
   .border-radius(0);
 
-  &:hover {
-    .box-shadow;
-  }
   .panel-heading {
     border: none;
     .border-radius(0);
@@ -78,6 +74,7 @@
     .list-group {
       .list-group-item, .list-group-item:last-child, .list-group-item:first-child {
           border: 1px solid transparent;
+          .border-radius(0);
 
         &:hover, &.active {
           border: 1px solid @alert-warning-border;
@@ -87,22 +84,25 @@
   }
 
   /**
-  * @style accordions Accordions
-  * @parent panels.less
+  * @styles accordions Accordions
   *
-  * @description Add the `accordion` class to a panel for additional styles when expanding/collapsing a panel.
+  * Add the `accordion` class to a panel for additional styles when expanding/collapsing a panel.
   *
   **/
 
   &.accordion {
     .panel-heading {
-      padding-left: @grid-gutter-width/4;
+      padding: 0;
 
       a {
+        padding: @grid-gutter-width/3 @grid-gutter-width/2 @grid-gutter-width/3 @grid-gutter-width/4;
+        padding-left: 35px;
+
         &:before {
           .icon-font;
           content: '\e845';
-          margin-right: @grid-gutter-width/4;
+          position: absolute;
+          left: 10px;
         }
       }
     }
@@ -110,6 +110,7 @@
       .panel-heading {
         background-color: #fff;
         .border;
+        color: @gray-light;
 
         a:before {
           content: '\e831';

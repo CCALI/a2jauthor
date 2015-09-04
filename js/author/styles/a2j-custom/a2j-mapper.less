@@ -143,31 +143,32 @@
   &.icon {
     &.arrow {
       position: absolute;
-      top: -11px;
-      border-color: @gray-lighter;
-      .caret;
-      border-width: 6px;
-      margin-left: -5px;
-      left: 50%;
+      background-image: url(/author/images/map_arrow_down.png);
+      background-repeat:no-repeat;
+      width:16px;
+      height:20px;
+      left: 67px;
+      top: -21px;
     }
-    &.start, &.exit {
+    &.start {
       position: absolute;
+      background-image: url(/author/images/MapperIconStart.png);
+      background-repeat:no-repeat;
       width:100px;
-      height:100px;
-      line-height: 100px;
-      margin-bottom: 50px;
+      height:150px;
       left: 25px;
       top: -150px;
-      .border-radius(250px);
-      .border;
-      background: @brand-info;
-      color: #fff;
-      font-size: @font-size-h4;
-      font-weight: @headings-font-weight;
+      text-indent: -9999px;
     }
     &.exit {
+      position: absolute;
+      background-image: url(/author/images/MapperIconExit.png);
+      background-repeat:no-repeat;
+      width:100px;
+      height:150px;
+      left: 25px;
       top: 72px;
-      background: @brand-danger;
+      text-indent: -9999px;
     }
   } // .icon
 } // .mapper

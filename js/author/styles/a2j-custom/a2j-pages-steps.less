@@ -94,33 +94,8 @@
   }
 }
 
-/**
-  * @styles step-colors Step Colors
-  * @parent a2j-pages-steps.less 1
-  *
-  * We define a variable for each color of the step using an `id="step[num]"` in the HTML and then calling this style in the CSS using `@step0: #EFEFC6;`. Sixteen colors (starting with zero) are defined for sixteen uniquely colored steps. All 16 are put into an array in Less called `@steps` which is used in the following functions.
-**/
-
-//## A2J Specific colors
-@step0: #EFEFC6;
-@step1: #EFEF8C;
-@step2: #EFC6EF;
-@step3: #EFC6C6;
-@step4: #EF8CEF;
-@step5: #EF8C8C;
-@step6: #C6EFEF;
-@step7: #C6EFC6;
-@step8: #C6C6EF;
-@step9: #C6C68C;
-@step10: #C68CC6;
-@step11: #C68C8C;
-@step12: #8CEFEF;
-@step13: #8CEF8C;
-@step14: #8CC6C6;
-@step15: #8CC68C;
-
 // Put all the step color variables into an array
-@steps: step0, step1, step3, step4, step5, step6, step7, step8, step9, step10, step11, step12, step13, step14, step15;
+@steps: step0, step1, step2, step3, step4, step5, step6, step7, step8, step9, step10, step11, step12, step13, step14, step15;
 
 .generate-step-colors(@steps) {
     .-(@i: length(@steps)) when (@i > 0) {
@@ -178,11 +153,11 @@
   * @demo docs/demos/step-colors/demo.html
 **/
 
-.generate-bg-steps(@steps) {
+.generate-bg-classes(@steps) {
     .-(@i: length(@steps)) when (@i > 0) {
         @name: extract(@steps, @i);
-        &.bg-@{name} {background: @@name}
+        .bg-@{name} {background: @@name}
         .-((@i - 1));
     } .-;
 }
-.generate-bg-steps(@steps);
+.generate-bg-classes(@steps);

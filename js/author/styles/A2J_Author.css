@@ -1,122 +1,11 @@
 @charset "utf-8";
 
-.ui-widget-header,
-.ui-state-default,
-.ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default,
-.ui-state-hover,
-.ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover,
-.ui-state-focus,
-.ui-widget-content .ui-state-focus,
-.ui-widget-header .ui-state-focus,
-.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active,
-.ui-priority-primary,
-.ui-widget-content .ui-priority-primary,
-.ui-widget-header .ui-priority-primary
- { font-weight: normal; }
-
-
 html, body {
 	font-family:  "Open Sans",​sans-serif;
 	font-size: 14px;
 	margin:0;
 	padding:0;
 }
-
-
-#welcome > div {
-	background-image: url(../../viewer/images/A2JAvatar-Guide-Front-F0.png);
-	background-repeat: no-repeat;
-	padding-left: 150px;
-}
-
-.authortool {
-	margin: 0;
-	margin-top: 80px;
-}
-.guidemenu {
-  margin: 0;
-  padding: 0;
-  position:  fixed;
-  top: 0;
-  left: 0;
-  width: 125px;
-  z-index: 99;
-}
-.guidemenu .logo {
-  margin: 8px auto;
-  width: 51px;
-  height: 53px;
-  display: block;
-}
-.authorenv {
-	font-size:2em;
-	color: #800;
-}
-.authorver {
-	font-size:10px;
-}
-
-.editicons {
-	width: 50px;
-}
-.editicons .ui-icon {
-	display: inline-block;
-}
-
-
-/*********** A2J ***************/
-table.A2JSteps, table.A2JVars , table.A2JClauses, table.A2JFiles {
-	width:100%;
-	border-style:solid;
-	border-width:thin;
-	border-color:#fff;
-}
-
-
-
-table.A2JSteps tr td, table.A2JVars tr td , table.A2JClauses tr td, table.A2JFiles tr td {
-/* JPM */
- 	padding:.33em;
-/* JPM */
-}
-
-/* JPM */
-table.A2JSteps tr, table.A2JVars tr , table.A2JClauses tr {
-	cursor:pointer;
-}
-/* JPM */
-
-
-input.narrow {
-	width: 5em;
-}
-/*let ui-layout handle scrolling // .ui-tab-content, .ui-tabs-panel{overflow: scroll;} */
-
-/* Shared */
-.boxsizingBorder , .CAJAEditor, div.editq{
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-}
-
-
-.CAJAEditor {
-	padding: 0;
-	margin: 0;
-	width: 100%;
-}
-.CAJAContent {
-	padding: 0;
-	margin: 0;
-	width: 100%;
-}
-
- /*********** Editor ***************/
-
-.sorthandle {
-	cursor: move;
-}
-
 .editspan { /* wrap around fields for fluid width */
 	display: block;
 	overflow: hidden;
@@ -129,7 +18,6 @@ input.narrow {
 .editable.tallest {
 	min-height: 5em;
 }
-
 .editable { /* authoring text fields */
 	min-width: 10em;
 	margin-top: 1px;
@@ -138,9 +26,9 @@ input.narrow {
 	border: 1px solid #ccc;
 	min-height: 1em;
 	width:100%;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 .ui-autocomplete .ui-menu-item {
 	max-height: 2em;
@@ -152,70 +40,6 @@ input.narrow {
 	/* prevent horizontal scrollbar */
 	overflow-x: hidden;
  }
-
-.codeedit, .xml {
-	white-space: pre-wrap;
-}
-.xml {
-	font-size: .5em;
-}
-.collapse {
-	height: 1.5em;
-	overflow: hidden;
-}
-.CAJAContent P {
-	padding: 0;
-	margin: 0;
-	margin-top: .5em;
-	margin-bottom: .5em;
-	line-height: 1.0em;
-}
-P.CAJASection {
-	font-size: 2em;
-	font-weight: bold;
-	border-left: dashed;
-	margin-top: 2em;
-	border-width: thin;
-	padding-left: 5px;
-}
-P.CAJAPage {
-	font-size: 1.5em;
-	border-top: dashed;
-	border-left: dashed;
-	border-width:thin;
-	margin-top: 1em;
-	padding-left: 5px;
-}
-P.CAJAStep {
-	margin-top: 2em;
-	margin-bottom: 2em;
-	font-size: 2em;
-	padding: .5em;
-	border: 1px solid #000;
-}
-
-P.CAJAComment {
-	font-style: italic;
-	background-color:#eee;
-}
-P.CAJAAsk {
-	background-color:#ffFFCC;
-}
-P.CAJATest {
-	background-color:#efe;
-	text-indent: -3em;
-	padding-left: 3em;
-	width: auto;
-}
-.hilite {
-	background-color:#ff8;
-}
-.hilite.slack {
-	background-color:#ff0;
-}
-.macro {
-	background-color:#eee;
-}
 .warning {
 	padding: 0;
 	margin: 0;
@@ -224,18 +48,7 @@ P.CAJATest {
 	font-size: .9em;
 	font-style: italic;
 }
-.inform {
-	background-image: url(../images/inform.png);
-	background-repeat: no-repeat;
-	padding: 0;
-	margin: 0;
-	padding-left: 20px;
-	height: 16px;
-	background-color:#fdd;
-	border: thin;
-	font-size: .9em;
-	font-style: italic;
-}
+
 table.CAJAReportDump {
 	border-collapse:collapse;
 	width: 100%;
@@ -294,184 +107,19 @@ table.CAJAReportDump tr:nth-child(3n+3) {
 	padding: 0px;
 	margin: 0px;
 }
-.pageedit {
-	padding: 5px;
-	margin: 25px;
-}
-.pagelink {
-	background-color:#FFFFCC;
-}
-.section {
-	padding: 5px;
-	margin: 2px;
-}
-
-.section .header {
-	font-style: normal;
-	padding: 4px;
-	font-weight: bold;
-	float: none;
-	clear: none;
-	position: relative;
-	cursor: default;
-	background-position: center;
-	display: block;
-}
-.section .body {
-	border: 1px none #00CC99;
-	padding: 4px;
-	margin-left:20px;
-	display: block;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-top-width: 1px;
-	border-right-width: 1px;
-	border-bottom-width: 1px;
-	border-left-width: 1px;
-}
-.section .header .hintinfo {
-	color:#999999;
-	font-weight: bold;
-	font-style: italic;
-}
-.section .header .hover {
-	color: red;
-	cursor: pointer;
-}
-.section .header span.folder, .section .header span.file {
-	padding-left: 26px;
-	display:inline;
-	height: 15px;
-}
-.section .header span.folder {
-	background: url(jQuery/images/folder.gif) 0 0 no-repeat;
-}
-.editInPlace {
-	padding:5px;
-}
-textarea {
-	width: 95%;
-	font-size: 1em;
-}
-#outline {
-	border:thin solid #00FF99;
-}
-.TabOption {
-	float:right;
-	color:#FF0000;
-	padding:5px;
-}
 .hotspot {
 	height: 100px;
 }
 
-
-
-
-/************** Tracer ************/
 #tracer li {
 	font-size: 8pt;
 	padding:1px;
 	margin-left: -2em;
 }
 
-/************** List Table ************/
-
-.hidden {
-	display: none;
-}
-
-
-.hidestart {
-	visibility: hidden;
-}
-.ui-dialog .ui-state-error { padding: .3em; }
-
-.ui-dialog {
-	box-shadow: 10px 10px #888888;
-}
-
-#guidepanel > ul > span {
-	float: right;
-	padding-right: 50px;
-}
-#guidepanel .ui-widget-header  .ui-dialog-titlebar-close {
-   height: 18px;
-   width: 19px;
-   padding: 1px;
-}
-#guidepanel .ui-widget-header  .ui-dialog-titlebar-close .ui-icon {
-   display: block;
-   margin: 1px;
-}
-#guidepanel .ui-widget-header .ui-dialog-titlebar-close:hover, .ui-widget-header .ui-dialog-titlebar-close:focus {
-   padding: 0;
-}
-
 #dialog_window_minimized_container {
 	z-index: 9999;
 }
-/*
-.pagelist * li:hover,
-table.A2JVars tr:hover,
-table.A2JClauses tr:hover,
-table.A2JFiles tr:hover{
-	background-color:rgba(88,88,88,0.75) !important;
-	color: #fff !important;
-	cursor: pointer;
-}
-*/
-.example{
-	height: 100%;
-}
-.tabsVariables {
-	border:#666666;
-}
-.tabsPanel {
-	height: 100%;
-	overflow: scroll;
-	border: 2px #f00 ;
-}
-
-.page-edit-form-panel .tabsPanel{
-	overflow: hidden;
-}
-.tabHeader {
-	font-size: 1.0em;
-	padding-bottom: 15px;
-}
-.tabHeader.bootstrap-styles h3 {
-  font-size: 20px;
-  margin: 0;
-}
-#tabsPages .tabContentFrame .tabContent  {
-	background-color: #fff;
-}
-
-.tabFooter {
-	padding-top: 15px;
-	padding-bottom: 15px;
-}
-.tabContent {
-	border: none;
-}
-#showlogic, #showtext {
-	display: inline;
-}
-
-div.codeedit.haserr {
-	background-color: #fbb;
-}
-div.codeedit span.err {
-	text-decoration: none;
-	background-color: #f88;
-	border: 1px;
-	padding-bottom: 0px;
-}
-
-
 .fileuploader {
 	display: inline-block;
 	position: relative;
@@ -480,16 +128,6 @@ div.codeedit span.err {
 	margin: 0px;
 	padding: 0px;
 }
-
-/* JPM expandCollapse button */
-#expandCollapse, .tabHeader button.ecPanelButton {
-	font-size: small;
-}
-
-.tabHeader button.CSH {
-	font-size: small;
-}
-
 #uploadCMPFileInput {
 	opacity:  0;
 }

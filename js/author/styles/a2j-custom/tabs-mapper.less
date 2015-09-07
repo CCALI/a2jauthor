@@ -125,50 +125,76 @@
   	cursor: pointer;
 
   	&.RIGHT {
-    	color: #080;
+    	color: @brand-success;
     }
     &.WRONG {
-    	color: #f00;
+    	color: @brand-danger;
     }
   } //.branch
 
   .line {
   	background-color: @gray-light;
-  	border: 0px @gray-light;
     position: absolute;
+
+    &.faded {
+    	background-color: lighten(@gray-light,40%);
+    }
   }
+
 } // .map
+
+.css-line {
+  content: '';
+  background: @gray-light;
+  display: block;
+  width: 2px;
+  height: 6px;
+  position: absolute;
+  bottom: 5px;
+  left: -1px;
+}
 
 .mapper {
   &.icon {
     &.arrow {
       position: absolute;
-      background-image: url(/author/images/map_arrow_down.png);
-      background-repeat:no-repeat;
-      width:16px;
-      height:20px;
-      left: 67px;
-      top: -21px;
+      top: -11px;
+      .caret;
+      border-width: 6px;
+      margin-left: -5px;
+      left: 50%;
+      border-top-color: @gray-light;
+
+      &:before {
+        .css-line;
+      }
     }
-    &.start {
+    &.start, &.exit {
       position: absolute;
-      background-image: url(/author/images/MapperIconStart.png);
-      background-repeat:no-repeat;
       width:100px;
-      height:150px;
+      height:100px;
+      line-height: 100px;
+      margin-bottom: 50px;
       left: 25px;
       top: -150px;
-      text-indent: -9999px;
+      .border-radius(250px);
+      .border;
+      background: @brand-info;
+      color: #fff;
+      font-size: @font-size-h4;
+      font-weight: @headings-font-weight;
+
+      &:before {
+        .css-line;
+        bottom: auto;
+        top: 100px;
+        left: 48px;
+        height: 35px;
+      }
     }
     &.exit {
-      position: absolute;
-      background-image: url(/author/images/MapperIconExit.png);
-      background-repeat:no-repeat;
-      width:100px;
-      height:150px;
-      left: 25px;
       top: 72px;
-      text-indent: -9999px;
+      background: @brand-danger;
     }
   } // .icon
 } // .mapper

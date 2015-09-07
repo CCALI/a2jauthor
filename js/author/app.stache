@@ -1,7 +1,10 @@
 {{#with appState}}
   <div id="splash" class="welcome">
-    <div align="center">
-      <img src="../viewer/images/A2J5_Icon_512.png" />
+    <div class="loading">
+    <img class="" src="images/a2j-logo85x89.png">
+      <h2 class="text-center text-muted">
+        <span class="glyphicon-spin6 animate-spin"></span> Loading...
+      </h2>
     </div>
   </div>
 
@@ -111,14 +114,12 @@
                   </ul>
                 </div>
               </div>
-              <div class="tabFooter">
-              </div>
             </div>
           </div><!-- col-4 -->
           <div class="col-8">
            <div id="tabsMapper">
 
-              <div class="tabFooter">
+              <div class="">
                 <button class="btn btn-default"></button>
                 <button zoom="fit" class="btn btn-default"><span class="glyphicon-resize"></span> Fit</button>
                 <button zoom="1.25" class="btn btn-default"><span class="glyphicon-zoom-in"></span> Zoom In</button>

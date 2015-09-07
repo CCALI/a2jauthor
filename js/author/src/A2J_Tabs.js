@@ -128,6 +128,7 @@ function updateTOC()
 		var stepNum = $(this).data('stepnum');
 		var step = $(this).attr('rel').split(' ')[1];
 		var $nodes=$('.node.Step'+step);
+		var $lines=$('.line.Step'+step);
 
 		$('#CAJAOutlineMap #step'+stepNum).toggleClass('collapsed');
 		$('#CAJAOutlineMap #panel'+stepNum).slideToggle(300);
@@ -135,10 +136,12 @@ function updateTOC()
 		if ($('#CAJAOutlineMap #step'+stepNum).hasClass('collapsed'))
 		{	// If step is collapse, fade it.
 			$nodes.addClass('faded');
+			$lines.addClass('faded');
 		}
 		else
 		{	// Step not collapsed, display normally.
 			$nodes.removeClass('faded');
+			$lines.removeClass('faded');
 		}
 	});
 

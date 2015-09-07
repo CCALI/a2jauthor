@@ -1,6 +1,6 @@
 /**
 * @stylesheet color-palette.less Color Palette
-* @parent styles-theme 3
+* @parent styles-theme 2
 *
 * @description
 * The colors included in this theme have been evaluated to be consistent with accessibility
@@ -19,7 +19,7 @@
 * been mapped into the theme color palette and are used in baseline elements and custom components.
 * However these variables persist to enable their usage in bootstrap components.
 *
-* @iframe docs/demos/color-palette/brand-colors/demo.html 461
+* @iframe docs/demos/color-palette/brand-colors/demo.html
 **/
 
 @gray-base:              #000;
@@ -45,7 +45,7 @@
 * and the default link elements. See the [typography](typography.less.html) section for guidance on how to use these
 * colors on text and link elements.
 *
-* @iframe docs/demos/color-palette/scaffolding-colors/demo.html 219
+* @iframe docs/demos/color-palette/scaffolding-colors/demo.html
 **/
 
 
@@ -60,14 +60,6 @@
 @link-hover-color:      darken(@link-color, 15%);
 //* Link hover decoration.
 @link-hover-decoration: underline;
-
-// Put all the color variables into an array for the demo
-@color-palette: gray-base, gray-darker, gray-dark, gray, gray-light, gray-lighter, brand-primary, brand-success, brand-info, brand-warning, brand-danger, link-active-color, body-bg, text-color, link-color, link-hover-color;
-
-// Generate a set of classes to style the demo
-.style-demo {
-  .generate-bg-classes(@color-palette);
-}
 
 /**
   * @styles step-colors Step Colors

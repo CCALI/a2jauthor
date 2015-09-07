@@ -2,57 +2,8 @@
 // Variables
 // --------------------------------------------------
 
-
-/**
- *  @stylesheet variables.less Typography
- *  @parent styles-theme 0
- *
- *  Global style definitions for all typographic elements
- *  including headings, paragraphs, lists, and blockquotes.
- */
-
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
-
-@font-family-sans-serif:  "Open Sans", Helvetica, Arial, sans-serif;
-@font-family-serif:       Georgia, "Times New Roman", Times, serif;
-//* Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
-@font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
-@font-family-base:        @font-family-sans-serif;
-
-@font-size-base:          14px;
-@font-size-large:         ceil((@font-size-base * 1.25)); // ~18px
-@font-size-small:         ceil((@font-size-base * 0.85)); // ~12px
-
-/** @styles headings Headings
- *
- * H tags defining a typographical heirarchy
- */
-
-@font-size-h1:            floor((@font-size-base * 2.6)); // ~36px
-@font-size-h2:            floor((@font-size-base * 2.15)); // ~30px
-@font-size-h3:            ceil((@font-size-base * 1.7)); // ~24px
-@font-size-h4:            ceil((@font-size-base * 1.25)); // ~18px
-@font-size-h5:            @font-size-base;
-@font-size-h6:            ceil((@font-size-base * 0.85)); // ~12px
-
-//* Unit-less `line-height` for use in components like buttons.
-@line-height-base:        1.428571429; // 20/14
-//* Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
-@line-height-computed:    floor((@font-size-base * @line-height-base)); // ~20px
-
-//* By default, this inherits from the `<body>`.
-@headings-font-family:    inherit;
-@headings-font-weight:    300;
-@headings-line-height:    1.1;
-@headings-color:          inherit;
-
-//* Load fonts from this directory.
-@icon-font-path:          "../fonts/";
-//* File name for all font files.
-@icon-font-name:          "glyphicons-halflings-regular";
-//* Element ID within SVG icon file.
-@icon-font-svg-id:        "glyphicons_halflingsregular";
-
+@import "color-palette.less";
+@import "typography.less";
 
 //== Components
 //

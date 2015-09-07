@@ -153,11 +153,13 @@
   * @demo docs/demos/step-colors/demo.html
 **/
 
-.generate-bg-classes(@steps) {
-    .-(@i: length(@steps)) when (@i > 0) {
-        @name: extract(@steps, @i);
-        .bg-@{name} {background: @@name}
-        .-((@i - 1));
-    } .-;
-}
 .generate-bg-classes(@steps);
+
+
+// Put all the color variables into an array for the demo
+@color-palette: gray-base, gray-darker, gray-dark, gray, gray-light, gray-lighter, brand-primary, brand-success, brand-info, brand-warning, brand-danger, link-active-color, body-bg, text-color, link-color, link-hover-color;
+
+// Generate a set of classes to style the demo
+.style-demo {
+  .generate-bg-classes(@color-palette);
+}

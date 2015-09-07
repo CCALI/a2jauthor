@@ -1,5 +1,5 @@
 @stylesheet icons Iconography
-@parent styles-theme 0
+@parent styles-theme 3
 
 This page describes the custom icon font used for the application.
 

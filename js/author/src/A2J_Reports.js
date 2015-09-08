@@ -31,7 +31,6 @@ function newWindowReport(title,html)
 	+'</head>'+'<body class="CAJAReportDump">'+html
 	+'<script>window.less = { async: true, fileSync: true };</script>'
   +'<script src="../node_modules/steal/steal.js" data-main="author/main"></script>'
-  +'<!-- <script src="../dist/bundles/author/main.js" data-root="/" data-env="production"></script> -->'
 	+'</body>'
   +'</html>';
 	reportWindow.document.write(html);

@@ -26,11 +26,13 @@ function longProcess(statusPrompt, process)
 function newWindowReport(title,html)
 {	// Open report in new window. Include CSS for proper formatting.
 	var reportWindow = window.open();//'A2J_Report.html', "");
-	html = '<html><head><title>' + title + '</title>'
-	+'<link rel="stylesheet" type="text/css" href="styles/author.jquery-ui.css">'
+	html = '<html class="bootstrap-styles reports"><head><title>' + title + '</title>'
 	+'<link rel="stylesheet" type="text/css" href="styles/A2J_Author.css">'
-	+'<link rel="stylesheet" type="text/css" href="styles/A2J_Reports.css">'
-	+'</head>'+'<body class="CAJAReportDump bootstrap-styles">'+html +'</body>'
+	+'</head>'+'<body class="CAJAReportDump">'+html
+	+'<script>window.less = { async: true, fileSync: true };</script>'
+  +'<script src="../node_modules/steal/steal.js" data-main="author/main"></script>'
+  +'<!-- <script src="../dist/bundles/author/main.js" data-root="/" data-env="production"></script> -->'
+	+'</body>'
   +'</html>';
 	reportWindow.document.write(html);
 	reportWindow.document.close();
@@ -67,11 +69,12 @@ function textStatisticsReport(text, includeAllStats)
 	var gradeFK = t.fleschKincaidGradeLevel();
 	var good = gradeFK < 7;
 	var css = (gradeFK < 7 ? 'FleschKincaidUnder7' : (gradeFK<10 ? 'FleschKincaidUnder10' : 'FleschKincaid10OrHigher'));
+	var alertClass = (gradeFK < 7 ? 'alert-success' : (gradeFK<10 ? 'alert-warning' : 'alert-danger'));
 	var info = '';
 	if (!good || includeAllStats===true || gPrefs.FKGradeAll)
 	{
 		// Doing all stats takes some time, so only do them if we've got a bad F-K grade or we specifically wnat them all.
-		info = '<div class=TextStatistics>'
+		info = '<small class=TextStatistics>'
 			+	'<a target=_blank href="http://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests">Flesch Kincaid</a> Grade Level: <span class='+css+'>'+gradeFK+'</span>'
 			+	' and Reading Ease: '+t.fleschKincaidReadingEase()
 			+	'; <a target=_blank href="http://en.wikipedia.org/wiki/Gunning_fog_index">Gunning Fog</a> Score: <span>'+t.gunningFogScore()+'</span>'
@@ -81,13 +84,14 @@ function textStatisticsReport(text, includeAllStats)
 			+	'; Average Words Per Sentence: ' + t.averageWordsPerSentence()
 		// Other stats we might use:
 		//		automatedReadabilityIndex
-			+'</div>';
+			+'</small>';
 	}
 	return {
 		good: gradeFK < 7,
 		gradeFK:gradeFK,
 		// If good, then we'd display text normally otherwise we might include the stat info for reference.
 		css: css,
+		alertClass: alertClass,
 		info: info
 	};
 }
@@ -121,7 +125,7 @@ function reportFull()
 		}
 		function anchor(link) {
 			if (link!='') {
-				return '<a name="'+link+'"/>';
+				return '<a name="'+link+'"></a>';
 			}
 			else
 			{
@@ -131,7 +135,7 @@ function reportFull()
 		function jumpAnchor(link,label)
 		{
 			if (link!='') {
-				return '<a class=jump href="#'+link+'">'+label+'</a>';
+				return '<a class="btn btn-primary" href="#'+link+'">'+label+'</a>';
 			}
 			else{
 				return label;
@@ -182,7 +186,7 @@ function reportFull()
 		{	// Calc text stats, color based on grade level, show stats if not good.
 			if (text!=''){
 				var tsr = textStatisticsReport(text,false);
-				text = '<div class="' + tsr.css+'">' + text  + '</div>' + tsr.info;
+				text = '<div class="grade-text ' + tsr.css+'">' + text  + '</div>' + tsr.info;
 			}
 			return text;
 		}
@@ -237,11 +241,11 @@ function reportFull()
 		for (var si in guide.steps)
 		{
 			step = guide.steps[si];
-			ts+= tuple('Step "'+step.number+'":',  jumpAnchor('STEP'+si, step.text),'Step'+parseInt(si));
+			ts+= tuple('Step "'+step.number+'":',  jumpAnchor('STEP'+si, step.text),'bg-step'+parseInt(si));
 			stepHTML[si] = '';
 		}
 		t += tuple('Steps',fieldSetWrap('Interview Steps',tableWrap(ts)));
-		t += tuple('Popups',jumpAnchor('POPUPS','Popup pages'),'Step0');
+		t += tuple('Popups',jumpAnchor('POPUPS','Popup pages'),'');
 		html += fieldSetWrap('Interview Information',tableWrap(t));
 
 		// Variable list
@@ -318,16 +322,16 @@ function reportFull()
 			if (stepHTML[si]=='') {
 				stepHTML[si]='No pages for this step';
 			}
-			html += anchor('STEP'+si)+'<h2>Step '+ step.number+' ' + step.text + '</h2>' +  stepHTML[si];
+			html += anchor('STEP'+si)+'<div class="step-wrapper step-wrapper-step'+ step.number+'"><h2 class="heading-step">Step '+ step.number+' ' + step.text + '</h2>' +  stepHTML[si]+'</div>';
 		}
 		if (popHTML=='') {
 			popHTML = 'No popups in this interview';
 		}
-		html += anchor('POPUPS') + '<h2>Popups</h2>' + popHTML;
+		html += anchor('POPUPS') + '<h2>Popups</h2>' + popHTML+'<hr />';
 
 		var tsr = textStatisticsReport(guideGradeText,true);
-		guideGradeText = '<div class="GradeReport ' + tsr.css+'">The F-K Grade for all questions and help in this interview is '+tsr.gradeFK
-			+' (< 7 is Good)'
+		guideGradeText = '<div class="GradeReport ' + tsr.css+'"><div class="alert '+tsr.alertClass+'">The F-K Grade for all questions and help in this interview is '+tsr.gradeFK
+			+' (< 7 is Good)</div>'
 			+  tsr.info + '</div>';
 		html +=  fieldSetWrap('Text Statistics', guideGradeText );
 		html = '<h1>Full Report for ' + gGuide.title+'</h1>'+html;

@@ -120,3 +120,11 @@ br, .clear {
 .hidestart {
 	visibility: hidden;
 }
+
+.generate-bg-classes(@steps) {
+    .-(@i: length(@steps)) when (@i > 0) {
+        @name: extract(@steps, @i);
+        .bg-@{name} {background: @@name}
+        .-((@i - 1));
+    } .-;
+}

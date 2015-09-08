@@ -46,7 +46,7 @@
   * ```
   *
   * **Results in:**
-  * @iframe docs/demos/forms-inputs/demo.html 50
+  * @iframe docs/demos/forms-inputs/demo.html
   *
   *
   * > #### Input groups
@@ -62,7 +62,7 @@
   * <textarea class="form-control" rows="3"></textarea>
   * ```
   * **Results in:**
-  * @iframe docs/demos/forms-textarea/demo.html 80
+  * @iframe docs/demos/forms-textarea/demo.html
   *
   *
   * ### Checkboxes and radios
@@ -97,7 +97,7 @@
   * </select>
   * ```
   * **Results in:**
-  * @iframe docs/demos/forms-selects/demo1.html 50
+  * @iframe docs/demos/forms-selects/demo1.html
   *
   *
   *
@@ -115,7 +115,7 @@
   * </select>
   * ```
   * **Results in:**
-  * @iframe docs/demos/forms-selects/demo2.html 105
+  * @iframe docs/demos/forms-selects/demo2.html
   *
   *
   * ## Static control
@@ -123,7 +123,7 @@
   *
   * #### Example
   *
-  * @demo docs/demos/forms-static/demo1.html 180
+  * @demo docs/demos/forms-static/demo1.html
   *
   * #### Example
   *
@@ -214,6 +214,79 @@
   *
   * @demo docs/demos/forms-helptext/demo.html
 **/
+
+
+//== Forms
+//
+//##
+
+//* `<input>` background color
+@input-bg:                       #fff;
+//* `<input disabled>` background color
+@input-bg-disabled:              @gray-lighter;
+
+//* Text color for `<input>`s
+@input-color:                    @gray;
+//* `<input>` border color
+@input-border:                   #ccc;
+
+// TODO: Rename `@input-border-radius` to `@input-border-radius-base` in v4
+//* Default `.form-control` border radius
+// This has no effect on `<select>`s in some browsers, due to the limited stylability of `<select>`s in CSS.
+@input-border-radius:            @border-radius-base;
+//* Large `.form-control` border radius
+@input-border-radius-large:      @border-radius-large;
+//* Small `.form-control` border radius
+@input-border-radius-small:      @border-radius-small;
+
+//* Border color for inputs on focus
+@input-border-focus:             @link-color;
+
+//* Placeholder text color
+@input-color-placeholder:        #999;
+
+//* Default `.form-control` height
+@input-height-base:              (@line-height-computed + (@padding-base-vertical * 2) + 2);
+//* Large `.form-control` height
+@input-height-large:             (ceil(@font-size-large * @line-height-large) + (@padding-large-vertical * 2) + 2);
+//* Small `.form-control` height
+@input-height-small:             (floor(@font-size-small * @line-height-small) + (@padding-small-vertical * 2) + 2);
+
+//* `.form-group` margin
+@form-group-margin-bottom:       15px;
+
+@legend-color:                   @gray-dark;
+@legend-border-color:            #e5e5e5;
+
+//* Background color for textual input addons
+@input-group-addon-bg:           @gray-lighter;
+//* Border color for textual input addons
+@input-group-addon-border-color: @input-border;
+
+//* Disabled cursor for form controls and buttons.
+@cursor-disabled:                not-allowed;
+
+
+//== Form states and alerts
+//
+//## Define colors for form feedback states and, by default, alerts.
+
+@state-success-text:             #3c763d;
+@state-success-bg:               #dff0d8;
+@state-success-border:           darken(spin(@state-success-bg, -10), 5%);
+
+@state-info-text:                #31708f;
+@state-info-bg:                  #d9edf7;
+@state-info-border:              darken(spin(@state-info-bg, -10), 7%);
+
+@state-warning-text:             #8a6d3b;
+@state-warning-bg:               #fcf8e3;
+@state-warning-border:           darken(spin(@state-warning-bg, -10), 5%);
+
+@state-danger-text:              #a94442;
+@state-danger-bg:                #f2dede;
+@state-danger-border:            darken(spin(@state-danger-bg, -10), 5%);
+
 
 .form-control,
 textarea,

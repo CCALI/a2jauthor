@@ -1,0 +1,31 @@
+.reports {
+  body {
+    padding: @grid-gutter-width;
+
+    .heading-step {
+      margin-top: 0;
+      margin-bottom: @grid-gutter-width/2;
+    }
+    .step-wrapper {
+     .border;
+      padding: @grid-gutter-width/2;
+      margin-bottom: @grid-gutter-width;
+
+      .generate-step-wrapper-classes(@steps);
+
+      legend {
+        .border;
+      }
+    }
+  } // body
+}
+
+.generate-step-wrapper-classes(@steps) {
+    .-(@i: length(@steps)) when (@i > 0) {
+        @name: extract(@steps, @i);
+        &.step-wrapper-@{name} {
+          border-left: 4px solid @@name;
+          }
+        .-((@i - 1));
+    } .-;
+}

@@ -1,18 +1,4 @@
-/**
-* @stylesheet typography.less Typography
-* @parent Styles.baseline-elements 1
-*
-* @description
-* Global style definitions for all typographic elements including headings, paragraphs, lists, and blockquotes.
-**/
 
-/**
-* @styles headings Headings
-*
-* @description
-* H tags defining a typographical hierarchy.
-*
-**/
 h1,h2,h3,h4,h5,h6{
   margin: 0;
   margin-bottom: 15px;
@@ -25,13 +11,7 @@ h1,h2,h3,h4,h5,h6{
   h5 { font-size: @font-size; }
   h6 { font-size: @font-size*.85; }
 
-/**
-* @styles content Content Tags
-*
-* @description
-* Typography for paragraphs, links, lists, etc.
-*
-**/
+
 p, .p {
   font-size: @font-size;
   font-weight: @font-weight;
@@ -148,13 +128,7 @@ del,s,strike{
   text-decoration:line-through;
 }
 
-/**
-* @styles special Special Type Styles
-*
-* @description
-* Text shadow mixins to be added to type styles as needed. They are usually applied to buttons and headings.
-*
-**/
+
 .text-shadow(@opacity: .5) {
   text-shadow: 0 -1px 0 rgba(0,0,0,@opacity);
 }

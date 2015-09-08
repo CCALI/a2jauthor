@@ -1,19 +1,4 @@
-/**
-* @stylesheet api.less API
-* @parent Styles.docs
 
-* @description
-* Styles the docs and overwrites some of the theme default styles.
-**/
-
-
-/**
-* @styles simple-tag Simple Tag
-*
-* @description
-* Simple tags are styled independently from parent containers, and are different from the `ul.tags li` elements.
-*
-**/
 .simple-tag {
   display: inline-block;
   -webkit-border-radius: 4px;
@@ -27,14 +12,7 @@
 }
 
 
-/**
-* @styles docs-title Title Section
 
-* @description
-* Styles the title section that shows as the top of each document. It is composed by
-* a `.heading`, `tags`, a `subheading`, and a list of `links`.
-*
-**/
 .docs {
   .title {
     display: block;
@@ -214,13 +192,7 @@
 }
 
 
-/**
-* @styles signature Signature
-*
-* @description
-* Used as a wrapper for parameters and returns. The signature has space for headings, code and additional plain-language explanations.
-*
-**/
+
 .docs .signature-wrapper {
   &*:last-child {
     margin-bottom: 0;
@@ -255,10 +227,7 @@
   }
 }
 
-/**
-* @styles small-signature Small Signature
-*
-**/
+
 .small-signature {
   padding: 10px;
   background-color: @fog;
@@ -291,13 +260,7 @@
 }
 
 
-/**
-* @styles parameters-returns Parameters and Returns
-*
-* @description
-* Parameters and returns are shown inside of `.signature` but their styles are not dependant on it.
-*
-**/
+
 .docs {
   .parameters, .returns {
     list-style-type: none;

@@ -1,7 +1,4 @@
-/**
-* @styles header Header
-*
-**/
+
 header {
   background-color: @color-header;
   color: @clear;
@@ -29,12 +26,8 @@ header {
   background: url(@logo) no-repeat left center;
   background-size: @logo-width;
 }
-  
 
-/**
-* @styles header-nav Header Nav
-*
-**/
+
 header .main-nav {
   list-style-type: none;
   padding: 0;
@@ -66,16 +59,10 @@ header .main-nav {
       border-radius: 2px;
     }
   }
-} 
+}
 
 
-/**
-* @styles header-dropdown Header Dropdown Menu
 
-* @description
-* This dropdown shows when hovering the logo.
-*
-**/
 header {
   .dropdown-menu {
     background-color: @clear;
@@ -99,7 +86,7 @@ header {
       padding-left: @gutter/2;
     }
   }
-  .dropdown-menu li a:hover, 
+  .dropdown-menu li a:hover,
   .dropdown-menu li.active a {
     background-color: @fog;
     color: @night;
@@ -107,14 +94,7 @@ header {
 }
 
 
-/**
-* @styles header-bitovi-menu Bitovi Menu
-*
-* @description
-* This dropdown menu shows when hovering the Bitovi bits icon.
-* Links placed on this menu link out the external Bitovi sites.
-*
-**/
+
 header {
   .bitovi-menu {
     display: inline-block;
@@ -156,7 +136,7 @@ header {
     position: relative;
   }
 
-  .bitovi-menu:hover .dropdown-menu, 
+  .bitovi-menu:hover .dropdown-menu,
   .logo-menu:hover .dropdown-menu,
   .menu-container:hover .dropdown-menu {
     display: block;

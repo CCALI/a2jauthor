@@ -1,5 +1,5 @@
 /**
-* @stylesheet typography Typography
+* @stylesheet typography.less Typography
 * @parent styles-theme 1
 *
 * @description
@@ -15,6 +15,14 @@
 * @demo docs/demos/typography/headings/example/demo.html
 **/
 
+/**
+* @styles var-typography Typography
+* @parent variables.less
+*
+* `typography.less` All the font sizes, headings, and weights for the theme
+*
+**/
+
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
 
 @font-family-sans-serif:  "Open Sans", Helvetica, Arial, sans-serif;
@@ -25,7 +33,7 @@
 
 
 /** @styles headings Headings
- * @parent typography 1
+ * @parent typography.less 1
  *
  * H tags defining a typographical heirarchy. Each page of the application should use the appropriate header level based on semantics, rather than font size. For example, an `<h2>` should not be used if there is not a parent `<h1>` - if the font sizes are not appropriate for the context, these can be adjusted on an individual-level in component specific style sheets. However, the defined header level sizes should usually be honored.
  *
@@ -98,7 +106,7 @@
 
 /**
 * @styles body-copy Body Copy
-* @parent typography 0
+* @parent typography.less 0
 *
 * @description
 *
@@ -123,7 +131,7 @@
 
 /**
 * @styles inline-text-elements Inline text elements
-* @parent typography 1
+* @parent typography.less 1
 *
 * @description
 *
@@ -185,7 +193,7 @@
 
 /**
 * @styles alignment-classes Alignment classes
-* @parent typography 2
+* @parent typography.less 2
 *
 * @description
 *
@@ -197,7 +205,7 @@
 
 /**
 * @styles tranformation-classes Transformation classes
-* @parent typography 3
+* @parent typography.less 3
 *
 * @description
 *
@@ -209,7 +217,7 @@
 
 /**
 * @styles abbreviations Abbreviations
-* @parent typography 4
+* @parent typography.less 4
 *
 * @description
 *
@@ -231,7 +239,7 @@
 
 /**
 * @styles addresses Addresses
-* @parent typography 5
+* @parent typography.less 5
 *
 * @description
 *
@@ -244,7 +252,7 @@
 
 /**
 * @styles blockquotes Blockquotes
-* @parent typography 5
+* @parent typography.less 6
 *
 * @description
 *
@@ -273,7 +281,7 @@
 
 /**
 * @styles lists Lists
-* @parent typography 6
+* @parent typography.less 7
 *
 * @description
 *

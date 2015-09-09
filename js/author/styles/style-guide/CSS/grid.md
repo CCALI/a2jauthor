@@ -27,22 +27,20 @@ We use the following media queries in our Less files to create the key breakpoin
 /* No media query since this is the default in Bootstrap */
 
 /* Small devices (tablets, 768px and up) */
-\@media (min-width: @screen-sm-min) { ... }
+@media (min-width: @screen-sm-min) { ... }
 
 /* Medium devices (desktops, 992px and up) */
-\@media (min-width: @screen-md-min) { ... }
+@media (min-width: @screen-md-min) { ... }
 
 /* Large devices (large desktops, 1200px and up) */
-\@media (min-width: @screen-lg-min) { ... }
+@media (min-width: @screen-lg-min) { ... }
 ```
 
 We occasionally expand on these media queries to include a `max-width` to limit CSS to a narrower set of devices.
 
-<pre>
-    <code>
-        \@media (max-width: @screen-xs-max) { ... }
-        \@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) { ... }
-        \@media (min-width: @screen-md-min) and (max-width: @screen-md-max) { ... }
-        \@media (min-width: @screen-lg-min) { ... }
-    </code>
-</pre>
+```
+@media (max-width: @screen-xs-max) { ... }
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) { ... }
+@media (min-width: @screen-md-min) and (max-width: @screen-md-max) { ... }
+@media (min-width: @screen-lg-min) { ... }
+```

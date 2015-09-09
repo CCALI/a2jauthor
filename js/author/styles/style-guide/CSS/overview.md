@@ -7,9 +7,9 @@ Bootstrap makes use of certain HTML elements and CSS properties that require the
 
 ```
 <!DOCTYPE html>
-    <html lang="en">
-    ...
-    </html>
+  <html lang="en">
+  ...
+  </html>
 ```
 
 ## Mobile First

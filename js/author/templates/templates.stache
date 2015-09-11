@@ -7,14 +7,12 @@
 {{/if}}
 
 <div class="page">
-{{#if templatesPromise.isResolved}}
-
- {{#if openDeletedAlert}}
   <app-alert
     auto-close="true"
-    alert-type="warning"
     dismissible="true"
+    alert-type="warning"
     open="{openDeletedAlert}"
+    class="deleted-templates-alert"
     auto-close-time="{alertAutoCloseTime}">
 
     {{#each deletedTemplates}}
@@ -23,14 +21,13 @@
       </p>
     {{/each}}
   </app-alert>
- {{/if}}
 
- {{#if openRestoredAlert}}
   <app-alert
     auto-close="true"
-    alert-type="warning"
     dismissible="true"
+    alert-type="warning"
     open="{openRestoredAlert}"
+    class="restored-templates-alert"
     auto-close-time="{alertAutoCloseTime}">
 
     {{#each restoredTemplates}}
@@ -39,9 +36,6 @@
       </p>
     {{/each}}
   </app-alert>
- {{/if}}
-
-{{/if}}
 
   <div class="container-fluid">
     {{#if templatesPromise.isPending}}

@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import assert from 'assert';
 import {Alert} from './alert';
 import stache from 'can/view/stache/';
@@ -11,6 +12,10 @@ describe('<app-alert>', function() {
 
     beforeEach(function() {
       vm = new Alert();
+    });
+
+    it('is closed by default', function() {
+      assert.isFalse(vm.attr('open'));
     });
 
     it('defaults autoClose to false', function() {
@@ -44,20 +49,35 @@ describe('<app-alert>', function() {
 
   describe('Component', function() {
     beforeEach(function() {
+      $.fx.off = true;
       let frag = stache('<app-alert open="true"></app-alert>');
       $('#test-area').html(frag());
     });
 
-    afterEach(() => $('#test-area').empty());
-
-    it('is visible if open is true', function() {
-      assert($('app-alert').is(':visible'));
+    afterEach(function() {
+      $.fx.off = false;
+      $('#test-area').empty();
     });
 
-    it('a close button is visible if dismissible', function() {
-      $('app-alert').viewModel().attr('dismissible', true);
-      assert($('.alert').hasClass('alert-dismissible'));
-      assert($('button.close').is(':visible'));
+    it('is visible if "open" is "true"', function() {
+      assert.isTrue($('app-alert').is(':visible'));
+    });
+
+    it('is hidden if "open" is "false"', function() {
+      $('app-alert').viewModel().attr('open', false);
+      assert.isFalse($('app-alert').is(':visible'));
+    });
+
+    it('close button is not visible unless dismissible', function() {
+      let vm = $('app-alert').viewModel();
+
+      // dismissible false by default
+      assert.isFalse($('.close').is(':visible'));
+      assert.isFalse($('.alert').hasClass('alert-dismissible'));
+
+      vm.attr('dismissible', true);
+      assert.isTrue($('.close').is(':visible'));
+      assert.isTrue($('.alert').hasClass('alert-dismissible'));
     });
   });
 

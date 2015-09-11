@@ -3,14 +3,16 @@
 templates-page {
   display: block;
 
-  app-alert {
+  .deleted-templates-alert,
+  .restored-templates-alert {
     position: absolute;
     z-index: 100;
     width: 96%;
-    top: -1px;
+    top: @navbar-height - 1;
     left: 0;
     margin-left: 2%;
   }
+
   .page {
     position: relative;
   }

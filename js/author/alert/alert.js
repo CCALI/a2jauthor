@@ -112,6 +112,7 @@ export let Alert = Map.extend({
      */
     open: {
       type: 'boolean',
+      value: false,
       set(newVal) {
         let autoClose = this.attr('autoClose');
 
@@ -166,18 +167,20 @@ export default Component.extend({
   events: {
     inserted() {
       if (this.viewModel.attr('open')) {
-        this.element.find('.alert-wrapper').show();
+        this.element.show();
+      } else {
+        this.element.hide();
       }
     },
 
     '{viewModel} open': function() {
+      let $el = this.element;
       let open = this.viewModel.attr('open');
-      let $wrapper = this.element.find('.alert-wrapper');
 
       if (open) {
-        $wrapper.slideDown();
+        $el.slideDown();
       } else {
-        $wrapper.slideUp();
+        $el.slideUp();
         this.viewModel.clearAutoCloseTimeout();
       }
     }

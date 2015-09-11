@@ -711,20 +711,20 @@ TPage.prototype.tagList=function()
 		/** @type {TField} */
 		var field = page.fields[f];
 		if (field.required) {
-			tags += ' <span class="label label-info field">' + field.fieldTypeToTagName() + '<span class="text-danger">*</span></span>';
+			tags += '<span class="label label-info tag"><span class="glyphicon-pencil"></span>' + field.fieldTypeToTagName() + '<span class="text-danger">*</span></span>';
 		}else{
-			tags += ' <span class="label label-info field">' + field.fieldTypeToTagName() + '</span>';
+			tags += '<span class="label label-info tag"><span class="glyphicon-pencil"></span>' + field.fieldTypeToTagName() + '</span>';
 		}
 	}
 	if (page.help!=='') {
-		tags += ' <span class="label label-info tag help">' + 'Help' + '</span>';
+		tags += '<span class="label label-warning tag"><span class="glyphicon-lifebuoy"></span>Help</span>';
 	}
 	if (page.codeAfter!=='' || page.codeBefore!=='') {
-		tags += ' <span class="label label-info tag logic">' + 'Logic' + '</span>';
+		tags += '<span class="label label-success tag"><span class="glyphicon-split"></span>Logic</span>';
 	}
 	if (page.repeatVar!=='')
 	{
-		tags += ' <span class="label label-info tag repeat">&nbsp</span>';
+		tags += '<span class="glyphicon-cw">&nbsp</span>';
 	}
 	return tags;
 };

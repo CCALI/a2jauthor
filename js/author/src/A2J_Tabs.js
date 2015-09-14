@@ -510,7 +510,7 @@ var form={
 		var rows=2;
 		var e=$('<div name="'+data.name+'">'
 			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<span class=editspan><textarea  class="form-control text editable taller" rows='+rows+'>'+data.value+'</textarea></span></div>');
+			+'<span class=editspan><div class="form-control text editable taller" rows='+rows+'>'+data.value+'</div></span></div>');
 		$('.editable',e).blur(function(){
 			var val=$(this).val();//form.htmlFix($(this).html());
 			form.change($(this), val);
@@ -583,7 +583,7 @@ var form={
 		}
 	}
 	,codeCheck:function(elt){
-		$(elt).removeClass('haserr');
+		$(elt).removeClass('has-error');
 		$('SPAN',$(elt)).remove();
 		var code=form.codeFix($(elt).html());
 		$(elt).html(code);
@@ -594,7 +594,7 @@ var form={
 		var t=[];
 		if (script.errors.length>0)
 		{
-			$(elt).addClass('haserr');
+			$(elt).addClass('has-error');
 		/*
 			for (l=0;l<lines.length;l++)
 			{

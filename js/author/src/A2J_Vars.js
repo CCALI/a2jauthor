@@ -87,7 +87,7 @@ TGuide.prototype.variableListHTML = function ()
 	{
 		var v=sortvars[vi];
 		tb+=html.row([v.name,v.type,v.repeating,v.comment
-			+ (typeof v.warning==='undefined'?'':'<span class="warning">'+v.warning+'</spab>')]);
+			+ (typeof v.warning==='undefined'?'':'<span class="text-danger"><span class="glyphicon-attention"></span> '+v.warning+'</span>')]);
 	}
 	return '<table class="table table-hover">'+th + '<tbody>'+ tb + '</tbody>'+"</table>";
 };

@@ -3,12 +3,12 @@ import List from 'can/list/';
 import 'can/map/define/';
 
 /**
- * @module AJ2Node
+ * @module A2JNode
  * @parent api-models
  *
- * The AJ2 Node Map represents an [AJ2Template] node. From its root node
- * out to its branches and leaves, every AJ2Template node is an AJ2Node.
- * An AJ2Node is a branch if it has child AJ2Nodes of its own,
+ * The A2J Node Map represents an [A2J] node. From its root node
+ * out to its branches and leaves, every A2J node is an A2JNode.
+ * An A2JNode is a branch if it has child A2JNodes of its own,
  * otherwise it's a leaf.
  */
 export default Map.extend({
@@ -16,7 +16,7 @@ export default Map.extend({
     /**
      * @property {String} component
      *
-     * A component tag name for an AJ2 component.
+     * A component tag name for an A2J component.
      */
     component: {
       value: ''

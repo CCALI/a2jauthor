@@ -1,5 +1,6 @@
 import Map from 'can/map/';
 import Template from 'author/models/template';
+import A2JTemplate from 'author/models/a2j-template';
 
 import 'can/map/define/';
 
@@ -163,7 +164,15 @@ export default Map.extend({
    * `displayList` when it's done.
    */
   init() {
-    let promise = Template.findAll().then(templates => {
+    let appState = this.attr('@root');
+
+    if(window.gGuideID) {
+      appState.attr('guide_id', window.gGuideID);
+    }
+
+    let guide_id = this.attr('@root').attr('guide_id');
+
+    let promise = A2JTemplate.findAll({ guide_id }).then(templates => {
       this.attr('templates', templates);
       this.attr('displayList', this.makeDisplayList());
     });

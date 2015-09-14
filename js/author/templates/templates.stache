@@ -2,7 +2,8 @@
   <templates-toolbar
     class="clearfix"
     filter="{activeFilter}"
-    search-token="{searchToken}">
+    search-token="{searchToken}",
+    templates="{templates}">
   </templates-toolbar>
 {{/if}}
 

@@ -1,7 +1,7 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './edit.stache!';
-import Template from 'author/models/template';
+import A2JTemplate from 'author/models/a2j-template';
 
 import './tabs/';
 import './toolbar/';
@@ -12,17 +12,24 @@ import 'can/map/define/';
 
 export let TemplateEditPage = Map.extend({
   define: {
-    template: {
-      get() {
-        let id = this.attr('templateId');
-        return Template.findOne({id});
+    a2jTemplate: {
+      value() {
+        let id = can.route.attr('id');
+
+        if(id === 'new') {
+          return new A2JTemplate();
+        }
+        else {
+          return A2JTemplate.findOne({id});
+        }
       }
     }
   }
 });
 
 export default Component.extend({
-  template,
+  tag: 'template-edit-page',
   leakScope: false,
-  tag: 'template-edit-page'
+  viewModel: TemplateEditPage,
+  template
 });

@@ -20,7 +20,7 @@
     float: left;
     width: 70%;
     height: 100%;
-    overflow: auto;
+    position: relative;
   }
   .col-4 {
     float: left;
@@ -38,17 +38,20 @@
     display: none;
   }
 }
+.map-toolbar {
+  background: #fff;
+  padding-bottom: @grid-gutter-width/2;
+  padding-left: @grid-gutter-width/2;
+  border-bottom: 1px solid @gray-lighter;
+  z-index: 99;
+  width: 100%;
+}
 
 #tabsMapper {
   margin-left: @grid-gutter-width/2;
-
-  .tabFooter {
-    position: absolute;
-    background: #fff;
-    border-bottom: 1px solid @gray-lighter;
-    z-index: 99;
-    width: 100%;
-  }
+  overflow: auto;
+  width: 100%;
+  height: 100%;
 }
 
 

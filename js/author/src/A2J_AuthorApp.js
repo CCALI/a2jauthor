@@ -250,10 +250,10 @@ function main()
     .button().next()
     .button();
 
-  $('#tabsMapper button:eq(0)').click(mapZoomSlide);
-  $('#tabsMapper button:eq(1)').click(mapZoomClick);
-  $('#tabsMapper button:eq(2)').click(mapZoomClick);
-  $('#tabsMapper button:eq(3)').click(mapZoomClick);
+  $('#MapperToolbar button:eq(0)').click(mapZoomSlide);
+  $('#MapperToolbar button:eq(1)').click(mapZoomClick);
+  $('#MapperToolbar button:eq(2)').click(mapZoomClick);
+  $('#MapperToolbar button:eq(3)').click(mapZoomClick);
 
   $('#tabsPages #open-guide').click(function(){
       gotoPageEdit(pageEditSelected());

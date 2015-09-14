@@ -218,12 +218,12 @@ function mapZoomSlide()
 		$('#tabsMap .col-4').css("width", "30%");
 		$('#tabsMap .col-8').css("width", "70%");
 		//col-4
-	$('#tabsMapper button').first()
+	$('#MapperToolbar button').first()
 		.button({disabled:false,label:'<span class="glyphicon-left-thin"></span> Hide Page List'});
 	} else {
 		$('#tabsMap .col-4').css("width", "0px");
 		$('#tabsMap .col-8').css("width", "100%");
-	$('#tabsMapper button').first()
+	$('#MapperToolbar button').first()
 		.button({disabled:false,label:'<span class="glyphicon-right-thin"></span> Show Page List'});
 	}
 }
@@ -236,7 +236,7 @@ function mapZoomClick() {
 	// make sure the #MapperPanel has height, otherwise the Fit button
 	// won't work propertly https://github.com/bitovi/CAJA/issues/25.
 	var $mapperPanelParent = $mapperPanel.parents('.col-8').first();
-	$mapperPanel.height($mapperPanelParent.height());
+	$mapperPanel.height($mapperPanelParent.height()-34);
 
 	if (zoom === 'fit') {
 		// TODO must be an easy function to get map's true width,height (children bounds).

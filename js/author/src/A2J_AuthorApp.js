@@ -235,7 +235,7 @@ function main()
     row.data('record',$.extend({},row.data('record')));
     form.listManagerSave($(this).closest('table'));
   });
-  $(document).on("click", ".editicons .ui-icon-circle-collapse",  function(){// delete a table row
+  $(document).on("click", ".editicons .ui-icon-circle-minus",  function(){// delete a table row
     var $tbl=$(this).closest('table');
     var settings=$tbl.data('settings');
     if ($('tbody tr',$tbl).length<=settings.min) {return;}

@@ -20,7 +20,6 @@
     float: left;
     width: 70%;
     height: 100%;
-    overflow: auto;
     position: relative;
   }
   .col-4 {
@@ -40,9 +39,6 @@
   }
 }
 .map-toolbar {
-  position: absolute;
-  top: 0;
-  left: 0;
   background: #fff;
   padding-bottom: @grid-gutter-width/2;
   padding-left: @grid-gutter-width/2;
@@ -53,6 +49,9 @@
 
 #tabsMapper {
   margin-left: @grid-gutter-width/2;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
 }
 
 

@@ -1,12 +1,12 @@
-{{#if template.isPending}}
+{{#if a2jTemplate.isPending}}
   <app-loading></app-loading>
 {{else}}
-  <template-edit-toolbar></template-edit-toolbar>
+  <template-edit-toolbar a2j-template="{a2jTemplate}"></template-edit-toolbar>
 
   <div class="container">
     <div class="row clearfix">
       <div class="col-md-8">
-        <template-elements elements="{template.value.elements}"></template-elements>
+        <template-elements root-node="{a2jTemplate.rootNode}"></template-elements>
       </div>
 
       <div class="col-md-4">

@@ -8,7 +8,7 @@
 
         <form class="navbar-form template-name-form">
           <div class="form-group">
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" can-value="{a2jTemplate.title}">
           </div>
         </form>
       </div>

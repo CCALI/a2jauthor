@@ -1,4 +1,4 @@
-{{#unless elements.length}}
+{{#if showEmpty}}
   <blank-element></blank-element>
-{{/unless}}
+{{/if}}
 

@@ -16,7 +16,7 @@
         <div class="row">
           <div class="col-sm-9">
             <h4 class="title">{{title}}</h4>
-            <p class="description">{{description}}</p>
+            <p class="description"><a2j-template template="{template}"/></p>
           </div>
 
           <ul class="template-menu col-sm-3">

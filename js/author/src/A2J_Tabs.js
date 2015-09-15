@@ -245,16 +245,16 @@ var form={
 		//$('#page-picker-list .pageoutline li').removeClass(SELECTED);
 		$('#page-picker-list').html('<ul class="list-group">' + ts + '</ul>');
 
-		var e=pageNameRelFilter('#page-picker-list li',pageName);
+		var e=pageNameRelFilter('#page-picker-list .list-group-item',pageName);
 		e.toggleClass(SELECTED);
 		// TODO SJG Scrolling to focus the selected page is not working. Why!?!?
 		//$('#page-picker-list .pageoutline').scrollTop(0);
 		//scrollToElt($('#page-picker-list .pageoutline'),e);
 
 		// JPM Only 'select' Pages, not Steps
-		$('#page-picker-list  li[rel^="PAGE "]')
+		$('#page-picker-list .list-group-item[rel^="PAGE "]')
 			.click(function(e){
-				$('#page-picker-list li').removeClass(SELECTED);
+				$('#page-picker-list .list-group-item').removeClass(SELECTED);
 				$(this).toggleClass(SELECTED);
 				//var rel=$(this).attr('rel');
 				//trace(rel);
@@ -276,7 +276,7 @@ var form={
 				buttons:[
 				{text:'Change', click:function()
 					{
-						var newPageDest = makestr($('#page-picker-list li.'+SELECTED).first().attr('rel')).substr(5);
+						var newPageDest = makestr($('#page-picker-list .list-group-item.'+SELECTED).first().attr('rel')).substr(5);
 						data.value = newPageDest;
 						var pageDispName = gGuide.pageDisplayName(newPageDest);
 						pageButton.button({label:pageDispName});
@@ -304,11 +304,11 @@ var form={
 
 		$('#page-picker-list').html('<ul>' + ts + '</ul>');
 
-		var e=pageNameRelFilter('#page-picker-list li',pageName);
+		var e=pageNameRelFilter('#page-picker-list .list-group-item',pageName);
 		e.toggleClass(SELECTED);
-		$('#page-picker-list  li[rel^="PAGE "]')
+		$('#page-picker-list .list-group-item[rel^="PAGE "]')
 			.click(function(e){
-				$('#page-picker-list li').removeClass(SELECTED);
+				$('#page-picker-list .list-group-item').removeClass(SELECTED);
 				$(this).toggleClass(SELECTED);
 
 			})
@@ -329,7 +329,7 @@ var form={
 				buttons:[
 				{text:'Change', click:function()
 					{
-						var newPageDest = makestr($('#page-picker-list li.'+SELECTED).first().attr('rel')).substr(5);
+						var newPageDest = makestr($('#page-picker-list .list-group-item.'+SELECTED).first().attr('rel')).substr(5);
 						data.value = newPageDest;
 						//data.change.call(rel,data);
 						//form.change(pageButton, newPageDest);

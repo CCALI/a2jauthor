@@ -3,5 +3,9 @@
 {{#if value}}
   <span class="var-val">{{value}}</span>
 {{else}}
-  <span class="var-name">{{name}}</span>
+  {{#if isUndeclared}}
+    <span class="var-name undeclared">{{name}}</span>
+  {{else}}
+    <span class="var-name">{{variable.name}}</span>
+  {{/if}}
 {{/if}}

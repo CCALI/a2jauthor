@@ -10,13 +10,13 @@ export default {
       {
         component: '<free-form state="{.}"/>',
         state: {
-          userContent: 'First thing.'
+          userContent: 'First <a2j-variable name="thing"></a2j-variable>.'
         }
       },
       {
         component: '<free-form state="{.}"/>',
         state: {
-          userContent: 'Second thing.'
+          userContent: 'Something completely different.'
         }
       }
     ]

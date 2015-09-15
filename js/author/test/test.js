@@ -1,5 +1,6 @@
 import 'author/models/fixtures/';
 import 'author/models/tests/a2j-template-test';
+import 'author/models/tests/a2j-variable-test';
 import 'author/models/tests/guide-test';
 import 'author/models/tests/template-test';
 

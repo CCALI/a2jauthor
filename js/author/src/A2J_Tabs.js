@@ -211,8 +211,9 @@ var form={
 
 	,checkbox: function(data){
 		var e=$('<div name="'+data.name+'">'
-			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<span  class=editspan > <input class="form-control" type="checkbox" />'+data.checkbox+'</span></div>');
+			+'<div class="editspan form-group">'
+			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
+			+'<input class="form-control" type="checkbox" />'+data.checkbox+'</div></div>');
 		$('input',e).blur(function(){
 			form.change($(this),$(this).is(':checked'));}).attr( 'checked',data.value===true).data('data',data);
 		return e;
@@ -350,8 +351,9 @@ var form={
 	{	// Pick variable name from list of defined variables
 		var dval = (data.value);
 
-		var e =$((typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-				+ '<span class=editspan><input class="form-control ui-combobox-input editable autocomplete picker varname dest" type="text" ></span>');
+		var e =$((typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
+				+ '<div class="editspan form-group">'
+				+ '<input class="form-control ui-combobox-input editable autocomplete picker varname dest" type="text" ></div>');
 
 		$('.picker',e).blur(function(){
 			var val=$(this).val();
@@ -422,10 +424,11 @@ var form={
 
 	,text: function(data){
 		var e=$('<div name="'+data.name+'">'
-			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<span class=editspan> <input class="form-control ui-widget editable" '+
+			+'<div class="editspan form-group">'
+			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
+			+'<input class="form-control ui-widget editable" '+
 			//'placeholder="'+data.placeholder+'" '+
-			'type="text" /> </span></div>');
+			'type="text" /> </div></div>');
 		//if (typeof data.class!=='undefined') $('input',e).addClass(data.class);
 		//if (typeof data.width!=='undefined') $('input',e).css('width',data.class);
 		$('input',e).blur(function(){
@@ -492,10 +495,10 @@ var form={
 	,htmlarea: function(data){//label,value,handler,name){
 		form.id++;
 		var e= $('<div name="'+data.name+'">'
-			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<span class=editspan>'
+			+'<div class="editspan form-group">'
+			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
 			+'<div contenteditable=true class="htmledit form-control text editable taller" id="tinyMCE_'+form.id+'"  name="'+form.id+'" rows='+1+'>'
-			+data.value+'</div></span></div>');
+			+data.value+'</div></div></div>');
 		$('.editable',e).focus(function(){$(this).addClass('tallest');form.editorAdd($(this));}).blur(function(){
 			//$(this).removeClass('tallest');
 			form.editorRemove(this);
@@ -509,8 +512,9 @@ var form={
 	{
 		var rows=2;
 		var e=$('<div name="'+data.name+'">'
-			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<span class=editspan><div class="form-control text editable taller" rows='+rows+'>'+data.value+'</div></span></div>');
+			+'<div class="editspan form-group">'
+			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
+			+'<div class="form-control text editable taller" rows='+rows+'>'+data.value+'</div></div></div>');
 		$('.editable',e).blur(function(){
 			var val=$(this).val();//form.htmlFix($(this).html());
 			form.change($(this), val);
@@ -583,7 +587,7 @@ var form={
 		}
 	}
 	,codeCheck:function(elt){
-		$(elt).removeClass('has-error');
+		$(elt).parent().removeClass('has-error');
 		$('SPAN',$(elt)).remove();
 		var code=form.codeFix($(elt).html());
 		$(elt).html(code);
@@ -594,7 +598,7 @@ var form={
 		var t=[];
 		if (script.errors.length>0)
 		{
-			$(elt).addClass('has-error');
+			$(elt).parent().addClass('has-error');
 		/*
 			for (l=0;l<lines.length;l++)
 			{
@@ -642,8 +646,9 @@ var form={
 	,codearea:function(data){
 		form.id++;
 		var e= $('<div>'
-			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<div class=editspan><div spellcheck="false" contenteditable=true spellcheck=false class="form-control text editable taller codeedit"  rows='+4+'>'+data.value+'</div><div class="errors"></div></div></div>');
+			+'<div class="editspan form-group">'
+			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
+			+'<div spellcheck="false" contenteditable=true spellcheck=false class="form-control text editable taller codeedit"  rows='+4+'>'+data.value+'</div><div class="errors"></div></div></div>');
 		$('.editable',e).blur(function(){
 			form.codeCheckSoon(this);
 			$('SPAN',$(this)).remove();
@@ -660,8 +665,9 @@ var form={
 			c += '<option value="'+listValueLabel[o]+'">'+listValueLabel[o+1]+'</option>';
 		}
 		var e =$('<div name="'+data.name+'">'
-			+(typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-			+'<span class=editspan><select class="form-control">'+c+'</select></span></div>');
+			+'<span class="editspan form-group">'
+			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
+			+'<select class="form-control">'+c+'</select></span></div>');
 		$('.ui-select-input',e).change(function(){
 			form.change($(this),$('option:selected',this).val());
 		}).data('data',data).val(data.value);

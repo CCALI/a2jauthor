@@ -624,7 +624,7 @@ var form={
 					//(err.line)
 					//'<span class="err">'+err.text+'</span>'
 					//'<span class="ui-widget">
-					'<span style="margin-top: 20px; padding: 0 .7em;" class="ui-state-highlight ui-corner-all"><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-'+'alert'+'"></span>'+err.text+'</span></span>'
+					'<span class="text-danger"><span class="glyphicon-attention"></span>'+err.text+'</span></span>'
 					//</span>'
 					);
 			}
@@ -645,10 +645,9 @@ var form={
 	}
 	,codearea:function(data){
 		form.id++;
-		var e= $('<div>'
-			+'<div class="editspan form-group">'
+		var e= $('<div class="editspan form-group">'
 			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
-			+'<div spellcheck="false" contenteditable=true spellcheck=false class="form-control text editable taller codeedit"  rows='+4+'>'+data.value+'</div><div class="errors help-block"></div></div></div>');
+			+'<div spellcheck="false" contenteditable=true spellcheck=false class="form-control text editable taller codeedit"  rows='+4+'>'+data.value+'</div><div class="errors help-block"></div></div>');
 		$('.editable',e).blur(function(){
 			form.codeCheckSoon(this);
 			$('SPAN',$(this)).remove();
@@ -665,9 +664,9 @@ var form={
 			c += '<option value="'+listValueLabel[o]+'">'+listValueLabel[o+1]+'</option>';
 		}
 		var e =$('<div name="'+data.name+'">'
-			+'<span class="editspan form-group">'
+			+'<div class="editspan form-group">'
 			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
-			+'<select class="form-control">'+c+'</select></span></div>');
+			+'<select class="form-control">'+c+'</select></div></div>');
 		$('.ui-select-input',e).change(function(){
 			form.change($(this),$('option:selected',this).val());
 		}).data('data',data).val(data.value);

@@ -1,4 +1,4 @@
-import Map from 'can/map/';
+import Model from 'can/model/';
 import List from 'can/list/';
 import 'can/map/define/';
 
@@ -9,7 +9,24 @@ import 'can/map/define/';
  * An A2J variable is an answer, or list of answers, to a guided interview
  * question. They are used when generating documents.
  */
-export default Map.extend({
+export default Model.extend({
+  id: 'name',
+
+  makeFindOne: function() {
+    return function(params, success, error) {
+      let deferred = new can.Deferred();
+      let gGuide = window.gGuide || {};
+      let vars = gGuide.vars || {};
+      let name = params.name || '';
+
+      deferred.resolve(this.model(vars[name.toLowerCase()] || { }));
+
+      return deferred.then(success, error);
+    };
+  }
+
+}, {
+
   define: {
     /**
      * @property {String} name
@@ -37,7 +54,7 @@ export default Map.extend({
      *
      * Whether the values contain multiple answers.
      */
-    repeating {
+    repeating: {
       value: false
     },
     /**

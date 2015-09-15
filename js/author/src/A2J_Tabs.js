@@ -648,7 +648,7 @@ var form={
 		var e= $('<div>'
 			+'<div class="editspan form-group">'
 			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
-			+'<div spellcheck="false" contenteditable=true spellcheck=false class="form-control text editable taller codeedit"  rows='+4+'>'+data.value+'</div><div class="errors"></div></div></div>');
+			+'<div spellcheck="false" contenteditable=true spellcheck=false class="form-control text editable taller codeedit"  rows='+4+'>'+data.value+'</div><div class="errors help-block"></div></div></div>');
 		$('.editable',e).blur(function(){
 			form.codeCheckSoon(this);
 			$('SPAN',$(this)).remove();

@@ -687,19 +687,27 @@ var form={
 		}
 		//(list);
 		return form.pickList(data,list);
-	}
-	,tableRowCounter:function(name,label,minelts,maxelts,value)
-	{	// Let user choose number of said item
-		var c=$('<label/>').text(label);
-		var s='<select list="'+name+'" class="form-control">';
-		var o;
-		for (o=minelts;o<=maxelts;o++)
-		{
-			s+="<option>"+o+"</option>";
-		}
-		s+="</select>";
-		return $('<div/>').append(c.after(s).change(function(){form.tableRowAdjust(name,$('option:selected',this).val());}).val(value));
-	}
+	},
+
+  // Let user choose number of said item
+  tableRowCounter: function(name, label, minelts, maxelts, value) {
+    var option;
+    var $label = $('<label/>').text(label);
+    var $select = $(`<select list="${name}" class="form-control picklist"></select>`);
+
+    // append `option` tags to `$select`
+    for (option = minelts; option <= maxelts; option++) {
+      $('<option />', {text: option}).appendTo($select);
+    }
+
+    $select
+      .change(function() {
+        form.tableRowAdjust(name, $('option:selected', this).val());
+      })
+      .val(value);
+
+    return $('<div/>').append($label.add($select));
+  }
 
 	,tableRowAdjust:function(name,val)
 	{	// Adjust number of rows. set visible for rows > val. if val > max rows, clone the last row.

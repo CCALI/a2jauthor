@@ -6,7 +6,7 @@
   <div class="container">
     <div class="row clearfix">
       <div class="col-md-8">
-        <template-elements root-node="{a2jTemplate.rootNode}"></template-elements>
+        <template-elements root-node="{a2jTemplate.value.rootNode}"></template-elements>
       </div>
 
       <div class="col-md-4">

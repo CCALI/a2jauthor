@@ -1,6 +1,6 @@
 {{#with template}}
   <div class="template-wrapper{{#if deleting}} deleting{{/if}}{{#if restoring}} restoring{{/if}}">
-    <a class="template-link" can-href="{page='templates' id=id}">
+    <a class="template-link" can-href="{page='templates' id=template_id}">
 
       <div class="template-order">
         <span class="build-order">{{buildOrder}}</span><br>

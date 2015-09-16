@@ -13,14 +13,13 @@ import 'can/map/define/';
 export let TemplateEditPage = Map.extend({
   define: {
     a2jTemplate: {
-      value() {
-        let id = can.route.attr('id');
+      get() {
+        let id = this.attr('templateId');
 
-        if(id === 'new') {
-          return new A2JTemplate();
-        }
-        else {
-          return A2JTemplate.findOne({id});
+        if (id === 'new') {
+          return Promise.resolve(new A2JTemplate());
+        } else {
+          return A2JTemplate.findOne({template_id: id});
         }
       }
     }

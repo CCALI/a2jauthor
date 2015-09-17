@@ -929,9 +929,22 @@ TGuide.prototype.noviceTab = function(tab,clear)
 		case 'tabsSteps':
 
 			fs=form.fieldset('Start/Exit points');
-			fs.append(form.pickpage({	value: guide.firstPage,label:'Starting Point:',	change:function(val){guide.firstPage=val;}}));
-			fs.append(form.pickpage({	value: guide.exitPage,label:'Exit Point:',		change:function(val){guide.exitPage=val;}}));
-			t.append(fs);
+
+      var cols66 =$(''
+        +'<div class="row">'
+          +'<div class="col-sm-6 starting">'
+          +'</div>'
+          +'<div class="col-sm-6 exit">'
+          +'</div>'
+        +'</div>');
+
+			fs.append(cols66);
+      t.append(fs);
+
+      $('.starting').append(form.pickpage({	value: guide.firstPage,label:'Starting Point: ',	change:function(val){guide.firstPage=val;}}));
+			$('.exit').append(form.pickpage({	value: guide.exitPage,label:'Exit Point: ',		change:function(val){guide.exitPage=val;}}));
+
+
 			fs=form.fieldset('Steps');
 			var blankStep=new TStep();
 
@@ -941,23 +954,37 @@ TGuide.prototype.noviceTab = function(tab,clear)
 					updateTOC();
 				}
 				,create:function(ff,step){
-						ff.append(form.text({  label:"Step Number:", placeholder:'#',value:step.number,
+
+          var stepNum = form.text({  label:"Step Number:", placeholder:'#',value:step.number,
 							change:function(val,step){
 								step.number=val;
-								updateTOC();}}));
-						ff.append(form.text({  label:"Step Sign:", placeholder:'title',value:step.text,
+								updateTOC();
+								}
+							}).html();
+          var stepTitle = form.text({  label:"Step Sign:", placeholder:'title',value:step.text,
 							change:function(val,step){
 								step.text=val;
 								updateTOC();
-							}}));
+							}}).html();
+
+  	      var cols39 =$(''
+          +'<div class="row">'
+            +'<div class="col-sm-3">'
+            +stepNum
+            +'</div>'
+            +'<div class="col-sm-9">'
+            +stepTitle
+            +'</div>'
+          +'</div>');
+
+          ff.append(cols39);
+
 					return ff;
 				}}));
 			t.append(fs);
 			break;
 	}
 	form.finish(t);
-
-
 
 	 $("legend",t).click(function(){
 			 $(this).siblings('div').slideToggle(300);

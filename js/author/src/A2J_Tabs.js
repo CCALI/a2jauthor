@@ -198,7 +198,7 @@ var form={
 		return $(form.noteHTML('alert',t));
 	}
 	,fieldset:function(legend,record){
-		return $('<fieldset name="record"><legend >'+legend+'</legend></fieldset>').data('record',record);//.click(function(){$(this).toggleClass('collapse')});
+		return $('<fieldset name="record" class="accordion"><legend>'+legend+'</legend></fieldset>').data('record',record);//.click(function(){$(this).toggleClass('collapse')});
 	}
 	,record:function(record){
 		return $('<div name=record class=record/>').data('record',record);
@@ -961,6 +961,7 @@ TGuide.prototype.noviceTab = function(tab,clear)
 
 	 $("legend",t).click(function(){
 			 $(this).siblings('div').slideToggle(300);
+			 $(this).parent().toggleClass( 'collapsed');
 	 });
 
 

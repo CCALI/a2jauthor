@@ -4,6 +4,7 @@ import Component from 'can/component/';
 import template from './free-form.stache!';
 
 import 'can/map/define/';
+import './free-form.less!';
 import '../element-container/';
 
 export let FreeFormVM = Map.extend({

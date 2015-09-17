@@ -1,21 +1,23 @@
-<element-container selected="{selected}">
-  <h3>{{title}}</h3>
-  {{#if underline}}<hr class="title-underline">{{/if}}
-</element-container>
+<div>
+  <element-container selected="{selected}">
+    <h3>{{title}}</h3>
+    {{#if underline}}<hr class="title-underline">{{/if}}
+  </element-container>
 
-{{#if selected}}
-  <app-popover placement="right">
-    <form>
-      <div class="form-group">
-        <label>Section Title</label>
-        <input class="form-control" can-value="{title}">
-      </div>
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" can-value="{underline}"> Underline
-        </label>
-      </div>
-      <button type="submit" class="btn btn-default">Save & Close</button>
-    </form>
-  </app-popover>
-{{/if}}
+  {{#if selected}}
+    <app-popover placement="right">
+      <form>
+        <div class="form-group">
+          <label>Section Title</label>
+          <input class="form-control" can-value="{title}">
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" can-value="{underline}"> Underline
+          </label>
+        </div>
+        <button type="submit" class="btn btn-default">Save & Close</button>
+      </form>
+    </app-popover>
+  {{/if}}
+</div>

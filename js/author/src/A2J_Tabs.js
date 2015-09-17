@@ -497,8 +497,8 @@ var form={
 		var e= $('<div name="'+data.name+'">'
 			+'<div class="editspan form-group">'
 			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
-			+'<div contenteditable=true class="htmledit form-control text editable taller" id="tinyMCE_'+form.id+'"  name="'+form.id+'" rows='+1+'>'
-			+data.value+'</div></div></div>');
+			+'<div><div contenteditable=true class="htmledit form-control text editable taller" id="tinyMCE_'+form.id+'"  name="'+form.id+'" rows='+1+'>'
+			+data.value+'</div></div></div></div>');
 		$('.editable',e).focus(function(){$(this).addClass('tallest');form.editorAdd($(this));}).blur(function(){
 			//$(this).removeClass('tallest');
 			form.editorRemove(this);

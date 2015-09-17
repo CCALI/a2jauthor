@@ -321,7 +321,7 @@ function reportFull()
 			if (stepHTML[si]=='') {
 				stepHTML[si]='No pages for this step';
 			}
-			html += anchor('STEP'+si)+'<div class="step-wrapper step-wrapper-step'+ step.number+'"><h2 class="heading-step">Step '+ step.number+' ' + step.text + '</h2>' +  stepHTML[si]+'</div>';
+			html += anchor('STEP'+si)+'<div class="step-wrapper step-step'+ step.number+'"><h2 class="heading-step">Step '+ step.number+' ' + step.text + '</h2>' +  stepHTML[si]+'</div>';
 		}
 		if (popHTML=='') {
 			popHTML = 'No popups in this interview';

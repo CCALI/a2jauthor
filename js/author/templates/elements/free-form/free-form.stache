@@ -1,5 +1,7 @@
-{{#if enableEdit}}
-  <textarea can-value="userContent">{{userContent}}</textarea>
-{{else}}
-  {{a2jParse userContent}}
-{{/if}}
+<element-container>
+  {{#if enableEdit}}
+    <textarea can-value="userContent">{{userContent}}</textarea>
+  {{else}}
+    {{a2jParse userContent}}
+  {{/if}}
+</element-container>

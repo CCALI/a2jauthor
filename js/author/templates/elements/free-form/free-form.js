@@ -1,9 +1,10 @@
 import Map from 'can/map/';
+import stache from 'can/view/stache/';
 import Component from 'can/component/';
 import template from './free-form.stache!';
-import stache from 'can/view/stache/';
 
 import 'can/map/define/';
+import '../element-container/';
 
 export let FreeFormVM = Map.extend({
   define: {
@@ -17,11 +18,13 @@ export let FreeFormVM = Map.extend({
 });
 
 export default Component.extend({
-  tag: 'free-form',
   template,
+  tag: 'free-form',
+
   viewModel: function(attrs) {
     return new FreeFormVM(attrs.state);
   },
+
   helpers: {
     a2jParse: function(templateSnippet) {
       templateSnippet = templateSnippet.isComputed ? templateSnippet() :

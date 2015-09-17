@@ -12,6 +12,13 @@ export default {
         state: {
           userContent: 'Hello, <a2j-variable name="Client first name TE"></a2j-variable>.'
         }
+      },
+      {
+        component: '<section-title state="{.}"></section-title>',
+        state: {
+          title: 'Section Title',
+          underline: true
+        }
       }
     ]
   }

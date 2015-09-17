@@ -955,29 +955,25 @@ TGuide.prototype.noviceTab = function(tab,clear)
 				}
 				,create:function(ff,step){
 
-          var stepNum = form.text({  label:"Step Number:", placeholder:'#',value:step.number,
+  	      var colRow =$('<div class="row"></div>');
+          var colNumber =$('<div class="col-sm-3"></div>');
+          var colTitle =$('<div class="col-sm-9"></div>');
+
+          colNumber.append(form.text({  label:"Step Number:", placeholder:'#',value:step.number,
 							change:function(val,step){
 								step.number=val;
 								updateTOC();
-								}
-							}).html();
-          var stepTitle = form.text({  label:"Step Sign:", placeholder:'title',value:step.text,
+						  }}));
+
+          colTitle.append(form.text({  label:"Step Sign:", placeholder:'title',value:step.text,
 							change:function(val,step){
 								step.text=val;
 								updateTOC();
-							}}).html();
+							}}));
 
-  	      var cols39 =$(''
-          +'<div class="row">'
-            +'<div class="col-sm-3">'
-            +stepNum
-            +'</div>'
-            +'<div class="col-sm-9">'
-            +stepTitle
-            +'</div>'
-          +'</div>');
-
-          ff.append(cols39);
+          colRow.append(colNumber);
+          colRow.append(colTitle);
+          ff.append(colRow);
 
 					return ff;
 				}}));

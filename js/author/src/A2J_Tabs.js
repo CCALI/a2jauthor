@@ -738,7 +738,8 @@ var form={
 	,listManagerAddRow:function($tbl,record)
 	{
 		var settings=$tbl.data('settings');
-		var $row=$('<tr valign=top class="" name="record"/>');
+
+		var $row=$('<tr valign=top class="step-step'+record.number+'" name="record"/>');
 		$row.append($('<td class="editicons"/>')
 			.append('<span class="ui-draggable sorthandle glyphicon-move"></span>'
 			+'<span class="ui-icon-circle-plus glyphicon-plus-circled"></span><span class="ui-icon-circle-minus glyphicon-minus-circled"></span>'));
@@ -929,9 +930,22 @@ TGuide.prototype.noviceTab = function(tab,clear)
 		case 'tabsSteps':
 
 			fs=form.fieldset('Start/Exit points');
-			fs.append(form.pickpage({	value: guide.firstPage,label:'Starting Point:',	change:function(val){guide.firstPage=val;}}));
-			fs.append(form.pickpage({	value: guide.exitPage,label:'Exit Point:',		change:function(val){guide.exitPage=val;}}));
-			t.append(fs);
+
+      var cols66 =$(''
+        +'<div class="row">'
+          +'<div class="col-sm-6 starting">'
+          +'</div>'
+          +'<div class="col-sm-6 exit">'
+          +'</div>'
+        +'</div>');
+
+			fs.append(cols66);
+      t.append(fs);
+
+      $('.starting').append(form.pickpage({	value: guide.firstPage,label:'Starting Point: ',	change:function(val){guide.firstPage=val;}}));
+			$('.exit').append(form.pickpage({	value: guide.exitPage,label:'Exit Point: ',		change:function(val){guide.exitPage=val;}}));
+
+
 			fs=form.fieldset('Steps');
 			var blankStep=new TStep();
 
@@ -941,23 +955,33 @@ TGuide.prototype.noviceTab = function(tab,clear)
 					updateTOC();
 				}
 				,create:function(ff,step){
-						ff.append(form.text({  label:"Step Number:", placeholder:'#',value:step.number,
+
+  	      var colRow =$('<div class="row"></div>');
+          var colNumber =$('<div class="col-sm-3"></div>');
+          var colTitle =$('<div class="col-sm-9"></div>');
+
+          colNumber.append(form.text({  label:"Step Number:", placeholder:'#',value:step.number,
 							change:function(val,step){
 								step.number=val;
-								updateTOC();}}));
-						ff.append(form.text({  label:"Step Sign:", placeholder:'title',value:step.text,
+								updateTOC();
+						  }}));
+
+          colTitle.append(form.text({  label:"Step Sign:", placeholder:'title',value:step.text,
 							change:function(val,step){
 								step.text=val;
 								updateTOC();
 							}}));
+
+          colRow.append(colNumber);
+          colRow.append(colTitle);
+          ff.append(colRow);
+
 					return ff;
 				}}));
 			t.append(fs);
 			break;
 	}
 	form.finish(t);
-
-
 
 	 $("legend",t).click(function(){
 			 $(this).siblings('div').slideToggle(300);

@@ -128,3 +128,14 @@ br, .clear {
         .-((@i - 1));
     } .-;
 }
+.generate-step-wrapper-classes(@steps) {
+    .-(@i: length(@steps)) when (@i > 0) {
+        @name: extract(@steps, @i);
+        .step-@{name} {
+          border-left: 4px solid @@name !important;
+          }
+        .-((@i - 1));
+    } .-;
+}
+
+.generate-step-wrapper-classes(@steps);

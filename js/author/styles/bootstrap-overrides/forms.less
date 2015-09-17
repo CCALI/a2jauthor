@@ -336,3 +336,36 @@ input[type="color"],
     background-color: #fff;
   }
 }
+
+
+  /**
+  * @styles accordion-fieldsets Accordion Fieldsets
+  * @parent accordions
+  *
+  * Fieldsets can also behave like accordion panels by adding the `accordion` class. The `<legend>` element then takes on the behavior expanding and collapsing the fieldset.
+  *
+  **/
+
+fieldset.accordion {
+  legend {
+    cursor: pointer;
+    padding-left: 35px;
+    position: relative;
+
+      &:before {
+        .icon-font;
+        content: '\e845';
+        position: absolute;
+        left: 10px;
+        line-height: 24px;
+        margin-left: 0;
+      }
+  }
+  &.collapsed {
+      legend {
+        &:before {
+          content: '\e831';
+        }
+      }
+    }
+}

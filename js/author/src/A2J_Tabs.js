@@ -738,7 +738,8 @@ var form={
 	,listManagerAddRow:function($tbl,record)
 	{
 		var settings=$tbl.data('settings');
-		var $row=$('<tr valign=top class="" name="record"/>');
+
+		var $row=$('<tr valign=top class="step-step'+record.number+'" name="record"/>');
 		$row.append($('<td class="editicons"/>')
 			.append('<span class="ui-draggable sorthandle glyphicon-move"></span>'
 			+'<span class="ui-icon-circle-plus glyphicon-plus-circled"></span><span class="ui-icon-circle-minus glyphicon-minus-circled"></span>'));

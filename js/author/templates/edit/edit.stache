@@ -1,17 +1,19 @@
-{{#if a2jTemplate.isPending}}
-  <app-loading></app-loading>
-{{else}}
-  <template-edit-toolbar a2j-template="{a2jTemplate}"></template-edit-toolbar>
+<div class="page">
+  {{#if a2jTemplate.isPending}}
+    <app-loading></app-loading>
+  {{else}}
+    <template-edit-toolbar a2j-template="{a2jTemplate}"></template-edit-toolbar>
 
-  <div class="container">
-    <div class="row clearfix">
-      <div class="col-md-8">
-        <template-elements root-node="{a2jTemplate.value.rootNode}"></template-elements>
-      </div>
+    <div class="container">
+      <div class="row clearfix">
+        <div class="col-md-8">
+          <a2j-template template="{a2jTemplate.value}"></a2j-template>
+        </div>
 
-      <div class="col-md-4">
-        <template-edit-tabs></template-edit-tabs>
+        <div class="col-md-4">
+          <template-edit-tabs></template-edit-tabs>
+        </div>
       </div>
     </div>
-  </div>
-{{/if}}
+  {{/if}}
+</div>

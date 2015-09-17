@@ -1,14 +1,19 @@
-import Component from 'can/component/';
 import stache from 'can/view/stache/';
+import Component from 'can/component/';
+import template from './free-form.stache!';
+
+import '../element-container/';
 
 export default Component.extend({
+  template,
   tag: 'free-form',
   events: {
-    inserted: function($element) {
+    inserted($el) {
       let viewModel = this.viewModel;
       let state = viewModel.attr('state');
       let renderer = stache(state.attr('userContent'));
-      $element.append(renderer(state));
+
+      $el.find('content').replaceWith(renderer(state));
     }
   }
 });

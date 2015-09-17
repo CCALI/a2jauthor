@@ -5,6 +5,7 @@ import stache from 'can/view/stache/';
 import 'can/map/define/';
 import 'author/templates/elements/free-form/';
 import 'author/templates/elements/a2j-variable/';
+import 'author/templates/elements/section-title/';
 
 export let A2JTemplateVM = Map.extend({
   define: {

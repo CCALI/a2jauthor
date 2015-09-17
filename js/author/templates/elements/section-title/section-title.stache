@@ -1,0 +1,4 @@
+<element-container selected="{selected}">
+  <h3>{{title}}</h3>
+  {{#if underline}}<hr class="title-underline">{{/if}}
+</element-container>

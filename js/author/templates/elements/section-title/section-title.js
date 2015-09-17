@@ -2,6 +2,7 @@ import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './section-title.stache!';
 
+import 'author/popover/';
 import './section-title.less!';
 import '../element-container/';
 
@@ -16,6 +17,7 @@ export let SectionTitleVM = Map.extend({
 export default Component.extend({
   template,
   tag: 'section-title',
+
   viewModel: function(attrs) {
     return new SectionTitleVM(attrs.state);
   }

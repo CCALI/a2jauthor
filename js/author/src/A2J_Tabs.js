@@ -693,7 +693,7 @@ var form={
   tableRowCounter: function(name, label, minelts, maxelts, value) {
     var option;
     var $label = $('<label/>').text(label);
-    var $select = $(`<select list="${name}" class="form-control picklist"></select>`);
+    var $select = $('<select list="' + name + '" class="form-control picklist"></select>');
 
     // append `option` tags to `$select`
     for (option = minelts; option <= maxelts; option++) {

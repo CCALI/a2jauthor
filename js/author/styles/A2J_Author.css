@@ -9,7 +9,6 @@ html, body {
 .editspan { /* wrap around fields for fluid width */
 	display: block;
 	overflow: hidden;
-	padding: 5px 5px 5px 5px;
 }
 .editable.taller {
 	margin-top: 0em;

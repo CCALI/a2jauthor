@@ -43,14 +43,9 @@
     <div class="guidepanels ui-widget xui-widget-content">
 
       <!-- About Tab -->
-      <div class="tab-panel has-toolbar bootstrap-styles" id="tabsAbout">
-        <nav class="navbar navbar-default">
-          <p class="navbar-text">Information about this interview</p>
-          <div class="nav navbar-nav navbar-right">
-            <button class="ecPanelButton btn btn-default navbar-btn" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
-          </div><!-- nav navbar-nav navbar-right -->
-        </nav>
+      <div class="tab-panel bootstrap-styles" id="tabsAbout">
         <div class="tabContentFrame page">
+        <h3 class="page-title">Information about this interview</h3>
         <div>
 
          <!-- Nav tabs -->
@@ -65,11 +60,11 @@
 
         <!-- Tab panes -->
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="tab-about">About stuff</div>
-            <div role="tabpanel" class="tab-pane" id="tab-layout">Layout stuff</div>
-            <div role="tabpanel" class="tab-pane" id="tab-feedback">Feedback</div>
-            <div role="tabpanel" class="tab-pane" id="tab-revision">Revision stuff</div>
-            <div role="tabpanel" class="tab-pane" id="tab-authors">Revision stuff</div>
+            <div role="tabpanel" class="tab-pane active" id="tab-about"></div>
+            <div role="tabpanel" class="tab-pane" id="tab-layout"></div>
+            <div role="tabpanel" class="tab-pane" id="tab-feedback"></div>
+            <div role="tabpanel" class="tab-pane" id="tab-revision"></div>
+            <div role="tabpanel" class="tab-pane" id="tab-authors"></div>
           </div>
         <!-- Tab panes -->
 

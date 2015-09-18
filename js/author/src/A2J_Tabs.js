@@ -881,9 +881,26 @@ TGuide.prototype.noviceTab = function(tab,clear)
 
 			tabAbout = form.div('About');
 
+      var cols444 =$(''
+        +'<div class="row">'
+          +'<div class="col-sm-4 language">'
+          +'</div>'
+          +'<div class="col-sm-4 avatar">'
+          +'</div>'
+          +'<div class="col-sm-4 gender">'
+          +'</div>'
+        +'</div>');
+
 			tabAbout.append(form.text({label:'Title:', placeholder:'Interview title', value:guide.title, change:function(val){guide.title=val;}}));
 			tabAbout.append(form.htmlarea({label:'Description:',value:guide.description,change:function(val){guide.description=val;}}));
 			tabAbout.append(form.text({label:'Jurisdiction:', value:guide.jurisdiction, change:function(val){guide.jurisdiction=val;}}));
+
+      tabAbout.append(cols444);
+      tabAbout.append(form.htmlarea({label:'Credits:',value:guide.credits,change:function(val){guide.credits=val;}}));
+			tabAbout.append(form.text({label:'Approximate Completion Time:',placeholder:'',value:guide.completionTime,change:function(val){guide.completionTime=val;}}));
+
+      $('#tab-about').html(tabAbout);
+
 
 			var l,list=[];
 			for (l in Languages.regional){
@@ -891,7 +908,7 @@ TGuide.prototype.noviceTab = function(tab,clear)
 				list.push(l, Languages.regional[l].LanguageEN + ' (' + Languages.regional[l].Language+') {'+l+'}');
 			}
 
-			tabAbout.append(form.pickList({label:'Language:', value:guide.language, change:function(val){
+			$('.language').append(form.pickList({label:'Language:', value:guide.language, change:function(val){
 				guide.language=val;
 				Languages.set(guide.language);
 				$('.A2JViewer','#page-viewer').html('');
@@ -899,7 +916,7 @@ TGuide.prototype.noviceTab = function(tab,clear)
 
 			list=['avatar1','Avatar 1','avatar2','Avatar 2','avatar3','Avatar 3'];
 
-			tabAbout.append(form.pickList({label:'Avatar:',value:guide.avatar,change:function(val){
+			$('.avatar').append(form.pickList({label:'Avatar:',value:guide.avatar,change:function(val){
 				guide.avatar=val;
 				}},list));
 			list=['Female','Female Guide','Male','Male Guide'];
@@ -907,12 +924,11 @@ TGuide.prototype.noviceTab = function(tab,clear)
 				guide.guideGender='Female';
 			}
 
-			tabAbout.append(form.pickList({label:'Guide Gender:',value:guide.guideGender,change:function(val){
+			$('.gender').append(form.pickList({label:'Guide Gender:',value:guide.guideGender,change:function(val){
 				guide.guideGender=val;}},list));
-			tabAbout.append(form.htmlarea({label:'Credits:',value:guide.credits,change:function(val){guide.credits=val;}}));
-			tabAbout.append(form.text({label:'Approximate Completion Time:',placeholder:'',value:guide.completionTime,change:function(val){guide.completionTime=val;}}));
 
-      $('#tab-about').html(tabAbout);
+
+
 
       tabLayout = form.div('Layout');
 			tabLayout.append(form.pickImage({label:'Logo graphic:', placeholder: 'Logo URL',value:guide.logoImage, change:function(val){guide.logoImage=val;}}));

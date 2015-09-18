@@ -1,7 +1,7 @@
 import Map from 'can/map/';
-import dragula from 'dragula';
 import Component from 'can/component/';
 import stache from 'can/view/stache/';
+import dragula from 'dragula/dist/dragula';
 
 import 'can/map/define/';
 import './a2j-template.less!';

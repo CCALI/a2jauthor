@@ -8,12 +8,6 @@ import './interviews.less!';
 
 let Interviews = Map.extend({
   define: {
-    interviews: {
-      get() {
-        return Guide.findAll();
-      }
-    },
-
     blankInterview: {
       get() {
         return {
@@ -37,7 +31,30 @@ export default Component.extend({
   leakScope: false,
   tag: 'interviews-page',
   viewModel: Interviews,
+
   events: {
+    inserted: function() {
+      let vm = this.viewModel;
+      let updateGuidePromise = can.Deferred().resolve();
+
+      // if there is a loaded guide when this component is inserted,
+      // save the guide first and then fetch the guides.
+      // https://github.com/CCALI/CAJA/issues/527
+      if (window.gGuide) {
+        updateGuidePromise = can.Deferred();
+
+        window.guideSave(function() {
+          updateGuidePromise.resolve();
+        });
+      }
+
+      let interviews = updateGuidePromise.then(function() {
+        return Guide.findAll();
+      });
+
+      vm.attr('interviews', interviews);
+    },
+
     '.guide click': function(target) {
       this.element.find('.guide').removeClass('active');
       target.addClass('active');
@@ -47,6 +64,7 @@ export default Component.extend({
       window.openSelectedGuide();
     }
   },
+
   helpers: {
     formatFileSize: function(sizeInBytes) {
       sizeInBytes = sizeInBytes();

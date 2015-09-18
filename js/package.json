@@ -16,6 +16,7 @@
     "can": "^2.3.0-pre.7",
     "chai": "^3.0.0",
     "documentjs": "0.3.0-pre.2",
+    "dragula": "^3.3.0",
     "express": "^4.13.0",
     "funcunit": "^3.0.0",
     "grunt": "^0.4.5",

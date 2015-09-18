@@ -37,20 +37,22 @@ function setProgress(status, showSpinner)
   $('#CAJAStatus').html( status );
 }
 
-function ws(data,results)
-{ // Contact the webservice to handle user signin, retrieval of guide lists and load/update/cloning guides.
+// Contact the webservice to handle user signin, retrieval of guide lists and
+// load/update/cloning guides.
+function ws(data, results) {
   $.ajax({
-    url:'CAJA_WS.php',
-    dataType:'json',
+    url: 'CAJA_WS.php',
+    dataType: 'json',
     type: 'POST',
     data: data,
-    success: function(data){
+    success: function(data) {
       //trace(String.substr(JSON.stringify(data),0,299));
       results(data);
     },
-    error: function(err,xhr) {
-      dialogAlert({title:'Error loading file',body:xhr.responseText});
-      setProgress('Error: '+xhr.responseText);
+
+    error: function(err, xhr) {
+      dialogAlert({ title: 'Error loading file', body: xhr.responseText });
+      setProgress('Error: ' + xhr.responseText);
     }
   });
 }
@@ -454,17 +456,15 @@ function main()
   signin();
 }
 
-window.onbeforeunload=function()
-{
-  if (gGuide  && gGuideID && (gGuideID!==0))
-  { // If we've got a guide loaded, ask if we want to leave.
+window.onbeforeunload = function() {
+  // If we've got a guide loaded, ask if we want to leave.
+  if (gGuide && gGuideID && (gGuideID !== 0)) {
     return 'Leave A2J Author?';
-  }
-  else
-  {
+  } else {
     return null;
   }
 };
+
 $(document).ready(main);
 
 /* */

@@ -36,38 +36,39 @@ function guideLoaded(data)
 	setProgress('');
 }
 
-function guideSave(onFinished)
-{	// Save current guide, but only if the XML has changed since last save to avoid upload overhead.
-	// If successful/or unsuccesful save, call onFinished.
-	if (gGuide!==null && gGuideID!==0)
-	{
-		setProgress('Saving '+gGuide.title,true);
-		var xml = exportXML_CAJA_from_CAJA(gGuide);
-		if (xml!==gGuide.lastSaveXML) {
-			gGuide.lastSaveXML=xml;
+// Save current guide, but only if the XML has changed since last save to avoid upload overhead.
+// If successful/or unsuccesful save, call onFinished.
+function guideSave(onFinished) {
 
-			// 01/14/2015 included JSON form of guide XML
-			var guideJSON_str=guide2JSON_Mobile(gGuide);
+  if (gGuide !== null && gGuideID !== 0) {
+    var xml = exportXML_CAJA_from_CAJA(gGuide);
 
-			ws( {cmd:'guidesave',
-				gid:gGuideID,
-				guide: xml,
-				title:gGuide.title,
-				json: guideJSON_str}, function(response){
-				setProgress((makestr(response.error)!=='') ? response.error : 'Saved');
-				if (onFinished){
-					onFinished();
-				}
-			});
-		}
-		else
-		{
-			setProgress('No changes since last save');
-			if (onFinished){
-				onFinished();
-			}
-		}
-	}
+    setProgress('Saving ' + gGuide.title, true);
+
+    if (xml !== gGuide.lastSaveXML) {
+      gGuide.lastSaveXML = xml;
+
+      // 01/14/2015 included JSON form of guide XML
+      var guideJSON_str = guide2JSON_Mobile(gGuide);
+
+      var params = {
+        cmd: 'guidesave',
+        gid: gGuideID,
+        guide: xml,
+        title: gGuide.title,
+        json: guideJSON_str
+      };
+
+      ws(params, function(response) {
+        if (onFinished) onFinished();
+        setProgress((makestr(response.error) !== '') ? response.error : 'Saved');
+      });
+
+    } else {
+      setProgress('No changes since last save');
+      if (onFinished) onFinished();
+    }
+  }
 }
 
 

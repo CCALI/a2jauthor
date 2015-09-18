@@ -955,14 +955,23 @@ TGuide.prototype.noviceTab = function(tab,clear)
 				,save:function(newlist){
 					guide.authors=newlist; }
 				,create:function(ff,author){
-						ff.append(form.text({  label:"Author's Name:", placeholder:'name',value:author.name,
+
+  	      var colRow =$('<div class="row"></div>');
+          var colLeft =$('<div class="col-sm-6"></div>');
+          var colRight =$('<div class="col-sm-6"></div>');
+
+						colLeft.append(form.text({  label:"Author's Name:", placeholder:'name',value:author.name,
 							change:function(val,author){author.name=val;}}));
-						ff.append(form.text({  label:"Author's Title:", placeholder:'title',value:author.title,
+						colRight.append(form.text({  label:"Author's Title:", placeholder:'title',value:author.title,
 							change:function(val,author){author.title=val;}}));
-						ff.append(form.text({  label:"Author's Organization:", placeholder:'organization',value:author.organization,
+						colLeft.append(form.text({  label:"Author's Organization:", placeholder:'organization',value:author.organization,
 							change:function(val,author){author.organization=val;}}));
-						ff.append(form.text({  label:"Author's email:", placeholder:'email',value:author.email,
+						colRight.append(form.text({  label:"Author's email:", placeholder:'email',value:author.email,
 							change:function(val,author){author.email=val;}}));
+
+						ff.append(colRow);
+						ff.append(colLeft);
+						ff.append(colRight);
 					return ff;
 				}}));
 

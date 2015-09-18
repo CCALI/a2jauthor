@@ -924,6 +924,12 @@ TGuide.prototype.noviceTab = function(tab,clear)
 
 			t.append(fs);
 
+      $("#about-tabs > li > a").click(function(event){
+        $('.tab-pane').removeClass('active');
+        var panelId = $(this).data('panel');
+        $('#'+panelId).addClass('active');
+      });
+
 			break;
 
 

@@ -54,20 +54,24 @@
         <div>
 
          <!-- Nav tabs -->
-          <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">About</a></li>
-            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Layout</a></li>
-            <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Feedback</a></li>
-            <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Revision History</a></li>
+          <ul class="nav nav-tabs" role="tablist" id="about-tabs">
+            <li role="presentation" class="active"><a href="#" role="tab" data-panel="tab-about">About</a></li>
+            <li role="presentation"><a href="#" role="tab" data-panel="tab-layout">Layout</a></li>
+            <li role="presentation"><a href="#" role="tab" data-panel="tab-feedback">Feedback</a></li>
+            <li role="presentation"><a href="#" role="tab" data-panel="tab-revision">Revision History</a></li>
+            <li role="presentation"><a href="#" role="tab" data-panel="tab-authors">Authors</a></li>
           </ul>
+        <!-- Nav tabs -->
 
-          <!-- Tab panes -->
+        <!-- Tab panes -->
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="home">About stuff</div>
-            <div role="tabpanel" class="tab-pane" id="profile">Layout stuff</div>
-            <div role="tabpanel" class="tab-pane" id="messages">Feedback</div>
-            <div role="tabpanel" class="tab-pane" id="settings">Revision stuff</div>
+            <div role="tabpanel" class="tab-pane active" id="tab-about">About stuff</div>
+            <div role="tabpanel" class="tab-pane" id="tab-layout">Layout stuff</div>
+            <div role="tabpanel" class="tab-pane" id="tab-feedback">Feedback</div>
+            <div role="tabpanel" class="tab-pane" id="tab-revision">Revision stuff</div>
+            <div role="tabpanel" class="tab-pane" id="tab-authors">Revision stuff</div>
           </div>
+        <!-- Tab panes -->
 
         <br />
         </div>

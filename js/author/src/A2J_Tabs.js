@@ -655,30 +655,45 @@ var form={
 			}).data('data',data);
 		form.codeCheckSoon($('.codeedit',e));
 		return e;
-	}
+	},
 
-	,pickList:function(data,listValueLabel){//list is array to ensure preserved order. Note: js object properties don't guarantee order
-		var c="";
-		var o;
-		for (o=0;o<listValueLabel.length;o+=2){
-			c += '<option value="'+listValueLabel[o]+'">'+listValueLabel[o+1]+'</option>';
-		}
-		var e =$('<div name="'+data.name+'">'
-			+'<div class="editspan form-group">'
-			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
-			+'<select class="form-control">'+c+'</select></div></div>');
-		$('.ui-select-input',e).change(function(){
-			form.change($(this),$('option:selected',this).val());
-		}).data('data',data).val(data.value);
-		//trace(data.value,$('.ui-select-input',e).val());
-		if ($('.ui-select-input',e).val()!==String(data.value))
-		{
-			$('select',e).append($('<option value="'+data.value+'">{'+data.value+'}</option>'));
-			$('.ui-select-input',e).val(data.value);
-		}
-		return e;
-	}
-	,pickStep:function(data){
+  // list is array to ensure preserved order. Note: js object properties don't guarantee order
+  pickList: function(data, listValueLabel) {
+    var i;
+    var options = '';
+
+    // listValueLabel :: [Integer, String, ...]
+    // where the integer value represents the `option` tag value and the string
+    // is the `option` tag label
+    for (i = 0; i < listValueLabel.length; i += 2) {
+      options += '<option value="' + listValueLabel[i] + '">' + listValueLabel[i + 1] + '</option>';
+    }
+
+    var $selectFormGroup = $('<div name="' + data.name + '">'
+      + '<div class="editspan form-group">'
+      + (typeof data.label !== 'undefined' ? ('<label class="control-label">' + data.label + '</label>') : '')
+      + '<select class="form-control">' + options + '</select></div></div>'
+    );
+
+    var $selectInput = $selectFormGroup.find('select');
+
+    $selectInput
+      .change(function() {
+        form.change($(this), $('option:selected', this).val());
+      })
+      .data('data', data)
+      .val(data.value);
+
+    // trace(data.value,$('.ui-select-input',e).val());
+    if ($selectInput.val() !== String(data.value)) {
+      $selectInput.append($('<option value="' + data.value + '">{' + data.value + '}</option>'));
+      $selectInput.val(data.value);
+    }
+
+    return $selectFormGroup;
+  },
+
+  pickStep:function(data){
 		var list=[];
 		var s;
 		for (s=0;s<gGuide.steps.length;s++){

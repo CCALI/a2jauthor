@@ -368,53 +368,39 @@ function gotoPageEdit(pageName)
 	$pageEditDialog.dialog('moveToTop');
 
 }
-function gotoTabOrPage(target)
-{	// Go to a tab or popup a page.
 
-	if (target.indexOf("PAGE ")===0)
-	{
-		gotoPageEdit(target.substr(5));
-		return;
-	}
-	if (target.indexOf("STEP ")===0)
-	{
-		target='tabsSteps';
-	}
-	$('.guidemenu nav li').removeClass('active');
-	$('.guidemenu nav li[ref="'+target+'"]').addClass('active');
-	$('.tab-panel').hide();
-	$('.tab-panel.panel-info').show();
-	$('#'+target).show();
-	switch (target)
-	{
-		case 'tabsAbout':
-		case 'tabsVariables':
-		case 'tabsSteps':
-		case 'tabsLogic':
-		case 'tabsText':
-		case 'tabsClauses':
-			if (gGuide) {gGuide.noviceTab(target,false);}
-			break;
-		case 'tabsPreview':
-			if (gGuide) {gotoPageView(gGuide.firstPage);}
-			break;
-		case 'tabsGuides':
-			// Ensure author can't load new guide before we've saved the current one.
+// Go to a tab or popup a page.
+function gotoTabOrPage(target) {
 
-			if (gGuide) {
-        // Ensure existing guide is saved.
-				$('#' + target).hide();
-				guideSave(function() {
-					$('#' + target).show();
-				});
-			}
+  if (target.indexOf("PAGE ") === 0) {
+    gotoPageEdit(target.substr(5));
+    return;
+  }
 
-			break;
-	}
+  if (target.indexOf("STEP ") === 0) {
+    target = 'tabsSteps';
+  }
+
+  $('.guidemenu nav li').removeClass('active');
+  $('.guidemenu nav li[ref="' + target + '"]').addClass('active');
+  $('.tab-panel').hide();
+  $('.tab-panel.panel-info').show();
+  $('#' + target).show();
+
+  switch (target) {
+    case 'tabsAbout':
+    case 'tabsVariables':
+    case 'tabsSteps':
+    case 'tabsLogic':
+    case 'tabsText':
+    case 'tabsClauses':
+      if (gGuide) gGuide.noviceTab(target, false);
+      break;
+    case 'tabsPreview':
+      if (gGuide) gotoPageView(gGuide.firstPage);
+      break;
+  }
 }
-
-
-
 
 /** @param {TPage} page */
 function guidePageEditForm(page, div, pagename)//novicePage

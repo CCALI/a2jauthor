@@ -214,9 +214,11 @@ var form={
 
 	,checkbox: function(data){
 		var e=$('<div name="'+data.name+'">'
-			+'<div class="editspan form-group">'
-			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
-			+'<input class="form-control" type="checkbox" />'+data.checkbox+'</div></div>');
+			+'<div class="checkbox">'
+			+'<label>'
+			+'<input type="checkbox" /> '+data.checkbox
+			+(typeof data.label!=='undefined' ? ( data.label ) : '')
+			+'</label></div></div>');
 		$('input',e).blur(function(){
 			form.change($(this),$(this).is(':checked'));}).attr( 'checked',data.value===true).data('data',data);
 		return e;

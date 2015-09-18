@@ -43,7 +43,7 @@
     <div class="guidepanels ui-widget xui-widget-content">
 
       <!-- About Tab -->
-      <div class="tab-panel has-toolbar" id="tabsAbout">
+      <div class="tab-panel has-toolbar bootstrap-styles" id="tabsAbout">
         <nav class="navbar navbar-default">
           <p class="navbar-text">Information about this interview</p>
           <div class="nav navbar-nav navbar-right">
@@ -52,11 +52,23 @@
         </nav>
         <div class="tabContentFrame page">
         <div>
-        <ul class="nav nav-tabs">
-          <li role="presentation" class="active"><a href="javascript:void(0)">Home</a></li>
-          <li role="presentation"><a href="javascript:void(0)">Profile</a></li>
-          <li role="presentation"><a href="javascript:void(0)">Messages</a></li>
-        </ul>
+
+         <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">About</a></li>
+            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Layout</a></li>
+            <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Feedback</a></li>
+            <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Revision History</a></li>
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">About stuff</div>
+            <div role="tabpanel" class="tab-pane" id="profile">Layout stuff</div>
+            <div role="tabpanel" class="tab-pane" id="messages">Feedback</div>
+            <div role="tabpanel" class="tab-pane" id="settings">Revision stuff</div>
+          </div>
+
         <br />
         </div>
           <div class="tabContent editq"></div>

@@ -526,7 +526,10 @@ var form={
 
 	,pickFile : function(mask)
 	{
-		var e=$('<span class="fileinput-button"><button class="btn btn-primary"><span class="glyphicon-plus"></span> Upload...</button><input class="form-control fileupload" type="file" name="files[]"/></span>');
+		var e=$('<div class="fileinput-button form-group">'
+		+'<button class="btn btn-primary"><span class="glyphicon-plus"></span> Upload...</button>'
+		+'<input class="form-control fileupload" type="file" name="files[]"/>'
+		+'</div>');
 		//.addClass('fileupload-processing')
 		if (gGuideID!==0) {
 			$('.fileupload',e).fileupload({
@@ -552,9 +555,19 @@ var form={
 		return e;
 	}
 	,pickAudio: function(data){
-  	var wrap = $('<div class="form-inline form-upload"></div>');
-  		inputs=form.text(data).append(form.pickFile(''));
-  		wrap.append(inputs);
+  	var wrap = $('<div class="form-upload row"></div>');
+  	var leftCol = $('<div class="col-xs-9"></div>');
+  	var rightCol = $('<div class="col-xs-3"></div>');
+
+  		inputs=form.text(data)
+  		button=form.pickFile('')
+
+      leftCol.append(inputs);
+      rightCol.append(button);
+
+      wrap.append(leftCol);
+      wrap.append(rightCol);
+
 		return wrap;
 	}
 	,pickImage: function(data){

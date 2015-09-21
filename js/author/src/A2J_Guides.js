@@ -77,61 +77,79 @@ function loadNewGuidePrep(guideFile,startTabOrPage)
 	$('.pageoutline').html('');
 }
 
+// When a guide is selected, the "pages" tab is automatically loaded by the
+// `guideStart` method, but this happens outside of the scope of CanJS routing.
+// Causing issues like https://github.com/CCALI/CAJA/issues/475, this method
+// updates can.route properly.
+function gotoPagesTab() {
+  var pagesTabRef = 'pages';
 
-function guideStart(startTabOrPage)
-{
-	if (startTabOrPage === ''){
-		startTabOrPage='tabsPages';//'tabsAbout';
-	}
+  if (can && can.route) {
+    var page = can.route.attr('page');
 
-
-
-	$('#splash').hide();
-	$('#authortool').removeClass('hidestart');//.addClass('authortool').show
-
-	//$('#tabviews').tabs( { disabled:false});
-	$('#tabsVariables .tabContent, #tabsLogic  .tabContent, #tabsSteps .tabContent, #tabsAbout .tabContent, #tabsClauses .tabContent, #tabsText .tabContent').html("");
-
-	if (makestr(startTabOrPage)===""){
-		startTabOrPage="PAGE "+(gGuide.firstPage);
-	}
-	//trace("Starting location "+startTabOrPage);
-
-	gotoTabOrPage(startTabOrPage);
-	updateTOC();
-
-	//$('#guidepanel ul li a:first').html(gGuide.title);
-	$('#guidetitle').html(gGuide.title);
-
-
-	// ### Upload file(s) to current guide
-	$('#fileupload').addClass('fileupload-processing');
-	if (gGuideID!==0) {
-		$('#fileupload').fileupload({
-			 url:CONST.uploadURL+gGuideID,
-			 dataType: 'json',
-			 done: function (e, data) {
-				setTimeout(updateAttachmentFiles,1);
-			 },
-			 progressall: function (e, data) {
-				  var progress = parseInt(data.loaded / data.total * 100, 10);
-				  $('#progress .bar').css('width',	progress + '%'
-				);
-			}
-		});
-		updateAttachmentFiles();
-	}
-
-
-	buildMap();
-
-
-	if (gEnv!=='' && gStartArgs.getDataURL!=='') {
-		localGuidePlay();
-		return;
-	}
+    if (page !== pagesTabRef) {
+      can.route.attr('page', pagesTabRef);
+    }
+  } else {
+    gotoTabOrPage('tabsPages');
+  }
 }
 
+function guideStart(startTabOrPage) {
+  var defaultTab = 'tabsPages'; // 'tabsAbout';
+
+  if (startTabOrPage === '') {
+    startTabOrPage = defaultTab;
+  }
+
+  $('#splash').hide();
+  $('#authortool').removeClass('hidestart');//.addClass('authortool').show
+
+  //$('#tabviews').tabs( { disabled:false});
+  $('#tabsVariables .tabContent, #tabsLogic  .tabContent, #tabsSteps .tabContent, #tabsAbout .tabContent, #tabsClauses .tabContent, #tabsText .tabContent').html('');
+
+  if (makestr(startTabOrPage) === '') {
+    startTabOrPage = 'PAGE ' + gGuide.firstPage;
+  }
+
+  if (startTabOrPage === 'tabsPages') {
+    gotoPagesTab();
+  } else {
+    gotoTabOrPage(startTabOrPage);
+  }
+
+  updateTOC();
+
+  // $('#guidepanel ul li a:first').html(gGuide.title);
+  $('#guidetitle').html(gGuide.title);
+
+  // ### Upload file(s) to current guide
+  $('#fileupload').addClass('fileupload-processing');
+
+  if (gGuideID !== 0) {
+    $('#fileupload').fileupload({
+      url: CONST.uploadURL + gGuideID,
+      dataType: 'json',
+      done: function(e, data) {
+        setTimeout(updateAttachmentFiles, 1);
+      },
+
+      progressall: function(e, data) {
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $('#progress .bar').css('width',	progress + '%');
+      }
+    });
+
+    updateAttachmentFiles();
+  }
+
+  buildMap();
+
+  if (gEnv !== '' && gStartArgs.getDataURL !== '') {
+    localGuidePlay();
+    return;
+  }
+}
 
 function blankGuide()
 {	// 2014-07-24 Create exact duplicate of A2J 4's New Interview.

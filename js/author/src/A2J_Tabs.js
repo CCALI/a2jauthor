@@ -200,6 +200,9 @@ var form={
 	,fieldset:function(legend,record){
 		return $('<fieldset name="record" class="accordion"><legend>'+legend+'</legend></fieldset>').data('record',record);//.click(function(){$(this).toggleClass('collapse')});
 	}
+	,div:function(legend,record){
+		return $(legend).data('record',record);
+	}
 	,record:function(record){
 		return $('<div name=record class=record/>').data('record',record);
 	}
@@ -211,9 +214,11 @@ var form={
 
 	,checkbox: function(data){
 		var e=$('<div name="'+data.name+'">'
-			+'<div class="editspan form-group">'
-			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
-			+'<input class="form-control" type="checkbox" />'+data.checkbox+'</div></div>');
+			+'<div class="checkbox">'
+			+'<label>'
+			+'<input type="checkbox" /> '+data.checkbox
+			+(typeof data.label!=='undefined' ? ( data.label ) : '')
+			+'</label></div></div>');
 		$('input',e).blur(function(){
 			form.change($(this),$(this).is(':checked'));}).attr( 'checked',data.value===true).data('data',data);
 		return e;
@@ -423,12 +428,11 @@ var form={
 	*/
 
 	,text: function(data){
-		var e=$('<div name="'+data.name+'">'
-			+'<div class="editspan form-group">'
+		var e=$('<div class="editspan form-group">'
 			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
 			+'<input class="form-control ui-widget editable" '+
 			//'placeholder="'+data.placeholder+'" '+
-			'type="text" /> </div></div>');
+			'type="text" /> </div>');
 		//if (typeof data.class!=='undefined') $('input',e).addClass(data.class);
 		//if (typeof data.width!=='undefined') $('input',e).css('width',data.class);
 		$('input',e).blur(function(){
@@ -524,7 +528,10 @@ var form={
 
 	,pickFile : function(mask)
 	{
-		var e=$('<span class="fileinput-button bootstrap-styles"><button class="btn btn-primary"><span class="glyphicon-plus"></span> Upload...</button><input class=" form-control fileupload" type="file" name="files[]"/></span>');
+		var e=$('<div class="fileinput-button form-group">'
+		+'<button class="btn btn-primary"><span class="glyphicon-plus"></span> Upload...</button>'
+		+'<input class="form-control fileupload" type="file" name="files[]"/>'
+		+'</div>');
 		//.addClass('fileupload-processing')
 		if (gGuideID!==0) {
 			$('.fileupload',e).fileupload({
@@ -549,20 +556,31 @@ var form={
 		}
 		return e;
 	}
-
-
 	,pickAudio: function(data){
-		return form.text(data).append(form.pickFile(''));
+  	var wrap = $('<div class="form-upload row"></div>');
+  	var leftCol = $('<div class="col-xs-9"></div>');
+  	var rightCol = $('<div class="col-xs-3"></div>');
+
+  		inputs=form.text(data)
+  		button=form.pickFile('')
+
+      leftCol.append(inputs);
+      rightCol.append(button);
+
+      wrap.append(leftCol);
+      wrap.append(rightCol);
+
+		return wrap;
 	}
-	,pickImage:function(data){
-		return form.text(data).append(form.pickFile(''));
-	}
-	,pickVideo:function(data){
-		return form.text(data).append(form.pickFile(''));
-	}
-	,pickXML:function(data){
-		return form.text(data).append(form.pickFile(''));
-	}
+	,pickImage: function(data){
+    return form.pickAudio(data);
+  }
+	,pickVideo: function(data){
+    return form.pickAudio(data);
+  }
+	,pickXML: function(data){
+    return form.pickAudio(data);
+  }
 
 	,clear:function(){
 		form.codeCheckList=[];
@@ -870,74 +888,118 @@ TGuide.prototype.noviceTab = function(tab,clear)
 
 
 		case "tabsAbout":
-			fs = form.fieldset('About');
-			fs.append(form.text({label:'Title:', placeholder:'Interview title', value:guide.title, change:function(val){guide.title=val;}}));
-			fs.append(form.htmlarea({label:'Description:',value:guide.description,change:function(val){guide.description=val;}}));
-			fs.append(form.text({label:'Jurisdiction:', value:guide.jurisdiction, change:function(val){guide.jurisdiction=val;}}));
+  		$('#about-tabs > li').removeClass('active');
+      $('.tab-pane').removeClass('active');
+
+      $('#about-tabs > li').first().addClass('active');
+      $('#tab-about').addClass('active');
+
+			tabAbout = form.div('About');
+
+      var cols444 =$(''
+        +'<div class="row">'
+          +'<div class="col-sm-4 language">'
+          +'</div>'
+          +'<div class="col-sm-4 avatar">'
+          +'</div>'
+          +'<div class="col-sm-4 gender">'
+          +'</div>'
+        +'</div>');
+
+			tabAbout.append(form.text({label:'Title:', placeholder:'Interview title', value:guide.title, change:function(val){guide.title=val;}}));
+			tabAbout.append(form.htmlarea({label:'Description:',value:guide.description,change:function(val){guide.description=val;}}));
+			tabAbout.append(form.text({label:'Jurisdiction:', value:guide.jurisdiction, change:function(val){guide.jurisdiction=val;}}));
+
+      tabAbout.append(cols444);
+      tabAbout.append(form.htmlarea({label:'Credits:',value:guide.credits,change:function(val){guide.credits=val;}}));
+			tabAbout.append(form.text({label:'Approximate Completion Time:',placeholder:'',value:guide.completionTime,change:function(val){guide.completionTime=val;}}));
+
+      $('#tab-about').html(tabAbout);
+
 
 			var l,list=[];
 			for (l in Languages.regional){
 				// l is language code like en or es.
 				list.push(l, Languages.regional[l].LanguageEN + ' (' + Languages.regional[l].Language+') {'+l+'}');
 			}
-			fs.append(form.pickList({label:'Language:', value:guide.language, change:function(val){
+
+			$('.language').append(form.pickList({label:'Language:', value:guide.language, change:function(val){
 				guide.language=val;
 				Languages.set(guide.language);
 				$('.A2JViewer','#page-viewer').html('');
 				}},list));
+
 			list=['avatar1','Avatar 1','avatar2','Avatar 2','avatar3','Avatar 3'];
 
-			fs.append(form.pickList({label:'Avatar:',value:guide.avatar,change:function(val){
+			$('.avatar').append(form.pickList({label:'Avatar:',value:guide.avatar,change:function(val){
 				guide.avatar=val;
 				}},list));
 			list=['Female','Female Guide','Male','Male Guide'];
 			if (guide.guideGender!=='Male') {
 				guide.guideGender='Female';
 			}
-			fs.append(form.pickList({label:'Guide Gender:',value:guide.guideGender,change:function(val){
+
+			$('.gender').append(form.pickList({label:'Guide Gender:',value:guide.guideGender,change:function(val){
 				guide.guideGender=val;}},list));
-			fs.append(form.htmlarea({label:'Credits:',value:guide.credits,change:function(val){guide.credits=val;}}));
-			fs.append(form.text({label:'Approximate Completion Time:',placeholder:'',value:guide.completionTime,change:function(val){guide.completionTime=val;}}));
-			t.append(fs);
 
 
-			fs = form.fieldset('Layout');
-			fs.append(form.pickImage({label:'Logo graphic:', placeholder: 'Logo URL',value:guide.logoImage, change:function(val){guide.logoImage=val;}}));
-			fs.append(form.pickImage({label:'End graphic:', placeholder:'End (destination graphic) URL',value:guide.endImage, change:function(val){guide.endImage=val;}}));
-			fs.append(form.pickList({label:'Mobile friendly?', value:guide.mobileFriendly, change:function(val){guide.mobileFriendly=val;}},['','Undetermined','false','No','true','Yes']));
-			t.append(fs);
 
-			fs = form.fieldset('Feedback');
-			fs.append(form.checkbox({label:'Allow Send feedback?', checkbox:'', value:guide.sendfeedback,
+
+      tabLayout = form.div('Layout');
+			tabLayout.append(form.pickImage({label:'Logo graphic:', placeholder: 'Logo URL',value:guide.logoImage, change:function(val){guide.logoImage=val;}}));
+			tabLayout.append(form.pickImage({label:'End graphic:', placeholder:'End (destination graphic) URL',value:guide.endImage, change:function(val){guide.endImage=val;}}));
+			tabLayout.append(form.pickList({label:'Mobile friendly?', value:guide.mobileFriendly, change:function(val){guide.mobileFriendly=val;}},['','Undetermined','false','No','true','Yes']));
+			$('#tab-layout').html(tabLayout);
+
+      tabFeedback = form.div('Feedback');
+			tabFeedback.append(form.checkbox({label:'Allow Send feedback?', checkbox:'', value:guide.sendfeedback,
 						change:function(val,field){guide.sendfeedback=val;}}));
-			fs.append(form.text({label:'Feedback email:',value:guide.emailContact,change:function(val){guide.emailContact=val;}}));
-			t.append(fs);
+			tabFeedback.append(form.text({label:'Feedback email:',value:guide.emailContact,change:function(val){guide.emailContact=val;}}));
+			$('#tab-feedback').html(tabFeedback);
 
 			fs = form.fieldset('Authors');
 			var blankAuthor=new TAuthor();
 
-			fs = form.fieldset('Revision History');
-			fs.append(form.text({label:'Current Version:',value:guide.version,change:function(val){guide.version=val;}}));
-			fs.append(form.htmlarea({label:'Revision Notes',value:guide.notes,change:function(val){guide.notes=val;}}));
-			t.append(fs);
+			tabHistory = form.div('Revision History');
+			tabHistory.append(form.text({label:'Current Version:',value:guide.version,change:function(val){guide.version=val;}}));
+			tabHistory.append(form.htmlarea({label:'Revision Notes',value:guide.notes,change:function(val){guide.notes=val;}}));
+			$('#tab-history').append(tabHistory);
 
-			fs=form.fieldset('Authors');
-			fs.append(form.listManager({name:'Authors',picker:'Number of authors',min:1,max:12,list:guide.authors,blank:blankAuthor
+			tabAuthors = form.div('Authors');
+			tabAuthors.append(form.listManager({name:'Authors',picker:'Number of authors',min:1,max:12,list:guide.authors,blank:blankAuthor
 				,save:function(newlist){
 					guide.authors=newlist; }
 				,create:function(ff,author){
-						ff.append(form.text({  label:"Author's Name:", placeholder:'name',value:author.name,
+
+  	      var colRow =$('<div class="row"></div>');
+          var colLeft =$('<div class="col-sm-6"></div>');
+          var colRight =$('<div class="col-sm-6"></div>');
+
+						colLeft.append(form.text({  label:"Author's Name:", placeholder:'name',value:author.name,
 							change:function(val,author){author.name=val;}}));
-						ff.append(form.text({  label:"Author's Title:", placeholder:'title',value:author.title,
+						colRight.append(form.text({  label:"Author's Title:", placeholder:'title',value:author.title,
 							change:function(val,author){author.title=val;}}));
-						ff.append(form.text({  label:"Author's Organization:", placeholder:'organization',value:author.organization,
+						colLeft.append(form.text({  label:"Author's Organization:", placeholder:'organization',value:author.organization,
 							change:function(val,author){author.organization=val;}}));
-						ff.append(form.text({  label:"Author's email:", placeholder:'email',value:author.email,
+						colRight.append(form.text({  label:"Author's email:", placeholder:'email',value:author.email,
 							change:function(val,author){author.email=val;}}));
+
+						ff.append(colRow);
+						ff.append(colLeft);
+						ff.append(colRight);
 					return ff;
 				}}));
 
-			t.append(fs);
+			$('#tab-authors').html(tabAuthors);
+
+      $("#about-tabs > li > a").click(function(event){
+        $('#about-tabs > li').removeClass('active');
+        $(this).parent().addClass('active');
+
+        $('.tab-pane').removeClass('active');
+        var panelId = $(this).data('panel');
+        $('#'+panelId).addClass('active');
+      });
 
 			break;
 

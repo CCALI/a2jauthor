@@ -40,7 +40,7 @@
   * @styles pills-stacked
   * @parent navs.less 3
   * Pills are also vertically stackable. Just add `.nav-stacked`.
-  * @demo docs/demos/navs/pills-stacked/demo.html
+  * @demo docs/demos/navs/pills-stackable/demo.html
   **/
 
   /**
@@ -70,23 +70,7 @@
   * #### Link functionality not impacted
   * This class will only change the `<a>`'s appearance, not its functionality.
   * Use custom JavaScript to disable links here.
-  * @demo docs/demos/navs/disabled-links/demo.html
-  **/
-
-  /**
-  * @styles dropdowns
-  * @parent navs.less 6
-  * ## Using Dropdowns
-  * Add dropdown menus with a little extra HTML and the dropdowns
-  * JavaScript plugin.
-  * @demo docs/demos/navs/using-dropdowns/demo.html
-  **/
-
-  /**
-  * @styles pills-with-dropdowns
-  * @parent navs.less 7
-  * ### Pills with dropdowns
-  * @demo docs/demos/navs/pills-dropdowns/demo.html
+  * @demo docs/demos/navs/disabled/demo.html
   **/
 
 
@@ -107,7 +91,6 @@
 
 //== Tabs
 @nav-tabs-border-color:                     #ddd;
-
 @nav-tabs-link-hover-border-color:          @gray-lighter;
 
 @nav-tabs-active-link-hover-bg:             @body-bg;
@@ -135,5 +118,11 @@
     border-left: 1px solid @gray-lighter;
     margin-top: (@navbar-height*.4)/2;
     width: 0px;
+  }
+  &.nav-tabs {
+    li > a {
+      .border-radius(0);
+    }
+
   }
 }

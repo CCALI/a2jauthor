@@ -90,7 +90,7 @@ function guideStart(startTabOrPage)
 	$('#authortool').removeClass('hidestart');//.addClass('authortool').show
 
 	//$('#tabviews').tabs( { disabled:false});
-	//$('#tabsVariables .tabContent, #tabsLogic  .tabContent, #tabsSteps .tabContent, #tabsAbout .tabContent, #tabsClauses .tabContent, #tabsText .tabContent').html("");
+	$('#tabsVariables .tabContent, #tabsLogic  .tabContent, #tabsSteps .tabContent, #tabsAbout .tabContent, #tabsClauses .tabContent, #tabsText .tabContent').html("");
 
 	if (makestr(startTabOrPage)===""){
 		startTabOrPage="PAGE "+(gGuide.firstPage);

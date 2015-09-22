@@ -26,7 +26,7 @@ describe('A2JVariable Model', () => {
     });
   });
 
-  it.only('findOne (variable not found)', () => {
+  it('findOne (variable not found)', () => {
     return A2JVariable.findOne({ name: 'not found' }).then((a2jvariable) => {
       assert.strictEqual(a2jvariable.attr('values.1'), undefined);
     });

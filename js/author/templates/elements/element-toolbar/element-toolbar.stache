@@ -1,7 +1,12 @@
 <div>
   <span class="glyphicon-move small text-muted"></span>
   <div class="pull-right">
-    <span class="glyphicon-docs small text-muted"></span>Duplicate
-    <span class="glyphicon-trash small text-muted"></span>Delete
+    <a href="#" class="duplicate-element">
+      <span class="glyphicon-docs small text-muted"></span>Duplicate
+    </a>
+
+    <a href="#" class="delete-element">
+      <span class="glyphicon-trash small text-muted"></span>Delete
+    </a>
   </div>
 </div>

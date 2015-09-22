@@ -20,6 +20,9 @@ let A2JTemplate = Model.extend({
 
   findAll: '/api/guides/{guide_id}/templates',
   findOne: '/api/templates/{template_id}',
+  create: '/api/templates',
+  update: '/api/templates/{template_id}',
+  destroy: '/api/templates/{template_id}',
 
   /**
    * @function makeDocumentTree

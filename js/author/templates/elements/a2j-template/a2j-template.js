@@ -26,7 +26,7 @@ export let A2JTemplateVM = Map.extend({
       get: function() {
         let template = this.attr('template');
 
-        return template.attr('rootNode');
+        return template && template.attr('rootNode');
       }
     },
     /**

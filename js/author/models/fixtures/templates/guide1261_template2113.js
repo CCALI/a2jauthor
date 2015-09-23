@@ -16,7 +16,7 @@ export default {
       {
         component: '<section-title state="{.}"></section-title>',
         state: {
-          title: 'Section Title',
+          title: 'This is a Section Title',
           underline: true
         }
       }

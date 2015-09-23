@@ -255,7 +255,7 @@
       <div class="tab-panel has-toolbar" id="tabsTemplate">
         {{#is page "templates"}}
           {{#if id}}
-            <template-edit-page template-id="{{id}}"></template-edit-page>
+            <template-edit-page template-id="{id}"></template-edit-page>
           {{else}}
             <templates-page></templates-page>
           {{/if}}

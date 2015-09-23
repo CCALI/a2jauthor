@@ -7,7 +7,7 @@
     <div class="container">
       <div class="row clearfix">
         <div class="col-md-8">
-          <a2j-template template="{a2jTemplate.value}"></a2j-template>
+          <a2j-template template="{a2jTemplate.value}" edit-enabled="true"></a2j-template>
         </div>
 
         <div class="col-md-4">

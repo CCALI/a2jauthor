@@ -28,6 +28,14 @@ export let A2JTemplateVM = Map.extend({
 
         return template.attr('rootNode');
       }
+    },
+    /**
+     * @property {Boolean} editEnabled
+     *
+     * Whether an element can have edit options made available.
+     */
+    editEnabled: {
+      value: false
     }
   }
 });
@@ -66,8 +74,10 @@ export default Component.extend({
 
   helpers: {
     a2jParse(component, state) {
-      state = state.isComputed ?  state() : state;
       component = component.isComputed ? component() : component;
+
+      state = state.isComputed ?  state() : state;
+      state.attr('editEnabled', this.attr('editEnabled'));
 
       return stache(component)(state);
     }

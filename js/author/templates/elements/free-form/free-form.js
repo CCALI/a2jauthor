@@ -12,9 +12,11 @@ export let FreeFormVM = Map.extend({
     userContent: {
       value: ''
     },
+
     editEnabled: {
       value: false
     },
+
     editActive: {
       value: false
     }

@@ -42,7 +42,6 @@ export let A2JTemplateVM = Map.extend({
      * Whether an element can have edit options made available.
      */
     editEnabled: {
-      type: 'boolean',
       value: false
     }
   },
@@ -121,7 +120,6 @@ export default Component.extend({
       component = component.isComputed ? component() : component;
       state = state.isComputed ?  state() : state;
 
-      state.attr('editActive', false);
       state.attr('editEnabled', this.attr('editEnabled'));
 
       return stache(component)(state);

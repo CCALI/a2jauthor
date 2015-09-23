@@ -55,8 +55,42 @@ export let Container = Map.extend({
 });
 
 export default Component.extend({
+  tag: 'element-container',
   template,
   leakScope: false,
-  viewModel: Container,
-  tag: 'element-container'
+  viewModel: function(attrs, parentScope) {
+    let vm = new Container();
+
+    vm.attr('parentScope', parentScope.attr('.'));
+
+    return vm;
+  },
+  events: {
+    inserted($el) {
+      let vm = this.viewModel.attr('parentScope');
+      let rootViewModel = $el.parents('a2j-template').viewModel();
+
+      vm.attr('rootViewModel', rootViewModel);
+      rootViewModel.registerNodeViewModel(vm);
+    },
+
+    removed() {
+      let vm = this.viewModel.attr('parentScope');
+      let rootViewModel = vm.attr('rootViewModel');
+
+      if (rootViewModel) {
+        rootViewModel.deregisterNodeViewModel(vm);
+      }
+    },
+
+    '{viewModel} selected': function() {
+      let vm = this.viewModel.attr('parentScope');
+      let editActive = vm.attr('editActive');
+      let rootViewModel = vm.attr('rootViewModel');
+
+      if(editActive) {
+        rootViewModel.toggleEditActiveNode(vm);
+      }
+    }
+  }
 });

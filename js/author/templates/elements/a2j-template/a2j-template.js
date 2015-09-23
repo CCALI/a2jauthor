@@ -1,4 +1,5 @@
 import Map from 'can/map/';
+import List from 'can/list/';
 import Component from 'can/component/';
 import stache from 'can/view/stache/';
 import dragula from 'dragula/dist/dragula';
@@ -19,6 +20,7 @@ export let A2JTemplateVM = Map.extend({
     template: {
       value: ''
     },
+
     /**
      * @property {A2JNode} rootNode
      */
@@ -29,13 +31,55 @@ export let A2JTemplateVM = Map.extend({
         return template && template.attr('rootNode');
       }
     },
+
+    nodesViewModels: {
+      value: new List()
+    },
+
     /**
      * @property {Boolean} editEnabled
      *
      * Whether an element can have edit options made available.
      */
     editEnabled: {
+      type: 'boolean',
       value: false
+    }
+  },
+
+  toggleEditActiveNode(nodeViewModel) {
+    let nodesViewModels = this.attr('nodesViewModels');
+
+    nodesViewModels.each(function(node) {
+      let active = node === nodeViewModel;
+      node.attr('editActive', active);
+    });
+  },
+
+  getNodeViewModelIndex(nodeViewModel) {
+    let index;
+    let nodesViewModels = this.attr('nodesViewModels');
+
+    nodesViewModels.each(function(node, i) {
+      if (node === nodeViewModel) {
+        index = i;
+        return false;
+      }
+    });
+
+    return index;
+  },
+
+  registerNodeViewModel(nodeViewModel) {
+    this.attr('nodesViewModels').push(nodeViewModel);
+  },
+
+  deregisterNodeViewModel(nodeViewModel) {
+    let nodesViewModels = this.attr('nodesViewModels');
+    let index = this.getNodeViewModelIndex(nodeViewModel);
+
+    if (index !== -1) {
+      nodesViewModels.splice(index, 1);
     }
   }
 });
@@ -75,8 +119,9 @@ export default Component.extend({
   helpers: {
     a2jParse(component, state) {
       component = component.isComputed ? component() : component;
-
       state = state.isComputed ?  state() : state;
+
+      state.attr('editActive', false);
       state.attr('editEnabled', this.attr('editEnabled'));
 
       return stache(component)(state);

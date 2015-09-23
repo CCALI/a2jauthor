@@ -29,5 +29,34 @@ export default Component.extend({
 
   viewModel: function(attrs) {
     return new SectionTitleVM(attrs.state);
+  },
+
+  events: {
+    inserted($el) {
+      let vm = this.viewModel;
+      let rootViewModel = $el.parents('a2j-template').viewModel();
+
+      vm.attr('rootViewModel', rootViewModel);
+      rootViewModel.registerNodeViewModel(vm);
+    },
+
+    removed() {
+      let vm = this.viewModel;
+      let rootViewModel = vm.attr('rootViewModel');
+
+      if (rootViewModel) {
+        rootViewModel.deregisterNodeViewModel(vm);
+      }
+    },
+
+    '{viewModel} editActive': function() {
+      let vm = this.viewModel;
+      let editActive = vm.attr('editActive');
+      let rootViewModel = vm.attr('rootViewModel');
+
+      if (editActive) {
+        rootViewModel.toggleEditActiveNode(vm);
+      }
+    }
   }
 });

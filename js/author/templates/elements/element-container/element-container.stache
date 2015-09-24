@@ -1,4 +1,4 @@
-<div class="wrapper{{#if selected}} selected{{/if}}" (click)="toggleSelected">
+<div class="wrapper{{#if selected}} selected{{/if}}" (click)="setSelected">
   <content />
 </div>
 

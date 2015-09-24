@@ -7,7 +7,7 @@
     {{#if editActive}}
       <element-options-pane title="Section Title">
         <form>
-          <input class="form-control" can-value="{title}">
+          <input class="form-control title-input" value="{{../title}}">
           <div class="checkbox">
             <label>
               <input type="checkbox" can-value="{underline}"> Underline

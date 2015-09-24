@@ -1,3 +1,13 @@
 free-form {
   display: block;
+
+  .options-popover-overrides {
+    top: -120px;
+    left: 340px;
+    position: relative;
+  }
+
+  element-options-pane .popover {
+    .options-popover-overrides() !important;
+  }
 }

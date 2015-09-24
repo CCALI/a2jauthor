@@ -5,20 +5,16 @@
     </element-container>
 
     {{#if editActive}}
-      <app-popover placement="right">
+      <element-options-pane title="Section Title">
         <form>
-          <div class="form-group">
-            <label>Section Title</label>
-            <input class="form-control" can-value="{title}">
-          </div>
+          <input class="form-control" can-value="{title}">
           <div class="checkbox">
             <label>
               <input type="checkbox" can-value="{underline}"> Underline
             </label>
           </div>
-          <button type="submit" class="btn btn-default">Save & Close</button>
         </form>
-      </app-popover>
+      </element-options-pane>
     {{/if}}
   {{else}}
     {{> section-title-content}}

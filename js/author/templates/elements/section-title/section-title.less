@@ -6,14 +6,13 @@ section-title {
     border-top: 1px solid #000;
   }
 
-  .options-popover {
-    top: -150px;
-    width: 300px;
-    left: 300px;
+  .options-popover-overrides {
+    top: -120px;
+    left: 340px;
     position: relative;
   }
 
-  app-popover .popover {
-    .options-popover() !important;
+  element-options-pane .popover {
+    .options-popover-overrides() !important;
   }
 }

@@ -1,0 +1,19 @@
+<div class="popover right" style="display: block;">
+  <div class="arrow"></div>
+
+  {{#if title}}
+    <h3 class="pane-title">{{title}}</h3>
+
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+  {{/if}}
+
+  <div class="popover-content">
+    <content />
+
+    <div class="text-center">
+      <button class="btn btn-default">Save & Close</button>
+    </div>
+  </div>
+</div>

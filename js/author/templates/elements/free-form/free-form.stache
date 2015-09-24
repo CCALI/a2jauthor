@@ -6,6 +6,18 @@
       {{a2jParse userContent}}
     {{/if}}
   </element-container>
+
+  {{#if editActive}}
+    <element-options-pane title="Text">
+      <form>
+        <div class="form-group">
+          <label>Notes</label>
+          <textarea class="form-control" rows="3"></textarea>
+          <span class="help-block">For reference only. These notes are not part of the assembled document.</span>
+        </div>
+      </form>
+    </element-options-pane>
+  {{/if}}
 {{else}}
   {{a2jParse userContent}}
 {{/if}}

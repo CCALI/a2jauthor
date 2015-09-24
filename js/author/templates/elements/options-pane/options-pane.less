@@ -1,0 +1,37 @@
+element-options-pane {
+  .popover {
+    .popover-overrides() !important;
+  }
+
+  .close {
+    .close-button-overrides() !important;
+  }
+
+  h3.pane-title {
+    margin: 0;
+    padding: 17px;
+  }
+
+  .popover-overrides {
+    width: 330px;
+    max-width: 330px;
+    border-radius: 0;
+    border: 2px solid #2D659B;
+
+    &.right > .arrow {
+      top: 20px;
+
+      &:after {
+        border-right-color: #2D659B;
+      }
+    }
+  }
+
+  .close-button-overrides {
+    top: -45px;
+    right: 20px;
+    color: inherit;
+    font-size: 30px;
+    position: relative;
+  }
+}

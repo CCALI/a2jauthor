@@ -4,7 +4,7 @@ import contentTpl from './content.stache!'
 import template from './section-title.stache!';
 
 import 'can/view/';
-import 'author/popover/';
+import '../options-pane/';
 import './section-title.less!';
 import '../element-container/';
 

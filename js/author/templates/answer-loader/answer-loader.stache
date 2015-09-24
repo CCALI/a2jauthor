@@ -1,0 +1,6 @@
+<can-import from="author/templates/answer-loader/answer-loader.less!"/>
+
+{{#if isEnabled}}
+  <button class="btn btn-default navbar-btn load-answers">Load Answers</button>
+  <input type="file"/>
+{{/if}}

@@ -1,3 +1,4 @@
+<can-import from="author/templates/answer-loader/" />
 <nav class="navbar navbar-default">
   <div class="container-fluid">
 
@@ -21,6 +22,7 @@
 
     <div class="nav navbar-nav navbar-right">
       <a can-href="{page='templates' id='new'}"><button class="btn btn-primary navbar-btn new-template"><span class="glyphicon-plus"></span> New Template</button></a>
+      <answer-loader/>
       <button class="btn btn-default navbar-btn test-compile"><span class="glyphicon-file-pdf"></span> Test Assemble</button>
     </div>
 

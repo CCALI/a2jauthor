@@ -43,14 +43,13 @@ export let Container = Map.extend({
   },
 
   /**
-   * @property {function} element-container.ViewModel.prototype.toggleSelected toggleSelected
+   * @property {function} element-container.ViewModel.prototype.setSelected setSelected
    * @parent element-container.ViewModel
    *
-   * Toggles `selected` value.
+   * Sets `selected` property to `true`
    */
-  toggleSelected() {
-    let selected = this.attr('selected');
-    this.attr('selected', !selected);
+  setSelected() {
+    this.attr('selected', true);
   }
 });
 
@@ -58,6 +57,7 @@ export default Component.extend({
   tag: 'element-container',
   template,
   leakScope: false,
+
   viewModel: function(attrs, parentScope) {
     let vm = new Container();
 
@@ -65,13 +65,19 @@ export default Component.extend({
 
     return vm;
   },
+
   events: {
     inserted($el) {
       let vm = this.viewModel.attr('parentScope');
-      let rootViewModel = $el.parents('a2j-template').viewModel();
+      let $a2jTemplate = $el.parents('a2j-template');
 
-      vm.attr('rootViewModel', rootViewModel);
-      rootViewModel.registerNodeViewModel(vm);
+      // only register element if it is a child of `a2j-template`
+      if ($a2jTemplate.length) {
+        let rootViewModel = $a2jTemplate.viewModel();
+
+        vm.attr('rootViewModel', rootViewModel);
+        rootViewModel.registerNodeViewModel(vm);
+      }
     },
 
     removed() {
@@ -88,7 +94,7 @@ export default Component.extend({
       let editActive = vm.attr('editActive');
       let rootViewModel = vm.attr('rootViewModel');
 
-      if(editActive) {
+      if (editActive && rootViewModel) {
         rootViewModel.toggleEditActiveNode(vm);
       }
     }

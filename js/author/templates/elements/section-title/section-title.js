@@ -29,5 +29,11 @@ export default Component.extend({
 
   viewModel: function(attrs) {
     return new SectionTitleVM(attrs.state);
+  },
+
+  events: {
+    '.title-input keyup': function($el) {
+      this.viewModel.attr('title', $el.val());
+    }
   }
 });

@@ -52,6 +52,36 @@ export let A2JTemplateVM = Map.extend({
     }
   },
 
+  saveTemplateChanges() {
+    this.attr('template').save().then(() => {
+      this.attr('showUpdateSuccess', true);
+    });
+  },
+
+  cloneNode(nodeViewModel) {
+    let index = this.getNodeViewModelIndex(nodeViewModel);
+
+    if (index !== -1) {
+      let rootNode = this.attr('rootNode');
+      let originalNode = rootNode.attr('children').attr(index);
+      let clonedNode = new Map(originalNode.attr());
+
+      rootNode.attr('children').push(clonedNode);
+      this.saveTemplateChanges();
+    }
+  },
+
+  deleteNode(nodeViewModel) {
+    let index = this.getNodeViewModelIndex(nodeViewModel);
+
+    if (index !== -1) {
+      let rootNode = this.attr('rootNode');
+
+      rootNode.attr('children').splice(index, 1);
+      this.saveTemplateChanges();
+    }
+  },
+
   updateNodeState(nodeViewModel) {
     let index = this.getNodeViewModelIndex(nodeViewModel);
 
@@ -66,9 +96,7 @@ export let A2JTemplateVM = Map.extend({
       // will cause a stack overflow.
       node.attr('state').attr(_omit(nodeViewModel.attr(), 'rootNodeScope'));
 
-      this.attr('template').save().then(() => {
-        this.attr('showUpdateSuccess', true);
-      });
+      this.saveTemplateChanges();
     }
   },
 
@@ -118,26 +146,6 @@ export default Component.extend({
     inserted($el) {
       // add drag & drop support to the templates view
       dragula([$el.get(0)]);
-    },
-
-    'element-toolbar .delete-element click': function($el, evt) {
-      evt.preventDefault();
-
-      let rootNode = this.viewModel.attr('rootNode');
-      let nodeIndex = $el.parents('.node-wrapper').data('node-index');
-
-      rootNode.attr('children').splice(nodeIndex, 1);
-    },
-
-    'element-toolbar .duplicate-element click': function($el, evt) {
-      evt.preventDefault();
-
-      let rootNode = this.viewModel.attr('rootNode');
-      let nodeIndex = $el.parents('.node-wrapper').data('node-index');
-      let originalNode = rootNode.attr('children').attr(nodeIndex);
-      let clonedNode = new Map(originalNode.attr());
-
-      rootNode.attr('children').push(clonedNode);
     }
   },
 

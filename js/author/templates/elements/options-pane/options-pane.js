@@ -14,11 +14,11 @@ export let OptionsPane = Map.extend({
   },
 
   saveAndClose() {
-    let parentScope = this.attr('parentScope');
+    let nodeScope = this.attr('parentScope');
 
-    if (parentScope) {
-      let rootNodeScope = parentScope.attr('rootNodeScope');
-      rootNodeScope.updateNodeState(parentScope);
+    if (nodeScope) {
+      let rootNodeScope = nodeScope.attr('rootNodeScope');
+      rootNodeScope.updateNodeState(nodeScope);
     }
   }
 });

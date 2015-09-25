@@ -1,10 +1,12 @@
 import Map from 'can/map/';
 import List from 'can/list/';
-import Component from 'can/component/';
 import stache from 'can/view/stache/';
+import _omit from 'lodash/object/omit';
+import Component from 'can/component/';
 import dragula from 'dragula/dist/dragula';
 import template from './a2j-template.stache!';
 
+import 'author/alert/';
 import 'can/map/define/';
 import './a2j-template.less!';
 import 'dragula/dist/dragula.css!';
@@ -43,6 +45,30 @@ export let A2JTemplateVM = Map.extend({
      */
     editEnabled: {
       value: false
+    },
+
+    showUpdateSuccess: {
+      value: false
+    }
+  },
+
+  updateNodeState(nodeViewModel) {
+    let index = this.getNodeViewModelIndex(nodeViewModel);
+
+    if (index !== -1) {
+      let node = this.attr('rootNode').attr('children').attr(index);
+
+      // toggle editActive so it 'closes' the options pane
+      nodeViewModel.attr('editActive', false);
+
+      // `rootNodeScope` is a reference to `a2j-template` viewModel, if we
+      // don't remove it before calling `.attr` in node's `state` map it
+      // will cause a stack overflow.
+      node.attr('state').attr(_omit(nodeViewModel.attr(), 'rootNodeScope'));
+
+      this.attr('template').save().then(() => {
+        this.attr('showUpdateSuccess', true);
+      });
     }
   },
 
@@ -56,7 +82,7 @@ export let A2JTemplateVM = Map.extend({
   },
 
   getNodeViewModelIndex(nodeViewModel) {
-    let index;
+    let index = -1;
     let nodesViewModels = this.attr('nodesViewModels');
 
     nodesViewModels.each(function(node, i) {

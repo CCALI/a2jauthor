@@ -1,3 +1,7 @@
+<app-alert auto-close="true" alert-type="success" open="{showUpdateSuccess}">
+  <p>Template updated successfully.</p>
+</app-alert>
+
 {{#each rootNode.children}}
   <div class="node-wrapper" data-node-index="{{@index}}">
     {{a2jParse component state}}

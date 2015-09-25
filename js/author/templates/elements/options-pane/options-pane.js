@@ -11,11 +11,25 @@ export let OptionsPane = Map.extend({
       type: 'string',
       value: ''
     }
+  },
+
+  saveAndClose() {
+    let parentScope = this.attr('parentScope');
+
+    if (parentScope) {
+      let rootNodeScope = parentScope.attr('rootNodeScope');
+      rootNodeScope.updateNodeState(parentScope);
+    }
   }
 });
 
 export default Component.extend({
   template,
   tag: 'element-options-pane',
-  viewModel: OptionsPane
+
+  viewModel: function(attrs, parentScope) {
+    let vm = new OptionsPane(attrs);
+    vm.attr('parentScope', parentScope.attr('.'));
+    return vm;
+  }
 });

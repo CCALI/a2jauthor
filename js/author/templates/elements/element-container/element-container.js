@@ -73,29 +73,29 @@ export default Component.extend({
 
       // only register element if it is a child of `a2j-template`
       if ($a2jTemplate.length) {
-        let rootViewModel = $a2jTemplate.viewModel();
+        let rootNodeScope = $a2jTemplate.viewModel();
 
-        vm.attr('rootViewModel', rootViewModel);
-        rootViewModel.registerNodeViewModel(vm);
+        vm.attr('rootNodeScope', rootNodeScope);
+        rootNodeScope.registerNodeViewModel(vm);
       }
     },
 
     removed() {
       let vm = this.viewModel.attr('parentScope');
-      let rootViewModel = vm.attr('rootViewModel');
+      let rootNodeScope = vm.attr('rootNodeScope');
 
-      if (rootViewModel) {
-        rootViewModel.deregisterNodeViewModel(vm);
+      if (rootNodeScope) {
+        rootNodeScope.deregisterNodeViewModel(vm);
       }
     },
 
     '{viewModel} selected': function() {
       let vm = this.viewModel.attr('parentScope');
       let editActive = vm.attr('editActive');
-      let rootViewModel = vm.attr('rootViewModel');
+      let rootNodeScope = vm.attr('rootNodeScope');
 
-      if (editActive && rootViewModel) {
-        rootViewModel.toggleEditActiveNode(vm);
+      if (editActive && rootNodeScope) {
+        rootNodeScope.toggleEditActiveNode(vm);
       }
     }
   }

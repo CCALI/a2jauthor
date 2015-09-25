@@ -13,7 +13,7 @@
     <content />
 
     <div class="text-center">
-      <button class="btn btn-default">Save & Close</button>
+      <button (click)="saveAndClose" class="btn btn-default">Save & Close</button>
     </div>
   </div>
 </div>

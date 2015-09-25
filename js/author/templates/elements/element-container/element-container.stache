@@ -3,5 +3,5 @@
 </div>
 
 {{#if selected}}
-  <element-toolbar></element-toolbar>
+  <element-toolbar node-scope="{parentScope}"></element-toolbar>
 {{/if}}

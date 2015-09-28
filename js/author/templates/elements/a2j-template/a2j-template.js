@@ -100,6 +100,22 @@ export let A2JTemplateVM = Map.extend({
     }
   },
 
+  revertNodeState(nodeViewModel) {
+    let index = this.getNodeViewModelIndex(nodeViewModel);
+
+    if (index !== -1) {
+      let node = this.attr('rootNode').attr('children').attr(index);
+
+      // toggle editActive so it 'closes' the options pane
+      nodeViewModel.attr('editActive', false);
+
+      // sets `nodeViewModel` state back to the previous saved state
+      // in the a2j-template model instance, doing this, any change made
+      // to it in the author element is discarded.
+      nodeViewModel.attr(node.attr('state').attr());
+    }
+  },
+
   toggleEditActiveNode(nodeViewModel) {
     let nodesViewModels = this.attr('nodesViewModels');
 

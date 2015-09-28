@@ -2,7 +2,7 @@
   {{#if a2jTemplate.isPending}}
     <app-loading></app-loading>
   {{else}}
-    <template-edit-toolbar a2j-template="{a2jTemplate}"></template-edit-toolbar>
+    <template-edit-toolbar a2j-template="{a2jTemplate.value}"></template-edit-toolbar>
 
     <div class="container">
       <div class="row clearfix">

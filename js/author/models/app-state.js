@@ -11,11 +11,12 @@ import 'can/map/define/';
 export default Map.extend({
   define: {
     /**
-     * @property {String} guide_id
+     * @property {String} guideId
      *
      * The identifier to the guided interview currently loaded.
      */
-    guide_id: {
+    guideId: {
+      serialize: false,
       value: window.gGuideID || ''
     }
   }

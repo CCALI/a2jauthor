@@ -167,12 +167,12 @@ export default Map.extend({
     let appState = this.attr('@root');
 
     if(window.gGuideID) {
-      appState.attr('guide_id', window.gGuideID);
+      appState.attr('guideId', window.gGuideID);
     }
 
-    let guide_id = this.attr('@root').attr('guide_id');
+    let guideId = appState.attr('guideId');
 
-    let promise = A2JTemplate.findAll({ guide_id }).then(templates => {
+    let promise = A2JTemplate.findAll({ guide_id: guideId }).then(templates => {
       this.attr('templates', templates);
       this.attr('displayList', this.makeDisplayList());
     });

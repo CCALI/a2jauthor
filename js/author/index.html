@@ -21,6 +21,11 @@
     <div id="author-app"></div>
 
     <script>
+      // ckeditor loads its config file (styles and default plugins) by
+      // injecting script tags into the document, without CKEDITOR_BASEPATH
+      // being set property it won't work.
+      var CKEDITOR_BASEPATH = '/ckeditor/';
+
       window.less = {
         async: true,
         fileSync: true

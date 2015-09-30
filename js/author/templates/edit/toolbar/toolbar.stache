@@ -20,7 +20,7 @@
         </ul>
 
         <div class="nav navbar-nav navbar-right">
-          <button class="btn btn-default navbar-btn test-assemble"><span class="glyphicon-file-pdf"></span> Test Assemble</button>
+          <a can-href="{ page='templates', action='assemble', id=a2jTemplate.template_id }"><button class="btn btn-default navbar-btn test-assemble"><span class="glyphicon-file-pdf"></span> Test Assemble</button></a>
         </div>
       </div>
     </div>

@@ -19,7 +19,8 @@ let appState = new AppState();
 
 can.route.map(appState);
 can.route(':page', {page: 'interviews'});
-can.route(':page/:id');
+can.route(':page/:action', { action: 'view' });
+can.route(':page/:action/:id');
 can.route.ready();
 
 $('body').on('click', 'a[href="#"]', ev => ev.preventDefault());

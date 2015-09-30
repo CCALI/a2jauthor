@@ -1,0 +1,9 @@
+<can-import from="author/templates/elements/a2j-template/"/>
+
+{{#if templateId}}
+  <a2j-template template="{templates}"/>
+{{else}}
+  {{#each templates}}
+    <a2j-template template="{.}"/>
+  {{/each}}
+{{/if}}

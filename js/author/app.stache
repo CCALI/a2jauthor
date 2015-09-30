@@ -1,3 +1,5 @@
+<can-import from="author/templates/assembly/"/>
+
 {{#with appState}}
   <div id="splash" class="welcome">
     <div class="loading">
@@ -254,11 +256,15 @@
       <!-- Template Tab -->
       <div class="tab-panel has-toolbar" id="tabsTemplate">
         {{#is page "templates"}}
-          {{#if id}}
-            <template-edit-page template-id="{id}"></template-edit-page>
+          {{#eq action 'assemble'}}
+            <template-assembly guide-id="{guideId}" template-id="{id}"></template-assembly>
           {{else}}
-            <templates-page></templates-page>
-          {{/if}}
+            {{#if id}}
+              <template-edit-page template-id="{id}"></template-edit-page>
+            {{else}}
+              <templates-page></templates-page>
+            {{/if}}
+          {{/eq}}
         {{/is}}
       </div>
 

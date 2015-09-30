@@ -27,6 +27,14 @@ export let FreeFormVM = Map.extend({
     }
   },
 
+  updateUserContent() {
+    let instance = this.attr('ckeditorInstance');
+
+    if (instance) {
+      this.attr('userContent', instance.getData());
+    }
+  },
+
   destroyEditorInstance() {
     let instance = this.attr('ckeditorInstance');
 
@@ -68,11 +76,20 @@ export default Component.extend({
         // won't be in the DOM when `ckeditor.replace` is called.
         setTimeout(() => {
           let $textarea = this.element.find('textarea');
-          let editor = ckeditor.replace($textarea.get(0), {});
+
+          let editor = ckeditor.replace($textarea.get(0), {
+            extraPlugins: 'a2j-variable',
+            extraAllowedContent: {
+              'a2j-variable': {
+                attributes: ['name']
+              }
+            }
+          });
 
           vm.attr('ckeditorInstance', editor);
         });
       } else {
+        vm.updateUserContent();
         vm.destroyEditorInstance();
       }
     }

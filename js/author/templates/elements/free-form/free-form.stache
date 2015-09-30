@@ -1,7 +1,7 @@
 {{#if editEnabled}}
   <element-container selected="{editActive}">
     {{#if editActive}}
-      <textarea can-value="userContent">{{userContent}}</textarea>
+      <textarea>{{userContent}}</textarea>
     {{else}}
       {{a2jParse userContent}}
     {{/if}}

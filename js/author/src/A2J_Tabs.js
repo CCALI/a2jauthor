@@ -197,8 +197,8 @@ var form={
 	,noteAlert:function(t){
 		return $(form.noteHTML('alert',t));
 	}
-	,fieldset:function(legend,record){
-		return $('<fieldset name="record" class="accordion"><legend>'+legend+'</legend></fieldset>').data('record',record);//.click(function(){$(this).toggleClass('collapse')});
+	,fieldset:function(legend,record,accordion){
+		return $('<fieldset name="record" class="'+accordion+'"><legend>'+legend+'</legend></fieldset>').data('record',record);//.click(function(){$(this).toggleClass('collapse')});
 	}
 	,div:function(legend,record){
 		return $(legend).data('record',record);
@@ -855,7 +855,7 @@ TGuide.prototype.noviceTab = function(tab,clear)
 				{
 					if ((gPrefs.showLogic===2) || (gPrefs.showLogic===1 && (page.codeBefore!=="" || page.codeAfter!=="")))
 					{
-						pagefs=form.fieldset(page.name, page);
+						pagefs=form.fieldset(page.name, page,'accordion');
 						if (gPrefs.showLogic===2 || page.codeBefore!==""){
 							pagefs.append(form.codearea({label:'Before:',	value:page.codeBefore,change:codeBeforeChange} ));
 						}
@@ -874,7 +874,7 @@ TGuide.prototype.noviceTab = function(tab,clear)
 			for (p in guide.sortedPages)
 			{
 				page=guide.sortedPages[p];
-				pagefs=form.fieldset(page.name, page);
+				pagefs=form.fieldset(page.name, page,'accordion');
 				pageNameFieldsForTextTab(pagefs,page);
 				t.append(pagefs);
 			}
@@ -1006,7 +1006,7 @@ TGuide.prototype.noviceTab = function(tab,clear)
 
 		case 'tabsSteps':
 
-			fs=form.fieldset('Start/Exit points');
+			fs=form.fieldset('Start/Exit points','','accordion');
 
       var cols66 =$(''
         +'<div class="row">'
@@ -1023,7 +1023,7 @@ TGuide.prototype.noviceTab = function(tab,clear)
 			$('.exit').append(form.pickpage({	value: guide.exitPage,label:'Exit Point: ',		change:function(val){guide.exitPage=val;}}));
 
 
-			fs=form.fieldset('Steps');
+			fs=form.fieldset('Steps','','accordion');
 			var blankStep=new TStep();
 
 			fs.append(form.listManager({grid:true,name:'Steps',picker:'Number of Steps:',min:1,max:CONST.MAXSTEPS,list:guide.steps,blank:blankStep

@@ -470,18 +470,22 @@ function guidePageEditForm(page, div, pagename)//novicePage
 		{
 			showMe = Number(showMe);
       form.find('.form-upload').hide();
+      form.find('[name="helpReader"]').hide();
 
 			if(showMe===1) {
   			//Show graphic
+  			form.find('[name="helpAudio"]').show();
   			form.find('[name="helpGraphic"]').show();
+  			form.find('[name="helpReader"]').show();
 			}
 			else if(showMe===2) {
   			// Show video
   			form.find('[name="helpVideo"]').show();
+  			form.find('[name="helpReader"]').show();
 			}
 			else {
   			// Show text
-  			form.find('[name="helpReader"]').show();
+  			form.find('[name="helpAudio"]').show();
 			}
 		};
 		pagefs.append(form.pickList({label:'Help style:',value:getShowMe(), change:function(val,page,form){

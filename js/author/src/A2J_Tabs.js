@@ -557,7 +557,7 @@ var form={
 		return e;
 	}
 	,pickAudio: function(data){
-  	var wrap = $('<div name="'+data.name+'" class="form-upload row"></div>');
+  	var wrap = $('<div name="'+data.name+'" class="form-upload row clearfix"></div>');
   	var leftCol = $('<div class="col-xs-9"></div>');
   	var rightCol = $('<div class="col-xs-3"></div>');
 

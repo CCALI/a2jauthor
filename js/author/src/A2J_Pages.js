@@ -335,7 +335,7 @@ function gotoPageEdit(pageName)
 		title: page.name,
 		width: 750,
 		height: 500,
-		modal: false,
+		modal: true,
 		minWidth: 200,
 		minHeight: 500, maxHeight: 700,
 

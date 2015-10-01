@@ -2,7 +2,9 @@
   'use strict';
 
   CKEDITOR.plugins.add('a2j-variable', {
-    requires: 'widget',
+    hidpi: true,
+    icons: 'a2j-variable',
+    requires: 'widget,dialog',
 
     onLoad: function() {
       // Register styles for variable widget frame.
@@ -10,19 +12,18 @@
     },
 
     init: function(editor) {
+      // Register dialog.
+      CKEDITOR.dialog.add('variables', this.path + 'dialogs/variables.js');
+
       editor.widgets.add('a2j-variable', {
         inline: true,
-
+        dialog: 'variables',
+        pathName: 'variables',
+        button: 'Insert a Variable',
         template: '<a2j-variable name=""></a2j-variable>',
 
         upcast: function(element) {
-          if (element.name === 'a2j-variable') {
-            var name = element.attributes.name;
-            var text = new CKEDITOR.htmlParser.text(name);
-
-            element.add(text);
-            return element;
-          }
+          return element.name === 'a2j-variable';
         },
 
         downcast: function(element) {
@@ -33,6 +34,12 @@
 
         init: function() {
           this.setData('name', this.element.getAttribute('name'));
+        },
+
+        // callback executed when data changes through setData.
+        data: function() {
+          this.element.setAttribute('name', this.data.name);
+          this.element.setText(this.data.name);
         }
       });
     }

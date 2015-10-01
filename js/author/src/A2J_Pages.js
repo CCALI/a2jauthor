@@ -469,23 +469,43 @@ function guidePageEditForm(page, div, pagename)//novicePage
 		var updateShowMe=function(form,showMe)
 		{
 			showMe = Number(showMe);
-			form.find('[name="helpAudio"]').showit(showMe!==2);
-			form.find('[name="helpGraphic"]').showit(showMe===1);
-			form.find('[name="helpReader"]').showit(showMe>=1);
-			form.find('[name="helpVideo"]').showit(showMe===2);
+      form.find('.form-upload').hide();
+      form.find('[name="helpReader"]').hide();
+
+			if(showMe===1) {
+  			//Show graphic
+  			form.find('[name="helpAudio"]').show();
+  			form.find('[name="helpGraphic"]').show();
+  			form.find('[name="helpReader"]').show();
+			}
+			else if(showMe===2) {
+  			// Show video
+  			form.find('[name="helpVideo"]').show();
+  			form.find('[name="helpReader"]').show();
+			}
+			else {
+  			// Show text
+  			form.find('[name="helpAudio"]').show();
+			}
 		};
 		pagefs.append(form.pickList({label:'Help style:',value:getShowMe(), change:function(val,page,form){
 			updateShowMe(form, (val));
 			}},  [0,'Text',1,'Show Me Graphic',2,'Show Me Video']));
+
 		pagefs.append(form.htmlarea(	{label:"Help:",value:page.help,change:function(val,page){page.help=val;}} ));
+
 		pagefs.append(form.pickAudio(	{name:'helpAudio',label:'Help audio:',placeholder:'Help audio URL',	value:page.helpAudioURL,
 			change:function(val,page){page.helpAudioURL=val;}} ));
+
 		pagefs.append(form.pickImage(		{name:'helpGraphic',label:'Help graphic:',placeholder:'Help image URL',	value:page.helpImageURL,
 			change:function(val,page){page.helpImageURL=val;}} ));
+
 		pagefs.append(form.pickVideo(		{name:'helpVideo', label:'Help video:',placeholder:'Help video URL',		value:page.helpVideoURL,
 			change:function(val,page){page.helpVideoURL=val;}} ));
+
 		pagefs.append(form.htmlarea(	{name:'helpReader', label:'Help Text Reader:', value:page.helpReader,
 			change:function(val,page){page.helpReader=val;}} ));
+
 		pagefs.append(form.varPicker(		{label:'Counting Variable:',placeholder:'',	value:page.repeatVar,
 			change:function(val,page){page.repeatVar=val;}} ));
 		t.append(pagefs);

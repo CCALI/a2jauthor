@@ -963,7 +963,7 @@ TGuide.prototype.noviceTab = function(tab,clear)
 			tabHistory = form.div('Revision History');
 			tabHistory.append(form.text({label:'Current Version:',value:guide.version,change:function(val){guide.version=val;}}));
 			tabHistory.append(form.htmlarea({label:'Revision Notes',value:guide.notes,change:function(val){guide.notes=val;}}));
-			$('#tab-history').append(tabHistory);
+			$('#tab-revision').append(tabHistory);
 
 			tabAuthors = form.div('Authors');
 			tabAuthors.append(form.listManager({name:'Authors',picker:'Number of authors',min:1,max:12,list:guide.authors,blank:blankAuthor

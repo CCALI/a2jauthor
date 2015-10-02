@@ -5,7 +5,6 @@ import Map from 'can/map/';
 import './item.less!';
 import 'can/view/href/';
 import 'can/map/define/';
-import 'author/templates/elements/a2j-template/';
 
 /**
  * @module {Module} templatesListItem <templates-list-item>

@@ -22,7 +22,9 @@ CKEDITOR.dialog.add('variables', function(editor) {
   function setActiveItem(item) {
     if (!listItems) return;
 
+    // enable ok button on variable selection.
     var dialog = CKEDITOR.dialog.getCurrent();
+    dialog.enableButton('ok');
 
     listItems.forEach(function(listItem) {
       listItem.removeClass('active');
@@ -109,6 +111,10 @@ CKEDITOR.dialog.add('variables', function(editor) {
 
     onShow: function() {
       var guide = window.gGuide;
+      var dialog = CKEDITOR.dialog.getCurrent();
+
+      // disable ok button to avoid insertion of empty variables.
+      dialog.disableButton('ok');
 
       if (gGuide) {
         var variableNames = getVarsNames(gGuide.vars);

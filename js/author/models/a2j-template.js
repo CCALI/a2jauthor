@@ -33,11 +33,12 @@ let A2JTemplate = Model.extend({
    * @param {can.Map} node
    */
   makeDocumentTree: function(node) {
-    let scope = this;
     let branch = new A2JNode(node);
-    if(branch.attr('children.length')) {
-      branch.attr('children').forEach(function(child, index) {
-        branch.attr('children.' + index, scope.makeDocumentTree(child));
+    let children = branch.attr('children');
+
+    if (children.attr('length')) {
+      children.forEach((child, index) => {
+        branch.attr('children.' + index, this.makeDocumentTree(child));
       });
     }
 
@@ -46,33 +47,37 @@ let A2JTemplate = Model.extend({
 
   makeFindAll: function(findAllData) {
     return function(params, success, error) {
-      return findAllData(params).then((response) => {
+
+      let dfd = findAllData(params).then((response) => {
         let a2jTemplates = this.models(response);
 
-        a2jTemplates.map((a2jTemplate) => {
-          a2jTemplate.attr('rootNode',
-            this.makeDocumentTree(a2jTemplate.attr('rootNode')))
-          }
-        );
+        a2jTemplates.each((a2jTemplate, index) => {
+          // extend template with buildOrder property.
+          a2jTemplate.attr('buildOrder', index + 1);
+
+          let documentTree = this.makeDocumentTree(a2jTemplate.attr('rootNode'));
+          a2jTemplate.attr('rootNode', documentTree);
+        });
 
         return a2jTemplates;
-      }).
-      then(success, error);
-    }
+      });
+
+      return dfd.then(success, error);
+    };
   },
 
   makeFindOne: function(findOneData) {
     return function(params, success, error) {
-      return findOneData(params).then((response) => {
+
+      let dfd = findOneData(params).then((response) => {
         let a2jTemplate = this.model(response);
-        let documentTree = this.makeDocumentTree(
-          a2jTemplate.attr('rootNode'));
+        let documentTree = this.makeDocumentTree(a2jTemplate.attr('rootNode'));
 
         a2jTemplate.attr('rootNode', documentTree);
-
         return a2jTemplate;
-      })
-      .then(success, error);
+      });
+
+      return dfd.then(success, error);
     };
   }
 }, {

@@ -67,18 +67,18 @@ To take advantage of the Bootstrap grid system within a modal, just nest `.conta
 //* Background color of modal content area
 @modal-content-bg:                             #fff;
 //* Modal content border color
-@modal-content-border-color:                   rgba(0,0,0,.2);
+@modal-content-border-color:                   @gray-light;
 //* Modal content border color **for IE8**
-@modal-content-fallback-border-color:          #999;
+@modal-content-fallback-border-color:          @gray-light;
 
 //* Modal backdrop background color
 @modal-backdrop-bg:           #000;
 //* Modal backdrop opacity
 @modal-backdrop-opacity:      .5;
 //* Modal header border color
-@modal-header-border-color:   #e5e5e5;
+@modal-header-border-color:   @brand-primary;
 //* Modal footer border color
-@modal-footer-border-color:   @modal-header-border-color;
+@modal-footer-border-color:   @gray-light;
 
 @modal-lg:                    900px;
 @modal-md:                    600px;
@@ -90,6 +90,16 @@ To take advantage of the Bootstrap grid system within a modal, just nest `.conta
     .box-shadow;
   }
   .modal-header {
-    background: #f6f6f6;
+    background: @brand-primary;
+    color: #fff;
+
+    .close {
+      color: #fff;
+      .no-text-shadow;
+      margin-top: 2px;
+    }
+  }
+  .modal-footer {
+    background: @gray-lighter;
   }
 }

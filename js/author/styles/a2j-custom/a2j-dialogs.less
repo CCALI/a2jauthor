@@ -17,6 +17,7 @@
   .border;
   .box-shadow;
   z-index: @zindex-modal;
+  border-color: @gray-light;
 
   .ui-button  {
     background: @btn-default-bg;
@@ -35,7 +36,7 @@
   .ui-dialog-titlebar {
   	padding: @grid-gutter-width/2;
   	position: relative;
-    background: #f6f6f6;
+    background: @brand-primary;
 
     .ui-dialog-title {
     	float: left;
@@ -46,6 +47,7 @@
     	text-overflow: ellipsis;
     	font-size: @font-size-h4;
     	font-weight: @headings-font-weight;
+    	color: #fff;
     }
     .ui-dialog-titlebar-close {
     	position: absolute;
@@ -68,7 +70,7 @@
         top: 4px;
         right: 0;
         font-size: 18px;
-        color: @close-color;
+        color: #fff;
         opacity: 0.2;
       }
       &:hover,
@@ -108,8 +110,10 @@ ul#cajasettings {
 	text-align: left;
 	border-width: 1px 0 0 0;
 	background-image: none;
-	margin-top: .5em;
+	margin-top: 0;
 	padding: .3em 1em .5em .4em;
+	background: @gray-lighter;
+	border-top: 1px solid @gray-light;
 
 	button:last-child {
   	background: @btn-primary-bg;

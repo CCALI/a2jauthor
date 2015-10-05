@@ -1,4 +1,0 @@
-{{#if showEmpty}}
-  <blank-element></blank-element>
-{{/if}}
-

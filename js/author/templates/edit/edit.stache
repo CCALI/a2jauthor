@@ -1,15 +1,24 @@
 <div class="page">
-  {{#if a2jTemplate.isPending}}
+  {{#if a2jTemplatePromise.isPending}}
     <app-loading></app-loading>
   {{else}}
-    <template-edit-toolbar a2j-template="{a2jTemplate.value}"></template-edit-toolbar>
+    <template-edit-toolbar a2j-template="{a2jTemplate}"></template-edit-toolbar>
 
     <div class="container">
       <div class="row clearfix">
+        {{! left column where elements are rendered }}
         <div class="col-md-8">
-          <a2j-template template="{a2jTemplate.value}" edit-enabled="true"></a2j-template>
+          {{#if a2jTemplate.rootNode.children.length}}
+            <a2j-template
+              edit-enabled="true"
+              template="{a2jTemplate}">
+            </a2j-template>
+          {{else}}
+            <blank-element></blank-element>
+          {{/if}}
         </div>
 
+        {{! right column where template options tab is rendered }}
         <div class="col-md-4">
           <template-edit-tabs></template-edit-tabs>
         </div>

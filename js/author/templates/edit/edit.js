@@ -5,30 +5,38 @@ import A2JTemplate from 'author/models/a2j-template';
 
 import './tabs/';
 import './toolbar/';
-import '../elements/';
 import './edit.less!';
 import 'author/loading/';
 import 'can/map/define/';
+import '../elements/blank/';
 
 export let TemplateEditPage = Map.extend({
   define: {
-    a2jTemplate: {
+    a2jTemplatePromise: {
       get() {
+        let promise;
         let id = this.attr('templateId');
 
         if (id === 'new') {
-          return Promise.resolve(new A2JTemplate());
+          promise = Promise.resolve(new A2JTemplate());
         } else {
-          return A2JTemplate.findOne({template_id: id});
+          promise = A2JTemplate.findOne({template_id: id});
         }
+
+        promise = promise.then(a2jTemplate => {
+          this.attr('a2jTemplate', a2jTemplate);
+          return a2jTemplate;
+        });
+
+        return promise;
       }
     }
   }
 });
 
 export default Component.extend({
-  tag: 'template-edit-page',
+  template,
   leakScope: false,
-  viewModel: TemplateEditPage,
-  template
+  tag: 'template-edit-page',
+  viewModel: TemplateEditPage
 });

@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import F from 'funcunit';
 import assert from 'assert';
 import stache from 'can/view/stache/';
 
@@ -9,16 +10,20 @@ describe('<interviews-page>', function() {
 
   describe('Component', function() {
     let vm;
-    const activeClass = 'ui-state-active';
+    const activeClass = 'active';
 
-    beforeEach(function() {
+    beforeEach(function(done) {
       let frag = stache('<interviews-page></interviews-page>');
       $('#test-area').html(frag());
       vm = $('interviews-page').viewModel();
-      return vm.attr('interviews');
+
+      F('.guide').size(n => n > 0);
+      F(done);
     });
 
-    afterEach(() => $('#test-area').empty());
+    afterEach(function() {
+      $('#test-area').empty();
+    });
 
     it('lists interviews fetched from the server', function() {
       assert.isTrue($('.guide').length > 0, 'interviews should be listed');
@@ -50,10 +55,10 @@ describe('<interviews-page>', function() {
       return vm.attr('interviews').then(interviews => {
         let interview = interviews.attr(0);
         let id = interview.attr('id');
-        let size = $(`[gid=${id}] .size`).text();
+        let details = $(`[gid=${id}] small`).text();
 
+        assert.isTrue(details.indexOf('4K') !== -1);
         assert.equal(interview.attr('fileSize'), 3551);
-        assert.equal(size, '4K');
       });
     });
   });

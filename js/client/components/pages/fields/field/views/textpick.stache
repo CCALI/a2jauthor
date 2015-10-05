@@ -1,0 +1,6 @@
+<div>
+	<label for="{{label}}">{{{eval label}}}</label>
+	<select id="{{label}}" can-value="field._answer.values">
+		{{{options}}}
+	</select>
+</div>

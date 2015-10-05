@@ -1,0 +1,13 @@
+<p>
+	<h3>{{interview.title}}</h1>
+
+	{{#each interview.authors}}
+	<h4>{{name}}</h2>
+	{{/each}}
+
+	<div class="btn-group btn-group-justified">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default" can-click="navigate">Start</button>
+		<div class="btn-group">
+	</div>
+</p>

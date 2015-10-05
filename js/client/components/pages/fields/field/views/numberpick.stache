@@ -1,0 +1,16 @@
+<div>
+	<div class="form-group {{#if hasError}}has-error{{/if}}">
+		<label for="{{label}}">{{{eval label}}}</label>
+		<select id="{{label}}" can-value="field._answer.values">
+			{{#selectnum}}
+			<option value="{{.}}">{{.}}</option>
+			{{/selectnum}}
+		</select>
+	</div>
+
+	{{#prompt}}
+	<div class="alert alert-danger" role="alert">
+		{{{eval field.invalidPrompt}}}
+	</div>
+	{{/prompt}}
+<div>

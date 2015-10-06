@@ -164,9 +164,9 @@ export default Map.extend({
    * `displayList` when it's done.
    */
   init() {
-    let appState = this.attr('@root');
+    let appState = this.attr('appState');
 
-    if(window.gGuideID) {
+    if (window.gGuideID) {
       appState.attr('guideId', window.gGuideID);
     }
 

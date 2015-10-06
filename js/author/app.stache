@@ -262,7 +262,7 @@
             {{#if id}}
               <template-edit-page template-id="{id}"></template-edit-page>
             {{else}}
-              <templates-page></templates-page>
+              <templates-page app-state="{.}"></templates-page>
             {{/if}}
           {{/eq}}
         {{/is}}

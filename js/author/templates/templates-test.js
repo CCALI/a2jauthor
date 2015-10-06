@@ -1,4 +1,5 @@
 import F from 'funcunit';
+import Map from 'can/map/';
 import assert from 'assert';
 import Templates from './templates-vm';
 
@@ -12,7 +13,9 @@ describe('<templates-page>', function() {
     let vm;
 
     beforeEach(function() {
-      vm = new Templates();
+      vm = new Templates({
+        appState: new Map()
+      });
     });
 
     it('defaults activeFilter to "active" status', function() {
@@ -28,18 +31,24 @@ describe('<templates-page>', function() {
   });
 
   describe('Component', function() {
-    beforeEach(function() {
+    beforeEach(function(done) {
+      let appState = new Map({guideId: 1255});
+
       let frag = can.view.stache(
-        '<templates-page></templates-page>'
+        '<templates-page app-state="{appState}"></templates-page>'
       );
-      $('#test-area').html(frag());
+
+      $('#test-area').html(frag({appState}));
+
+      F('templates-list-item').size(size => size > 0);
+      F(done);
     });
 
-    afterEach(() => $('#test-area').empty());
+    afterEach(function() {
+      $('#test-area').empty();
+    });
 
     it('renders a list of active templates by default', function(done) {
-      F('templates-list-item').size(size => size > 0);
-
       F(function() {
         let templates = $('templates-page').viewModel().attr('displayList');
         let deleted = templates.filter(template => !template.attr('active'));
@@ -50,12 +59,10 @@ describe('<templates-page>', function() {
     });
 
     it('rendered list is sorted by buildOrder asc by default', function(done) {
-      F('templates-list-item').size(size => size > 0);
-
       F(function() {
         let templates = $('templates-page').viewModel().attr('displayList');
         let buildOrder = templates.attr().map(template => template.buildOrder);
-        assert.deepEqual(buildOrder, [1, 2, 3, 4], 'should be sorted asc');
+        assert.deepEqual(buildOrder, [1, 2], 'should be sorted asc');
       });
 
       F(done);
@@ -64,9 +71,6 @@ describe('<templates-page>', function() {
     it('deleted templates are filtered out properly', function(done) {
       let delay = 0;
       let totalActive;
-
-      // wait for the list to be rendered
-      F('templates-list-item').size(size => size > 0);
 
       F(function() {
         totalActive = $('templates-list-item').length;
@@ -91,8 +95,6 @@ describe('<templates-page>', function() {
     });
 
     it('displays alert if there are no search results', function(done) {
-      F('templates-list-item').size(size => size > 0);
-
       F(function() {
         $('templates-page').viewModel().attr('searchToken', '123456789');
       });
@@ -103,8 +105,6 @@ describe('<templates-page>', function() {
     });
 
     it('displays alert if there are no templates', function(done) {
-      F('templates-list-item').size(size => size > 0);
-
       // replace component's template list with an empty array.
       F(function() {
         $('templates-page').viewModel().attr('templates').replace([]);
@@ -115,8 +115,6 @@ describe('<templates-page>', function() {
     });
 
     it('displays alert if no templates match filters', function(done) {
-      F('templates-list-item').size(size => size > 0);
-
       F(function() {
         let vm = $('templates-page').viewModel();
 
@@ -130,8 +128,6 @@ describe('<templates-page>', function() {
     });
 
     it('displays alert if there are no templates in the trash', function(done) {
-      F('templates-list-item').size(size => size > 0);
-
       F(function() {
         let vm = $('templates-page').viewModel();
 

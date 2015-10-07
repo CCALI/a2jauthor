@@ -1,4 +1,13 @@
+@import '../../../main';
+
 element-options-pane {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: @grid-gutter-width/2;
+  height: 100%;
+
   .popover {
     .popover-overrides() !important;
   }
@@ -18,11 +27,17 @@ element-options-pane {
     border-radius: 0;
     border: 2px solid #2D659B;
 
-    &.right > .arrow {
-      top: 20px;
+    &.right {
+      float: none;
+      left: @grid-gutter-width/2;
+      top: 0;
 
-      &:after {
-        border-right-color: #2D659B;
+      & > .arrow {
+        top: @grid-gutter-width/2;
+
+        &:after {
+          border-right-color: #2D659B;
+        }
       }
     }
   }

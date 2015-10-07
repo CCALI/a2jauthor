@@ -1,0 +1,87 @@
+codeBefore
+codeAfter
+
+//set variable on answer
+//set variable with conditions
+
+	codeBefore: 'set fullname to firstname + " " middlename + " " + lastname'
+	//pseudoAnswers: {
+		'fullname': 'Bob Frank Jones'
+	}
+
+	if middlename = ""
+	set fullname  to firstname + " " + lastname
+	else
+	set fullname to firstname + " " middlename + " " + lastname
+	end if
+
+	//pseudoAnswers: {
+		'fullname': 'Bob Jones'
+	}
+
+//set variables on answer
+
+	'set firstname to "Bob"'
+	'set lastname to "Jones"'
+
+//set page destination -> codeAfter
+//goto page(immediately navigate to destination) -> codeBefore
+
+	if incarceration = true
+	GOTO "1-job loss date"
+	end if
+
+	//sets gLogic.gotopage = "1-job loss date"
+
+
+/*
+	logic blocks(codeBefore/codeAfter) //executeScript
+	logic in text, eg: "hello %%5+6%%"(text, help, label) //evalLogicHTML
+	//%% is the current wrapper token, but this will be variable
+	//within %% is an expression
+	//%%1+1%%
+	//%%firstName%%
+
+	Note: "varGet" looks up properties on the answer object. Some props may be unrelated to fields, provided initially by the interview for calculations, etc.
+
+	//varSet|varGet will need to lookup/set accordingly with new answer model
+	Note: case insensitive, perhaps a regex check for character matching regardless of case.
+
+	//below both cases resolve to the author's variable name
+	%%firstName%% %%FIRSTNAME%%
+	answer: {
+		'FirstName': ''
+	}
+ */
+
+/*
+	evalLogicHTML -> translateCAJAtoJSExpression -> [_VG, etc]
+	executeScript -> translateCAJAtoJS -> translateCAJAtoJSExpression -> [_VG, etc]
+ */
+
+
+/*
+loadAnswerFile === additional answer file stored as a url string(user saved halfway)
+	//bookmark variable with where the user left off
+ */
+
+/*
+Popups
+<a href="POPUP://1-Introduction">View your income</a>
+$('a[href="POPUP://"]).click(function() {
+})
+
+Modals within modals a possibility
+Not modifying history
+On close, show page
+Pass through evalLogicHTML
+ */
+
+
+
+TODOs:
+
+- partially saved interview.json
+- sample file that loadAnswerFile would return(xml)
+	- anx to json HotDocsAnswerSetFromXML(loadAnswerFileXMLResponse)
+	- something with varying types

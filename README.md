@@ -8,6 +8,9 @@ This the private repo for the browser-based versions of CALI Author and A2J Auth
 ```
 $ cd js
 $ npm install
+$ npm install -g bower
+$ npm install -g grunt-cli
+$ bower install
 ```
 
 ## To run locally:
@@ -18,7 +21,7 @@ $ npm start
 
 Then visit [http://localhost:3000](http://localhost:3000)
 
-## To build:
+## To build the Author:
 
 ```
 $ cd js
@@ -27,6 +30,16 @@ $ grunt build
 
 If you want to view the app in production mode, just start the server (`npm start`)
 and go to [http://localhost:3000/author/index.production.html](http://localhost:3000/author/index.production.html).
+
+## To build the mobile Viewer:
+
+```
+$ cd js
+$ grunt
+```
+
+If you want to view the app in production mode, just start the server (`npm start`)
+and go to [http://localhost:3000/client/index.html](http://localhost:3000/client/index.html).
 
 ## To run tests:
 

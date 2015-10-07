@@ -1,0 +1,3 @@
+{{#each fields}}
+	<a2j-field logic="{logic}" field="{.}" answer="{answer}"></a2j-field>
+{{/each}}

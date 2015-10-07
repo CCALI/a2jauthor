@@ -1,0 +1,10 @@
+<div class="{{#if hasError}}has-error{{/if}}">
+	<div class="checkbox">
+		<input
+			id="{{label}}"
+			type="checkbox"
+			name="{{name}}"
+			can-value="field._answer.values"/>
+		<label for="{{label}}">{{{eval label}}}</label>
+	</div>
+</div>

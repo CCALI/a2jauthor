@@ -1,0 +1,22 @@
+<br/>
+<div class="row">
+	<div class="col-xs-3 text-center">
+		<a can-click="toggleCredits" href="javascript://">
+			<img src="images/logo.png" class="img-responsive"/>
+		</a>
+	</div>
+
+	<div class="col-xs-6 text-center">
+		<strong>{{mState.header}}</strong><br/>
+		<small>{{prefix 'Step: ' mState.step}}</strong>
+	</div>
+
+	{{#showSave}}
+	<div class="col-xs-3">
+		<button
+			type="button"
+			can-click="save"
+			class="btn {{#if pState.isDirty}}btn-warning{{else}}btn-success{{/if}}">Save</button>
+	</div>
+	{{/showSave}}
+</div>

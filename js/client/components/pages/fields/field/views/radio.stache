@@ -1,0 +1,4 @@
+<div class="a2j-radio-button-group">
+	<input class="a2j-radio-button" id="{{label}}" type="radio" name="{{name}}" can-value="field._answer.values" value="{{value}}"/>
+	<label class="a2j-radio-button-label" for="{{label}}">{{{eval label}}}</label>
+</div>

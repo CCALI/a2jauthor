@@ -73,8 +73,12 @@ export default Component.extend({
       if ($a2jTemplate.length) {
         let rootNodeScope = $a2jTemplate.viewModel();
 
+        // get node's index value from the list item wrapper element
+        let $listItem = $el.parents('.node-wrapper');
+        let nodeIndex = $listItem.data('node-index');
+
         vm.attr('rootNodeScope', rootNodeScope);
-        rootNodeScope.registerNodeViewModel(vm);
+        rootNodeScope.registerNodeViewModel(vm, nodeIndex);
       }
     },
 

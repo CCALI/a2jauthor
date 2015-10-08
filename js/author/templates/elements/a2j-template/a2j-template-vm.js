@@ -69,10 +69,15 @@ export default Map.extend({
       let rootNode = this.attr('rootNode');
       let children = rootNode.attr('children');
 
+      let clonedNodeIndex = index + 1;
       let originalNode = children.attr(index);
       let clonedNode = new Map(originalNode.attr());
 
-      children.push(clonedNode);
+      // make sure cloned node is not in editable mode.
+      clonedNode.attr('state').attr('editActive', false);
+
+      // insert cloned node below the original
+      children.splice(clonedNodeIndex, 0, clonedNode);
       this.saveTemplateChanges();
     }
   },
@@ -129,8 +134,9 @@ export default Map.extend({
     return index;
   },
 
-  registerNodeViewModel(nodeViewModel) {
-    this.attr('nodesViewModels').push(nodeViewModel);
+  registerNodeViewModel(nodeViewModel, index) {
+    let nodesViewModels = this.attr('nodesViewModels');
+    nodesViewModels.splice(index, 0, nodeViewModel);
   },
 
   deregisterNodeViewModel(nodeViewModel) {
@@ -149,13 +155,7 @@ export default Map.extend({
     let nodesViewModels = this.attr('nodesViewModels');
 
     if (from !== to) {
-      // when the children elements of the rootNode are moved around, we need
-      // to sync up the `nodesViewModels` list which keeps a reference of the
-      // view models of each of the components that represent a child/node.
-      // https://github.com/CCALI/CAJA/issues/614
       moveItem(children, from, to);
-      moveItem(nodesViewModels, from, to);
-
       this.attr('dragItemIndex', to);
     }
   },

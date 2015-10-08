@@ -4,7 +4,11 @@
 
 <ul>
   {{#each rootNode.children}}
-    <li class="node-wrapper{{#if isBeingDragged}} drag-placeholder{{/if}}" draggable="true">
+    <li
+      draggable="true"
+      data-node-index="{{@index}}"
+      class="node-wrapper{{#if isBeingDragged}} drag-placeholder{{/if}}">
+
       {{a2jParse component state}}
     </li>
   {{/each}}

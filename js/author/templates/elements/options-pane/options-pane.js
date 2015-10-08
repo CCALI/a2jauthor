@@ -56,23 +56,6 @@ export let OptionsPane = Map.extend({
       let rootNodeScope = nodeScope.attr('rootNodeScope');
       rootNodeScope.updateNodeState(nodeScope);
     }
-  },
-
-  /**
-   * @property {function} optionsPane.ViewModel.prototype.discardAndClose discardAndClose
-   * @parent optionsPane.ViewModel
-   *
-   * Similar to `saveAndClose`, this method is called when the X button is clicked,
-   * it delegates the logic to restore the element previous state to the root node
-   * scope (`a2j-template`'s scope).
-   */
-  discardAndClose() {
-    let nodeScope = this.attr('parentScope');
-
-    if (nodeScope) {
-      let rootNodeScope = nodeScope.attr('rootNodeScope');
-      rootNodeScope.revertNodeState(nodeScope);
-    }
   }
 });
 

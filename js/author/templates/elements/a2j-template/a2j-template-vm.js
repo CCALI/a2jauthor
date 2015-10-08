@@ -146,9 +146,16 @@ export default Map.extend({
     let from = this.attr('dragItemIndex');
     let to = this.attr('dropItemIndex');
     let children = this.attr('rootNode.children');
+    let nodesViewModels = this.attr('nodesViewModels');
 
     if (from !== to) {
+      // when the children elements of the rootNode are moved around, we need
+      // to sync up the `nodesViewModels` list which keeps a reference of the
+      // view models of each of the components that represent a child/node.
+      // https://github.com/CCALI/CAJA/issues/614
       moveItem(children, from, to);
+      moveItem(nodesViewModels, from, to);
+
       this.attr('dragItemIndex', to);
     }
   },

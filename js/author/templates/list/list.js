@@ -2,39 +2,11 @@ import Map from 'can/map/';
 import template from './list.stache!';
 import Component from 'can/component/';
 import _range from 'lodash/utility/range';
+import moveItem from 'author/utils/move-item-array';
 
 import './item/';
 import './list.less!';
 import 'can/map/define/';
-
-/**
- * @function move
- * @hide true
- * @description
- *
- * Moves the item at the `start` index to the `end` index, it does not mutate
- * the provided array, it returns a new reference.
- *
- * Usage:
- *   @codestart
- *   let a = [1, 2, 3];
- *   let b = move(a, 0, 2);
- *
- *   assert.deepEqual(a, [1, 2, 3]);
- *   assert.deepEqual(b, [2, 3, 1]);
- *   @codeend
- *
- * @param {Array} array An array object
- * @param {Number} start Index of the element that will be moved
- * @param {Number} end Index at which element will be moved
- * @return {Array} The modified array
- */
-function move(array, start, end) {
-  var copy = array.slice(0);
-  var item = copy.splice(start, 1)[0];
-  copy.splice(end, 0, item);
-  return copy;
-}
 
 /**
  * @module {Module} templatesList <templates-list>
@@ -79,7 +51,7 @@ export let List = Map.extend({
       can.batch.start();
 
       let positions = _range(templates.attr('length'));
-      let newPositions = move(positions, dragPos, dropPos);
+      let newPositions = moveItem(positions, dragPos, dropPos);
 
       newPositions.forEach(function(pos, index) {
         templates.attr(pos).attr('buildOrder', index + 1);
@@ -114,11 +86,8 @@ export default Component.extend({
     'li dragenter': function(el) {
       let dropIndex = this.viewModel.attr('dropItemIndex');
 
-      // dragenter is fired multiple times, we need to make sure the class is
-      // only added when `dropItemIndex` is different from the element's index
-      // that receives the dragenter event; the first condition makes sure the
-      // class is added for the element being dragged.
-      if (dropIndex == null && dropIndex !== el.index()) {
+      // add placeholder class to the element being dragged.
+      if (dropIndex == null) {
         el.addClass('drag-placeholder');
       }
 

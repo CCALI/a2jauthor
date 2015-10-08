@@ -1,3 +1,19 @@
+@import '../../../main';
+
 a2j-template {
   display: block;
+
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  .drag-placeholder {
+    border: 1px dashed darken(@gray-lighter, 20%);
+    background-color: lighten(@gray-lighter, 10%) !important;
+
+    :first-child {
+      visibility: hidden;
+    }
+  }
 }

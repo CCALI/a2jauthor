@@ -59,10 +59,8 @@ export default Component.extend({
   leakScope: false,
 
   viewModel: function(attrs, parentScope) {
-    let vm = new Container();
-
+    let vm = new Container(attrs);
     vm.attr('parentScope', parentScope.attr('.'));
-
     return vm;
   },
 

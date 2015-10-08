@@ -63,6 +63,15 @@ export default Component.extend({
   },
 
   events: {
+    inserted() {
+      let vm = this.viewModel;
+      let editActive = vm.attr('editActive');
+
+      if (editActive) {
+        this.initCKEditor();
+      }
+    },
+
     removed() {
       this.viewModel.destroyEditorInstance();
     },
@@ -72,26 +81,32 @@ export default Component.extend({
       let editActive = vm.attr('editActive');
 
       if (editActive) {
-        // wait for the template to be updated, otherwise the `textarea`
-        // won't be in the DOM when `ckeditor.replace` is called.
-        setTimeout(() => {
-          let $textarea = this.element.find('textarea');
-
-          let editor = ckeditor.replace($textarea.get(0), {
-            extraPlugins: 'a2j-variable',
-            extraAllowedContent: {
-              'a2j-variable': {
-                attributes: ['name']
-              }
-            }
-          });
-
-          vm.attr('ckeditorInstance', editor);
-        });
+        this.initCKEditor();
       } else {
         vm.updateUserContent();
         vm.destroyEditorInstance();
       }
+    },
+
+    initCKEditor() {
+      let vm = this.viewModel;
+
+      // wait for the template to be updated, otherwise the `textarea`
+      // won't be in the DOM when `ckeditor.replace` is called.
+      setTimeout(() => {
+        let $textarea = this.element.find('textarea');
+
+        let editor = ckeditor.replace($textarea.get(0), {
+          extraPlugins: 'a2j-variable',
+          extraAllowedContent: {
+            'a2j-variable': {
+              attributes: ['name']
+            }
+          }
+        });
+
+        vm.attr('ckeditorInstance', editor);
+      });
     }
   }
 });

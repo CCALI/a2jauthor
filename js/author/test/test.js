@@ -1,8 +1,9 @@
 import 'author/models/fixtures/';
-import 'author/models/tests/a2j-template-test';
-import 'author/models/tests/a2j-variable-test';
 import 'author/models/tests/guide-test';
 import 'author/models/tests/template-test';
+import 'author/utils/move-item-array-test';
+import 'author/models/tests/a2j-template-test';
+import 'author/models/tests/a2j-variable-test';
 
 import 'author/alert/alert-test';
 import 'author/popover/popover-test';

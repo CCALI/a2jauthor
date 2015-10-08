@@ -2,8 +2,10 @@
   <p>Template updated successfully.</p>
 </app-alert>
 
-{{#each rootNode.children}}
-  <div class="node-wrapper" data-node-index="{{@index}}">
-    {{a2jParse component state}}
-  </div>
-{{/each}}
+<ul>
+  {{#each rootNode.children}}
+    <li class="node-wrapper{{#if isBeingDragged}} drag-placeholder{{/if}}" draggable="true">
+      {{a2jParse component state}}
+    </li>
+  {{/each}}
+</ul>

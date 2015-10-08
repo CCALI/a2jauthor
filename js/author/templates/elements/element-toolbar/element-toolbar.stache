@@ -1,5 +1,5 @@
 <div>
-  <span class="glyphicon-move small text-muted"></span>
+  <span class="glyphicon-move small text-muted drag-handle"></span>
   <div class="pull-right">
     <a href="#" (click)="cloneNode">
       <span class="glyphicon-docs small text-muted"></span>Duplicate

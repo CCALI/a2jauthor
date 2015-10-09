@@ -79,6 +79,8 @@ export default Component.extend({
 
         vm.attr('rootNodeScope', rootNodeScope);
         rootNodeScope.registerNodeViewModel(vm, nodeIndex);
+
+        this.toggleEditActiveNode();
       }
     },
 
@@ -92,6 +94,10 @@ export default Component.extend({
     },
 
     '{viewModel} selected': function() {
+      this.toggleEditActiveNode();
+    },
+
+    toggleEditActiveNode() {
       let vm = this.viewModel.attr('parentScope');
       let editActive = vm.attr('editActive');
       let rootNodeScope = vm.attr('rootNodeScope');

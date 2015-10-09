@@ -20,7 +20,7 @@
 
         {{! right column where template options tab is rendered }}
         <div class="col-md-4">
-          <template-edit-tabs></template-edit-tabs>
+          <template-edit-tabs a2j-template="{a2jTemplate}"></template-edit-tabs>
         </div>
       </div>
     </div>

@@ -126,6 +126,14 @@ let A2JTemplate = Model.extend({
         });
       }
     }
+  },
+
+  addNode(node) {
+    if (node instanceof A2JNode) {
+      let rootNode = this.attr('rootNode');
+      let children = rootNode.attr('children');
+      children.push(node);
+    }
   }
 });
 

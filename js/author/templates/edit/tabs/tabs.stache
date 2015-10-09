@@ -1,9 +1,104 @@
-<bit-tabs>
+<bit-tabs tabs-class="nav nav-tabs">
   <bit-panel title="Add Elements">
-    <h3>Standard</h3>
-    <button>Element</button>
+    <div class="tab-pane">
+      <h3>Standard</h3>
+      <div class="row clearfix">
+        <div class="col-lg-6">
+          <button class="btn btn-default disabled">Plain Text</button>
+        </div>
+
+        <div class="col-lg-6">
+          <button class="btn btn-default">Rich Text</button>
+        </div>
+      </div>
+
+      <div class="row clearfix">
+        <div class="col-lg-6">
+          <button class="btn btn-default disabled">Table</button>
+        </div>
+
+        <div class="col-lg-6">
+          <button class="btn btn-default disabled">Checklist</button>
+        </div>
+      </div>
+
+      <div class="row clearfix">
+        <div class="col-lg-6">
+          <button class="btn btn-default">Section</button>
+        </div>
+
+        <div class="col-lg-6">
+          <button class="btn btn-default disabled">Page Break</button>
+        </div>
+      </div>
+
+      <h3>Logic</h3>
+      <div class="row clearfix">
+        <div class="col-lg-6">
+          <button class="btn btn-default disabled">If / Else</button>
+        </div>
+
+        <div class="col-lg-6">
+          <button class="btn btn-default disabled">Repeat Loop</button>
+        </div>
+      </div>
+
+      <h3>Special</h3>
+      <div class="row clearfix">
+        <div class="col-lg-6">
+          <button class="btn btn-default disabled">Signature Line</button>
+        </div>
+
+        <div class="col-lg-6">
+          <button class="btn btn-default disabled">Upload PDF</button>
+        </div>
+      </div>
+    </div>
   </bit-panel>
 
   <bit-panel title="Template Options">
+    <form>
+      <h3>Layout</h3>
+
+      <div class="row clearfix">
+        <div class="col-lg-6">
+          <button class="btn btn-default disabled">Custom Header</button>
+        </div>
+
+        <div class="col-lg-6">
+          <button class="btn btn-default disabled">Custom Footer</button>
+        </div>
+      </div>
+
+      <h3>Formatting</h3>
+
+      <div class="form-group">
+        <label>Font Family</label>
+        <select class="form-control" disabled>
+          <option selected="selected">Arial</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Font Size</label>
+        <select class="form-control" disabled>
+          <option selected="selected">12</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Section Numbering</label>
+        <select class="form-control" disabled>
+          <option selected="selected">None</option>
+        </select>
+      </div>
+
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="" disabled>
+          Conditional Logic
+        </label>
+      </div>
+    </form>
   </bit-panel>
 </bit-tabs>

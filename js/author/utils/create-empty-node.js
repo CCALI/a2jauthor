@@ -20,7 +20,7 @@ let emptyNodes = {
 };
 
 export default function createEmptyNode(nodeName) {
-  let nodeDefinition = emptyNodes[nodoName];
+  let nodeDefinition = emptyNodes[nodeName];
 
   if (nodeDefinition) {
     return new A2JNode(nodeDefinition);

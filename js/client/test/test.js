@@ -1,4 +1,4 @@
-import 'client/models/tests/page-test';
-import 'client/models/tests/answervm-test';
-import 'client/models/tests/interview-test';
-import 'client/models/tests/memory-state-test';
+import 'client/util/tests/';
+import 'client/models/tests/';
+
+

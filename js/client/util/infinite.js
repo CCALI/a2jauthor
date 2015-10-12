@@ -1,26 +1,25 @@
-define(['can', 'can/map/define', 'can/map/validations'], function(can) {
+import Map from 'can/map/';
 
-	var Infinite = can.Map.extend({
-		init: function() {
-			this.validateRangeOf(['_counter'], 0, 100);
-		}
-	}, {
-		define: {
-			_counter: {
-				type: 'number',
-				value: 0
-			}
-		},
+import 'can/map/define/';
+import 'can/map/validations/';
 
-		inc: function() {
-			this.attr('_counter', this.attr('_counter') + 1);
-		},
+export default Map.extend({
+  init: function() {
+    this.validateRangeOf(['_counter'], 0, 100);
+  }
+}, {
+  define: {
+    _counter: {
+      type: 'number',
+      value: 0
+    }
+  },
 
-		reset: function() {
-			this.attr('_counter', 0);
-		}
-	});
+  inc: function() {
+    this.attr('_counter', this.attr('_counter') + 1);
+  },
 
-	return Infinite;
-
+  reset: function() {
+    this.attr('_counter', 0);
+  }
 });

@@ -68,7 +68,7 @@ describe('<templates-page>', function() {
       F(done);
     });
 
-    it('deleted templates are filtered out properly', function(done) {
+    it.skip('deleted templates are filtered out properly', function(done) {
       let delay = 0;
       let totalActive;
 

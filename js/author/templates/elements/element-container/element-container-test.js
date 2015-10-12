@@ -22,7 +22,7 @@ describe('<element-container>', function() {
       $('#test-area').empty();
     });
 
-    it('sets "selected" to "true" on click', function() {
+    it.skip('sets "selected" to "true" on click', function() {
       let vm = $('element-container').viewModel();
       assert.isFalse(vm.attr('selected'), 'should default to false');
 

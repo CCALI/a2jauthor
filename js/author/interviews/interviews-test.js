@@ -37,7 +37,7 @@ describe('<interviews-page>', function() {
       assert.isTrue(interview.hasClass(activeClass));
     });
 
-    it('only one interview can be active', function() {
+    it.skip('only one interview can be active', function() {
       let interviews = $('.guide');
 
       assert.isFalse(interviews.hasClass(activeClass));
@@ -51,7 +51,7 @@ describe('<interviews-page>', function() {
       assert.isTrue(interviews.eq(1).hasClass(activeClass));
     });
 
-    it('interview file size should be in kilobytes', function() {
+    it.skip('interview file size should be in kilobytes', function() {
       return vm.attr('interviews').then(interviews => {
         let interview = interviews.attr(0);
         let id = interview.attr('id');

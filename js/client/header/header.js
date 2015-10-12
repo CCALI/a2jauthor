@@ -1,32 +1,31 @@
-define(['can',
-		'text!components/header/init.stache',
-		'can/view/stache'
-	],
+import Map from 'can/map/';
+import Component from 'can/component/';
+import template from './header.stache!';
 
-	function(can, init) {
+let HeaderVM = Map.extend({
+  toggleCredits: function() {
+    this.attr('mState.showCredits', !this.attr('mState.showCredits'));
+  },
 
-		can.Component.extend({
-			tag: 'a2j-header',
-			template: can.stache(init),
-			scope: {
-				toggleCredits: function() {
-					this.attr('mState.showCredits', !this.attr('mState.showCredits'));
-				},
+  save: function() {
+    this.attr('pState').save(true);
+  }
+});
 
-				save: function() {
-					this.attr('pState').save(true);
-				}
-			},
-			helpers: {
-				showSave: function(options) {
-					var autoSetDataURL = this.attr('mState.autoSetDataURL');
+export default Component.extend({
+  template,
+  leakScope: false,
+  tag: 'a2j-header',
+  viewModel: HeaderVM,
 
-					return this.attr('rState.view') === 'pages'
-						&& autoSetDataURL && autoSetDataURL.length
-						? options.fn()
-						: options.inverse();
-				}
-			}
-		});
+  helpers: {
+    showSave: function(options) {
+      let autoSetDataURL = this.attr('mState.autoSetDataURL');
 
-	});
+      return this.attr('rState.view') === 'pages'
+        && autoSetDataURL && autoSetDataURL.length
+        ? options.fn()
+        : options.inverse();
+    }
+  }
+});

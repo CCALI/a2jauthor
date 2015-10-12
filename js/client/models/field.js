@@ -1,63 +1,69 @@
-define(['can',
-	'models/answer',
-	'exports',
-	'can/map/define'],
-	function(can, Answer, exports) {
+import $ from 'jquery';
+import Map from 'can/map/';
+import List from 'can/list/';
+import Answer from 'client/models/answer';
 
-		Field = can.Map({
-			define: {
-				answer: {
-					get: function() {
-						var answer = this.page.interview.attr('answers').attr(this.attr('name'));
+import 'can/map/define/';
 
-						if(answer) {
-							return answer;
-						} else {
-							answer = new Answer({
-								name: this.attr('name').toLowerCase(),
-								type: this.attr('type'),
-								repeating: this.attr('repeating'),
-								values: [null]
-							});
+let Field = Map.extend({
+  define: {
+    answer: {
+      get: function() {
+        var answer = this.page.interview.attr('answers').attr(this.attr('name'));
 
-							this.page.interview.attr('answers').attr(this.attr('name').toLowerCase(), answer);
+        if (answer) {
+          return answer;
+        } else {
+          answer = new Answer({
+            name: this.attr('name').toLowerCase(),
+            type: this.attr('type'),
+            repeating: this.attr('repeating'),
+            values: [null]
+          });
 
-							return answer;
-						}
-					}
-				},
+          this.page.interview.attr('answers').attr(this.attr('name').toLowerCase(), answer);
+          return answer;
+        }
+      }
+    },
 
-				options: {
-					value: ''
-				}
-			},
+    options: {
+      value: ''
+    }
+  },
 
-			getOptions: function() {
-				var dfd = new can.Deferred(),
-				self = this;
+  getOptions: function() {
+    let _this = this;
+    let dfd = new can.Deferred();
 
-				if(this.attr('listData')) {
-					this.attr('options', this.attr('listData'));
-					dfd.resolve();
-				}
-				else if(this.attr('listSrc')) {
-					can.ajax({
-						url: this.attr('listSrc'),
-						dataType: 'text',
-						success: function(options) {
-							self.attr('options', options);
-							dfd.resolve();
-						},
-						error: function() {
-							dfd.reject();
-						}
-					});
-				}
+    if (this.attr('listData')) {
+      this.attr('options', this.attr('listData'));
+      dfd.resolve();
+    }
+    else if (this.attr('listSrc')) {
+      let req = $.ajax({
+        dataType: 'text',
+        url: this.attr('listSrc'),
+      });
 
-				return dfd;
-			}
-		});
+      let onSuccess = function(options) {
+        _this.attr('options', options);
+        dfd.resolve();
+      };
 
-		exports.Field = Field;
+      let onError = function() {
+        dfd.reject();
+      };
 
-	});
+      req.then(onSuccess, onError);
+    }
+
+    return dfd;
+  }
+});
+
+Field.List = List.extend({
+  Map: Field
+}, {});
+
+export default Field;

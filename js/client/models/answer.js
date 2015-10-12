@@ -1,7 +1,5 @@
-define(['can', 'can/map/define'], function(can) {
+import Map from 'can/map/';
 
-	var Answer = can.Map.extend();
+import 'can/map/define/';
 
-	return Answer;
-
-});
+export default Map.extend({});

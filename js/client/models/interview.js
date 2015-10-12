@@ -1,104 +1,97 @@
-define(['can',
-	'models/answers',
-	'models/page',
-	'util/parser',
-	'exports',
-	'can/map/define'],
-	function(can, Answers, Page, parser, exports) {
+import Model from 'can/model/';
+import Page from 'client/models/page';
+import parser from 'client/util/parser';
+import _find from 'lodash/collection/find';
+import Answers from 'client/models/answers';
 
-		var Interview = can.Model.extend({
-			findOne: function(data, success, error) {
-				var dfd = new can.Deferred(),
-				resumeDfd = new can.Deferred(),
+import 'can/map/define/';
 
-				interviewDfd = can.ajax({
-					url: data.url
-				});
+export default can.Model.extend({
+  findOne: function(data, success, error) {
+    let dfd = new can.Deferred();
+    let resumeDfd = new can.Deferred();
 
-				interviewDfd.done(function(interview) {
-					if(data.resume) {
-						can.ajax({
-							url: data.resume,
-							dataType: 'text'
-						})
-						.done(function(anx) {
-							var vars = parser.parseJSON(anx, interview.vars);
-							interview.vars = vars;
+    let interviewDfd = can.ajax({
+      url: data.url
+    });
 
-							resumeDfd.resolve(interview);
-						})
-						.fail(function() {
-							resumeDfd.reject();
-						});
-					}
-					else {
-						resumeDfd.resolve(interview);
-					}
-				});
+    interviewDfd.done(function(interview) {
+      if (data.resume) {
+        can.ajax({
+          url: data.resume,
+          dataType: 'text'
+        })
+        .done(function(anx) {
+          var vars = parser.parseJSON(anx, interview.vars);
+          interview.vars = vars;
 
-				resumeDfd.done(function(interview) {
-					dfd.resolve(interview);
-				}).fail(function() {
-					dfd.reject();
-				});
+          resumeDfd.resolve(interview);
+        })
+        .fail(function() {
+          resumeDfd.reject();
+        });
+      } else {
+        resumeDfd.resolve(interview);
+      }
+    });
 
-				return dfd;
-			},
+    resumeDfd.done(function(interview) {
+      dfd.resolve(interview);
+    }).fail(function() {
+      dfd.reject();
+    });
 
-			parseModel: function(data) {
-				data._pages = data.pages;
-				data.pages = [];
+    return dfd;
+  },
 
-				can.each(data._pages, function(p) {
-					var num = p.step,
+  parseModel: function(data) {
+    data._pages = data.pages;
+    data.pages = [];
 
-					step = _.find(data.steps, function(step) {
-						return +step.number === num;
-					});
+    can.each(data._pages, function(p) {
+      let num = p.step;
 
-					p.step = step;
+      let step = _find(data.steps, function(step) {
+        return +step.number === num;
+      });
 
-					data.pages.push(p);
-				});
+      p.step = step;
 
-				can.each(data.vars, function(v) {
-					v.values = v.values || [null];
-				});
+      data.pages.push(p);
+    });
 
-				return data;
-			}
-		}, {
-			define: {
-				pages: {
-					set: function(list) {
-						var self = this;
+    can.each(data.vars, function(v) {
+      v.values = v.values || [null];
+    });
 
-						var pages = new Page.Page.List(list.forEach(function(p) {
-							p.interview = self;
-						}));
+    return data;
+  }
+}, {
+  define: {
+    pages: {
+      set: function(list) {
+        list.forEach(p => p.interview = this);
+        var pages = new Page.List(list);
+        return pages;
+      },
 
-						return pages;
-					},
-					Type: Page.Page.List
-				},
-				answers: {
-					Type: Answers,
-					Value: Answers
-				}
-			},
+      Type: Page.List
+    },
 
-			createGuide: function() {
-				var answers = this.attr('answers');
+    answers: {
+      Type: Answers,
+      Value: Answers
+    }
+  },
 
-				return {
-					pages: this._pages,
-					varExists: can.proxy(answers.varExists, answers),
-					varGet: can.proxy(answers.varGet, answers),
-					varSet: can.proxy(answers.varSet, answers)
-				};
-			}
-		});
+  createGuide: function() {
+    var answers = this.attr('answers');
 
-		exports.Interview = Interview;
-
-	});
+    return {
+      pages: this._pages,
+      varExists: can.proxy(answers.varExists, answers),
+      varGet: can.proxy(answers.varGet, answers),
+      varSet: can.proxy(answers.varSet, answers)
+    };
+  }
+});

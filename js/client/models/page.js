@@ -1,36 +1,33 @@
-define(['can',
-	'models/answer',
-	'models/field',
-	'lodash',
-	'exports',
-	'can/map/define'],
-	function(can, Answer, Field, _, exports) {
+import Map from 'can/map/';
+import List from 'can/list/';
+import Field from 'client/models/field';
+import Answer from 'client/models/answer';
+import _find from 'lodash/collection/find';
 
-		var Page = can.Map.extend({
-			define: {
-				fields: {
-					set: function(list) {
-						var self =  this;
+import 'can/map/define/';
 
-						var fields = new Field.Field.List(list.forEach(function(f) {
-							f.page = self;
-						}));
+let Page = Map.extend({
+  define: {
+    fields: {
+      set: function(list) {
+        list.forEach(f => f.page = this);
+        let fields = new Field.List(list);
+        return fields;
+      },
 
-						return fields;
-					},
-					Type: Field.Field.List
-				}
-			}
-		});
+      Type: Field.List
+    }
+  }
+});
 
-		Page.List = Page.List.extend({
-			find: function(name) {
-				return _.find(this, function(page) {
-					return page.attr('name') === name;
-				});
-			}
-		});
+Page.List = List.extend({
+  Map: Page
+}, {
+  find: function(name) {
+    return _find(this, function(page) {
+      return page.attr('name') === name;
+    });
+  }
+});
 
-		exports.Page = Page;
-
-	});
+export default Page;

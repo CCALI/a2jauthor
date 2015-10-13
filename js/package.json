@@ -23,7 +23,6 @@
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-less": "^1.0.1",
-    "grunt-contrib-requirejs": "0.4.4",
     "grunt-jsbeautifier": "0.2.7",
     "jquery": "^2.1.4",
     "jquery-ui": "git://github.com/jquery/jquery-ui.git#1.11.4",

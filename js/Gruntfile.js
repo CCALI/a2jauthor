@@ -36,7 +36,7 @@ module.exports = function(grunt) {
         reporter: 'Spec',
         browsers: ['firefox']
       },
-      firefox: ['author/test/index.html']
+      firefox: ['author/test/index.html', 'client/test/index.html']
     },
 
     copy: {

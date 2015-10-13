@@ -1,68 +1,61 @@
-define(['can',
-	'util/tlogic',
-	'util/infinite',
-	'util/regex',
-	'models/constants',
-	'util/string',
-	'can/map/define'],
+import Map from 'can/map/';
+import regex from 'client/util/regex';
+import tLogic from 'client/util/tlogic';
+import cString from 'client/util/string';
+import Infinite from 'client/util/infinite';
+import constants from 'client/models/constants';
 
-function(can,
-	tLogic,
-	Infinite,
-	regex,
-	constants,
-	cString) {
+import 'can/map/define/';
 
-	var Logic = can.Map.extend({
-		define: {
-			gotoPage: {
-				get: function() {
-					return this._tLogic.GOTOPAGE;
-				},
+export default Map.extend({
+  define: {
+    gotoPage: {
+      get: function() {
+        return this._tLogic.GOTOPAGE;
+      },
 
-				set: function(val) {
-					this._tLogic.GOTOPAGE = val;
-				}
-			},
+      set: function(val) {
+        this._tLogic.GOTOPAGE = val;
+      }
+    },
 
-			infinite: {
-				Type: Infinite,
-				Value: Infinite
-			}
-		},
+    infinite: {
+      Type: Infinite,
+      Value: Infinite
+    }
+  },
 
-		init: function() {
-			var guide = this.attr('interview').createGuide(),
-			stringMethods = ['decodeEntities', 'htmlEscape', 'jsDate2days',
-				'today2jsDate', 'mdy2jsDate', 'days2jsDate', 'ismdy', 'jquote'],
-			traceMethods = ['traceTag'],
-			methods = [guide, regex, constants];
+  init: function() {
+    let guide = this.attr('interview').createGuide();
 
-			can.each(stringMethods, function(fn) {
-				methods.push(can.proxy(cString[fn], cString));
-			});
+    let stringMethods = ['decodeEntities', 'htmlEscape', 'jsDate2days',
+      'today2jsDate', 'mdy2jsDate', 'days2jsDate', 'ismdy', 'jquote'];
 
-			can.each(traceMethods, function(fn) {
-				methods.push(function() {});
-			});
+    let traceMethods = ['traceTag'];
+    let methods = [guide, regex, constants];
 
-			this._tLogic = tLogic.apply(this, methods);
-			//TODO: This exposure is due to creating a function on the fly within
-			//tlogic.js, line 539
-			window.gLogic = this._tLogic;
-		},
+    can.each(stringMethods, function(fn) {
+      methods.push(can.proxy(cString[fn], cString));
+    });
 
-		eval: function(str) {
-			var output = this._tLogic.evalLogicHTML(str);
+    can.each(traceMethods, function(fn) {
+      methods.push(function() {});
+    });
 
-			return output.html;
-		},
+    this._tLogic = tLogic.apply(this, methods);
 
-		exec: function(cajascript) {
-			return this._tLogic.executeScript(cajascript);
-		}
-	});
+    //TODO: This exposure is due to creating a function on the fly within
+    //tlogic.js, line 539
+    window.gLogic = this._tLogic;
+  },
 
-	return Logic;
+  eval: function(str) {
+    var output = this._tLogic.evalLogicHTML(str);
 
+    return output.html;
+  },
+
+  exec: function(cajascript) {
+    return this._tLogic.executeScript(cajascript);
+  }
 });

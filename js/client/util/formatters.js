@@ -1,45 +1,45 @@
 var FormattedValue = can.Control.extend({
-	init: function () {
-		this.set();
-	},
+  init: function() {
+    this.set();
+  },
 
-	__format: function() {
-		// return formatted version of this.options.value;
-	},
+  __format: function() {
+    // return formatted version of this.options.value;
+  },
 
-	__deformat: function() {
-		// return this.element[0].value sans format(keeps your model pristine);
-	},
+  __deformat: function() {
+    // return this.element[0].value sans format(keeps your model pristine);
+  },
 
-	'{value} change': 'set',
-	set: function () {
-		if (!this.element) {
-			return;
-		}
+  '{value} change': 'set',
 
-		var self = this;
+  set: function() {
+    if (!this.element) {
+      return;
+    }
 
-		setTimeout(function() {
-			self.element[0].value = self.__format();
-		});
-	},
+    setTimeout(() => {
+      this.element[0].value = this.__format();
+    });
+  },
 
-	'change': function () {
-		if (!this.element) {
-			return;
-		}
+  change: function() {
+    if (!this.element) {
+      return;
+    }
 
-		this.options.value(this.__deformat());
-	}
+    this.options.value(this.__deformat());
+  }
 });
 
-can.view.attr('can-ssn-value', function (el, data) {
-	var attr = removeCurly(el.getAttribute('can-ssn-value')),
-	value = data.scope.computeData(attr, {
-		args: []
-	}).compute;
+can.view.attr('can-ssn-value', function(el, data) {
+  let attr = removeCurly(el.getAttribute('can-ssn-value'));
 
-	new Value(el, {
-		value: value
-	});
+  let value = data.scope.computeData(attr, {
+    args: []
+  }).compute;
+
+  new Value(el, {
+    value: value
+  });
 });

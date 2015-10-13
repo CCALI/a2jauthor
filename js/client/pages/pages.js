@@ -2,7 +2,6 @@ import PagesVM from './pages-vm';
 import Component from 'can/component/';
 import template from './pages.stache!';
 import AnswerVM from 'client/models/answervm';
-import constants from 'client/models/constants';
 
 import 'client/util/helpers';
 import 'client/pages/fields/';
@@ -10,7 +9,7 @@ import 'client/pages/fields/';
 export default Component.extend({
   template,
   tag: 'a2j-pages',
-  viewModel: PageVM,
+  viewModel: PagesVM,
 
   helpers: {
     page: function(page, options) {

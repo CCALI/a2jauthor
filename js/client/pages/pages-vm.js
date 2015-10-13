@@ -1,4 +1,8 @@
 import Map from 'can/map/';
+import AnswerVM from 'client/models/answervm';
+import constants from 'client/models/constants';
+
+import 'bootstrap/js/modal';
 
 export default Map.extend({
   currentPage: null,

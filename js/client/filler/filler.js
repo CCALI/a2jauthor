@@ -1,4 +1,4 @@
-import control from 'can/control/';
+import Control from 'can/control/';
 
 import 'can/view/';
 

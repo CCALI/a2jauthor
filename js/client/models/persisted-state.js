@@ -1,5 +1,5 @@
 import Model from 'can/model/';
-import Parse from 'client/util/parser';
+import Parser from 'client/util/parser';
 import Answers from 'client/models/answers';
 import LocalModel from 'client/models/local-model';
 

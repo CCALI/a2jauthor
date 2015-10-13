@@ -50,8 +50,8 @@ export default Component.extend({
         },
 
         dateformat: function(val, format, options) {
-          let val = typeof val === 'function' ? val() : val;
-          let format = typeof format === 'function' ? format() : format;
+          val = typeof val === 'function' ? val() : val;
+          format = typeof format === 'function' ? format() : format;
 
           return val ? moment(val, 'MM/DD/YYYY').format(format) : val;
         },

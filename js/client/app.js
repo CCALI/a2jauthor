@@ -13,7 +13,6 @@ import 'can/route/';
 import 'client/util/helpers';
 import 'client/screen-manager/';
 import 'jquerypp/dom/cookie/';
-import 'client/models/fixtures/';
 
 // State attrs not needing persistance, such as showing/hiding the table of contents.
 // Load configuration from desktop into mobile

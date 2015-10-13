@@ -55,7 +55,8 @@
       "chai": "chai/chai",
       "assert": "tests/assert",
       "lodash": "lodash-amd/modern",
-      "jquery.ui.widget": "jquery-ui/ui/widget"
+      "jquery.ui.widget": "jquery-ui/ui/widget",
+      "localforage": "localforage/dist/localforage.nopromises"
     },
     "meta": {
       "viewer/A2J_Types": {

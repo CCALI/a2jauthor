@@ -1,14 +1,9 @@
-define(['can',
-		'text!components/pages/fields/init.stache',
-		'components/pages/fields/field/field',
-		'can/view/stache'
-	],
+import Component from 'can/component/';
+import template from './fields.stache!';
 
-	function(can, init) {
+import 'client/pages/fields/field/';
 
-		can.Component.extend({
-			tag: 'a2j-fields',
-			template: can.stache(init)
-		});
-
-	});
+export default Component.extend({
+  template,
+  tag: 'a2j-fields'
+});

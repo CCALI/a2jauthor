@@ -6,16 +6,18 @@ import 'steal-mocha';
 
 describe('Parser', function() {
 
+  let fixturesBase = '../models/fixtures';
+
   // 2015-01-12 SJG Fails in Pre Windows 7 in all browsers???
   it('toANX', function() {
-    let jsonDfd = $.get('../fixtures/inclusive_answers.json');
+    let jsonDfd = $.get(fixturesBase + '/inclusive_answers.json');
 
     let xmlDfd = $.ajax({
-      url: '../fixtures/inclusive_answers.xml',
+      url: fixturesBase + '/inclusive_answers.xml',
       dataType: 'text'
     });
 
-    let interviewDfd = $.get('../fixtures/interview.json');
+    let interviewDfd = $.get(fixturesBase + '/interview.json');
 
     let onSuccess = function(json, xml, interview) {
       json = json[0];
@@ -31,14 +33,14 @@ describe('Parser', function() {
 
   // 2015-01-12 SJG Fails in Pre Windows 7 in all browsers???
   it('toANX', function() {
-    let jsonDfd = $.get('../fixtures/inclusive_answers.json');
+    let jsonDfd = $.get(fixturesBase + '/inclusive_answers.json');
 
     let xmlDfd = $.ajax({
-      url: '../fixtures/inclusive_answers.xml',
+      url: fixturesBase + '/inclusive_answers.xml',
       dataType: 'text'
     });
 
-    let interviewDfd = $.get('../fixtures/interview.json');
+    let interviewDfd = $.get(fixturesBase + '/interview.json');
 
     let onSuccess = function(json, xml, interview) {
       json = json[0];
@@ -53,10 +55,10 @@ describe('Parser', function() {
   });
 
   it('toJSON', function() {
-    let jsonDfd = $.get('../fixtures/partial.json');
+    let jsonDfd = $.get(fixturesBase + '/partial.json');
 
     let xmlDfd = $.ajax({
-      url: '../fixtures/partial.anx',
+      url: fixturesBase + '/partial.anx',
       dataType: 'text'
     });
 

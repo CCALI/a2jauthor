@@ -38,13 +38,13 @@ module.exports = function(grunt) {
     },
 
     'steal-build': {
-      bundle: {
+      default: {
         options: {
           system: {
-            config: 'package.json!npm'
+            config: 'package.json!npm',
+            main: ['author/main', 'client/app']
           },
           buildOptions: {
-            bundleSteal: true
           }
         }
       }

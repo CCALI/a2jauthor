@@ -1,5 +1,5 @@
 /*
- 	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
+	CALI Author 5 / A2J Author 5 (CAJA) 正义 * công lý * правосудие
 */
 /* combo box  */
  (function( $ ) {

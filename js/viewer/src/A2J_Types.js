@@ -5,7 +5,7 @@
 	Type/constant declarations
 	Required by Author and Viewers
 	2015 - 04/2012
-	
+
 
 */
 
@@ -13,9 +13,9 @@
 
 // ### Constants  ###
 
-/** @const */ 
+/** @const */
 var CONST = {
-	
+
 	devShowTesting: false,
 	showXML: 0,
 	uploadURL: '',
@@ -25,11 +25,11 @@ var CONST = {
 
 	A2JVersionNum:"5.0.2.5" , //VersionInfo.verNum
 	A2JVersionDate:"2015-06-04",
-	
-	
+
+
 	//CAVersionNum:"5.0.0",
 	//CAVersionDate:"2013-04-15",
-	
+
 	vnNavigationTF:"A2J Navigation TF",//11/24/08 2.6 Navigation button toggler.
 		// if FALSE, navigation next/back/my progress are turned off.
 	vnInterviewIncompleteTF:"A2J Interview Incomplete TF",//08/17/09 3.0.1 Is interview complete?
@@ -42,7 +42,7 @@ var CONST = {
 
 	// Page Types
 	ptPopup:'Popup',
-	
+
 	// Field Types
 	ftButton:"button",
 	ftText:"text",
@@ -61,7 +61,7 @@ var CONST = {
 	ftCheckBox:"checkbox",
 	ftCheckBoxNOTA:"checkboxNOTA",
 	ftCheckBoxMultiple:"checkboxmultiple",
-	
+
 
 	// Variable Types
 	vtUnknown : "Unknown",// 0,
@@ -74,7 +74,7 @@ var CONST = {
 	//vtStringsAns: ["Unknown","TextValue","TFValue","NumValue","DateValue","MCValue","OtherValue"],
 	//vtStrings: ["Unknown","Text","TF","Number","Date","MC","Other"],
 	//vtStringsGrid: ["Unknown","Text","True/False","Number","Date","Multiple Choice","Other"],
-	
+
 	// Limits
 	// 2014-05-27 HotDocs has 50 character limit on variable name length
 	MAXVARNAMELENGTH: 50,
@@ -84,12 +84,12 @@ var CONST = {
 	MAXBUTTONS: 3,
 	MAXSTEPS: 12,
 	kMinYear: 1900,
-	
+
 	// 11/27/07 1.7.7 Ordering options for lists such as a county list
 	ordDefault:"",
 	ordAscending:"ASC",
 	ordDescending:"DESC",
-	
+
 	// Navigation page destinations
 	qIDNOWHERE:"",
 	qIDSUCCESS:"SUCCESS", // Posts data to server and exits viewer
@@ -99,16 +99,16 @@ var CONST = {
 	qIDRESUME:"RESUME", //8/24/09 3.0.2
 
 	// 2014-06-04 Button-based repeat options
-	RepeatVarSetOne:'=1', 
+	RepeatVarSetOne:'=1',
 	RepeatVarSetPlusOne: '+=1',
-	
+
 	// HotDocs ANX
 	// 4/8/04 This is the DTD for the HotDocs ANX file format.
 	// It's prepended to the answer set for upload.
-	HotDocsANXHeader_UTF8_str : 
+	HotDocsANXHeader_UTF8_str :
 	"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
-	 
-	
+
+
 	,
 	ScriptLineBreak : '<BR/>'
 };
@@ -119,7 +119,7 @@ var CONST = {
 
 
 
-/** 
+/**
  * @constructor
  * @struct
  * @this {TVariable}
@@ -138,7 +138,7 @@ function TVariable()
 
 
 
-/** 
+/**
  * @constructor
  * @struct
  * @this {TText}
@@ -149,10 +149,10 @@ function TText()
 	return this;
 }
 
-/** 
+/**
  * @constructor
  * @struct
- * @this {TButton} 
+ * @this {TButton}
  */
 function TButton()
 {	// Guide defined button, 0 or more
@@ -166,10 +166,10 @@ function TButton()
 	return this;
 }
 
-/** 
+/**
  * @constructor
  * @struct
- * @this {TField} 
+ * @this {TField}
  */
 function TField()
 {
@@ -263,7 +263,7 @@ TField.prototype.fieldTypeToTagName = function()
 
 
 
-/** 
+/**
  * @constructor
  * @struct
  *  @this {TScript}
@@ -277,10 +277,10 @@ function TScript()
 
 
 
-/** 
+/**
  * @constructor
  * @struct
- * @this {TStep} 
+ * @this {TStep}
  */
 function TStep()
 {
@@ -289,7 +289,7 @@ function TStep()
 	return this;
 }
 
-/** 
+/**
  * @constructor
  * @struct
  * @this {TClause}
@@ -311,7 +311,7 @@ function TPopup()
 	return this;
 }*/
 
-/** 
+/**
  * @constructor
  * @struct
  * @this {TPage}
@@ -325,7 +325,7 @@ function TPage()
 	this.notes= "";
 	this.learn= "";//Learn More prompt
 	this.help= "";// Optional help text from Learn More button
-	
+
 	this.helpAudioURL = "";
 	this.helpReader="";
 	this.helpImageURL="";
@@ -336,24 +336,24 @@ function TPage()
 	this.fields=[];
 	this.buttons=[];
 	this.step=0;//index into guide.steps[]
-	
+
 	this.type ="";//type of page interaction
 	this.style ="";//subtype of page interaction
 
 	this.mapx=0;
 	this.mapy=0;
 	this.mapBranches=null;
-	
+
 
 	this.xml=null;
 	return this;
 }
 
 
-/** 
+/**
  * @constructor
  * @struct
- * @this {TAuthor} 
+ * @this {TAuthor}
  */
 function TAuthor()
 {
@@ -364,7 +364,7 @@ function TAuthor()
 	return this;
 }
 
-/** 
+/**
  * @constructor
  * @struct
  * @this {TGuide}
@@ -390,21 +390,21 @@ function TGuide()
 	this.subjectarea="";			//Original CA - CA places every lesson into a single main category like Torts.
 	this.title="";					//Origin Both - author title - in CA it's visible at top of page, not seen in A2J by user
 	this.version="";				//Original Both - CA uses the mm/dd/yyyy format, A2J is author defined
-	this.viewer="";				//Origin CAJA - A2J, CA, CAJA - which viewer to use? 
+	this.viewer="";				//Origin CAJA - A2J, CA, CAJA - which viewer to use?
 	this.logoImage="";			//Origin A2J
 	this.endImage="";				//Origin A2J
 	this.mobileFriendly='';		//If true, will run on Mobile, false won't, '' unknown.
-	
+
 	/** @type {Array.<TAuthor>} */
 	this.authors=[];				//Origin Both - single line, CA is a heirarchy. Array of TAuthor
-	
+
 	this.firstPage="";			//Origin A2J - starting page specificed by author
 	this.exitPage="";				//Origin A2J - page that exist success
-	
+
 	/** @type {Array.<TStep>} */
 	this.steps=[];					//Origin A2J - array of TStep()
-	
-	
+
+
 	this.pages={};			//Origin both - associative array of pages TPage() by page name. E.g., pages["Contents"] = TPage()
 	this.clauses={};	//Origin CAJA - associative array of contants, MAXINCOME:25000
 	//this.popups=[];		//Origin A2J - array of embedded text popups (these are anonymous unlike CA where they are named)
@@ -417,9 +417,9 @@ function TGuide()
 	//this.mapids=[];// array of mapids indices	- maps a page.id to page while .pages uses page.name.
 	this.sortedPages=[];//array of pages sorted by name (natural order)
 	this.lastSaveXML="";
-	
+
 	this.attachedFiles={};//list of attached external files
-	
+
 	return this;
 }
 
@@ -470,8 +470,8 @@ TGuide.prototype.stepDisplayNameViewer=function(s)
 };
 
 //
-		  
-		  
+
+
 
 TGuide.prototype.collectionSorted = function (collection)
 {	// Return array of variables sorted naturally.
@@ -565,7 +565,7 @@ TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 		autoIDs[CONST.qIDFAIL]=		lang.qIDFAIL;//"[Exit - User does not qualify]"
 		autoIDs[CONST.qIDEXIT]=		lang.qIDEXIT;//"[Exit - Save Incomplete Form]"//8/17/09 3.0.1 Save incomplete form
 		autoIDs[CONST.qIDBACK]=		lang.qIDBACK;//"[Back to prior question]"//8/17/09 3.0.1 Same as history Back button.
-		autoIDs[CONST.qIDRESUME]=	lang.qIDRESUME;//"[Exit - Resume interview]"//8/24/09 3.0.2	
+		autoIDs[CONST.qIDRESUME]=	lang.qIDRESUME;//"[Exit - Resume interview]"//8/24/09 3.0.2
 		if (typeof autoIDs[ name ] === 'undefined'){
 			dval = lang.UnknownID.printf( name, name );//,props(autoIDs)) //"[Unknown id "+id+"]" + props(autoIDs);
 		}
@@ -578,12 +578,12 @@ TGuide.prototype.pageDisplayName=function(name)//pageNametoText
 
 
 TVariable.prototype.traceLogic=function(msg)
-{	// Send trace message into viewer's log trace. 
-	traceLogic(msg+':'+traceTag("var",this.name)+', '+ (this.type) +', ' +(this.repeating?'REPEATING':'')+', '+this.comment);	
+{	// Send trace message into viewer's log trace.
+	traceLogic(msg+':'+traceTag("var",this.name)+', '+ (this.type) +', ' +(this.repeating?'REPEATING':'')+', '+this.comment);
 };
 
 
-	
+
 TGuide.prototype.varExists=function(varName)
 {
 	varName = jQuery.trim(varName);
@@ -606,10 +606,10 @@ TGuide.prototype.varGet=function(varName,varIndex,opts)
 {	// opts has optionsl modifiers including forcing value to number or date.
 	/** @type {TGuide} */
 	var guide=this;
-	
+
 	/** @type {TVariable} */
 	var v=guide.varExists(varName);
-	
+
 	if (v === null)
 	{
 		traceLogic('Undefined variable: '+ traceTag('var',varName)+ ((varIndex===0)?'':traceTag('varidx',varIndex) ));
@@ -619,22 +619,22 @@ TGuide.prototype.varGet=function(varName,varIndex,opts)
 	{
 		if (v.repeating)
 		{	// 2014-10-13 Repeating variable without an index returns array of all values.
-			// Caller needs to process array for calculations or display. 
-			return v.values; 
+			// Caller needs to process array for calculations or display.
+			return v.values;
 		}
 		varIndex=1;
 	}
-	var val = v.values[varIndex]; 
+	var val = v.values[varIndex];
 	switch (v.type)
 	{
 		case CONST.vtNumber:
-			
+
 			if (opts && opts.num2num===true )
 			{	// For calculations for number to be number even if blank.
 				val=textToNumber(val);
 			}
 			break;
-		
+
 		case CONST.vtDate:
 			if (opts && opts.date2num===true )
 			{	// For calculations like comparing dates or adding days we convert date to number,
@@ -646,17 +646,17 @@ TGuide.prototype.varGet=function(varName,varIndex,opts)
 				}
 			}
 			break;
-		
+
 		case CONST.vtText:
-			
+
 			if (opts && opts.date2num===true && ismdy(val))
 			{	// If it's a date type or looks like a date time, convert to number of days.
 				val = jsDate2days(mdy2jsDate(val));
 				//trace('Date as #',val);
 			}
 			break;
-		
-		
+
+
 		case CONST.vtTF:
 			 val= (val>0) || (val===true) || (val==='true');
 			break;
@@ -732,11 +732,11 @@ TGuide.prototype.varSet=function(varName,varVal,varIndex)//setVariableLoop
 		//v.traceLogic('Creating immediate');
 	}
 	if ((typeof varIndex==='undefined') || (varIndex===null) || (varIndex==='')){
-		varIndex=0;		
+		varIndex=0;
 	}
 	// Handle type conversion, like number to date.
 	switch (v.type)
-	{		
+	{
 		case CONST.vtDate:
 			if (typeof varVal==='number')
 			{
@@ -745,8 +745,8 @@ TGuide.prototype.varSet=function(varName,varVal,varIndex)//setVariableLoop
 			}
 			break;
 	}
-	
-	// Set value but only trace if the value actually is different. 
+
+	// Set value but only trace if the value actually is different.
 	if (varIndex===0)
 	{
 		if (v.values[1]!==varVal)
@@ -760,7 +760,7 @@ TGuide.prototype.varSet=function(varName,varVal,varIndex)//setVariableLoop
 	else
 	{
 		if (v.values[varIndex]!==varVal)
-		{	
+		{
 			gLogic.indent++;
 			gLogic.traceLogic(traceTag('var',varName+' # '+varIndex)+traceTag('val',varVal));
 			gLogic.indent--;
@@ -800,7 +800,7 @@ TGuide.prototype.variableToField = function (varName)
 
 TGuide.prototype.varClearAll=function()
 {	// 2014-08-11 Clear all values, arrays reset to 1 element
-	
+
 	var vi;
 	for (vi in this.vars)
 	{
@@ -808,7 +808,7 @@ TGuide.prototype.varClearAll=function()
 		var v = this.vars[vi];
 		v.values=[];
 	}
-	
+
 };
 
 
@@ -825,9 +825,9 @@ var gGuideID; // unique service side id for this guide
 
 var inAuthor; // True if author+viewer, false if just viewer.
 
-// User 
+// User
 /** @type {number} */
-var gUserID=0; 
+var gUserID=0;
 
 /** @type {string} */
 var gUserNickName="User";
@@ -858,4 +858,3 @@ var gStartArgs = {
 
 
 /* */
-

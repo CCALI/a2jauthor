@@ -1,7 +1,7 @@
 /*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	
+
 	10/2013
 	JavaScript functions with JSLint complaints.
 	Companion to A2J_Shared.js - contains Lint-unfriendly but valid code
@@ -26,7 +26,7 @@ var REG={
 
 String.prototype.simpleHash=function()
 {	// Return a simple hash of string. MD5 or other preferred but will do in a pinch.
-	// 
+	//
 	var str=String(this);
 	//http://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
 	return str.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a;},0);
@@ -48,7 +48,7 @@ function sortingNaturalCompare(a, b) {//http://my.opera.com/GreyWyvern/blog/show
     return tz;
   }
 	// 2014-06-16 we want case-insensitive comparisons.
-	
+
 	a = (a===null || typeof a === "undefined" ) ? '' : String(a).toUpperCase();
 	b = (b===null || typeof b === "undefined" ) ? '' : String(b).toUpperCase();
 

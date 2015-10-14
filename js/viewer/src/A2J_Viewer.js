@@ -25,16 +25,16 @@ function traceAlert(html)
 	// These are errors that an author might need to deal with such as variables too long or script syntax error.
 	// Displayed publicly so users will be alerted that something bad is happening. The logic tracer may be hidden
 	// to users so logging only there may hide a defect.
-	// Since there may be more than one error, dump them into a scrollable list. 
+	// Since there may be more than one error, dump them into a scrollable list.
 	var div = $('<div class="ui-widget"><div style="padding: 0 .7em;" class="ui-state-error ui-corner-all"><p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>'+html+'<button/></div></div>');
 	$('button',div).button({label:'x'}).click(function()
-	{	// When closing an alert note, remove it, reduce counter, hide if counter back to 0. 
+	{	// When closing an alert note, remove it, reduce counter, hide if counter back to 0.
 		$(this).parentsUntil('.ui-widget').remove();
 		$('.alertCounter').text( --alertCounter );
 		$('.alertPanel,.alertCounter').toggle(alertCounter>0);
 	});
 	$('.alertPanel').append(div);
-	$('.alertCounter').text( ++alertCounter ).show();	
+	$('.alertCounter').text( ++alertCounter ).show();
 	$('.alertPanel').toggle(alertCounter>0);
 	trace(String(html).stripHTML()); // trace alert into console too.
 }
@@ -53,21 +53,21 @@ var A2JViewer={
 			$(this).toggle($(this).text().toUpperCase().indexOf(filter)>=0);
 		});
 	},
-	
-	
+
+
 	refreshVariables : function ( )
 	{	// Update the variables table with latest values
 		var $t=$('.varvalpanel');
-		
+
 		if ($t.length==0) {
 			return;
 		}
-		
+
 		/** @type {TGuide} */
 		var g = gGuide;
 		/** @type {TVariable} */
 		var v;
-		var th=html.rowheading(["Name",'Loop',"Value"]); 
+		var th=html.rowheading(["Name",'Loop',"Value"]);
 		var sortvars=[];
 		// List of variables *including* array element values such as child name#1, child name#2, etc.
 		var vn;
@@ -81,8 +81,8 @@ var A2JViewer={
 					}
 				}
 				else{
-					sortvars.push({name:v.name,v:v,i:1});				
-				} 
+					sortvars.push({name:v.name,v:v,i:1});
+				}
 			}
 		}
 		sortvars.sort(function (a,b){
@@ -90,7 +90,7 @@ var A2JViewer={
 			return sortingNaturalCompare(a.name,b.name);
 			 /*a.name.toLowerCase()>b.name.toLowerCase();*/
 			});
-		
+
 		var tb='';
 		for (var vi=0;vi<sortvars.length;vi++)
 		{
@@ -104,14 +104,14 @@ var A2JViewer={
 				tb+=html.row([v.name,'',val]);
 			}
 		}
-	
+
 		$t.html('').append('<table class="A2JVars">'+th + '<tbody>'+ tb + '</tbody>'+"</table>");
 		$('tr',$t).click(function(){
 			//$("#dialog-form-var-val-edit" ).dialog( "open" );
 		});
 		A2JViewer.filterVariables();
 	},
-	
+
 	fillSample: function()
 	{	// Populate fields with 'sample' values, if specified or applicable.
 		var page = gPage;
@@ -134,7 +134,7 @@ var A2JViewer={
 				case CONST.ftDateMDY://"Date MM/DD/YYYY"
 				   $('#'+fid).val(sample);
 				   break;
-				
+
 				case CONST.ftGender://"Gender"
 				case CONST.ftRadioButton://"Radio Button"
 				case CONST.ftCheckBox://"Check box"
@@ -144,15 +144,15 @@ var A2JViewer={
 			}
 		}
 	},
-	
+
 	history:[], // Array of {title,pagename}
 	skipHistory: false,
-	
-	
+
+
 	/** @param {TPage} page  */
 	layoutPage:function(div,page)
 	{	// Layout page into interactive viewer. attach event handlers.
-	
+
 		if (div.html()==="")
 		{	// First time rendering, attach handlers. Only executed once.
 			var watermark = (  (String(window.location).indexOf('.a2jauthor.org') < 0) ? '' : '<div class="demoWatermark">For demonstration and testing purposes only. Not intended for use by the public. This A2J Guided Interview will not generate a form.</div>');
@@ -160,7 +160,7 @@ var A2JViewer={
 						'<div class="interact"></div>'
 						+'<div class="a2jbtn"></div> '
 						+'<ul class="NavBar">'
-						
+
 						+' <li><button class="navBack">'+lang.GoBack+'</button></li>'
 						+' <li><button class="navNext">'+lang.GoNext+'</button></li>'
 						+' <li><div class="ui-widget">'+lang.MyProgress	+ ': <select  id="history"></select>'+ '</div></li>'
@@ -182,16 +182,16 @@ var A2JViewer={
 			+ '<div class="logo"/>'
 			);
 			//<img src="images/SJILogo.gif" width="90" height="55" hspace="3" vspace="3" align="left" />
-			
+
 			$('div.a2jbtn',div).attr('title',versionString()).click(function()
 			{
 				$(div).toggleClass('test',500);//$('.A2JViewer')
 			});
-			
+
 			$('.alertCounter').hide().click(function(){$('.alertPanel').slideToggle();});
-	
+
 			//$( ".NavBar" ).menu({position:{my:'left top',at:'left bottom'}});
-			
+
 			//### Variable debugging
 			$('#viewer-var-form').append('<div class="relative"><button id="uploadAnswer"></button><input type="file" id="uploadAnswerFileInput"> <button id="downloadAnswer"></button><button id="refreshAnswer"></button>'
 												  +'<button id="clearAnswer"></button>'
@@ -204,20 +204,20 @@ var A2JViewer={
 			});
 			$('#refreshAnswer').button({label:'Refresh',icons:{primary:'ui-icon-arrowrefresh-1-w' } } ).click(function(){
 				A2JViewer.refreshVariables();
-			});				
+			});
 			$('#clearAnswer').button({label:'Clear',icons:{primary:'ui-icon-trash'}}).click(function(){
 				gGuide.varClearAll();
 				A2JViewer.refreshVariables();
-			});			
+			});
 			$('#clearTrace').button({label:'Clear',icons:{primary:'ui-icon-trash'}}).click(function(){
 				$('#tracer').empty();
 			});
 			$('#uploadAnswer').button({label:'Open',icons:{primary:'ui-icon-folder-open'}});
-			$('#uploadAnswerFileInput').on('change',function()			
+			$('#uploadAnswerFileInput').on('change',function()
 			{	// Browse for answer file on local desktop to upload to client (no server).
 				var file = $('#uploadAnswerFileInput')[0].files[0];
 				var textType = /text.*/;
-				setProgress("Loading..."); 
+				setProgress("Loading...");
 				if (file.type==='' || file.type.match(textType))
 				{
 					var reader = new FileReader();
@@ -228,16 +228,16 @@ var A2JViewer={
 						setProgress('');
 						A2JViewer.refreshVariables();
 					};
-					reader.readAsText(file);	
-				} 
+					reader.readAsText(file);
+				}
 				else
 				{
-					setProgress("File not supported!"); 
+					setProgress("File not supported!");
 				}
 			});
-			
+
 			$('#viewer-var-filter').keyup(A2JViewer.filterVariables);
-			
+
 			// Navigation
 			$('#history').change(function(){
 				// Handle history navigation from drop down.
@@ -270,7 +270,7 @@ var A2JViewer={
 			$('button.navResumeExit',div).button({label:  lang.ResumeExit,icons:{primary:'ui-icon-arrowreturnthick-1-w'}}).click(function(){
 				A2JViewer.goExitResume();
 			});
-		
+
 			if (typeof authorViewerHook !== 'undefined'){
 				authorViewerHook();
 			}
@@ -283,7 +283,7 @@ var A2JViewer={
 			}
 		}
 		traceLogic( 'Page ' + traceTag('page', page.name));
-		gLogic.infiniteLoopCounter++;		
+		gLogic.infiniteLoopCounter++;
 		gLogic.GOTOPAGE='';
 		if (makestr(page.codeBefore)!=='')
 		{
@@ -293,7 +293,7 @@ var A2JViewer={
 			if (gLogic.GOTOPAGE!=='' && gLogic.GOTOPAGE!==gPage.name)
 			{
 				if (gLogic.infiniteLoopCounter< gLogic.infiniteLoopCounterMax )
-				{	// Jump to next page without displaying this page. 
+				{	// Jump to next page without displaying this page.
 					gotoPageView(gLogic.GOTOPAGE);
 					return;
 				}
@@ -306,14 +306,14 @@ var A2JViewer={
 			}
 			else
 			{
-				traceLogic(traceTag('info','Asking Question'));				
+				traceLogic(traceTag('info','Asking Question'));
 			}
 		}
-		
+
 		// Displaying the question. Set our infiniteLoopCounter to 0
 		gLogic.infiniteLoopCounter=0;
-		
-		
+
+
 		function prepHTML(htmlText)
 		{	// Take question text, learn text, popup text HTML and parse for logic blocks.
 			// Ensure hyperlinks target separate windows.
@@ -327,8 +327,8 @@ var A2JViewer={
 			//trace(htmlText);
 			return  htmlText;
 		}
-	
-		
+
+
 		var curstep = page.step;
 		var questionHTML = prepHTML( page.text );
 		var learnHTML = page.learn; // Learn more prompt (optional)
@@ -347,13 +347,13 @@ var A2JViewer={
 			$('#history').prepend(opt).prop('selectedIndex',0);
 		}
 		A2JViewer.updateNavigationButtons();
-		
-		
-		A2JViewer.skipHistory=false;		
-		
+
+
+		A2JViewer.skipHistory=false;
+
 		$('.interact',div).html(A2JViewer.layoutStep(curstep));
-		
-		
+
+
 		// 2014-11-21 Display option author-defined branding image
 		var logoImage = gGuide.logoImage;
 		if (logoImage!='')
@@ -364,17 +364,17 @@ var A2JViewer={
 			// css('background-image','url('+logoImage+')');
 		}
 		//$('.mobile',div).empty().append($('<a href=/>').attr('src',logoImage));
-		
-		
+
+
 		$('.ui-form.question',div).html(questionHTML+'<div class="form"></div>');
-		
+
 		// Add audio player elements to question and help panels.
 		$('.question.panel',div).append('<div class="audio"></div><div class="buttonlist"></div>');
 		if (page.textAudioURL!=='')
 		{
 			$('.question .audio',div).html(audioPlayerHTML(page.textAudioURL));
 		}
-		
+
 		for (var bi=0;bi<page.buttons.length;bi++)
 		{
 			/** @type {TButton} */
@@ -385,10 +385,10 @@ var A2JViewer={
 				+( b.label==='' ? lang.Continue : b.label)
 				+'</button>');
 		}
-		
+
 		// ### FieldSet to attach custom fields.
 		var fs=$('.ui-form.question .form',div);
-	
+
 		// varIndex is null or an array index number.
 		var varIndex=null;
 		if (page.repeatVar!==''){
@@ -396,7 +396,7 @@ var A2JViewer={
 			varIndex = textToNumber(gGuide.varGet(page.repeatVar));
 		}
 		for (var fi=0;fi<page.fields.length;fi++)
-		{			
+		{
 			/** @type {TField} */
 			var f = page.fields[fi];// field record
 			/*
@@ -411,7 +411,7 @@ var A2JViewer={
 				this.calculator=false;
 				this.maxChars="";
 			*/
-			
+
 			var fid = "FID_"+fi;//field id - unique
 			var fname = "FID_"+f.name;//field name - possible duplicates, i.e., radio buttons
 
@@ -434,7 +434,7 @@ var A2JViewer={
 						$($input).attr('maxlength',f.maxChars);
 					}
 				   break;
-				
+
 				case CONST.ftTextLong://"Text (Long)"
 				   $input=($('<textarea type=text class=textarea id='+fid+'></textarea>').val(defval));
 					if (f.maxChars>0) {
@@ -451,30 +451,30 @@ var A2JViewer={
 						loadXMLList({elt:$input,data:'<select>'+f.listData+'</select>',val:defval});
 					}
 				   break;
-				
+
 				case CONST.ftNumber://"Number"
 				    $input=($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
-				
+
 				case CONST.ftNumberDollar://"Number Dollar"
 				   $input=($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
-				
+
 				case CONST.ftNumberSSN://"Number SSN"
 				   $input=($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
-				
+
 				case CONST.ftNumberPhone://"Number Phone"
 				   $input=($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
-				
+
 				case CONST.ftNumberZIP://"Number ZIP Code"
 				   $input=($('<input type=text class=number id='+fid+'></input>').val(defval));
 				   break;
-				
+
 				case CONST.ftNumberPick://"Number (Pick from list)"
 				   //$input=($('<input type=text id='+fid+'></input>').val(defval));
-					
+
 				   $input=($('<select id='+fid+'></select>').val(defval));
 					var listData='';
 					var o;
@@ -483,9 +483,9 @@ var A2JViewer={
 						listData += '<option value="'+o+'">'+o+'</option>';
 					}
 					loadXMLList({elt:$input,data:'<select>'+listData+'</select>',val:defval});
-					
+
 				   break;
-				
+
 				case CONST.ftDateMDY://"Date MM/DD/YYYY"
 					// Ideally use input type=date - not supported by non-Chrome desktop browsers.
 				   $input=($('<input type=text id='+fid+' placeholder="mm/dd/yyyy"></input>').val(defval));
@@ -506,14 +506,14 @@ var A2JViewer={
 					}
 					// 2014-06-16 Override year jQuery ui pick list to show entire valid range.
 					dateOpts.yearRange=minYear  +':' + maxYear;
-					
+
 					$.datepicker.setDefaults($.datepicker.regional[ gGuide.language ]);
-					// 3/21/2014 Format dates for any language in USA m/d/y format. 
+					// 3/21/2014 Format dates for any language in USA m/d/y format.
 					dateOpts.dateFormat = 'mm/dd/yy';
 					$input.datepicker( dateOpts);
 					$('#ui-datepicker-div').addClass('bubble');
 				   break;
-				
+
 				case CONST.ftGender://"Gender"
 					var fidM=fid+"M";
 					var fidF=fid+"F";
@@ -523,7 +523,7 @@ var A2JViewer={
 						.append('<br/>')
 						.append($('<input type=radio id="'+fidF+'" name="'+fname+'"></input>').prop('checked',g==='F')).append($('<label/>').attr('for',fidF).html(lang.Female));
 				   break;
-				
+
 				case CONST.ftRadioButton://"Radio Button"
 				   $labelinput=($('<input type=radio id="'+fid+'" name="'+fname+'" value="'+f.value+'"></input>')).prop('checked',defval===f.value);
 				   break;
@@ -548,7 +548,7 @@ var A2JViewer={
 			}
 			fs.append($row);
 		}
-		
+
 		// ### Learn more Prompt
 		if ((helpHTML!=='' || page.helpAudioURL!=='' || page.helpVideoURL!=='')  && learnHTML==='') {
 			// If learn more help exists but the prompt is blank, use the default prompt.
@@ -560,11 +560,11 @@ var A2JViewer={
 			$('.A2JViewer .help.panel').show();
 		});
 		$('.panel.learnmore',div).hide();
-		if (learnHTML!=="" ) {			
+		if (learnHTML!=="" ) {
 			$('.panel.learnmore',div).delay(500).fadeIn(500);
 		}
-		
-		// ### Learn more Help		
+
+		// ### Learn more Help
 		$('.ui-form.help',div).html(helpHTML );
 		$('.panel.help',div).hide();
 		if (page.helpAudioURL!=='')
@@ -578,7 +578,7 @@ var A2JViewer={
 			$('.help.panel',div).hide();
 			$('.learnmore.panel',div).show();
 		});
-		
+
 		// For Popups, intercept click and display.
 		// Popups appear over the learn more help.
 		// If there are popups within popups, they are not nested, just overwrite.
@@ -603,20 +603,20 @@ var A2JViewer={
 		});
 
 
-		
+
 		// ### Error prompt
 		$('.panel.formerror',div).hide();
 		$('.panel.formerror button',div).button().click(function(){
 			$('.formerror.panel',div).hide();
 		});
-		
+
 		//### Position question bubble
 		var h=$('.question.ui-form',div).height();
 		if (h>400)
 		{	// TODO Handle via CSS instead of script
 			$('.question.bubble',div).css({top:50});
 		}
-		
+
 		$('.question.panel .buttonlist button',div).button().click(function()
 		{	//### Question validation of form data before proceeding
 			// If we have an repeat var, be sure to use array indexing.
@@ -626,17 +626,17 @@ var A2JViewer={
 				varIndex=textToNumber(gGuide.varGet(page.repeatVar));
 			}
 			var invalid=false;
-			var checkBoxCount=0; //  Checkbox tally foruse with CheckBoxNOTA. 2015-06-29 Git Issue #315 
+			var checkBoxCount=0; //  Checkbox tally foruse with CheckBoxNOTA. 2015-06-29 Git Issue #315
 			$('.question.panel .ui-form div').removeClass('error');
 			for (var fi=0; (!invalid ) && (fi<page.fields.length);fi++)
 			{
 				/** @type TField */
-				var f = page.fields[fi];// field record				
+				var f = page.fields[fi];// field record
 				var fid = "FID_"+fi;//field id - unique
 				var val = '';
 				switch (f.type)
 				{	// Get the field Value, validate it, store in variables if valid.
-					
+
 					case CONST.ftText:	//	"Text"
 						val = jQuery.trim($('#'+fid).val());
 						if (val==='' && f.required) {
@@ -646,9 +646,9 @@ var A2JViewer={
 							gGuide.varSet(f.name,val,varIndex);
 						}
 					   break;
-					
+
 					case CONST.ftTextLong://"Text (Long)"
-						val =  $('#'+fid).val(); // Don't trim. 
+						val =  $('#'+fid).val(); // Don't trim.
 						if (val==='' && f.required) {
 							invalid=true;
 						}
@@ -656,15 +656,15 @@ var A2JViewer={
 							gGuide.varSet(f.name,val,varIndex);
 						}
 					   break;
-					
-					case CONST.ftNumber://"Number"				
+
+					case CONST.ftNumber://"Number"
 					case CONST.ftNumberDollar://"Numbfer Dollar"
 						val = jQuery.trim($('#'+fid).val());
 						if (val==='' && f.required) {
 							invalid=true;
 						}
 						else
-						{ 
+						{
 							val = textToNumber(val);
 							if (f.min !=='' && val < f.min){
 								invalid=true;
@@ -678,7 +678,7 @@ var A2JViewer={
 							$('#'+fid).val(val);
 						}
 					   break;
-					
+
 					case CONST.ftNumberSSN://"Number SSN"
 					case CONST.ftNumberPhone://"Number Phone"
 					case CONST.ftNumberZIP://"Number ZIP Code"
@@ -736,7 +736,7 @@ var A2JViewer={
 						}
 						if ($('#'+fid+'F').is(':checked')){
 							val = lang.Female;
-						}					
+						}
 						if (val==='' && f.required) {
 							invalid=true;
 						}
@@ -754,19 +754,19 @@ var A2JViewer={
 						{
 							invalid=true;
 						}
-		
+
 					   break;
 					case CONST.ftCheckBox://"Check box"
 						val  =  $('#'+fid).is(':checked');
 						gGuide.varSet(f.name,val,varIndex);
-						// 2015-06-29 Git Issue #315 
+						// 2015-06-29 Git Issue #315
 						if (val) {
 							checkBoxCount ++;
 						}
 					   break;
-					case CONST.ftCheckBoxNOTA://"Check Box (None of the Above)" 
+					case CONST.ftCheckBoxNOTA://"Check Box (None of the Above)"
 						val  =  $('#'+fid).is(':checked');
-						// 2015-06-29 Git Issue #315 
+						// 2015-06-29 Git Issue #315
 						if ((val && checkBoxCount > 0) || (!val && checkBoxCount == 0))
 						{	// If a CheckbxNOTA exists, either it is checked or one or more other checkboxes are.
 							invalid = true;
@@ -781,7 +781,7 @@ var A2JViewer={
 					switch (f.type){
 						case CONST.ftGender:
 							defaultFieldPrompt=lang.FieldPrompts_gender;
-							break;					
+							break;
 						default:
 							defaultFieldPrompt=lang.FieldPrompts_text;
 					}
@@ -789,24 +789,24 @@ var A2JViewer={
 					$('.panel.formerror',div).show();
 					$('.ui-form [fname="'+f.name+'"]').addClass('error');
 				}
-				
+
 			}//end for
-			
+
 			if (!invalid)
 			{
 				var bi=parseInt($(this).attr('num'),10);
 				var b=page.buttons[bi];
-				
+
 				traceLogic( 'You pressed ' + traceTag('ui',b.label));
 				//trace('ButtonPress',b.label,b.name,b.value);
 				if (b.name!=="")
-				{	// Set button's variable 
+				{	// Set button's variable
 					gGuide.varSet(b.name,b.value,varIndex);
 				}
-				
+
 				// Our default next page is derived from the button pressed.
 				// Might be overridden by the After logic.
-				gLogic.GOTOPAGE=b.next;				
+				gLogic.GOTOPAGE=b.next;
 				// execute the logic
 				if (makestr(page.codeAfter)!=='')
 				{
@@ -814,8 +814,8 @@ var A2JViewer={
 					traceLogic(traceTag('info','Logic After Question'));
 					gLogic.executeScript(page.codeAfter);
 				}
-		
-				
+
+
 				// 2014-06-03 Button repeat/counters.
 				switch (b.repeatVarSet)
 				{
@@ -838,30 +838,30 @@ var A2JViewer={
 						gGuide.varSet(b.repeatVar, value + 1);
 						break;
 				}
-				
-				
+
+
 				if (gLogic.GOTOPAGE === b.next)
 				{	// If logic didn't change our destination, go with button's choice, including optional url.
 					gotoPageView(b.next,b.url);
 				}
 				else
-				{	// Logic changed our destination so follow that. 
+				{	// Logic changed our destination so follow that.
 					gotoPageView(gLogic.GOTOPAGE);
-					
+
 				}
 			}
 		});//button click
-		
+
 	},
-	
+
 	saveExitQ:'', // Remember the point we left normal path and entered the Save/Resume path
 	saveExitActive:false, // True when we're in the Save path.
-	
+
 	updateNavigationButtons:function()
 	{	// Ensure navigation button states reflect application state
 		// 11/24/08 2.6 if history variable has value of false, grayout.
 		// 04/08/09 2.7.6 if navigation is false Hide.
-	
+
 		var navOn=true;// !(Global.curTemplate.getVariableValue(CVariable.vnNavigationTF)==false);
 		if (A2JViewer.saveExitActive){
 			navOn=false;
@@ -875,7 +875,7 @@ var A2JViewer={
 		$('button.navSaveAndExit').toggle(true === ((gGuide.exitPage !== CONST.qIDNOWHERE) && (!A2JViewer.saveExitActive)));
 		$('button.navResumeExit').toggle(true === A2JViewer.saveExitActive);
 	},
-	
+
 	goBack:function()
 	{	// User hit the back button or scripted go back was executed.
 		// trace('navBack');
@@ -883,10 +883,10 @@ var A2JViewer={
 		A2JViewer.skipHistory=true;
 		gotoPageView($('#history').val());
 	},
-	
+
 	goSaveExit:function()
 	{	// When user chooses Exit we first jump to the Exit page where we can present info and let them back out.
-		// Exit button will be replaced with a Resume button. 
+		// Exit button will be replaced with a Resume button.
 		// 08/17/09 3.0.1
 		//trace('navSaveAndExit');
 		A2JViewer.saveExitQ=gPage.name;
@@ -895,8 +895,8 @@ var A2JViewer={
 		//updateNavigationButtons();
 	},
 
-	goExitResume:function()				
-	{	// User in the Exit path and pressed Resume. 
+	goExitResume:function()
+	{	// User in the Exit path and pressed Resume.
 		// 8/24/09 3.0.2 Resume from exit
 		//trace('navResumeExit');
 		A2JViewer.saveExitActive=false;
@@ -907,12 +907,12 @@ var A2JViewer={
 			A2JViewer.saveExitQ='';
 		}
 	},
-	
+
 	layoutStep:function(curstep)
 	{
 		var steps=gGuide.steps;
 		var IMG = A2JViewer.IMG;
-		
+
 		/**
 		* @param {string} [w]
 		* @param {string} [h]
@@ -931,13 +931,13 @@ var A2JViewer={
 		];
 		var COLORS=4;
 		var si = (stepcount<=1) ? stepInfos[0] : stepInfos[1];
-		
-		
+
+
 		// 2014-10-23 Display Author-defined courthouse replacement image.
 		var endImage=gGuide.endImage;
 		if (endImage =='')
 		{	// Use Court house if author didn't specify.
-			endImage=IMG + 'A2J5_CourtHouse.png';	
+			endImage=IMG + 'A2J5_CourtHouse.png';
 		}
 		else
 		{
@@ -960,20 +960,20 @@ var A2JViewer={
 			txt += '<div class="stepsign" style="position:absolute; left:'+s1[0]+'px; top: '+s1[1]+'px;'+zoom+'"><div class="stepsigncolor Step'+color+'" ></div>	<div class="stepnumber" >'+gGuide.stepDisplayNumber(steps[cs])+'</div>'
 			+'<table class="steptextdiv"><tr valign=true><td><span class="steptext">'+gGuide.stepDisplayNameViewer(cs)+'</span></tr></tr></table></div>';
 		}
-		
-		// Setup guide and client avatars		
+
+		// Setup guide and client avatars
 		var avatarVarName="User Avatar"; // "blank" or "tan" or ""
 		//var genderVarName="User Gender"; // "Male" or "Female" or ""
-		
+
 		var gg=gGuide.guideGender;// Guide's gender
 		gg = (gg ==='Male') ? 'M' : 'F';//M or F
-		
+
 		var cg = gGuide.getClientGender();
 		//var cg=gGuide.varGet(genderVarName); // Client's gender (blank means only show guide)
 		//if (cg==='Male'){ cg='M';} else if (cg==='Female') {cg='F';} else {cg='';}
-		
-		
-		var av=gGuide.varGet(avatarVarName);// Avatar style, originally blank or tan. 
+
+
+		var av=gGuide.varGet(avatarVarName);// Avatar style, originally blank or tan.
 		if (typeof av === 'undefined' || av===null) {av=gGuide.avatar;}
 		if (av==='tan' || av==='avatar2')
 			{av=1;}
@@ -997,9 +997,9 @@ var A2JViewer={
 			txt += posimg(IMG+'A2JAvatar-Guide-Front-'+gg+av+'.png',si.gf[0],si.gf[1]);
 		}
 		txt +='<div class="question panel" style="position:absolute; left:'+qx+'px; top: 140px; "><div class="question bubble"><div class="question ui-form"></div></div></div><img class="bubbleTip" style="position:absolute; left: '+(qx+299)+'px; top: 240px; " src="'+IMG+'guide_bubble_tip.png"   />';
-			//width: 300px; 
+			//width: 300px;
 
-		// HTML for Learn More and LearnMore Help bubbles. 
+		// HTML for Learn More and LearnMore Help bubbles.
 		// Learnmore button
 		var shared = '<div class="learnmore panel" style="position:absolute; left:604px; top: 153px; width: 285px;"><div class="learnmore bubble"><div class="ui-form learnmore"></div></div>'
 			+'<div class="buttonlist"><button>'+lang.LearnMore+'</button></div></div>';
@@ -1008,7 +1008,7 @@ var A2JViewer={
 			+'<div class="audio"></div><div class="buttonlist"><button>'+ lang.Close+'</button></div></div>';
 		// Popup panel
 		shared += '<div class="popup panel" style="position:absolute; left:550px; top: 80px; width: 300px;"><div class="popup bubble"><div class="ui-form popup"></div></div>'
-			+'<div class="audio"></div><div class="buttonlist"><button>'+ lang.Close+'</button></div></div>';			
+			+'<div class="audio"></div><div class="buttonlist"><button>'+ lang.Close+'</button></div></div>';
 		// Form errors panel
 		shared += '<div class="formerror panel" style="position:absolute; left:604px; top: 93px; width: 285px;"><div class="formerror bubble"><div class="ui-form formerror"></div></div>'
 			+'<div class="buttonlist"><button>'+ lang.Close+'</button></div></div>';
@@ -1020,4 +1020,3 @@ var A2JViewer={
 
 
 /* */
-

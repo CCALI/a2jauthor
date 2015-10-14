@@ -3,7 +3,7 @@
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	A2J Viewer app - handles user's Viewer side of things - I/o for a user.
-	2015 - 12/12/2012, 04/15/2013	
+	2015 - 12/12/2012, 04/15/2013
 
 	Used by A2J Viewer only.
 */
@@ -36,11 +36,11 @@ function guideStart(start)
 	}
 	Languages.set(Languages.defaultLanguage);
 	var guide=gGuide;
-	
+
 	traceLogic('Guide '+guide.title+' loaded.');
 	traceLogic('#Pages: '+propCount(guide.pages)+', #Variables:'+propCount(guide.vars));
 
-	//for (var pi in guide.pages)	traceLogic(traceTag('page',guide.pages[pi].name)); 
+	//for (var pi in guide.pages)	traceLogic(traceTag('page',guide.pages[pi].name));
 	if( "" === String(start)){
 		start=guide.firstPage;
 	}
@@ -52,11 +52,11 @@ function guideStart(start)
 	{
 		$('.A2JViewer').toggleClass('test',500);
 	}
-	
-	
-	// Auto load answer file when starting Viewer only. 
+
+
+	// Auto load answer file when starting Viewer only.
 	gGuide.loadXMLAnswerExternal({
-		url:gStartArgs.getDataURL 
+		url:gStartArgs.getDataURL
 		,success:function(){
 			//dialogAlert({title:'DEBUG Answer files answers',body:prettyXML(gGuide.HotDocsAnswerSetXML()),width:800,height:600});
 		}});
@@ -149,7 +149,7 @@ function gotoPageView(destPageName, url )
 				A2JViewer.layoutPage($('#page-viewer .A2JViewer'),gPage);
 			}
 		}
-		
+
    },1);
 }
 
@@ -167,7 +167,7 @@ function main()
 	while (match = search.exec(query)){
 		urlParams[decode(match[1])] = decode(match[2]);
 	}
-	 
+
 	gStartArgs = urlParams;
 	inAuthor=false;
 	loadGuideFile(gStartArgs.templateURL,"");

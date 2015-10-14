@@ -1,8 +1,8 @@
 /*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	
-	Convert guide into JSON for Mobile viewer 
+
+	Convert guide into JSON for Mobile viewer
 
 	2015 - 12/22/2014  02/20/2012
 
@@ -17,14 +17,14 @@ function page2JSON_Mobile(page)
 		type:				page.type,
 		step:				page.step,
 		repeatVar:		page.repeatVar,
-		text:				page.text, 
-		textAudioURL:	page.textAudioURL, 
+		text:				page.text,
+		textAudioURL:	page.textAudioURL,
 		learn:			page.learn,
 		help:				page.help,
 		helpAudioURL:	page.helpAudioURL,
-		helpReader:		page.helpReader, 
-		helpImageURL:	page.helpImageURL, 
-		helpVideoURL:	page.helpVideoURL, 
+		helpReader:		page.helpReader,
+		helpImageURL:	page.helpImageURL,
+		helpVideoURL:	page.helpVideoURL,
 		buttons:		[],
 		fields:		[],
 		codeBefore:		page.codeBefore,
@@ -37,7 +37,7 @@ function page2JSON_Mobile(page)
 		var b=page.buttons[bi];
 		PAGE.buttons.push({
 			// 2015-03-03 Ensure a blank button shows something.
-			label:	(''==b.label) ? lang.Continue : b.label, 
+			label:	(''==b.label) ? lang.Continue : b.label,
 			next:		b.next,
 			url:		b.url,
 			repeatVar:		b.repeatVar,
@@ -53,20 +53,20 @@ function page2JSON_Mobile(page)
 		//		Flags for Calendar/calculator
 		var f=page.fields[fi];
 		PAGE.fields.push({
-			type:				f.type, 
+			type:				f.type,
 			label:			f.label,
-			name:				f.name, 
-			value:			f.value, 
-			order:			f.order, 
+			name:				f.name,
+			value:			f.value,
+			order:			f.order,
 			required:		f.required === true ? true : false,
-			min:				f.min, 
-			max:				f.max, 
+			min:				f.min,
+			max:				f.max,
 			//calendar:		f.calendar,
 			//calculator:		f.calculator,
 			maxChars:		f.maxChars,
 			listSrc:			f.listSrc,
 			listData:		f.listData,
-			sample:			f.sample, 
+			sample:			f.sample,
 			invalidPrompt:	f.invalidPrompt});
 	}
 	return PAGE;
@@ -78,7 +78,7 @@ function guide2JSON_Mobile (guide)
 {	// 12/22/2014 Convert internal Guide structure into Mobile JSON format.
 	// Drop internatl references and cyclic pointers.
 	var newGuide={};
-	
+
 	newGuide.tool = guide.tool;
 	newGuide.toolversion=guide.toolversion;
 	newGuide.avatar=guide.avatar;
@@ -101,7 +101,7 @@ function guide2JSON_Mobile (guide)
 	newGuide.endImage=guide.endImage;
 	newGuide.logoImage=guide.logoImage;
 	newGuide.mobileFriendly=guide.mobileFriendly;
-	
+
 	newGuide.authors=[];
 	var i;
 	for (i in guide.authors)
@@ -112,9 +112,9 @@ function guide2JSON_Mobile (guide)
 				title:author.title,
 				organization:author.organization,
 				email:author.email
-		}); 
+		});
 	}
-	
+
 	newGuide.firstPage=guide.firstPage;
 	newGuide.exitPage=guide.exitPage;
 
@@ -126,9 +126,9 @@ function guide2JSON_Mobile (guide)
 		newGuide.steps.push({
 				number:step.number,
 				text:step.text
-			}); 
+			});
 	}
-	
+
 	newGuide.vars={};
 	var vi;
 	for (vi in guide.vars)
@@ -143,7 +143,7 @@ function guide2JSON_Mobile (guide)
 		  comment: v.comment
 		 };
 	}
-	
+
 	newGuide.pages={};
 	for (var pi in guide.pages)
 	{

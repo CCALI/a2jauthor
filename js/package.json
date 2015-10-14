@@ -59,24 +59,24 @@
       "localforage": "localforage/dist/localforage.nopromises"
     },
     "meta": {
-      "viewer/A2J_Types": {
+      "viewer/src/A2J_Types": {
         "format": "global"
       },
-      "viewer/jquery.ui.combobox": {
+      "viewer/src/jquery.ui.combobox": {
         "deps": [
           "jquery-ui/ui/widget"
         ]
       },
-      "viewer/jquery.ui.traggable": {
+      "viewer/src/jquery.ui.traggable": {
         "deps": [
           "jquery-ui/ui/mouse",
           "jquery-ui/ui/widget"
         ]
       },
-      "viewer/A2J_AnswerFile": {
+      "viewer/src/A2J_AnswerFile": {
         "format": "global",
         "deps": [
-          "viewer/A2J_Types"
+          "viewer/src/A2J_Types"
         ]
       },
       "author/src/A2J_Tabs": {

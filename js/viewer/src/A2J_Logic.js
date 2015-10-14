@@ -1,7 +1,7 @@
 /*
 	A2J Author 5 * JusticeJustice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	
+
 	Logic
 	06/15/2012
 
@@ -16,7 +16,7 @@
 
 
 // Classes
-/** 
+/**
  * @constructor
  * @struct
  * @this {ParseError}
@@ -30,7 +30,7 @@ function ParseError(lineNum,errType,errText)
 }
 
 
-/** 
+/**
  * @constructor
  * @struct
  * @this {TLogic}
@@ -47,8 +47,8 @@ function TLogic()
 	this.userFunctions = {}; // list of user functions, property name is function name.
 	this.indent=0; // Tracing indent level/shows nesting code.
 	this.GOTOPAGE='';// Optionally set by GOTO commmand in script. Allows us to breakout when needed.
-	
-	this.infiniteLoopCounter = 0; // Counts GOTO Pages without an interaction. If we hit too many, probable infinite loop. 
+
+	this.infiniteLoopCounter = 0; // Counts GOTO Pages without an interaction. If we hit too many, probable infinite loop.
 	this.infiniteLoopCounterMax= 100;
 	return this;
 }
@@ -84,7 +84,7 @@ TLogic.prototype.pageFindReferences = function(CAJAScript,findName,newName)
 };
 
 TLogic.prototype.testVar = function(name,lineNum,errors)
-{	// If variable name not defined in variables list, add error. 
+{	// If variable name not defined in variables list, add error.
 	if (!gGuide.varExists(name))
 	{
 		switch (name)
@@ -93,7 +93,7 @@ TLogic.prototype.testVar = function(name,lineNum,errors)
 				return;
 			default:
 				errors.push(new ParseError(lineNum,'','Undefined variable '+name));
-		}		
+		}
 	}
 };
 
@@ -106,7 +106,7 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 	_VG(x,n) = get nth element of array variable x
 	_VS(x,y,z) = set value of variable x#y to z
 	_ED(d) = parse an mm/dd/yyyy string to date
-	_CF(f,a) = call function f with argument a	
+	_CF(f,a) = call function f with argument a
 
 	CAJA supported syntax
 	SET v TO e or SET v = e becomes SV(v,e)
@@ -118,14 +118,14 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 	var jsLines=[];
 	//var csLines=CAJAScriptHTML.split(CONST.ScriptLineBreak);//CAJAScriptLines;//CAJAScript.split("\n");
 	//var csLines= decodeEntities(CAJAScriptHTML.replace(CONST.ScriptLineBreak,"\n",'gi')).split("\n");
-	
+
 	var csLines= CAJAScriptHTML.split(CONST.ScriptLineBreak);
-	
+
 	var ifd=0;//if depth syntax checker
 	var l;
-	
+
 	var exp; // current expression as string
-	
+
 	function hackQuote()
 	{	// 2014-08-07 If expression has one quote assume it extends multiple lines and collect them.
 		// Ideally we don't tokenize by lines.
@@ -139,7 +139,7 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 				{
 					noquote = csLines[l2].indexOf('"')<0;
 					exp += '\\n' + csLines[l2];//embed line break for display
-					csLines[l2]='';					
+					csLines[l2]='';
 				}
 			}
 		}
@@ -191,7 +191,7 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 					{
 						errors.push(new ParseError(l,"",lang.scriptErrorMissingPage.printf(pageName)));
 					}
-					js=("_GO("+jquote(line)+","+pageNameExp+");return;");	
+					js=("_GO("+jquote(line)+","+pageNameExp+");return;");
 				}
 			}
 			else
@@ -233,7 +233,7 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 			}
 			else
 			if ((args = line.match(/^else/i))!==null)
-			{	// "else" becomes "}else{" 
+			{	// "else" becomes "}else{"
 				if (this.showCAJAScript===3){
 					line="";//don't print else?
 				}
@@ -254,16 +254,16 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 			else
 			{	// Unknown statement
 				// 2014-08-07 Some authors use multi-line expressions.
-				
-				
+
+
 				//exp = line;
 				//hackQuote();
 				//js=("_W("+jquote(exp)+","+this.translateCAJAtoJSExpression(exp, l, errors)+")");
-				
+
 				js="_CAJA("+ jquote(line)+ ");";
 				errors.push(new ParseError(l,"",lang.scriptErrorUnhandled.printf(line)));
 			}
-			
+
 			switch (this.showCAJAScript)
 			{
 				case 0:
@@ -287,23 +287,23 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 };
 
 TLogic.prototype.evalBlock = function(expressionInText)
-{	// Evaluate a block of expression included in a text block. 
+{	// Evaluate a block of expression included in a text block.
 	var txt = "";
 	var errors=[];
 	var js=this.translateCAJAtoJSExpression(expressionInText, 1, errors);
 	if (errors.length === 0 )
 	{
 		try {
-			// This uses JavaScript EVAL. 
+			// This uses JavaScript EVAL.
 			var f=(new Function( "with (gLogic) { return ("+ js +")}" ));
 			var result = f(); // Execute the javascript code.
-			
+
 			if (result instanceof Array)
 			{	// 2014-10-13 If got back array (such as from a Repeat variable without index)
 				// turn into human readable list.
 				result =  readableList(result);
 			}
-			
+
 			txt = htmlEscape(result);
 			// Ensure line breaks from user long answer or author's multi-line text set appear.
 			txt = txt.replace("\n","<BR>","gi");
@@ -322,7 +322,7 @@ TLogic.prototype.evalBlock = function(expressionInText)
 
 TLogic.prototype.evalLogicHTML = function(html)
 {	// Parse for %% declarations. Return html block and js block for debugging.
-	
+
 	var parts=html.split("%%");
 	var js=[];
 	if (parts.length > 0)
@@ -346,7 +346,7 @@ TLogic.prototype.evalLogicHTML = function(html)
 TLogic.prototype.evalLogicHTML2 = function(html)
 {	// 2014-08-13 Parse for %% declarations. Return html block and js block for debugging.
 	// INCOMPLETE
-	// Support conditionals as well. 
+	// Support conditionals as well.
 	var parts=html.split("%%");
 	var script;
 	//trace('evalLogicHTML2',html);
@@ -397,7 +397,7 @@ TLogic.prototype.evalLogicHTMLFull = function(html)
 				logic += (block + '\n');
 			}
 		}
-		
+
 		script =  gLogic.translateCAJAtoJS(logic);
 		script.html = logic;
 	}
@@ -405,7 +405,7 @@ TLogic.prototype.evalLogicHTMLFull = function(html)
 		script={js:[],errors:[],html:html};
 	}
 	trace('evalLogicHTMLFull',html);
-	return script; 
+	return script;
 };*/
 
 
@@ -425,34 +425,34 @@ TLogic.prototype.translateCAJAtoJSExpression = function(CAJAExpression, lineNum,
 	// Compiled into JS function to check for errors.
 	// Any syntax errors are pushed onto the errors array.
 	var js = (" " + CAJAExpression +" ");
-	
+
 	function trackVar(match,p1,offset,string){
 		gLogic.testVar(p1,lineNum,errors);
 		//trace('trackVar',p1);
-		return '$1("' + p1 + '")'; 
+		return '$1("' + p1 + '")';
 	}
 	function trackVarIndex(match,p1,p2,offset,string){
 		gLogic.testVar(p1,lineNum,errors);
 		//trace('trackVarIndex',p1,p2);
-		return '$1("' + p1 + '",' + p2+')'; 
+		return '$1("' + p1 + '",' + p2+')';
 	}
 	function trackVarIndexVar(match,p1,p2,offset,string){
 		gLogic.testVar(p1,lineNum,errors);
 		gLogic.testVar(p2,lineNum,errors);
 		//trace('trackVarIndexVar',p1,p2);
-		return '$1("' + p1 + '",$1("'+p2+'"))'; 
+		return '$1("' + p1 + '",$1("'+p2+'"))';
 	}
-	
+
 	// Handle items not in quotes
 	js = js.split('"');
 	var j;
 	for (j=0;j<js.length;j+=2)
 	{
 		var jj=js[j];
-		
+
 		// Strip out $ from $25,000 and inappropriate %%.
 		jj = jj.replace(/\$|\%\%/gi,'');
-		
+
 		//	A2J variables support spaces and other symbols using [] delimiter notation.
 		//		Examples: Name, G/C person age MC, Doesn't have alternate guardian TE, Child Name, Child Name 2, Child Name#2, Child Name#Child Index
 		// Variable formats:
@@ -460,25 +460,25 @@ TLogic.prototype.translateCAJAtoJSExpression = function(CAJAExpression, lineNum,
 		//			[child name] converts to GetVar("child name")
 		//jj = jj.replace(/\[([\w|\s|\-|\'|\/]+)\]/gi,"$$1(\"$1\")");
 		jj = jj.replace(/\[([\w|\s|\-|\'|\/]+)\]/gi,trackVar);
-		
-		
-		
+
+
+
 		//		Variable name with possible spaces#number (array)
 		//			[child name#2] converts to GetVar("child name",2)
 		//jj = jj.replace(/\[([\w|\s|\-|\'|\/]+)#([\d]+)\]/gi,"$$1(\"$1\",$2)");
 		jj = jj.replace(/\[([\w|\s|\-|\'|\/]+)#([\d]+)\]/gi,trackVarIndex);
-		
+
 		// Variable name with possible spaces#other variable name that evaluates to a number (array)
 		//			[child name#child counter] converts to GetVar("child name",GetVar("child counter"))
 		//jj = jj.replace(/\[([\w|\s|\-|\'|\/]+)#([\w|\s|\-|\'|\/]+)\]/gi,"$$1(\"$1\",$$1(\"$2\"))");
 		jj = jj.replace(/\[([\w|\s|\-|\'|\/]+)#([\w|\s|\-|\'|\/]+)\]/gi,trackVarIndexVar);
 
-		
+
 		//	A2J dates bracketed with # like VB
 		//		#12/25/2012# converts to convertDate("12/25/2012")
 		var date = /#([\d|\/]+)#/gi;
 		jj = jj.replace(date,"$$2(\"$1\")");
-		
+
 		js[j]=jj;
 	}
 	js = js.join('"').split('"');
@@ -486,28 +486,28 @@ TLogic.prototype.translateCAJAtoJSExpression = function(CAJAExpression, lineNum,
 	for (j=0;j<js.length;j+=2)
 	{	// handle standalone symbols not in quotes
 		jj=js[j];
-		
+
 		// A2J allows commas in numbers for clarity
 		//		25,000.25 converts to 25000.25
 		var vn = /(\d[\d|\,]+)/gi;
 		jj = jj.replace(vn,comma_fnc);//function(s){return s.replace(",","");});
-		
+
 		//	A2J uses IS, AND, OR and NOT while JS uses ==, &&, || and !
 		jj = jj.replace(/\band\b/gi,"&&");
 		jj = jj.replace(/\bor\b/gi,"||");
 		jj = jj.replace(/\bnot\b/gi,"!");
-		
+
 		//	A2J uses = and <> for comparison while JS uses == and !=
 		jj = jj.replace(/\=/gi,"==");
 		jj = jj.replace(/\>\=\=/gi,">=");
 		jj = jj.replace(REG.LOGIC_LE ,"<=");
 		jj = jj.replace(REG.LOGIC_NE,"!=");
 		jj = jj.replace(/\bis\b/gi,"==");
-		
-		// Constants 
+
+		// Constants
 		jj = jj.replace(/\btrue\b/gi,"1");
 		jj = jj.replace(/\bfalse\b/gi,"0");
-		
+
 		// Function calls
 		//		age([child birthdate]) converts to CallFunction("age",GetVar("child birthdate"))
 		jj = jj.replace(/([A-Za-z_][\w]*)(\s*)(\()/gi,'$$3("$1",');
@@ -522,8 +522,8 @@ TLogic.prototype.translateCAJAtoJSExpression = function(CAJAExpression, lineNum,
 		//		first_name converts to VV("first_name")
 		//jj = jj.replace(/([A-Za-z_][\w]*)/gi,'$$1("$1")');
 		jj = jj.replace(/([A-Za-z_][\w]*)/gi,trackVar);
-		
-		
+
+
 
 		js[j]=jj;
 	}
@@ -562,7 +562,7 @@ TLogic.prototype.traceLogic = function(html)
 	//if(1) { trace(String(html).stripHTML());}
 };
 
-// Functions called by JS translation of CAJA code. 
+// Functions called by JS translation of CAJA code.
 TLogic.prototype._CAJA = function(c)
 {
 	this.traceLogic( traceTag('code',c));
@@ -600,7 +600,7 @@ TLogic.prototype._VG=function( varname,varidx)
 	return gGuide.varGet(varname,varidx,{date2num:true, num2num:true});
 };
 TLogic.prototype._CF=function(fName,val)
-{ 
+{
 	//this.indent++;
 	//this.traceLogic("Call function "+f);
 	var f  = this.userFunctions[fName.toLowerCase()];
@@ -610,13 +610,13 @@ TLogic.prototype._CF=function(fName,val)
 	else
 	{
 		return f.func(val);
-		
+
 	}
 	//this.indent--;
 };
 TLogic.prototype._ED=function(dstr)
 {
-	// Date format expected: m/dd/yyyy. 
+	// Date format expected: m/dd/yyyy.
 	// Converted to unix seconds
 	return Date.parse(dstr);
 };
@@ -691,7 +691,7 @@ gLogic.addUserFunction('Dollar',1,function(val)
 	return $.formatNumber(val,{format:"#,###.00", locale:"us"});
 });
 gLogic.addUserFunction('DollarRound',1,function(val)
-{	// Convert to dollar format, commas and rounded to nearest dollar. 
+{	// Convert to dollar format, commas and rounded to nearest dollar.
 	return $.formatNumber(Math.round(val),{format:"#,##0", locale:"us"});
 });
 gLogic.addUserFunction('Round',1,function(val)
@@ -704,7 +704,7 @@ gLogic.addUserFunction('Trunc',1,function(val)
 });
 
 gLogic.addUserFunction('Number',1,function(val)
-{	// Convert something to a number or 0. 
+{	// Convert something to a number or 0.
 	return parseFloat(val);
 });
 
@@ -728,17 +728,17 @@ gLogic.addUserFunction('Sum',1,function(valArray)
 
 gLogic.addUserFunction('Age',1,function( val )
 {	// 2014-07-30 Return age in years
-	
+
 	// To test, compare against today's month and day but with an
 	// earlier year and choosing 1 day before and 1 day after.
 	var myDate;
 	if (ismdy(val)) {
-		myDate = mdy2jsDate(val); 
+		myDate = mdy2jsDate(val);
 	}
 	else{
 		myDate = days2jsDate(val);
 	}
-	var nowDate = today2jsDate(); 
+	var nowDate = today2jsDate();
 	var y1=myDate.getFullYear();
 	var y2=nowDate.getFullYear();
 	var m1=myDate.getMonth();
@@ -758,14 +758,14 @@ gLogic.addUserFunction('Age',1,function( val )
 	{	// otherwise return year diff plus 1
 		return y2-y1-1;
 	}
-	
-}); 
+
+});
 
 gLogic.addUserFunction('Ordinal',1,function(ordinal)
 {	// Map number to ordinal: 1 becomes first, 8 becomes eighth.
 	ordinal = parseInt(ordinal,10);
 	var txt = lang["Ordinals_"+ordinal];
-	if (!txt)		
+	if (!txt)
 	{	// If not found in ordinal list, build from scratch in English form.
 		var ending;
 		switch (ordinal % 10)

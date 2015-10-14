@@ -1,7 +1,7 @@
 /*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	
+
 	Answer File IO
 
 	12/22/2014, 02/20/2012
@@ -92,7 +92,7 @@ TGuide.prototype.HotDocsAnswerSetVariable = function(variable) //CVariable
 	//	2. nested tag like <MCValue><SelValue>Minnesota</SelValue></MCValue>
 	// 3. repeating tag like <RptValue><
 
-	
+
 	var mapVar2ANX={};
 	mapVar2ANX[CONST.vtUnknown]=	"Unknown";
 	mapVar2ANX[CONST.vtText]=		"TextValue";
@@ -106,7 +106,7 @@ TGuide.prototype.HotDocsAnswerSetVariable = function(variable) //CVariable
 	if (ansType===CONST.vtUnknown || ansType === null || typeof ansType==='undefined'){
 		ansType=[CONST.vtText];
 	}
-	
+
 	function getXMLValue(value)
 	{
 		if (varType===CONST.vtDate)
@@ -133,11 +133,11 @@ TGuide.prototype.HotDocsAnswerSetVariable = function(variable) //CVariable
 	var vi;
 	var xml='';
 	if (variable.repeating===true)
-	{	// Repeating variables are nested in RptValue tag. 
+	{	// Repeating variables are nested in RptValue tag.
 		for (vi=1 ; vi< variable.values.length; vi++)
 		{
 			xml += getXMLValue(variable.values[vi]);
-		}		
+		}
 		xml = '<RptValue>' + xml + '</RptValue>';
 	}
 	else
@@ -199,7 +199,7 @@ TGuide.prototype.HotDocsAnswerSetFromXML=function(AnswerSetXML)
 	mapANX2Var["DateValue"]=CONST.vtDate;
 	mapANX2Var["OtherValue"]=CONST.vtOther;
 	mapANX2Var["RptValue"]=CONST.vtUnknown;
-	
+
 	var guide=this;
 	$(AnswerSetXML).find('AnswerSet > Answer').each(function()
 	{
@@ -222,8 +222,8 @@ TGuide.prototype.HotDocsAnswerSetFromXML=function(AnswerSetXML)
 			//v.name=varName;
 			//guide.vars[varName_i]=v;
 			vNew=true;
-		}	
-		
+		}
+
 		switch (varANXType) {
 			case 'TextValue':
 				guide.varSet(varName,$(this).find('TextValue').html());
@@ -274,14 +274,14 @@ TGuide.prototype.HotDocsAnswerSetFromXML=function(AnswerSetXML)
 				v.warning = 'Type not in answer file, assuming '+v.type;
 			}
 		}
-		
+
 		v.traceLogic(vNew ? 'Creating new:' : 'Replacing:');
 	});
 };
 
 
 
-TGuide.prototype.loadXMLAnswerExternal = function (opts) 
+TGuide.prototype.loadXMLAnswerExternal = function (opts)
 /*	Load a XML based answer file. */
 {	// Load list from opts.url, default list value will be opts.val, and XML stored in opts.elt.
    $.ajax({

@@ -5,31 +5,31 @@
 	Global Preferences for Authoring, referenced by Viewer in Author.
 	Required by Author and Viewers
 	07/2014
-	
+
 */
 
 
 var gPrefs =
 {
 	// Persistent for author
-	
+
 	// Include warning when var name length exceeds HotDocs length
 	warnHotDocsNameLength : true,
 
 	// Include grades for 'good' text as well
 	FKGradeAll : false,
 
-	// Show JavaScript translations	
+	// Show JavaScript translations
 	showJS : false,
-	
+
 	// Non persistent
-	
+
 	// Show all logic or just filled
 	showLogic : 1,
-	
+
 	// Show all text or just filled
 	showText : 1
-	
+
 };
 
 
@@ -43,7 +43,7 @@ gPrefs.save=function()
 			if (gPrefs.hasOwnProperty(p) && typeof gPrefs[p]!=='function')
 			{
 				//trace('Setting saved: '+p+' = '+this[p]);
-				localStorage.setItem(p,gPrefs[p]); 
+				localStorage.setItem(p,gPrefs[p]);
 			}
 		}
 	 }
@@ -75,14 +75,13 @@ gPrefs.load=function()
 				}
 				catch (e)
 				{
-					
+
 				}
 			}
 		}
-	 }	
+	 }
 };
 
 
 
 /* */
-

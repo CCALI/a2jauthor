@@ -1,7 +1,7 @@
 /*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	
+
 	A2J Parser for XML
 
 	Parse native CAJA into CAJA structure
@@ -17,13 +17,13 @@ function fixPath(file)
 	// 04/30/2015 Map data files to the fileDataURL instead of guide's path.
 	// File could be http://site/myfile or myfile or somepath/myfile
 	if (file.indexOf('http')===0)
-	{	// Files starting with http or https are not modified. 
+	{	// Files starting with http or https are not modified.
 		return file;
 	}
-	
+
 	var filesPath = gStartArgs.fileDataURL;
 	if (filesPath == '') {
-		// 2015-06-10 If path not specified (likely for an Authoring installation), try to use guide's path. 
+		// 2015-06-10 If path not specified (likely for an Authoring installation), try to use guide's path.
 		filesPath = gGuidePath;
 	}
 	var fileFixed = filesPath + urlSplit(file).file;
@@ -75,14 +75,14 @@ function page2JSON(page)
 		//_NEXTPAGE:	page.nextPage===''?gJS2XML_SKIP:page.nextPage,
 		//_nextPageDisabled: page.nextPageDisabled===true ? true : gJS2XML_SKIP,
 		//_alignText:	page.alignText==='' ? gJS2XML_SKIP : page.alignText,
-		XML_TEXT:	page.text, 
-		TEXTAUDIO:	page.textAudioURL, 
+		XML_TEXT:	page.text,
+		TEXTAUDIO:	page.textAudioURL,
 		LEARN:	page.learn,
 		XML_HELP:	page.help,
 		HELPAUDIO:	page.helpAudioURL,
-		XML_HELPREADER:	page.helpReader, 
-		HELPIMAGE:	page.helpImageURL, 
-		HELPVIDEO:	page.helpVideoURL, 
+		XML_HELPREADER:	page.helpReader,
+		HELPIMAGE:	page.helpImageURL,
+		HELPVIDEO:	page.helpVideoURL,
 		BUTTONS:		[],
 		FIELDS:		[],
 		XML_CODEBEFORE:	page.codeBefore,
@@ -106,19 +106,19 @@ function page2JSON(page)
 	for (fi in page.fields){
 		var f=page.fields[fi];
 		var FIELD = {
-			_TYPE:			f.type, 
-			_ORDER:			f.order, 
+			_TYPE:			f.type,
+			_ORDER:			f.order,
 			_REQUIRED:		f.required, //==true ? true : gJS2XML_SKIP,
-			_MIN:				f.min, 
-			_MAX:				f.max, 
+			_MIN:				f.min,
+			_MAX:				f.max,
 			_MAXCHARS:		f.maxChars,
-			_CALCULATOR:	f.calculator===true ? true : gJS2XML_SKIP, 
+			_CALCULATOR:	f.calculator===true ? true : gJS2XML_SKIP,
 			LISTSRC:			f.listSrc,
 			XML_LISTDATA:	f.listData,
 			XML_LABEL:		f.label,
-			NAME:				f.name, 
-			VALUE:			f.value, 
-			SAMPLE:			f.sample, 
+			NAME:				f.name,
+			VALUE:			f.value,
+			SAMPLE:			f.sample,
 			XML_INVALIDPROMPT:	f.invalidPrompt
 		};
 		PAGE.FIELDS.push({FIELD:FIELD});
@@ -131,8 +131,8 @@ function page2JSON(page)
 function exportXML_CAJA_from_CAJA(guide)
 {	// Convert Guide structure into XML
 	var JSON={GUIDE:{INFO:{AUTHORS:[]},PAGES:[] ,STEPS:[],VARIABLES:[],CLAUSES:[] }};
-	
-	
+
+
 	JSON.GUIDE.INFO.tool=guide.tool;
 	JSON.GUIDE.INFO.toolversion=guide.toolversion;
 	JSON.GUIDE.INFO.avatar=guide.avatar;
@@ -164,9 +164,9 @@ function exportXML_CAJA_from_CAJA(guide)
 				NAME:author.name,
 				TITLE:author.title,
 				ORGANIZATION:author.organization,
-				EMAIL:author.email}}); 
+				EMAIL:author.email}});
 	}
-	
+
 	JSON.GUIDE.INFO.firstPage=guide.firstPage;
 	JSON.GUIDE.INFO.exitPage=guide.exitPage;
 	var si;
@@ -176,7 +176,7 @@ function exportXML_CAJA_from_CAJA(guide)
 		JSON.GUIDE.STEPS.push({
 			STEP:{
 				_NUMBER:step.number,
-				XML_TEXT:step.text}}); 
+				XML_TEXT:step.text}});
 	}
 	var vi;
 	for (vi in guide.vars)
@@ -188,7 +188,7 @@ function exportXML_CAJA_from_CAJA(guide)
 			  _REPEATING: ((v.repeating===true )? v.repeating : gJS2XML_SKIP),
 			  _COMMENT: v.comment
 			 };
-		JSON.GUIDE.VARIABLES.push({VARIABLE:VARIABLE}); 
+		JSON.GUIDE.VARIABLES.push({VARIABLE:VARIABLE});
 	}
 	var ci;
 	for (ci in guide.clauses)
@@ -199,7 +199,7 @@ function exportXML_CAJA_from_CAJA(guide)
 			  _COMMENT: c.comment,
 			  XML_TEXT:c.text
 			 };
-		JSON.GUIDE.CLAUSES.push({CLAUSE:CLAUSE}); 
+		JSON.GUIDE.CLAUSES.push({CLAUSE:CLAUSE});
 	}
 	for (var pi in guide.pages)
 	{
@@ -214,8 +214,8 @@ function exportXML_CAJA_from_CAJA(guide)
 
 function parseXML2Page(PAGE, page)
 {
-	page.xml = PAGE.xml(); 
-	
+	page.xml = PAGE.xml();
+
 	page.type=PAGE.attr("TYPE");
 	page.style=makestr(PAGE.attr("STYLE"));
 	if (page.type===CONST.ptPopup || page.type==="Pop-up page")
@@ -244,16 +244,16 @@ function parseXML2Page(PAGE, page)
 	page.notes=makestr(PAGE.find("NOTES").xml());
 	page.codeBefore = makestr(PAGE.find("CODEBEFORE").xml());
 	page.codeAfter =	makestr(PAGE.find("CODEAFTER").xml());
-	
+
 	PAGE.find('BUTTONS > BUTTON').each(function(){
 		var button=new TButton();
 		button.label =jQuery.trim($(this).find("LABEL").text());
 		button.next = makestr($(this).attr("NEXT"));
 		button.url = makestr($(this).attr("URL"));
 		button.repeatVar=makestr($(this).attr("REPEATVAR"));
-		button.repeatVarSet=makestr($(this).attr("REPEATVARSET"));		
+		button.repeatVarSet=makestr($(this).attr("REPEATVARSET"));
 		button.name =jQuery.trim($(this).find("NAME").xml());
-		button.value = jQuery.trim($(this).find("VALUE").xml());	
+		button.value = jQuery.trim($(this).find("VALUE").xml());
 		page.buttons.push(button);
 	});
 	PAGE.find('FIELDS > FIELD').each(function(){
@@ -270,15 +270,15 @@ function parseXML2Page(PAGE, page)
 		field.max = makestr($field.attr("MAX"));
 		field.maxChars = makestr($field.attr("MAXCHARS"));
 		field.calculator=textToBool($field.attr("CALCULATOR"),false);
-		
+
 		field.invalidPrompt =makestr(jQuery.trim($field.find("INVALIDPROMPT").xml()));
 		field.invalidPromptAudio =makestr(jQuery.trim($field.find("INVALIDPROMPTAUDIO").xml()));
-		
+
 		field.listSrc =	makestr($field.find("LISTSRC").xml());
 		if (field.listSrc===""){
 			field.listData =	$field.find("LISTDATA").xml();
 		}
-	
+
 		page.fields.push(field);
 	});
 	return page;
@@ -288,7 +288,7 @@ function parseXML2Page(PAGE, page)
 function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 {	// Parse parseCAJA
 	var guide=new TGuide();
-	
+
 	var INFO = $('INFO',GUIDE);
 	guide.tool =			makestr(INFO.children('TOOL').text());
 	guide.toolversion =  makestr(INFO.children('TOOLVERSION').text());
@@ -339,7 +339,7 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		author.email = AUTHOR.find('EMAIL').text();
 		guide.authors.push(author);
 	});
-	
+
 	guide.firstPage =  makestr(GUIDE.find('FIRSTPAGE').text());
 	guide.exitPage =  makestr(GUIDE.find('EXITPAGE').text());
 	GUIDE.find("STEP").each(function() {
@@ -349,7 +349,7 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		step.text=STEP.find("TEXT").xml();
 		guide.steps.push(step);
 	 });
-	// Parse pages into book.pages[] records. 
+	// Parse pages into book.pages[] records.
 	GUIDE.find("VARIABLES > VARIABLE").each(function() {
 		var VARIABLE = $(this);
 		//var v = new TVariable();
@@ -361,7 +361,7 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		//guide.vars[v.name.toLowerCase()]=v;
 	 });
 	guide.varCreateInternals();
-	
+
 	/*
 	GUIDE.find("POPUP").each(function() {//TODO discard unused popups
 		var POPUP = $(this);
@@ -373,7 +373,7 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 	});*/
 	GUIDE.find("CLAUSES > CLAUSE").each(function() {
 		var CLAUSE = $(this);
-		var clause = new TClause(); 
+		var clause = new TClause();
 		clause.name=CLAUSE.attr("NAME");
 		clause.comment=makestr(CLAUSE.attr("COMMENT"));
 		clause.text=makestr(CLAUSE.find("TEXT").xml());
@@ -384,7 +384,7 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		var page = guide.addUniquePage(PAGE.attr("NAME"));
 		parseXML2Page(PAGE,page);
 	});
-	
+
 	return guide;
 }
 function page2XML(page)/* return XML */
@@ -408,7 +408,7 @@ function pageFromXML(xml)/* return TPage */
 /** @param {string} startTabOrPage */
 function loadGuideFile(guideFile,startTabOrPage)
 {  // Load guide file and start on specified page
-	
+
 	if (guideFile==='') {
 		$('#splash').empty();
 		dialogAlert({title:'No guide file specified'});
@@ -425,10 +425,10 @@ function loadGuideFile(guideFile,startTabOrPage)
 	*/
 	//trace(guideFile,url,gGuidePath,startTabOrPage);
    loadNewGuidePrep(guideFile,startTabOrPage);
-	
+
    window.setTimeout(function()
 		//{loadGuideFile2(guideFile,startTabOrPage);}
-		{	// Load guide file and start on specified page. 
+		{	// Load guide file and start on specified page.
 			$.ajax({
 				url: guideFile,
 				dataType:  "xml", // IE will only load XML file from local disk as text, not xml.
@@ -443,12 +443,12 @@ function loadGuideFile(guideFile,startTabOrPage)
 				{
 					var cajaDataXML;
 					cajaDataXML = data;
-					cajaDataXML=$(cajaDataXML); 
+					cajaDataXML=$(cajaDataXML);
 					// global variable guide
 					gGuide =  parseXML_Auto_to_CAJA(cajaDataXML);
 					gGuide.filename=guideFile;
 					guideStart(startTabOrPage);
-					setProgress('');     
+					setProgress('');
 				}
 			});
 		},500);
@@ -478,7 +478,7 @@ TGuide.prototype.addUniquePage=function(preferredName,clonePage)
 	}
 	//trace(name,page.name);
 	page.name = name;
-	guide.pages[page.name] = page;  
+	guide.pages[page.name] = page;
 	return page;
 };
 

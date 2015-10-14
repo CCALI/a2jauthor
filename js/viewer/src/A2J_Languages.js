@@ -7,20 +7,20 @@
 	Language blocks for each supported language.
 	There's a Languages[] structure for A2J Viewer specific code.
 	And jQuery UI structs for Calendar.
-	
+
 	Currently supported languages:
 		English
 		Spanish
 		Vietnamese
-		Chinese-Simplified 
+		Chinese-Simplified
 		Korean
 		French
 		Polish
 		Russian
 		Dutch
-		
+
 	Pending:
-		 
+
 	2015 - 07/14/2012
 
 */
@@ -42,8 +42,8 @@ var lang = {
 	LearnMore:'',
 	FieldPrompts_text:'',
 	FieldPrompts_gender:'',
-	RepeatAnd:'', // Used in building comma list from REPEAT. 
-	
+	RepeatAnd:'', // Used in building comma list from REPEAT.
+
 	qIDNOWHERE:'',
 	qIDSUCCESS:'',
 	qIDFAIL:'',
@@ -51,7 +51,7 @@ var lang = {
 	qIDBACK:'',
 	qIDRESUME:'',
 	UnknownID:'',
-	
+
 	scriptErrorMissingPage :'',
 	scriptErrorUnhandled : '',
 	scriptErrorEndMissing : ''
@@ -71,7 +71,7 @@ function readableList(list)
 	var text=items.pop();
 	if (items.length>0)
 	{
-		text=items.join(', ')+' ' + lang.RepeatAnd +' ' + text; 
+		text=items.join(', ')+' ' + lang.RepeatAnd +' ' + text;
 	}
 	return text;
 }
@@ -91,7 +91,7 @@ function TLanguages()
 		}
 		//trace("TLanguages.set",languageID);
 		var region;
-		
+
 		region = this.regional[languageID];
 		lang = {};
 		var e;
@@ -192,8 +192,8 @@ Languages.regional.en= {
 	Ordinals_12:'twelfth',
 	Ordinals_13:'13th',
 	RepeatAnd: 'and',
-	
-	
+
+
 	// Authoring system, non-translated elements.
 	// Tab names
 	tabAbout:'About',
@@ -210,7 +210,7 @@ Languages.regional.en= {
 	qIDRESUME : "[Exit - Resume interview]",
 	// Unknown ID
 	UnknownID : "[Unknown id [{1}]: [{2}",
-	
+
 	scriptErrorMissingPage :'Page "{1}" does not exist.',
 	scriptErrorUnhandled : 'Unknown command: {1}',
 	scriptErrorEndMissing : 'Missing an EndIf'
@@ -685,7 +685,7 @@ Languages.regional.nl= {
 	Ordinals10:'tiende',
 	Ordinals11:'elfde',
 	Ordinals12:'twaalfde',
-	Ordinals13:'dertiende'	
+	Ordinals13:'dertiende'
 };
 
 
@@ -763,7 +763,7 @@ Languages.regional['zh-cn']= {
 // Korean
 Languages.regional.ko= {
 	locale:'ko',
-	
+
 	Language: '영어',
 	LanguageEN: 'Korean',
 	AskYesNo_Yes:'예',
@@ -1016,6 +1016,3 @@ jQuery(function($){
 
 
 /* */
-
-
-

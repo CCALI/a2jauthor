@@ -4,7 +4,7 @@
 
 	Global server configuration for A2J Viewer.
 	2015-06-04
-	
+
 */
 
 var gConfig = {
@@ -12,4 +12,3 @@ var gConfig = {
 	AJAXLoadingTimeout : 59000 // 60 seconds for debugging
 
 }
-

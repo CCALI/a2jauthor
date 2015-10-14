@@ -1,9 +1,9 @@
-﻿/* *****************
+/* *****************
 	@charset "utf-8";
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	
-	A2J 5 Viewer Stylesheet 
+
+	A2J 5 Viewer Stylesheet
 	02/02/2012
 	05/2014
 */
@@ -32,7 +32,7 @@ html, body{
 	height: 64px;
 	top: 45px;
 	left: 5px;
-	background-image: url(images/A2J5_Viewer_Logo.png);
+	background-image: url(../images/A2J5_Viewer_Logo.png);
 }
 
 .SJILogo {
@@ -40,7 +40,7 @@ html, body{
 	height: 55px;
 	padding: 3px;
 	margin: 0px;
-	background-image: url(images/SJILogo.png);
+	background-image: url(../images/SJILogo.png);
 	display: inline;
 	float: left;
 }
@@ -53,7 +53,7 @@ html, body{
 	top:0px;
 	right:0px;
 	bottom:0px;
-	
+
 	border: 1px solid #444;
 	color: #000;
 	background-color:#fff;
@@ -69,7 +69,7 @@ html, body{
 	top: 0;
 	left: 0;
 	bottom: 0;
-	overflow:hidden;	
+	overflow:hidden;
 	background-color: #eee;
 }
 
@@ -128,15 +128,15 @@ html, body{
 	border-top-width: thin;
 	border-right-width: thin;
 	border-bottom-width:  thin;
-	border-left-width: thin; 
-	border-top-style: none; 
-	border-right-style: none; 
-	border-bottom-style: none; 
+	border-left-width: thin;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
 	border-left-style:  none;
-	border-top-color: #eee; 
-	border-right-color: #eee; 
-	border-bottom-color: #eee; 
-	border-left-color: #eee; 
+	border-top-color: #eee;
+	border-right-color: #eee;
+	border-bottom-color: #eee;
+	border-left-color: #eee;
 }
 .A2JViewer .NavBar li a:hover, .Viewer .NavBar li a:focus{
 	margin: 2px;
@@ -215,14 +215,14 @@ html, body{
 	color: #888;
 }
 .NavBar button.ui-state-default .ui-icon {
-	background-image: url(images/ui-icons_222222_256x240.png);
+	background-image: url(../images/ui-icons_222222_256x240.png);
 }
 /*
 .NavBar > li { float: left; display: block; width: auto !important; }
 .NavBar > li > a > span { float: left; display: block; clear: both; overflow: hidden;}
 .NavBar > li > a { float: left; display: block; clear: both; overflow: hidden;}
 */
-.customSelect { 
+.customSelect {
 /* This is the default class that is used */
 /* Put whatever custom styles you want here */
 }
@@ -308,9 +308,9 @@ div.help.bubble > div { /* form with viewer's field inputs */
 	padding: 0px;
 	width: 100%;
 	overflow: auto;
-	position: relative;  
+	position: relative;
 	min-height: 150px;
-	max-height: 400px; 
+	max-height: 400px;
 }
 div.question.bubble > div {
 	max-height: 350px;/* Must preserve room for drop down calendar */
@@ -320,7 +320,7 @@ div.question.bubble > div {
 	padding: 0px;
 	width: 100%;
 	overflow: auto;
-	position: relative;  
+	position: relative;
 	min-height: 1em;
 	max-height: auto;
 }
@@ -330,7 +330,7 @@ div.question.bubble > div {
 .help.bubble,
 .help.bubble > div {
 	min-height: 50px;
-	max-height: 500px; 
+	max-height: 500px;
 }
 
 /* Buttons below the question/learn more bubbles */
@@ -342,8 +342,8 @@ div.question.bubble > div {
 	margin-top: 1.0em;
 	bottom: 4px;
 	margin-right: 2em;
-	width: 100%; 
-	min-height:  2em; 
+	width: 100%;
+	min-height:  2em;
 }
 .question.panel .buttonlist{
 	text-align:right;
@@ -365,7 +365,7 @@ div.question.bubble > div {
 .A2JViewer input[type=radio], .A2JViewer input[type=checkbox] {
 	display: inline;
 }
-div.question.bubble fieldset div.row{  
+div.question.bubble fieldset div.row{
 	margin: 0;
 	margin-top: .5em;
 	padding: 0;
@@ -394,7 +394,7 @@ div.question.bubble fieldset div.row input[type=text].number {
 .question .field {
 	position: relative;
 	padding-top: .5em;
-	width: 100%;	
+	width: 100%;
 }
 .question .labelinput {
 	position: relative;
@@ -470,7 +470,7 @@ div.stepsign {
 	position: relative;
 	width: 440px;
 	height: 150px;
-	background-image: url(images/step_sign.png);
+	background-image: url(../images/step_sign.png);
 	background-repeat: no-repeat;
 }
 div.stepsigncolor {
@@ -547,7 +547,7 @@ span.tag { /* general tag */
 	background-color: #fff;
 }
 span.tag.field {
-	background-color: #efe;	
+	background-color: #efe;
 }
 span.tag.field.required {
 	border: solid #FFFF00;
@@ -561,7 +561,7 @@ span.tag.repeat {
 	background: transparent;
 	background-image: url(../author/images/MapperNodeRepeat.png);
 	background-repeat: no-repeat;
-	border: none; 
+	border: none;
 	padding:0px;
 	width: 12px;
 	height: 12px;
@@ -627,7 +627,7 @@ span.err {
 	border-color:#fff;
 }
 .ViewerVarForm .varvalpanel table.A2JVars {
- 	padding:.2em; 
+	padding:.2em;
 }
 .ViewerVarForm .varvalpanel table.A2JVars tr {
 	cursor:pointer;
@@ -731,12 +731,12 @@ x.question.panel {
 
 /* 05/22/2015 Hyperlinks and Popups have different colors */
 div.bubble * a {
-	color: #00f; 
+	color: #00f;
 }
 div.bubble * a[href^="POPUP"]
 {
-	color: #f00; 
+	color: #f00;
 }
-	
-	
+
+
 /* */

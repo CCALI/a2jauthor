@@ -79,6 +79,11 @@
           "viewer/src/A2J_Types"
         ]
       },
+      "viewer/src/A2J_Shared": {
+        "deps": [
+          "jquery-ui/ui/dialog"
+        ]
+      },
       "author/src/A2J_Tabs": {
         "format": "global",
         "deps": [

@@ -1,0 +1,105 @@
+<div class="app-wrapper">
+  <div class="app-container">
+
+    <!-- app-header -->
+    <div class="app-header">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+            <ul class="nav navbar-nav">
+              <button class="btn btn-default navbar-btn"><span class="glyphicon-left-open"></span> Back</button>
+              <button class="btn btn-default navbar-btn">Next <span class="glyphicon-right-open"></span></button>
+            </ul>
+            <form class="navbar-form navbar-left" role="search">
+              <span>My progress:</span>
+              <div class="form-group ">
+                <div class="input-group">
+                  <select class="form-control" id="history">
+                    <option value="1-Introduction">This is a short sample interview. It ask…</option>
+                  </select>
+                </div>
+              </div>
+            </form>
+            <button class="btn btn-default navbar-btn"><span class="glyphicon-plus"></span> Send Feedback</button>
+            <button class="btn btn-default navbar-btn"><span class="glyphicon-cancel-circled"></span> Exit</button>
+          </div><!-- /.navbar-collapse -->
+
+        </div>
+      </nav>
+    <!-- app nav -->
+
+    <!-- horizon -->
+    <div class="horizon">
+      <img class="courthouse" src="images/A2J5_CourtHouse.png" />
+    </div>
+    <!-- horizon -->
+
+    </div>
+    <!-- app-header -->
+
+
+    <!-- app-content -->
+    <div class="app-content">
+      <div class="sidewalk">
+      </div>
+
+        <div class="app-step step-1 current">
+        </div>
+
+        <div class="step-current">
+          <div class="guide-wrapper">
+            <div class="bubble bubble-right">
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
+              <a href="#0" class="btn btn-primary">Continue</a>
+            </div> <!-- bubble -->
+
+            <img src="images/A2JAvatar-Guide-Front-F0.png" class="avatar-guide" />
+          </div><!-- guide-wrapper -->
+
+          <div class="client-wrapper">
+            <img src="images/A2JAvatar-Client-M0.png" class="client-guide" />
+
+            <div class="bubble">
+              <p>Lorem ipsum dolor sit amet?</p>
+              <a href="#0" class="btn btn-info">Learn More</a>
+            </div> <!-- bubble -->
+
+
+          </div><!-- client-wrapper -->
+
+          <div class="sign-wrapper">
+            <div class="sign">
+              <h2><span class="sign-step">1</span> Begin the Interview</h2>
+            </div>
+          </div>
+
+        </div><!-- step-current -->
+
+
+        <div class="step-next">
+          <div class="app-step step-2 next"></div>
+
+            <div class="sign-wrapper">
+              <div class="sign">
+                <h2><span class="sign-step">2</span> Answer Questions</h2>
+              </div>
+            </div>
+        </div>
+
+      <div class="step-next-next">
+          <div class="app-step step-3 next"></div>
+
+            <div class="sign-wrapper">
+              <div class="sign">
+                <h2><span class="sign-step">3</span> Do Things & Stuff</h2>
+              </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- app-content -->
+
+  </div><!-- app-container -->
+</div><!-- app-wrapper -->

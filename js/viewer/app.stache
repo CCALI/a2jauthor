@@ -1,0 +1,14 @@
+{{#if isMobile}}
+  <div class="container">
+    <a2j-mobile-viewer
+      r-state="{rState}"
+      p-state="{pState}"
+      m-state="{mState}"
+      interview="{interview}"
+      logic="{logic}"
+      lang="{lang}">
+    </a2j-screen-manager>
+  </div>
+{{else}}
+  <a2j-desktop-viewer />
+{{/if}}

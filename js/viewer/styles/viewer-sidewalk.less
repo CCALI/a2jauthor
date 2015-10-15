@@ -1,0 +1,18 @@
+.sidewalk {
+	width: @steps-width;
+  background: linear-gradient(to right bottom, transparent 50%, @sidewalk-color 50%);
+  right: @steps-from-right;
+  position: absolute;
+  height: calc(~"100% - " @header-height);
+  //border: 1px solid red;
+
+  &:after {
+    position: absolute;
+    content: '';
+    background: @sidewalk-color;
+    width: 10%;
+    height: 100%;
+    bottom: 0;
+    right: -10%;
+  }
+}

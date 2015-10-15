@@ -2,8 +2,8 @@ import Map from 'can/map/';
 import regex from 'viewer/mobile/util/regex';
 import tLogic from 'viewer/mobile/util/tlogic';
 import cString from 'viewer/mobile/util/string';
+import constants from 'viewer/models/constants';
 import Infinite from 'viewer/mobile/util/infinite';
-import constants from 'viewer/mobile/models/constants';
 
 import 'can/map/define/';
 

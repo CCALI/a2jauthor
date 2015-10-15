@@ -1,0 +1,16 @@
+.horizon {
+  position: relative;
+	height: @horizon-height;
+	background: @horizon-color url(images/A2J5_Icon_68.png) no-repeat;
+	background-position: @grid-gutter-width center;
+
+	.courthouse {
+  	height: auto;
+    z-index: 10;
+    position: absolute;
+    width: 30%;
+    max-width: 240px;
+    bottom: -5px;
+    right: @steps-from-right - 10%;
+	}
+}

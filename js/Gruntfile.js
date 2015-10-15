@@ -11,7 +11,10 @@ module.exports = function(grunt) {
         reporter: 'Spec',
         browsers: ['firefox']
       },
-      firefox: ['author/test/index.html', 'client/test/index.html']
+      firefox: [
+        'author/test/index.html',
+        'viewer/mobile/test/index.html'
+      ]
     },
 
     copy: {
@@ -42,7 +45,10 @@ module.exports = function(grunt) {
         options: {
           system: {
             config: 'package.json!npm',
-            main: ['author/main', 'client/app']
+            main: [
+              'author/main',
+              'viewer/app'
+            ]
           },
           buildOptions: {
           }

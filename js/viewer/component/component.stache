@@ -1,4 +1,0 @@
-<can-import from="viewer/styles/A2J_Fonts.css!" />
-<can-import from="viewer/styles/viewer.jquery-ui.css!" />
-<can-import from="viewer/styles/jquery-ui.extra.css!" />
-<can-import from="viewer/styles/A2J_Viewer.css!" />

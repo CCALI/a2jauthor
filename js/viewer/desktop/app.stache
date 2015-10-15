@@ -1,0 +1,31 @@
+<div id="splash" class="welcome">
+  <div align="center">
+    <img src="images/A2J5_Icon_512.png"/>
+    <p>Loading... <img alt="Loading..." src="./images/ajax-loader.gif" width="16" height="16" /></p>
+  </div>
+</div>
+
+<div id="page-viewer" class="hidestart ViewerApp a2jv">
+  <div class="testing ui-widget-content">
+    <div id="viewer-logic-form" class="ViewerLogicForm">
+      <div class="tracepanel">
+        <ol id="tracer" contentEditable="true"></ol>
+      </div>
+      <div class="immediatepanel">
+        <span><input type="text" id="tracerimm"/></span>
+      </div>
+    </div>
+
+    <div id="viewer-var-form" class="ViewerVarForm"></div>
+  </div>
+
+  <div class="A2JViewer"></div>
+  <div class="alertPanel"></div>
+  <div class="alertCounter"></div>
+</div>
+
+<div id="dialog-confirm" class="a2jv" title=""></div>
+
+<noscript>
+  <div class="NoJS">JavaScript is disabled. Please enable JavaScript to continue.</div>
+</noscript>

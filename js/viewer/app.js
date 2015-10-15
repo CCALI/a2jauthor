@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import loader from '@loader';
 import isMobile from './is-mobile';
-import config from 'viewer/app-config';
+import config from 'viewer/config/';
 
 import 'jquerypp/dom/cookie/';
 

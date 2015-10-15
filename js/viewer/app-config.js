@@ -3,8 +3,8 @@ export default {
 
   // templateURL points to the interview XML. This demo just passes what's on the querystring.
   // templateURL: '/interview.xml',
-  templateURL: '../tests/data/Sample Short Interview.xml?data=ExtraData4templateURL',
-  // templateURL: '../../A2JGetInterview.aspx?data=2417^b4e01b9c-4573-4776-b195-cb9490ac0c3b^1c725dd1-8bf6-4dc5-955d-b0cfb94600a5',
+  // templateURL: '../tests/data/Sample Short Interview.xml?data=ExtraData4templateURL',
+  templateURL: '../../A2JGetInterview.aspx?data=2417^b4e01b9c-4573-4776-b195-cb9490ac0c3b^1c725dd1-8bf6-4dc5-955d-b0cfb94600a5',
   // templateURL:'../tests/data/Sample Short Interview Answers.anx?data=something',
 
   // fileDataURL is the folder of interview's assets, usually the folder of the interview XML
@@ -16,8 +16,8 @@ export default {
   // getDataURL loads an answer file at start, used for RESUME
   // getDataURL:  '../tests/data/Sample Short Interview Answers.anx',
   // getDataURL: '/resume.aspx',
-  getDataURL: '../tests/data/Sample Short Interview Answers.anx?data=ExtraData4getDataURL',
-  // getDataURL: 'A2JGetData.aspx?data=0^b4e01b9c-4573-4776-b195-cb9490ac0c3b^2417^dcb160b4-7321-44c5-a99a-92d3e3efc1d6',
+  // getDataURL: '../tests/data/Sample Short Interview Answers.anx?data=ExtraData4getDataURL',
+  getDataURL: 'A2JGetData.aspx?data=0^b4e01b9c-4573-4776-b195-cb9490ac0c3b^2417^dcb160b4-7321-44c5-a99a-92d3e3efc1d6',
   // getDataURL:'A2J_ViewerExit.html',
 
   // setDataURL saves answer file and leaves the viewer (its response replaces viewer's frame)

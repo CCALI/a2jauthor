@@ -1,14 +1,17 @@
 {{#if isMobile}}
-  <div class="container">
-    <a2j-mobile-viewer
-      r-state="{rState}"
-      p-state="{pState}"
-      m-state="{mState}"
-      interview="{interview}"
-      logic="{logic}"
-      lang="{lang}">
-    </a2j-screen-manager>
-  </div>
+  <a2j-mobile-viewer
+    lang="{lang}"
+    logic="{logic}"
+    r-state="{rState}"
+    p-state="{pState}"
+    m-state="{mState}"
+    interview="{interview}" />
 {{else}}
-  <a2j-desktop-viewer />
+  <a2j-desktop-viewer
+    lang="{lang}"
+    logic="{logic}"
+    r-state="{rState}"
+    p-state="{pState}"
+    m-state="{mState}"
+    interview="{interview}" />
 {{/if}}

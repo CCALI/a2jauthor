@@ -84,7 +84,7 @@ export default can.Model.extend({
     }
   },
 
-  createGuide: function() {
+  createGuide() {
     var answers = this.attr('answers');
 
     return {
@@ -93,5 +93,13 @@ export default can.Model.extend({
       varGet: can.proxy(answers.varGet, answers),
       varSet: can.proxy(answers.varSet, answers)
     };
+  },
+
+  getPageByName(name) {
+    let pages = this.attr('pages');
+
+    return _find(pages, function(page) {
+      return page.attr('name') === name;
+    });
   }
 });

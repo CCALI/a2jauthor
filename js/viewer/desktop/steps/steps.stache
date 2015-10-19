@@ -1,0 +1,86 @@
+<can-import from="viewer/mobile/pages/" />
+<can-import from="viewer/desktop/steps/steps.less!" />
+
+<div class="step-current">
+  <div class="app-step step-1 current"></div>
+
+  <div class="guide-wrapper">
+    <div id="guideBubble" class="bubble">
+      <div class="bubble-content">
+        <a2j-pages
+          logic="{logic}"
+          r-state="{rState}"
+          p-state="{pState}"
+          m-state="{mState}"
+          interview="{interview}" />
+      </div><!-- bubble-content -->
+    </div><!-- bubble -->
+
+    <div class="avatar-wrapper">
+      <span class="bubble-arrow"></span>
+      <object type="image/svg+xml" class="avatar-guide" data="images/guide-male-side.svg">Your browser does not support SVG</object>
+    </div>
+  </div><!-- guide-wrapper -->
+
+  <div class="client-wrapper">
+    <div class="avatar-wrapper">
+      <span class="bubble-arrow left"></span>
+      <object type="image/svg+xml" class="avatar-client" data="images/client-male.svg">Your browser does not support SVG</object>
+    </div>
+
+    <div id="clientBubble" class="bubble">
+      <div class="bubble-content">
+        <p>What about my privacy? What will happen to this information?</p>
+      </div>
+      <a href="#0" class="btn btn-info">Learn More</a>
+    </div><!-- bubble -->
+  </div><!-- client-wrapper -->
+
+  <div class="sign-wrapper">
+    <div class="sign">
+      <h2><span class="sign-step">1</span> Begin the Interview</h2>
+    </div>
+  </div>
+</div><!-- step-current -->
+
+<div class="next-wrapper">
+  <div id="next-2" class="step-next next-2 step-2">
+    <div class="app-step"></div>
+
+    <div class="sign-wrapper">
+      <div class="sign">
+        <h2><span class="sign-step">2</span> Answer Questions</h2>
+      </div>
+    </div>
+  </div>
+
+  <div id="next-3" class="step-next next-3 step-3">
+    <div class="app-step"></div>
+
+    <div class="sign-wrapper">
+      <div class="sign">
+        <h2><span class="sign-step">3</span> Do Things & Stuff</h2>
+      </div>
+    </div>
+  </div>
+
+  <div id="next-4" class="step-next next-4 step-4">
+    <div class="app-step"></div>
+
+    <div class="sign-wrapper">
+      <div class="sign">
+        <h2><span class="sign-step">4</span> Turn Around</h2>
+      </div>
+    </div>
+  </div>
+
+  <div id="next-5" class="step-next next-5 step-5">
+    <div class="app-step"></div>
+
+    <div class="sign-wrapper">
+      <div class="sign">
+        <h2><span class="sign-step">5</span> Take a Nap</h2>
+      </div>
+    </div>
+  </div>
+</div>

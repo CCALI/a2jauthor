@@ -1,90 +1,101 @@
+.step-current {
+  width: 100%;
+  .vertical-align(absolute);
+  z-index: @zindex-popover;
+
+  @media only screen and (min-width: @screen-md) {
+    //padding-left: 13%;
+  }
+}
+
 .app-step {
   position: absolute;
-  bottom: @grid-gutter-width;
+  bottom: 0;
   width: @steps-width;
-  height: 500px;
-  right: @steps-from-right;
-  //border: 1px solid blue;
+  height: 100%;
+  right: @steps-from-right - @sidewalk-right-padding;
+  //border: 1px solid green;
 
-  &.next {
-    //bottom: 50%;
-    width: 25%;
-    height: 100%;
-    //border: 1px solid aqua;
-  }
   &:after {
     position: absolute;
     content: '';
     .border-radius(50%);
-    width: 120%;
+    width: 100%;
+    right: 0;
   }
-  &.current:after {
-    background: #EFEFC6;
+  &.current {
     height: 100px;
-    bottom: 0;
-    //right: -20%;
+    bottom: -25px;
 
-  }
-  &.next:after {
-    background: #EFC6EF;
-    height: 40%;
-    bottom: 0;
-    //right: -20%;
-    //width: 140%;
-    left: 15%;
+    &:after {
+      background: #EFEFC6;
+      height: 100px;
+      bottom: 0;
+    }
   }
 }
 
-.step-current {
+.step-next {
   width: 100%;
-  bottom: 50px;
+  bottom: calc(~"50vh - " @header-height);
   position: absolute;
   //border: 1px solid red;
   padding-left: 5%;
-}
-.step-next {
-  width: 100%;
-  bottom: 47%;
-  position: absolute;
-  border: 1px solid red;
-  padding-left: 5%;
   height: 10%;
-}
+  display: none;
 
-.step-next-next {
-  width: 100%;
-  bottom: 60%;
-  position: absolute;
-  border: 1px solid red;
-  padding-left: 5%;
-  height: 10%;
+  .app-step {
+    width: 35%;
 
-    &.next {
-    //bottom: 50%;
-    width: 25%;
-    height: 100%;
-    //border: 1px solid aqua;
+    &:after {
+      background: #EFC6EF;
+      height: 40%;
+      bottom: 0;
+    }
   }
 }
 
-.guide-wrapper {
-  //border: 1px solid blue;
-  width: 45%;
-  max-height: 390px;
-  float: left;
+.next-2 {
+  bottom: calc(~"53% - " @header-height/2);
+    .app-step:after {
+    height: 30%;
+  }
 }
 
-.client-wrapper {
-  //border: 1px solid green;
-  width: 45%;
-  max-height: 390px;
-  float: left;
+.next-3 {
+  bottom: calc(~"67% - " @header-height/2);
+  .app-step:after {
+    height: 30%;
+  }
+}
+
+.next-4 {
+  bottom: calc(~"79% - " @header-height/2);
+  .app-step:after {
+    height: 20%;
+  }
+}
+
+.next-5 {
+  bottom: calc(~"87% - " @header-height/2);
+  .app-step:after {
+    height: 10%;
+  }
 }
 
 
-
-
-
+.steps-2 .next-wrapper .step-next:nth-child(-n+1) {
+  display: block;
+}
+.steps-3 .next-wrapper .step-next:nth-child(-n+2) {
+  display: block;
+}
+.steps-4 .next-wrapper .step-next:nth-child(-n+3) {
+  display: block;
+}
+.steps-5 .next-wrapper .step-next:nth-child(-n+4) {
+    display: block !important;
+}
 
 .Step0 { background-color:#EFEFC6; }
 .Step1 { background-color:#EFEF8C; }
@@ -103,6 +114,26 @@
 .Step14 { background-color:#8CC6C6; }
 .Step15 { background-color:#8CC68C; }
 
+.step-2 {
+  .app-step:after {
+    background:#EFC6EF;
+  }
+}
+.step-3 {
+  .app-step:after {
+    background:#EFC6C6;
+  }
+}
+.step-4 {
+  .app-step:after {
+    background:#EF8CEF;
+  }
+}
+.step-5 {
+  .app-step:after {
+    background:#EF8C8C;
+  }
+}
 
 div.step  {
 	position: relative;

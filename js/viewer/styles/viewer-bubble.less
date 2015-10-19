@@ -1,20 +1,24 @@
 @bubble-width: 40%;
 
 .bubble {
-  position: relative;
-	width: 50%;
+	width: 60%;
 	.border-box;
 	.bubble-generator;
 	.box-shadow;
-	float: left;
-	max-height: 280px;
 	z-index: 20;
+	position: absolute;
+	top: 0;
 
-	&.bubble-right {
-  	float: left;
+	&.vertical {
+  	.vertical-align(absolute);
+  }
+
+	.bubble-content {
+  	max-height: calc(~"80vh - 40px");
+    overflow-x: hidden;
+    overflow-y: auto;
 	}
 }
-
 
 .bubble-generator(
 	@bubble-background: @bubble-color,
@@ -25,18 +29,6 @@
 	@bubble-angle: 75
 	) {
 
-  // This is the total height of the bubble, including padding, border, and line-height
-	@bubble-height: ((@bubble-padding*2) + (@border-width*2));
-	@bubble-triangle-height: (@bubble-height/2)-@border-width;
-
-	//x/sin(b) = y/sin(a) = z/sin(c)
-	@side-angles: (180 - @bubble-angle)/2;
-	@side-length: (@bubble-height*(sin(@side-angles + 0deg))) / (sin(@bubble-angle + 0deg));
-
-	// Border stuffs
-	@border-width: extract(@bubble-border, 1);
-	@border-color: extract(@bubble-border, 3);
-
   background: @bubble-background;
   .text-smoothing;
   color: @bubble-fontcolor;
@@ -45,87 +37,67 @@
   border: @bubble-border;
   .border-radius(@bubble-radius);
 
-  @after-height: (@bubble-height/2)-(@border-width);
-  @after-border-right: round(@side-length/2+(@border-width/2));
-  margin-left: (round(@after-height + @after-border-right - @border-width)+(@border-width/2))/2; //sets a margin so that it doesn't overlap other stuff
 
-	// Bubble left is default. Should add support for right too. :)
-	&:after, &:before {
-		right: 100%;
-		top: 50%;
-		border: solid transparent;
-		content: " ";
-		height: 0;
-		width: 0;
-		position: absolute;
-		pointer-events: none;
-		border-color: rgba(255, 255, 255, 0); // Borders are transparent by default
-	}
-	&.top {
-  	&:after, &:before {
-  	  top: @bubble-padding*2;
-  	}
-	}
-	&.bottom {
-  	&:after, &:before {
-  	  top: auto;
-  	  bottom: @bubble-padding*2;
-  	}
-	}
-	&:after { // background (the triangle in the front)
-  	border-right-color: @bubble-background; // Only adding color to the right border creates the triangle
-  	border-width: @bubble-triangle-height; // Total height divided by 2 minus border width
-  	border-top: @after-height solid transparent;
-		border-bottom: @after-height solid transparent;
-		border-right: @after-border-right solid @bubble-background; // This controls the angle
-		margin-top: -@after-height; // This controls the position of the background color from the top
-		left: -(@after-height + @after-border-right); // Explicitly sets the position of the triangle based on the width
-
-	}
-	// Border (the triangle behind the background)
-	&:before {
-    @before-height: @bubble-triangle-height+@border-width;
-    @before-border-right: round(@side-length/2+@border-width*2)-@border-width;
-    border-right-color: @border-color; // Only adding color to the right border creates the triangle
-    border-width: @before-height;
-  	border-top: @before-height solid transparent;
-		border-bottom: @before-height solid transparent;
-		border-right: @before-border-right solid @border-color; // This controls the angle
-		margin-top: -@before-height; // This controls the position of the background color from the top
-		left: -(round(@before-height+@before-border-right+(@border-width/2))); // Explicitly sets the position of the triangle based on the width
-	}
-
-  // Bubble right
-  &.bubble-right {
-    margin-left: 0;
-    margin-right: (round(@after-height + @after-border-right - @border-width)+(@border-width/2))/2; //sets a margin so that it doesn't overlap other stuff
-
-  	&:after, &:before {
-  		right: auto;
-  		left: 100%;
-  		border-right: none;
-  		left: auto;
-  	}
-  	&:after { // background (the triangle in the front)
-    	border-left-color: @bubble-background; // Only adding color to the right border creates the triangle
-  		border-left: @after-border-right solid @bubble-background; // This controls the angle
-      right: -(floor((@after-height + @after-border-right)/2)); // Explicitly sets the position of the triangle based on the width
-  	}
-  	// Border (the triangle behind the background)
-  	&:before {
-      @before-height: @bubble-triangle-height+@border-width;
-      @before-border-right: round(@side-length/2+@border-width*2)-@border-width;
-      border-left-color: @border-color; // Only adding color to the right border creates the triangle
-  		border-left: @before-border-right solid @border-color; // This controls the angle
-  		right: -(floor((round(@before-height+@before-border-right+(@border-width/2)))/2)); // Explicitly sets the position of the triangle based on the width
-  	}
-  } // Bubble right
-
-	// Only apply a box-shadow for callouts with a border
-	& when (@border-width > 0) {
-    box-shadow: -@border-width/2 0 0 0 @border-color;
-  }
   h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
+  }
+}
+
+
+.bubble-arrow {
+	background: #ffffff;
+	border: 1px solid #ccc;
+  position: absolute;
+  display: block;
+  top: @grid-gutter-width;
+  z-index: @zindex-dropdown;
+
+  &:after, &:before {
+  	left: 100%;
+  	top: 50%;
+  	border: solid transparent;
+  	content: " ";
+  	height: 0;
+  	width: 0;
+  	position: absolute;
+  	pointer-events: none;
+  }
+
+  &:after {
+  	border-color: rgba(255, 255, 255, 0);
+  	border-left-color: #ffffff;
+  	border-width: 15px;
+  	margin-top: -15px;
+  }
+  &:before {
+  	border-color: rgba(204, 204, 204, 0);
+  	border-left-color: #ccc;
+  	border-width: 16px;
+  	margin-top: -16px;
+  }
+
+  &.left:after, &.left:before {
+  	right: 100%;
+  	left: auto;
+  }
+
+  &.left:after {
+    border-left-color: rgba(255, 255, 255, 0);
+  	border-right-color: #ffffff;
+  }
+  &.left:before {
+     border-left-color: rgba(255, 255, 255, 0);
+  	border-right-color: #ccc;
+  }
+}
+
+.client-wrapper {
+  .bubble-arrow, .bubble {
+    left: 25%;
+  }
+}
+.guide-wrapper {
+  .bubble-arrow, .bubble {
+    right: 25%;
   }
 }

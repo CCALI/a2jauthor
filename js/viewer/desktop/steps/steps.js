@@ -2,17 +2,12 @@ import $ from 'jquery';
 import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './steps.stache!';
-import _inRange from 'lodash/number/inRange';
 import resizeBubbles from 'viewer/resize-bubbles';
 
 import 'can/map/define/';
 
 let ViewerStepsVM = Map.extend({
   define: {
-    maxSteps: {
-      value: 3
-    },
-
     steps: {
       get() {
         return this.attr('interview.steps');
@@ -33,17 +28,12 @@ let ViewerStepsVM = Map.extend({
       }
     },
 
-    displaySteps: {
+    nextSteps: {
       get() {
-        let maxSteps = this.attr('maxSteps');
         let currentStep = this.attr('currentStep');
         let stepNumber = parseInt(currentStep.attr('number'), 10);
-        let maxStepNumber = stepNumber + maxSteps;
 
-        return this.attr('steps').filter(function(step) {
-          let number = parseInt(step.attr('number'), 10);
-          return _inRange(number, stepNumber, maxStepNumber);
-        });
+        return this.attr('steps').slice(stepNumber + 1);
       }
     }
   }

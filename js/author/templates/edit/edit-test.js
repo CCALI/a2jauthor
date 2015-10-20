@@ -8,7 +8,7 @@ import '../elements/a2j-template/';
 
 describe('template-edit-page', function() {
 
-  describe('Component', function() {
+  describe.skip('Component', function() {
     beforeEach(function() {
       let frag = stache(
         '<template-edit-page template-id="new"></template-edit-page>'

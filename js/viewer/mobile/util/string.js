@@ -1,4 +1,4 @@
-import constants from 'viewer/mobile/models/constants';
+import constants from 'viewer/models/constants';
 
 export default {
   strcmp: function(a, b) {

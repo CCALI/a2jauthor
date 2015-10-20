@@ -1,0 +1,30 @@
+<div class="app-header">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+        <ul class="nav navbar-nav">
+          <button class="btn btn-default navbar-btn"><span class="glyphicon-left-open"></span> Back</button>
+          <button class="btn btn-default navbar-btn">Next <span class="glyphicon-right-open"></span></button>
+        </ul>
+
+        <form class="navbar-form navbar-left" role="search">
+          <span>My progress:</span>
+          <div class="form-group ">
+            <div class="input-group">
+              <select class="form-control" id="history">
+                <option value="1-Introduction">This is a short sample interview. It ask…</option>
+              </select>
+            </div>
+          </div>
+        </form>
+
+        <button class="btn btn-default navbar-btn"><span class="glyphicon-plus"></span> Send Feedback</button>
+        <button class="btn btn-default navbar-btn"><span class="glyphicon-cancel-circled"></span> Exit</button>
+      </div><!-- /.navbar-collapse -->
+    </div>
+  </nav>
+
+  <div class="horizon">
+    <img class="courthouse" src="images/A2J5_CourtHouse.png" />
+  </div>
+</div>

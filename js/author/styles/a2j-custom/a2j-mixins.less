@@ -115,10 +115,10 @@ br, .clear {
  @retina: ~"only screen and (-webkit-min-device-pixel-ratio: 2),  only screen and (min--moz-device-pixel-ratio: 2),  only screen and (-o-min-device-pixel-ratio: 2/1),  only screen and (min-device-pixel-ratio: 2),only screen and (-webkit-device-pixel-ratio:1.5)";
 
 .hidden {
-	display: none;
+  display: none;
 }
 .hidestart {
-	visibility: hidden;
+  visibility: hidden;
 }
 
 .generate-bg-classes(@steps) {
@@ -136,4 +136,26 @@ br, .clear {
           }
         .-((@i - 1));
     } .-;
+}
+
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+
+.unselectable {
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
+.vertical-align(@position: relative) {
+  position: @position;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }

@@ -1,42 +1,82 @@
+import can from 'can';
 import $ from 'jquery';
-import loader from '@loader';
 import isMobile from './is-mobile';
 import config from 'viewer/config/';
+import template from './app.stache!';
+import Lang from 'viewer/mobile/util/lang';
+import Answers from 'viewer/models/answers';
+import Logic from 'viewer/mobile/util/logic';
+import constants from 'viewer/models/constants';
+import Interview from 'viewer/models/interview';
+import MemoryState from 'viewer/models/memory-state';
+import PersistedState from 'viewer/models/persisted-state';
 
+import 'can/route/';
+import 'viewer/mobile/';
+import 'viewer/desktop/';
 import 'jquerypp/dom/cookie/';
+import './styles/styles.less!';
+import 'viewer/mobile/util/helpers';
 
-let firstTimeRender = true;
-let cookie = $.cookie('useDesktop');
-let useDesktop = cookie == null || cookie === 'true';
+// State attrs not needing persistance, such as showing/hiding the table of contents.
+// Load configuration from desktop into mobile
+let mState = new MemoryState(config);
 
-let loadApp = function() {
-  $('#viewer-app').empty();
-
-  // set config object as query string parameters without reloading the page
-  if (window.history && 'replaceState' in window.history) {
-    let href = window.location.href;
-    window.history.replaceState(null, null, href + '?' + $.param(config));
-  }
-
-  return (isMobile() || !useDesktop)
-    ? loader.import('viewer/mobile/app')
-    : loader.import('viewer/desktop/app');
-};
-
-let reRender = function(module) {
-  module.render();
-};
-
-isMobile.bind('change', function() {
-  if (firstTimeRender) {
-    loadApp();
-  } else {
-    loadApp().then(reRender);
-  }
-
-  // this flag is used to only re-render the app when
-  // its code has already been loaded before.
-  firstTimeRender = false;
+// AJAX request for interview json
+let iDfd = Interview.findOne({
+  url: mState.attr('templateURL'),
+  resume: mState.attr('getDataURL')
 });
 
-loadApp();
+// Local storage request for any existing answers
+let pDfd = PersistedState.findOne();
+
+// Route state
+let rState = new can.Map();
+
+can.route('', { view: 'intro' });
+can.route('view/:view/page/:page');
+can.route('view/:view/page/:page/:i');
+can.route.map(rState);
+
+$.when(iDfd, pDfd).then(function(interview, pState) {
+  can.route.ready();
+
+  pState = pState || new PersistedState();
+  pState.attr('setDataURL', mState.attr('setDataURL'));
+  pState.attr('autoSetDataURL', mState.attr('autoSetDataURL'));
+
+  let lang = new Lang(interview.attr('language'));
+  let answers = pState.attr('answers');
+
+  answers.attr(can.extend({}, interview.serialize().vars));
+  answers.attr(constants.vnInterviewIncompleteTF.toLowerCase(), {
+    name: constants.vnInterviewIncompleteTF.toLowerCase(),
+    type: constants.vtTF,
+    values: [null, true]
+  });
+  answers.attr('lang', lang);
+
+  interview.attr('answers', answers);
+  let logic = new Logic({
+    interview: interview
+  });
+
+  pState.backup();
+
+  rState.bind('change', function(ev, attr, how, val, old) {
+    if (attr === 'page' && val) {
+      pState.attr('currentPage', val);
+    }
+  });
+
+  $('#viewer-app').append(template({
+    rState: rState,
+    pState: pState,
+    mState: mState,
+    interview: interview,
+    logic: logic,
+    lang: lang,
+    isMobile: isMobile
+  }));
+});

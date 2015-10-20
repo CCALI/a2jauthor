@@ -1,0 +1,348 @@
+﻿/* *****************
+	@charset "utf-8";
+	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
+	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+
+	A2J 5 Viewer Stylesheet
+	02/02/2012
+	05/2014
+*/
+.a2jv, .A2JViewer {
+	font-family: "Open Sans", sans-serif;
+	//font-size: 1em;
+}
+.ViewerApp  {
+	//font-size: 12px;
+	margin: 0px;
+	padding: 0px;
+	/*overflow: none;*/
+}
+.a2jbtn {
+	position: absolute;
+	width: 260px;
+	height: 64px;
+	top: 45px;
+	left: 5px;
+	background-image: url(images/A2J5_Viewer_Logo.png);
+}
+.SJILogo {
+	width: 90px;
+	height: 55px;
+	padding: 3px;
+	margin: 0px;
+	background-image: url(images/SJILogo.png);
+	display: inline;
+	float: left;
+}
+
+.A2JViewer {
+	position:fixed;
+	left:0px;
+	top:0px;
+	right:0px;
+	bottom:0px;
+}
+.A2JViewer.test {
+	left:410px;
+}
+
+.testing {
+	position:fixed;
+	width:400px;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	overflow:hidden;
+	background-color: #eee;
+}
+
+.A2JViewer fieldset {
+	border: none;
+}
+.A2JViewer .notice {
+	position: absolute;
+	bottom: 0px;
+	margin: 0.5em;
+	padding: 0px;
+}
+.A2JViewer .license {
+	background-color: rgba(255,255,255,.8);
+}
+
+.demoWatermark {
+	position: absolute;
+	background: none repeat scroll 0 0 rgba(255,255,255,.5);
+	left: 25%;
+	right: 25%;
+	top: 50px;
+   margin: 2px;
+   padding: 5px;
+	font-size: 12pt;
+}
+.A2JViewer .logo {
+	position: absolute;
+	display: block;
+	width: 120px;
+	height: 120px;
+	padding: 0px;
+	margin: 0px;
+	bottom: 5px;
+	right: 5px;
+}
+.A2JViewer .mobile {
+	position: absolute;
+	display: block;
+	bottom: 5px;
+	right: 5px;
+}
+
+.alertPanel {
+	/* Spammy alerts for user go here. */
+	position: absolute;
+	margin: 3em;
+	margin-right: 3em;
+	margin-left: 3em;
+	max-height: 250px;
+	background-color: #ffa;
+	overflow: auto;
+	right: 1em;
+	bottom: 1em;
+	left: 1em;
+}
+.alertPanel button {
+	float:right;
+}
+.alertCounter {
+	position: absolute;
+	right: 1em;
+	bottom: 1em;
+	width: 32px;
+	height: 32px;
+	text-align:  center;
+	border: 3px solid #f00;
+	border-radius: 32px;
+	background-color:#fff;
+	color: #f00;
+	font-size: 24px;
+	cursor:pointer;
+}
+
+.infobar{
+	padding: 10px;
+	background-color:#000;
+	color:#fff;
+}
+
+.A2JViewer .debugmenu {
+	position: absolute;
+	bottom: 15px;
+	left: 5px;
+}
+
+.A2JViewer .interact {
+	overflow: hidden;
+}
+
+/* Debugging Aids */
+
+.codeedit, .xml, #tracer li {
+	/*font-family: Monospace;*/
+}
+#tracer {
+	padding-left: -5px;
+}
+#tracer li{
+	font-weight: normal;
+	/*font-family: "Courier New", Courier, monospace;*/
+	font-size: 9px;
+	line-height: inherit;
+	border: none;
+	/*background-color: #ddd;*/
+	margin: 1px;
+	padding: 2px;
+}
+span.code, span.var, span.varidx, span.val, span.page, span.valT,span.valF,span.info,
+span.tag,span.field,span.field.required,span.learnmore,span.logic {
+	padding: 2px;
+	margin: 2px;
+}
+span.ui { /* color button pressed by client */
+	border: thin solid #fea;
+	background-color: #ccf;
+}
+span.info { /* color comment */
+	border: thin solid #fea;
+	background-color: #ddd;
+}
+span.tag { /* general tag */
+	border: thin solid #fea;
+	color: #000;
+	background-color: #fff;
+}
+span.tag.field {
+	background-color: #efe;
+}
+span.tag.field.required {
+	border: solid #FFFF00;
+	background-color: #ddd;
+}
+span.tag.logic {
+	border: thin solid #fea;
+	background-color: #CC9966;
+}
+span.tag.repeat {
+	background: transparent;
+	background-image: url(../author/images/MapperNodeRepeat.png);
+	background-repeat: no-repeat;
+	border: none;
+	padding:0px;
+	width: 12px;
+	height: 12px;
+	display: inline-block;
+}
+span.tag.learnmore {
+	border: thin solid #fea;
+	background-color: #FFCC66;
+}
+span.taglist { /* list of tags will be right side */
+	float:right;
+}
+span.code {
+	border: thin solid #CC9966;
+	background-color: #ddd;
+}
+span.var {
+	background-color: #F5DEB3;
+}
+span.varidx {
+	background-color: #fcc
+}
+span.valT{ /* if value is True */
+	border: thin solid #CC9966;
+	background-color: #90EE90;
+}
+span.valF{ /* if value is False */
+	border: thin solid #CC9966;
+	background-color: #FFC0CB;
+}
+span.valBlank{/* if value is blank or null */
+	border: thin solid #CC9966;
+	background-color: #DCDCDC;
+}
+span.val{/* if value is anything else */
+	border: thin solid #CC9966;
+	background-color: #FFD700;
+}
+span.page {
+	background-color: #ddf;
+}
+span.err {
+	text-decoration: none;
+	border-bottom: dashed  1px #f00;
+	padding-bottom: 0px;
+ }
+
+.ViewerVarForm .varvalpanel{
+	position:absolute;
+	top: 3em;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow-y: scroll;
+	background-color: #fdd;
+	font-size: 9px;
+}
+
+.ViewerVarForm .varvalpanel table.A2JVars  {
+	width:100%;
+	border-style:solid;
+	border-width:thin;
+	border-color:#fff;
+}
+.ViewerVarForm .varvalpanel table.A2JVars {
+ 	padding:.2em;
+}
+.ViewerVarForm .varvalpanel table.A2JVars tr {
+	cursor:pointer;
+}
+.ViewerVarForm .varvalpanel table.A2JVars tr:nth-child(even)
+{	background-color:rgba(240,240,240,0.5);}
+.ViewerVarForm .varvalpanel table.A2JVars tr:nth-child(odd)
+{	background-color:rgba(255,255,255,0.5);}
+
+
+.ViewerVarForm div {
+	white-space: nowrap;
+}
+.ViewerVarForm div input {
+	display: inline;
+}
+.relative {
+	position: relative;
+}
+#uploadAnswerFileInput  {
+	opacity:  0;
+	position: absolute;
+	left: 0;
+	height: 30px;
+}
+
+.ViewerLogicForm .tracepanel{
+	position:absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 32px;
+	overflow-y: scroll;
+}
+.ViewerLogicForm .immediatepanel{
+	position:absolute;
+	bottom: 0px;
+	height: 24px;
+	left: 0;
+	right: 0;
+	padding: 4px;
+	margin: 4px;
+}
+.ViewerLogicForm .immediatepanel input {
+	width: 50%;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+#clearTrace {
+	float:right;
+}
+#page-viewer.ViewerApp  .ViewerVarForm {
+	position: fixed;
+	top:0;
+	left:0;
+	bottom: 50%;
+	width: 400px;
+	border: 1px solid #bbb;
+}
+#page-viewer.ViewerApp   .ViewerLogicForm {
+	position: fixed;
+	top:50%;
+	left:0;
+	bottom: 0;
+	width: 400px;
+	border: 1px solid #bbb;
+}
+
+x.question.panel {
+	background-color:#f00;
+}
+
+.audio {
+	margin-top: 1em;
+}
+
+.A2JViewer audio,
+.A2JViewer video {
+  max-width: 270px;
+}
+
+#history {
+	width: 20em;
+}

@@ -1,7 +1,7 @@
 import $ from 'jquery';
+import Answers from 'viewer/models/answers';
+import constants from 'viewer/models/constants';
 import cString from 'viewer/mobile/util/string';
-import Answers from 'viewer/mobile/models/answers';
-import constants from 'viewer/mobile/models/constants';
 
 let variableToField = function(attr, pages) {
   for (var p in pages) {

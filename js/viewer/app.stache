@@ -1,0 +1,17 @@
+{{#if isMobile}}
+  <a2j-mobile-viewer
+    lang="{lang}"
+    logic="{logic}"
+    r-state="{rState}"
+    p-state="{pState}"
+    m-state="{mState}"
+    interview="{interview}" />
+{{else}}
+  <a2j-desktop-viewer
+    lang="{lang}"
+    logic="{logic}"
+    r-state="{rState}"
+    p-state="{pState}"
+    m-state="{mState}"
+    interview="{interview}" />
+{{/if}}

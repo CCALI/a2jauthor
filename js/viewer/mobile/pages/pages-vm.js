@@ -1,6 +1,6 @@
 import Map from 'can/map/';
-import AnswerVM from 'viewer/mobile/models/answervm';
-import constants from 'viewer/mobile/models/constants';
+import AnswerVM from 'viewer/models/answervm';
+import constants from 'viewer/models/constants';
 
 import 'bootstrap/js/modal';
 

@@ -1,0 +1,98 @@
+@skin-lighter: #f6cab5;
+@skin-light: #e6ab89;
+@skin-medium: #c48f66;
+@skin-dark: #ad7247;
+@skin-darker: #764f38;
+@shirt-color: @brand-info;
+@hair-color: #231f20;
+
+.avatar-guide {
+  float: right;
+}
+.avatar-guide, .avatar-client {
+  z-index: 10;
+  width: 20%;
+  height: auto;
+
+  #shirt[style] {
+    fill: @shirt-color !important;
+  }
+  #hair-back[style], #hair-top[style] {
+    fill: darken(@hair-color, 5%) !important;
+  }
+  #hair[style], #hair-front[style], #hair-left[style], #hair-right[style] {
+    fill: @hair-color !important;
+  }
+
+  &.skin-lighter {
+    #foot-right[style], #foot-left[style], #left-hand[style], #right-hand[style], #face[style] {
+      fill: @skin-lighter !important;
+    }
+    #face-shadows stop[style] {
+      stop-color: darken(@skin-lighter, 30%) !important;
+    }
+    #hand-shadow path[style]{
+      fill: darken(@skin-lighter, 10%) !important;
+    }
+    #left-hand-gradient_1_ stop[style] {
+      stop-color: darken(@skin-lighter, 10%) !important;
+    }
+  }
+  &.skin-light {
+    #foot-right[style], #foot-left[style], #left-hand[style], #right-hand[style], #face[style] {
+      fill: @skin-light !important;
+    }
+    #face-shadows stop[style] {
+      stop-color: darken(@skin-light, 30%) !important;
+    }
+    #hand-shadow path[style]{
+      fill: darken(@skin-light, 10%) !important;
+    }
+    #left-hand-gradient_1_ stop[style] {
+      stop-color: darken(@skin-light, 10%) !important;
+    }
+  }
+  &.skin-medium {
+    #foot-right[style], #foot-left[style], #left-hand[style], #right-hand[style], #face[style] {
+      fill: @skin-medium !important;
+    }
+    #face-shadows stop[style] {
+      stop-color: darken(@skin-medium, 30%) !important;
+    }
+    #hand-shadow path[style]{
+      fill: darken(@skin-medium, 10%) !important;
+    }
+    #left-hand-gradient_1_ stop[style] {
+      stop-color: darken(@skin-medium, 10%) !important;
+    }
+  }
+  &.skin-dark {
+    #foot-right[style], #foot-left[style], #left-hand[style], #right-hand[style], #face[style] {
+      fill: @skin-dark !important;
+    }
+    #face-shadows stop[style] {
+      stop-color: darken(@skin-dark, 30%) !important;
+    }
+    #hand-shadow path[style]{
+      fill: darken(@skin-dark, 10%) !important;
+    }
+    #left-hand-gradient_1_ stop[style] {
+      stop-color: darken(@skin-dark, 10%) !important;
+    }
+  }
+  &.skin-darker {
+    #foot-right[style], #foot-left[style], #left-hand[style], #right-hand[style], #face[style] {
+      fill: @skin-darker !important;
+    }
+    #face-shadows stop[style] {
+      stop-color: darken(@skin-darker, 30%) !important;
+    }
+    #hand-shadow path[style]{
+      fill: darken(@skin-darker, 10%) !important;
+    }
+    #left-hand-gradient_1_ stop[style] {
+      stop-color: darken(@skin-darker, 10%) !important;
+    }
+  }
+}
+

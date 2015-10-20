@@ -1,7 +1,7 @@
 import PagesVM from './pages-vm';
 import Component from 'can/component/';
 import template from './pages.stache!';
-import AnswerVM from 'viewer/mobile/models/answervm';
+import AnswerVM from 'viewer/models/answervm';
 
 import 'viewer/mobile/util/helpers';
 import 'viewer/mobile/pages/fields/';

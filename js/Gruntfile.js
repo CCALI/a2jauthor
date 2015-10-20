@@ -13,7 +13,7 @@ module.exports = function(grunt) {
       },
       firefox: [
         'author/test/index.html',
-        'viewer/mobile/test/index.html'
+        'viewer/test/index.html'
       ]
     },
 

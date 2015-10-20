@@ -1,0 +1,72 @@
+// Defines the location of the Bootstrap package files
+@bootstrap-base: "../../node_modules/bootstrap/less";
+
+// Defines the location of our CSS overrides for default Bootstrap components
+@bootstrap-overrides: "../../author/styles/bootstrap-overrides";
+
+// Defines the location of custom A2J components that are needed for the framework
+@a2j-custom: "../../author/styles/a2j-custom";
+
+
+// Original A2J Viewer CSS
+//@import "A2J_Fonts.less";
+//@import "viewer.jquery-ui.less";
+//@import "jquery-ui.extra.less";
+//@import "A2J_Viewer.less";
+
+// Import our custom variables for Bootstrap
+@import "@{bootstrap-overrides}/variables.less";
+
+// Core mixins
+@import "@{bootstrap-base}/mixins.less";
+
+// Reset and dependencies
+@import "@{bootstrap-base}/normalize.less";
+@import "@{bootstrap-base}/print.less";
+
+// Core CSS
+@import "@{bootstrap-base}/scaffolding.less";
+@import "@{bootstrap-base}/type.less";
+@import "@{bootstrap-overrides}/typography.less";
+@import "@{bootstrap-base}/grid.less";
+@import "@{bootstrap-base}/forms.less";
+@import "@{bootstrap-overrides}/forms.less";
+@import "@{bootstrap-overrides}/form-fieldsets.less";
+@import "@{bootstrap-base}/buttons.less";
+
+// Components
+@import "@{bootstrap-base}/button-groups.less";
+@import "@{bootstrap-base}/input-groups.less";
+@import "@{bootstrap-base}/navs.less";
+@import "@{bootstrap-overrides}/navs.less";
+@import "@{bootstrap-base}/navbar.less";
+@import "@{bootstrap-base}/labels.less";
+@import "@{bootstrap-overrides}/labels.less";
+@import "@{bootstrap-base}/alerts.less";
+@import "@{bootstrap-overrides}/alerts.less";
+@import "@{bootstrap-base}/close.less";
+
+// Components w/ JavaScript
+@import "@{bootstrap-base}/modals.less";
+
+// Utility classes
+@import "@{bootstrap-base}/utilities.less";
+@import "@{bootstrap-base}/responsive-utilities.less";
+
+
+//Import elements custom to A2J
+@import "@{a2j-custom}/a2j-mixins.less";
+@import "viewer-layout.less";
+@import "viewer-variables.less";
+@import "viewer-navbar.less";
+@import "viewer-horizon.less";
+@import "viewer-sidewalk.less";
+@import "viewer-bubble.less";
+@import "viewer-avatars.less";
+@import "viewer-steps.less";
+@import "viewer-signs.less";
+@import "viewer-questions.less";
+
+//Import our custom icon font
+@import (inline) "../../author/styles/icon-font/css/justice-embedded.css";
+@import (inline) "../../author/styles/icon-font/css/animation.css";

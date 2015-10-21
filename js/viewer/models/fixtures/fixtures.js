@@ -1,6 +1,14 @@
 import fixture from 'can/util/fixture/';
+import realInterviewJSON from './real_interview_1.json';
+import parseModelInterviewJSON from './parse-model-interview.json';
 
-fixture('GET /interview.json', 'fixtures/real_interview_1.json');
+fixture('GET /interview.json', function(req, res) {
+  res(realInterviewJSON);
+});
+
+fixture('GET /parse-model-interview.json', function(req, res) {
+  res(parseModelInterviewJSON);
+});
 
 fixture('GET /options', function(req, res) {
   res(200, 'success', '<OPTION VALUE=\"Illinois\">Illinois</OPTION><OPTION VALUE=\"Indiana\">Indiana</OPTION><OPTION VALUE=\"Minnesota\">Minnesota</OPTION><OPTION VALUE=\"Texas\">Texas</OPTION><OPTION VALUE=\"Wyoming\">Wyoming</OPTION>');

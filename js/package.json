@@ -5,7 +5,7 @@
   "main": "author/main",
   "scripts": {
     "start": "node server",
-    "test": "grunt test"
+    "test": "testee --browsers firefox viewer/test/index.html author/test/index.html"
   },
   "author": "",
   "license": "ISC",

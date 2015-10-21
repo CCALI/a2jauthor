@@ -6,9 +6,11 @@ import template from './app.stache!';
 import Lang from 'viewer/mobile/util/lang';
 import Answers from 'viewer/models/answers';
 import Logic from 'viewer/mobile/util/logic';
+import AppState from 'viewer/models/app-state';
 import constants from 'viewer/models/constants';
 import Interview from 'viewer/models/interview';
 import MemoryState from 'viewer/models/memory-state';
+import setVisitedPages from 'viewer/models/visited-pages';
 import PersistedState from 'viewer/models/persisted-state';
 
 import 'can/route/';
@@ -32,7 +34,7 @@ let iDfd = Interview.findOne({
 let pDfd = PersistedState.findOne();
 
 // Route state
-let rState = new can.Map();
+let rState = new AppState();
 
 can.route('', { view: 'intro' });
 can.route('view/:view/page/:page');
@@ -69,6 +71,11 @@ $.when(iDfd, pDfd).then(function(interview, pState) {
       pState.attr('currentPage', val);
     }
   });
+
+  // makes sure `rState` has a list of the pages visited by the user, this
+  // logic is implemented as an independent module because setting `interview`
+  // to `rState` breaks `a2j-pages`, possibly due to viewModel/scope issues.
+  setVisitedPages(rState, interview);
 
   $('#viewer-app').append(template({
     rState: rState,

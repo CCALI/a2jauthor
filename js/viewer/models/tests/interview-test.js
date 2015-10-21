@@ -4,24 +4,10 @@ import Interview from 'viewer/models/interview';
 
 describe('Interview model', function() {
 
-  it('parseModels', function() {
-    fixture('GET /interview.json', function(req, res) {
-      res(200, {
-        pages: {
-          '1-Introduction': {
-            name: '1-Introduction',
-            fields: [{
-              name: 'user gender',
-              type: 'text'
-            }]
-          }
-        }
-      });
-    });
+  it('parseModels', function(done) {
+    let dfd = Interview.findOne({url: '/parse-model-interview.json'});
 
-    let dfd = Interview.findOne({url: '/interview.json'});
-
-    return dfd.then(function(interview) {
+    dfd.then(function(interview) {
       assert.deepEqual(interview.serialize(), {
         pages: [{
           fields: [{
@@ -44,7 +30,7 @@ describe('Interview model', function() {
         answers: {}
       });
 
-      can.fixture.overwrites = [];
+      done();
     });
   });
 

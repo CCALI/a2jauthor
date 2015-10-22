@@ -31,9 +31,11 @@ let ViewerStepsVM = Map.extend({
     nextSteps: {
       get() {
         let currentStep = this.attr('currentStep');
-        let stepNumber = parseInt(currentStep.attr('number'), 10);
 
-        return this.attr('steps').slice(stepNumber + 1);
+        if (currentStep) {
+          let stepNumber = parseInt(currentStep.attr('number'), 10);
+          return this.attr('steps').slice(stepNumber + 1);
+        }
       }
     }
   }

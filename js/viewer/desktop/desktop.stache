@@ -4,7 +4,7 @@
 
 <div class="app-wrapper">
   <div class="app-container">
-    <a2j-viewer-header app-state="{rState}" />
+    <a2j-viewer-header app-state="{rState}" interview="{interview}" />
 
     <div class="app-content">
       <div id="sidewalk" class="sidewalk"></div>

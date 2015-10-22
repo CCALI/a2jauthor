@@ -1,6 +1,8 @@
+import $ from 'jquery';
 import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './header.stache!';
+import constants from 'viewer/models/constants';
 import _findIndex from 'lodash/array/findIndex';
 
 import 'can/map/define/';
@@ -38,6 +40,27 @@ export let ViewerHeaderVM = Map.extend({
       get(pageName) {
         let pages = this.attr('visitedPages');
         return pageName ? pageName : pages.attr('0.name');
+      }
+    },
+
+    feedbackData: {
+      type: '*',
+      get() {
+        let interview = this.attr('interview');
+        let pageName = this.attr('selectedPageName');
+        let pages = interview.attr('pages');
+        let page = pages.find(pageName);
+
+        if (!page) return {};
+
+        return {
+          questionid: page.attr('name'),
+          questiontext: page.attr('text'),
+          interviewid: interview.attr('version'),
+          viewerversion: constants.A2JVersionNum,
+          emailto: interview.attr('emailContact'),
+          interviewtitle: interview.attr('title')
+        };
       }
     }
   },
@@ -79,6 +102,12 @@ export default Component.extend({
     stripTags(text) {
       text = text.isComputed ? text() : text;
       return text.replace(/(<([^>]+)>)/ig, '');
+    },
+
+    feedbackFormUrl() {
+      let feedbackData = this.attr('feedbackData');
+      let baseUrl = 'http://www.a2jauthor.org/A2JFeedbackForm.php?';
+      return baseUrl + $.param(feedbackData);
     }
   },
 

@@ -27,7 +27,13 @@
           </div>
         </form>
 
-        <button class="btn btn-default navbar-btn" disabled><span class="glyphicon-plus"></span> Send Feedback</button>
+        <a role="button"
+          href="{{feedbackFormUrl}}"
+          class="btn btn-default navbar-btn send-feedback {{^if interview.sendfeedback}}disabled{{/if}}">
+
+          <span class="glyphicon-plus"></span> Send Feedback
+        </a>
+
         <button class="btn btn-default navbar-btn" disabled><span class="glyphicon-cancel-circled"></span> Exit</button>
       </div><!-- /.navbar-collapse -->
     </div>

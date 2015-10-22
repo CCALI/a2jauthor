@@ -3,6 +3,7 @@ import assert from 'assert';
 import stache from 'can/view/stache/';
 import AppState from 'viewer/models/app-state';
 import Interview from 'viewer/models/interview';
+import constants from 'viewer/models/constants';
 import {ViewerHeaderVM} from 'viewer/desktop/header/';
 
 import 'steal-mocha';
@@ -13,16 +14,18 @@ describe('<a2j-viewer-header>', function() {
     let vm;
     let pages;
     let visited;
+    let interview;
 
     beforeEach(function(done) {
       let promise = Interview.findOne({url: '/interview.json'});
 
-      promise.then(function(interview) {
+      promise.then(function(_interview) {
+        interview = _interview;
         let appState = new AppState();
 
         pages = interview.attr('pages');
-        vm = new ViewerHeaderVM({appState});
         visited = appState.attr('visitedPages');
+        vm = new ViewerHeaderVM({appState, interview});
 
         done();
       });
@@ -38,6 +41,21 @@ describe('<a2j-viewer-header>', function() {
       visited.unshift(pages.attr(1));
       assert.equal(vm.attr('selectedPageName'), pages.attr(1).attr('name'),
         'should return second page name');
+    });
+
+    it('collects feedback form data', function() {
+      // simulate user is on interview second page.
+      let secondPage = pages.attr(1);
+      vm.attr('selectedPageName', secondPage.attr('name'));
+
+      assert.deepEqual(vm.attr('feedbackData'), {
+        questionid: secondPage.attr('name'),
+        questiontext: secondPage.attr('text'),
+        interviewid: interview.attr('version'),
+        viewerversion: constants.A2JVersionNum,
+        emailto: interview.attr('emailContact'),
+        interviewtitle: interview.attr('title')
+      });
     });
 
     it('canNavigateBack - whether back button should be enabled', function() {
@@ -75,19 +93,23 @@ describe('<a2j-viewer-header>', function() {
   describe('Component', function() {
     let pages;
     let visited;
+    let interview;
 
     beforeEach(function(done) {
       let promise = Interview.findOne({url: '/interview.json'});
 
-      promise.then(function(interview) {
+      promise.then(function(_interview) {
+        interview = _interview;
         let appState = new AppState();
 
         pages = interview.attr('pages');
         visited = appState.attr('visitedPages');
 
-        let frag = stache('<a2j-viewer-header app-state="{appState}" />');
-        $('#test-area').html(frag({appState}));
+        let frag = stache(
+          '<a2j-viewer-header interview="{interview}" app-state="{appState}" />'
+        );
 
+        $('#test-area').html(frag({appState, interview}));
         done();
       });
     });
@@ -110,6 +132,18 @@ describe('<a2j-viewer-header>', function() {
       assert.equal($('select option').length, 2, 'two pages visited');
       assert.equal($('option:selected').val(), pages.attr(1).attr('name'),
         'most recent page should be the selected option');
+    });
+
+    it('enables/disables feedback button based on interview.sendfeedback', function() {
+      // turn off feedback
+      interview.attr('sendfeedback', false);
+      assert.isTrue($('.send-feedback').hasClass('disabled'),
+        'button should be disabled');
+
+      // turn on feedback
+      interview.attr('sendfeedback', true);
+      assert.isFalse($('.send-feedback').hasClass('disabled'),
+        'button should not be disabled');
     });
   });
 

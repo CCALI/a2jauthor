@@ -1,67 +1,159 @@
+//http://jsfiddle.net/x1fy6jhh/5/
+
 .sign-wrapper {
+  width: 30%;
   position: absolute;
-  right: 10%;
-  bottom: 50px;
+  left: 66%;
+  bottom: 0;
 }
+
 .sign {
-  border: 3px solid @gray-light;
-  background-color: #EFEFC6;
-  padding: 15px;
-
-  h2 {
-    margin: 0;
-    padding: 0;
-    font-size: 25px;
-  }
-
-  .sign-step {
-    .border-radius(50%);
-    padding: 0 11px;
-    color: #fff;
-    background: @gray-light;
-  }
-}
-
-.step-next {
-
-  .sign {
+    position: relative;
+    width: 100%;
+    padding-top: 20%;
     background-color: #EFC6EF;
 
-    h2 {
-      font-size: 18px;
+  .sign-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid grey;
+  }
+  h2 {
+    margin: 2%;
+    height: 96%;
+    text-transform: uppercase;
+    width: 96%;
+    font-size: 100%;
+  }
+
+  &:after, &:before {
+	left: 5%;
+	bottom: -25%;
+	content: " ";
+	height: 25%;
+	width: 2%;
+	background: #593622;
+	content: '';
+	position: absolute;
+	pointer-events: none;
+  }
+  &:after {
+    right: 5%;
+    left: auto;
+   }
+}
+
+.circle-wrapper {
+  width: 15%;
+  height:auto;
+  display: inline-block;
+  margin: 2%;
+  float: left;
+}
+
+.circle {
+  border-radius: 50%;
+  width: 100%;
+  padding-bottom: 100%;
+  border: 1px solid #000;
+  position: relative;
+
+  .circle-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+
+    &:before {
+      content: '';
+      vertical-align: middle;
+      display: inline-block;
+      width: 0;
+      height: 100%;
     }
   }
 }
 
-.step-next-next {
 
-  .sign {
-    background-color: #EF8CEF;
+.step-current {
+  .sign-wrapper {
 
-    h2 {
-      font-size: 15px;
+    .sign {
+      background-color: #EFEFC6;
+
+      .circle, h2 {
+        font-size: 2vw;
+        line-height: 2vw;
+      }
     }
   }
 }
 
-.step-next-next-next {
+.step-2 {
+  .sign-wrapper {
+    width: 20%;
+    left: 67%;
 
-  .sign {
-    background-color: #EF8CEF;
+    .sign {
+      background-color: #EFC6EF;
 
-    h2 {
-      font-size: 13px;
+      .circle, h2 {
+        font-size: 1.25vw;
+        line-height: 1.25vw;
+      }
     }
   }
 }
 
-.step-next-next-next-next {
+.step-3 {
+  .sign-wrapper {
+    width: 15%;
+    left: 68.25%;
 
-  .sign {
-    background-color: #EF8CEF;
+    .sign {
+      background-color: #EFC6C6;
 
-    h2 {
-      font-size: 11px;
+    .circle, h2 {
+        font-size: 1vw;
+        line-height: 1vw;
+      }
+    }
+  }
+}
+
+.step-4 {
+  .sign-wrapper {
+    width: 10%;
+    left: 69.25%;
+
+    .sign {
+      background-color: #EF8CEF;
+
+    .circle, h2 {
+        font-size: .75vw;
+        line-height: .75vw;
+      }
+    }
+  }
+}
+
+.step-5 {
+  .sign-wrapper {
+    width: 8%;
+    left: 69.25%;
+
+    .sign {
+      background-color: #EF8C8C;
+
+      .circle, h2 {
+        font-size: .5vw;
+        line-height: .5vw;
+      }
     }
   }
 }

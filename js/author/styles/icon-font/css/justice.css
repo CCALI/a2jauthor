@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'justice';
-  src: url('../font/justice.eot?36268152');
-  src: url('../font/justice.eot?36268152#iefix') format('embedded-opentype'),
-       url('../font/justice.woff?36268152') format('woff'),
-       url('../font/justice.ttf?36268152') format('truetype'),
-       url('../font/justice.svg?36268152#justice') format('svg');
+  src: url('../font/justice.eot?28074571');
+  src: url('../font/justice.eot?28074571#iefix') format('embedded-opentype'),
+       url('../font/justice.woff?28074571') format('woff'),
+       url('../font/justice.ttf?28074571') format('truetype'),
+       url('../font/justice.svg?28074571#justice') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -14,7 +14,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'justice';
-    src: url('../font/justice.svg?36268152#justice') format('svg');
+    src: url('../font/justice.svg?28074571#justice') format('svg');
   }
 }
 */
@@ -126,3 +126,4 @@
 .glyphicon-collapse:before { content: '\e845'; } /* '' */
 .glyphicon-mobile:before { content: '\e846'; } /* '' */
 .glyphicon-cw:before { content: '\e847'; } /* '' */
+.glyphicon-step-zero:before { content: '\e848'; } /* '' */

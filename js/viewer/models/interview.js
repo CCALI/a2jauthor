@@ -1,15 +1,18 @@
 import Model from 'can/model/';
 import Page from 'viewer/models/page';
 import _find from 'lodash/collection/find';
+import _extend from 'lodash/object/extend';
 import Answers from 'viewer/models/answers';
+import _isString from 'lodash/lang/isString';
 import parser from 'viewer/mobile/util/parser';
+import getSkinTone from 'viewer/models/get-skin-tone';
 
 import 'can/map/define/';
 
 export default can.Model.extend({
   findOne: function(data, success, error) {
-    let dfd = new can.Deferred();
-    let resumeDfd = new can.Deferred();
+    let dfd = can.Deferred();
+    let resumeDfd = can.Deferred();
 
     let interviewDfd = can.ajax({
       url: data.url
@@ -49,15 +52,16 @@ export default can.Model.extend({
     data.pages = [];
 
     can.each(data._pages, function(p) {
-      let num = p.step;
+      let page = _extend({}, p);
+      let stepNumber = page.step;
 
       let step = _find(data.steps, function(step) {
-        return +step.number === num;
+        return parseInt(step.number, 10) === stepNumber;
       });
 
-      p.step = step;
-
-      data.pages.push(p);
+      // put the actual step object in the page.
+      page.step = step;
+      data.pages.push(page);
     });
 
     can.each(data.vars, function(v) {
@@ -68,6 +72,11 @@ export default can.Model.extend({
   }
 }, {
   define: {
+    answers: {
+      Type: Answers,
+      Value: Answers
+    },
+
     pages: {
       set: function(list) {
         list.forEach(p => p.interview = this);
@@ -78,9 +87,54 @@ export default can.Model.extend({
       Type: Page.List
     },
 
-    answers: {
-      Type: Answers,
-      Value: Answers
+    guideAvatarGender: {
+      serialize: false,
+      get() {
+        let gender = this.attr('guideGender') || '';
+        return gender.toLowerCase() === 'male'
+          ? 'male'
+          : 'female';
+      }
+    },
+
+    avatarSkinTone: {
+      serialize: false,
+      get() {
+        let varName = this.attr('avatar');
+        return getSkinTone(varName);
+      }
+    },
+
+    userGender: {
+      serialize: false,
+      get() {
+        let result;
+        let answers = this.attr('answers');
+        let gender = answers.attr('user gender');
+
+        if (gender) {
+          let values = gender.attr('values').attr() || [];
+          let lastValue = values.pop();
+
+          if (_isString(lastValue) && lastValue.length) {
+            lastValue = lastValue.toLowerCase();
+
+            switch (lastValue) {
+              case 'm':
+              case 'male':
+                result = 'male';
+                break;
+
+              case 'f':
+              case 'female':
+                result = 'female';
+                break;
+            }
+          }
+        }
+
+        return result;
+      }
     }
   },
 

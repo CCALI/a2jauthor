@@ -1,4 +1,5 @@
 <can-import from="viewer/mobile/pages/" />
+<can-import from="viewer/desktop/avatar/" />
 <can-import from="viewer/desktop/steps/steps.less!" />
 
 {{#currentStep}}
@@ -19,22 +20,14 @@
 
       <div class="avatar-wrapper">
         <span class="bubble-arrow"></span>
-        <object
-          type="image/svg+xml"
-          class="avatar-guide"
-          data="images/guide-male-side.svg">Your browser does not support SVG
-        </object>
+        <a2j-viewer-avatar class="avatar-guide" facing="right" />
       </div>
     </div><!-- guide-wrapper -->
 
     <div class="client-wrapper">
       <div class="avatar-wrapper">
         <span class="bubble-arrow left"></span>
-        <object
-          type="image/svg+xml"
-          class="avatar-client"
-          data="images/client-male.svg">Your browser does not support SVG
-        </object>
+        <a2j-viewer-avatar class="avatar-client" facing="left" />
       </div>
 
       <div id="clientBubble" class="bubble">

@@ -1,0 +1,48 @@
+<can-import from="viewer/desktop/avatar/" />
+<can-import from="viewer/styles/styles.less!" />
+
+<div class="row">
+  <div class="col-md-6" style="padding-left: 50px;">
+    <form>
+      <h3>Gender</h3>
+      <div class="radio">
+        <label><input type="radio" name="gender" can-value="{gender}" value="female">Female</label>
+      </div>
+      <div class="radio">
+        <label><input type="radio" name="gender" can-value="{gender}" value="male">Male</label>
+      </div>
+
+      <h3>Facing</h3>
+      <div class="radio">
+        <label><input type="radio" name="facing" can-value="{facing}" value="front">Front</label>
+      </div>
+      <div class="radio">
+        <label><input type="radio" name="facing" can-value="{facing}" value="left">Left</label>
+      </div>
+      <div class="radio">
+        <label><input type="radio" name="facing" can-value="{facing}" value="right">Right</label>
+      </div>
+
+      <h3>Style</h3>
+      <div class="radio">
+        <label><input type="radio" name="skin" can-value="{skin}" value="lighter">Lighter</label>
+      </div>
+      <div class="radio">
+        <label><input type="radio" name="skin" can-value="{skin}" value="light">Light</label>
+      </div>
+      <div class="radio">
+        <label><input type="radio" name="skin" can-value="{skin}" value="medium">Medium</label>
+      </div>
+      <div class="radio">
+        <label><input type="radio" name="skin" can-value="{skin}" value="dark">Dark</label>
+      </div>
+      <div class="radio">
+        <label><input type="radio" name="skin" can-value="{skin}" value="darker">Darker</label>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-md-6">
+    <a2j-viewer-avatar class="avatar-client" gender="{gender}" facing="{facing}" skin="{skin}" />
+  </div>
+</div>

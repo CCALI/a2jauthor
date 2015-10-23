@@ -1,13 +1,14 @@
 import fixture from 'can/util/fixture/';
+import _extend from 'lodash/object/extend';
 import realInterviewJSON from './real_interview_1.json';
 import parseModelInterviewJSON from './parse-model-interview.json';
 
 fixture('GET /interview.json', function(req, res) {
-  res(realInterviewJSON);
+  res(_extend({}, realInterviewJSON));
 });
 
 fixture('GET /parse-model-interview.json', function(req, res) {
-  res(parseModelInterviewJSON);
+  res(_extend({}, parseModelInterviewJSON));
 });
 
 fixture('GET /options', function(req, res) {

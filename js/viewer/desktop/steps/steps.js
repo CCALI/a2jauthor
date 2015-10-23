@@ -37,6 +37,17 @@ let ViewerStepsVM = Map.extend({
           return this.attr('steps').slice(stepNumber + 1);
         }
       }
+    },
+
+    avatarSkinTone: {
+      get() {
+        let mState = this.attr('mState');
+        let interview = this.attr('interview');
+        let globalSkinTone = mState.attr('avatarSkinTone');
+        let interviewSkinTone = interview.attr('avatarSkinTone');
+
+        return globalSkinTone || interviewSkinTone;
+      }
     }
   }
 });

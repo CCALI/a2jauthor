@@ -1,0 +1,5 @@
+<can-import from="viewer/desktop/avatar/avatar.less!" />
+
+<object type="image/svg+xml" data="/viewer/images/{{avatarImageName}}">
+  Your browser does not support SVG
+</object>

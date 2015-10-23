@@ -25,6 +25,16 @@ module.exports = function(grunt) {
         files: {
           "author/docs/styles.css": "author/main.less"
         }
+      },
+      'svg': {
+        options: {
+          compress: true,
+          yuicompress: true,
+          optimization: 2
+        },
+        files: {
+          "viewer/styles/viewer-avatars.css": "viewer/styles/viewer-avatars.less"
+        }
       }
     },
 
@@ -58,13 +68,14 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('documentjs');
   grunt.loadNpmTasks('steal-tools');
-	grunt.loadNpmTasks('grunt-jsbeautifier');
+  grunt.loadNpmTasks('grunt-jsbeautifier');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
 
   grunt.renameTask('documentjs', 'documentjs-orig');
 
+  grunt.registerTask('svg-styles', ['less:svg']);
 	grunt.registerTask('beautify', ['jsbeautifier']);
   grunt.registerTask('build', ['clean:build', 'steal-build']);
   grunt.registerTask('documentjs', [

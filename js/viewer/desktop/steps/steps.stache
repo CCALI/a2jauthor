@@ -42,9 +42,17 @@
 
     <div class="sign-wrapper">
       <div class="sign">
-        <h2><span class="sign-step">{{formatStepNumber number}}</span> {{text}}</h2>
-      </div>
-    </div>
+        <div class="sign-inner">
+          <div class="circle-wrapper">
+            <div class="circle">
+              <span class="circle-content">{{formatStepNumber number}}</span>
+            </div>
+          </div>
+
+          <h2>{{text}}</h2>
+        </div>
+      </div><!-- sign -->
+    </div><!-- sign-wrapper -->
   </div><!-- step-current -->
 {{/currentStep}}
 
@@ -58,9 +66,17 @@
 
         <div class="sign-wrapper">
           <div class="sign">
-            <h2><span class="sign-step">{{formatStepNumber number}}</span> {{text}}</h2>
-          </div>
-        </div>
+            <div class="sign-inner">
+              <div class="circle-wrapper">
+                <div class="circle">
+                  <span class="circle-content">{{formatStepNumber number}}</span>
+                </div>
+              </div>
+
+              <h2>{{text}}</h2>
+            </div>
+          </div><!-- sign -->
+        </div><!-- sign-wrapper -->
       </div>
     </div>
   {{/each}}

@@ -1,63 +1,65 @@
-{{#equal rState.page '__error'}}
-<div class="jumbotron">
-	<h1>Oops!</h1>
-	<p>You've reached this page in error.</p>
-	<p>
-		<a href="javascript://" can-click="home" class="btn btn-primary">Return home</a>
-	</p>
-</div>
-{{/equal}}
+{{#eq rState.page '__error'}}
+  <div class="jumbotron">
+    <h1>Oops!</h1>
+    <p>You've reached this page in error.</p>
+    <p><a href="javascript://" can-click="home" class="btn btn-primary">Return home</a></p>
+  </div>
+{{/eq}}
 
 {{#page rState.page}}
-<h2>{{name}}</h2>
-<p>
-	{{{eval text}}}
-</p>
+  <h2>{{name}}</h2>
+  <p>{{{eval text}}}</p>
 
-<div class="col-md-12">
-	<a2j-fields></a2j-fields>
-</div>
+  <div class="col-md-12">
+    <a2j-fields logic="{logic}" fields="{fields}"></a2j-fields>
+  </div>
 
-<p class="text-center">
-	<a data-toggle="modal" data-target="#pageModal">{{learn}}</a>
-</p>
+  <p class="text-center">
+    <a data-toggle="modal" data-target="#pageModal">{{learn}}</a>
+  </p>
 
-<div class="modal fade"
-	id="pageModal"
-	tabindex="-1"
-	role="dialog"
-	aria-labelledby="pageModalLbl"
-	aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">
-					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-				</button>
-				<h4 class="modal-title" id="pageModalLbl">
-					{{#if ../popupPage}}
-					{{popupPage.name}}
-					{{else}}
-					{{learn}}
-					{{/if}}
-				</h4>
-			</div>
-			<div class="modal-body">
-				{{#if ../popupPage}}
-				{{{eval popupPage.text}}}
-				{{else}}
-				{{{eval help}}}
-				{{/if}}
-			</div>
-		</div>
-	</div>
-</div>
+  <div
+    id="pageModal"
+    tabindex="-1"
+    role="dialog"
+    aria-hidden="true"
+    class="modal fade"
+    aria-labelledby="pageModalLbl">
 
-<div class="btn-group btn-group-justified">
-	<div class="btn-group btn-group-vertical">
-		{{#each buttons}}
-		<button type="button" class="btn btn-default" can-click="navigate">{{label}}</button>
-		{{/each}}
-	<div class="btn-group">
-</div>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+          </button>
+
+          <h4 class="modal-title" id="pageModalLbl">
+            {{#if ../popupPage}}
+              {{popupPage.name}}
+            {{else}}
+              {{learn}}
+            {{/if}}
+          </h4>
+        </div>
+
+        <div class="modal-body">
+          {{#if ../popupPage}}
+            {{{eval popupPage.text}}}
+          {{else}}
+            {{{eval help}}}
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-group btn-group-justified">
+    <div class="btn-group btn-group-vertical">
+      {{#each buttons}}
+        <button type="button" class="btn btn-default" can-click="navigate">
+          {{label}}
+        </button>
+      {{/each}}
+    <div class="btn-group">
+  </div>
 {{/page}}

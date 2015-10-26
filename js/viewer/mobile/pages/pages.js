@@ -8,6 +8,7 @@ import 'viewer/mobile/pages/fields/';
 
 export default Component.extend({
   template,
+  leakScope: false,
   tag: 'a2j-pages',
   viewModel: PagesVM,
 

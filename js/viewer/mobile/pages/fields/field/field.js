@@ -36,9 +36,9 @@ export default Component.extend({
         },
 
         selectnum: function(options) {
-          let result = [],
-          min = this.attr('field.min'),
-          max = this.attr('field.max');
+          let result = [];
+          let min = this.attr('field.min');
+          let max = this.attr('field.max');
 
           for (var i = min; i <= max; i++) {
             result.push(options.fn(options.scope.add({

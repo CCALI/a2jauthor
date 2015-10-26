@@ -5,4 +5,4 @@ import 'viewer/mobile/util/tests/';
 
 import 'viewer/desktop/steps/steps-test';
 import 'viewer/desktop/avatar/avatar-test';
-import 'viewer/desktop/header/header-test';
+import 'viewer/desktop/navigation/navigation-test';

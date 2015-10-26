@@ -1,4 +1,4 @@
-<can-import from="viewer/desktop/header/header.less!" />
+<can-import from="viewer/desktop/navigation/navigation.less!" />
 
 <div class="app-header">
   <nav class="navbar navbar-default">

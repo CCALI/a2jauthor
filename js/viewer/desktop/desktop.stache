@@ -1,10 +1,9 @@
 <can-import from="viewer/desktop/steps/" />
-<can-import from="viewer/desktop/header/" />
-<can-import from="viewer/desktop/header/header.less!" />
+<can-import from="viewer/desktop/navigation/" />
 
 <div class="app-wrapper">
   <div class="app-container">
-    <a2j-viewer-header app-state="{rState}" interview="{interview}" />
+    <a2j-viewer-navigation app-state="{rState}" interview="{interview}" />
 
     <div class="app-content">
       <div id="sidewalk" class="sidewalk"></div>

@@ -1,13 +1,13 @@
 import $ from 'jquery';
 import Map from 'can/map/';
 import Component from 'can/component/';
-import template from './header.stache!';
+import template from './navigation.stache!';
 import constants from 'viewer/models/constants';
 import _findIndex from 'lodash/array/findIndex';
 
 import 'can/map/define/';
 
-export let ViewerHeaderVM = Map.extend({
+export let ViewerNavigationVM = Map.extend({
   define: {
     visitedPages: {
       get() {
@@ -95,8 +95,8 @@ export let ViewerHeaderVM = Map.extend({
 export default Component.extend({
   template,
   leakScope: false,
-  tag: 'a2j-viewer-header',
-  viewModel: ViewerHeaderVM,
+  tag: 'a2j-viewer-navigation',
+  viewModel: ViewerNavigationVM,
 
   helpers: {
     stripTags(text) {

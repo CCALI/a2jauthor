@@ -45,7 +45,7 @@ export default Map.extend({
     },
 
     val: {
-      set: function(val) {
+      type(val) {
         if (this.attr('config.type') === 'datemdy') {
           return moment(val, 'YYYY-MM-DD').toDate();
         }

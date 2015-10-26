@@ -4,11 +4,11 @@ import stache from 'can/view/stache/';
 import AppState from 'viewer/models/app-state';
 import Interview from 'viewer/models/interview';
 import constants from 'viewer/models/constants';
-import {ViewerHeaderVM} from 'viewer/desktop/header/';
+import {ViewerNavigationVM} from 'viewer/desktop/navigation/';
 
 import 'steal-mocha';
 
-describe('<a2j-viewer-header>', function() {
+describe('<a2j-viewer-navigation>', function() {
 
   describe('viewModel', function() {
     let vm;
@@ -25,7 +25,7 @@ describe('<a2j-viewer-header>', function() {
 
         pages = interview.attr('pages');
         visited = appState.attr('visitedPages');
-        vm = new ViewerHeaderVM({appState, interview});
+        vm = new ViewerNavigationVM({appState, interview});
 
         done();
       });
@@ -106,7 +106,7 @@ describe('<a2j-viewer-header>', function() {
         visited = appState.attr('visitedPages');
 
         let frag = stache(
-          '<a2j-viewer-header interview="{interview}" app-state="{appState}" />'
+          '<a2j-viewer-navigation interview="{interview}" app-state="{appState}" />'
         );
 
         $('#test-area').html(frag({appState, interview}));

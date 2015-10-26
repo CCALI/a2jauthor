@@ -1,30 +1,17 @@
-<!--
-<div class="btn-group btn-group-justified btn-group-lg">
-	<div
-		class="btn btn-default"
-		can-click="set"
-		data-value="m">Male</div>
-	<div
-		class="btn btn-default"
-		can-click="set"
-		data-value="f">Female</div>
-</div>
--->
-
 <div>
-	<div class="form-group {{#if hasError}}has-error{{/if}}">
-		<label class="control-label" for="{{label}}">{{{eval label}}}</label>
+  <div class="form-group {{#if hasError}}has-error{{/if}}">
+    <label class="control-label" for="{{label}}">{{{eval label}}}</label>
 
-		<input type="radio" id="m" value="m" can-value="field._answer.values"/>
-		<label for="m">Male</label>
+    <input type="radio" id="m" name="gender" value="m" ($change)="update" />
+    <label for="m">Male</label>
 
-		<input type="radio" id="f" value="f" can-value="field._answer.values"/>
-		<label for="f">Female</label>
-	</div>
+    <input type="radio" id="f" name="gender" value="f" ($change)="update" />
+    <label for="f">Female</label>
+  </div>
 
-	{{#prompt}}
-	<div class="alert alert-danger" role="alert">
-		{{{eval field.invalidPrompt}}}
-	</div>
-	{{/prompt}}
+  {{#prompt}}
+  <div class="alert alert-danger" role="alert">
+    {{{eval field.invalidPrompt}}}
+  </div>
+  {{/prompt}}
 <div>

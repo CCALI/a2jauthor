@@ -1,4 +1,3 @@
-import can from 'can';
 import assert from 'assert';
 import Validations from 'viewer/mobile/util/validations';
 

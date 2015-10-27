@@ -3,18 +3,23 @@
 
 <div class="app-wrapper">
   <div class="app-container">
-    <a2j-viewer-navigation app-state="{rState}" interview="{interview}" />
+    {{#if pageNotFound}}
+      <div class="alert alert-danger text-center" role="alert">
+        The page {{rState.page}} does not exist!
+      </div>
+    {{else}}
+      <a2j-viewer-navigation app-state="{rState}" interview="{interview}" />
 
-    <div class="app-content">
-      <div id="sidewalk" class="sidewalk"></div>
+      <div class="app-content">
+        <div id="sidewalk" class="sidewalk"></div>
 
-      <a2j-viewer-steps
-        logic="{logic}"
-        r-state="{rState}"
-        p-state="{pState}"
-        m-state="{mState}"
-        interview="{interview}" />
-    </div><!-- app-content -->
-
+        <a2j-viewer-steps
+          logic="{logic}"
+          r-state="{rState}"
+          p-state="{pState}"
+          m-state="{mState}"
+          interview="{interview}" />
+      </div><!-- app-content -->
+    {{/if}}
   </div><!-- app-container -->
 </div><!-- app-wrapper -->

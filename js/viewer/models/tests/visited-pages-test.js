@@ -47,6 +47,13 @@ describe('setVisitedPages', function() {
     assert.equal(visited.attr('length'), 2, 'second page already visited');
   });
 
+  it('onlys include known pages', function() {
+    let visited = appState.attr('visitedPages');
+
+    appState.attr('page', 'this-page-does-not-exist');
+    assert.equal(visited.attr('length'), 0, 'invalid page');
+  });
+
   it('recently visited pages are at the top of the list', function() {
     let visited = appState.attr('visitedPages');
 

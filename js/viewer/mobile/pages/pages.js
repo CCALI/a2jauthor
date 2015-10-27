@@ -19,6 +19,10 @@ export default Component.extend({
       if (page && page !== 'FAIL') {
         let self = this;
         let p = this.attr('interview.pages').find(page);
+
+        // unknown page name.
+        if (!p) return;
+
         let fields = p.attr('fields');
 
         this.attr('mState.header', p.attr('step.text'));
@@ -72,17 +76,18 @@ export default Component.extend({
       let logic = this.scope.attr('logic');
       let p = this.scope.attr('interview.pages').find(val);
 
+      // unknown page name
+      if (!p) return;
+
       logic.exec(p.attr('codeBefore'));
       var gotoPage = logic.attr('gotoPage');
 
       if (logic.attr('infinite').errors()) {
         this.scope.attr('rState.page', '__error');
-      }
-      else if (gotoPage && gotoPage.length) {
+      } else if (gotoPage && gotoPage.length) {
         logic.attr('infinite').inc();
         this.scope._setPage(p, gotoPage);
-      }
-      else {
+      } else {
         logic.attr('infinite').reset();
       }
     },

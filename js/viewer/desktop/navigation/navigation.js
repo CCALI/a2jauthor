@@ -16,6 +16,32 @@ export let ViewerNavigationVM = Map.extend({
       }
     },
 
+    selectedPageName: {
+      get(pageName) {
+        let pages = this.attr('visitedPages');
+        return pageName ? pageName : pages.attr('0.name');
+      }
+    },
+
+    canSaveAndExit: {
+      get() {
+        let appState = this.attr('appState');
+        let interview = this.attr('interview');
+
+        return !appState.attr('saveAndExitActive') &&
+          interview.attr('exitPage') !== constants.qIDNOWHERE;
+      }
+    },
+
+    canResumeInterview: {
+      get() {
+        let appState = this.attr('appState');
+
+        return appState.attr('saveAndExitActive') &&
+          appState.attr('lastPageBeforeExit');
+      }
+    },
+
     canNavigateBack: {
       get() {
         let pages = this.attr('visitedPages');
@@ -33,13 +59,6 @@ export let ViewerNavigationVM = Map.extend({
         let pageName = this.attr('selectedPageName');
         let pageIndex = this.getPageIndex(pageName);
         return totalPages > 1 && pageIndex > 0;
-      }
-    },
-
-    selectedPageName: {
-      get(pageName) {
-        let pages = this.attr('visitedPages');
-        return pageName ? pageName : pages.attr('0.name');
       }
     },
 
@@ -71,6 +90,28 @@ export let ViewerNavigationVM = Map.extend({
     return _findIndex(pages, function(page) {
       return page.attr('name') === pageName;
     });
+  },
+
+  saveAndExit() {
+    let appState = this.attr('appState');
+    let interview = this.attr('interview');
+    let exitPage = interview.attr('exitPage');
+    let pageName = this.attr('selectedPageName');
+
+    appState.attr('saveAndExitActive', true);
+    appState.attr('lastPageBeforeExit', pageName);
+
+    this.attr('selectedPageName', exitPage);
+  },
+
+  resumeInterview() {
+    let appState = this.attr('appState');
+    let lastPageName = appState.attr('lastPageBeforeExit');
+
+    appState.attr('lastPageBeforeExit', '');
+    appState.attr('saveAndExitActive', false);
+
+    this.attr('selectedPageName', lastPageName);
   },
 
   navigateBack() {

@@ -27,14 +27,24 @@
           </div>
         </form>
 
-        <a role="button"
-          href="{{feedbackFormUrl}}"
-          class="btn btn-default navbar-btn send-feedback {{^if interview.sendfeedback}}disabled{{/if}}">
+        {{#if interview.sendfeedback}}
+          <a role="button" href="{{feedbackFormUrl}}"
+            class="btn btn-default navbar-btn send-feedback">
+            <span class="glyphicon-plus"></span> Send Feedback
+          </a>
+        {{/if}}
 
-          <span class="glyphicon-plus"></span> Send Feedback
-        </a>
+        {{#if canSaveAndExit}}
+          <button class="btn btn-default navbar-btn" ($click)="saveAndExit">
+            <span class="glyphicon-cancel-circled"></span> Save &amp; Exit
+          </button>
+        {{/if}}
 
-        <button class="btn btn-default navbar-btn" disabled><span class="glyphicon-cancel-circled"></span> Exit</button>
+        {{#if canResumeInterview}}
+          <button class="btn btn-default navbar-btn" ($click)="resumeInterview">
+            Resume
+          </button>
+        {{/if}}
       </div><!-- /.navbar-collapse -->
     </div>
   </nav>

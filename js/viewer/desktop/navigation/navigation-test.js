@@ -14,6 +14,7 @@ describe('<a2j-viewer-navigation>', function() {
     let vm;
     let pages;
     let visited;
+    let appState;
     let interview;
 
     beforeEach(function(done) {
@@ -21,7 +22,7 @@ describe('<a2j-viewer-navigation>', function() {
 
       promise.then(function(_interview) {
         interview = _interview;
-        let appState = new AppState();
+        appState = new AppState();
 
         pages = interview.attr('pages');
         visited = appState.attr('visitedPages');
@@ -56,6 +57,23 @@ describe('<a2j-viewer-navigation>', function() {
         emailto: interview.attr('emailContact'),
         interviewtitle: interview.attr('title')
       });
+    });
+
+    it('canSaveAndExit - whether save and exit button should be enabled', function() {
+      interview.attr('exitPage', constants.qIDNOWHERE);
+      appState.attr('saveAndExitActive', false);
+      assert.isFalse(vm.attr('canSaveAndExit'));
+
+      // it is false in this case because saveAndExitActive flag is true
+      interview.attr('exitPage', 'success-page');
+      appState.attr('saveAndExitActive', true);
+      assert.isFalse(vm.attr('canSaveAndExit'));
+
+      // it is only true when exitPage is a valid string and
+      // appState.canSaveAndExit is false
+      interview.attr('exitPage', 'success-page');
+      appState.attr('saveAndExitActive', false);
+      assert.isTrue(vm.attr('canSaveAndExit'));
     });
 
     it('canNavigateBack - whether back button should be enabled', function() {
@@ -134,16 +152,14 @@ describe('<a2j-viewer-navigation>', function() {
         'most recent page should be the selected option');
     });
 
-    it('enables/disables feedback button based on interview.sendfeedback', function() {
+    it('shows/hides feedback button based on interview.sendfeedback', function() {
       // turn off feedback
       interview.attr('sendfeedback', false);
-      assert.isTrue($('.send-feedback').hasClass('disabled'),
-        'button should be disabled');
+      assert.equal($('.send-feedback').length, 0, 'button should not be rendered');
 
       // turn on feedback
       interview.attr('sendfeedback', true);
-      assert.isFalse($('.send-feedback').hasClass('disabled'),
-        'button should not be disabled');
+      assert.isTrue($('.send-feedback').is(':visible'), 'button should be rendered');
     });
   });
 

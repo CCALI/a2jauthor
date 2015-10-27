@@ -12,6 +12,16 @@ export default Map.extend({
     visitedPages: {
       Value: List,
       serialize: false
+    },
+
+    saveAndExitActive: {
+      value: false,
+      serialize: false
+    },
+
+    activePageBeforeExit: {
+      value: null,
+      serialize: false
     }
   }
 })

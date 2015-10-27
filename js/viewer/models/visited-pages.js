@@ -9,7 +9,7 @@ let registerPageFromUrl = function(appState, interview) {
   if (pageName !== '' && !visited.attr('length')) {
     let pages = interview.attr('pages');
     let page = pages.find(pageName);
-    visited.push(page);
+    if (page) visited.push(page);
   }
 };
 

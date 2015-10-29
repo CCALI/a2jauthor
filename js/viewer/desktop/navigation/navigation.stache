@@ -1,6 +1,6 @@
 <can-import from="viewer/desktop/navigation/navigation.less!" />
 
-<div class="app-header">
+<div class="app-header-x">
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">

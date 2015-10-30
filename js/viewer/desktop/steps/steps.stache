@@ -57,10 +57,10 @@
 {{/currentStep}}
 
 {{#if nextSteps.length}}
-  {{#each nextSteps}}
-    <div class="next-wrapper">
+  <div class="next-wrapper">
+    {{#each nextSteps}}
       <div id="next-{{@index + 2}}"
-        class="step-next next-{{@index + 2}} step-{{@index + 2}}">
+        class="step-next next-{{@index + 2}} step-{{formatStepNumber number}}">
 
         <div class="app-step"></div>
 
@@ -78,6 +78,6 @@
           </div><!-- sign -->
         </div><!-- sign-wrapper -->
       </div>
-    </div>
-  {{/each}}
+    {{/each}}
+  </div>
 {{/if}}

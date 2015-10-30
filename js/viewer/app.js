@@ -10,7 +10,6 @@ import AppState from 'viewer/models/app-state';
 import constants from 'viewer/models/constants';
 import Interview from 'viewer/models/interview';
 import MemoryState from 'viewer/models/memory-state';
-import setVisitedPages from 'viewer/models/visited-pages';
 import PersistedState from 'viewer/models/persisted-state';
 
 import 'can/route/';
@@ -69,10 +68,7 @@ $.when(iDfd, pDfd).then(function(interview, pState) {
     }
   });
 
-  // makes sure `rState` has a list of the pages visited by the user, this
-  // logic is implemented as an independent module because setting `interview`
-  // to `rState` breaks `a2j-pages`, possibly due to viewModel/scope issues.
-  setVisitedPages(rState, interview);
+  rState.attr('interview', interview);
 
   $('#viewer-app').append(template({
     rState: rState,

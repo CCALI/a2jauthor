@@ -13,7 +13,7 @@
     {{#if interview.logoImage}}
       <img src="{{imagePath mState.fileDataURL interview.logoImage}}" class="img-responsive"/>
     {{else}}
-      <img src="images/logo_big.png" class="img-responsive"/>
+      <img src="{{joinBase 'viewer/images/logo_big.png'}}" class="img-responsive"/>
     {{/if}}
 
     <p>{{{eval interview.credits}}}</p>
@@ -34,7 +34,7 @@
   {{/equal}}
 
   {{#equal rState.view 'complete'}}
-    <img src="images/logo_big.png" class="img-responsive"/>
+    <img src="{{joinBase 'viewer/images/logo_big.png'}}" class="img-responsive"/>
     <div class="btn-group btn-group-justified">
       <a href="{{mState.redirect}}" class="btn btn-primary">{{i11n 'Continue'}}</a>
     </div>

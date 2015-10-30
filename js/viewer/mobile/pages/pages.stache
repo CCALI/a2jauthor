@@ -11,14 +11,14 @@
 
 {{#if currentPage}}
   {{#with currentPage}}
-    <h2 class="visible-xs-block">{{name}}</h2>
-    <p>{{{eval text}}}</p>
+    <div class="bubble-content">
+      <h2 class="visible-xs-block">{{name}}</h2>
+      <p>{{{eval text}}}</p>
 
-    {{#if fields.length}}
-      <div class="col-md-12">
+      {{#if fields.length}}
         <a2j-fields logic="{logic}" fields="{fields}"></a2j-fields>
-      </div>
-    {{/if}}
+      {{/if}}
+    </div><!-- bubble-content -->
 
     <p class="text-center">
       <a data-toggle="modal" data-target="#pageModal">{{learn}}</a>
@@ -59,14 +59,13 @@
       </div>
     </div>
 
-    <div class="btn-group btn-group-justified">
-      <div class="btn-group btn-group-vertical">
-        {{#each buttons}}
-          <button type="button" class="btn btn-default" can-click="navigate">
-            {{label}}
-          </button>
-        {{/each}}
-      <div class="btn-group">
-    </div>
+
+
+    {{#each buttons}}
+      <button type="button" class="btn btn-default btn-navigate" can-click="navigate">
+        {{label}}
+      </button>
+    {{/each}}
+
   {{/with}}
 {{/if}}

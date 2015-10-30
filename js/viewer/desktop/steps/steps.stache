@@ -8,14 +8,12 @@
 
     <div class="guide-wrapper">
       <div id="guideBubble" class="bubble">
-        <div class="bubble-content">
-          <a2j-pages
-            logic="{logic}"
-            r-state="{rState}"
-            p-state="{pState}"
-            m-state="{mState}"
-            interview="{interview}" />
-        </div><!-- bubble-content -->
+        <a2j-pages
+          logic="{logic}"
+          r-state="{rState}"
+          p-state="{pState}"
+          m-state="{mState}"
+          interview="{interview}" />
       </div><!-- bubble -->
 
       <div class="avatar-wrapper">

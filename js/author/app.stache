@@ -1,37 +1,26 @@
+<can-import from="viewer/preview/"/>
+<can-import from="author/preview/"/>
 <can-import from="author/templates/assembly/"/>
 
-{{#with appState}}
-  <div id="splash" class="welcome">
-    <div class="loading">
+<div id="splash" class="welcome">
+  <div class="loading">
     <img class="" src="images/a2j-logo85x89.png">
-      <h2 class="text-center text-muted">
-        <span class="glyphicon-spin6 animate-spin"></span> Loading...
-      </h2>
-    </div>
+    <h2 class="text-center text-muted">
+      <span class="glyphicon-spin6 animate-spin"></span> Loading...
+    </h2>
   </div>
+</div>
 
-  <div id="page-viewer" class="hidestart ViewerApp a2jv">
-    <div class="testing ui-widget-content">
-      <div id="viewer-logic-form" class="ViewerLogicForm">
-        <div class="tracepanel">
-          <ol id="tracer" contentEditable="true"></ol>
-        </div>
-        <div class="immediatepanel">
-
-          <span>
-        <input type="text" id="tracerimm"/></span>
-          <button id="clearTrace"></button>
-
-        </div>
-      </div>
-      <div id="viewer-var-form" class="ViewerVarForm"></div>
-    </div>
-    <div class="A2JViewer"></div>
-    <div class="alertPanel"></div>
-    <div class="alertCounter"></div>
+{{#if appState.previewMode}}
+  <div id="viewer-app">
+    <a2j-viewer-preview />
   </div>
+{{/if}}
 
-  <div id="authortool" class="hidestart authortool bootstrap-styles">
+{{#with appState}}
+  <div id="authortool"
+    class="hidestart authortool bootstrap-styles"
+    {{#if previewMode}}style="display: none;"{{/if}}>
 
     <div id="cajaheader" class="hidestart">
       <app-header page="{{page}}"></app-header>
@@ -282,8 +271,9 @@
 
       <!-- Preview Tab -->
       <div class="tab-panel page" id="tabsPreview">
-        <h3 class="page-title">Previewer</h3>
-        <p>Show a preview of the current interview.</p>
+        {{#is page 'preview'}}
+          <author-preview preview-mode="{previewMode}" />
+        {{/is}}
       </div>
 
       <div class="tab-panel page" id="tabsUpload">
@@ -435,6 +425,5 @@
     <div id="login-form" title="Access To Justice 5">
       Please sign in at <a href="http://a2j02.a2jauthor.org">A2J Author.org</a>.
     </div>
-  </div>
   </div>
 {{/with}}

@@ -1,3 +1,6 @@
+<can-import from="viewer/mobile/pages/fields/" />
+<can-import from="viewer/mobile/pages/pages.less!" />
+
 {{#eq rState.page '__error'}}
   <div class="jumbotron">
     <h1>Oops!</h1>
@@ -6,60 +9,64 @@
   </div>
 {{/eq}}
 
-{{#page rState.page}}
-  <h2>{{name}}</h2>
-  <p>{{{eval text}}}</p>
+{{#if currentPage}}
+  {{#with currentPage}}
+    <h2>{{name}}</h2>
+    <p>{{{eval text}}}</p>
 
-  <div class="col-md-12">
-    <a2j-fields logic="{logic}" fields="{fields}"></a2j-fields>
-  </div>
+    {{#if fields.length}}
+      <div class="col-md-12">
+        <a2j-fields logic="{logic}" fields="{fields}"></a2j-fields>
+      </div>
+    {{/if}}
 
-  <p class="text-center">
-    <a data-toggle="modal" data-target="#pageModal">{{learn}}</a>
-  </p>
+    <p class="text-center">
+      <a data-toggle="modal" data-target="#pageModal">{{learn}}</a>
+    </p>
 
-  <div
-    id="pageModal"
-    tabindex="-1"
-    role="dialog"
-    aria-hidden="true"
-    class="modal fade"
-    aria-labelledby="pageModalLbl">
+    <div
+      id="pageModal"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+      class="modal fade"
+      aria-labelledby="pageModalLbl">
 
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">
-            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-          </button>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+            </button>
 
-          <h4 class="modal-title" id="pageModalLbl">
+            <h4 class="modal-title" id="pageModalLbl">
+              {{#if ../popupPage}}
+                {{popupPage.name}}
+              {{else}}
+                {{learn}}
+              {{/if}}
+            </h4>
+          </div>
+
+          <div class="modal-body">
             {{#if ../popupPage}}
-              {{popupPage.name}}
+              {{{eval popupPage.text}}}
             {{else}}
-              {{learn}}
+              {{{eval help}}}
             {{/if}}
-          </h4>
-        </div>
-
-        <div class="modal-body">
-          {{#if ../popupPage}}
-            {{{eval popupPage.text}}}
-          {{else}}
-            {{{eval help}}}
-          {{/if}}
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="btn-group btn-group-justified">
-    <div class="btn-group btn-group-vertical">
-      {{#each buttons}}
-        <button type="button" class="btn btn-default" can-click="navigate">
-          {{label}}
-        </button>
-      {{/each}}
-    <div class="btn-group">
-  </div>
-{{/page}}
+    <div class="btn-group btn-group-justified">
+      <div class="btn-group btn-group-vertical">
+        {{#each buttons}}
+          <button type="button" class="btn btn-default" can-click="navigate">
+            {{label}}
+          </button>
+        {{/each}}
+      <div class="btn-group">
+    </div>
+  {{/with}}
+{{/if}}

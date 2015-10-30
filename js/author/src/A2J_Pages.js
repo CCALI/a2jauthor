@@ -396,9 +396,6 @@ function gotoTabOrPage(target) {
     case 'tabsClauses':
       if (gGuide) gGuide.noviceTab(target, false);
       break;
-    case 'tabsPreview':
-      if (gGuide) gotoPageView(gGuide.firstPage);
-      break;
   }
 }
 

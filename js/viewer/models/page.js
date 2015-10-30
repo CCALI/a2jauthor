@@ -8,6 +8,12 @@ import 'can/map/define/';
 
 let Page = Map.extend({
   define: {
+    step: {
+      // forces the convertion of TStep objects when converting
+      // `window.gGuide` to an Interview model instance.
+      Type: Map
+    },
+
     fields: {
       set: function(list) {
         list.forEach(f => f.page = this);

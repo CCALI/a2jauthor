@@ -10,6 +10,10 @@
     {{else}}
       <a2j-viewer-navigation app-state="{rState}" interview="{interview}" />
 
+      <div class="horizon">
+        <img class="courthouse" src="{{joinBase 'viewer/images/A2J5_CourtHouse.png'}}" />
+      </div>
+
       <div class="app-content">
         <div id="sidewalk" class="sidewalk"></div>
 

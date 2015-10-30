@@ -2,7 +2,7 @@
 <can-import from="viewer/desktop/avatar/" />
 <can-import from="viewer/desktop/steps/steps.less!" />
 
-{{#currentStep}}
+{{#if currentStep}}
   <div class="step-current">
     <div class="app-step step-1 current"></div>
 
@@ -45,11 +45,11 @@
         <div class="sign-inner">
           <div class="circle-wrapper">
             <div class="circle">
-              <span class="circle-content">{{formatStepNumber number}}</span>
+              <span class="circle-content">{{formatStepNumber currentStep.number}}</span>
             </div>
           </div>
 
-          <h2>{{text}}</h2>
+          <h2>{{currentStep.text}}</h2>
         </div>
       </div><!-- sign -->
     </div><!-- sign-wrapper -->

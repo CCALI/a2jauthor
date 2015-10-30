@@ -14,10 +14,7 @@ import setVisitedPages from 'viewer/models/visited-pages';
 import PersistedState from 'viewer/models/persisted-state';
 
 import 'can/route/';
-import 'viewer/mobile/';
-import 'viewer/desktop/';
 import 'jquerypp/dom/cookie/';
-import './styles/styles.less!';
 import 'viewer/mobile/util/helpers';
 
 // State attrs not needing persistance, such as showing/hiding the table of contents.

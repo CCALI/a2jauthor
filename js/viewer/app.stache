@@ -1,3 +1,7 @@
+<can-import from="viewer/mobile/" />
+<can-import from="viewer/desktop/" />
+<can-import from="viewer/styles/styles.less!" />
+
 {{#if isMobile}}
   <a2j-mobile-viewer
     lang="{lang}"

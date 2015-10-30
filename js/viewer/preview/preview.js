@@ -9,7 +9,6 @@ import Logic from 'viewer/mobile/util/logic';
 import AppState from 'viewer/models/app-state';
 import Interview from 'viewer/models/interview';
 import MemoryState from 'viewer/models/memory-state';
-import setVisitedPages from 'viewer/models/visited-pages';
 import PersistedState from 'viewer/models/persisted-state';
 import parseGuideToMobile from 'viewer/mobile/util/guide-to-mobile';
 
@@ -34,7 +33,7 @@ export default Component.extend({
       let lang = new Lang(interview.attr('language'));
 
       rState.attr('view', 'intro');
-      setVisitedPages(rState, interview);
+      rState.attr('interview', interview);
 
       vm.attr({
         rState, pState, mState,

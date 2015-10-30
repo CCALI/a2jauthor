@@ -11,7 +11,7 @@
 
 {{#if currentPage}}
   {{#with currentPage}}
-    <h2>{{name}}</h2>
+    <h2 class="visible-xs-block">{{name}}</h2>
     <p>{{{eval text}}}</p>
 
     {{#if fields.length}}

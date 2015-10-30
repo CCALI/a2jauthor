@@ -1,6 +1,24 @@
 import $ from 'jquery';
+import _inRange from 'lodash/number/inRange';
 
-export default function resizeBubbles() {
+export function resizeBubbles() {
+  let $guideBubble = $('#guideBubble');
+  let $clientBubble = $('#clientBubble');
+
+  if ($guideBubble.height() > $guideBubble.parent().height()) {
+    $guideBubble.addClass('vertical').removeClass('top');
+  } else {
+    $guideBubble.removeClass('vertical').addClass('top');
+  }
+
+  if ($clientBubble.height() > $clientBubble.parent().height()) {
+    $clientBubble.addClass('vertical').removeClass('top');
+  } else {
+    $clientBubble.removeClass('vertical').addClass('top');
+  }
+}
+
+export function resizeSteps() {
   let $body = $('body');
   let $html = $('html');
   let $guideBubble = $('#guideBubble');
@@ -15,53 +33,60 @@ export default function resizeBubbles() {
   let angleA = 90 - Math.asin(sidewalkHeight / sidewalkLength) * (180 / Math.PI);
   let angleB = 180 - 90 - angleA;
 
-  if ($guideBubble.height() > $guideBubble.parent().height()) {
-    $guideBubble.addClass('vertical');
-    $guideBubble.removeClass('top');
-  } else {
-    $guideBubble.removeClass('vertical');
-    $guideBubble.addClass('top');
-  }
-
-  if ($clientBubble.height() > $clientBubble.parent().height()) {
-    $clientBubble.addClass('vertical');
-    $clientBubble.removeClass('top');
-  } else {
-    $clientBubble.removeClass('vertical');
-    $clientBubble.addClass('top');
-  }
-
+  // Remove all the step classes first
   $body.removeClass('steps-1 steps-2 steps-3 steps-4 steps-5');
 
-  let next2Width = (sidewalkHeight * .47) / (Math.tan(angleB * Math.PI / 180));
-  $('#next-2 .app-step').css({
-    width: 'calc(10% + ' + next2Width + 'px)'
-  });
-
-  let next3Width = (sidewalkHeight * .33) / (Math.tan(angleB * Math.PI / 180));
-  $('#next-3 .app-step').css({
-    width: 'calc(8% + ' + next3Width + 'px'
-  });
-
-  let next4Width = (sidewalkHeight * .21) / (Math.tan(angleB * Math.PI / 180));
-  $('#next-4 .app-step').css({
-    width: 'calc(6% + ' + next4Width + 'px'
-  });
-
-  let next5Width = (sidewalkHeight * .13) / (Math.tan(angleB * Math.PI / 180));
-  $('#next-5 .app-step').css({
-    width: 'calc(4% + ' + next5Width + 'px'
-  });
-
-  if (sidewalkHeight < 449) {
+  // Add or remove steps based on sidewalk height
+  if (sidewalkHeight < 100) {
     $body.addClass('steps-1');
-  } else if (sidewalkHeight > 449 && sidewalkHeight < 500) {
+  } else if (_inRange(sidewalkHeight, 100, 300)) {
     $body.addClass('steps-2');
-  } else if (sidewalkHeight > 499 && sidewalkHeight < 700) {
+  } else if (_inRange(sidewalkHeight, 300, 500)) {
     $body.addClass('steps-3');
-  } else if (sidewalkHeight > 699 && sidewalkHeight < 800) {
+  } else if (_inRange(sidewalkHeight, 500, 750)) {
     $body.addClass('steps-4');
   } else {
     $body.addClass('steps-5');
   }
+
+  let computeStepStyles = function(width) {
+    return {
+      'margin-right': `-${Math.ceil(width * .1)}px`,
+      width: `calc(0% + ${Math.ceil(width + (width * .3))}px)`
+    };
+  };
+
+  let nextWidth;
+  let denominator = Math.tan(angleB * Math.PI / 180);
+
+  nextWidth = (sidewalkHeight * .65) / denominator;
+  $('.app-step.step-1').css(computeStepStyles(nextWidth));
+
+  // Next 2
+  nextWidth = (sidewalkHeight * .47) / denominator;
+  $('#next-2 .app-step').css(computeStepStyles(nextWidth));
+
+  nextWidth = (sidewalkHeight * .35) / denominator;
+  $('.steps-2 #next-2 .app-step').css(computeStepStyles(nextWidth));
+
+  // Next 3
+  nextWidth = (sidewalkHeight * .33) / denominator;
+  $('#next-3 .app-step').css(computeStepStyles(nextWidth));
+
+  nextWidth = (sidewalkHeight * .30) / denominator;
+  $('.steps-4 #next-3 .app-step').css(computeStepStyles(nextWidth));
+
+  nextWidth = (sidewalkHeight * .28) / denominator;
+  $('.steps-3 #next-3 .app-step').css(computeStepStyles(nextWidth));
+
+  // Next 4
+  nextWidth = (sidewalkHeight * .21) / denominator;
+  $('#next-4 .app-step').css(computeStepStyles(nextWidth));
+
+  nextWidth = (sidewalkHeight * .17) / denominator;
+  $('.steps-4 #next-4 .app-step').css(computeStepStyles(nextWidth));
+
+  // Next 5
+  nextWidth = (sidewalkHeight * .13) / denominator;
+  $('#next-5 .app-step').css(computeStepStyles(nextWidth));
 };

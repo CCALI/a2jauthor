@@ -2,7 +2,8 @@ import $ from 'jquery';
 import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './steps.stache!';
-import resizeBubbles from 'viewer/resize-bubbles';
+import _flow from 'lodash/function/flow';
+import {resizeBubbles, resizeSteps} from 'viewer/resize-bubbles';
 
 import 'can/map/define/';
 
@@ -60,12 +61,12 @@ export default Component.extend({
 
   events: {
     inserted() {
-      resizeBubbles();
-      $(window).on('resize', resizeBubbles);
-    },
+      let resizeStepsAndBubbles = _flow(resizeBubbles, resizeSteps);
 
-    removed() {
-      $(window).off('resize', resizeBubbles);
+      resizeStepsAndBubbles();
+
+      $(window).on('resize', resizeStepsAndBubbles);
+      this.element.find('object').on('load', resizeBubbles);
     }
   },
 

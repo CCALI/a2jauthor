@@ -43,7 +43,13 @@
         <div class="sign-inner">
           <div class="circle-wrapper">
             <div class="circle">
-              <span class="circle-content">{{formatStepNumber currentStep.number}}</span>
+              <span class="circle-content">
+                {{#zeroOrUndefined currentStep.number}}
+                  <span class="glyphicon-step-zero"></span>
+                {{else}}
+                  {{currentStep.number}}
+                {{/zeroOrUndefined}}
+              </span>
             </div>
           </div>
 
@@ -67,7 +73,7 @@
             <div class="sign-inner">
               <div class="circle-wrapper">
                 <div class="circle">
-                  <span class="circle-content">{{formatStepNumber number}}</span>
+                  <span class="circle-content">{{number}}</span>
                 </div>
               </div>
 

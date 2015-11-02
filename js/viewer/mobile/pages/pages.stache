@@ -59,8 +59,6 @@
       </div>
     </div>
 
-
-
     {{#each buttons}}
       <button type="button" class="btn btn-default btn-navigate" can-click="navigate">
         {{label}}

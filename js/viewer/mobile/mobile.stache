@@ -1,3 +1,5 @@
+<can-import from="viewer/mobile/mobile.less!" />
+
 {{^tocOrCreditsShown}}
   <a2j-header
     r-state="{rState}"

@@ -54,23 +54,11 @@ module.exports = function(grunt) {
           }
         }
       }
-    },
-
-    jsbeautifier: {
-      files: ['client/**/*.js'],
-      options: {
-        js: {
-          indentSize: 2,
-          indentChar: " ",
-          indentWithTabs: false
-        }
-      }
     }
   });
 
   grunt.loadNpmTasks('documentjs');
   grunt.loadNpmTasks('steal-tools');
-  grunt.loadNpmTasks('grunt-jsbeautifier');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');

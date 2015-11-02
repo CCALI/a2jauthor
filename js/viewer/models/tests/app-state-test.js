@@ -7,11 +7,13 @@ import 'steal-mocha';
 describe('AppState', function() {
   let appState;
   let pageNames;
+  let interview;
 
   beforeEach(function(done) {
     let promise = Interview.findOne({url: '/interview.json'});
 
-    promise.then(function(interview) {
+    promise.then(function(_interview) {
+      interview = _interview;
       appState = new AppState({interview});
 
       // collect the actual page names of the interview
@@ -68,6 +70,28 @@ describe('AppState', function() {
     assert.equal(visited.shift().attr('name'), pageNames[2]);
     assert.equal(visited.shift().attr('name'), pageNames[1]);
     assert.equal(visited.shift().attr('name'), pageNames[0]);
+  });
+
+  it('visitedPages should not be empty when both page/interview are set', function() {
+    let visited;
+
+    // set first page then interview
+    appState = new AppState();
+    appState.attr('page', pageNames[0]);
+    appState.attr('interview', interview);
+
+    visited = appState.attr('visitedPages');
+    assert.equal(visited.attr('length'), 1, 'should include first page name');
+    assert.equal(visited.attr('0.name'), pageNames[0]);
+
+    // set first interview then page.
+    appState = new AppState();
+    appState.attr('interview', interview);
+    appState.attr('page', pageNames[0]);
+
+    visited = appState.attr('visitedPages');
+    assert.equal(visited.attr('length'), 1, 'should include first page name');
+    assert.equal(visited.attr('0.name'), pageNames[0]);
   });
 
 });

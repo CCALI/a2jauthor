@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import Map from 'can/map/';
 import Component from 'can/component/';
+import _trunc from 'lodash/string/trunc';
 import template from './navigation.stache!';
 import constants from 'viewer/models/constants';
 import _findIndex from 'lodash/array/findIndex';
@@ -140,15 +141,20 @@ export default Component.extend({
   viewModel: ViewerNavigationVM,
 
   helpers: {
-    stripTags(text) {
-      text = text.isComputed ? text() : text;
-      return text.replace(/(<([^>]+)>)/ig, '');
-    },
-
     feedbackFormUrl() {
       let feedbackData = this.attr('feedbackData');
       let baseUrl = 'http://www.a2jauthor.org/A2JFeedbackForm.php?';
       return baseUrl + $.param(feedbackData);
+    },
+
+    fitPageDescription(text) {
+      text = text.isComputed ? text() : text;
+
+      // strip html tags
+      text = text.replace(/(<([^>]+)>)/ig, '');
+
+      // truncate text to avoid https://github.com/CCALI/CAJA/issues/685
+      return _trunc(text, {length: 40, separator: ' '});
     }
   },
 

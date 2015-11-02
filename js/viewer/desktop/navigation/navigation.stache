@@ -19,7 +19,9 @@
           <div class="input-group">
             <select class="form-control" id="history" can-value="{selectedPageName}">
               {{#each visitedPages}}
-                <option value="{{name}}" {{#eq @index 0}}selected{{/eq}}>{{stripTags text}}</option>
+                <option value="{{name}}" {{#eq @index 0}}selected{{/eq}}>
+                  {{fitPageDescription text}}
+                </option>
               {{/each}}
             </select>
           </div>

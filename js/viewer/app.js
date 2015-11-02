@@ -70,13 +70,10 @@ $.when(iDfd, pDfd).then(function(interview, pState) {
 
   rState.attr('interview', interview);
 
+  // used to control how many steps are on the screen
+  $('body').data('max-steps', interview.attr('steps.length'));
+
   $('#viewer-app').append(template({
-    rState: rState,
-    pState: pState,
-    mState: mState,
-    interview: interview,
-    logic: logic,
-    lang: lang,
-    isMobile: isMobile
+    rState, pState, mState, interview, logic, lang, isMobile
   }));
 });

@@ -18,6 +18,25 @@ export function resizeBubbles() {
   }
 }
 
+export function getMaxStepsOnScreen(sidewalkHeight) {
+  let maxSteps;
+  let interviewSteps = $('body').data('max-steps') || Number.POSITIVE_INFINITY;
+
+  if (sidewalkHeight < 100) {
+    maxSteps = 1;
+  } else if (_inRange(sidewalkHeight, 100, 300)) {
+    maxSteps = 2;
+  } else if (_inRange(sidewalkHeight, 300, 500)) {
+    maxSteps = 3;
+  } else if (_inRange(sidewalkHeight, 500, 750)) {
+    maxSteps = 4;
+  } else {
+    maxSteps = 5;
+  }
+
+  return interviewSteps < maxSteps ? interviewSteps : maxSteps;
+}
+
 export function resizeSteps() {
   let $body = $('body');
   let $html = $('html');
@@ -37,17 +56,8 @@ export function resizeSteps() {
   $body.removeClass('steps-1 steps-2 steps-3 steps-4 steps-5');
 
   // Add or remove steps based on sidewalk height
-  if (sidewalkHeight < 100) {
-    $body.addClass('steps-1');
-  } else if (_inRange(sidewalkHeight, 100, 300)) {
-    $body.addClass('steps-2');
-  } else if (_inRange(sidewalkHeight, 300, 500)) {
-    $body.addClass('steps-3');
-  } else if (_inRange(sidewalkHeight, 500, 750)) {
-    $body.addClass('steps-4');
-  } else {
-    $body.addClass('steps-5');
-  }
+  let maxStepsOnScreen = getMaxStepsOnScreen(sidewalkHeight);
+  $body.addClass(`steps-${maxStepsOnScreen}`);
 
   let computeStepStyles = function(width) {
     return {

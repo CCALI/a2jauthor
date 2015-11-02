@@ -42,6 +42,13 @@ describe('<a2j-viewer-steps>', function() {
       $('#test-area').empty();
     });
 
+    it('renders arrow when step number is zero', function() {
+      let firstStepNumber = interview.attr('steps.0.number');
+
+      assert.equal(parseInt(firstStepNumber, 10), 0);
+      assert.equal($('.glyphicon-step-zero').length, 1, 'should be one arrow');
+    });
+
     it('renders only guide avatar if "userGender" is unknown', function() {
       let answers = interview.attr('answers');
 

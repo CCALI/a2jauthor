@@ -49,6 +49,8 @@ module.exports = function(grunt) {
             ]
           },
           buildOptions: {
+            minify: true,
+            bundleSteal: true
           }
         }
       }

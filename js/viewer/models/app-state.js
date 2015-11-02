@@ -6,10 +6,6 @@ import 'can/map/define/';
 
 export default Map.extend({
   define: {
-    interview: {
-      serialize: false
-    },
-
     visitedPages: {
       Value: List,
       serialize: false
@@ -25,22 +21,29 @@ export default Map.extend({
       serialize: false
     },
 
+    interview: {
+      serialize: false,
+      set(interview) {
+        let pageName = this.attr('page');
+        this.setVisitedPages(pageName, interview);
+        return interview;
+      }
+    },
+
     page: {
       value: '',
-
       set(pageName) {
-        this.setVisitedPages(pageName);
+        let interview = this.attr('interview');
+        this.setVisitedPages(pageName, interview);
         return pageName;
       }
     }
   },
 
-  setVisitedPages(pageName) {
-    let interview = this.attr('interview');
-    let visited = this.attr('visitedPages');
-
+  setVisitedPages(pageName, interview) {
     if (!pageName || !interview) return;
 
+    let visited = this.attr('visitedPages');
     let page = interview.getPageByName(pageName);
 
     // do not add the same page twice.

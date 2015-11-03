@@ -10,9 +10,7 @@ This the private repo for the browser-based versions of CALI Author and A2J Auth
 ```
 $ cd js
 $ npm install
-$ npm install -g bower
 $ npm install -g grunt-cli
-$ bower install
 ```
 
 ## To run locally:
@@ -21,9 +19,9 @@ $ bower install
 $ npm start
 ```
 
-Then visit [http://localhost:3000](http://localhost:3000)
+Then visit [http://localhost:3000/js/](http://localhost:3000/js/)
 
-## To build the Author:
+## To build the Author and Viewer:
 
 ```
 $ cd js
@@ -31,26 +29,17 @@ $ grunt build
 ```
 
 If you want to view the app in production mode, just start the server (`npm start`)
-and go to [http://localhost:3000/author/index.production.html](http://localhost:3000/author/index.production.html).
-
-## To build the mobile Viewer:
-
-```
-$ cd js
-$ grunt
-```
-
-If you want to view the app in production mode, just start the server (`npm start`)
-and go to [http://localhost:3000/client/index.html](http://localhost:3000/client/index.html).
+and go to [http://localhost:3000/js/author/index.production.html](http://localhost:3000/js/author/index.production.html)
+or [http://localhost:3000/js/viewer/index.production.html](http://localhost:3000/js/viewer/index.production.html)
 
 ## To run tests:
 
 ```
-$ grunt test
+$ npm test
 ```
 
 or, if your local server is running (you ran `npm start` before) you can run tests in your browser
-by loading [http://localhost:3000/author/test](http://localhost:3000/author/test)
+by loading [http://localhost:3000/js/author/test](http://localhost:3000/js/author/test)
 
 ## To generate the documentation:
 

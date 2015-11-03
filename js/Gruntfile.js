@@ -43,7 +43,6 @@ module.exports = function(grunt) {
         options: {
           system: {
             main: ['author/main'],
-            bundlesPath: 'dist/author',
             config: 'package.json!npm',
             bundle: ['author/app-template', 'author/src/src']
           },
@@ -57,7 +56,6 @@ module.exports = function(grunt) {
         options: {
           system: {
             main: ['viewer/app'],
-            bundlesPath: 'dist/viewer',
             config: 'package.json!npm'
           },
           buildOptions: {

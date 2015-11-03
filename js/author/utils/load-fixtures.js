@@ -1,5 +1,6 @@
 var loader = require('@loader');
-var isProduction = loader.env === 'production';
+var loaderEnv = loader.env || '';
+var isProduction = loaderEnv.indexOf('production') !== -1;
 
 // if this module is loaded, the `import` hook of the available loader will
 // be overridden to make sure the fixtures module is loaded before the app's
@@ -10,11 +11,11 @@ if (!isProduction) {
   var _import = loader.import;
 
   loader.import = function(name) {
-    if (name === 'author/main' || name == 'client/app') {
+    if (name === 'author/main' || name == 'viewer/app') {
       var _this = this;
 
-      var fixtures = (name == 'client/app')
-        ? 'client/models/fixtures/'
+      var fixtures = (name === 'viewer/app')
+        ? 'viewer/models/fixtures/'
         : 'author/models/fixtures/';
 
       return _this.import(fixtures).then(function() {

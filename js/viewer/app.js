@@ -3,6 +3,7 @@ import $ from 'jquery';
 import isMobile from './is-mobile';
 import config from 'viewer/config/';
 import template from './app.stache!';
+import _isEmpty from 'lodash/lang/isEmpty';
 import Lang from 'viewer/mobile/util/lang';
 import Answers from 'viewer/models/answers';
 import Logic from 'viewer/mobile/util/logic';
@@ -18,7 +19,8 @@ import 'viewer/mobile/util/helpers';
 
 // State attrs not needing persistance, such as showing/hiding the table of contents.
 // Load configuration from desktop into mobile
-let mState = new MemoryState(config);
+let qsParams = can.deparam(window.location.search.substring(1));
+let mState = new MemoryState(_isEmpty(qsParams) ? config : qsParams);
 
 // AJAX request for interview json
 let iDfd = Interview.findOne({

@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         src: 'icon-font/**/*',
         dest: 'author/docs/demos/'
       },
-      'demos': {
+      demos: {
         expand: true,
         cwd: 'author/styles/style-guide/',
         src: 'demos/**/*',
@@ -21,39 +21,51 @@ module.exports = function(grunt) {
     },
 
     less: {
-      'docs': {
+      docs: {
         files: {
-          "author/docs/styles.css": "author/main.less"
+          'author/docs/styles.css': 'author/main.less'
         }
       },
-      'svg': {
+      svg: {
         options: {
           compress: true,
           yuicompress: true,
           optimization: 2
         },
         files: {
-          "viewer/styles/viewer-avatars.css": "viewer/styles/viewer-avatars.less"
+          'viewer/styles/viewer-avatars.css': 'viewer/styles/viewer-avatars.less'
         }
       }
     },
 
     'steal-build': {
-      default: {
+      author: {
         options: {
           system: {
+            main: ['author/main'],
+            bundlesPath: 'dist/author',
             config: 'package.json!npm',
-            main: [
-              'author/main',
-              'viewer/app'
-            ]
+            bundle: ['author/app-template', 'author/src/src']
           },
           buildOptions: {
             minify: true,
-            bundleSteal: true
+            bundleSteal: false
           }
         }
-      }
+      },
+      viewer:{
+        options: {
+          system: {
+            main: ['viewer/app'],
+            bundlesPath: 'dist/viewer',
+            config: 'package.json!npm'
+          },
+          buildOptions: {
+            minify: true,
+            bundleSteal: false
+          }
+        }
+      },
     }
   });
 
@@ -66,7 +78,6 @@ module.exports = function(grunt) {
   grunt.renameTask('documentjs', 'documentjs-orig');
 
   grunt.registerTask('svg-styles', ['less:svg']);
-	grunt.registerTask('beautify', ['jsbeautifier']);
   grunt.registerTask('build', ['clean:build', 'steal-build']);
   grunt.registerTask('documentjs', [
     'documentjs-orig',

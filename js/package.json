@@ -46,10 +46,6 @@
     "configDependencies": [
       "author/utils/load-fixtures"
     ],
-    "bundle": [
-      "author/app-template",
-      "author/src/src"
-    ],
     "map": {
       "chai": "chai/chai",
       "assert": "tests/assert",

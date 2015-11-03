@@ -82,6 +82,9 @@ export default Component.extend({
       let objDoc = obj.contentDocument;
       let $svg = $(objDoc.getElementsByTagName('svg'));
 
+      // do nothing if svg not in the DOM (e.g lack of browser support)
+      if (!$svg) return;
+
       // space separated list of class names.
       let svgClasses = $svg.attr('class');
 

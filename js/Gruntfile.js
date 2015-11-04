@@ -33,7 +33,7 @@ module.exports = function(grunt) {
           optimization: 2
         },
         files: {
-          'viewer/styles/viewer-avatars.css': 'viewer/styles/viewer-avatars.less'
+          'styles/viewer-avatars.css': 'styles/viewer-avatars.less'
         }
       }
     },

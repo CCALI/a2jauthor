@@ -1,10 +1,10 @@
-<can-import from="author/styles/"/>
+<can-import from="styles/"/>
 <can-import from="author/header/"/>
 <can-import from="author/footer/"/>
 <can-import from="viewer/preview/"/>
 <can-import from="author/preview/"/>
 <can-import from="author/templates/"/>
-<can-import from="author/main.less!"/>
+<can-import from="author/styles.less!"/>
 <can-import from="author/interviews/"/>
 <can-import from="author/templates/edit/"/>
 <can-import from="author/vertical-navbar/"/>

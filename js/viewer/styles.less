@@ -7,12 +7,8 @@
 // Defines the location of custom A2J components that are needed for the framework
 @a2j-custom: "../author/styles/a2j-custom";
 
-
-// Original A2J Viewer CSS
-//@import "A2J_Fonts.less";
-//@import "viewer.jquery-ui.less";
-//@import "jquery-ui.extra.less";
-//@import "A2J_Viewer.less";
+// Defines the location of the viewer specific CSS files
+@a2j-viewer: "../styles/viewer";
 
 // Import our custom variables for Bootstrap
 @import "@{bootstrap-overrides}/variables.less";
@@ -56,16 +52,16 @@
 
 //Import elements custom to A2J
 @import "@{a2j-custom}/a2j-mixins.less";
-@import "viewer-layout.less";
-@import "viewer-variables.less";
-@import "viewer-navbar.less";
-@import "viewer-horizon.less";
-@import "viewer-sidewalk.less";
-@import "viewer-bubble.less";
-@import "viewer-avatars.less";
-@import "viewer-steps.less";
-@import "viewer-signs.less";
-@import "viewer-questions.less";
+@import "@{a2j-viewer}/layout.less";
+@import "@{a2j-viewer}/variables.less";
+@import "@{a2j-viewer}/navbar.less";
+@import "@{a2j-viewer}/horizon.less";
+@import "@{a2j-viewer}/sidewalk.less";
+@import "@{a2j-viewer}/bubble.less";
+@import "@{a2j-viewer}/avatars.less";
+@import "@{a2j-viewer}/steps.less";
+@import "@{a2j-viewer}/signs.less";
+@import "@{a2j-viewer}/questions.less";
 
 //Import our custom icon font
 @import (inline) "../author/styles/icon-font/css/justice-embedded.css";

@@ -4,16 +4,6 @@ import AppState from './models/app-state';
 import tabsRouting from 'author/utils/tabs-routing';
 
 import 'can/route/';
-import 'author/styles/';
-import 'author/main.less!';
-
-import './header/';
-import './footer/';
-import './templates/';
-import './interviews/';
-import './templates/edit/';
-import './vertical-navbar/';
-import './interviews/toolbar/';
 
 let appState = new AppState();
 

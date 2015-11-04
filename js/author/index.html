@@ -24,15 +24,10 @@
       // ckeditor loads its config file (styles and default plugins) by
       // injecting script tags into the document, without CKEDITOR_BASEPATH
       // being set property it won't work.
-      var CKEDITOR_BASEPATH = '/ckeditor/';
-
-      window.less = {
-        async: true,
-        fileSync: true
-      };
+      CKEDITOR_BASEPATH = '/ckeditor/';
+      window.less = {async: true, fileSync: true};
     </script>
 
-    <script src="../node_modules/steal/steal.js" data-main="author/main"></script>
-    <!-- <script src="../dist/bundles/author/main.js" data-root="/" data-env="production"></script> -->
+    <script src="../node_modules/steal/steal.js" main="author/app"></script>
   </body>
 </html>

@@ -4,16 +4,6 @@ import AppState from './models/app-state';
 import tabsRouting from 'author/utils/tabs-routing';
 
 import 'can/route/';
-import '../styles/';
-import 'author/styles.less!';
-
-import './header/';
-import './footer/';
-import './templates/';
-import './interviews/';
-import './templates/edit/';
-import './vertical-navbar/';
-import './interviews/toolbar/';
 
 let appState = new AppState();
 
@@ -24,6 +14,16 @@ can.route(':page/:action/:id');
 can.route.ready();
 
 $('body').on('click', 'a[href="#"]', ev => ev.preventDefault());
+
+// this custom event is triggered when the user clicks the preview button
+// in the edit page modal, since that code is not inside the CanJS app scope,
+// the custom event is the way to let the CanJS app know that it needs to
+// updated its state properly so the preview tab is rendered on the right page.
+$(window).on('edit-page:preview', function(evt, pageName) {
+  appState.attr('interviewPageName', pageName);
+  appState.attr('page', 'preview');
+  appState.attr('previewMode', true);
+});
 
 // The legacy code in src/src requires the dom to be populated in order to work,
 // so we first render the main app's template and then load the code.

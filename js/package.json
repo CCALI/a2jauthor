@@ -2,7 +2,7 @@
   "name": "a2j-author-viewer-gui",
   "version": "0.0.1",
   "description": "Authoring and viewer App GUI.",
-  "main": "author/main",
+  "main": "author/app",
   "scripts": {
     "start": "node server",
     "test": "testee --browsers firefox viewer/test/index.html author/test/index.html"

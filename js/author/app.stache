@@ -1,6 +1,15 @@
+<can-import from="author/styles/"/>
+<can-import from="author/header/"/>
+<can-import from="author/footer/"/>
 <can-import from="viewer/preview/"/>
 <can-import from="author/preview/"/>
+<can-import from="author/templates/"/>
+<can-import from="author/main.less!"/>
+<can-import from="author/interviews/"/>
+<can-import from="author/templates/edit/"/>
+<can-import from="author/vertical-navbar/"/>
 <can-import from="author/templates/assembly/"/>
+<can-import from="author/interviews/toolbar/"/>
 
 <div id="splash" class="welcome">
   <div class="loading">
@@ -13,7 +22,7 @@
 
 {{#if appState.previewMode}}
   <div id="viewer-app">
-    <a2j-viewer-preview />
+    <a2j-viewer-preview {page-name}="appState.interviewPageName" />
   </div>
 {{/if}}
 

@@ -11,7 +11,7 @@ if (!isProduction) {
   var _import = loader.import;
 
   loader.import = function(name) {
-    if (name === 'author/main' || name == 'viewer/app') {
+    if (name === 'author/app' || name == 'viewer/app') {
       var _this = this;
 
       var fixtures = (name === 'viewer/app')

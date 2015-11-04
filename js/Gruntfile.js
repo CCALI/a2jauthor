@@ -42,7 +42,7 @@ module.exports = function(grunt) {
       author: {
         options: {
           system: {
-            main: ['author/main'],
+            main: ['author/app'],
             config: 'package.json!npm',
             bundle: ['author/app-template', 'author/src/src']
           },

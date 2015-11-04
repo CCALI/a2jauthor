@@ -310,63 +310,66 @@ function pageEditDelete(name)
 		}});
 }
 
-function gotoPageEdit(pageName)
-{	// Bring page edit window forward with page content
-	$pageEditDialog =  $('.page-edit-form');
-	$('#authortool').show();
-	$('#page-viewer').hide();
-   var page = gGuide.pages[pageName];
-	if (page === null || typeof page === "undefined"){
-		return;
-	}
+// Bring page edit window forward with page content
+function gotoPageEdit(pageName) {
+  $pageEditDialog = $('.page-edit-form');
 
-	//trace(page2XML(pageFromXML(page2XML(page))));
+  $('#authortool').show();
+  $('#page-viewer').hide();
 
+  var page = gGuide.pages[pageName];
+  if (page == null) return;
 
-	$('#tabsLogic  .tabContent, #tabsText .tabContent').html("");//clear these so they refresh with new data. TODO - update in place
-	//var $page =	findPageDialog(pageName);
-	//if ($page.length==0)
-	//$page = $('.page-edit-form:first').clone(false,false);
-	$pageEditDialog.attr('rel',page.name);
-	$pageEditDialog.attr('title','Question Editor');//page.name);
-	$pageEditDialog.dialog({
-  	dialogClass: "modal bootstrap-styles",
-		autoOpen:false,
-		title: page.name,
-		width: 750,
-		height: 500,
-		modal: false,
-		minWidth: 200,
-		minHeight: 500, maxHeight: 700,
+  // clear these so they refresh with new data. TODO - update in place
+  $('#tabsLogic  .tabContent, #tabsText .tabContent').html('');
 
-		close: function(){
-		},
-		buttons:[
-		{text:'XML', click:function(){
-			var pageName=$(this).attr('rel');
-			dialogAlert({title:'Page XML',width:800,height:600,body:prettyXML(page2XML(gGuide.pages[pageName]))});
-		}},/*
-		{text:'Delete', click:function(){
-			pageEditDelete($(this).attr('rel'));
-		}},
-		{text:'Clone', click:function(){
-			pageEditClone($(this).attr('rel'));
-		}},*/
-		{text:'Preview', click:function(){
-			var pageName=$(this).attr('rel');
-			gotoPageView(pageName);
-			$pageEditDialog.dialog("close");
-		}},
-		{text:'Close',click:function(){
-			$(this).dialog("close");
-			updateTOCOnePage();
-		 }}
-	]});
-	guidePageEditForm(page,$('.page-edit-form-panel',$pageEditDialog).html(''),page.name);
+  $pageEditDialog.attr('rel', page.name);
+  $pageEditDialog.attr('title', 'Question Editor');
 
-	$pageEditDialog.dialog('open' );
-	$pageEditDialog.dialog('moveToTop');
+  $pageEditDialog.dialog({
+    dialogClass: 'modal bootstrap-styles',
+    autoOpen: false,
+    title: page.name,
+    width: 750,
+    height: 500,
+    modal: false,
+    minWidth: 200,
+    minHeight: 500,
+    maxHeight: 700,
 
+    close: function() {},
+
+    buttons:[{
+      text:'XML',
+      click:function() {
+        var pageName = $(this).attr('rel');
+        dialogAlert({
+          title: 'Page XML',
+          width: 800,
+          height: 600,
+          body: prettyXML(page2XML(gGuide.pages[pageName]))
+        });
+      }
+    }, {
+      text: 'Preview',
+      click: function() {
+        var pageName = $(this).attr('rel');
+        $pageEditDialog.dialog('close');
+        $(window).trigger('edit-page:preview', pageName);
+      }
+    }, {
+      text: 'Close',
+      click: function() {
+        $(this).dialog('close');
+        updateTOCOnePage();
+      }
+    }]
+  });
+
+  guidePageEditForm(page, $('.page-edit-form-panel', $pageEditDialog).html(''), page.name);
+
+  $pageEditDialog.dialog('open');
+  $pageEditDialog.dialog('moveToTop');
 }
 
 // Go to a tab or popup a page.

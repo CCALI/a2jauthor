@@ -17,7 +17,7 @@
         <span>My progress:</span>
         <div class="form-group ">
           <div class="input-group">
-            <select class="form-control" id="history" can-value="{selectedPageName}">
+            <select class="form-control" {$value}="selectedPageName">
               {{#each visitedPages}}
                 <option value="{{name}}" {{#eq @index 0}}selected{{/eq}}>
                   {{fitPageDescription text}}

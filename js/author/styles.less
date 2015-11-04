@@ -3,7 +3,7 @@
  * @group styles-start 0 Getting Started
  * @group styles-theme 1 Theme Basics
  * @group styles-base 2 Base Elements
- * @group styles-custom 3 Custom Styles
+ * @group styles-author 3 Custom Styles
  * @group styles-utilities 4 Utilities
  *
  * This is the Live Style Guide for the A2J Author Framework. A2J Author is based on the Boostrap 3 CSS framework for all markup and styles.
@@ -18,7 +18,10 @@
 @bootstrap-overrides: "../styles/bootstrap-overrides";
 
 // Defines the location of custom A2J components that are needed for the framework
-@a2j-custom: "../styles/author";
+@a2j-author: "../styles/author";
+
+// Defines the location of shared CSS files
+@a2j-shared: "../styles/shared";
 
 // Import our custom variables for Bootstrap
 @import "@{bootstrap-overrides}/variables.less";
@@ -50,7 +53,7 @@
   @import "@{bootstrap-base}/navs.less";
   @import "@{bootstrap-overrides}/navs.less";
   @import "@{bootstrap-base}/navbar.less";
-  @import "@{a2j-custom}/vertical-navbar.less";
+  @import "@{a2j-author}/vertical-navbar.less";
   @import "@{bootstrap-base}/labels.less";
   @import "@{bootstrap-overrides}/labels.less";
   @import "@{bootstrap-base}/alerts.less";
@@ -77,16 +80,16 @@
 @import "@{bootstrap-overrides}/carets.less";
 
 //Import elements custom to A2J
-@import "@{a2j-custom}/a2j-mixins.less";
-@import "@{a2j-custom}/a2j-header.less";
-@import "@{a2j-custom}/a2j-layout.less";
-@import "@{a2j-custom}/a2j-pages-steps.less";
-@import "@{a2j-custom}/a2j-mapper.less";
-@import "@{a2j-custom}/loading.less";
-@import "@{a2j-custom}/a2j-dialogs.less";
-@import "@{a2j-custom}/a2j-editicons.less";
-@import "@{a2j-custom}/a2j-code.less";
-@import "@{a2j-custom}/a2j-reports.less";
+@import "@{a2j-shared}/mixins.less";
+@import "@{a2j-author}/header.less";
+@import "@{a2j-author}/layout.less";
+@import "@{a2j-author}/pages-steps.less";
+@import "@{a2j-author}/mapper.less";
+@import "@{a2j-author}/loading.less";
+@import "@{a2j-author}/dialogs.less";
+@import "@{a2j-author}/editicons.less";
+@import "@{a2j-author}/code.less";
+@import "@{a2j-author}/reports.less";
 
 //Import our custom icon font
 @import (inline) "../styles/icon-font/css/justice-embedded.css";

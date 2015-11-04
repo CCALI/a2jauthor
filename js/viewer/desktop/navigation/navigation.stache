@@ -51,5 +51,5 @@
 </nav>
 
 <div class="horizon">
-  <img class="courthouse" src="{{joinBase 'viewer/images/A2J5_CourtHouse.png'}}" />
+  <img class="courthouse" src="{{joinBase 'viewer/images/A2J5_CourtHouse.svg'}}" />
 </div>

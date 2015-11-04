@@ -4,8 +4,8 @@ import AppState from './models/app-state';
 import tabsRouting from 'author/utils/tabs-routing';
 
 import 'can/route/';
-import 'author/styles/';
-import 'author/main.less!';
+import '../styles/';
+import 'author/styles.less!';
 
 import './header/';
 import './footer/';

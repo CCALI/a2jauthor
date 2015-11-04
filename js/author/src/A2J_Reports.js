@@ -27,7 +27,7 @@ function newWindowReport(title,html)
 {	// Open report in new window. Include CSS for proper formatting.
 	var reportWindow = window.open();//'A2J_Report.html', "");
 	html = '<html class="bootstrap-styles reports"><head><title>' + title + '</title>'
-	+'<link rel="stylesheet" type="text/css" href="styles/A2J_Author.css">'
+	+'<link rel="stylesheet" type="text/css" href="../styles/A2J_Author.css">'
 	+'</head>'+'<body class="CAJAReportDump">'+html
 	+'<script>window.less = { async: true, fileSync: true };</script>'
   +'<script src="../node_modules/steal/steal.js" data-main="author/main"></script>'

@@ -20,12 +20,10 @@
     <div id="author-app"></div>
 
     <script>
-      window.less = {
-        async: true,
-        fileSync: true
-      };
+      CKEDITOR_BASEPATH = '/ckeditor/';
+      window.less = {async: true, fileSync: true};
     </script>
 
-    <script src="../node_modules/steal/steal.production.js" main="author/main"></script>
+    <script src="../node_modules/steal/steal.production.js" main="author/app"></script>
   </body>
 </html>

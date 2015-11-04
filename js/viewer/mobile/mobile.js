@@ -2,12 +2,6 @@ import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './mobile.stache!';
 
-import 'viewer/mobile/pages/';
-import 'viewer/mobile/intro/';
-import 'viewer/mobile/header/';
-import 'viewer/mobile/footer/';
-import 'viewer/mobile/filler/';
-
 let MobileViewerVM = Map.extend({
   hideCredits: function() {
     this.attr('mState.showCredits', false);

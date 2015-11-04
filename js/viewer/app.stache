@@ -9,7 +9,8 @@
     r-state="{rState}"
     p-state="{pState}"
     m-state="{mState}"
-    interview="{interview}" />
+    interview="{interview}"
+    class="bootstrap-styles" />
 {{else}}
   <a2j-desktop-viewer
     lang="{lang}"
@@ -17,5 +18,6 @@
     r-state="{rState}"
     p-state="{pState}"
     m-state="{mState}"
-    interview="{interview}" />
+    interview="{interview}"
+    class="bootstrap-styles" />
 {{/if}}

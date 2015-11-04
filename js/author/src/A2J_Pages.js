@@ -354,8 +354,8 @@ function gotoPageEdit(pageName) {
       text: 'Preview',
       click: function() {
         var pageName = $(this).attr('rel');
-        gotoPageView(pageName);
         $pageEditDialog.dialog('close');
+        $(window).trigger('edit-page:preview', pageName);
       }
     }, {
       text: 'Close',

@@ -32,8 +32,19 @@ export default Component.extend({
       let logic = new Logic({interview});
       let lang = new Lang(interview.attr('language'));
 
-      rState.attr('view', 'intro');
       rState.attr('interview', interview);
+
+      // if pageName is set, we need to make sure the viewer loads
+      // that specific page (covers the case when user clicks `preview`
+      // from the edit page popup).
+      if (vm.attr('pageName')) {
+        rState.attr({
+          view: 'pages',
+          page: vm.attr('pageName')
+        });
+      } else {
+        rState.attr('view', 'intro');
+      }
 
       vm.attr({
         rState, pState, mState,

@@ -8,22 +8,22 @@ module.exports = function(grunt) {
     copy: {
       'icon-font': {
         expand: true,
-        cwd: 'author/styles/',
+        cwd: 'styles/',
         src: 'icon-font/**/*',
-        dest: 'author/docs/demos/'
+        dest: 'docs/demos/'
       },
       demos: {
         expand: true,
-        cwd: 'author/styles/style-guide/',
+        cwd: 'styles/style-guide/',
         src: 'demos/**/*',
-        dest: 'author/docs/'
+        dest: 'docs/'
       }
     },
 
     less: {
       docs: {
         files: {
-          'author/docs/styles.css': 'author/styles.less'
+          'docs/author.css': 'author/styles.less'
         }
       },
       svg: {

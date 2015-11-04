@@ -37,6 +37,18 @@ export default Map.extend({
         let page = this.attr('page');
         return (page === 'preview') ? val : false;
       }
+    },
+
+    /**
+     * @property {String} AppState.protoype.interviewPageName
+     *
+     * The name of the page that will be loaded when user clicks the interview
+     * button in the edit page popup, when empty the first page of the interview
+     * will be loaded.
+     */
+    interviewPageName: {
+      value: '',
+      serialize: false
     }
   }
 });

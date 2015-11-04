@@ -22,7 +22,7 @@
 
 {{#if appState.previewMode}}
   <div id="viewer-app">
-    <a2j-viewer-preview />
+    <a2j-viewer-preview {page-name}="appState.interviewPageName" />
   </div>
 {{/if}}
 

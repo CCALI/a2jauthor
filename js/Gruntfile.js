@@ -8,22 +8,22 @@ module.exports = function(grunt) {
     copy: {
       'icon-font': {
         expand: true,
-        cwd: 'author/styles/',
+        cwd: 'styles/',
         src: 'icon-font/**/*',
-        dest: 'author/docs/demos/'
+        dest: 'docs/demos/'
       },
       demos: {
         expand: true,
-        cwd: 'author/styles/style-guide/',
+        cwd: 'styles/style-guide/',
         src: 'demos/**/*',
-        dest: 'author/docs/'
+        dest: 'docs/'
       }
     },
 
     less: {
       docs: {
         files: {
-          'author/docs/styles.css': 'author/main.less'
+          'docs/author.css': 'author/styles.less'
         }
       },
       svg: {
@@ -33,7 +33,7 @@ module.exports = function(grunt) {
           optimization: 2
         },
         files: {
-          'viewer/styles/viewer-avatars.css': 'viewer/styles/viewer-avatars.less'
+          'styles/viewer-avatars.css': 'styles/viewer/avatars.less'
         }
       }
     },

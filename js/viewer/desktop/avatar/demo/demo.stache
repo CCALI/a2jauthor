@@ -1,5 +1,5 @@
 <can-import from="viewer/desktop/avatar/" />
-<can-import from="viewer/styles/styles.less!" />
+<can-import from="viewer/styles.less!" />
 
 <div class="row">
   <div class="col-md-6" style="padding-left: 50px;">

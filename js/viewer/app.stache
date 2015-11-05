@@ -1,6 +1,6 @@
 <can-import from="viewer/mobile/" />
 <can-import from="viewer/desktop/" />
-<can-import from="viewer/styles/styles.less!" />
+<can-import from="viewer/styles.less!" />
 
 {{#if isMobile}}
   <a2j-mobile-viewer
@@ -9,7 +9,8 @@
     r-state="{rState}"
     p-state="{pState}"
     m-state="{mState}"
-    interview="{interview}" />
+    interview="{interview}"
+    class="bootstrap-styles" />
 {{else}}
   <a2j-desktop-viewer
     lang="{lang}"
@@ -17,5 +18,6 @@
     r-state="{rState}"
     p-state="{pState}"
     m-state="{mState}"
-    interview="{interview}" />
+    interview="{interview}"
+    class="bootstrap-styles" />
 {{/if}}

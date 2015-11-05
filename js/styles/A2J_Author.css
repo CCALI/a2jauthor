@@ -1,0 +1,82 @@
+@charset "utf-8";
+
+html, body {
+	font-family:  "Open Sans",​sans-serif;
+	font-size: 14px;
+	margin:0;
+	padding:0;
+}
+.editspan { /* wrap around fields for fluid width */
+	display: block;
+	overflow: hidden;
+}
+.editable.taller {
+	margin-top: 0em;
+	min-height: 2em;
+}
+.editable.tallest {
+	min-height: 5em;
+}
+.editable { /* authoring text fields */
+	min-width: 10em;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	padding: 5px;
+	border: 1px solid #ccc;
+	min-height: 1em;
+	width:100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.ui-autocomplete .ui-menu-item {
+	max-height: 2em;
+	overflow: hidden;
+}
+.ui-autocomplete{
+	max-height: 10em;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+ }
+.warning {
+	padding: 0;
+	margin: 0;
+	background-color:#fdd;
+	border: thin;
+	font-size: .9em;
+	font-style: italic;
+}
+.loader {
+	display: inline-block;
+	background-image: url(../viewer/images/ajax-loader.gif);
+	background-repeat: no-repeat;
+	width:16px;
+	height:16px;
+	padding: 0px;
+	margin: 0px;
+}
+.hotspot {
+	height: 100px;
+}
+
+#tracer li {
+	font-size: 8pt;
+	padding:1px;
+	margin-left: -2em;
+}
+
+#dialog_window_minimized_container {
+	z-index: 9999;
+}
+.fileuploader {
+	display: inline-block;
+	position: relative;
+	width: 250px;
+	height: 2em;
+	margin: 0px;
+	padding: 0px;
+}
+#uploadCMPFileInput {
+	opacity:  0;
+}

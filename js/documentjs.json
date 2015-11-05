@@ -1,15 +1,15 @@
 {
   "siteDefaults": {
-    "templates": "author/styles/documentjs-theme/templates",
-    "static": "author/styles/documentjs-theme/static"
+    "templates": "styles/documentjs-theme/templates",
+    "static": "styles/documentjs-theme/static"
   },
   "sites": {
     "docs": {
       "glob": {
-        "pattern": "author/**/*.{js,md,less}",
+        "pattern": "{author,viewer,styles}/**/*.{js,md,less}",
         "ignore": "{docs,viewer,node_modules,tests,minify,author/{src,libs,docs}}/**/*"
       },
-      "dest": "./author/docs",
+      "dest": "./docs",
       "parent": "author"
     }
   }

@@ -1,9 +1,3 @@
-.step-current {
-  width: 100%;
-  .vertical-align(absolute);
-  z-index: @zindex-popover;
-}
-
 .app-step {
   position: absolute;
   bottom: 0;
@@ -11,18 +5,25 @@
   height: 100%;
   right: 30%;
 
-  &:after {
+  .step-circle {
     position: absolute;
     content: '';
     .border-radius(50%);
     width: 100%;
     right: 0;
   }
-  &.current {
+}
+
+.step-current {
+  width: 100%;
+  .vertical-align(absolute);
+  z-index: @zindex-popover;
+
+  .app-step {
     height: 100px;
     bottom: -5%;
 
-    &:after {
+    .step-circle {
       height: 100px;
       bottom: 0;
     }
@@ -40,7 +41,7 @@
   .app-step {
     width: 35%;
 
-    &:after {
+    .step-circle {
       height: 40%;
       bottom: 0;
     }
@@ -51,28 +52,32 @@
 
 .next-2 {
   bottom: calc(~"53% - " @minus-header);
-    .app-step:after {
+
+  .step-circle {
     height: 40%;
   }
 }
 
 .next-3 {
   bottom: calc(~"67% - " @minus-header);
-  .app-step:after {
+
+  .step-circle {
     height: 30%;
   }
 }
 
 .next-4 {
   bottom: calc(~"79% - " @minus-header);
-  .app-step:after {
+
+  .step-circle {
     height: 20%;
   }
 }
 
 .next-5 {
   bottom: calc(~"87% - " @minus-header);
-  .app-step:after {
+
+  .step-circle {
     height: 10%;
   }
 }

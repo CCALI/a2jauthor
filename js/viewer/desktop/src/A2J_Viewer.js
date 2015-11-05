@@ -1,4 +1,4 @@
-﻿/*
+/*
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
@@ -112,38 +112,37 @@ var A2JViewer={
 		A2JViewer.filterVariables();
 	},
 
-	fillSample: function()
-	{	// Populate fields with 'sample' values, if specified or applicable.
-		var page = gPage;
-		for (var fi=0;fi<page.fields.length;fi++)
-		{
-			var f = page.fields[fi];// field record
-			var fid = "FID_"+fi;//field id - unique
-			var sample = f.sample;
-			switch (f.type)
-			{
-				case CONST.ftText://"Text"
-				case CONST.ftTextLong://"Text (Long)"
-				case CONST.ftTextPick://"Text (Pick from list)"
-				case CONST.ftNumber://"Number"
-				case CONST.ftNumberDollar://"Number Dollar"
-				case CONST.ftNumberSSN://"Number SSN"
-				case CONST.ftNumberPhone://"Number Phone"
-				case CONST.ftNumberZIP://"Number ZIP Code"
-				case CONST.ftNumberPick://"Number (Pick from list)"
-				case CONST.ftDateMDY://"Date MM/DD/YYYY"
-				   $('#'+fid).val(sample);
-				   break;
+  // Populate fields with 'sample' values, if specified or applicable.
+  fillSample: function() {
+    var page = gPage;
+    for (var fi = 0; fi < page.fields.length; fi++) {
+      var f = page.fields[fi]; // field record
+      var fid = 'FID_' + fi; //field id - unique
+      var sample = f.sample;
 
-				case CONST.ftGender://"Gender"
-				case CONST.ftRadioButton://"Radio Button"
-				case CONST.ftCheckBox://"Check box"
-				case CONST.ftCheckBoxNOTA://"Check Box (None of the Above)
-					// Sample data not used.
-					break;
-			}
-		}
-	},
+      switch (f.type) {
+        case CONST.ftText://"Text"
+        case CONST.ftTextLong://"Text (Long)"
+        case CONST.ftTextPick://"Text (Pick from list)"
+        case CONST.ftNumber://"Number"
+        case CONST.ftNumberDollar://"Number Dollar"
+        case CONST.ftNumberSSN://"Number SSN"
+        case CONST.ftNumberPhone://"Number Phone"
+        case CONST.ftNumberZIP://"Number ZIP Code"
+        case CONST.ftNumberPick://"Number (Pick from list)"
+        case CONST.ftDateMDY://"Date MM/DD/YYYY"
+          $('#' + fid).val(sample);
+          break;
+
+        case CONST.ftGender://"Gender"
+        case CONST.ftRadioButton://"Radio Button"
+        case CONST.ftCheckBox://"Check box"
+        case CONST.ftCheckBoxNOTA://"Check Box (None of the Above)
+          // Sample data not used.
+          break;
+      }
+    }
+  },
 
 	history:[], // Array of {title,pagename}
 	skipHistory: false,

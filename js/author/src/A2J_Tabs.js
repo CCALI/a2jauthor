@@ -1076,29 +1076,42 @@ function resumeEdit()
 	if ($pageEditDialog!==null){$pageEditDialog.dialog('open');}
 }
 
-function authorViewerHook()
-{	//	### Attach Author editing buttons to the A2J viewer
-	A2JViewer.IMG = "../viewer/images/";
-	$('.A2JViewer').append('<div class="debugmenu"><button/><button/><button/><button/></div>');
-	$('.A2JViewer div.debugmenu button').first()
-		.button({label:'Variables/Script',icons:{primary:'ui-icon-wrench'}}).click(function(){$('.A2JViewer').toggleClass('test',100);})
-		.next()
-		.button({label:'Fill',icons:{primary:'ui-icon-pencil'}}).click(function(){
-			A2JViewer.fillSample();
-		})
-		.next()
-		.button({label:'Resume Edit',icons:{primary:'ui-icon-arrowreturnthick-1-w'}}).click(function(){
-			resumeEdit();
-		})
-		.next()
-		.button({label:'Edit this',icons:{primary:'ui-icon-pencil'}}).click(function(){
-			gotoPageEdit(gPage.name);
-		});
+// ### Attach Author editing buttons to the A2J viewer
+function authorViewerHook() {
+  A2JViewer.IMG = '../viewer/images/';
+
+  $('.A2JViewer').append('<div class="debugmenu"><button/><button/><button/><button/></div>');
+
+  $('.A2JViewer div.debugmenu button')
+    .first().button({
+      label: 'Variables/Script',
+      icons: {primary:'ui-icon-wrench'}
+    })
+    .click(function() {
+      $('.A2JViewer').toggleClass('test', 100);
+    })
+    .next().button({
+      label: 'Fill',
+      icons: {primary:'ui-icon-pencil'}
+    })
+    .click(function() {
+      A2JViewer.fillSample();
+    })
+    .next().button({
+      label: 'Resume Edit',
+      icons: {primary:'ui-icon-arrowreturnthick-1-w'}
+    })
+    .click(function() {
+      resumeEdit();
+    })
+    .next().button({
+      label: 'Edit this',
+      icons:{primary:'ui-icon-pencil'}
+    })
+    .click(function() {
+      gotoPageEdit(gPage.name);
+    });
 }
-
-
-
-
 
 function updateTOCOnePage()
 {	// TODO - just update only this page's TOC and Mapper entry.

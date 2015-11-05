@@ -8,7 +8,7 @@
       <div class="step-circle bg-step{{currentStep.number}}"></div>
     </div>
 
-    <div class="guide-wrapper">
+    <div class="guide-wrapper {{^if interview.userGender}}guide-center{{/if}}">
       <div id="guideBubble" class="bubble">
         <a2j-pages
           logic="{logic}"

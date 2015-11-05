@@ -4,7 +4,9 @@
 
 {{#if currentStep}}
   <div class="step-current">
-    <div class="app-step step-1 current"></div>
+    <div class="app-step">
+      <div class="step-circle bg-step{{currentStep.number}}"></div>
+    </div>
 
     <div class="guide-wrapper">
       <div id="guideBubble" class="bubble">
@@ -39,7 +41,7 @@
     {{/if}}
 
     <div class="sign-wrapper">
-      <div class="sign">
+      <div class="sign bg-step{{currentStep.number}}">
         <div class="sign-inner">
           <div class="circle-wrapper">
             <div class="circle">
@@ -66,10 +68,12 @@
       <div id="next-{{@index + 2}}"
         class="step-next next-{{@index + 2}} step-{{formatStepNumber number}}">
 
-        <div class="app-step"></div>
+        <div class="app-step">
+          <div class="step-circle bg-step{{formatStepNumber number}}"></div>
+        </div>
 
         <div class="sign-wrapper">
-          <div class="sign">
+          <div class="sign bg-step{{formatStepNumber number}}">
             <div class="sign-inner">
               <div class="circle-wrapper">
                 <div class="circle">

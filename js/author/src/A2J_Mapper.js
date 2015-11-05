@@ -169,7 +169,7 @@ function buildMap()
 			var stepc;//stepcolor
 			stepc = page.step;
 			$map.append(' '
-				+'<div class="node Step'+(stepc)+'" pagename="'+page.name.asHTML()+'" style="z-index:1; left:'+nodeLeft+'px;top:'+nodeTop+'px;">'
+				+'<div class="node bg-step'+(stepc)+'" pagename="'+page.name.asHTML()+'" style="z-index:1; left:'+nodeLeft+'px;top:'+nodeTop+'px;">'
 				+(page.type===CONST.ptPopup ? '':'<div class="mapper icon arrow"></div>')
 				+(page.name == gGuide.firstPage ? '<div class="mapper icon start">Start</div>':'')
 				+(page.name == gGuide.exitPage ? '<div class="mapper icon exit">Exit</div>':'')

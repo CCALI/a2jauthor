@@ -41,8 +41,6 @@ export default Component.extend({
       let appState = vm.attr('appState');
       let pageName = appState.attr('interviewPageName');
 
-      console.log('click edit', pageName);
-
       if (_isFunction(window.gotoPageEdit)) {
         vm.resumeEdit();
         window.gotoPageEdit(pageName);

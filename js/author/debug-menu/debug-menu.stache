@@ -1,0 +1,19 @@
+<can-import from="author/debug-menu/debug-menu.less!"/>
+
+<div class="btn-group debugmenu">
+  <button type="button" class="btn btn-default btn-warning btn-variables-panel" disabled="disabled">
+    Variables/Script
+  </button>
+
+  <button type="button" class="btn btn-default btn-warning btn-fill-sample" disabled="disabled">
+    Fill
+  </button>
+
+  <button type="button" class="btn btn-default btn-warning btn-resume-edit">
+    Resume Edit
+  </button>
+
+  <button type="button" class="btn btn-default btn-warning btn-edit-this">
+    Edit this
+  </button>
+</div>

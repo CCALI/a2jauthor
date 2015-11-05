@@ -34,17 +34,23 @@ export default Component.extend({
 
       rState.attr('interview', interview);
 
-      // if pageName is set, we need to make sure the viewer loads
-      // that specific page (covers the case when user clicks `preview`
-      // from the edit page popup).
-      if (vm.attr('pageName')) {
+      // if previewPageName is set, we need to make sure the viewer
+      // loads that specific page (covers the case when user clicks
+      // `preview` from the edit page popup).
+      if (vm.attr('previewPageName')) {
         rState.attr({
           view: 'pages',
-          page: vm.attr('pageName')
+          page: vm.attr('previewPageName')
         });
       } else {
         rState.attr('view', 'intro');
       }
+
+      // hack to keep `interviewPageName` in sync with author app.
+      vm.attr('interviewPageName', rState.attr('page'));
+      rState.bind('page', function(evt, attr, how, newVal) {
+        vm.attr('interviewPageName', rState.attr('page'));
+      });
 
       vm.attr({
         rState, pState, mState,

@@ -20,7 +20,7 @@ $('body').on('click', 'a[href="#"]', ev => ev.preventDefault());
 // the custom event is the way to let the CanJS app know that it needs to
 // updated its state properly so the preview tab is rendered on the right page.
 $(window).on('edit-page:preview', function(evt, pageName) {
-  appState.attr('interviewPageName', pageName);
+  appState.attr('previewPageName', pageName);
   appState.attr('page', 'preview');
   appState.attr('previewMode', true);
 });
@@ -32,7 +32,7 @@ let loadLegacyCode = function() {
 };
 
 let render = function({template}) {
-  $('#author-app').html(template({appState}));
+  $('#author-app').html(template(appState));
 };
 
 loader.import('author/app-template')

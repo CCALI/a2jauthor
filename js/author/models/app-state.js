@@ -40,11 +40,22 @@ export default Map.extend({
     },
 
     /**
-     * @property {String} AppState.protoype.interviewPageName
+     * @property {String} AppState.protoype.previewPageName
      *
      * The name of the page that will be loaded when user clicks the interview
      * button in the edit page popup, when empty the first page of the interview
      * will be loaded.
+     */
+    previewPageName: {
+      value: '',
+      serialize: false
+    },
+
+    /**
+     * @property {String} AppState.protoype.interviewPageName
+     *
+     * The name of the page that is currently being previewed in the viewer
+     * app, it is bound to viewer's route page property.
      */
     interviewPageName: {
       value: '',

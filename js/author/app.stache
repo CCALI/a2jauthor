@@ -6,6 +6,7 @@
 <can-import from="author/templates/"/>
 <can-import from="author/styles.less!"/>
 <can-import from="author/interviews/"/>
+<can-import from="author/debug-menu/"/>
 <can-import from="author/templates/edit/"/>
 <can-import from="author/vertical-navbar/"/>
 <can-import from="author/templates/assembly/"/>
@@ -20,419 +21,422 @@
   </div>
 </div>
 
-{{#if appState.previewMode}}
+{{#if previewMode}}
   <div id="viewer-app">
-    <a2j-viewer-preview {page-name}="appState.interviewPageName" />
+    <a2j-viewer-preview
+      {preview-page-name}="previewPageName"
+      {^interview-page-name}="interviewPageName" />
+
+    <author-debug-menu {(app-state)}="." />
   </div>
 {{/if}}
 
-{{#with appState}}
-  <div id="authortool"
-    class="hidestart authortool bootstrap-styles"
-    {{#if previewMode}}style="display: none;"{{/if}}>
+<div id="authortool"
+  class="hidestart authortool bootstrap-styles"
+  {{#if previewMode}}style="display: none;"{{/if}}>
 
-    <div id="cajaheader" class="hidestart">
-      <app-header page="{{page}}"></app-header>
-    </div>
-
-    <div class="guideio"></div>
-    <div class="">
-      <vertical-navbar theme="inverse" page="{page}"></vertical-nabvar>
-    </div>
-
-    <div class="guidepanels ui-widget xui-widget-content">
-
-      <!-- About Tab -->
-      <div class="tab-panel bootstrap-styles" id="tabsAbout">
-        <div class="tabContentFrame page">
-        <h3 class="page-title">Information about this interview</h3>
-        <div>
-
-         <!-- Nav tabs -->
-          <ul class="nav nav-tabs" role="tablist" id="about-tabs">
-            <li role="presentation" class="active"><a href="#" role="tab" data-panel="tab-about">About</a></li>
-            <li role="presentation"><a href="#" role="tab" data-panel="tab-layout">Layout</a></li>
-            <li role="presentation"><a href="#" role="tab" data-panel="tab-feedback">Feedback</a></li>
-            <li role="presentation"><a href="#" role="tab" data-panel="tab-revision">Revision History</a></li>
-            <li role="presentation"><a href="#" role="tab" data-panel="tab-authors">Authors</a></li>
-          </ul>
-        <!-- Nav tabs -->
-
-        <!-- Tab panes -->
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="tab-about"></div>
-            <div role="tabpanel" class="tab-pane" id="tab-layout"></div>
-            <div role="tabpanel" class="tab-pane" id="tab-feedback"></div>
-            <div role="tabpanel" class="tab-pane" id="tab-revision"></div>
-            <div role="tabpanel" class="tab-pane" id="tab-authors"></div>
-          </div>
-        <!-- Tab panes -->
-
-        <br />
-        </div>
-          <div class="tabContent editq"></div>
-        </div>
-      </div><!--tab-panel has-toolbar -->
-
-      <!-- Variables Tab -->
-      <div class="tab-panel has-toolbar" id="tabsVariables">
-        <nav class="navbar navbar-default">
-          <p class="navbar-text">Variables used in this interview</p>
-          <div class="nav navbar-nav navbar-right">
-            <button id="var-add" class="btn btn-default navbar-btn"><span class="glyphicon-plus"></span> Add</button>
-            <a href="javascript:void(0)" class="fileinput-button">
-              <button id="uploadCMPFile" class="btn btn-primary navbar-btn"><span class="glyphicon-folder-open"></span> Add from HotDocs .CMP</button>
-              <input type="file" id="uploadCMPFileInput"/>
-            </a>
-          </div><!-- nav navbar-nav navbar-right -->
-        </nav>
-        <div class="page tabContentFrame">
-          <div class="tabContent editq"></div>
-        </div>
-      </div><!-- tab-panel has-toolbar -->
-
-      <!-- Steps Tab -->
-      <div class="tab-panel" id="tabsSteps">
-        <div class="tabContentFrame page">
-          <h3 class="page-title">Steps</h3>
-          <div class="tabContent editq"></div>
-        </div>
-      </div>
-
-      <!-- Pages Tab -->
-      <div class="tab-panel has-toolbar" id="tabsPages">
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <ul class="nav navbar-nav">
-              <li><a href="#" id="open-guide"><span class="glyphicon-new-message"></span> Open</li>
-              <li><a href="#" id="clone-guide"><span class="glyphicon-docs"></span> Clone</a></li>
-              <li><a href="#" id="delete-guide"><span class="glyphicon-trash"></span> Delete</a></li>
-              <li class="divider"></li>
-              <li><a href="#" id="new-page"><span class="glyphicon-doc"></span> New Page</a></li>
-              <li><a href="#" id="new-popup"><span class="glyphicon-popup"></span> New Popup</a></li>
-            </ul>
-            <div class="nav navbar-nav navbar-right">
-              <button id="expandCollapse" data-state="collapsed" class="btn btn-default navbar-btn"></button>
-            </div>
-          </div>
-        </nav>
-        <div id="CAJAOutline" class="page pageoutline pagelist">
-          <ul>
-          </ul>
-        </div>
-      </div> <!-- tab-panel has-toolbar -->
-
-      <!-- Maps Tab -->
-      <div class="tab-panel" id="tabsMap">
-        <div class="tabContentFrame page">
-          <div class="col-4">
-            <div class="tabsMapPages">
-              <div class="PagesPanel">
-                <div id="CAJAOutlineMap" class="pageoutline pagelist">
-                  <ul>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div><!-- col-4 -->
-          <div class="col-8">
-            <div id="MapperToolbar" class="map-toolbar">
-              <button class="btn btn-default"><span class="glyphicon-left-thin"></span> Hide Page List</button>
-              <button zoom="fit" class="btn btn-default"><span class="glyphicon-resize"></span> Fit</button>
-              <button zoom="1.25" class="btn btn-default"><span class="glyphicon-zoom-in"></span> Zoom In</button>
-              <button zoom="0.75" class="btn btn-default"><span class="glyphicon-zoom-out"></span> Zoom Out</button>
-            </div>
-
-           <div id="tabsMapper">
-              <div id="MapperPanel">
-                <div class="map"></div>
-              </div>
-            </div>
-
-          </div><!-- col-8 -->
-        </div>
-      </div>
-
-      <!-- All Logic Tab -->
-      <div class="tab-panel has-toolbar" id="tabsLogic">
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
-              <ul class="nav navbar-nav" id="showlogic">
-                <p class="navbar-text hidden-xs">Show:</p>
-                <li id="showlogic2">
-                  <a href="#" >
-                    All Code Blocks
-                  </a>
-                </li>
-                <li id="showlogic1" class="active">
-                  <a href="#" >
-                    Only Active Code
-                  </a>
-                </li>
-              </ul>
-            <div class="nav navbar-nav navbar-right">
-              <button class="ecPanelButton btn btn-default navbar-btn" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
-            </div>
-          </div>
-        </nav>
-       <div class="page">
-        <div class="tabContentFrame">
-          <div class="tabContent editq"></div>
-        </div>
-        </div>
-      </div>
-
-      <!-- All Text Tab -->
-      <div class="tab-panel has-toolbar" id="tabsText">
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
-              <ul class="nav navbar-nav" id="showlogic">
-                <p class="navbar-text hidden-xs">Show:</p>
-                <li id="showtext2">
-                  <a href="#" >
-                    All Fields
-                  </a>
-                </li>
-                <li id="showtext1" class="active">
-                  <a href="#" >
-                    Only Filled Fields
-                  </a>
-                </li>
-              </ul>
-            <div class="nav navbar-nav navbar-right">
-              <button class="ecPanelButton btn btn-default navbar-btn" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
-            </div>
-          </div>
-        </nav>
-        <div class="tabContentFrame page">
-          <div class="tabContent editq"></div>
-        </div>
-      </div>
-
-      <!-- All Files Tab -->
-      <div class="tab-panel has-toolbar" id="tabsFiles">
-          <nav class="navbar navbar-default">
-            <p class="navbar-text">Files currently attached to this interview</p>
-
-            <div class="nav navbar-nav navbar-right">
-              <div class="fileuploader">
-                <!-- The fileinput-button span is used to style the file input field as button -->
-                <a href="javascript:void(0)" class="fileinput-button">
-                  <button class="btn btn-default navbar-btn">
-                    <span class="glyphicon-folder-upload"></span> Upload files...
-                  </button>
-                  <!-- The file input field used as target for the file upload widget -->
-                  <input id="fileupload" type="file" name="files[]" multiple />
-                </a>
-
-                <div id="progress" class="progress progress-success progress-striped">
-                  <div class="bar"></div>
-                </div>
-              </div>
-            </div>
-          </nav>
-
-          <div class="page">
-            <div class="tabContentFrame">
-              <div class="tabContent editq">
-                <table class="A2JFiles table table-striped">
-                  <tbody id="attachmentFiles" class="files"></tbody>
-                </table>
-              </div>
-            </div>
-          </div><!-- page -->
-      </div><!-- tab-panel has-toolbar #tabsFiles -->
-
-      <!-- Interview Tab -->
-      <div class="tab-panel has-toolbar" id="tabsGuides">
-        {{#is page "interviews"}}
-          <interviews-toolbar></interviews-toolbar>
-          <interviews-page></interviews-page>
-        {{/is}}
-      </div>
-
-      <!-- Template Tab -->
-      <div class="tab-panel has-toolbar" id="tabsTemplate">
-        {{#is page "templates"}}
-          {{#eq action 'assemble'}}
-            <template-assembly guide-id="{guideId}" template-id="{id}"></template-assembly>
-          {{else}}
-            {{#if id}}
-              <template-edit-page template-id="{id}"></template-edit-page>
-            {{else}}
-              <templates-page app-state="{.}"></templates-page>
-            {{/if}}
-          {{/eq}}
-        {{/is}}
-      </div>
-
-      <!-- Report Tab -->
-      <div class="tab-panel" id="tabsReport">
-        <div class="tabContentFrame page">
-          <div class="tabContent editq">
-            <h3 class="page-title">Report</h3>
-            <p>Report of text in a print-friendly layout, also useful for translation projects</p>
-            <button id="reportFull" class="btn btn-primary">Full Report</button>
-            <button id="reportTranscript" class="btn btn-primary">Transcript Report</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Preview Tab -->
-      <div class="tab-panel page" id="tabsPreview">
-        {{#is page 'preview'}}
-          <author-preview preview-mode="{previewMode}" />
-        {{/is}}
-      </div>
-
-      <div class="tab-panel page" id="tabsUpload">
-        <h3 class="page-title">Publish/Upload</h3>
-        <p>To publish your interview to another site such as LHI, download the ZIP which contains the interview and its supplemental files.</p>
-
-        <button id="guideZIP" class="btn btn-default"><span class="glyphicon-file-archive"></span> Download ZIP</button>
-        <button id="guideDownload" class="btn btn-default"><span class="glyphicon-folder-download"></span> Download A2J</button>
-        <button id="guidePublish" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to Public URL</button>
-        <button id="guideMobile" class="btn btn-default"><span class="glyphicon-mobile"></span> Test Mobile</button>
-      </div><!-- id="tabsUpload" -->
-    </div>
-
-    <app-footer></app-footer>
+  <div id="cajaheader" class="hidestart">
+    <app-header page="{{page}}"></app-header>
   </div>
 
-  <div class="hidestart">
-    <div id="xedit-plain-form" title="Edit" class="">
-      <form>
-        <fieldset>
-          <textarea name="text" class="text ui-widget-content ui-corner-all"></textarea>
-        </fieldset>
-      </form>
-    </div>
-    <div id="page-picker-dialog" title="Pick a destination page" class="">
-      <form>
-        <div id="page-picker-list" class="pageoutline pagelist">
-        </div>
-      </form>
-    </div>
-    <div class="page-edit-form">
-      <div class="page-edit-form-panel"></div>
-    </div>
-    <div id="var-edit-form" title="Variable">
-      <form class="editq">
-        <fieldset>
-          <div>
-            <label for="varname">Name:</label>
-            <span class="editspan">
-        <input type="text" name="varname" id="varname" class="editable text ui-widget-content ui-corner-all"  />
-        </span>
-          </div>
-          <div>
-            <label for="vartype">Type:</label>
-            <span class="editspan">
-        <select name="vartype" id="vartype" class="editable">
-          <option value="Unknown">Unknown</option>
-          <option value="Text">Text</option>
-          <option value="TF">TF - True/False</option>
-          <option value="Number">Number</option>
-          <option value="Date">Date</option>
-          <option value="MC">Multiple choice</option>
-          <option value="Other">Other</option>
-        </select>
-        </span>
-          </div>
-          <div>
-            <label for="varrepeating">Repeating:</label>
-            <span class="editspan">
-          <input type="checkbox" name="varrepeating" id="varrepeating">Check if multiple values
-        </span>
-          </div>
-          <div>
-            <label for="varcomment">Comment:</label>
-            <span class="editspan">
-        <input type="textarea" name="varcomment" id="varcomment" class="editable taller text ui-widget-content ui-corner-all"  />
-        </span>
-          </div>
-          <div>
-            <label for="varusage">Used by:</label>
-            <input type="button" name="varusage" id="varusage" />
-          </div>
-          <div>
-            <div id="varUsageList"></div>
-          </div>
-        </fieldset>
-      </form>
-    </div>
+  <div class="guideio"></div>
+  <div class="">
+    <vertical-navbar theme="inverse" page="{page}"></vertical-nabvar>
+  </div>
 
-    <div id="clause-edit-form" title="Clause">
-      <div class="editq">
-        <div id=clausefs></div>
-        <fieldset>
-          <div>
-            <label for="clauseusage">Used by:</label>
-            <input type="button" name="clauseusage" id="clauseusage" />
-          </div>
-          <div>
-            <div id="clauseUsageList"></div>
-          </div>
-        </fieldset>
+  <div class="guidepanels ui-widget xui-widget-content">
+
+    <!-- About Tab -->
+    <div class="tab-panel bootstrap-styles" id="tabsAbout">
+      <div class="tabContentFrame page">
+      <h3 class="page-title">Information about this interview</h3>
+      <div>
+
+       <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" id="about-tabs">
+          <li role="presentation" class="active"><a href="#" role="tab" data-panel="tab-about">About</a></li>
+          <li role="presentation"><a href="#" role="tab" data-panel="tab-layout">Layout</a></li>
+          <li role="presentation"><a href="#" role="tab" data-panel="tab-feedback">Feedback</a></li>
+          <li role="presentation"><a href="#" role="tab" data-panel="tab-revision">Revision History</a></li>
+          <li role="presentation"><a href="#" role="tab" data-panel="tab-authors">Authors</a></li>
+        </ul>
+      <!-- Nav tabs -->
+
+      <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="tab-about"></div>
+          <div role="tabpanel" class="tab-pane" id="tab-layout"></div>
+          <div role="tabpanel" class="tab-pane" id="tab-feedback"></div>
+          <div role="tabpanel" class="tab-pane" id="tab-revision"></div>
+          <div role="tabpanel" class="tab-pane" id="tab-authors"></div>
+        </div>
+      <!-- Tab panes -->
+
+      <br />
+      </div>
+        <div class="tabContent editq"></div>
+      </div>
+    </div><!--tab-panel has-toolbar -->
+
+    <!-- Variables Tab -->
+    <div class="tab-panel has-toolbar" id="tabsVariables">
+      <nav class="navbar navbar-default">
+        <p class="navbar-text">Variables used in this interview</p>
+        <div class="nav navbar-nav navbar-right">
+          <button id="var-add" class="btn btn-default navbar-btn"><span class="glyphicon-plus"></span> Add</button>
+          <a href="javascript:void(0)" class="fileinput-button">
+            <button id="uploadCMPFile" class="btn btn-primary navbar-btn"><span class="glyphicon-folder-open"></span> Add from HotDocs .CMP</button>
+            <input type="file" id="uploadCMPFileInput"/>
+          </a>
+        </div><!-- nav navbar-nav navbar-right -->
+      </nav>
+      <div class="page tabContentFrame">
+        <div class="tabContent editq"></div>
+      </div>
+    </div><!-- tab-panel has-toolbar -->
+
+    <!-- Steps Tab -->
+    <div class="tab-panel" id="tabsSteps">
+      <div class="tabContentFrame page">
+        <h3 class="page-title">Steps</h3>
+        <div class="tabContent editq"></div>
       </div>
     </div>
-    <div id="settings-form" title="Settings" class="bootstrap-styles">
-      <ul id="cajasettings">
-        <h3>General</h3>
-        <p>Color Schemes: <span class="text-muted">A2J 5</span></p>
 
-        <p>Data Settings:</p>
-        <p><label><input type=checkbox id="setting_warnHotDocsNameLength"> Warn when variable name lengths are too long for HotDocs</label></p>
-
-        <p>Text Statistics: (Flesh-Kincaid and more)</p>
-        <p><label><input type="checkbox" id="setting_FKGradeAll" /> Include grade numbers for good text</label></p>
-        <hr />
-        <h3>Advanced</h3>
-        <p><label><input type=checkbox id="setting_showJS"> Show JS</label></p>
-      </ul>
-    </div>
-
-    <div id="dialog-form-var-val-edit" title="Change value">
-      <form>
-        <fieldset>
-          <label for="value">Value</label>
-          <input type="text" name="value" id="var-value" class="text ui-widget-content ui-corner-all">
-        </fieldset>
-      </form>
-    </div>
-
-    <div id="xviewer-logic-form" title="Viewer logic" class="ViewerLogicForm">
-      <div class="tracepanel">
-        <ul id="tracer">
+    <!-- Pages Tab -->
+    <div class="tab-panel has-toolbar" id="tabsPages">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <ul class="nav navbar-nav">
+            <li><a href="#" id="open-guide"><span class="glyphicon-new-message"></span> Open</li>
+            <li><a href="#" id="clone-guide"><span class="glyphicon-docs"></span> Clone</a></li>
+            <li><a href="#" id="delete-guide"><span class="glyphicon-trash"></span> Delete</a></li>
+            <li class="divider"></li>
+            <li><a href="#" id="new-page"><span class="glyphicon-doc"></span> New Page</a></li>
+            <li><a href="#" id="new-popup"><span class="glyphicon-popup"></span> New Popup</a></li>
+          </ul>
+          <div class="nav navbar-nav navbar-right">
+            <button id="expandCollapse" data-state="collapsed" class="btn btn-default navbar-btn"></button>
+          </div>
+        </div>
+      </nav>
+      <div id="CAJAOutline" class="page pageoutline pagelist">
+        <ul>
         </ul>
       </div>
-      <div class="immediatepanel">
-        <input type="text" id="tracerimm" />
+    </div> <!-- tab-panel has-toolbar -->
+
+    <!-- Maps Tab -->
+    <div class="tab-panel" id="tabsMap">
+      <div class="tabContentFrame page">
+        <div class="col-4">
+          <div class="tabsMapPages">
+            <div class="PagesPanel">
+              <div id="CAJAOutlineMap" class="pageoutline pagelist">
+                <ul>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div><!-- col-4 -->
+        <div class="col-8">
+          <div id="MapperToolbar" class="map-toolbar">
+            <button class="btn btn-default"><span class="glyphicon-left-thin"></span> Hide Page List</button>
+            <button zoom="fit" class="btn btn-default"><span class="glyphicon-resize"></span> Fit</button>
+            <button zoom="1.25" class="btn btn-default"><span class="glyphicon-zoom-in"></span> Zoom In</button>
+            <button zoom="0.75" class="btn btn-default"><span class="glyphicon-zoom-out"></span> Zoom Out</button>
+          </div>
+
+         <div id="tabsMapper">
+            <div id="MapperPanel">
+              <div class="map"></div>
+            </div>
+          </div>
+
+        </div><!-- col-8 -->
       </div>
     </div>
-    <div id="xviewer-var-form" title="Viewer Variables" class="ViewerVarForm"></div>
-    <div id="texttoolbar" class="texttoolbar ui-widget-header ui-corner-all">
-      <button id="bold">bold</button>
-      <button id="italic">italic</button>
-      <button id="indent">indent</button>
-      <button id="outdent">outdent</button>
-      <button id="link">link</button>
-      <button id="popup">popup</button>
-    </div>
-    <div id="welcome" title="Welcome to Access to Justice Author (v5)">
-      <div class="tabContentFrame">
-        <div class="tabContent ">
-          <p class="name"></p>
-          <h2>What would you like to do?</h2>
-          <div id="guidelist">
+
+    <!-- All Logic Tab -->
+    <div class="tab-panel has-toolbar" id="tabsLogic">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav" id="showlogic">
+              <p class="navbar-text hidden-xs">Show:</p>
+              <li id="showlogic2">
+                <a href="#" >
+                  All Code Blocks
+                </a>
+              </li>
+              <li id="showlogic1" class="active">
+                <a href="#" >
+                  Only Active Code
+                </a>
+              </li>
+            </ul>
+          <div class="nav navbar-nav navbar-right">
+            <button class="ecPanelButton btn btn-default navbar-btn" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
           </div>
+        </div>
+      </nav>
+     <div class="page">
+      <div class="tabContentFrame">
+        <div class="tabContent editq"></div>
+      </div>
+      </div>
+    </div>
+
+    <!-- All Text Tab -->
+    <div class="tab-panel has-toolbar" id="tabsText">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav" id="showlogic">
+              <p class="navbar-text hidden-xs">Show:</p>
+              <li id="showtext2">
+                <a href="#" >
+                  All Fields
+                </a>
+              </li>
+              <li id="showtext1" class="active">
+                <a href="#" >
+                  Only Filled Fields
+                </a>
+              </li>
+            </ul>
+          <div class="nav navbar-nav navbar-right">
+            <button class="ecPanelButton btn btn-default navbar-btn" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
+          </div>
+        </div>
+      </nav>
+      <div class="tabContentFrame page">
+        <div class="tabContent editq"></div>
+      </div>
+    </div>
+
+    <!-- All Files Tab -->
+    <div class="tab-panel has-toolbar" id="tabsFiles">
+        <nav class="navbar navbar-default">
+          <p class="navbar-text">Files currently attached to this interview</p>
+
+          <div class="nav navbar-nav navbar-right">
+            <div class="fileuploader">
+              <!-- The fileinput-button span is used to style the file input field as button -->
+              <a href="javascript:void(0)" class="fileinput-button">
+                <button class="btn btn-default navbar-btn">
+                  <span class="glyphicon-folder-upload"></span> Upload files...
+                </button>
+                <!-- The file input field used as target for the file upload widget -->
+                <input id="fileupload" type="file" name="files[]" multiple />
+              </a>
+
+              <div id="progress" class="progress progress-success progress-striped">
+                <div class="bar"></div>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <div class="page">
+          <div class="tabContentFrame">
+            <div class="tabContent editq">
+              <table class="A2JFiles table table-striped">
+                <tbody id="attachmentFiles" class="files"></tbody>
+              </table>
+            </div>
+          </div>
+        </div><!-- page -->
+    </div><!-- tab-panel has-toolbar #tabsFiles -->
+
+    <!-- Interview Tab -->
+    <div class="tab-panel has-toolbar" id="tabsGuides">
+      {{#is page "interviews"}}
+        <interviews-toolbar></interviews-toolbar>
+        <interviews-page></interviews-page>
+      {{/is}}
+    </div>
+
+    <!-- Template Tab -->
+    <div class="tab-panel has-toolbar" id="tabsTemplate">
+      {{#is page "templates"}}
+        {{#eq action 'assemble'}}
+          <template-assembly guide-id="{guideId}" template-id="{id}"></template-assembly>
+        {{else}}
+          {{#if id}}
+            <template-edit-page template-id="{id}"></template-edit-page>
+          {{else}}
+            <templates-page app-state="{.}"></templates-page>
+          {{/if}}
+        {{/eq}}
+      {{/is}}
+    </div>
+
+    <!-- Report Tab -->
+    <div class="tab-panel" id="tabsReport">
+      <div class="tabContentFrame page">
+        <div class="tabContent editq">
+          <h3 class="page-title">Report</h3>
+          <p>Report of text in a print-friendly layout, also useful for translation projects</p>
+          <button id="reportFull" class="btn btn-primary">Full Report</button>
+          <button id="reportTranscript" class="btn btn-primary">Transcript Report</button>
         </div>
       </div>
     </div>
-    <div id="dialog_window_minimized_container"></div>
-    <div id="dialog-confirm" title=""></div>
-    <div id="login-form" title="Access To Justice 5">
-      Please sign in at <a href="http://a2j02.a2jauthor.org">A2J Author.org</a>.
+
+    <!-- Preview Tab -->
+    <div class="tab-panel page" id="tabsPreview">
+      {{#is page 'preview'}}
+        <author-preview preview-mode="{previewMode}" />
+      {{/is}}
+    </div>
+
+    <div class="tab-panel page" id="tabsUpload">
+      <h3 class="page-title">Publish/Upload</h3>
+      <p>To publish your interview to another site such as LHI, download the ZIP which contains the interview and its supplemental files.</p>
+
+      <button id="guideZIP" class="btn btn-default"><span class="glyphicon-file-archive"></span> Download ZIP</button>
+      <button id="guideDownload" class="btn btn-default"><span class="glyphicon-folder-download"></span> Download A2J</button>
+      <button id="guidePublish" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to Public URL</button>
+      <button id="guideMobile" class="btn btn-default"><span class="glyphicon-mobile"></span> Test Mobile</button>
+    </div><!-- id="tabsUpload" -->
+  </div>
+
+  <app-footer></app-footer>
+</div>
+
+<div class="hidestart">
+  <div id="xedit-plain-form" title="Edit" class="">
+    <form>
+      <fieldset>
+        <textarea name="text" class="text ui-widget-content ui-corner-all"></textarea>
+      </fieldset>
+    </form>
+  </div>
+  <div id="page-picker-dialog" title="Pick a destination page" class="">
+    <form>
+      <div id="page-picker-list" class="pageoutline pagelist">
+      </div>
+    </form>
+  </div>
+  <div class="page-edit-form">
+    <div class="page-edit-form-panel"></div>
+  </div>
+  <div id="var-edit-form" title="Variable">
+    <form class="editq">
+      <fieldset>
+        <div>
+          <label for="varname">Name:</label>
+          <span class="editspan">
+      <input type="text" name="varname" id="varname" class="editable text ui-widget-content ui-corner-all"  />
+      </span>
+        </div>
+        <div>
+          <label for="vartype">Type:</label>
+          <span class="editspan">
+      <select name="vartype" id="vartype" class="editable">
+        <option value="Unknown">Unknown</option>
+        <option value="Text">Text</option>
+        <option value="TF">TF - True/False</option>
+        <option value="Number">Number</option>
+        <option value="Date">Date</option>
+        <option value="MC">Multiple choice</option>
+        <option value="Other">Other</option>
+      </select>
+      </span>
+        </div>
+        <div>
+          <label for="varrepeating">Repeating:</label>
+          <span class="editspan">
+        <input type="checkbox" name="varrepeating" id="varrepeating">Check if multiple values
+      </span>
+        </div>
+        <div>
+          <label for="varcomment">Comment:</label>
+          <span class="editspan">
+      <input type="textarea" name="varcomment" id="varcomment" class="editable taller text ui-widget-content ui-corner-all"  />
+      </span>
+        </div>
+        <div>
+          <label for="varusage">Used by:</label>
+          <input type="button" name="varusage" id="varusage" />
+        </div>
+        <div>
+          <div id="varUsageList"></div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+
+  <div id="clause-edit-form" title="Clause">
+    <div class="editq">
+      <div id=clausefs></div>
+      <fieldset>
+        <div>
+          <label for="clauseusage">Used by:</label>
+          <input type="button" name="clauseusage" id="clauseusage" />
+        </div>
+        <div>
+          <div id="clauseUsageList"></div>
+        </div>
+      </fieldset>
     </div>
   </div>
-{{/with}}
+  <div id="settings-form" title="Settings" class="bootstrap-styles">
+    <ul id="cajasettings">
+      <h3>General</h3>
+      <p>Color Schemes: <span class="text-muted">A2J 5</span></p>
+
+      <p>Data Settings:</p>
+      <p><label><input type=checkbox id="setting_warnHotDocsNameLength"> Warn when variable name lengths are too long for HotDocs</label></p>
+
+      <p>Text Statistics: (Flesh-Kincaid and more)</p>
+      <p><label><input type="checkbox" id="setting_FKGradeAll" /> Include grade numbers for good text</label></p>
+      <hr />
+      <h3>Advanced</h3>
+      <p><label><input type=checkbox id="setting_showJS"> Show JS</label></p>
+    </ul>
+  </div>
+
+  <div id="dialog-form-var-val-edit" title="Change value">
+    <form>
+      <fieldset>
+        <label for="value">Value</label>
+        <input type="text" name="value" id="var-value" class="text ui-widget-content ui-corner-all">
+      </fieldset>
+    </form>
+  </div>
+
+  <div id="xviewer-logic-form" title="Viewer logic" class="ViewerLogicForm">
+    <div class="tracepanel">
+      <ul id="tracer">
+      </ul>
+    </div>
+    <div class="immediatepanel">
+      <input type="text" id="tracerimm" />
+    </div>
+  </div>
+  <div id="xviewer-var-form" title="Viewer Variables" class="ViewerVarForm"></div>
+  <div id="texttoolbar" class="texttoolbar ui-widget-header ui-corner-all">
+    <button id="bold">bold</button>
+    <button id="italic">italic</button>
+    <button id="indent">indent</button>
+    <button id="outdent">outdent</button>
+    <button id="link">link</button>
+    <button id="popup">popup</button>
+  </div>
+  <div id="welcome" title="Welcome to Access to Justice Author (v5)">
+    <div class="tabContentFrame">
+      <div class="tabContent ">
+        <p class="name"></p>
+        <h2>What would you like to do?</h2>
+        <div id="guidelist">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="dialog_window_minimized_container"></div>
+  <div id="dialog-confirm" title=""></div>
+  <div id="login-form" title="Access To Justice 5">
+    Please sign in at <a href="http://a2j02.a2jauthor.org">A2J Author.org</a>.
+  </div>
+</div>
+

@@ -32,78 +32,87 @@ function updateAttachmentFiles( )
 	 });
 }
 
+// List of pages within their steps.
+function getTOCStepPages(includePages, includePops, includeSpecial) {
+  var s;
+  var popups = '';
+  var inSteps = [];
 
-function getTOCStepPages(includePages,includePops,includeSpecial)
-{	// List of pages within their steps.
-	var inSteps=[];
-	var popups="";
-	var s;
-	for (s=0;s<CONST.MAXSTEPS;s++)
-	{
-		inSteps[s]="";
-	}
-	var p, plink;
-	for (p in gGuide.sortedPages)
-	{
-		/** @type {TPage} */
-		var page = gGuide.sortedPages[p];
-		var tip = '<em class="description">'+decodeEntities(page.text).substr(0,64) + '</em><span class="field-tags pull-right hidden-xs">' + page.tagList()  + '</span>';
-		plink= '<a class="page-item list-group-item unselectable" rel="PAGE '+page.name.asHTML()+'"><span class="title">'+page.name.asHTML()
-			+'</span>'+tip+'</a>';
-		if (page.type===CONST.ptPopup)
-		{
-			popups += plink;
-		}
-		else
-		{
-			inSteps[page.step] += plink;
-		}
-	}
-	var ts="";
-      ts+='<div class="pages-container">';
-      ts+='<h3 class="page-title">Pages</h3>';
+  for (s = 0; s < CONST.MAXSTEPS; s++) {
+    inSteps[s] = '';
+  }
 
-	if (includePages) {
-		for (s in inSteps)
-		{	// List all steps including those for pages that are in steps that we may have removed.
-			if (inSteps[s]!=='') {
-  			ts+='<div class="panel panel-info accordion" id="step'+s+'">';
-        ts+='<div class="panel-heading" role="tab" id="collapseListGroupHeading1">';
-				ts+='<h4 class="panel-title"><a role="button" class="step" rel="STEP '+s+'" data-stepnum="'+s+'">Step ' + gGuide.stepDisplayName(s) +'</a></h4>';
-				ts+='</div>';
-				ts+='<div id="panel'+s+'" class="panel-body panel-collapse" role="tabpanel" aria-expanded="true">';
-				ts+='<div class="list-group">'+inSteps[s]+'</div>';
-				ts+='</div></div>';
-			}
-		}
-	}
+  var p;
+  var plink;
 
-	ts+='</div>';
+  for (p in gGuide.sortedPages) {
+    /** @type {TPage} */
+    var page = gGuide.sortedPages[p];
+    var tip = '<em class="description">' + decodeEntities(page.text).substr(0, 64) + '</em><span class="field-tags pull-right hidden-xs">' + page.tagList() + '</span>';
+    plink = '<a class="page-item list-group-item unselectable" rel="PAGE ' + page.name.asHTML() + '"><span class="title">' + page.name.asHTML() + '</span>' + tip + '</a>';
 
-	if (includePops===true)
-	{	// Popups as destinations.
-  	    ts+='<div class="popups-container">';
-  	    ts+='<h3 class="page-title">Popups</h3>';
-				ts+='<div class="list-group">'+popups+'</div>';
-				ts+='</div>';
-	}
-	if (includeSpecial===true)
-	{	// Special branch destinations.
-		var branchIDs=[CONST.qIDNOWHERE,CONST.qIDSUCCESS,CONST.qIDFAIL,CONST.qIDEXIT,CONST.qIDBACK,CONST.qIDRESUME];
-		var i;
-		var tss='';
-		for (i in branchIDs)
-		{
-			var branchID = branchIDs[i];
-			plink= '<a class="page-item list-group-item unselectable" rel="PAGE '+branchID +'">'+ gGuide.pageDisplayName(branchID) +'</a>';
-			tss += plink;
-		}
-		ts+='<div class="special-container">';
-		ts+='<h3 class="page-title">Special Branching</h3>';
-		ts+='<div class="list-group">'+tss+'</div>';
-		ts+='</div>';
-	}
-	return ts;
+    if (page.type === CONST.ptPopup) {
+      popups += plink;
+    } else {
+      inSteps[page.step] += plink;
+    }
+  }
+
+  var ts = '';
+  ts += '<div class="pages-container">';
+  ts += '<h3 class="page-title">Pages</h3>';
+
+  if (includePages) {
+    // List all steps including those for pages that are in steps that we may have removed.
+    for (s in inSteps) {
+      if (inSteps[s] !== '') {
+        ts += '<div class="panel panel-info accordion" id="step' + s + '">';
+        ts += '<div class="panel-heading" role="tab" id="collapseListGroupHeading1">';
+        ts += '<h4 class="panel-title"><a role="button" class="step" rel="STEP ' + s + '" data-stepnum="' + s + '">Step ' + gGuide.stepDisplayName(s) + '</a></h4>';
+        ts += '</div>';
+        ts += '<div id="panel' + s + '" class="panel-body panel-collapse" role="tabpanel" aria-expanded="true">';
+        ts += '<div class="list-group">' + inSteps[s] + '</div>';
+        ts += '</div></div>';
+      }
+    }
+  }
+
+  ts += '</div>';
+
+  // Popups as destinations.
+  if (includePops === true) {
+    ts += '<div class="popups-container">';
+    ts += '<h3 class="page-title">Popups</h3>';
+    ts += '<div class="list-group">' + popups + '</div>';
+    ts += '</div>';
+  }
+
+  // Special branch destinations.
+  if (includeSpecial === true) {
+    var branchIDs = [
+      CONST.qIDNOWHERE,
+      CONST.qIDSUCCESS,
+      CONST.qIDFAIL,
+      CONST.qIDEXIT,
+      CONST.qIDBACK,
+      CONST.qIDRESUME
+    ];
+
+    var i;
+    var tss = '';
+    for (i in branchIDs) {
+      var branchID = branchIDs[i];
+      plink = '<a class="page-item list-group-item unselectable" rel="PAGE ' + branchID + '">' + gGuide.pageDisplayName(branchID) + '</a>';
+      tss += plink;
+    }
+
+    ts += '<div class="special-container">';
+    ts += '<h3 class="page-title">Special Branching</h3>';
+    ts += '<div class="list-group">' + tss + '</div>';
+    ts += '</div>';
+  }
+
+  return ts;
 }
 
 function updateTOC()

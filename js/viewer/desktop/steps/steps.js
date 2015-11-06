@@ -3,7 +3,6 @@ import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './steps.stache!';
 import _isNaN from 'lodash/lang/isNaN';
-import _flow from 'lodash/function/flow';
 import {resizeBubbles, resizeSteps} from 'viewer/resize-bubbles';
 
 import 'can/map/define/';
@@ -62,10 +61,14 @@ export default Component.extend({
 
   events: {
     inserted() {
-      let resizeStepsAndBubbles = _flow(resizeBubbles, resizeSteps);
+      let interview = this.viewModel.attr('interview');
+
+      let resizeStepsAndBubbles = function() {
+        resizeBubbles();
+        resizeSteps(interview.attr('steps.length'));
+      };
 
       resizeStepsAndBubbles();
-
       $(window).on('resize', resizeStepsAndBubbles);
       this.element.find('object').on('load', resizeBubbles);
     }

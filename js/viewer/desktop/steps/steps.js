@@ -3,6 +3,7 @@ import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './steps.stache!';
 import _isNaN from 'lodash/lang/isNaN';
+import _startsWith from 'lodash/string/startsWith';
 import {resizeBubbles, resizeSteps} from 'viewer/resize-bubbles';
 
 import 'can/map/define/';
@@ -68,9 +69,28 @@ export default Component.extend({
         resizeSteps(interview.attr('steps.length'));
       };
 
-      resizeStepsAndBubbles();
       $(window).on('resize', resizeStepsAndBubbles);
+
+      resizeStepsAndBubbles();
+      this.setStepsLeftClass();
       this.element.find('object').on('load', resizeBubbles);
+    },
+
+    '{viewModel} nextSteps': function() {
+      this.setStepsLeftClass();
+    },
+
+    setStepsLeftClass() {
+      let $body = $('body');
+      let nextSteps = this.viewModel.attr('nextSteps');
+      let stepsLeft = nextSteps.attr('length');
+
+      $body.removeClass(function(i, classes) {
+        let matches = c => _startsWith(c, 'steps-left-');
+        return classes.split(' ').filter(matches).join(' ').trim();
+      });
+
+      $body.addClass(`steps-left-${stepsLeft}`);
     }
   },
 

@@ -5,6 +5,7 @@ import _extend from 'lodash/object/extend';
 import Answers from 'viewer/models/answers';
 import _isString from 'lodash/lang/isString';
 import parser from 'viewer/mobile/util/parser';
+import _includes from 'lodash/collection/includes'
 import getSkinTone from 'viewer/models/get-skin-tone';
 
 import 'can/map/define/';
@@ -85,6 +86,14 @@ export default can.Model.extend({
       },
 
       Type: Page.List
+    },
+
+    steps: {
+      get(steps) {
+        let pages = this.attr('pages');
+        let withPages = pages.map(p => p.attr('step.number')).attr();
+        return steps.filter(s => _includes(withPages, s.attr('number')));
+      }
     },
 
     guideAvatarGender: {

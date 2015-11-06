@@ -114,4 +114,28 @@ describe('Interview model', function() {
     });
   });
 
+  it('filters out steps with no pages', function() {
+    let parsedData = Interview.parseModel({
+      pages: {
+        'page-1': {step: 0},
+        'page-2': {step: 0},
+        'page-3': {step: 1}
+      },
+      steps: [
+        {number: 0, text: 'Step 0'},
+        {number: 1, text: 'Step 1'},
+        {number: 2, text: 'Step 2'}
+      ]
+    });
+
+    let interview = new Interview(parsedData);
+    let steps = interview.attr('steps');
+
+    assert.equal(steps.attr('length'), 2,
+      '"Step 2" has not pages so it should not be included');
+
+    assert.equal(steps.attr('0.number'), 0, '"Step 0" has pages');
+    assert.equal(steps.attr('1.number'), 1, '"Step 1" has pages');
+  });
+
 });

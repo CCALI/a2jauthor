@@ -18,9 +18,8 @@ export function resizeBubbles() {
   }
 }
 
-export function getMaxStepsOnScreen(sidewalkHeight) {
+export function getMaxStepsOnScreen(sidewalkHeight, interviewSteps) {
   let maxSteps;
-  let interviewSteps = $('body').data('max-steps') || Number.POSITIVE_INFINITY;
 
   if (sidewalkHeight < 100) {
     maxSteps = 1;
@@ -37,7 +36,7 @@ export function getMaxStepsOnScreen(sidewalkHeight) {
   return interviewSteps < maxSteps ? interviewSteps : maxSteps;
 }
 
-export function resizeSteps() {
+export function resizeSteps(interviewSteps) {
   let $body = $('body');
   let $html = $('html');
   let $guideBubble = $('#guideBubble');
@@ -56,7 +55,7 @@ export function resizeSteps() {
   $body.removeClass('steps-1 steps-2 steps-3 steps-4 steps-5');
 
   // Add or remove steps based on sidewalk height
-  let maxStepsOnScreen = getMaxStepsOnScreen(sidewalkHeight);
+  let maxStepsOnScreen = getMaxStepsOnScreen(sidewalkHeight, interviewSteps);
   $body.addClass(`steps-${maxStepsOnScreen}`);
 
   let computeStepStyles = function(width) {

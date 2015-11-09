@@ -7,6 +7,7 @@
 <can-import from="author/styles.less!"/>
 <can-import from="author/interviews/"/>
 <can-import from="author/debug-menu/"/>
+<can-import from="author/debug-alerts/"/>
 <can-import from="author/templates/edit/"/>
 <can-import from="author/vertical-navbar/"/>
 <can-import from="author/templates/assembly/"/>
@@ -27,7 +28,8 @@
       {preview-page-name}="previewPageName"
       {^interview-page-name}="interviewPageName" />
 
-    <author-debug-menu {(app-state)}="." />
+      <author-debug-alerts {(alert-messages)}="viewerAlertMessages" />
+      <author-debug-menu {(app-state)}="." />
   </div>
 {{/if}}
 

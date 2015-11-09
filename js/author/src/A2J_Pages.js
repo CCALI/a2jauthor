@@ -355,7 +355,7 @@ function gotoPageEdit(pageName) {
       click: function() {
         var pageName = $(this).attr('rel');
         $pageEditDialog.dialog('close');
-        $(window).trigger('edit-page:preview', pageName);
+        $('#author-app').trigger('edit-page:preview', pageName);
       }
     }, {
       text: 'Close',

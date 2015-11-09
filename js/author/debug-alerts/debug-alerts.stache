@@ -1,0 +1,8 @@
+<can-import from="author/alert/"/>
+<can-import from="author/debug-alerts/debug-alerts.less!"/>
+
+<div class="debug-alerts-wrapper">
+  {{#each alertMessages}}
+    <app-alert open="true" alert-type="danger" dismissible="true">{{{.}}}</app-alert>
+  {{/each}}
+</div>

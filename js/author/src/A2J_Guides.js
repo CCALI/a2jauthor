@@ -16,24 +16,28 @@
  * Parses data returned from the server
  * When guide file is finally downloaded, we can parse it and update the UI.
 */
-function guideLoaded(data)
-{
-	var cajaDataXML;
-	try {
-		cajaDataXML=$(jQuery.parseXML(data.guide));
-	}
-	catch (e) {
-		setProgress('');
-		dialogAlert({title:'Error occurred loading guide #'+data.gid,body:'Unable to load XML' +"\n"+String.substr(String(e).asHTML(),0,99)});
-		return;
-	}
-	gGuideID=data.gid;
-	gGuide =  parseXML_Auto_to_CAJA(cajaDataXML);
-	//$('li.guide[gid="'+gGuideID+'"]').html(gGuide.title);
+function guideLoaded(data) {
+  var cajaDataXML;
 
-	gGuidePath=urlSplit(data.path).path;
-	guideStart('');
-	setProgress('');
+  try {
+    cajaDataXML = $(jQuery.parseXML(data.guide));
+  } catch (e) {
+    setProgress('');
+    dialogAlert({
+      title:'Error occurred loading guide #' + data.gid,
+      body:'Unable to load XML' + '\n' + String.substr(String(e).asHTML(), 0, 99)
+    });
+    return;
+  }
+
+  gGuideID = data.gid;
+  $('#author-app').trigger('author:guide-selected', gGuideID);
+
+  gGuide = parseXML_Auto_to_CAJA(cajaDataXML);
+  gGuidePath = urlSplit(data.path).path;
+
+  guideStart('');
+  setProgress('');
 }
 
 // Save current guide, but only if the XML has changed since last save to avoid upload overhead.
@@ -189,23 +193,24 @@ function createBlankGuide() {
 	});
 }
 
-function openSelectedGuide()
-{	// Open the currently selected guide (either double click or via Open button)
-	var $a=$('a.guide.active').first();
-	var gid=$a.attr('gid');
-	if (!gid) {
-		return;
-	}
-	var guideFile=$a.text();
-	setProgress('Loading guide '+guideFile,true);
-	loadNewGuidePrep(guideFile,'');
-	$('#splash').hide();
-	if(gid==='a2j'){
-		createBlankGuide();
-	}
-	else{
-		ws({cmd:'guide',gid:gid},guideLoaded);
-	}
+// Open the currently selected guide (either double click or via Open button)
+function openSelectedGuide() {
+  var $a = $('a.guide.active').first();
+  var gid = $a.attr('gid');
+
+  if (!gid) return;
+
+  var guideFile = $a.text();
+
+  setProgress('Loading guide ' + guideFile, true);
+  loadNewGuidePrep(guideFile, '');
+  $('#splash').hide();
+
+  if (gid === 'a2j') {
+    createBlankGuide();
+  } else {
+    ws({cmd:'guide', gid: gid}, guideLoaded);
+  }
 }
 
 function archiveSelectedGuide() {

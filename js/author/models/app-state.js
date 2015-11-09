@@ -1,4 +1,5 @@
 import Map from 'can/map/';
+import List from 'can/list/';
 
 import 'can/map/define/';
 
@@ -59,6 +60,17 @@ export default Map.extend({
      */
     interviewPageName: {
       value: '',
+      serialize: false
+    },
+
+    /**
+     * @property {String} AppState.protoype.viewerAlertMessages
+     *
+     * List of error messages meant to be displayed to the user (author) in
+     * preview mode.
+     */
+    viewerAlertMessages: {
+      Value: List,
       serialize: false
     }
   }

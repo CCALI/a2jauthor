@@ -12,37 +12,26 @@
 // Elements: navbar, road step area, question, guide avatar, user avatar, learn more prompt, learn more bubble.
 //var gLogic;
 
-var alertCounter=0;
+var alertCounter = 0;
 
-function versionString()
-{
-	return "Access to Justice Viewer/Author Version "+ CONST.A2JVersionNum+"("+CONST.A2JVersionDate+")";
+function versionString() {
+  return 'Access to Justice Viewer/Author Version '
+    + CONST.A2JVersionNum + '(' + CONST.A2JVersionDate + ')';
 }
 
+// 2014-05-27 Print error message into viewer space.
+// These are errors that an author might need to deal with such as variables too long or script syntax error.
+// Displayed publicly so users will be alerted that something bad is happening. The logic tracer may be hidden
+// to users so logging only there may hide a defect.
+// Since there may be more than one error, dump them into a scrollable list.
+function traceAlert(html) {
+  $('#author-app').trigger('author:trace-alert', html);
 
-function traceAlert(html)
-{	// 2014-05-27 Print error message into viewer space.
-	// These are errors that an author might need to deal with such as variables too long or script syntax error.
-	// Displayed publicly so users will be alerted that something bad is happening. The logic tracer may be hidden
-	// to users so logging only there may hide a defect.
-	// Since there may be more than one error, dump them into a scrollable list.
-	var div = $('<div class="ui-widget"><div style="padding: 0 .7em;" class="ui-state-error ui-corner-all"><p><span style="float: left; margin-right: .3em;" class="ui-icon ui-icon-alert"></span>'+html+'<button/></div></div>');
-	$('button',div).button({label:'x'}).click(function()
-	{	// When closing an alert note, remove it, reduce counter, hide if counter back to 0.
-		$(this).parentsUntil('.ui-widget').remove();
-		$('.alertCounter').text( --alertCounter );
-		$('.alertPanel,.alertCounter').toggle(alertCounter>0);
-	});
-	$('.alertPanel').append(div);
-	$('.alertCounter').text( ++alertCounter ).show();
-	$('.alertPanel').toggle(alertCounter>0);
-	trace(String(html).stripHTML()); // trace alert into console too.
+  // trace alert into console too.
+  trace(String(html).stripHTML());
 }
 
-
-
-
-var A2JViewer={
+var A2JViewer = {
 
 	IMG : "images/",
 

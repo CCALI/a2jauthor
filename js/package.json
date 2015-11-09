@@ -38,6 +38,9 @@
   },
   "system": {
     "transpiler": "babel",
+    "ext": {
+      "text": "text"
+    },
     "npmIgnore": [
       "testee",
       "documentjs",

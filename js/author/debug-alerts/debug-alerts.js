@@ -15,5 +15,17 @@ const DebugAlerts = Map.extend({
 export default Component.extend({
   template,
   viewModel: DebugAlerts,
-  tag: 'author-debug-alerts'
+  tag: 'author-debug-alerts',
+
+  events: {
+    '.btn-dismiss click': function() {
+      let $el = this.element;
+      let vm = this.viewModel;
+      let alertMessages = vm.attr('alertMessages');
+
+      $el.slideUp('slow', function() {
+        alertMessages.replace([]);
+      });
+    }
+  }
 })

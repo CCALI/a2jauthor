@@ -69,7 +69,7 @@ export function resizeSteps(interviewSteps) {
   let denominator = Math.tan(angleB * Math.PI / 180);
 
   nextWidth = (sidewalkHeight * .65) / denominator;
-  $('.app-step.step-1').css(computeStepStyles(nextWidth));
+  $('.step-current .app-step').css(computeStepStyles(nextWidth));
 
   // Next 2
   nextWidth = (sidewalkHeight * .47) / denominator;

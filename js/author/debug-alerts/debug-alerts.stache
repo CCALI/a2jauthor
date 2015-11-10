@@ -2,9 +2,13 @@
 <can-import from="author/debug-alerts/debug-alerts.less!"/>
 
 <div class="debug-alerts-wrapper">
-  <button type="button" class="btn btn-primary btn-block btn-dismiss">Dismiss All</button>
+  <button type="button" class="btn btn-default btn-block btn-dismiss">
+    Dismiss All <span class="badge">{{messagesCount}}</span>
+  </button>
 
   {{#each alertMessages}}
-    <app-alert open="true" alert-type="danger" dismissible="true">{{{.}}}</app-alert>
+    <app-alert {(open)}="open" alert-type="danger" dismissible="true">
+      {{{message}}}
+    </app-alert>
   {{/each}}
 </div>

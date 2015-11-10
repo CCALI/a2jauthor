@@ -15,7 +15,7 @@ export default function bindCustomEvents(appState) {
   // internal parts of the code call `window.traceAlert` which no longer
   // updates the DOM manually but triggers this event
   $authorApp.on('author:trace-alert', function(evt, alert) {
-    appState.attr('viewerAlertMessages').push(alert);
+    appState.attr('viewerAlertMessages').push({message: alert, open: true});
   });
 
   // user double clicks a guide in the interview tab or clicks the open guide

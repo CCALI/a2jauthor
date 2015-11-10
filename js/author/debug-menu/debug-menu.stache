@@ -1,7 +1,7 @@
 <can-import from="author/debug-menu/debug-menu.less!"/>
 
 <div class="btn-group debugmenu">
-  <button type="button" class="btn btn-default btn-warning btn-variables-panel" disabled="disabled">
+  <button type="button" class="btn btn-default btn-warning btn-variables-panel">
     Variables/Script
   </button>
 

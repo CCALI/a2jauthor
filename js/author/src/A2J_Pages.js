@@ -70,64 +70,57 @@ function pageNameFieldsForTextTab(pagefs,page)
 	}
 }
 
-/**
-* @param {String} destPageName
-* @param {String} [url]
-*/
-function gotoPageView(destPageName, url)
-{  // Navigate to given page (after tiny delay). This version only used for Author.
-   window.setTimeout(function()
-	{
 
-		if (destPageName === CONST.qIDSUCCESS)
-		{	// On success exit, flag interview as Complete.
-			gGuide.varSet(CONST.vnInterviewIncompleteTF,false);
-			dialogAlert("Author note: User's data would upload to server.");
-		}
-		else
-		if (destPageName === CONST.qIDEXIT)
-		{	//Exit/Resume
-			dialogAlert("Author note: User's INCOMPLETE data would upload to server.");
-		}
-		else
-		if (destPageName === CONST.qIDFAIL)
-		{
-			if (makestr(url)===''){
-				url=gStartArgs.exitURL;
-			}
-			dialogAlert('Author note: User would be redirected to another page: <a target=_blank href="'+url+'">'+url+'</a>');
-		}
-		else
-		if (destPageName === CONST.qIDRESUME)
-		{	// 8/17/09 3.0.1 Execute the Resume button.
-			traceLogic("Scripted 'Resume'");
-			A2JViewer.goExitResume();
-		}
-		else
-		if (destPageName === CONST.qIDBACK)
-		{	// 8/17/09 3.0.1 Execute the Back button.
-			traceLogic("Scripted 'Go Back'");
-			A2JViewer.goBack();
-		}
-		else
-		{
-			var page = gGuide.pages[destPageName];
-			if (page === null || typeof page === "undefined")
-			{
-				traceAlert('Page is missing: '+ destPageName);
-				traceLogic('Page is missing: '+ destPageName);
-			}
-			else
-			{
-				gPage=page;
-				$('#authortool').hide();
-				A2JViewer.layoutPage($('.A2JViewer','#page-viewer'),gPage);
-				$('#page-viewer').removeClass('hidestart').show();
-				A2JViewer.refreshVariables();//TODO more efficient updates
-				//$('.A2JViewer').addClass('test',500);
-			}
-		}
-   },1);
+// @param {String} destPageName
+// @param {String} [url]
+// Navigate to given page (after tiny delay). This version only used for Author.
+function gotoPageView(destPageName, url) {
+  window.setTimeout(function() {
+
+    switch (destPageName) {
+      // On success exit, flag interview as Complete.
+      case CONST.qIDSUCCESS:
+        gGuide.varSet(CONST.vnInterviewIncompleteTF, false);
+        dialogAlert('Author note: User\'s data would upload to server.');
+        break;
+
+      // Exit/Resume
+      case CONST.qIDEXIT:
+        dialogAlert('Author note: User\'s INCOMPLETE data would upload to server.');
+        break;
+
+      case CONST.qIDFAIL:
+        if (makestr(url) === '') url = gStartArgs.exitURL;
+        dialogAlert('Author note: User would be redirected to another page: <a target=_blank href="' + url + '">' + url + '</a>');
+        break;
+
+      // 8/17/09 3.0.1 Execute the Resume button.
+      case CONST.qIDRESUME:
+        traceLogic('Scripted \'Resume\'');
+        A2JViewer.goExitResume();
+        break;
+
+      // 8/17/09 3.0.1 Execute the Back button.
+      case CONST.qIDBACK:
+        traceLogic('Scripted \'Go Back\'');
+        A2JViewer.goBack();
+        break;
+
+      default:
+        var page = gGuide.pages[destPageName];
+
+        if (page === null || typeof page === 'undefined') {
+          traceAlert('Page is missing: ' + destPageName);
+          traceLogic('Page is missing: ' + destPageName);
+        } else {
+          gPage = page;
+          $('#authortool').hide();
+          A2JViewer.layoutPage($('.A2JViewer', '#page-viewer'), gPage);
+          $('#page-viewer').removeClass('hidestart').show();
+          A2JViewer.refreshVariables();//TODO more efficient updates
+        }
+    }
+  }, 1);
 }
 
 function pageNameRelFilter(e,pageName)

@@ -2,6 +2,7 @@ import 'author/models/fixtures/';
 import 'author/models/tests/guide-test';
 import 'author/models/tests/template-test';
 import 'author/utils/move-item-array-test';
+import 'author/models/tests/app-state-test';
 import 'author/models/tests/a2j-template-test';
 import 'author/models/tests/a2j-variable-test';
 

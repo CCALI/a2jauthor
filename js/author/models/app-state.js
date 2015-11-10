@@ -12,6 +12,12 @@ import 'can/map/define/';
 export default Map.extend({
 
   define: {
+    /**
+     * @property {String} AppState.prototype.page
+     *
+     * The name of the "tab" the author is seeing, it is bound to can.route.
+     *
+     */
     page: {
       value: ''
     },
@@ -34,7 +40,11 @@ export default Map.extend({
      */
     showDebugPanel: {
       value: false,
-      serialize: false
+      serialize: false,
+      get(val) {
+        let page = this.attr('page');
+        return (page === 'preview') ? val : false;
+      }
     },
 
     /**

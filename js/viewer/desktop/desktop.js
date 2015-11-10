@@ -9,6 +9,10 @@ let DesktopViewerVM = Map.extend({
   define: {
     pageNotFound: {
       value: false
+    },
+
+    showDemoNotice: {
+      value: false
     }
   },
 
@@ -59,6 +63,12 @@ export default Component.extend({
   },
 
   events: {
+    inserted() {
+      let vm = this.viewModel;
+      let location = window.location.toString();
+      vm.attr('showDemoNotice', location.indexOf('.a2jauthor.org') !== -1);
+    },
+
     '{rState} page': function() {
       this.viewModel.checkPageExists();
     }

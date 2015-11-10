@@ -1,3 +1,4 @@
+<can-import from="author/alert/">
 <can-import from="viewer/desktop/navigation/navigation.less!" />
 
 <nav class="navbar navbar-default">
@@ -49,6 +50,13 @@
     </div><!-- /.navbar-collapse -->
   </div>
 </nav>
+
+{{#if showDemoNotice}}
+  <app-alert open="true" alert-type="warning" class="demo-notice">
+    For demonstration and testing purposes only. Not intended for use by the
+    public. This A2J Guided Interview will not generate a form.
+  </app-alert>
+{{/if}}
 
 <div class="horizon">
   <img class="courthouse" src="{{joinBase 'viewer/images/A2J5_CourtHouse.svg'}}" />

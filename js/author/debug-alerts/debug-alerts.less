@@ -1,17 +1,14 @@
 author-debug-alerts {
+  left: 50px;
+  right: 50px;
+  bottom: 50px;
+  overflow: auto;
   display: block;
+  max-height: 250px;
+  z-index: 99999999;
+  position: absolute;
 
-  .debug-alerts-wrapper {
-    left: 50px;
-    right: 50px;
-    bottom: 50px;
-    overflow: auto;
-    max-height: 250px;
-    z-index: 99999999;
-    position: absolute;
-
-    app-alert .alert {
-      margin-bottom: 0;
-    }
+  app-alert .alert {
+    margin-bottom: 0;
   }
 }

@@ -2,6 +2,8 @@
 <can-import from="author/debug-alerts/debug-alerts.less!"/>
 
 <div class="debug-alerts-wrapper">
+  <button type="button" class="btn btn-primary btn-block btn-dismiss">Dismiss All</button>
+
   {{#each alertMessages}}
     <app-alert open="true" alert-type="danger" dismissible="true">{{{.}}}</app-alert>
   {{/each}}

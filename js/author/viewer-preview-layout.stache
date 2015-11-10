@@ -16,7 +16,10 @@
       {preview-page-name}="previewPageName"
       {^interview-page-name}="interviewPageName" />
 
-      <author-debug-alerts {(alert-messages)}="viewerAlertMessages" />
       <author-debug-menu {(app-state)}="." />
+
+      {{#if viewerAlertMessages.length}}
+        <author-debug-alerts {(alert-messages)}="viewerAlertMessages" />
+      {{/if}}
   </div>
 </div>

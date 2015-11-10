@@ -8,7 +8,10 @@
         The page {{rState.page}} does not exist!
       </div>
     {{else}}
-      <a2j-viewer-navigation app-state="{rState}" interview="{interview}" />
+      <a2j-viewer-navigation
+        app-state="{rState}"
+        interview="{interview}"
+        show-demo-notice="{showDemoNotice}" />
 
       <div class="app-content">
         <div id="sidewalk" class="sidewalk"></div>

@@ -1,4 +1,5 @@
 import Map from 'can/map/';
+import List from 'can/list/';
 import Component from 'can/component/';
 import template from './debug-alerts.stache!';
 
@@ -7,7 +8,17 @@ import 'can/map/define/';
 const DebugAlerts = Map.extend({
   define: {
     alertMessages: {
-      value: []
+      Value: List
+    },
+
+    messagesCount: {
+      get() {
+        let messages = this.attr('alertMessages');
+
+        return messages
+          .filter(m => m.attr('open'))
+          .attr('length');
+      }
     }
   }
 });

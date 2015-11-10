@@ -1,0 +1,22 @@
+<can-import from="viewer/preview/"/>
+<can-import from="author/debug-menu/"/>
+<can-import from="author/debug-panel/"/>
+<can-import from="author/debug-alerts/"/>
+<can-import from="styles/author/viewer-layout.less!"/>
+
+<div>
+  {{#if showDebugPanel}}
+    <div class="author-debug-panel">
+      <author-debug-panel />
+    </div>
+  {{/if}}
+
+  <div id="viewer-app" class="{{#if showDebugPanel}}with-debug-panel{{/if}}">
+    <a2j-viewer-preview
+      {preview-page-name}="previewPageName"
+      {^interview-page-name}="interviewPageName" />
+
+      <author-debug-alerts {(alert-messages)}="viewerAlertMessages" />
+      <author-debug-menu {(app-state)}="." />
+  </div>
+</div>

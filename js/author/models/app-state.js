@@ -10,11 +10,12 @@ import 'can/map/define/';
  * This is the global application state.
  */
 export default Map.extend({
-  page: {
-    value: ''
-  },
 
   define: {
+    page: {
+      value: ''
+    },
+
     /**
      * @property {String} AppState.prototype.guideId
      *
@@ -23,6 +24,17 @@ export default Map.extend({
     guideId: {
       serialize: false,
       value: window.gGuideID || ''
+    },
+
+    /**
+     * @property {Boolean} AppState.prototype.showDebugPanel
+     *
+     * Whether to show the debug panel (variables and trace panels) when
+     * the author is previewing the interview.
+     */
+    showDebugPanel: {
+      value: false,
+      serialize: false
     },
 
     /**
@@ -73,5 +85,10 @@ export default Map.extend({
       Value: List,
       serialize: false
     }
+  },
+
+  toggleDebugPanel() {
+    let val = this.attr('showDebugPanel');
+    this.attr('showDebugPanel', !val);
   }
 });

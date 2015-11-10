@@ -1,13 +1,10 @@
 <can-import from="styles/"/>
 <can-import from="author/header/"/>
 <can-import from="author/footer/"/>
-<can-import from="viewer/preview/"/>
 <can-import from="author/preview/"/>
 <can-import from="author/templates/"/>
 <can-import from="author/styles.less!"/>
 <can-import from="author/interviews/"/>
-<can-import from="author/debug-menu/"/>
-<can-import from="author/debug-alerts/"/>
 <can-import from="author/templates/edit/"/>
 <can-import from="author/vertical-navbar/"/>
 <can-import from="author/templates/assembly/"/>
@@ -23,14 +20,7 @@
 </div>
 
 {{#if previewMode}}
-  <div id="viewer-app">
-    <a2j-viewer-preview
-      {preview-page-name}="previewPageName"
-      {^interview-page-name}="interviewPageName" />
-
-      <author-debug-alerts {(alert-messages)}="viewerAlertMessages" />
-      <author-debug-menu {(app-state)}="." />
-  </div>
+  {{> viewer-preview-layout}}
 {{/if}}
 
 <div id="authortool"

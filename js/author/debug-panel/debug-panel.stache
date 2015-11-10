@@ -1,0 +1,26 @@
+<can-import from="author/debug-panel/debug-panel.less!"/>
+
+<div id="viewer-var-form">
+  <div style="position: relative;">
+    <button id="uploadAnswer"></button>
+    <input type="file" id="uploadAnswerFileInput" />
+    <button id="downloadAnswer"></button>
+    <button id="refreshAnswer"></button>
+    <button id="clearAnswer"></button>
+    <label for="viewer-var-filter">Filter:</label>
+    <input type="text" id="viewer-var-filter" size="5" style="display: inline;" />
+  </div>
+
+  <div class="varvalpanel"></div>
+</div>
+
+<div id="viewer-logic-form">
+  <div class="tracepanel">
+    <ol id="tracer" contentEditable="true"></ol>
+  </div>
+
+  <div class="immediatepanel">
+    <span><input type="text" id="tracerimm"/></span>
+    <button id="clearTrace"></button>
+  </div>
+</div>

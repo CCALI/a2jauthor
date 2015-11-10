@@ -2,8 +2,10 @@ import $ from 'jquery';
 import loader from '@loader';
 import AppState from './models/app-state';
 import tabsRouting from 'author/utils/tabs-routing';
+import viewerPreviewTpl from './viewer-preview-layout.stache!';
 import bindCustomEvents from 'author/utils/bind-custom-events';
 
+import 'can/view/';
 import 'can/route/';
 
 let appState = new AppState();
@@ -13,6 +15,7 @@ can.route(':page', {page: 'interviews'});
 can.route(':page/:action', { action: 'view' });
 can.route(':page/:action/:id');
 can.route.ready();
+can.view.preload('viewer-preview-layout', viewerPreviewTpl);
 
 $('body').on('click', 'a[href="#"]', ev => ev.preventDefault());
 

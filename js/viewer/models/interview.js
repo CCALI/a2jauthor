@@ -191,7 +191,7 @@ export default can.Model.extend({
 
         return result;
       }
-    },
+    }
   },
 
   createGuide() {

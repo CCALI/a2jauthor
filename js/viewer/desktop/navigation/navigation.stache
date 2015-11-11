@@ -1,5 +1,5 @@
-<can-import from="author/alert/">
-<can-import from="viewer/desktop/navigation/navigation.less!" />
+<can-import from="author/alert/"/>
+<can-import from="viewer/desktop/navigation/navigation.less!"/>
 
 <nav class="navbar navbar-default">
   <div class="container-fluid">

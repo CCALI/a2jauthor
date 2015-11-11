@@ -1,4 +1,3 @@
-import './jquery.ui.1.9.1.min';
 import './jquery.xml.min';
 
 import './desktop_app.config';

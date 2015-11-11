@@ -1,5 +1,6 @@
-<can-import from="viewer/desktop/steps/" />
-<can-import from="viewer/desktop/navigation/" />
+<can-import from="viewer/desktop/steps/"/>
+<can-import from="viewer/desktop/navigation/"/>
+<can-import from="viewer/desktop/desktop.less!"/>
 
 <div class="app-wrapper">
   <div class="app-container">
@@ -23,6 +24,12 @@
           m-state="{mState}"
           interview="{interview}" />
       </div><!-- app-content -->
+
+      {{#if authorBrandLogo}}
+        <div class="author-brand-logo">
+          <img src="{{normalizePath(authorBrandLogo)}}" alt="Author Brand Logo">
+        </div>
+      {{/if}}
     {{/if}}
   </div><!-- app-container -->
 </div><!-- app-wrapper -->

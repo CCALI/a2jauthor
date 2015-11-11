@@ -10,10 +10,38 @@ import getSkinTone from 'viewer/models/get-skin-tone';
 
 import 'can/map/define/';
 
+/**
+ * @module {function} Interview
+ * @inherits can.Model
+ * @parent api-models
+ *
+ * The **Interview** model represents a sample interview or an interview created
+ * by the logged in user.
+ *
+ *  @codestart
+ *    Interview
+ *      .findOne({ url: 'path/to/interview' })
+ *      .then(function(interview) {});
+ *  @codeend
+ *
+ */
+
+function getInterviewPath(url) {
+  if (_isString(url) && url.length) {
+    let parts = url.split('/');
+
+    // drop the interview filename
+    parts.pop();
+
+    return `${parts.join('/')}/`;
+  }
+}
+
 export default can.Model.extend({
   findOne: function(data, success, error) {
     let dfd = can.Deferred();
     let resumeDfd = can.Deferred();
+    let interviewPath = getInterviewPath(data.url);
 
     let interviewDfd = can.ajax({
       url: data.url
@@ -40,8 +68,12 @@ export default can.Model.extend({
     });
 
     resumeDfd.done(function(interview) {
-      dfd.resolve(interview);
-    }).fail(function() {
+      dfd.resolve(_extend({
+        __interviewPath: interviewPath
+      }, interview));
+    });
+
+    resumeDfd.fail(function() {
       dfd.reject();
     });
 
@@ -143,6 +175,43 @@ export default can.Model.extend({
         }
 
         return result;
+      }
+    },
+
+    /**
+     * @property {String} Guide.prototype.endImage endImage
+     *
+     * Author-defined courthouse replacement image.
+     */
+    endImage: {
+      value: ''
+    },
+
+    /**
+     * @property {String} Guide.prototype.endImage endImage
+     *
+     * Author-defined branding image (bottom-right logo).
+     */
+    logoImage: {
+      value: ''
+    },
+
+    /**
+     * @property {String} Guide.prototype.interviewPath interviewPath
+     *
+     * The path of the interview in the server, when the viewer is running
+     * standalone we get the path from the url used to retrieve the interview,
+     * a `__interviewPath` property is set in `Interview.findOne`, when running
+     * in preview mode (author app), we get the path from a global variable;
+     * this path is used to during the normalization of the path of some custom
+     * images provided by the author (like `logoImage`, or `endImage`).
+     */
+    interviewPath: {
+      serialize: false,
+      get() {
+        return window.gGuidePath
+          ? window.gGuidePath
+          : this.attr('__interviewPath');
       }
     }
   },

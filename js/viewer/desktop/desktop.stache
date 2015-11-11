@@ -13,7 +13,7 @@
         app-state="{rState}"
         interview="{interview}"
         show-demo-notice="{showDemoNotice}"
-        courthouse-image="{{normalizePath(authorCourthouseImage)}}" />
+        {{#if authorCourthouseImage}}courthouse-image="{{normalizePath(authorCourthouseImage)}}"{{/if}} />
 
       <div class="app-content">
         <div id="sidewalk" class="sidewalk"></div>

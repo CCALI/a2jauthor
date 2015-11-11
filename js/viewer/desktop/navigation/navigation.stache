@@ -59,5 +59,9 @@
 {{/if}}
 
 <div class="horizon">
-  <img class="courthouse" src="{{joinBase 'viewer/images/A2J5_CourtHouse.svg'}}" />
+  {{#if courthouseImage}}
+    <img class="courthouse" src="{{courthouseImage}}" />
+  {{else}}
+    <img class="courthouse" src="{{joinBase 'viewer/images/A2J5_CourtHouse.svg'}}" />
+  {{/if}}
 </div>

@@ -68,9 +68,7 @@ export default can.Model.extend({
     });
 
     resumeDfd.done(function(interview) {
-      dfd.resolve(_extend({
-        __interviewPath: interviewPath
-      }, interview));
+      dfd.resolve(_extend({interviewPath}, interview));
     });
 
     resumeDfd.fail(function() {
@@ -146,6 +144,23 @@ export default can.Model.extend({
       }
     },
 
+    /**
+     * @property {String} Guide.prototype.interviewPath interviewPath
+     *
+     * The path of the interview in the server; when the viewer is running
+     * standalone we get the path from the url used to retrieve the interview,
+     * in this case the property is set in `Interview.findOne`. When running
+     * in preview mode (author app), we get the path from a global variable;
+     * this path is used to during the normalization of the path of some custom
+     * images provided by the author (like `logoImage`, or `endImage`).
+     */
+    interviewPath: {
+      serialize: false,
+      get(path) {
+        return window.gGuidePath ? window.gGuidePath : path;
+      }
+    },
+
     userGender: {
       serialize: false,
       get() {
@@ -177,43 +192,6 @@ export default can.Model.extend({
         return result;
       }
     },
-
-    /**
-     * @property {String} Guide.prototype.endImage endImage
-     *
-     * Author-defined courthouse replacement image.
-     */
-    endImage: {
-      value: ''
-    },
-
-    /**
-     * @property {String} Guide.prototype.endImage endImage
-     *
-     * Author-defined branding image (bottom-right logo).
-     */
-    logoImage: {
-      value: ''
-    },
-
-    /**
-     * @property {String} Guide.prototype.interviewPath interviewPath
-     *
-     * The path of the interview in the server, when the viewer is running
-     * standalone we get the path from the url used to retrieve the interview,
-     * a `__interviewPath` property is set in `Interview.findOne`, when running
-     * in preview mode (author app), we get the path from a global variable;
-     * this path is used to during the normalization of the path of some custom
-     * images provided by the author (like `logoImage`, or `endImage`).
-     */
-    interviewPath: {
-      serialize: false,
-      get() {
-        return window.gGuidePath
-          ? window.gGuidePath
-          : this.attr('__interviewPath');
-      }
-    }
   },
 
   createGuide() {

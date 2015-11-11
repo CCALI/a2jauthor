@@ -19,6 +19,12 @@ let DesktopViewerVM = Map.extend({
       get() {
         return this.attr('interview.logoImage');
       }
+    },
+
+    authorCourthouseImage: {
+      get() {
+        return this.attr('interview.endImage');
+      }
     }
   },
 

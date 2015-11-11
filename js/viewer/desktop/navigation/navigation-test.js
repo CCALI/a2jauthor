@@ -175,6 +175,22 @@ describe('<a2j-viewer-navigation>', function() {
       interview.attr('sendfeedback', true);
       assert.isTrue($('.send-feedback').is(':visible'), 'button should be rendered');
     });
+
+    it('shows custom courthouse image if provided', function() {
+      let vm = $('a2j-viewer-navigation').viewModel();
+      vm.attr('courthouseImage', 'my-custom-courthouse.jpg');
+
+      let courthouseSrc = $('img.courthouse').attr('src');
+      assert.equal(courthouseSrc, 'my-custom-courthouse.jpg');
+    });
+
+    it('uses default courthouse image when custom not provided', function() {
+      let vm = $('a2j-viewer-navigation').viewModel();
+      vm.attr('courthouseImage', null);
+
+      let courthouseSrc = $('img.courthouse').attr('src');
+      assert.isTrue(courthouseSrc.indexOf('A2J5_CourtHouse.svg') !== -1);
+    });
   });
 
 });

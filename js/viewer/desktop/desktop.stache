@@ -12,7 +12,8 @@
       <a2j-viewer-navigation
         app-state="{rState}"
         interview="{interview}"
-        show-demo-notice="{showDemoNotice}" />
+        show-demo-notice="{showDemoNotice}"
+        courthouse-image="{{normalizePath(authorCourthouseImage)}}" />
 
       <div class="app-content">
         <div id="sidewalk" class="sidewalk"></div>

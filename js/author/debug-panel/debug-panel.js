@@ -13,32 +13,6 @@ export default Component.extend({
   events: {
     inserted() {
       window.A2JViewer.refreshVariables();
-
-      // set up jquery-ui buttons.
-      $('#downloadAnswer').button({
-        label: 'Save',
-        icons: {primary:'ui-icon-disk'}
-      });
-
-      $('#refreshAnswer').button({
-        label: 'Refresh',
-        icons: {primary:'ui-icon-arrowrefresh-1-w'}
-      });
-
-      $('#clearAnswer').button({
-        label: 'Clear',
-        icons: {primary:'ui-icon-trash'}
-      });
-
-      $('#clearTrace').button({
-        label: 'Clear',
-        icons: {primary:'ui-icon-trash'}
-      });
-
-      $('#uploadAnswer').button({
-        label: 'Open',
-        icons: {primary:'ui-icon-folder-open'}
-      });
     },
 
     // Download answer file directly from client to desktop.

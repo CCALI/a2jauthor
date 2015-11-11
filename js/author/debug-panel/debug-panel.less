@@ -1,3 +1,8 @@
+@import '../styles';
+@import '../../styles/bootstrap-overrides/forms.less';
+
+@panel-width: 400px;
+
 author-debug-panel {
   display: block;
 
@@ -5,8 +10,10 @@ author-debug-panel {
     top: 0;
     left: 0;
     opacity: 0;
-    height: 30px;
+    height: @input-height-small + @grid-gutter-width/2;
     position: absolute;
+    cursor: pointer;
+    width: 85px;
   }
 
   #viewer-logic-form {
@@ -14,93 +21,68 @@ author-debug-panel {
     top: 50%;
     left: 0;
     bottom: 0;
-    width: 400px;
-    border: 1px solid #bbb;
+    width: @panel-width;
+    padding: @grid-gutter-width/4;
   }
 
   #viewer-var-form {
     top: 0;
     left: 0;
     bottom: 50%;
-    width: 400px;
+    width: @panel-width;
     position: fixed;
-    border: 1px solid #bbb;
+    padding: @grid-gutter-width/4;
+    border-bottom: 1px solid @gray-lighter;
+
+    #viewer-var-filter {
+      display: inline;
+      width: 140px;
+    }
   }
 
   .tracepanel {
     top: 0;
     left: 0;
     right: 0;
-    bottom: 32px;
+    padding: @grid-gutter-width/4;
+    bottom: @input-height-small + @grid-gutter-width/2;
     overflow-y: scroll;
     position: absolute;
   }
 
   .immediatepanel {
-    left: 0;
-    right: 0;
-    margin: 4px;
-    padding: 4px;
-    height: 24px;
-    bottom: 10px;
+    bottom: @grid-gutter-width/4;
+    width: @panel-width;
     position: absolute;
 
     #tracerimm {
-      width: 50%;
-    }
-
-    #clearTrace {
-      float: right;
+      width: 70%;
     }
   }
 
   .varvalpanel {
     left: 0;
     right: 0;
-    top: 3em;
+    top: @input-height-small + @grid-gutter-width/2;
     bottom: 0;
-    font-size: 9px;
     position: absolute;
     overflow-y: scroll;
-    background-color: #fdd;
+    padding: @grid-gutter-width/4;
+    background-color: lighten(@state-info-bg,2%);
 
     table {
       width: 100%;
-      border-style: solid;
-      border-width: thin;
-      border-color: #fff;
-      padding: .2em;
+      font-size: @font-size-small;
 
       tr {
         cursor: pointer;
-
-        &:nth-child(even) {
-          background-color: rgba(240, 240, 240, 0.5);
-        }
 
         &:nth-child(odd) {
           background-color:rgba(255, 255, 255, 0.5);
         }
       }
 
-      th {
-        border-style: solid;
-        border-width: thick;
-        border-color: #F0F7FA;
-        padding: .8em;
-        font-size: 1.1em;
-        background-color: #F0F7FA;
-      }
     }
   }
 
-  .ui-button-text {
-    font-size: 12px;
-    font-weight: normal;
-  }
-
-  label {
-    font-size: 12px;
-    font-weight: normal;
-  }
 }

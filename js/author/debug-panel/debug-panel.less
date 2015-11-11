@@ -1,3 +1,9 @@
+@import '../styles';
+@import '../../styles/bootstrap-overrides/forms.less';
+
+@panel-width: 400px;
+
+
 author-debug-panel {
   display: block;
 
@@ -5,8 +11,10 @@ author-debug-panel {
     top: 0;
     left: 0;
     opacity: 0;
-    height: 30px;
+    height: @input-height-small + @grid-gutter-width/2;
     position: absolute;
+    cursor: pointer;
+    width: 85px;
   }
 
   #viewer-logic-form {
@@ -14,93 +22,160 @@ author-debug-panel {
     top: 50%;
     left: 0;
     bottom: 0;
-    width: 400px;
-    border: 1px solid #bbb;
+    width: @panel-width;
+    padding: @grid-gutter-width/4;
   }
 
   #viewer-var-form {
     top: 0;
     left: 0;
     bottom: 50%;
-    width: 400px;
+    width: @panel-width;
     position: fixed;
-    border: 1px solid #bbb;
+    padding: @grid-gutter-width/4;
+    border-bottom: 1px solid @gray-lighter;
+
+    #viewer-var-filter {
+      display: inline;
+      width: 140px;
+    }
   }
 
   .tracepanel {
     top: 0;
     left: 0;
     right: 0;
-    bottom: 32px;
+    padding: @grid-gutter-width/4;
+    bottom: @input-height-small + @grid-gutter-width/2;
     overflow-y: scroll;
     position: absolute;
+
+
+    #tracer li {
+    	font-size: 8pt;
+    	padding:1px;
+    	margin-left: -2em;
+    	margin-bottom: 5px;
+    }
+
   }
 
   .immediatepanel {
-    left: 0;
-    right: 0;
-    margin: 4px;
-    padding: 4px;
-    height: 24px;
-    bottom: 10px;
+    bottom: @grid-gutter-width/4;
+    width: @panel-width;
     position: absolute;
 
     #tracerimm {
-      width: 50%;
-    }
-
-    #clearTrace {
-      float: right;
+      width: 70%;
     }
   }
 
   .varvalpanel {
     left: 0;
     right: 0;
-    top: 3em;
+    top: @input-height-small + @grid-gutter-width/2;
     bottom: 0;
-    font-size: 9px;
     position: absolute;
     overflow-y: scroll;
-    background-color: #fdd;
+    padding: @grid-gutter-width/4;
+    background-color: lighten(@state-info-bg,2%);
 
     table {
       width: 100%;
-      border-style: solid;
-      border-width: thin;
-      border-color: #fff;
-      padding: .2em;
+      font-size: @font-size-small;
 
       tr {
         cursor: pointer;
-
-        &:nth-child(even) {
-          background-color: rgba(240, 240, 240, 0.5);
-        }
 
         &:nth-child(odd) {
           background-color:rgba(255, 255, 255, 0.5);
         }
       }
 
-      th {
-        border-style: solid;
-        border-width: thick;
-        border-color: #F0F7FA;
-        padding: .8em;
-        font-size: 1.1em;
-        background-color: #F0F7FA;
-      }
     }
   }
 
-  .ui-button-text {
-    font-size: 12px;
-    font-weight: normal;
-  }
+}
 
-  label {
-    font-size: 12px;
-    font-weight: normal;
+span.code, span.var, span.varidx, span.val, span.page, span.valT,span.valF,span.info,
+span.tag,span.field,span.field.required,span.learnmore,span.logic {
+	padding: 2px;
+	margin: 2px;
+}
+span.ui { /* color button pressed by client */
+	border: thin solid #fea;
+	background-color: #ccf;
+}
+span.info { /* color comment */
+	border: thin solid #fea;
+	background-color: #ddd;
+}
+span.tag { /* general tag */
+	border: thin solid #fea;
+	color: #000;
+	background-color: #fff;
+}
+span.tag.field {
+	background-color: #efe;
+}
+span.tag.field.required {
+	border: solid #FFFF00;
+	background-color: #ddd;
+}
+span.tag.logic {
+	border: thin solid #fea;
+	background-color: #CC9966;
+}
+span.tag.repeat {
+	.icon-font;
+	position: relative;
+	border: none;
+
+	&:before {
+  	content: '\e847';
+  	position: absolute;
+  	top: 0;
+  	left: 0;
   }
 }
+span.tag.learnmore {
+	border: thin solid #fea;
+	background-color: #FFCC66;
+}
+span.taglist { /* list of tags will be right side */
+	float:right;
+}
+span.code {
+	border: thin solid #CC9966;
+	background-color: #ddd;
+}
+span.var {
+	background-color: #F5DEB3;
+}
+span.varidx {
+	background-color: #fcc
+}
+span.valT{ /* if value is True */
+	border: thin solid #CC9966;
+	background-color: #90EE90;
+}
+span.valF{ /* if value is False */
+	border: thin solid #CC9966;
+	background-color: #FFC0CB;
+}
+span.valBlank{/* if value is blank or null */
+	border: thin solid #CC9966;
+	background-color: #DCDCDC;
+}
+span.val{/* if value is anything else */
+	border: thin solid #CC9966;
+	background-color: #FFD700;
+}
+span.page {
+	background-color: #ddf;
+}
+span.err {
+	text-decoration: none;
+	border-bottom: dashed  1px #f00;
+	padding-bottom: 0px;
+ }

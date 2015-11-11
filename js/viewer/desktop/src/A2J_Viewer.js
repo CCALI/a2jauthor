@@ -93,7 +93,7 @@ var A2JViewer = {
     }
 
     $t.html('').append(
-      '<table class="A2JVars">' + th + '<tbody>' + tb + '</tbody>' + '</table>'
+      '<table class="A2JVars table-condensed">' + th + '<tbody>' + tb + '</tbody>' + '</table>'
     );
 
     A2JViewer.filterVariables();

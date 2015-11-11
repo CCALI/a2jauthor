@@ -1,26 +1,25 @@
 <can-import from="author/debug-panel/debug-panel.less!"/>
 
-<div id="viewer-var-form">
-  <div style="position: relative;">
-    <button id="uploadAnswer"></button>
-    <input type="file" id="uploadAnswerFileInput" />
-    <button id="downloadAnswer"></button>
-    <button id="refreshAnswer"></button>
-    <button id="clearAnswer"></button>
-    <label for="viewer-var-filter">Filter:</label>
-    <input type="text" id="viewer-var-filter" size="5" style="display: inline;" />
-  </div>
+<div id="viewer-var-form" class="bootstrap-styles">
+
+  <button id="uploadAnswer" class="btn btn-default btn-sm"><span class="glyphicon-folder-open"></span> Open</button>
+  <input type="file" id="uploadAnswerFileInput" />
+  <button id="downloadAnswer" class="btn btn-default btn-sm"><span class="glyphicon-floppy"></span> Save</button>
+  <button id="refreshAnswer" class="btn btn-default btn-sm"><span class="glyphicon-cw"></span></button>
+  <button id="clearAnswer" class="btn btn-default btn-sm"><span class="glyphicon-trash"></span></button>
+  <input type="text" id="viewer-var-filter" class="form-control input-sm" placeholder="Filter" />
 
   <div class="varvalpanel"></div>
 </div>
 
-<div id="viewer-logic-form">
+<div id="viewer-logic-form" class="bootstrap-styles">
   <div class="tracepanel">
     <ol id="tracer" contentEditable="true"></ol>
   </div>
 
-  <div class="immediatepanel">
-    <span><input type="text" id="tracerimm"/></span>
-    <button id="clearTrace"></button>
+  <div class="form-inline immediatepanel">
+      <input type="text" id="tracerimm" class="form-control input-sm" placeholder="Filter" />
+      <button id="clearTrace" class="btn btn-default btn-sm"><span class="glyphicon-trash"></span> Clear</button>
   </div>
+
 </div>

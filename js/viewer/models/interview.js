@@ -37,7 +37,7 @@ function getInterviewPath(url) {
   }
 }
 
-export default can.Model.extend({
+const Interview = Model.extend({
   findOne: function(data, success, error) {
     let dfd = can.Deferred();
     let resumeDfd = can.Deferred();
@@ -166,7 +166,7 @@ export default can.Model.extend({
       get() {
         let result;
         let answers = this.attr('answers');
-        let gender = answers.attr('user gender');
+        let gender = answers.attr(userGenderVarName);
 
         if (gender) {
           let values = gender.attr('values').attr() || [];
@@ -213,3 +213,6 @@ export default can.Model.extend({
     });
   }
 });
+
+export default Interview;
+export const userGenderVarName = 'user gender';

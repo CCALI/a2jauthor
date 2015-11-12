@@ -15,4 +15,12 @@ describe('Page Model', function() {
     assert.equal(pages.find('1-Introduction'), page, 'page found by name');
   });
 
+  it('hasUserGenderField - whether page has an "user gender" field', function() {
+    let page = new Page({fields: [{name: 'Foo Bar'}]});
+    assert.isFalse(page.attr('hasUserGenderField'));
+
+    page = new Page({fields: [{name: 'User Gender'}]});
+    assert.isTrue(page.attr('hasUserGenderField'));
+  });
+
 });

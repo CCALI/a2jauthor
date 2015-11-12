@@ -6,10 +6,11 @@
     </label>
 
     <input
+      type="text"
       id="{{label}}"
       class="form-control"
       ($change)="validateField"
-      {($value)}="field._answer.values" />
+      {($value)}="field._answer.values"/>
   </div>
 
   {{#if showInvalidPrompt}}

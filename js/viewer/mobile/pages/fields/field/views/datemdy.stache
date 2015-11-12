@@ -1,18 +1,19 @@
 <div>
-  <div class="form-group {{#if hasError}}has-error{{/if}}">
+  <div class="form-group {{#if field.hasError}}has-error{{/if}}">
     <label class="control-label" for="{{label}}">{{{eval label}}}</label>
-    <input type="date"
+    <input
+      type="date"
       id="{{label}}"
-      ($change)="update"
       class="form-control"
-      ($value)="field._answer.values"
+      ($change)="validateField"
+      {($value)}="field._answer.values"
       min="{{dateformat min 'YYYY-MM-DD'}}"
       max="{{dateformat max 'YYYY-MM-DD'}}" />
   </div>
 
-  {{#prompt}}
-  <div class="alert alert-danger" role="alert">
-    {{{eval field.invalidPrompt}}}
-  </div>
-  {{/prompt}}
+  {{#if showInvalidPrompt}}
+    <div class="alert alert-danger" role="alert">
+      {{{eval field.invalidPrompt}}}
+    </div>
+  {{/if}}
 <div>

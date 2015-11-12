@@ -1,11 +1,11 @@
-<div class="{{#if hasError}}has-error{{/if}}">
+<div class="{{#if field.hasError}}has-error{{/if}}">
   <div class="checkbox">
     <input
       id="{{label}}"
       type="checkbox"
       name="{{name}}"
-      ($change)="update"
-      ($value)="field._answer.values"/>
+      ($change)="validateField"
+      {($value)}="field._answer.values"/>
     <label for="{{label}}">{{{eval label}}}</label>
   </div>
 </div>

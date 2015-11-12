@@ -5,8 +5,24 @@ import Component from 'can/component/';
 import template from './field.stache!';
 
 let FieldVM = Map.extend({
-  update(ctx, el, ev) {
-    this.attr('field._answer.values', el.val());
+  define: {
+    showInvalidPrompt: {
+      get() {
+        let field = this.attr('field');
+        let hasError = field.attr('hasError');
+        let invalidPrompt = field.attr('invalidPrompt');
+
+        return hasError && invalidPrompt;
+      }
+    }
+  },
+
+  validateField(ctx, el) {
+    let field = this.attr('field');
+    let answer = field.attr('_answer');
+
+    answer.attr('values', el.val());
+    field.attr('hasError', !!answer.errors());
   }
 });
 
@@ -27,12 +43,6 @@ export default Component.extend({
         eval: function(str) {
           str = typeof str === 'function' ? str() : str;
           return self.attr('logic').eval(str);
-        },
-
-        prompt: function(options) {
-          if (self.attr('hasError') && this.attr('field.invalidPrompt')) {
-            return options.fn();
-          }
         },
 
         selectnum: function(options) {
@@ -61,12 +71,6 @@ export default Component.extend({
           return this.attr('lang.' + key);
         }
       });
-    }
-  },
-
-  events: {
-    '{field._answer} change': function(ans, ev) {
-      this.scope.attr('hasError', !!ans.errors());
     }
   }
 });

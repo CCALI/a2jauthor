@@ -21,6 +21,10 @@ export default Component.extend({
       appState.toggleDebugPanel();
     },
 
+    '.btn-fill-sample click': function() {
+      $('#author-app').trigger('author:fill-page-sample');
+    },
+
     '.btn-resume-edit click': function() {
       let vm = this.viewModel;
       let appState = vm.attr('appState');

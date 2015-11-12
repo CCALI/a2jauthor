@@ -1,6 +1,7 @@
 <div>
   <label for="{{label}}">{{{eval label}}}</label>
-  <select id="{{label}}" ($value)="field._answer.values" ($change)="update">
+
+  <select id="{{label}}" {($value)}="field._answer.values" ($change)="validateField">
     {{{options}}}
   </select>
 </div>

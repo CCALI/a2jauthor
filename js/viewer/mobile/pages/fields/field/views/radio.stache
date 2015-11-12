@@ -1,10 +1,11 @@
 <div class="a2j-radio-button-group">
-  <input type="radio"
+  <input
+    type="radio"
     id="{{label}}"
     name="{{name}}"
-    ($value)="value"
-    ($change)="update"
-    class="a2j-radio-button" />
+    {($value)}="value"
+    class="a2j-radio-button"
+    ($change)="validateField"/>
 
   <label class="a2j-radio-button-label" for="{{label}}">{{{eval label}}}</label>
 </div>

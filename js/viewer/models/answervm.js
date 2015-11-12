@@ -37,6 +37,7 @@ export default Map.extend({
         case 'numberzip':
           return validations.required() || validations.maxChars();
           break;
+        case 'number':
         case 'numberpick':
         case 'numberdollar':
           return validations.required() || validations.min() || validations.max();

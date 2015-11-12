@@ -50,6 +50,19 @@ let ViewerStepsVM = Map.extend({
 
         return globalSkinTone || interviewSkinTone;
       }
+    },
+
+    // we should not show the client avatar if the current page has the user
+    // gender field, this prevents the avatar to be rendered right when user
+    // selects their gender, which causes a weird jump of the avatar bubble.
+    showClientAvatar: {
+      get() {
+        let interview = this.attr('interview');
+        let currentPage = this.attr('currentPage');
+        let hasUserGenderField = currentPage.attr('hasUserGenderField');
+
+        return interview.attr('userGender') && !hasUserGenderField;
+      }
     }
   }
 });

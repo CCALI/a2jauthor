@@ -6,6 +6,8 @@ import _find from 'lodash/collection/find';
 
 import 'can/map/define/';
 
+const userGenderVarName = 'user gender';
+
 let Page = Map.extend({
   define: {
     step: {
@@ -15,13 +17,27 @@ let Page = Map.extend({
     },
 
     fields: {
-      set: function(list) {
+      set(list) {
         list.forEach(f => f.page = this);
         let fields = new Field.List(list);
         return fields;
       },
 
       Type: Field.List
+    },
+
+    // whether this page has an 'user gender' field.
+    hasUserGenderField: {
+      serialize: false,
+
+      get() {
+        let fields = this.attr('fields');
+
+        return !!_find(fields, function(field) {
+          let fieldName = field.attr('name').toLowerCase();
+          return fieldName === userGenderVarName;
+        });
+      }
     }
   }
 });

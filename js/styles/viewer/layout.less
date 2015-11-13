@@ -15,9 +15,6 @@ html, body, #viewer-app, #author-app {
   width: 100%;
   height: 100%;
 }
-#viewer-app {
-  background: @lawn-color;
-}
 .app-header, a2j-viewer-navigation {
   display:table-row;
   height: @header-height;
@@ -40,4 +37,9 @@ html, body, #viewer-app, #author-app {
 }
 .client-wrapper {
   padding-left: @grid-gutter-width;
+}
+@media only screen and (min-width: @screen-sm) {
+  #viewer-app {
+    background: @lawn-color;
+  }
 }

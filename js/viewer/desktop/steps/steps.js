@@ -86,7 +86,7 @@ export default Component.extend({
 
       resizeStepsAndBubbles();
       this.setStepsLeftClass();
-      this.element.find('object').on('load', resizeBubbles);
+      this.element.find('object').on('load', resizeStepsAndBubbles);
     },
 
     '{viewModel} nextSteps': function() {

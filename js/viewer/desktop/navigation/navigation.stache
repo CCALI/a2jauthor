@@ -37,9 +37,9 @@
       {{/if}}
 
       {{#if canSaveAndExit}}
-       <!-- <button class="btn btn-default navbar-btn" ($click)="saveAndExit">
+        <button class="btn btn-default navbar-btn" ($click)="saveAndExit">
           <span class="glyphicon-floppy"></span> Save &amp; Exit
-        </button> -->
+        </button>
       {{/if}}
 
       {{#if canResumeInterview}}

@@ -93,6 +93,12 @@ export default Component.extend({
       this.setStepsLeftClass();
     },
 
+    '{viewModel} currentStep': function () {
+      setTimeout(() => {
+        resizeSteps(this.viewModel.attr('interview.steps.length'));
+      }, 0);
+    },
+
     setStepsLeftClass() {
       let $body = $('body');
       let nextSteps = this.viewModel.attr('nextSteps');

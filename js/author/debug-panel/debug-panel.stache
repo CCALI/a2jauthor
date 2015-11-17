@@ -1,15 +1,46 @@
 <can-import from="author/debug-panel/debug-panel.less!"/>
 
 <div id="viewer-var-form" class="bootstrap-styles">
-
   <button id="uploadAnswer" class="btn btn-default btn-sm"><span class="glyphicon-folder-open"></span> Open</button>
   <input type="file" id="uploadAnswerFileInput" />
-  <button id="downloadAnswer" class="btn btn-default btn-sm"><span class="glyphicon-floppy"></span> Save</button>
-  <button id="refreshAnswer" class="btn btn-default btn-sm"><span class="glyphicon-cw"></span></button>
-  <button id="clearAnswer" class="btn btn-default btn-sm"><span class="glyphicon-trash"></span></button>
-  <input type="text" id="viewer-var-filter" class="form-control input-sm" placeholder="Filter" />
 
-  <div class="varvalpanel"></div>
+  <button id="downloadAnswer" class="btn btn-default btn-sm">
+    <span class="glyphicon-floppy"></span> Save
+  </button>
+
+  <button id="clearAnswer" class="btn btn-default btn-sm" ($click)="clearAnswers">
+    <span class="glyphicon-trash"></span> Clear
+  </button>
+
+  <input
+    type="text"
+    placeholder="Filter"
+    id="viewer-var-filter"
+    class="form-control input-sm"/>
+
+  <div class="varvalpanel">
+    {{#if variables.length}}
+      <table class="A2JVars table-condensed">
+        <thead>
+          <tr valign="top">
+            <th>Name</th>
+            <th>Loop</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {{#each variables}}
+            <tr valign="top">
+              <td>{{name}}</td>
+              <td>{{repeating}}</td>
+              <td>{{value}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{/if}}
+  </div>
 </div>
 
 <div id="viewer-logic-form" class="bootstrap-styles">
@@ -18,8 +49,7 @@
   </div>
 
   <div class="form-inline immediatepanel">
-      <input type="text" id="tracerimm" class="form-control input-sm" placeholder="Filter" />
-      <button id="clearTrace" class="btn btn-default btn-sm"><span class="glyphicon-trash"></span> Clear</button>
+    <input type="text" id="tracerimm" class="form-control input-sm" placeholder="Filter" />
+    <button id="clearTrace" class="btn btn-default btn-sm"><span class="glyphicon-trash"></span> Clear</button>
   </div>
-
 </div>

@@ -9,54 +9,45 @@
 */
 
 
-TGuide.prototype.HotDocsAnswerSetXML=function()
-{	// 2/28/05 Bug in HotDocs requires empty variable to NOT be included.
+// 2/28/05 Bug in HotDocs requires empty variable to NOT be included.
+TGuide.prototype.HotDocsAnswerSetXML = function() {
+  this.updateVarsForAnswerFile();
 
-	//debug.printFunction("HotDocsAnswerSetXML");
+  // Build the Answer XML file.
+  // Start with the DTD header.
+  // 8/15/11 UTF-8 answer file format
+  var xmlResult = CONST.HotDocsANXHeader_UTF8_str;
 
-	this.updateVarsForAnswerFile();
+  xmlResult += '<AnswerSet title="">';
 
-	// Build the Answer XML file.
-	// Start with the DTD header.
+  var vi;
+  var vars = this.vars;
 
-	// 8/15/11 UTF-8 answer file format
-	var xml_str=CONST.HotDocsANXHeader_UTF8_str;
+  for (vi in vars) {
+    if (1) {
+      var v = vars[vi];
+      xmlResult += this.HotDocsAnswerSetVariable(v);//+"\n";
+    }
+  }
 
-	xml_str+="<AnswerSet title=\"\">";
-
-	var vars=this.vars;
-	var vi;
-	for (vi in vars)
-	{
-		if (1)
-		{
-			/** @type {TVariable} */
-			var v=vars[vi];
-			xml_str+=this.HotDocsAnswerSetVariable(v);//+"\n";
-		}
-	}
-	xml_str+="</AnswerSet>";
-	//trace(xml_str);
-	return xml_str;
+  xmlResult += '</AnswerSet>';
+  return xmlResult;
 };
 
-
 /** @param {TVariable} variable  */
-TGuide.prototype.HotDocsAnswerSetVariable = function(variable) //CVariable
-{	// HotDocs requires a variable type.
-	// This information is derived from the field's type.
-	//var fieldType;//String
-	/** @type {TField} */
-	var field;
+TGuide.prototype.HotDocsAnswerSetVariable = function(variable) {
+  // HotDocs requires a variable type.
+  // This information is derived from the field's type.
+  var field;
 
 	// HotDocs doesn't like missing value fields.
 	// 8/05 HotDocs local gets confused with variables that have no values.
 	// 8/05 not sure if we include repeat values which may have blank values, so I include it.
 	// 01/28/2008 1.8.6 For blank/null variables, use the unans="true" attribute.
 	// this is what HotDocs wants and also forces XML nodes to remain present.
+  var varType;
+  field = this.variableToField(variable.name);
 
-	var varType;
-	field=this.variableToField(variable.name);
 	if (field===null)
 	{
 		// We have a variable that has no field. Possible if we downloaded an answerset and the Interview has changed.
@@ -155,18 +146,18 @@ TGuide.prototype.HotDocsAnswerSetVariable = function(variable) //CVariable
 	return xml;
 };
 
-TGuide.prototype.varCreateInternals=function()
-{	// Create the A2J internal answer set variables.
-	this.varCreateOverride(CONST.vnVersion, CONST.vtText,false,'A2J Author Version');
-	this.varCreateOverride(CONST.vnInterviewID, CONST.vtText,false,'Guide ID');
-	this.varCreateOverride(CONST.vnBookmark, CONST.vtText,false,'Current Page');
-	this.varCreateOverride(CONST.vnHistory, CONST.vtText,false,'Progress History List (XML)');
-	this.varCreateOverride(CONST.vnNavigationTF, CONST.vtTF,false,'Allow navigation?');
-	this.varCreateOverride(CONST.vnInterviewIncompleteTF, CONST.vtTF,false,'Reached Successful Exit?');
-	for (var s=0;s<CONST.MAXSTEPS;s++)
-	{
-		this.varCreateOverride(CONST.vnStepPrefix+s, CONST.vtText,false,'');
-	}
+// Create the A2J internal answer set variables.
+TGuide.prototype.varCreateInternals = function() {
+  this.varCreateOverride(CONST.vnVersion, CONST.vtText, false, 'A2J Author Version');
+  this.varCreateOverride(CONST.vnInterviewID, CONST.vtText, false, 'Guide ID');
+  this.varCreateOverride(CONST.vnBookmark, CONST.vtText, false, 'Current Page');
+  this.varCreateOverride(CONST.vnHistory, CONST.vtText, false, 'Progress History List (XML)');
+  this.varCreateOverride(CONST.vnNavigationTF, CONST.vtTF, false, 'Allow navigation?');
+  this.varCreateOverride(CONST.vnInterviewIncompleteTF, CONST.vtTF, false, 'Reached Successful Exit?');
+
+  for (var s = 0; s < CONST.MAXSTEPS; s++) {
+    this.varCreateOverride(CONST.vnStepPrefix + s, CONST.vtText, false, '');
+  }
 };
 
 TGuide.prototype.updateVarsForAnswerFile=function()
@@ -186,100 +177,109 @@ TGuide.prototype.makeHash=function()//InterviewHash
 	return str.simpleHash();
 };
 
-TGuide.prototype.HotDocsAnswerSetFromXML=function(AnswerSetXML)
-{	// 11/13 Parse HotDocs answer file XML string into guide's variables.
-	// Add to existing variables. Do NOT override variable types.
+// 11/13 Parse HotDocs answer file XML string into guide's variables.
+// Add to existing variables. Do NOT override variable types.
+TGuide.prototype.HotDocsAnswerSetFromXML = function(AnswerSetXML) {
 
-	var mapANX2Var={};
-	mapANX2Var["Unknown"]= CONST.vtUnknown;
-	mapANX2Var["TextValue"]=CONST.vtText;
-	mapANX2Var["TFValue"]=CONST.vtTF;
-	mapANX2Var["MCValue"]=CONST.vtMC;
-	mapANX2Var["NumValue"]=CONST.vtNumber;
-	mapANX2Var["DateValue"]=CONST.vtDate;
-	mapANX2Var["OtherValue"]=CONST.vtOther;
-	mapANX2Var["RptValue"]=CONST.vtUnknown;
+  var mapANX2Var = {
+    Unknown: CONST.vtUnknown,
+    TextValue: CONST.vtText,
+    TFValue: CONST.vtTF,
+    MCValue: CONST.vtMC,
+    NumValue: CONST.vtNumber,
+    DateValue: CONST.vtDate,
+    OtherValue: CONST.vtOther,
+    RptValue: CONST.vtUnknown
+  };
 
-	var guide=this;
-	$(AnswerSetXML).find('AnswerSet > Answer').each(function()
-	{
-		var varName = makestr($(this).attr("name"));
-		if (varName.indexOf('#')>=0) {
-			// 12/03/2013 Do not allow # in variable names. We discard them.
-			//trace("Discarding invalidly named variable '"+varName+"'");
-			return;
-		}
-		//var varName_i=varName.toLowerCase();
-		/** @type {TVariable} */
-		var v=guide.varExists(varName);//guide.vars[varName_i];
-		var vNew=false;
-		var varANXType=$(this).children().get(0).tagName;
-		var varType = mapANX2Var[varANXType];
-		if (v === null)
-		{	// Variables not defined in the interview should be added in case we're passing variables between interviews.
-			v=guide.varCreate(varName,varType,false, '');
-			//v=new TVariable();
-			//v.name=varName;
-			//guide.vars[varName_i]=v;
-			vNew=true;
-		}
+  var guide = this;
 
-		switch (varANXType) {
-			case 'TextValue':
-				guide.varSet(varName,$(this).find('TextValue').html());
-				break;
-			case 'NumValue':
-				guide.varSet(varName,$(this).find('NumValue').html());
-				break;
-			case 'TFValue':
-				guide.varSet(varName,$(this).find('TFValue').html());
-				break;
-			case 'DateValue':
-				guide.varSet(varName,dmyTomdy($(this).find('DateValue').html()));
-				break;
-			case 'MCValue':
-				guide.varSet(varName,$(this).find('MCValue > SelValue').html());
-				break;
-			case 'RptValue':
-				v.repeating=true;
-				$('RptValue',this).children().each(function(i){
-					varANXType=$(this).get(0).tagName;
-					varType = mapANX2Var[varANXType];
-					switch (varANXType) {
-						case 'TextValue':
-						case 'NumValue':
-						case 'TFValue':
-						case 'DateValue':
-							guide.varSet(varName,dmyTomdy($(this).html()),i+1);
-							break;
-						case 'MCValue':
-							guide.varSet(varName,$(this).find('SelValue').html());
-							break;
-					}
-				});
-				break;
-		}
-		if (v.type === CONST.vtUnknown) {
-			v.type = varType;
-			if (v.type===CONST.vtUnknown)
-			{
-				varName=varName.split(" ");
-				varName=varName[varName.length-1];
-				if (varName==='MC') {	v.type=CONST.vtMC;}
-				else
-				if (varName==='TF') {	v.type=CONST.vtTF;}
-				else
-				if (varName==='NU') {	v.type=CONST.vtNumber;}
-				else					{	v.type=CONST.vtText;	}
-				v.warning = 'Type not in answer file, assuming '+v.type;
-			}
-		}
+  $(AnswerSetXML).find('AnswerSet > Answer').each(function() {
+    var varName = makestr($(this).attr('name'));
 
-		v.traceLogic(vNew ? 'Creating new:' : 'Replacing:');
-	});
+    // 12/03/2013 Do not allow # in variable names.
+    if (varName.indexOf('#') >= 0) return;
+
+    var vNew = false;
+    var v = guide.varExists(varName);//guide.vars[varName_i];
+    var varANXType = $(this).children().get(0).tagName;
+    var varType = mapANX2Var[varANXType];
+
+    // Variables not defined in the interview should be added in case we're
+    // passing variables between interviews.
+    if (v === null) {
+      v = guide.varCreate(varName, varType, false, '');
+      vNew = true;
+    }
+
+    switch (varANXType) {
+      case 'TextValue':
+        guide.varSet(varName, $(this).find('TextValue').html());
+        break;
+
+      case 'NumValue':
+        guide.varSet(varName, $(this).find('NumValue').html());
+        break;
+
+      case 'TFValue':
+        guide.varSet(varName, $(this).find('TFValue').html());
+        break;
+
+      case 'DateValue':
+        guide.varSet(varName, dmyTomdy($(this).find('DateValue').html()));
+        break;
+
+      case 'MCValue':
+        guide.varSet(varName, $(this).find('MCValue > SelValue').html());
+        break;
+
+      case 'RptValue':
+        v.repeating = true;
+
+        $('RptValue', this).children().each(function(i) {
+          varANXType = $(this).get(0).tagName;
+          varType = mapANX2Var[varANXType];
+
+          switch (varANXType) {
+            case 'TextValue':
+            case 'NumValue':
+            case 'TFValue':
+            case 'DateValue':
+              guide.varSet(varName, dmyTomdy($(this).html()), i + 1);
+              break;
+
+            case 'MCValue':
+              guide.varSet(varName, $(this).find('SelValue').html());
+              break;
+          }
+        });
+
+        break;
+    }
+
+    if (v.type === CONST.vtUnknown) {
+      v.type = varType;
+      if (v.type === CONST.vtUnknown) {
+        varName = varName.split(' ');
+        varName = varName[varName.length - 1];
+
+        if (varName === 'MC') {
+          v.type = CONST.vtMC;
+        } else if (varName === 'TF') {
+          v.type = CONST.vtTF;
+        } else if (varName === 'NU') {
+          v.type = CONST.vtNumber;
+        } else {
+          v.type = CONST.vtText;
+        }
+
+        v.warning = 'Type not in answer file, assuming ' + v.type;
+      }
+    }
+
+    v.traceLogic(vNew ? 'Creating new:' : 'Replacing:');
+  });
 };
-
-
 
 TGuide.prototype.loadXMLAnswerExternal = function (opts)
 /*	Load a XML based answer file. */

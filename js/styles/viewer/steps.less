@@ -52,57 +52,71 @@
 @minus-header: ceil(@header-height/2);
 
 // Adjust the position of the steps in the background
-.next-2 {
-  bottom: calc(~"60% - " @minus-header);
+.next-wrapper {
+  .next-2 {
+    bottom: calc(~"57% - " @minus-header);
 
-  .step-circle {
-    height: 40%;
+    .step-circle {
+      height: 40%;
+    }
   }
-}
 
-.next-3 {
-  bottom: calc(~"74% - " @minus-header);
+  .next-3 {
+    bottom: calc(~"72% - " @minus-header);
 
-  .step-circle {
-    height: 20%;
+    .step-circle {
+      height: 20%;
+    }
   }
-}
 
-.next-4 {
-  bottom: calc(~"85% - " @minus-header);
+  .next-4 {
+    bottom: calc(~"81% - " @minus-header);
 
-  .step-circle {
-    height: 10%;
+    .step-circle {
+      height: 10%;
+    }
   }
-}
 
-.next-5 {
-  bottom: calc(~"87% - " @minus-header);
+  .next-5 {
+    bottom: calc(~"88% - " @minus-header);
 
-  .step-circle {
-    height: 5%;
+    .step-circle {
+      height: 5%;
+    }
   }
 }
 
 // When there are less than 5 steps
 .steps-4 {
-  .next-3 {
-    bottom: calc(~"70% - " @minus-header);
-  }
-  .next-4 {
-    bottom: calc(~"83% - " @minus-header);
+  .next-wrapper {
+    .next-2 {
+      bottom: calc(~"55% - " @minus-header);
+    }
+    .next-3 {
+      bottom: calc(~"72% - " @minus-header);
+    }
+    .next-4 {
+      bottom: calc(~"84% - " @minus-header);
+    }
   }
 }
 
 .steps-3 {
-  .next-3 {
-    bottom: calc(~"81% - " @minus-header);
+  .next-wrapper {
+    .next-2 {
+      bottom: calc(~"62% - " @minus-header);
+    }
+    .next-3 {
+      bottom: calc(~"81% - " @minus-header);
+    }
   }
 }
 
 .steps-2 {
-  .next-2 {
-    bottom: calc(~"65% - " @minus-header);
+  .next-wrapper {
+    .next-2 {
+      bottom: calc(~"65% - " @minus-header);
+    }
   }
 }
 

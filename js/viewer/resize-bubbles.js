@@ -23,11 +23,11 @@ export function getMaxStepsOnScreen(sidewalkHeight, interviewSteps) {
 
   if (sidewalkHeight < 100) {
     maxSteps = 1;
-  } else if (_inRange(sidewalkHeight, 100, 300)) {
+  } else if (_inRange(sidewalkHeight, 100, 450)) {
     maxSteps = 2;
-  } else if (_inRange(sidewalkHeight, 300, 500)) {
+  } else if (_inRange(sidewalkHeight, 450, 550)) {
     maxSteps = 3;
-  } else if (_inRange(sidewalkHeight, 500, 750)) {
+  } else if (_inRange(sidewalkHeight, 550, 750)) {
     maxSteps = 4;
   } else {
     maxSteps = 5;

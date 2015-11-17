@@ -6,18 +6,19 @@
 
 {{#if showDebugPanel}}
   <div class="author-debug-panel">
-    <author-debug-panel />
+    <author-debug-panel {interview}="viewerInterview"/>
   </div>
 {{/if}}
 
 <div id="viewer-app" class="{{#if showDebugPanel}}with-debug-panel{{/if}}">
   <a2j-viewer-preview
+    {(interview)}="viewerInterview"
     {preview-page-name}="previewPageName"
-    {^interview-page-name}="interviewPageName" />
+    {^interview-page-name}="interviewPageName"/>
 
-    <author-debug-menu {(app-state)}="." />
+    <author-debug-menu {(app-state)}="."/>
 
     {{#if viewerAlertMessages.length}}
-      <author-debug-alerts {(alert-messages)}="viewerAlertMessages" />
+      <author-debug-alerts {(alert-messages)}="viewerAlertMessages"/>
     {{/if}}
 </div>

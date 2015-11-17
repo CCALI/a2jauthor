@@ -1,31 +1,33 @@
 import $ from 'jquery';
+import _keys from 'lodash/object/keys';
+import _find from 'lodash/collection/find';
 import Answers from 'viewer/models/answers';
 import constants from 'viewer/models/constants';
 import cString from 'viewer/mobile/util/string';
+import _forEach from 'lodash/collection/forEach';
 
-let variableToField = function(attr, pages) {
-  for (var p in pages) {
-    if (pages.hasOwnProperty(attr)) {
-      var page = pages[p];
+let variableToField = function(varName, pages) {
+  let field;
 
-      for (var i = 0; i < page.fields.length; i++) {
-        var field = page.fields[i];
+  _forEach(_keys(pages), function(pageName) {
+    let page = pages[pageName];
 
-        if (cString.strcmp(field.name, varName) === 0) {
-          return field;
-        }
-      }
-    }
-  }
+    field = _find(page.fields, function(field) {
+      return field.name.toLowerCase() === varName.toLowerCase();
+    });
 
-  return null;
+    // early exit of the iteration if field found.
+    if (field) return false;
+  });
+
+  return field;
 };
 
 let setVariable = function(variable, pages) {
   var varType;
-
   var field = variableToField(variable.name, pages);
-  if (field === null) {
+
+  if (field == null) {
     varType = variable.type;
   } else {
     varType = cString.fieldTypeToVariableType(field.type);
@@ -42,8 +44,9 @@ let setVariable = function(variable, pages) {
   mapVar2ANX[constants.vtOther] = 'OtherValue';
 
   var ansType = mapVar2ANX[varType];
+
   // Type unknown possible with a Looping variable like CHILD
-  if (ansType === constants.vtUnknown || ansType === null || typeof ansType === 'undefined') {
+  if (ansType === constants.vtUnknown || ansType == null) {
     ansType = [constants.vtText];
   }
 
@@ -91,13 +94,8 @@ let setVariable = function(variable, pages) {
   return xml;
 };
 
-export default  {
-  parseANX: function(json, pages) {
-    // json[constants.vnVersion] = constants.A2JVersionNum;
-    // json[constants.vnInterviewID] = this.makeHash(); //instance of TGuide
-    // json[constants.vnBookmark] = gPage.name; //page key: "1-Introduction"
-    // json[constants.vnHistory] = this.historyToXML(); //instance of TGuide
-
+export default {
+  parseANX(json, pages) {
     var xml = constants.HotDocsANXHeader_UTF8_str;
     xml += '<AnswerSet title="">';
 
@@ -110,86 +108,99 @@ export default  {
     return xml;
   },
 
-  parseJSON: function(AnswerSetXML, vars) {
-    // 11/13 Parse HotDocs answer file XML string into guide's variables.
-    // Add to existing variables. Do NOT override variable types.
-
-    var mapANX2Var = {};
-    mapANX2Var["unknown"] = constants.vtUnknown;
-    mapANX2Var["textvalue"] = constants.vtText;
-    mapANX2Var["tfvalue"] = constants.vtTF;
-    mapANX2Var["mcvalue"] = constants.vtMC;
-    mapANX2Var["numvalue"] = constants.vtNumber;
-    mapANX2Var["datevalue"] = constants.vtDate;
-    mapANX2Var["othervalue"] = constants.vtOther;
-    mapANX2Var["rptvalue"] = constants.vtUnknown;
+  // 11/13 Parse HotDocs answer file XML string into guide's variables.
+  // Add to existing variables. Do NOT override variable types.
+  parseJSON: function(answersXML, vars) {
+    var mapANX2Var = {
+      unknown: constants.vtUnknown,
+      textvalue: constants.vtText,
+      tfvalue: constants.vtTF,
+      mcvalue: constants.vtMC,
+      numvalue: constants.vtNumber,
+      datevalue: constants.vtDate,
+      othervalue: constants.vtOther,
+      rptvalue: constants.vtUnknown
+    };
 
     var guide = new Answers(vars);
 
-    $(AnswerSetXML).find('answer').each(function() {
+    $(answersXML).find('answer').each(function() {
       var varName = cString.makestr($(this).attr('name'));
-      if (varName.indexOf('#') >= 0) {
-        // 12/03/2013 Do not allow # in variable names. We discard them.
-        //trace("Discarding invalidly named variable '"+varName+"'");
-        return;
-      }
+
+      // 12/03/2013 Do not allow # in variable names.
+      if (varName.indexOf('#') !== -1) return;
 
       var v = guide.varExists(varName);
-      var varANXType=$(this).children().get(0).tagName.toLowerCase();
+      var varANXType = $(this).children().get(0).tagName.toLowerCase();
       var varType = mapANX2Var[varANXType];
 
-      if (v === null) {
-        // Variables not defined in the interview should be added in case we're passing variables between interviews.
+      // Variables not defined in the interview should be added in case
+      // we're passing variables between interviews.
+      if (v == null) {
         v = guide.varCreate(varName, varType, false, '');
       }
 
       switch (varANXType) {
         case 'textvalue':
-          guide.varSet(varName,$(this).find('TextValue').html());
+          guide.varSet(varName, $(this).find('TextValue').html());
           break;
+
         case 'numvalue':
-          guide.varSet(varName,+$(this).find('NumValue').html());
+          guide.varSet(varName, +$(this).find('NumValue').html());
           break;
+
         case 'tfvalue':
-          guide.varSet(varName,!!$(this).find('TFValue').html());
+          guide.varSet(varName, !!$(this).find('TFValue').html());
           break;
+
         case 'datevalue':
-          guide.varSet(varName,$(this).find('DateValue').html());
+          guide.varSet(varName, $(this).find('DateValue').html());
           break;
+
         case 'mcvalue':
-          guide.varSet(varName,$(this).find('MCValue > SelValue').html());
+          guide.varSet(varName, $(this).find('MCValue > SelValue').html());
           break;
+
         case 'rptvalue':
           v.attr('repeating', true);
-          $('rptvalue',this).children().each(function(i){
-            varANXType=$(this).get(0).tagName.toLowerCase();
+
+          $('rptvalue', this).children().each(function(i) {
+            varANXType = $(this).get(0).tagName.toLowerCase();
             varType = mapANX2Var[varANXType];
+
             switch (varANXType) {
               case 'textvalue':
               case 'numvalue':
               case 'tfvalue':
               case 'datevalue':
-                guide.varSet(varName,$(this).html(),i+1);
+                guide.varSet(varName, $(this).html(), i + 1);
                 break;
+
               case 'mcvalue':
-                guide.varSet(varName,$(this).find('SelValue').html());
+                guide.varSet(varName, $(this).find('SelValue').html());
                 break;
             }
           });
+
           break;
       }
 
       if (v.attr('type') === constants.vtUnknown) {
         v.attr('type', varType);
-        if (v.attr('type')===constants.vtUnknown) {
-          varName=varName.split(" ");
-          varName=varName[varName.length-1];
-          if (varName==='MC') { v.attr('type', constants.vtMC);}
-          else
-          if (varName==='TF') { v.attr('type', constants.vtTF);}
-          else
-          if (varName==='NU') { v.attr('type', constants.vtNumber);}
-          else          { v.attr('type', constants.vtText); }
+
+        if (v.attr('type') === constants.vtUnknown) {
+          varName = varName.split(' ');
+          varName = varName[varName.length - 1];
+
+          if (varName === 'MC') {
+            v.attr('type', constants.vtMC);
+          } else if (varName === 'TF') {
+            v.attr('type', constants.vtTF);
+          } else if (varName === 'NU') {
+            v.attr('type', constants.vtNumber);
+          } else {
+            v.attr('type', constants.vtText);
+          }
         }
       }
     });

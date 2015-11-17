@@ -1,13 +1,17 @@
+import List from 'can/list/';
 import Model from 'can/model/';
 import Page from 'viewer/models/page';
+import _last from 'lodash/array/last';
+import _keys from 'lodash/object/keys';
 import _find from 'lodash/collection/find';
 import _extend from 'lodash/object/extend';
 import Answers from 'viewer/models/answers';
 import _isString from 'lodash/lang/isString';
 import parser from 'viewer/mobile/util/parser';
-import _includes from 'lodash/collection/includes'
+import _includes from 'lodash/collection/includes';
 import getSkinTone from 'viewer/models/get-skin-tone';
 
+import 'can/list/sort/';
 import 'can/map/define/';
 
 /**
@@ -191,7 +195,61 @@ const Interview = Model.extend({
 
         return result;
       }
+    },
+
+    /**
+     * @property {List} Guide.prototype.variablesList variablesList
+     *
+     * Returns a list of the interview variables, the variables come from the
+     * server in `interview.vars`, which is an object where each key is a var
+     * name and its value is an object with the properties of a variable (name,
+     * repeating, flag, value...), having an actual list is handy for rendering
+     * purposes.
+     *
+     */
+    variablesList: {
+      serialize: false,
+
+      get() {
+        let list = new List();
+        let answers = this.attr('answers');
+        let vars = this.attr('vars').attr();
+
+        // sort list using "natural string" sort.
+        list.attr('comparator', function(a, b) {
+          let aName = a.attr('name');
+          let bName = b.attr('name');
+
+          return aName.localeCompare(bName, {numeric: true});
+        });
+
+        list.replace(_keys(vars).map(function(key) {
+          let variable = vars[key];
+          let answer = answers.attr(key.toLowerCase());
+
+          let value = answer
+            ? _last(answer.attr('values').attr())
+            : _last(variable.values);
+
+          return {
+            value,
+            name: variable.name,
+            repeating: variable.repeating,
+          };
+        }));
+
+        return list;
+      }
     }
+  },
+
+  clearAnswers() {
+    let answers = this.attr('answers');
+
+    _keys(answers.attr()).forEach(function(key) {
+      let answer = answers.attr(key);
+      answer.attr('values', [null]);
+    });
   },
 
   createGuide() {

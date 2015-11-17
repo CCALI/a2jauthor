@@ -94,6 +94,15 @@ export default Map.extend({
     viewerAlertMessages: {
       Value: List,
       serialize: false
+    },
+
+    /**
+     * @property {String} AppState.protoype.viewerInterview
+     *
+     * The Interview instance used by the viewer app in preview mode.
+     */
+    viewerInterview: {
+      serialize: false
     }
   },
 

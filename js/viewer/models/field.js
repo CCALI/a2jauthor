@@ -7,40 +7,46 @@ import 'can/map/define/';
 
 let Field = Map.extend({
   define: {
+    options: {
+      value: ''
+    },
+
+    emptyAnswer: {
+      get() {
+        return new Answer({
+          values: [null],
+          type: this.attr('type'),
+          repeating: this.attr('repeating'),
+          name: this.attr('name').toLowerCase()
+        });
+      }
+    },
+
     answer: {
-      get: function() {
-        var answer = this.page.interview.attr('answers').attr(this.attr('name'));
+      get() {
+        let varName = this.attr('name').toLowerCase();
+        let answers = this.page.interview.attr('answers');
+        let answer = answers.attr(varName);
 
         if (answer) {
           return answer;
         } else {
-          answer = new Answer({
-            name: this.attr('name').toLowerCase(),
-            type: this.attr('type'),
-            repeating: this.attr('repeating'),
-            values: [null]
-          });
-
-          this.page.interview.attr('answers').attr(this.attr('name').toLowerCase(), answer);
+          answer = this.attr('emptyAnswer');
+          answers.attr(varName, answer);
           return answer;
         }
       }
-    },
-
-    options: {
-      value: ''
     }
   },
 
-  getOptions: function() {
+  getOptions() {
     let _this = this;
-    let dfd = new can.Deferred();
+    let dfd = can.Deferred();
 
     if (this.attr('listData')) {
       this.attr('options', this.attr('listData'));
       dfd.resolve();
-    }
-    else if (this.attr('listSrc')) {
+    } else if (this.attr('listSrc')) {
       let req = $.ajax({
         dataType: 'text',
         url: this.attr('listSrc'),

@@ -1,12 +1,11 @@
 export default {
   // templateURL points to the interview XML. This demo just passes what's on the querystring.
   // templateURL:'../tests/data/Sample Short Interview Answers.anx?data=something',
-  templateURL: '../tests/data/All-Inclusive Sample Interview.json',
-  templateURL: '../tests/data/Fields And Logic Repeat Loops.json',
-  templateURL: '../tests/data/Mobile Volunteer answers.json',
-  templateURL: '../tests/data/A2J_NYSample_interview.json',
-  templateURL: '../tests/data/A2J_MobileOnlineInterview_Interview.json',
-  //templateURL: '../tests/data/Sample Short Interview.xml?data=ExtraData4templateURL',
+  //templateURL: '../tests/data/All-Inclusive Sample Interview.json',
+  //templateURL: '../tests/data/Fields And Logic Repeat Loops.json',
+  //templateURL: '../tests/data/A2J_NYSample_interview.json',
+  //templateURL: '../tests/data/A2J_MobileOnlineInterview_Interview.json',
+  templateURL: '../tests/data/Sample Short Interview.xml?data=ExtraData4templateURL',
 
   // fileDataURL: 'images/',
   fileDataURL:'../tests/data/',

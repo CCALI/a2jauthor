@@ -36,6 +36,13 @@ export function getMaxStepsOnScreen(sidewalkHeight, interviewSteps) {
   return interviewSteps < maxSteps ? interviewSteps : maxSteps;
 }
 
+function computeStepStyles(width) {
+  return {
+    'margin-right': `-${Math.ceil(width * .1)}px`,
+    width: `calc(0% + ${Math.ceil(width + (width * .3))}px)`
+  };
+};
+
 export function resizeSteps(interviewSteps) {
   let $body = $('body');
   let $html = $('html');
@@ -58,44 +65,34 @@ export function resizeSteps(interviewSteps) {
   let maxStepsOnScreen = getMaxStepsOnScreen(sidewalkHeight, interviewSteps);
   $body.addClass(`steps-${maxStepsOnScreen}`);
 
-  let computeStepStyles = function(width) {
-    return {
-      'margin-right': `-${Math.ceil(width * .1)}px`,
-      width: `calc(0% + ${Math.ceil(width + (width * .3))}px)`
-    };
-  };
-
-  let nextWidth;
   let denominator = Math.tan(angleB * Math.PI / 180);
 
-  nextWidth = (sidewalkHeight * .65) / denominator;
-  $('.step-current .app-step').css(computeStepStyles(nextWidth));
+  // calculate @minus-header less variable
+  let headerHeight = $body.height() - sidewalkHeight;
+  let minusHeader = Math.ceil(headerHeight / 2);
 
-  // Next 2
-  nextWidth = (sidewalkHeight * .47) / denominator;
-  $('#next-2 .app-step').css(computeStepStyles(nextWidth));
+  let bodyHeight = $body.height();
 
-  nextWidth = (sidewalkHeight * .35) / denominator;
-  $('.steps-2 #next-2 .app-step').css(computeStepStyles(nextWidth));
+  $('.app-step').each((i, el) => {
+    let $parent = $(el).parent();
+    let parentBottom;
 
-  // Next 3
-  nextWidth = (sidewalkHeight * .33) / denominator;
-  $('#next-3 .app-step').css(computeStepStyles(nextWidth));
+    if ($parent.hasClass('step-current')) {
+      // current step will line up with bottom of avatar
+      parentBottom = $parent.offset().top;
+    } else {
+      // other steps will be positioned based on parent's `bottom` css property
+      parentBottom = $parent.css('bottom');
+      parentBottom = +parentBottom.slice(0, parentBottom.indexOf('px'));
+    }
 
-  nextWidth = (sidewalkHeight * .30) / denominator;
-  $('.steps-4 #next-3 .app-step').css(computeStepStyles(nextWidth));
+    // calculate percentage x from less equation `calc(~"x% - " minusHeader) = bodyHeight`
+    let parentBottomPercentage = Math.ceil(((parentBottom + minusHeader) / bodyHeight) * 100);
 
-  nextWidth = (sidewalkHeight * .28) / denominator;
-  $('.steps-3 #next-3 .app-step').css(computeStepStyles(nextWidth));
+    // calculate percentage remaining from 100%
+    let remainingPercentage = (100 - parentBottomPercentage) / 100;
 
-  // Next 4
-  nextWidth = (sidewalkHeight * .21) / denominator;
-  $('#next-4 .app-step').css(computeStepStyles(nextWidth));
-
-  nextWidth = (sidewalkHeight * .17) / denominator;
-  $('.steps-4 #next-4 .app-step').css(computeStepStyles(nextWidth));
-
-  // Next 5
-  nextWidth = (sidewalkHeight * .13) / denominator;
-  $('#next-5 .app-step').css(computeStepStyles(nextWidth));
+    let nextWidth = (sidewalkHeight * remainingPercentage) / denominator;
+    $(el).css(computeStepStyles(nextWidth));
+  });
 };

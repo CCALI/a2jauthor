@@ -2,53 +2,53 @@
 <can-import from="viewer/desktop/navigation/navigation.less!"/>
 
 <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
-      <ul class="nav navbar-nav">
-        <button class="btn btn-default navbar-btn" can-click="navigateBack" {{^if canNavigateBack}}disabled{{/if}}>
-          <span class="glyphicon-left-open"></span> Back
-        </button>
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+    <ul class="nav navbar-nav">
+      <button class="btn btn-default navbar-btn" can-click="navigateBack" {{^if canNavigateBack}}disabled{{/if}}>
+        <span class="glyphicon-left-open"></span> <span class="sr-only">Back</span>
+      </button>
 
-        <button class="btn btn-default navbar-btn" can-click="navigateForward" {{^if canNavigateForward}}disabled{{/if}}>
-          Next <span class="glyphicon-right-open"></span>
-        </button>
-      </ul>
+      <button class="btn btn-default navbar-btn" can-click="navigateForward" {{^if canNavigateForward}}disabled{{/if}}>
+        <span class="sr-only">Next</span> <span class="glyphicon-right-open"></span>
+      </button>
+    </ul>
 
-      <form class="navbar-form navbar-left" role="search">
-        <span>My progress:</span>
-        <div class="form-group ">
-          <div class="input-group">
-            <select class="form-control" {$value}="selectedPageName">
-              {{#each visitedPages}}
-                <option value="{{name}}" {{#eq @index 0}}selected{{/eq}}>
-                  {{fitPageDescription text}}
-                </option>
-              {{/each}}
-            </select>
-          </div>
+    <form class="navbar-form navbar-left" role="search">
+      <span>My progress:</span>
+      <div class="form-group ">
+        <div class="input-group">
+          <select class="form-control" {$value}="selectedPageName">
+            {{#each visitedPages}}
+              <option value="{{name}}" {{#eq @index 0}}selected{{/eq}}>
+                {{fitPageDescription text}}
+              </option>
+            {{/each}}
+          </select>
         </div>
-      </form>
+      </div>
+    </form>
 
+    <div class="nav navbar-nav navbar-right">
       {{#if interview.sendfeedback}}
         <a role="button" href="{{feedbackFormUrl}}"
           class="btn btn-default navbar-btn send-feedback">
-          <span class="glyphicon-plus"></span> Send Feedback
+          <span class="glyphicon-mail"></span> Send Feedback
         </a>
       {{/if}}
 
       {{#if canSaveAndExit}}
         <button class="btn btn-default navbar-btn" ($click)="saveAndExit">
-          <span class="glyphicon-cancel-circled"></span> Save &amp; Exit
+          <span class="glyphicon-floppy"></span> Save &amp; Exit
         </button>
       {{/if}}
 
       {{#if canResumeInterview}}
         <button class="btn btn-default navbar-btn" ($click)="resumeInterview">
-          Resume
+          <span class="glyphicon-right-thin"></span> Resume
         </button>
       {{/if}}
-    </div><!-- /.navbar-collapse -->
-  </div>
+    </div><!-- /navbar-right -->
+  </div><!-- /.navbar-collapse -->
 </nav>
 
 {{#if showDemoNotice}}

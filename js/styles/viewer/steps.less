@@ -22,6 +22,7 @@
   .app-step {
     height: 100px;
     bottom: -5%;
+    //perspective: 200px;
 
     .step-circle {
       height: 100px;
@@ -50,60 +51,83 @@
 
 @minus-header: ceil(@header-height/2);
 
-.next-2 {
-  bottom: calc(~"53% - " @minus-header);
+// Adjust the position of the steps in the background
+.next-wrapper {
+  .next-2 {
+    bottom: calc(~"57% - " @minus-header);
 
-  .step-circle {
-    height: 40%;
+    .step-circle {
+      height: 40%;
+    }
   }
-}
 
-.next-3 {
-  bottom: calc(~"67% - " @minus-header);
-
-  .step-circle {
-    height: 30%;
-  }
-}
-
-.next-4 {
-  bottom: calc(~"79% - " @minus-header);
-
-  .step-circle {
-    height: 20%;
-  }
-}
-
-.next-5 {
-  bottom: calc(~"87% - " @minus-header);
-
-  .step-circle {
-    height: 10%;
-  }
-}
-
-.steps-4 {
   .next-3 {
-    bottom: calc(~"70% - " @minus-header);
+    bottom: calc(~"72% - " @minus-header);
+
+    .step-circle {
+      height: 20%;
+    }
   }
+
   .next-4 {
-    bottom: calc(~"83% - " @minus-header);
+    bottom: calc(~"81% - " @minus-header);
+
+    .step-circle {
+      height: 10%;
+    }
+  }
+
+  .next-5 {
+    bottom: calc(~"88% - " @minus-header);
+
+    .step-circle {
+      height: 5%;
+    }
+  }
+}
+
+// When there are less than 5 steps
+.steps-4 {
+  .next-wrapper {
+    .next-2 {
+      bottom: calc(~"55% - " @minus-header);
+    }
+    .next-3 {
+      bottom: calc(~"72% - " @minus-header);
+    }
+    .next-4 {
+      bottom: calc(~"84% - " @minus-header);
+    }
   }
 }
 
 .steps-3 {
-  .next-3 {
-    bottom: calc(~"72% - " @minus-header);
+  .next-wrapper {
+    .next-2 {
+      bottom: calc(~"62% - " @minus-header);
+    }
+    .next-3 {
+      bottom: calc(~"81% - " @minus-header);
+    }
   }
 }
 
 .steps-2 {
-  .next-2 {
-    bottom: calc(~"65% - " @minus-header);
+  .next-wrapper {
+    .next-2 {
+      bottom: calc(~"65% - " @minus-header);
+    }
   }
 }
 
+// When there is only one step left, the courthouse is bigger
+.steps-left-1 {
+  .next-2 {
+    bottom: calc(~"74% - " @minus-header);
+  }
+}
 
+// Hide and show the steps based on viewport height
 .steps-2 .next-wrapper .step-next:nth-child(-n+1) {
   display: block;
 }
@@ -116,3 +140,6 @@
 .steps-5 .next-wrapper .step-next:nth-child(-n+4) {
     display: block !important;
 }
+
+
+

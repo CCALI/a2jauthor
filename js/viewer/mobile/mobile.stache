@@ -1,7 +1,6 @@
 <can-import from="viewer/mobile/pages/"/>
 <can-import from="viewer/mobile/intro/"/>
 <can-import from="viewer/mobile/header/"/>
-<can-import from="viewer/mobile/footer/"/>
 <can-import from="viewer/mobile/filler/"/>
 <can-import from="viewer/mobile/mobile.less!"/>
 
@@ -36,8 +35,6 @@
       m-state="{mState}"
       interview="{interview}">
     </a2j-intro>
-
-    <a2j-footer m-state="{mState}"></a2j-footer>
   {{/equal}}
 
   {{#equal rState.view 'complete'}}

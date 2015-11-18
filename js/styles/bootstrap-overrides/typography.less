@@ -8,6 +8,8 @@
 * All HTML headings, `<h1>` through `<h6>`, are available. `.h1` through `.h6` classes are also available,
 * for when you want to match the font styling of a heading but still want your text to be displayed inline.
 *
+* H tags defining a typographical heirarchy. Each page of the application should use the appropriate header level based on semantics, rather than font size. For example, an `<h2>` should not be used if there is not a parent `<h1>` - if the font sizes are not appropriate for the context, these can be adjusted on an individual-level in component specific style sheets. However, the defined header level sizes should usually be honored.
+*
 * @demo docs/demos/typography/headings/demo.html
 *
 * Create lighter, secondary text in any heading with a generic `<small>` tag or the `.small` class.
@@ -30,16 +32,6 @@
 //* Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
 @font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
 @font-family-base:        @font-family-sans-serif;
-
-
-/** @styles headings Headings
- * @parent typography.less 1
- *
- * H tags defining a typographical heirarchy. Each page of the application should use the appropriate header level based on semantics, rather than font size. For example, an `<h2>` should not be used if there is not a parent `<h1>` - if the font sizes are not appropriate for the context, these can be adjusted on an individual-level in component specific style sheets. However, the defined header level sizes should usually be honored.
- *
- * @demo docs/demos/src/components/base/demos/typography/headings.html
- *
-**/
 
 //* Unit-less `line-height` for use in components like buttons.
 @line-height-base:        1.428571429; // 20/14

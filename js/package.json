@@ -57,6 +57,33 @@
       "localforage": "localforage/dist/localforage.nopromises"
     },
     "meta": {
+      "author/src/A2J_Tabs": {
+        "format": "global",
+        "deps": [
+          "jquery-ui/ui/sortable"
+        ]
+      },
+      "author/src/TextStatistics": {
+        "format": "global"
+      },
+      "author/src/A2J_AuthorApp": {
+        "format": "global",
+        "deps": [
+          "jquery-ui/ui/button",
+          "jquery-ui/ui/autocomplete",
+          "jquery-ui/ui/draggable",
+          "jquery-ui/ui/resizable",
+          "jquery-ui/ui/dialog",
+          "jquery-ui/ui/tooltip",
+          "blueimp-file-upload/js/jquery.fileupload"
+        ]
+      },
+      "author/src/A2J_Reports": {
+        "format": "global",
+        "deps": [
+          "author/src/viewer/A2J_Logic"
+        ]
+      },
       "author/src/viewer/A2J_Types": {
         "format": "global"
       },
@@ -80,27 +107,6 @@
       "author/src/viewer/A2J_Shared": {
         "deps": [
           "jquery-ui/ui/dialog"
-        ]
-      },
-      "author/src/A2J_Tabs": {
-        "format": "global",
-        "deps": [
-          "jquery-ui/ui/sortable"
-        ]
-      },
-      "author/src/TextStatistics": {
-        "format": "global"
-      },
-      "author/src/A2J_AuthorApp": {
-        "format": "global",
-        "deps": [
-          "jquery-ui/ui/button",
-          "jquery-ui/ui/autocomplete",
-          "jquery-ui/ui/draggable",
-          "jquery-ui/ui/resizable",
-          "jquery-ui/ui/dialog",
-          "jquery-ui/ui/tooltip",
-          "blueimp-file-upload/js/jquery.fileupload"
         ]
       },
       "blueimp-file-upload/js/jquery.fileupload": {

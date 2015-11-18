@@ -22,19 +22,25 @@ function longProcess(statusPrompt, process)
 	}, 100 );
 }
 
+// Open report in new window. Include CSS for proper formatting.
+function newWindowReport(title, html) {
+  var reportWindow = window.open();
 
-function newWindowReport(title,html)
-{	// Open report in new window. Include CSS for proper formatting.
-	var reportWindow = window.open();//'A2J_Report.html', "");
-	html = '<html class="bootstrap-styles reports"><head><title>' + title + '</title>'
-	+'<link rel="stylesheet" type="text/css" href="../styles/A2J_Author.css">'
-	+'</head>'+'<body class="CAJAReportDump">'+html
-	+'<script>window.less = { async: true, fileSync: true };</script>'
-  +'<script src="../node_modules/steal/steal.js" data-main="author/main"></script>'
-	+'</body>'
-  +'</html>';
-	reportWindow.document.write(html);
-	reportWindow.document.close();
+  html =
+    '<html class="bootstrap-styles reports">' +
+      '<head>' +
+        '<title>' + title + '</title>' +
+        '<link rel="stylesheet" type="text/css" ' +
+          'href="../dist/bundles/app-template-styles.less.css">' +
+      '</head>' +
+
+      '<body class="CAJAReportDump">' + html +
+        '<script>window.less = { async: true };</script>' +
+      '</body>' +
+    '</html>';
+
+  reportWindow.document.write(html);
+  reportWindow.document.close();
 }
 
 TLogic.prototype.stripLogicHTML = function(html)

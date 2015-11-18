@@ -44,7 +44,11 @@ module.exports = function(grunt) {
           system: {
             main: ['author/app'],
             config: 'package.json!npm',
-            bundle: ['author/app-template', 'author/src/src']
+            bundle: [
+              'author/app-template',
+              'author/src/src',
+              'author/styles.less!'
+            ]
           },
           buildOptions: {
             minify: true,

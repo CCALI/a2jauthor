@@ -12,6 +12,7 @@ import constants from 'viewer/models/constants';
 import Interview from 'viewer/models/interview';
 import MemoryState from 'viewer/models/memory-state';
 import PersistedState from 'viewer/models/persisted-state';
+import setMobileDesktopClass from 'viewer/util/set-mobile-desktop-class';
 
 import 'can/route/';
 import 'jquerypp/dom/cookie/';
@@ -71,6 +72,7 @@ $.when(iDfd, pDfd).then(function(interview, pState) {
   });
 
   rState.attr('interview', interview);
+  setMobileDesktopClass(isMobile, $('body'));
 
   $('#viewer-app').append(template({
     rState, pState, mState, interview, logic, lang, isMobile

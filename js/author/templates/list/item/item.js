@@ -1,9 +1,7 @@
-import Component from 'can/component/';
-import template from './item.stache!';
 import Map from 'can/map/';
+import template from './item.stache!';
+import Component from 'can/component/';
 
-import './item.less!';
-import 'can/view/href/';
 import 'can/map/define/';
 
 /**

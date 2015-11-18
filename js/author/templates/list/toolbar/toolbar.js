@@ -2,7 +2,6 @@ import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './toolbar.stache!';
 
-import './toolbar.less!';
 import 'can/map/define/';
 
 export let Toolbar = Map.extend({

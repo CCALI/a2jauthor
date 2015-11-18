@@ -1,3 +1,6 @@
+<can-import from="author/templates/elements/element-container/"/>
+<can-import from="author/templates/elements/free-form/free-form.less!"/>
+
 {{#if editEnabled}}
   <element-container selected="{editActive}">
     {{#if editActive}}
@@ -13,7 +16,9 @@
         <div class="form-group">
           <label>Notes</label>
           <textarea class="form-control" rows="3"></textarea>
-          <span class="help-block">For reference only. These notes are not part of the assembled document.</span>
+          <span class="help-block">
+            For reference only. These notes are not part of the assembled document.
+          </span>
         </div>
       </form>
     </element-options-pane>

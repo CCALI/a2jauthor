@@ -1,6 +1,8 @@
+<can-import from="author/templates/list/item/item.less!"/>
+
 {{#with template}}
   <div class="template-wrapper{{#if deleting}} deleting{{/if}}{{#if restoring}} restoring{{/if}}">
-    <a class="template-link" can-href="{page='templates' action='edit' id=template_id}">
+    <a class="template-link" href="{{routeUrl page='templates' action='edit' id=template_id}}">
 
       <div class="template-order">
         <span class="build-order">{{buildOrder}}</span><br>
@@ -24,16 +26,15 @@
             <li class="divider"></li>
             {{#if hovered}}
               {{#if active}}
-                <li class="options"><a class="delete" (click)="deleteTemplate" href="#">Delete</a></li>
+                <li class="options"><a class="delete" ($click)="deleteTemplate()" href="#">Delete</a></li>
               {{else}}
-                <li class="options"><a class="restore" (click)="restoreTemplate" href="#">Restore</a></li>
+                <li class="options"><a class="restore" ($click)="restoreTemplate()" href="#">Restore</a></li>
               {{/if}}
             {{/if}}
           </ul>
 
         </div>
       </div>
-
     </a>
   </div>
 {{/with}}

@@ -1,8 +1,14 @@
+<can-import from="author/loading/"/>
+<can-import from="author/templates/edit/tabs/"/>
+<can-import from="author/templates/edit/toolbar/"/>
+<can-import from="author/templates/elements/blank/"/>
+<can-import from="author/templates/edit/edit.less!"/>
+
 <div class="page">
   {{#if a2jTemplatePromise.isPending}}
-    <app-loading></app-loading>
+    <app-loading/>
   {{else}}
-    <template-edit-toolbar a2j-template="{a2jTemplate}"></template-edit-toolbar>
+    <template-edit-toolbar a2j-template="{a2jTemplate}"/>
 
     <div class="container">
       <div class="row clearfix">
@@ -11,16 +17,15 @@
           {{#if a2jTemplate.rootNode.children.length}}
             <a2j-template
               edit-enabled="true"
-              template="{a2jTemplate}">
-            </a2j-template>
+              template="{a2jTemplate}"/>
           {{else}}
-            <blank-element></blank-element>
+            <blank-element/>
           {{/if}}
         </div>
 
         {{! right column where template options tab is rendered }}
         <div class="col-md-4">
-          <template-edit-tabs a2j-template="{a2jTemplate}"></template-edit-tabs>
+          <template-edit-tabs a2j-template="{a2jTemplate}"/>
         </div>
       </div>
     </div>

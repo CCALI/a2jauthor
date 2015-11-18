@@ -1,7 +1,9 @@
+<can-import from="author/templates/list/sortbar/sortbar.less!"/>
+
 <div class="sort-order clearfix">
   <a href="#"
     class="sort-flag {{sortCaretClasses 'buildOrder'}}"
-    (click)="{setSortCriteria 'buildOrder'}">#</a>
+    ($click)="setSortCriteria('buildOrder')">#</a>
 </div>
 
 <div class="sort-columns">
@@ -9,13 +11,13 @@
     <div class="col-xs-9">
       <a href="#"
         class="sort-flag {{sortCaretClasses 'title'}}"
-        (click)="{setSortCriteria 'title'}">Title</a>
+        ($click)="setSortCriteria('title')">Title</a>
     </div>
 
     <div class="col-xs-3 text-right">
       <a href="#"
         class="sort-flag {{sortCaretClasses 'lastModified'}}"
-        (click)="{setSortCriteria 'lastModified'}">Date Modified</a>
+        ($click)="setSortCriteria('lastModified')">Date Modified</a>
     </div>
   </div>
 </div>

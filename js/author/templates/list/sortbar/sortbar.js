@@ -3,7 +3,6 @@ import Component from 'can/component/';
 import template from './sortbar.stache!';
 
 import 'can/list/sort/';
-import './sortbar.less!';
 import 'can/map/define/';
 
 export let Sortbar = Map.extend({

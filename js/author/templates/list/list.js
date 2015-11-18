@@ -4,8 +4,6 @@ import Component from 'can/component/';
 import _range from 'lodash/utility/range';
 import moveItem from 'author/utils/move-item-array';
 
-import './item/';
-import './list.less!';
 import 'can/map/define/';
 
 /**

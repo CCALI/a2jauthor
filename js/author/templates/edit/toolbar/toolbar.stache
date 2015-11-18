@@ -1,3 +1,5 @@
+<can-import from="author/templates/edit/toolbar/toolbar.less!"/>
+
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="row">
@@ -8,7 +10,7 @@
 
         <form class="navbar-form template-name-form">
           <div class="form-group">
-            <input type="text" class="form-control" can-value="{a2jTemplate.title}">
+            <input type="text" class="form-control" {($value)}="a2jTemplate.title">
           </div>
         </form>
       </div>
@@ -20,7 +22,11 @@
         </ul>
 
         <div class="nav navbar-nav navbar-right">
-          <a can-href="{ page='templates', action='assemble', id=a2jTemplate.template_id }"><button class="btn btn-default navbar-btn test-assemble"><span class="glyphicon-file-pdf"></span> Test Assemble</button></a>
+          <a href="{{routeUrl page='templates' action='assemble' id=a2jTemplate.template_id}}">
+            <button class="btn btn-default navbar-btn test-assemble">
+              <span class="glyphicon-file-pdf"></span> Test Assemble
+            </button>
+          </a>
         </div>
       </div>
     </div>

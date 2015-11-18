@@ -3,12 +3,7 @@ import Component from 'can/component/';
 import template from './edit.stache!';
 import A2JTemplate from 'author/models/a2j-template';
 
-import './tabs/';
-import './toolbar/';
-import './edit.less!';
-import 'author/loading/';
 import 'can/map/define/';
-import '../elements/blank/';
 
 export let TemplateEditPage = Map.extend({
   define: {

@@ -1,10 +1,12 @@
+<can-import from="author/templates/elements/options-pane/options-pane.less!" />
+
 <div class="popover right" style="display: block;">
   <div class="arrow"></div>
 
   {{#if title}}
     <h3 class="pane-title">{{title}}</h3>
 
-    <button (click)="saveAndClose" type="button" class="close" aria-label="Close">
+    <button ($click)="saveAndClose()" type="button" class="close" aria-label="Close">
       <span aria-hidden="true">×</span>
     </button>
   {{/if}}
@@ -13,7 +15,7 @@
     <content />
 
     <div class="text-center">
-      <button (click)="saveAndClose" class="btn btn-default">Save & Close</button>
+      <button ($click)="saveAndClose()" class="btn btn-default">Save & Close</button>
     </div>
   </div>
 </div>

@@ -3,9 +3,6 @@ import Component from 'can/component/';
 import template from './tabs.stache!';
 import createEmptyNode from 'author/utils/create-empty-node';
 
-import 'bit-tabs';
-import './tabs.less!';
-
 let TemplateEditTabsVm = Map.extend({
   addElement(elementName) {
     let a2jTemplate = this.attr('a2jTemplate');

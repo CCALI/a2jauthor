@@ -1,3 +1,6 @@
+<can-import from="bit-tabs"/>
+<can-import from="author/templates/edit/tabs/tabs.less!"/>
+
 <bit-tabs tabs-class="nav nav-tabs">
   <bit-panel title="Add Elements">
     <div class="tab-pane">
@@ -10,7 +13,7 @@
         <div class="col-lg-6">
           <button
             class="btn btn-default"
-            (click)="{{addElement 'rich-text'}}">Rich Text</button>
+            ($click)="addElement('rich-text')">Rich Text</button>
         </div>
       </div>
 
@@ -28,7 +31,7 @@
         <div class="col-lg-6">
           <button
             class="btn btn-default"
-            (click)="{{addElement 'section-title'}}">Section</button>
+            ($click)="addElement('section-title')">Section</button>
         </div>
 
         <div class="col-lg-6">

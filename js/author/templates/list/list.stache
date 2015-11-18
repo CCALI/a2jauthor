@@ -1,3 +1,6 @@
+<can-import from="author/templates/list/item/"/>
+<can-import from="author/templates/list/list.less!"/>
+
 <ul>
   {{#each templates}}
     <li {{#if isDraggable}}draggable="true"{{/if}}>

@@ -1,7 +1,10 @@
-<div class="wrapper{{#if selected}} selected{{/if}}" (click)="setSelected">
+<can-import from="author/templates/elements/element-toolbar/"/>
+<can-import from="author/templates/elements/element-container/element-container.less!"/>
+
+<div class="wrapper{{#if selected}} selected{{/if}}" ($click)="setSelected()">
   <content />
 </div>
 
 {{#if selected}}
-  <element-toolbar node-scope="{parentScope}"></element-toolbar>
+  <element-toolbar {(node-scope)}="parentScope"></element-toolbar>
 {{/if}}

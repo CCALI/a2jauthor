@@ -3,7 +3,6 @@ import Component from 'can/component/';
 import template from './options-pane.stache!';
 
 import 'can/map/define/';
-import './options-pane.less!';
 
 /**
  * @module {Module} optionsPane <element-options-pane>

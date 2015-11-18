@@ -3,8 +3,6 @@ import Component from 'can/component/';
 import template from './element-container.stache!';
 
 import 'can/map/define/';
-import '../element-toolbar/';
-import './element-container.less!';
 
 /**
  * @module {Module} author/templates/elements/element-container/ <element-container>
@@ -54,9 +52,9 @@ export let Container = Map.extend({
 });
 
 export default Component.extend({
-  tag: 'element-container',
   template,
   leakScope: false,
+  tag: 'element-container',
 
   viewModel: function(attrs, parentScope) {
     let vm = new Container(attrs);

@@ -1,12 +1,10 @@
 import Map from 'can/map/';
+import ckeditor from 'ckeditor/';
 import stache from 'can/view/stache/';
 import Component from 'can/component/';
 import template from './free-form.stache!';
 
 import 'can/map/define/';
-import './free-form.less!';
-import '../element-container/';
-import ckeditor from 'ckeditor/';
 
 export let FreeFormVM = Map.extend({
   define: {

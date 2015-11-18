@@ -1,11 +1,13 @@
+<can-import from="author/templates/elements/element-toolbar/element-toolbar.less!"/>
+
 <div>
   <span class="glyphicon-move small text-muted drag-handle"></span>
   <div class="pull-right">
-    <a href="#" (click)="cloneNode">
+    <a href="#" ($click)="cloneNode()">
       <span class="glyphicon-docs small text-muted"></span>Duplicate
     </a>
 
-    <a href="#" (click)="deleteNode">
+    <a href="#" ($click)="deleteNode()">
       <span class="glyphicon-trash small text-muted"></span>Delete
     </a>
   </div>

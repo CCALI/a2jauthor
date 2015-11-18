@@ -1,4 +1,6 @@
-<can-import from="author/templates/answer-loader/" />
+<can-import from="author/templates/answer-loader/"/>
+<can-import from="author/templates/list/toolbar/toolbar.less!"/>
+
 <nav class="navbar navbar-default">
   <div class="container-fluid">
 
@@ -6,36 +8,51 @@
       <p class="navbar-text hidden-xs">View:</p>
 
       <li class="{{#is filter 'all'}}active{{/is}}">
-        <a href="#" can-click="{setFilter 'all'}">All</a>
+        <a href="#" ($click)="setFilter('all')">All</a>
       </li>
 
       <li class="{{#is filter 'active'}}active{{/is}}">
-        <a href="#" can-click="{setFilter 'active'}">Active</a>
+        <a href="#" ($click)="setFilter('active')">Active</a>
       </li>
 
       <li class="{{#is filter 'deleted'}}active{{/is}}">
-        <a href="#" can-click="{setFilter 'deleted'}">Deleted</a>
+        <a href="#" ($click)="setFilter('deleted')">Deleted</a>
       </li>
 
       <li role="separator" class="divider hidden-xs"></li>
     </ul>
 
     <div class="nav navbar-nav navbar-right">
-      <a can-href="{page='templates' id='new'}"><button class="btn btn-primary navbar-btn new-template"><span class="glyphicon-plus"></span> New Template</button></a>
+      <a href="{{routeUrl page='templates' id='new'}}">
+        <button class="btn btn-primary navbar-btn new-template">
+          <span class="glyphicon-plus"></span> New Template
+        </button>
+      </a>
+
       <answer-loader/>
-      <a can-href="{ page='templates', action='assemble', guideId=templates.0.guide_id }"><button class="btn btn-default navbar-btn test-compile"><span class="glyphicon-file-pdf"></span> Test Assemble</button></a>
+
+      <a href="{{routeUrl page='templates' action='assemble' guideId=templates.0.guide_id}}">
+        <button class="btn btn-default navbar-btn test-compile">
+          <span class="glyphicon-file-pdf"></span> Test Assemble
+        </button>
+      </a>
     </div>
 
     <form class="navbar-form" role="search">
       <div class="form-group {{#if showClearButton}}has-feedback{{/if}}">
         <div class="input-group">
           <input type="text"
-                value="{{searchToken}}"
-                class="form-control search-input"
-                placeholder="search for a template...">
-          <span class="input-group-addon"><span class="glyphicon-search"></span><span class="sr-only">Search</span></span>
+            value="{{searchToken}}"
+            class="form-control search-input"
+            placeholder="search for a template...">
+
+          <span class="input-group-addon">
+            <span class="glyphicon-search"></span>
+            <span class="sr-only">Search</span>
+          </span>
+
           {{#if showClearButton}}
-              <span (click)="clearSearchToken" class="glyphicon glyphicon-cancel-circled form-control-feedback form-control-clear" aria-hidden="true"></span>
+            <span ($click)="clearSearchToken()" class="glyphicon glyphicon-cancel-circled form-control-feedback form-control-clear" aria-hidden="true"></span>
           {{/if}}
         </div>
       </div>

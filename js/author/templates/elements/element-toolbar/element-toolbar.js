@@ -3,7 +3,6 @@ import Component from 'can/component/';
 import template from './element-toolbar.stache!';
 
 import 'can/map/define/';
-import './element-toolbar.less!';
 
 /**
  * @module {Module} author/templates/elements/element-toolbar/ <element-toolbar>
@@ -48,6 +47,6 @@ export let ElementToolbar = Map.extend({
 export default Component.extend({
   template,
   leakScope: false,
-  viewModel: ElementToolbar,
-  tag: 'element-toolbar'
+  tag: 'element-toolbar',
+  viewModel: ElementToolbar
 });

@@ -1,6 +1,7 @@
 <can-import from="viewer/mobile/pages/" />
 <can-import from="viewer/desktop/avatar/" />
 <can-import from="viewer/desktop/steps/steps.less!" />
+<can-import from="viewer/desktop/steps/sign-text/" />
 
 {{#if currentStep}}
   <div class="step-current">
@@ -55,7 +56,9 @@
             </div>
           </div>
 
-          <h2>{{currentStep.text}}</h2>
+          <div class="sign-text">
+            <a2j-viewer-sign-text text="{{currentStep.text}}"></a2j-viewer-sign-text>
+          </div>
         </div>
       </div><!-- sign -->
     </div><!-- sign-wrapper -->
@@ -81,7 +84,9 @@
                 </div>
               </div>
 
-              <h2>{{text}}</h2>
+              <div class="sign-text">
+                <a2j-viewer-sign-text text="{{text}}"></a2j-viewer-sign-text>
+              </div>
             </div>
           </div><!-- sign -->
         </div><!-- sign-wrapper -->

@@ -24,6 +24,7 @@
     "grunt-contrib-copy": "^0.8.0",
     "grunt-contrib-less": "^1.0.1",
     "jquery": "^2.1.4",
+    "jquery-textfill": "^0.6.0",
     "jquery-ui": "git://github.com/jquery/jquery-ui.git#1.11.4",
     "jquerypp": "^2.0.1",
     "localforage": "^1.3.0",
@@ -53,6 +54,7 @@
       "chai": "chai/chai",
       "assert": "tests/assert",
       "lodash": "lodash-amd/modern",
+      "jquery-textfill": "jquery-textfill/source/jquery.textfill",
       "jquery.ui.widget": "jquery-ui/ui/widget",
       "localforage": "localforage/dist/localforage.nopromises"
     },

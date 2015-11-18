@@ -1,0 +1,3 @@
+<can-import from="viewer/desktop/steps/sign-text/sign-text.less!" />
+
+<div><p title="{{text}}">{{displayText}}</p></div>

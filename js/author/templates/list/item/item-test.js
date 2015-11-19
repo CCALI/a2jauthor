@@ -2,7 +2,7 @@ import $ from 'jquery';
 import assert from 'assert';
 import {Item} from './item';
 import stache from 'can/view/stache/';
-import Template from 'author/models/template';
+import A2JTemplate from 'author/models/a2j-template';
 
 import 'steal-mocha';
 
@@ -12,7 +12,7 @@ describe('<templates-list-item>', function() {
   describe('viewModel', function() {
     beforeEach(function() {
       vm = new Item({
-        template: new Template()
+        template: new A2JTemplate()
       });
     });
 
@@ -75,7 +75,7 @@ describe('<templates-list-item>', function() {
     let template;
 
     beforeEach(function() {
-      template = new Template({
+      template = new A2JTemplate({
         active: true,
         buildOrder: 1,
         lastModified: '',

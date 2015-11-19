@@ -93,4 +93,18 @@ describe('A2JTemplate Model', function() {
       assert.equal(children.pop().attr('title'), 'foo bar');
     });
   });
+
+  it('search - filters list that matches title', function() {
+    let result;
+    let templates = new A2JTemplate.List([{title: 'foo'}, {title: 'bar o'}]);
+
+    result = templates.search('baz');
+    assert.equal(result.attr('length'), 0, 'no templates with baz title');
+
+    result = templates.search('foo');
+    assert.equal(result.attr('length'), 1, 'there is one match');
+
+    result = templates.search('o');
+    assert.equal(result.attr('length'), 2, 'there are two matches');
+  });
 });

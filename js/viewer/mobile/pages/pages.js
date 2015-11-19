@@ -20,6 +20,10 @@ export default Component.extend({
       this.element.find('#pageModal').modal();
     },
 
+    'a click': function(el) {
+      el.attr('target', '_blank');
+    },
+
     '{rState} page': function(rState, ev, val, old) {
       let vm = this.viewModel;
 

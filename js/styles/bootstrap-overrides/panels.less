@@ -140,8 +140,18 @@
   /**
   * @styles accordions Accordions
   *
-  * Add the `accordion` class to a panel for additional styles when expanding/collapsing a panel.
+  * Add the `accordion` class to a panel for additional styles when expanding/collapsing a panel. Allows for plus/minus icons. Use JavaScript to add/remove the class `collapsed` to change to a minus icon.
+  * Note: because the icon is inserted as a pseudo element, padding will be removed from the heading. You have to put an `<a>` inside the heading like this:
   *
+  * ```
+  * <div class="panel-heading">
+  *  <h3 class="panel-title">
+  *   <a href="#">Step 1: Access to Justice</a>
+  *  </h3>
+  * </div>
+  * ```
+  *
+  * @demo docs/demos/panels-accordion/demo.html
   **/
 
   &.accordion {

@@ -22,25 +22,27 @@ Grid systems are used for creating page layouts through a series of rows and col
 
 We use the following media queries in our Less files to create the key breakpoints in our grid system.
 
+
 ```
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
 
 /* Small devices (tablets, 768px and up) */
-@media (min-width: @screen-sm-min) { ... }
+@@media (min-width: @screen-sm-min) { ... }
 
 /* Medium devices (desktops, 992px and up) */
-@media (min-width: @screen-md-min) { ... }
+@@media (min-width: @screen-md-min) { ... }
 
 /* Large devices (large desktops, 1200px and up) */
-@media (min-width: @screen-lg-min) { ... }
+@@media (min-width: @screen-lg-min) { ... }
 ```
 
 We occasionally expand on these media queries to include a `max-width` to limit CSS to a narrower set of devices.
 
+
 ```
-@media (max-width: @screen-xs-max) { ... }
-@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) { ... }
-@media (min-width: @screen-md-min) and (max-width: @screen-md-max) { ... }
-@media (min-width: @screen-lg-min) { ... }
+@@media (max-width: @screen-xs-max) { ... }
+@@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) { ... }
+@@media (min-width: @screen-md-min) and (max-width: @screen-md-max) { ... }
+@@media (min-width: @screen-lg-min) { ... }
 ```

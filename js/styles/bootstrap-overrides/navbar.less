@@ -42,7 +42,9 @@
   * Be sure to use a `<nav>` element or, if using a more generic element such
   * as a `<div>`, add a `role="navigation"` to every navbar to explicitly identify
   * it as a landmark region for users of assistive technologies.
-  * @demo less/demos/navbar/default/demo.html
+  *
+  * @demo docs/demos/navbar/default/demo.html
+  *
   **/
 
   /**
@@ -262,3 +264,9 @@
 @navbar-inverse-toggle-hover-bg:            #333;
 @navbar-inverse-toggle-icon-bar-bg:         #fff;
 @navbar-inverse-toggle-border-color:        #333;
+
+.navbar-brand img {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}

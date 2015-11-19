@@ -1,11 +1,12 @@
+import moment from 'moment';
 import Model from 'can/model/';
 import A2JNode from './a2j-node';
-import moment from 'moment';
 import comparator from './template-comparator';
+
 import 'can/map/define/';
 
 /**
- * @module A2JTemplate
+ * @module {function} A2JTemplate
  * @parent api-models
  *
  * An A2J Template Model represents the structure of a legal document that
@@ -15,7 +16,7 @@ import 'can/map/define/';
  *
  * A guided interview can have one or more A2J Templates associated to it.
  */
-let A2JTemplate = Model.extend({
+const A2JTemplate = Model.extend({
   id: 'template_id',
 
   findAll: '/api/guides/{guide_id}/templates',
@@ -25,12 +26,12 @@ let A2JTemplate = Model.extend({
   destroy: '/api/templates/{template_id}',
 
   /**
-   * @function makeDocumentTree
+   * @function A2JTemplate.makeDocumentTree makeDocumentTree
+   * @param {can.Map} node
    *
    * Take a rootNode and traverse the tree while making every node an
    * [A2JNode].
    *
-   * @param {can.Map} node
    */
   makeDocumentTree: function(node) {
     let branch = new A2JNode(node);
@@ -83,39 +84,43 @@ let A2JTemplate = Model.extend({
 }, {
   define: {
     /**
-     * @property {String} guide_id
+     * @property {String} A2JTemplate.prototype.guide_id guide_id
      *
      * The guided interview that this template is related to.
      */
     guide_id: {
       value: ''
     },
+
     /**
-     * @property {String} template_id
+     * @property {String} A2JTemplate.prototype.template_id template_id
      *
      * Unique identifier for this template.
      */
     template_id: {
       value: ''
     },
+
     /**
-     * @property {String} title
+     * @property {String} A2JTemplate.prototype.title title
      *
      * A human readable name for this template.
      */
     title: {
       value: 'Untitled Template'
     },
+
     /**
-     * @property {Boolean} active
+     * @property {Boolean} A2JTemplate.prototype.active active
      *
      * Whether the template should be rendered.
      */
     active: {
       value: true
     },
+
     /**
-     * @property {A2JNode} rootNode
+     * @property {A2JNode} A2JTemplate.prototype.rootNode rootNode
      *
      * The root container for any authoring components.
      */
@@ -144,19 +149,6 @@ A2JTemplate.List = A2JTemplate.List.extend({
 
   deleted() {
     return this.filter(template => !template.attr('active'));
-  },
-
-  // overriding filter due to a bug in the base implementation
-  filter(predicate) {
-    let filtered = new this.constructor();
-
-    this.each((item, index) => {
-      if (predicate.call(this, item, index, this)) {
-        filtered.push(item);
-      }
-    });
-
-    return filtered;
   },
 
   sortBy(key, direction = 'asc') {

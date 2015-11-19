@@ -1,5 +1,4 @@
 import Map from 'can/map/';
-import Template from 'author/models/template';
 import A2JTemplate from 'author/models/a2j-template';
 
 import 'can/map/define/';

@@ -11,6 +11,10 @@ let DesktopViewerVM = Map.extend({
       value: false
     },
 
+    modalContent: {
+      value: null
+    },
+
     showDemoNotice: {
       value: false
     },

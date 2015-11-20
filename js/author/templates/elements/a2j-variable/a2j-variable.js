@@ -18,7 +18,7 @@ export let A2JVariableVM = Map.extend({
       },
     },
     /**
-     * @property {Number} index
+     * @property {Number} number-index
      *
      * Values are stored in a one-based array whether the variable is repeating
      * or not.

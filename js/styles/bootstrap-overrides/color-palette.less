@@ -21,12 +21,10 @@
 
 
 /**
-* @styles bootstrap-brand-colors Bootstrap Brand Colors
+* @styles bootstrap-brand-colors A2J Brand Colors
 * @parent color-palette.less 2
 *
-* These colors are used across Bootstrap by default. The ones with names in parenthesis have
-* been mapped into the theme color palette and are used in baseline elements and custom components.
-* However these variables persist to enable their usage in bootstrap components.
+* These colors are used across both applications by default.
 *
 * @iframe docs/demos/color-palette/brand-colors/demo.html
 **/
@@ -75,6 +73,12 @@
   * @parent color-palette.less 3
   *
   * We define a variable for each color of the step using an `id="step[num]"` in the HTML and then calling this style in the CSS using `@step0: #EFEFC6;`. Sixteen colors (starting with zero) are defined for sixteen uniquely colored steps. All 16 are put into an array in Less called `@steps` which is used to style steps throughout the app.
+  *
+  * You can add any of these colors as a background to an element by applying a class of `step-X` where `X` is the step number.
+  *
+  * ```
+  * <div class="step-5"> ... </div>
+  * ```
   *
   * @demo docs/demos/step-colors/demo.html
 **/

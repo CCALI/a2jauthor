@@ -73,8 +73,9 @@ export default Map.extend({
       let originalNode = children.attr(index);
       let clonedNode = new Map(originalNode.attr());
 
-      // make sure cloned node is not in editable mode.
-      clonedNode.attr('state').attr('editActive', false);
+      // the cloned node should be "selected" (ready to be edited)
+      originalNode.attr('editActive', false);
+      clonedNode.attr('state').attr('editActive', true);
 
       // insert cloned node below the original
       children.splice(clonedNodeIndex, 0, clonedNode);

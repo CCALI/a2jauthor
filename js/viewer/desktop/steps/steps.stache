@@ -16,7 +16,8 @@
           r-state="{rState}"
           p-state="{pState}"
           m-state="{mState}"
-          interview="{interview}" />
+          interview="{interview}"
+          {(modal-content)}="modalContent" />
       </div><!-- bubble -->
 
       <div class="avatar-wrapper">

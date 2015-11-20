@@ -9,6 +9,9 @@ export default Map.extend({
   define: {
     currentPage: {
       value: null
+    },
+    modalContent: {
+      value: null
     }
   },
 

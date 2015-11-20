@@ -74,7 +74,9 @@ $.when(iDfd, pDfd).then(function(interview, pState) {
   rState.attr('interview', interview);
   setMobileDesktopClass(isMobile, $('body'));
 
+  let modalContent = can.compute();
+
   $('#viewer-app').append(template({
-    rState, pState, mState, interview, logic, lang, isMobile
+    rState, pState, mState, interview, logic, lang, isMobile, modalContent
   }));
 });

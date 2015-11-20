@@ -15,9 +15,7 @@ export default Component.extend({
     'a:regex(href,popup\://) click': function(el, ev) {
       ev.preventDefault();
       var p = this.scope.attr('interview.pages').find(el[0].pathname.replace('//', ''));
-      this.scope.attr('popupPage', p);
-
-      this.element.find('#pageModal').modal();
+      this.viewModel.attr('modalContent', p);
     },
 
     'a click': function(el) {
@@ -58,10 +56,6 @@ export default Component.extend({
       }
 
       vm.setCurrentPage();
-    },
-
-    '#pageModal hidden.bs.modal': function(el, ev) {
-      this.scope.attr('popupPage', null);
     }
   }
 });

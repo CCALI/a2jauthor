@@ -23,7 +23,8 @@
           r-state="{rState}"
           p-state="{pState}"
           m-state="{mState}"
-          interview="{interview}" />
+          interview="{interview}"
+          {(modal-content)}="modalContent" />
       </div><!-- app-content -->
 
       {{#if authorBrandLogo}}

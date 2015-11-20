@@ -1,5 +1,6 @@
 <can-import from="viewer/mobile/" />
 <can-import from="viewer/desktop/" />
+<can-import from="viewer/modal/" />
 <can-import from="viewer/styles.less!" />
 
 {{#if isMobile}}
@@ -19,5 +20,12 @@
     p-state="{pState}"
     m-state="{mState}"
     interview="{interview}"
-    class="bootstrap-styles" />
+    class="bootstrap-styles"
+    {(modal-content)}="modalContent" />
 {{/if}}
+<a2j-modal
+  logic="{logic}"
+  interview="{interview}"
+  r-state="{rState}"
+  class="bootstrap-styles"
+  {(modal-content)}="modalContent" />

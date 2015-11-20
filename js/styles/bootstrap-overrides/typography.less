@@ -24,6 +24,7 @@
 * `typography.less` All the font sizes, headings, and weights for the theme
 *
 **/
+@import '../viewer/variables.less';
 
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
 
@@ -33,8 +34,6 @@
 @font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
 @font-family-base:        @font-family-sans-serif;
 
-//* Unit-less `line-height` for use in components like buttons.
-@line-height-base:        1.428571429; // 20/14
 //* Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
 @line-height-computed:    floor((@font-size-base * @line-height-base)); // ~20px
 

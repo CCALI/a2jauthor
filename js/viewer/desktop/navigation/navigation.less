@@ -1,9 +1,14 @@
+@import "../../../styles/viewer/variables.less";
+
 a2j-viewer-navigation {
   .demo-notice .alert {
     border-top: 0;
-    margin-bottom: 0;
     text-align: center;
     border-bottom: 1px solid #e7e7e7;
+    position: fixed;
+    top: @viewer-navbar-height;
+    width: 100%;
+    z-index: 11;
   }
   .navbar-nav.navbar-right {
     margin-right: 0;

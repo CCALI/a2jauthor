@@ -4,12 +4,6 @@ import A2JNode from 'author/models/a2j-node';
 import template from './a2j-template.stache!';
 import A2JTemplateVM from './a2j-template-vm';
 
-import 'author/alert/';
-import './a2j-template.less!';
-import 'author/templates/elements/free-form/';
-import 'author/templates/elements/a2j-variable/';
-import 'author/templates/elements/section-title/';
-
 export default Component.extend({
   template,
   tag: 'a2j-template',

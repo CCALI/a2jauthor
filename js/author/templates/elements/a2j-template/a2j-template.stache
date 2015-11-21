@@ -1,3 +1,9 @@
+<can-import from="author/alert/"/>
+<can-import from="author/templates/elements/free-form/"/>
+<can-import from="author/templates/elements/a2j-variable/"/>
+<can-import from="author/templates/elements/section-title/"/>
+<can-import from="author/templates/elements/a2j-template/a2j-template.less!"/>
+
 <app-alert auto-close="true" alert-type="success" open="{showUpdateSuccess}">
   <p>Template updated successfully.</p>
 </app-alert>
@@ -6,10 +12,21 @@
   {{#each rootNode.children}}
     <li
       draggable="true"
-      data-node-index="{{@index}}"
       class="node-wrapper{{#if isBeingDragged}} drag-placeholder{{/if}}">
 
-      {{a2jParse component state}}
+      {{#if deleted}}
+        <app-alert
+          open="true"
+          auto-close="true"
+          dismissible="true"
+          alert-type="default"
+          (closed)="removeNodeFromChildren(@index)">
+
+          <p>Element has been deleted - <a href="#" ($click)="restoreNode(@index)">Restore</a></p>
+        </app-alert>
+      {{/if}}
+
+      {{a2jParse(component, state, @index)}}
     </li>
   {{/each}}
 </ul>

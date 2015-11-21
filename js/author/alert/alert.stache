@@ -1,3 +1,5 @@
+<can-import from="author/alert/alert.less!"/>
+
 <div class="alert {{alertTypeClass}} {{#if dismissible}}alert-dismissible{{/if}}" role="alert">
   {{#if dismissible}}
     <a class="close" aria-label="Close" data-dismiss="alert" can-click="closeAlert">

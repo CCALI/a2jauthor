@@ -2,7 +2,7 @@ import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './alert.stache!';
 
-import './alert.less!';
+import 'can/util/event';
 import 'can/map/define/';
 
 const alertTypeClasses = {
@@ -131,7 +131,7 @@ export let Alert = Map.extend({
     this.clearAutoCloseTimeout();
 
     let timeoutId = setTimeout(() => {
-      this.attr('open', false);
+      this.closeAlert();
     }, delay);
 
     this.attr('autoCloseTimeoutId', timeoutId);
@@ -175,13 +175,14 @@ export default Component.extend({
 
     '{viewModel} open': function() {
       let $el = this.element;
-      let open = this.viewModel.attr('open');
+      let vm = this.viewModel;
+      let open = vm.attr('open');
 
       if (open) {
         $el.slideDown();
       } else {
-        $el.slideUp();
-        this.viewModel.clearAutoCloseTimeout();
+        $el.slideUp(() => can.trigger(vm, 'closed'));
+        vm.clearAutoCloseTimeout();
       }
     }
   },

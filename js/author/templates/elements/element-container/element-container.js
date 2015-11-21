@@ -71,9 +71,8 @@ export default Component.extend({
       if ($a2jTemplate.length) {
         let rootNodeScope = $a2jTemplate.viewModel();
 
-        // get node's index value from the list item wrapper element
-        let $listItem = $el.parents('.node-wrapper');
-        let nodeIndex = $listItem.data('node-index');
+        // gets node index in the children array
+        let nodeIndex = vm.attr('nodeIndex');
 
         vm.attr('rootNodeScope', rootNodeScope);
         rootNodeScope.registerNodeViewModel(vm, nodeIndex);
@@ -93,6 +92,18 @@ export default Component.extend({
 
     '{viewModel} selected': function() {
       this.toggleEditActiveNode();
+    },
+
+    '{viewModel.parentScope} deleted': function(ps, evt, deleted) {
+      let $el = this.element;
+
+      if (deleted) {
+        $el.slideUp('fast');
+        $el.siblings('element-options-pane').hide();
+      } else {
+        $el.slideDown('fast');
+        $el.siblings('element-options-pane').show();
+      }
     },
 
     toggleEditActiveNode() {

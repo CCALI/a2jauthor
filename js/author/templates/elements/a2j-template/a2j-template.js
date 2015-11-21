@@ -10,10 +10,12 @@ export default Component.extend({
   viewModel: A2JTemplateVM,
 
   helpers: {
-    a2jParse(component, state) {
-      component = component.isComputed ? component() : component;
+    a2jParse(component, state, index) {
+      index = index.isComputed ? index() : index;
       state = state.isComputed ?  state() : state;
+      component = component.isComputed ? component() : component;
 
+      state.attr('nodeIndex', index);
       state.attr('editEnabled', this.attr('editEnabled'));
 
       return stache(component)(state);

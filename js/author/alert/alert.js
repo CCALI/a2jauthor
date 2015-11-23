@@ -14,7 +14,7 @@ const alertTypeClasses = {
 };
 
 /**
- * @module {Module} alert <app-alert>
+ * @module {Module} author/alert <app-alert>
  * @parent api-components
  *
  * Wrapper component for bootstrap's alert elements. It adds the ability to
@@ -31,7 +31,7 @@ const alertTypeClasses = {
 
 /**
  * @property {can.Map} alert.ViewModel
- * @parent alert
+ * @parent author/alert
  *
  * `<app-alert>`'s viewModel.
  */

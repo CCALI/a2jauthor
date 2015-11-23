@@ -1,3 +1,6 @@
+<can-import from="author/button-toolbar/"/>
+<can-import from="author/interviews/toolbar/toolbar.less!"/>
+
 <button-toolbar>
   <ul class="nav navbar-nav">
     <li><a href="#" class="open-guide"><span class="glyphicon-folder-open"></span> Open</a></li>

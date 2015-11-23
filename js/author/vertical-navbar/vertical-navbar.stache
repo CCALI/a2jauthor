@@ -1,3 +1,5 @@
+<can-import from="author/vertical-navbar/vertical-navbar.less!"/>
+
 <div class="vertical-navbar guidemenu
   {{#is theme 'inverse'}}navbar-inverse{{/is}}
   {{#is position 'left'}}navbar-fixed-left{{else}}navbar-fixed-right{{/if}}">
@@ -7,7 +9,10 @@
   <nav class="nav navbar-nav">
     {{#each items}}
       <li ref="{{ref}}" class="{{#if active}}active{{/if}}">
-        <a can-click="setPage" href="#"><span class="icon {{icon}}"></span> <span class="title">{{title}}</span></a>
+        <a href="#" ($click)="setPage(this)">
+          <span class="icon {{icon}}"></span>
+          <span class="title">{{title}}</span>
+        </a>
       </li>
     {{/each}}
   </nav>

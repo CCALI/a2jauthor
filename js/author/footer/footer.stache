@@ -1,3 +1,5 @@
+<can-import from="author/footer/footer.less!"/>
+
 <div class="cajafooter">
   <span id="saveStatus"></span>
   <span id="CAJAStatus"></span>

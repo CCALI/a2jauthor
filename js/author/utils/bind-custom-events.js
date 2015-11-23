@@ -25,14 +25,34 @@ export default function bindCustomEvents(appState) {
 
   // internal parts of the code call `window.traceAlert` which no longer
   // updates the DOM manually but triggers this event
-  $authorApp.on('author:trace-alert', function(evt, alert) {
-    appState.attr('viewerAlertMessages').push({message: alert, open: true});
+  $authorApp.on('author:trace-alert', function(evt, data) {
+    let alertMessages = appState.attr('viewerAlertMessages');
+    let guideId = alertMessages.attr('guideId');
+
+    // we set a static `guideId` property to the alertMessages list to avoid
+    // mixing alert messages from different interviews when the selected
+    // interview changes.
+    if (!guideId || (guideId && guideId !== data.guideId)) {
+      alertMessages.replace([]);
+      alertMessages.attr('guideId', data.guideId);
+    }
+
+    alertMessages.push({message: data.message, open: true});
   });
 
   // user double clicks a guide in the interview tab or clicks the open guide
   // button in the toolbar.
   $authorApp.on('author:guide-selected', function(evt, guideId) {
-    appState.attr('viewerAlertMessages').replace([]);
+    let alertMessages = appState.attr('viewerAlertMessages');
+
+    // this check is similar to the one made in the `author:trace-alert`,
+    // *this* covers the case where a selected interview does not generate
+    // alert messages (which causes `author:trace-alert` to not fire at all)
+    if (guideId !== alertMessages.attr('guideId')) {
+      alertMessages.replace([]);
+      alertMessages.attr('guideId', guideId);
+    }
+
     appState.attr('guideId', guideId);
   });
 

@@ -4,7 +4,7 @@ import List from 'can/list/';
 import 'can/map/define/';
 
 /**
- * @module {function} AppState
+ * @module {function} author/models/app-state AppState
  * @parent api-models
  *
  * This is the global application state.
@@ -13,7 +13,7 @@ export default Map.extend({
 
   define: {
     /**
-     * @property {String} AppState.prototype.page
+     * @property {String} AppState.prototype.page page
      *
      * The name of the "tab" the author is seeing, it is bound to can.route.
      *
@@ -23,7 +23,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {String} AppState.prototype.guideId
+     * @property {String} AppState.prototype.guideId guideId
      *
      * The identifier to the guided interview currently loaded.
      */
@@ -33,7 +33,20 @@ export default Map.extend({
     },
 
     /**
-     * @property {Boolean} AppState.prototype.showDebugPanel
+     * @property {String} AppState.prototype.guideTitle guideTitle
+     *
+     * The title of the current selected guided interview.
+     */
+    guideTitle: {
+      serialize: false,
+      get() {
+        let guideId = this.attr('guideId');
+        return (guideId && window.gGuide) ? window.gGuide.title : '';
+      }
+    },
+
+    /**
+     * @property {Boolean} AppState.prototype.showDebugPanel showDebugPanel
      *
      * Whether to show the debug panel (variables and trace panels) when
      * the author is previewing the interview.
@@ -48,7 +61,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {Boolean} AppState.protoype.previewMode
+     * @property {Boolean} AppState.protoype.previewMode previewMode
      *
      * Whether user has toggled the interview preview mode, the viewer
      * app will be rendered if `true`.
@@ -63,7 +76,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {String} AppState.protoype.previewPageName
+     * @property {String} AppState.protoype.previewPageName previewPageName
      *
      * The name of the page that will be loaded when user clicks the interview
      * button in the edit page popup, when empty the first page of the interview
@@ -75,7 +88,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {String} AppState.protoype.interviewPageName
+     * @property {String} AppState.protoype.interviewPageName interviewPageName
      *
      * The name of the page that is currently being previewed in the viewer
      * app, it is bound to viewer's route page property.
@@ -86,7 +99,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {String} AppState.protoype.viewerAlertMessages
+     * @property {String} AppState.protoype.viewerAlertMessages viewerAlertMessages
      *
      * List of error messages meant to be displayed to the user (author) in
      * preview mode.
@@ -97,7 +110,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {String} AppState.protoype.viewerInterview
+     * @property {String} AppState.protoype.viewerInterview viewerInterview
      *
      * The Interview instance used by the viewer app in preview mode.
      */

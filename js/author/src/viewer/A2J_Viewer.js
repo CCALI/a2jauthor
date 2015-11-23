@@ -25,7 +25,10 @@ function versionString() {
 // to users so logging only there may hide a defect.
 // Since there may be more than one error, dump them into a scrollable list.
 function traceAlert(html) {
-  $('#author-app').trigger('author:trace-alert', html);
+  $('#author-app').trigger('author:trace-alert', {
+    message: html,
+    guideId: window.gGuideID
+  });
 
   // trace alert into console too.
   trace(String(html).stripHTML());

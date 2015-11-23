@@ -28,7 +28,7 @@
   {{#if previewMode}}style="display: none;"{{/if}}>
 
   <div id="cajaheader" class="hidestart">
-    <app-header page="{{page}}"></app-header>
+    <app-header {page}="page" {title}="guideTitle"/>
   </div>
 
   <div class="guideio"></div>

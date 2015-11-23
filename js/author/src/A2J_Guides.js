@@ -31,10 +31,10 @@ function guideLoaded(data) {
   }
 
   gGuideID = data.gid;
-  $('#author-app').trigger('author:guide-selected', gGuideID);
-
   gGuide = parseXML_Auto_to_CAJA(cajaDataXML);
   gGuidePath = urlSplit(data.path).path;
+
+  $('#author-app').trigger('author:guide-selected', gGuideID);
 
   guideStart('');
   setProgress('');
@@ -123,9 +123,6 @@ function guideStart(startTabOrPage) {
   }
 
   updateTOC();
-
-  // $('#guidepanel ul li a:first').html(gGuide.title);
-  $('#guidetitle').html(gGuide.title);
 
   // ### Upload file(s) to current guide
   $('#fileupload').addClass('fileupload-processing');

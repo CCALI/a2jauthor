@@ -1,3 +1,7 @@
+import moment from 'moment';
+import _isNaN from 'lodash/lang/isNaN';
+import _isString from 'lodash/lang/isString';
+
 /**
  * @module {{}} author/models/template-comparator
  *
@@ -14,43 +18,58 @@
 export default {
   number(key, direction) {
     return function(a, b) {
-      if (direction === 'desc') {
-        [a, b] = [b, a];
-      }
+      // swap properties if sorted `desc`
+      if (direction === 'desc') [a, b] = [b, a];
 
-      if (a.attr(key) === b.attr(key)) {
+      let numberA = parseInt(a.attr(key), 10);
+      let numberB = parseInt(b.attr(key), 10);
+
+      // do nothing if properties are not valid numbers
+      if (_isNaN(numberA) || _isNaN(numberB)) return;
+
+      if (numberA === numberB) {
         return a.attr('active') ? -1 : (b.attr('active') ? -1 : 0);
       }
 
-      return a.attr(key) - b.attr(key);
+      return numberA - numberB;
     };
   },
 
   string(key, direction) {
     return function(a, b) {
-      if (direction === 'desc') {
-        [a, b] = [b, a];
-      }
+      // swap properties if sorted `desc`
+      if (direction === 'desc') [a, b] = [b, a];
 
-      if (a.attr(key).localeCompare(b.attr(key)) === 0) {
+      let stringA = a.attr(key);
+      let stringB = b.attr(key);
+
+      // do nothing if properties are not valid strings
+      if (!_isString(stringA) || !_isString(stringB)) return;
+
+      if (stringA.localeCompare(stringB) === 0) {
         return a.attr('active') ? -1 : (b.attr('active') ? -1 : 0);
       }
 
-      return a.attr(key).localeCompare(b.attr(key), {numberic: true});
+      return stringA.localeCompare(stringB, {numeric: true});
     };
   },
 
   moment(key, direction) {
     return function(a, b) {
-      if (direction === 'desc') {
-        [a, b] = [b, a];
-      }
+      // swap properties if sorted `desc`
+      if (direction === 'desc') [a, b] = [b, a];
 
-      if (a.attr(key).isSame(b.attr(key))) {
+      let momentA = a.attr(key);
+      let momentB = b.attr(key);
+
+      // do nothing if properties are not valid moment instances
+      if (!moment.isMoment(momentA) || !moment.isMoment(momentB)) return;
+
+      if (momentA.isSame(momentB)) {
         return a.attr('active') ? -1 : (b.attr('active') ? -1 : 0);
       }
 
-      return a.attr(key).isAfter(b.attr(key)) ? -1 : 1;
+      return momentA.isAfter(momentB) ? -1 : 1;
     };
   }
 };

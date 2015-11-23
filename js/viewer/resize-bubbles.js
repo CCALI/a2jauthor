@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import _inRange from 'lodash/number/inRange';
+import can from 'can';
 
 export function resizeBubbles() {
   let $guideBubble = $('#guideBubble');
@@ -94,5 +95,9 @@ export function resizeSteps(interviewSteps) {
 
     let nextWidth = (sidewalkHeight * remainingPercentage) / denominator;
     $(el).css(computeStepStyles(nextWidth));
+
+    // resize sign text to fit in new sign size
+    let signText = $(el).parent().find('a2j-viewer-sign-text')[0];
+    can.trigger(signText, 'resize');
   });
 };

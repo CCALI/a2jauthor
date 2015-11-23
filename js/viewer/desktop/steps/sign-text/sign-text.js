@@ -3,6 +3,7 @@ import _trunc from 'lodash/string/trunc';
 import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './sign-text.stache!';
+import can from 'can';
 
 import 'can/map/define/';
 import 'jquery-textfill';
@@ -32,6 +33,7 @@ export default Component.extend({
   events: {
     inserted() {
       let $p = this.element.find('div p');
+      let $parent = $p.parent();
 
       let resizeText = function() {
         // remove inline line-height set by updateLineHeight function
@@ -51,14 +53,20 @@ export default Component.extend({
           $p.css('line-height', newLineHight + 'px');
         };
 
-        $p.parent().textfill({
+        let maxFontPixels = Math.floor($parent.height() / 2);
+
+        $parent.textfill({
           innerTag: 'p',
-          success: updateLineHeight
+          success: updateLineHeight,
+          maxFontPixels: maxFontPixels
         });
       };
 
       resizeText();
       $(window).on('resize', resizeText);
+
+      // synthetic resize event fired when user navigates to next step
+      can.bind.call(this.element, 'resize', resizeText);
     }
   }
 });

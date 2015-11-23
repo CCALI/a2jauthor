@@ -1,13 +1,6 @@
 import Component from 'can/component/';
-import Templates from './templates-vm';
+import TemplatesVM from './templates-vm';
 import template from './templates.stache!';
-
-import './list/';
-import './list/sortbar/';
-import './list/toolbar/';
-import 'author/alert/';
-import 'author/loading/';
-import './templates.less!';
 
 /**
  * @module {Module} templatesPage <templates-page>
@@ -27,8 +20,8 @@ import './templates.less!';
 export default Component.extend({
   template,
   leakScope: false,
-  viewModel: Templates,
   tag: 'templates-page',
+  viewModel: TemplatesVM,
 
   helpers: {
     listStateClassName() {

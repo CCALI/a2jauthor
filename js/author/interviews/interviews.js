@@ -4,9 +4,8 @@ import Guide from 'author/models/guide';
 import template from './interviews.stache!';
 
 import 'can/map/define/';
-import './interviews.less!';
 
-let Interviews = Map.extend({
+let InterviewsVM = Map.extend({
   define: {
     blankInterview: {
       get() {
@@ -30,7 +29,7 @@ export default Component.extend({
   template,
   leakScope: false,
   tag: 'interviews-page',
-  viewModel: Interviews,
+  viewModel: InterviewsVM,
 
   events: {
     inserted: function() {

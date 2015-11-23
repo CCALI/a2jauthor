@@ -1,3 +1,6 @@
+<can-import from="author/loading/"/>
+<can-import from="author/interviews/interviews.less!"/>
+
 {{#if interviews.isPending}}
   <app-loading></app-loading>
 {{/if}}

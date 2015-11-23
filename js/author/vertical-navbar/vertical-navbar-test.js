@@ -1,6 +1,7 @@
-import 'steal-mocha';
 import assert from 'assert';
-import {VerticalNavbar} from './vertical-navbar';
+import {VerticalNavbarVM} from './vertical-navbar';
+
+import 'steal-mocha';
 
 describe('<vertical-navbar>', function() {
 
@@ -8,7 +9,7 @@ describe('<vertical-navbar>', function() {
     var vm;
 
     beforeEach(function() {
-      vm = new VerticalNavbar();
+      vm = new VerticalNavbarVM();
     });
 
     it('defaults \'position\' to left', function() {

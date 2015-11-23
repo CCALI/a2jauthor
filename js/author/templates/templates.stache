@@ -1,10 +1,16 @@
+<can-import from="author/alert/"/>
+<can-import from="author/loading/"/>
+<can-import from="author/templates/list/"/>
+<can-import from="author/templates/list/sortbar/"/>
+<can-import from="author/templates/list/toolbar/"/>
+<can-import from="author/templates/templates.less!"/>
+
 {{#if templatesPromise.isResolved}}
   <templates-toolbar
     class="clearfix"
     filter="{activeFilter}"
-    search-token="{searchToken}",
-    templates="{templates}">
-  </templates-toolbar>
+    templates="{templates}"
+    search-token="{searchToken}"/>
 {{/if}}
 
 <div class="page">
@@ -40,7 +46,7 @@
 
   <div class="container-fluid">
     {{#if templatesPromise.isPending}}
-      <app-loading></app-loading>
+      <app-loading/>
     {{/if}}
 
     {{#if templatesPromise.isResolved}}
@@ -65,13 +71,12 @@
       {{/if}}
 
       {{#if showTemplatesList}}
-        <templates-sortbar criteria="{sortCriteria}"></templates-sortbar>
+        <templates-sortbar criteria="{sortCriteria}"/>
 
         <templates-list
           templates="{displayList}"
           class="{{listStateClassName}}"
-          is-draggable="{listIsDraggable}">
-        </templates-list>
+          is-draggable="{listIsDraggable}"/>
       {{/if}}
     {{/if}}
   </div>

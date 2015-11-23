@@ -3,7 +3,6 @@ import Component from 'can/component/';
 import template from './popover.stache!';
 import _includes from 'lodash/collection/includes';
 
-import './popover.less!';
 import 'can/map/define/';
 
 const placements = ['top', 'right', 'bottom', 'left', 'auto'];

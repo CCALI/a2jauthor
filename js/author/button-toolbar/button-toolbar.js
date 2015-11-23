@@ -1,8 +1,6 @@
 import Component from 'can/component/';
 import template from './button-toolbar.stache!';
 
-import './button-toolbar.less!';
-
 /**
  * @module {function} components/button-toolbar/ <button-toolbar>
  * @parent api-components

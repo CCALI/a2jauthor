@@ -4,6 +4,22 @@ import Component from 'can/component/';
 import template from './debug-menu.stache!';
 import _isFunction from 'lodash/lang/isFunction';
 
+/**
+ * @module {Module} author/debug-menu <author-debug-menu>
+ * @parent api-components
+ *
+ * This component renders some buttons that allow the user (author) to debug
+ * the interview in the "preview" tab. Among these options there is the button
+ * that toggles the variables panel and the button that takes the user straight
+ * to the page edit modal.
+ *
+ * ## Use
+ *
+ * @codestart
+ *   <author-debug-menu {(app-state)}="appState" />
+ * @codeend
+ */
+
 let DebugMenuVM = Map.extend({
   resumeEdit() {
     this.attr('appState.page', 'pages');

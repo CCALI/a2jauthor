@@ -250,15 +250,19 @@
     <!-- Template Tab -->
     <div class="tab-panel has-toolbar" id="tabsTemplate">
       {{#is page "templates"}}
-        {{#eq action 'assemble'}}
-          <template-assembly guide-id="{guideId}" template-id="{id}"></template-assembly>
-        {{else}}
-          {{#if id}}
-            <template-edit-page template-id="{id}"></template-edit-page>
+        {{#if guideId}}
+          {{#eq action 'assemble'}}
+            <template-assembly
+              template-id="{id}"
+              guide-id="{guideId}" />
           {{else}}
-            <templates-page app-state="{.}"></templates-page>
-          {{/if}}
-        {{/eq}}
+            {{#if id}}
+              <template-edit-page template-id="{id}"></template-edit-page>
+            {{else}}
+              <templates-page app-state="{.}"></templates-page>
+            {{/if}}
+          {{/eq}}
+        {{/if}}
       {{/is}}
     </div>
 

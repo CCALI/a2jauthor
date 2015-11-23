@@ -4,12 +4,24 @@
   <div class="container-fluid">
     <div class="row">
       <div class="title-column col-xs-8">
-        <h1 id="guidetitle" class="guidetitle">A2J Guided Interviews<sup>®</sup></h1>
+        <h1 class="guidetitle">
+          {{#if title}}
+            {{title}}
+          {{else}}
+            A2J Guided Interviews<sup>®</sup>
+          {{/if}}
+        </h1>
       </div>
 
       <div class="utility-links col-xs-4 text-right">
-        <button id="settings" class="btn btn-link"><span class="glyphicon-cog"></span> Settings</button>
-        <a href="{{helpPageUrl}}" target="_blank" class="btn btn-link"><span class="glyphicon-lifebuoy"></span> Help</a>
+        <button id="settings" class="btn btn-link">
+          <span class="glyphicon-cog"></span> Settings
+        </button>
+
+        <a href="{{helpPageUrl}}" target="_blank" class="btn btn-link">
+          <span class="glyphicon-lifebuoy"></span> Help
+        </a>
+
         <br />
         <span class="authorenv"></span>
       </div>

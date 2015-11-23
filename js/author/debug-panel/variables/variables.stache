@@ -1,0 +1,43 @@
+<can-import from="author/debug-panel/variables/variables.less!"/>
+
+<div id="viewer-var-form" class="bootstrap-styles">
+  <button id="uploadAnswer" class="btn btn-default btn-sm"><span class="glyphicon-folder-open"></span> Open</button>
+  <input type="file" id="uploadAnswerFileInput" />
+
+  <button id="downloadAnswer" class="btn btn-default btn-sm">
+    <span class="glyphicon-floppy"></span> Save
+  </button>
+
+  <button id="clearAnswer" class="btn btn-default btn-sm" ($click)="clearAnswers">
+    <span class="glyphicon-trash"></span> Clear
+  </button>
+
+  <input
+    type="text"
+    placeholder="Filter"
+    id="viewer-var-filter"
+    class="form-control input-sm"/>
+
+  <div class="varvalpanel">
+    <table class="A2JVars table-condensed">
+      <thead>
+        <tr valign="top">
+          <th>Name</th>
+          <th>Loop</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {{#each variables}}
+          <tr valign="top">
+            <td>{{name}}</td>
+            <td>{{repeating}}</td>
+            <td>{{value}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+

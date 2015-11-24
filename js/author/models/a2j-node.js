@@ -3,7 +3,7 @@ import List from 'can/list/';
 import 'can/map/define/';
 
 /**
- * @module A2JNode
+ * @module {Module} author/models/a2j-node A2JNode
  * @parent api-models
  *
  * The A2J Node Map represents an [A2J] node. From its root node
@@ -14,15 +14,16 @@ import 'can/map/define/';
 export default Map.extend({
   define: {
     /**
-     * @property {String} component
+     * @property {String} A2JNode.prototype.define.component component
      *
      * A component tag name for an A2J component.
      */
     component: {
       value: ''
     },
+
     /**
-     * @property {can.Map} state
+     * @property {can.Map} A2JNode.prototype.define.state state
      *
      * A node's state is a map of view model properties passed to
      * its component.
@@ -30,8 +31,9 @@ export default Map.extend({
     state: {
       Value: Map
     },
+
     /**
-     * @property {can.List} children
+     * @property {can.List} A2JNode.prototype.define.children children
      *
      * If a node has other nodes beneath it then its a branch.
      */

@@ -2,7 +2,7 @@
 
 {{#with template}}
   <div class="template-wrapper{{#if deleting}} deleting{{/if}}{{#if restoring}} restoring{{/if}}">
-    <a class="template-link" href="{{routeUrl page='templates' action='edit' id=template_id}}">
+    <a class="template-link" href="{{routeUrl page='templates' action='edit' id=templateId}}">
 
       <div class="template-order">
         <span class="build-order">{{buildOrder}}</span><br>
@@ -22,7 +22,7 @@
           </div>
 
           <ul class="template-menu col-sm-3">
-            <li class="last-modified">{{lastModifiedFromNow}}</li>
+            <li class="last-modified">{{updatedAtFromNow}}</li>
             <li class="divider"></li>
             {{#if hovered}}
               {{#if active}}

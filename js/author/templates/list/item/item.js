@@ -76,6 +76,23 @@ export let Item = Map.extend({
     restoring: {
       type: 'boolean',
       value: false
+    },
+
+    /**
+     * @property {String} templatesListItem.ViewModel.prototype.define.updatedAtFromNow updatedAtFromNow
+     * @parent templatesListItem.ViewModel
+     *
+     * This a string with the relative time since the template was updated.
+     *
+     * e.g: "one month ago"
+     */
+    updatedAtFromNow: {
+      get() {
+        let template = this.attr('template');
+        let updatedAt = template.attr('updatedAt');
+        return updatedAt.isValid() ? updatedAt.fromNow() : '';
+
+      }
     }
   },
 

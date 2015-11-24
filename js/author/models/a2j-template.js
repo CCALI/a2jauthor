@@ -17,13 +17,13 @@ import 'can/map/define/';
  * A guided interview can have one or more A2J Templates associated to it.
  */
 const A2JTemplate = Model.extend({
-  id: 'template_id',
+  id: 'templateId',
 
-  findAll: '/api/guides/{guide_id}/templates',
-  findOne: '/api/templates/{template_id}',
   create: '/api/templates',
-  update: '/api/templates/{template_id}',
-  destroy: '/api/templates/{template_id}',
+  update: '/api/templates/{templateId}',
+  destroy: '/api/templates/{templateId}',
+  findOne: '/api/templates/{templateId}',
+  findAll: '/api/guides/{guideId}/templates',
 
   /**
    * @function A2JTemplate.makeDocumentTree makeDocumentTree
@@ -84,20 +84,20 @@ const A2JTemplate = Model.extend({
 }, {
   define: {
     /**
-     * @property {String} A2JTemplate.prototype.guide_id guide_id
+     * @property {String} A2JTemplate.prototype.guideId guideId
      *
      * The guided interview that this template is related to.
      */
-    guide_id: {
+    guideId: {
       value: ''
     },
 
     /**
-     * @property {String} A2JTemplate.prototype.template_id template_id
+     * @property {String} A2JTemplate.prototype.templateId templateId
      *
      * Unique identifier for this template.
      */
-    template_id: {
+    templateId: {
       value: ''
     },
 
@@ -130,6 +130,17 @@ const A2JTemplate = Model.extend({
           type: 'a2j-template'
         });
       }
+    },
+
+    /**
+     * @property {moment} A2JTemplate.prototype.updatedAt updatedAt
+     *
+     * The date of the template's most recent update.
+     */
+    updatedAt: {
+      get(lastVal) {
+        return moment(lastVal);
+      }
     }
   },
 
@@ -161,7 +172,7 @@ A2JTemplate.List = A2JTemplate.List.extend({
         this.attr('comparator', comparator.string(key, direction));
         break;
 
-      case 'lastModified':
+      case 'updatedAt':
         this.attr('comparator', comparator.moment(key, direction));
         break;
     }

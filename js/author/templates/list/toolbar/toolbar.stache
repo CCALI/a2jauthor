@@ -31,7 +31,7 @@
 
       <answer-loader/>
 
-      <a href="{{routeUrl page='templates' action='assemble' guideId=templates.0.guide_id}}">
+      <a href="{{routeUrl page='templates' action='assemble' guideId=templates.0.guideId}}">
         <button class="btn btn-default navbar-btn test-compile">
           <span class="glyphicon-file-pdf"></span> Test Assemble
         </button>

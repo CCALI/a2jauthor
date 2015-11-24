@@ -78,7 +78,7 @@ describe('<templates-list-item>', function() {
       template = new A2JTemplate({
         active: true,
         buildOrder: 1,
-        lastModified: '',
+        updatedAt: '',
         title: 'Foo bar baz',
         description: 'Lorem ipsum dolor sit amet, homero salutandi te sea'
       });

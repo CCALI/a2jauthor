@@ -1,7 +1,8 @@
 import can from 'can';
-import A2JTemplate from '../a2j-template';
-import A2JNode from '../a2j-node';
 import assert from 'assert';
+import A2JNode from '../a2j-node';
+import A2JTemplate from '../a2j-template';
+
 import 'steal-mocha';
 
 describe('A2JTemplate Model', function() {
@@ -15,7 +16,9 @@ describe('A2JTemplate Model', function() {
   });
 
   it('findOne', function() {
-    return A2JTemplate.findOne({ template_id: 2112 }).then((a2jTemplate) => {
+    let promise = A2JTemplate.findOne({templateId: 2112});
+
+    return promise.then(function(a2jTemplate) {
       assert.ok(a2jTemplate.attr('rootNode') instanceof A2JNode);
       assert.ok(a2jTemplate.attr('rootNode.children.0') instanceof A2JNode);
       assert.ok(a2jTemplate.attr('rootNode.children.1') instanceof A2JNode);
@@ -23,8 +26,10 @@ describe('A2JTemplate Model', function() {
   });
 
   it('findAll', function() {
-    return A2JTemplate.findAll({ guide_id: 1261 }).then((a2jTemplates) => {
-      a2jTemplates.map((a2jTemplate) => {
+    let promise = A2JTemplate.findAll({guideId: 1261});
+
+    return promise.then(function(a2jTemplates) {
+      a2jTemplates.each(function(a2jTemplate) {
         assert.ok(a2jTemplate.attr('rootNode') instanceof A2JNode);
 
         if (a2jTemplate.attr('rootNode.children.length')) {
@@ -35,39 +40,38 @@ describe('A2JTemplate Model', function() {
   });
 
   it('create', function() {
-    let a2jTemplate = new A2JTemplate({ title: 'Best Template' });
+    let a2jTemplate = new A2JTemplate({title: 'Best Template'});
 
-    return a2jTemplate.save().then((bestTemplate) => {
+    return a2jTemplate.save().then(function(bestTemplate) {
       assert.equal(bestTemplate.attr('title'), 'Best Template');
     });
   });
 
   it('update', function(done) {
-    let a2jTemplate = new A2JTemplate({ title: 'Best Template' });
+    let a2jTemplate = new A2JTemplate({title: 'Best Template'});
 
-    a2jTemplate.save().then((bestTemplate) => {
+    a2jTemplate.save().then(function(bestTemplate) {
       assert.equal(bestTemplate.attr('title'), 'Best Template');
 
-      let templateId = bestTemplate.attr('template_id');
+      let templateId = bestTemplate.attr('templateId');
 
       bestTemplate.attr('title', 'Bestest Template');
 
-      bestTemplate.save().then((bestestTemplate) => {
+      bestTemplate.save().then(function(bestestTemplate) {
         assert.equal(bestestTemplate.attr('title'), 'Bestest Template');
-        assert.equal(bestestTemplate.attr('template_id'), templateId);
-
+        assert.equal(bestestTemplate.attr('templateId'), templateId);
         done();
       });
     });
   });
 
   it('destroy', function(done) {
-    A2JTemplate.findAll({ guide_id: 1261 }).then((a2jTemplates) => {
-      let destroyPromises = [];
+    let promise = A2JTemplate.findAll({guideId: 1261});
 
-      a2jTemplates.map((a2jTemplate) => {
-        if (a2jTemplate.attr('template_id') >= 3000) {
-          destroyPromises.push(a2jTemplate.destroy());
+    promise.then(function(a2jTemplates) {
+      let destroyPromises = a2jTemplates.map(function(a2jTemplate) {
+        if (a2jTemplate.attr('templateId') >= 3000) {
+          return a2jTemplate.destroy();
         }
       });
 
@@ -76,9 +80,9 @@ describe('A2JTemplate Model', function() {
   });
 
   it('addNode', function() {
-    let dfd = A2JTemplate.findOne({ template_id: 2112 });
+    let promise = A2JTemplate.findOne({templateId: 2112});
 
-    return dfd.then(function(a2jTemplate) {
+    return promise.then(function(a2jTemplate) {
       let children = a2jTemplate.attr('rootNode.children');
       let total = children.attr('length');
 

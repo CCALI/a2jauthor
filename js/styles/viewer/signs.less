@@ -1,13 +1,33 @@
+/**
+ * @stylesheet signs-steps Signs & Steps
+ * @parent styles-viewer 4
+ *
+**/
+/**
+ * @stylesheet signs.less Signs
+ * @parent signs-steps 1
+ *
+ * The signs in the A2J Viewer application are 100% HTML/CSS and use no images. By default, the signs will fill their parent container. In the A2J Viewer, JavaScript is being used to calculate the position and size of each sign, as well as the size of the text inside.
+ *
+ * @demo docs/demos/signs/demo.html
+ *
+**/
+
 //http://jsfiddle.net/x1fy6jhh/5/
 
 .sign-wrapper {
-  width: 30%;
-  position: absolute;
-  left: 66%;
-  bottom: 0;
-  z-index: 10;
+  position: relative;
 }
 
+.step-next, .step-current {
+  .sign-wrapper {
+    width: 30%;
+    position: absolute;
+    left: 66%;
+    bottom: 0;
+    z-index: 10;
+  }
+}
 .sign {
   position: relative;
   width: 100%;

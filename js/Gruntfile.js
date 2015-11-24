@@ -23,7 +23,8 @@ module.exports = function(grunt) {
     less: {
       docs: {
         files: {
-          'docs/author.css': 'author/styles.less'
+          'docs/author.css': 'author/styles.less',
+          'docs/viewer.css': 'viewer/styles.less'
         }
       },
       svg: {

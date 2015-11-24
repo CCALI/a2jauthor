@@ -1,6 +1,7 @@
 export default {
-  guide_id: '1261',
-  template_id: '2113',
+  guideId: '1261',
+  templateId: '2113',
+  updatedAt: '2015-10-24T14:16:23.688Z',
   title: 'General Counsel Opening Statement',
   rootNode: {
     component: 'a2j-template',

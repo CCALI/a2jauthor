@@ -16,8 +16,8 @@
 
     <div class="col-xs-3 text-right">
       <a href="#"
-        class="sort-flag {{sortCaretClasses 'lastModified'}}"
-        ($click)="setSortCriteria('lastModified')">Date Modified</a>
+        class="sort-flag {{sortCaretClasses 'updatedAt'}}"
+        ($click)="setSortCriteria('updatedAt')">Date Modified</a>
     </div>
   </div>
 </div>

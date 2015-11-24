@@ -9,14 +9,11 @@ export let TemplateEditPage = Map.extend({
   define: {
     a2jTemplatePromise: {
       get() {
-        let promise;
-        let id = this.attr('templateId');
+        let templateId = this.attr('templateId');
 
-        if (id === 'new') {
-          promise = Promise.resolve(new A2JTemplate());
-        } else {
-          promise = A2JTemplate.findOne({template_id: id});
-        }
+        let promise = templateId === 'new'
+          ? Promise.resolve(new A2JTemplate())
+          : A2JTemplate.findOne({templateId});
 
         promise = promise.then(a2jTemplate => {
           this.attr('a2jTemplate', a2jTemplate);

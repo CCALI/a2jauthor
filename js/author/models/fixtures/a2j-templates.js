@@ -15,7 +15,7 @@ let persistTemplates = () => {
   localStorage.setItem('a2jTemplateSequence', a2jTemplateSequence);
 };
 
-if(!a2jTemplates) {
+if (!a2jTemplates) {
   a2jTemplates = fixtureTemplates;
   a2jTemplateSequence = 3000;
 
@@ -25,31 +25,35 @@ if(!a2jTemplates) {
 export default function(request, response) {
   let requestData = request.data || {};
 
-  if(request.type === 'post') {
-    requestData.guide_id = '1261';
-    requestData.template_id = a2jTemplateSequence++;
+  if (request.type === 'post') {
+    requestData.guideId = '1261';
+    requestData.templateId = a2jTemplateSequence++;
   }
 
-  if(request.type === 'post' || request.type === 'put') {
-    a2jTemplates[requestData.template_id] = requestData;
-    persistTemplates();
-
-    return a2jTemplates[requestData.template_id];
-  }
-  else if(request.type === 'delete') {
-    if(a2jTemplates[requestData.template_id] === undefined) {
-      response(404);
-    }
-    else {
-      delete a2jTemplates[requestData.template_id];
+  switch (request.type) {
+    case 'put':
+    case 'post':
+      a2jTemplates[requestData.templateId] = requestData;
       persistTemplates();
-      response(200);
-    }
-  }
-  else if(requestData.template_id) {
-    return a2jTemplates[requestData.template_id];
-  }
-  else {
-    return _values(a2jTemplates);
+      response(a2jTemplates[requestData.templateId]);
+      break;
+
+    case 'delete':
+      if (a2jTemplates[requestData.templateId] == null) {
+        response(404);
+      } else {
+        delete a2jTemplates[requestData.templateId];
+        persistTemplates();
+        response(200);
+      }
+
+      break;
+
+    default:
+      if (requestData.templateId) {
+        response(a2jTemplates[requestData.templateId]);
+      } else {
+        response(_values(a2jTemplates));
+      }
   }
 };

@@ -9,14 +9,13 @@ export let TemplateAssembly = Map.extend({
   define: {
     templates: {
       get(currentValue, setValue) {
-        let guideId = this.attr('guideId') || window.gGuideID;
+        let guideId = this.attr('guideId');
         let templateId = this.attr('templateId');
 
-        if(templateId) {
-          A2JTemplate.findOne({ template_id: templateId }).then(setValue);
-        }
-        else if(guideId) {
-          A2JTemplate.findAll({ guide_id: guideId}).then(setValue);
+        if (templateId) {
+          A2JTemplate.findOne({templateId}).then(setValue);
+        } else if (guideId) {
+          A2JTemplate.findAll({guideId}).then(setValue);
         }
       }
     }
@@ -24,7 +23,7 @@ export let TemplateAssembly = Map.extend({
 });
 
 export default Component.extend({
+  template,
   tag: 'template-assembly',
-  viewModel: TemplateAssembly,
-  template
+  viewModel: TemplateAssembly
 });

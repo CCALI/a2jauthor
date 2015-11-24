@@ -22,7 +22,7 @@
         </ul>
 
         <div class="nav navbar-nav navbar-right">
-          <a href="{{routeUrl page='templates' action='assemble' id=a2jTemplate.template_id}}">
+          <a href="{{routeUrl page='templates' action='assemble' id=a2jTemplate.templateId}}">
             <button class="btn btn-default navbar-btn test-assemble">
               <span class="glyphicon-file-pdf"></span> Test Assemble
             </button>

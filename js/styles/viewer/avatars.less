@@ -1,3 +1,53 @@
+/**
+ * @stylesheet avatars.less Avatars
+ * @parent styles-viewer 1
+ *
+ * Avatars are used to represent both the guide and the client throughout A2J interviews in the Viewer application.
+ *
+ *
+ * @demo docs/demos/avatars/demo.html
+ *
+ * ## Usage
+ *
+ * The avatars are SVG images with customizable attributes using CSS. They are available in both female and male genders, as well as a variety of skin tones. Hair color, blouse, or tie color can also be adjusted with additional styles.
+ *
+ * Avatars can be added to the app like any regular image: `<img src="/js/viewer/images/avatar-female-left.svg" />`. However, the customizable SVG elements of the avatar cannot be accessed as an `img`. Further, browsers that do not support SVG will show nothing or a broken link.
+ *
+ * The preferred method for using avatars is as an `<object>` which allows the app to pass CSS class names to modify the look of the SVG. An `<object>` also provides a fallback for browsers that do not support SVG.
+ *
+ * ```
+ * <object type="image/svg+xml" data="/js/viewer/images/avatar-female-left.svg">
+ *   Your browser does not support SVG
+ * </object>
+ * ```
+ * The only downside to using `<object>` is that the browser treats the SVG as a separate document, like a web page within an iframe. As a result, all styles must be independently passed into the SVG directly and cannot be applied to the page styles since the SVG is a separate "page" from the rest of the app.
+ *
+ * ## Changing Colors
+ * A2J's `avatars.less` file contains several variables for customizing the look of the avatars. These include the skin tone, shirt/tie color, and hair color. Current variables and values are:
+ * ```
+ * @@skin-lighter: #f6cab5;
+ * @@skin-light: #e6ab89;
+ * @@skin-medium: #c48f66;
+ * @@skin-dark: #ad7247;
+ * @@skin-darker: #764f38;
+ *
+ * @@shirt-color: #5bc0de;
+ * @@hair-color: #231f20;
+ * ```
+ *
+  * The avatar skin tone is dynamically set by JavaScript based on the data in the interview or the selection of the user. The JavaScript takes the data for the skin tone and applies it directly to the SVG file itself as a classname. For example, the SVG file `avatar-female-front.svg` contains the following classname `skin-darker` by default. Changing this classname to any of the above will alter the skin tone:
+ *
+ * ```
+ * <svg version="1.1" id="Guide_-_Female_-_Front" class="avatar-guide skin-darker"
+     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	   x="0px" y="0px" viewBox="0 0 214.4 757.6" style="enable-background:new 0 0 214.4 757.6;"
+	 xml:space="preserve">
+ * ```
+ *
+ * @demo docs/demos/avatars/skin.html
+ *
+**/
+
 @skin-lighter: #f6cab5;
 @skin-light: #e6ab89;
 @skin-medium: #c48f66;
@@ -6,6 +56,7 @@
 
 @shirt-color: #5bc0de;
 @hair-color: #231f20;
+
 
 .avatar-guide {
   float: right;
@@ -97,3 +148,35 @@
   }
 }
 
+/**
+* @styles svgs Editing SVG Files
+* @parent avatars.less
+*
+* The SVG files can be edited in any vector graphics application (like Adobe Illustrator). However, because of the CSS reference and classnames required for A2J the files will also need to be opened in a text editor prior to usage. Once vector editing is completed and saved as an SVG, open the files in a text editor to ensure that the CSS references are in tact. Each file should have a reference to the CSS at the top of the file like:
+*
+* ```
+* <?xml-stylesheet href="../../styles/viewer-avatars.css" type="text/css"?>
+* ```
+*
+* Additionally, each file needs to have a classname set on the `<svg>` element of either `avatar-guide` or `avatar-client` along with a default skin tone classname like `skin-darker`. For example:
+*
+ * ```
+ * <svg version="1.1" id="Guide_-_Female_-_Front" class="avatar-guide skin-darker"
+     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	   x="0px" y="0px" viewBox="0 0 214.4 757.6" style="enable-background:new 0 0 214.4 757.6;"
+	 xml:space="preserve">
+ * ```
+ *
+ * ### Color Groups
+ *
+ * Each SVG file also has several elements which contain unique IDs that determine what colors are applied to that portion of the vector image. For example, the avatar's hands will have `id="left-hand"` which allows the CSS to apply the skin tone to that part of the image. These IDs can be edited directly in Illustrator by creating groups and layers with these names or by adding them with a text editor.
+ *
+ * Here is a list of currently used IDs that apply color to the SVGs:
+ *
+ * * Skin color applied to IDs: `face`, `left-hand`, `right-hand`, `foot-right`, `foot-left`
+ * * Variations on the selected skin tone to create gradients and shadows are applied to IDs: `face-shadows`, `hand-shadow`, and `left-hand-graident_1_`
+ * * Shirt or tie color is applied to ID `shirt`
+ * * Hair color is applied to IDs: `hair`, `hair-front`, `hair-left`, `hair-right`
+ * * A darkened variation on hair color used to create shadows is applied to IDs: `hair-back`, `hair-top`
+*
+**/

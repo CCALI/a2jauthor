@@ -161,7 +161,6 @@ export let Alert = Map.extend({
 export default Component.extend({
   template,
   tag: 'app-alert',
-  leakScope: false,
   viewModel: Alert,
 
   events: {

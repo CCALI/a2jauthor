@@ -1,12 +1,21 @@
-var express = require('express');
-var path = require('path');
-var app = express();
+import AppMap from 'can-ssr/app-map';
 
-app.use(express.static(path.join(__dirname, '../')));
+import 'can/route/';
+import 'can/map/define/';
+import 'can/route/pushstate/';
 
-var server = app.listen(3000, function() {
-  var host = server.address().address;
-  var port = server.address().port;
+const AppViewModel = AppMap.extend({
+  define: {
+    message: {
+      value: 'Hello World!',
+      serialize: false
+    },
 
-  console.log('app listening at http://%s:%s', host, port);
+    title: {
+      value: 'donejs-chat',
+      serialize: false
+    }
+  }
 });
+
+export default AppViewModel;

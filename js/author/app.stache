@@ -7,7 +7,6 @@
 <can-import from="author/interviews/"/>
 <can-import from="author/templates/edit/"/>
 <can-import from="author/vertical-navbar/"/>
-<can-import from="author/templates/assembly/"/>
 <can-import from="author/interviews/toolbar/"/>
 
 <div id="splash" class="welcome">
@@ -251,17 +250,11 @@
     <div class="tab-panel has-toolbar" id="tabsTemplate">
       {{#is page "templates"}}
         {{#if guideId}}
-          {{#eq action 'assemble'}}
-            <template-assembly
-              template-id="{id}"
-              guide-id="{guideId}" />
+          {{#if id}}
+            <template-edit-page template-id="{id}"></template-edit-page>
           {{else}}
-            {{#if id}}
-              <template-edit-page template-id="{id}"></template-edit-page>
-            {{else}}
-              <templates-page app-state="{.}"></templates-page>
-            {{/if}}
-          {{/eq}}
+            <templates-page app-state="{.}"></templates-page>
+          {{/if}}
         {{/if}}
       {{/is}}
     </div>

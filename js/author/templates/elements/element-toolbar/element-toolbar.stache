@@ -1,4 +1,4 @@
-<can-import from="author/templates/elements/element-toolbar/element-toolbar.less!"/>
+<can-import from="caja/author/templates/elements/element-toolbar/element-toolbar.less!"/>
 
 <div>
   <span class="glyphicon-move small text-muted drag-handle"></span>

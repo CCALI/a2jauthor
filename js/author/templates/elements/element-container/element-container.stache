@@ -1,5 +1,5 @@
-<can-import from="author/templates/elements/element-toolbar/"/>
-<can-import from="author/templates/elements/element-container/element-container.less!"/>
+<can-import from="caja/author/templates/elements/element-toolbar/"/>
+<can-import from="caja/author/templates/elements/element-container/element-container.less!"/>
 
 <div class="wrapper{{#if selected}} selected{{/if}}" ($click)="setSelected()">
   <content />

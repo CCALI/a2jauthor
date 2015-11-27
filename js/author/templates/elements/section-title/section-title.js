@@ -1,12 +1,9 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
-import contentTpl from './content.stache!'
+import contentTpl from './content.stache!';
 import template from './section-title.stache!';
 
 import 'can/view/';
-import '../options-pane/';
-import './section-title.less!';
-import '../element-container/';
 
 // preload stache partial
 can.view.preload('section-title-content', contentTpl);

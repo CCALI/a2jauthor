@@ -1,5 +1,5 @@
 {
-  "name": "a2j-author-viewer-gui",
+  "name": "caja",
   "version": "0.0.1",
   "description": "Authoring and viewer App GUI.",
   "main": "author/app",
@@ -9,10 +9,14 @@
   },
   "author": "",
   "license": "ISC",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/CCALI/CAJA"
+  },
   "devDependencies": {
     "bit-tabs": "0.2.0",
     "blueimp-file-upload": "^9.10.1",
-    "bootstrap": "^3.3.5",
+    "bootstrap": "3.3.5",
     "can": "^2.3.0",
     "chai": "^3.0.0",
     "connect": "3.2.0",

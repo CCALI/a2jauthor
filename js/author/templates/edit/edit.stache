@@ -3,12 +3,13 @@
 <can-import from="author/templates/edit/toolbar/"/>
 <can-import from="author/templates/elements/blank/"/>
 <can-import from="author/templates/edit/edit.less!"/>
+<can-import from="author/templates/elements/a2j-template/"/>
 
 <div class="page">
   {{#if a2jTemplatePromise.isPending}}
     <app-loading/>
   {{else}}
-    <template-edit-toolbar a2j-template="{a2jTemplate}"/>
+    <template-edit-toolbar template="{a2jTemplate}"/>
 
     <div class="container">
       <div class="row clearfix">

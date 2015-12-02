@@ -10,7 +10,7 @@
 
         <form class="navbar-form template-name-form">
           <div class="form-group">
-            <input type="text" class="form-control" {($value)}="a2jTemplate.title">
+            <input type="text" class="form-control" {($value)}="template.title">
           </div>
         </form>
       </div>
@@ -22,11 +22,15 @@
         </ul>
 
         <div class="nav navbar-nav navbar-right">
-          <a href="/api/assemble" target="_blank">
-            <button class="btn btn-default navbar-btn test-assemble">
+          <form action="/api/assemble" method="post" target="_blank">
+            {{#if template}}
+              <input type="hidden" name="template" value="{{serializedTemplate}}">
+            {{/input}}
+
+            <button type="submit" class="btn btn-default navbar-btn test-assemble">
               <span class="glyphicon-file-pdf"></span> Test Assemble
             </button>
-          </a>
+          </form>
         </div>
       </div>
     </div>

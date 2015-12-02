@@ -1,8 +1,8 @@
 import Component from 'can/component/';
-import template from './blank.stache!';
+import template from './a2j-blank.stache!';
 
 export default Component.extend({
   template,
   leakScope: false,
-  tag: 'blank-element'
+  tag: 'a2j-blank-template'
 });

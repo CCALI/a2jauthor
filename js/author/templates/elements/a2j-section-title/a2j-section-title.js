@@ -1,7 +1,7 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
 import contentTpl from './content.stache!';
-import template from './section-title.stache!';
+import template from './a2j-section-title.stache!';
 
 import 'can/view/';
 
@@ -22,7 +22,7 @@ export let SectionTitleVM = Map.extend({
 
 export default Component.extend({
   template,
-  tag: 'section-title',
+  tag: 'a2j-section-title',
 
   viewModel: function(attrs) {
     return new SectionTitleVM(attrs.state);

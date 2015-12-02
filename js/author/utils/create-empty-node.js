@@ -2,7 +2,7 @@ import A2JNode from 'author/models/a2j-node';
 
 let emptyNodes = {
   'section-title': {
-    component: '<section-title state="{.}"></section-title>',
+    component: '<a2j-section-title state="{.}" />',
     state: {
       underline: true,
       editActive: true,
@@ -11,7 +11,7 @@ let emptyNodes = {
   },
 
   'rich-text': {
-    component: '<free-form state="{.}"/>',
+    component: '<a2j-rich-text state="{.}" />',
     state: {
       editActive: true,
       userContent: 'Add some text...'

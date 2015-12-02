@@ -1,4 +1,4 @@
-<can-import from="author/templates/elements/blank/blank.less!" />
+<can-import from="author/templates/elements/a2j-blank/a2j-blank.less!" />
 
 <div class="text-center">
   <h2>This template is empty!</h2>

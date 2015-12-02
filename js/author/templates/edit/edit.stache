@@ -1,8 +1,8 @@
 <can-import from="author/loading/"/>
 <can-import from="author/templates/edit/tabs/"/>
 <can-import from="author/templates/edit/toolbar/"/>
-<can-import from="author/templates/elements/blank/"/>
 <can-import from="author/templates/edit/edit.less!"/>
+<can-import from="author/templates/elements/a2j-blank/"/>
 <can-import from="author/templates/elements/a2j-template/"/>
 
 <div class="page">
@@ -20,7 +20,7 @@
               edit-enabled="true"
               template="{a2jTemplate}"/>
           {{else}}
-            <blank-element/>
+            <a2j-blank-template />
           {{/if}}
         </div>
 

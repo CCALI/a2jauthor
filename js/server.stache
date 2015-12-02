@@ -4,12 +4,10 @@
     {{asset "css"}}
   </head>
   <body class="bootstrap-styles">
-    <can-import from="caja/author/alert/" />
     <can-import from="caja/author/styles.less!" />
     <can-import from="caja/server" export-as="viewModel" />
+    <can-import from="caja/author/templates/elements/a2j-template-wrapper/" />
 
-    <app-alert open="true" alert-type="warning">
-      <h1>{{message}}</h1>
-    </app-alert>
+    <a2j-template-wrapper {(template)}="request.body.template" />
   </body>
 </html>

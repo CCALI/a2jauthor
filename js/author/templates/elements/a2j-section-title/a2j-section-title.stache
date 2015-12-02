@@ -1,6 +1,6 @@
 <can-import from="caja/author/templates/elements/options-pane/" />
 <can-import from="caja/author/templates/elements/element-container/" />
-<can-import from="caja/author/templates/elements/section-title/section-title.less!" />
+<can-import from="caja/author/templates/elements/a2j-section-title/a2j-section-title.less!" />
 
 <div>
   {{#if editEnabled}}

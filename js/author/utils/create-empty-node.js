@@ -2,7 +2,7 @@ import A2JNode from 'author/models/a2j-node';
 
 let emptyNodes = {
   'section-title': {
-    component: '<section-title state="{.}"></section-title>',
+    component: '<a2j-section-title state="{.}" />',
     state: {
       underline: true,
       editActive: true,

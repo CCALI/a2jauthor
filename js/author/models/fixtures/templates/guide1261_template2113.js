@@ -9,13 +9,13 @@ export default {
     },
     children: [
       {
-        component: '<a2j-rich-text state="{.}"/>',
+        component: '<a2j-rich-text state="{.}" />',
         state: {
           userContent: 'Hello, <a2j-variable name="Client first name TE"></a2j-variable>.'
         }
       },
       {
-        component: '<section-title state="{.}"></section-title>',
+        component: '<a2j-section-title state="{.}" />',
         state: {
           title: 'This is a Section Title',
           underline: true

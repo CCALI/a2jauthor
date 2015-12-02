@@ -3,9 +3,20 @@
 CAJA
 ====
 
-This the private repo for the browser-based versions of CALI Author and A2J Author.
+This the private repo for the browser-based versions of A2J Author and Viewer.
 
 ## To setup:
+
+First install the server side dependencies, there is a small ExpressJS service
+that generates PDF as part of the document assembly feature; from the root folder
+run
+
+```
+npm install
+```
+
+Then you need to install the dependencies of the CanJS Author and Viewer apps
+which are located in  the `js` folder inside the root:
 
 ```
 $ cd js
@@ -15,11 +26,16 @@ $ npm install -g grunt-cli
 
 ## To run locally:
 
+From the root folder (`CAJA/`) run
+
 ```
 $ npm start
 ```
 
-Then visit [http://localhost:3000/js/](http://localhost:3000/js/)
+Then, if you want to load the author app go to
+[http://localhost:3000/js/author](http://localhost:3000/js/author) or go to
+[http://localhost:3000/js/viewer](http://localhost:3000/js/viewer) if you want
+to load the viewer app instead.
 
 ## To build the Author and Viewer:
 

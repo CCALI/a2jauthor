@@ -475,13 +475,17 @@
 
 		// Functions called by JS translation of CAJA code.
 		TLogic.prototype._CAJA = function(c) {
-			this.traceLogic(traceTag('code', c));
+			window.can.trigger(window, 'traceLogic', { '_CAJA': { format: 'code', msg: c } }, false);
 		};
 		TLogic.prototype._IF = function(d, c, e) {
 			if ((e) === true) {
-				this.traceLogic("IF " + traceTag('valT', c) + ' ' + '\u2714');
+				window.can.trigger(window, 'traceLogic', {
+					'_IF': [{ msg: "IF" }, { format: 'valT', msg: c }, { msg: '\u2714' }]
+				}, false);
 			} else {
-				this.traceLogic("<strike>IF " + traceTag('valF', c) + '</strike>');
+				window.can.trigger(window, 'traceLogic', {
+					'_IF': [{ msg: "IF" }, { format: 'valF', msg: c }]
+				}, false);
 			}
 			this.indent = d;
 			return (e === true);
@@ -493,7 +497,7 @@
 			//}
 		};
 		TLogic.prototype._VS = function(c, varname, varidx, val) {
-			this.traceLogic(c);
+			window.can.trigger(window, 'traceLogic', { '_VS': { msg: c } }, false);
 			return gGuide.varSet(varname, val, varidx);
 		};
 
@@ -514,7 +518,6 @@
 				return 'Unknown function "' + fName + '"';
 			} else {
 				return f.func(val);
-
 			}
 			//this.indent--;
 		};
@@ -525,13 +528,12 @@
 		};
 		TLogic.prototype._GO = function(c, pageName) {
 			this.GOTOPAGE = pageName;
-			this.traceLogic(c);
-			//this.traceLogic("Going to page "+traceTag('page',this.GOTOPAGE));
+			window.can.trigger(window, 'traceLogic', { '_GO': { msg: c } }, false);
 		};
 		TLogic.prototype._TRACE = function(c, exp) {
-			this.traceLogic(c);
+			window.can.trigger(window, 'traceLogic', { '_TRACE-c': { msg: c } }, false);
 			this.indent++;
-			this.traceLogic(traceTag('info', exp));
+			window.can.trigger(window, 'traceLogic', { '_TRACE-exp': { format: 'info', msg: exp } }, false);
 			this.indent--;
 		};
 		TLogic.prototype._deltaVars = function() {};
@@ -552,13 +554,21 @@
 					result = null;
 				} catch (e) {
 					// Trace runtime errors
-					this.traceLogic("executeScript.error: " + e.lineNumber + ": " + e.message);
+					var message = {};
+					message["executeScript.error: " + e.lineNumber + ": " + e.message] = [{
+						msg: "executeScript.error: " + e.lineNumber + ": " + e.message
+					}];
+					window.can.trigger(window, 'traceLogic', message, false);
 					//trace(CAJAScriptHTML);
 					//trace(js);
 					return false;
 				}
 			} else {
-				this.traceLogic("executeScript.error: " + "syntax error in logic");
+				window.can.trigger(window, 'traceLogic', {
+					"executeScript.error: syntax error in logic": [{
+						msg: "executeScript.error: syntax error in logic"
+					}]
+				}, false);
 				return false;
 			}
 			this.indent = 0;

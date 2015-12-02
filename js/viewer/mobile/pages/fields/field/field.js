@@ -4,7 +4,7 @@ import views from './views/';
 import Component from 'can/component/';
 import template from './field.stache!';
 
-let FieldVM = Map.extend({
+export let FieldVM = Map.extend({
   define: {
     showInvalidPrompt: {
       get() {
@@ -21,8 +21,24 @@ let FieldVM = Map.extend({
     let field = this.attr('field');
     let answer = field.attr('_answer');
 
-    answer.attr('values', el.val());
-    field.attr('hasError', !!answer.errors());
+    let value = el.val();
+    answer.attr('values', value);
+
+    let errors = answer.errors();
+    field.attr('hasError', !!errors);
+
+    if (!errors) {
+      let name = field.attr('name').toLowerCase();
+      let message = {};
+
+      message[name] = [
+        { format: 'var', msg: name },
+        { msg: ' = ' },
+        { format: 'val', msg: value }
+      ];
+
+      this.attr('traceLogic').push(message);
+    }
   }
 });
 

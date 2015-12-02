@@ -8,7 +8,22 @@
 
 <div id="viewer-logic-form" class="bootstrap-styles">
   <div class="tracepanel">
-    <ol id="tracer" contentEditable="true"></ol>
+    <ol id="tracer" contentEditable="true">
+      {{#each traceLogicList}}
+        <li>Page <span class="page">{{pageName}}</span></li>
+        {{#each messages}}
+          <li>
+          {{#each fragments}}
+            {{#if format}}
+              <span class="{{traceLogicFormat(format, msg)}}">{{traceLogicMessage(format, msg)}}</span>
+            {{else}}
+              {{msg}}
+            {{/if}}
+          {{/each}}
+          </li>
+        {{/each}}
+      {{/each}}
+    </ol>
   </div>
 
   <div class="form-inline immediatepanel">

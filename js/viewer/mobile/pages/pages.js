@@ -18,8 +18,27 @@ export default Component.extend({
       this.viewModel.attr('modalContent', p);
     },
 
+    '{window} traceLogic': function(el, ev, msg) {
+      this.viewModel.attr('traceLogic').push(msg);
+    },
+
     'a click': function(el) {
       el.attr('target', '_blank');
+    },
+
+    '{interview.answers} change': function(answers, ev, attr, how, newVal) {
+      attr = attr.substr(0, attr.indexOf('.values.1'));
+      newVal = newVal[0];
+
+      if (attr && typeof newVal != null) {
+        let message = {};
+        message[attr] = [
+          { format: 'var', msg: attr },
+          { msg: ' = ' },
+          { format: 'val', msg: newVal }
+        ];
+        this.viewModel.attr('traceLogic').push(message);
+      }
     },
 
     '{rState} page': function(rState, ev, val, old) {
@@ -43,12 +62,29 @@ export default Component.extend({
       // unknown page name
       if (!p) return;
 
-      logic.exec(p.attr('codeBefore'));
+      if (p.attr('codeBefore')) {
+        vm.attr('traceLogic').push({
+          codeBefore: { format: 'info', msg: 'Logic Before Question'}
+        });
+        logic.exec(p.attr('codeBefore'));
+      }
       var gotoPage = logic.attr('gotoPage');
 
       if (logic.attr('infinite').errors()) {
+        this.viewModel.attr('traceLogic').push({
+          'infinite loop': {
+            format: 'info',
+            msg: 'Possible infinite loop. Too many page jumps without user interaction'
+          }
+        });
         vm.attr('rState.page', '__error');
       } else if (gotoPage && gotoPage.length) {
+        let traceLogic = {};
+        let counter = logic.attr('infinite._counter');
+        let traceLogicMsg =  (counter === 0) ? 'Setting repeat variable to 1' : 'Incrementing repeat variable';
+        traceLogic['infinite-' + counter] = { msg: traceLogicMsg };
+        this.viewModel.attr('traceLogic').push(traceLogic);
+
         logic.attr('infinite').inc();
         vm._setPage(p, gotoPage);
       } else {

@@ -12,6 +12,9 @@ export default Map.extend({
     },
     modalContent: {
       value: null
+    },
+    traceLogic: {
+      value: []
     }
   },
 
@@ -27,6 +30,13 @@ export default Map.extend({
     let error = false;
     let fields = this.attr('currentPage.fields');
 
+    this.attr('traceLogic').push({
+      button: [
+        { msg: 'You pressed' },
+        { format: 'ui', msg: button.attr('label') }
+      ]
+  });
+
     can.each(fields, function(field) {
       let errors = field.attr('_answer').errors();
       field.attr('hasError', !!errors);
@@ -37,7 +47,12 @@ export default Map.extend({
     if (!error) {
       let logic = this.attr('logic');
 
-      logic.exec(this.attr('currentPage.codeAfter'));
+      if (this.attr('currentPage.codeAfter')) {
+        this.attr('traceLogic').push({
+          codeAfter: { format: 'info', msg: 'Logic After Question' }
+        });
+        logic.exec(this.attr('currentPage.codeAfter'));
+      }
 
       let gotoPage = logic.attr('gotoPage');
       if (gotoPage && gotoPage.length) {
@@ -93,6 +108,10 @@ export default Map.extend({
         console.warn(`Unknown page: ${pageName}`);
         return;
       }
+
+      this.attr('traceLogic').push({
+        page: page.attr('name')
+      });
 
       let fields = page.attr('fields');
 

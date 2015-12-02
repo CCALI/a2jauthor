@@ -13,6 +13,15 @@ export default Map.extend({
 
   define: {
     /**
+    * @property {List} AppState.property.traceLogic
+    *
+    * latest message to display in the trace panel
+    */
+    traceLogic: {
+      serialize: false
+    },
+
+    /**
      * @property {String} AppState.prototype.page page
      *
      * The name of the "tab" the author is seeing, it is bound to can.route.

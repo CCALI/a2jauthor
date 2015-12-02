@@ -6,7 +6,9 @@
 
 {{#if showDebugPanel}}
   <div class="author-debug-panel">
-    <author-debug-panel {interview}="viewerInterview"/>
+    <author-debug-panel
+      {interview}="viewerInterview"
+      {(trace-logic)}="traceLogic" />
   </div>
 {{/if}}
 
@@ -14,7 +16,7 @@
   <a2j-viewer-preview
     {(interview)}="viewerInterview"
     {preview-page-name}="previewPageName"
-    {^interview-page-name}="interviewPageName"/>
+    {(trace-logic)}="traceLogic" />
 
     <author-debug-menu {(app-state)}="."/>
 

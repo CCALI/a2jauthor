@@ -1,12 +1,14 @@
-<can-import from="author/alert/"/>
-<can-import from="author/templates/elements/free-form/"/>
-<can-import from="author/templates/elements/a2j-variable/"/>
-<can-import from="author/templates/elements/section-title/"/>
-<can-import from="author/templates/elements/a2j-template/a2j-template.less!"/>
+<can-import from="caja/author/alert/"/>
+<can-import from="caja/author/templates/elements/free-form/"/>
+<can-import from="caja/author/templates/elements/a2j-variable/"/>
+<can-import from="caja/author/templates/elements/section-title/"/>
+<can-import from="caja/author/templates/elements/a2j-template/a2j-template.less!"/>
 
-<app-alert auto-close="true" alert-type="success" open="{showUpdateSuccess}">
-  <p>Template updated successfully.</p>
-</app-alert>
+{{#if showUpdateSuccess}}
+  <app-alert auto-close="true" alert-type="success" open="true">
+    <p>Template updated successfully.</p>
+  </app-alert>
+{{/if}}
 
 <ul>
   {{#each rootNode.children}}

@@ -1,7 +1,7 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './a2j-variable.stache!';
-import Variable from 'author/models/a2j-variable';
+import Variable from 'caja/author/models/a2j-variable';
 
 import 'can/map/define/';
 
@@ -11,12 +11,13 @@ export let A2JVariableVM = Map.extend({
      * @property {A2JVariable} variable
      */
     variable: {
-      get: function(currentValue, setValue) {
+      get(currentValue, setValue) {
         let name = this.attr('name');
 
-        Variable.findOne({ name }).then(setValue);
+        Variable.findOne({name}).then(setValue);
       },
     },
+
     /**
      * @property {Number} number-index
      *
@@ -26,6 +27,7 @@ export let A2JVariableVM = Map.extend({
     index: {
       value: undefined
     },
+
     /**
      * @property {String} value
      *
@@ -36,10 +38,10 @@ export let A2JVariableVM = Map.extend({
      *   then an index of 1 is defaulted and that element is returned.
      */
     value: {
-      get: function() {
+      get() {
         let variable = this.attr('variable');
 
-        if(!variable) {
+        if (!variable) {
           return '';
         }
 
@@ -47,24 +49,24 @@ export let A2JVariableVM = Map.extend({
         let index = this.attr('index');
         let repeating = variable.attr('repeating');
 
-        if(repeating && values.length > 2 && !index) {
+        if (repeating && values.length > 2 && !index) {
           return [].concat(values.slice(1, -1),
             'and ' + values.slice(-1)).join(', ');
-        }
-        else if(!index) {
+        } else if (!index) {
           index = 1;
         }
 
         return variable.attr('values.' + index);
       }
     },
+
     /**
      * @property {Boolean} isUndeclared
      *
      * Whether the variable was found in the global gGuide.vars structure.
      */
     isUndeclared: {
-      get: function() {
+      get() {
         let variable = this.attr('variable');
 
         return variable && variable.isNew();
@@ -74,8 +76,7 @@ export let A2JVariableVM = Map.extend({
 });
 
 export default Component.extend({
+  template,
   tag: 'a2j-variable',
-  viewModel: A2JVariableVM,
-  leakScope: false,
-  template
+  viewModel: A2JVariableVM
 });

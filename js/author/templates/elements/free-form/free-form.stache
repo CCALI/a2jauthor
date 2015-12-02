@@ -1,12 +1,12 @@
-<can-import from="author/templates/elements/element-container/"/>
-<can-import from="author/templates/elements/free-form/free-form.less!"/>
+<can-import from="caja/author/templates/elements/element-container/"/>
+<can-import from="caja/author/templates/elements/free-form/free-form.less!"/>
 
 {{#if editEnabled}}
   <element-container selected="{editActive}">
     {{#if editActive}}
       <textarea>{{userContent}}</textarea>
     {{else}}
-      {{a2jParse userContent}}
+      {{a2jParse(userContent)}}
     {{/if}}
   </element-container>
 
@@ -24,5 +24,5 @@
     </element-options-pane>
   {{/if}}
 {{else}}
-  {{a2jParse userContent}}
+  {{a2jParse(userContent)}}
 {{/if}}

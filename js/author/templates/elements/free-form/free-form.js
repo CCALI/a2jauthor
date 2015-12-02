@@ -1,5 +1,5 @@
 import Map from 'can/map/';
-import ckeditor from 'ckeditor/';
+import loader from '@loader';
 import stache from 'can/view/stache/';
 import Component from 'can/component/';
 import template from './free-form.stache!';
@@ -47,15 +47,12 @@ export default Component.extend({
   template,
   tag: 'free-form',
 
-  viewModel: function(attrs) {
+  viewModel(attrs) {
     return new FreeFormVM(attrs.state);
   },
 
   helpers: {
     a2jParse: function(templateSnippet) {
-      templateSnippet = templateSnippet.isComputed ? templateSnippet() :
-        templateSnippet;
-
       return stache(templateSnippet)();
     }
   },
@@ -64,9 +61,12 @@ export default Component.extend({
     inserted() {
       let vm = this.viewModel;
       let editActive = vm.attr('editActive');
+      let editEnabled = vm.attr('editEnabled');
 
-      if (editActive) {
-        this.initCKEditor();
+      if (editEnabled) {
+        loader.import('caja/ckeditor/').then(() => {
+          if (editActive) this.initCKEditor();
+        });
       }
     },
 
@@ -94,7 +94,7 @@ export default Component.extend({
       setTimeout(() => {
         let $textarea = this.element.find('textarea');
 
-        let editor = ckeditor.replace($textarea.get(0), {
+        let editor = CKEDITOR.replace($textarea.get(0), {
           extraPlugins: 'a2j-variable',
           extraAllowedContent: {
             'a2j-variable': {

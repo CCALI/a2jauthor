@@ -1,4 +1,4 @@
-<can-import from="author/templates/elements/options-pane/options-pane.less!" />
+<can-import from="caja/author/templates/elements/options-pane/options-pane.less!" />
 
 <div class="popover right" style="display: block;">
   <div class="arrow"></div>

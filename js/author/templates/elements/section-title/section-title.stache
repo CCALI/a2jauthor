@@ -1,3 +1,7 @@
+<can-import from="caja/author/templates/elements/options-pane/" />
+<can-import from="caja/author/templates/elements/element-container/" />
+<can-import from="caja/author/templates/elements/section-title/section-title.less!" />
+
 <div>
   {{#if editEnabled}}
     <element-container selected="{editActive}">

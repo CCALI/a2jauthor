@@ -1,0 +1,13 @@
+<html>
+  <head>
+    <title>{{title}}</title>
+    {{asset "css"}}
+  </head>
+  <body class="bootstrap-styles">
+    <can-import from="caja/author/styles.less!" />
+    <can-import from="caja/server" export-as="viewModel" />
+    <can-import from="caja/author/templates/elements/a2j-template-wrapper/" />
+
+    <a2j-template-wrapper {(template)}="request.body.template" />
+  </body>
+</html>

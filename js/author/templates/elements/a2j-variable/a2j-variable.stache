@@ -1,4 +1,4 @@
-<can-import from="author/templates/elements/a2j-variable/a2j-variable.less!" />
+<can-import from="caja/author/templates/elements/a2j-variable/a2j-variable.less!" />
 
 {{#if value}}
   <span class="var-val">{{value}}</span>

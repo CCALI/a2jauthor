@@ -1,4 +1,4 @@
-<can-import from="author/alert/alert.less!"/>
+<can-import from="caja/author/alert/alert.less!"/>
 
 <div class="alert {{alertTypeClass}} {{#if dismissible}}alert-dismissible{{/if}}" role="alert">
   {{#if dismissible}}

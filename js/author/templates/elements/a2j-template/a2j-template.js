@@ -1,6 +1,5 @@
 import stache from 'can/view/stache/';
 import Component from 'can/component/';
-import A2JNode from 'author/models/a2j-node';
 import template from './a2j-template.stache!';
 import A2JTemplateVM from './a2j-template-vm';
 

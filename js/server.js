@@ -1,12 +1,16 @@
-var express = require('express');
-var path = require('path');
-var app = express();
+import AppMap from 'can-ssr/app-map';
 
-app.use(express.static(path.join(__dirname, '../')));
+import 'can/route/';
+import 'can/map/define/';
+import 'can/route/pushstate/';
 
-var server = app.listen(3000, function() {
-  var host = server.address().address;
-  var port = server.address().port;
-
-  console.log('app listening at http://%s:%s', host, port);
+const AppViewModel = AppMap.extend({
+  define: {
+    title: {
+      serialize: false,
+      value: 'A2J Test Assemble'
+    }
+  }
 });
+
+export default AppViewModel;

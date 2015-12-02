@@ -48,7 +48,8 @@ module.exports = function(grunt) {
             bundle: [
               'author/app-template',
               'author/src/src',
-              'author/styles.less!'
+              'author/styles.less!',
+              'author/ckeditor/ckeditor'
             ]
           },
           buildOptions: {

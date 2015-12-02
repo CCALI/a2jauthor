@@ -2,11 +2,11 @@ import Map from 'can/map/';
 import loader from '@loader';
 import stache from 'can/view/stache/';
 import Component from 'can/component/';
-import template from './free-form.stache!';
+import template from './a2j-rich-text.stache!';
 
 import 'can/map/define/';
 
-export let FreeFormVM = Map.extend({
+export let RichTextVM = Map.extend({
   define: {
     userContent: {
       value: ''
@@ -45,10 +45,10 @@ export let FreeFormVM = Map.extend({
 
 export default Component.extend({
   template,
-  tag: 'free-form',
+  tag: 'a2j-rich-text',
 
   viewModel(attrs) {
-    return new FreeFormVM(attrs.state);
+    return new RichTextVM(attrs.state);
   },
 
   helpers: {

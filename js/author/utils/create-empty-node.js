@@ -11,7 +11,7 @@ let emptyNodes = {
   },
 
   'rich-text': {
-    component: '<free-form state="{.}"/>',
+    component: '<a2j-rich-text state="{.}" />',
     state: {
       editActive: true,
       userContent: 'Add some text...'

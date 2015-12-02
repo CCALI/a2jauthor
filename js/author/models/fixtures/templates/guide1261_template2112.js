@@ -9,13 +9,13 @@ export default {
     },
     children: [
       {
-        component: '<free-form state="{.}"/>',
+        component: '<a2j-rich-text state="{.}" />',
         state: {
           userContent: 'First <a2j-variable name="thing"></a2j-variable>.'
         }
       },
       {
-        component: '<free-form state="{.}"/>',
+        component: '<a2j-rich-text state="{.}" />',
         state: {
           userContent: 'Something completely different.'
         }

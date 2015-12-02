@@ -4,7 +4,6 @@
   "description": "Authoring and viewer App GUI.",
   "main": "author/app",
   "scripts": {
-    "start": "node server",
     "test": "testee --browsers firefox viewer/test/index.html author/test/index.html"
   },
   "author": "",

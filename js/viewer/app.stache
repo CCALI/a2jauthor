@@ -21,7 +21,8 @@
     m-state="{mState}"
     interview="{interview}"
     class="bootstrap-styles"
-    {(modal-content)}="modalContent" />
+    {(modal-content)}="modalContent"
+    {(trace-logic)}="traceLogic" />
 {{/if}}
 <a2j-modal
   logic="{logic}"

@@ -24,7 +24,8 @@
           p-state="{pState}"
           m-state="{mState}"
           interview="{interview}"
-          {(modal-content)}="modalContent" />
+          {(modal-content)}="modalContent"
+          {(trace-logic)}="traceLogic" />
       </div><!-- app-content -->
 
       {{#if authorBrandLogo}}

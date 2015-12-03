@@ -17,7 +17,8 @@
           p-state="{pState}"
           m-state="{mState}"
           interview="{interview}"
-          {(modal-content)}="modalContent" />
+          {(modal-content)}="modalContent"
+          {(trace-logic)}="traceLogic" />
       </div><!-- bubble -->
 
       <div class="avatar-wrapper">

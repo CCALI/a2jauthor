@@ -10,7 +10,6 @@ CAJA_Pieces.js
 *.pydevproject
 .project
 .metadata
-bin/
 tmp/
 *.tmp
 *.bak
@@ -68,7 +67,6 @@ DocProject/Help/html
 publish
 
 # Others
-[Bb]in
 [Oo]bj
 sql
 TestResults

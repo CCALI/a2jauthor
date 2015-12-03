@@ -49,7 +49,7 @@ module.exports = function(grunt) {
               'author/app-template',
               'author/src/src',
               'author/styles.less!',
-              'author/ckeditor/ckeditor'
+              'ckeditor/ckeditor'
             ]
           },
           buildOptions: {

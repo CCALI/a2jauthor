@@ -11,6 +11,6 @@ import 'viewer/desktop/steps/sign-text/sign-text-test';
 
 import 'viewer/modal/modal-test';
 
-import 'viewer/mobile/pages/pages-test';
+// import 'viewer/mobile/pages/pages-test';
 
 import 'viewer/mobile/pages/fields/field/field-test';

@@ -1,8 +1,6 @@
 import $ from 'jquery';
-import List from 'can/list/';
+import can from 'can';
 import assert from 'assert';
-import stache from 'can/view/stache/';
-import Map from 'can/map/';
 import PagesVM from './pages-vm';
 import './pages';
 
@@ -18,8 +16,7 @@ describe('<a2j-pages>', () => {
         errors: $.noop,
         reset: $.noop,
         _counter: 0,
-        inc: $.noop,
-        reset: $.noop
+        inc: $.noop
       },
     });
 
@@ -29,7 +26,7 @@ describe('<a2j-pages>', () => {
     });
 
     defaults = {
-      traceLogic: new List,
+      traceLogic: new can.List,
       currentPage: { fields: [] },
       logic: logicStub,
       rState: { },
@@ -90,7 +87,7 @@ describe('<a2j-pages>', () => {
 
   describe('Component', () => {
     beforeEach(() => {
-      let frag = stache(
+      let frag = can.stache(
         '<a2j-pages></a2j-pages>'
       );
       $('#test-area').html(frag());

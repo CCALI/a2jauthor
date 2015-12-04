@@ -1,11 +1,7 @@
 <can-import from="caja/author/templates/elements/a2j-variable/a2j-variable.less!" />
 
-{{#if value}}
+{{#if showValue}}
   <span class="var-val">{{value}}</span>
 {{else}}
-  {{#if isUndeclared}}
-    <span class="var-name undeclared">{{name}}</span>
-  {{else}}
-    <span class="var-name">{{variable.name}}</span>
-  {{/if}}
+  <span class="var-name">{{name}}</span>
 {{/if}}

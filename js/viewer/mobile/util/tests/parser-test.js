@@ -1,53 +1,28 @@
-import $ from 'jquery';
 import assert from 'assert';
 import Parser from 'viewer/mobile/util/parser';
+import partialJSON from 'viewer/models/fixtures/partial.json';
+import partialXML from 'viewer/models/fixtures/partial.anx!text';
+import interviewJSON from 'viewer/models/fixtures/interview.json';
+import answersJSON from 'viewer/models/fixtures/inclusive_answers.json';
+import answersXML from 'viewer/models/fixtures/inclusive_answers.xml!text';
 
 import 'steal-mocha';
 
 describe('Parser', function() {
+  it('generates hot docs answers file correctly', function() {
+    let variables = answersJSON;
+    let expectedXML = answersXML;
+    let pages = interviewJSON.pages;
 
-  let fixturesBase = '../models/fixtures';
-
-  // 2015-01-12 SJG Fails in Pre Windows 7 in all browsers???
-  it('toANX', function() {
-    let jsonDfd = $.get(fixturesBase + '/inclusive_answers.json');
-
-    let xmlDfd = $.ajax({
-      url: fixturesBase + '/inclusive_answers.xml',
-      dataType: 'text'
-    });
-
-    let interviewDfd = $.get(fixturesBase + '/interview.json');
-
-    let onSuccess = function(json, xml, interview) {
-      json = json[0];
-      xml = xml[0];
-      interview = interview[0];
-
-      let anx = Parser.parseANX(json, interview.pages);
-      assert.equal(anx, xml.trim(), 'anx file correctly parsed');
-    };
-
-    return $.when(jsonDfd, xmlDfd, interviewDfd).done(onSuccess);
+    let parsedXML = Parser.parseANX(variables, pages);
+    assert.equal(parsedXML, expectedXML.trim(), 'generated xml is wrong');
   });
 
-  it('toJSON', function() {
-    let jsonDfd = $.get(fixturesBase + '/partial.json');
+  it('parses hot docs answers file correctly', function() {
+    let answersXML = partialXML;
+    let expectedAnswers = partialJSON;
+    let parsedAnswers = Parser.parseJSON(answersXML);
 
-    let xmlDfd = $.ajax({
-      url: fixturesBase + '/partial.anx',
-      dataType: 'text'
-    });
-
-    let onSuccess = function(json, xml) {
-      json = json[0];
-      xml = xml[0];
-
-      var o = Parser.parseJSON(xml);
-      assert.deepEqual(o, json, 'json correctly parsed');
-    };
-
-    return $.when(jsonDfd, xmlDfd).done(onSuccess);
+    assert.deepEqual(parsedAnswers, expectedAnswers, 'generated answers is wrong');
   });
-
 });

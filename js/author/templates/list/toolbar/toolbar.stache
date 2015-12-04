@@ -1,5 +1,4 @@
-<can-import from="author/templates/answer-loader/"/>
-<can-import from="author/templates/list/toolbar/toolbar.less!"/>
+<can-import from="author/templates/list/toolbar/toolbar.less!" />
 
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -28,8 +27,6 @@
           <span class="glyphicon-plus"></span> New Template
         </button>
       </a>
-
-      <answer-loader/>
 
       <a href="{{routeUrl page='templates' action='assemble' guideId=templates.0.guideId}}">
         <button class="btn btn-default navbar-btn test-compile">

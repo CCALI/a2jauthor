@@ -86,6 +86,17 @@ export default Map.extend({
       value: false
     },
 
+    /**
+     * @property {Boolean} a2jTemplate.ViewModel.prototype.define.useAnswers useAnswers
+     * @parent a2jTemplate.ViewModel
+     *
+     * Whether to replace the variable names used in the template by their values
+     * when user uploads an answer file.
+     */
+    useAnswers: {
+      value: false
+    },
+
     showUpdateSuccess: {
       value: false
     }

@@ -6,6 +6,17 @@ import constants from 'viewer/models/constants';
 import cString from 'viewer/mobile/util/string';
 import _forEach from 'lodash/collection/forEach';
 
+const mapANX2Var = {
+  unknown: constants.vtUnknown,
+  textvalue: constants.vtText,
+  tfvalue: constants.vtTF,
+  mcvalue: constants.vtMC,
+  numvalue: constants.vtNumber,
+  datevalue: constants.vtDate,
+  othervalue: constants.vtOther,
+  rptvalue: constants.vtUnknown
+};
+
 let variableToField = function(varName, pages) {
   let field;
 
@@ -72,9 +83,9 @@ let setVariable = function(variable, pages) {
   };
 
   var xml = '';
-  if (variable.repeating === true) {
+  if (variable.repeating) {
     // Repeating variables are nested in RptValue tag.
-    for (var i = 1; i < variable.values.length; i++) {
+    for (var i = 1; i < variable.values.length; i += 1) {
       xml += getXMLValue(variable.values[i]);
     }
 
@@ -110,21 +121,10 @@ export default {
 
   // 11/13 Parse HotDocs answer file XML string into guide's variables.
   // Add to existing variables. Do NOT override variable types.
-  parseJSON: function(answersXML, vars) {
-    var mapANX2Var = {
-      unknown: constants.vtUnknown,
-      textvalue: constants.vtText,
-      tfvalue: constants.vtTF,
-      mcvalue: constants.vtMC,
-      numvalue: constants.vtNumber,
-      datevalue: constants.vtDate,
-      othervalue: constants.vtOther,
-      rptvalue: constants.vtUnknown
-    };
-
+  parseJSON(answersXML, vars) {
     var guide = new Answers(vars);
 
-    $(answersXML).find('answer').each(function() {
+    $(answersXML).find('answer, Answer').each(function() {
       var varName = cString.makestr($(this).attr('name'));
 
       // 12/03/2013 Do not allow # in variable names.
@@ -207,4 +207,4 @@ export default {
 
     return guide.serialize();
   }
-}
+};

@@ -13,6 +13,7 @@ import 'author/interviews/interviews-test';
 import 'author/templates/list/item/item-test';
 import 'author/templates/list/sortbar/sortbar-test';
 import 'author/vertical-navbar/vertical-navbar-test';
+import 'author/templates/elements/a2j-variable/a2j-variable-test';
 import 'author/templates/elements/element-container/element-container-test';
 
 import 'author/debug-panel/debug-panel-test';

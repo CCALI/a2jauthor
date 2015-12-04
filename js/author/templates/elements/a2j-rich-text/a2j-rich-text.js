@@ -52,8 +52,11 @@ export default Component.extend({
   },
 
   helpers: {
-    a2jParse: function(templateSnippet) {
-      return stache(templateSnippet)();
+    a2jParse(templateSnippet) {
+      return stache(templateSnippet)({
+        answers: this.attr('answers'),
+        useAnswers: this.attr('useAnswers')
+      });
     }
   },
 

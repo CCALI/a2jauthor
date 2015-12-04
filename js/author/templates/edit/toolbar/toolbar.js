@@ -3,6 +3,7 @@ import Component from 'can/component/';
 import template from './toolbar.stache!';
 
 import 'can/map/define/';
+import 'bootstrap/js/modal';
 
 /**
  * @module {Module} author/templates/edit/toolbar/toolbar <template-edit-toolbar>
@@ -35,21 +36,6 @@ let EditToolbarVM = Map.extend({
      */
     template: {
       value: null
-    },
-
-    /**
-     * @property {String} editToolbar.ViewModel.prototype.define.serializedTemplate serializedTemplate
-     * @parent editToolbar.ViewModel
-     *
-     * This is the string representation of [template] after being serialized,
-     * it is used as the value of a hidden input post to the server when user
-     * clicks the "Test Assemble" button.
-     */
-    serializedTemplate: {
-      get() {
-        let template = this.attr('template');
-        return JSON.stringify(template.serialize());
-      }
     }
   }
 });

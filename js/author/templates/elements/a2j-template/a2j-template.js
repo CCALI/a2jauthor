@@ -11,10 +11,12 @@ export default Component.extend({
   helpers: {
     a2jParse(component, state, index) {
       index = index.isComputed ? index() : index;
-      state = state.isComputed ?  state() : state;
-      component = component.isComputed ? component() : component;
+
+      let template = this.attr('template');
 
       state.attr('nodeIndex', index);
+      state.attr('answers', template.attr('answers'));
+      state.attr('useAnswers', this.attr('useAnswers'));
       state.attr('editEnabled', this.attr('editEnabled'));
 
       return stache(component)(state);

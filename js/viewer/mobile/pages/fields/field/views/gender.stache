@@ -2,11 +2,11 @@
   <div class="form-group {{#if field.hasError}}has-error{{/if}}">
     <label class="control-label" for="{{label}}">{{{eval label}}}</label>
 
-    <input type="radio" id="m" name="gender" value="m" ($change)="validateField"/>
-    <label for="m">Male</label>
+    <input type="radio" id="m" name="gender" value="{{i18n("Male")}}" ($change)="validateField"/>
+    <label for="{{i18n("Male")}}">{{i18n("Male")}}</label>
 
-    <input type="radio" id="f" name="gender" value="f" ($change)="validateField"/>
-    <label for="f">Female</label>
+    <input type="radio" id="f" name="gender" value="{{i18n("Female")}}" ($change)="validateField"/>
+    <label for="{{i18n("Female")}}">{{i18n("Female")}}</label>
   </div>
 
   {{#if showInvalidPrompt}}

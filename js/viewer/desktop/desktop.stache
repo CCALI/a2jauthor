@@ -10,6 +10,7 @@
       </div>
     {{else}}
       <a2j-viewer-navigation
+        {lang}="lang"
         app-state="{rState}"
         interview="{interview}"
         show-demo-notice="{showDemoNotice}"
@@ -19,6 +20,7 @@
         <div id="sidewalk" class="sidewalk"></div>
 
         <a2j-viewer-steps
+          {lang}="lang"
           logic="{logic}"
           r-state="{rState}"
           p-state="{pState}"

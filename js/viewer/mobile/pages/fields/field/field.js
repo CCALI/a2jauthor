@@ -58,13 +58,14 @@ export default Component.extend({
       return views[type](options.scope, {
         eval: function(str) {
           str = typeof str === 'function' ? str() : str;
+
           return self.attr('logic').eval(str);
         },
 
         selectnum: function(options) {
           let result = [];
-          let min = this.attr('field.min');
-          let max = this.attr('field.max');
+          let min = self.attr('field.min');
+          let max = self.attr('field.max');
 
           for (var i = min; i <= max; i++) {
             result.push(options.fn(options.scope.add({
@@ -82,9 +83,9 @@ export default Component.extend({
           return val ? moment(val, 'MM/DD/YYYY').format(format) : val;
         },
 
-        i11n: function(key) {
+        i18n: function(key) {
           key = typeof key === 'function' ? key() : key;
-          return this.attr('lang.' + key);
+          return self.attr('lang').attr(key) || key;
         }
       });
     }

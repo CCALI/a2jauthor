@@ -10,7 +10,7 @@ describe('<a2j-field>', () => {
 
     beforeEach(() => {
       fieldStub = {
-        name: 'foo input',
+        name: 'Foo Input',
         _answer: {}
       };
 
@@ -25,14 +25,14 @@ describe('<a2j-field>', () => {
     });
 
     it('validateField', () => {
-      let el = $('<input name="foo input" type="text" />');
+      let el = $('<input name="Foo Input" type="text" />');
 
       $(el).val('bar value');
       vm.validateField(null, el);
 
       assert.deepEqual(vm.attr('traceLogic').attr(), [{
-        'foo input': [
-          { format: 'var', msg: 'foo input' },
+        'Foo Input': [
+          { format: 'var', msg: 'Foo Input' },
           { msg: ' = ' },
           { format: 'val', msg: 'bar value' }
         ]
@@ -42,14 +42,14 @@ describe('<a2j-field>', () => {
       vm.validateField(null, el);
 
       assert.deepEqual(vm.attr('traceLogic').attr(), [{
-        'foo input': [
-          { format: 'var', msg: 'foo input' },
+        'Foo Input': [
+          { format: 'var', msg: 'Foo Input' },
           { msg: ' = ' },
           { format: 'val', msg: 'bar value' }
         ]
       }, {
-        'foo input': [
-          { format: 'var', msg: 'foo input' },
+        'Foo Input': [
+          { format: 'var', msg: 'Foo Input' },
           { msg: ' = ' },
           { format: 'val', msg: 'baz value' }
         ]

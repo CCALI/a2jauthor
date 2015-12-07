@@ -15,6 +15,9 @@
     "directories": {
       "lib": "js"
     },
+    "map": {
+      "lodash": "lodash-amd/modern"
+    },
     "npmIgnore": [
       "documentjs",
       "testee",

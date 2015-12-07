@@ -12,6 +12,7 @@
     <div class="guide-wrapper {{^if showClientAvatar}}guide-center{{/if}}">
       <div id="guideBubble" class="bubble">
         <a2j-pages
+          {lang}="lang"
           logic="{logic}"
           r-state="{rState}"
           p-state="{pState}"

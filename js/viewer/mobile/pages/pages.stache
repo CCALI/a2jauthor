@@ -16,7 +16,12 @@
       <p>{{{eval text}}}</p>
 
       {{#if fields.length}}
-        <a2j-fields logic="{logic}" fields="{fields}" {(trace-logic)}="traceLogic"></a2j-fields>
+        <a2j-fields
+          logic="{logic}"
+          fields="{fields}"
+          {(trace-logic)}="traceLogic"
+          {lang}="lang">
+        </a2j-fields>
       {{/if}}
     </div><!-- bubble-content -->
 

@@ -27,7 +27,7 @@
   {{#if previewMode}}style="display: none;"{{/if}}>
 
   <div id="cajaheader" class="hidestart">
-    <app-header {page}="page" {title}="guideTitle"/>
+    <app-header {page}="page" {title}="guide.title"/>
   </div>
 
   <div class="guideio"></div>
@@ -251,9 +251,9 @@
       {{#is page "templates"}}
         {{#if guideId}}
           {{#if id}}
-            <template-edit-page template-id="{id}"></template-edit-page>
+            <template-edit-page {(guide)}="guide" {(template-id)}="id"></template-edit-page>
           {{else}}
-            <templates-page app-state="{.}"></templates-page>
+            <templates-page {(app-state)}="."></templates-page>
           {{/if}}
         {{/if}}
       {{/is}}

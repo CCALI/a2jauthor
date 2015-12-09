@@ -2,6 +2,7 @@ import $ from 'jquery';
 import Map from 'can/map/';
 import List from 'can/list/';
 import Component from 'can/component/';
+import _keys from 'lodash/object/keys';
 import template from './assemble.stache!';
 import parser from 'viewer/mobile/util/parser';
 
@@ -40,6 +41,19 @@ let AssembleOptionsVM = Map.extend({
      */
     interviewAnswers: {
       Value: Map
+    },
+
+    /**
+     * @property {Boolean} assemble.ViewModel.prototype.hasLoadedAnswers hasLoadedAnswers
+     * @parent assemble.ViewModel
+     *
+     * Whether user has loaded an answers file already.
+     */
+    hasLoadedAnswers: {
+      get() {
+        let answers = this.attr('interviewAnswers');
+        return _keys(answers.attr()).length > 0;
+      }
     },
 
     /**
@@ -99,6 +113,10 @@ export default Component.extend({
     '.load-answers click': function($el, evt) {
       evt.preventDefault();
       this.element.find('.answers-file-input').click();
+    },
+
+    '.clear-answers click': function() {
+      this.viewModel.attr('interviewAnswers', new Map());
     },
 
     '.answers-file-input change': function($el) {

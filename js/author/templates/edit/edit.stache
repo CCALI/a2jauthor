@@ -29,7 +29,7 @@
         </div>
       </div>
 
-      <test-assemble-options {template}="a2jTemplate" />
+      <test-assemble-options {guide}="guide" {template}="a2jTemplate" />
     </div>
   {{/if}}
 </div>

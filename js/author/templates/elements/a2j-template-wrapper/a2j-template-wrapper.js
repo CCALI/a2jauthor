@@ -10,13 +10,13 @@ import 'can/map/define/';
  * @parent api-components
  *
  * This component is used server side, to wrap `<a2j-template>`, it converts the
- * serialized template received from the client into an instance of the
- * A2JTemplate model used by `<a2j-template>` for rendering purposes.
+ * serialized payload received from the client to the `templates` and `answers`
+ * objects needed to render the PDF document.
  *
  * ## Use
  *
  * @codestart
- *   <a2j-template-wrapper {templates}="request.body.templates" />
+ *   <a2j-template-wrapper {payload}="request.body.payload" />
  * @codeend
  */
 
@@ -29,24 +29,51 @@ import 'can/map/define/';
 let TemplateWrapperVM = Map.extend({
   define: {
     /**
-     * @property {A2JTemplate.List} templateWrapper.ViewModel.prototype.parsedTemplates parsedTemplates
+     * @property {can.Map} templateWrapper.ViewModel.prototype.payload payload
      * @parent templateWrapper.ViewModel
      *
-     * This is a list of A2JTemplate instances created from the stringified
-     * `templates` object sent by the client.
+     * JSON payload sent by the client, it should include both `answers` and
+     * `templates` properties.
      */
-    parsedTemplates: {
-      get() {
-        let rawList = [];
-        let tplJSON = this.attr('templates');
+    payload: {
+      set(json) {
+        let result = {answers: {}, templates: []};
 
         try {
-          rawList = JSON.parse(tplJSON);
+          result = JSON.parse(json);
         } catch (e) {
           console.error('Invalid JSON', e);
         }
 
-        return new A2JTemplate.List(rawList);
+        return new Map(result);
+      }
+    },
+
+    /**
+     * @property {A2JTemplate.List} templateWrapper.ViewModel.prototype.templates templates
+     * @parent templateWrapper.ViewModel
+     *
+     * List of A2JTemplate instances extracted from the [payload].
+     */
+    templates: {
+      get() {
+        let payload = this.attr('payload');
+
+        return new A2JTemplate.List(payload.attr('templates'));
+      }
+    },
+
+    /**
+     * @property {can.Map} templateWrapper.ViewModel.prototype.answers answers
+     * @parent templateWrapper.ViewModel
+     *
+     * Key/value map of interview's variable values extracted from [payload].
+     */
+    answers: {
+      get() {
+        let payload = this.attr('payload');
+
+        return payload.attr('answers');
       }
     }
   }

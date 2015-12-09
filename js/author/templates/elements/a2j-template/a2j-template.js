@@ -12,10 +12,8 @@ export default Component.extend({
     a2jParse(component, state, index) {
       index = index.isComputed ? index() : index;
 
-      let template = this.attr('template');
-
       state.attr('nodeIndex', index);
-      state.attr('answers', template.attr('answers'));
+      state.attr('answers', this.attr('answers'));
       state.attr('useAnswers', this.attr('useAnswers'));
       state.attr('editEnabled', this.attr('editEnabled'));
 
@@ -61,7 +59,7 @@ export default Component.extend({
     // this event won't be dispatched if the source node is moved during the
     // drag, causing the placeholder to stay visible after the elemet has been
     // dropped.
-    'li dragend': function($el) {
+    'li dragend': function() {
       this.viewModel.removeDragPlaceholderFlag();
       this.element.find('element-options-pane').show();
 

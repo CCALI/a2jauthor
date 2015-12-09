@@ -42,15 +42,18 @@ export default Map.extend({
     },
 
     /**
-     * @property {String} AppState.prototype.guideTitle guideTitle
+     * @property {can.Map} AppState.prototype.guide guide
      *
-     * The title of the current selected guided interview.
+     * The current selected guided interview.
      */
-    guideTitle: {
+    guide: {
       serialize: false,
       get() {
         let guideId = this.attr('guideId');
-        return (guideId && window.gGuide) ? window.gGuide.title : '';
+
+        if (guideId && window.gGuide) {
+          return new Map(window.gGuide);
+        }
       }
     },
 

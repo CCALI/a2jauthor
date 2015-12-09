@@ -8,6 +8,6 @@
     <can-import from="caja/server" export-as="viewModel" />
     <can-import from="caja/author/templates/elements/a2j-template-wrapper/" />
 
-    <a2j-template-wrapper {(template)}="request.body.template" />
+    <a2j-template-wrapper {templates}="request.body.templates" />
   </body>
 </html>

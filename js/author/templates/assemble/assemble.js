@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import Map from 'can/map/';
+import List from 'can/list/';
 import Component from 'can/component/';
 import template from './assemble.stache!';
 import parser from 'viewer/mobile/util/parser';
@@ -30,17 +31,28 @@ import 'can/map/define/';
 let AssembleOptionsVM = Map.extend({
   define: {
     /**
-     * @property {String} assemble.ViewModel.prototype.serializedTemplate serializedTemplate
+     * @property {String} assemble.ViewModel.prototype.serializedTemplates serializedTemplates
      * @parent assemble.ViewModel
      *
-     * This is the string representation of [template] after being serialized,
-     * it is used as the value of a hidden input post to the server when user
-     * clicks the "Get PDF" button.
+     * This is the string representation of a list of [A2JTemplate] instances
+     * used to generate a PDF document. When [template] is provided, we create
+     * a list of only one template, this covers the use case when user clicks
+     * "Test Assemble" button in the template edit page; if user clicks the
+     * same button in the templates list page, [templates] is used instead.
      */
-    serializedTemplate: {
+    serializedTemplates: {
       get() {
+        let list = new List();
         let template = this.attr('template');
-        return JSON.stringify(template.serialize());
+        let templates = this.attr('templates');
+
+        if (template) {
+          list.push(template);
+        } else if (templates) {
+          list = templates;
+        }
+
+        return JSON.stringify(list.serialize());
       }
     }
   }

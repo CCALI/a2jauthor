@@ -3,6 +3,7 @@ import Component from 'can/component/';
 import template from './toolbar.stache!';
 
 import 'can/map/define/';
+import 'bootstrap/js/modal';
 
 export let Toolbar = Map.extend({
   define: {

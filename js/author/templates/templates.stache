@@ -1,6 +1,7 @@
 <can-import from="author/alert/"/>
 <can-import from="author/loading/"/>
 <can-import from="author/templates/list/"/>
+<can-import from="author/templates/assemble/"/>
 <can-import from="author/templates/list/sortbar/"/>
 <can-import from="author/templates/list/toolbar/"/>
 <can-import from="author/templates/templates.less!"/>
@@ -80,4 +81,6 @@
       {{/if}}
     {{/if}}
   </div>
+
+  <test-assemble-options {templates}="displayList" />
 </div>

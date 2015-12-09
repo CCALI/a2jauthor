@@ -16,7 +16,7 @@ import 'can/map/define/';
  * ## Use
  *
  * @codestart
- *   <a2j-template-wrapper {(template)}="request.body.template" />
+ *   <a2j-template-wrapper {templates}="request.body.templates" />
  * @codeend
  */
 
@@ -29,19 +29,24 @@ import 'can/map/define/';
 let TemplateWrapperVM = Map.extend({
   define: {
     /**
-     * @property {A2JTemplate} templateWrapper.ViewModel.prototype.define.parsedTemplate parsedTemplate
+     * @property {A2JTemplate.List} templateWrapper.ViewModel.prototype.parsedTemplates parsedTemplates
      * @parent templateWrapper.ViewModel
      *
-     * This is an A2JTemplate instance created from the template object sent by
-     * the client.
+     * This is a list of A2JTemplate instances created from the stringified
+     * `templates` object sent by the client.
      */
-    parsedTemplate: {
+    parsedTemplates: {
       get() {
-        let tplString = this.attr('template');
+        let rawList = [];
+        let tplJSON = this.attr('templates');
 
-        if (tplString) {
-          return new A2JTemplate(JSON.parse(tplString));
+        try {
+          rawList = JSON.parse(tplJSON);
+        } catch (e) {
+          console.error('Invalid JSON', e);
         }
+
+        return new A2JTemplate.List(rawList);
       }
     }
   }

@@ -28,11 +28,13 @@
         </button>
       </a>
 
-      <a href="{{routeUrl page='templates' action='assemble' guideId=templates.0.guideId}}">
-        <button class="btn btn-default navbar-btn test-compile">
-          <span class="glyphicon-file-pdf"></span> Test Assemble
-        </button>
-      </a>
+      <button
+        data-toggle="modal"
+        data-target="#test-assemble-modal"
+        class="btn btn-default navbar-btn test-assemble">
+
+        <span class="glyphicon-file-pdf"></span> Test Assemble
+      </button>
     </div>
 
     <form class="navbar-form" role="search">

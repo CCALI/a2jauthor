@@ -28,7 +28,7 @@ export let FieldVM = Map.extend({
     field.attr('hasError', !!errors);
 
     if (!errors) {
-      let name = field.attr('name').toLowerCase();
+      let name = field.attr('name');
       let message = {};
 
       message[name] = [
@@ -46,6 +46,21 @@ export default Component.extend({
   template,
   tag: 'a2j-field',
   viewModel: FieldVM,
+
+  events: {
+    '{field._answer.answer.values} change': function(values, ev, attr) {
+      if (attr === '1') {
+        let message = {};
+        let msgVar = this.viewModel.attr('field.name');
+        message[msgVar] = [
+          { format: 'var', msg: msgVar },
+          { msg: ' = ' },
+          { format: 'val', msg: values[attr] }
+        ];
+        this.viewModel.attr('traceLogic').push(message);
+      }
+    }
+  },
 
   helpers: {
     selector: function(type, options) {

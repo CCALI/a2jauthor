@@ -26,21 +26,6 @@ export default Component.extend({
       el.attr('target', '_blank');
     },
 
-    '{interview.answers} change': function(answers, ev, attr, how, newVal) {
-      attr = attr.substr(0, attr.indexOf('.values.1'));
-      newVal = newVal[0];
-
-      if (attr && typeof newVal != null) {
-        let message = {};
-        message[attr] = [
-          { format: 'var', msg: attr },
-          { msg: ' = ' },
-          { format: 'val', msg: newVal }
-        ];
-        this.viewModel.attr('traceLogic').push(message);
-      }
-    },
-
     '{rState} page': function(rState, ev, val, old) {
       let vm = this.viewModel;
 

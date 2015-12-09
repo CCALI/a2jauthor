@@ -1,7 +1,7 @@
 <can-import from="caja/author/templates/elements/a2j-template/" />
 <can-import from="caja/author/templates/elements/a2j-template-wrapper/a2j-template-wrapper.less!" />
 
-{{#parsedTemplates}}
-  <a2j-template use-answers="true" {template}="." />
-{{/parsedTemplates}}
+{{#each templates}}
+  <a2j-template use-answers="true" {answers}="answers" {template}="." />
+{{/each}}
 

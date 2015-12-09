@@ -13,12 +13,13 @@ import 'can/map/define/';
  *
  * This component is used when user clicks the "Test Assemble" button, it
  * exposes two buttons that allow the user to load an anwers file and/or get a
- * PDF of the template passed as an attribute.
+ * PDF of the template (or templates) passed as an attribute.
  *
  * ## Use
  *
  * @codestart
  *   <test-assemble-options {template}="a2jTemplate" />
+ *   <test-assemble-options {templates}="templatesList" />
  * @codeend
  */
 
@@ -31,16 +32,27 @@ import 'can/map/define/';
 let AssembleOptionsVM = Map.extend({
   define: {
     /**
-     * @property {String} assemble.ViewModel.prototype.serializedTemplates serializedTemplates
+     * @property {Answers} assemble.ViewModel.prototype.interviewAnswers interviewAnswers
      * @parent assemble.ViewModel
      *
-     * This is the string representation of a list of [A2JTemplate] instances
-     * used to generate a PDF document. When [template] is provided, we create
-     * a list of only one template, this covers the use case when user clicks
-     * "Test Assemble" button in the template edit page; if user clicks the
-     * same button in the templates list page, [templates] is used instead.
+     * This is a key/value map containing the interview's variable values
+     * provided by the user through the viewer app.
      */
-    serializedTemplates: {
+    interviewAnswers: {
+      Value: Map
+    },
+
+    /**
+     * @property {can.List} assemble.ViewModel.prototype.templatesList templatesList
+     * @parent assemble.ViewModel
+     *
+     * List of [A2JTemplate] instances used to generate a PDF document. When
+     * [template] is provided, the list contains only that template -this covers
+     * the use case when user clicks "Test Assemble" button in the template edit
+     * page - if user clicks the same button in the templates list page,
+     * [templates] is used instead.
+     */
+    templatesList: {
       get() {
         let list = new List();
         let template = this.attr('template');
@@ -52,7 +64,27 @@ let AssembleOptionsVM = Map.extend({
           list = templates;
         }
 
-        return JSON.stringify(list.serialize());
+        return list;
+      }
+    },
+
+    /**
+     * @property {String} assemble.ViewModel.prototype.assemblePayload assemblePayload
+     * @parent assemble.ViewModel
+     *
+     * JSON representation of the payload sent to the server to generate the
+     * PDF document, which is an object with two properties: `templates` and
+     * `answers`.
+     */
+    assemblePayload: {
+      get() {
+        let templates = this.attr('templatesList');
+        let answers = this.attr('interviewAnswers');
+
+        return JSON.stringify({
+          answers: answers.serialize(),
+          templates: templates.serialize()
+        });
       }
     }
   }
@@ -70,18 +102,18 @@ export default Component.extend({
     },
 
     '.answers-file-input change': function($el) {
+      let vm = this.viewModel;
       let file = $el.get(0).files[0];
-      let template = this.viewModel.attr('template');
+      let templates = vm.attr('templatesList');
 
-      if (file && template) {
+      if (file && templates) {
         let reader = new FileReader();
 
         reader.onload = function() {
           let parsedXML = $.parseXML(reader.result);
           let answers = parser.parseJSON(parsedXML, {});
 
-          // set an aswers propery to the template model instance
-          template.attr('answers', answers);
+          if (answers) vm.attr('interviewAnswers', answers);
         };
 
         reader.readAsText(file);

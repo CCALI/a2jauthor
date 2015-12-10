@@ -22,13 +22,13 @@
           auto-close="true"
           dismissible="true"
           alert-type="default"
-          (closed)="removeNodeFromChildren(@index)">
+          (closed)="removeNodeFromChildren(%index)">
 
-          <p>Element has been deleted - <a href="#" ($click)="restoreNode(@index)">Restore</a></p>
+          <p>Element has been deleted - <a href="#" ($click)="restoreNode(%index)">Restore</a></p>
         </app-alert>
       {{/if}}
 
-      {{a2jParse(component, state, @index)}}
+      {{a2jParse(component, state, %index)}}
     </li>
   {{/each}}
 </ul>

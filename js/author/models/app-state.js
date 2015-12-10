@@ -47,14 +47,8 @@ export default Map.extend({
      * The current selected guided interview.
      */
     guide: {
-      serialize: false,
-      get() {
-        let guideId = this.attr('guideId');
-
-        if (guideId && window.gGuide) {
-          return new Map(window.gGuide);
-        }
-      }
+      Value: Map,
+      serialize: false
     },
 
     /**

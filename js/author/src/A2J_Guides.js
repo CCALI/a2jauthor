@@ -64,13 +64,19 @@ function guideSave(onFinished) {
       };
 
       ws(params, function(response) {
-        if (onFinished) onFinished();
-        setProgress((makestr(response.error) !== '') ? response.error : 'Saved');
+        if (typeof onFinished === 'function') onFinished();
+
+        if ((makestr(response.error) !== '')) {
+          setProgress(response.error);
+        } else {
+          setProgress('Saved');
+          $('#author-app').trigger('author:guide-updated');
+        }
       });
 
     } else {
       setProgress('No changes since last save');
-      if (onFinished) onFinished();
+      if (typeof onFinished === 'function') onFinished();
     }
   }
 }

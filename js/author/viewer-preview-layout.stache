@@ -14,9 +14,10 @@
 
 <div id="viewer-app" class="{{#if showDebugPanel}}with-debug-panel{{/if}}">
   <a2j-viewer-preview
+    {(trace-logic)}="traceLogic"
     {(interview)}="viewerInterview"
     {preview-page-name}="previewPageName"
-    {(trace-logic)}="traceLogic" />
+    {^interview-page-name}="interviewPageName" />
 
     <author-debug-menu {(app-state)}="."/>
 

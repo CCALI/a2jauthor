@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import Map from 'can/map/';
 import Component from 'can/component/';
 import isMobile from 'viewer/is-mobile';
@@ -48,7 +47,7 @@ export default Component.extend({
 
       // hack to keep `interviewPageName` in sync with author app.
       vm.attr('interviewPageName', rState.attr('page'));
-      rState.bind('page', function(evt, attr, how, newVal) {
+      rState.bind('page', function() {
         vm.attr('interviewPageName', rState.attr('page'));
       });
 

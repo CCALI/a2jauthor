@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import Map from 'can/map/';
 import constants from 'viewer/models/constants';
 import _contains from 'lodash/collection/contains';
 
@@ -54,13 +55,13 @@ export default function bindCustomEvents(appState) {
     }
 
     appState.attr('guideId', guideId);
-    appState.attr('guide', window.gGuide);
+    appState.attr('guide', new Map(window.gGuide));
   });
 
   // when window.gGuide is saved to the server successfully,
   // sync the map reference in the appState.
   $authorApp.on('author:guide-updated', function() {
-    appState.attr('guide', window.gGuide);
+    appState.attr('guide', new Map(window.gGuide));
   });
 
   // TODO: Figure out a better way to do this.

@@ -54,6 +54,13 @@ export default function bindCustomEvents(appState) {
     }
 
     appState.attr('guideId', guideId);
+    appState.attr('guide', window.gGuide);
+  });
+
+  // when window.gGuide is saved to the server successfully,
+  // sync the map reference in the appState.
+  $authorApp.on('author:guide-updated', function() {
+    appState.attr('guide', window.gGuide);
   });
 
   // TODO: Figure out a better way to do this.
@@ -76,4 +83,4 @@ export default function bindCustomEvents(appState) {
       }
     });
   });
-};
+}

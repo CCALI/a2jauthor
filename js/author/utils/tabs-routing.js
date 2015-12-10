@@ -15,6 +15,11 @@ import navbarItems from 'author/vertical-navbar/navbar-items';
 export default function tabsRouting(appState) {
 
   let onPageChange = function(evt, newPage) {
+    if (newPage !== 'templates') {
+      appState.removeAttr('id');
+      appState.removeAttr('action');
+    }
+
     let item = navbarItems.filter(item => item.page === newPage).shift();
     window.gotoTabOrPage(item.ref);
   };

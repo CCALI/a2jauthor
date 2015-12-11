@@ -27,7 +27,7 @@ export default function(request, response) {
 
   if (request.type === 'post') {
     requestData.guideId = '1261';
-    requestData.templateId = a2jTemplateSequence++;
+    requestData.templateId = a2jTemplateSequence + 1;
   }
 
   switch (request.type) {

@@ -8,16 +8,16 @@
 
 <div class="page">
   {{#if a2jTemplatePromise.isPending}}
-    <app-loading/>
+    <app-loading />
   {{else}}
-    <template-edit-toolbar template="{a2jTemplate}"/>
+    <template-edit-toolbar {(template)}="a2jTemplate" />
 
     <div class="container">
       <div class="row clearfix">
         {{! left column where elements are rendered }}
         <div class="col-md-8">
           {{#if a2jTemplate.rootNode.children.length}}
-            <a2j-template edit-enabled="true" template="{a2jTemplate}"/>
+            <a2j-template edit-enabled="true" {(template)}="a2jTemplate" />
           {{else}}
             <a2j-blank-template />
           {{/if}}
@@ -25,7 +25,7 @@
 
         {{! right column where template options tab is rendered }}
         <div class="col-md-4">
-          <template-edit-tabs a2j-template="{a2jTemplate}"/>
+          <template-edit-tabs {(a2j-template)}="a2jTemplate" />
         </div>
       </div>
 

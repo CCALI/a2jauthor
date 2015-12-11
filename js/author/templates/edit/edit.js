@@ -5,22 +5,23 @@ import A2JTemplate from 'author/models/a2j-template';
 
 import 'can/map/define/';
 
-export let TemplateEditPage = Map.extend({
+export let TemplateEditPageVM = Map.extend({
   define: {
     a2jTemplatePromise: {
       get() {
+        let promise;
         let templateId = this.attr('templateId');
 
-        let promise = templateId === 'new'
-          ? Promise.resolve(new A2JTemplate())
-          : A2JTemplate.findOne({templateId});
+        if (templateId === 'new') {
+          promise = Promise.resolve(new A2JTemplate());
+        } else {
+          promise = A2JTemplate.findOne({templateId});
+        }
 
-        promise = promise.then(a2jTemplate => {
+        return promise.then(a2jTemplate => {
           this.attr('a2jTemplate', a2jTemplate);
           return a2jTemplate;
         });
-
-        return promise;
       }
     }
   }
@@ -30,5 +31,5 @@ export default Component.extend({
   template,
   leakScope: false,
   tag: 'template-edit-page',
-  viewModel: TemplateEditPage
+  viewModel: TemplateEditPageVM
 });

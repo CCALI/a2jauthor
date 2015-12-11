@@ -31,7 +31,11 @@
 
     {{#each buttons}}
       <button type="button" class="btn btn-default btn-navigate" can-click="navigate">
-        {{label}}
+        {{#if label}}
+          {{label}}
+        {{else}}
+          {{lang.Continue}}
+        {{/if}}
       </button>
     {{/each}}
 

@@ -31,11 +31,6 @@ function parseButtons(pageButtons = []) {
   return pageButtons.map(function(button) {
     let result = _pick(button, buttonProperties);
 
-    // 2015-03-03 Ensure a blank button shows something.
-    result.label = result.label === ''
-      ? 'Continue'
-      : result.label;
-
     return result;
   });
 }

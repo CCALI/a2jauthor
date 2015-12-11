@@ -78,12 +78,5 @@ export default Component.extend({
 
       vm.setCurrentPage();
     }
-  },
-
-  helpers: {
-    i18n(key) {
-      key = typeof key === 'function' ? key() : key;
-      return this.attr('lang').attr(key) || key;
-    }
   }
 });

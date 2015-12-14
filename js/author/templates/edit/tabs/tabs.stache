@@ -35,7 +35,9 @@
         </div>
 
         <div class="col-lg-6">
-          <button class="btn btn-default disabled">Page Break</button>
+          <button
+            class="btn btn-default"
+            ($click)="addElement('page-break')">Page Break</button>
         </div>
       </div>
 

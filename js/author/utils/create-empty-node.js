@@ -16,6 +16,13 @@ let emptyNodes = {
       editActive: true,
       userContent: 'Add some text...'
     }
+  },
+
+  'page-break': {
+    component: '<a2j-page-break state="{.}" />',
+    state: {
+      editActive: true
+    }
   }
 };
 
@@ -27,4 +34,4 @@ export default function createEmptyNode(nodeName) {
   } else {
     console.error('Unknown Node ', nodeName);
   }
-};
+}

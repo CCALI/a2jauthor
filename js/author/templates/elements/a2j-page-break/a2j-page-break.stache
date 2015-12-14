@@ -1,18 +1,14 @@
 <can-import from="caja/author/templates/elements/options-pane/" />
 <can-import from="caja/author/templates/elements/element-container/" />
-<can-import from="caja/author/templates/elements/a2j-rich-text/a2j-rich-text.less!" />
+<can-import from="caja/author/templates/elements/a2j-page-break/a2j-page-break.less!" />
 
 {{#if editEnabled}}
   <element-container selected="{editActive}">
-    {{#if editActive}}
-      <textarea>{{userContent}}</textarea>
-    {{else}}
-      {{a2jParse(userContent)}}
-    {{/if}}
+    <p><span class="text-muted">Page Break</span></p>
   </element-container>
 
   {{#if editActive}}
-    <element-options-pane title="Text">
+    <element-options-pane title="Page Break">
       <form>
         <div class="form-group">
           <label>Notes</label>
@@ -24,6 +20,4 @@
       </form>
     </element-options-pane>
   {{/if}}
-{{else}}
-  {{a2jParse(userContent)}}
 {{/if}}

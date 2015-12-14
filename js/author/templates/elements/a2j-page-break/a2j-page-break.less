@@ -1,0 +1,27 @@
+a2j-page-break {
+  display: block;
+  position: relative;
+  page-break-after: left;
+
+  p {
+    padding: 0;
+    line-height: 0;
+    text-align: center;
+    border-bottom: 1px dotted #ddd;
+
+    span {
+      padding: 0 15px;
+      background: #fff;
+    }
+  }
+
+  .options-popover-overrides {
+    top: -120px;
+    left: 340px;
+    position: relative;
+  }
+
+  element-options-pane .popover {
+    .options-popover-overrides() !important;
+  }
+}

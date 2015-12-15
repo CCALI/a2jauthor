@@ -84,7 +84,7 @@ export default Component.extend({
 
           for (var i = min; i <= max; i++) {
             result.push(options.fn(options.scope.add({
-              '@index': i
+              '%index': i
             }).add(i)));
           }
 

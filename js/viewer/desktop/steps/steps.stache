@@ -71,8 +71,8 @@
 {{#if nextSteps.length}}
   <div class="next-wrapper">
     {{#each nextSteps}}
-      <div id="next-{{@index + 2}}"
-        class="step-next next-{{@index + 2}} step-{{@index + 2}}">
+      <div id="next-{{ add(%index, 2) }}"
+        class="step-next next-{{ add(%index, 2) }} step-{{ add(%index, 2) }}">
 
         <div class="app-step">
           <div class="step-circle bg-step{{formatStepNumber number}}"></div>

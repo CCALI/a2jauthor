@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;a2j-repeat-loop&gt;</title>
+  </head>
+
+  <body>
+    <script type="text/stache" can-autorender>
+      <can-import from="author/styles.less!" />
+      <can-import from="author/templates/elements/a2j-repeat-loop/" />
+
+      <div class="bootstrap-styles" >
+        <button id="preview" type="button" class="btn btn-primary">Preview</button>
+
+        <div class="row clearfix" style="margin-top: 20px;">
+          <div class="col-md-6">
+            <a2j-repeat-loop edit-enabled="true" edit-active="true" />
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script src="../../../../node_modules/steal/steal.js" main="can/view/autorender/">
+      window.less = { async: true };
+
+      $(function() {
+        $('body').on('click', '#preview', function() {
+          var vm = $('a2j-repeat-loop').viewModel();
+          var value = vm.attr('editEnabled');
+          vm.attr('editEnabled', !value);
+        });
+      });
+    </script>
+  </body>
+</html>

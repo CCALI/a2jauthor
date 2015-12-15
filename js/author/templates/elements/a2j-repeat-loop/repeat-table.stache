@@ -1,0 +1,41 @@
+{{#if editEnabled}}
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        {{#each tableColumns}}
+          <th style="width: {{width}}%;">{{column}}</th>
+        {{/each}}
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        {{#each tableColumns}}
+          <th>
+            <input class="form-control" type="text" {($value)}="variable">
+          </th>
+        {{/each}}
+      </tr>
+    </tbody>
+  </table>
+{{else}}
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        {{#each tableColumns}}
+          <th style="width: {{width}}%;">{{column}}</th>
+        {{/each}}
+      </tr>
+    </thead>
+
+    <tbody>
+      {{#each loopCollection}}
+        <tr>
+          {{#each tableColumns}}
+            <th>{{variable}}</th>
+          {{/each}}
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{/if}}

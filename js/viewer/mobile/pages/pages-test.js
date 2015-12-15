@@ -2,6 +2,8 @@ import $ from 'jquery';
 import can from 'can';
 import assert from 'assert';
 import PagesVM from './pages-vm';
+import sinon from 'sinon';
+
 import './pages';
 
 import 'steal-mocha';
@@ -18,6 +20,10 @@ describe('<a2j-pages>', () => {
         _counter: 0,
         inc: $.noop
       },
+      varExists: sinon.spy(),
+      varCreate: sinon.spy(),
+      varGet: sinon.stub(),
+      varSet: sinon.spy()
     });
 
     nextPageStub = new can.Map({
@@ -50,29 +56,75 @@ describe('<a2j-pages>', () => {
       assert.deepEqual(vm.attr('traceLogic').attr(), []);
     });
 
-    it('navigate', () => {
-      let button = new can.Map({
-        label: 'Go!',
-        next: 'Next'
+    describe('navigate', () => {
+      it('basic', () => {
+        let button = new can.Map({
+          label: 'Go!',
+          next: 'Next'
+        });
+
+        vm.navigate(button);
+
+        assert.deepEqual(vm.attr('traceLogic').attr(), [{
+          'button': [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go!' } ]
+        }], 'should not run codeAfter if it is empty');
+
+        vm.attr('currentPage.codeAfter', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>');
+        button.attr('label', 'Go Again!')
+        vm.navigate(button);
+
+        assert.deepEqual(vm.attr('traceLogic').attr(), [{
+          'button': [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go!' } ]
+        }, {
+          'button': [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go Again!' } ]
+        }, {
+          'codeAfter': { format: 'info', msg: 'Logic After Question' }
+        }], 'should run codeAfter');
       });
 
-      vm.navigate(button);
+      it('repeatVarSet=1', () => {
+        let button = new can.Map({
+          label: 'Go!',
+          next: 'Next'
+        });
 
-      assert.deepEqual(vm.attr('traceLogic').attr(), [{
-        'button': [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go!' } ]
-      }], 'should not run codeAfter if it is empty');
+        button.repeatVar = 'Repeat';
+        button.repeatVarSet = '=1';
 
-      vm.attr('currentPage.codeAfter', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>');
-      button.attr('label', 'Go Again!')
-      vm.navigate(button);
+        vm.navigate(button);
 
-      assert.deepEqual(vm.attr('traceLogic').attr(), [{
-        'button': [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go!' } ]
-      }, {
-        'button': [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go Again!' } ]
-      }, {
-        'codeAfter': { format: 'info', msg: 'Logic After Question' }
-      }], 'should run codeAfter');
+        assert(logicStub.varExists.calledWith('Repeat'), 'Checks if repeatVar exists');
+        assert(logicStub.varCreate.calledWith('Repeat', 'Number', false, 'Repeat variable index'), 'Creates repeatVar');
+        assert(logicStub.varSet.calledWith('Repeat', 1), 'Sets repeatVar to 1');
+
+        assert.deepEqual(vm.attr('traceLogic').attr(), [{
+          'button': [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go!' } ],
+        }, {
+          'Repeat-0': { msg: 'Setting repeat variable to 1' }
+        }], 'Should log button press and repeatVar initialization');
+      });
+
+      it('repeatVarSet+=1', () => {
+        let button = new can.Map({
+          label: 'Go!',
+          next: 'Next'
+        });
+
+        button.repeatVar = 'Repeat';
+        button.repeatVarSet = '+=1';
+        logicStub.varGet.returns(1);
+
+        vm.navigate(button);
+
+        assert(logicStub.varGet.calledWith('Repeat'), 'Gets current value of variable');
+        assert(logicStub.varSet.calledWith('Repeat', 2), 'Sets repeatVar to 2');
+
+        assert.deepEqual(vm.attr('traceLogic').attr(), [{
+          'button': [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go!' } ],
+        }, {
+          'Repeat-1': { msg: 'Incrementing repeat variable' }
+        }], 'Should log button press and repeatVar increment');
+      });
     });
 
     it('setCurrentPage', () => {

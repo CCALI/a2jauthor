@@ -258,6 +258,7 @@ const Interview = Model.extend({
     return {
       pages: this._pages,
       varExists: can.proxy(answers.varExists, answers),
+      varCreate: can.proxy(answers.varCreate, answers),
       varGet: can.proxy(answers.varGet, answers),
       varSet: can.proxy(answers.varSet, answers)
     };

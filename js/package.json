@@ -35,6 +35,7 @@
     "moment": "^2.10.3",
     "serve-index": "1.4.0",
     "serve-static": "1.6.4",
+    "sinon": "^1.17.2",
     "steal": "^0.12.3",
     "steal-mocha": "0.0.3",
     "steal-tools": "^0.12.1",

@@ -35,7 +35,7 @@ export default Map.extend({
         { msg: 'You pressed' },
         { format: 'ui', msg: button.attr('label') }
       ]
-  });
+    });
 
     can.each(fields, function(field) {
       let errors = field.attr('_answer').errors();
@@ -52,6 +52,25 @@ export default Map.extend({
           codeAfter: { format: 'info', msg: 'Logic After Question' }
         });
         logic.exec(this.attr('currentPage.codeAfter'));
+      }
+
+      let repeatVar = button.repeatVar;
+      let traceLogic = {};
+      switch(button.repeatVarSet) {
+        case '=1':
+          if (!logic.varExists(repeatVar)) {
+            logic.varCreate(repeatVar, "Number", false, 'Repeat variable index');
+          }
+          logic.varSet(repeatVar, 1);
+          traceLogic[repeatVar + '-0'] = { msg: 'Setting repeat variable to 1' };
+          this.attr('traceLogic').push(traceLogic);
+          break;
+        case '+=1':
+          var value = logic.varGet(repeatVar);
+          logic.varSet(repeatVar, value + 1);
+          traceLogic[repeatVar + '-' + value] = { msg: 'Incrementing repeat variable' };
+          this.attr('traceLogic').push(traceLogic);
+          break;
       }
 
       let gotoPage = logic.attr('gotoPage');

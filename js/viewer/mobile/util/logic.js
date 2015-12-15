@@ -26,13 +26,13 @@ export default Map.extend({
   },
 
   init: function() {
-    let guide = this.attr('interview').createGuide();
+    this.guide = this.attr('interview').createGuide();
 
     let stringMethods = ['decodeEntities', 'htmlEscape', 'jsDate2days',
       'today2jsDate', 'mdy2jsDate', 'days2jsDate', 'ismdy', 'jquote'];
 
     let traceMethods = ['traceTag'];
-    let methods = [guide, regex, constants];
+    let methods = [this.guide, regex, constants];
 
     can.each(stringMethods, function(fn) {
       methods.push(can.proxy(cString[fn], cString));
@@ -57,5 +57,21 @@ export default Map.extend({
 
   exec: function(cajascript) {
     return this._tLogic.executeScript(cajascript);
+  },
+
+  varExists(...args) {
+    return this.guide.varExists(...args);
+  },
+
+  varCreate(...args) {
+    return this.guide.varCreate(...args);
+  },
+
+  varSet(...args) {
+    return this.guide.varSet(...args);
+  },
+
+  varGet(...args) {
+    return this.guide.varGet(...args);
   }
 });

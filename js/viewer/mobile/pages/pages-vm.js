@@ -15,6 +15,13 @@ export default Map.extend({
     },
     traceLogic: {
       value: []
+    },
+    repeatVar: {
+      value: null
+    },
+    repeatVarCount: {
+      value: null,
+      Type: Number
     }
   },
 
@@ -57,7 +64,7 @@ export default Map.extend({
       let repeatVar = button.repeatVar;
       let traceLogic = {};
       switch(button.repeatVarSet) {
-        case '=1':
+        case constants.RepeatVarSetOne:
           if (!logic.varExists(repeatVar)) {
             logic.varCreate(repeatVar, "Number", false, 'Repeat variable index');
           }
@@ -65,7 +72,7 @@ export default Map.extend({
           traceLogic[repeatVar + '-0'] = { msg: 'Setting repeat variable to 1' };
           this.attr('traceLogic').push(traceLogic);
           break;
-        case '+=1':
+        case constants.RepeatVarSetPlusOne:
           var value = logic.varGet(repeatVar);
           logic.varSet(repeatVar, value + 1);
           traceLogic[repeatVar + '-' + value] = { msg: 'Incrementing repeat variable' };
@@ -137,10 +144,35 @@ export default Map.extend({
       this.attr('mState.header', page.attr('step.text'));
       this.attr('mState.step', page.attr('step.number'));
 
+      let buttons = page.attr('buttons');
+
+      if (buttons && buttons.length) {
+        buttons.each((item) => {
+          let repeatVar = item.attr('repeatVar');
+          if (repeatVar) {
+            this.attr('repeatVar', repeatVar);
+
+            switch (item.attr('repeatVarSet')) {
+              case constants.RepeatVarSetOne:
+                this.attr('repeatVarCount', 1);
+                break;
+              case constants.RepeatVarSetPlusOne:
+                this.attr('repeatVarCount', this.attr('repeatVarCount') + 1);
+                break;
+            }
+            return false;
+          }
+        });
+      }
+
       fields.each(field => {
+        let repeatVarCount = this.attr('repeatVarCount');
+        let answerIndex = repeatVarCount ? repeatVarCount : 1;
+
         var avm = new AnswerVM({
           field: field,
-          answer: field.attr('answer')
+          answer: field.attr('answer'),
+          answerIndex
         });
 
         if (this.attr('rState.i')) {

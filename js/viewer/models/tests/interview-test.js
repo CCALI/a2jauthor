@@ -138,4 +138,44 @@ describe('Interview model', function() {
     assert.equal(steps.attr('1.number'), 1, '"Step 1" has pages');
   });
 
+  it('variablesList', () => {
+    let interview = new Interview();
+    interview.attr('vars', {
+      'var a': { name: 'var a', repeating: true, values: [ null ] },
+      'var b': { name: 'var b', repeating: true, values: [ null ] },
+      'var c': { name: 'var c', repeating: false, values: [ null ] }
+    });
+
+    assert.deepEqual(interview.attr('variablesList').attr(), [
+      { name: 'var a', repeating: 1, value: null },
+      { name: 'var b', repeating: 1, value: null },
+      { name: 'var c', repeating: null, value: null }
+    ], 'should set value to null when values is [ null ]');
+
+    interview.attr('vars', {
+      'var a': { name: 'var a', repeating: true, values: [ null, 'foo' ] },
+      'var b': { name: 'var b', repeating: true, values: [ null, 'bar' ] },
+      'var c': { name: 'var c', repeating: false, values: [ null, 'non-repeating' ] }
+    });
+
+    assert.deepEqual(interview.attr('variablesList').attr(), [
+      { name: 'var a', repeating: 1, value: 'foo' },
+      { name: 'var b', repeating: 1, value: 'bar' },
+      { name: 'var c', repeating: null, value: 'non-repeating' },
+    ], 'should set value to "foo" when values is [ null, "foo" ]');
+
+    interview.attr('vars', {
+      'var a': { name: 'var a', repeating: true, values: [ null, 'foo', 'baz' ] },
+      'var b': { name: 'var b', repeating: true, values: [ null, 'bar', 'zed' ] },
+      'var c': { name: 'var c', repeating: false, values: [ null, 'non-repeating' ] }
+    });
+
+    assert.deepEqual(interview.attr('variablesList').attr(), [
+      { name: 'var a', repeating: 1, value: 'foo' },
+      { name: 'var a', repeating: 2, value: 'baz' },
+      { name: 'var b', repeating: 1, value: 'bar' },
+      { name: 'var b', repeating: 2, value: 'zed' },
+      { name: 'var c', repeating: null, value: 'non-repeating' }
+    ], 'should create two entries with values "foo" and "baz" when values is [ null, "foo", "baz" ]');
+  });
 });

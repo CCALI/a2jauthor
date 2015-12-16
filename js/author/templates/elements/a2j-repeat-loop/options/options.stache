@@ -1,0 +1,77 @@
+<can-import from="caja/author/templates/elements/options-pane/" />
+<can-import from="caja/author/templates/elements/a2j-repeat-loop/options/options.less!" />
+
+<element-options-pane title="Repeat Loop">
+  <form>
+    <div class="form-group">
+      <label for="">&nbsp;</label>
+      <input type="text" class="form-control" {($value)}="loopTitle">
+    </div>
+
+    <label for="">Repeat each:</label>
+    <div class="form-group row clearfix">
+      <div class="col-md-7">
+        <select class="form-control" {($value)}="loopType">
+          <option value="counter">Number of times</option>
+          <option value="collection" disabled>For each variable</option>
+        </select>
+      </div>
+      <div class="col-md-5">
+        {{#if useLoopCounter}}
+          <input type="number" min="1" class="form-control" {($value)}="loopCounter">
+        {{else}}
+          <input type="text" class="form-control" {($value)}="loopVariable">
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="btn-group btn-group-justified" data-toggle="buttons">
+        <label class="btn btn-default {{#is displayType "table"}}active{{/is}}">
+          <input type="radio" value="table" name="displayType" autocomplete="off"> Table
+        </label>
+
+        <label class="btn btn-default disabled {{#is displayType "list"}}active{{/is}}">
+          <input type="radio" value="list" name="displayType" autocomplete="off" disabled> List
+        </label>
+
+        <label class="btn btn-default disabled {{#is displayType "text"}}active{{/is}}">
+          <input type="radio" value="text" name="displayType" autocomplete="off" disabled> Text
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      {{#is displayType "table"}}
+        <div class="row clearfix">
+          <div class="col-md-6">Columns</div>
+          <div class="col-md-4">%</div>
+          <div class="col-md-2">&nbsp;</div>
+        </div>
+
+        {{#each tableColumns}}
+          <div class="row clearfix table-form-row">
+            <div class="col-md-5">
+              <input type="text" class="form-control" {($value)}="column">
+            </div>
+            <div class="col-md-4">
+              <input type="number" min="0" max="100" class="form-control" {($value)}="width">
+            </div>
+            <div class="col-md-3 table-column-buttons">
+              <span class="label label-success" ($click)="addColumn()">+</span>
+              <span class="label label-danger"
+                ($click)="removeColumn(%index)"
+                {{#is %index 0}}style="display: none;"{{/is}}>-</span>
+            </div>
+          </div>
+        {{/each}}
+      {{/is}}
+
+      {{#is displayType "list"}}
+      {{/is}}
+
+      {{#is displayType "text"}}
+      {{/is}}
+    </div>
+  </form>
+</element-options-pane>

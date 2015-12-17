@@ -63,7 +63,8 @@
       "jquery-textfill": "jquery-textfill/source/jquery.textfill",
       "jquery.ui.widget": "jquery-ui/ui/widget",
       "localforage": "localforage/dist/localforage.nopromises",
-      "typeahead": "typeahead.js/dist/typeahead.bundle"
+      "typeahead": "typeahead.js/dist/typeahead.jquery",
+      "bloodhound": "typeahead.js/dist/bloodhound"
     },
     "meta": {
       "author/src/A2J_Tabs": {
@@ -123,8 +124,11 @@
           "jquery"
         ]
       },
-      "typeahead.js/dist/typeahead.bundle": {
+      "typeahead.js/dist/typeahead.jquery": {
         "format": "global"
+      },
+      "typeahead.js/dist/bloodhound": {
+        "format": "cjs"
       }
     }
   }

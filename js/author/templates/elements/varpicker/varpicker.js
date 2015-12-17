@@ -1,3 +1,4 @@
+import Bloodhound from 'bloodhound';
 import Component from 'can/component/';
 import VarPickerVM from './varpicker-vm';
 import template from './varpicker.stache!';

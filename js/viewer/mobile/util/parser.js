@@ -72,11 +72,13 @@ let setVariable = function(variable, pages) {
       // 2014-06-02 SJG Blank value for Repeating variables MUST be in answer file (acting as placeholders.)
       xmlV = '<' + ansType + ' UNANS="true">' + '</' + ansType + '>';
     } else {
-      xmlV = '<' + ansType + '>' + cString.htmlEscape(value) + '</' + ansType + '>';
-    }
+      xmlV = cString.htmlEscape(value);
 
-    if (varType === constants.vtMC) {
-      xmlV = '<SelValue>' + xmlV + '</SelValue>';
+      if (varType === constants.vtMC) {
+        xmlV = '<SelValue>' + xmlV + '</SelValue>';
+      }
+
+      xmlV = '<' + ansType + '>' + xmlV + '</' + ansType + '>';
     }
 
     return xmlV;

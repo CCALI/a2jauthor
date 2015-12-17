@@ -15,13 +15,6 @@ export default Map.extend({
     },
     traceLogic: {
       value: []
-    },
-    repeatVar: {
-      value: null
-    },
-    repeatVarCount: {
-      value: null,
-      Type: Number
     }
   },
 
@@ -59,25 +52,6 @@ export default Map.extend({
           codeAfter: { format: 'info', msg: 'Logic After Question' }
         });
         logic.exec(this.attr('currentPage.codeAfter'));
-      }
-
-      let repeatVar = button.repeatVar;
-      let traceLogic = {};
-      switch(button.repeatVarSet) {
-        case constants.RepeatVarSetOne:
-          if (!logic.varExists(repeatVar)) {
-            logic.varCreate(repeatVar, "Number", false, 'Repeat variable index');
-          }
-          logic.varSet(repeatVar, 1);
-          traceLogic[repeatVar + '-0'] = { msg: 'Setting repeat variable to 1' };
-          this.attr('traceLogic').push(traceLogic);
-          break;
-        case constants.RepeatVarSetPlusOne:
-          var value = logic.varGet(repeatVar);
-          logic.varSet(repeatVar, value + 1);
-          traceLogic[repeatVar + '-' + value] = { msg: 'Incrementing repeat variable' };
-          this.attr('traceLogic').push(traceLogic);
-          break;
       }
 
       let gotoPage = logic.attr('gotoPage');
@@ -147,28 +121,22 @@ export default Map.extend({
       let buttons = page.attr('buttons');
 
       if (buttons && buttons.length) {
-        buttons.each((item) => {
-          let repeatVar = item.attr('repeatVar');
-          if (repeatVar) {
-            this.attr('repeatVar', repeatVar);
+        buttons.each((button) => {
+          let repeatVar = button.attr('repeatVar');
 
-            switch (item.attr('repeatVarSet')) {
-              case constants.RepeatVarSetOne:
-                this.attr('repeatVarCount', 1);
-                break;
-              case constants.RepeatVarSetPlusOne:
-                this.attr('repeatVarCount', this.attr('repeatVarCount') + 1);
-                break;
-            }
+          if (repeatVar) {
+            this.setRepeatVariable(repeatVar, button.repeatVarSet);
             return false;
           }
         });
       }
 
-      fields.each(field => {
-        let repeatVarCount = this.attr('repeatVarCount');
-        let answerIndex = repeatVarCount ? repeatVarCount : 1;
+      let logic = this.attr('logic');
+      let repeatVar = logic && logic.varGet('repeatVar');
+      let repeatVarCount = logic && logic.varGet(repeatVar);
+      let answerIndex = repeatVarCount ? repeatVarCount : 1;
 
+      fields.each(field => {
         var avm = new AnswerVM({
           field: field,
           answer: field.attr('answer'),
@@ -187,6 +155,34 @@ export default Map.extend({
       });
 
       this.attr('currentPage', page);
+    }
+  },
+
+  setRepeatVariable(repeatVar, repeatVarSet) {
+    let logic = this.attr('logic');
+    let traceLogic = this.attr('traceLogic');
+    let traceLogicMsg = {};
+
+    if (!logic.varExists('repeatVar')) {
+      logic.varCreate('repeatVar', 'Text', false, 'Repeat variable name');
+    }
+    logic.varSet('repeatVar', repeatVar);
+
+    switch(repeatVarSet) {
+      case constants.RepeatVarSetOne:
+        if (!logic.varExists(repeatVar)) {
+          logic.varCreate(repeatVar, "Number", false, 'Repeat variable index');
+        }
+        logic.varSet(repeatVar, 1);
+        traceLogicMsg[repeatVar + '-0'] = { msg: 'Setting repeat variable to 1' };
+        traceLogic.push(traceLogicMsg);
+        break;
+      case constants.RepeatVarSetPlusOne:
+        var value = logic.varGet(repeatVar);
+        logic.varSet(repeatVar, value + 1);
+        traceLogicMsg[repeatVar + '-' + value] = { msg: 'Incrementing repeat variable' };
+        traceLogic.push(traceLogicMsg);
+        break;
     }
   }
 });

@@ -16,6 +16,7 @@
     "bit-tabs": "0.2.0",
     "blueimp-file-upload": "^9.10.1",
     "bootstrap": "3.3.5",
+    "bootstrap-tokenfield": "^0.12.0",
     "can": "^2.3.0",
     "chai": "^3.0.0",
     "connect": "3.2.0",
@@ -39,7 +40,8 @@
     "steal": "^0.12.3",
     "steal-mocha": "0.0.3",
     "steal-tools": "^0.12.1",
-    "testee": "^0.2.0"
+    "testee": "^0.2.0",
+    "typeahead.js": "git://github.com/twitter/typeahead.js.git#v0.11.1"
   },
   "system": {
     "transpiler": "babel",
@@ -60,7 +62,8 @@
       "lodash": "lodash-amd/modern",
       "jquery-textfill": "jquery-textfill/source/jquery.textfill",
       "jquery.ui.widget": "jquery-ui/ui/widget",
-      "localforage": "localforage/dist/localforage.nopromises"
+      "localforage": "localforage/dist/localforage.nopromises",
+      "typeahead": "typeahead.js/dist/typeahead.bundle"
     },
     "meta": {
       "author/src/A2J_Tabs": {
@@ -119,6 +122,9 @@
         "deps": [
           "jquery"
         ]
+      },
+      "typeahead.js/dist/typeahead.bundle": {
+        "format": "global"
       }
     }
   }

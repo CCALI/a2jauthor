@@ -1,0 +1,4 @@
+<can-import from="caja/author/templates/elements/varpicker/varpicker.less!" />
+<can-import from="bootstrap-tokenfield/dist/css/bootstrap-tokenfield.css!" />
+
+<input type="text" class="form-control" {($value)}="selected" />

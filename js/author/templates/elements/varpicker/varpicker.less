@@ -1,0 +1,69 @@
+@import '../../../styles';
+@import '../../../../node_modules/bootstrap/less/mixins/nav-divider';
+@import '../../../../node_modules/bootstrap/less/mixins/reset-filter';
+@import '../../../../node_modules/bootstrap/less/dropdowns';
+
+var-picker {
+  display: block;
+
+  .transparent-input {
+    border: none;
+    box-shadow: none;
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  .tokenfield {
+    // prevents the inner input to show outside of its container.
+    .twitter-typeahead {
+      width: auto;
+    }
+
+    // make sure inner input is completely transparent
+    .tt-input,
+    .tt-input:focus {
+      .transparent-input() !important;
+    }
+  }
+
+  // https://github.com/bassjobsen/typeahead.js-bootstrap-css
+  span.twitter-typeahead {
+    width: 100%;
+
+    .tt-menu {
+      &:extend(.dropdown-menu);
+    }
+
+    .tt-dropdown-menu {
+      &:extend(.dropdown-menu);
+    }
+
+    .tt-suggestion {
+      &:extend(.dropdown-menu > li > a);
+      &:hover,
+      &:focus {
+        &:extend(.dropdown-menu > .active > a);
+      }
+    }
+
+    .tt-suggestion.tt-cursor {
+      &:extend(.dropdown-menu > .active > a);
+    }
+
+    .input-group & {
+      display: block !important;
+      .tt-dropdown-menu {
+        top:32px !important;
+      }
+    }
+    .input-group.input-group-lg & {
+      .tt-dropdown-menu {
+        top:44px !important;
+      }
+    }
+    .input-group.input-group-sm & {
+      .tt-dropdown-menu {
+        top:28px !important;
+      }
+    }
+  }
+}

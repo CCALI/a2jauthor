@@ -1,5 +1,7 @@
-import Model from 'can/model/';
 import List from 'can/list/';
+import Model from 'can/model/';
+import _values from 'lodash/object/values';
+
 import 'can/map/define/';
 
 /**
@@ -9,10 +11,10 @@ import 'can/map/define/';
  * An A2J variable is an answer, or list of answers, to a guided interview
  * question. They are used when generating documents.
  */
-export default Model.extend({
+let A2JVariable = Model.extend({
   id: 'name',
 
-  makeFindOne: function() {
+  makeFindOne() {
     return function(params, success, error) {
       let deferred = new can.Deferred();
       let gGuide = window.gGuide || {};
@@ -23,8 +25,33 @@ export default Model.extend({
 
       return deferred.then(success, error);
     };
-  }
+  },
 
+  /**
+   * @property {function} A2JVariable.fromGuideVars fromGuideVars
+   * @param {Object} vars The raw vars object from `gGuide`
+   * @return {A2JVariable.List} A variables list
+   *
+   * The guide (`window.gGuide`) object used in the author app, models the
+   * variables as a key/value record where the key is the lowercase variable
+   * name and the value is an object with variables properties (`name`,
+   * `repeating` and `values`). This static method takes this object and
+   * generates a collection where each item is an instance of `A2JVariable`.
+   */
+  fromGuideVars(vars) {
+    let list = new A2JVariable.List();
+
+    // sort list using "natural string" sort.
+    list.attr('comparator', function(a, b) {
+      let an = a.attr('name');
+      let bn = b.attr('name');
+
+      return an.localeCompare(bn, {numeric: true});
+    });
+
+    list.replace(_values(vars));
+    return list;
+  }
 }, {
 
   define: {
@@ -67,3 +94,5 @@ export default Model.extend({
     }
   }
 });
+
+export default A2JVariable;

@@ -223,20 +223,39 @@ const Interview = Model.extend({
           return aName.localeCompare(bName, {numeric: true});
         });
 
-        list.replace(_keys(vars).map(function(key) {
+        _keys(vars).forEach(function(key) {
           let variable = vars[key];
           let answer = answers.attr(key.toLowerCase());
 
-          let value = answer
-            ? _last(answer.attr('values').attr())
-            : _last(variable.values);
+          let values = answer ? answer.attr('values').attr() : variable.values;
 
-          return {
-            value,
-            name: variable.name,
-            repeating: variable.repeating,
-          };
-        }));
+          if (!variable.repeating) {
+            // handle [ null ] or [ null, "foo" ] scenarios
+            list.push({
+              value: _last(values),
+              name: variable.name,
+              repeating: null
+            });
+          } else if (values.length <= 1) {
+            // repeating variable with no values ie. [ null ]
+            list.push({
+              value: null,
+              name: variable.name,
+              repeating: 1
+            });
+          } else {
+            // repeating variable with values
+            values.forEach((item, i) => {
+              if (item !== null) {
+                list.push({
+                  value: item,
+                  name: variable.name,
+                  repeating: i
+                });
+              }
+            });
+          }
+        });
 
         return list;
       }

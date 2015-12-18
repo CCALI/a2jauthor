@@ -1,6 +1,7 @@
 import List from 'can/list/';
 import Model from 'can/model/';
 import _values from 'lodash/object/values';
+import _toPlainObject from 'lodash/lang/toPlainObject';
 
 import 'can/map/define/';
 
@@ -39,18 +40,11 @@ let A2JVariable = Model.extend({
    * generates a collection where each item is an instance of `A2JVariable`.
    */
   fromGuideVars(vars) {
-    let list = new A2JVariable.List();
-
-    // sort list using "natural string" sort.
-    list.attr('comparator', function(a, b) {
-      let an = a.attr('name');
-      let bn = b.attr('name');
-
-      return an.localeCompare(bn, {numeric: true});
-    });
-
-    list.replace(_values(vars));
-    return list;
+    // convert the array to TVariable objects to an array of raw Object,
+    // otherwise the can.List constructor won't convert the TVariable objects
+    // to Map instances.
+    let values = _values(vars).map(_toPlainObject);
+    return new A2JVariable.List(values);
   }
 }, {
 
@@ -63,6 +57,7 @@ let A2JVariable = Model.extend({
     name: {
       value: ''
     },
+
     /**
      * @property {String} propertyName
      *
@@ -70,12 +65,13 @@ let A2JVariable = Model.extend({
      * window.gGuide.vars
      */
     propertyName: {
-      get: function() {
+      get() {
         let name = this.attr('name') || '';
 
         return name.toLowerCase();
       }
     },
+
     /**
      * @property {Boolean} repeating
      *
@@ -84,6 +80,7 @@ let A2JVariable = Model.extend({
     repeating: {
       value: false
     },
+
     /**
      * @property {can.List} values
      *

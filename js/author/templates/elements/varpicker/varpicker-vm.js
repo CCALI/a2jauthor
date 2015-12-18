@@ -31,9 +31,7 @@ export default Map.extend({
      * and generates an actual list of variables out of it.
      */
     variables: {
-      set(vars) {
-        return A2JVariable.fromGuideVars(vars.attr());
-      }
+      Value: A2JVariable.List
     },
 
     /**

@@ -1,10 +1,11 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './demo.stache!';
+import A2JVariable from 'author/models/a2j-variable';
 
 import 'can/map/define/';
 
-let variablesFixture = {
+const guideVars = {
   'user gender': {
     name: 'User Gender',
     type: 'Text',
@@ -46,9 +47,9 @@ let variablesFixture = {
 
 let VarPickerDemoVM = Map.extend({
   define: {
-    guideVars: {
+    variables: {
       value() {
-        return new Map(variablesFixture);
+        return A2JVariable.fromGuideVars(guideVars);
       }
     }
   }

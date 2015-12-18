@@ -1,7 +1,21 @@
 import Map from 'can/map/';
 import List from 'can/list/';
+import A2JVariable from './a2j-variable';
 
 import 'can/map/define/';
+
+// TODO: extract this into its own file, but first figure out what to do
+// with the existing Guide model that works with a different data structure.
+let Guide = Map.extend({
+  define: {
+    variablesList: {
+      get() {
+        let vars = this.attr('vars');
+        return A2JVariable.fromGuideVars(vars.attr());
+      }
+    }
+  }
+});
 
 /**
  * @module {function} author/models/app-state AppState
@@ -47,8 +61,11 @@ export default Map.extend({
      * The current selected guided interview.
      */
     guide: {
-      Value: Map,
-      serialize: false
+      serialize: false,
+
+      set(gGuide = {}) {
+        return new Guide(gGuide);
+      }
     },
 
     /**

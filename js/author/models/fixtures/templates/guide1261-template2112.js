@@ -9,6 +9,10 @@ export default {
     },
     children: [
       {
+        component: '<a2j-repeat-loop state="{.}" />',
+        state: {}
+      },
+      {
         component: '<a2j-rich-text state="{.}" />',
         state: {
           userContent: 'User\'s last name <a2j-variable name="Client last name TE" />.'

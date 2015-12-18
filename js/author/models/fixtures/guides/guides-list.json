@@ -1,0 +1,53 @@
+{
+  "userid": 78740,
+  "guides": [
+    { "id": "1255",
+      "title": "My Interview (6\/22\/2015)",
+      "owned": true,
+      "details": {
+        "modified": "2015-06-22 11:16:36",
+        "size": 3551
+      }
+    },
+    { "id": "20",
+      "title": "THRC Guided Interview",
+      "owned": true,
+      "details": {
+        "modified": "2015-12-18 11:16:36",
+        "size": 161000
+      }
+    },
+    { "id": "5",
+      "title": "A2J Mobile Online Interview",
+      "owned": false,
+      "details": {
+        "modified": "2012-10-15 20:55:58",
+        "size": 382665
+      }
+    },
+    { "id": "134",
+      "title": "NYS Surrogate\"s Small Estate Settlement",
+      "owned": false,
+      "details": {
+        "modified": "2012-10-15 20:55:56",
+        "size": 234875
+      }
+    },
+    { "id": "573",
+      "title": "Repeat Loop Example",
+      "owned": false,
+      "details": {
+        "modified": "2014-09-04 12:05:44",
+        "size": 6212
+      }
+    },
+    { "id": "135",
+      "title": "Utah Legal Services Online Intake",
+      "owned": false,
+      "details": {
+        "modified": "2012-10-15 20:55:26",
+        "size": 251976
+      }
+    }
+  ]
+}

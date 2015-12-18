@@ -5,7 +5,7 @@
   <div class="jumbotron">
     <h1>Oops!</h1>
     <p>You've reached this page in error.</p>
-    <p><a href="javascript://" can-click="home" class="btn btn-primary">Return home</a></p>
+    <p><a href="javascript://" ($click)="home" class="btn btn-primary">Return home</a></p>
   </div>
 {{/eq}}
 
@@ -17,8 +17,8 @@
 
       {{#if fields.length}}
         <a2j-fields
-          logic="{logic}"
-          fields="{fields}"
+          {(logic)}="logic"
+          {(fields)}="fields"
           {(trace-logic)}="traceLogic"
           {lang}="lang">
         </a2j-fields>
@@ -30,7 +30,7 @@
     </p>
 
     {{#each buttons}}
-      <button type="button" class="btn btn-default btn-navigate" can-click="navigate">
+      <button type="button" class="btn btn-default btn-navigate" ($click)="navigate">
         {{#if label}}
           {{label}}
         {{else}}

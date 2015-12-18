@@ -63,6 +63,12 @@ let ViewerStepsVM = Map.extend({
 
         return interview.attr('userGender') && !hasUserGenderField;
       }
+    },
+
+    guideAvatarFacingDirection: {
+      get() {
+        return this.attr('showClientAvatar') ? 'right' : 'front';
+      }
     }
   }
 });

@@ -5,28 +5,28 @@
 
 {{#if isMobile}}
   <a2j-mobile-viewer
-    lang="{lang}"
-    logic="{logic}"
-    r-state="{rState}"
-    p-state="{pState}"
-    m-state="{mState}"
-    interview="{interview}"
+    {(lang)}="lang"
+    {(logic)}="logic"
+    {(r-state)}="rState"
+    {(p-state)}="pState"
+    {(m-state)}="mState"
+    {(interview)}="interview"
     class="bootstrap-styles" />
 {{else}}
   <a2j-desktop-viewer
-    lang="{lang}"
-    logic="{logic}"
-    r-state="{rState}"
-    p-state="{pState}"
-    m-state="{mState}"
-    interview="{interview}"
-    class="bootstrap-styles"
+    {(lang)}="lang"
+    {(logic)}="logic"
+    {(r-state)}="rState"
+    {(p-state)}="pState"
+    {(m-state)}="mState"
+    {(interview)}="interview"
     {(modal-content)}="modalContent"
-    {(trace-logic)}="traceLogic" />
+    {(trace-logic)}="traceLogic"
+    class="bootstrap-styles" />
 {{/if}}
 <a2j-modal
-  logic="{logic}"
-  interview="{interview}"
-  r-state="{rState}"
-  class="bootstrap-styles"
-  {(modal-content)}="modalContent" />
+  {(logic)}="logic"
+  {(interview)}="interview"
+  {(r-state)}="rState"
+  {(modal-content)}="modalContent"
+  class="bootstrap-styles" />

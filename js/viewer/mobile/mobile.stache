@@ -6,11 +6,11 @@
 
 {{^tocOrCreditsShown}}
   <a2j-header
-    r-state="{rState}"
-    p-state="{pState}"
-    m-state="{mState}"
-    interview="{interview}"
-    logic="{logic}">
+    {(r-state)}="rState"
+    {(p-state)}="pState"
+    {(m-state)}="mState"
+    {(interview)}="interview"
+    {(logic)}="logic">
   </a2j-header>
 {{/tocOrCreditsShown}}
 
@@ -30,27 +30,28 @@
 {{^tocOrCreditsShown}}
   {{#equal rState.view 'intro'}}
     <a2j-intro
-      r-state="{rState}"
-      p-state="{pState}"
-      m-state="{mState}"
-      interview="{interview}">
+      {(r-state)}="rState"
+      {(p-state)}="pState"
+      {(m-state)}="mState"
+      {(interview)}="interview">
     </a2j-intro>
   {{/equal}}
 
   {{#equal rState.view 'complete'}}
     <img src="{{joinBase 'viewer/images/logo_big.png'}}" class="img-responsive"/>
     <div class="btn-group btn-group-justified">
-      <a href="{{mState.redirect}}" class="btn btn-primary">{{i11n 'Continue'}}</a>
+      <a href="{{mState.redirect}}" class="btn btn-primary">{{lang.Continue}}</a>
     </div>
   {{/equal}}
 
   {{#equal rState.view 'pages'}}
     <a2j-pages
-      r-state="{rState}"
-      p-state="{pState}"
-      m-state="{mState}"
-      logic="{logic}"
-      interview="{interview}">
+      {lang}="lang"
+      {(r-state)}="rState"
+      {(p-state)}="pState"
+      {(m-state)}="mState"
+      {(logic)}="logic"
+      {(interview)}="interview">
     </a2j-pages>
   {{/equal}}
 {{/tocOrCreditsShown}}

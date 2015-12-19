@@ -1,3 +1,4 @@
+<can-import from="caja/author/templates/elements/varpicker/" />
 <can-import from="caja/author/templates/elements/options-pane/" />
 <can-import from="caja/author/templates/elements/a2j-repeat-loop/options/options.less!" />
 
@@ -13,14 +14,14 @@
       <div class="col-md-7">
         <select class="form-control" {($value)}="loopType">
           <option value="counter">Number of times</option>
-          <option value="collection" disabled>For each variable</option>
+          <option value="collection">For each variable</option>
         </select>
       </div>
       <div class="col-md-5">
         {{#if useLoopCounter}}
           <input type="number" min="1" class="form-control" {($value)}="loopCounter">
         {{else}}
-          <input type="text" class="form-control" {($value)}="loopVariable">
+          <var-picker {variables}="guide.variablesList" {(selected)}="loopVariable" />
         {{/if}}
       </div>
     </div>

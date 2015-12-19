@@ -82,5 +82,5 @@
     {{/if}}
   </div>
 
-  <test-assemble-options {guide}="appState.guide" {templates}="displayList" />
+  <test-assemble-options {templates}="displayList" />
 </div>

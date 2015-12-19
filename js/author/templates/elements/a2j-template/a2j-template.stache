@@ -2,6 +2,7 @@
 <can-import from="caja/author/templates/elements/a2j-variable/" />
 <can-import from="caja/author/templates/elements/a2j-rich-text/" />
 <can-import from="caja/author/templates/elements/a2j-page-break/" />
+<can-import from="caja/author/templates/elements/a2j-repeat-loop/" />
 <can-import from="caja/author/templates/elements/a2j-section-title/" />
 <can-import from="caja/author/templates/elements/a2j-template/a2j-template.less!" />
 

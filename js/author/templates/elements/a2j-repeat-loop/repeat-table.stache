@@ -10,11 +10,11 @@
 
     <tbody>
       <tr>
-        {{#each tableColumns}}
-          <th>
-            <input class="form-control" type="text" {($value)}="variable">
+        {{#tableColumns}}
+          <th style="width: {{width}}%;">
+            <var-picker {variables}="guide.variablesList" {(selected)}="variable" />
           </th>
-        {{/each}}
+        {{/tableColumns}}
       </tr>
     </tbody>
   </table>
@@ -32,7 +32,7 @@
       {{#each loopCollection}}
         <tr>
           {{#each tableColumns}}
-            <th>{{variable}}</th>
+            <th style="width: {{width}}%;">{{variable}}</th>
           {{/each}}
         </tr>
       {{/each}}

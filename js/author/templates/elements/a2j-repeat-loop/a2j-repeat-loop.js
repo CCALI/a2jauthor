@@ -149,7 +149,10 @@ let RepeatLoopVM = Map.extend({
 export default Component.extend({
   template,
   tag: 'a2j-repeat-loop',
-  viewModel: RepeatLoopVM,
+
+  viewModel(attrs) {
+    return new RepeatLoopVM(attrs.state);
+  },
 
   events: {
     'input[name="displayType"] change': function($el) {

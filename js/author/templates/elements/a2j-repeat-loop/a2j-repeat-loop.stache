@@ -1,3 +1,5 @@
+<can-import from="caja/author/templates/elements/varpicker/" />
+<can-import from="caja/author/templates/elements/a2j-variable/" />
 <can-import from="caja/author/templates/elements/element-container/" />
 <can-import from="caja/author/templates/elements/a2j-repeat-loop/options/" />
 <can-import from="caja/author/templates/elements/a2j-repeat-loop/a2j-repeat-loop.less!" />
@@ -10,8 +12,7 @@
           REPEAT <span class="label label-default">{{loopCounter}}</span>
           {{#is loopCounter 1}}TIME{{else}}TIMES{{/is}} in a TABLE
         {{else}}
-          LOOP FOR EACH <span class="label label-default">{{loopVariable}}</span>
-          in a TABLE
+          LOOP FOR EACH <a2j-variable {name}="loopVariable" /> in a TABLE
         {{/if}}
       </div>
 
@@ -41,6 +42,7 @@
 
   {{#if editActive}}
     <a2j-repeat-loop-options
+      {(guide)}="guide"
       {(loop-counter)}="loopCounter"
       {(table-columns)}="tableColumns"
       {(use-loop-counter)}="useLoopCounter" />

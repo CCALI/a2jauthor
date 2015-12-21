@@ -27,11 +27,6 @@ export default Component.extend({
     eval: function(str) {
       str = typeof str === 'function' ? str() : str;
       return this.attr('logic').eval(str);
-    },
-
-    i11n: function(key) {
-      key = typeof key === 'function' ? key() : key;
-      return this.attr('lang.' + key);
     }
   }
 });

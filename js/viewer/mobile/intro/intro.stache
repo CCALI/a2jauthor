@@ -7,7 +7,7 @@
 
 	<div class="btn-group btn-group-justified">
 		<div class="btn-group">
-			<button type="button" class="btn btn-default" can-click="navigate">Start</button>
+			<button type="button" class="btn btn-default" ($click)="navigate">Start</button>
 		<div class="btn-group">
 	</div>
 </p>

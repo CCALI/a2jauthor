@@ -4,11 +4,11 @@
 <nav class="navbar navbar-default">
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
     <ul class="nav navbar-nav">
-      <button class="btn btn-default navbar-btn" can-click="navigateBack" {{^if canNavigateBack}}disabled{{/if}}>
+      <button class="btn btn-default navbar-btn" ($click)="navigateBack" {{^if canNavigateBack}}disabled{{/if}}>
         <span class="glyphicon-left-open"></span> <span class="sr-only">{{lang.GoBack}}</span>
       </button>
 
-      <button class="btn btn-default navbar-btn" can-click="navigateForward" {{^if canNavigateForward}}disabled{{/if}}>
+      <button class="btn btn-default navbar-btn" ($click)="navigateForward" {{^if canNavigateForward}}disabled{{/if}}>
         <span class="sr-only">{{lang.GoNext}}</span> <span class="glyphicon-right-open"></span>
       </button>
     </ul>
@@ -19,8 +19,8 @@
         <div class="input-group">
           <select class="form-control" {($value)}="selectedPageName">
             {{#each visitedPages}}
-              <option value="{{name}}" {{#eq %index 0}}selected{{/eq}}>
-                {{fitPageDescription text}}
+              <option {$value}="name" {{#eq %index 0}}selected{{/eq}}>
+                {{fitPageDescription(text)}}
               </option>
             {{/each}}
           </select>

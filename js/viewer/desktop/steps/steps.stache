@@ -13,11 +13,11 @@
       <div id="guideBubble" class="bubble">
         <a2j-pages
           {lang}="lang"
-          logic="{logic}"
-          r-state="{rState}"
-          p-state="{pState}"
-          m-state="{mState}"
-          interview="{interview}"
+          {(logic)}="logic"
+          {(r-state)}="rState"
+          {(p-state)}="pState"
+          {(m-state)}="mState"
+          {(interview)}="interview"
           {(modal-content)}="modalContent"
           {(trace-logic)}="traceLogic" />
       </div><!-- bubble -->
@@ -26,9 +26,9 @@
         <span class="bubble-arrow"></span>
         <a2j-viewer-avatar
           class="avatar-guide"
-          skin="{{avatarSkinTone}}"
-          gender="{{interview.guideAvatarGender}}"
-          facing="{{#if showClientAvatar}}right{{else}}front{{/if}}" />
+          {skin}="avatarSkinTone"
+          {gender}="interview.guideAvatarGender"
+          {facing}="guideAvatarFacingDirection" />
       </div>
     </div><!-- guide-wrapper -->
 
@@ -38,8 +38,8 @@
           <a2j-viewer-avatar
             facing="left"
             class="avatar-client"
-            skin="{{avatarSkinTone}}"
-            gender="{{interview.userGender}}" />
+            {skin}="avatarSkinTone"
+            {gender}="interview.userGender" />
         </div>
       </div><!-- client-wrapper -->
     {{/if}}
@@ -60,7 +60,7 @@
           </div>
 
           <div class="sign-text">
-            <a2j-viewer-sign-text text="{{currentStep.text}}"></a2j-viewer-sign-text>
+            <a2j-viewer-sign-text {text}="currentStep.text"></a2j-viewer-sign-text>
           </div>
         </div>
       </div><!-- sign -->
@@ -88,7 +88,7 @@
               </div>
 
               <div class="sign-text">
-                <a2j-viewer-sign-text text="{{text}}"></a2j-viewer-sign-text>
+                <a2j-viewer-sign-text {text}="text"></a2j-viewer-sign-text>
               </div>
             </div>
           </div><!-- sign -->

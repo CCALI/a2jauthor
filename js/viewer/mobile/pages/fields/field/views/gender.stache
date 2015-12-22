@@ -1,6 +1,6 @@
 <div>
   <div class="form-group {{#if field.hasError}}has-error{{/if}}">
-    <label class="control-label" for="{{label}}">{{{eval label}}}</label>
+    <label class="control-label" for="{{label}}">{{{ eval(label, repeatVarValue) }}}</label>
 
     <input type="radio" id="m" name="gender" value="Male" ($change)="validateField"/>
     <label for="m">{{i18n("Male")}}</label>
@@ -11,7 +11,7 @@
 
   {{#if showInvalidPrompt}}
     <div class="alert alert-danger" role="alert">
-      {{{eval field.invalidPrompt}}}
+      {{{ eval(field.invalidPrompt, repeatVarValue) }}}
     </div>
   {{/if}}
 <div>

@@ -17,18 +17,18 @@
 
             <h4 class="modal-title" id="pageModalLbl">
               {{#if ../modalContent}}
-                {{modalContent.name}}
+                {{ eval(modalContent.name, repeatVarValue) }}
               {{else}}
-                {{learn}}
+                {{ eval(learn, repeatVarValue) }}
               {{/if}}
             </h4>
           </div>
 
           <div class="modal-body">
             {{#if ../modalContent}}
-              {{{eval modalContent.text}}}
+              {{{ eval(modalContent.text, repeatVarValue) }}}
             {{else}}
-              {{{eval help}}}
+              {{{ eval(help, repeatVarValue) }}}
             {{/if}}
           </div>
         </div>

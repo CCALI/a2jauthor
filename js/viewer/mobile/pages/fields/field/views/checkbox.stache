@@ -6,6 +6,6 @@
       name="{{name}}"
       ($change)="validateField"
       {($value)}="field._answer.values"/>
-    <label for="{{label}}">{{{eval label}}}</label>
+    <label for="{{label}}">{{{ eval(label, repeatVarValue) }}}</label>
   </div>
 </div>

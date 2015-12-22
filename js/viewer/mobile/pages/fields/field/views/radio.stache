@@ -7,5 +7,5 @@
     class="a2j-radio-button"
     ($change)="validateField"/>
 
-  <label class="a2j-radio-button-label" for="{{label}}">{{{eval label}}}</label>
+  <label class="a2j-radio-button-label" for="{{label}}">{{{ eval(label, repeatVarValue) }}}</label>
 </div>

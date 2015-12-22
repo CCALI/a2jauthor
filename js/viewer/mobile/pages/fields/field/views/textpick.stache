@@ -1,5 +1,5 @@
 <div>
-  <label for="{{label}}">{{{eval label}}}</label>
+  <label for="{{label}}">{{{ eval(label, repeatVarValue) }}}</label>
 
   <select id="{{label}}" {($value)}="field._answer.values" ($change)="validateField">
     {{{options}}}

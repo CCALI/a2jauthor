@@ -24,6 +24,24 @@ export let ViewerNavigationVM = Map.extend({
       }
     },
 
+    selectedPageIndex: {
+      set(newVal) {
+        let selectedPage = this.attr('visitedPages').attr(newVal);
+        let selectedPageName = selectedPage.attr('name');
+
+        let repeatVar = selectedPage.attr('repeatVar');
+        let repeatVarValue = selectedPage.attr('repeatVarValue');
+        if (repeatVar && repeatVarValue) {
+          this.attr('appState.repeatVarValue', selectedPage.repeatVarValue);
+          this.attr('logic').varSet(repeatVar, repeatVarValue);
+        }
+
+        this.attr('selectedPageName', selectedPageName);
+
+        return newVal;
+      }
+    },
+
     canSaveAndExit: {
       get() {
         let appState = this.attr('appState');
@@ -147,29 +165,26 @@ export default Component.extend({
       return baseUrl + $.param(feedbackData);
     },
 
-    fitPageDescription(text) {
+    fitPageDescription(text, repeatVarValue) {
       text = text.isComputed ? text() : text;
 
       // strip html tags
-      text = text.replace(/(<([^>]+)>)/ig, '');
+      text = text.replace(/(<([^>]+)>)/ig, '').trim();
 
       // truncate text to avoid https://github.com/CCALI/CAJA/issues/685
-      return _trunc(text, {length: 40, separator: ' '});
+      text = _trunc(text, {length: 40, separator: ' '});
+      text = (typeof repeatVarValue === "number") ? text + '#' + repeatVarValue : text;
+
+      return text;
     }
   },
 
   events: {
-    '{visitedPages} length': function() {
-      let vm = this.viewModel;
-      let pages = vm.attr('visitedPages');
-      vm.attr('selectedPageName', pages.attr('0.name'));
-    },
-
-    '{viewModel} selectedPageName': function() {
-      let vm = this.viewModel;
-      let state = vm.attr('appState');
-      let pageName = vm.attr('selectedPageName');
-      state.attr('page', pageName);
+    /*
+    * select most recently visited page in selectedPageIndex dropdown
+    */
+    '{visitedPages} length': function(pages) {
+      this.viewModel.attr('selectedPageIndex', 0);
     }
   }
 });

@@ -11,6 +11,8 @@
     {{else}}
       <a2j-viewer-navigation
         {lang}="lang"
+        {logic}="logic"
+        {(selected-page-name)}="rState.page"
         {(app-state)}="rState"
         {(interview)}="interview"
         {(show-demo-notice)}="showDemoNotice"

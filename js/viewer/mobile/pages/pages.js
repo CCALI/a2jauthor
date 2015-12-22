@@ -26,7 +26,7 @@ export default Component.extend({
       el.attr('target', '_blank');
     },
 
-    '{rState} page': function(rState, ev, val, old) {
+    '{rState} page': function(rState, ev, val) {
       let vm = this.viewModel;
 
       if (!val || val === 'FAIL') {
@@ -77,6 +77,15 @@ export default Component.extend({
       }
 
       vm.setCurrentPage();
+    },
+
+
+    /*
+    * when value of repeatVar changes, re-render page fields
+    */
+    '{rState} repeatVarValue': function(rState, ev, val) {
+      let fields = this.viewModel.attr('currentPage.fields');
+      this.viewModel.setFieldAnswers(fields);
     }
   }
 });

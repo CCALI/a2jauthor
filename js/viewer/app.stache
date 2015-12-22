@@ -25,6 +25,7 @@
     class="bootstrap-styles" />
 {{/if}}
 <a2j-modal
+  {repeat-var-value}="rState.repeatVarValue"
   {(logic)}="logic"
   {(interview)}="interview"
   {(r-state)}="rState"

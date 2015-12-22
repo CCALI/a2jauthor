@@ -1,6 +1,6 @@
 import Map from 'can/map/';
 import List from 'can/list/';
-import A2JVariable from 'author/models/a2j-variable';
+import A2JVariable from 'caja/author/models/a2j-variable';
 
 import 'can/map/define/';
 

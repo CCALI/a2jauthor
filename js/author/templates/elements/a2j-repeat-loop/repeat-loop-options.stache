@@ -7,13 +7,13 @@
 
     <label for="">Repeat each:</label>
     <div class="form-group row clearfix">
-      <div class="col-md-7">
+      <div class="col-md-6">
         <select class="form-control" {($value)}="loopType">
           <option value="counter">Number of times</option>
           <option value="variable">For each variable</option>
         </select>
       </div>
-      <div class="col-md-5">
+      <div class="col-md-6">
         {{#if useLoopCounter}}
           <input type="number" min="1" class="form-control" {($value)}="loopCounter">
         {{else}}

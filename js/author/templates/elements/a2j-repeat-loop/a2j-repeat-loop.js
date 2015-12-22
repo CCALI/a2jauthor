@@ -2,10 +2,12 @@ import Component from 'can/component/';
 import RepeatLoopVM from './a2j-repeat-loop-vm';
 import template from './a2j-repeat-loop.stache!';
 import displayTableTpl from './repeat-table.stache!';
+import repeatLoopOptionsTpl from './repeat-loop-options.stache!';
 
 import 'can/view/';
 
 can.view.preload('display-table-tpl', displayTableTpl);
+can.view.preload('repeat-loop-options-tpl', repeatLoopOptionsTpl);
 
 /**
  * @module {Module} author/templates/elements/a2j-repeat-loop/ <a2j-repeat-loop>

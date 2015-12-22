@@ -2,15 +2,8 @@ import Map from 'can/map/';
 import List from 'can/list/';
 import _last from 'lodash/array/last';
 import _range from 'lodash/utility/range';
-import _isString from 'lodash/lang/isString';
 
 import 'can/map/define/';
-
-const isTrue = function(value) {
-  return _isString(value) ?
-    value.toLowerCase() === 'true' :
-    Boolean(value);
-};
 
 /**
  * @property {can.Map} repeatLoop.ViewModel
@@ -39,7 +32,10 @@ export default Map.extend({
      * instead of iterating over an existing variable.
      */
     loopCounter: {
-      value: 1
+      value: 1,
+      set(value) {
+        return value < 1 ? 1 : value;
+      }
     },
 
     /**
@@ -156,6 +152,34 @@ export default Map.extend({
     }
   },
 
+  addColumn() {
+    let columns = this.attr('tableColumns');
+    let newLength = columns.attr('length') + 1;
+    let colWidth = Math.floor(100 / newLength);
+
+    columns.each(function(col) {
+      col.attr('width', colWidth);
+    });
+
+    columns.push({
+      variable: '',
+      width: colWidth,
+      column: `Column ${newLength}`
+    });
+  },
+
+  removeColumn(index) {
+    let columns = this.attr('tableColumns');
+    let newLength = columns.attr('length') - 1;
+    let colWidth = Math.floor(100 / newLength);
+
+    columns.each(function(col) {
+      col.attr('width', colWidth);
+    });
+
+    columns.splice(index, 1);
+  },
+
   getAnswer(varName = '') {
     let answers = this.attr('answers');
     let answerKey = varName.toLowerCase();
@@ -185,7 +209,7 @@ export default Map.extend({
 
       values = values.filter(v => v != null);
 
-      if (isTrue(repeating) && index != null) {
+      if (repeating && index != null) {
         return values.attr(index);
       } else {
         return _last(values.attr());

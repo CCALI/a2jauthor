@@ -32,7 +32,7 @@
       {{#each loopCollection}}
         <tr>
           {{#each tableColumns}}
-            <th style="width: {{width}}%;">{{variable}}</th>
+            <th style="width: {{width}}%;">{{getValue(variable, ../%index)}}</th>
           {{/each}}
         </tr>
       {{/each}}

@@ -14,7 +14,7 @@
       <div class="col-md-7">
         <select class="form-control" {($value)}="loopType">
           <option value="counter">Number of times</option>
-          <option value="collection">For each variable</option>
+          <option value="variable">For each variable</option>
         </select>
       </div>
       <div class="col-md-5">

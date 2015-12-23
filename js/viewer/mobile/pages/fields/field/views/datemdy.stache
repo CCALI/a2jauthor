@@ -1,6 +1,6 @@
 <div>
   <div class="form-group {{#if field.hasError}}has-error{{/if}}">
-    <label class="control-label" for="{{label}}">{{{eval label}}}</label>
+    <label class="control-label" for="{{label}}">{{{ eval(label, repeatVarValue) }}}</label>
     <input
       type="date"
       id="{{label}}"
@@ -13,7 +13,7 @@
 
   {{#if showInvalidPrompt}}
     <div class="alert alert-danger" role="alert">
-      {{{eval field.invalidPrompt}}}
+      {{{ eval(field.invalidPrompt, repeatVarValue) }}}
     </div>
   {{/if}}
 <div>

@@ -37,7 +37,7 @@ let rState = new AppState();
 
 can.route('', { view: 'intro' });
 can.route('view/:view/page/:page');
-can.route('view/:view/page/:page/:i');
+can.route('view/:view/page/:page/:repeatVarValue');
 can.route.map(rState);
 
 $.when(iDfd, pDfd).then(function(interview, pState) {
@@ -73,6 +73,8 @@ $.when(iDfd, pDfd).then(function(interview, pState) {
 
   rState.attr('interview', interview);
   setMobileDesktopClass(isMobile, $('body'));
+
+  rState.attr('logic', logic);
 
   let modalContent = can.compute();
 

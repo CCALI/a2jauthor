@@ -37,6 +37,14 @@ export default Map.extend({
         this.setVisitedPages(pageName, interview);
         return pageName;
       }
+    },
+
+    repeatVarValue: {
+      type: 'number'
+    },
+
+    logic: {
+      serialize: false
     }
   },
 
@@ -46,11 +54,21 @@ export default Map.extend({
     let visited = this.attr('visitedPages');
     let page = interview.getPageByName(pageName);
 
+    let logic = this.attr('logic');
+    let repeatVar = page && page.attr('repeatVar');
+    let repeatVarValue = (repeatVar) ? logic.varGet(repeatVar) : undefined;
+
     // do not add the same page twice.
     let alreadyVisited = _find(visited, function(visitedPage) {
-      return visitedPage.attr('name') === pageName;
+      let visitedPageRepeatVarValue = visitedPage.attr('repeatVarValue');
+      return visitedPage.attr('name') === pageName &&
+             (!visitedPageRepeatVarValue || (visitedPageRepeatVarValue === repeatVarValue));
     });
 
-    if (page && !alreadyVisited) visited.unshift(page);
+    if (page && !alreadyVisited) {
+      let text = (logic && logic.eval) ? logic.eval(page.attr('text')) : page.attr('text');
+      let name = page.attr('name');
+      visited.unshift({ name, text, repeatVar, repeatVarValue });
+    }
   }
 })

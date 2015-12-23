@@ -131,31 +131,35 @@ export default Map.extend({
         });
       }
 
-      let logic = this.attr('logic');
-      let repeatVar = logic && logic.varGet('repeatVar');
-      let repeatVarCount = logic && logic.varGet(repeatVar);
-      let answerIndex = repeatVarCount ? repeatVarCount : 1;
-
-      fields.each(field => {
-        var avm = new AnswerVM({
-          field: field,
-          answer: field.attr('answer'),
-          answerIndex
-        });
-
-        if (this.attr('rState.i')) {
-          avm.attr('answerIndex', +this.attr('rState.i'));
-        }
-
-        if (field.attr('type') === 'textpick') {
-          field.getOptions();
-        }
-
-        field.attr('_answer', avm);
-      });
+      this.setFieldAnswers(fields);
 
       this.attr('currentPage', page);
     }
+  },
+
+  setFieldAnswers(fields) {
+    let logic = this.attr('logic');
+    let repeatVar = logic && logic.varGet('repeatVar');
+    let repeatVarCount = logic && logic.varGet(repeatVar);
+    let answerIndex = repeatVarCount ? repeatVarCount : 1;
+
+    fields.each(field => {
+      var avm = new AnswerVM({
+        field: field,
+        answer: field.attr('answer'),
+        answerIndex
+      });
+
+      if (this.attr('rState.i')) {
+        avm.attr('answerIndex', +this.attr('rState.i'));
+      }
+
+      if (field.attr('type') === 'textpick') {
+        field.getOptions();
+      }
+
+      field.attr('_answer', avm);
+    });
   },
 
   setRepeatVariable(repeatVar, repeatVarSet) {

@@ -13,10 +13,11 @@
   {{#with currentPage}}
     <div class="bubble-content">
       <h2 class="visible-xs-block">{{name}}</h2>
-      <p>{{{eval text}}}</p>
+      <p>{{{ eval(text, rState.repeatVarValue) }}}</p>
 
       {{#if fields.length}}
         <a2j-fields
+          {repeat-var-value}="rState.repeatVarValue"
           {(logic)}="logic"
           {(fields)}="fields"
           {(trace-logic)}="traceLogic"
@@ -26,7 +27,7 @@
     </div><!-- bubble-content -->
 
     <p class="text-center">
-      <a data-toggle="modal" data-target="#pageModal">{{learn}}</a>
+      <a data-toggle="modal" data-target="#pageModal">{{{ eval(learn, rState.repeatVarValue) }}}</a>
     </p>
 
     {{#each buttons}}

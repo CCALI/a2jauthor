@@ -33,6 +33,8 @@ export default Component.extend({
 
       rState.attr('interview', interview);
 
+      rState.attr('logic', logic);
+
       // if previewPageName is set, we need to make sure the viewer
       // loads that specific page (covers the case when user clicks
       // `preview` from the edit page popup).

@@ -17,10 +17,10 @@
       <span>{{lang.MyProgress}}:</span>
       <div class="form-group ">
         <div class="input-group">
-          <select class="form-control" {($value)}="selectedPageName">
+          <select class="form-control" {($value)}="selectedPageIndex">
             {{#each visitedPages}}
-              <option {$value}="name" {{#eq %index 0}}selected{{/eq}}>
-                {{fitPageDescription(text)}}
+              <option {$value}="%index" {{#eq %index 0}}selected{{/eq}}>
+                {{fitPageDescription(text, repeatVarValue)}}
               </option>
             {{/each}}
           </select>

@@ -5,6 +5,7 @@ import AppState from 'viewer/models/app-state';
 import Interview from 'viewer/models/interview';
 import constants from 'viewer/models/constants';
 import {ViewerNavigationVM} from 'viewer/desktop/navigation/';
+import sinon from 'sinon';
 
 import 'steal-mocha';
 
@@ -106,6 +107,36 @@ describe('<a2j-viewer-navigation>', function() {
       assert.isFalse(vm.attr('canNavigateBack'),
         'in first page, user can go to second page');
     });
+
+    it('selectedPageIndex', () => {
+      visited.unshift(pages.attr(2));
+      visited.unshift(pages.attr(1));
+      visited.unshift(pages.attr(0));
+
+      let logicSpy = {
+        varSet: sinon.spy()
+      };
+      vm.attr('logic', logicSpy);
+
+      vm.attr('selectedPageIndex', 1);
+      assert.equal(vm.attr('selectedPageName'), pages.attr(1).attr('name'),
+        'should set selectedpageName to page 1');
+      assert.equal(logicSpy.varSet.callCount, 0,
+        'should not set repeatVar logic for page 1')
+
+      vm.attr('selectedPageIndex', 0);
+      assert.equal(vm.attr('selectedPageName'), pages.attr(0).attr('name'),
+        'should set selectedpageName to page 0');
+      assert.equal(logicSpy.varSet.callCount, 0,
+        'should not set repeatVar logic for page 0')
+
+      pages.attr(2).attr('repeatVar', 'foo');
+      pages.attr(2).attr('repeatVarValue', 2);
+      vm.attr('selectedPageIndex', 2);
+      assert.equal(vm.attr('selectedPageName'), pages.attr(2).attr('name'),
+        'should set selectedpageName to page 2');
+      assert(logicSpy.varSet.calledWith('foo', 2), 'should set repeatVar logic');
+    });
   });
 
   describe('Component', function() {
@@ -141,14 +172,14 @@ describe('<a2j-viewer-navigation>', function() {
       visited.unshift(pages.attr(0));
 
       assert.equal($('select option').length, 1, 'just one page visited');
-      assert.equal($('option:selected').val(), pages.attr(0).attr('name'),
+      assert.equal($('option:selected').val(), 0,
         'most recent page should be the selected option');
 
       // navigate to second page
       visited.unshift(pages.attr(1));
 
       assert.equal($('select option').length, 2, 'two pages visited');
-      assert.equal($('option:selected').val(), pages.attr(1).attr('name'),
+      assert.equal($('option:selected').val(), 0,
         'most recent page should be the selected option');
     });
 
@@ -160,7 +191,7 @@ describe('<a2j-viewer-navigation>', function() {
 
       // making sure the firstPage is selected
       let $selectedOption = $('option:selected');
-      assert.equal($('option:selected').val(), firstPage.attr('name'));
+      assert.equal($('option:selected').val(), 0);
 
       let optionText = $selectedOption.text().trim();
       assert.isTrue(optionText.length <= 40, 'should be truncated');
@@ -173,7 +204,7 @@ describe('<a2j-viewer-navigation>', function() {
 
       // turn on feedback
       interview.attr('sendfeedback', true);
-      assert.isTrue($('.send-feedback').is(':visible'), 'button should be rendered');
+      assert.equal($('.send-feedback').length, 1, 'button should be rendered');
     });
 
     it('shows custom courthouse image if provided', function() {

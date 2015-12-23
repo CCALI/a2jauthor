@@ -1,3 +1,5 @@
+<can-import from="styles/author.jquery-ui.css" />
+<can-import from="viewer/mobile/pages/fields/field/views/datemdy.less!" />
 <div>
   <div class="form-group {{#if field.hasError}}has-error{{/if}}">
     <label class="control-label" for="{{label}}">{{{ eval(label, repeatVarValue) }}}</label>
@@ -10,9 +12,12 @@
         {($value)}="field._answer.values"
         min="{{dateformat min 'YYYY-MM-DD'}}"
         max="{{dateformat max 'YYYY-MM-DD'}}" />
-      {{/else}}
-        CUSTOM DATE INPUT
-      {{/if}}
+    {{/else}}
+      <input
+        type="text"
+        id="{{label}}"
+        class="form-control" />
+    {{/if}}
   </div>
 
   {{#if showInvalidPrompt}}

@@ -1,8 +1,11 @@
+import $ from 'jquery';
 import Map from 'can/map/';
 import moment from 'moment';
 import views from './views/';
 import Component from 'can/component/';
 import template from './field.stache!';
+
+import 'jquery-ui/ui/datepicker';
 
 /**
  * @property {can.Map} field.ViewModel
@@ -33,14 +36,29 @@ export let FieldVM = Map.extend({
      */
     supportsNativeDateInput: {
       get() {
-        let input = document.createElement('input');
-        input.setAttribute('type', 'date');
+        if (this.attr('field.type') !== 'datemdy') {
+          return true;
+        } else {
+          let input = this.attr('document').createElement('input');
+          input.setAttribute('type', 'date');
 
-        let illegalValue = 'illegal value';
-        input.setAttribute('value', illegalValue);
+          let illegalValue = 'illegal value';
+          input.setAttribute('value', illegalValue);
 
-        return (input.value !== illegalValue);
+          return (input.value !== illegalValue);
+        }
       }
+    },
+
+    /**
+     * @property {Boolean} field.ViewModel.prototype.document document
+     * @parent field.ViewModel
+     *
+     * allows overriding of global document for testing supportsNativeDateInput
+     *
+     */
+    document: {
+      value: window.document
     }
   },
 
@@ -66,6 +84,13 @@ export let FieldVM = Map.extend({
 
       this.attr('traceLogic').push(message);
     }
+  },
+
+  convertDate(date, outputFormat, inputFormat) {
+    inputFormat = inputFormat || 'YYYY-MM-DD';
+    outputFormat = outputFormat || 'MM/DD/YYYY';
+
+    return date ? moment(date, inputFormat).format(outputFormat) : date;
   }
 });
 
@@ -91,6 +116,35 @@ export default Component.extend({
   viewModel: FieldVM,
 
   events: {
+    inserted() {
+      let vm = this.viewModel;
+
+      if (!vm.attr('supportsNativeDateInput')) {
+        let defaultDate = vm.convertDate(vm.attr('field._answer.values')) || null;
+        let minDate = vm.convertDate(vm.attr('field.min')) || null;
+        let maxDate = vm.convertDate(vm.attr('field.max')) || null;
+        let lang = vm.attr('lang');
+
+        $('input', this.element).datepicker({
+          defaultDate,
+          minDate,
+          maxDate,
+          monthNames: lang.MonthNamesLong.split(','),
+          monthNamesShort: lang.MonthNamesShort.split(','),
+          dateFormat: 'mm/dd/yy',
+          onSelect(dateText) {
+            let $el = $(this);
+            let val = $el.val();
+            let unformattedVal = vm.convertDate(val, 'YYYY-MM-DD','MM/DD/YYYY')
+            $el.val(unformattedVal);
+
+            vm.validateField(null, $el);
+
+            $el.val(val);
+          }
+        }).val(defaultDate);
+      }
+    },
     '{field._answer.answer.values} change': function(values, ev, attr) {
       if (attr === '1') {
         let message = {};
@@ -135,10 +189,9 @@ export default Component.extend({
         },
 
         dateformat: function(val, format, options) {
-          val = typeof val === 'function' ? val() : val;
-          format = typeof format === 'function' ? format() : format;
-
-          return val ? moment(val, 'MM/DD/YYYY').format(format) : val;
+          val = val.isComputed ? val() : val;
+          format = format.isComputed ? format() : format;
+          return self.convertDate(val, format);
         },
 
         i18n: function(key) {

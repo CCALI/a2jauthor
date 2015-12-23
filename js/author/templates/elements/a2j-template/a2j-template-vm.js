@@ -95,17 +95,11 @@ export default Map.extend({
      */
     useAnswers: {
       value: false
-    },
-
-    showUpdateSuccess: {
-      value: false
     }
   },
 
   saveTemplateChanges() {
-    this.attr('template').save().then(() => {
-      this.attr('showUpdateSuccess', true);
-    });
+    this.attr('template').save();
   },
 
   cloneNode(nodeViewModel) {

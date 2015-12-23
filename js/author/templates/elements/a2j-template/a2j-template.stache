@@ -5,12 +5,6 @@
 <can-import from="caja/author/templates/elements/a2j-section-title/" />
 <can-import from="caja/author/templates/elements/a2j-template/a2j-template.less!" />
 
-{{#if showUpdateSuccess}}
-  <app-alert auto-close="true" alert-type="success" open="true">
-    <p>Template updated successfully.</p>
-  </app-alert>
-{{/if}}
-
 <ul>
   {{#each rootNode.children}}
     <li

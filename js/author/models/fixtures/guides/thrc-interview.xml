@@ -1,0 +1,3704 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<GUIDE>
+  <INFO>
+    <AUTHORS>
+      <AUTHOR>
+        <NAME>Anonymous</NAME>
+      </AUTHOR>
+    </AUTHORS>
+    <TOOL>A2J</TOOL>
+    <TOOLVERSION>2012-04-19</TOOLVERSION>
+    <AVATAR>avatar1</AVATAR>
+    <GUIDEGENDER>Female</GUIDEGENDER>
+    <DESCRIPTION>
+      <P>This is a guided interview to procure information to populate the THRC complaint form. </P>
+    </DESCRIPTION>
+    <JURISDICTION>Jurisdiction of my interview</JURISDICTION>
+    <LANGUAGE>en</LANGUAGE>
+    <NOTES>11/3/2015 interview created.</NOTES>
+    <SENDFEEDBACK>false</SENDFEEDBACK>
+    <SUBJECTAREA>Jurisdiction of my interview</SUBJECTAREA>
+    <TITLE>THRC Guided Interview</TITLE>
+    <VERSION>11/3/2015</VERSION>
+    <VIEWER>A2J</VIEWER>
+    <FIRSTPAGE>1-Introduction</FIRSTPAGE>
+    <EXITPAGE>SUCCESS</EXITPAGE>
+  </INFO>
+  <PAGES>
+    <PAGE NAME="1-Introduction" TYPE="A2J" MAPX="23270" MAPY="23470" STEP="0">
+      <TEXT>Welcome to the Tennessee Human Rights Commission complaint form!  You can use this form to file a complaint if you feel you have been discriminated against.</TEXT>
+      <LEARN>Want to know more about the Tennessee Human Rights Commission?</LEARN>
+      <HELP>
+        <P>The Tennessee Human Rights Commission is an independent state agency that enforces the Tennessee Human Rights Act.  </P>
+        <P>The Commission works in cooperation with the U.S. Department of Housing and Urban Development and the Equal Employment Opportunity Commission to safeguard individuals from discrimination in employment, housing, public accommodations, and under Title VI of the Civil Rights Act.</P>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2-Language" />
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="Call Spanish Toll-Free Number" TYPE="Popup" MAPX="null" MAPY="0" STEP="0">
+      <TEXT>Lamentamos que la entrevista online actualmente no esta disponible en español. Para llegar al formulario de denuncia en español, haga click
+        <A href="https://www.tn.gov/assets/entities/humanrights/attachments/Fillable_Complaint_Form_Espanol_Revised_2013_New_Address.pdf">aquí</A>. Si usted necesita otra ayuda, por favor contacte al Comité de Derechos Humanos de Tennessee al 1-866-856-1252 para hablar en español con una operadora sobre como presentar una denuncia. Gracias.
+        <BR/>
+      </TEXT>
+    </PAGE>
+    <PAGE NAME="1- Disclaimer" TYPE="A2J" MAPX="23520" MAPY="23640" STEP="1">
+      <TEXT>When you complete this interview, it does
+        <B>NOT</B> mean that your complaint has been filed with the Tennessee Human Rights Commission (THRC).
+        <BR/>
+        <BR/>After you complete this complaint, you must
+        <B>print </B>it out,
+        <B>sign</B> it, and
+        <B>mail or fax it </B>to the THRC.
+        <BR/>
+        <BR/>Click "
+        <B>Yes</B>" if you understand.  Click "
+        <B>Exit</B>" if you do not wish to continue.
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2 - Secure Site">
+          <LABEL>Yes</LABEL>
+          <NAME>Disclaimer yes or no TF</NAME>
+          <VALUE>true</VALUE>
+        </BUTTON>
+        <BUTTON NEXT="FAIL">
+          <LABEL>Exit</LABEL>
+          <NAME>Disclaimer yes or no TF</NAME>
+          <VALUE>false</VALUE>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="2 - Secure Site" TYPE="A2J" MAPX="22470" MAPY="22470" STEP="1">
+      <TEXT>This is a
+        <B>secure site</B>.  Any information transmitted over this site is
+        <B>secure</B>.  If you are using a public computer that does not belong to you, remember to completely close out of the internet browser when you are finished.
+        <B>If you don't, you may accidentally share your personal information.</B>
+        <BR/>
+        <BR/>This complaint form may take around
+        <B>30 minutes</B> to complete.
+        <BR/>
+        <BR/>This form
+        <B>cannot be saved </B>if you do not finish.  The time it takes to complete the complaint form may vary depending on the type of complaint you wish to file.</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="1- Discriminated against?">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="2-Language" TYPE="A2J" MAPX="23510" MAPY="23370" STEP="0">
+      <TEXT>Do you speak English?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="3-Next Instructions">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Speak english</NAME>
+          <VALUE>true</VALUE>
+          <INVALIDPROMPT>You must choose one option before proceeding
+            <BR/>
+          </INVALIDPROMPT>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Speak english</NAME>
+          <VALUE>false</VALUE>
+          <INVALIDPROMPT>You must choose one option before proceeding</INVALIDPROMPT>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Speak english]=true
+        <BR/>GOTO "3-Next Instructions"
+        <BR/>END IF
+        <BR/>
+        <BR/>IF [Speak english]=false
+        <BR/>GOTO "2-Language 2"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="3-Next Instructions" TYPE="A2J" MAPX="23240" MAPY="23240" STEP="0">
+      <TEXT>
+        <P>You can file a complaint with the Tennessee Human Rights Commission by completing the questions in this interview. Click
+          <B>"Begin" </B>when you are ready to start. </P>
+        <P>If you make a mistake at any time, you can click the
+          <B>"Back"</B> button in the top left hand corner of this screen. Do
+          <B>NOT</B> use the back and forward arrows in your browser.
+          <BR/>
+        </P>
+        <P>If you need to revisit  a question you have already answered, you can use the
+          <B>"MY PROGRESS" </B>drop down menu at the top of your screen.
+          <BR/>
+        </P>
+        <P>If you see a
+          <B>"Learn More" </B>button on your screen, click it for extra information that might be helpful!</P>
+        <P>Some information is required to complete the complaint form.  That information will be in RED.</P>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="1- Disclaimer">
+          <LABEL>Begin</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="New page 4 2 2" TYPE="A2J" MAPX="21760" MAPY="21760" STEP="7">
+      <TEXT>
+        <P>Your guided interview is now complete!</P>
+        <P>Please print your complaint form, sign it, and date it. You will need to mail it to the address below. Once the Tennessee Human Rights Commission receives your complaint, they will call you. If you do not hear from them in the next ten days, please call 1-800-251-3589.
+          <BR/>
+          <BR/>Tennessee Human Rights Commission Central Office
+          <BR/>Tennessee Tower
+          <BR/>312 Rosa L. Parks Avenue, 23rd Floor
+          <BR/>Nashville, TN 37243</P>
+        <P>Note: Remember to exit the browser fully to protect your personal information!
+          <BR/>
+        </P>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="SUCCESS" URL="https://www.tn.gov/humanrights/">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="1-Type of Complaint" TYPE="A2J" MAPX="22070" MAPY="22070" STEP="3">
+      <TEXT>
+        <P>Thank you for that information, %%[Client first name TE]%%!</P>
+        <P>You may file one of four types of complaints. The four types of complaints are:
+          <BR/>
+          <BR/>1)
+          <B>Employment</B>
+        </P>
+        <P>2)
+          <B>Housing</B>
+          <BR/>
+          <BR/>3)
+          <B>Public Accommodation</B>
+          <B><BR/></B>
+          <BR/>4)
+          <B> Title VI</B>
+          <BR/>
+          <BR/>Do you know which type of complaint you would like to file?</P>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="1a-Housing, PA, or Title VI">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Yes</LABEL>
+          <NAME>Know type of complaint y or n</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>No</LABEL>
+          <NAME>Know type of complaint y or n</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Know type of complaint y or n]=true
+        <BR/>GOTO "1a-Housing, PA, or Title VI"
+        <BR/>END IF
+        <BR/>
+        <BR/>IF [Know type of complaint y or n]=false
+        <BR/>GOTO "1b-About each type of complaint"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="1-Name" TYPE="A2J" MAPX="21520" MAPY="21520" STEP="4">
+      <TEXT>
+        <P>You will now be asked to fill in certain contact information. Please fill out this information as completely and correctly as possible so that the Human Rights Commission can contact you after processing your complaint. </P>
+        <P>What is your name?</P>
+        <P>Note: Fields in red are required.
+          <BR/>
+          <BR/>
+        </P>
+      </TEXT>
+      <LEARN>Why do you need my name?</LEARN>
+      <HELP>The Tennessee Human Rights Commission requires your name to file a complaint.  They will contact you to get more information.
+        <BR/>Furthermore, anonymous applications are not accepted by the Tennessee Human Rights Commission.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2-DOB">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="true">
+          <LABEL>First:</LABEL>
+          <NAME>Client first name TE</NAME>
+          <INVALIDPROMPT>You must enter your first name to continue.</INVALIDPROMPT>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Middle:</LABEL>
+          <NAME>Client middle name TE</NAME>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="true">
+          <LABEL>Last:</LABEL>
+          <NAME>Client last name TE</NAME>
+          <INVALIDPROMPT>You must enter your last name to continue.</INVALIDPROMPT>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF HASANSWERED([Client middle name TE])
+        <BR/>SET [Client name TE] TO [Client first name TE] + " " + [Client middle name TE] + " " + [Client last name TE]
+        <BR/>ELSE
+        <BR/>SET [Client name TE] TO [Client first name TE] + " " + [Client last name TE]
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="2-DOB" TYPE="A2J" MAPX="21140" MAPY="21140" STEP="4">
+      <TEXT>
+        <P>What is your date of birth?</P>
+        <P>Note: You must be at least 18 years old to file a complaint.
+          <BR/>
+        </P>
+      </TEXT>
+      <LEARN>Why do we need your date of birth?</LEARN>
+      <HELP>To ensure that you eligible to file a complaint with the THRC.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="3-Address">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="datemdy" REQUIRED="true" CALENDAR="true">
+          <LABEL>Date of birth:</LABEL>
+          <VALUE>MM/DD/YYYY</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Address" TYPE="A2J" MAPX="21110" MAPY="21110" STEP="4">
+      <TEXT>What is your current mailing address?
+        <BR/>
+      </TEXT>
+      <LEARN>Why do you need my address?</LEARN>
+      <HELP>We need your address in order to contact you with information about your complaint. If you move or are evicted, you must contact the Tennessee Human Rights Commission so we know where to find you.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="4-Have home phone?">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="true">
+          <LABEL>Street Address:</LABEL>
+          <NAME>Client address TE</NAME>
+          <INVALIDPROMPT>You must disclose your address in order to process the complaint.</INVALIDPROMPT>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="true">
+          <LABEL>City:</LABEL>
+          <NAME>Client city TE</NAME>
+          <INVALIDPROMPT>You must disclose your full address in order to process the complaint.</INVALIDPROMPT>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>County:</LABEL>
+          <NAME>Client county TE</NAME>
+          <INVALIDPROMPT>You must disclose your full address, including county, in order to process your complaint.</INVALIDPROMPT>
+        </FIELD>
+        <FIELD TYPE="textpick" REQUIRED="true">
+          <LISTSRC>US_states (10).xml</LISTSRC>
+          <LABEL>State:</LABEL>
+          <NAME>Client state TE</NAME>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false" MAXCHARS="5">
+          <LABEL>Zipcode</LABEL>
+          <NAME>Client zip TE</NAME>
+          <INVALIDPROMPT>Your zipcode must be expressed in numbers.  If you do not know your zipcode, either ask someone or leave it blank.</INVALIDPROMPT>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="4-Have home phone?" TYPE="A2J" MAPX="20870" MAPY="20870" STEP="4">
+      <TEXT>Do you have a home phone?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <LEARN>Why do we need your phone number?</LEARN>
+      <HELP>We need your phone numbers so that our staff can get in touch with you to discuss your complaint.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="5-Telephone">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Have home phone</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Have home phone</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Have home phone]=true
+        <BR/>GOTO "5-Telephone"
+        <BR/>END IF
+        <BR/>IF [Have home phone]=false
+        <BR/>GOTO "6-Have cell phone?"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="5-Telephone" TYPE="A2J" MAPX="21060" MAPY="21060" STEP="4">
+      <TEXT>What is your home phone number?
+        <BR/>
+        <BR/>
+        <B>NOTE</B>: Please format telephone numbers like this: XXX-XXXX.</TEXT>
+      <LEARN>Don't have a home phone?</LEARN>
+      <HELP>No worries, %%[Client first name TE]%%, click continue to enter your cell phone number.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="6-Have cell phone?">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="true" MAXCHARS="3">
+          <LABEL>Area code:</LABEL>
+          <NAME>Client area code TE</NAME>
+          <SAMPLE>xxx</SAMPLE>
+          <INVALIDPROMPT>You must enter an area code.</INVALIDPROMPT>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="true">
+          <LABEL>Number:</LABEL>
+          <NAME>Client phone number TE</NAME>
+          <SAMPLE>xxx-xxxx</SAMPLE>
+          <INVALIDPROMPT>You must include a dash after the first three numbers and before the last four numbers.</INVALIDPROMPT>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="7-Cell Phone" TYPE="A2J" MAPX="21050" MAPY="21050" STEP="4">
+      <TEXT>What is your cell phone number?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <LEARN>No cell phone?</LEARN>
+      <HELP>If you do not have a home or cell phone number, be sure to include a number where you can be reached through an alternative contact.  If you do not have an alternative contact, please be sure to include an email address.  If you do not have an email address, open a new window and create an email address so that we have at least one way to contact you.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="8-Have an email address?">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="true" MAXCHARS="3">
+          <LABEL>Area code:</LABEL>
+          <NAME>Client cell area code TE</NAME>
+          <VALUE>xxx</VALUE>
+          <INVALIDPROMPT>You must include an area code.</INVALIDPROMPT>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="true" MAXCHARS="8">
+          <LABEL>Cell phone number:</LABEL>
+          <NAME>Client cell number TE</NAME>
+          <VALUE>xxx-xxxx</VALUE>
+          <INVALIDPROMPT>You must include a dash after the first three numbers--before the last four number--of your cell phone number.</INVALIDPROMPT>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="6-Have cell phone?" TYPE="A2J" MAPX="21040" MAPY="21040" STEP="4">
+      <TEXT>Do you have a cell phone?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="7-Cell Phone">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Cell phone TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Cell phone TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Cell phone TF]=true
+        <BR/>GOTO "7-Cell Phone"
+        <BR/>END IF
+        <BR/>IF [Cell phone TF]=false
+        <BR/>GOTO "8-Have an email address?"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="8-Have an email address?" TYPE="A2J" MAPX="19930" MAPY="19930" STEP="4">
+      <TEXT>Do you have an email address?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="9-Email address">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Email yes or no</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Email yes or no</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Email yes or no]=true
+        <BR/>GOTO "9-Email address"
+        <BR/>END IF
+        <BR/>IF [Email yes or no]=false
+        <BR/>GOTO "10-Alternate contact?"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="9-Email address" TYPE="A2J" MAPX="19900" MAPY="19900" STEP="4">
+      <TEXT>Enter your email address.</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="10-Alternate contact?">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Email address:</LABEL>
+          <NAME>Client email TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="10-Alternate contact?" TYPE="A2J" MAPX="19880" MAPY="19880" STEP="4">
+      <TEXT>In case we have trouble reaching you, is there someone else we can contact?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="1-Type of Complaint">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Alternate contact</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Alternate contact</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Alternate contact]=true
+        <BR/>GOTO "11-Alternate contact name"
+        <BR/>END IF
+        <BR/>
+        <BR/>IF [Alternate contact]=false
+        <BR/>GOTO "1-Type of Complaint"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="11-Alternate contact name" TYPE="A2J" MAPX="19790" MAPY="19790" STEP="4">
+      <TEXT>What is the name of your alternate contact?</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="12-Alternate contact address">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="true">
+          <LABEL>First:</LABEL>
+          <NAME>alternate contact first name</NAME>
+          <INVALIDPROMPT>You must enter a first name.</INVALIDPROMPT>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Middle:</LABEL>
+          <NAME>alternate contact middle name</NAME>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="true">
+          <LABEL>Last</LABEL>
+          <NAME>alternate contact last name</NAME>
+          <INVALIDPROMPT>You must enter a last name.</INVALIDPROMPT>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF HASANSWERED([alternate contact middle name])
+        <BR/>SET [Contact name TE] TO [alternate contact first name] + " " + [alternate contact middle name] + " " + [alternate contact last name]
+        <BR/>ELSE
+        <BR/>SET [Contact name TE] TO [alternate contact first name] + " " + [alternate contact last name]
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="12-Alternate contact address" TYPE="A2J" MAPX="19730" MAPY="19730" STEP="4">
+      <TEXT>What is your alternate contacts address?</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="1- Narrative">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Street (including number):</LABEL>
+          <NAME>Contact address TE</NAME>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>City:</LABEL>
+          <NAME>Contact city TE</NAME>
+        </FIELD>
+        <FIELD TYPE="textpick" REQUIRED="false">
+          <LISTSRC>US_states (11).xml</LISTSRC>
+          <LABEL>State:</LABEL>
+          <NAME>Contact state TE</NAME>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Zipcode:</LABEL>
+          <NAME>Contact zip TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="1- Narrative" TYPE="A2J" MAPX="21770" MAPY="21770" STEP="5">
+      <TEXT>
+        <P>In your own words, tell us what happened. Please make the
+          <B>basis</B> of your discrimination clear.
+          <BR/>
+          <BR/>Please give dates if you know them and include the names of anyone that was present. Be sure to tell us why you feel you were treated differently
+          <B>based</B> on your membership in a protected class.</P>
+        <P>For
+          <B>Housing</B> complaints, the protected classes are
+          <B> race, creed, color, religion, sex, age, national
+origin, disability or familial status</B>, or if you feel you were
+          <B>retaliated</B> against. Also, if you’re filing a housing complaint and are currently facing eviction, let us know here.</P>
+        <P>For
+          <B>Title VI</B> complaints,  the protected classes are
+          <B>race, color, or national origin.</B>
+        </P>
+        <P>For
+          <B>Public Accommodation</B> complaints, the classes are...
+          <BR/>
+          <BR/>
+        </P>
+        <P>You must tell us your story before you can continue.</P>
+      </TEXT>
+      <LEARN>Not sure what your basis of discrimination is?</LEARN>
+      <HELP>Your
+        <B>basis</B> of discrimination is the
+        <B>REASON</B> you were discriminated against. It will include your race, creed, color, religion, sex, age, national origin, disability or familial status, or if you feel you were retaliated against.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="1-Witness Intro">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="textlong" REQUIRED="true">
+          <NAME>What happened TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="1- Discriminated against?" TYPE="A2J" MAPX="19570" MAPY="19570" STEP="2">
+      <TEXT>Do you believe you have been the victim of discrimination?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <LEARN>What is a discriminatory practice?</LEARN>
+      <HELP>
+        <P>It depends on which type of complaint you file, but generally, a "
+          <B>discriminatory practice</B>" is
+          <U>any</U> direct or indirect act or practice of exclusion, distinction, restriction, segregation, limitation, refusal, denial, or any other act or practice of differentiation or preference in the treatment of a person or persons because of race, creed, color, religion, sex, disability, age, familial status or national origin.</P>
+        <P>In other words, if you were excluded, treated differently, or refused or denied service because of your race, creed, color, religion, sex, disability, age, familial status or national origin then you may be the victim of a
+          <B>discriminatory practice</B>.</P>
+        <P>For example: </P>
+        <P>1) Landlords cannot charge more rent because you have children or prohibit service animals if you are disabled.</P>
+        <P>2) Restaurants and other establishments open to the public, and is used by the general public, cannot refuse you service due to your race, creed, national origin, or religion.</P>
+        <P>3) A federally funded business or agency cannot treat your differently or refuse you service based on your race, color, or national origin.</P>
+        <P>If you have questions regarding your eligibility to file a complaint, you may call the Tennessee Human Rights Commission directly at:
+          <B>(615) 741-5825</B>.</P>
+        <P>
+          <BR/>
+        </P>
+        <P>
+          <BR/>
+        </P>
+        <P>
+          <BR/>
+        </P>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="3-Ready to file?">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Victim of discrimination</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Victim of discrimination</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Victim of discrimination]=true
+        <BR/>GOTO "2-Discriminated against in Tennessee?"
+        <BR/>END IF
+        <BR/>
+        <BR/>IF [Victim of discrimination]=false
+        <BR/>GOTO "You do not qualify"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="You do not qualify" TYPE="Popup" MAPX="null" MAPY="0" STEP="0">
+      <TEXT>If you were not excluded, treated differently, or refused or denied service by a person or business because of your race, creed, color, religion, sex, disability, age, or national origin then you do not qualify as a complainant.
+        <BR/>
+        <BR/>If you have further questions, please contact the Tennessee Human Rights Commission at (615) 741-5825 or toll-free at 1-800-251-3589.  You may also contact your local Legal Aid Office for information about your situation.
+        <BR/>
+        <BR/>If you have reached this page by mistake, press the "Back" button in the top left corner of your screen.
+        <BR/>
+      </TEXT>
+      <NOTES>
+        <BR/>
+      </NOTES>
+    </PAGE>
+    <PAGE NAME="You do not qualify 2" TYPE="Popup" MAPX="null" MAPY="0" STEP="0">
+      <TEXT>If you do not have a Housing, Public Accommodation, or Title VI claim, you do not qualify to use the online interview.
+        <BR/>
+        <BR/>If you have an Employment claim, please contact the Tennessee Human Rights Commission at (615) 741-5825 or toll-free at 1-800-251-3589.
+        <BR/>
+        <BR/>If you have made a mistake, use the "Back" button at the top left corner of your screen.</TEXT>
+    </PAGE>
+    <PAGE NAME="2-Discriminated against in Tennessee?" TYPE="A2J" MAPX="18830" MAPY="18830" STEP="2">
+      <TEXT>Did the discriminatory act or practice occur in Tennessee?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-5">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>occur in TN</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>occur in TN</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [occur in TN]=true
+        <BR/>GOTO "3-Ready to file?"
+        <BR/>END IF
+        <BR/>
+        <BR/>IF [occur in TN]=false
+        <BR/>GOTO "Act must have occurred in TN."
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="3-Ready to file?" TYPE="A2J" MAPX="21840" MAPY="21840" STEP="2">
+      <TEXT>Are you ready to file your complaint?</TEXT>
+      <LEARN>Want to know what information you will need?</LEARN>
+      <HELP>To fill out the form, you will need to share your personal contact information and the name and address of the person, business, or entity that discriminated against you.  You will also need to know the date(s) of the discriminatory act.
+        <BR/>
+        <BR/>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="1-Name">
+          <LABEL>Yes</LABEL>
+        </BUTTON>
+        <BUTTON NEXT="3a-Why not?">
+          <LABEL>No</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="Act must have occurred in TN." TYPE="Popup" MAPX="null" MAPY="0" STEP="0">
+      <TEXT>I'm sorry.  You cannot file a complaint with the Tennessee Human Rights Commission if the discriminatory act or practice did not occur in Tennessee.
+        <BR/>
+        <BR/>In order to file a complaint, contact the Human Rights Commission for the state in which the discriminatory act or practice occurred.
+        <BR/>
+        <BR/>For example, if the act occurred in Georgia, contact the Civil and Human Rights Commission of Georgia.</TEXT>
+    </PAGE>
+    <PAGE NAME="1a-Housing, PA, or Title VI" TYPE="A2J" MAPX="18710" MAPY="18710" STEP="3">
+      <TEXT>What type of complaint would you like to file?</TEXT>
+      <LEARN>Need more information about the types of complaints?</LEARN>
+      <HELP>
+        <P>You may have an
+          <B> Employment</B> complaint if someone refused to hire you, paid you less than others, or fired you based on your race, creed, color, religion, sex, age, or national origin. If you have an employment complaint, please contact the Tennessee Human Rights Commission at 1-800-251-3589. </P>
+        <P>You may have a
+          <B>Housing</B> complaint if someone refused to sell or rent property, charged you a different amount of rent than someone else, or refused to allow modification or accommodations based on your race, creed, color, religion, national origin, age, familial status, or disability.
+          <BR/>
+          <BR/>You may have a
+          <B>Public Accommodation</B> complaint if you were discriminated against in a place that is open to, and is used by the general public, due to your race, creed, national origin, or religion.
+          <BR/>
+          <BR/>You may have a
+          <B> Title VI </B>complaint if you were discriminated against because of
+          <B> </B>your race, color, or national origin (where your ancestors are from), and the person or business that discriminated against you was a state agency, or a person affiliated with a state agency, that receives money from the Federal Government for the program or activity with which you are involved.</P>
+        <P>If you would like to see the information about and specific examples of each type of complaint again, you will need to use the "BACK" button located in the top left corner of this interview window.</P>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2a-Housing: Basis of Discrim Race">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Housing</LABEL>
+          <NAME>Type of Complaint MC</NAME>
+          <VALUE>Housing</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Public Accommodation</LABEL>
+          <NAME>Type of Complaint MC</NAME>
+          <VALUE>PA</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Title VI</LABEL>
+          <NAME>Type of Complaint MC</NAME>
+          <VALUE>Title VI</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Employment</LABEL>
+          <NAME>Type of Complaint MC</NAME>
+          <VALUE>Employment</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Type of Complaint MC]="Housing"
+        <BR/>GOTO "1h-General Disclaimer About Bases of Discrim for Housing"
+        <BR/>END IF
+        <BR/>
+        <BR/>IF [Type of Complaint MC]="PA"
+        <BR/>GOTO "3-Public Accommodation-1"
+        <BR/>END IF
+        <BR/>
+        <BR/>IF [Type of Complaint MC]="Title VI"
+        <BR/>GOTO "1j-General Disclaimer About Bases of Discrim for Title VI"
+        <BR/>END IF
+        <BR/>
+        <BR/>IF [Type of Complaint MC]="Employment"
+        <BR/>GOTO "Employment Complaint"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="4c-Title VI: Type of Discrimination" TYPE="A2J" MAPX="18580" MAPY="18580" STEP="3">
+      <TEXT>We are going to ask you a few more questions about the discrimination you experienced. </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="4d-Title VI: Type of Discrimination">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="4d-Title VI: Type of Discrimination" TYPE="A2J" MAPX="18570" MAPY="18570" STEP="3">
+      <TEXT>Did someone deny you a service, aid, or benefit? </TEXT>
+      <LEARN>Not sure? Click here for an example.</LEARN>
+      <HELP>For example: You were not given food stamps because of your race.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="4e-Title VI: Type of Discrimination">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Denied program title TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Denied program title TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="4e-Title VI: Type of Discrimination" TYPE="A2J" MAPX="18560" MAPY="18560" STEP="3">
+      <TEXT>Were you treated differently from others when you were receiving a benefit or service?</TEXT>
+      <LEARN>Not sure? Click here for an example.</LEARN>
+      <HELP>For example, you were the last to receive the benefit or service because of your race, color, or national origin.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="4f-Title VI: Type of Discrimination">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Different treatment title TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Different treatment title TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="4f-Title VI: Type of Discrimination" TYPE="A2J" MAPX="18640" MAPY="18640" STEP="3">
+      <TEXT>Were you separated or segregated from others because of your race, color, or national origin in receiving a benefit or service?</TEXT>
+      <LEARN>Not sure? Click here for an example.</LEARN>
+      <HELP>For example: You are a prison inmate, and you were forced to eat separately from other inmates because of your race, color, or national origin.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="4g-Title VI: Type of Discrimination">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Segregation title TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Segregation title TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="4g-Title VI: Type of Discrimination" TYPE="A2J" MAPX="18070" MAPY="18070" STEP="3">
+      <TEXT>Were you denied membership on a planning or advisory body? </TEXT>
+      <LEARN>Not sure? Click here to learn more.</LEARN>
+      <HELP>For example: A state agency has a committee that advises it on policy. You were not allowed to serve on that committee because of your race.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="4h-Title VI: Type of Discrimination">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Denied membership title TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Denied membership title TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="4h-Title VI: Type of Discrimination" TYPE="A2J" MAPX="18060" MAPY="18060" STEP="3">
+      <TEXT>Was the discrimination against you different from one of the examples given?</TEXT>
+      <LEARN>Not sure? Click here to learn more.</LEARN>
+      <HELP>Discrimination can happen in many different forms. If your experience was different from one of the examples given, click yes.
+        <BR/>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="4j-Title VI: Retaliation">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Other title actions TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Other title actions TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Other title actions TF]=true
+        <BR/>GOTO "4i-Title VI: Type of Discrimination"
+        <BR/>END IF
+        <BR/>IF [Other title actions TF]=false
+        <BR/>GOTO "4j-Title VI: Retaliation"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="4i-Title VI: Type of Discrimination" TYPE="A2J" MAPX="18050" MAPY="18050" STEP="3">
+      <TEXT>In a short sentence, tell us how the discrimination you experienced was different. </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="4j-Title VI: Retaliation">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="textlong" REQUIRED="false">
+          <NAME>Other title actions TE</NAME>
+          <VALUE>Type your response here.</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="4j-Title VI: Retaliation" TYPE="A2J" MAPX="18590" MAPY="18590" STEP="3">
+      <TEXT>Were you retaliated against? </TEXT>
+      <LEARN>What does retaliation mean?</LEARN>
+      <HELP>If you were treated differently because previously you filed a discrimination complaint you may have been retaliated against.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="4m-Title VI: Respondent Info">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Retaliation title basis TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Retaliation title basis TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Retaliation title basis TF]=true
+        <BR/>GOTO "4k-Title VI: Retaliation"
+        <BR/>END IF
+        <BR/>IF [Retaliation title basis TF]=false
+        <BR/>GOTO "4m-Title VI: Respondent Info"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="4k-Title VI: Retaliation" TYPE="A2J" MAPX="18040" MAPY="18040" STEP="3">
+      <TEXT>Why were you retaliated against? </TEXT>
+      <LEARN>Don't see the reason you were retaliated against? </LEARN>
+      <HELP>Select "
+        <B>Other</B>" and tell us how you were retaliated against in the next question.  </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="4l-Title VI: Retaliation 2">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="checkboxNOTA" REQUIRED="false">
+          <LABEL>Filed a complaint of discrimination</LABEL>
+          <NAME>Filed a complaint title TF</NAME>
+        </FIELD>
+        <FIELD TYPE="checkboxNOTA" REQUIRED="false">
+          <LABEL>Gave testimony or participated in a discrimination investigation</LABEL>
+          <NAME>Gave testimony title TF</NAME>
+        </FIELD>
+        <FIELD TYPE="checkboxNOTA" REQUIRED="false">
+          <LABEL>Opposed or objected to discrimination</LABEL>
+          <NAME>Opposed discrim title TF</NAME>
+        </FIELD>
+        <FIELD TYPE="checkboxNOTA" REQUIRED="false">
+          <LABEL>Other</LABEL>
+          <NAME>Other retaliation title TF</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="4l-Title VI: Retaliation 2" TYPE="A2J" MAPX="17620" MAPY="17620" STEP="3">
+      <TEXT>If you selected "
+        <B>Other</B>", please tell us more. If not, select "
+        <B>Continue</B>"</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="4m-Title VI: Respondent Info">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="textlong" REQUIRED="false">
+          <NAME>Other title actions TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2a-Housing: Basis of Discrim Race" TYPE="A2J" MAPX="20420" MAPY="20420" STEP="3">
+      <TEXT>Do you believe you were discriminated against because of your race?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <LEARN>What does &quot;race&quot; mean?</LEARN>
+      <HELP>
+        <P>A person's "race" can be defined as those obvious, physical traits such as the color of their skin.  Some examples include the African-American, Caucasian, and Hispanic races.</P>
+        <P>
+          <I>An<B> example</B> of discrimination on the basis of race: If a landlord refused to rent to you <B>because</B> you are African-American, Caucasian, Hispanic, or another race.</I>
+        </P>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2b-Housing: Basis of Discrim Color">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Basis of discrimination race TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Basis of discrimination race TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Basis of discrimination race TF]=true
+        <BR/>GOTO "2a-Housing: Basis of Discrim Race 2"
+        <BR/>END IF
+        <BR/>
+        <BR/>IF [Basis of discrimination race TF]=false
+        <BR/>GOTO "2b-Housing: Basis of Discrim Color"
+        <BR/>END IF</CODEAFTER>
+      <NOTES>
+        <BR/>
+      </NOTES>
+    </PAGE>
+    <PAGE NAME="2b-Housing: Basis of Discrim Color" TYPE="A2J" MAPX="16250" MAPY="16250" STEP="3">
+      <TEXT>Do you feel you were treated differently because of the color of your skin?
+        <BR/>
+      </TEXT>
+      <LEARN>To learn more about discrimination on the basis of &quot;Color,&quot; click &quot;Learn More.&quot;</LEARN>
+      <HELP>Color here refers to your skin color.
+        <BR/>
+        <BR/>
+        <I><B>Example</B>:  If someone denied you entrance to a grocery store because you are "brown-skinned."</I>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2c-Housing: Basis of Discrim National Origin">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Basis of discrimination color TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Basis of discrimination color TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Basis of discrimination color TF]=true
+        <BR/>GOTO "2b-Housing: Basis of Discrim Color 2"
+        <BR/>END IF
+        <BR/>IF [Basis of discrimination color TF]=false
+        <BR/>GOTO "2c-Housing: Basis of Discrim National Origin"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="2c-Housing: Basis of Discrim National Origin" TYPE="A2J" MAPX="16190" MAPY="16190" STEP="3">
+      <TEXT>Do you feel you were treated differently because of your national origin?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <LEARN>What does &quot;national origin&quot; mean?</LEARN>
+      <HELP>
+        <P>
+          <B>National origin</B> means the country you or your ancestors are from.</P>
+        <P>
+          <I>An<B> example</B> of discrimination based on national origin:  </I>
+          <I>If a landlord refused to rent to you because your family migrated from another country.</I>
+        </P>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2d-Housing: Basis of Discrim Disability">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Basis of discrimination national origin TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Basis of discrimination national origin TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Basis of discrimination national origin TF]=true
+        <BR/>GOTO "2c-Housing: Basis of Discrim National Origin 2"
+        <BR/>END IF
+        <BR/>
+        <BR/>IF [Basis of discrimination national origin TF]=false
+        <BR/>
+        <BR/>GOTO "2d-Housing: Basis of Discrim Disability"
+        <BR/>END IF</CODEAFTER>
+      <NOTES>Grounds taken from 4-21-102</NOTES>
+    </PAGE>
+    <PAGE NAME="2d-Housing: Basis of Discrim Disability" TYPE="A2J" MAPX="16140" MAPY="16140" STEP="3">
+      <TEXT>Do you feel you were treated differently because of a mental or physical impairment that limits your life activities?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <LEARN>Need more information about &quot;disabilities&quot; or &quot;life activities&quot;?</LEARN>
+      <HELP>“
+        <B>Disability</B>” means, with respect to a person:
+        <BR/>
+        <BR/>(i) A physical or mental impairment that substantially limits one (1) or more of such person's major life activities;
+        <BR/>
+        <BR/>(ii) A record of having such an impairment; or
+        <BR/>
+        <BR/>(iii) Being regarded as having such an impairment;
+        <BR/>
+        <BR/>“
+        <B>Disability</B>” does not include current, illegal use of, or addiction to, a controlled substance or controlled substance analogue;
+        <BR/>
+        <P>In general, a
+          <B>physical or mental impairment </B>includes hearing, mobility and visual impairments, chronic mental illness, AIDS, AIDS Related Complex, and mental retardation that substantially limits one or more major life activities. </P>
+        <P>
+          <B>Major life activities</B> include walking, talking, hearing, seeing, breathing, learning, performing manual tasks, and caring for oneself.</P>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2e-Housing: Basis of Discrim Sex">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Basis of discrimination disability TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Basis of discrimination disability TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Basis of discrimination disability TF]=true
+        <BR/>GOTO "2d-Housing: Basis of Discrim Disability 2"
+        <BR/>END IF
+        <BR/>IF [Basis of discrimination disability TF]=false
+        <BR/>GOTO "2e-Housing: Basis of Discrim Sex"
+        <BR/>END IF</CODEAFTER>
+      <NOTES>Grounds for Disability taken from TCA 4-21-102 and HUD's website.</NOTES>
+    </PAGE>
+    <PAGE NAME="2e-Housing: Basis of Discrim Sex" TYPE="A2J" MAPX="16120" MAPY="16120" STEP="3">
+      <TEXT>Do you feel you were treated differently because of your sex/gender?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <LEARN>What is &quot;sex&quot; and/or &quot;gender&quot;?</LEARN>
+      <HELP>
+        <B>Sex/Gender</B> generally refers to the designation of male or female as indicated on your birth certificate, driver's license, or another form on file with the Federal Government.
+        <BR/>
+        <BR/>
+        <I><B>Example</B>: If someone refused to rent to you, or would only rent to you on different terms, because you are a woman.</I>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2f-Housing: Basis of Discrim Religion">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Basis of discrimination sex or gender TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Basis of discrimination sex or gender TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Basis of discrimination sex or gender TF]=true
+        <BR/>GOTO "2e-Housing: Basis of Discrim Sex 2"
+        <BR/>END IF
+        <BR/>IF [Basis of discrimination sex or gender TF]=false
+        <BR/>GOTO "2f-Housing: Basis of Discrim Religion"
+        <BR/>END IF</CODEAFTER>
+      <NOTES>Grounds taken from 4-21-102</NOTES>
+    </PAGE>
+    <PAGE NAME="2f-Housing: Basis of Discrim Religion" TYPE="A2J" MAPX="16090" MAPY="16090" STEP="3">
+      <TEXT>Do you feel you were treated differently because of your religion?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2g-Housing: Basis of Discrim Creed">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Basis of discrimination religion TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Basis of discrimination religion TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Basis of discrimination religion TF]=true
+        <BR/>GOTO "2f-Housing: Basis of Discrim Religion 2"
+        <BR/>END IF
+        <BR/>IF [Basis of discrimination religion TF]=false
+        <BR/>GOTO "2g-Housing: Basis of Discrim Creed"
+        <BR/>END IF</CODEAFTER>
+      <NOTES>We didn't feel that a definition of religion was necessary.  If they don't know what religion is, it's unlikely to be the reason why they filed this complaint today.  </NOTES>
+    </PAGE>
+    <PAGE NAME="2g-Housing: Basis of Discrim Creed" TYPE="A2J" MAPX="15990" MAPY="15990" STEP="3">
+      <TEXT>Do you feel you were treated differently because of your creed?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <LEARN>What is creed?</LEARN>
+      <HELP>
+        <B>Creed </B>is a deeply held belief.
+        <BR/>
+        <BR/>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2gg-Housing: Basis of Discrim Familial Status">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Basis of discrimination creed TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Basis of discrimination creed TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Basis of discrimination creed TF]=true
+        <BR/>GOTO "2g-Housing: Basis of Discrim Creed 2"
+        <BR/>END IF
+        <BR/>IF [Basis of discrimination creed TF]=false
+        <BR/>GOTO "2gg-Housing: Basis of Discrim Familial Status"
+        <BR/>END IF</CODEAFTER>
+      <NOTES>This was Shay's answer to your (Professor Vojdik's) question about what creed is.  There is not a working definition of creed and a lot of confusion about what would constitute a protected "creed" in TN and most other states.  While it seems synonymous with religion, only one state has held that the two are synonymous.  As a result, it's hard to provide an example.
+        <BR/>This site gives an interesting rundown on the ambiguity of "creed": http://hrprofessionalsmagazine.com/creed-t-human-rights-act/</NOTES>
+    </PAGE>
+    <PAGE NAME="2gg-Housing: Basis of Discrim Familial Status" TYPE="A2J" MAPX="15940" MAPY="15940" STEP="3">
+      <TEXT>
+        <P>Do you feel you were treated differently because you are pregnant, have children, or have custody of a child under 18?
+          <BR/>
+        </P>
+        <P>Reminder: This is the last basis of discrimination for a housing complaint. If you have not checked one, you will not be able to file a complaint.
+          <BR/>
+          <BR/>
+        </P>
+      </TEXT>
+      <LEARN>What does &quot;Familial Status&quot; mean?</LEARN>
+      <HELP>
+        <B>Familial status</B> means a family contains a member under the age of 18.
+        <BR/>
+        <BR/>In accordance with the THRA, it is discrimination if someone treats you differently with regard to the terms and conditions of housing due to the presence of children or the expected presence of children under the age of 18, including pregnant women. Please note it is illegal to advertise “no children” in advertisements for the sale or rental of housing.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2ggg-Housing: Basis of Discrim Retaliation">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Basis of discrimination familial status TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Basis of discrimination familial status TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <NOTES>Definition of "familial status" taken directly from THRC's website.
+        <BR/>https://www.tn.gov/humanrights/search?keywords=housing
+        <BR/>
+      </NOTES>
+    </PAGE>
+    <PAGE NAME="2ggg-Housing: Basis of Discrim Retaliation" TYPE="A2J" MAPX="15910" MAPY="15910" STEP="3">
+      <TEXT>
+        <P>Do you feel you were treated differently by a person or business because you:</P>
+        <P>1) previously filed a discrimination complaint against, </P>
+        <P>2) gave testimony against, or </P>
+        <P>3) took part in an investigation against:</P>
+        <P>- The person or business or </P>
+        <P>- A friend, family member, or employee of the person or business?
+          <BR/>
+        </P>
+      </TEXT>
+      <LEARN>What does retaliation mean?</LEARN>
+      <HELP>
+        <P>If you were treated differently due to previously filing a discrimination complaint, giving testimony against, or taking part in an investigation against the person you seek to file a discrimination action against today, you may have been
+          <B>retaliated</B> against. </P>
+        <P>This means that the person who discriminated against you did not like something you did in response to their discriminatory act, so they took action (eviction, raising rent, etc.) that harmed you in some way in order to seek revenge or get even, which is also known as
+          <B>retaliation</B>.</P>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2gggg-Housing: Basis of Discrim Retaliation 2">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Basis of discrimination retaliation TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Basis of discrimination retaliation TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Basis of discrimination retaliation TF]=true
+        <BR/>GOTO "2gggg-Housing: Basis of Discrim Retaliation 2"
+        <BR/>END IF
+        <BR/>
+        <BR/>IF [Basis of discrimination retaliation TF]=false
+        <BR/>GOTO "2h-Housing: Who discriminated against you?"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="2gggg-Housing: Basis of Discrim Retaliation 2" TYPE="A2J" MAPX="15860" MAPY="15860" STEP="3">
+      <TEXT>Were you retaliated against because you filed a complaint of discrimination against a person or business?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2ggggg-Housing: Basis of Discrim Retaliation 2 2">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Basis of discrimination retaliation TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Basis of discrimination retaliation TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2ggggg-Housing: Basis of Discrim Retaliation 2 2" TYPE="A2J" MAPX="15830" MAPY="15830" STEP="3">
+      <TEXT>Were you retaliated against because you gave testimony or took part in an investigation against a person or business?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2gggggg-Housing: Basis of Discrim Retaliation 2 2 2">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Basis of discrimination retaliation TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Basis of discrimination retaliation TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2gggggg-Housing: Basis of Discrim Retaliation 2 2 2" TYPE="A2J" MAPX="15800" MAPY="15800" STEP="3">
+      <TEXT>Were you retaliated against because you protested against or criticized discrimination by a person or business?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2ggggggg-Housing: Basis of Discrim Retaliation 2 2 2 2">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Basis of discrimination retaliation TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Basis of discrimination retaliation TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2ggggggg-Housing: Basis of Discrim Retaliation 2 2 2 2" TYPE="A2J" MAPX="15770" MAPY="15770" STEP="3">
+      <TEXT>Was there another, different basis for the retaliation?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2h-Housing: Who discriminated against you?">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Type of retaliation other TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Type of retaliation other TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Type of retaliation other TF]=true
+        <BR/>GOTO "2ggggggg-Housing: Basis of Discrim Retaliation 2 2 2 2 2"
+        <BR/>END IF
+        <BR/>IF [Type of retaliation other TF]=false
+        <BR/>GOTO "2h-Housing: Who discriminated against you?"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="2h-Housing: Who discriminated against you?" TYPE="A2J" MAPX="20330" MAPY="20330" STEP="3">
+      <TEXT>Who discriminated against you?  Was it a person or a business?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2hh-Housing: Person discriminated">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Person</LABEL>
+          <NAME>Housing discrim person or business</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Business</LABEL>
+          <NAME>Housing discrim person or business</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Housing discrim person or business]=true
+        <BR/>GOTO "2hh-Housing: Person discriminated"
+        <BR/>END IF
+        <BR/>
+        <BR/>IF [Housing discrim person or business]=false
+        <BR/>GOTO "2hh-Housing: Person discriminated 2"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="2hh-Housing: Person discriminated" TYPE="A2J" MAPX="20320" MAPY="20320" STEP="3">
+      <TEXT>What is the person's name?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <LEARN>Don't know their name?</LEARN>
+      <HELP>You don't need to know the person's name at this moment, but it would be helpful if you could find and let the commission know.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2hhhh-Housing: Address 1">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Full name:</LABEL>
+          <NAME>Respondent entity TE</NAME>
+        </FIELD>
+      </FIELDS>
+      <NOTES>
+        <BR/>
+      </NOTES>
+    </PAGE>
+    <PAGE NAME="2hhhh-Housing: Address 1" TYPE="A2J" MAPX="16480" MAPY="16480" STEP="3">
+      <TEXT>What is the address of the person or business that discriminated against you?</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2hhhh-Housing: Phone">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Street address:</LABEL>
+          <NAME>Respondent address TE</NAME>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="true">
+          <LABEL>City:</LABEL>
+          <NAME>Respondent city TE</NAME>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>County:</LABEL>
+          <NAME>Respondent county TE</NAME>
+        </FIELD>
+        <FIELD TYPE="textpick" REQUIRED="true">
+          <LISTSRC>US_states (12).xml</LISTSRC>
+          <LABEL>State:</LABEL>
+          <NAME>Respondent state TE</NAME>
+        </FIELD>
+        <FIELD TYPE="numberzip" REQUIRED="false" MAXCHARS="5">
+          <LABEL>Zip code:</LABEL>
+          <NAME>Respondent zip TE</NAME>
+          <VALUE>#####</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2hhhh-Housing: Phone" TYPE="A2J" MAPX="15660" MAPY="15660" STEP="3">
+      <TEXT>What is the phone number of the person or business that discriminated against you?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <LEARN>Don't know the phone number?</LEARN>
+      <HELP>If you don't know the phone number we can look it up later.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2hhhhh-Housing: Type of person or business">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="numberphone" REQUIRED="false">
+          <LABEL>Phone number</LABEL>
+          <VALUE>(xxx)xxx-xxxx</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="4-Title VI: Basis of Discrimination 2: Color" TYPE="A2J" MAPX="15080" MAPY="15080" STEP="3">
+      <TEXT>Do you believe you were discriminated against because of the color of your skin? </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="4-Title VI: Basis of Discrimination 3">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Yes</LABEL>
+          <NAME>Color title basis TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>No</LABEL>
+          <NAME>Color title basis TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Color title basis TF]=true
+        <BR/>GOTO "4-Title VI: Basis of Discrimination 2a: Color"
+        <BR/>END IF
+        <BR/>IF [Color title basis TF]=false
+        <BR/>GOTO "4-Title VI: Basis of Discrimination 3"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="4-Title VI: Basis of Discrimination 3" TYPE="A2J" MAPX="15070" MAPY="15070" STEP="3">
+      <TEXT>Do you believe you were discriminated against because of your national origin? </TEXT>
+      <LEARN>What does &quot;national origin&quot; mean? </LEARN>
+      <HELP>
+        <P>
+          <B>National origin</B> means the country you or your ancestors are from.</P>
+        <P>An example of discrimination based on national origin:</P>
+        <P>If a landlord refused to rent to you because your family migrated from another country.</P>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="4c-Title VI: Type of Discrimination">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Yes</LABEL>
+          <NAME>National origin title basis TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>No</LABEL>
+          <NAME>National origin title basis TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [National origin title basis TF]=true
+        <BR/>GOTO "4-Title VI: Basis of Discrimination 3a: National Origin"
+        <BR/>END IF
+        <BR/>IF [National origin title basis TF]=false
+        <BR/>GOTO "4c-Title VI: Type of Discrimination"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="4-Title VI: Basis of Discrimination 1: Race" TYPE="A2J" MAPX="18610" MAPY="18610" STEP="3">
+      <TEXT>Do you believe you were discriminated against because of your race?</TEXT>
+      <LEARN>What does &quot;race&quot; mean?</LEARN>
+      <HELP>
+        <P>Race is membership in a distinct group based on physical and genetic features.  Some examples include the African-American, Caucasian, and Hispanic races.</P>
+        <P>An example of discrimination on the basis of race:</P>
+        <P>If a landlord refused to rent to you or a bank refused to provide lending to you for the purchase of a home
+          <B>because</B> you are African-American, Caucasian, Hispanic, or another race.</P>
+      </HELP>
+      <HELPAUDIO>A2JAvatar-Guide-Front-F0[1] (2).png</HELPAUDIO>
+      <HELPIMAGE>A2JAvatar-Guide-Front-F0[1] (4).png</HELPIMAGE>
+      <HELPVIDEO>A2JAvatar-Guide-Front-F0[1] (3).png</HELPVIDEO>
+      <BUTTONS>
+        <BUTTON NEXT="4-Title VI: Basis of Discrimination 2: Color">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LISTSRC>A2JAvatar-Guide-Front-F0[1] (6).png</LISTSRC>
+          <LABEL>Yes</LABEL>
+          <NAME>Race title basis TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LISTSRC>A2JAvatar-Guide-Front-F0[1] (5).png</LISTSRC>
+          <LABEL>No</LABEL>
+          <NAME>Race title basis TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Race title basis TF]=true
+        <BR/>GOTO "4-Title VI: Basis of Discrimination 1a: Race"
+        <BR/>END IF
+        <BR/>IF [Race title basis TF]=false
+        <BR/>GOTO "4-Title VI: Basis of Discrimination 2: Color"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="4-Title VI: Basis of Discrimination 1a: Race" TYPE="A2J" MAPX="15060" MAPY="15060" STEP="3">
+      <TEXT>What is your race? </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="4-Title VI: Basis of Discrimination 2: Color">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Race</LABEL>
+          <NAME>Race title basis TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="4-Title VI: Basis of Discrimination 2a: Color" TYPE="A2J" MAPX="15050" MAPY="15050" STEP="3">
+      <TEXT>What is your skin color?</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="4-Title VI: Basis of Discrimination 3">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Color</LABEL>
+          <NAME>Color title basis TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="4-Title VI: Basis of Discrimination 3a: National Origin" TYPE="A2J" MAPX="15040" MAPY="15040" STEP="3">
+      <TEXT>What is your national origin? </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="4c-Title VI: Type of Discrimination">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>National Origin</LABEL>
+          <NAME>National origin title basis TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-1" TYPE="A2J" MAPX="20270" MAPY="20270" STEP="3">
+      <TEXT>When did the discrimination happen?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <LEARN>Click &quot;Learn More&quot; For More Information</LEARN>
+      <HELP>When did this business discriminate against you?</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-1a">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="datemdy" REQUIRED="false" CALENDAR="true">
+          <LABEL>Discrimination Start Date</LABEL>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-2" TYPE="A2J" MAPX="18650" MAPY="18650" STEP="3">
+      <TEXT>When were you last discriminated against ? Please give us the most recent date of discrimination against you.</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-3">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="datemdy" REQUIRED="false" CALENDAR="true">
+          <LABEL>Date of
+            <B>Most Recent </B>Discriminatory Act</LABEL>
+          <NAME>Most recent date DA</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-4" TYPE="A2J" MAPX="20450" MAPY="20450" STEP="3">
+      <TEXT>Do you believe you were discriminated against because of your race?
+        <BR/>
+      </TEXT>
+      <LEARN>Click &quot;Learn More&quot; For More Information</LEARN>
+      <HELP>A person's "race" can be defined as those obvious, physical traits such as the color of their skin.
+        <BR/>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-5">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Yes</LABEL>
+          <NAME>Race pa basis TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>No</LABEL>
+          <NAME>Race pa basis TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false" MAXCHARS="20">
+          <LABEL>If
+            <B>YES</B>, Please indicate your race.</LABEL>
+          <NAME>Race pa basis TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-3" TYPE="A2J" MAPX="14660" MAPY="14660" STEP="3">
+      <TEXT>There are several reasons a business might discriminate against you. Here are the reasons prohibited by the Tennessee Human Rights Commission:
+        <BR/>
+        <BR/>
+        <BR/>Reasons for Public Accommodation Discrimination:
+        <BR/>
+        <BR/>
+        <B>Race</B>
+        <BR/>
+        <BR/>
+        <B>Color</B>: The color of your skin
+        <BR/>
+        <BR/>
+        <B>National Origin</B>: The country that you or your ancestors are from
+        <BR/>
+        <BR/>
+        <B>Age</B>: How old you are
+        <BR/>
+        <BR/>
+        <B>Sex/Gender</B>: Whether you are male or female
+        <BR/>
+        <B><BR/>Religion</B>
+        <BR/>
+        <BR/>
+        <B>Creed</B>: A non-religious but sincerely held belief
+        <BR/>
+        <BR/>
+        <B>Retaliation</B>: Being punished for engaging in a legally protected activity, such as filing a discrimination complaint, or assisting in a complaint.
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="1i-General Disclaimer About Bases of Discrim for PA">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-5" TYPE="A2J" MAPX="16280" MAPY="16280" STEP="3">
+      <TEXT>
+        <P>Do you feel you were treated differently because of the color of your skin?</P>
+      </TEXT>
+      <LEARN>Click &quot;Learn More&quot; For More Information</LEARN>
+      <HELP>Color here refers to your skin color. For example, you might say you were denied entrance to a grocery store because you are "brown-skinned."</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-6">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Yes</LABEL>
+          <NAME>Color pa basis TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>No
+            <BR/>
+            <BR/>
+          </LABEL>
+          <NAME>Color pa basis TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false" MAXCHARS="15">
+          <LABEL>If
+            <B>Yes</B>, what is your
+            <B>color</B>?</LABEL>
+          <NAME>Color pa basis TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-6" TYPE="A2J" MAPX="16220" MAPY="16220" STEP="3">
+      <TEXT>Do you feel you were treated differently because of your national origin?</TEXT>
+      <LEARN>Click &quot;Learn More&quot; For More Information</LEARN>
+      <HELP>National Origin is based on the country that you or your ancestors are from. For example, a person from Japan is Japanese. Also, a person whose parents are from Japan might also be considered Japanese.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-7">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Yes</LABEL>
+          <NAME>Basis of discrimination national origin TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>No</LABEL>
+          <NAME>Basis of discrimination national origin TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>If
+            <B>YES</B>, what is you
+            <B>National Origin</B>?</LABEL>
+          <NAME>National origin pa basis TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-16" TYPE="A2J" MAPX="20360" MAPY="20360" STEP="3">
+      <TEXT>Who discriminated against you?  Was it a business (this can include any person who worked for the business)?</TEXT>
+      <LEARN>Click &quot;Learn More&quot; for more information</LEARN>
+      <HELP>An example of a business that may have discriminated against you might be a local restaurant chain or a department store.
+        <BR/>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-18">
+          <LABEL>Continue</LABEL>
+          <NAME>Business pa Dscrim</NAME>
+        </BUTTON>
+      </BUTTONS>
+      <CODEAFTER>IF [Pa discrim person or business]=true
+        <BR/>GOTO "3-Public Accommodation-17"
+        <BR/>END IF
+        <BR/>
+        <BR/>IF [Pa discrim person or business]=false
+        <BR/>GOTO "3-Public Accommodation-18"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-18" TYPE="A2J" MAPX="20310" MAPY="20310" STEP="3">
+      <TEXT>What was the business's name?</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-19">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="true">
+          <LABEL>Business name:</LABEL>
+          <NAME>Respondent entity TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-7" TYPE="A2J" MAPX="17390" MAPY="17390" STEP="3">
+      <TEXT>Do you believe that you were discriminated against  because of your age?</TEXT>
+      <LEARN>Click &quot;Learn More&quot; For More Information</LEARN>
+      <HELP>Your age is how old you are, in years.
+        <BR/>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-8">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Yes</LABEL>
+          <NAME>Age pa basis TF</NAME>
+          <VALUE>True</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>No</LABEL>
+          <NAME>Age pa basis TF</NAME>
+          <VALUE>False</VALUE>
+        </FIELD>
+        <FIELD TYPE="numberpick" REQUIRED="false" MIN="1" MAX="120">
+          <LABEL>If
+            <B>YES</B>, then how old are you?</LABEL>
+          <NAME>Age pa basis NU</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-8" TYPE="A2J" MAPX="16150" MAPY="16150" STEP="3">
+      <TEXT>Do you feel you were treated differently because of the sex or gender indicated on your birth certificate?</TEXT>
+      <LEARN>Click &quot;Learn More&quot; For More Information</LEARN>
+      <HELP>Sex and gender, for the purposes of this form, refer to what is indicated on your birth certificate.
+        <BR/>For example, discrimination based on sex or gender would be a situation in which a dry cleaning service charged women more than men for the same services.
+        <BR/>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-9">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Yes</LABEL>
+          <NAME>Sex gender pa TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>No</LABEL>
+          <NAME>Sex gender pa TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+        <FIELD TYPE="gender" REQUIRED="false">
+          <LABEL>Please indicate your sex/gender:</LABEL>
+          <NAME>Male pa basis TF</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-9" TYPE="A2J" MAPX="16120" MAPY="16120" STEP="3">
+      <TEXT>Do you feel you were treated differently because of your religion?</TEXT>
+      <LEARN>Click &quot;Learn More&quot; For More Information</LEARN>
+      <HELP>Discrimination based on religion could occur, for example, if a sales person in a store treated a Jewish person differently than Christians. </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-10">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Yes</LABEL>
+          <NAME>Religion pa basis TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>No</LABEL>
+          <NAME>Religion pa basis TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false" MAXCHARS="25">
+          <LABEL>Please Specify your
+            <B>Religion:</B>
+          </LABEL>
+          <NAME>Religion pa basis TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-10" TYPE="A2J" MAPX="16020" MAPY="16020" STEP="3">
+      <TEXT>Do you feel you were treated differently because of your creed?</TEXT>
+      <LEARN>Click &quot;Learn More&quot; For More Information</LEARN>
+      <HELP>"
+        <B>Creed</B>" is deeply held belief.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-11">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Yes</LABEL>
+          <NAME>Creed pa basis TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>No</LABEL>
+          <NAME>Creed pa basis TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false" MAXCHARS="20">
+          <LABEL>If
+            <B>YES, </B>Specify your
+            <B>Creed</B>:</LABEL>
+          <NAME>Creed pa basis TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-1a" TYPE="A2J" MAPX="20280" MAPY="20280" STEP="3">
+      <TEXT>Is the discrimination ongoing?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <LEARN>Click &quot;Learn More&quot; for More Information</LEARN>
+      <HELP>Is the business still discriminating against you?</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-2">
+          <LABEL>Yes</LABEL>
+          <NAME>Pa Ongoing TF</NAME>
+        </BUTTON>
+        <BUTTON NEXT="3-Public Accommodation-2">
+          <LABEL>No</LABEL>
+          <NAME>Pa ongoing TF</NAME>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-11" TYPE="A2J" MAPX="15940" MAPY="15940" STEP="3">
+      <TEXT>
+        <B>RETALIATION</B>
+        <BR/>
+        <BR/>Do you believe that you were treated differently by a business for your involvement in a discrimination claim?
+        <BR/>
+        <BR/>The Human Right Commission offers three possible reasons for retaliation:
+        <BR/>
+        <BR/>1. You filed a complaint against a company
+        <BR/>
+        <BR/>2. You gave testimony or participated in a discrimination investigation involving someone else
+        <BR/>
+        <BR/>3. You opposed a discriminatory act
+        <BR/>
+        <BR/>You may also have a different reason than stated above.
+        <BR/>
+        <BR/>Do you think retaliation is why you were treated unfairly or differently?</TEXT>
+      <LEARN>Click &quot;Learn More&quot; For More Information</LEARN>
+      <HELP>For example, Karen filed a complaint with the Commission against her local grocery store. Days later, she again visited the store, where she received poorer service from the store's clerks compared to the other customers. This could be the grocery store retaliating against Karen.</HELP>
+      <BUTTONS>
+        <BUTTON>
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Yes</LABEL>
+          <NAME>Retaliation pa basis TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>No</LABEL>
+          <NAME>Retaliation pa basis TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Retaliation pa basis TF]=true
+        <BR/>GOTO "3-Public Accommodation-12"
+        <BR/>END IF
+        <BR/>
+        <BR/>IF [Retaliation pa basis TF]=false
+        <BR/>GOTO "3-Public Accommodation-16"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-12" TYPE="A2J" MAPX="15890" MAPY="15890" STEP="3">
+      <TEXT>Were you retaliated against because you filed a complaint of discrimination?</TEXT>
+      <LEARN>Click &quot;Learn More&quot; For More Information </LEARN>
+      <HELP>For example, Mark filed a discrimination complaint against his local butcher shop. A week later, he went to visit the same butcher, and the shop owner refused to serve him.
+        <BR/>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-13">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Yes</LABEL>
+          <NAME>Field discrimination TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>No</LABEL>
+          <NAME>Field discrimination TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-13" TYPE="A2J" MAPX="15860" MAPY="15860" STEP="3">
+      <TEXT>Were you retaliated against because you gave testimony against someone or took part in an investigation about discrimination?</TEXT>
+      <LEARN>Click &quot;Learn More&quot; For More Information</LEARN>
+      <HELP>For example, Adam's co-worker filed a discrimination claim against their employer. Adam testified on his co-worker's behalf about the discrimination that had occurred. After learning about Adam's involvement in the discrimination claim, Adam's manager assigned Adam longer shifts for the next month. This could be retaliation.
+        <BR/>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-14">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Yes</LABEL>
+          <NAME>Gave testimony investigation pa basis TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>No</LABEL>
+          <NAME>Gave testimony investigation pa basis TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-14" TYPE="A2J" MAPX="15830" MAPY="15830" STEP="3">
+      <TEXT>Were you retaliated against because you opposed or were against an act of discrimination?
+        <BR/>
+      </TEXT>
+      <LEARN>Click &quot;Learn More&quot; For More Information</LEARN>
+      <HELP>For example, Janet overheard her boss saying that he would refuse to let anyone over the age of 40 into their store. Janet told her boss that what he was planning to do was wrong, and that she wouldn't be involved in it. Days later, Janet was fired. This could be retaliation against Janet because she opposed a discriminatory act.
+        <BR/>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-15">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Yes</LABEL>
+          <NAME>Opposed objected pa basis TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>No</LABEL>
+          <NAME>Opposed objected pa basis TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-15" TYPE="A2J" MAPX="14630" MAPY="14630" STEP="3">
+      <TEXT>Is there another reason that you believe you are being retaliated against? (You can include all the details of the situation in the "What Happened" section of this interview).</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-16">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Yes</LABEL>
+          <NAME>Other reason pa basis TF</NAME>
+          <VALUE>True</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>No</LABEL>
+          <NAME>Other reason pa basis TF</NAME>
+          <VALUE>False</VALUE>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Other Reason in about 3-5 words:</LABEL>
+          <NAME>Other reason pa basis TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2hhhhh-Housing: Type of person or business" TYPE="A2J" MAPX="13040" MAPY="13040" STEP="3">
+      <TEXT>Was the person or business that discriminated against you one or more of the following?  You may check all that apply, and you
+        <B>MUST</B> select one to continue.</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2hhhhhh-Housing: Type of property involved">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="checkbox" REQUIRED="true">
+          <LABEL>Owner</LABEL>
+          <NAME>Respondent info owner TF</NAME>
+          <VALUE>true</VALUE>
+          <INVALIDPROMPT>
+            <BR/>
+          </INVALIDPROMPT>
+        </FIELD>
+        <FIELD TYPE="checkbox" REQUIRED="true">
+          <LABEL>Builder</LABEL>
+          <NAME>Respondent info builder TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="checkbox" REQUIRED="true">
+          <LABEL>Broker</LABEL>
+          <NAME>Respondent info broker TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="checkbox" REQUIRED="true">
+          <LABEL>Salesperson</LABEL>
+          <NAME>Respondent info salesperson TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="checkbox" REQUIRED="true">
+          <LABEL>Manager</LABEL>
+          <NAME>Respondent info manager TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="checkbox" REQUIRED="true">
+          <LABEL>Bank or Lender</LABEL>
+          <NAME>Respondent info bank or other lender TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="checkbox" REQUIRED="true">
+          <LABEL>Other</LABEL>
+          <NAME>Respondent info other TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="checkbox" REQUIRED="true">
+          <LABEL>None of the above</LABEL>
+          <NAME>Respondent info NOA</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Respondent info other TF]=true
+        <BR/>GOTO "2hhhhh-Housing: Type of person or business OTHER"
+        <BR/>END IF
+        <BR/>IF [Respondent info NOA]=true
+        <BR/>GOTO "Respondent Type--Must Respond"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="2hhhhhhh-Housing: Property Address" TYPE="A2J" MAPX="12960" MAPY="12960" STEP="3">
+      <TEXT>What is the street address of the house or property involved in the discrimination?</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2i-Housing: Sale or rent">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Street address:</LABEL>
+          <NAME>Property address street TE</NAME>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="true">
+          <LABEL>City:</LABEL>
+          <NAME>Property address city TE</NAME>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>County:</LABEL>
+          <NAME>Property address county TE</NAME>
+        </FIELD>
+        <FIELD TYPE="textpick" REQUIRED="true">
+          <LISTSRC>US_states (13).xml</LISTSRC>
+          <LABEL>State:</LABEL>
+          <NAME>Property address state TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2hhhhhh-Housing: Type of property involved" TYPE="A2J" MAPX="13000" MAPY="13000" STEP="3">
+      <TEXT>What type of property was involved in the discrimination?</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2hhhhhhh-Housing: Property Address">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Single family house</LABEL>
+          <NAME>Property Type MC</NAME>
+          <VALUE>Single family house</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>House or building for two or more families</LABEL>
+          <NAME>Property Type MC</NAME>
+          <VALUE>House or building for two or more families</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Building for five or more families</LABEL>
+          <NAME>Property Type MC</NAME>
+          <VALUE>Building for five or more families</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Other</LABEL>
+          <NAME>Property Type MC</NAME>
+          <VALUE>Other</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Property Type MC]="Single family house"
+        <BR/>GOTO "2hhhhhhh-Housing: Property Address"
+        <BR/>END IF
+        <BR/>
+        <BR/>IF [Property Type MC]="House or building for two or more families"
+        <BR/>GOTO "2hhhhhhh-Housing: Property Address"
+        <BR/>END IF
+        <BR/>
+        <BR/>IF [Property Type MC]="Building for five or more families"
+        <BR/>GOTO "2hhhhhhh-Housing: Property Address"
+        <BR/>END IF
+        <BR/>
+        <BR/>IF [Property Type MC]="Other"
+        <BR/>GOTO "2hhhhhh-Housing: Type of property involved 2"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="2i-Housing: Sale or rent" TYPE="A2J" MAPX="12910" MAPY="12910" STEP="3">
+      <TEXT>Was the property for sale or rent?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2ii-Housing: Owner live">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>For sale or rent TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>For sale or rent TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>I'm not sure</LABEL>
+          <NAME>For sale or rent TF</NAME>
+          <VALUE>False</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2ii-Housing: Owner live" TYPE="A2J" MAPX="12880" MAPY="12880" STEP="3">
+      <TEXT>Did the owner live at the property?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2iii-Housing: actions taken agaisnt">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Owner live there TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Owner live there TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2iii-Housing: actions taken agaisnt" TYPE="A2J" MAPX="12840" MAPY="12840" STEP="3">
+      <TEXT>You are going to be asked a few questions about the discrimination. Please mark yes or no depending on what happened.</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2iiii-Housing: actions taken agaisnt 2">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="2iiiiii-Housing: actions taken agaisnt 4" TYPE="A2J" MAPX="12780" MAPY="12780" STEP="3">
+      <TEXT>Did someone intimidate, coerce, or interfere with you?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <LEARN>What does coerce mean?</LEARN>
+      <HELP>You may have been
+        <B>coerced </B>if someone used physical force or threatened to harm you to persuade you to do something.
+        <BR/>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2iiiiiii-Housing: actions taken agaisnt 4 2">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Intimidated interfered coerced TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Intimidated interfered coerced TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+      </FIELDS>
+      <NOTES>We used what Professor Vojdik provides in her notes.</NOTES>
+    </PAGE>
+    <PAGE NAME="2iiii-Housing: actions taken agaisnt 2" TYPE="A2J" MAPX="12660" MAPY="12660" STEP="3">
+      <TEXT>Did someone refuse to sell, rent, or negotiate with you?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2iiiii-Housing: actions taken agaisnt 2 2">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Actions against you refusal TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Actions against you refusal TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2iiiii-Housing: actions taken agaisnt 2 2" TYPE="A2J" MAPX="12610" MAPY="12610" STEP="3">
+      <TEXT>Did someone falsely deny you housing that was available?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <LEARN>What does mean to &quot;falsely deny&quot; housing?</LEARN>
+      <HELP>Someone may have falsely denied you housing if they refused to sell or rent to you and gave you a reason that was false.
+        <BR/>
+        <BR/>
+        <B><I>Example:</I></B>
+        <I>if the landlord told you that the property was
+unavailable to rent, or that it was not safe for someone to live in, or some
+other false statement.</I>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2iiiiii-Housing: actions taken agaisnt 4">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Falsely denied TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Falsely denied TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2iiiiiii-Housing: actions taken agaisnt 4 2" TYPE="A2J" MAPX="12560" MAPY="12560" STEP="3">
+      <TEXT>
+        <P>Were the terms and conditions of your sale or rental
+          <B>different from another
+person(s)</B> of a different race, color, national origin, religion, creed, sex, disability, age, family status, or as a result of retaliation?”</P>
+
+        <BR/>
+      </TEXT>
+      <LEARN>How can I tell if my terms and conditions differed from others?</LEARN>
+      <HELP>You will know if you were given different terms and conditions in your rental or purchase of housing if this was an action taken against you.
+        <BR/>
+        <BR/>If you live in a building that houses more than one family, you may have either heard from someone in the building who doesn't belong to a protected class about their terms and conditions of rental, lease, or purchase.
+        <BR/>
+        <BR/>If you live in a single family home, you may have heard from someone who doesn't belong to a protected class who received better terms and conditions on a loan despite using the same bank or lender.  Or if you're renting a single family home from the same landlord as someone else, you might have heard that their terms and conditions are better.
+        <BR/>
+        <BR/>A more common example is if you were asked to pay a higher price (be it rent or purchase price) than others not belonging to a protected class, despite the properties being the same.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2iiiiiiii-Housing: actions taken agaisnt 4 2 2">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Different terms TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Different terms TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2iiiiiiii-Housing: actions taken agaisnt 4 2 2" TYPE="A2J" MAPX="12530" MAPY="12530" STEP="3">
+      <TEXT>Were you retaliated against?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <LEARN>How would I know if I was retaliated against?</LEARN>
+      <HELP>
+        <P>You cannot be punished
+          <B> </B>for
+          <B>(a) filing a claim against, or </B>
+          <B>(b)
+for giving information during an investigation</B>
+          <B>about</B>:</P>
+
+        <UL>
+          <LI>
+            <P>an owner,</P>
+          </LI>
+          <LI>
+            <P>landlord, </P>
+          </LI>
+          <LI>
+            <P>builder, </P>
+          </LI>
+          <LI>
+            <P>broker, </P>
+          </LI>
+          <LI>
+            <P>salesperson, </P>
+          </LI>
+          <LI>
+            <P>property manager, </P>
+          </LI>
+          <LI>
+            <P>bank or lender, </P>
+          </LI>
+          <LI>
+            <P>or another person.</P>
+          </LI>
+        </UL>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2iiiiiiiii-Housing: actions taken agaisnt 4 2 2 2">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Retaliated against TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Retaliated against TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+      </FIELDS>
+      <NOTES>We quoted this directly from Prof. Vojdik's suggested text.</NOTES>
+    </PAGE>
+    <PAGE NAME="2iiiiiiiii-Housing: actions taken agaisnt 4 2 2 2" TYPE="A2J" MAPX="12490" MAPY="12490" STEP="3">
+      <TEXT>Was there discrimination in the financing of your home, home loan, or other financing terms relating to housing?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <LEARN>How would I know if I was financially discriminated against?</LEARN>
+      <HELP>For
+        <B> example</B>, financial discrimination might occur if you received a higher interest rate, or were denied financing because of a discriminatory reason, such as your race or sex.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2iiiiiiiiii-Housing: actions taken agaisnt 4 2 2 2 2">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Financial discrimination TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Financial discrimination TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2iiiiiiiiii-Housing: actions taken agaisnt 4 2 2 2 2" TYPE="A2J" MAPX="12450" MAPY="12450" STEP="3">
+      <TEXT>Was there advertising which was discriminatory?</TEXT>
+      <LEARN>How can I tell if an advertisement is discriminatory? </LEARN>
+      <HELP>Advertisements
+        <B>cannot </B>state or suggest that the property does not allow children or service animals or that a building or complex is only available to persons of a certain race.
+        <BR/>
+        <BR/>
+        <I><B>Example</B>: photographs of an apartment
+building that only show white tenants could suggest that tenants must be
+white.</I>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2iiiiiiiiiii-Housing: actions taken agaisnt 4 2 2 2 2 2">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Discriminatory advertising TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Discriminatory advertising TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2iiiiiiiiiii-Housing: actions taken agaisnt 4 2 2 2 2 2" TYPE="A2J" MAPX="12420" MAPY="12420" STEP="3">
+      <TEXT>Was there discrimination in real estate services?</TEXT>
+      <LEARN>How do I know what real estate discrimination is? </LEARN>
+      <HELP>Real estate agents cannot direct you to a certain area of town based on the racial make-up of the area or imply that property values or crime rates are changing because of the people who live there.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2iiiiiiiiiiii-Housing: actions taken agaisnt 4 2 2 2 2 2 2">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Discriminatory real estate service TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Discriminatory real estate service TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2iiiiiiiiiiii-Housing: actions taken agaisnt 4 2 2 2 2 2 2" TYPE="A2J" MAPX="12380" MAPY="12380" STEP="3">
+      <TEXT>Did someone refuse to allow modification of the property or otherwise accommodate your disabilities?</TEXT>
+      <LEARN>Not sure what &quot;refusal to modify for or accommodate disabilities&quot; means? </LEARN>
+      <HELP>Property owners must allow you to modify your home if you agree to pay for the reasonable modifications and for the home to be returned to its previous condition when you move out.  Any changes must not physically damage the property.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2iiiiiiiiiiiii-Housing: actions taken agaisnt 4 2 2 2 2 2 2 2">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Refusal to modify or accommodate TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Refusal to modify or accommodate TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2iiiiiiiiiiiii-Housing: actions taken agaisnt 4 2 2 2 2 2 2 2" TYPE="A2J" MAPX="12330" MAPY="12330" STEP="3">
+      <TEXT>Was there another type of discriminatory action taken against you?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2j-Housing: When did the discrimination happen">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Other actions against you TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Other actions against you TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [Other actions against you TF]=true
+        <BR/>GOTO "2iiiiiiiiiiiii-Housing: actions taken agaisnt 4 2 2 2 2 2 2 2 2"
+        <BR/>END IF
+        <BR/>
+        <BR/>IF [Other actions against you TF]=false
+        <BR/>GOTO "2j-Housing: When did the discrimination happen"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="2j-Housing: When did the discrimination happen" TYPE="A2J" MAPX="12290" MAPY="12290" STEP="3">
+      <TEXT>When did the discrimination begin?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2jj-Housing: When did the discrimination happen 2">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="datemdy" REQUIRED="true" CALENDAR="true">
+          <LABEL>Beginning date:</LABEL>
+          <NAME>Beginning date DA</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2jj-Housing: When did the discrimination happen 2" TYPE="A2J" MAPX="12260" MAPY="12260" STEP="3">
+      <TEXT>What is the most recent date in which you suffered this discrimination?</TEXT>
+      <LEARN>Are you unsure of the most recent date?</LEARN>
+      <HELP>If you are unsure of the precise date, just give a ballpark estimate of the most recent date of discrimination.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2jjj-Housing: When did the discrimination happen 2 2">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="datemdy" REQUIRED="true" CALENDAR="true">
+          <LABEL>Most recent date:</LABEL>
+          <NAME>Most recent date DA</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2jjj-Housing: When did the discrimination happen 2 2" TYPE="A2J" MAPX="12230" MAPY="12230" STEP="3">
+      <TEXT>Is the person or business still discriminating against you?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="1- Narrative">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Discrimination ongoing TF</NAME>
+          <VALUE>Yes</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Discrimination ongoing TF</NAME>
+          <VALUE>No</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="1b-About each type of complaint" TYPE="A2J" MAPX="11900" MAPY="11900" STEP="3">
+      <TEXT>Here is some more information about each type of complaint:
+        <BR/>
+        <BR/>You may have a
+        <B>Housing</B> complaint if someone refused to sell or rent property, charged you a different amount of rent than someone else, or refused to allow modification or accommodations to the property to accommodate a disability on the basis of race, color, national origin, disability, sex/gender, religion, creed, familial status, or in retaliation against you for filing a complaint of discrimination, giving testimony or otherwise participating in a discrimination investigation, opposing or objecting to discrimination, or another means of retaliation.
+        <BR/>
+        <BR/> The Tennessee Human Rights Act prohibits discrimination related to housing, residential or commercial, including Advertisement, Financing, Negotiating, Rental, Real Estate Transaction and Sale. The law applies to Associations, Builders, Brokers, Developers, Insurance Agents, Financial Institutions, Landlords, Managers, Operators and Owner.
+        <BR/>
+        <BR/>You may have a
+        <B>Public Accommodation</B> complaint if you were discriminated against in a place that is open to, and is used by the general public, due to your race, creed, national origin, or religion.
+        <BR/>
+        <BR/>You may have a
+        <B> Title VI </B>complaint if you were discriminated against because of
+        <B> </B>your race, color, or national origin (where your ancestors are from), and the person or business that discriminated against you was a state agency, or a person affiliated with a state agency, that receives money from the Federal Government for the program or activity with which you are involved.
+        <BR/>
+        <BR/>Do you need additional information about each type of complaint, or are you ready to file?</TEXT>
+      <LEARN>Want to see some examples of each type of discrimination?</LEARN>
+      <HELP>For
+        <B>housing</B>, finance companies cannot charge you a higher interest rate because of your religion.  Landlords cannot refuse to rent to you because you have children.  Realtors cannot steer you toward an area of town because of your race.
+        <BR/>
+        <BR/>
+        <BR/>For
+        <B>Title VI</B>, any state agency that receives federal funding cannot discriminate against you because of your race, color, or national origin. If a state agency that is receiving federal funding denies you a benefit, or treats you differently then everyone else,
+        <B>AND</B> that treatment is based on your race, color, or national origin, you may have a Title VI complaint.
+        <BR/>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="1a-Housing, PA, or Title VI">
+          <LABEL>Ready to file</LABEL>
+          <NAME>About each complaint TF</NAME>
+          <VALUE>true</VALUE>
+        </BUTTON>
+        <BUTTON NEXT="1c-About housing in-depth">
+          <LABEL>Need more information</LABEL>
+          <NAME>About each complaint TF</NAME>
+          <VALUE>false</VALUE>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="1c-About housing in-depth" TYPE="A2J" MAPX="11860" MAPY="11860" STEP="3">
+      <TEXT>
+        <P>Here is more information and examples of each type of complaint:
+          <B><BR/></B>
+          <B><BR/></B>
+          <B>Housing discrimination</B> comes in many different forms.  Federal law makes it illegal to discriminate in the provision of housing based on a person's race, color, national origin, religion, sex, family status, or disability.  </P>
+        <P>If you have been discriminated against in one of the following ways (among others), and on one of the bases listed above, you should file a
+          <B>housing complaint</B>:</P>
+        <P>- If someone refused to sell, rent or lease housing to an interested tenant or buyer.</P>
+        <P>- If someone applied different sale, rental or occupancy terms for different people.</P>
+        <P>- If someone lied about or misrepresented the availability of housing when housing was in fact available.</P>
+        <P>- If someone provided inferior conditions, terms, facilities or privileges in connection with housing.</P>
+        <P>- If someone “blockbusted” or encouraged people to leave an area based on their protected class.</P>
+        <P>- If someone refused to permit reasonable modifications when accommodations may have been necessary for a person to use and enjoy their dwelling.</P>
+        <P>- Steering customers to a certain neighborhood, refusing to serve certain customers by real estate professionals.</P>
+        <P>- If someone redlined or limited financial lending in a particular area because of the demographics of that area, or imposed different terms or conditions on a loan.</P>
+        <P>- If someone harassed tenants and homeowners in connection with housing accommodations.</P>
+        <P>- If local zoning laws have an unfair effect on protected classes.</P>
+        <P>These examples are
+          <B>NOT</B> all-inclusive.  You may have been discriminated against in another sense.  Even if you do not recognize your specific situation in the examples above, you may continue with the interview.</P>
+        <P>
+          <B>To learn more about OTHER types of discrimination, press "Continue."</B>
+        </P>
+      </TEXT>
+      <LEARN>What is a &quot;protected class&quot;?</LEARN>
+      <HELP>A
+        <B>protected class</B> is a characteristic of a person which cannot be targeted for discrimination, including race, color, religion, national origin, sex/gender, family status, or disability.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="1d-About PA in-depth">
+          <LABEL>Continue to Information About Public Accommodation</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="1d-About PA in-depth" TYPE="A2J" MAPX="11810" MAPY="11810" STEP="3">
+      <TEXT>Under Tennessee law, a
+        <B>public accommodation</B> is a place or service that is generally open and available to the public, and can be run by the government, or a private company.
+        <BR/>It is an illegal practice for a place of
+        <B>public accommodation</B> to discriminate against anyone based on any of the following:
+        <BR/>
+        <BR/>- Age (40+)
+        <BR/>- Color
+        <BR/>- Creed
+        <BR/>- National Origin
+        <BR/>- Race
+        <BR/>- Religion
+        <BR/>-  Sex
+        <BR/>
+        <BR/>Examples of a public accommodation could include your local grocery stores and schools, to law offices and even dentists.
+        <BR/>
+        <BR/>The law also prohibits publishing, circulating, or displaying any material that communicates that any person is unwelcome on the basis of unlawful discrimination.
+        <BR/>
+        <BR/>If you were a victim of this type of discrimination, you should file a
+        <B>public accommodation complaint</B>.
+        <BR/>
+        <BR/>
+        <B>To learn about TITLE VI discrimination, press "Continue."</B>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="1e-About title VI in-depth">
+          <LABEL>Continue to Information About Title VI</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="1e-About title VI in-depth" TYPE="A2J" MAPX="11740" MAPY="11740" STEP="3">
+      <TEXT>
+        <P>
+          <B>Title VI </B>of the Civil Rights Act of 1964
+          <B>prohibits</B> discrimination based on
+          <B>race, color, or national origin</B> in programs or activities receiving money from the federal government. All federal agencies that provide grants of assistance (money to support businesses/other entities) are required to enforce Title VI. </P>
+        <P>For example, the U.S. Department of Education gives grants of financial assistance to schools and colleges and to certain other entities, including vocational rehabilitation programs.</P>
+        <P>
+          <B>Examples of discrimination</B> covered by Title VI include: </P>
+        <P>- Discriminatory Bullying or harassment</P>
+        <P>- School segregation</P>
+        <P>- Denial of language services to English learners</P>
+        <P>- Denial of equal rights to public education regardless of immigration/citizenship status</P>
+        <P>- Discriminatory assignment to special education services</P>
+        <P>- Intimidating, threatening, coercing, or discriminating against any individual for the purpose of interfering with any right or privilege otherwise secured by federal law</P>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="1f-Type of complaint round 2">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="1f-Type of complaint round 2" TYPE="A2J" MAPX="11620" MAPY="11620" STEP="3">
+      <TEXT>Now that you've heard a little more about each type of complaint, are you ready to select which type of complaint you need to file?
+        <BR/>
+        <BR/>If you would like to review the information again, use the "BACK" button located in the top left corner of this interview window.</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="1a-Housing, PA, or Title VI">
+          <LABEL>Yes</LABEL>
+          <NAME>type of complaint round 2 TF</NAME>
+          <VALUE>true</VALUE>
+        </BUTTON>
+        <BUTTON NEXT="1g-Contact Legal Aid or THRC">
+          <LABEL>I'm still not sure</LABEL>
+          <NAME>type of complaint round 2 TF</NAME>
+          <VALUE>false</VALUE>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="1g-Contact Legal Aid or THRC" TYPE="A2J" MAPX="11540" MAPY="11540" STEP="3">
+      <TEXT>If you are still unsure which type of complaint to file, you may want to speak with your local legal aid office or contact the Tennessee Human Rights Commission directly.  You can call them at 1-800-251-3589.
+        <BR/>
+        <BR/>If you explain your situation to an attorney at your local legal aid office, he/she can probably explain which type of complaint you need to file.  Otherwise, a representative for the Tennessee Human Rights Commission may also be able to assist you in figuring out which type of complaint you need to file.
+        <BR/>
+        <BR/>Unfortunately, however, if you do not know which type of complaint you need to file, you will not be able to complete the guided interview.
+        <BR/>
+        <BR/>If you have reached this page by mistake, press the "BACK" button in the top left corner of your screen to try again.
+        <BR/>
+        <BR/>If you are truly unsure of which type of complaint to file, press the "Exit Interview" button below this box and fill out the complaint once you have the necessary information.
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="FAIL">
+          <LABEL>Exit Interview</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="3b-Please return when you are ready to file" TYPE="A2J" MAPX="11450" MAPY="11450" STEP="2">
+      <TEXT>In that case, please return when you are ready to file.
+        <BR/>
+        <BR/>If you have reach this page by mistake, press the "BACK" button located in the top left corner of your screen.
+        <BR/>
+        <BR/>If you are truly not ready to file a complaint, press "Exit Interview" below.</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="FAIL">
+          <LABEL>Exit Interview</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="3a-Why not?" TYPE="A2J" MAPX="11500" MAPY="11500" STEP="2">
+      <TEXT>Do you need more information about each type of complaint?</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="1b-About each type of complaint">
+          <LABEL>Yes</LABEL>
+        </BUTTON>
+        <BUTTON NEXT="3b-Please return when you are ready to file">
+          <LABEL>No</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="1-Witness Name 1" TYPE="A2J" MAPX="21550" MAPY="21550" STEP="6" REPEATVAR="WitnessCount">
+      <TEXT>You will now be asked to fill in certain contact information for your witnesses. Please fill out this information as completely and correctly as possible so that the Human Rights Commission can contact you after processing your complaint. What is your witness's name?</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2-Witness Address 1">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="true">
+          <LABEL>First:</LABEL>
+          <NAME>Witness first name TE</NAME>
+          <INVALIDPROMPT>You must enter a valid name to continue.</INVALIDPROMPT>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="true">
+          <LABEL>Last:</LABEL>
+          <NAME>Witness last name TE</NAME>
+          <INVALIDPROMPT>You must enter a valid name to continue.</INVALIDPROMPT>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2-Witness Address 1" TYPE="A2J" MAPX="21140" MAPY="21140" STEP="6" REPEATVAR="WitnessCount">
+      <TEXT>What is the address of your witness?</TEXT>
+      <LEARN>Why do you need an address?</LEARN>
+      <HELP>We need an address in order to contact your witness about your complaint.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2-Witness Phone">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Street address:</LABEL>
+          <NAME>Witness address TE</NAME>
+          <INVALIDPROMPT>You must disclose your address in order to process the complaint.</INVALIDPROMPT>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Apartment Number (If needed)</LABEL>
+          <NAME>Witness apt number TE</NAME>
+          <INVALIDPROMPT>You must disclose your full address in order to process the complaint.</INVALIDPROMPT>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="true">
+          <LABEL>City</LABEL>
+          <NAME>Witness address city TE</NAME>
+          <INVALIDPROMPT>You must disclose your full address, including city, in order to process your complaint.</INVALIDPROMPT>
+        </FIELD>
+        <FIELD TYPE="textpick" REQUIRED="true">
+          <LISTSRC>US_states.xml</LISTSRC>
+          <LABEL>State:</LABEL>
+          <NAME>Witness address state TE</NAME>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false" MAXCHARS="5">
+          <LABEL>Zip Code:</LABEL>
+          <NAME>Witness address zip TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Witness Phone 1" TYPE="A2J" MAPX="21090" MAPY="21090" STEP="6" REPEATVAR="WitnessCount">
+      <TEXT>What is your witness's phone number?</TEXT>
+      <LEARN>Why do you need this information?</LEARN>
+      <HELP>The Commission may need to speak with one of your witnesses regarding your claim. </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="4-Witness Last Question">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="false" MAXCHARS="3">
+          <LABEL>Area code:</LABEL>
+          <NAME>Witness phone area code TE</NAME>
+          <SAMPLE>xxx</SAMPLE>
+          <INVALIDPROMPT>You must enter an area code.</INVALIDPROMPT>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false" MAXCHARS="8">
+          <LABEL>Number:</LABEL>
+          <NAME>Witness phone number TE</NAME>
+          <INVALIDPROMPT>You must include a dash after the first three numbers and before the last four numbers.</INVALIDPROMPT>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="1-Witness Intro" TYPE="A2J" MAPX="10840" MAPY="10840" STEP="6">
+      <TEXT>Do you have any witnesses?</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="1-Witness Name 1" REPEATVAR="WitnessCount" REPEATVARSET="=1">
+          <LABEL>Yes</LABEL>
+        </BUTTON>
+        <BUTTON NEXT="New page 4 2 2">
+          <LABEL>No</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="4-Witness Last Question" TYPE="A2J" MAPX="10720" MAPY="10720" STEP="6" REPEATVAR="WitnessCount">
+      <TEXT>Do you have any more witnesses?</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="1-Witness Name 1" REPEATVAR="WitnessCount" REPEATVARSET="+=1">
+          <LABEL>Yes</LABEL>
+        </BUTTON>
+        <BUTTON NEXT="New page 4 2 2">
+          <LABEL>No</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="2hh-Housing: Person discriminated 2" TYPE="A2J" MAPX="10320" MAPY="10320" STEP="3">
+      <TEXT>What is the name of the business? </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2hhhh-Housing: Address 1">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="true">
+          <LABEL>Business Name:</LABEL>
+          <NAME>Respondent entity TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-19" TYPE="A2J" MAPX="16510" MAPY="16510" STEP="3">
+      <TEXT>What is the address of the business that discriminated against you?</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-20">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Street</LABEL>
+          <NAME>Respondent address TE</NAME>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>City</LABEL>
+          <NAME>Respondent city TE</NAME>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>County</LABEL>
+          <NAME>Respondent county TE</NAME>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>State</LABEL>
+          <NAME>Respondent state TE</NAME>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Zip code</LABEL>
+          <NAME>Respondent zip TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Public Accommodation-20" TYPE="A2J" MAPX="15690" MAPY="15690" STEP="3">
+      <TEXT>What is the phone number of the business that discriminated against you?</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="1- Narrative">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="numberphone" REQUIRED="false" MAXCHARS="16">
+          <LABEL>Phone number</LABEL>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="4m-Title VI: Respondent Info" TYPE="A2J" MAPX="9710" MAPY="9710" STEP="3">
+      <TEXT>What is the name of the state agency that discriminated against you?</TEXT>
+      <LEARN>Not sure what a state agency is?</LEARN>
+      <HELP>
+        <P>An example of a state agency is The Department of Corrections. </P>
+        <P>
+          <BR/>
+        </P>
+        <P>The discrimination does not have to come from the agency directly. </P>
+        <P>
+          <BR/>
+        </P>
+        <P>The discrimination could also come from an organization that received funding from a state agency. You can tell us about that organization instead if you are not sure which agency funded the organization. If you are unsure, you may skip the question.</P>
+      </HELP>
+      <BUTTONS>
+        <BUTTON NEXT="1-Name" />
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>
+            <BR/>
+          </LABEL>
+          <NAME>Respondent entity TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="Employment Complaint" TYPE="Popup" MAPX="null" MAPY="0" STEP="0">
+      <TEXT>You may not file an employment complaint
+        <B>using this interview </B>at this time.
+        <BR/>
+        <BR/>If you need to file an employment complaint, please contact the Tennessee Human Rights Commission directly at (615) 741-5825 or toll-free at 1-800-251-3589.You may also access the online complaint form
+        <A href="https://www.tn.gov/assets/entities/humanrights/attachments/FillableComplaintFormEnglishRevised2013NewAddress.pdf">here</A>.
+        <BR/>
+        <BR/>
+      </TEXT>
+    </PAGE>
+    <PAGE NAME="1h-General Disclaimer About Bases of Discrim for Housing" TYPE="A2J" MAPX="8590" MAPY="8590" STEP="3">
+      <TEXT>Before you begin your complaint, however, it is
+        <B>CRITICAL</B> for you to understand that you
+        <B>MUST</B> select
+        <B> AT LEAST ONE</B> basis of discrimination.
+        <BR/>
+        <BR/>If you do not select a basis of discrimination, your complaint cannot be filed.  Even if you complete the interview and follow the instructions for filing a complaint, the Tennessee Human Rights Commission
+        <B>WILL NOT</B> accept your complaint if you have not selected a basis for discrimination.
+        <BR/>
+        <BR/>Furthermore, it is rare that you will have a cause of action for
+        <B>EVERY</B> type of discrimination.  Please read the "Learn More" prompts and think very carefully about the bases of discrimination which you select.
+        <BR/>
+        <BR/>Selecting all of the bases may delay the process of filing and taking action to resolve your complaint.
+        <BR/>
+        <BR/>Please keep this in mind as you progress through the bases of discrimination.  Thank you.
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2a-Housing: Basis of Discrim Race">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="1i-General Disclaimer About Bases of Discrim for PA" TYPE="A2J" MAPX="8140" MAPY="8140" STEP="3">
+      <TEXT>Before you answer the basis of discrimination questions, it is
+        <B>CRITICAL</B> for you to understand that you
+        <B>MUST</B> select
+        <B> AT LEAST ONE</B> basis of discrimination.
+        <BR/>
+        <BR/>If you do not select a basis of discrimination, your complaint cannot be filed.  Even if you complete the interview and follow the instructions for filing a complaint, the Tennessee Human Rights Commission
+        <B>WILL NOT</B> accept your complaint if you have not selected a basis for discrimination.
+        <BR/>
+        <BR/>Furthermore, it is incredibly rare that you will have a cause of action for
+        <B>EVERY</B> type of discrimination.  Please read the "Learn More" prompts and think very carefully about the bases of discrimination which you select.
+        <BR/>
+        <BR/>Selecting all of the bases may delay the process of filing and taking action to resolve your complaint.
+        <BR/>
+        <BR/>Please keep this in mind as you progress through the bases of discrimination.  Thank you.</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="3-Public Accommodation-4">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="1j-General Disclaimer About Bases of Discrim for Title VI" TYPE="A2J" MAPX="8100" MAPY="8100" STEP="3">
+      <TEXT>Thank you, %%[Client first name TE]%%!
+        <BR/>
+        <BR/>Before you begin your complaint, however, it is
+        <B>CRITICAL</B> for you to understand that you
+        <B>MUST</B> select
+        <B> AT LEAST ONE</B> basis of discrimination.
+        <BR/>
+        <BR/>If you do not select a basis of discrimination, your complaint cannot be filed.  Even if you complete the interview and follow the instructions for filing a complaint, the Tennessee Human Rights Commission
+        <B>WILL NOT</B> accept your complaint if you have not selected a basis for discrimination.
+        <BR/>
+        <BR/>Furthermore, it is rare that you will have a cause of action for
+        <B>EVERY</B> type of discrimination.  Please read the "Learn More" prompts and think very carefully about the bases of discrimination which you select.
+        <BR/>
+        <BR/>Selecting all of the bases may delay the process of filing and taking action to resolve your complaint.
+        <BR/>
+        <BR/>Please keep this in mind as you progress through the bases of discrimination.  Thank you.</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="4-Title VI: Basis of Discrimination 1: Race">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="2a-Housing: Basis of Discrim Race 2" TYPE="A2J" MAPX="7890" MAPY="7890" STEP="3">
+      <TEXT>Please provide your race:
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2b-Housing: Basis of Discrim Color">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="true">
+          <LABEL>Race:</LABEL>
+          <NAME>Race discrimination TE</NAME>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="2b-Housing: Basis of Discrim Color 2" TYPE="A2J" MAPX="7800" MAPY="7800" STEP="3">
+      <TEXT>Please state your color:</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2c-Housing: Basis of Discrim National Origin">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="true">
+          <LABEL>Color:</LABEL>
+          <NAME>Color discrimination TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2c-Housing: Basis of Discrim National Origin 2" TYPE="A2J" MAPX="7780" MAPY="7780" STEP="3">
+      <TEXT>Please state your national origin.
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2d-Housing: Basis of Discrim Disability">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>National Origin:</LABEL>
+          <NAME>National origin discrimination TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2d-Housing: Basis of Discrim Disability 2" TYPE="A2J" MAPX="7720" MAPY="7720" STEP="3">
+      <TEXT>Please state your disability</TEXT>
+      <LEARN>Do you have more than one disability?</LEARN>
+      <HELP>Just list the disability which you believe led to the discrimination.  If you believe it was all of your disabilities, please just list the most prominent disability that you suffer from.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="2e-Housing: Basis of Discrim Sex">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="true" MAXCHARS="25">
+          <NAME>Disability discrimination TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2e-Housing: Basis of Discrim Sex 2" TYPE="A2J" MAPX="7710" MAPY="7710" STEP="3">
+      <TEXT>What is your sex/gender?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2f-Housing: Basis of Discrim Religion">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Male</LABEL>
+          <NAME>Basis of discrimination sex gender male female TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Female</LABEL>
+          <NAME>Basis of discrimination sex gender male female TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2f-Housing: Basis of Discrim Religion 2" TYPE="A2J" MAPX="7680" MAPY="7680" STEP="3">
+      <BUTTONS>
+        <BUTTON NEXT="2gg-Housing: Basis of Discrim Familial Status">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="true">
+          <LABEL>Your Religion:
+            <BR/>
+          </LABEL>
+          <NAME>Religion discrimination TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2g-Housing: Basis of Discrim Creed 2" TYPE="A2J" MAPX="7670" MAPY="7670" STEP="3">
+      <TEXT>What is your creed?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2gg-Housing: Basis of Discrim Familial Status">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Creed:</LABEL>
+          <NAME>Creed discrimination TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2ggggggg-Housing: Basis of Discrim Retaliation 2 2 2 2 2" TYPE="A2J" MAPX="7630" MAPY="7630" STEP="3">
+      <TEXT>What type of retaliation was it?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2h-Housing: Who discriminated against you?">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="true" MAXCHARS="35">
+          <LABEL>Other:</LABEL>
+          <NAME>Other type of retaliation TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2iiiiiiiiiiiii-Housing: actions taken agaisnt 4 2 2 2 2 2 2 2 2" TYPE="A2J" MAPX="7600" MAPY="7600" STEP="3">
+      <BUTTONS>
+        <BUTTON NEXT="2j-Housing: When did the discrimination happen">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="true">
+          <LABEL>Please specify:</LABEL>
+          <NAME>Other actions against you TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2hhhhhh-Housing: Type of property involved 2" TYPE="A2J" MAPX="7460" MAPY="7460" STEP="3">
+      <TEXT>What type of property was it?</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2hhhhhhh-Housing: Property Address">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="true">
+          <NAME>Other property type TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2-Language 2" TYPE="A2J" MAPX="7420" MAPY="7420" STEP="0">
+      <TEXT>What language do you speak?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="3-Next Instructions">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Spanish</LABEL>
+          <NAME>what language do you speak</NAME>
+          <VALUE>Spanish</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Chinese</LABEL>
+          <NAME>what language do you speak</NAME>
+          <VALUE>Chinese</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>French</LABEL>
+          <NAME>what language do you speak</NAME>
+          <VALUE>French</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>German</LABEL>
+          <NAME>what language do you speak</NAME>
+          <VALUE>German</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [what language do you speak]="Spanish"
+        <BR/>GOTO "Call Spanish Toll-Free Number"
+        <BR/>END IF
+        <BR/>IF [what language do you speak]="Chinese"
+        <BR/>
+        <BR/>GOTO "Speaks Chinese"
+        <BR/>END IF
+        <BR/>IF [what language do you speak]="German"
+        <BR/>GOTO "Speaks German"
+        <BR/>END IF
+        <BR/>IF [what language do you speak]="French"
+        <BR/>GOTO "Speaks French"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+    <PAGE NAME="Speaks Chinese" TYPE="Popup" MAPX="null" MAPY="0" STEP="0">
+      <TEXT>我很抱歉，目前还没有一个中国的投诉表格，也没有任何人与谁讲中国的佣金。
+        <BR/>
+        <BR/>您可以尝试直接在（615） 741-5825，或免费电话 1-800-251-3589 联系人权委员会。</TEXT>
+    </PAGE>
+    <PAGE NAME="Speaks German" TYPE="Popup" MAPX="null" MAPY="0" STEP="0">
+      <TEXT>Bitte enschuldigen Sie, dass im Moment keine deutschen Versionen des Online-Interviews oder des Beschwärdeformulars zur Verfügung stehen. Bitte kontaktieren Sie, The Tennessee Human Rights Commission, direkt über (615) 741-5825 oder gebührenfrei über 1-800-251-3589 um mit einem Vertreter, über ihr Anliegen, zu sprechen. Vielen Dank.</TEXT>
+    </PAGE>
+    <PAGE NAME="Speaks French" TYPE="Popup" MAPX="null" MAPY="0" STEP="0">
+      <TEXT>Je suis désolé. Ni entretiens ni formulaires de plaintes sont actuellement disponibles en français.
+        <BR/>
+        <BR/>Pour plus d'informations et d'aides afin de déposer une plainte, veuillez contacter la commission nationale consultative des droits de l'homme directement au (615) 741-5825 ou gratuitement au 1-800-251-3589.
+        <BR/>
+      </TEXT>
+    </PAGE>
+    <PAGE NAME="Respondent Type--Must Respond" TYPE="Popup" MAPX="null" MAPY="0" STEP="0">
+      <TEXT>You must select at least one respondent type.  Please press the "BACK" button at the top left corner of your screen to make a selection.</TEXT>
+    </PAGE>
+    <PAGE NAME="2hhhhh-Housing: Type of person or business OTHER" TYPE="A2J" MAPX="5160" MAPY="5160" STEP="3">
+      <TEXT>Because you selected "Other," what was the title of the "other" person who discriminated against you?
+        <BR/>
+        <BR/>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2hhhhhh-Housing: Type of property involved">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Other:</LABEL>
+          <NAME>Resonpondent info other specify TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2hhhhh-Housing: Type of person or business - Popup" TYPE="Popup" MAPX="null" MAPY="0" STEP="0">
+      <TEXT>My popup text</TEXT>
+    </PAGE>
+    <PAGE NAME="2-Witness Phone" TYPE="A2J" MAPX="640" MAPY="640" STEP="6">
+      <TEXT>Do your witness have a phone (home or cell)?
+        <BR/>If you do not know, please select no.</TEXT>
+      <BUTTONS>
+        <BUTTON>
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>Yes</LABEL>
+          <NAME>Witness phone TF</NAME>
+          <VALUE>true</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="true">
+          <LABEL>No</LABEL>
+          <NAME>Witness phone TF</NAME>
+          <VALUE>false</VALUE>
+        </FIELD>
+      </FIELDS>
+      <CODEAFTER>IF [witness phone TF]=true
+        <BR/>GOTO "3-Witness Phone 1"
+        <BR/>END IF
+        <BR/>IF [witness phone TF]=false
+        <BR/>GOTO "4-Witness Last Question"
+        <BR/>END IF</CODEAFTER>
+    </PAGE>
+  </PAGES>
+  <STEPS>
+    <STEP NUMBER="0">
+      <TEXT>INTRODUCTION</TEXT>
+    </STEP>
+    <STEP NUMBER="1">
+      <TEXT>DISCLAIMER</TEXT>
+    </STEP>
+    <STEP NUMBER="2">
+      <TEXT>ARE YOU READY TO FILE</TEXT>
+    </STEP>
+    <STEP NUMBER="3">
+      <TEXT>TYPE OF COMPLAINT</TEXT>
+    </STEP>
+    <STEP NUMBER="4">
+      <TEXT>CONTACT INFORMATION</TEXT>
+    </STEP>
+    <STEP NUMBER="5">
+      <TEXT>NARRATIVE</TEXT>
+    </STEP>
+    <STEP NUMBER="6">
+      <TEXT>WITNESSES</TEXT>
+    </STEP>
+    <STEP NUMBER="7">
+      <TEXT>WHAT WILL HAPPEN NEXT</TEXT>
+    </STEP>
+    <STEP NUMBER="8">
+      <TEXT>IMPORTANT NOTICE</TEXT>
+    </STEP>
+  </STEPS>
+  <VARIABLES>
+    <VARIABLE NAME="User Gender" TYPE="Text" COMMENT="User's gender will be used to display appopriate avatar." />
+    <VARIABLE NAME="User Avatar" TYPE="Text" />
+    <VARIABLE NAME="Client first name TE" TYPE="Text" />
+    <VARIABLE NAME="Client middle name TE" TYPE="Text" />
+    <VARIABLE NAME="Client last name TE" TYPE="Text" />
+    <VARIABLE NAME="A2J Version" TYPE="Text" COMMENT="A2J Author Version" />
+    <VARIABLE NAME="A2J Interview ID" TYPE="Text" COMMENT="Guide ID" />
+    <VARIABLE NAME="A2J Bookmark" TYPE="Text" COMMENT="Current Page" />
+    <VARIABLE NAME="A2J History" TYPE="Text" COMMENT="Progress History List (XML)" />
+    <VARIABLE NAME="A2J Navigation TF" TYPE="TF" COMMENT="Allow navigation?" />
+    <VARIABLE NAME="A2J Interview Incomplete TF" TYPE="TF" COMMENT="Reached Successful Exit?" />
+    <VARIABLE NAME="A2J Step 0" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 1" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 2" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 3" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 4" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 5" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 6" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 7" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 8" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 9" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 10" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 11" TYPE="Text" />
+    <VARIABLE NAME="Client address TE" TYPE="Text" />
+    <VARIABLE NAME="Client apartment number TE" TYPE="Text" />
+    <VARIABLE NAME="Client area code TE" TYPE="Text" />
+    <VARIABLE NAME="Client cell area code TE" TYPE="Text" />
+    <VARIABLE NAME="Client cell number TE" TYPE="Text" />
+    <VARIABLE NAME="Client city TE" TYPE="Text" />
+    <VARIABLE NAME="Client county TE" TYPE="Text" />
+    <VARIABLE NAME="Client email TE" TYPE="Text" />
+    <VARIABLE NAME="Client learn other TE" TYPE="Text" />
+    <VARIABLE NAME="Client name TE" TYPE="Text" />
+    <VARIABLE NAME="Client other origin specify TE" TYPE="Text" />
+    <VARIABLE NAME="Client phone number TE" TYPE="Text" />
+    <VARIABLE NAME="Client race specify TE" TYPE="Text" />
+    <VARIABLE NAME="Client state TE" TYPE="Text" />
+    <VARIABLE NAME="Client zip TE" TYPE="Text" />
+    <VARIABLE NAME="Color discrimination TE" TYPE="Text" />
+    <VARIABLE NAME="Color pa basis TE" TYPE="Text" />
+    <VARIABLE NAME="Color title basis TE" TYPE="Text" />
+    <VARIABLE NAME="Contact address TE" TYPE="Text" />
+    <VARIABLE NAME="Contact area code TE" TYPE="Text" />
+    <VARIABLE NAME="Contact cell area code TE" TYPE="Text" />
+    <VARIABLE NAME="Contact cell number TE" TYPE="Text" />
+    <VARIABLE NAME="Contact city TE" TYPE="Text" />
+    <VARIABLE NAME="Contact name TE" TYPE="Text" />
+    <VARIABLE NAME="Contact phone number TE" TYPE="Text" />
+    <VARIABLE NAME="Contact state TE" TYPE="Text" />
+    <VARIABLE NAME="Contact zip TE" TYPE="Text" />
+    <VARIABLE NAME="Creed discrimination TE" TYPE="Text" />
+    <VARIABLE NAME="Creed pa basis TE" TYPE="Text" />
+    <VARIABLE NAME="Disability discrimination TE" TYPE="Text" />
+    <VARIABLE NAME="Employ actions other TE" TYPE="Text" />
+    <VARIABLE NAME="Employ basis of discrim color TE" TYPE="Text" />
+    <VARIABLE NAME="Employ basis of discrim creed TE" TYPE="Text" />
+    <VARIABLE NAME="Employ basis of discrim disability TE" TYPE="Text" />
+    <VARIABLE NAME="Employ basis of discrim national origin TE" TYPE="Text" />
+    <VARIABLE NAME="Employ basis of discrim race TE" TYPE="Text" />
+    <VARIABLE NAME="Employ basis of discrim religion TE" TYPE="Text" />
+    <VARIABLE NAME="Employ retaliation bc other TE" TYPE="Text" />
+    <VARIABLE NAME="Employment hr or personnel director TE" TYPE="Text" />
+    <VARIABLE NAME="Employment title at termination TE" TYPE="Text" />
+    <VARIABLE NAME="Employment title when hired TE" TYPE="Text" />
+    <VARIABLE NAME="Gave testimony pa basis TF" TYPE="Text" />
+    <VARIABLE NAME="National origin discrimination TE" TYPE="Text" />
+    <VARIABLE NAME="National origin pa basis TE" TYPE="Text" />
+    <VARIABLE NAME="National origin title basis TE" TYPE="Text" />
+    <VARIABLE NAME="Other actions against you TE" TYPE="Text" />
+    <VARIABLE NAME="Other property type TE" TYPE="Text" />
+    <VARIABLE NAME="Other reason pa basis TE" TYPE="Text" />
+    <VARIABLE NAME="Other title actions TE" TYPE="Text" />
+    <VARIABLE NAME="Other title retaliation TE" TYPE="Text" />
+    <VARIABLE NAME="Other type of retaliation TE" TYPE="Text" />
+    <VARIABLE NAME="Property address city TE" TYPE="Text" />
+    <VARIABLE NAME="Property address county TE" TYPE="Text" />
+    <VARIABLE NAME="Property address state TE" TYPE="Text" />
+    <VARIABLE NAME="Property address street TE" TYPE="Text" />
+    <VARIABLE NAME="Race discrimination TE" TYPE="Text" />
+    <VARIABLE NAME="Race pa basis TE" TYPE="Text" />
+    <VARIABLE NAME="Race title basis TE" TYPE="Text" />
+    <VARIABLE NAME="Religion discrimination TE" TYPE="Text" />
+    <VARIABLE NAME="Religion pa basis TE" TYPE="Text" />
+    <VARIABLE NAME="Resonpondent info other specify TE" TYPE="Text" />
+    <VARIABLE NAME="Respondent address TE" TYPE="Text" />
+    <VARIABLE NAME="Respondent area code TE" TYPE="Text" />
+    <VARIABLE NAME="Respondent city TE" TYPE="Text" />
+    <VARIABLE NAME="Respondent county TE" TYPE="Text" />
+    <VARIABLE NAME="Respondent entity TE" TYPE="Text" />
+    <VARIABLE NAME="Respondent name of supervisor TE" TYPE="Text" />
+    <VARIABLE NAME="Respondent phone TE" TYPE="Text" />
+    <VARIABLE NAME="Respondent state TE" TYPE="Text" />
+    <VARIABLE NAME="Respondent type of business TE" TYPE="Text" />
+    <VARIABLE NAME="Respondent zip TE" TYPE="Text" />
+    <VARIABLE NAME="Retaliation title basis TE" TYPE="Text" />
+    <VARIABLE NAME="See Addendum" TYPE="Text" />
+    <VARIABLE NAME="See addendum TE" TYPE="Text" />
+    <VARIABLE NAME="What happened TE" TYPE="Text" />
+    <VARIABLE NAME="Witness address TE" TYPE="Text" REPEATING="true" />
+    <VARIABLE NAME="Witness address city TE" TYPE="Text" REPEATING="true" />
+    <VARIABLE NAME="Witness address state TE" TYPE="Text" REPEATING="true" />
+    <VARIABLE NAME="Witness address zip TE" TYPE="Text" REPEATING="true" />
+    <VARIABLE NAME="Witness apt number TE" TYPE="Text" REPEATING="true" />
+    <VARIABLE NAME="Witness area code TE" TYPE="Text" REPEATING="true" />
+    <VARIABLE NAME="Witness first name TE" TYPE="Text" REPEATING="true" />
+    <VARIABLE NAME="Witness last name TE" TYPE="Text" REPEATING="true" />
+    <VARIABLE NAME="Witness phone area code TE" TYPE="Text" REPEATING="true" />
+    <VARIABLE NAME="Witness phone number TE" TYPE="Text" REPEATING="true" />
+    <VARIABLE NAME="Age pa basis NU" TYPE="Number" />
+    <VARIABLE NAME="Employ basis of discrim age NU" TYPE="Number" />
+    <VARIABLE NAME="Employment number employed NU" TYPE="Number" />
+    <VARIABLE NAME="Employment pay rate or salary NU" TYPE="Number" />
+    <VARIABLE NAME="Beginning date DA" TYPE="Date" />
+    <VARIABLE NAME="Client dob DA" TYPE="Date" />
+    <VARIABLE NAME="Employment began DA" TYPE="Date" />
+    <VARIABLE NAME="Employment ended DA" TYPE="Date" />
+    <VARIABLE NAME="Most recent date DA" TYPE="Date" />
+    <VARIABLE NAME="Actions against you refusal TF" TYPE="TF" />
+    <VARIABLE NAME="Age pa basis TF" TYPE="TF" />
+    <VARIABLE NAME="Basis of discrimination color TF" TYPE="TF" />
+    <VARIABLE NAME="Basis of discrimination creed TF" TYPE="TF" />
+    <VARIABLE NAME="Basis of discrimination disability TF" TYPE="TF" />
+    <VARIABLE NAME="Basis of discrimination familial status TF" TYPE="TF" />
+    <VARIABLE NAME="Basis of discrimination national origin TF" TYPE="TF" />
+    <VARIABLE NAME="Basis of discrimination race TF" TYPE="TF" />
+    <VARIABLE NAME="Basis of discrimination religion TF" TYPE="TF" />
+    <VARIABLE NAME="Basis of discrimination retaliation TF" TYPE="TF" />
+    <VARIABLE NAME="Basis of discrimination sex gender male female TF" TYPE="TF" />
+    <VARIABLE NAME="Basis of discrimination sex or gender TF" TYPE="TF" />
+    <VARIABLE NAME="Client hispanic TF" TYPE="TF" />
+    <VARIABLE NAME="Color pa basis TF" TYPE="TF" />
+    <VARIABLE NAME="Color title basis TF" TYPE="TF" />
+    <VARIABLE NAME="Creed pa basis TF" TYPE="TF" />
+    <VARIABLE NAME="Denied membership title TF" TYPE="TF" />
+    <VARIABLE NAME="Denied program title TF" TYPE="TF" />
+    <VARIABLE NAME="Different terms TF" TYPE="TF" />
+    <VARIABLE NAME="Different treatment title TF" TYPE="TF" />
+    <VARIABLE NAME="Discrimination ongoing TF" TYPE="TF" />
+    <VARIABLE NAME="Discriminatory advertising TF" TYPE="TF" />
+    <VARIABLE NAME="Discriminatory real estate service TF" TYPE="TF" />
+    <VARIABLE NAME="Employ actions demoted TF" TYPE="TF" />
+    <VARIABLE NAME="Employ actions denied benefits TF" TYPE="TF" />
+    <VARIABLE NAME="Employ actions denied disability acc TF" TYPE="TF" />
+    <VARIABLE NAME="Employ actions denied raise TF" TYPE="TF" />
+    <VARIABLE NAME="Employ actions denied religious acc TF" TYPE="TF" />
+    <VARIABLE NAME="Employ actions discharged TF" TYPE="TF" />
+    <VARIABLE NAME="Employ actions harassed or intimidated TF" TYPE="TF" />
+    <VARIABLE NAME="Employ actions laid off TF" TYPE="TF" />
+    <VARIABLE NAME="Employ actions not hired TF" TYPE="TF" />
+    <VARIABLE NAME="Employ actions not promoted TF" TYPE="TF" />
+    <VARIABLE NAME="Employ actions not recalled TF" TYPE="TF" />
+    <VARIABLE NAME="Employ actions other TF" TYPE="TF" />
+    <VARIABLE NAME="Employ actions retaliated against TF" TYPE="TF" />
+    <VARIABLE NAME="Employ actions suspended TF" TYPE="TF" />
+    <VARIABLE NAME="Employ actions transferred TF" TYPE="TF" />
+    <VARIABLE NAME="Employ basis of discrim age TF" TYPE="TF" />
+    <VARIABLE NAME="Employ basis of discrim color TF" TYPE="TF" />
+    <VARIABLE NAME="Employ basis of discrim creed TF" TYPE="TF" />
+    <VARIABLE NAME="Employ basis of discrim disability TF" TYPE="TF" />
+    <VARIABLE NAME="Employ basis of discrim national origin TF" TYPE="TF" />
+    <VARIABLE NAME="Employ basis of discrim race TF" TYPE="TF" />
+    <VARIABLE NAME="Employ basis of discrim religion TF" TYPE="TF" />
+    <VARIABLE NAME="Employ basis of discrim retaliation TF" TYPE="TF" />
+    <VARIABLE NAME="Employ basis of discrim sex m or f TF" TYPE="TF" />
+    <VARIABLE NAME="Employ basis of discrim sex or gender TF" TYPE="TF" />
+    <VARIABLE NAME="Employ retaliation bc filed complaint TF" TYPE="TF" />
+    <VARIABLE NAME="Employ retaliation bc gave testimony TF" TYPE="TF" />
+    <VARIABLE NAME="Employ retaliation bc opposed discrim TF" TYPE="TF" />
+    <VARIABLE NAME="Employ retaliation bc other TF" TYPE="TF" />
+    <VARIABLE NAME="Employment filed with eeoc TF" TYPE="TF" />
+    <VARIABLE NAME="Falsely denied TF" TYPE="TF" />
+    <VARIABLE NAME="Female pa basis TF" TYPE="TF" />
+    <VARIABLE NAME="Field discrimination TF" TYPE="TF" />
+    <VARIABLE NAME="Filed a complaint title TF" TYPE="TF" />
+    <VARIABLE NAME="Financial discrimination TF" TYPE="TF" />
+    <VARIABLE NAME="For sale or rent TF" TYPE="TF" />
+    <VARIABLE NAME="Gave testimony investigation pa basis TF" TYPE="TF" />
+    <VARIABLE NAME="Gave testimony title TF" TYPE="TF" />
+    <VARIABLE NAME="Intimidated interfered coerced TF" TYPE="TF" />
+    <VARIABLE NAME="Male pa basis TF" TYPE="TF" />
+    <VARIABLE NAME="National origin pa basis TF" TYPE="TF" />
+    <VARIABLE NAME="National origin title basis TF" TYPE="TF" />
+    <VARIABLE NAME="Opposed discrim title TF" TYPE="TF" />
+    <VARIABLE NAME="Opposed objected pa basis TF" TYPE="TF" />
+    <VARIABLE NAME="Other actions against you TF" TYPE="TF" />
+    <VARIABLE NAME="Other reason pa basis TF" TYPE="TF" />
+    <VARIABLE NAME="Other retaliation title TF" TYPE="TF" />
+    <VARIABLE NAME="Other title actions TF" TYPE="TF" />
+    <VARIABLE NAME="Owner live there TF" TYPE="TF" />
+    <VARIABLE NAME="Race pa basis TF" TYPE="TF" />
+    <VARIABLE NAME="Race title basis TF" TYPE="TF" />
+    <VARIABLE NAME="Refusal to modify or accommodate TF" TYPE="TF" />
+    <VARIABLE NAME="Refusal to sell or rent TF" TYPE="TF" />
+    <VARIABLE NAME="Religion pa basis TF" TYPE="TF" />
+    <VARIABLE NAME="Respondent info owner TF" TYPE="TF" />
+    <VARIABLE NAME="Respondent info bank or other lender TF" TYPE="TF" />
+    <VARIABLE NAME="Respondent info broker TF" TYPE="TF" />
+    <VARIABLE NAME="Respondent info brokers TF" TYPE="TF" />
+    <VARIABLE NAME="Respondent info builder TF" TYPE="TF" />
+    <VARIABLE NAME="Respondent info builders TF" TYPE="TF" />
+    <VARIABLE NAME="Respondent info manager TF" TYPE="TF" />
+    <VARIABLE NAME="Respondent info other TF" TYPE="TF" />
+    <VARIABLE NAME="Respondent info salesperson TF" TYPE="TF" />
+    <VARIABLE NAME="Retaliated against TF" TYPE="TF" />
+    <VARIABLE NAME="Retaliated against title TF" TYPE="TF" />
+    <VARIABLE NAME="Retaliation pa basis TF" TYPE="TF" />
+    <VARIABLE NAME="Retaliation title basis TF" TYPE="TF" />
+    <VARIABLE NAME="Segregation title TF" TYPE="TF" />
+    <VARIABLE NAME="Sex gender pa TF" TYPE="TF" />
+    <VARIABLE NAME="Type of retaliation complaint TF" TYPE="TF" />
+    <VARIABLE NAME="Type of retaliation opposed TF" TYPE="TF" />
+    <VARIABLE NAME="Type of retaliation other TF" TYPE="TF" />
+    <VARIABLE NAME="Type of retaliation testimony TF" TYPE="TF" />
+    <VARIABLE NAME="Client learn how MC" TYPE="MC" />
+    <VARIABLE NAME="Client race MC" TYPE="MC" />
+    <VARIABLE NAME="Property Type MC" TYPE="MC" />
+    <VARIABLE NAME="Type of Complaint MC" TYPE="MC" />
+    <VARIABLE NAME="Witness address state MC" TYPE="MC" REPEATING="true" />
+    <VARIABLE NAME="Witness filter" TYPE="TF" />
+    <VARIABLE NAME="Witness filter additional" TYPE="TF" />
+    <VARIABLE NAME="Client gender" TYPE="Text" />
+    <VARIABLE NAME="Disclaimer yes or no TF" TYPE="TF" />
+    <VARIABLE NAME="Do you have a cell phone" TYPE="TF" />
+    <VARIABLE NAME="Speak english" TYPE="TF" />
+    <VARIABLE NAME="Cell phone TF" TYPE="TF" />
+    <VARIABLE NAME="Speak english TF" TYPE="Text" />
+    <VARIABLE NAME="Have home phone" TYPE="TF" />
+    <VARIABLE NAME="Have home phone?" TYPE="Text" />
+    <VARIABLE NAME="Housing discrim person or business" TYPE="TF" />
+    <VARIABLE NAME="Email yes or no" TYPE="TF" />
+    <VARIABLE NAME="alternate contact first name" TYPE="Text" />
+    <VARIABLE NAME="alternate contact middle name" TYPE="Text" />
+    <VARIABLE NAME="alternate contact last name" TYPE="Text" />
+    <VARIABLE NAME="Victim of discrimination" TYPE="TF" />
+    <VARIABLE NAME="Know type of complaint y or n" TYPE="TF" />
+    <VARIABLE NAME="occur in TN" TYPE="TF" />
+    <VARIABLE NAME="PA" TYPE="Unknown" />
+    <VARIABLE NAME="Housing" TYPE="Unknown" />
+    <VARIABLE NAME="Title VI" TYPE="Unknown" />
+    <VARIABLE NAME="Pa Ongoing TF" TYPE="Text" />
+    <VARIABLE NAME="Race title basis MC" TYPE="Text" />
+    <VARIABLE NAME="Color title basis MC" TYPE="Text" />
+    <VARIABLE NAME="National origin title basis MC" TYPE="Text" />
+    <VARIABLE NAME="Denied program title MC" TYPE="Text" />
+    <VARIABLE NAME="Different treatment title MC" TYPE="Text" />
+    <VARIABLE NAME="Segregation title MC" TYPE="Text" />
+    <VARIABLE NAME="Pa discrim person or business" TYPE="Text" />
+    <VARIABLE NAME="Person pa discrim" TYPE="Text" />
+    <VARIABLE NAME="Business pa Dscrim" TYPE="Text" />
+    <VARIABLE NAME="About each complaint TF" TYPE="TF" />
+    <VARIABLE NAME="type of complaint round 2 TF" TYPE="TF" />
+    <VARIABLE NAME="WitnessCount" TYPE="Number" REPEATING="true" />
+    <VARIABLE NAME="Alternate contact" TYPE="TF" />
+    <VARIABLE NAME="Discrimination happened only once" TYPE="TF" />
+    <VARIABLE NAME="what language do you speak" TYPE="MC" />
+    <VARIABLE NAME="Respondent info NOA" TYPE="TF" />
+    <VARIABLE NAME="Witness phone TF" TYPE="TF" />
+    <VARIABLE TYPE="Text" />
+  </VARIABLES>
+</GUIDE>

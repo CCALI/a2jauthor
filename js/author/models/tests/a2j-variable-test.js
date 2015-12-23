@@ -4,6 +4,7 @@ import A2JVariable from '../a2j-variable';
 import 'steal-mocha';
 
 describe('A2JVariable Model', function() {
+
   it('findOne (variable found)', function() {
     let originalGuide = window.gGuide;
     window.gGuide = {};
@@ -51,7 +52,9 @@ describe('A2JVariable Model', function() {
       }
     });
 
-    assert.instanceOf(list, A2JVariable.List);
     assert.equal(list.attr('length'), 2);
+    assert.instanceOf(list, A2JVariable.List);
+    assert.include(list.attr('0.name'), 'Foo Bar');
   });
+
 });

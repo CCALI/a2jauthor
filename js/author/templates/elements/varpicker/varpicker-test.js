@@ -1,21 +1,30 @@
 import assert from 'assert';
 import List from 'can/list/';
 import VarPickerVM from './varpicker-vm';
-import A2JVariable from 'author/models/a2j-variable';
+import Variable from 'author/models/a2j-variable';
 
 import 'steal-mocha';
 
-const guideVars = {
-  'foo bar': {
-    name: 'Foo Bar',
+const variables = {
+  childcounter: {
+    name: 'ChildCounter',
+    type: 'Number',
     repeating: false,
-    values: [null]
+    values: [null, 3]
   },
 
-  'bar baz': {
-    name: 'Bar Baz',
+  'first name': {
+    name: 'First Name',
+    type: 'Text',
     repeating: false,
-    values: [null]
+    values: [null, 'John']
+  },
+
+  'child name': {
+    name: 'Child Name',
+    type: 'Text',
+    repeating: true,
+    values: [null, 'Bart', 'Lisa', 'Maggie']
   }
 };
 
@@ -26,22 +35,39 @@ describe('<var-picker>', function() {
 
     beforeEach(function() {
       vm = new VarPickerVM({
-        variables: guideVars
+        variables: Variable.fromGuideVars(variables)
       });
     });
 
-    it('converts guideVars to an A2JVariable list', function() {
-      let variables = vm.attr('variables');
-      assert.equal(variables.length, 2);
-      assert.instanceOf(variables, A2JVariable.List);
-    });
-
-    it('generates a list of variable names', function() {
+    it('variableNames - a list of variable names', function() {
       let names = vm.attr('variableNames');
 
       assert.instanceOf(names, List);
-      assert.include(names.attr(), 'Foo Bar');
-      assert.include(names.attr(), 'Bar Baz');
+      assert.include(names.attr(), 'Child Name');
+      assert.include(names.attr(), 'First Name');
+      assert.include(names.attr(), 'ChildCounter');
+    });
+
+    it('filterTypes - array of types from a comma separated string', function() {
+      vm.attr('filterTypes', 'number, Text');
+      assert.deepEqual(vm.attr('filterTypes'), ['number', 'text']);
+    });
+
+    it('variables - list of variables filtered properly', function() {
+      assert.deepEqual(vm.attr('filterTypes'), []);
+      assert.equal(vm.attr('filterOcurrence'), 'any', 'default value');
+
+      assert.equal(vm.attr('variables.length'), 3,
+        'no filters set so it should have all variables');
+
+      vm.attr('filterOcurrence', 'single');
+      assert.equal(vm.attr('variables.length'), 2,
+        'there are two non-repeating variables');
+
+      vm.attr('filterTypes', 'text');
+      assert.equal(vm.attr('variables.length'), 1,
+        'there is only one non-repeating variable that is text');
+      assert.equal(vm.attr('variables.0.name'), 'First Name');
     });
   });
 

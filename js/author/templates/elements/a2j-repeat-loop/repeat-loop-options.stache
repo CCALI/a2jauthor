@@ -1,6 +1,3 @@
-<can-import from="caja/author/templates/elements/options-pane/" />
-<can-import from="caja/author/templates/elements/a2j-repeat-loop/options/options.less!" />
-
 <element-options-pane title="Repeat Loop">
   <form>
     <div class="form-group">
@@ -10,17 +7,20 @@
 
     <label for="">Repeat each:</label>
     <div class="form-group row clearfix">
-      <div class="col-md-7">
+      <div class="col-md-6">
         <select class="form-control" {($value)}="loopType">
           <option value="counter">Number of times</option>
-          <option value="collection" disabled>For each variable</option>
+          <option value="variable">For each variable</option>
         </select>
       </div>
-      <div class="col-md-5">
+      <div class="col-md-6">
         {{#if useLoopCounter}}
           <input type="number" min="1" class="form-control" {($value)}="loopCounter">
         {{else}}
-          <input type="text" class="form-control" {($value)}="loopVariable">
+          <var-picker
+            filter-types="number"
+            {(selected)}="loopVariable"
+            {variables}="guide.variablesList" />
         {{/if}}
       </div>
     </div>

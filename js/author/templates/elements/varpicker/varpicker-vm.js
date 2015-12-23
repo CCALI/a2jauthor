@@ -1,8 +1,29 @@
 import Map from 'can/map/';
 import List from 'can/list/';
-import A2JVariable from 'author/models/a2j-variable';
+import _compact from 'lodash/array/compact';
+import _includes from 'lodash/collection/includes';
 
 import 'can/map/define/';
+
+const ocurrences = ['any', 'single', 'repeating'];
+
+const byRepeating = function(filter, variable) {
+  if (filter !== 'any') {
+    let repeating = filter === 'repeating';
+    return variable.attr('repeating') === repeating;
+  } else {
+    return true;
+  }
+};
+
+const byType = function(types, variable) {
+  if (types && types.length) {
+    let type = variable.attr('type') || '';
+    return _includes(types, type.toLowerCase());
+  } else {
+    return true;
+  }
+};
 
 /**
  * @property {can.Map} varPicker.ViewModel
@@ -23,16 +44,54 @@ export default Map.extend({
     },
 
     /**
+     * @property {String} varPicker.ViewModel.prototype.filterOcurrence filterOcurrence
+     * @parent varPicker.ViewModel
+     *
+     * The variables can be either `repeating` (multiple values) or just
+     * `single` value. This property filter the [variables] list by looking
+     * into the `repeating` property. If the value is `any`, the value of
+     * `repeating` is ignored by the filter, but if the value is `repeating`
+     * only those variables with `repeating` set to true will be in the list;
+     * finally if the value is `single`, only the non-repeating variables will
+     * be in the list.
+     */
+    filterOcurrence: {
+      value: 'any',
+      set(value) {
+        return _includes(ocurrences, value) ? value : 'any';
+      }
+    },
+
+    /**
+     * @property {Array} varPicker.ViewModel.prototype.filterTypes filterTypes
+     * @parent varPicker.ViewModel
+     *
+     * Array of variable types used to filter the [variable] list.
+     */
+    filterTypes: {
+      value: '',
+      set(value = '') {
+        return _compact(value.split(','))
+          .map(t => t.toLowerCase().trim());
+      }
+    },
+
+    /**
      * @property {A2JVariable.List} varPicker.ViewModel.prototype.variables variables
      * @parent varPicker.ViewModel
      *
-     * List of A2JVariable objects, since `window.gGuide` models the variables
-     * using a key/value format, this property takes that record (`gGuide.vars`)
-     * and generates an actual list of variables out of it.
+     * List of A2JVariable objects.
      */
     variables: {
-      set(vars) {
-        return A2JVariable.fromGuideVars(vars.attr());
+      get(list) {
+        let types = this.attr('filterTypes');
+        let ocurrence = this.attr('filterOcurrence');
+
+        if (list) {
+          return list
+            .filter(v => byType(types, v))
+            .filter(v => byRepeating(ocurrence, v));
+        }
       }
     },
 

@@ -1,10 +1,12 @@
 import _values from 'lodash/object/values';
-import template2112 from './templates/guide1261_template2112';
-import template2113 from './templates/guide1261_template2113';
+import template2112 from './templates/guide1261-template2112';
+import template2113 from './templates/guide1261-template2113';
+import template2114 from './templates/guide20-template2114';
 
 let fixtureTemplates = {
   2112: template2112,
-  2113: template2113
+  2113: template2113,
+  2114: template2114
 };
 
 let a2jTemplates = JSON.parse(localStorage.getItem('a2jTemplates'));
@@ -56,4 +58,4 @@ export default function(request, response) {
         response(_values(a2jTemplates));
       }
   }
-};
+}

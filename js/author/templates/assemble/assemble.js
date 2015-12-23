@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import Map from 'can/map/';
 import List from 'can/list/';
 import Component from 'can/component/';
@@ -128,10 +127,11 @@ export default Component.extend({
         let reader = new FileReader();
 
         reader.onload = function() {
-          let parsedXML = $.parseXML(reader.result);
-          let answers = parser.parseJSON(parsedXML, {});
+          let answers = parser.parseJSON(reader.result, {});
 
-          if (answers) vm.attr('interviewAnswers', answers);
+          if (answers) {
+            vm.attr('interviewAnswers', answers);
+          }
         };
 
         reader.readAsText(file);

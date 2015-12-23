@@ -1,5 +1,6 @@
+<can-import from="caja/author/templates/elements/varpicker/" />
+<can-import from="caja/author/templates/elements/options-pane/" />
 <can-import from="caja/author/templates/elements/element-container/" />
-<can-import from="caja/author/templates/elements/a2j-repeat-loop/options/" />
 <can-import from="caja/author/templates/elements/a2j-repeat-loop/a2j-repeat-loop.less!" />
 
 {{#if editEnabled}}
@@ -40,10 +41,7 @@
   </element-container>
 
   {{#if editActive}}
-    <a2j-repeat-loop-options
-      {(loop-counter)}="loopCounter"
-      {(table-columns)}="tableColumns"
-      {(use-loop-counter)}="useLoopCounter" />
+    {{> repeat-loop-options-tpl }}
   {{/if}}
 {{else}}
   <div>

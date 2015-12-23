@@ -13,6 +13,7 @@ export default Component.extend({
       index = index.isComputed ? index() : index;
 
       state.attr('nodeIndex', index);
+      state.attr('guide', this.attr('guide'));
       state.attr('answers', this.attr('answers'));
       state.attr('useAnswers', this.attr('useAnswers'));
       state.attr('editEnabled', this.attr('editEnabled'));

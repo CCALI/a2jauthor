@@ -1,6 +1,12 @@
 import Map from 'can/map/';
 import List from 'can/list/';
+import _omit from 'lodash/object/omit';
+
 import 'can/map/define/';
+
+const omitStateProps = [
+  'guide', 'answers', 'useAnswers'
+];
 
 /**
  * @module {Module} author/models/a2j-node A2JNode
@@ -29,7 +35,11 @@ export default Map.extend({
      * its component.
      */
     state: {
-      Value: Map
+      Value: Map,
+      serialize(current) {
+        let serialized = current.serialize();
+        return _omit(serialized, ...omitStateProps);
+      }
     },
 
     /**

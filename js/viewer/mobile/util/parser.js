@@ -123,10 +123,15 @@ export default {
 
   // 11/13 Parse HotDocs answer file XML string into guide's variables.
   // Add to existing variables. Do NOT override variable types.
+
+  // FIX: answersXML needs to be the XML string and not the parsed XML
+  // (eg. $.parseXML(xmlstring)), jquery parses strings as HTML DOM Nodes which
+  // are case-insensitive and normalized to lowercase. This function depends on
+  // the tags to be lowercase.
   parseJSON(answersXML, vars) {
     var guide = new Answers(vars);
 
-    $(answersXML).find('answer, Answer').each(function() {
+    $(answersXML).find('answer').each(function() {
       var varName = cString.makestr($(this).attr('name'));
 
       // 12/03/2013 Do not allow # in variable names.

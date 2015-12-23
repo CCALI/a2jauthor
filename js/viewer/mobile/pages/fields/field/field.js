@@ -4,6 +4,12 @@ import views from './views/';
 import Component from 'can/component/';
 import template from './field.stache!';
 
+/**
+ * @property {can.Map} field.ViewModel
+ * @parent <a2j-field>
+ *
+ * `<a2j-field>`'s viewModel.
+ */
 export let FieldVM = Map.extend({
   define: {
     showInvalidPrompt: {
@@ -13,6 +19,27 @@ export let FieldVM = Map.extend({
         let invalidPrompt = field.attr('invalidPrompt');
 
         return hasError && invalidPrompt;
+      }
+    },
+
+    /**
+     * @property {Boolean} field.ViewModel.prototype.supportsNativeDateInput supportsNativeDateInput
+     * @parent field.ViewModel
+     *
+     * Whether the current browsers supports native Date input fields
+     * by detecting if a date input automatically sanitizes non-date values
+     * technique from http://stackoverflow.com/a/10199306
+     *
+     */
+    supportsNativeDateInput: {
+      get() {
+        let input = document.createElement('input');
+        input.setAttribute('type', 'date');
+
+        let illegalValue = 'illegal value';
+        input.setAttribute('value', illegalValue);
+
+        return (input.value !== illegalValue);
       }
     }
   },
@@ -42,6 +69,22 @@ export let FieldVM = Map.extend({
   }
 });
 
+/**
+ * @module {Module} viewer/mobile/pages/fields/field/ <a2j-field>
+ * @parent viewer/mobile/pages/fields/
+ *
+ * This component allows you to display a form field of a specific type
+ *
+ * ## use
+ * @codestart
+ * <a2j-field
+ *    {(field)}="field
+ *    {repeat-var-value}="repeatVarValue"
+ *    {(logic)}="logic"
+ *    {lang}="lang"
+ *    {(trace-logic)}="traceLogic" />
+ * @codeend
+ */
 export default Component.extend({
   template,
   tag: 'a2j-field',

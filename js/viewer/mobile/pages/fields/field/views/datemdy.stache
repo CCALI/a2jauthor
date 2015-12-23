@@ -1,14 +1,18 @@
 <div>
   <div class="form-group {{#if field.hasError}}has-error{{/if}}">
     <label class="control-label" for="{{label}}">{{{ eval(label, repeatVarValue) }}}</label>
-    <input
-      type="date"
-      id="{{label}}"
-      class="form-control"
-      ($change)="validateField"
-      {($value)}="field._answer.values"
-      min="{{dateformat min 'YYYY-MM-DD'}}"
-      max="{{dateformat max 'YYYY-MM-DD'}}" />
+    {{#if supportsNativeDateInput}}
+      <input
+        type="date"
+        id="{{label}}"
+        class="form-control"
+        ($change)="validateField"
+        {($value)}="field._answer.values"
+        min="{{dateformat min 'YYYY-MM-DD'}}"
+        max="{{dateformat max 'YYYY-MM-DD'}}" />
+      {{/else}}
+        CUSTOM DATE INPUT
+      {{/if}}
   </div>
 
   {{#if showInvalidPrompt}}

@@ -1,6 +1,21 @@
 a2j-repeat-loop {
   display: block;
 
+  @panel-info-color: #31708f;
+  @panel-info-bg-color: #d9edf7;
+
+  .panel > .panel-heading {
+    color: @panel-info-color !important;
+  }
+
+  .panel > .panel-footer {
+    border-color: #bce8f1;
+    color: @panel-info-color;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: @panel-info-bg-color;
+  }
+
   element-options-pane {
     .table-column-buttons {
       padding: 5px;

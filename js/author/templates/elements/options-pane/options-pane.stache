@@ -6,7 +6,7 @@
   {{#if title}}
     <h3 class="pane-title">{{title}}</h3>
 
-    <button ($click)="saveAndClose()" type="button" class="close" aria-label="Close">
+    <button ($click)="saveAndClose()" type="button" class="popover-close close" aria-label="Close">
       <span aria-hidden="true">×</span>
     </button>
   {{/if}}

@@ -29,6 +29,7 @@ export default Component.extend({
   events: {
     inserted() {
       let vm = this.viewModel;
+      let selected = vm.attr('selected');
       let $input = this.element.find('input');
       let variableNames = vm.attr('variableNames').attr();
 
@@ -38,11 +39,16 @@ export default Component.extend({
         datumTokenizer: Bloodhound.tokenizers.whitespace
       });
 
-      $input.tokenfield({
-        limit: 1,
-        inputType: 'text',
-        createTokensOnBlur: false,
-        typeahead: [null, {source: engine.ttAdapter()}]
+      setTimeout(function() {
+        $input.tokenfield({
+          limit: 1,
+          tokens: selected,
+          inputType: 'text',
+          createTokensOnBlur: false,
+          typeahead: [null, {source: engine.ttAdapter()}]
+        });
+
+        $input.show();
       });
     },
 

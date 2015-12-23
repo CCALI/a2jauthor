@@ -2,7 +2,6 @@ import Map from 'can/map/';
 import List from 'can/list/';
 import _compact from 'lodash/array/compact';
 import _includes from 'lodash/collection/includes';
-import A2JVariable from 'caja/author/models/a2j-variable';
 
 import 'can/map/define/';
 
@@ -18,9 +17,9 @@ const byRepeating = function(filter, variable) {
 };
 
 const byType = function(types, variable) {
-  if (types.length) {
-    let type = variable.attr('type').toLowerCase();
-    return _includes(types, type);
+  if (types && types.length) {
+    let type = variable.attr('type') || '';
+    return _includes(types, type.toLowerCase());
   } else {
     return true;
   }
@@ -70,6 +69,7 @@ export default Map.extend({
      * Array of variable types used to filter the [variable] list.
      */
     filterTypes: {
+      value: '',
       set(value = '') {
         return _compact(value.split(','))
           .map(t => t.toLowerCase().trim());
@@ -80,19 +80,18 @@ export default Map.extend({
      * @property {A2JVariable.List} varPicker.ViewModel.prototype.variables variables
      * @parent varPicker.ViewModel
      *
-     * List of A2JVariable objects, since `window.gGuide` models the variables
-     * using a key/value format, this property takes that record (`gGuide.vars`)
-     * and generates an actual list of variables out of it.
+     * List of A2JVariable objects.
      */
     variables: {
-      Value: A2JVariable.List,
       get(list) {
         let types = this.attr('filterTypes');
         let ocurrence = this.attr('filterOcurrence');
 
-        return list
-          .filter(v => byType(types, v))
-          .filter(v => byRepeating(ocurrence, v));
+        if (list) {
+          return list
+            .filter(v => byType(types, v))
+            .filter(v => byRepeating(ocurrence, v));
+        }
       }
     },
 

@@ -17,7 +17,10 @@
         {{#if useLoopCounter}}
           <input type="number" min="1" class="form-control" {($value)}="loopCounter">
         {{else}}
-          <var-picker {variables}="guide.variablesList" {(selected)}="loopVariable" />
+          <var-picker
+            filter-types="number"
+            {(selected)}="loopVariable"
+            {variables}="guide.variablesList" />
         {{/if}}
       </div>
     </div>

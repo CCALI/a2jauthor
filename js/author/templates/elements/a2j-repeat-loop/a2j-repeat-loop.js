@@ -81,6 +81,10 @@ export default Component.extend({
       }
     },
 
+    '.input-loop-title keyup': function($el) {
+      this.viewModel.attr('loopTitle', $el.val());
+    },
+
     'input[name="displayType"] change': function($el) {
       this.viewModel.attr('displayType', $el.val());
     },

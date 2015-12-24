@@ -2,7 +2,7 @@
   <form>
     <div class="form-group">
       <label for="">&nbsp;</label>
-      <input type="text" class="form-control" {($value)}="loopTitle">
+      <input type="text" class="form-control input-loop-title" {$value}="loopTitle">
     </div>
 
     <label for="">Repeat each:</label>

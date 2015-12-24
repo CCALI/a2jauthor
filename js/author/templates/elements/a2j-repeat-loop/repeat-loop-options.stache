@@ -43,6 +43,29 @@
 
     <div class="form-group">
       {{#is displayType "table"}}
+        <div class="row clearfix" style="margin-bottom: 10px;">
+          <div class="col-md-12">
+            <label class="radio-inline">
+              <input type="radio"
+                name="tableStyle"
+                value="bordered"
+                {{#is tableStyle "bordered"}}checked{{/is}}> Bordered
+            </label>
+            <label class="radio-inline">
+              <input type="radio"
+                name="tableStyle"
+                value="condensed"
+                {{#is tableStyle "condensed"}}checked{{/is}}> Condensed
+            </label>
+            <label class="radio-inline">
+              <input type="radio"
+                name="tableStyle"
+                value="striped"
+                {{#is tableStyle "striped"}}checked{{/is}}> Striped rows
+            </label>
+          </div>
+        </div>
+
         <div class="row clearfix">
           <div class="col-md-6">Columns</div>
           <div class="col-md-4">%</div>

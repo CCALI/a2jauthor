@@ -33,6 +33,10 @@ export default Component.extend({
   events: {
     'input[name="displayType"] change': function($el) {
       this.viewModel.attr('displayType', $el.val());
+    },
+
+    'input[name="tableStyle"] change': function($el) {
+      this.viewModel.attr('tableStyle', $el.val());
     }
   },
 

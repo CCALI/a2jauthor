@@ -99,6 +99,17 @@ export default Map.extend({
     },
 
     /**
+     * @property {String} repeatLoop.ViewModel.prototype.tableStyle tableStyle
+     * @parent repeatLoop.ViewModel
+     *
+     * Whether the table is `bordered`, `condensed` or has `striped` rows; these
+     * are the avaiable table style options in bootstrap.
+     */
+    tableStyle: {
+      value: 'bordered'
+    },
+
+    /**
      * @property {can.List} repeatLoop.ViewModel.prototype.tableColumns tableColumns
      * @parent repeatLoop.ViewModel
      *

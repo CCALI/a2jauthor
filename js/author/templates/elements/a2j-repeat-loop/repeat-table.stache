@@ -1,5 +1,5 @@
 {{#if editEnabled}}
-  <table class="table table-bordered">
+  <table class="table table-{{tableStyle}}">
     <thead>
       <tr>
         {{#each tableColumns}}
@@ -22,7 +22,7 @@
     </tbody>
   </table>
 {{else}}
-  <table class="table table-bordered">
+  <table class="table table-{{tableStyle}}">
     <thead>
       <tr>
         {{#each tableColumns}}

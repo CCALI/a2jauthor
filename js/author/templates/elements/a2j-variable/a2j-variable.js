@@ -1,9 +1,21 @@
 import Map from 'can/map/';
+import _tail from 'lodash/array/tail';
+import _last from 'lodash/array/last';
 import Component from 'can/component/';
 import _extend from 'lodash/object/extend';
+import _initial from 'lodash/array/initial';
+import _compact from 'lodash/array/compact';
 import template from './a2j-variable.stache!';
 
 import 'can/map/define/';
+
+const commaString = function(values) {
+  if (values.length >= 2) {
+    return `${_initial(values).join(', ')} and ${_last(values)}`;
+  } else {
+    return _last(values);
+  }
+};
 
 /**
  * @module {Module} author/templates/elements/a2j-variable/ <a2j-variable>
@@ -50,13 +62,15 @@ export let A2JVariableVM = Map.extend({
     },
 
     /**
-     * @property {Number} variable.ViewModel.prototype.index index
+     * @property {Number} variable.ViewModel.prototype.varIndex varIndex
      * @parent variable.ViewModel
      *
-     * Variable values are stored in a one-based array whether the variable is
-     * repeating or not.
+     * The index used to access a specific value of a `repeating` variable.
+     *
+     * E.g: if [varIndex] is set to `2`, `variable.attr('values.2')` will be
+     * returned if `variable` is `repeating`.
      */
-    index: {
+    varIndex: {
       value: null
     },
 
@@ -76,19 +90,15 @@ export let A2JVariableVM = Map.extend({
         let variable = this.attr('variable');
 
         if (variable) {
-          let index = this.attr('index');
           let repeating = variable.attr('repeating');
-          let values = variable.attr('values').attr() || [];
+          let values = _tail(variable.attr('values').attr());
 
-          if (!index && repeating && values.length > 2) {
-            let last = values.slice(-1);
-            let initial = values.slice(1, -1);
-
-            // [null, 'foo', 'bar', 'baz'] -> 'foo, bar and baz'
-            return `${initial.join(', ')} and ${last}`;
+          if (repeating) {
+            let index = this.attr('varIndex');
+            return (index != null) ? values[index] : commaString(values);
+          } else {
+            return _last(values);
           }
-
-          return values[index == null ? 1 : index];
         }
       }
     },
@@ -116,11 +126,18 @@ export default Component.extend({
   tag: 'a2j-variable',
 
   viewModel(attrs, parentScope) {
-    let vmAttrs = attrs;
+    let vmAttrs = _extend({}, attrs);
     let answers = parentScope.attr('answers');
+    let varIndex = parentScope.attr('varIndex');
+
+    // only take `varIndex` from the parentScope if it's not null / undefined
+    // and if `varIndex` has not been provided as an attribute already.
+    if (varIndex != null && vmAttrs.varIndex == null) {
+      vmAttrs.varIndex = varIndex;
+    }
 
     if (answers) {
-      vmAttrs = _extend({}, attrs, {
+      _extend(vmAttrs, {
         answers: answers.attr(),
         useAnswers: parentScope.attr('useAnswers')
       });

@@ -47,20 +47,6 @@ describe('<a2j-repeat-loop>', function() {
       assert.deepEqual(range, [0, 1, 2], 'childcounter value is 3');
     });
 
-    it('getAnswerAtIndex returns answer of given variable at specified index', function() {
-      assert.equal(vm.getAnswerAtIndex('Child Name', 0), 'Bart',
-        'null values are ignored');
-
-      assert.equal(vm.getAnswerAtIndex('Child Name', 2), 'Maggie');
-      assert.isUndefined(vm.getAnswerAtIndex('Child Name', 3));
-
-      assert.equal(vm.getAnswerAtIndex('First Name', 0), 'John',
-        'non repeating variables alway return last value');
-
-      assert.equal(vm.getAnswerAtIndex('First Name', 100), 'John',
-        'non repeating variables alway return last value');
-    });
-
     it('loopCollection is a range up to either [loopCounter] or [loopVariable]', function() {
       assert.equal(vm.attr('loopType'), 'variable');
       assert.deepEqual(vm.attr('loopCollection').attr(), [0, 1, 2],

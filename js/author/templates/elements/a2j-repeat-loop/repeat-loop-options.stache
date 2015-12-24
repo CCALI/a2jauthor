@@ -35,8 +35,8 @@
           <input type="radio" value="list" name="displayType" autocomplete="off" disabled> List
         </label>
 
-        <label class="btn btn-default disabled {{#is displayType "text"}}active{{/is}}">
-          <input type="radio" value="text" name="displayType" autocomplete="off" disabled> Text
+        <label class="btn btn-default {{#is displayType "text"}}active{{/is}}">
+          <input type="radio" value="text" name="displayType" autocomplete="off"> Text
         </label>
       </div>
     </div>
@@ -91,9 +91,6 @@
       {{/is}}
 
       {{#is displayType "list"}}
-      {{/is}}
-
-      {{#is displayType "text"}}
       {{/is}}
     </div>
   </form>

@@ -99,6 +99,17 @@ export default Map.extend({
     },
 
     /**
+     * @property {String} repeatLoop.ViewModel.prototype.loopRichText loopRichText
+     * @parent repeatLoop.ViewModel
+     *
+     * The content of the rich text editor used when [displayType] is set to
+     * `text`.
+     */
+    loopRichText: {
+      value: ''
+    },
+
+    /**
      * @property {String} repeatLoop.ViewModel.prototype.tableStyle tableStyle
      * @parent repeatLoop.ViewModel
      *
@@ -107,6 +118,16 @@ export default Map.extend({
      */
     tableStyle: {
       value: 'bordered'
+    },
+
+    /**
+     * @property {String} repeatLoop.ViewModel.prototype.ckeditorInstance ckeditorInstance
+     * @parent repeatLoop.ViewModel
+     *
+     * Represents an editor instance.
+     */
+    ckeditorInstance: {
+      type: '*'
     },
 
     /**
@@ -211,20 +232,20 @@ export default Map.extend({
     return new List(_range(counter));
   },
 
-  getAnswerAtIndex(varName, index) {
-    let variable = this.getAnswer(varName);
+  updateLoopRichText() {
+    let editor = this.attr('ckeditorInstance');
 
-    if (variable) {
-      let values = variable.attr('values');
-      let repeating = variable.attr('repeating');
+    if (editor) {
+      this.attr('loopRichText', editor.getData());
+    }
+  },
 
-      values = values.filter(v => v != null);
+  destroyEditorInstance() {
+    let editor = this.attr('ckeditorInstance');
 
-      if (repeating && index != null) {
-        return values.attr(index);
-      } else {
-        return _last(values.attr());
-      }
+    if (editor) {
+      editor.destroy();
+      this.attr('ckeditorInstance', null);
     }
   }
 });

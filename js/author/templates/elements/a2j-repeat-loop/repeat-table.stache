@@ -35,7 +35,9 @@
       {{#each loopCollection}}
         <tr>
           {{#each tableColumns}}
-            <th style="width: {{width}}%;">{{getValue(variable, ../%index)}}</th>
+            <th style="width: {{width}}%;">
+              <a2j-variable {name}="variable" {var-index}="../%index" />
+            </th>
           {{/each}}
         </tr>
       {{/each}}

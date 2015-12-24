@@ -5,7 +5,8 @@ import _omit from 'lodash/object/omit';
 import 'can/map/define/';
 
 const omitStateProps = [
-  'guide', 'answers', 'useAnswers'
+  'guide', 'answers', 'useAnswers',
+  'ckeditorInstance', 'nodeIndex'
 ];
 
 /**

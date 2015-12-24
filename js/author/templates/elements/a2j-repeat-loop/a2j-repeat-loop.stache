@@ -10,10 +10,10 @@
       <div class="panel-heading">
         {{#if useLoopCounter}}
           REPEAT <span class="label label-default">{{loopCounter}}</span>
-          {{#is loopCounter 1}}TIME{{else}}TIMES{{/is}} in a TABLE
+          {{#is loopCounter 1}}TIME{{else}}TIMES{{/is}} in {{displayTypeText()}}
         {{else}}
           LOOP FOR EACH <span class="label label-default">{{loopVariable}}</span>
-          in a TABLE
+          in {{displayTypeText()}}
         {{/if}}
       </div>
 

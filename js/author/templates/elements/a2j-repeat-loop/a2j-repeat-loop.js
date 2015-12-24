@@ -12,6 +12,12 @@ import 'can/view/';
 can.view.preload('display-table-tpl', displayTableTpl);
 can.view.preload('repeat-loop-options-tpl', repeatLoopOptionsTpl);
 
+const displayTypeMap = {
+  list: 'A LIST',
+  table: 'A TABLE',
+  text: 'PARAGRAPH'
+};
+
 /**
  * @module {Module} author/templates/elements/a2j-repeat-loop/ <a2j-repeat-loop>
  * @parent api-components
@@ -117,6 +123,11 @@ export default Component.extend({
       }
 
       return stache(templateSnippet)(scope);
+    },
+
+    displayTypeText() {
+      let type = this.attr('displayType');
+      return displayTypeMap[type];
     }
   }
 });

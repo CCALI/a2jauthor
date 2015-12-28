@@ -52,4 +52,15 @@ describe('AnswerViewModel', function() {
     }, 'multiple values serialize');
   });
 
+  it('set() when answer is null', () => {
+    let avm = new AnswerVM({
+      answer: null
+    });
+
+    assert.doesNotThrow(() => {
+      avm.attr('values', false)
+    });
+
+    assert.deepEqual(avm.attr('answer.values').attr(), [ null, false ]);
+  });
 });

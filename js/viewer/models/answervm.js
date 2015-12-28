@@ -100,6 +100,10 @@ export default Map.extend({
           val = moment(val, 'YYYY-MM-DD').format('MM/DD/YYYY');
         }
 
+        if (!this.attr('answer')) {
+          this.attr('answer', {});
+        }
+
         if (!this.attr('answer.values')) {
           this.attr('answer.values', [null]);
         }

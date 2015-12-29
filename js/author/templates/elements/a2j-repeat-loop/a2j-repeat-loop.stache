@@ -21,10 +21,11 @@
         <h3>{{loopTitle}}</h3>
 
         {{#is displayType "table"}}
-          {{> display-table-tpl}}
+          {{> loop-table-tpl }}
         {{/is}}
 
         {{#is displayType "list"}}
+          {{> loop-list-tpl }}
         {{/is}}
 
         {{#is displayType "text"}}
@@ -54,10 +55,11 @@
     <h3>{{loopTitle}}</h3>
 
     {{#is displayType "table"}}
-      {{> display-table-tpl}}
+      {{> loop-table-tpl }}
     {{/is}}
 
     {{#is displayType "list"}}
+      {{> loop-list-tpl }}
     {{/is}}
 
     {{#is displayType "text"}}

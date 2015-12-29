@@ -28,15 +28,18 @@
     <div class="form-group">
       <div class="btn-group btn-group-justified" data-toggle="buttons">
         <label class="btn btn-default {{#is displayType "table"}}active{{/is}}">
-          <input type="radio" value="table" name="displayType" autocomplete="off"> Table
+          <input type="radio" value="table" name="displayType" autocomplete="off">
+          Table
         </label>
 
-        <label class="btn btn-default disabled {{#is displayType "list"}}active{{/is}}">
-          <input type="radio" value="list" name="displayType" autocomplete="off" disabled> List
+        <label class="btn btn-default {{#is displayType "list"}}active{{/is}}">
+          <input type="radio" value="list" name="displayType" autocomplete="off">
+          List
         </label>
 
         <label class="btn btn-default {{#is displayType "text"}}active{{/is}}">
-          <input type="radio" value="text" name="displayType" autocomplete="off"> Text
+          <input type="radio" value="text" name="displayType" autocomplete="off">
+          Text
         </label>
       </div>
     </div>
@@ -77,20 +80,75 @@
             <div class="col-md-5">
               <input type="text" class="form-control" {($value)}="column">
             </div>
+
             <div class="col-md-4">
               <input type="number" min="0" max="100" class="form-control" {($value)}="width">
             </div>
+
             <div class="col-md-3 table-column-buttons">
               <span class="label label-success" ($click)="addColumn()">+</span>
-              <span class="label label-danger"
-                ($click)="removeColumn(%index)"
-                {{#is %index 0}}style="display: none;"{{/is}}>-</span>
+
+              {{#showRemoveButton(%index)}}
+                <span class="label label-danger" ($click)="removeColumn(%index)">-</span>
+              {{/showRemoveButton}}
             </div>
           </div>
         {{/each}}
       {{/is}}
 
       {{#is displayType "list"}}
+        <div class="radio">
+          <label>
+            <input type="radio"
+              value="true"
+              name="repeatEachInOneList"
+              {{#if repeatEachInOneList}}checked{{/if}}>
+            Repeat each item in one list
+          </label>
+        </div>
+
+        <div class="radio">
+          <label>
+            <input type="radio"
+              value="false"
+              name="repeatEachInOneList"
+              {{^if repeatEachInOneList}}checked{{/if}}>
+            Repeat an entire list multiple times
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label for="">Kind</label>
+
+          <select class="form-control" {($value)}="listStyleType">
+            <option value="disc">Bullets</option>
+            <option value="decimal">Numbers</option>
+            <option value="lower-alpha">Lowercase Alphabetical</option>
+            <option value="upper-alpha">Uppercase Alphabetical</option>
+            <option value="lower-roman">Lowercase Roman Numerals</option>
+            <option value="upper-roman">Uppercase Roman Numerals</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="">Item to repeat</label>
+
+          {{#each listItems}}
+            <div class="row clearfix table-form-row">
+              <div class="col-md-8">
+                <input type="text" class="form-control" {($value)}="item">
+              </div>
+
+              <div class="col-md-4 table-column-buttons">
+                <span class="label label-success" ($click)="addListItem()">+</span>
+
+                {{#showRemoveButton(%index)}}
+                  <span class="label label-danger" ($click)="removeListItem(%index)">-</span>
+                {{/showRemoveButton}}
+              </div>
+            </div>
+          {{/each}}
+        </div>
       {{/is}}
     </div>
   </form>

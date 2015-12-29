@@ -1,18 +1,49 @@
 import assert from 'assert';
 import Validations from 'viewer/mobile/util/validations';
+import moment from 'moment';
 
 describe('Validations', function() {
   let validations;
 
-  it('empty config', function() {
-    validations = new Validations();
+  describe('config', () => {
+    it('empty', function() {
+      validations = new Validations();
 
-    let invalid = validations.required()
-      || validations.maxChars()
-      || validations.min()
-      || validations.max();
+      let invalid = validations.required()
+        || validations.maxChars()
+        || validations.min()
+        || validations.max();
 
-    assert.ok(!invalid, 'empty config attrs are ignored');
+      assert.ok(!invalid, 'empty config attrs are ignored');
+    });
+
+    it('min', () => {
+      validations = new Validations({
+        config: {
+          type: 'datemdy'
+        }
+      });
+
+      validations.attr('config.min', 'TODAY');
+      assert.equal(validations.config.min.toString(), moment().format('MM/DD/YYYY'), 'min - TODAY');
+
+      validations.attr('config.min', 'FOOBAR');
+      assert.equal(validations.config.min, '', 'min - FOOBAR');
+    });
+
+    it('max', () => {
+      validations = new Validations({
+        config: {
+          type: 'datemdy'
+        }
+      });
+
+      validations.attr('config.max', 'TODAY');
+      assert.equal(validations.config.max.toString(), moment().format('MM/DD/YYYY'), 'max - TODAY');
+
+      validations.attr('config.max', 'FOOBAR');
+      assert.equal(validations.config.max, '', 'max - FOOBAR');
+    });
   });
 
   describe('validations:required', function() {

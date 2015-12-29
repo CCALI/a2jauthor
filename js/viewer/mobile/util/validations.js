@@ -14,7 +14,11 @@ let Config = Map.extend({
     min: {
       type: function(val) {
         if (this.attr('type') === 'datemdy') {
-          return val && moment(val, 'MM/DD/YYYY').toDate();
+          if (!val) {
+            return '';
+          }
+          let date = (val === 'TODAY') ? moment() : moment(val);
+          return date.isValid() ? date.format('MM/DD/YYYY') : '';
         }
 
         return +val;
@@ -24,7 +28,11 @@ let Config = Map.extend({
     max: {
       type: function(val) {
         if (this.attr('type') === 'datemdy') {
-          return val && moment(val, 'MM/DD/YYYY').toDate();
+          if (!val) {
+            return '';
+          }
+          let date = (val === 'TODAY') ? moment() : moment(val);
+          return date.isValid() ? date.format('MM/DD/YYYY') : '';
         }
 
         return +val;

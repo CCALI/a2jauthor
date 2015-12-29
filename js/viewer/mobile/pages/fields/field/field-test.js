@@ -86,6 +86,7 @@ describe('<a2j-field>', () => {
       assert.equal(vm.convertDate('2015/23/12', null, 'YYYY/DD/MM'), '12/23/2015', 'should convert with custom input format');
       assert.equal(vm.convertDate('2015-12-23', 'YYYY/DD/MM'), '2015/23/12', 'should convert with custom output format');
       assert.equal(vm.convertDate('2015/23/12', 'DD-MM-YY', 'YYYY/DD/MM'), '23-12-15', 'should convert with custom formats');
+      assert.equal(vm.convertDate('TODAY'), 'TODAY', 'should keep TODAY');
     });
   });
 });

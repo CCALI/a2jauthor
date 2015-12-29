@@ -90,7 +90,7 @@ export let FieldVM = Map.extend({
     inputFormat = inputFormat || 'YYYY-MM-DD';
     outputFormat = outputFormat || 'MM/DD/YYYY';
 
-    return date ? moment(date, inputFormat).format(outputFormat) : date;
+    return (date && date !== 'TODAY') ? moment(date, inputFormat).format(outputFormat) : date;
   }
 });
 

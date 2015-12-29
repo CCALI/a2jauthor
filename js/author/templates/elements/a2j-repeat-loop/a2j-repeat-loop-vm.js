@@ -121,6 +121,19 @@ export default Map.extend({
     },
 
     /**
+     * @property {String} repeatLoop.ViewModel.prototype.listStyleType listStyleType
+     * @parent repeatLoop.ViewModel
+     *
+     * Specifies the appearance of a list item element, current supported values
+     * are `disc`, `decimal`, `lower-alpha`, `upper-alpha`, `lower-roman` and
+     * `upper-roman`. These are some of the values allowed for the `list-style-type`
+     * css property.
+     */
+    listStyleType: {
+      value: 'disc'
+    },
+
+    /**
      * @property {String} repeatLoop.ViewModel.prototype.ckeditorInstance ckeditorInstance
      * @parent repeatLoop.ViewModel
      *
@@ -142,6 +155,33 @@ export default Map.extend({
           width: 100,
           variable: '',
           column: 'Column 1'
+        }]);
+      }
+    },
+
+    /**
+     * @property {can.List} repeatLoop.ViewModel.prototype.repeatEachInOneList repeatEachInOneList
+     * @parent repeatLoop.ViewModel
+     *
+     * Whether to repeat each of the items in [listItems] in one list or to
+     * repeat the entire list ([listItems]) multiple times.
+     */
+    repeatEachInOneList: {
+      value: true,
+      type: 'boolean'
+    },
+
+    /**
+     * @property {can.List} repeatLoop.ViewModel.prototype.listItems listItems
+     * @parent repeatLoop.ViewModel
+     *
+     * This list holds the data used to render a html list.
+     */
+    listItems: {
+      value() {
+        return new List([{
+          variable: '',
+          item: 'Item 1'
         }]);
       }
     },
@@ -210,6 +250,21 @@ export default Map.extend({
     });
 
     columns.splice(index, 1);
+  },
+
+  addListItem() {
+    let items = this.attr('listItems');
+    let newLength = items.attr('length') + 1;
+
+    items.push({
+      variable: '',
+      item: `Item ${newLength}`
+    });
+  },
+
+  removeListItem(index) {
+    let items = this.attr('listItems');
+    items.splice(index, 1);
   },
 
   getAnswer(varName = '') {

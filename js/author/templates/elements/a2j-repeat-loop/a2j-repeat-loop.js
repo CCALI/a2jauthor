@@ -4,12 +4,14 @@ import Component from 'can/component/';
 import _isNumber from 'lodash/lang/isNumber';
 import RepeatLoopVM from './a2j-repeat-loop-vm';
 import template from './a2j-repeat-loop.stache!';
-import displayTableTpl from './repeat-table.stache!';
+import loopListTpl from './loop-views/loop-list.stache!';
+import loopTableTpl from './loop-views/loop-table.stache!';
 import repeatLoopOptionsTpl from './repeat-loop-options.stache!';
 
 import 'can/view/';
 
-can.view.preload('display-table-tpl', displayTableTpl);
+can.view.preload('loop-list-tpl', loopListTpl);
+can.view.preload('loop-table-tpl', loopTableTpl);
 can.view.preload('repeat-loop-options-tpl', repeatLoopOptionsTpl);
 
 const displayTypeMap = {
@@ -93,6 +95,10 @@ export default Component.extend({
       this.viewModel.attr('tableStyle', $el.val());
     },
 
+    'input[name="repeatEachInOneList"] change': function($el) {
+      this.viewModel.attr('repeatEachInOneList', $el.val() === 'true');
+    },
+
     initCKEditor() {
       let vm = this.viewModel;
 
@@ -127,6 +133,11 @@ export default Component.extend({
       }
 
       return stache(templateSnippet)(scope);
+    },
+
+    showRemoveButton(index, options) {
+      index = index.isComputed ? index() : index;
+      return (index > 0) ? options.fn() : options.inverse();
     },
 
     displayTypeText() {

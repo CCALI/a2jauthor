@@ -47,7 +47,8 @@ export default Map.extend({
     val: {
       type(val) {
         if (this.attr('config.type') === 'datemdy') {
-          return moment(val, 'YYYY-MM-DD').toDate();
+          let date = moment(val, 'YYYY-MM-DD');
+          return date.isValid() ? date.toDate() : '';
         }
 
         return val;
@@ -72,16 +73,38 @@ export default Map.extend({
   },
 
   min: function() {
-    if (this.config.min
-      && this.val && this.val < this.config.min) {
-      return true;
+    if (this.config.min) {
+      if (!this.val) {
+        return true;
+      }
+
+      if (this.config.type === 'datemdy') {
+        if (moment(this.val).isBefore(this.config.min)) {
+          return true;
+        }
+      } else {
+        if (this.val < this.config.min) {
+          return true;
+        }
+      }
     }
   },
 
   max: function() {
-    if (this.config.max
-      && this.val && this.val > this.config.max) {
-      return true;
+    if (this.config.max) {
+      if (!this.val) {
+        return true;
+      }
+
+      if (this.config.type === 'datemdy') {
+        if (moment(this.val).isAfter(this.config.max)) {
+          return true;
+        }
+      } else {
+        if (this.val > this.config.max) {
+          return true;
+        }
+      }
     }
   }
 });

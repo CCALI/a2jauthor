@@ -83,23 +83,28 @@ describe('Validations', function() {
 
     it('date:min', function() {
       validations.attr('config.type', 'datemdy');
+      validations.attr('config.min', '');
+      validations.attr('val', '2014-11-30');
+      assert.ok(!validations.min(), 'valid - no min');
+
       validations.attr('config.min', '12/01/2014');
+      assert.ok(validations.min(), 'invalid');
+
       validations.attr('val', '2014-12-01');
       assert.ok(!validations.min(), 'valid');
-
-      validations.attr('val', '2014-11-30');
-      assert.ok(validations.min(), 'invalid');
     });
 
     it('date:max', function() {
       validations.attr('config.type', 'datemdy');
+      validations.attr('config.max', '');
+      validations.attr('val', '2015-01-01');
+      assert.ok(!validations.max(), 'valid - no max');
+
       validations.attr('config.max', '12/31/2014');
+      assert.ok(validations.max(), 'invalid');
+
       validations.attr('val', '2014-12-31');
       assert.ok(!validations.max(), 'valid');
-
-      validations.attr('val', '2015-01-01');
-      assert.ok(validations.max(), 'invalid');
     });
   });
-
 });

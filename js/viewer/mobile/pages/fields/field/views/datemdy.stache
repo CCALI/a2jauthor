@@ -8,7 +8,7 @@
         type="date"
         id="{{label}}"
         class="form-control"
-        ($change)="validateField"
+        ($blur)="validateField"
         {($value)}="field._answer.values"
         min="{{dateformat min 'YYYY-MM-DD'}}"
         max="{{dateformat max 'YYYY-MM-DD'}}" />

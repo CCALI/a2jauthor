@@ -359,49 +359,58 @@ var form={
 					}
 				}
 			]});
-	}
+	},
 
-	,varPicker: function(data)
-	{	// Pick variable name from list of defined variables
-		var dval = (data.value);
+  // Pick variable name from list of defined variables
+  varPicker: function(data) {
+    var dval = (data.value);
 
-		var e =$((typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
-				+ '<div class="editspan form-group">'
-				+ '<input class="form-control ui-combobox-input editable autocomplete picker varname dest" type="text" ></div>');
+    var label = data.label != null ?
+      '<label class="control-label">' + data.label + '</label>' : '';
 
-		$('.picker',e).blur(function(){
-			var val=$(this).val();
-			form.change($(this),val);
-		}).data('data',data).val(decodeEntities(dval));
+    var $el = $(
+      label +
+      '<div class="editspan form-group">' +
+        '<input class="form-control ui-combobox-input editable autocomplete picker varname dest" type="text" >' +
+      '</div>'
+    );
 
-		// Create list of sorted variable names with type info.
-		var sortedVars  = gGuide.varsSorted();
-		var source=[];
-		for (var vi in sortedVars) {
-			var v = sortedVars[vi];
-			source.push({label:v.name+' '+v.type,value:v.name});
-		}
-		$('.autocomplete.picker.varname',e).autocomplete({ source: source ,
-	      change: function () { // if didn't match, restore to original value
-	         //var matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex($(this).val().split("\t")[0]) + "$", "i");
-	         var newvalue = $(this).val();
-				/*var sortedVars  = gGuide.varsSorted();
-	         $.each(sortedVars, function (p, v) {
-					if ( (matcher.test(v.name)))
-					{
-						newvalue = (v.name);
-						return false;
-					}
-					return true;
-	         });
-	         */
-	         $(this).val(newvalue);
-	      }})
-			.focus(function () {
-			   $(this).autocomplete("search");
-			});
-		return e;
-	}
+    var $pickerInput = $el.find('.picker.autocomplete');
+
+    var onBlur = function() {
+      var val = $(this).val();
+      form.change($(this), val);
+    };
+
+    // Create list of sorted variable names with type info.
+    var sortedVars = gGuide.varsSorted();
+
+    var source = sortedVars.map(function(variable) {
+      return {
+        value: variable.name,
+        label: variable.name + ' ' + variable.type
+      };
+    });
+
+    $pickerInput
+      .blur(onBlur)
+      .data('data', data)
+      .val(decodeEntities(dval));
+
+    $pickerInput.autocomplete({
+      source: source,
+      appendTo: '.page-edit-form-panel',
+      change: function() {
+        var newvalue = $(this).val();
+        $(this).val(newvalue);
+      }
+    })
+    .focus(function() {
+      $(this).autocomplete('search');
+    });
+
+    return $el;
+  },
 
 	/*
 	,pickpageComboBox:function(data)
@@ -436,7 +445,7 @@ var form={
 	}
 	*/
 
-	,text: function(data){
+	text: function(data){
 		var e=$('<div class="editspan form-group">'
 			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
 			+'<input class="form-control ui-widget editable" '+

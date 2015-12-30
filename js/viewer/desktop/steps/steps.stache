@@ -5,12 +5,12 @@
 
 {{#if currentStep}}
   <div class="step-current">
-    <div class="app-step">
+    <div class="app-step" {$style}="formatStepStyles( getStepWidth(true) )">
       <div class="step-circle bg-step{{currentStep.number}}"></div>
     </div>
 
     <div class="guide-wrapper {{^if showClientAvatar}}guide-center{{/if}}">
-      <div id="guideBubble" class="bubble">
+      <div id="guideBubble" class="bubble {{#if guideBubbleTallerThanAvatar}}vertical{{/else}}top{{/if}}">
         <a2j-pages
           {lang}="lang"
           {(logic)}="logic"
@@ -26,6 +26,7 @@
         <span class="bubble-arrow"></span>
         <a2j-viewer-avatar
           class="avatar-guide"
+          {avatar-loaded}="avatarLoaded"
           {skin}="avatarSkinTone"
           {gender}="interview.guideAvatarGender"
           {facing}="guideAvatarFacingDirection" />
@@ -38,6 +39,7 @@
           <a2j-viewer-avatar
             facing="left"
             class="avatar-client"
+            {avatar-loaded}="avatarLoaded"
             {skin}="avatarSkinTone"
             {gender}="interview.userGender" />
         </div>
@@ -60,13 +62,16 @@
           </div>
 
           <div class="sign-text">
-            <a2j-viewer-sign-text {text}="currentStep.text"></a2j-viewer-sign-text>
+            <a2j-viewer-sign-text
+              {current-step-number}="currentStep.number"
+              {is-current-step}="true"
+              {text}="currentStep.text" />
           </div>
         </div>
       </div><!-- sign -->
     </div><!-- sign-wrapper -->
   </div><!-- step-current -->
-{{/currentStep}}
+{{/if}}
 
 {{#if nextSteps.length}}
   <div class="next-wrapper">
@@ -74,7 +79,7 @@
       <div id="next-{{ add(%index, 2) }}"
         class="step-next next-{{ add(%index, 2) }} step-{{ add(%index, 2) }}">
 
-        <div class="app-step">
+        <div class="app-step" {$style}="formatStepStyles( getStepWidth(false, %index) )">
           <div class="step-circle bg-step{{formatStepNumber number}}"></div>
         </div>
 
@@ -88,7 +93,10 @@
               </div>
 
               <div class="sign-text">
-                <a2j-viewer-sign-text {text}="text"></a2j-viewer-sign-text>
+                <a2j-viewer-sign-text
+                  {current-step-number}="currentStep.number"
+                  {is-current-step}="false"
+                  {text}="text" />
               </div>
             </div>
           </div><!-- sign -->

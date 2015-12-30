@@ -1,20 +1,49 @@
 import assert from 'assert';
 import Validations from 'viewer/mobile/util/validations';
+import moment from 'moment';
 
 describe('Validations', function() {
   let validations;
 
-  beforeEach(function() {
-    validations = new Validations();
-  });
+  describe('config', () => {
+    it('empty', function() {
+      validations = new Validations();
 
-  it('empty config', function() {
-    let invalid = validations.required()
-      || validations.maxChars()
-      || validations.min()
-      || validations.max();
+      let invalid = validations.required()
+        || validations.maxChars()
+        || validations.min()
+        || validations.max();
 
-    assert.ok(!invalid, 'empty config attrs are ignored');
+      assert.ok(!invalid, 'empty config attrs are ignored');
+    });
+
+    it('min', () => {
+      validations = new Validations({
+        config: {
+          type: 'datemdy'
+        }
+      });
+
+      validations.attr('config.min', 'TODAY');
+      assert.equal(validations.config.min.toString(), moment().format('MM/DD/YYYY'), 'min - TODAY');
+
+      validations.attr('config.min', 'FOOBAR');
+      assert.equal(validations.config.min, '', 'min - FOOBAR');
+    });
+
+    it('max', () => {
+      validations = new Validations({
+        config: {
+          type: 'datemdy'
+        }
+      });
+
+      validations.attr('config.max', 'TODAY');
+      assert.equal(validations.config.max.toString(), moment().format('MM/DD/YYYY'), 'max - TODAY');
+
+      validations.attr('config.max', 'FOOBAR');
+      assert.equal(validations.config.max, '', 'max - FOOBAR');
+    });
   });
 
   describe('validations:required', function() {
@@ -81,25 +110,51 @@ describe('Validations', function() {
       assert.ok(validations.min(), 'invalid');
     });
 
-    it('date:min', function() {
+    it('date', function() {
       validations.attr('config.type', 'datemdy');
+      validations.attr('config.min', '');
+      validations.attr('val', '2014-11-30');
+      assert.ok(!validations.min(), 'valid - no min');
+
       validations.attr('config.min', '12/01/2014');
+      assert.ok(validations.min(), 'invalid');
+
       validations.attr('val', '2014-12-01');
       assert.ok(!validations.min(), 'valid');
 
-      validations.attr('val', '2014-11-30');
-      assert.ok(validations.min(), 'invalid');
-    });
-
-    it('date:max', function() {
-      validations.attr('config.type', 'datemdy');
-      validations.attr('config.max', '12/31/2014');
-      validations.attr('val', '2014-12-31');
-      assert.ok(!validations.max(), 'valid');
-
-      validations.attr('val', '2015-01-01');
-      assert.ok(validations.max(), 'invalid');
+      validations.attr('val', 'Invalid date');
+      assert.ok(validations.min(), 'invalid - Invalid date');
     });
   });
 
+  describe('validations:max', function() {
+    beforeEach(function() {
+      validations = new Validations();
+    });
+
+    it('number', function() {
+      validations.attr('config.max', 10);
+      validations.attr('val', 10);
+      assert.ok(!validations.max(), 'valid');
+
+      validations.attr('val', 11);
+      assert.ok(validations.max(), 'invalid');
+    });
+
+    it('date', function() {
+      validations.attr('config.type', 'datemdy');
+      validations.attr('config.max', '');
+      validations.attr('val', '2015-01-01');
+      assert.ok(!validations.max(), 'valid - no max');
+
+      validations.attr('config.max', '12/31/2014');
+      assert.ok(validations.max(), 'invalid');
+
+      validations.attr('val', '2014-12-31');
+      assert.ok(!validations.max(), 'valid');
+
+      validations.attr('val', 'Invalid date');
+      assert.ok(validations.max(), 'invalid - Invalid date');
+    });
+  });
 });

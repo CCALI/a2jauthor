@@ -2,10 +2,16 @@
   <ul style="list-style-type: {{listStyleType}};" class="inline-items-list">
     {{#each listItems}}
       <li>
-        {{item}}: <var-picker
-          {(selected)}="variable"
-          filter-ocurrence="repeating"
-          {variables}="guide.variablesList" />
+        {{item}}:
+
+        {{#if editActive}}
+          <var-picker
+            {(selected)}="variable"
+            filter-ocurrence="repeating"
+            {variables}="guide.variablesList" />
+        {{else}}
+          <a2j-variable {name}="variable" />
+        {{/if}}
       </li>
     {{/each}}
   </ul>

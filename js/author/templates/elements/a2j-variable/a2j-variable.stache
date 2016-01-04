@@ -3,5 +3,7 @@
 {{#if showValue}}
   <span class="var-val">{{value}}</span>
 {{else}}
-  <span class="var-name">{{name}}</span>
+  {{#if name}}
+    <span class="var-name">{{name}}</span>
+  {{/if}}
 {{/if}}

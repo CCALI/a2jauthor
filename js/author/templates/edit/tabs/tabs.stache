@@ -48,7 +48,9 @@
         </div>
 
         <div class="col-lg-6">
-          <button class="btn btn-default disabled">Repeat Loop</button>
+          <button
+            class="btn btn-default"
+            ($click)="addElement('repeat-loop')">Repeat Loop</button>
         </div>
       </div>
 

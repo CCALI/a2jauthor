@@ -23,6 +23,13 @@ let emptyNodes = {
     state: {
       editActive: true
     }
+  },
+
+  'repeat-loop': {
+    component: '<a2j-repeat-loop state="{.}" />',
+    state: {
+      editActive: true
+    }
   }
 };
 

@@ -12,10 +12,14 @@
       <tr>
         {{#tableColumns}}
           <th style="width: {{width}}%;">
-            <var-picker
-              {(selected)}="variable"
-              filter-ocurrence="repeating"
-              {variables}="guide.variablesList" />
+            {{#if editActive}}
+              <var-picker
+                {(selected)}="variable"
+                filter-ocurrence="repeating"
+                {variables}="guide.variablesList" />
+            {{else}}
+              <a2j-variable {name}="variable" />
+            {{/if}}
           </th>
         {{/tableColumns}}
       </tr>

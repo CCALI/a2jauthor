@@ -24,6 +24,10 @@
           {lang}="lang">
         </a2j-fields>
       {{/if}}
+
+      {{#if textAudioURL}}
+        <audio {$src}="prefix(mState.fileDataURL, textAudioURL)" controls="controls"></audio>
+      {{/if}}
     </div><!-- bubble-content -->
 
     <p class="text-center">

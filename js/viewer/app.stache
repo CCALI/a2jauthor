@@ -29,6 +29,7 @@
   {repeat-var-value}="rState.repeatVarValue"
   {(logic)}="logic"
   {(interview)}="interview"
+  {(m-state)}="mState"
   {(r-state)}="rState"
   {(modal-content)}="modalContent"
   class="bootstrap-styles" />

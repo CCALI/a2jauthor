@@ -30,6 +30,10 @@
             {{else}}
               {{{ eval(help, repeatVarValue) }}}
             {{/if}}
+
+            {{#if helpImageURL}}
+              <img {$src}="prefix(mState.fileDataURL, helpImageURL)">
+            {{/if}}
           </div>
         </div>
       </div>

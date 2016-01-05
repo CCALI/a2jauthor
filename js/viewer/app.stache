@@ -14,6 +14,7 @@
     class="bootstrap-styles" />
 {{else}}
   <a2j-desktop-viewer
+    *desktop-viewer
     {(lang)}="lang"
     {(logic)}="logic"
     {(r-state)}="rState"
@@ -22,7 +23,7 @@
     {(interview)}="interview"
     {(modal-content)}="modalContent"
     {(trace-logic)}="traceLogic"
-    class="bootstrap-styles" />
+    class="bootstrap-styles steps-left-{{*desktopViewer.remainingSteps}} steps-{{*desktopViewer.maxDisplayedSteps}}" />
 {{/if}}
 <a2j-modal
   {repeat-var-value}="rState.repeatVarValue"

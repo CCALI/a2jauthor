@@ -1,3 +1,4 @@
 <can-import from="viewer/desktop/steps/sign-text/sign-text.less!" />
+<can-import from="jquerypp/event/resize/" />
 
-<div><p {$title}="text">{{displayText}}</p></div>
+<div ($resize)="resizeText()"><p {$title}="text">{{displayText}}</p></div>

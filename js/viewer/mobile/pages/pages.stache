@@ -30,10 +30,6 @@
       {{/if}}
     </div><!-- bubble-content -->
 
-    <p class="text-center">
-      <a data-toggle="modal" data-target="#pageModal">{{{ eval(learn, rState.repeatVarValue) }}}</a>
-    </p>
-
     {{#each buttons}}
       <button type="button" class="btn btn-default btn-navigate" ($click)="navigate">
         {{#if label}}

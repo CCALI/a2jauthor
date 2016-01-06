@@ -225,6 +225,19 @@ export let ViewerStepsVM = Map.extend({
     },
 
     /**
+     * @property {Number} steps.ViewModel.prototype.clientBubbleTallerThanAvatar clientBubbleTallerThanAvatar
+     * @parent steps.ViewModel
+     *
+     * whether the client bubble is taller than the avatar
+     *
+     */
+    clientBubbleTallerThanAvatar: {
+      get() {
+        return this.attr('clientBubbleHeight') > this.attr('avatarHeight');
+      }
+    },
+
+    /**
      * @property {Number} steps.ViewModel.prototype.minusHeader minusHeader
      * @parent steps.ViewModel
      *
@@ -333,6 +346,9 @@ export let ViewerStepsVM = Map.extend({
 
     let $guideBubble = $('#guideBubble');
     vm.attr('guideBubbleHeight', $guideBubble.height());
+
+    let $clientBubble = $('#clientBubble');
+    vm.attr('clientBubbleHeight', $clientBubble.height());
 
     let $avatar = $guideBubble.parent();
     vm.attr('avatarHeight', $avatar.height());

@@ -88,5 +88,41 @@ describe('<a2j-field>', () => {
       assert.equal(vm.convertDate('2015/23/12', 'DD-MM-YY', 'YYYY/DD/MM'), '23-12-15', 'should convert with custom formats');
       assert.equal(vm.convertDate('TODAY'), 'TODAY', 'should keep TODAY');
     });
+
+    it('invalidPrompt', () => {
+      vm.attr('lang', {
+        FieldPrompts_checkbox: 'You must select one or more checkboxes to continue.',
+        FieldPrompts_text: 'You must type a response in the highlighted space before you can continue.',
+      });
+      vm.attr('field', {});
+
+      vm.attr('field.hasError', false);
+      assert.ok(!vm.attr('showInvalidPrompt'), 'showInvalidPrompt should be false when there is no error');
+
+      vm.attr('field.hasError', true);
+      assert.ok(!vm.attr('showInvalidPrompt'), 'showInvalidPrompt should be false when there is an error but no message');
+
+      vm.attr('field.hasError', false);
+      vm.attr('field.type', 'checkbox');
+      vm.removeAttr('field.invalidPrompt');
+      assert.equal(vm.attr('invalidPrompt'), vm.attr('lang.FieldPrompts_checkbox'), 'checkbox - should show the default error message');
+
+      vm.attr('field.hasError', true);
+      assert.ok(vm.attr('showInvalidPrompt'), 'checkbox - showInvalidPrompt should be true when there is an error and a default message');
+
+      vm.attr('field.invalidPrompt', 'This is invalid');
+      assert.equal(vm.attr('invalidPrompt'), 'This is invalid', 'checkbox - should show the custom error message');
+      assert.ok(vm.attr('showInvalidPrompt'), 'checkbox - showInvalidPrompt should be true when there is an error and a default message');
+
+      vm.attr('field.type', 'text');
+      vm.removeAttr('field.invalidPrompt');
+      assert.equal(vm.attr('invalidPrompt'), vm.attr('lang.FieldPrompts_text'), 'text - should show the default error message');
+      assert.ok(vm.attr('showInvalidPrompt'), 'text - showInvalidPrompt should be true when there is an error and a default message');
+
+      vm.attr('field.invalidPrompt', 'This is invalid');
+      assert.equal(vm.attr('invalidPrompt'), 'This is invalid', 'text - should show the custom error message');
+      assert.ok(vm.attr('showInvalidPrompt'), 'should be true when there is an error and a default message');
+      assert.ok(vm.attr('showInvalidPrompt'), 'text - showInvalidPrompt should be true when there is an error and a default message');
+    });
   });
 });

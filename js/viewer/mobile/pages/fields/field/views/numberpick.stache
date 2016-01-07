@@ -9,7 +9,7 @@
 
   {{#if showInvalidPrompt}}
     <div class="alert alert-danger" role="alert">
-      {{{ eval(field.invalidPrompt, repeatVarValue) }}}
+      {{{ eval(invalidPrompt, repeatVarValue) }}}
     </div>
   {{/if}}
 <div>

@@ -9,13 +9,18 @@ import checkbox from './checkbox.stache!';
 import numberpick from './numberpick.stache!';
 
 export default {
-  checkbox, number, text,
-  gender, datemdy, textlong,
-  radio, numberpick, textpick,
-
+  checkbox,
+  checkboxNOTA: checkbox,
+  datemdy,
+  gender,
+  number,
+  numberdollar: number,
   numberphone: text,
+  numberpick,
   numberssn: number,
   numberzip: number,
-  numberdollar: number,
-  checkboxNOTA: checkbox
+  radio,
+  text,
+  textlong,
+  textpick
 };

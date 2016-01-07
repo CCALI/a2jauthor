@@ -30,7 +30,7 @@
       {{/if}}
     </div><!-- bubble-content -->
 
-    <p class="text-center">
+    <p class="text-center modal-button">
       <a data-toggle="modal" data-target="#pageModal">{{{ eval(learn, rState.repeatVarValue) }}}</a>
     </p>
 

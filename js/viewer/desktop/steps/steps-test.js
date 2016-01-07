@@ -200,6 +200,15 @@ describe('<a2j-viewer-steps>', function() {
       assert.equal(vm.attr('guideBubbleTallerThanAvatar'), true, 'true');
     });
 
+    it('clientBubbleTallerThanAvatar', () => {
+      vm.attr('clientBubbleHeight', 100);
+      vm.attr('avatarHeight', 100);
+      assert.equal(vm.attr('clientBubbleTallerThanAvatar'), false, 'false');
+
+      vm.attr('avatarHeight', 99);
+      assert.equal(vm.attr('clientBubbleTallerThanAvatar'), true, 'true');
+    });
+
     it('minusHeader', () => {
       vm.attr('bodyHeight', 100);
       vm.attr('sidewalkHeight', 50);

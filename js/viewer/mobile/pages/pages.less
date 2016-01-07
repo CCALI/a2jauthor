@@ -1,7 +1,17 @@
+@import "../../../styles/bootstrap-overrides/variables.less";
+
 a2j-pages {
   display: block;
 
   .checkbox input[type="checkbox"] {
     margin-left: 0 !important;
+  }
+
+  .modal-button {
+    display: none;
+
+    @media (max-width: @screen-sm) {
+      display: block;
+    }
   }
 }

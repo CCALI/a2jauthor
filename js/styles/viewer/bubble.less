@@ -94,6 +94,7 @@
   top: @grid-gutter-width;
   z-index: @zindex-dropdown;
   right: -1px;
+  width: 0px;
 
   &:after, &:before {
   	left: 100%;
@@ -139,9 +140,14 @@
     margin: 0;
   }
 }
+
 .guide-wrapper {
   .bubble-arrow, .bubble {
     right: 25%;
     margin: 0;
+
+    &.right {
+      left: 105%;
+    }
   }
 }

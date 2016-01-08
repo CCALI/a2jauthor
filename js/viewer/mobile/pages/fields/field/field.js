@@ -4,8 +4,11 @@ import moment from 'moment';
 import views from './views/';
 import Component from 'can/component/';
 import template from './field.stache!';
+import invalidPromptTpl from './views/invalidPrompt.stache';
 
 import 'jquery-ui/ui/datepicker';
+
+can.view.preload('invalid-prompt-tpl', invalidPromptTpl);
 
 /**
  * @property {can.Map} field.ViewModel

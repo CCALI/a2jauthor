@@ -12,9 +12,5 @@
       ($value)="field._answer.values"/>
   </div>
 
-  {{#if showInvalidPrompt}}
-    <div class="alert alert-danger" role="alert">
-      {{{ eval(invalidPrompt, repeatVarValue) }}}
-    </div>
-  {{/if}}
+  {{> invalid-prompt-tpl }}
 <div>

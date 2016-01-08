@@ -4,7 +4,7 @@ import moment from 'moment';
 import views from './views/';
 import Component from 'can/component/';
 import template from './field.stache!';
-import invalidPromptTpl from './views/invalidPrompt.stache';
+import invalidPromptTpl from './views/invalid-prompt.stache!';
 
 import 'jquery-ui/ui/datepicker';
 

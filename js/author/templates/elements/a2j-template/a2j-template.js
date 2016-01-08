@@ -12,11 +12,15 @@ export default Component.extend({
     a2jParse(component, state, index) {
       index = index.isComputed ? index() : index;
 
+      can.batch.start();
+
       state.attr('nodeIndex', index);
       state.attr('guide', this.attr('guide'));
       state.attr('answers', this.attr('answers'));
       state.attr('useAnswers', this.attr('useAnswers'));
       state.attr('editEnabled', this.attr('editEnabled'));
+
+      can.batch.stop();
 
       return stache(component)(state);
     }

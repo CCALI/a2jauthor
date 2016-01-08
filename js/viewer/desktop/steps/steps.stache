@@ -104,11 +104,11 @@
         class="step-next next-{{ add(%index, 2) }} step-{{ add(%index, 2) }}">
 
         <div class="app-step" {$style}="formatStepStyles( getStepWidth(false, %index) )">
-          <div class="step-circle bg-step{{formatStepNumber number}}"></div>
+          <div class="step-circle bg-step{{number}}"></div>
         </div>
 
         <div class="sign-wrapper">
-          <div class="sign bg-step{{formatStepNumber number}}">
+          <div class="sign bg-step{{number}}">
             <div class="sign-inner">
               <div class="circle-wrapper">
                 <div class="circle">

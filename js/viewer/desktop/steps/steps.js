@@ -402,11 +402,6 @@ export default Component.extend({
         : options.inverse();
     },
 
-    formatStepNumber(number) {
-      number = number.isComputed ? number() : number;
-      return parseInt(number, 10) + 1;
-    },
-
     add(a, b) {
       a = a.isComputed ? +a() : +a;
       b = b.isComputed ? +b() : +b;

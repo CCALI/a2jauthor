@@ -1,0 +1,5 @@
+{{#if showInvalidPrompt}}
+  <div class="alert alert-danger" role="alert">
+    {{{ eval(invalidPrompt, repeatVarValue) }}}
+  </div>
+{{/if}}

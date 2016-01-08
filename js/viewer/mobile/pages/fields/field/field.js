@@ -4,8 +4,11 @@ import moment from 'moment';
 import views from './views/';
 import Component from 'can/component/';
 import template from './field.stache!';
+import invalidPromptTpl from './views/invalid-prompt.stache!';
 
 import 'jquery-ui/ui/datepicker';
+
+can.view.preload('invalid-prompt-tpl', invalidPromptTpl);
 
 /**
  * @property {can.Map} field.ViewModel
@@ -15,13 +18,31 @@ import 'jquery-ui/ui/datepicker';
  */
 export let FieldVM = Map.extend({
   define: {
+    /**
+     * @property {Boolean} field.ViewModel.prototype.showInvalidPrompt showInvalidPrompt
+     * @parent field.ViewModel
+     *
+     * Whether a prompt should be shown to indicate the field's answer is invalid
+     *
+     */
     showInvalidPrompt: {
       get() {
-        let field = this.attr('field');
-        let hasError = field.attr('hasError');
-        let invalidPrompt = field.attr('invalidPrompt');
+        return this.attr('field.hasError') && this.attr('invalidPrompt');
+      }
+    },
 
-        return hasError && invalidPrompt;
+    /**
+     * @property {String} field.ViewModel.prototype.invalidPrompt invalidPrompt
+     * @parent field.ViewModel
+     *
+     * The prompt that should be shown when a field's answer is invalid
+     *
+     */
+    invalidPrompt: {
+      get() {
+        let field = this.attr('field');
+        let defaultInvalidPrompt = this.attr('lang').attr('FieldPrompts_' + field.attr('type'));
+        return field.attr('invalidPrompt') || defaultInvalidPrompt;
       }
     },
 

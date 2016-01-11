@@ -1,7 +1,12 @@
 <div>
-  <label for="{{label}}">{{{ eval(label, repeatVarValue) }}}</label>
+  <div class="form-group {{#if field.hasError}}has-error{{/if}}">
+    <label class="control-label" for="{{label}}">{{{ eval(label, repeatVarValue) }}}</label>
 
-  <select id="{{label}}" {($value)}="field._answer.values" ($change)="validateField">
-    {{{options}}}
-  </select>
+    <select class="form-control" id="{{label}}" {($value)}="field._answer.values" ($change)="validateField">
+      <option {{#if field.required}}disabled{{/if}} value="">{{ lang.ChooseListText }}</option>
+      {{{options}}}
+    </select>
+  </div>
+
+  {{> invalid-prompt-tpl }}
 </div>

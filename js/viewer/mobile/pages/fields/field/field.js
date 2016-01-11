@@ -83,6 +83,13 @@ export let FieldVM = Map.extend({
     }
   },
 
+  /**
+   * @property {Boolean} field.ViewModel.prototype.validateField validateField
+   * @parent field.ViewModel
+   *
+   * validates a field for errors
+   *
+   */
   validateField(ctx, el) {
     let field = this.attr('field');
     let answer = field.attr('_answer');
@@ -107,6 +114,19 @@ export let FieldVM = Map.extend({
     }
   },
 
+  /**
+   * @property {Boolean} field.ViewModel.prototype.convertDate convertDate
+   * @parent field.ViewModel
+   *
+   * convert a Date using moment with options input and output formats
+   *
+   * ## use
+   * @codestart
+   * vm.convertDate('2015-12-01'); // "12/01/2015"
+   * vm.convertDate('2015-12-01', 'YYYY-MM-DD'); // "2015-12-01"
+   * vm.convertDate('2015/12/01', 'YYYY-MM-DD', 'YYYY/MM/DD'); // "2015-12-01"
+   * @codeend
+   */
   convertDate(date, outputFormat, inputFormat) {
     inputFormat = inputFormat || 'YYYY-MM-DD';
     outputFormat = outputFormat || 'MM/DD/YYYY';

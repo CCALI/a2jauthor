@@ -72,6 +72,9 @@ export default Map.extend({
 
           return validations.required();
           break;
+        case 'textpick':
+          return validations.required();
+          break;
       }
     });
   }

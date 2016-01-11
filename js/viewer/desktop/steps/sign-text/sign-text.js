@@ -199,6 +199,11 @@ export default Component.extend({
     // resize when user navigates to next step
     '{viewModel} currentStepNumber': function(vm, ev, newVal){
       setTimeout(vm.resizeText.bind(vm));
+    },
+
+    // resize when debug-panel opens
+    '{viewModel} showDebugPanel': function(vm) {
+      setTimeout(vm.resizeText.bind(vm));
     }
   }
 });

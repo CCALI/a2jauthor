@@ -15,6 +15,7 @@
 {{else}}
   <a2j-desktop-viewer
     *desktop-viewer
+    {show-debug-panel}="showDebugPanel"
     {(lang)}="lang"
     {(logic)}="logic"
     {(r-state)}="rState"

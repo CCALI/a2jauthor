@@ -22,6 +22,7 @@
         <div id="sidewalk" class="sidewalk"></div>
 
         <a2j-viewer-steps
+          {show-debug-panel}="showDebugPanel"
           {^remaining-steps}="remainingSteps"
           {^max-displayed-steps}="maxDisplayedSteps"
           {lang}="lang"

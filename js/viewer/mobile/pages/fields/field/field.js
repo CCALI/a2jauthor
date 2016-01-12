@@ -84,7 +84,7 @@ export let FieldVM = Map.extend({
   },
 
   /**
-   * @property {Boolean} field.ViewModel.prototype.validateField validateField
+   * @property {Function} field.ViewModel.prototype.validateField validateField
    * @parent field.ViewModel
    *
    * validates a field for errors
@@ -115,7 +115,7 @@ export let FieldVM = Map.extend({
   },
 
   /**
-   * @property {Boolean} field.ViewModel.prototype.convertDate convertDate
+   * @property {Function} field.ViewModel.prototype.convertDate convertDate
    * @parent field.ViewModel
    *
    * convert a Date using moment with options input and output formats

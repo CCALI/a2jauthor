@@ -2,6 +2,7 @@ import Map from 'can/map/';
 import List from 'can/list/';
 import _omit from 'lodash/object/omit';
 import _inRange from 'lodash/number/inRange';
+import A2JNode from 'caja/author/models/a2j-node';
 
 import 'can/map/define/';
 
@@ -111,7 +112,7 @@ export default Map.extend({
 
       let clonedNodeIndex = index + 1;
       let originalNode = children.attr(index);
-      let clonedNode = new Map(originalNode.attr());
+      let clonedNode = new A2JNode(originalNode.attr());
 
       // the cloned node should be "selected" (ready to be edited)
       originalNode.attr('editActive', false);
@@ -226,7 +227,6 @@ export default Map.extend({
     let from = this.attr('dragItemIndex');
     let to = this.attr('dropItemIndex');
     let children = this.attr('rootNode.children');
-    let nodesViewModels = this.attr('nodesViewModels');
 
     if (from !== to) {
       moveItem(children, from, to);

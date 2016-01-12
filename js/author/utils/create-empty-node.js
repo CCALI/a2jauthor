@@ -2,7 +2,7 @@ import A2JNode from 'author/models/a2j-node';
 
 let emptyNodes = {
   'section-title': {
-    component: '<a2j-section-title state="{.}" />',
+    tag: 'a2j-section-title',
     state: {
       underline: true,
       editActive: true,
@@ -11,7 +11,7 @@ let emptyNodes = {
   },
 
   'rich-text': {
-    component: '<a2j-rich-text state="{.}" />',
+    tag: 'a2j-rich-text',
     state: {
       editActive: true,
       userContent: 'Add some text...'
@@ -19,14 +19,14 @@ let emptyNodes = {
   },
 
   'page-break': {
-    component: '<a2j-page-break state="{.}" />',
+    tag: 'a2j-page-break',
     state: {
       editActive: true
     }
   },
 
   'repeat-loop': {
-    component: '<a2j-repeat-loop state="{.}" />',
+    tag: 'a2j-repeat-loop',
     state: {
       editActive: true
     }
@@ -39,6 +39,6 @@ export default function createEmptyNode(nodeName) {
   if (nodeDefinition) {
     return new A2JNode(nodeDefinition);
   } else {
-    console.error('Unknown Node ', nodeName);
+    console.error('Unknown Node: ', nodeName);
   }
 }

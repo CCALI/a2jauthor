@@ -4,10 +4,10 @@ export default {
   updatedAt: '2015-11-23T14:15:11.499Z',
   title: 'Landlord Nonpayment DIY Program',
   rootNode: {
-    component: 'a2j-template',
+    tag: 'a2j-template',
     state: {},
     children: [
-      { component: '<a2j-repeat-loop state="{.}" />',
+      { tag: 'a2j-repeat-loop',
         state: {}
       }
     ]

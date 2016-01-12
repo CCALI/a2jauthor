@@ -21,11 +21,11 @@ const omitStateProps = [
 export default Map.extend({
   define: {
     /**
-     * @property {String} A2JNode.prototype.define.component component
+     * @property {String} A2JNode.prototype.define.tag tag
      *
      * A component tag name for an A2J component.
      */
-    component: {
+    tag: {
       value: ''
     },
 

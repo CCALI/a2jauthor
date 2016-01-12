@@ -87,6 +87,7 @@
 
           <div class="sign-text">
             <a2j-viewer-sign-text
+              {show-debug-panel}="showDebugPanel"
               {current-step-number}="currentStep.number"
               {is-current-step}="true"
               {text}="currentStep.text" />
@@ -118,6 +119,7 @@
 
               <div class="sign-text">
                 <a2j-viewer-sign-text
+                  {show-debug-panel}="showDebugPanel"
                   {current-step-number}="currentStep.number"
                   {is-current-step}="false"
                   {text}="text" />

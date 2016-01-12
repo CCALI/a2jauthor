@@ -389,6 +389,10 @@ export default Component.extend({
 
     '{window} resize': function() {
       this.viewModel.updateDomProperties();
+    },
+
+    '{viewModel} showDebugPanel': function(vm) {
+      setTimeout(vm.updateDomProperties.bind(vm));
     }
   },
 

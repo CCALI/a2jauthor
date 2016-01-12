@@ -24,7 +24,7 @@
         </app-alert>
       {{/if}}
 
-      {{a2jParse(component, state, %index)}}
+      {{a2jParse(tag, state, %index)}}
     </li>
   {{/each}}
 </ul>

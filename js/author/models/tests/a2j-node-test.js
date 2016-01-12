@@ -10,8 +10,8 @@ describe('A2JNode', function() {
     let state = node.attr('state');
 
     let expected = {
+      tag: '',
       children: [],
-      component: '',
       state: {
         foo: 'bar'
       }

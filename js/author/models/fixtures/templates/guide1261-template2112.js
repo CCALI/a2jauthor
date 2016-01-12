@@ -4,22 +4,18 @@ export default {
   updatedAt: '2015-11-23T14:15:11.499Z',
   title: 'Authorization for Medical Treatment of a Minor',
   rootNode: {
-    component: 'a2j-template',
-    state: {
-    },
+    tag: 'a2j-template',
+    state: {},
     children: [
-      {
-        component: '<a2j-repeat-loop state="{.}" />',
+      { tag: 'a2j-repeat-loop',
         state: {}
       },
-      {
-        component: '<a2j-rich-text state="{.}" />',
+      { tag: 'a2j-rich-text',
         state: {
           userContent: 'User\'s last name <a2j-variable name="Client last name TE" />.'
         }
       },
-      {
-        component: '<a2j-rich-text state="{.}" />',
+      { tag: 'a2j-rich-text',
         state: {
           userContent: `<p><em>Lorem ipsum dolor sit amet, pri ad porro consul
             disputando. Mea tale admodum cu, soluta fuisset per ad. Te omittam

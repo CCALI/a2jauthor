@@ -1,6 +1,7 @@
 import text from './text.stache!';
 import radio from './radio.stache!';
 import number from './number.stache!'
+import numberdollar from './numberdollar.stache!'
 import gender from './gender.stache!';
 import datemdy from './datemdy.stache!';
 import textpick from './textpick.stache!';
@@ -28,7 +29,7 @@ export default {
   datemdy,
   gender,
   number,
-  numberdollar: number,
+  numberdollar,
   numberphone: text,
   numberpick,
   numberssn: number,

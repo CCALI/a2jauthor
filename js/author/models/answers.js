@@ -30,10 +30,10 @@ const commaString = function(values) {
  * }
  * @codeend
  *
- * This Map, extends the provided object when the functions `getVariable` and
- * `getValue` to access the variable object provided a variable name (upper or
- * lowercase) and `getValue` has logic to return the handle different variable
- * types.
+ * This Map, extends the provided object with the functions `getVariable` and
+ * `getValue`; `getVariable` returns the variable object provided a variable name
+ * (upper or lowercase) and `getValue` has logic to return the value of a variable
+ * according to its type.
  */
 export default Map.extend({
   /**

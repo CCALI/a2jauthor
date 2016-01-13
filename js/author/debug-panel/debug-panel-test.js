@@ -153,6 +153,28 @@ describe('<author-debug-panel>', () => {
           }]
         }
       ], 'should handle loops');
+
+      vm.clearTraceLogicList();
+      assert.deepEqual(vm.attr('traceLogicList').attr(), [
+        {
+          pageName: '4 - Loop',
+          messages: []
+        }
+      ], 'should clear messages but keep current page');
+
+      vm.attr('traceLogic').push({
+        'infinite-5': { msg: "Incrementing repeat variable" }
+      });
+
+      assert.deepEqual(vm.attr('traceLogicList').attr(), [
+        {
+          pageName: '4 - Loop',
+          messages: [{
+            key: 'infinite-5',
+            fragments: [ { msg: 'Incrementing repeat variable' } ]
+          }]
+        }
+      ], 'should list messages pushed after list was cleared');
     });
   });
 });

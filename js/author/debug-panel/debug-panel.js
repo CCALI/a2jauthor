@@ -78,6 +78,13 @@ export let DebugPanelVM = Map.extend({
         return lastSetValue;
       }
     }
+  },
+
+  clearTraceLogicList() {
+    let tr = this.attr('traceLogicList');
+    let currentPage = tr.attr(tr.attr('length') - 1);
+    currentPage.attr('messages').replace([]);
+    tr.replace(currentPage);
   }
 });
 
@@ -85,12 +92,6 @@ export default Component.extend({
   template,
   viewModel: DebugPanelVM,
   tag: 'author-debug-panel',
-
-  events: {
-    '#clearTrace click': function() {
-      this.element.find('#tracer').empty();
-    }
-  },
 
   helpers: {
     traceLogicFormat(format, msg) {

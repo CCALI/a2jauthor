@@ -31,7 +31,7 @@
   "dependencies": {
     "body-parser": "~1.13.2",
     "bootstrap": "3.3.5",
-    "can": "^2.3.2",
+    "can": "2.3.8",
     "can-ssr": "^0.11.0-pre.2",
     "cookie-parser": "~1.3.5",
     "debug": "~2.2.0",

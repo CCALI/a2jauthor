@@ -1,6 +1,9 @@
 import Map from 'can/map/';
 import assert from 'assert';
+import Answers from 'author/models/answers';
 import {A2JVariableVM} from './a2j-variable';
+
+import 'steal-mocha';
 
 describe('<a2j-variable>', function() {
 
@@ -8,7 +11,7 @@ describe('<a2j-variable>', function() {
     let vm;
 
     beforeEach(function() {
-      let answers = new Map({
+      let fixture = {
         'client first name': {
           values: [null],
           repeating: false,
@@ -21,11 +24,11 @@ describe('<a2j-variable>', function() {
           name: 'Child Name',
           values: [null, 'Bart', 'Lisa', 'Maggie']
         }
-      });
+      };
 
       vm = new A2JVariableVM({
-        answers,
-        name: 'Client First Name'
+        name: 'Client First Name',
+        answers: new Answers(fixture)
       });
     });
 

@@ -9,6 +9,9 @@ export default {
     children: [
       { tag: 'a2j-repeat-loop',
         state: {}
+      },
+      { tag: 'a2j-conditional',
+        state: {}
       }
     ]
   }

@@ -30,7 +30,7 @@ import 'can/map/define/';
 export let Container = Map.extend({
   define: {
     /**
-     * @property {Boolean} element-container.ViewModel.prototype.define.selected selected
+     * @property {Boolean} element-container.ViewModel.prototype.selected selected
      * @parent element-container.ViewModel
      *
      * Whether this element is selected.
@@ -65,7 +65,7 @@ export default Component.extend({
   events: {
     inserted($el) {
       let vm = this.viewModel.attr('parentScope');
-      let $a2jTemplate = $el.parents('a2j-template');
+      let $a2jTemplate = $el.closest('a2j-template');
 
       // only register element if it is a child of `a2j-template`
       if ($a2jTemplate.length) {

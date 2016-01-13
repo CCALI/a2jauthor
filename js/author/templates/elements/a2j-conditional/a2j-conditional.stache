@@ -1,0 +1,60 @@
+<can-import from="caja/author/templates/elements/varpicker/" />
+<can-import from="caja/author/templates/elements/options-pane/" />
+<can-import from="caja/author/templates/elements/a2j-variable/" />
+<can-import from="caja/author/templates/elements/element-container/" />
+<can-import from="caja/author/templates/elements/a2j-conditional/a2j-conditional.less!" />
+
+{{#if editEnabled}}
+  <element-container {(selected)}="editActive">
+    <div class="panel panel-warning">
+      <div class="panel-heading">
+        IF
+        {{#if leftOperand}}
+          <span class="label label-default">
+            {{#is leftOperandType 'variable'}}
+              <a2j-variable {name}="leftOperand" />
+            {{else}}
+              {{leftOperand}}
+            {{/is}}
+          </span>
+
+          {{formatOperator(operator)}}
+
+          {{#if rightOperand}}
+            <span class="label label-default">
+              {{#is rightOperandType 'variable'}}
+                <a2j-variable {name}="rightOperand" />
+              {{else}}
+                {{rightOperand}}
+              {{/is}}
+            </span>
+          {{/if}}
+        {{/if}}
+      </div>
+
+      <div class="panel-body">
+        <a2j-template edit-enabled="true" {(template)}="ifBlockTemplate" />
+      </div>
+
+      {{#if elseClause}}
+        <div class="panel-else">ELSE</div>
+
+        <div class="panel-body">
+          <a2j-template edit-enabled="true" {(template)}="elseBlockTemplate" />
+        </div>
+      {{/if}}
+
+      <div class="panel-footer">END IF</div>
+    </div>
+  </element-container>
+
+  {{#if editActive}}
+    {{> conditional-options-tpl }}
+  {{/if}}
+{{else}}
+  {{#if evalCondition()}}
+    <a2j-template edit-enabled="false" {template}="ifBlockTemplate" />
+  {{else}}
+    <a2j-template edit-enabled="false" {template}="elseBlockTemplate" />
+  {{/if}}
+{{/if}}

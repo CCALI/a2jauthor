@@ -74,7 +74,9 @@ export default Map.extend({
      * `<a2j-template>` component.
      */
     nodesViewModels: {
-      value: new List()
+      value: function() {
+        return new List();
+      }
     },
 
     /**
@@ -84,6 +86,7 @@ export default Map.extend({
      * Whether an element can have edit options made available.
      */
     editEnabled: {
+      type: 'boolean',
       value: false
     },
 

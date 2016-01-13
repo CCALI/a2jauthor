@@ -4,25 +4,27 @@
 <can-import from="author/debug-alerts/"/>
 <can-import from="styles/author/viewer-layout.less!"/>
 
-{{#if showDebugPanel}}
-  <div class="author-debug-panel">
-    <author-debug-panel
-      {interview}="viewerInterview"
-      {(trace-logic)}="traceLogic" />
-  </div>
-{{/if}}
+{{#if previewMode}}
+  {{#if showDebugPanel}}
+    <div class="author-debug-panel">
+      <author-debug-panel
+        {interview}="viewerInterview"
+        {(trace-logic)}="traceLogic" />
+    </div>
+  {{/if}}
 
-<div id="viewer-app" class="{{#if showDebugPanel}}with-debug-panel{{/if}}">
-  <a2j-viewer-preview
-    {show-debug-panel}="showDebugPanel"
-    {(trace-logic)}="traceLogic"
-    {(interview)}="viewerInterview"
-    {preview-page-name}="previewPageName"
-    {^interview-page-name}="interviewPageName" />
+  <div id="viewer-app" class="{{#if showDebugPanel}}with-debug-panel{{/if}}">
+    <a2j-viewer-preview
+      {show-debug-panel}="showDebugPanel"
+      {(trace-logic)}="traceLogic"
+      {(interview)}="viewerInterview"
+      {preview-page-name}="previewPageName"
+      {^interview-page-name}="interviewPageName" />
 
     <author-debug-menu {(app-state)}="."/>
 
     {{#if viewerAlertMessages.length}}
       <author-debug-alerts {(alert-messages)}="viewerAlertMessages"/>
     {{/if}}
-</div>
+  </div>
+{{/if}}

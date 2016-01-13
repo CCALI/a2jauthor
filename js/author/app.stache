@@ -18,9 +18,7 @@
   </div>
 </div>
 
-{{#if previewMode}}
-  {{> viewer-preview-layout}}
-{{/if}}
+{{> viewer-preview-layout}}
 
 <div id="authortool"
   class="hidestart authortool bootstrap-styles"

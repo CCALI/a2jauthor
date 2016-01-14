@@ -147,8 +147,8 @@ describe('Interview model', function() {
     });
 
     assert.deepEqual(interview.attr('variablesList').attr(), [
-      { name: 'var a', repeating: 1, value: null },
-      { name: 'var b', repeating: 1, value: null },
+      { name: 'var a', repeating: null, value: null },
+      { name: 'var b', repeating: null, value: null },
       { name: 'var c', repeating: null, value: null }
     ], 'should set value to null when values is [ null ]');
 

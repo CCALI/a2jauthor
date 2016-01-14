@@ -241,7 +241,7 @@ const Interview = Model.extend({
             list.push({
               value: null,
               name: variable.name,
-              repeating: 1
+              repeating: null
             });
           } else {
             // repeating variable with values

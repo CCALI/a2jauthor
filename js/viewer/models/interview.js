@@ -263,10 +263,7 @@ const Interview = Model.extend({
   },
 
   clearAnswers() {
-    let answers = this.attr('answers');
-
-    _keys(answers.attr()).forEach(function(key) {
-      let answer = answers.attr(key);
+    this.attr('answers').each((answer) => {
       answer.attr('values', [null]);
     });
   },

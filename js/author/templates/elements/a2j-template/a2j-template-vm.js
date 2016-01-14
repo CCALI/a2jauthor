@@ -2,6 +2,7 @@ import Map from 'can/map/';
 import List from 'can/list/';
 import _omit from 'lodash/object/omit';
 import _inRange from 'lodash/number/inRange';
+import _isFunction from 'lodash/lang/isFunction';
 import A2JNode from 'caja/author/models/a2j-node';
 
 import 'can/map/define/';
@@ -99,11 +100,28 @@ export default Map.extend({
      */
     useAnswers: {
       value: false
+    },
+
+    /**
+     * @property {Function} a2jTemplate.ViewModel.prototype.define.saveCallback saveCallback
+     * @parent a2jTemplate.ViewModel
+     *
+     * Callback to be executed when interactions to the element might require the
+     * template to be updated.
+     */
+    saveCallback: {
+      value: null
     }
   },
 
   saveTemplateChanges() {
-    this.attr('template').save();
+    let saveCallback = this.saveCallback;
+
+    if (_isFunction(saveCallback)) {
+      saveCallback.call(this);
+    } else {
+      this.attr('template').save();
+    }
   },
 
   cloneNode(nodeViewModel) {

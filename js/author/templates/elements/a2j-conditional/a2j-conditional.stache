@@ -33,14 +33,20 @@
       </div>
 
       <div class="panel-body">
-        <a2j-template edit-enabled="true" {(template)}="ifBlockTemplate" />
+        <a2j-template
+          edit-enabled="true"
+          {save-callback}="@noOpFn"
+          {(template)}="ifBlockTemplate" />
       </div>
 
       {{#if elseClause}}
         <div class="panel-else">ELSE</div>
 
         <div class="panel-body">
-          <a2j-template edit-enabled="true" {(template)}="elseBlockTemplate" />
+          <a2j-template
+            edit-enabled="true"
+            {save-callback}="@noOpFn"
+            {(template)}="elseBlockTemplate" />
         </div>
       {{/if}}
 

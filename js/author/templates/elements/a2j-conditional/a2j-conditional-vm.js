@@ -175,6 +175,18 @@ export default Map.extend({
     }
   },
 
+  /**
+   * @function conditional.ViewModel.prototype.noOpFn noOpFn
+   * @parent conditional.ViewModel
+   *
+   * An empty function intended to be used as the `saveCallback` of the
+   * `a2j-template` instances used in `ifBlockTemplate`/`elseBlockTemplate`,
+   * this way these template instances are not saved as independent templates
+   * but are serialized as any other property of the `a2j-conditional` component
+   * state.
+   */
+  noOpFn: can.noop,
+
   getOperandValue(rightOrLeft = 'left') {
     let answers = this.attr('answers');
     let operand = this.attr(`${rightOrLeft}Operand`);

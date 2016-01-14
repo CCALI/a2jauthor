@@ -6,8 +6,20 @@ import template from './debug-panel.stache!';
 
 import 'can/map/define/';
 
+/**
+ * @property {can.Map} authorDebugPanel.ViewModel
+ * @parent <author-debug-panel>
+ *
+ * `<author-debug-panel>`'s viewModel.
+ */
 export let DebugPanelVM = Map.extend({
   define: {
+    /**
+     * @property {can.List} authorDebugPanel.ViewModel.prototype.variables variables
+     * @parent authorDebugPanel.ViewModel
+     *
+     * list of variables used in the interview and their values
+     */
     variables: {
       get() {
         let interview = this.attr('interview');
@@ -18,21 +30,64 @@ export let DebugPanelVM = Map.extend({
       }
     },
 
+    /**
+     * @property {can.List} authorDebugPanel.ViewModel.prototype.traceLogic traceLogic
+     * @parent authorDebugPanel.ViewModel
+     *
+     * list of trace messages not yet added to the traceLogicList
+     *
+     * This is the external API used by other components for adding messages
+     * to the trace panel. This way, other components do not need to know
+     * how the traceLogicList is formatted. Messages can be added as a
+     * single key/value pair or as a key and an array of messages.
+     *
+     * Each msg can also have a format, formats include
+     * "ui", "info", "var", "val", "code", "valT", "valF"
+     *
+     * ## use
+     *
+     * @codestart
+     * // add a single message
+     * vm.attr('traceLogic').push({
+     *   page: '1 - Intro'
+     * });
+     *
+     * // add multiple messages
+     * vm.attr('traceLogic').push({
+     *   button: [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go!' } ]
+     * });
+     * @codeend
+     */
     traceLogic: {
       value: new List
     },
 
+    /**
+     * @property {can.List} authorDebugPanel.ViewModel.prototype.traceLogicList traceLogicList
+     * @parent authorDebugPanel.ViewModel
+     *
+     * list of trace messages formatted to be displayed in the trace panel
+     *
+     * Messages will be removed from the traceLogic property and grouped by page.
+     * Messages within the current page can be updated by pushing a new message with the same key.
+     */
     traceLogicList: {
       value: new List,
       get(lastSetValue) {
         let traceLogic = this.attr('traceLogic');
+
+        // format all the unformatted traceLogic messages
         while (traceLogic.attr('length')) {
           let newMessage = traceLogic.shift();
           let pageName = newMessage.attr('page');
 
+          // handle messages indicating the user navigated to a new page, like:
+          // { page: '1 - Intro' }
           if (pageName) {
             let pageExists = false;
 
+            // if this page already exists, skip it.
+            // for instance, this could happen when using a repeat variable.
             lastSetValue.each((page) => {
               if (page.attr('pageName') === pageName) {
                 pageExists = true;
@@ -40,6 +95,7 @@ export let DebugPanelVM = Map.extend({
               }
             });
 
+            // if page doesn't exist, add it.
             if (!pageExists) {
               lastSetValue.push({
                 pageName: pageName,
@@ -58,6 +114,9 @@ export let DebugPanelVM = Map.extend({
                 fragments = [ fragments ];
               }
 
+              // update message if it already exists, such as  user changing a variable
+              // {'first name': [ { format: 'var', msg: 'first name' }, { msg: ' = ' }, { format: 'val', msg: 'sam' } ]
+              // {'first name': [ { format: 'var', msg: 'first name' }, { msg: ' = ' }, { format: 'val', msg: 'manuel' } ]
               currentPage.attr('messages').each((message) => {
                 if (message.attr('key') === key) {
                   message.attr('fragments', fragments);
@@ -65,6 +124,7 @@ export let DebugPanelVM = Map.extend({
                 }
               });
 
+              // if this is a new message, add it
               if (!existingMessageUpdated) {
                 currentPage.attr('messages').push({
                   key: key,
@@ -78,21 +138,50 @@ export let DebugPanelVM = Map.extend({
         return lastSetValue;
       }
     }
+  },
+
+  /**
+   * @function authorDebugPanel.ViewModel.prototype.clearTraceLogicList clearTraceLogicList
+   * @parent authorDebugPanel.ViewModel
+   *
+   * clear messages from the trace logic list
+   *
+   * Remove all message from the list, but leave a single entry for the current page.
+   * This allows new messages to be added before the user navigates to a new page.
+   */
+  clearTraceLogicList() {
+    let tr = this.attr('traceLogicList');
+    let currentPage = tr.attr(tr.attr('length') - 1);
+    currentPage.attr('messages').replace([]);
+    tr.replace(currentPage);
   }
 });
 
+/**
+ * @module {Module} author/debug-panel/ <author-debug-panel>
+ * @parent api-components
+ *
+ * this component displays the debug-panel for the author view
+ *
+ * ## Use
+ *
+ * @codestart
+ *   <author-debug-panel
+ *     {interview}="viewerInterview" />
+ * @codeend
+ */
 export default Component.extend({
   template,
   viewModel: DebugPanelVM,
   tag: 'author-debug-panel',
 
-  events: {
-    '#clearTrace click': function() {
-      this.element.find('#tracer').empty();
-    }
-  },
-
   helpers: {
+    /**
+     * @function authorDebugPanel.prototype.traceLogicFormat traceLogicFormat
+     * @parent authorDebugPanel
+     *
+     * helper used to get the class name to format each message fragment's span
+     */
     traceLogicFormat(format, msg) {
       format = (format && format.isComputed) ? format() : format;
       msg = (msg && msg.isComputed) ? msg() : msg;
@@ -105,6 +194,12 @@ export default Component.extend({
 
       return format;
     },
+    /**
+     * @function authorDebugPanel.prototype.traceLogicMessage traceLogicMessage
+     * @parent authorDebugPanel
+     *
+     * Format a message - used for providing "blank" for empty values set by the user
+     */
     traceLogicMessage(format, msg) {
       format = (format && format.isComputed) ? format() : format;
       msg = (msg && msg.isComputed) ? msg() : msg;

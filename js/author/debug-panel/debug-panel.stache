@@ -28,6 +28,6 @@
 
   <div class="form-inline immediatepanel">
     <input type="text" id="tracerimm" class="form-control input-sm" placeholder="Filter" />
-    <button id="clearTrace" class="btn btn-default btn-sm"><span class="glyphicon-trash"></span> Clear</button>
+    <button ($click)="clearTraceLogicList()" class="btn btn-default btn-sm"><span class="glyphicon-trash"></span> Clear</button>
   </div>
 </div>

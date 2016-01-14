@@ -1,21 +1,10 @@
 import Map from 'can/map/';
-import _tail from 'lodash/array/tail';
-import _last from 'lodash/array/last';
 import Component from 'can/component/';
 import _extend from 'lodash/object/extend';
-import _initial from 'lodash/array/initial';
-import _compact from 'lodash/array/compact';
 import template from './a2j-variable.stache!';
+import Answers from 'caja/author/models/answers';
 
 import 'can/map/define/';
-
-const commaString = function(values) {
-  if (values.length >= 2) {
-    return `${_initial(values).join(', ')} and ${_last(values)}`;
-  } else {
-    return _last(values);
-  }
-};
 
 /**
  * @module {Module} author/templates/elements/a2j-variable/ <a2j-variable>
@@ -42,6 +31,17 @@ const commaString = function(values) {
 export let A2JVariableVM = Map.extend({
   define: {
     /**
+     * @property {Answers} variable.ViewModel.prototype.answers answers
+     * @parent variable.ViewModel
+     *
+     * Answers object available when user uploads an ANX file during document
+     * assembly.
+     */
+    answers: {
+      Type: Answers
+    },
+
+    /**
      * @property {Answer} variable.ViewModel.prototype.variable variable
      * @parent variable.ViewModel
      *
@@ -56,7 +56,7 @@ export let A2JVariableVM = Map.extend({
         let answers = this.attr('answers');
 
         if (name && answers) {
-          return answers.attr(name.toLowerCase());
+          return answers.getVariable(name);
         }
       },
     },
@@ -78,27 +78,18 @@ export let A2JVariableVM = Map.extend({
      * @property {String} variable.ViewModel.prototype.value value
      * @parent variable.ViewModel
      *
-     * The effective variable value:
-     * - If the variable is repeating and no index is requested,
-     *   then an English comma delimited string is returned.
-     *
-     * - If the variable is NOT repeating or only contains a single value
-     *   then an index of 1 is defaulted and that element is returned.
+     * The effective variable value.
      */
     value: {
       get() {
         let variable = this.attr('variable');
 
         if (variable) {
-          let repeating = variable.attr('repeating');
-          let values = _tail(variable.attr('values').attr());
+          let name = this.attr('name');
+          let answers = this.attr('answers');
+          let index = this.attr('varIndex');
 
-          if (repeating) {
-            let index = this.attr('varIndex');
-            return (index != null) ? values[index] : commaString(values);
-          } else {
-            return _last(values);
-          }
+          return answers.getValue(name, index);
         }
       }
     },

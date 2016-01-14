@@ -7,6 +7,7 @@ const tagToComponentMap = {
   'a2j-rich-text': '<a2j-rich-text state="{.}" />',
   'a2j-page-break': '<a2j-page-break state="{.}" />',
   'a2j-repeat-loop': '<a2j-repeat-loop state="{.}" />',
+  'a2j-conditional': '<a2j-conditional state="{.}" />',
   'a2j-section-title': '<a2j-section-title state="{.}" />'
 };
 
@@ -35,6 +36,10 @@ export default Component.extend({
   },
 
   events: {
+    click: function(_, evt) {
+      evt.stopPropagation();
+    },
+
     'li dragstart': function($el, evt) {
       let $handle = $el.find('.drag-handle');
 

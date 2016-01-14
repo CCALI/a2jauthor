@@ -1,5 +1,6 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
+import Answers from 'caja/author/models/answers';
 import template from './a2j-template-wrapper.stache!';
 import A2JTemplate from 'caja/author/models/a2j-template';
 
@@ -64,7 +65,7 @@ let TemplateWrapperVM = Map.extend({
     },
 
     /**
-     * @property {can.Map} templateWrapper.ViewModel.prototype.answers answers
+     * @property {Answers} templateWrapper.ViewModel.prototype.answers answers
      * @parent templateWrapper.ViewModel
      *
      * Key/value map of interview's variable values extracted from [payload].
@@ -72,8 +73,9 @@ let TemplateWrapperVM = Map.extend({
     answers: {
       get() {
         let payload = this.attr('payload');
+        let rawAnswers = payload.attr('answers').attr();
 
-        return payload.attr('answers');
+        return new Answers(rawAnswers);
       }
     }
   }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;a2j-template-wrapper&gt;</title>
+  </head>
+
+  <body>
+    <div class="bootstrap-styles" >
+      <div class="row clearfix" style="margin-top: 20px;">
+        <div class="col-md-12 app"></div>
+      </div>
+    </div>
+
+    <script>window.less = { async: true };</script>
+
+    <script src="../../../../node_modules/steal/steal.js" main="@empty">
+      var $ = require('jquery');
+      var stache = require('can/view/stache/');
+
+      require('author/styles.less!');
+      require('author/templates/elements/a2j-template-wrapper/');
+
+      var template = '<a2j-template-wrapper {payload}="payload" />';
+      var frag = stache(template);
+      var reqPayload = '{"answers":{"a2j version":{"name":"A2J Version","repeating":false,"type":"Text","values":[null,"5.0.2.4"]},"a2j interview id":{"name":"A2J Interview ID","repeating":false,"type":"Text","values":[null,"-995046246"]},"a2j bookmark":{"name":"A2J Bookmark","repeating":false,"type":"Text","values":[null,"New page 4 2 2"]},"a2j history":{"name":"A2J History","repeating":false,"type":"Text","values":[null,"&lt;LABELS/&gt;"]},"witness address te":{"name":"Witness address TE","repeating":true,"type":"Text","values":[null,"1234 Main","565 W. Monroe","9000 East Wickham"]},"witness address city te":{"name":"Witness address city TE","repeating":true,"type":"Text","values":[null,"Chicago","Evanston","Des Moine"]},"witness address state te":{"name":"Witness address state TE","repeating":true,"type":"MC","values":[null,"IA"]},"witness address zip te":{"name":"Witness address zip TE","repeating":true,"type":"Text","values":[null,"60661","12345","12347"]},"witness apt number te":{"name":"Witness apt number TE","repeating":true,"type":"Text","values":[null,"#1B","401",""]},"witness area code te":{"name":"Witness area code TE","repeating":true,"type":"Text","values":[null]},"witness first name te":{"name":"Witness first name TE","repeating":true,"type":"Text","values":[null,"John","Jane","Mark"]},"witness last name te":{"name":"Witness last name TE","repeating":true,"type":"Text","values":[null,"Doe","Adams","Smith"]},"witness phone area code te":{"name":"Witness phone area code TE","repeating":true,"type":"Text","values":[null,"123","","123"]},"witness phone number te":{"name":"Witness phone number TE","repeating":true,"type":"Text","values":[null,"4567890","","4567890"]},"witness address state mc":{"name":"Witness address state MC","repeating":true,"type":"MC","values":[null]},"witnesscount":{"name":"WitnessCount","repeating":true,"type":"Number","values":[null,"3"]},"witness phone tf":{"name":"Witness phone TF","repeating":false,"type":"MC","values":[null,"true"]}},"templates":[{"guideId":"20","templateId":"2114","title":"Landlord Nonpayment DIY Program","active":true,"rootNode":{"tag":"a2j-template","children":[{"tag":"a2j-conditional","children":[],"state":{"editEnabled":"true","editActive":false,"operator":"is-true","elseClause":false,"leftOperand":"WitnessCount","rightOperand":"","leftOperandType":"variable","rightOperandType":"variable","ifBlockTemplate":{"guideId":"1261","templateId":3001,"title":"Untitled Template","active":true,"rootNode":{"children":[{"tag":"a2j-section-title","state":{"title":"This is a Section Title","underline":true,"nodeIndex":0,"useAnswers":false,"editEnabled":"true","editActive":false}}]}},"elseBlockTemplate":{"guideId":"","templateId":"","title":"Untitled Template","active":true,"rootNode":{"children":[{"tag":"a2j-section-title","state":{"title":"Different Section Title","underline":false}}]}}}}],"state":{}}}]}';
+
+      $('.app').append(frag({ payload: reqPayload }));
+    </script>
+  </body>
+</html>

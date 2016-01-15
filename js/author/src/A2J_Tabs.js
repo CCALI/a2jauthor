@@ -529,22 +529,34 @@ var form={
 			form.change($(this), html);
 		}).data('data',data) ;
 		return e;
-	}
-	,textArea: function(data)
-	{
-		var rows=2;
-		var e=$('<div name="'+data.name+'">'
-			+'<div class="editspan form-group">'
-			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
-			+'<div class="form-control text editable taller" rows='+rows+'>'+data.value+'</div></div></div>');
-		$('.editable',e).blur(function(){
-			var val=$(this).val();//form.htmlFix($(this).html());
-			form.change($(this), val);
-		}).data('data',data);
-		return e;
-	}
+	},
 
-	,pickFile : function(mask)
+  textArea: function(data) {
+    var label = data.label != null ?
+      ('<label class="control-label">' + data.label + '</label>') : '';
+
+    var $el = $(
+      '<div name="' + data.name + '">' +
+        '<div class="editspan form-group">' +
+          label +
+          '<textarea class="form-control text editable taller" rows="2">' +
+            data.value +
+          '</textarea>' +
+        '</div>' +
+      '</div>'
+    );
+
+    var onBlur = function() {
+      var val = $(this).val(); // form.htmlFix($(this).html());
+      form.change($(this), val);
+    };
+
+    $el.find('.editable').blur(onBlur).data('data', data);
+
+    return $el;
+  },
+
+  pickFile : function(mask)
 	{
 		var e=$('<div class="fileinput-button form-group">'
 		+'<button class="btn btn-primary"><span class="glyphicon-plus"></span> Upload...</button>'

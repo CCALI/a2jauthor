@@ -22,6 +22,10 @@ export let RichTextVM = Map.extend({
 
     ckeditorInstance: {
       type: '*'
+    },
+
+    showOptionsPane: {
+      value: true
     }
   },
 

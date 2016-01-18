@@ -26,6 +26,10 @@ export let RichTextVM = Map.extend({
 
     showOptionsPane: {
       value: true
+    },
+
+    wrapWithContainer: {
+      value: true
     }
   },
 

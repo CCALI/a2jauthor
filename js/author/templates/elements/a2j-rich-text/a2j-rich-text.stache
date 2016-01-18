@@ -3,13 +3,21 @@
 <can-import from="caja/author/templates/elements/a2j-rich-text/a2j-rich-text.less!" />
 
 {{#if editEnabled}}
-  <element-container {(selected)}="editActive">
+  {{#if wrapWithContainer}}
+    <element-container {(selected)}="editActive">
+      {{#if editActive}}
+        <textarea>{{userContent}}</textarea>
+      {{else}}
+        {{a2jParse(userContent)}}
+      {{/if}}
+    </element-container>
+  {{else}}
     {{#if editActive}}
       <textarea>{{userContent}}</textarea>
     {{else}}
       {{a2jParse(userContent)}}
     {{/if}}
-  </element-container>
+  {{/if}}
 
   {{#if showOptionsPane}}
     {{#if editActive}}

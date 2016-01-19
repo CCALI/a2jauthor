@@ -197,6 +197,7 @@ export default Map.extend({
 
       // toggle editActive so it 'closes' the options pane
       nodeViewModel.attr('editActive', false);
+      this.attr('activeNode', null);
 
       // `rootNodeScope` is a reference to `a2j-template` viewModel, if we
       // don't remove it before calling `.attr` in node's `state` map it
@@ -210,9 +211,27 @@ export default Map.extend({
   toggleEditActiveNode(nodeViewModel) {
     let nodesViewModels = this.attr('nodesViewModels');
 
-    nodesViewModels.each(function(node) {
+    nodesViewModels.each(node => {
       let active = node === nodeViewModel;
-      node.attr('editActive', active);
+
+      if (active) {
+        node.attr('editActive', true);
+        this.attr('activeNode', nodeViewModel);
+      } else {
+        node.attr('editActive', false);
+      }
+    });
+
+    let activeNode = this.attr('activeNode');
+
+    // walk the list of node's view model instances, if there is a node that
+    // has nested nodes (it owns `a2j-template` instances) let it know that there
+    // is an active node so it can propertly 'de-activate'/'de-select` any of its
+    // child elements.
+    nodesViewModels.each(function(node) {
+      if (node.attr('hasNestedNodes')) {
+        node.attr('activeNode', activeNode);
+      }
     });
   },
 

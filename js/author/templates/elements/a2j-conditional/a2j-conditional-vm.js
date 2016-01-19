@@ -140,6 +140,40 @@ export default Map.extend({
       value: 'variable'
     },
 
+    /**
+     * @property {Boolean} conditional.ViewModel.prototype.hasNestedNodes hasNestedNodes
+     * @parent conditional.ViewModel
+     *
+     * Boolean flag that tells the `a2j-template` parent component that instances
+     * of this component (`a2j-conditional`) need to be notified that there is
+     * an active node, since this element owns its own elements it should know when
+     * to toggle their `editActive` state when sibling elements are 'selected'.
+     */
+    hasNestedNodes: {
+      value: true
+    },
+
+    /**
+     * @property {can.Map} conditional.ViewModel.prototype.activeNode activeNode
+     * @parent conditional.ViewModel
+     *
+     * View model instance of the current active node (element). When set, this
+     * setter makes sure the previous set node is de-selected; this prevents that
+     * child nodes of the inner template instances used for the `if` and `else`
+     * blocks are selected at the same time.
+     */
+    activeNode: {
+      set(newActiveNode) {
+        let current = this.attr('activeNode');
+
+        if (current) {
+          current.attr('editActive', false);
+        }
+
+        return newActiveNode;
+      }
+    },
+
     ifBlockTemplate: {
       value() {
         return new A2JTemplate({

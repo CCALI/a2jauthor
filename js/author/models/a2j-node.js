@@ -4,9 +4,10 @@ import _omit from 'lodash/object/omit';
 
 import 'can/map/define/';
 
-const omitStateProps = [
+const omitStateAttrs = [
   'guide', 'answers', 'useAnswers',
-  'ckeditorInstance', 'nodeIndex'
+  'ckeditorInstance', 'nodeIndex',
+  'activeNode'
 ];
 
 /**
@@ -39,7 +40,7 @@ export default Map.extend({
       Value: Map,
       serialize(current) {
         let serialized = current.serialize();
-        return _omit(serialized, ...omitStateProps);
+        return _omit(serialized, ...omitStateAttrs);
       }
     },
 

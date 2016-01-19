@@ -36,6 +36,7 @@
         <a2j-template
           edit-enabled="true"
           {save-callback}="@noOpFn"
+          {(active-node)}="activeNode"
           {(template)}="ifBlockTemplate" />
       </div>
 
@@ -46,6 +47,7 @@
           <a2j-template
             edit-enabled="true"
             {save-callback}="@noOpFn"
+            {(active-node)}="activeNode"
             {(template)}="elseBlockTemplate" />
         </div>
       {{/if}}

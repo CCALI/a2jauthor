@@ -68,48 +68,50 @@
   </bit-panel>
 
   <bit-panel title="Template Options">
-    <form>
-      <h3>Layout</h3>
+    <h3>Layout</h3>
 
-      <div class="row clearfix">
-        <div class="col-lg-6">
-          <button class="btn btn-default disabled">Custom Header</button>
-        </div>
-
-        <div class="col-lg-6">
-          <button class="btn btn-default disabled">Custom Footer</button>
-        </div>
+    <div class="row clearfix">
+      <div class="col-lg-6">
+        <button
+          class="btn btn-default"
+          ($click)="editElement('header')">Custom Header</button>
       </div>
 
-      <h3>Formatting</h3>
-
-      <div class="form-group">
-        <label>Font Family</label>
-        <select class="form-control" disabled>
-          <option selected="selected">Arial</option>
-        </select>
+      <div class="col-lg-6">
+        <button
+          class="btn btn-default"
+          ($click)="editElement('footer')">Custom Footer</button>
       </div>
+    </div>
 
-      <div class="form-group">
-        <label>Font Size</label>
-        <select class="form-control" disabled>
-          <option selected="selected">12</option>
-        </select>
-      </div>
+    <h3>Formatting</h3>
 
-      <div class="form-group">
-        <label>Section Numbering</label>
-        <select class="form-control" disabled>
-          <option selected="selected">None</option>
-        </select>
-      </div>
+    <div class="form-group">
+      <label>Font Family</label>
+      <select class="form-control" disabled>
+        <option selected="selected">Arial</option>
+      </select>
+    </div>
 
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" value="" disabled>
-          Conditional Logic
-        </label>
-      </div>
-    </form>
+    <div class="form-group">
+      <label>Font Size</label>
+      <select class="form-control" disabled>
+        <option selected="selected">12</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Section Numbering</label>
+      <select class="form-control" disabled>
+        <option selected="selected">None</option>
+      </select>
+    </div>
+
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="" disabled>
+        Conditional Logic
+      </label>
+    </div>
   </bit-panel>
 </bit-tabs>

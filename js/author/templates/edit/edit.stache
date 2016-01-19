@@ -5,6 +5,7 @@
 <can-import from="author/templates/edit/edit.less!"/>
 <can-import from="author/templates/elements/a2j-blank/"/>
 <can-import from="author/templates/elements/a2j-template/"/>
+<can-import from="author/templates/elements/a2j-header-footer/"/>
 
 <div class="page">
   {{#if a2jTemplatePromise.isPending}}
@@ -16,6 +17,8 @@
       <div class="row clearfix">
         {{! left column where elements are rendered }}
         <div class="col-md-8">
+          <a2j-header-footer title="Custom Header" {(edit-active)}="*editingHeader"/>
+
           {{#if a2jTemplate.rootNode.children.length}}
             <a2j-template
               {(guide)}="guide"
@@ -24,11 +27,16 @@
           {{else}}
             <a2j-blank-template />
           {{/if}}
+
+          <a2j-header-footer title="Custom Footer" {(edit-active)}="*editingFooter"/>
         </div>
 
         {{! right column where template options tab is rendered }}
         <div class="col-md-4">
-          <template-edit-tabs {(a2j-template)}="a2jTemplate" />
+          <template-edit-tabs
+            {(a2j-template)}="a2jTemplate"
+            {(^editing-header)}="*editingHeader"
+            {(^editing-footer)}="*editingFooter"/>
         </div>
       </div>
 

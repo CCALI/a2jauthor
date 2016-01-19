@@ -82,7 +82,9 @@ export default Component.extend({
     },
 
     removed() {
-      this.viewModel.destroyEditorInstance();
+      let vm = this.viewModel;
+      vm.updateUserContent();
+      vm.destroyEditorInstance();
     },
 
     '{viewModel} editActive': function() {

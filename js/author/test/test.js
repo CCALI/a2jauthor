@@ -18,6 +18,7 @@ import 'author/templates/elements/varpicker/varpicker-test';
 import 'author/templates/elements/a2j-variable/a2j-variable-test';
 import 'author/templates/elements/options-pane/options-pane-test';
 import 'author/templates/elements/a2j-repeat-loop/a2j-repeat-loop-test';
+import 'author/templates/elements/a2j-header-footer/a2j-header-footer-test';
 import 'author/templates/elements/element-container/element-container-test';
 
 import 'author/debug-panel/debug-panel-test';

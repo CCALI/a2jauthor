@@ -17,7 +17,7 @@
       <div class="row clearfix">
         {{! left column where elements are rendered }}
         <div class="col-md-8">
-          <a2j-header-footer title="Custom Header" {(edit-active)}="*editingHeader"/>
+          <a2j-header-footer title="Custom Header" {(edit-active)}="*editingHeader" {^user-content}="*templateHeader"/>
 
           {{#if a2jTemplate.rootNode.children.length}}
             <a2j-template
@@ -28,7 +28,7 @@
             <a2j-blank-template />
           {{/if}}
 
-          <a2j-header-footer title="Custom Footer" {(edit-active)}="*editingFooter"/>
+          <a2j-header-footer title="Custom Footer" {(edit-active)}="*editingFooter" {^user-content}="*templateFooter"/>
         </div>
 
         {{! right column where template options tab is rendered }}
@@ -40,7 +40,7 @@
         </div>
       </div>
 
-      <test-assemble-options {guide}="guide" {template}="a2jTemplate" />
+      <test-assemble-options {guide}="guide" {template}="a2jTemplate" {header}="*templateHeader" {footer}="*templateFooter" />
     </div>
   {{/if}}
 </div>

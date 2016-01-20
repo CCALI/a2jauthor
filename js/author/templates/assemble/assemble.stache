@@ -31,7 +31,9 @@
 
       <div class="modal-footer">
         <form action="/api/assemble" method="post" target="_blank">
-          <input type="hidden" name="payload" value="{{assemblePayload}}">
+          <input type="hidden" name="payload" {$value}="assemblePayload">
+          <input type="hidden" name="header" {$value}="header">
+          <input type="hidden" name="footer" {$value}="footer">
           <button type="submit" class="btn btn-primary btn-submit">Get PDF</button>
         </form>
       </div>

@@ -14,8 +14,10 @@
   <div class="popover-content">
     <content />
 
-    <div class="text-center">
-      <button ($click)="saveAndClose()" class="btn btn-default">Save & Close</button>
-    </div>
+    {{#if showSaveButton}}
+      <div class="text-center">
+        <button ($click)="saveAndClose()" class="btn btn-default btn-save">Save &amp; Close</button>
+      </div>
+    {{/if}}
   </div>
 </div>

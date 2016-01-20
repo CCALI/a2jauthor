@@ -2,6 +2,7 @@
 <can-import from="caja/author/templates/elements/options-pane/" />
 <can-import from="caja/author/templates/elements/a2j-variable/" />
 <can-import from="caja/author/templates/elements/element-container/" />
+<can-import from="caja/author/templates/elements/a2j-conditional/add-element/" />
 <can-import from="caja/author/templates/elements/a2j-conditional/a2j-conditional.less!" />
 
 {{#if editEnabled}}
@@ -35,9 +36,13 @@
       <div class="panel-body">
         <a2j-template
           edit-enabled="true"
+          {(template)}="ifBody"
           {save-callback}="@noOpFn"
-          {(active-node)}="activeNode"
-          {(template)}="ifBlockTemplate" />
+          {(active-node)}="activeNode" />
+
+        <conditional-add-element
+          {(template)}="ifBody"
+          {(active-node)}="activeNode" />
       </div>
 
       {{#if elseClause}}
@@ -46,9 +51,13 @@
         <div class="panel-body">
           <a2j-template
             edit-enabled="true"
+            {(template)}="elseBody"
             {save-callback}="@noOpFn"
-            {(active-node)}="activeNode"
-            {(template)}="elseBlockTemplate" />
+            {(active-node)}="activeNode" />
+
+          <conditional-add-element
+            {(template)}="elseBody"
+            {(active-node)}="activeNode" />
         </div>
       {{/if}}
 
@@ -61,8 +70,8 @@
   {{/if}}
 {{else}}
   {{#if evalCondition()}}
-    <a2j-template edit-enabled="false" {template}="ifBlockTemplate" />
+    <a2j-template edit-enabled="false" {template}="ifBody" />
   {{else}}
-    <a2j-template edit-enabled="false" {template}="elseBlockTemplate" />
+    <a2j-template edit-enabled="false" {template}="elseBody" />
   {{/if}}
 {{/if}}

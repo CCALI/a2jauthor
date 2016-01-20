@@ -174,37 +174,31 @@ export default Map.extend({
       }
     },
 
-    ifBlockTemplate: {
+    /**
+     * @property {A2JTemplate} conditional.ViewModel.prototype.ifBody ifBody
+     * @parent conditional.ViewModel
+     *
+     * A2JTemplate instance that represents the tree of elements that will be
+     * rendered in the final PDF document if the condition set by the user
+     * evaluates to `true` (`evalCondition()` yields `true`).
+     */
+    ifBody: {
       value() {
-        return new A2JTemplate({
-          rootNode: {
-            children: [
-              { tag: 'a2j-section-title',
-                state: {
-                  title: 'This is a Section Title',
-                  underline: true
-                }
-              }
-            ]
-          }
-        });
+        return new A2JTemplate();
       }
     },
 
-    elseBlockTemplate: {
+    /**
+     * @property {A2JTemplate} conditional.ViewModel.prototype.elseBody elseBody
+     * @parent conditional.ViewModel
+     *
+     * A2JTemplate instance that represents the tree of elements that will be
+     * rendered in the final PDF document if the condition set by the user
+     * evaluates to `false` (`evalCondition()` yields `false`).
+     */
+    elseBody: {
       value() {
-        return new A2JTemplate({
-          rootNode: {
-            children: [
-              { tag: 'a2j-section-title',
-                state: {
-                  title: 'Different Section Title',
-                  underline: false
-                }
-              }
-            ]
-          }
-        });
+        return new A2JTemplate();
       }
     }
   },
@@ -214,10 +208,9 @@ export default Map.extend({
    * @parent conditional.ViewModel
    *
    * An empty function intended to be used as the `saveCallback` of the
-   * `a2j-template` instances used in `ifBlockTemplate`/`elseBlockTemplate`,
-   * this way these template instances are not saved as independent templates
-   * but are serialized as any other property of the `a2j-conditional` component
-   * state.
+   * `a2j-template` instances used in `ifBody`/`elseBody`, this way these
+   * template instances are not saved as independent templates but are
+   * serialized as any other property of the `a2j-conditional` component state.
    */
   noOpFn: can.noop,
 

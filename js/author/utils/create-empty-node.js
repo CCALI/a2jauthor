@@ -1,4 +1,4 @@
-import A2JNode from 'author/models/a2j-node';
+import A2JNode from 'caja/author/models/a2j-node';
 
 let emptyNodes = {
   'section-title': {

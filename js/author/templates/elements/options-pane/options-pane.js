@@ -1,6 +1,7 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './options-pane.stache!';
+import _isFunction from 'lodash/lang/isFunction';
 
 import 'can/map/define/';
 
@@ -38,6 +39,17 @@ export let OptionsPane = Map.extend({
     title: {
       type: 'string',
       value: ''
+    },
+
+    /**
+     * @property {Boolean} optionsPane.ViewModel.prototype.define.showSaveButton showSaveButton
+     * @parent optionsPane.ViewModel
+     *
+     * Whether to show the `Save and Close` button.
+     */
+    showSaveButton: {
+      type: 'boolean',
+      value: true
     }
   },
 
@@ -49,12 +61,22 @@ export let OptionsPane = Map.extend({
    * the logic to persist the element/node state to the `a2j-template` scope.
    */
   saveAndClose() {
-    let nodeScope = this.attr('parentScope');
+    let saveAndClose = this.attr('saveAndClose');
 
-    if (nodeScope) {
-      let rootNodeScope = nodeScope.attr('rootNodeScope');
-      rootNodeScope.updateNodeState(nodeScope);
+    if (_isFunction(saveAndClose)) {
+      saveAndClose();
+    } else {
+      // we need to refactor this component so it always gets this behavior as
+      // a regular `attr` instead of keeping a reference to its parent VM.
+      let nodeScope = this.attr('parentScope');
+
+      if (nodeScope) {
+        let rootNodeScope = nodeScope.attr('rootNodeScope');
+        rootNodeScope.updateNodeState(nodeScope);
+      }
     }
+
+    return false;
   }
 });
 

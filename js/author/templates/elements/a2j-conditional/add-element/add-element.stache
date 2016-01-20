@@ -1,0 +1,52 @@
+<can-import from="caja/author/templates/elements/options-pane/" />
+<can-import from="caja/author/templates/elements/a2j-conditional/add-element/add-element.less!" />
+
+<div class="{{#if editActive}}active{{/if}}" ($click)="setAsActive()">
+  add elements here...
+</div>
+
+{{#if editActive}}
+  <element-options-pane
+    title="Add Elements"
+    {show-save-button}="false"
+    {save-and-close}="@closeOptionsPopup">
+
+    <h3>Standard</h3>
+    <div class="row clearfix">
+      <div class="col-md-6">
+        <button
+          class="btn btn-default btn-block"
+          ($click)="addElement('section-title')">Section</button>
+      </div>
+
+      <div class="col-md-6">
+        <button
+          class="btn btn-default btn-block"
+          ($click)="addElement('rich-text')">Rich Text</button>
+      </div>
+    </div>
+
+    <div class="row clearfix">
+      <div class="col-md-6">
+        <button
+          class="btn btn-default btn-block"
+          ($click)="addElement('page-break')">Page Break</button>
+      </div>
+
+      <div class="col-md-6">&nbsp;</div>
+    </div>
+
+    <h3>Logic</h3>
+    <div class="row clearfix">
+      <div class="col-md-6">
+        <button class="btn btn-default btn-block disabled">If / Else</button>
+      </div>
+
+      <div class="col-md-6">
+        <button
+          class="btn btn-default btn-block"
+          ($click)="addElement('repeat-loop')">Repeat Loop</button>
+      </div>
+    </div>
+  </element-options-pane>
+{{/if}}

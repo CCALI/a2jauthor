@@ -24,7 +24,7 @@ const operatorTextMap = {
  * ## Use
  *
  * @codestart
- *   <a2j-conditional left-operand="true" operator="is-greater-than" right-operand="3"  />
+ *   <a2j-conditional left-operand="5" operator="is-greater-than" right-operand="3"  />
  * @codeend
  */
 export default Component.extend({

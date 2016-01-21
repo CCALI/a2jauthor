@@ -183,9 +183,8 @@ export default Map.extend({
      * evaluates to `true` (`evalCondition()` yields `true`).
      */
     ifBody: {
-      value() {
-        return new A2JTemplate();
-      }
+      Type: A2JTemplate,
+      Value: A2JTemplate
     },
 
     /**
@@ -197,9 +196,8 @@ export default Map.extend({
      * evaluates to `false` (`evalCondition()` yields `false`).
      */
     elseBody: {
-      value() {
-        return new A2JTemplate();
-      }
+      Type: A2JTemplate,
+      Value: A2JTemplate
     }
   },
 
@@ -213,6 +211,35 @@ export default Map.extend({
    * serialized as any other property of the `a2j-conditional` component state.
    */
   noOpFn: can.noop,
+
+  /**
+   * @function conditional.ViewModel.prototype.setActiveNode setActiveNode
+   * @parent conditional.ViewModel
+   *
+   * Callback passed down to the instances of `<conditional-add-element />` so
+   * `<a2j-conditional />` can set `activeNode` properly when user selects the
+   * add element component.
+   */
+  setActiveNode(node) {
+    if (node) {
+      node.attr('editActive', true);
+      this.attr('activeNode', node);
+    }
+  },
+
+  /**
+   * @function conditional.ViewModel.prototype.deselectNestedNode deselectNestedNode
+   * @parent conditional.ViewModel
+   *
+   * `<a2j-template />` will call this method on every component that own instances
+   * of itself, e.g `a2j-conditional` is a child of `<a2j-template />` but owns
+   * instances of `<a2j-template />` as well (`ifBody` and `elseBody`). When an
+   * element is selected in the parent template, `deselectNestedNode` will be called
+   * to make sure any nested element is deselected properly.
+   */
+  deselectNestedNode() {
+    this.attr('activeNode', null);
+  },
 
   getOperandValue(rightOrLeft = 'left') {
     let answers = this.attr('answers');

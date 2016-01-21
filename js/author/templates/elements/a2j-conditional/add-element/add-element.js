@@ -1,6 +1,7 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './add-element.stache!';
+import _isFunction from 'lodash/lang/isFunction';
 import createEmptyNode from 'caja/author/utils/create-empty-node';
 
 import 'can/map/define/';
@@ -49,8 +50,12 @@ const AddElementVM = Map.extend({
    * allowing the user to effectively add elements.
    */
   setAsActive() {
-    this.attr('editActive', true);
-    this.attr('activeNode', this);
+    let setActiveNode = this.attr('setActiveNode');
+
+    if (_isFunction(setActiveNode)) {
+      setActiveNode(this);
+    }
+
     return false;
   },
 

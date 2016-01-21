@@ -42,6 +42,16 @@ export default Component.extend({
   },
 
   events: {
+    '{viewModel} activeNode': function() {
+      let $el = this.element;
+      let vm = this.viewModel;
+      let activeNode = vm.attr('activeNode');
+
+      if (activeNode) {
+        $el.trigger('nested-node-selected', activeNode);
+      }
+    },
+
     '{viewModel} leftOperandType': function() {
       this.viewModel.attr('leftOperand', '');
     },

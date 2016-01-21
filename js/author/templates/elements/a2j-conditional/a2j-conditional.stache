@@ -42,7 +42,8 @@
 
         <conditional-add-element
           {(template)}="ifBody"
-          {(active-node)}="activeNode" />
+          {(active-node)}="activeNode"
+          {set-active-node}="@setActiveNode" />
       </div>
 
       {{#if elseClause}}
@@ -57,7 +58,8 @@
 
           <conditional-add-element
             {(template)}="elseBody"
-            {(active-node)}="activeNode" />
+            {(active-node)}="activeNode"
+            {set-active-node}="@setActiveNode" />
         </div>
       {{/if}}
 

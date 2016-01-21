@@ -2,9 +2,11 @@ import $ from 'jquery';
 import assert from 'assert';
 import stache from 'can/view/stache/';
 import ConditionalVM from './a2j-conditional-vm';
+import createEmptyNode from 'author/utils/create-empty-node';
 
 import 'steal-mocha';
 import './a2j-conditional';
+import 'author/templates/elements/a2j-template/';
 
 describe('<a2j-conditional>', function() {
 
@@ -194,6 +196,31 @@ describe('<a2j-conditional>', function() {
       vm.attr('elseClause', true);
       assert.isTrue($('.panel-else').is(':visible'));
       assert.lengthOf($('.panel-body'), 2, 'if and else body should be rendered');
+    });
+
+    it('only one element can be selected at a time', function() {
+      vm.attr('elseClause', true);
+      vm.attr('ifBody').addNode(createEmptyNode('section-title'));
+      vm.attr('elseBody').addNode(createEmptyNode('section-title'));
+
+      let $firstIfElement = $('element-container').eq(1);
+      let $firstElseElement = $('element-container').eq(2);
+      let $addElementToIf = $('conditional-add-element').eq(0);
+      let $addElementToElse = $('conditional-add-element').eq(0);
+
+      $firstIfElement.find('.wrapper').click();
+      assert.isTrue($firstIfElement.viewModel().attr('selected'));
+      assert.isFalse($firstElseElement.viewModel().attr('selected'));
+      assert.isFalse($addElementToIf.viewModel().attr('editActive'));
+      assert.isFalse($addElementToElse.viewModel().attr('editActive'));
+      assert.lengthOf($('element-options-pane'), 1);
+
+      $firstElseElement.find('.wrapper').click();
+      assert.isTrue($firstElseElement.viewModel().attr('selected'));
+      assert.isFalse($firstIfElement.viewModel().attr('selected'));
+      assert.isFalse($addElementToIf.viewModel().attr('editActive'));
+      assert.isFalse($addElementToElse.viewModel().attr('editActive'));
+      assert.lengthOf($('element-options-pane'), 1);
     });
 
     describe('element options pane', function() {

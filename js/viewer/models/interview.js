@@ -1,14 +1,14 @@
 import List from 'can/list/';
 import Model from 'can/model/';
+import _last from 'lodash/last';
+import _keys from 'lodash/keys';
+import _find from 'lodash/find';
+import _assign from 'lodash/assign';
 import Page from 'viewer/models/page';
-import _last from 'lodash/array/last';
-import _keys from 'lodash/object/keys';
-import _find from 'lodash/collection/find';
-import _extend from 'lodash/object/extend';
+import _includes from 'lodash/includes';
+import _isString from 'lodash/isString';
 import Answers from 'viewer/models/answers';
-import _isString from 'lodash/lang/isString';
 import parser from 'viewer/mobile/util/parser';
-import _includes from 'lodash/collection/includes';
 import getSkinTone from 'viewer/models/get-skin-tone';
 
 import 'can/list/sort/';
@@ -72,7 +72,7 @@ const Interview = Model.extend({
     });
 
     resumeDfd.done(function(interview) {
-      dfd.resolve(_extend({interviewPath}, interview));
+      dfd.resolve(_assign({interviewPath}, interview));
     });
 
     resumeDfd.fail(function() {
@@ -87,7 +87,7 @@ const Interview = Model.extend({
     data.pages = [];
 
     can.each(data._pages, function(p) {
-      let page = _extend({}, p);
+      let page = _assign({}, p);
       let stepNumber = page.step;
 
       let step = _find(data.steps, function(step) {

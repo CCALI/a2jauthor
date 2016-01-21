@@ -1,6 +1,6 @@
 import moment from 'moment';
-import _isNaN from 'lodash/lang/isNaN';
-import _isString from 'lodash/lang/isString';
+import _isNaN from 'lodash/isNaN';
+import _isString from 'lodash/isString';
 
 /**
  * @module {{}} author/models/template-comparator

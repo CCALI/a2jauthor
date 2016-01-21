@@ -1,9 +1,7 @@
-import $ from 'jquery';
-import _trunc from 'lodash/string/trunc';
 import Map from 'can/map/';
 import Component from 'can/component/';
+import _truncate from 'lodash/truncate';
 import template from './sign-text.stache!';
-import can from 'can';
 
 import 'can/map/define/';
 import 'jquery-textfill';
@@ -24,7 +22,7 @@ export let SignTextVM = Map.extend({
      */
     displayText: {
       get() {
-        return _trunc(this.attr('text'), {
+        return _truncate(this.attr('text'), {
           length: this.attr('maxChars') + this.attr('overflowText').length,
           separator: ' ',
           omission: this.attr('overflowText')

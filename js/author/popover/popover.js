@@ -1,7 +1,7 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
+import _includes from 'lodash/includes';
 import template from './popover.stache!';
-import _includes from 'lodash/collection/includes';
 
 import 'can/map/define/';
 

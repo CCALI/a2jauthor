@@ -1,8 +1,8 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './tabs.stache!';
+import _capitalize from 'lodash/capitalize';
 import createEmptyNode from 'author/utils/create-empty-node';
-import _capitalize from 'lodash/string/capitalize';
 
 import 'can/map/define/';
 

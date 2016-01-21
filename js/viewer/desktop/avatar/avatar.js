@@ -1,7 +1,7 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './avatar.stache!';
-import _contains from 'lodash/collection/contains';
+import _includes from 'lodash/includes';
 
 import 'can/map/define/';
 
@@ -11,9 +11,9 @@ const skinEnum = ['light', 'lighter', 'medium', 'dark', 'darker'];
 
 const enumType = function(enumColl) {
   return function(value) {
-    return _contains(enumColl, value)
-      ? value
-      : enumColl[0];
+    return _includes(enumColl, value) ?
+      value :
+      enumColl[0];
   };
 };
 

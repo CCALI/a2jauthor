@@ -1,12 +1,10 @@
 import $ from 'jquery';
 import Map from 'can/map/';
 import List from 'can/list/';
+import _isNaN from 'lodash/isNaN';
+import _inRange from 'lodash/inRange';
 import Component from 'can/component/';
 import template from './steps.stache!';
-import _isNaN from 'lodash/lang/isNaN';
-import _startsWith from 'lodash/string/startsWith';
-import _inRange from 'lodash/number/inRange';
-import can from 'can';
 
 import 'can/map/define/';
 

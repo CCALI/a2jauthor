@@ -1,6 +1,6 @@
 import Map from 'can/map/';
 import List from 'can/list/';
-import _omit from 'lodash/object/omit';
+import _omit from 'lodash/omit';
 
 import 'can/map/define/';
 

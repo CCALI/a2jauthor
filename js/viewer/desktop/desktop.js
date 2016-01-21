@@ -1,7 +1,7 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './desktop.stache!';
-import _isUndefined from 'lodash/lang/isUndefined';
+import _isUndefined from 'lodash/isUndefined';
 
 import 'can/map/define/';
 

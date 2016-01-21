@@ -1,7 +1,7 @@
 import Map from 'can/map/';
 import moment from 'moment';
-import _filter from 'lodash/collection/filter';
-import _reduce from 'lodash/collection/reduce';
+import _filter from 'lodash/filter';
+import _reduce from 'lodash/reduce';
 import Validations from 'viewer/mobile/util/validations';
 
 import 'can/map/define/';

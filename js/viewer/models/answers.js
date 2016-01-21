@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import Model from 'can/model/';
-import _find from 'lodash/collection/find';
+import _find from 'lodash/find';
 import CONST from 'viewer/models/constants';
 import cString from 'viewer/mobile/util/string';
 

@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import Map from 'can/map/';
+import _includes from 'lodash/includes';
 import constants from 'viewer/models/constants';
-import _contains from 'lodash/collection/contains';
 
 // List of field types that can be filled with the `sample` property.
 const canUseSampleValues = [
@@ -78,7 +78,7 @@ export default function bindCustomEvents(appState) {
       let fieldType = field.attr('type');
       let sampleValue = field.attr('sample');
 
-      if (_contains(canUseSampleValues, fieldType)) {
+      if (_includes(canUseSampleValues, fieldType)) {
         field.attr('hasError', false);
         answer.attr('values', sampleValue);
       }

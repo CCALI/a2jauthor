@@ -1,8 +1,7 @@
 import Map from 'can/map/';
 import List from 'can/list/';
+import _find from 'lodash/find';
 import Field from 'viewer/models/field';
-import Answer from 'viewer/models/answer';
-import _find from 'lodash/collection/find';
 
 import 'can/map/define/';
 

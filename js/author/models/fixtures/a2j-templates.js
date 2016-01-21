@@ -1,4 +1,4 @@
-import _values from 'lodash/object/values';
+import _values from 'lodash/values';
 import template2112 from './templates/guide1261-template2112';
 import template2113 from './templates/guide1261-template2113';
 import template2114 from './templates/guide20-template2114';

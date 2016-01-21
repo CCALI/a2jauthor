@@ -1,9 +1,9 @@
 import Map from 'can/map/';
+import _assign from 'lodash/assign';
 import Component from 'can/component/';
 import isMobile from 'viewer/is-mobile';
 import template from 'viewer/app.stache!';
 import Lang from 'viewer/mobile/util/lang';
-import _extend from 'lodash/object/extend';
 import Logic from 'viewer/mobile/util/logic';
 import AppState from 'viewer/models/app-state';
 import Interview from 'viewer/models/interview';
@@ -24,7 +24,7 @@ export default Component.extend({
       let mState = new MemoryState();
       let pState = new PersistedState();
 
-      let mobileData = parseGuideToMobile(_extend({}, window.gGuide));
+      let mobileData = parseGuideToMobile(_assign({}, window.gGuide));
       let parsedData = Interview.parseModel(mobileData);
       let interview = new Interview(parsedData);
 

@@ -22,6 +22,14 @@ export let RichTextVM = Map.extend({
 
     ckeditorInstance: {
       type: '*'
+    },
+
+    showOptionsPane: {
+      value: true
+    },
+
+    wrapWithContainer: {
+      value: true
     }
   },
 
@@ -74,7 +82,9 @@ export default Component.extend({
     },
 
     removed() {
-      this.viewModel.destroyEditorInstance();
+      let vm = this.viewModel;
+      vm.updateUserContent();
+      vm.destroyEditorInstance();
     },
 
     '{viewModel} editActive': function() {

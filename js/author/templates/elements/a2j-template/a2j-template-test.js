@@ -27,7 +27,7 @@ describe('a2j-template', function() {
       $('#test-area').empty();
     });
 
-    describe('only one element can be selected at a time', function() {
+    describe.skip('only one element can be selected at a time', function() {
       it('works when selecting child elements (direct descendants)', function() {
         assert.lengthOf($('element-options-pane'), 0, 'no element selected');
 

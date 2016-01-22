@@ -42,13 +42,13 @@ export default Component.extend({
   },
 
   events: {
-    '{viewModel} activeNode': function() {
+    '{viewModel} selectedNode': function() {
       let $el = this.element;
       let vm = this.viewModel;
-      let activeNode = vm.attr('activeNode');
+      let selectedNode = vm.attr('selectedNode');
 
-      if (activeNode) {
-        $el.trigger('nested-node-selected', activeNode);
+      if (selectedNode) {
+        $el.trigger('nested-node-selected', selectedNode);
       }
     },
 

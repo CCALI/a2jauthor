@@ -113,7 +113,13 @@ export default Map.extend({
       value: null
     },
 
-    activeNode: {
+    /**
+     * @property {can.Map} a2jTemplate.ViewModel.prototype.define.selectedNode selectedNode
+     * @parent a2jTemplate.ViewModel
+     *
+     * The currenly selected node (element) view model.
+     */
+    selectedNode: {
       get() {
         let nodesViewModels = this.attr('nodesViewModels');
 

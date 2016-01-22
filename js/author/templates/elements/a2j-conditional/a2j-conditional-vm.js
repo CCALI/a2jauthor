@@ -146,7 +146,7 @@ export default Map.extend({
      *
      * Boolean flag that tells the `a2j-template` parent component that instances
      * of this component (`a2j-conditional`) need to be notified that there is
-     * an active node, since this element owns its own elements it should know when
+     * a selected node, since this element owns its own elements it should know when
      * to toggle their `editActive` state when sibling elements are 'selected'.
      */
     hasNestedNodes: {
@@ -154,23 +154,23 @@ export default Map.extend({
     },
 
     /**
-     * @property {can.Map} conditional.ViewModel.prototype.activeNode activeNode
+     * @property {can.Map} conditional.ViewModel.prototype.selectedNode selectedNode
      * @parent conditional.ViewModel
      *
-     * View model instance of the current active node (element). When set, this
+     * View model instance of the currently selected node (element). When set, this
      * setter makes sure the previous set node is de-selected; this prevents that
      * child nodes of the inner template instances used for the `if` and `else`
      * blocks are selected at the same time.
      */
-    activeNode: {
-      set(newActiveNode) {
-        let current = this.attr('activeNode');
+    selectedNode: {
+      set(newSelectedNode) {
+        let current = this.attr('selectedNode');
 
         if (current) {
           current.attr('editActive', false);
         }
 
-        return newActiveNode;
+        return newSelectedNode;
       }
     },
 
@@ -213,17 +213,17 @@ export default Map.extend({
   noOpFn: can.noop,
 
   /**
-   * @function conditional.ViewModel.prototype.setActiveNode setActiveNode
+   * @function conditional.ViewModel.prototype.setSelectedNode setSelectedNode
    * @parent conditional.ViewModel
    *
    * Callback passed down to the instances of `<conditional-add-element />` so
-   * `<a2j-conditional />` can set `activeNode` properly when user selects the
+   * `<a2j-conditional />` can set `selectedNode` properly when user selects the
    * add element component.
    */
-  setActiveNode(node) {
+  setSelectedNode(node) {
     if (node) {
       node.attr('editActive', true);
-      this.attr('activeNode', node);
+      this.attr('selectedNode', node);
     }
   },
 
@@ -238,7 +238,7 @@ export default Map.extend({
    * to make sure any nested element is deselected properly.
    */
   deselectNestedNode() {
-    this.attr('activeNode', null);
+    this.attr('selectedNode', null);
   },
 
   getOperandValue(rightOrLeft = 'left') {

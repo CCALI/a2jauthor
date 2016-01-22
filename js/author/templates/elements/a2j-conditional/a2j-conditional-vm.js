@@ -1,6 +1,6 @@
 import Map from 'can/map/';
+import _includes from 'lodash/includes';
 import Answers from 'caja/author/models/answers';
-import _includes from 'lodash/collection/includes';
 import A2JTemplate from 'caja/author/models/a2j-template';
 
 import 'can/view/';

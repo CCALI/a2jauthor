@@ -1,7 +1,7 @@
 import Map from 'can/map/';
 import List from 'can/list/';
-import _compact from 'lodash/array/compact';
-import _includes from 'lodash/collection/includes';
+import _compact from 'lodash/compact';
+import _includes from 'lodash/includes';
 
 import 'can/map/define/';
 

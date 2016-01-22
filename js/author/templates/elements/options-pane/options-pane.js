@@ -1,7 +1,7 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
+import _isFunction from 'lodash/isFunction';
 import template from './options-pane.stache!';
-import _isFunction from 'lodash/lang/isFunction';
 
 import 'can/map/define/';
 

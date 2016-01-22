@@ -1,7 +1,7 @@
 import Map from 'can/map/';
 import List from 'can/list/';
-import _last from 'lodash/array/last';
-import _range from 'lodash/utility/range';
+import _last from 'lodash/last';
+import _range from 'lodash/range';
 
 import 'can/map/define/';
 

@@ -1,10 +1,10 @@
 import $ from 'jquery';
 import Map from 'can/map/';
 import Component from 'can/component/';
-import _trunc from 'lodash/string/trunc';
+import _truncate from 'lodash/truncate';
+import _findIndex from 'lodash/findIndex';
 import template from './navigation.stache!';
 import constants from 'viewer/models/constants';
-import _findIndex from 'lodash/array/findIndex';
 
 import 'can/map/define/';
 
@@ -172,7 +172,7 @@ export default Component.extend({
       text = text.replace(/(<([^>]+)>)/ig, '').trim();
 
       // truncate text to avoid https://github.com/CCALI/CAJA/issues/685
-      text = _trunc(text, {length: 40, separator: ' '});
+      text = _truncate(text, {length: 40, separator: ' '});
       text = (typeof repeatVarValue === "number") ? text + '#' + repeatVarValue : text;
 
       return text;

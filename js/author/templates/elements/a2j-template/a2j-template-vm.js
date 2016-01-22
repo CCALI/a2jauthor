@@ -1,8 +1,8 @@
 import Map from 'can/map/';
 import List from 'can/list/';
-import _omit from 'lodash/object/omit';
-import _inRange from 'lodash/number/inRange';
-import _isFunction from 'lodash/lang/isFunction';
+import _omit from 'lodash/omit';
+import _inRange from 'lodash/inRange';
+import _isFunction from 'lodash/isFunction';
 import A2JNode from 'caja/author/models/a2j-node';
 
 import 'can/map/define/';

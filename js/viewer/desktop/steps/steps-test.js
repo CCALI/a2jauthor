@@ -5,7 +5,7 @@ import stache from 'can/view/stache/';
 import AppState from 'viewer/models/app-state';
 import Interview from 'viewer/models/interview';
 import { ViewerStepsVM } from 'viewer/desktop/steps/';
-import _round from 'lodash/math/round';
+import _round from 'lodash/round';
 
 import 'steal-mocha';
 

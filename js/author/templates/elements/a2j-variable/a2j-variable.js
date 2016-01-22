@@ -1,6 +1,6 @@
 import Map from 'can/map/';
+import _assign from 'lodash/assign';
 import Component from 'can/component/';
-import _extend from 'lodash/object/extend';
 import template from './a2j-variable.stache!';
 import Answers from 'caja/author/models/answers';
 
@@ -117,7 +117,7 @@ export default Component.extend({
   tag: 'a2j-variable',
 
   viewModel(attrs, parentScope) {
-    let vmAttrs = _extend({}, attrs);
+    let vmAttrs = _assign({}, attrs);
     let answers = parentScope.attr('answers');
     let varIndex = parentScope.attr('varIndex');
 
@@ -128,7 +128,7 @@ export default Component.extend({
     }
 
     if (answers) {
-      _extend(vmAttrs, {
+      _assign(vmAttrs, {
         answers: answers.attr(),
         useAnswers: parentScope.attr('useAnswers')
       });

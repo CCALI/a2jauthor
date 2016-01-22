@@ -1,4 +1,4 @@
-import _inRange from 'lodash/number/inRange';
+import _inRange from 'lodash/inRange';
 
 /**
  * @function move

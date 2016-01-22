@@ -2,7 +2,7 @@ import $ from 'jquery';
 import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './debug-menu.stache!';
-import _isFunction from 'lodash/lang/isFunction';
+import _isFunction from 'lodash/isFunction';
 
 /**
  * @module {Module} author/debug-menu <author-debug-menu>

@@ -1,7 +1,7 @@
 import Map from 'can/map/';
-import _tail from 'lodash/array/tail';
-import _last from 'lodash/array/last';
-import _initial from 'lodash/array/initial';
+import _tail from 'lodash/tail';
+import _last from 'lodash/last';
+import _initial from 'lodash/initial';
 
 import 'can/list/';
 

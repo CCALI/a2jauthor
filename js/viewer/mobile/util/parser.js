@@ -1,10 +1,10 @@
 import $ from 'jquery';
-import _keys from 'lodash/object/keys';
-import _find from 'lodash/collection/find';
+import _keys from 'lodash/keys';
+import _find from 'lodash/find';
+import _forEach from 'lodash/forEach';
 import Answers from 'viewer/models/answers';
 import constants from 'viewer/models/constants';
 import cString from 'viewer/mobile/util/string';
-import _forEach from 'lodash/collection/forEach';
 
 const mapANX2Var = {
   unknown: constants.vtUnknown,

@@ -1,6 +1,6 @@
 import Map from 'can/map/';
 import List from 'can/list/';
-import _find from 'lodash/collection/find';
+import _find from 'lodash/find';
 
 import 'can/map/define/';
 

@@ -1,7 +1,7 @@
 import Map from 'can/map/';
 import moment from 'moment';
-import _isNull from 'lodash/lang/isNull';
-import _isUndefined from 'lodash/lang/isUndefined';
+import _isNull from 'lodash/isNull';
+import _isUndefined from 'lodash/isUndefined';
 
 import 'can/map/define/';
 

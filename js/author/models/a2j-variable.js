@@ -1,7 +1,7 @@
 import List from 'can/list/';
 import Model from 'can/model/';
-import _values from 'lodash/object/values';
-import _toPlainObject from 'lodash/lang/toPlainObject';
+import _values from 'lodash/values';
+import _toPlainObject from 'lodash/toPlainObject';
 
 import 'can/map/define/';
 

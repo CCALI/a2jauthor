@@ -1,4 +1,4 @@
-import _pick from 'lodash/object/pick';
+import _pick from 'lodash/pick';
 
 // Convert guide into JSON for Mobile viewer
 

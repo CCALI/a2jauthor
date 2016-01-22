@@ -111,6 +111,26 @@ export default Map.extend({
      */
     saveCallback: {
       value: null
+    },
+
+    /**
+     * @property {can.Map} a2jTemplate.ViewModel.prototype.define.selectedNode selectedNode
+     * @parent a2jTemplate.ViewModel
+     *
+     * The currenly selected node (element) view model.
+     */
+    selectedNode: {
+      get() {
+        let nodesViewModels = this.attr('nodesViewModels');
+
+        let active = nodesViewModels.filter(function(nodeVM) {
+          return nodeVM.attr('editActive');
+        });
+
+        if (active && active.length) {
+          return active.attr(0);
+        }
+      }
     }
   },
 
@@ -197,12 +217,11 @@ export default Map.extend({
 
       // toggle editActive so it 'closes' the options pane
       nodeViewModel.attr('editActive', false);
-      this.attr('activeNode', null);
 
       // `rootNodeScope` is a reference to `a2j-template` viewModel, if we
       // don't remove it before calling `.attr` in node's `state` map it
       // will cause a stack overflow.
-      node.attr('state').attr(_omit(nodeViewModel.attr(), 'rootNodeScope'));
+      node.attr('state').attr(_omit(nodeViewModel.serialize(), 'rootNodeScope', 'guide'));
 
       this.saveTemplateChanges();
     }
@@ -211,26 +230,27 @@ export default Map.extend({
   toggleEditActiveNode(nodeViewModel) {
     let nodesViewModels = this.attr('nodesViewModels');
 
-    nodesViewModels.each(node => {
-      let active = node === nodeViewModel;
-
-      if (active) {
-        node.attr('editActive', true);
-        this.attr('activeNode', nodeViewModel);
-      } else {
-        node.attr('editActive', false);
-      }
+    nodesViewModels.each(function(node) {
+      let isActive = node === nodeViewModel;
+      node.attr('editActive', isActive);
     });
 
-    let activeNode = this.attr('activeNode');
+    this.toggleEditActiveNestedNode();
+  },
 
-    // walk the list of node's view model instances, if there is a node that
-    // has nested nodes (it owns `a2j-template` instances) let it know that there
-    // is an active node so it can propertly 'de-activate'/'de-select` any of its
-    // child elements.
+  // walk the list of node's view model instances, if there is a node that
+  // has nested nodes (it owns `a2j-template` instances) "tell it" to deselect
+  // any possible active element that it might own.
+  toggleEditActiveNestedNode() {
+    let nodesViewModels = this.attr('nodesViewModels');
+
     nodesViewModels.each(function(node) {
       if (node.attr('hasNestedNodes')) {
-        node.attr('activeNode', activeNode);
+        if (_isFunction(node.deselectNestedNode)) {
+          node.deselectNestedNode();
+        } else {
+          console.error('Element is required to implement deselectNestedNode');
+        }
       }
     });
   },

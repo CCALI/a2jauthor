@@ -5,9 +5,9 @@ import _omit from 'lodash/omit';
 import 'can/map/define/';
 
 const omitStateAttrs = [
-  'guide', 'answers', 'useAnswers',
-  'ckeditorInstance', 'nodeIndex',
-  'activeNode'
+  'guide', 'answers', 'useAnswers', 'ckeditorInstance',
+  'nodeIndex', 'activeNode', 'rootNodeScope', 'editActive',
+  'editEnabled'
 ];
 
 /**

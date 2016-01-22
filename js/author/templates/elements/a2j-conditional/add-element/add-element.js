@@ -1,6 +1,7 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './add-element.stache!';
+import _isFunction from 'lodash/lang/isFunction';
 import createEmptyNode from 'caja/author/utils/create-empty-node';
 
 import 'can/map/define/';
@@ -41,16 +42,20 @@ const AddElementVM = Map.extend({
   },
 
   /**
-   * @function addElement.ViewModel.prototype.setAsActive setAsActive
+   * @function addElement.ViewModel.prototype.select select
    * @parent addElement.ViewModel
    *
    * This function is executed when the user clicks the element, this sets
-   * `editActive` to `true` which causes the element-options-pane to be shown
+   * `editActive` to `true` which causes the `element-options-pane` to be shown
    * allowing the user to effectively add elements.
    */
-  setAsActive() {
-    this.attr('editActive', true);
-    this.attr('activeNode', this);
+  select() {
+    let setSelectedNode = this.attr('setSelectedNode');
+
+    if (_isFunction(setSelectedNode)) {
+      setSelectedNode(this);
+    }
+
     return false;
   },
 

@@ -38,11 +38,12 @@
           edit-enabled="true"
           {(template)}="ifBody"
           {save-callback}="@noOpFn"
-          {(active-node)}="activeNode" />
+          {(selected-node)}="selectedNode" />
 
         <conditional-add-element
           {(template)}="ifBody"
-          {(active-node)}="activeNode" />
+          {(selected-node)}="selectedNode"
+          {set-selected-node}="@setSelectedNode" />
       </div>
 
       {{#if elseClause}}
@@ -53,11 +54,12 @@
             edit-enabled="true"
             {(template)}="elseBody"
             {save-callback}="@noOpFn"
-            {(active-node)}="activeNode" />
+            {(selected-node)}="selectedNode" />
 
           <conditional-add-element
             {(template)}="elseBody"
-            {(active-node)}="activeNode" />
+            {(selected-node)}="selectedNode"
+            {set-selected-node}="@setSelectedNode" />
         </div>
       {{/if}}
 

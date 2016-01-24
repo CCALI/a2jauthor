@@ -26,9 +26,7 @@
         {{#currentPage}}
           {{#if learn}}
             <div id="clientBubble" class="bubble right {{#if clientBubbleTallerThanAvatar}}vertical{{/else}}top{{/if}}">
-              <p class="text-center">
-                <a data-toggle="modal" data-target="#pageModal">{{{ eval(learn, rState.repeatVarValue) }}}</a>
-              </p>
+              {{> learn-more-tpl}}
             </div>
           {{/if}}
         {{/currentPage}}
@@ -60,9 +58,7 @@
           {{#if learn}}
             <span class="bubble-arrow left"></span>
             <div id="clientBubble" class="bubble {{#if clientBubbleTallerThanAvatar}}vertical{{/else}}top{{/if}}">
-              <p class="text-center">
-                <a data-toggle="modal" data-target="#pageModal">{{{ eval(learn, rState.repeatVarValue) }}}</a>
-              </p>
+              {{> learn-more-tpl}}
             </div>
           {{/if}}
         {{/currentPage}}

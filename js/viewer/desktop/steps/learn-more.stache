@@ -1,0 +1,5 @@
+<p class="text-center">
+  <a data-toggle="modal" data-target="#pageModal">
+    {{{ eval(learn, rState.repeatVarValue) }}}
+  </a>
+</p>

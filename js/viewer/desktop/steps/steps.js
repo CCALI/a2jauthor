@@ -5,8 +5,11 @@ import _isNaN from 'lodash/isNaN';
 import _inRange from 'lodash/inRange';
 import Component from 'can/component/';
 import template from './steps.stache!';
+import learnMoreTemplate from './learn-more.stache';
 
 import 'can/map/define/';
+
+can.view.preload('learn-more-tpl', learnMoreTemplate);
 
 /**
  * @property {can.Map} steps.ViewModel

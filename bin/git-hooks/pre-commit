@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# This ensures that dependencies are installed locally whenever merging a commit
+# that changed the shrinkwrap.
+
+# update shrinkwrap.json when package.json changes
+function package_changes_staged {
+  ! git diff --cached  --quiet -- package.json
+}
+
+if package_changes_staged; then
+  echo "Running 'npm shrinkwrap' to match new package spec..." >&2
+  npm shrinkwrap
+  git add npm-shrinkwrap.json
+fi
+
+# update js/npm-shrinkwrap.json when js/package.json changes
+function js_package_changes_staged {
+  ! git diff --cached  --quiet -- js/package.json
+}
+
+if js_package_changes_staged; then
+  echo "Running 'cd js/; npm shrinkwrap --dev' to match new package spec..." >&2
+  cd js
+  npm shrinkwrap --dev
+  cd ..
+  git add js/npm-shrinkwrap.json
+fi

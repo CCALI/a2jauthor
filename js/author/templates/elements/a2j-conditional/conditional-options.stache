@@ -13,7 +13,7 @@
 
       <div class="col-md-6">
         {{#is leftOperandType 'variable'}}
-          <var-picker {(selected)}="leftOperand" {variables}="guide.variablesList" />
+          <var-picker {(selected)}="leftOperand" {variables}="variablesList" />
         {{else}}
           <input type="text" class="form-control" {($value)}="leftOperand">
         {{/if}}
@@ -41,7 +41,7 @@
 
       <div class="col-md-6">
         {{#is rightOperandType 'variable'}}
-          <var-picker {(selected)}="rightOperand" {variables}="guide.variablesList" />
+          <var-picker {(selected)}="rightOperand" {variables}="variablesList" />
         {{else}}
           <input type="text" class="form-control" {($value)}="rightOperand">
         {{/if}}

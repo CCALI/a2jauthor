@@ -1,39 +1,11 @@
-import stache from 'can/view/stache/';
 import Component from 'can/component/';
 import template from './a2j-template.stache!';
 import A2JTemplateVM from './a2j-template-vm';
-
-const tagToComponentMap = {
-  'a2j-rich-text': '<a2j-rich-text state="{.}" />',
-  'a2j-page-break': '<a2j-page-break state="{.}" />',
-  'a2j-repeat-loop': '<a2j-repeat-loop state="{.}" />',
-  'a2j-conditional': '<a2j-conditional state="{.}" />',
-  'a2j-section-title': '<a2j-section-title state="{.}" />'
-};
 
 export default Component.extend({
   template,
   tag: 'a2j-template',
   viewModel: A2JTemplateVM,
-
-  helpers: {
-    a2jParse(tag, state, index) {
-      index = index.isComputed ? index() : index;
-      let component = tagToComponentMap[tag];
-
-      can.batch.start();
-
-      state.attr('nodeIndex', index);
-      state.attr('guide', this.attr('guide'));
-      state.attr('answers', this.attr('answers'));
-      state.attr('useAnswers', this.attr('useAnswers'));
-      state.attr('editEnabled', this.attr('editEnabled'));
-
-      can.batch.stop();
-
-      return stache(component)(state);
-    }
-  },
 
   events: {
     click: function(_, evt) {

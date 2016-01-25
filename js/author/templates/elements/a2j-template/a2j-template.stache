@@ -21,11 +21,77 @@
           alert-type="default"
           (closed)="removeNodeFromChildren(%index)">
 
-          <p>Element has been deleted - <a href="#" ($click)="restoreNode(%index)">Restore</a></p>
+          <p>
+            Element has been deleted -
+            <a href="#" ($click)="restoreNode(%index)">Restore</a>
+          </p>
         </app-alert>
       {{/if}}
 
-      {{a2jParse(tag, state, %index)}}
+      {{#is tag 'a2j-page-break'}}
+        <a2j-page-break
+          {node-index}="%index"
+          {edit-enabled}="editEnabled"
+        />
+      {{/is}}
+
+      {{#is tag 'a2j-section-title'}}
+        <a2j-section-title
+          {node-index}="%index"
+          {(title)}="state.title"
+          {edit-enabled}="editEnabled"
+          {(underline)}="state.underline"
+        />
+      {{/is}}
+
+      {{#is tag 'a2j-rich-text'}}
+        <a2j-rich-text
+          {answers}="answers"
+          {node-index}="%index"
+          {use-answers}="useAnswers"
+          {edit-enabled}="editEnabled"
+          {(user-content)}="state.userContent"
+        />
+      {{/is}}
+
+      {{#is tag 'a2j-conditional'}}
+        <a2j-conditional
+          {answers}="answers"
+          {node-index}="%index"
+          {use-answers}="useAnswers"
+          {(if-body)}="state.ifBody"
+          {edit-enabled}="editEnabled"
+          {(operator)}="state.operator"
+          {(else-body)}="state.elseBody"
+          {(else-clause)}="state.elseClause"
+          {(left-operand)}="state.leftOperand"
+          {(right-operand)}="state.rightOperand"
+          {variables-list}="guide.variablesList"
+          {(left-operand-type)}="state.leftOperandType"
+          {(right-operand-type)}="state.rightOperandType"
+        />
+      {{/is}}
+
+      {{#is tag 'a2j-repeat-loop'}}
+        <a2j-repeat-loop
+          {answers}="answers"
+          {node-index}="%index"
+          {use-answers}="useAnswers"
+          {edit-enabled}="editEnabled"
+          {(loop-type)}="state.loopType"
+          {(loop-title)}="state.loopTitle"
+          {(list-items)}="state.listItems"
+          {(table-style)}="state.tableStyle"
+          {(loop-counter)}="state.loopCounter"
+          {(display-type)}="state.displayType"
+          {(table-columns)}="state.tableColumns"
+          {(loop-variable)}="state.loopVariable"
+          {variables-list}="guide.variablesList"
+          {(loop-rich-text)}="state.loopRichText"
+          {(list-style-type)}="state.listStyleType"
+          {(repeat-each-in-one-list)}="state.repeatEachInOneList"
+        />
+      {{/is}}
     </li>
   {{/each}}
 </ul>

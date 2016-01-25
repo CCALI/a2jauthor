@@ -54,10 +54,7 @@ export let RichTextVM = Map.extend({
 export default Component.extend({
   template,
   tag: 'a2j-rich-text',
-
-  viewModel(attrs) {
-    return new RichTextVM(attrs.state);
-  },
+  viewModel: RichTextVM,
 
   helpers: {
     a2jParse(templateSnippet) {

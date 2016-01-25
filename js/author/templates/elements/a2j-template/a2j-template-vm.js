@@ -1,6 +1,5 @@
 import Map from 'can/map/';
 import List from 'can/list/';
-import _omit from 'lodash/omit';
 import _inRange from 'lodash/inRange';
 import _isFunction from 'lodash/isFunction';
 import A2JNode from 'caja/author/models/a2j-node';
@@ -213,15 +212,8 @@ export default Map.extend({
     let index = this.getNodeViewModelIndex(nodeViewModel);
 
     if (index !== -1) {
-      let node = this.attr('rootNode').attr('children').attr(index);
-
       // toggle editActive so it 'closes' the options pane
       nodeViewModel.attr('editActive', false);
-
-      // `rootNodeScope` is a reference to `a2j-template` viewModel, if we
-      // don't remove it before calling `.attr` in node's `state` map it
-      // will cause a stack overflow.
-      node.attr('state').attr(_omit(nodeViewModel.serialize(), 'rootNodeScope', 'guide'));
 
       this.saveTemplateChanges();
     }

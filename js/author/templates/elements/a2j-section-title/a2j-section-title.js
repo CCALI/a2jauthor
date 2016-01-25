@@ -23,10 +23,7 @@ export let SectionTitleVM = Map.extend({
 export default Component.extend({
   template,
   tag: 'a2j-section-title',
-
-  viewModel: function(attrs) {
-    return new SectionTitleVM(attrs.state);
-  },
+  viewModel: SectionTitleVM,
 
   events: {
     '.title-input keyup': function($el) {

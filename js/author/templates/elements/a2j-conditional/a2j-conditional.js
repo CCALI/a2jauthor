@@ -30,10 +30,7 @@ const operatorTextMap = {
 export default Component.extend({
   template,
   tag: 'a2j-conditional',
-
-  viewModel(attrs) {
-    return new ConditionalVM(attrs.state);
-  },
+  viewModel: ConditionalVM,
 
   helpers: {
     formatOperator(operator) {

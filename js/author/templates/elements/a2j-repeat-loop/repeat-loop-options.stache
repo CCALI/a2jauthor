@@ -20,7 +20,8 @@
           <var-picker
             filter-types="number"
             {(selected)}="loopVariable"
-            {variables}="guide.variablesList" />
+            {variables}="variablesList"
+          />
         {{/if}}
       </div>
     </div>

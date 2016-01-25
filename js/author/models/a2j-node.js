@@ -7,7 +7,7 @@ import 'can/map/define/';
 const omitStateAttrs = [
   'guide', 'answers', 'useAnswers', 'ckeditorInstance',
   'nodeIndex', 'activeNode', 'rootNodeScope', 'editActive',
-  'editEnabled'
+  'editEnabled', 'variablesList'
 ];
 
 /**

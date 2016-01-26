@@ -91,10 +91,9 @@ export default Component.extend({
       vm.updateChildrenOrder();
     },
 
-    // need to figure out why 2-way binding to this variables does not update
-    // the parent bound property.
-    '{viewModel} selectedNode': function() {
-      const selectedNode = this.viewModel.attr('selectedNode');
+    // need to figure out why 2-way binding this variable from a parent
+    // component does not update the parent bound property.
+    '{viewModel} selectedNode': function(vm, evt, selectedNode) {
       this.element.trigger('node-selected', selectedNode);
     }
   }

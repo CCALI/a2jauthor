@@ -1,4 +1,5 @@
 import Map from 'can/map/';
+import _omit from 'lodash/omit';
 import _inRange from 'lodash/inRange';
 import _isFunction from 'lodash/isFunction';
 import A2JNode from 'caja/author/models/a2j-node';
@@ -165,7 +166,10 @@ export default Map.extend({
   cloneNode(id) {
     const originalNode = this.getChildById(id);
     const children = this.attr('rootNode.children');
-    const clonedNode = new A2JNode(originalNode.attr());
+
+    // remove `id` before creating a cloned instance of the node, this will
+    // prevent the cloned node to have the same `id` as the original.
+    const clonedNode = new A2JNode(_omit(originalNode.attr(), 'id'));
 
     // the cloned node should be "selected" (ready to be edited)
     originalNode.attr('state').attr('editActive', false);

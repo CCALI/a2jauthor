@@ -28,7 +28,9 @@ export default Map.extend({
      * Node's id
      */
     id: {
-      type: 'string'
+      value() {
+        return cuid();
+      }
     },
 
     /**
@@ -62,9 +64,5 @@ export default Map.extend({
     children: {
       Value: List
     }
-  },
-
-  init() {
-    this.attr('id', cuid());
   }
 });

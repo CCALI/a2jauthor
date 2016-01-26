@@ -1,4 +1,8 @@
-<element-options-pane title="Repeat Loop">
+<element-options-pane
+  {node-id}="nodeId"
+  title="Repeat Loop"
+  {save-and-close}="@updateNode">
+
   <form>
     <div class="form-group">
       <label for="">&nbsp;</label>

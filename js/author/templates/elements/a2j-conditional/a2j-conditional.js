@@ -39,22 +39,50 @@ export default Component.extend({
   },
 
   events: {
-    '{viewModel} selectedNode': function() {
-      let $el = this.element;
-      let vm = this.viewModel;
-      let selectedNode = vm.attr('selectedNode');
-
-      if (selectedNode) {
-        $el.trigger('nested-node-selected', selectedNode);
-      }
-    },
-
     '{viewModel} leftOperandType': function() {
       this.viewModel.attr('leftOperand', '');
     },
 
     '{viewModel} rightOperandType': function() {
       this.viewModel.attr('rightOperand', '');
+    },
+
+    // TODO: Find a viewModel oriented way to solve the selection of nested nodes.
+    '{viewModel} addToIfSelected': function() {
+      const vm = this.viewModel;
+      const addToIfSelected = vm.attr('addToIfSelected');
+
+      if (addToIfSelected) {
+        vm.attr('addToElseSelected', false);
+        this.toggleSelectedNode();
+      }
+    },
+
+    '{viewModel} addToElseSelected': function() {
+      const vm = this.viewModel;
+      const addToElseSelected = vm.attr('addToElseSelected');
+
+      if (addToElseSelected) {
+        vm.attr('addToIfSelected', false);
+        this.toggleSelectedNode();
+      }
+    },
+
+    'a2j-template node-selected': function(el, evt, selectedNode) {
+      if (selectedNode) {
+        const vm = this.viewModel;
+
+        vm.attr('addToIfSelected', false);
+        vm.attr('addToElseSelected', false);
+
+        this.toggleSelectedNode(selectedNode.attr('id'));
+      }
+    },
+
+    toggleSelectedNode(nodeId) {
+      const vm = this.viewModel;
+      const toggleEditActiveNode = vm.attr('toggleEditActiveNode');
+      toggleEditActiveNode(nodeId);
     }
   }
 });

@@ -4,7 +4,14 @@
 
 {{#if editEnabled}}
   {{#if wrapWithContainer}}
-    <element-container {(selected)}="editActive">
+    <element-container
+      {node-id}="id"
+      {deleted}="deleted"
+      {(selected)}="editActive"
+      {clone-node}="@cloneNode"
+      {delete-node}="@deleteNode"
+      {toggle-edit-active-node}="@toggleEditActiveNode">
+
       {{#if editActive}}
         <textarea>{{userContent}}</textarea>
       {{else}}
@@ -21,7 +28,11 @@
 
   {{#if showOptionsPane}}
     {{#if editActive}}
-      <element-options-pane title="Text">
+      <element-options-pane
+        title="Text"
+        {node-id}="nodeId"
+        {save-and-close}="@updateNode">
+
         <form>
           <div class="form-group">
             <label>Notes</label>

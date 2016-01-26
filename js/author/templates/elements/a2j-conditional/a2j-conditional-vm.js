@@ -141,40 +141,6 @@ export default Map.extend({
     },
 
     /**
-     * @property {Boolean} conditional.ViewModel.prototype.hasNestedNodes hasNestedNodes
-     * @parent conditional.ViewModel
-     *
-     * Boolean flag that tells the `a2j-template` parent component that instances
-     * of this component (`a2j-conditional`) need to be notified that there is
-     * a selected node, since this element owns its own elements it should know when
-     * to toggle their `editActive` state when sibling elements are 'selected'.
-     */
-    hasNestedNodes: {
-      value: true
-    },
-
-    /**
-     * @property {can.Map} conditional.ViewModel.prototype.selectedNode selectedNode
-     * @parent conditional.ViewModel
-     *
-     * View model instance of the currently selected node (element). When set, this
-     * setter makes sure the previous set node is de-selected; this prevents that
-     * child nodes of the inner template instances used for the `if` and `else`
-     * blocks are selected at the same time.
-     */
-    selectedNode: {
-      set(newSelectedNode) {
-        let current = this.attr('selectedNode');
-
-        if (current) {
-          current.attr('editActive', false);
-        }
-
-        return newSelectedNode;
-      }
-    },
-
-    /**
      * @property {A2JTemplate} conditional.ViewModel.prototype.ifBody ifBody
      * @parent conditional.ViewModel
      *
@@ -183,8 +149,10 @@ export default Map.extend({
      * evaluates to `true` (`evalCondition()` yields `true`).
      */
     ifBody: {
-      Type: A2JTemplate,
-      Value: A2JTemplate
+      get() {
+        const children = this.attr('children');
+        return children.attr(0);
+      }
     },
 
     /**
@@ -196,8 +164,43 @@ export default Map.extend({
      * evaluates to `false` (`evalCondition()` yields `false`).
      */
     elseBody: {
-      Type: A2JTemplate,
-      Value: A2JTemplate
+      get() {
+        const children = this.attr('children');
+        return children.attr(1);
+      }
+    },
+
+    /**
+     * @property {Boolean} conditional.ViewModel.prototype.addToIfSelected addToIfSelected
+     * @parent conditional.ViewModel
+     *
+     * Whether the component that allows elements to be added to `ifBlock` is
+     * selected.
+     */
+    addToIfSelected: {
+      value: false
+    },
+
+    /**
+     * @property {Boolean} conditional.ViewModel.prototype.addToElseSelected addToElseSelected
+     * @parent conditional.ViewModel
+     *
+     * Whether the component that allows elements to be added to `elseBlock` is
+     * selected.
+     */
+    addToElseSelected: {
+      value: false
+    }
+  },
+
+  init() {
+    const children = this.attr('children');
+
+    if (!children.attr('length')) {
+      children.replace([
+        new A2JTemplate(),
+        new A2JTemplate()
+      ]);
     }
   },
 
@@ -211,35 +214,6 @@ export default Map.extend({
    * serialized as any other property of the `a2j-conditional` component state.
    */
   noOpFn: can.noop,
-
-  /**
-   * @function conditional.ViewModel.prototype.setSelectedNode setSelectedNode
-   * @parent conditional.ViewModel
-   *
-   * Callback passed down to the instances of `<conditional-add-element />` so
-   * `<a2j-conditional />` can set `selectedNode` properly when user selects the
-   * add element component.
-   */
-  setSelectedNode(node) {
-    if (node) {
-      node.attr('editActive', true);
-      this.attr('selectedNode', node);
-    }
-  },
-
-  /**
-   * @function conditional.ViewModel.prototype.deselectNestedNode deselectNestedNode
-   * @parent conditional.ViewModel
-   *
-   * `<a2j-template />` will call this method on every component that own instances
-   * of itself, e.g `a2j-conditional` is a child of `<a2j-template />` but owns
-   * instances of `<a2j-template />` as well (`ifBody` and `elseBody`). When an
-   * element is selected in the parent template, `deselectNestedNode` will be called
-   * to make sure any nested element is deselected properly.
-   */
-  deselectNestedNode() {
-    this.attr('selectedNode', null);
-  },
 
   getOperandValue(rightOrLeft = 'left') {
     let answers = this.attr('answers');

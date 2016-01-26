@@ -1,4 +1,8 @@
-<element-options-pane title="If / Else Conditional">
+<element-options-pane
+  {node-id}="nodeId"
+  title="If / Else Conditional"
+  {save-and-close}="@updateNode">
+
   <form>
     {{! without this the second column in the div below breaks to a new line :/ }}
     &nbsp;

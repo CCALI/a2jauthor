@@ -30,12 +30,12 @@ import 'can/map/define/';
 const AddElementVM = Map.extend({
   define: {
     /**
-     * @property {Boolean} addElement.ViewModel.prototype.editActive editActive
+     * @property {Boolean} addElement.ViewModel.prototype.selected selected
      * @parent addElement.ViewModel
      *
      * Whether the component is currently selected.
      */
-    editActive: {
+    selected: {
       type: 'boolean',
       value: false
     }
@@ -50,10 +50,10 @@ const AddElementVM = Map.extend({
    * allowing the user to effectively add elements.
    */
   select() {
-    let setSelectedNode = this.attr('setSelectedNode');
+    const selected = this.attr('selected');
 
-    if (_isFunction(setSelectedNode)) {
-      setSelectedNode(this);
+    if (!selected) {
+      this.attr('selected', true);
     }
 
     return false;
@@ -67,8 +67,7 @@ const AddElementVM = Map.extend({
    * the pane is about to be closed.
    */
   closeOptionsPopup() {
-    this.attr('editActive', false);
-    this.attr('activeNode', null);
+    this.attr('selected', false);
   },
 
   /**
@@ -78,8 +77,10 @@ const AddElementVM = Map.extend({
    * Adds the element matching `tagName` to the available `template` object.
    */
   addElement(tagName) {
-    let template = this.attr('template');
-    template.addNode(createEmptyNode(tagName));
+    const template = this.attr('template');
+    const children = template.attr('rootNode.children');
+
+    children.push(createEmptyNode(tagName));
     return false;
   }
 });

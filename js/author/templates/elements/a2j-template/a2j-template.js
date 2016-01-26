@@ -91,19 +91,11 @@ export default Component.extend({
       vm.updateChildrenOrder();
     },
 
-    // This event is fired by elements that own `a2j-template` instances (they
-    // have nested elements, e.g a2j-conditional); when those nested elements are
-    // selected by the user the event is triggered so parent `a2j-template` can
-    // deselect it's top level nodes.
-    'nested-node-selected': function($el, evt, nodeVM) {
-      let vm = this.viewModel;
-      let nodesViewModels = vm.attr('nodesViewModels');
-
-      nodesViewModels.each(function(node) {
-        if (node !== nodeVM) {
-          node.attr('editActive', false);
-        }
-      });
+    // need to figure out why 2-way binding to this variables does not update
+    // the parent bound property.
+    '{viewModel} selectedNode': function() {
+      const selectedNode = this.viewModel.attr('selectedNode');
+      this.element.trigger('node-selected', selectedNode);
     }
   }
 });

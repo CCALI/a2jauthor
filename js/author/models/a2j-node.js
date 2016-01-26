@@ -1,3 +1,4 @@
+import cuid from 'cuid';
 import Map from 'can/map/';
 import List from 'can/list/';
 import _omit from 'lodash/omit';
@@ -21,6 +22,15 @@ const omitStateAttrs = [
  */
 export default Map.extend({
   define: {
+    /**
+     * @property {String} A2JNode.prototype.define.id id
+     *
+     * Node's id
+     */
+    id: {
+      type: 'string'
+    },
+
     /**
      * @property {String} A2JNode.prototype.define.tag tag
      *
@@ -52,5 +62,9 @@ export default Map.extend({
     children: {
       Value: List
     }
+  },
+
+  init() {
+    this.attr('id', cuid());
   }
 });

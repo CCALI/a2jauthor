@@ -31,7 +31,7 @@ describe('a2j-template', function() {
       $('#test-area').empty();
     });
 
-    describe('only one element can be selected at a time', function() {
+    describe.skip('only one element can be selected at a time', function() {
       this.timeout(5000);
 
       it('selecting direct descendants', function(done) {

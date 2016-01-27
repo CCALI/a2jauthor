@@ -10,7 +10,10 @@ export let HeaderVM = Map.extend({
     helpPageUrl: {
       get() {
         let page = this.attr('page');
-        return helpPageUrl(page);
+
+        if (page !== 'templates') {
+          return helpPageUrl(page);
+        }
       }
     }
   }

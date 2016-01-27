@@ -1,5 +1,3 @@
-const basePath = 'http://author.a2jauthor.org/csh5/';
-
 /**
  * @module {{}} author/utils/help-page-url help-page-url
  * @parent api-utils
@@ -11,7 +9,29 @@ const basePath = 'http://author.a2jauthor.org/csh5/';
  * the a2j author help page.
  *
  */
+const basePath = 'http://author.a2jauthor.org/content/';
+
+const pageToHelpUrlMap = {
+  about: 'chapter-4-about-tab',
+  variables: 'chapter-5-variables-tab',
+  steps: 'chapter-6-steps-tab',
+  pages: 'pages-tab',
+  map: 'chapter-8-map',
+  files: 'chapter-12-files-tab',
+  allLogic: 'chapter-13-all-logic-tab',
+  allText: 'chapter-11-all-text',
+  preview: 'chapter-10-preview-mode',
+  report: 'chapter-9-report-tab',
+  publish: 'chapter-14-publish-tab',
+  interviews: 'chapter-3-getting-started'
+};
+
 export default function(page) {
-  let path = page.charAt(0).toUpperCase() + page.substring(1);
-  return basePath + path;
+  const urlPath = pageToHelpUrlMap[page];
+
+  if (urlPath) {
+    return basePath + urlPath;
+  } else {
+    console.error(`Missing help url for ${page} page`);
+  }
 }

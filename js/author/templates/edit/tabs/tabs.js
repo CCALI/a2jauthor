@@ -6,21 +6,26 @@ import createEmptyNode from 'author/utils/create-empty-node';
 
 import 'can/map/define/';
 
-let TemplateEditTabsVm = Map.extend({
+let TemplateEditTabsVM = Map.extend({
   define: {
     editingHeader: {
       type: 'boolean',
       value: false
     },
+
     editingFooter: {
       type: 'boolean',
       value: false
     }
   },
+
   addElement(elementName) {
-    let a2jTemplate = this.attr('a2jTemplate');
-    a2jTemplate.addNode(createEmptyNode(elementName));
+    const template = this.attr('template');
+    const newNode = createEmptyNode(elementName);
+
+    template.addNode(newNode);
   },
+
   editElement(elementName) {
     this.attr('editing' + _capitalize(elementName), true);
   }
@@ -30,5 +35,5 @@ export default Component.extend({
   template,
   leakScope: false,
   tag: 'template-edit-tabs',
-  viewModel: TemplateEditTabsVm
+  viewModel: TemplateEditTabsVM
 });

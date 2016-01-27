@@ -1,6 +1,6 @@
 import A2JNode from 'caja/author/models/a2j-node';
 
-let emptyNodes = {
+const emptyNodes = {
   'section-title': {
     tag: 'a2j-section-title',
     state: {
@@ -34,7 +34,7 @@ let emptyNodes = {
 };
 
 export default function createEmptyNode(nodeName) {
-  let nodeDefinition = emptyNodes[nodeName];
+  const nodeDefinition = emptyNodes[nodeName];
 
   if (nodeDefinition) {
     return new A2JNode(nodeDefinition);

@@ -42,9 +42,10 @@
         {{! right column where template options tab is rendered }}
         <div class="col-md-4">
           <template-edit-tabs
-            {(a2j-template)}="a2jTemplate"
+            {(template)}="a2jTemplate"
             {(^editing-header)}="*editingHeader"
-            {(^editing-footer)}="*editingFooter"/>
+            {(^editing-footer)}="*editingFooter"
+          />
         </div>
       </div>
 

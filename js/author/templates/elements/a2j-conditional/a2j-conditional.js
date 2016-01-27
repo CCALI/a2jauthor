@@ -30,10 +30,7 @@ const operatorTextMap = {
 export default Component.extend({
   template,
   tag: 'a2j-conditional',
-
-  viewModel(attrs) {
-    return new ConditionalVM(attrs.state);
-  },
+  viewModel: ConditionalVM,
 
   helpers: {
     formatOperator(operator) {
@@ -42,22 +39,22 @@ export default Component.extend({
   },
 
   events: {
-    '{viewModel} selectedNode': function() {
-      let $el = this.element;
-      let vm = this.viewModel;
-      let selectedNode = vm.attr('selectedNode');
-
-      if (selectedNode) {
-        $el.trigger('nested-node-selected', selectedNode);
-      }
-    },
-
     '{viewModel} leftOperandType': function() {
       this.viewModel.attr('leftOperand', '');
     },
 
     '{viewModel} rightOperandType': function() {
       this.viewModel.attr('rightOperand', '');
+    },
+
+    // TODO: Find a viewModel oriented way to solve the selection of nested nodes.
+    'a2j-template node-selected': function(el, evt, selectedNode) {
+      if (selectedNode) {
+        const vm = this.viewModel;
+        const toggleEditActiveNode = vm.attr('toggleEditActiveNode');
+
+        toggleEditActiveNode(selectedNode.attr('id'));
+      }
     }
   }
 });

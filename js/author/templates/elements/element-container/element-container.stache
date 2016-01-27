@@ -6,5 +6,9 @@
 </div>
 
 {{#if selected}}
-  <element-toolbar {(node-scope)}="parentScope"></element-toolbar>
+  <element-toolbar
+    {node-id}="nodeId"
+    {clone-node}="@cloneNode"
+    {delete-node}="@deleteNode"
+  />
 {{/if}}

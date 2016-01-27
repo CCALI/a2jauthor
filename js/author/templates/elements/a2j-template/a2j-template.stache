@@ -19,13 +19,111 @@
           auto-close="true"
           dismissible="true"
           alert-type="default"
-          (closed)="removeNodeFromChildren(%index)">
+          (closed)="removeNodeFromChildren(id)">
 
-          <p>Element has been deleted - <a href="#" ($click)="restoreNode(%index)">Restore</a></p>
+          <p>
+            Element has been deleted -
+            <a href="#" ($click)="restoreNode(id)">Restore</a>
+          </p>
         </app-alert>
       {{/if}}
 
-      {{a2jParse(tag, state, %index)}}
+      {{#is tag 'a2j-page-break'}}
+        <a2j-page-break
+          {node-id}="id"
+          {clone-node}="@cloneNode"
+          {deleted}="{state.deleted}"
+          {delete-node}="@deleteNode"
+          {update-node}="@updateNode"
+          {edit-enabled}="editEnabled"
+          {(edit-active)}="state.editActive"
+          {toggle-edit-active-node}="@toggleEditActiveNode"
+        />
+      {{/is}}
+
+      {{#is tag 'a2j-section-title'}}
+        <a2j-section-title
+          {(title)}="state.title"
+          {(underline)}="state.underline"
+
+          {node-id}="id"
+          {clone-node}="@cloneNode"
+          {delete-node}="@deleteNode"
+          {update-node}="@updateNode"
+          {edit-enabled}="editEnabled"
+          {(edit-active)}="state.editActive"
+          {toggle-edit-active-node}="@toggleEditActiveNode"
+        />
+      {{/is}}
+
+      {{#is tag 'a2j-rich-text'}}
+        <a2j-rich-text
+          {(user-content)}="state.userContent"
+
+          {node-id}="id"
+          {answers}="answers"
+          {clone-node}="@cloneNode"
+          {use-answers}="useAnswers"
+          {deleted}="{state.deleted}"
+          {delete-node}="@deleteNode"
+          {update-node}="@updateNode"
+          {edit-enabled}="editEnabled"
+          {(edit-active)}="state.editActive"
+          {toggle-edit-active-node}="@toggleEditActiveNode"
+        />
+      {{/is}}
+
+      {{#is tag 'a2j-conditional'}}
+        <a2j-conditional
+          {(children)}="children"
+          {(operator)}="state.operator"
+          {(else-clause)}="state.elseClause"
+          {(left-operand)}="state.leftOperand"
+          {(right-operand)}="state.rightOperand"
+          {variables-list}="guide.variablesList"
+          {(left-operand-type)}="state.leftOperandType"
+          {(right-operand-type)}="state.rightOperandType"
+
+          {node-id}="id"
+          {answers}="answers"
+          {clone-node}="@cloneNode"
+          {use-answers}="useAnswers"
+          {deleted}="{state.deleted}"
+          {delete-node}="@deleteNode"
+          {update-node}="@updateNode"
+          {edit-enabled}="editEnabled"
+          {(edit-active)}="state.editActive"
+          {toggle-edit-active-node}="@toggleEditActiveNode"
+        />
+      {{/is}}
+
+      {{#is tag 'a2j-repeat-loop'}}
+        <a2j-repeat-loop
+          {(loop-type)}="state.loopType"
+          {(loop-title)}="state.loopTitle"
+          {(list-items)}="state.listItems"
+          {(table-style)}="state.tableStyle"
+          {(loop-counter)}="state.loopCounter"
+          {(display-type)}="state.displayType"
+          {(table-columns)}="state.tableColumns"
+          {(loop-variable)}="state.loopVariable"
+          {variables-list}="guide.variablesList"
+          {(loop-rich-text)}="state.loopRichText"
+          {(list-style-type)}="state.listStyleType"
+          {(repeat-each-in-one-list)}="state.repeatEachInOneList"
+
+          {node-id}="id"
+          {answers}="answers"
+          {clone-node}="@cloneNode"
+          {use-answers}="useAnswers"
+          {deleted}="{state.deleted}"
+          {delete-node}="@deleteNode"
+          {update-node}="@updateNode"
+          {edit-enabled}="editEnabled"
+          {(edit-active)}="state.editActive"
+          {toggle-edit-active-node}="@toggleEditActiveNode"
+        />
+      {{/is}}
     </li>
   {{/each}}
 </ul>

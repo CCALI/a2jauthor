@@ -1,11 +1,11 @@
 <can-import from="caja/author/templates/elements/options-pane/" />
 <can-import from="caja/author/templates/elements/a2j-conditional/add-element/add-element.less!" />
 
-<div class="{{#if editActive}}active{{/if}}" ($click)="select()">
+<div class="{{#if selected}}selected{{/if}}" ($click)="select()">
   add elements here...
 </div>
 
-{{#if editActive}}
+{{#if selected}}
   <element-options-pane
     title="Add Elements"
     {show-save-button}="false"

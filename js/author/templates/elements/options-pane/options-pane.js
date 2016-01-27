@@ -27,7 +27,7 @@ import 'can/map/define/';
  *
  * `<element-options-pane>`'s viewModel.
  */
-export let OptionsPane = Map.extend({
+export let OptionsPaneVM = Map.extend({
   define: {
     /**
      * @property {Boolean} optionsPane.ViewModel.prototype.define.title title
@@ -61,19 +61,13 @@ export let OptionsPane = Map.extend({
    * the logic to persist the element/node state to the `a2j-template` scope.
    */
   saveAndClose() {
-    let saveAndClose = this.attr('saveAndClose');
+    const id = this.attr('nodeId');
+    const saveAndClose = this.attr('saveAndClose');
 
     if (_isFunction(saveAndClose)) {
-      saveAndClose();
+      saveAndClose(id);
     } else {
-      // we need to refactor this component so it always gets this behavior as
-      // a regular `attr` instead of keeping a reference to its parent VM.
-      let nodeScope = this.attr('parentScope');
-
-      if (nodeScope) {
-        let rootNodeScope = nodeScope.attr('rootNodeScope');
-        rootNodeScope.updateNodeState(nodeScope);
-      }
+      console.error('saveAndClose should be a function');
     }
 
     return false;
@@ -82,11 +76,6 @@ export let OptionsPane = Map.extend({
 
 export default Component.extend({
   template,
-  tag: 'element-options-pane',
-
-  viewModel: function(attrs, parentScope) {
-    let vm = new OptionsPane(attrs);
-    vm.attr('parentScope', parentScope.attr('.'));
-    return vm;
-  }
+  viewModel: OptionsPaneVM,
+  tag: 'element-options-pane'
 });

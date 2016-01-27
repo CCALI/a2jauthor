@@ -4,12 +4,23 @@
 
 <div>
   {{#if editEnabled}}
-    <element-container selected="{editActive}">
+    <element-container
+      {node-id}="nodeId"
+      {deleted}="deleted"
+      {(selected)}="editActive"
+      {clone-node}="@cloneNode"
+      {delete-node}="@deleteNode"
+      {toggle-edit-active-node}="@toggleEditActiveNode">
+
       {{> section-title-content}}
     </element-container>
 
     {{#if editActive}}
-      <element-options-pane title="Section Title">
+      <element-options-pane
+        {node-id}="nodeId"
+        title="Section Title"
+        {save-and-close}="@updateNode">
+
         <form>
           <input class="form-control title-input" value="{{../title}}">
           <div class="checkbox">

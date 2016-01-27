@@ -6,7 +6,14 @@
 <can-import from="caja/author/templates/elements/a2j-conditional/a2j-conditional.less!" />
 
 {{#if editEnabled}}
-  <element-container {(selected)}="editActive">
+  <element-container
+    {node-id}="id"
+    {deleted}="deleted"
+    {(selected)}="editActive"
+    {clone-node}="@cloneNode"
+    {delete-node}="@deleteNode"
+    {toggle-edit-active-node}="@toggleEditActiveNode">
+
     <div class="panel panel-warning">
       <div class="panel-heading">
         IF
@@ -38,12 +45,14 @@
           edit-enabled="true"
           {(template)}="ifBody"
           {save-callback}="@noOpFn"
-          {(selected-node)}="selectedNode" />
+        />
 
         <conditional-add-element
           {(template)}="ifBody"
-          {(selected-node)}="selectedNode"
-          {set-selected-node}="@setSelectedNode" />
+          {node-id}="addToIfNode.id"
+          {(selected)}="addToIfNode.state.editActive"
+          {toggle-edit-active-node}="@toggleEditActiveNode"
+        />
       </div>
 
       {{#if elseClause}}
@@ -54,12 +63,14 @@
             edit-enabled="true"
             {(template)}="elseBody"
             {save-callback}="@noOpFn"
-            {(selected-node)}="selectedNode" />
+          />
 
           <conditional-add-element
             {(template)}="elseBody"
-            {(selected-node)}="selectedNode"
-            {set-selected-node}="@setSelectedNode" />
+            {node-id}="addToElseNode.id"
+            {(selected)}="addToElseNode.state.editActive"
+            {toggle-edit-active-node}="@toggleEditActiveNode"
+          />
         </div>
       {{/if}}
 

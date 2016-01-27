@@ -1,5 +1,6 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
+import _isFunction from 'lodash/isFunction';
 import template from './element-toolbar.stache!';
 
 import 'can/map/define/';
@@ -18,26 +19,30 @@ import 'can/map/define/';
  * @codeend
  */
 
-export let ElementToolbar = Map.extend({
+export const ElementToolbar = Map.extend({
   define: {},
 
-  cloneNode() {
-    let nodeScope = this.attr('nodeScope');
+  clone() {
+    const id = this.attr('nodeId');
+    const cloneNode = this.attr('cloneNode');
 
-    if (nodeScope) {
-      let rootNodeScope = nodeScope.attr('rootNodeScope');
-      rootNodeScope.cloneNode(nodeScope);
+    if (_isFunction(cloneNode)) {
+      cloneNode(id);
+    } else {
+      console.error('cloneNode should be a function');
     }
 
     return false;
   },
 
-  deleteNode() {
-    let nodeScope = this.attr('nodeScope');
+  delete() {
+    const id = this.attr('nodeId');
+    const deleteNode = this.attr('deleteNode');
 
-    if (nodeScope) {
-      let rootNodeScope = nodeScope.attr('rootNodeScope');
-      rootNodeScope.deleteNode(nodeScope);
+    if (_isFunction(deleteNode)) {
+      deleteNode(id);
+    } else {
+      console.error('deleteNode should be a function');
     }
 
     return false;

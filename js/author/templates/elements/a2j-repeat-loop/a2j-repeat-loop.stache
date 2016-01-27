@@ -5,7 +5,14 @@
 <can-import from="caja/author/templates/elements/a2j-repeat-loop/a2j-repeat-loop.less!" />
 
 {{#if editEnabled}}
-  <element-container {(selected)}="editActive">
+  <element-container
+    {node-id}="id"
+    {deleted}="deleted"
+    {(selected)}="editActive"
+    {clone-node}="@cloneNode"
+    {delete-node}="@deleteNode"
+    {toggle-edit-active-node}="@toggleEditActiveNode">
+
     <div class="panel panel-info">
       <div class="panel-heading">
         {{#if useLoopCounter}}

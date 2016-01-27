@@ -1,3 +1,4 @@
+import cuid from 'cuid';
 import Map from 'can/map/';
 import List from 'can/list/';
 import _omit from 'lodash/omit';
@@ -7,7 +8,7 @@ import 'can/map/define/';
 const omitStateAttrs = [
   'guide', 'answers', 'useAnswers', 'ckeditorInstance',
   'nodeIndex', 'activeNode', 'rootNodeScope', 'editActive',
-  'editEnabled'
+  'editEnabled', 'variablesList'
 ];
 
 /**
@@ -21,6 +22,17 @@ const omitStateAttrs = [
  */
 export default Map.extend({
   define: {
+    /**
+     * @property {String} A2JNode.prototype.define.id id
+     *
+     * Node's id
+     */
+    id: {
+      value() {
+        return cuid();
+      }
+    },
+
     /**
      * @property {String} A2JNode.prototype.define.tag tag
      *

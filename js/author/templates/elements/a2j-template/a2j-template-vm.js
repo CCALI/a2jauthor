@@ -1,9 +1,9 @@
 import Map from 'can/map/';
-import List from 'can/list/';
 import _omit from 'lodash/omit';
 import _inRange from 'lodash/inRange';
 import _isFunction from 'lodash/isFunction';
 import A2JNode from 'caja/author/models/a2j-node';
+import A2JTemplate from 'caja/author/models/a2j-template';
 
 import 'can/map/define/';
 
@@ -66,21 +66,6 @@ export default Map.extend({
     },
 
     /**
-     * @property {can.List} a2jTemplate.ViewModel.prototype.define.nodesViewModels nodesViewModels
-     * @parent a2jTemplate.ViewModel
-     *
-     * This is a list containing the instances of each of the `viewModels` of
-     * the nodes of this `template`. We keep this list, in order to handle the
-     * communication between the children nodes components and their root node
-     * `<a2j-template>` component.
-     */
-    nodesViewModels: {
-      value: function() {
-        return new List();
-      }
-    },
-
-    /**
      * @property {Boolean} a2jTemplate.ViewModel.prototype.define.editEnabled editEnabled
      * @parent a2jTemplate.ViewModel
      *
@@ -121,10 +106,11 @@ export default Map.extend({
      */
     selectedNode: {
       get() {
-        let nodesViewModels = this.attr('nodesViewModels');
+        const rootNode = this.attr('rootNode');
+        const children = rootNode.attr('children');
 
-        let active = nodesViewModels.filter(function(nodeVM) {
-          return nodeVM.attr('editActive');
+        const active = children.filter(child => {
+          return child.attr('state.editActive');
         });
 
         if (active && active.length) {
@@ -144,143 +130,123 @@ export default Map.extend({
     }
   },
 
-  cloneNode(nodeViewModel) {
-    let index = this.getNodeViewModelIndex(nodeViewModel);
+  getChildById(id) {
+    const rootNode = this.attr('rootNode');
+    const children = rootNode.attr('children');
 
-    if (index !== -1) {
-      let rootNode = this.attr('rootNode');
-      let children = rootNode.attr('children');
+    const find = (nodes, id) => {
+      let result;
 
-      let clonedNodeIndex = index + 1;
-      let originalNode = children.attr(index);
-      let clonedNode = new A2JNode(originalNode.attr());
+      nodes.each(node => {
+        if (node instanceof A2JTemplate) {
+          const children = node.attr('rootNode.children');
+          result = find(children);
+          if (result) return false;
+        } else {
+          if (node.attr('id') === id) {
+            result = node;
+            return false;
+          } else {
+            const children = node.attr('children');
 
-      // the cloned node should be "selected" (ready to be edited)
-      originalNode.attr('editActive', false);
-      clonedNode.attr('state').attr('editActive', true);
+            if (children.attr('length')) {
+              result = find(children, id);
+              if (result) return false;
+            }
+          }
+        }
+      });
 
-      // insert cloned node below the original
-      children.splice(clonedNodeIndex, 0, clonedNode);
-      this.saveTemplateChanges();
-    }
+      return result;
+    };
+
+    return find(children, id);
   },
 
-  restoreNode(index) {
-    index = index.isComputed ? index() : index;
+  cloneNode(id) {
+    const originalNode = this.getChildById(id);
+    const children = this.attr('rootNode.children');
 
-    let rootNode = this.attr('rootNode');
-    let nodesViewModels = this.attr('nodesViewModels');
+    // remove `id` before creating a cloned instance of the node, this will
+    // prevent the cloned node to have the same `id` as the original.
+    const clonedNode = new A2JNode(_omit(originalNode.attr(), 'id'));
 
-    let nodeViewModel = nodesViewModels.attr(index);
-    let deleteNode = rootNode.attr('children').attr(index);
+    // the cloned node should be "selected" (ready to be edited)
+    originalNode.attr('state').attr('editActive', false);
+    clonedNode.attr('state').attr('editActive', true);
 
-    deleteNode.attr('deleted', false);
-    nodeViewModel.attr('deleted', false);
-    nodeViewModel.attr('editActive', true);
+    // insert cloned node next to the original
+    const clonedNodeIndex = children.indexOf(originalNode) + 1;
+    children.splice(clonedNodeIndex, 0, clonedNode);
+
+    this.saveTemplateChanges();
+  },
+
+  restoreNode(id) {
+    const deletedNode = this.getChildById(id);
+
+    deletedNode.attr('deleted', false);
+    deletedNode.attr('state.deleted', false);
+    deletedNode.attr('state.editActive', true);
 
     return false;
   },
 
   // this function only flags the node as deleted, so we have time to display
   // the alert that allows user to restore the node right away.
-  deleteNode(nodeViewModel) {
-    let index = this.getNodeViewModelIndex(nodeViewModel);
+  deleteNode(id) {
+    let deletedNode = this.getChildById(id);
 
-    if (index !== -1) {
-      let rootNode = this.attr('rootNode');
-      let deletedNode = rootNode.attr('children').attr(index);
-
-      deletedNode.attr('deleted', true);
-      nodeViewModel.attr('deleted', true);
-    }
+    deletedNode.attr('deleted', true);
+    deletedNode.attr('state.deleted', true);
   },
 
   // this function "really" removes the node from the children array, hence
   // the `li` tag that contains the node is also removed from the DOM.
-  removeNodeFromChildren(index) {
-    index = index.isComputed ? index() : index;
-
-    let rootNode = this.attr('rootNode');
-    let node = rootNode.attr('children').attr(index);
+  removeNodeFromChildren(id) {
+    const node = this.getChildById(id);
+    const children = this.attr('rootNode.children');
 
     if (node && node.attr('deleted')) {
-      rootNode.attr('children').splice(index, 1);
+      const index = children.indexOf(node);
+
+      children.splice(index, 1);
       this.saveTemplateChanges();
     }
   },
 
-  updateNodeState(nodeViewModel) {
-    let index = this.getNodeViewModelIndex(nodeViewModel);
+  updateNode(id) {
+    const node = this.getChildById(id);
 
-    if (index !== -1) {
-      let node = this.attr('rootNode').attr('children').attr(index);
+    // toggle editActive so it 'closes' the options pane
+    node.attr('state.editActive', false);
 
-      // toggle editActive so it 'closes' the options pane
-      nodeViewModel.attr('editActive', false);
-
-      // `rootNodeScope` is a reference to `a2j-template` viewModel, if we
-      // don't remove it before calling `.attr` in node's `state` map it
-      // will cause a stack overflow.
-      node.attr('state').attr(_omit(nodeViewModel.serialize(), 'rootNodeScope', 'guide'));
-
-      this.saveTemplateChanges();
-    }
+    this.saveTemplateChanges();
   },
 
-  toggleEditActiveNode(nodeViewModel) {
-    let nodesViewModels = this.attr('nodesViewModels');
+  toggleEditActiveNode(id) {
+    const rootNode = this.attr('rootNode');
+    const children = rootNode.attr('children');
 
-    nodesViewModels.each(function(node) {
-      let isActive = node === nodeViewModel;
-      node.attr('editActive', isActive);
-    });
+    const toggle = (nodes, id) => {
+      nodes.each(node => {
+        let children;
+        const nodeId = node.attr('id');
 
-    this.toggleEditActiveNestedNode();
-  },
-
-  // walk the list of node's view model instances, if there is a node that
-  // has nested nodes (it owns `a2j-template` instances) "tell it" to deselect
-  // any possible active element that it might own.
-  toggleEditActiveNestedNode() {
-    let nodesViewModels = this.attr('nodesViewModels');
-
-    nodesViewModels.each(function(node) {
-      if (node.attr('hasNestedNodes')) {
-        if (_isFunction(node.deselectNestedNode)) {
-          node.deselectNestedNode();
+        if (node instanceof A2JTemplate) {
+          children = node.attr('rootNode.children');
         } else {
-          console.error('Element is required to implement deselectNestedNode');
+          children = node.attr('children');
+          node.attr('state.editActive', (nodeId === id));
         }
-      }
-    });
-  },
 
-  getNodeViewModelIndex(nodeViewModel) {
-    let index = -1;
-    let nodesViewModels = this.attr('nodesViewModels');
+        if (children.attr('length')) {
+          toggle(children, id);
+        }
+      });
+    };
 
-    nodesViewModels.each(function(node, i) {
-      if (node === nodeViewModel) {
-        index = i;
-        return false;
-      }
-    });
-
-    return index;
-  },
-
-  registerNodeViewModel(nodeViewModel, index) {
-    let nodesViewModels = this.attr('nodesViewModels');
-    nodesViewModels.splice(index, 0, nodeViewModel);
-  },
-
-  deregisterNodeViewModel(nodeViewModel) {
-    let nodesViewModels = this.attr('nodesViewModels');
-    let index = this.getNodeViewModelIndex(nodeViewModel);
-
-    if (index !== -1) {
-      nodesViewModels.splice(index, 1);
-    }
+    toggle(children, id);
   },
 
   updateChildrenOrder() {

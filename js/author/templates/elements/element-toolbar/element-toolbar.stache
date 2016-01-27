@@ -3,11 +3,11 @@
 <div>
   <span class="glyphicon-move small text-muted drag-handle"></span>
   <div class="pull-right">
-    <a href="#" ($click)="cloneNode()">
+    <a href="#" ($click)="clone()">
       <span class="glyphicon-docs small text-muted"></span>Duplicate
     </a>
 
-    <a href="#" ($click)="deleteNode()">
+    <a href="#" ($click)="delete()">
       <span class="glyphicon-trash small text-muted"></span>Delete
     </a>
   </div>

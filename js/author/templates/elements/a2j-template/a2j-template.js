@@ -1,39 +1,11 @@
-import stache from 'can/view/stache/';
 import Component from 'can/component/';
 import template from './a2j-template.stache!';
 import A2JTemplateVM from './a2j-template-vm';
-
-const tagToComponentMap = {
-  'a2j-rich-text': '<a2j-rich-text state="{.}" />',
-  'a2j-page-break': '<a2j-page-break state="{.}" />',
-  'a2j-repeat-loop': '<a2j-repeat-loop state="{.}" />',
-  'a2j-conditional': '<a2j-conditional state="{.}" />',
-  'a2j-section-title': '<a2j-section-title state="{.}" />'
-};
 
 export default Component.extend({
   template,
   tag: 'a2j-template',
   viewModel: A2JTemplateVM,
-
-  helpers: {
-    a2jParse(tag, state, index) {
-      index = index.isComputed ? index() : index;
-      let component = tagToComponentMap[tag];
-
-      can.batch.start();
-
-      state.attr('nodeIndex', index);
-      state.attr('guide', this.attr('guide'));
-      state.attr('answers', this.attr('answers'));
-      state.attr('useAnswers', this.attr('useAnswers'));
-      state.attr('editEnabled', this.attr('editEnabled'));
-
-      can.batch.stop();
-
-      return stache(component)(state);
-    }
-  },
 
   events: {
     click: function(_, evt) {
@@ -119,19 +91,10 @@ export default Component.extend({
       vm.updateChildrenOrder();
     },
 
-    // This event is fired by elements that own `a2j-template` instances (they
-    // have nested elements, e.g a2j-conditional); when those nested elements are
-    // selected by the user the event is triggered so parent `a2j-template` can
-    // deselect it's top level nodes.
-    'nested-node-selected': function($el, evt, nodeVM) {
-      let vm = this.viewModel;
-      let nodesViewModels = vm.attr('nodesViewModels');
-
-      nodesViewModels.each(function(node) {
-        if (node !== nodeVM) {
-          node.attr('editActive', false);
-        }
-      });
+    // need to figure out why 2-way binding this variable from a parent
+    // component does not update the parent bound property.
+    '{viewModel} selectedNode': function(vm, evt, selectedNode) {
+      this.element.trigger('node-selected', selectedNode);
     }
   }
 });

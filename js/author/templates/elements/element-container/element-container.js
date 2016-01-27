@@ -1,5 +1,6 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
+import _isFunction from 'lodash/isFunction';
 import template from './element-container.stache!';
 
 import 'can/map/define/';
@@ -27,7 +28,7 @@ import 'can/map/define/';
  *
  * `<element-container>`'s viewModel.
  */
-export let Container = Map.extend({
+export let ContainerVM = Map.extend({
   define: {
     /**
      * @property {Boolean} element-container.ViewModel.prototype.selected selected
@@ -41,60 +42,58 @@ export let Container = Map.extend({
   },
 
   /**
-   * @property {function} element-container.ViewModel.prototype.setSelected setSelected
+   * @function element-container.ViewModel.prototype.setSelected setSelected
    * @parent element-container.ViewModel
    *
-   * Sets `selected` property to `true`
+   * Calls `doSelectNode` if node is not selected already, used as the handler
+   * for the click event.
    */
   setSelected() {
+    const selected = this.attr('selected');
+
+    if (!selected) {
+      this.doSelectNode();
+    }
+  },
+
+  /**
+   * @function element-container.ViewModel.prototype.doSelectNode doSelectNode
+   * @parent element-container.ViewModel
+   *
+   * Sets `selected` to `true` and calls `toggleEditActiveNode` to make sure
+   * there is only element selected at a time.
+   */
+  doSelectNode() {
+    const id = this.attr('nodeId');
+    const toggleEditActiveNode = this.attr('toggleEditActiveNode');
+
     this.attr('selected', true);
+
+    if (_isFunction(toggleEditActiveNode)) {
+      toggleEditActiveNode(id);
+    } else {
+      console.error('toggleEditActiveNode should be a function');
+    }
   }
 });
 
 export default Component.extend({
   template,
-  leakScope: false,
+  viewModel: ContainerVM,
   tag: 'element-container',
 
-  viewModel: function(attrs, parentScope) {
-    let vm = new Container(attrs);
-    vm.attr('parentScope', parentScope.attr('.'));
-    return vm;
-  },
-
   events: {
-    inserted($el) {
-      let vm = this.viewModel.attr('parentScope');
-      let $a2jTemplate = $el.closest('a2j-template');
+    // when a new element is added to a template, is selected by default,
+    // we want to make sure any selected element is toggled properly.
+    inserted() {
+      const vm = this.viewModel;
 
-      // only register element if it is a child of `a2j-template`
-      if ($a2jTemplate.length) {
-        let rootNodeScope = $a2jTemplate.viewModel();
-
-        // gets node index in the children array
-        let nodeIndex = vm.attr('nodeIndex');
-
-        vm.attr('rootNodeScope', rootNodeScope);
-        rootNodeScope.registerNodeViewModel(vm, nodeIndex);
-
-        this.toggleEditActiveNode();
+      if (vm.attr('selected')) {
+        vm.doSelectNode();
       }
     },
 
-    removed() {
-      let vm = this.viewModel.attr('parentScope');
-      let rootNodeScope = vm.attr('rootNodeScope');
-
-      if (rootNodeScope) {
-        rootNodeScope.deregisterNodeViewModel(vm);
-      }
-    },
-
-    '{viewModel} selected': function() {
-      this.toggleEditActiveNode();
-    },
-
-    '{viewModel.parentScope} deleted': function(ps, evt, deleted) {
+    '{viewModel} deleted': function(ps, evt, deleted) {
       let $el = this.element;
 
       if (deleted) {
@@ -103,16 +102,6 @@ export default Component.extend({
       } else {
         $el.slideDown('fast');
         $el.siblings('element-options-pane').show();
-      }
-    },
-
-    toggleEditActiveNode() {
-      let vm = this.viewModel.attr('parentScope');
-      let editActive = vm.attr('editActive');
-      let rootNodeScope = vm.attr('rootNodeScope');
-
-      if (editActive && rootNodeScope) {
-        rootNodeScope.toggleEditActiveNode(vm);
       }
     }
   }

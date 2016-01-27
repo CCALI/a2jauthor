@@ -32,8 +32,5 @@ let PageBreakVM = Map.extend({
 export default Component.extend({
   template,
   tag: 'a2j-page-break',
-
-  viewModel(attrs) {
-    return new PageBreakVM(attrs.state);
-  },
+  viewModel: PageBreakVM
 });

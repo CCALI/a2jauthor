@@ -15,8 +15,9 @@
             {{#if editActive}}
               <var-picker
                 {(selected)}="variable"
+                {variables}="variablesList"
                 filter-ocurrence="repeating"
-                {variables}="guide.variablesList" />
+              />
             {{else}}
               <a2j-variable {name}="variable" />
             {{/if}}

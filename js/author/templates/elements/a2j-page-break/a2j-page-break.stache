@@ -3,12 +3,23 @@
 <can-import from="caja/author/templates/elements/a2j-page-break/a2j-page-break.less!" />
 
 {{#if editEnabled}}
-  <element-container selected="{editActive}">
+  <element-container
+    {node-id}="id"
+    {deleted}="deleted"
+    {(selected)}="editActive"
+    {clone-node}="@cloneNode"
+    {delete-node}="@deleteNode"
+    {toggle-edit-active-node}="@toggleEditActiveNode">
+
     <p><span class="text-muted">Page Break</span></p>
   </element-container>
 
   {{#if editActive}}
-    <element-options-pane title="Page Break">
+    <element-options-pane
+      title="Page Break"
+      {node-id}="nodeId"
+      {save-and-close}="@updateNode">
+
       <form>
         <div class="form-group">
           <label>Notes</label>

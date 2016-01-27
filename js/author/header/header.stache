@@ -18,9 +18,11 @@
           <span class="glyphicon-cog"></span> Settings
         </button>
 
-        <a href="{{helpPageUrl}}" target="_blank" class="btn btn-link">
-          <span class="glyphicon-lifebuoy"></span> Help
-        </a>
+        {{#if helpPageUrl}}
+          <a href="{{helpPageUrl}}" target="_blank" class="btn btn-link">
+            <span class="glyphicon-lifebuoy"></span> Help
+          </a>
+        {{/if}}
 
         <br />
         <span class="authorenv"></span>

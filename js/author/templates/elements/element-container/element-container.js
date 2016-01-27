@@ -42,25 +42,37 @@ export let ContainerVM = Map.extend({
   },
 
   /**
-   * @property {function} element-container.ViewModel.prototype.setSelected setSelected
+   * @function element-container.ViewModel.prototype.setSelected setSelected
    * @parent element-container.ViewModel
    *
-   * Sets `selected` property to `true`
+   * Calls `doSelectNode` if node is not selected already, used as the handler
+   * for the click event.
    */
   setSelected() {
     const selected = this.attr('selected');
 
     if (!selected) {
-      const id = this.attr('nodeId');
-      const toggleEditActiveNode = this.attr('toggleEditActiveNode');
+      this.doSelectNode();
+    }
+  },
 
-      this.attr('selected', true);
+  /**
+   * @function element-container.ViewModel.prototype.doSelectNode doSelectNode
+   * @parent element-container.ViewModel
+   *
+   * Sets `selected` to `true` and calls `toggleEditActiveNode` to make sure
+   * there is only element selected at a time.
+   */
+  doSelectNode() {
+    const id = this.attr('nodeId');
+    const toggleEditActiveNode = this.attr('toggleEditActiveNode');
 
-      if (_isFunction(toggleEditActiveNode)) {
-        toggleEditActiveNode(id);
-      } else {
-        console.error('toggleEditActiveNode should be a function');
-      }
+    this.attr('selected', true);
+
+    if (_isFunction(toggleEditActiveNode)) {
+      toggleEditActiveNode(id);
+    } else {
+      console.error('toggleEditActiveNode should be a function');
     }
   }
 });
@@ -71,6 +83,16 @@ export default Component.extend({
   tag: 'element-container',
 
   events: {
+    // when a new element is added to a template, is selected by default,
+    // we want to make sure any selected element is toggled properly.
+    inserted() {
+      const vm = this.viewModel;
+
+      if (vm.attr('selected')) {
+        vm.doSelectNode();
+      }
+    },
+
     '{viewModel} deleted': function(ps, evt, deleted) {
       let $el = this.element;
 

@@ -49,7 +49,9 @@
 
         <conditional-add-element
           {(template)}="ifBody"
-          {(selected)}="addToIfSelected"
+          {node-id}="addToIfNode.id"
+          {(selected)}="addToIfNode.state.editActive"
+          {toggle-edit-active-node}="@toggleEditActiveNode"
         />
       </div>
 
@@ -65,7 +67,9 @@
 
           <conditional-add-element
             {(template)}="elseBody"
-            {(selected)}="addToElseSelected"
+            {node-id}="addToElseNode.id"
+            {(selected)}="addToElseNode.state.editActive"
+            {toggle-edit-active-node}="@toggleEditActiveNode"
           />
         </div>
       {{/if}}

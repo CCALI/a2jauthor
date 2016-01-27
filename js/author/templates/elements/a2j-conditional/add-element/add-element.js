@@ -46,14 +46,23 @@ const AddElementVM = Map.extend({
    * @parent addElement.ViewModel
    *
    * This function is executed when the user clicks the element, this sets
-   * `editActive` to `true` which causes the `element-options-pane` to be shown
+   * `selected` to `true` which causes the `element-options-pane` to be shown
    * allowing the user to effectively add elements.
    */
   select() {
     const selected = this.attr('selected');
 
     if (!selected) {
+      const id = this.attr('nodeId');
+      const toggleEditActiveNode = this.attr('toggleEditActiveNode');
+
       this.attr('selected', true);
+
+      if (_isFunction(toggleEditActiveNode)) {
+        toggleEditActiveNode(id);
+      } else {
+        console.error('toggleEditActiveNode should be a function');
+      }
     }
 
     return false;

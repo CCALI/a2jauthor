@@ -1,6 +1,7 @@
 import Map from 'can/map/';
 import _includes from 'lodash/includes';
 import Answers from 'caja/author/models/answers';
+import A2JNode from 'caja/author/models/a2j-node';
 import A2JTemplate from 'caja/author/models/a2j-template';
 
 import 'can/view/';
@@ -171,37 +172,36 @@ export default Map.extend({
     },
 
     /**
-     * @property {Boolean} conditional.ViewModel.prototype.addToIfSelected addToIfSelected
+     * @property {A2JNode} conditional.ViewModel.prototype.addToIfNode addToIfNode
      * @parent conditional.ViewModel
      *
-     * Whether the component that allows elements to be added to `ifBlock` is
-     * selected.
+     * A2JNode instance used to bind some properties of the
+     * `conditional-add-element` instance used to add elements to `ifBody`.
      */
-    addToIfSelected: {
-      value: false
+    addToIfNode: {
+      get() {
+        const children = this.attr('children');
+        return children.attr(2);
+      }
     },
 
     /**
-     * @property {Boolean} conditional.ViewModel.prototype.addToElseSelected addToElseSelected
+     * @property {A2JNode} conditional.ViewModel.prototype.addToElseNode addToElseNode
      * @parent conditional.ViewModel
      *
-     * Whether the component that allows elements to be added to `elseBlock` is
-     * selected.
+     * A2JNode instance used to bind some properties of the
+     * `conditional-add-element` instance used to add elements to `elseBody`.
      */
-    addToElseSelected: {
-      value: false
+    addToElseNode: {
+      get() {
+        const children = this.attr('children');
+        return children.attr(3);
+      }
     }
   },
 
   init() {
-    const children = this.attr('children');
-
-    if (!children.attr('length')) {
-      children.replace([
-        new A2JTemplate(),
-        new A2JTemplate()
-      ]);
-    }
+    this.setChildrenIfEmpty();
   },
 
   /**
@@ -224,6 +224,40 @@ export default Map.extend({
       return operand;
     } else {
       return (answers && operand) ? answers.getValue(operand) : null;
+    }
+  },
+
+  /**
+   * @function conditional.ViewModel.prototype.setChildrenIfEmpty setChildrenIfEmpty
+   * @parent conditional.ViewModel
+   *
+   * This is a *hack* to register the instances of `A2JTemplate` and `A2JNode`
+   * used for `ifBody`/`elseBody` and the `conditional-add-element` instances as
+   * `a2j-conditional` children.
+   *
+   * `a2j-template` has logic to recursively walk through its children
+   * (and children of its children) to make sure there is only one selected element,
+   * it makes sense for `a2j-conditional` to be parent of the properties mentioned
+   * before, it just feels odd to rely on their order inside children.
+   *
+   *  TODO: Find a better way to do this.
+   */
+  setChildrenIfEmpty() {
+    const children = this.attr('children');
+
+    if (!children.attr('length')) {
+      const addElementNode = {
+        state: {},
+        children: [],
+        tag: 'conditional-add-element'
+      };
+
+      children.replace([
+        new A2JTemplate(),
+        new A2JTemplate(),
+        new A2JNode(addElementNode),
+        new A2JNode(addElementNode)
+      ]);
     }
   },
 

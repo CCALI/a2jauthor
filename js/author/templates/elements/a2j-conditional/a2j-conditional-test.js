@@ -203,7 +203,7 @@ describe('<a2j-conditional>', function() {
       assert.lengthOf($('.panel-body'), 2, 'if and else body should be rendered');
     });
 
-    describe('element options pane', function() {
+    describe.skip('element options pane', function() {
       beforeEach(function() {
         vm.attr('editActive', true);
         vm.attr('editEnabled', true);

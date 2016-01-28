@@ -1102,7 +1102,7 @@ TGuide.prototype.noviceTab = function(tab,clear)
         }
       }));
 
-      $('#tab-revision').append(tabHistory);
+      $('#tab-revision').html(tabHistory);
 
       // ------------------------------------------
       // Authors tab

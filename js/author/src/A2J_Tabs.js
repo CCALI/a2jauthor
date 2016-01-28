@@ -917,122 +917,269 @@ TGuide.prototype.noviceTab = function(tab,clear)
 			break;
 
 
-		case "tabsAbout":
-  		$('#about-tabs > li').removeClass('active');
+    case 'tabsAbout':
+      $('#about-tabs > li').removeClass('active');
       $('.tab-pane').removeClass('active');
 
       $('#about-tabs > li').first().addClass('active');
       $('#tab-about').addClass('active');
 
-			tabAbout = form.div('About');
+      // ------------------------------------------
+      // About tab
+      tabAbout = form.div('About');
 
-      var cols444 =$(''
-        +'<div class="row">'
-          +'<div class="col-sm-4 language">'
-          +'</div>'
-          +'<div class="col-sm-4 avatar">'
-          +'</div>'
-          +'<div class="col-sm-4 gender">'
-          +'</div>'
-        +'</div>');
+      var cols444 = $(
+        '<div class="row">' +
+          '<div class="col-sm-4 language"></div>' +
+          '<div class="col-sm-4 avatar"></div>' +
+          '<div class="col-sm-4 gender"></div>' +
+        '</div>'
+      );
 
-			tabAbout.append(form.text({label:'Title:', placeholder:'Interview title', value:guide.title, change:function(val){guide.title=val;}}));
-			tabAbout.append(form.htmlarea({label:'Description:',value:guide.description,change:function(val){guide.description=val;}}));
-			tabAbout.append(form.text({label:'Jurisdiction:', value:guide.jurisdiction, change:function(val){guide.jurisdiction=val;}}));
+      tabAbout.append(form.text({
+        label: 'Title:',
+        placeholder: 'Interview title',
+        value: guide.title,
+        change: function(val) {
+          guide.title = val;
+        }
+      }));
+
+      tabAbout.append(form.htmlarea({
+        label: 'Description:',
+        value: guide.description,
+        change: function(val) {
+          guide.description = val;
+        }
+      }));
+
+      tabAbout.append(form.text({
+        label: 'Jurisdiction:',
+        value: guide.jurisdiction,
+        change: function(val) {
+          guide.jurisdiction = val;
+        }
+      }));
 
       tabAbout.append(cols444);
-      tabAbout.append(form.htmlarea({label:'Credits:',value:guide.credits,change:function(val){guide.credits=val;}}));
-			tabAbout.append(form.text({label:'Approximate Completion Time:',placeholder:'',value:guide.completionTime,change:function(val){guide.completionTime=val;}}));
+
+      tabAbout.append(form.htmlarea({
+        label: 'Credits:',
+        value: guide.credits,
+        change: function(val) {
+          guide.credits = val;
+        }
+      }));
+
+      tabAbout.append(form.text({
+        label: 'Approximate Completion Time:',
+        placeholder: '',
+        value: guide.completionTime,
+        change: function(val) {
+          guide.completionTime = val;
+        }
+      }));
 
       $('#tab-about').html(tabAbout);
 
+      var l;
+      var list = [];
 
-			var l,list=[];
-			for (l in Languages.regional){
-				// l is language code like en or es.
-				list.push(l, Languages.regional[l].LanguageEN + ' (' + Languages.regional[l].Language+') {'+l+'}');
-			}
+      for (l in Languages.regional) {
+        // l is language code like en or es.
+        list.push(l, Languages.regional[l].LanguageEN + ' (' + Languages.regional[l].Language + ') {' + l + '}');
+      }
 
-			$('.language').append(form.pickList({label:'Language:', value:guide.language, change:function(val){
-				guide.language=val;
-				Languages.set(guide.language);
-				$('.A2JViewer','#page-viewer').html('');
-				}},list));
+      $('.language').append(form.pickList({
+        label: 'Language:',
+        value: guide.language,
+        change: function(val) {
+          guide.language = val;
+          Languages.set(guide.language);
+          $('.A2JViewer', '#page-viewer').html('');
+        }
+      }, list));
 
-			list=['avatar1','Avatar 1','avatar2','Avatar 2','avatar3','Avatar 3'];
+      list = ['avatar1', 'Avatar 1', 'avatar2', 'Avatar 2', 'avatar3', 'Avatar 3'];
 
-			$('.avatar').append(form.pickList({label:'Avatar:',value:guide.avatar,change:function(val){
-				guide.avatar=val;
-				}},list));
-			list=['Female','Female Guide','Male','Male Guide'];
-			if (guide.guideGender!=='Male') {
-				guide.guideGender='Female';
-			}
+      $('.avatar').append(form.pickList({
+        label: 'Avatar:',
+        value: guide.avatar,
+        change: function(val) {
+          guide.avatar = val;
+        }
+      }, list));
 
-			$('.gender').append(form.pickList({label:'Guide Gender:',value:guide.guideGender,change:function(val){
-				guide.guideGender=val;}},list));
+      list = ['Female', 'Female Guide', 'Male', 'Male Guide'];
 
+      if (guide.guideGender !== 'Male') {
+        guide.guideGender = 'Female';
+      }
 
+      $('.gender').append(form.pickList({
+        label: 'Guide Gender:',
+        value: guide.guideGender,
+        change: function(val) {
+          guide.guideGender = val;
+        }
+      }, list));
 
-
+      // ------------------------------------------
+      // Layout tab
       tabLayout = form.div('Layout');
-			tabLayout.append(form.pickImage({label:'Logo graphic:', placeholder: 'Logo URL',value:guide.logoImage, change:function(val){guide.logoImage=val;}}));
-			tabLayout.append(form.pickImage({label:'End graphic:', placeholder:'End (destination graphic) URL',value:guide.endImage, change:function(val){guide.endImage=val;}}));
-			tabLayout.append(form.pickList({label:'Mobile friendly?', value:guide.mobileFriendly, change:function(val){guide.mobileFriendly=val;}},['','Undetermined','false','No','true','Yes']));
-			$('#tab-layout').html(tabLayout);
 
+      tabLayout.append(form.pickImage({
+        label: 'Logo graphic:',
+        placeholder: 'Logo URL',
+        value: guide.logoImage,
+        change: function(val) {
+          guide.logoImage = val;
+        }
+      }));
+
+      tabLayout.append(form.pickImage({
+        label: 'End graphic:',
+        placeholder: 'End (destination graphic) URL',
+        value: guide.endImage,
+        change: function(val) {
+          guide.endImage = val;
+        }
+      }));
+
+      tabLayout.append(form.pickList({
+        label: 'Mobile friendly?',
+        value: guide.mobileFriendly,
+        change: function(val) {
+          guide.mobileFriendly = val;
+        }
+      }, ['', 'Undetermined', 'false', 'No', 'true', 'Yes']));
+
+      $('#tab-layout').html(tabLayout);
+
+      // -------------------------------
+      // Feedback tab
       tabFeedback = form.div('Feedback');
-			tabFeedback.append(form.checkbox({label:'Allow Send feedback?', checkbox:'', value:guide.sendfeedback,
-						change:function(val,field){guide.sendfeedback=val;}}));
-			tabFeedback.append(form.text({label:'Feedback email:',value:guide.emailContact,change:function(val){guide.emailContact=val;}}));
-			$('#tab-feedback').html(tabFeedback);
 
-			fs = form.fieldset('Authors');
-			var blankAuthor=new TAuthor();
+      tabFeedback.append(form.checkbox({
+        label: 'Allow Send feedback?',
+        checkbox: '',
+        value: guide.sendfeedback,
+        change: function(val) {
+          guide.sendfeedback = val;
+        }
+      }));
 
-			tabHistory = form.div('Revision History');
-			tabHistory.append(form.text({label:'Current Version:',value:guide.version,change:function(val){guide.version=val;}}));
-			tabHistory.append(form.htmlarea({label:'Revision Notes',value:guide.notes,change:function(val){guide.notes=val;}}));
-			$('#tab-revision').append(tabHistory);
+      tabFeedback.append(form.text({
+        label: 'Feedback email:',
+        value: guide.emailContact,
+        change: function(val) {
+          guide.emailContact = val;
+        }
+      }));
 
-			tabAuthors = form.div('Authors');
-			tabAuthors.append(form.listManager({name:'Authors',picker:'Number of authors',min:1,max:12,list:guide.authors,blank:blankAuthor
-				,save:function(newlist){
-					guide.authors=newlist; }
-				,create:function(ff,author){
+      $('#tab-feedback').html(tabFeedback);
 
-  	      var colRow =$('<div class="row"></div>');
-          var colLeft =$('<div class="col-sm-6"></div>');
-          var colRight =$('<div class="col-sm-6"></div>');
+      fs = form.fieldset('Authors');
+      var blankAuthor = new TAuthor();
 
-						colLeft.append(form.text({  label:"Author's Name:", placeholder:'name',value:author.name,
-							change:function(val,author){author.name=val;}}));
-						colRight.append(form.text({  label:"Author's Title:", placeholder:'title',value:author.title,
-							change:function(val,author){author.title=val;}}));
-						colLeft.append(form.text({  label:"Author's Organization:", placeholder:'organization',value:author.organization,
-							change:function(val,author){author.organization=val;}}));
-						colRight.append(form.text({  label:"Author's email:", placeholder:'email',value:author.email,
-							change:function(val,author){author.email=val;}}));
+      // ------------------------------------------
+      // Revision history tab
+      tabHistory = form.div('Revision History');
 
-						ff.append(colRow);
-						ff.append(colLeft);
-						ff.append(colRight);
-					return ff;
-				}}));
+      tabHistory.append(form.text({
+        label: 'Current Version:',
+        value: guide.version,
+        change: function(val) {
+          guide.version = val;
+        }
+      }));
 
-			$('#tab-authors').html(tabAuthors);
+      tabHistory.append(form.htmlarea({
+        label: 'Revision Notes',
+        value: guide.notes,
+        change: function(val) {
+          guide.notes = val;
+        }
+      }));
 
-      $("#about-tabs > li > a").click(function(event){
+      $('#tab-revision').html(tabHistory);
+
+      // ------------------------------------------
+      // Authors tab
+      tabAuthors = form.div('Authors');
+
+      tabAuthors.append(form.listManager({
+        name: 'Authors',
+        picker: 'Number of authors',
+        min: 1,
+        max: 12,
+        list: guide.authors,
+        blank: blankAuthor,
+        save: function(newlist) {
+          guide.authors = newlist;
+        },
+
+        create: function(ff, author) {
+          var colRow = $('<div class="row"></div>');
+          var colLeft = $('<div class="col-sm-6"></div>');
+          var colRight = $('<div class="col-sm-6"></div>');
+
+          colLeft.append(form.text({
+            label: 'Author\'s Name:',
+            placeholder: 'name',
+            value: author.name,
+            change: function(val, author) {
+              author.name = val;
+            }
+          }));
+
+          colRight.append(form.text({
+            label: 'Author\'s Title:',
+            placeholder: 'title',
+            value: author.title,
+            change: function(val, author) {
+              author.title = val;
+            }
+          }));
+
+          colLeft.append(form.text({
+            label: 'Author\'s Organization:',
+            placeholder: 'organization',
+            value: author.organization,
+            change: function(val, author) {
+              author.organization = val;
+            }
+          }));
+
+          colRight.append(form.text({
+            label: 'Author\'s email:',
+            placeholder: 'email',
+            value: author.email,
+            change: function(val, author) {
+              author.email = val;
+            }
+          }));
+
+          ff.append(colRow);
+          ff.append(colLeft);
+          ff.append(colRight);
+
+          return ff;
+        }
+      }));
+
+      $('#tab-authors').html(tabAuthors);
+
+      $('#about-tabs > li > a').click(function(event) {
         $('#about-tabs > li').removeClass('active');
         $(this).parent().addClass('active');
 
         $('.tab-pane').removeClass('active');
         var panelId = $(this).data('panel');
-        $('#'+panelId).addClass('active');
+        $('#' + panelId).addClass('active');
       });
 
-			break;
-
+      break;
 
 		case 'tabsSteps':
 

@@ -84,6 +84,7 @@ export default Map.extend({
      * when user uploads an answer file.
      */
     useAnswers: {
+      type: 'boolean',
       value: false
     },
 

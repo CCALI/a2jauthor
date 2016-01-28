@@ -83,8 +83,18 @@
   {{/if}}
 {{else}}
   {{#if evalCondition()}}
-    <a2j-template edit-enabled="false" {template}="ifBody" />
+    <a2j-template
+      use-answers="true"
+      {answers}="answers"
+      {template}="ifBody"
+      edit-enabled="false"
+    />
   {{else}}
-    <a2j-template edit-enabled="false" {template}="elseBody" />
+    <a2j-template
+      use-answers="true"
+      {answers}="answers"
+      edit-enabled="false"
+      {template}="elseBody"
+    />
   {{/if}}
 {{/if}}

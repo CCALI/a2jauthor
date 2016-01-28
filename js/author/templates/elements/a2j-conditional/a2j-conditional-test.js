@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import F from 'funcunit';
 import assert from 'assert';
 import stache from 'can/view/stache/';
 import ConditionalVM from './a2j-conditional-vm';
@@ -202,26 +203,30 @@ describe('<a2j-conditional>', function() {
       assert.lengthOf($('.panel-body'), 2, 'if and else body should be rendered');
     });
 
-    describe('element options pane', function() {
+    describe.skip('element options pane', function() {
       beforeEach(function() {
         vm.attr('editActive', true);
         vm.attr('editEnabled', true);
       });
 
-      it('options pane is toggled based on [editActive] value', function() {
+      it('options pane is toggled based on [editActive] value', function(done) {
         vm.attr('editActive', true);
-        assert.isTrue($('element-options-pane').is(':visible'));
+        F('element-options-pane').visible('options pane should be visible');
 
-        vm.attr('editActive', false);
-        assert.isFalse($('element-options-pane').is(':visible'));
+        F(() => vm.attr('editActive', false));
+        F('element-options-pane').missing('options pane should be gone');
+
+        F(done);
       });
 
-      it('toggles right operand form group based on [unaryOperation] value', function() {
+      it('toggles right operand form group based on [unaryOperation] value', function(done) {
         vm.attr('operator', 'is-true');
-        assert.isTrue($('.right-operand').css('visibility') === 'hidden');
+        F('.right-operand').css('visibility', 'hidden', 'visibility should be hidden');
 
-        vm.attr('operator', 'is-greater-than');
-        assert.isFalse($('.right-operand').css('visibility') === 'hidden');
+        F(() => vm.attr('operator', 'is-greater-than'));
+        F('.right-operand').css('visibility', 'visible', 'visibility should be visible');
+
+        F(done);
       });
     });
   });

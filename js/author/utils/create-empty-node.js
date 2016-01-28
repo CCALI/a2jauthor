@@ -30,6 +30,14 @@ const emptyNodes = {
     state: {
       editActive: true
     }
+  },
+
+  'if-else': {
+    tag: 'a2j-conditional',
+    children: [],
+    state: {
+      editActive: true
+    }
   }
 };
 

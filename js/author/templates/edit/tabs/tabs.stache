@@ -44,7 +44,9 @@
       <h3>Logic</h3>
       <div class="row clearfix">
         <div class="col-lg-6">
-          <button class="btn btn-default disabled">If / Else</button>
+          <button
+            class="btn btn-default"
+            ($click)="addElement('if-else')">If / Else</button>
         </div>
 
         <div class="col-lg-6">

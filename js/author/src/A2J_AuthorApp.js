@@ -230,19 +230,34 @@ function main()
     downloadTextFile( exportXML_CAJA_from_CAJA(gGuide), gGuide.filename);
    });
 
-  $(document).on("click", '.editicons .ui-icon-circle-plus',function(){// clone a table row
-    var $tbl=$(this).closest('table');
-    var row = $(this).closest('tr');
-    var settings=$tbl.data('settings');
-    if ($('tbody tr',$tbl).length>=settings.max) {return;}
-    row.clone(true,true).insertAfter(row).fadeIn();
-    row.data('record',$.extend({},row.data('record')));
+  // clone a table row
+  $(document).on('click', '.editicons .ui-icon-circle-plus', function() {
+    var $tbl = $(this).closest('table');
+    var $row = $(this).closest('tr');
+    var $rows = $tbl.find('tbody tr');
+    var settings = $tbl.data('settings');
+
+    if ($rows.length >= settings.max) {
+      return;
+    }
+
+    $row.clone(true, true)
+      .attr('class', 'step-step' + ($rows.length + 1))
+      .insertAfter($row).fadeIn()
+      .data('record', $.extend({}, $row.data('record')));
+
     form.listManagerSave($(this).closest('table'));
   });
-  $(document).on("click", ".editicons .ui-icon-circle-minus",  function(){// delete a table row
-    var $tbl=$(this).closest('table');
-    var settings=$tbl.data('settings');
-    if ($('tbody tr',$tbl).length<=settings.min) {return;}
+
+  // delete a table row
+  $(document).on('click', '.editicons .ui-icon-circle-minus',  function() {
+    var $tbl = $(this).closest('table');
+    var settings = $tbl.data('settings');
+
+    if ($tbl.find('tbody tr').length <= settings.min) {
+      return;
+    }
+
     $(this).closest('tr').remove();
     form.listManagerSave($tbl);
   });

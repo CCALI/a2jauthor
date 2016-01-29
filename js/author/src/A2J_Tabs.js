@@ -797,20 +797,34 @@ var form={
 		});
 		settings.save(list);
 		$('select[list="'+settings.name+'"]').val(list.length);
-	}
-	,listManagerAddRow:function($tbl,record)
-	{
-		var settings=$tbl.data('settings');
+	},
 
-		var $row=$('<tr valign=top class="step-step'+record.number+'" name="record"/>');
-		$row.append($('<td class="editicons"/>')
-			.append('<span class="ui-draggable sorthandle glyphicon-move"></span>'
-			+'<span class="ui-icon-circle-plus glyphicon-plus-circled"></span><span class="ui-icon-circle-minus glyphicon-minus-circled"></span>'));
-		$row.append($('<td/>').append(settings.create(form.div(),record)));
-		$row.data('record',record);
-		$tbl.append($row);
-	}
-	,listManager:function(settings)
+  listManagerAddRow: function($tbl, record) {
+    var settings = $tbl.data('settings');
+
+    if (record && !Number.isInteger(record.number)) {
+      var $rows = $tbl.find('tbody tr');
+      record.number = $rows.length + 1;
+    }
+
+    var $row = $(
+      '<tr valign=top class="step-step' + record.number + '" name="record"/>'
+    );
+
+    $row.append(
+      '<td class="editicons">' +
+        '<span class="ui-draggable sorthandle glyphicon-move"></span>' +
+        '<span class="ui-icon-circle-plus glyphicon-plus-circled"></span>' +
+        '<span class="ui-icon-circle-minus glyphicon-minus-circled"></span>' +
+      '</td>'
+    );
+
+    $row.append(settings.create(form.div(), record));
+    $row.data('record', record);
+    $tbl.append($row);
+  },
+
+  listManager:function(settings)
 	{	//   data.name:'Fields' data.,picker:'Number of fields:',data.min:0,data.max:CONST.MAXFIELDS,data.list:page.fields,data.blank:blankField,data.save=function to save,data.create=create form elts for record
 		var div = $('<div/>');
 		var $tbl=$('<table/>').addClass('list table table-striped').data('settings',settings).attr('list',settings.name);
@@ -1181,60 +1195,89 @@ TGuide.prototype.noviceTab = function(tab,clear)
 
       break;
 
-		case 'tabsSteps':
+    case 'tabsSteps':
+      fs = form.fieldset('Start/Exit points', '', 'accordion');
 
-			fs=form.fieldset('Start/Exit points','','accordion');
+      var cols66 = $(
+        '<div class="row">' +
+          '<div class="col-sm-6 starting"></div>' +
+          '<div class="col-sm-6 exit"></div>' +
+        '</div>'
+      );
 
-      var cols66 =$(''
-        +'<div class="row">'
-          +'<div class="col-sm-6 starting">'
-          +'</div>'
-          +'<div class="col-sm-6 exit">'
-          +'</div>'
-        +'</div>');
-
-			fs.append(cols66);
+      fs.append(cols66);
       t.append(fs);
 
-      $('.starting').append(form.pickpage({	value: guide.firstPage,label:'Starting Point: ',	change:function(val){guide.firstPage=val;}}));
-			$('.exit').append(form.pickpage({	value: guide.exitPage,label:'Exit Point: ',		change:function(val){guide.exitPage=val;}}));
+      $('.starting').append(form.pickpage({
+        value: guide.firstPage,
+        label: 'Starting Point: ',
+        change: function(val) {
+          guide.firstPage = val;
+        }
+      }));
 
+      $('.exit').append(form.pickpage({
+        value: guide.exitPage,
+        label:'Exit Point: ',
+        change:function(val) {
+          guide.exitPage = val;
+        }
+      }));
 
-			fs=form.fieldset('Steps','','accordion');
-			var blankStep=new TStep();
+      fs = form.fieldset('Steps', '', 'accordion');
+      var blankStep = new TStep();
 
-			fs.append(form.listManager({grid:true,name:'Steps',picker:'Number of Steps:',min:1,max:CONST.MAXSTEPS,list:guide.steps,blank:blankStep
-				,save:function(newlist){
-					guide.steps=newlist;
-					updateTOC();
-				}
-				,create:function(ff,step){
+      fs.append(form.listManager({
+        grid: true,
+        name: 'Steps',
+        picker: 'Number of Steps:',
+        min: 1,
+        max: CONST.MAXSTEPS,
+        list: guide.steps,
+        blank: blankStep,
 
-  	      var colRow =$('<div class="row"></div>');
-          var colNumber =$('<div class="col-sm-3"></div>');
-          var colTitle =$('<div class="col-sm-9"></div>');
+        save: function(newlist) {
+          guide.steps = newlist;
+          updateTOC();
+        },
 
-          colNumber.append(form.text({  label:"Step Number:", placeholder:'#',value:step.number,
-							change:function(val,step){
-								step.number=val;
-								updateTOC();
-						  }}));
+        create: function(ff, step) {
+          var colRow = $('<div class="row"></div>');
+          var colNumber = $('<div class="col-sm-3"></div>');
+          var colTitle = $('<div class="col-sm-9"></div>');
 
-          colTitle.append(form.text({  label:"Step Sign:", placeholder:'title',value:step.text,
-							change:function(val,step){
-								step.text=val;
-								updateTOC();
-							}}));
+          colNumber.append(form.text({
+            label: 'Step Number:',
+            placeholder: '#',
+            value: step.number,
+            change: function(val, step) {
+              step.number = val;
+              updateTOC();
+            }
+          }));
+
+          colTitle.append(form.text({
+            label: 'Step Sign:',
+            placeholder: 'title',
+            value: step.text,
+            change: function(val, step) {
+              step.text = val;
+              updateTOC();
+            }
+          }));
 
           colRow.append(colNumber);
           colRow.append(colTitle);
           ff.append(colRow);
 
-					return ff;
-				}}));
-			t.append(fs);
-			break;
-	}
+          return ff;
+        }
+      }));
+
+      t.append(fs);
+      break;
+  }
+
 	form.finish(t);
 
 	 $("legend",t).click(function(){

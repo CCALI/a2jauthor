@@ -1,4 +1,3 @@
-import _values from 'lodash/values';
 import template2112 from './templates/guide1261-template2112';
 import template2113 from './templates/guide1261-template2113';
 import template2114 from './templates/guide20-template2114';
@@ -55,7 +54,8 @@ export default function(request, response) {
       if (requestData.templateId) {
         response(a2jTemplates[requestData.templateId]);
       } else {
-        response(_values(a2jTemplates));
+        const list = Object.keys(a2jTemplates).map(k => a2jTemplates[k]);
+        response(list);
       }
   }
 }

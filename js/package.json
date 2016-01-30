@@ -55,7 +55,8 @@
       "grunt-contrib-less"
     ],
     "configDependencies": [
-      "author/utils/load-fixtures"
+      "author/utils/load-fixtures",
+      "author/utils/set-global-for-lodash"
     ],
     "map": {
       "chai": "chai/chai",

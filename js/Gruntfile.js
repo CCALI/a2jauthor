@@ -49,7 +49,8 @@ module.exports = function(grunt) {
               'author/app-template',
               'author/src/src',
               'author/styles.less!',
-              'caja/ckeditor/ckeditor'
+              'caja/ckeditor/ckeditor',
+              'author/models/fixtures/only-templates-fixtures'
             ]
           },
           buildOptions: {

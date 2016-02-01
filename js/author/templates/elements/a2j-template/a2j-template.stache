@@ -32,11 +32,11 @@
         <a2j-page-break
           {node-id}="id"
           {clone-node}="@cloneNode"
-          {deleted}="{state.deleted}"
+          {deleted}="state.deleted"
           {delete-node}="@deleteNode"
           {update-node}="@updateNode"
           {edit-enabled}="editEnabled"
-          {(edit-active)}="state.editActive"
+          {(edit-active)}="./state.editActive"
           {toggle-edit-active-node}="@toggleEditActiveNode"
         />
       {{/is}}
@@ -51,7 +51,7 @@
           {delete-node}="@deleteNode"
           {update-node}="@updateNode"
           {edit-enabled}="editEnabled"
-          {(edit-active)}="state.editActive"
+          {(edit-active)}="./state.editActive"
           {toggle-edit-active-node}="@toggleEditActiveNode"
         />
       {{/is}}
@@ -68,7 +68,7 @@
           {delete-node}="@deleteNode"
           {update-node}="@updateNode"
           {edit-enabled}="editEnabled"
-          {(edit-active)}="state.editActive"
+          {(edit-active)}="./state.editActive"
           {toggle-edit-active-node}="@toggleEditActiveNode"
         />
       {{/is}}
@@ -92,7 +92,7 @@
           {delete-node}="@deleteNode"
           {update-node}="@updateNode"
           {edit-enabled}="editEnabled"
-          {(edit-active)}="state.editActive"
+          {(edit-active)}="./state.editActive"
           {toggle-edit-active-node}="@toggleEditActiveNode"
         />
       {{/is}}
@@ -120,7 +120,7 @@
           {delete-node}="@deleteNode"
           {update-node}="@updateNode"
           {edit-enabled}="editEnabled"
-          {(edit-active)}="state.editActive"
+          {(edit-active)}="./state.editActive"
           {toggle-edit-active-node}="@toggleEditActiveNode"
         />
       {{/is}}

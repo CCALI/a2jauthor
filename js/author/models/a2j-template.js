@@ -33,20 +33,27 @@ const A2JTemplate = Model.extend({
    * [A2JNode].
    *
    */
-  makeDocumentTree: function(node) {
-    let branch = new A2JNode(node);
-    let children = branch.attr('children');
+  makeDocumentTree(node) {
+    const branch = new A2JNode(node);
+    const children = branch.attr('children');
 
-    if (children.attr('length')) {
-      children.forEach((child, index) => {
-        branch.attr('children.' + index, this.makeDocumentTree(child));
-      });
-    }
+    children.forEach((child, index) => {
+      const isTemplate = !!(child.attr('tag') == null || child.attr('rootNode'));
+
+      if (isTemplate) {
+        const template = new A2JTemplate(children);
+        const tree = this.makeDocumentTree(template.attr('rootNode'));
+        template.attr('rootNode', tree);
+
+      } else {
+        branch.attr(`children.${index}`, this.makeDocumentTree(child));
+      }
+    });
 
     return branch;
   },
 
-  makeFindAll: function(findAllData) {
+  makeFindAll(findAllData) {
     return function(params, success, error) {
 
       let dfd = findAllData(params).then((response) => {
@@ -67,7 +74,7 @@ const A2JTemplate = Model.extend({
     };
   },
 
-  makeFindOne: function(findOneData) {
+  makeFindOne(findOneData) {
     return function(params, success, error) {
 
       let dfd = findOneData(params).then((response) => {
@@ -127,7 +134,7 @@ const A2JTemplate = Model.extend({
     rootNode: {
       value: function() {
         return new A2JNode({
-          type: 'a2j-template'
+          tag: 'a2j-template'
         });
       }
     },

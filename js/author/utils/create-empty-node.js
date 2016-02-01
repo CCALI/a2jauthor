@@ -3,6 +3,7 @@ import A2JNode from 'caja/author/models/a2j-node';
 const emptyNodes = {
   'section-title': {
     tag: 'a2j-section-title',
+    children: [],
     state: {
       underline: true,
       editActive: true,
@@ -12,6 +13,7 @@ const emptyNodes = {
 
   'rich-text': {
     tag: 'a2j-rich-text',
+    children: [],
     state: {
       editActive: true,
       userContent: 'Add some text...'
@@ -20,6 +22,7 @@ const emptyNodes = {
 
   'page-break': {
     tag: 'a2j-page-break',
+    children: [],
     state: {
       editActive: true
     }
@@ -27,6 +30,7 @@ const emptyNodes = {
 
   'repeat-loop': {
     tag: 'a2j-repeat-loop',
+    children: [],
     state: {
       editActive: true
     }

@@ -233,17 +233,16 @@ export default Map.extend({
       nodes.each(node => {
         let children;
         const nodeId = node.attr('id');
+        const isTemplate = !!node.attr('rootNode');
 
-        if (node instanceof A2JTemplate) {
+        if (isTemplate) {
           children = node.attr('rootNode.children');
         } else {
           children = node.attr('children');
           node.attr('state.editActive', (nodeId === id));
         }
 
-        if (children.attr('length')) {
-          toggle(children, id);
-        }
+        toggle(children, id);
       });
     };
 

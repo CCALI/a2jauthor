@@ -11,6 +11,14 @@ const omitStateAttrs = [
   'editEnabled', 'variablesList'
 ];
 
+const NodeState = Map.extend({
+  define: {
+    editActive: {
+      value: false
+    }
+  }
+});
+
 /**
  * @module {Module} author/models/a2j-node A2JNode
  * @parent api-models
@@ -49,7 +57,8 @@ export default Map.extend({
      * its component.
      */
     state: {
-      Value: Map,
+      Type: NodeState,
+      Value: NodeState,
       serialize(current) {
         let serialized = current.serialize();
         return _omit(serialized, ...omitStateAttrs);

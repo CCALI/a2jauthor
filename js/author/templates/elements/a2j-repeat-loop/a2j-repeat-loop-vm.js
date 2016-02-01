@@ -20,7 +20,19 @@ export default Map.extend({
      * Whether the component's edit options are enabled or not.
      */
     editEnabled: {
-      type: 'boolean'
+      type: 'boolean',
+      value: false
+    },
+
+    /**
+     * @property {Boolean} repeatLoop.ViewModel.prototype.editActive editActive
+     * @parent repeatLoop.ViewModel
+     *
+     * Whether the component is currently selected.
+     */
+    editActive: {
+      type: 'boolean',
+      value: false
     },
 
     /**

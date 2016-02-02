@@ -11,9 +11,12 @@ export let TemplateEditPageVM = Map.extend({
       get() {
         let promise;
         let templateId = this.attr('templateId');
+        let guideId = window.gGuideID;
 
         if (templateId === 'new') {
-          promise = Promise.resolve(new A2JTemplate());
+          promise = Promise.resolve(new A2JTemplate({
+            guideId: guideId
+          }));
         } else {
           promise = A2JTemplate.findOne({templateId});
         }

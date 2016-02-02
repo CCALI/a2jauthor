@@ -18,7 +18,7 @@ app.set('view engine', 'jade');
 app.configure(feathers.rest())
    .use(logger('dev'))
    .use(bodyParser.json())
-   .use(bodyParser.urlencoded({ extended: false }))
+   .use(bodyParser.urlencoded({ extended: true }))
    .use(cookieParser())
    .use('/', feathers.static(path.join(__dirname, '..')))
    .use('/api/assemble', assemble)

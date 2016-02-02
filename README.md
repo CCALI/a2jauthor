@@ -29,7 +29,24 @@ $ cd js
 $ npm install
 ```
 
-## To run locally:
+## To build the server code:
+
+From the root folder (`CAJA/`) run
+```
+$ npm run build
+```
+This will also be done automatically when starting the server (see below).
+
+
+## To run server tests:
+
+From the root folder (`CAJA/`) run
+```
+$ npm test
+```
+
+
+## To run server locally:
 
 From the root folder (`CAJA/`) run
 
@@ -42,7 +59,17 @@ Then, if you want to load the author app go to
 [http://localhost:3000/js/viewer](http://localhost:3000/js/viewer) if you want
 to load the viewer app instead.
 
-## To build the Author and Viewer:
+
+## To debug server:
+
+Prepend any of the `npm` commands above with `DEBUG=A2J:*`
+For example, to debug the server running locally:
+```
+$ DEBUG=A2J:* npm start
+```
+Then any `debug(...)` messages in the code will be displayed in the console.
+
+## To build the Author and Viewer client code:
 
 You need to install `grunt` first, follow the instructions in this [link](http://gruntjs.com/getting-started#installing-the-cli),
 once the `grunt` CLI is available, run the following commands:
@@ -62,14 +89,15 @@ You need to make sure `author/index.production.html` and `viewer/index.productio
 
 The simplest way to accomplish this is to rename `author/index.html` to something like `author/index.dev.html` and then rename `author/index.production.html` to `author/index.html` (same thing should be done to the viewer index file).
 
-## To run tests:
+## To run client tests:
 
 ```
 $ npm test
 ```
 
 or, if your local server is running (you ran `npm start` before) you can run tests in your browser
-by loading [http://localhost:3000/js/author/test](http://localhost:3000/js/author/test)
+by loading [http://localhost:3000/js/author/test/](http://localhost:3000/js/author/test/) or
+[http://localhost:3000/js/viewer/test/](http://localhost:3000/js/viewer/test/)
 
 ## To generate the documentation:
 

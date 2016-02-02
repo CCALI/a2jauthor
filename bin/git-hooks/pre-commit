@@ -9,8 +9,8 @@ function package_changes_staged {
 }
 
 if package_changes_staged; then
-  echo "Running 'npm shrinkwrap' to match new package spec..." >&2
-  npm shrinkwrap
+  echo "Running 'npm shrinkwrap --dev' to match new package spec..." >&2
+  npm shrinkwrap --dev
   git add npm-shrinkwrap.json
 fi
 

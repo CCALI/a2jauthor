@@ -2,11 +2,11 @@ var he = require('he');
 var url = require('url');
 var path = require('path');
 var ssr = require('can-ssr');
-var express = require('express');
+var feathers = require('feathers');
 var wkhtmltopdf = require('wkhtmltopdf');
 var _kebabCase = require('lodash/kebabCase');
 
-var router = express.Router();
+var router = feathers.Router();
 
 var render = ssr({
   main: 'caja/server.stache!done-autorender',

@@ -20,11 +20,11 @@ import 'can/map/define/';
 const A2JTemplate = Model.extend({
   id: 'templateId',
 
-  create: '/api/templates',
-  update: '/api/templates/{templateId}',
-  destroy: '/api/templates/{templateId}',
-  findOne: '/api/templates/{templateId}',
-  findAll: '/api/guides/{guideId}/templates',
+  create: '/api/template',
+  update: '/api/template/{templateId}',
+  destroy: '/api/template/{templateId}',
+  findOne: '/api/template/{templateId}',
+  findAll: '/api/templates/{guideId}',
 
   /**
    * @function A2JTemplate.makeDocumentTree makeDocumentTree

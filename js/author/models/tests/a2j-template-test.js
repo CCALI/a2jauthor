@@ -3,6 +3,7 @@ import assert from 'assert';
 import moment from 'moment';
 import A2JNode from '../a2j-node';
 import A2JTemplate from '../a2j-template';
+import '../fixtures/templates';
 
 import 'steal-mocha';
 

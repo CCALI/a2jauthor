@@ -76,8 +76,8 @@ describe('lib/routes/template', function() {
       writeJSONStub.returns(mockWriteDeferred.promise);
 
       mockReadDeferred.resolve(templatesData);
-      mockMergeDeferred.resolve(templatesData);
-      mockWriteDeferred.resolve(templatesData);
+      mockMergeDeferred.resolve(JSON.stringify(templatesData));
+      mockWriteDeferred.resolve(JSON.stringify(template2112Data));
     });
 
     afterEach(function() {
@@ -87,7 +87,7 @@ describe('lib/routes/template', function() {
     });
 
     it('should write updated data to file', function(done) {
-      template.update(2112, template2112Data, null, function() {
+      template.update(2112, template2112Data, null, function(err, data) {
         let fileName = writeJSONStub.getCall(0).args[0];
         fileName = fileName.substring(fileName.lastIndexOf('/') + 1);
 
@@ -103,6 +103,10 @@ describe('lib/routes/template', function() {
           _.pick(template2112Data, [ 'guideId', 'templateId', 'updatedAt', 'title']),
           'with correct summary data');
         assert.deepEqual(mergeJSONStub.getCall(0).args[2], 'templateId', 'with correct unique id')
+
+        assert.deepEqual(data, JSON.stringify(template2112Data),
+          'http response should only contain updated template data');
+
         done();
       });
     });
@@ -128,9 +132,6 @@ describe('lib/routes/template', function() {
       getTemplatesJSONStub.returns(getTemplatesJSONDeferred.promise);
       writeJSONStub.returns(mockWriteDeferred.promise);
       mergeJSONStub.returns(mockMergeDeferred.promise);
-
-      mockMergeDeferred.resolve(JSON.stringify(template2113Data));
-      mockWriteDeferred.resolve(JSON.stringify(template2113Data));
     });
 
     afterEach(function() {
@@ -140,10 +141,13 @@ describe('lib/routes/template', function() {
     });
 
     it('should write data to next template file', function(done) {
-      getTemplatesJSONDeferred.resolve(templatesData);
+      let newData = _.assign({}, template2112Data, { templateId: 2115 });
 
-      template.create(_.omit(template2112Data, [ 'templateId' ]), null, function() {
-        var newData = _.assign({}, template2112Data, { templateId: 2115 });
+      getTemplatesJSONDeferred.resolve(templatesData);
+      mockWriteDeferred.resolve(JSON.stringify(newData));
+      mockMergeDeferred.resolve(JSON.stringify(templatesData));
+
+      template.create(_.omit(template2112Data, [ 'templateId' ]), null, function(err, data) {
         var writeFileName = writeJSONStub.getCall(0).args[0];
         writeFileName = writeFileName.substring(writeFileName.lastIndexOf('/') + 1);
 
@@ -161,19 +165,24 @@ describe('lib/routes/template', function() {
           _.pick(newData, [ 'guideId', 'templateId', 'updatedAt', 'title']),
           'with correct summary data');
 
+        assert.deepEqual(data, JSON.stringify(newData),
+          'http response should only contain new template data');
+
         done();
       });
     });
 
     it('should write data to template1 when no templates exist', function(done) {
+      let newData = _.assign({}, template2112Data, { templateId: 2115 });
+
       getTemplatesJSONDeferred.resolve([]);
+      mockWriteDeferred.resolve(JSON.stringify(newData));
+      mockMergeDeferred.resolve(JSON.stringify(templatesData));
 
       template.create(_.omit(template2112Data, [ 'templateId' ]), null, function() {
         var newData = _.assign({}, template2112Data, { templateId: 1 });
         var writeFileName = writeJSONStub.getCall(0).args[0];
         writeFileName = writeFileName.substring(writeFileName.lastIndexOf('/') + 1);
-
-        debug('WRITEFILENAME', writeFileName);
 
         assert.equal(writeFileName, 'template1.json',
           'should write template file');

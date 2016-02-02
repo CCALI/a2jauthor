@@ -106,7 +106,7 @@ module.exports = {
     return Q.all([
       writeTemplatePromise,
       writeSummaryPromise
-    ]);
+    ]).then(([templateData, summaryData]) => templateData);
   },
 
   /**
@@ -210,7 +210,7 @@ module.exports = {
       .then(templateId => _.assign(data, { templateId: templateId }))
       .then(newTemplateData => this.getTemplatePath(newTemplateData))
       .then(newTemplatePath => this.writeTemplateAndUpdateSummary(newTemplatePath, data))
-      .then(templateData => this.successHandler(`Wrote template ${templateData}`, templateData, cb))
+      .then(templateData => this.successHandler(`Wrote template ${templateData.templateId}`, templateData, cb))
       .catch(error => this.errorHandler(error, cb));
   },
 

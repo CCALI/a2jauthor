@@ -67,9 +67,8 @@ module.exports = {
    */
   writeJSON: function(path, data) {
     var deferred = Q.defer();
-    data = JSON.stringify(data, null, '\t');
 
-    fs.writeFile(path, data, function(err) {
+    fs.writeFile(path, JSON.stringify(data, null, '\t'), function(err) {
       if (!err) {
         try {
           deferred.resolve(data);

@@ -71,7 +71,7 @@ describe('lib/util/files', function() {
           var jsonData = JSON.stringify(templatesData, null, '\t');
           assert.equal(writeFileStub.getCall(0).args[0], 'foo.json', 'to correct file');
           assert.deepEqual(writeFileStub.getCall(0).args[1], jsonData, 'with correct data');
-          assert.deepEqual(data, jsonData, 'and return the data');
+          assert.deepEqual(data, templatesData, 'and return the raw data');
           done();
         });
     });

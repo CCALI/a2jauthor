@@ -39,6 +39,9 @@ to load the viewer app instead.
 
 ## To build the Author and Viewer:
 
+You need to install `grunt` first, follow the instructions in this [link](http://gruntjs.com/getting-started#installing-the-cli),
+once the `grunt` CLI is available, run the following commands:
+
 ```
 $ cd js
 $ grunt build
@@ -47,6 +50,12 @@ $ grunt build
 If you want to view the app in production mode, just start the server (`npm start`)
 and go to [http://localhost:3000/js/author/index.production.html](http://localhost:3000/js/author/index.production.html)
 or [http://localhost:3000/js/viewer/index.production.html](http://localhost:3000/js/viewer/index.production.html)
+
+### Keep in mind when setting a production environment:
+
+You need to make sure `author/index.production.html` and `viewer/index.production.html` are loaded instead of `author/index.html` and `viewer/index.html` because the latter will load the development files one by one even if you follow the instructions to build the app. 
+
+The simplest way to accomplish this is to rename `author/index.html` to something like `author/index.dev.html` and then rename `author/index.production.html` to `author/index.html` (same thing should be done to the viewer index file).
 
 ## To run tests:
 

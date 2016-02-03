@@ -1,5 +1,6 @@
 import can from 'can';
 import assert from 'assert';
+import moment from 'moment';
 import A2JNode from '../a2j-node';
 import A2JTemplate from '../a2j-template';
 
@@ -110,5 +111,110 @@ describe('A2JTemplate Model', function() {
 
     result = templates.search('o');
     assert.equal(result.attr('length'), 2, 'there are two matches');
+  });
+
+  describe('A2JTemplate.List.sortBy', function() {
+    let templates;
+
+    const today = moment.utc();
+    const oneDayAgo = today.subtract(1, 'days').format();
+    const twoDaysAgo = today.subtract(2, 'days').format();
+    const threeDaysAgo = today.subtract(3, 'days').format();
+
+    const templatesFixture = [
+      { buildOrder: 3, title: 'a-third', active: false, updatedAt: twoDaysAgo },
+      { buildOrder: 2, title: 'b-second', active: true, updatedAt: threeDaysAgo },
+      { buildOrder: 3, title: 'a-third', active: true, updatedAt: twoDaysAgo },
+      { buildOrder: 1, title: 'c-first', active: true, updatedAt: oneDayAgo }
+    ];
+
+    const getActual = function(templates) {
+      return templates.attr().map(function(tpl) {
+        const { buildOrder, title, active } = tpl;
+        return { buildOrder, title, active };
+      });
+    };
+
+    beforeEach(function() {
+      templates = new A2JTemplate.List(templatesFixture);
+    });
+
+    it('buildOrder asc (actives are sorted first)', function() {
+      templates.sortBy('buildOrder');
+
+      const actual = getActual(templates);
+
+      assert.deepEqual(actual, [
+        { buildOrder: 1, title: 'c-first', active: true },
+        { buildOrder: 2, title: 'b-second', active: true },
+        { buildOrder: 3, title: 'a-third', active: true },
+        { buildOrder: 3, title: 'a-third', active: false }
+      ]);
+    });
+
+    it('buildOrder desc (actives are sorted first)', function() {
+      templates.sortBy('buildOrder', 'desc');
+
+      const actual = getActual(templates);
+
+      assert.deepEqual(actual, [
+        { buildOrder: 3, title: 'a-third', active: true  },
+        { buildOrder: 3, title: 'a-third', active: false },
+        { buildOrder: 2, title: 'b-second', active: true },
+        { buildOrder: 1, title: 'c-first', active: true }
+      ]);
+    });
+
+    it('title asc (actives are sorted first)', function() {
+      templates.sortBy('title');
+
+      const actual = getActual(templates);
+
+      assert.deepEqual(actual, [
+        { buildOrder: 3, title: 'a-third', active: true },
+        { buildOrder: 3, title: 'a-third', active: false },
+        { buildOrder: 2, title: 'b-second', active: true },
+        { buildOrder: 1, title: 'c-first', active: true }
+      ]);
+    });
+
+    it('title desc (actives are sorted first)', function() {
+      templates.sortBy('title', 'desc');
+
+      const actual = getActual(templates);
+
+      assert.deepEqual(actual, [
+        { buildOrder: 1, title: 'c-first', active: true },
+        { buildOrder: 2, title: 'b-second', active: true },
+        { buildOrder: 3, title: 'a-third', active: true },
+        { buildOrder: 3, title: 'a-third', active: false }
+      ]);
+    });
+
+    it('updatedAt asc (actives are sorted first)', function() {
+      templates.sortBy('updatedAt');
+
+      const actual = getActual(templates);
+
+      assert.deepEqual(actual, [
+        { buildOrder: 1, title: 'c-first', active: true },
+        { buildOrder: 3, title: 'a-third', active: true },
+        { buildOrder: 3, title: 'a-third', active: false },
+        { buildOrder: 2, title: 'b-second', active: true }
+      ]);
+    });
+
+    it('updatedAt asc (actives are sorted first)', function() {
+      templates.sortBy('updatedAt', 'desc');
+
+      const actual = getActual(templates);
+
+      assert.deepEqual(actual, [
+        { buildOrder: 2, title: 'b-second', active: true },
+        { buildOrder: 3, title: 'a-third', active: true },
+        { buildOrder: 3, title: 'a-third', active: false },
+        { buildOrder: 1, title: 'c-first', active: true }
+      ]);
+    });
   });
 });

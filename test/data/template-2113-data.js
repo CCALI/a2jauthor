@@ -3,6 +3,7 @@ var template = {
   templateId: 2115,
   updatedAt: '2015-10-24T14:16:23.688Z',
   title: 'General Counsel Opening Statement',
+  active: 'false',
   rootNode: {
     tag: 'a2j-template',
     state: {},

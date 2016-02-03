@@ -100,7 +100,7 @@ describe('lib/routes/template', function() {
         assert.equal(mergeFileName, 'templates.json',
           'should write summary file');
         assert.deepEqual(mergeJSONStub.getCall(0).args[1],
-          _.pick(template2112Data, [ 'guideId', 'templateId', 'updatedAt', 'title']),
+          _.pick(template2112Data, template.summaryFields),
           'with correct summary data');
         assert.deepEqual(mergeJSONStub.getCall(0).args[2], 'templateId', 'with correct unique id')
 
@@ -162,7 +162,7 @@ describe('lib/routes/template', function() {
         assert.equal(mergeFileName, 'templates.json',
           'should write summary file');
         assert.deepEqual(mergeJSONStub.getCall(0).args[1],
-          _.pick(newData, [ 'guideId', 'templateId', 'updatedAt', 'title']),
+          _.pick(newData, template.summaryFields),
           'with correct summary data');
 
         assert.deepEqual(data, JSON.stringify(newData),
@@ -195,7 +195,7 @@ describe('lib/routes/template', function() {
         assert.equal(mergeFileName, 'templates.json',
           'should write summary file');
         assert.deepEqual(mergeJSONStub.getCall(0).args[1],
-          _.pick(newData, [ 'guideId', 'templateId', 'updatedAt', 'title']),
+          _.pick(newData, template.summaryFields),
           'with correct summary data');
 
         done();
@@ -247,7 +247,7 @@ describe('lib/routes/template', function() {
 
         assert.equal(splicedFile, 'templates.json');
         assert.deepEqual(spliceJSONStub.getCall(0).args[1],
-          _.pick(template2112Data, [ 'guideId', 'templateId', 'updatedAt', 'title']));
+          _.pick(template2112Data, template.summaryFields));
 
         done();
       });

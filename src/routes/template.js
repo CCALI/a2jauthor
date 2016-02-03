@@ -24,6 +24,20 @@ var debug = require('debug')('A2J:routes/template');
  */
 module.exports = {
   /**
+   * @property {Function} templates.summaryFields
+   * @parent templates
+   *
+   * Fields from template to be included in summary templates.json file.
+   *
+   */
+  summaryFields: [
+    'guideId',
+    'templateId',
+    'updatedAt',
+    'title',
+    'active'
+  ],
+  /**
    * @property {Function} templates.filterTemplatesByTemplateId
    * @parent templates
    *
@@ -88,12 +102,7 @@ module.exports = {
    * @return {Promise} resolves when both files are written.
    */
   writeTemplateAndUpdateSummary(path, data, replaceOnMerge) {
-    var summaryData = _.pick(data, [
-      'guideId',
-      'templateId',
-      'updatedAt',
-      'title'
-    ]);
+    var summaryData = _.pick(data, this.summaryFields);
     var uniqueId = replaceOnMerge ? 'templateId' : undefined;
 
     var writeTemplatePromise = files.writeJSON(path, data);
@@ -134,7 +143,10 @@ module.exports = {
     var updatePromise = Q.all([
       templatesPathPromise,
       templateDataPromise
-    ]).then(([path, data]) => files.spliceJSON(path, data));
+    ]).then(([path, data]) => {
+      debug("DATA", data);
+      return files.spliceJSON(path, data)
+    });
 
     return Q.all([
       deletePromise,

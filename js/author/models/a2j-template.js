@@ -136,6 +136,7 @@ const A2JTemplate = Model.extend({
      * Whether the template should be rendered.
      */
     active: {
+      type: 'boolean',
       value: true
     },
 

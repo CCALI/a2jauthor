@@ -3,6 +3,7 @@ var template = {
   templateId: 2112,
   updatedAt: '2015-11-23T14:15:11.499Z',
   title: 'Authorization for Medical Treatment of a Minor',
+  active: 'true',
   rootNode: {
     tag: 'a2j-template',
     state: {},

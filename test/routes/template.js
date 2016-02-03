@@ -87,7 +87,7 @@ describe('lib/routes/template', function() {
     });
 
     it('should write updated data to file', function(done) {
-      template.update(2112, template2112Data, null, function(err, data) {
+      template.update(2112, _.omit(template2112Data, 'templateId'), null, function(err, data) {
         let fileName = writeJSONStub.getCall(0).args[0];
         fileName = fileName.substring(fileName.lastIndexOf('/') + 1);
 

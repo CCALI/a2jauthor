@@ -182,13 +182,13 @@ module.exports = {
    * GET /api/template/{template_id}
    */
   get(templateId, params, cb) {
-    debug('GET /api/template/' + templateId);
+    debug(`GET /api/template/${templateId} request`);
 
     templates.getTemplatesJSON()
       .then(templatesData => this.filterTemplatesByTemplateId(templatesData, templateId))
       .then(templateSummary => this.getTemplatePath(templateSummary))
       .then(templatePath => files.readJSON(templatePath))
-      .then(templateData => this.successHandler(`Found template ${templateData}`, templateData, cb))
+      .then(templateData => this.successHandler(`GET /api/template/${templateId} response: ${JSON.stringify(templateData)}`, templateData, cb))
       .catch(error => this.errorHandler(error, cb));
   },
 
@@ -203,14 +203,14 @@ module.exports = {
    * POST /api/template
    */
   create(data, params, cb) {
-    debug('POST /api/template', JSON.stringify(data));
+    debug(`POST /api/template request: ${JSON.stringify(data)}`);
 
     templates.getTemplatesJSON()
       .then(templatesData => this.getNextTemplateId(templatesData))
       .then(templateId => _.assign(data, { templateId: templateId }))
       .then(newTemplateData => this.getTemplatePath(newTemplateData))
       .then(newTemplatePath => this.writeTemplateAndUpdateSummary(newTemplatePath, data))
-      .then(templateData => this.successHandler(`Wrote template ${templateData.templateId}`, templateData, cb))
+      .then(templateData => this.successHandler(`POST /api/template response: ${JSON.stringify(templateData)}`, templateData, cb))
       .catch(error => this.errorHandler(error, cb));
   },
 
@@ -225,14 +225,16 @@ module.exports = {
    * PUT /api/template/{template_id}
    */
   update(id, data, params, cb) {
-    debug('PUT /api/template/' + id, data);
+    debug(`PUT /api/template/${id} request: ${JSON.stringify(data)}`);
+
+    _.assign(data, { templateId: +id });
 
     paths.getTemplatesPath()
       .then(templatesPath => files.readJSON(templatesPath))
       .then(templatesData => this.filterTemplatesByTemplateId(templatesData, id))
       .then(templateSummary => this.getTemplatePath(templateSummary))
       .then(templatePath => this.writeTemplateAndUpdateSummary(templatePath, data, true))
-      .then(templateData => this.successHandler(`Updated template ${id} with ${templateData}`, templateData, cb))
+      .then(templateData => this.successHandler(`PUT /api/template/${id} response: ${JSON.stringify(templateData)}`, templateData, cb))
       .catch(error => this.errorHandler(error, cb));
   },
 
@@ -247,10 +249,10 @@ module.exports = {
    * DELETE /api/template/{template_id}
    */
   remove(id, params, cb) {
-    debug('DELETE /api/template/' + id);
+    debug(`DELETE /api/template/${id} request`);
 
     this.deleteTemplateAndUpdateSummary(id)
-      .then(templatePath => this.successHandler(`Deleted template ${templatePath}`, templatePath, cb))
+      .then(templatePath => this.successHandler(`DELETE /api/template/${id} response: ${templatePath}`, templatePath, cb))
       .catch(error => this.errorHandler(error, cb));
   }
 };

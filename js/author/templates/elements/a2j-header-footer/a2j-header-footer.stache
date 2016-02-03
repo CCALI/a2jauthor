@@ -15,7 +15,12 @@
 
     <h2>{{title}}</h2>
 
-    <a2j-rich-text {state}="." {^user-content}="userContent"></a2j-rich-text>
+    <a2j-rich-text
+      {(user-content)}="userContent"
+      {edit-enabled}="editEnabled"
+      {edit-active}="editActive"
+      {show-options-pane}="showOptionsPane"
+      {wrap-with-container}="wrapWithContainer" />
 
     <div class="text-center checkbox">
       <label>

@@ -10,6 +10,7 @@ import 'author/alert/alert-test';
 import 'author/popover/popover-test';
 import 'author/templates/templates-test';
 import 'author/templates/edit/edit-test';
+import 'author/templates/edit/toolbar/toolbar-test';
 import 'author/interviews/interviews-test';
 import 'author/templates/list/item/item-test';
 import 'author/templates/list/sortbar/sortbar-test';

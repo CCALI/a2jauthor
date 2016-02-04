@@ -174,6 +174,44 @@ const A2JTemplate = Model.extend({
         const rootNode = this.attr('rootNode');
         return rootNode.attr('outline');
       }
+    },
+
+    /**
+     * @property {moment} A2JTemplate.prototype.header header
+     *
+     * The Custom Header for the template.
+     */
+    header: {
+      value: ''
+    },
+
+    /**
+     * @property {moment} A2JTemplate.prototype.hideHeaderOnFirstPage hideHeaderOnFirstPage
+     *
+     * Whether the header should be hidden on the first page of the assembled PDF.
+     */
+    hideHeaderOnFirstPage: {
+      type: 'boolean',
+      value: false
+    },
+
+    /**
+     * @property {moment} A2JTemplate.prototype.footer footer
+     *
+     * The Custom Footer for the template.
+     */
+    footer: {
+      value: ''
+    },
+
+    /**
+     * @property {moment} A2JTemplate.prototype.hideFooterOnFirstPage hideFooterOnFirstPage
+     *
+     * Whether the footer should be hidden on the first page of the assembled PDF.
+     */
+    hideFooterOnFirstPage: {
+      type: 'boolean',
+      value: false
     }
   },
 

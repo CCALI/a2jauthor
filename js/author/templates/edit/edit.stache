@@ -20,8 +20,9 @@
           <a2j-header-footer
             title="Custom Header"
             {(edit-active)}="*editingHeader"
-            {^user-content}="*templateHeader"
-            {^not-displayed-on-first-Page}="*hideHeaderOnFirstPage"/>
+            {(user-content)}="a2jTemplate.header"
+            {(not-displayed-on-first-Page)}="a2jTemplate.hideHeaderOnFirstPage"
+            {save-template}="a2jTemplate@save" />
 
           {{#if a2jTemplate.rootNode.children.length}}
             <a2j-template
@@ -35,8 +36,9 @@
           <a2j-header-footer
             title="Custom Footer"
             {(edit-active)}="*editingFooter"
-            {^user-content}="*templateFooter"
-            {^not-displayed-on-first-Page}="*hideFooterOnFirstPage"/>
+            {(user-content)}="a2jTemplate.footer"
+            {(not-displayed-on-first-Page)}="a2jTemplate.hideFooterOnFirstPage"
+            {save-template}="a2jTemplate@save" />
         </div>
 
         {{! right column where template options tab is rendered }}
@@ -52,10 +54,10 @@
       <test-assemble-options
         {guide}="guide"
         {template}="a2jTemplate"
-        {header}="*templateHeader"
-        {footer}="*templateFooter"
-        {hide-header-on-first-page}="*hideHeaderOnFirstPage"
-        {hide-footer-on-first-page}="*hideFooterOnFirstPage" />
+        {header}="a2jTemplate.header"
+        {footer}="a2jTemplate.footer"
+        {hide-header-on-first-page}="a2jTemplate.hideHeaderOnFirstPage"
+        {hide-footer-on-first-page}="a2jTemplate.hideFooterOnFirstPage" />
     </div>
   {{/if}}
 </div>

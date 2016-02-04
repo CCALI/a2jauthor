@@ -7,9 +7,15 @@ This the private repo for the browser-based versions of A2J Author and Viewer.
 
 ## To setup:
 
-First install the server side dependencies, there is a small ExpressJS service
-that generates PDF as part of the document assembly feature; from the root folder
-run
+### wkhtmltopdf
+
+Before installing the server side depencencies, you need to install `wkhtmltopdf`
+on your system, `wkhtmltopdf` is a command line tool that renders HTML into PDF.  The
+easiest way to do this is to [download](http://wkhtmltopdf.org/downloads.html#stable) a
+prebuilt version for your system
+
+Once `wkhtmltopdf` command line tool is available on your system, install the
+node dependencies from the from the root folder of the app by running the following command:
 
 ```
 npm install
@@ -21,7 +27,6 @@ which are located in  the `js` folder inside the root:
 ```
 $ cd js
 $ npm install
-$ npm install -g grunt-cli
 ```
 
 ## To run locally:

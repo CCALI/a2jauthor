@@ -35,12 +35,12 @@ module.exports = {
     return paths.getTemplatesPath()
       .then(templatesPath => {
         templatesJSONPath = templatesPath;
-        return files.readJSON(templatesPath);
+        return files.readJSON({ path: templatesPath });
       })
       .catch(err => {
         debug(err);
         debug(`Writing ${templatesJSONPath}`);
-        return files.writeJSON(templatesJSONPath, []);
+        return files.writeJSON({ path: templatesJSONPath, data: [] });
       });
   },
 

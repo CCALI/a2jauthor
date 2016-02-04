@@ -57,8 +57,8 @@ describe('lib/routes/templates', function() {
 
       templates.getTemplatesJSON()
         .then(data => {
-          assert.equal(writeFileStub.getCall(0).args[0], templatesJSONPath, 'should write file');
-          assert.deepEqual(writeFileStub.getCall(0).args[1], [], 'with empty array');
+          assert.equal(writeFileStub.getCall(0).args[0].path, templatesJSONPath, 'should write file');
+          assert.deepEqual(writeFileStub.getCall(0).args[0].data, [], 'with empty array');
           assert.deepEqual(data, []);
           done();
         });

@@ -25,11 +25,11 @@ module.exports = {
    * ## Use
    *
    * @codestart
-   * files.readJSON('foo.json')
+   * files.readJSON({ path: 'foo.json' })
    *   .then(data => console.log(data));
    * @codeend
    */
-  readJSON: function(path) {
+  readJSON: function({ path }) {
     var deferred = Q.defer();
 
     fs.readFile(path, 'UTF-8', function(err, data) {
@@ -61,11 +61,11 @@ module.exports = {
    * ## Use
    *
    * @codestart
-   * files.writeJSON('foo.json', { hello: 'world' })
+   * files.writeJSON({ path: 'foo.json', data: { hello: 'world' } })
    *   .then(data => console.log(data));
    * @codeend
    */
-  writeJSON: function(path, data) {
+  writeJSON: function({ path, data }) {
     var deferred = Q.defer();
 
     fs.writeFile(path, JSON.stringify(data, null, '\t'), function(err) {
@@ -103,18 +103,25 @@ module.exports = {
    *
    * @codestart
    * // foo.json -> [{"id":1},{"id":2,"foo":"bar"}]
-   * files.mergeJSON('foo.json', { id: 3 })
+   * files.mergeJSON({
+   *     path: 'foo.json',
+   *     data: { id: 3 }
+   *   })
    *   .then(data => console.log(data));
    * // [{"id":1},{"id":2,"foo":"bar"},{"id":3}]
-   * files.mergeJSON('foo.json', { id: 2, bar: 'baz' }, 'id')
+   * files.mergeJSON({
+   *     path: 'foo.json',
+   *     data: { id: 2, bar: 'baz' },
+   *     replaceKey: 'id'
+   *   })
    *   .then(data => console.log(data));
    * // [{"id":1},{"id":2,"bar":"baz"},{"id":3}]
    * @codeend
    */
-  mergeJSON: function(path, data, replaceKey) {
+  mergeJSON: function({ path, data, replaceKey }) {
     var deferred = Q.defer();
 
-    this.readJSON(path)
+    this.readJSON({ path })
       .then(fileData => {
         if (!replaceKey) {
           return fileData.concat(data)
@@ -124,7 +131,7 @@ module.exports = {
           });
         }
       })
-      .then(mergedData => this.writeJSON(path, mergedData))
+      .then(mergedData => this.writeJSON({ path, data: mergedData }))
       .then(data => deferred.resolve(data))
       .catch(err => deferred.reject(err));
 
@@ -146,17 +153,17 @@ module.exports = {
    *
    * @codestart
    * // foo.json -> [{"id":1},{"id":2,"foo":"bar"}]
-   * files.spliceJSON('foo.json', { id: 1 })
+   * files.spliceJSON({ path: 'foo.json', data: { id: 1 } })
    *   .then(data => console.log(data));
    * // [{"id":2,"foo":"bar"}]
    * @codeend
    */
-  spliceJSON: function(path, data) {
+  spliceJSON: function({ path, data }) {
     var deferred = Q.defer();
 
-    this.readJSON(path)
+    this.readJSON({ path })
       .then(fileData => _.filter(fileData, o => !_.isEqual(o, data)))
-      .then(splicedData => this.writeJSON(path, splicedData))
+      .then(splicedData => this.writeJSON({ path, data: splicedData }))
       .then(data => deferred.resolve(data))
       .catch(err => deferred.reject(err));
 
@@ -180,7 +187,7 @@ module.exports = {
    *   .then(path => console.log(path));
    * @codeend
    */
-  delete: function(path) {
+  delete: function({ path }) {
     // `force: true` is necessary when deleting
     // files outside the current directory.
     return del([ path ], { force: true })

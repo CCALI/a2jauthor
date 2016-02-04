@@ -88,21 +88,21 @@ describe('lib/routes/template', function() {
 
     it('should write updated data to file', function(done) {
       template.update(2112, _.omit(template2112Data, 'templateId'), null, function(err, data) {
-        let fileName = writeJSONStub.getCall(0).args[0];
+        let fileName = writeJSONStub.getCall(0).args[0].path;
         fileName = fileName.substring(fileName.lastIndexOf('/') + 1);
 
         assert.equal(fileName, 'template2112.json');
-        assert.deepEqual(writeJSONStub.getCall(0).args[1], template2112Data);
+        assert.deepEqual(writeJSONStub.getCall(0).args[0].data, template2112Data);
 
-        let mergeFileName = mergeJSONStub.getCall(0).args[0];
+        let mergeFileName = mergeJSONStub.getCall(0).args[0].path;
         mergeFileName = mergeFileName.substring(mergeFileName.lastIndexOf('/') + 1);
 
         assert.equal(mergeFileName, 'templates.json',
           'should write summary file');
-        assert.deepEqual(mergeJSONStub.getCall(0).args[1],
+        assert.deepEqual(mergeJSONStub.getCall(0).args[0].data,
           _.pick(template2112Data, template.summaryFields),
           'with correct summary data');
-        assert.deepEqual(mergeJSONStub.getCall(0).args[2], 'templateId', 'with correct unique id')
+        assert.deepEqual(mergeJSONStub.getCall(0).args[0].replaceKey, 'templateId', 'with correct unique id')
 
         assert.deepEqual(data, JSON.stringify(template2112Data),
           'http response should only contain updated template data');
@@ -148,20 +148,20 @@ describe('lib/routes/template', function() {
       mockMergeDeferred.resolve(JSON.stringify(templatesData));
 
       template.create(_.omit(template2112Data, [ 'templateId' ]), null, function(err, data) {
-        var writeFileName = writeJSONStub.getCall(0).args[0];
+        var writeFileName = writeJSONStub.getCall(0).args[0].path;
         writeFileName = writeFileName.substring(writeFileName.lastIndexOf('/') + 1);
 
         assert.equal(writeFileName, 'template2115.json',
           'should write template file');
-        assert.deepEqual(writeJSONStub.getCall(0).args[1], newData,
+        assert.deepEqual(writeJSONStub.getCall(0).args[0].data, newData,
           'should write template file with template data');
 
-        var mergeFileName = mergeJSONStub.getCall(0).args[0];
+        var mergeFileName = mergeJSONStub.getCall(0).args[0].path;
         mergeFileName = mergeFileName.substring(mergeFileName.lastIndexOf('/') + 1);
 
         assert.equal(mergeFileName, 'templates.json',
           'should write summary file');
-        assert.deepEqual(mergeJSONStub.getCall(0).args[1],
+        assert.deepEqual(mergeJSONStub.getCall(0).args[0].data,
           _.pick(newData, template.summaryFields),
           'with correct summary data');
 
@@ -181,20 +181,20 @@ describe('lib/routes/template', function() {
 
       template.create(_.omit(template2112Data, [ 'templateId' ]), null, function() {
         var newData = _.assign({}, template2112Data, { templateId: 1 });
-        var writeFileName = writeJSONStub.getCall(0).args[0];
+        var writeFileName = writeJSONStub.getCall(0).args[0].path;
         writeFileName = writeFileName.substring(writeFileName.lastIndexOf('/') + 1);
 
         assert.equal(writeFileName, 'template1.json',
           'should write template file');
-        assert.deepEqual(writeJSONStub.getCall(0).args[1], newData,
+        assert.deepEqual(writeJSONStub.getCall(0).args[0].data, newData,
           'should write template file with template data');
 
-        var mergeFileName = mergeJSONStub.getCall(0).args[0];
+        var mergeFileName = mergeJSONStub.getCall(0).args[0].path;
         mergeFileName = mergeFileName.substring(mergeFileName.lastIndexOf('/') + 1);
 
         assert.equal(mergeFileName, 'templates.json',
           'should write summary file');
-        assert.deepEqual(mergeJSONStub.getCall(0).args[1],
+        assert.deepEqual(mergeJSONStub.getCall(0).args[0].data,
           _.pick(newData, template.summaryFields),
           'with correct summary data');
 
@@ -237,16 +237,16 @@ describe('lib/routes/template', function() {
 
     it('should delete file', function(done) {
       template.remove(2112, null, function() {
-        var deletedFile = deleteStub.getCall(0).args[0];
+        var deletedFile = deleteStub.getCall(0).args[0].path;
         deletedFile = deletedFile.substring(deletedFile.lastIndexOf('/') + 1);
 
         assert.equal(deletedFile, 'template2112.json');
 
-        var splicedFile = spliceJSONStub.getCall(0).args[0];
+        var splicedFile = spliceJSONStub.getCall(0).args[0].path;
         splicedFile = splicedFile.substring(splicedFile.lastIndexOf('/') + 1);
 
         assert.equal(splicedFile, 'templates.json');
-        assert.deepEqual(spliceJSONStub.getCall(0).args[1],
+        assert.deepEqual(spliceJSONStub.getCall(0).args[0].data,
           _.pick(template2112Data, template.summaryFields));
 
         done();

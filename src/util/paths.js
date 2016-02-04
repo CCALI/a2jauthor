@@ -3,9 +3,6 @@ var user = require('./user');
 var Q = require('q');
 var debug = require('debug')('A2J:paths')
 
-// path of the userfiles directory
-const userFilesPath = path.join(process.cwd(), '../userfiles');
-
 /**
  * @module {Module} /util/paths paths
  * @parent api
@@ -15,6 +12,14 @@ const userFilesPath = path.join(process.cwd(), '../userfiles');
  *
  */
 module.exports = {
+  /**
+   * @property {Function} paths.guidesDir
+   * @parent paths
+   *
+   * Path of the userfiles directory.
+   */
+   guidesDir: path.join(process.cwd(), '../userfiles/'),
+
   /**
    * @property {Function} paths.getTemplatesPath
    * @parent paths
@@ -27,7 +32,7 @@ module.exports = {
 
     user.getCurrentUser()
       .then(user => {
-        let file = path.join(userFilesPath,
+        let file = path.join(this.guidesDir,
                      user,
                      'templates.json');
 
@@ -46,12 +51,12 @@ module.exports = {
    * @return {Promise} a Promise that will resolve to the
    * path to the JSON file of a template.
    */
-  getTemplatePath(guideId, templateId) {
+  getTemplatePath({ guideId, templateId }) {
     var deferred = Q.defer();
 
     user.getCurrentUser()
       .then(user => {
-        let file = path.join(userFilesPath,
+        let file = path.join(this.guidesDir,
                     user,
                     'guides',
                     '' + guideId,

@@ -44,14 +44,12 @@ module.exports = {
    * Filter an array of templates to find the one with matching
    * templateId.
    *
-   * @param {Array} templates
+   * @param {Array} templatesData
    * @param {Number} templateId
    * @return {Object} template from templates array matching templateId
    */
-  filterTemplatesByTemplateId(templates, templateId) {
-    var template = _.find(templates, (o) => {
-      return o.templateId === parseInt(templateId, 10);
-    });
+  filterTemplatesByTemplateId({ templatesData, templateId }) {
+    var template = _.find(templatesData, (o) => o.templateId === parseInt(templateId, 10));
 
     if (!template) {
       throw new Error('Template not found with templateId ' + templateId);
@@ -61,20 +59,7 @@ module.exports = {
   },
 
   /**
-   * @property {Function} templates.getTemplatePath
-   * @parent templates
-   *
-   * Get a path to a template based on its summary.
-   *
-   * @param {Object} template - an object summarizing a template.
-   * @return {String} path to the template's file.
-   */
-  getTemplatePath({ guideId, templateId }) {
-    return paths.getTemplatePath(guideId, templateId);
-  },
-
-  /**
-   * @property {Function} templates.getTemplatePath
+   * @property {Function} templates.getNextTemplateId
    * @parent templates
    *
    * Get the next valid template id by adding 1 to the
@@ -83,8 +68,8 @@ module.exports = {
    * @param {Array} templates - list of existing templates.
    * @return {Number} next valid templateId.
    */
-  getNextTemplateId(templates) {
-    let maxId = _.max(_.map(templates, file => file.templateId)) || 0;
+  getNextTemplateId({ templatesData }) {
+    let maxId = _.max(_.map(templatesData, template => template.templateId)) || 0;
     return maxId + 1;
   },
 
@@ -101,16 +86,16 @@ module.exports = {
    * summary when merging into the templates.json file.
    * @return {Promise} resolves when both files are written.
    */
-  writeTemplateAndUpdateSummary(path, data, replaceOnMerge) {
+  writeTemplateAndUpdateSummary({ path, data, replaceOnMerge }) {
     var summaryData = _.pick(data, this.summaryFields);
     var uniqueId = replaceOnMerge ? 'templateId' : undefined;
 
-    var writeTemplatePromise = files.writeJSON(path, data);
+    var writeTemplatePromise = files.writeJSON({ path, data });
 
     var templatesPathPromise = paths.getTemplatesPath();
 
     var writeSummaryPromise = templatesPathPromise
-      .then(path => files.mergeJSON(path, summaryData, uniqueId));
+      .then(path => files.mergeJSON({ path, data: summaryData, replaceKey: uniqueId }));
 
     return Q.all([
       writeTemplatePromise,
@@ -129,29 +114,29 @@ module.exports = {
    * @return {Promise} resolves when file is deleted and templates.json
    * is updated.
    */
-  deleteTemplateAndUpdateSummary(id) {
+  deleteTemplateAndUpdateSummary({ templateId }) {
     var templatesPathPromise = paths.getTemplatesPath();
 
     var templateDataPromise = templatesPathPromise
-      .then(templatesPath => files.readJSON(templatesPath))
-      .then(templatesData => this.filterTemplatesByTemplateId(templatesData, id));
+      .then(templatesPath => files.readJSON({ path: templatesPath }))
+      .then(templatesData => this.filterTemplatesByTemplateId({ templatesData, templateId }));
 
     var deletePromise = templateDataPromise
-      .then(templateSummary => this.getTemplatePath(templateSummary))
-      .then(templatePath => files.delete(templatePath));
+      .then(templateSummary => paths.getTemplatePath(templateSummary))
+      .then(templatePath => files.delete({ path: templatePath }));
 
     var updatePromise = Q.all([
       templatesPathPromise,
       templateDataPromise
     ]).then(([path, data]) => {
       debug("DATA", data);
-      return files.spliceJSON(path, data)
+      return files.spliceJSON({ path, data })
     });
 
     return Q.all([
       deletePromise,
       updatePromise
-    ]);
+    ]).then(([templatePath, summaryData]) => templatePath);
   },
 
   /**
@@ -164,7 +149,7 @@ module.exports = {
    * @param {Object} data - response data.
    * @param {Function} callback - API callback.
    */
-  successHandler(msg, data, callback) {
+  successHandler({ msg, data, callback }) {
     debug(msg);
     callback(null, data);
   },
@@ -178,7 +163,7 @@ module.exports = {
    * @param {String} error - error message.
    * @param {Function} callback - API callback.
    */
-  errorHandler(error, callback) {
+  errorHandler({ error, callback }) {
     debug(error);
     callback(error);
   },
@@ -193,15 +178,19 @@ module.exports = {
    *
    * GET /api/template/{template_id}
    */
-  get(templateId, params, cb) {
+  get(templateId, params, callback) {
     debug(`GET /api/template/${templateId} request`);
 
     templates.getTemplatesJSON()
-      .then(templatesData => this.filterTemplatesByTemplateId(templatesData, templateId))
-      .then(templateSummary => this.getTemplatePath(templateSummary))
-      .then(templatePath => files.readJSON(templatePath))
-      .then(templateData => this.successHandler(`GET /api/template/${templateId} response: ${JSON.stringify(templateData)}`, templateData, cb))
-      .catch(error => this.errorHandler(error, cb));
+      .then(templatesData => this.filterTemplatesByTemplateId({ templatesData, templateId }))
+      .then(templateSummary => paths.getTemplatePath(templateSummary))
+      .then(templatePath => files.readJSON({ path: templatePath }))
+      .then(data => this.successHandler({
+        msg: `GET /api/template/${templateId} response: ${JSON.stringify(data)}`,
+        data,
+        callback
+      }))
+      .catch(error => this.errorHandler({ error, callback }));
   },
 
   /**
@@ -214,16 +203,20 @@ module.exports = {
    *
    * POST /api/template
    */
-  create(data, params, cb) {
+  create(data, params, callback) {
     debug(`POST /api/template request: ${JSON.stringify(data)}`);
 
     templates.getTemplatesJSON()
-      .then(templatesData => this.getNextTemplateId(templatesData))
+      .then(templatesData => this.getNextTemplateId({ templatesData }))
       .then(templateId => _.assign(data, { templateId: templateId }))
-      .then(newTemplateData => this.getTemplatePath(newTemplateData))
-      .then(newTemplatePath => this.writeTemplateAndUpdateSummary(newTemplatePath, data))
-      .then(templateData => this.successHandler(`POST /api/template response: ${JSON.stringify(templateData)}`, templateData, cb))
-      .catch(error => this.errorHandler(error, cb));
+      .then(newTemplateData => paths.getTemplatePath(newTemplateData))
+      .then(newTemplatePath => this.writeTemplateAndUpdateSummary({ path: newTemplatePath, data }))
+      .then(data => this.successHandler({
+        msg: `POST /api/template response: ${JSON.stringify(data)}`,
+        data,
+        callback
+      }))
+      .catch(error => this.errorHandler({ error, callback }));
   },
 
   /**
@@ -236,18 +229,22 @@ module.exports = {
    *
    * PUT /api/template/{template_id}
    */
-  update(id, data, params, cb) {
-    debug(`PUT /api/template/${id} request: ${JSON.stringify(data)}`);
+  update(templateId, data, params, callback) {
+    debug(`PUT /api/template/${templateId} request: ${JSON.stringify(data)}`);
 
-    _.assign(data, { templateId: +id });
+    _.assign(data, { templateId: +templateId });
 
     paths.getTemplatesPath()
-      .then(templatesPath => files.readJSON(templatesPath))
-      .then(templatesData => this.filterTemplatesByTemplateId(templatesData, id))
-      .then(templateSummary => this.getTemplatePath(templateSummary))
-      .then(templatePath => this.writeTemplateAndUpdateSummary(templatePath, data, true))
-      .then(templateData => this.successHandler(`PUT /api/template/${id} response: ${JSON.stringify(templateData)}`, templateData, cb))
-      .catch(error => this.errorHandler(error, cb));
+      .then(templatesPath => files.readJSON({ path: templatesPath }))
+      .then(templatesData => this.filterTemplatesByTemplateId({ templatesData, templateId }))
+      .then(templateSummary => paths.getTemplatePath(templateSummary))
+      .then(templatePath => this.writeTemplateAndUpdateSummary({ path: templatePath, data, replaceOnMerge: true }))
+      .then(data => this.successHandler({
+        msg: `PUT /api/template/${templateId} response: ${JSON.stringify(data)}`,
+        data,
+        callback
+      }))
+      .catch(error => this.errorHandler({ error, callback }));
   },
 
   /**
@@ -260,11 +257,15 @@ module.exports = {
    *
    * DELETE /api/template/{template_id}
    */
-  remove(id, params, cb) {
-    debug(`DELETE /api/template/${id} request`);
+  remove(templateId, params, callback) {
+    debug(`DELETE /api/template/${templateId} request`);
 
-    this.deleteTemplateAndUpdateSummary(id)
-      .then(templatePath => this.successHandler(`DELETE /api/template/${id} response: ${templatePath}`, templatePath, cb))
-      .catch(error => this.errorHandler(error, cb));
+    this.deleteTemplateAndUpdateSummary({ templateId })
+      .then(data => this.successHandler({
+        msg: `DELETE /api/template/${templateId} response: ${data}`,
+        data: templateId,
+        callback
+      }))
+      .catch(error => this.errorHandler({ error, callback }));
   }
 };

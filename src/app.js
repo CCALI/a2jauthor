@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var assemble = require('./routes/assemble');
 var templates = require('./routes/templates');
 var template = require('./routes/template');
+var forwardCookies = require('./util/cookies').forwardCookies;
 
 var app = feathers();
 
@@ -22,9 +23,8 @@ app.configure(feathers.rest())
    .use(cookieParser())
    .use('/', feathers.static(path.join(__dirname, '..')))
    .use('/api/assemble', assemble)
-   .use('/api/template', template)
-   .use('/api/templates', templates);
-
+   .use('/api/template', forwardCookies, template)
+   .use('/api/templates', forwardCookies, templates);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -44,7 +44,7 @@
         <a2j-template
           edit-enabled="true"
           {(template)}="ifBody"
-          {save-callback}="@noOpFn"
+          {save-callback}="@updateNodeState"
         />
 
         <conditional-add-element
@@ -62,7 +62,7 @@
           <a2j-template
             edit-enabled="true"
             {(template)}="elseBody"
-            {save-callback}="@noOpFn"
+            {save-callback}="@updateNodeState"
           />
 
           <conditional-add-element

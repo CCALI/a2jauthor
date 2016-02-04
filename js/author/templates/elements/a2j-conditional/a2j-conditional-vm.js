@@ -1,5 +1,6 @@
 import Map from 'can/map/';
 import _includes from 'lodash/includes';
+import _isFunction from 'lodash/isFunction';
 import Answers from 'caja/author/models/answers';
 import A2JNode from 'caja/author/models/a2j-node';
 import A2JTemplate from 'caja/author/models/a2j-template';
@@ -205,15 +206,22 @@ export default Map.extend({
   },
 
   /**
-   * @function conditional.ViewModel.prototype.noOpFn noOpFn
+   * @function conditional.ViewModel.prototype.updateNodeState updateNodeState
    * @parent conditional.ViewModel
    *
-   * An empty function intended to be used as the `saveCallback` of the
-   * `a2j-template` instances used in `ifBody`/`elseBody`, this way these
-   * template instances are not saved as independent templates but are
-   * serialized as any other property of the `a2j-conditional` component state.
+   * Callback passed down to the `a2j-templates` used in `ifBody`/`elseBody` to
+   * to be called when the children of these template instances are saved.
    */
-  noOpFn: can.noop,
+  updateNodeState() {
+    const id = this.attr('nodeId');
+    const updateNode = this.attr('updateNode');
+
+    if (_isFunction(updateNode)) {
+      updateNode(id);
+    } else {
+      console.error('updateNode should be a function');
+    }
+  },
 
   getOperandValue(rightOrLeft = 'left') {
     let answers = this.attr('answers');

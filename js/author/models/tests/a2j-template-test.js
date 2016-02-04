@@ -113,6 +113,125 @@ describe('A2JTemplate Model', function() {
     assert.equal(result.attr('length'), 2, 'there are two matches');
   });
 
+  describe('outline', function() {
+    it('returns fixed message when template has no elements', function() {
+      const template = new A2JTemplate();
+      const children = template.attr('rootNode.children');
+
+      assert.equal(children.attr('length'), 0, 'should be blank');
+      assert.equal(template.attr('outline'), 'This template is blank');
+    });
+
+    it('returns list of formatted element names (no nested elements)', function() {
+      const rteAndSectionTitle = A2JTemplate.makeFromTreeObject({
+        rootNode: {
+          tag: 'a2j-template',
+          children: [
+            { tag: 'a2j-rich-text', state: {} },
+            { tag: 'a2j-section-title', state: {} }
+          ]
+        }
+      });
+
+      const sectionTitleAndRTE = A2JTemplate.makeFromTreeObject({
+        rootNode: {
+          tag: 'a2j-template',
+          children: [
+            { tag: 'a2j-section-title', state: {} },
+            { tag: 'a2j-rich-text', state: {} }
+          ]
+        }
+      });
+
+      assert.equal(rteAndSectionTitle.attr('outline'), 'Rich Text, Section Title');
+      assert.equal(sectionTitleAndRTE.attr('outline'), 'Section Title, Rich Text');
+    });
+
+    it('repeat-loop outline is annotated with display type', function() {
+      const repeatLoop = A2JTemplate.makeFromTreeObject({
+        rootNode: {
+          tag: 'a2j-template',
+          children: [
+            { tag: 'a2j-repeat-loop', state: { displayType: '' } }
+          ]
+        }
+      });
+
+      // defaults to table if displayType unknown
+      assert.equal(repeatLoop.attr('outline'), 'Repeat Loop (Table)');
+
+      repeatLoop.attr('rootNode.children.0.state.displayType', 'list');
+      assert.equal(repeatLoop.attr('outline'), 'Repeat Loop (List)');
+
+      repeatLoop.attr('rootNode.children.0.state.displayType', 'text');
+      assert.equal(repeatLoop.attr('outline'), 'Repeat Loop (Text)');
+
+      repeatLoop.attr('rootNode.children.0.state.displayType', 'table');
+      assert.equal(repeatLoop.attr('outline'), 'Repeat Loop (Table)');
+    });
+
+    it('if-else outline is annotated with nested elements', function() {
+      const ifElse = A2JTemplate.makeFromTreeObject({
+        rootNode: {
+          tag: 'a2j-template',
+          children: [
+            { tag: 'a2j-conditional',
+              state: {},
+              children: [
+                { rootNode: {
+                    tag: 'a2j-template',
+                    children: [
+                      { tag: 'a2j-section-title', state: {} },
+                      { tag: 'a2j-repeat-loop', state: { displayType: '' } }
+                    ]
+                  }
+                },
+                { rootNode: {
+                    tag: 'a2j-template',
+                    children: [
+                      { tag: 'a2j-rich-text', state: {} },
+                      { tag: 'a2j-page-break', state: {} },
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      });
+
+      assert.equal(
+        ifElse.attr('outline'),
+        'If / Else (Section Title, Repeat Loop (Table), Rich Text, Page Break)'
+      );
+    });
+
+    it('if-else nested elements should not output empty template message', function() {
+      const ifElse = A2JTemplate.makeFromTreeObject({
+        rootNode: {
+          tag: 'a2j-template',
+          children: [
+            { tag: 'a2j-conditional',
+              state: {},
+              children: [
+                { rootNode: {
+                    tag: 'a2j-template',
+                    children: [
+                      { tag: 'a2j-section-title', state: {} },
+                    ]
+                  }
+                },
+                { rootNode: { tag: 'a2j-template', children: [] } }
+              ]
+            }
+          ]
+        }
+      });
+
+      assert.equal(ifElse.attr('outline'), 'If / Else (Section Title)');
+    });
+  });
+
   describe('A2JTemplate.List.sortBy', function() {
     let templates;
 

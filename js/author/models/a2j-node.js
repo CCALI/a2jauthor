@@ -2,6 +2,7 @@ import cuid from 'cuid';
 import Map from 'can/map/';
 import List from 'can/list/';
 import _omit from 'lodash/omit';
+import makeNodeOutline from './make-node-outline';
 
 import 'can/map/define/';
 
@@ -31,7 +32,7 @@ const NodeState = Map.extend({
 export default Map.extend({
   define: {
     /**
-     * @property {String} A2JNode.prototype.define.id id
+     * @property {String} A2JNode.prototype.id id
      *
      * Node's id
      */
@@ -42,7 +43,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {String} A2JNode.prototype.define.tag tag
+     * @property {String} A2JNode.prototype.tag tag
      *
      * A component tag name for an A2J component.
      */
@@ -51,7 +52,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {can.Map} A2JNode.prototype.define.state state
+     * @property {can.Map} A2JNode.prototype.state state
      *
      * A node's state is a map of view model properties passed to
      * its component.
@@ -66,12 +67,23 @@ export default Map.extend({
     },
 
     /**
-     * @property {can.List} A2JNode.prototype.define.children children
+     * @property {can.List} A2JNode.prototype.children children
      *
      * If a node has other nodes beneath it then its a branch.
      */
     children: {
       Value: List
+    },
+
+    /**
+     * @property {String} A2JNode.prototype.outline outline
+     *
+     * Short version of contents from the components inside.
+     */
+    outline: {
+      get() {
+        return makeNodeOutline(this);
+      }
     }
   }
 });

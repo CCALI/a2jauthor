@@ -1,5 +1,6 @@
 import moment from 'moment';
 import Model from 'can/model/';
+import _omit from 'lodash/omit';
 import A2JNode from './a2j-node';
 import comparator from './template-comparator';
 
@@ -41,9 +42,11 @@ const A2JTemplate = Model.extend({
       const isTemplate = !!(child.attr('tag') == null || child.attr('rootNode'));
 
       if (isTemplate) {
-        const template = new A2JTemplate(children);
-        const tree = this.makeDocumentTree(template.attr('rootNode'));
-        template.attr('rootNode', tree);
+        const template = new A2JTemplate(_omit(child.attr(), 'rootNode'));
+        const docTree = this.makeDocumentTree(child.attr('rootNode'));
+
+        template.attr('rootNode', docTree);
+        branch.attr(`children.${index}`, template);
 
       } else {
         branch.attr(`children.${index}`, this.makeDocumentTree(child));
@@ -87,7 +90,17 @@ const A2JTemplate = Model.extend({
 
       return dfd.then(success, error);
     };
+  },
+
+  makeFromTreeObject(tree) {
+    const template = new A2JTemplate(_omit(tree, 'rootNode'));
+    const docTree = this.makeDocumentTree(tree.rootNode);
+
+    template.attr('rootNode', docTree);
+
+    return template;
   }
+
 }, {
   define: {
     /**
@@ -147,6 +160,18 @@ const A2JTemplate = Model.extend({
     updatedAt: {
       get(lastVal) {
         return moment(lastVal);
+      }
+    },
+
+    /**
+     * @property {String} A2JTemplate.prototype.outline outline
+     *
+     * Short version of contents from the components inside.
+     */
+    outline: {
+      get() {
+        const rootNode = this.attr('rootNode');
+        return rootNode.attr('outline');
       }
     }
   },

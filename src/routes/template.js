@@ -3,6 +3,7 @@ var Q = require('q');
 var path = require('path');
 var paths = require('../util/paths');
 var files = require('../util/files');
+var user = require('../util/user');
 var templates = require('./templates');
 
 var debug = require('debug')('A2J:routes/template');
@@ -74,72 +75,6 @@ module.exports = {
   },
 
   /**
-   * @property {Function} templates.writeTemplateAndUpdateSummary
-   * @parent templates
-   *
-   * Write a template file and update the templates.json
-   * file with the new template data.
-   *
-   * @param {String} path - template path.
-   * @param {Object} data - template data.
-   * @param {Boolean} replaceOnMerge - whether to replace the template's
-   * summary when merging into the templates.json file.
-   * @return {Promise} resolves when both files are written.
-   */
-  writeTemplateAndUpdateSummary({ path, data, replaceOnMerge }) {
-    var summaryData = _.pick(data, this.summaryFields);
-    var uniqueId = replaceOnMerge ? 'templateId' : undefined;
-
-    var writeTemplatePromise = files.writeJSON({ path, data });
-
-    var templatesPathPromise = paths.getTemplatesPath();
-
-    var writeSummaryPromise = templatesPathPromise
-      .then(path => files.mergeJSON({ path, data: summaryData, replaceKey: uniqueId }));
-
-    return Q.all([
-      writeTemplatePromise,
-      writeSummaryPromise
-    ]).then(([templateData, summaryData]) => templateData);
-  },
-
-  /**
-   * @property {Function} templates.deleteTemplateAndUpdateSummary
-   * @parent templates
-   *
-   * Delete a template file and update the templates.json
-   * to remove its entry.
-   *
-   * @param {String} id - template id.
-   * @return {Promise} resolves when file is deleted and templates.json
-   * is updated.
-   */
-  deleteTemplateAndUpdateSummary({ templateId }) {
-    var templatesPathPromise = paths.getTemplatesPath();
-
-    var templateDataPromise = templatesPathPromise
-      .then(templatesPath => files.readJSON({ path: templatesPath }))
-      .then(templatesData => this.filterTemplatesByTemplateId({ templatesData, templateId }));
-
-    var deletePromise = templateDataPromise
-      .then(templateSummary => paths.getTemplatePath(templateSummary))
-      .then(templatePath => files.delete({ path: templatePath }));
-
-    var updatePromise = Q.all([
-      templatesPathPromise,
-      templateDataPromise
-    ]).then(([path, data]) => {
-      debug("DATA", data);
-      return files.spliceJSON({ path, data })
-    });
-
-    return Q.all([
-      deletePromise,
-      updatePromise
-    ]).then(([templatePath, summaryData]) => templatePath);
-  },
-
-  /**
    * @property {Function} templates.successHandler
    * @parent templates
    *
@@ -181,9 +116,18 @@ module.exports = {
   get(templateId, params, callback) {
     debug(`GET /api/template/${templateId} request`);
 
-    templates.getTemplatesJSON()
-      .then(templatesData => this.filterTemplatesByTemplateId({ templatesData, templateId }))
-      .then(templateSummary => paths.getTemplatePath(templateSummary))
+    let usernamePromise = user.getCurrentUser();
+
+    let templateSummaryPromise = usernamePromise
+      .then(username => templates.getTemplatesJSON({ username }))
+      .then(templatesData => this.filterTemplatesByTemplateId({ templatesData, templateId }));
+
+    Q.all([templateSummaryPromise, usernamePromise])
+      .then(([{ guideId, templateId }, username]) => paths.getTemplatePath({
+        guideId,
+        templateId,
+        username
+      }))
       .then(templatePath => files.readJSON({ path: templatePath }))
       .then(data => this.successHandler({
         msg: `GET /api/template/${templateId} response: ${JSON.stringify(data)}`,
@@ -199,6 +143,9 @@ module.exports = {
    *
    * Create a new template.
    *
+   * Write a template file and update the templates.json
+   * file with the new template data.
+   *
    * ## Use
    *
    * POST /api/template
@@ -206,12 +153,34 @@ module.exports = {
   create(data, params, callback) {
     debug(`POST /api/template request: ${JSON.stringify(data)}`);
 
-    templates.getTemplatesJSON()
+    let usernamePromise = user.getCurrentUser();
+
+    let templateDataPromise = usernamePromise
+      .then(username => templates.getTemplatesJSON({ username }))
       .then(templatesData => this.getNextTemplateId({ templatesData }))
-      .then(templateId => _.assign(data, { templateId: templateId }))
-      .then(newTemplateData => paths.getTemplatePath(newTemplateData))
-      .then(newTemplatePath => this.writeTemplateAndUpdateSummary({ path: newTemplatePath, data }))
-      .then(data => this.successHandler({
+      .then(templateId => _.assign(data, { templateId }));
+
+    let writeTemplatePromise = Q.all([templateDataPromise, usernamePromise])
+      .then(([{ guideId, templateId }, username]) => paths.getTemplatePath({
+        guideId,
+        templateId,
+        username
+      }))
+      .then(path => files.writeJSON({ path, data }));
+
+    let templatesPathPromise = usernamePromise
+      .then(username => paths.getTemplatesPath({ username }));
+
+    let writeSummaryPromise = Q.all([ templatesPathPromise, templateDataPromise])
+      .then(([ path, templateData ]) => files.mergeJSON({
+        path,
+        data: _.pick(templateData, this.summaryFields)
+      }));
+
+    return Q.all([
+      writeTemplatePromise,
+      writeSummaryPromise
+    ]).then(([data]) => this.successHandler({
         msg: `POST /api/template response: ${JSON.stringify(data)}`,
         data,
         callback
@@ -223,7 +192,8 @@ module.exports = {
    * @property {Function} template.update
    * @parent templates
    *
-   * Update a template.
+   * Update a template file and update the templates.json
+   * file with the new template data.
    *
    * ## Use
    *
@@ -234,12 +204,28 @@ module.exports = {
 
     _.assign(data, { templateId: +templateId });
 
-    paths.getTemplatesPath()
-      .then(templatesPath => files.readJSON({ path: templatesPath }))
-      .then(templatesData => this.filterTemplatesByTemplateId({ templatesData, templateId }))
-      .then(templateSummary => paths.getTemplatePath(templateSummary))
-      .then(templatePath => this.writeTemplateAndUpdateSummary({ path: templatePath, data, replaceOnMerge: true }))
-      .then(data => this.successHandler({
+    let usernamePromise = user.getCurrentUser();
+
+    let writeTemplatePromise = usernamePromise
+      .then(username => paths.getTemplatePath({
+        guideId: data.guideId,
+        templateId: data.templateId,
+        username
+      }))
+      .then(path => files.writeJSON({ path, data }));
+
+    let writeSummaryPromise = usernamePromise
+      .then(username => paths.getTemplatesPath({ username }))
+      .then(path => files.mergeJSON({
+        path,
+        data: _.pick(data, this.summaryFields),
+        replaceKey: 'templateId'
+      }))
+
+    Q.all([
+        writeTemplatePromise,
+        writeSummaryPromise
+      ]).then(([data]) => this.successHandler({
         msg: `PUT /api/template/${templateId} response: ${JSON.stringify(data)}`,
         data,
         callback
@@ -251,7 +237,8 @@ module.exports = {
    * @property {Function} template.delete
    * @parent templates
    *
-   * Delete a template.
+   * Delete a template file and update the templates.json
+   * to remove its entry
    *
    * ## Use
    *
@@ -260,8 +247,34 @@ module.exports = {
   remove(templateId, params, callback) {
     debug(`DELETE /api/template/${templateId} request`);
 
-    this.deleteTemplateAndUpdateSummary({ templateId })
-      .then(data => this.successHandler({
+    let usernamePromise = user.getCurrentUser();
+
+    let templatesPathPromise = usernamePromise
+      .then(username => paths.getTemplatesPath({ username }));
+
+    let templateDataPromise = templatesPathPromise
+      .then(templatesPath => files.readJSON({ path: templatesPath }))
+      .then(templatesData => this.filterTemplatesByTemplateId({ templatesData, templateId }));
+
+    let updatePromise = Q.all([
+      templatesPathPromise,
+      templateDataPromise
+    ]).then(([path, data]) => {
+      return files.spliceJSON({ path, data })
+    });
+
+    let deletePromise = Q.all([ templateDataPromise, usernamePromise ])
+      .then(([{ guideId, templateId }, username]) => paths.getTemplatePath({
+        guideId,
+        templateId,
+        username
+      }))
+      .then(templatePath => files.delete({ path: templatePath }));
+
+    return Q.all([
+      deletePromise,
+      updatePromise
+    ]).then(([data]) => this.successHandler({
         msg: `DELETE /api/template/${templateId} response: ${data}`,
         data: templateId,
         callback

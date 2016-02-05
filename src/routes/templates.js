@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var paths = require('../util/paths');
 var files = require('../util/files');
+var user = require('../util/user');
 var debug = require('debug')('A2J:routes/templates');
 
 /**
@@ -29,10 +30,10 @@ module.exports = {
    * @return {Promise} a Promise that will resolve to the
    * path to templates data.
    */
-  getTemplatesJSON() {
+  getTemplatesJSON({ username }) {
     let templatesJSONPath;
 
-    return paths.getTemplatesPath()
+    return paths.getTemplatesPath({ username })
       .then(templatesPath => {
         templatesJSONPath = templatesPath;
         return files.readJSON({ path: templatesPath });
@@ -57,7 +58,8 @@ module.exports = {
   get(guideId, params, callback) {
     debug('GET /api/templates/' + guideId);
 
-    this.getTemplatesJSON()
+    user.getCurrentUser()
+    .then(username => this.getTemplatesJSON({ username }))
       .then(templatesData => _.filter(templatesData, o => o.guideId === guideId))
       .then(templates => {
         if (templates.length) {

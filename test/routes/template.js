@@ -5,6 +5,7 @@ var _ = require('lodash');
 
 var template = require('../../src/routes/template');
 var files = require('../../src/util/files');
+var user = require('../../src/util/user');
 var templates = require('../../src/routes/templates');
 
 var templatesData = require('../data/templates-data');
@@ -14,6 +15,21 @@ var template2113Data = require('../data/template-2113-data');
 var debug = require('debug')('A2J:test');
 
 describe('lib/routes/template', function() {
+  let getCurrentUserStub,
+      currentUserName;
+
+  beforeEach(function() {
+    let mockCurrentUserDeferred = Q.defer();
+    currentUserName = 'DEV';
+    getCurrentUserStub = sinon.stub(user, 'getCurrentUser');
+    getCurrentUserStub.returns(mockCurrentUserDeferred.promise);
+    mockCurrentUserDeferred.resolve(currentUserName);
+  });
+
+  afterEach(function() {
+    getCurrentUserStub.restore();
+  });
+
   describe('get', function() {
     var getTemplatesJSONStub,
         readJSONStub,

@@ -5,19 +5,28 @@ var Q = require('q');
 var templates = require('../../src/routes/templates');
 var files = require('../../src/util/files');
 var paths = require('../../src/util/paths');
+var user = require('../../src/util/user');
 
 var templatesData = require('../data/templates-data');
 
 var debug = require('debug')('A2J:tests/routes/templates');
 
 describe('lib/routes/templates', function() {
-  let getTemplatesPathStub, templatesJSONPath;
+  let getTemplatesPathStub,
+      templatesJSONPath,
+      currentUserName;
 
   beforeEach(function() {
     let mockTemplatesPathDeferred = Q.defer();
+    let mockCurrentUserDeferred = Q.defer();
+
     templatesJSONPath = '.../templates.json';
+    currentUserName = 'DEV';
+
     getTemplatesPathStub = sinon.stub(paths, 'getTemplatesPath');
+
     getTemplatesPathStub.returns(mockTemplatesPathDeferred.promise);
+
     mockTemplatesPathDeferred.resolve(templatesJSONPath);
   });
 
@@ -44,7 +53,7 @@ describe('lib/routes/templates', function() {
       readFileStub.returns(mockTemplatesDeferred.promise);
       mockTemplatesDeferred.resolve(templatesData);
 
-      templates.getTemplatesJSON()
+      templates.getTemplatesJSON({ username: currentUserName })
         .then(data => {
           assert.deepEqual(data, templatesData);
           done();
@@ -55,7 +64,7 @@ describe('lib/routes/templates', function() {
       readFileStub.throws("Error: ENOENT: no such file or directory, open '.../templates.json'");
       writeFileStub.returns([]);
 
-      templates.getTemplatesJSON()
+      templates.getTemplatesJSON({ username: currentUserName })
         .then(data => {
           assert.equal(writeFileStub.getCall(0).args[0].path, templatesJSONPath, 'should write file');
           assert.deepEqual(writeFileStub.getCall(0).args[0].data, [], 'with empty array');
@@ -66,19 +75,26 @@ describe('lib/routes/templates', function() {
   });
 
   describe('get', function(done) {
-    let getTemplatesJSONStub, mockTemplatesJSONDeferred;
+    let getTemplatesJSONStub,
+      getCurrentUserStub;
 
     beforeEach(function() {
-      mockTemplatesJSONDeferred = Q.defer();
+      let mockCurrentUserDeferred = Q.defer();
+      let mockTemplatesJSONDeferred = Q.defer();
 
       getTemplatesJSONStub = sinon.stub(templates, 'getTemplatesJSON');
+      getCurrentUserStub = sinon.stub(user, 'getCurrentUser');
+
       getTemplatesJSONStub.returns(mockTemplatesJSONDeferred.promise);
+      getCurrentUserStub.returns(mockCurrentUserDeferred.promise);
 
       mockTemplatesJSONDeferred.resolve(templatesData);
+      mockCurrentUserDeferred.resolve(currentUserName);
     });
 
     afterEach(function() {
       templates.getTemplatesJSON.restore();
+      getCurrentUserStub.restore();
     });
 
     it('should return templates data for a guide', function(done) {

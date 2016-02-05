@@ -1,0 +1,5 @@
+{{#if editActive}}
+  <textarea style="{{fontProperties}}">{{userContent}}</textarea>
+{{else}}
+  <div style="{{fontProperties}}">{{a2jParse(userContent)}}</div>
+{{/if}}

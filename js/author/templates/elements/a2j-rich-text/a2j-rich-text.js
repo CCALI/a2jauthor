@@ -2,9 +2,13 @@ import Map from 'can/map/';
 import loader from '@loader';
 import stache from 'can/view/stache/';
 import Component from 'can/component/';
+import contentTpl from './content.stache!';
 import template from './a2j-rich-text.stache!';
 
+import 'can/view/';
 import 'can/map/define/';
+
+can.view.preload('rich-text-content', contentTpl);
 
 export let RichTextVM = Map.extend({
   define: {

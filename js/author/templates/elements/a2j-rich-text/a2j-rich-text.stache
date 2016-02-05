@@ -12,18 +12,10 @@
       {delete-node}="@deleteNode"
       {toggle-edit-active-node}="@toggleEditActiveNode">
 
-      {{#if editActive}}
-        <textarea>{{userContent}}</textarea>
-      {{else}}
-        {{a2jParse(userContent)}}
-      {{/if}}
+      {{> rich-text-content }}
     </element-container>
   {{else}}
-    {{#if editActive}}
-      <textarea>{{userContent}}</textarea>
-    {{else}}
-      {{a2jParse(userContent)}}
-    {{/if}}
+    {{> rich-text-content }}
   {{/if}}
 
   {{#if showOptionsPane}}
@@ -46,5 +38,5 @@
     {{/if}}
   {{/if}}
 {{else}}
-  {{a2jParse(userContent)}}
+  {{> rich-text-content }}
 {{/if}}

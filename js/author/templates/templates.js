@@ -16,7 +16,6 @@ import template from './templates.stache!';
  * <templates-page></templates-page>
  * @codeend
  */
-
 export default Component.extend({
   template,
   leakScope: false,

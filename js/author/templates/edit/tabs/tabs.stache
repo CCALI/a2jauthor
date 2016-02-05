@@ -90,15 +90,23 @@
 
     <div class="form-group">
       <label>Font Family</label>
-      <select class="form-control" disabled>
-        <option selected="selected">Arial</option>
+      <select class="form-control" {($value)}="template.rootNode.state.fontFamily">
+        <option value="sans-serif" selected>Sans Serif</option>
+        <option value="arial">Arial</option>
+        <option value="times-new-roman">Times New Roman</option>
+        <option value="courier-new">Courier New</option>
       </select>
     </div>
 
     <div class="form-group">
       <label>Font Size</label>
-      <select class="form-control" disabled>
-        <option selected="selected">12</option>
+      <select class="form-control" {($value)}="template.rootNode.state.fontSize">
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14" selected>14</option>
+        <option value="15">15</option>
       </select>
     </div>
 

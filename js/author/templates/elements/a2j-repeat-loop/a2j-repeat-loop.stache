@@ -24,7 +24,7 @@
         {{/if}}
       </div>
 
-      <div class="panel-body">
+      <div class="panel-body" style="{{fontProperties}}">
         <h3>{{loopTitle}}</h3>
 
         {{#is displayType "table"}}
@@ -58,7 +58,7 @@
     {{> repeat-loop-options-tpl }}
   {{/if}}
 {{else}}
-  <div>
+  <div style="{{fontProperties}}">
     <h3>{{loopTitle}}</h3>
 
     {{#is displayType "table"}}

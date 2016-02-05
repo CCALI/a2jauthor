@@ -58,8 +58,8 @@ module.exports = {
   get(guideId, params, callback) {
     debug('GET /api/templates/' + guideId);
 
-    user.getCurrentUser()
-    .then(username => this.getTemplatesJSON({ username }))
+    user.getCurrentUser({ cookieHeader: params.cookieHeader })
+      .then(username => this.getTemplatesJSON({ username }))
       .then(templatesData => _.filter(templatesData, o => o.guideId === guideId))
       .then(templates => {
         if (templates.length) {

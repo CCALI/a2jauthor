@@ -14,7 +14,8 @@ var debug = require('debug')('A2J:tests/routes/templates');
 describe('lib/routes/templates', function() {
   let getTemplatesPathStub,
       templatesJSONPath,
-      currentUserName;
+      currentUserName,
+      params;
 
   beforeEach(function() {
     let mockTemplatesPathDeferred = Q.defer();
@@ -22,6 +23,7 @@ describe('lib/routes/templates', function() {
 
     templatesJSONPath = '.../templates.json';
     currentUserName = 'DEV';
+    params = {};
 
     getTemplatesPathStub = sinon.stub(paths, 'getTemplatesPath');
 
@@ -98,21 +100,21 @@ describe('lib/routes/templates', function() {
     });
 
     it('should return templates data for a guide', function(done) {
-      templates.get('Guide1261', null, function(err, data) {
+      templates.get('Guide1261', params, function(err, data) {
         assert.equal(data.length, 2);
         done();
       });
     });
 
     it('should return templates data for a different guide', function(done) {
-      templates.get('Guide1262', null, function(err, data) {
+      templates.get('Guide1262', params, function(err, data) {
         assert.equal(data.length, 1, 'should return template data for another guide');
         done();
       });
     });
 
     it('should return an error when guide does have templates data', function(done) {
-      templates.get('Guide1337', null, function(err, data) {
+      templates.get('Guide1337', params, function(err, data) {
         assert.deepEqual(data, []);
         done();
       });

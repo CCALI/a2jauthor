@@ -528,6 +528,9 @@ switch ($command)
 		break;
 		*/
 
+  case 'currentuser':
+    $result['username']=$user->name;
+    break;
 
 	default:
 		$err="Unknown command";

@@ -14,7 +14,7 @@ module.exports = {
    * Middleware function to pass cookies through params.cookies.
    */
   forwardCookies(req, res, next) {
-    req.feathers.cookie = req.headers.cookie;
+    req.feathers.cookieHeader = req.headers.cookie;
     next();
   }
 }

@@ -116,7 +116,7 @@ module.exports = {
   get(templateId, params, callback) {
     debug(`GET /api/template/${templateId} request`);
 
-    let usernamePromise = user.getCurrentUser();
+    let usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader });
 
     let templateSummaryPromise = usernamePromise
       .then(username => templates.getTemplatesJSON({ username }))
@@ -153,7 +153,7 @@ module.exports = {
   create(data, params, callback) {
     debug(`POST /api/template request: ${JSON.stringify(data)}`);
 
-    let usernamePromise = user.getCurrentUser();
+    let usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader });
 
     let templateDataPromise = usernamePromise
       .then(username => templates.getTemplatesJSON({ username }))
@@ -204,7 +204,7 @@ module.exports = {
 
     _.assign(data, { templateId: +templateId });
 
-    let usernamePromise = user.getCurrentUser();
+    let usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader });
 
     let writeTemplatePromise = usernamePromise
       .then(username => paths.getTemplatePath({

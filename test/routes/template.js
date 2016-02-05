@@ -6,6 +6,8 @@ var _ = require('lodash');
 var template = require('../../src/routes/template');
 var files = require('../../src/util/files');
 var user = require('../../src/util/user');
+var config = require('../../src/util/config');
+var paths = require('../../src/util/paths');
 var templates = require('../../src/routes/templates');
 
 var templatesData = require('../data/templates-data');
@@ -16,12 +18,20 @@ var debug = require('debug')('A2J:test');
 
 describe('lib/routes/template', function() {
   let getCurrentUserStub,
-      currentUserName;
+      currentUserName,
+      params,
+      guidesDir;
 
   beforeEach(function() {
     let mockCurrentUserDeferred = Q.defer();
+
     currentUserName = 'DEV';
+    params = {};
+    guidesDir = '/foo/userfiles/';
+    paths.guidesDir = guidesDir;
+
     getCurrentUserStub = sinon.stub(user, 'getCurrentUser');
+
     getCurrentUserStub.returns(mockCurrentUserDeferred.promise);
     mockCurrentUserDeferred.resolve(currentUserName);
   });
@@ -56,14 +66,14 @@ describe('lib/routes/template', function() {
     });
 
     it('should return data for a template', function(done) {
-      template.get(2112, null, function(err, data) {
+      template.get(2112, params, function(err, data) {
         assert.deepEqual(data, template2112Data);
         done();
       });
     });
 
     it('should return an error when template does not have data', function(done) {
-      template.get(2113, null, function(err, data) {
+      template.get(2113, params, function(err, data) {
         assert(err);
         done();
       });
@@ -103,7 +113,7 @@ describe('lib/routes/template', function() {
     });
 
     it('should write updated data to file', function(done) {
-      template.update(2112, _.omit(template2112Data, 'templateId'), null, function(err, data) {
+      template.update(2112, _.omit(template2112Data, 'templateId'), params, function(err, data) {
         let fileName = writeJSONStub.getCall(0).args[0].path;
         fileName = fileName.substring(fileName.lastIndexOf('/') + 1);
 
@@ -163,7 +173,7 @@ describe('lib/routes/template', function() {
       mockWriteDeferred.resolve(JSON.stringify(newData));
       mockMergeDeferred.resolve(JSON.stringify(templatesData));
 
-      template.create(_.omit(template2112Data, [ 'templateId' ]), null, function(err, data) {
+      template.create(_.omit(template2112Data, [ 'templateId' ]), params, function(err, data) {
         var writeFileName = writeJSONStub.getCall(0).args[0].path;
         writeFileName = writeFileName.substring(writeFileName.lastIndexOf('/') + 1);
 
@@ -195,7 +205,7 @@ describe('lib/routes/template', function() {
       mockWriteDeferred.resolve(JSON.stringify(newData));
       mockMergeDeferred.resolve(JSON.stringify(templatesData));
 
-      template.create(_.omit(template2112Data, [ 'templateId' ]), null, function() {
+      template.create(_.omit(template2112Data, [ 'templateId' ]), params, function() {
         var newData = _.assign({}, template2112Data, { templateId: 1 });
         var writeFileName = writeJSONStub.getCall(0).args[0].path;
         writeFileName = writeFileName.substring(writeFileName.lastIndexOf('/') + 1);

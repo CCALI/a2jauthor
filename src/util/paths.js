@@ -1,5 +1,7 @@
 var path = require('path');
 var Q = require('q');
+var config = require('./config');
+
 var debug = require('debug')('A2J:paths')
 
 /**
@@ -17,7 +19,7 @@ module.exports = {
    *
    * Path of the userfiles directory.
    */
-   guidesDir: path.join(process.cwd(), '../userfiles/'),
+   guidesDir: config.get('GUIDES_DIR'),
 
   /**
    * @property {Function} paths.getTemplatesPath

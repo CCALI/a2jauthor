@@ -50,7 +50,7 @@ let AssembleOptionsVM = Map.extend({
      */
     hasLoadedAnswers: {
       get() {
-        let answers = this.attr('interviewAnswers');
+        const answers = this.attr('interviewAnswers');
         return _keys(answers.attr()).length > 0;
       }
     },
@@ -68,8 +68,8 @@ let AssembleOptionsVM = Map.extend({
     templatesList: {
       get() {
         let list = new List();
-        let template = this.attr('template');
-        let templates = this.attr('templates');
+        const template = this.attr('template');
+        const templates = this.attr('templates');
 
         if (template) {
           list.push(template);
@@ -91,8 +91,8 @@ let AssembleOptionsVM = Map.extend({
      */
     assemblePayload: {
       get() {
-        let templates = this.attr('templatesList');
-        let answers = this.attr('interviewAnswers');
+        const templates = this.attr('templatesList');
+        const answers = this.attr('interviewAnswers');
 
         return JSON.stringify({
           answers: answers.serialize(),
@@ -119,15 +119,15 @@ export default Component.extend({
     },
 
     '.answers-file-input change': function($el) {
-      let vm = this.viewModel;
-      let file = $el.get(0).files[0];
-      let templates = vm.attr('templatesList');
+      const vm = this.viewModel;
+      const file = $el.get(0).files[0];
+      const templates = vm.attr('templatesList');
 
       if (file && templates) {
-        let reader = new FileReader();
+        const reader = new FileReader();
 
         reader.onload = function() {
-          let answers = parser.parseJSON(reader.result, {});
+          const answers = parser.parseJSON(reader.result, {});
 
           if (answers) {
             vm.attr('interviewAnswers', answers);

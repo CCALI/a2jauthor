@@ -7,7 +7,14 @@ import A2JTemplate from 'caja/author/models/a2j-template';
 
 import 'can/map/define/';
 
-function moveItem(list, from, to) {
+const fontFamilyMap = {
+  'sans-serif': '\'Open Sans\', sans-serif',
+  arial: 'Arial, \'Helvetica Neue\', Helvetica, sans-serif',
+  'times-new-roman': 'TimesNewRoman, \'Times New Roman\', Times, Baskerville, Georgia, serif',
+  'courier-new': '\'Courier New\', Courier, \'Lucida Sans Typewriter\', \'Lucida Typewriter\', monospace'
+};
+
+const moveItem = function(list, from, to) {
   let length = list.attr('length');
 
   from = parseInt(from, 10);
@@ -18,7 +25,7 @@ function moveItem(list, from, to) {
     list.splice(to, 0, item);
     return list;
   }
-}
+};
 
 /**
  * @module {Module} author/templates/elements/a2j-template/ <a2j-template>
@@ -43,7 +50,7 @@ function moveItem(list, from, to) {
 export default Map.extend({
   define: {
     /**
-     * @property {A2JTemplate} a2jTemplate.ViewModel.prototype.define.template template
+     * @property {A2JTemplate} a2jTemplate.ViewModel.prototype.template template
      * @parent a2jTemplate.ViewModel
      *
      * The [A2JTemplate] model instance retrieved from the server.
@@ -53,7 +60,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {A2JNode} a2jTemplate.ViewModel.prototype.define.rootNode rootNode
+     * @property {A2JNode} a2jTemplate.ViewModel.prototype.rootNode rootNode
      * @parent a2jTemplate.ViewModel
      *
      * The root [A2JNode] instance of `template`.
@@ -66,7 +73,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {Boolean} a2jTemplate.ViewModel.prototype.define.editEnabled editEnabled
+     * @property {Boolean} a2jTemplate.ViewModel.prototype.editEnabled editEnabled
      * @parent a2jTemplate.ViewModel
      *
      * Whether an element can have edit options made available.
@@ -77,7 +84,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {Boolean} a2jTemplate.ViewModel.prototype.define.useAnswers useAnswers
+     * @property {Boolean} a2jTemplate.ViewModel.prototype.useAnswers useAnswers
      * @parent a2jTemplate.ViewModel
      *
      * Whether to replace the variable names used in the template by their values
@@ -89,7 +96,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {Function} a2jTemplate.ViewModel.prototype.define.saveCallback saveCallback
+     * @property {Function} a2jTemplate.ViewModel.prototype.saveCallback saveCallback
      * @parent a2jTemplate.ViewModel
      *
      * Callback to be executed when interactions to the element might require the
@@ -100,7 +107,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {can.Map} a2jTemplate.ViewModel.prototype.define.selectedNode selectedNode
+     * @property {can.Map} a2jTemplate.ViewModel.prototype.selectedNode selectedNode
      * @parent a2jTemplate.ViewModel
      *
      * The currenly selected node (element) view model.
@@ -116,6 +123,24 @@ export default Map.extend({
 
         if (active && active.length) {
           return active.attr(0);
+        }
+      }
+    },
+
+    /**
+     * @property {String} a2jTemplate.ViewModel.prototype.fontProperties fontProperties
+     * @parent a2jTemplate.ViewModel
+     *
+     * Font CSS rules to be applied to the content of each element of the template.
+     */
+    fontProperties: {
+      get() {
+        const state = this.attr('rootNode.state');
+        const size = state.attr('fontSize');
+        const family = fontFamilyMap[state.attr('fontFamily')];
+
+        if (family && size) {
+          return `font-family: ${family}; font-size: ${size}px;`;
         }
       }
     }

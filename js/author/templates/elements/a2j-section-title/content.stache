@@ -1,2 +1,4 @@
-<h3>{{title}}</h3>
-{{#if underline}}<hr class="title-underline">{{/if}}
+<div style="{{fontProperties}}">
+  <h3>{{title}}</h3>
+  {{#if underline}}<hr class="title-underline">{{/if}}
+</div>

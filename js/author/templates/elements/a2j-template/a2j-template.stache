@@ -36,6 +36,7 @@
           {delete-node}="@deleteNode"
           {update-node}="@updateNode"
           {edit-enabled}="editEnabled"
+          {font-properties}="fontProperties"
           {(edit-active)}="./state.editActive"
           {toggle-edit-active-node}="@toggleEditActiveNode"
         />
@@ -51,6 +52,7 @@
           {delete-node}="@deleteNode"
           {update-node}="@updateNode"
           {edit-enabled}="editEnabled"
+          {font-properties}="fontProperties"
           {(edit-active)}="./state.editActive"
           {toggle-edit-active-node}="@toggleEditActiveNode"
         />
@@ -68,6 +70,7 @@
           {delete-node}="@deleteNode"
           {update-node}="@updateNode"
           {edit-enabled}="editEnabled"
+          {font-properties}="fontProperties"
           {(edit-active)}="./state.editActive"
           {toggle-edit-active-node}="@toggleEditActiveNode"
         />
@@ -92,6 +95,7 @@
           {delete-node}="@deleteNode"
           {update-node}="@updateNode"
           {edit-enabled}="editEnabled"
+          {font-properties}="fontProperties"
           {(edit-active)}="./state.editActive"
           {toggle-edit-active-node}="@toggleEditActiveNode"
         />
@@ -120,6 +124,7 @@
           {delete-node}="@deleteNode"
           {update-node}="@updateNode"
           {edit-enabled}="editEnabled"
+          {font-properties}="fontProperties"
           {(edit-active)}="./state.editActive"
           {toggle-edit-active-node}="@toggleEditActiveNode"
         />

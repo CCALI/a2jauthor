@@ -231,54 +231,5 @@ module.exports = {
         callback
       }))
       .catch(error => this.errorHandler({ error, callback }));
-  },
-
-  /**
-   * @property {Function} template.delete
-   * @parent templates
-   *
-   * Delete a template file and update the templates.json
-   * to remove its entry
-   *
-   * ## Use
-   *
-   * DELETE /api/template/{template_id}
-   */
-  remove(templateId, params, callback) {
-    debug(`DELETE /api/template/${templateId} request`);
-
-    let usernamePromise = user.getCurrentUser();
-
-    let templatesPathPromise = usernamePromise
-      .then(username => paths.getTemplatesPath({ username }));
-
-    let templateDataPromise = templatesPathPromise
-      .then(templatesPath => files.readJSON({ path: templatesPath }))
-      .then(templatesData => this.filterTemplatesByTemplateId({ templatesData, templateId }));
-
-    let updatePromise = Q.all([
-      templatesPathPromise,
-      templateDataPromise
-    ]).then(([path, data]) => {
-      return files.spliceJSON({ path, data })
-    });
-
-    let deletePromise = Q.all([ templateDataPromise, usernamePromise ])
-      .then(([{ guideId, templateId }, username]) => paths.getTemplatePath({
-        guideId,
-        templateId,
-        username
-      }))
-      .then(templatePath => files.delete({ path: templatePath }));
-
-    return Q.all([
-      deletePromise,
-      updatePromise
-    ]).then(([data]) => this.successHandler({
-        msg: `DELETE /api/template/${templateId} response: ${data}`,
-        data: templateId,
-        callback
-      }))
-      .catch(error => this.errorHandler({ error, callback }));
   }
 };

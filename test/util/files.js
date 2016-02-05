@@ -158,41 +158,4 @@ describe('lib/util/files', function() {
         });
     });
   });
-
-  describe('spliceJSON', function() {
-    var mockReadJSONDeferred, mockReadJSON, mockWriteJSONDeferred, mockWriteJSON;
-
-    beforeEach(function() {
-      mockReadJSONDeferred = Q.defer();
-      mockReadJSON = sinon.stub(files, 'readJSON');
-      mockReadJSON.returns(mockReadJSONDeferred.promise);
-
-      mockWriteJSONDeferred = Q.defer();
-      mockWriteJSON = sinon.stub(files, 'writeJSON');
-      mockWriteJSON.returns(mockWriteJSONDeferred.promise);
-    });
-
-    afterEach(function() {
-      files.readJSON.restore();
-      files.writeJSON.restore();
-      mockReadJSONDeferred = null;
-      mockWriteJSONDeferred = null;
-    });
-
-    it('should splice object out of array in JSON file', function(done) {
-      var fileInputData = [{ foo: "bar" }, { baz: "xyz" }];
-      var userInputData = { baz: "xyz" };
-      var expectedData = [{ foo: "bar" }];
-
-      mockReadJSONDeferred.resolve(fileInputData);
-      mockWriteJSONDeferred.resolve(JSON.stringify(expectedData));
-
-      files.spliceJSON({ path: 'foo.json', data: userInputData })
-        .then(function(data) {
-          assert.equal(mockWriteJSON.getCall(0).args[0].path, 'foo.json', 'should write to JSON file');
-          assert.deepEqual(mockWriteJSON.getCall(0).args[0].data, expectedData, 'with correct data');
-          done();
-        });
-      });
-  });
 });

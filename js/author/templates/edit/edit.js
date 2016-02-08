@@ -21,10 +21,13 @@ export let TemplateEditPageVM = Map.extend({
           promise = A2JTemplate.findOne({templateId});
         }
 
-        return promise.then(a2jTemplate => {
-          this.attr('a2jTemplate', a2jTemplate);
-          return a2jTemplate;
-        });
+        return promise;
+      }
+    },
+
+    a2jTemplate: {
+      get(last, set) {
+        return this.attr('a2jTemplatePromise').then(set);
       }
     }
   }

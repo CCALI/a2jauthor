@@ -33,10 +33,7 @@ module.exports = {
    */
   summaryFields: [
     'guideId',
-    'templateId',
-    'updatedAt',
-    'title',
-    'active'
+    'templateId'
   ],
   /**
    * @property {Function} templates.filterTemplatesByTemplateId

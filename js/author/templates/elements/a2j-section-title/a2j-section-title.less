@@ -6,4 +6,27 @@ a2j-section-title {
     margin: 0;
     border-top: 1px solid #000;
   }
+
+  .section-title {
+    &.count-none:before {
+      content: none;
+      counter-increment: none;
+    }
+
+    &:not(.count-none):before {
+      counter-increment: section;
+    }
+
+    &.count-decimal:before {
+      content: counter(section) ".\0000a0";
+    }
+
+    &.count-upper-roman:before {
+      content: counter(section, upper-roman) ".\0000a0";
+    }
+
+    &.count-upper-alpha:before {
+      content: counter(section, upper-alpha) ".\0000a0";
+    }
+  }
 }

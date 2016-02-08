@@ -112,8 +112,11 @@
 
     <div class="form-group">
       <label>Section Numbering</label>
-      <select class="form-control" disabled>
-        <option selected="selected">None</option>
+      <select class="form-control" {($value)}="template.rootNode.state.sectionCounter">
+        <option value="none" selected>None</option>
+        <option value="decimal">1.2.3...</option>
+        <option value="upper-roman">I.II.III...</option>
+        <option value="upper-alpha">A.B.C...</option>
       </select>
     </div>
 

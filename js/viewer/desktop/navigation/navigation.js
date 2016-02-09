@@ -8,8 +8,20 @@ import constants from 'viewer/models/constants';
 
 import 'can/map/define/';
 
+/**
+ * @property {can.Map} viewerNavigation.ViewModel
+ * @parent <a2j-viewer-navigation>
+ *
+ * `<a2j-viewer-navigation>`'s viewModel.
+ */
 export let ViewerNavigationVM = Map.extend({
   define: {
+    /**
+     * @property {can.List} viewerNavigation.ViewModel.visitedPages visitedPages
+     * @parent viewerNavigation.ViewModel
+     *
+     * list of pages visited by the user.
+     */
     visitedPages: {
       get() {
         let state = this.attr('appState');
@@ -17,6 +29,12 @@ export let ViewerNavigationVM = Map.extend({
       }
     },
 
+    /**
+     * @property {String} viewerNavigation.ViewModel.selectedPageName selectedPageName
+     * @parent viewerNavigation.ViewModel
+     *
+     * Name of currently selected page.
+     */
     selectedPageName: {
       get(pageName) {
         let pages = this.attr('visitedPages');
@@ -24,6 +42,15 @@ export let ViewerNavigationVM = Map.extend({
       }
     },
 
+    /**
+     * @property {Number} viewerNavigation.ViewModel.selectedPageIndex selectedPageIndex
+     * @parent viewerNavigation.ViewModel
+     *
+     * Index of currently selected page.
+     *
+     * Used for navigating between pages since the same page may appear multiple
+     * times in `visitedPages` list if user is navigating through a repeat loop.
+     */
     selectedPageIndex: {
       set(newVal) {
         let selectedPage = this.attr('visitedPages').attr(newVal);
@@ -42,6 +69,12 @@ export let ViewerNavigationVM = Map.extend({
       }
     },
 
+    /**
+     * @property {Boolean} viewerNavigation.ViewModel.canSaveAndExit canSaveAndExit
+     * @parent viewerNavigation.ViewModel
+     *
+     * Whether user can save and exit interview.
+     */
     canSaveAndExit: {
       get() {
         let appState = this.attr('appState');
@@ -52,6 +85,12 @@ export let ViewerNavigationVM = Map.extend({
       }
     },
 
+    /**
+     * @property {Boolean} viewerNavigation.ViewModel.canResumeInterview canResumeInterview
+     * @parent viewerNavigation.ViewModel
+     *
+     * Whether user can resume interview.
+     */
     canResumeInterview: {
       get() {
         let appState = this.attr('appState');
@@ -61,6 +100,12 @@ export let ViewerNavigationVM = Map.extend({
       }
     },
 
+    /**
+     * @property {Boolean} viewerNavigation.ViewModel.canNavigateBack canNavigateBack
+     * @parent viewerNavigation.ViewModel
+     *
+     * Whether user can navigate to the previous page.
+     */
     canNavigateBack: {
       get() {
         let pages = this.attr('visitedPages');
@@ -71,6 +116,12 @@ export let ViewerNavigationVM = Map.extend({
       }
     },
 
+    /**
+     * @property {Boolean} viewerNavigation.ViewModel.canNavigateForward canNavigateForward
+     * @parent viewerNavigation.ViewModel
+     *
+     * Whether user can navigate to the next page.
+     */
     canNavigateForward: {
       get() {
         let pages = this.attr('visitedPages');
@@ -81,6 +132,12 @@ export let ViewerNavigationVM = Map.extend({
       }
     },
 
+    /**
+     * @property {Object} viewerNavigation.ViewModel.feedbackData feedbackData
+     * @parent viewerNavigation.ViewModel
+     *
+     * Data to be submitted when user sends feedback.
+     */
     feedbackData: {
       type: '*',
       get() {
@@ -103,6 +160,12 @@ export let ViewerNavigationVM = Map.extend({
     }
   },
 
+  /**
+   * @property {Function} viewerNavigation.ViewModel.getPageIndex getPageIndex
+   * @parent viewerNavigation.ViewModel
+   *
+   * @return {Number} index of current page.
+   */
   getPageIndex(pageName) {
     let pages = this.attr('visitedPages');
 
@@ -111,6 +174,12 @@ export let ViewerNavigationVM = Map.extend({
     });
   },
 
+  /**
+   * @property {Function} viewerNavigation.ViewModel.saveAndExit saveAndExit
+   * @parent viewerNavigation.ViewModel
+   *
+   * Saves interview and exits.
+   */
   saveAndExit() {
     let appState = this.attr('appState');
     let interview = this.attr('interview');
@@ -123,6 +192,12 @@ export let ViewerNavigationVM = Map.extend({
     this.attr('selectedPageName', exitPage);
   },
 
+  /**
+   * @property {Function} viewerNavigation.ViewModel.resumeInterview resumeInterview
+   * @parent viewerNavigation.ViewModel
+   *
+   * Resumes saved interview.
+   */
   resumeInterview() {
     let appState = this.attr('appState');
     let lastPageName = appState.attr('lastPageBeforeExit');
@@ -133,6 +208,12 @@ export let ViewerNavigationVM = Map.extend({
     this.attr('selectedPageName', lastPageName);
   },
 
+  /**
+   * @property {Function} viewerNavigation.ViewModel.navigateBack navigateBack
+   * @parent viewerNavigation.ViewModel
+   *
+   * Navigates to previous page.
+   */
   navigateBack() {
     let pages = this.attr('visitedPages');
     let pageName = this.attr('selectedPageName');
@@ -142,6 +223,12 @@ export let ViewerNavigationVM = Map.extend({
     this.attr('selectedPageName', prevPage.attr('name'));
   },
 
+  /**
+   * @property {Function} viewerNavigation.ViewModel.navigateForward navigateForward
+   * @parent viewerNavigation.ViewModel
+   *
+   * Navigates to next page.
+   */
   navigateForward() {
     let pages = this.attr('visitedPages');
     let pageName = this.attr('selectedPageName');
@@ -152,6 +239,22 @@ export let ViewerNavigationVM = Map.extend({
   }
 });
 
+/**
+ * @module {Module} viewer/desktop/navigation/ <a2j-viewer-navigation>
+ * @parent api-components
+ *
+ * This component displays the navigation bar for the viewer app.
+ *
+ * ## Use
+ *
+ * @codestart
+ * <a2j-viewer-navigation>
+ *   {(selected-page-name)}="rState.page"
+ *   {(app-state)}="rState"
+ *   {(interview)}="interview">
+ * </a2j-viewer-navigation>
+ * @codeend
+ */
 export default Component.extend({
   template,
   leakScope: false,

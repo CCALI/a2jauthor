@@ -26,16 +26,22 @@ if (!a2jTemplates) {
 export default function(request, response) {
   let requestData = request.data || {};
 
-  if (request.type === 'post') {
-    requestData.guideId = '1261';
-    requestData.templateId = a2jTemplateSequence + 1;
-  }
-
   switch (request.type) {
     case 'put':
-    case 'post':
       a2jTemplates[requestData.templateId] = requestData;
       persistTemplates();
+
+      response(a2jTemplates[requestData.templateId]);
+      break;
+
+    case 'post':
+      a2jTemplateSequence += 1;
+      requestData.templateId = a2jTemplateSequence;
+      requestData.guideId = requestData.guideId || '1261';
+
+      a2jTemplates[requestData.templateId] = requestData;
+      persistTemplates();
+
       response(a2jTemplates[requestData.templateId]);
       break;
 

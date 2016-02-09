@@ -249,7 +249,12 @@
       {{#is page "templates"}}
         {{#if guideId}}
           {{#if id}}
-            <template-edit-page {(guide)}="guide" {(template-id)}="id" />
+            <template-edit-page
+              {(guide)}="guide"
+              {(action)}="action"
+              {(template-id)}="id"
+              {guide-id}="guideId"
+            />
           {{else}}
             <templates-page {(app-state)}="." />
           {{/if}}

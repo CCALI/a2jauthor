@@ -150,12 +150,17 @@ module.exports = {
   create(data, params, callback) {
     debug(`POST /api/template request: ${JSON.stringify(data)}`);
 
+    let currentTime = Date.now();
     let usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader });
 
     let templateDataPromise = usernamePromise
       .then(username => templates.getTemplatesJSON({ username }))
       .then(templatesData => this.getNextTemplateId({ templatesData }))
-      .then(templateId => _.assign(data, { templateId }));
+      .then(templateId => _.assign(data, {
+        templateId,
+        createdAt: currentTime,
+        updatedAt: currentTime
+      }));
 
     let writeTemplatePromise = Q.all([templateDataPromise, usernamePromise])
       .then(([{ guideId, templateId }, username]) => paths.getTemplatePath({
@@ -199,7 +204,11 @@ module.exports = {
   update(templateId, data, params, callback) {
     debug(`PUT /api/template/${templateId} request: ${JSON.stringify(data)}`);
 
-    _.assign(data, { templateId: +templateId });
+    let currentTime = Date.now();
+    _.assign(data, {
+      templateId: +templateId,
+      updatedAt: currentTime
+    });
 
     let usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader });
 

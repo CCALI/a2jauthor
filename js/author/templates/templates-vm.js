@@ -222,7 +222,7 @@ export default Map.extend({
     template.attr({
       deleted: false,
       active: true
-    });
+    }).save();
     this.attr('openDeletedAlert', false);
   },
 
@@ -230,7 +230,7 @@ export default Map.extend({
     template.attr({
       restored: false,
       active: false
-    });
+    }).save();
     this.attr('openRestoredAlert', false);
   },
 

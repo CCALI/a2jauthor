@@ -20,11 +20,11 @@ import 'can/map/define/';
 const A2JTemplate = Model.extend({
   id: 'templateId',
 
-  create: '/api/templates',
-  update: '/api/templates/{templateId}',
-  destroy: '/api/templates/{templateId}',
-  findOne: '/api/templates/{templateId}',
-  findAll: '/api/guides/{guideId}/templates',
+  create: '/api/template',
+  update: '/api/template/{templateId}',
+  destroy: '/api/template/{templateId}',
+  findOne: '/api/template/{templateId}',
+  findAll: '/api/templates/{guideId}',
 
   /**
    * @function A2JTemplate.makeDocumentTree makeDocumentTree
@@ -136,6 +136,7 @@ const A2JTemplate = Model.extend({
      * Whether the template should be rendered.
      */
     active: {
+      type: 'boolean',
       value: true
     },
 
@@ -173,6 +174,44 @@ const A2JTemplate = Model.extend({
         const rootNode = this.attr('rootNode');
         return rootNode.attr('outline');
       }
+    },
+
+    /**
+     * @property {moment} A2JTemplate.prototype.header header
+     *
+     * The Custom Header for the template.
+     */
+    header: {
+      value: ''
+    },
+
+    /**
+     * @property {moment} A2JTemplate.prototype.hideHeaderOnFirstPage hideHeaderOnFirstPage
+     *
+     * Whether the header should be hidden on the first page of the assembled PDF.
+     */
+    hideHeaderOnFirstPage: {
+      type: 'boolean',
+      value: false
+    },
+
+    /**
+     * @property {moment} A2JTemplate.prototype.footer footer
+     *
+     * The Custom Footer for the template.
+     */
+    footer: {
+      value: ''
+    },
+
+    /**
+     * @property {moment} A2JTemplate.prototype.hideFooterOnFirstPage hideFooterOnFirstPage
+     *
+     * Whether the footer should be hidden on the first page of the assembled PDF.
+     */
+    hideFooterOnFirstPage: {
+      type: 'boolean',
+      value: false
     }
   },
 

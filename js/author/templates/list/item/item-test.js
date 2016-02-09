@@ -3,17 +3,23 @@ import assert from 'assert';
 import {Item} from './item';
 import stache from 'can/view/stache/';
 import A2JTemplate from 'author/models/a2j-template';
+import sinon from 'sinon';
 
 import 'steal-mocha';
 
 describe('<templates-list-item>', function() {
-  let vm;
+  let vm, templateSaveSpy;
 
   describe('viewModel', function() {
     beforeEach(function() {
       vm = new Item({
         template: new A2JTemplate()
       });
+      templateSaveSpy = sinon.spy(vm.attr('template'), 'save');
+    });
+
+    afterEach(function() {
+      templateSaveSpy.restore();
     });
 
     it('defaults transitionTime to 1000ms', function() {
@@ -45,6 +51,7 @@ describe('<templates-list-item>', function() {
       setTimeout(function() {
         assert.isFalse(vm.attr('deleting'), 'should be reset to false');
         assert.isFalse(template.attr('active'), 'after transitionTime it should be false');
+        assert.isTrue(templateSaveSpy.calledOnce, 'should save template to server')
         done();
       }, delay);
     });
@@ -66,6 +73,7 @@ describe('<templates-list-item>', function() {
       setTimeout(function() {
         assert.isFalse(vm.attr('restoring'), 'should be reset to false');
         assert.isTrue(template.attr('active'), 'after transitionTime it should be true');
+        assert.isTrue(templateSaveSpy.calledOnce, 'should save template to server')
         done();
       }, delay);
     });

@@ -119,6 +119,11 @@ export let HeaderFooterVM = Map.extend({
    */
   setEditActive(val) {
     this.attr('editActive', val);
+
+    if (!val) {
+      let save = this.attr('saveTemplate');
+      save();
+    }
   }
 });
 
@@ -138,11 +143,7 @@ export let HeaderFooterVM = Map.extend({
 export default Component.extend({
   template,
   tag: 'a2j-header-footer',
-
-  viewModel(attrs) {
-    return new HeaderFooterVM(attrs.state);
-  },
-
+  viewModel: HeaderFooterVM,
   events: {
     inserted() {
       this.viewModel.attr('title', this.element.attr('title'));

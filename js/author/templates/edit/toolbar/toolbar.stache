@@ -1,4 +1,5 @@
 <can-import from="author/templates/edit/toolbar/toolbar.less!" />
+<can-import from="bootstrap/js/modal" />
 
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -11,7 +12,7 @@
         <form class="navbar-form template-name-form">
           <div class="form-group">
             {{#if template}}
-              <input type="text" class="form-control" {($value)}="template.title">
+              <input type="text" class="form-control" {($value)}="template.title" ($blur)="saveTemplate()">
             {{/if}}
           </div>
         </form>

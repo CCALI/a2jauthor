@@ -1,25 +1,30 @@
 var path = require('path');
 var logger = require('morgan');
-var express = require('express');
+var feathers = require('feathers');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var assemble = require('./routes/assemble');
+var templates = require('./routes/templates');
+var template = require('./routes/template');
+var forwardCookies = require('./util/cookies').forwardCookies;
 
-var app = express();
+var app = feathers();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-
-app.use('/', express.static(path.join(__dirname, '..')));
-app.use('/api/assemble', assemble);
+app.configure(feathers.rest())
+   .use(logger('dev'))
+   .use(bodyParser.json())
+   .use(bodyParser.urlencoded({ extended: true }))
+   .use(cookieParser())
+   .use('/', feathers.static(path.join(__dirname, '..')))
+   .use('/api/assemble', assemble)
+   .use('/api/template', forwardCookies, template)
+   .use('/api/templates', forwardCookies, templates);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

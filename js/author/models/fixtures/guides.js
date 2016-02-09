@@ -1,4 +1,4 @@
-import 'can/util/fixture/';
+import fixture from 'can/util/fixture/';
 import guidesList from './guides/guides-list.json';
 import thrcInterviewXML from './guides/thrc-interview.xml!text';
 import mobileInterviewXML from './guides/mobile-online-interview.xml!text';
@@ -69,7 +69,7 @@ const selectGuide = function(guideId) {
   return guide;
 };
 
-export default can.fixture('POST CAJA_WS.php', function(req, res) {
+export default fixture('POST CAJA_WS.php', function(req, res) {
   var cmd = req.data ? req.data.cmd : null;
 
   switch (cmd) {

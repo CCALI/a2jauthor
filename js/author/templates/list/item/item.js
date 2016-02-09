@@ -113,6 +113,7 @@ export let Item = Map.extend({
     setTimeout(() => {
       this.attr('deleting', false);
       template.attr('active', false);
+      template.save();
     }, delay);
 
     return false;
@@ -135,6 +136,7 @@ export let Item = Map.extend({
     setTimeout(() => {
       this.attr('restoring', false);
       template.attr('active', true);
+      template.save();
     }, delay);
 
     return false;

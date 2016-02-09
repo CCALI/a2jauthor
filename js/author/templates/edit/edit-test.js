@@ -21,31 +21,35 @@ describe('template-edit-page', function() {
       $('#test-area').empty();
     });
 
-    it('renders a2j-template when template has elements', function() {
-      let templatePromise = vm.attr('a2jTemplatePromise');
-
-      return templatePromise.then(function(template) {
+    it('renders a2j-template when template has elements', function(done) {
+      vm.bind('a2jTemplate', function(ev, template) {
         let totalChildren = template.attr('rootNode.children.length');
 
         assert.isTrue(totalChildren > 0, 'template has elements');
-        assert($('a2j-template').length, 'a2j-template should be rendered');
-        assert(!$('a2j-blank-template').length, 'it should not be rendered');
+
+        setTimeout(() => {
+          assert($('a2j-template').length, 'a2j-template should be rendered');
+          assert(!$('a2j-blank-template').length, 'it should not be rendered');
+
+          done();
+        }, 0);
       });
     });
 
-    it('renders a2j-blank-template when template has no elements', function() {
-      let vm = $('template-edit-page').viewModel();
-      let templatePromise = vm.attr('a2jTemplatePromise');
-
-      return templatePromise.then(function(template) {
+    it('renders a2j-blank-template when template has no elements', function(done) {
+      vm.bind('a2jTemplate', function(ev, template) {
         let children = template.attr('rootNode.children');
 
         // replace children with empty list.
         children.replace([]);
 
         assert.equal(children.attr('length'), 0, 'it should be empty');
-        assert($('a2j-blank-template').length, 'it should be rendered');
-        assert(!$('a2j-template').length, 'a2j-template should not be rendered');
+        setTimeout(() => {
+          assert($('a2j-blank-template').length, 'it should be rendered');
+          assert(!$('a2j-template').length, 'a2j-template should not be rendered');
+
+          done();
+        }, 0);
       });
     });
   });

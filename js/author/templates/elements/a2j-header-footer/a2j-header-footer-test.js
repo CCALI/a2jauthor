@@ -1,12 +1,16 @@
 import assert from 'assert';
+import sinon from 'sinon';
 import { HeaderFooterVM } from './a2j-header-footer';
 
 describe('<a2j-header-footer>', function() {
   describe('viewModel', function() {
-    let vm;
+    let vm, templateSaveSpy;
 
     beforeEach(function() {
-      vm = new HeaderFooterVM();
+      templateSaveSpy = sinon.spy();
+      vm = new HeaderFooterVM({
+        saveTemplate: templateSaveSpy
+      });
     });
 
     it('containsWords', () => {
@@ -37,6 +41,7 @@ describe('<a2j-header-footer>', function() {
 
       vm.setEditActive(false);
       assert(!vm.attr('editActive'), 'should set editActive to false');
+      assert(templateSaveSpy.calledOnce, 'should save template');
     });
   });
 });

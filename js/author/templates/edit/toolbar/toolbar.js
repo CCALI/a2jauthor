@@ -3,7 +3,6 @@ import Component from 'can/component/';
 import template from './toolbar.stache!';
 
 import 'can/map/define/';
-import 'bootstrap/js/modal';
 
 /**
  * @module {Module} author/templates/edit/toolbar/toolbar <template-edit-toolbar>
@@ -26,7 +25,7 @@ import 'bootstrap/js/modal';
  *
  * <template-edit-toolbar>'s viewModel.
  */
-let EditToolbarVM = Map.extend({
+export let EditToolbarVM = Map.extend({
   define: {
     /**
      * @property {A2JTemplate} editToolbar.ViewModel.prototype.define.template template
@@ -37,6 +36,10 @@ let EditToolbarVM = Map.extend({
     template: {
       value: null
     }
+  },
+
+  saveTemplate() {
+    this.attr('template').save();
   }
 });
 

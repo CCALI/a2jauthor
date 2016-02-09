@@ -113,3 +113,6 @@ js/author/docs/
 
 # mobile viewer app dependencies
 js/client/lib/
+
+# compiled server code
+lib/

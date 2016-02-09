@@ -29,7 +29,25 @@ $ cd js
 $ npm install
 ```
 
-## To run locally:
+
+## To build the server code:
+
+From the root folder (`CAJA/`) run
+```
+$ npm run build
+```
+This will also be done automatically when starting the server (see below).
+
+
+## To run server tests:
+
+From the root folder (`CAJA/`) run
+```
+$ npm test
+```
+
+
+## To run server locally:
 
 From the root folder (`CAJA/`) run
 
@@ -42,7 +60,61 @@ Then, if you want to load the author app go to
 [http://localhost:3000/js/viewer](http://localhost:3000/js/viewer) if you want
 to load the viewer app instead.
 
-## To build the Author and Viewer:
+### Development mode:
+
+By default, the server will run in production mode. This means that when accessing
+the templates API, the server will try to validate the current user using their
+PHP session information. To disable this, use the command:
+```
+$ npm run dev
+```
+
+This will start the server with NODE_ENV=development, which will default to the
+username "dev" and assume the following folder structure:
+```
+CAJA/
+userfiles/
+  dev/
+    guides/
+```
+
+### Server Configuration
+
+In production mode, the server uses a configuration file called `config.json`
+that is expected to be in the parent directory of the folder where the git repo
+is cloned. This file should have the following structure:
+```
+{
+  "SERVER_URL": "http://bitovi.a2jauthor.org/",
+  "GUIDES_DIR": "f:/www/caja.cali.org/caja/userfiles/",
+  "GUIDES_URL": "/caja/userfiles/",
+  "SQL_HOST": "localhost",
+  "SQL_USERNAME": "z",
+  "SQL_PASSWD": "z",
+  "SQL_DBNAME": "caja",
+  "SQL_PORT": 3356,
+  "DRUPAL_HOST": "localhost",
+  "DRUPAL_USERNAME": "z",
+  "DRUPAL_PASSWD": "z",
+  "DRUPAL_DBNAME": "D7commons",
+  "DRUPAL_PORT": 3356
+}
+```
+The SERVER_URL and GUIDES_DIR properties are used by the Node server, but
+this file will also be used by CONFIG.PHP, which also uses the database
+connection information.
+
+### Debugging the server:
+
+Prepend any of the `npm` commands above with `DEBUG=A2J:*`
+For example, to debug the server running locally:
+```
+$ DEBUG=A2J:* npm start
+```
+Then any `debug(...)` messages in the code will be displayed in the console.
+
+
+## To build the Author and Viewer client code:
 
 You need to install `grunt` first, follow the instructions in this [link](http://gruntjs.com/getting-started#installing-the-cli),
 once the `grunt` CLI is available, run the following commands:
@@ -56,20 +128,24 @@ If you want to view the app in production mode, just start the server (`npm star
 and go to [http://localhost:3000/js/author/index.production.html](http://localhost:3000/js/author/index.production.html)
 or [http://localhost:3000/js/viewer/index.production.html](http://localhost:3000/js/viewer/index.production.html)
 
+
 ### Keep in mind when setting a production environment:
 
-You need to make sure `author/index.production.html` and `viewer/index.production.html` are loaded instead of `author/index.html` and `viewer/index.html` because the latter will load the development files one by one even if you follow the instructions to build the app. 
+You need to make sure `author/index.production.html` and `viewer/index.production.html` are loaded instead of `author/index.html` and `viewer/index.html` because the latter will load the development files one by one even if you follow the instructions to build the app.
 
 The simplest way to accomplish this is to rename `author/index.html` to something like `author/index.dev.html` and then rename `author/index.production.html` to `author/index.html` (same thing should be done to the viewer index file).
 
-## To run tests:
+
+## To run client tests:
 
 ```
 $ npm test
 ```
 
 or, if your local server is running (you ran `npm start` before) you can run tests in your browser
-by loading [http://localhost:3000/js/author/test](http://localhost:3000/js/author/test)
+by loading [http://localhost:3000/js/author/test/](http://localhost:3000/js/author/test/) or
+[http://localhost:3000/js/viewer/test/](http://localhost:3000/js/viewer/test/)
+
 
 ## To generate the documentation:
 

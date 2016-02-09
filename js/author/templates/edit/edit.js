@@ -11,17 +11,23 @@ export let TemplateEditPageVM = Map.extend({
       get() {
         let promise;
         let templateId = this.attr('templateId');
+        let guideId = window.gGuideID;
 
         if (templateId === 'new') {
-          promise = Promise.resolve(new A2JTemplate());
+          promise = Promise.resolve(new A2JTemplate({
+            guideId: guideId
+          }));
         } else {
           promise = A2JTemplate.findOne({templateId});
         }
 
-        return promise.then(a2jTemplate => {
-          this.attr('a2jTemplate', a2jTemplate);
-          return a2jTemplate;
-        });
+        return promise;
+      }
+    },
+
+    a2jTemplate: {
+      get(last, set) {
+        return this.attr('a2jTemplatePromise').then(set);
       }
     }
   }

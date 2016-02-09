@@ -3,7 +3,12 @@
   "version": "0.0.1",
   "description": "Authoring and viewer App GUI.",
   "scripts": {
-    "start": "node ./bin/www"
+    "build": "babel src --out-dir lib",
+    "start": "npm run build && NODE_ENV=production node ./bin/www",
+    "dev": "npm run build && node ./bin/www",
+    "test": "npm run mocha",
+    "mocha": "mocha test/routes test/util --compilers js:babel-register",
+    "mocha:watch": "mocha test/routes test/util --compilers js:babel-register --watch"
   },
   "author": "",
   "license": "ISC",
@@ -28,6 +33,11 @@
       "donejs-cli"
     ]
   },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
   "dependencies": {
     "body-parser": "~1.13.2",
     "bootstrap": "3.3.5",
@@ -36,19 +46,30 @@
     "can-ssr": "^0.11.0-pre.2",
     "cookie-parser": "~1.3.5",
     "cuid": "^1.3.8",
-    "debug": "~2.2.0",
+    "del": "^2.2.0",
     "done-autorender": "^0.6.0-pre.0",
     "done-css": "^1.1.15",
-    "express": "~4.13.1",
+    "feathers": "^1.3.0",
     "he": "^0.5.0",
     "jade": "~1.11.0",
     "jquery": "~2.1.4",
     "lodash": "^4.0.0",
     "moment": "^2.10.3",
     "morgan": "~1.6.1",
+    "q": "^1.4.1",
+    "request": "^2.69.0",
     "serve-favicon": "~2.3.0",
     "steal": "^0.12.4",
     "typeahead.js": "git://github.com/twitter/typeahead.js.git#v0.11.1",
     "wkhtmltopdf": "^0.1.5"
+  },
+  "devDependencies": {
+    "assert": "^1.3.0",
+    "babel-cli": "^6.4.5",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-register": "^6.4.3",
+    "debug": "^2.2.0",
+    "mocha": "^2.3.4",
+    "sinon": "^1.17.2"
   }
 }

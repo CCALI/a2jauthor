@@ -1,12 +1,43 @@
 import $ from 'jquery';
 import assert from 'assert';
 import stache from 'can/view/stache/';
+import { TemplateEditPageVM } from './edit';
 
-import './edit';
 import 'steal-mocha';
 import '../elements/a2j-template/';
 
 describe('template-edit-page', function() {
+
+  describe('viewModel', function() {
+    let vm;
+
+    beforeEach(function() {
+      localStorage.clear();
+
+      vm = new TemplateEditPageVM({
+        templateId: 'new'
+      });
+    });
+
+    afterEach(function() {
+      localStorage.clear();
+    });
+
+    it('saves new templates automatically and sets new id', function(done) {
+      assert.equal(vm.attr('templateId'), 'new');
+
+      vm.bind('a2jTemplate', function() {
+        const templateId = vm.attr('a2jTemplate.templateId');
+
+        assert.equal(vm.attr('action'), 'edit');
+        assert.equal(vm.attr('templateId'), templateId, 'same as a2jTemplate');
+        assert(vm.attr('a2jTemplate.templateId') > 3000, 'fixture starts id sequence at 3000');
+
+        vm.unbind('a2jTemplate');
+        done();
+      });
+    });
+  });
 
   describe('Component', function() {
     let vm;

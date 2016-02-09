@@ -1,5 +1,5 @@
 var Q = require('q');
-var fs = require('fs');
+var fs = require('fs-extra');
 var _ = require('lodash');
 var del = require('del');
 
@@ -68,16 +68,22 @@ module.exports = {
   writeJSON: function({ path, data }) {
     var deferred = Q.defer();
 
-    fs.writeFile(path, JSON.stringify(data, null, '\t'), function(err) {
-      if (!err) {
+    fs.ensureFile(path, function(error) {
+      if (error) {
+        deferred.reject(error);
+      }
+
+      fs.writeFile(path, JSON.stringify(data, null, '\t'), function(err) {
+        if (err) {
+          deferred.reject(err);
+        }
+
         try {
           deferred.resolve(data);
         } catch(e) {
           deferred.reject(e);
         }
-      } else {
-        deferred.reject(err);
-      }
+      });
     });
 
     return deferred.promise;

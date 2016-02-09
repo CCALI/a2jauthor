@@ -1,6 +1,6 @@
 var assert = require('assert');
 var sinon = require('sinon');
-var fs = require('fs');
+var fs = require('fs-extra');
 var Q = require('q');
 
 var files = require('../../src/util/files');
@@ -53,31 +53,47 @@ describe('lib/util/files', function() {
   });
 
   describe('writeJSON', function() {
-    var writeFileStub;
+    var writeFileStub,
+        ensureFileStub;
 
     beforeEach(function() {
       writeFileStub = sinon.stub(fs, 'writeFile');
+      ensureFileStub = sinon.stub(fs, 'ensureFile');
     });
 
     afterEach(function() {
-      fs.writeFile.restore();
+      writeFileStub.restore();
+      ensureFileStub.restore();
+    });
+
+    it('should ensure file exists before writing', function(done) {
+      writeFileStub.callsArgWith(2, null);
+      ensureFileStub.callsArgWith(1, null);
+
+      files.writeJSON({ path: 'foo.json', data: templatesData })
+        .then(function(data) {
+          assert.equal(ensureFileStub.getCall(0).args[0], 'foo.json');
+          done();
+        });
     });
 
     it('should write', function(done) {
       writeFileStub.callsArgWith(2, null);
+      ensureFileStub.callsArgWith(1, null);
 
       files.writeJSON({ path: 'foo.json', data: templatesData })
         .then(function(data) {
           var jsonData = JSON.stringify(templatesData, null, '\t');
           assert.equal(writeFileStub.getCall(0).args[0], 'foo.json', 'to correct file');
           assert.deepEqual(writeFileStub.getCall(0).args[1], jsonData, 'with correct data');
-          assert.deepEqual(data, templatesData, 'and return the raw data');
+          assert.deepEqual(data, templatesData, 'and then return the raw data');
           done();
         });
     });
 
     it('should fail when file cannot be written', function(done) {
       writeFileStub.callsArgWith(2, "Some Error");
+      ensureFileStub.callsArgWith(1, null);
 
       files.writeJSON({ path: 'foo.json', data: templatesData })
         .catch(function(err) {

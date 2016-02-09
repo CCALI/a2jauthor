@@ -9,20 +9,20 @@ This the private repo for the browser-based versions of A2J Author and Viewer.
 
 ### wkhtmltopdf
 
-Before installing the server side depencencies, you need to install `wkhtmltopdf`
-on your system, `wkhtmltopdf` is a command line tool that renders HTML into PDF.  The
+Before installing the server side dependencies, you need to install `wkhtmltopdf`
+on your system first, `wkhtmltopdf` is a command line tool that renders HTML into PDF. The
 easiest way to do this is to [download](http://wkhtmltopdf.org/downloads.html#stable) a
 prebuilt version for your system
 
 Once `wkhtmltopdf` command line tool is available on your system, install the
-node dependencies from the from the root folder of the app by running the following command:
+node dependencies from the root folder of the app by running the following command:
 
 ```
 npm install
 ```
 
 Then you need to install the dependencies of the CanJS Author and Viewer apps
-which are located in  the `js` folder inside the root:
+which are located in `CAJA/js/`
 
 ```
 $ cd js

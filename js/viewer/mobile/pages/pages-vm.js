@@ -29,6 +29,8 @@ export default Map.extend({
   navigate(button) {
     let error = false;
     let fields = this.attr('currentPage.fields');
+    let repeatVar = button.attr('repeatVar');
+    let repeatVarSet = button.attr('repeatVarSet');
 
     this.attr('traceLogic').push({
       button: [
@@ -36,6 +38,10 @@ export default Map.extend({
         { format: 'ui', msg: button.attr('label') }
       ]
     });
+
+    if (repeatVar && repeatVarSet) {
+      this.setRepeatVariable(repeatVar, repeatVarSet);
+    }
 
     can.each(fields, function(field) {
       let errors = field.attr('_answer').errors();
@@ -119,17 +125,6 @@ export default Map.extend({
       this.attr('mState.step', page.attr('step.number'));
 
       let buttons = page.attr('buttons');
-
-      if (buttons && buttons.length) {
-        buttons.each((button) => {
-          let repeatVar = button.attr('repeatVar');
-
-          if (repeatVar) {
-            this.setRepeatVariable(repeatVar, button.repeatVarSet);
-            return false;
-          }
-        });
-      }
 
       this.setFieldAnswers(fields);
 

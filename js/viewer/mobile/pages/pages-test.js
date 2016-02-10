@@ -56,29 +56,74 @@ describe('<a2j-pages>', () => {
       assert.deepEqual(vm.attr('traceLogic').attr(), []);
     });
 
-    it('navigate', () => {
-      let button = new can.Map({
-        label: 'Go!',
-        next: 'Next'
+    describe('navigate', () => {
+      let setRepeatVariableStub;
+
+      beforeEach(() => {
+        setRepeatVariableStub = sinon.stub(vm, 'setRepeatVariable');
       });
 
-      vm.navigate(button);
+      afterEach(() => {
+        setRepeatVariableStub.restore();
+      });
 
-      assert.deepEqual(vm.attr('traceLogic').attr(), [{
-        'button': [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go!' } ]
-      }], 'should not run codeAfter if it is empty');
+      it('without repeatVar logic', () => {
+        let button = new can.Map({
+          label: 'Go!',
+          next: 'Next'
+        });
 
-      vm.attr('currentPage.codeAfter', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>');
-      button.attr('label', 'Go Again!')
-      vm.navigate(button);
+        vm.navigate(button);
 
-      assert.deepEqual(vm.attr('traceLogic').attr(), [{
-        'button': [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go!' } ]
-      }, {
-        'button': [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go Again!' } ]
-      }, {
-        'codeAfter': { format: 'info', msg: 'Logic After Question' }
-      }], 'should run codeAfter');
+        assert.deepEqual(vm.attr('traceLogic').attr(), [{
+          'button': [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go!' } ]
+        }], 'should not run codeAfter if it is empty');
+
+        assert.equal(setRepeatVariableStub.callCount, 0, 'should not call setRepeatVariable');
+
+        vm.attr('currentPage.codeAfter', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>');
+        button.attr('label', 'Go Again!')
+        vm.navigate(button);
+
+        assert.deepEqual(vm.attr('traceLogic').attr(), [{
+          'button': [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go!' } ]
+        }, {
+          'button': [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go Again!' } ]
+        }, {
+          'codeAfter': { format: 'info', msg: 'Logic After Question' }
+        }], 'should run codeAfter');
+      });
+
+      it('with repeatVar logic', () => {
+        let button = new can.Map({
+          label: 'Go!',
+          next: 'Next',
+          repeatVar: 'Repeat',
+          repeatVarSet: '=1'
+        });
+
+        vm.navigate(button);
+
+        assert.deepEqual(vm.attr('traceLogic').attr(), [{
+          'button': [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go!' } ]
+        }], 'should not run codeAfter if it is empty');
+
+        assert.equal(setRepeatVariableStub.callCount, 1, 'should call setRepeatVariable');
+        assert.equal(setRepeatVariableStub.firstCall.args[0], 'Repeat', 'should call setRepeatVariable with correct repeatVar');
+        assert.equal(setRepeatVariableStub.firstCall.args[1], '=1', 'should call setRepeatVariable with correct repeatVarSet');
+
+        vm.attr('currentPage.codeAfter', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>');
+        button.attr('label', 'Go Again!')
+        vm.navigate(button);
+
+        assert.deepEqual(vm.attr('traceLogic').attr(), [{
+          'button': [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go!' } ]
+        }, {
+          'button': [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go Again!' } ]
+        }, {
+          'codeAfter': { format: 'info', msg: 'Logic After Question' }
+        }], 'should run codeAfter');
+      });
     });
 
     it('setRepeatVariable', () => {

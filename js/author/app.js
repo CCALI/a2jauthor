@@ -8,10 +8,6 @@ import bindCustomEvents from 'author/utils/bind-custom-events';
 import 'can/view/';
 import 'can/route/';
 
-// needed for https://github.com/CCALI/CAJA/issues/987; remove when api is
-// available.
-import 'can/util/fixture/';
-
 let appState = new AppState();
 
 can.route.map(appState);

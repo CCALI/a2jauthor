@@ -767,6 +767,14 @@ var form={
       form.tableRowAdjust(name, $('option:selected', this).val());
     };
 
+    // wait for the next turn on the event loop to adjust the number of rows
+    // based on the default option of the row counter select box, this makes
+    // sure that if the min is greater than zero, the table will have that min
+    // number of rows on screen. See https://github.com/CCALI/CAJA/issues/1100
+    setTimeout(function() {
+      form.tableRowAdjust(name, $select.find('option:nth(0)').val());
+    });
+
     $select.change(onChange).val(value);
     return $('<div/>').append($label.add($select));
   },

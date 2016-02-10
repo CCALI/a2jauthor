@@ -84,14 +84,19 @@ describe('lib/routes/template', function() {
     var readJSONStub,
         mergeJSONStub,
         writeJSONStub,
+        dateNowStub,
         mockReadDeferred,
         mockMergeDeferred,
-        mockWriteDeferred;
+        mockWriteDeferred,
+        mockCreatedTime,
+        mockCurrentTime;
 
     beforeEach(function() {
       mockReadDeferred = Q.defer();
       mockMergeDeferred = Q.defer();
       mockWriteDeferred = Q.defer();
+      mockCreatedTime = 1455044906872;
+      mockCurrentTime = 1455555555555;
 
       readJSONStub = sinon.stub(files, 'readJSON');
       mergeJSONStub = sinon.stub(files, 'mergeJSON');
@@ -100,34 +105,46 @@ describe('lib/routes/template', function() {
       readJSONStub.returns(mockReadDeferred.promise);
       mergeJSONStub.returns(mockMergeDeferred.promise);
       writeJSONStub.returns(mockWriteDeferred.promise);
+      dateNowStub = sinon.stub(Date, 'now');
 
       mockReadDeferred.resolve(templatesData);
       mockMergeDeferred.resolve(JSON.stringify(templatesData));
       mockWriteDeferred.resolve(JSON.stringify(template2112Data));
+      dateNowStub.returns(mockCurrentTime);
     });
 
     afterEach(function() {
       readJSONStub.restore();
       mergeJSONStub.restore();
       writeJSONStub.restore();
+      dateNowStub.restore();
     });
 
     it('should write updated data to file', function(done) {
-      template.update(2112, _.omit(template2112Data, 'templateId'), params, function(err, data) {
+      let inputData = _.assign(_.omit(template2112Data, 'templateId'), {
+        createdAt: mockCreatedTime,
+        updatedAt: mockCreatedTime
+      });
+
+      let newData = _.assign({}, template2112Data, {
+        createdAt: mockCreatedTime,
+        updatedAt: mockCurrentTime
+      });
+
+      template.update(2112, inputData, params, function(err, data) {
         let fileName = writeJSONStub.getCall(0).args[0].path;
         fileName = fileName.substring(fileName.lastIndexOf('/') + 1);
 
-        assert.equal(fileName, 'template2112.json');
-        assert.deepEqual(writeJSONStub.getCall(0).args[0].data, template2112Data);
+        assert.equal(fileName, 'template2112.json', 'should write template file');
+        assert.deepEqual(writeJSONStub.getCall(0).args[0].data, newData,
+          'should write template file with template data');
 
         let mergeFileName = mergeJSONStub.getCall(0).args[0].path;
         mergeFileName = mergeFileName.substring(mergeFileName.lastIndexOf('/') + 1);
 
-        assert.equal(mergeFileName, 'templates.json',
-          'should write summary file');
+        assert.equal(mergeFileName, 'templates.json', 'should write summary file');
         assert.deepEqual(mergeJSONStub.getCall(0).args[0].data,
-          _.pick(template2112Data, template.summaryFields),
-          'with correct summary data');
+          _.pick(inputData, template.summaryFields), 'with correct summary data');
         assert.deepEqual(mergeJSONStub.getCall(0).args[0].replaceKey, 'templateId', 'with correct unique id')
 
         assert.deepEqual(data, JSON.stringify(template2112Data),
@@ -142,38 +159,50 @@ describe('lib/routes/template', function() {
     var getTemplatesJSONStub,
         writeJSONStub,
         mergeJSONStub,
+        dateNowStub,
         getTemplatesJSONDeferred,
         mockWriteDeferred,
-        mockMergeDeferred;
+        mockMergeDeferred,
+        mockCurrentTime;
 
     beforeEach(function() {
       getTemplatesJSONDeferred = Q.defer();
       mockWriteDeferred = Q.defer();
       mockMergeDeferred = Q.defer();
+      mockCurrentTime = 1455044906872;
 
       getTemplatesJSONStub = sinon.stub(templates, 'getTemplatesJSON');
       writeJSONStub = sinon.stub(files, 'writeJSON');
       mergeJSONStub = sinon.stub(files, 'mergeJSON');
+      dateNowStub = sinon.stub(Date, 'now');
 
       getTemplatesJSONStub.returns(getTemplatesJSONDeferred.promise);
       writeJSONStub.returns(mockWriteDeferred.promise);
       mergeJSONStub.returns(mockMergeDeferred.promise);
+      dateNowStub.returns(mockCurrentTime);
     });
 
     afterEach(function() {
       getTemplatesJSONStub.restore();
       writeJSONStub.restore();
       mergeJSONStub.restore();
+      dateNowStub.restore();
     });
 
     it('should write data to next template file', function(done) {
-      let newData = _.assign({}, template2112Data, { templateId: 2115 });
+      let inputData = _.omit(template2112Data, [ 'templateId' ]);
+
+      let newData = _.assign({}, template2112Data, {
+        templateId: 2115,
+        createdAt: mockCurrentTime,
+        updatedAt: mockCurrentTime
+      });
 
       getTemplatesJSONDeferred.resolve(templatesData);
       mockWriteDeferred.resolve(JSON.stringify(newData));
       mockMergeDeferred.resolve(JSON.stringify(templatesData));
 
-      template.create(_.omit(template2112Data, [ 'templateId' ]), params, function(err, data) {
+      template.create(inputData, params, function(err, data) {
         var writeFileName = writeJSONStub.getCall(0).args[0].path;
         writeFileName = writeFileName.substring(writeFileName.lastIndexOf('/') + 1);
 
@@ -199,14 +228,19 @@ describe('lib/routes/template', function() {
     });
 
     it('should write data to template1 when no templates exist', function(done) {
-      let newData = _.assign({}, template2112Data, { templateId: 2115 });
+      let inputData = _.omit(template2112Data, [ 'templateId' ]);
+
+      let newData = _.assign({}, template2112Data, {
+        templateId: 1,
+        createdAt: mockCurrentTime,
+        updatedAt: mockCurrentTime
+      });
 
       getTemplatesJSONDeferred.resolve([]);
       mockWriteDeferred.resolve(JSON.stringify(newData));
       mockMergeDeferred.resolve(JSON.stringify(templatesData));
 
-      template.create(_.omit(template2112Data, [ 'templateId' ]), params, function() {
-        var newData = _.assign({}, template2112Data, { templateId: 1 });
+      template.create(inputData, params, function() {
         var writeFileName = writeJSONStub.getCall(0).args[0].path;
         writeFileName = writeFileName.substring(writeFileName.lastIndexOf('/') + 1);
 
@@ -220,6 +254,7 @@ describe('lib/routes/template', function() {
 
         assert.equal(mergeFileName, 'templates.json',
           'should write summary file');
+
         assert.deepEqual(mergeJSONStub.getCall(0).args[0].data,
           _.pick(newData, template.summaryFields),
           'with correct summary data');

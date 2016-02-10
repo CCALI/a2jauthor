@@ -763,32 +763,34 @@ var form={
       $('<option />', {text: option}).appendTo($select);
     }
 
-    $select
-      .change(function() {
-        form.tableRowAdjust(name, $('option:selected', this).val());
-      })
-      .val(value);
+    var onChange = function() {
+      form.tableRowAdjust(name, $('option:selected', this).val());
+    };
 
+    $select.change(onChange).val(value);
     return $('<div/>').append($label.add($select));
-  }
+  },
 
-	,tableRowAdjust:function(name,val)
-	{	// Adjust number of rows. set visible for rows > val. if val > max rows, clone the last row.
-		var $tbl = $('table[list="'+name+'"]');
-		var settings=$tbl.data('settings');
-		var $tbody = $('tbody',$tbl);//'table[list="'+name+'"] tbody');
-		var rows = $('tr',$tbody).length;
-		var r;
-		for (r=0;r<rows;r++){
-			$('tr:nth('+r+')',$tbody).showit(r<val);
-		}
-		for (r=rows;r<val;r++){
-			form.listManagerAddRow($tbl,$.extend({},settings.blank));
-		}
-		form.listManagerSave($tbl);
-	}
+  // Adjust number of rows. set visible for rows > val. if val > max rows, clone the last row.
+  tableRowAdjust: function(name, val) {
+    var $tbl = $('table[list="' + name + '"]');
+    var settings = $tbl.data('settings');
+    var $tbody = $tbl.find('tbody'); //'table[list="'+name+'"] tbody');
+    var rows = $tbody.find('tr').length;
+    var r;
 
-	,listManagerSave:function($tbl)
+    for (r = 0; r < rows; r++) {
+      $tbody.find('tr:nth(' + r + ')').showit(r < val);
+    }
+
+    for (r = rows; r < val; r++) {
+      form.listManagerAddRow($tbl, $.extend({}, settings.blank));
+    }
+
+    form.listManagerSave($tbl);
+  },
+
+  listManagerSave:function($tbl)
 	{	// save revised order or added/removed items
 		var settings=$tbl.data('settings');
 		var list=[];
@@ -824,30 +826,40 @@ var form={
     $tbl.append($row);
   },
 
-  listManager:function(settings)
-	{	//   data.name:'Fields' data.,picker:'Number of fields:',data.min:0,data.max:CONST.MAXFIELDS,data.list:page.fields,data.blank:blankField,data.save=function to save,data.create=create form elts for record
-		var div = $('<div/>');
-		var $tbl=$('<table/>').addClass('list table table-striped').data('settings',settings).attr('list',settings.name);
-		div.append(form.tableRowCounter(settings.name,settings.picker,settings.min,settings.max,settings.list.length));
-		var i;
-		for (i=0;i<settings.list.length;i++){
-			form.listManagerAddRow($tbl,settings.list[i]);
-		}
-		$('tbody',$tbl).sortable({
-			handle:"td .sorthandle",
-			update:function(event,ui){
-				form.listManagerSave((ui.item.closest('table')));
-			}});
-		div.append($tbl);
-		/*(		div.append($('<button id="newrow"/>').button({label:'Add',icons:{primary:"ui-icon-plusthick"}}).click(function(){
-			addRow($.extend({},settings.blank));
-			save();
-		}));
+  // data.name:'Fields' data.,picker:'Number of fields:',data.min:0,data.max:CONST.MAXFIELDS,data.list:page.fields,data.blank:blankField,data.save=function to save,data.create=create form elts for record
+  listManager: function(settings) {
+    var $div = $('<div/>');
 
-		*/
-		return div;
-	}
+    var $tbl = $('<table/>')
+      .addClass('list table table-striped')
+      .data('settings', settings)
+      .attr('list', settings.name);
 
+    $div.append(form.tableRowCounter(
+      settings.name,
+      settings.picker,
+      settings.min,
+      settings.max,
+      settings.list.length
+    ));
+
+    var list = settings.list || [];
+
+    list.forEach(function(item) {
+      form.listManagerAddRow($tbl, item);
+    });
+
+    $tbl.find('tbody').sortable({
+      handle: 'td .sorthandle',
+      update: function(event, ui) {
+        form.listManagerSave((ui.item.closest('table')));
+      }
+    });
+
+    $div.append($tbl);
+
+    return $div;
+  }
 };
 
 TGuide.prototype.noviceTab = function(tab,clear)

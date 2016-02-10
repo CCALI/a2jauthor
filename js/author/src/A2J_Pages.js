@@ -638,45 +638,101 @@ function guidePageEditForm(page, div, pagename)//novicePage
 			ff.find('[name="url"]').showit(showURL);
 		};
 
-		if (page.type === "A2J" || page.buttons.length > 0) {
-			var blankButton=new TButton();
+    if (page.type === "A2J" || page.buttons.length > 0) {
+      var blankButton = new TButton();
 
-			fs=form.fieldset('Buttons');
-			fs.append(form.listManager({name:'Buttons',picker:'Number of buttons',min:1,max:CONST.MAXBUTTONS,list:page.buttons,blank:blankButton
-				,save:function(newlist){
-					page.buttons=newlist; }
-				,create:function(ff,b){
-					ff.append(form.text({value: b.label,label:'Label:',placeholder:'button label',
-						change:function(val,b){b.label=val;}}));
-					ff.append(form.varPicker({value: b.name, label:'Variable Name:',placeholder:'variable',
-						change:function(val,b){b.name=val;}}));
-					ff.append(form.text({value: b.value,label:'Default value:',placeholder:'Default value',
-						change:function(val,b){b.value=val;}}));
+      fs = form.fieldset('Buttons');
 
-					ff.append(form.pickpage({value: b.next,label:'Destination:',
-						change:function(val,b,ff){
-							b.next=val;
-							updateButtonLayout(ff,b);
-						}}));
-					ff.append(form.text({name:'url', value: b.url, label:'URL:',placeholder:'',
-						change:function(val,b,ff){
-							b.url=val;
-						}}));
-					ff.append(form.pickList({label:'Repeat Options:',value: b.repeatVarSet,
-									change:function(val,b,form){
-										b.repeatVarSet = val;
-									}},
-						['','Normal',
-						 CONST.RepeatVarSetOne,'Set Counting Variable to 1',
-						 CONST.RepeatVarSetPlusOne,'Increment Counting Variable'] ));
-					ff.append(form.varPicker(
-						{label:'Counting Variable:',placeholder:'',	value:b.repeatVar,
-						change:function(val,b){b.repeatVar=val;}} ));
-					updateButtonLayout(ff,b);
-					return ff;
-				}}));
+      fs.append(form.listManager({
+        name: 'Buttons',
+        picker: 'Number of buttons',
+        min: 1,
+        max: CONST.MAXBUTTONS,
+        list: page.buttons,
+        blank: blankButton,
+
+        save: function(newlist) {
+          page.buttons = newlist;
+        },
+
+        create: function(ff, b) {
+          ff.append(form.text({
+            value: b.label,
+            label: 'Label:',
+            placeholder: 'button label',
+            change: function(val, b) {
+              b.label = val;
+            }
+          }));
+
+          ff.append(form.varPicker({
+            value: b.name,
+            label: 'Variable Name:',
+            placeholder: 'variable',
+            change: function(val, b) {
+              b.name = val;
+            }
+          }));
+
+          ff.append(form.text({
+            value: b.value,
+            label: 'Default value:',
+            placeholder: 'Default value',
+            change: function(val, b) {
+              b.value = val;
+            }
+          }));
+
+          ff.append(form.pickpage({
+            value: b.next,
+            label: 'Destination:',
+            change: function(val, b, ff) {
+              b.next = val;
+              updateButtonLayout(ff, b);
+            }
+          }));
+
+          ff.append(form.text({
+            name: 'url',
+            value: b.url,
+            label: 'URL:',
+            placeholder: '',
+            change: function(val, b) {
+              b.url = val;
+            }
+          }));
+
+          var repeatOptions = [
+            '', 'Normal',
+            CONST.RepeatVarSetOne, 'Set Counting Variable to 1',
+            CONST.RepeatVarSetPlusOne, 'Increment Counting Variable'
+          ];
+
+          ff.append(form.pickList({
+            label: 'Repeat Options:',
+            value: b.repeatVarSet,
+            change: function(val, b) {
+              b.repeatVarSet = val;
+            }
+          }, repeatOptions));
+
+          ff.append(form.varPicker({
+            label: 'Counting Variable:',
+            placeholder: '',
+            value: b.repeatVar,
+            change: function(val, b) {
+              b.repeatVar = val;
+            }
+          }));
+
+          updateButtonLayout(ff, b);
+          return ff;
+        }
+      }));
+
 			t.append(fs);
 		}
+
 		fs=form.fieldset('Advanced Logic');
 		fs.append(form.codearea({label:'Before:',	value:page.codeBefore,
 			change:function(val){page.codeBefore=val; /* TODO Compile for syntax errors */}} ));

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GUIDE>
+  <INFO>
+    <AUTHORS>
+      <AUTHOR>
+        <NAME>Jessica Frank</NAME>
+        <TITLE>Program Coordinator</TITLE>
+        <ORGANIZATION>A2J Author</ORGANIZATION>
+        <EMAIL>jbolack@kentlaw.iit.edu</EMAIL>
+      </AUTHOR>
+    </AUTHORS>
+    <TOOL>A2J</TOOL>
+    <TOOLVERSION>2012-04-19</TOOLVERSION>
+    <AVATAR>avatar1</AVATAR>
+    <GUIDEGENDER>Female</GUIDEGENDER>
+    <COMPLETIONTIME>10 minutes</COMPLETIONTIME>
+    <DESCRIPTION>
+      <P>This A2J Guided Interview was created to demonstrate the new features of A2J Author.</P>
+    </DESCRIPTION>
+    <EMAILCONTACT>jbolack@kentlaw.iit.edu</EMAILCONTACT>
+    <JURISDICTION>TIG-atopia</JURISDICTION>
+    <LANGUAGE>en</LANGUAGE>
+    <NOTES>1/11/2016 interview created.</NOTES>
+    <SENDFEEDBACK>true</SENDFEEDBACK>
+    <SUBJECTAREA>Jurisdiction of my interview</SUBJECTAREA>
+    <TITLE>Sample A2J Guided Interview for the TIG conference 2016</TITLE>
+    <VERSION>1/11/2016</VERSION>
+    <VIEWER>A2J</VIEWER>
+    <MOBILEFRIENDLY>true</MOBILEFRIENDLY>
+    <FIRSTPAGE>1-Introduction</FIRSTPAGE>
+  </INFO>
+  <PAGES>
+    <PAGE NAME="1-Introduction" TYPE="A2J" MAPX="630" MAPY="790" STEP="0">
+      <TEXT>
+        <P>Welcome to our sample A2J Guided Interview. This was created to show you how cool the new version of A2J Author is now. Feel free to stop Jessica at any time to ask questions or to explore</P>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2-Name">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="2-Name" TYPE="A2J" MAPX="630" MAPY="940" STEP="0">
+      <TEXT>
+        <P>
+          <FONT>Enter your name.</FONT>
+        </P>
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="3-Gender">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" ORDER="ASC" REQUIRED="true">
+          <LABEL>First:</LABEL>
+          <NAME>Client first name TE</NAME>
+          <INVALIDPROMPT>You must type a response in the highlighted space before you can continue.</INVALIDPROMPT>
+        </FIELD>
+        <FIELD TYPE="text" ORDER="ASC" REQUIRED="false">
+          <LABEL>Middle:</LABEL>
+          <NAME>Client middle name TE</NAME>
+          <INVALIDPROMPT>You must type a response in the highlighted space before you can continue.</INVALIDPROMPT>
+        </FIELD>
+        <FIELD TYPE="text" ORDER="ASC" REQUIRED="true">
+          <LABEL>Last:</LABEL>
+          <NAME>Client last name TE</NAME>
+          <INVALIDPROMPT>You must type a response in the highlighted space before you can continue.</INVALIDPROMPT>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Gender" TYPE="A2J" MAPX="630" MAPY="1090" STEP="0">
+      <TEXT>Choose your gender.</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="1- Addresses and phone numbers">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="gender" REQUIRED="true">
+          <LABEL>Gender:</LABEL>
+          <NAME>User Gender</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="1-Do you have any assets over $100?" TYPE="A2J" MAPX="1070" MAPY="800" STEP="2">
+      <TEXT>
+        Do you have any
+        <A href="POPUP://Asset definition">assets</A>
+        over $100?
+        <BR />
+      </TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2-What is the name and value of this asset?" REPEATVAR="AssetCount" REPEATVARSET="=1">
+          <LABEL>Yes</LABEL>
+          <NAME>Have assets TF</NAME>
+          <VALUE>true</VALUE>
+        </BUTTON>
+        <BUTTON NEXT="1-The end">
+          <LABEL>No</LABEL>
+          <NAME>Have assets TF</NAME>
+          <VALUE>false</VALUE>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="Asset definition" TYPE="Popup" MAPX="null" MAPY="0" STEP="0">
+      <TEXT>An asset is any property owned by a person or company.</TEXT>
+    </PAGE>
+    <PAGE NAME="2-What is the name and value of this asset?" TYPE="A2J" MAPX="1080" MAPY="930" STEP="2" REPEATVAR="AssetCount">
+      <TEXT>Please tell me what the %%ORDINAL([AssetCount])%% asset is and how much you think it is worth.</TEXT>
+      <LEARN>How do I decide how much it is worth?</LEARN>
+      <HELP>You can put a value on an asset based on the price you paid for it, how much someone is willing to pay you for it, or you can hire an expert to give you their estimate.</HELP>
+      <BUTTONS>
+        <BUTTON NEXT="3-Any more to add?">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Name of item</LABEL>
+          <NAME>Asset name TE</NAME>
+        </FIELD>
+        <FIELD TYPE="numberdollar" REQUIRED="false" CALCULATOR="true">
+          <LABEL>Value</LABEL>
+          <NAME>Asset value NU</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="3-Any more to add?" TYPE="A2J" MAPX="1080" MAPY="1100" STEP="2" REPEATVAR="AssetCount">
+      <TEXT>Do you have any more assets over $100 to add?</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2-What is the name and value of this asset?" REPEATVAR="AssetCount" REPEATVARSET="+=1">
+          <LABEL>Yes</LABEL>
+        </BUTTON>
+        <BUTTON NEXT="1-The end">
+          <LABEL>No</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="1-The end" TYPE="A2J" MAPX="1300" MAPY="790" STEP="3">
+      <TEXT>You've finished this A2J Guided Interview. Now you can test assemble your document using the answers created in this demonstration.</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="SUCCESS">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+    </PAGE>
+    <PAGE NAME="1- Addresses and phone numbers" TYPE="A2J" MAPX="860" MAPY="930" STEP="1">
+      <TEXT>Please enter your address and phone number.</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="2-Are you married?">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>Street</LABEL>
+          <NAME>Address street TE</NAME>
+          <SAMPLE>1600 Pennsylvania Avenue</SAMPLE>
+        </FIELD>
+        <FIELD TYPE="text" REQUIRED="false">
+          <LABEL>City</LABEL>
+          <NAME>Address city TE</NAME>
+          <SAMPLE>Washington, DC</SAMPLE>
+        </FIELD>
+        <FIELD TYPE="numberphone" REQUIRED="false">
+          <LABEL>Phone number</LABEL>
+          <NAME>Phone number TE</NAME>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+    <PAGE NAME="2-Are you married?" TYPE="A2J" MAPX="470" MAPY="470" STEP="1">
+      <TEXT>What is your marital status?</TEXT>
+      <BUTTONS>
+        <BUTTON NEXT="1-Do you have any assets over $100?">
+          <LABEL>Continue</LABEL>
+        </BUTTON>
+      </BUTTONS>
+      <FIELDS>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Single</LABEL>
+          <NAME>Marital status MC</NAME>
+          <VALUE>single</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Married</LABEL>
+          <NAME>Marital status MC</NAME>
+          <VALUE>married</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Divorced</LABEL>
+          <NAME>Marital status MC</NAME>
+          <VALUE>divorced</VALUE>
+        </FIELD>
+        <FIELD TYPE="radio" REQUIRED="false">
+          <LABEL>Widowed</LABEL>
+          <NAME>Marital status MC</NAME>
+          <VALUE>widowed</VALUE>
+        </FIELD>
+      </FIELDS>
+    </PAGE>
+  </PAGES>
+  <STEPS>
+    <STEP NUMBER="0">
+      <TEXT>Welcome</TEXT>
+    </STEP>
+    <STEP NUMBER="1">
+      <TEXT>Check this out!</TEXT>
+    </STEP>
+    <STEP NUMBER="2">
+      <TEXT>More cool stuff</TEXT>
+    </STEP>
+    <STEP NUMBER="3">
+      <TEXT>The end!</TEXT>
+    </STEP>
+  </STEPS>
+  <VARIABLES>
+    <VARIABLE NAME="User Gender" TYPE="Text" COMMENT="User's gender will be used to display appopriate avatar." />
+    <VARIABLE NAME="User Avatar" TYPE="Text" />
+    <VARIABLE NAME="Client first name TE" TYPE="Text" />
+    <VARIABLE NAME="Client middle name TE" TYPE="Text" />
+    <VARIABLE NAME="Client last name TE" TYPE="Text" />
+    <VARIABLE NAME="A2J Version" TYPE="Text" COMMENT="A2J Author Version" />
+    <VARIABLE NAME="A2J Interview ID" TYPE="Text" COMMENT="Guide ID" />
+    <VARIABLE NAME="A2J Bookmark" TYPE="Text" COMMENT="Current Page" />
+    <VARIABLE NAME="A2J History" TYPE="Text" COMMENT="Progress History List (XML)" />
+    <VARIABLE NAME="A2J Navigation TF" TYPE="TF" COMMENT="Allow navigation?" />
+    <VARIABLE NAME="A2J Interview Incomplete TF" TYPE="TF" COMMENT="Reached Successful Exit?" />
+    <VARIABLE NAME="A2J Step 0" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 1" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 2" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 3" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 4" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 5" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 6" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 7" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 8" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 9" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 10" TYPE="Text" />
+    <VARIABLE NAME="A2J Step 11" TYPE="Text" />
+    <VARIABLE NAME="ChildCount" TYPE="Number" />
+    <VARIABLE NAME="Phone number TE" TYPE="Text" />
+    <VARIABLE NAME="Address street TE" TYPE="Text" />
+    <VARIABLE NAME="Address city TE" TYPE="Text" />
+    <VARIABLE NAME="Address state MC" TYPE="MC" />
+    <VARIABLE NAME="Have assets TF" TYPE="TF" />
+    <VARIABLE NAME="AssetCount" TYPE="Number" />
+    <VARIABLE NAME="Asset name TE" TYPE="Text" REPEATING="true" />
+    <VARIABLE NAME="Asset value NU" TYPE="Number" REPEATING="true" />
+    <VARIABLE NAME="Marital status MC" TYPE="MC" />
+    <VARIABLE NAME="Address" TYPE="Unknown" />
+    <VARIABLE NAME="Address phone TE" TYPE="Text" />
+  </VARIABLES>
+</GUIDE>

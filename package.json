@@ -4,7 +4,7 @@
   "description": "Authoring and viewer App GUI.",
   "scripts": {
     "build": "babel src --out-dir lib",
-    "start": "npm run build && NODE_ENV=production node ./bin/www",
+    "start": "npm run build && node ./bin/www",
     "dev": "npm run build && node ./bin/www",
     "test": "npm run mocha",
     "mocha": "mocha test/routes test/util --compilers js:babel-register",

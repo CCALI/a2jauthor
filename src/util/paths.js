@@ -14,14 +14,6 @@ var debug = require('debug')('A2J:paths')
  */
 module.exports = {
   /**
-   * @property {Function} paths.guidesDir
-   * @parent paths
-   *
-   * Path of the userfiles directory.
-   */
-   guidesDir: config.get('GUIDES_DIR'),
-
-  /**
    * @property {Function} paths.getTemplatesPath
    * @parent paths
    *
@@ -31,7 +23,9 @@ module.exports = {
   getTemplatesPath({ username }) {
     var deferred = Q.defer();
 
-    let file = path.join(this.guidesDir,username, 'templates.json');
+    let guidesDir = config.get('GUIDES_DIR');
+    let file = path.join(guidesDir, username, 'templates.json');
+
     deferred.resolve(file);
 
     return deferred.promise;
@@ -49,7 +43,8 @@ module.exports = {
   getTemplatePath({ username, guideId, templateId }) {
     var deferred = Q.defer();
 
-    let file = path.join(this.guidesDir,
+    let guidesDir = config.get('GUIDES_DIR');
+    let file = path.join(guidesDir,
                 username,
                 'guides',
                 '' + guideId,

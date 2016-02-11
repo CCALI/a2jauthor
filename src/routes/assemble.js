@@ -6,6 +6,8 @@ var feathers = require('feathers');
 var wkhtmltopdf = require('wkhtmltopdf');
 var _kebabCase = require('lodash/kebabCase');
 
+var debug = require('debug')('A2J:routes/assemble');
+
 var router = feathers.Router();
 
 var render = ssr({

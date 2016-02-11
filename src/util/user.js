@@ -1,6 +1,7 @@
 var Q = require('q');
 var request = require('request');
 var config = require('./config');
+var url = require('url');
 
 var debug = require('debug')('A2J:util/user');
 
@@ -14,13 +15,21 @@ var debug = require('debug')('A2J:util/user');
  */
 module.exports = {
   /**
-   * @property {Function} user.nodeEnv
+   * @property {Function} user.handleError
    * @parent user
    *
-   * Process' NODE_ENV environment variable made available
-   * to be overwritten for testing.
+   * Error Handler.
    */
-  nodeEnv: process.env.NODE_ENV,
+   handleError({ msg, serverURL, deferred }) {
+    let hostname = url.parse(serverURL).hostname;
+
+    if (hostname === 'localhost') {
+      debug('getCurrentUser hardcoding to dev');
+      deferred.resolve('dev');
+    }
+
+    deferred.reject('Cannot authenticate current user');
+  },
 
   /**
    * @property {Function} user.getCurrentUser
@@ -30,22 +39,11 @@ module.exports = {
    */
   getCurrentUser({ cookieHeader }) {
     let deferred = Q.defer();
-    let serverUrl = config.get('SERVER_URL');
+    let serverURL = config.get('SERVER_URL');
 
     debug('getCurrentUser request', cookieHeader);
 
-    let handleError = (msg) => {
-      debug(msg);
-
-      if (this.nodeEnv !== 'production') {
-        debug('getCurrentUser hardcoding to dev');
-        deferred.resolve('dev');
-      }
-
-      deferred.reject('Cannot authenticate current user');
-    };
-
-    request.post(serverUrl + '/js/author/CAJA_WS.php', {
+    request.post(serverURL + '/js/author/CAJA_WS.php', {
       headers: {
         Cookie: cookieHeader
       },
@@ -57,11 +55,19 @@ module.exports = {
           debug(`currentuser response ${body.username}`);
           deferred.resolve(body.username);
         } catch(err) {
-          handleError(`getCurrentUser error ${err}`);
+          this.handleError({
+            msg: `getCurrentUser error ${err}`,
+            serverURL,
+            deferred
+          });
         }
       } else {
         let statusCode = response && response.statusCode;
-        handleError(`getCurrentUser error (${statusCode}): ${error} `);
+        this.handleError({
+          msg: `getCurrentUser error (${statusCode}): ${error} `,
+          serverURL,
+          deferred
+        });
       }
     });
 

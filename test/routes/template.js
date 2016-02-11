@@ -18,6 +18,10 @@ var debug = require('debug')('A2J:test');
 
 describe('lib/routes/template', function() {
   let getCurrentUserStub,
+      getTemplatesPathStub,
+      getTemplatePathStub,
+      mockTemplatesPathDeferred,
+      mockTemplatePathDeferred,
       currentUserName,
       params,
       guidesDir;
@@ -25,19 +29,28 @@ describe('lib/routes/template', function() {
   beforeEach(function() {
     let mockCurrentUserDeferred = Q.defer();
 
+    mockTemplatesPathDeferred = Q.defer();
+    mockTemplatePathDeferred = Q.defer();
+
     currentUserName = 'DEV';
     params = {};
     guidesDir = '/foo/userfiles/';
     paths.guidesDir = guidesDir;
 
     getCurrentUserStub = sinon.stub(user, 'getCurrentUser');
+    getTemplatesPathStub = sinon.stub(paths, 'getTemplatesPath');
+    getTemplatePathStub = sinon.stub(paths, 'getTemplatePath');
 
     getCurrentUserStub.returns(mockCurrentUserDeferred.promise);
+    getTemplatesPathStub.returns(mockTemplatesPathDeferred.promise);
+    getTemplatePathStub.returns(mockTemplatePathDeferred.promise);
     mockCurrentUserDeferred.resolve(currentUserName);
   });
 
   afterEach(function() {
     getCurrentUserStub.restore();
+    getTemplatesPathStub.restore();
+    getTemplatePathStub.restore();
   });
 
   describe('get', function() {
@@ -66,6 +79,8 @@ describe('lib/routes/template', function() {
     });
 
     it('should return data for a template', function(done) {
+      mockTemplatePathDeferred.resolve('path/to/template2112.json');
+
       template.get(2112, params, function(err, data) {
         assert.deepEqual(data, template2112Data);
         done();
@@ -73,6 +88,8 @@ describe('lib/routes/template', function() {
     });
 
     it('should return an error when template does not have data', function(done) {
+      mockTemplatePathDeferred.resolve('path/to/template2113.json');
+
       template.get(2113, params, function(err, data) {
         assert(err);
         done();
@@ -130,6 +147,9 @@ describe('lib/routes/template', function() {
         createdAt: mockCreatedTime,
         updatedAt: mockCurrentTime
       });
+
+      mockTemplatesPathDeferred.resolve('path/to/templates.json');
+      mockTemplatePathDeferred.resolve('path/to/template2112.json');
 
       template.update(2112, inputData, params, function(err, data) {
         let fileName = writeJSONStub.getCall(0).args[0].path;
@@ -198,6 +218,9 @@ describe('lib/routes/template', function() {
         updatedAt: mockCurrentTime
       });
 
+      mockTemplatesPathDeferred.resolve('path/to/templates.json');
+      mockTemplatePathDeferred.resolve('path/to/template2115.json');
+
       getTemplatesJSONDeferred.resolve(templatesData);
       mockWriteDeferred.resolve(JSON.stringify(newData));
       mockMergeDeferred.resolve(JSON.stringify(templatesData));
@@ -235,6 +258,9 @@ describe('lib/routes/template', function() {
         createdAt: mockCurrentTime,
         updatedAt: mockCurrentTime
       });
+
+      mockTemplatesPathDeferred.resolve('path/to/templates.json');
+      mockTemplatePathDeferred.resolve('path/to/template1.json');
 
       getTemplatesJSONDeferred.resolve([]);
       mockWriteDeferred.resolve(JSON.stringify(newData));

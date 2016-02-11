@@ -6,13 +6,7 @@ let debug = require('debug')('A2J:util/config');
 try {
   config = require('../../../config.json');
 } catch(e) {
-  debug(e);
-
-  if (process.env.NODE_ENV !== 'production') {
-    config = {
-      'GUIDES_DIR': path.join(process.cwd(), '../userfiles')
-    };
-  }
+  throw new Error('Unable to load config.json');
 }
 
 module.exports = {

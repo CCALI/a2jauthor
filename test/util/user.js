@@ -1,8 +1,8 @@
 var assert = require('assert');
 var sinon = require('sinon');
-var Q = require('q');
 var request = require('request');
 
+var config = require('../../src/util/config');
 var user = require('../../src/util/user');
 
 var debug = require('debug')('A2J:tests');
@@ -23,7 +23,17 @@ describe('lib/util/user', function() {
   });
 
   describe('getCurrentUser', function() {
-    it('should succeed when request.post returns a username', function(done) {
+    let handleErrorStub;
+
+    beforeEach(function() {
+      handleErrorStub = sinon.stub(user, 'handleError');
+    });
+
+    afterEach(function() {
+      handleErrorStub.restore();
+    });
+
+    it('when request.post returns a username', function(done) {
       requestPostStub.callsArgWith(2, null, {
         statusCode: 200
       }, JSON.stringify({
@@ -35,89 +45,85 @@ describe('lib/util/user', function() {
           let headers = requestPostStub.getCall(0).args[1].headers;
 
           assert.deepEqual(headers, { Cookie: cookieHeader }, 'should pass cookies HTTP header to request.post');
-
           assert.equal(username, currentUsername, 'should resolve with username');
           done();
         });
     });
 
-    describe('when NODE_ENV !== "production"', function() {
-      it('should return "dev" when request.post fails', function(done) {
-        requestPostStub.callsArgWith(2, 'Error!', {
-          statusCode: 200
-        });
-
-        user.getCurrentUser({ cookieHeader })
-          .then(function(username) {
-            assert.equal(username, 'dev');
-            done();
-          });
+    it('when request.post fails', function() {
+      requestPostStub.callsArgWith(2, 'Error!', {
+        statusCode: 200
       });
 
-      it('should return "dev" when request.post fails (HTTP)', function(done) {
-        requestPostStub.callsArgWith(2, null, {
-          statusCode: 404
-        });
+      user.getCurrentUser({ cookieHeader });
 
-        user.getCurrentUser({ cookieHeader })
-          .then(function(username) {
-            assert.equal(username, 'dev');
-            done();
-          });
-      });
-
-      it('should return "dev" when response is not valid JSON', function(done) {
-        requestPostStub.callsArgWith(2, null, {
-          statusCode: 200
-        }, 'foo');
-
-        user.getCurrentUser({ cookieHeader })
-          .then(function(username) {
-            assert.equal(username, 'dev');
-            done();
-          });
-      });
+      assert.equal(handleErrorStub.callCount, 1, 'should call handleError');
     });
 
-    describe('when NODE_ENV === "production"', function() {
-      it('should fail when request.post fails', function(done) {
-        requestPostStub.callsArgWith(2, 'Error!', {
-          statusCode: 200
-        });
-        user.nodeEnv = 'production';
-
-        user.getCurrentUser({ cookieHeader })
-          .catch(function(error) {
-            assert(error);
-            done();
-          });
+    it('when request.post fails (HTTP)', function() {
+      requestPostStub.callsArgWith(2, null, {
+        statusCode: 404
       });
 
-      it('should fail when request.post fails (HTTP)', function(done) {
-        requestPostStub.callsArgWith(2, null, {
-          statusCode: 404
-        });
-        user.nodeEnv = 'production';
+      user.getCurrentUser({ cookieHeader });
 
-        user.getCurrentUser({ cookieHeader })
-          .catch(function(error) {
-            assert(error);
-            done();
-          });
-      });
+      assert.equal(handleErrorStub.callCount, 1, 'should call handleError');
+    });
 
-      it('should fail when response is not valid JSON', function(done) {
-        requestPostStub.callsArgWith(2, null, {
-          statusCode: 200
-        }, 'foo');
-        user.nodeEnv = 'production';
+    it('when response is not valid JSON', function() {
+      requestPostStub.callsArgWith(2, null, {
+        statusCode: 200
+      }, 'foo');
 
-        user.getCurrentUser({ cookieHeader })
-          .catch(function(error) {
-            assert(error);
-            done();
-          });
-      });
+      user.getCurrentUser({ cookieHeader });
+
+      assert.equal(handleErrorStub.callCount, 1, 'should call handleError');
+    });
+  });
+
+  describe('handleError, serverUrl=', function() {
+    let deferred,
+        serverURL;
+
+    beforeEach(function() {
+      deferred = {
+        resolve: sinon.spy(),
+        reject: sinon.spy()
+      };
+    });
+
+    it('http://localhost', function() {
+      serverURL = 'http://localhost';
+
+      user.handleError({ serverURL, deferred });
+
+      assert.equal(deferred.resolve.callCount, 1, 'should resolve deferred');
+      assert.equal(deferred.resolve.firstCall.args[0], 'dev', 'should hardcode user to dev');
+    });
+
+    it('http://localhost:3000', function() {
+      serverURL = 'http://localhost:3000';
+
+      user.handleError({ serverURL, deferred });
+
+      assert.equal(deferred.resolve.callCount, 1, 'should resolve deferred');
+      assert.equal(deferred.resolve.firstCall.args[0], 'dev', 'should hardcode user to dev');
+    });
+
+    it('http://localhost.evilsite.com', function() {
+      serverURL = 'http://localhost:3000';
+
+      user.handleError({ serverURL, deferred });
+
+      assert.equal(deferred.reject.callCount, 1, 'should reject deferred');
+    });
+
+    it('http://bitovi.a2jauthor.org/', function() {
+      serverURL = 'http://bitovi.a2jauthor.org/';
+
+      user.handleError({ serverURL, deferred });
+
+      assert.equal(deferred.reject.callCount, 1, 'should reject deferred');
     });
   });
 });

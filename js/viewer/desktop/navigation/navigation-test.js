@@ -80,32 +80,63 @@ describe('<a2j-viewer-navigation>', function() {
     it('canNavigateBack - whether back button should be enabled', function() {
       // navigate to first page
       visited.unshift(pages.attr(0));
+      vm.attr('selectedPageIndex', 0);
       assert.isFalse(vm.attr('canNavigateBack'), 'false if only one page visited');
 
       // navigate to second page
       visited.unshift(pages.attr(1));
-      assert.isTrue(vm.attr('canNavigateBack'), 'user can go back to first page');
+      vm.attr('selectedPageIndex', 0);
+      assert.isTrue(vm.attr('canNavigateBack'), 'true when on last page');
 
       // go back to first page
-      vm.attr('selectedPageName', pages.attr(0).attr('name'));
-      assert.isFalse(vm.attr('canNavigateBack'), 'in first page, can not go back');
+      vm.attr('selectedPageIndex', 1);
+      assert.isFalse(vm.attr('canNavigateBack'), 'false when on first page');
     });
 
     it('canNavigateForward - whether next button should be enabled', function() {
       // navigate to first page
       visited.unshift(pages.attr(0));
-      assert.isFalse(vm.attr('canNavigateForward'),
-        'false if only one page visited');
+      vm.attr('selectedPageIndex', 0);
+      assert.isFalse(vm.attr('canNavigateForward'), 'false if only one page visited');
 
       // navigate to second page
       visited.unshift(pages.attr(1));
-      assert.isFalse(vm.attr('canNavigateForward'),
-        'user can not go next the last visited page');
+      vm.attr('selectedPageIndex', 0);
+      assert.isFalse(vm.attr('canNavigateForward'), 'false when on the last page');
 
       // go back to first page
-      vm.attr('selectedPageName', pages.attr(0).attr('name'));
-      assert.isFalse(vm.attr('canNavigateBack'),
-        'in first page, user can go to second page');
+      vm.attr('selectedPageIndex', 1);
+      assert.isTrue(vm.attr('canNavigateForward'), 'true when on the first page');
+    });
+
+    it('navigateBack', () => {
+      visited.unshift(pages.attr(2));
+      visited.unshift(pages.attr(1));
+      visited.unshift(pages.attr(0));
+
+      // select most recent page
+      vm.attr('selectedPageIndex', 0);
+
+      vm.navigateBack();
+      assert.equal(vm.attr('selectedPageIndex'), 1, 'should navigate to middle page');
+
+      vm.navigateBack();
+      assert.equal(vm.attr('selectedPageIndex'), 2, 'should navigate to oldest page');
+    });
+
+    it('navigateForward', () => {
+      visited.unshift(pages.attr(2));
+      visited.unshift(pages.attr(1));
+      visited.unshift(pages.attr(0));
+
+      // select oldest page
+      vm.attr('selectedPageIndex', 2);
+
+      vm.navigateForward();
+      assert.equal(vm.attr('selectedPageIndex'), 1, 'should navigate to middle page');
+
+      vm.navigateForward();
+      assert.equal(vm.attr('selectedPageIndex'), 0, 'should navigate to most recent page');
     });
 
     it('selectedPageIndex', () => {

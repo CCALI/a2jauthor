@@ -2,6 +2,7 @@ import fixture from 'can/util/fixture/';
 import guidesList from './guides/guides-list.json';
 import thrcInterviewXML from './guides/thrc-interview.xml!text';
 import mobileInterviewXML from './guides/mobile-online-interview.xml!text';
+import assetCountLoopInterviewXML from './guides/asset-count-loop-interview.xml!text';
 
 const userData = {
   userid: 78740,
@@ -42,6 +43,14 @@ const thrcGuide = {
   userid: 78740
 };
 
+const assetCountLoopGuide = {
+  gid: '20',
+  editoruid: '78740',
+  guide: assetCountLoopInterviewXML,
+  path: '\/app\/userfiles\/A2J\/guides\/A2J_MobileOnline\/A2J_MobileOnlineInterview_Interview.xml',
+  userid: 78740
+};
+
 const selectGuide = function(guideId) {
   let guide;
 
@@ -60,6 +69,10 @@ const selectGuide = function(guideId) {
 
     case '20':
       guide = thrcGuide;
+      break;
+
+    case '573':
+      guide = assetCountLoopGuide;
       break;
 
     default:

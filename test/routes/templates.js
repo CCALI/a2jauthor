@@ -24,7 +24,7 @@ describe('lib/routes/templates', function() {
     let mockTemplatesPathDeferred = Q.defer(),
         mockCurrentUserDeferred = Q.defer();
 
-    templatesJSONPath = '.../templates.json';
+    templatesJSONPath = 'path/to/templates/templates.json';
     currentUserName = 'DEV';
     params = {};
 
@@ -81,6 +81,7 @@ describe('lib/routes/templates', function() {
 
   describe('get', function(done) {
     let getTemplatesJSONStub,
+        getTemplatePathStub,
         getCurrentUserStub,
         readFileStub;
 
@@ -89,7 +90,9 @@ describe('lib/routes/templates', function() {
           mockTemplatesJSONDeferred = Q.defer();
 
       getTemplatesJSONStub = sinon.stub(templates, 'getTemplatesJSON');
+      getTemplatePathStub = sinon.stub(paths, 'getTemplatePath');
       getCurrentUserStub = sinon.stub(user, 'getCurrentUser');
+
       readFileStub = sinon.stub(files, 'readJSON', ({ path }) => {
         if (path.indexOf('template2112.json') >= 0) {
           return template2112Data;
@@ -112,12 +115,22 @@ describe('lib/routes/templates', function() {
     });
 
     afterEach(function() {
-      templates.getTemplatesJSON.restore();
+      getTemplatesJSONStub.restore();
+      getTemplatePathStub.restore();
       getCurrentUserStub.restore();
       readFileStub.restore();
     });
 
     it('should return templates data for a guide', function(done) {
+      let deferredOne = Q.defer();
+      let deferredTwo = Q.defer();
+
+      getTemplatePathStub.onFirstCall().returns(deferredOne.promise);
+      getTemplatePathStub.onSecondCall().returns(deferredTwo.promise);
+
+      deferredOne.resolve('path/to/template2112.json');
+      deferredTwo.resolve('path/to/template2113.json');
+
       templates.get('Guide1261', params, function(err, data) {
         assert.equal(data.length, 2, 'should get 2 templates');
         assert.deepEqual(data[0], template2112Data, 'should get full data for first template');
@@ -127,6 +140,12 @@ describe('lib/routes/templates', function() {
     });
 
     it('should return templates data for a different guide', function(done) {
+      let deferredOne = Q.defer();
+
+      getTemplatePathStub.onFirstCall().returns(deferredOne.promise);
+
+      deferredOne.resolve('path/to/template2114.json');
+
       templates.get('Guide1262', params, function(err, data) {
         assert.equal(data.length, 1, 'should return template data for another guide');
         assert.deepEqual(data[0], template2114Data, 'should get full data for first template');

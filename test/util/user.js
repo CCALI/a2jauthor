@@ -9,17 +9,21 @@ var debug = require('debug')('A2J:tests');
 
 describe('lib/util/user', function() {
   let requestPostStub,
+      configGetStub,
       currentUsername,
       cookieHeader;
 
   beforeEach(function() {
     requestPostStub = sinon.stub(request, 'post');
+    configGetStub = sinon.stub(config, 'get');
+
     currentUsername = 'A2J_User';
     cookieHeader = 'one=1; two=2;';
   });
 
   afterEach(function() {
     requestPostStub.restore();
+    configGetStub.restore();
   });
 
   describe('getCurrentUser', function() {

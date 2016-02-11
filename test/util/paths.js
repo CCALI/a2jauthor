@@ -4,17 +4,26 @@ var Q = require('q');
 var path = require('path');
 
 var paths = require('../../src/util/paths');
+var config = require('../../src/util/config');
 
 var debug = require('debug')('A2J:tests');
 
 describe('lib/util/paths', function() {
-  let guidesDir, currentUser;
+  let guidesDir,
+      currentUser,
+      configGetStub;
 
   beforeEach(function() {
     guidesDir = '/foo/userfiles/';
-    paths.guidesDir = guidesDir;
+
+    configGetStub = sinon.stub(config, 'get');
+    configGetStub.returns(guidesDir);
 
     currentUser = 'DEV';
+  });
+
+  afterEach(function() {
+    configGetStub.restore();
   });
 
   it('getTemplatesPath', function(done) {

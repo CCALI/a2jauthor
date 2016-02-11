@@ -1,16 +1,15 @@
-let path = require('path');
-let config = {};
-
-let debug = require('debug')('A2J:util/config');
-
-try {
-  config = require('../../../config.json');
-} catch(e) {
-  throw new Error('Unable to load config.json');
-}
+let config;
 
 module.exports = {
-  get(key){
+  get(key) {
+    if (typeof config === 'undefined') {
+      try {
+        config = require('../../../config.json');
+      } catch(e) {
+        throw new Error('Unable to load config.json');
+      }
+    }
+
     return config[key];
   }
 }

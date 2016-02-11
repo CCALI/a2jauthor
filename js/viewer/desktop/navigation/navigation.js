@@ -50,12 +50,18 @@ export let ViewerNavigationVM = Map.extend({
      *
      * Used for navigating between pages since the same page may appear multiple
      * times in `visitedPages` list if user is navigating through a repeat loop.
+     *
+     * `pageIndex === totalPages - 1` is the first page.
+     * `pageIndex === 0` is the last page (most recent).
      */
     selectedPageIndex: {
+      type: 'number',
       set(newVal) {
         let selectedPage = this.attr('visitedPages').attr(newVal);
         let selectedPageName = selectedPage.attr('name');
 
+        // if user changes page using the dropdown,
+        // restore repeatVarValue of loop being navigated to
         let repeatVar = selectedPage.attr('repeatVar');
         let repeatVarValue = selectedPage.attr('repeatVarValue');
         if (repeatVar && repeatVarValue) {
@@ -108,10 +114,9 @@ export let ViewerNavigationVM = Map.extend({
      */
     canNavigateBack: {
       get() {
-        let pages = this.attr('visitedPages');
-        let totalPages = pages.attr('length');
-        let pageName = this.attr('selectedPageName');
-        let pageIndex = this.getPageIndex(pageName);
+        let totalPages = this.attr('visitedPages.length');
+        let pageIndex = this.attr('selectedPageIndex');
+
         return totalPages > 1 && pageIndex < totalPages - 1;
       }
     },
@@ -124,10 +129,9 @@ export let ViewerNavigationVM = Map.extend({
      */
     canNavigateForward: {
       get() {
-        let pages = this.attr('visitedPages');
-        let totalPages = pages.attr('length');
-        let pageName = this.attr('selectedPageName');
-        let pageIndex = this.getPageIndex(pageName);
+        let totalPages = this.attr('visitedPages.length');
+        let pageIndex = this.attr('selectedPageIndex');
+
         return totalPages > 1 && pageIndex > 0;
       }
     },
@@ -158,20 +162,6 @@ export let ViewerNavigationVM = Map.extend({
         };
       }
     }
-  },
-
-  /**
-   * @property {Function} viewerNavigation.ViewModel.getPageIndex getPageIndex
-   * @parent viewerNavigation.ViewModel
-   *
-   * @return {Number} index of current page.
-   */
-  getPageIndex(pageName) {
-    let pages = this.attr('visitedPages');
-
-    return _findIndex(pages, function(page) {
-      return page.attr('name') === pageName;
-    });
   },
 
   /**
@@ -215,12 +205,7 @@ export let ViewerNavigationVM = Map.extend({
    * Navigates to previous page.
    */
   navigateBack() {
-    let pages = this.attr('visitedPages');
-    let pageName = this.attr('selectedPageName');
-    let pageIndex = this.getPageIndex(pageName);
-    let prevPage = pages.attr(pageIndex + 1);
-
-    this.attr('selectedPageName', prevPage.attr('name'));
+    this.attr('selectedPageIndex', this.attr('selectedPageIndex') + 1);
   },
 
   /**
@@ -230,12 +215,7 @@ export let ViewerNavigationVM = Map.extend({
    * Navigates to next page.
    */
   navigateForward() {
-    let pages = this.attr('visitedPages');
-    let pageName = this.attr('selectedPageName');
-    let pageIndex = this.getPageIndex(pageName);
-    let nextPage = pages.attr(pageIndex - 1);
-
-    this.attr('selectedPageName', nextPage.attr('name'));
+    this.attr('selectedPageIndex', this.attr('selectedPageIndex') - 1);
   }
 });
 

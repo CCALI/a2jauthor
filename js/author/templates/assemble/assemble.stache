@@ -12,11 +12,14 @@
 
       <div class="modal-body">
         <div class="row">
-          <div class="col-md-8 guide-title">{{guide.title}}</div>
+          <div class="col-md-8 guide-title">{{guideTitle}}</div>
 
           <div class="col-md-4">
             {{#if hasLoadedAnswers}}
-              <button type="button" class="btn btn-link clear-answers pull-right">
+              <button type="button"
+                ($click)="clearAnswers()"
+                class="btn btn-link clear-answers pull-right">
+
                 Clear answers
               </button>
             {{else}}
@@ -31,12 +34,15 @@
 
       <div class="modal-footer">
         <form action="/api/assemble" method="post" target="_blank">
-          <input type="hidden" name="guideTitle" {$value}="guide.title">
-          <input type="hidden" name="payload" {$value}="assemblePayload">
+          <input type="hidden" name="guideId" {$value}="guideId">
+          <input type="hidden" name="guideTitle" {$value}="guideTitle">
+          <input type="hidden" name="answers" {$value}="answersString">
+
           <input type="hidden" name="header" {$value}="header">
           <input type="hidden" name="hideHeaderOnFirstPage" {$value}="hideHeaderOnFirstPage">
           <input type="hidden" name="footer" {$value}="footer">
           <input type="hidden" name="hideFooterOnFirstPage" {$value}="hideFooterOnFirstPage">
+
           <button type="submit" class="btn btn-primary btn-submit">Get PDF</button>
         </form>
       </div>

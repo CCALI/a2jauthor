@@ -53,12 +53,14 @@
         </div>
 
         <test-assemble-options
-          {guide}="guide"
-          {template}="a2jTemplate"
+          {guide-id}="guideId"
+          {guide-title}="guide.title"
           {header}="a2jTemplate.header"
           {footer}="a2jTemplate.footer"
+          {template-id}="a2jTemplate.id"
           {hide-header-on-first-page}="a2jTemplate.hideHeaderOnFirstPage"
-          {hide-footer-on-first-page}="a2jTemplate.hideFooterOnFirstPage" />
+          {hide-footer-on-first-page}="a2jTemplate.hideFooterOnFirstPage"
+        />
       </div>
     {{/if}}
   {{/if}}

@@ -33,11 +33,6 @@
       "donejs-cli"
     ]
   },
-  "babel": {
-    "presets": [
-      "es2015"
-    ]
-  },
   "dependencies": {
     "body-parser": "~1.13.2",
     "bootstrap": "3.3.5",

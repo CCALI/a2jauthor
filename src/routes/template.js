@@ -179,7 +179,7 @@ module.exports = {
         data: _.pick(templateData, this.summaryFields)
       }));
 
-    return Q.all([
+    Q.all([
       writeTemplatePromise,
       writeSummaryPromise
     ]).then(([data]) => this.successHandler({

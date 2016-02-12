@@ -60,24 +60,6 @@ Then, if you want to load the author app go to
 [http://localhost:3000/js/viewer](http://localhost:3000/js/viewer) if you want
 to load the viewer app instead.
 
-### Development mode:
-
-By default, the server will run in production mode. This means that when accessing
-the templates API, the server will try to validate the current user using their
-PHP session information. To disable this, use the command:
-```
-$ npm run dev
-```
-
-This will start the server with NODE_ENV=development, which will default to the
-username "dev" and assume the following folder structure:
-```
-CAJA/
-userfiles/
-  dev/
-    guides/
-```
-
 ### Server Configuration
 
 In production mode, the server uses a configuration file called `config.json`
@@ -116,12 +98,8 @@ Then any `debug(...)` messages in the code will be displayed in the console.
 
 ## To build the Author and Viewer client code:
 
-You need to install `grunt` first, follow the instructions in this [link](http://gruntjs.com/getting-started#installing-the-cli),
-once the `grunt` CLI is available, run the following commands:
-
 ```
-$ cd js
-$ grunt build
+$ npm run build:client
 ```
 
 If you want to view the app in production mode, just start the server (`npm start`)

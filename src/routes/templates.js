@@ -59,6 +59,8 @@ module.exports = {
    * ## Use
    *
    * GET /api/templates/{guide_id}
+   * GET /api/templates/{guide_id}?active=true
+   * GET /api/templates/{guide_id}?active=false
    */
   get(guideId, params, callback) {
     debug('GET /api/templates/' + guideId);
@@ -84,12 +86,16 @@ module.exports = {
 
     Q.all(templatePromises)
       .then(templates => {
-        if (templates.length) {
-          debug('Found', templates.length, 'templates for guide', guideId);
+        let active = params.query && params.query.active;
+        return (active) ? _.filter(templates, { active }) : templates;
+      })
+      .then(filteredTemplates => {
+        if (filteredTemplates.length) {
+          debug('Found', filteredTemplates.length, 'templates for guide', guideId);
         } else {
           debug('No templates found for guideId ' + guideId);
         }
-        callback(null, templates);
+        callback(null, filteredTemplates);
       })
       .catch(error => {
         debug(error);

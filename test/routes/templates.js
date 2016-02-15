@@ -159,5 +159,43 @@ describe('lib/routes/templates', function() {
         done();
       });
     });
+
+    it('should filter templates to active=true', function(done) {
+      let deferredOne = Q.defer();
+      let deferredTwo = Q.defer();
+
+      getTemplatePathStub.onFirstCall().returns(deferredOne.promise);
+      getTemplatePathStub.onSecondCall().returns(deferredTwo.promise);
+
+      deferredOne.resolve('path/to/template2112.json');
+      deferredTwo.resolve('path/to/template2113.json');
+
+      params = { query: { active: 'true' } };
+
+      templates.get('Guide1261', params, function(err, data) {
+        assert.equal(data.length, 1, 'should get 1 templates');
+        assert.deepEqual(data[0], template2112Data, 'should get full data for first template');
+        done();
+      });
+    });
+
+    it('should filter templates to active=false', function(done) {
+      let deferredOne = Q.defer();
+      let deferredTwo = Q.defer();
+
+      getTemplatePathStub.onFirstCall().returns(deferredOne.promise);
+      getTemplatePathStub.onSecondCall().returns(deferredTwo.promise);
+
+      deferredOne.resolve('path/to/template2112.json');
+      deferredTwo.resolve('path/to/template2113.json');
+
+      params = { query: { active: 'false' } };
+
+      templates.get('Guide1261', params, function(err, data) {
+        assert.equal(data.length, 1, 'should get 1 templates');
+        assert.deepEqual(data[0], template2113Data, 'should get full data for first template');
+        done();
+      });
+    });
   });
 });

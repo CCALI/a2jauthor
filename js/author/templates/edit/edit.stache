@@ -57,7 +57,7 @@
           {guide-title}="guide.title"
           {header}="a2jTemplate.header"
           {footer}="a2jTemplate.footer"
-          {template-id}="a2jTemplate.id"
+          {template-id}="a2jTemplate.templateId"
           {hide-header-on-first-page}="a2jTemplate.hideHeaderOnFirstPage"
           {hide-footer-on-first-page}="a2jTemplate.hideFooterOnFirstPage"
         />

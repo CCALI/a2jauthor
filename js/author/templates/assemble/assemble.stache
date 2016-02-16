@@ -37,6 +37,7 @@
           <input type="hidden" name="guideId" {$value}="guideId">
           <input type="hidden" name="guideTitle" {$value}="guideTitle">
           <input type="hidden" name="answers" {$value}="answersString">
+          <input type="hidden" name="templateId" {$value}="templateId">
 
           <input type="hidden" name="header" {$value}="header">
           <input type="hidden" name="hideHeaderOnFirstPage" {$value}="hideHeaderOnFirstPage">

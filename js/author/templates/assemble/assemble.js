@@ -1,5 +1,4 @@
 import Map from 'can/map/';
-import List from 'can/list/';
 import _keys from 'lodash/keys';
 import Component from 'can/component/';
 import template from './assemble.stache!';
@@ -12,14 +11,15 @@ import 'can/map/define/';
  * @parent api-components
  *
  * This component is used when user clicks the "Test Assemble" button, it
- * exposes two buttons that allow the user to load an anwers file and/or get a
- * PDF of the template (or templates) passed as an attribute.
+ * exposes two buttons that allow the author to load an anwers file and/or get
+ * a PDF generated out of a single template or of all the templates matching the
+ * provided [guideId].
  *
  * ## Use
  *
  * @codestart
- *   <test-assemble-options {template}="a2jTemplate" />
- *   <test-assemble-options {templates}="templatesList" />
+ *   <test-assemble-options {guide-id}="guideId" />
+ *   <test-assemble-options {guide-id}="guideId" {template-id}="templateId" />
  * @codeend
  */
 
@@ -32,11 +32,54 @@ import 'can/map/define/';
 let AssembleOptionsVM = Map.extend({
   define: {
     /**
+     * @property {String} assemble.ViewModel.prototype.guideId guideId
+     * @parent assemble.ViewModel
+     *
+     * The guided interview id.
+     *
+     * This id is required during document assembly, if [templateId] is not set,
+     * the assembly endpoint will generate a document using all of the templates
+     * for the logged in author that matches this [guideId].
+     */
+    guideId: {
+      value: ''
+    },
+
+    /**
+     * @property {String} assemble.ViewModel.prototype.guideTitle guideTitle
+     * @parent assemble.ViewModel
+     *
+     * Guided interview title.
+     *
+     * This title is displayed in the popup where author is allowed to either
+     * upload answers or generate PDF and it's also sent as part of the payload
+     * to the document assembly endpoint to be used as the document filename.
+     */
+    guideTitle: {
+      value: ''
+    },
+
+    /**
+     * @property {String} assemble.ViewModel.prototype.templateId templateId
+     * @parent assemble.ViewModel
+     *
+     * Id of the template to be used during document assembly.
+     *
+     * This property is optional, and should be set only when you want to
+     * generate a PDF document out of a single template, e.g when the author
+     * clicks the "Assemble" button in the template edit page, the document
+     * should be generated using the template being edited at that moment.
+     */
+    templateId: {
+      value: ''
+    },
+
+    /**
      * @property {Answers} assemble.ViewModel.prototype.interviewAnswers interviewAnswers
      * @parent assemble.ViewModel
      *
      * This is a key/value map containing the interview's variable values
-     * provided by the user through the viewer app.
+     * uploaded by the author.
      */
     interviewAnswers: {
       Value: Map
@@ -56,50 +99,23 @@ let AssembleOptionsVM = Map.extend({
     },
 
     /**
-     * @property {can.List} assemble.ViewModel.prototype.templatesList templatesList
+     * @property {String} assemble.ViewModel.prototype.answersString answersString
      * @parent assemble.ViewModel
      *
-     * List of [A2JTemplate] instances used to generate a PDF document. When
-     * [template] is provided, the list contains only that template -this covers
-     * the use case when user clicks "Test Assemble" button in the template edit
-     * page - if user clicks the same button in the templates list page,
-     * [templates] is used instead.
+     * JSON representation of `answers` object used to fill in the template during
+     * document assembly.
      */
-    templatesList: {
+    answersString: {
       get() {
-        let list = new List();
-        const template = this.attr('template');
-        const templates = this.attr('templates');
-
-        if (template) {
-          list.push(template);
-        } else if (templates) {
-          list = templates;
-        }
-
-        return list;
-      }
-    },
-
-    /**
-     * @property {String} assemble.ViewModel.prototype.assemblePayload assemblePayload
-     * @parent assemble.ViewModel
-     *
-     * JSON representation of the payload sent to the server to generate the
-     * PDF document, which is an object with two properties: `templates` and
-     * `answers`.
-     */
-    assemblePayload: {
-      get() {
-        const templates = this.attr('templatesList');
         const answers = this.attr('interviewAnswers');
 
-        return JSON.stringify({
-          answers: answers.serialize(),
-          templates: templates.serialize()
-        });
+        return JSON.stringify(answers.serialize());
       }
     }
+  },
+
+  clearAnswers() {
+    this.attr('interviewAnswers', new Map());
   }
 });
 
@@ -114,16 +130,11 @@ export default Component.extend({
       this.element.find('.answers-file-input').click();
     },
 
-    '.clear-answers click': function() {
-      this.viewModel.attr('interviewAnswers', new Map());
-    },
-
     '.answers-file-input change': function($el) {
       const vm = this.viewModel;
       const file = $el.get(0).files[0];
-      const templates = vm.attr('templatesList');
 
-      if (file && templates) {
+      if (file) {
         const reader = new FileReader();
 
         reader.onload = function() {

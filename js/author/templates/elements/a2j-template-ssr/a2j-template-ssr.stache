@@ -1,0 +1,12 @@
+<can-import from="caja/author/templates/elements/a2j-template/" />
+<can-import from="caja/author/templates/elements/a2j-template-ssr/a2j-template-ssr.less!" />
+
+{{#if templatesPromise.isResolved}}
+  {{#each templates}}
+    <a2j-template
+      {template}="."
+      use-answers="true"
+      {answers}="answers"
+      edit-enabled="false" />
+  {{/each}}
+{{/if}}

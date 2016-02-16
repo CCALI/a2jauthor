@@ -6,8 +6,11 @@
   <body class="bootstrap-styles">
     <can-import from="caja/author/styles.less!" />
     <can-import from="caja/server" export-as="viewModel" />
-    <can-import from="caja/author/templates/elements/a2j-template-wrapper/" />
+    <can-import from="caja/author/templates/elements/a2j-template-ssr/" />
 
-    <a2j-template-wrapper {payload}="request.body.payload" />
+    <a2j-template-ssr
+      {answers}="request.body.answers"
+      {guide-id}="request.body.guideId"
+      {template-id}="request.body.templateId" />
   </body>
 </html>

@@ -20,6 +20,12 @@ const NodeState = Map.extend({
   }
 });
 
+// cuid requires mimeTypes to be defined, which is not the case
+// when this code is running on the server.
+if (navigator.mimeTypes == null) {
+  navigator.mimeTypes = [];
+}
+
 /**
  * @module {Module} author/models/a2j-node A2JNode
  * @parent api-models

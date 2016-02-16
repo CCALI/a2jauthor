@@ -25,7 +25,8 @@
 
     {{#each deletedTemplates}}
       <p>
-        {{title}} - has been deleted - <a href="#" ($click)="restoreTemplate(this)">Restore</a>
+        {{title}} - has been deleted -
+        <a href="#" ($click)="restoreTemplate(this)">Restore</a>
       </p>
     {{/each}}
   </app-alert>
@@ -40,7 +41,8 @@
 
     {{#each restoredTemplates}}
       <p>
-        {{title}} - has been restored - <a href="#" ($click)="deleteTemplate(this)">Delete</a>
+        {{title}} - has been restored -
+        <a href="#" ($click)="deleteTemplate(this)">Delete</a>
       </p>
     {{/each}}
   </app-alert>
@@ -82,5 +84,7 @@
     {{/if}}
   </div>
 
-  <test-assemble-options {guide}="appState.guide" {templates}="displayList" />
+  <test-assemble-options
+    {guide-id}="appState.guideId"
+    {guide-title}="appState.guide.title" />
 </div>

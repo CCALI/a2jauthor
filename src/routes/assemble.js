@@ -1,35 +1,34 @@
-var he = require('he');
-var url = require('url');
-var path = require('path');
-var ssr = require('can-ssr');
-var feathers = require('feathers');
-var wkhtmltopdf = require('wkhtmltopdf');
-var _kebabCase = require('lodash/kebabCase');
+const he = require('he');
+const url = require('url');
+const path = require('path');
+const ssr = require('can-ssr');
+const feathers = require('feathers');
+const wkhtmltopdf = require('wkhtmltopdf');
+const _kebabCase = require('lodash/kebabCase');
+const XHR = require('can-ssr/lib/middleware/xhr');
 
-var debug = require('debug')('A2J:routes/assemble');
+const router = feathers.Router();
 
-var router = feathers.Router();
-
-var render = ssr({
+const render = ssr({
   main: 'caja/server.stache!done-autorender',
   config: path.join(__dirname, '..', '..', 'package.json!npm')
 });
 
-var filename = function(guideTitle) {
+const filename = function(guideTitle) {
   return _kebabCase(guideTitle || 'document') + '.pdf';
 };
 
 router.post('/', function(req, res) {
-  var guideTitle = req.body.guideTitle;
-  var url = req.protocol + '://' + req.get('host') + req.originalUrl;
-  var headerFooterUrl = url + '/header-footer?content=';
+  const guideTitle = req.body.guideTitle;
+  const url = req.protocol + '://' + req.get('host') + req.originalUrl;
+  const headerFooterUrl = url + '/header-footer?content=';
 
-  var pdfOptions = {
+  const pdfOptions = {
     'header-spacing': 5,
     'footer-spacing': 5
   };
 
-  var toPdf = function(html) {
+  const toPdf = function(html) {
     if (html) {
       res.set({
         status: 201,
@@ -58,14 +57,15 @@ router.post('/', function(req, res) {
     }
   };
 
-  var onSuccess = function(result) {
+  const onSuccess = function(result) {
     toPdf(he.decode(result.html));
   };
 
-  var onFailure = function(error) {
+  const onFailure = function(error) {
     res.status(500).send(error);
   };
 
+  XHR.base = req.protocol + '://' + req.get('host');
   render(req).then(onSuccess, onFailure);
 });
 

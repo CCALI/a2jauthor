@@ -6,7 +6,12 @@
   {{#if title}}
     <h3 class="pane-title">{{title}}</h3>
 
-    <button ($click)="saveAndClose()" type="button" class="popover-close close" aria-label="Close">
+    <button
+      type="button"
+      aria-label="Close"
+      class="popover-close close"
+      ($click)="saveAndClose(nodeId)">
+
       <span aria-hidden="true">×</span>
     </button>
   {{/if}}
@@ -16,7 +21,9 @@
 
     {{#if showSaveButton}}
       <div class="text-center">
-        <button ($click)="saveAndClose()" class="btn btn-default btn-save">Save &amp; Close</button>
+        <button ($click)="saveAndClose(nodeId)" class="btn btn-default btn-save">
+          Save &amp; Close
+        </button>
       </div>
     {{/if}}
   </div>

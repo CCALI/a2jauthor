@@ -1,17 +1,14 @@
-var assert = require('assert');
-var sinon = require('sinon');
-var Q = require('q');
-var path = require('path');
+const path = require('path');
+const sinon = require('sinon');
+const assert = require('assert');
 
-var paths = require('../../src/util/paths');
-var config = require('../../src/util/config');
-
-var debug = require('debug')('A2J:tests');
+const paths = require('../../src/util/paths');
+const config = require('../../src/util/config');
 
 describe('lib/util/paths', function() {
-  let guidesDir,
-      currentUser,
-      configGetStub;
+  let guidesDir;
+  let currentUser;
+  let configGetStub;
 
   beforeEach(function() {
     guidesDir = '/foo/userfiles/';
@@ -26,21 +23,25 @@ describe('lib/util/paths', function() {
     configGetStub.restore();
   });
 
-  it('getTemplatesPath', function(done) {
-    paths.getTemplatesPath({ username: currentUser })
-      .then((templatesPath) => {
-        assert.equal(templatesPath,
-                    path.join(guidesDir, currentUser, 'templates.json'));
-        done();
-      });
+  it('getTemplatesPath', function() {
+    const promise = paths.getTemplatesPath({ username: currentUser });
+
+    return promise.then((templatesPath) => {
+      const expected = path.join(guidesDir, currentUser, 'templates.json');
+      assert.equal(templatesPath, expected);
+    });
   });
 
-  it('getTemplatePath', function(done) {
-    paths.getTemplatePath({ username: currentUser, guideId: 'Guide20', templateId: 20 })
-      .then((templatesPath) => {
-        assert.equal(templatesPath,
-                    path.join(guidesDir, currentUser, 'guides', 'Guide20', 'template20.json'));
-        done();
-      });
+  it('getTemplatePath', function() {
+    const promise = paths.getTemplatePath({
+      guideId: 20,
+      templateId: 20,
+      username: currentUser
+    });
+
+    return promise.then((templatesPath) => {
+      const expected = path.join(guidesDir, currentUser, 'guides/Guide20/template20.json');
+      assert.equal(templatesPath, expected);
+    });
   });
 });

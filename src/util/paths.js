@@ -1,8 +1,6 @@
-var path = require('path');
-var Q = require('q');
-var config = require('./config');
-
-var debug = require('debug')('A2J:paths')
+const Q = require('q');
+const path = require('path');
+const config = require('./config');
 
 /**
  * @module {Module} /util/paths paths
@@ -21,10 +19,10 @@ module.exports = {
    * path to the templates.json file  for the current user.
    */
   getTemplatesPath({ username }) {
-    var deferred = Q.defer();
+    const deferred = Q.defer();
 
-    let guidesDir = config.get('GUIDES_DIR');
-    let file = path.join(guidesDir, username, 'templates.json');
+    const guidesDir = config.get('GUIDES_DIR');
+    const file = path.join(guidesDir, username, 'templates.json');
 
     deferred.resolve(file);
 
@@ -41,14 +39,14 @@ module.exports = {
    * path to the JSON file of a template.
    */
   getTemplatePath({ username, guideId, templateId }) {
-    var deferred = Q.defer();
+    const deferred = Q.defer();
+    const guidesDir = config.get('GUIDES_DIR');
 
-    let guidesDir = config.get('GUIDES_DIR');
-    let file = path.join(guidesDir,
-                username,
-                'guides',
-                '' + guideId,
-                'template' + templateId + '.json');
+    const file = path.join(
+      guidesDir, username,
+      `guides/Guide${guideId}`,
+      `template${templateId}.json`
+    );
 
     deferred.resolve(file);
 

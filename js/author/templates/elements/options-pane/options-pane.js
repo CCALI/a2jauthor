@@ -1,6 +1,5 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
-import _isFunction from 'lodash/isFunction';
 import template from './options-pane.stache!';
 
 import 'can/map/define/';
@@ -51,26 +50,6 @@ export let OptionsPaneVM = Map.extend({
       type: 'boolean',
       value: true
     }
-  },
-
-  /**
-   * @property {function} optionsPane.ViewModel.prototype.saveAndClose saveAndClose
-   * @parent optionsPane.ViewModel
-   *
-   * This method is called when the save & close button is clicked, it delegates
-   * the logic to persist the element/node state to the `a2j-template` scope.
-   */
-  saveAndClose() {
-    const id = this.attr('nodeId');
-    const saveAndClose = this.attr('saveAndClose');
-
-    if (_isFunction(saveAndClose)) {
-      saveAndClose(id);
-    } else {
-      console.error('saveAndClose should be a function');
-    }
-
-    return false;
   }
 });
 

@@ -39,7 +39,6 @@ date_default_timezone_set("America/Chicago");
 }
 */
 
-
 if ($isProductionServer) {
 	//	09/05/2013 SJG Get Drupal userid from session
 	// If user not signed in, userid will be 0.
@@ -430,36 +429,41 @@ switch ($command)
 			$result['gid']=$row['gid'];
 			$guideName = $row['filename'];
 			$path_parts = pathinfo($guideName);
+
 			$guideDir = $path_parts['dirname'];
 			$guideNameOnly = $path_parts['filename'];
-			$zip  = new ZipArchive();
-			$zipNameOnly = 'A2J5 Guide'.$gid.' Archive'./*' '.date(DATE_FORMAT).*/'.zip';
+
+			$zip = new ZipArchive();
+			$zipNameOnly = 'A2J5 Guide'.$gid.' Archive.zip';
 			$zipName = $guideDir.'/'.$zipNameOnly;
 			$zipFull = GUIDES_DIR.$zipName;
-			if ($zip->open($zipFull,ZipArchive::OVERWRITE)!==TRUE)
-			{
+			$zipRes = $zip->open($zipFull, ZipArchive::OVERWRITE);
+
+			if ($zipRes !== TRUE) {
 				trace("cannot open $zipFull");
-			}
-			else
-			{
+			} else {
 				trace("created $zipFull");
 				$zip->addFile(GUIDES_DIR.$guideName,'Guide.xml');
-				$zip->addFile(replace_extension(GUIDES_DIR.$guideName,'json'),'Guide.json');
+
+				add_guide_json_file($guideName, $zip);
+				$zip->addFromString("templates.json", guide_templates_index_string($gid));
 
 				$files = scandir(GUIDES_DIR.$guideDir);
+				
 				// Ideally, scan Guide and only zip files used in the interview.
 				// Currently, just add all files in the folder of the guide.
-				//$zip->addPattern('/\.(?:jpg|xml|png|gif)$/', GUIDES_DIR.$guideDir);
-				foreach($files as $file)
-				{
-					$ext = pathinfo($file,PATHINFO_EXTENSION);
-					if( ($ext!='') && ($file!=$guideNameOnly) AND ($ext!='zip'))
-					{
-						$zip->addFile(GUIDES_DIR.$guideDir.'/'.$file,$file);
+				// $zip->addPattern('/\.(?:jpg|xml|png|gif)$/', GUIDES_DIR.$guideDir);
+				foreach($files as $file) {
+					$ext = pathinfo($file, PATHINFO_EXTENSION);
+
+					if (($ext != '') && ($file != $guideNameOnly) && ($ext != 'zip')) {
+						$filePath = GUIDES_DIR.$guideDir.'/'.$file;
+						$zip->addFile($filePath, $file);
 					}
 				}
+
 				$zip->close();
-				$result['zip']=GUIDES_URL.$guideDir.'/'.$zipNameOnly;
+				$result['zip'] = GUIDES_URL.$guideDir.'/'.$zipNameOnly;
 				// Caller will redirect to download the zip.
 			}
 		}
@@ -485,16 +489,17 @@ switch ($command)
 			mkdir($GuidePublicDir,0775,true);
 			$files = scandir(GUIDES_DIR.$guideDir);
 			//### Ideally, scan Guide and only zip files used in the interview.
-			foreach($files as $file)
-			{
-				$ext = pathinfo($file,PATHINFO_EXTENSION);
-				if( ($ext!='') && ($file!=$guideNameOnly) && ($ext!='zip') && in_array($ext,array('xml','gif','png','jpg','mp3','mp4')))
-				{
+			foreach($files as $file) {
+				$ext = pathinfo($file, PATHINFO_EXTENSION);
+
+				if (($ext!='') && ($file!=$guideNameOnly) && ($ext!='zip') && in_array($ext, array('xml','gif','png','jpg','mp3','mp4', 'json'))) {
 					copy(GUIDES_DIR.$guideDir.'/'.$file,$GuidePublicDir.'/'.$file);
 				}
 			}
+
 			copy(GUIDES_DIR.$guideName, $GuidePublicDir.'/Guide.xml');
 			copy(replace_extension(GUIDES_DIR.$guideName,'json'), $GuidePublicDir.'/Guide.json');//01/14/2015
+			file_put_contents($GuidePublicDir . 'templates.json', guide_templates_index_string($row['gid']));
 
 			//http://localhost/caja/userfiles/public/dev/guides/A2JFieldTypes/2014-07-22-14-06-12
 			file_put_contents($GuidePublicDir.'/index.php', '<?php header("Location: /app/js/viewer/A2J_Viewer.php?gid=".$_SERVER["REQUEST_URI"]."Guide.xml"); ?>');
@@ -539,9 +544,60 @@ switch ($command)
 $result['userid']=$userid;
 if($err!="") $result['error']=$err;
 
-$return  = json_encode($result);
+$return = json_encode($result);
 echo $return;
 
+/**
+ * Adds the json guide file to provided zip if it exists.
+ *
+ * Given the guide name and a zip file object, this method will check for the
+ * existence of json file matching guide_name in the guide's directory, if the
+ * file exists, it will add it to the zip file object as "Guide.json".
+ *
+ * @param string $guide_name File name of the xml guided interview
+ * @param ZIP $zip An opened ZipArchive instance
+ * @return void
+ */
+function add_guide_json_file($guide_name, $zip) {
+	$xml_guide_path = GUIDES_DIR . $guide_name;
+	$json_guide_path = replace_extension($xml_guide_path, 'json');
+
+	if (file_exists($json_guide_path)) {
+		$zip->addFile($json_guide_path, 'Guide.json');
+	}
+}
+
+/**
+ * JSON encoded list of templates that belong to provided guide id.
+ *
+ * This function reads the user's template index file and if it exists it will
+ * filter down the list of templates using the guide_id passed as a parameter,
+ * then it will return a json string of that filtered list.
+ *
+ * @param int $guide_id The numerical id of the guided interview
+ * @return string
+ */
+function guide_templates_index_string($guide_id) {
+	$guide_templates_list = [];
+	$userdir = $_SESSION['userdir'];
+	$user_template_index_path = GUIDES_DIR . $userdir . "/templates.json";
+
+	if (file_exists($user_template_index_path)) {
+		$user_template_index_contents = file_get_contents($user_template_index_path);
+
+		// array with objects containing guideId and templateId properties e.g
+		// [{ guideId: 5, templateId: 10 }, { guideId: 6, templateId: 11 }]
+		$user_template_index_list = json_decode($user_template_index_contents);
+
+		$guide_templates_list = array_filter($user_template_index_list,
+			function($ti) use($guide_id) {
+				return $ti->guideId == $guide_id;
+			}
+		);
+	}
+
+	return json_encode($guide_templates_list);
+}
 
 
 function getGuideFileDetails($filename)

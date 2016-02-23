@@ -5,6 +5,10 @@ var files = require('../util/files');
 var user = require('../util/user');
 var debug = require('debug')('A2J:routes/templates');
 
+const filterTemplatesByActive = function(active, templates) {
+  return (active != null) ? _.filter(templates, { active }) : templates;
+};
+
 /**
  * @module {Module} /routes/templates templates
  * @parent api
@@ -34,15 +38,63 @@ module.exports = {
   getTemplatesJSON({ username }) {
     let templatesJSONPath;
 
-    return paths.getTemplatesPath({ username })
+    const pathPromise = paths
+      .getTemplatesPath({ username })
       .then(templatesPath => {
         templatesJSONPath = templatesPath;
-        return files.readJSON({ path: templatesPath });
-      })
+        return templatesPath;
+      });
+
+    return pathPromise
+      .then(path => files.readJSON({ path }))
       .catch(err => {
         debug(err);
         debug(`Writing ${templatesJSONPath}`);
         return files.writeJSON({ path: templatesJSONPath, data: [] });
+      });
+  },
+
+  /**
+   * @property {Function} templates.find
+   * @parent templates
+   *
+   * Find all templates in `fileDataUrl`
+   *
+   * Reads the templates.json file in `fileDataUrl`, then uses the templateId
+   * from this list to open each individual template file, filters them based
+   * on the `active` param (if available) and then send back the combined data.
+   *
+   * ## Use
+   *
+   * GET /api/templates?fileDataUrl="path/to/data/folder"&active=true
+   * GET /api/templates?fileDataUrl="path/to/data/folder"&active=false
+   */
+  find(params, callback) {
+    const { active, fileDataUrl } = (params.query || {});
+
+    if (!fileDataUrl) {
+      return callback('You must provide fileDataUrl');
+    }
+
+    const templateIndexPromise = paths
+      .getTemplatesPath({ fileDataUrl })
+      .then(path => files.readJSON({ path }));
+
+    const templatePromises = templateIndexPromise
+      .then(templateIndex => {
+        return _.map(templateIndex, ({ templateId }) => {
+          return paths
+            .getTemplatePath({ templateId, fileDataUrl })
+            .then(path => files.readJSON({ path }));
+        });
+      });
+
+    Q.all(templatePromises)
+      .then(templates => filterTemplatesByActive(active, templates))
+      .then(filteredTemplates => callback(null, filteredTemplates))
+      .catch(error => {
+        debug(error);
+        callback(error);
       });
   },
 
@@ -65,30 +117,34 @@ module.exports = {
   get(guideId, params, callback) {
     debug('GET /api/templates/' + guideId);
 
-    let usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader });
+    const { cookieHeader } = params;
+    const { active } = (params.query || {});
+    const usernamePromise = user.getCurrentUser({ cookieHeader });
 
-    let filteredTemplateSummaries = usernamePromise
+    const filterByGuideId = function(coll) {
+      return _.filter(coll, o => o.guideId === guideId);
+    };
+
+    const filteredTemplateSummaries = usernamePromise
       .then(username => this.getTemplatesJSON({ username }))
-      .then(templateSummaryData => _.filter(templateSummaryData, o => o.guideId === guideId));
+      .then(filterByGuideId);
 
-    let templatePromises = Q.all([filteredTemplateSummaries, usernamePromise])
+    const templatePromises = Q
+      .all([filteredTemplateSummaries, usernamePromise])
       .then(([ filteredTemplates, username ]) => {
         return _.map(filteredTemplates, ({ guideId, templateId }) => {
-          return paths.getTemplatePath({
-            guideId,
-            templateId,
-            username
-          }).then(path => {
+          const pathPromise = paths.getTemplatePath({
+            guideId, templateId, username
+          });
+
+          return pathPromise.then(path => {
             return files.readJSON({ path });
           });
         });
       });
 
     Q.all(templatePromises)
-      .then(templates => {
-        let active = params.query && params.query.active;
-        return (active) ? _.filter(templates, { active }) : templates;
-      })
+      .then(templates => filterTemplatesByActive(active, templates))
       .then(filteredTemplates => {
         if (filteredTemplates.length) {
           debug('Found', filteredTemplates.length, 'templates for guide', guideId);

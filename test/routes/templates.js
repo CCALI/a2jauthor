@@ -15,7 +15,7 @@ const template2112Data = require('../data/template-2112-data');
 const template2113Data = require('../data/template-2113-data');
 const template2114Data = require('../data/template-2114-data');
 
-describe.only('lib/routes/templates', function() {
+describe('lib/routes/templates', function() {
 
   describe('with mocks', function() {
     let getTemplatesPathStub;

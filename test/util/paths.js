@@ -6,7 +6,7 @@ const _includes = require('lodash/includes');
 const paths = require('../../src/util/paths');
 const config = require('../../src/util/config');
 
-describe.only('lib/util/paths', function() {
+describe('lib/util/paths', function() {
   let guidesDir;
   let currentUser;
   let configGetStub;

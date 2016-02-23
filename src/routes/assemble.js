@@ -18,7 +18,21 @@ const filename = function(guideTitle) {
   return _kebabCase(guideTitle || 'document') + '.pdf';
 };
 
-router.post('/', function(req, res) {
+// middleware to validate the presence of either `guideId` or
+// `fileDataUrl`, during document assembly one of those two
+// properties is needed to retrieve the template's data.
+const checkPresenceOf = function(req, res, next) {
+  const { guideId, fileDataUrl } = req.body;
+
+  if (!guideId && !fileDataUrl) {
+    return res.status(400)
+      .send('You must provide either guideId or fileDataUrl');
+  }
+
+  next();
+};
+
+router.post('/', checkPresenceOf, function(req, res) {
   const guideTitle = req.body.guideTitle;
   const url = req.protocol + '://' + req.get('host') + req.originalUrl;
   const headerFooterUrl = url + '/header-footer?content=';
@@ -29,32 +43,38 @@ router.post('/', function(req, res) {
   };
 
   const toPdf = function(html) {
-    if (html) {
-      res.set({
-        status: 201,
-        'Content-Type': 'application/pdf',
-        'Access-Control-Allow-Origin': '*',
-        'Content-Disposition': 'attachment; filename=' + filename(guideTitle)
-      });
-
-      pdfOptions['header-html'] = [
-        headerFooterUrl,
-        encodeURIComponent(req.body.header),
-        '&hideOnFirstPage=',
-        encodeURIComponent(req.body.hideHeaderOnFirstPage)
-      ].join('');
-
-      pdfOptions['footer-html'] = [
-        headerFooterUrl,
-        encodeURIComponent(req.body.footer),
-        '&hideOnFirstPage=',
-        encodeURIComponent(req.body.hideFooterOnFirstPage)
-      ].join('');
-
-      wkhtmltopdf(html, pdfOptions).pipe(res);
-    } else {
-      res.sendStatus(400);
+    if (!html) {
+      res.status(500)
+        .send('There was a problem generating the document, try again later.');
     }
+
+    const { header, hideHeaderOnFirstPage } = req.body;
+    const { footer, hideFooterOnFirstPage } = req.body;
+
+    res.set({
+      status: 201,
+      'Content-Type': 'application/pdf',
+      'Access-Control-Allow-Origin': '*',
+      'Content-Disposition': 'attachment; filename=' + filename(guideTitle)
+    });
+
+    if (header) {
+      const h = encodeURIComponent(header);
+      const hofp = encodeURIComponent(hideHeaderOnFirstPage);
+
+      pdfOptions['header-html'] = `${headerFooterUrl}${h}&hideOnFirstPage=${hofp}`;
+    }
+
+    if (footer) {
+      const f = encodeURIComponent(footer);
+      const hofp = encodeURIComponent(hideFooterOnFirstPage);
+
+      pdfOptions['footer-html'] = `${headerFooterUrl}${f}&hideOnFirstPage=${hofp}`;
+    }
+
+    // finally call wkhtmltopdf with the html generated from the can-ssr call
+    // and pipe it into the response object.
+    wkhtmltopdf(html, pdfOptions).pipe(res);
   };
 
   const onSuccess = function(result) {

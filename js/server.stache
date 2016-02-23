@@ -11,6 +11,7 @@
     <a2j-template-ssr
       {answers}="request.body.answers"
       {guide-id}="request.body.guideId"
-      {template-id}="request.body.templateId" />
+      {template-id}="request.body.templateId"
+      {file-data-url}="request.body.fileDataUrl" />
   </body>
 </html>

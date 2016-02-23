@@ -1,20 +1,61 @@
 import Map from 'can/map/';
+import _some from 'lodash/some';
 import AnswerVM from 'viewer/models/answervm';
 import constants from 'viewer/models/constants';
 
 import 'can/map/define/';
 import 'bootstrap/js/modal';
 
+/**
+ * @property {can.Map} pages.ViewModel
+ * @parent viewer/mobile/pages/
+ *
+ * `<a2j-pages>` viewModel.
+ */
 export default Map.extend({
   define: {
     currentPage: {
       value: null
     },
+
     modalContent: {
       value: null
     },
+
     traceLogic: {
       value: []
+    },
+
+    /**
+     * @property {String} pages.ViewModel.prototype.guideId guideId
+     * @parent pages.ViewModel
+     *
+     * Id of the guided interview being "previewed" by the author.
+     *
+     * This property is not available (it's undefined) when the viewer runs
+     * in standalone mode. It's used during document assembly to filter the
+     * templates used to generate the final document.
+     */
+    guideId: {
+      get() {
+        return window.gGuideID;
+      }
+    },
+
+    /**
+     * @property {String} pages.ViewModel.prototype.answersString answersString
+     * @parent pages.ViewModel
+     *
+     * JSON representation of the `answers` entered by the user.
+     *
+     * This is used during document assembly to fill in the variables added by
+     * the author to any of the templates.
+     */
+    answersString: {
+      get() {
+        const answers = this.attr('interview.answers');
+        return JSON.stringify(answers.serialize());
+      }
     }
   },
 
@@ -22,76 +63,88 @@ export default Map.extend({
     this.setCurrentPage();
   },
 
-  home() {
+  returnHome() {
     this.attr('rState').attr({}, true);
   },
 
-  navigate(button) {
-    let error = false;
-    let fields = this.attr('currentPage.fields');
-    let repeatVar = button.attr('repeatVar');
-    let repeatVarSet = button.attr('repeatVarSet');
+  validateAllFields() {
+    const fields = this.attr('currentPage.fields');
 
+    can.each(fields, function(field) {
+      const hasError = !!field.attr('_answer').errors();
+      field.attr('hasError', hasError);
+    });
+  },
+
+  traceButtonClicked(buttonLabel) {
     this.attr('traceLogic').push({
       button: [
         { msg: 'You pressed' },
-        { format: 'ui', msg: button.attr('label') }
+        { format: 'ui', msg: buttonLabel }
       ]
     });
+  },
+
+  traceLogicAfterQuestion() {
+    this.attr('traceLogic').push({
+      codeAfter: { format: 'info', msg: 'Logic After Question' }
+    });
+  },
+
+  onSuccessBtnClick() {
+    const savePromise = this.attr('pState').save();
+
+    savePromise.done(url => {
+      const step = '';
+      const header = '';
+      const redirect = url;
+
+      this.attr('mState').attr({ step, header, redirect });
+      this.attr('rState').attr({ view: 'complete' }, true);
+    });
+  },
+
+  navigate(button) {
+    const repeatVar = button.attr('repeatVar');
+    const fields = this.attr('currentPage.fields');
+    const repeatVarSet = button.attr('repeatVarSet');
+
+    this.traceButtonClicked(button.attr('label'));
 
     if (repeatVar && repeatVarSet) {
       this.setRepeatVariable(repeatVar, repeatVarSet);
     }
 
-    can.each(fields, function(field) {
-      let errors = field.attr('_answer').errors();
-      field.attr('hasError', !!errors);
+    this.validateAllFields();
+    const anyFieldWithError = _some(fields, f => f.attr('hasError'));
 
-      if (errors) error = true;
-    });
+    if (!anyFieldWithError) {
+      const logic = this.attr('logic');
+      const gotoPage = logic.attr('gotoPage');
+      const codeAfter = this.attr('currentPage.codeAfter');
 
-    if (!error) {
-      let logic = this.attr('logic');
-
-      if (this.attr('currentPage.codeAfter')) {
-        this.attr('traceLogic').push({
-          codeAfter: { format: 'info', msg: 'Logic After Question' }
-        });
-        logic.exec(this.attr('currentPage.codeAfter'));
+      if (codeAfter) {
+        this.traceLogicAfterQuestion();
+        logic.exec(codeAfter);
       }
 
-      let gotoPage = logic.attr('gotoPage');
       if (gotoPage && gotoPage.length) {
         logic.attr('gotoPage', null);
         this._setPage(this.attr('currentPage'), gotoPage);
-      }
-      else if (button.next === 'SUCCESS') {
-        let self = this;
-        let completed = new AnswerVM({
-          answer: this.attr('pState.answers.' + constants.vnInterviewIncompleteTF.toLowerCase())
-        });
-
-        completed.attr('values', false);
-        var dfd = this.attr('pState').save();
-        dfd.done(function(url) {
-          self.attr('mState').attr({
-            redirect: url,
-            header: '',
-            step: ''
-          });
-          self.attr('rState').attr({ view: 'complete' }, true);
-        });
-      }
-      else {
+      } else if (button.next === 'ASSEMBLE') {
+        this.onAssembleBtnClick();
+      } else {
         this._setPage(this.attr('currentPage'), button.next);
       }
     }
   },
 
   _setPage(page, gotoPage) {
-    let rState = this.attr('rState');
-    let answer = this.attr('interview.answers.' + page.attr('repeatVar'));
-    let i = answer ? new AnswerVM({ answer: answer }).attr('values') : null;
+    const rState = this.attr('rState');
+    const repeatVar = page.attr('repeatVar');
+
+    const answer = this.attr(`interview.answers.${repeatVar}`);
+    const i = answer ? new AnswerVM({ answer }).attr('values') : null;
 
     if (i) {
       rState.attr({
@@ -105,10 +158,10 @@ export default Map.extend({
   },
 
   setCurrentPage() {
-    let pageName = this.attr('rState.page');
+    const pageName = this.attr('rState.page');
 
     if (pageName && pageName !== 'FAIL') {
-      let page = this.attr('interview.pages').find(pageName);
+      const page = this.attr('interview.pages').find(pageName);
 
       if (!page) {
         console.warn(`Unknown page: ${pageName}`);
@@ -119,30 +172,24 @@ export default Map.extend({
         page: page.attr('name')
       });
 
-      let fields = page.attr('fields');
-
+      this.attr('currentPage', page);
+      this.setFieldAnswers(page.attr('fields'));
       this.attr('mState.header', page.attr('step.text'));
       this.attr('mState.step', page.attr('step.number'));
-
-      let buttons = page.attr('buttons');
-
-      this.setFieldAnswers(fields);
-
-      this.attr('currentPage', page);
     }
   },
 
   setFieldAnswers(fields) {
-    let logic = this.attr('logic');
-    let repeatVar = logic && logic.varGet('repeatVar');
-    let repeatVarCount = logic && logic.varGet(repeatVar);
-    let answerIndex = repeatVarCount ? repeatVarCount : 1;
+    const logic = this.attr('logic');
+    const repeatVar = logic && logic.varGet('repeatVar');
+    const repeatVarCount = logic && logic.varGet(repeatVar);
+    const answerIndex = repeatVarCount ? repeatVarCount : 1;
 
     fields.each(field => {
-      var avm = new AnswerVM({
-        field: field,
+      const avm = new AnswerVM({
+        field,
+        answerIndex,
         answer: field.attr('answer'),
-        answerIndex
       });
 
       if (this.attr('rState.i')) {
@@ -158,26 +205,31 @@ export default Map.extend({
   },
 
   setRepeatVariable(repeatVar, repeatVarSet) {
-    let logic = this.attr('logic');
-    let traceLogic = this.attr('traceLogic');
+    const logic = this.attr('logic');
+    const traceLogic = this.attr('traceLogic');
+
     let traceLogicMsg = {};
 
     if (!logic.varExists('repeatVar')) {
       logic.varCreate('repeatVar', 'Text', false, 'Repeat variable name');
     }
+
     logic.varSet('repeatVar', repeatVar);
 
-    switch(repeatVarSet) {
+    switch (repeatVarSet) {
       case constants.RepeatVarSetOne:
         if (!logic.varExists(repeatVar)) {
-          logic.varCreate(repeatVar, "Number", false, 'Repeat variable index');
+          logic.varCreate(repeatVar, 'Number', false, 'Repeat variable index');
         }
+
         logic.varSet(repeatVar, 1);
         traceLogicMsg[repeatVar + '-0'] = { msg: 'Setting repeat variable to 1' };
         traceLogic.push(traceLogicMsg);
         break;
+
       case constants.RepeatVarSetPlusOne:
-        var value = logic.varGet(repeatVar);
+        const value = logic.varGet(repeatVar);
+
         logic.varSet(repeatVar, value + 1);
         traceLogicMsg[repeatVar + '-' + value] = { msg: 'Incrementing repeat variable' };
         traceLogic.push(traceLogicMsg);

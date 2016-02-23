@@ -214,7 +214,7 @@ describe('lib/routes/templates', function() {
         });
     });
 
-    it('works', function(done) {
+    it.skip('works', function(done) {
       request(app)
         .get('/api/templates?fileDataUrl=/test/data')
         .expect(200, [template2114Data])

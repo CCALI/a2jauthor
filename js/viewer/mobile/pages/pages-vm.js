@@ -1,10 +1,17 @@
 import Map from 'can/map/';
+import _some from 'lodash/some';
 import AnswerVM from 'viewer/models/answervm';
 import constants from 'viewer/models/constants';
 
 import 'can/map/define/';
 import 'bootstrap/js/modal';
 
+/**
+ * @property {can.Map} pages.ViewModel
+ * @parent viewer/mobile/pages/
+ *
+ * `<a2j-pages>` viewModel.
+ */
 export default Map.extend({
   define: {
     currentPage: {
@@ -17,6 +24,38 @@ export default Map.extend({
 
     traceLogic: {
       value: []
+    },
+
+    /**
+     * @property {String} pages.ViewModel.prototype.guideId guideId
+     * @parent pages.ViewModel
+     *
+     * Id of the guided interview being "previewed" by the author.
+     *
+     * This property is not available (it's undefined) when the viewer runs
+     * in standalone mode. It's used during document assembly to filter the
+     * templates used to generate the final document.
+     */
+    guideId: {
+      get() {
+        return window.gGuideID;
+      }
+    },
+
+    /**
+     * @property {String} pages.ViewModel.prototype.answersString answersString
+     * @parent pages.ViewModel
+     *
+     * JSON representation of the `answers` entered by the user.
+     *
+     * This is used during document assembly to fill in the variables added by
+     * the author to any of the templates.
+     */
+    answersString: {
+      get() {
+        const answers = this.attr('interview.answers');
+        return JSON.stringify(answers.serialize());
+      }
     }
   },
 
@@ -24,8 +63,32 @@ export default Map.extend({
     this.setCurrentPage();
   },
 
-  home() {
+  returnHome() {
     this.attr('rState').attr({}, true);
+  },
+
+  validateAllFields() {
+    const fields = this.attr('currentPage.fields');
+
+    can.each(fields, function(field) {
+      const hasError = !!field.attr('_answer').errors();
+      field.attr('hasError', hasError);
+    });
+  },
+
+  traceButtonClicked(buttonLabel) {
+    this.attr('traceLogic').push({
+      button: [
+        { msg: 'You pressed' },
+        { format: 'ui', msg: buttonLabel }
+      ]
+    });
+  },
+
+  traceLogicAfterQuestion() {
+    this.attr('traceLogic').push({
+      codeAfter: { format: 'info', msg: 'Logic After Question' }
+    });
   },
 
   onSuccessBtnClick() {
@@ -42,52 +105,34 @@ export default Map.extend({
   },
 
   navigate(button) {
-    const fields = this.attr('currentPage.fields');
     const repeatVar = button.attr('repeatVar');
+    const fields = this.attr('currentPage.fields');
     const repeatVarSet = button.attr('repeatVarSet');
 
-    this.attr('traceLogic').push({
-      button: [
-        { msg: 'You pressed' },
-        { format: 'ui', msg: button.attr('label') }
-      ]
-    });
+    this.traceButtonClicked(button.attr('label'));
 
     if (repeatVar && repeatVarSet) {
       this.setRepeatVariable(repeatVar, repeatVarSet);
     }
 
-    let error = false;
+    this.validateAllFields();
+    const anyFieldWithError = _some(fields, f => f.attr('hasError'));
 
-    can.each(fields, function(field) {
-      const hasError = !!field.attr('_answer').errors();
-
-      field.attr('hasError', hasError);
-
-      if (hasError) {
-        error = true;
-        return false;
-      }
-    });
-
-    if (!error) {
+    if (!anyFieldWithError) {
       const logic = this.attr('logic');
-
-      if (this.attr('currentPage.codeAfter')) {
-        this.attr('traceLogic').push({
-          codeAfter: { format: 'info', msg: 'Logic After Question' }
-        });
-
-        logic.exec(this.attr('currentPage.codeAfter'));
-      }
-
       const gotoPage = logic.attr('gotoPage');
+      const codeAfter = this.attr('currentPage.codeAfter');
+
+      if (codeAfter) {
+        this.traceLogicAfterQuestion();
+        logic.exec(codeAfter);
+      }
 
       if (gotoPage && gotoPage.length) {
         logic.attr('gotoPage', null);
         this._setPage(this.attr('currentPage'), gotoPage);
-      } else if (button.next === 'SUCCESS') {
-        this.onSuccessBtnClick();
+      } else if (button.next === 'ASSEMBLE') {
+        this.onAssembleBtnClick();
       } else {
         this._setPage(this.attr('currentPage'), button.next);
       }

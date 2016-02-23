@@ -208,7 +208,9 @@ Languages.regional.en= {
 	qIDEXIT : "[Exit - Save Incomplete Form]",
 	qIDBACK : "[Back to prior question]",
 	qIDRESUME : "[Exit - Resume interview]",
-	// Unknown ID
+  qIDASSEMBLE: '[Assemble - Generate PDF document]',
+
+  // Unknown ID
 	UnknownID : "[Unknown id [{1}]: [{2}",
 
 	scriptErrorMissingPage :'Page "{1}" does not exist.',

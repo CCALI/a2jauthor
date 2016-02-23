@@ -10,26 +10,29 @@
 
 /* global gGuidePath,gPage,gGuide,gUserID,gGuideID,gUserNickName, gPrefs*/
 
-function updateAttachmentFiles( )
-{	// Load list of uploaded existing files:
-	gGuide.attachedFiles={};
-	$.ajax({
-		  // Uncomment the following to send cross-domain cookies:
-		  //xhrFields: {withCredentials: true},
-		  url: $('#fileupload').fileupload('option', 'url'),
-		  dataType: 'json',
-		  context: $('#fileupload')[0]
-	 }).always(function () {
-		  $(this).removeClass('fileupload-processing');
-	 }).done(function (result) {
-		  gGuide.attachedFiles = result.files;
-		  $('#attachmentFiles').empty();
-			$.each(gGuide.attachedFiles, function (index, file) {
-				 $('<tr><td>'+
-					'<a target=_blank href="'+gGuidePath+(file.name)+'">'+file.name+'</a>'
-					+'</td><td>'+file.size+'</td></tr>').appendTo('#attachmentFiles');
-			});
-	 });
+function updateAttachmentFiles() {
+  // Load list of uploaded existing files:
+  gGuide.attachedFiles = {};
+
+  $.ajax({
+    // Uncomment the following to send cross-domain cookies:
+    // xhrFields: {withCredentials: true},
+    url: $('#fileupload').fileupload('option', 'url'),
+    dataType: 'json',
+    context: $('#fileupload')[0]
+  }).always(function() {
+    $(this).removeClass('fileupload-processing');
+  }).done(function(result) {
+    gGuide.attachedFiles = result.files;
+    $('#attachmentFiles').empty();
+
+    $.each(gGuide.attachedFiles, function(index, file) {
+      $('<tr><td>' +
+        '<a target=_blank href="' + gGuidePath + (file.name) + '">' + file.name + '</a>' +
+        '</td><td>' + file.size + '</td></tr>'
+      ).appendTo('#attachmentFiles');
+    });
+  });
 }
 
 // List of pages within their steps.
@@ -38,7 +41,7 @@ function getTOCStepPages(includePages, includePops, includeSpecial) {
   var popups = '';
   var inSteps = [];
 
-  for (s = 0; s < CONST.MAXSTEPS; s++) {
+  for (s = 0; s < CONST.MAXSTEPS; s += 1) {
     inSteps[s] = '';
   }
 
@@ -80,7 +83,7 @@ function getTOCStepPages(includePages, includePops, includeSpecial) {
   ts += '</div>';
 
   // Popups as destinations.
-  if (includePops === true) {
+  if (includePops) {
     ts += '<div class="popups-container">';
     ts += '<h3 class="page-title">Popups</h3>';
     ts += '<div class="list-group">' + popups + '</div>';
@@ -88,14 +91,15 @@ function getTOCStepPages(includePages, includePops, includeSpecial) {
   }
 
   // Special branch destinations.
-  if (includeSpecial === true) {
+  if (includeSpecial) {
     var branchIDs = [
       CONST.qIDNOWHERE,
       CONST.qIDSUCCESS,
       CONST.qIDFAIL,
       CONST.qIDEXIT,
       CONST.qIDBACK,
-      CONST.qIDRESUME
+      CONST.qIDRESUME,
+      CONST.qIDASSEMBLE
     ];
 
     var i;

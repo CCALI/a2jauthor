@@ -97,6 +97,7 @@ var CONST = {
 	qIDEXIT:"EXIT", //8/17/09 3.0.1 Save like SUCCESS but flag incomplete true.
 	qIDBACK:"BACK", //8/17/09 3.0.1 Same as history Back button.
 	qIDRESUME:"RESUME", //8/24/09 3.0.2
+  qIDASSEMBLE: 'ASSEMBLE',
 
 	// 2014-06-04 Button-based repeat options
 	RepeatVarSetOne:'=1',
@@ -545,37 +546,37 @@ TGuide.prototype.stepDisplayNumber =function( step )
 	return number;
 };
 
-TGuide.prototype.pageDisplayName=function(name)//pageNametoText
-{	// Convert a page name or reserved word into readable text.
-	// Regular pages just have their name.
-	// Special branches like SUCCESS or EXIT have a more user friendly description.
-	var guide=this;
-	var dval="";
-	if (guide.pages[name])
-	{
-		var page = guide.pages[name];
-		//name = htmlEscape(this.pages[ name ].name);
-		dval = page.name;// +"\t"+  decodeEntities(page.text);
-	}
-	else
-	{
-		var autoIDs={};
-		autoIDs[CONST.qIDNOWHERE]=	lang.qIDNOWHERE;//"[no where]"
-		autoIDs[CONST.qIDSUCCESS]=	lang.qIDSUCCESS;//"[Success - Process Form]"
-		autoIDs[CONST.qIDFAIL]=		lang.qIDFAIL;//"[Exit - User does not qualify]"
-		autoIDs[CONST.qIDEXIT]=		lang.qIDEXIT;//"[Exit - Save Incomplete Form]"//8/17/09 3.0.1 Save incomplete form
-		autoIDs[CONST.qIDBACK]=		lang.qIDBACK;//"[Back to prior question]"//8/17/09 3.0.1 Same as history Back button.
-		autoIDs[CONST.qIDRESUME]=	lang.qIDRESUME;//"[Exit - Resume interview]"//8/24/09 3.0.2
-		if (typeof autoIDs[ name ] === 'undefined'){
-			dval = lang.UnknownID.printf( name, name );//,props(autoIDs)) //"[Unknown id "+id+"]" + props(autoIDs);
-		}
-		else{
-			dval = autoIDs[ name ];
-		}
-	}
-	return dval;
-};
+// pageNametoText
+// Convert a page name or reserved word into readable text.
+// Regular pages just have their name.
+// Special branches like SUCCESS or EXIT have a more user friendly description.
+TGuide.prototype.pageDisplayName = function(name) {
+  var dval = '';
+  var guide = this;
 
+  if (guide.pages[name]) {
+    var page = guide.pages[name];
+    dval = page.name;
+  } else {
+    var autoIDs = {};
+
+    autoIDs[CONST.qIDNOWHERE] =	lang.qIDNOWHERE;
+    autoIDs[CONST.qIDSUCCESS] =	lang.qIDSUCCESS;
+    autoIDs[CONST.qIDFAIL] = lang.qIDFAIL;
+    autoIDs[CONST.qIDEXIT] = lang.qIDEXIT;
+    autoIDs[CONST.qIDBACK] = lang.qIDBACK;
+    autoIDs[CONST.qIDRESUME] = lang.qIDRESUME;
+    autoIDs[CONST.qIDASSEMBLE] = lang.qIDASSEMBLE;
+
+    if (typeof autoIDs[name] === 'undefined') {
+      dval = lang.UnknownID.printf(name, name);
+    } else {
+      dval = autoIDs[name];
+    }
+  }
+
+  return dval;
+};
 
 TVariable.prototype.traceLogic=function(msg)
 {	// Send trace message into viewer's log trace.

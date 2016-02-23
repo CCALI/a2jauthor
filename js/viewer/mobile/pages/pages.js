@@ -1,15 +1,39 @@
 import PagesVM from './pages-vm';
 import Component from 'can/component/';
 import template from './pages.stache!';
-import AnswerVM from 'viewer/models/answervm';
 
 import 'viewer/mobile/util/helpers';
 
+/**
+ * @module {Module} viewer/mobile/pages/ <a2j-pages>
+ * @parent api-components
+ *
+ * This component renders each of the interview pages and handle the
+ * navigation between those pages.
+ *
+ * ## Use
+ *
+ * @codestart
+ *   <a2j-pages
+ *     {lang}="lang"
+ *     {(logic)}="logic"
+ *     {(r-state)}="routeState"
+ *     {(m-state)}="memoryState"
+ *     {(interview)}="interview"
+ *     {(p-state)}="persistedState" />
+ * @codeend
+ */
 export default Component.extend({
   template,
-  leakScope: false,
   tag: 'a2j-pages',
+  leakScope: false,
   viewModel: PagesVM,
+
+  helpers: {
+    buttonLabelOrDefault(label) {
+      return label ? label : this.attr('lang').attr('Continue');
+    }
+  },
 
   events: {
     'a:regex(href,popup\://) click': function(el, ev) {
@@ -79,13 +103,12 @@ export default Component.extend({
       vm.setCurrentPage();
     },
 
+    // when value of repeatVar changes, re-render page fields
+    '{rState} repeatVarValue': function() {
+      const vm = this.viewModel;
+      const fields = vm.attr('currentPage.fields');
 
-    /*
-    * when value of repeatVar changes, re-render page fields
-    */
-    '{rState} repeatVarValue': function(rState, ev, val) {
-      let fields = this.viewModel.attr('currentPage.fields');
-      this.viewModel.setFieldAnswers(fields);
+      vm.setFieldAnswers(fields);
     }
   }
 });

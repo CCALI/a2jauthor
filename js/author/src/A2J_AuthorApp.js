@@ -174,19 +174,19 @@ function main()
         }
   });
 
-  $('#guideZIP').button({  disabled:false}).click(function()
-  { // 01/08/2014 ZIP the guide and related files.
-    function guideZipped(data)
-    {
+  // 01/08/2014 ZIP the guide and related files.
+  $('#guideZIP').button({ disabled: false }).click(function() {
+    setProgress('Generating ZIP', true);
+
+    ws({ cmd: 'guidezip', gid: gGuideID }, function(data) {
       setProgress('');
-      gGuideID=data.gid;
-      if (data.zip!==''){
-        window.open( data.zip);
+      window.gGuideID = data.gid;
+
+      if (data.zip !== '') {
+        window.open(data.zip);
       }
-    }
-    setProgress('Generating ZIP',true);
-    ws({cmd:'guidezip',gid:gGuideID},guideZipped);
-   });
+    });
+  });
 
   $('#guidePublish').button({  disabled:false}).click(function()
   { // 07/22/2014 Publish guide and related files to unique, permanent URL.

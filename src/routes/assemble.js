@@ -4,8 +4,8 @@ const path = require('path');
 const ssr = require('can-ssr');
 const feathers = require('feathers');
 const wkhtmltopdf = require('wkhtmltopdf');
-const _kebabCase = require('lodash/kebabCase');
 const XHR = require('can-ssr/lib/middleware/xhr');
+const filenamify = require('../util/pdf-filename');
 
 const router = feathers.Router();
 
@@ -13,10 +13,6 @@ const render = ssr({
   main: 'caja/server.stache!done-autorender',
   config: path.join(__dirname, '..', '..', 'package.json!npm')
 });
-
-const filename = function(guideTitle) {
-  return _kebabCase(guideTitle || 'document') + '.pdf';
-};
 
 // middleware to validate the presence of either `guideId` or
 // `fileDataUrl`, during document assembly one of those two
@@ -33,7 +29,6 @@ const checkPresenceOf = function(req, res, next) {
 };
 
 router.post('/', checkPresenceOf, function(req, res) {
-  const guideTitle = req.body.guideTitle;
   const url = req.protocol + '://' + req.get('host') + req.originalUrl;
   const headerFooterUrl = url + '/header-footer?content=';
 
@@ -42,7 +37,7 @@ router.post('/', checkPresenceOf, function(req, res) {
     'footer-spacing': 5
   };
 
-  const toPdf = function(html) {
+  const toPdf = function(filename, html) {
     if (!html) {
       res.status(500)
         .send('There was a problem generating the document, try again later.');
@@ -55,7 +50,7 @@ router.post('/', checkPresenceOf, function(req, res) {
       status: 201,
       'Content-Type': 'application/pdf',
       'Access-Control-Allow-Origin': '*',
-      'Content-Disposition': 'attachment; filename=' + filename(guideTitle)
+      'Content-Disposition': `attachment; filename=${filename}`
     });
 
     if (header) {
@@ -78,7 +73,8 @@ router.post('/', checkPresenceOf, function(req, res) {
   };
 
   const onSuccess = function(result) {
-    toPdf(he.decode(result.html));
+    const title = req.body.guideTitle;
+    toPdf(filenamify(title), he.decode(result.html));
   };
 
   const onFailure = function(error) {

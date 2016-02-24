@@ -1,6 +1,7 @@
 const Q = require('q');
 const path = require('path');
 const config = require('./config');
+const urlRegex = require('url-regex');
 
 /**
  * @module {Module} /util/paths paths
@@ -14,16 +15,31 @@ module.exports = {
   /**
    * @function paths.getViewerPath
    * @parent paths
-   *
-   * When `fileDataUrl` is used to locate the template(s) json files,
-   * we need to build the templates path using the viewer folder as
-   * the base, since that's the base path the standalone viewer uses
-   * to retrive the Guide.json file needed to render the app.
-   *
-   * @return {String} The path of the viewer app folder
+   * @return {String} Absolute path to the viewer app folder
    */
   getViewerPath() {
     return path.join(__dirname, '..', '..', 'js/viewer');
+  },
+
+  /**
+   * @function paths.normalizeFileDataUrl
+   * @parent paths
+   * @param {String} fileDataUrl URL where the file data folder is located
+   *
+   * When `fileDataUrl` is used to locate the template(s) json files,
+   * we need to build the templates path using the viewer folder as
+   * the base if `fileDataUrl` is relative, otherwise we just use the
+   * absolute `fileDataUrl` as-is.
+   *
+   * @return {String} Normalized file data url
+   */
+  normalizeFileDataUrl(fileDataUrl) {
+    const isAbsolutePath = path.isAbsolute(fileDataUrl);
+    const isUrl = urlRegex({ exact: true }).test(fileDataUrl);
+
+    return (isUrl || isAbsolutePath) ?
+      fileDataUrl :
+      path.join(this.getViewerPath(), fileDataUrl);
   },
 
   /**
@@ -38,7 +54,7 @@ module.exports = {
     const guidesDir = config.get('GUIDES_DIR');
 
     const file = fileDataUrl ?
-      path.join(this.getViewerPath(), fileDataUrl, 'templates.json') :
+      path.join(this.normalizeFileDataUrl(fileDataUrl), 'templates.json') :
       path.join(guidesDir, username, 'templates.json');
 
     deferred.resolve(file);
@@ -62,7 +78,7 @@ module.exports = {
     const filename = `template${templateId}.json`;
 
     const file = fileDataUrl ?
-      path.join(this.getViewerPath(), fileDataUrl, filename) :
+      path.join(this.normalizeFileDataUrl(fileDataUrl), filename) :
       path.join(guidesDir, username, folderName, filename);
 
     deferred.resolve(file);

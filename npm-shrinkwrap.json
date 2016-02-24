@@ -3105,6 +3105,18 @@
       "from": "git://github.com/twitter/typeahead.js.git#v0.11.1",
       "resolved": "git://github.com/twitter/typeahead.js.git#588440f66559714280628a4f9799f0c4eb880a4a"
     },
+    "url-regex": {
+      "version": "3.1.0",
+      "from": "url-regex@latest",
+      "resolved": "https://registry.npmjs.org/url-regex/-/url-regex-3.1.0.tgz",
+      "dependencies": {
+        "ip-regex": {
+          "version": "1.0.3",
+          "from": "ip-regex@>=1.0.1 <2.0.0",
+          "resolved": "https://registry.npmjs.org/ip-regex/-/ip-regex-1.0.3.tgz"
+        }
+      }
+    },
     "wkhtmltopdf": {
       "version": "0.1.5",
       "from": "https://registry.npmjs.org/wkhtmltopdf/-/wkhtmltopdf-0.1.5.tgz",

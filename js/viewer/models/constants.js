@@ -78,6 +78,8 @@ export default {
   qIDEXIT: 'EXIT', //8/17/09 3.0.1 Save like SUCCESS but flag incomplete true.
   qIDBACK: 'BACK', //8/17/09 3.0.1 Same as history Back button.
   qIDRESUME: 'RESUME', //8/24/09 3.0.2
+  qIDASSEMBLE: 'ASSEMBLE',
+  qIDASSEMBLESUCCESS: 'ASSEMBLE-SUCCESS',
 
   // 2014-06-04 Button-based repeat options
   RepeatVarSetOne: '=1',

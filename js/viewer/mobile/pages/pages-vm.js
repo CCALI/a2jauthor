@@ -91,7 +91,7 @@ export default Map.extend({
     });
   },
 
-  onSuccessBtnClick() {
+  saveAndComplete() {
     const savePromise = this.attr('pState').save();
 
     savePromise.done(url => {
@@ -131,9 +131,10 @@ export default Map.extend({
       if (gotoPage && gotoPage.length) {
         logic.attr('gotoPage', null);
         this._setPage(this.attr('currentPage'), gotoPage);
-      } else if (button.next === 'ASSEMBLE') {
-        this.onAssembleBtnClick();
-      } else {
+      } else if (button.next === constants.qIDSUCCESS ||
+        button.next === constants.qIDASSEMBLESUCCESS) {
+        this.saveAndComplete();
+      } else if (button.next !== constants.qIDASSEMBLE) {
         this._setPage(this.attr('currentPage'), button.next);
       }
     }

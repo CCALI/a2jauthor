@@ -12,6 +12,21 @@ const config = require('./config');
  */
 module.exports = {
   /**
+   * @function paths.getViewerPath
+   * @parent paths
+   *
+   * When `fileDataUrl` is used to locate the template(s) json files,
+   * we need to build the templates path using the viewer folder as
+   * the base, since that's the base path the standalone viewer uses
+   * to retrive the Guide.json file needed to render the app.
+   *
+   * @return {String} The path of the viewer app folder
+   */
+  getViewerPath() {
+    return path.join(__dirname, '..', '..', 'js/viewer');
+  },
+
+  /**
    * @property {Function} paths.getTemplatesPath
    * @parent paths
    *
@@ -23,7 +38,7 @@ module.exports = {
     const guidesDir = config.get('GUIDES_DIR');
 
     const file = fileDataUrl ?
-      path.join(__dirname, '..', '..', fileDataUrl, 'templates.json') :
+      path.join(this.getViewerPath(), fileDataUrl, 'templates.json') :
       path.join(guidesDir, username, 'templates.json');
 
     deferred.resolve(file);
@@ -47,7 +62,7 @@ module.exports = {
     const filename = `template${templateId}.json`;
 
     const file = fileDataUrl ?
-      path.join(__dirname, '..', '..', fileDataUrl, filename) :
+      path.join(this.getViewerPath(), fileDataUrl, filename) :
       path.join(guidesDir, username, folderName, filename);
 
     deferred.resolve(file);

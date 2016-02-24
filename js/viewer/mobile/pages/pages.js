@@ -1,6 +1,7 @@
 import PagesVM from './pages-vm';
 import Component from 'can/component/';
 import template from './pages.stache!';
+import constants from 'viewer/models/constants';
 
 import 'viewer/mobile/util/helpers';
 
@@ -30,6 +31,11 @@ export default Component.extend({
   viewModel: PagesVM,
 
   helpers: {
+    isAssembleButton(label) {
+      return label === constants.qIDASSEMBLE ||
+        label === constants.qIDASSEMBLESUCCESS;
+    },
+
     buttonLabelOrDefault(label) {
       return label ? label : this.attr('lang').attr('Continue');
     }

@@ -34,14 +34,14 @@
     </p>
 
     {{#each buttons}}
-      {{#is next "ASSEMBLE"}}
+      {{#if isAssembleButton(next)}}
         <form action="/api/assemble" method="post" target="_blank">
           <input type="hidden" name="guideId" {$value}="guideId">
           <input type="hidden" name="answers" {$value}="answersString">
           <input type="hidden" name="guideTitle" {$value}="interview.title">
           <input type="hidden" name="fileDataUrl" {$value}="mState.fileDataURL">
 
-          <button type="submit" class="btn btn-default btn-navigate">
+          <button type="submit" class="btn btn-default btn-navigate" ($click)="navigate">
             {{buttonLabelOrDefault(label)}}
           </button>
         </form>
@@ -49,7 +49,7 @@
         <button type="button" class="btn btn-default btn-navigate" ($click)="navigate">
           {{buttonLabelOrDefault(label)}}
         </button>
-      {{/is}}
+      {{/if}}
     {{/each}}
   {{/with}}
 {{/if}}

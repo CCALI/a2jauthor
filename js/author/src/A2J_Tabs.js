@@ -99,7 +99,8 @@ function getTOCStepPages(includePages, includePops, includeSpecial) {
       CONST.qIDEXIT,
       CONST.qIDBACK,
       CONST.qIDRESUME,
-      CONST.qIDASSEMBLE
+      CONST.qIDASSEMBLE,
+      CONST.qIDASSEMBLESUCCESS
     ];
 
     var i;

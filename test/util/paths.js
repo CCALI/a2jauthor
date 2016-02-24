@@ -39,7 +39,7 @@ describe('lib/util/paths', function() {
       const promise = paths.getTemplatesPath({ fileDataUrl });
 
       return promise.then((templatesPath) => {
-        assert.ok(_includes(templatesPath, `CAJA/${fileDataUrl}`));
+        assert.ok(_includes(templatesPath, `CAJA/js/viewer/${fileDataUrl}`));
       });
     });
   });
@@ -65,7 +65,7 @@ describe('lib/util/paths', function() {
       });
 
       return promise.then((templatesPath) => {
-        const expected = 'CAJA/path/to/file/data/template20.json';
+        const expected = 'CAJA/js/viewer/path/to/file/data/template20.json';
         assert.ok(_includes(templatesPath, expected));
       });
     });

@@ -8,6 +8,5 @@ exports.translate = function(load) {
     .replace(/[\t]/g, '\\t')
     .replace(/[\r]/g, '\\r')
     .replace(/[\u2028]/g, '\\u2028')
-    .replace(/[\u2029]/g, '\\u2029')
-  + '";\n});';
+    .replace(/[\u2029]/g, '\\u2029') + '";\n});';
 };

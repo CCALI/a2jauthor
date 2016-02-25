@@ -1,7 +1,6 @@
-import $ from 'jquery';
 import Map from 'can/map/';
 import Component from 'can/component/';
-import template from './modal.stache!'
+import template from './modal.stache!';
 
 import 'can/map/define/';
 
@@ -26,12 +25,14 @@ export default Component.extend({
     'a click': function(el) {
       el.attr('target', '_blank');
     },
-    '{viewModel} modalContent': function(vm, ev, newVal, oldVal) {
+
+    '{viewModel} modalContent': function(vm, ev, newVal) {
       if (newVal) {
         this.element.find('#pageModal').modal();
       }
     },
-    '#pageModal hidden.bs.modal': function(el, ev) {
+
+    '#pageModal hidden.bs.modal': function() {
       this.viewModel.attr('modalContent', null);
     }
   },

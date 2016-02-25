@@ -64,5 +64,10 @@
   "safeContextKeyword": "_this",
   "validateLineBreaks": "LF",
   "validateQuoteMarks": "'",
-  "validateIndentation": 2
+  "validateIndentation": 2,
+  "excludeFiles": [
+    "node_modules/**",
+    "js/author/src/**",
+    "js/node_modules/**"
+  ]
 }

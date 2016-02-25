@@ -4,8 +4,8 @@ import template from './intro.stache!';
 
 import 'jquerypp/event/swipe/';
 
-let IntroVM = Map.extend({
-  navigate: function(button) {
+const IntroVM = Map.extend({
+  navigate() {
     this.attr('rState').attr({
       page: this.attr('interview.firstPage'),
       view: 'pages'

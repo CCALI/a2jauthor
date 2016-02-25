@@ -5,6 +5,13 @@ module.exports = function(grunt) {
       build: ['dist/']
     },
 
+    jshint: {
+      options: {
+        jshintrc: '../.jshintrc'
+      },
+      all: ['author/**/*.js', 'viewer/**/*.js'],
+    },
+
     copy: {
       'icon-font': {
         expand: true,
@@ -78,6 +85,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
 
   grunt.renameTask('documentjs', 'documentjs-orig');
 

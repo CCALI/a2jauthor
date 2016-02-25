@@ -153,13 +153,13 @@ describe('<a2j-viewer-navigation>', function() {
       assert.equal(vm.attr('selectedPageName'), pages.attr(1).attr('name'),
         'should set selectedpageName to page 1');
       assert.equal(logicSpy.varSet.callCount, 0,
-        'should not set repeatVar logic for page 1')
+        'should not set repeatVar logic for page 1');
 
       vm.attr('selectedPageIndex', 0);
       assert.equal(vm.attr('selectedPageName'), pages.attr(0).attr('name'),
         'should set selectedpageName to page 0');
       assert.equal(logicSpy.varSet.callCount, 0,
-        'should not set repeatVar logic for page 0')
+        'should not set repeatVar logic for page 0');
 
       pages.attr(2).attr('repeatVar', 'foo');
       pages.attr(2).attr('repeatVarValue', 2);

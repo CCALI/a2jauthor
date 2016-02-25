@@ -71,4 +71,4 @@ export default Map.extend({
       visited.unshift({ name, text, repeatVar, repeatVarValue });
     }
   }
-})
+});

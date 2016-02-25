@@ -328,8 +328,8 @@ export let ViewerStepsVM = Map.extend({
    * the style attribute value needed for styling a step based on its width
    */
   formatStepStyles(width) {
-    return 'margin-right: ' + `-${Math.ceil(width * .1)}px;` +
-           'width: ' +`calc(0% + ${Math.ceil(width + (width * .3))}px);`
+    return 'margin-right: ' + `-${Math.ceil(width * 0.1)}px;` +
+           'width: ' +`calc(0% + ${Math.ceil(width + (width * 0.3))}px);`;
   },
 
   avatarLoaded() {
@@ -402,9 +402,9 @@ export default Component.extend({
       number = number.isComputed ? number() : number;
       number = parseInt(number, 10);
 
-      return (number === 0 || _isNaN(number))
-        ? options.fn()
-        : options.inverse();
+      return (number === 0 || _isNaN(number)) ?
+        options.fn() :
+        options.inverse();
     },
 
     add(a, b) {

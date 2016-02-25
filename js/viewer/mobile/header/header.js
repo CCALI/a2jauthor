@@ -22,10 +22,10 @@ export default Component.extend({
     showSave: function(options) {
       let autoSetDataURL = this.attr('mState.autoSetDataURL');
 
-      return this.attr('rState.view') === 'pages'
-        && autoSetDataURL && autoSetDataURL.length
-        ? options.fn()
-        : options.inverse();
+      return (this.attr('rState.view') === 'pages' &&
+        autoSetDataURL && autoSetDataURL.length) ?
+        options.fn() :
+        options.inverse();
     }
   }
 });

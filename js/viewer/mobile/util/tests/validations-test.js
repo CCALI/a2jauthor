@@ -9,10 +9,10 @@ describe('Validations', function() {
     it('empty', function() {
       validations = new Validations();
 
-      let invalid = validations.required()
-        || validations.maxChars()
-        || validations.min()
-        || validations.max();
+      let invalid = validations.required() ||
+        validations.maxChars() ||
+        validations.min() ||
+        validations.max();
 
       assert.ok(!invalid, 'empty config attrs are ignored');
     });

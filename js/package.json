@@ -4,7 +4,7 @@
   "description": "Authoring and viewer App GUI.",
   "main": "author/app",
   "scripts": {
-    "test": "testee --reporter Spec --browsers firefox viewer/test/index.html author/test/index.html"
+    "test": "grunt jshint && testee --reporter Spec --browsers firefox viewer/test/index.html author/test/index.html"
   },
   "author": "",
   "license": "ISC",
@@ -27,6 +27,7 @@
     "grunt": "^0.4.5",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-less": "^1.0.1",
     "jquery": "~2.1.4",
     "jquery-textfill": "^0.6.0",

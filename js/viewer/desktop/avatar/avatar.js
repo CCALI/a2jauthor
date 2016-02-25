@@ -95,4 +95,4 @@ export default Component.extend({
       $svg.attr('class', `${svgClasses} skin-${skin}`);
     }
   }
-})
+});

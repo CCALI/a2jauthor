@@ -1,0 +1,9 @@
+js/dist/**/*.js
+node_modules/**/*.js
+js/author/src/**/*.js
+js/node_modules/**/*.js
+js/viewer/mobile/resources/*.js
+js/viewer/mobile/util/regex.js
+js/viewer/mobile/util/tlang.js
+js/viewer/mobile/util/tlogic.js
+js/viewer/models/constants.js

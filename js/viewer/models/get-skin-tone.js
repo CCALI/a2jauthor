@@ -14,4 +14,4 @@ let tonesMap = {
 export default function getSkinTone(avatarName) {
   if (!avatarName) return lighter;
   return tonesMap[avatarName];
-};
+}

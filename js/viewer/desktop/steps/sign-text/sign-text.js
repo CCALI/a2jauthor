@@ -195,7 +195,7 @@ export default Component.extend({
     },
 
     // resize when user navigates to next step
-    '{viewModel} currentStepNumber': function(vm, ev, newVal){
+    '{viewModel} currentStepNumber': function(vm) {
       setTimeout(vm.resizeText.bind(vm));
     },
 

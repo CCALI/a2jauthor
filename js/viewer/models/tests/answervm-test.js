@@ -58,7 +58,7 @@ describe('AnswerViewModel', function() {
     });
 
     assert.doesNotThrow(() => {
-      avm.attr('values', false)
+      avm.attr('values', false);
     });
 
     assert.deepEqual(avm.attr('answer.values').attr(), [ null, false ]);

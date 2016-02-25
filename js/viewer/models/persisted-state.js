@@ -1,7 +1,6 @@
 import Model from 'can/model/';
 import Answers from 'viewer/models/answers';
 import Parser from 'viewer/mobile/util/parser';
-import LocalModel from 'viewer/models/local-model';
 
 import 'can/map/define/';
 import 'viewer/mobile/util/backup';

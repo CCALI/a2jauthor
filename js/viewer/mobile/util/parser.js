@@ -109,7 +109,7 @@ let setVariable = function(variable, pages) {
 
 export default {
   parseANX(json, pages) {
-    var xml = constants.HotDocsANXHeader_UTF8_str;
+    var xml = constants.HotDocsANXHeader_UTF8_str; // jshint ignore:line
     xml += '<AnswerSet title="">';
 
     for (var k in json) {

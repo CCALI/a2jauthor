@@ -253,7 +253,7 @@ describe('<a2j-pages>', () => {
     });
 
     it('sets traceLogic when traceLogic event is triggered on the window', (done) => {
-      vm.attr('traceLogic').bind('change', function handler(ev, attr) {
+      vm.attr('traceLogic').bind('change', function handler() {
         vm.attr('traceLogic').unbind('change', handler);
 
         assert.deepEqual(vm.attr('traceLogic').attr(), [

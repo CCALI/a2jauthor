@@ -20,6 +20,6 @@ export default Control.extend({
 });
 
 // Expose an additional html attr for easy access
-can.view.attr('filler', function(el, data) {
+can.view.attr('filler', function(el) {
   new Filler(el);
 });

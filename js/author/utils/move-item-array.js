@@ -21,15 +21,17 @@ import _inRange from 'lodash/inRange';
  * @param {Number} to Index at which element will be moved
  * @return {Array} The modified array
  */
-export default function moveItem(array = [], from, to) {
-  let length = array.length;
+export default function moveItem(array, from, to) {
+  array = array || [];
+
+  const length = array.length;
 
   from = parseInt(from, 10);
   to = parseInt(to, 10);
 
   if (_inRange(from, 0, length) && _inRange(to, 0, length)) {
-    var copy = array.slice(0);
-    var item = copy.splice(from, 1)[0];
+    const copy = array.slice(0);
+    const item = copy.splice(from, 1)[0];
     copy.splice(to, 0, item);
     return copy;
   } else {

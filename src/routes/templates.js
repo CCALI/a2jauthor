@@ -1,9 +1,9 @@
-var Q = require('q');
-var _ = require('lodash');
-var paths = require('../util/paths');
-var files = require('../util/files');
-var user = require('../util/user');
-var debug = require('debug')('A2J:routes/templates');
+const Q = require('q');
+const _ = require('lodash');
+const paths = require('../util/paths');
+const files = require('../util/files');
+const user = require('../util/user');
+const debug = require('debug')('A2J:routes/templates');
 
 const filterTemplatesByActive = function(active, templates) {
   return (active != null) ? _.filter(templates, { active }) : templates;
@@ -143,14 +143,18 @@ module.exports = {
         });
       });
 
+    const debugTemplatesByGuide = function(templates) {
+      if (templates.length) {
+        debug('Found', templates.length, 'templates for guide', guideId);
+      } else {
+        debug('No templates found for guideId ' + guideId);
+      }
+    };
+
     Q.all(templatePromises)
       .then(templates => filterTemplatesByActive(active, templates))
       .then(filteredTemplates => {
-        if (filteredTemplates.length) {
-          debug('Found', filteredTemplates.length, 'templates for guide', guideId);
-        } else {
-          debug('No templates found for guideId ' + guideId);
-        }
+        debugTemplatesByGuide(filteredTemplates);
         callback(null, filteredTemplates);
       })
       .catch(error => {

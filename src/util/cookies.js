@@ -17,4 +17,4 @@ module.exports = {
     req.feathers.cookieHeader = req.headers.cookie;
     next();
   }
-}
+};

@@ -1,12 +1,11 @@
-var _ = require('lodash');
-var Q = require('q');
-var path = require('path');
-var paths = require('../util/paths');
-var files = require('../util/files');
-var user = require('../util/user');
-var templates = require('./templates');
+const _ = require('lodash');
+const Q = require('q');
+const paths = require('../util/paths');
+const files = require('../util/files');
+const user = require('../util/user');
+const templates = require('./templates');
 
-var debug = require('debug')('A2J:routes/template');
+const debug = require('debug')('A2J:routes/template');
 
 /**
  * @module {Module} /routes/template template
@@ -47,7 +46,7 @@ module.exports = {
    * @return {Object} template from templates array matching templateId
    */
   filterTemplatesByTemplateId({ templatesData, templateId }) {
-    var template = _.find(templatesData, (o) => o.templateId === parseInt(templateId, 10));
+    const template = _.find(templatesData, (o) => o.templateId === parseInt(templateId, 10));
 
     if (!template) {
       throw new Error('Template not found with templateId ' + templateId);
@@ -67,7 +66,7 @@ module.exports = {
    * @return {Number} next valid templateId.
    */
   getNextTemplateId({ templatesData }) {
-    let maxId = _.max(_.map(templatesData, template => template.templateId)) || 0;
+    const maxId = _.max(_.map(templatesData, template => template.templateId)) || 0;
     return maxId + 1;
   },
 
@@ -113,9 +112,9 @@ module.exports = {
   get(templateId, params, callback) {
     debug(`GET /api/template/${templateId} request`);
 
-    let usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader });
+    const usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader });
 
-    let templateSummaryPromise = usernamePromise
+    const templateSummaryPromise = usernamePromise
       .then(username => templates.getTemplatesJSON({ username }))
       .then(templatesData => this.filterTemplatesByTemplateId({ templatesData, templateId }));
 
@@ -150,10 +149,10 @@ module.exports = {
   create(data, params, callback) {
     debug(`POST /api/template request: ${JSON.stringify(data)}`);
 
-    let currentTime = Date.now();
-    let usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader });
+    const currentTime = Date.now();
+    const usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader });
 
-    let templateDataPromise = usernamePromise
+    const templateDataPromise = usernamePromise
       .then(username => templates.getTemplatesJSON({ username }))
       .then(templatesData => this.getNextTemplateId({ templatesData }))
       .then(templateId => _.assign(data, {
@@ -162,7 +161,7 @@ module.exports = {
         updatedAt: currentTime
       }));
 
-    let writeTemplatePromise = Q.all([templateDataPromise, usernamePromise])
+    const writeTemplatePromise = Q.all([templateDataPromise, usernamePromise])
       .then(([{ guideId, templateId }, username]) => paths.getTemplatePath({
         guideId,
         templateId,
@@ -170,10 +169,10 @@ module.exports = {
       }))
       .then(path => files.writeJSON({ path, data }));
 
-    let templatesPathPromise = usernamePromise
+    const templatesPathPromise = usernamePromise
       .then(username => paths.getTemplatesPath({ username }));
 
-    let writeSummaryPromise = Q.all([ templatesPathPromise, templateDataPromise])
+    const writeSummaryPromise = Q.all([templatesPathPromise, templateDataPromise])
       .then(([ path, templateData ]) => files.mergeJSON({
         path,
         data: _.pick(templateData, this.summaryFields)
@@ -204,15 +203,15 @@ module.exports = {
   update(templateId, data, params, callback) {
     debug(`PUT /api/template/${templateId} request: ${JSON.stringify(data)}`);
 
-    let currentTime = Date.now();
+    const currentTime = Date.now();
     _.assign(data, {
       templateId: +templateId,
       updatedAt: currentTime
     });
 
-    let usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader });
+    const usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader });
 
-    let writeTemplatePromise = usernamePromise
+    const writeTemplatePromise = usernamePromise
       .then(username => paths.getTemplatePath({
         guideId: data.guideId,
         templateId: data.templateId,
@@ -220,13 +219,13 @@ module.exports = {
       }))
       .then(path => files.writeJSON({ path, data }));
 
-    let writeSummaryPromise = usernamePromise
+    const writeSummaryPromise = usernamePromise
       .then(username => paths.getTemplatesPath({ username }))
       .then(path => files.mergeJSON({
         path,
         data: _.pick(data, this.summaryFields),
         replaceKey: 'templateId'
-      }))
+      }));
 
     Q.all([
         writeTemplatePromise,

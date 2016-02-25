@@ -42,7 +42,7 @@ function getInterviewPath(url) {
 }
 
 const Interview = Model.extend({
-  findOne: function(data, success, error) {
+  findOne(data, success, error) {
     let dfd = can.Deferred();
     let resumeDfd = can.Deferred();
     let interviewPath = getInterviewPath(data.url);
@@ -79,10 +79,10 @@ const Interview = Model.extend({
       dfd.reject();
     });
 
-    return dfd;
+    return dfd.then(success, error);
   },
 
-  parseModel: function(data) {
+  parseModel(data) {
     data._pages = data.pages;
     data.pages = [];
 
@@ -134,9 +134,7 @@ const Interview = Model.extend({
       serialize: false,
       get() {
         let gender = this.attr('guideGender') || '';
-        return gender.toLowerCase() === 'male'
-          ? 'male'
-          : 'female';
+        return gender.toLowerCase() === 'male' ? 'male' : 'female';
       }
     },
 

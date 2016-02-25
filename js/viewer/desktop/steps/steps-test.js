@@ -130,7 +130,7 @@ describe('<a2j-viewer-steps>', function() {
       vm.attr('sidewalkHeight', 750);
       assert.equal(vm.attr('maxDisplayedSteps'), 5, 'show 5 steps when sidewalk is 750px or above');
 
-      vm.attr('interview.steps.length', 4)
+      vm.attr('interview.steps.length', 4);
       assert.equal(vm.attr('maxDisplayedSteps'), 4, 'never show more steps than interview has');
     });
 
@@ -144,7 +144,7 @@ describe('<a2j-viewer-steps>', function() {
       assert.equal(vm.attr('avatarSkinTone'), 'avatar', 'should use interview skin tone if set');
 
       vm.attr('interview.avatarSkinTone', '');
-      vm.attr('mState.avatarSkinTone', 'global')
+      vm.attr('mState.avatarSkinTone', 'global');
       assert.equal(vm.attr('avatarSkinTone'), 'global', 'should use global skin tone if set');
 
       vm.attr('interview.avatarSkinTone', 'avatar');
@@ -164,16 +164,28 @@ describe('<a2j-viewer-steps>', function() {
       });
 
       assert.ok(!vm.attr('showClientAvatar'), 'should not show client avatar');
-      assert.equal(vm.attr('guideAvatarFacingDirection'), 'front', 'should show guide avatar facing front')
+      assert.equal(
+        vm.attr('guideAvatarFacingDirection'),
+        'front',
+        'should show guide avatar facing front'
+      );
 
       vm.attr('interview.userGender', 'gender');
       currentPage.attr('hasUserGenderField', true);
       assert.ok(!vm.attr('showClientAvatar'), 'should not show client avatar when current page has the user gender field');
-      assert.equal(vm.attr('guideAvatarFacingDirection'), 'front', 'should still show guide avatar facing front')
+      assert.equal(
+        vm.attr('guideAvatarFacingDirection'),
+        'front',
+        'should still show guide avatar facing front'
+      );
 
       currentPage.attr('hasUserGenderField', false);
       assert.ok(!!vm.attr('showClientAvatar'), 'should show client avatar when user has a gender');
-      assert.equal(vm.attr('guideAvatarFacingDirection'), 'right', 'should show guide avatar facing right')
+      assert.equal(
+        vm.attr('guideAvatarFacingDirection'),
+        'right',
+        'should show guide avatar facing right'
+      );
     });
 
     it('sidewalkLength', () => {
@@ -184,8 +196,9 @@ describe('<a2j-viewer-steps>', function() {
 
     it('sidewalkAngleA', () => {
       vm.attr('sidewalkHeight', 600);
+
       // set sidewalkLength to 1200 by doing 1200^2 - 600^2 = sidewalkWidth^2
-      vm.attr('sidewalkWidth', Math.pow( Math.pow(1200, 2) - Math.pow(600, 2), 0.5));
+      vm.attr('sidewalkWidth', Math.pow(Math.pow(1200, 2) - Math.pow(600, 2), 0.5));
 
       // angle A is then PI/6 radians (30 degrees)
       assert.equal(_round(vm.attr('sidewalkAngleA'), 5), _round(Math.PI / 6, 5));

@@ -38,7 +38,7 @@ export default Map.extend({
       methods.push(can.proxy(cString[fn], cString));
     });
 
-    can.each(traceMethods, function(fn) {
+    can.each(traceMethods, function() {
       methods.push(function() {});
     });
 

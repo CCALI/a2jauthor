@@ -11,4 +11,4 @@ export default {
   LOGIC_NE: /\<\>/gi,
   LINK_POP:  /\"POPUP:\/\/(([^\"])+)\"/ig,
   LINK_POP2: /\"POPUP:\/\/(([^\"])+)\"/i
-}
+};

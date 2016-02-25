@@ -86,9 +86,9 @@ export default Component.extend({
       let filesPath = this.attr('mState.fileDataUrl');
       let interviewPath = this.attr('interview.interviewPath');
 
-      return filesPath
-        ? filesPath + fileName
-        : interviewPath + fileName;
+      return filesPath ?
+        filesPath + fileName :
+        interviewPath + fileName;
     }
   },
 

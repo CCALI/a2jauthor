@@ -53,8 +53,8 @@ export default Component.extend({
       if (file.type === '' || file.type.match(textTypeRegex)) {
         let reader = new FileReader();
 
-        reader.onload = e => {
-          let answers = parser.parseJSON(reader.result, vars);
+        reader.onload = () => {
+          const answers = parser.parseJSON(reader.result, vars);
           interview.attr('answers', answers);
         };
 
@@ -62,4 +62,4 @@ export default Component.extend({
       }
     }
   }
-})
+});

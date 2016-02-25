@@ -25,28 +25,30 @@ export default Map.extend({
 
       validations.attr('val', val);
 
+      let isValid;
+
       switch (field.type) {
         case 'text':
         case 'textlong':
         case 'numberphone':
-          return validations.required() || validations.maxChars();
+          isValid = validations.required() || validations.maxChars();
           break;
         case 'numberssn':
-          return validations.required();
+          isValid = validations.required();
           break;
         case 'numberzip':
-          return validations.required() || validations.maxChars();
+          isValid = validations.required() || validations.maxChars();
           break;
         case 'number':
         case 'numberpick':
         case 'numberdollar':
-          return validations.required() || validations.min() || validations.max();
+          isValid = validations.required() || validations.min() || validations.max();
           break;
         case 'gender':
-          return validations.required();
+          isValid = validations.required();
           break;
         case 'datemdy':
-          return validations.required() || validations.min() || validations.max();
+          isValid = validations.required() || validations.min() || validations.max();
           break;
         case 'checkbox':
         case 'radio':
@@ -70,12 +72,14 @@ export default Map.extend({
 
           validations.attr('val', v || null);
 
-          return validations.required();
+          isValid = validations.required();
           break;
         case 'textpick':
-          return validations.required();
+          isValid = validations.required();
           break;
       }
+
+      return isValid;
     });
   }
 }, {

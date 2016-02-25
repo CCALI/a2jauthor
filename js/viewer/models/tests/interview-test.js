@@ -1,5 +1,4 @@
 import assert from 'assert';
-import fixture from 'can/util/fixture/';
 import Interview from 'viewer/models/interview';
 
 describe('Interview model', function() {

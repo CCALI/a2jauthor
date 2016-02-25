@@ -1,6 +1,6 @@
-import $ from 'jquery';
 import Map from 'can/map/';
 import List from 'can/list/';
+import _find from 'lodash/find';
 import Component from 'can/component/';
 import template from './debug-panel.stache!';
 
@@ -24,9 +24,9 @@ export let DebugPanelVM = Map.extend({
       get() {
         let interview = this.attr('interview');
 
-        return interview
-          ? interview.attr('variablesList')
-          : new List([]);
+        return interview ?
+          interview.attr('variablesList') :
+          new List([]);
       }
     },
 
@@ -59,7 +59,9 @@ export let DebugPanelVM = Map.extend({
      * @codeend
      */
     traceLogic: {
-      value: new List
+      value: function() {
+        return new List();
+      }
     },
 
     /**
@@ -72,9 +74,46 @@ export let DebugPanelVM = Map.extend({
      * Messages within the current page can be updated by pushing a new message with the same key.
      */
     traceLogicList: {
-      value: new List,
+      value: function() {
+        return new List();
+      },
+
       get(lastSetValue) {
         let traceLogic = this.attr('traceLogic');
+
+        const checkPageExists = function(pageName) {
+          return page => page.attr('pageName') === pageName;
+        };
+
+        const onEachMessage = function(currentPage) {
+          return function(fragments, key) {
+            let existingMessageUpdated = false;
+
+            // all messages should be arrays, even if they only have one fragment
+            // { msg: 'message' } -> [ { msg: 'message' } ]
+            if (!(fragments && fragments.length)) {
+              fragments = [fragments];
+            }
+
+            // update message if it already exists, such as  user changing a variable
+            // {'first name': [ { format: 'var', msg: 'first name' }, { msg: ' = ' }, { format: 'val', msg: 'sam' } ]
+            // {'first name': [ { format: 'var', msg: 'first name' }, { msg: ' = ' }, { format: 'val', msg: 'manuel' } ]
+            currentPage.attr('messages').each((message) => {
+              if (message.attr('key') === key) {
+                message.attr('fragments', fragments);
+                existingMessageUpdated = true;
+              }
+            });
+
+            // if this is a new message, add it
+            if (!existingMessageUpdated) {
+              currentPage.attr('messages').push({
+                key: key,
+                fragments: fragments
+              });
+            }
+          };
+        };
 
         // format all the unformatted traceLogic messages
         while (traceLogic.attr('length')) {
@@ -84,16 +123,9 @@ export let DebugPanelVM = Map.extend({
           // handle messages indicating the user navigated to a new page, like:
           // { page: '1 - Intro' }
           if (pageName) {
-            let pageExists = false;
-
             // if this page already exists, skip it.
             // for instance, this could happen when using a repeat variable.
-            lastSetValue.each((page) => {
-              if (page.attr('pageName') === pageName) {
-                pageExists = true;
-                return false;
-              }
-            });
+            const pageExists = !!_find(lastSetValue, checkPageExists(pageName));
 
             // if page doesn't exist, add it.
             if (!pageExists) {
@@ -104,34 +136,7 @@ export let DebugPanelVM = Map.extend({
             }
           } else {
             let currentPage = lastSetValue.attr(lastSetValue.attr('length') - 1);
-
-            newMessage.each((fragments, key) => {
-              let existingMessageUpdated = false;
-
-              // all messages should be arrays, even if they only have one fragment
-              // { msg: 'message' } -> [ { msg: 'message' } ]
-              if (!(fragments && fragments.length)) {
-                fragments = [ fragments ];
-              }
-
-              // update message if it already exists, such as  user changing a variable
-              // {'first name': [ { format: 'var', msg: 'first name' }, { msg: ' = ' }, { format: 'val', msg: 'sam' } ]
-              // {'first name': [ { format: 'var', msg: 'first name' }, { msg: ' = ' }, { format: 'val', msg: 'manuel' } ]
-              currentPage.attr('messages').each((message) => {
-                if (message.attr('key') === key) {
-                  message.attr('fragments', fragments);
-                  existingMessageUpdated = true;
-                }
-              });
-
-              // if this is a new message, add it
-              if (!existingMessageUpdated) {
-                currentPage.attr('messages').push({
-                  key: key,
-                  fragments: fragments
-                })
-              }
-            });
+            newMessage.each(onEachMessage(currentPage));
           }
         }
 
@@ -188,8 +193,8 @@ export default Component.extend({
 
       if (format === 'val') {
         format = (!msg) ? 'valBlank' :
-                  ((msg == true || msg == 'true') ? 'valT' :
-                   ((msg == false || msg == 'false') ? 'valF' : format.toLowerCase()));
+                  ((msg === true || msg === 'true') ? 'valT' :
+                   ((msg === false || msg === 'false') ? 'valF' : format.toLowerCase()));
       }
 
       return format;
@@ -204,7 +209,7 @@ export default Component.extend({
       format = (format && format.isComputed) ? format() : format;
       msg = (msg && msg.isComputed) ? msg() : msg;
 
-      return (format === 'val' && !msg) ? "blank" : msg;
+      return (format === 'val' && !msg) ? 'blank' : msg;
     }
   }
-})
+});

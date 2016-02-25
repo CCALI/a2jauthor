@@ -173,10 +173,10 @@ export default Component.extend({
           monthNames: lang.MonthNamesLong.split(','),
           monthNamesShort: lang.MonthNamesShort.split(','),
           dateFormat: 'mm/dd/yy',
-          onSelect(dateText) {
+          onSelect() {
             let $el = $(this);
             let val = $el.val();
-            let unformattedVal = vm.convertDate(val, 'YYYY-MM-DD','MM/DD/YYYY')
+            let unformattedVal = vm.convertDate(val, 'YYYY-MM-DD', 'MM/DD/YYYY');
             $el.val(unformattedVal);
 
             vm.validateField(null, $el);
@@ -186,6 +186,7 @@ export default Component.extend({
         }).val(defaultDate);
       }
     },
+
     '{field._answer.answer.values} change': function(values, ev, attr) {
       if (attr === '1') {
         let message = {};
@@ -220,7 +221,7 @@ export default Component.extend({
           let min = self.attr('field.min');
           let max = self.attr('field.max');
 
-          for (var i = min; i <= max; i++) {
+          for (var i = min; i <= max; i += 1) {
             result.push(options.fn(options.scope.add({
               '%index': i
             }).add(i)));
@@ -229,7 +230,7 @@ export default Component.extend({
           return result;
         },
 
-        dateformat: function(val, format, options) {
+        dateformat: function(val, format) {
           val = val.isComputed ? val() : val;
           format = format.isComputed ? format() : format;
           return self.convertDate(val, format);

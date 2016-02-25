@@ -1,7 +1,7 @@
 import Model from 'can/model/';
 import localforage from 'localforage';
 
-var LocalModel = Model.extend({
+export default Model.extend({
   findOne: function(params, success, error) {
     var dfd = new can.Deferred();
 

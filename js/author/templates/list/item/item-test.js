@@ -8,7 +8,8 @@ import sinon from 'sinon';
 import 'steal-mocha';
 
 describe('<templates-list-item>', function() {
-  let vm, templateSaveSpy;
+  let vm;
+  let templateSaveSpy;
 
   describe('viewModel', function() {
     beforeEach(function() {
@@ -51,7 +52,7 @@ describe('<templates-list-item>', function() {
       setTimeout(function() {
         assert.isFalse(vm.attr('deleting'), 'should be reset to false');
         assert.isFalse(template.attr('active'), 'after transitionTime it should be false');
-        assert.isTrue(templateSaveSpy.calledOnce, 'should save template to server')
+        assert.isTrue(templateSaveSpy.calledOnce, 'should save template to server');
         done();
       }, delay);
     });
@@ -73,7 +74,7 @@ describe('<templates-list-item>', function() {
       setTimeout(function() {
         assert.isFalse(vm.attr('restoring'), 'should be reset to false');
         assert.isTrue(template.attr('active'), 'after transitionTime it should be true');
-        assert.isTrue(templateSaveSpy.calledOnce, 'should save template to server')
+        assert.isTrue(templateSaveSpy.calledOnce, 'should save template to server');
         done();
       }, delay);
     });

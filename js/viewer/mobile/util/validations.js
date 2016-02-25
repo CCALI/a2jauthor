@@ -136,10 +136,10 @@ export default Map.extend({
    * returns true if the val is required and empty
    */
   required: function() {
-    if (this.config.required
-      && (_isNull(this.val)
-            || _isUndefined(this.val)
-            || (typeof this.val === 'string' && !this.val.length))) {
+    if (this.config.required &&
+      (_isNull(this.val) ||
+        _isUndefined(this.val) ||
+        (typeof this.val === 'string' && !this.val.length))) {
       return true;
     }
   },
@@ -151,8 +151,8 @@ export default Map.extend({
    * returns true if the val is longer than the configured maxChars
    */
   maxChars: function() {
-    if (this.config.maxChars
-      && this.val && this.val.length > this.config.maxChars) {
+    if (this.config.maxChars &&
+      this.val && this.val.length > this.config.maxChars) {
       return true;
     }
   },

@@ -57,7 +57,7 @@ export default Model.extend({}, {
     return typeof v === 'undefined' ? null : v;
   },
 
-  varCreate: function(varName, varType, varRepeat, varComment) {
+  varCreate: function(varName, varType, varRepeat) {
     this.attr(varName.toLowerCase(), {
       name: varName,
       repeating: varRepeat,
@@ -121,14 +121,13 @@ export default Model.extend({}, {
   },
 
   varSet: function(varName, varVal, varIndex) {
-    let guide = this;
-
     let v = this.varExists(varName);
+
     if (v === null) {
       // Create variable at runtime
       v = this.varCreate(varName, CONST.vtText,
-        !((typeof varIndex === 'undefined') || (varIndex === null)
-          || (varIndex === '') || (varIndex === 0)), '');
+        !((typeof varIndex === 'undefined') || (varIndex === null) ||
+          (varIndex === '') || (varIndex === 0)), '');
     }
 
     if ((typeof varIndex === 'undefined') || (varIndex === null) || (varIndex === '')) {

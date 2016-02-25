@@ -6,7 +6,8 @@ import 'steal-mocha';
 
 describe('<a2j-field>', () => {
   describe('viewModel', () => {
-    let vm, fieldStub;
+    let vm;
+    let fieldStub;
 
     beforeEach(() => {
       fieldStub = {
@@ -16,7 +17,7 @@ describe('<a2j-field>', () => {
 
       vm = new FieldVM({
         field: fieldStub,
-        traceLogic: new List
+        traceLogic: new List()
       });
     });
 
@@ -90,10 +91,13 @@ describe('<a2j-field>', () => {
     });
 
     it('invalidPrompt', () => {
+      /* jshint ignore:start */
       vm.attr('lang', {
         FieldPrompts_checkbox: 'You must select one or more checkboxes to continue.',
         FieldPrompts_text: 'You must type a response in the highlighted space before you can continue.',
       });
+      /* jshint ignore:end */
+
       vm.attr('field', {});
 
       vm.attr('field.hasError', false);

@@ -24,4 +24,4 @@ export default Component.extend({
   template,
   viewModel: AvatarDemoVM,
   tag: 'a2j-viewer-avatar-demo'
-})
+});

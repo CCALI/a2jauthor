@@ -2,7 +2,6 @@ import $ from 'jquery';
 import Map from 'can/map/';
 import Component from 'can/component/';
 import _truncate from 'lodash/truncate';
-import _findIndex from 'lodash/findIndex';
 import template from './navigation.stache!';
 import constants from 'viewer/models/constants';
 
@@ -256,7 +255,7 @@ export default Component.extend({
 
       // truncate text to avoid https://github.com/CCALI/CAJA/issues/685
       text = _truncate(text, {length: 40, separator: ' '});
-      text = (typeof repeatVarValue === "number") ? text + '#' + repeatVarValue : text;
+      text = (typeof repeatVarValue === 'number') ? text + '#' + repeatVarValue : text;
 
       return text;
     }
@@ -266,7 +265,7 @@ export default Component.extend({
     /*
     * select most recently visited page in selectedPageIndex dropdown
     */
-    '{visitedPages} length': function(pages) {
+    '{visitedPages} length': function() {
       this.viewModel.attr('selectedPageIndex', 0);
     }
   }

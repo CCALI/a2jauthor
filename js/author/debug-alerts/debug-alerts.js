@@ -72,4 +72,4 @@ export default Component.extend({
       });
     }
   }
-})
+});

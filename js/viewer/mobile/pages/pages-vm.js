@@ -1,9 +1,11 @@
 import Map from 'can/map/';
 import _some from 'lodash/some';
 import AnswerVM from 'viewer/models/answervm';
+import Parser from 'viewer/mobile/util/parser';
 import constants from 'viewer/models/constants';
 
 import 'can/map/define/';
+import 'can/util/jquery/';
 import 'bootstrap/js/modal';
 
 /**
@@ -24,6 +26,38 @@ export default Map.extend({
 
     traceLogic: {
       value: []
+    },
+
+    /**
+     * @property {String} pages.ViewModel.prototype.saveAnswersButton saveAnswersButton
+     * @parent pages.ViewModel
+     *
+     * String used to represent the button that saves the answers to the server
+     * and replaces the viewer with the server's response.
+     */
+    saveAnswersButton: {
+      value: constants.qIDSUCCESS
+    },
+
+    /**
+     * @property {String} pages.ViewModel.prototype.assembleButton assembleButton
+     * @parent pages.ViewModel
+     *
+     * String used to represent the button that generates a PDF document.
+     */
+    assembleButton: {
+      value: constants.qIDASSEMBLE
+    },
+
+    /**
+     * @property {String} pages.ViewModel.prototype.assembleAndSaveButton assembleAndSaveButton
+     * @parent pages.ViewModel
+     *
+     * String used to represent the button that generates a PDF document and also
+     * saves the answers to the server.
+     */
+    assembleAndSaveButton: {
+      value: constants.qIDASSEMBLESUCCESS
     },
 
     /**
@@ -53,8 +87,24 @@ export default Map.extend({
      */
     answersString: {
       get() {
-        const answers = this.attr('interview.answers');
+        const answers = this.attr('pState.answers');
         return JSON.stringify(answers.serialize());
+      }
+    },
+
+    /**
+     * @property {String} pages.ViewModel.prototype.answersString answersString
+     * @parent pages.ViewModel
+     *
+     * JSON representation of the XML version of the `answers` entered by the user.
+     *
+     * This is POSTed to `setDataURL` when user finishes the interview.
+     */
+    answersANXString: {
+      get() {
+        const answers = this.attr('pState.answers');
+        const parsed = Parser.parseANX(answers.serialize());
+        return JSON.stringify(parsed);
       }
     }
   },
@@ -91,19 +141,6 @@ export default Map.extend({
     });
   },
 
-  saveAndComplete() {
-    const savePromise = this.attr('pState').save();
-
-    savePromise.done(url => {
-      const step = '';
-      const header = '';
-      const redirect = url;
-
-      this.attr('mState').attr({ step, header, redirect });
-      this.attr('rState').attr({ view: 'complete' }, true);
-    });
-  },
-
   navigate(button) {
     const repeatVar = button.attr('repeatVar');
     const fields = this.attr('currentPage.fields');
@@ -128,15 +165,21 @@ export default Map.extend({
         logic.exec(codeAfter);
       }
 
+      if (button.next === constants.qIDASSEMBLESUCCESS) {
+        can.trigger(this, 'post-answers-to-server');
+      }
+
       if (gotoPage && gotoPage.length) {
         logic.attr('gotoPage', null);
         this._setPage(this.attr('currentPage'), gotoPage);
-      } else if (button.next === constants.qIDSUCCESS ||
-        button.next === constants.qIDASSEMBLESUCCESS) {
-        this.saveAndComplete();
-      } else if (button.next !== constants.qIDASSEMBLE) {
+      } else if (button.next !== constants.qIDSUCCESS &&
+        button.next !== constants.qIDASSEMBLE &&
+        button.next !== constants.qIDASSEMBLESUCCESS) {
+
         this._setPage(this.attr('currentPage'), button.next);
       }
+    } else {
+      return false;
     }
   },
 

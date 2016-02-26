@@ -3,12 +3,12 @@ import Answers from 'viewer/models/answers';
 import Parser from 'viewer/mobile/util/parser';
 
 import 'can/map/define/';
-import 'viewer/mobile/util/backup';
 import 'can/construct/super/';
+import 'viewer/mobile/util/backup';
 
 export default Model.extend({
-  findOne: function() {
-    return new can.Deferred().resolve({});
+  findOne() {
+    return can.Deferred().resolve({});
   }
 }, {
 
@@ -23,43 +23,21 @@ export default Model.extend({
     }
   },
 
-  init: function() {
+  init() {
     this.backup();
   },
 
-  save: function(autosave) {
-    let self = this;
-    let dfd = new can.Deferred();
+  save() {
+    const url = this.attr('autoSetDataURL');
 
-    //parse and send xml to server
-    var anx = Parser.parseANX(self.serialize().answers);
+    // parse and send xml to server
+    const anx = Parser.parseANX(this.serialize().answers);
+    const data = { AnswerKey: anx };
 
-    if (!autosave) {
-      // Post as AnswerKey variable.
-      // 03/05/2015 SJG POST replaces this page (like A2J 4)
-      // Eventually we should use AJAX and then redirect when successfully uploaded.
-      var $form = $('<form action="' + this.attr('setDataURL') + '" method=POST accept-charset="UTF-8" target=_parent><input type=hidden id="AnswerKey" name="AnswerKey"/></form>');
-      $('body').append($form);
-      $('#AnswerKey').val(anx);
-      $form.submit();
-    }
-
-    can.ajax({
-      url: autosave ? this.attr('autoSetDataURL') : this.attr('setDataURL'),
-      type: 'POST',
-      data: {
-        AnswerKey: anx
-      },
-      success: function(msg) {
-        self.backup();
-        dfd.resolve(msg);
-      },
-
-      error: function() {
-        dfd.reject();
-      }
-    });
-
-    return dfd;
+    return $.ajax({ url, type: 'POST', data })
+      .then(res => {
+        this.backup();
+        return res;
+      });
   }
 });

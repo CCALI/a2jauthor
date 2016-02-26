@@ -1,9 +1,14 @@
 import PagesVM from './pages-vm';
 import Component from 'can/component/';
 import template from './pages.stache!';
-import constants from 'viewer/models/constants';
+import assembleFormTpl from './assemble-form.stache!';
+import saveAnswersFormTpl from './save-answers-form.stache!';
 
+import 'can/view/';
 import 'viewer/mobile/util/helpers';
+
+can.view.preload('assemble-form', assembleFormTpl);
+can.view.preload('save-answers-form', saveAnswersFormTpl);
 
 /**
  * @module {Module} viewer/mobile/pages/ <a2j-pages>
@@ -31,12 +36,7 @@ export default Component.extend({
   viewModel: PagesVM,
 
   helpers: {
-    isAssembleButton(label) {
-      return label === constants.qIDASSEMBLE ||
-        label === constants.qIDASSEMBLESUCCESS;
-    },
-
-    buttonLabelOrDefault(label) {
+    getButtonLabel(label) {
       return label ? label : this.attr('lang').attr('Continue');
     }
   },
@@ -54,6 +54,25 @@ export default Component.extend({
 
     'a click': function(el) {
       el.attr('target', '_blank');
+    },
+
+    // This event is fired when the Assemble and Save button is clicked,
+    // it waits to asynchronously submit the form that posts the XML asnwers
+    // to the `setDataURL` endpoint.
+    '{viewModel} post-answers-to-server': function() {
+      const $form = this.element.find('.post-answers-form');
+
+      setTimeout(function() {
+        $form.submit();
+      });
+    },
+
+    // when value of repeatVar changes, re-render page fields
+    '{rState} repeatVarValue': function() {
+      const vm = this.viewModel;
+      const fields = vm.attr('currentPage.fields');
+
+      vm.setFieldAnswers(fields);
     },
 
     '{rState} page': function(rState, ev, val) {
@@ -107,14 +126,6 @@ export default Component.extend({
       }
 
       vm.setCurrentPage();
-    },
-
-    // when value of repeatVar changes, re-render page fields
-    '{rState} repeatVarValue': function() {
-      const vm = this.viewModel;
-      const fields = vm.attr('currentPage.fields');
-
-      vm.setFieldAnswers(fields);
     }
   }
 });

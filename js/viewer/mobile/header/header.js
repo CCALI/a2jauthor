@@ -2,13 +2,63 @@ import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './header.stache!';
 
-let HeaderVM = Map.extend({
-  toggleCredits: function() {
-    this.attr('mState.showCredits', !this.attr('mState.showCredits'));
+import 'can/map/define/';
+
+/**
+ * @module {Module} viewer/mobile/header/ <a2j-header>
+ * @parent api-components
+ *
+ * Represents the header of the mobile viewer.
+ *
+ * ## Use
+ *
+ * @codestart
+ *   <a2j-header {m-state}="mState" {p-state}="pState" />
+ * @codeend
+ */
+
+/**
+ * @property {can.Map} header.ViewModel
+ * @parent viewer/mobile/header/
+ *
+ * `<a2j-header>` viewModel.
+ */
+const HeaderVM = Map.extend({
+  define: {
+    /**
+     * @property {Booelan} header.ViewModel.prototype.disableSaveButton disableSaveButton
+     * @parent conditional.ViewModel
+     *
+     * Whether the save button should be disabled or not.
+     */
+    disableSaveButton: {
+      value: false
+    },
+
+    /**
+     * @property {Booelan} header.ViewModel.prototype.showSaveButton showSaveButton
+     * @parent conditional.ViewModel
+     *
+     * Whether the display the save button.
+     */
+    showSaveButton: {
+      get() {
+        return !!this.attr('mState.autoSetDataURL');
+      }
+    }
   },
 
-  save: function() {
-    this.attr('pState').save(true);
+  toggleCredits() {
+    const currentVal = this.attr('mState.showCredits');
+    this.attr('mState.showCredits', !currentVal);
+  },
+
+  save() {
+    this.attr('disableSaveButton', true);
+
+    this.attr('pState').save().always(() => {
+      this.attr('disableSaveButton', false);
+    });
   }
 });
 
@@ -16,16 +66,5 @@ export default Component.extend({
   template,
   leakScope: false,
   tag: 'a2j-header',
-  viewModel: HeaderVM,
-
-  helpers: {
-    showSave: function(options) {
-      let autoSetDataURL = this.attr('mState.autoSetDataURL');
-
-      return (this.attr('rState.view') === 'pages' &&
-        autoSetDataURL && autoSetDataURL.length) ?
-        options.fn() :
-        options.inverse();
-    }
-  }
+  viewModel: HeaderVM
 });

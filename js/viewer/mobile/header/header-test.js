@@ -23,7 +23,7 @@ describe('a2j-header', function() {
   });
 
   afterEach(function() {
-    // $('#test-area').empty();
+    $('#test-area').empty();
   });
 
   it('shows save button if autoSetDataURL is set', function() {

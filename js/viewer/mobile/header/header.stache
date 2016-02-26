@@ -1,7 +1,7 @@
 <br/>
 <div class="row">
   <div class="col-xs-3 text-center">
-    <a can-click="toggleCredits" href="javascript://">
+    <a ($click)="toggleCredits()" href="javascript://">
       <img src="{{joinBase 'viewer/images/logo.png'}}" class="img-responsive"/>
     </a>
   </div>
@@ -11,12 +11,14 @@
     <small>{{prefix 'Step: ' mState.step}}</strong>
   </div>
 
-  {{#if showSave}}
+  {{#if showSaveButton}}
     <div class="col-xs-3">
-      <button
-        type="button"
-        can-click="save"
-        class="btn {{#if pState.isDirty}}btn-warning{{else}}btn-success{{/if}}">Save</button>
+      <button type="button"
+              ($click)="save()"
+              {{#if disableSaveButton}}disabled{{/if}}
+              class="btn save {{#if pState.isDirty}}btn-warning{{else}}btn-success{{/if}}">
+        Save
+      </button>
     </div>
   {{/if}}
 </div>

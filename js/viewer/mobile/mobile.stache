@@ -4,15 +4,9 @@
 <can-import from="viewer/mobile/filler/"/>
 <can-import from="viewer/mobile/mobile.less!"/>
 
-{{^tocOrCreditsShown}}
-  <a2j-header
-    {(r-state)}="rState"
-    {(p-state)}="pState"
-    {(m-state)}="mState"
-    {(interview)}="interview"
-    {(logic)}="logic">
-  </a2j-header>
-{{/tocOrCreditsShown}}
+{{#unless tocOrCreditsShown}}
+  <a2j-header {(p-state)}="pState" {(m-state)}="mState" />
+{{/unless}}
 
 {{#if mState.showCredits}}
   <div filler can-click="hideCredits">
@@ -27,7 +21,7 @@
   </div>
 {{/if}}
 
-{{^tocOrCreditsShown}}
+{{#unless tocOrCreditsShown}}
   {{#equal rState.view 'intro'}}
     <a2j-intro
       {(r-state)}="rState"
@@ -54,4 +48,4 @@
       {(interview)}="interview">
     </a2j-pages>
   {{/equal}}
-{{/tocOrCreditsShown}}
+{{/unless}}

@@ -22,35 +22,30 @@
     <script> window.less = { async: true, useFileCache: true };</script>
     <script>
       localStorage.setItem('a2jConfig', JSON.stringify({
-        // templateURL points to the interview XML. This demo just passes what's on the querystring.
-        // templateURL:'../tests/data/Sample Short Interview Answers.anx?data=something',
-        //templateURL: '../tests/data/All-Inclusive Sample Interview.json',
-        //templateURL: '../tests/data/Fields And Logic Repeat Loops.json',
-        //templateURL: '../tests/data/A2J_NYSample_interview.json',
-        //templateURL: '../tests/data/A2J_MobileOnlineInterview_Interview.json',
+        // path (or url) to the interview XML file
         templateURL: '../tests/data/Sample Short Interview.xml?data=ExtraData4templateURL',
 
-        // fileDataURL: 'images/',
+        // folder containing images, templates and other assets related to the interview
         fileDataURL:'../tests/data/',
 
-        // getDataURL:'A2J_ViewerExit.html',
+        // endpoint to load an answer file at start, used for RESUME
         getDataURL: '../tests/data/Sample Short Interview Answers.anx?data=ExtraData4getDataURL',
 
-        // setDataURL saves answer file and leaves the viewer (its response replaces viewer's frame)
+        // endpoint to save the answer's file and leaves the viewer (its response replaces viewer's frame)
         setDataURL: '/save.aspx',
 
-        // autoSetDataURL silently saves answer file periodically. (Optional).
+        // (Optional) ajax endpoit to silently save the answer file periodically
         autoSetDataURL: '/autosave.aspx',
 
-        // exitURL replaces the viewer's frame with this URL on EXIT (user 'fails' interview)
+        // use to replace the viewer's frame on EXIT (user 'fails' interview)
         exitURL: 'A2J_ViewerExit.html',
 
-        // logURL accepts silent logging data.
+        // endpoint to silent log data
         // E.g., https://lawhelpinteractive.org/a2j_logging
         logURL: '',
 
-        // errRepURL accepts user's public submission of an error to which they can add an optional comment.
-        // E.g., 'https://lawhelpinteractive.org/problem_reporting_form',
+        // accepts user's public submission of an error to which they can add an optional comment.
+        // E.g., 'https://lawhelpinteractive.org/problem_reporting_form'
         errRepURL: ''
       }));
     </script>

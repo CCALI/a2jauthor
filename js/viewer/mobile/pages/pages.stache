@@ -42,7 +42,7 @@
           {{> assemble-form }}
         {{/case}}
 
-        {{#case assembleAndSaveButon}}
+        {{#case assembleAndSaveButton}}
           <div style="display: none;">{{> save-answers-form }}</div>
           {{> assemble-form }}
         {{/case}}

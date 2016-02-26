@@ -1,0 +1,14 @@
+<form method="POST"
+      target="_parent"
+      accept-charset="UTF-8"
+      class="post-answers-form"
+      action="{{pState.setDataURL}}">
+
+  <input type="hidden" name="AnswerKey" {$value}="answersANXString" />
+
+  <button type="submit"
+          ($click)="navigate"
+          class="btn btn-default btn-navigate">
+    {{getButtonLabel(label)}}
+  </button>
+</form>

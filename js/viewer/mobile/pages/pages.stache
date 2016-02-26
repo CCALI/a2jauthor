@@ -16,12 +16,11 @@
       <p>{{{ eval(text, rState.repeatVarValue) }}}</p>
 
       {{#if fields.length}}
-        <a2j-fields
-          {lang}="lang"
-          {(logic)}="logic"
-          {(fields)}="fields"
-          {(trace-logic)}="traceLogic"
-          {repeat-var-value}="rState.repeatVarValue" />
+        <a2j-fields {lang}="lang"
+                    {(logic)}="logic"
+                    {(fields)}="fields"
+                    {(trace-logic)}="traceLogic"
+                    {repeat-var-value}="rState.repeatVarValue" />
       {{/if}}
 
       {{#if textAudioURL}}
@@ -34,22 +33,29 @@
     </p>
 
     {{#each buttons}}
-      {{#if isAssembleButton(next)}}
-        <form action="/api/assemble" method="post" target="_blank">
-          <input type="hidden" name="guideId" {$value}="guideId">
-          <input type="hidden" name="answers" {$value}="answersString">
-          <input type="hidden" name="guideTitle" {$value}="interview.title">
-          <input type="hidden" name="fileDataUrl" {$value}="mState.fileDataURL">
+      {{#switch next}}
+        {{#case saveAnswersButton}}
+          {{> save-answers-form }}
+        {{/case}}
 
-          <button type="submit" class="btn btn-default btn-navigate" ($click)="navigate">
-            {{buttonLabelOrDefault(label)}}
+        {{#case assembleButton}}
+          {{> assemble-form }}
+        {{/case}}
+
+        {{#case assembleAndSaveButon}}
+          <div style="display: none;">{{> save-answers-form }}</div>
+          {{> assemble-form }}
+        {{/case}}
+
+        {{#default}}
+          <button type="button"
+                  ($click)="navigate"
+                  class="btn btn-default btn-navigate">
+            {{getButtonLabel(label)}}
           </button>
-        </form>
-      {{else}}
-        <button type="button" class="btn btn-default btn-navigate" ($click)="navigate">
-          {{buttonLabelOrDefault(label)}}
-        </button>
-      {{/if}}
+        {{/default}}
+      {{/switch}}
     {{/each}}
+
   {{/with}}
 {{/if}}

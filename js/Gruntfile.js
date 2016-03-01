@@ -61,6 +61,7 @@ module.exports = function(grunt) {
           },
           buildOptions: {
             minify: true,
+            sourceMaps: true,
             bundleSteal: false
           }
         }
@@ -73,6 +74,7 @@ module.exports = function(grunt) {
           },
           buildOptions: {
             minify: true,
+            sourceMaps: true,
             bundleSteal: false
           }
         }

@@ -138,6 +138,7 @@ directory where the repo folder is located, that ZIP file will contain the built
 app along with some other files needed to run the standalone viewer app in a
 production environment.
 
+
 ## To generate the documentation:
 
 ```
@@ -158,3 +159,56 @@ You should see something like the following:
 
 Open up a brower and navigate to [http://localhost:8000](http://localhost:8000)
 you should see the docs page!
+
+
+## To deploy the author (and viewer) app
+
+There is a deploy script available in the `deploy` folder, it basically sets up
+an ssh connection to a remote server and executes the commands to make sure the 
+minified scripts along with other assets and files required to run the app in a
+production environment are copied over to the remote server.
+
+Before you run that bash script, you need to provide some configuration options,
+for that open in a text editor the file `deploy.conf`, let's say you have a staging
+environment hosted at `staging.a2jauthor.org`, your username in that server is `jmayer`
+and you'd like to use the following path `/home/jmayer/public_html/CAJA` to locate
+the app assets. Your `deploy.conf` would look like this:
+
+```
+[staging]
+user jmayer
+host staging.a2jauthor.org
+path /home/jmayer/public_html/CAJA
+needs_tty yes
+```
+
+With that in place, you just need to run in your terminal the following command:
+
+```
+$ ./deploy/deploy.sh staging
+```
+
+By default, the deploy script will build the app, run the tests and continue to 
+deploy the files to the host server if everything went well. You can skip the build
+process or the tests, if you want to take a look at the available options, just run:
+
+```
+$ ./deploy/deploy.sh -h
+```
+
+The deployment configuration file also allows you to set up commands to be executed
+before and/or after the deployment is done, if for instance you want to restart 
+all of the NodeJS apps running in the staging environment mentioned above after the
+deployment has been completed (assuming you're using [`pm2`](https://github.com/Unitech/pm2) 
+as your NodeJS process manager), you just need to change your `deploy.conf` to 
+look like this:
+
+```
+[staging]
+user jmayer
+host staging.a2jauthor.org
+path /home/jmayer/public_html/CAJA
+needs_tty yes
+post-deploy pm2 restart all
+```
+and you're done!

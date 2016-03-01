@@ -125,6 +125,19 @@ by loading [http://localhost:3000/js/author/test/](http://localhost:3000/js/auth
 [http://localhost:3000/js/viewer/test/](http://localhost:3000/js/viewer/test/)
 
 
+## To generate the viewer app distributable files:
+
+From the root folder (`CAJA`) run the following command:
+
+```
+$ npm run build:viewer-zip
+```
+
+That will build the viewer app and it will create a ZIP file located in the same
+directory where the repo folder is located, that ZIP file will contain the built
+app along with some other files needed to run the standalone viewer app in a
+production environment.
+
 ## To generate the documentation:
 
 ```

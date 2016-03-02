@@ -201,22 +201,6 @@ function main()
     setProgress('Creating published guide',true);
     ws({cmd:'guidepublish',gid:gGuideID},guidePublished);
    });
-  $('#guideMobile').button().click(function(){
-    // 2015-01-14
-    // E.g., http://localhost/app/js/viewer/mobile/mobile.min.html?templateURL=/app/userfiles/public/dev/guides/Guide334/2015-01-12-12-46-35/Guide.xml&fileDataURL=images%2F&getDataURL=%2Fresume.aspx&setDataURL=%2Fsave.aspx&autoSetDataURL=%2Fautosave.aspx&exitURL=https%3A%2F%2Fgoogle.com&logURL=&errRepURL=&desktopURL=index.html#!view/pages/page/06-Where%20will%20you%20file%20the%20affidavit%3F
-    // Open new window with a unique URL that author can test on mobile.
-    // URL needs to load a JSON so we do a save first to ensure our json is updated.
-    setProgress('Generating Mobile files',true);
-    gGuide.lastSaveXML=''; //force a save.
-    guideSave(function(){
-      // open a new window pointing to the interview specifically.
-      // Short url as possible?
-      // security needed or just browse directly??
-      window.open('../viewer/mobile.min.html?templateURL=' +
-              gGuidePath +'Guide.xml');
-    });
-  });
-
 
   $('#reportFull').button().click(reportFull);
   $('#reportTranscript').button().click(reportTranscript);

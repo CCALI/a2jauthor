@@ -671,11 +671,26 @@ TLogic.prototype.executeScript = function(CAJAScriptHTML)
 	return true;
 };
 
+// Replace logic %% declarations with placeholder for Flesh-Kincaid grading.
+TLogic.prototype.stripLogicHTML = function(html) {
+  var parts = makestr(html).split('%%');
 
+  if (parts.length > 0) {
+    html = '';
+    var p;
+
+    for (p = 0; p < parts.length; p += 2) {
+      html += parts[p];
+      if (p < parts.length - 1) {
+        html += ' word ';
+      }
+    }
+  }
+
+  return html;
+};
 
 var gLogic = new TLogic();
-
-
 
 /* Logic Script functions */
 

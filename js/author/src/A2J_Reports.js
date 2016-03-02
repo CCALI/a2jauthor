@@ -11,15 +11,13 @@
 
 /* global gGuide, gLogic */
 
+function longProcess(statusPrompt, process) {
+  setProgress(statusPrompt, true);
 
-
-function longProcess(statusPrompt, process)
-{	//
-	setProgress(statusPrompt,true);
-	setTimeout(function(){
-		process();
-		setProgress('');
-	}, 100 );
+  setTimeout(function() {
+    process();
+    setProgress('');
+  }, 100);
 }
 
 // Open report in new window. Include CSS for proper formatting.
@@ -42,25 +40,6 @@ function newWindowReport(title, html) {
   reportWindow.document.write(html);
   reportWindow.document.close();
 }
-
-TLogic.prototype.stripLogicHTML = function(html)
-{	// Replace logic %% declarations with placeholder for Flesh-Kincaid grading.
-	var parts=makestr(html).split("%%");
-	if (parts.length > 0)
-	{
-		html="";
-		var p;
-		for (p=0;p<parts.length;p+=2)
-		{
-			html += parts[p];
-			if (p<parts.length-1)
-			{
-				html += " word ";
-			}
-		}
-	}
-	return html;
-};
 
 function textStatisticsReport(text, includeAllStats)
 {	// 2014-06-30 Return suitable class to use and information block about text complexity.

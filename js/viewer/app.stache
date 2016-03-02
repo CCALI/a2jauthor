@@ -10,8 +10,9 @@
     {(r-state)}="rState"
     {(p-state)}="pState"
     {(m-state)}="mState"
+    class="bootstrap-styles"
     {(interview)}="interview"
-    class="bootstrap-styles" />
+    {(modal-content)}="modalContent" />
 {{else}}
   <a2j-desktop-viewer
     *desktop-viewer
@@ -26,11 +27,12 @@
     {(trace-logic)}="traceLogic"
     class="bootstrap-styles steps-left-{{*desktopViewer.remainingSteps}} steps-{{*desktopViewer.maxDisplayedSteps}}" />
 {{/if}}
+
 <a2j-modal
-  {repeat-var-value}="rState.repeatVarValue"
   {(logic)}="logic"
-  {(interview)}="interview"
-  {(m-state)}="mState"
   {(r-state)}="rState"
+  {(m-state)}="mState"
+  class="bootstrap-styles"
+  {(interview)}="interview"
   {(modal-content)}="modalContent"
-  class="bootstrap-styles" />
+  {repeat-var-value}="rState.repeatVarValue" />

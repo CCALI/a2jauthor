@@ -44,8 +44,15 @@ export default Component.extend({
   events: {
     'a:regex(href,popup\://) click': function(el, ev) {
       ev.preventDefault();
-      var p = this.scope.attr('interview.pages').find(el[0].pathname.replace('//', ''));
-      this.viewModel.attr('modalContent', p);
+
+      const vm = this.viewModel;
+      const pages = vm.attr('interview.pages');
+
+      if (pages) {
+        const pageName = el.get(0).pathname.replace('//', '');
+        const page = pages.find(pageName);
+        vm.attr('modalContent', page);
+      }
     },
 
     '{window} traceLogic': function(el, ev, msg) {

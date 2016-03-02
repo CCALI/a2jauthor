@@ -41,11 +41,11 @@
   {{#equal rState.view 'pages'}}
     <a2j-pages
       {lang}="lang"
+      {(logic)}="logic"
       {(r-state)}="rState"
       {(p-state)}="pState"
       {(m-state)}="mState"
-      {(logic)}="logic"
-      {(interview)}="interview">
-    </a2j-pages>
+      {(interview)}="interview"
+      {(modal-content)}="modalContent" />
   {{/equal}}
 {{/unless}}

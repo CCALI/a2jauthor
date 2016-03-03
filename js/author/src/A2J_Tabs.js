@@ -763,9 +763,19 @@ var form={
     var $label = $('<label/>').text(label);
     var $select = $('<select list="' + name + '" class="form-control picklist"></select>');
 
+    // validating that value is within the limits
+    if (value < minelts) {
+      value = minelts;
+    } else if (value > maxelts) {
+      value = maxelts;
+    }
+
     // append `option` tags to `$select`
     for (option = minelts; option <= maxelts; option++) {
-      $('<option />', {text: option}).appendTo($select);
+      $select.append($('<option />', {
+        text: option,
+        selected: (option === value)
+      }));
     }
 
     var onChange = function() {
@@ -777,7 +787,8 @@ var form={
     // sure that if the min is greater than zero, the table will have that min
     // number of rows on screen. See https://github.com/CCALI/CAJA/issues/1100
     setTimeout(function() {
-      form.tableRowAdjust(name, $select.find('option:nth(0)').val());
+      var $selected = $select.find('option:selected');
+      form.tableRowAdjust(name, $selected.val());
     });
 
     $select.change(onChange).val(value);

@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Model from 'can/model/';
 
 import 'can/map/define/';
@@ -16,10 +17,10 @@ import 'can/map/define/';
  *  @codeend
  *
  */
-let Guide = Model.extend({
+const Guide = Model.extend({
   findAll: 'POST CAJA_WS.php',
 
-  makeFindAll: function(findAllData) {
+  makeFindAll(findAllData) {
     return function(params, success, error) {
       params = (params == null) ? {} : params;
       params.cmd = 'guides';
@@ -32,6 +33,31 @@ let Guide = Model.extend({
 
       return dfd.then(success, error);
     };
+  },
+
+  destroy(id) {
+    const def = $.Deferred();
+
+    const reject = function() {
+      def.reject();
+    };
+
+    const maybeResolve = function(result) {
+      if (result.error) {
+        def.reject(error);
+      } else {
+        def.resolve(result);
+      }
+    };
+
+    $.post({
+      dataType: 'json',
+      url: 'CAJA_WS.php',
+      data: { gid: id, cmd: 'guidearchive' }
+    })
+    .then(maybeResolve, reject);
+
+    return def.promise;
   }
 }, {
   define: {

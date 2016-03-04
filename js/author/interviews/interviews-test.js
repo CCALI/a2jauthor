@@ -2,11 +2,41 @@ import $ from 'jquery';
 import F from 'funcunit';
 import assert from 'assert';
 import stache from 'can/view/stache/';
+import { InterviewsVM } from './interviews';
 
 import 'steal-mocha';
-import './interviews';
 
 describe('<interviews-page>', function() {
+
+  describe('viewModel', function() {
+    let vm = null;
+
+    beforeEach(function() {
+      vm = new InterviewsVM();
+    });
+
+    it('deleteInterview works', function() {
+      vm.attr('interviews', [
+        { id: 1, title: 'foo', owned: true },
+        { id: 2, title: 'bar', owned: true }
+      ]);
+
+      assert.equal(vm.attr('interviews.length'), 2,
+        'there should be 2 interviews');
+
+      // delete interview with id 1
+      vm.deleteInterview(1);
+
+      assert.equal(vm.attr('interviews.length'), 1,
+        'interview with id 1 should have been deleted');
+
+      // delete interview with id 5
+      vm.deleteInterview(5);
+
+      assert.equal(vm.attr('interviews.length'), 1,
+        'should still be 1 since there is no interview with given id');
+    });
+  });
 
   describe('Component', function() {
     let vm;
@@ -37,29 +67,22 @@ describe('<interviews-page>', function() {
       assert.isTrue(interview.hasClass(activeClass));
     });
 
-    it.skip('only one interview can be active', function() {
-      let interviews = $('.guide');
+    it('only one interview can be active', function(done) {
+      F('.guide').hasClass(activeClass, false, 'there should be no active interview');
 
-      assert.isFalse(interviews.hasClass(activeClass));
+      // select first interview of the list
+      F('.guide:eq(0)').click();
 
-      interviews.eq(0).click();
-      assert.equal($(`.${activeClass}`).length, 1);
-      assert.isTrue(interviews.eq(0).hasClass(activeClass));
+      F('.guide:eq(0)').hasClass(activeClass, true, 'should be active');
+      F('.' + activeClass).size(1, 'there should be one active interview');
 
-      interviews.eq(1).click();
-      assert.equal($(`.${activeClass}`).length, 1);
-      assert.isTrue(interviews.eq(1).hasClass(activeClass));
-    });
+      // select second interview of the list
+      F('.guide:eq(1)').click();
 
-    it.skip('interview file size should be in kilobytes', function() {
-      return vm.attr('interviews').then(interviews => {
-        let interview = interviews.attr(0);
-        let id = interview.attr('id');
-        let details = $(`[gid=${id}] small`).text();
+      F('.guide:eq(1)').hasClass(activeClass, true, 'should be active');
+      F('.' + activeClass).size(1, 'there should be one active interview');
 
-        assert.isTrue(details.indexOf('4K') !== -1);
-        assert.equal(interview.attr('fileSize'), 3551);
-      });
+      F(done);
     });
   });
 

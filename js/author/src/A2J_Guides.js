@@ -218,21 +218,29 @@ function openSelectedGuide() {
 
 function archiveSelectedGuide() {
   // 2014-08-28 Delete the currently selected guide
-	var $li = $('a.guide.active').first();
-	var name = $('span.title', $li).text();
+  var $li = $('a.guide.active').first();
+  var name = $li.find('span.title').text();
 
-	dialogConfirmYesNo({
+  var dialogMessage =
+    '<div class="alert alert-danger">' +
+      '<span class="glyphicon-attention"></span>' +
+      'Would you like to delete ' + name + '?' +
+    '</div>';
+
+  dialogConfirmYesNo({
     title: 'Delete interview',
-    message: '<div class="alert alert-danger"><span class="glyphicon-attention"></span> Would you like to delete ' + name + '?</div>',
+    message: dialogMessage,
     height: 300,
     name: name,
-		Yes: function() {
-		  var gid = $li.attr('gid');
+    Yes: function() {
+      var gid = $li.attr('gid');
 
-			if (gid) {
-        ws({cmd: 'guidearchive', gid: gid});
+      if (gid) {
+        ws({ cmd: 'guidearchive', gid: gid }, function() {
+          $('#author-app').trigger('author:guide-deleted', gid);
+        });
       }
-		}
+    }
   });
 }
 

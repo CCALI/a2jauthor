@@ -450,22 +450,28 @@ var form={
 	}
 	*/
 
-	text: function(data){
-		var e=$('<div class="editspan form-group">'
-			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
-			+'<input class="form-control ui-widget editable" '+
-			//'placeholder="'+data.placeholder+'" '+
-			'type="text" /> </div>');
-		//if (typeof data.class!=='undefined') $('input',e).addClass(data.class);
-		//if (typeof data.width!=='undefined') $('input',e).css('width',data.class);
-		$('input',e).blur(function(){
-			form.change($(this),$(this).val());
-			//trace('Saving text',$(this).val());
-			}).val(decodeEntities(data.value)).data('data',data);
-		return e;
-	}
+  text: function(data) {
+    var label = data.label != null ?
+      '<label class="control-label">' + data.label + '</label>' : '';
 
-	,pasteFix:function(srchtml,ALLOWED_TAGS)
+    var $el = $(
+      '<div class="editspan form-group">' +
+        label +
+        '<input class="form-control ui-widget editable" type="text">' +
+      '</div>'
+    );
+
+    $el.find('input')
+      .blur(function() {
+        form.change($(this), $(this).val());
+      })
+      .val(decodeEntities(data.value))
+      .data('data', data);
+
+    return $el;
+  },
+
+  pasteFix:function(srchtml,ALLOWED_TAGS)
 	{	// 2014-11-06 Strip out HTML comments and any other unapproved code that Word usually adds.
 		// TODO strip out other irrelevant code
 		var html =$('<div>'+(srchtml)+'</div>').html(); // ensure valid HTML tags
@@ -561,63 +567,79 @@ var form={
     return $el;
   },
 
-  pickFile : function(mask)
-	{
-		var e=$('<div class="fileinput-button form-group">'
-		+'<button class="btn btn-primary"><span class="glyphicon-plus"></span> Upload...</button>'
-		+'<input class="form-control fileupload" type="file" name="files[]"/>'
-		+'</div>');
-		//.addClass('fileupload-processing')
-		if (gGuideID!==0) {
-			$('.fileupload',e).fileupload({
-				 url:CONST.uploadURL + gGuideID,
-				 dataType: 'json',
-				 done: function (e, data) {
-					var filename = data.result.files[0].name;
-					// 2014-11-24 after loading file, blur calls update.
-					$(e.target).closest('div').find('input[type=text]').val(filename).blur();
-					//trace('filename',filename);
-					//form.change($(this),filename);
-					setTimeout(updateAttachmentFiles,250);
-				 },
-				 progressall: function (e, data) {
-					  var progress = parseInt(data.loaded / data.total * 100, 10);
-					  $('#progress .bar').css(
-							'width',
-							progress + '%'
-					  );
-				 }
-			});
-		}
-		return e;
-	}
-	,pickAudio: function(data){
-  	var wrap = $('<div name="'+data.name+'" class="form-upload row clearfix"></div>');
-  	var leftCol = $('<div class="col-xs-9"></div>');
-  	var rightCol = $('<div class="col-xs-3"></div>');
+  pickFile: function(mask) {
+    var $fileupload = $(
+      '<div class="fileinput-button form-group">' +
+        '<button class="btn btn-primary">' +
+          '<span class="glyphicon-plus"></span> Upload...' +
+        '</button>' +
+        '<input class="form-control fileupload" type="file" name="files[]" >' +
+      '</div>'
+    );
 
-  		inputs=form.text(data)
-  		button=form.pickFile('')
+    if (gGuideID !== 0) {
+      $fileupload.find('.fileupload').fileupload({
+        dataType: 'json',
+        url: CONST.uploadURL + gGuideID,
 
-      leftCol.append(inputs);
-      rightCol.append(button);
+        done: function(evt, data) {
+          var filename = data.result.files[0].name;
 
-      wrap.append(leftCol);
-      wrap.append(rightCol);
+          // 2014-11-24 after loading file, blur calls update.
+          $(evt.target)
+            .closest('.form-upload')
+            .find('.filename-input-container')
+            .find('input[type=text]')
+            .val(filename)
+            .blur();
 
-		return wrap;
-	}
-	,pickImage: function(data){
+          setTimeout(updateAttachmentFiles, 250);
+        },
+
+        progressall: function(evt, data) {
+          var progress = parseInt(data.loaded / data.total * 100, 10);
+          $('#progress .bar').css('width', progress + '%');
+        }
+      });
+    }
+
+    return $fileupload;
+  },
+
+  pickAudio: function(data) {
+    var inputs = form.text(data);
+    var button = form.pickFile('');
+
+    var $leftCol = $('<div class="col-xs-9 filename-input-container"></div>');
+    var $rightCol = $('<div class="col-xs-3"></div>');
+
+    var $wrapper = $(
+      '<div name="' + data.name + '" class="form-upload row clearfix">' +
+      '</div>'
+    );
+
+    $leftCol.append(inputs);
+    $rightCol.append(button);
+
+    $wrapper.append($leftCol);
+    $wrapper.append($rightCol);
+
+    return $wrapper;
+  },
+
+  pickImage: function(data) {
     return form.pickAudio(data);
-  }
-	,pickVideo: function(data){
-    return form.pickAudio(data);
-  }
-	,pickXML: function(data){
-    return form.pickAudio(data);
-  }
+  },
 
-	,clear:function(){
+  pickVideo: function(data) {
+    return form.pickAudio(data);
+  },
+
+  pickXML: function(data) {
+    return form.pickAudio(data);
+  },
+
+  clear:function(){
 		form.codeCheckList=[];
 	}
 	,finish:function(div){

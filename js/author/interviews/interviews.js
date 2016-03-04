@@ -5,7 +5,7 @@ import template from './interviews.stache!';
 
 import 'can/map/define/';
 
-let InterviewsVM = Map.extend({
+export const InterviewsVM = Map.extend({
   define: {
     blankInterview: {
       get() {
@@ -14,6 +14,23 @@ let InterviewsVM = Map.extend({
           title: 'Blank Interview'
         };
       }
+    }
+  },
+
+  deleteInterview(id) {
+    const interviews = this.attr('interviews');
+
+    if (interviews) {
+      let index = -1;
+
+      interviews.each(function(interview, i) {
+        if (interview.attr('id') === id) {
+          index = i;
+          return false;
+        }
+      });
+
+      if (index !== -1) interviews.splice(index, 1);
     }
   }
 });
@@ -31,9 +48,17 @@ export default Component.extend({
   tag: 'interviews-page',
   viewModel: InterviewsVM,
 
+  helpers: {
+    formatFileSize: function(sizeInBytes) {
+      sizeInBytes = sizeInBytes();
+      let sizeInKB = Math.ceil(sizeInBytes / 1024);
+      return sizeInKB ? `${sizeInKB}K` : '';
+    }
+  },
+
   events: {
     inserted: function() {
-      let vm = this.viewModel;
+      const vm = this.viewModel;
       let updateGuidePromise = can.Deferred().resolve();
 
       // if there is a loaded guide when this component is inserted,
@@ -47,11 +72,15 @@ export default Component.extend({
         });
       }
 
-      let interviews = updateGuidePromise.then(function() {
-        return Guide.findAll();
-      });
+      const interviewsPromise = updateGuidePromise
+        .then(function() {
+          return Guide.findAll();
+        })
+        .then(function(interviews) {
+          vm.attr('interviews', interviews);
+        });
 
-      vm.attr('interviews', interviews);
+      vm.attr('interviewsPromise', interviewsPromise);
     },
 
     '.guide click': function(target) {
@@ -61,14 +90,10 @@ export default Component.extend({
 
     '.guide dblclick': function() {
       window.openSelectedGuide();
-    }
-  },
+    },
 
-  helpers: {
-    formatFileSize: function(sizeInBytes) {
-      sizeInBytes = sizeInBytes();
-      let sizeInKB = Math.ceil(sizeInBytes / 1024);
-      return sizeInKB ? `${sizeInKB}K` : '';
+    '{window} author:guide-deleted': function(window, evt, guideId) {
+      this.viewModel.deleteInterview(guideId);
     }
   }
 });

@@ -439,19 +439,20 @@ TGuide.prototype.getClientGender=function()
 	return this.goodGender(this.varGet(this.genderVarName));
 };
 
-TGuide.prototype.stepDisplayName=function(s)
-{	// Return text for displaying step number and text in author mode.
-	var txt;
-	if ( s<this.steps.length ) {
-		txt= this.steps[s].number+'. '+this.steps[s].text;
-		if (txt==='. ') {
-			txt='[Step#'+s+']';
-		}
-	}
-	else{
-		txt= '? (Unknown Step #'+s+')';
-	}
-	return txt;
+TGuide.prototype.stepDisplayName = function(s) {
+  // Return text for displaying step number and text in author mode.
+  var txt;
+
+  if (s < this.steps.length) {
+    txt = this.steps[s].number + '. ' + this.steps[s].text;
+    if (txt === '. ') {
+      txt = '[Step#' + s + ']';
+    }
+  } else {
+    txt = '? (Unknown Step #' + s + ')';
+  }
+
+  return txt;
 };
 
 TGuide.prototype.stepDisplayNameViewer=function(s)

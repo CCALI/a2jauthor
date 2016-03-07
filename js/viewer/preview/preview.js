@@ -19,20 +19,23 @@ export default Component.extend({
 
   events: {
     inserted() {
-      let vm = this.viewModel;
-      let rState = new AppState();
-      let mState = new MemoryState();
-      let pState = new PersistedState();
+      const vm = this.viewModel;
+      const rState = new AppState();
+      const mState = new MemoryState();
+      const pState = new PersistedState();
 
-      let mobileData = parseGuideToMobile(_assign({}, window.gGuide));
-      let parsedData = Interview.parseModel(mobileData);
-      let interview = new Interview(parsedData);
+      // Set fileDataUrl to window.gGuidePath, so the viewer can locate the
+      // interview assets (images, sounds, etc).
+      mState.attr('fileDataURL', vm.attr('guidePath'));
 
-      let logic = new Logic({interview});
-      let lang = new Lang(interview.attr('language'));
+      const mobileData = parseGuideToMobile(_assign({}, window.gGuide));
+      const parsedData = Interview.parseModel(mobileData);
+      const interview = new Interview(parsedData);
+
+      const logic = new Logic({interview});
+      const lang = new Lang(interview.attr('language'));
 
       rState.attr('interview', interview);
-
       rState.attr('logic', logic);
 
       // if previewPageName is set, we need to make sure the viewer

@@ -15,9 +15,10 @@
 
   <div id="viewer-app" class="{{#if showDebugPanel}}with-debug-panel{{/if}}">
     <a2j-viewer-preview
-      {show-debug-panel}="showDebugPanel"
+      {guide-path}="guidePath"
       {(trace-logic)}="traceLogic"
       {(interview)}="viewerInterview"
+      {show-debug-panel}="showDebugPanel"
       {preview-page-name}="previewPageName"
       {^interview-page-name}="interviewPageName" />
 

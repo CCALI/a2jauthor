@@ -732,7 +732,8 @@ var form={
 		return e;
 	},
 
-  // list is array to ensure preserved order. Note: js object properties don't guarantee order
+  // list is array to ensure preserved order.
+  // Note: js object properties don't guarantee order
   pickList: function(data, listValueLabel) {
     var i;
     var options = '';
@@ -741,13 +742,24 @@ var form={
     // where the integer value represents the `option` tag value and the string
     // is the `option` tag label
     for (i = 0; i < listValueLabel.length; i += 2) {
-      options += '<option value="' + listValueLabel[i] + '">' + listValueLabel[i + 1] + '</option>';
+      options +=
+        '<option value="' + listValueLabel[i] + '">' +
+          listValueLabel[i + 1] +
+        '</option>';
     }
 
-    var $selectFormGroup = $('<div name="' + data.name + '">'
-      + '<div class="editspan form-group">'
-      + (typeof data.label !== 'undefined' ? ('<label class="control-label">' + data.label + '</label>') : '')
-      + '<select class="form-control">' + options + '</select></div></div>'
+    var label = data.label != null ?
+      ('<label class="control-label">' + data.label + '</label>') : '';
+
+    var $selectFormGroup = $(
+      '<div name="' + data.name + '">' +
+        '<div class="editspan form-group">' +
+          label +
+          '<select class="form-control">' +
+            options +
+          '</select>' +
+        '</div>' +
+      '</div>'
     );
 
     var $selectInput = $selectFormGroup.find('select');
@@ -768,16 +780,16 @@ var form={
     return $selectFormGroup;
   },
 
-  pickStep:function(data){
-		var list=[];
-		var s;
-		for (s=0;s<gGuide.steps.length;s++){
-			//var step = gGuide.steps[s];
-			list.push(s, gGuide.stepDisplayName(s)); // s,step.number+". "+ (step.text));
-		}
-		//(list);
-		return form.pickList(data,list);
-	},
+  pickStep: function(data) {
+    var list = [];
+    var steps = gGuide.steps || [];
+
+    for (var i = 0; i < steps.length; i += 1) {
+      list.push(steps[i].number, gGuide.stepDisplayName(i));
+    }
+
+    return form.pickList(data, list);
+  },
 
   // Let user choose number of said item
   tableRowCounter: function(name, label, minelts, maxelts, value) {

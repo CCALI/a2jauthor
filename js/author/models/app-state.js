@@ -52,7 +52,21 @@ export default Map.extend({
      */
     guideId: {
       serialize: false,
-      value: window.gGuideID || ''
+      value() {
+        return window.gGuideID || '';
+      }
+    },
+
+    /**
+     * @property {String} AppState.prototype.guidePath guidePath
+     *
+     * The path to the folder where the Guide.xml file is located.
+     */
+    guidePath: {
+      serialize: false,
+      value() {
+        return window.gGuidePath || '';
+      }
     },
 
     /**

@@ -8,7 +8,7 @@
 	$isBitoviServer = ($_SERVER["HTTP_HOST"] == "bitovi.a2jauthor.org");
 
 	if ($isBitoviServer) {
-		define("GUIDES_URL", "/app/userfiles/");
+		define("GUIDES_URL", "/userfiles/");
 		define("DRUPAL_ROOT_DIR", "/vol/data/sites/commons7_dev");
 		define("GUIDES_DIR","/vol/data/sites/bitovi-dev/userfiles/");
 		$mysqli = new mysqli("localhost", "caja_dev", "r00dm0nkey", "caja_dev");

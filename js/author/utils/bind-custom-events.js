@@ -54,8 +54,11 @@ export default function bindCustomEvents(appState) {
       alertMessages.attr('guideId', guideId);
     }
 
-    appState.attr('guideId', guideId);
-    appState.attr('guide', new Map(window.gGuide));
+    appState.attr({
+      guideId: guideId,
+      guidePath: window.gGuidePath,
+      guide: new Map(window.gGuide)
+    });
   });
 
   // when window.gGuide is saved to the server successfully,

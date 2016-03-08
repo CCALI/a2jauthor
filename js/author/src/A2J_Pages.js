@@ -426,11 +426,17 @@ function guidePageEditForm(page, div, pagename)//novicePage
 	}
 	else
 	{
-		fs=form.fieldset('Page info',page);
-		fs.append(form.pickStep({label:'Step:',value: page.step, change:function(val,page){
-			page.step=parseInt(val,10);
-			updateTOC();
-		}} ));
+    fs = form.fieldset('Page info', page);
+
+    fs.append(form.pickStep({
+      label: 'Step:',
+      value: page.step,
+      change: function(val, page) {
+        page.step = parseInt(val, 10);
+        updateTOC();
+      }
+    }));
+
 		fs.append(form.text({label:'Name:', value:page.name,change:function(val,page,form)
 		{	// Renaming a page. Rename all references to the page. Use the new name only if it's unique.
 			val = jQuery.trim(val);

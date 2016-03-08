@@ -83,16 +83,13 @@ const Interview = Model.extend({
   },
 
   parseModel(data) {
+    data.steps = data.steps || [];
     data._pages = data.pages;
     data.pages = [];
 
     can.each(data._pages, function(p) {
-      let page = _assign({}, p);
-      let stepNumber = page.step;
-
-      let step = _find(data.steps, function(step) {
-        return parseInt(step.number, 10) === stepNumber;
-      });
+      const page = _assign({}, p);
+      const step = data.steps[page.step];
 
       // put the actual step object in the page.
       page.step = step;

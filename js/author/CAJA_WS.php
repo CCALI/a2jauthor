@@ -534,7 +534,7 @@ switch ($command)
 		*/
 
   case 'currentuser':
-    $result['username']=$user->name;
+    $result['username'] = $isBitoviServer ? "dev" : $user->name;
     break;
 
 	default:

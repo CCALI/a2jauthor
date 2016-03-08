@@ -224,6 +224,12 @@ run_build() {
   npm run build >> $LOG_PATH 2>&1
   test $? -eq 0 || abort Building app, check $LOG_PATH for details
 
+  progress "Building server app"
+
+  # Run server's build
+  npm run build:server >> $LOG_PATH 2>&1
+  test $? -eq 0 || abort Building server app, check $LOG_PATH for details
+
   progress "Building UI app"
 
   # Run UI's build

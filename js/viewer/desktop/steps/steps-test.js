@@ -75,31 +75,53 @@ describe('<a2j-viewer-steps>', function() {
     });
   });
 
-  describe('ViewModel', () => {
+  describe('ViewModel', function() {
     let vm;
 
     beforeEach(() => {
       vm = new ViewerStepsVM({});
     });
 
-    it('should correctly set nextSteps & remainingSteps based on current step number', () => {
-      let currentPage = new Map({
+    it('computes nextSteps & remainingSteps based on current step', function() {
+      const currentPage = new Map({
         step: {
-          number: '0'
+          number: '2',
+          text: 'Audio Test'
         }
       });
 
-      let interview = {
+      const interview = {
         getPageByName() {
           return currentPage;
         },
-        steps: [ {}, {}, {} ]
+
+        steps: [
+          { number: '2', text: 'Audio Test' },
+          { number: '3', text: 'Graphic Test' },
+          { number: '4', text: 'Graphic with Audio Test' },
+          { number: '5', text: 'Video' }
+        ]
       };
+
+      const expectedNextSteps = [
+        { number: '3', text: 'Graphic Test' },
+        { number: '4', text: 'Graphic with Audio Test' },
+        { number: '5', text: 'Video' }
+      ];
 
       vm.attr({ interview });
 
-      assert.equal(vm.attr('nextSteps.length'), 2, 'nextSteps.length');
-      assert.equal(vm.attr('remainingSteps'), 2, 'remainingSteps');
+      assert.deepEqual(
+        vm.attr('nextSteps').serialize(),
+        expectedNextSteps,
+        'it should match expected fixtures'
+      );
+
+      assert.equal(
+        vm.attr('remainingSteps'),
+        expectedNextSteps.length,
+        'there should be 3 steps remaining'
+      );
     });
 
     it('maxDisplayedSteps', () => {

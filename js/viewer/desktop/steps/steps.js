@@ -5,6 +5,7 @@ import _isNaN from 'lodash/isNaN';
 import _inRange from 'lodash/inRange';
 import Component from 'can/component/';
 import template from './steps.stache!';
+import _findIndex from 'lodash/findIndex';
 import learnMoreTemplate from './learn-more.stache';
 
 import 'can/map/define/';
@@ -39,8 +40,8 @@ export let ViewerStepsVM = Map.extend({
      */
     currentPage: {
       get() {
-        let interview = this.attr('interview');
-        let pageName = this.attr('rState.page');
+        const interview = this.attr('interview');
+        const pageName = this.attr('rState.page');
         return interview.getPageByName(pageName);
       }
     },
@@ -65,11 +66,15 @@ export let ViewerStepsVM = Map.extend({
      */
     nextSteps: {
       get() {
-        let currentStep = this.attr('currentStep');
+        const steps = this.attr('steps').attr();
+        const currentStep = this.attr('currentStep');
 
         if (currentStep) {
-          let stepNumber = parseInt(currentStep.attr('number'), 10);
-          return this.attr('steps').slice(stepNumber + 1);
+          const stepIndex = _findIndex(steps, ({ number }) => {
+            return number == currentStep.attr('number');
+          });
+
+          return this.attr('steps').slice(stepIndex + 1);
         }
       }
     },

@@ -3,12 +3,16 @@ import Interview from 'viewer/models/interview';
 
 describe('Interview model', function() {
 
-  it('parseModels', function(done) {
-    let dfd = Interview.findOne({url: '/parse-model-interview.json'});
+  it('parseModels', function() {
+    const dfd = Interview.findOne({url: '/parse-model-interview.json'});
 
-    dfd.then(function(interview) {
+    return dfd.then(function(interview) {
       assert.deepEqual(interview.serialize(), {
         pages: [{
+          step: {
+            number: '1',
+            text: 'Small Estate Affidavit'
+          },
           fields: [{
             name: 'user gender',
             type: 'text',
@@ -18,6 +22,7 @@ describe('Interview model', function() {
         }],
         _pages: {
           '1-Introduction': {
+            step: 0,
             name: '1-Introduction',
             fields: [{
               name: 'user gender',
@@ -28,8 +33,6 @@ describe('Interview model', function() {
         },
         answers: {}
       });
-
-      done();
     });
   });
 

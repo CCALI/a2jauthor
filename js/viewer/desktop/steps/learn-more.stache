@@ -1,6 +1,5 @@
-<p>
-    {{{ eval(learn, rState.repeatVarValue) }}}
-</p>
+<p>{{{ eval(learn, rState.repeatVarValue) }}}</p>
+
 <a class="btn btn-default btn-navigate" data-toggle="modal" data-target="#pageModal">
   {{lang.LearnMore}}
 </a>

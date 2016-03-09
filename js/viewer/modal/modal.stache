@@ -1,46 +1,67 @@
 {{#if currentPage}}
-  {{#with currentPage}}
-    <div
-      id="pageModal"
-      tabindex="-1"
-      role="dialog"
-      aria-hidden="true"
-      class="modal fade"
-      aria-labelledby="pageModalLbl">
+{{#with currentPage}}
+  <div
+    id="pageModal"
+    tabindex="-1"
+    role="dialog"
+    aria-hidden="true"
+    class="modal fade"
+    aria-labelledby="pageModalLbl">
 
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">
-              <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-            </button>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
 
-            <h4 class="modal-title" id="pageModalLbl">
-              {{#if ../modalContent}}
-                {{ eval(modalContent.name, repeatVarValue) }}
-              {{else}}
-                {{ eval(learn, repeatVarValue) }}
-              {{/if}}
-            </h4>
-          </div>
-
-          <div class="modal-body">
+          <h4 class="modal-title" id="pageModalLbl">
             {{#if ../modalContent}}
-              {{{ eval(modalContent.text, repeatVarValue) }}}
+              {{ eval(modalContent.name, repeatVarValue) }}
             {{else}}
-              {{{ eval(help, repeatVarValue) }}}
+              {{ eval(learn, repeatVarValue) }}
             {{/if}}
+          </h4>
+        </div>
 
-            {{#if helpImageURL}}
-              <img {$src}="prefix(mState.fileDataURL, helpImageURL)">
-            {{/if}}
+        <div class="modal-body">
+          {{#if ../modalContent}}
+            {{{ eval(modalContent.text, repeatVarValue) }}}
+          {{else}}
+            {{{ eval(help, repeatVarValue) }}}
+          {{/if}}
 
-            {{#if helpAudioURL}}
-              <audio {$src}="prefix(mState.fileDataURL, helpAudioURL)" controls="controls"></audio>
+          {{#if helpImageURL}}
+            <img
+              class="help-image"
+              {$src}="prefix(mState.fileDataURL, helpImageURL)">
+          {{/if}}
+
+          {{#if helpAudioURL}}
+            <audio
+              class="help-audio"
+              controls="controls"
+              {$src}="prefix(mState.fileDataURL, helpAudioURL)">
+            </audio>
+          {{/if}}
+
+          {{#if helpVideoURL}}
+            {{#if isGif(helpVideoURL)}}
+              <img
+                class="help-video"
+                {$src}="prefix(mState.fileDataURL, helpVideoURL)">
+            {{else}}
+              <video
+                class="help-video"
+                controls="controls"
+                {$src}="prefix(mState.fileDataURL, helpVideoURL)">
+              </video>
             {{/if}}
-          </div>
+          {{/if}}
         </div>
       </div>
     </div>
-  {{/with}}
+  </div>
+{{/with}}
 {{/if}}

@@ -8,8 +8,8 @@ export let ModalVM = Map.extend({
   define: {
     currentPage: {
       get() {
-        let interview = this.attr('interview');
-        let pageName = this.attr('rState.page');
+        const interview = this.attr('interview');
+        const pageName = this.attr('rState.page');
         return interview.getPageByName(pageName);
       }
     }
@@ -21,6 +21,19 @@ export default Component.extend({
   leakScope: false,
   tag: 'a2j-modal',
   viewModel: ModalVM,
+
+  helpers: {
+    isGif(url = '') {
+      const ext = url.split('.').pop();
+      return ext.toLowerCase() === 'gif';
+    },
+
+    eval(str) {
+      str = typeof str === 'function' ? str() : str;
+      return this.attr('logic').eval(str);
+    }
+  },
+
   events: {
     'a click': function(el) {
       el.attr('target', '_blank');
@@ -34,12 +47,6 @@ export default Component.extend({
 
     '#pageModal hidden.bs.modal': function() {
       this.viewModel.attr('modalContent', null);
-    }
-  },
-  helpers: {
-    eval: function(str) {
-      str = typeof str === 'function' ? str() : str;
-      return this.attr('logic').eval(str);
     }
   }
 });

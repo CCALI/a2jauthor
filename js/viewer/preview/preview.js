@@ -35,6 +35,11 @@ export default Component.extend({
       const logic = new Logic({interview});
       const lang = new Lang(interview.attr('language'));
 
+      const answers = pState.attr('answers');
+      answers.attr('lang', lang);
+      answers.attr(can.extend({}, interview.serialize().vars));
+
+      interview.attr('answers', answers);
       rState.attr('interview', interview);
       rState.attr('logic', logic);
 

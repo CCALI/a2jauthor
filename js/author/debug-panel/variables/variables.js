@@ -22,11 +22,11 @@ export default Component.extend({
   events: {
     // Download answer file directly from client to desktop.
     '#downloadAnswer click': function() {
-      let interview = this.viewModel.attr('interview');
-      let answers = interview.attr('answers').attr();
-      let pages = interview.attr('_pages').attr();
+      const interview = this.viewModel.attr('interview');
+      const pages = interview.attr('_pages').serialize();
+      const answers = interview.attr('answers').serialize();
 
-      let hotDocsXML = parser.parseANX(answers, pages);
+      const hotDocsXML = parser.parseANX(answers, pages);
       window.downloadTextFile(hotDocsXML, 'answer.anx');
     },
 

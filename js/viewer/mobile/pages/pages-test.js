@@ -40,6 +40,7 @@ describe('<a2j-pages>', () => {
       rState: { },
       mState: { },
       interview: {
+        answers: new can.Map(),
         pages: {
           find() {
             return nextPageStub;

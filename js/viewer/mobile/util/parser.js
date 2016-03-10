@@ -108,13 +108,14 @@ let setVariable = function(variable, pages) {
 };
 
 export default {
-  parseANX(json, pages) {
+  parseANX(answers, pages) {
     var xml = constants.HotDocsANXHeader_UTF8_str; // jshint ignore:line
+
     xml += '<AnswerSet title="">';
 
-    for (var k in json) {
-      xml += setVariable(json[k], pages);
-    }
+    Object.keys(answers).forEach(function(varName) {
+      xml += setVariable(answers[varName], pages);
+    });
 
     xml += '</AnswerSet>';
 

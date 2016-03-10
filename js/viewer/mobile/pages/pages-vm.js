@@ -186,15 +186,14 @@ export default Map.extend({
   _setPage(page, gotoPage) {
     const rState = this.attr('rState');
     const repeatVar = page.attr('repeatVar');
+    const answers = this.attr('interview.answers');
+    const countVarName = (repeatVar || '').toLowerCase();
 
-    const answer = this.attr(`interview.answers.${repeatVar}`);
-    const i = answer ? new AnswerVM({ answer }).attr('values') : null;
+    const answer = answers.attr(countVarName);
+    const i = answer ? (new AnswerVM({ answer })).attr('values') : null;
 
     if (i) {
-      rState.attr({
-        page: gotoPage,
-        i: +i
-      });
+      rState.attr({ page: gotoPage, i: parseInt(i, 10) });
     } else {
       rState.removeAttr('i');
       rState.attr('page', gotoPage);
@@ -225,27 +224,30 @@ export default Map.extend({
 
   setFieldAnswers(fields) {
     const logic = this.attr('logic');
-    const repeatVar = logic && logic.varGet('repeatVar');
-    const repeatVarCount = logic && logic.varGet(repeatVar);
-    const answerIndex = repeatVarCount ? repeatVarCount : 1;
 
-    fields.each(field => {
-      const avm = new AnswerVM({
-        field,
-        answerIndex,
-        answer: field.attr('answer'),
+    if (logic && fields.length) {
+      const repeatVar = logic.varGet('repeatVar');
+      const repeatVarCount = logic.varGet(repeatVar);
+      const answerIndex = repeatVarCount ? repeatVarCount : 1;
+
+      fields.each(field => {
+        const avm = new AnswerVM({
+          field,
+          answerIndex,
+          answer: field.attr('answer'),
+        });
+
+        if (this.attr('rState.i')) {
+          avm.attr('answerIndex', +this.attr('rState.i'));
+        }
+
+        if (field.attr('type') === 'textpick') {
+          field.getOptions();
+        }
+
+        field.attr('_answer', avm);
       });
-
-      if (this.attr('rState.i')) {
-        avm.attr('answerIndex', +this.attr('rState.i'));
-      }
-
-      if (field.attr('type') === 'textpick') {
-        field.getOptions();
-      }
-
-      field.attr('_answer', avm);
-    });
+    }
   },
 
   setRepeatVariable(repeatVar, repeatVarSet) {

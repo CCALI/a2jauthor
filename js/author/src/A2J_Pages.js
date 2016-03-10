@@ -450,43 +450,55 @@ function guidePageEditForm(page, div, pagename)//novicePage
 		fs.append(form.htmlarea({label:'Notes:',value: page.notes,change:function(val,page){page.notes=val;}} ));
 		t.append(fs);
 
-		var pagefs=form.fieldset('Question text',page);
+    var pagefs = form.fieldset('Question text', page);
 
-		pagefs.append(form.htmlarea(	{label:'Text:',value:page.text,change:function(val,page){page.text=val;}} ));
-		pagefs.append(form.pickAudio(	{label:'Text audio:', placeholder:'mp3 file',	value:	page.textAudioURL,change:function(val,page){page.textAudioURL=val;}} ));
-		pagefs.append(form.text(		{label:'Learn More prompt:',placeholder:'Learn more',	value:page.learn,	change:function(val,page){page.learn=val;}} ));
-		var getShowMe=function()
-		{
-			if (page.helpVideoURL!==""){
-				return 2;
-			}
-			if (page.helpImageURL!==""){
-				return 1;
-			}
-			return 0;
-		};
-		var updateShowMe=function(form,showMe)
-		{
-			showMe = Number(showMe);
-      form.find('.form-upload').hide();
-      form.find('[name="helpReader"]').hide();
+    pagefs.append(form.htmlarea({
+      label: 'Text:',
+      value: page.text,
+      change: function(val, page) {
+        page.text = val;
+      }
+    }));
 
-			if(showMe===1) {
-  			//Show graphic
-  			form.find('[name="helpAudio"]').show();
-  			form.find('[name="helpGraphic"]').show();
-  			form.find('[name="helpReader"]').show();
-			}
-			else if(showMe===2) {
-  			// Show video
-  			form.find('[name="helpVideo"]').show();
-  			form.find('[name="helpReader"]').show();
-			}
-			else {
-  			// Show text
-  			form.find('[name="helpAudio"]').show();
-			}
-		};
+    pagefs.append(form.pickAudio({
+      label: 'Text audio:',
+      placeholder: 'mp3 file',
+      value: page.textAudioURL,
+      change: function(val, page) {
+        page.textAudioURL = val;
+      }
+    }));
+
+    pagefs.append(form.text({
+      label: 'Learn More prompt:',
+      placeholder: 'Learn more',
+      value: page.learn,
+      change: function(val, page) {
+        page.learn = val;
+      }
+    }));
+
+    var getShowMe = function() {
+      if (page.helpVideoURL !== '') {
+        return 2;
+      }
+
+      if (page.helpImageURL !== '') {
+        return 1;
+      }
+
+      return 0;
+    };
+
+    var updateShowMe = function(form, showMe) {
+      showMe = Number(showMe);
+
+      form.find('[name="helpAudio"]').showit(showMe !== 2);
+      form.find('[name="helpGraphic"]').showit(showMe === 1);
+      form.find('[name="helpReader"]').showit(showMe >= 1);
+      form.find('[name="helpVideo"]').showit(showMe === 2);
+    };
+
 		pagefs.append(form.pickList({label:'Help style:',value:getShowMe(), change:function(val,page,form){
 			updateShowMe(form, (val));
 			}},  [0,'Text',1,'Show Me Graphic',2,'Show Me Video']));

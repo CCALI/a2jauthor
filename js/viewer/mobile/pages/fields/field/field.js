@@ -1,7 +1,10 @@
 import $ from 'jquery';
 import Map from 'can/map/';
 import moment from 'moment';
+import List from 'can/list/';
 import views from './views/';
+import _range from 'lodash/range';
+import _isNaN from 'lodash/isNaN';
 import Component from 'can/component/';
 import template from './field.stache!';
 import invalidPromptTpl from './views/invalid-prompt.stache!';
@@ -18,6 +21,24 @@ can.view.preload('invalid-prompt-tpl', invalidPromptTpl);
  */
 export let FieldVM = Map.extend({
   define: {
+    /**
+     * @property {List} field.ViewModel.prototype.numberPickOptions numberPickOptions
+     * @parent field.ViewModel
+     *
+     * List of integers used to render the `select` tag options when the field
+     * type is 'numberpick'. e.g, if `field.min` is `1` and and `field.max` is
+     * `5`, this property would return `[1, 2, 3, 4, 5]`.
+     */
+    numberPickOptions: {
+      get() {
+        const min = parseInt(this.attr('field.min'), 10);
+        const max = parseInt(this.attr('field.max'), 10);
+        const options = (_isNaN(min) || _isNaN(max)) ? [] : _range(min, max + 1);
+
+        return new List(options);
+      }
+    },
+
     /**
      * @property {Boolean} field.ViewModel.prototype.showInvalidPrompt showInvalidPrompt
      * @parent field.ViewModel
@@ -202,7 +223,7 @@ export default Component.extend({
   },
 
   helpers: {
-    selector: function(type, options) {
+    selector(type, options) {
       type = typeof type === 'function' ? type() : type;
 
       let self = this;
@@ -210,33 +231,19 @@ export default Component.extend({
       // TODO: CanJS should allow for passing helpers as well as scope.
       // This below is a copy of screenManager's eval helper.
       return views[type](options.scope, {
-        eval: function(str) {
+        eval(str) {
           str = typeof str === 'function' ? str() : str;
 
           return self.attr('logic').eval(str);
         },
 
-        selectnum: function(options) {
-          let result = [];
-          let min = self.attr('field.min');
-          let max = self.attr('field.max');
-
-          for (var i = min; i <= max; i += 1) {
-            result.push(options.fn(options.scope.add({
-              '%index': i
-            }).add(i)));
-          }
-
-          return result;
-        },
-
-        dateformat: function(val, format) {
+        dateformat(val, format) {
           val = val.isComputed ? val() : val;
           format = format.isComputed ? format() : format;
           return self.convertDate(val, format);
         },
 
-        i18n: function(key) {
+        i18n(key) {
           key = typeof key === 'function' ? key() : key;
           return self.attr('lang').attr(key) || key;
         }

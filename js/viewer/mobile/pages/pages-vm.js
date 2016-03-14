@@ -4,6 +4,7 @@ import AnswerVM from 'viewer/models/answervm';
 import Parser from 'viewer/mobile/util/parser';
 import constants from 'viewer/models/constants';
 
+import 'can/util/batch/';
 import 'can/map/define/';
 import 'can/util/jquery/';
 import 'bootstrap/js/modal';
@@ -211,14 +212,43 @@ export default Map.extend({
         return;
       }
 
-      this.attr('traceLogic').push({
-        page: page.attr('name')
-      });
+      can.batch.start();
 
+      this.attr('traceLogic').push({ page: page.attr('name') });
       this.attr('currentPage', page);
       this.setFieldAnswers(page.attr('fields'));
       this.attr('mState.header', page.attr('step.text'));
       this.attr('mState.step', page.attr('step.number'));
+
+      can.batch.stop();
+    }
+  },
+
+  /**
+   * @function pages.ViewModel.prototype.__ensureFieldAnswer __ensureFieldAnswer
+   * @parent pages.ViewModel
+   *
+   * Returns an Answer instance of the given field name.
+   *
+   * This method takes a `field` model instance and checks if there is an
+   * `answer` object already set in the `interview.answers` list, if that's
+   * the case the object is returned, otherwise an empty answer is created
+   * using the `field` data, that answer is set to the answers list and returned.
+   *
+   * ** This is doing too many things, it probably does not belong here either.
+   */
+  __ensureFieldAnswer(field) {
+    const name = field.attr('name').toLowerCase();
+    const answers = this.attr('interview.answers');
+
+    let answer = answers.attr(name);
+
+    if (answer) {
+      return answer;
+    } else {
+      answer = field.attr('emptyAnswer');
+      answers.attr(name, answer);
+      return answer;
     }
   },
 
@@ -231,11 +261,8 @@ export default Map.extend({
       const answerIndex = repeatVarCount ? repeatVarCount : 1;
 
       fields.each(field => {
-        const avm = new AnswerVM({
-          field,
-          answerIndex,
-          answer: field.attr('answer'),
-        });
+        const answer = this.__ensureFieldAnswer(field);
+        const avm = new AnswerVM({ field, answerIndex, answer });
 
         if (this.attr('rState.i')) {
           avm.attr('answerIndex', +this.attr('rState.i'));

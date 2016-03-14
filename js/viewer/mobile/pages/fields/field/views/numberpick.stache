@@ -3,7 +3,9 @@
     <label for="{{label}}">{{{ eval(label, repeatVarValue) }}}</label>
 
     <select id="{{label}}" {($value)}="field._answer.values" ($change)="validateField">
-      {{#selectnum}}<option value="{{.}}">{{.}}</option>{{/selectnum}}
+      {{#each numberPickOptions}}
+        <option value="{{.}}">{{.}}</option>
+      {{/each}}
     </select>
   </div>
 

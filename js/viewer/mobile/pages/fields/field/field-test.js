@@ -25,6 +25,24 @@ describe('<a2j-field>', () => {
       vm = null;
     });
 
+    it('computes numberPickOptions from field min/max values', function() {
+      vm.attr('field').attr({ min: '1', max: '5' });
+
+      assert.deepEqual(
+        vm.attr('numberPickOptions').serialize(),
+        [1, 2, 3, 4, 5],
+        'should return a range including end value'
+      );
+
+      // if min or max are not valid integers
+      vm.attr('field').attr({ min: '', max: '' });
+      assert.deepEqual(
+        vm.attr('numberPickOptions').serialize(),
+        [],
+        'should return an empty list'
+      );
+    });
+
     it('validateField', () => {
       let el = $('<input name="Foo Input" type="text" />');
 

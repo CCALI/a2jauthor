@@ -106,24 +106,25 @@ const Interview = Model.extend({
   define: {
     answers: {
       Type: Answers,
-      Value: Answers
+
+      value() {
+        return new Answers();
+      }
     },
 
     pages: {
-      set: function(list) {
-        list.forEach(p => p.interview = this);
-        var pages = new Page.List(list);
-        return pages;
-      },
-
       Type: Page.List
     },
 
     steps: {
       get(steps) {
-        let pages = this.attr('pages');
-        let withPages = pages.map(p => p.attr('step.number')).attr();
-        return steps.filter(s => _includes(withPages, s.attr('number')));
+        const pages = this.attr('pages');
+
+        // This is an array of step numbers which have pages associated to them
+        const stepsNumbers = pages.map(p => p.attr('step.number')).attr();
+
+        // Filters all the steps that own pages.
+        return steps.filter(s => _includes(stepsNumbers, s.attr('number')));
       }
     },
 

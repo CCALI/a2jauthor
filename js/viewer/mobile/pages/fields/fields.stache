@@ -1,3 +1,8 @@
 {{#each fields}}
-  <a2j-field {repeat-var-value}="repeatVarValue" {(logic)}="logic" {(field)}="." {lang}="lang" {(trace-logic)}="traceLogic"></a2j-field>
+  <a2j-field
+    {(field)}="."
+    {lang}="lang"
+    {(logic)}="logic"
+    {(trace-logic)}="traceLogic"
+    {repeat-var-value}="repeatVarValue" />
 {{/each}}

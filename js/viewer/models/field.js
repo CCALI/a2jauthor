@@ -5,7 +5,7 @@ import Answer from 'viewer/models/answer';
 
 import 'can/map/define/';
 
-let Field = Map.extend({
+const Field = Map.extend({
   define: {
     options: {
       value: ''
@@ -19,22 +19,6 @@ let Field = Map.extend({
           repeating: this.attr('repeating'),
           name: this.attr('name').toLowerCase()
         });
-      }
-    },
-
-    answer: {
-      get() {
-        let varName = this.attr('name').toLowerCase();
-        let answers = this.page.interview.attr('answers');
-        let answer = answers.attr(varName);
-
-        if (answer) {
-          return answer;
-        } else {
-          answer = this.attr('emptyAnswer');
-          answers.attr(varName, answer);
-          return answer;
-        }
       }
     }
   },

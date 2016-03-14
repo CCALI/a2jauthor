@@ -7,7 +7,7 @@ import 'can/map/define/';
 
 const userGenderVarName = 'user gender';
 
-let Page = Map.extend({
+const Page = Map.extend({
   define: {
     step: {
       // forces the convertion of TStep objects when converting
@@ -16,12 +16,6 @@ let Page = Map.extend({
     },
 
     fields: {
-      set(list) {
-        list.forEach(f => f.page = this);
-        let fields = new Field.List(list);
-        return fields;
-      },
-
       Type: Field.List
     },
 
@@ -44,10 +38,8 @@ let Page = Map.extend({
 Page.List = List.extend({
   Map: Page
 }, {
-  find: function(name) {
-    return _find(this, function(page) {
-      return page.attr('name') === name;
-    });
+  find(name) {
+    return _find(this, p => p.attr('name') === name);
   }
 });
 

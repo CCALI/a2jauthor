@@ -11,39 +11,43 @@ describe('Logic', function() {
   let interview;
 
   beforeEach(function() {
-    answers = new Answers();
+    answers = new Answers({
+      firstname: {
+        type: 'text',
+        values: [null],
+        name: 'firstname'
+      },
+      middlename: {
+        type: 'text',
+        values: [null],
+        name: 'middlename'
+      },
+      lastname: {
+        type: 'text',
+        values: [null],
+        name: 'lastname'
+      }
+    });
 
     interview = new Interview({
       _pages: {
         '1-Introduction': {
           name: '1-Introduction',
-          fields: [{
-            name: 'firstname',
-            type: 'text'
-          }, {
-            name: 'middlename',
-            type: 'text'
-          }, {
-            name: 'lastname',
-            type: 'text'
-          }]
+          fields: [
+            { name: 'firstname', type: 'text' },
+            { name: 'middlename', type: 'text' },
+            { name: 'lastname', type: 'text' }
+          ]
         },
-        '1-job loss date': {
-          name: '1-Introduction',
-        }
+        '1-job loss date': { name: '1-Introduction' }
       },
       pages: [{
         name: '1-Introduction',
-        fields: [{
-          name: 'firstname',
-          type: 'text'
-        }, {
-          name: 'middlename',
-          type: 'text'
-        }, {
-          name: 'lastname',
-          type: 'text'
-        }]
+        fields: [
+          { name: 'firstname', type: 'text' },
+          { name: 'middlename', type: 'text' },
+          { name: 'lastname', type: 'text' }
+        ]
       }, {
         name: '1-Introduction',
         fields: []
@@ -51,36 +55,37 @@ describe('Logic', function() {
       answers: answers
     });
 
-    let avm = new AnswerVM({
-      answer: interview.attr('pages.0.fields.0.answer')
-    });
+    let avm = new AnswerVM({ answer: answers.attr('firstname') });
     avm.attr('values', 'John');
 
-    avm = new AnswerVM({
-      answer: interview.attr('pages.0.fields.2.answer')
-    });
+    avm = new AnswerVM({ answer: answers.attr('lastname') });
     avm.attr('values', 'Doe');
 
-    logic = new Logic({
-      interview: interview
-    });
+    logic = new Logic({ interview });
   });
 
   it('simple set', function() {
     logic.exec('set firstname to "Bob"');
 
-    assert.deepEqual(answers.serialize(), {
-      'firstname': {
+    const expected = {
+      firstname: {
         name: 'firstname',
         type: 'text',
         values: [null, 'Bob']
       },
-      'lastname': {
+      middlename: {
+        type: 'text',
+        values: [null],
+        name: 'middlename'
+      },
+      lastname: {
         name: 'lastname',
         type: 'text',
         values: [null, 'Doe']
       }
-    }, 'values set');
+    };
+
+    assert.deepEqual(answers.serialize(), expected, 'values set');
   });
 
   it('simple goto', function() {
@@ -103,7 +108,12 @@ describe('Logic', function() {
   it('eval text', function() {
     assert.equal(logic.eval('%%1+1%%'), '2', 'simple eval');
     assert.equal(logic.eval('%%firstname%%'), 'John', 'simple token interpolation');
-    assert.equal(logic.eval('%%firstname%% %%FIRSTname%%'), 'John John', 'multiple token interpolation w/ case');
+
+    assert.equal(
+      logic.eval('%%firstname%% %%FIRSTname%%'),
+      'John John',
+      'multiple token interpolation w/ case'
+    );
   });
 
   it('conditional set w/ linebreaks', function() {
@@ -114,9 +124,7 @@ describe('Logic', function() {
       set fullname to firstname + " " + middlename + " " + lastname<BR/>
       end if`;
 
-    let avm = new AnswerVM({
-      answer: interview.attr('pages.0.fields.1.answer')
-    });
+    let avm = new AnswerVM({ answer: answers.attr('middlename') });
     avm.attr('values', '');
 
     answers.attr('fullname', new Answer({
@@ -129,23 +137,23 @@ describe('Logic', function() {
     logic.exec(str);
 
     assert.deepEqual(answers.serialize(), {
-      'fullname': {
+      fullname: {
         name: 'fullname',
         repeating: false,
         type: 'text',
         values: [null, 'John Doe']
       },
-      'firstname': {
+      firstname: {
         name: 'firstname',
         type: 'text',
         values: [null, 'John']
       },
-      'lastname': {
+      lastname: {
         name: 'lastname',
         type: 'text',
         values: [null, 'Doe']
       },
-      'middlename': {
+      middlename: {
         name: 'middlename',
         type: 'text',
         values: [null, '']
@@ -158,23 +166,23 @@ describe('Logic', function() {
     logic.exec(str);
 
     assert.deepEqual(answers.serialize(), {
-      'fullname': {
+      fullname: {
         name: 'fullname',
         repeating: false,
         type: 'text',
         values: [null, 'John T Doe']
       },
-      'firstname': {
+      firstname: {
         name: 'firstname',
         type: 'text',
         values: [null, 'John']
       },
-      'lastname': {
+      lastname: {
         name: 'lastname',
         type: 'text',
         values: [null, 'Doe']
       },
-      'middlename': {
+      middlename: {
         name: 'middlename',
         type: 'text',
         values: [null, 'T']

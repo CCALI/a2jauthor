@@ -143,45 +143,59 @@ export default Map.extend({
   },
 
   navigate(button) {
-    const repeatVar = button.attr('repeatVar');
-    const fields = this.attr('currentPage.fields');
-    const repeatVarSet = button.attr('repeatVarSet');
+    const page = this.attr('currentPage');
+    const fields = page.attr('fields');
 
     this.traceButtonClicked(button.attr('label'));
-
-    if (repeatVar && repeatVarSet) {
-      this.setRepeatVariable(repeatVar, repeatVarSet);
-    }
-
     this.validateAllFields();
+
     const anyFieldWithError = _some(fields, f => f.attr('hasError'));
 
     if (!anyFieldWithError) {
       const logic = this.attr('logic');
       const gotoPage = logic.attr('gotoPage');
-      const codeAfter = this.attr('currentPage.codeAfter');
+      const codeAfter = page.attr('codeAfter');
+      const repeatVar = button.attr('repeatVar');
+      const repeatVarSet = button.attr('repeatVarSet');
 
       if (codeAfter) {
         this.traceLogicAfterQuestion();
         logic.exec(codeAfter);
       }
 
+      // repeatVar holds the name of the variable that acts as the total count
+      // of a repeating variable; and repeatVarSet indicates whether that
+      // variable should be set to `1` or increased, `setRepeatVariable` takes
+      // care of setting `repeatVar` properly.
+      if (repeatVar && repeatVarSet) {
+        this.setRepeatVariable(repeatVar, repeatVarSet);
+      }
+
       if (button.next === constants.qIDASSEMBLESUCCESS) {
         can.trigger(this, 'post-answers-to-server');
       }
 
+      // logic might override the destination page, if after executing `codeAfter`
+      // `logic.gotoPage` is truthy, we just navigate to that page instead of the
+      // one set by `button.next`.
       if (gotoPage && gotoPage.length) {
         logic.attr('gotoPage', null);
-        this._setPage(this.attr('currentPage'), gotoPage);
-      } else if (button.next !== constants.qIDSUCCESS &&
+        this._setPage(page, gotoPage);
+      }
+      // only navigate to the `button.next` page if the button clicked is not
+      // any of the buttons with "special" behavior.
+      else if (button.next !== constants.qIDSUCCESS &&
         button.next !== constants.qIDASSEMBLE &&
         button.next !== constants.qIDASSEMBLESUCCESS) {
 
-        this._setPage(this.attr('currentPage'), button.next);
+        this._setPage(page, button.next);
       }
-    } else {
-      return false;
+
+      return;
     }
+
+    // do nothing if there are field(s) with error(s)
+    return false;
   },
 
   _setPage(page, gotoPage) {

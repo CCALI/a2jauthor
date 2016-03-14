@@ -31,8 +31,6 @@ export default Component.extend({
       const mobileData = parseGuideToMobile(_assign({}, window.gGuide));
       const parsedData = Interview.parseModel(mobileData);
       const interview = new Interview(parsedData);
-
-      const logic = new Logic({interview});
       const lang = new Lang(interview.attr('language'));
 
       const answers = pState.attr('answers');
@@ -41,6 +39,9 @@ export default Component.extend({
 
       interview.attr('answers', answers);
       rState.attr('interview', interview);
+
+      // needs to be created after answers are set
+      const logic = new Logic({ interview });
       rState.attr('logic', logic);
 
       // if previewPageName is set, we need to make sure the viewer

@@ -189,4 +189,51 @@ describe('Logic', function() {
       }
     }, 'middle name set');
   });
+
+  describe('conditional goto with linebreaks', function() {
+    const code =
+      `IF  [ChildCount] = [Number of children NU] <BR/>
+        GOTO "1- Do you have any?"<BR/>
+      ELSE<BR/>
+        GOTO "2- Child's name" <BR/>
+      END IF`;
+
+    beforeEach(function() {
+      answers = new Answers({
+        childcount: {
+          type: 'Number',
+          values: [null, '2'],
+          name: 'ChildCount'
+        },
+        'number of children nu': {
+          type: 'Number',
+          values: [null, '2'],
+          name: 'Number of children NU'
+        }
+      });
+
+      interview = new Interview({
+        answers,
+        _pages: {
+          '1- Do you have any?': {},
+          '2- Child\'s name': {}
+        }
+      });
+
+      logic = new Logic({ interview });
+    });
+
+    it('evaluates to if block correctly', function() {
+      logic.exec(code);
+      assert.equal(logic.attr('gotoPage'), '1- Do you have any?');
+    });
+
+    it('evaluates to else block correctly', function() {
+      answers.attr('childcount').attr('values', [null, '1']);
+
+      logic.exec(code);
+
+      assert.equal(logic.attr('gotoPage'), '2- Child\'s name');
+    });
+  });
 });

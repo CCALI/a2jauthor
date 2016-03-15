@@ -1,5 +1,6 @@
 import Map from 'can/map/';
 import _some from 'lodash/some';
+import _isString from 'lodash/isString';
 import AnswerVM from 'viewer/models/answervm';
 import Parser from 'viewer/mobile/util/parser';
 import constants from 'viewer/models/constants';
@@ -153,11 +154,15 @@ export default Map.extend({
 
     if (!anyFieldWithError) {
       const logic = this.attr('logic');
-      const gotoPage = logic.attr('gotoPage');
       const codeAfter = page.attr('codeAfter');
       const repeatVar = button.attr('repeatVar');
       const repeatVarSet = button.attr('repeatVarSet');
 
+      // default next page is derived from the button pressed.
+      // might be overridden by the After logic.
+      logic.attr('gotoPage', button.next);
+
+      // execute After logic
       if (codeAfter) {
         this.traceLogicAfterQuestion();
         logic.exec(codeAfter);
@@ -175,16 +180,18 @@ export default Map.extend({
         can.trigger(this, 'post-answers-to-server');
       }
 
-      // logic might override the destination page, if after executing `codeAfter`
-      // `logic.gotoPage` is truthy, we just navigate to that page instead of the
-      // one set by `button.next`.
-      if (gotoPage && gotoPage.length) {
+      const gotoPage = logic.attr('gotoPage');
+      const logicPageisNotEmpty = _isString(gotoPage) && gotoPage.length;
+
+      // this means the logic After has overriden the destination page, we
+      // should navigate to this page instead of the page set by `button.next`.
+      if (logicPageisNotEmpty && gotoPage !== button.next) {
         logic.attr('gotoPage', null);
         this._setPage(page, gotoPage);
-      }
+
       // only navigate to the `button.next` page if the button clicked is not
       // any of the buttons with "special" behavior.
-      else if (button.next !== constants.qIDSUCCESS &&
+      } else if (button.next !== constants.qIDSUCCESS &&
         button.next !== constants.qIDASSEMBLE &&
         button.next !== constants.qIDASSEMBLESUCCESS) {
 

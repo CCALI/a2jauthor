@@ -3,28 +3,9 @@ import Model from 'can/model/';
 import _find from 'lodash/find';
 import CONST from 'viewer/models/constants';
 import cString from 'viewer/mobile/util/string';
+import readableList from 'viewer/util/readable-list';
 
 import 'can/map/define/';
-
-let readableList = function(list, lang) {
-  // 2014-09-03 Return comma separated, optional 'and' for array.
-  var items = [];
-
-  for (var i in list) {
-    // Remove null or blanks.
-    var item = list[i];
-    if (!(item === null || typeof item === 'undefined' || item === '')) {
-      items.push(item);
-    }
-  }
-
-  var text = items.pop();
-  if (items.length > 0) {
-    text = items.join(', ') + ' ' + lang.RepeatAnd + ' ' + text;
-  }
-
-  return text;
-};
 
 export default Model.extend({}, {
   define: {

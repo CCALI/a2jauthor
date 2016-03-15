@@ -62,9 +62,11 @@ export default Component.extend({
         vm.attr('interviewPageName', rState.attr('page'));
       });
 
+      const modalContent = can.compute();
+
       vm.attr({
-        rState, pState, mState,
-        interview, logic, lang, isMobile
+        rState, pState, mState, interview,
+        logic, lang, isMobile, modalContent
       });
 
       this.element.html(template(vm));

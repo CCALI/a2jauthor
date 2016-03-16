@@ -53,6 +53,23 @@ describe('AnswerViewModel', function() {
     assert.deepEqual(avm.attr('answer.values').attr(), [null, false]);
   });
 
+  it('does not set invalid dates', function() {
+    const field = new Field({ name: 'foo', type: 'datemdy' });
+    field.attr('answer', field.attr('emptyAnswer'));
+
+    const avm = new AnswerVM({ field, answer: field.attr('answer') });
+    avm.attr('values', 'invalid date');
+    assert.equal(avm.attr('values'), '', 'should return empty string');
+  });
+
+  it('date types with no answer should not default to today', function() {
+    const field = new Field({ name: 'foo', type: 'datemdy' });
+    field.attr('answer', field.attr('emptyAnswer'));
+
+    const avm = new AnswerVM({ field, answer: field.attr('answer') });
+    assert.equal(avm.attr('values'), '', 'should return empty string');
+  });
+
   describe('validating checkboxes', function() {
     let checkboxes;
 

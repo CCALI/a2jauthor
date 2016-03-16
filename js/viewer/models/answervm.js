@@ -95,15 +95,14 @@ export default Map.extend({
       get() {
         const type = this.attr('field.type');
         const index = this.attr('answerIndex');
-        const raw = this.attr(`answer.values.${index}`);
+        const answer = this.attr(`answer.values.${index}`);
 
         if (type === 'datemdy') {
-          return raw ?
-            moment(raw, 'MM/DD/YYYY').format('YYYY-MM-DD') :
-            moment().format('YYYY-MM-DD');
+          const date = moment(answer, 'MM/DD/YYYY');
+          return date.isValid() ? date.format('YYYY-MM-DD') : '';
         }
 
-        return raw;
+        return answer;
       },
 
       set(val) {
@@ -111,7 +110,8 @@ export default Map.extend({
         const type = this.attr('field.type');
 
         if (type === 'datemdy') {
-          val = moment(val, 'YYYY-MM-DD').format('MM/DD/YYYY');
+          const date = moment(val, 'YYYY-MM-DD');
+          val = date.isValid() ? date.format('MM/DD/YYYY') : '';
         }
 
         if (!this.attr('answer')) {

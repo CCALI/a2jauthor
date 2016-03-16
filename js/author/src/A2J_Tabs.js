@@ -861,7 +861,11 @@ var form={
   listManagerAddRow: function($tbl, record) {
     var settings = $tbl.data('settings');
 
-    if (record && !Number.isInteger(record.number)) {
+    function isInteger(x) {
+      return (typeof x === 'number') && (x % 1 === 0);
+    }
+
+    if (record && !isInteger(record.number)) {
       var $rows = $tbl.find('tbody tr');
       record.number = $rows.length + 1;
     }

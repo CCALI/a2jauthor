@@ -1,19 +1,20 @@
 import Map from 'can/map/';
 import moment from 'moment';
+import _some from 'lodash/some';
 import _filter from 'lodash/filter';
-import _reduce from 'lodash/reduce';
 import Validations from 'viewer/mobile/util/validations';
 
 import 'can/map/define/';
 import 'can/map/validations/';
 
 export default Map.extend({
-  init: function() {
+  init() {
     this.validate('values', function(val) {
-      var field = this.attr('field');
+      const field = this.attr('field');
+
       if (!field) return;
 
-      var validations = new Validations({
+      const validations = new Validations({
         config: {
           type: field.type,
           maxChars: field.maxChars,
@@ -53,24 +54,26 @@ export default Map.extend({
         case 'checkbox':
         case 'radio':
         case 'checkboxNOTA':
-          let self = this;
-          let fields = this.attr('field').page.attr('fields');
+          const fields = this.attr('fields');
+          const index = this.attr('answerIndex');
 
-          fields = _filter(fields, function(f) {
+          const checkboxes = _filter(fields, function(f) {
+            // if the field being validated is either 'checkbox' or 'checkboxNOTA',
+            // we need to filter all fields which are either of those types.
             if (field.type === 'checkbox' || field.type === 'checkboxNOTA') {
               return f.type === 'checkbox' || f.type === 'checkboxNOTA';
-            }
 
-            return f.type === field.type;
+            // otherwise filter fields that are 'radio' type.
+            } else {
+              return f.type === 'radio';
+            }
           });
 
-          var v = _reduce(fields, function(v, field) {
-            var answer = field.attr('answer.values.' + self.attr('answerIndex'));
+          const anyChecked = _some(checkboxes, function(checkbox) {
+            return !!checkbox.attr(`answer.values.${index}`);
+          });
 
-            return val || v || !!answer;
-          }, !!fields[0].attr('answer.values.' + self.attr('answerIndex')));
-
-          validations.attr('val', v || null);
+          validations.attr('val', anyChecked || null);
 
           isValid = validations.required();
           break;
@@ -88,23 +91,26 @@ export default Map.extend({
   answerIndex: 1,
   define: {
     values: {
-      get: function() {
-        let type = this.attr('field.type');
-        let raw = this.attr('answer.values.' + this.attr('answerIndex'));
+      get() {
+        const type = this.attr('field.type');
+        const index = this.attr('answerIndex');
+        const answer = this.attr(`answer.values.${index}`);
 
         if (type === 'datemdy') {
-          return raw ? moment(raw, 'MM/DD/YYYY').format('YYYY-MM-DD') : moment().format('YYYY-MM-DD');
+          const date = moment(answer, 'MM/DD/YYYY');
+          return date.isValid() ? date.format('YYYY-MM-DD') : '';
         }
 
-        return raw;
+        return answer;
       },
 
-      set: function(val) {
-        let index = this.attr('answerIndex');
-        let type = this.attr('field.type');
+      set(val) {
+        const index = this.attr('answerIndex');
+        const type = this.attr('field.type');
 
         if (type === 'datemdy') {
-          val = moment(val, 'YYYY-MM-DD').format('MM/DD/YYYY');
+          const date = moment(val, 'YYYY-MM-DD');
+          val = date.isValid() ? date.format('MM/DD/YYYY') : '';
         }
 
         if (!this.attr('answer')) {
@@ -115,7 +121,7 @@ export default Map.extend({
           this.attr('answer.values', [null]);
         }
 
-        this.attr('answer.values.' + index, val);
+        this.attr(`answer.values.${index}`, val);
       }
     }
   }

@@ -283,7 +283,7 @@ export default Map.extend({
 
       fields.each(field => {
         const answer = this.__ensureFieldAnswer(field);
-        const avm = new AnswerVM({ field, answerIndex, answer });
+        const avm = new AnswerVM({ field, answerIndex, answer, fields });
 
         if (this.attr('rState.i')) {
           avm.attr('answerIndex', +this.attr('rState.i'));

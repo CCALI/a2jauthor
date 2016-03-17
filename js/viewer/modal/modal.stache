@@ -56,6 +56,9 @@
                 class="help-video"
                 controls="controls"
                 {$src}="prefix(mState.fileDataURL, helpVideoURL)">
+                Sorry, your browser doesn't support embedded videos,
+                but don't worry, you can <a href="{{prefix(mState.fileDataURL, helpVideoURL)}}">download it</a>
+                and watch it with your favorite video player!
               </video>
             {{/if}}
           {{/if}}

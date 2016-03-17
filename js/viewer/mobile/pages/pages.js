@@ -83,7 +83,12 @@ export default Component.extend({
     },
 
     '{rState} page': function(rState, ev, val) {
-      let vm = this.viewModel;
+      const vm = this.viewModel;
+
+      if (rState.attr('forceNavigation')) {
+        vm.setCurrentPage();
+        return;
+      }
 
       if (!val || val === 'FAIL') {
         let exitURL = vm.attr('mState.exitURL');

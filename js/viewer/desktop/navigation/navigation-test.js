@@ -144,28 +144,40 @@ describe('<a2j-viewer-navigation>', function() {
       visited.unshift(pages.attr(1));
       visited.unshift(pages.attr(0));
 
-      let logicSpy = {
-        varSet: sinon.spy()
-      };
+      const logicSpy = { varSet: sinon.spy() };
       vm.attr('logic', logicSpy);
 
       vm.attr('selectedPageIndex', 1);
-      assert.equal(vm.attr('selectedPageName'), pages.attr(1).attr('name'),
-        'should set selectedpageName to page 1');
+      assert.equal(
+        vm.attr('appState.page'),
+        pages.attr(1).attr('name'),
+        'should set appState.page to page 1'
+      );
+
       assert.equal(logicSpy.varSet.callCount, 0,
         'should not set repeatVar logic for page 1');
 
       vm.attr('selectedPageIndex', 0);
-      assert.equal(vm.attr('selectedPageName'), pages.attr(0).attr('name'),
-        'should set selectedpageName to page 0');
+
+      assert.equal(
+        vm.attr('appState.page'),
+        pages.attr(0).attr('name'),
+        'should set selectedpageName to page 0'
+      );
+
       assert.equal(logicSpy.varSet.callCount, 0,
         'should not set repeatVar logic for page 0');
 
       pages.attr(2).attr('repeatVar', 'foo');
       pages.attr(2).attr('repeatVarValue', 2);
       vm.attr('selectedPageIndex', 2);
-      assert.equal(vm.attr('selectedPageName'), pages.attr(2).attr('name'),
-        'should set selectedpageName to page 2');
+
+      assert.equal(
+        vm.attr('appState.page'),
+        pages.attr(2).attr('name'),
+        'should set appState.page to page 2'
+      );
+
       assert(logicSpy.varSet.calledWith('foo', 2), 'should set repeatVar logic');
     });
   });

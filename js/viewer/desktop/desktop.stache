@@ -1,3 +1,4 @@
+<can-import from="author/footer/"/>
 <can-import from="viewer/desktop/steps/"/>
 <can-import from="viewer/desktop/navigation/"/>
 <can-import from="viewer/desktop/desktop.less!"/>
@@ -41,5 +42,7 @@
         </div>
       {{/if}}
     {{/if}}
+
+    <app-footer />
   </div><!-- app-container -->
 </div><!-- app-wrapper -->

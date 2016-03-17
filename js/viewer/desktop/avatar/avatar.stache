@@ -1,7 +1,12 @@
 <can-import from="viewer/desktop/avatar/avatar.less!" />
 
-{{#if avatarImageName}}
-  <object type="image/svg+xml" data="{{joinBase 'viewer/images/' avatarImageName}}" ($load)="avatarLoaded()">
-    Your browser does not support SVG
-  </object>
-{{/if}}
+<div class="scaling-svg-container">
+  {{#if avatarImageName}}
+    <object type="image/svg+xml"
+      class="scaling-svg"
+      ($load)="avatarLoaded()"
+      data="{{joinBase 'viewer/images/' avatarImageName}}">
+      Your browser does not support SVG
+    </object>
+  {{/if}}
+</div>

@@ -11,6 +11,11 @@ export default Map.extend({
       serialize: false
     },
 
+    forceNavigation: {
+      type: 'boolean',
+      serialize: false
+    },
+
     saveAndExitActive: {
       value: false,
       serialize: false

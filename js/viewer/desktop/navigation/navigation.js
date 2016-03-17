@@ -56,19 +56,26 @@ export let ViewerNavigationVM = Map.extend({
     selectedPageIndex: {
       type: 'number',
       set(newVal) {
-        let selectedPage = this.attr('visitedPages').attr(newVal);
-        let selectedPageName = selectedPage.attr('name');
+        const appState = this.attr('appState');
+        const selectedPage = this.attr('visitedPages').attr(newVal);
+        const selectedPageName = selectedPage.attr('name');
 
         // if user changes page using the dropdown,
         // restore repeatVarValue of loop being navigated to
-        let repeatVar = selectedPage.attr('repeatVar');
-        let repeatVarValue = selectedPage.attr('repeatVarValue');
+        const repeatVar = selectedPage.attr('repeatVar');
+        const repeatVarValue = selectedPage.attr('repeatVarValue');
+
         if (repeatVar && repeatVarValue) {
-          this.attr('appState.repeatVarValue', selectedPage.repeatVarValue);
+          this.attr('appState.repeatVarValue', repeatVarValue);
           this.attr('logic').varSet(repeatVar, repeatVarValue);
         }
 
-        this.attr('selectedPageName', selectedPageName);
+        if (selectedPageName !== appState.attr('page')) {
+          appState.attr({
+            page: selectedPageName,
+            forceNavigation: true
+          });
+        }
 
         return newVal;
       }

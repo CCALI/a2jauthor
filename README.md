@@ -1,6 +1,6 @@
 [![Build Status](https://api.travis-ci.com/CCALI/CAJA.svg?token=CrXpSAsYvh8VrmswxMau&branch=bitovi)](https://magnum.travis-ci.com/CCALI/CAJA/)
 
-A2J AUTHOR 5.0 (previously know as CAJA)
+A2J Author 5.0 (previously know as CAJA)
 ====
 
 This the private repo for the browser-based versions of A2J Author and Viewer.

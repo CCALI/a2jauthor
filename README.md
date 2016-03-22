@@ -5,6 +5,13 @@ A2J AUTHOR 5.0 (previously know as CAJA)
 
 This the private repo for the browser-based versions of A2J Author and Viewer.
 
+Before following the instructions for setup below.  It is assumed that you have npm and nodejs already installed. 
+
+- /user/sam/git/caja is where this all gets installed (replace "sam" with whatever username you are on your system. 
+- npm and nodejs are installed at the system level using appget or other install tool dependent on your Linux/Mac distro.
+- According to John, you cannot run this on Windows machines at all due to the path length limitation of 256 characters.  This is actually a limitation of the Windows API, not the NTFS file system, but it makes it almost impossible to work on reasonably complex javascript projects on Windows.  
+
+
 ## To setup:
 
 ### wkhtmltopdf

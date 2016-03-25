@@ -116,3 +116,5 @@ js/client/lib/
 
 # compiled server code
 lib/
+
+*.komodoproject

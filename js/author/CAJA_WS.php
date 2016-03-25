@@ -499,7 +499,7 @@ switch ($command)
 
 			copy(GUIDES_DIR.$guideName, $GuidePublicDir.'/Guide.xml');
 			copy(replace_extension(GUIDES_DIR.$guideName,'json'), $GuidePublicDir.'/Guide.json');//01/14/2015
-			file_put_contents($GuidePublicDir . 'templates.json', guide_templates_index_string($row['gid']));
+			file_put_contents($GuidePublicDir . '/templates.json', guide_templates_index_string($row['gid']));
 
 			//http://localhost/caja/userfiles/public/dev/guides/A2JFieldTypes/2014-07-22-14-06-12
 			file_put_contents($GuidePublicDir.'/index.php', '<?php header("Location: /app/js/viewer/A2J_Viewer.php?gid=".$_SERVER["REQUEST_URI"]."Guide.xml"); ?>');

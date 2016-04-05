@@ -43,7 +43,7 @@ module.exports = {
 
     debug('getCurrentUser request', cookieHeader);
 
-    request.post(serverURL + '/js/author/CAJA_WS.php', {
+    request.post(serverURL + '/app/js/author/CAJA_WS.php', { 
       headers: {
         Cookie: cookieHeader
       },

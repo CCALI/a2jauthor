@@ -4,25 +4,11 @@
 	09/07/2013 - 10/05/2012 SJG Customize db and folder paths depending on server.
 */
 
-	$isBitoviServer =    ($_SERVER["HTTP_HOST"] == "bitovi.a2jauthor.org");
-	$isAuthorDevServer = ($_SERVER["HTTP_HOST"] == "authordev.a2jauthor.org");
-	$isLocalServerDev =  ($_SERVER["HTTP_HOST"] == "localhost");
+	$isBitoviServer =     ($_SERVER["HTTP_HOST"] == "bitovi.a2jauthor.org");
+	$isAuthorDevServer =  ($_SERVER["HTTP_HOST"] == "authordev.a2jauthor.org");
+	$isAuthorProdServer = ($_SERVER["HTTP_HOST"] == "www.a2jauthor.org");
 
-	if ($isLocalServerDev) {
-		$isProductionServer = FALSE; 
-		define("GUIDES_DIR", "/Users/Sam/Desktop/dev/F/SJGProjects/A2J5/A2JApp/userfiles/"); //'f:/www/caja.cali.org/caja/userfiles/');
-		
-		define("GUIDES_URL",'/app/userfiles/');
-		//$mysqli = new mysqli("localhost","dbadmin","a2j4cali","caja",3356);
-		//$drupaldb = new mysqli("localhost","dbadmin","a2j4cali","D7commons",3356); //Drupal for user auth
-		$mysqli = new mysqli("a2j01.a2jauthor.org","caja_dev","r00dm0nkey","caja_dev");
-		$drupaldb = new mysqli("a2j01.a2jauthor.org","D7commons_dev","r00dm0nkey","D7commons_dev"); //Drupal for user auth
-		//session_start();//  09/05/2013 WARNING! LEAVE session_start() OFF TO ACCESS DRUPAL SESSIONS!
-		// Set the working directory to your Drupal root
-		define('DRUPAL_ROOT_DIR',''); 
-		define("LOCAL_USER", 45 );// DEV Author 
-	}
-	elseif ($isBitoviServer) {
+	if ($isBitoviServer) {
 		$isProductionServer = TRUE; 
 		define("DRUPAL_ROOT_DIR", "/vol/data/sites/commons7_dev");
 		define("GUIDES_DIR","/vol/data/sites/bitovi-dev/userfiles/");
@@ -33,14 +19,13 @@
 	elseif ($isAuthorDevServer) {
 		$isProductionServer = TRUE; 
 		define("DRUPAL_ROOT_DIR", "/vol/data/sites/commons7_dev");
-		define("GUIDES_DIR","/vol/data/sites/bitovi-dev/userfiles/");
-		define("GUIDES_URL", "http://bitovi.a2jauthor.org/userfiles/");// grabbing files from bitovi for now
+		define("GUIDES_DIR","/vol/data/sites/a2j55dev/userfiles/");
+		define("GUIDES_URL", "/app/userfiles/");
 		$mysqli = new mysqli("localhost", "caja_dev", "r00dm0nkey", "caja_dev");
 		$drupaldb = new mysqli("localhost", "D7commons_dev", "r00dm0nkey", "D7commons_dev");
 	}
-	else { 
-		
-	/*	3/17/2016 Needs work for main production site
+	elseif ($isAuthorProdServer) {		
+	/*	2016-03-17 Needs work for main production site
 	 *	$isProductionServer = TRUE; 
 		// requires trailing slash
 		define("GUIDES_DIR", "/vol/data/sites/author/userfiles/");
@@ -54,6 +39,19 @@
 		// Set the working directory to your Drupal root
 		define("DRUPAL_ROOT_DIR", "/vol/data/sites/commons7_beta");
 		*/
+	}
+	else { // 2016-03-31 SJG Assume running locallaly, use local userfiles, hard coded user id but developer user database
+		$isProductionServer = FALSE; 
+		define("GUIDES_DIR", "/Users/Sam/Desktop/dev/F/SJGProjects/A2J5/A2JApp/userfiles/"); //'f:/www/caja.cali.org/caja/userfiles/');
+		define("GUIDES_URL",'/app/userfiles/');
+		//$mysqli = new mysqli("localhost","dbadmin","a2j4cali","caja",3356);
+		//$drupaldb = new mysqli("localhost","dbadmin","a2j4cali","D7commons",3356); //Drupal for user auth
+		$mysqli = new mysqli("a2j01.a2jauthor.org","caja_dev","r00dm0nkey","caja_dev");
+		$drupaldb = new mysqli("a2j01.a2jauthor.org","D7commons_dev","r00dm0nkey","D7commons_dev"); //Drupal for user auth
+		//session_start();//  09/05/2013 WARNING! LEAVE session_start() OFF TO ACCESS DRUPAL SESSIONS!
+		// Set the working directory to your Drupal root
+		define('DRUPAL_ROOT_DIR',''); 
+		define("LOCAL_USER", 45 );// DEV Author 
 	}
 
 	// 08/05/2013 CAJA Defines user ID and upload Directory for

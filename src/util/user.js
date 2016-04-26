@@ -20,12 +20,14 @@ module.exports = {
    *
    * Error Handler.
    */
-  handleError({ msg, serverURL, deferred }) {
+  handleError({ msg, serverURL, deferred, cookieHeader }) {
     const hostname = url.parse(serverURL).hostname;
 
-    if (hostname === 'localhost') {
+    if (hostname === 'localhost' && cookieHeader) {
       debug('getCurrentUser hardcoding to dev');
       deferred.resolve('dev');
+    } else if(!cookieHeader){
+      deferred.reject('No cookies!');
     }
 
     deferred.reject('Cannot authenticate current user');
@@ -58,7 +60,8 @@ module.exports = {
           this.handleError({
             msg: `getCurrentUser error ${err}`,
             serverURL,
-            deferred
+            deferred,
+            cookieHeader
           });
         }
       } else {
@@ -66,7 +69,8 @@ module.exports = {
         this.handleError({
           msg: `getCurrentUser error (${statusCode}): ${error} `,
           serverURL,
-          deferred
+          deferred,
+          cookieHeader
         });
       }
     });

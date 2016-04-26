@@ -1,11 +1,17 @@
 const he = require('he');
 const url = require('url');
 const path = require('path');
-const ssr = require('can-ssr');
+const ssr = require('done-ssr');
+const XHR = require('done-ssr-middleware/lib/xhr');
 const feathers = require('feathers');
 const wkhtmltopdf = require('wkhtmltopdf');
-const XHR = require('can-ssr/lib/middleware/xhr');
 const filenamify = require('../util/pdf-filename');
+const forwardCookies = require('../util/cookies').forwardCookies;
+const streamToPromise = require('stream-to-promise');
+const through = require('through2');
+
+const debug = require('debug')('A2J:assemble');
+const util = require('util');
 
 const router = feathers.Router();
 
@@ -28,7 +34,7 @@ const checkPresenceOf = function(req, res, next) {
   next();
 };
 
-router.post('/', checkPresenceOf, function(req, res) {
+router.post('/', checkPresenceOf, forwardCookies, function(req, res, next) {
   const url = req.protocol + '://' + req.get('host') + req.originalUrl;
   const headerFooterUrl = url + '/header-footer?content=';
 
@@ -72,20 +78,26 @@ router.post('/', checkPresenceOf, function(req, res) {
     wkhtmltopdf(html, pdfOptions).pipe(res);
   };
 
-  const onSuccess = function(result) {
-    const title = req.body.guideTitle;
-    toPdf(filenamify(title), he.decode(result.html));
-  };
-
   const onFailure = function(error) {
     res.status(500).send(error);
   };
 
-  XHR.base = req.protocol + '://' + req.get('host');
-  render(req).then(onSuccess, onFailure);
+  // XHR.base = req.protocol + '://' + req.get('host');
+  var renderStream = render(req);
+  renderStream.pipe(through(function(buffer){
+    const html = buffer.toString();
+    const title = req.body.guideTitle;
+
+    debug('SENDING HTML');
+    toPdf(filenamify(title), he.decode(html));
+  }));
+
+  renderStream.on('error', function(err){
+    debug(err);
+  })
 });
 
-router.get('/header-footer', function(req, res) {
+router.get('/header-footer', forwardCookies, function(req, res) {
   var query = url.parse(req.originalUrl, true).query;
 
   if (query.page === '1' && query.hideOnFirstPage === 'true') {

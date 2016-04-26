@@ -48,9 +48,17 @@ const TemplateSsrVM = Map.extend({
         const templateId = this.attr('templateId');
         const fileDataUrl = this.attr('fileDataUrl');
 
-        return templateId ?
+        var res = templateId ?
           this.findOneAndMakeList(templateId) :
           A2JTemplate.findAll({ guideId, fileDataUrl, active });
+
+        res.then(function(templates){
+          console.log(templates)
+        }, function(err){
+          console.log(err);
+        })
+
+        return res;
       }
     },
 

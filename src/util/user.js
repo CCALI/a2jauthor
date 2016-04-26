@@ -23,11 +23,9 @@ module.exports = {
   handleError({ msg, serverURL, deferred, cookieHeader }) {
     const hostname = url.parse(serverURL).hostname;
 
-    if (hostname === 'localhost' && cookieHeader) {
+    if (hostname === 'localhost') {
       debug('getCurrentUser hardcoding to dev');
       deferred.resolve('dev');
-    } else if(!cookieHeader){
-      deferred.reject('No cookies!');
     }
 
     deferred.reject('Cannot authenticate current user');

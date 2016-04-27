@@ -7,7 +7,6 @@ const feathers = require('feathers');
 const wkhtmltopdf = require('wkhtmltopdf');
 const filenamify = require('../util/pdf-filename');
 const forwardCookies = require('../util/cookies').forwardCookies;
-const streamToPromise = require('stream-to-promise');
 const through = require('through2');
 
 const debug = require('debug')('A2J:assemble');
@@ -82,13 +81,11 @@ router.post('/', checkPresenceOf, forwardCookies, function(req, res, next) {
     res.status(500).send(error);
   };
 
-  // XHR.base = req.protocol + '://' + req.get('host');
   var renderStream = render(req);
   renderStream.pipe(through(function(buffer){
     const html = buffer.toString();
     const title = req.body.guideTitle;
 
-    debug('SENDING HTML');
     toPdf(filenamify(title), he.decode(html));
   }));
 

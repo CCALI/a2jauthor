@@ -52,11 +52,9 @@ const TemplateSsrVM = Map.extend({
           this.findOneAndMakeList(templateId) :
           A2JTemplate.findAll({ guideId, fileDataUrl, active });
 
-        res.then(function(templates){
-          console.log(templates)
-        }, function(err){
-          console.log(err);
-        })
+        res.catch(function(err){
+          console.error(err);
+        });
 
         return res;
       }

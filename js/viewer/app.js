@@ -14,7 +14,9 @@ import 'viewer/mobile/util/helpers';
 // State attrs not needing persistance, such as showing/hiding the table of contents.
 // Load configuration from desktop into mobile
 const qsParams = can.deparam(window.location.search.substring(1));
-const mState = new MemoryState(_isEmpty(qsParams) ? config : qsParams);
+const mState = new MemoryState(_isEmpty(qsParams) ?
+  config :
+  Object.assign({}, config, qsParams));
 
 // AJAX request for interview json
 const interviewPromise = Interview.findOne({

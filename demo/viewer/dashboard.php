@@ -1,76 +1,61 @@
-<!-- This script scans the directory, ignoring non-folder files -->
 <?php
+  error_reporting(E_ALL);
 
-$guide_name = str_replace(" ","_",$_FILES['file']['name']);
-$temp_zip_file_location = $_FILES['file']['tmp_name'];
-$guide_id = uniqid();
+  $guideId = uniqid();
+  $pathToGuidesFolder = '../guides/';
+  $tempZipFileLocation = $_FILES['file']['tmp_name'];
 
-// since empty string above gives root folder, add data folder to path
-$path_to_data_folder = pathinfo(realpath(''), PATHINFO_DIRNAME) . '/guides/';
-
-if ($_GET['delete']) {
-  parse_str($_SERVER['QUERY_STRING'], $urlparams);
-  $id_to_remove = $urlparams['delete'];
-
-  function removeDirectory($path) {
+  function removeDirectoryAndContents($path) {
     $files = glob($path . '/*');
 
     foreach ($files as $file) {
-      is_dir($file) ? removeDirectory($file) : unlink($file);
+      unlink($file);
     }
 
     rmdir($path);
     return;
   }
-  // if id matches expected length, remove, otherwise skip - securitay?
-  if (mb_strlen($id_to_remove) === 13) {
-    removeDirectory($path_to_data_folder . '/' . $id_to_remove);
-  }
-}
 
-if ($temp_zip_file_location !="") {
-  echo '<h5>Loading A2J Viewer</h5>';
-  $zipfile = $temp_zip_file_location;
+  // 'routes' based on GET or zip file present
+  if ($_GET['delete']) {
+    // Recommended best practice to protect against code injection
+    parse_str($_SERVER['QUERY_STRING'], $urlparams);
+    $idToRemove = $urlparams['delete'];
 
-  $zip = new ZipArchive;
-  $res = $zip->open($zipfile);
-  if ($res === TRUE) {
-    $old_folder_name = trim($zip->getNameIndex(0), '/');
-    // extract it to the path we determined above
-    $zip->extractTo($path_to_data_folder);
-    $zip->close();
+    removeDirectoryAndContents($pathToGuidesFolder . '/' . $idToRemove);
   }
 
-  // renaming the folder name to uniq id allows for uploading of same guide file
-  rename($path_to_data_folder . '/' . $old_folder_name, $path_to_data_folder . '/' . $guide_id);
-  // open newly uploaded Guide
-  $xml_guide_url = 'index.html?templateURL=../guides/'.$guide_id.'/Guide.xml&fileDataURL=../guides/'.$guide_id;
-  // redirect and launch newly uploaded guide
-  echo "<script>window.location = `{$xml_guide_url}`</script>";
+  if ($tempZipFileLocation !="") {
+    $zip = new ZipArchive;
+    $res = $zip->open($tempZipFileLocation);
+    if ($res === TRUE) {
+      $oldFolderName = trim($zip->getNameIndex(0), '/');
 
-}
+      $zip->extractTo('/Applications/MAMP/tmp/php/');
+      $zip->close();
 
-error_reporting(E_ALL);
+      rename("/Applications/MAMP/tmp/php/" . $oldFolderName, $pathToGuidesFolder . $guideId);
+    }
 
-// Sort in ascending order - this is default
-$dir_only = array();
+    // generate viewer link with proper query params
+    $xmlGuideUrl = 'index.html?templateURL=../guides/'.$guideId.'/Guide.xml&fileDataURL=../guides/'.$guideId;
 
-foreach (glob('../guides/*', GLOB_ONLYDIR) as $keep) {
-  $dir_only[] = basename($keep);  // truncates file url to only folder name
-}
-
+    // redirect and launch newly uploaded guide
+    header("Location: " . $xmlGuideUrl);
+    exit();
+  }
 ?>
 
 <!-- Create a clickable list of all guides, launching the guide/viewer -->
 
 <h3>Current Guide List</h3>
 <ul id="guideList">
-  <?php foreach ($dir_only as $index => $directoryName) : ?>
-    <?php $viewerUrl = 'index.html?templateURL=../guides/'.$directoryName.'/Guide.xml&fileDataURL=../guides/'.$directoryName; ?>
+  <?php foreach (glob('../guides/*', GLOB_ONLYDIR) as $directoryName) : ?>
+    <?php $viewerUrl = 'index.html?templateURL=../guides/'. $directoryName .'/Guide.xml&fileDataURL=../guides/'. $directoryName; ?>
     <li>
       <a href="?delete=<?php echo $directoryName; ?>">[Delete]</a>
       <a id="<?php echo $directoryName; ?>" href="<?php echo $viewerUrl; ?>">
-        <?php echo $directoryName; ?>
+        <?php echo basename($directoryName); ?>
      </a>
     </li>
   <?php endforeach; ?>
@@ -79,11 +64,9 @@ foreach (glob('../guides/*', GLOB_ONLYDIR) as $keep) {
 <!-- Form for uploading/posting guides -->
 
 <form enctype="multipart/form-data" action="dashboard.php" method="post" target="_self">
-  <label for="POST-guide">Select Guide to Upload:</label>
+  <label for="POST-file">Select Guide to Upload:</label>
   <p>
     <input type="file" name="file" accept=".zip">
   </p>
-  <div>
-   <input type="submit" value="Send">
-  </div>
+  <input type="submit" value="Send">
 </form>

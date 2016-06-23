@@ -1,11 +1,13 @@
 <?php
   error_reporting(E_ALL);
 
-  $guideId = uniqid();
-  $pathToGuidesFolder = '../guides/';
-  $tempZipFileLocation = $_FILES['file']['tmp_name'];
-  // truncate zip file string to grab tmp parent directory
-  $tempDirectoryLocation = substr($tempZipFileLocation, 0, strrpos($tempZipFileLocation, '/') + 1);
+  // grab original name replacing spaces and dropping zip extension
+  $originalZipFileName = str_replace(" ","-",pathinfo($_FILES['file']['name'], PATHINFO_FILENAME));
+  $guideId = strtolower(uniqid() . '-' . $originalZipFileName);
+  $guidesPath = '../guides/';
+  $tempZipFilePath = $_FILES['file']['tmp_name'];
+  // truncate zip file path to grab tmp parent directory
+  $tempDirectoryPath = substr($tempZipFilePath, 0, strrpos($tempZipFilePath, '/') + 1);
 
   function removeDirectoryAndContents($path) {
     $files = glob($path . '/*');
@@ -17,25 +19,25 @@
     rmdir($path);
   }
 
-  // 'routes' based on GET or zip file present
+  // 'routes' based on GET or zip file being present
   if ($_GET['delete']) {
     // Recommended best practice to protect against code injection
     parse_str($_SERVER['QUERY_STRING'], $urlParams);
     $idToRemove = $urlParams['delete'];
 
-    removeDirectoryAndContents($pathToGuidesFolder . '/' . $idToRemove);
+    removeDirectoryAndContents($guidesPath . '/' . $idToRemove);
   }
 
-  if ($tempZipFileLocation !="") {
+  if ($tempZipFilePath !="") {
     $zip = new ZipArchive;
-    $res = $zip->open($tempZipFileLocation);
+    $res = $zip->open($tempZipFilePath);
     if ($res === TRUE) {
       $oldFolderName = trim($zip->getNameIndex(0), '/');
 
-      $zip->extractTo($tempDirectoryLocation);
+      $zip->extractTo($tempDirectoryPath);
       $zip->close();
       // error check here for successful extraction before rename/move?
-      rename($tempDirectoryLocation . $oldFolderName, $pathToGuidesFolder . $guideId);
+      rename($tempDirectoryPath . $oldFolderName, $guidesPath . $guideId);
     }
 
     // generate viewer link with proper query params
@@ -55,7 +57,7 @@
     <?php $viewerUrl = 'index.html?templateURL=../guides/'. $directoryName .'/Guide.xml&fileDataURL=../guides/'. $directoryName; ?>
     <li>
       <a href="?delete=<?php echo $directoryName; ?>">[Delete]</a>
-      <a "<?php echo $directoryName; ?>" href="<?php echo $viewerUrl; ?>">
+      <a href="<?php echo $viewerUrl; ?>">
         <?php echo basename($directoryName); ?>
      </a>
     </li>
@@ -63,11 +65,9 @@
 </ul>
 
 <!-- Form for uploading/posting guides -->
-
+<h3>Upload New Guide</h3>
+<p>Choose a .zip file exported from the A2J Author:</p>
 <form action="dashboard.php" method="post" target="_self" enctype="multipart/form-data">
-  <label for="file">Select Guide to Upload:</label>
-  <p>
-    <input type="file" name="file" accept=".zip">
-  </p>
-  <input type="submit" value="Send">
+  <input type="file" name="file" accept=".zip">
+  <input type="submit" value="Upload">
 </form>

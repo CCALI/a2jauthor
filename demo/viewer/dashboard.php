@@ -4,6 +4,8 @@
   $guideId = uniqid();
   $pathToGuidesFolder = '../guides/';
   $tempZipFileLocation = $_FILES['file']['tmp_name'];
+  // truncate zip file string to grab tmp parent directory
+  $tempDirectoryLocation = substr($tempZipFileLocation, 0, strrpos($tempZipFileLocation, '/') + 1);
 
   function removeDirectoryAndContents($path) {
     $files = glob($path . '/*');
@@ -13,14 +15,13 @@
     }
 
     rmdir($path);
-    return;
   }
 
   // 'routes' based on GET or zip file present
   if ($_GET['delete']) {
     // Recommended best practice to protect against code injection
-    parse_str($_SERVER['QUERY_STRING'], $urlparams);
-    $idToRemove = $urlparams['delete'];
+    parse_str($_SERVER['QUERY_STRING'], $urlParams);
+    $idToRemove = $urlParams['delete'];
 
     removeDirectoryAndContents($pathToGuidesFolder . '/' . $idToRemove);
   }
@@ -31,10 +32,10 @@
     if ($res === TRUE) {
       $oldFolderName = trim($zip->getNameIndex(0), '/');
 
-      $zip->extractTo('/Applications/MAMP/tmp/php/');
+      $zip->extractTo($tempDirectoryLocation);
       $zip->close();
-
-      rename("/Applications/MAMP/tmp/php/" . $oldFolderName, $pathToGuidesFolder . $guideId);
+      // error check here for successful extraction before rename/move?
+      rename($tempDirectoryLocation . $oldFolderName, $pathToGuidesFolder . $guideId);
     }
 
     // generate viewer link with proper query params
@@ -49,12 +50,12 @@
 <!-- Create a clickable list of all guides, launching the guide/viewer -->
 
 <h3>Current Guide List</h3>
-<ul id="guideList">
+<ul>
   <?php foreach (glob('../guides/*', GLOB_ONLYDIR) as $directoryName) : ?>
     <?php $viewerUrl = 'index.html?templateURL=../guides/'. $directoryName .'/Guide.xml&fileDataURL=../guides/'. $directoryName; ?>
     <li>
       <a href="?delete=<?php echo $directoryName; ?>">[Delete]</a>
-      <a id="<?php echo $directoryName; ?>" href="<?php echo $viewerUrl; ?>">
+      <a "<?php echo $directoryName; ?>" href="<?php echo $viewerUrl; ?>">
         <?php echo basename($directoryName); ?>
      </a>
     </li>
@@ -63,8 +64,8 @@
 
 <!-- Form for uploading/posting guides -->
 
-<form enctype="multipart/form-data" action="dashboard.php" method="post" target="_self">
-  <label for="POST-file">Select Guide to Upload:</label>
+<form action="dashboard.php" method="post" target="_self" enctype="multipart/form-data">
+  <label for="file">Select Guide to Upload:</label>
   <p>
     <input type="file" name="file" accept=".zip">
   </p>

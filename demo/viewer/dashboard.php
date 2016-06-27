@@ -1,12 +1,14 @@
 <?php
   error_reporting(E_ALL);
 
-  // grab original name replacing spaces and dropping zip extension
-  $originalZipFileName = str_replace(" ","-",pathinfo($_FILES['file']['name'], PATHINFO_FILENAME));
-  $guideId = strtolower(uniqid() . '-' . $originalZipFileName);
+  // replace spaces and drop zip extension
+  $minusDotZip = isset($_FILES['file']['name']) ? pathinfo($_FILES['file']['name'], PATHINFO_FILENAME) : '';
+  $hyphenatedZipFileName = strtolower(str_replace(" ","-", $minusDotZip));
+  // set uniq Id and path for guides
+  $guideId = uniqid() . '-' . $hyphenatedZipFileName;
   $guidesPath = '../guides/';
-  $tempZipFilePath = $_FILES['file']['tmp_name'];
-  // truncate zip file path to grab tmp parent directory
+  // grab temp zip file and parent directory
+  $tempZipFilePath = isset($_FILES['file']['tmp_name']) ? $_FILES['file']['tmp_name'] : '';
   $tempDirectoryPath = substr($tempZipFilePath, 0, strrpos($tempZipFilePath, '/') + 1);
 
   function removeDirectoryAndContents($path) {
@@ -20,7 +22,8 @@
   }
 
   // 'routes' based on GET or zip file being present
-  if ($_GET['delete']) {
+  $getSent = isset($_GET['delete']) ? $_GET['delete'] : '';
+  if ($getSent !== '') {
     // Recommended best practice to protect against code injection
     parse_str($_SERVER['QUERY_STRING'], $urlParams);
     $idToRemove = $urlParams['delete'];
@@ -28,7 +31,7 @@
     removeDirectoryAndContents($guidesPath . '/' . $idToRemove);
   }
 
-  if ($tempZipFilePath !="") {
+  if ($tempZipFilePath !== '') {
     $zip = new ZipArchive;
     $res = $zip->open($tempZipFilePath);
     if ($res === TRUE) {

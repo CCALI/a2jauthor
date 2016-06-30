@@ -19,7 +19,6 @@
 
     rmdir($path);
 
-    header("Location: dashboard.php");
   }
 
   // 'routes' based on GET or zip file being present
@@ -30,6 +29,7 @@
     $idToRemove = $urlParams['delete'];
 
     removeDirectoryAndContents($guidesPath . '/' . $idToRemove);
+    header("Location: dashboard.php");
   }
 
   if ($tempZipFilePath !== '') {

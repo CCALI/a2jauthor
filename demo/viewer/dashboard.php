@@ -7,9 +7,8 @@
   // set uniq Id and path for guides
   $guideId = uniqid() . '-' . $hyphenatedZipFileName;
   $guidesPath = '../guides/';
-  // grab temp zip file and parent directory
+  // grab temp zip file
   $tempZipFilePath = isset($_FILES['file']['tmp_name']) ? $_FILES['file']['tmp_name'] : '';
-  $tempDirectoryPath = substr($tempZipFilePath, 0, strrpos($tempZipFilePath, '/') + 1);
 
   function removeDirectoryAndContents($path) {
     $files = glob($path . '/*');
@@ -19,6 +18,7 @@
     }
 
     rmdir($path);
+
   }
 
   // 'routes' based on GET or zip file being present
@@ -29,26 +29,32 @@
     $idToRemove = $urlParams['delete'];
 
     removeDirectoryAndContents($guidesPath . '/' . $idToRemove);
+    header("Location: dashboard.php");
   }
 
   if ($tempZipFilePath !== '') {
     $zip = new ZipArchive;
-    $res = $zip->open($tempZipFilePath);
-    if ($res === TRUE) {
-      $oldFolderName = trim($zip->getNameIndex(0), '/');
+    $opened = $zip->open($tempZipFilePath);
+    if ($opened === TRUE) {
+      $extractPath = $guidesPath . '/' . $guideId;
+      // check for proper file structure
+      if($zip->getFromName('Guide.json')) {
+        $extracted = $zip->extractTo($extractPath);
+      } else {
+        echo '<h4>Badly formatted .zip file, please choose another.</h4>';
+      }
 
-      $zip->extractTo($tempDirectoryPath);
       $zip->close();
-      // error check here for successful extraction before rename/move?
-      rename($tempDirectoryPath . $oldFolderName, $guidesPath . $guideId);
     }
 
     // generate viewer link with proper query params
     $xmlGuideUrl = 'index.html?templateURL=../guides/'.$guideId.'/Guide.xml&fileDataURL=../guides/'.$guideId;
 
     // redirect and launch newly uploaded guide
-    header("Location: " . $xmlGuideUrl);
-    exit();
+    if ($extracted) {
+      header("Location: " . $xmlGuideUrl);
+      exit();
+    }
   }
 ?>
 

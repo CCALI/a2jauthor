@@ -18,8 +18,6 @@
     }
 
     rmdir($path);
-
-    header("Location: index.php");
   }
 
   // 'routes' based on GET or zip file being present
@@ -32,6 +30,7 @@
     $idToRemove = $urlParams['delete'];
 
     removeDirectoryAndContents($guidesPath . '/' . $idToRemove);
+    header("Location: index.php");
   }
 
   if ($tempZipFilePath !== '') {
@@ -48,15 +47,8 @@
 
       $zip->close();
     }
-
     // generate viewer link with proper query params
     $xmlGuideUrl = 'viewer.html?templateURL=../guides/'.$guideId.'/Guide.xml&fileDataURL=../guides/'.$guideId;
-
-    // redirect and launch newly uploaded guide
-    if ($extracted) {
-      header("Location: " . $xmlGuideUrl);
-      exit();
-    }
   }
 ?>
 
@@ -68,7 +60,7 @@
     <?php $viewerUrl = 'viewer.html?templateURL=../guides/'. $directoryName .'/Guide.xml&fileDataURL=../guides/'. $directoryName; ?>
     <li>
       <a href="?delete=<?php echo $directoryName; ?>">[Delete]</a>
-      <a href="<?php echo $viewerUrl; ?>">
+      <a target="_blank" href="<?php echo $viewerUrl; ?>">
         <?php echo basename($directoryName); ?>
      </a>
     </li>
@@ -82,4 +74,3 @@
   <input type="file" name="file" accept=".zip">
   <input type="submit" value="Upload">
 </form>
-

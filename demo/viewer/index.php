@@ -12,17 +12,14 @@
 
   function removeDirectoryAndContents($path) {
     $files = glob($path . '/*');
-
     foreach ($files as $file) {
       unlink($file);
     }
-
     rmdir($path);
   }
 
   // 'routes' based on GET or zip file being present
   $getSent = isset($_GET['delete']) ? $_GET['delete'] : '';
-  $extracted = false;
 
   if ($getSent !== '') {
     // Recommended best practice to protect against code injection
@@ -40,15 +37,12 @@
       $extractPath = $guidesPath . '/' . $guideId;
       // check for proper file structure
       if($zip->getFromName('Guide.json')) {
-        $extracted = $zip->extractTo($extractPath);
+        $zip->extractTo($extractPath);
       } else {
         echo '<h4>Badly formatted .zip file, please choose another.</h4>';
       }
-
       $zip->close();
     }
-    // generate viewer link with proper query params
-    $xmlGuideUrl = 'viewer.html?templateURL=../guides/'.$guideId.'/Guide.xml&fileDataURL=../guides/'.$guideId;
   }
 ?>
 

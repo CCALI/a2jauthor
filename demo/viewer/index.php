@@ -68,7 +68,7 @@
     <?php $viewerUrl = 'viewer.html?templateURL=../guides/'. $directoryName .'/Guide.xml&fileDataURL=../guides/'. $directoryName; ?>
     <li>
       <a href="?delete=<?php echo $directoryName; ?>">[Delete]</a>
-      <a target="_blank" href="<?php echo $viewerUrl; ?>">
+      <a href="<?php echo $viewerUrl; ?>">
         <?php echo basename($directoryName); ?>
      </a>
     </li>

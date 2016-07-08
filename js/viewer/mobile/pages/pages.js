@@ -89,8 +89,9 @@ export default Component.extend({
         vm.setCurrentPage();
         return;
       }
-
-      if (!val || val === 'FAIL') {
+      // Navigate to the exitURL if the page is set to a
+      // non-undefined falsy or the explicit "FAIL" string
+      if ((! val && typeof val !== 'undefined') || val === 'FAIL') {
         let exitURL = vm.attr('mState.exitURL');
 
         //TODO: This shouldn't be necessary, however something

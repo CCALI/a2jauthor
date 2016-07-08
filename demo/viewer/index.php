@@ -12,24 +12,22 @@
 
   function removeDirectoryAndContents($path) {
     $files = glob($path . '/*');
-
     foreach ($files as $file) {
       unlink($file);
     }
-
     rmdir($path);
-
   }
 
   // 'routes' based on GET or zip file being present
   $getSent = isset($_GET['delete']) ? $_GET['delete'] : '';
+
   if ($getSent !== '') {
     // Recommended best practice to protect against code injection
     parse_str($_SERVER['QUERY_STRING'], $urlParams);
     $idToRemove = $urlParams['delete'];
 
     removeDirectoryAndContents($guidesPath . '/' . $idToRemove);
-    header("Location: dashboard.php");
+    header("Location: index.php");
   }
 
   if ($tempZipFilePath !== '') {
@@ -39,21 +37,11 @@
       $extractPath = $guidesPath . '/' . $guideId;
       // check for proper file structure
       if($zip->getFromName('Guide.json')) {
-        $extracted = $zip->extractTo($extractPath);
+        $zip->extractTo($extractPath);
       } else {
         echo '<h4>Badly formatted .zip file, please choose another.</h4>';
       }
-
       $zip->close();
-    }
-
-    // generate viewer link with proper query params
-    $xmlGuideUrl = 'index.html?templateURL=../guides/'.$guideId.'/Guide.xml&fileDataURL=../guides/'.$guideId;
-
-    // redirect and launch newly uploaded guide
-    if ($extracted) {
-      header("Location: " . $xmlGuideUrl);
-      exit();
     }
   }
 ?>
@@ -63,10 +51,10 @@
 <h3>Current Guide List</h3>
 <ul>
   <?php foreach (glob('../guides/*', GLOB_ONLYDIR) as $directoryName) : ?>
-    <?php $viewerUrl = 'index.html?templateURL=../guides/'. $directoryName .'/Guide.xml&fileDataURL=../guides/'. $directoryName; ?>
+    <?php $viewerUrl = 'viewer.html?templateURL='. $directoryName .'/Guide.xml&fileDataURL='. $directoryName; ?>
     <li>
       <a href="?delete=<?php echo $directoryName; ?>">[Delete]</a>
-      <a href="<?php echo $viewerUrl; ?>">
+      <a target="_blank" href="<?php echo $viewerUrl; ?>">
         <?php echo basename($directoryName); ?>
      </a>
     </li>
@@ -76,7 +64,7 @@
 <!-- Form for uploading/posting guides -->
 <h3>Upload New Guide</h3>
 <p>Choose a .zip file exported from the A2J Author:</p>
-<form action="dashboard.php" method="post" target="_self" enctype="multipart/form-data">
+<form action="index.php" method="post" target="_self" enctype="multipart/form-data">
   <input type="file" name="file" accept=".zip">
   <input type="submit" value="Upload">
 </form>

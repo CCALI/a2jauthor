@@ -65,7 +65,7 @@ TLogic.prototype.pageFindReferences = function(CAJAScript,findName,newName)
 	var result={};
 	result.add=false;
 	// Replacing IE/Edge line breaks before splitting
-	var csLines = CAJAScriptHTML
+	var csLines = CAJAScript
 		.replace('<BR />', CONST.ScriptLineBreak)
 		.split(CONST.ScriptLineBreak);
 	var l;

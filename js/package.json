@@ -70,16 +70,16 @@
       "bloodhound": "typeahead.js/dist/bloodhound"
     },
     "meta": {
-      "author/src/A2J_Tabs": {
+      "caja/author/src/A2J_Tabs": {
         "format": "global",
         "deps": [
           "jquery-ui/ui/sortable"
         ]
       },
-      "author/src/TextStatistics": {
+      "caja/author/src/TextStatistics": {
         "format": "global"
       },
-      "author/src/A2J_AuthorApp": {
+      "caja/author/src/A2J_AuthorApp": {
         "format": "global",
         "deps": [
           "jquery-ui/ui/button",
@@ -91,46 +91,46 @@
           "blueimp-file-upload/js/jquery.fileupload"
         ]
       },
-      "author/src/A2J_Reports": {
+      "caja/author/src/A2J_Reports": {
         "format": "global",
         "deps": [
           "author/src/viewer/A2J_Logic"
         ]
       },
-      "author/src/viewer/A2J_Types": {
+      "caja/author/src/viewer/A2J_Types": {
         "format": "global"
       },
-      "author/src/viewer/jquery.ui.combobox": {
+      "caja/author/src/viewer/jquery.ui.combobox": {
         "deps": [
           "jquery-ui/ui/widget"
         ]
       },
-      "author/src/viewer/jquery.ui.traggable": {
+      "caja/author/src/viewer/jquery.ui.traggable": {
         "deps": [
           "jquery-ui/ui/mouse",
           "jquery-ui/ui/widget"
         ]
       },
-      "author/src/viewer/A2J_AnswerFile": {
+      "caja/author/src/viewer/A2J_AnswerFile": {
         "format": "global",
         "deps": [
           "author/src/viewer/A2J_Types"
         ]
       },
-      "author/src/viewer/A2J_Shared": {
+      "caja/author/src/viewer/A2J_Shared": {
         "deps": [
           "jquery-ui/ui/dialog"
         ]
       },
-      "blueimp-file-upload/js/jquery.fileupload": {
+      "caja/blueimp-file-upload/js/jquery.fileupload": {
         "deps": [
           "jquery"
         ]
       },
-      "typeahead.js/dist/typeahead.jquery": {
+      "caja/typeahead.js/dist/typeahead.jquery": {
         "format": "global"
       },
-      "typeahead.js/dist/bloodhound": {
+      "caja/typeahead.js/dist/bloodhound": {
         "format": "cjs"
       }
     }

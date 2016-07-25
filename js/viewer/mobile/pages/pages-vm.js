@@ -98,7 +98,7 @@ export default Map.extend({
      * @property {String} pages.ViewModel.prototype.answersString answersString
      * @parent pages.ViewModel
      *
-     * JSON representation of the XML version of the `answers` entered by the user.
+     * XML version of the `answers` entered by the user.
      *
      * This is POSTed to `setDataURL` when user finishes the interview.
      */
@@ -106,7 +106,7 @@ export default Map.extend({
       get() {
         const answers = this.attr('pState.answers');
         const parsed = Parser.parseANX(answers.serialize());
-        return JSON.stringify(parsed);
+        return parsed;
       }
     }
   },

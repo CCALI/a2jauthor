@@ -15,25 +15,25 @@
 
   <body>
     <div id="viewer-app"></div>
-
+    <script>window.pushState = function () { debugger } </script>
     <script>global = window;</script>
     <script>window.less = { async: true };</script>
 
     <script>
       localStorage.setItem('a2jConfig', JSON.stringify({
         // path (or url) to the interview XML file
-        templateURL: '../data/Guide.xml',
+        templateURL: '../guides/default/Guide.xml',
 
         // folder containing images, templates and other assets related to the interview
-        fileDataURL: '../data',
+        fileDataURL: '../guides/default/',
 
         // endpoint to load an answer file at start, used for RESUME
         getDataURL: '',
 
         // endpoint to save the answer's file and leaves the viewer (its response replaces viewer's frame)
-        setDataURL: '',
+        setDataURL: './answers.php',
 
-        // (Optional) ajax endpoit to silently save the answer file periodically
+        // (Optional) ajax endpoint to silently save the answer file periodically
         autoSetDataURL: '',
 
         // use to replace the viewer's frame on EXIT (user 'fails' interview)

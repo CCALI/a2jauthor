@@ -130,10 +130,11 @@
 			*/
 			var errors = [];
 			var jsLines = [];
-			//var csLines=CAJAScriptHTML.split(CONST.ScriptLineBreak);//CAJAScriptLines;//CAJAScript.split("\n");
-			//var csLines= decodeEntities(CAJAScriptHTML.replace(CONST.ScriptLineBreak,"\n",'gi')).split("\n");
 
-			var csLines = CAJAScriptHTML.split(CONST.ScriptLineBreak);
+			// Replacing IE/Edge line breaks before splitting
+			var csLines = CAJAScriptHTML
+				.replace('<BR />', CONST.ScriptLineBreak)
+				.split(CONST.ScriptLineBreak);
 
 			var ifd = 0; //if depth syntax checker
 			var l;

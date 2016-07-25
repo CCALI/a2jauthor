@@ -2,6 +2,7 @@ import can from 'can';
 import startApp from './start-app';
 import config from 'viewer/config/';
 import _isEmpty from 'lodash/isEmpty';
+import _assign from 'lodash/assign';
 import AppState from 'viewer/models/app-state';
 import Interview from 'viewer/models/interview';
 import MemoryState from 'viewer/models/memory-state';
@@ -16,7 +17,7 @@ import 'viewer/mobile/util/helpers';
 const qsParams = can.deparam(window.location.search.substring(1));
 const mState = new MemoryState(_isEmpty(qsParams) ?
   config :
-  Object.assign({}, config, qsParams));
+  _assign({}, config, qsParams));
 
 // AJAX request for interview json
 const interviewPromise = Interview.findOne({

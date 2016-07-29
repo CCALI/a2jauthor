@@ -20,8 +20,9 @@ define('D7_DB_USER', "");
 define('D7_DB_PASSWORD', '');
 define('D7_DB_HOST', '');
 
-$mysqli = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
-$drupaldb = new mysqli(D7_DB_HOST,D7_DB_USER,D7_DB_PASSWORD,D7_DB_NAME);
+$mysqli = new mysqli('localhost', 'root', 'root', 'caja', 3306);
+// $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+// $drupaldb = new mysqli(D7_DB_HOST,D7_DB_USER,D7_DB_PASSWORD,D7_DB_NAME);
 
 $isProductionServer = FALSE; //or FALSE
 ?>

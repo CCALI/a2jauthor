@@ -58,6 +58,7 @@ if ($isProductionServer) {
 	//if ($usertest == 'dev') $userid=45;
 	$canAuthor=true;
 	$userid=LOCAL_USER;
+  $userid=45;
 }
 
 
@@ -449,7 +450,7 @@ switch ($command)
 				$zip->addFromString("templates.json", guide_templates_index_string($gid));
 
 				$files = scandir(GUIDES_DIR.$guideDir);
-				
+
 				// Ideally, scan Guide and only zip files used in the interview.
 				// Currently, just add all files in the folder of the guide.
 				// $zip->addPattern('/\.(?:jpg|xml|png|gif)$/', GUIDES_DIR.$guideDir);

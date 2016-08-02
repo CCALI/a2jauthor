@@ -33,7 +33,7 @@ const Field = Map.extend({
     } else if (this.attr('listSrc')) {
       let req = $.ajax({
         dataType: 'text',
-        url: this.attr('listSrc'),
+        url: window.gGuidePath+this.attr('listSrc'),
       });
 
       let onSuccess = function(options) {

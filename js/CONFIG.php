@@ -6,8 +6,8 @@
 
 define("SERVER_URL","");
 define("DRUPAL_ROOT_DIR", "");
-define("GUIDES_DIR","");
-define("GUIDES_URL", "/userfiles/"); //this shoudldn't change if running at web root
+define("GUIDES_DIR","/Users/Garrett/Sites/CALI/CAJA/userfiles/");
+define("GUIDES_URL", "/CALI/CAJA/userfiles/"); //this shoudldn't change if running at web root
 
 // db variables
 define('DB_NAME', "");
@@ -20,9 +20,8 @@ define('D7_DB_USER', "");
 define('D7_DB_PASSWORD', '');
 define('D7_DB_HOST', '');
 
-$mysqli = new mysqli('localhost', 'root', 'root', 'caja', 3306);
-// $mysqli = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
-// $drupaldb = new mysqli(D7_DB_HOST,D7_DB_USER,D7_DB_PASSWORD,D7_DB_NAME);
+$mysqli = new mysqli(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
+$drupaldb = new mysqli(D7_DB_HOST,D7_DB_USER,D7_DB_PASSWORD,D7_DB_NAME);
 
 $isProductionServer = FALSE; //or FALSE
 ?>

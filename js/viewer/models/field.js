@@ -33,11 +33,13 @@ const Field = Map.extend({
     } else if (this.attr('listSrc')) {
       let req = $.ajax({
         dataType: 'text',
-        url: this.attr('listSrc'),
+        url: window.gGuidePath+this.attr('listSrc'),
       });
 
       let onSuccess = function(options) {
-        _this.attr('options', options);
+        // strip <select> tags
+        let formatted = options.replace(/<select>/ig, '').replace(/<\/select>/ig, '');
+        _this.attr('options', formatted);
         dfd.resolve();
       };
 

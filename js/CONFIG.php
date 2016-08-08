@@ -6,8 +6,8 @@
 
 define("SERVER_URL","");
 define("DRUPAL_ROOT_DIR", "");
-define("GUIDES_DIR","/Users/Garrett/Sites/CALI/CAJA/userfiles/");
-define("GUIDES_URL", "/CALI/CAJA/userfiles/"); //this shoudldn't change if running at web root
+define("GUIDES_DIR","");
+define("GUIDES_URL", "/userfiles/"); //this shoudldn't change if running at web root
 
 // db variables
 define('DB_NAME', "");

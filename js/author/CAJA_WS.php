@@ -63,7 +63,6 @@ if ($isProductionServer) {
 
 header("Content-type: text/plain; charset=utf-8");
 
-
 switch ($command)
 {
 	case 'test':
@@ -432,12 +431,11 @@ switch ($command)
 
 			$guideDir = $path_parts['dirname'];
 			$guideNameOnly = $path_parts['filename'];
-
 			$zip = new ZipArchive();
 			$zipNameOnly = 'A2J5 Guide'.$gid.' Archive.zip';
 			$zipName = $guideDir.'/'.$zipNameOnly;
 			$zipFull = GUIDES_DIR.$zipName;
-			$zipRes = $zip->open($zipFull, ZipArchive::OVERWRITE);
+			$zipRes = $zip->open($zipFull, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
 			if ($zipRes !== TRUE) {
 				trace("cannot open $zipFull");

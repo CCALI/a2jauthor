@@ -58,7 +58,6 @@ if ($isProductionServer) {
 	//if ($usertest == 'dev') $userid=45;
 	$canAuthor=true;
 	$userid=LOCAL_USER;
-  $userid=45;
 }
 
 

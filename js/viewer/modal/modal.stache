@@ -46,6 +46,14 @@
             </audio>
           {{/if}}
 
+          {{#if textAudioURL}}
+            <audio
+              class="help-audio"
+              controls="controls"
+              {$src}="prefix(mState.fileDataURL, textAudioURL)">
+            </audio>
+          {{/if}}
+
           {{#if helpVideoURL}}
             {{#if isGif(helpVideoURL)}}
               <img

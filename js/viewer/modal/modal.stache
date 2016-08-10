@@ -38,45 +38,38 @@
               {$src}="prefix(mState.fileDataURL, helpImageURL)">
           {{/if}}
 
-          {{#if ../modalContent}}
-          {{#with ../modalContent}}
-            <div class="media">
-              {{#if helpAudioURL}}
-                <audio
-                  class="help-audio"
-                  controls="controls"
-                  {$src}="prefix(mState.fileDataURL, helpAudioURL)">
-                </audio>
-              {{/if}}
-
-              {{#if textAudioURL}}
-                <audio
-                  class="help-audio"
-                  controls="controls"
-                  {$src}="prefix(mState.fileDataURL, textAudioURL)">
-                </audio>
-              {{/if}}
-
-              {{#if helpVideoURL}}
-                {{#if isGif(helpVideoURL)}}
-                  <img
-                    class="help-video"
-                    {$src}="prefix(mState.fileDataURL, helpVideoURL)">
-                {{else}}
-                  <video
-                    class="help-video"
-                    controls="controls"
-                    {$src}="prefix(mState.fileDataURL, helpVideoURL)">
-                    Sorry, your browser doesn't support embedded videos,
-                    but don't worry, you can <a href="{{prefix(mState.fileDataURL, helpVideoURL)}}">download it</a>
-                    and watch it with your favorite video player!
-                  </video>
-                {{/if}}
-              {{/if}}
-            </div>
-          {{/with}}
+          {{#if helpAudioURL}}
+            <audio
+              class="help-audio"
+              controls="controls"
+              {$src}="prefix(mState.fileDataURL, helpAudioURL)">
+            </audio>
           {{/if}}
 
+          {{#if textAudioURL}}
+            <audio
+              class="help-audio"
+              controls="controls"
+              {$src}="prefix(mState.fileDataURL, textAudioURL)">
+            </audio>
+          {{/if}}
+
+          {{#if helpVideoURL}}
+            {{#if isGif(helpVideoURL)}}
+              <img
+                class="help-video"
+                {$src}="prefix(mState.fileDataURL, helpVideoURL)">
+            {{else}}
+              <video
+                class="help-video"
+                controls="controls"
+                {$src}="prefix(mState.fileDataURL, helpVideoURL)">
+                Sorry, your browser doesn't support embedded videos,
+                but don't worry, you can <a href="{{prefix(mState.fileDataURL, helpVideoURL)}}">download it</a>
+                and watch it with your favorite video player!
+              </video>
+            {{/if}}
+          {{/if}}
         </div>
       </div>
     </div>

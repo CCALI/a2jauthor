@@ -301,7 +301,7 @@ export default Map.extend({
         }
 
         field.attr('_answer', avm);
-      })
+      });
     }
   },
 

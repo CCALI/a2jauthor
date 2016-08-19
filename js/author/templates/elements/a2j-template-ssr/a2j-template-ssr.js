@@ -31,7 +31,7 @@ import 'can/map/define/';
  *
  * <a2j-template-ssr>'s viewModel.
  */
-const TemplateSsrVM = Map.extend({
+export const TemplateSsrVM = Map.extend({
   define: {
     /**
      * @property {Promise} templateSsr.ViewModel.prototype.templatesPromise templatesPromise
@@ -48,15 +48,9 @@ const TemplateSsrVM = Map.extend({
         const templateId = this.attr('templateId');
         const fileDataUrl = this.attr('fileDataUrl');
 
-        var res = templateId ?
+        return templateId ?
           this.findOneAndMakeList(templateId) :
           A2JTemplate.findAll({ guideId, fileDataUrl, active });
-
-        res.catch(function(err){
-          console.error(err);
-        });
-
-        return res;
       }
     },
 
@@ -68,7 +62,9 @@ const TemplateSsrVM = Map.extend({
      */
     templates: {
       get(last, set) {
-        this.attr('templatesPromise').then(set);
+        this.attr('templatesPromise').then(set, error => {
+          console.log('Failed to get templates from server: ', error);
+        });
       }
     },
 

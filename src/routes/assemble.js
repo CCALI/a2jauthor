@@ -2,7 +2,6 @@ const he = require('he');
 const url = require('url');
 const path = require('path');
 const ssr = require('done-ssr');
-const XHR = require('done-ssr-middleware/lib/xhr');
 const feathers = require('feathers');
 const wkhtmltopdf = require('wkhtmltopdf');
 const filenamify = require('../util/pdf-filename');
@@ -10,8 +9,6 @@ const forwardCookies = require('../util/cookies').forwardCookies;
 const through = require('through2');
 
 const debug = require('debug')('A2J:assemble');
-const util = require('util');
-
 const router = feathers.Router();
 
 const render = ssr({
@@ -33,9 +30,11 @@ const checkPresenceOf = function(req, res, next) {
   next();
 };
 
-router.post('/', checkPresenceOf, forwardCookies, function(req, res, next) {
+router.post('/', checkPresenceOf, forwardCookies, function(req, res) {
   const url = req.protocol + '://' + req.get('host') + req.originalUrl;
   const headerFooterUrl = url + '/header-footer?content=';
+
+  debug('Request payload: ', req.body);
 
   const pdfOptions = {
     'header-spacing': 5,
@@ -89,9 +88,7 @@ router.post('/', checkPresenceOf, forwardCookies, function(req, res, next) {
     toPdf(filenamify(title), he.decode(html));
   }));
 
-  renderStream.on('error', function(err){
-    debug(err);
-  })
+  renderStream.on('error', onFailure);
 });
 
 router.get('/header-footer', forwardCookies, function(req, res) {

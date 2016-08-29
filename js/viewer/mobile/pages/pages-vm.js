@@ -275,18 +275,25 @@ export default Map.extend({
 
   setFieldAnswers(fields) {
     const logic = this.attr('logic');
+    const page = this.attr('currentPage');
 
     if (logic && fields.length) {
-      const repeatVar = logic.varGet('repeatVar');
-      const repeatVarCount = logic.varGet(repeatVar);
-      const answerIndex = repeatVarCount ? repeatVarCount : 1;
+      let answerIndex = 1;
+      const rState = this.attr('rState');
+
+      if (page.attr('repeatVar')) {
+        const repeatVar = logic.varGet('repeatVar');
+        const repeatVarCount = logic.varGet(repeatVar);
+
+        answerIndex = (repeatVarCount != null) ? repeatVarCount : answerIndex;
+      }
 
       fields.each(field => {
         const answer = this.__ensureFieldAnswer(field);
         const avm = new AnswerVM({ field, answerIndex, answer, fields });
 
-        if (this.attr('rState.i')) {
-          avm.attr('answerIndex', +this.attr('rState.i'));
+        if (page.attr('repeatVar') && rState.attr('i')) {
+          avm.attr('asnwerIndex', parseInt(rState.attr('i'), 10));
         }
 
         if (field.attr('type') === 'textpick') {

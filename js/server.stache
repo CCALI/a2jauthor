@@ -1,7 +1,6 @@
 <html>
   <head>
     <title>{{title}}</title>
-    {{asset "css"}}
   </head>
   <body class="bootstrap-styles">
     <can-import from="caja/author/styles.less!" />
@@ -12,6 +11,7 @@
       {answers}="request.body.answers"
       {guide-id}="request.body.guideId"
       {template-id}="request.body.templateId"
-      {file-data-url}="request.body.fileDataUrl" />
+      {file-data-url}="request.body.fileDataUrl"
+    />
   </body>
 </html>

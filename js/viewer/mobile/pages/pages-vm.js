@@ -100,11 +100,12 @@ export default Map.extend({
      *
      * XML version of the `answers` entered by the user.
      *
-     * This is POSTed to `setDataURL` when user finishes the interview.
+     * This is POSTed to `setDataURL` when user finishes the interview,
+     * and populated when a user loads saved answers.
      */
-    answersANXString: {
+    answersANX: {
       get() {
-        const answers = this.attr('pState.answers');
+        const answers = this.attr('interview.answers');
         const parsed = Parser.parseANX(answers.serialize());
         return parsed;
       }

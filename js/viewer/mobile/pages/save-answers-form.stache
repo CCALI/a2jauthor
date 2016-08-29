@@ -4,7 +4,7 @@
       class="post-answers-form"
       action="{{pState.setDataURL}}">
 
-  <input type="hidden" name="AnswerKey" {$value}="answersANXString" />
+  <input type="hidden" name="AnswerKey" {$value}="answersANX" />
 
   <button type="submit"
           ($click)="navigate"

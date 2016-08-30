@@ -202,6 +202,75 @@ function main()
     ws({cmd:'guidepublish',gid:gGuideID},guidePublished);
    });
 
+
+  // 09/29/2106 Handle publishing guides to external test servers. URL is defined in CAJA_WS.php
+  $('#guideZIPLHI').button({  disabled:true, icons:{primary:"ui-icon-disk"}}).click(function()
+  {  // 08/10/2015 ZIP the guide files, POST them to LHI, open new window for author to complete LHI process.
+    function guideZipped(data)
+    {
+      setProgress('');
+      gGuideID=data.gid;
+      if (data.url!==''){
+        window.open( data.url);
+      }
+    }
+    setProgress('Publishing to LHI',true);
+    ws({cmd:'guideZIPLHI',gid:gGuideID},guideZipped);
+   });
+  $('#guideZIPLHIQA').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
+  {  // 11/23/2015 ZIP the guide files, POST them to LHI, open new window for author to complete LHI process. For QA testing
+    function guideZipped(data)
+    {
+      setProgress('');
+      gGuideID=data.gid;
+      if (data.url!==''){
+        window.open( data.url);
+      }
+    }
+    setProgress('Publishing to LHI - QA',true);
+    ws({cmd:'guideZIPLHIQA',gid:gGuideID,server:'QA'},guideZipped);
+   });
+  $('#guideZIPTESTLHIQA').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
+  {  // 2/2016 ZIP the guide files,
+    function guideZipped(data)
+    {
+      setProgress('');
+      gGuideID=data.gid;
+      if (data.url!==''){
+        window.open( data.url);
+      }
+    }
+    setProgress('Publishing to Test LHI - QA',true);
+    ws({cmd:'guideZIPTESTLHIQA',gid:gGuideID,server:'QA'},guideZipped);
+   });
+  $('#guideZIPTESTCALI').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
+  {  // 2/2016 ZIP the guide files,
+    function guideZipped(data)
+    {
+      setProgress('');
+      gGuideID=data.gid;
+      if (data.url!==''){
+        window.open( data.url);
+      }
+    }
+    setProgress('Publishing to Test CALI',true);
+    ws({cmd:'guideZIPTESTCALI',gid:gGuideID,server:'QA'},guideZipped);
+   });
+  $('#guideZIPTESTPROBONO').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
+  {  // 2/2016 ZIP the guide files,
+    function guideZipped(data)
+    {
+      setProgress('');
+      gGuideID=data.gid;
+      if (data.url!==''){
+        window.open( data.url);
+      }
+    }
+    setProgress('Publishing to Test Probono',true);
+    ws({cmd:'guideZIPTESTPROBONO',gid:gGuideID,server:'QA'},guideZipped);
+   });
+
+
   $('#reportFull').button().click(reportFull);
   $('#reportTranscript').button().click(reportTranscript);
 

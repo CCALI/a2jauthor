@@ -15,6 +15,10 @@
 	 zip/publish should ensure guide.json also exists for each guide.xml.
 */
 
+
+	// enable below for CodeBug php debugging
+	xdebug_break();
+
 define('DATE_FORMAT',	  'Y-m-d-H-i-s'); // date stamp for file names
 define('DATE_FORMAT_UI', 'Y-m-d H:i:s'); // date stamp for human reading
 
@@ -49,15 +53,14 @@ if ($isProductionServer) {
 	//Load Drupal
 	// Minimum bootstrap to get user's session info is DRUPAL_BOOTSTRAP_SESSION.
 	drupal_bootstrap(DRUPAL_BOOTSTRAP_SESSION);
-	$userid = $isBitoviServer ? 45 : intval($user->uid);
-	$canAuthor = $isBitoviServer ? true : in_array('a2j author', array_values($user->roles));
+	// 08/30/2016 $isBitoviServer was used in previous troubleshooting and may be needed again but unlikely
+	// $userid = $isBitoviServer ? 45 : intval($user->uid);
+	// $canAuthor = $isBitoviServer ? true : in_array('a2j author', array_values($user->roles));
 } else {
 	// Running locally, just use demo or devuser (26 ,45 for a2jauthor.org).
 	session_start();//  09/05/2013 WARNING! LEAVE session_start() OFF TO ACCESS DRUPAL SESSIONS!
-	//$usertest=$_REQUEST['u'];
-	//if ($usertest == 'dev') $userid=45;
 	$canAuthor=true;
-	$userid=LOCAL_USER;
+	$userid=45;
 }
 
 
@@ -416,60 +419,80 @@ switch ($command)
 
 
 
-	 case 'guidezip':
-		// 01/08/2014 Zip guide XML and attached files.
-		// Security Warning: Zip file is available to all users knowing the URL.
-		// Improvement: ZIP on demand rather than via AJAX and then loading a static file?
-		$result['zip']='';
-	 	$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
-		$res=$mysqli->query("select * from guides where gid=$gid and (isPublic=1  or isFree=1  or editoruid=$userid)");
-		if ($row=$res->fetch_assoc())
-		{
-			$result['gid']=$row['gid'];
-			$guideName = $row['filename'];
-			$path_parts = pathinfo($guideName);
-
-			$guideDir = $path_parts['dirname'];
-			$guideNameOnly = $path_parts['filename'];
-			$zip = new ZipArchive();
-			$zipNameOnly = 'A2J5 Guide'.$gid.' Archive.zip';
-			$zipName = $guideDir.'/'.$zipNameOnly;
-			$zipFull = GUIDES_DIR.$zipName;
-			$zipRes = $zip->open($zipFull, ZipArchive::CREATE | ZipArchive::OVERWRITE);
-
-			if ($zipRes !== TRUE) {
-				trace("cannot open $zipFull");
-			} else {
-				trace("created $zipFull");
-				$zip->addFile(GUIDES_DIR.$guideName,'Guide.xml');
-
-				add_guide_json_file($guideName, $zip);
-				$zip->addFromString("templates.json", guide_templates_index_string($gid));
-
-				$files = scandir(GUIDES_DIR.$guideDir);
-
-				// Ideally, scan Guide and only zip files used in the interview.
-				// Currently, just add all files in the folder of the guide.
-				// $zip->addPattern('/\.(?:jpg|xml|png|gif)$/', GUIDES_DIR.$guideDir);
-				foreach($files as $file) {
-					$ext = pathinfo($file, PATHINFO_EXTENSION);
-
-					if (($ext != '') && ($file != $guideNameOnly) && ($ext != 'zip')) {
-						$filePath = GUIDES_DIR.$guideDir.'/'.$file;
-						$zip->addFile($filePath, $file);
-					}
-				}
-
-				$zip->close();
-				$result['zip'] = GUIDES_URL.$guideDir.'/'.$zipNameOnly;
-				// Caller will redirect to download the zip.
-			}
-		}
+	case 'guidezip':
+		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+		createGuideZip($gid);
 		break;
+
+
+		//### 08/292106 TODO These cases should be refactored to reuse guidezip code above
+	// case 'guideZIPLHI':
+	case 'guideZIPLHIQA':
+	// case 'guideZIPTESTLHIQA':
+	// case 'guideZIPTESTCALI':
+	// case 'guideZIPTESTPROBONO':
+
+	// 08/10/2015 ZIP guide, POST to LHI, return LHI's result.
+	// The zip code is identical to the 'guidezip' handler above. Extra steps are below.
+	$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+	$zipFull = createGuideZip($gid);
+
+		// Once zip is built, proceeed to posting it to the host site, LHI.
+		// POST the ZIP file using standard HTTP POST. Server returns a URL to redirect to.
+		if ($command=="guideZIPTESTCALI"){
+		  $LHI_POST_URL = "http://a2j.freelawreporter.org/A2JFilePUT.php"; // 2016-02-29 CALI A2J Dev
+		}
+		else
+		if ($command=="guideZIPTESTLHIQA"){
+		  //$LHI_POST_URL = "http://lhiuat.cloudapp.net/LHIUAT/Upload/A2JLoader.aspx"; // LHI dev site
+		  $LHI_POST_URL = "http://lhiuat.cloudapp.net/LHIUAT/Upload/A2JLoader.aspx?Session=" . $gid; // 2016-02-29 LHI-Marlabs dev site
+		}
+		else
+		if ($command=="guideZIPTESTPROBONO"){
+		  $LHI_POST_URL = "http://lhi-dev.probononet.net/Upload/A2JLoader.aspx?Session=" . $gid;//
+		  }
+		else
+		if ($command=="guideZIPLHIQA"){
+		  // $LHI_POST_URL = "http://a2j.freelawreporter.org/A2JFilePUT.php"; // CALI A2J Dev
+		  //$LHI_POST_URL = "https://rebuildqa.lawhelpinteractive.org/Upload/A2JLoader.aspx"; // LHI QA site
+		  $LHI_POST_URL = "https://rebuildqa.lawhelpinteractive.org/Upload/A2JLoader.aspx?Session=" . $gid;//
+		  // $LHI_POST_URL = "http://localhost:54589/Upload/A2JLoader.aspx";// 2016-02-18 LHI's local test (per request)
+		}else{
+		  $LHI_POST_URL = "https://www.lawhelpinteractive.org/Upload/A2JUpload.aspx"; // LHI production site
+		}
+		//$LHI_POST_URL = "http://localhost/sjgprojects/phputils/a2jfileput.php"; // local test site
+
+		$ch = curl_init($LHI_POST_URL);
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER ,true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, array(
+			'file' => '@'. $zipFull
+		));
+		// because Marlabs is using a self-signed cert we need to tell CURL to just carry on
+		// this should be removed in production
+		// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		$res  = curl_exec($ch);
+		if ($res === FALSE) {
+		  die(curl_error($ch));
+		}
+		// Extract strURL markup from  LHI's HTML response and return to caller.
+		//var_dump($res);
+		//die;
+		$tag = "strURL";
+		$tagstart=strpos($res,"<$tag>");
+		$tagend=strpos($res,"</$tag>",$tagstart);
+		if ($tagstart!==false) {
+		  $res=trim(substr($res,$tagstart+strlen($tag)+2,$tagend-$tagstart-strlen($tag)-2));
+		}
+		// $result['url']=$res ;
+		$result['url']=$LHI_POST_URL;
+		// Caller should open a new window with this URL.
+		// The new window is where author completes LHI process completely separate from A2J Author site.
+	break;
 
 	case 'guidepublish':
 		//### Publish specified existing guide to custom unique public folder.
-	 	$oldgid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+		$oldgid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$res=$mysqli->query("select * from guides where gid=$oldgid  and (isPublic=1  or isFree=1  or editoruid=$userid)");
 		trace('Publishing gid '.$oldgid);
 
@@ -509,7 +532,6 @@ switch ($command)
 		break;
 
 
-
 		/*
 	case 'guidemobilesave':
 		// 01/14/2015 Save json form of guide into guide's folder
@@ -544,6 +566,68 @@ if($err!="") $result['error']=$err;
 
 $return = json_encode($result);
 echo $return;
+
+
+/**
+ * Creates a zip file of Guide files and resources.
+ *
+ * Given the gid of a Guide Interview, this method will create a zip file
+ * of all guide resources, including associated templates. If the
+ * file exists, it will overwrite the current zipped file.
+ *
+ * @param string gid Guide gid used to query mysql
+ * @return void
+ **/
+
+function createGuideZip($gid) {
+	global $result, $mysqli, $userid;
+	$result['zip']='';
+	$res=$mysqli->query("select * from guides where gid=$gid and (isPublic=1  or isFree=1  or editoruid=$userid)");
+	if ($row=$res->fetch_assoc())
+	{
+		$result['gid']=$row['gid'];
+		$guideName = $row['filename'];
+		$path_parts = pathinfo($guideName);
+
+		$guideDir = $path_parts['dirname'];
+		$guideNameOnly = $path_parts['filename'];
+		$zip = new ZipArchive();
+		$zipNameOnly = 'A2J5 Guide'.$gid.' Archive.zip';
+		$zipName = $guideDir.'/'.$zipNameOnly;
+		$zipFull = GUIDES_DIR.$zipName;
+		$zipRes = $zip->open($zipFull, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+
+		if ($zipRes !== TRUE) {
+			trace("cannot open $zipFull");
+		} else {
+			trace("created $zipFull");
+			$zip->addFile(GUIDES_DIR.$guideName,'Guide.xml');
+
+			add_guide_json_file($guideName, $zip);
+			$zip->addFromString("templates.json", guide_templates_index_string($gid));
+
+			$files = scandir(GUIDES_DIR.$guideDir);
+
+			// Ideally, scan Guide and only zip files used in the interview.
+			// Currently, just add all files in the folder of the guide.
+			// $zip->addPattern('/\.(?:jpg|xml|png|gif)$/', GUIDES_DIR.$guideDir);
+			foreach($files as $file) {
+				$ext = pathinfo($file, PATHINFO_EXTENSION);
+
+				if (($ext != '') && ($file != $guideNameOnly) && ($ext != 'zip')) {
+					$filePath = GUIDES_DIR.$guideDir.'/'.$file;
+					$zip->addFile($filePath, $file);
+				}
+			}
+
+			$zip->close();
+			$result['zip'] = GUIDES_URL.$guideDir.'/'.$zipNameOnly;
+			// Caller will redirect to download the zip.
+			return $zipFull;
+		}
+	}
+}
+
 
 /**
  * Adds the json guide file to provided zip if it exists.
@@ -672,21 +756,21 @@ writelognow();
 
 function writelognow()
 {
-	global $return, $traces;
-	if (writelog)
-	{	//log if local only
-		ob_start();
-		echo "\n\n----------------\n\n";
-		echo "GET\n";var_dump ($_GET);
-		echo "FILES\n";var_dump ($_FILES);
-		echo "POST\n";var_dump ($_POST);
-		echo "REQUEST\n";var_dump ($_REQUEST);
-		echo "RESULT\n";var_dump ($return);
-		echo "Traces\n";var_dump ($traces);
-		$msg=ob_get_clean();
-		//error_log($msg,3,sys_get_temp_dir().'/CAJA_WS.log');
-		file_put_contents(sys_get_temp_dir().'/CAJA_WS.log',$msg,FILE_APPEND);
-	}
+	// global $return, $traces;
+	// if (writelog)
+	// {	//log if local only
+	// 	ob_start();
+	// 	echo "\n\n----------------\n\n";
+	// 	echo "GET\n";var_dump ($_GET);
+	// 	echo "FILES\n";var_dump ($_FILES);
+	// 	echo "POST\n";var_dump ($_POST);
+	// 	echo "REQUEST\n";var_dump ($_REQUEST);
+	// 	echo "RESULT\n";var_dump ($return);
+	// 	echo "Traces\n";var_dump ($traces);
+	// 	$msg=ob_get_clean();
+	// 	//error_log($msg,3,sys_get_temp_dir().'/CAJA_WS.log');
+	// 	file_put_contents(sys_get_temp_dir().'/CAJA_WS.log',$msg,FILE_APPEND);
+	// }
 }
 
 

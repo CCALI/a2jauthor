@@ -57,7 +57,7 @@ if ($isProductionServer) {
 	// Running locally, just use demo or devuser (26 ,45 for a2jauthor.org).
 	session_start();//  09/05/2013 WARNING! LEAVE session_start() OFF TO ACCESS DRUPAL SESSIONS!
 	$canAuthor=true;
-	$userid=45;
+	$userid=LOCAL_USER;
 }
 
 header("Content-type: text/plain; charset=utf-8");

@@ -1,4 +1,5 @@
 <?php
+
 /*
 	CALI Author 5 / A2J Author 5 (CAJA) * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
@@ -14,10 +15,6 @@
 	 all guide saves should include a JSON form
 	 zip/publish should ensure guide.json also exists for each guide.xml.
 */
-
-
-	// enable below for CodeBug php debugging
-	xdebug_break();
 
 define('DATE_FORMAT',	  'Y-m-d-H-i-s'); // date stamp for file names
 define('DATE_FORMAT_UI', 'Y-m-d H:i:s'); // date stamp for human reading
@@ -62,7 +59,6 @@ if ($isProductionServer) {
 	$canAuthor=true;
 	$userid=45;
 }
-
 
 header("Content-type: text/plain; charset=utf-8");
 
@@ -429,8 +425,11 @@ switch ($command)
 	// case 'guideZIPLHI':
 	case 'guideZIPLHIQA':
 	// case 'guideZIPTESTLHIQA':
-	// case 'guideZIPTESTCALI':
+	case 'guideZIPTESTCALI':
 	// case 'guideZIPTESTPROBONO':
+
+// enable below for CodeBug php debugging
+xdebug_break();
 
 	// 08/10/2015 ZIP guide, POST to LHI, return LHI's result.
 	// The zip code is identical to the 'guidezip' handler above. Extra steps are below.
@@ -440,7 +439,8 @@ switch ($command)
 		// Once zip is built, proceeed to posting it to the host site, LHI.
 		// POST the ZIP file using standard HTTP POST. Server returns a URL to redirect to.
 		if ($command=="guideZIPTESTCALI"){
-		  $LHI_POST_URL = "http://a2j.freelawreporter.org/A2JFilePUT.php"; // 2016-02-29 CALI A2J Dev
+		  // $LHI_POST_URL = "http://a2j.freelawreporter.org/A2JFilePUT.php"; // 2016-02-29 CALI A2J Dev
+		$LHI_POST_URL = "http://viewerdev.a2jauthor.org/uploader/A2JFilePUT.php";
 		}
 		else
 		if ($command=="guideZIPTESTLHIQA"){
@@ -465,6 +465,8 @@ switch ($command)
 		$ch = curl_init($LHI_POST_URL);
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER ,true);
+		// PHP 5.6 and newer requires CURLOPT_SAFE_UPLOAD set to false
+		curl_setopt($ch, CURLOPT_SAFE_UPLOAD, false);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, array(
 			'file' => '@'. $zipFull
 		));
@@ -572,8 +574,8 @@ echo $return;
  * Creates a zip file of Guide files and resources.
  *
  * Given the gid of a Guide Interview, this method will create a zip file
- * of all guide resources, including associated templates. If the
- * file exists, it will overwrite the current zipped file.
+ * of all guide resources, including associated templates, in the local guide folder.
+ * If the zip file exists, it will overwrite the current zipped file.
  *
  * @param string gid Guide gid used to query mysql
  * @return void

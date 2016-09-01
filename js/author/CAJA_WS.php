@@ -1,5 +1,4 @@
 <?php
-
 /*
 	CALI Author 5 / A2J Author 5 (CAJA) * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
@@ -11,7 +10,7 @@
 	05/2014 Loads author system only if user is logged into Drupal with an 'a2j author' role setting.
 	07/2014 Create public versions
 	08/2014 add more file details
-	01/2015 add mobile JSON handler
+	01/2015 add mobile JSON handler -- 08/2016 deprecated and removed
 	 all guide saves should include a JSON form
 	 zip/publish should ensure guide.json also exists for each guide.xml.
 */
@@ -62,14 +61,12 @@ if ($isProductionServer) {
 
 header("Content-type: text/plain; charset=utf-8");
 
-switch ($command)
-{
+switch ($command){
 	case 'test':
 		//var_dump($_SESSION);
 		//var_dump($user);
 		//var_dump( array_values($user->roles));
 		break;
-
 
 	case 'login':
 		$username='';
@@ -117,14 +114,12 @@ switch ($command)
 		$_SESSION['userdir']=$userdir;
 		break;
 
-
 	case 'logout':
 		// do logout, clear seession user id
 		$userid=0;
 		$result['userid']=$userid;
 		$_SESSION['userid']=$userid;
 		break;
-
 
 	case 'guides':
 		// list of free, public or user owned guides
@@ -186,7 +181,6 @@ switch ($command)
 		}
 		break;
 
-
 	case 'guidesave':
 		// update the guide (only if user matches guide's editor
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
@@ -245,7 +239,6 @@ switch ($command)
 			$err="No permission to archive this guide";
 		break;
 
-
 	case 'answersetsave':
 		// 4/29/2014 Save answerset into guide's folder. overwrite anything else.
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
@@ -280,8 +273,6 @@ switch ($command)
 			$err="No permission to update this answerset";
 		}
 		break;
-
-
 
 	case 'guidesaveas':
 		// Saving XML to new record. if gid > 0 we're cloning. if = 0 we've got a new guide.
@@ -326,8 +317,6 @@ switch ($command)
 		}
 		break;
 
-
-
 	case 'uploadfile':
 		/*
 		 * jQuery File Upload Plugin PHP Example 5.14
@@ -358,7 +347,6 @@ switch ($command)
 			exit();//Return immediately with upload info.
 		}
 		break;
-
 
 	case 'uploadguide':
 		// 10/03/2013 Upload existing XML/A2J file to a new guide.
@@ -412,24 +400,16 @@ switch ($command)
 		}
 		break;
 
-
-
-
 	case 'guidezip':
-		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
-		createGuideZip($gid);
+			$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+			createGuideZip($gid);
 		break;
 
-
-		//### 08/292106 TODO These cases should be refactored to reuse guidezip code above
-	// case 'guideZIPLHI':
 	case 'guideZIPLHIQA':
-	// case 'guideZIPTESTLHIQA':
 	case 'guideZIPTESTCALI':
-	// case 'guideZIPTESTPROBONO':
 
-// enable below for CodeBug php debugging
-xdebug_break();
+	// enable below for CodeBug php debugging
+	// xdebug_break();
 
 	// 08/10/2015 ZIP guide, POST to LHI, return LHI's result.
 	// The zip code is identical to the 'guidezip' handler above. Extra steps are below.
@@ -439,28 +419,14 @@ xdebug_break();
 		// Once zip is built, proceeed to posting it to the host site, LHI.
 		// POST the ZIP file using standard HTTP POST. Server returns a URL to redirect to.
 		if ($command=="guideZIPTESTCALI"){
-		  // $LHI_POST_URL = "http://a2j.freelawreporter.org/A2JFilePUT.php"; // 2016-02-29 CALI A2J Dev
-		$LHI_POST_URL = "http://viewerdev.a2jauthor.org/uploader/A2JFilePUT.php";
+		  $LHI_POST_URL = "http://viewerdev.a2jauthor.org/uploader/A2JFilePUT.php";
 		}
-		else
-		if ($command=="guideZIPTESTLHIQA"){
-		  //$LHI_POST_URL = "http://lhiuat.cloudapp.net/LHIUAT/Upload/A2JLoader.aspx"; // LHI dev site
-		  $LHI_POST_URL = "http://lhiuat.cloudapp.net/LHIUAT/Upload/A2JLoader.aspx?Session=" . $gid; // 2016-02-29 LHI-Marlabs dev site
-		}
-		else
-		if ($command=="guideZIPTESTPROBONO"){
-		  $LHI_POST_URL = "http://lhi-dev.probononet.net/Upload/A2JLoader.aspx?Session=" . $gid;//
-		  }
 		else
 		if ($command=="guideZIPLHIQA"){
-		  // $LHI_POST_URL = "http://a2j.freelawreporter.org/A2JFilePUT.php"; // CALI A2J Dev
-		  //$LHI_POST_URL = "https://rebuildqa.lawhelpinteractive.org/Upload/A2JLoader.aspx"; // LHI QA site
-		  $LHI_POST_URL = "https://rebuildqa.lawhelpinteractive.org/Upload/A2JLoader.aspx?Session=" . $gid;//
-		  // $LHI_POST_URL = "http://localhost:54589/Upload/A2JLoader.aspx";// 2016-02-18 LHI's local test (per request)
+		  $LHI_POST_URL = "https://rebuildqa.lawhelpinteractive.org/Upload/A2JLoader.aspx?Session=" . $gid;
 		}else{
 		  $LHI_POST_URL = "https://www.lawhelpinteractive.org/Upload/A2JUpload.aspx"; // LHI production site
 		}
-		//$LHI_POST_URL = "http://localhost/sjgprojects/phputils/a2jfileput.php"; // local test site
 
 		$ch = curl_init($LHI_POST_URL);
 		curl_setopt($ch, CURLOPT_POST, true);
@@ -490,7 +456,7 @@ xdebug_break();
 		$result['url']=$LHI_POST_URL;
 		// Caller should open a new window with this URL.
 		// The new window is where author completes LHI process completely separate from A2J Author site.
-	break;
+		break;
 
 	case 'guidepublish':
 		//### Publish specified existing guide to custom unique public folder.
@@ -533,52 +499,30 @@ xdebug_break();
 		}
 		break;
 
-
-		/*
-	case 'guidemobilesave':
-		// 01/14/2015 Save json form of guide into guide's folder
-		// TODO ensure json is updated for ZIP creation.
-		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
-		$json=$_REQUEST['json'];
-		$res=$mysqli->query("select * from guides where gid=$gid and editoruid=$userid");
-		if ($row=$res->fetch_assoc()){
-		  $result['info']="Will create json!";
-		  $filename=GUIDES_DIR.'interview.json';
-		  $path_parts = pathinfo($filename);
-		  $filedir = $path_parts['dirname'];
-		  $filenameonly=$path_parts['filename'];
-			trace('saving json to '.$filename);
-			file_put_contents($filename,$json);
-		}
-		else
-			$err="No permission to update this guide";
+	case 'currentuser':
+		$result['username'] = ($userid == 45) ? "dev" : $user->name;
 		break;
-		*/
-
-  case 'currentuser':
-    $result['username'] = ($userid == 45) ? "dev" : $user->name;
-    break;
 
 	default:
 		$err="Unknown command";
 		break;
 }
+
 $result['userid']=$userid;
 if($err!="") $result['error']=$err;
 
 $return = json_encode($result);
 echo $return;
 
-
 /**
  * Creates a zip file of Guide files and resources.
  *
- * Given the gid of a Guide Interview, this method will create a zip file
+ * Given the `gid` of a Guide Interview, this method will create a zip file
  * of all guide resources, including associated templates, in the local guide folder.
  * If the zip file exists, it will overwrite the current zipped file.
  *
  * @param string gid Guide gid used to query mysql
- * @return void
+ * @return string $zipFull the full local path name to the created zip file
  **/
 
 function createGuideZip($gid) {
@@ -630,7 +574,6 @@ function createGuideZip($gid) {
 	}
 }
 
-
 /**
  * Adds the json guide file to provided zip if it exists.
  *
@@ -642,6 +585,7 @@ function createGuideZip($gid) {
  * @param ZIP $zip An opened ZipArchive instance
  * @return void
  */
+
 function add_guide_json_file($guide_name, $zip) {
 	$xml_guide_path = GUIDES_DIR . $guide_name;
 	$json_guide_path = replace_extension($xml_guide_path, 'json');
@@ -683,9 +627,7 @@ function guide_templates_index_string($guide_id) {
 	return json_encode($guide_templates_list);
 }
 
-
-function getGuideFileDetails($filename)
-{	// 2014-08-26 Get info about guide
+function getGuideFileDetails($filename) {	// 2014-08-26 Get info about guide
 	$filename=GUIDES_DIR.$filename;
 	$details="";
 	if (file_exists($filename))
@@ -716,15 +658,8 @@ function getGuideFileDetails($filename)
 	}
 	return $details;
 }
-/*
-function GUIDE_DIR($gid)
-{
-	return GUIDES_DIR.$gid;
-	//return GUIDES_DIR.str_pad($gid,8,'0',STR_PAD_LEFT );
-}
-*/
-function listGuides($sql)
-{
+
+function listGuides($sql) {
 	global $userid,$mysqli,$result;
 	trace($sql);
 	if ($userid!=0)
@@ -743,17 +678,16 @@ function listGuides($sql)
 }
 
 
-function replace_extension($filename, $new_extension)
-{
+function replace_extension($filename, $new_extension) {
     $info = pathinfo($filename);
     return $info['dirname'] . '/' . $info['filename'] . '.' . $new_extension;
 }
 
-function trace($msg)
-{
+function trace($msg) {
 	global $traces;
 	$traces[]=$msg;
 }
+
 writelognow();
 
 function writelognow()
@@ -774,7 +708,5 @@ function writelognow()
 	// 	file_put_contents(sys_get_temp_dir().'/CAJA_WS.log',$msg,FILE_APPEND);
 	// }
 }
-
-
 
 ?>

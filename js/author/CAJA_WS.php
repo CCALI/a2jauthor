@@ -23,8 +23,8 @@ $result=array();
 $err="";
 $mysqli="";
 $drupaldb="";
-require "../CONFIG.php";
-// check connection
+require "../../../CONFIG.php";
+//check connection
 if (mysqli_connect_errno()) {
   exit('Connect failed: '. mysqli_connect_error());
 }

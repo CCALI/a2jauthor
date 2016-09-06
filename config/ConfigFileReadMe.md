@@ -1,0 +1,33 @@
+ConfigFileReadMe.md
+
+The two config files, config.json and CONFIG.php are to be placed at the root
+directory of the A2J app.  For example:
+
+webroot 
+   |
+   |--- app
+   |--- userfiles
+   |--- config.json
+   |--- CONFIG.php
+
+   The config.json is used by the Document Assembly API served by 
+   NodeJS and the CONFIG.php file is used by A2J app itself.  
+   It is required in js/author/CAJA_WS.php.  Update the sample files
+   with your settings, and move them to the root directory that contains
+   the A2J app itself, as above.
+
+   The `userfiles` folder contains Guide Interviews, sorted by author and then guide numbers.  It's structure should be:
+
+   userfiles
+      |
+      |--- public (used to store free or publicly accessible guide interviews)
+      |
+      |--- <author_name> (ex: dev)
+               |
+               |--- guides
+               |      |---Guide###
+               |
+               |--- template.json (maps GuideInterviews to templates)
+
+
+

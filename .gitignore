@@ -1,7 +1,7 @@
 ##################################
 # A2J Files to skip
 ##################################
-CAJA_Pieces.js
+
 
 #################
 ## Eclipse
@@ -119,6 +119,3 @@ js/client/lib/
 lib/
 
 *.komodoproject
-
-# local config file
-js/CONFIG.php

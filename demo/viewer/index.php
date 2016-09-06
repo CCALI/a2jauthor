@@ -3,7 +3,8 @@
 
   // replace spaces and drop zip extension
   $minusDotZip = isset($_FILES['file']['name']) ? pathinfo($_FILES['file']['name'], PATHINFO_FILENAME) : '';
-  $hyphenatedZipFileName = strtolower(str_replace(" ","-", $minusDotZip));
+  $replaceSpecialChars = preg_replace('/[^a-zA-Z0-9\s]/', "", $minusDotZip);
+  $hyphenatedZipFileName = strtolower(str_replace(" ","-", $replaceSpecialChars));
   // set uniq Id and path for guides
   $guideId = uniqid() . '-' . $hyphenatedZipFileName;
   $guidesPath = '../guides/';
@@ -11,11 +12,18 @@
   $tempZipFilePath = isset($_FILES['file']['tmp_name']) ? $_FILES['file']['tmp_name'] : '';
 
   function removeDirectoryAndContents($path) {
-    $files = glob($path . '/*');
-    foreach ($files as $file) {
-      unlink($file);
+    // protect against empty path
+    if (empty($path)) {
+      return false;
     }
-    rmdir($path);
+    // find all files ignoring . or .. but including other hidden files
+    $files = array_diff(scandir($path), array('.', '..'));
+
+    foreach ($files as $file) {
+      (is_dir("$path/$file")) ? removeDirectoryandContents("$path/$file") : unlink("$path/$file");
+    }
+
+    return rmdir($path);
   }
 
   // 'routes' based on GET or zip file being present

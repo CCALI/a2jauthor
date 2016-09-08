@@ -23,8 +23,8 @@
     <script>
       // ckeditor loads its config file (styles and default plugins) by
       // injecting script tags into the document, without CKEDITOR_BASEPATH
-      // being set property it won't work.
-      CKEDITOR_BASEPATH = '/js/ckeditor/';
+      // being set properly it won't work. Use absolute file path, not relative.
+      CKEDITOR_BASEPATH = '/app/js/ckeditor/';
       window.less = {async: true, fileSync: true};
     </script>
 

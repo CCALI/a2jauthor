@@ -1,6 +1,7 @@
 import Map from 'can/map/';
 import regex from 'viewer/mobile/util/regex';
 import tLogic from 'viewer/mobile/util/tlogic';
+import Lang from 'viewer/mobile/util/lang';
 import cString from 'viewer/mobile/util/string';
 import constants from 'viewer/models/constants';
 import Infinite from 'viewer/mobile/util/infinite';
@@ -47,6 +48,10 @@ export default Map.extend({
     //TODO: This exposure is due to creating a function on the fly within
     //tlogic.js, line 539
     window.gLogic = this._tLogic;
+
+    // Exposed `lang` is required in mobile/util/tlogic.js
+    var langID = this.attr('interview').language;
+    window.lang = new Lang(langID);
   },
 
   eval: function(str) {

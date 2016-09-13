@@ -12,7 +12,7 @@ describe('lib/util/paths', function() {
 
   // The test will fail if 'app/' directory name changes
   const projectDirname = function() {
-    return __dirname.substring(0, __dirname.lastIndexOf('app/') + 4);
+    return __dirname.substring(0, __dirname.lastIndexOf('CAJA/') + 5);
   };
 
   beforeEach(function() {

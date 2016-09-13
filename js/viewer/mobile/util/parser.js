@@ -158,7 +158,14 @@ export default {
           break;
 
         case 'tfvalue':
-          guide.varSet(varName, !!$(this).find('TFValue').html());
+        // Needs to be true boolean for 2 way binding in checkbox.stache view
+          var bool = $(this).find('TFValue').html();
+          if (bool === "true") {
+            bool = true;
+          } else {
+            bool = false;
+          }
+          guide.varSet(varName, bool);
           break;
 
         case 'datevalue':

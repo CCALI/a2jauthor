@@ -114,8 +114,14 @@ export let FieldVM = Map.extend({
   validateField(ctx, el) {
     let field = this.attr('field');
     let answer = field.attr('_answer');
+    let value;
 
-    let value = el.val();
+    if (field.type === "checkbox") {
+      value = el[0].checked;
+    } else {
+      value = el.val();
+    }
+
     answer.attr('values', value);
 
     let errors = answer.errors();

@@ -5,7 +5,7 @@
       type="checkbox"
       name="{{name}}"
       ($change)="validateField"
-      {($value)}="field._answer.values"/>
+      {($checked)}="field._answer.values"/>
     <label for="{{label}}">{{{ eval(label, repeatVarValue) }}}</label>
   </div>
 </div>

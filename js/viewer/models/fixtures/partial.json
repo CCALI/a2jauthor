@@ -82,5 +82,11 @@
 		"type": "Text",
 		"repeating": false,
 		"values": [null, "Homer Simpson"]
+	},
+	"like chocolate tf": {
+		"name": "Like chocolate TF",
+		"type": "TF",
+		"repeating": false,
+		"values": [null, true]
 	}
 }

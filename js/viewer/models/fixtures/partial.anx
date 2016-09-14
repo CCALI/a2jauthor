@@ -52,4 +52,7 @@
 	<Answer name="Client Full Name TE">
 		<TextValue>Homer Simpson</TextValue>
 	</Answer>
+	<Answer name="Like chocolate TF">
+		<TFValue>true</TFValue>
+	</Answer>
 </AnswerSet>

@@ -37,6 +37,14 @@ describe('Parser', function() {
     let expectedAnswers = partialJSON;
     let parsedAnswers = Parser.parseJSON(answersXML);
 
-    assert.deepEqual(parsedAnswers, expectedAnswers, 'generated answers is wrong');
+    assert.deepEqual(parsedAnswers, expectedAnswers, 'generated answers are wrong');
   });
+
+  it('parsed answer file sets TF values to boolean', function() {
+    let answersXML = partialXML;
+    let parsedAnswers = Parser.parseJSON(answersXML);
+
+    assert.equal(parsedAnswers["like chocolate tf"].values[1], true, 'TF answer not of type boolean');
+  });
+
 });

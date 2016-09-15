@@ -160,7 +160,7 @@ export default {
         case 'tfvalue':
         // Needs to be true boolean for 2 way binding in checkbox.stache view
           var bool = $(this).find('TFValue').html();
-          if (bool === "true") {
+          if (bool.toLowerCase() === "true" || true) {
             bool = true;
           } else {
             bool = false;

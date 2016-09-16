@@ -49,14 +49,14 @@ if ($isProductionServer) {
 	//Load Drupal
 	// Minimum bootstrap to get user's session info is DRUPAL_BOOTSTRAP_SESSION.
 	drupal_bootstrap(DRUPAL_BOOTSTRAP_SESSION);
-	// 08/30/2016 $isBitoviServer was used in previous troubleshooting and may be needed again but unlikely
-	// $userid = $isBitoviServer ? 45 : intval($user->uid);
-	// $canAuthor = $isBitoviServer ? true : in_array('a2j author', array_values($user->roles));
+
+	$userid = intval($user->uid);
+	$canAuthor = in_array('a2j author', array_values($user->roles));
 } else {
 	// Running locally, just use demo or devuser (26 ,45 for a2jauthor.org).
 	session_start();//  09/05/2013 WARNING! LEAVE session_start() OFF TO ACCESS DRUPAL SESSIONS!
-	$canAuthor=true;
 	$userid=LOCAL_USER;
+	$canAuthor=true;
 }
 
 header("Content-type: text/plain; charset=utf-8");

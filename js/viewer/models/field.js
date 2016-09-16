@@ -38,7 +38,7 @@ const Field = Map.extend({
 
       let onSuccess = function(options) {
         // strip anything before or after option tags
-        let formatted = options.match(/<option.*<\/option>/ig).join('');
+        let formatted = options.replace(/<select>/ig, '').replace(/<\/select/ig, '');
         _this.attr('options', formatted);
         dfd.resolve();
       };

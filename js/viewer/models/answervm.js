@@ -62,7 +62,6 @@ export default Map.extend({
             // we need to filter all fields which are either of those types.
             if (field.type === 'checkbox' || field.type === 'checkboxNOTA') {
               return f.type === 'checkbox' || f.type === 'checkboxNOTA';
-
             // otherwise filter fields that are 'radio' type.
             } else {
               return f.type === 'radio';
@@ -70,7 +69,7 @@ export default Map.extend({
           });
 
           const anyChecked = _some(checkboxes, function(checkbox) {
-            return !!checkbox.attr(`answer.values.${index}`);
+            return !!checkbox.attr(`_answer.answer.values.${index}`);
           });
 
           validations.attr('val', anyChecked || null);

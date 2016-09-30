@@ -1,11 +1,15 @@
-<div class="{{#if field.hasError}}has-error{{/if}}">
-  <div class="checkbox">
-    <input
-      id="{{label}}"
-      type="checkbox"
-      name="{{name}}"
-      ($change)="validateField"
-      {($checked)}="field._answer.values"/>
-    <label for="{{label}}">{{{ eval(label, repeatVarValue) }}}</label>
-  </div>
+<div>
+	<div class="{{#if field.hasError}}has-error{{/if}}">
+		<div class="checkbox">
+		<input
+			id="{{label}}"
+			type="checkbox"
+			name="{{name}}"
+			($change)="validateField"
+			{($checked)}="field._answer.values"/>
+		<label for="{{label}}">{{{ eval(label, repeatVarValue) }}}</label>
+		</div>
+	</div>
+
+	{{> invalid-prompt-tpl }}
 </div>

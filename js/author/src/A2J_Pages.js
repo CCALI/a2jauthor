@@ -534,14 +534,15 @@ function guidePageEditForm(page, div, pagename)//novicePage
 			var updateFieldLayout= function(ff,field)
 			//** @param {TField} field */
 			{
+				var canRequire = field.type !== 'radio';
 				var canMinMax = field.type===CONST.ftNumber || field.type===CONST.ftNumberDollar || field.type===CONST.ftNumberPick || field.type===CONST.ftDateMDY;
 				var canList = field.type===CONST.ftTextPick;
-				var canDefaultValue=	field.type!==CONST.ftCheckBox && field.type!==CONST.ftCheckBoxNOTA && field.type!==CONST.ftGender;
+				var canDefaultValue = field.type!==CONST.ftCheckBox && field.type!==CONST.ftCheckBoxNOTA && field.type!==CONST.ftGender;
 				var canOrder =   field.type===CONST.ftTextPick || field.type===CONST.ftNumberPick || field.type===CONST.ftDateMDY;
 				var canUseCalc = (field.type === CONST.ftNumber) || (field.type === CONST.ftNumberDollar);
-        var canMaxChars= field.type===CONST.ftText || field.type===CONST.ftTextLong || field.type===CONST.ftNumber || field.type===CONST.ftNumberDollar || field.type===CONST.ftNumberPhone || field.type===CONST.ftNumberZIP;
-        var canCalendar = field.type===CONST.ftDateMDY;
-        var canUseSample = field.type===CONST.ftText || field.type===CONST.ftTextLong
+				var canMaxChars= field.type===CONST.ftText || field.type===CONST.ftTextLong || field.type===CONST.ftNumber || field.type===CONST.ftNumberDollar || field.type===CONST.ftNumberPhone || field.type===CONST.ftNumberZIP;
+				var canCalendar = field.type===CONST.ftDateMDY;
+				var canUseSample = field.type===CONST.ftText || field.type===CONST.ftTextLong
 					|| field.type === CONST.ftTextPick  || field.type === CONST.ftNumberPick
 					|| field.type===CONST.ftNumber || field.type === CONST.ftNumberZIP || field.type === CONST.ftNumberSSN || field.type === CONST.ftNumberDollar
 					|| field.type === CONST.ftDateMDY;
@@ -549,18 +550,18 @@ function guidePageEditForm(page, div, pagename)//novicePage
 				// Can it use extra long labels instead of single line?
 				//	useLongLabel = curField.type==CField.ftCheckBox ||	curField.type==CField.ftCheckBoxNOTA ||curField.type==CField.ftRadioButton ||urField.type==CField.ftCheckBoxMultiple;
 				//	useLongText =curField.type==CField.ftTextLong;
-
+				ff.find('[name="required"]').showit(canRequire);
 				ff.find('[name="maxchars"]').showit(canMaxChars);
-        ff.find('[name="min"]').showit(canMinMax );
-        ff.find('[name="max"]').showit(canMinMax );
-        ff.find('[name="default"]').showit(canDefaultValue);
-        ff.find('[name="calculator"]').showit(canUseCalc);
-        ff.find('[name="calendar"]').showit(canCalendar);
+				ff.find('[name="min"]').showit(canMinMax );
+				ff.find('[name="max"]').showit(canMinMax );
+				ff.find('[name="default"]').showit(canDefaultValue);
+				ff.find('[name="calculator"]').showit(canUseCalc);
+				ff.find('[name="calendar"]').showit(canCalendar);
 
-        ff.find('[name="listext"]').showit(canList);
-        ff.find('[name="listint"]').showit(canList);
-        ff.find('[name="orderlist"]').showit(canOrder);
-        ff.find('[name="sample"]').showit(canUseSample);
+				ff.find('[name="listext"]').showit(canList);
+				ff.find('[name="listint"]').showit(canList);
+				ff.find('[name="orderlist"]').showit(canOrder);
+				ff.find('[name="sample"]').showit(canUseSample);
 			};
 
 			fs=form.fieldset('Fields');
@@ -574,6 +575,11 @@ function guidePageEditForm(page, div, pagename)//novicePage
 					ff.append(form.pickList({label:'Type:',value: field.type,
 						change:function(val,field,ff){
 							field.type=val;
+							// Radio Buttons always required
+							if (field.type === 'radio') {
+								field.required = true;
+							}
+
 							updateFieldLayout(ff,field);
 							}},
 
@@ -601,8 +607,8 @@ function guidePageEditForm(page, div, pagename)//novicePage
 						change:function(val,field){field.name=jQuery.trim(val);}}));
 					ff.append(form.text({label:'Default value:',name:'default', placeholder:'Default value',value:  field.value,
 						change:function(val,field){field.value=jQuery.trim(val);}}));
-					ff.append(form.checkbox({label:'Required:', checkbox:'', value:field.required,
-						change:function(val,field){field.required=val;}}));
+					ff.append(form.checkbox({label:'Required:',name: 'required', checkbox:'', value:field.required,
+					change:function(val,field){field.required = val}}));
 					ff.append(form.text({label:'Max chars:',name:'maxchars', placeholder:'Max Chars',value: field.maxChars,
 						change:function(val,field){field.maxChars=val;}}));
 					ff.append(form.checkbox({label:'Show Calculator:',name:'calculator',checkbox:'Calculator available?', value:field.calculator,

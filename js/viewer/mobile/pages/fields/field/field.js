@@ -116,7 +116,7 @@ export let FieldVM = Map.extend({
     let answer = field.attr('_answer');
     let value;
 
-    if (field.type === "checkbox") {
+    if (field.type === "checkbox" || field.type === "checkboxNOTA") {
       value = el[0].checked;
     } else {
       value = el.val();

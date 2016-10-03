@@ -80,7 +80,7 @@ router.post('/', checkPresenceOf, forwardCookies, function(req, res) {
     res.status(500).send(error);
   };
 
-  var renderStream = render(req);
+  const renderStream = render(req);
   renderStream.pipe(through(function(buffer){
     const html = buffer.toString();
     const title = req.body.guideTitle;

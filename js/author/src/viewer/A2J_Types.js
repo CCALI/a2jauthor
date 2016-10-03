@@ -661,7 +661,7 @@ TGuide.prototype.varGet=function(varName,varIndex,opts)
 
 
 		case CONST.vtTF:
-			 val= (val>0) || (val===true) || (val==='true');
+			 val = (val>0) || (val===true) || (val==='true');
 			break;
 	}
 	//trace('varGet',varName,varIndex,val);

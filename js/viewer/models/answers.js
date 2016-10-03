@@ -115,13 +115,22 @@ export default Model.extend({}, {
       varIndex = 0;
     }
 
-    // Handle type conversion, like number to date.
+    // Handle type conversion, like number to date and null to proper `notanswered` values.
     switch (v.attr('type')) {
       case CONST.vtDate:
         if (typeof varVal === 'number') {
           varVal = cString.jsDate2mdy(cString.days2jsDate(varVal));
         }
-
+        break;
+      case CONST.vtText:
+        if (varVal === null) {
+          varVal = '';
+        }
+        break;
+      case CONST.vtTF:
+        if (varVal === null) {
+          varVal = false;
+        }
         break;
     }
 

@@ -101,17 +101,6 @@
 			return result;
 		};
 
-		TLogic.prototype.testVar = function(name, lineNum, errors) { // If variable name not defined in variables list, add error.
-			if (!gGuide.varExists(name)) {
-				switch (name) {
-					case 'TODAY':
-						return;
-					default:
-						errors.push(new ParseError(lineNum, '', 'Undefined variable ' + name));
-				}
-			}
-		};
-
 		TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML) { // Translate CAJA script statements of multiple lines with conditionals into JS script but do NOT evaluate.
 			// Returns JavaScript source code lines in .js and errors in .errors which caller may evaluate
 			// TODO: needs a regex guru to optimize
@@ -416,10 +405,6 @@
 				jj = jj.replace(REG.LOGIC_NE, "!=");
 				jj = jj.replace(/\bis\b/gi, "==");
 
-				// Constants
-				jj = jj.replace(/\btrue\b/gi, "1");
-				jj = jj.replace(/\bfalse\b/gi, "0");
-
 				// Function calls
 				//		age([child birthdate]) converts to CallFunction("age",GetVar("child birthdate"))
 				jj = jj.replace(/([A-Za-z_][\w]*)(\s*)(\()/gi, '$$3("$1",');
@@ -503,14 +488,38 @@
 		};
 
 		TLogic.prototype._VG = function(varname, varidx) {
-			if (varname === 'TODAY') {
-				return jsDate2days(today2jsDate());
+			switch (varname.toUpperCase()) {
+				case 'TODAY':
+					return jsDate2days(today2jsDate());
+					break;
+				case 'NULL':
+					return null;
+					break;
+				case 'TRUE':
+					return true;
+					break;
+				case 'FALSE':
+					return false;
+					break;
+				default:
+					return gGuide.varGet(varname, varidx, {
+					date2num: true,
+					num2num: true
+				});
 			}
-			return gGuide.varGet(varname, varidx, {
-				date2num: true,
-				num2num: true
-			});
 		};
+
+		TLogic.prototype.testVar = function(name, lineNum, errors) {
+			const reservedWords = ['TODAY', 'NULL', 'TRUE', 'FALSE'];
+			const isAReservedWord = reservedWords.indexOf(name.toUpperCase()) !== -1;
+
+			if (!gGuide.varExists(name) && !isAReservedWord) {
+				errors.push(new ParseError(lineNum, '', 'Undefined variable ' + name));
+			}
+			// var exists, do nothing
+			return;
+		};
+
 		TLogic.prototype._CF = function(fName, val) {
 			//this.indent++;
 			//this.traceLogic("Call function "+f);
@@ -611,11 +620,11 @@
 			return parseFloat(val);
 		});
 
-		gLogic.addUserFunction('HasAnswered', 1, function(val) { // Return true if variable answerd (actually if it's not ''.
+		gLogic.addUserFunction('HasAnswered', 1, function(val) { // Return true if variable answered (actually if it's not '').
 			return (typeof val === 'undefined' || val === null || val === '') === false;
 		});
 
-		gLogic.addUserFunction('Sum', 1, function(valArray) { // Return true if variable answerd (actually if it's not ''.
+		gLogic.addUserFunction('Sum', 1, function(valArray) { // Sum
 			var sum = 0;
 			if (valArray instanceof Array) {
 				var i;

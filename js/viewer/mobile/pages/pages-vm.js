@@ -281,6 +281,7 @@ export default Map.extend({
     if (logic && fields.length) {
       let answerIndex = 1;
       const rState = this.attr('rState');
+      const mState = this.attr('mState');
 
       if (page.attr('repeatVar')) {
         const repeatVar = logic.varGet('repeatVar');
@@ -294,11 +295,11 @@ export default Map.extend({
         const avm = new AnswerVM({ field, answerIndex, answer, fields });
 
         if (page.attr('repeatVar') && rState.attr('i')) {
-          avm.attr('asnwerIndex', parseInt(rState.attr('i'), 10));
+          avm.attr('answerIndex', parseInt(rState.attr('i'), 10));
         }
 
         if (field.attr('type') === 'textpick') {
-          field.getOptions();
+          field.getOptions(mState.attr('fileDataURL'));
         }
 
         field.attr('_answer', avm);

@@ -23,7 +23,7 @@ const Field = Map.extend({
     }
   },
 
-  getOptions() {
+  getOptions(guidePath) {
     let _this = this;
     let dfd = can.Deferred();
 
@@ -33,7 +33,7 @@ const Field = Map.extend({
     } else if (this.attr('listSrc')) {
       let req = $.ajax({
         dataType: 'text',
-        url: window.gGuidePath+this.attr('listSrc'),
+        url: guidePath + this.attr('listSrc'),
       });
 
       let onSuccess = function(options) {

@@ -184,6 +184,12 @@ export default Map.extend({
       const gotoPage = logic.attr('gotoPage');
       const logicPageisNotEmpty = _isString(gotoPage) && gotoPage.length;
 
+      // Set field answers for buttons with values
+      if (button.name) {
+        const buttonAnswer = this.interview.answers.attr(button.name.toLowerCase());
+        buttonAnswer.values.push(button.value);
+      }
+
       // this means the logic After has overriden the destination page, we
       // should navigate to this page instead of the page set by `button.next`.
       if (logicPageisNotEmpty && gotoPage !== button.next) {

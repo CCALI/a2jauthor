@@ -9,11 +9,13 @@ export default {
     children: [
       { tag: 'a2j-repeat-loop',
         children: [],
-        state: {}
+        state: {},
+        id: 'citvkuuhz00003k6aaeghgt9v'
       },
       { tag: 'a2j-conditional',
         children: [],
-        state: {}
+        state: {},
+        id: 'citvkuui300013k6a8n9329e9'
       }
     ]
   }

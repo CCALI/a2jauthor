@@ -2,11 +2,20 @@ import $ from 'jquery';
 import F from 'funcunit';
 import assert from 'assert';
 import stache from 'can/view/stache/';
+import A2JTemplateVM from './a2j-template-vm';
 import A2JTemplate from 'author/models/a2j-template';
 import templateFixture from 'author/models/fixtures/templates/guide20-template2114';
 
 import 'steal-mocha';
 import './a2j-template';
+
+function makeA2JTemplate({ rootNode }) {
+  const docTree = A2JTemplate.makeDocumentTree(rootNode);
+  const template = new A2JTemplate();
+
+  template.attr('rootNode', docTree);
+  return template;
+}
 
 describe('a2j-template', function() {
 
@@ -14,10 +23,7 @@ describe('a2j-template', function() {
     let vm;
 
     beforeEach(function() {
-      const rootNode = A2JTemplate.makeDocumentTree(templateFixture.rootNode);
-      const template = new A2JTemplate();
-
-      template.attr('rootNode', rootNode);
+      const template = makeA2JTemplate(templateFixture);
 
       const frag = stache(
         '<a2j-template edit-enabled="true" {(template)}="template" />'
@@ -131,4 +137,13 @@ describe('a2j-template', function() {
     });
   });
 
+  describe('viewModel', function() {
+    it('getChildById works', function() {
+      const template = makeA2JTemplate(templateFixture);
+      const vm = new A2JTemplateVM({ template });
+
+      const child = vm.getChildById('citvkuui300013k6a8n9329e9');
+      assert.equal(child.attr('tag'), 'a2j-conditional');
+    });
+  });
 });

@@ -3,7 +3,6 @@ import _omit from 'lodash/omit';
 import _inRange from 'lodash/inRange';
 import _isFunction from 'lodash/isFunction';
 import A2JNode from 'caja/author/models/a2j-node';
-import A2JTemplate from 'caja/author/models/a2j-template';
 
 import 'can/map/define/';
 
@@ -164,7 +163,9 @@ export default Map.extend({
       let result;
 
       nodes.each(node => {
-        if (node instanceof A2JTemplate) {
+        const nodeIsATemplate = Boolean(node.attr('rootNode'));
+
+        if (nodeIsATemplate) {
           const children = node.attr('rootNode.children');
           result = find(children);
           if (result) return false;

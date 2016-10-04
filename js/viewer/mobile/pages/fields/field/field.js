@@ -199,8 +199,9 @@ export default Component.extend({
           maxDate,
           monthNames: lang.MonthNamesLong.split(','),
           monthNamesShort: lang.MonthNamesShort.split(','),
+          appendText: '(mm/dd/yyyy)',
           dateFormat: 'mm/dd/yy',
-          onSelect() {
+          onClose() {
             let $el = $(this);
             let val = $el.val();
             let unformattedVal = vm.convertDate(val, 'YYYY-MM-DD', 'MM/DD/YYYY');

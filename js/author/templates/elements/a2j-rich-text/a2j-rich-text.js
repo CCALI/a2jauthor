@@ -10,8 +10,23 @@ import 'can/map/define/';
 
 can.view.preload('rich-text-content', contentTpl);
 
+/*
+ * @module RichTextVM
+ * @parent A2JRichText
+ *
+ * <a2j-rich-text /> viewmodel
+ */
 export let RichTextVM = Map.extend({
   define: {
+    /**
+     * @property {String} notes
+     *
+     * The notes added by the author using the element options panel
+     */
+    notes: {
+      value: ''
+    },
+
     userContent: {
       value: ''
     },
@@ -55,6 +70,13 @@ export let RichTextVM = Map.extend({
   }
 });
 
+
+/**
+ * @module A2JRichText
+ * @parent api-components
+ *
+ * The Rich Text template element
+ */
 export default Component.extend({
   template,
   tag: 'a2j-rich-text',

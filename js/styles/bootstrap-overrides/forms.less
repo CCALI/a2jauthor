@@ -384,3 +384,9 @@ fieldset.accordion {
   }
 }
 
+// without this setting textareas "row" property won't work
+// bootstrap includes this rule by default but our setup messes
+// up the specificity of the rule
+textarea.form-control {
+  height: auto;
+}

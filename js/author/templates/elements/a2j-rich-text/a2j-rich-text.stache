@@ -28,7 +28,7 @@
         <form>
           <div class="form-group">
             <label>Notes</label>
-            <textarea class="form-control" rows="3"></textarea>
+            <textarea class="form-control" {($value)}="notes" rows="3"></textarea>
             <span class="help-block">
               For reference only. These notes are not part of the assembled document.
             </span>

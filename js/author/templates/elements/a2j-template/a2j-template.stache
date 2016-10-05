@@ -30,6 +30,8 @@
 
       {{#is tag 'a2j-page-break'}}
         <a2j-page-break
+          {(notes)}="state.notes"
+
           {node-id}="id"
           {clone-node}="@cloneNode"
           {deleted}="state.deleted"
@@ -61,6 +63,7 @@
 
       {{#is tag 'a2j-rich-text'}}
         <a2j-rich-text
+          {(notes)}="state.notes"
           {(user-content)}="state.userContent"
 
           {node-id}="id"

@@ -1,0 +1,72 @@
+<can-import from="caja/author/templates/elements/condition-form/" />
+
+<h3>Layout</h3>
+
+<div class="row clearfix">
+  <div class="col-lg-6">
+    <button
+      class="btn btn-default"
+      ($click)="editElement('header')">Custom Header</button>
+  </div>
+
+  <div class="col-lg-6">
+    <button
+      class="btn btn-default"
+      ($click)="editElement('footer')">Custom Footer</button>
+  </div>
+</div>
+
+<h3>Formatting</h3>
+
+<div class="form-group">
+  <label>Font Family</label>
+  <select class="form-control" {($value)}="template.rootNode.state.fontFamily">
+    <option value="sans-serif" selected>Sans Serif</option>
+    <option value="arial">Arial</option>
+    <option value="times-new-roman">Times New Roman</option>
+    <option value="courier-new">Courier New</option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label>Font Size</label>
+  <select class="form-control" {($value)}="templateState.fontSize">
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+    <option value="13">13</option>
+    <option value="14" selected>14</option>
+    <option value="15">15</option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label>Section Numbering</label>
+  <select class="form-control" {($value)}="templateState.sectionCounter">
+    <option value="none" selected>None</option>
+    <option value="decimal">1.2.3...</option>
+    <option value="upper-roman">I.II.III...</option>
+    <option value="upper-alpha">A.B.C...</option>
+  </select>
+</div>
+
+<div class="checkbox conditional-logic">
+  <label>
+    <input type="checkbox" {($checked)}="isConditionalLogicEnabled">
+    <h3>Conditional Logic</h3>
+  </label>
+</div>
+
+<p class="{{#unless isConditionalLogicEnabled}}text-muted{{/unless}}">
+  Only use this template if
+</p>
+
+<condition-form
+  {variables-list}="variablesList"
+  {(operator)}="templateState.operator"
+  {(left-operand)}="templateState.leftOperand"
+  {(right-operand)}="templateState.rightOperand"
+  {disabled}="{{not(isConditionalLogicEnabled)}}"
+  {(right-operand-type)}="templateState.rightOperandType"
+/>
+

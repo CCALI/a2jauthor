@@ -1,39 +1,37 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
 import template from './tabs.stache!';
-import _capitalize from 'lodash/capitalize';
-import createEmptyNode from 'author/utils/create-empty-node';
+import Component from 'can/component/';
+import _throttle from 'lodash/throttle';
+import TemplateEditTabsVM from './tabs-vm';
+import addElementsTabTpl from './add-elements-tab.stache';
+import templateOptiosTabTpl from './template-options-tab.stache';
 
-import 'can/map/define/';
+import 'can/view/';
 
-let TemplateEditTabsVM = Map.extend({
-  define: {
-    editingHeader: {
-      type: 'boolean',
-      value: false
-    },
+can.view.preload('add-elements-tab-tpl', addElementsTabTpl);
+can.view.preload('template-options-tab-tpl', templateOptiosTabTpl);
 
-    editingFooter: {
-      type: 'boolean',
-      value: false
-    }
-  },
-
-  addElement(elementName) {
-    const template = this.attr('template');
-    const newNode = createEmptyNode(elementName);
-
-    template.addNode(newNode);
-  },
-
-  editElement(elementName) {
-    this.attr('editing' + _capitalize(elementName), true);
-  }
-});
-
+/**
+ * @module TemplateEditTabs
+ * @parent api-components
+ *
+ * The tabs shown in the template edit page
+ */
 export default Component.extend({
   template,
   leakScope: false,
   tag: 'template-edit-tabs',
-  viewModel: TemplateEditTabsVM
+  viewModel: TemplateEditTabsVM,
+
+  helpers: {
+    not(value) {
+      return !value;
+    }
+  },
+
+  events: {
+    '{templateState} change': _throttle(function() {
+      const template = this.viewModel.attr('template');
+      template.save();
+    }, 5000)
+  }
 });

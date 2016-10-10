@@ -1,130 +1,17 @@
-<can-import from="bit-tabs"/>
-<can-import from="author/templates/edit/tabs/tabs.less!"/>
+<can-import from="bit-tabs" />
+<can-import from="caja/author/templates/edit/tabs/tabs.less!" />
+<can-import from="caja/author/templates/elements/varpicker/" />
 
 <bit-tabs tabs-class="nav nav-tabs">
   <bit-panel title="Add Elements">
     <div class="tab-pane">
-      <h3>Standard</h3>
-      <div class="row clearfix">
-        <div class="col-lg-6">
-          <button class="btn btn-default disabled">Plain Text</button>
-        </div>
-
-        <div class="col-lg-6">
-          <button
-            class="btn btn-default"
-            ($click)="addElement('rich-text')">Rich Text</button>
-        </div>
-      </div>
-
-      <div class="row clearfix">
-        <div class="col-lg-6">
-          <button class="btn btn-default disabled">Table</button>
-        </div>
-
-        <div class="col-lg-6">
-          <button class="btn btn-default disabled">Checklist</button>
-        </div>
-      </div>
-
-      <div class="row clearfix">
-        <div class="col-lg-6">
-          <button
-            class="btn btn-default"
-            ($click)="addElement('section-title')">Section</button>
-        </div>
-
-        <div class="col-lg-6">
-          <button
-            class="btn btn-default"
-            ($click)="addElement('page-break')">Page Break</button>
-        </div>
-      </div>
-
-      <h3>Logic</h3>
-      <div class="row clearfix">
-        <div class="col-lg-6">
-          <button
-            class="btn btn-default"
-            ($click)="addElement('if-else')">If / Else</button>
-        </div>
-
-        <div class="col-lg-6">
-          <button
-            class="btn btn-default"
-            ($click)="addElement('repeat-loop')">Repeat Loop</button>
-        </div>
-      </div>
-
-      <h3>Special</h3>
-      <div class="row clearfix">
-        <div class="col-lg-6">
-          <button class="btn btn-default disabled">Signature Line</button>
-        </div>
-
-        <div class="col-lg-6">
-          <button class="btn btn-default disabled">Upload PDF</button>
-        </div>
-      </div>
+      {{> add-elements-tab-tpl}}
     </div>
   </bit-panel>
 
   <bit-panel title="Template Options">
-    <h3>Layout</h3>
-
-    <div class="row clearfix">
-      <div class="col-lg-6">
-        <button
-          class="btn btn-default"
-          ($click)="editElement('header')">Custom Header</button>
-      </div>
-
-      <div class="col-lg-6">
-        <button
-          class="btn btn-default"
-          ($click)="editElement('footer')">Custom Footer</button>
-      </div>
-    </div>
-
-    <h3>Formatting</h3>
-
-    <div class="form-group">
-      <label>Font Family</label>
-      <select class="form-control" {($value)}="template.rootNode.state.fontFamily">
-        <option value="sans-serif" selected>Sans Serif</option>
-        <option value="arial">Arial</option>
-        <option value="times-new-roman">Times New Roman</option>
-        <option value="courier-new">Courier New</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>Font Size</label>
-      <select class="form-control" {($value)}="template.rootNode.state.fontSize">
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-        <option value="13">13</option>
-        <option value="14" selected>14</option>
-        <option value="15">15</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>Section Numbering</label>
-      <select class="form-control" {($value)}="template.rootNode.state.sectionCounter">
-        <option value="none" selected>None</option>
-        <option value="decimal">1.2.3...</option>
-        <option value="upper-roman">I.II.III...</option>
-        <option value="upper-alpha">A.B.C...</option>
-      </select>
-    </div>
-
-    <div class="checkbox">
-      <label>
-        <input type="checkbox" value="" disabled>
-        Conditional Logic
-      </label>
+    <div class="tab-pane">
+      {{> template-options-tab-tpl}}
     </div>
   </bit-panel>
 </bit-tabs>

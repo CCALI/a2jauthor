@@ -3,10 +3,13 @@
 
 {{#if templatesPromise.isResolved}}
   {{#each templates}}
-    <a2j-template
-      {template}="."
-      use-answers="true"
-      {answers}="answers"
-      edit-enabled="false" />
+    {{#if canRenderTemplate(this)}}
+      <a2j-template
+        {template}="."
+        use-answers="true"
+        {answers}="answers"
+        edit-enabled="false"
+      />
+    {{/if}}
   {{/each}}
 {{/if}}

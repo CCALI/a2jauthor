@@ -46,8 +46,9 @@
           <div class="col-md-4">
             <template-edit-tabs
               {(template)}="a2jTemplate"
-              {(^editing-header)}="*editingHeader"
-              {(^editing-footer)}="*editingFooter"
+              {^editing-header}="*editingHeader"
+              {^editing-footer}="*editingFooter"
+              {variables-list}="guide.variablesList"
             />
           </div>
         </div>

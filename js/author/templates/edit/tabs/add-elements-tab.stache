@@ -1,0 +1,63 @@
+<h3>Standard</h3>
+<div class="row clearfix">
+  <div class="col-lg-6">
+    <button class="btn btn-default disabled">Plain Text</button>
+  </div>
+
+  <div class="col-lg-6">
+    <button
+      class="btn btn-default"
+      ($click)="addElement('rich-text')">Rich Text</button>
+  </div>
+</div>
+
+<div class="row clearfix">
+  <div class="col-lg-6">
+    <button class="btn btn-default disabled">Table</button>
+  </div>
+
+  <div class="col-lg-6">
+    <button class="btn btn-default disabled">Checklist</button>
+  </div>
+</div>
+
+<div class="row clearfix">
+  <div class="col-lg-6">
+    <button
+      class="btn btn-default"
+      ($click)="addElement('section-title')">Section</button>
+  </div>
+
+  <div class="col-lg-6">
+    <button
+      class="btn btn-default"
+      ($click)="addElement('page-break')">Page Break</button>
+  </div>
+</div>
+
+<h3>Logic</h3>
+<div class="row clearfix">
+  <div class="col-lg-6">
+    <button
+      class="btn btn-default"
+      ($click)="addElement('if-else')">If / Else</button>
+  </div>
+
+  <div class="col-lg-6">
+    <button
+      class="btn btn-default"
+      ($click)="addElement('repeat-loop')">Repeat Loop</button>
+  </div>
+</div>
+
+<h3>Special</h3>
+<div class="row clearfix">
+  <div class="col-lg-6">
+    <button class="btn btn-default disabled">Signature Line</button>
+  </div>
+
+  <div class="col-lg-6">
+    <button class="btn btn-default disabled">Upload PDF</button>
+  </div>
+</div>
+

@@ -7,7 +7,7 @@ function getOperandValue(operand, operandType, answers) {
 }
 
 /**
- * @function conditional.ViewModel.prototype.evalCondition evalCondition
+ * @module {function} evalAuthorCondition
  * @return {Boolean} Result of evaluating the condition set by the user.
  *
  * This method evaluates the condition especified by the user through the UI,

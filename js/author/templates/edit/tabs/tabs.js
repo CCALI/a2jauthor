@@ -3,12 +3,12 @@ import Component from 'can/component/';
 import _throttle from 'lodash/throttle';
 import TemplateEditTabsVM from './tabs-vm';
 import addElementsTabTpl from './add-elements-tab.stache';
-import templateOptiosTabTpl from './template-options-tab.stache';
+import templateOptionsTabTpl from './template-options-tab.stache';
 
 import 'can/view/';
 
 can.view.preload('add-elements-tab-tpl', addElementsTabTpl);
-can.view.preload('template-options-tab-tpl', templateOptiosTabTpl);
+can.view.preload('template-options-tab-tpl', templateOptionsTabTpl);
 
 /**
  * @module TemplateEditTabs

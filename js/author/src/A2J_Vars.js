@@ -45,7 +45,7 @@ function varEdit(v/*TVariable*/)
 					gGuide.varDelete(this.name);
 				}});
 			}},
-			{text:'Close',click:function(){
+			{text:'Save',click:function(){
 				var name= $('#varname').val();
 				if(name!==v.name)//rename variable
 				{

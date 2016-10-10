@@ -4,9 +4,9 @@ import _isFunction from 'lodash/isFunction';
 import Answers from 'caja/author/models/answers';
 import A2JNode from 'caja/author/models/a2j-node';
 import A2JTemplate from 'caja/author/models/a2j-template';
+import evalAuthorCondition from 'caja/author/utils/eval-author-condition';
 
 import 'can/view/';
-import 'can/map/define/';
 
 /**
  * @property {can.Map} conditional.ViewModel
@@ -223,18 +223,6 @@ export default Map.extend({
     }
   },
 
-  getOperandValue(rightOrLeft = 'left') {
-    let answers = this.attr('answers');
-    let operand = this.attr(`${rightOrLeft}Operand`);
-    let operandType = this.attr(`${rightOrLeft}OperandType`);
-
-    if (operandType === 'text') {
-      return operand;
-    } else {
-      return (answers && operand) ? answers.getValue(operand) : null;
-    }
-  },
-
   /**
    * @function conditional.ViewModel.prototype.setChildrenIfEmpty setChildrenIfEmpty
    * @parent conditional.ViewModel
@@ -272,50 +260,14 @@ export default Map.extend({
   /**
    * @function conditional.ViewModel.prototype.evalCondition evalCondition
    * @return {Boolean} Result of evaluating the condition set by the user.
-   *
-   * This method evaluates the condition especified by the user through the UI,
-   * it also handles the look up in the answers object if the user set a variable
-   * name through var-picker instead of some other (text) value:
-   *
-   *   - is-true         -> `!!leftOperandValue`
-   *   - is-false        -> `!leftOperandValue`
-   *   - is-equal        -> `leftOperandValue === rightOperandValue`
-   *   - is-not-equal    -> `leftOperandValue !== rightOperandValue`
-   *   - is-less-than    -> `leftOperandValue < rightOperandValue`
-   *   - is-greater-than -> `leftOperandValue > rightOperandValue`
    */
   evalCondition() {
-    let val;
-    let operator = this.attr('operator');
-    let leftValue = this.getOperandValue('left');
-    let rightValue = this.getOperandValue('right');
-
-    switch (operator) {
-      case 'is-true':
-        val = !!leftValue;
-        break;
-
-      case 'is-false':
-        val = !leftValue;
-        break;
-
-      case 'is-equal':
-        val = leftValue === rightValue;
-        break;
-
-      case 'is-not-equal':
-        val = leftValue !== rightValue;
-        break;
-
-      case 'is-greater-than':
-        val = leftValue > rightValue;
-        break;
-
-      case 'is-less-than':
-        val = leftValue < rightValue;
-        break;
-    }
-
-    return val;
+    return evalAuthorCondition({
+      answers: this.attr('answers'),
+      operator: this.attr('operator'),
+      leftOperand: this.attr('leftOperand'),
+      rightOperand: this.attr('rightOperand'),
+      rightOperandType: this.attr('rightOperandType')
+    });
   }
 });

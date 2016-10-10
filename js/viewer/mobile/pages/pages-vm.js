@@ -31,6 +31,16 @@ export default Map.extend({
     },
 
     /**
+     * @property {String} pages.ViewModel.prototype.backButton backButton
+     * @parent pages.ViewModel
+     *
+     * String used to represent the button that sends the user back to the most
+     * recently visited page.
+     */
+    backButton: {
+      value: constants.qIDBACK
+    },
+    /**
      * @property {String} pages.ViewModel.prototype.saveAnswersButton saveAnswersButton
      * @parent pages.ViewModel
      *
@@ -160,11 +170,12 @@ export default Map.extend({
       const repeatVarSet = button.attr('repeatVarSet');
 
       // default next page is derived from the button pressed.
-      // might be overridden by the After logic.
+      // might be overridden by the After logic or special
+      // back to prior question button.
       logic.attr('gotoPage', button.next);
 
-      // execute After logic
-      if (codeAfter) {
+      // execute After logic only if not going to a prior question
+      if (codeAfter && button.next !== constants.qIDBACK) {
         this.traceLogicAfterQuestion();
         logic.exec(codeAfter);
       }
@@ -181,10 +192,20 @@ export default Map.extend({
         can.trigger(this, 'post-answers-to-server');
       }
 
+      // user has selected to navigate to a prior question
+      if (button.next === constants.qIDBACK) {
+        const visitedPages = this.rState.attr('visitedPages');
+        // last visited page always at index 1
+        const priorQuestion = (visitedPages[1].attr('name'));
+        // override with new gotoPage
+        logic.attr('gotoPage', priorQuestion);
+        button.attr('next', priorQuestion);
+      }
+
       const gotoPage = logic.attr('gotoPage');
       const logicPageisNotEmpty = _isString(gotoPage) && gotoPage.length;
 
-      // Set field answers for buttons with values
+      // Set answers for buttons with values
       if (button.name) {
         const buttonAnswer = this.interview.answers.attr(button.name.toLowerCase());
         buttonAnswer.values.push(button.value);

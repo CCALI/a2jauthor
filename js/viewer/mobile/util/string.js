@@ -1,4 +1,5 @@
 import constants from 'viewer/models/constants';
+import moment from 'moment';
 
 export default {
   strcmp: function(a, b) {
@@ -143,32 +144,42 @@ export default {
 
   jsDate2days: function(d) {
     // Convert JS date into days since 1/1/1970
-    return d.getTime() / (1000 * 60 * 60 * 24);
+    const refDate = moment('01/01/1970');
+    const jsDate = moment(d);
+
+    const totalDays = jsDate.diff(refDate, 'days');
+    return totalDays;
+  },
+
+  days2jsDate: function(numDays) {
+    // Return JS Date based on days since 1/1/1970
+    const refDate = moment('01/01/1970');
+    const newDate = refDate.add(numDays, 'days');
+
+    return newDate.toDate();
   },
 
   mdy2jsDate: function(MDY) {
     // 2014-06-16 Convert a2j m/d/y date to JavaScript date object for use in calculations
     if (this.makestr(MDY) !== '') {
-      var parts = MDY.split('/');
-      return new Date(parts[2], parts[0] - 1, parts[1]);
+      const date = moment(MDY);
+      return date.toDate();
     }
     else {
       // return today if we don't recognize it.
-      var d = new Date();
-      return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      const currentDay = moment();
+      return currentDay.toDate();
     }
+  },
+
+  jsDate2mdy: function (d) {
+  // 2014-06-16 Convert js date to A2J's M/D/Y format
+    const date = moment(d);
+    return date.format('MM/DD/YYYY');
   },
 
   today2jsDate: function() {
     return this.mdy2jsDate('');
-  },
-
-  days2jsDate: function(numDays) {
-    // Return JS Date based on days since 1/1/1970
-    var d = new Date();
-    d.setTime(numDays * 1000 * 60 * 60 * 24);
-
-    return d;
   },
 
   jquote: function(str) {

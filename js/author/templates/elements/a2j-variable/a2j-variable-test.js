@@ -1,7 +1,7 @@
 import Map from 'can/map/';
 import assert from 'assert';
 import Answers from 'author/models/answers';
-import {A2JVariableVM} from './a2j-variable';
+import A2JVariableVM from './a2j-variable-vm';
 
 import 'steal-mocha';
 

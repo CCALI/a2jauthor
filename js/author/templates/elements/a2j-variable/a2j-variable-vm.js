@@ -70,17 +70,32 @@ export default Map.extend({
     },
 
     /**
-     * @property {Boolean} showValue
+     * @property {Boolean} canShowAnswer
      *
      * Whether to show the variable value in the answers object instead of the
-     * variable name pass to the component through its attributes.
+     * variable name passed to the component through its attributes.
      */
-    showValue: {
+    canShowAnswer: {
       get() {
         let value = this.attr('value');
         let useAnswers = this.attr('useAnswers');
 
         return value != null && useAnswers;
+      }
+    },
+
+    /**
+     * @property {Boolean} isUnanswered
+     *
+     * Whether there is an answer available for the variable when the flag
+     * to interpolate the answers is `true`.
+     */
+    isUnanswered: {
+      get() {
+        let value = this.attr('value');
+        let useAnswers = this.attr('useAnswers');
+
+        return useAnswers && value == null;
       }
     }
   }

@@ -39,7 +39,7 @@ export let EditToolbarVM = Map.extend({
   },
 
   saveTemplate() {
-    this.attr('template').save();
+     this.attr('template').save();
   }
 });
 

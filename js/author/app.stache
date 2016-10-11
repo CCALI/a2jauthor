@@ -100,6 +100,7 @@
             <li><a href="#" id="open-guide"><span class="glyphicon-new-message"></span> Open</li>
             <li><a href="#" id="clone-guide"><span class="glyphicon-docs"></span> Clone</a></li>
             <li><a href="#" id="delete-guide"><span class="glyphicon-trash"></span> Delete</a></li>
+            <li><a href="#" id="save-guide"><span class="glyphicon-floppy"></span> Save</a></li>
             <li class="divider"></li>
             <li><a href="#" id="new-page"><span class="glyphicon-doc"></span> New Page</a></li>
             <li><a href="#" id="new-popup"><span class="glyphicon-popup"></span> New Popup</a></li>

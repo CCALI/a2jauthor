@@ -62,7 +62,6 @@ function guideSave(onFinished) {
         title: gGuide.title,
         json: guideJSON_str
       };
-
       ws(params, function(response) {
         if (typeof onFinished === 'function') onFinished();
 

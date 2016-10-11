@@ -129,7 +129,6 @@ function main()
   $('.authorenv').text(gEnv);
   $('.authorver').html(CONST.A2JVersionNum+" "+CONST.A2JVersionDate);
   $('#cajainfo').attr('title',versionString());
-  //$('#guideSave').button({label:'Save Now',icons:{primary:"ui-icon-disk"}}).click(function(){guideSave();});
   $('#settings').click(function(){$('#settings-form').dialog('open');});
 
   // JPM Handles Expand/Collapse button on pages list
@@ -335,6 +334,13 @@ function main()
     });
   $('#tabsPages #delete-guide').click(function(){
       pageEditDelete(pageEditSelected());
+    });
+  $('#tabsPages #save-guide').click(function(){
+      if (window.gGuide) {
+        // This log is for Jessica during Dev phase
+        console.log('Info: Saving Guide');
+        window.guideSave();
+      }
     });
 
   $('#tabsPages #new-page').click(function(){

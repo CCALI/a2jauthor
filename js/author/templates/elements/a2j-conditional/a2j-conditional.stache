@@ -1,6 +1,7 @@
 <can-import from="caja/author/templates/elements/varpicker/" />
 <can-import from="caja/author/templates/elements/options-pane/" />
 <can-import from="caja/author/templates/elements/a2j-variable/" />
+<can-import from="caja/author/templates/elements/condition-form/" />
 <can-import from="caja/author/templates/elements/element-container/" />
 <can-import from="caja/author/templates/elements/a2j-conditional/add-element/" />
 <can-import from="caja/author/templates/elements/a2j-conditional/a2j-conditional.less!" />
@@ -12,8 +13,8 @@
     {(selected)}="editActive"
     {clone-node}="@cloneNode"
     {delete-node}="@deleteNode"
-    {toggle-edit-active-node}="@toggleEditActiveNode">
-
+    {toggle-edit-active-node}="@toggleEditActiveNode"
+  >
     <div class="panel panel-warning">
       <div class="panel-heading">
         IF
@@ -79,7 +80,19 @@
   </element-container>
 
   {{#if editActive}}
-    {{> conditional-options-tpl }}
+    <element-options-pane
+      {node-id}="nodeId"
+      title="If / Else Conditional"
+      {save-and-close}="@updateNode"
+    >
+      <condition-form
+        {variables-list}="variablesList"
+        {(operator)}="operator"
+        {(left-operand)}="leftOperand"
+        {(right-operand)}="rightOperand"
+        {(right-operand-type)}="rightOperandType"
+      />
+    </element-options-pane>
   {{/if}}
 {{else}}
   {{#if evalCondition()}}

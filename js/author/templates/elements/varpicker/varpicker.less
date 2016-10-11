@@ -11,6 +11,11 @@ var-picker {
   }
 
   .tokenfield {
+    &.disabled {
+      opacity: 1;
+      background-color: @gray-lighter;
+    }
+
     // prevents the inner input to show outside of its container.
     .twitter-typeahead {
       width: auto;

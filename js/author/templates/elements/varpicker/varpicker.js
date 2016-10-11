@@ -40,16 +40,25 @@ export default Component.extend({
       });
 
       setTimeout(function() {
-        $input.tokenfield({
-          limit: 1,
-          tokens: selected,
-          inputType: 'text',
-          createTokensOnBlur: false,
-          typeahead: [null, {source: engine.ttAdapter()}]
-        });
-
-        $input.show();
+        $input
+          .tokenfield({
+            limit: 1,
+            tokens: selected,
+            inputType: 'text',
+            createTokensOnBlur: false,
+            typeahead: [null, {source: engine.ttAdapter()}]
+          })
+          .trigger('tokenfield:initialized')
+          .show();
       });
+    },
+
+    removed() {
+      let $input = this.element.find('input');
+
+      $input
+        .tokenfield('destoy')
+        .trigger('tokenfield:destroyed');
     },
 
     // when a token in created, hide the inner input, we don't need to show

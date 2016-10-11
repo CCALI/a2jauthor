@@ -1,0 +1,56 @@
+<form>
+  <div class="form-group row clearfix">
+    <div class="col-md-12">
+      <var-picker
+        {disabled}="disabled"
+        {(selected)}="leftOperand"
+        {variables}="variablesList"
+      />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <select
+      class="form-control"
+      {($value)}="operator"
+      {$disabled}="disabled"
+    >
+      <option value="is-true">is true</option>
+      <option value="is-false">is false</option>
+      <option value="is-equal">equals</option>
+      <option value="is-not-equal">does not equal</option>
+      <option value="is-greater-than">is greater than</option>
+      <option value="is-less-than">is less than</option>
+    </select>
+  </div>
+
+  <div class="form-group row clearfix right-operand {{#if isUnaryOperation}}invisible{{/if}}">
+    <div class="col-md-6">
+      <select
+        class="form-control"
+        {$disabled}="disabled"
+        {($value)}="rightOperandType"
+      >
+        <option value="variable">Variable</option>
+        <option value="text">Text</option>
+      </select>
+    </div>
+
+    <div class="col-md-6">
+      {{#is rightOperandType 'variable'}}
+        <var-picker
+          {$disabled}="disabled"
+          {(selected)}="rightOperand"
+          {variables}="variablesList"
+        />
+      {{else}}
+        <input
+          type="text"
+          class="form-control"
+          {$disabled}="disabled"
+          {($value)}="rightOperand"
+        />
+      {{/if}}
+    </div>
+  </div>
+</form>

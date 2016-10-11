@@ -34,6 +34,15 @@ const byType = function(types, variable) {
 export default Map.extend({
   define: {
     /**
+     * @property {Boolean} disabled
+     *
+     * Whether the picker is disabled
+     */
+    disabled: {
+      value: false
+    },
+
+    /**
      * @property {String} varPicker.ViewModel.prototype.selected selected
      * @parent varPicker.ViewModel
      *

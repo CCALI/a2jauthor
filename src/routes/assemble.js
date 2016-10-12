@@ -16,6 +16,9 @@ const render = ssr({
   config: path.join(__dirname, '..', '..', 'package.json!npm')
 });
 
+// it won't work on the server without this
+wkhtmltopdf.command = '/usr/local/bin/wkhtmltopdf';
+
 // middleware to validate the presence of either `guideId` or
 // `fileDataUrl`, during document assembly one of those two
 // properties is needed to retrieve the template's data.

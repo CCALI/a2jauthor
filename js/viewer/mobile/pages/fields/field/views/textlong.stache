@@ -9,7 +9,7 @@
       id="{{label}}"
       class="form-control"
       ($change)="validateField"
-      ($value)="field._answer.values"/>
+      {($value)}="field._answer.values"/>
   </div>
 
   {{> invalid-prompt-tpl }}

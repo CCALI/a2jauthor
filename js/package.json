@@ -39,14 +39,15 @@
     "serve-index": "1.4.0",
     "serve-static": "1.6.4",
     "sinon": "^1.17.2",
-    "steal": "^0.12.3",
+    "steal": "^0.16.39",
     "steal-mocha": "0.0.3",
-    "steal-tools": "^0.12.1",
+    "steal-tools": "^0.16.8",
     "testee": "^0.2.0",
     "typeahead.js": "git://github.com/twitter/typeahead.js.git#v0.11.1"
   },
   "system": {
     "transpiler": "babel",
+    "npmAlgorithm": "flat",
     "ext": {
       "text": "text"
     },

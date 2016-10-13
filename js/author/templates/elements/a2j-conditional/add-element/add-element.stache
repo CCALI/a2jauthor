@@ -39,14 +39,12 @@
     <h3>Logic</h3>
     <div class="row clearfix">
       <div class="col-md-6">
-        <button class="btn btn-default btn-block disabled">If / Else</button>
-      </div>
-
-      <div class="col-md-6">
         <button
           class="btn btn-default btn-block"
           ($click)="addElement('repeat-loop')">Repeat Loop</button>
       </div>
+
+      <div class="col-md-6">&nbsp;</div>
     </div>
   </element-options-pane>
 {{/if}}

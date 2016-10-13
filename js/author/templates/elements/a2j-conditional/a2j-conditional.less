@@ -14,7 +14,9 @@ a2j-conditional {
   }
 
   .panel-warning > .panel-body {
-    overflow-x: auto;
+    a2j-rich-text .wrapper:not(.selected) {
+      overflow-x: auto;
+    }
   }
 
   .panel-warning > .panel-heading {

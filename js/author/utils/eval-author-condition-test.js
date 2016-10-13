@@ -15,6 +15,12 @@ describe('evalAuthorCondition', function() {
         name: 'Contracts amount over 5k MC'
       },
 
+      'minor children tf': {
+        repeating: false,
+        values: [null, 'false'],
+        name: 'Minor Children TF'
+      },
+
       'mother monthly income': {
         repeating: false,
         values: [null, '100'],
@@ -29,23 +35,34 @@ describe('evalAuthorCondition', function() {
     });
   });
 
-  // !!leftOperand
-  it('is-true operator with variable operand', function() {
+  it('unary operation with variable operand', function() {
     assert.isTrue(evalAuthorCondition({
       answers,
       operator: 'is-true',
       leftOperandType: 'variable',
       leftOperand: 'Contracts amount over 5k MC'
     }));
-  });
-
-  // !leftOperand
-  it('is-false operator with variable operand', function() {
     assert.isFalse(evalAuthorCondition({
       answers,
       operator: 'is-false',
       leftOperandType: 'variable',
       leftOperand: 'Contracts amount over 5k MC'
+    }));
+  });
+
+  it('unary operation with variable operand and string values', function() {
+    assert.isFalse(evalAuthorCondition({
+      answers,
+      operator: 'is-true',
+      leftOperandType: 'variable',
+      leftOperand: 'Minor Children TF'
+    }));
+
+    assert.isTrue(evalAuthorCondition({
+      answers,
+      operator: 'is-false',
+      leftOperandType: 'variable',
+      leftOperand: 'Minor Children TF'
     }));
   });
 

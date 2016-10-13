@@ -337,8 +337,6 @@ function main()
     });
   $('#tabsPages #save-guide').click(function(){
       if (window.gGuide) {
-        // This log is for Jessica during Dev phase
-        console.log('Info: Saving Guide');
         window.guideSave();
       }
     });

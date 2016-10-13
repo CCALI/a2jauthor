@@ -25,6 +25,11 @@
         </ul>
 
         <div class="nav navbar-nav navbar-right">
+          <button ($click)="saveTemplate"
+            class="btn btn-default navbar-btn save-template">
+
+            <span class="glyphicon-floppy"></span> Save Template
+          </button>
           <button
             data-toggle="modal"
             data-target="#test-assemble-modal"

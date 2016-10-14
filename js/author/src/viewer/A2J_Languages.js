@@ -18,6 +18,11 @@
 		Polish
 		Russian
 		Dutch
+		Albanian
+		Arabic
+		Bengali
+		Chaldean
+		Hmong
 
 	Pending:
 
@@ -92,18 +97,6 @@ var lang = {
 	Ordinals_12:'',
 	Ordinals_13:'',
 	RepeatAnd: '', // Used in building comma list from REPEAT.
-
-	qIDNOWHERE:'',
-	qIDSUCCESS:'',
-	qIDFAIL:'',
-	qIDEXIT:'',
-	qIDBACK:'',
-	qIDRESUME:'',
-	UnknownID:'',
-
-	scriptErrorMissingPage :'',
-	scriptErrorUnhandled : '',
-	scriptErrorEndMissing : ''
 };
 
 function readableList(list)
@@ -141,9 +134,6 @@ function TLanguages()
 		//trace("TLanguages.set",languageID);
 		var region;
 
-		// redundant due to var above
-		// lang = {};
-
 		region = this.regional[languageID];
 		var e;
 		for (e in region){
@@ -176,7 +166,7 @@ function TLanguages()
 var Languages = new TLanguages();
 
 /* 05/05/2005, 03/11/2010 English language file used with A2J Viewer'*/
-Languages.regional.en= {
+Languages.regional.en = {
 	locale:'en',
 	Language:'English',
 	LanguageEN: 'English',
@@ -251,7 +241,6 @@ Languages.regional.en= {
 	tabAbout:'About',
 	tabInterview:'Interview',
 	tabVariables:'Variables',
-	//tabConstants:'Clauses',
 	tabSteps:'Steps',
 	// Question branching types
 	qIDNOWHERE:"[no where]",
@@ -260,11 +249,11 @@ Languages.regional.en= {
 	qIDEXIT : "[Exit - Save Incomplete Form]",
 	qIDBACK : "[Back to prior question]",
 	qIDRESUME : "[Exit - Resume interview]",
-  qIDASSEMBLE: '[Assemble - Generate PDF document]',
-  qIDASSEMBLESUCCESS: '[Assemble - Generate PDF and Process Form]',
+	qIDASSEMBLE: '[Assemble - Generate PDF document]',
+	qIDASSEMBLESUCCESS: '[Assemble - Generate PDF and Process Form]',
 
-  // Unknown ID
-	UnknownID : "[Unknown id [{1}]: [{2}",
+	// Unknown ID
+	UnknownID : "[Unknown id [{1}]: [{2}]",
 
 	scriptErrorMissingPage :'Page "{1}" does not exist.',
 	scriptErrorUnhandled : 'Unknown command: {1}',
@@ -555,7 +544,7 @@ Languages.regional.cld = {
 };
 
 // Spanish language file used with A2J Viewer'
-Languages.regional.es= {
+Languages.regional.es = {
 	locale:'es',
 	Language:'Español',
 	LanguageEN: 'Spanish',
@@ -663,7 +652,7 @@ Languages.regional.es= {
 };
 
 // French
-Languages.regional.fr= {
+Languages.regional.fr = {
 	locale:'fr',
 	Language:'Français',
 	LanguageEN: 'French',
@@ -802,7 +791,7 @@ Languages.regional.hmn = {
 };
 
 // Korean
-Languages.regional.ko= {
+Languages.regional.ko = {
 	locale:'ko',
 	Language: '영어',
 	LanguageEN: 'Korean',
@@ -873,7 +862,7 @@ Languages.regional.ko= {
 };
 
 // Nederlands (Dutch)
-Languages.regional.nl= {
+Languages.regional.nl = {
 	locale:'nl',
 	Language:'Nederlands',
 	LanguageEN: 'Dutch',
@@ -943,7 +932,7 @@ Languages.regional.nl= {
 };
 
 // Polish
-Languages.regional.pl= {
+Languages.regional.pl = {
 	locale:'pl',
 	Language:'Polski',
 	LanguageEN: 'Polish',
@@ -1013,7 +1002,7 @@ Languages.regional.pl= {
 };
 
 // Russian
-Languages.regional.ru= {
+Languages.regional.ru = {
 	locale:'ru',
 	LanguageEN: 'Russian',
 	Language:'Русский',
@@ -1083,7 +1072,7 @@ Languages.regional.ru= {
 };
 
 // Vietnamese language file used with A2J Viewer'
-Languages.regional.vi= {
+Languages.regional.vi = {
 	locale:'vi',
 	Language:'Tiếng Anh',
 	LanguageEN: 'Vietnamese',
@@ -1154,7 +1143,7 @@ Languages.regional.vi= {
 };
 
 // Simplified Chinese language file used with A2J Viewer
-Languages.regional['zh-cn']= {
+Languages.regional['zh-cn'] = {
 	locale:'zh-cn',
 	Language:'英语',
 	LanguageEN: 'Simplified Chinese',
@@ -1403,6 +1392,3 @@ jQuery(function($){
 });
 
 }
-
-
-/* */

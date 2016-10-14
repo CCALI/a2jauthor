@@ -8,7 +8,18 @@
 
     onLoad: function() {
       // Register styles for variable widget frame.
-      CKEDITOR.addCss('a2j-variable { background-color: #D7ECF5; border-radius: 6px; padding: 3px 10px }');
+      CKEDITOR.addCss(
+        'a2j-variable {' +
+          'width: 170px;' +
+          'overflow: hidden;' +
+          'text-overflow: ellipsis;' +
+          'white-space: nowrap;' +
+          'background-color: #D7ECF5;' +
+          'border-radius: 6px;' +
+          'padding: 3px 10px;' +
+          'display: inline-block;' +
+        '}'
+      );
     },
 
     init: function(editor) {

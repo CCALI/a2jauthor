@@ -92,6 +92,12 @@
         {(right-operand)}="rightOperand"
         {(right-operand-type)}="rightOperandType"
       />
+
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" {($checked)}="elseClause"> Else Clause
+        </label>
+      </div>
     </element-options-pane>
   {{/if}}
 {{else}}

@@ -1,9 +1,6 @@
 import Component from 'can/component/';
 import template from './a2j-conditional.stache!';
 import ConditionalVM from './a2j-conditional-vm';
-import conditionalOptionsTpl from './conditional-options.stache!';
-
-can.view.preload('conditional-options-tpl', conditionalOptionsTpl);
 
 const operatorTextMap = {
   'is-true': 'IS TRUE',

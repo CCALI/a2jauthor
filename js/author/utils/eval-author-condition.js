@@ -31,11 +31,11 @@ export default function(params) {
 
   switch (operator) {
     case 'is-true':
-      val = Boolean(leftValue);
+      val = leftValue === 'true' || (Boolean(leftValue) && leftValue !== 'false');
       break;
 
     case 'is-false':
-      val = !leftValue;
+      val = (leftValue === 'false' || !leftValue);
       break;
 
     case 'is-equal':

@@ -3,8 +3,7 @@ import Component from 'can/component/';
 import _truncate from 'lodash/truncate';
 import template from './sign-text.stache!';
 
-import 'can/map/define/';
-import 'jquery-textfill';
+import 'caja/viewer/util/jquery-textfill';
 
 /**
  * @property {can.Map} signText.ViewModel

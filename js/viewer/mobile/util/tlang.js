@@ -204,7 +204,7 @@
 		// Albanian
 		Languages.regional.sq = {
 			locale: 'sq',
-			Language: 'Anglisht',
+			Language: 'Shqip',
 			LanguageEN: 'Albanian',
 			AskYesNo_Yes: 'Po',
 			AskYesNo_No: 'Jo',
@@ -663,7 +663,7 @@
 		// Hmong
 		Languages.regional.hmn = {
 			locale: 'hmn',
-			Language: 'Lus As Kiv',
+			Language: 'Hmoob',
 			LanguageEN: 'Hmong',
 			AskYesNo_Yes: 'Yog',
 			AskYesNo_No: 'Tsis Yog',

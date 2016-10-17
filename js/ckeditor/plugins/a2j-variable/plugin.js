@@ -10,7 +10,7 @@
       // Register styles for variable widget frame.
       CKEDITOR.addCss(
         'a2j-variable {' +
-          'width: 170px;' +
+          'max-width: 170px;' +
           'overflow: hidden;' +
           'text-overflow: ellipsis;' +
           'white-space: nowrap;' +

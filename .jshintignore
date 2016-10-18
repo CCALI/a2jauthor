@@ -7,3 +7,4 @@ js/viewer/mobile/util/regex.js
 js/viewer/mobile/util/tlang.js
 js/viewer/mobile/util/tlogic.js
 js/viewer/models/constants.js
+js/viewer/util/jquery-textfill.js

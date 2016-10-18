@@ -11,6 +11,7 @@
       CKEDITOR.addCss(
         'a2j-variable {' +
           'max-width: 170px;' +
+          'max-width: 10rem;' +
           'overflow: hidden;' +
           'text-overflow: ellipsis;' +
           'white-space: nowrap;' +

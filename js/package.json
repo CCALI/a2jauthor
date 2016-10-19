@@ -87,7 +87,17 @@
           "jquery-ui/ui/resizable",
           "jquery-ui/ui/dialog",
           "jquery-ui/ui/tooltip",
-          "blueimp-file-upload/js/jquery.fileupload"
+          "blueimp-file-upload/js/jquery.fileupload",
+          "author/src/viewer/A2J_Types",
+          "author/src/viewer/A2J_Languages",
+          "author/src/viewer/A2J_Shared",
+          "author/src/viewer/A2J_Viewer",
+          "author/src/A2J_Reports",
+          "author/src/A2J_Mapper",
+          "author/src/viewer/A2J_Prefs",
+          "author/src/A2J_Vars",
+          "author/src/A2J_Clauses",
+          "author/src/A2J_Tabs"
         ]
       },
       "author/src/A2J_Reports": {

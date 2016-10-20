@@ -360,6 +360,9 @@ switch ($command){
 		define('UPLOAD_DIR', $user_guides_path);
 		define('UPLOAD_URL', $user_guides_path);
 
+		// fail early if there is any error in the $_FILEs['interview'] object
+		check_for_upload_errors('interview');
+
 		// 10/03/2013 Upload existing XML/A2J file to a new guide.
 		$title = $mysqli->real_escape_string('Untitled uploaded guide');
 		$sql = "insert into guides (title, editoruid, archive) values ('{$title}', '{$userid}', 0)";
@@ -515,6 +518,41 @@ echo $return;
 /************** helper functions **************************/
 /**********************************************************/
 
+
+function check_for_upload_errors($upload_name) {
+	$upload_errors = [
+		1 => 'The uploaded file exceeds the upload_max_filesize',
+		2 => 'The uploaded file exceeds the MAX_FILE_SIZE value in the HTML form',
+		3 => 'The uploaded file was only partially uploaded',
+		4 => 'No file was uploaded',
+		6 => 'Missing a temporary folder',
+		7 => 'Failed to write file to disk.',
+		8 => 'A PHP extension stopped the file upload.',
+	];
+
+	$error_code = $_FILES[$upload_name]['error'];
+	$error_message = $upload_errors[$error_code];
+
+	switch ($error_code) {
+		case UPLOAD_ERR_OK:
+			break; //noop
+
+		case UPLOAD_ERR_INI_SIZE:
+		case UPLOAD_ERR_FORM_SIZE:
+		case UPLOAD_ERR_PARTIAL:
+		case UPLOAD_ERR_NO_FILE:
+			fail_and_exit(400, $error_message);
+
+		case UPLOAD_ERR_NO_TMP_DIR:
+		case UPLOAD_ERR_CANT_WRITE:
+		case UPLOAD_ERR_EXTENSION:
+			fail_and_exit(500, $error_message);
+
+		default:
+			fail_and_exit(500, 'Unknown upload error');
+	}
+}
+
 function cleanup_failed_guide_upload() {
 	global $mysqli;
 
@@ -533,10 +571,10 @@ function process_uploaded_guide_file($destination_path) {
 
 	$file_data = $_FILES['interview'];
 	$temp_file_path = $file_data['tmp_name'];
+	$mime_type = mime_content_type($temp_file_path);
 
-	if ($file_data['type'] == 'application/zip') {
-		$foldername = unzip($temp_file_path, UPLOAD_DIR);
-		rename(UPLOAD_DIR . $foldername, $destination_path);
+	if ($mime_type == 'application/zip') {
+		unzip($temp_file_path, $destination_path);
 		find_guide_file_and_rename($destination_path);
 	} else {
 		$filename = $file_data['name'];
@@ -610,7 +648,6 @@ function is_a2j_or_xml($file) {
  */
 function unzip($zip_path, $destination) {
 	$zip = new ZipArchive;
-	$foldername = "";
 
 	if ($zip->open($zip_path) === TRUE) {
 		$foldername = $zip->getNameIndex(0);
@@ -619,8 +656,6 @@ function unzip($zip_path, $destination) {
 	} else {
 		fail_and_exit(400, 'Failed to extract the zip archive');
 	}
-
-	return $foldername;
 }
 
 /**

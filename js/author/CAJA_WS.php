@@ -350,7 +350,6 @@ switch ($command){
 		break;
 
 	case 'uploadguide':
-		include 'UploadHandler.php';
 		error_reporting(E_ALL | E_STRICT);
 
 		$user_dir = (empty($_SESSION['userdir'])) ? '00000' : $_SESSION['userdir'];
@@ -360,7 +359,6 @@ switch ($command){
 		// place uploaded file in the user's guides folder
 		define('UPLOAD_DIR', $user_guides_path);
 		define('UPLOAD_URL', $user_guides_path);
-		new UploadHandler();
 
 		// 10/03/2013 Upload existing XML/A2J file to a new guide.
 		$title = $mysqli->real_escape_string('Untitled uploaded guide');
@@ -370,10 +368,7 @@ switch ($command){
 			$new_guide_folder_path = $user_guides_path . "Guide{$mysqli->insert_id}";
 			process_uploaded_guide_file($new_guide_folder_path);
 		} else {
-			// fail if we couldn't save the empty interview
-			http_response_code(500);
-			echo 'Uh-oh, something went wrong saving the guide';
-			exit();
+			fail_and_exit(500, 'Uh-oh, something went wrong saving the guide');
 		}
 
 		$new_guide_id = $mysqli->insert_id;
@@ -395,6 +390,8 @@ switch ($command){
 		if ($res = $mysqli->query($sql)) {
 			writelognow();
 			exit(); // return immediately with upload info.
+		} else {
+			fail_and_exit(500, 'Uh-oh, something went wrong saving the guide');
 		}
 
 		break;
@@ -514,6 +511,65 @@ $return = json_encode($result);
 echo $return;
 
 
+/**********************************************************/
+/************** helper functions **************************/
+/**********************************************************/
+
+function cleanup_failed_guide_upload() {
+	global $mysqli;
+
+	$new_guide_id = $mysqli->insert_id;
+	$new_guide_dir = UPLOAD_DIR . "Guide{$new_guide_id}/";
+
+	$mysqli->query("DELETE FROM guides WHERE gid='{$new_guide_id}'");
+
+	if (is_dir($new_guide_dir)) {
+		delete_directory($new_guide_dir);
+	}
+}
+
+function process_uploaded_guide_file($destination_path) {
+	global $mysqli;
+
+	$file_data = $_FILES['interview'];
+	$temp_file_path = $file_data['tmp_name'];
+
+	if ($file_data['type'] == 'application/zip') {
+		$foldername = unzip($temp_file_path, UPLOAD_DIR);
+		rename(UPLOAD_DIR . $foldername, $destination_path);
+		find_guide_file_and_rename($destination_path);
+	} else {
+		$filename = $file_data['name'];
+
+		if (is_a2j_or_xml($filename) == TRUE) {
+			mkdir($destination_path);
+			move_uploaded_file($temp_file_path, $destination_path . '/Guide.xml');
+		} else {
+			cleanup_failed_guide_upload();
+			fail_and_exit(422, "No valid xml or a2j file was provided");
+		}
+	}
+}
+
+function find_guide_file_and_rename($path) {
+	global $mysqli;
+
+	if (($files = scandir($path)) != FALSE) {
+		$guide_files = array_filter($files, "is_a2j_or_xml");
+
+		if (empty($guide_files) == TRUE) {
+			cleanup_failed_guide_upload();
+			fail_and_exit(422, "No valid xml or a2j file was found in the zip archive");
+		} else {
+			$first_valid_xml = $path . "/" . array_values($guide_files)[0];
+			rename($first_valid_xml, $path . "/Guide.xml");
+		}
+	} else {
+		cleanup_failed_guide_upload();
+		fail_and_exit(422, "The zip archive cannot be empty");
+	}
+}
+
 function get_guide_title_from_xml($xml) {
 	$guide_xml = new SimpleXMLElement($xml);
 
@@ -527,41 +583,44 @@ function get_guide_title_from_xml($xml) {
 	return $result;
 }
 
-function process_uploaded_guide_file($destination_path) {
-	$file_data = $_FILES['interview'];
-	$temp_file_path = $_FILES['interview']['tmp_name'];
+function fail_and_exit($http_code, $message) {
+	http_response_code($http_code);
+	header('Content-type: application/json');
 
-	if ($file_data['type'] == 'application/zip') {
-		// the unzipped foldername will be the filename without the extension
-		$foldername = pathinfo($file_data['name'])['filename'];
+	$response = [
+		"error" => [ "code" => $http_code, "message" => $message ]
+	];
 
-		unzip($temp_file_path, UPLOAD_DIR);
-		rename(UPLOAD_DIR . $foldername, $destination_path);
-	} else {
-		// if we did not get a zip file we assume(?) it is an xml file,
-		// we proceed to create the Guide folder and move the uploaded file
-		// with the name Guide.xml
-		$filename = $file_data['name'];
-
-		mkdir($destination_path);
-		move_uploaded_file($temp_file_path, $destination_path . '/Guide.xml');
-	}
+	echo json_encode($response);
+	exit();
 }
 
+function is_a2j_or_xml($file) {
+	$ext = pathinfo($file, PATHINFO_EXTENSION);
+	$starts_with_a2j = (($ext != "") && (strpos($ext, "a2j") === 0));
+
+	return ($starts_with_a2j || $ext == "xml");
+}
 
 /**
  * Extracts the zip archive content to the indicated destination
+ *
+ * Returns the folder name of the unzipped archive
+ * **This code assumes the archive will contain a root folder**
  */
 function unzip($zip_path, $destination) {
 	$zip = new ZipArchive;
+	$foldername = "";
+
 	if ($zip->open($zip_path) === TRUE) {
+		$foldername = $zip->getNameIndex(0);
 		$zip->extractTo($destination);
 		$zip->close();
 	} else {
-		http_response_code(500);
-		echo 'Failed to extract the zip archive';
-		exit();
+		fail_and_exit(400, 'Failed to extract the zip archive');
 	}
+
+	return $foldername;
 }
 
 /**
@@ -635,7 +694,6 @@ function createGuideZip($gid) {
  * @param ZIP $zip An opened ZipArchive instance
  * @return void
  */
-
 function add_guide_json_file($guide_name, $zip) {
 	$xml_guide_path = GUIDES_DIR . $guide_name;
 	$json_guide_path = replace_extension($xml_guide_path, 'json');
@@ -736,6 +794,24 @@ function replace_extension($filename, $new_extension) {
 function trace($msg) {
 	global $traces;
 	$traces[]=$msg;
+}
+
+function delete_directory($dir) {
+	if ($handle = opendir($dir)) {
+		while (($file = readdir($handle)) !== false) {
+			if ($file != "." && $file != "..") {
+				if (is_dir($dir . $file)) {
+					if (!@rmdir($dir . $file)) { // Empty directory? Remove it
+						delete_directory($dir . $file . '/'); // Not empty? Delete the files inside it
+					}
+				} else {
+					@unlink($dir . $file);
+				}
+			}
+		}
+		closedir($handle);
+		@rmdir($dir);
+	}
 }
 
 writelognow();

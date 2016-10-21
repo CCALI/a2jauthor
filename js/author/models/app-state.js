@@ -1,10 +1,9 @@
+import $ from 'jquery';
 import Map from 'can/map/';
 import List from 'can/list/';
 import A2JVariable from './a2j-variable';
+import _isEmpty from 'lodash/isEmpty';
 
-import 'can/map/define/';
-
-// TODO: extract this into its own file, but first figure out what to do
 // with the existing Guide model that works with a different data structure.
 let Guide = Map.extend({
   define: {
@@ -18,16 +17,15 @@ let Guide = Map.extend({
 });
 
 /**
- * @module {function} author/models/app-state AppState
+ * @module {function} AuthorAppState
  * @parent api-models
  *
  * This is the global application state.
  */
 export default Map.extend({
-
   define: {
     /**
-    * @property {List} AppState.property.traceLogic
+    * @property {List} traceLogic
     *
     * latest message to display in the trace panel
     */
@@ -36,7 +34,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {String} AppState.prototype.page page
+     * @property {String} page
      *
      * The name of the "tab" the author is seeing, it is bound to can.route.
      *
@@ -46,7 +44,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {String} AppState.prototype.guideId guideId
+     * @property {String} guideId
      *
      * The identifier to the guided interview currently loaded.
      */
@@ -58,7 +56,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {String} AppState.prototype.guidePath guidePath
+     * @property {String} guidePath
      *
      * The path to the folder where the Guide.xml file is located.
      */
@@ -70,7 +68,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {can.Map} AppState.prototype.guide guide
+     * @property {can.Map} guide
      *
      * The current selected guided interview.
      */
@@ -83,7 +81,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {Boolean} AppState.prototype.showDebugPanel showDebugPanel
+     * @property {Boolean} showDebugPanel
      *
      * Whether to show the debug panel (variables and trace panels) when
      * the author is previewing the interview.
@@ -98,7 +96,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {Boolean} AppState.protoype.previewMode previewMode
+     * @property {Boolean} previewMode
      *
      * Whether user has toggled the interview preview mode, the viewer
      * app will be rendered if `true`.
@@ -113,7 +111,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {String} AppState.protoype.previewPageName previewPageName
+     * @property {String} previewPageName
      *
      * The name of the page that will be loaded when user clicks the interview
      * button in the edit page popup, when empty the first page of the interview
@@ -125,7 +123,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {String} AppState.protoype.interviewPageName interviewPageName
+     * @property {String} interviewPageName
      *
      * The name of the page that is currently being previewed in the viewer
      * app, it is bound to viewer's route page property.
@@ -136,7 +134,7 @@ export default Map.extend({
     },
 
     /**
-     * @property {String} AppState.protoype.viewerAlertMessages viewerAlertMessages
+     * @property {String} viewerAlertMessages
      *
      * List of error messages meant to be displayed to the user (author) in
      * preview mode.
@@ -147,13 +145,48 @@ export default Map.extend({
     },
 
     /**
-     * @property {String} AppState.protoype.viewerInterview viewerInterview
+     * @property {String} viewerInterview
      *
      * The Interview instance used by the viewer app in preview mode.
      */
     viewerInterview: {
       serialize: false
+    },
+
+    /**
+     * @property {can.Map} globalAlertProps
+     *
+     * This map holds some properties use to control the behavior of the
+     * `app-alert` used to notify errors and other messages globally across
+     * the different tabs
+     */
+    globalAlertProps: {
+      serialize: false,
+      value() {
+        return {
+          open: false,
+          message: '',
+          alertType: 'danger'
+        };
+      }
     }
+  },
+
+  init() {
+    let appState = this;
+
+    $(document).ajaxError(function globalAjaxHandler(event, jqxhr) {
+      let status = jqxhr.status;
+      let response = jqxhr.responseJSON || {};
+
+      if (status >= 400 && !_isEmpty(response.error)) {
+        appState.attr('globalAlertProps', {
+          open: true,
+          alertType: 'danger',
+          message: response.error.message
+        });
+      }
+    });
   },
 
   toggleDebugPanel() {

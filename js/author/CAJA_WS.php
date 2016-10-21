@@ -579,12 +579,12 @@ function process_uploaded_guide_file($destination_path) {
 	} else {
 		$filename = $file_data['name'];
 
-		if (is_a2j_or_xml($filename) == TRUE) {
+		if (has_a2j_or_xml_ext($filename) == TRUE) {
 			mkdir($destination_path);
 			move_uploaded_file($temp_file_path, $destination_path . '/Guide.xml');
 		} else {
 			cleanup_failed_guide_upload();
-			fail_and_exit(422, "No valid xml or a2j file was provided");
+			fail_and_exit(422, "No valid .a2j or .xml file was provided");
 		}
 	}
 }
@@ -592,19 +592,38 @@ function process_uploaded_guide_file($destination_path) {
 function find_guide_file_and_rename($path) {
 	global $mysqli;
 
-	if (($files = scandir($path)) != FALSE) {
-		$guide_files = array_filter($files, "is_a2j_or_xml");
+	$possible_xml_files = array("interview.xml", "guide.xml");
 
-		if (empty($guide_files) == TRUE) {
+	if (($files = scandir($path)) != FALSE) {
+		$guide_files = array_map("strtolower", array_filter($files, "is_valid_guide_file"));
+
+		if (count($guide_files) === 0) {
 			cleanup_failed_guide_upload();
-			fail_and_exit(422, "No valid xml or a2j file was found in the zip archive");
-		} else {
-			$first_valid_xml = $path . "/" . array_values($guide_files)[0];
-			rename($first_valid_xml, $path . "/Guide.xml");
+			fail_and_exit(422, "No valid .a2j or .xml file was found in the .zip file");
 		}
+
+		if (count($guide_files) > 1) {
+			cleanup_failed_guide_upload();
+
+			// zip contains both an interview.xml and guide.xml
+			if (count(array_intersect($possible_xml_files, $guide_files)) === 2) {
+				fail_and_exit(422, "The .zip file cannot contain both an interview.xml and guide.xml");
+			}
+
+			// zip contains multiple .a2j files
+			if (count(array_filter($guide_files, "has_a2j_ext")) > 1) {
+				fail_and_exit(422, "The .zip file cannot contain multiple .a2j files");
+			}
+
+			fail_and_exit(422, "The .zip cannot contain both an interview.xml or guide.xml and an .a2j file");
+		}
+
+		// rename the found guide file to Guide.xml
+		$guide_file_path = $path . "/" . array_values($guide_files)[0];
+		rename($guide_file_path, $path . "/Guide.xml");
 	} else {
 		cleanup_failed_guide_upload();
-		fail_and_exit(422, "The zip archive cannot be empty");
+		fail_and_exit(422, "Unable to open .zip file");
 	}
 }
 
@@ -633,11 +652,30 @@ function fail_and_exit($http_code, $message) {
 	exit();
 }
 
-function is_a2j_or_xml($file) {
+/**
+ * Checks if the filename extension starts with a2j
+ */
+function has_a2j_ext($file) {
 	$ext = pathinfo($file, PATHINFO_EXTENSION);
-	$starts_with_a2j = (($ext != "") && (strpos($ext, "a2j") === 0));
+	return (($ext != "") && (strpos($ext, "a2j") === 0));
+}
 
-	return ($starts_with_a2j || $ext == "xml");
+function has_a2j_or_xml_ext($file) {
+	return (has_a2j_ext($file) || $ext == "xml");
+}
+
+/**
+ * Given a filename will check if file is a valid guide definition file
+ *
+ * Any file with an extension that starts with `a2j` is valid or a file named
+ * `interview.xml` or `guide.xml`; the casing is not relevant since the function
+ * will lowercase the filename before the comparison.
+ */
+function is_valid_guide_file($file) {
+	$filename = strtolower($file);
+
+	return has_a2j_ext($filename) ||
+		($filename == "interview.xml" || $filename == "guide.xml");
 }
 
 /**
@@ -654,7 +692,7 @@ function unzip($zip_path, $destination) {
 		$zip->extractTo($destination);
 		$zip->close();
 	} else {
-		fail_and_exit(400, 'Failed to extract the zip archive');
+		fail_and_exit(400, 'Unable to open .zip file');
 	}
 }
 

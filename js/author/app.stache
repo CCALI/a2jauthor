@@ -34,6 +34,16 @@
   </div>
 
   <div class="guidepanels ui-widget xui-widget-content">
+    <app-alert
+      auto-close="true"
+      dismissible="true"
+      class="global-alert"
+      {auto-close-timeout}="20000"
+      {(open)}="globalAlertProps.open"
+      {alert-type}="globalAlertProps.alertType"
+    >
+      {{{globalAlertProps.message}}}
+    </app-alert>
 
     <!-- About Tab -->
     <div class="tab-panel bootstrap-styles" id="tabsAbout">

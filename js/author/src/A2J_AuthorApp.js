@@ -490,20 +490,6 @@ function main()
     }
   }, CONST.AutoSaveInterval);
 
-
-  $('#guideupload').fileupload({
-     url:CONST.uploadGuideURL,
-     dataType: 'json',
-     done: function (e, data) {
-      setTimeout(signin,500);
-     },
-     progressall: function (e, data) {
-        var progress = parseInt(data.loaded / data.total * 100, 10);
-        $('#guideuploadprogress .bar').css('width', progress + '%'
-      );
-    }
-  });
-
   // remove jquery-ui classes from buttons.
   (function() {
     var classes = [

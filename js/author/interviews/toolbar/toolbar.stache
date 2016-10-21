@@ -15,7 +15,12 @@
     <a href="javascript:void(0)" class="fileinput-button">
       <span class="glyphicon-folder-upload"></span> Upload A2J Guided Interview...
       <!-- The file input field used as target for the file upload widget -->
-      <input type="file" name="interview" fileupload />
+      <input
+        fileupload
+        type="file"
+        name="interview"
+        accept=".a2j,.a2j4,.a2j5,.xml"
+      />
     </a>
     </li>
     <div id="guideuploadprogress" class="progress progress-success progress-striped">

@@ -5,6 +5,7 @@ import Lang from 'viewer/mobile/util/lang';
 import cString from 'viewer/mobile/util/string';
 import constants from 'viewer/models/constants';
 import Infinite from 'viewer/mobile/util/infinite';
+import NumberFormat from 'numberformat';
 
 import 'can/map/define/';
 
@@ -42,6 +43,9 @@ export default Map.extend({
     can.each(traceMethods, function() {
       methods.push(function() {});
     });
+
+    // This replaces the jquery NumberFormatter plugin dependency in tlogic.js
+    methods.push(new NumberFormat());
 
     this._tLogic = tLogic.apply(this, methods);
 

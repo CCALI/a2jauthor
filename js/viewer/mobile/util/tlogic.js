@@ -9,7 +9,7 @@
 	return function(gGuide,
 		REG, CONST, decodeEntities, htmlEscape,
 		jsDate2days, today2jsDate, mdy2jsDate, days2jsDate, ismdy,
-		jquote, traceTag) {
+		jquote, traceTag, NumberFormat) {
 
 		gGuide = gGuide || window.gGuide;
 		REG = REG || window.REG;
@@ -23,7 +23,7 @@
 		jquote = jquote || window.jquote;
 		traceTag = traceTag || window.traceTag;
 		ismdy = ismdy || window.ismdy;
-
+		NumberFormat = NumberFormat;
 		/*******************************************************************************
 			A2J Author 5 * JusticeJustice * justicia * 正义 * công lý * 사법 * правосудие
 			All Contents Copyright The Center for Computer-Assisted Legal Instruction
@@ -36,7 +36,6 @@
 			Phase 1: Compile the CAJA script to spot syntax errors or undefined functions or variables.
 			Phase 2: If compile ie successful, execute the JS version.
 
-			Dependencies: jqhashtable-2.1.js, jquery.numberformatter-1.2.1.jsmin.js
 		******************************************************************************/
 
 
@@ -586,8 +585,9 @@
 		};
 
 
-		function niceNumber(val) { // Return number formatted for human eyes, with commas.
-			return $.formatNumber(val, {
+		function niceNumber(num) { // Return number formatted for human eyes, with commas.
+			const num2string = num.toString();
+			return NumberFormat.formatNumber(num2string, {
 				format: "#,###",
 				locale: "us"
 			});
@@ -601,20 +601,20 @@
 
 		// Default user defined functions used by A2J
 
-		if ($.formatNumber) {
-			gLogic.addUserFunction('Dollar', 1, function(val) { // Convert to dollar format, commas with 2 digits after 0.
-				return $.formatNumber(val, {
-					format: "#,###.00",
-					locale: "us"
-				});
+		gLogic.addUserFunction('Dollar', 1, function(num) { // Convert to dollar format, commas with 2 digits after 0.
+			const num2string = num.toString();
+			return NumberFormat.formatNumber(num2string,{
+				format: "#,###.00",
+				locale: "us"
 			});
-			gLogic.addUserFunction('DollarRound', 1, function(val) { // Convert to dollar format, commas and rounded to nearest dollar.
-				return $.formatNumber(Math.round(val), {
-					format: "#,##0",
-					locale: "us"
-				});
+		});
+		gLogic.addUserFunction('DollarRound', 1, function(num) { // Convert to dollar format, commas and rounded to nearest dollar.
+			const roundedNum2string = Math.round(num);
+			return NumberFormat.formatNumber(roundedNum2string, {
+				format: "#,###",
+				locale: "us"
 			});
-		}
+		});
 
 		gLogic.addUserFunction('Number', 1, function(val) { // Convert something to a number or 0.
 			return parseFloat(val);

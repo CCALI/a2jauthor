@@ -918,7 +918,8 @@
           "dependencies": {
             "source-map": {
               "version": "0.1.43",
-              "from": "source-map@>=0.1.43 <0.2.0"
+              "from": "source-map@0.1.43",
+              "resolved": "https://registry.npmjs.org/source-map/-/source-map-0.1.43.tgz"
             }
           }
         },
@@ -981,7 +982,8 @@
               "dependencies": {
                 "graceful-fs": {
                   "version": "4.1.9",
-                  "from": "graceful-fs@>=4.1.2 <5.0.0"
+                  "from": "graceful-fs@4.1.9",
+                  "resolved": "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.1.9.tgz"
                 },
                 "source-map": {
                   "version": "0.5.6",
@@ -992,7 +994,8 @@
             },
             "lodash": {
               "version": "4.16.4",
-              "from": "lodash@>=4.3.0 <5.0.0"
+              "from": "lodash@4.16.4",
+              "resolved": "https://registry.npmjs.org/lodash/-/lodash-4.16.4.tgz"
             },
             "minimatch": {
               "version": "2.0.10",
@@ -2780,7 +2783,8 @@
           "dependencies": {
             "wordwrap": {
               "version": "0.0.3",
-              "from": "wordwrap@>=0.0.2 <0.1.0"
+              "from": "wordwrap@0.0.3",
+              "resolved": "https://registry.npmjs.org/wordwrap/-/wordwrap-0.0.3.tgz"
             }
           }
         },
@@ -2801,7 +2805,8 @@
           "dependencies": {
             "async": {
               "version": "0.2.10",
-              "from": "async@>=0.2.6 <0.3.0"
+              "from": "async@0.2.10",
+              "resolved": "https://registry.npmjs.org/async/-/async-0.2.10.tgz"
             },
             "source-map": {
               "version": "0.5.6",
@@ -3525,6 +3530,11 @@
           "resolved": "https://registry.npmjs.org/lodash.assign/-/lodash.assign-4.2.0.tgz"
         }
       }
+    },
+    "numeral": {
+      "version": "1.5.3",
+      "from": "numeral@latest",
+      "resolved": "https://registry.npmjs.org/numeral/-/numeral-1.5.3.tgz"
     },
     "oauth-sign": {
       "version": "0.3.0",
@@ -4547,7 +4557,8 @@
           "dependencies": {
             "graceful-fs": {
               "version": "4.1.9",
-              "from": "graceful-fs@>=4.1.2 <5.0.0"
+              "from": "graceful-fs@4.1.9",
+              "resolved": "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.1.9.tgz"
             },
             "source-map": {
               "version": "0.5.6",

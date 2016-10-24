@@ -1,6 +1,10 @@
 <html>
   <head>
     <title>{{title}}</title>
+
+    {{! TODO: find a better way to locate the css bundle }}
+    {{! might be something to fix in done-css }}
+    <link rel="stylesheet" href="file://{{request.__cssBundlePath}}">
   </head>
   <body class="bootstrap-styles">
     <can-import from="caja/author/styles.less!" />

@@ -7,7 +7,6 @@
     "test": "npm run mocha",
     "build": "babel src --out-dir lib",
     "build:server": "steal-tools build",
-    "prestart": "npm run build",
     "start": "NODE_ENV=production node ./bin/www",
     "dev": "npm run build && node ./bin/www",
     "build:viewer-zip": "node ./bin/make-viewer-package",

@@ -2,11 +2,12 @@ const he = require('he');
 const url = require('url');
 const path = require('path');
 const ssr = require('done-ssr');
+const through = require('through2');
 const feathers = require('feathers');
 const wkhtmltopdf = require('wkhtmltopdf');
 const filenamify = require('../util/pdf-filename');
 const forwardCookies = require('../util/cookies').forwardCookies;
-const through = require('through2');
+const getCssBundlePath = require('../util/get-css-bundle-path');
 
 const debug = require('debug')('A2J:assemble');
 const router = feathers.Router();
@@ -82,6 +83,11 @@ router.post('/', checkPresenceOf, forwardCookies, function(req, res) {
   const onFailure = function(error) {
     res.status(500).send(error);
   };
+
+  // make the absolute path to the css bundle available in the request
+  // object so the template can use it to load it using a file uri,
+  // otherwise wkhtmltopdf won't load the styles at all.
+  req.__cssBundlePath = getCssBundlePath();
 
   const renderStream = render(req);
   renderStream.pipe(through(function(buffer){

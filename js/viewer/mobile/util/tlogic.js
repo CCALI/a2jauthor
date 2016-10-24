@@ -9,7 +9,7 @@
 	return function(gGuide,
 		REG, CONST, decodeEntities, htmlEscape,
 		jsDate2days, today2jsDate, mdy2jsDate, days2jsDate, ismdy,
-		jquote, traceTag, NumberFormat) {
+		jquote, traceTag, numeral) {
 
 		gGuide = gGuide || window.gGuide;
 		REG = REG || window.REG;
@@ -23,7 +23,7 @@
 		jquote = jquote || window.jquote;
 		traceTag = traceTag || window.traceTag;
 		ismdy = ismdy || window.ismdy;
-		NumberFormat = NumberFormat;
+		numeral = numeral;
 		/*******************************************************************************
 			A2J Author 5 * JusticeJustice * justicia * 正义 * công lý * 사법 * правосудие
 			All Contents Copyright The Center for Computer-Assisted Legal Instruction
@@ -587,10 +587,7 @@
 
 		function niceNumber(num) { // Return number formatted for human eyes, with commas.
 			const num2string = num.toString();
-			return NumberFormat.formatNumber(num2string, {
-				format: "#,###",
-				locale: "us"
-			});
+			return numeral(num2string).format('0,0');
 		}
 
 		var gLogic = new TLogic();
@@ -603,17 +600,11 @@
 
 		gLogic.addUserFunction('Dollar', 1, function(num) { // Convert to dollar format, commas with 2 digits after 0.
 			const num2string = num.toString();
-			return NumberFormat.formatNumber(num2string,{
-				format: "#,###.00",
-				locale: "us"
-			});
+			return numeral(num2string).format('0,0.00');
 		});
 		gLogic.addUserFunction('DollarRound', 1, function(num) { // Convert to dollar format, commas and rounded to nearest dollar.
 			const roundedNum2string = Math.round(num);
-			return NumberFormat.formatNumber(roundedNum2string, {
-				format: "#,###",
-				locale: "us"
-			});
+			return numeral(roundedNum2string).format('0,0');
 		});
 
 		gLogic.addUserFunction('Number', 1, function(val) { // Convert something to a number or 0.

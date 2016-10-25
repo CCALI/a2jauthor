@@ -64,7 +64,7 @@ let setVariable = function(variable, pages) {
   var getXMLValue = function(value) {
     if (varType === constants.vtDate) {
       // Ensure our m/d/y is converted to HotDocs d/m/y
-      value = cString.mdyTodmy(value);
+      value = cString.swapMonthAndDay(value);
     }
 
     var xmlV;

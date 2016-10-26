@@ -74,12 +74,12 @@ export default {
     return (s === null || typeof s === 'undefined') ? '' : s;
   },
 
-  mdyTodmy: function(DMY) {
-    // 7/1/05 convert internal month/day/year format to HotDocs day/month/year format.
+  swapMonthAndDay: function(stringDate) {
+    // LHI uses british dates in HotDocs. This converts Brit and US dates in both directions
     var result = '';
 
-    if (this.makestr(DMY) !== '') {
-      var parts = DMY.split('/');
+    if (this.makestr(stringDate) !== '') {
+      var parts = stringDate.split('/');
       result = parts[1] + '/' + parts[0] + '/' + parts[2];
     }
 

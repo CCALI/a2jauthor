@@ -6,10 +6,10 @@ import 'steal-mocha';
 describe('normalizePath', function() {
   const pathToGuide = '/userfiles/user/guide';
 
-  it('throws with invalid parameters', function() {
-    assert.throws(() => normalizePath(), /Invalid parameters/);
-    assert.throws(() => normalizePath('foo', null), /Invalid parameters/);
-    assert.throws(() => normalizePath(null, 'foo'), /Invalid parameters/);
+  it('returns empty string with invalid parameters', function() {
+    assert.equal(normalizePath(), '');
+    assert.equal(normalizePath('foo', null), '');
+    assert.equal(normalizePath(null, 'foo'), '');
   });
 
   it('keeps urls', function() {

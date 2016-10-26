@@ -1,5 +1,7 @@
 import can from 'can';
 import $ from 'jquery';
+import _isFunction from 'lodash/isFunction';
+import normalizePath from 'caja/viewer/util/normalize-path';
 
 import 'can/route/';
 import 'can/view/stache/';
@@ -20,24 +22,11 @@ can.stache.registerHelper('equal', function(a, b, options) {
   return a === b ? options.fn() : options.inverse();
 });
 
-can.stache.registerHelper('imagePath', function(prefix, src) {
-  src = typeof src === 'function' ? src() : src;
-  prefix = typeof prefix === 'function' ? prefix() : prefix;
+can.stache.registerHelper('normalizePath', function(fileDataUrl, path) {
+  path = _isFunction(path) ? path() : path;
+  fileDataUrl = _isFunction(fileDataUrl) ? fileDataUrl() : fileDataUrl;
 
-  if (!/\/\//.test(src)) {
-    return prefix + src;
-  }
-
-  return src;
-});
-
-can.stache.registerHelper('prefix', function(prefix, str) {
-  prefix = typeof prefix === 'function' ? prefix() : prefix;
-  str = typeof str === 'function' ? str() : str;
-
-  if (str && str.length) {
-    return prefix + str;
-  }
+  return normalizePath(fileDataUrl, path);
 });
 
 // override for setURL issue
@@ -58,5 +47,5 @@ $.expr[':'].regex = function(elem, index, match) {
   let regexFlags = 'ig';
   let regex = new RegExp(matchParams.join('').replace(/^\s+|\s+$/g, ''), regexFlags);
 
-  return regex.test(jQuery(elem)[attr.method](attr.property));
+  return regex.test($(elem)[attr.method](attr.property));
 };

@@ -11,7 +11,7 @@
 {{#if mState.showCredits}}
   <div filler can-click="hideCredits">
     {{#if interview.logoImage}}
-      <img src="{{imagePath mState.fileDataURL interview.logoImage}}" class="img-responsive"/>
+      <img src="{{normalizePath(mState.fileDataURL, interview.logoImage)}}" class="img-responsive"/>
     {{else}}
       <img src="{{joinBase 'viewer/images/logo_big.png'}}" class="img-responsive"/>
     {{/if}}

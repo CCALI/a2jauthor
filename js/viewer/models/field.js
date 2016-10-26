@@ -2,9 +2,16 @@ import $ from 'jquery';
 import Map from 'can/map/';
 import List from 'can/list/';
 import Answer from 'viewer/models/answer';
+import normalizePath from 'caja/viewer/util/normalize-path';
 
 import 'can/map/define/';
 
+/**
+ * @module {can.Map} Field
+ * @parent api-models
+ *
+ * A map representing a field of an interview page
+ */
 const Field = Map.extend({
   define: {
     options: {
@@ -23,31 +30,48 @@ const Field = Map.extend({
     }
   },
 
+  /**
+   * @function getOptions
+   * @return {jQuery.Deferred} A deferred object that resolves to a list
+   *
+   * List of options of a given field (e.g select box options)
+   *
+   * Some fields, like a select box, require a list of options for the
+   * user to pick. The options might be already available in the listData
+   * property or if listSrc is defined, an ajax request should be triggered to
+   * get the options from a different endpoint or an XML stored in the guide
+   * folder
+   */
   getOptions(guidePath) {
-    let _this = this;
-    let dfd = can.Deferred();
+    let dfd = $.Deferred();
+    let listSrc = this.attr('listSrc');
+    let listData = this.attr('listData');
 
-    if (this.attr('listData')) {
-      this.attr('options', this.attr('listData'));
-      dfd.resolve();
-    } else if (this.attr('listSrc')) {
-      let req = $.ajax({
+    if (!listData && !listSrc) {
+      return dfd.reject(new Error('Missing listData or listSrc values'));
+    }
+
+    if (listData) {
+      this.attr('options', listData);
+      return dfd.resolve(listData);
+    }
+
+    if (listSrc) {
+      let ajaxOptions = {
         dataType: 'text',
-        url: guidePath + this.attr('listSrc'),
-      });
-
-      let onSuccess = function(options) {
-        // strip anything before or after option tags
-        let formatted = options.replace(/<select>/ig, '').replace(/<\/select/ig, '');
-        _this.attr('options', formatted);
-        dfd.resolve();
+        url: normalizePath(guidePath, listSrc)
       };
 
-      let onError = function() {
-        dfd.reject();
-      };
-
-      req.then(onSuccess, onError);
+      $.ajax(ajaxOptions)
+        .then(options => {
+          // strip anything before or after option tags
+          let formatted = options.replace(/<select>/ig, '').replace(/<\/select/ig, '');
+          this.attr('options', formatted);
+          dfd.resolve(formatted);
+        })
+        .then(null, function(error) {
+          dfd.reject(error);
+        });
     }
 
     return dfd;

@@ -24,11 +24,11 @@
       {{/if}}
 
       {{#if textAudioURL}}
-        <audio {$src}="prefix(mState.fileDataURL, textAudioURL)" controls="controls"></audio>
+        <audio {$src}="normalizePath(mState.fileDataURL, textAudioURL)" controls="controls"></audio>
       {{/if}}
-      
+
       {{#if helpAudioURL}}
-        <audio {$src}="prefix(mState.fileDataURL, helpAudioURL)" controls="controls"></audio>
+        <audio {$src}="normalizePath(mState.fileDataURL, helpAudioURL)" controls="controls"></audio>
       {{/if}}
     </div><!-- bubble-content -->
 

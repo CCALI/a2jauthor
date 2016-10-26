@@ -17,7 +17,7 @@
         {(app-state)}="rState"
         {(interview)}="interview"
         {(show-demo-notice)}="showDemoNotice"
-        {{#if authorCourthouseImage}}courthouse-image="{{normalizePath(authorCourthouseImage)}}"{{/if}} />
+        {{#if authorCourthouseImage}}courthouse-image="{{normalizePath(mState.fileDataURL, authorCourthouseImage)}}"{{/if}} />
 
       <div class="app-content">
         <div id="sidewalk" class="sidewalk"></div>
@@ -38,7 +38,7 @@
 
       {{#if authorBrandLogo}}
         <div class="author-brand-logo">
-          <img src="{{normalizePath(authorBrandLogo)}}" alt="Author Brand Logo">
+          <img src="{{normalizePath(mState.fileDataURL, authorBrandLogo)}}" alt="Author Brand Logo">
         </div>
       {{/if}}
     {{/if}}

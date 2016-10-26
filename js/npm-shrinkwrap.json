@@ -3651,6 +3651,11 @@
       "from": "path@>=0.11.14 <0.12.0",
       "resolved": "https://registry.npmjs.org/path/-/path-0.11.14.tgz"
     },
+    "path-browserify": {
+      "version": "0.0.0",
+      "from": "path-browserify@latest",
+      "resolved": "https://registry.npmjs.org/path-browserify/-/path-browserify-0.0.0.tgz"
+    },
     "path-exists": {
       "version": "1.0.0",
       "from": "path-exists@>=1.0.0 <2.0.0",

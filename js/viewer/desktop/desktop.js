@@ -72,23 +72,9 @@ export default Component.extend({
   viewModel: DesktopViewerVM,
 
   helpers: {
-    eval: function(str) {
+    eval(str) {
       str = typeof str === 'function' ? str() : str;
       return this.attr('logic').eval(str);
-    },
-
-    // Keep fully qualified web path, otherwise default to file within
-    // interview's folder.
-    normalizePath(path) {
-      if (path.indexOf('http') === 0) return path;
-
-      let fileName = path.split('/').pop();
-      let filesPath = this.attr('mState.fileDataUrl');
-      let interviewPath = this.attr('interview.interviewPath');
-
-      return filesPath ?
-        filesPath + fileName :
-        interviewPath + fileName;
     }
   },
 

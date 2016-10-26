@@ -8,7 +8,7 @@
 
   <div class="col-lg-6">
     <button class="btn btn-default" ($click)="addElement('rich-text')">
-      Rich Tex
+      Rich Text
     </button>
   </div>
 </div>

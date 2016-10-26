@@ -6,7 +6,8 @@
     role="dialog"
     aria-hidden="true"
     class="modal fade"
-    aria-labelledby="pageModalLbl">
+    aria-labelledby="pageModalLbl"
+  >
 
     <div class="modal-dialog">
       <div class="modal-content">
@@ -35,14 +36,16 @@
           {{#if helpImageURL}}
             <img
               class="help-image"
-              {$src}="prefix(mState.fileDataURL, helpImageURL)">
+              {$src}="normalizePath(mState.fileDataURL, helpImageURL)"
+            >
           {{/if}}
 
           {{#if helpAudioURL}}
             <audio
               class="help-audio"
               controls="controls"
-              {$src}="prefix(mState.fileDataURL, helpAudioURL)">
+              {$src}="normalizePath(mState.fileDataURL, helpAudioURL)"
+            >
             </audio>
           {{/if}}
 
@@ -50,7 +53,8 @@
             <audio
               class="help-audio"
               controls="controls"
-              {$src}="prefix(mState.fileDataURL, textAudioURL)">
+              {$src}="normalizePath(mState.fileDataURL, textAudioURL)"
+            >
             </audio>
           {{/if}}
 
@@ -58,14 +62,16 @@
             {{#if isGif(helpVideoURL)}}
               <img
                 class="help-video"
-                {$src}="prefix(mState.fileDataURL, helpVideoURL)">
+                {$src}="normalizePath(mState.fileDataURL, helpVideoURL)"
+              >
             {{else}}
               <video
                 class="help-video"
                 controls="controls"
-                {$src}="prefix(mState.fileDataURL, helpVideoURL)">
+                {$src}="normalizePath(mState.fileDataURL, helpVideoURL)"
+              >
                 Sorry, your browser doesn't support embedded videos,
-                but don't worry, you can <a href="{{prefix(mState.fileDataURL, helpVideoURL)}}">download it</a>
+                but don't worry, you can <a href="{{normalizePath(mState.fileDataURL, helpVideoURL)}}">download it</a>
                 and watch it with your favorite video player!
               </video>
             {{/if}}

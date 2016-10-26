@@ -661,6 +661,7 @@ function has_a2j_ext($file) {
 }
 
 function has_a2j_or_xml_ext($file) {
+	$ext = pathinfo($file, PATHINFO_EXTENSION);
 	return (has_a2j_ext($file) || $ext == "xml");
 }
 

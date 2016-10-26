@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 import 'can/view/';
-import 'author/src/A2J_AuthorApp';
+import 'blueimp-file-upload/js/jquery.fileupload';
 
 /**
  * @module FileUploadAttr
@@ -24,9 +24,11 @@ can.view.attr('fileupload', function(el) {
   $el.on('inserted', function() {
     $el.fileupload({
       dataType: 'json',
-      url: CONST.uploadGuideURL,
+      url: 'CAJA_WS.php?cmd=uploadguide',
       done() {
-        setTimeout(signin, 500);
+        setTimeout(function() {
+          if (window.signin) window.signin();
+        }, 500);
       },
       progressall(e, data) {
         let progress = parseInt(data.loaded / data.total * 100, 10);

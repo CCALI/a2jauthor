@@ -15,6 +15,8 @@
 	 zip/publish should ensure guide.json also exists for each guide.xml.
  */
 
+require_once "../../vendor/Requests/library/Requests.php";
+Requests::register_autoloader();
 
 define('DATE_FORMAT',	  'Y-m-d-H-i-s'); // date stamp for file names
 define('DATE_FORMAT_UI', 'Y-m-d H:i:s'); // date stamp for human reading
@@ -369,7 +371,7 @@ switch ($command){
 
 		if ($res = $mysqli->query($sql)) {
 			$new_guide_folder_path = $user_guides_path . "Guide{$mysqli->insert_id}";
-			process_uploaded_guide_file($new_guide_folder_path);
+			process_uploaded_guide_file($mysqli->insert_id, $new_guide_folder_path);
 		} else {
 			fail_and_exit(500, 'Uh-oh, something went wrong saving the guide');
 		}
@@ -566,7 +568,7 @@ function cleanup_failed_guide_upload() {
 	}
 }
 
-function process_uploaded_guide_file($destination_path) {
+function process_uploaded_guide_file($guide_id, $destination_path) {
 	global $mysqli;
 
 	$file_data = $_FILES['interview'];
@@ -576,6 +578,7 @@ function process_uploaded_guide_file($destination_path) {
 	if ($mime_type == 'application/zip') {
 		unzip($temp_file_path, $destination_path);
 		find_guide_file_and_rename($destination_path);
+		create_guide_templates($guide_id, $destination_path);
 	} else {
 		$filename = $file_data['name'];
 
@@ -627,6 +630,56 @@ function find_guide_file_and_rename($path) {
 	}
 }
 
+/**
+ * Register uploaded guide templates through templates API
+ *
+ * The zip file being uploaded might contain template json files, even though
+ * the templates will be in the expected location on the filesystem, the templates
+ * API won't "see them" when the author visits the templates tab.
+ *
+ * The reason being, at the root of the user folder where guides are stored,
+ * there is a file called "templates.json", that file serves as an index to map
+ * a guideId to a templateId, when the list of templates is requested by the
+ * client that index file is read and then API locates each template json file
+ * found in said index file.
+ *
+ * The zip upload process does not update the "templates.json" file, so, in
+ * order to "register" the uploaded templates, PHP will send POST requests with
+ * the content of the individual template json files as the payload, then the
+ * templates API (Node) will take care of updating the "templates.json", create
+ * the right template ids and write new JSON files
+ */
+function create_guide_templates($guide_id, $guide_folder_path) {
+	if (($files = scandir($guide_folder_path)) !== FALSE) {
+		$request_url = "http://127.0.0.1/api/template";
+		$request_headers = array("Content-Type" => "application/json");
+		$templates = array_values(array_filter($files, "is_template_file"));
+
+		try {
+			foreach ($templates as $template) {
+				$file_path = "{$guide_folder_path}/{$template}";
+				$json_file = file_get_contents($file_path);
+				$json_data = json_decode($json_file);
+
+				// update guideId and remove the original templateId
+				unset($json_data->templateId);
+				$json_data->guideId = strval($guide_id);
+
+				// fire the request to create the template through the NODE api
+				Requests::post($request_url, $request_headers, json_encode($json_data));
+
+				// delete the uploaded template, the NODE api will create a new file
+				unlink($file_path);
+			}
+		} catch (Exception $e) {
+			trace("Caught exception: ", $e->getMessage(), "\n");
+		}
+	} else {
+		cleanup_failed_guide_upload();
+		fail_and_exit(422, "Unable to open .zip file");
+	}
+}
+
 function get_guide_title_from_xml($xml) {
 	$guide_xml = new SimpleXMLElement($xml);
 
@@ -663,6 +716,15 @@ function has_a2j_ext($file) {
 function has_a2j_or_xml_ext($file) {
 	$ext = pathinfo($file, PATHINFO_EXTENSION);
 	return (has_a2j_ext($file) || $ext == "xml");
+}
+
+/**
+ * Check whether the filename is an A2J template file
+ *
+ * Template filenames start with the word "template" followed by a numerical id
+ */
+function is_template_file($filename) {
+	return (preg_match("/\btemplate\d+.json/", $filename, $matches) === 1);
 }
 
 /**

@@ -25,7 +25,7 @@
       </div>
 
       <div class="panel-body" style="{{fontProperties}}">
-        <h3>{{loopTitle}}</h3>
+        {{{ showRepeatLoopTitle() }}}
 
         {{#is displayType "table"}}
           {{> loop-table-tpl }}

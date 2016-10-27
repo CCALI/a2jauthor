@@ -140,6 +140,13 @@ export default Component.extend({
     displayTypeText() {
       let type = this.attr('displayType');
       return displayTypeMap[type];
+    },
+
+    showRepeatLoopTitle() {
+      let title = this.attr('loopTitle');
+      let tag = this.attr('loopTitleTag');
+
+      return `<${tag}>${title}</${tag}>`;
     }
   }
 });

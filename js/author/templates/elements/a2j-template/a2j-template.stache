@@ -116,6 +116,7 @@
           {(table-columns)}="state.tableColumns"
           {(loop-variable)}="state.loopVariable"
           {variables-list}="guide.variablesList"
+          {(loop-title-tag)}="state.loopTitleTag"
           {(loop-rich-text)}="state.loopRichText"
           {(list-style-type)}="state.listStyleType"
           {(repeat-each-in-one-list)}="state.repeatEachInOneList"

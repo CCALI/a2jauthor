@@ -101,13 +101,23 @@ export default Map.extend({
     },
 
     /**
-     * @property {String} repeatLoop.ViewModel.prototype.loopType loopType
+     * @property {String} repeatLoop.ViewModel.prototype.loopTitle loopTitle
      * @parent repeatLoop.ViewModel
      *
      * The title shown at the top of the component's content.
      */
     loopTitle: {
       value: 'This is the loop title'
+    },
+
+    /**
+     * @property {String} repeatLoop.ViewModel.prototype.loopTitleTag loopTitleTag
+     * @parent repeatLoop.ViewModel
+     *
+     * Control the size of the title shown at the top of the component's content.
+     */
+    loopTitleTag: {
+      value: 'h3'
     },
 
     /**

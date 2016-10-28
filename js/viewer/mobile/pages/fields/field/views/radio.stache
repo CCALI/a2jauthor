@@ -5,6 +5,7 @@
 			id="{{label}}"
 			name="{{name}}"
 			{($value)}="value"
+			{{#if shouldBeChecked}}checked{{/if}}
 			class="a2j-radio-button"
 			($change)="validateField"/>
 

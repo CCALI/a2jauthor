@@ -68,6 +68,40 @@ export let FieldVM = Map.extend({
     },
 
     /**
+     * @property {Boolean} field.ViewModel.prototype.shouldBeChecked shouldBeChecked
+     * @parent field.ViewModel
+     *
+     * Whether a Radio Button should be checked based on saved answers
+     *
+     */
+    shouldBeChecked: {
+      get: function() {
+        let name = this.attr('field.name').toLowerCase();
+        if (name) {
+          let value = this.attr('field.value');
+          let answer = this.attr('logic.interview.answers').attr(name).values[1];
+          return (value === answer);
+        }
+      }
+    },
+
+   /**
+     * @property {String} field.ViewModel.prototype.savedGenderValue savedGenderValue
+     * @parent field.ViewModel
+     *
+     * Used to determine if gender radio button should be checked based on saved answer
+     *
+     */
+    savedGenderValue: {
+      get: function() {
+        let name = this.attr('field.name').toLowerCase();
+        if (name) {
+          return this.attr('logic.interview.answers').attr(name).values[1];
+        }
+      }
+    },
+
+    /**
      * @property {Boolean} field.ViewModel.prototype.supportsNativeDateInput supportsNativeDateInput
      * @parent field.ViewModel
      *

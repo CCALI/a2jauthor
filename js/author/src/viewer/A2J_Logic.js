@@ -60,7 +60,7 @@ TLogic.prototype.pageExists = function(pageName)
 };
 
 
-TLogic.prototype.pageFindReferences = function(CAJAScript,findName,newName)
+TLogic.prototype.pageFindReferences = function(CAJAScript,findName)
 {	// Find/replace all GOTO findName with newName or just return if found.
 	var result={};
 	result.add=false;
@@ -135,7 +135,7 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 		// Ideally we don't tokenize by lines.
 		// TODO support multi-line expressions too.
 		if (exp.indexOf('"')>=0) {
-			if (exp.split('"').length % 2 == 0)
+			if (exp.split('"').length % 2 === 0)
 			{	// Warning: need to accept embedded quote?
 				var noquote=true;
 				var l2;
@@ -378,39 +378,6 @@ TLogic.prototype.evalLogicHTML2 = function(html)
 	//trace('evalLogicHTML2',script.html);
 	return script;
 };
-/*
-TLogic.prototype.evalLogicHTMLFull = function(html)
-{	// 2014-08-07 Parse for « » and convert into full JS chunk.
-	// INCOMPLETE
-	trace('evalLogicHTMLFull',html);
-	var parts=html.split("»");
-	if (parts.length > 0)
-	{
-		var p;
-		var logic='';
-		for (p=0;p<parts.length;p++)
-		{
-			var parts2 = parts[p].split("«");
-			html =parts2[0];
-			if (html!=='') {
-				logic += ('write "'+html.split("\n").join(" ")+ '"' +'\n');
-			}
-			if (parts2.length>1)
-			{
-				var block =  parts2[1]  ;
-				logic += (block + '\n');
-			}
-		}
-
-		script =  gLogic.translateCAJAtoJS(logic);
-		script.html = logic;
-	}
-	else{
-		script={js:[],errors:[],html:html};
-	}
-	trace('evalLogicHTMLFull',html);
-	return script;
-};*/
 
 
 TLogic.prototype.hds = function(a2j4)
@@ -733,17 +700,6 @@ gLogic.addUserFunction('HasAnswered',1,function(val)
 	return  (typeof val ==='undefined' || val === null || val === '')===false;
 });
 
-gLogic.addUserFunction('Sum',1,function(valArray)
-{	// Return true if variable answerd (actually if it's not ''.
-	var sum=0;
-	if (  valArray instanceof Array) {
-		var i;
-		for (i=1;i<valArray.length;i++) {
-			sum += parseFloat(valArray[i]);
-		}
-	}
-	return sum;
-});
 
 gLogic.addUserFunction('Age',1,function( val )
 {	// 2014-07-30 Return age in years

@@ -519,14 +519,16 @@
 			return;
 		};
 
-		TLogic.prototype._CF = function(fName, val) {
+		TLogic.prototype._CF = function(fName) {
+			const args = [].slice.call(arguments);
+			const params = args.slice(1);
 			//this.indent++;
 			//this.traceLogic("Call function "+f);
 			var f = this.userFunctions[fName.toLowerCase()];
 			if (!f) {
 				return 'Unknown function "' + fName + '"';
 			} else {
-				return f.func(val);
+				return f.func.apply(null, params);
 			}
 			//this.indent--;
 		};
@@ -615,14 +617,17 @@
 			return (typeof val === 'undefined' || val === null || val === '') === false;
 		});
 
-		gLogic.addUserFunction('Sum', 1, function(valArray) { // Sum
+		gLogic.addUserFunction('Sum', 1, function(num) { // Sum
+			const args = [].slice.call(arguments);
 			var sum = 0;
-			if (valArray instanceof Array) {
-				var i;
-				for (i = 1; i < valArray.length; i++) {
-					sum += parseFloat(valArray[i]);
+
+			for (var i = 0; i < args.length; i++) {
+				const val = parseFloat(args[i]);
+				if (!isNaN(val)) {
+					sum += val;
 				}
 			}
+
 			return sum;
 		});
 

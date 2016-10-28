@@ -2,10 +2,10 @@
   <div class="form-group {{#if field.hasError}}has-error{{/if}}">
     <label class="control-label" for="{{label}}">{{{ eval(label, repeatVarValue) }}}</label>
 
-    <input type="radio" id="m" name="gender" value="Male" ($change)="validateField"/>
+    <input type="radio" id="m" name="gender" value="Male" {{#is savedGenderValue "Male"}}checked{{/is}} ($change)="validateField"/>
     <label for="m">{{i18n("Male")}}</label>
 
-    <input type="radio" id="f" name="gender" value="Female" ($change)="validateField"/>
+    <input type="radio" id="f" name="gender" value="Female" {{#is savedGenderValue "Female"}}checked{{/is}} ($change)="validateField"/>
     <label for="f">{{i18n("Female")}}</label>
   </div>
 

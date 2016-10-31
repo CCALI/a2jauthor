@@ -192,37 +192,44 @@ switch ($command){
 		$json=$_REQUEST['json'];//01/14/2015
 
 		$res=$mysqli->query("select * from guides where gid=$gid and editoruid=$userid");
+
 		if ($row=$res->fetch_assoc()){
-		  $result['info']="Will update!";
-		  // Rename existing auto name file with a date time stamp and save update to autoname
-		  $oldtitle=GUIDES_DIR.$row['title'];
-		  $filename=GUIDES_DIR.$row['filename'];
-		  $path_parts = pathinfo($filename);
-		  $filedir = $path_parts['dirname'];
-		  $filenameonly=$path_parts['filename'];
-		  if (file_exists($filename))
-		  {
-				//trace(filemtime($filename));
-				$verdir = $filedir.'/Versions';
-				if (!file_exists($verdir))
-				{
-				  mkdir($verdir);
-				}
-				$revname=$verdir.'/'.$filenameonly.' Version_'.date(DATE_FORMAT,filemtime($filename)).'.xml';
-				rename($filename, $revname);
-				if ($title!="" && $title != $oldtitle)
-				{
-					$sql="update guides set title='".$mysqli->real_escape_string($title)."' where gid = $gid";
-					$res=$mysqli->query($sql);
-				}
-			}
-			trace('saving to '.$filename);
-			file_put_contents($filename,$xml);
-			file_put_contents(replace_extension($filename,'json'),$json);//01/14/2015
-		}
-		else
-			$err="No permission to update this guide";
-		break;
+            $result['info']="Will update!";
+
+            // Rename existing auto name file with a date time stamp and save update to autoname
+            $oldtitle=GUIDES_DIR.$row['title'];
+            $filename=GUIDES_DIR.$row['filename'];
+            $path_parts = pathinfo($filename);
+            $filedir = $path_parts['dirname'];
+            $filenameonly=$path_parts['filename'];
+
+            // never rename the GUIDES_DIR
+            if (file_exists($filename) && !is_dir($filename) && $filename !== GUIDES_DIR) {
+                //trace(filemtime($filename));
+                $verdir = $filedir.'/Versions';
+
+                if (!file_exists($verdir)) {
+                    mkdir($verdir);
+                }
+
+                $revname=$verdir.'/'.$filenameonly.' Version_'.date(DATE_FORMAT,filemtime($filename)).'.xml';
+                rename($filename, $revname);
+
+                if ($title!="" && $title != $oldtitle) {
+                    $sql="update guides set title='".$mysqli->real_escape_string($title)."' where gid = $gid";
+                    $res=$mysqli->query($sql);
+                }
+
+                trace('saving to '.$filename);
+                file_put_contents($filename, $xml);
+                file_put_contents(replace_extension($filename, 'json'), $json);//01/14/2015
+            }
+        }
+        else {
+            $err="No permission to update this guide";
+        }
+
+        break;
 
 	case 'guidearchive':
 		// 2014-08-26 archive the guide (only if user matches guide's editor
@@ -373,7 +380,7 @@ switch ($command){
 			$new_guide_folder_path = $user_guides_path . "Guide{$mysqli->insert_id}";
 			process_uploaded_guide_file($mysqli->insert_id, $new_guide_folder_path);
 		} else {
-			fail_and_exit(500, 'Uh-oh, something went wrong saving the guide');
+			fail_and_exit(500, 'There has been an error saving your A2J Guided Interview. Please try again or contact webmaster@a2jauthor.org');
 		}
 
 		$new_guide_id = $mysqli->insert_id;
@@ -523,6 +530,7 @@ echo $return;
 
 function check_for_upload_errors($upload_name) {
 	$upload_errors = [
+		0 => NULL,
 		1 => 'The uploaded file exceeds the upload_max_filesize',
 		2 => 'The uploaded file exceeds the MAX_FILE_SIZE value in the HTML form',
 		3 => 'The uploaded file was only partially uploaded',
@@ -537,7 +545,7 @@ function check_for_upload_errors($upload_name) {
 
 	switch ($error_code) {
 		case UPLOAD_ERR_OK:
-			break; //noop
+			break; // This error code means that the file uploaded with success
 
 		case UPLOAD_ERR_INI_SIZE:
 		case UPLOAD_ERR_FORM_SIZE:
@@ -681,16 +689,22 @@ function create_guide_templates($guide_id, $guide_folder_path) {
 }
 
 function get_guide_title_from_xml($xml) {
-	$guide_xml = new SimpleXMLElement($xml);
+	libxml_use_internal_errors(TRUE);
+	$guide_xml = simplexml_load_string($xml);
 
-	$result = $guide_xml->TITLE; // A2J 4 format
+	if ($guide_xml === FALSE) {
+		cleanup_failed_guide_upload();
+		fail_and_exit(422, "The A2J Guided Interview you are attempting to upload is in an invalid `.xml` file");
+	} else {
+		$result = $guide_xml->TITLE; // A2J 4 format
 
-	// A2J 5 would be $guide_xml->INFO->TITLE;
-	if ($result == '') {
-		$result = $guide_xml->INFO->TITLE;
+		// A2J 5 would be $guide_xml->INFO->TITLE;
+		if ($result == '') {
+			$result = $guide_xml->INFO->TITLE;
+		}
+
+		return $result;
 	}
-
-	return $result;
 }
 
 function fail_and_exit($http_code, $message) {

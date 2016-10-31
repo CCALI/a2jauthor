@@ -12,6 +12,11 @@ insert_final_newline = true
 [*.md]
 trim_trailing_whitespace = false
 
+# PHP PSR-2 Coding Standards
 [*.php]
-indent_style = tab
-trim_trailing_whitespace = false
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4

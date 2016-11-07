@@ -26,6 +26,11 @@ $result=array();
 $err="";
 $mysqli="";
 $drupaldb="";
+
+//used in create_guide_templates
+$http_host = $_SERVER['HTTP_HOST'];
+$http_protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != '') == 'https' ? 'https' : 'http';
+
 require "../../../CONFIG.php";
 //check connection
 if (mysqli_connect_errno()) {
@@ -658,8 +663,11 @@ function find_guide_file_and_rename($path) {
  * the right template ids and write new JSON files
  */
 function create_guide_templates($guide_id, $guide_folder_path) {
+	global $http_host;
+	global $http_protocol;
+
 	if (($files = scandir($guide_folder_path)) !== FALSE) {
-		$request_url = "http://127.0.0.1/api/template";
+		$request_url = "{$http_protocol}://{$http_host}/api/template";
 		$request_headers = array("Content-Type" => "application/json");
 		$templates = array_values(array_filter($files, "is_template_file"));
 

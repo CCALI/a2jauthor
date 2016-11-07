@@ -299,11 +299,9 @@
 
       <button id="guideZIP" class="btn btn-default"><span class="glyphicon-file-archive"></span> Download ZIP</button>
       <button id="guideDownload" class="btn btn-default"><span class="glyphicon-folder-download"></span> Download A2J</button>
-      <button id="guidePublish" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to Public URL</button>
       <hr>
       <p>To publish to testing servers, use the buttons below</p>
       <button id="guideZIPLHIQA" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to RebuildQA</button>
-      <button id="guideZIPTESTCALI" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to CALI Demo</button>
     </div><!-- id="tabsUpload" -->
   </div>
 

@@ -414,10 +414,7 @@ switch ($command){
 		break;
 
 	case 'guideZIPLHIQA':
-	case 'guideZIPTESTCALI':
-
-	// enable below for CodeBug php debugging
-	// xdebug_break();
+	case 'guideZIPTESTCALI': // 11-01-26 This button/case removed from app.stache during public testing
 
 	// 08/10/2015 ZIP guide, POST to LHI, return LHI's result.
 	// The zip code is identical to the 'guidezip' handler above. Extra steps are below.
@@ -466,7 +463,7 @@ switch ($command){
 		// The new window is where author completes LHI process completely separate from A2J Author site.
 		break;
 
-	case 'guidepublish':
+	case 'guidepublish': // 11-01-26 This button/case removed from app.stache during public testing
 		//### Publish specified existing guide to custom unique public folder.
 		$oldgid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$res=$mysqli->query("select * from guides where gid=$oldgid  and (isPublic=1  or isFree=1  or editoruid=$userid)");

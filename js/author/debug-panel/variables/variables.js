@@ -75,7 +75,9 @@ export default Component.extend({
             }
           }
 
-          interview.attr('answers', answers);
+          // This updates current answers keeping single source
+          // of truth for A2J scripts and canjs components
+          interview.attr('answers').attr(answers);
         };
 
         reader.readAsText(file);

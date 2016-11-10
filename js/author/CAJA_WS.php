@@ -27,10 +27,6 @@ $err="";
 $mysqli="";
 $drupaldb="";
 
-//used in create_guide_templates
-$http_host = $_SERVER['HTTP_HOST'];
-$http_protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != '') == 'https' ? 'https' : 'http';
-
 require "../../../CONFIG.php";
 //check connection
 if (mysqli_connect_errno()) {
@@ -660,12 +656,13 @@ function find_guide_file_and_rename($path) {
  * the right template ids and write new JSON files
  */
 function create_guide_templates($guide_id, $guide_folder_path) {
-	global $http_host;
-	global $http_protocol;
 
 	if (($files = scandir($guide_folder_path)) !== FALSE) {
+		$http_protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != '') == 'https' ? 'https' : 'http';
+		$http_host = $_SERVER['HTTP_HOST'];
 		$request_url = "{$http_protocol}://{$http_host}/api/template";
-		$request_headers = array("Content-Type" => "application/json");
+		$request_cookie = isset($_COOKIE) ? createCookie($_COOKIE) : "";
+		$request_headers = array("Content-Type" => "application/json", "Cookie" => $request_cookie);
 		$templates = array_values(array_filter($files, "is_template_file"));
 
 		try {
@@ -691,6 +688,17 @@ function create_guide_templates($guide_id, $guide_folder_path) {
 		cleanup_failed_guide_upload();
 		fail_and_exit(422, "Unable to open .zip file");
 	}
+}
+
+function createCookie ($cookie_array) {
+	$parts = array();
+
+	foreach($cookie_array as $name => $value) {
+		$parts[] = sprintf('%s=%s', $name, $value);
+	}
+	$cookie_string = implode('; ', $parts);
+
+	return $cookie_string;
 }
 
 function get_guide_title_from_xml($xml) {

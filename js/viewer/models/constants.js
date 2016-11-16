@@ -63,7 +63,7 @@ export default {
   MAXFIELDS: 9,
   // Reasonable limit on buttons per question
   MAXBUTTONS: 3,
-  MAXSTEPS: 12,
+  MAXSTEPS: 13,
   kMinYear: 1900,
 
   // 11/27/07 1.7.7 Ordering options for lists such as a county list

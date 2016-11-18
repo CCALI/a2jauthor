@@ -169,7 +169,10 @@ export default {
           break;
 
         case 'datevalue':
-          guide.varSet(varName, $(this).find('DateValue').html());
+        // HotDocs dates in british format while A2J expects US format
+          let britDate = $(this).find('DateValue').html();
+          let usDate = cString.swapMonthAndDay(britDate);
+          guide.varSet(varName, usDate);
           break;
 
         case 'mcvalue':

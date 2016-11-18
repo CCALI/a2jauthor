@@ -2,7 +2,6 @@ import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './variables.stache!';
 import parser from 'viewer/mobile/util/parser';
-import cString from 'viewer/mobile/util/string';
 
 let VariablesTableVM = Map.extend({
   clearAnswers() {
@@ -56,24 +55,6 @@ export default Component.extend({
 
         reader.onload = () => {
           const answers = parser.parseJSON(reader.result, vars);
-
-          // Saved answers for LHI HotDocs uses british style dates dd/mm/yyyy
-          // convert those back to US dates mm/dd/yyyy
-          Object.keys(answers).forEach(findDateType);
-
-          function findDateType(answer) {
-            if (answers[answer].type === 'Date') {
-              let values = answers[answer].values;
-              values.forEach(convertToUSDate);
-            }
-          }
-
-          function convertToUSDate(britDate, index, valuesArray) {
-            if (britDate) {
-              let usDate = cString.swapMonthAndDay(britDate);
-              valuesArray[index] = usDate;
-            }
-          }
 
           // This updates current answers keeping single source
           // of truth for A2J scripts and canjs components

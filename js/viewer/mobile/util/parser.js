@@ -190,8 +190,12 @@ export default {
               case 'textvalue':
               case 'numvalue':
               case 'tfvalue':
-              case 'datevalue':
                 guide.varSet(varName, $(this).html(), i + 1);
+                break;
+              case 'datevalue':
+                let britDate = $(this).html();
+                let usDate = cString.swapMonthAndDay(britDate);
+                guide.varSet(varName, usDate, i + 1);
                 break;
 
               case 'mcvalue':

@@ -126,11 +126,6 @@ export default Component.extend({
         });
         vm.attr('rState.page', '__error');
       } else if (gotoPage && gotoPage.length) {
-        let traceLogic = {};
-        let counter = logic.attr('infinite._counter');
-        let traceLogicMsg =  (counter === 0) ? 'Setting repeat variable to 1' : 'Incrementing repeat variable';
-        traceLogic['infinite-' + counter] = { msg: traceLogicMsg };
-        this.viewModel.attr('traceLogic').push(traceLogic);
 
         logic.attr('infinite').inc();
         vm._setPage(p, gotoPage);

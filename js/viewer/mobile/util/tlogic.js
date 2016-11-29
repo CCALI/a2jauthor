@@ -618,14 +618,17 @@
 			return (typeof val === 'undefined' || val === null || val === '') === false;
 		});
 
-		gLogic.addUserFunction('Sum', 1, function(num) { // Sum
-			const args = [].slice.call(arguments);
+		gLogic.addUserFunction('Sum', 1, function(readableListString) {
+			// Sum needs an array of number values from the friendly display string
 			var sum = 0;
 
-			for (var i = 0; i < args.length; i++) {
-				const val = parseFloat(args[i]);
-				if (!isNaN(val)) {
-					sum += val;
+			if (readableListString && typeof readableListString === "string") {
+				var answerValues = readableListString.replace('and', ',').split(',');
+				for (var i = 0; i < answerValues.length; i++) {
+					const val = parseFloat(answerValues[i]);
+					if (!isNaN(val)) {
+						sum += val;
+					}
 				}
 			}
 

@@ -161,6 +161,12 @@ export default Map.extend({
     this.traceButtonClicked(button.attr('label'));
     this.validateAllFields();
 
+    // Set answers for buttons with values
+    if (button.name) {
+      const buttonAnswer = this.interview.answers.attr(button.name.toLowerCase());
+      buttonAnswer.attr('values.1', button.value);
+    }
+
     const anyFieldWithError = _some(fields, f => f.attr('hasError'));
 
     if (!anyFieldWithError) {
@@ -204,12 +210,6 @@ export default Map.extend({
 
       const gotoPage = logic.attr('gotoPage');
       const logicPageisNotEmpty = _isString(gotoPage) && gotoPage.length;
-
-      // Set answers for buttons with values
-      if (button.name) {
-        const buttonAnswer = this.interview.answers.attr(button.name.toLowerCase());
-        buttonAnswer.values.push(button.value);
-      }
 
       // this means the logic After has overriden the destination page, we
       // should navigate to this page instead of the page set by `button.next`.

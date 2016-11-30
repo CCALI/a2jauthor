@@ -353,7 +353,7 @@ export default Map.extend({
         }
 
         logic.varSet(repeatVar, 1);
-        traceLogicMsg[repeatVar + '-0'] = { msg: 'Setting repeat variable to 1' };
+        traceLogicMsg[repeatVar + '-0'] = { msg: 'Setting [' + repeatVar + '] to 1' };
         traceLogic.push(traceLogicMsg);
         break;
 
@@ -361,7 +361,7 @@ export default Map.extend({
         const value = logic.varGet(repeatVar);
 
         logic.varSet(repeatVar, value + 1);
-        traceLogicMsg[repeatVar + '-' + value] = { msg: 'Incrementing repeat variable' };
+        traceLogicMsg[repeatVar + '-' + value] = { msg: 'Incrementing [' + repeatVar + '] to ' + (value + 1) };
         traceLogic.push(traceLogicMsg);
         break;
     }

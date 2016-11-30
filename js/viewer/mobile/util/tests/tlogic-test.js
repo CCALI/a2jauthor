@@ -5,24 +5,18 @@ let testLogic = new Tlogic();
 
 describe('Tlogic', function() {
 
-	it('SUM returns passed value if one param', function() {
-		let totalValue = testLogic._CF("SUM", 22);
-		assert.equal(totalValue, 22);
+	it('SUM converts readableList display string and totals values', function() {
+		let totalValue = testLogic._CF("SUM", "100, 200 and 300");
+		assert.equal(totalValue, 600);
 	});
 
-	it('SUM returns the total of an array of values', function() {
-		let totalValue = testLogic._CF("SUM", 22, 18, 10);
-		assert.equal(totalValue, 50);
+	it('SUM ignores non-number values in the readableList', function() {
+		let totalValue = testLogic._CF("SUM", "blue, 4, 8 and 12");
+		assert.equal(totalValue, 24);
 	});
 
-	it('SUM handles string numbers', function() {
-		let totalValue = testLogic._CF("SUM", "8", 4, "32");
-		assert.equal(totalValue, 44);
+	it('SUM handles non string values, returning 0 by default', function() {
+		let totalValue = testLogic._CF("SUM", null);
+		assert.equal(totalValue, 0);
 	});
-
-	it('SUM ignores non-number values', function() {
-		let totalValue = testLogic._CF("SUM", "8", 4, "blue");
-		assert.equal(totalValue, 12);
-	});
-
 });

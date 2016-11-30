@@ -149,7 +149,7 @@ describe('<a2j-pages>', () => {
       assert(logicStub.varSet.calledWith('Repeat', 1), 'Sets repeatVar to 1');
 
       assert.deepEqual(vm.attr('traceLogic').attr(), [{
-        'Repeat-0': { msg: 'Setting repeat variable to 1' }
+        'Repeat-0': { msg: 'Setting [Repeat] to 1' }
       }], 'Should log repeatVar initialization');
 
       logicStub.varGet.returns(1);
@@ -159,9 +159,9 @@ describe('<a2j-pages>', () => {
       assert(logicStub.varSet.calledWith('Repeat', 2), 'Sets repeatVar to 2');
 
       assert.deepEqual(vm.attr('traceLogic').attr(), [{
-        'Repeat-0': { msg: 'Setting repeat variable to 1' }
+        'Repeat-0': { msg: 'Setting [Repeat] to 1' }
       }, {
-        'Repeat-1': { msg: 'Incrementing repeat variable' }
+        'Repeat-1': { msg: 'Incrementing [Repeat] to 2' }
       }], 'Should log repeatVar increment');
     });
 
@@ -207,33 +207,6 @@ describe('<a2j-pages>', () => {
         assert.deepEqual(vm.attr('traceLogic').attr(), [{
           'codeBefore': { format: 'info', msg: 'Logic Before Question'}
         }], 'logic before trace');
-      });
-
-      it('Setting repeat varibale to 1', (done) => {
-        vm.attr('traceLogic').bind('change', function handler() {
-          vm.attr('traceLogic').unbind('change', handler);
-          assert.deepEqual(vm.attr('traceLogic').attr(), [{
-            'infinite-0': { msg: 'Setting repeat variable to 1'}
-          }], 'Setting repeat varibale to 1');
-          done();
-        });
-
-        logicStub.attr('gotoPage', 'bar');
-        vm.attr('rState.page', 'foo');
-      });
-
-      it('Incrementing repeat variable', (done) => {
-        vm.attr('traceLogic').bind('change', function handler() {
-          vm.attr('traceLogic').unbind('change', handler);
-          assert.deepEqual(vm.attr('traceLogic').attr(), [{
-            'infinite-1': { msg: 'Incrementing repeat variable'}
-          }], 'Incrementing repeat variable');
-          done();
-        });
-
-        logicStub.attr('infinite._counter', 1);
-        logicStub.attr('gotoPage', 'bar');
-        vm.attr('rState.page', 'foo');
       });
 
       it('Possible infinte loop', (done) => {

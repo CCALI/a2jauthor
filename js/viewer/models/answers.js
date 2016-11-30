@@ -56,8 +56,9 @@ export default Model.extend({}, {
 
     if (typeof varIndex === 'undefined' || varIndex === null || varIndex === '') {
       if (v.repeating) {
-        // Repeating variable without an index returns array of all values
+        // Repeating variable without an index returns a readable list for display
         return readableList(v.values, this.attr('lang'));
+
       }
 
       varIndex = 1;
@@ -134,8 +135,11 @@ export default Model.extend({}, {
         break;
     }
 
-    // Set value but only trace if the value actually is different.
-    if (varIndex === 0) {
+    // Reset all values or set new single value
+    if (varIndex === 0 && varVal === null) {
+      v.attr('values', [null]);
+    }
+    else if (varIndex === 0) {
       v.attr('values.1', varVal);
     }
     else {

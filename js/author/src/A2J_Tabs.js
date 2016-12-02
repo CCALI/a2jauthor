@@ -92,16 +92,22 @@ function getTOCStepPages(includePages, includePops, includeSpecial) {
 
   // Special branch destinations.
   if (includeSpecial) {
-    var branchIDs = [
-      CONST.qIDNOWHERE,
-      CONST.qIDSUCCESS,
-      CONST.qIDFAIL,
-      CONST.qIDEXIT,
-      CONST.qIDBACK,
-      CONST.qIDRESUME,
-      CONST.qIDASSEMBLE,
-      CONST.qIDASSEMBLESUCCESS
-    ];
+    if (includeSpecial === "noWhereOnly") { // Exit Point in Steps only allows 'NoWhere'
+      var branchIDs = [
+        CONST.qIDNOWHERE
+      ];
+    } else {
+      var branchIDs = [
+        CONST.qIDNOWHERE,
+        CONST.qIDSUCCESS,
+        CONST.qIDFAIL,
+        CONST.qIDEXIT,
+        CONST.qIDBACK,
+        CONST.qIDRESUME,
+        CONST.qIDASSEMBLE,
+        CONST.qIDASSEMBLESUCCESS
+      ];
+    }
 
     var i;
     var tss = '';
@@ -258,7 +264,14 @@ var form={
 
 
 		// Special destinations of page ids we can go to including the built-ins like no where, exit.
-		var ts = getTOCStepPages(true,false,true);
+    // In Steps, Starting Point lists only Author Pages, Exit Point includes built-in 'noWhere' to clear it
+    if (data.label === "Starting Point: ") {
+		  var ts = getTOCStepPages(true,false,false);
+    } else if (data.label === "Exit Point: ") {
+      var ts = getTOCStepPages(true,false,"noWhereOnly");
+    } else {
+  		var ts = getTOCStepPages(true,false,true);
+    }
 
 		//$('#CAJAOutline').clone().appendTo('#page-picker-list');
 		//$('#page-picker-list li[rel^="tabsPopups"],#page-picker-list li[rel^="tabsPopups"] + ul').empty();

@@ -179,11 +179,16 @@ export let ViewerNavigationVM = Map.extend({
   saveAndExit() {
     let appState = this.attr('appState');
     let interview = this.attr('interview');
+    let answers = interview.attr('answers');
     let exitPage = interview.attr('exitPage');
     let pageName = this.attr('selectedPageName');
 
     appState.attr('saveAndExitActive', true);
     appState.attr('lastPageBeforeExit', pageName);
+
+    if (answers) {
+      answers.attr('a2j interview incomplete tf').attr('values.1', true);
+    }
 
     this.attr('selectedPageName', exitPage);
   },
@@ -197,9 +202,15 @@ export let ViewerNavigationVM = Map.extend({
   resumeInterview() {
     let appState = this.attr('appState');
     let lastPageName = appState.attr('lastPageBeforeExit');
+    let interview = this.attr('interview');
+    let answers = interview.attr('answers');
 
     appState.attr('lastPageBeforeExit', '');
     appState.attr('saveAndExitActive', false);
+
+    if (answers) {
+      answers.attr('a2j interview incomplete tf').attr('values', [null]);
+    }
 
     this.attr('selectedPageName', lastPageName);
   },

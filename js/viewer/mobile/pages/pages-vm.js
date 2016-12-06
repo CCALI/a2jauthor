@@ -40,6 +40,7 @@ export default Map.extend({
     backButton: {
       value: constants.qIDBACK
     },
+
     /**
      * @property {String} pages.ViewModel.prototype.saveAnswersButton saveAnswersButton
      * @parent pages.ViewModel
@@ -49,6 +50,27 @@ export default Map.extend({
      */
     saveAnswersButton: {
       value: constants.qIDSUCCESS
+    },
+
+    /**
+     * @property {String} pages.ViewModel.prototype.exitButton exitButton
+     * @parent pages.ViewModel
+     *
+     * String used to represent the button that saves the answers to the server
+     * when the interview is only partially complete.
+     */
+    exitButton: {
+      value: constants.qIDEXIT
+    },
+
+        /**
+     * @property {String} pages.ViewModel.prototype.resumeButton resumeButton
+     * @parent pages.ViewModel
+     *
+     * String used to represent the button that resumes the interview rather than Exit.
+     */
+    resumeButton: {
+      value: constants.qIDRESUME
     },
 
     /**
@@ -159,13 +181,14 @@ export default Map.extend({
     const fields = page.attr('fields');
 
     this.traceButtonClicked(button.attr('label'));
-    this.validateAllFields();
 
     // Set answers for buttons with values
     if (button.name) {
       const buttonAnswer = this.interview.answers.attr(button.name.toLowerCase());
       buttonAnswer.attr('values.1', button.value);
     }
+
+    this.validateAllFields();
 
     const anyFieldWithError = _some(fields, f => f.attr('hasError'));
 
@@ -194,7 +217,7 @@ export default Map.extend({
         this.setRepeatVariable(repeatVar, repeatVarSet);
       }
 
-      if (button.next === constants.qIDASSEMBLESUCCESS) {
+      if (button.next === constants.qIDASSEMBLESUCCESS || button.next === constants.qIDSUCCESS || button.next === constants.qIDEXIT) {
         can.trigger(this, 'post-answers-to-server');
       }
 

@@ -188,7 +188,7 @@
 			qIDFAIL : "[Exit - User does not qualify]",
 			qIDEXIT : "[Exit - Save Incomplete Form]",
 			qIDBACK : "[Back to prior question]",
-			qIDRESUME : "[Exit - Resume interview]",
+			qIDRESUME : "[Resume interview]",
 			qIDASSEMBLE: '[Assemble - Generate PDF document]',
 			qIDASSEMBLESUCCESS: '[Assemble - Generate PDF and Process Form]',
 

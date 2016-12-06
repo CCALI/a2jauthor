@@ -3,6 +3,7 @@ import _some from 'lodash/some';
 import _isString from 'lodash/isString';
 import AnswerVM from 'viewer/models/answervm';
 import Parser from 'viewer/mobile/util/parser';
+import {ViewerNavigationVM} from 'viewer/desktop/navigation/navigation';
 import constants from 'viewer/models/constants';
 
 import 'can/util/batch/';
@@ -177,6 +178,16 @@ export default Map.extend({
   },
 
   navigate(button) {
+    // special destination dIDRESUME button skips rest of navigate
+    if (button.next === 'RESUME') {
+      let interview = this.attr('interview');
+      let appState = this.attr('rState');
+      // Handle the same as Desktop Navigation Resume
+      let vm = new ViewerNavigationVM({appState, interview});
+      vm.resumeInterview();
+      return;
+    }
+
     const page = this.attr('currentPage');
     const fields = page.attr('fields');
 

@@ -70,7 +70,7 @@ export let ViewerNavigationVM = Map.extend({
           this.attr('logic').varSet(repeatVar, repeatVarValue);
         }
 
-        if (selectedPageName !== appState.attr('page')) {
+        if (selectedPageName !== appState.attr('page') || newVal === 0) {
           appState.attr({
             page: selectedPageName,
             forceNavigation: true
@@ -108,7 +108,7 @@ export let ViewerNavigationVM = Map.extend({
         let appState = this.attr('appState');
 
         return appState.attr('saveAndExitActive') &&
-          appState.attr('lastPageBeforeExit');
+          !!appState.attr('lastVisitedPage');
       }
     },
 
@@ -179,11 +179,16 @@ export let ViewerNavigationVM = Map.extend({
   saveAndExit() {
     let appState = this.attr('appState');
     let interview = this.attr('interview');
+    let answers = interview.attr('answers');
     let exitPage = interview.attr('exitPage');
     let pageName = this.attr('selectedPageName');
 
     appState.attr('saveAndExitActive', true);
-    appState.attr('lastPageBeforeExit', pageName);
+    appState.attr('lastVisitedPage', pageName);
+
+    if (answers) {
+      answers.attr('a2j interview incomplete tf').attr('values.1', true);
+    }
 
     this.attr('selectedPageName', exitPage);
   },
@@ -196,10 +201,20 @@ export let ViewerNavigationVM = Map.extend({
    */
   resumeInterview() {
     let appState = this.attr('appState');
-    let lastPageName = appState.attr('lastPageBeforeExit');
+    let lastPageName = appState.attr('lastVisitedPage');
+    let interview = this.attr('interview');
+    let answers = interview.attr('answers');
+    let visitedPages = appState.attr('visitedPages');
 
-    appState.attr('lastPageBeforeExit', '');
     appState.attr('saveAndExitActive', false);
+    appState.attr('lastVisitedPage', null);
+
+    // Special Exit page should only show in My Progress while on that page
+    visitedPages.shift();
+
+    if (answers) {
+      answers.attr('a2j interview incomplete tf').attr('values', [null]);
+    }
 
     this.attr('selectedPageName', lastPageName);
   },

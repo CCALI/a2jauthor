@@ -42,6 +42,10 @@
           {{> save-answers-form }}
         {{/case}}
 
+        {{#case exitButton}}
+          {{> save-answers-form }}
+        {{/case}}
+
         {{#case assembleButton}}
           {{> assemble-form }}
         {{/case}}

@@ -66,15 +66,32 @@ describe('<a2j-viewer-navigation>', function() {
       assert.isFalse(vm.attr('canSaveAndExit'));
 
       // it is false in this case because saveAndExitActive flag is true
-      interview.attr('exitPage', 'success-page');
+      interview.attr('exitPage', '1-Exit');
       appState.attr('saveAndExitActive', true);
       assert.isFalse(vm.attr('canSaveAndExit'));
 
-      // it is only true when exitPage is a valid string and
-      // appState.canSaveAndExit is false
-      interview.attr('exitPage', 'success-page');
+      // it is only true when exitPage is not qIDNOWHERE and
+      // appState.saveAndExitActive is false
+      interview.attr('exitPage', '1-Exit');
       appState.attr('saveAndExitActive', false);
       assert.isTrue(vm.attr('canSaveAndExit'));
+    });
+
+    it('canResumeInterview - whether Resume button should be enabled', function() {
+      appState.attr('lastVisitedPage', null);
+      appState.attr('saveAndExitActive', false);
+      assert.isFalse(vm.attr('canResumeInterview'));
+
+      // it is false in this case because saveAndExitActive flag is false
+      appState.attr('lastVisitedPage', '1-Intro');
+      appState.attr('saveAndExitActive', false);
+      assert.isFalse(vm.attr('canResumeInterview'));
+
+      // it is only true when lastVisitedPage is a valid string and
+      // appState.saveAndExitActive is true
+      appState.attr('lastVisitedPage', '1-Intro');
+      appState.attr('saveAndExitActive', true);
+      assert.isTrue(vm.attr('canResumeInterview'));
     });
 
     it('canNavigateBack - whether back button should be enabled', function() {
@@ -186,16 +203,19 @@ describe('<a2j-viewer-navigation>', function() {
     let pages;
     let visited;
     let interview;
+    let appState;
+    let vm;
 
     beforeEach(function(done) {
       let promise = Interview.findOne({url: '/interview.json'});
 
       promise.then(function(_interview) {
         interview = _interview;
-        let appState = new AppState();
+        appState = new AppState();
 
         pages = interview.attr('pages');
         visited = appState.attr('visitedPages');
+        vm = new ViewerNavigationVM({appState, interview});
 
         let frag = stache(
           '<a2j-viewer-navigation interview="{interview}" app-state="{appState}" />'
@@ -243,12 +263,37 @@ describe('<a2j-viewer-navigation>', function() {
     it('shows/hides feedback button based on interview.sendfeedback', function() {
       // turn off feedback
       interview.attr('sendfeedback', false);
-      assert.equal($('.send-feedback').length, 0, 'button should not be rendered');
+      assert.equal($('.send-feedback').length, 0, 'Feedback button should not be rendered');
 
       // turn on feedback
       interview.attr('sendfeedback', true);
-      assert.equal($('.send-feedback').length, 1, 'button should be rendered');
+      assert.equal($('.send-feedback').length, 1, 'Feedback button should be rendered');
     });
+
+    it('shows/hides Exit button based on vm.canSaveAndExit', function() {
+      // turn off Exit button following properties result in canSaveAndExit being false
+      interview.attr('exitPage', constants.qIDNOWHERE);
+      appState.attr('saveAndExitActive', false);
+      assert.equal($('.can-exit').length, 0, 'Exit button should not be rendered');
+
+      // turn on Exit button only with valid Exit Point
+      interview.attr('exitPage', '1-Exit');
+      appState.attr('saveAndExitActive', false);
+      assert.equal($('.can-exit').length, 1, 'Exit button should be rendered');
+    });
+
+    it('shows/hides Resume button based on vm.canSaveAndExit', function() {
+      // turn off Resume button when saveAndExitActive is false even when lastVisitedPage has a value
+      appState.attr('lastVisitedPage', '1-Intro');
+      appState.attr('saveAndExitActive', false);
+      assert.equal($('.can-exit').length, 0, 'Resume button should not be rendered');
+
+      // turn on Resume button when Exit button has been clicked
+      appState.attr('lastVisitedPage', '1-Intro');
+      appState.attr('saveAndExitActive', true);
+      assert.equal($('.can-resume').length, 1, 'Resume button should be rendered');
+    });
+
 
     it('shows custom courthouse image if provided', function() {
       let vm = $('a2j-viewer-navigation').viewModel();

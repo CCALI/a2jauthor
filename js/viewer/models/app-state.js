@@ -21,7 +21,7 @@ export default Map.extend({
       serialize: false
     },
 
-    activePageBeforeExit: {
+    lastVisitedPage: {
       value: null,
       serialize: false
     },

@@ -37,13 +37,13 @@
       {{/if}}
 
       {{#if canSaveAndExit}}
-        <button class="btn btn-default navbar-btn" ($click)="saveAndExit">
+        <button class="btn btn-default navbar-btn can-exit" ($click)="saveAndExit">
           <span class="glyphicon-floppy"></span> {{lang.SaveAndExit}}
         </button>
       {{/if}}
 
       {{#if canResumeInterview}}
-        <button class="btn btn-default navbar-btn" ($click)="resumeInterview">
+        <button class="btn btn-default navbar-btn can-resume" ($click)="resumeInterview">
           <span class="glyphicon-right-thin"></span> {{lang.ResumeExit}}
         </button>
       {{/if}}

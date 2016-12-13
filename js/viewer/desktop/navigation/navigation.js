@@ -108,7 +108,7 @@ export let ViewerNavigationVM = Map.extend({
         let appState = this.attr('appState');
 
         return appState.attr('saveAndExitActive') &&
-          appState.attr('lastVisitedPage');
+          !!appState.attr('lastVisitedPage');
       }
     },
 

@@ -95,7 +95,7 @@ export default Model.extend({}, {
         break;
 
       case CONST.vtTF:
-        val = (val > 0) || (val === true) || (val === 'true');
+        val = (val > 0) || (val === true) || (val.toLowerCase() === 'true');
         break;
     }
 

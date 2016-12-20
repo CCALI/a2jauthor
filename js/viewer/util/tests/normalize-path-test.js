@@ -4,7 +4,8 @@ import normalizePath from '../normalize-path';
 import 'steal-mocha';
 
 describe('normalizePath', function() {
-  const pathToGuide = '/userfiles/user/guide';
+  const pathToGuide = '/userfiles/user/guide/';
+  const fullyQualifiedPathToGuide = 'http://www.cali.org/userfiles/user/guide/';
 
   it('returns empty string with invalid parameters', function() {
     assert.equal(normalizePath(), '');
@@ -15,6 +16,11 @@ describe('normalizePath', function() {
   it('keeps urls', function() {
     let url = 'http://some/folder/file.xxx';
     assert.equal(normalizePath(pathToGuide, url), url);
+  });
+
+   it('keeps fully qualified guide path', function() {
+    let file = 'buds.jpg';
+    assert.equal(normalizePath(fullyQualifiedPathToGuide, file), 'http://www.cali.org/userfiles/user/guide/buds.jpg');
   });
 
   it('replaces the file path with path provided as first argument', function() {

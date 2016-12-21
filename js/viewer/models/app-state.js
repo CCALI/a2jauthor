@@ -16,14 +16,6 @@ export default Map.extend({
       serialize: false
     },
 
-    previewActive: {
-      type: 'boolean',
-      serialize: false,
-      get() {
-        return window.location.href.indexOf('#!preview') !== -1;
-      }
-    },
-
     saveAndExitActive: {
       value: false,
       serialize: false

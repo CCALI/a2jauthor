@@ -178,9 +178,6 @@ export default Map.extend({
   },
 
   navigate(button) {
-    // Author preview should not post to server
-    let previewActive = this.attr('rState').attr('previewActive');
-
     // special destination dIDRESUME button skips rest of navigate
     if (button.next === 'RESUME') {
       let interview = this.attr('interview');
@@ -188,18 +185,6 @@ export default Map.extend({
       // Handle the same as Desktop Navigation Resume
       let vm = new ViewerNavigationVM({appState, interview});
       vm.resumeInterview();
-      return;
-    }
-
-    // special destination qIDFAIL button skips rest of navigate
-    // Author can provide an external URL to explain why user did not qualify
-    if (button.next === 'FAIL') {
-      let failURL = button.url.indexOf('http') !== 0 ? failURL = 'http://' + button.url : button.url;
-      if (previewActive) {
-        alert('Author note: User would be redirected to \n(' + failURL +')');
-      } else {
-        window.location = failURL;
-      }
       return;
     }
 
@@ -243,7 +228,7 @@ export default Map.extend({
         this.setRepeatVariable(repeatVar, repeatVarSet);
       }
 
-      if (!previewActive && (button.next === constants.qIDASSEMBLESUCCESS || button.next === constants.qIDSUCCESS || button.next === constants.qIDEXIT)) {
+      if (button.next === constants.qIDASSEMBLESUCCESS || button.next === constants.qIDSUCCESS || button.next === constants.qIDEXIT) {
         can.trigger(this, 'post-answers-to-server');
       }
 
@@ -268,18 +253,11 @@ export default Map.extend({
 
       // only navigate to the `button.next` page if the button clicked is not
       // any of the buttons with "special" behavior.
-      } else if (button.next !== constants.qIDEXIT &&
-        button.next !== constants.qIDSUCCESS &&
+      } else if (button.next !== constants.qIDSUCCESS &&
         button.next !== constants.qIDASSEMBLE &&
         button.next !== constants.qIDASSEMBLESUCCESS) {
 
         this._setPage(page, button.next);
-      } else {
-        if (button.next === constants.qIDEXIT) {
-          alert ("Author note: User's INCOMPLETE data would upload to the server.");
-        } else {
-          alert ("Author note: User's data would upload to the  server.");
-        }
       }
 
       return;

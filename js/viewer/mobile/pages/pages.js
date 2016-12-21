@@ -63,7 +63,7 @@ export default Component.extend({
       el.attr('target', '_blank');
     },
 
-    // This event is fired when the Exit, Success, or AssembleSuccess button is clicked,
+    // This event is fired when the Assemble and Save button is clicked,
     // it waits to asynchronously submit the form that posts the XML asnwers
     // to the `setDataURL` endpoint.
     '{viewModel} post-answers-to-server': function() {

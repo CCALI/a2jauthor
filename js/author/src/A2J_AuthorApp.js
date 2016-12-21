@@ -514,13 +514,10 @@ function main()
   signin();
 }
 
-window.onbeforeunload = function(e) {
+window.onbeforeunload = function() {
   // If we've got a guide loaded, ask if we want to leave.
   if (gGuide && gGuideID && (gGuideID !== 0)) {
-    // most browsers have a default message now and may not use this text.
-    var dialogText = 'Leave A2J Author?';
-    e.returnValue = dialogText;
-    return dialogText;
+    return 'Leave A2J Author?';
   } else {
     return null;
   }

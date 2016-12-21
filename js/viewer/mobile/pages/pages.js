@@ -116,6 +116,8 @@ export default Component.extend({
         logic.exec(p.attr('codeBefore'));
       }
       var gotoPage = logic.attr('gotoPage');
+      // If this has value, we are exiting the interview
+      var lastPageBeforeExit = rState.attr('lastPageBeforeExit');
 
       if (logic.attr('infinite').errors()) {
         this.viewModel.attr('traceLogic').push({
@@ -125,7 +127,7 @@ export default Component.extend({
           }
         });
         vm.attr('rState.page', '__error');
-      } else if (gotoPage && gotoPage.length) {
+      } else if (gotoPage && gotoPage.length && !lastPageBeforeExit) {
 
         logic.attr('infinite').inc();
         vm._setPage(p, gotoPage);

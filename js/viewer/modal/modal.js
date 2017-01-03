@@ -26,8 +26,25 @@ export default Component.extend({
   },
 
   events: {
-    'a click': function(el) {
-      el.attr('target', '_blank');
+    'a click': function(el, ev) {
+      // load new popup content
+      if (el.attr('href').toLowerCase().indexOf('popup') !== -1) {
+        ev.preventDefault();
+        const pages = this.viewModel.attr('interview.pages');
+
+        if (pages) {
+          const pageName = el.get(0).pathname.replace('//', '');
+          const page = pages.find(pageName);
+          // popup content is only title, text, and textAudio
+          this.viewModel.attr('modalContent', {
+            title: page.name,
+            text: page.text,
+            audioURL: page.textAudioURL
+          });
+        } else { //external link
+          el.attr('target', '_blank');
+        }
+      }
     },
 
     '{viewModel} modalContent': function(vm, ev, newVal) {

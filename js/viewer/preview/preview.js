@@ -11,7 +11,15 @@ import MemoryState from 'viewer/models/memory-state';
 import PersistedState from 'viewer/models/persisted-state';
 import parseGuideToMobile from 'viewer/mobile/util/guide-to-mobile';
 
-const ViewerPreviewVM = Map.extend({});
+const ViewerPreviewVM = Map.extend({
+  define: {
+    interviewPageName: {
+      get: function(){
+        return this.attr("rState.page");
+      }
+    }
+  }
+});
 
 export default Component.extend({
   tag: 'a2j-viewer-preview',
@@ -55,12 +63,6 @@ export default Component.extend({
       } else {
         rState.attr('view', 'intro');
       }
-
-      // hack to keep `interviewPageName` in sync with author app.
-      vm.attr('interviewPageName', rState.attr('page'));
-      rState.bind('page', function() {
-        vm.attr('interviewPageName', rState.attr('page'));
-      });
 
       const modalContent = can.compute();
 

@@ -717,7 +717,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
           }));
 
           ff.append(form.text({
-            name: 'url',
+            groupName: 'url',
             value: b.url,
             label: 'URL:',
             placeholder: '',

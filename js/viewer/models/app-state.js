@@ -16,6 +16,14 @@ export default Map.extend({
       serialize: false
     },
 
+    previewActive: {
+      type: 'boolean',
+      serialize: false,
+      get() {
+        return can.route.attr('page') === 'preview';
+      }
+    },
+
     saveAndExitActive: {
       value: false,
       serialize: false

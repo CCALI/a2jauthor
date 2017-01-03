@@ -51,7 +51,12 @@ export default Component.extend({
       if (pages) {
         const pageName = el.get(0).pathname.replace('//', '');
         const page = pages.find(pageName);
-        vm.attr('modalContent', page);
+        // popups only have name, text, textAudioURL possible values
+        vm.attr('modalContent', {
+          title: page.name,
+          text: page.text,
+          audioURL: page.textAudioURL
+        });
       }
     },
 

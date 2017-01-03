@@ -1,37 +1,14 @@
 import $ from 'jquery';
 import F from 'funcunit';
 import Map from 'can/map/';
-import assert from 'assert';
 import { ModalVM } from './modal';
 import stache from 'can/view/stache/';
 
+import 'viewer/styles.less!';
+
 describe('<a2j-modal> ', function() {
-  describe('viewModel', function() {
-    let vm;
-
-    beforeEach(function() {
-      vm = new ModalVM();
-    });
-
-    it('computes currentPage properly', function() {
-      const interview = {
-        getPageByName(name) {
-          const pages = { foo: 'bar' };
-          return pages[name];
-        }
-      };
-
-      const rState = new can.Map({ page: 'foo' });
-
-      vm.attr('interview', interview);
-      vm.attr('rState', rState);
-
-      assert.equal(vm.attr('currentPage'), 'bar');
-    });
-  });
-
   describe('Component', function() {
-    let vm;
+    let vm = new ModalVM();
 
     beforeEach(function() {
       const interview = {
@@ -41,18 +18,20 @@ describe('<a2j-modal> ', function() {
       };
 
       const rState = new Map({ page: 'foo' });
-      const mState = new Map({ fileDataURL: '/js/images/' });
+      const mState = new Map({ fileDataURL: '/CAJA/js/images/' });
       const logic = new Map({ eval() {} });
+      const modalContent = new Map({});
 
       const frag = stache(
-        `<a2j-modal
+        `<a2j-modal class="bootstrap-styles"
           {logic}="logic"
           {m-state}="mState"
           {r-state}="rState"
-          {interview}="interview" />`
+          {interview}="interview"
+          {modal-content}="modalContent" />`
       );
 
-      $('#test-area').html(frag({ interview, rState, logic, mState }));
+      $('#test-area').html(frag({ interview, rState, logic, mState, modalContent }));
       vm = $('a2j-modal').viewModel();
     });
 
@@ -60,62 +39,44 @@ describe('<a2j-modal> ', function() {
       $('#test-area').empty();
     });
 
-    it('renders image tag if pages includes helpImageURL', function(done) {
-      const interview = {
-        getPageByName() {
-          return new Map({ helpImageURL: 'ui-icons_ffffff_256x240.png' });
-        }
-      };
+    it('renders image tag if modalContent includes imageURL', function(done) {
+      const  helpImageURL = 'ui-icons_ffffff_256x240.png';
 
-      vm.attr('interview', interview);
+      vm.attr('modalContent', { imageURL: helpImageURL});
 
-      F('img.help-image').exists();
-      F('img.help-image').attr('src', '/js/images/ui-icons_ffffff_256x240.png');
+      F('img.modal-image').exists();
+      F('img.modal-image').attr('src', '/CAJA/js/images/ui-icons_ffffff_256x240.png');
 
       F(done);
     });
 
     it('renders audio tag if page includes helpAudioURL', function(done) {
-      const interview = {
-        getPageByName() {
-          return new Map({ helpAudioURL: 'foo.mp3' });
-        }
-      };
+      const helpAudioURL = 'pings.ogg';
 
-      vm.attr('interview', interview);
+      vm.attr('modalContent', { audioURL: helpAudioURL});
 
-      F('audio.help-audio').exists();
-      F('audio.help-audio').attr('src', '/js/images/foo.mp3');
+      F('audio.modal-audio').exists();
+      F('audio.modal-audio').attr('src', '/CAJA/js/images/pings.ogg');
 
       F(done);
     });
 
     it('renders image tag if page includes helpVideoURL (gif)', function(done) {
-      const interview = {
-        getPageByName() {
-          return new Map({ helpVideoURL: 'foo.gif' });
-        }
-      };
+      const helpVideoURL = 'panda.gif';
 
-      vm.attr('interview', interview);
-
-      F('img.help-video').exists();
-      F('img.help-video').attr('src', '/js/images/foo.gif');
+      vm.attr('modalContent', { videoURL: helpVideoURL});
+      F('img.modal-video').exists();
+      F('img.modal-video').attr('src', '/CAJA/js/images/panda.gif');
 
       F(done);
     });
 
     it('renders video tag if page includes helpVideoURL (other)', function(done) {
-      const interview = {
-        getPageByName() {
-          return new Map({ helpVideoURL: 'foo.ogg' });
-        }
-      };
+      const helpVideoURL = 'pings.ogg';
 
-      vm.attr('interview', interview);
-
-      F('video.help-video').exists();
-      F('video.help-video').attr('src', '/js/images/foo.ogg');
+      vm.attr('modalContent', { videoURL: helpVideoURL});
+      F('video.modal-video').exists();
+      F('video.modal-video').attr('src', '/CAJA/js/images/pings.ogg');
 
       F(done);
     });

@@ -3,18 +3,9 @@ import Component from 'can/component/';
 import template from './modal.stache!';
 
 import 'can/map/define/';
+import 'bootstrap/js/modal';
 
-export let ModalVM = Map.extend({
-  define: {
-    currentPage: {
-      get() {
-        const interview = this.attr('interview');
-        const pageName = this.attr('rState.page');
-        return interview.getPageByName(pageName);
-      }
-    }
-  }
-});
+export let ModalVM = Map.extend({});
 
 export default Component.extend({
   template,

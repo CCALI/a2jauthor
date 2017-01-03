@@ -27,9 +27,6 @@
         <audio {$src}="normalizePath(mState.fileDataURL, textAudioURL)" controls="controls"></audio>
       {{/if}}
 
-      {{#if helpAudioURL}}
-        <audio {$src}="normalizePath(mState.fileDataURL, helpAudioURL)" controls="controls"></audio>
-      {{/if}}
     </div><!-- bubble-content -->
 
     <p class="text-center modal-button">

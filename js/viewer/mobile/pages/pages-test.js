@@ -209,6 +209,14 @@ describe('<a2j-pages>', () => {
         }], 'logic before trace');
       });
 
+      it('codeBefore with forceNavigation: true should not execute codeBefore', () => {
+        nextPageStub.attr('codeBefore', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>');
+        vm.attr('rState.forceNavigation', true);
+        vm.attr('rState.page', 'bar');
+
+        assert.deepEqual(vm.attr('traceLogic').attr(), [], 'logic before trace with forceNavigation true');
+      });
+
       it('Possible infinte loop', (done) => {
         vm.attr('traceLogic').bind('change', function handler() {
           vm.attr('traceLogic').unbind('change', handler);

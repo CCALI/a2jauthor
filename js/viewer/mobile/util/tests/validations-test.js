@@ -121,9 +121,6 @@ describe('Validations', function() {
 
       validations.attr('val', '2014-12-01');
       assert.ok(!validations.min(), 'valid');
-
-      validations.attr('val', 'Invalid date');
-      assert.ok(validations.min(), 'invalid - Invalid date');
     });
   });
 
@@ -152,9 +149,6 @@ describe('Validations', function() {
 
       validations.attr('val', '2014-12-31');
       assert.ok(!validations.max(), 'valid');
-
-      validations.attr('val', 'Invalid date');
-      assert.ok(validations.max(), 'invalid - Invalid date');
     });
   });
 });

@@ -34,7 +34,7 @@ let Config = Map.extend({
           if (!val) {
             return '';
           }
-          let date = (val === 'TODAY') ? moment() : moment(val);
+          let date = (val.toUpperCase() === 'TODAY') ? moment() : moment(val);
           return date.isValid() ? date.format('MM/DD/YYYY') : '';
         }
 
@@ -57,7 +57,7 @@ let Config = Map.extend({
           if (!val) {
             return '';
           }
-          let date = (val === 'TODAY') ? moment() : moment(val);
+          let date = (val.toUpperCase() === 'TODAY') ? moment() : moment(val);
           return date.isValid() ? date.format('MM/DD/YYYY') : '';
         }
 
@@ -166,7 +166,7 @@ export default Map.extend({
   min: function() {
     if (this.config.min) {
       if (!this.val) {
-        return true;
+        return false;
       }
 
       if (this.config.type === 'datemdy') {
@@ -190,7 +190,7 @@ export default Map.extend({
   max: function() {
     if (this.config.max) {
       if (!this.val) {
-        return true;
+        return false;
       }
 
       if (this.config.type === 'datemdy') {

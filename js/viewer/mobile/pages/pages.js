@@ -92,6 +92,7 @@ export default Component.extend({
 
       if (rState.attr('forceNavigation')) {
         vm.setCurrentPage();
+        rState.attr('forceNavigation', false);
         return;
       }
       // Navigate to the exitURL if the page is set to a

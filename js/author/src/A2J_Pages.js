@@ -238,25 +238,15 @@ function pageRename(page,newName){
 			return false;
 		}
 	}
-	// Rename GUI references
-	/*
-	var targetOld="PAGE "+page.name;
-	var targetNew="PAGE "+newName;
-	$('li').filter(function(){return targetOld==$(this).attr('target');}).each(function(){
-		$(this).attr('target',targetNew);
-		$(this).text(newName);
-		})
-	$('.page-edit-form').filter(function(){ return page.name == $(this).attr('rel')}).each(function(){
-		$(this).attr('rel',newName);
-		$(this).dialog({title:newName});
-		})
-		*/
 	gGuide.pageFindReferences(page.name,newName);
 	delete gGuide.pages[page.name];
 	page.name = newName;
 	gGuide.pages[page.name]=page;
 	gGuide.sortPages();
-	//updateTOC(); update now handled when page dialog is closed.
+	// Update name for Preview button to have correct target
+	if ($pageEditDialog) {
+		$pageEditDialog.attr('rel', page.name);
+	}
 	pageEditSelect(newName);
 	return true;
 }

@@ -12,7 +12,12 @@ describe('<a2j-field>', () => {
     beforeEach(() => {
       fieldStub = {
         name: 'Foo Input',
-        _answer: {}
+        _answer: {
+          answerIndex: 1,
+          answer: {
+            values: [null]
+          }
+        }
       };
 
       vm = new FieldVM({
@@ -23,6 +28,14 @@ describe('<a2j-field>', () => {
 
     afterEach(() => {
       vm = null;
+    });
+
+    it('shouldBeChecked', () => {
+      let values = vm.attr('field._answer.answer.values');
+      values.push('bar');
+      vm.attr('field').attr('value', 'bar');
+
+      assert(vm.attr('shouldBeChecked'), 'should return true if answer matches radio button value');
     });
 
     it('computes numberPickOptions from field min/max values', function() {

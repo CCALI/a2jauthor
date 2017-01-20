@@ -76,12 +76,13 @@ export let FieldVM = Map.extend({
      */
     shouldBeChecked: {
       get: function() {
-        let name = this.attr('field.name').toLowerCase();
-        if (name) {
-          let value = this.attr('field.value');
-          let answer = this.attr('logic.interview.answers').attr(name).values[1];
-          return (value === answer);
-        }
+        let field = this.attr('field');
+        let radioButtonValue = field.attr('value');
+        let answerIndex = field.attr('_answer.answerIndex');
+        let answerValues = field.attr('_answer.answer.values');
+        let previousAnswer = answerValues[answerIndex];
+
+        return (radioButtonValue === previousAnswer);
       }
     },
 

@@ -217,7 +217,7 @@ describe('<a2j-pages>', () => {
         assert.deepEqual(vm.attr('traceLogic').attr(), [], 'logic before trace with forceNavigation true');
       });
 
-      it('Possible infinte loop', (done) => {
+      it('Possible infinite loop', (done) => {
         vm.attr('traceLogic').bind('change', function handler() {
           vm.attr('traceLogic').unbind('change', handler);
           assert.deepEqual(vm.attr('traceLogic').attr(), [{

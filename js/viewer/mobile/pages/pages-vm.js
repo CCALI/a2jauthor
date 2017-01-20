@@ -282,6 +282,12 @@ export default Map.extend({
           alert ("Author note: User's data would upload to the  server.");
         }
      }
+      if (page.name === gotoPage) {
+        let rState = this.attr('rState');
+        let interview = this.attr('interview');
+        rState.setVisitedPages(gotoPage, interview);
+        can.trigger(rState, 'page',[gotoPage]);
+      }
 
       return;
     }
@@ -305,6 +311,7 @@ export default Map.extend({
       rState.removeAttr('i');
       rState.attr('page', gotoPage);
     }
+
   },
 
   setCurrentPage() {
@@ -422,5 +429,62 @@ export default Map.extend({
         traceLogic.push(traceLogicMsg);
         break;
     }
+  },
+
+  changePage: function(rState, newPageName) {
+    const vm = this;
+
+    if (rState.attr('forceNavigation')) {
+      vm.setCurrentPage();
+      rState.attr('forceNavigation', false);
+      return;
+    }
+    // Navigate to the exitURL if the page is set to a
+    // non-undefined falsy or the explicit "FAIL" string
+    if ((! newPageName && typeof newPageName !== 'undefined') || newPageName === 'FAIL') {
+      let exitURL = vm.attr('mState.exitURL');
+
+      //TODO: This shouldn't be necessary, however something
+      //else is being executed.
+      setTimeout(function() {
+        window.location = exitURL;
+      });
+
+      return;
+    }
+
+    let logic = vm.attr('logic');
+    let p = vm.attr('interview.pages').find(newPageName);
+
+    // unknown page name
+    if (!p) return;
+
+    if (p.attr('codeBefore')) {
+      vm.attr('traceLogic').push({
+        codeBefore: { format: 'info', msg: 'Logic Before Question'}
+      });
+      logic.exec(p.attr('codeBefore'));
+    }
+    var gotoPage = logic.attr('gotoPage');
+    // If this has value, we are exiting the interview
+    var lastPageBeforeExit = rState.attr('lastPageBeforeExit');
+
+    if (logic.attr('infinite').errors()) {
+      vm.attr('traceLogic').push({
+        'infinite loop': {
+          format: 'info',
+          msg: 'Possible infinite loop. Too many page jumps without user interaction'
+        }
+      });
+      vm.attr('rState.page', '__error');
+    } else if (gotoPage && gotoPage.length && !lastPageBeforeExit) {
+
+      logic.attr('infinite').inc();
+      vm._setPage(p, gotoPage);
+    } else {
+      logic.attr('infinite').reset();
+    }
+
+    vm.setCurrentPage();
   }
 });

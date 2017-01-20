@@ -29,6 +29,7 @@ can.view.preload('save-answers-form', saveAnswersFormTpl);
  *     {(p-state)}="persistedState" />
  * @codeend
  */
+
 export default Component.extend({
   template,
   tag: 'a2j-pages',
@@ -87,61 +88,8 @@ export default Component.extend({
       vm.setFieldAnswers(fields);
     },
 
-    '{rState} page': function(rState, ev, val) {
-      const vm = this.viewModel;
-
-      if (rState.attr('forceNavigation')) {
-        vm.setCurrentPage();
-        rState.attr('forceNavigation', false);
-        return;
-      }
-      // Navigate to the exitURL if the page is set to a
-      // non-undefined falsy or the explicit "FAIL" string
-      if ((! val && typeof val !== 'undefined') || val === 'FAIL') {
-        let exitURL = vm.attr('mState.exitURL');
-
-        //TODO: This shouldn't be necessary, however something
-        //else is being executed.
-        setTimeout(function() {
-          window.location = exitURL;
-        });
-
-        return;
-      }
-
-      let logic = vm.attr('logic');
-      let p = vm.attr('interview.pages').find(val);
-
-      // unknown page name
-      if (!p) return;
-
-      if (p.attr('codeBefore')) {
-        vm.attr('traceLogic').push({
-          codeBefore: { format: 'info', msg: 'Logic Before Question'}
-        });
-        logic.exec(p.attr('codeBefore'));
-      }
-      var gotoPage = logic.attr('gotoPage');
-      // If this has value, we are exiting the interview
-      var lastPageBeforeExit = rState.attr('lastPageBeforeExit');
-
-      if (logic.attr('infinite').errors()) {
-        this.viewModel.attr('traceLogic').push({
-          'infinite loop': {
-            format: 'info',
-            msg: 'Possible infinite loop. Too many page jumps without user interaction'
-          }
-        });
-        vm.attr('rState.page', '__error');
-      } else if (gotoPage && gotoPage.length && !lastPageBeforeExit) {
-
-        logic.attr('infinite').inc();
-        vm._setPage(p, gotoPage);
-      } else {
-        logic.attr('infinite').reset();
-      }
-
-      vm.setCurrentPage();
+    '{rState} page': function(rState, ev, newPageName) {
+      this.viewModel.changePage(rState, newPageName);
     }
   }
 });

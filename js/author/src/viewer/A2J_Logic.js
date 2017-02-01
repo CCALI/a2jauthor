@@ -119,7 +119,7 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 */
 	var errors=[];
 	var jsLines=[];
-	debugger;
+
 	// Replacing IE/Edge line breaks before splitting
 	var csLines = CAJAScriptHTML
 		.replace(/<BR \/>/g, CONST.ScriptLineBreak)
@@ -287,8 +287,7 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 	if (ifd>0){
 		errors.push(new ParseError(l,"",lang.scriptErrorEndMissing.printf()));
 	}
-	trace('obaid');
-	trace(jsLines);
+	
 	return {js : jsLines,  errors: errors};
 };
 
@@ -638,7 +637,6 @@ TLogic.prototype.executeScript = function(CAJAScriptHTML)
 	}
 	else
 	{
-		debugger;
 		this.traceLogic("executeScript.error: "+"syntax error in logic");
 		return false;
 	}

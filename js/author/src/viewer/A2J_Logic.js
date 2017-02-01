@@ -66,7 +66,7 @@ TLogic.prototype.pageFindReferences = function(CAJAScript,findName)
 	result.add=false;
 	// Replacing IE/Edge line breaks before splitting
 	var csLines = CAJAScript
-		.replace('<BR />', CONST.ScriptLineBreak)
+		.replace(/<BR \/>/g, CONST.ScriptLineBreak)
 		.split(CONST.ScriptLineBreak);
 	var l;
 	for (l=0;l<csLines.length;l++)
@@ -119,10 +119,10 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 */
 	var errors=[];
 	var jsLines=[];
-
+	debugger;
 	// Replacing IE/Edge line breaks before splitting
 	var csLines = CAJAScriptHTML
-		.replace('<BR />', CONST.ScriptLineBreak)
+		.replace(/<BR \/>/g, CONST.ScriptLineBreak)
 		.split(CONST.ScriptLineBreak);
 
 	var ifd=0;//if depth syntax checker
@@ -287,6 +287,8 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 	if (ifd>0){
 		errors.push(new ParseError(l,"",lang.scriptErrorEndMissing.printf()));
 	}
+	trace('obaid');
+	trace(jsLines);
 	return {js : jsLines,  errors: errors};
 };
 
@@ -617,6 +619,7 @@ TLogic.prototype.executeScript = function(CAJAScriptHTML)
 	}
 	this.indent=0;
 	var script = this.translateCAJAtoJS(CAJAScriptHTML);
+	console.log(CAJAScriptHTML);
 	if (script.errors.length === 0)
 	{
 		var js = "with (gLogic) {"+ script.js.join("\n") +"}";
@@ -635,6 +638,7 @@ TLogic.prototype.executeScript = function(CAJAScriptHTML)
 	}
 	else
 	{
+		debugger;
 		this.traceLogic("executeScript.error: "+"syntax error in logic");
 		return false;
 	}

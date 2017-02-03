@@ -618,7 +618,7 @@ TLogic.prototype.executeScript = function(CAJAScriptHTML)
 	}
 	this.indent=0;
 	var script = this.translateCAJAtoJS(CAJAScriptHTML);
-	console.log(CAJAScriptHTML);
+
 	if (script.errors.length === 0)
 	{
 		var js = "with (gLogic) {"+ script.js.join("\n") +"}";

@@ -128,18 +128,21 @@ export default Component.extend({
       // wait for the template to be updated, otherwise the `textarea`
       // won't be in the DOM when `ckeditor.replace` is called.
       setTimeout(() => {
-        let $textarea = this.element.find('textarea');
+        //check if we have access to the element while dragging is going on
+        if(this.element) {
+          let $textarea = this.element.find('textarea');
 
-        let editor = CKEDITOR.replace($textarea.get(0), {
-          extraPlugins: 'a2j-variable',
-          extraAllowedContent: {
-            'a2j-variable': {
-              attributes: ['name']
+          let editor = CKEDITOR.replace($textarea.get(0), {
+            extraPlugins: 'a2j-variable',
+            extraAllowedContent: {
+              'a2j-variable': {
+                attributes: ['name']
+              }
             }
-          }
-        });
+          });
 
-        vm.attr('ckeditorInstance', editor);
+          vm.attr('ckeditorInstance', editor);
+        }
       });
     }
   }

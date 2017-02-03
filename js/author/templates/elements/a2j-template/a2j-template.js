@@ -76,6 +76,7 @@ export default Component.extend({
 
     '{document} dragover': function($el, evt) {
       evt.preventDefault();
+      this.viewModel.removeDragPlaceholderFlag();
     },
 
     // if a template is not being droppped within the boundaries of one the

@@ -292,9 +292,12 @@ export default Map.extend({
 
     let children = this.attr('rootNode.children');
     let draggedItem = children.attr(dragItemIndex);
-
-    draggedItem.attr('isBeingDragged', true);
-    draggedItem.attr('state').attr('editActive', true);
+    
+    if(typeof draggedItem !== 'undefined') {
+      draggedItem.attr('isBeingDragged', true);
+      draggedItem.attr('state').attr('editActive', true);  
+    }
+    
   },
 
   removeDragPlaceholderFlag() {
@@ -304,6 +307,9 @@ export default Map.extend({
     let children = this.attr('rootNode.children');
     let draggedItem = children.attr(dragItemIndex);
 
-    draggedItem.removeAttr('isBeingDragged');
+    if(typeof draggedItem !== 'undefined') {
+      draggedItem.removeAttr('isBeingDragged');
+    }
+    
   }
 });

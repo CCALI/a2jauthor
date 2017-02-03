@@ -122,7 +122,7 @@
 
 			// Replacing IE/Edge line breaks before splitting
 			var csLines = CAJAScriptHTML
-				.replace('<BR />', CONST.ScriptLineBreak)
+				.replace(/<BR \/>/g, CONST.ScriptLineBreak)
 				.split(CONST.ScriptLineBreak);
 
 			var ifd = 0; //if depth syntax checker

@@ -509,6 +509,10 @@ function guidePageEditForm(page, div, pagename)//novicePage
 
 		pagefs.append(form.varPicker(		{label:'Counting Variable:',placeholder:'',	value:page.repeatVar,
 			change:function(val,page){page.repeatVar=val;}} ));
+
+		pagefs.append(form.varPicker(		{label:'Outer Loop Variable:',placeholder:'',	value:page.outerLoopVar,
+			change:function(val,page){page.outerLoopVar=val;}} ));
+
 		t.append(pagefs);
 		updateShowMe(pagefs,getShowMe());
 		pagefs=null;
@@ -792,6 +796,10 @@ TPage.prototype.tagList=function()
 		tags += '<span class="label label-success tag"><span class="glyphicon-split"></span>Logic</span>';
 	}
 	if (page.repeatVar!=='')
+	{
+		tags += '<span class="glyphicon-cw">&nbsp</span>';
+	}
+	if (page.outerLoopVar!== '')
 	{
 		tags += '<span class="glyphicon-cw">&nbsp</span>';
 	}

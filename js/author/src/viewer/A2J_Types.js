@@ -333,6 +333,7 @@ function TPage()
 	this.helpImageURL="";
 	this.helpVideoURL="";
 	this.repeatVar="";// built-in for attaching Field variables to array
+	this.outerLoopVar="";
 	this.codeBefore="";
 	this.codeAfter="";
 	this.fields=[];

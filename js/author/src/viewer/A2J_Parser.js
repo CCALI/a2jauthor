@@ -65,29 +65,30 @@ function loadXMLListExternal(opts)
 function page2JSON(page)
 {
 	var PAGE = {
-		_NAME:		page.name,
-		_TYPE:		page.type,
-		_STYLE:		page.style,
-		_MAPX:		page.mapx,
-		_MAPY:		page.mapy,
-		_STEP:		page.step,
-		_REPEATVAR:	page.repeatVar,
+		_NAME:			page.name,
+		_TYPE:			page.type,
+		_STYLE:			page.style,
+		_MAPX:			page.mapx,
+		_MAPY:			page.mapy,
+		_STEP:			page.step,
+		_REPEATVAR:		page.repeatVar,
+		_OUTERLOOPVAR: 	page.outerLoopVar,
 		//_NEXTPAGE:	page.nextPage===''?gJS2XML_SKIP:page.nextPage,
 		//_nextPageDisabled: page.nextPageDisabled===true ? true : gJS2XML_SKIP,
 		//_alignText:	page.alignText==='' ? gJS2XML_SKIP : page.alignText,
-		XML_TEXT:	page.text,
-		TEXTAUDIO:	page.textAudioURL,
-		LEARN:	page.learn,
-		XML_HELP:	page.help,
-		HELPAUDIO:	page.helpAudioURL,
+		XML_TEXT:		page.text,
+		TEXTAUDIO:		page.textAudioURL,
+		LEARN:			page.learn,
+		XML_HELP:		page.help,
+		HELPAUDIO:		page.helpAudioURL,
 		XML_HELPREADER:	page.helpReader,
-		HELPIMAGE:	page.helpImageURL,
-		HELPVIDEO:	page.helpVideoURL,
+		HELPIMAGE:		page.helpImageURL,
+		HELPVIDEO:		page.helpVideoURL,
 		BUTTONS:		[],
-		FIELDS:		[],
+		FIELDS:			[],
 		XML_CODEBEFORE:	page.codeBefore,
-		XML_CODEAFTER:		page.codeAfter,
-		XML_NOTES:	page.notes
+		XML_CODEAFTER:	page.codeAfter,
+		XML_NOTES:		page.notes
 	};
 	var bi;
 	for (bi in page.buttons){
@@ -229,6 +230,7 @@ function parseXML2Page(PAGE, page)
 		page.mapy=parseInt(PAGE.attr("MAPY"),10);
 	}
 	page.repeatVar=makestr(PAGE.attr("REPEATVAR"));
+	page.outerLoopVar=makestr(PAGE.attr("OUTERLOOPVAR"));
 	//page.nextPage="";
 	//page.nextPageDisabled = false;
 	//page.alignText="";

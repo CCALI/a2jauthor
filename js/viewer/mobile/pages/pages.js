@@ -85,6 +85,15 @@ export default Component.extend({
       const vm = this.viewModel;
       const fields = vm.attr('currentPage.fields');
 
+      // keep answer index in sync with repeatVarValue
+      // when a user is navigating via the nav bar
+      const rState = this.viewModel.attr('rState');
+      const repeatVarValue = rState.attr('repeatVarValue');
+
+      if (rState && repeatVarValue) {
+        rState.attr('i', repeatVarValue);
+      }
+
       vm.setFieldAnswers(fields);
     },
 

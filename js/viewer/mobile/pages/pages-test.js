@@ -145,53 +145,55 @@ describe('<a2j-pages>', () => {
 
         let kidstf = new can.Map({
           comment: "",
-          name: "Kids TF",
+          name: "KidsTF",
           repeating: true,
           type: "TF",
           values: [null]
         });
 
-        answers.attr('kids tf', kidstf);
+        answers.attr('kidstf', kidstf);
 
         const button = new can.Map({
           label: 'Go!',
           next: 'Next',
-          name: 'Kids TF',
+          name: 'KidsTF',
           value: "true"
         });
 
         vm.navigate(button);
 
-        assert.deepEqual(answers.attr('kids tf.values.1'), true,
+        assert.deepEqual(answers.attr('kidstf.values.1'), true,
         'first saved value should be true');
       });
 
       it('saves answer when button can hold mutilple values', () => {
         let answers = defaults.interview.answers;
         let page = defaults.currentPage;
-        page.attr('repeatVar', 'Age Count');
 
         let agesnu = new can.Map({
           comment: "",
-          name: "Ages NU",
+          name: "AgesNU",
           repeating: true,
           type: "Number",
           values: [null, 14, 12]
         });
 
-        answers.attr('ages nu', agesnu);
+        answers.attr('agesnu', agesnu);
 
         const button = new can.Map({
           label: 'Go!',
           next: 'Next',
-          name: 'Ages NU',
+          name: 'AgesNU',
           value: "42"
         });
 
+        // required to trigger mutli-value save
+        page.attr('repeatVar', 'AgeCount');
         logicStub.varGet.returns(3);
+
         vm.navigate(button);
 
-        assert.deepEqual(answers.attr('ages nu.values.3'), 42,
+        assert.deepEqual(answers.attr('agesnu.values.3'), 42,
         'adds mutli value to index 3');
       });
 

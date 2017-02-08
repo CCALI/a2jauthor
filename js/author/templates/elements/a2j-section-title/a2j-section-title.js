@@ -61,6 +61,16 @@ export let SectionTitleVM = Map.extend({
     sectionCounter: {
       value: 'none'
     },
+
+    /**
+     * @property {String} sectionTitle.ViewModel.prototype.titleTag titleTag
+     * @parent sectionTitle.ViewModel
+     *
+     * Control the size of the title shown at the top of the component's content.
+     */
+    titleTag: {
+      value: 'h3'
+    },
   }
 });
 
@@ -72,6 +82,16 @@ export default Component.extend({
   events: {
     '.title-input keyup': function($el) {
       this.viewModel.attr('title', $el.val());
+    }
+  },
+
+  helpers: {
+    showSectionTitle() {
+      let title = this.attr('title');
+      let tag = this.attr('titleTag');
+      let sectionCounter = this.attr("sectionCounter");
+
+      return `<${tag} class="section-title count-${sectionCounter}">${title}</${tag}>`;
     }
   }
 });

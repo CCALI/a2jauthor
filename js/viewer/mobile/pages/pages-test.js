@@ -35,7 +35,7 @@ describe('<a2j-pages>', () => {
 
     defaults = {
       traceLogic: new can.List(),
-      currentPage: { fields: [] },
+      currentPage: new can.Map ({ fields: [], repeatVar: "" }),
       logic: logicStub,
       rState: { },
       mState: { },
@@ -139,6 +139,62 @@ describe('<a2j-pages>', () => {
         assert.deepEqual(vm.attr('traceLogic').attr(), expectedTrageLogic,
           'should run codeAfter');
       });
+
+      it('saves answer when button has a value', () => {
+        let answers = defaults.interview.answers;
+
+        let kidstf = new can.Map({
+          comment: "",
+          name: "Kids TF",
+          repeating: true,
+          type: "TF",
+          values: [null]
+        });
+
+        answers.attr('kids tf', kidstf);
+
+        const button = new can.Map({
+          label: 'Go!',
+          next: 'Next',
+          name: 'Kids TF',
+          value: "true"
+        });
+
+        vm.navigate(button);
+
+        assert.deepEqual(answers.attr('kids tf.values.1'), true,
+        'first saved value should be true');
+      });
+
+      it('saves answer when button can hold mutilple values', () => {
+        let answers = defaults.interview.answers;
+        let page = defaults.currentPage;
+        page.attr('repeatVar', 'Age Count');
+
+        let agesnu = new can.Map({
+          comment: "",
+          name: "Ages NU",
+          repeating: true,
+          type: "Number",
+          values: [null, 14, 12]
+        });
+
+        answers.attr('ages nu', agesnu);
+
+        const button = new can.Map({
+          label: 'Go!',
+          next: 'Next',
+          name: 'Ages NU',
+          value: "42"
+        });
+
+        logicStub.varGet.returns(3);
+        vm.navigate(button);
+
+        assert.deepEqual(answers.attr('ages nu.values.3'), 42,
+        'adds mutli value to index 3');
+      });
+
     });
 
     it('setRepeatVariable', () => {
@@ -174,6 +230,7 @@ describe('<a2j-pages>', () => {
       }], 'trace page name');
     });
   });
+
 
   describe('Component', () => {
     beforeEach(() => {

@@ -210,8 +210,26 @@ export default Map.extend({
 
     // Set answers for buttons with values
     if (button.name) {
-      const buttonAnswer = this.interview.answers.attr(button.name.toLowerCase());
-      buttonAnswer.attr('values.1', button.value);
+      const logic = this.attr('logic');
+      const buttonAnswer = this.__ensureFieldAnswer(button);
+      let buttonAnswerIndex = 1;
+
+      if (page.attr('repeatVar')) {
+        const repeatVar = page.attr('repeatVar');
+        const repeatVarCount = logic.varGet(repeatVar);
+
+        buttonAnswerIndex = (repeatVarCount != null) ? repeatVarCount : buttonAnswerIndex;
+      }
+
+      let buttonValue = button.value;
+
+      if (buttonAnswer.type === 'TF') {
+        buttonValue = buttonValue.toLowerCase() === "true" ? true : false;
+      } else if (buttonAnswer.type === "Number") {
+        buttonValue = parseInt(buttonValue);
+      }
+
+      buttonAnswer.attr('values.' + buttonAnswerIndex, buttonValue);
     }
 
     this.validateAllFields();

@@ -7,7 +7,7 @@ import readableList from 'viewer/util/readable-list';
 
 import 'can/map/define/';
 
-export default Model.extend({}, {
+export default Model.extend('Answers',{}, {
   define: {
     lang: {
       serialize: function() {
@@ -95,7 +95,11 @@ export default Model.extend({}, {
         break;
 
       case CONST.vtTF:
-        val = (val > 0) || (val === true) || (val.toLowerCase() === 'true');
+        if (typeof val === 'string') {
+          val = val.toLowerCase() === "true" ? true : false;
+        } else {
+          val = (val === true) || (parseInt(val) > 0);
+        }
         break;
     }
 

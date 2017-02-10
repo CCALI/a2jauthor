@@ -36,7 +36,7 @@
           </div>
           <div class="checkbox">
             <label>
-              <input type="checkbox" can-value="{underline}"> Underline
+              <input type="checkbox" {($checked)}="underline"> Underline
             </label>
           </div>
         </form>

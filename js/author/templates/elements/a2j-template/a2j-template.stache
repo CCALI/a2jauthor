@@ -58,7 +58,7 @@
           {(edit-active)}="./state.editActive"
           {toggle-edit-active-node}="@toggleEditActiveNode"
           {section-counter}="../rootNode.state.sectionCounter"
-          {title-tag}="state.titleTag"
+          {(title-tag)}="state.titleTag"
         />
       {{/is}}
 

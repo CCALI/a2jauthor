@@ -35,7 +35,7 @@ describe('<a2j-pages>', () => {
 
     defaults = {
       traceLogic: new can.List(),
-      currentPage: { fields: [] },
+      currentPage: new can.Map ({ fields: [], repeatVar: "" }),
       logic: logicStub,
       rState: { },
       mState: { },
@@ -139,6 +139,64 @@ describe('<a2j-pages>', () => {
         assert.deepEqual(vm.attr('traceLogic').attr(), expectedTrageLogic,
           'should run codeAfter');
       });
+
+      it('saves answer when button has a value', () => {
+        let answers = defaults.interview.answers;
+
+        let kidstf = new can.Map({
+          comment: "",
+          name: "KidsTF",
+          repeating: true,
+          type: "TF",
+          values: [null]
+        });
+
+        answers.attr('kidstf', kidstf);
+
+        const button = new can.Map({
+          label: 'Go!',
+          next: 'Next',
+          name: 'KidsTF',
+          value: "true"
+        });
+
+        vm.navigate(button);
+
+        assert.deepEqual(answers.attr('kidstf.values.1'), true,
+        'first saved value should be true');
+      });
+
+      it('saves answer when button can hold mutilple values', () => {
+        let answers = defaults.interview.answers;
+        let page = defaults.currentPage;
+
+        let agesnu = new can.Map({
+          comment: "",
+          name: "AgesNU",
+          repeating: true,
+          type: "Number",
+          values: [null, 14, 12]
+        });
+
+        answers.attr('agesnu', agesnu);
+
+        const button = new can.Map({
+          label: 'Go!',
+          next: 'Next',
+          name: 'AgesNU',
+          value: "42"
+        });
+
+        // required to trigger mutli-value save
+        page.attr('repeatVar', 'AgeCount');
+        logicStub.varGet.returns(3);
+
+        vm.navigate(button);
+
+        assert.deepEqual(answers.attr('agesnu.values.3'), 42,
+        'adds mutli value to index 3');
+      });
+
     });
 
     it('setRepeatVariable', () => {
@@ -174,6 +232,7 @@ describe('<a2j-pages>', () => {
       }], 'trace page name');
     });
   });
+
 
   describe('Component', () => {
     beforeEach(() => {

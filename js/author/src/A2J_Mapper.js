@@ -127,6 +127,7 @@ function showPageOnMap() {}
 
 // Construct mapper flowcharts.
 function buildMap() {
+  
   var page;
   var $map = $('.map');
   var guidePages = gGuide.pages || {};
@@ -192,12 +193,12 @@ function buildMap() {
 
 // JPM if showing/hiding page list, do that and zoom to fit
 function mapZoomSlide() {
-  $('.tabsMapPages').animate({width: 'toggle'});
 
-  if ($('#tabsMap .col-4').css('width') == '0px') {
-    $('#tabsMap .col-4').css('width', '30%');
+  if ($('#tabsMap .col-4').hasClass('isHidden')) {
+    $('#tabsMap .col-4').removeClass('isHidden');
+    $('#tabsMap .col-4').animate({width: '30%'}, function(element) {});
     $('#tabsMap .col-8').css('width', '70%');
-
+    $('.tabsMapPages').css('display', 'block');
     $('#MapperToolbar button')
       .first()
       .button({
@@ -205,9 +206,10 @@ function mapZoomSlide() {
         label: '<span class="glyphicon-left-thin"></span> Hide Page List'
       });
   } else {
-    $('#tabsMap .col-4').css('width', '0px');
+    $('#tabsMap .col-4').addClass('isHidden');
+    $('#tabsMap .col-4').animate({width: '0%'}, function(element) {});
     $('#tabsMap .col-8').css('width', '100%');
-
+    $('.tabsMapPages').css('display', 'none');
     $('#MapperToolbar button')
       .first()
       .button({

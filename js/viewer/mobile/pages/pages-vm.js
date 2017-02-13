@@ -345,11 +345,22 @@ export default Map.extend({
 
       can.batch.start();
 
+      
+
       this.attr('traceLogic').push({ page: page.attr('name') });
       this.attr('currentPage', page);
       this.setFieldAnswers(page.attr('fields'));
       this.attr('mState.header', page.attr('step.text'));
       this.attr('mState.step', page.attr('step.number'));
+      
+      //run logic before question
+      if (page.attr('codeBefore')) {
+        let logic = this.attr('logic');
+        this.attr('traceLogic').push({
+          codeBefore: { format: 'info', msg: 'Logic Before Question'}
+        });
+        logic.exec(page.attr('codeBefore'));
+      }
 
       can.batch.stop();
     }

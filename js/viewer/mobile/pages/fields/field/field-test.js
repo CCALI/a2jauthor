@@ -12,6 +12,8 @@ describe('<a2j-field>', () => {
     beforeEach(() => {
       fieldStub = {
         name: 'Foo Input',
+        type: '',
+        suggestionText: '',
         _answer: {
           answerIndex: 1,
           answer: {
@@ -35,7 +37,19 @@ describe('<a2j-field>', () => {
       values.push('bar');
       vm.attr('field').attr('value', 'bar');
 
-      assert(vm.attr('shouldBeChecked'), 'should return true if answer matches radio button value');
+      assert.equal(vm.attr('shouldBeChecked'), true, 'should return true if answer matches radio button value');
+    });
+
+    it('should suggest a format for SSN numbers', () => {
+      vm.attr('field').attr('type', 'numberssn');
+
+      assert.equal(vm.attr('suggestionText'), '999-99-9999', 'should return ssn format suggestion');
+    });
+
+    it('should suggest a format for SSN numbers', () => {
+      vm.attr('field').attr('type', 'numberphone');
+
+      assert.equal(vm.attr('suggestionText'), '(555)-555-5555', 'should return phone number format suggestion');
     });
 
     it('computes numberPickOptions from field min/max values', function() {

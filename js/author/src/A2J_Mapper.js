@@ -45,6 +45,7 @@ function mapLines() {
     page = guidePages[pageName];
 
     if (page.mapx != null) {
+      
       var nodeLeft = page.mapx;
       var nodeTop = page.mapy;
 
@@ -135,14 +136,16 @@ function buildMap() {
   $map.empty();
 
   // Snap to grid
-  Object.keys(guidePages).forEach(function(pageName) {
-    page = guidePages[pageName];
+  // NOTE: This is causing the map to shift on every load.
+  // Causing part of the issue described in issue #936
+  // Object.keys(guidePages).forEach(function(pageName) {
+  //   page = guidePages[pageName];
 
-    if (page.mapx != null) {
-      page.mapx = Math.round(1 + page.mapx / GRID_MAP.x) * GRID_MAP.x;
-      page.mapy = Math.round(1 + page.mapy / GRID_MAP.y) * GRID_MAP.y;
-    }
-  });
+  //   if (page.mapx != null) {
+  //     page.mapx = Math.round(1 + page.mapx / GRID_MAP.x) * GRID_MAP.x;
+  //     page.mapy = Math.round(1 + page.mapy / GRID_MAP.y) * GRID_MAP.y;
+  //   }
+  // });
 
   // Full size boxes with question names and simple lines connecting boxes.
   Object.keys(guidePages).forEach(function(pageName) {

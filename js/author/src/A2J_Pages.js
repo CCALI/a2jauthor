@@ -171,6 +171,7 @@ function pageEditNew()
 {	// Create a new blank page, after selected page.
 	var newName = pageEditSelected();
 	var newStep;
+	var selPage = false;
 	if (newName ==='')
 	{	// No page selected, use first page listed in TOC and in first step.
 		var rel = makestr($('.pageoutline li').first().attr('rel'));
@@ -187,13 +188,22 @@ function pageEditNew()
 	}
 	else
 	{	// Create new page in same step as selected page.
-		var selPage = gGuide.pages[newName];
+		selPage = gGuide.pages[newName];
 		newStep = selPage.step;
 	}
+
+	if(selPage === false) {
+		selPage = gGuide.sortedPages.length > 0 ? gGuide.sortedPages[gGuide.sortedPages.length - 1] : false;
+	}
+	
+
 	var page = gGuide.addUniquePage(newName);
 	page.type="A2J";
 	page.text="My text";
 	page.step = newStep;
+	page.mapx = selPage ? selPage.mapx : 0;
+	page.mapy = selPage ? selPage.mapy + NODE_SIZE.h + 20 : 0;
+	
 	// 2014-10-22 Ensure a new page has at least one button
 	var cnt= new TButton();
 	cnt.label = lang.Continue;

@@ -5,7 +5,7 @@ import AnswerVM from 'viewer/models/answervm';
 import Parser from 'viewer/mobile/util/parser';
 import {ViewerNavigationVM} from 'viewer/desktop/navigation/navigation';
 import constants from 'viewer/models/constants';
-import _find from 'lodash/find';
+
 import 'can/util/batch/';
 import 'can/map/define/';
 import 'can/util/jquery/';

@@ -524,7 +524,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
 			var updateFieldLayout= function(ff,field)
 			//** @param {TField} field */
 			{
-				var canRequire = field.type !== 'radio';
+				var canRequire = field.type !== 'radio' && field.type !== CONST.ftCheckBoxNOTA;
 				var canMinMax = field.type===CONST.ftNumber || field.type===CONST.ftNumberDollar || field.type===CONST.ftNumberPick || field.type===CONST.ftDateMDY;
 				var canList = field.type===CONST.ftTextPick;
 				var canDefaultValue = field.type!==CONST.ftCheckBox && field.type!==CONST.ftCheckBoxNOTA && field.type!==CONST.ftGender;
@@ -566,7 +566,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
 						change:function(val,field,ff){
 							field.type=val;
 							// Radio Buttons always required
-							if (field.type === 'radio') {
+							if (field.type === 'radio' || field.type === CONST.ftCheckBoxNOTA) {
 								field.required = true;
 							}
 
@@ -707,7 +707,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
           }));
 
           ff.append(form.text({
-            groupName: 'url',
+            name: 'url',
             value: b.url,
             label: 'URL:',
             placeholder: '',

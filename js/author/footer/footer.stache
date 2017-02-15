@@ -3,5 +3,5 @@
 <div class="cajafooter">
   <span id="saveStatus"></span>
   <span id="CAJAStatus"></span>
-  <span class="copyright">© 2000-2017 IIT-Chicago-Kent College of Law and CALI {{viewerVersion}}</span>
+  <span class="copyright">© 2000-{{currentYear}} IIT Chicago-Kent College of Law and CALI {{viewerVersion}}</span>
 </div>

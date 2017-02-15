@@ -5,7 +5,7 @@ import AnswerVM from 'viewer/models/answervm';
 import Parser from 'viewer/mobile/util/parser';
 import {ViewerNavigationVM} from 'viewer/desktop/navigation/navigation';
 import constants from 'viewer/models/constants';
-
+import _find from 'lodash/find';
 import 'can/util/batch/';
 import 'can/map/define/';
 import 'can/util/jquery/';
@@ -352,15 +352,7 @@ export default Map.extend({
       this.setFieldAnswers(page.attr('fields'));
       this.attr('mState.header', page.attr('step.text'));
       this.attr('mState.step', page.attr('step.number'));
-      
-      //run logic before question
-      if (page.attr('codeBefore')) {
-        let logic = this.attr('logic');
-        this.attr('traceLogic').push({
-          codeBefore: { format: 'info', msg: 'Logic Before Question'}
-        });
-        logic.exec(page.attr('codeBefore'));
-      }
+    
 
       can.batch.stop();
     }

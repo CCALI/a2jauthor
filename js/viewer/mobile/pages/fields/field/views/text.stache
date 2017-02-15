@@ -10,7 +10,8 @@
       id="{{label}}"
       class="form-control"
       ($change)="validateField"
-      {($value)}="field._answer.values"/>
+      {($value)}="field._answer.values"
+      placeholder="{{suggestionText}}" />
   </div>
 
   {{> invalid-prompt-tpl }}

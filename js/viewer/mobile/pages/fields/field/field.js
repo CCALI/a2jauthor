@@ -102,6 +102,27 @@ export let FieldVM = Map.extend({
       }
     },
 
+     /**
+     * @property {String} field.ViewModel.prototype.suggestionText suggestionText
+     * @parent field.ViewModel
+     *
+     * Used to suggest input format for text strings
+     *
+     */
+
+    suggestionText: {
+      get: function() {
+        let fieldType = this.field.type;
+        if (fieldType === 'numberssn') {
+          return '999-99-9999';
+        } else if (fieldType === 'numberphone') {
+          return '(555)-555-5555';
+        } else {
+          return '';
+        }
+      }
+    },
+
     /**
      * @property {Boolean} field.ViewModel.prototype.supportsNativeDateInput supportsNativeDateInput
      * @parent field.ViewModel

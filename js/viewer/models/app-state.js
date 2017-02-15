@@ -79,6 +79,12 @@ export default Map.extend({
     });
 
     if (page && !alreadyVisited) {
+      //if there is any codeBefore that we need to execute, let's do that. 
+      //this will make sure that any macros inside the page.attr('text') get's evaluated properly.
+      if (page.attr('codeBefore')) {
+        logic.exec(page.attr('codeBefore'));
+      }
+
       let text = (logic && logic.eval) ? logic.eval(page.attr('text')) : page.attr('text');
       let name = page.attr('name');
       visited.unshift({ name, text, repeatVar, repeatVarValue });

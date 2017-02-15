@@ -468,7 +468,7 @@ var form={
       '<label class="control-label">' + data.label + '</label>' : '';
 
     var $el = $(
-      '<div class="editspan form-group" ' + (data.groupName ? 'name="' + data.groupName + '"' : '') + '>' +
+      '<div class="editspan form-group" ' + (data.name ? 'name="' + data.name + '"' : '') + '>' +
         label +
         '<input class="form-control ui-widget editable" type="text">' +
       '</div>'

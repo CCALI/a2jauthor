@@ -83,7 +83,7 @@ export let FieldVM = Map.extend({
         let previousAnswer = answerValues[answerIndex];
 
         return (radioButtonValue === previousAnswer);
-      }
+      },
     },
 
    /**
@@ -250,7 +250,24 @@ export default Component.extend({
       }
     },
 
+    '{a2j-field input[type=checkbox]} change': function(values, ev) {
+      let field = this.viewModel.attr('field');
+
+      if (ev.target.checked === true && (field.type === "checkbox" || field.type === "checkboxNOTA")) {
+        let fields = this.viewModel.attr('%root.fields');
+        if (fields) {
+          let toStayChecked = field.type;
+            fields.each(function(field) {
+              if (field.type !== toStayChecked) {
+                field.attr('_answer.answer.values.1', false);
+              }
+            });
+          }
+        }
+    },
+
     '{field._answer.answer.values} change': function(values, ev, attr) {
+
       if (attr === '1') {
         let message = {};
         let msgVar = this.viewModel.attr('field.name');

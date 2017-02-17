@@ -59,7 +59,7 @@
   {{/if}}
 {{else}}
   <div style="{{fontProperties}}">
-    <h3>{{loopTitle}}</h3>
+    {{{ showRepeatLoopTitle() }}}
 
     {{#is displayType "table"}}
       {{> loop-table-tpl }}

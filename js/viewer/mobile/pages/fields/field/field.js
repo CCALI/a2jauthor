@@ -116,7 +116,7 @@ export let FieldVM = Map.extend({
         if (fieldType === 'numberssn') {
           return '999-99-9999';
         } else if (fieldType === 'numberphone') {
-          return '(555)-555-5555';
+          return '(555) 555-5555';
         } else {
           return '';
         }

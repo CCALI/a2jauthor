@@ -54,7 +54,7 @@ describe('<a2j-field>', () => {
     it('should suggest a format for SSN numbers', () => {
       vm.attr('field').attr('type', 'numberphone');
 
-      assert.equal(vm.attr('suggestionText'), '(555)-555-5555', 'should return phone number format suggestion');
+      assert.equal(vm.attr('suggestionText'), '(555) 555-5555', 'should return phone number format suggestion');
     });
 
     it('computes numberPickOptions from field min/max values', function() {

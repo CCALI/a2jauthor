@@ -43,6 +43,27 @@ export default Component.extend({
   },
 
   events: {
+
+    'a.learn-more click': function(el, ev) {
+      ev.preventDefault();
+      
+      const vm = this.viewModel;
+      const pages = vm.attr('interview.pages');
+      const pageName = vm.attr('rState.page');
+
+      if (pages && pageName) {
+        const page = pages.find(pageName);
+
+        vm.attr('modalContent', {
+          title: page.learn,
+          text: page.help,
+          imageURL: page.helpImageURL,
+          audioURL: page.helpAudioURL,
+          videoURL: page.helpVideoURL
+        });
+      }
+    },
+
     'a:regex(href,popup\://) click': function(el, ev) {
       ev.preventDefault();
 

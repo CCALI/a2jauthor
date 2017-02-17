@@ -356,11 +356,11 @@ export default Map.extend({
 
       can.batch.stop();
       if (page.attr('codeBefore')) {
-        let logic = this.attr('logic');
+        //if we had any codeBefore which we executed in app-state.js setVisitedPages
+        //we should log that to the traceLogic here.
         this.attr('traceLogic').push({
           codeBefore: { format: 'info', msg: 'Logic Before Question'}
         });
-        //logic.exec(page.attr('codeBefore'));
       }
     }
   },

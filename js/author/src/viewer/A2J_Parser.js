@@ -72,6 +72,7 @@ function page2JSON(page)
 		_MAPY:			page.mapy,
 		_STEP:			page.step,
 		_REPEATVAR:		page.repeatVar,
+		_NESTED:		page.nested,
 		_OUTERLOOPVAR: 	page.outerLoopVar,
 		//_NEXTPAGE:	page.nextPage===''?gJS2XML_SKIP:page.nextPage,
 		//_nextPageDisabled: page.nextPageDisabled===true ? true : gJS2XML_SKIP,
@@ -230,6 +231,7 @@ function parseXML2Page(PAGE, page)
 		page.mapy=parseInt(PAGE.attr("MAPY"),10);
 	}
 	page.repeatVar=makestr(PAGE.attr("REPEATVAR"));
+	page.nested=textToBool(PAGE.attr('NESTED'));
 	page.outerLoopVar=makestr(PAGE.attr("OUTERLOOPVAR"));
 	//page.nextPage="";
 	//page.nextPageDisabled = false;

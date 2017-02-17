@@ -17,6 +17,7 @@ function page2JSON_Mobile(page)
 		type:			page.type,
 		step:			page.step,
 		repeatVar:		page.repeatVar,
+		nested:			page.nested,
 		outerLoopVar: 	page.outerLoopVar,
 		text:			page.text,
 		textAudioURL:	page.textAudioURL,

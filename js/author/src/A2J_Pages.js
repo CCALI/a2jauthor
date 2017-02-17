@@ -487,6 +487,10 @@ function guidePageEditForm(page, div, pagename)//novicePage
       form.find('[name="helpGraphic"]').showit(showMe === 1);
       form.find('[name="helpReader"]').showit(showMe >= 1);
       form.find('[name="helpVideo"]').showit(showMe === 2);
+
+			// only show outerLoopVar if nested is checked
+			form.find('[name="outerLoopVar"]').showit(page.nested);
+
     };
 
 		pagefs.append(form.pickList({label:'Help style:',value:getShowMe(), change:function(val,page,form){
@@ -510,7 +514,17 @@ function guidePageEditForm(page, div, pagename)//novicePage
 		pagefs.append(form.varPicker(		{label:'Counting Variable:',placeholder:'',	value:page.repeatVar,
 			change:function(val,page){page.repeatVar=val;}} ));
 
-		pagefs.append(form.varPicker(		{label:'Outer Loop Variable:',placeholder:'',	value:page.outerLoopVar,
+		pagefs.append(form.checkbox({name: 'nested', label:'Nested:', checkbox:'', value:page.nested,
+			change:function(val,page){
+				page.nested = val;
+				$('[name="outerLoopVar"]').showit(page.nested);
+				// clear outerLoopVar if unchecked
+				if (!page.nested) {
+					page.outerLoopVar = '';
+				}
+			}}));
+
+		pagefs.append(form.varPicker({name: 'outerLoopVar', label:'Outer Loop Counting Variable:',placeholder:'',	value:page.outerLoopVar,
 			change:function(val,page){page.outerLoopVar=val;}} ));
 
 		t.append(pagefs);

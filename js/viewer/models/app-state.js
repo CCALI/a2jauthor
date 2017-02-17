@@ -13,6 +13,7 @@ export default Map.extend({
 
     forceNavigation: {
       type: 'boolean',
+      value: false,
       serialize: false
     },
 
@@ -38,6 +39,7 @@ export default Map.extend({
       serialize: false,
       set(interview) {
         let pageName = this.attr('page');
+        debugger
         this.setVisitedPages(pageName, interview);
         return interview;
       }
@@ -47,6 +49,7 @@ export default Map.extend({
       value: '',
       set(pageName) {
         let interview = this.attr('interview');
+        debugger
         this.setVisitedPages(pageName, interview);
         return pageName;
       }
@@ -78,13 +81,15 @@ export default Map.extend({
              (!visitedPageRepeatVarValue || (visitedPageRepeatVarValue === repeatVarValue));
     });
 
-    if (page && !alreadyVisited) {
-      //if there is any codeBefore that we need to execute, let's do that. 
-      //this will make sure that any macros inside the page.attr('text') get's evaluated properly.
-      if (page.attr('codeBefore')) {
-        logic.exec(page.attr('codeBefore'));
-      }
+    //if there is any codeBefore that we need to execute, let's do that.
+    //this will make sure that any macros inside the page.attr('text') get's evaluated properly.
 
+    if (page && this.attr("forceNavigation") === false && page.attr('codeBefore')) {
+      debugger
+      logic.exec(page.attr('codeBefore'));
+    }
+
+    if (page && !alreadyVisited) {
       let text = (logic && logic.eval) ? logic.eval(page.attr('text')) : page.attr('text');
       let name = page.attr('name');
       visited.unshift({ name, text, repeatVar, repeatVarValue });

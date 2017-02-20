@@ -345,23 +345,13 @@ export default Map.extend({
 
       can.batch.start();
 
-
-
       this.attr('traceLogic').push({ page: page.attr('name') });
       this.attr('currentPage', page);
       this.setFieldAnswers(page.attr('fields'));
       this.attr('mState.header', page.attr('step.text'));
       this.attr('mState.step', page.attr('step.number'));
 
-
       can.batch.stop();
-      if (page.attr('codeBefore')) {
-        //if we had any codeBefore which we executed in app-state.js setVisitedPages
-        //we should log that to the traceLogic here.
-        this.attr('traceLogic').push({
-          codeBefore: { format: 'info', msg: 'Logic Before Question'}
-        });
-      }
     }
   },
 
@@ -459,6 +449,17 @@ export default Map.extend({
     }
   },
 
+  fireCodeBefore(page, logic) {
+    let forceNavigation = this.attr('rState.forceNavigation');
+
+    if (page && !forceNavigation && page.attr('codeBefore')) {
+        this.attr('traceLogic').push({
+          codeBefore: { format: 'info', msg: 'Logic Before Question'}
+        });
+      logic.exec(page.attr('codeBefore'));
+      }
+  },
+
   changePage: function(rState, newPageName) {
     const vm = this;
 
@@ -484,15 +485,13 @@ export default Map.extend({
     let logic = vm.attr('logic');
     let p = vm.attr('interview.pages').find(newPageName);
 
-    // unknown page name
+    // Next page is unknown page name
     if (!p) return;
 
-    // if (p.attr('codeBefore')) {
-    //   vm.attr('traceLogic').push({
-    //     codeBefore: { format: 'info', msg: 'Logic Before Question'}
-    //   });
-      // logic.exec(p.attr('codeBefore'));
-    // }
+    if (p.attr('codeBefore')) {
+      this.fireCodeBefore(p, logic);
+    }
+
     var gotoPage = logic.attr('gotoPage');
     // If this has value, we are exiting the interview
     var lastPageBeforeExit = rState.attr('lastPageBeforeExit');

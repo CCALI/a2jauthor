@@ -1,6 +1,7 @@
 import Map from 'can/map/';
 import List from 'can/list/';
 import _find from 'lodash/find';
+import PagesVM from 'viewer/mobile/pages/pages-vm';
 
 import 'can/map/define/';
 
@@ -81,9 +82,10 @@ export default Map.extend({
 
     //if there is any codeBefore that we need to execute, let's do that.
     //this will make sure that any macros inside the page.attr('text') get's evaluated properly.
-
-    if (!alreadyVisited && page && this.attr("forceNavigation") === false && page.attr('codeBefore')) {
-      logic.exec(page.attr('codeBefore'));
+    const firstPage = interview.attr('firstPage');
+    if (pageName === firstPage && page.attr('codeBefore')) {
+      let vm = new PagesVM();
+      vm.fireCodeBefore(page, logic);
     }
 
     if (page && !alreadyVisited) {

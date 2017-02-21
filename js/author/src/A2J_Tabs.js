@@ -232,15 +232,22 @@ var form={
 	//,number:    function(label,value,minNum,maxNum,handler){
 	//	return "<label>"+label+'</label><input class="editable" type="text" name="'+group+id+'" value="'+htmlEscape(value)+'"> ';}
 
-	,checkbox: function(data){
+	,checkbox: function(data) {
 		var e=$('<div name="'+data.name+'">'
 			+'<div class="checkbox">'
 			+'<label>'
 			+'<input type="checkbox" /> '+data.checkbox
 			+(typeof data.label!=='undefined' ? ( data.label ) : '')
 			+'</label></div></div>');
-		$('input',e).blur(function(){
-			form.change($(this),$(this).is(':checked'));}).attr( 'checked',data.value===true).data('data',data);
+
+    var input = $('input',e);
+
+    input.change(function(){
+      form.change($(this),$(this).is(':checked'));
+    });
+
+    input.attr('checked', data.value===true).data('data',data);
+
 		return e;
 	}
 
@@ -382,14 +389,14 @@ var form={
   // Pick variable name from list of defined variables
   varPicker: function(data) {
     var dval = (data.value);
-
-    var label = data.label != null ?
-      '<label class="control-label">' + data.label + '</label>' : '';
+    var label = data.label ? '<label class="control-label">' + data.label + '</label>' : '';
 
     var $el = $(
+      '<div ' + (data.name ? 'name="' + data.name + '"' : '') + '>' +
       label +
       '<div class="editspan form-group">' +
         '<input class="form-control ui-combobox-input editable autocomplete picker varname dest" type="text" >' +
+      '</div>' +
       '</div>'
     );
 

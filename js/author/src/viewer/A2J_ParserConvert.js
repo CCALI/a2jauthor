@@ -134,6 +134,8 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		page.mapx=parseInt(0.5*QUESTION.attr("MAPX"),10);
 		page.mapy=parseInt(0.7*QUESTION.attr("MAPY"),10) + 100;
 		page.repeatVar=makestr(QUESTION.attr("REPEATVAR"));
+		page.outerLoopVar=makestr(QUESTION.attr("OUTERLOOPVAR"));
+		page.nested=textToBool(QUESTION.attr("NESTED"));
 		//page.nextPage="";
 		//page.nextPageDisabled = false;
 		page.text=replacePopups(page.name,makestr(QUESTION.find("TEXT").xml()));

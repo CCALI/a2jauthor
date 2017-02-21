@@ -56,6 +56,10 @@ export default Map.extend({
       type: 'number'
     },
 
+    outerLoopVarValue: {
+      type: 'number'
+    },
+
     logic: {
       serialize: false
     }
@@ -70,6 +74,8 @@ export default Map.extend({
     let logic = this.attr('logic');
     let repeatVar = page && page.attr('repeatVar');
     let repeatVarValue = (repeatVar) ? logic.varGet(repeatVar) : undefined;
+    let outerLoopVar = page && page.attr('outerLoopVar');
+    let outerLoopVarValue = (outerLoopVar) ? logic.varGet(outerLoopVar) : undefined;
 
     // do not add the same page twice.
     let alreadyVisited = _find(visited, function(visitedPage) {
@@ -81,7 +87,7 @@ export default Map.extend({
     if (page && !alreadyVisited) {
       let text = (logic && logic.eval) ? logic.eval(page.attr('text')) : page.attr('text');
       let name = page.attr('name');
-      visited.unshift({ name, text, repeatVar, repeatVarValue });
+      visited.unshift({ name, text, repeatVar, repeatVarValue, outerLoopVar, outerLoopVarValue });
     }
   }
 });

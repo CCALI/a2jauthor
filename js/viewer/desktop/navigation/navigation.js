@@ -265,7 +265,7 @@ export default Component.extend({
   helpers: {
     feedbackFormUrl() {
       let feedbackData = this.attr('feedbackData');
-      let baseUrl = 'http://www.a2jauthor.org/A2JFeedbackForm.php?';
+      let baseUrl = 'http://www.a2jauthor.org/app/A2JFeedbackForm.php?';
       return baseUrl + $.param(feedbackData);
     },
 

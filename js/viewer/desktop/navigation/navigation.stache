@@ -30,7 +30,7 @@
 
     <div class="nav navbar-nav navbar-right">
       {{#if interview.sendfeedback}}
-        <a role="button" href="{{feedbackFormUrl}}"
+        <a role="button" target="_blank" href="{{feedbackFormUrl}}"
           class="btn btn-default navbar-btn send-feedback">
           <span class="glyphicon-mail"></span> {{lang.SendFeedback}}
         </a>

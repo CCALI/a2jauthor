@@ -138,7 +138,7 @@ export let SignTextVM = Map.extend({
         let maxFontPixels = Math.floor(vm.attr('paragraphContainer').height() / 2);
 
         vm.attr('paragraphContainer').textfill({
-          innerTag: 'p',
+          innerTag: 'div',
           // once the text size has been set, update the line height
           success: vm.updateLineHeight.bind(vm),
           maxFontPixels: maxFontPixels
@@ -205,7 +205,7 @@ export default Component.extend({
 
   events: {
     inserted() {
-      let $p = this.element.find('div p');
+      let $p = this.element.find('div div');
       this.viewModel.attr('paragraph', $p);
       this.viewModel.attr('paragraphContainer', $p.parent());
       this.viewModel.resizeText();

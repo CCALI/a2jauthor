@@ -241,11 +241,12 @@ var form={
 			+'</label></div></div>');
 
     var input = $('input',e);
-      input.change(function(){
-        form.change($(this),$(this).is(':checked'));
-      });
 
-      input.attr('checked', data.value===true).data('data',data);
+    input.change(function(){
+      form.change($(this),$(this).is(':checked'));
+    });
+
+    input.attr('checked', data.value===true).data('data',data);
 
 		return e;
 	}

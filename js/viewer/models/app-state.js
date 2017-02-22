@@ -1,7 +1,6 @@
 import Map from 'can/map/';
 import List from 'can/list/';
 import _find from 'lodash/find';
-import PagesVM from 'viewer/mobile/pages/pages-vm';
 
 import 'can/map/define/';
 
@@ -83,9 +82,15 @@ export default Map.extend({
     //if there is any codeBefore that we need to execute, let's do that.
     //this will make sure that any macros inside the page.attr('text') get's evaluated properly.
     const firstPage = interview.attr('firstPage');
+    let newGotoPage;
     if (pageName === firstPage && page.attr('codeBefore')) {
-      let vm = new PagesVM();
-      vm.fireCodeBefore(page, logic);
+      newGotoPage = this.fireCodeBefore(page, logic);
+    }
+    // newGotoPage means a GOTO event fired in the codeBefore skip this current pageName
+    // as visited, and set the newGotoPage instead
+    if (newGotoPage) {
+      this.setVisitedPages(newGotoPage, interview);
+      return;
     }
 
     if (page && !alreadyVisited) {
@@ -93,5 +98,23 @@ export default Map.extend({
       let name = page.attr('name');
       visited.unshift({ name, text, repeatVar, repeatVarValue });
     }
+  },
+
+  fireCodeBefore(page, logic, traceLogic) {
+    let forceNavigation = this.attr('forceNavigation');
+    let preGotoPage = logic.attr('gotoPage');
+
+    if (page && !forceNavigation && page.attr('codeBefore')) {
+      if (traceLogic) {
+        traceLogic.push({
+          codeBefore: { format: 'info', msg: 'Logic Before Question'}
+        });
+      }
+      logic.exec(page.attr('codeBefore'));
+    }
+
+    let postGotoPage = logic.attr('gotoPage');
+    // if gotoPage changes, codeBefore fired a goto event
+    return preGotoPage !== postGotoPage ? postGotoPage : false;
   }
 });

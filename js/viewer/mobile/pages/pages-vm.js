@@ -449,17 +449,6 @@ export default Map.extend({
     }
   },
 
-  fireCodeBefore(page, logic) {
-    let forceNavigation = this.attr('rState.forceNavigation');
-
-    if (page && !forceNavigation && page.attr('codeBefore')) {
-        this.attr('traceLogic').push({
-          codeBefore: { format: 'info', msg: 'Logic Before Question'}
-        });
-      logic.exec(page.attr('codeBefore'));
-      }
-  },
-
   changePage: function(rState, newPageName) {
     const vm = this;
 
@@ -482,14 +471,23 @@ export default Map.extend({
       return;
     }
 
-    let logic = vm.attr('logic');
-    let p = vm.attr('interview.pages').find(newPageName);
+    // Checking and firing the next page's codeBefore
+    let nextPage = vm.attr('interview.pages').find(newPageName);
 
     // Next page is unknown page name
-    if (!p) return;
+    if (!nextPage) return;
 
-    if (p.attr('codeBefore')) {
-      this.fireCodeBefore(p, logic);
+    let logic = vm.attr('logic');
+    let traceLogic = vm.attr('traceLogic');
+    let newGotoPage;
+
+    if (nextPage.attr('codeBefore')) {
+      newGotoPage = rState.fireCodeBefore(nextPage, logic, traceLogic);
+    }
+    // Goto event in beforeCode sets the new page and exits this changePage
+    if (newGotoPage) {
+      vm._setPage(nextPage, newGotoPage);
+      return;
     }
 
     var gotoPage = logic.attr('gotoPage');
@@ -507,7 +505,7 @@ export default Map.extend({
     } else if (gotoPage && gotoPage.length && !lastPageBeforeExit) {
 
       logic.attr('infinite').inc();
-      vm._setPage(p, gotoPage);
+      vm._setPage(nextPage, gotoPage);
     } else {
       logic.attr('infinite').reset();
     }

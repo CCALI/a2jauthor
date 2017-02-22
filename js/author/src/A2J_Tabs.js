@@ -530,9 +530,9 @@ var form={
 	}
 	,htmlFix:function(html)
 	{
-		console.log('htmlFix before',html);
+		// console.log('htmlFix before',html);
 		html = form.pasteFix(html,['P','BR','UL','OL','LI','A','B','I','U','BLOCKQUOTE']);
- 		console.log('htmlFix after ',html);
+ 		// console.log('htmlFix after ',html);
 		return html;
 	}
 	,htmlarea: function(data){//label,value,handler,name){
@@ -544,32 +544,26 @@ var form={
 			+data.value+'</div></div></div></div>');
 		$('.editable',e).focus(
       function(){
-        console.log("editable focused");
         $(this).addClass('tallest');
         form.editorAdd($(this));
       });
     $('.editable', e).blur(function(){
-      console.log("editable blur");
 			//$(this).removeClass('tallest');
 			form.editorRemove(this);
       var html=form.htmlFix($(this).html());
-      console.log(html);
 			//$(this).html(html);
 			form.change($(this), html);
 		});
     $('.editable', e).data('data',data);
     $('.editable', e).on('DOMNodeInserted', function(){
-      console.log("editable DOMNodeInserted");
       var html=form.htmlFix($(this).html());
 			form.change($(this), html);
     });
     $('.editable', e).on('DOMNodeRemoved', function(){
-      console.log("editable DOMNodeRemoved");
       var html=form.htmlFix($(this).html());
 			form.change($(this), html);
     });
     $('.editable', e).on('DOMCharacterDataModified', function(){
-      console.log("editable DOMCharacterDataModified");
       var html=form.htmlFix($(this).html());
 			form.change($(this), html);
     });

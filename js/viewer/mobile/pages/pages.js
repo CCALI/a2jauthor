@@ -50,7 +50,7 @@ export default Component.extend({
       const pages = vm.attr('interview.pages');
 
       if (pages) {
-        const pageName = $(el.get(0)).attr("href").replace("POPUP://", ""); //pathname is not supported in FF and IE.
+        const pageName = $(el.get(0)).attr("href").replace("popup://", "").replace("POPUP://", "").replace("/", ""); //pathname is not supported in FF and IE.
         const page = pages.find(pageName);
         // popups only have name, text, textAudioURL possible values
         vm.attr('modalContent', {

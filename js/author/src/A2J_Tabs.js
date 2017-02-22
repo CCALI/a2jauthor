@@ -297,7 +297,7 @@ var form={
 				//var name= $(this).data().value;
 				//$('page-picker-dialog').dialog( "close" );
 			});
-		$('#page-picker-dialog').data(data).dialog({
+    $('#page-picker-dialog').data(data).dialog({
   		dialogClass: "modal bootstrap-styles",
 			autoOpen:true,
 				width: 700,
@@ -350,6 +350,7 @@ var form={
 				//var name= $(this).data().value;
 				//$('page-picker-dialog').dialog( "close" );
 			});
+      
 		$('#page-picker-dialog').data(data).dialog({
   		dialogClass: "modal bootstrap-styles",
 			autoOpen:true,
@@ -530,10 +531,8 @@ var form={
 	}
 	,htmlFix:function(html)
 	{
-		// console.log('htmlFix before',html);
 		html = form.pasteFix(html,['P','BR','UL','OL','LI','A','B','I','U','BLOCKQUOTE']);
- 		// console.log('htmlFix after ',html);
-		return html;
+ 		return html;
 	}
 	,htmlarea: function(data){//label,value,handler,name){
 		form.id++;
@@ -548,11 +547,9 @@ var form={
         form.editorAdd($(this));
       });
     $('.editable', e).blur(function(){
-			//$(this).removeClass('tallest');
-			form.editorRemove(this);
+      form.editorRemove(this);
       var html=form.htmlFix($(this).html());
-			//$(this).html(html);
-			form.change($(this), html);
+      form.change($(this), html);
 		});
     $('.editable', e).data('data',data);
     $('.editable', e).on('DOMNodeInserted', function(){
@@ -1546,7 +1543,20 @@ function editButton()
 				restoreSelection(sel);
 				//trace('window.getSelection', window.getSelection());
 				//trace('html',html);
-				document.execCommand('insertHTML',false,  html );
+				var didExecute = document.execCommand('insertHTML',false,  html );
+        if(!didExecute) {
+          //this one is for the team at Microsoft who decided to drop support for 
+          //document.execCommand('insertHTML', false, html) and didn't even bother
+          //returning an error. *kudos*
+          var frag = document.createDocumentFragment();
+          var htmlElement = document.createElement("span");
+          htmlElement.innerHTML = html;
+          frag.appendChild(htmlElement);
+          var selection = document.getSelection();
+          var range = selection.getRangeAt(0);
+          range.deleteContents();
+          range.insertNode(frag);
+        }
 				//trace('window.getSelection', window.getSelection());
 			}
 		}

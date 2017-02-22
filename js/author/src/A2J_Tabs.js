@@ -196,7 +196,7 @@ var form={
 		//$('#texttoolbar').hide();
 	}
 	,change: function(elt,val){
-		var form= $(elt).closest('[name="record"]');
+    var form= $(elt).closest('[name="record"]');
 		$(elt).data('data').change.call(elt,val,form.data('record'),form);
 	}
 	,h1:function(h){
@@ -362,12 +362,9 @@ var form={
 				buttons:[
 				{text:'Change', click:function()
 					{
-						var newPageDest = makestr($('#page-picker-list .list-group-item.'+SELECTED).first().attr('rel')).substr(5);
+            var newPageDest = makestr($('#page-picker-list .list-group-item.'+SELECTED).first().attr('rel')).substr(5);
 						data.value = newPageDest;
-						//data.change.call(rel,data);
-						//form.change(pageButton, newPageDest);
-						//trace('Changing destination  to "'+newPageDest+'"');
-						doneFnc(newPageDest);
+            doneFnc(newPageDest);
 						$(this).dialog("close");
 					}
 				},
@@ -533,9 +530,9 @@ var form={
 	}
 	,htmlFix:function(html)
 	{
-		//trace('htmlFix before',html);
+		console.log('htmlFix before',html);
 		html = form.pasteFix(html,['P','BR','UL','OL','LI','A','B','I','U','BLOCKQUOTE']);
- 		//trace('htmlFix after ',html);
+ 		console.log('htmlFix after ',html);
 		return html;
 	}
 	,htmlarea: function(data){//label,value,handler,name){
@@ -545,13 +542,38 @@ var form={
 			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
 			+'<div><div contenteditable=true class="htmledit form-control text editable taller" id="tinyMCE_'+form.id+'"  name="'+form.id+'" rows='+1+'>'
 			+data.value+'</div></div></div></div>');
-		$('.editable',e).focus(function(){$(this).addClass('tallest');form.editorAdd($(this));}).blur(function(){
+		$('.editable',e).focus(
+      function(){
+        console.log("editable focused");
+        $(this).addClass('tallest');
+        form.editorAdd($(this));
+      });
+    $('.editable', e).blur(function(){
+      console.log("editable blur");
 			//$(this).removeClass('tallest');
 			form.editorRemove(this);
-			var html=form.htmlFix($(this).html());
+      var html=form.htmlFix($(this).html());
+      console.log(html);
 			//$(this).html(html);
 			form.change($(this), html);
-		}).data('data',data) ;
+		});
+    $('.editable', e).data('data',data);
+    $('.editable', e).on('DOMNodeInserted', function(){
+      console.log("editable DOMNodeInserted");
+      var html=form.htmlFix($(this).html());
+			form.change($(this), html);
+    });
+    $('.editable', e).on('DOMNodeRemoved', function(){
+      console.log("editable DOMNodeRemoved");
+      var html=form.htmlFix($(this).html());
+			form.change($(this), html);
+    });
+    $('.editable', e).on('DOMCharacterDataModified', function(){
+      console.log("editable DOMCharacterDataModified");
+      var html=form.htmlFix($(this).html());
+			form.change($(this), html);
+    });
+    
 		return e;
 	},
 
@@ -1564,7 +1586,7 @@ function editButton()
 						url='POPUP://'+newPop;
 					}
 				}
-				setHTML();
+        setHTML();
 			});
 
 		}

@@ -552,6 +552,10 @@ var form={
       form.change($(this), html);
 		});
     $('.editable', e).data('data',data);
+
+    //these event bindings is for IE11 to handle any 
+    //updates to the `contenteditable`
+    //since blur is not called properly
     $('.editable', e).on('DOMNodeInserted', function(){
       var html=form.htmlFix($(this).html());
 			form.change($(this), html);
@@ -1541,8 +1545,6 @@ function editButton()
 					html = '<a href="'+url+'">'+txt+'</a>';
 				}
 				restoreSelection(sel);
-				//trace('window.getSelection', window.getSelection());
-				//trace('html',html);
 				var didExecute = document.execCommand('insertHTML',false,  html );
         if(!didExecute) {
           //this one is for the team at Microsoft who decided to drop support for 
@@ -1557,7 +1559,6 @@ function editButton()
           range.deleteContents();
           range.insertNode(frag);
         }
-				//trace('window.getSelection', window.getSelection());
 			}
 		}
 

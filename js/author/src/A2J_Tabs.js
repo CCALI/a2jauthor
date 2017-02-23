@@ -553,9 +553,9 @@ var form={
 		});
     $('.editable', e).data('data',data);
 
-    //these event bindings is for IE11 to handle any 
+    //these event bindings are for IE11 to handle any 
     //updates to the `contenteditable`
-    //since blur is not called properly
+    //since blur event is not called properly
     $('.editable', e).on('DOMNodeInserted', function(){
       var html=form.htmlFix($(this).html());
 			form.change($(this), html);

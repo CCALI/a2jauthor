@@ -19,16 +19,24 @@ import 'bootstrap/js/modal';
  */
 export default Map.extend({
   define: {
+    /**
+     * @property {String} pages.ViewModel.prototype.currentPage currentPage
+     * @parent pages.ViewModel
+     *
+     * String used to represent the current active page
+     */
     currentPage: {
       value: null
     },
 
+    /**
+     * @property {Object} pages.ViewModel.prototype.modalContent modalContent
+     * @parent pages.ViewModel
+     *
+     * Object that defines properties and values for popup and learn more modals
+     */
     modalContent: {
       value: null
-    },
-
-    traceLogic: {
-      value: []
     },
 
     /**
@@ -141,6 +149,18 @@ export default Map.extend({
         const answers = this.attr('interview.answers');
         const parsed = Parser.parseANX(answers.serialize());
         return parsed;
+      }
+    },
+
+    traceLogic: {
+
+      value: [],
+      get(lastSetVal) {
+        if(lastSetVal && lastSetVal.length === 0 && this.attr("rState.traceLogic")) {
+          console.log("once");
+          return this.attr("rState.traceLogic");
+        }
+        return lastSetVal;
       }
     }
   },
@@ -471,24 +491,11 @@ export default Map.extend({
       return;
     }
 
-    // Checking and firing the next page's codeBefore
+    // // Next page is unknown page name
     let nextPage = vm.attr('interview.pages').find(newPageName);
-
-    // Next page is unknown page name
     if (!nextPage) return;
 
     let logic = vm.attr('logic');
-    let traceLogic = vm.attr('traceLogic');
-    let newGotoPage;
-
-    if (nextPage.attr('codeBefore')) {
-      newGotoPage = rState.fireCodeBefore(nextPage, logic, traceLogic);
-    }
-    // Goto event in beforeCode sets the new page and exits this changePage
-    if (newGotoPage) {
-      vm._setPage(nextPage, newGotoPage);
-      return;
-    }
 
     var gotoPage = logic.attr('gotoPage');
     // If this has value, we are exiting the interview

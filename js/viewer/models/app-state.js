@@ -4,8 +4,9 @@ import _find from 'lodash/find';
 
 import 'can/map/define/';
 
-export default Map.extend({
+export const ViewerAppState = Map.extend({
   define: {
+
     visitedPages: {
       Value: List,
       serialize: false
@@ -59,7 +60,20 @@ export default Map.extend({
 
     logic: {
       serialize: false
+    },
+
+    traceLogic: {
+      value: []
     }
+  },
+
+  init() {
+    var self = this;
+    //this.attr("traceLogic", []);
+    $(window).on('traceLogic', function(ev, msg) {
+      console.log('heard traceLogic: ', msg);
+      self.attr('traceLogic').push(msg);
+    });
   },
 
   setVisitedPages(pageName, interview) {
@@ -81,40 +95,43 @@ export default Map.extend({
 
     //if there is any codeBefore that we need to execute, let's do that.
     //this will make sure that any macros inside the page.attr('text') get's evaluated properly.
-    const firstPage = interview.attr('firstPage');
     let newGotoPage;
-    if (pageName === firstPage && page.attr('codeBefore')) {
+    if (page.attr('codeBefore')) {
       newGotoPage = this.fireCodeBefore(page, logic);
     }
     // newGotoPage means a GOTO event fired in the codeBefore skip this current pageName
     // as visited, and set the newGotoPage instead
     if (newGotoPage) {
       this.setVisitedPages(newGotoPage, interview);
-      return;
     }
-
-    if (page && !alreadyVisited) {
+    // newGoto pages don't populate the visitedPages list
+    if (page && !alreadyVisited && !newGotoPage) {
       let text = (logic && logic.eval) ? logic.eval(page.attr('text')) : page.attr('text');
       let name = page.attr('name');
       visited.unshift({ name, text, repeatVar, repeatVarValue });
     }
   },
 
-  fireCodeBefore(page, logic, traceLogic) {
+  fireCodeBefore(page, logic) {
     let forceNavigation = this.attr('forceNavigation');
+    let traceLogic = this.attr('traceLogic');
     let preGotoPage = logic.attr('gotoPage');
 
     if (page && !forceNavigation && page.attr('codeBefore')) {
-      if (traceLogic) {
+        traceLogic.push({
+          page: page.attr("name")
+        });
         traceLogic.push({
           codeBefore: { format: 'info', msg: 'Logic Before Question'}
         });
-      }
       logic.exec(page.attr('codeBefore'));
     }
 
     let postGotoPage = logic.attr('gotoPage');
+
     // if gotoPage changes, codeBefore fired a goto event
     return preGotoPage !== postGotoPage ? postGotoPage : false;
   }
 });
+
+export default ViewerAppState;

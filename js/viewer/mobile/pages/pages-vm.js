@@ -198,7 +198,8 @@ export default Map.extend({
        if (previewActive) {
          alert('Author note: User would be redirected to \n(' + failURL +')');
        } else {
-         window.location = failURL;
+         //window.location = failURL;
+         window.open(failURL, '_blank');
        }
        return;
      }

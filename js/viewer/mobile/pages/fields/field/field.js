@@ -279,7 +279,7 @@ export default Component.extend({
         if (fields) {
           let toStayChecked = field.type;
             fields.each(function(field) {
-              if (field.type !== toStayChecked) {
+              if (field.type !== toStayChecked && (field.type === "checkbox" || field.type === "checkboxNOTA")) {
                 field.attr('_answer.answer.values.1', false);
               }
             });

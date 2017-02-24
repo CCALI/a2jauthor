@@ -182,7 +182,7 @@ describe('<a2j-field>', () => {
 
   describe('Component', () => {
     let logicStub;
-    let checkboxDefaults, NOTADefaults;
+    let checkboxDefaults, NOTADefaults, textDefaults;
     let fields = new List();
 
     beforeEach(() => {
@@ -250,8 +250,33 @@ describe('<a2j-field>', () => {
           traceLogic: new List()
         })
       };
+
+      textDefaults = {
+        fields: fields,
+        logic: logicStub,
+        repeatVarValue: "",
+        lang: new Map(),
+        traceLogic: new List(),
+        name: 'Name',
+        type: 'text',
+        label: 'Name',
+        vm:  new FieldVM({
+          field: {
+            name: 'Name',
+            type: 'text',
+            label: 'Name',
+            _answer: {
+              answerIndex: 1,
+              answer: {
+                values: [null, 'Wilhelmina']
+              }
+            }
+          },
+          traceLogic: new List()
+        })
+      };
       // populate fields for this.viewModel.%root
-      fields.push(checkboxDefaults.vm.attr('field'), NOTADefaults.vm.attr('field'));
+      fields.push(checkboxDefaults.vm.attr('field'), NOTADefaults.vm.attr('field'), textDefaults.vm.attr('field'));
 
       let checkboxFrag = can.stache(
         `<a2j-field
@@ -271,7 +296,16 @@ describe('<a2j-field>', () => {
         {repeat-var-value}="repeatVarValue" />`
       );
 
-      $('#test-area').html(checkboxFrag(checkboxDefaults)).append(NOTAFrag(NOTADefaults));
+      let textFrag = can.stache(
+        `<a2j-field
+        {(field)}="vm.field"
+        {lang}="lang"
+        {(logic)}="logic"
+        {(trace-logic)}="traceLogic"
+        {repeat-var-value}="repeatVarValue" />`
+      );
+
+      $('#test-area').html(checkboxFrag(checkboxDefaults)).append(NOTAFrag(NOTADefaults)).append(textFrag(textDefaults));
     });
 
     afterEach(() => {
@@ -297,6 +331,16 @@ describe('<a2j-field>', () => {
         $("a2j-field [id='Likes Chocolate']").prop('checked', true).change();
 
         assert.equal(checkboxNOTA.attr('_answer.answer.values.1'), false, 'Checking NOTA clears other checkboxes');
+
+      });
+
+      it('should not set any non checkbox style fields to false', () => {
+        let checkbox = checkboxDefaults.vm.attr('field');
+        checkbox.attr('_answer.answer.values.1', false);
+        let textField = textDefaults.vm.attr('field');
+
+        $("a2j-field [id='Likes Chocolate']").prop('checked', true).change();
+        assert.equal(textField.attr('_answer.answer.values.1'), "Wilhelmina", 'Checking checkbox does not change text field');
 
       });
     });

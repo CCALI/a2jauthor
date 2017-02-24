@@ -33,7 +33,7 @@ export default Component.extend({
         const pages = this.viewModel.attr('interview.pages');
 
         if (pages) {
-          const pageName = el.get(0).pathname.replace('//', '');
+          const pageName = $(el.get(0)).attr("href").replace("popup://", "").replace("POPUP://", "").replace("/", ""); //pathname is not supported in FF and IE.
           const page = pages.find(pageName);
           // popup content is only title, text, and textAudio
           this.viewModel.attr('modalContent', {

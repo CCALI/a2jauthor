@@ -70,13 +70,14 @@ export const ViewerAppState = Map.extend({
     }
 
   },
-  
+
   init() {
 
-    
+
     var self = this;
 
     $(window).on('traceLogic', function(ev, msg) {
+      console.log('viewer app-state init');
       self.attr('traceLogic').push(msg);
     });
   },

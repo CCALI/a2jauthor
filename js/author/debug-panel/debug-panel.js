@@ -88,7 +88,7 @@ export let DebugPanelVM = Map.extend({
         const onEachMessage = function(currentPage) {
           return function(fragments, key) {
             let existingMessageUpdated = false;
-
+            debugger
             // all messages should be arrays, even if they only have one fragment
             // { msg: 'message' } -> [ { msg: 'message' } ]
             if (!(fragments && fragments.length)) {

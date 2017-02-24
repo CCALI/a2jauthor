@@ -48,6 +48,12 @@ export default Component.extend({
       let traceLogic = this.viewModel.attr("traceLogic");
       let finalTraceLogic = stateTraceLogic.concat(traceLogic);
       this.viewModel.attr("traceLogic", finalTraceLogic);
+      var vm = this.viewModel;
+      stateTraceLogic.bind('change', function(ev, index, action, elements) {
+        vm.attr("traceLogic").push(elements[0]);
+      });
+
+      //whenever rState.traeLogic get's updated.. we need to update viewMode.traeLogic
     },
     'a:regex(href,popup\://) click': function(el, ev) {
       ev.preventDefault();
@@ -97,6 +103,16 @@ export default Component.extend({
 
     '{rState} page': function(rState, ev, newPageName) {
       this.viewModel.changePage(rState, newPageName);
+    },
+    '{rState traceLogic} length': function() {
+      console.log("traceLogic updated..");
+    },
+    '{rState} traceLogic': function(rState, ev, newTraceLogic) {
+      console.log('rState TL updated');
+      let stateTraceLogic = this.viewModel.attr("rState.traceLogic");
+      let traceLogic = this.viewModel.attr("traceLogic");
+      let finalTraceLogic = stateTraceLogic.concat(traceLogic);
+      this.viewModel.attr("traceLogic", finalTraceLogic);
     }
   }
 });

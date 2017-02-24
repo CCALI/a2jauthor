@@ -105,7 +105,7 @@ export const ViewerAppState = Map.extend({
     let repeatVarValue = (repeatVar) ? logic.varGet(repeatVar) : undefined;
 
     let lastVisitedPageName = this.attr("lastVisitedPageName");
-    
+
     if (lastVisitedPageName === false || lastVisitedPageName !== pageName) {
        this.attr('lastVisitedPageName', pageName);
     }
@@ -120,7 +120,7 @@ export const ViewerAppState = Map.extend({
     //if there is any codeBefore that we need to execute, let's do that.
     //this will make sure that any macros inside the page.attr('text') get's evaluated properly.
     let newGotoPage;
-    if (page.attr('codeBefore') && lastVisitedPageName !== pageName) {
+    if (page.attr('codeBefore') && (lastVisitedPageName !== pageName || this.attr('singlePageLoop'))) {
       newGotoPage = this.fireCodeBefore(page, logic);
     }
     // newGotoPage means a GOTO event fired in the codeBefore skip this current pageName

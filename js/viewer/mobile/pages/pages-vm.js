@@ -173,7 +173,7 @@ export default Map.extend({
 
 
   init() {
-    this.setCurrentPage();    
+    this.setCurrentPage();
   },
 
   returnHome() {
@@ -327,11 +327,16 @@ export default Map.extend({
           alert ("Author note: User's data would upload to the  server.");
         }
      }
+
       if (page.name === gotoPage) {
         let rState = this.attr('rState');
         let interview = this.attr('interview');
+        rState.attr('singlePageLoop', true);
+
         rState.setVisitedPages(gotoPage, interview);
         can.trigger(rState, 'page',[gotoPage]);
+
+        rState.attr('singlePageLoop', false);
       }
 
       return;
@@ -340,8 +345,8 @@ export default Map.extend({
     // do nothing if there are field(s) with error(s)
     return false;
   },
-  
-  
+
+
   _setPage(page, gotoPage) {
     const rState = this.attr('rState');
     const repeatVar = page.attr('repeatVar');

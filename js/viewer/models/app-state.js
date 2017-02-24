@@ -18,6 +18,12 @@ export const ViewerAppState = Map.extend({
       serialize: false
     },
 
+    singlePageLoop: {
+      type: 'boolean',
+      value: false,
+      serialize: false
+    },
+
     previewActive: {
       type: 'boolean',
       serialize: false,
@@ -36,11 +42,19 @@ export const ViewerAppState = Map.extend({
       serialize: false
     },
 
+    lastVisitedPageName: {
+      value: '',
+      serialize: false,
+      set (newVal) {
+        return newVal;
+      }
+    },
+
     interview: {
       serialize: false,
       set(interview) {
-        let pageName = this.attr('page');
-        this.setVisitedPages(pageName, interview);
+        // let pageName = this.attr('page');
+        // this.setVisitedPages(pageName, interview);
         return interview;
       }
     },
@@ -83,6 +97,7 @@ export const ViewerAppState = Map.extend({
   },
 
   setVisitedPages(pageName, interview) {
+
     if (!pageName || !interview) return;
 
     let visited = this.attr('visitedPages');
@@ -91,6 +106,12 @@ export const ViewerAppState = Map.extend({
     let logic = this.attr('logic');
     let repeatVar = page && page.attr('repeatVar');
     let repeatVarValue = (repeatVar) ? logic.varGet(repeatVar) : undefined;
+
+    let lastVisitedPageName = this.attr("lastVisitedPageName");
+
+    if (lastVisitedPageName !== pageName) {
+       this.attr('lastVisitedPageName', pageName);
+    }
 
     // do not add the same page twice.
     let alreadyVisited = _find(visited, function(visitedPage) {
@@ -102,7 +123,7 @@ export const ViewerAppState = Map.extend({
     //if there is any codeBefore that we need to execute, let's do that.
     //this will make sure that any macros inside the page.attr('text') get's evaluated properly.
     let newGotoPage;
-    if (page.attr('codeBefore')) {
+    if (page.attr('codeBefore') && this.attr("lastVisitedPageName") !== pageName) {
       newGotoPage = this.fireCodeBefore(page, logic);
     }
     // newGotoPage means a GOTO event fired in the codeBefore skip this current pageName

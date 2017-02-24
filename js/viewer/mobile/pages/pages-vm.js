@@ -153,20 +153,27 @@ export default Map.extend({
     },
 
     traceLogic: {
-
       value: [],
-      get(lastSetVal) {
-        if(lastSetVal && lastSetVal.length === 0 && this.attr("rState.traceLogic")) {
-          console.log("once");
-          return this.attr("rState.traceLogic");
-        }
-        return lastSetVal;
+      // get: function(lastSetValue) {
+      //   debugger;
+      //   if(lastSetValue && lastSetValue === 0 && this.attr("rState.traceLogic")) {
+      //     return this.attr("rState.traceLogic");
+      //   }
+      //   return lastSetValue;
+      // }
+    },
+
+    test: {
+      set: function(newVal) {
+        debugger;
+        return newVal;
       }
     }
   },
 
+
   init() {
-    this.setCurrentPage();
+    this.setCurrentPage();    
   },
 
   returnHome() {
@@ -333,7 +340,8 @@ export default Map.extend({
     // do nothing if there are field(s) with error(s)
     return false;
   },
-
+  
+  
   _setPage(page, gotoPage) {
     const rState = this.attr('rState');
     const repeatVar = page.attr('repeatVar');

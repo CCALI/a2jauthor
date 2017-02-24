@@ -43,6 +43,12 @@ export default Component.extend({
   },
 
   events: {
+    'inserted': function() {
+      let stateTraceLogic = this.viewModel.attr("rState.traceLogic");
+      let traceLogic = this.viewModel.attr("traceLogic");
+      let finalTraceLogic = stateTraceLogic.concat(traceLogic);
+      this.viewModel.attr("traceLogic", finalTraceLogic);
+    },
     'a:regex(href,popup\://) click': function(el, ev) {
       ev.preventDefault();
 
@@ -61,9 +67,10 @@ export default Component.extend({
       }
     },
 
-    '{window} traceLogic': function(el, ev, msg) {
-      this.viewModel.attr('traceLogic').push(msg);
-    },
+    // '{window} traceLogic': function(el, ev, msg) {
+    //   console.log("{window} traceLogic called");
+    //   this.viewModel.attr('traceLogic').push(msg);
+    // },
 
     'a click': function(el) {
       el.attr('target', '_blank');

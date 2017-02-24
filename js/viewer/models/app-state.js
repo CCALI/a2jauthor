@@ -63,15 +63,20 @@ export const ViewerAppState = Map.extend({
     },
 
     traceLogic: {
-      value: []
+      serialize: false,
+      value: function() {
+        return new List();
+      }
     }
-  },
 
+  },
+  
   init() {
+
+    
     var self = this;
-    //this.attr("traceLogic", []);
+
     $(window).on('traceLogic', function(ev, msg) {
-      console.log('heard traceLogic: ', msg);
       self.attr('traceLogic').push(msg);
     });
   },

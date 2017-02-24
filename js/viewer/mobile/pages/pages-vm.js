@@ -198,8 +198,13 @@ export default Map.extend({
        if (previewActive) {
          alert('Author note: User would be redirected to \n(' + failURL +')');
        } else {
-         //window.location = failURL;
-         window.open(failURL, '_blank');
+         if(failURL === "http://") {
+           //we have no url to go to, so we should close this window
+           //need decision on what to do in this case?
+         }
+         else {
+           window.open(failURL, '_blank');
+         }
        }
        return;
      }

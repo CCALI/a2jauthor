@@ -64,7 +64,7 @@ export default Map.extend({
       value: constants.qIDEXIT
     },
 
-        /**
+     /**
      * @property {String} pages.ViewModel.prototype.resumeButton resumeButton
      * @parent pages.ViewModel
      *
@@ -180,9 +180,14 @@ export default Map.extend({
   navigate(button) {
     // Author preview should not post to server
     let previewActive = this.attr('rState').attr('previewActive');
+    //
+    if (previewActive) {
+      this.previewActiveResponses(button);
+      return;
+    }
 
     // special destination dIDRESUME button skips rest of navigate
-    if (button.next === 'RESUME') {
+    if (button.next === constants.qIDRESUME) {
       let interview = this.attr('interview');
       let appState = this.attr('rState');
       // Handle the same as Desktop Navigation Resume
@@ -192,22 +197,22 @@ export default Map.extend({
     }
 
     // special destination qIDFAIL button skips rest of navigate
-     // Author can provide an external URL to explain why user did not qualify
-     if (button.next === 'FAIL') {
-       let failURL = button.url.indexOf('http') !== 0 ? 'http://' + button.url : button.url;
-       if (previewActive) {
-         alert('Author note: User would be redirected to \n(' + failURL +')');
-       } else {
-         if(failURL === "http://") {
-           //we have no url to go to, so we should close this window
-           //need decision on what to do in this case?
-         }
-         else {
-           window.open(failURL, '_blank');
-         }
-       }
-       return;
-     }
+    // Author can provide an external URL to explain why user did not qualify
+    if (button.next === constants.qIDFAIL) {
+      let failURL = button.url.toLowerCase();
+      let hasProtocol = failURL.indexOf('http') === 0;
+      failURL = hasProtocol ? failURL : 'http://' + failURL;
+        if(failURL === "http://") {
+          // If Empty, standard message
+          this.attr('modalContent', {
+            title: "You did not Qualify",
+            text: "Unfortunately, you did not qualify to use this A2J Guided Interview. Please close your browser window or tab to exit the interview.",
+          });
+        } else {
+          window.open(failURL, '_blank');
+        }
+      return;
+    }
 
     const page = this.attr('currentPage');
     const fields = page.attr('fields');
@@ -267,6 +272,7 @@ export default Map.extend({
         this.setRepeatVariable(repeatVar, repeatVarSet);
       }
 
+      // Don't post to the server in Author Preview
       if (!previewActive && (button.next === constants.qIDASSEMBLESUCCESS || button.next === constants.qIDSUCCESS || button.next === constants.qIDEXIT)) {
         can.trigger(this, 'post-answers-to-server');
       }
@@ -295,16 +301,11 @@ export default Map.extend({
       } else if (button.next !== constants.qIDEXIT &&
         button.next !== constants.qIDSUCCESS &&
         button.next !== constants.qIDASSEMBLE &&
-        button.next !== constants.qIDASSEMBLESUCCESS) {
+        button.next !== constants.qIDASSEMBLESUCCESS &&
+        button.next !== constants.qIDFAIL) {
 
         this._setPage(page, button.next);
 
-     } else {
-        if (button.next === constants.qIDEXIT && previewActive) {
-          alert ("Author note: User's INCOMPLETE data would upload to the server.");
-        } else if ((button.next === constants.qIDSUCCESS ||  button.next === constants.qIDASSEMBLESUCCESS) && previewActive) {
-          alert ("Author note: User's data would upload to the  server.");
-        }
      }
       // Make sure pages looping on themselves update
       if (page.name === gotoPage) {
@@ -319,6 +320,32 @@ export default Map.extend({
 
     // do nothing if there are field(s) with error(s)
     return false;
+  },
+
+  previewActiveResponses (button) {
+    switch(button.next) {
+      case constants.qIDFAIL:
+        this.attr('modalContent', {
+          title: "Author note:",
+          text: 'User would be redirected to \n(' + button.url +')',
+        });
+        break;
+
+      case constants.qIDEXIT:
+        this.attr('modalContent', {
+          title: "Author note:",
+          text: "User's INCOMPLETE data would upload to the server.",
+        });
+        break;
+
+      case constants.qIDSUCCESS:
+      case constants.qIDASSEMBLESUCCESS:
+        this.attr('modalContent', {
+          title: "Author note:",
+          text: "User's data would upload to the  server.",
+        });
+        break;
+    }
   },
 
   _setPage(page, gotoPage) {

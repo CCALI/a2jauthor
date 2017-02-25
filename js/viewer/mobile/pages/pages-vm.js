@@ -154,21 +154,8 @@ export default Map.extend({
 
     traceLogic: {
       value: [],
-      // get: function(lastSetValue) {
-      //   debugger;
-      //   if(lastSetValue && lastSetValue === 0 && this.attr("rState.traceLogic")) {
-      //     return this.attr("rState.traceLogic");
-      //   }
-      //   return lastSetValue;
-      // }
-    },
-
-    test: {
-      set: function(newVal) {
-        debugger;
-        return newVal;
-      }
     }
+
   },
 
 
@@ -327,7 +314,7 @@ export default Map.extend({
           alert ("Author note: User's data would upload to the  server.");
         }
      }
-
+      // Make sure pages looping on themselves update
       if (page.name === gotoPage) {
         let rState = this.attr('rState');
         let interview = this.attr('interview');
@@ -485,11 +472,13 @@ export default Map.extend({
   changePage: function(rState, newPageName) {
     const vm = this;
 
+    // navigation via navbar skips logic
     if (rState.attr('forceNavigation')) {
       vm.setCurrentPage();
       rState.attr('forceNavigation', false);
       return;
     }
+
     // Navigate to the exitURL if the page is set to a
     // non-undefined falsy or the explicit "FAIL" string
     if ((! newPageName && typeof newPageName !== 'undefined') || newPageName === 'FAIL') {

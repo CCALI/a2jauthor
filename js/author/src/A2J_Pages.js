@@ -171,6 +171,7 @@ function pageEditNew()
 {	// Create a new blank page, after selected page.
 	var newName = pageEditSelected();
 	var newStep;
+	var selPage = false;
 	if (newName ==='')
 	{	// No page selected, use first page listed in TOC and in first step.
 		var rel = makestr($('.pageoutline li').first().attr('rel'));
@@ -187,13 +188,22 @@ function pageEditNew()
 	}
 	else
 	{	// Create new page in same step as selected page.
-		var selPage = gGuide.pages[newName];
+		selPage = gGuide.pages[newName];
 		newStep = selPage.step;
 	}
+
+	if(selPage === false) {
+		selPage = gGuide.sortedPages.length > 0 ? gGuide.sortedPages[gGuide.sortedPages.length - 1] : false;
+	}
+	
+
 	var page = gGuide.addUniquePage(newName);
 	page.type="A2J";
 	page.text="My text";
 	page.step = newStep;
+	page.mapx = selPage ? selPage.mapx : 0;
+	page.mapy = selPage ? selPage.mapy + NODE_SIZE.h + 20 : 0;
+	
 	// 2014-10-22 Ensure a new page has at least one button
 	var cnt= new TButton();
 	cnt.label = lang.Continue;
@@ -487,6 +497,10 @@ function guidePageEditForm(page, div, pagename)//novicePage
       form.find('[name="helpGraphic"]').showit(showMe === 1);
       form.find('[name="helpReader"]').showit(showMe >= 1);
       form.find('[name="helpVideo"]').showit(showMe === 2);
+
+			// only show outerLoopVar if nested is checked
+			form.find('[name="outerLoopVar"]').showit(page.nested);
+
     };
 
 		pagefs.append(form.pickList({label:'Help style:',value:getShowMe(), change:function(val,page,form){
@@ -509,6 +523,20 @@ function guidePageEditForm(page, div, pagename)//novicePage
 
 		pagefs.append(form.varPicker(		{label:'Counting Variable:',placeholder:'',	value:page.repeatVar,
 			change:function(val,page){page.repeatVar=val;}} ));
+
+		pagefs.append(form.checkbox({name: 'nested', label:'Nested:', checkbox:'', value:page.nested,
+			change:function(val,page){
+				page.nested = val;
+				$('[name="outerLoopVar"]').showit(page.nested);
+				// clear outerLoopVar if unchecked
+				if (!page.nested) {
+					page.outerLoopVar = '';
+				}
+			}}));
+
+		pagefs.append(form.varPicker({name: 'outerLoopVar', label:'Outer Loop Counting Variable:',placeholder:'',	value:page.outerLoopVar,
+			change:function(val,page){page.outerLoopVar=val;}} ));
+
 		t.append(pagefs);
 		updateShowMe(pagefs,getShowMe());
 		pagefs=null;
@@ -524,7 +552,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
 			var updateFieldLayout= function(ff,field)
 			//** @param {TField} field */
 			{
-				var canRequire = field.type !== 'radio';
+				var canRequire = field.type !== 'radio' && field.type !== CONST.ftCheckBoxNOTA;
 				var canMinMax = field.type===CONST.ftNumber || field.type===CONST.ftNumberDollar || field.type===CONST.ftNumberPick || field.type===CONST.ftDateMDY;
 				var canList = field.type===CONST.ftTextPick;
 				var canDefaultValue = field.type!==CONST.ftCheckBox && field.type!==CONST.ftCheckBoxNOTA && field.type!==CONST.ftGender;
@@ -566,7 +594,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
 						change:function(val,field,ff){
 							field.type=val;
 							// Radio Buttons always required
-							if (field.type === 'radio') {
+							if (field.type === 'radio' || field.type === CONST.ftCheckBoxNOTA) {
 								field.required = true;
 							}
 
@@ -707,7 +735,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
           }));
 
           ff.append(form.text({
-            groupName: 'url',
+            name: 'url',
             value: b.url,
             label: 'URL:',
             placeholder: '',
@@ -792,6 +820,10 @@ TPage.prototype.tagList=function()
 		tags += '<span class="label label-success tag"><span class="glyphicon-split"></span>Logic</span>';
 	}
 	if (page.repeatVar!=='')
+	{
+		tags += '<span class="glyphicon-cw">&nbsp</span>';
+	}
+	if (page.outerLoopVar!== '')
 	{
 		tags += '<span class="glyphicon-cw">&nbsp</span>';
 	}

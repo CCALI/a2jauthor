@@ -117,10 +117,28 @@ export let SignTextVM = Map.extend({
         // otherwise the sizing calculation will not work correctly
         paragraph.css('line-height', '');
 
+        let innerText = paragraph[0].innerHTML;
+        let words = innerText.split(" ");
+        if(words.length === 1) {
+          //we only have one word here so we need to apply some css tricks
+          paragraph.css({
+            'text-overflow': 'ellipsis',
+            'white-space': 'nowrap',
+            'overflow': 'hidden'
+          });
+        } else {
+          //let's remove this temp styles
+          paragraph.css({
+            'text-overflow': '',
+            'white-space': '',
+            'overflow': ''
+          });
+        }
+
         let maxFontPixels = Math.floor(vm.attr('paragraphContainer').height() / 2);
 
         vm.attr('paragraphContainer').textfill({
-          innerTag: 'p',
+          innerTag: 'div',
           // once the text size has been set, update the line height
           success: vm.updateLineHeight.bind(vm),
           maxFontPixels: maxFontPixels
@@ -187,7 +205,7 @@ export default Component.extend({
 
   events: {
     inserted() {
-      let $p = this.element.find('div p');
+      let $p = this.element.find('div div');
       this.viewModel.attr('paragraph', $p);
       this.viewModel.attr('paragraphContainer', $p.parent());
       this.viewModel.resizeText();

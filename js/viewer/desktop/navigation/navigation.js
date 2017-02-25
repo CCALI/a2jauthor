@@ -60,21 +60,29 @@ export let ViewerNavigationVM = Map.extend({
         const selectedPage = this.attr('visitedPages').attr(newVal);
         const selectedPageName = selectedPage.attr('name');
 
+        if (selectedPageName !== appState.attr('page')) {
+          appState.attr({
+            page: selectedPageName,
+            forceNavigation: true
+          });
+        }
+
         // if user changes page using the dropdown,
         // restore repeatVarValue of loop being navigated to
+        // as well as it's associated outerLoopVarValue if it exists
         const repeatVar = selectedPage.attr('repeatVar');
         const repeatVarValue = selectedPage.attr('repeatVarValue');
+        const outerLoopVar = selectedPage.attr('outerLoopVar');
+        const outerLoopVarValue = selectedPage.attr('outerLoopVarValue');
 
         if (repeatVar && repeatVarValue) {
           this.attr('appState.repeatVarValue', repeatVarValue);
           this.attr('logic').varSet(repeatVar, repeatVarValue);
         }
 
-        if (selectedPageName !== appState.attr('page')) {
-          appState.attr({
-            page: selectedPageName,
-            forceNavigation: true
-          });
+        if (outerLoopVar && outerLoopVarValue) {
+          this.attr('appState.outerLoopVarValue', outerLoopVarValue);
+          this.attr('logic').varSet(outerLoopVar, outerLoopVarValue);
         }
 
         return newVal;

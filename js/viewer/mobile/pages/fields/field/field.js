@@ -83,7 +83,7 @@ export let FieldVM = Map.extend({
         let previousAnswer = answerValues[answerIndex];
 
         return (radioButtonValue === previousAnswer);
-      }
+      },
     },
 
    /**
@@ -98,6 +98,27 @@ export let FieldVM = Map.extend({
         let name = this.attr('field.name').toLowerCase();
         if (name) {
           return this.attr('logic.interview.answers').attr(name).values[1];
+        }
+      }
+    },
+
+     /**
+     * @property {String} field.ViewModel.prototype.suggestionText suggestionText
+     * @parent field.ViewModel
+     *
+     * Used to suggest input format for text strings
+     *
+     */
+
+    suggestionText: {
+      get: function() {
+        let fieldType = this.field.type;
+        if (fieldType === 'numberssn') {
+          return '999-99-9999';
+        } else if (fieldType === 'numberphone') {
+          return '(555) 555-5555';
+        } else {
+          return '';
         }
       }
     },
@@ -250,7 +271,24 @@ export default Component.extend({
       }
     },
 
+    '{a2j-field input[type=checkbox]} change': function(values, ev) {
+      let field = this.viewModel.attr('field');
+
+      if (ev.target.checked === true && (field.type === "checkbox" || field.type === "checkboxNOTA")) {
+        let fields = this.viewModel.attr('%root.fields');
+        if (fields) {
+          let toStayChecked = field.type;
+            fields.each(function(field) {
+              if (field.type !== toStayChecked && (field.type === "checkbox" || field.type === "checkboxNOTA")) {
+                field.attr('_answer.answer.values.1', false);
+              }
+            });
+          }
+        }
+    },
+
     '{field._answer.answer.values} change': function(values, ev, attr) {
+
       if (attr === '1') {
         let message = {};
         let msgVar = this.viewModel.attr('field.name');

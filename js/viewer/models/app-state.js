@@ -69,6 +69,10 @@ export const ViewerAppState = Map.extend({
       type: 'number'
     },
 
+    outerLoopVarValue: {
+      type: 'number'
+    },
+
     logic: {
       serialize: false
     },
@@ -103,6 +107,8 @@ export const ViewerAppState = Map.extend({
     let logic = this.attr('logic');
     let repeatVar = page && page.attr('repeatVar');
     let repeatVarValue = (repeatVar) ? logic.varGet(repeatVar) : undefined;
+    let outerLoopVar = page && page.attr('outerLoopVar');
+    let outerLoopVarValue = (outerLoopVar) ? logic.varGet(outerLoopVar) : undefined;
 
     let lastVisitedPageName = this.attr("lastVisitedPageName");
     
@@ -132,7 +138,7 @@ export const ViewerAppState = Map.extend({
     if (page && !alreadyVisited && !newGotoPage) {
       let text = (logic && logic.eval) ? logic.eval(page.attr('text')) : page.attr('text');
       let name = page.attr('name');
-      visited.unshift({ name, text, repeatVar, repeatVarValue });
+      visited.unshift({ name, text, repeatVar, repeatVarValue, outerLoopVar, outerLoopVarValue });
     }
   },
 

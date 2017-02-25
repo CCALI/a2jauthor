@@ -24,7 +24,7 @@ var CONST = {
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
 	A2JVersionNum:"6.0Staging" , //VersionInfo.verNum
-	A2JVersionDate:"2016-10-31",
+	A2JVersionDate:"2017-02-15",
 
 
 	//CAVersionNum:"5.0.0",
@@ -333,6 +333,7 @@ function TPage()
 	this.helpImageURL="";
 	this.helpVideoURL="";
 	this.repeatVar="";// built-in for attaching Field variables to array
+	this.outerLoopVar="";
 	this.codeBefore="";
 	this.codeAfter="";
 	this.fields=[];

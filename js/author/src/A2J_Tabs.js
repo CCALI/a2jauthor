@@ -196,7 +196,7 @@ var form={
 		//$('#texttoolbar').hide();
 	}
 	,change: function(elt,val){
-		var form= $(elt).closest('[name="record"]');
+    var form= $(elt).closest('[name="record"]');
 		$(elt).data('data').change.call(elt,val,form.data('record'),form);
 	}
 	,h1:function(h){
@@ -232,15 +232,22 @@ var form={
 	//,number:    function(label,value,minNum,maxNum,handler){
 	//	return "<label>"+label+'</label><input class="editable" type="text" name="'+group+id+'" value="'+htmlEscape(value)+'"> ';}
 
-	,checkbox: function(data){
+	,checkbox: function(data) {
 		var e=$('<div name="'+data.name+'">'
 			+'<div class="checkbox">'
 			+'<label>'
 			+'<input type="checkbox" /> '+data.checkbox
 			+(typeof data.label!=='undefined' ? ( data.label ) : '')
 			+'</label></div></div>');
-		$('input',e).blur(function(){
-			form.change($(this),$(this).is(':checked'));}).attr( 'checked',data.value===true).data('data',data);
+
+    var input = $('input',e);
+
+    input.change(function(){
+      form.change($(this),$(this).is(':checked'));
+    });
+
+    input.attr('checked', data.value===true).data('data',data);
+
 		return e;
 	}
 
@@ -297,7 +304,7 @@ var form={
 				//var name= $(this).data().value;
 				//$('page-picker-dialog').dialog( "close" );
 			});
-		$('#page-picker-dialog').data(data).dialog({
+    $('#page-picker-dialog').data(data).dialog({
   		dialogClass: "modal bootstrap-styles",
 			autoOpen:true,
 				width: 700,
@@ -350,6 +357,7 @@ var form={
 				//var name= $(this).data().value;
 				//$('page-picker-dialog').dialog( "close" );
 			});
+      
 		$('#page-picker-dialog').data(data).dialog({
   		dialogClass: "modal bootstrap-styles",
 			autoOpen:true,
@@ -362,12 +370,9 @@ var form={
 				buttons:[
 				{text:'Change', click:function()
 					{
-						var newPageDest = makestr($('#page-picker-list .list-group-item.'+SELECTED).first().attr('rel')).substr(5);
+            var newPageDest = makestr($('#page-picker-list .list-group-item.'+SELECTED).first().attr('rel')).substr(5);
 						data.value = newPageDest;
-						//data.change.call(rel,data);
-						//form.change(pageButton, newPageDest);
-						//trace('Changing destination  to "'+newPageDest+'"');
-						doneFnc(newPageDest);
+            doneFnc(newPageDest);
 						$(this).dialog("close");
 					}
 				},
@@ -382,14 +387,14 @@ var form={
   // Pick variable name from list of defined variables
   varPicker: function(data) {
     var dval = (data.value);
-
-    var label = data.label != null ?
-      '<label class="control-label">' + data.label + '</label>' : '';
+    var label = data.label ? '<label class="control-label">' + data.label + '</label>' : '';
 
     var $el = $(
+      '<div ' + (data.name ? 'name="' + data.name + '"' : '') + '>' +
       label +
       '<div class="editspan form-group">' +
         '<input class="form-control ui-combobox-input editable autocomplete picker varname dest" type="text" >' +
+      '</div>' +
       '</div>'
     );
 
@@ -468,7 +473,7 @@ var form={
       '<label class="control-label">' + data.label + '</label>' : '';
 
     var $el = $(
-      '<div class="editspan form-group" ' + (data.groupName ? 'name="' + data.groupName + '"' : '') + '>' +
+      '<div class="editspan form-group" ' + (data.name ? 'name="' + data.name + '"' : '') + '>' +
         label +
         '<input class="form-control ui-widget editable" type="text">' +
       '</div>'
@@ -533,10 +538,8 @@ var form={
 	}
 	,htmlFix:function(html)
 	{
-		//trace('htmlFix before',html);
 		html = form.pasteFix(html,['P','BR','UL','OL','LI','A','B','I','U','BLOCKQUOTE']);
- 		//trace('htmlFix after ',html);
-		return html;
+ 		return html;
 	}
 	,htmlarea: function(data){//label,value,handler,name){
 		form.id++;
@@ -545,13 +548,34 @@ var form={
 			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
 			+'<div><div contenteditable=true class="htmledit form-control text editable taller" id="tinyMCE_'+form.id+'"  name="'+form.id+'" rows='+1+'>'
 			+data.value+'</div></div></div></div>');
-		$('.editable',e).focus(function(){$(this).addClass('tallest');form.editorAdd($(this));}).blur(function(){
-			//$(this).removeClass('tallest');
-			form.editorRemove(this);
-			var html=form.htmlFix($(this).html());
-			//$(this).html(html);
+		$('.editable',e).focus(
+      function(){
+        $(this).addClass('tallest');
+        form.editorAdd($(this));
+      });
+    $('.editable', e).blur(function(){
+      form.editorRemove(this);
+      var html=form.htmlFix($(this).html());
+      form.change($(this), html);
+		});
+    $('.editable', e).data('data',data);
+
+    //these event bindings are for IE11 to handle any 
+    //updates to the `contenteditable`
+    //since blur event is not called properly
+    $('.editable', e).on('DOMNodeInserted', function(){
+      var html=form.htmlFix($(this).html());
 			form.change($(this), html);
-		}).data('data',data) ;
+    });
+    $('.editable', e).on('DOMNodeRemoved', function(){
+      var html=form.htmlFix($(this).html());
+			form.change($(this), html);
+    });
+    $('.editable', e).on('DOMCharacterDataModified', function(){
+      var html=form.htmlFix($(this).html());
+			form.change($(this), html);
+    });
+    
 		return e;
 	},
 
@@ -1528,10 +1552,20 @@ function editButton()
 					html = '<a href="'+url+'">'+txt+'</a>';
 				}
 				restoreSelection(sel);
-				//trace('window.getSelection', window.getSelection());
-				//trace('html',html);
-				document.execCommand('insertHTML',false,  html );
-				//trace('window.getSelection', window.getSelection());
+				var didExecute = document.execCommand('insertHTML',false,  html );
+        if(!didExecute) {
+          //this one is for the team at Microsoft who decided to drop support for 
+          //document.execCommand('insertHTML', false, html) and didn't even bother
+          //returning an error. *kudos*
+          var frag = document.createDocumentFragment();
+          var htmlElement = document.createElement("span");
+          htmlElement.innerHTML = html;
+          frag.appendChild(htmlElement);
+          var selection = document.getSelection();
+          var range = selection.getRangeAt(0);
+          range.deleteContents();
+          range.insertNode(frag);
+        }
 			}
 		}
 
@@ -1564,7 +1598,7 @@ function editButton()
 						url='POPUP://'+newPop;
 					}
 				}
-				setHTML();
+        setHTML();
 			});
 
 		}

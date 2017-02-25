@@ -1,7 +1,12 @@
-import { FieldVM } from './field';
+import $ from 'jquery';
+import can from 'can';
 import assert from 'assert';
+import { FieldVM } from './field';
 import List from 'can/list/';
+import Map from 'can/map/';
+import sinon from 'sinon';
 
+import './field';
 import 'steal-mocha';
 
 describe('<a2j-field>', () => {
@@ -12,6 +17,8 @@ describe('<a2j-field>', () => {
     beforeEach(() => {
       fieldStub = {
         name: 'Foo Input',
+        type: '',
+        suggestionText: '',
         _answer: {
           answerIndex: 1,
           answer: {
@@ -35,7 +42,19 @@ describe('<a2j-field>', () => {
       values.push('bar');
       vm.attr('field').attr('value', 'bar');
 
-      assert(vm.attr('shouldBeChecked'), 'should return true if answer matches radio button value');
+      assert.equal(vm.attr('shouldBeChecked'), true, 'should return true if answer matches radio button value');
+    });
+
+    it('should suggest a format for SSN numbers', () => {
+      vm.attr('field').attr('type', 'numberssn');
+
+      assert.equal(vm.attr('suggestionText'), '999-99-9999', 'should return ssn format suggestion');
+    });
+
+    it('should suggest a format for SSN numbers', () => {
+      vm.attr('field').attr('type', 'numberphone');
+
+      assert.equal(vm.attr('suggestionText'), '(555) 555-5555', 'should return phone number format suggestion');
     });
 
     it('computes numberPickOptions from field min/max values', function() {
@@ -158,6 +177,172 @@ describe('<a2j-field>', () => {
       assert.equal(vm.attr('invalidPrompt'), 'This is invalid', 'text - should show the custom error message');
       assert.ok(vm.attr('showInvalidPrompt'), 'should be true when there is an error and a default message');
       assert.ok(vm.attr('showInvalidPrompt'), 'text - showInvalidPrompt should be true when there is an error and a default message');
+    });
+  });
+
+  describe('Component', () => {
+    let logicStub;
+    let checkboxDefaults, NOTADefaults, textDefaults;
+    let fields = new List();
+
+    beforeEach(() => {
+      logicStub = new Map({
+        exec: $.noop,
+        infinite: {
+          errors: $.noop,
+          reset: $.noop,
+          _counter: 0,
+          inc: $.noop
+        },
+        varExists: sinon.spy(),
+        varCreate: sinon.spy(),
+        varGet: sinon.stub(),
+        varSet: sinon.spy(),
+        eval: sinon.spy()
+      });
+
+      checkboxDefaults = {
+        fields: fields,
+        logic: logicStub,
+        repeatVarValue: "",
+        lang: new Map(),
+        traceLogic: new List(),
+        name: 'Likes Chocolate TF',
+        type: 'checkbox',
+        label: 'Likes Chocolate',
+        vm: new FieldVM({
+          field: {
+            name: 'Likes Chocolate TF',
+            type: 'checkbox',
+            label: 'Likes Chocolate',
+            _answer: {
+              answerIndex: 1,
+              answer: {
+                values: [null]
+              }
+            },
+          },
+          traceLogic: new List()
+        })
+      };
+
+      NOTADefaults = {
+        fields: fields,
+        logic: logicStub,
+        repeatVarValue: "",
+        lang: new Map(),
+        traceLogic: new List(),
+        name: 'None of the Above',
+        type: 'checkboxNOTA',
+        label: 'None of the Above',
+        vm:  new FieldVM({
+          field: {
+            name: 'None of the Above',
+            type: 'checkboxNOTA',
+            label: 'None of the Above',
+            _answer: {
+              answerIndex: 1,
+              answer: {
+                values: [null]
+              }
+            }
+          },
+          traceLogic: new List()
+        })
+      };
+
+      textDefaults = {
+        fields: fields,
+        logic: logicStub,
+        repeatVarValue: "",
+        lang: new Map(),
+        traceLogic: new List(),
+        name: 'Name',
+        type: 'text',
+        label: 'Name',
+        vm:  new FieldVM({
+          field: {
+            name: 'Name',
+            type: 'text',
+            label: 'Name',
+            _answer: {
+              answerIndex: 1,
+              answer: {
+                values: [null, 'Wilhelmina']
+              }
+            }
+          },
+          traceLogic: new List()
+        })
+      };
+      // populate fields for this.viewModel.%root
+      fields.push(checkboxDefaults.vm.attr('field'), NOTADefaults.vm.attr('field'), textDefaults.vm.attr('field'));
+
+      let checkboxFrag = can.stache(
+        `<a2j-field
+        {(field)}="vm.field"
+        {lang}="lang"
+        {(logic)}="logic"
+        {(trace-logic)}="traceLogic"
+        {repeat-var-value}="repeatVarValue" />`
+      );
+
+      let NOTAFrag = can.stache(
+        `<a2j-field
+        {(field)}="vm.field"
+        {lang}="lang"
+        {(logic)}="logic"
+        {(trace-logic)}="traceLogic"
+        {repeat-var-value}="repeatVarValue" />`
+      );
+
+      let textFrag = can.stache(
+        `<a2j-field
+        {(field)}="vm.field"
+        {lang}="lang"
+        {(logic)}="logic"
+        {(trace-logic)}="traceLogic"
+        {repeat-var-value}="repeatVarValue" />`
+      );
+
+      $('#test-area').html(checkboxFrag(checkboxDefaults)).append(NOTAFrag(NOTADefaults)).append(textFrag(textDefaults));
+    });
+
+    afterEach(() => {
+      $('#test-area').empty();
+    });
+
+    describe('a2j-field input change', () => {
+
+      it('should set other checkbox values to false when None of the Above is checked', () => {
+        let checkbox = checkboxDefaults.vm.attr('field');
+        checkbox.attr('_answer.answer.values.1', true);
+
+        $("a2j-field [id='None of the Above']").prop('checked', true).change();
+
+        assert.equal(checkbox.attr('_answer.answer.values.1'), false, 'Checking NOTA clears other checkboxes');
+
+      });
+
+      it('should set checkboxNOTA value to false when another checkbox is checked', () => {
+        let checkboxNOTA = NOTADefaults.vm.attr('field');
+        checkboxNOTA.attr('_answer.answer.values.1', true);
+
+        $("a2j-field [id='Likes Chocolate']").prop('checked', true).change();
+
+        assert.equal(checkboxNOTA.attr('_answer.answer.values.1'), false, 'Checking NOTA clears other checkboxes');
+
+      });
+
+      it('should not set any non checkbox style fields to false', () => {
+        let checkbox = checkboxDefaults.vm.attr('field');
+        checkbox.attr('_answer.answer.values.1', false);
+        let textField = textDefaults.vm.attr('field');
+
+        $("a2j-field [id='Likes Chocolate']").prop('checked', true).change();
+        assert.equal(textField.attr('_answer.answer.values.1'), "Wilhelmina", 'Checking checkbox does not change text field');
+
+      });
     });
   });
 });

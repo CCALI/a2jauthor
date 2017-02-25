@@ -13,20 +13,22 @@ function page2JSON_Mobile(page)
 {	// 12/22/2014 Convert native TPage into Mobile JSON format.
 	// Include only properties used by viewer, dropping internal pointers/cyclic references.
 	var PAGE = {
-		name:				page.name,
-		type:				page.type,
-		step:				page.step,
+		name:			page.name,
+		type:			page.type,
+		step:			page.step,
 		repeatVar:		page.repeatVar,
-		text:				page.text,
+		nested:			page.nested,
+		outerLoopVar: 	page.outerLoopVar,
+		text:			page.text,
 		textAudioURL:	page.textAudioURL,
 		learn:			page.learn,
-		help:				page.help,
+		help:			page.help,
 		helpAudioURL:	page.helpAudioURL,
 		helpReader:		page.helpReader,
 		helpImageURL:	page.helpImageURL,
 		helpVideoURL:	page.helpVideoURL,
 		buttons:		[],
-		fields:		[],
+		fields:			[],
 		codeBefore:		page.codeBefore,
 		codeAfter:		page.codeAfter,
 		notes:			page.notes
@@ -53,18 +55,18 @@ function page2JSON_Mobile(page)
 		//		Flags for Calendar/calculator
 		var f=page.fields[fi];
 		PAGE.fields.push({
-			type:				f.type,
+			type:			f.type,
 			label:			f.label,
-			name:				f.name,
+			name:			f.name,
 			value:			f.value,
 			order:			f.order,
 			required:		f.required === true ? true : false,
-			min:				f.min,
-			max:				f.max,
+			min:			f.min,
+			max:			f.max,
 			//calendar:		f.calendar,
-			//calculator:		f.calculator,
+			//calculator:	f.calculator,
 			maxChars:		f.maxChars,
-			listSrc:			f.listSrc,
+			listSrc:		f.listSrc,
 			listData:		f.listData,
 			sample:			f.sample,
 			invalidPrompt:	f.invalidPrompt});

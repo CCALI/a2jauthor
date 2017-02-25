@@ -71,6 +71,17 @@ export let SectionTitleVM = Map.extend({
     titleTag: {
       value: 'h3'
     },
+
+    /**
+     * @property {String} sectionTitle.ViewModel.prototype.underline underline
+     * @parent sectionTitle.ViewModel
+     *
+     * Control if the title is underlined or not
+     */
+    underline: {
+      type: 'boolean',
+      value: false
+    }
   }
 });
 

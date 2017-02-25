@@ -88,11 +88,18 @@ export let DebugPanelVM = Map.extend({
         const onEachMessage = function(currentPage) {
           return function(fragments, key) {
             let existingMessageUpdated = false;
+
             // all messages should be arrays, even if they only have one fragment
             // { msg: 'message' } -> [ { msg: 'message' } ]
             if (!(fragments && fragments.length)) {
+              key = fragments.msg.split(" ").join("_");
               fragments = [fragments];
             }
+
+            if(key === "_IF") {
+              key = fragments[1].msg.split(" ").join("_");
+            }
+
 
             // update message if it already exists, such as  user changing a variable
             // {'first name': [ { format: 'var', msg: 'first name' }, { msg: ' = ' }, { format: 'val', msg: 'sam' } ]
@@ -135,7 +142,9 @@ export let DebugPanelVM = Map.extend({
             }
           } else {
             let currentPage = lastSetValue.attr(lastSetValue.attr('length') - 1);
-            newMessage.each(onEachMessage(currentPage));
+            if(currentPage) {
+              newMessage.each(onEachMessage(currentPage));
+            }
           }
         }
 

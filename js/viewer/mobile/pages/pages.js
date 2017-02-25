@@ -55,6 +55,27 @@ export default Component.extend({
 
       //whenever rState.traeLogic get's updated.. we need to update viewMode.traeLogic
     },
+
+    'a.learn-more click': function(el, ev) {
+      ev.preventDefault();
+
+      const vm = this.viewModel;
+      const pages = vm.attr('interview.pages');
+      const pageName = vm.attr('rState.page');
+
+      if (pages && pageName) {
+        const page = pages.find(pageName);
+
+        vm.attr('modalContent', {
+          title: page.learn,
+          text: page.help,
+          imageURL: page.helpImageURL,
+          audioURL: page.helpAudioURL,
+          videoURL: page.helpVideoURL
+        });
+      }
+    },
+
     'a:regex(href,popup\://) click': function(el, ev) {
       ev.preventDefault();
 
@@ -62,7 +83,7 @@ export default Component.extend({
       const pages = vm.attr('interview.pages');
 
       if (pages) {
-        const pageName = el.get(0).pathname.replace('//', '');
+        const pageName = $(el.get(0)).attr("href").replace("popup://", "").replace("POPUP://", "").replace("/", ""); //pathname is not supported in FF and IE.
         const page = pages.find(pageName);
         // popups only have name, text, textAudioURL possible values
         vm.attr('modalContent', {
@@ -98,21 +119,21 @@ export default Component.extend({
       const vm = this.viewModel;
       const fields = vm.attr('currentPage.fields');
 
+      // keep answer index in sync with repeatVarValue
+      // when a user is navigating via the nav bar
+      const rState = this.viewModel.attr('rState');
+      const repeatVarValue = rState.attr('repeatVarValue');
+
+      if (rState && repeatVarValue) {
+        rState.attr('i', repeatVarValue);
+      }
+
       vm.setFieldAnswers(fields);
     },
 
     '{rState} page': function(rState, ev, newPageName) {
       this.viewModel.changePage(rState, newPageName);
-    },
-    '{rState traceLogic} length': function() {
-      console.log("traceLogic updated..");
-    },
-    '{rState} traceLogic': function(rState, ev, newTraceLogic) {
-      console.log('rState TL updated');
-      let stateTraceLogic = this.viewModel.attr("rState.traceLogic");
-      let traceLogic = this.viewModel.attr("traceLogic");
-      let finalTraceLogic = stateTraceLogic.concat(traceLogic);
-      this.viewModel.attr("traceLogic", finalTraceLogic);
     }
+
   }
 });

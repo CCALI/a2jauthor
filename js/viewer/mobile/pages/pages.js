@@ -46,14 +46,15 @@ export default Component.extend({
     'inserted': function() {
       let stateTraceLogic = this.viewModel.attr("rState.traceLogic");
       let traceLogic = this.viewModel.attr("traceLogic");
-      let finalTraceLogic = stateTraceLogic.concat(traceLogic);
-      this.viewModel.attr("traceLogic", finalTraceLogic);
-      var vm = this.viewModel;
-      stateTraceLogic.bind('change', function(ev, index, action, elements) {
-        vm.attr("traceLogic").push(elements[0]);
-      });
 
-      //whenever rState.traeLogic get's updated.. we need to update viewMode.traeLogic
+      if(stateTraceLogic) {
+        let finalTraceLogic = stateTraceLogic.concat(traceLogic);
+        this.viewModel.attr("traceLogic", finalTraceLogic);
+        var vm = this.viewModel;
+        stateTraceLogic.bind('change', function(ev, index, action, elements) {
+          vm.attr("traceLogic").push(elements[0]);
+        });
+      }
     },
 
     'a.learn-more click': function(el, ev) {
@@ -94,10 +95,10 @@ export default Component.extend({
       }
     },
 
-    // '{window} traceLogic': function(el, ev, msg) {
-    //   console.log("{window} traceLogic called");
-    //   this.viewModel.attr('traceLogic').push(msg);
-    // },
+    '{window} traceLogic': function(el, ev, msg) {
+      console.log("{window} traceLogic called");
+      this.viewModel.attr('traceLogic').push(msg);
+    },
 
     'a click': function(el) {
       el.attr('target', '_blank');

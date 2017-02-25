@@ -153,7 +153,7 @@ export default Map.extend({
     },
 
     traceLogic: {
-      value: [],
+      value: []
     }
 
   },

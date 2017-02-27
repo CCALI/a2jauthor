@@ -181,7 +181,12 @@ export default Map.extend({
     // Author preview should not post to server
     let previewActive = this.attr('rState').attr('previewActive');
     //
-    if (previewActive) {
+    if (previewActive &&
+      (button.next === constants.qIDFAIL ||
+      button.next === constants.qIDEXIT ||
+      button.next === constants.qIDSUCCESS ||
+      button.next === constants.qIDASSEMBLESUCCESS)
+      ) {
       this.previewActiveResponses(button);
       return;
     }

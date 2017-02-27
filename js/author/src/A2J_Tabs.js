@@ -357,7 +357,7 @@ var form={
 				//var name= $(this).data().value;
 				//$('page-picker-dialog').dialog( "close" );
 			});
-      
+
 		$('#page-picker-dialog').data(data).dialog({
   		dialogClass: "modal bootstrap-styles",
 			autoOpen:true,
@@ -560,7 +560,7 @@ var form={
 		});
     $('.editable', e).data('data',data);
 
-    //these event bindings are for IE11 to handle any 
+    //these event bindings are for IE11 to handle any
     //updates to the `contenteditable`
     //since blur event is not called properly
     $('.editable', e).on('DOMNodeInserted', function(){
@@ -575,7 +575,7 @@ var form={
       var html=form.htmlFix($(this).html());
 			form.change($(this), html);
     });
-    
+
 		return e;
 	},
 
@@ -1549,12 +1549,12 @@ function editButton()
 				}
 				else
 				{
-					html = '<a href="'+url+'">'+txt+'</a>';
+					html = '<a target="_blank" href="'+url+'">'+txt+'</a>';
 				}
 				restoreSelection(sel);
 				var didExecute = document.execCommand('insertHTML',false,  html );
         if(!didExecute) {
-          //this one is for the team at Microsoft who decided to drop support for 
+          //this one is for the team at Microsoft who decided to drop support for
           //document.execCommand('insertHTML', false, html) and didn't even bother
           //returning an error. *kudos*
           var frag = document.createDocumentFragment();

@@ -92,12 +92,16 @@ export let DebugPanelVM = Map.extend({
             // all messages should be arrays, even if they only have one fragment
             // { msg: 'message' } -> [ { msg: 'message' } ]
             if (!(fragments && fragments.length)) {
-              key = fragments.msg.split(" ").join("_");
+              // key = fragments.msg.split(" ").join("_");
               fragments = [fragments];
             }
 
+
             if(key === "_IF") {
               key = fragments[1].msg.split(" ").join("_");
+            }
+            if(key === "_VS") {
+              key = fragments[0].msg.split(" ").join("_");
             }
 
 

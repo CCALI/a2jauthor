@@ -19,7 +19,7 @@
         <div class="input-group">
           <select class="form-control" {($value)}="selectedPageIndex">
             {{#each visitedPages}}
-              <option {$value}="%index" {{#eq %index 0}}selected{{/eq}}>
+              <option {$value}="%index" {{#eq %index ../alreadyVisitedPageIndex}}selected{{/eq}}>
                 {{fitPageDescription(text, repeatVarValue)}}
               </option>
             {{/each}}

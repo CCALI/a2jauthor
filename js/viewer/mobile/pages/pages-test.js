@@ -3,7 +3,7 @@ import can from 'can';
 import assert from 'assert';
 import PagesVM from './pages-vm';
 import sinon from 'sinon';
-
+import AppState from 'viewer/models/app-state';
 import './pages';
 import 'steal-mocha';
 
@@ -22,6 +22,7 @@ describe('<a2j-pages>', () => {
         _counter: 0,
         inc: $.noop
       },
+      goToPage: false,
       varExists: sinon.spy(),
       varCreate: sinon.spy(),
       varGet: sinon.stub(),
@@ -37,10 +38,13 @@ describe('<a2j-pages>', () => {
       traceLogic: new can.List(),
       currentPage: new can.Map ({ fields: [], repeatVar: "" }),
       logic: logicStub,
-      rState: { },
+      rState: new AppState(),
       mState: { },
       interview: {
         answers: new can.Map(),
+        getPageByName: function() {
+          return nextPageStub;
+        },
         pages: {
           find() {
             return nextPageStub;
@@ -261,9 +265,10 @@ describe('<a2j-pages>', () => {
 
       it('codeBefore', () => {
         nextPageStub.attr('codeBefore', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>');
+        vm.attr('rState.logic', defaults.logic);
+        vm.attr('rState.interview', defaults.interview);
         vm.attr('rState.page', 'bar');
-
-        assert.deepEqual(vm.attr('traceLogic').attr(), [{
+        assert.deepEqual(vm.attr('rState.traceLogic').attr(), [{page: 'Next'}, {
           'codeBefore': { format: 'info', msg: 'Logic Before Question'}
         }], 'logic before trace');
       });
@@ -294,6 +299,7 @@ describe('<a2j-pages>', () => {
     });
 
     it('sets traceLogic when traceLogic event is triggered on the window', (done) => {
+
       vm.attr('traceLogic').bind('change', function handler() {
         vm.attr('traceLogic').unbind('change', handler);
 
@@ -304,7 +310,7 @@ describe('<a2j-pages>', () => {
         done();
       });
 
-      can.trigger(window, 'traceLogic', {
+      window.can.trigger(window, 'traceLogic', {
         error: [{ msg: 'error' }]
       }, false);
     });

@@ -19,16 +19,24 @@ import 'bootstrap/js/modal';
  */
 export default Map.extend({
   define: {
+    /**
+     * @property {String} pages.ViewModel.prototype.currentPage currentPage
+     * @parent pages.ViewModel
+     *
+     * String used to represent the current active page
+     */
     currentPage: {
       value: null
     },
 
+    /**
+     * @property {Object} pages.ViewModel.prototype.modalContent modalContent
+     * @parent pages.ViewModel
+     *
+     * Object that defines properties and values for popup and learn more modals
+     */
     modalContent: {
       value: null
-    },
-
-    traceLogic: {
-      value: []
     },
 
     /**
@@ -142,8 +150,14 @@ export default Map.extend({
         const parsed = Parser.parseANX(answers.serialize());
         return parsed;
       }
+    },
+
+    traceLogic: {
+      value: []
     }
+
   },
+
 
   init() {
     this.setCurrentPage();
@@ -316,8 +330,12 @@ export default Map.extend({
       if (page.name === gotoPage) {
         let rState = this.attr('rState');
         let interview = this.attr('interview');
+        rState.attr('singlePageLoop', true);
+
         rState.setVisitedPages(gotoPage, interview);
         can.trigger(rState, 'page',[gotoPage]);
+
+        rState.attr('singlePageLoop', false);
       }
 
       return;
@@ -512,18 +530,12 @@ export default Map.extend({
       return;
     }
 
+    // // Next page is unknown page name
+    let nextPage = vm.attr('interview.pages').find(newPageName);
+    if (!nextPage) return;
+
     let logic = vm.attr('logic');
-    let p = vm.attr('interview.pages').find(newPageName);
 
-    // unknown page name
-    if (!p) return;
-
-    if (p.attr('codeBefore')) {
-      vm.attr('traceLogic').push({
-        codeBefore: { format: 'info', msg: 'Logic Before Question'}
-      });
-      logic.exec(p.attr('codeBefore'));
-    }
     var gotoPage = logic.attr('gotoPage');
     // If this has value, we are exiting the interview
     var lastPageBeforeExit = rState.attr('lastPageBeforeExit');
@@ -539,7 +551,7 @@ export default Map.extend({
     } else if (gotoPage && gotoPage.length && !lastPageBeforeExit) {
 
       logic.attr('infinite').inc();
-      vm._setPage(p, gotoPage);
+      vm._setPage(nextPage, gotoPage);
     } else {
       logic.attr('infinite').reset();
     }

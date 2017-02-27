@@ -43,10 +43,23 @@ export default Component.extend({
   },
 
   events: {
+    'inserted': function() {
+      let stateTraceLogic = this.viewModel.attr("rState.traceLogic");
+      let traceLogic = this.viewModel.attr("traceLogic");
+
+      if(stateTraceLogic) {
+        let finalTraceLogic = stateTraceLogic.concat(traceLogic);
+        this.viewModel.attr("traceLogic", finalTraceLogic);
+        var vm = this.viewModel;
+        stateTraceLogic.bind('change', function(ev, index, action, elements) {
+          vm.attr("traceLogic").push(elements[0]);
+        });
+      }
+    },
 
     'a.learn-more click': function(el, ev) {
       ev.preventDefault();
-      
+
       const vm = this.viewModel;
       const pages = vm.attr('interview.pages');
       const pageName = vm.attr('rState.page');
@@ -83,6 +96,7 @@ export default Component.extend({
     },
 
     '{window} traceLogic': function(el, ev, msg) {
+      console.log("{window} traceLogic called");
       this.viewModel.attr('traceLogic').push(msg);
     },
 
@@ -121,5 +135,6 @@ export default Component.extend({
     '{rState} page': function(rState, ev, newPageName) {
       this.viewModel.changePage(rState, newPageName);
     }
+
   }
 });

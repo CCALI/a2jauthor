@@ -288,7 +288,7 @@ export default Component.extend({
         }
     },
 
-    '{a2j-field input[type=text]} keyup': _debounce(function(values, ev) {
+    '{a2j-field input[type=text]} keyup': _debounce(function() {
       if(!!navigator.userAgent.match(/Trident.*rv\:11\./)) {
         //only do this if user is using IE11
         //this is to handle the mis-firing of `change` event

@@ -96,7 +96,6 @@ export default Component.extend({
     },
 
     '{window} traceLogic': function(el, ev, msg) {
-      console.log("{window} traceLogic called");
       this.viewModel.attr('traceLogic').push(msg);
     },
 

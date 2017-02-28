@@ -26,12 +26,15 @@ function updateAttachmentFiles() {
     gGuide.attachedFiles = result.files;
     $('#attachmentFiles').empty();
 
-    $.each(gGuide.attachedFiles, function(index, file) {
-      $('<tr><td>' +
-        '<a target=_blank href="' + gGuidePath + (file.name) + '">' + file.name + '</a>' +
-        '</td><td>' + file.size + '</td></tr>'
-      ).appendTo('#attachmentFiles');
-    });
+    if(gGuide.attachedFiles) {
+      //if gGuide.attachedFiles is empty we don't need to loop through them
+      $.each(gGuide.attachedFiles, function(index, file) {
+        $('<tr><td>' +
+          '<a target=_blank href="' + gGuidePath + (file.name) + '">' + file.name + '</a>' +
+          '</td><td>' + file.size + '</td></tr>'
+        ).appendTo('#attachmentFiles');
+      });
+    }
   });
 }
 

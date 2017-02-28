@@ -9,7 +9,7 @@
 	return function(gGuide,
 		REG, CONST, decodeEntities, htmlEscape,
 		jsDate2days, today2jsDate, mdy2jsDate, days2jsDate, jsDate2mdy, ismdy,
-		jquote, traceTag, numeral) {
+		jquote, isNumber, traceTag, numeral) {
 
 		gGuide = gGuide || window.gGuide;
 		REG = REG || window.REG;
@@ -22,6 +22,7 @@
 		days2jsDate = days2jsDate || window.days2jsDate;
 		jsDate2mdy = jsDate2mdy || window.jsDate2mdy;
 		jquote = jquote || window.jquote;
+		isNumber = isNumber || window.isNumber;
 		traceTag = traceTag || window.traceTag;
 		ismdy = ismdy || window.ismdy;
 		numeral = numeral;

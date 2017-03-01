@@ -19,16 +19,24 @@ import 'bootstrap/js/modal';
  */
 export default Map.extend({
   define: {
+    /**
+     * @property {String} pages.ViewModel.prototype.currentPage currentPage
+     * @parent pages.ViewModel
+     *
+     * String used to represent the current active page
+     */
     currentPage: {
       value: null
     },
 
+    /**
+     * @property {Object} pages.ViewModel.prototype.modalContent modalContent
+     * @parent pages.ViewModel
+     *
+     * Object that defines properties and values for popup and learn more modals
+     */
     modalContent: {
       value: null
-    },
-
-    traceLogic: {
-      value: []
     },
 
     /**
@@ -64,7 +72,7 @@ export default Map.extend({
       value: constants.qIDEXIT
     },
 
-        /**
+     /**
      * @property {String} pages.ViewModel.prototype.resumeButton resumeButton
      * @parent pages.ViewModel
      *
@@ -142,8 +150,14 @@ export default Map.extend({
         const parsed = Parser.parseANX(answers.serialize());
         return parsed;
       }
+    },
+
+    traceLogic: {
+      value: []
     }
+
   },
+
 
   init() {
     this.setCurrentPage();
@@ -177,12 +191,48 @@ export default Map.extend({
     });
   },
 
+  handleIE11(page) {
+    if(!!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+      //only do this if user is using IE11
+      //this is to handle the mis-firing of `change` event
+      //in IE11 when "tabbing" through the fields
+
+      const fields = page.attr('fields');
+      const logic = this.attr('logic');
+
+      let answerIndex = this.attr("rState.i") ? this.attr("rState.i") : 1;
+      let answers = logic.attr("interview.answers");
+
+      fields.each(function(field){
+        let type = field.attr("type");
+        let val = $("input[id='"+ field.attr("label")+"']").val();
+        if(type == "gender") {
+          val = $("input[name='gender']:checked").val();
+        }
+        if(answers) {
+          answers.attr(field.attr("name").toLowerCase()).attr("values." + answerIndex, val);
+        }
+      });
+    }
+  },
+
   navigate(button) {
+
     // Author preview should not post to server
     let previewActive = this.attr('rState').attr('previewActive');
+    //
+    if (previewActive &&
+      (button.next === constants.qIDFAIL ||
+      button.next === constants.qIDEXIT ||
+      button.next === constants.qIDSUCCESS ||
+      button.next === constants.qIDASSEMBLESUCCESS)
+      ) {
+      this.previewActiveResponses(button);
+      return;
+    }
 
     // special destination dIDRESUME button skips rest of navigate
-    if (button.next === 'RESUME') {
+    if (button.next === constants.qIDRESUME) {
       let interview = this.attr('interview');
       let appState = this.attr('rState');
       // Handle the same as Desktop Navigation Resume
@@ -192,20 +242,27 @@ export default Map.extend({
     }
 
     // special destination qIDFAIL button skips rest of navigate
-     // Author can provide an external URL to explain why user did not qualify
-     if (button.next === 'FAIL') {
-       let failURL = button.url.indexOf('http') !== 0 ? 'http://' + button.url : button.url;
-       if (previewActive) {
-         alert('Author note: User would be redirected to \n(' + failURL +')');
-       } else {
-         window.location = failURL;
-       }
-       return;
-     }
+    // Author can provide an external URL to explain why user did not qualify
+    if (button.next === constants.qIDFAIL) {
+      let failURL = button.url.toLowerCase();
+      let hasProtocol = failURL.indexOf('http') === 0;
+      failURL = hasProtocol ? failURL : 'http://' + failURL;
+        if(failURL === "http://") {
+          // If Empty, standard message
+          this.attr('modalContent', {
+            title: "You did not Qualify",
+            text: "Unfortunately, you did not qualify to use this A2J Guided Interview. Please close your browser window or tab to exit the interview.",
+          });
+        } else {
+          window.open(failURL, '_blank');
+        }
+      return;
+    }
 
     const page = this.attr('currentPage');
     const fields = page.attr('fields');
 
+    this.handleIE11(page);
     this.traceButtonClicked(button.attr('label'));
 
     // Set answers for buttons with values
@@ -261,6 +318,7 @@ export default Map.extend({
         this.setRepeatVariable(repeatVar, repeatVarSet);
       }
 
+      // Don't post to the server in Author Preview
       if (!previewActive && (button.next === constants.qIDASSEMBLESUCCESS || button.next === constants.qIDSUCCESS || button.next === constants.qIDEXIT)) {
         can.trigger(this, 'post-answers-to-server');
       }
@@ -289,23 +347,22 @@ export default Map.extend({
       } else if (button.next !== constants.qIDEXIT &&
         button.next !== constants.qIDSUCCESS &&
         button.next !== constants.qIDASSEMBLE &&
-        button.next !== constants.qIDASSEMBLESUCCESS) {
+        button.next !== constants.qIDASSEMBLESUCCESS &&
+        button.next !== constants.qIDFAIL) {
 
         this._setPage(page, button.next);
 
-     } else {
-        if (button.next === constants.qIDEXIT && previewActive) {
-          alert ("Author note: User's INCOMPLETE data would upload to the server.");
-        } else if ((button.next === constants.qIDSUCCESS ||  button.next === constants.qIDASSEMBLESUCCESS) && previewActive) {
-          alert ("Author note: User's data would upload to the  server.");
-        }
      }
       // Make sure pages looping on themselves update
       if (page.name === gotoPage) {
         let rState = this.attr('rState');
         let interview = this.attr('interview');
+        rState.attr('singlePageLoop', true);
+
         rState.setVisitedPages(gotoPage, interview);
         can.trigger(rState, 'page',[gotoPage]);
+
+        rState.attr('singlePageLoop', false);
       }
 
       return;
@@ -313,6 +370,32 @@ export default Map.extend({
 
     // do nothing if there are field(s) with error(s)
     return false;
+  },
+
+  previewActiveResponses (button) {
+    switch(button.next) {
+      case constants.qIDFAIL:
+        this.attr('modalContent', {
+          title: "Author note:",
+          text: 'User would be redirected to \n(' + button.url +')',
+        });
+        break;
+
+      case constants.qIDEXIT:
+        this.attr('modalContent', {
+          title: "Author note:",
+          text: "User's INCOMPLETE data would upload to the server.",
+        });
+        break;
+
+      case constants.qIDSUCCESS:
+      case constants.qIDASSEMBLESUCCESS:
+        this.attr('modalContent', {
+          title: "Author note:",
+          text: "User's data would upload to the  server.",
+        });
+        break;
+    }
   },
 
   _setPage(page, gotoPage) {
@@ -474,18 +557,12 @@ export default Map.extend({
       return;
     }
 
+    // // Next page is unknown page name
+    let nextPage = vm.attr('interview.pages').find(newPageName);
+    if (!nextPage) return;
+
     let logic = vm.attr('logic');
-    let p = vm.attr('interview.pages').find(newPageName);
 
-    // unknown page name
-    if (!p) return;
-
-    if (p.attr('codeBefore')) {
-      vm.attr('traceLogic').push({
-        codeBefore: { format: 'info', msg: 'Logic Before Question'}
-      });
-      logic.exec(p.attr('codeBefore'));
-    }
     var gotoPage = logic.attr('gotoPage');
     // If this has value, we are exiting the interview
     var lastPageBeforeExit = rState.attr('lastPageBeforeExit');
@@ -501,7 +578,7 @@ export default Map.extend({
     } else if (gotoPage && gotoPage.length && !lastPageBeforeExit) {
 
       logic.attr('infinite').inc();
-      vm._setPage(p, gotoPage);
+      vm._setPage(nextPage, gotoPage);
     } else {
       logic.attr('infinite').reset();
     }

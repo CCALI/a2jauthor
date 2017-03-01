@@ -288,34 +288,6 @@ export default Component.extend({
         }
     },
 
-    '{a2j-field input[type=text]} keyup': _debounce(function() {
-      if(!!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-        //only do this if user is using IE11
-        //this is to handle the mis-firing of `change` event
-        //in IE11 when "tabbing" through the fields
-        var vm = this.viewModel;
-        var input = $(this);
-        var fields = vm.attr("%root.fields");
-        fields.each(function(field){
-
-          let val = $("input[id='"+ field.attr("label")+"']").val();
-          let message = {};
-          let msgVar = field.attr("name");
-
-          //set the field value...
-          field.attr("_answer.answer.values.1", val);
-
-          $(input).focus();
-          message[msgVar] = [
-            { format: 'var', msg: msgVar },
-            { msg: ' = ' },
-            { format: 'val', msg: val }
-          ];
-          vm.attr('traceLogic').push(message);
-        });
-      }
-    }, 500 ),
-
     '{field._answer.answer.values} change': function(values, ev, attr) {
 
       if (attr === '1') {

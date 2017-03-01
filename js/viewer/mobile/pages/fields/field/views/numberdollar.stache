@@ -11,6 +11,7 @@
       <input
         type="number"
         id="{{label}}"
+        name="{{name}}"
         class="form-control"
         ($change)="validateField"
         {($value)}="field._answer.values"/>

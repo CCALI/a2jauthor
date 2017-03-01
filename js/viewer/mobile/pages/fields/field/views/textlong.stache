@@ -8,6 +8,7 @@
     <textarea
       id="{{label}}"
       class="form-control"
+      name="{{name}}"
       ($change)="validateField"
       {($value)}="field._answer.values"/>
   </div>

@@ -191,35 +191,35 @@ export default Map.extend({
     });
   },
 
-  handleIE11(page) {
+  handleIE11(fields, logic) {
     if(!!navigator.userAgent.match(/Trident.*rv\:11\./)) {
       //only do this if user is using IE11
       //this is to handle the mis-firing of `change` event
       //in IE11 when "tabbing" through the fields
-
-      const fields = page.attr('fields');
-      const logic = this.attr('logic');
-
-      let answerIndex = this.attr("rState.i") ? this.attr("rState.i") : 1;
-      let answers = logic.attr("interview.answers");
-
-      fields.each(function(field){
-        let type = field.attr("type");
-        let val = $("input[id='"+ field.attr("label")+"']").val();
-        if(type == "gender") {
-          val = $("input[name='gender']:checked").val();
-        }
+      if(logic && fields && fields.length > 0) {
+        let answerIndex = this.attr("rState.i") ? this.attr("rState.i") : 1;
+        let answers = logic.attr("interview.answers");
         if(answers) {
-          answers.attr(field.attr("name").toLowerCase()).attr("values." + answerIndex, val);
+          fields.each(function(field){
+            let type = field.attr("type");
+            let val = $("input[id='"+ field.attr("label")+"']").val();
+            if(type === "gender") {
+              val = $("input[name='gender']:checked").val();
+            }
+            answers.attr(field.attr("name").toLowerCase()).attr("values." + answerIndex, val);
+          });
         }
-      });
+      }
     }
   },
 
   navigate(button) {
-
+    const page = this.attr('currentPage');
+    const fields = page.attr('fields');
+    const logic = this.attr('logic');
+    this.handleIE11(fields, logic);
     // Author preview should not post to server
-    let previewActive = this.attr('rState').attr('previewActive');
+    const previewActive = this.attr('rState').attr('previewActive');
     //
     if (previewActive &&
       (button.next === constants.qIDFAIL ||
@@ -259,10 +259,7 @@ export default Map.extend({
       return;
     }
 
-    const page = this.attr('currentPage');
-    const fields = page.attr('fields');
 
-    this.handleIE11(page);
     this.traceButtonClicked(button.attr('label'));
 
     // Set answers for buttons with values

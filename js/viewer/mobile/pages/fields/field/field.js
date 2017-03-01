@@ -5,7 +5,6 @@ import List from 'can/list/';
 import views from './views/';
 import _range from 'lodash/range';
 import _isNaN from 'lodash/isNaN';
-import _debounce from 'lodash/debounce';
 import Component from 'can/component/';
 import template from './field.stache!';
 import invalidPromptTpl from './views/invalid-prompt.stache!';

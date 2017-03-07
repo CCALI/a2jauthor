@@ -17,7 +17,7 @@ import 'bootstrap/js/modal';
  *
  * `<a2j-pages>` viewModel.
  */
-export default Map.extend({
+export default Map.extend('PagesVM', {
   define: {
     /**
      * @property {String} pages.ViewModel.prototype.currentPage currentPage
@@ -191,22 +191,36 @@ export default Map.extend({
     });
   },
 
-  handleIE11(fields, logic) {
+  handleIE11(fields, logic, traceLogic) {
     if(!!navigator.userAgent.match(/Trident.*rv\:11\./)) {
       //only do this if user is using IE11
       //this is to handle the mis-firing of `change` event
       //in IE11 when "tabbing" through the fields
       if(logic && fields && fields.length > 0) {
-        let answerIndex = this.attr("rState.i") ? this.attr("rState.i") : 1;
         let answers = logic.attr("interview.answers");
         if(answers) {
           fields.each(function(field){
             let type = field.attr("type");
-            let val = $("input[id='"+ field.attr("label")+"']").val();
-            if(type === "gender") {
-              val = $("input[name='gender']:checked").val();
+            // These types work with native code
+            if(type !== 'gender' &&
+               type !== 'checkbox' &&
+               type !== 'checboxNOTA' &&
+               type !== 'radio' &&
+               type !== 'textpick' &&
+               type !== 'numberpick' &&
+               type !== 'datemdy') {
+
+              // Handle each field as if the blur/focus event had fired correctly with validateField
+              let escapedLabel = field.attr("label").replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\\$&");
+              let preSelector = field.type !== 'textlong' ? 'input' : 'textarea';
+              let fieldEl = $(preSelector + "[id='" + escapedLabel + "']");
+
+              let vm = new FieldVM();
+              // validateField expects `this` to have field and traceLogic
+              vm.attr('field', field);
+              vm.attr('traceLogic', traceLogic);
+              vm.validateField(vm, fieldEl);
             }
-            answers.attr(field.attr("name").toLowerCase()).attr("values." + answerIndex, val);
           });
         }
       }
@@ -217,10 +231,15 @@ export default Map.extend({
     const page = this.attr('currentPage');
     const fields = page.attr('fields');
     const logic = this.attr('logic');
-    this.handleIE11(fields, logic);
-    // Author preview should not post to server
+    const traceLogic = this.attr('traceLogic');
+
+    // IE11 fails to fire all validateField events, handle that here
+    this.handleIE11(fields, logic, traceLogic);
+
+    // Author Preview Mode changes handling of special buttons, and does not post answers
     const previewActive = this.attr('rState').attr('previewActive');
     //
+
     if (previewActive &&
       (button.next === constants.qIDFAIL ||
       button.next === constants.qIDEXIT ||

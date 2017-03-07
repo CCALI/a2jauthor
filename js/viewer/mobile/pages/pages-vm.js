@@ -199,6 +199,9 @@ export default Map.extend('PagesVM', {
       if(logic && fields && fields.length > 0) {
         let answers = logic.attr("interview.answers");
         if(answers) {
+          // create temp FieldVM for validateField function
+          let vm = new FieldVM();
+
           fields.each(function(field){
             let type = field.attr("type");
             // These types work with native code
@@ -215,13 +218,14 @@ export default Map.extend('PagesVM', {
               let preSelector = field.type !== 'textlong' ? 'input' : 'textarea';
               let fieldEl = $(preSelector + "[id='" + escapedLabel + "']");
 
-              let vm = new FieldVM();
               // validateField expects `this` to have field and traceLogic
               vm.attr('field', field);
               vm.attr('traceLogic', traceLogic);
               vm.validateField(vm, fieldEl);
             }
           });
+          // Cleanup temp FieldVM instance
+          vm = null;
         }
       }
     }

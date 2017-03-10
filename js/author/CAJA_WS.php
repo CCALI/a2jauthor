@@ -822,7 +822,6 @@ function createGuideZip($gid) {
 			$zip->addFile(GUIDES_DIR.$guideName,'Guide.xml');
 
 			add_guide_json_file($guideName, $zip);
-			$zip->addFromString("templates.json", guide_templates_index_string($gid));
 
 			$files = scandir(GUIDES_DIR.$guideDir);
 
@@ -837,6 +836,8 @@ function createGuideZip($gid) {
 					$zip->addFile($filePath, $file);
 				}
 			}
+			// templates.json should be updated last to overwrite any previous templates.json file
+			$zip->addFromString("templates.json", guide_templates_index_string($gid));
 
 			$zip->close();
 			$result['zip'] = GUIDES_URL.$guideDir.'/'.$zipNameOnly;

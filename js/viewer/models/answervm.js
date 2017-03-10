@@ -7,7 +7,7 @@ import Validations from 'viewer/mobile/util/validations';
 import 'can/map/define/';
 import 'can/map/validations/';
 
-export default Map.extend({
+export default Map.extend('AnswerVM', {
   init() {
     this.validate('values', function(val) {
       const field = this.attr('field');
@@ -93,14 +93,14 @@ export default Map.extend({
       get() {
         const type = this.attr('field.type');
         const index = this.attr('answerIndex');
-        const answer = this.attr(`answer.values.${index}`);
+        const previousValue = this.attr(`answer.values.${index}`);
 
         if (type === 'datemdy') {
-          const date = moment(answer, 'MM/DD/YYYY');
+          const date = moment(previousValue, 'MM/DD/YYYY');
           return date.isValid() ? date.format('YYYY-MM-DD') : '';
         }
 
-        return answer;
+        return previousValue;
       },
 
       set(val) {

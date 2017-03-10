@@ -19,7 +19,7 @@ can.view.preload('invalid-prompt-tpl', invalidPromptTpl);
  *
  * `<a2j-field>`'s viewModel.
  */
-export let FieldVM = Map.extend({
+export let FieldVM = Map.extend('FieldVM', {
   define: {
     /**
      * @property {List} field.ViewModel.prototype.numberPickOptions numberPickOptions
@@ -236,7 +236,7 @@ export let FieldVM = Map.extend({
  *    {(trace-logic)}="traceLogic" />
  * @codeend
  */
-export default Component.extend({
+export default Component.extend('FieldComponent', {
   template,
   tag: 'a2j-field',
   viewModel: FieldVM,

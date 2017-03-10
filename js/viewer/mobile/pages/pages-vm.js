@@ -17,7 +17,7 @@ import 'bootstrap/js/modal';
  *
  * `<a2j-pages>` viewModel.
  */
-export default Map.extend({
+export default Map.extend('PagesVM', {
   define: {
     /**
      * @property {String} pages.ViewModel.prototype.currentPage currentPage
@@ -191,10 +191,59 @@ export default Map.extend({
     });
   },
 
+  handleIE11(fields, logic, traceLogic) {
+    if(!!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+      //only do this if user is using IE11
+      //this is to handle the mis-firing of `change` event
+      //in IE11 when "tabbing" through the fields
+      if(logic && fields && fields.length > 0) {
+        let answers = logic.attr("interview.answers");
+        if(answers) {
+          // create temp FieldVM for validateField function
+          let vm = new FieldVM();
+
+          fields.each(function(field){
+            let type = field.attr("type");
+            // These types work with native code
+            if(type !== 'gender' &&
+               type !== 'checkbox' &&
+               type !== 'checboxNOTA' &&
+               type !== 'radio' &&
+               type !== 'textpick' &&
+               type !== 'numberpick' &&
+               type !== 'datemdy') {
+
+              // Handle each field as if the blur/focus event had fired correctly with validateField
+              let escapedLabel = field.attr("label").replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\\$&");
+              let preSelector = field.type !== 'textlong' ? 'input' : 'textarea';
+              let fieldEl = $(preSelector + "[id='" + escapedLabel + "']");
+
+              // validateField expects `this` to have field and traceLogic
+              vm.attr('field', field);
+              vm.attr('traceLogic', traceLogic);
+              vm.validateField(vm, fieldEl);
+            }
+          });
+          // Cleanup temp FieldVM instance
+          vm = null;
+        }
+      }
+    }
+  },
+
   navigate(button) {
-    // Author preview should not post to server
-    let previewActive = this.attr('rState').attr('previewActive');
+    const page = this.attr('currentPage');
+    const fields = page.attr('fields');
+    const logic = this.attr('logic');
+    const traceLogic = this.attr('traceLogic');
+
+    // IE11 fails to fire all validateField events, handle that here
+    this.handleIE11(fields, logic, traceLogic);
+
+    // Author Preview Mode changes handling of special buttons, and does not post answers
+    const previewActive = this.attr('rState').attr('previewActive');
     //
+
     if (previewActive &&
       (button.next === constants.qIDFAIL ||
       button.next === constants.qIDEXIT ||
@@ -233,8 +282,6 @@ export default Map.extend({
       return;
     }
 
-    const page = this.attr('currentPage');
-    const fields = page.attr('fields');
 
     this.traceButtonClicked(button.attr('label'));
 

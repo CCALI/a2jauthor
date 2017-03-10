@@ -139,6 +139,16 @@ export const ViewerAppState = Map.extend({
       let name = page.attr('name');
       visited.unshift({ name, text, repeatVar, repeatVarValue, outerLoopVar, outerLoopVarValue });
     }
+
+    if (page && alreadyVisited) {
+      let selectedIndex = 0;
+       visited.each(function(visitedPage, visitedPageIndex) {
+        if(page.attr('name') === visitedPage.attr('name') && repeatVarValue === visitedPage.attr('repeatVarValue')) {
+          selectedIndex = visitedPageIndex;
+        }
+      });
+      can.trigger(this.attr('visitedPages'), 'revisited', selectedIndex);
+    }
   },
 
   fireCodeBefore(page, logic) {

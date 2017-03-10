@@ -41,6 +41,13 @@ export let ViewerNavigationVM = Map.extend({
       }
     },
 
+    alreadyVisitedPageIndex: {
+      type: 'number',
+      get(newVal) {
+        return newVal || 0;
+      }
+    },
+
     /**
      * @property {Number} viewerNavigation.ViewModel.selectedPageIndex selectedPageIndex
      * @parent viewerNavigation.ViewModel
@@ -297,6 +304,10 @@ export default Component.extend({
     */
     '{visitedPages} length': function() {
       this.viewModel.attr('selectedPageIndex', 0);
+    },
+
+    '{visitedPages} revisited': function(map, ev, selectedIndex) {
+      this.viewModel.attr('alreadyVisitedPageIndex', selectedIndex);
     }
   }
 });

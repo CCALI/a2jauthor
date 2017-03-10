@@ -23,9 +23,8 @@ var CONST = {
 	// Spinnner for loading wait
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
-	A2JVersionNum:"6.0Staging" , //VersionInfo.verNum
-	A2JVersionDate:"2017-02-15",
-
+	A2JVersionNum:"6.0" , //VersionInfo.verNum
+	A2JVersionDate:"2017-03-01",
 
 	//CAVersionNum:"5.0.0",
 	//CAVersionDate:"2013-04-15",

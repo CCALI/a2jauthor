@@ -8,6 +8,7 @@
         type="date"
         id="{{label}}"
         class="form-control"
+        name="{{name}}"
         ($blur)="validateField"
         {($value)}="field._answer.values"
         min="{{dateformat min 'YYYY-MM-DD'}}"
@@ -16,6 +17,7 @@
       <input
         type="text"
         id="{{label}}"
+        name="{{name}}"
         class="form-control" />
     {{/if}}
   </div>

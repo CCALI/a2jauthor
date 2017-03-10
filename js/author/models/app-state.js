@@ -173,7 +173,7 @@ export default Map.extend({
   },
 
   init() {
-    let appState = this;
+    let appState = this;  
 
     $(document).ajaxError(function globalAjaxHandler(event, jqxhr) {
       let status = jqxhr.status;

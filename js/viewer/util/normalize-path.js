@@ -2,7 +2,6 @@ import path from 'path-browserify';
 
 export default function(pathToGuideFolder, filePath) {
   if (!pathToGuideFolder || !filePath) {
-    console.error('Invalid parameters: ', arguments);
     return '';
   }
 

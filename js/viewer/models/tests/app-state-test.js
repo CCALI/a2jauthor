@@ -104,8 +104,8 @@ describe('AppState', function() {
 
     // set first page then interview
     appState = new AppState({ logic });
-    appState.attr('page', pageNames[0]);
     appState.attr('interview', interview);
+    appState.attr('page', pageNames[0]);
 
     visited = appState.attr('visitedPages');
     assert.equal(visited.attr('length'), 1, 'should include first page name');

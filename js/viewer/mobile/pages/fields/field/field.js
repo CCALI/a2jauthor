@@ -19,7 +19,7 @@ can.view.preload('invalid-prompt-tpl', invalidPromptTpl);
  *
  * `<a2j-field>`'s viewModel.
  */
-export let FieldVM = Map.extend({
+export let FieldVM = Map.extend('FieldVM', {
   define: {
     /**
      * @property {List} field.ViewModel.prototype.numberPickOptions numberPickOptions
@@ -93,11 +93,13 @@ export let FieldVM = Map.extend({
      * Used to determine if gender radio button should be checked based on saved answer
      *
      */
-    savedGenderValue: {
+      savedGenderValue: {
       get: function() {
         let name = this.attr('field.name').toLowerCase();
-        if (name) {
-          return this.attr('logic.interview.answers').attr(name).values[1];
+        let answerIndex = this.attr('%root.%root.rState.i') ? this.attr('%root.%root.rState.i') : 1;
+        let answers = this.attr('logic.interview.answers');
+        if (name && answers) {
+          return answers.attr(name).attr('values.'+answerIndex);
         }
       }
     },
@@ -234,7 +236,7 @@ export let FieldVM = Map.extend({
  *    {(trace-logic)}="traceLogic" />
  * @codeend
  */
-export default Component.extend({
+export default Component.extend('FieldComponent', {
   template,
   tag: 'a2j-field',
   viewModel: FieldVM,

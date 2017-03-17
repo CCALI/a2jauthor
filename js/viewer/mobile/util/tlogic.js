@@ -25,7 +25,7 @@
 		isNumber = isNumber || window.isNumber;
 		traceTag = traceTag || window.traceTag;
 		ismdy = ismdy || window.ismdy;
-		numeral = numeral;
+		numeral = numeral || window.numeral;
 		/*******************************************************************************
 			A2J Author 5 * JusticeJustice * justicia * 正义 * công lý * 사법 * правосудие
 			All Contents Copyright The Center for Computer-Assisted Legal Instruction
@@ -603,13 +603,30 @@
 		// Default user defined functions used by A2J
 
 		gLogic.addUserFunction('Dollar', 1, function(num) { // Convert to dollar format, commas with 2 digits after 0.
-			const num2string = num.toString();
-			return numeral(num2string).format('0,0.00');
+			return numeral(num).format('0,0.00');
 		});
+
 		gLogic.addUserFunction('DollarRound', 1, function(num) { // Convert to dollar format, commas and rounded to nearest dollar.
-			const roundedNum2string = Math.round(num);
-			return numeral(roundedNum2string).format('0,0');
+			return numeral(num).format('0,0');
 		});
+
+		// These 4 functions use `numeral` library to cast strings to numbers if needed.
+		gLogic.addUserFunction('Trunc',1,function(num)  {	// Return integer without decimals
+			return Math.trunc(numeral(num).value());
+		});
+
+		gLogic.addUserFunction('Trunc2',1,function(num)  {	// Return integer with 2 decimal places
+			return Math.trunc(numeral(num).value() * 100) / 100;
+		});
+
+		gLogic.addUserFunction('Round',1,function(num) {	// Return integer, rounded.
+			return Math.round(numeral(num).value());
+		});
+
+		gLogic.addUserFunction('Round2',1,function(num) {	// Return integer, rounded to two decimal places.
+			return Math.round(numeral(num).value() * 100) / 100;
+		});
+
 
 		gLogic.addUserFunction('Number', 1, function(val) { // Convert something to a number or 0.
 			return parseFloat(val);

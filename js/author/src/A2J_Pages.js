@@ -195,7 +195,7 @@ function pageEditNew()
 	if(selPage === false) {
 		selPage = gGuide.sortedPages.length > 0 ? gGuide.sortedPages[gGuide.sortedPages.length - 1] : false;
 	}
-	
+
 
 	var page = gGuide.addUniquePage(newName);
 	page.type="A2J";
@@ -203,7 +203,7 @@ function pageEditNew()
 	page.step = newStep;
 	page.mapx = selPage ? selPage.mapx : 0;
 	page.mapy = selPage ? selPage.mapy + NODE_SIZE.h + 20 : 0;
-	
+
 	// 2014-10-22 Ensure a new page has at least one button
 	var cnt= new TButton();
 	cnt.label = lang.Continue;
@@ -394,6 +394,20 @@ function gotoTabOrPage(target) {
       break;
   }
 }
+
+//For internal lists, convert select list OPTIONS into plain text with line breaks
+// optionsHTML is a string html fragment
+function convertOptionsToText (optionsHTML) {
+	var convertedList = '';
+	if (optionsHTML) {
+		var listSelect = document.createElement("select");
+		listSelect.innerHTML = optionsHTML;
+		convertedList = [].map.call(listSelect.children, function(option) {
+			return option.innerHTML
+		}).join("\n");
+	}
+	return convertedList;
+};
 
 /** @param {TPage} page */
 function guidePageEditForm(page, div, pagename)//novicePage
@@ -640,12 +654,14 @@ function guidePageEditForm(page, div, pagename)//novicePage
 							field.listSrc=val;
 							// trace('List source is '+field.listSrc);
 						}}));
-					// 2014-11-24 For internal lists, convert select list OPTIONS into plain text with line breaks
-					var listText = makestr(field.listData).replace('</OPTION>','</OPTION>\n','gi').stripHTML();
-					//trace(listText);
+
+					// Restore previous text list or create from current html option list
+					var listText = field.previousTextList ? field.previousTextList : convertOptionsToText(field.listData);
+
 					ff.append(form.textArea({label:'Internal list:',name:'listint',value: listText,
 						change:function(val,field){
 							// 2014-11-24 Convert line break items into pairs like <OPTION VALUE="Purple">Purple</OPTION>
+							field.previousTextList = val;
 							val = val.split('\n');
 							var select=$('<SELECT/>');
 							for (var vi in val) {

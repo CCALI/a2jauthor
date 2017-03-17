@@ -5,18 +5,87 @@ let testLogic = new Tlogic();
 
 describe('Tlogic', function() {
 
-	it('SUM converts readableList display string and totals values', function() {
-		let totalValue = testLogic._CF("SUM", "100, 200 and 300");
-		assert.equal(totalValue, 600);
+	describe('SUM', function() {
+		it('SUM converts readableList display string and totals values', function() {
+			let totalValue = testLogic._CF("SUM", "100, 200 and 300");
+			assert.equal(totalValue, 600);
+		});
+
+		it('SUM ignores non-number values in the readableList', function() {
+			let totalValue = testLogic._CF("SUM", "blue, 4, 8 and 12");
+			assert.equal(totalValue, 24);
+		});
+
+		it('SUM handles non string values, returning 0 by default', function() {
+			let totalValue = testLogic._CF("SUM", null);
+			assert.equal(totalValue, 0);
+		});
 	});
 
-	it('SUM ignores non-number values in the readableList', function() {
-		let totalValue = testLogic._CF("SUM", "blue, 4, 8 and 12");
-		assert.equal(totalValue, 24);
+	describe('DOLLAR and DOLLARROUND', function(){
+		it('DOLLAR returns a string, with cents rounded to 2 decimals', function() {
+			let dollarString = testLogic._CF('DOLLAR', 1345.678);
+			assert.equal(dollarString, '1,345.68');
+		});
+
+		it('DOLLARROUND returns a string, to the nearest dollar', function() {
+			let dollarString = testLogic._CF('DOLLARROUND', 9872.678);
+			assert.equal(dollarString, '9,873');
+		});
 	});
 
-	it('SUM handles non string values, returning 0 by default', function() {
-		let totalValue = testLogic._CF("SUM", null);
-		assert.equal(totalValue, 0);
+	describe('ROUND and ROUND2', function(){
+		it('ROUND returns a number rounded to the nearest integer', function() {
+			let roundedNumber = testLogic._CF('ROUND', 2345.678);
+			assert.equal(roundedNumber, 2346);
+		});
+
+		it('ROUND2 returns a number rounded to 2 decimal points', function() {
+			let roundedNumber2 = testLogic._CF('ROUND2', 2345.678);
+			assert.equal(roundedNumber2, 2345.68);
+		});
+
+		it('ROUND returns a number rounded to the nearest integer, if given a string number', function() {
+			let roundedNumber = testLogic._CF('ROUND', '2345.678');
+			assert.equal(roundedNumber, 2346);
+		});
+
+		it('ROUND2 returns a number rounded to 2 decimal points, if given a string number', function() {
+			let roundedNumber2 = testLogic._CF('ROUND2', '2345.678');
+			assert.equal(roundedNumber2, 2345.68);
+		});
 	});
+
+	describe('TRUNC and TRUNC2', function(){
+		it('TRUNC returns a number, discarding any decimals', function() {
+			let truncatedNumber = testLogic._CF('TRUNC', 2345.678);
+			assert.equal(truncatedNumber, 2345);
+		});
+
+		it('TRUNC2 returns a number, discarding any digits beyond 2 decimal points', function() {
+			let truncatedNumber2 = testLogic._CF('TRUNC2', 2345.678);
+			assert.equal(truncatedNumber2, 2345.67);
+		});
+
+		it('TRUNC2 returns a number with only one decimal point as needed', function() {
+			let truncatedNumber2 = testLogic._CF('TRUNC2', 345.6);
+			assert.equal(truncatedNumber2, 345.6);
+		});
+
+		it('TRUNC returns a number, discarding any decimals, if given a string number', function() {
+			let truncatedNumber = testLogic._CF('TRUNC', '2345.678');
+			assert.equal(truncatedNumber, 2345);
+		});
+
+		it('TRUNC2 returns a number, discarding any digits beyond 2 decimal points, if given a string number', function() {
+			let truncatedNumber2 = testLogic._CF('TRUNC2', '2345.678');
+			assert.equal(truncatedNumber2, 2345.67);
+		});
+
+		it('TRUNC2 returns a number with only one decimal point as needed, if given a string number', function() {
+			let truncatedNumber2 = testLogic._CF('TRUNC2', '345.6');
+			assert.equal(truncatedNumber2, 345.6);
+		});
+	});
+
 });

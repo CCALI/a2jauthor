@@ -275,7 +275,7 @@
 					var result = f(); // Execute the javascript code.
 					txt = htmlEscape(result);
 					// Ensure line breaks from user long answer or author's multi-line text set appear.
-					txt = txt.replace("\n", "<BR>", "gi");
+					txt = txt.replace(/\n|\r\n|\r/g, "<BR>");
 				} catch (e) {
 					// Collect runtime errors
 					txt = '<span class="code">' + expressionInText + '</span><span class="err">' + e.message + '</span>';

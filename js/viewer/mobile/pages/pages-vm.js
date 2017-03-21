@@ -340,6 +340,14 @@ export default Map.extend('PagesVM', {
 
       // Don't post to the server in Author Preview
       if (!previewActive && (button.next === constants.qIDASSEMBLESUCCESS || button.next === constants.qIDSUCCESS || button.next === constants.qIDEXIT)) {
+        // This disable is for LHI/HotDocs issue taking too long to process
+        // prompting users to repeatedly press submit, crashing HotDocs
+        // Matches A2J4 functionality, but should really be handled better on LHI's server
+        $("button:contains("+button.label+")").prop('disabled', true);
+        this.attr('modalContent', {
+          title: "Answers Submitted :",
+          text: 'Page will redirect shortly',
+        });
         can.trigger(this, 'post-answers-to-server');
       }
 

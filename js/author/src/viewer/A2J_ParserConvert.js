@@ -48,7 +48,6 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	guide.viewer="A2J";
 	guide.endImage = TEMPLATE.find('ENDGRAPHIC').text();
 	guide.logoImage = TEMPLATE.find('LOGOGRAPHIC').text();
-	guide.mobileFriendly='';
 
 	var author = new TAuthor();
 	author.name = makestr(TEMPLATE.find('AUTHOR').text());

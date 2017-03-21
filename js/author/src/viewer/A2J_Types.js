@@ -395,7 +395,6 @@ function TGuide()
 	this.viewer="";				//Origin CAJA - A2J, CA, CAJA - which viewer to use?
 	this.logoImage="";			//Origin A2J
 	this.endImage="";				//Origin A2J
-	this.mobileFriendly='';		//If true, will run on Mobile, false won't, '' unknown.
 
 	/** @type {Array.<TAuthor>} */
 	this.authors=[];				//Origin Both - single line, CA is a heirarchy. Array of TAuthor

@@ -201,7 +201,6 @@ function reportFull()
 		t += (tupleAuto('Approximate Completion Time:',  guide.completionTime));
 		t += (tupleAuto('Logo graphic:',  guide.logoImage));
 		t += (tupleAuto('End graphic:',  guide.endImage));
-		t += (tupleAuto('Mobile friendly?',  guide.mobileFriendly));
 		var ta = tuples('TH',['Name','Title','Organization','email']);
 		for (var ai in guide.authors)
 		{

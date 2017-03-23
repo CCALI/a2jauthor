@@ -11,6 +11,9 @@ import answersWithRepeating from './fixtures/answers-with-repeating-values.json'
 import pagesWithRepeating from './fixtures/interview-pages-with-repeating-vars.json';
 import answersXMLWithRepeating from './fixtures/answers-file-with-repeating-values.anx!text';
 
+// Nested loop answers file
+import nestedAnswersXML from './fixtures/answers-with-nested-values.anx!text';
+
 import 'steal-mocha';
 
 describe('Parser', function() {
@@ -45,6 +48,15 @@ describe('Parser', function() {
     let parsedAnswers = Parser.parseJSON(answersXML);
 
     assert.equal(parsedAnswers["like chocolate tf"].values[1], true, 'TF answer not of type boolean');
+  });
+
+  it('parsed answer file captures nested loop answers at correct indexes', function() {
+    let parsedAnswers = Parser.parseJSON(nestedAnswersXML);
+    assert.equal(parsedAnswers["user gender"].values[21], "Female", 'MC values');
+    assert.equal(parsedAnswers["salary nu"].values[21], 67890, 'Number values');
+    assert.equal(parsedAnswers["client last name te"].values[21], "Dang", 'Text values');
+    assert.equal(parsedAnswers["dob da"].values[21], "02/02/1980", 'Date values');
+    assert.equal(parsedAnswers["chocolate tf"].values[21], true, 'TF values');
   });
 
 });

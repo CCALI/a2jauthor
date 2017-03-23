@@ -185,22 +185,38 @@ export default {
           $('rptvalue', this).children().each(function(i) {
             varANXType = $(this).get(0).tagName.toLowerCase();
             varType = mapANX2Var[varANXType];
+            // Only set answers with values to keep Author Var list in Debug Panel clean
+            if ($(this).html() !== "") {
+              switch (varANXType) {
+                case 'textvalue':
+                  guide.varSet(varName, $(this).html(), i + 1);
+                  break;
 
-            switch (varANXType) {
-              case 'textvalue':
-              case 'numvalue':
-              case 'tfvalue':
-                guide.varSet(varName, $(this).html(), i + 1);
-                break;
-              case 'datevalue':
-                let britDate = $(this).html();
-                let usDate = cString.swapMonthAndDay(britDate);
-                guide.varSet(varName, usDate, i + 1);
-                break;
+                case 'numvalue':
+                  guide.varSet(varName, +$(this).html(), i + 1);
+                  break;
 
-              case 'mcvalue':
-                guide.varSet(varName, $(this).find('SelValue').html());
-                break;
+                case 'tfvalue':
+                  // Needs to be true boolean for 2 way binding in checkbox.stache view
+                  var bool = $(this).html();
+                  if (bool.toLowerCase() === "true") {
+                    bool = true;
+                  } else {
+                    bool = false;
+                  }
+                  guide.varSet(varName, bool, i + 1);
+                  break;
+
+                case 'datevalue':
+                  let britDate = $(this).html();
+                  let usDate = cString.swapMonthAndDay(britDate);
+                  guide.varSet(varName, usDate, i + 1);
+                  break;
+
+                case 'mcvalue':
+                  guide.varSet(varName, $(this).find('SelValue').html(), i + 1);
+                  break;
+              }
             }
           });
 

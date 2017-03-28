@@ -1164,14 +1164,6 @@ TGuide.prototype.noviceTab = function(tab,clear)
         }
       }));
 
-      tabLayout.append(form.pickList({
-        label: 'Mobile friendly?',
-        value: guide.mobileFriendly,
-        change: function(val) {
-          guide.mobileFriendly = val;
-        }
-      }, ['', 'Undetermined', 'false', 'No', 'true', 'Yes']));
-
       $('#tab-layout').html(tabLayout);
 
       // -------------------------------

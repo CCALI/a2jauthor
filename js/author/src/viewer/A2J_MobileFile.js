@@ -102,7 +102,6 @@ function guide2JSON_Mobile (guide)
 	newGuide.viewer=guide.viewer;
 	newGuide.endImage=guide.endImage;
 	newGuide.logoImage=guide.logoImage;
-	newGuide.mobileFriendly=guide.mobileFriendly;
 
 	newGuide.authors=[];
 	var i;

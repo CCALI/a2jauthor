@@ -156,7 +156,6 @@ function exportXML_CAJA_from_CAJA(guide)
 	JSON.GUIDE.INFO.viewer=guide.viewer;
 	JSON.GUIDE.INFO.endImage=guide.endImage;
 	JSON.GUIDE.INFO.logoImage=guide.logoImage;
-	JSON.GUIDE.INFO.mobileFriendly=guide.mobileFriendly;
 	var i;
 	for (i in guide.authors)
 	{
@@ -332,7 +331,6 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 	guide.viewer =			makestr(INFO.children('VIEWER').text());
 	guide.logoImage =		makestr(INFO.children('LOGOIMAGE').text());
 	guide.endImage =		makestr(INFO.children('ENDIMAGE').text());
-	guide.mobileFriendly=INFO.children('MOBILEFRIENDLY').text();
 	guide.authors=[];
 	GUIDE.find("AUTHORS > AUTHOR").each(function() {
 		var AUTHOR = $(this);

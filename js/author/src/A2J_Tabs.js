@@ -541,7 +541,7 @@ var form={
 	}
 	,htmlFix:function(html)
 	{
-		html = form.pasteFix(html,['P','BR','UL','OL','LI','A','B','I','U','BLOCKQUOTE']);
+		html = form.pasteFix(html,['DIV','P','BR','UL','OL','LI','A','B','I','U','BLOCKQUOTE']);
  		return html;
 	}
 	,htmlarea: function(data){//label,value,handler,name){
@@ -549,8 +549,8 @@ var form={
 		var e= $('<div name="'+data.name+'">'
 			+'<div class="editspan form-group">'
 			+(typeof data.label!=='undefined' ? ('<label class="control-label">'+data.label+'</label>') : '')
-			+'<div><div contenteditable=true class="htmledit form-control text editable taller" id="tinyMCE_'+form.id+'"  name="'+form.id+'" rows='+1+'>'
-			+data.value+'</div></div></div></div>');
+			+'<div contenteditable=true class="htmledit form-control text editable taller" id="tinyMCE_'+form.id+'"  name="'+form.id+'" rows='+1+'>'
+			+data.value+'</div></div></div>');
 		$('.editable',e).focus(
       function(){
         $(this).addClass('tallest');

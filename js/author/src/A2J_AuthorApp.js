@@ -515,6 +515,7 @@ function main()
 }
 
 window.onbeforeunload = function() {
+  // Chrome no longer let's you customize the message
   // If we've got a guide loaded, ask if we want to leave.
   if (gGuide && gGuideID && (gGuideID !== 0)) {
     return 'Leave A2J Author?';

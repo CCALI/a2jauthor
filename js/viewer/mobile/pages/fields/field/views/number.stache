@@ -1,18 +1,22 @@
+<can-import from="viewer/mobile/pages/fields/field/views/number.less!" />
+
 <div>
+  {{log}}
   <div class="form-group {{#if field.hasError}}has-error{{/if}}">
     <label class="control-label" for="{{label}}">
       {{{ eval(label, repeatVarValue) }}}
       {{#if required}}<small class="text-danger">(Required)</small>{{/if}}
     </label>
-
-    <input
-      type="number"
-      id="{{label}}"
-      name="{{name}}"
-      class="form-control"
-      ($change)="validateField"
-      {($value)}="field._answer.values"/>
+    <div>
+      <input
+        type="number"
+        id="{{label}}"
+        name="{{name}}"
+        class="form-control"
+        ($change)="validateField"
+        {($value)}="field._answer.values"/>
+      {{#if field.calculator}}<img src="../calculator/calculator.png" class="calc-icon" ($click)="showCalculator(field)" />{{/if}}
+    </div>
   </div>
-
   {{> invalid-prompt-tpl }}
 <div>

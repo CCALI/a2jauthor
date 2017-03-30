@@ -7,6 +7,10 @@ import bindCustomEvents from 'author/utils/bind-custom-events';
 
 import 'can/view/';
 import 'can/route/';
+import 'calculator/jquery.plugin';
+import 'calculator/jquery.calculator';
+import 'calculator/jquery.calculator.css';
+
 
 let appState = new AppState();
 

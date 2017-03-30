@@ -643,7 +643,7 @@ function guidePageEditForm(page, div, pagename)//novicePage
 					change:function(val,field){field.required = val}}));
 					ff.append(form.text({label:'Max chars:',name:'maxchars', placeholder:'Max Chars',value: field.maxChars,
 						change:function(val,field){field.maxChars=val;}}));
-					ff.append(form.checkbox({label:'Show Calculator:',name:'calculator',checkbox:'Calculator available?', value:field.calculator,
+					ff.append(form.checkbox({label:'Show Calculator:',name:'calculator',checkbox:'', value:field.calculator,
 						change:function(val,field){field.calculator=val;}}));
 					ff.append(form.text({label:'Min value:',name:'min',placeholder:'min', value: field.min,
 						change:function(val,field){field.min=val;}}));

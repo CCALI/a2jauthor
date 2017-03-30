@@ -200,6 +200,24 @@ export let FieldVM = Map.extend('FieldVM', {
   },
 
   /**
+   * @property {Function} field.ViewModel.prototype.showCalculator showCalculator
+   * @parent field.ViewModel
+   *
+   * shows input calculator
+   *
+   */
+  showCalculator(field) {
+    let inputId = field.attr('label');
+    let $inputEl = $("[id='"+inputId+"']");
+    $inputEl.calculator({showOn: 'operator', eraseText: 'Clear',
+      onClose: function(calcValue, instance) {
+        instance.elem.prop('value', calcValue).change();
+      }
+    });
+    $inputEl.calculator('show');
+  },
+
+  /**
    * @property {Function} field.ViewModel.prototype.convertDate convertDate
    * @parent field.ViewModel
    *

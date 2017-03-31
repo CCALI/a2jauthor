@@ -10,7 +10,7 @@ const buttonProperties = [
 const fieldProperties = [
   'type', 'label', 'name', 'value', 'order', 'required',
   'min', 'max', 'maxChars', 'listSrc', 'listData', 'sample',
-  'invalidPrompt'
+  'invalidPrompt','calculator'
 ];
 
 const pageProperties = [

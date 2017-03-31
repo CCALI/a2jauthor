@@ -182,7 +182,7 @@ describe('<a2j-field>', () => {
 
   describe('Component', () => {
     let logicStub;
-    let checkboxDefaults, NOTADefaults, textDefaults;
+    let checkboxDefaults, NOTADefaults, textDefaults, numberDollarDefaults;
     let fields = new List();
 
     beforeEach(() => {
@@ -275,8 +275,35 @@ describe('<a2j-field>', () => {
           traceLogic: new List()
         })
       };
+
+      numberDollarDefaults = {
+        fields: fields,
+        logic: logicStub,
+        repeatVarValue: "",
+        lang: new Map(),
+        traceLogic: new List(),
+        name: 'Salary',
+        type: 'numberdollar',
+        label: 'Salary',
+        vm:  new FieldVM({
+          field: {
+            name: 'Salary',
+            type: 'numberdollar',
+            label: 'Salary',
+            calculator: false,
+            _answer: {
+              answerIndex: 1,
+              answer: {
+                values: [null, 45678]
+              }
+            }
+          },
+          traceLogic: new List()
+        })
+      };
+
       // populate fields for this.viewModel.%root
-      fields.push(checkboxDefaults.vm.attr('field'), NOTADefaults.vm.attr('field'), textDefaults.vm.attr('field'));
+      fields.push(checkboxDefaults.vm.attr('field'), NOTADefaults.vm.attr('field'), textDefaults.vm.attr('field'), numberDollarDefaults.vm.attr('field'));
 
       let checkboxFrag = can.stache(
         `<a2j-field
@@ -305,7 +332,16 @@ describe('<a2j-field>', () => {
         {repeat-var-value}="repeatVarValue" />`
       );
 
-      $('#test-area').html(checkboxFrag(checkboxDefaults)).append(NOTAFrag(NOTADefaults)).append(textFrag(textDefaults));
+      let numberDollarFrag = can.stache(
+        `<a2j-field
+        {(field)}="vm.field"
+        {lang}="lang"
+        {(logic)}="logic"
+        {(trace-logic)}="traceLogic"
+        {repeat-var-value}="repeatVarValue" />`
+      );
+
+      $('#test-area').html(checkboxFrag(checkboxDefaults)).append(numberDollarFrag(numberDollarDefaults)).append(NOTAFrag(NOTADefaults)).append(textFrag(textDefaults));
     });
 
     afterEach(() => {
@@ -344,5 +380,25 @@ describe('<a2j-field>', () => {
 
       });
     });
+
+    describe('Calculator', () => {
+
+      it('should show the calculator image when selected', () => {
+        let numberDollarField = numberDollarDefaults.vm.attr('field');
+        numberDollarField.attr('calculator', true);
+
+        let $calcFound = $(".calc-icon");
+
+        assert.equal($calcFound.attr('class'), "calc-icon");
+      });
+
+      it('should not show the calculator image when unselected', () => {
+        let $calcFound = $(".calc-icon");
+
+        assert.equal($calcFound.attr('class'), undefined);
+      });
+
+    });
+
   });
 });

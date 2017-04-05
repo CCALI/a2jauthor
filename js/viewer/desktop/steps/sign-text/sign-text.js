@@ -11,7 +11,7 @@ import 'caja/viewer/util/jquery-textfill';
  *
  * `<a2j-viewer-sign-text>`'s viewModel.
  */
-export let SignTextVM = Map.extend({
+export let SignTextVM = Map.extend('SignTextVM', {
   define: {
     /**
      * @property {String} signText.ViewModel.prototype.displayText displayText
@@ -21,13 +21,45 @@ export let SignTextVM = Map.extend({
      */
     displayText: {
       get() {
-        return _truncate(this.attr('text'), {
+        const a2jStepValues = this.attr('a2jStepValues');
+        let stepIndex, overrideText;
+
+        if (a2jStepValues.length) {
+          stepIndex = this.attr('number');
+          overrideText = a2jStepValues[stepIndex].attr('values.1');
+        }
+
+        let stepText = overrideText ? overrideText : this.attr('text');
+
+        return _truncate(stepText , {
           length: this.attr('maxChars') + this.attr('overflowText').length,
           separator: ' ',
           omission: this.attr('overflowText')
         });
       }
     },
+
+    /**
+     * @property {Array} signText.ViewModel.prototype.a2jStepValues a2jStepValues
+     * @parent signText.ViewModel
+     *
+     * listens for changes to A2J Step variables during an interview - used to update displayText
+     */
+    a2jStepValues: {
+      get() {
+        let a2jStepVars = [];
+        let answers = this.attr('interview.answers');
+        if (answers) {
+          answers.each(function(answer) {
+            if (answer.name && answer.name.indexOf("A2J Step") !== -1) {
+              answer.attr('values');  // setup binding on values(1)
+              a2jStepVars.push(answer);
+            }
+          });
+        }
+        return a2jStepVars;
+      }
+  },
 
     /**
      * @property {String} signText.ViewModel.prototype.maxChars maxChars
@@ -72,6 +104,17 @@ export let SignTextVM = Map.extend({
      */
     isCurrentStep: {
       type: 'boolean'
+    },
+
+    /**
+     * @property {Number} signText.ViewModel.prototype.number number
+     * @parent signText.ViewModel
+     *
+     * step number and index for the sign and displayText value
+     *
+     */
+    number: {
+      type: 'number'
     },
 
     /**
@@ -120,7 +163,7 @@ export let SignTextVM = Map.extend({
         let innerText = paragraph[0].innerHTML;
         let words = innerText.split(" ");
         if(words.length === 1) {
-          //we only have one word here so we need to apply some css tricks
+          //we only have one long word here so we need to apply some css tricks
           paragraph.css({
             'text-overflow': 'ellipsis',
             'white-space': 'nowrap',
@@ -138,7 +181,7 @@ export let SignTextVM = Map.extend({
         let maxFontPixels = Math.floor(vm.attr('paragraphContainer').height() / 2);
 
         vm.attr('paragraphContainer').textfill({
-          innerTag: 'div',
+          innerTag: 'span',
           // once the text size has been set, update the line height
           success: vm.updateLineHeight.bind(vm),
           maxFontPixels: maxFontPixels
@@ -205,7 +248,7 @@ export default Component.extend({
 
   events: {
     inserted() {
-      let $p = this.element.find('div div');
+      let $p = this.element.find('div span');
       this.viewModel.attr('paragraph', $p);
       this.viewModel.attr('paragraphContainer', $p.parent());
       this.viewModel.resizeText();
@@ -213,6 +256,11 @@ export default Component.extend({
 
     // resize when user navigates to next step
     '{viewModel} currentStepNumber': function(vm) {
+      setTimeout(vm.resizeText.bind(vm));
+    },
+
+    // resize when displayText updates
+    '{viewModel} displayText': function(vm) {
       setTimeout(vm.resizeText.bind(vm));
     },
 

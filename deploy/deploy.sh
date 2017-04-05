@@ -356,8 +356,8 @@ run_send() {
 run_cleanup() {
   progress "Cleaning up source directory"
   rm -rf tmp
-  # uncomment to remove TAR file
-  # rm $TAR_NAME
+  # comment line below to save TAR file
+  rm $TAR_NAME
 }
 ##
 # Deployment

@@ -83,10 +83,12 @@
 
           <div class="sign-text">
             <a2j-viewer-sign-text
+              {interview}="interview"
               {show-debug-panel}="showDebugPanel"
               {current-step-number}="currentStep.number"
               {is-current-step}="true"
-              {text}="currentStep.text" />
+              {text}="currentStep.text"
+              {number}="currentStep.number" />
           </div>
         </div>
       </div><!-- sign -->
@@ -115,10 +117,12 @@
 
               <div class="sign-text">
                 <a2j-viewer-sign-text
+                  {interview}="interview"
                   {show-debug-panel}="showDebugPanel"
                   {current-step-number}="currentStep.number"
                   {is-current-step}="false"
-                  {text}="text" />
+                  {text}="text"
+                  {number}="number" />
               </div>
             </div>
           </div><!-- sign -->

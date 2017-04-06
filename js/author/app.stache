@@ -302,6 +302,7 @@
       <hr>
       <p>To publish to testing servers, use the buttons below</p>
       <button id="guideZIPLHIQA" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to RebuildQA</button>
+      <button id="guideZIPLHI" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to LHI Production</button>
     </div><!-- id="tabsUpload" -->
   </div>
 

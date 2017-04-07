@@ -207,14 +207,16 @@ export let FieldVM = Map.extend('FieldVM', {
    *
    */
   showCalculator(field) {
-    let inputId = field.attr('label');
-    let $inputEl = $("[id='"+inputId+"']");
-    $inputEl.calculator({showOn: 'operator', eraseText: 'Clear',
-      onClose: function(calcValue, instance) {
-        instance.elem.prop('value', calcValue).change();
-      }
-    });
-    $inputEl.calculator('show');
+    if (field && field.calculator === true) {
+      let inputId = field.attr('label');
+      let $inputEl = $("[id='"+inputId+"']");
+      $inputEl.calculator({showOn: 'operator', eraseText: 'Clear',
+        onClose: function(calcValue, instance) {
+          instance.elem.prop('value', calcValue).change();
+        }
+      });
+      $inputEl.calculator('show');
+    }
   },
 
   /**

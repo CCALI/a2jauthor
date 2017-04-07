@@ -106,21 +106,21 @@ function page2JSON(page)
 	}
 	var fi;
 	for (fi in page.fields){
-		var f=page.fields[fi];
+		var 	f=page.fields[fi];
 		var FIELD = {
-			_TYPE:			f.type,
-			_ORDER:			f.order,
-			_REQUIRED:		f.required, //==true ? true : gJS2XML_SKIP,
+			_TYPE:				f.type,
+			_ORDER:				f.order,
+			_REQUIRED:			f.required, //==true ? true : gJS2XML_SKIP,
 			_MIN:				f.min,
 			_MAX:				f.max,
-			_MAXCHARS:		f.maxChars,
-			_CALCULATOR:	f.calculator===true ? true : gJS2XML_SKIP,
+			_MAXCHARS:			f.maxChars,
+			_CALCULATOR:		f.calculator,
 			LISTSRC:			f.listSrc,
-			XML_LISTDATA:	f.listData,
-			XML_LABEL:		f.label,
+			XML_LISTDATA:		f.listData,
+			XML_LABEL:			f.label,
 			NAME:				f.name,
-			VALUE:			f.value,
-			SAMPLE:			f.sample,
+			VALUE:				f.value,
+			SAMPLE:				f.sample,
 			XML_INVALIDPROMPT:	f.invalidPrompt
 		};
 		PAGE.FIELDS.push({FIELD:FIELD});
@@ -273,8 +273,7 @@ function parseXML2Page(PAGE, page)
 		field.min = makestr($field.attr("MIN"));//could be a number or a date so don't convert to number
 		field.max = makestr($field.attr("MAX"));
 		field.maxChars = makestr($field.attr("MAXCHARS"));
-		field.calculator=textToBool($field.attr("CALCULATOR"),false);
-
+		field.calculator=textToBool($field.attr("CALCULATOR"));
 		field.invalidPrompt =makestr(jQuery.trim($field.find("INVALIDPROMPT").xml()));
 		field.invalidPromptAudio =makestr(jQuery.trim($field.find("INVALIDPROMPTAUDIO").xml()));
 

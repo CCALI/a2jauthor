@@ -39,8 +39,9 @@ function parseFields(pageFields = []) {
   return pageFields.map(function(field) {
     let result = _pick(field, fieldProperties);
 
-    // make sure `required` is a boolean value
+    // make sure `required` and `calculator` are boolean values
     result.required = Boolean(result.required);
+    result.calculator = Boolean(result.calculator);
 
     return result;
   });

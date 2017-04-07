@@ -172,7 +172,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 			field.order = makestr($(this).attr("ORDER"));
 			field.min = makestr($(this).attr("MIN"));
 			field.max = makestr($(this).attr("MAX"));
-			field.calculator=textToBool($(this).attr("CALCULATOR"),false);
+			field.calculator=textToBool($(this).attr("CALCULATOR"));
 			field.label =makestr(jQuery.trim($(this).find("LABEL").xml()));
 			field.name =jQuery.trim($(this).find("NAME").xml());
 			field.value = makestr(jQuery.trim($(this).find("VALUE").xml()));

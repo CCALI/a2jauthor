@@ -64,7 +64,7 @@ function page2JSON_Mobile(page)
 			min:			f.min,
 			max:			f.max,
 			//calendar:		f.calendar,
-			//calculator:	f.calculator,
+			calculator:		f.calculator === true ? true : false,
 			maxChars:		f.maxChars,
 			listSrc:		f.listSrc,
 			listData:		f.listData,

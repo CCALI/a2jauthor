@@ -178,13 +178,13 @@ function TField()
 	this.label ="";
 	this.name ="";//reference TVar.name
 	this.value = "";//default value (used in radio buttons)
-	this.required =false;
+	this.required = false;
 	this.invalidPrompt ="";
 	this.invalidPromptAudio = "";
 	this.order ="";//default, ASC, DESC
 	this.min="";
 	this.max="";
-	this.calculator=false;
+	this.calculator = false;
 	this.maxChars="";
 	this.listSrc="";
 	this.listData="";

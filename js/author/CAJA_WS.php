@@ -414,6 +414,7 @@ switch ($command){
 			createGuideZip($gid);
 		break;
 
+	case 'guideZIPLHI':
 	case 'guideZIPLHIQA':
 	case 'guideZIPTESTCALI': // 11-01-26 This button/case removed from app.stache during public testing
 
@@ -431,7 +432,7 @@ switch ($command){
 		if ($command=="guideZIPLHIQA"){
 		  $LHI_POST_URL = "https://rebuildqa.lawhelpinteractive.org/Upload/A2JLoader.aspx?Session=" . $gid;
 		}else{
-		  $LHI_POST_URL = "https://www.lawhelpinteractive.org/Upload/A2JUpload.aspx"; // LHI production site
+		  $LHI_POST_URL = "https://lawhelpinteractive.org/Upload/A2JLoader.aspx?Session=" . $gid; // LHI production site
 		}
 
 		$ch = curl_init($LHI_POST_URL);

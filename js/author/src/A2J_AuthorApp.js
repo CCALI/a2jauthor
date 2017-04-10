@@ -203,7 +203,7 @@ function main()
 
 
   // 09/29/2106 Handle publishing guides to external test servers. URL is defined in CAJA_WS.php
-  $('#guideZIPLHI').button({  disabled:true, icons:{primary:"ui-icon-disk"}}).click(function()
+  $('#guideZIPLHI').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
   {  // 08/10/2015 ZIP the guide files, POST them to LHI, open new window for author to complete LHI process.
     function guideZipped(data)
     {

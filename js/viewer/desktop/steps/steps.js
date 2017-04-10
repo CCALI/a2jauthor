@@ -18,7 +18,7 @@ can.view.preload('learn-more-tpl', learnMoreTemplate);
  *
  * `<a2j-viewer-steps>`'s viewModel.
  */
-export let ViewerStepsVM = Map.extend({
+export let ViewerStepsVM = Map.extend('ViewerStepsVM', {
   define: {
     /**
      * @property {String} steps.ViewModel.prototype.steps steps

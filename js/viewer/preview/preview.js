@@ -11,7 +11,7 @@ import MemoryState from 'viewer/models/memory-state';
 import PersistedState from 'viewer/models/persisted-state';
 import parseGuideToMobile from 'viewer/mobile/util/guide-to-mobile';
 
-const ViewerPreviewVM = Map.extend({
+const ViewerPreviewVM = Map.extend('ViewerPreviewVM', {
   define: {
     interviewPageName: {
       get: function(){

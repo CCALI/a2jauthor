@@ -11,6 +11,9 @@ import PersistedState from 'viewer/models/persisted-state';
 import 'can/route/';
 import 'jquerypp/dom/cookie/';
 import 'viewer/mobile/util/helpers';
+import 'calculator/jquery.plugin';
+import 'calculator/jquery.calculator';
+import 'calculator/jquery.calculator.css';
 
 // State attrs not needing persistance, such as showing/hiding the table of contents.
 // Load configuration from desktop into mobile

@@ -709,10 +709,15 @@
 			return jsDate2mdy(days2jsDate(val));
 		});
 
-
-
 		gLogic.addUserFunction('String', 1, function(val) {
 			return String(val);
+		});
+
+		gLogic.addUserFunction('Contains', 2, function(varValue, stringValue) { // Case insensitive
+			varValue = String(varValue).toLowerCase();
+			stringValue = String(stringValue).toLowerCase();
+
+			return varValue.indexOf(stringValue) !== -1;
 		});
 
 		gLogic.addUserFunction('HisHer', 1, function(gender) {

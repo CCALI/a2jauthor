@@ -287,7 +287,7 @@ TLogic.prototype.translateCAJAtoJS = function(CAJAScriptHTML)
 	if (ifd>0){
 		errors.push(new ParseError(l,"",lang.scriptErrorEndMissing.printf()));
 	}
-	
+
 	return {js : jsLines,  errors: errors};
 };
 
@@ -773,6 +773,11 @@ gLogic.addUserFunction('Date',1,function(val)
 
 
 gLogic.addUserFunction('String',1,function(val){return String(val);});
+
+gLogic.addUserFunction('Contains', 2, function(varValue, stringVal) {
+	console.log(arguments);
+	return varValue.toLowerCase().indexOf(stringVal.toLowerCase()) !== -1;
+});
 
 gLogic.addUserFunction('HisHer',1,function(gender){return (gender==='male') ? 'his' : 'her';});
 gLogic.addUserFunction('HimHer',1,function(gender){return (gender==='male') ? 'him' : 'her';});

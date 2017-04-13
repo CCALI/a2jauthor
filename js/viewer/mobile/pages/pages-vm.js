@@ -523,6 +523,18 @@ export default Map.extend('PagesVM', {
           field.getOptions(mState.attr('fileDataURL'));
         }
 
+        // Assign default value if it exists and no previous answer
+        if (field.value && !avm.attr('answer.values.'+answerIndex)) {
+          // Default values used differently or not at all for these field types
+          if (field.type !== constants.ftRadioButton &&
+              field.type !== constants.ftCheckBox &&
+              field.type !== constants.ftCheckBoxNOTA &&
+              field.type !== constants.ftGender)
+          {
+            avm.attr('answer.values.'+answerIndex, field.value);
+          }
+        }
+
         field.attr('_answer', avm);
       });
     }

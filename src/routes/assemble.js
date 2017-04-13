@@ -42,7 +42,8 @@ router.post('/', checkPresenceOf, forwardCookies, function(req, res) {
 
   const pdfOptions = {
     'header-spacing': 5,
-    'footer-spacing': 5
+    'footer-spacing': 5,
+    'margin-top': 20
   };
 
   const toPdf = function(filename, html) {

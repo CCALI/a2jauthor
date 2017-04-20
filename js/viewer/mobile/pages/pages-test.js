@@ -235,7 +235,59 @@ describe('<a2j-pages>', () => {
         page: 'Next'
       }], 'trace page name');
     });
-  });
+
+    describe('default values', () => {
+      it('sets default value', () => {
+        let field = new can.Map({
+          name: 'StateTE',
+          label: 'Enter State:',
+          type: 'text',
+          value: 'Texas'
+        });
+
+        let answerVar = new can.Map({
+          name: 'statete',
+          type: 'text',
+          values: [null]
+        });
+
+        vm.attr('interview.answers.statete', answerVar);
+
+        nextPageStub.fields.push(field);
+        vm.attr('rState.page', 'Next');  // page find() always returns nextPageStub
+
+        vm.setCurrentPage();
+
+        assert.equal(vm.attr('interview.answers.statete.values.1'), 'Texas', 'Default values override empty answers');
+      });
+
+      it('ignores default value if previous answer exists', () => {
+        let field = new can.Map({
+          name: 'StateTE',
+          label: 'Enter State:',
+          type: 'text',
+          value: 'Texas'
+        });
+
+        let answerVar = new can.Map({
+          name: 'statete',
+          type: 'text',
+          values: [null, 'Illinois']
+        });
+
+        vm.attr('interview.answers.statete', answerVar);
+
+        nextPageStub.fields.push(field);
+        vm.attr('rState.page', 'Next');  // page find() always returns nextPageStub
+
+        vm.setCurrentPage();
+
+        assert.equal(vm.attr('interview.answers.statete.values.1'), 'Illinois', 'Saved answers trump Default Values');
+      });
+    });
+
+    });
+
 
 
   describe('Component', () => {

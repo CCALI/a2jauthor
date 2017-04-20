@@ -88,4 +88,22 @@ describe('Tlogic', function() {
 		});
 	});
 
+	describe('CONTAINS', function(){
+		it('returns true if the test string is found, regardless of case', function() {
+			let varValue = "Muddy Waters";
+			let stringValue = "mud";
+			let hasString = testLogic._CF('CONTAINS', varValue, stringValue);
+
+			assert.equal(hasString, true);
+		});
+
+		it('returns false if not found', function() {
+			let varValue = "Muddy Waters";
+			let stringValue = "lasers";
+			let hasString = testLogic._CF('CONTAINS', varValue, stringValue);
+
+			assert.equal(hasString, false);
+		});
+	});
+
 });

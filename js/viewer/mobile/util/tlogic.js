@@ -285,7 +285,8 @@
 			}
 			return {
 				js: js,
-				text: txt
+				text: txt,
+				errors: errors
 			};
 		};
 
@@ -577,11 +578,13 @@
 					return false;
 				}
 			} else {
-				window.can.trigger(window, 'traceLogic', {
-					"executeScript.error: syntax error in logic": [{
-						msg: "executeScript.error: syntax error in logic"
-					}]
-				}, false);
+				script.errors.forEach(function(error) {
+					window.can.trigger(window, 'traceLogic', {
+						"executeScript.error: syntax error in logic": [{
+							msg: "executeScript.error: " + error.text
+						}]
+					}, false);
+				})
 				return false;
 			}
 			this.indent = 0;

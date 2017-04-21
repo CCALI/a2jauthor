@@ -1,0 +1,11 @@
+<can-import from="author/debug-panel/evaluate/evaluate.less!"/>
+
+<div id="evaluate-form" class="bootstrap-styles">
+    <input
+    type="text"
+    placeholder="Enter short expression scripts here"
+    id="evaluate-input"
+    class="form-control input-sm"/>
+
+    <button ($click)="evaluateScript()" id="evaluate-button" class="btn btn-default btn-sm pull-right"><span class="glyphicon-pencil"></span> Evaluate</button>
+</div>

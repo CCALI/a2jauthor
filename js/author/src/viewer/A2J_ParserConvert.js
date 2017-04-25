@@ -108,7 +108,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 				popup.page.type="Popup";
 				//trace("Creating popup ["+popup.page.name+"]");
 				popup.page.text = replacePopups(pageName,popup.text);
-				return '"POPUP://' + htmlEscape(popup.page.name)+ '"';
+				return '"POPUP://' + escapeHtml(popup.page.name)+ '"';
 		});
 	};
 
@@ -236,7 +236,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 				else
 				if ((args = statement.match(/goto\s+(\w+)\s?/i))!==null){
 					//statement = "GOTO '"+args[1]+"'";//guide.pageIDtoName(args[1]);
-					statement = "GOTO \""+htmlEscape(fixID(args[1]))+"\"";
+					statement = "GOTO \""+escapeHtml(fixID(args[1]))+"\"";
 				}
 				else{
 					statement = "//"+statement;
@@ -292,7 +292,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 				if (button.name) // if button has a variable attached, we assign a value to it
 					scriptAfter.push(resptest+" THEN SET ["+button.name+"] to "+button.value+"");
 				if (makestr(button.next)!="")// if button has a destination, we'll go there after any AFTER scripts have run.
-					scriptLast.push(resptest+" THEN GOTO "+ htmlEscape(fixID(button.next)));
+					scriptLast.push(resptest+" THEN GOTO "+ escapeHtml(fixID(button.next)));
 			}  */
 		var s;
 		for (s in scripts)

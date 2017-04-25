@@ -232,9 +232,6 @@ var form={
 	,div:function(){
 		return $('<div />');
 	}
-	//,number:    function(label,value,minNum,maxNum,handler){
-	//	return "<label>"+label+'</label><input class="editable" type="text" name="'+group+id+'" value="'+htmlEscape(value)+'"> ';}
-
 	,checkbox: function(data) {
 		var e=$('<div name="'+data.name+'">'
 			+'<div class="checkbox">'
@@ -1590,7 +1587,7 @@ function editButton()
 					}
 					else
 					{
-						url='POPUP://'+newPop;
+						url='POPUP://'+escapeHtml(newPop);
 					}
 				}
         setHTML();

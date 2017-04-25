@@ -133,7 +133,7 @@ function reportFull()
 			{
 				// HREF="POPUP://MyPopup" becomes HREF="#PAGE_MyPopup"
 				var popupid=match.match(REG.LINK_POP2)[1];
-				// popupid= htmlEscape(newName);
+				// popupid= escapeHtml(newName);
 				return   '"#' + pageLink(popupid) + '"' + 'title="Popup page ' + (popupid) +'"';
 			});
 			return html;

@@ -30,7 +30,7 @@ export default Map.extend({
   init: function() {
     this.guide = this.attr('interview').createGuide();
 
-    let stringMethods = ['decodeEntities', 'htmlEscape', 'jsDate2days',
+    let stringMethods = ['decodeEntities', 'escapeHtml', 'jsDate2days',
       'today2jsDate', 'mdy2jsDate', 'days2jsDate','jsDate2mdy', 'ismdy', 'jquote', 'isNumber'];
 
     let traceMethods = ['traceTag'];

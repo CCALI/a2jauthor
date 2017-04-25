@@ -86,7 +86,7 @@ export default {
     return result;
   },
 
-  htmlEscape: function(str) {
+  escapeHtml: function(str) {
     return String(str)
       .replace(/&/g, '&amp;')
       .replace(/"/g, '&quot;')

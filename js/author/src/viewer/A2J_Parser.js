@@ -348,10 +348,7 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		var STEP = $(this);
 		var step = new TStep();
 		step.number=STEP.attr("NUMBER");
-<<<<<<< Updated upstream
-=======
 		// convert escaped XML special chars ex: &amp;
->>>>>>> Stashed changes
 		step.text=decodeEntities(STEP.find("TEXT").xml());
 		guide.steps.push(step);
 	 });

@@ -1,6 +1,9 @@
 <div>
   <div class="form-group {{#if field.hasError}}has-error{{/if}}">
-    <label class="control-label" for="{{label}}">{{{ eval(label, repeatVarValue) }}}</label>
+    <label class="control-label" for="{{label}}">
+      {{{ eval(label, repeatVarValue) }}}
+      {{#if required}}<small class="text-danger">(Required)</small>{{/if}}
+    </label>
 
     <select class="form-control" name="{{name}}" id="{{label}}" {($value)}="field._answer.values" ($change)="validateField">
       <option {{#if field.required}}disabled{{/if}} value="">{{ lang.ChooseListText }}</option>

@@ -330,7 +330,13 @@ function gotoPageEdit(pageName) {
     minHeight: 500,
     maxHeight: 700,
 
-    close: function() {},
+    close: function() {
+			// Update view and save any time edit dialog closes
+			updateTOCOnePage()
+			if (window.gGuide) {
+				window.guideSave();
+			}
+		},
 
     buttons:[{
       text:'XML',
@@ -354,7 +360,6 @@ function gotoPageEdit(pageName) {
       text: 'Close',
       click: function() {
         $(this).dialog('close');
-        updateTOCOnePage();
       }
     }]
   });

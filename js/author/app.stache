@@ -388,7 +388,7 @@
   <div id="settings-form" title="Settings" class="bootstrap-styles">
     <ul id="cajasettings">
       <h3>General</h3>
-      <p>Color Schemes: <span class="text-muted">A2J 5</span></p>
+      <p>Color Schemes: <span class="text-muted">A2J 6</span></p>
 
       <p>Data Settings:</p>
       <p><label><input type=checkbox id="setting_warnHotDocsNameLength"> Warn when variable name lengths are too long for HotDocs</label></p>

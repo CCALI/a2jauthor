@@ -377,7 +377,7 @@ function TGuide()
 	this.tool="CAJA";
 	this.toolversion="2014-06-24";
 	this.avatar="";				//Origin A2J - default avatar to use (blank or tan)
-	this.guideGender='Female';	//A2J5 - default avatar gender to use (M or F)
+	this.guideGender='Female';	//A2J6 - default avatar gender to use (M or F)
 	this.completionTime="";		//Origin CA - author's estimated completion time including section breakdown
 	this.copyrights="";			//Origin CA - CALI copyright notices, etc.
 	this.createdate="";			//Original CA - first date of creation of the lesson

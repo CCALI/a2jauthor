@@ -318,7 +318,7 @@ function reportFull()
 			+  tsr.info + '</div>';
 		html +=  fieldSetWrap('Text Statistics', guideGradeText );
 		html = '<h1>Full Report for ' + gGuide.title+'</h1>'+html;
-		newWindowReport(gGuide.title +' - Full Report - A2J 5 Author',html);
+		newWindowReport(gGuide.title +' - Full Report - A2J 6 Author',html);
 		//$('.tabContent','#tabsReport').html(html);
 	});
 }
@@ -391,7 +391,7 @@ function reportTranscript()
 		+'</ul>'
 		+'<table class="table CAJAReportDump CAJATranscriptDump">'+html+'</table>';
 
-	newWindowReport( gGuide.title +' - Transcript Report - A2J 5 Author' ,html);
+	newWindowReport( gGuide.title +' - Transcript Report - A2J 6 Author' ,html);
 	//	$('.tabContent','#tabsReport').html(html);
 }
 

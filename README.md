@@ -1,15 +1,15 @@
 [![Build Status](https://api.travis-ci.com/CCALI/CAJA.svg?token=CrXpSAsYvh8VrmswxMau&branch=bitovi)](https://magnum.travis-ci.com/CCALI/CAJA/)
 
-A2J Author 5.0 (previously know as CAJA)
+A2J Author 6.0 (previously know as CAJA)
 ====
 
 This the private repo for the browser-based versions of A2J Author and Viewer.
 
-Before following the instructions for setup below.  It is assumed that you have npm and nodejs already installed. 
+Before following the instructions for setup below.  It is assumed that you have npm and nodejs already installed.
 
-- /user/sam/git/caja is where this all gets installed (replace "sam" with whatever username you are on your system. 
+- /user/sam/git/caja is where this all gets installed (replace "sam" with whatever username you are on your system.
 - npm and nodejs are installed at the system level using appget or other install tool dependent on your Linux/Mac distro.
-- According to John, you cannot run this on Windows machines at all due to the path length limitation of 256 characters.  This is actually a limitation of the Windows API, not the NTFS file system, but it makes it almost impossible to work on reasonably complex javascript projects on Windows.  
+- According to John, you cannot run this on Windows machines at all due to the path length limitation of 256 characters.  This is actually a limitation of the Windows API, not the NTFS file system, but it makes it almost impossible to work on reasonably complex javascript projects on Windows.
 
 
 ## To setup:
@@ -171,7 +171,7 @@ you should see the docs page!
 ## To deploy the author (and viewer) app
 
 There is a deploy script available in the `deploy` folder, it basically sets up
-an ssh connection to a remote server and executes the commands to make sure the 
+an ssh connection to a remote server and executes the commands to make sure the
 minified scripts along with other assets and files required to run the app in a
 production environment are copied over to the remote server.
 
@@ -195,7 +195,7 @@ With that in place, you just need to run in your terminal the following command:
 $ ./deploy/deploy.sh staging
 ```
 
-By default, the deploy script will build the app, run the tests and continue to 
+By default, the deploy script will build the app, run the tests and continue to
 deploy the files to the host server if everything went well. You can skip the build
 process or the tests, if you want to take a look at the available options, just run:
 
@@ -204,10 +204,10 @@ $ ./deploy/deploy.sh -h
 ```
 
 The deployment configuration file also allows you to set up commands to be executed
-before and/or after the deployment is done, if for instance you want to restart 
+before and/or after the deployment is done, if for instance you want to restart
 all of the NodeJS apps running in the staging environment mentioned above after the
-deployment has been completed (assuming you're using [`pm2`](https://github.com/Unitech/pm2) 
-as your NodeJS process manager), you just need to change your `deploy.conf` to 
+deployment has been completed (assuming you're using [`pm2`](https://github.com/Unitech/pm2)
+as your NodeJS process manager), you just need to change your `deploy.conf` to
 look like this:
 
 ```

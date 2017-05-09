@@ -2,7 +2,7 @@
 	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
-	Parse A2J 4 Interview into A2J 5 format
+	Parse A2J 4 Interview into A2J 6 format
 
 	02/20/2012
 

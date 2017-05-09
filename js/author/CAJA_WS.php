@@ -1,6 +1,6 @@
 <?php
 /*
-	CALI Author 5 / A2J Author 5 (CAJA) * Justice * justicia * 正义 * công lý * 사법 * правосудие
+	CALI Author 6 / A2J Author 6 (CAJA) * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	10/05/2012 Simple CAJA Author Web Service API
@@ -711,7 +711,7 @@ function get_guide_title_from_xml($xml) {
 	} else {
 		$result = $guide_xml->TITLE; // A2J 4 format
 
-		// A2J 5 would be $guide_xml->INFO->TITLE;
+		// A2J 6 would be $guide_xml->INFO->TITLE;
 		if ($result == '') {
 			$result = $guide_xml->INFO->TITLE;
 		}
@@ -810,7 +810,7 @@ function createGuideZip($gid) {
 		$guideDir = $path_parts['dirname'];
 		$guideNameOnly = $path_parts['filename'];
 		$zip = new ZipArchive();
-		$zipNameOnly = 'A2J5 Guide'.$gid.' Archive.zip';
+		$zipNameOnly = 'A2J6 Guide'.$gid.' Archive.zip';
 		$zipName = $guideDir.'/'.$zipNameOnly;
 		$zipFull = GUIDES_DIR.$zipName;
 		$zipRes = $zip->open($zipFull, ZipArchive::CREATE | ZipArchive::OVERWRITE);

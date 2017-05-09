@@ -10,7 +10,7 @@
 		makestr = makestr || window.makestr;
 
 		/******************************************************************************
-			A2J Author 5 * Justice * 正义 * công lý * 사법 * правосудие * sprawiedliwość
+			A2J Author 6 * Justice * 正义 * công lý * 사법 * правосудие * sprawiedliwość
 			All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 			Language (INCOMPLETE)

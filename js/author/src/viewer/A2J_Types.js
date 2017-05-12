@@ -414,7 +414,7 @@ function TGuide()
 	this.templates="";	//Origin A2J - notes about source template files
 	this.vars={};			//Origin A2J - associative array of TVariables()
 
-	this.filename="interview.a2j";
+	this.filename="interview.a2j6";
 	//this.mapids=[];// array of mapids indices	- maps a page.id to page while .pages uses page.name.
 	this.sortedPages=[];//array of pages sorted by name (natural order)
 	this.lastSaveXML="";

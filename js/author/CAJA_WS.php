@@ -810,15 +810,16 @@ function createGuideZip($gid) {
 		$guideDir = $path_parts['dirname'];
 		$guideNameOnly = $path_parts['filename'];
 		$zip = new ZipArchive();
-		$zipNameOnly = 'A2J6 Guide'.$gid.' Archive.zip';
+		$title = $row['title'];
+		$zipNameOnly = $title.'.zip';
 		$zipName = $guideDir.'/'.$zipNameOnly;
 		$zipFull = GUIDES_DIR.$zipName;
 		$zipRes = $zip->open($zipFull, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
 		if ($zipRes !== TRUE) {
-			trace("cannot open $zipFull");
+			trace("cannot open ".$zipFull);
 		} else {
-			trace("created $zipFull");
+			trace("created ".$zipFull);
 			$zip->addFile(GUIDES_DIR.$guideName,'Guide.xml');
 
 			add_guide_json_file($guideName, $zip);

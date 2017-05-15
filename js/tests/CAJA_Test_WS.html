@@ -5,9 +5,9 @@
 -->
 <HTML xmlns="http://www.w3.org/1999/xhtml">
 <!-- DW6 -->
-<HEAD> 
+<HEAD>
 
-<title>CAJA Web Service Tester</title> 
+<title>CAJA Web Service Tester</title>
 
 <script src="../viewer/jquery.1.8.2.min.js">  </script>
 <link  href="../viewer/viewer.jquery-ui.css" rel="stylesheet" type="text/css" />
@@ -21,7 +21,7 @@ var gGuideID;
 
 function trace(msg)
 {
-	$('#trace').prepend('<div class=trace>'+  Array.prototype.slice.call(arguments).join(", ")+'</div>'); 
+	$('#trace').prepend('<div class=trace>'+  Array.prototype.slice.call(arguments).join(", ")+'</div>');
 }
 function status(msg)
 {
@@ -30,13 +30,13 @@ function status(msg)
 	//alert(msg);
 }
 function html(txt){
-	$('#results').html(txt); 
+	$('#results').html(txt);
 }
 $(document).ready(function()
-{  
+{
 	trace("Ready");
 	status('Ready');
-	
+
 	function signin(data)
 	{
 		gUserID=data.userid;
@@ -54,34 +54,34 @@ $(document).ready(function()
 		}
 	}
 	function guideLoaded(data)
-	{ 
+	{
 		gGuideID=data.gid;
-		status('Loaded the guide #'+gGuideID );		
-		
-		var cajaDataXML=$(data.guide);  
+		status('Loaded the guide #'+gGuideID );
+
+		var cajaDataXML=$(data.guide);
 		var description = makestr(cajaDataXML.find('DESCRIPTION').text());
 		var pages=[];
 		cajaDataXML.find("QUESTION").each(function() {
 			QUESTION = $(this);
 			pages.push(QUESTION.attr("ID")+" "+ QUESTION.attr("NAME"));
 		});
-		
-		html("<textarea rows=20 id=guidexml>"+ htmlEscape(data.guide) + "</textarea>"
-		+ data.guide.length+" characters<hr>" 
-		+ description +pages.join('<li>')); 
+
+		html("<textarea rows=20 id=guidexml>"+ escapeHtml(data.guide) + "</textarea>"
+		+ data.guide.length+" characters<hr>"
+		+ description +pages.join('<li>'));
 	}
 	function answersetLoaded(data)
-	{ 
+	{
 		gGuideID=data.gid;
-		status('Loaded the answerset #'+gGuideID );		
-		html("<textarea rows=20 id=guidexml>"+ htmlEscape(data.answerset) + "</textarea>" ); 
+		status('Loaded the answerset #'+gGuideID );
+		html("<textarea rows=20 id=guidexml>"+ escapeHtml(data.answerset) + "</textarea>" );
 	}
 	function guideZipped(data)
-	{ 
+	{
 		gGuideID=data.gid;
 		if (data.zip!=''){
-			status('ZIpped the guide #'+gGuideID );		
-			html('ZIP File is '+data.zip); 
+			status('ZIpped the guide #'+gGuideID );
+			html('ZIP File is '+data.zip);
 			window.open( data.zip);
 		}
 	}
@@ -89,7 +89,7 @@ $(document).ready(function()
 	{
 		gGuideID=0;
 		var items = [];
-	  	$.each(data.guides, function(key,g) 
+	  	$.each(data.guides, function(key,g)
 		{
 			var size='n/a';
 			var modified='n/a';
@@ -101,7 +101,7 @@ $(document).ready(function()
 			items.push(
 				'<tr class=guide gid="' + g.id + '">'
 				+'<td>' + size + '</td> '
-				+'<td>XML</td> <td>ANX</td> <td>ZIP</td> <td>' + g.title  + '</td>' + '<td>' + (g.owned?'mine':'other') + '</td>' 
+				+'<td>XML</td> <td>ANX</td> <td>ZIP</td> <td>' + g.title  + '</td>' + '<td>' + (g.owned?'mine':'other') + '</td>'
 				+'<td>' + modified + '</td> '
 				+'<td>Delete</td>'
 				+'<td>' + g.id + '</td>'
@@ -112,22 +112,22 @@ $(document).ready(function()
 		$('tr.guide td:nth-child(2)').click(function(){
 			var gid =  $(this).parent().attr('gid');
 			setProgress('Loading guide '+$(this).parent().text(),true);
-			ws({cmd:'guide',gid:gid } ,guideLoaded);		
+			ws({cmd:'guide',gid:gid } ,guideLoaded);
 		});
 		$('tr.guide td:nth-child(3)').click(function(){
 			var gid =  $(this).parent().attr('gid');
 			setProgress('Loading AnswerSet '+$(this).parent().text(),true);
-			ws({cmd:'answerset',gid:gid},answersetLoaded);		
+			ws({cmd:'answerset',gid:gid},answersetLoaded);
 		});
 		$('tr.guide td:nth-child(4)').click(function(){
 			var gid =  $(this).parent().attr('gid');
 			setProgress('Loading ZIP '+$(this).parent().text(),true);
-			ws({cmd:'guidezip',gid:gid},guideZipped);		
+			ws({cmd:'guidezip',gid:gid},guideZipped);
 		});
 		$('tr.guide td:nth-child(8)').click(function(){
 			var gid =  $(this).parent().attr('gid');
 			setProgress('Deleting '+$(this).parent().text(),true);
-			ws({cmd:'guidearchive',gid:gid},wsListGuides);		
+			ws({cmd:'guidearchive',gid:gid},wsListGuides);
 		});
 	}
 	function setProgress(stat , showSpinner)
@@ -136,7 +136,7 @@ $(document).ready(function()
 			stat ='';
 		}
 		if (stat !==''){
-			status(stat); 
+			status(stat);
 		}
 	}
 
@@ -179,7 +179,7 @@ $(document).ready(function()
 	};
 	$('#guides_owned').click( wsListGuides);
 	$('#guides_owned_archive').click(function(){ws({cmd:'guides/owned/archive'},listGuides)});
-	
+
 	$('#guides_all').click(function(){ws({cmd:'guides'},listGuides)});
 	$('#guidesave').click(function()	{if (gGuideID==0) return; ws({cmd:'guidesave',gid:gGuideID, guide:$('#guidexml').val()},statusupdate)});
 	$('#guidearchive').click(function()	{if (gGuideID==0) return; ws({cmd:'guidearchive',gid:gGuideID},statusupdate)});
@@ -198,7 +198,7 @@ function ws(data,results)
 		dataType:'json',
 		type: 'POST',
 		data: data,
-		success: function(data){ 
+		success: function(data){
 			trace(String.substr(JSON.stringify(data),0,1299));
 			results(data);
 		},
@@ -206,7 +206,7 @@ function ws(data,results)
 			alert("error:"+xhr.responseText );
 		}
 	})
-}  
+}
 
 
 function loadFile(bookFile)
@@ -223,7 +223,7 @@ function loadFile(bookFile)
 				parseUnit(data);
 			}
 		});
-}  
+}
 
 </script>
 
@@ -243,7 +243,7 @@ td {
 	padding: 2px;
 }
 form {
-	border: 2px; 
+	border: 2px;
 	}
 .header {
 	height: 45px;
@@ -284,14 +284,14 @@ tr.guide td:hover {
 			<tr>
 				<td>Good Login</td>
 				<td nowrap="nowrap">
-					<p>User:	
+					<p>User:
 						<input name="username" type="text" id="username" value="dev"    />
 						</p>
 					<p>Pass:
 						<input name="password" type="password" id="userpass"    />
 						</p>
 					<p>
-						<input type="button" id="signin1" value="Sign in" />			
+						<input type="button" id="signin1" value="Sign in" />
 									</p></td>
 			</tr>
 			<tr>
@@ -303,7 +303,7 @@ tr.guide td:hover {
 						<input id="userpass2" type="password" value="bad password" />
 							</p>
 					<p>
-						<input type="button" id="signin2" value="Sign in" />				
+						<input type="button" id="signin2" value="Sign in" />
 						</p></td>
 			</tr>
 			<tr>
@@ -312,7 +312,7 @@ tr.guide td:hover {
 			</tr>
 			<tr>
 				<td>  Author Guides </td>
-				<td nowrap="nowrap"> 
+				<td nowrap="nowrap">
 						<p>
 							<input type="button" id="guides_owned" value="My Guides" />
 							</p>
@@ -344,9 +344,8 @@ tr.guide td:hover {
 		<td width="100%"><div id="status">Status</div><div id="results">Results</div></td>
 		<td width="300"><div id="trace"></div></td>
 	</tr>
-</table>	
+</table>
 </form>
 </BODY>
 </HTML>
 
- 

@@ -177,18 +177,19 @@ function exportXML_CAJA_from_CAJA(guide)
 		JSON.GUIDE.STEPS.push({
 			STEP:{
 				_NUMBER:step.number,
-				XML_TEXT:step.text}});
+				// escape special chars, ex: &, for XML answer set
+				XML_TEXT: escapeHtml(step.text)}});
 	}
 	var vi;
 	for (vi in guide.vars)
 	{
 		var v=guide.vars[vi];
 		var VARIABLE = {
-			  _NAME:v.name,
-			  _TYPE:v.type,
-			  _REPEATING: ((v.repeating===true )? v.repeating : gJS2XML_SKIP),
-			  _COMMENT: v.comment
-			 };
+			_NAME:v.name,
+			_TYPE:v.type,
+			_REPEATING: ((v.repeating===true )? v.repeating : gJS2XML_SKIP),
+			_COMMENT: v.comment
+			};
 		JSON.GUIDE.VARIABLES.push({VARIABLE:VARIABLE});
 	}
 	var ci;
@@ -196,10 +197,10 @@ function exportXML_CAJA_from_CAJA(guide)
 	{
 		var c=guide.clauses[ci];
 		var CLAUSE = {
-			  _NAME:c.name,
-			  _COMMENT: c.comment,
-			  XML_TEXT:c.text
-			 };
+			_NAME:c.name,
+			_COMMENT: c.comment,
+			XML_TEXT:c.text
+			};
 		JSON.GUIDE.CLAUSES.push({CLAUSE:CLAUSE});
 	}
 	for (var pi in guide.pages)
@@ -347,7 +348,8 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		var STEP = $(this);
 		var step = new TStep();
 		step.number=STEP.attr("NUMBER");
-		step.text=STEP.find("TEXT").xml();
+		// convert escaped XML special chars ex: &amp;
+		step.text=decodeEntities(STEP.find("TEXT").xml());
 		guide.steps.push(step);
 	 });
 	// Parse pages into book.pages[] records.

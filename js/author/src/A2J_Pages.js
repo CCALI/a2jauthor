@@ -809,8 +809,8 @@ function guidePageEditForm(page, div, pagename)//novicePage
    div.append(t);
 	form.finish(t);
 	if (CONST.showXML){
-		div.append('<div class=xml>'+htmlEscape(page.xml)+'</div>');
-		div.append('<div class=xml>'+htmlEscape(page.xmla2j)+'</div>');
+		div.append('<div class=xml>'+escapeHtml(page.xml)+'</div>');
+		div.append('<div class=xml>'+escapeHtml(page.xmla2j)+'</div>');
 	}
 
 	gPage = page;
@@ -869,7 +869,7 @@ TGuide.prototype.pageFindReferences=function(findName,newName){
 				add=true;
 				if (newName!==null)
 				{
-					popupid= htmlEscape(newName);
+					popupid= escapeHtml(newName);
 				}
 			}
 			return '"POPUP://' + popupid+ '"';

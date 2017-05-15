@@ -309,7 +309,7 @@ TLogic.prototype.evalBlock = function(expressionInText)
 				result =  readableList(result);
 			}
 
-			txt = htmlEscape(result);
+			txt = escapeHtml(result);
 			// Ensure line breaks from user long answer or author's multi-line text set appear.
 			txt = txt.replace("\n","<BR>","gi");
 		}

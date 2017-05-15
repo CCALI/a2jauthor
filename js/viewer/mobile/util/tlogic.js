@@ -7,7 +7,7 @@
 }(this, function() {
 
 	return function(gGuide,
-		REG, CONST, decodeEntities, htmlEscape,
+		REG, CONST, decodeEntities, escapeHtml,
 		jsDate2days, today2jsDate, mdy2jsDate, days2jsDate, jsDate2mdy, ismdy,
 		jquote, isNumber, traceTag, numeral) {
 
@@ -15,7 +15,7 @@
 		REG = REG || window.REG;
 		CONST = CONST || window.CONST;
 		decodeEntities = decodeEntities || window.decodeEntities;
-		htmlEscape = htmlEscape || window.htmlEscape;
+		escapeHtml = escapeHtml || window.escapeHtml;
 		jsDate2days = jsDate2days || window.jsDate2days;
 		today2jsDate = today2jsDate || window.today2jsDate;
 		mdy2jsDate = mdy2jsDate || window.mdy2jsDate;
@@ -273,7 +273,7 @@
 					// This uses JavaScript EVAL.
 					var f = (new Function("with (gLogic) { return (" + js + ")}"));
 					var result = f(); // Execute the javascript code.
-					txt = htmlEscape(result);
+					txt = escapeHtml(result);
 					// Ensure line breaks from user long answer or author's multi-line text set appear.
 					txt = txt.replace(/\n|\r\n|\r/g, "<BR>");
 				} catch (e) {

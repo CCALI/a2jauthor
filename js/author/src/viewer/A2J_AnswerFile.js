@@ -112,7 +112,7 @@ TGuide.prototype.HotDocsAnswerSetVariable = function(variable) {
 		}
 		else
 		{
-			var val = htmlEscape(value);
+			var val = escapeHtml(value);
 			if (varType === CONST.vtMC)
 			{	// 2015-01-12 MCValue > SelValue
 				val = '<SelValue>' + val + '</SelValue>';

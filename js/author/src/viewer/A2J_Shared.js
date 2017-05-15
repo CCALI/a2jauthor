@@ -139,7 +139,7 @@ $.fn.showit = function(yes) { // show/hide via class rather than .toggle to avoi
 };
 
 // http://stackoverflow.com/questions/1219860/javascript-jquery-html-encoding
-function htmlEscape(str){
+function escapeHtml(str){
     return String(str)
             .replace(/&/g, '&amp;')
             .replace(/"/g, '&quot;')
@@ -149,7 +149,7 @@ function htmlEscape(str){
 }
 
 String.prototype.asHTML=function(){
-	return htmlEscape(this);
+	return escapeHtml(this);
 };
 
 String.prototype.stripHTML=function(){
@@ -161,7 +161,7 @@ String.prototype.ellipsis=function(limit){
 };
 
 function prettyXML(xml) {
-	var html = htmlEscape(xml);
+	var html = escapeHtml(xml);
 	html = html.split("&lt;A").join("<BR>&lt;A");
 	//trace(html);
 	return html;
@@ -280,7 +280,7 @@ function js2xml(name,o)
 	}
 	function clean(body)
 	{
-		return htmlEscape(body);
+		return escapeHtml(body);
 	}
 	if (typeof o === 'object')
 	{
@@ -392,7 +392,7 @@ function propsJSON_(name,d,o)
 	if (typeof o === 'string')
 	{
 		var TRIM = 1024;
-		var t=htmlEscape(o );
+		var t=escapeHtml(o );
 		if (t.length<TRIM){
 			body += name + ':"' + t + '"\n';
 		}
@@ -410,22 +410,6 @@ function propsJSON(name,o)
 {
 	return propsJSON_(name,0,o);
 }
-/*
-//http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values
-var urlParams;
-(window.onpopstate = function () {
-    var match,
-        pl     = /\+/g,  // Regex for replacing addition symbol with a space
-        search = /([^&=]+)=?([^&]*)/g,
-        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
-        query  = window.location.search.substring(1);
-
-    urlParams = {};
-    while (match = search.exec(query))
-       urlParams[decode(match[1])] = decode(match[2]);
-})();
-*/
-
 
 function cr2P(txt)
 {	//
@@ -560,7 +544,7 @@ function traceTag(cname,chtml)
 			cname='valF';//any thing like False, use the False styling
 		}
 	}
-	return "<span class="+cname+">"+htmlEscape(chtml)+"</span>";
+	return "<span class="+cname+">"+escapeHtml(chtml)+"</span>";
 }
 
 

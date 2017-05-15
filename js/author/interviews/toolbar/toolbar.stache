@@ -19,7 +19,7 @@
         fileupload
         type="file"
         name="interview"
-        accept=".a2j,.a2j4,.a2j5,.xml,.zip"
+        accept=".a2j,.a2j4,.a2j5,.a2j6,.xml,.zip"
       />
     </a>
     </li>

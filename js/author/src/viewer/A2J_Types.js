@@ -377,7 +377,7 @@ function TGuide()
 	this.tool="CAJA";
 	this.toolversion="2014-06-24";
 	this.avatar="";				//Origin A2J - default avatar to use (blank or tan)
-	this.guideGender='Female';	//A2J5 - default avatar gender to use (M or F)
+	this.guideGender='Female';	//A2J6 - default avatar gender to use (M or F)
 	this.completionTime="";		//Origin CA - author's estimated completion time including section breakdown
 	this.copyrights="";			//Origin CA - CALI copyright notices, etc.
 	this.createdate="";			//Original CA - first date of creation of the lesson
@@ -414,7 +414,7 @@ function TGuide()
 	this.templates="";	//Origin A2J - notes about source template files
 	this.vars={};			//Origin A2J - associative array of TVariables()
 
-	this.filename="interview.a2j";
+	this.filename="interview.a2j6";
 	//this.mapids=[];// array of mapids indices	- maps a page.id to page while .pages uses page.name.
 	this.sortedPages=[];//array of pages sorted by name (natural order)
 	this.lastSaveXML="";

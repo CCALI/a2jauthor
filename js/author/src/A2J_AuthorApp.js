@@ -274,11 +274,11 @@ function main()
   $('#reportTranscript').button().click(reportTranscript);
 
   $('#guideDownload').button({  disabled:false }).click(function()
-  { // 05/08/2014 Download as .a2j file.
-    // 06/06/2014 Use .a2j5 extension so A2J4 doesn't try to open it.
-    if (gGuide.filename.indexOf('.a2j5')<0) {
-      gGuide.filename+= '.a2j5';
-    }
+  {
+    // 05/09/2017 Use .a2j6 extension so A2J4 doesn't try to open it.
+    // Also use guide title for filename
+      gGuide.filename = gGuide.title + '.a2j6';
+
     downloadTextFile( exportXML_CAJA_from_CAJA(gGuide), gGuide.filename);
    });
 

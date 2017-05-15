@@ -527,14 +527,19 @@ function scrollToElt(container,scrollTo)
 function downloadTextFile(fileTextContent, fileName)
 {	// 05/08/2014 Download generic text file directly from client to desktop.
 	// Create an anchor, set its url to the data, use type application/octet-stream to force download rather than view in browser.
-	var a =  window.document.createElement('a');
-	a.href = window.URL.createObjectURL(new Blob([fileTextContent], {type: 'application/octet-stream'}));
-	a.download = fileName;
-	// Append anchor to body.
-	document.body.appendChild(a);
-	a.click();
-	// Remove anchor from body
-	document.body.removeChild(a);
+	if (window.navigator.msSaveBlob) {
+		var blob = new Blob([fileTextContent], {type: 'application/octet-stream'});
+		navigator.msSaveBlob(blob, fileName);
+	} else {
+		var a =  window.document.createElement('a');
+		a.href = window.URL.createObjectURL(new Blob([fileTextContent], {type: 'application/octet-stream'}));
+		a.download = fileName;
+		// Append anchor to body.
+		document.body.appendChild(a);
+		a.click();
+		// Remove anchor from body
+		document.body.removeChild(a);
+	}
 }
 
 function traceTag(cname,chtml)

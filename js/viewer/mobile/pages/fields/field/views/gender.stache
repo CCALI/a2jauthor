@@ -9,9 +9,13 @@
 
     <input type="radio" id="f" name="gender" value="Female" {{#is savedGenderValue "Female"}}checked{{/is}} ($change)="validateField"/>
     <label for="f">{{i18n("Female")}}</label>
-    <label>
-      {{#if required}}<small class="text-danger">(Required)</small>{{/if}}
-    </label>
+   {{#if required}}
+    <div>
+        <label>
+          <small class="text-danger">(Required)</small>
+        </label>
+      </div>
+    {{/if}}
   </div>
   {{> invalid-prompt-tpl }}
 <div>

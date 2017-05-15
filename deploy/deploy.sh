@@ -356,7 +356,7 @@ run_send() {
 run_cleanup() {
   progress "Cleaning up source directory"
   rm -rf tmp
-  # comment line below to save TAR file
+  # comment line below to save local TAR file
   rm $TAR_NAME
 }
 ##

@@ -2,7 +2,6 @@ import $ from 'jquery';
 import F from 'funcunit';
 import assert from 'assert';
 import stache from 'can/view/stache/';
-import Map from 'can/map/';
 import List from 'can/list/';
 import { InterviewsVM } from './interviews';
 

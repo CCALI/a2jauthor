@@ -86,9 +86,10 @@ export default Component.extend({
       if (pages) {
         const pageName = $(el.get(0)).attr("href").replace("popup://", "").replace("POPUP://", "").replace("/", ""); //pathname is not supported in FF and IE.
         const page = pages.find(pageName);
-        // popups only have name, text, textAudioURL possible values
+        // popups only have text, textAudioURL possible values
+        // title (page.name) is more of internal descriptor for popups
         vm.attr('modalContent', {
-          title: page.name,
+          title: '',
           text: page.text,
           audioURL: page.textAudioURL
         });

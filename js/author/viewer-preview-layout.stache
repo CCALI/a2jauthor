@@ -8,8 +8,9 @@
   {{#if showDebugPanel}}
     <div class="author-debug-panel">
       <author-debug-panel
-        {interview}="viewerInterview"
-        {(trace-logic)}="traceLogic" />
+        {(interview)}="viewerInterview"
+        {(trace-logic)}="traceLogic"
+        {(trace-logic-list)} = "traceLogicList" />
     </div>
   {{/if}}
 

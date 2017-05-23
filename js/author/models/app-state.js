@@ -34,6 +34,15 @@ export default Map.extend({
     },
 
     /**
+    * @property {List} traceLogicList
+    *
+    * active list of each pages traceLogic
+    */
+    traceLogicList: {
+      serialize: false
+    },
+
+    /**
      * @property {String} page
      *
      * The name of the "tab" the author is seeing, it is bound to can.route.
@@ -113,7 +122,7 @@ export default Map.extend({
     /**
      * @property {String} previewPageName
      *
-     * The name of the page that will be loaded when user clicks the interview
+     * The name of the page that will be loaded when user clicks the preview
      * button in the edit page popup, when empty the first page of the interview
      * will be loaded.
      */
@@ -150,7 +159,10 @@ export default Map.extend({
      * The Interview instance used by the viewer app in preview mode.
      */
     viewerInterview: {
-      serialize: false
+      serialize: false,
+      set (val) {
+        return val;
+      }
     },
 
     /**
@@ -173,7 +185,7 @@ export default Map.extend({
   },
 
   init() {
-    let appState = this;  
+    let appState = this;
 
     $(document).ajaxError(function globalAjaxHandler(event, jqxhr) {
       let status = jqxhr.status;

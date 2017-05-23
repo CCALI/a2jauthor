@@ -32,6 +32,8 @@ export default Component.extend({
       const mState = new MemoryState();
       const pState = new PersistedState();
 
+      const previewAnswers = vm.attr('interview.answers') ? vm.attr('interview.answers') : null;
+
       // Set fileDataUrl to window.gGuidePath, so the viewer can locate the
       // interview assets (images, sounds, etc).
       mState.attr('fileDataURL', vm.attr('guidePath'));
@@ -65,6 +67,15 @@ export default Component.extend({
       }
 
       const modalContent = can.compute();
+
+      if (previewAnswers) {
+        previewAnswers.each(function(answer) {
+          let name = answer.name ? answer.name.toLowerCase() : "";
+          if (interview.attr('answers.'+name)) {
+            interview.attr('answers.'+name+'.values', answer.attr('values'));
+          }
+        });
+      }
 
       vm.attr({
         rState, pState, mState, interview,

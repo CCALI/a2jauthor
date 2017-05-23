@@ -50,8 +50,6 @@ export const ViewerAppState = Map.extend({
     interview: {
       serialize: false,
       set(interview) {
-        // let pageName = this.attr('page');
-        // this.setVisitedPages(pageName, interview);
         return interview;
       }
     },

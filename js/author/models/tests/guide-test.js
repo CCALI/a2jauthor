@@ -9,10 +9,10 @@ describe('Guide Model', () => {
     return Guide.findAll().then(function(guides) {
       assert(guides.attr('length') > 0);
 
-      let guide = guides.attr(0).attr();
+      let guide = guides.attr(0);
 
       assert.property(guide, 'id');
-      assert.property(guide, 'title');
+      assert.deepProperty(guide, '_computedAttrs.title');
       assert.deepProperty(guide, 'details.size');
     });
   });

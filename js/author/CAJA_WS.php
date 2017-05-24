@@ -812,6 +812,13 @@ function createGuideZip($gid) {
 		$guideNameOnly = $path_parts['filename'];
 		$zip = new ZipArchive();
 		$title = $row['title'];
+
+		// remove characters not allowed in windows filenames
+		// sub forward slash with - for dates
+		$search = array("/", "\\", ":", "*", "?", "<", ">", "|", '"');
+		$replace = array("-", "");
+		$title = str_replace($search, $replace, $title);
+
 		$zipNameOnly = $title.'.zip';
 		$zipName = $guideDir.'/'.$zipNameOnly;
 		$zipFull = GUIDES_DIR.$zipName;

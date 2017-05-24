@@ -67,7 +67,11 @@ const Guide = Model.extend({
      */
     title: {
       type: 'string',
-      value: 'Untitled'
+      value: 'Untitled',
+      get (lastSet) {
+        // mysql escapes apostrophes on GI titles, remove the escape \
+        return lastSet.replace("\\", "");
+      }
     },
 
     /**

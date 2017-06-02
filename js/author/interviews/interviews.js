@@ -1,5 +1,6 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
+import List from 'can/list/';
 import Guide from 'author/models/guide';
 import template from './interviews.stache!';
 
@@ -14,7 +15,21 @@ export const InterviewsVM = Map.extend({
           title: 'Blank Interview'
         };
       }
+    },
+    traceLogicList: {
+      serialize: false
     }
+  },
+
+  clearPreviewState() {
+      // fired on inserted event to clear any Author preview answer/tracelogic
+      if (this.attr('traceLogicList') && this.attr('traceLogicList').length > 0) {
+        this.attr('traceLogicList', new List());
+      }
+
+      if (this.attr('%root.viewerInterview')) {
+        this.attr('%root.viewerInterview').clearAnswers();
+      }
   },
 
   deleteInterview(id) {
@@ -59,6 +74,12 @@ export default Component.extend({
   events: {
     inserted: function() {
       const vm = this.viewModel;
+
+      // clear debug-panel traceLogicList and preview answers
+      // even if we don't change interviews
+      vm.clearPreviewState();
+
+
       let updateGuidePromise = can.Deferred().resolve();
 
       // if there is a loaded guide when this component is inserted,

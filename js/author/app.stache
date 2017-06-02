@@ -147,7 +147,7 @@
             <button zoom="0.75" class="btn btn-default"><span class="glyphicon-zoom-out"></span> Zoom Out</button>
           </div>
 
-         <div id="tabsMapper">
+        <div id="tabsMapper">
             <div id="MapperPanel">
               <div class="map"></div>
             </div>
@@ -179,7 +179,7 @@
           </div>
         </div>
       </nav>
-     <div class="page">
+    <div class="page">
       <div class="tabContentFrame">
         <div class="tabContent editq"></div>
       </div>
@@ -251,7 +251,7 @@
     <div class="tab-panel has-toolbar" id="tabsGuides">
       {{#is page "interviews"}}
         <interviews-toolbar></interviews-toolbar>
-        <interviews-page></interviews-page>
+        <interviews-page {(trace-logic-list)}="traceLogicList"></interviews-page>
       {{/is}}
     </div>
 

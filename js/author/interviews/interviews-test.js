@@ -2,6 +2,7 @@ import $ from 'jquery';
 import F from 'funcunit';
 import assert from 'assert';
 import stache from 'can/view/stache/';
+import List from 'can/list/';
 import { InterviewsVM } from './interviews';
 
 import 'steal-mocha';
@@ -36,7 +37,18 @@ describe('<interviews-page>', function() {
       assert.equal(vm.attr('interviews.length'), 1,
         'should still be 1 since there is no interview with given id');
     });
+
+    it('clears preview tracelogic messages', function() {
+        let previewTraceList = new List({ pageName: "Intro", messages: ["These", "are", "usually", "Maps"] });
+        vm.attr('traceLogicList', previewTraceList);
+
+        vm.clearPreviewState();
+
+        assert.equal(vm.attr('traceLogicList.length'), 0,'there should be an empty list');
+      });
   });
+
+
 
   describe('Component', function() {
     let vm;

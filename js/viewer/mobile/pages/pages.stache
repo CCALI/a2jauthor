@@ -12,7 +12,13 @@
 {{#if currentPage}}
   {{#with currentPage}}
     <div class="bubble-content">
-      <h2 class="visible-xs-block">{{name}}</h2>
+      <h3 class="visible-xs-block">
+        {{#is step.number '0'}}
+          <span class="glyphicon-right-open">{{step.text}}</span>
+        {{else}}
+          {{step.number}}: {{step.text}}
+        {{/is}}
+      </h3>
       <p>{{{ eval(text, rState.repeatVarValue) }}}</p>
 
       {{#if fields.length}}

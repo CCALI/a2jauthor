@@ -5,7 +5,7 @@
 <can-import from="viewer/mobile/mobile.less!"/>
 
 {{#unless tocOrCreditsShown}}
-  <a2j-header {(p-state)}="pState" {(m-state)}="mState" />
+  <a2j-header {p-state}="pState" {m-state}="mState" {interview}="interview" />
 {{/unless}}
 
 {{#if mState.showCredits}}

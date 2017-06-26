@@ -43,6 +43,6 @@
       {{/if}}
     {{/if}}
 
-    <app-footer />
+    <app-footer {r-state}="rState" />
   </div><!-- app-container -->
 </div><!-- app-wrapper -->

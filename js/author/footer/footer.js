@@ -15,6 +15,12 @@ let FooterVM = Map.extend({
       get() {
           return moment().year();
       }
+    },
+    // Used to hide status updates in Author preview mode
+    showCAJAStatus: {
+      get () {
+        return ! this.attr('rState.previewActive');
+      }
     }
   }
 });

@@ -77,6 +77,26 @@ describe('AppState', function() {
     logic.varGet.returns(1);
     appState.attr('page', pageNames[2]);
     assert.equal(visited.attr('length'), 4, 'third page already visited in repeatVar iteration');
+
+    // user goes to fourth page with outerLoopVarValue
+    interview.attr('pages.3.outerLoopVar', 'outer');
+    logic.varGet.returns(1);
+    appState.attr('page', pageNames[3]);
+    assert.equal(visited.attr('length'), 5, 'fourth page visited');
+    assert.equal(visited.attr('0.outerLoopVar'), 'outer', 'fourth page has outerLoopVar');
+    assert.equal(visited.attr('0.outerLoopVarValue'), '1', 'fourth page has outerLoopVarValue');
+
+    // user returns to the fourth page after navigating to new page
+    interview.attr('pages.5.outerLoopVar', '');
+    logic.varGet.returns(undefined);
+    appState.attr('page', pageNames[5]);
+    assert.equal(visited.attr('0.outerLoopVar'), '', 'fifth page does not have outerLoopVar');
+    assert.equal(visited.attr('length'), 6, 'fifth page adds to visited');
+
+    logic.varGet.returns(1);
+    appState.attr('page', pageNames[3]);
+    assert.equal(visited.attr('1.outerLoopVar'), 'outer', 'fourth page has same outerLoopVar');
+    assert.equal(visited.attr('length'), 6, 'fourth page already visited in outerLoopVar iteration');
   });
 
   it('only includes known pages', function() {
@@ -120,5 +140,4 @@ describe('AppState', function() {
     assert.equal(visited.attr('length'), 1, 'should include first page name');
     assert.equal(visited.attr('0.name'), pageNames[0]);
   });
-
 });

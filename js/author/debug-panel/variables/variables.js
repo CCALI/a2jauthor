@@ -50,7 +50,7 @@ export default Component.extend({
       let file = $fileInput.get(0).files[0];
       let vars = interview.attr('vars').attr();
 
-      if (file.type === '' || file.type.match(textTypeRegex)) {
+      if (file && file.type === '' || file.type.match(textTypeRegex)) {
         let reader = new FileReader();
 
         reader.onload = () => {

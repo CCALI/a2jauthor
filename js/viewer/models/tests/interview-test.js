@@ -1,5 +1,6 @@
 import assert from 'assert';
 import Interview from 'viewer/models/interview';
+import Map from 'can/map/';
 
 describe('Interview model', function() {
 
@@ -179,5 +180,74 @@ describe('Interview model', function() {
       { name: 'var b', repeating: 2, value: 'zed' },
       { name: 'var c', repeating: null, value: 'non-repeating' }
     ], 'should create two entries with values "foo" and "baz" when values is [ null, "foo", "baz" ]');
+  });
+
+  describe('clearAnswers', function() {
+    let interview;
+
+    beforeEach(function() {
+      interview = new Interview();
+      let answers = new Map({
+        name: {
+          comment: "",
+          name: 'Name',
+          repeating: false,
+          type: 'text',
+          values: [null, 'Muddy']
+        },
+        gender: {
+          comment: "",
+          name: 'Gender',
+          repeating: false,
+          type: 'text',
+          values: [null, 'Male']
+        },
+          salary: {
+          comment: "",
+          name: 'Salary',
+          repeating: true,
+          type: 'number',
+          values: [null, 100, 200, 300]
+        },
+          lang: {
+          0: "e",
+          1: "n",
+          Exit: "Exit"
+        }
+      });
+
+      interview.attr('answers', answers);
+    });
+
+    it ('clears repeating answers', function(){
+      let answers = interview.attr('answers');
+      interview.clearAnswers();
+
+      let salary = answers.attr('salary');
+      let values = salary.attr('values');
+      assert.equal(values.length, 1);
+      assert.equal(values[0], null);
+    });
+
+    it('clears all answers', function(){
+      let answers = interview.attr('answers');
+      interview.clearAnswers();
+
+      answers.each(function(answer){
+        let values = answer.attr('values');
+        if (values) { // skip answers without values prop
+          assert.equal(values.length, 1);
+          assert.equal(values[0], null);
+        }
+      });
+    });
+
+    it('does nothing if values array not on answer', function(){
+      let answers = interview.attr('answers');
+      interview.clearAnswers();
+
+      let lang = answers.attr('lang');
+      assert.notProperty(lang, 'values', 'no values array added to lang');
+    });
   });
 });

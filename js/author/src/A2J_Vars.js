@@ -58,7 +58,7 @@ function varEdit(v/*TVariable*/)
 				v.repeating=$('#varrepeating').is(':checked');
 				gGuide.noviceTab('tabsVariables',true);
 				$(this).dialog("close");
-			 }}
+			}}
 		]});
 }
 
@@ -73,6 +73,8 @@ TGuide.prototype.varDelete=function(name){
 function varAdd()
 {  // Add new variable and edit.
 	var v= new TVariable();
+	// default to Text type
+	v.type = "Text";
 	varEdit(v);
 }
 

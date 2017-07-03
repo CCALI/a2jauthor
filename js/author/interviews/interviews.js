@@ -18,6 +18,15 @@ export const InterviewsVM = Map.extend({
     },
     traceLogicList: {
       serialize: false
+    },
+    currentGuideId: {
+      type: 'string',
+      get() {
+        return window.gGuideID;
+      },
+      set(gid) {
+        return gid;
+      }
     }
   },
 

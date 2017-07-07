@@ -8,18 +8,22 @@ import Guide from 'author/models/guide';
 
 export const UploadVM = Map.extend('UploadVM', {
   define: {
-    interviews: {},
+    interviews: {
+      serialize: false
+    }
   },
 
   scrollToUploadedFile(gid) {
     if (gid) {
       var $el = $('a[gid="'+gid+'"]');
-      var scrollTo = $el.offset().top - 140;
 
-      $('html body').scrollTop(scrollTo);
+      if ($el) {
+        $('a.guide').removeClass('active');
+        $el.addClass('active');
 
-      $('a.guide').removeClass('active');
-      $el.addClass('active');
+        var scrollTo = $el.offset().top - 140;
+        $('html body').scrollTop(scrollTo);
+      }
     }
   }
 
@@ -47,9 +51,6 @@ export default Component.extend('UploadComponent', {
               Guide.findAll()
                 .then(function(interviews) {
                   vm.attr('interviews', interviews);
-                })
-                .then(function() {
-                  // scroll to newly uploaded GI in list
                   vm.scrollToUploadedFile(response.result.gid);
                 });
             }
@@ -61,7 +62,7 @@ export default Component.extend('UploadComponent', {
               $('#guideuploadprogress .bar').css('width', '0%');
             }
           }
-        }, {vm: vm});
+        });
     }
   }
 });

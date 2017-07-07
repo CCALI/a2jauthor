@@ -23,9 +23,6 @@ export const InterviewsVM = Map.extend({
       type: 'string',
       get() {
         return window.gGuideID;
-      },
-      set(gid) {
-        return gid;
       }
     }
   },

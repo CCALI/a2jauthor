@@ -250,9 +250,6 @@
     <!-- Interview Tab -->
     <div class="tab-panel has-toolbar" id="tabsGuides">
       {{#is page "interviews"}}
-        <interviews-toolbar></interviews-toolbar>
-        <interviews-page {(trace-logic-list)}="traceLogicList"></interviews-page>
-
         <interviews-toolbar {(interviews)}="interviews"></interviews-toolbar>
         <interviews-page {(interviews)}="interviews" {(trace-logic-list)}="traceLogicList"></interviews-page>
       {{/is}}

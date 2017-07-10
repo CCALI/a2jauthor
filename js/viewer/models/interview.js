@@ -13,6 +13,7 @@ import getSkinTone from 'viewer/models/get-skin-tone';
 
 import 'can/list/sort/';
 import 'can/map/define/';
+import 'can/util/batch/';
 
 /**
  * @module {function} Interview
@@ -259,9 +260,16 @@ const Interview = Model.extend({
   },
 
   clearAnswers() {
+    // can.batch required for Author preview mode with long var/answer lists
+    can.batch.start();
+
     this.attr('answers').each((answer) => {
-      answer.attr('values', [null]);
+      if (answer && answer.attr('values') && answer.attr('values').length > 1) {
+        answer.attr('values', [null]);
+      }
     });
+
+    can.batch.stop();
   },
 
   createGuide() {

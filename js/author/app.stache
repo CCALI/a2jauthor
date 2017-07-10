@@ -339,13 +339,11 @@
           <label for="vartype">Type:</label>
           <span class="editspan">
       <select name="vartype" id="vartype" class="editable">
-        <option value="Unknown">Unknown</option>
         <option value="Text">Text</option>
         <option value="TF">TF - True/False</option>
         <option value="Number">Number</option>
         <option value="Date">Date</option>
         <option value="MC">Multiple choice</option>
-        <option value="Other">Other</option>
       </select>
       </span>
         </div>

@@ -38,10 +38,12 @@ let setVariable = function(variable, pages) {
   var varType;
   var field = variableToField(variable.name, pages);
 
-  if (field == null) {
+  if (variable && variable.type) {
     varType = variable.type;
-  } else {
+  } else if (field && field.type) {
     varType = cString.fieldTypeToVariableType(field.type);
+  } else {
+    varType = constants.vtText;
   }
 
   var mapVar2ANX = {};

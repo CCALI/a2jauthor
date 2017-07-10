@@ -1,7 +1,7 @@
 {
   "user gender": {
     "name": "User Gender",
-    "type": "Text",
+    "type": "MC",
     "comment": "User's gender will be used to display appopriate avatar.",
     "repeating": false,
     "values": [

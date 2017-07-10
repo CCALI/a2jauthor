@@ -370,6 +370,7 @@
 	"loopcount": {
 		"name": "LoopCount",
 		"comment": "",
+		"type": "Number",
 		"repeating": false,
 		"values": [null, 1],
 		"warning": ""

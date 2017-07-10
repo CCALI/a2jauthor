@@ -1,0 +1,21 @@
+<can-import from="caja/author/interviews/toolbar/upload/upload.less!"/>
+
+<div class="fileuploader nav navbar-nav">
+    <li role="separator" class="divider hidden-xs"></li>
+    <!-- The fileinput-button span is used to style the file input field as button -->
+    <li>
+    <a href="javascript:void(0)" class="fileinput-button">
+        <span class="glyphicon-folder-upload"></span> Upload A2J Guided Interview...
+        <!-- The file input field used as target for the file upload widget -->
+        <input
+        class="a2j-guideupload"
+        type="file"
+        name="interview"
+        accept=".a2j,.a2j4,.a2j5,.xml,.zip"
+        />
+    </a>
+    </li>
+    <div id="guideuploadprogress" class="progress progress-success progress-striped">
+        <div class="bar"></div>
+    </div>
+</div>

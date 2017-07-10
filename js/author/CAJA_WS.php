@@ -402,7 +402,9 @@ switch ($command){
 
 		if ($res = $mysqli->query($sql)) {
 			writelognow();
-			exit(); // return immediately with upload info.
+			// send gid back to client
+			$result['status']='Successful Upload';
+			$result['gid']=$new_guide_id;
 		} else {
 			fail_and_exit(500, 'Uh-oh, something went wrong saving the guide');
 		}

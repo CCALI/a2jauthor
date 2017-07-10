@@ -53,6 +53,16 @@ export default Map.extend({
     },
 
     /**
+     * @property {can.Map} interviews
+     *
+     * The available interviews shown to the Author
+     *
+     */
+    interviews: {
+      serialize: false
+    },
+
+    /**
      * @property {String} guideId
      *
      * The identifier to the guided interview currently loaded.

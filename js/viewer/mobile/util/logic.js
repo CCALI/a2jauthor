@@ -31,7 +31,8 @@ export default Map.extend({
     this.guide = this.attr('interview').createGuide();
 
     let stringMethods = ['decodeEntities', 'escapeHtml', 'jsDate2days',
-      'today2jsDate', 'mdy2jsDate', 'days2jsDate','jsDate2mdy', 'ismdy', 'jquote', 'isNumber'];
+      'today2jsDate', 'mdy2jsDate', 'days2jsDate','jsDate2mdy', 'ismdy',
+      'jquote', 'isNumber', 'formatDateForDisplay', 'convertDateToNumber'];
 
     let traceMethods = ['traceTag'];
     let methods = [this.guide, regex, constants];
@@ -44,7 +45,7 @@ export default Map.extend({
       methods.push(function() {});
     });
 
-    // This replaces the jquery NumberFormatter plugin dependency in tlogic.js
+    // numeral replaces the jquery NumberFormatter plugin dependency in tlogic.js
     methods.push(numeral);
 
     this._tLogic = tLogic.apply(this, methods);

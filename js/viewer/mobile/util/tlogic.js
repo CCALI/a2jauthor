@@ -9,7 +9,8 @@
 	return function(gGuide,
 		REG, CONST, decodeEntities, escapeHtml,
 		jsDate2days, today2jsDate, mdy2jsDate, days2jsDate, jsDate2mdy, ismdy,
-		jquote, isNumber, traceTag, numeral) {
+		jquote, isNumber, formatDateForDisplay, convertDateToNumber, traceTag,
+		numeral, moment) {
 
 		gGuide = gGuide || window.gGuide;
 		REG = REG || window.REG;
@@ -21,11 +22,15 @@
 		mdy2jsDate = mdy2jsDate || window.mdy2jsDate;
 		days2jsDate = days2jsDate || window.days2jsDate;
 		jsDate2mdy = jsDate2mdy || window.jsDate2mdy;
+		ismdy = ismdy || window.ismdy;
 		jquote = jquote || window.jquote;
 		isNumber = isNumber || window.isNumber;
+		formatDateForDisplay = formatDateForDisplay || window.formatDateForDisplay;
+		convertDateToNumber = convertDateToNumber || window.convertDateToNumber;
 		traceTag = traceTag || window.traceTag;
-		ismdy = ismdy || window.ismdy;
 		numeral = numeral || window.numeral;
+		moment = moment || window.moment;
+
 		/*******************************************************************************
 			A2J Author 6 * JusticeJustice * justicia * 正义 * công lý * 사법 * правосудие
 			All Contents Copyright The Center for Computer-Assisted Legal Instruction
@@ -377,7 +382,7 @@
 
 
 				//	A2J dates bracketed with # like VB
-				//		#12/25/2012# converts to convertDate("12/25/2012")
+				//	#12/25/2012# converts to convertDate("12/25/2012")
 				var date = /#([\d|\/]+)#/gi;
 				jj = jj.replace(date, "$$2(\"$1\")");
 
@@ -490,24 +495,27 @@
 		};
 
 		TLogic.prototype._VG = function(varname, varidx) {
+			var val;
 			switch (varname.toUpperCase()) {
 				case 'TODAY':
-					return jsDate2days(today2jsDate());
+					// returns a moment object
+					val = moment();
 					break;
 				case 'NULL':
-					return null;
+					val = null;
 					break;
 				case 'TRUE':
-					return true;
+					val = true;
 					break;
 				case 'FALSE':
-					return false;
+					val = false;
 					break;
 				default:
-					return gGuide.varGet(varname, varidx, {
+					val = gGuide.varGet(varname, varidx, {
 					date2num: true,
 					num2num: true
 				});
+				return val;
 			}
 		};
 
@@ -536,7 +544,7 @@
 			//this.indent--;
 		};
 		TLogic.prototype._ED = function(dstr) {
-			// Date format expected: m/dd/yyyy.
+			// Date format expected: mm/dd/yyyy.
 			// Converted to unix seconds
 			return Date.parse(dstr);
 		};
@@ -656,32 +664,10 @@
 			return sum;
 		});
 
-		gLogic.addUserFunction('Age', 1, function(val) { // 2014-07-30 Return age in years
-
-			// To test, compare against today's month and day but with an
-			// earlier year and choosing 1 day before and 1 day after.
-			var myDate;
-			if (ismdy(val)) {
-				myDate = mdy2jsDate(val);
-			} else {
-				myDate = days2jsDate(val);
-			}
-			var nowDate = today2jsDate();
-			var y1 = myDate.getFullYear();
-			var y2 = nowDate.getFullYear();
-			var m1 = myDate.getMonth();
-			var m2 = nowDate.getMonth();
-			var d1 = myDate.getDate();
-			var d2 = nowDate.getDate();
-			if (y1 === y2) { // same year, return 0
-				return 0;
-			} else
-			if (m1 < m2 || (m1 === m2 && d1 <= d2)) { // month earlier, or month same but date earlier, return year diff
-				return y2 - y1;
-			} else { // otherwise return year diff plus 1
-				return y2 - y1 - 1;
-			}
-
+		// returns number of years between a user provide date and today
+		gLogic.addUserFunction('Age', 1, function(val) {
+			var myDate = moment(val);
+			return moment().diff(myDate, 'years');
 		});
 
 		gLogic.addUserFunction('Ordinal', 1, function(ordinal) { // Map number to ordinal: 1 becomes first, 8 becomes eighth.
@@ -707,9 +693,15 @@
 			return txt;
 		});
 
-		gLogic.addUserFunction('Date', 1, function(val) { // Assuming internal date is stored as time stamp since some offset.
-			// How can we switch to JS date?
-			return jsDate2mdy(days2jsDate(val));
+		gLogic.addUserFunction('Date', 1, function(val) {
+			if (typeof val === 'number') {
+				// TODO: should handle international formats
+				val = formatDateForDisplay(val);
+			} else {
+				// falsey values display nothing
+				val = '';
+			}
+			return val;
 		});
 
 		gLogic.addUserFunction('String', 1, function(val) {

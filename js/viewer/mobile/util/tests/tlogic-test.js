@@ -5,6 +5,18 @@ let testLogic = new Tlogic();
 
 describe('Tlogic', function() {
 
+	describe('DATE', function() {
+		it('DATE returns empty string if passed value is falsey', function(){
+			let emptyString = testLogic._CF("DATE", "");
+			let nullString = testLogic._CF("DATE", null);
+			let undefinedString = testLogic._CF("DATE", undefined);
+
+			assert.equal(emptyString, '');
+			assert.equal(nullString, '');
+			assert.equal(undefinedString, '');
+		});
+	});
+
 	describe('SUM', function() {
 		it('SUM converts readableList display string and totals values', function() {
 			let totalValue = testLogic._CF("SUM", "100, 200 and 300");

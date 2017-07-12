@@ -78,9 +78,9 @@ export default Model.extend('Answers',{}, {
         if (opts && opts.date2num === true) {
           // For calculations like comparing dates or adding days we convert date to number,
           //  daysSince1970, like A2J 4.
-          if (val !== '') {
+          if (val) {
             // 11/28/06 If date is blank DON'T convert to number.
-            val = cString.jsDate2days(cString.mdy2jsDate(val));
+            val = cString.convertDateToNumber(val);
           }
         }
 
@@ -88,8 +88,8 @@ export default Model.extend('Answers',{}, {
 
       case CONST.vtText:
         if (opts && opts.date2num === true && cString.ismdy(val)) {
-          // If it's a date type or looks like a date time, convert to number of days.
-          val = cString.jsDate2days(cString.mdy2jsDate(val));
+          // If it's a date type or looks like a date type, convert to number of days.
+          val = cString.convertDateToNumber(val);
         }
 
         break;
@@ -124,7 +124,7 @@ export default Model.extend('Answers',{}, {
     switch (v.attr('type')) {
       case CONST.vtDate:
         if (typeof varVal === 'number') {
-          varVal = cString.jsDate2mdy(cString.days2jsDate(varVal));
+          varVal = cString.formatDateForDisplay(varVal);
         }
         break;
       case CONST.vtText:

@@ -74,18 +74,6 @@ export default {
     return (s === null || typeof s === 'undefined') ? '' : s;
   },
 
-  swapMonthAndDay: function(stringDate) {
-    // LHI uses british dates in HotDocs. This converts Brit and US dates in both directions
-    var result = '';
-
-    if (this.makestr(stringDate) !== '') {
-      var parts = stringDate.split('/');
-      result = parts[1] + '/' + parts[0] + '/' + parts[2];
-    }
-
-    return result;
-  },
-
   escapeHtml: function(str) {
     return String(str)
       .replace(/&/g, '&amp;')
@@ -141,7 +129,29 @@ export default {
 
     return decodeHTMLEntities;
   })(),
+//----
+  swapMonthAndDay: function(stringDate) {
+    // LHI uses british dates in HotDocs. This converts Brit and US dates in both directions
+    var result = '';
 
+    if (this.makestr(stringDate) !== '') {
+      var parts = stringDate.split('/');
+      result = parts[1] + '/' + parts[0] + '/' + parts[2];
+    }
+
+    return result;
+  },
+
+  formatDateForDisplay: function(date, format) {
+      format = format ? format : 'dd/mm/yyyy';
+      return moment(date).format(format);
+  },
+
+  convertDateToNumber: function(date) {
+    return moment(date).valueOf();
+  },
+
+//----
   jsDate2days: function(d) {
     // Convert JS date into days since 1/1/1970
     const refDate = moment('01/01/1970');
@@ -153,10 +163,12 @@ export default {
 
   days2jsDate: function(numDays) {
     // Return JS Date based on days since 1/1/1970
-    const refDate = moment('01/01/1970');
-    const newDate = refDate.add(numDays, 'days');
+    if (!numDays) {
+      const refDate = moment('01/01/1970');
+      const newDate = refDate.add(numDays, 'days');
 
-    return newDate.toDate();
+      return newDate.toDate();
+    }
   },
 
   mdy2jsDate: function(MDY) {
@@ -179,7 +191,7 @@ export default {
   },
 
   today2jsDate: function() {
-    return this.mdy2jsDate('');
+    return moment().valueOf();
   },
 
   jquote: function(str) {

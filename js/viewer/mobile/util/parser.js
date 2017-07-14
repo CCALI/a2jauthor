@@ -5,6 +5,7 @@ import _forEach from 'lodash/forEach';
 import Answers from 'viewer/models/answers';
 import constants from 'viewer/models/constants';
 import cString from 'viewer/mobile/util/string';
+import cDate from 'viewer/mobile/util/date';
 
 const mapANX2Var = {
   unknown: constants.vtUnknown,
@@ -64,7 +65,7 @@ let setVariable = function(variable, pages) {
   var getXMLValue = function(value) {
     if (varType === constants.vtDate) {
       // Ensure our m/d/y is converted to HotDocs d/m/y
-      value = cString.swapMonthAndDay(value);
+      value = cDate.swapMonthAndDay(value);
     }
 
     var xmlV;
@@ -171,7 +172,7 @@ export default {
         case 'datevalue':
         // HotDocs dates in british format while A2J expects US format
           let britDate = $(this).find('DateValue').html();
-          let usDate = cString.swapMonthAndDay(britDate);
+          let usDate = cDate.swapMonthAndDay(britDate);
           guide.varSet(varName, usDate);
           break;
 
@@ -209,7 +210,7 @@ export default {
 
                 case 'datevalue':
                   let britDate = $(this).html();
-                  let usDate = cString.swapMonthAndDay(britDate);
+                  let usDate = cDate.swapMonthAndDay(britDate);
                   guide.varSet(varName, usDate, i + 1);
                   break;
 

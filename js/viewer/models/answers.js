@@ -3,6 +3,7 @@ import Model from 'can/model/';
 import _find from 'lodash/find';
 import CONST from 'viewer/models/constants';
 import cString from 'viewer/mobile/util/string';
+import cDate from 'viewer/mobile/util/date';
 import readableList from 'viewer/util/readable-list';
 
 import 'can/map/define/';
@@ -68,7 +69,7 @@ export default Model.extend('Answers',{}, {
     switch (v.type) {
       case CONST.vtNumber:
         if (opts && opts.num2num === true) {
-          // For calculations for number to be number even if blank.
+          // For calculations for number to be number even if blank (returning 0).
           val = cString.textToNumber(val);
         }
 
@@ -80,7 +81,8 @@ export default Model.extend('Answers',{}, {
           //  daysSince1970, like A2J 4.
           if (val) {
             // 11/28/06 If date is blank DON'T convert to number.
-            val = cString.convertDateToNumber(val);
+            // this number represents the date as days since epoch, '01/01/1970'
+            val = cDate.dateToDays(val);
           }
         }
 
@@ -89,7 +91,8 @@ export default Model.extend('Answers',{}, {
       case CONST.vtText:
         if (opts && opts.date2num === true && cString.ismdy(val)) {
           // If it's a date type or looks like a date type, convert to number of days.
-          val = cString.convertDateToNumber(val);
+          // Why is this needed? TODO:
+          val = cDate.dateToDays(val);
         }
 
         break;
@@ -124,7 +127,8 @@ export default Model.extend('Answers',{}, {
     switch (v.attr('type')) {
       case CONST.vtDate:
         if (typeof varVal === 'number') {
-          varVal = cString.formatDateForDisplay(varVal);
+          // this can take a second format param. default is 'MM/DD/YYYY' if no second param sent
+          varVal = cDate.dateToString(varVal);
         }
         break;
       case CONST.vtText:

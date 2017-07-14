@@ -1,5 +1,4 @@
 import constants from 'viewer/models/constants';
-import moment from 'moment';
 
 export default {
   strcmp: function(a, b) {
@@ -18,18 +17,6 @@ export default {
     if (a < b) return -1;
     if (a > b) return 1;
     return 0;
-  },
-
-  ismdy: function(str) {
-    //  Return true if str looks like a date (m/d/y)
-    if (typeof str === 'string') {
-      var parts = str.split('/');
-      if (parts.length === 3) {
-        return this.isNumber(parts[0]) && this.isNumber(parts[1]) && this.isNumber(parts[2]) ;
-      }
-    }
-
-    return false;
   },
 
   fieldTypeToVariableType: function(type) {
@@ -73,6 +60,19 @@ export default {
     // lazy test to make sure s is a string or blank, not "null" or "undefined"
     return (s === null || typeof s === 'undefined') ? '' : s;
   },
+
+  // not sure if should be a string or date method or both - most likely redundant, and not needed
+  ismdy: function(str) {
+    //  Return true if str looks like a date (m/d/y)
+    if (typeof str === 'string') {
+        var parts = str.split('/');
+        if (parts.length === 3) {
+        return this.isNumber(parts[0]) && this.isNumber(parts[1]) && this.isNumber(parts[2]) ;
+        }
+    }
+
+    return false;
+    },
 
   escapeHtml: function(str) {
     return String(str)
@@ -129,72 +129,9 @@ export default {
 
     return decodeHTMLEntities;
   })(),
-//----
-  swapMonthAndDay: function(stringDate) {
-    // LHI uses british dates in HotDocs. This converts Brit and US dates in both directions
-    var result = '';
-
-    if (this.makestr(stringDate) !== '') {
-      var parts = stringDate.split('/');
-      result = parts[1] + '/' + parts[0] + '/' + parts[2];
-    }
-
-    return result;
-  },
-
-  formatDateForDisplay: function(date, format) {
-      format = format ? format : 'dd/mm/yyyy';
-      return moment(date).format(format);
-  },
-
-  convertDateToNumber: function(date) {
-    return moment(date).valueOf();
-  },
-
-//----
-  jsDate2days: function(d) {
-    // Convert JS date into days since 1/1/1970
-    const refDate = moment('01/01/1970');
-    const jsDate = moment(d);
-
-    const totalDays = jsDate.diff(refDate, 'days');
-    return totalDays;
-  },
-
-  days2jsDate: function(numDays) {
-    // Return JS Date based on days since 1/1/1970
-    if (!numDays) {
-      const refDate = moment('01/01/1970');
-      const newDate = refDate.add(numDays, 'days');
-
-      return newDate.toDate();
-    }
-  },
-
-  mdy2jsDate: function(MDY) {
-    // 2014-06-16 Convert a2j m/d/y date to JavaScript date object for use in calculations
-    if (this.makestr(MDY) !== '') {
-      const date = moment(MDY);
-      return date.toDate();
-    }
-    else {
-      // return today if we don't recognize it.
-      const currentDay = moment();
-      return currentDay.toDate();
-    }
-  },
-
-  jsDate2mdy: function (d) {
-  // 2014-06-16 Convert js date to A2J's M/D/Y format
-    const date = moment(d);
-    return date.format('MM/DD/YYYY');
-  },
-
-  today2jsDate: function() {
-    return moment().valueOf();
-  },
 
   jquote: function(str) {
     return '"' + str.replace(/"/gi, '\\"') + '"';
   }
+
 };

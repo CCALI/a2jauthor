@@ -3,6 +3,7 @@ import regex from 'viewer/mobile/util/regex';
 import tLogic from 'viewer/mobile/util/tlogic';
 import Lang from 'viewer/mobile/util/lang';
 import cString from 'viewer/mobile/util/string';
+import cDate from 'viewer/mobile/util/date';
 import constants from 'viewer/models/constants';
 import Infinite from 'viewer/mobile/util/infinite';
 import numeral from 'numeral';
@@ -30,15 +31,19 @@ export default Map.extend({
   init: function() {
     this.guide = this.attr('interview').createGuide();
 
-    let stringMethods = ['decodeEntities', 'escapeHtml', 'jsDate2days',
-      'today2jsDate', 'mdy2jsDate', 'days2jsDate','jsDate2mdy', 'ismdy',
-      'jquote', 'isNumber', 'formatDateForDisplay', 'convertDateToNumber'];
+    let stringMethods = ['ismdy', 'decodeEntities', 'escapeHtml', 'jquote', 'isNumber'];
+
+    let dateMethods = ['swapMonthAndDay', 'dateToString', 'dateToDays', 'daysToDate', 'todaysDate', 'dateDiff'];
 
     let traceMethods = ['traceTag'];
     let methods = [this.guide, regex, constants];
 
     can.each(stringMethods, function(fn) {
       methods.push(can.proxy(cString[fn], cString));
+    });
+
+    can.each(dateMethods, function(fn) {
+      methods.push(can.proxy(cDate[fn], cDate));
     });
 
     can.each(traceMethods, function() {

@@ -381,6 +381,7 @@
 
 				//	A2J dates bracketed with # like VB
 				//	#12/25/2012# converts to convertDate("12/25/2012")
+				//  This is a deprecated syntax and will be removed (see _ED function)
 				var date = /#([\d|\/]+)#/gi;
 				jj = jj.replace(date, "$$2(\"$1\")");
 
@@ -542,8 +543,9 @@
 		TLogic.prototype._ED = function(dstr) {
 			// Date format expected: mm/dd/yyyy.
 			// Converted to unix seconds
-			// TODO: ask sam about this
-			return dateToDays(dstr);
+			// this is based on a deprecated syntax for dates but is here for A2J 4 conversions
+			// should be safe to remove after 01/01/2018 (remove regex parsing above as well)
+			return Date.parse(dstr);
 		};
 		TLogic.prototype._GO = function(c, pageName) {
 			this.GOTOPAGE = pageName;
@@ -684,8 +686,9 @@
 			return txt;
 		});
 
-		// returns number of years between a user provide date and today
+		// returns number of years between a user provide date and today's date
 		gLogic.addUserFunction('Age', 1, function(date) {
+			// handle date as numDays since epoch (01/10/1970)
 			if (typeof date === 'number') {
 				date = daysToDate(date)
 			}
@@ -693,13 +696,15 @@
 		});
 
 		gLogic.addUserFunction('Date', 1, function(numDays) {
-			let displayDate;
+			// A2J Date macro gets the value of the source date
+			// as number of days since epoch (01/10/1970)
+			// Should display nothing if numDays is falsey
+			let displayDate = '';
+
 			if (numDays) {
-				displayDate = dateToString(daysToDate(numDays));
-			} else {
-				// falsey numues display nothing
-				displayDate = '';
+				displayDate = dateToString(numDays);
 			}
+
 			return displayDate;
 		});
 

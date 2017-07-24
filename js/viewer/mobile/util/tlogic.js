@@ -699,7 +699,7 @@
 			// A2J Date macro gets the value of the source date
 			// as number of days since epoch (01/10/1970)
 			// Should display nothing if numDays is falsey
-			let displayDate = '';
+			var displayDate = '';
 
 			if (numDays) {
 				displayDate = dateToString(numDays);

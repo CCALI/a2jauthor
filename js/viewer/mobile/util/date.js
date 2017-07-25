@@ -36,10 +36,10 @@ export default {
         return moment(date).format(format);
     },
 
-    // used to get days since epoch as the A2J parser expects days for math operations
+    // used to get days since epoch as the A2J parser expects days for math operations, ie: [bDay] + 30
     // date can be a string date, or moment date
     dateToDays: function(date) {
-        return this.dateDiff(constants.epoch, date, 'days');
+        return this.dateDiff(date, constants.epoch, 'days');
     },
 
     // used to reconvert number of days since epoch to a moment date object
@@ -49,7 +49,7 @@ export default {
         return newDate;
     },
 
-    // formatted before display/save
+    // will be formatted before display/save
     todaysDate: function() {
         return moment();
     },
@@ -57,10 +57,12 @@ export default {
     // startDate - string or moment object
     // endDate - string or moment object
     // unitOfMeasure - string ex: 'years' or 'days'
+    // Returns positive values when startDate is most recent date, negative if reversed
+    // ex: dateDiff('01-01-2000', '01-01-1970', 'years') returns the number 30
     dateDiff: function(startDate, endDate, unitOfMeasure) {
         unitOfMeasure = typeof unitOfMeasure === 'string' ? unitOfMeasure : 'days';
-        // handle reversing of start and end dates, should always be positive number
-        return Math.abs(moment(startDate).diff(moment(endDate), unitOfMeasure));
+        // diff can be negative for pre-epoch dates
+        return moment(startDate).diff(moment(endDate), unitOfMeasure);
     },
 
 };

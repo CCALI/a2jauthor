@@ -496,8 +496,8 @@
 		TLogic.prototype._VG = function(varname, varidx) {
 			switch (varname.toUpperCase()) {
 				case 'TODAY':
-					// returns a todays date as number of days since epoch
-					return dateToDays(todaysDate());
+					// today's date as a moment object
+					return todaysDate();
 					break;
 				case 'NULL':
 					return null;
@@ -692,7 +692,8 @@
 			if (typeof date === 'number') {
 				date = daysToDate(date)
 			}
-			return dateDiff(date, todaysDate(), 'years');
+			// Age is always a positive number, but diff can return a negative
+			return Math.abs(dateDiff(date, todaysDate(), 'years'));
 		});
 
 		gLogic.addUserFunction('Date', 1, function(numDays) {

@@ -84,24 +84,23 @@ describe('util: date', function() {
 
     describe('dateDiff', function(){
 
-        it('should return number of days between two dates if no unit of measure passed', function(){
-            let startDate = moment('01/01/1970');
-            let daysDiff = cDate.dateDiff(startDate, testDate);
+        it('should return a positive number of days when most recent date is first', function(){
+            let endDate = moment('01/01/1970');
+            let daysDiff = cDate.dateDiff(testDate, endDate);
 
             assert.equal(daysDiff, 58, 'failed to compute number of days');
         });
 
-        it('should return a positive unit of measure regardless of date order', function(){
-            let startDate = moment('01/01/1970');
-            let daysDiff = cDate.dateDiff(startDate, testDate);
-            let reversedDaysDiff = cDate.dateDiff(testDate, startDate);
+        it('should return a negative number of days when most recent date is second', function(){
+            let endDate = moment('01/01/1970');
+            let daysDiff = cDate.dateDiff(endDate, testDate);
 
-            assert.equal(daysDiff, reversedDaysDiff, 'days should equal 58 for both');
+            assert.equal(daysDiff, -58, 'failed to compute negative number of days');
         });
 
         it('should return number of years if passed 3rd param "years"', function(){
-            let startDate = moment('01/01/2000');
-            let endDate = moment('01/01/2010');
+            let endDate = moment('01/01/2000');
+            let startDate = moment('01/01/2010');
             let yearsDiff = cDate.dateDiff(startDate, endDate, 'years');
 
             assert.equal(yearsDiff, 10, 'did not compute 10 years');

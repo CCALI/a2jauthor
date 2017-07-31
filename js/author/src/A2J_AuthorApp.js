@@ -485,8 +485,8 @@ function main()
 
   // call guideSave every 5 minutes
   setInterval(function() {
-      if (gGuide) {
-      guideSave();
+    if (gGuide) {
+      window.guideSave();
     }
   }, CONST.AutoSaveInterval);
 

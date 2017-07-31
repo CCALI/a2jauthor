@@ -105,8 +105,7 @@ function guide2JSON_Mobile (guide)
 
 	newGuide.authors=[];
 	var i;
-	for (i in guide.authors)
-	{
+	for (i in guide.authors) {
 		var author=guide.authors[i];
 		newGuide.authors.push({
 				name:author.name,
@@ -136,13 +135,12 @@ function guide2JSON_Mobile (guide)
 	{
 		var v=guide.vars[vi];
 		// 2015-01-12 mobile needs variaable keys in lowercase
-		newGuide.vars[v.name.toLowerCase()]=
-		{
-		  name:v.name,
-		  type:v.type,
-		  repeating: ((v.repeating===true )? v.repeating : false),
-		  comment: v.comment
-		 };
+		newGuide.vars[v.name.toLowerCase()]= {
+			name:v.name,
+			type:v.type,
+			repeating: ((v.repeating===true )? v.repeating : false),
+			comment: v.comment
+		};
 	}
 
 	newGuide.pages={};

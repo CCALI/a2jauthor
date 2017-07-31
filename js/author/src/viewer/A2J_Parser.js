@@ -157,8 +157,7 @@ function exportXML_CAJA_from_CAJA(guide)
 	JSON.GUIDE.INFO.endImage=guide.endImage;
 	JSON.GUIDE.INFO.logoImage=guide.logoImage;
 	var i;
-	for (i in guide.authors)
-	{
+	for (i in guide.authors) {
 		var author=guide.authors[i];
 		JSON.GUIDE.INFO.AUTHORS.push({
 			AUTHOR:{
@@ -332,6 +331,7 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 	guide.logoImage =		makestr(INFO.children('LOGOIMAGE').text());
 	guide.endImage =		makestr(INFO.children('ENDIMAGE').text());
 	guide.authors=[];
+
 	GUIDE.find("AUTHORS > AUTHOR").each(function() {
 		var AUTHOR = $(this);
 		var author = new TAuthor();

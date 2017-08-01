@@ -612,9 +612,12 @@ function guidePageEditForm(page, div, pagename)//novicePage
 					ff.append(form.pickList({label:'Type:',value: field.type,
 						change:function(val,field,ff){
 							field.type=val;
-							// Radio Buttons always required
+							// Radio Buttons and CheckboxNOTA always required
+							// Also check the `required` box so it will show checked
+							// if the field type is switched to any other field
 							if (field.type === 'radio' || field.type === CONST.ftCheckBoxNOTA) {
 								field.required = true;
+								ff.find('[name="required"]').find('[type=checkbox]').prop('checked', true);
 							}
 
 							updateFieldLayout(ff,field);

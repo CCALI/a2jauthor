@@ -26,7 +26,7 @@ It's best to add icons as a *separate* inline element (`span`) to a parent tag, 
 ````
 
 ## Available icons
-@demo styles/icon-font/demo.html
+@demo demos/icon-font/demo.html
 
 ## Adding or removing icons
 Icons use a special font file generated automatically by <a href="http://fontello.com/">Fontello.com</a>. Icon files are located in `author/styles/icon-font` and should not be modified directly.

@@ -27,6 +27,7 @@ export default {
     },
 
     // used for display and to save answers
+    // takes optional format string
     dateToString: function(date, format) {
         // moment doesn't handle days since epoch by default
         if (typeof date === 'number') {
@@ -37,7 +38,7 @@ export default {
     },
 
     // used to get days since epoch as the A2J parser expects days for math operations, ie: [bDay] + 30
-    // date can be a string date, or moment date
+    // `date` can be a string date, or moment date
     dateToDays: function(date) {
         return this.dateDiff(date, constants.epoch, 'days');
     },
@@ -49,7 +50,7 @@ export default {
         return newDate;
     },
 
-    // will be formatted before display/save
+    // will be formatted before display/save or changed to number for calculations
     todaysDate: function() {
         return moment();
     },

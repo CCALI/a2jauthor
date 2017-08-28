@@ -496,8 +496,9 @@
 		TLogic.prototype._VG = function(varname, varidx) {
 			switch (varname.toUpperCase()) {
 				case 'TODAY':
-					// today's date as a moment object
-					return todaysDate();
+					// today's date as number of days since epoch (01/01/1970)
+					// to be used for calculations in A2J scripts, example: `IF TODAY < [Due Date DA]`
+					return dateToDays(todaysDate());
 					break;
 				case 'NULL':
 					return null;

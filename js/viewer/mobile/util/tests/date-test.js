@@ -23,7 +23,7 @@ describe('util: date', function() {
             let usDate = cDate.swapMonthAndDay(britDate);
             assert.equal(usDate, '04/17/1988', 'failed to create US date');
         });
-	});
+    });
 
     describe('dateToString', function(){
 

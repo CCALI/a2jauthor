@@ -845,11 +845,11 @@ TPage.prototype.tagList=function()
 	}
 	if (page.repeatVar!=='')
 	{
-		tags += '<span class="glyphicon-cw">&nbsp</span>';
+		tags += '<span class="label label-danger glyphicon-cw">Loop</span>';
 	}
 	if (page.outerLoopVar!== '')
 	{
-		tags += '<span class="glyphicon-cw">&nbsp</span>';
+		tags += '<span class="label label-danger glyphicon-cw">Nested Loop</span>';
 	}
 	return tags;
 };

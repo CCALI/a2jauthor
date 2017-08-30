@@ -1,0 +1,10 @@
+<div class="{{#if overCharacterLimit}}text-danger{{/if}}">
+
+    <small>Character Limit: {{availableLength}}</small>
+
+    {{#if overCharacterLimit}}
+    <div>
+        <small>You have exceeded the allowed number of characters for this answer</small>
+    </div>
+    {{/if}}
+</div>

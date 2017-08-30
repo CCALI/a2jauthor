@@ -32,24 +32,19 @@ export default Map.extend('AnswerVM', {
         case 'text':
         case 'textlong':
         case 'numberphone':
-          invalid = validations.required() || validations.maxChars();
-          break;
         case 'numberssn':
-          invalid = validations.required();
-          break;
         case 'numberzip':
           invalid = validations.required() || validations.maxChars();
           break;
         case 'number':
-        case 'numberpick':
         case 'numberdollar':
+        case 'numberpick':
+        case 'datemdy':
           invalid = validations.required() || validations.min() || validations.max();
           break;
         case 'gender':
+        case 'textpick':
           invalid = validations.required();
-          break;
-        case 'datemdy':
-          invalid = validations.required() || validations.min() || validations.max();
           break;
         case 'checkbox':
         case 'radio':
@@ -74,9 +69,6 @@ export default Map.extend('AnswerVM', {
 
           validations.attr('val', anyChecked || null);
 
-          invalid = validations.required();
-          break;
-        case 'textpick':
           invalid = validations.required();
           break;
       }

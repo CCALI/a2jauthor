@@ -12,7 +12,12 @@
       name="{{name}}"
       ($change)="validateField"
       {($value)}="field._answer.values"
+      ($input)="calcAvailableLength(%event)"
       placeholder="{{suggestionText}}" />
+
+      {{#if maxChars}}
+        {{> exceeded-maxchars-tpl }}
+      {{/if}}
   </div>
 
   {{> invalid-prompt-tpl }}

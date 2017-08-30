@@ -10,7 +10,12 @@
       class="form-control"
       name="{{name}}"
       ($change)="validateField"
-      {($value)}="field._answer.values"/>
+      {($value)}="field._answer.values"
+      ($input)="calcAvailableLength(%event)"/>
+
+      {{#if maxChars}}
+        {{> exceeded-maxchars-tpl }}
+      {{/if}}
   </div>
 
   {{> invalid-prompt-tpl }}

@@ -8,10 +8,12 @@ import _isNaN from 'lodash/isNaN';
 import Component from 'can/component/';
 import template from './field.stache!';
 import invalidPromptTpl from './views/invalid-prompt.stache!';
+import exceededMaxcharsTpl from './views/exceeded-maxchars.stache!';
 
 import 'jquery-ui/ui/datepicker';
 
 can.view.preload('invalid-prompt-tpl', invalidPromptTpl);
+can.view.preload('exceeded-maxchars-tpl', exceededMaxcharsTpl);
 
 /**
  * @property {can.Map} field.ViewModel
@@ -159,7 +161,49 @@ export let FieldVM = Map.extend('FieldVM', {
      */
     document: {
       value: window.document
+    },
+
+    /**
+     * @property {Number} field.ViewModel.prototype.availableLength availableLength
+     * @parent field.ViewModel
+     *
+     * remaining allowed characters before maxChar limit is reached
+     *
+     */
+    availableLength:{
+      value: undefined
+    },
+
+    /**
+     * @property {Boolean} field.ViewModel.prototype.overCharacterLimit overCharacterLimit
+     * @parent field.ViewModel
+     *
+     * used to trigger messages when over the maxChars value
+     *
+     */
+    overCharacterLimit: {
+      get() {
+        return this.attr('availableLength') < 0;
+      }
     }
+  },
+
+  /**
+     * @property {Number} field.ViewModel.prototype.calcAvailableLength suggestionText
+     * @parent field.ViewModel
+     *
+     * Remaining character count
+     *
+     */
+
+  calcAvailableLength(ev) {
+    let maxChars = this.attr('field.maxChars');
+    let availableLengthValue;
+    if (maxChars) {
+      availableLengthValue = (maxChars - ev.target.value.length);
+      this.attr('availableLength', availableLengthValue);
+    }
+    return availableLengthValue;
   },
 
   /**
@@ -237,6 +281,13 @@ export let FieldVM = Map.extend('FieldVM', {
     outputFormat = outputFormat || 'MM/DD/YYYY';
 
     return (date && date !== 'TODAY') ? moment(date, inputFormat).format(outputFormat) : date;
+  },
+
+  /**
+   * default availableLength
+   */
+  init() {
+    this.attr('availableLength', this.attr('field.maxChars'));
   }
 });
 

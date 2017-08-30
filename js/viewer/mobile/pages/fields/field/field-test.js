@@ -51,7 +51,7 @@ describe('<a2j-field>', () => {
       assert.equal(vm.attr('suggestionText'), '999-99-9999', 'should return ssn format suggestion');
     });
 
-    it('should suggest a format for SSN numbers', () => {
+    it('should suggest a format for Phone numbers', () => {
       vm.attr('field').attr('type', 'numberphone');
 
       assert.equal(vm.attr('suggestionText'), '(555) 555-5555', 'should return phone number format suggestion');
@@ -177,6 +177,32 @@ describe('<a2j-field>', () => {
       assert.equal(vm.attr('invalidPrompt'), 'This is invalid', 'text - should show the custom error message');
       assert.ok(vm.attr('showInvalidPrompt'), 'should be true when there is an error and a default message');
       assert.ok(vm.attr('showInvalidPrompt'), 'text - showInvalidPrompt should be true when there is an error and a default message');
+    });
+
+    it('calcAvailableLength', function(){
+      let ev = { target: { value: 'this is' } };
+      let field = vm.attr('field');
+      field.attr({'type': 'text', 'maxChars': undefined});
+
+      vm.calcAvailableLength(ev);
+      assert.equal(vm.attr('availableLength'), null, 'did not return undefined when maxChar not set');
+
+      field.attr('maxChars', 10);
+      vm.calcAvailableLength(ev);
+
+      assert.equal(vm.attr('availableLength'), 3, 'did not compute remaining characters');
+    });
+
+    it('should detect when maxChar value is overCharacterLimit', function(){
+      let ev = { target: { value: 'this is over the limit' } };
+      let field = vm.attr('field');
+      field.attr({
+        'type':'text',
+        'maxChars': 10
+      });
+      vm.calcAvailableLength(ev);
+
+      assert.equal(vm.attr('overCharacterLimit'), true, 'did not detect exceeding answer limit');
     });
   });
 

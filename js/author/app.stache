@@ -219,6 +219,11 @@
           <p class="navbar-text">Files currently attached to this interview</p>
 
           <div class="nav navbar-nav navbar-right">
+            <button id="files-delete" class="btn btn-default navbar-btn" role="button">
+              <span class="glyphicon-trash"> Delete checked files</span>
+            </button>
+
+
             <div class="fileuploader">
               <!-- The fileinput-button span is used to style the file input field as button -->
               <a href="javascript:void(0)" class="fileinput-button">

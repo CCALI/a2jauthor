@@ -407,6 +407,36 @@ switch ($command){
 		}
 		break;
 
+	case 'deletefiles':
+		// Front end code in A2J_Tabs.js prevents selection of core Guide and template files
+	    $gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+		$filesToDelete=$_REQUEST['fileDeleteList'];
+		$res=$mysqli->query("select * from guides where gid=$gid and editoruid=$userid");
+		if ($row=$res->fetch_assoc()) {
+			$filename=$row['filename'];
+			$pathParts = pathinfo($filename);
+			$fileDir =  $pathParts['dirname'];
+
+			foreach($filesToDelete as $file) {
+				$deleteFile = GUIDES_DIR.$fileDir.'/'.$file;
+				$thumbnail = GUIDES_DIR.$fileDir.'/thumbnail/'.$file;
+				$fileArchiveDir = GUIDES_DIR.$fileDir.'/Archived';
+				$safeToDelete = file_exists($deleteFile) && !is_dir($deleteFile) && $deleteFile !== GUIDES_DIR;
+
+                if (!file_exists($fileArchiveDir)) {
+                    mkdir($fileArchiveDir);
+                }
+
+				if ($safeToDelete) {
+					// archived first
+					copy($deleteFile, $fileArchiveDir.'/'.$file);
+					unlink($deleteFile);
+					unlink($thumbnail);
+				}
+			}
+		}
+		break;
+
 	case 'uploadguide':
 		error_reporting(E_ALL | E_STRICT);
 

@@ -29,7 +29,14 @@ function updateAttachmentFiles() {
     if(gGuide.attachedFiles) {
       //if gGuide.attachedFiles is empty we don't need to loop through them
       $.each(gGuide.attachedFiles, function(index, file) {
-        $('<tr><td>' +
+        // guide and template files can't be deleted, protect those here
+        var notGuide = (file.name !== 'Guide.xml' && file.name !== 'Guide.json');
+        var jsonExt = (file.name.length - 5) === file.name.lastIndexOf('.json');
+        var startWithTemplate = file.name.indexOf('template') === 0;
+        var notTemplate = ! (startWithTemplate && jsonExt);
+        var inputHTML = (notGuide && notTemplate) ? '<input type="checkbox" />' : '';
+
+        $('<tr><td>' + inputHTML + '</td><td>' +
           '<a target=_blank href="' + gGuidePath + (file.name) + '">' + file.name + '</a>' +
           '</td><td>' + file.size + '</td></tr>'
         ).appendTo('#attachmentFiles');
@@ -37,6 +44,55 @@ function updateAttachmentFiles() {
     }
   });
 }
+
+function deleteSelectedAttachmentFiles() {
+  var $attachmentRows = $('#attachmentFiles.files').children();
+  var fileDeleteList =[];
+
+  $attachmentRows.each(function(index) {
+    var $input = $('input', this).get(0);
+    if ($input && $input.checked) {
+      var fileName = this.children[1].innerText;
+      var notGuide = (fileName !== 'Guide.xml' && fileName !== 'Guide.json');
+      if (notGuide) {
+        fileDeleteList.push(fileName);
+      }
+    }
+  });
+
+  if (fileDeleteList.length) {
+    var listHTML = fileDeleteList.map(function(value) {
+        return('<li>' + value + '</li>');
+    }).join("");
+
+    var dialogMessage =
+    '<div class="alert alert-danger">' +
+      'You are about to delete the following files:' +
+      '<ul class="files-list">' + listHTML + '</ul>' +
+      'Are you sure you want to permanently delete these files from your A2J Guided Interview?';
+
+    dialogConfirmYesNo({
+      title: 'Permanently Delete Files?',
+      message: dialogMessage,
+      height: 350,
+      width: 400,
+      name: name,
+      Yes: function() {
+        window.ws({cmd: 'deletefiles', gid:gGuideID, fileDeleteList: fileDeleteList}, function(response) {
+          if (response.error) {
+            console.error('error deleting files ', response.error)
+          } else {
+            window.updateAttachmentFiles();
+          }
+        });
+      }
+    });
+
+  }
+  // make sure files are deleted before updating file list
+}
+
+$('#files-delete').on('click', deleteSelectedAttachmentFiles);
 
 // List of pages within their steps.
 function getTOCStepPages(includePages, includePops, includeSpecial) {

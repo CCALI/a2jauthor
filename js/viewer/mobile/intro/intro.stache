@@ -1,8 +1,6 @@
 <p>
-	{{#each interview.authors}}
-	<h4>{{name}}</h4>
-	{{/each}}
-
+	<br>
+	<br>
 	<div class="btn-group btn-group-justified">
 		<div class="btn-group">
 			<button type="button" class="btn btn-default" ($click)="navigate">Start</button>

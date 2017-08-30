@@ -55,6 +55,12 @@ function makePackageFolder() {
   // copy viewer images to `a2j-viewer/viewer/images`
   fs.copySync(path.join(cajaPath, 'js', 'viewer', 'images'),
               path.join(outputPath, 'viewer', 'images'));
+
+  // copy jquery date picker images to `a2j-viewer/images`
+  // sending only png images, as others are used for tests
+  fs.copySync(path.join(cajaPath, 'js', 'images'),
+              path.join(outputPath, 'images'),
+            {filter: function(file) {return file.endsWith('.png');}});
 }
 
 function makePackageZip() {

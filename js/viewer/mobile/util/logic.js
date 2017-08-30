@@ -3,6 +3,7 @@ import regex from 'viewer/mobile/util/regex';
 import tLogic from 'viewer/mobile/util/tlogic';
 import Lang from 'viewer/mobile/util/lang';
 import cString from 'viewer/mobile/util/string';
+import cDate from 'viewer/mobile/util/date';
 import constants from 'viewer/models/constants';
 import Infinite from 'viewer/mobile/util/infinite';
 import numeral from 'numeral';
@@ -30,8 +31,9 @@ export default Map.extend({
   init: function() {
     this.guide = this.attr('interview').createGuide();
 
-    let stringMethods = ['decodeEntities', 'escapeHtml', 'jsDate2days',
-      'today2jsDate', 'mdy2jsDate', 'days2jsDate','jsDate2mdy', 'ismdy', 'jquote', 'isNumber'];
+    let stringMethods = ['ismdy', 'decodeEntities', 'escapeHtml', 'jquote', 'isNumber'];
+
+    let dateMethods = ['swapMonthAndDay', 'dateToString', 'dateToDays', 'daysToDate', 'todaysDate', 'dateDiff'];
 
     let traceMethods = ['traceTag'];
     let methods = [this.guide, regex, constants];
@@ -40,11 +42,15 @@ export default Map.extend({
       methods.push(can.proxy(cString[fn], cString));
     });
 
+    can.each(dateMethods, function(fn) {
+      methods.push(can.proxy(cDate[fn], cDate));
+    });
+
     can.each(traceMethods, function() {
       methods.push(function() {});
     });
 
-    // This replaces the jquery NumberFormatter plugin dependency in tlogic.js
+    // numeral replaces the jquery NumberFormatter plugin dependency in tlogic.js
     methods.push(numeral);
 
     this._tLogic = tLogic.apply(this, methods);

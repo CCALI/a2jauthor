@@ -7,25 +7,28 @@
 }(this, function() {
 
 	return function(gGuide,
-		REG, CONST, decodeEntities, escapeHtml,
-		jsDate2days, today2jsDate, mdy2jsDate, days2jsDate, jsDate2mdy, ismdy,
-		jquote, isNumber, traceTag, numeral) {
+		REG, CONST,
+		ismdy, decodeEntities, escapeHtml, jquote, isNumber,
+		swapMonthAndDay, dateToString, dateToDays, daysToDate, todaysDate, dateDiff,
+		traceTag, numeral) {
 
 		gGuide = gGuide || window.gGuide;
 		REG = REG || window.REG;
 		CONST = CONST || window.CONST;
+		ismdy = ismdy || window.ismdy;
 		decodeEntities = decodeEntities || window.decodeEntities;
 		escapeHtml = escapeHtml || window.escapeHtml;
-		jsDate2days = jsDate2days || window.jsDate2days;
-		today2jsDate = today2jsDate || window.today2jsDate;
-		mdy2jsDate = mdy2jsDate || window.mdy2jsDate;
-		days2jsDate = days2jsDate || window.days2jsDate;
-		jsDate2mdy = jsDate2mdy || window.jsDate2mdy;
 		jquote = jquote || window.jquote;
 		isNumber = isNumber || window.isNumber;
+		swapMonthAndDay = swapMonthAndDay || swapMonthAndDay;
+		dateToString = dateToString || window.dateToString;
+		dateToDays = dateToDays || window.dateToDays;
+		daysToDate = daysToDate || window.daysToDate;
+		todaysDate = todaysDate || window.todaysDate;
+		dateDiff = dateDiff || window.dateDiff;
 		traceTag = traceTag || window.traceTag;
-		ismdy = ismdy || window.ismdy;
 		numeral = numeral || window.numeral;
+
 		/*******************************************************************************
 			A2J Author 6 * JusticeJustice * justicia * 正义 * công lý * 사법 * правосудие
 			All Contents Copyright The Center for Computer-Assisted Legal Instruction
@@ -377,7 +380,8 @@
 
 
 				//	A2J dates bracketed with # like VB
-				//		#12/25/2012# converts to convertDate("12/25/2012")
+				//	#12/25/2012# converts to convertDate("12/25/2012")
+				//  This is a deprecated syntax and will be removed (see _ED function)
 				var date = /#([\d|\/]+)#/gi;
 				jj = jj.replace(date, "$$2(\"$1\")");
 
@@ -492,7 +496,9 @@
 		TLogic.prototype._VG = function(varname, varidx) {
 			switch (varname.toUpperCase()) {
 				case 'TODAY':
-					return jsDate2days(today2jsDate());
+					// today's date as number of days since epoch (01/01/1970)
+					// to be used for calculations in A2J scripts, example: `IF TODAY < [Due Date DA]`
+					return dateToDays(todaysDate());
 					break;
 				case 'NULL':
 					return null;
@@ -536,8 +542,10 @@
 			//this.indent--;
 		};
 		TLogic.prototype._ED = function(dstr) {
-			// Date format expected: m/dd/yyyy.
+			// Date format expected: mm/dd/yyyy.
 			// Converted to unix seconds
+			// this is based on a deprecated syntax for dates but is here for A2J 4 conversions
+			// should be safe to remove after 01/01/2018 (remove regex parsing above as well)
 			return Date.parse(dstr);
 		};
 		TLogic.prototype._GO = function(c, pageName) {
@@ -656,34 +664,6 @@
 			return sum;
 		});
 
-		gLogic.addUserFunction('Age', 1, function(val) { // 2014-07-30 Return age in years
-
-			// To test, compare against today's month and day but with an
-			// earlier year and choosing 1 day before and 1 day after.
-			var myDate;
-			if (ismdy(val)) {
-				myDate = mdy2jsDate(val);
-			} else {
-				myDate = days2jsDate(val);
-			}
-			var nowDate = today2jsDate();
-			var y1 = myDate.getFullYear();
-			var y2 = nowDate.getFullYear();
-			var m1 = myDate.getMonth();
-			var m2 = nowDate.getMonth();
-			var d1 = myDate.getDate();
-			var d2 = nowDate.getDate();
-			if (y1 === y2) { // same year, return 0
-				return 0;
-			} else
-			if (m1 < m2 || (m1 === m2 && d1 <= d2)) { // month earlier, or month same but date earlier, return year diff
-				return y2 - y1;
-			} else { // otherwise return year diff plus 1
-				return y2 - y1 - 1;
-			}
-
-		});
-
 		gLogic.addUserFunction('Ordinal', 1, function(ordinal) { // Map number to ordinal: 1 becomes first, 8 becomes eighth.
 			ordinal = parseInt(ordinal, 10);
 			var txt = lang["Ordinals_" + ordinal];
@@ -707,9 +687,27 @@
 			return txt;
 		});
 
-		gLogic.addUserFunction('Date', 1, function(val) { // Assuming internal date is stored as time stamp since some offset.
-			// How can we switch to JS date?
-			return jsDate2mdy(days2jsDate(val));
+		// returns number of years between a user provide date and today's date
+		gLogic.addUserFunction('Age', 1, function(date) {
+			// handle date as numDays since epoch (01/10/1970)
+			if (typeof date === 'number') {
+				date = daysToDate(date)
+			}
+			// Age is always a positive number, but diff can return a negative
+			return Math.abs(dateDiff(date, todaysDate(), 'years'));
+		});
+
+		gLogic.addUserFunction('Date', 1, function(numDays) {
+			// A2J Date macro gets the value of the source date
+			// as number of days since epoch (01/10/1970)
+			// Should display nothing if numDays is falsey
+			var displayDate = '';
+
+			if (numDays) {
+				displayDate = dateToString(numDays);
+			}
+
+			return displayDate;
 		});
 
 		gLogic.addUserFunction('String', 1, function(val) {

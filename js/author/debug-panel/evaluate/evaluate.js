@@ -1,6 +1,7 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './evaluate.stache!';
+import $ from 'jquery';
 
 import 'can/map/define/';
 
@@ -51,16 +52,16 @@ export let EvaluatePanelVM = Map.extend('EvaluatePanelVM',{
 });
 
 export default Component.extend({
-  template,
-  leakScope: false,
-  viewModel: EvaluatePanelVM,
-  tag: 'author-evaluate-panel',
+    template,
+    leakScope: false,
+    viewModel: EvaluatePanelVM,
+    tag: 'author-evaluate-panel',
 
-  events: {
+    events: {
     '#evaluate-input keyup': function(el, ev) {
         if (ev.keyCode===13) {
             $('#evaluate-button').click();
         }
     },
-  }
+    }
 });

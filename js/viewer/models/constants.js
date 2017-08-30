@@ -65,6 +65,7 @@ export default {
   MAXBUTTONS: 3,
   MAXSTEPS: 13,
   kMinYear: 1900,
+  epoch: '01/01/1970',
 
   // 11/27/07 1.7.7 Ordering options for lists such as a county list
   ordDefault: '',

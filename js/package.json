@@ -133,7 +133,7 @@
       "typeahead.js/dist/bloodhound": {
         "format": "cjs"
       },
-      "bootstrap/js/modal" : {
+      "bootstrap/js/modal": {
         "format": "global",
         "deps": [
           "jquery@2.1.4#dist/jquery"

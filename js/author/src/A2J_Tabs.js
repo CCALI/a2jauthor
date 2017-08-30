@@ -435,39 +435,6 @@ var form={
     return $el;
   },
 
-	/*
-	,pickpageComboBox:function(data)
-	{
-		var dval = gGuide.pageDisplayName(data.value);
-
-		var e =$((typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '')
-				+ '<span class=editspan><input class="  ui-combobox-input editable autocomplete picker page dest" type="text" ></span>');
-		$('.picker',e).blur(function(){
-			var val=$(this).val();
-			form.change($(this),val);
-		}).data('data',data).val(decodeEntities(dval));
-		$('.autocomplete.picker.page',e).autocomplete({ source: pickPage, html: true,
-	      change: function () { // if didn't match, restore to original value
-	         var matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex($(this).val().split("\t")[0]) + "$", "i");
-	         var newvalue = $(this).val();//.split("\t")[0];
-				//trace(newvalue);
-	         $.each(gGuide.sortedPages, function (p, page) {
-					if ((page.type!==CONST.ptPopup) && (matcher.test(page.name)))
-					{
-						newvalue = gGuide.pageDisplayName(page.name);
-						return false;
-					}
-					return true;
-	         });
-	         $(this).val(newvalue);
-	      }})
-			.focus(function () {
-			   $(this).autocomplete("search");
-			});
-		return e;
-	}
-	*/
-
   text: function(data) {
     var label = data.label != null ?
       '<label class="control-label">' + data.label + '</label>' : '';
@@ -887,10 +854,18 @@ var form={
   listManagerSave:function($tbl)
 	{	// save revised order or added/removed items
 		var settings=$tbl.data('settings');
-		var list=[];
+    var list=[];
+
 		$('tr',$tbl).not(':hidden').each(function(idx){ //:gt(0)
 			list.push($(this).data('record'));
-		});
+    });
+
+    // if list length is zero, that means we are loading the Authors tab
+    // while it is hidden, and we should use the last saved version as source of truth
+    if (settings.name === "Authors" && list.length === 0) {
+      list = settings.list;
+    }
+
 		settings.save(list);
 		$('select[list="'+settings.name+'"]').val(list.length);
 	},
@@ -1041,7 +1016,7 @@ TGuide.prototype.noviceTab = function(tab,clear)
 
       // ------------------------------------------
       // About tab
-      tabAbout = form.div('About');
+      var tabAbout = form.div('About');
 
       var cols444 = $(
         '<div class="row">' +
@@ -1141,7 +1116,7 @@ TGuide.prototype.noviceTab = function(tab,clear)
 
       // ------------------------------------------
       // Layout tab
-      tabLayout = form.div('Layout');
+      var tabLayout = form.div('Layout');
 
       tabLayout.append(form.pickImage({
         label: 'Logo graphic:',
@@ -1165,7 +1140,7 @@ TGuide.prototype.noviceTab = function(tab,clear)
 
       // -------------------------------
       // Feedback tab
-      tabFeedback = form.div('Feedback');
+      var tabFeedback = form.div('Feedback');
 
       tabFeedback.append(form.checkbox({
         label: 'Allow Send feedback?',
@@ -1186,12 +1161,9 @@ TGuide.prototype.noviceTab = function(tab,clear)
 
       $('#tab-feedback').html(tabFeedback);
 
-      fs = form.fieldset('Authors');
-      var blankAuthor = new TAuthor();
-
       // ------------------------------------------
       // Revision history tab
-      tabHistory = form.div('Revision History');
+      var tabHistory = form.div('Revision History');
 
       tabHistory.append(form.text({
         label: 'Current Version:',
@@ -1213,7 +1185,8 @@ TGuide.prototype.noviceTab = function(tab,clear)
 
       // ------------------------------------------
       // Authors tab
-      tabAuthors = form.div('Authors');
+      var tabAuthors = form.div('Authors');
+      var blankAuthor = new TAuthor();
 
       tabAuthors.append(form.listManager({
         name: 'Authors',
@@ -1373,10 +1346,10 @@ TGuide.prototype.noviceTab = function(tab,clear)
 
 	form.finish(t);
 
-	 $("legend",t).click(function(){
-			 $(this).siblings('div').slideToggle(300);
-			 $(this).parent().toggleClass( 'collapsed');
-	 });
+  $("legend",t).click(function(){
+      $(this).siblings('div').slideToggle(300);
+      $(this).parent().toggleClass( 'collapsed');
+  });
 
 
 

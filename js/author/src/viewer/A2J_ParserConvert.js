@@ -59,7 +59,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		step.number=STEP.attr("NUMBER");
 		step.text=STEP.find("TEXT").xml();
 		guide.steps.push(step);
-	 });
+	});
 
 	guide.templates=makestr(TEMPLATE.find('TEMPLATES').text());
 

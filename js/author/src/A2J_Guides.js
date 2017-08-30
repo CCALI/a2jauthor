@@ -22,17 +22,30 @@ function guideLoaded(data) {
   try {
     cajaDataXML = $(jQuery.parseXML(data.guide));
   } catch (e) {
+    if (e.message) {
+      var errorMessage = e.message.substr(0, e.message.indexOf(':'));
+    }
     setProgress('');
     dialogAlert({
-      title:'Error occurred loading guide #' + data.gid,
-      body:'Unable to load XML' + '\n' + String.substr(String(e).asHTML(), 0, 99)
+      title:'Error loading  A2J Guided Interview with #' + data.gid,
+      body: errorMessage  +
+		'<p>You can attempt to recover your A2J Guided Interview from the last successful save point by clicking the RECOVER button</p>',
+      buttons: {
+        RECOVER: function() {
+          window.recoverSelectedGuide(data.gid);
+          $( this ).dialog( "close" );
+        },
+        CLOSE: function() {
+          $( this ).dialog( "close" );
+        }
+      }
     });
     return;
   }
 
-  gGuideID = data.gid;
-  gGuide = parseXML_Auto_to_CAJA(cajaDataXML);
-  gGuidePath = urlSplit(data.path).path;
+  window.gGuideID = data.gid;
+  window.gGuide = parseXML_Auto_to_CAJA(cajaDataXML);
+  window.gGuidePath = urlSplit(data.path).path;
 
   $('#author-app').trigger('author:guide-selected', gGuideID);
 
@@ -40,8 +53,26 @@ function guideLoaded(data) {
   setProgress('');
 }
 
+// Recover most current guide saved in Versions folder
+function recoverSelectedGuide(guideId) {
+  window.ws({ cmd: 'guiderecover', gid: guideId },
+    function recoverCallback(data){
+      if (data.error) {
+        window.dialogAlert({
+          title: "Unable to recover your A2J Guided Interview",
+          body: "Most likely there are no previously saved versions to recover. Please contact webmaster@a2jauthor.org for more information."
+        });
+      } else {
+        window.dialogAlert({
+          title: "A2J Guided Interview Recovered",
+          body: "You should now be able to open your A2J Guided Interview #" + data.gid + "."
+        });
+      }
+    }
+  );
+}
 // Save current guide, but only if the XML has changed since last save to avoid upload overhead.
-// If successful/or unsuccesful save, call onFinished.
+// If successful or unsuccessful save, call onFinished.
 function guideSave(onFinished) {
 
   if (gGuide !== null && gGuideID !== 0) {
@@ -232,7 +263,7 @@ function archiveSelectedGuide() {
       var gid = $li.attr('gid');
 
       if (gid) {
-        ws({ cmd: 'guidearchive', gid: gid }, function() {
+        window.ws({ cmd: 'guidearchive', gid: gid }, function() {
           $('#author-app').trigger('author:guide-deleted', gid);
         });
       }

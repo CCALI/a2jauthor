@@ -48,26 +48,29 @@ function dialogAlert(args)
 	//	args.title = dialog title,
 	//	args.body = message body
 
-   if (typeof args === "string"){args={body:args};	}
-   if (typeof args.title==='undefined'){	args.title="Alert";}
-   if (typeof args.width==='undefined'){	args.width=350;}
-   if (typeof args.height==='undefined'){	args.height=250;}
-   if (typeof args.body==='undefined'){	args.body='An error occurred.';}
-   var $d=$( "#dialog-confirm" );
-   $d.html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>'+args.body+'</p>');
-   $d.dialog({
-      title: args.title,
-      dialogClass: "modal bootstrap-styles",
-      resizable: true,
-      width: args.width,
-      height:args.height,
-      modal: true,
-      buttons: {
-          OK: function() {
-              $( this ).dialog( "close" );
-          }
-      }
-   });
+	if (typeof args === "string"){args={body:args};	}
+	if (typeof args.title==='undefined'){	args.title="Alert";}
+	if (typeof args.width==='undefined'){	args.width=350;}
+	if (typeof args.height==='undefined'){	args.height=250;}
+	if (typeof args.body==='undefined'){	args.body='An unknown error occurred.';}
+	if (typeof args.buttons === 'undefined') {
+		args.buttons = {
+			OK: function() {
+				$( this ).dialog( "close" ); }
+			};
+	}
+
+	var $d=$( "#dialog-confirm" );
+	$d.html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>'+args.body+'</p>');
+	$d.dialog({
+		title: args.title,
+		dialogClass: "modal bootstrap-styles",
+		resizable: true,
+		width: args.width,
+		height:args.height,
+		modal: true,
+		buttons: args.buttons
+	});
 }
 
 function urlSplit(url)
@@ -599,5 +602,3 @@ function videoPlayerHTML(videoFile)
 	//}
 	return '<video controls><source src="' + videoFile + '"  type="video/mp4"><source src="' + videoFile + '"  type="video/webm"></video>';
 }
-
-/* */

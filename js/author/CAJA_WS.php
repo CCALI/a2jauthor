@@ -185,6 +185,55 @@ switch ($command){
 		}
 		break;
 
+	case 'guiderecover' :
+		// recreate json file from good Guide.xml
+		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+		$res=$mysqli->query("select * from guides where gid=$gid and editoruid=$userid");
+
+		if ($row=$res->fetch_assoc()) {
+			// this info is for the current state of the interview
+            $oldtitle=GUIDES_DIR.$row['title'];
+            $filename=GUIDES_DIR.$row['filename'];
+            $path_parts = pathinfo($filename);
+            $filedir = $path_parts['dirname'];
+            $filenameonly=$path_parts['filename'];
+
+			// retrieve most recent saved xml file, if it exists
+		    $verdir = $filedir.'/Versions';
+			// ignore hidden files starting with a dot
+			$versionslist = preg_grep('/^([^.])/', scandir($verdir, SCANDIR_SORT_DESCENDING));
+			$newestfile = $versionslist[0];
+
+			if (!($newestfile)) {
+				$err = 'No versions to restore';
+				break;
+			}
+
+            $result['info']="Recovering Guide Id: ".$gid;
+			$result['gid']=$gid;
+
+            // never rename the GUIDES_DIR
+            if (file_exists($filename) && !is_dir($filename) && $filename !== GUIDES_DIR) {
+                $cordir = $filedir.'/Corrupt';
+
+                if (!file_exists($cordir)) {
+                    mkdir($cordir);
+                }
+				// backup current corrupted file
+                $corname=$cordir.'/'.$filenameonly.'_CORRUPTED_'.date(DATE_FORMAT,filemtime($filename)).'.xml';
+                rename($filename, $corname);
+                trace('saved corrupt file to '.$corname);
+
+
+				// move recovered file to Guide.xml
+				$recovered_file = $verdir.'/'.$newestfile;
+				rename($recovered_file, $filename);
+    	    } else {
+				$err="No permission to recover this guide";
+			}
+		}
+		break;
+
 	case 'guidesave':
 		// update the guide (only if user matches guide's editor
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
@@ -225,8 +274,7 @@ switch ($command){
                 file_put_contents($filename, $xml);
                 file_put_contents(replace_extension($filename, 'json'), $json);//01/14/2015
             }
-        }
-        else {
+        } else {
             $err="No permission to update this guide";
         }
 

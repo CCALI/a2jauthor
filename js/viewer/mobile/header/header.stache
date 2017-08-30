@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-xs-3 text-center">
     <a ($click)="toggleCredits()" href="javascript://">
-      <img src="{{joinBase 'viewer/images/logo.png'}}" class="img-responsive"/>
+      <img src="{{joinBase 'viewer/images/a2j-circle-300.png'}}" class="logo-viewer-mobile"/>
     </a>
   </div>
 

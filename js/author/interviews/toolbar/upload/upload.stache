@@ -15,6 +15,7 @@
         />
     </a>
     </li>
+    <li role="separator" class="divider hidden-xs"></li>
     <div id="guideuploadprogress" class="progress progress-success progress-striped">
         <div class="bar"></div>
     </div>

@@ -57,8 +57,10 @@ export default Component.extend('UploadComponent', {
           },
           progressall(e, data) {
             let progress = parseInt(data.loaded / data.total * 100, 10);
-            $('#guideuploadprogress .bar').css('width', progress + '%');
+              $('#guideuploadprogress').addClass('darken-div-anim');
+              $('#guideuploadprogress .bar').css('width', progress + '%');
             if (progress === 100) {
+              $('#guideuploadprogress').removeClass('darken-div-anim');
               $('#guideuploadprogress .bar').css('width', '0%');
             }
           }

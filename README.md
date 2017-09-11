@@ -146,27 +146,22 @@ app along with some other files needed to run the standalone viewer app in a
 production environment.
 
 
-## To generate the documentation:
+## Documentation
+*Note: these commands should run in the `CAJA/js` directory.*
+
+To build the documentation, run:
 
 ```
-$ cd js
-$ grunt documentjs
+$ npm run build-docs
 ```
 
-If you want to view the generated docs in your brower just do:
+To view the documentation, run:
 
 ```
-$ cd author/docs
-$ python -m SimpleHTTPServer
+$ npm run serve-docs
 ```
 
-You should see something like the following:
-
-`Serving HTTP on 0.0.0.0 port 8000 ...`
-
-Open up a brower and navigate to [http://localhost:8000](http://localhost:8000)
-you should see the docs page!
-
+The documentation site should be running at `http://localhost:8080`.
 
 ## To deploy the author (and viewer) app
 

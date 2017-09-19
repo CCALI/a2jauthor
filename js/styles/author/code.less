@@ -17,8 +17,14 @@
 .codeedit, .xml {
 	white-space: pre-wrap;
 }
-div.codeedit.haserr {
-	background-color: @brand-danger;
+.has-error .codeedit {
+	background-color: @alert-danger-bg;
+}
+.has-warning .codeedit {
+	background-color: @alert-warning-bg;
+}
+.has-success .codeedit {
+	background-color: @alert-success-bg;
 }
 div.codeedit span.err {
 	background-color: @brand-danger;

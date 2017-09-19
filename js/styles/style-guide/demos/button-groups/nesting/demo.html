@@ -13,9 +13,25 @@
   <button type="button" class="btn btn-default">2</button>
 
   <div class="btn-group" role="group">
-    <button id="btnGroupDrop1" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Something Awesome
+      <button type="button" class="btn btn-default dropdown-toggle open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Dropdown Close
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="#">Dropdown link</a></li>
+        <li><a href="#">Dropdown link</a></li>
+      </ul>
+    </div>
+
+  <div class="btn-group open" role="group">
+    <button type="button" class="btn btn-default dropdown-toggle open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Dropdown Open
+      <span class="caret"></span>
     </button>
+    <ul class="dropdown-menu">
+      <li><a href="#">Dropdown link</a></li>
+      <li><a href="#">Dropdown link</a></li>
+    </ul>
   </div>
 </div>
 </body>

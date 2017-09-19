@@ -10,7 +10,7 @@ import 'can/route/';
 import 'calculator/jquery.plugin';
 import 'calculator/jquery.calculator';
 import 'calculator/jquery.calculator.css';
-
+import 'bootstrap/js/dropdown.js';
 
 let appState = new AppState();
 

@@ -33,6 +33,15 @@
   * > #### Conveying meaning to assistive technologies
   * > Using color to add meaning to a button only provides a visual indication, which will not be conveyed to users of assistive technologies - such as screen readers. Ensure that information denoted by the color is either obvious from the content itself (the visible text of the button), or is included through alternative means, such as additional text hidden with the `.sr-only` class.
   *
+  * ## Dropdown
+  * Any button can be a dropdown toggle.
+  * 
+  * The interaction is handled by `dropdown.js` which is not included in the style guide. 
+  * The javascript adds a class `.open` to the parent `.btn-group` class allowing the 
+  * `.dropdown-menu` class to display.
+  *
+  * @demo demos/buttons-dropdown/demo.html
+  *
   * ## Sizes
   * Fancy larger or smaller buttons- Add `.btn-lg`, `.btn-sm`, or `.btn-xs` for additional sizes.
   *

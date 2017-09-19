@@ -100,9 +100,11 @@
   @styles button-groups-nesting
     @parent button-groups.less 7
   * ## Dropdown Menus within Buttons
-  * Bootstrap has the ability to add dropdown menus within button groups. This is not currently part of the A2J app, but can be added with a little JavaScript and adding the reference `.less` file to `styles.less` within the app like `@import "@{bootstrap-base}/dropdowns.less";`
-  *
   * Place a `.btn-group` within another `.btn-group` when you want dropdown menus
   * mixed with a series of buttons.
+  *
+  * The interaction is handled by `dropdown.js` which is not included in the style guide. 
+  * The javascript adds a class `.open` to the parent `.btn-group` class allowing the 
+  * `.dropdown-menu` class to display.
   * @demo demos/button-groups/nesting/demo.html
   **/

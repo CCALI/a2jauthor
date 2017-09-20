@@ -23,7 +23,8 @@ const pageToHelpUrlMap = {
   preview: 'chapter-10-preview-mode',
   report: 'chapter-9-report-tab',
   publish: 'chapter-14-publish-tab',
-  interviews: 'chapter-3-getting-started'
+  interviews: 'chapter-3-getting-started',
+  templates: 'chapter-15-a2j-document-assembly-tool-a2j-dat-and-templates-tab'
 };
 
 export default function(page) {

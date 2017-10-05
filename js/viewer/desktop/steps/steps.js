@@ -337,6 +337,12 @@ export let ViewerStepsVM = Map.extend('ViewerStepsVM', {
            'width: ' +`calc(0% + ${Math.ceil(width + (width * 0.3))}px);`;
   },
 
+  /**
+   * @property {Function} steps.ViewModel.prototype.updateDomProperties updateDomProperties
+   * @parent steps.ViewModel
+   *
+   *  updates the dom to keep step elements in proper relation to each other
+   */
   updateDomProperties() {
     let vm = this;
 
@@ -363,7 +369,13 @@ export let ViewerStepsVM = Map.extend('ViewerStepsVM', {
       vm.attr('stepNextCssBottom').attr(i, cssBottom);
     });
   },
-  // This is triggered by avatar.js when the avatar svg is inserted
+
+  /**
+   * @property {Function} steps.ViewModel.prototype.avatarLoaded avatarLoaded
+   * @parent steps.ViewModel
+   *
+   *  used to trigger the dom update from avatar.js on svg load
+   */
   avatarLoaded() {
     this.afterAvatarLoaded(() => this.updateDomProperties());
   },

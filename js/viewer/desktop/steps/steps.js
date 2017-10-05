@@ -337,10 +337,6 @@ export let ViewerStepsVM = Map.extend('ViewerStepsVM', {
            'width: ' +`calc(0% + ${Math.ceil(width + (width * 0.3))}px);`;
   },
 
-  avatarLoaded() {
-    this.updateDomProperties();
-  },
-
   updateDomProperties() {
     let vm = this;
 
@@ -366,14 +362,24 @@ export let ViewerStepsVM = Map.extend('ViewerStepsVM', {
       cssBottom = +cssBottom.slice(0, cssBottom.indexOf('px'));
       vm.attr('stepNextCssBottom').attr(i, cssBottom);
     });
+  },
+  // This is triggered by avatar.js when the avatar svg is inserted
+  avatarLoaded() {
+    this.afterAvatarLoaded(() => this.updateDomProperties());
+  },
+
+  // TODO: figure out a better way update the dom when the avatar changes in the DOM
+  afterAvatarLoaded (callback) {
+    setTimeout(callback, 0);
   }
 });
+
 
 /**
  * @module {Module} viewer/desktop/steps/ <a2j-viewer-steps>
  * @parent api-components
  *
- * this component displays an interviews steps
+ * this component displays an interview's steps
  *
  * ## Use
  *
@@ -398,7 +404,11 @@ export default Component.extend({
     },
 
     '{viewModel} showDebugPanel': function(vm) {
-      setTimeout(vm.updateDomProperties.bind(vm));
+      vm.afterAvatarLoaded(() => vm.updateDomProperties());
+    },
+
+    '{viewModel} currentPage': function(vm) {
+      vm.afterAvatarLoaded(() => vm.updateDomProperties());
     },
 
     'a.learn-more click': function(el, ev) {

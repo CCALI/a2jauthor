@@ -15,11 +15,11 @@
 	c-1.2,2-4.7,9.7,2,11.6c6.7,2,20.3,3.5,27.7,2.2c7.4-1.2,16.6-5.7,20.6-9.7c4-4,5.7-4.2,10.7-6.7c5-2.5,10.4-4.5,10.2-10.4
 	c-0.2-5.9-4.2-15.6-4.2-15.6s0,6.2-1.5,8.9c-1.5,2.7-5.9,12.9-12.6,15.9c-6.7,3-16.1,5.9-28.5,2.2
 	C100.1,735.8,96.4,731.6,96.4,731.6z"/>
-<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="31.4385" y1="507.6277" x2="138.8313" y2="507.6277">
+<linearGradient id="av-f-l_1_" gradientUnits="userSpaceOnUse" x1="31.4385" y1="507.6277" x2="138.8313" y2="507.6277">
 	<stop  offset="0.3313" style="stop-color:#B8B29C"/>
 	<stop  offset="0.8405" style="stop-color:#A7A28E"/>
 </linearGradient>
-<path style="fill:url(#SVGID_1_);" d="M47,313.9l47.3,9.9l13.9,177.3c0,0,16.8,50.5,17.8,59.4c1,8.9,12.9,102,12.9,105
+<path style="fill:url(#av-f-l_1_);" d="M47,313.9l47.3,9.9l13.9,177.3c0,0,16.8,50.5,17.8,59.4c1,8.9,12.9,102,12.9,105
 	c0,3-17.8,30.7-17.8,30.7s-20.8,7.9-37.7,4c-16.8-4-22.8-5.9-22.8-5.9l7.9-13.9c0,0-4-13.9-4-19.8c0-5.9,5.9-52.5,5.9-52.5v-28.7
 	c0,0,2-25.8,2-28.7c0-3-6.9-35.7-7.9-40.6c-1-5-11.9-43.6-12.9-47.6c-1-4-11.9-46.6-13.9-54.5c-2-7.9-7.9-45.6-5.9-65.4
 	C33.8,322.8,47,313.9,47,313.9z"/>
@@ -81,31 +81,31 @@
 	C163.5,124.9,163.9,125.1,163.5,124.7z"/>
 <g id="face-shadows">
 
-		<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="523.9555" y1="-433.9037" x2="523.9555" y2="-440.5294" gradientTransform="matrix(1.2115 0.2869 -0.2304 0.9732 -640.926 323.6878)">
+		<linearGradient id="av-f-l_2_" gradientUnits="userSpaceOnUse" x1="523.9555" y1="-433.9037" x2="523.9555" y2="-440.5294" gradientTransform="matrix(1.2115 0.2869 -0.2304 0.9732 -640.926 323.6878)">
 		<stop  offset="0" style="stop-color:#000000;stop-opacity:0"/>
 		<stop  offset="1" style="stop-color:#000000;stop-opacity:0.4"/>
 	</linearGradient>
-	<path style="fill:url(#SVGID_2_);" d="M84.7,49.6c0.6-1.1,2.5-4.2,6.8-4.7c4.2-0.5,10.1,3.3,12.1,5.9"/>
+	<path style="fill:url(#av-f-l_2_);" d="M84.7,49.6c0.6-1.1,2.5-4.2,6.8-4.7c4.2-0.5,10.1,3.3,12.1,5.9"/>
 
-		<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="-3805.8293" y1="1214.6112" x2="-3806.7427" y2="1206.7493" gradientTransform="matrix(0.8909 -0.1516 -0.1035 -0.6079 3595.6401 229.7519)">
+		<linearGradient id="av-f-l_3_" gradientUnits="userSpaceOnUse" x1="-3805.8293" y1="1214.6112" x2="-3806.7427" y2="1206.7493" gradientTransform="matrix(0.8909 -0.1516 -0.1035 -0.6079 3595.6401 229.7519)">
 		<stop  offset="0" style="stop-color:#000000;stop-opacity:0"/>
 		<stop  offset="0.9449" style="stop-color:#000000;stop-opacity:0.378"/>
 		<stop  offset="1" style="stop-color:#000000;stop-opacity:0.4"/>
 	</linearGradient>
-	<path style="fill:url(#SVGID_3_);" d="M70.1,69.2c0.5,0.9,2.1,3.6,6.2,4.2c4.1,0.5,10.1-2.5,12.3-4.6"/>
+	<path style="fill:url(#av-f-l_3_);" d="M70.1,69.2c0.5,0.9,2.1,3.6,6.2,4.2c4.1,0.5,10.1-2.5,12.3-4.6"/>
 
-		<linearGradient id="SVGID_4_" gradientUnits="userSpaceOnUse" x1="155.2796" y1="43.2359" x2="155.2796" y2="15.7189" gradientTransform="matrix(0.9995 -3.080000e-02 3.080000e-02 0.9995 -63.3361 77.1181)">
+		<linearGradient id="av-f-l_4_" gradientUnits="userSpaceOnUse" x1="155.2796" y1="43.2359" x2="155.2796" y2="15.7189" gradientTransform="matrix(0.9995 -3.080000e-02 3.080000e-02 0.9995 -63.3361 77.1181)">
 		<stop  offset="0" style="stop-color:#000000;stop-opacity:0"/>
 		<stop  offset="0.9018" style="stop-color:#000000;stop-opacity:0.4"/>
 	</linearGradient>
-	<path style="fill:url(#SVGID_4_);" d="M78.3,97.2c0,0,13.8,3.7,30.1-9.7c0,0-1.7,7.1-10.6,11.3c-8.9,4.1-12,6.8-13.9,9.4
+	<path style="fill:url(#av-f-l_4_);" d="M78.3,97.2c0,0,13.8,3.7,30.1-9.7c0,0-1.7,7.1-10.6,11.3c-8.9,4.1-12,6.8-13.9,9.4
 		c-1.8,2.6-6.8,7.8-6.8,7.8L78.3,97.2z"/>
 	<g>
-		<linearGradient id="SVGID_5_" gradientUnits="userSpaceOnUse" x1="73.9236" y1="50.8448" x2="73.9236" y2="44.5667">
+		<linearGradient id="av-f-l_5_" gradientUnits="userSpaceOnUse" x1="73.9236" y1="50.8448" x2="73.9236" y2="44.5667">
 			<stop  offset="0" style="stop-color:#000000;stop-opacity:0"/>
 			<stop  offset="1" style="stop-color:#000000;stop-opacity:0.4"/>
 		</linearGradient>
-		<path style="fill:url(#SVGID_5_);" d="M74.1,44.6c-2.1-0.2-4.6,0.8-6.9,2.1c0,1.3-0.1,2.5-0.2,3.7l13.9-1.4
+		<path style="fill:url(#av-f-l_5_);" d="M74.1,44.6c-2.1-0.2-4.6,0.8-6.9,2.1c0,1.3-0.1,2.5-0.2,3.7l13.9-1.4
 			C80.2,47.9,78.3,44.9,74.1,44.6z"/>
 	</g>
 </g>

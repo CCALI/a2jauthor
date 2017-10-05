@@ -2,11 +2,8 @@
 
 <div class="scaling-svg-container">
   {{#if avatarImageName}}
-    <object type="image/svg+xml"
-      class="scaling-svg"
-      ($load)="avatarLoaded()"
-      data="{{joinBase 'viewer/images/' avatarImageName}}">
-      Your browser does not support SVG
-    </object>
+  <div class="scaling-svg">
+    {{{svgInline}}}
+  </div>
   {{/if}}
 </div>

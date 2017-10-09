@@ -5,11 +5,11 @@
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
     <ul class="nav navbar-nav">
       <button class="btn btn-default navbar-btn" ($click)="navigateBack" {{^if canNavigateBack}}disabled{{/if}}>
-        <span class="glyphicon-left-open"></span> <span class="sr-only">{{lang.GoBack}}</span>
+        <span class="glyphicon-left-open"></span>{{lang.GoBack}}
       </button>
 
       <button class="btn btn-default navbar-btn" ($click)="navigateForward" {{^if canNavigateForward}}disabled{{/if}}>
-        <span class="sr-only">{{lang.GoNext}}</span> <span class="glyphicon-right-open"></span>
+        {{lang.GoNext}}<span class="glyphicon-right-open"></span>
       </button>
     </ul>
 

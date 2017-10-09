@@ -7,10 +7,32 @@
  * @stylesheet signs.less Signs
  * @parent signs-steps 1
  *
- * The signs in the A2J Viewer application are 100% HTML/CSS and use no images. By default, the signs will fill their parent container. In the A2J Viewer, JavaScript is being used to calculate the position and size of each sign, as well as the size of the text inside.
+ * The signs in the A2J Viewer application are 100% HTML/CSS and use no images. By default, the signs will fill their parent container. In the A2J Viewer, JavaScript is being used to calculate the position of the signs and CSS Transform change the size of each sign, (including the content contained in the sign).
+ *
+ * Note: For the demo below, a multiplier has been added for the content in the sig to be displayed correctly by adding the `.demo` class to the body tag. This class is not to be used in the application.
  *
  * @demo demos/signs/demo.html
  *
+* ### Browser Support
+*
+* Additional support needed to be added for Firefox and Edge to display the number or icon in circle correctly within the sign:
+*
+* ```
+  // Firefox circles not displaying correctly - fix 
+  @-moz-document url-prefix() {
+    .sign-circle {
+      padding-bottom: 1%;
+      display: inline-table;
+    }
+  }
+  // Edge circles not displaying correctly - fix 
+  @supports (-ms-ime-align: auto) {
+    .sign-circle {
+      padding-bottom: 1%;
+      display: inline-table;
+    }
+  }
+*```
 **/
 
 //http://jsfiddle.net/x1fy6jhh/5/
@@ -25,155 +47,103 @@
     position: absolute;
     left: 66%;
     bottom: 0;
-    z-index: 10;
+    z-index: 100;
   }
 }
-.sign {
-  position: relative;
+.sign-outer {
   width: 100%;
-  padding-top: 20%;
+  padding: 1.5%;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  display: flex;
 
-  .sign-inner {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border: 1px solid grey;
+  .sign-circle {
+    width: 16%;
+    height: 0;
+    padding-bottom: 16%;
+    line-height: 1.2;
+    font-size: 3.5vw;
+    font-weight: 600;
+    text-align: center;
+    background: rgba(255, 255, 255, .9);
+    border-radius: 50%;
   }
-  .sign-text {
-    margin: 0;
-    height: 100%;
-    width: 75%;
-    float: right;
+  .sign-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 2%;
+    font-size: 2vw;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -1px;
+    background: transparent;
+  }
+  // Firefox circles not displaying correctly - fix 
+  @-moz-document url-prefix() { 
+    .sign-circle {
+      padding-bottom: 1%;
+      display: inline-table;
+    }
+  }
+  // Edge circles not displaying correctly - fix 
+  @supports (-ms-ime-align: auto) {
+    .sign-circle {
+      padding-bottom: 1%;
+      display: inline-table;
+    }
   }
 
-  // The feet of the signs
-  &:after, &:before {
-	left: 5%;
-	bottom: -25%;
-	content: " ";
-	height: 25%;
-	width: 2%;
-	background: #593622;
-	content: '';
-	position: absolute;
-	pointer-events: none;
+  /* Styles the sign posts */
+  &:before,
+  &:after {
+      left: 5%;
+      bottom: -30px;
+      content: " ";
+      height: 30px;
+      width: 2%;
+      background: #593622;
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      border-radius: 0 0 25% 25%;
   }
   &:after {
-    right: 5%;
-    left: auto;
-   }
-}
-
-.circle-wrapper {
-  width: 15%;
-  height:auto;
-  display: inline-block;
-  margin: 2%;
-  float: left;
-}
-
-.circle {
-  border-radius: 50%;
-  width: 100%;
-  padding-bottom: 100%;
-  border: 1px solid #000;
-  position: relative;
-
-  .circle-content {
-    position: absolute;
-    top: 3%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-
-    &:before {
-      content: '';
-      vertical-align: middle;
-      display: inline-block;
-      width: 0;
-      height: 100%;
-    }
+      right: 5%;
+      left: auto;
   }
 }
 
-.step-current {
-  .sign-wrapper {
-    .sign {
-      .circle {
-        .circle-content {
-          margin-left: -5%;
-        }
-        font-size: 2vw;
-        line-height: 2vw;
-      }
-    }
-  }
+// Scales down the signage for the visible signage
+.step-2 .sign-wrapper {
+  transform-origin: bottom left;
+  transform: scale(.7) translateX(7.5%);
+  z-index: 99;
+}
+.step-3 .sign-wrapper {
+  transform-origin: bottom left;
+  transform: scale(.5) translateX(15%);
+  z-index: 98;
+}
+.step-4 .sign-wrapper {
+  transform-origin: bottom left;
+  transform: scale(.3) translateX(30%);
+  z-index: 97;
+}
+.step-5 .sign-wrapper {
+  transform-origin: bottom left;
+  transform: scale(.2) translateX(50%);
+  z-index: 96;
 }
 
-#viewer-app.with-debug-panel {
-  .step-current {
-    .sign-wrapper {
-      .sign {
-        .circle {
-          font-size: 1vw;
-          line-height: 1vw;
-        }
-      }
-    }
+// For the content on the demoo page to display correctly
+.style-guide-demo {
+  padding: 20px;
+  .sign-content {
+    font-size: calc(2vw * 3.5);
   }
-}
-
-.step-2 {
-  .sign-wrapper {
-    width: 20%;
-    left: 67%;
-    .sign {
-      .circle {
-        font-size: 1.25vw;
-        line-height: 1.25vw;
-      }
-    }
-  }
-}
-
-.step-3 {
-  .sign-wrapper {
-    width: 15%;
-    left: 68.25%;
-    .sign {
-      .circle {
-        font-size: 1vw;
-        line-height: 1vw;
-      }
-    }
-  }
-}
-
-.step-4 {
-  .sign-wrapper {
-    width: 10%;
-    left: 69.25%;
-    .sign {
-      .circle {
-        font-size: .75vw;
-        line-height: .75vw;
-      }
-    }
-  }
-}
-
-.step-5 {
-  .sign-wrapper {
-    width: 8%;
-    left: 69.25%;
-    .sign {
-      .circle {
-        font-size: .5vw;
-        line-height: .5vw;
-      }
-    }
+  .sign-circle {
+    font-size: calc(3.5vw * 3.5);
   }
 }

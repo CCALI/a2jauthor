@@ -6,6 +6,7 @@ import _inRange from 'lodash/inRange';
 import Component from 'can/component/';
 import template from './steps.stache!';
 import _findIndex from 'lodash/findIndex';
+import _truncate from 'lodash/truncate';
 import learnMoreTemplate from './learn-more.stache';
 
 import 'can/map/define/';
@@ -21,19 +22,7 @@ can.view.preload('learn-more-tpl', learnMoreTemplate);
 export let ViewerStepsVM = Map.extend('ViewerStepsVM', {
   define: {
     /**
-     * @property {String} steps.ViewModel.prototype.steps steps
-     * @parent steps.ViewModel
-     *
-     * list of steps in the interview
-     */
-    steps: {
-      get() {
-        return this.attr('interview.steps');
-      }
-    },
-
-    /**
-     * @property {String} steps.ViewModel.prototype.currentPage currentPage
+     * @property {can.Map} steps.ViewModel.prototype.currentPage currentPage
      * @parent steps.ViewModel
      *
      * current page in interview
@@ -47,7 +36,19 @@ export let ViewerStepsVM = Map.extend('ViewerStepsVM', {
     },
 
     /**
-     * @property {String} steps.ViewModel.prototype.currentStep currentStep
+     * @property {can.List} steps.ViewModel.prototype.steps steps
+     * @parent steps.ViewModel
+     *
+     * list of steps in the interview
+     */
+    steps: {
+      get() {
+        return this.attr('interview.steps');
+      }
+    },
+
+    /**
+     * @property {can.Map} steps.ViewModel.prototype.currentStep currentStep
      * @parent steps.ViewModel
      *
      * current step in interview
@@ -59,28 +60,20 @@ export let ViewerStepsVM = Map.extend('ViewerStepsVM', {
     },
 
     /**
-     * @property {String} steps.ViewModel.prototype.nextSteps nextSteps
+     * @property {can.List} steps.ViewModel.prototype.nextSteps nextSteps
      * @parent steps.ViewModel
      *
-     * steps after current step in interview
+     * list of steps after current step in interview
      */
     nextSteps: {
       get() {
-        const steps = this.attr('steps').attr();
-        const currentStep = this.attr('currentStep');
-
-        if (currentStep) {
-          const stepIndex = _findIndex(steps, ({ number }) => {
-            return number == currentStep.attr('number');
-          });
-
-          return this.attr('steps').slice(stepIndex + 1);
-        }
+        const currentStepIndex = this.getStepIndex(this.attr('currentStep'));
+        return this.attr('steps').slice(currentStepIndex + 1);
       }
     },
 
     /**
-     * @property {String} steps.ViewModel.prototype.remainingSteps remainingSteps
+     * @property {Number} steps.ViewModel.prototype.remainingSteps remainingSteps
      * @parent steps.ViewModel
      *
      * number of steps after current step in interview
@@ -121,6 +114,29 @@ export let ViewerStepsVM = Map.extend('ViewerStepsVM', {
         return interviewSteps < maxSteps ? interviewSteps : maxSteps;
       }
     },
+
+    /**
+     * @property {Array} steps.ViewModel.prototype.a2jStepVars a2jStepVars
+     * @parent steps.ViewModel
+     *
+     * list of the A2J Step variables and their values
+     * listens for changes to A2J Step variables during an interview - used to update displayText
+     */
+    a2jStepVars: {
+      get() {
+        let a2jStepVars = [];
+        let answers = this.attr('interview.answers');
+        if (answers) {
+          answers.each(function(answer) {
+            if (answer.name && answer.name.indexOf("A2J Step") !== -1) {
+              answer.attr('values');  // setup binding on values(1)
+              a2jStepVars.push(answer);
+            }
+          });
+        }
+        return a2jStepVars;
+      }
+  },
 
     /**
      * @property {Number} steps.ViewModel.prototype.avatarSkinTone avatarSkinTone
@@ -292,6 +308,56 @@ export let ViewerStepsVM = Map.extend('ViewerStepsVM', {
   },
 
   /**
+   * @property {Number} steps.ViewModel.prototype.getStepIndex getStepIndex
+   * @parent steps.ViewModel
+   *
+   * index for a given step, step.number and index do not have to match
+   */
+  getStepIndex (step) {
+    const steps = this.attr('steps').attr();
+    const stepIndex = _findIndex(steps, ({ number }) => {
+      return number == step.attr('number');
+    });
+
+    return stepIndex;
+  },
+
+  /**
+   * @property {String} steps.ViewModel.prototype.getTextForStep getTextForStep
+   * @parent steps.ViewModel
+   *
+   * the step text which can be overridden by Authors assigned values to `A2J Step #` variables
+   */
+  getTextForStep (step) {
+    const index = this.getStepIndex(step);
+    const defaultText = this.attr(`interview.steps.${index}.text`);
+    let variableText;
+    const variable = this.attr('a2jStepVars')[index];
+    if (variable) {
+      variableText = variable.attr('values.1');
+    }
+    return variableText || defaultText;
+  },
+
+  /**
+   * @property {String} steps.ViewModel.prototype.getDisplayTextForStep getDisplayTextForStep
+   * @parent steps.ViewModel
+   *
+   * final text to be displayed on step sign in viewer, truncated as needed
+   */
+  getDisplayTextForStep (step) {
+      const maxChars = 50;
+      const overflowText = '...';
+      const text = this.getTextForStep(step);
+
+      return _truncate(text, {
+        length: maxChars + overflowText.length,
+        separator: ' ',
+        omission: overflowText
+      });
+  },
+
+  /**
    * @property {Number} steps.ViewModel.prototype.getStepWidth getStepWidth
    * @parent steps.ViewModel
    *
@@ -327,7 +393,7 @@ export let ViewerStepsVM = Map.extend('ViewerStepsVM', {
   },
 
   /**
-   * @property {Number} steps.ViewModel.prototype.formatStepStyles formatStepStyles
+   * @property {String} steps.ViewModel.prototype.formatStepStyles formatStepStyles
    * @parent steps.ViewModel
    *
    * the style attribute value needed for styling a step based on its width

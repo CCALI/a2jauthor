@@ -59,7 +59,8 @@
   }
 }
 
-@minus-header: ceil(@header-height/2);
+// Adjusts when the later steps get assigned display: none, roughly 130px - accomodates where the watermark is shown
+@minus-header: ceil(@header-height/1.5);
 
 // Adjust the position of the steps in the background
 .next-wrapper {

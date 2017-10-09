@@ -1,7 +1,6 @@
 <can-import from="viewer/mobile/pages/" />
 <can-import from="viewer/desktop/avatar/" />
 <can-import from="viewer/desktop/steps/steps.less!" />
-<can-import from="viewer/desktop/steps/sign-text/" />
 
 {{#if currentStep}}
   <div class="step-current">
@@ -63,36 +62,24 @@
           {{/if}}
         {{/currentPage}}
       {{/if}}
-
     </div><!-- client-wrapper -->
 
     <div class="sign-wrapper">
-      <div class="sign bg-step{{currentStep.number}}">
-        <div class="sign-inner">
-          <div class="circle-wrapper">
-            <div class="circle">
-              <span class="circle-content">
-                {{#zeroOrUndefined currentStep.number}}
-                  <span class="glyphicon-step-zero"></span>
-                {{else}}
-                  {{currentStep.number}}
-                {{/zeroOrUndefined}}
-              </span>
-            </div>
-          </div>
-
-          <div class="sign-text">
-            <a2j-viewer-sign-text
-              {interview}="interview"
-              {show-debug-panel}="showDebugPanel"
-              {current-step-number}="currentStep.number"
-              {is-current-step}="true"
-              {text}="currentStep.text"
-              {number}="currentStep.number" />
-          </div>
-        </div>
-      </div><!-- sign -->
-    </div><!-- sign-wrapper -->
+      <div class="sign-outer bg-step{{currentStep.number}}">
+        <div class="sign-circle">
+          <span class="circle-content">
+            {{#zeroOrUndefined currentStep.number}}
+              <span class="glyphicon-step-zero"></span>
+            {{else}}
+              {{currentStep.number}}
+            {{/zeroOrUndefined}}
+          </span>
+        </div> <!-- sign circle -->
+        <div class="sign-content">
+          <span title="{{getTextForStep(currentStep)}}">{{getDisplayTextForStep(currentStep)}}</span>
+        </div> <!-- sign content -->
+      </div> <!-- sign outer -->
+    </div> <!-- sign wrapper -->
   </div><!-- step-current -->
 {{/if}}
 
@@ -107,26 +94,15 @@
         </div>
 
         <div class="sign-wrapper">
-          <div class="sign bg-step{{number}}">
-            <div class="sign-inner">
-              <div class="circle-wrapper">
-                <div class="circle">
-                  <span class="circle-content">{{number}}</span>
-                </div>
-              </div>
-
-              <div class="sign-text">
-                <a2j-viewer-sign-text
-                  {interview}="interview"
-                  {show-debug-panel}="showDebugPanel"
-                  {current-step-number}="currentStep.number"
-                  {is-current-step}="false"
-                  {text}="text"
-                  {number}="number" />
-              </div>
-            </div>
-          </div><!-- sign -->
-        </div><!-- sign-wrapper -->
+          <div class="sign-outer bg-step{{number}}">
+            <div class="sign-circle">
+              <span class="circle-content">{{number}}</span>
+            </div> <!-- sign circle -->
+            <div class="sign-content">
+              <span title="{{getTextForStep(.)}}">{{getDisplayTextForStep(.)}}</span>
+            </div> <!-- sign content -->
+          </div> <!-- sign outter -->
+        </div> <!-- sign wrapper -->
       </div>
     {{/each}}
   </div>

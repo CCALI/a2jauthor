@@ -86,14 +86,19 @@ describe('<a2j-viewer-steps>', function() {
     let vm;
 
     beforeEach(() => {
-      vm = new ViewerStepsVM({});
-    });
+      vm = new ViewerStepsVM();
 
-    it('computes nextSteps & remainingSteps based on current step', function() {
       const currentPage = new Map({
         step: {
           number: '2',
           text: 'Audio Test'
+        }
+      });
+
+      const answers = new Map({
+        'a2j step 0': {
+          name: 'A2J Step 0',
+          values: [null]
         }
       });
 
@@ -107,16 +112,62 @@ describe('<a2j-viewer-steps>', function() {
           { number: '3', text: 'Graphic Test' },
           { number: '4', text: 'Graphic with Audio Test' },
           { number: '5', text: 'Video' }
-        ]
-      };
+        ],
 
+        answers
+      };
+      vm.attr({ interview });
+    });
+
+    it('getTextForStep', () => {
+      let stepVar = vm.attr('interview.answers.a2j step 0');
+      stepVar.attr('values.1', 'New Sign Text');
+      const step = vm.attr('interview.steps.0');
+      assert.equal(vm.getDisplayTextForStep(step), 'New Sign Text', 'Authors can set new sign displayText');
+    });
+
+    it('Returns original step text if a2j step variable cleared', () => {
+      let stepToUpdate = vm.attr('interview.answers.a2j step 0');
+      stepToUpdate.attr('values.1', 'New Sign Text');
+      stepToUpdate.attr('values.1', '');
+      const step = vm.attr('interview.steps.0');
+
+      assert.equal(vm.getDisplayTextForStep(step), 'Audio Test', 'should restore text when step var set to empty string');
+    });
+
+    it('getStepIndex', () => {
+      const step = vm.attr('interview.steps.2');
+
+      assert.equal(vm.getStepIndex(step), 2, 'it did not return the correct index for the step');
+    });
+
+    it('getDisplayTextForStep', () => {
+      const step = vm.attr('interview.steps.0');
+      assert.equal(vm.getDisplayTextForStep(step), 'Audio Test', 'should not change short text');
+
+      step.attr('text', 'slightly longer text with a space as the 51st char that gets truncated');
+
+      assert.equal(
+        vm.getDisplayTextForStep(step),
+        'slightly longer text with a space as the 51st char...',
+        'should truncate to 50 chars and add an ellipsis'
+      );
+
+      step.attr('text', 'long text with a space as the 50th character in the middle of a word');
+
+      assert.equal(
+        vm.getDisplayTextForStep(step),
+        'long text with a space as the 50th character in...',
+        'should truncate to last full word before 50th char and add an ellipsis'
+      );
+    });
+
+    it('computes nextSteps & remainingSteps based on current step', function() {
       const expectedNextSteps = [
         { number: '3', text: 'Graphic Test' },
         { number: '4', text: 'Graphic with Audio Test' },
         { number: '5', text: 'Video' }
       ];
-
-      vm.attr({ interview });
 
       assert.deepEqual(
         vm.attr('nextSteps').serialize(),

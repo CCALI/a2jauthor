@@ -48,31 +48,39 @@
     <!-- About Tab -->
     <div class="tab-panel bootstrap-styles" id="tabsAbout">
       <div class="tabContentFrame page">
-      <h3 class="page-title">Information about this interview</h3>
-      <div>
-
-       <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist" id="about-tabs">
-          <li role="presentation" class="active"><a href="#" role="tab" data-panel="tab-about">About</a></li>
-          <li role="presentation"><a href="#" role="tab" data-panel="tab-layout">Layout</a></li>
-          <li role="presentation"><a href="#" role="tab" data-panel="tab-feedback">Feedback</a></li>
-          <li role="presentation"><a href="#" role="tab" data-panel="tab-revision">Revision History</a></li>
-          <li role="presentation"><a href="#" role="tab" data-panel="tab-authors">Authors</a></li>
-        </ul>
-      <!-- Nav tabs -->
-
-      <!-- Tab panes -->
-        <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tab-about"></div>
-          <div role="tabpanel" class="tab-pane" id="tab-layout"></div>
-          <div role="tabpanel" class="tab-pane" id="tab-feedback"></div>
-          <div role="tabpanel" class="tab-pane" id="tab-revision"></div>
-          <div role="tabpanel" class="tab-pane" id="tab-authors"></div>
+        <div class="row">
+          <div class="col-xs-10">
+            <h3 class="page-title">Information about this interview</h3>
+          </div>
+          <div class="utility-links col-xs-2 pull-right">
+              <button id="settings" class="btn btn-link">
+                <span class="glyphicon-cog"></span> Advanced Settings
+              </button>
+          </div>
         </div>
-      <!-- Tab panes -->
+        <div>
+          <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist" id="about-tabs">
+              <li role="presentation" class="active"><a href="#" role="tab" data-panel="tab-about">About</a></li>
+              <li role="presentation"><a href="#" role="tab" data-panel="tab-layout">Layout</a></li>
+              <li role="presentation"><a href="#" role="tab" data-panel="tab-feedback">Feedback</a></li>
+              <li role="presentation"><a href="#" role="tab" data-panel="tab-revision">Revision History</a></li>
+              <li role="presentation"><a href="#" role="tab" data-panel="tab-authors">Authors</a></li>
+            </ul>
+          <!-- Nav tabs -->
 
-      <br />
-      </div>
+          <!-- Tab panes -->
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="tab-about"></div>
+              <div role="tabpanel" class="tab-pane" id="tab-layout"></div>
+              <div role="tabpanel" class="tab-pane" id="tab-feedback"></div>
+              <div role="tabpanel" class="tab-pane" id="tab-revision"></div>
+              <div role="tabpanel" class="tab-pane" id="tab-authors"></div>
+            </div>
+          <!-- Tab panes -->
+
+          <br />
+        </div>
         <div class="tabContent editq"></div>
       </div>
     </div><!--tab-panel has-toolbar -->

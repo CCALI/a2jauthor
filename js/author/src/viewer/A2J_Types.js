@@ -837,8 +837,8 @@ var gGuidePath;
 /** @type {string} */
 var gEnv=''; // Where are we running? Locally, on a2jauthor.org, as beta or dev?
 // Determine what stage we're in and display watermark.
-gEnv= (String(window.location).indexOf('http://authorbeta.a2jauthor.org')===0)?'BETA':
-		(String(window.location).indexOf('http://authordev.a2jauthor.org')===0)?'DEV':
+gEnv= (String(window.location).indexOf('http://bitovi.a2jauthor.org')===0)?'DEV':
+		(String(window.location).indexOf('http://staging.a2jauthor.org')===0)?'STAGING':
 		(String(window.location).indexOf('http://localhost/')===0)?'LOCAL':'';
 
 

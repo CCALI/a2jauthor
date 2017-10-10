@@ -39,6 +39,7 @@
               <audio
                 class="modal-audio"
                 controls="controls"
+                controlsList="nodownload"
                 {$src}="normalizePath(mState.fileDataURL, modalContent.audioURL)"
               >
               </audio>
@@ -54,6 +55,7 @@
                 <video
                   class="modal-video"
                   controls="controls"
+                  controlsList="nodownload"
                   {$src}="normalizePath(mState.fileDataURL, modalContent.videoURL)"
                 >
                   Sorry, your browser doesn't support embedded videos,

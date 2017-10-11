@@ -2,7 +2,8 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     clean: {
-      build: ['dist/']
+      build: ['dist/'],
+      cachedTemplate: ['node_modules/documentjs/site/static', 'node_modules/documentjs/site/templates']
     },
 
     jshint: {
@@ -94,6 +95,14 @@ module.exports = function(grunt) {
   grunt.registerTask('svg-styles', ['less:svg']);
   grunt.registerTask('build', ['clean:build', 'steal-build']);
   grunt.registerTask('documentjs', [
+    'clean:cachedTemplate',
+    'documentjs-orig',
+    'copy:icon-font',
+    'copy:demos',
+    'less:docs'
+  ]);
+
+  grunt.registerTask('documentjs-lite', [
     'documentjs-orig',
     'copy:icon-font',
     'copy:demos',

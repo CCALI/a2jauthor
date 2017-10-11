@@ -6,7 +6,7 @@
   "scripts": {
     "test": "grunt jshint && testee --reporter Spec --browsers firefox viewer/test/index.html author/test/index.html",
     "build-docs": "grunt documentjs",
-    "serve-docs": "http-server docs"
+    "serve-docs": "grunt documentjs-lite && http-server docs"
   },
   "author": "",
   "license": "ISC",

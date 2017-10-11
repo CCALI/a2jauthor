@@ -149,13 +149,13 @@ production environment.
 ## Documentation
 *Note: these commands should run in the `CAJA/js` directory.*
 
-To build the documentation, run:
+To build the documentation *and* update the documentjs template, run:
 
 ```
 $ npm run build-docs
 ```
 
-To view the documentation, run:
+To build the documentation and view the documentation, run:
 
 ```
 $ npm run serve-docs

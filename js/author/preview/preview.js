@@ -23,6 +23,17 @@ let AuthorPreviewVM = Map.extend({
     previewMode: {
       value: false
     }
+  },
+
+  lockScrolling (enable) {
+    if (enable) {
+      // ie11 and Edge require scrollTop reset
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
   }
 });
 
@@ -36,6 +47,10 @@ export default Component.extend({
       if (window.gGuide) {
         this.viewModel.attr('previewMode', true);
       }
+      this.viewModel.lockScrolling(true);
+    },
+    removed() {
+      this.viewModel.lockScrolling(false);
     }
   }
 });

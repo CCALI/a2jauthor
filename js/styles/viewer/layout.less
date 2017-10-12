@@ -39,6 +39,8 @@ html, body, #viewer-app, #author-app {
   padding-left: @grid-gutter-width;
 }
 .desktop {
+  // this prevents extraneous scroll bars, specifically in ie11 and Edge
+  overflow: hidden;
   #viewer-app {
     background: @lawn-color;
   }

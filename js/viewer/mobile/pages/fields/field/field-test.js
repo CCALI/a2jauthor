@@ -107,31 +107,6 @@ describe('<a2j-field>', () => {
       }], 'trace updated input value');
     });
 
-    it('supportsNativeDateInput', () => {
-      vm.attr('field', { type: 'foo' });
-      assert(vm.attr('supportsNativeDateInput'), 'should return true for non-date input');
-
-      vm.attr('field', { type: 'datemdy' });
-
-      vm.attr('document', {
-        createElement() {
-          return {
-            setAttribute(key, value) { this[key] = value; }
-          };
-        }
-      });
-      assert(!vm.attr('supportsNativeDateInput'), 'should return false when setAttribute does not sanitize value');
-
-      vm.attr('document', {
-        createElement() {
-          return {
-            setAttribute() {}
-          };
-        }
-      });
-      assert(vm.attr('supportsNativeDateInput'), 'should return true when setAttribute does not set value');
-    });
-
     it('convertDate', () => {
       assert.equal(vm.convertDate('2015-12-23'), '12/23/2015', 'should convert with default formats');
       assert.equal(vm.convertDate('2015/23/12', null, 'YYYY/DD/MM'), '12/23/2015', 'should convert with custom input format');
@@ -210,6 +185,10 @@ describe('<a2j-field>', () => {
     let logicStub;
     let checkboxDefaults, NOTADefaults, textDefaults, numberDollarDefaults;
     let fields = new List();
+    let langStub = new Map({
+      MonthNamesShort: 'Jan, Feb',
+      MonthNamesLong:'January, February',
+    });
 
     beforeEach(() => {
       logicStub = new Map({
@@ -231,7 +210,7 @@ describe('<a2j-field>', () => {
         fields: fields,
         logic: logicStub,
         repeatVarValue: "",
-        lang: new Map(),
+        lang: langStub,
         traceLogic: new List(),
         name: 'Likes Chocolate TF',
         type: 'checkbox',
@@ -256,7 +235,7 @@ describe('<a2j-field>', () => {
         fields: fields,
         logic: logicStub,
         repeatVarValue: "",
-        lang: new Map(),
+        lang: langStub,
         traceLogic: new List(),
         name: 'None of the Above',
         type: 'checkboxNOTA',
@@ -281,7 +260,7 @@ describe('<a2j-field>', () => {
         fields: fields,
         logic: logicStub,
         repeatVarValue: "",
-        lang: new Map(),
+        lang: langStub,
         traceLogic: new List(),
         name: 'Name',
         type: 'text',
@@ -306,7 +285,7 @@ describe('<a2j-field>', () => {
         fields: fields,
         logic: logicStub,
         repeatVarValue: "",
-        lang: new Map(),
+        lang: langStub,
         traceLogic: new List(),
         name: 'Salary',
         type: 'numberdollar',

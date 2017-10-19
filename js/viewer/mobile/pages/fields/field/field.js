@@ -128,42 +128,6 @@ export let FieldVM = Map.extend('FieldVM', {
     },
 
     /**
-     * @property {Boolean} field.ViewModel.prototype.supportsNativeDateInput supportsNativeDateInput
-     * @parent field.ViewModel
-     *
-     * Whether the current browsers supports native Date input fields
-     * by detecting if a date input automatically sanitizes non-date values
-     * technique from http://stackoverflow.com/a/10199306
-     *
-     */
-    supportsNativeDateInput: {
-      get() {
-        if (this.attr('field.type') !== 'datemdy') {
-          return true;
-        } else {
-          let input = this.attr('document').createElement('input');
-          input.setAttribute('type', 'date');
-
-          let illegalValue = 'illegal value';
-          input.setAttribute('value', illegalValue);
-
-          return (input.value !== illegalValue);
-        }
-      }
-    },
-
-    /**
-     * @property {Boolean} field.ViewModel.prototype.document document
-     * @parent field.ViewModel
-     *
-     * allows overriding of global document for testing supportsNativeDateInput
-     *
-     */
-    document: {
-      value: window.document
-    },
-
-    /**
      * @property {Number} field.ViewModel.prototype.availableLength availableLength
      * @parent field.ViewModel
      *
@@ -315,33 +279,30 @@ export default Component.extend('FieldComponent', {
   events: {
     inserted() {
       let vm = this.viewModel;
+      let defaultDate = vm.convertDate(vm.attr('field._answer.values')) || null;
+      let minDate = vm.convertDate(vm.attr('field.min')) || null;
+      let maxDate = vm.convertDate(vm.attr('field.max')) || null;
+      let lang = vm.attr('lang');
 
-      if (!vm.attr('supportsNativeDateInput')) {
-        let defaultDate = vm.convertDate(vm.attr('field._answer.values')) || null;
-        let minDate = vm.convertDate(vm.attr('field.min')) || null;
-        let maxDate = vm.convertDate(vm.attr('field.max')) || null;
-        let lang = vm.attr('lang');
+      $('input.datepicker-input', this.element).datepicker({
+        defaultDate,
+        minDate,
+        maxDate,
+        monthNames: lang.MonthNamesLong.split(','),
+        monthNamesShort: lang.MonthNamesShort.split(','),
+        appendText: '(mm/dd/yyyy)',
+        dateFormat: 'mm/dd/yy',
+        onClose() {
+          let $el = $(this);
+          let val = $el.val();
+          let unformattedVal = vm.convertDate(val, 'YYYY-MM-DD', 'MM/DD/YYYY');
+          $el.val(unformattedVal);
 
-        $('input', this.element).datepicker({
-          defaultDate,
-          minDate,
-          maxDate,
-          monthNames: lang.MonthNamesLong.split(','),
-          monthNamesShort: lang.MonthNamesShort.split(','),
-          appendText: '(mm/dd/yyyy)',
-          dateFormat: 'mm/dd/yy',
-          onClose() {
-            let $el = $(this);
-            let val = $el.val();
-            let unformattedVal = vm.convertDate(val, 'YYYY-MM-DD', 'MM/DD/YYYY');
-            $el.val(unformattedVal);
+          vm.validateField(null, $el);
 
-            vm.validateField(null, $el);
-
-            $el.val(val);
-          }
-        }).val(defaultDate);
-      }
+          $el.val(val);
+        }
+      }).val(defaultDate);
     },
 
     '{a2j-field input[type=checkbox]} change': function(values, ev) {

@@ -31,8 +31,13 @@
             {{#if modalContent.imageURL}}
             <img
               class="modal-image"
-              {$src}="normalizePath(mState.fileDataURL, modalContent.imageURL)"
+              {$src}="normalizePath(mState.fileDataURL, modalContent.imageURL)" >
+            <a
+              href="{{ normalizePath(mState.fileDataURL, modalContent.imageURL) }}" data-lightbox="image-1"
+              class="btn btn-default pull-right"
             >
+              <span class="demo-icon glyphicon-resize-full"></span>
+            </a>
             {{/if}}
 
             {{#if modalContent.audioURL}}

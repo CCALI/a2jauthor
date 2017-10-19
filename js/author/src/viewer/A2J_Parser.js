@@ -409,29 +409,18 @@ function pageFromXML(xml)/* return TPage */
 
 /** @param {string} guideFile */
 /** @param {string} startTabOrPage */
-function loadGuideFile(guideFile,startTabOrPage)
-{  // Load guide file and start on specified page
+// Load guide file and start on specified page
+function loadGuideFile(guideFile,startTabOrPage) {
 
 	if (guideFile==='') {
 		$('#splash').empty();
 		dialogAlert({title:'No guide file specified'});
 		return;
 	}
-	/*
-	var url=urlSplit(guideFile);
-	guideFile = url.path+url.file;
-	gGuidePath = url.path;
-	if (url.hash!=="")
-	{
-      startTabOrPage= "PAGE " +url.hash;
-	}
-	*/
-	//trace(guideFile,url,gGuidePath,startTabOrPage);
-   loadNewGuidePrep(guideFile,startTabOrPage);
+	// this global function is defined in A2J_Guides.js
+	loadNewGuidePrep();
 
-   window.setTimeout(function()
-		//{loadGuideFile2(guideFile,startTabOrPage);}
-		{	// Load guide file and start on specified page.
+	window.setTimeout(function() {
 			$.ajax({
 				url: guideFile,
 				dataType:  "xml", // IE will only load XML file from local disk as text, not xml.
@@ -441,7 +430,7 @@ function loadGuideFile(guideFile,startTabOrPage)
 					function(data,textStatus,thrownError){
 						$('#splash').empty();
 						dialogAlert({title:'Error occurred loading file',body:'Unable to load XML from '+guideFile+"\n"+textStatus});
-					 },
+					},
 				success: function(data)
 				{
 					var cajaDataXML;

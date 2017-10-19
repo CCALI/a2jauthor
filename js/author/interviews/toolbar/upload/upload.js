@@ -18,11 +18,14 @@ export const UploadVM = Map.extend('UploadVM', {
       var $el = $('a[gid="'+gid+'"]');
 
       if ($el) {
-        $('a.guide').removeClass('active');
-        $el.addClass('active');
+        $('a.guide').removeClass('guide-uploaded');
+        $el.addClass('guide-uploaded');
 
-        var scrollTo = $el.offset().top - 140;
-        $('html body').scrollTop(scrollTo);
+        var uploadedGuidePosition = $('.guide-uploaded').offset().top;
+        var navBarHeight = 140;
+        var scrollTo = uploadedGuidePosition - navBarHeight;
+
+        $("html,body").animate({scrollTop:  scrollTo}, 300);
       }
     }
   }

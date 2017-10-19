@@ -47,7 +47,7 @@ function guideLoaded(data) {
   window.gGuide = parseXML_Auto_to_CAJA(cajaDataXML);
   window.gGuidePath = urlSplit(data.path).path;
 
-  $('#author-app').trigger('author:guide-selected', gGuideID);
+  $('#author-app').trigger('author:item-selected', gGuideID);
 
   guideStart('');
   setProgress('');
@@ -112,8 +112,7 @@ function guideSave(onFinished) {
 }
 
 
-function loadNewGuidePrep(guideFile,startTabOrPage)
-{
+function loadNewGuidePrep() {
 	$('.pageoutline').html('');
 }
 
@@ -224,16 +223,13 @@ function createBlankGuide() {
 }
 
 // Open the currently selected guide (either double click or via Open button)
-function openSelectedGuide() {
-  var $a = $('a.guide.active').first();
-  var gid = $a.attr('gid');
+function openSelectedGuide(gid) {
+  if (!gid) {return;}
 
-  if (!gid) return;
+  var guideFile = $('[gid="'+ gid +'"]').text();
 
-  var guideFile = $a.text();
-
-  setProgress('Loading guide ' + guideFile, true);
-  loadNewGuidePrep(guideFile, '');
+  setProgress('Loading guide with ID: ' + gid, true);
+  window.loadNewGuidePrep();
   $('#splash').hide();
 
   if (gid === 'a2j') {
@@ -245,7 +241,7 @@ function openSelectedGuide() {
 
 function archiveSelectedGuide() {
   // 2014-08-28 Delete the currently selected guide
-  var $li = $('a.guide.active').first();
+  var $li = $('a.guide.item-selected').first();
   var name = $li.find('span.title').text();
 
   var dialogMessage =

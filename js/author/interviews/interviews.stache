@@ -26,7 +26,7 @@
 
       <div class="list-group">
         {{#each interviews.owned}}
-          <a class="guide list-group-item {{#eq id currentGuideId}}active{{/eq}}" gid="{{id}}">
+          <a class="guide list-group-item {{#eq id currentGuideId}}guide-opened{{/eq}}" gid="{{id}}">
             <span class="title">{{title}}</span>
             <small class="pull-right text-muted">#{{id}} | {{formatFileSize fileSize}} | {{lastModified}}</small>
           </a>

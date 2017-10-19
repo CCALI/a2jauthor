@@ -96,7 +96,7 @@
     border: 1px solid transparent;
     .border-radius(0);
 
-    &.active {
+    &.item-selected {
       background: @alert-warning-bg;
       border: 1px solid @alert-warning-border;
       color: @text-color;
@@ -104,6 +104,30 @@
       .list-group-item-text {
         color: @text-color;
       }
+    }
+    &.guide-opened {
+      border-left: 4px solid @brand-secondary !important;
+      color: @text-color;
+
+      .list-group-item-text {
+        color: @text-color;
+      }
+    }
+    &.guide-uploaded {
+      border-left: 4px solid @brand-success !important;
+      color: @text-color;
+
+      .list-group-item-text {
+        color: @text-color;
+      }
+    }
+    &.active.item-selected, &.guide-uploaded.item-selected, &.guide-opened:hover, &guide-uploaded:hover {
+      background: @link-selected-color;
+    }
+    &.guide-opened:hover, &guide-uploaded:hover {
+      background: #f5f5f5;
+      border: 1px solid @gray-lighter;
+      cursor: pointer;
     }
     &.disabled, &.disabled:hover {
       background: none;

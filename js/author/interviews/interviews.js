@@ -21,8 +21,11 @@ export const InterviewsVM = Map.extend({
     },
     currentGuideId: {
       type: 'string',
-      get() {
-        return window.gGuideID;
+      get(lastSet) {
+        return lastSet || window.gGuideID;
+      },
+      set(val) {
+        return val;
       }
     }
   },
@@ -111,12 +114,13 @@ export default Component.extend({
     },
 
     '.guide click': function(target) {
-      this.element.find('.guide').removeClass('active');
-      target.addClass('active');
+      this.element.find('.guide').removeClass('item-selected');
+      target.addClass('item-selected');
     },
 
-    '.guide dblclick': function() {
-      window.openSelectedGuide();
+    '.guide dblclick': function(target) {
+      const gid = target.attr('gid');
+      window.openSelectedGuide(gid);
     },
 
     '{window} author:guide-deleted': function(window, evt, guideId) {

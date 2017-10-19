@@ -43,7 +43,7 @@ export default function bindCustomEvents(appState) {
 
   // user double clicks a guide in the interview tab or clicks the open guide
   // button in the toolbar.
-  $authorApp.on('author:guide-selected', function(evt, guideId) {
+  $authorApp.on('author:item-selected', function(evt, guideId) {
     let alertMessages = appState.attr('viewerAlertMessages');
 
     // this check is similar to the one made in the `author:trace-alert`,

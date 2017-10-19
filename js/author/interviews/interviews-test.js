@@ -52,7 +52,8 @@ describe('<interviews-page>', function() {
 
   describe('Component', function() {
     let vm;
-    const activeClass = 'active';
+    const selectedClass = 'item-selected';
+    const openedClass = 'guide-opened';
 
     beforeEach(function(done) {
       let frag = stache('<interviews-page></interviews-page>');
@@ -71,28 +72,58 @@ describe('<interviews-page>', function() {
       assert.isTrue($('.guide').length > 0, 'interviews should be listed');
     });
 
-    it('interviews are set as active when clicked', function() {
+    it('interviews are set as selected when clicked', function() {
       let interview = $('.guide').eq(0);
 
-      assert.isFalse(interview.hasClass(activeClass));
+      assert.isFalse(interview.hasClass(selectedClass));
       interview.click();
-      assert.isTrue(interview.hasClass(activeClass));
+      assert.isTrue(interview.hasClass(selectedClass));
     });
 
-    it('only one interview can be active', function(done) {
-      F('.guide').hasClass(activeClass, false, 'there should be no active interview');
+    it('only one interview can be selected', function(done) {
+      F('.guide').hasClass(selectedClass, false, 'there should be no selected interview');
 
       // select first interview of the list
       F('.guide:eq(0)').click();
 
-      F('.guide:eq(0)').hasClass(activeClass, true, 'should be active');
-      F('.' + activeClass).size(1, 'there should be one active interview');
+      F('.guide:eq(0)').hasClass(selectedClass, true, 'should be selected');
+      F('.' + selectedClass).size(1, 'there should be one selected interview');
 
       // select second interview of the list
       F('.guide:eq(1)').click();
 
-      F('.guide:eq(1)').hasClass(activeClass, true, 'should be active');
-      F('.' + activeClass).size(1, 'there should be one active interview');
+      F('.guide:eq(1)').hasClass(selectedClass, true, 'should be selected');
+      F('.' + selectedClass).size(1, 'there should be one selected interview');
+
+      F(done);
+    });
+
+    window.openSelectedGuide = (gid) => {
+      vm.attr('currentGuideId', gid);
+    };
+
+    it('interviews are set as opened when double clicked', function() {
+      let interview = $('.guide').eq(1);
+
+      assert.isFalse(interview.hasClass(openedClass));
+      interview.dblclick();
+      assert.isTrue(interview.hasClass(openedClass));
+    });
+
+    it('only one interview can be opened', function(done) {
+      F('.guide').hasClass(openedClass, false, 'there should be no opened interview');
+
+      // select first interview of the list
+      F('.guide:eq(1)').dblclick();
+
+      F('.guide:eq(1)').hasClass(openedClass, true, 'should be opened');
+      F('.' + openedClass).size(1, 'there should be one opened interview');
+
+      // select second interview of the list
+      F('.guide:eq(2)').dblclick();
+
+      F('.guide:eq(2)').hasClass(openedClass, true, 'should be opened');
+      F('.' + openedClass).size(1, 'there should be one opened interview');
 
       F(done);
     });

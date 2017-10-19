@@ -15,7 +15,9 @@ export default Component.extend({
 
   events: {
     '.open-guide click': function() {
-      window.openSelectedGuide();
+        const selectedGuide = $('a.guide.item-selected').first();
+        const gid = selectedGuide[0].getAttribute('gid');
+        window.openSelectedGuide(gid);
     },
 
     '.clone-guide click': function() {

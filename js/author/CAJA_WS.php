@@ -494,9 +494,10 @@ switch ($command){
 			createGuideZip($gid);
 		break;
 
-	case 'guideZIPLHI':
 	case 'guideZIPLHIQA':
-	case 'guideZIPTESTCALI': // 11-01-26 This button/case removed from app.stache during public testing
+	case 'guideZIPLHIDEV':
+	case 'guideZIPMARLABS':
+	case 'guideZIPLHI':
 
 	// 08/10/2015 ZIP guide, POST to LHI, return LHI's result.
 	// The zip code is identical to the 'guidezip' handler above. Extra steps are below.
@@ -505,14 +506,14 @@ switch ($command){
 
 		// Once zip is built, proceeed to posting it to the host site, LHI.
 		// POST the ZIP file using standard HTTP POST. Server returns a URL to redirect to.
-		if ($command=="guideZIPTESTCALI"){
-		  $LHI_POST_URL = "http://viewerdev.a2jauthor.org/uploader/A2JFilePUT.php";
-		}
-		else
-		if ($command=="guideZIPLHIQA"){
-		  $LHI_POST_URL = "https://rebuildqa.lawhelpinteractive.org/Upload/A2JLoader.aspx?Session=" . $gid;
-		}else{
-		  $LHI_POST_URL = "https://lawhelpinteractive.org/Upload/A2JLoader.aspx?Session=" . $gid; // LHI production site
+		if ($command=="guideZIPLHIQA") {
+			$LHI_POST_URL = "https://rebuildqa.lawhelpinteractive.org/Upload/A2JLoader.aspx?Session=" . $gid;
+		} else if ($command=="guideZIPLHIDEV") {
+			$LHI_POST_URL = "https://dev.lawhelpinteractive.org/Upload/A2JLoader.aspx?Session=" . $gid;
+		} else if ($command=="guideZIPMARLABS") {
+			$LHI_POST_URL = "http://lhiuat.cloudapp.net/Upload/A2JLoader.aspx?Session=" . $gid;
+		} else if ($command=="guideZIPLHI") {
+			$LHI_POST_URL = "https://lawhelpinteractive.org/Upload/A2JLoader.aspx?Session=" . $gid; // LHI production site
 		}
 
 		$ch = curl_init($LHI_POST_URL);

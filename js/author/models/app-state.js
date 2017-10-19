@@ -130,6 +130,20 @@ export default Map.extend({
     },
 
     /**
+     * @property {Boolean} showDevPublishButtons
+     *
+     * Whether currently developing locally or on Staging server
+     * used to show special DEV publish buttons for LHI and Marlabs
+     */
+    showDevPublishButtons: {
+      value: false,
+      serialize: false,
+      get() {
+        return location.hostname === 'localhost' || location.hostname === 'staging.a2jauthor.org';
+      }
+    },
+
+    /**
      * @property {String} previewPageName
      *
      * The name of the page that will be loaded when user clicks the preview

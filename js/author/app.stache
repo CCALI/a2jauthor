@@ -316,6 +316,12 @@
       <p>To publish to testing servers, use the buttons below</p>
       <button id="guideZIPLHIQA" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to RebuildQA</button>
       <button id="guideZIPLHI" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to LHI Production</button>
+      {{#if showDevPublishButtons}}
+        <hr>
+        <p>To publish to development servers, use the buttons below</p>
+        <button id="guideZIPLHIDEV" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to LHI DEV</button>
+        <button id="guideZIPMARLABS" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to Marlabs DEV</button>
+      {{/if}}
     </div><!-- id="tabsUpload" -->
   </div>
 

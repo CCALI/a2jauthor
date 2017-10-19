@@ -1,0 +1,129 @@
+<can-import from='author/hair-picker/' />
+<can-import from='author/skin-picker/' />
+<can-import from='author/tiny-editor/' />
+<can-import from='author/about/main/main.less' />
+<can-import from='viewer/desktop/avatar/' />
+
+<div class='row'>
+  <div class='col-md-10'>
+    <div class='form-group'>
+      <label class="control-label">Title:</label>
+      <input
+        type="text"
+        class="form-control ui-widget editable"
+        placeholder='My awesome interview'
+        {($value)}='guide.title'
+      />
+    </div>
+
+    <div class='form-group'>
+      <label class="control-label">Description:</label>
+      <tiny-editor
+        {value}="guide.description"
+        {on-value}="@updateDescription"
+      />
+    </div>
+
+    <div class='form-group'>
+      <label class="control-label">Jurisdiction:</label>
+      <input
+        type="text"
+        class="form-control ui-widget editable"
+        placeholder='My awesome province'
+        {($value)}='guide.jurisdiction'
+      />
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 avatar">
+        <div class="editspan form-group">
+          <label class="control-label">Guide Gender:</label>
+          <div class='gender-options'>
+            <label>
+              <input
+                type='radio'
+                name='gender'
+                value='female'
+                {{^is guide.guideGender 'male'}}
+                  checked
+                {{/is}}
+                ($change)='updateAvatarGender(%event)'
+              />
+              <span>Female</span>
+            </label>
+            <label>
+              <input
+                type='radio'
+                name='gender'
+                value='male'
+                {{#is guide.guideGender 'male'}}
+                  checked
+                {{/is}}
+                ($change)='updateAvatarGender(%event)'
+              />
+              <span>Male</span>
+            </label>
+          </div>
+        </div>
+        <div>
+          <label>Guide Skin Tone:</label>
+          <skin-picker
+            {selected-skin}="guide.avatarSkinTone"
+            {on-skin}="@updateSkinTone"
+          />
+        </div>
+        <div>
+          <label>Guide Hair Color:</label>
+          <hair-picker
+            {selected-hair}="guide.avatarHairColor"
+            {on-hair}="@updateHairColor"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class='form-group'>
+      <label class="control-label">Credits:</label>
+      <tiny-editor
+        {value}="guide.credits"
+        {on-value}="@updateCredits"
+      />
+    </div>
+
+    <div class='row'>
+      <div class="col-sm-6 language">
+        <div class="editspan form-group">
+          <label class="control-label">Language:</label>
+          <select
+            class="form-control"
+            {($value)}="guide.language"
+            ($change)="updateLanguagePack()"
+          >
+            {{#each languageOptions}}
+              <option value='{{value}}'>{{displayName}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+      <div class='col-md-6'>
+        <div class='form-group'>
+          <label class="control-label">Approximate Completion Time:</label>
+          <input
+          type="text"
+          class="form-control ui-widget editable"
+          placeholder='42 minutes'
+          {($value)}='guide.completionTime'
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='col-md-2'>
+    <a2j-viewer-avatar
+      kind="guide"
+      {gender}="guide.guideGender"
+      {skin}="guide.avatarSkinTone"
+      {hair}="guide.avatarHairColor"
+    />
+  </div>
+</div>

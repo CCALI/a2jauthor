@@ -84,6 +84,8 @@ function guide2JSON_Mobile (guide)
 	newGuide.tool = guide.tool;
 	newGuide.toolversion=guide.toolversion;
 	newGuide.avatar=guide.avatar;
+	newGuide.avatarSkinTone = guide.avatarSkinTone;
+	newGuide.avatarHairColor = guide.avatarHairColor;
 	newGuide.guideGender=guide.guideGender;
 	newGuide.completionTime=guide.completionTime;
 	newGuide.copyrights=guide.copyrights;

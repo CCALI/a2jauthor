@@ -1,0 +1,9 @@
+<can-import from="author/color-chips/color-chips.less!"/>
+<ul class='chip-list'>
+  {{#each colorClasses}}
+    <li
+      class="color-chip {{.}} {{#is . selectedColorClass}}selected-chip{{/is}}"
+      ($click)="onSelect(.)"
+    ></li>
+  {{/each}}
+</ul>

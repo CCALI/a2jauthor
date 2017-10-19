@@ -1,0 +1,50 @@
+@import "../../styles/bootstrap-overrides/color-palette.less";
+@import "../../styles/viewer/avatars.less";
+@import "../hair-picker/hair-picker.less";
+@import "../skin-picker/skin-picker.less";
+
+color-chips {
+  display: block;
+
+  .chip-list {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  .color-chip{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-right: 5px;
+    border: 1px #333 solid;
+    box-sizing: border-box;
+  }
+  .selected-chip{
+    border: 2px @brand-success solid;
+    padding-top: 8px;
+  }
+  .selected-chip:after{
+    content: "";
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid black;
+    margin-left: 3px;
+  }
+  .cross-through:before {
+    position: absolute;
+    content: '';
+    margin-left: 11px;
+    margin-top: -4px;
+    height: 31px;
+    width: 1px;
+    background-color: @brand-danger;
+  }
+  .selected-chip.cross-through:before{
+    margin-top: -14px;
+  }
+  .cross-through:before {
+    transform: rotate(45deg);
+  }
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;color-chips&gt;</title>
+  </head>
+
+  <body>
+    <script id='demo' type="text/stache" can-autorender>
+      <can-import from="author/app" />
+      <can-import from="author/styles.less!" />
+      <can-import from="author/color-chips/" />
+
+      <fieldset>
+        <h1>Color Chips</h1>
+
+        <fieldset>
+          <label>Hair color picker</label>
+
+          <color-chips
+            {color-classes}="@hairColorClasses"
+            {selected-color-class}="@hairSelectedColorClass"
+            {on-color-class}="@hairOnColorClass"
+          />
+        </fieldset>
+        <fieldset>
+          <label>Skin color picker</label>
+
+          <color-chips
+            {color-classes}="@skinColorClasses"
+            {selected-color-class}="@skinSelectedColorClass"
+            {on-color-class}="@skinOnColorClass"
+          />
+        </fieldset>
+      </fieldset>
+    </script>
+
+    <script src="../../node_modules/steal/steal.js"
+      data-main="can/view/autorender/">
+      window.less = {
+        async: true,
+        fileSync: true
+      };
+    </script>
+
+    <script>
+      setTimeout(() => { // waits for can to load
+        can.autorender(() => {
+          const dm = $('#demo').viewModel()
+          dm.attr({
+            hairColorClasses: [
+              'hair-blonde',
+              'hair-red',
+              'hair-brown-light',
+              'hair-brown-medium',
+              'hair-brown-dark',
+              'hair-gray-dark',
+              'hair-gray-light',
+              'hair-bald cross-through'
+            ],
+            hairSelectedColorClass: 'hair-blonde',
+            hairOnColorClass: function (color) {
+              dm.attr('hairSelectedColorClass', color)
+            },
+            skinColorClasses: [
+              'skin-lighter',
+              'skin-light',
+              'skin-medium',
+              'skin-dark',
+              'skin-darker'
+            ],
+            skinSelectedColorClass: 'skin-lighter',
+            skinOnColorClass: function (color) {
+              dm.attr('skinSelectedColorClass', color)
+            }
+          })
+        })
+      }, 3000)
+    </script>
+  </body>
+</html>

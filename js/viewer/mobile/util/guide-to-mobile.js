@@ -20,11 +20,31 @@ const pageProperties = [
 ];
 
 const guideProperties = [
-  'tool', 'toolversion', 'avatar', 'guideGender', 'completionTime',
-  'copyrights', 'createdate', 'credits', 'description', 'emailContact',
-  'jurisdiction', 'language', 'modifydate', 'notes', 'sendfeedback',
-  'subjectarea', 'title', 'version', 'viewer', 'endImage', 'logoImage',
-  'firstPage', 'exitPage'
+  'avatar',
+  'avatarHairColor',
+  'avatarSkinTone',
+  'completionTime',
+  'copyrights',
+  'createdate',
+  'credits',
+  'description',
+  'emailContact',
+  'endImage',
+  'exitPage',
+  'firstPage',
+  'guideGender',
+  'jurisdiction',
+  'language',
+  'logoImage',
+  'modifydate',
+  'notes',
+  'sendfeedback',
+  'subjectarea',
+  'title',
+  'tool',
+  'toolversion',
+  'version',
+  'viewer'
 ];
 
 function parseButtons(pageButtons = []) {

@@ -8,53 +8,34 @@ describe('Interview model', function() {
     const dfd = Interview.findOne({url: '/parse-model-interview.json'});
 
     return dfd.then(function(interview) {
-      assert.deepEqual(interview.serialize(), {
-        pages: [{
-          step: {
-            number: '1',
-            text: 'Small Estate Affidavit'
-          },
+      const data = interview.serialize();
+
+      assert.deepEqual(data.pages, [{
+        step: {
+          number: '1',
+          text: 'Small Estate Affidavit'
+        },
+        fields: [{
+          name: 'user gender',
+          type: 'text',
+          options: ''
+        }],
+        name: '1-Introduction'
+      }]);
+
+      assert.deepEqual(data._pages, {
+        '1-Introduction': {
+          step: 0,
+          name: '1-Introduction',
           fields: [{
             name: 'user gender',
             type: 'text',
             options: ''
-          }],
-          name: '1-Introduction'
-        }],
-        _pages: {
-          '1-Introduction': {
-            step: 0,
-            name: '1-Introduction',
-            fields: [{
-              name: 'user gender',
-              type: 'text',
-              options: ''
-            }]
-          }
-        },
-        answers: {}
+          }]
+        }
       });
-    });
-  });
 
-  describe('avatarSkinTone', function() {
-    let interview;
-
-    beforeEach(function() {
-      interview = new Interview();
-    });
-
-    it('is not serialized', function() {
-      let serialized = interview.serialize();
-      assert.notProperty(serialized, 'avatarSkinTone');
-    });
-
-    it('computes its value from "avatar"', function() {
-      interview.attr('avatar', 'blank');
-      assert.equal(interview.attr('avatarSkinTone'), 'lighter');
-
-      interview.attr('avatar', 'avatar3');
-      assert.equal(interview.attr('avatarSkinTone'), 'darker');
+      assert.deepEqual(data.answers, {});
     });
   });
 

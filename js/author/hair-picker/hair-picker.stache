@@ -1,0 +1,6 @@
+<can-import from='author/color-chips/' />
+<color-chips
+  {selected-color-class}="selectedHairClass"
+  {color-classes}="hairClasses"
+  {on-color-class}="@onHairClass"
+/>

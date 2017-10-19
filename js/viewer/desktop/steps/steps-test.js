@@ -214,21 +214,21 @@ describe('<a2j-viewer-steps>', function() {
       assert.equal(vm.attr('maxDisplayedSteps'), 4, 'never show more steps than interview has');
     });
 
-    it('avatarSkinTone', () => {
+    it('guideAvatarSkinTone', () => {
       vm.attr({
         interview: {},
         mState: {}
       });
 
       vm.attr('interview.avatarSkinTone', 'avatar');
-      assert.equal(vm.attr('avatarSkinTone'), 'avatar', 'should use interview skin tone if set');
+      assert.equal(vm.attr('guideAvatarSkinTone'), 'avatar', 'should use interview skin tone if set');
 
       vm.attr('interview.avatarSkinTone', '');
       vm.attr('mState.avatarSkinTone', 'global');
-      assert.equal(vm.attr('avatarSkinTone'), 'global', 'should use global skin tone if set');
+      assert.equal(vm.attr('guideAvatarSkinTone'), 'global', 'should use global skin tone if set');
 
       vm.attr('interview.avatarSkinTone', 'avatar');
-      assert.equal(vm.attr('avatarSkinTone'), 'global', 'should use global skin tone if both are set');
+      assert.equal(vm.attr('guideAvatarSkinTone'), 'global', 'should use global skin tone if both are set');
     });
 
     it('showClientAvatar / guideAvatarFacingDirection', () => {

@@ -34,9 +34,10 @@
       <div class="avatar-wrapper">
         <span class="bubble-arrow"></span>
         <a2j-viewer-avatar
-          class="avatar-guide"
+          kind="guide"
           {@avatar-loaded}="@avatarLoaded"
-          {skin}="avatarSkinTone"
+          {skin}="guideAvatarSkinTone"
+          {hair}="guideAvatarHairColor"
           {gender}="interview.guideAvatarGender"
           {facing}="guideAvatarFacingDirection" />
       </div>
@@ -46,10 +47,11 @@
       {{#if showClientAvatar}}
         <div class="avatar-wrapper">
           <a2j-viewer-avatar
+            kind="client"
             facing="left"
-            class="avatar-client"
             {@avatar-loaded}="@avatarLoaded"
-            {skin}="avatarSkinTone"
+            {skin}="clientAvatarSkinTone"
+            {hair}="clientAvatarHairColor"
             {gender}="interview.userGender" />
         </div>
 

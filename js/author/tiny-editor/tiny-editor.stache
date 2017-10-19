@@ -1,0 +1,7 @@
+<div class='editor-container'>
+  <div
+    id="tinyMCE_{{formId}}" name="{{formId}}" rows='1'
+    class="htmledit form-control text editable taller"
+    contenteditable=true
+  >{{{value}}}</div>
+</div>

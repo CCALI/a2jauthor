@@ -1,23 +1,17 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './avatar.stache!';
-import _includes from 'lodash/includes';
 import canUtil from 'can/util/';
+import {
+  Face,
+  Hair,
+  Skin,
+  Gender,
+  getClassNameForSkin,
+  getClassNameForHair
+} from './colors';
 
 import 'can/map/define/';
-
-const genderEnum = ['female', 'male'];
-const facingEnum = ['front', 'right', 'left'];
-const skinEnum = ['light', 'lighter', 'medium', 'dark', 'darker'];
-
-// helper function to set type
-const enumType = function(enumColl) {
-  return function(value) {
-    return _includes(enumColl, value) ?
-      value :
-      enumColl[0];
-  };
-};
 
 function getBaseUrl () {
   // Source: https://github.com/canjs/canjs/blob/432c9b0c0f9f8ace62788cf7c8258998673856b9/view/stache/mustache_helpers.js#L204
@@ -47,8 +41,8 @@ export let ViewerAvatarVM = Map.extend('ViewerAvatarVM', {
      * avatar gender
      */
     gender: {
-      value: 'female',
-      type: enumType(genderEnum)
+      type: Gender,
+      value: Gender.defaultValue
     },
 
     /**
@@ -58,8 +52,19 @@ export let ViewerAvatarVM = Map.extend('ViewerAvatarVM', {
      * avatar skin tone
      */
     skin: {
-      value: 'light',
-      type: enumType(skinEnum)
+      type: Skin,
+      value: Skin.defaultValue,
+    },
+
+    /**
+     * @property {String} avatar.ViewModel.prototype.hair hair
+     * @parent avatar.ViewModel
+     *
+     * avatar hair color
+     */
+    hair: {
+      type: Hair,
+      value: Hair.defaultValue,
     },
 
     /**
@@ -69,8 +74,8 @@ export let ViewerAvatarVM = Map.extend('ViewerAvatarVM', {
      * avatar facing
      */
     facing: {
-      value: 'front',
-      type: enumType(facingEnum)
+      type: Face,
+      value: Face.defaultValue
     },
 
     /**
@@ -96,6 +101,19 @@ export let ViewerAvatarVM = Map.extend('ViewerAvatarVM', {
      */
     svgInline: {
       value: ''
+    },
+
+    svgClassNames: {
+      get () {
+        const isGuide = this.attr('kind') === 'guide';
+        const baseClass = isGuide ? 'avatar-guide' : 'avatar-client';
+        const isMale = this.attr('gender') === 'male';
+        const genderClass = isMale ? 'avatar-male' : 'avatar-female';
+        const skinClass = getClassNameForSkin(this.attr('skin'));
+        const hairClass = getClassNameForHair(this.attr('hair'));
+
+        return `${baseClass} ${genderClass} ${skinClass} ${hairClass}`;
+      }
     },
 
     /**
@@ -152,55 +170,37 @@ export default Component.extend({
       this.loadAvatarSvg();
     },
 
-    // When the skin changes, there is no need to wait for the svg
-    // to load since its data property does not change.
-    '{viewModel} skin': function() {
-      let skin = this.viewModel.attr('skin');
-      this.setSkinClassName(skin);
-    },
-
     // when the image name changes, we need to wait for the new svg to be
     // loaded to then make the adjustments to the css class name.
     '{viewModel} avatarImageName': function() {
-        this.loadAvatarSvg();
+      this.loadAvatarSvg();
     },
 
-    setSkinClassName(skin) {
-      let $svg;
-      if (this.element) {
-        var isGuide = this.element.attr('class').indexOf('guide') !== -1;
-        var avatarSelector = isGuide ? '.avatar-guide' : '.avatar-client';
-        // get the raw object element
-        $svg = this.element.find(avatarSelector);
+    '{viewModel} svgClassNames': function() {
+      this.updateSvgClass();
+    },
+
+    updateSvgClass () {
+      if (!this.element) {
+        return;
       }
 
-      // do nothing if svg not in the DOM (e.g lack of browser support)
-      if (!$svg) return;
-
-      // space separated list of class names.
-      let svgClasses = $svg.attr('class');
-
-      // remove any skin-* class already set
-      svgClasses = svgClasses.replace(/skin-\S*/g, '').trim();
-
-      // apply the updated classes list.
-      $svg.attr('class', `${svgClasses} skin-${skin}`);
+      const classNames = this.viewModel.attr('svgClassNames');
+      const svg = this.element.find('.avatar-guide, .avatar-client');
+      svg.attr('class', classNames);
     },
 
     loadAvatarSvg() {
-      let vm =  this.viewModel;
-      let svgBasePath = vm.attr('svgBasePath');
-      let avatarImageName = vm.attr('avatarImageName');
-      let skin = vm.attr('skin');
-      let self = this;
+      const vm =  this.viewModel;
+      const svgBasePath = vm.attr('svgBasePath');
+      const avatarImageName = vm.attr('avatarImageName');
 
       $.ajax({
         url: svgBasePath + avatarImageName,
         dataType: 'text'
-      })
-      .then(function(data) {
+      }).then(data => {
         vm.attr('svgInline', data);
-        self.setSkinClassName(skin);
+        this.updateSvgClass();
         vm.fireAvatarLoaded();
       });
     }

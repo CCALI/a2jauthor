@@ -3,15 +3,31 @@ import Map from 'can/map/';
 import List from 'can/list/';
 import A2JVariable from './a2j-variable';
 import _isEmpty from 'lodash/isEmpty';
+import {Gender, Hair, Skin} from 'viewer/desktop/avatar/colors';
 
 // with the existing Guide model that works with a different data structure.
-let Guide = Map.extend({
+let Guide = Map.extend('AppStateGuide', {
   define: {
     variablesList: {
       get() {
         let vars = this.attr('vars');
         return A2JVariable.fromGuideVars(vars.attr());
       }
+    },
+
+    guideGender: {
+      type: Gender,
+      value: Gender.defaultValue
+    },
+
+    avatarSkinTone: {
+      type: Skin,
+      value: Skin.defaultValue
+    },
+
+    avatarHairColor: {
+      type: Hair,
+      value: Hair.defaultValue
     }
   }
 });

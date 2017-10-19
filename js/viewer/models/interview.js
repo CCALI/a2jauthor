@@ -9,7 +9,7 @@ import _includes from 'lodash/includes';
 import _isString from 'lodash/isString';
 import Answers from 'viewer/models/answers';
 import parser from 'viewer/mobile/util/parser';
-import getSkinTone from 'viewer/models/get-skin-tone';
+import {Hair, Skin} from 'viewer/desktop/avatar/colors';
 
 import 'can/list/sort/';
 import 'can/map/define/';
@@ -131,6 +131,7 @@ const Interview = Model.extend({
 
     guideAvatarGender: {
       serialize: false,
+      value: 'female',
       get() {
         let gender = this.attr('guideGender') || '';
         return gender.toLowerCase() === 'male' ? 'male' : 'female';
@@ -138,11 +139,13 @@ const Interview = Model.extend({
     },
 
     avatarSkinTone: {
-      serialize: false,
-      get() {
-        let varName = this.attr('avatar');
-        return getSkinTone(varName);
-      }
+      type: Skin,
+      value: Skin.defaultValue
+    },
+
+    avatarHairColor: {
+      type: Hair,
+      value: Hair.defaultValue
     },
 
     /**

@@ -139,6 +139,8 @@ function exportXML_CAJA_from_CAJA(guide)
 	JSON.GUIDE.INFO.toolversion=guide.toolversion;
 	JSON.GUIDE.INFO.avatar=guide.avatar;
 	JSON.GUIDE.INFO.guideGender=guide.guideGender;
+	JSON.GUIDE.INFO.avatarSkinTone=guide.avatarSkinTone;
+	JSON.GUIDE.INFO.avatarHairColor=guide.avatarHairColor;
 	JSON.GUIDE.INFO.completionTime=guide.completionTime;
 	JSON.GUIDE.INFO.XML_copyrights=guide.copyrights;
 	JSON.GUIDE.INFO.createdate=guide.createdate;
@@ -312,6 +314,8 @@ function parseXML_CAJA_to_CAJA(GUIDE) // GUIDE is XML DOM
 		default:
 			guide.avatar = 'avatar1';
 	}
+	guide.avatarSkinTone = makestr(INFO.children('AVATARSKINTONE').text());
+	guide.avatarHairColor = makestr(INFO.children('AVATARHAIRCOLOR').text());
 	guide.guideGender=	makestr(INFO.children('GUIDEGENDER').text());
 	guide.completionTime=makestr(INFO.children('COMPLETIONTIME').text());
 	guide.copyrights=		makestr(INFO.children('COPYRIGHTS').xml());

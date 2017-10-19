@@ -1,0 +1,6 @@
+<can-import from='author/color-chips/' />
+<color-chips
+  {selected-color-class}="selectedSkinClass"
+  {color-classes}="skinClasses"
+  {on-color-class}="@onSkinClass"
+/>

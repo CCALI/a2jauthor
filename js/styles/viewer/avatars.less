@@ -88,6 +88,16 @@
 @skin-dark: #ad7247;
 @skin-darker: #764f38;
 
+// hair colors
+@hair-blonde: #f4bc6d;
+@hair-red: #eb732e;
+@hair-brown-light: #7e4e2e;
+@hair-brown-medium: #482516;
+@hair-brown-dark: #231f20;
+@hair-gray-dark: #8e8e8e;
+@hair-gray-light: #d1d1d1;
+@hair-bald: transparent;
+
 // base guide avatar colors
 @guide-hair-color: #231f20;
 @guide-shirt-color: #5bc0de;
@@ -112,10 +122,8 @@
 
 svg.avatar-guide {
   float: right;
+  background-color: transparent !important;
 
-  .hair-color {
-    fill: @guide-hair-color !important;
-  }
   .shirt-color {
     fill: @guide-shirt-color !important;
   }
@@ -156,6 +164,17 @@ svg.avatar-guide {
     .skin-color {
       fill: @skin-darker !important;
     }
+  }
+
+  &.hair-blonde .hair-color       {fill: @hair-blonde;}
+  &.hair-red .hair-color          {fill: @hair-red;}
+  &.hair-brown-light .hair-color  {fill: @hair-brown-light;}
+  &.hair-brown-medium .hair-color {fill: @hair-brown-medium;}
+  &.hair-brown-dark .hair-color   {fill: @hair-brown-dark;}
+  &.hair-gray-dark .hair-color    {fill: @hair-gray-dark;}
+  &.hair-gray-light .hair-color   {fill: @hair-gray-light;}
+  &.hair-bald .hair-color, &.hair-bald .hair-lighten, &.hair-bald .hair-shade {
+      display: none;
   }
 }
 
@@ -290,8 +309,12 @@ svg.avatar-guide {
 * so an overwrite hack was created to fill these paths with a solid black fill and give them 10% opacity
 * 
 ```
-// IE10+ Hack to fix bubble positioning with Avatars and spacing between Avatars in IE11 and to fix small SVG gradients appearing as solid black
-@@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+// IE10+ Hack to fix Avatar SVG on the About page and bubble positioning with Avatars and spacing between Avatars in IE11 and to fix small SVG gradients appearing as solid black
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  #tab-about .avatar-guide {
+    height: 60vh;
+  }
+  
   .guide-wrapper, .client-wrapper {
     width: 48%;
   }
@@ -375,8 +398,12 @@ a2j-viewer-avatar {
 *
 **/
 
-// IE10+ Hack to fix bubble positioning with Avatars and spacing between Avatars in IE11 and to fix small SVG gradients appearing as solid black
+// IE10+ Hack to fix Avatar SVG on the About page and bubble positioning with Avatars and spacing between Avatars in IE11 and to fix small SVG gradients appearing as solid black
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  #tab-about .avatar-guide {
+    height: 60vh;
+  }
+
   .guide-wrapper, .client-wrapper {
     width: 48%;
   }

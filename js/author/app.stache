@@ -8,6 +8,7 @@
 <can-import from="author/templates/edit/"/>
 <can-import from="author/vertical-navbar/"/>
 <can-import from="author/interviews/toolbar/"/>
+<can-import from='author/about/main/' />
 
 <div id="splash" class="welcome">
   <div class="loading">
@@ -58,31 +59,35 @@
               </button>
           </div>
         </div>
-        <div>
-          <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist" id="about-tabs">
-              <li role="presentation" class="active"><a href="#" role="tab" data-panel="tab-about">About</a></li>
-              <li role="presentation"><a href="#" role="tab" data-panel="tab-layout">Layout</a></li>
-              <li role="presentation"><a href="#" role="tab" data-panel="tab-feedback">Feedback</a></li>
-              <li role="presentation"><a href="#" role="tab" data-panel="tab-revision">Revision History</a></li>
-              <li role="presentation"><a href="#" role="tab" data-panel="tab-authors">Authors</a></li>
-            </ul>
-          <!-- Nav tabs -->
 
-          <!-- Tab panes -->
-            <div class="tab-content">
-              <div role="tabpanel" class="tab-pane active" id="tab-about"></div>
-              <div role="tabpanel" class="tab-pane" id="tab-layout"></div>
-              <div role="tabpanel" class="tab-pane" id="tab-feedback"></div>
-              <div role="tabpanel" class="tab-pane" id="tab-revision"></div>
-              <div role="tabpanel" class="tab-pane" id="tab-authors"></div>
-            </div>
-          <!-- Tab panes -->
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" id="about-tabs">
+          <li role="presentation" class="active"><a href="#" role="tab" data-panel="tab-about">About</a></li>
+          <li role="presentation"><a href="#" role="tab" data-panel="tab-layout">Layout</a></li>
+          <li role="presentation"><a href="#" role="tab" data-panel="tab-feedback">Feedback</a></li>
+          <li role="presentation"><a href="#" role="tab" data-panel="tab-revision">Revision History</a></li>
+          <li role="presentation"><a href="#" role="tab" data-panel="tab-authors">Authors</a></li>
+        </ul>
+        <!-- Nav tabs -->
 
-          <br />
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="tab-about">
+            {{#if guide}}
+              <about-main {(guide)}="guide" />
+            {{else}}
+              <p>Please select an interview.</p>
+            {{/if}}
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tab-layout"></div>
+          <div role="tabpanel" class="tab-pane" id="tab-feedback"></div>
+          <div role="tabpanel" class="tab-pane" id="tab-revision"></div>
+          <div role="tabpanel" class="tab-pane" id="tab-authors"></div>
         </div>
-        <div class="tabContent editq"></div>
+        <!-- Tab panes -->
       </div>
+      <br />
+      <div class="tabContent editq"></div>
     </div><!--tab-panel has-toolbar -->
 
     <!-- Variables Tab -->
@@ -462,4 +467,3 @@
     Please sign in at <a href="http://a2j02.a2jauthor.org">A2J Author.org</a>.
   </div>
 </div>
-

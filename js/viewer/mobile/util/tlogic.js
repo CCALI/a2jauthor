@@ -722,13 +722,13 @@
 		});
 
 		gLogic.addUserFunction('HisHer', 1, function(gender) {
-			return (gender === 'male') ? 'his' : 'her';
+			return (gender.toLowerCase() === 'male') ? 'his' : 'her';
 		});
 		gLogic.addUserFunction('HimHer', 1, function(gender) {
-			return (gender === 'male') ? 'him' : 'her';
+			return (gender.toLowerCase() === 'male') ? 'him' : 'her';
 		});
 		gLogic.addUserFunction('HeShe', 1, function(gender) {
-			return (gender === 'male') ? 'he' : 'she';
+			return (gender.toLowerCase() === 'male') ? 'he' : 'she';
 		});
 
 

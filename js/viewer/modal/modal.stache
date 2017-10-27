@@ -1,3 +1,5 @@
+<can-import from='author/audio-player/' />
+
   <div
     id="pageModal"
     tabindex="-1"
@@ -41,13 +43,9 @@
             {{/if}}
 
             {{#if modalContent.audioURL}}
-              <audio
-                class="modal-audio"
-                controls="controls"
-                controlsList="nodownload"
-                {$src}="normalizePath(mState.fileDataURL, modalContent.audioURL)"
-              >
-              </audio>
+              <audio-player
+                {source-url}="normalizePath(mState.fileDataURL, modalContent.audioURL)"
+              />
             {{/if}}
 
             {{#if modalContent.videoURL}}

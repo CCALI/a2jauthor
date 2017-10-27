@@ -55,8 +55,7 @@ describe('<a2j-modal> ', function() {
 
       vm.attr('modalContent', { audioURL: helpAudioURL});
 
-      F('audio.modal-audio').exists();
-      F('audio.modal-audio').attr('src', '/CAJA/js/images/pings.ogg');
+      F('audio-player').exists();
 
       F(done);
     });

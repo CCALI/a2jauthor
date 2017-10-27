@@ -1,5 +1,6 @@
 <can-import from="viewer/mobile/pages/fields/" />
 <can-import from="viewer/mobile/pages/pages.less!" />
+<can-import from='author/audio-player/' />
 
 {{#eq rState.page '__error'}}
   <div class="jumbotron">
@@ -30,7 +31,9 @@
       {{/if}}
 
       {{#if textAudioURL}}
-        <audio {$src}="normalizePath(mState.fileDataURL, textAudioURL)" controls="controls"></audio>
+        <audio-player
+          {source-url}="normalizePath(mState.fileDataURL, textAudioURL)"
+        />
       {{/if}}
 
     </div><!-- bubble-content -->

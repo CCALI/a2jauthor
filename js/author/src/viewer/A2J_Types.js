@@ -9,8 +9,6 @@
 
 */
 
-
-
 // ### Constants  ###
 
 /** @const */
@@ -481,7 +479,7 @@ TGuide.prototype.collectionSorted = function (collection)
 	for (i in collection){
 		sorted.push(collection[i]);
 	}
-	sorted.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
+	sorted.sort(function (a,b){return naturalCompare.caseInsensitive(a.name,b.name);});
 	return sorted;
 };
 
@@ -503,7 +501,7 @@ TGuide.prototype.sortPages=function()
 			this.sortedPages.push(this.pages[pagename]);
 		}
 	}
-	this.sortedPages=this.sortedPages.sort(function (a,b){return sortingNaturalCompare(a.name,b.name);});
+	this.sortedPages=this.sortedPages.sort(function (a,b){return naturalCompare.caseInsensitive(a.name,b.name);});
 };
 
 TGuide.prototype.historyToXML=function()

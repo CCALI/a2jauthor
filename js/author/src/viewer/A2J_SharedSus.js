@@ -32,41 +32,83 @@ String.prototype.simpleHash=function()
 	return str.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a;},0);
 };
 
-/*jslint eqeq: false  */
-function sortingNaturalCompare(a, b) {//http://my.opera.com/GreyWyvern/blog/show.dml/1671288
-  function chunkify(t) {
-    var tz = [], x = 0, y = -1, n = 0, i, j;
 
-    while (i = (j = t.charAt(x++)).charCodeAt(0)) {
-      var m = (i == 46 || (i >=48 && i <= 57));
-      if (m !== n) {
-        tz[++y] = "";
-        n = m;
-      }
-      tz[y] += j;
-    }
-    return tz;
-  }
-	// 2014-06-16 we want case-insensitive comparisons.
+// TODO: this import doesn't work due to import timing of legacy code in js/author/app.js
+// functions below are a copy paste of the module, minus the custom alphabet code
+// https://www.npmjs.com/package/string-natural-compare
+// should import this module normally when this code is refactored to CanJS
+// import naturalCompare from 'string-natural-compare';
 
-	a = (a===null || typeof a === "undefined" ) ? '' : String(a).toUpperCase();
-	b = (b===null || typeof b === "undefined" ) ? '' : String(b).toUpperCase();
-
-  var aa = chunkify(a);
-  var bb = chunkify(b);
-  var x;
-  for (x = 0; aa[x] && bb[x]; x++) {
-    if (aa[x] !== bb[x]) {
-      var c = Number(aa[x]), d = Number(bb[x]);
-      if (c == aa[x] && d == bb[x]) {
-         return c - d;
-		} else{
-			return (aa[x] > bb[x]) ? 1 : -1;
-		}
-    }
-  }
-  return aa.length - bb.length;
+function isNumberCode(code) {
+	return code >= 48 && code <= 57;
 }
+
+function naturalCompare(a, b) {
+	var lengthA = (a += '').length;
+	var lengthB = (b += '').length;
+	var aIndex = 0;
+	var bIndex = 0;
+
+	while (aIndex < lengthA && bIndex < lengthB) {
+		var charCodeA = a.charCodeAt(aIndex);
+		var charCodeB = b.charCodeAt(bIndex);
+
+		if (isNumberCode(charCodeA)) {
+			if (!isNumberCode(charCodeB)) {
+			return charCodeA - charCodeB;
+			}
+
+			var numStartA = aIndex;
+			var numStartB = bIndex;
+
+			while (charCodeA === 48 && ++numStartA < lengthA) {
+			charCodeA = a.charCodeAt(numStartA);
+			}
+			while (charCodeB === 48 && ++numStartB < lengthB) {
+			charCodeB = b.charCodeAt(numStartB);
+			}
+
+			var numEndA = numStartA;
+			var numEndB = numStartB;
+
+			while (numEndA < lengthA && isNumberCode(a.charCodeAt(numEndA))) {
+			++numEndA;
+			}
+			while (numEndB < lengthB && isNumberCode(b.charCodeAt(numEndB))) {
+			++numEndB;
+			}
+
+			var difference = numEndA - numStartA - numEndB + numStartB; // numA length - numB length
+			if (difference) {
+			return difference;
+			}
+
+			while (numStartA < numEndA) {
+			difference = a.charCodeAt(numStartA++) - b.charCodeAt(numStartB++);
+			if (difference) {
+				return difference;
+			}
+			}
+
+			aIndex = numEndA;
+			bIndex = numEndB;
+			continue;
+		}
+
+		if (charCodeA !== charCodeB) {
+			return charCodeA - charCodeB;
+		}
+
+		++aIndex;
+		++bIndex;
+	}
+
+	return lengthA - lengthB;
+}
+
+naturalCompare.caseInsensitive = naturalCompare.i = function(a, b) {
+	return naturalCompare(('' + a).toLowerCase(), ('' + b).toLowerCase());
+};// end string natural-compare code
 
 
 //http://stackoverflow.com/questions/5796718/html-entity-decode

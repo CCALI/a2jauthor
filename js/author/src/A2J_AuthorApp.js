@@ -202,7 +202,7 @@ function main()
    });
 
   // 09/29/2106 Handle publishing guides to external test servers. URL is defined in CAJA_WS.php
-  $('#guideZIPLHI').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
+  $('#guideZIPLHI').button({  disabled:false}).click(function()
   {  // 08/10/2015 ZIP the guide files, POST them to LHI, open new window for author to complete LHI process.
     function guideZipped(data)
     {
@@ -215,7 +215,7 @@ function main()
     setProgress('Publishing to LHI',true);
     ws({cmd:'guideZIPLHI',gid:gGuideID},guideZipped);
    });
-  $('#guideZIPLHIQA').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
+  $('#guideZIPLHIQA').button({  disabled:false}).click(function()
   {  // 11/23/2015 ZIP the guide files, POST them to LHI, open new window for author to complete LHI process. For QA testing
     function guideZipped(data)
     {
@@ -228,7 +228,7 @@ function main()
     setProgress('Publishing to LHI - QA',true);
     ws({cmd:'guideZIPLHIQA',gid:gGuideID,server:'QA'},guideZipped);
    });
-  $('#guideZIPTESTLHIQA').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
+  $('#guideZIPTESTLHIQA').button({  disabled:false}).click(function()
   {  // 2/2016 ZIP the guide files,
     function guideZipped(data)
     {
@@ -241,7 +241,7 @@ function main()
     setProgress('Publishing to Test LHI - QA',true);
     ws({cmd:'guideZIPTESTLHIQA',gid:gGuideID,server:'QA'},guideZipped);
    });
-  $('#guideZIPLHIDEV').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
+  $('#guideZIPLHIDEV').button({  disabled:false}).click(function()
   {  // 2/2016 ZIP the guide files,
     function guideZipped(data)
     {
@@ -254,7 +254,7 @@ function main()
     setProgress('Publishing to LHI DEV',true);
     ws({cmd:'guideZIPLHIDEV',gid:gGuideID,server:'QA'},guideZipped);
    });
-  $('#guideZIPMARLABS').button({  disabled:false, icons:{primary:"ui-icon-disk"}}).click(function()
+  $('#guideZIPMARLABS').button({  disabled:false}).click(function()
   {  // 2/2016 ZIP the guide files,
     function guideZipped(data)
     {
@@ -404,7 +404,9 @@ function main()
     height: 500,
     modal: true,
     buttons:[
-    {text:'Close',click:function(){
+    {text:'Close',
+    class: 'btn btn-default btn-wide-sm',
+    click:function(){
       $(this).dialog("close");
       gPrefs.FKGradeAll =   $('#setting_FKGradeAll').is(':checked');
       gPrefs.showJS =    $('#setting_showJS').is(':checked');
@@ -488,27 +490,6 @@ function main()
       window.guideSave();
     }
   }, CONST.AutoSaveInterval);
-
-  // remove jquery-ui classes from buttons.
-  (function() {
-    var classes = [
-      'ui-widget',
-      'ui-button',
-      'ui-state-default',
-      'ui-corner-all',
-      'ui-corner-left',
-      'ui-corner-right',
-      'ui-button-text-only',
-      'ui-button-icon-primary',
-      'ui-icon',
-      'ui-button-text',
-      'ui-state-hover',
-      'ui-state-active',
-      'ui-buttonset'
-    ];
-
-    $('.bootstrap-styles button, .bootstrap-styles span, .bootstrap-styles a, .bootstrap-styles a:hover, .bootstrap-styles li, .bootstrap-styles label, .bootstrap-styles ul').removeClass(classes.join(' '));
-  }());
 
   signin();
 }

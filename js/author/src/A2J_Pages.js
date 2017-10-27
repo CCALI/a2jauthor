@@ -339,7 +339,14 @@ function gotoPageEdit(pageName) {
 		},
 
     buttons:[{
-      text:'XML',
+			text: 'Close',
+			class: 'btn btn-default btn-wide-sm',
+      click: function() {
+        $(this).dialog('close');
+      }
+    }, {
+			text:'XML',
+			class: 'btn btn-default btn-wide-sm',
       click:function() {
         var pageName = $(this).attr('rel');
         dialogAlert({
@@ -348,21 +355,21 @@ function gotoPageEdit(pageName) {
           height: 600,
           body: prettyXML(page2XML(gGuide.pages[pageName]))
         });
-      }
+			}
     }, {
-      text: 'Preview',
+			text: 'Preview',
+			class: 'btn btn-primary btn-wide-sm',
       click: function() {
         var pageName = $(this).attr('rel');
         $pageEditDialog.dialog('close');
         $('#author-app').trigger('edit-page:preview', pageName);
       }
-    }, {
-      text: 'Close',
-      click: function() {
-        $(this).dialog('close');
-      }
     }]
-  });
+	});
+
+	// removes jQuery.ui classes from buttons
+	var modal = $pageEditDialog.parents('.ui-dialog');
+	modal.find('.ui-button').removeClass('ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only');
 
   guidePageEditForm(page, $('.page-edit-form-panel', $pageEditDialog).html(''), page.name);
 
@@ -751,7 +758,8 @@ function guidePageEditForm(page, div, pagename)//novicePage
 
           ff.append(form.pickpage({
             value: b.next,
-            label: 'Destination:',
+						label: 'Destination:',
+						buttonText: 'Set Destination',
             change: function(val, b, ff) {
               b.next = val;
               updateButtonLayout(ff, b);

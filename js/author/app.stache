@@ -297,8 +297,8 @@
         <div class="tabContent editq">
           <h3 class="page-title">Report</h3>
           <p>Report of text in a print-friendly layout, also useful for translation projects</p>
-          <button id="reportFull" class="btn btn-primary">Full Report</button>
-          <button id="reportTranscript" class="btn btn-primary">Transcript Report</button>
+          <button id="reportFull" class="btn btn-default btn-wide-md">Full Report</button>
+          <button id="reportTranscript" class="btn btn-default btn-wide-md">Transcript Report</button>
         </div>
       </div>
     </div>
@@ -315,17 +315,17 @@
       <h3 class="page-title">Publish/Upload</h3>
       <p>To publish your interview to another site such as LHI, download the ZIP which contains the interview and its supplemental files.</p>
 
-      <button id="guideZIP" class="btn btn-default"><span class="glyphicon-file-archive"></span> Download ZIP</button>
-      <button id="guideDownload" class="btn btn-default"><span class="glyphicon-folder-download"></span> Download A2J</button>
+      <button id="guideZIP" class="btn btn-default btn-wide-md"><span class="glyphicon-file-archive"></span> Download ZIP</button>
+      <button id="guideDownload" class="btn btn-default btn-wide-md"><span class="glyphicon-folder-download"></span> Download A2J</button>
       <hr>
       <p>To publish to testing servers, use the buttons below</p>
-      <button id="guideZIPLHIQA" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to RebuildQA</button>
-      <button id="guideZIPLHI" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to LHI Production</button>
+      <button id="guideZIPLHIQA" class="btn btn-default btn-wide-md"><span class="glyphicon-publish"></span> Publish to RebuildQA</button>
+      <button id="guideZIPLHI" class="btn btn-default btn-wide-md"><span class="glyphicon-publish"></span> Publish to LHI Production</button>
       {{#if showDevPublishButtons}}
         <hr>
         <p>To publish to development servers, use the buttons below</p>
-        <button id="guideZIPLHIDEV" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to LHI DEV</button>
-        <button id="guideZIPMARLABS" class="btn btn-default"><span class="glyphicon-publish"></span> Publish to Marlabs DEV</button>
+        <button id="guideZIPLHIDEV" class="btn btn-default btn-wide-md"><span class="glyphicon-publish"></span> Publish to LHI DEV</button>
+        <button id="guideZIPMARLABS" class="btn btn-default btn-wide-md"><span class="glyphicon-publish"></span> Publish to Marlabs DEV</button>
       {{/if}}
     </div><!-- id="tabsUpload" -->
   </div>

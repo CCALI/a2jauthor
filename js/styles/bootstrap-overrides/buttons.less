@@ -131,3 +131,48 @@
 @btn-border-radius-base:         @border-radius-base;
 @btn-border-radius-large:        @border-radius-large;
 @btn-border-radius-small:        @border-radius-small;
+
+/**
+* @styles margins Margins
+* @parent buttons.less 2
+*
+* Adds a right margin to button class `.btn` to give more distance between clickstates.
+*
+* @demo demos/buttons/button-margin.html
+*
+**/
+
+@btn-right-margin:                10px;
+
+// Setting button margins wider
+.bootstrap-styles .btn {
+  margin-right: @btn-right-margin;
+}
+.bootstrap-styles .btn:last-child {
+  margin-right: 0;
+}
+
+/**
+* @styles widths Button Widths
+* @parent buttons.less 3
+*
+* Creates button widths for uniform button sizing: `.btn-wide-sm`, `.btn-wide-md`, and `.btn-wide-lg`.
+* Widths are applied using `min-width` declaration so that buttons with longer text will expand the button (rather than get clipped).
+*
+* @demo demos/buttons/button-widths.html
+*
+**/
+// Extending buttons with width options
+@btn-wide-sm:                    100px;
+@btn-wide-md:                    225px;
+@btn-wide-lg:                    350px;
+
+.btn-wide-sm {
+  min-width: @btn-wide-sm;
+}
+.btn-wide-md {
+  min-width: @btn-wide-md;
+}
+.btn-wide-lg {
+  min-width: @btn-wide-lg;
+}

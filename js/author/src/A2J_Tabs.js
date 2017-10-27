@@ -311,11 +311,21 @@ var form={
 	,pickpage:function(data)
 	{	// 2014-06-02 Pick page via popup picker instead.
 		var pageDispName = gGuide.pageDisplayName(data.value);
-		var e=$('<div class="bootstrap-styles" name="'+data.name+'">' + (typeof data.label!=='undefined' ? ('<label>'+data.label+'</label>') : '') + ('<button class="btn btn-primary" />')+'</div>');
-		$('button',e).button({label:pageDispName}).addClass('glyphicon-link').data('data',data).click(function(){
-			//alert(data.value);
-			form.pickPageDialog($(this),data);
-		});
+    var e=$('<div class="destination-picker bootstrap-styles" name="'+data.name+'">'
+      + (typeof data.label!=='undefined'
+        ? ('<label>'+data.label+'</label>')
+        : '') 
+      + ('<span>' + pageDispName + '</span>')
+      + ('<button class="btn btn-default" />')
+      + '</div>');
+    $('button',e)
+      .button({label:data.buttonText})
+      .addClass('glyphicon-link')
+      .data('data',data)
+      .click(function(){
+		  	//alert(data.value);
+			  form.pickPageDialog($(this),data);
+		  });
 		return e;
 	}
 
@@ -370,24 +380,37 @@ var form={
 					$('#page-picker-list').empty();
 				},
 				buttons:[
-				{text:'Change', click:function()
+        {text:'Cancel',
+        class: 'btn btn-default btn-wide-sm',
+        click:function()
+          {
+            $(this).dialog("close");
+          }
+        },
+        {text:'Change',
+        class: 'btn btn-primary btn-wide-sm',
+        click:function()
 					{
 						var newPageDest = makestr($('#page-picker-list .list-group-item.'+SELECTED).first().attr('rel')).substr(5);
 						data.value = newPageDest;
-						var pageDispName = gGuide.pageDisplayName(newPageDest);
-						pageButton.button({label:pageDispName});
+            var pageDispName = gGuide.pageDisplayName(newPageDest);
+            
+            var picker = $(pageButton).parents('.destination-picker');
+            var buttonData = picker.find('button').data('data');
+            var newPicker = form.pickpage(data);
+            picker.replaceWith(newPicker);
+            var newButton = newPicker.find('button');
+
 						//data.change.call(rel,data);
-						form.change(pageButton, newPageDest);
+						form.change(newButton, newPageDest);
 						//trace('Changing destination  to "'+newPageDest+'"');
 						$(this).dialog("close");
 					}
-				},
-				{text:'Cancel',click:function()
-					{
-						$(this).dialog("close");
-					}
 				}
-			]});
+      ]});
+    // removes jQuery.ui classes from buttons
+    var modal = $('#page-picker-dialog').parents('.ui-dialog');
+    modal.find('.ui-button').removeClass('ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only');
 	}
 
 	,pickPopupDialog:function(pageButton,data,doneFnc)
@@ -630,8 +653,8 @@ var form={
   pickFile: function(mask) {
     var $fileupload = $(
       '<div class="fileinput-button form-group">' +
-        '<button class="btn btn-primary">' +
-          '<span class="glyphicon-plus"></span> Upload...' +
+        '<button class="btn btn-default btn-wide-sm">' +
+          '<span class="glyphicon-plus"></span> Upload' +
         '</button>' +
         '<input class="form-control fileupload" type="file" name="files[]" >' +
       '</div>'
@@ -1236,6 +1259,7 @@ TGuide.prototype.noviceTab = function(tab,clear)
       $('.starting').append(form.pickpage({
         value: guide.firstPage,
         label: 'Starting Point: ',
+        buttonText: 'Set Start Point',
         change: function(val) {
           guide.firstPage = val;
         }
@@ -1244,6 +1268,7 @@ TGuide.prototype.noviceTab = function(tab,clear)
       $('.exit').append(form.pickpage({
         value: guide.exitPage,
         label:'Exit Point: ',
+        buttonText: 'Set Exit Point',
         change:function(val) {
           guide.exitPage = val;
         }

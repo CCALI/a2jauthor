@@ -31,15 +31,21 @@ function dialogConfirmYesNo(args)
 		height:args.height?args.height : 240,
 		modal: true,
 		buttons: {
+			No: function() {
+				$( this ).dialog( "close" );
+			},
 			Yes: function() {
 				$( this ).dialog( "close" );
 				args.Yes(args);
-			 },
-			No: function() {
-				$( this ).dialog( "close" );
-			 }
+			}
 		}
 	});
+	// removes jQuery.ui classes from buttons
+	var modal = $('#dialog-confirm').parents('.ui-dialog');
+	modal.find('.ui-button').addClass('btn btn-wide-sm');
+	modal.find('.ui-button:nth-child(1)').addClass('btn-default');
+	modal.find('.ui-button:nth-child(2)').addClass('btn-primary');
+    modal.find('.ui-button').removeClass('ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only');
 }
 
 function dialogAlert(args)

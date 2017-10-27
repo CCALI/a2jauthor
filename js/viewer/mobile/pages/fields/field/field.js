@@ -9,6 +9,7 @@ import Component from 'can/component/';
 import template from './field.stache!';
 import invalidPromptTpl from './views/invalid-prompt.stache!';
 import exceededMaxcharsTpl from './views/exceeded-maxchars.stache!';
+import constants from 'viewer/models/constants';
 
 import 'jquery-ui/ui/datepicker';
 
@@ -280,14 +281,19 @@ export default Component.extend('FieldComponent', {
     inserted() {
       let vm = this.viewModel;
       let defaultDate = vm.convertDate(vm.attr('field._answer.values')) || null;
-      let minDate = vm.convertDate(vm.attr('field.min')) || null;
-      let maxDate = vm.convertDate(vm.attr('field.max')) || null;
+      // TODO: these dates need to be internationalized for output/input format
+      // min/max values currently only come in as mm/dd/yyyy, or special value, TODAY, which is handled in convertDate above
+      let minDate = vm.convertDate(vm.attr('field.min'), null, 'MM/DD/YYYY') || null;
+      let maxDate = vm.convertDate(vm.attr('field.max'), null, 'MM/DD/YYYY') || null;
       let lang = vm.attr('lang');
 
       $('input.datepicker-input', this.element).datepicker({
         defaultDate,
         minDate,
         maxDate,
+        changeMonth: true,
+        changeYear: true,
+        yearRange: constants.kMinYear + ":" + constants.kMaxYear,
         monthNames: lang.MonthNamesLong.split(','),
         monthNamesShort: lang.MonthNamesShort.split(','),
         appendText: '(mm/dd/yyyy)',

@@ -1,7 +1,8 @@
 <can-import from="viewer/mobile/pages/fields/field/views/radio.less!" />
 
 <div>
-	<div class="a2j-radio-button-group">
+	<div class="a2j-radio-button-group radio">
+		<label class="a2j-radio-button-label" for="{{label}}">
 		<input
 			type="radio"
 			id="{{label}}"
@@ -11,7 +12,7 @@
 			class="a2j-radio-button"
 			($change)="validateField"/>
 
-		<label class="a2j-radio-button-label" for="{{label}}">{{{ eval(label, repeatVarValue) }}}</label>
+		{{{ eval(label, repeatVarValue) }}}</label>
 	</div>
 
 	{{> invalid-prompt-tpl }}

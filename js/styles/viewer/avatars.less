@@ -35,7 +35,7 @@
 * @parent avatars.less 3
 * 
 * A2J's `avatars.less` file contains several variables for customizing the look of the avatars. These include 
-* the skin tone, shirt/tie color, and hair color. The ability to change hair color will come in a later branch. 
+* the skin tone, shirt/tie color, and hair color. The ability to change hair color is discussed in a later section on this page. 
 * At this time there are no plans to change the avatars clothes color, but classes have been added if that 
 * becomes needed. Current variables and values are:
 * ```
@@ -69,15 +69,57 @@
 * Changing this classname to any of the above will alter the skin tone:
 *
 * Each file needs to have a classname set on the `<svg>` element of either `avatar-guide` or `avatar-client` 
-* along with a gender, `avatar-male` or `avatar-female`, and default skin tone classname like `skin-darker`. 
+* along with a gender, `avatar-male` or `avatar-female`, and default skin tone classname like `skin-darker`, and hair color like `hair-brown-dark`. 
 * For example:
 *
 * ```
-* <svg xmlns="http://www.w3.org/2000/svg" id="Guide-Male-Left" class="avatar-guide avatar-female skin-darker" 
+* <svg xmlns="http://www.w3.org/2000/svg" id="Guide-Male-Left" class="avatar-guide avatar-female skin-darker hair-brown-dark" 
 * viewBox="0 0 250.5 757.6"> ... </svg>
 * ```
 *
 * @iframe demos/avatars/skin.html 600
+*
+**/
+
+/**
+* @styles hair-color Changing Avatar Hair Color
+* @parent avatars.less 4
+* 
+* A2J's `avatars.less` file contains several variables for customizing the look of the avatars. These include 
+* the skin tone, shirt/tie color, and hair color. The ability to change hair color will come in a later branch. 
+* At this time there are no plans to change the avatars clothes color, but classes have been added if that 
+* becomes needed. Current variables and values are:
+* ```
+// hair colors
+@@hair-blonde: #f4bc6d;
+@@hair-red: #eb732e;
+@@hair-brown-light: #7e4e2e;
+@@hair-brown-medium: #482516;
+@@hair-brown-dark: #231f20;
+@@hair-gray-dark: #8e8e8e;
+@@hair-gray-light: #d1d1d1;
+@@hair-bald: transparent;
+
+// Applying hair colors
+.hair-blonde .hair-color       {fill: @hair-blonde;}
+.hair-red .hair-color          {fill: @hair-red;}
+.hair-brown-light .hair-color  {fill: @hair-brown-light;}
+.hair-brown-medium .hair-color {fill: @hair-brown-medium;}
+.hair-brown-dark .hair-color   {fill: @hair-brown-dark;}
+.hair-gray-dark .hair-color    {fill: @hair-gray-dark;}
+.hair-gray-light .hair-color   {fill: @hair-gray-light;}
+.hair-bald .hair-color, &.hair-bald .hair-lighten, &.hair-bald .hair-shade {
+  display: none;
+}
+```
+*
+* The Guide avatar hair color is dynamically set by JavaScript based on a selection of the Author in the interview. 
+* The JavaScript takes the data for the hair color and applies it directly to the SVG file itself as a classname. 
+* For example, the SVG file `avatar-male-left.svg` contains the following classname `hair-brown-dark`. 
+* Changing this classname to any of the above will alter the hair color.
+*
+*
+* @iframe demos/avatars/hair.html 600
 *
 **/
 
@@ -234,7 +276,7 @@ svg.avatar-guide {
 
 /**
 * @styles color-classes Additional Color Classes
-* @parent avatars.less 4
+* @parent avatars.less 5
 *
 * Each SVG file also has several elements which contain similar classes that determine what colors are applied
 * to that portion of the vector image. For example, the avatar's skin tone will have `class="skin-color"` 
@@ -289,7 +331,7 @@ svg.avatar-guide {
 
 /**
 * @styles editing-svgs Editing SVG Files
-* @parent avatars.less 5
+* @parent avatars.less 6
 *
 * The SVG files can be edited in any vector graphics application (like Adobe Illustrator). However, because 
 * of the CSS reference and classnames required for A2J the files will also need to be opened in a text editor 
@@ -302,7 +344,7 @@ svg.avatar-guide {
 
 /**
 * @styles browser-hacks Browser Hacks
-* @parent avatars.less 6
+* @parent avatars.less 7
 *
 *
 * In IE11 and Edge there was an issue with small paths with gradients applied (e.g. eyes, nose, and ears) 

@@ -52,10 +52,5 @@ export default Component.extend({
     '.editable blur'(target) {
       this.viewModel.changeValue(target.html());
     },
-
-    // Fixes IE11 contenteditable quirks
-    '.editable DOMCharacterDataModified'(target) {
-      this.viewModel.changeValue(target.html());
-    },
   }
 });

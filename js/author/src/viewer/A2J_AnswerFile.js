@@ -151,8 +151,9 @@ TGuide.prototype.varCreateInternals = function() {
   this.varCreateOverride(CONST.vnVersion, CONST.vtText, false, 'A2J Author Version');
   this.varCreateOverride(CONST.vnInterviewID, CONST.vtText, false, 'Guide ID');
   this.varCreateOverride(CONST.vnBookmark, CONST.vtText, false, 'Current Page');
-  this.varCreateOverride(CONST.vnHistory, CONST.vtText, false, 'Progress History List (XML)');
-  this.varCreateOverride(CONST.vnNavigationTF, CONST.vtTF, false, 'Allow navigation?');
+	this.varCreateOverride(CONST.vnHistory, CONST.vtText, false, 'Progress History List (XML)');
+	// deprecated - TODO: remove completely
+  // this.varCreateOverride(CONST.vnNavigationTF, CONST.vtTF, false, 'Allow navigation?');
   this.varCreateOverride(CONST.vnInterviewIncompleteTF, CONST.vtTF, false, 'Reached Successful Exit?');
 
   for (var s = 0; s < CONST.MAXSTEPS; s++) {

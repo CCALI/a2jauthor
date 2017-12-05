@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;report-page&gt;</title>
+  </head>
+
+  <body>
+    <script type="text/stache" can-autorender>
+      <can-import from="author/report/" />
+
+      <div>
+        <report-page {(guide)}="guide"></report-page>
+      </div>
+    </script>
+
+    <script src="../../node_modules/steal/steal.js"
+    data-main="can/view/autorender/">
+      window.less = {
+        async: true,
+        fileSync: true
+      };
+      import Map from 'can/map/'
+
+      const VM = Map.extend({
+        define: {
+          guide: {
+            get() {
+              return {
+                title: "Top o the World!",
+                revision: "32.8"
+              }
+            }
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

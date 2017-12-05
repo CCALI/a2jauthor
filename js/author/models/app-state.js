@@ -41,6 +41,14 @@ let Guide = Map.extend('AppStateGuide', {
 export default Map.extend({
   define: {
     /**
+    * @property {String} selectedReport
+    *
+    * selected report type
+    */
+    selectedReport: {
+      serialize: false
+    },
+    /**
     * @property {List} traceLogic
     *
     * latest message to display in the trace panel

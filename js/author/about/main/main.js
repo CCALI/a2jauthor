@@ -60,7 +60,7 @@ export const AboutMainVm = Map.extend({
       get () {
         return getLanguageList().map(language => ({
           value: language.locale,
-          displayName: `${language.englishName} (${language.name}) {${language.locale}}`
+          displayName: `${language.name} (${language.englishName}) {${language.locale}}`
         }));
       }
     }

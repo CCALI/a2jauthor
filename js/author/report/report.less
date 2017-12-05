@@ -1,0 +1,71 @@
+report-page {
+	display: block;
+
+	.building-report {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%);
+	}
+
+	.hide-section {
+		display: none;
+	}
+
+	.report {
+		margin: 160px 45px 50px;
+		p {
+			margin: 0px 0px 2px 10px;
+		}
+		label {
+			margin-bottom: 0px;
+		}
+	}
+
+	.sub-legend {
+		font-size: 16px;
+		font-weight: 300;
+		margin-top: 3px;
+	}
+
+	@media print {
+		.report {
+			margin: 5px;
+
+			fieldset {
+				border: none;
+			}
+
+
+			p {
+				margin: 0px 0px 2px 10px;
+			}
+			label {
+				margin-bottom: 0px;
+			}
+			// bootstrap columns for print
+			.col-sm-1 {width:8%;  float:left;}
+			.col-sm-2 {width:16%; float:left;}
+			.col-sm-3 {width:25%; float:left;}
+			.col-sm-4 {width:33%; float:left;}
+			.col-sm-5 {width:42%; float:left;}
+			.col-sm-6 {width:50%; float:left;}
+			.col-sm-7 {width:58%; float:left;}
+			.col-sm-8 {width:66%; float:left;}
+			.col-sm-9 {width:75%; float:left;}
+			.col-sm-10{width:83%; float:left;}
+			.col-sm-11{width:92%; float:left;}
+			.col-sm-12{width:100%; float:left;}
+		}
+
+		.sub-legend {
+			font-size: 16px;
+			font-weight: 300;
+			margin-top: 3px;
+		}
+
+		.hide-section {
+			display: none;
+		}
+	}
+}

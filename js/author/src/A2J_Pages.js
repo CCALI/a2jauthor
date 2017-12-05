@@ -484,7 +484,16 @@ function guidePageEditForm(page, div, pagename)//novicePage
       change: function(val, page) {
         page.text = val;
       }
+		}));
+
+		pagefs.append(form.htmlarea({
+      label: 'Text Citation:',
+      value: page.textCitation,
+      change: function(val, page) {
+        page.textCitation = val;
+      }
     }));
+
 
     pagefs.append(form.pickAudio({
       label: 'Text audio:',
@@ -534,6 +543,8 @@ function guidePageEditForm(page, div, pagename)//novicePage
 			}},  [0,'Text',1,'Show Me Graphic',2,'Show Me Video']));
 
 		pagefs.append(form.htmlarea(	{label:"Help:",value:page.help,change:function(val,page){page.help=val;}} ));
+
+		pagefs.append(form.htmlarea({label:'Help Citation:',value: page.helpCitation,change:function(val,page){page.helpCitation=val;}} ));
 
 		pagefs.append(form.pickAudio(	{name:'helpAudio',label:'Help audio:',placeholder:'Help audio URL',	value:page.helpAudioURL,
 			change:function(val,page){page.helpAudioURL=val;}} ));
@@ -808,10 +819,12 @@ function guidePageEditForm(page, div, pagename)//novicePage
 		}
 
 		fs=form.fieldset('Advanced Logic');
-		fs.append(form.codearea({label:'Before:',	value:page.codeBefore,
-			change:function(val){page.codeBefore=val; /* TODO Compile for syntax errors */}} ));
-		fs.append(form.codearea({label:'After:',	value:page.codeAfter,
-			change:function(val){page.codeAfter=val; /* TODO Compile for syntax errors */	}} ));
+		fs.append(form.codearea({ label:'Before:',	value:page.codeBefore,
+			change:function(val){ page.codeBefore=val; /* TODO Compile for syntax errors */}} ));
+		fs.append(form.codearea({ label:'After:',	value:page.codeAfter,
+			change:function(val){ page.codeAfter=val; /* TODO Compile for syntax errors */	}} ));
+		fs.append(form.htmlarea({ label:'Logic Citation:',value: page.codeCitation,
+		  change:function(val){ page.codeCitation=val; }} ));
 		t.append(fs);
 
 

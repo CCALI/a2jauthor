@@ -29,7 +29,7 @@ function newWindowReport(title, html) {
       '<head>' +
         '<title>' + title + '</title>' +
         '<link rel="stylesheet" type="text/css" ' +
-          'href="../dist/bundles/app-template-styles.less.css">' +
+          'href="../dist/bundles/viewer/app.css">' +
       '</head>' +
 
       '<body class="CAJAReportDump">' + html +
@@ -41,8 +41,8 @@ function newWindowReport(title, html) {
   reportWindow.document.close();
 }
 
-function textStatisticsReport(text, includeAllStats)
-{	// 2014-06-30 Return suitable class to use and information block about text complexity.
+function textStatisticsReport(text, includeAllStats) {
+	// 2014-06-30 Return suitable class to use and information block about text complexity.
 	// This is an API wrapper to the https://github.com/cgiffard/TextStatistics.js module.
 	// Also suggested is that the text background turn green if grade level < 7, Yellow < 10 and red for >=10.
 	// Returns object with {good:bool, css:'class', info:'info'}
@@ -57,7 +57,7 @@ function textStatisticsReport(text, includeAllStats)
 	var info = '';
 	if (!good || includeAllStats===true || gPrefs.FKGradeAll)
 	{
-		// Doing all stats takes some time, so only do them if we've got a bad F-K grade or we specifically wnat them all.
+		// Doing all stats takes some time, so only do them if we've got a bad F-K grade or we specifically want them all.
 		info = '<small class=TextStatistics>'
 			+	'<a target=_blank href="http://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests">Flesch Kincaid</a> Grade Level: <span class='+css+'>'+gradeFK+'</span>'
 			+	' and Reading Ease: '+t.fleschKincaidReadingEase()
@@ -80,8 +80,7 @@ function textStatisticsReport(text, includeAllStats)
 	};
 }
 
-function reportFull()
-{	// 2016-06-24 Generate full report, ala LessonText.
+function reportFull() {	// 2016-06-24 Generate full report, ala LessonText.
 	longProcess( 'Building report', function ()
 	{
 		/** @type {TGuide} */
@@ -116,8 +115,7 @@ function reportFull()
 				return '';
 			}
 		}
-		function jumpAnchor(link,label)
-		{
+		function jumpAnchor(link,label) {
 			if (link!='') {
 				return '<a class="btn btn-primary" href="#'+link+'">'+label+'</a>';
 			}
@@ -125,25 +123,22 @@ function reportFull()
 				return label;
 			}
 		}
-		function fixHTML4Report(html)
-		{
+		function fixHTML4Report(html) {
 			// All external links, display link URL after.
 			// All Popup links, display popup name after and rename link to jump to anchor tag.
 			html=html.replace(REG.LINK_POP,function(match,p1,offset,string) // jslint nolike: /\"POPUP:\/\/(([^\"])+)\"/ig
 			{
 				// HREF="POPUP://MyPopup" becomes HREF="#PAGE_MyPopup"
 				var popupid=match.match(REG.LINK_POP2)[1];
-				// popupid= escapeHtml(newName);
+
 				return   '"#' + pageLink(popupid) + '"' + 'title="Popup page ' + (popupid) +'"';
 			});
 			return html;
 		}
-		function tuple(label,value,styleclass)
-		{	// return table row columns
+		function tuple(label,value,styleclass) {	// return table row columns
 			return '<tr' + (styleclass?' class='+styleclass:'')+'><td>' + label + '</td><td>' + value + '&nbsp;</td></tr>';
 		}
-		function tupleAuto(label,value)
-		{	// return table row columns but only if data present.
+		function tupleAuto(label,value) {	// return table row columns but only if data present.
 			if (!isBlankOrNull(value)) {
 				return tuple(label,value);
 			}
@@ -151,8 +146,7 @@ function reportFull()
 				return '';
 			}
 		}
-		function tuples(colType,colsArray)
-		{
+		function tuples(colType,colsArray) {
 			var t='';
 			for (var c in colsArray)
 			{
@@ -255,10 +249,12 @@ function reportFull()
 				t += tuple('Step',	guide.stepDisplayName(si)); //steps[si].number+':'+guide.steps[si].text);
 				guideGradeText += ' ' + page.text;
 				t += (tuple('Text',	gradeText(fixHTML4Report(page.text))));
+				t += (tuple('Text Citation', page.textCitation ));
 				t += (tupleAuto('Text audio',	page.textAudioURL));
 				t += (tupleAuto('Learn prompt',	page.learn));
 				guideGradeText += ' ' + page.help;
 				t += (tupleAuto('Help',	 gradeText(fixHTML4Report(page.help))));
+				t += (tuple('Help Citation', page.helpCitation ));
 				t += (tupleAuto('Help audio',	page.helpAudioURL));
 				t += (tupleAuto('Help reader',	page.helpReader));
 				t += (tupleAuto('Help image',	page.helpImageURL));
@@ -296,6 +292,7 @@ function reportFull()
 				t += tuple('Buttons',tableWrap(bt));
 
 				t += tupleAuto('Logic After',	page.codeAfter);
+				t += (tuple('Logic Citation', page.codeCitation ));
 				stepHTML[si] += anchor( pageLink(page.name)) + fieldSetWrap('Page '+ page.name, tableWrap(t) , 'Step'+parseInt(si));
 			}
 		}
@@ -319,24 +316,16 @@ function reportFull()
 		html +=  fieldSetWrap('Text Statistics', guideGradeText );
 		html = '<h1>Full Report for ' + gGuide.title+'</h1>'+html;
 		newWindowReport(gGuide.title +' - Full Report - A2J 6 Author',html);
-		//$('.tabContent','#tabsReport').html(html);
 	});
 }
 
-function reportTranscript()
-{	//  2016-06-24 List all text blocks for translation.
+function reportTranscript() {	//  2016-06-24 List all text blocks for translation.
 	/** @type {TGuide} */
 	var guide = gGuide;
 	/** @type {TPage} */
 	var page;
-	/** @type {TStep} */
-	//var step;
-	/** @type {TAuthor} */
-	//var author;
 	/** @type {TField} */
 	var field;
-	/** @type {TButton} */
-	//var button;
 
 	var html = '';
 
@@ -363,7 +352,7 @@ function reportTranscript()
 		sub=0;
 		pnum ++;
 		var name = guide.pageDisplayName(page.name);
-		//var si = page.step;
+
 		if (page.type === CONST.ptPopup) {
 			html+= tuples('TD',[pnum,name,'Popup Text',page.text]);
 		}
@@ -392,7 +381,79 @@ function reportTranscript()
 		+'<table class="table CAJAReportDump CAJATranscriptDump">'+html+'</table>';
 
 	newWindowReport( gGuide.title +' - Transcript Report - A2J 6 Author' ,html);
-	//	$('.tabContent','#tabsReport').html(html);
+}
+
+function reportCitation() { // 2017-10-31 list all citation references per page
+	console.log('printing citation report');
+		/** @type {TGuide} */
+		var guide = gGuide;
+		/** @type {TPage} */
+		var page;
+		/** @type {TField} */
+		var field;
+
+		var html = '';
+
+		if (!gGuide) {return};
+
+		function tuples(colType, colsArray) {
+			var t='';
+			var colSizes = [1, 2, 3, 6];
+			for (var c in colsArray) {
+				t += '<' + colType + ' class="col-sm-' + colSizes[c] + '">' + colsArray[c] + '</'+colType+'>';
+			}
+			return '<tr>' + t + '</tr>';
+		}
+
+		html += tuples('TH', ['#','Page','Section','Citation']);
+		var pageCount=0;
+		var notesCount=0;
+		var textCount=0;
+		var helpCount=0;
+		var logicCount=0;
+		var PH='&nbsp;';
+		// Pages section
+		var p;
+		for (p in guide.sortedPages) {	// Spreadsheet format: page name, chunk/field, citation
+			page = guide.sortedPages[p];
+			pageCount++;
+			var name = guide.pageDisplayName(page.name);
+
+			if (page.type === CONST.ptPopup) {
+				// pop ups only have a notes field for citations
+				html+= tuples('TD',[pageCount,name,'Popup Citation',page.notes]);
+			} else {
+				// else grab notes, text citation, help citation, and logic citation
+				if (page.notes !== '') {
+					html += tuples('TD',[pageCount, name,'Page Notes', page.notes]);
+					notesCount++;
+				}
+				if (page.textCitation !== '') {
+					html += tuples('TD',[pageCount, name,'Question Citation', page.textCitation]);
+					textCount++;
+				}
+				if (page.helpCitation !== '') {
+					html += tuples('TD',[pageCount, name,'Help Citation', page.helpCitation]);
+					helpCount++;
+				}
+				if (page.codeCitation !== '') {
+					html += tuples('TD',[pageCount, name,'Logic Citation', page.codeCitation]);
+					logicCount++;
+				}
+			}
+		}
+
+		html = '<h1>Citation Transcripts for: "' + gGuide.title+'"</h1>'
+			+'<ul>'
+				+'<li>Number of pages: ' + pageCount
+				+'<li>Number of pages with Page Notes Citations: ' + notesCount
+				+'<li>Number of pages with Question Text Citations: ' + textCount
+				+'<li>Number of pages with Help Text Citations: ' + helpCount
+				+'<li>Number of pages with Advanced Logic Citations: ' + logicCount
+			+'</ul>'
+			+'<table class="table CAJAReportDump CAJACitationDump">' + html + '</table>';
+
+		newWindowReport( gGuide.title +' - Citation Report - A2J 6 Author', html);
 }
 
 /* */

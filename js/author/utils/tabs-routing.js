@@ -21,7 +21,9 @@ export default function tabsRouting(appState) {
     }
 
     let item = navbarItems.filter(item => item.page === newPage).shift();
-    window.gotoTabOrPage(item.ref);
+    if (item && item.ref) {
+      window.gotoTabOrPage(item.ref);
+    }
   };
 
   // navigate to the right page/tab on load.

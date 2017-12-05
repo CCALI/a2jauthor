@@ -32,7 +32,5 @@ export default function(page) {
 
   if (urlPath) {
     return basePath + urlPath;
-  } else {
-    console.error(`Missing help url for ${page} page`);
   }
 }

@@ -9,6 +9,7 @@ import 'author/utils/eval-author-condition-test';
 
 import 'author/alert/alert-test';
 import 'author/popover/popover-test';
+import 'author/report/report-test';
 import 'author/templates/templates-test';
 import 'author/templates/edit/edit-test';
 import 'author/templates/edit/toolbar/toolbar-test';

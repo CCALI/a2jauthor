@@ -14,9 +14,9 @@ const fieldProperties = [
 ];
 
 const pageProperties = [
-  'name', 'type', 'step', 'repeatVar', 'outerLoopVar', 'text', 'textAudioURL',
-  'learn', 'help', 'helpAudioURL', 'helpReader', 'helpImageURL',
-  'helpVideoURL', 'codeBefore', 'codeAfter', 'notes'
+  'name', 'type', 'step', 'repeatVar', 'outerLoopVar', 'text', 'textCitation', 'textAudioURL',
+  'learn', 'help', 'helpCitation', 'helpAudioURL', 'helpReader', 'helpImageURL',
+  'helpVideoURL', 'codeBefore', 'codeAfter', 'codeCitation', 'notes'
 ];
 
 const guideProperties = [

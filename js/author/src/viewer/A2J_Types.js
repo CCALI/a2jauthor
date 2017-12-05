@@ -315,37 +315,38 @@ function TPopup()
  * @struct
  * @this {TPage}
  */
-function TPage()
-{	// This represents a single page within the lesson book/interview.
+function TPage() {	// This represents a single page within the lesson book/interview.
 	//this.id="";// Unique id
-	this.name= "";// Unique but author chosen name
-	this.text= "";// Text of question
-	this.textAudioURL= "";
-	this.notes= "";
-	this.learn= "";//Learn More prompt
-	this.help= "";// Optional help text from Learn More button
-
+	this.name = "";// Unique but author chosen name
+	this.text = "";// Text of question
+	this.textCitation = "";
+	this.textAudioURL = "";
+	this.notes = "";
+	this.learn = "";//Learn More prompt
+	this.help = "";// Optional help text from Learn More button
+	this.helpCitation = "";
 	this.helpAudioURL = "";
-	this.helpReader="";
-	this.helpImageURL="";
-	this.helpVideoURL="";
-	this.repeatVar="";// built-in for attaching Field variables to array
-	this.outerLoopVar="";
-	this.codeBefore="";
-	this.codeAfter="";
+	this.helpReader = "";
+	this.helpImageURL = "";
+	this.helpVideoURL = "";
+	this.repeatVar = "";// built-in for attaching Field variables to array
+	this.outerLoopVar = "";
+	this.codeBefore = "";
+	this.codeAfter = "";
+	this.codeCitation = "";
 	this.fields=[];
 	this.buttons=[];
 	this.step=0;//index into guide.steps[]
 
-	this.type ="";//type of page interaction
-	this.style ="";//subtype of page interaction
+	this.type = "";//type of page interaction
+	this.style = "";//subtype of page interaction
 
-	this.mapx=0;
-	this.mapy=0;
-	this.mapBranches=null;
+	this.mapx = 0;
+	this.mapy = 0;
+	this.mapBranches = null;
 
 
-	this.xml=null;
+	this.xml = null;
 	return this;
 }
 

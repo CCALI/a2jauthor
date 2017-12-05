@@ -78,9 +78,11 @@ function page2JSON(page)
 		//_nextPageDisabled: page.nextPageDisabled===true ? true : gJS2XML_SKIP,
 		//_alignText:	page.alignText==='' ? gJS2XML_SKIP : page.alignText,
 		XML_TEXT:		page.text,
+		XML_TEXTCITATION: page.textCitation,
 		TEXTAUDIO:		page.textAudioURL,
 		LEARN:			page.learn,
 		XML_HELP:		page.help,
+		XML_HELPCITATION: page.helpCitation,
 		HELPAUDIO:		page.helpAudioURL,
 		XML_HELPREADER:	page.helpReader,
 		HELPIMAGE:		page.helpImageURL,
@@ -89,6 +91,7 @@ function page2JSON(page)
 		FIELDS:			[],
 		XML_CODEBEFORE:	page.codeBefore,
 		XML_CODEAFTER:	page.codeAfter,
+		XML_CODECITATION: page.codeCitation,
 		XML_NOTES:		page.notes
 	};
 	var bi;
@@ -239,16 +242,19 @@ function parseXML2Page(PAGE, page)
 	//page.alignText="";
 	page.step=parseInt(PAGE.attr("STEP"),10);
 	page.text=PAGE.find("TEXT").xml();
-	page.textAudioURL=makestr(PAGE.find("TEXTAUDIO").text());
-	page.learn=makestr(PAGE.find("LEARN").text());
-	page.help=makestr(PAGE.find("HELP").xml());
-	page.helpAudioURL=makestr(PAGE.find("HELPAUDIO").text());
-	page.helpReader=makestr(PAGE.find("HELPREADER").xml());
-	page.helpImageURL=makestr(PAGE.find("HELPIMAGE").text());
-	page.helpVideoURL=makestr(PAGE.find("HELPVIDEO").text());
-	page.notes=makestr(PAGE.find("NOTES").xml());
+	page.textCitation=makestr(PAGE.find("TEXTCITATION").xml());
+	page.textAudioURL = makestr(PAGE.find("TEXTAUDIO").text());
+	page.learn = makestr(PAGE.find("LEARN").text());
+	page.help = makestr(PAGE.find("HELP").xml());
+	page.helpCitation = makestr(PAGE.find("HELPCITATION").xml());
+	page.helpAudioURL = makestr(PAGE.find("HELPAUDIO").text());
+	page.helpReader = makestr(PAGE.find("HELPREADER").xml());
+	page.helpImageURL = makestr(PAGE.find("HELPIMAGE").text());
+	page.helpVideoURL = makestr(PAGE.find("HELPVIDEO").text());
+	page.notes = makestr(PAGE.find("NOTES").xml());
 	page.codeBefore = makestr(PAGE.find("CODEBEFORE").xml());
-	page.codeAfter =	makestr(PAGE.find("CODEAFTER").xml());
+	page.codeAfter = makestr(PAGE.find("CODEAFTER").xml());
+	page.codeCitation = makestr(PAGE.find("CODECITATION").xml());
 
 	PAGE.find('BUTTONS > BUTTON').each(function(){
 		var button=new TButton();

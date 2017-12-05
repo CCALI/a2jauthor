@@ -1,0 +1,11 @@
+<can-import from="caja/author/button-toolbar/"/>
+<can-import from="caja/author/report/toolbar/toolbar.less!"/>
+
+<button-toolbar>
+  <ul class="nav navbar-nav">
+    <li><a href="#" class="select-full-report"><span class="glyphicon-clipboard"></span> Full Report</a></li>
+    <li><a href="#" class="select-text-report"><span class="glyphicon-clipboard"></span> Text Report</a></li>
+    <li><a href="#" class="select-citation-report"><span class="glyphicon-clipboard"></span> Citation Report</a></li>
+    <li><a href="#" class="print-report"><span class="glyphicon-pencil"></span> Print Current Report</a></li>
+  </ul>
+</button-toolbar>

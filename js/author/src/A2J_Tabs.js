@@ -314,7 +314,7 @@ var form={
     var e=$('<div class="destination-picker bootstrap-styles" name="'+data.name+'">'
       + (typeof data.label!=='undefined'
         ? ('<label>'+data.label+'</label>')
-        : '') 
+        : '')
       + ('<span>' + pageDispName + '</span>')
       + ('<button class="btn btn-default" />')
       + '</div>');
@@ -394,7 +394,7 @@ var form={
 						var newPageDest = makestr($('#page-picker-list .list-group-item.'+SELECTED).first().attr('rel')).substr(5);
 						data.value = newPageDest;
             var pageDispName = gGuide.pageDisplayName(newPageDest);
-            
+
             var picker = $(pageButton).parents('.destination-picker');
             var buttonData = picker.find('button').data('data');
             var newPicker = form.pickpage(data);
@@ -587,7 +587,7 @@ var form={
 		html = form.pasteFix(html,['DIV','P','BR','UL','OL','LI','A','B','I','U','BLOCKQUOTE']);
  		return html;
 	}
-	,htmlarea: function(data){//label,value,handler,name){
+	,htmlarea: function(data){//label,value,handler,name) {
 		form.id++;
 		var e= $('<div name="'+data.name+'">'
 			+'<div class="editspan form-group">'

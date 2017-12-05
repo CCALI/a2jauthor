@@ -20,9 +20,11 @@ function page2JSON_Mobile(page)
 		nested:			page.nested,
 		outerLoopVar: 	page.outerLoopVar,
 		text:			page.text,
+		textCitation: 	page.textCitation,
 		textAudioURL:	page.textAudioURL,
 		learn:			page.learn,
 		help:			page.help,
+		helpCitation: 	page.helpCitation,
 		helpAudioURL:	page.helpAudioURL,
 		helpReader:		page.helpReader,
 		helpImageURL:	page.helpImageURL,
@@ -31,6 +33,7 @@ function page2JSON_Mobile(page)
 		fields:			[],
 		codeBefore:		page.codeBefore,
 		codeAfter:		page.codeAfter,
+		codeCitation: 	page.codeCitation,
 		notes:			page.notes
 	};
 	var bi;

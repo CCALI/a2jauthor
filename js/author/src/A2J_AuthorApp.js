@@ -271,6 +271,7 @@ function main()
 
   $('#reportFull').button().click(reportFull);
   $('#reportTranscript').button().click(reportTranscript);
+  $('#reportCitation').button().click(reportCitation);
 
   $('#guideDownload').button({  disabled:false }).click(function()
   {

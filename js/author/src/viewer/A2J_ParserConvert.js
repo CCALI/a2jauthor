@@ -127,25 +127,26 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		var page = mapids[QUESTION.attr("ID")];
 
 		page.xmla2j = QUESTION.xml();
-		page.type="A2J";
-		page.style="";
-		page.step=parseInt(QUESTION.attr("STEP"),10);
-		page.mapx=parseInt(0.5*QUESTION.attr("MAPX"),10);
-		page.mapy=parseInt(0.7*QUESTION.attr("MAPY"),10) + 100;
-		page.repeatVar=makestr(QUESTION.attr("REPEATVAR"));
-		page.outerLoopVar=makestr(QUESTION.attr("OUTERLOOPVAR"));
-		page.nested=textToBool(QUESTION.attr("NESTED"));
-		//page.nextPage="";
-		//page.nextPageDisabled = false;
-		page.text=replacePopups(page.name,makestr(QUESTION.find("TEXT").xml()));
-		page.textAudioURL= replacePopups(page.name,makestr(QUESTION.find("TEXTAUDIO").xml()));
-		page.learn=makestr(QUESTION.find("LEARN").xml());
-		page.help= replacePopups(page.name,makestr(QUESTION.find("HELP").xml()));
-		page.helpAudioURL= replacePopups(page.name,makestr(QUESTION.find("HELPAUDIO").xml()));
-		page.helpReader=makestr(QUESTION.find("HELPREADER").xml());
-		page.helpImageURL=makestr(QUESTION.find("HELPGRAPHIC").text());
-		page.helpVideoURL=makestr(QUESTION.find("HELPVIDEO").text());
-		page.notes= cr2P(makestr(QUESTION.find("NOTE").xml()));
+		page.type = "A2J";
+		page.style ="";
+		page.step = parseInt(QUESTION.attr("STEP"),10);
+		page.mapx = parseInt(0.5*QUESTION.attr("MAPX"),10);
+		page.mapy = parseInt(0.7*QUESTION.attr("MAPY"),10) + 100;
+		page.repeatVar = makestr(QUESTION.attr("REPEATVAR"));
+		page.outerLoopVar = makestr(QUESTION.attr("OUTERLOOPVAR"));
+		page.nested = textToBool(QUESTION.attr("NESTED"));
+		page.text = replacePopups(page.name,makestr(QUESTION.find("TEXT").xml()));
+		page.textCitation = cr2P(makestr(QUESTION.find("TEXTCITATION").xml()));
+		page.textAudioURL = replacePopups(page.name,makestr(QUESTION.find("TEXTAUDIO").xml()));
+		page.learn = makestr(QUESTION.find("LEARN").xml());
+		page.help = replacePopups(page.name,makestr(QUESTION.find("HELP").xml()));
+		page.helpCitation = cr2P(makestr(QUESTION.find("HELPCITATION").xml()));
+		page.helpAudioURL = replacePopups(page.name,makestr(QUESTION.find("HELPAUDIO").xml()));
+		page.helpReader = makestr(QUESTION.find("HELPREADER").xml());
+		page.helpImageURL = makestr(QUESTION.find("HELPGRAPHIC").text());
+		page.helpVideoURL = makestr(QUESTION.find("HELPVIDEO").text());
+		page.notes = cr2P(makestr(QUESTION.find("NOTE").xml()));
+		page.codeCitation = cr2P(makestr(QUESTION.find("CODECITATION").xml()));
 
 		if (CONST.showXML) {
 			page.xml = $(this).xml();

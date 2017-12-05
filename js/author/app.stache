@@ -8,6 +8,8 @@
 <can-import from="author/templates/edit/"/>
 <can-import from="author/vertical-navbar/"/>
 <can-import from="author/interviews/toolbar/"/>
+<can-import from="author/report/" />
+<can-import from="author/report/toolbar/"/>
 <can-import from='author/about/main/' />
 
 <div id="splash" class="welcome">
@@ -292,15 +294,11 @@
     </div>
 
     <!-- Report Tab -->
-    <div class="tab-panel" id="tabsReport">
-      <div class="tabContentFrame page">
-        <div class="tabContent editq">
-          <h3 class="page-title">Report</h3>
-          <p>Report of text in a print-friendly layout, also useful for translation projects</p>
-          <button id="reportFull" class="btn btn-default btn-wide-md">Full Report</button>
-          <button id="reportTranscript" class="btn btn-default btn-wide-md">Transcript Report</button>
-        </div>
-      </div>
+    <div class="tab-panel has-toolbar" id="tabsReport">
+      {{#is page 'report'}}
+        <report-toolbar {(selected-report)}="selectedReport"></report-toolbar>
+        <report-page {guide}="guide" {(selected-report)}="selectedReport"></report-page>
+        {{/is}}
     </div>
 
     <!-- Preview Tab -->

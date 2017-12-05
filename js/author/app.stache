@@ -312,13 +312,13 @@
 
     <!-- Publish/Upload Tab -->
     <div class="tab-panel page" id="tabsUpload">
-      <h3 class="page-title">Publish/Upload</h3>
-      <p>To publish your interview to another site such as LHI, download the ZIP which contains the interview and its supplemental files.</p>
+      <h3 class="page-title">Publish/Download</h3>
+      <p>To download your A2J Guided Interview<sup>®</sup>, use the buttons below</p>
 
       <button id="guideZIP" class="btn btn-default btn-wide-md"><span class="glyphicon-file-archive"></span> Download ZIP</button>
       <button id="guideDownload" class="btn btn-default btn-wide-md"><span class="glyphicon-folder-download"></span> Download A2J</button>
       <hr>
-      <p>To publish to testing servers, use the buttons below</p>
+      <p>To publish to LawHelp Interactive, use the buttons below</p>
       <button id="guideZIPLHIQA" class="btn btn-default btn-wide-md"><span class="glyphicon-publish"></span> Publish to RebuildQA</button>
       <button id="guideZIPLHI" class="btn btn-default btn-wide-md"><span class="glyphicon-publish"></span> Publish to LHI Production</button>
       {{#if showDevPublishButtons}}

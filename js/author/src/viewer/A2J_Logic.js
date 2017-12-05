@@ -86,16 +86,14 @@ TLogic.prototype.pageFindReferences = function(CAJAScript,findName)
 	return result;
 };
 
-TLogic.prototype.testVar = function(name,lineNum,errors)
-{	// If variable name not defined in variables list, add error.
-	if (!gGuide.varExists(name))
-	{
-		switch (name)
-		{
-			case 'TODAY':
-				return;
-			default:
-				errors.push(new ParseError(lineNum,'','Undefined variable '+name));
+TLogic.prototype.testVar = function(name,lineNum,errors) {	// If variable name not defined in variables list, add error.
+	if (!gGuide.varExists(name)) {
+		const shoutName = name.toString().toUpperCase();
+		const reservedWordFound = (shoutName === 'NULL' || shoutName === 'TODAY' || shoutName === 'TRUE' || shoutName === 'FALSE');
+		if (reservedWordFound) {
+			return;
+		} else {
+			errors.push(new ParseError(lineNum,'','Undefined variable '+name));
 		}
 	}
 };

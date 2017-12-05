@@ -25,4 +25,21 @@ describe('util: string', function() {
 		});
 
 	});
+
+	describe('textToNumber', function() {
+		it('returns null if falsey value', function() {
+			assert.equal(cString.textToNumber(''), null, 'empty string did not return null');
+			assert.equal(cString.textToNumber(null), null, 'null did not return null, really?!!?');
+			assert.equal(cString.textToNumber(undefined), null, 'undefined did not return null');
+			assert.equal(cString.textToNumber(false), null, 'boolean false did not return to null');
+		});
+
+		it('returns a number if a string number', function() {
+			assert.equal(cString.textToNumber('456'), 456, 'string number did not return a number');
+		});
+
+		it('returns a number from a string with comma seperators', function() {
+			assert.equal(cString.textToNumber('4,567,890'), 4567890, 'string number with commas not parsed correctly');
+		});
+	});
 });

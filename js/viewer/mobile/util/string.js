@@ -84,25 +84,18 @@ export default {
 
   textToNumber: function(n) {
     // Convert to number even with commas.
-    // If it's text, return 0.
-    if (n === '' || n === null || typeof n === 'undefined' || n === 'false') {
-      return 0;
+    // Used to return 0 for falsey values, but was breaking 'hasanswered' macro - should return null instead
+    // with better variable type controls, this function should only be needed to handle string numbers with commas
+    // and maybe not even that if numeral.js is used.
+    if (typeof n === 'string') {
+      n = n.replace(/,/g, ''); // English Only TODO: handle international numbers
     }
 
-    if (n === 'true') {
-      return true;
+    if (isNaN(parseFloat(n))) {
+      return null;
     }
 
-    if (this.isNumber(n)) {
-      return parseFloat(n);
-    }
-
-    n = String(n).replace(',', ''); //English Only
-    if (this.isNumber(n)) {
-      return parseFloat(n);
-    }
-
-    return 0;
+    return parseFloat(n);
   },
 
   isNumber: function(n) {

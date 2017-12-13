@@ -45,6 +45,8 @@ function guideLoaded(data) {
 
   window.gGuideID = data.gid;
   window.gGuide = parseXML_Auto_to_CAJA(cajaDataXML);
+  // used for piwik dashboard
+  window.gGuide.authid = data.userid;
   window.gGuidePath = urlSplit(data.path).path;
 
   $('#author-app').trigger('author:item-selected', gGuideID);

@@ -1,7 +1,7 @@
 /*
 	CALI Author 5 / A2J Author 5 (CAJA) * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
-	
+
 	CALI Author Book Parser
 	04/15/2013
 
@@ -24,6 +24,7 @@ function parseXML_CA_to_CAJA(BOOK)
 
 	var guide=new TGuide();
 
+	guide.authid = BOOK.find('INFO > AUTHID').xml();
 	guide.tool=				"CA";
 	guide.toolversion=	makestr(BOOK.find('INFO > CAVERSIONREQUIRED').text());
 	guide.avatar=			"";
@@ -33,8 +34,8 @@ function parseXML_CA_to_CAJA(BOOK)
 	guide.createdate=		BOOK.find('INFO > CREATEDATE').xml();
 	guide.credits=			cr2P(br2cr(makestr(BOOK.find('INFO > CREDITS').xml())));
 	guide.description=	cr2P(makestr(BOOK.find('CALIDESCRIPTION').xml()));
-	guide.jurisdiction=	""; 
-	guide.language=		"en"; 
+	guide.jurisdiction=	"";
+	guide.language=		"en";
 	guide.modifydate=		BOOK.find('INFO > MODIFYDATE').xml();
 	guide.notes=			cr2P(br2cr(makestr(BOOK.find('INFO > NOTES').xml())));
 	guide.sendfeedback=	true;
@@ -55,8 +56,8 @@ function parseXML_CA_to_CAJA(BOOK)
 		guide.authors.push(author);
 	});
 
-	
-	
+
+
 	BOOK.find("BOOK > PAGE").each(function() {
 		var pageXML = $(this);
 		var page = new TPage();
@@ -66,7 +67,7 @@ function parseXML_CA_to_CAJA(BOOK)
 		page.name=pageXML.attr("ID");
 		//page.name=page.id;
 		page.type=pageXML.attr("TYPE");
-		
+
 		page.style=makestr(pageXML.attr("STYLE"));
 		page.nextPage="";
 		page.nextPageDisabled = false;
@@ -86,17 +87,17 @@ function parseXML_CA_to_CAJA(BOOK)
 			page.mapx=mapbounds[0];
 			page.mapy=mapbounds[1];
 		}
-		
+
 		var it=pageXML.find("INITIALTEXT").xml();
 		if (it!==null)
 		{	// text select
 			//aie(page,"initialText",pageXML.find("INITIALTEXT").xml());
-			page.initialText=it; 
+			page.initialText=it;
 			page.tests=[];
 			page.tests.push({
-				style:'range', 
-				text: pageXML.find("CORRECTTEXT").xml(), 
-				slackWordsBefore: pageXML.find("SLACKWORDSBEFORE").xml(), 
+				style:'range',
+				text: pageXML.find("CORRECTTEXT").xml(),
+				slackWordsBefore: pageXML.find("SLACKWORDSBEFORE").xml(),
 				slackWordsAfter: pageXML.find("SLACKWORDSAFTER").xml()
 			});
 		}
@@ -117,7 +118,7 @@ function parseXML_CA_to_CAJA(BOOK)
 			page.details[d].label = "ABCDEFG".charAt(d)+".";
 		});
 		pageXML.find('FEEDBACK').each(function()
-		{	
+		{
 			var text=jQuery.trim($(this).xml());
 			if ($(this).attr("BUTTON")===null){
 				page.feedbackShared = text;
@@ -135,22 +136,22 @@ function parseXML_CA_to_CAJA(BOOK)
 				{
 					page.feedbacks=[];
 				}
-				page.feedbacks[fb.id]=fb; 
+				page.feedbacks[fb.id]=fb;
 			}
 		});
-		
+
 		if (!(page.type==="Topics" && page.name!=="Contents"))
 		{	// skip placeholder pages
 			guide.pages[page.name] = page;
 			//guide.mapids[page.id]=page;
 			//if (page.name!=page.id) trace("mismatch");
 		}
-	}); 
+	});
 
 	guide.templates="";
 	guide.variables=[];
-	
-	
+
+
 	guide.firstPage=	"Contents";
 	guide.exitPage=	"";
 	$('LI',guide.TOC).each(function(i,li){
@@ -168,8 +169,8 @@ function parseXML_CA_to_CAJA(BOOK)
 		}
 		guide.steps.push(step);
 	});
-	
-	
+
+
 	//trace(guide.TOC);
 	//trace(propsJSON('guide.steps',guide.steps));
 	//var step = new TStep();
@@ -177,14 +178,14 @@ function parseXML_CA_to_CAJA(BOOK)
 	//step.text.eoOutline
 	//guide.steps[0]=step;
 	// Convert TOC into useful thing
-	
+
 	/*
 	// Add stub pages for the About and Score screens.
 	var page = new TPage();
 	page.name=pageABOUT;
 	page.text= book.description;
 	book.pages[page.name]=page;
-	
+
 	page=new TPage()
 	page.name=pageLessonCompleted;
 	page.nextPageDisabled=true;

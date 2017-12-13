@@ -84,6 +84,7 @@ function guide2JSON_Mobile (guide)
 	// Drop internatl references and cyclic pointers.
 	var newGuide={};
 
+	newGuide.authid = guide.authid;
 	newGuide.tool = guide.tool;
 	newGuide.toolversion=guide.toolversion;
 	newGuide.avatar=guide.avatar;

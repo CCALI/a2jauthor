@@ -1,11 +1,13 @@
 import Map from 'can/map/';
+import List from 'can/list/';
 import Component from 'can/component/';
 import template from './report.stache';
 import pagePartial from './page-partial.stache';
 import popupPartial from './popup-partial.stache';
 import naturalCompare from 'string-natural-compare/';
-import TextStats from 'text-statistics';
 import cString from 'viewer/mobile/util/string';
+import textStats from 'text-statistics';
+import _cloneDeep from 'lodash/cloneDeep';
 
 can.view.preload('page-partial', pagePartial);
 can.view.preload('popup-partial', popupPartial);
@@ -19,14 +21,31 @@ can.view.preload('popup-partial', popupPartial);
  */
 export const ReportVM = Map.extend('ReportVM', {
   define: {
+    parentGuide: {
+      set (guide) {
+        const cloneMade = this.attr('cloneMade');
+        if (guide && !cloneMade) {
+          this.attr('guide', _cloneDeep(guide));
+          this.attr('cloneMade', true);
+        }
+        return guide;
+      }
+    },
+
+    cloneMade: {
+      type: 'boolean',
+      value: false
+    },
+
     /**
      * @property {Map} report.ViewModel.prototype.define.guide guide
      * @parent report.ViewModel
      *
-     * passed in state of the current guide
+     * local deep copy of the current guide from the app-state
+     * this prevents the auto save from updating the report while it is being viewed
      */
     guide: {
-      serialize: false
+
     },
 
     /**
@@ -43,7 +62,8 @@ export const ReportVM = Map.extend('ReportVM', {
      * @property {Boolean} report.ViewModel.prototype.define.buildingReport buildingReport
      * @parent report.ViewModel
      *
-     * used to active the 'building report' spinner, initial value based on a current guide existing
+     * used to active the 'building report' spinner
+     * initial value function prevents spinner when no guide loaded
      */
     buildingReport: {
       value: function () {
@@ -188,31 +208,73 @@ export const ReportVM = Map.extend('ReportVM', {
      * @property {Array} report.ViewModel.prototype.define.fkGradeList fkGradeList
      * @parent report.ViewModel
      *
-     * used to store Flesch-Kincaid scores and compute the overall average score
+     * list of grades used to get overall interview reading grade level
      */
     fkGradeList: {
-      value: []
+      Type: List,
+      value: () => new List()
+    },
+
+    /**
+     * @property {Number} report.ViewModel.prototype.define.fkOverallGrade fkOverallGrade
+     * @parent report.ViewModel
+     *
+     * average of all interview text scores from the above list
+     */
+    fkOverallGrade: {
+
+    },
+
+    /**
+     * @property {Boolean} report.ViewModel.prototype.define.hideAllGrades hideAllGrades
+     * @parent report.ViewModel
+     *
+     * show fk text grades only when bad, or author selects hide grades from toolbar
+     */
+    hideAllGrades: {
+      type: 'boolean',
+      value: false
     }
-
   },
 
-  textStatisticsReports (text) {
-    const statsReports = TextStats(text);
-    const fkGrade = statsReports.fleschKincaidGradeLevel();
-    const wordCount = statsReports.wordCount();
-    const averageWordsPerSentence = statsReports.averageWordsPerSentence();
-
-    return {
-      fleschKincaidGrade: fkGrade,
-      wordCount: wordCount,
-      averageWordsPerSentence: averageWordsPerSentence
-    };
+  /**
+   * @property {Function} report.ViewModel.prototype.hideGrade hideGrade
+   * @parent report.ViewModel
+   *
+   * whether to hide the grading results
+   */
+  hideGrade (fkGrade) {
+    return !fkGrade || this.attr('hideAllGrades');
   },
 
-  textStatAlertClass (fkGrade) {
+  /**
+   * @property {Function} report.ViewModel.prototype.getOverallGrade getOverallGrade
+   * @parent report.ViewModel
+   *
+   * computes and formats the overall interview reading grade level
+   */
+  getOverallGrade () {
+    const fkGradeList = this.attr('fkGradeList');
+    if (fkGradeList.length) {
+      let gradeTotal = 0;
+      fkGradeList.forEach(function (grade) {
+        gradeTotal += grade;
+      });
+      return (gradeTotal / fkGradeList.length).toFixed(1);
+    }
+  },
+
+  /**
+   * @property {Function} report.ViewModel.prototype.getTextAlertClass getTextAlertClass
+   * @parent report.ViewModel
+   *
+   * sets the background color based on the reading grade level
+   */
+  getTextAlertClass (fkGrade) {
     if (fkGrade) {
-      return (fkGrade < 6 ? 'alert-success' :
-              (fkGrade < 9 ? 'alert-warning' : 'alert-danger'));
+      return (fkGrade < 6 ? 'alert-success'
+              : (fkGrade < 9 ? 'alert-warning'
+              : 'alert-danger'));
     }
   },
 
@@ -231,12 +293,39 @@ export const ReportVM = Map.extend('ReportVM', {
   },
 
   /**
+   * @property {Function} report.ViewModel.prototype.getTextStats getTextStats
+   * @parent report.ViewModel
+   *
+   *  reading grade stats for display
+   *  uses https://www.npmjs.com/package/text-statistics
+   */
+  getTextStats (text) {
+    const statsReports = textStats(text);
+    const fkGrade = statsReports.fleschKincaidGradeLevel();
+    const wordCount = statsReports.wordCount();
+    const averageWordsPerSentence = parseFloat(statsReports.averageWordsPerSentence().toFixed(1));
+    const alertClass = this.getTextAlertClass(fkGrade);
+
+    // add this grade to the overall list of scores
+    this.attr('fkGradeList').push(fkGrade);
+
+    return {
+      fkGrade,
+      wordCount,
+      averageWordsPerSentence,
+      alertClass
+    };
+  },
+
+  /**
    * @property {Function} report.ViewModel.prototype.buildPagesByStep buildPagesByStep
    * @parent report.ViewModel
    *
    * builds 2 sorted arrays, pages and popups, from the existing sortedPages and steps Maps
    */
   buildPagesByStep (sortedPages, guideSteps) {
+    const vm = this;
+
     const pagesByStep = [];
     const popupPages = [];
 
@@ -249,6 +338,10 @@ export const ReportVM = Map.extend('ReportVM', {
     });
 
     sortedPages.forEach(function (page) {
+      page.textStats = page.text ? vm.getTextStats(page.text) : null;
+      page.learnStats = page.learn ? vm.getTextStats(page.learn) : null;
+      page.helpStats = page.help ? vm.getTextStats(page.help) : null;
+
       if (page.type === 'Popup') {
         popupPages.push(page);
       } else {
@@ -259,7 +352,6 @@ export const ReportVM = Map.extend('ReportVM', {
 
     return [pagesByStep, popupPages];
   }
-
 });
 
 /**
@@ -274,7 +366,7 @@ export const ReportVM = Map.extend('ReportVM', {
  * ## Use
  *
  * @codestart
- *   <report-page {guide}="guide" {(selected-report)}="selectedReport"></report-page>
+ *   <report-page {guide}="guide" {(hide-all-grades)}="hideAllGrades" {(selected-report)}="selectedReport"></report-page>
  * @codeend
  */
 export default Component.extend({
@@ -283,7 +375,10 @@ export default Component.extend({
   tag: 'report-page',
 
   events: {
-
+    '{fkGradeList} length': function () {
+      const interviewGradeLevel = this.viewModel.getOverallGrade();
+      this.viewModel.attr('fkOverallGrade', interviewGradeLevel);
+    }
   },
 
   helpers: {
@@ -296,8 +391,8 @@ export default Component.extend({
 
     formatPageTextCell (val) {
       if (val) {
-        // ignore case and optional space after br
-        val = val.replace(/(<br\s?\/>)/gi, '|');
+        // this preserves hard returns from interview while keeping text shorter
+        val = val.replace(/(<br\s?\/>)/gi, '|').replace(/(<\/option>)/gi, ' | ').replace(/(<\/p>)/gi, ' | ');
       }
       return cString.decodeEntities(val);
     },
@@ -308,6 +403,10 @@ export default Component.extend({
 
     addOne (val) {
       return parseInt(val) + 1;
+    },
+
+    showAlertGlyph (alertClass) {
+      return alertClass === 'alert-danger';
     }
   }
 });

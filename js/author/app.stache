@@ -296,9 +296,9 @@
     <!-- Report Tab -->
     <div class="tab-panel has-toolbar" id="tabsReport">
       {{#is page 'report'}}
-        <report-toolbar {(selected-report)}="selectedReport"></report-toolbar>
-        <report-page {guide}="guide" {(selected-report)}="selectedReport"></report-page>
-        {{/is}}
+        <report-toolbar {(hide-all-grades)}="hideAllGrades" {(selected-report)}="selectedReport"></report-toolbar>
+        <report-page {parent-guide}="guide" {(hide-all-grades)}="hideAllGrades" {(selected-report)}="selectedReport"></report-page>
+      {{/is}}
     </div>
 
     <!-- Preview Tab -->

@@ -1,11 +1,16 @@
-    <fieldset><legend>{{name}}</legend>
-        <div class="row">
-            <div class="col-xs-12">
-                <div>
-                    <p class="{{#if hideCitation}}hide-section{{/if}}"><label>Notes:</label>  {{formatPageTextCell(notes)}}</p>
-                    <p class="{{#if hideText}}hide-section{{/if}}"><label>Text:</label>  {{formatPageTextCell(text)}}</p>
-                    <p class="{{#if hideDefault}}hide-section{{/if}}"><label>Text Audio:</label>  {{textAudioURL}}</p>
+<can-import from='author/report/text-stats/' />
+
+<fieldset><legend>{{name}}</legend>
+    <div class="row">
+        <div class="col-xs-12">
+            <div>
+                <p class="{{#if hideCitation}}hide-section{{/if}}"><label>Notes:</label>  {{formatPageTextCell(notes)}}</p>
+                <div class="{{#if hideText}}hide-section{{/if}}">
+                    <p><label>Text:</label>  {{formatPageTextCell(text)}}</p>
+                    <text-stats {stats}="textStats"></text-stats>
                 </div>
+                <p class="{{#if hideDefault}}hide-section{{/if}}"><label>Text Audio:</label>  {{textAudioURL}}</p>
             </div>
         </div>
-    </fieldset>
+    </div>
+</fieldset>

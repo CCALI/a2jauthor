@@ -6,6 +6,7 @@
     <li><a href="#" class="select-full-report"><span class="glyphicon-clipboard"></span> Full Report</a></li>
     <li><a href="#" class="select-text-report"><span class="glyphicon-clipboard"></span> Text Report</a></li>
     <li><a href="#" class="select-citation-report"><span class="glyphicon-clipboard"></span> Citation Report</a></li>
-    <li><a href="#" class="print-report"><span class="glyphicon-pencil"></span> Print Current Report</a></li>
+    <li><a href="#" class="print-report"><span class="glyphicon-pencil"></span> Print Preview</a></li>
+    <li><a href="#" class="hide-grades-toggle"><span class="glyphicon-eye"></span> {{gradesButtonText}}</a></li>
   </ul>
 </button-toolbar>

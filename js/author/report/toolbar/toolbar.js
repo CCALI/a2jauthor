@@ -19,7 +19,30 @@ export const ReportToolbarVM = Map.extend('ReportToolbarVM', {
      *
      * tracks and sends the selected report type to the `<report-page>` component
      */
-    selectedReport: {}
+    selectedReport: {},
+
+    /**
+     * @property {Boolean} report.ViewModel.prototype.define.hideAllGrades hideAllGrades
+     * @parent report.ViewModel
+     *
+     * show fk text grades only when bad, or author selects hideAllGrades
+     */
+    hideAllGrades: {
+      type: 'boolean'
+    },
+
+    /**
+     * @property {String} report.ViewModel.prototype.define.gradesButtonText gradesButtonText
+     * @parent report.ViewModel
+     *
+     * update show/hide button text
+     */
+    gradesButtonText: {
+      value: 'Hide Text Grading',
+      get () {
+        return this.attr('hideAllGrades') === true ? 'Show Text Grading' : 'Hide Text Grading';
+      }
+    }
   }
 });
 
@@ -33,7 +56,7 @@ export const ReportToolbarVM = Map.extend('ReportToolbarVM', {
  * ## Use
  *
  * @codestart
- *  <report-toolbar {(selected-report)}="selectedReport"></report-toolbar>
+ *  <report-toolbar {(hide-all-grades)}="hideAllGrades" {(selected-report)}="selectedReport"></report-toolbar>
  * @codeend
  */
 export default Component.extend({
@@ -43,19 +66,24 @@ export default Component.extend({
   tag: 'report-toolbar',
 
   events: {
-    '.select-full-report click': function() {
+    '.select-full-report click': function () {
       this.viewModel.attr('selectedReport', 'fullReport');
     },
 
-    '.select-text-report click': function() {
+    '.select-text-report click': function () {
       this.viewModel.attr('selectedReport', 'textReport');
     },
 
-    '.select-citation-report click': function() {
+    '.select-citation-report click': function () {
       this.viewModel.attr('selectedReport', 'citationReport');
     },
 
-    '.print-report click': function() {
+    '.hide-grades-toggle click': function () {
+      const currentValue = this.viewModel.attr('hideAllGrades');
+      this.viewModel.attr('hideAllGrades', !currentValue);
+    },
+
+    '.print-report click': function () {
       const reportElement = document.getElementById("print-report");
       const reportTitleElement = document.getElementsByClassName("guidetitle")[0];
 

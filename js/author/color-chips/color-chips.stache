@@ -1,4 +1,4 @@
-<can-import from="author/color-chips/color-chips.less!"/>
+<can-import from="caja/author/color-chips/color-chips.less!"/>
 <ul class='chip-list'>
   {{#each colorClasses}}
     <li

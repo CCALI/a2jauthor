@@ -3,8 +3,8 @@ import F from 'funcunit';
 import assert from 'assert';
 import stache from 'can/view/stache/';
 import A2JTemplateVM from './a2j-template-vm';
-import A2JTemplate from 'author/models/a2j-template';
-import templateFixture from 'author/models/fixtures/templates/guide20-template2114';
+import A2JTemplate from 'caja/author/models/a2j-template';
+import templateFixture from 'caja/author/models/fixtures/templates/guide20-template2114';
 
 import 'steal-mocha';
 import './a2j-template';

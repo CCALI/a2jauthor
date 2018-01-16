@@ -15,6 +15,7 @@
       {answers}="request.body.answers"
       {guide-id}="request.body.guideId"
       {template-id}="request.body.templateId"
+      {template-ids}="request.body.templateIds"
       {file-data-url}="request.body.fileDataUrl"
     />
   </body>

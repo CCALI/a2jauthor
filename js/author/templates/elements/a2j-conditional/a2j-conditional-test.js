@@ -6,7 +6,7 @@ import ConditionalVM from './a2j-conditional-vm';
 
 import 'steal-mocha';
 import './a2j-conditional';
-import 'author/templates/elements/a2j-template/';
+import 'caja/author/templates/elements/a2j-template/';
 
 describe('<a2j-conditional>', function() {
 

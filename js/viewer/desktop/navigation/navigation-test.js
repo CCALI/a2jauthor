@@ -1,10 +1,10 @@
 import $ from 'jquery';
 import assert from 'assert';
 import stache from 'can/view/stache/';
-import AppState from 'viewer/models/app-state';
-import Interview from 'viewer/models/interview';
-import constants from 'viewer/models/constants';
-import {ViewerNavigationVM} from 'viewer/desktop/navigation/';
+import AppState from 'caja/viewer/models/app-state';
+import Interview from 'caja/viewer/models/interview';
+import constants from 'caja/viewer/models/constants';
+import {ViewerNavigationVM} from 'caja/viewer/desktop/navigation/';
 import sinon from 'sinon';
 
 import 'steal-mocha';

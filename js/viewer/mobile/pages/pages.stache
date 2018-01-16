@@ -1,6 +1,6 @@
-<can-import from="viewer/mobile/pages/fields/" />
-<can-import from="viewer/mobile/pages/pages.less!" />
-<can-import from='author/audio-player/' />
+<can-import from="caja/viewer/mobile/pages/fields/" />
+<can-import from="caja/viewer/mobile/pages/pages.less!" />
+<can-import from='caja/author/audio-player/' />
 
 {{#eq rState.page '__error'}}
   <div class="jumbotron">

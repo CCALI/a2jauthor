@@ -2,7 +2,7 @@ import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './fields.stache!';
 
-import 'viewer/mobile/pages/fields/field/';
+import 'caja/viewer/mobile/pages/fields/field/';
 
 /**
  * @property {can.Map} fields.ViewModel

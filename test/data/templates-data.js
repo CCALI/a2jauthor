@@ -7,6 +7,6 @@ var templates = [{
 }, {
   guideId: 'Guide1262',
   templateId: 2114
-}];
+}]
 
-module.exports = templates;
+module.exports = templates

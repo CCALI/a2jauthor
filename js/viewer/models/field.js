@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import Map from 'can/map/';
 import List from 'can/list/';
-import Answer from 'viewer/models/answer';
+import Answer from 'caja/viewer/models/answer';
 import normalizePath from 'caja/viewer/util/normalize-path';
 
 import 'can/map/define/';

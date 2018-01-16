@@ -2,7 +2,7 @@ import Map from 'can/map/';
 import moment from 'moment';
 import _some from 'lodash/some';
 import _filter from 'lodash/filter';
-import Validations from 'viewer/mobile/util/validations';
+import Validations from 'caja/viewer/mobile/util/validations';
 
 import 'can/map/define/';
 import 'can/map/validations/';

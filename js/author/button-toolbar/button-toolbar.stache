@@ -1,4 +1,4 @@
-<can-import from="author/button-toolbar/button-toolbar.less!"/>
+<can-import from="caja/author/button-toolbar/button-toolbar.less!"/>
 
 <nav class="navbar navbar-default navbar-toolbar">
   <div class="container-fluid">

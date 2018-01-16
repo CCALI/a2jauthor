@@ -1,8 +1,8 @@
 import assert from 'assert';
-import Field from 'viewer/models/field';
-import Answer from 'viewer/models/answer';
-import Answers from 'viewer/models/answers';
-import AnswerVM from 'viewer/models/answervm';
+import Field from 'caja/viewer/models/field';
+import Answer from 'caja/viewer/models/answer';
+import Answers from 'caja/viewer/models/answers';
+import AnswerVM from 'caja/viewer/models/answervm';
 
 import 'steal-mocha';
 

@@ -32,14 +32,14 @@ module.exports = function(options, folders){
 		// makes sure can is not added to the global so we can build nicely.
 		global.GLOBALCAN = false;
 		return stealTools.build({
-			main: "static",
 			config: __dirname+"/config.js",
-			bundlesPath: __dirname+"/bundles",
+			main: "static",
 			paths:  {
 				"jquery": jQueryRelative,
 				"can/*": canJSRelative
 			}
 		},{
+			dest: __dirname+"/bundles",
 			minify: options.minifyBuild === false ? false : true,
 			quiet: options.debug ? false : true,
 			debug: options.debug ?  true : false

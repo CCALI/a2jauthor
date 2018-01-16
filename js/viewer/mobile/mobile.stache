@@ -1,8 +1,8 @@
-<can-import from="viewer/mobile/pages/"/>
-<can-import from="viewer/mobile/intro/"/>
-<can-import from="viewer/mobile/header/"/>
-<can-import from="viewer/mobile/filler/"/>
-<can-import from="viewer/mobile/mobile.less!"/>
+<can-import from="caja/viewer/mobile/pages/"/>
+<can-import from="caja/viewer/mobile/intro/"/>
+<can-import from="caja/viewer/mobile/header/"/>
+<can-import from="caja/viewer/mobile/filler/"/>
+<can-import from="caja/viewer/mobile/mobile.less!"/>
 
 {{#unless tocOrCreditsShown}}
   <a2j-header {p-state}="pState" {m-state}="mState" {interview}="interview" />

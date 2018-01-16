@@ -2,7 +2,7 @@ import Map from 'can/map/';
 import _range from 'lodash/range';
 import template from './list.stache!';
 import Component from 'can/component/';
-import moveItem from 'author/utils/move-item-array';
+import moveItem from 'caja/author/utils/move-item-array';
 
 import 'can/map/define/';
 

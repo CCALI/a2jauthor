@@ -1,18 +1,21 @@
 {
   "name": "caja",
+  "private": true,
   "version": "0.0.1",
-  "main": "server.stache!done-autorender",
+  "main": "caja/server.stache!done-autorender",
   "description": "Authoring and viewer App GUI.",
   "scripts": {
-    "test": "npm run mocha",
-    "build": "babel src --out-dir lib",
-    "build:server": "steal-tools build",
+    "test": "npm run lint:pdf && npm run mocha && npm run test:pdf",
+    "build": "babel src --out-dir lib --quiet",
+    "build:server": "steal-tools build --no-minify",
     "start": "NODE_ENV=production node ./bin/www",
     "dev": "npm run build && node ./bin/www",
     "build:viewer-zip": "node ./bin/make-viewer-package",
     "build:client": "grunt build --gruntfile=js/Gruntfile.js",
     "mocha": "mocha test/routes test/util --compilers js:babel-register",
-    "mocha:watch": "mocha test/routes test/util --compilers js:babel-register --watch"
+    "mocha:watch": "mocha test/routes test/util --compilers js:babel-register --watch",
+    "test:pdf": "npm run build && babel test --out-dir test-lib --quiet && ava --serial",
+    "lint:pdf": "standard src/*.js src/**/*.js --fix && standard test/**/*.js --fix --env mocha"
   },
   "author": "",
   "license": "ISC",
@@ -21,7 +24,20 @@
     "url": "https://github.com/CCALI/CAJA"
   },
   "system": {
-    "npmAlgorithm": "flat",
+    "//": "globals-patch can be removed after upgrade to done-ssr 1.x and can 3.x",
+    "configDependencies": [
+      "globals-patch"
+    ],
+    "ext": {
+      "ejs": "can/view/ejs/system",
+      "mustache": "can/view/mustache/system",
+      "stache": "can/view/stache/system"
+    },
+    "plugins": [
+      "done-css",
+      "steal-less",
+      "can"
+    ],
     "directories": {
       "lib": "js"
     },
@@ -37,52 +53,94 @@
       "generator-donejs",
       "donejs-cli",
       "babel-cli"
-    ]
+    ],
+    "minify": true
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "body-parser": "~1.13.2",
     "bootstrap": "3.3.5",
     "bootstrap-tokenfield": "^0.12.0",
-    "can": "^2.3.0",
+    "can": "^2.3.33",
+    "cheerio": "^1.0.0-rc.2",
     "cookie-parser": "~1.3.5",
+    "core-js": "^2.5.3",
     "cuid": "^1.3.8",
     "del": "^2.2.0",
     "done-autorender": "^0.8.0",
-    "done-css": "^2.0.3",
-    "done-ssr": "^0.13.4",
+    "done-css": "^3.0.1",
+    "done-ssr": "^0.13.5",
+    "express": "^4.0.0",
     "feathers": "^1.3.0",
     "filenamify": "^1.2.0",
-    "fs-extra": "https://registry.npmjs.org/fs-extra/-/fs-extra-0.26.5.tgz",
+    "fs-extra": "^4.0.3",
     "he": "^0.5.0",
     "helmet": "^1.1.0",
+    "hummus": "^1.0.83",
     "jade": "~1.11.0",
+    "joi": "^10.6.0",
     "jquery": "~2.1.4",
     "lodash": "^4.0.0",
     "moment": "^2.10.3",
     "morgan": "~1.6.1",
+    "multer": "^1.3.0",
     "q": "^1.4.1",
     "request": "^2.69.0",
     "serve-favicon": "~2.3.0",
-    "steal": "^0.16.39",
+    "steal": "^1.6.3",
+    "steal-css": "^1.3.1",
     "through2": "^2.0.1",
     "typeahead.js": "git://github.com/twitter/typeahead.js.git#v0.11.1",
     "url-regex": "^3.1.0",
+    "util.promisify": "^1.0.0",
+    "uuid": "^3.1.0",
     "wkhtmltopdf": "^0.1.5"
   },
   "devDependencies": {
     "archiver": "^0.21.0",
     "assert": "^1.3.0",
+    "ava": "^0.21.0",
     "babel-cli": "^6.4.5",
-    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-env": "^1.6.0",
     "babel-register": "^6.4.3",
     "chalk": "^1.1.1",
     "debug": "^2.2.0",
-    "fs-extra": "https://registry.npmjs.org/fs-extra/-/fs-extra-0.26.5.tgz",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
     "mocha": "^2.3.4",
     "sinon": "^1.17.2",
-    "steal-tools": "^0.16.8",
+    "standard": "^10.0.3",
+    "steal-less": "^1.2.2",
+    "steal-tools": "^1.10.0",
     "supertest": "^1.2.0"
+  },
+  "standard": {
+    "ignore": [
+      "src/pdf/assets/checkmark-font-demo/*"
+    ]
+  },
+  "ava": {
+    "files": [
+      "test-lib/pdf/**/*.js"
+    ],
+    "source": [
+      "lib/pdf/**/*.js"
+    ],
+    "require": [
+      "babel-polyfill"
+    ]
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "useBuiltIns": "usage",
+          "targets": {
+            "node": "8"
+          }
+        }
+      ]
+    ]
   }
 }

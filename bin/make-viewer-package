@@ -10,7 +10,7 @@ var cajaPath = path.join(__dirname, '..');
 var outputPath = path.join(cajaPath, '..', 'a2j-viewer');
 
 var buildConfig = {
-  main: 'viewer/app',
+  main: 'caja/viewer/app',
   config: path.join(cajaPath, 'js', 'package.json!npm')
 };
 

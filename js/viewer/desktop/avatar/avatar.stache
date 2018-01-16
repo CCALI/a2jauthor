@@ -1,4 +1,4 @@
-<can-import from="viewer/desktop/avatar/avatar.less!" />
+<can-import from="caja/viewer/desktop/avatar/avatar.less!" />
 
 <div class="scaling-svg-container">
   {{#if avatarImageName}}

@@ -1,7 +1,7 @@
 import Map from 'can/map/';
 import _isString from 'lodash/isString';
 import _capitalize from 'lodash/capitalize';
-import createEmptyNode from 'author/utils/create-empty-node';
+import createEmptyNode from 'caja/author/utils/create-empty-node';
 
 /**
  * @module TemplateEditTabsVM

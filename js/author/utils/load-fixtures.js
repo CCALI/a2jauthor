@@ -9,12 +9,12 @@ var isProduction = loader.isEnv('production');
 
 if (isWindow && !isProduction) {
   loader.import = function(name) {
-    if (name === 'author/app' || name == 'viewer/app') {
+    if (name === 'caja/author/app' || name == 'caja/viewer/app') {
       var _this = this;
 
-      var fixtures = name === 'viewer/app' ?
-        'viewer/models/fixtures/' :
-        'author/models/fixtures/';
+      var fixtures = name === 'caja/viewer/app' ?
+        'caja/viewer/models/fixtures/' :
+        'caja/author/models/fixtures/';
 
       return _this.import(fixtures).then(function() {
         return _import.call(_this, name);

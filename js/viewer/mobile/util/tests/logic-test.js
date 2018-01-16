@@ -1,9 +1,9 @@
 import assert from 'assert';
-import Answer from 'viewer/models/answer';
-import Answers from 'viewer/models/answers';
-import Logic from 'viewer/mobile/util/logic';
-import AnswerVM from 'viewer/models/answervm';
-import Interview from 'viewer/models/interview';
+import Answer from 'caja/viewer/models/answer';
+import Answers from 'caja/viewer/models/answers';
+import Logic from 'caja/viewer/mobile/util/logic';
+import AnswerVM from 'caja/viewer/models/answervm';
+import Interview from 'caja/viewer/models/interview';
 
 describe('Logic', function() {
   let logic;

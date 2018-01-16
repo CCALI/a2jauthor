@@ -1,0 +1,75 @@
+<can-import from='caja/author/modal/'/>
+<can-import from="caja/author/variables/editor/"/>
+
+<nav class="navbar navbar-default">
+  <p class="navbar-text">Variables used in this interview</p>
+  <div class="nav navbar-nav navbar-right">
+    <button
+      id="var-add"
+      class="btn btn-default navbar-btn"
+      ($click)="openVariableCreator()"
+    >
+      <span class="glyphicon-plus"></span> Add
+    </button>
+    <a href="javascript:void(0)" class="fileinput-button">
+      <button
+        id="uploadCMPFile"
+        class="btn btn-primary navbar-btn"
+      >
+        <span class="glyphicon-folder-open"></span>
+        Add from HotDocs .CMP
+      </button>
+      <input type="file" id="uploadCMPFileInput"/>
+    </a>
+  </div><!-- nav navbar-nav navbar-right -->
+</nav>
+
+<div class="page tabContentFrame">
+  <!-- <div class="tabContent editq"> -->
+  {{#if variableList.length}}
+    <table class="table table-hover">
+      <thead>
+        <tr valign="top">
+          <th>Name</th>
+          <th>Type</th>
+          <th>Repeating</th>
+          <th>Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each variableList}}
+          <tr ($click)="openVariableEditor(name)">
+            <td>{{name}}</td>
+            <td>{{type}}</td>
+            <td>
+              {{#if repeating}}
+                Yes
+              {{else}}
+                No
+              {{/if}}
+            </td>
+            <td>{{comment}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{/if}}
+  <!-- </div> -->
+</div>
+
+{{#if showVariableModal}}
+  <author-modal
+    modal-title="Variable"
+    cancel-text='Delete'
+    submit-text='Save'
+    {@on-cancel}="@onDismissVariableEditing"
+    {@on-submit}="@onConfirmVariableEditing"
+  >
+    <variable-editor
+      {@initial-variable}="@editingVariable"
+      {@show-usage-finder}=true
+      {@on-variable-change}="@onVariableChange"
+      {@on-select-suggestion}="@onSelectSuggestion"
+    />
+  </author-modal>
+{{/if}}

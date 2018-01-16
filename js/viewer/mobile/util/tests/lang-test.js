@@ -1,5 +1,5 @@
 import assert from 'assert';
-import Lang from 'viewer/mobile/util/lang';
+import Lang from 'caja/viewer/mobile/util/lang';
 
 import 'steal-mocha';
 

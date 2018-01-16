@@ -4,7 +4,7 @@ import template from './hair-picker.stache';
 import {
   hairColors,
   getClassNameForHair
-} from 'viewer/desktop/avatar/colors';
+} from 'caja/viewer/desktop/avatar/colors';
 
 const hairClasses = hairColors.map(hair => {
   const hairClass = getClassNameForHair(hair);

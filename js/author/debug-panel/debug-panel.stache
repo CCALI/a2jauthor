@@ -1,6 +1,6 @@
-<can-import from="author/debug-panel/variables/"/>
-<can-import from="author/debug-panel/evaluate/"/>
-<can-import from="author/debug-panel/debug-panel.less!"/>
+<can-import from="caja/author/debug-panel/variables/"/>
+<can-import from="caja/author/debug-panel/evaluate/"/>
+<can-import from="caja/author/debug-panel/debug-panel.less!"/>
 
 {{#if variables.length}}
   <author-variables-table {(interview)}="interview" {(variables)}="variables"/>

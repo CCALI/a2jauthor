@@ -1,7 +1,7 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
 import List from 'can/list/';
-import Guide from 'author/models/guide';
+import Guide from 'caja/author/models/guide';
 import template from './interviews.stache!';
 
 import 'can/map/define/';

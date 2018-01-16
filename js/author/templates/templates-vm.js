@@ -1,5 +1,5 @@
 import Map from 'can/map/';
-import A2JTemplate from 'author/models/a2j-template';
+import A2JTemplate from 'caja/author/models/a2j-template';
 
 import 'can/map/define/';
 

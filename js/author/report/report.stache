@@ -1,4 +1,4 @@
-<can-import from="author/report/report.less!"/>
+<can-import from="caja/author/report/report.less!"/>
 
 {{#if buildingReport}}
     <div class="building-report">

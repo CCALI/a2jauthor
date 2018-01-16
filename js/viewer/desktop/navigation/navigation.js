@@ -3,7 +3,7 @@ import Map from 'can/map/';
 import Component from 'can/component/';
 import _truncate from 'lodash/truncate';
 import template from './navigation.stache!';
-import constants from 'viewer/models/constants';
+import constants from 'caja/viewer/models/constants';
 
 import 'can/map/define/';
 

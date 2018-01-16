@@ -11,7 +11,7 @@
  *
  * @codestart
  *   import List from 'can/list/';
- *   import comparator from 'author/utils/sort-comparator';
+ *   import comparator from 'caja/author/utils/sort-comparator';
  *
  *   import 'can/list/sort/';
  *

@@ -1,5 +1,5 @@
 import assert from 'assert';
-import Validations from 'viewer/mobile/util/validations';
+import Validations from 'caja/viewer/mobile/util/validations';
 import moment from 'moment';
 
 describe('Validations', function() {

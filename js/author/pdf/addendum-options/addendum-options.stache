@@ -1,0 +1,62 @@
+<can-import from='caja/author/pdf/addendum-options/addendum-options.less' />
+<can-import from='caja/author/modal/' />
+
+<author-modal
+  modal-title='Addendum options'
+  {on-cancel}='@onModalCancel'
+  cancel-text='Cancel'
+  {on-submit}='@onSubmit'
+  submit-text='Save options'
+  {on-left-button-click}='@onReset'
+  left-button-text='Reset'
+>
+  <div class='split-fields'>
+    <fieldset>
+      <label>Page size</label>
+      <div>
+        <label>
+          <span class='title'>Width:</span>
+          <input
+            type='number'
+            class='editable'
+            {($value)}='pageWidth'
+          />
+          <span class='unit'>inches</span>
+        </label>
+        <label>
+          <span class='title'>Height:</span>
+          <input
+            type='number'
+            class='editable'
+            {($value)}='pageHeight'
+          />
+          <span class='unit'>inches</span>
+        </label>
+      </div>
+    </fieldset>
+    <span class='separator'></span>
+    <fieldset>
+      <label>Page margins</label>
+      <div>
+        <label>
+          <span class='title'>Vertical:</span>
+          <input
+            type='number'
+            class='editable'
+            {($value)}='topBottomMargin'
+          />
+          <span class='unit'>inches</span>
+        </label>
+        <label>
+          <span class='title'>Horizontal:</span>
+          <input
+            type='number'
+            class='editable'
+            {($value)}='leftRightMargin'
+          />
+          <span class='unit'>inches</span>
+        </label>
+      </div>
+    </fieldset>
+  </div>
+</author-modal>

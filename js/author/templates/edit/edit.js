@@ -1,9 +1,13 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
-import template from './edit.stache!';
-import A2JTemplate from 'author/models/a2j-template';
+import Map from "can/map/";
+import Component from "can/component/";
+import template from "./edit.stache!";
+import A2JTemplate from "caja/author/models/a2j-template";
+import A2JNode from "caja/author/models/a2j-node";
 
-import 'can/map/define/';
+import "can/route/";
+import "can/map/define/";
+
+import { sharedPdfFlag } from "caja/author/pdf/index";
 
 /**
  * @module {Module} author/templates/edit/ <template-edit-page>
@@ -37,11 +41,12 @@ export const TemplateEditPageVM = Map.extend({
      */
     a2jTemplatePromise: {
       get() {
-        const templateId = this.attr('templateId');
+        const templateId = this.attr("templateId");
+        if (templateId === "new") {
+          return this.makeNewTemplate();
+        }
 
-        return templateId === 'new' ?
-          this.makeNewTemplate() :
-          A2JTemplate.findOne({ templateId });
+        return A2JTemplate.findOne({ templateId });
       }
     },
 
@@ -53,7 +58,16 @@ export const TemplateEditPageVM = Map.extend({
      */
     a2jTemplate: {
       get(last, set) {
-        this.attr('a2jTemplatePromise').then(set);
+        this.attr("a2jTemplatePromise").then(set);
+      }
+    },
+
+    isPdfTemplate: {
+      get() {
+        const template = this.attr("a2jTemplate");
+        return (
+          template && template.rootNode && template.rootNode.tag === "a2j-pdf"
+        );
       }
     }
   },
@@ -65,16 +79,23 @@ export const TemplateEditPageVM = Map.extend({
    */
   makeNewTemplate() {
     const _this = this;
-    const guideId = this.attr('guideId');
+    const guideId = this.attr("guideId");
+    const isPdfTemplate = sharedPdfFlag.get();
+    sharedPdfFlag.clear();
+    const defaultProps = { guideId };
+    let templateProps = defaultProps;
+    if (isPdfTemplate) {
+      templateProps = Object.assign(defaultProps, {
+        rootNode: new A2JNode({ tag: "a2j-pdf" })
+      });
+    }
 
     const fn = can.__notObserve(function() {
-      const template = new A2JTemplate({ guideId });
-
-      return template.save().then(function(tpl) {
-        const id = tpl.attr('templateId');
-
+      const template = new A2JTemplate(templateProps);
+      return template.save().then(template => {
+        const id = template.attr("templateId");
         _this.attr({
-          action: 'edit',
+          action: "edit",
           templateId: id
         });
       });
@@ -87,6 +108,6 @@ export const TemplateEditPageVM = Map.extend({
 export default Component.extend({
   template,
   leakScope: false,
-  tag: 'template-edit-page',
+  tag: "template-edit-page",
   viewModel: TemplateEditPageVM
 });

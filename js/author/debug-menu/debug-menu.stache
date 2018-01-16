@@ -1,4 +1,4 @@
-<can-import from="author/debug-menu/debug-menu.less!"/>
+<can-import from="caja/author/debug-menu/debug-menu.less!"/>
 
 <div class="debugmenu">
   <button type="button" class="btn btn-default btn-warning btn-variables-panel btn-wide-md">

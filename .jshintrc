@@ -3,7 +3,6 @@
   "camelcase": true,
   "eqnull": true,
   "indent": 2,
-  "plusplus": true,
   "esnext": true,
   "browser": true,
   "unused": true,

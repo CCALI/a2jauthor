@@ -1,4 +1,4 @@
-import constants from 'viewer/models/constants';
+import constants from 'caja/viewer/models/constants';
 
 export default {
   strcmp: function(a, b) {

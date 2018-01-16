@@ -4,7 +4,7 @@ import template from './skin-picker.stache';
 import {
   skinTones,
   getClassNameForSkin
-} from 'viewer/desktop/avatar/colors';
+} from 'caja/viewer/desktop/avatar/colors';
 
 const skinClasses = skinTones.map(getClassNameForSkin);
 

@@ -1,6 +1,6 @@
 import assert from 'assert';
 import moment from 'moment';
-import cDate from 'viewer/mobile/util/date';
+import cDate from 'caja/viewer/mobile/util/date';
 
 describe('util: date', function() {
 

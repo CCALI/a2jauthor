@@ -1,5 +1,5 @@
 import assert from 'assert';
-import cString from 'viewer/mobile/util/string';
+import cString from 'caja/viewer/mobile/util/string';
 
 describe('util: string', function() {
 

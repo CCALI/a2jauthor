@@ -1,6 +1,5 @@
 import './viewer/';
 
-import './A2J_Vars';
 import './A2J_Clauses';
 import './A2J_Pages';
 import './A2J_Guides';
@@ -10,4 +9,3 @@ import './A2J_Mapper';
 
 import './A2J_AuthorApp';
 import './A2J_Debug';
-import './TextStatistics';

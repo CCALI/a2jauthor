@@ -1,4 +1,4 @@
-<can-import from="author/templates/list/sortbar/sortbar.less!"/>
+<can-import from="caja/author/templates/list/sortbar/sortbar.less!"/>
 
 <div class="sort-order clearfix">
   <a href="#"

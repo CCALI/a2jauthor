@@ -4,7 +4,7 @@ import Map from 'can/map/';
 import { ModalVM } from './modal';
 import stache from 'can/view/stache/';
 
-import 'viewer/styles.less!';
+import 'caja/viewer/styles.less!';
 
 describe('<a2j-modal> ', function() {
   describe('Component', function() {

@@ -1,9 +1,9 @@
 import $ from 'jquery';
 import loader from '@loader';
 import AppState from './models/app-state';
-import tabsRouting from 'author/utils/tabs-routing';
-import viewerPreviewTpl from './viewer-preview-layout.stache!';
-import bindCustomEvents from 'author/utils/bind-custom-events';
+import tabsRouting from 'caja/author/utils/tabs-routing';
+import viewerPreviewTpl from './viewer-preview-layout.stache';
+import bindCustomEvents from 'caja/author/utils/bind-custom-events';
 
 import 'can/view/';
 import 'can/route/';
@@ -28,14 +28,14 @@ bindCustomEvents(appState);
 // The legacy code in src/src requires the dom to be populated in order to work,
 // so we first render the main app's template and then load the code.
 let loadLegacyCode = function() {
-  return loader.import('author/src/');
+  return loader.import('caja/author/src/');
 };
 
 let render = function({template}) {
   $('#author-app').html(template(appState));
 };
 
-loader.import('author/app-template')
+loader.import('caja/author/app-template')
   .then(render)
   .then(loadLegacyCode)
   .then(() => tabsRouting(appState));

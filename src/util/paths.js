@@ -1,7 +1,7 @@
-const Q = require('q');
-const path = require('path');
-const config = require('./config');
-const urlRegex = require('url-regex');
+const Q = require('q')
+const path = require('path')
+const config = require('./config')
+const urlRegex = require('url-regex')
 
 /**
  * @module {Module} /util/paths paths
@@ -17,8 +17,8 @@ module.exports = {
    * @parent paths
    * @return {String} Absolute path to the viewer app folder
    */
-  getViewerPath() {
-    return path.join(__dirname, '..', '..', 'js/viewer');
+  getViewerPath () {
+    return path.join(__dirname, '..', '..', 'js/viewer')
   },
 
   /**
@@ -33,13 +33,13 @@ module.exports = {
    *
    * @return {String} Normalized file data url
    */
-  normalizeFileDataUrl(fileDataUrl) {
-    const isAbsolutePath = path.isAbsolute(fileDataUrl);
-    const isUrl = urlRegex({ exact: true }).test(fileDataUrl);
+  normalizeFileDataUrl (fileDataUrl) {
+    const isAbsolutePath = path.isAbsolute(fileDataUrl)
+    const isUrl = urlRegex({ exact: true }).test(fileDataUrl)
 
-    return (isUrl || isAbsolutePath) ?
-      fileDataUrl :
-      path.join(this.getViewerPath(), fileDataUrl);
+    return (isUrl || isAbsolutePath)
+      ? fileDataUrl
+      : path.join(this.getViewerPath(), fileDataUrl)
   },
 
   /**
@@ -49,17 +49,17 @@ module.exports = {
    * @return {Promise} a Promise that will resolve to the
    * path to the templates.json file for the current user.
    */
-  getTemplatesPath({ username, fileDataUrl }) {
-    const deferred = Q.defer();
-    const guidesDir = config.get('GUIDES_DIR');
+  getTemplatesPath ({ username, fileDataUrl }) {
+    const deferred = Q.defer()
+    const guidesDir = config.get('GUIDES_DIR')
 
-    const file = fileDataUrl ?
-      path.join(this.normalizeFileDataUrl(fileDataUrl), 'templates.json') :
-      path.join(guidesDir, username, 'templates.json');
+    const file = fileDataUrl
+      ? path.join(this.normalizeFileDataUrl(fileDataUrl), 'templates.json')
+      : path.join(guidesDir, username, 'templates.json')
 
-    deferred.resolve(file);
+    deferred.resolve(file)
 
-    return deferred.promise;
+    return deferred.promise
   },
 
   /**
@@ -71,18 +71,18 @@ module.exports = {
    * @return {Promise} a Promise that will resolve to the
    * path to the JSON file of a template.
    */
-  getTemplatePath({ username, guideId, templateId, fileDataUrl }) {
-    const deferred = Q.defer();
-    const guidesDir = config.get('GUIDES_DIR');
-    const folderName = `guides/Guide${guideId}`;
-    const filename = `template${templateId}.json`;
+  getTemplatePath ({ username, guideId, templateId, fileDataUrl }) {
+    const deferred = Q.defer()
+    const guidesDir = config.get('GUIDES_DIR')
+    const folderName = `guides/Guide${guideId}`
+    const filename = `template${templateId}.json`
 
-    const file = fileDataUrl ?
-      path.join(this.normalizeFileDataUrl(fileDataUrl), filename) :
-      path.join(guidesDir, username, folderName, filename);
+    const file = fileDataUrl
+      ? path.join(this.normalizeFileDataUrl(fileDataUrl), filename)
+      : path.join(guidesDir, username, folderName, filename)
 
-    deferred.resolve(file);
+    deferred.resolve(file)
 
-    return deferred.promise;
+    return deferred.promise
   }
-};
+}

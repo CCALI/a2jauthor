@@ -1,9 +1,9 @@
-import Bloodhound from 'bloodhound';
+import Bloodhound from 'typeahead.js/dist/bloodhound';
 import Component from 'can/component/';
 import VarPickerVM from './varpicker-vm';
 import template from './varpicker.stache!';
 
-import 'typeahead';
+import "typeahead.js/dist/typeahead.jquery";
 import 'bootstrap-tokenfield';
 
 /**

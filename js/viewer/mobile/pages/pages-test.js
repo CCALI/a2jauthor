@@ -3,7 +3,7 @@ import can from 'can';
 import assert from 'assert';
 import PagesVM from './pages-vm';
 import sinon from 'sinon';
-import AppState from 'viewer/models/app-state';
+import AppState from 'caja/viewer/models/app-state';
 import './pages';
 import 'steal-mocha';
 

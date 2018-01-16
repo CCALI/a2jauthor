@@ -1,6 +1,6 @@
-<can-import from="viewer/mobile/pages/" />
-<can-import from="viewer/desktop/avatar/" />
-<can-import from="viewer/desktop/steps/steps.less!" />
+<can-import from="caja/viewer/mobile/pages/" />
+<can-import from="caja/viewer/desktop/avatar/" />
+<can-import from="caja/viewer/desktop/steps/steps.less!" />
 
 {{#if currentStep}}
   <div class="step-current">

@@ -5,7 +5,7 @@ import assembleFormTpl from './assemble-form.stache!';
 import saveAnswersFormTpl from './save-answers-form.stache!';
 
 import 'can/view/';
-import 'viewer/mobile/util/helpers';
+import 'caja/viewer/mobile/util/helpers';
 
 can.view.preload('assemble-form', assembleFormTpl);
 can.view.preload('save-answers-form', saveAnswersFormTpl);

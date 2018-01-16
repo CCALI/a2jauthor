@@ -1,4 +1,4 @@
-<can-import from='author/report/text-stats/' />
+<can-import from='caja/author/report/text-stats/' />
 
 <fieldset><legend>{{name}}</legend>
     <div class="row">

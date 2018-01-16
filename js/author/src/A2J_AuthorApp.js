@@ -437,7 +437,6 @@ function main()
 
 
   $('#page-viewer').hide();
-  $('#var-add').button().click(varAdd);
   $('#clause-add').button().click(clauseAdd);
 
   $('#uploadCMPFile').button();

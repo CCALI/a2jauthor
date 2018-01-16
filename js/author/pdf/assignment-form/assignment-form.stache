@@ -1,0 +1,176 @@
+<can-import from='caja/author/pdf/assignment-form/assignment-form.less' />
+<can-import from='caja/author/modal/' />
+<can-import from='caja/author/variables/editor/' />
+<can-import from='caja/author/pdf/checkmark-picker/' />
+
+{{#if conflictingVariables}}
+  <author-modal
+    modal-title='Assignment conflict'
+    cancel-text='Dismiss'
+    {@on-cancel}='@fireCancel'
+  >
+    <div class='conflict'>
+      <p>
+        There is a grouping conflict.
+        There are boxes selected which are assigned to {{conflictingVariables.length}} different variables.
+        Please deselect or unassign boxes so there is at most one selected variable.
+      </p>
+
+      <p>Currently selected variables:</p>
+      <ul>
+        {{#each conflictingVariables}}
+          <li>{{.}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  </author-modal>
+{{else}}
+  <author-modal
+    modal-title='Assign variable'
+    left-button-text='Unassign'
+    left-button-icon='glyphicon-lock-open-alt'
+    {@on-left-button-click}="@fireUnassign"
+    cancel-text='Cancel'
+    {@on-cancel}="@fireCancel"
+    submit-text='Assign'
+    {@on-submit}="@fireAssign"
+  >
+    <variable-editor
+      {@initial-variable}="@initialVariable"
+      {@existing-variable-names}="@variableSuggestions"
+      {@show-usage-finder}=false
+      {@on-variable-change}="@onVariableChange"
+      {@on-select-suggestion}="@onSelectSuggestion"
+    />
+
+    {{#if hasOptions}}
+      <fieldset>
+        {{#if hasOverflowOption}}
+          <div>
+            <label>Text overflow:</label>
+            <div class='overflow-picker'>
+              <label>
+                <input
+                  type='radio'
+                  name='overflow-style-1'
+                  value='overflow-to-addendum'
+                  ($change)='onOverflowStyleChange(%event)'
+                  {{#is variableBuffer.overflowStyle 'overflow-to-addendum'}}
+                    checked='checked'
+                  {{/is}}
+                />
+                <span>Append overflow text to an addendum</span>
+              </label>
+              <label>
+                <input
+                  type='radio'
+                  name='overflow-style-2'
+                  value='everything-to-addendum'
+                  ($change)='onOverflowStyleChange(%event)'
+                  {{#is variableBuffer.overflowStyle 'everything-to-addendum'}}
+                    checked='checked'
+                  {{/is}}
+                />
+                <span>Append all text to an addendum if there would be overflow</span>
+              </label>
+              <label>
+                <input
+                  type='radio'
+                  name='overflow-style-3'
+                  value='clip-overflow'
+                  ($change)='onOverflowStyleChange(%event)'
+                  {{#is variableBuffer.overflowStyle 'clip-overflow'}}
+                    checked='checked'
+                  {{/is}}
+                />
+                <span>Ignore text overflow</span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label>Addendum label:</label>
+            <input
+              type="text"
+              class="editable"
+              {($value)}="variableBuffer.addendumLabel"
+            />
+          </div>
+        {{/if}}
+
+        {{#if hasPassValueOption}}
+          <div>
+            <label>Field type:</label>
+            <div class='pass-type-picker'>
+              <label>
+                <input
+                  type='radio'
+                  name='pass-type'
+                  value='pass-value'
+                  ($change)='onPassValueChange(%event)'
+                  {{^if variableBuffer.isCheck}}
+                    checked='checked'
+                  {{/if}}
+                />
+                <span>Pass multiple choice value</span>
+              </label>
+              <label>
+                <input
+                  type='radio'
+                  name='pass-type'
+                  value='pass-check'
+                  ($change)='onPassValueChange(%event)'
+                  {{#if variableBuffer.isCheck}}
+                    checked='checked'
+                  {{/if}}
+                />
+                <span>Draw a checkmark if the variable matches</span>
+              </label>
+              <div class='multiple-choice'>
+                {{#is variableBuffer.choices.length 1}}
+                  <label>Multiple choice value</label>
+                {{else}}
+                  <label>Multiple choice values</label>
+                {{/is}}
+                {{#each variableBuffer.choices}}
+                  <input
+                    type='text'
+                    class='editable'
+                    {{^if hasChoicesOption}}
+                      disabled
+                    {{/if}}
+                    placeholder="Multiple choice value #{{%index}}"
+                    value="{{.}}"
+                    ($change)="onChoiceChange(%event, %index)"
+                  />
+                {{/each}}
+              </div>
+            </div>
+          </div>
+        {{/if}}
+
+        {{#if hasCheckmarkOption}}
+          <div class='checkmark-options'>
+            <label>Checkmark style:</label>
+            <checkmark-picker
+              check="{{variableBuffer.checkIcon}}"
+              {@on-check}="@onCheckIcon"
+            />
+            {{#if hasInvertOption}}
+              <label>
+                <input
+                  type='checkbox'
+                  {{#if variableBuffer.isInverted}}
+                    checked='checked'
+                  {{/if}}
+                  ($change)='onInvertChange(%event)'
+                />
+                <span>If the variable is false, draw the checkmark.</span>
+              </label>
+            {{/if}}
+          </div>
+        {{/if}}
+      </fieldset>
+    {{/if}}
+  </author-modal>
+{{/if}}

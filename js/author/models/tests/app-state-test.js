@@ -1,5 +1,5 @@
 import assert from 'assert';
-import AppState from 'author/models/app-state';
+import AppState from 'caja/author/models/app-state';
 
 import 'steal-mocha';
 

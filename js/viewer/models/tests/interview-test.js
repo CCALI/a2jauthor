@@ -1,5 +1,5 @@
 import assert from 'assert';
-import Interview from 'viewer/models/interview';
+import Interview from 'caja/viewer/models/interview';
 import Map from 'can/map/';
 
 describe('Interview model', function() {

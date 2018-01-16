@@ -1026,7 +1026,6 @@ TGuide.prototype.noviceTab = function(tab,clear)
 
 
 		case "tabsVariables":
-			guide.buildTabVariables(t);
 			break;
 
 		case "tabsClauses":

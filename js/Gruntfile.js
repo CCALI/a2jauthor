@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
   grunt.initConfig({
     clean: {
@@ -10,7 +10,7 @@ module.exports = function(grunt) {
       options: {
         jshintrc: '../.jshintrc'
       },
-      all: ['author/**/*.js', 'viewer/**/*.js'],
+      all: ['author/**/*.js', 'viewer/**/*.js']
     },
 
     copy: {
@@ -31,8 +31,8 @@ module.exports = function(grunt) {
     less: {
       docs: {
         files: {
-          'docs/author.css': 'author/styles.less',
-          'docs/viewer.css': 'viewer/styles.less'
+          'docs/author.css': 'caja/author/styles.less',
+          'docs/viewer.css': 'caja/viewer/styles.less'
         }
       },
       svg: {
@@ -50,13 +50,13 @@ module.exports = function(grunt) {
     'steal-build': {
       author: {
         options: {
-          system: {
-            main: ['author/app'],
-            config: 'package.json!npm',
+          steal: {
+            main: ['caja/author/app'],
+            config: __dirname + '/package.json!npm',
             bundle: [
-              'author/app-template',
-              'author/src/src',
-              'author/styles.less!',
+              'caja/author/app-template',
+              'caja/author/src/src',
+              'caja/author/styles.less!',
               'caja/ckeditor/ckeditor'
             ]
           },
@@ -67,11 +67,11 @@ module.exports = function(grunt) {
           }
         }
       },
-      viewer:{
+      viewer: {
         options: {
-          system: {
-            main: ['viewer/app'],
-            config: 'package.json!npm'
+          steal: {
+            main: ['caja/viewer/app'],
+            config: __dirname + '/package.json!npm'
           },
           buildOptions: {
             minify: true,
@@ -79,12 +79,12 @@ module.exports = function(grunt) {
             bundleSteal: false
           }
         }
-      },
+      }
     }
   });
 
   grunt.loadNpmTasks('documentjs');
-  grunt.loadNpmTasks('steal-tools');
+  grunt.loadNpmTasks('grunt-steal');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -108,5 +108,4 @@ module.exports = function(grunt) {
     'copy:demos',
     'less:docs'
   ]);
-
 };

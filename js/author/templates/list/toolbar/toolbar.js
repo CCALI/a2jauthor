@@ -1,34 +1,47 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
-import template from './toolbar.stache!';
+import Map from "can/map/";
+import Component from "can/component/";
+import template from "./toolbar.stache!";
 
-import 'can/map/define/';
-import 'bootstrap/js/modal';
+import "can/route/";
+import "can/map/define/";
+import "bootstrap/js/modal";
+
+import { sharedPdfFlag } from "caja/author/pdf/index";
 
 export let Toolbar = Map.extend({
   define: {
     filter: {
-      type: 'string'
+      type: "string"
     },
 
     searchToken: {
-      type: 'string',
-      value: ''
+      type: "string",
+      value: ""
     },
 
     showClearButton: {
       get() {
-        return this.attr('searchToken').length;
+        return this.attr("searchToken").length;
       }
     }
   },
 
   setFilter(filter) {
-    this.attr('filter', filter);
+    this.attr("filter", filter);
   },
 
   clearSearchToken() {
-    this.attr('searchToken', '');
+    this.attr("searchToken", "");
+  },
+
+  openPdfTemplate() {
+    sharedPdfFlag.set(true);
+    const newPdfTemplateTransition = {
+      page: "templates",
+      id: "new"
+    };
+
+    can.route.attr(newPdfTemplateTransition);
   }
 });
 
@@ -36,11 +49,11 @@ export default Component.extend({
   template,
   leakScope: false,
   viewModel: Toolbar,
-  tag: 'templates-toolbar',
+  tag: "templates-toolbar",
   events: {
-    '.search-input keyup': function(target) {
+    ".search-input keyup": function(target) {
       let newToken = target.val().trim();
-      this.viewModel.attr('searchToken', newToken);
+      this.viewModel.attr("searchToken", newToken);
     }
   }
 });

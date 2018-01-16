@@ -1,6 +1,6 @@
-const Q = require('q');
-const _ = require('lodash');
-const fs = require('fs-extra');
+const Q = require('q')
+const _ = require('lodash')
+const fs = require('fs-extra')
 
 /**
  * @module {Module} /util/files files
@@ -28,22 +28,22 @@ module.exports = {
    *   .then(data => console.log(data));
    * @codeend
    */
-  readJSON({ path }) {
-    const deferred = Q.defer();
+  readJSON ({ path }) {
+    const deferred = Q.defer()
 
-    fs.readFile(path, 'UTF-8', function(err, data) {
+    fs.readFile(path, 'UTF-8', function (err, data) {
       if (!err) {
         try {
-          deferred.resolve(JSON.parse(data));
+          deferred.resolve(JSON.parse(data))
         } catch (e) {
-          deferred.reject(e);
+          deferred.reject(e)
         }
       } else {
-        deferred.reject(err);
+        deferred.reject(err)
       }
-    });
+    })
 
-    return deferred.promise;
+    return deferred.promise
   },
 
   /**
@@ -64,30 +64,30 @@ module.exports = {
    *   .then(data => console.log(data));
    * @codeend
    */
-  writeJSON({ path, data }) {
-    const deferred = Q.defer();
+  writeJSON ({ path, data }) {
+    const deferred = Q.defer()
 
-    fs.ensureFile(path, function(error) {
+    fs.ensureFile(path, function (error) {
       if (error) {
-        deferred.reject(error);
+        deferred.reject(error)
       }
 
-      const fileData = JSON.stringify(data, null, '\t');
+      const fileData = JSON.stringify(data, null, '\t')
 
-      fs.writeFile(path, fileData, function(err) {
+      fs.writeFile(path, fileData, function (err) {
         if (err) {
-          deferred.reject(err);
+          deferred.reject(err)
         }
 
         try {
-          deferred.resolve(data);
+          deferred.resolve(data)
         } catch (e) {
-          deferred.reject(e);
+          deferred.reject(e)
         }
-      });
-    });
+      })
+    })
 
-    return deferred.promise;
+    return deferred.promise
   },
 
   /**
@@ -125,25 +125,25 @@ module.exports = {
    * // [{"id":1},{"id":2,"bar":"baz"},{"id":3}]
    * @codeend
    */
-  mergeJSON({ path, data, replaceKey }) {
-    const deferred = Q.defer();
+  mergeJSON ({ path, data, replaceKey }) {
+    const deferred = Q.defer()
 
-    const mergeData = function(fileData) {
+    const mergeData = function (fileData) {
       if (!replaceKey) {
-        return fileData.concat(data);
+        return fileData.concat(data)
       } else {
         return _.map(fileData, o => {
-          return (o[replaceKey] === data[replaceKey]) ? data : o;
-        });
+          return (o[replaceKey] === data[replaceKey]) ? data : o
+        })
       }
-    };
+    }
 
     this.readJSON({ path })
       .then(mergeData)
       .then(mergedData => this.writeJSON({ path, data: mergedData }))
       .then(data => deferred.resolve(data))
-      .catch(err => deferred.reject(err));
+      .catch(err => deferred.reject(err))
 
-    return deferred.promise;
+    return deferred.promise
   }
-};
+}

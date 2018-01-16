@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import Map from 'can/map/';
 import _includes from 'lodash/includes';
-import constants from 'viewer/models/constants';
+import constants from 'caja/viewer/models/constants';
 
 // List of field types that can be filled with the `sample` property.
 const canUseSampleValues = [
@@ -15,6 +15,19 @@ const canUseSampleValues = [
 // This function sets some event handles for custom events used to communicate
 // the parts of the author app that are outside of the scope of CanJS.
 export default function bindCustomEvents(appState) {
+  // changes to variables in CanJs should reflect back to the gGuide
+  appState.bind('change', (event, attr) => {
+    if (attr.indexOf('%root.') === 0) {
+      attr = attr.slice('%root.'.length);
+    }
+    const isGuideVarChange = attr.indexOf('guide.vars') === 0;
+    if (isGuideVarChange) {
+      const guide = appState.attr('guide');
+      const vars = guide.vars.serialize();
+      window.gGuide.vars = vars;
+    }
+  });
+
   let $authorApp = $('#author-app');
 
   // user clicks the preview button in the edit page modal

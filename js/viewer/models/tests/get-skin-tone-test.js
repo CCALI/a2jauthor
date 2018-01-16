@@ -1,5 +1,5 @@
 import assert from 'assert';
-import getSkinTone from 'viewer/models/get-skin-tone';
+import getSkinTone from 'caja/viewer/models/get-skin-tone';
 
 import 'steal-mocha';
 

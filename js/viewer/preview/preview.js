@@ -1,15 +1,15 @@
 import Map from 'can/map/';
 import _assign from 'lodash/assign';
 import Component from 'can/component/';
-import isMobile from 'viewer/is-mobile';
-import template from 'viewer/app.stache!';
-import Lang from 'viewer/mobile/util/lang';
-import Logic from 'viewer/mobile/util/logic';
-import AppState from 'viewer/models/app-state';
-import Interview from 'viewer/models/interview';
-import MemoryState from 'viewer/models/memory-state';
-import PersistedState from 'viewer/models/persisted-state';
-import parseGuideToMobile from 'viewer/mobile/util/guide-to-mobile';
+import isMobile from 'caja/viewer/is-mobile';
+import template from 'caja/viewer/app.stache!';
+import Lang from 'caja/viewer/mobile/util/lang';
+import Logic from 'caja/viewer/mobile/util/logic';
+import AppState from 'caja/viewer/models/app-state';
+import Interview from 'caja/viewer/models/interview';
+import MemoryState from 'caja/viewer/models/memory-state';
+import PersistedState from 'caja/viewer/models/persisted-state';
+import parseGuideToMobile from 'caja/viewer/mobile/util/guide-to-mobile';
 
 const ViewerPreviewVM = Map.extend('ViewerPreviewVM', {
   define: {

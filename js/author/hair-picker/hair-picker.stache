@@ -1,4 +1,4 @@
-<can-import from='author/color-chips/' />
+<can-import from='caja/author/color-chips/' />
 <color-chips
   {selected-color-class}="selectedHairClass"
   {color-classes}="hairClasses"

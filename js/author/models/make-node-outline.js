@@ -2,6 +2,7 @@ import _compact from 'lodash/compact';
 import _capitalize from 'lodash/capitalize';
 
 const elementTagToPrettyName = {
+  'a2j-pdf': 'PDF Document',
   'a2j-rich-text': 'Rich Text',
   'a2j-conditional': 'If / Else',
   'a2j-page-break': 'Page Break',

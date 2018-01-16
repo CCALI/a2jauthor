@@ -1,11 +1,11 @@
-const _ = require('lodash');
-const Q = require('q');
-const paths = require('../util/paths');
-const files = require('../util/files');
-const user = require('../util/user');
-const templates = require('./templates');
+const _ = require('lodash')
+const Q = require('q')
+const paths = require('../util/paths')
+const files = require('../util/files')
+const user = require('../util/user')
+const templates = require('./templates')
 
-const debug = require('debug')('A2J:routes/template');
+const debug = require('debug')('A2J:routes/template')
 
 /**
  * @module {Module} /routes/template template
@@ -45,14 +45,14 @@ module.exports = {
    * @param {Number} templateId
    * @return {Object} template from templates array matching templateId
    */
-  filterTemplatesByTemplateId({ templatesData, templateId }) {
-    const template = _.find(templatesData, (o) => o.templateId === parseInt(templateId, 10));
+  filterTemplatesByTemplateId ({ templatesData, templateId }) {
+    const template = _.find(templatesData, (o) => o.templateId === parseInt(templateId, 10))
 
     if (!template) {
-      throw new Error('Template not found with templateId ' + templateId);
+      throw new Error('Template not found with templateId ' + templateId)
     }
 
-    return template;
+    return template
   },
 
   /**
@@ -65,9 +65,9 @@ module.exports = {
    * @param {Array} templates - list of existing templates.
    * @return {Number} next valid templateId.
    */
-  getNextTemplateId({ templatesData }) {
-    const maxId = _.max(_.map(templatesData, template => template.templateId)) || 0;
-    return maxId + 1;
+  getNextTemplateId ({ templatesData }) {
+    const maxId = _.max(_.map(templatesData, template => template.templateId)) || 0
+    return maxId + 1
   },
 
   /**
@@ -80,9 +80,9 @@ module.exports = {
    * @param {Object} data - response data.
    * @param {Function} callback - API callback.
    */
-  successHandler({ msg, data, callback }) {
-    debug(msg);
-    callback(null, data);
+  successHandler ({ msg, data, callback }) {
+    debug(msg)
+    callback(null, data)
   },
 
   /**
@@ -94,9 +94,9 @@ module.exports = {
    * @param {String} error - error message.
    * @param {Function} callback - API callback.
    */
-  errorHandler({ error, callback }) {
-    debug(error);
-    callback(error);
+  errorHandler ({ error, callback }) {
+    debug(error)
+    callback(error)
   },
 
   /**
@@ -109,14 +109,14 @@ module.exports = {
    *
    * GET /api/template/{template_id}
    */
-  get(templateId, params, callback) {
-    debug(`GET /api/template/${templateId} request`);
+  get (templateId, params, callback) {
+    debug(`GET /api/template/${templateId} request`)
 
-    const usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader });
+    const usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader })
 
     const templateSummaryPromise = usernamePromise
       .then(username => templates.getTemplatesJSON({ username }))
-      .then(templatesData => this.filterTemplatesByTemplateId({ templatesData, templateId }));
+      .then(templatesData => this.filterTemplatesByTemplateId({ templatesData, templateId }))
 
     Q.all([templateSummaryPromise, usernamePromise])
       .then(([{ guideId, templateId }, username]) => paths.getTemplatePath({
@@ -130,7 +130,7 @@ module.exports = {
         data,
         callback
       }))
-      .catch(error => this.errorHandler({ error, callback }));
+      .catch(error => this.errorHandler({ error, callback }))
   },
 
   /**
@@ -146,11 +146,11 @@ module.exports = {
    *
    * POST /api/template
    */
-  create(data, params, callback) {
-    debug(`POST /api/template request: ${JSON.stringify(data)}`);
+  create (data, params, callback) {
+    debug(`POST /api/template request: ${JSON.stringify(data)}`)
 
-    const currentTime = Date.now();
-    const usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader });
+    const currentTime = Date.now()
+    const usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader })
 
     const templateDataPromise = usernamePromise
       .then(username => templates.getTemplatesJSON({ username }))
@@ -159,7 +159,7 @@ module.exports = {
         templateId,
         createdAt: currentTime,
         updatedAt: currentTime
-      }));
+      }))
 
     const writeTemplatePromise = Q.all([templateDataPromise, usernamePromise])
       .then(([{ guideId, templateId }, username]) => paths.getTemplatePath({
@@ -167,26 +167,26 @@ module.exports = {
         templateId,
         username
       }))
-      .then(path => files.writeJSON({ path, data }));
+      .then(path => files.writeJSON({ path, data }))
 
     const templatesPathPromise = usernamePromise
-      .then(username => paths.getTemplatesPath({ username }));
+      .then(username => paths.getTemplatesPath({ username }))
 
     const writeSummaryPromise = Q.all([templatesPathPromise, templateDataPromise])
       .then(([ path, templateData ]) => files.mergeJSON({
         path,
         data: _.pick(templateData, this.summaryFields)
-      }));
+      }))
 
     Q.all([
       writeTemplatePromise,
       writeSummaryPromise
     ]).then(([data]) => this.successHandler({
-        msg: `POST /api/template response: ${JSON.stringify(data)}`,
-        data,
-        callback
-      }))
-      .catch(error => this.errorHandler({ error, callback }));
+      msg: `POST /api/template response: ${JSON.stringify(data)}`,
+      data,
+      callback
+    }))
+      .catch(error => this.errorHandler({ error, callback }))
   },
 
   /**
@@ -200,16 +200,16 @@ module.exports = {
    *
    * PUT /api/template/{template_id}
    */
-  update(templateId, data, params, callback) {
-    debug(`PUT /api/template/${templateId} request: ${JSON.stringify(data)}`);
+  update (templateId, data, params, callback) {
+    debug(`PUT /api/template/${templateId} request: ${JSON.stringify(data)}`)
 
-    const currentTime = Date.now();
+    const currentTime = Date.now()
     _.assign(data, {
       templateId: +templateId,
       updatedAt: currentTime
-    });
+    })
 
-    const usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader });
+    const usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader })
 
     const writeTemplatePromise = usernamePromise
       .then(username => paths.getTemplatePath({
@@ -217,7 +217,7 @@ module.exports = {
         templateId: data.templateId,
         username
       }))
-      .then(path => files.writeJSON({ path, data }));
+      .then(path => files.writeJSON({ path, data }))
 
     const writeSummaryPromise = usernamePromise
       .then(username => paths.getTemplatesPath({ username }))
@@ -225,16 +225,16 @@ module.exports = {
         path,
         data: _.pick(data, this.summaryFields),
         replaceKey: 'templateId'
-      }));
+      }))
 
     Q.all([
-        writeTemplatePromise,
-        writeSummaryPromise
-      ]).then(([data]) => this.successHandler({
-        msg: `PUT /api/template/${templateId} response: ${JSON.stringify(data)}`,
-        data,
-        callback
-      }))
-      .catch(error => this.errorHandler({ error, callback }));
+      writeTemplatePromise,
+      writeSummaryPromise
+    ]).then(([data]) => this.successHandler({
+      msg: `PUT /api/template/${templateId} response: ${JSON.stringify(data)}`,
+      data,
+      callback
+    }))
+      .catch(error => this.errorHandler({ error, callback }))
   }
-};
+}

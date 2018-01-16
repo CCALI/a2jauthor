@@ -1,4 +1,4 @@
-<can-import from='author/audio-player/' />
+<can-import from='caja/author/audio-player/' />
 
   <div
     id="pageModal"

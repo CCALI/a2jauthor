@@ -23,7 +23,7 @@ function getBaseUrl () {
 }
 
 function joinBaseUrl () {
-  return canUtil.joinURIs(getBaseUrl(), 'viewer/images/');
+  return canUtil.joinURIs(getBaseUrl(), 'viewer//images/');
 }
 
 /**
@@ -124,7 +124,7 @@ export let ViewerAvatarVM = Map.extend('ViewerAvatarVM', {
      */
     svgBasePath: {
       get() {
-        return joinBaseUrl('viewer/images/');
+        return joinBaseUrl('viewer//images/');
       }
     }
   },

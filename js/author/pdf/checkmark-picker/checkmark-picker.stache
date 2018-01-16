@@ -1,0 +1,27 @@
+<can-import from='caja/author/pdf/checkmark-picker/checkmark-picker.less!' />
+
+{{#if isLoadingChecks}}
+  <div class='status'>
+    <i class='text-muted'>Loading checkmarks...</li>
+  </div>
+{{else}}
+  {{#if checkError}}
+    <div class='status'>
+      <i>
+        <span class='text-danger'>Failed to load available checkmarks.</span>
+        <button class='btn btn-link' ($click)='loadChecks()'>Retry</button>
+      </i>
+    </div>
+  {{else}}
+    <ul class='checks'>
+      {{#each checks}}
+        <li
+          class='check {{#is name selectedCheck}}check--selected{{/is}}'
+          ($click)='onSelectCheck(name)'
+        >
+          <span title='{{name}}'>{{text}}</span>
+        </li>
+      {{/each}}
+    </ul>
+  {{/if}}
+{{/if}}

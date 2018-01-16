@@ -3,7 +3,7 @@ import Map from 'can/map/';
 import List from 'can/list/';
 import A2JVariable from './a2j-variable';
 import _isEmpty from 'lodash/isEmpty';
-import {Gender, Hair, Skin} from 'viewer/desktop/avatar/colors';
+import {Gender, Hair, Skin} from 'caja/viewer/desktop/avatar/colors';
 
 // with the existing Guide model that works with a different data structure.
 let Guide = Map.extend('AppStateGuide', {

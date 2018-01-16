@@ -1,4 +1,4 @@
-<can-import from="author/templates/list/item/item.less!"/>
+<can-import from="caja/author/templates/list/item/item.less!"/>
 
 {{#with template}}
   <div class="template-wrapper{{#if deleting}} deleting{{/if}}{{#if restoring}} restoring{{/if}}">

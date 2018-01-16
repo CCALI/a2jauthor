@@ -22,6 +22,6 @@ var template = {
       }
     }]
   }
-};
+}
 
-module.exports = template;
+module.exports = template

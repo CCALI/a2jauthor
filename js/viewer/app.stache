@@ -1,7 +1,7 @@
-<can-import from="viewer/mobile/" />
-<can-import from="viewer/desktop/" />
-<can-import from="viewer/modal/" />
-<can-import from="viewer/styles.less!" />
+<can-import from="caja/viewer/mobile/" />
+<can-import from="caja/viewer/desktop/" />
+<can-import from="caja/viewer/modal/" />
+<can-import from="caja/viewer/styles.less!" />
 
 {{#if isMobile}}
   <a2j-mobile-viewer

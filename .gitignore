@@ -1,6 +1,7 @@
 ##################################
 # A2J Files to skip
 ##################################
+/pdf/temp/
 
 #################
 ## VS Code
@@ -123,5 +124,6 @@ js/client/lib/
 
 # compiled server code
 lib/
+test-lib/
 
 *.komodoproject

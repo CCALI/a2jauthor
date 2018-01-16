@@ -1,10 +1,10 @@
 import $ from 'jquery';
 import Model from 'can/model/';
 import _find from 'lodash/find';
-import CONST from 'viewer/models/constants';
-import cString from 'viewer/mobile/util/string';
-import cDate from 'viewer/mobile/util/date';
-import readableList from 'viewer/util/readable-list';
+import CONST from 'caja/viewer/models/constants';
+import cString from 'caja/viewer/mobile/util/string';
+import cDate from 'caja/viewer/mobile/util/date';
+import readableList from 'caja/viewer/util/readable-list';
 
 import 'can/map/define/';
 

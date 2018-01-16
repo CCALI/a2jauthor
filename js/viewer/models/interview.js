@@ -4,12 +4,12 @@ import _last from 'lodash/last';
 import _keys from 'lodash/keys';
 import _find from 'lodash/find';
 import _assign from 'lodash/assign';
-import Page from 'viewer/models/page';
+import Page from 'caja/viewer/models/page';
 import _includes from 'lodash/includes';
 import _isString from 'lodash/isString';
-import Answers from 'viewer/models/answers';
-import parser from 'viewer/mobile/util/parser';
-import {Hair, Skin} from 'viewer/desktop/avatar/colors';
+import Answers from 'caja/viewer/models/answers';
+import parser from 'caja/viewer/mobile/util/parser';
+import {Hair, Skin} from 'caja/viewer/desktop/avatar/colors';
 
 import 'can/list/sort/';
 import 'can/map/define/';

@@ -1,5 +1,5 @@
 import assert from 'assert';
-import MemoryState from 'viewer/models/memory-state';
+import MemoryState from 'caja/viewer/models/memory-state';
 
 import 'steal-mocha';
 

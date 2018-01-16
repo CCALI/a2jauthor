@@ -1,5 +1,5 @@
 import assert from 'assert';
-import Page from 'viewer/models/page';
+import Page from 'caja/viewer/models/page';
 
 import 'steal-mocha';
 

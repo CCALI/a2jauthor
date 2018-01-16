@@ -1,8 +1,8 @@
-<can-import from='author/hair-picker/' />
-<can-import from='author/skin-picker/' />
-<can-import from='author/tiny-editor/' />
-<can-import from='author/about/main/main.less' />
-<can-import from='viewer/desktop/avatar/' />
+<can-import from='caja/author/hair-picker/' />
+<can-import from='caja/author/skin-picker/' />
+<can-import from='caja/author/tiny-editor/' />
+<can-import from='caja/author/about/main/main.less' />
+<can-import from='caja/viewer/desktop/avatar/' />
 
 <div class='row'>
   <div class='col-xs-10'>

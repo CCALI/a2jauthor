@@ -4,7 +4,7 @@ import 'blueimp-file-upload/js/jquery.fileupload';
 import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './upload.stache!';
-import Guide from 'author/models/guide';
+import Guide from 'caja/author/models/guide';
 
 export const UploadVM = Map.extend('UploadVM', {
   define: {

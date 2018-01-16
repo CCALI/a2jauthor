@@ -1,5 +1,5 @@
-<can-import from="author/loading/"/>
-<can-import from="author/interviews/interviews.less!"/>
+<can-import from="caja/author/loading/"/>
+<can-import from="caja/author/interviews/interviews.less!"/>
 
 {{#if interviewsPromise.isPending}}
   <app-loading />

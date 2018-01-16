@@ -80,7 +80,22 @@ function textStatisticsReport(text, includeAllStats) {
 	};
 }
 
-function reportFull() {	// 2016-06-24 Generate full report, ala LessonText.
+function getVariableListHTML (guide) {
+  // Build HTML table of variables, nicely sorted.
+  var th=html.rowheading(["Name","Type","Repeating","Comment"]);
+  var sortvars=guide.varsSorted();
+  var vi;
+  var tb='';
+  for (vi in sortvars) {
+    var v=sortvars[vi];
+    tb+=html.row([v.name,v.type,v.repeating,v.comment
+    + (!v.warning ? '':'<span class="text-danger"><span class="glyphicon-attention"></span> '+v.warning+'</span>')]);
+  }
+  return '<table class="table table-hover">'+th + '<tbody>'+ tb + '</tbody>'+"</table>";
+}
+
+function reportFull()
+{	// 2016-06-24 Generate full report, ala LessonText.
 	longProcess( 'Building report', function ()
 	{
 		/** @type {TGuide} */
@@ -226,7 +241,7 @@ function reportFull() {	// 2016-06-24 Generate full report, ala LessonText.
 		html += fieldSetWrap('Interview Information',tableWrap(t));
 
 		// Variable list
-		t = guide.variableListHTML();
+		t = getVariableListHTML(guide);
 		html += anchor('VARS')+fieldSetWrap('Interview Variables',t);
 
 

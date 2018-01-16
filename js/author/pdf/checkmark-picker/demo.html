@@ -1,0 +1,72 @@
+<!doctype html>
+<title>Checkmark Picker</title>
+
+<body>
+  <div id='app' style='max-width: 640px; margin: 0px auto'>
+    <h1>Checkmark Picker</h1>
+  </div>
+
+  <script type="text/stache" can-autorender>
+    <can-import from="caja/author/pdf/checkmark-picker/checkmark-picker.less" />
+  </script>
+
+  <script data-main="@empty" src="../../../node_modules/steal/steal.js">
+    import 'can/view/autorender/';
+    import template from 'caja/author/pdf/checkmark-picker/checkmark-picker.stache';
+
+    const root = document.getElementById('app');
+
+    function demo (title, data) {
+      const section = document.createElement('section');
+      const heading = document.createElement('h3');
+      heading.innerText = title;
+
+      const container = document.createElement('checkmark-picker');
+      const view = template(data);
+
+      container.appendChild(view);
+      section.appendChild(heading);
+      section.appendChild(container);
+      root.appendChild(section);
+    }
+
+    demo('Loading state', {isLoadingChecks: true})
+    demo('Error state', {checkError: new Error('Failed to load checks')})
+    demo('Loaded state', {
+      checks: [
+        {
+          "name": "normal-check",
+          "text": ""
+        },
+        {
+          "name": "normal-cross",
+          "text": ""
+        },
+        {
+          "name": "hollow-circle",
+          "text": ""
+        },
+        {
+          "name": "check-circle",
+          "text": ""
+        },
+        {
+          "name": "solid-circle",
+          "text": ""
+        },
+        {
+          "name": "hollow-square",
+          "text": ""
+        },
+        {
+          "name": "check-square",
+          "text": ""
+        },
+        {
+          "name": "solid-square",
+          "text": ""
+        }
+      ]
+    })
+  </script>
+</body>

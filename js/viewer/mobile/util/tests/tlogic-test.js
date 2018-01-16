@@ -1,5 +1,5 @@
 import assert from 'assert';
-import Tlogic from 'viewer/mobile/util/tlogic';
+import Tlogic from 'caja/viewer/mobile/util/tlogic';
 
 let testLogic = new Tlogic();
 

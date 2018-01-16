@@ -9,7 +9,7 @@ import Component from 'can/component/';
 import template from './field.stache!';
 import invalidPromptTpl from './views/invalid-prompt.stache!';
 import exceededMaxcharsTpl from './views/exceeded-maxchars.stache!';
-import constants from 'viewer/models/constants';
+import constants from 'caja/viewer/models/constants';
 
 import 'jquery-ui/ui/datepicker';
 

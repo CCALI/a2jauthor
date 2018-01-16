@@ -1,11 +1,11 @@
 import $ from 'jquery';
 import isMobile from './is-mobile';
 import template from './app.stache!';
-import Lang from 'viewer/mobile/util/lang';
-import Logic from 'viewer/mobile/util/logic';
-import constants from 'viewer/models/constants';
-import PersistedState from 'viewer/models/persisted-state';
-import setMobileDesktopClass from 'viewer/util/set-mobile-desktop-class';
+import Lang from 'caja/viewer/mobile/util/lang';
+import Logic from 'caja/viewer/mobile/util/logic';
+import constants from 'caja/viewer/models/constants';
+import PersistedState from 'caja/viewer/models/persisted-state';
+import setMobileDesktopClass from 'caja/viewer/util/set-mobile-desktop-class';
 
 export default function({interview, pState, mState, rState}) {
   can.route.ready();

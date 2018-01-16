@@ -1,6 +1,6 @@
 import assert from 'assert';
-import AppState from 'viewer/models/app-state';
-import Interview from 'viewer/models/interview';
+import AppState from 'caja/viewer/models/app-state';
+import Interview from 'caja/viewer/models/interview';
 import sinon from 'sinon';
 
 import 'steal-mocha';

@@ -1,4 +1,4 @@
-<can-import from="author/audio-player/audio-player.less!"/>
+<can-import from="caja/author/audio-player/audio-player.less!"/>
 <!-- based on https://codepen.io/gregh/pen/NdVvbm?editors=0100#0 -->
 <div class="audio green-audio-player">
   {{#if loadAudioError}}

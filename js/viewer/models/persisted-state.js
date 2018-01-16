@@ -1,10 +1,10 @@
 import Model from 'can/model/';
-import Answers from 'viewer/models/answers';
-import Parser from 'viewer/mobile/util/parser';
+import Answers from 'caja/viewer/models/answers';
+import Parser from 'caja/viewer/mobile/util/parser';
 
 import 'can/map/define/';
 import 'can/construct/super/';
-import 'viewer/mobile/util/backup';
+import 'caja/viewer/mobile/util/backup';
 
 export default Model.extend({
   findOne() {

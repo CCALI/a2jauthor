@@ -1,10 +1,10 @@
 import assert from 'assert';
-import Parser from 'viewer/mobile/util/parser';
-import partialJSON from 'viewer/models/fixtures/partial.json';
-import partialXML from 'viewer/models/fixtures/partial.anx!text';
-import interviewJSON from 'viewer/models/fixtures/interview.json';
-import answersJSON from 'viewer/models/fixtures/inclusive_answers.json';
-import answersXML from 'viewer/models/fixtures/inclusive_answers.xml!text';
+import Parser from 'caja/viewer/mobile/util/parser';
+import partialJSON from 'caja/viewer/models/fixtures/partial.json';
+import partialXML from 'caja/viewer/models/fixtures/partial.anx!text';
+import interviewJSON from 'caja/viewer/models/fixtures/interview.json';
+import answersJSON from 'caja/viewer/models/fixtures/inclusive_answers.json';
+import answersXML from 'caja/viewer/models/fixtures/inclusive_answers.xml!text';
 
 // These correspond to an interview that has repeating variables
 import answersWithRepeating from './fixtures/answers-with-repeating-values.json';

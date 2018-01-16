@@ -1,4 +1,4 @@
-<can-import from="author/footer/footer.less!"/>
+<can-import from="caja/author/footer/footer.less!"/>
 
 <div class="cajafooter">
   {{#if showCAJAStatus}}

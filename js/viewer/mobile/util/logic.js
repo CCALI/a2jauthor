@@ -1,11 +1,11 @@
 import Map from 'can/map/';
-import regex from 'viewer/mobile/util/regex';
-import tLogic from 'viewer/mobile/util/tlogic';
-import Lang from 'viewer/mobile/util/lang';
-import cString from 'viewer/mobile/util/string';
-import cDate from 'viewer/mobile/util/date';
-import constants from 'viewer/models/constants';
-import Infinite from 'viewer/mobile/util/infinite';
+import regex from 'caja/viewer/mobile/util/regex';
+import tLogic from 'caja/viewer/mobile/util/tlogic';
+import Lang from 'caja/viewer/mobile/util/lang';
+import cString from 'caja/viewer/mobile/util/string';
+import cDate from 'caja/viewer/mobile/util/date';
+import constants from 'caja/viewer/models/constants';
+import Infinite from 'caja/viewer/mobile/util/infinite';
 import numeral from 'numeral';
 
 import 'can/map/define/';

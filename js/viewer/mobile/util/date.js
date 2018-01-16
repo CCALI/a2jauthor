@@ -1,4 +1,4 @@
-import constants from 'viewer/models/constants';
+import constants from 'caja/viewer/models/constants';
 import moment from 'moment';
 
 /*

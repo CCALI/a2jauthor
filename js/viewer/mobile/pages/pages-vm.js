@@ -1,10 +1,10 @@
 import Map from 'can/map/';
 import _some from 'lodash/some';
 import _isString from 'lodash/isString';
-import AnswerVM from 'viewer/models/answervm';
-import Parser from 'viewer/mobile/util/parser';
-import {ViewerNavigationVM} from 'viewer/desktop/navigation/navigation';
-import constants from 'viewer/models/constants';
+import AnswerVM from 'caja/viewer/models/answervm';
+import Parser from 'caja/viewer/mobile/util/parser';
+import {ViewerNavigationVM} from 'caja/viewer/desktop/navigation/navigation';
+import constants from 'caja/viewer/models/constants';
 
 import 'can/util/batch/';
 import 'can/map/define/';

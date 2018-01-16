@@ -22,7 +22,7 @@ var CONST = {
 	AJAXLoader: '<span class="loader">&nbsp;</span>"',
 
 	A2JVersionNum:"6.0" , //VersionInfo.verNum
-	A2JVersionDate:"2017-05-15",
+	A2JVersionDate:"2017-12-21",
 
 	//CAVersionNum:"5.0.0",
 	//CAVersionDate:"2013-04-15",

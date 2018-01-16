@@ -1,7 +1,7 @@
 import assert from 'assert';
 import List from 'can/list/';
 import VarPickerVM from './varpicker-vm';
-import Variable from 'author/models/a2j-variable';
+import Variable from 'caja/author/models/a2j-variable';
 
 import 'steal-mocha';
 

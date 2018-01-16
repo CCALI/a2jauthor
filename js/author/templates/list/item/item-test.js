@@ -2,7 +2,7 @@ import $ from 'jquery';
 import assert from 'assert';
 import {Item} from './item';
 import stache from 'can/view/stache/';
-import A2JTemplate from 'author/models/a2j-template';
+import A2JTemplate from 'caja/author/models/a2j-template';
 import sinon from 'sinon';
 
 import 'steal-mocha';

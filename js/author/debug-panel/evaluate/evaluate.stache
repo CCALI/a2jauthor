@@ -1,4 +1,4 @@
-<can-import from="author/debug-panel/evaluate/evaluate.less!"/>
+<can-import from="caja/author/debug-panel/evaluate/evaluate.less!"/>
 
 <div id="evaluate-form" class="bootstrap-styles">
     <input

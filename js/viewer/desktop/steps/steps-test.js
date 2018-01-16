@@ -5,10 +5,10 @@ import assert from 'assert';
 import _round from 'lodash/round';
 import _assign from 'lodash/assign';
 import stache from 'can/view/stache/';
-import AppState from 'viewer/models/app-state';
-import Interview from 'viewer/models/interview';
-import { ViewerStepsVM } from 'viewer/desktop/steps/';
-import interviewJSON from 'viewer/models/fixtures/real_interview_1.json';
+import AppState from 'caja/viewer/models/app-state';
+import Interview from 'caja/viewer/models/interview';
+import { ViewerStepsVM } from 'caja/viewer/desktop/steps/';
+import interviewJSON from 'caja/viewer/models/fixtures/real_interview_1.json';
 
 import 'steal-mocha';
 
@@ -183,12 +183,8 @@ describe('<a2j-viewer-steps>', function() {
     });
 
     it('maxDisplayedSteps', () => {
-      vm.attr({
-        interview: {
-          steps: new Array(5)
-        },
-        sidewalkHeight: 50
-      });
+      vm.attr('interview.steps', [1, 2, 3, 4, 5]);
+      vm.attr('sidewalkHeight', 50);
 
       assert.equal(vm.attr('maxDisplayedSteps'), 1, 'show 1 step when sidewalk < 100px');
 

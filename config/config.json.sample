@@ -19,5 +19,6 @@
   "DRUPAL_USERNAME": "root",
   "DRUPAL_PASSWD": "root",
   "DRUPAL_DBNAME": "D7commons",
-  "DRUPAL_PORT": 3306
+  "DRUPAL_PORT": 3306,
+  "WKHTMLTOPDF_PATH": "/usr/local/bin/wkhtmltopdf"
 }

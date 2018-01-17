@@ -39,8 +39,25 @@ const render = ssr({
   config: path.join(__dirname, '..', '..', 'package.json!npm')
 })
 
-// it won't work on the server without this
-wkhtmltopdf.command = '/usr/local/bin/wkhtmltopdf'
+// config.json is optional for standalone viewer, but defines path to wkhtmltopdf binary
+// use linux default if config.json not found
+// sample paths: linux '/usr/local/bin/wkhtmltopdf';  windows 'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf';
+// TODO: these checks can be removed once config.json is required for all standalone hosting
+let config
+const configPath = path.join(__dirname, '..', '..', '..', 'config.json')
+
+try {
+  fs.accessSync(configPath, fs.constants.R_OK)
+  debug('can read config.json from ', configPath)
+  config = require('../util/config')
+  wkhtmltopdf.command = config.get('WKHTMLTOPDF_PATH')
+} catch (err) {
+  console.warn('config.json file not found or unaccessible, using linux default path for wkhtmltopdf of : "/usr/local/bin/wkhtmltopdf"')
+  debug('expected config.json in ', configPath)
+  wkhtmltopdf.command = '/usr/local/bin/wkhtmltopdf'
+}
+
+debug('Path to wkhtmltopdf binary: ', wkhtmltopdf.command)
 
 // middleware to validate the presence of either `guideId` or
 // `fileDataUrl`, during document assembly one of those two

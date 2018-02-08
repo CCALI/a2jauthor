@@ -120,7 +120,7 @@ export default Map.extend({
     val: {
       type(val) {
         if (this.attr('config.type') === 'datemdy') {
-          let date = moment(val, 'YYYY-MM-DD');
+          let date = moment(val, 'MM/DD/YYYY');
           return date.isValid() ? date.toDate() : '';
         }
 

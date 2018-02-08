@@ -241,11 +241,28 @@ export let FieldVM = Map.extend('FieldVM', {
    * vm.convertDate('2015/12/01', 'YYYY-MM-DD', 'YYYY/MM/DD'); // "2015-12-01"
    * @codeend
    */
-  convertDate(date, outputFormat, inputFormat) {
-    inputFormat = inputFormat || 'YYYY-MM-DD';
+  convertDate (date, outputFormat, inputFormat) {
+    inputFormat = inputFormat || '';
     outputFormat = outputFormat || 'MM/DD/YYYY';
 
     return (date && date !== 'TODAY') ? moment(date, inputFormat).format(outputFormat) : date;
+  },
+
+  /**
+   * @property {Function} field.ViewModel.prototype.validateDatepicker validateDatepicker
+   * @parent field.ViewModel
+   *
+   * pre-formats datepicker dates
+   *
+   */
+  validateDatepicker ($el) {
+    let val = $el.val();
+    let unformattedVal = this.convertDate(val, 'MM/DD/YYYY');
+    $el.val(unformattedVal);
+
+    this.validateField(null, $el);
+
+    $el.val(val);
   },
 
   /**
@@ -280,35 +297,31 @@ export default Component.extend('FieldComponent', {
   events: {
     inserted() {
       let vm = this.viewModel;
-      let defaultDate = vm.convertDate(vm.attr('field._answer.values')) || null;
-      // TODO: these dates need to be internationalized for output/input format
-      // min/max values currently only come in as mm/dd/yyyy, or special value, TODAY, which is handled in convertDate above
-      let minDate = vm.convertDate(vm.attr('field.min'), null, 'MM/DD/YYYY') || null;
-      let maxDate = vm.convertDate(vm.attr('field.max'), null, 'MM/DD/YYYY') || null;
-      let lang = vm.attr('lang');
+      if (vm.attr('field.type') === 'datemdy') {
+        let defaultDate = vm.convertDate(vm.attr('field._answer.values')) || null;
+        // TODO: these dates need to be internationalized for output/input format
+        // min/max values currently only come in as mm/dd/yyyy, or special value, TODAY, which is handled in convertDate above
+        let minDate = vm.convertDate(vm.attr('field.min'), null, 'MM/DD/YYYY') || null;
+        let maxDate = vm.convertDate(vm.attr('field.max'), null, 'MM/DD/YYYY') || null;
+        let lang = vm.attr('lang');
 
-      $('input.datepicker-input', this.element).datepicker({
-        defaultDate,
-        minDate,
-        maxDate,
-        changeMonth: true,
-        changeYear: true,
-        yearRange: constants.kMinYear + ":" + constants.kMaxYear,
-        monthNames: lang.MonthNamesLong.split(','),
-        monthNamesShort: lang.MonthNamesShort.split(','),
-        appendText: '(mm/dd/yyyy)',
-        dateFormat: 'mm/dd/yy',
-        onClose() {
-          let $el = $(this);
-          let val = $el.val();
-          let unformattedVal = vm.convertDate(val, 'YYYY-MM-DD', 'MM/DD/YYYY');
-          $el.val(unformattedVal);
-
-          vm.validateField(null, $el);
-
-          $el.val(val);
-        }
-      }).val(defaultDate);
+        $('input.datepicker-input', this.element).datepicker({
+          defaultDate,
+          minDate,
+          maxDate,
+          changeMonth: true,
+          changeYear: true,
+          yearRange: constants.kMinYear + ":" + constants.kMaxYear,
+          monthNames: lang.MonthNamesLong.split(','),
+          monthNamesShort: lang.MonthNamesShort.split(','),
+          appendText: '(mm/dd/yyyy)',
+          dateFormat: 'mm/dd/yy',
+          onClose() {
+            let $el = $(this);
+            vm.validateDatepicker($el);
+          }
+        }).val(defaultDate);
+      }
     },
 
     '{a2j-field input[type=checkbox]} change': function(values, ev) {

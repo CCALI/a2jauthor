@@ -89,7 +89,7 @@ export default Map.extend('AnswerVM', {
 
         if (type === 'datemdy') {
           const date = moment(previousValue, 'MM/DD/YYYY');
-          return date.isValid() ? date.format('YYYY-MM-DD') : '';
+          return date.isValid() ? date.format('MM/DD/YYYY') : '';
         }
 
         return previousValue;
@@ -100,7 +100,7 @@ export default Map.extend('AnswerVM', {
         const type = this.attr('field.type');
 
         if (type === 'datemdy') {
-          const date = moment(val, 'YYYY-MM-DD');
+          const date = moment(val);
           val = date.isValid() ? date.format('MM/DD/YYYY') : '';
         }
 

@@ -10,6 +10,7 @@ import 'can/util/batch/';
 import 'can/map/define/';
 import 'can/util/jquery/';
 import 'bootstrap/js/modal';
+import { FieldVM } from './fields/field/field';
 
 /**
  * @property {can.Map} pages.ViewModel
@@ -191,55 +192,56 @@ export default Map.extend('PagesVM', {
     });
   },
 
-  handleIE11(fields, logic, traceLogic) {
-    if(!!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-      //only do this if user is using IE11
-      //this is to handle the mis-firing of `change` event
-      //in IE11 when "tabbing" through the fields
-      if(logic && fields && fields.length > 0) {
-        let answers = logic.attr("interview.answers");
-        if(answers) {
-          // create temp FieldVM for validateField function
-          let vm = new FieldVM();
+  handleIE11 (fields, logic, traceLogic) {
+    // this is to handle the mis-firing of `change` event
+    // in IE11 when "tabbing" through the fields as per this bug
+    if (logic && fields && fields.length > 0) {
+      const answers = logic.attr("interview.answers");
+      if (answers) {
+        let vm = new FieldVM();
+        fields.each(function (field) {
+          const type = field.attr('type');
+          // These types work with native code because you have to click to select
+          // which fires the blue/change event to validate the answer
+          if (type !== 'gender' &&
+              type !== 'checkbox' &&
+              type !== 'checboxNOTA' &&
+              type !== 'radio' &&
+              type !== 'textpick' &&
+              type !== 'numberpick') {
+            // Handle each field as if the blur/focus event had fired correctly with validateField
+            const fieldName = field.attr('name');
+            const escapedFieldName = fieldName.replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\\$&");
+            const preSelector = field.type !== 'textlong' ? 'input' : 'textarea';
+            const $fieldEl = $(preSelector + "[name='" + escapedFieldName + "']");
 
-          fields.each(function(field){
-            let type = field.attr("type");
-            // These types work with native code
-            if(type !== 'gender' &&
-               type !== 'checkbox' &&
-               type !== 'checboxNOTA' &&
-               type !== 'radio' &&
-               type !== 'textpick' &&
-               type !== 'numberpick' &&
-               type !== 'datemdy') {
+            // validateField expects `this` to have field and traceLogic
+            vm.attr({field, traceLogic});
 
-              // Handle each field as if the blur/focus event had fired correctly with validateField
-              let escapedLabel = field.attr("label").replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\\$&");
-              let preSelector = field.type !== 'textlong' ? 'input' : 'textarea';
-              let fieldEl = $(preSelector + "[id='" + escapedLabel + "']");
-
-              // validateField expects `this` to have field and traceLogic
-              vm.attr('field', field);
-              vm.attr('traceLogic', traceLogic);
-              vm.validateField(vm, fieldEl);
+            // fire same answer pre-validation as jquery datepicker
+            if (type === 'datemdy') {
+              vm.validateDatepicker($fieldEl);
+            } else {
+              vm.validateField(vm, $fieldEl);
             }
-          });
-          // Cleanup temp FieldVM instance
-          vm = null;
-        }
+          }
+        });
+        // Cleanup temp FieldVM instance
+        vm = null;
       }
     }
   },
 
-  navigate(button) {
+  navigate (button) {
     const page = this.attr('currentPage');
     const fields = page.attr('fields');
     const logic = this.attr('logic');
     const traceLogic = this.attr('traceLogic');
 
     // IE11 fails to fire all validateField events, handle that here
-    this.handleIE11(fields, logic, traceLogic);
-
+    if (!!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+      this.handleIE11(fields, logic, traceLogic);
+    }
     // Author Preview Mode changes handling of special buttons, and does not post answers
     const previewActive = this.attr('rState').attr('previewActive');
     //

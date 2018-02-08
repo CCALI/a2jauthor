@@ -11,6 +11,7 @@
     "start": "NODE_ENV=production node ./bin/www",
     "dev": "npm run build && node ./bin/www",
     "build:viewer-zip": "node ./bin/make-viewer-package",
+    "build:dat-zip": "node ./bin/make-dat-package",
     "build:client": "grunt build --gruntfile=js/Gruntfile.js",
     "mocha": "mocha test/routes test/util --compilers js:babel-register",
     "mocha:watch": "mocha test/routes test/util --compilers js:babel-register --watch",

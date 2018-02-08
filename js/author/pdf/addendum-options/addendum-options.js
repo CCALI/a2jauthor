@@ -28,7 +28,7 @@ export function Resetable(attrs) {
     throw new Error("`resetAttr` is reserved by Resetable");
   }
 
-  return Object.assign(attrs, {
+  return $.extend(attrs, {
     resetAttr(attrName) {
       const generator = this.constructor.defaultGenerators[attrName];
       if (!generator) {

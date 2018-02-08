@@ -896,7 +896,7 @@ const PdfEditorVm = Map.extend({
           nudgeDelta
         );
         const id = getNewVariableBoxId([...existingIds, ...newIds]);
-        const newBox = Object.assign(box.serialize(), {id, area});
+        const newBox = $.extend(box.serialize(), {id, area});
         duplicateBoxes.push(newBox);
         newIds.push(id);
       }
@@ -963,7 +963,7 @@ const PdfEditorVm = Map.extend({
       vars.removeAttr(deleteVariable);
     }
 
-    const tVariable = Object.assign(new window.TVariable(), createVariable);
+    const tVariable = $.extend(new window.TVariable(), createVariable);
     const variableKey = tVariable.name.toLowerCase();
     vars.attr(variableKey, tVariable);
 

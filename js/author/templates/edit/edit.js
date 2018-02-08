@@ -85,7 +85,7 @@ export const TemplateEditPageVM = Map.extend({
     const defaultProps = { guideId };
     let templateProps = defaultProps;
     if (isPdfTemplate) {
-      templateProps = Object.assign(defaultProps, {
+      templateProps = $.extend(defaultProps, {
         rootNode: new A2JNode({ tag: "a2j-pdf" })
       });
     }

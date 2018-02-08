@@ -88,7 +88,6 @@ export default Component.extend({
       // even if we don't change interviews
       vm.clearPreviewState();
 
-
       let updateGuidePromise = can.Deferred().resolve();
 
       // if there is a loaded guide when this component is inserted,
@@ -121,6 +120,9 @@ export default Component.extend({
     '.guide dblclick': function(target) {
       const gid = target.attr('gid');
       window.openSelectedGuide(gid);
+      // reset collapsed steps tracker in A2J_Tabs
+      // TODO: handle this in Pages tab refactor
+      window.collapsedSteps = [];
     },
 
     '{window} author:guide-deleted': function(window, evt, guideId) {

@@ -185,6 +185,37 @@ function getTOCStepPages(includePages, includePops, includeSpecial) {
   return ts;
 }
 
+// TODO: these 2 functions can go away when A2J_Tabs or A2J_Pages gets refactored into CanJS
+// until then it preserves collapsed step state through author preview and page editing
+// remove collapsed setps reset in interview.js as well
+function collapseSteps() {
+  if (window.gGuide) {
+    var stepNum;
+    window.gGuide.steps.forEach(function (step) {
+      stepNum = parseInt(step.number);
+      if (window.collapsedSteps && window.collapsedSteps[stepNum]) {
+        $('#step'+stepNum).addClass('collapsed');
+        $('#panel'+stepNum).slideToggle(0);
+      }
+    });
+  }
+}
+
+function setCollapsedSteps() {
+  window.collapsedSteps = [];
+
+  if (window.gGuide) {
+    var stepNum;
+    window.gGuide.steps.forEach(function (step) {
+      stepNum = parseInt(step.number);
+      window.collapsedSteps[stepNum] = $('#CAJAOutline #step'+stepNum) && $('#CAJAOutline #step'+stepNum).hasClass('collapsed');
+    });
+  }
+
+  return window.collapsedSteps;
+}
+
+
 function updateTOC()
 {	// Build outline for entire interview includes meta, step and question sections.
 	// 2014-06-02 TOC updates when page name, text, fields change. Or page is added/deleted.
@@ -197,7 +228,9 @@ function updateTOC()
 	$('#CAJAOutline .panel-heading .step').click(function(){
   	var stepNum = $(this).data('stepnum');
   	$('#step'+stepNum).toggleClass('collapsed');
-		$('#panel'+stepNum).slideToggle(300);
+    $('#panel'+stepNum).slideToggle(300);
+    // save collapsed steps status
+    window.setCollapsedSteps();
 	});
 
 	// JPM Clicking a step toggle slides step's page list.
@@ -215,12 +248,12 @@ function updateTOC()
 		if ($('#CAJAOutlineMap #step'+stepNum).hasClass('collapsed'))
 		{	// If step is collapse, fade it.
 			$nodes.addClass('faded');
-			$lines.addClass('faded');
+      $lines.addClass('faded');
 		}
 		else
 		{	// Step not collapsed, display normally.
 			$nodes.removeClass('faded');
-			$lines.removeClass('faded');
+      $lines.removeClass('faded');
 		}
 	});
 
@@ -240,6 +273,8 @@ function updateTOC()
 			gotoTabOrPage(rel);
 		});
 
+  // collapse any previously collapsed steps
+  window.collapseSteps();
 	// 2014-06-02 Sync mapper to TOC.
 	buildMap();
 }

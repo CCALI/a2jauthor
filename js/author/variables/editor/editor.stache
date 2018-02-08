@@ -72,7 +72,6 @@
       </span>
     </div>
     {{#if showUsageFinder}}
-      {{#if variableName.length}}
         <div id='var-usage-section'>
           <div>
             <label for="varusage">Used by:</label>
@@ -90,7 +89,6 @@
             </div>
           </div>
         </div>
-      {{/if}}
     {{/if}}
   </fieldset>
 </form>

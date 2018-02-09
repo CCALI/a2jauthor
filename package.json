@@ -7,7 +7,7 @@
   "scripts": {
     "test": "npm run lint:pdf && npm run mocha && npm run test:pdf",
     "build": "babel src --out-dir lib --quiet",
-    "build:server": "steal-tools build --no-minify",
+    "build:server": "steal-tools build",
     "start": "NODE_ENV=production node ./bin/www",
     "dev": "npm run build && node ./bin/www",
     "build:viewer-zip": "node ./bin/make-viewer-package",

@@ -3,7 +3,7 @@ import Component from 'can/component/';
 import template from './pages.stache';
 import assembleFormTpl from './assemble-form.stache';
 import saveAnswersFormTpl from './save-answers-form.stache';
-import {Analytics} from 'viewer/util/analytics';
+import {Analytics} from 'caja/viewer/util/analytics';
 
 import 'can/view/';
 import 'caja/viewer/mobile/util/helpers';

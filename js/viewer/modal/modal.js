@@ -1,7 +1,7 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
 import template from './modal.stache';
-import {Analytics} from 'viewer/util/analytics';
+import {Analytics} from 'caja/viewer/util/analytics';
 
 import 'can/map/define/';
 import 'bootstrap/js/modal';

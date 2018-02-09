@@ -8,7 +8,7 @@ import template from './steps.stache!';
 import _findIndex from 'lodash/findIndex';
 import _truncate from 'lodash/truncate';
 import learnMoreTemplate from './learn-more.stache';
-import {Analytics} from 'viewer/util/analytics';
+import {Analytics} from 'caja/viewer/util/analytics';
 
 import 'can/map/define/';
 

@@ -4,6 +4,7 @@ import Component from 'can/component/';
 import _truncate from 'lodash/truncate';
 import template from './navigation.stache!';
 import constants from 'caja/viewer/models/constants';
+import {Analytics} from 'caja/viewer/util/analytics';
 
 import 'can/map/define/';
 
@@ -201,6 +202,10 @@ export let ViewerNavigationVM = Map.extend({
     appState.attr('saveAndExitActive', true);
     appState.attr('lastPageBeforeExit', pageName);
 
+    if (window._paq) {
+      Analytics.trackCustomEvent('Save&Exit', 'from: ' + pageName);
+    }
+
     if (answers) {
       answers.attr('a2j interview incomplete tf').attr('values.1', true);
     }
@@ -231,6 +236,9 @@ export let ViewerNavigationVM = Map.extend({
       answers.attr('a2j interview incomplete tf').attr('values', [null]);
     }
 
+    if (window._paq) {
+      Analytics.trackCustomEvent('Resume-Interview', 'to: ' + lastPageName);
+    }
     this.attr('selectedPageName', lastPageName);
   },
 

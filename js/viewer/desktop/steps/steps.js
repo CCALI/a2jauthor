@@ -8,6 +8,7 @@ import template from './steps.stache!';
 import _findIndex from 'lodash/findIndex';
 import _truncate from 'lodash/truncate';
 import learnMoreTemplate from './learn-more.stache';
+import {Analytics} from 'viewer/util/analytics';
 
 import 'can/map/define/';
 
@@ -544,6 +545,11 @@ export default Component.extend({
 
       if (pages && pageName) {
         const page = pages.find(pageName);
+
+        // piwik tracking of learn-more clicks
+        if (window._paq){
+          Analytics.trackCustomEvent('Learn-More', 'from: ' + pageName, page.learn);
+        }
 
         vm.attr('modalContent', {
           title: page.learn,

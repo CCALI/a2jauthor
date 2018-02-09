@@ -27,7 +27,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	/** @type {TGuide} */
 	var guide=new TGuide();
 
-	guide.authid = 0;
+	guide.authorId = 0;
 	guide.tool = "A2J";
 	guide.toolversion =  makestr(TEMPLATE.find('A2JVERSION').text());
 	guide.avatar=			makestr(TEMPLATE.find('AVATAR').text());

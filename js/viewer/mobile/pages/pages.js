@@ -1,8 +1,9 @@
 import PagesVM from './pages-vm';
 import Component from 'can/component/';
-import template from './pages.stache!';
-import assembleFormTpl from './assemble-form.stache!';
-import saveAnswersFormTpl from './save-answers-form.stache!';
+import template from './pages.stache';
+import assembleFormTpl from './assemble-form.stache';
+import saveAnswersFormTpl from './save-answers-form.stache';
+import {Analytics} from 'viewer/util/analytics';
 
 import 'can/view/';
 import 'caja/viewer/mobile/util/helpers';
@@ -37,7 +38,7 @@ export default Component.extend({
   viewModel: PagesVM,
 
   helpers: {
-    getButtonLabel(label) {
+    getButtonLabel (label) {
       return label ? label : this.attr('lang').attr('Continue');
     }
   },
@@ -66,6 +67,10 @@ export default Component.extend({
 
       if (pages && pageName) {
         const page = pages.find(pageName);
+        // piwik tracking of learn-more clicks
+        if (window._paq) {
+          Analytics.trackCustomEvent('Learn-More', 'from: ' + pageName, page.learn);
+        }
 
         vm.attr('modalContent', {
           title: page.learn,
@@ -77,31 +82,37 @@ export default Component.extend({
       }
     },
 
-    'a:regex(href,popup\://) click': function(el, ev) {
-      ev.preventDefault();
+    'a click': function (el, ev) {
+      if (el.attr('href').toLowerCase().indexOf('popup') === 0) {
+        ev.preventDefault();
+        const vm = this.viewModel;
+        const pages = vm.attr('interview.pages');
 
-      const vm = this.viewModel;
-      const pages = vm.attr('interview.pages');
+        if (pages) {
+          const pageName = $(el.get(0)).attr("href").replace("popup://", "").replace("POPUP://", "").replace("/", ""); //pathname is not supported in FF and IE.
+          const page = pages.find(pageName);
+          const sourcePageName = vm.attr('currentPage.name');
 
-      if (pages) {
-        const pageName = $(el.get(0)).attr("href").replace("popup://", "").replace("POPUP://", "").replace("/", ""); //pathname is not supported in FF and IE.
-        const page = pages.find(pageName);
-        // popups only have text, textAudioURL possible values
-        // title (page.name) is more of internal descriptor for popups
-        vm.attr('modalContent', {
-          title: '',
-          text: page.text,
-          audioURL: page.textAudioURL
-        });
+          // piwik tracking of popups
+          if (window._paq) {
+            Analytics.trackCustomEvent('Pop-Up', 'from: ' + sourcePageName, pageName);
+          }
+
+          // popups only have text, textAudioURL possible values
+          // title (page.name) is more of internal descriptor for popups
+          vm.attr('modalContent', {
+            title: '',
+            text: page.text,
+            audioURL: page.textAudioURL
+          });
+        }
+      } else { // external link
+        el.attr('target', '_blank');
       }
     },
 
     '{window} traceLogic': function(el, ev, msg) {
       this.viewModel.attr('traceLogic').push(msg);
-    },
-
-    'a click': function(el) {
-      el.attr('target', '_blank');
     },
 
     // This event is fired when the Exit, Success, or AssembleSuccess button is clicked,

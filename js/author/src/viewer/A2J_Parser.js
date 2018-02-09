@@ -137,7 +137,7 @@ function exportXML_CAJA_from_CAJA(guide)
 {	// Convert Guide structure into XML
 	var JSON={GUIDE:{INFO:{AUTHORS:[]},PAGES:[] ,STEPS:[],VARIABLES:[],CLAUSES:[] }};
 
-	JSON.GUIDE.INFO.authid = guide.authid;
+	JSON.GUIDE.INFO.authorId = guide.authorId;
 	JSON.GUIDE.INFO.tool=guide.tool;
 	JSON.GUIDE.INFO.toolversion=guide.toolversion;
 	JSON.GUIDE.INFO.avatar=guide.avatar;

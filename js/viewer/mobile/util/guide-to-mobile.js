@@ -20,6 +20,7 @@ const pageProperties = [
 ];
 
 const guideProperties = [
+  'authorId',
   'avatar',
   'avatarHairColor',
   'avatarSkinTone',

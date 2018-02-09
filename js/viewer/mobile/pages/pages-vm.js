@@ -5,6 +5,7 @@ import AnswerVM from 'caja/viewer/models/answervm';
 import Parser from 'caja/viewer/mobile/util/parser';
 import {ViewerNavigationVM} from 'caja/viewer/desktop/navigation/navigation';
 import constants from 'caja/viewer/models/constants';
+import {Analytics} from 'caja/viewer/util/analytics';
 
 import 'can/util/batch/';
 import 'can/map/define/';
@@ -279,6 +280,10 @@ export default Map.extend('PagesVM', {
             text: "Unfortunately, you did not qualify to use this A2J Guided Interview. Please close your browser window or tab to exit the interview.",
           });
         } else {
+          // track the external link
+          if (window._paq) {
+            Analytics.trackExitLink(failURL, 'link');
+          }
           window.open(failURL, '_blank');
         }
       return;

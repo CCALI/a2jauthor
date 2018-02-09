@@ -24,7 +24,7 @@ function parseXML_CA_to_CAJA(BOOK)
 
 	var guide=new TGuide();
 
-	guide.authid = BOOK.find('INFO > AUTHID').xml();
+	guide.authorId = BOOK.find('INFO > AUTHORID').xml();
 	guide.tool=				"CA";
 	guide.toolversion=	makestr(BOOK.find('INFO > CAVERSIONREQUIRED').text());
 	guide.avatar=			"";

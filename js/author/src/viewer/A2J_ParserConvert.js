@@ -36,7 +36,7 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 	guide.copyrights="";
 	guide.createdate="";
 	guide.credits="";
-	guide.description = cr2P(makestr(TEMPLATE.find('DESCRIPTION').xml()));
+	guide.description = makestr(TEMPLATE.find('DESCRIPTION').xml());
 	guide.jurisdiction = makestr(TEMPLATE.find('JURISDICTION').text());
 	guide.language=makestr(TEMPLATE.find('LANGUAGE').text());
 	guide.modifydate="";

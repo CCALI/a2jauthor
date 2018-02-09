@@ -66,10 +66,6 @@ export const AboutMainVm = Map.extend({
     }
   },
 
-  updateDescription (description) {
-    this.attr('guide.description', description);
-  },
-
   updateLanguagePack () {
     const language = this.attr('guide.language');
     window.Languages.set(language);
@@ -87,10 +83,6 @@ export const AboutMainVm = Map.extend({
 
   updateHairColor (hairColor) {
     this.attr('guide.avatarHairColor', hairColor);
-  },
-
-  updateCredits (credits) {
-    this.attr('guide.credits', credits);
   }
 });
 

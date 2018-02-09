@@ -32,8 +32,8 @@ function parseXML_CA_to_CAJA(BOOK)
 	guide.completionTime=BOOK.find('INFO > COMPLETIONTIME').xml();
 	guide.copyrights=		cr2P(br2cr(makestr(BOOK.find('INFO > COPYRIGHTS').xml())));
 	guide.createdate=		BOOK.find('INFO > CREATEDATE').xml();
-	guide.credits=			cr2P(br2cr(makestr(BOOK.find('INFO > CREDITS').xml())));
-	guide.description=	cr2P(makestr(BOOK.find('CALIDESCRIPTION').xml()));
+	guide.credits=			br2cr(makestr(BOOK.find('INFO > CREDITS').xml()));
+	guide.description=	makestr(BOOK.find('CALIDESCRIPTION').xml());
 	guide.jurisdiction=	"";
 	guide.language=		"en";
 	guide.modifydate=		BOOK.find('INFO > MODIFYDATE').xml();

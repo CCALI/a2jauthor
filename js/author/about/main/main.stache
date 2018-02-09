@@ -1,6 +1,5 @@
 <can-import from='caja/author/hair-picker/' />
 <can-import from='caja/author/skin-picker/' />
-<can-import from='caja/author/tiny-editor/' />
 <can-import from='caja/author/about/main/main.less' />
 <can-import from='caja/viewer/desktop/avatar/' />
 
@@ -18,9 +17,9 @@
 
     <div class='form-group'>
       <label class="control-label">Description:</label>
-      <tiny-editor
-        {value}="guide.description"
-        {on-value}="@updateDescription"
+      <textarea
+        class="form-control text editable taller"
+        {($value)}="guide.description"
       />
     </div>
 
@@ -84,9 +83,9 @@
 
     <div class='form-group'>
       <label class="control-label">Credits:</label>
-      <tiny-editor
-        {value}="guide.credits"
-        {on-value}="@updateCredits"
+      <textarea
+        class="form-control text editable taller"
+        {($value)}="guide.credits"
       />
     </div>
 

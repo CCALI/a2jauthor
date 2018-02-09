@@ -4,5 +4,7 @@
     {lang}="lang"
     {(logic)}="logic"
     {(trace-logic)}="traceLogic"
-    {repeat-var-value}="repeatVarValue" />
+    {repeat-var-value}="repeatVarValue"
+    {(modal-content)}="modalContent"
+    {(r-state)}="rState" />
 {{/each}}

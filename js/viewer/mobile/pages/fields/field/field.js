@@ -265,12 +265,41 @@ export let FieldVM = Map.extend('FieldVM', {
     $el.val(val);
   },
 
+  /*
+   * @property {Function} field.ViewModel.prototype.expandTextlong expandTextlong
+   * @parent field.ViewModel
+   *
+   * expands textlong field types into larger modal for easier editing
+   * validateField needs to trigger here as the change event on the textlong.stache
+   * was interfering with the click event and vice versa. (see below)
+   * https://stackoverflow.com/questions/20523313/jquery-change-sometimes-event-prevents-click-event
+   *
+   */
+  expandTextlong (field) {
+    const answerName = field.attr('name');
+    const previewActive = this.attr('rState.previewActive');
+    if (!answerName && previewActive) {
+      this.attr('modalContent', {title: 'Author Warning', text: 'Text(long) fields require an assigned variable to expand'});
+    }
+    // handle skipped validation as per above
+    if (answerName) {
+      const $el = $('textarea[name="' + answerName + '"]');
+      this.validateField(null, $el);
+
+      const answerIndex = field.attr('_answer.answerIndex');
+      const textlongValue = field._answer.attr('answer.values.'+ answerIndex);
+      const title = field.attr('label');
+      this.attr('modalContent', {title, textlongValue, answerIndex, answerName});
+    }
+  },
+
   /**
    * default availableLength
    */
   init() {
     this.attr('availableLength', this.attr('field.maxChars'));
   }
+
 });
 
 /**

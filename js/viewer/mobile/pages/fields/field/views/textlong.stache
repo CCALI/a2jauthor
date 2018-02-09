@@ -1,3 +1,5 @@
+<can-import from="./textlong.less" />
+
 <div>
   <div class="form-group {{#if field.hasError}}has-error{{/if}}">
     <label class="control-label" for="{{label}}">
@@ -12,6 +14,8 @@
       ($change)="validateField"
       {($value)}="field._answer.values"
       ($input)="calcAvailableLength(%event)"/>
+
+    <button class="btn btn-default btn-xs expand-textlong pull-right" ($mousedown)="expandTextlong(field)"><span class="icon resize-btn-icon glyphicon-resize"></span></button>
 
       {{#if maxChars}}
         {{> exceeded-maxchars-tpl }}

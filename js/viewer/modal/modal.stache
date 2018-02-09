@@ -9,7 +9,7 @@
     aria-labelledby="pageModalLbl"
   >
 
-    <div class="modal-dialog">
+    <div class="modal-dialog {{#if modalContent.answerName}}modal-lg{{/if}}">
       <div class="modal-content">
         {{#if modalContent}}
         <div class="modal-header">
@@ -27,7 +27,17 @@
           </h4>
         </div>
 
-        <div class="modal-body">
+        <div class="modal-body {{#if modalContent.answerName}}has-textarea{{/if}}">
+          {{#if modalContent.answerName}}
+            <textarea autofocus
+              id="textlong-input"
+              class="form-control expanded-textarea"
+              {($value)}="modalContent.textlongValue"
+              {$answer-index}="modalContent.answerIndex"
+              {$answer-name}="modalContent.answerName"
+              {$answer-index}="modalContent.answerIndex">
+            </textarea>
+          {{else}}
             {{{ eval(modalContent.text, repeatVarValue) }}}
 
             {{#if modalContent.imageURL}}
@@ -67,6 +77,7 @@
                 </video>
               {{/if}}
             {{/if}}
+          {{/if}}
         </div>
         {{/if}}
       </div>

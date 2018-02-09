@@ -7,6 +7,9 @@ a2j-modal {
     width: 100%;
 
     .modal-body {
+      .has-textarea {
+        overflow-y: hidden;
+      }
       max-height: 400px;
       overflow-y: auto;
     }
@@ -18,5 +21,14 @@ a2j-modal {
         width: 100%;
       }
     }
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  .expanded-textarea {
+    resize: none;
+    min-height: 30vh;
   }
 }

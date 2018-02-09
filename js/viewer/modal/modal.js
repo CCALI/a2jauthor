@@ -5,8 +5,6 @@ import {Analytics} from 'caja/viewer/util/analytics';
 
 import 'can/map/define/';
 import 'bootstrap/js/modal';
-import 'lightbox2/dist/js/lightbox';
-import 'lightbox2/dist/css/lightbox.css';
 
 export let ModalVM = Map.extend({});
 
@@ -66,6 +64,17 @@ export default Component.extend({
     },
 
     '#pageModal hidden.bs.modal': function() {
+      // answer names are always lowercase versions in the answers map
+      const answerName = this.scope.attr('modalContent.answerName') && this.scope.attr('modalContent.answerName').toLowerCase();
+      if (answerName) {
+        const interviewAnswers = this.scope.attr('interview.answers');
+        const answerValues = interviewAnswers.attr(answerName + '.values');
+        const textlongValue = this.scope.attr('modalContent.textlongValue');
+        const answerIndex = this.scope.attr('modalContent.answerIndex');
+
+        answerValues.attr(answerIndex, textlongValue);
+      }
+
       this.viewModel.attr('modalContent', null);
     }
   }

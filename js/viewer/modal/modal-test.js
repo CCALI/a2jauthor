@@ -79,5 +79,12 @@ describe('<a2j-modal> ', function() {
 
       F(done);
     });
+
+    it('renders an expanded text area if page includes answerName (a2j variable name)', function (done) {
+      vm.attr('modalContent', { answerName: 'longAnswerTE'});
+      F('textarea.expanded-textarea').exists();
+
+      F(done);
+    });
   });
 });

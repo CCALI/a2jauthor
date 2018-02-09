@@ -27,7 +27,9 @@
                     {(logic)}="logic"
                     {(fields)}="fields"
                     {(trace-logic)}="traceLogic"
-                    {repeat-var-value}="rState.repeatVarValue" />
+                    {repeat-var-value}="rState.repeatVarValue"
+                    {(modal-content)}="modalContent"
+                    {(r-state)}="rState" />
       {{/if}}
 
       {{#if textAudioURL}}

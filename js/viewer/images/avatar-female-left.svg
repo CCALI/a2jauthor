@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" id="Client-Female-Left" class="avatar-client avatar-female skin-darker" viewBox="0 0 250.5 757.6">
+<svg xmlns="http://www.w3.org/2000/svg" id="Client-Female-Left" class="avatar-client avatar-female skin-darker" viewBox="0 0 250.5 757.6" role="presentation">
   <style>
     <!-- avatar specific shading styles -->
     #Client-Female-Left .hair-shade{opacity:5.000000e-02;fill:#FFFFFF;}

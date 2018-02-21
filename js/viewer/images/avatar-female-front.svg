@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" id="Guide-Female-Front" class="avatar-guide skin-darker" viewBox="0 0 250.5 757.6">
+<svg xmlns="http://www.w3.org/2000/svg" id="Guide-Female-Front" class="avatar-guide skin-darker" viewBox="0 0 250.5 757.6" role="presentation">
   <style>
     <!-- avatar specific shading styles -->
     #Guide-Female-Front .hair-shade{opacity:0.2;}

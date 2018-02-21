@@ -15,7 +15,7 @@
         class="form-control"
         ($change)="validateField"
         {($value)}="field._answer.values"/>
-      {{#if field.calculator}}<img src="{{joinBase 'viewer/images/calculator.png'}}" class="calc-icon" ($click)="showCalculator(field)" />{{/if}}
+      {{#if field.calculator}}<img src="{{joinBase 'viewer/images/calculator.png'}}" class="calc-icon" ($click)="showCalculator(field)" role="presentation"/>{{/if}}
     </div>
   </div>
 

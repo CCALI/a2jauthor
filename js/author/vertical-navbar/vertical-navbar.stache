@@ -4,7 +4,7 @@
   {{#is theme 'inverse'}}navbar-inverse{{/is}}
   {{#is position 'left'}}navbar-fixed-left{{else}}navbar-fixed-right{{/if}}">
 
-  <img class="logo img-responsive" src="images/a2j-circle.svg" />
+  <img class="logo img-responsive" src="images/a2j-circle.svg" alt="Access to Justice Logo" />
 
   <nav class="nav navbar-nav">
     {{#each items}}

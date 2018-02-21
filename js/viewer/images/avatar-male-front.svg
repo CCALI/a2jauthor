@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" id="Guide-Male-Front" class="avatar-guide skin-darker" viewBox="0 0 250.5 757.4">
+<svg xmlns="http://www.w3.org/2000/svg" id="Guide-Male-Front" class="avatar-guide skin-darker" viewBox="0 0 250.5 757.4" role="presentation">
   <style>
     <!-- avatar specific shading styles -->
     #Guide-Male-Front .st1{fill:url(#pant-left-shade_1_);}

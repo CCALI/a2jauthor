@@ -60,8 +60,8 @@
 
 <div class="horizon">
   {{#if courthouseImage}}
-    <img class="courthouse" src="{{courthouseImage}}" />
+    <img class="courthouse" src="{{courthouseImage}}" role="presentation" />
   {{else}}
-    <img class="courthouse" src="{{joinBase 'viewer/images/A2J5_CourtHouse.svg'}}" />
+    <img class="courthouse" src="{{joinBase 'viewer/images/A2J5_CourtHouse.svg'}}" role="presentation" />
   {{/if}}
 </div>

@@ -25,6 +25,10 @@ function makePackageFolder () {
   fs.copySync(path.join(datPath, 'src'),
               path.join(outputPath, 'src'));
 
+  // copy node pdf files
+  fs.copySync(path.join(datPath, 'pdf'),
+              path.join(outputPath, 'pdf'));
+
   // copy server views
   fs.copySync(path.join(datPath, 'views'),
               path.join(outputPath, 'views'));
@@ -35,12 +39,22 @@ function makePackageFolder () {
   fs.copySync(path.join(datPath, 'npm-shrinkwrap.json'),
               path.join(outputPath, 'npm-shrinkwrap.json'));
 
+  // include globals-patch.js TODO: can remove after CanJS 3.x upgrade
+  fs.copySync(path.join(datPath, 'globals-patch.js'),
+              path.join(outputPath, 'globals-patch.js'));
+
   // copy package.json to `a2j-viewer/` for shared code
   // TODO: only install bootstrap in js dir, so may not need this
   fs.copySync(path.join(datPath, 'js', 'package.json'),
               path.join(outputPath, 'js', 'package.json'));
   fs.copySync(path.join(datPath, 'js', 'npm-shrinkwrap.json'),
               path.join(outputPath, 'js', 'npm-shrinkwrap.json'));
+
+  // copy server.stache and server.js
+  fs.copySync(path.join(datPath, 'js', 'server.stache'),
+              path.join(outputPath, 'js', 'server.stache'));
+  fs.copySync(path.join(datPath, 'js', 'server.js'),
+              path.join(outputPath, 'js', 'server.js'));
 
   // copy shared styles required by the getCSSBundle call
   fs.copySync(path.join(datPath, 'js', 'styles'),
@@ -58,6 +72,8 @@ function makePackageFolder () {
               path.join(outputPath, 'js', 'author', 'templates'));
   fs.copySync(path.join(datPath, 'js', 'author', 'utils'),
               path.join(outputPath, 'js', 'author', 'utils'));
+  fs.copySync(path.join(datPath, 'js', 'author', 'pdf'),
+              path.join(outputPath, 'js', 'author', 'pdf'));
 }
 
 function makePackageZip () {

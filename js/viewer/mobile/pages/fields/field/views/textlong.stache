@@ -15,7 +15,7 @@
       {($value)}="field._answer.values"
       ($input)="calcAvailableLength(%event)"/>
 
-    <button class="btn btn-default btn-xs expand-textlong pull-right" ($mousedown)="expandTextlong(field)"><span class="icon resize-btn-icon glyphicon-resize"></span></button>
+    <button class="btn btn-default btn-xs expand-textlong pull-right" ($mousedown)="expandTextlong(field)"><span class="icon resize-btn-icon glyphicon-resize" aria-hidden="true"></span></button>
 
       {{#if maxChars}}
         {{> exceeded-maxchars-tpl }}

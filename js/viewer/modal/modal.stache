@@ -22,7 +22,7 @@
             {{#if modalContent.title}}
               {{ eval(modalContent.title, repeatVarValue) }}
             {{else}}
-              <span class="glyphicon-lifebuoy"></span>
+              <span class="glyphicon-lifebuoy" aria-hidden="true"></span>
             {{/if}}
           </h4>
         </div>
@@ -48,7 +48,7 @@
               href="{{ normalizePath(mState.fileDataURL, modalContent.imageURL) }}" data-lightbox="image-1"
               class="btn btn-default pull-right"
             >
-              <span class="demo-icon glyphicon-resize-full"></span>
+              <span class="demo-icon glyphicon-resize-full" aria-hidden="true"></span>
             </a>
             {{/if}}
 

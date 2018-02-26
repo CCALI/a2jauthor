@@ -71,7 +71,7 @@
         <div class="sign-circle">
           <span class="circle-content">
             {{#zeroOrUndefined currentStep.number}}
-              <span class="glyphicon-step-zero"></span>
+              <span class="glyphicon-step-zero" aria-hidden="true"></span>
             {{else}}
               {{currentStep.number}}
             {{/zeroOrUndefined}}

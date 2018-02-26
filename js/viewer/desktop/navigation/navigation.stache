@@ -5,11 +5,11 @@
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
     <ul class="nav navbar-nav">
       <button class="btn btn-default navbar-btn" ($click)="navigateBack" {{^if canNavigateBack}}disabled{{/if}}>
-        <span class="glyphicon-left-open"></span>{{lang.GoBack}}
+        <span class="glyphicon-left-open" aria-hidden="true"></span>{{lang.GoBack}}
       </button>
 
       <button class="btn btn-default navbar-btn" ($click)="navigateForward" {{^if canNavigateForward}}disabled{{/if}}>
-        {{lang.GoNext}}<span class="glyphicon-right-open"></span>
+        {{lang.GoNext}}<span class="glyphicon-right-open" aria-hidden="true"></span>
       </button>
     </ul>
 
@@ -32,19 +32,19 @@
       {{#if interview.sendfeedback}}
         <a role="button" target="_blank" href="{{feedbackFormUrl}}"
           class="btn btn-default navbar-btn send-feedback">
-          <span class="glyphicon-mail"></span> {{lang.SendFeedback}}
+          <span class="glyphicon-mail" aria-hidden="true"></span> {{lang.SendFeedback}}
         </a>
       {{/if}}
 
       {{#if canSaveAndExit}}
         <button class="btn btn-default navbar-btn can-exit" ($click)="saveAndExit">
-          <span class="glyphicon-floppy"></span> {{lang.SaveAndExit}}
+          <span class="glyphicon-floppy" aria-hidden="true"></span> {{lang.SaveAndExit}}
         </button>
       {{/if}}
 
       {{#if canResumeInterview}}
         <button class="btn btn-default navbar-btn can-resume" ($click)="resumeInterview">
-          <span class="glyphicon-right-thin"></span> {{lang.ResumeExit}}
+          <span class="glyphicon-right-thin" aria-hidden="true"></span> {{lang.ResumeExit}}
         </button>
       {{/if}}
     </div><!-- /navbar-right -->

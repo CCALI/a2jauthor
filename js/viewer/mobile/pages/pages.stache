@@ -15,7 +15,7 @@
     <div class="bubble-content">
       <h3 class="visible-xs-block">
         {{#is step.number '0'}}
-          <span class="glyphicon-right-open">{{step.text}}</span>
+          <span class="glyphicon-right-open" aria-hidden="true">{{step.text}}</span>
         {{else}}
           {{step.number}}: {{step.text}}
         {{/is}}

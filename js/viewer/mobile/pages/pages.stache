@@ -29,7 +29,8 @@
                     {(trace-logic)}="traceLogic"
                     {repeat-var-value}="rState.repeatVarValue"
                     {(modal-content)}="modalContent"
-                    {(r-state)}="rState" />
+                    {(r-state)}="rState" 
+                    role="form"/>
       {{/if}}
 
       {{#if textAudioURL}}

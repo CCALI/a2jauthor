@@ -4,7 +4,7 @@
 <can-import from="caja/viewer/desktop/desktop.less!"/>
 
 <div class="app-wrapper">
-  <div class="app-container">
+  <div class="app-container" role="main">
     {{#if pageNotFound}}
       <div class="alert alert-danger text-center" role="alert">
         The page {{rState.page}} does not exist!

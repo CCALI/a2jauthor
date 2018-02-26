@@ -119,7 +119,7 @@
 			LearnMore:'Learn More',
 			MyProgress:'MY PROGRESS',
 			ProvideFeedbackOrComment:'Provide feedback or comment on this page',
-			SaveAndExit:'EXIT',
+			SaveAndExit:'SAVE AND EXIT',
 			ResumeExit:'RESUME',
 			SendFeedback:'SEND FEEDBACK',
 			SoundIsOff:'SOUND IS OFF',

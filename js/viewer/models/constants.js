@@ -7,7 +7,7 @@ export default {
   AJAXLoader: '<span class="loader">&nbsp;</span>',
 
   A2JVersionNum: '6.0', //VersionInfo.verNum
-  A2JVersionDate: '2017-12-21',
+  A2JVersionDate: '2018-02-12',
 
   //CAVersionNum:'5.0.0',
   //CAVersionDate:'2013-04-15',

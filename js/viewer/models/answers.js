@@ -96,14 +96,6 @@ export default Model.extend('Answers',{}, {
         }
 
         break;
-
-      case CONST.vtTF:
-        if (typeof val === 'string') {
-          val = val.toLowerCase() === "true" ? true : false;
-        } else {
-          val = (val === true) || (parseInt(val) > 0);
-        }
-        break;
     }
 
     return val;
@@ -137,8 +129,8 @@ export default Model.extend('Answers',{}, {
         }
         break;
       case CONST.vtTF:
-        if (varVal === null) {
-          varVal = false;
+        if (typeof varVal !=='boolean') {
+          varVal = undefined;
         }
         break;
     }

@@ -251,7 +251,8 @@ export default Map.extend('PagesVM', {
       (button.next === constants.qIDFAIL ||
       button.next === constants.qIDEXIT ||
       button.next === constants.qIDSUCCESS ||
-      button.next === constants.qIDASSEMBLESUCCESS)
+      button.next === constants.qIDASSEMBLESUCCESS ||
+      button.next === constants.qIDASSEMBLE)
       ) {
       this.previewActiveResponses(button);
       return;
@@ -412,14 +413,21 @@ export default Map.extend('PagesVM', {
       case constants.qIDFAIL:
         this.attr('modalContent', {
           title: "Author note:",
-          text: 'User would be redirected to \n(' + button.url +')',
+          text: 'User would be redirected to \n(' + button.url +')'
         });
         break;
 
       case constants.qIDEXIT:
         this.attr('modalContent', {
           title: "Author note:",
-          text: "User's INCOMPLETE data would upload to the server.",
+          text: "User's INCOMPLETE data would upload to the server."
+        });
+        break;
+
+      case constants.qIDASSEMBLE:
+        this.attr('modalContent', {
+          title: "Author note:",
+          text: "Document Assembly would happen here.\nUse Test Assemble under the Templates tab to assemble in A2J Author"
         });
         break;
 
@@ -427,7 +435,7 @@ export default Map.extend('PagesVM', {
       case constants.qIDASSEMBLESUCCESS:
         this.attr('modalContent', {
           title: "Author note:",
-          text: "User's data would upload to the  server.",
+          text: "User's data would upload to the server."
         });
         break;
     }

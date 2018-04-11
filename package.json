@@ -25,6 +25,18 @@
     "url": "https://github.com/CCALI/CAJA"
   },
   "system": {
+    "envs": {
+      "build": {
+        "map": {
+        "can/util/util": "can/util/domless/domless"
+        }
+      },
+      "build-development": {
+        "map": {
+        "can/util/util": "can/util/util"
+        }
+      }
+    },
     "//": "globals-patch can be removed after upgrade to done-ssr 1.x and can 3.x",
     "configDependencies": [
       "globals-patch"

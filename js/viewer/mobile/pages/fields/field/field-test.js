@@ -154,6 +154,28 @@ describe('<a2j-field>', () => {
       assert.ok(vm.attr('showInvalidPrompt'), 'text - showInvalidPrompt should be true when there is an error and a default message');
     });
 
+    it('minMaxPrompt should show or hide based on showMinMaxPrompt', function () {
+      const field = vm.attr('field');
+
+      field.attr({'type': 'number', 'min': null, 'max': null});
+      assert.equal(vm.attr('showMinMaxPrompt'), false, 'if neither min/max has been set, showMinMaxPrompt should be false');
+
+      field.attr('min', 5);
+      assert.equal(vm.attr('showMinMaxPrompt'), true, 'if min exists, showMinMaxPrompt should be true');
+
+      field.attr({'min': null, 'max': 15});
+      assert.equal(vm.attr('showMinMaxPrompt'), true, 'if max exists, showMinMaxPrompt should be true');
+    });
+
+    it('minMaxPrompt should show min and max values in range display', function () {
+      const field = vm.attr('field');
+      field.attr({'type': 'number', 'min': 5, 'max': 15});
+      assert.equal(vm.attr('minMaxPrompt'), '(5 --- 15)', 'should show the range of acceptable values');
+
+      field.attr('min', null);
+      assert.equal(vm.attr('minMaxPrompt'), '(any --- 15)', 'should show the word "any" if min or max value not set');
+    });
+
     it('calcAvailableLength', function(){
       let ev = { target: { value: 'this is' } };
       let field = vm.attr('field');

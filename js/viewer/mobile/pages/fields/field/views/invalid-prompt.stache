@@ -1,5 +1,8 @@
 {{#if showInvalidPrompt}}
   <div class="alert alert-danger" role="alert">
     {{{ eval(invalidPrompt, repeatVarValue) }}}
+    {{#if showMinMaxPrompt}}
+        {{minMaxPrompt}}
+    {{/if}}
   </div>
 {{/if}}

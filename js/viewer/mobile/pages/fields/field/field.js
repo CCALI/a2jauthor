@@ -71,6 +71,36 @@ export let FieldVM = Map.extend('FieldVM', {
     },
 
     /**
+     * @property {Boolean} field.ViewModel.prototype.showMinMaxPrompt showMinMaxPrompt
+     * @parent field.ViewModel
+     *
+     * Whether a prompt should be shown to indicate the field's min and max values
+     *
+     */
+    showMinMaxPrompt: {
+      get () {
+        const min = this.attr('field.min');
+        const max = this.attr('field.max');
+        return !!(min || max);
+      }
+    },
+
+    /**
+     * @property {String} field.ViewModel.prototype.minMaxPrompt minMaxPrompt
+     * @parent field.ViewModel
+     *
+     * The prompt that should be shown when a field's answer is out of min/max range
+     *
+     */
+    minMaxPrompt: {
+      get () {
+        const min = this.attr('field.min') || 'any';
+        const max = this.attr('field.max') || 'any';
+        return `(${min} --- ${max})`;
+      }
+    },
+
+    /**
      * @property {Boolean} field.ViewModel.prototype.shouldBeChecked shouldBeChecked
      * @parent field.ViewModel
      *

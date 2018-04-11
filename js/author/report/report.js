@@ -232,6 +232,7 @@ export const ReportVM = Map.extend('ReportVM', {
      * show fk text grades only when bad, or author selects hide grades from toolbar
      */
     hideAllGrades: {
+      serialize: false,
       type: 'boolean',
       value: false
     }
@@ -405,8 +406,14 @@ export default Component.extend({
       return parseInt(val) + 1;
     },
 
-    showAlertGlyph (alertClass) {
-      return alertClass === 'alert-danger';
+    alertGlyph (alertClass) {
+      if (alertClass === 'alert-danger') {
+        return 'glyphicon-attention';
+      } else if (alertClass === 'alert-warning') {
+        return 'glyphicon-info-circled';
+      } else {
+        return '';
+      }
     }
   }
 });

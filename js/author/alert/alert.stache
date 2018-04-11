@@ -7,5 +7,7 @@
     </a>
   {{/if}}
 
+<span class="{{alertTypeSymbol}}" aria-hidden="true">
   <content />
+</span>
 </div>

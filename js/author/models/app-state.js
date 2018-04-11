@@ -202,6 +202,15 @@ export default Map.extend({
     },
 
     /**
+     * @property {String} hideAllGrades
+     *
+     * Used to pass state between reports tab and toolbar
+     */
+    hideAllGrades: {
+      serialize: false
+    },
+
+    /**
      * @property {String} viewerInterview
      *
      * The Interview instance used by the viewer app in preview mode.

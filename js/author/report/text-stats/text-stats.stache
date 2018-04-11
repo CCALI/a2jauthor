@@ -1,7 +1,7 @@
 <p class="{{#if hideGrade(stats.fkGrade)}}hide-section{{/if}}">
     <small class="text-muted {{stats.alertClass}}">
-        {{#if showAlertGlyph(stats.alertClass)}}<span class="glyphicon-attention"></span>{{/if}}
+        <span class="{{alertGlyph(stats.alertClass)}}"></span>
             Word Count: {{stats.wordCount}} | Avg Words/Sentence: {{stats.averageWordsPerSentence}} | Flesch-Kincaid Grade Level: {{stats.fkGrade}}
-        {{#if showAlertGlyph(stats.alertClass)}}<span class="glyphicon-attention"></span>{{/if}}
+        <span class="{{alertGlyph(stats.alertClass)}}"></span>
     </small>
 </p>

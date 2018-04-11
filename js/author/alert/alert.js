@@ -13,6 +13,14 @@ const alertTypeClasses = {
   warning: 'alert-warning'
 };
 
+const alertTypeSymbols = {
+  info: 'glyphicon-info-circled',
+  danger: 'glyphicon-attention',
+  default: '',
+  success: '',
+  warning: 'glyphicon-info-circled'
+};
+
 /**
  * @module {Module} author/alert <app-alert>
  * @parent api-components
@@ -187,9 +195,13 @@ export default Component.extend({
   },
 
   helpers: {
-    alertTypeClass() {
+    alertTypeClass () {
       let type = this.attr('alertType');
       return alertTypeClasses[type];
+    },
+    alertTypeSymbol () {
+      let type = this.attr('alertType');
+      return alertTypeSymbols[type];
     }
   }
 });

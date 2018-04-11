@@ -1,6 +1,8 @@
 import Map from "can/map/";
 import Component from "can/component/";
 import template from "./tab.stache";
+import parser from 'caja/viewer/mobile/util/parser';
+import { promptFile } from 'caja/author/utils/uploader';
 
 export const VariablesTabVM = Map.extend({
   define: {
@@ -88,6 +90,38 @@ export const VariablesTabVM = Map.extend({
     const variable = new window.TVariable();
     $.extend(variable, buffer);
     guide.vars.attr(buffer.name.toLowerCase(), variable);
+  },
+
+  uploadCmpFile() {
+    return promptFile(null, 'CMP')
+    .then(file => {
+      return new Promise((resolve, reject) => {
+        const reader = new window.FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+        reader.readAsText(file);
+      });
+    })
+    .then(text => {
+      return parser.parseHotDocsXML(text);
+    })
+    .then(tuples => {
+      this.addUploadedVariables(tuples);
+    });
+  },
+
+  addUploadedVariables (cmpTuples) {
+    const guide = this.attr('guide');
+    can.batch.start();
+    if (guide && guide.vars) {
+      cmpTuples.forEach(newVar => {
+        // name, type, repeating, comment
+        const variable = new window.TVariable();
+        $.extend(variable, newVar);
+        guide.vars.attr(newVar.name.toLowerCase(), variable);
+      });
+    }
+    can.batch.stop();
   }
 });
 
@@ -95,5 +129,5 @@ export default Component.extend({
   template,
   leakScope: false,
   viewModel: VariablesTabVM,
-  tag: "variables-tab"
+  tag: 'variables-tab'
 });

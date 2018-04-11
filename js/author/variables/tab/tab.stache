@@ -11,16 +11,14 @@
     >
       <span class="glyphicon-plus"></span> Add
     </button>
-    <a href="javascript:void(0)" class="fileinput-button">
       <button
         id="uploadCMPFile"
         class="btn btn-primary navbar-btn"
+      ($click)="uploadCmpFile()"
       >
         <span class="glyphicon-folder-open"></span>
         Add from HotDocs .CMP
       </button>
-      <input type="file" id="uploadCMPFileInput"/>
-    </a>
   </div><!-- nav navbar-nav navbar-right -->
 </nav>
 

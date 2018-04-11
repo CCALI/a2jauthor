@@ -15,16 +15,34 @@ const canUseSampleValues = [
 // This function sets some event handles for custom events used to communicate
 // the parts of the author app that are outside of the scope of CanJS.
 export default function bindCustomEvents(appState) {
-  // changes to variables in CanJs should reflect back to the gGuide
+  // TODO:remove: changes to variables in CanJs should reflect back to the gGuide
   appState.bind('change', (event, attr) => {
+    let changeThroughPercentRoot = false;
     if (attr.indexOf('%root.') === 0) {
-      attr = attr.slice('%root.'.length);
+      changeThroughPercentRoot = true;
+      // attr = attr.slice('%root.'.length);
     }
-    const isGuideVarChange = attr.indexOf('guide.vars') === 0;
-    if (isGuideVarChange) {
-      const guide = appState.attr('guide');
-      const vars = guide.vars.serialize();
-      window.gGuide.vars = vars;
+    // const isGuideVarChange = attr.indexOf('guide.vars') === 0;
+    if (changeThroughPercentRoot) {
+      console.warn('serializing guide.vars through %root from file bind-custom-events.js');
+      changeThroughPercentRoot = false;
+      // const guide = appState.attr('guide');
+      // const vars = guide.vars.serialize();
+      // window.gGuide.vars = vars;
+    }
+  });
+  // TODO:remove after QA testing: ^
+
+  // Updates window.gGuide with changes to guide.vars replacing above %root code
+  var vars = can.compute(function () {
+    var vars = appState.attr("guide.vars");
+    if (vars) {
+      return vars.serialize();
+    }
+  });
+  vars.bind("change", function (ev, newVars){
+    if (newVars) {
+      window.gGuide.vars = newVars;
     }
   });
 

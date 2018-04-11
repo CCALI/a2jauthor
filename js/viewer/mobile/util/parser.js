@@ -247,5 +247,67 @@ export default {
     });
 
     return guide.serialize();
+  },
+
+  // Traverses XML of uploaded HotDocs cmp file to find variables to import
+  // returns list of tuples - [ {name: name, type: constants.vtText } ]
+  parseHotDocsXML (cmp) {
+    const $cmpXML = $($.parseXML(cmp));
+
+    return new Promise((resolve) => {
+      // TODO: catch errors with 'reject'
+      const newVarList = [];
+
+      // parse a cmp xml file and return a list of variables to be added to guide var list
+      $cmpXML.find('*').each(function () {
+        const name = cString.makestr($(this).attr('name'));
+
+        switch (this.nodeName) {
+          case 'hd:text':
+            // hd:text name="AGR Petitioner Mother-Father-TE" askAutomatically="false" saveAnswer="false" warnIfUnanswered="false"/>
+            newVarList.push({ name: name, type: constants.vtText });
+            break;
+
+          case 'hd:trueFalse':
+            // <hd:trueFalse name="Petitioner unemployment TF">
+            newVarList.push({ name: name, type: constants.vtTF });
+            break;
+
+          case 'hd:date':
+            // <hd:date name="Date child came into petitioner care DA">
+            // <hd:defFormat>June 3, 1990</hd:defFormat>
+            // <hd:prompt>Date on which child came into care of petitioner(s)</hd:prompt>
+            // <hd:fieldWidth widthType="calculated"/>
+            // </hd:date>
+            newVarList.push({ name: name, type: constants.vtDate });
+            break;
+
+          case 'hd:number':
+            // <hd:number name="Putative children counter" askAutomatically="false" saveAnswer="false" warnIfUnanswered="false"/>
+            newVarList.push({ name: name, type: constants.vtNumber });
+            break;
+
+          case 'hd:multipleChoice':
+            // <hd:multipleChoice name="Child gender MC" askAutomatically="false">
+            newVarList.push({ name: name, type: constants.vtMC });
+            break;
+
+          case 'hd:computation':
+            // <hd:computation name="Any parent address not known CO" resultType="trueFalse">
+            // <hd:computation name="A minor/minors aff of due dliligence CO" resultType="text">
+            var resultType = $(this).attr("resultType");
+            if (resultType === 'text') {
+              newVarList.push({ name: name, type: constants.vtText });
+            }
+
+            if (resultType === 'trueFalse') {
+              newVarList.push({ name: name, type: constants.vtTF });
+            }
+            break;
+        }
+      });
+
+      resolve(newVarList);
+    });
   }
 };

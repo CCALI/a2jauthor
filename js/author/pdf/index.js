@@ -6,8 +6,8 @@ const { getTemplateOverlay } = assemble;
 const { parseJSON: parseAnxToJson } = parser;
 
 export function getPdfJs() {
-  if (window.PDFJS) {
-    return Promise.resolve(window.PDFJS);
+  if (window.pdfjsLib) {
+    return Promise.resolve(window.pdfjsLib);
   }
   return new Promise((resolve, reject) => {
     setTimeout(() => {

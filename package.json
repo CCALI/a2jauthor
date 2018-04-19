@@ -28,12 +28,12 @@
     "envs": {
       "build": {
         "map": {
-        "can/util/util": "can/util/domless/domless"
+          "can/util/util": "can/util/domless/domless"
         }
       },
       "build-development": {
         "map": {
-        "can/util/util": "can/util/util"
+          "can/util/util": "can/util/util"
         }
       }
     },

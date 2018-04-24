@@ -96,6 +96,12 @@ export default Model.extend('Answers',{}, {
         }
 
         break;
+
+      case CONST.vtTF:
+        if (typeof val === 'string') {
+          val = val.toLowerCase() === "true" ? true : false;
+        }
+        break;
     }
 
     return val;

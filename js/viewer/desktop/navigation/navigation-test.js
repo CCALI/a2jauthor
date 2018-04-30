@@ -197,6 +197,20 @@ describe('<a2j-viewer-navigation>', function() {
 
       assert(logicSpy.varSet.calledWith('foo', 2), 'should set repeatVar logic');
     });
+
+    it('alreadyVisitedPageIndex', () => {
+      // populate visited pages
+      visited.unshift(pages.attr(2));
+      visited.unshift(pages.attr(1));
+      visited.unshift(pages.attr(0));
+
+      // user changes dropdown to oldest page
+      vm.attr('selectedPageIndex', 2);
+      // mock using continue button instead of next or dropdown
+      vm.attr('alreadyVisitedPageIndex', 1);
+
+      assert.equal(vm.attr('alreadyVisitedPageIndex'), vm.attr('selectedPageIndex'), 'keeps selected page in nav dropdown in sync');
+    });
   });
 
   describe('Component', function() {

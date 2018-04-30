@@ -42,9 +42,19 @@ export let ViewerNavigationVM = Map.extend({
       }
     },
 
+    /**
+     * @property {Number} viewerNavigation.ViewModel.alreadyVisitedPageIndex alreadyVisitedPageIndex
+     * @parent viewerNavigation.ViewModel
+     *
+     * Index of a page that has been visited already - used to sync up nav dropdown to rendered page.
+     */
     alreadyVisitedPageIndex: {
       type: 'number',
       get(newVal) {
+        if (newVal && this.attr('selectedPageIndex') !== newVal) {
+          this.attr('selectedPageIndex', newVal);
+        }
+
         return newVal || 0;
       }
     },
@@ -58,7 +68,7 @@ export let ViewerNavigationVM = Map.extend({
      * Used for navigating between pages since the same page may appear multiple
      * times in `visitedPages` list if user is navigating through a repeat loop.
      *
-     * `pageIndex === totalPages - 1` is the first page.
+     * `pageIndex === totalPages - 1` is the oldest visited page.
      * `pageIndex === 0` is the last page (most recent).
      */
     selectedPageIndex: {

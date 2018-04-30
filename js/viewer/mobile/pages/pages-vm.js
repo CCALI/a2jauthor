@@ -363,6 +363,8 @@ export default Map.extend('PagesVM', {
       if (button.next === constants.qIDBACK) {
         const visitedPages = this.rState.attr('visitedPages');
         // last visited page always at index 1
+        // TODO: GOTO logic could break the above assumption
+        // might need a better way to track the last page
         const priorQuestion = (visitedPages[1].attr('name'));
         // override with new gotoPage
         logic.attr('gotoPage', priorQuestion);

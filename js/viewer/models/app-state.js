@@ -121,7 +121,7 @@ export const ViewerAppState = Map.extend({
     });
 
     //if there is any codeBefore that we need to execute, let's do that.
-    //this will make sure that any macros inside the page.attr('text') get's evaluated properly.
+    //this will make sure that any macros inside the page.attr('text') gets evaluated properly.
     let newGotoPage;
     if (page && page.attr('codeBefore') && (lastVisitedPageName !== pageName || this.attr('singlePageLoop'))) {
       newGotoPage = this.fireCodeBefore(page, logic);
@@ -131,7 +131,7 @@ export const ViewerAppState = Map.extend({
     if (newGotoPage) {
       this.setVisitedPages(newGotoPage, interview);
     }
-    // newGoto pages don't populate the visitedPages list
+
     if (page && !alreadyVisited && !newGotoPage) {
       let text = (logic && logic.eval) ? logic.eval(page.attr('text')) : page.attr('text');
       let name = page.attr('name');

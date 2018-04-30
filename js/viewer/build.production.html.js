@@ -1,4 +1,11 @@
-<!DOCTYPE HTML>
+
+const fs = require('fs');
+
+const version = Date.now();
+const html = template(version);
+
+function template (version) {
+  return `<!DOCTYPE HTML>
   <!--
     A2J Author 6 * Justice * justicia * 正义 * công lý * 사법 * правосудие
     All Contents Copyright The Center for Computer-Assisted Legal Instruction
@@ -59,6 +66,9 @@
           errRepURL: 'A2J_ViewerErrRep.php?data=ExtraData4errRepURL'
         }));
       </script>
-      <script src="../node_modules/steal/steal.production.js?v=1524605297665" cache-key="v" cache-version="1524605297665" deps-bundle main="caja/viewer/app"></script>
+      <script src="../node_modules/steal/steal.production.js?v=${version}" cache-key="v" cache-version="${version}" deps-bundle main="caja/viewer/app"></script>
     </body>
-  </html>
+  </html>`;
+}
+
+fs.writeFileSync(__dirname + '/index.production.html', html, 'utf-8');

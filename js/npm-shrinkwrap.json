@@ -4783,6 +4783,15 @@
       "integrity": "sha1-pCdO6zL6dl2lp6OxcSYXzjsUQUk=",
       "dev": true
     },
+    "grunt-run": {
+      "version": "0.8.0",
+      "resolved": "https://registry.npmjs.org/grunt-run/-/grunt-run-0.8.0.tgz",
+      "integrity": "sha512-yW2uTYBGvkDUK6+lWfXObE5gm8Kbjs7RrUh4NFqR0pOZ+YU/fR7rZPgTIn1f6hYpKXc/pCJSgGCtZIipLXVedw==",
+      "dev": true,
+      "requires": {
+        "strip-ansi": "3.0.1"
+      }
+    },
     "grunt-steal": {
       "version": "1.0.0",
       "resolved": "https://registry.npmjs.org/grunt-steal/-/grunt-steal-1.0.0.tgz",

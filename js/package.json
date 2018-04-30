@@ -32,6 +32,7 @@
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-less": "^1.4.1",
+    "grunt-run": "^0.8.0",
     "grunt-steal": "^1.0.0",
     "http-server": "^0.10.0",
     "jquery": "~2.1.4",

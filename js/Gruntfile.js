@@ -6,6 +6,24 @@ module.exports = function (grunt) {
       cachedTemplate: ['node_modules/documentjs/site/static', 'node_modules/documentjs/site/templates']
     },
 
+    run: {
+      options: {
+        // Task-specific options go here.
+      },
+      make_author_production: {
+        cmd: 'node',
+        args: [
+          'author/build.production.html.js'
+        ]
+      },
+      make_viewer_production: {
+        cmd: 'node',
+        args: [
+          'viewer/build.production.html.js'
+        ]
+      }
+    },
+
     jshint: {
       options: {
         jshintrc: '../.jshintrc'
@@ -89,11 +107,12 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-run');
 
   grunt.renameTask('documentjs', 'documentjs-orig');
 
   grunt.registerTask('svg-styles', ['less:svg']);
-  grunt.registerTask('build', ['clean:build', 'steal-build']);
+  grunt.registerTask('build', ['clean:build', 'steal-build', 'run:make_author_production, run:make_viewer_production']);
   grunt.registerTask('documentjs', [
     'clean:cachedTemplate',
     'documentjs-orig',

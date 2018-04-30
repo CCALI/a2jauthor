@@ -112,7 +112,7 @@ module.exports = function (grunt) {
   grunt.renameTask('documentjs', 'documentjs-orig');
 
   grunt.registerTask('svg-styles', ['less:svg']);
-  grunt.registerTask('build', ['clean:build', 'steal-build', 'run:make_author_production, run:make_viewer_production']);
+  grunt.registerTask('build', ['clean:build', 'steal-build', 'run:make_author_production', 'run:make_viewer_production']);
   grunt.registerTask('documentjs', [
     'clean:cachedTemplate',
     'documentjs-orig',

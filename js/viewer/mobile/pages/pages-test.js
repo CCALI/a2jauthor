@@ -4,6 +4,7 @@ import assert from 'assert';
 import PagesVM from './pages-vm';
 import sinon from 'sinon';
 import AppState from 'caja/viewer/models/app-state';
+import constants from 'caja/viewer/models/constants';
 import './pages';
 import 'steal-mocha';
 
@@ -199,6 +200,28 @@ describe('<a2j-pages>', () => {
 
         assert.deepEqual(answers.attr('agesnu.values.3'), 42,
         'adds mutli value to index 3');
+      });
+
+      it('sets a2j interview incomplete tf to false when special buttons fired', () => {
+        const answers = defaults.interview.answers;
+        const incompleteTF = constants.vnInterviewIncompleteTF.toLowerCase();
+
+        const incomplete = new can.Map({
+          comment: "",
+          name: incompleteTF,
+          repeating: false,
+          type: "TF",
+          values: [null, true]
+        });
+
+        const specialButton = new can.Map({
+          label: 'Special!',
+          next: constants.qIDSUCCESS
+        });
+
+        answers.attr(incompleteTF, incomplete);
+        vm.navigate(specialButton);
+        assert.equal(answers.attr(`${incompleteTF}.values.1`), false, 'success button should complete interview');
       });
 
     });

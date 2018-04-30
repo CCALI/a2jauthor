@@ -388,7 +388,16 @@ export default Map.extend('PagesVM', {
 
         this._setPage(page, button.next);
 
-     }
+      }
+
+      // if these special buttons are used, the interview is complete (incomplete is false)
+      if (button.next === constants.qIDFAIL ||
+        button.next === constants.qIDSUCCESS ||
+        button.next === constants.qIDASSEMBLE ||
+        button.next === constants.qIDASSEMBLESUCCESS) {
+        const answers = this.attr('interview.answers');
+        answers.attr(`${constants.vnInterviewIncompleteTF.toLowerCase()}.values`, [null, false]);
+      }
       // Make sure pages looping on themselves update
       if (page.name === gotoPage) {
         let rState = this.attr('rState');

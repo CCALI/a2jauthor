@@ -89,14 +89,20 @@ export default Map.extend({
     /**
      * @property {String} guideId
      *
-     * The identifier to the guided interview currently loaded.
+     * The identifier to the guideId interview currently loaded.
      */
     guideId: {
-      serialize: false,
       value() {
         return window.gGuideID || '';
       }
     },
+
+    /**
+     * @property {String} templateId
+     *
+     * The identifier to the templateId interview currently loaded.
+     */
+    templateId: {},
 
     /**
      * @property {String} guidePath

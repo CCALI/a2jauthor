@@ -16,7 +16,7 @@ export default function tabsRouting(appState) {
 
   let onPageChange = function(evt, newPage) {
     if (newPage !== 'templates') {
-      appState.removeAttr('id');
+      appState.removeAttr('templateId');
       appState.removeAttr('action');
     }
 

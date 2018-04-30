@@ -28,6 +28,7 @@ export const ReportToolbarVM = Map.extend('ReportToolbarVM', {
      * show fk text grades only when bad, or author selects hideAllGrades
      */
     hideAllGrades: {
+      serialize: false,
       type: 'boolean'
     },
 

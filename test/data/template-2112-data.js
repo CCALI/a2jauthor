@@ -1,5 +1,5 @@
 var template = {
-  guideId: 'Guide1261',
+  guideId: '1261',
   templateId: 2112,
   updatedAt: '2015-11-23T14:15:11.499Z',
   title: 'Authorization for Medical Treatment of a Minor',

@@ -2,7 +2,7 @@
 
 {{#with template}}
   <div class="template-wrapper{{#if deleting}} deleting{{/if}}{{#if restoring}} restoring{{/if}}">
-    <a class="template-link" href="{{routeUrl page='templates' action='edit' id=templateId}}">
+    <a class="template-link" href="{{routeUrl page='templates' action='edit' guideId=guideId templateId=templateId}}">
 
       <div class="template-order">
         <span class="build-order">{{buildOrder}}</span><br>

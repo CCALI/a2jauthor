@@ -7,7 +7,7 @@
 
 <div class='editor-container'>
   <div class='editor-sidebar'>
-    <a class='editor-list-return' href="{{routeUrl page='templates'}}">
+    <a class='editor-list-return' href="{{routeUrl page='templates' guideId=guideId}}">
       <i class="glyphicon glyphicon-left-open"></i>
       <span>Back to templates</span>
     </a>
@@ -345,5 +345,4 @@
       </author-modal>
     {{/if}}
   </div>
-  <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
 </div>

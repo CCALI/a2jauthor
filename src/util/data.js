@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const config = require('./config')
+const paths = require('./paths')
 
 function readJson (filepath) {
   return new Promise((resolve, reject) => {
@@ -22,22 +23,13 @@ function readJson (filepath) {
 }
 
 function dataLayer (config) {
-  const getUserDirectory = username => {
-    const guidesDir = config.get('GUIDES_DIR')
-    return path.join(guidesDir, username)
-  }
-
-  function getTemplatesIndexPath (username) {
-    return path.join(getUserDirectory(username), 'templates.json')
-  }
-
-  function getGuidePath (username, guideId) {
-    return path.join(getUserDirectory(username), 'guides', `Guide${guideId}`)
+  function getGuidePath (username, guideId, fileDataUrl) {
+    return paths.getGuideDirPath(username, guideId, fileDataUrl)
   }
 
   return {
-    getGuideXml (username, guideId) {
-      const guideDir = getGuidePath(username, guideId)
+    getGuideXml (username, guideId, fileDataUrl) {
+      const guideDir = getGuidePath(username, guideId, fileDataUrl)
       const filepath = path.join(guideDir, 'Guide.xml')
       return new Promise((resolve, reject) => {
         fs.readFile(filepath, {encoding: 'utf8'}, (error, text) => {
@@ -54,25 +46,8 @@ function dataLayer (config) {
       })
     },
 
-    async getTemplateJsonPath (username, templateId) {
-      const toString = x => '' + x
-      const templatesPath = getTemplatesIndexPath(username)
-      const templateList = await readJson(templatesPath)
-      const template = templateList.find(
-        entry => toString(entry.templateId) === toString(templateId)
-      )
-
-      if (!template) {
-        throw new Error(`Template "${templateId}" not found in "${templatesPath}"`)
-      }
-
-      const guideId = template.guideId
-      if (!guideId) {
-        throw new Error(`Template "${templateId}" is not associated to a guide ID`)
-      }
-
-      const guideDir = getGuidePath(username, guideId)
-      return path.join(guideDir, `template${templateId}.json`)
+    async getTemplateJsonPath (username, guideId, templateId, fileDataUrl) {
+      return paths.getTemplatePath({ username, guideId, templateId, fileDataUrl })
     }
   }
 }

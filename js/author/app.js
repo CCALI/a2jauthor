@@ -16,8 +16,9 @@ let appState = new AppState();
 
 can.route.map(appState);
 can.route(':page', {page: 'interviews'});
-can.route(':page/:action', { action: 'view' });
-can.route(':page/:action/:id');
+can.route(':page/:guideId');
+can.route(':page/:action/:guideId-:templateId');
+
 can.route.ready();
 can.view.preload('viewer-preview-layout', viewerPreviewTpl);
 

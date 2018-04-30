@@ -15,11 +15,12 @@
     {{#if a2jTemplate}}
       {{#if isPdfTemplate}}
         <pdf-editor
+          {(guide-id)}="guideId"
           {(guide)}="guide"
           {(template)}="a2jTemplate"
         />
       {{else}}
-        <template-edit-toolbar {(template)}="a2jTemplate" />
+        <template-edit-toolbar {(guide-id)}="guideId" {(template)}="a2jTemplate" />
 
         <div class="container">
           <div class="row clearfix">

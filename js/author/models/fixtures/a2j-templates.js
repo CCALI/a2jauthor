@@ -58,7 +58,8 @@ export default function(request, response) {
 
     default:
       if (requestData.templateId) {
-        response(a2jTemplates[requestData.templateId]);
+        const templateId = requestData.templateId;
+        response(a2jTemplates[templateId]);
       } else {
         const list = Object.keys(a2jTemplates).map(k => a2jTemplates[k]);
         response(list);

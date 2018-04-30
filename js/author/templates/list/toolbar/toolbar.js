@@ -39,14 +39,14 @@ export let Toolbar = Map.extend({
     this.attr("searchToken", "");
   },
 
-  openPdfTemplate() {
-    sharedPdfFlag.set(true);
-    const newPdfTemplateTransition = {
+  openNewTemplate(flag) {
+    sharedPdfFlag.set(flag);
+    const newTemplateTransition = {
       page: "templates",
-      id: "new"
+      templateId: "new"
     };
 
-    can.route.attr(newPdfTemplateTransition);
+    can.route.attr(newTemplateTransition);
   }
 });
 

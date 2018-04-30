@@ -25,6 +25,8 @@ describe('template-edit-page', function() {
 
     it('saves new templates automatically and sets new id', function(done) {
       assert.equal(vm.attr('templateId'), 'new');
+      // a2j-template model findOne requires fixture guideId
+      vm.attr('guideId', "1261");
 
       vm.bind('a2jTemplate', function() {
         const templateId = vm.attr('a2jTemplate.templateId');
@@ -43,7 +45,8 @@ describe('template-edit-page', function() {
     let vm;
 
     beforeEach(function() {
-      let frag = stache('<template-edit-page template-id="2113" />');
+      // a2j-template model findOne requires fixture guideId
+      let frag = stache('<template-edit-page template-id="2113" guide-id="1261"/>');
       $('#test-area').html(frag());
       vm = $('template-edit-page').viewModel();
     });

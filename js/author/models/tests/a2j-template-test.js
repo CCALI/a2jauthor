@@ -18,7 +18,7 @@ describe('A2JTemplate Model', function() {
   });
 
   it('findOne', function() {
-    let promise = A2JTemplate.findOne({templateId: 2112});
+    let promise = A2JTemplate.findOne({ guideId: 1261, templateId: 2112 });
 
     return promise.then(function(a2jTemplate) {
       assert.ok(a2jTemplate.attr('rootNode') instanceof A2JNode);
@@ -82,7 +82,7 @@ describe('A2JTemplate Model', function() {
   });
 
   it('addNode', function() {
-    let promise = A2JTemplate.findOne({templateId: 2112});
+    let promise = A2JTemplate.findOne({ guideId: 1261, templateId: 2112 });
 
     return promise.then(function(a2jTemplate) {
       let children = a2jTemplate.attr('rootNode.children');

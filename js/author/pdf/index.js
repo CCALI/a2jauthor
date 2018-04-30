@@ -1,19 +1,14 @@
 import $ from "jquery";
 import parser from "caja/viewer/mobile/util/parser";
 import assemble from './assemble';
+import PDFJS from 'pdfjs-dist';
+import 'pdfjs-dist/build/pdf.worker.entry';
 
 const { getTemplateOverlay } = assemble;
 const { parseJSON: parseAnxToJson } = parser;
 
 export function getPdfJs() {
-  if (window.pdfjsLib) {
-    return Promise.resolve(window.pdfjsLib);
-  }
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      getPdfJs().then(resolve, reject);
-    }, 20);
-  });
+  return Promise.resolve(PDFJS);
 }
 
 export function promptFile(fileType, fileHumanType) {
@@ -95,9 +90,10 @@ export function submitTemplatePdf(templateId, file) {
   return request(settings).then(({ ok }) => ok);
 }
 
-export function createOverlayPdf(templateId, overlay) {
+export function createOverlayPdf(guideId, templateId, overlay) {
+  const comboId = `${guideId}-${templateId}`;
   const settings = {
-    url: `/api/a2j-doc/storage/${templateId}/apply-overlay`,
+    url: `/api/a2j-doc/storage/${comboId}/apply-overlay`,
     type: "post",
     dataType: "json",
     contentType: "application/json; charset=utf-8",
@@ -119,12 +115,12 @@ export function assemblePdf ({variables, template}) {
     })
     .then(text => parseAnxToJson(text))
     .then(answers => getTemplateOverlay(template, variables, answers))
-    .then(overlay => createOverlayPdf(template.templateId, overlay))
+    .then(overlay => createOverlayPdf(template.guideId, template.templateId, overlay))
     .then(pdfId => getTemporaryPdfUrl(pdfId));
 }
 
-export function getTemplatePdfUrl(templateId) {
-  return `/api/a2j-doc/storage/${templateId}`;
+export function getTemplatePdfUrl(comboId) {
+  return `/api/a2j-doc/storage/${comboId}`;
 }
 
 export function getTemporaryPdfUrl(pdfId) {

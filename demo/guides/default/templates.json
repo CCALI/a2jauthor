@@ -1,1 +1,4 @@
-{"41":{"guideId":"4309","templateId":42}}
+{
+  "guideId":"4309",
+  "templateIds": [42]
+}

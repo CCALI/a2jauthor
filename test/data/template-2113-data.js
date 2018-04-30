@@ -1,6 +1,6 @@
 var template = {
-  guideId: 'Guide1261',
-  templateId: 2115,
+  guideId: '1261',
+  templateId: 2113,
   updatedAt: '2015-10-24T14:16:23.688Z',
   title: 'General Counsel Opening Statement',
   active: 'false',

@@ -95,7 +95,7 @@ async function assemble (req, res) {
   )
 
   const cookieHeader = req.headers.cookie
-  const {guideId, templateId, answers: answersJson} = req.body
+  const {guideId, templateId, answers: answersJson, fileDataUrl} = req.body
   const htmlOptions = req // Done SSR needs the whole request, sadly
   const downloadName = filenamify('A2J Test Assemble')
 
@@ -112,18 +112,18 @@ async function assemble (req, res) {
     })
   }
 
-  const username = await user.getCurrentUser({cookieHeader})
+  const username = fileDataUrl ? undefined : await user.getCurrentUser({cookieHeader})
   const answers = JSON.parse(answersJson)
-  const allTemplates = await getTemplatesForGuide(username, guideId)
+  const allTemplates = await getTemplatesForGuide(username, guideId, fileDataUrl)
   const isTemplateLogical = filterTemplatesByCondition(answers)
   const templates = allTemplates.filter(isTemplateLogical)
-  const guideVariables = await getVariablesForGuide(username, guideId)
+  const guideVariables = await getVariablesForGuide(username, guideId, fileDataUrl)
   const variables = mergeGuideVariableWithAnswers(guideVariables, answers)
   const segments = segmentTextAndPdfTemplates(templates)
   const pdfFiles = await Promise.all(segments.map(
     ({isPdf, templates}) => {
       if (isPdf) {
-        return renderPdfForPdfTemplates(username, templates, variables, answers)
+        return renderPdfForPdfTemplates(username, templates, variables, answers, fileDataUrl)
       }
 
       req.body.templateIds = templates.map(t => t.templateId)
@@ -160,25 +160,29 @@ async function assemble (req, res) {
   })
 }
 
-async function getTemplatesForGuide (username, guideId) {
-  const templateList = await templates.getTemplatesJSON({username})
-
-  const fullTemplates = templateList
-    .filter(t => t.guideId === guideId)
-    .map(({guideId, templateId}) => paths
-      .getTemplatePath({guideId, templateId, username})
+async function getTemplatesForGuide (username, guideId, fileDataUrl) {
+  const templateIndex = await templates.getTemplatesJSON({username, guideId, fileDataUrl})
+  // if guideId not defined, we are in standalone viewer/dat assembly using fileDataUrl
+  // set guideId to the local templates.json valu
+  if (fileDataUrl && !guideId) {
+    guideId = templateIndex.guideId
+  }
+  const templateIds = templateIndex.templateIds
+  const templatesPromises = templateIds
+  .map(templateId => paths
+      .getTemplatePath({guideId, templateId, username, fileDataUrl})
       .then(path => files.readJSON({path}))
     )
 
   const isActive = template =>
     template.active === 'true' || template.active === true
 
-  return Promise.all(fullTemplates)
+  return Promise.all(templatesPromises)
     .then(templates => templates.filter(isActive))
 }
 
-async function getVariablesForGuide (username, guideId) {
-  const xml = await data.getGuideXml(username, guideId)
+async function getVariablesForGuide (username, guideId, fileDataUrl) {
+  const xml = await data.getGuideXml(username, guideId, fileDataUrl)
   if (!xml) {
     return {}
   }
@@ -189,9 +193,9 @@ async function getVariablesForGuide (username, guideId) {
   }, {})
 }
 
-async function renderPdfForPdfTemplates (username, templates, variables, answers) {
+async function renderPdfForPdfTemplates (username, templates, variables, answers, fileDataUrl) {
   const pdfFiles = await Promise.all(templates.map(async template => {
-    const filepath = await storage.duplicateTemplatePdf(username, template.templateId)
+    const filepath = await storage.duplicateTemplatePdf(username, template.guideId, template.templateId, fileDataUrl)
     const overlay = getTemplateOverlay(template, variables, answers)
     await overlayer.forkWithOverlay(filepath, overlay)
     return filepath

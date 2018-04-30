@@ -130,7 +130,8 @@ module.exports = {
 
     const mergeData = function (fileData) {
       if (!replaceKey) {
-        return fileData.concat(data)
+        fileData.templateIds.push(data.templateId)
+        return fileData
       } else {
         return _.map(fileData, o => {
           return (o[replaceKey] === data[replaceKey]) ? data : o
@@ -143,6 +144,41 @@ module.exports = {
       .then(mergedData => this.writeJSON({ path, data: mergedData }))
       .then(data => deferred.resolve(data))
       .catch(err => deferred.reject(err))
+
+    return deferred.promise
+  },
+
+  /**
+   * @property {Function} files.readDir
+   * @parent files
+   *
+   * Read a directory for filename list.
+   *
+   * @param {String} path - the path to the file to be read.
+   * @return {Promise} a Promise that will resolve to
+   * the list of filenames in that directory.
+   *
+   * ## Use
+   *
+   * @codestart
+   * files.readDir({ path: 'foo/bar/ })
+   *   .then(data => console.log(data));
+   * @codeend
+   */
+  readDir ({ path }) {
+    const deferred = Q.defer()
+
+    fs.readdir(path, function (err, files) {
+      if (!err) {
+        try {
+          deferred.resolve(files)
+        } catch (e) {
+          deferred.reject(e)
+        }
+      } else {
+        deferred.reject(err)
+      }
+    })
 
     return deferred.promise
   }

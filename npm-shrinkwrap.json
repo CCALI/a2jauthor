@@ -14043,6 +14043,13 @@
       "integrity": "sha1-j7+rsKmKJT0xhDMfno3rc3L6xsA=",
       "dev": true
     },
+    "nan": {
+      "version": "2.9.2",
+      "resolved": "https://registry.npmjs.org/nan/-/nan-2.9.2.tgz",
+      "integrity": "sha512-ltW65co7f3PQWBDbqVvaU1WtFJUsNW7sWWm4HINhbMQIyVyzIeyZ8toX5TC5eeooE6piZoaEh4cZkueSKG3KYw==",
+      "dev": true,
+      "optional": true
+    },
     "natives": {
       "version": "1.1.1",
       "resolved": "https://registry.npmjs.org/natives/-/natives-1.1.1.tgz",

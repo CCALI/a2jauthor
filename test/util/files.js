@@ -1,11 +1,11 @@
-var assert = require('assert')
-var sinon = require('sinon')
-var fs = require('fs-extra')
-var Q = require('q')
+const assert = require('assert')
+const sinon = require('sinon')
+const fs = require('fs-extra')
+const Q = require('q')
 
-var files = require('../../src/util/files')
+const files = require('../../src/util/files')
 
-var templatesData = require('../data/templates-data')
+const templates2112Data = require('../data/template-2112-data')
 
 describe('lib/util/files', function () {
   describe('readJSON', function () {
@@ -20,19 +20,19 @@ describe('lib/util/files', function () {
     })
 
     it('should correctly read JSON', function (done) {
-      readFileStub.callsArgWith(2, null, JSON.stringify(templatesData))
+      readFileStub.callsArgWith(2, null, JSON.stringify(templates2112Data))
 
-      files.readJSON({ path: 'foo.json' })
+      files.readJSON({ path: '../data/DEV/guides/Guide1261/template2112.json' })
         .then(function (data) {
-          assert.deepEqual(data, templatesData)
+          assert.deepEqual(data, templates2112Data)
           done()
         })
     })
 
     it('should fail when data is non-JSON', function (done) {
-      readFileStub.callsArgWith(2, null, templatesData)
+      readFileStub.callsArgWith(2, null, templates2112Data)
 
-      files.readJSON({ path: 'foo.json' })
+      files.readJSON({ path: '../data/DEV/guides/Guide1261/template2112.json' })
         .catch(function (err) {
           assert(err)
           done()
@@ -42,7 +42,7 @@ describe('lib/util/files', function () {
     it('should fail when file cannot be read', function (done) {
       readFileStub.callsArgWith(2, 'Some Error')
 
-      files.readJSON({ path: 'foo.json' })
+      files.readJSON({ path: '../data/DEV/guides/Guide1261/template2112.json' })
         .catch(function (err) {
           assert(err)
           done()
@@ -68,7 +68,7 @@ describe('lib/util/files', function () {
       writeFileStub.callsArgWith(2, null)
       ensureFileStub.callsArgWith(1, null)
 
-      files.writeJSON({ path: 'foo.json', data: templatesData })
+      files.writeJSON({ path: 'foo.json', data: templates2112Data })
         .then(function (data) {
           assert.equal(ensureFileStub.getCall(0).args[0], 'foo.json')
           done()
@@ -79,12 +79,12 @@ describe('lib/util/files', function () {
       writeFileStub.callsArgWith(2, null)
       ensureFileStub.callsArgWith(1, null)
 
-      files.writeJSON({ path: 'foo.json', data: templatesData })
+      files.writeJSON({ path: 'foo.json', data: templates2112Data })
         .then(function (data) {
-          var jsonData = JSON.stringify(templatesData, null, '\t')
+          var jsonData = JSON.stringify(templates2112Data, null, '\t')
           assert.equal(writeFileStub.getCall(0).args[0], 'foo.json', 'to correct file')
           assert.deepEqual(writeFileStub.getCall(0).args[1], jsonData, 'with correct data')
-          assert.deepEqual(data, templatesData, 'and then return the raw data')
+          assert.deepEqual(data, templates2112Data, 'and then return the raw data')
           done()
         })
     })
@@ -93,7 +93,7 @@ describe('lib/util/files', function () {
       writeFileStub.callsArgWith(2, 'Some Error')
       ensureFileStub.callsArgWith(1, null)
 
-      files.writeJSON({ path: 'foo.json', data: templatesData })
+      files.writeJSON({ path: 'foo.json', data: templates2112Data })
         .catch(function (err) {
           assert(err)
           done()
@@ -121,10 +121,10 @@ describe('lib/util/files', function () {
       mockWriteJSONDeferred = null
     })
 
-    it('should merge object into array in JSON file', function (done) {
-      let fileInputData = [{ foo: 'bar' }]
-      let userInputData = { baz: 'xyz' }
-      let expectedData = [{ foo: 'bar' }, { baz: 'xyz' }]
+    it('should add a new templateId to the templateIds array', function (done) {
+      let fileInputData = { guideId: '1261', templateIds: [1, 2] }
+      let userInputData = { templateId: 3 }
+      let expectedData = { guideId: '1261', templateIds: [1, 2, 3] }
 
       mockReadJSONDeferred.resolve(fileInputData)
       mockWriteJSONDeferred.resolve(JSON.stringify(expectedData))

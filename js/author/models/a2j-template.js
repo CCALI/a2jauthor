@@ -22,10 +22,11 @@ const A2JTemplate = Model.extend(
     init() {
       const update2 = update1 =>
         function _update(id, template) {
+          const comboId = template.guideId + '-' + id;
           const isPdf = template.rootNode.tag === "a2j-pdf";
           if (isPdf) {
             return $.ajax({
-              url: `/api/template/${id}`,
+              url: `/api/template/${comboId}`,
               method: "put",
               contentType: "application/json",
               dataType: "json",
@@ -43,9 +44,9 @@ const A2JTemplate = Model.extend(
     id: "templateId",
 
     create: "/api/template",
-    update: "/api/template/{templateId}",
-    destroy: "/api/template/{templateId}",
-    findOne: "/api/template/{templateId}",
+    update: "/api/template/{guideId}-{templateId}",
+    destroy: "/api/template/{guideId}-{templateId}",
+    findOne: "/api/template/{guideId}-{templateId}",
     findAll: "/api/templates/{guideId}",
 
     /**

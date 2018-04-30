@@ -30,16 +30,17 @@ module.exports = {
    * @parent templates
    *
    * Read the templates.json file. If it does not exist,
-   * create it with an empty array.
+   * create it with this data structure:
+   *    { 'guideId': 600, 'templateIds': [] }
    *
    * @return {Promise} a Promise that will resolve to the
    * path to templates data.
    */
-  getTemplatesJSON ({ username }) {
+  getTemplatesJSON ({ username, guideId, fileDataUrl }) {
     let templatesJSONPath
 
     const pathPromise = paths
-      .getTemplatesPath({ username })
+      .getTemplatesPath({ username, guideId, fileDataUrl })
       .then(templatesPath => {
         templatesJSONPath = templatesPath
         return templatesPath
@@ -47,10 +48,13 @@ module.exports = {
 
     return pathPromise
       .then(path => files.readJSON({ path }))
-      .catch(err => {
+      .catch((err, path) => {
         debug(err)
         debug(`Writing ${templatesJSONPath}`)
-        return files.writeJSON({ path: templatesJSONPath, data: [] })
+        return files.writeJSON({
+          path: templatesJSONPath,
+          data: { 'guideId': guideId, 'templateIds': [] }
+        })
       })
   },
 
@@ -82,9 +86,10 @@ module.exports = {
 
     const templatePromises = templateIndexPromise
       .then(templateIndex => {
-        return _.map(templateIndex, ({ templateId }) => {
+        const templateIds = templateIndex.templateIds
+        return _.map(templateIds, (templateId) => {
           return paths
-            .getTemplatePath({ templateId, fileDataUrl })
+            .getTemplatePath({ username: null, guideId: null, templateId, fileDataUrl })
             .then(path => files.readJSON({ path }))
         })
       })
@@ -119,27 +124,26 @@ module.exports = {
 
     const { cookieHeader } = params
     const { active } = (params.query || {})
+    const { fileDataUrl } = (params.query || '')
     const usernamePromise = user.getCurrentUser({ cookieHeader })
 
-    const filterByGuideId = function (coll) {
-      return _.filter(coll, o => o.guideId === guideId)
-    }
+    let username
 
-    const filteredTemplateSummaries = usernamePromise
-      .then(username => this.getTemplatesJSON({ username }))
-      .then(filterByGuideId)
+    const templatePathPromises = usernamePromise
+    .then(currentUsername => {
+      username = currentUsername
+      return this.getTemplatesJSON({ username, guideId, fileDataUrl })
+    })
+    .then(({guideId, templateIds}) => {
+      return templateIds.map(templateId => {
+        return paths.getTemplatePath({ username, guideId, templateId })
+      })
+    })
 
-    const templatePromises = Q
-      .all([filteredTemplateSummaries, usernamePromise])
-      .then(([ filteredTemplates, username ]) => {
-        return _.map(filteredTemplates, ({ guideId, templateId }) => {
-          const pathPromise = paths.getTemplatePath({
-            guideId, templateId, username
-          })
-
-          return pathPromise.then(path => {
-            return files.readJSON({ path })
-          })
+    const templatePromises = Q.all(templatePathPromises)
+      .then(templatePaths => {
+        return templatePaths.map(path => {
+          return files.readJSON({ path })
         })
       })
 

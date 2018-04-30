@@ -576,7 +576,6 @@ switch ($command){
 
 			copy(GUIDES_DIR.$guideName, $GuidePublicDir.'/Guide.xml');
 			copy(replace_extension(GUIDES_DIR.$guideName,'json'), $GuidePublicDir.'/Guide.json');//01/14/2015
-			file_put_contents($GuidePublicDir . '/templates.json', guide_templates_index_string($row['gid']));
 
 			//http://localhost/caja/userfiles/public/dev/guides/A2JFieldTypes/2014-07-22-14-06-12
 			file_put_contents($GuidePublicDir.'/index.php', '<?php header("Location: /app/js/viewer/A2J_Viewer.php?gid=".$_SERVER["REQUEST_URI"]."Guide.xml"); ?>');
@@ -666,7 +665,8 @@ function process_uploaded_guide_file($guide_id, $destination_path) {
 	if ($mime_type == 'application/zip') {
 		unzip($temp_file_path, $destination_path);
 		find_guide_file_and_rename($destination_path);
-		create_guide_templates($guide_id, $destination_path);
+		update_guide_templates($guide_id, $destination_path);
+		update_templates_index($guide_id, $destination_path);
 	} else {
 		$filename = $file_data['name'];
 
@@ -719,49 +719,21 @@ function find_guide_file_and_rename($path) {
 }
 
 /**
- * Register uploaded guide templates through templates API
- *
- * The zip file being uploaded might contain template json files, even though
- * the templates will be in the expected location on the filesystem, the templates
- * API won't "see them" when the author visits the templates tab.
- *
- * The reason being, at the root of the user folder where guides are stored,
- * there is a file called "templates.json", that file serves as an index to map
- * a guideId to a templateId, when the list of templates is requested by the
- * client that index file is read and then API locates each template json file
- * found in said index file.
- *
- * The zip upload process does not update the "templates.json" file, so, in
- * order to "register" the uploaded templates, PHP will send POST requests with
- * the content of the individual template json files as the payload, then the
- * templates API (Node) will take care of updating the "templates.json", create
- * the right template ids and write new JSON files
+ * Update uploaded guide templates to the newly generated guideId
  */
-function create_guide_templates($guide_id, $guide_folder_path) {
-
+function update_guide_templates($guide_id, $guide_folder_path) {
 	if (($files = scandir($guide_folder_path)) !== FALSE) {
-		$http_protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != '') == 'https' ? 'https' : 'http';
-		$http_host = $_SERVER['HTTP_HOST'];
-		$request_url = "{$http_protocol}://{$http_host}/api/template";
-		$request_cookie = isset($_COOKIE) ? createCookie($_COOKIE) : "";
-		$request_headers = array("Content-Type" => "application/json", "Cookie" => $request_cookie);
 		$templates = array_values(array_filter($files, "is_template_file"));
-
 		try {
 			foreach ($templates as $template) {
 				$file_path = "{$guide_folder_path}/{$template}";
 				$json_file = file_get_contents($file_path);
 				$json_data = json_decode($json_file);
 
-				// update guideId and remove the original templateId
-				unset($json_data->templateId);
 				$json_data->guideId = strval($guide_id);
 
-				// fire the request to create the template through the NODE api
-				Requests::post($request_url, $request_headers, json_encode($json_data));
-
-				// delete the uploaded template, the NODE api will create a new file
-				unlink($file_path);
+				// write updated templates data to json
+				file_put_contents($file_path, json_encode($json_data));
 			}
 		} catch (Exception $e) {
 			trace("Caught exception: ", $e->getMessage(), "\n");
@@ -769,6 +741,30 @@ function create_guide_templates($guide_id, $guide_folder_path) {
 	} else {
 		cleanup_failed_guide_upload();
 		fail_and_exit(422, "Unable to open .zip file");
+	}
+}
+
+/**
+ * Update templates.json file with newly generated guideId from upload
+ * format  { guideId: 600, templateIds: [2, 5, 14] }
+ *
+ * note: front end code handles generating a new templates.json file if it doesn't exist
+ */
+function update_templates_index($guide_id, $guide_folder_path) {
+	$templates_index_path = $guide_folder_path . "/templates.json";
+	if (file_exists($templates_index_path)) {
+		try {
+				$templates_json_file = file_get_contents($templates_index_path);
+				$templates_json_data = json_decode($templates_json_file);
+
+				// update guideId in templates.json index
+				$templates_json_data->guideId = strval($guide_id);
+
+				// write updated templates data to json
+				file_put_contents($templates_index_path, json_encode($templates_json_data));
+		} catch (Exception $e) {
+			trace("Caught exception: ", $e->getMessage(), "\n");
+		}
 	}
 }
 
@@ -926,8 +922,6 @@ function createGuideZip($gid) {
 					$zip->addFile($filePath, $file);
 				}
 			}
-			// templates.json should be updated last to overwrite any previous templates.json file
-			$zip->addFromString("templates.json", guide_templates_index_string($gid));
 
 			$zip->close();
 			$result['zip'] = GUIDES_URL.$guideDir.'/'.$zipNameOnly;
@@ -951,42 +945,9 @@ function createGuideZip($gid) {
 function add_guide_json_file($guide_name, $zip) {
 	$xml_guide_path = GUIDES_DIR . $guide_name;
 	$json_guide_path = replace_extension($xml_guide_path, 'json');
-
 	if (file_exists($json_guide_path)) {
 		$zip->addFile($json_guide_path, 'Guide.json');
 	}
-}
-
-/**
- * JSON encoded list of templates that belong to provided guide id.
- *
- * This function reads the user's template index file and if it exists it will
- * filter down the list of templates using the guide_id passed as a parameter,
- * then it will return a json string of that filtered list.
- *
- * @param int $guide_id The numerical id of the guided interview
- * @return string
- */
-function guide_templates_index_string($guide_id) {
-	$guide_templates_list = [];
-	$userdir = $_SESSION['userdir'];
-	$user_template_index_path = GUIDES_DIR . $userdir . "/templates.json";
-
-	if (file_exists($user_template_index_path)) {
-		$user_template_index_contents = file_get_contents($user_template_index_path);
-
-		// array with objects containing guideId and templateId properties e.g
-		// [{ guideId: 5, templateId: 10 }, { guideId: 6, templateId: 11 }]
-		$user_template_index_list = json_decode($user_template_index_contents);
-
-		$guide_templates_list = array_filter($user_template_index_list,
-			function($ti) use($guide_id) {
-				return $ti->guideId == $guide_id;
-			}
-		);
-	}
-
-	return json_encode($guide_templates_list);
 }
 
 function getGuideFileDetails($filename) {	// 2014-08-26 Get info about guide

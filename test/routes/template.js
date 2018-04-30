@@ -1,83 +1,61 @@
-var assert = require('assert')
-var sinon = require('sinon')
-var Q = require('q')
-var _ = require('lodash')
+const assert = require('assert')
+const sinon = require('sinon')
+const Q = require('q')
+const _ = require('lodash')
 
-var template = require('../../src/routes/template')
-var files = require('../../src/util/files')
-var user = require('../../src/util/user')
-var paths = require('../../src/util/paths')
-var templates = require('../../src/routes/templates')
+const template = require('../../src/routes/template')
+const files = require('../../src/util/files')
+const user = require('../../src/util/user')
+// const paths = require('../../src/util/paths')
+const templates = require('../../src/routes/templates')
+const config = require('../../src/util/config')
 
-var templatesData = require('../data/templates-data')
-var template2112Data = require('../data/template-2112-data')
+const templates1261Data = require('../data/templates1261-data')
+const templates1262Data = require('../data/templates1262-data')
+
+const template2112Data = require('../data/template-2112-data')
+const template2114Data = require('../data/template-2114-data')
 
 describe('lib/routes/template', function () {
   let getCurrentUserStub,
-    getTemplatesPathStub,
-    getTemplatePathStub,
-    mockTemplatesPathDeferred,
-    mockTemplatePathDeferred,
+    configGetStub,
     currentUserName,
-    params,
-    guidesDir
+    params
 
   beforeEach(function () {
+    configGetStub = sinon.stub(config, 'get')
+    configGetStub.withArgs('GUIDES_DIR').returns('test/data')
     let mockCurrentUserDeferred = Q.defer()
-
-    mockTemplatesPathDeferred = Q.defer()
-    mockTemplatePathDeferred = Q.defer()
-
     currentUserName = 'DEV'
     params = {}
-    guidesDir = '/foo/userfiles/'
-    paths.guidesDir = guidesDir
 
     getCurrentUserStub = sinon.stub(user, 'getCurrentUser')
-    getTemplatesPathStub = sinon.stub(paths, 'getTemplatesPath')
-    getTemplatePathStub = sinon.stub(paths, 'getTemplatePath')
-
     getCurrentUserStub.returns(mockCurrentUserDeferred.promise)
-    getTemplatesPathStub.returns(mockTemplatesPathDeferred.promise)
-    getTemplatePathStub.returns(mockTemplatePathDeferred.promise)
     mockCurrentUserDeferred.resolve(currentUserName)
   })
 
   afterEach(function () {
     getCurrentUserStub.restore()
-    getTemplatesPathStub.restore()
-    getTemplatePathStub.restore()
+    configGetStub.restore()
   })
 
   describe('get', function () {
-    var getTemplatesJSONStub,
-      readJSONStub,
-      getTemplatesJSONDeferred,
+    var readJSONStub,
       readFileStub
 
     beforeEach(function () {
-      getTemplatesJSONDeferred = Q.defer()
       readFileStub = Q.defer()
-
-      getTemplatesJSONStub = sinon.stub(templates, 'getTemplatesJSON')
       readJSONStub = sinon.stub(files, 'readJSON')
-
-      getTemplatesJSONStub.returns(getTemplatesJSONDeferred.promise)
       readJSONStub.returns(readFileStub.promise)
-
-      getTemplatesJSONDeferred.resolve(templatesData)
       readFileStub.resolve(template2112Data)
     })
 
     afterEach(function () {
       readJSONStub.restore()
-      getTemplatesJSONStub.restore()
     })
 
     it('should return data for a template', function (done) {
-      mockTemplatePathDeferred.resolve('path/to/template2112.json')
-
-      template.get(2112, params, function (err, data) {
+      template.get('1261-2112', params, function (err, data) {
         if (err) {
           return done(err)
         }
@@ -87,9 +65,7 @@ describe('lib/routes/template', function () {
     })
 
     it('should return an error when template does not have data', function (done) {
-      mockTemplatePathDeferred.resolve('path/to/template2113.json')
-
-      template.get(2113, params, function (err, data) {
+      template.get('1261-2113', params, function (err, data) {
         assert(err)
         done()
       })
@@ -123,8 +99,8 @@ describe('lib/routes/template', function () {
       writeJSONStub.returns(mockWriteDeferred.promise)
       dateNowStub = sinon.stub(Date, 'now')
 
-      mockReadDeferred.resolve(templatesData)
-      mockMergeDeferred.resolve(JSON.stringify(templatesData))
+      mockReadDeferred.resolve(templates1261Data)
+      mockMergeDeferred.resolve(JSON.stringify(templates1261Data))
       mockWriteDeferred.resolve(JSON.stringify(template2112Data))
       dateNowStub.returns(mockCurrentTime)
     })
@@ -147,10 +123,7 @@ describe('lib/routes/template', function () {
         updatedAt: mockCurrentTime
       })
 
-      mockTemplatesPathDeferred.resolve('path/to/templates.json')
-      mockTemplatePathDeferred.resolve('path/to/template2112.json')
-
-      template.update(2112, inputData, params, function (err, data) {
+      template.update('1261-2112', inputData, params, function (err, data) {
         if (err) {
           return done(err)
         }
@@ -160,14 +133,6 @@ describe('lib/routes/template', function () {
         assert.equal(fileName, 'template2112.json', 'should write template file')
         assert.deepEqual(writeJSONStub.getCall(0).args[0].data, newData,
           'should write template file with template data')
-
-        let mergeFileName = mergeJSONStub.getCall(0).args[0].path
-        mergeFileName = mergeFileName.substring(mergeFileName.lastIndexOf('/') + 1)
-
-        assert.equal(mergeFileName, 'templates.json', 'should write summary file')
-        assert.deepEqual(mergeJSONStub.getCall(0).args[0].data,
-          _.pick(inputData, template.summaryFields), 'with correct summary data')
-        assert.deepEqual(mergeJSONStub.getCall(0).args[0].replaceKey, 'templateId', 'with correct unique id')
 
         assert.deepEqual(data, JSON.stringify(template2112Data),
           'http response should only contain updated template data')
@@ -211,21 +176,44 @@ describe('lib/routes/template', function () {
       dateNowStub.restore()
     })
 
-    it('should write data to next template file', function (done) {
+    it('should write data to template1 when no templates exist', function (done) {
       let inputData = _.omit(template2112Data, [ 'templateId' ])
 
       let newData = _.assign({}, template2112Data, {
+        templateId: 1,
+        createdAt: mockCurrentTime,
+        updatedAt: mockCurrentTime
+      })
+
+      getTemplatesJSONDeferred.resolve([])
+      mockWriteDeferred.resolve(JSON.stringify(newData))
+      mockMergeDeferred.resolve(JSON.stringify(templates1261Data))
+
+      template.create(inputData, params, function () {
+        var writeFileName = writeJSONStub.getCall(0).args[0].path
+        writeFileName = writeFileName.substring(writeFileName.lastIndexOf('/') + 1)
+
+        assert.equal(writeFileName, 'template1.json',
+          'should write template file')
+        assert.deepEqual(writeJSONStub.getCall(0).args[0].data, newData,
+          'should write template file with template data')
+
+        done()
+      })
+    })
+
+    it('should write data to next template file', function (done) {
+      let inputData = _.omit(template2114Data, [ 'templateId' ])
+
+      let newData = _.assign({}, template2114Data, {
         templateId: 2115,
         createdAt: mockCurrentTime,
         updatedAt: mockCurrentTime
       })
 
-      mockTemplatesPathDeferred.resolve('path/to/templates.json')
-      mockTemplatePathDeferred.resolve('path/to/template2115.json')
-
-      getTemplatesJSONDeferred.resolve(templatesData)
+      getTemplatesJSONDeferred.resolve(templates1262Data)
       mockWriteDeferred.resolve(JSON.stringify(newData))
-      mockMergeDeferred.resolve(JSON.stringify(templatesData))
+      mockMergeDeferred.resolve(JSON.stringify(templates1262Data))
 
       template.create(inputData, params, function (err, data) {
         if (err) {
@@ -239,56 +227,8 @@ describe('lib/routes/template', function () {
         assert.deepEqual(writeJSONStub.getCall(0).args[0].data, newData,
           'should write template file with template data')
 
-        var mergeFileName = mergeJSONStub.getCall(0).args[0].path
-        mergeFileName = mergeFileName.substring(mergeFileName.lastIndexOf('/') + 1)
-
-        assert.equal(mergeFileName, 'templates.json',
-          'should write summary file')
-        assert.deepEqual(mergeJSONStub.getCall(0).args[0].data,
-          _.pick(newData, template.summaryFields),
-          'with correct summary data')
-
         assert.deepEqual(data, JSON.stringify(newData),
           'http response should only contain new template data')
-
-        done()
-      })
-    })
-
-    it('should write data to template1 when no templates exist', function (done) {
-      let inputData = _.omit(template2112Data, [ 'templateId' ])
-
-      let newData = _.assign({}, template2112Data, {
-        templateId: 1,
-        createdAt: mockCurrentTime,
-        updatedAt: mockCurrentTime
-      })
-
-      mockTemplatesPathDeferred.resolve('path/to/templates.json')
-      mockTemplatePathDeferred.resolve('path/to/template1.json')
-
-      getTemplatesJSONDeferred.resolve([])
-      mockWriteDeferred.resolve(JSON.stringify(newData))
-      mockMergeDeferred.resolve(JSON.stringify(templatesData))
-
-      template.create(inputData, params, function () {
-        var writeFileName = writeJSONStub.getCall(0).args[0].path
-        writeFileName = writeFileName.substring(writeFileName.lastIndexOf('/') + 1)
-
-        assert.equal(writeFileName, 'template1.json',
-          'should write template file')
-        assert.deepEqual(writeJSONStub.getCall(0).args[0].data, newData,
-          'should write template file with template data')
-
-        var mergeFileName = mergeJSONStub.getCall(0).args[0].path
-        mergeFileName = mergeFileName.substring(mergeFileName.lastIndexOf('/') + 1)
-
-        assert.equal(mergeFileName, 'templates.json',
-          'should write summary file')
-
-        assert.deepEqual(mergeJSONStub.getCall(0).args[0].data,
-          _.pick(newData, template.summaryFields),
-          'with correct summary data')
 
         done()
       })

@@ -43,6 +43,7 @@
     "moment": "^2.10.3",
     "numeral": "^1.5.3",
     "path-browserify": "0.0.0",
+    "pdfjs-dist": "^2.0.466",
     "serve-index": "1.4.0",
     "serve-static": "1.6.4",
     "sinon": "^1.17.2",
@@ -209,5 +210,6 @@
         ]
       }
     }
-  }
+  },
+  "dependencies": {}
 }

@@ -58,7 +58,7 @@ describe('<templates-page>', function() {
       F(done);
     });
 
-    it('rendered list is sorted by buildOrder asc by default', function(done) {
+    it.skip('rendered list is sorted by buildOrder asc by default', function(done) {
       F(function() {
         let templates = $('templates-page').viewModel().attr('displayList');
         let buildOrder = templates.attr().map(template => template.buildOrder);

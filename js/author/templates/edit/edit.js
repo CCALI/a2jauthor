@@ -41,12 +41,13 @@ export const TemplateEditPageVM = Map.extend({
      */
     a2jTemplatePromise: {
       get() {
-        const templateId = this.attr("templateId");
-        if (templateId === "new") {
+        const templateId = this.attr('templateId');
+        const guideId = this.attr('guideId');
+        if (templateId === 'new') {
           return this.makeNewTemplate();
         }
 
-        return A2JTemplate.findOne({ templateId });
+        return A2JTemplate.findOne({ guideId, templateId });
       }
     },
 

@@ -16,9 +16,13 @@ module.exports = {
    * @function paths.getViewerPath
    * @parent paths
    * @return {String} Absolute path to the viewer app folder
+   *
+   *  if the config value exists, most likely a standalone viewer/dat install
+   *  if not use the default A2J Author location
    */
   getViewerPath () {
-    return path.join(__dirname, '..', '..', 'js/viewer')
+    const viewerConfigPath = config.get('VIEWER_PATH')
+    return viewerConfigPath || path.join(__dirname, '..', '..', 'js/viewer')
   },
 
   /**
@@ -38,26 +42,51 @@ module.exports = {
     const isUrl = urlRegex({ exact: true }).test(fileDataUrl)
 
     return (isUrl || isAbsolutePath)
-      ? fileDataUrl
-      : path.join(this.getViewerPath(), fileDataUrl)
+    ? fileDataUrl
+    : path.join(this.getViewerPath(), fileDataUrl)
+  },
+
+  /**
+   * @function paths.getGuideDirPath
+   * @parent paths
+   * @param {String} username - current username.
+   * @param {String} guideId - id of the guide.
+   * @param {String} fileDataUrl - used for standalone assembly
+   *
+   * When `fileDataUrl` is used to locate the root Guide directory,
+   * we need to build the Guide path using the viewer folder as
+   * the base if `fileDataUrl` is relative, otherwise we just use the
+   * absolute `fileDataUrl` as-is.
+   *
+   * @return {String} Normalized file data url
+   */
+  getGuideDirPath (username, guideId, fileDataUrl) {
+    const guidesDir = config.get('GUIDES_DIR')
+
+    return fileDataUrl
+    ? path.join(this.normalizeFileDataUrl(fileDataUrl))
+    : path.join(guidesDir, username, 'guides', `Guide${guideId}`)
   },
 
   /**
    * @property {Function} paths.getTemplatesPath
    * @parent paths
+   * @param {String} username - current username.
+   * @param {String} guideId - id of the guide.
+   * @param {String} fileDataUrl - used for standalone assembly
    *
    * @return {Promise} a Promise that will resolve to the
-   * path to the templates.json file for the current user.
+   * path to the templates.json file for the current Interview.
    */
-  getTemplatesPath ({ username, fileDataUrl }) {
+  getTemplatesPath ({ username, guideId, fileDataUrl }) {
     const deferred = Q.defer()
     const guidesDir = config.get('GUIDES_DIR')
 
-    const file = fileDataUrl
+    const templatesPath = fileDataUrl
       ? path.join(this.normalizeFileDataUrl(fileDataUrl), 'templates.json')
-      : path.join(guidesDir, username, 'templates.json')
+      : path.join(guidesDir, username, 'guides', `Guide${guideId}`, 'templates.json')
 
-    deferred.resolve(file)
+    deferred.resolve(templatesPath)
 
     return deferred.promise
   },

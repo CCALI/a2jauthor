@@ -30,17 +30,17 @@ function doesFileExist (filepath) {
 
 const storageRouter = (new Router())
   .use(user.middleware)
-  .get('/:templateId', async (req, res) => {
-    const {templateId} = req.params
-    if (!templateId) {
-      const error = new Error('A template ID must be provided')
+  .get('/:comboId', async (req, res) => {
+    const [ guideId, templateId ] = (req.params.comboId || '').split('-')
+    if (!guideId || !templateId) {
+      const error = new Error('A guide ID and template ID must be provided')
       return errorRes(res, error)
     }
 
     const {username} = req.user
     let pdfPath
     try {
-      pdfPath = await storage.getTemplatePdfPath(username, templateId)
+      pdfPath = await storage.getTemplatePdfPath(username, guideId, templateId)
     } catch (error) {
       return errorRes(res, error)
     }
@@ -53,8 +53,8 @@ const storageRouter = (new Router())
 
     res.sendFile(pdfPath)
   })
-  .post('/:templateId', upload.single('pdf'), (req, res) => {
-    const {templateId} = req.params
+  .post('/:comboId', upload.single('pdf'), (req, res) => {
+    const [ guideId, templateId ] = (req.params.comboId || '').split('-')
     const {username} = req.user
     if (!templateId) {
       const error = new Error('A template ID must be provided')
@@ -67,13 +67,13 @@ const storageRouter = (new Router())
       return errorRes(res, error)
     }
     const filepath = file.path
-    storage.saveTemplatePdf(username, templateId, filepath)
+    storage.saveTemplatePdf(username, guideId, templateId, filepath)
       .then(() => unlink(filepath))
       .then(() => res.json({ok: true}))
       .catch(error => errorRes(res, error))
   })
-  .post('/:templateId/apply-overlay', async (req, res) => {
-    const {templateId} = req.params
+  .post('/:comboId/apply-overlay', async (req, res) => {
+    const [ guideId, templateId ] = (req.params.comboId || '').split('-')
     const {overlay} = req.body
     if (!templateId) {
       const error = new Error('A template ID must be provided')
@@ -81,7 +81,7 @@ const storageRouter = (new Router())
     }
 
     const {username} = req.user
-    const pdfPath = await storage.getTemplatePdfPath(username, templateId)
+    const pdfPath = await storage.getTemplatePdfPath(username, guideId, templateId)
     const pdfId = await storage.commitTemporaryFilepath(pdfPath)
     const newPdfPath = storage.getTemporaryFilepath(pdfId)
     await overlayer.forkWithOverlay(newPdfPath, overlay)

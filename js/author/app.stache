@@ -34,7 +34,7 @@
 
   <div class="guideio"></div>
   <div class="">
-    <vertical-navbar theme="inverse" page="{page}"></vertical-nabvar>
+    <vertical-navbar theme="inverse" page="{page}" {guide-id}="guideId"></vertical-nabvar>
   </div>
 
   <div class="guidepanels ui-widget xui-widget-content">
@@ -268,11 +268,11 @@
     <div class="tab-panel has-toolbar" id="tabsTemplate">
       {{#is page "templates"}}
         {{#if guideId}}
-          {{#if id}}
+          {{#if templateId}}
             <template-edit-page
               {(guide)}="guide"
               {(action)}="action"
-              {(template-id)}="id"
+              {(template-id)}="templateId"
               {guide-id}="guideId"
             />
           {{else}}

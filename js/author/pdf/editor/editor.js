@@ -104,6 +104,7 @@ const PdfEditorVm = Map.extend({
   },
 
   define: {
+    guideId: {},
     template: {value: null},
     pdfController: {value: null},
     boxes: rootNodeProperty("boxes", () => []),
@@ -165,7 +166,7 @@ const PdfEditorVm = Map.extend({
       get() {
         const isViewable = this.attr("hasPdf") && !this.attr("pdfError");
         if (isViewable) {
-          const id = this.getTemplateId();
+          const id = this.getComboId();
           return getTemplatePdfUrl(id);
         }
       }
@@ -343,7 +344,11 @@ const PdfEditorVm = Map.extend({
 
   // <Pdf>
   getTemplateId() {
-    return this.attr("template.templateId");
+    return `${this.attr("template.templateId")}`;
+  },
+
+  getComboId() {
+    return `${this.attr("template.guideId")}-${this.attr("template.templateId")}`;
   },
 
   // pdfController pdfJs.Pdf
@@ -355,7 +360,7 @@ const PdfEditorVm = Map.extend({
       return Promise.resolve(existingPdf);
     }
 
-    const templatePdfUrl = getTemplatePdfUrl(this.getTemplateId());
+    const templatePdfUrl = getTemplatePdfUrl(this.getComboId());
     return getPdfJs()
       .then(pdfJs => pdfJs.getDocument(templatePdfUrl))
       .then(pdf => {
@@ -498,15 +503,15 @@ const PdfEditorVm = Map.extend({
   },
 
   uploadNewPdf() {
-    const templateId = this.getTemplateId();
+    const comboId = this.getComboId();
     const isPdfCorrupted = !!this.attr("pdfError");
     const isWithoutPdf = !this.attr("hasPdf");
     const shouldConfirmImmediately = isPdfCorrupted || isWithoutPdf;
     let uploadTask;
     if (shouldConfirmImmediately) {
-      uploadTask = uploadTemplatePdf(templateId, () => true);
+      uploadTask = uploadTemplatePdf(comboId, () => true);
     } else {
-      uploadTask = uploadTemplatePdf(templateId, newPageCount => {
+      uploadTask = uploadTemplatePdf(comboId, newPageCount => {
         const currentPageCount = this.attr("pages").length;
         const hasMorePages = newPageCount > currentPageCount;
         if (hasMorePages) {

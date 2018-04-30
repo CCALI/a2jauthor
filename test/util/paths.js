@@ -19,7 +19,7 @@ describe('lib/util/paths', function () {
     guidesDir = '/foo/userfiles/'
 
     configGetStub = sinon.stub(config, 'get')
-    configGetStub.returns(guidesDir)
+    configGetStub.withArgs('GUIDES_DIR').returns(guidesDir)
 
     currentUser = 'DEV'
   })
@@ -29,11 +29,11 @@ describe('lib/util/paths', function () {
   })
 
   describe('getTemplatesPath', function () {
-    it('is correct when username provided', function () {
-      const promise = paths.getTemplatesPath({ username: currentUser })
+    it('is correct when username and guideId provided', function () {
+      const promise = paths.getTemplatesPath({ username: currentUser, guideId: '1261' })
 
       return promise.then(templatesPath => {
-        const expected = path.join(guidesDir, currentUser, 'templates.json')
+        const expected = path.join(guidesDir, currentUser, 'guides/Guide1261/templates.json')
         assert.equal(templatesPath, expected)
       })
     })

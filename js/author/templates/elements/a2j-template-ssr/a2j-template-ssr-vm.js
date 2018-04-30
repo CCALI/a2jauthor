@@ -34,7 +34,7 @@ export default Map.extend({
         }
 
         if (templateId) {
-          return this.findOneAndMakeList(templateId);
+          return this.findOneAndMakeList(guideId, templateId);
         }
 
         return A2JTemplate.findAll({ guideId, fileDataUrl, active });
@@ -70,12 +70,12 @@ export default Map.extend({
   /**
    * @function findOneAndMakeList
    *
-   * Calls `A2JTemplate.findOne` with the id value pass as a parameter and
-   * returns an `A2JTemplate.List` with the template instance retrieved from
-   * the server.
+   * Calls `A2JTemplate.findOne` with the guideId and templateId values passed
+   * as a parameter and returns an `A2JTemplate.List` with the template instance
+   * retrieved from the server.
    */
-  findOneAndMakeList(id) {
-    const promise = A2JTemplate.findOne({ templateId: id });
+  findOneAndMakeList(guideId, templateId) {
+    const promise = A2JTemplate.findOne({ guideId, templateId });
     return promise.then(template => new List([template]));
   },
 

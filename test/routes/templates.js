@@ -7,133 +7,83 @@ const request = require('supertest')
 
 const templates = require('../../src/routes/templates')
 const files = require('../../src/util/files')
-const paths = require('../../src/util/paths')
 const user = require('../../src/util/user')
+const config = require('../../src/util/config')
 
-const templatesData = require('../data/templates-data')
+const templates1261Data = require('../data/templates1261-data')
 const template2112Data = require('../data/template-2112-data')
 const template2113Data = require('../data/template-2113-data')
 const template2114Data = require('../data/template-2114-data')
 
 describe('lib/routes/templates', function () {
   describe('with mocks', function () {
-    let getTemplatesPathStub
-    let templatesJSONPath
     let currentUserName
     let params
+    let configGetStub
 
     beforeEach(function () {
-      let mockTemplatesPathDeferred = Q.defer()
-
-      templatesJSONPath = 'path/to/templates/templates.json'
+      configGetStub = sinon.stub(config, 'get')
+      // GUIDES_DIR sets the base data folder for all paths
+      configGetStub.withArgs('GUIDES_DIR').returns('test/data')
       currentUserName = 'DEV'
       params = {}
-
-      getTemplatesPathStub = sinon.stub(paths, 'getTemplatesPath')
-
-      getTemplatesPathStub.returns(mockTemplatesPathDeferred.promise)
-
-      mockTemplatesPathDeferred.resolve(templatesJSONPath)
     })
 
     afterEach(function () {
-      getTemplatesPathStub.restore()
+      configGetStub.restore()
     })
 
     describe('getTemplatesJSON', function () {
-      let readFileStub
       let writeFileStub
 
       beforeEach(function () {
-        readFileStub = sinon.stub(files, 'readJSON')
         writeFileStub = sinon.stub(files, 'writeJSON')
       })
 
       afterEach(function () {
-        readFileStub.restore()
         writeFileStub.restore()
       })
 
       it('should return data from templates JSON file when it exists', function (done) {
-        let mockTemplatesDeferred = Q.defer()
-
-        readFileStub.returns(mockTemplatesDeferred.promise)
-        mockTemplatesDeferred.resolve(templatesData)
-
-        templates.getTemplatesJSON({ username: currentUserName })
-          .then(data => {
-            assert.deepEqual(data, templatesData)
-            done()
-          })
+        templates.getTemplatesJSON({ username: currentUserName, guideId: '1261' })
+        .then(data => {
+          assert.deepEqual(data, templates1261Data)
+          done()
+        })
       })
 
-      it('should write empty templates JSON file when it does not exist and return the empty array', function (done) {
+      it('should write empty templates JSON file when it does not exist and return the empty templateIds array', function (done) {
+        // force read error
+        let readFileStub = sinon.stub(files, 'readJSON')
         readFileStub.throws(`Error: ENOENT: no such file or directory, open '../templates.json'`)
         writeFileStub.returns([])
 
-        templates.getTemplatesJSON({ username: currentUserName })
-          .then(data => {
-            assert.equal(writeFileStub.getCall(0).args[0].path, templatesJSONPath, 'should write file')
-            assert.deepEqual(writeFileStub.getCall(0).args[0].data, [], 'with empty array')
-            assert.deepEqual(data, [])
-            done()
-          })
+        templates.getTemplatesJSON({ username: currentUserName, guideId: '600' })
+        .then(data => {
+          assert.deepEqual(writeFileStub.getCall(0).args[0].data.templateIds, [], 'with empty templateIds array')
+          assert.deepEqual(writeFileStub.getCall(0).args[0].data, {guideId: '600', templateIds: []}, 'with full data structure')
+          done()
+        })
+        readFileStub.restore()
       })
     })
 
     describe('GET /api/templates/{guideId}', function () {
-      let getTemplatesJSONStub
-      let getTemplatePathStub
       let getCurrentUserStub
-      let readFileStub
+      let mockCurrentUserDeferred = Q.defer()
 
       beforeEach(function () {
-        let mockCurrentUserDeferred = Q.defer()
-        let mockTemplatesJSONDeferred = Q.defer()
-
-        getTemplatesJSONStub = sinon.stub(templates, 'getTemplatesJSON')
-        getTemplatePathStub = sinon.stub(paths, 'getTemplatePath')
         getCurrentUserStub = sinon.stub(user, 'getCurrentUser')
-
-        readFileStub = sinon.stub(files, 'readJSON', ({ path }) => {
-          if (path.indexOf('template2112.json') >= 0) {
-            return template2112Data
-          }
-
-          if (path.indexOf('template2113.json') >= 0) {
-            return template2113Data
-          }
-
-          if (path.indexOf('template2114.json') >= 0) {
-            return template2114Data
-          }
-        })
-
-        getTemplatesJSONStub.returns(mockTemplatesJSONDeferred.promise)
         getCurrentUserStub.returns(mockCurrentUserDeferred.promise)
-
-        mockTemplatesJSONDeferred.resolve(templatesData)
         mockCurrentUserDeferred.resolve(currentUserName)
       })
 
       afterEach(function () {
-        getTemplatesJSONStub.restore()
-        getTemplatePathStub.restore()
         getCurrentUserStub.restore()
-        readFileStub.restore()
       })
 
       it('should return templates data for a guide', function (done) {
-        let deferredOne = Q.defer()
-        let deferredTwo = Q.defer()
-
-        getTemplatePathStub.onFirstCall().returns(deferredOne.promise)
-        getTemplatePathStub.onSecondCall().returns(deferredTwo.promise)
-
-        deferredOne.resolve('path/to/template2112.json')
-        deferredTwo.resolve('path/to/template2113.json')
-
-        templates.get('Guide1261', params, function (err, data) {
+        templates.get('1261', params, function (err, data) {
           if (err) {
             return done(err)
           }
@@ -145,13 +95,7 @@ describe('lib/routes/templates', function () {
       })
 
       it('should return templates data for a different guide', function (done) {
-        let deferredOne = Q.defer()
-
-        getTemplatePathStub.onFirstCall().returns(deferredOne.promise)
-
-        deferredOne.resolve('path/to/template2114.json')
-
-        templates.get('Guide1262', params, function (err, data) {
+        templates.get('1262', params, function (err, data) {
           if (err) {
             return done(err)
           }
@@ -161,8 +105,8 @@ describe('lib/routes/templates', function () {
         })
       })
 
-      it('should return an error when guide does have templates data', function (done) {
-        templates.get('Guide1337', params, function (err, data) {
+      it('should return an error when guide does not have templates data', function (done) {
+        templates.get('1337', params, function (err, data) {
           if (err) {
             return done(err)
           }
@@ -172,18 +116,9 @@ describe('lib/routes/templates', function () {
       })
 
       it('should filter templates to active=true', function (done) {
-        let deferredOne = Q.defer()
-        let deferredTwo = Q.defer()
-
-        getTemplatePathStub.onFirstCall().returns(deferredOne.promise)
-        getTemplatePathStub.onSecondCall().returns(deferredTwo.promise)
-
-        deferredOne.resolve('path/to/template2112.json')
-        deferredTwo.resolve('path/to/template2113.json')
-
         params = { query: { active: 'true' } }
 
-        templates.get('Guide1261', params, function (err, data) {
+        templates.get('1261', params, function (err, data) {
           if (err) {
             return done(err)
           }
@@ -194,18 +129,9 @@ describe('lib/routes/templates', function () {
       })
 
       it('should filter templates to active=false', function (done) {
-        let deferredOne = Q.defer()
-        let deferredTwo = Q.defer()
-
-        getTemplatePathStub.onFirstCall().returns(deferredOne.promise)
-        getTemplatePathStub.onSecondCall().returns(deferredTwo.promise)
-
-        deferredOne.resolve('path/to/template2112.json')
-        deferredTwo.resolve('path/to/template2113.json')
-
         params = { query: { active: 'false' } }
 
-        templates.get('Guide1261', params, function (err, data) {
+        templates.get('1261', params, function (err, data) {
           if (err) {
             return done(err)
           }
@@ -230,9 +156,13 @@ describe('lib/routes/templates', function () {
         })
     })
 
-    it.skip('works', function (done) {
+    it.skip('works with relative fileDataUrl', function (done) {
+      // TODO: this test does not work on Travis - need better way to test
+      // fileDataUrl with relative and absolute paths that work on Travis
+      // default config.VIEWER_PATH is approot/js/viewer
+      // test data in approot/test/data
       request(app)
-        .get('/api/templates?fileDataUrl=/test/data')
+        .get('/api/templates?fileDataUrl=../../test/data/DEV/guides/Guide1262/')
         .expect(200, [template2114Data])
         .end(function (err) {
           if (err) return done(err)

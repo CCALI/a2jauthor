@@ -30,15 +30,14 @@
         <span class="glyphicon-file-pdf"></span> Test Assemble
       </button>
 
-      <a href="{{routeUrl page='templates' id='new'}}">
-        <button class="btn btn-primary navbar-btn new-template">
-          <span class="glyphicon-plus"></span> Create Text Template
-        </button>
-      </a>
+      <button class="btn btn-primary navbar-btn new-template"
+        ($click)="openNewTemplate(false)">
+        <span class="glyphicon-plus"></span> Create Text Template
+      </button>
 
       {{#if showPdfButton}}
       <button
-        ($click)="openPdfTemplate()"
+        ($click)="openNewTemplate(true)"
         class="btn btn-primary navbar-btn new-template">
         <span class="glyphicon-plus"></span> Create PDF Template
       </button>

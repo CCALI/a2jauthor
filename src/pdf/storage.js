@@ -10,8 +10,8 @@ const storage = ({fs, uuid, data}) => {
   const unlink = promisify(fs.unlink)
   const extension = '.pdf'
 
-  async function getTemplatePdfPath (username, templateId) {
-    const templatePath = await data.getTemplateJsonPath(username, templateId)
+  async function getTemplatePdfPath (username, guideId, templateId, fileDataUrl) {
+    const templatePath = await data.getTemplateJsonPath(username, guideId, templateId, fileDataUrl)
     return templatePath.replace('.json', extension)
   }
 
@@ -32,18 +32,18 @@ const storage = ({fs, uuid, data}) => {
     },
 
     getTemplatePdfPath,
-    async saveTemplatePdf (username, templateId, sourceFilepath) {
-      const pdfPath = await getTemplatePdfPath(username, templateId)
+    async saveTemplatePdf (username, guideId, templateId, sourceFilepath) {
+      const pdfPath = await getTemplatePdfPath(username, guideId, templateId)
       await copy(sourceFilepath, pdfPath)
     },
 
-    async copyTemplatePdf (username, templateId, destinationFilepath) {
-      const pdfPath = await getTemplatePdfPath(username, templateId)
+    async copyTemplatePdf (username, guideId, templateId, destinationFilepath) {
+      const pdfPath = await getTemplatePdfPath(username, guideId, templateId)
       await copy(pdfPath, destinationFilepath)
     },
 
-    async duplicateTemplatePdf (username, templateId) {
-      const pdfPath = await getTemplatePdfPath(username, templateId)
+    async duplicateTemplatePdf (username, guideId, templateId, fileDataUrl) {
+      const pdfPath = await getTemplatePdfPath(username, guideId, templateId, fileDataUrl)
       const pdfId = await commitTemporaryFilepath(pdfPath)
       const copiedPdfPath = getTemporaryFilepath(pdfId)
       return copiedPdfPath

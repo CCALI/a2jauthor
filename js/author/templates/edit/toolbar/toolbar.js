@@ -28,6 +28,16 @@ import 'can/map/define/';
 export let EditToolbarVM = Map.extend({
   define: {
     /**
+     * @property {A2JTemplate} editToolbar.ViewModel.prototype.define.guideId guideId
+     * @parent editToolbar.ViewModel
+     *
+     * The currently loaded guideId
+     */
+    guideId: {
+      value: null
+    },
+
+    /**
      * @property {A2JTemplate} editToolbar.ViewModel.prototype.define.template template
      * @parent editToolbar.ViewModel
      *

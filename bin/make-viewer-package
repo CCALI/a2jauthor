@@ -56,6 +56,10 @@ function makePackageFolder() {
   fs.copySync(path.join(cajaPath, 'js', 'viewer', 'images'),
               path.join(outputPath, 'viewer', 'images'));
 
+  // copy lightbox2 images to expected path
+  fs.copySync(path.join(cajaPath, 'js', 'node_modules', 'lightbox2', 'dist', 'images'),
+              path.join(outputPath, 'node_modules', 'lightbox2', 'dist', 'images'));
+
   // copy jquery date picker images to `a2j-viewer/images`
   // sending only png images, as others are used for tests
   fs.copySync(path.join(cajaPath, 'js', 'images'),

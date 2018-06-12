@@ -5,6 +5,8 @@ import {Analytics} from 'caja/viewer/util/analytics';
 
 import 'can/map/define/';
 import 'bootstrap/js/modal';
+import 'lightbox2/dist/js/lightbox';
+import 'lightbox2/dist/css/lightbox.css';
 
 export let ModalVM = Map.extend({});
 

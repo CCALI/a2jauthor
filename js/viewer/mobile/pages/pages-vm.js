@@ -255,7 +255,8 @@ export default Map.extend('PagesVM', {
       button.next === constants.qIDASSEMBLE)
       ) {
       this.previewActiveResponses(button);
-      return;
+      // need `false` to stop default submit actions in preview
+      return false;
     }
 
     // special destination dIDRESUME button skips rest of navigate
@@ -438,15 +439,20 @@ export default Map.extend('PagesVM', {
       case constants.qIDASSEMBLE:
         this.attr('modalContent', {
           title: "Author note:",
-          text: "Document Assembly would happen here.\nUse Test Assemble under the Templates tab to assemble in A2J Author"
+          text: "Document Assembly would happen here.  Use Test Assemble under the Templates tab to assemble in A2J Author"
         });
         break;
 
       case constants.qIDSUCCESS:
+      this.attr('modalContent', {
+        title: "Author note:",
+        text: "User's data would upload to the server."
+      });
+      break;
       case constants.qIDASSEMBLESUCCESS:
         this.attr('modalContent', {
           title: "Author note:",
-          text: "User's data would upload to the server."
+          text: "User's data would upload to the server, then assemble their document.  Use Test Assemble under the Templates tab to assemble in A2J Author"
         });
         break;
     }

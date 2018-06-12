@@ -238,6 +238,18 @@ export let FieldVM = Map.extend('FieldVM', {
     }
   },
 
+  preValidateNumber (ctx, el) {
+    const field = this.attr('field');
+    // accept only numbers, commas, periods, and negative sign
+    const currentValue = el.val();
+    const scrubbedValue = currentValue.replace(/[^\d.,-]/g, '');
+    if (currentValue !== scrubbedValue) {
+      field.attr('hasError', true);
+    } else {
+      field.attr('hasError', false);
+    }
+  },
+
   /**
    * @property {Function} field.ViewModel.prototype.showCalculator showCalculator
    * @parent field.ViewModel

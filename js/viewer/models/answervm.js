@@ -3,6 +3,7 @@ import moment from 'moment';
 import _some from 'lodash/some';
 import _filter from 'lodash/filter';
 import Validations from 'caja/viewer/mobile/util/validations';
+import cString from 'caja/viewer/mobile/util/string';
 
 import 'can/map/define/';
 import 'can/map/validations/';
@@ -20,7 +21,8 @@ export default Map.extend('AnswerVM', {
           maxChars: field.maxChars,
           min: field.min,
           max: field.max,
-          required: field.required
+          required: field.required,
+          isNumber: true
         }
       });
 
@@ -38,6 +40,8 @@ export default Map.extend('AnswerVM', {
           break;
         case 'number':
         case 'numberdollar':
+          invalid = validations.isNumber() || validations.required() || validations.min() || validations.max();
+          break;
         case 'numberpick':
         case 'datemdy':
           invalid = validations.required() || validations.min() || validations.max();
@@ -102,6 +106,11 @@ export default Map.extend('AnswerVM', {
         if (type === 'datemdy') {
           const date = moment(val);
           val = date.isValid() ? date.format('MM/DD/YYYY') : '';
+        }
+        // TODO: this conversion allows for future locales
+        // should probably be moved to a better place when that happens
+        if (type === 'number') {
+          val = cString.textToNumber(val);
         }
 
         if (!this.attr('answer')) {

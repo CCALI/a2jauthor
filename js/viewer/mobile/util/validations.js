@@ -73,6 +73,16 @@ let Config = Map.extend({
      */
     required: {
       type: 'boolean'
+    },
+
+    /**
+     * @property {Boolean} validations.Config.prototype.isNumber isNumber
+     * @parent validations.prototype.Config
+     *
+     * this value is always true to check number and numberdollar types
+     */
+    isNumber: {
+      type: 'boolean'
     }
   }
 });
@@ -201,6 +211,27 @@ export default Map.extend({
         if (this.val > this.config.max) {
           return true;
         }
+      }
+    }
+  },
+
+  /**
+   * @property {String} validations.prototype.isNumber isNumber
+   * @parent validations
+   *
+   * using custom text input for number values, this assures it's a number
+   * null, empty string, and undefined are valid - essentially unanswered
+   */
+  isNumber: function () {
+    if (this.config.isNumber) {
+      if (!this.val && !isNaN(this.val)) {
+        return false;
+      }
+
+      if (isNaN(this.val)) {
+        return true;
+      } else {
+        return false;
       }
     }
   }

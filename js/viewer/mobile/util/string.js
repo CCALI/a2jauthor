@@ -1,4 +1,5 @@
 import constants from 'caja/viewer/models/constants';
+import numeral from 'numeral';
 
 export default {
   strcmp: function(a, b) {
@@ -82,20 +83,16 @@ export default {
       .replace(/>/g, '&gt;');
   },
 
-  textToNumber: function(n) {
+  textToNumber: function (textNumber) {
     // Convert to number even with commas.
-    // Used to return 0 for falsey values, but was breaking 'hasanswered' macro - should return null instead
-    // with better variable type controls, this function should only be needed to handle string numbers with commas
-    // and maybe not even that if numeral.js is used.
-    if (typeof n === 'string') {
-      n = n.replace(/,/g, ''); // English Only TODO: handle international numbers
-    }
-
-    if (isNaN(parseFloat(n))) {
+    // numeral.js handles US related string formats like '11,548.42'
+    // TODO: add locale support, possibly switch to numbro.js (a fork of numeraljs)
+    if (!textNumber) {
       return null;
     }
 
-    return parseFloat(n);
+    const num = numeral(textNumber).value();
+    return num;
   },
 
   isNumber: function(n) {

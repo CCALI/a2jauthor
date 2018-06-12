@@ -88,7 +88,7 @@ export const VariablesTabVM = Map.extend({
     }
 
     const variable = new window.TVariable();
-    $.extend(variable, buffer);
+    $.extend(variable, buffer.serialize());
     guide.vars.attr(buffer.name.toLowerCase(), variable);
   },
 

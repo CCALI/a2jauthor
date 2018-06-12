@@ -9,7 +9,7 @@ export const VariableEditorVM = Map.extend({
       type Variable = {
         name: String,
         type: String,
-        comment: Maybe String,
+        comment: String,
         repeating: Boolean
       }
 
@@ -57,8 +57,8 @@ export const VariableEditorVM = Map.extend({
       }
     },
     variableComment: {
-      value: null,
-      set(x = null) {
+      value: "",
+      set(x = "") {
         this.emitVariable();
         return x;
       }

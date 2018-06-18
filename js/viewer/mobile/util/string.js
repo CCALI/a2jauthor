@@ -1,5 +1,5 @@
 import constants from 'caja/viewer/models/constants';
-import numeral from 'numeral';
+import numbro from 'numbro';
 
 export default {
   strcmp: function(a, b) {
@@ -84,14 +84,11 @@ export default {
   },
 
   textToNumber: function (textNumber) {
-    // Convert to number even with commas.
-    // numeral.js handles US related string formats like '11,548.42'
-    // TODO: add locale support, possibly switch to numbro.js (a fork of numeraljs)
+    // TODO: update tlogic.js macros to use numbro.js
     if (!textNumber) {
       return null;
     }
-
-    const num = numeral(textNumber).value();
+    const num = numbro.unformat(textNumber);
     return num;
   },
 

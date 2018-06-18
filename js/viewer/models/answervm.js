@@ -109,7 +109,7 @@ export default Map.extend('AnswerVM', {
         }
         // TODO: this conversion allows for future locales
         // should probably be moved to a better place when that happens
-        if (type === 'number') {
+        if (type === 'number' || type === 'numberdollar') {
           val = cString.textToNumber(val);
         }
 

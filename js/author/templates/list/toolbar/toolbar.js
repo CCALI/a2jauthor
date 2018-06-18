@@ -10,11 +10,6 @@ import { sharedPdfFlag } from "caja/author/pdf/index";
 
 export let Toolbar = Map.extend({
   define: {
-    showPdfButton: {
-      get () {
-        return window.location.hostname === 'localhost' || window.location.hostname === 'staging.a2jauthor.org';
-      }
-    },
     filter: {
       type: "string"
     },

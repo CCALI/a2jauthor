@@ -55,7 +55,7 @@ const selectGuide = function(guideId) {
   let guide;
 
   switch (guideId) {
-    case '1255':
+    case '1261':
       guide = existingGuide;
       break;
 

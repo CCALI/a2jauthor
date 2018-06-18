@@ -30,6 +30,9 @@ import 'can/map/define/';
  */
 export let List = Map.extend({
   define: {
+    activeFilter: {
+      serialize: false
+    },
     isDraggable: {
       value: true
     },
@@ -37,30 +40,36 @@ export let List = Map.extend({
     itemTransitionTime: {
       type: 'number',
       value: 1000
-    }
+    },
+
+    hasSorted: {}
   },
 
   updateSortOrder() {
-    let templates = this.attr('templates');
+    let displayList = this.attr('displayList');
     let dragPos = this.attr('dragItemIndex');
     let dropPos = this.attr('dropItemIndex');
 
     if (dragPos !== dropPos) {
       can.batch.start();
 
-      let positions = _range(templates.attr('length'));
+      let positions = _range(displayList.attr('length'));
       let newPositions = moveItem(positions, dragPos, dropPos);
 
       newPositions.forEach(function(pos, index) {
-        templates.attr(pos).attr('buildOrder', index + 1);
+        const template = displayList.attr(pos);
+        template.attr('buildOrder', index + 1);
       });
 
       can.batch.stop();
-
       // since the list is sorted automatically when it's mutated
       // we need to keep track of the current index of the dragged
       // template to move it properly while it is dragged.
       this.attr('dragItemIndex', dropPos);
+
+      // tell templates viewModel the list has sorted to update
+      // and save the unfiltered list order
+      this.attr('hasSorted', true);
     }
   }
 });
@@ -152,6 +161,10 @@ export default Component.extend({
     },
 
     '{viewModel} dropItemIndex': function() {
+      this.viewModel.updateSortOrder();
+    },
+
+    '{viewModel} activeFilter': function() {
       this.viewModel.updateSortOrder();
     }
   }

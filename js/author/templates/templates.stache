@@ -73,9 +73,11 @@
         <templates-sortbar criteria="{sortCriteria}"/>
 
         <templates-list
-          templates="{displayList}"
+          {display-list}="displayList"
+          {(has-sorted)}="hasSorted"
+          active-filter="{activeFilter}"
           class="{{listStateClassName}}"
-          is-draggable="{listIsDraggable}"/>
+          is-draggable="{listIsDraggable}" />
       {{/if}}
     {{/if}}
   </div>

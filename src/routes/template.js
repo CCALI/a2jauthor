@@ -103,7 +103,7 @@ module.exports = {
    * @property {Function} template.get
    * @parent templates
    *
-   * Get a templates by id.
+   * Get a template by id.
    *
    * ## Use
    *

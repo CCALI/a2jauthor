@@ -16,9 +16,15 @@ export const InterviewsVM = Map.extend({
         };
       }
     },
+
     traceLogicList: {
       serialize: false
     },
+
+    viewerInterview: {
+      serialize: false
+    },
+
     currentGuideId: {
       type: 'string',
       get(lastSet) {
@@ -36,8 +42,8 @@ export const InterviewsVM = Map.extend({
         this.attr('traceLogicList', new List());
       }
 
-      if (this.attr('%root.viewerInterview')) {
-        this.attr('%root.viewerInterview').clearAnswers();
+      if (this.attr('viewerInterview')) {
+        this.attr('viewerInterview').clearAnswers();
       }
   },
 

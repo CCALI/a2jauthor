@@ -1,6 +1,6 @@
 import Component from 'can/component/';
 import TemplatesVM from './templates-vm';
-import template from './templates.stache!';
+import template from './templates.stache';
 
 /**
  * @module {Module} templatesPage <templates-page>
@@ -23,7 +23,7 @@ export default Component.extend({
   viewModel: TemplatesVM,
 
   helpers: {
-    listStateClassName() {
+    listStateClassName () {
       let className;
       let filter = this.attr('activeFilter');
 
@@ -46,7 +46,11 @@ export default Component.extend({
   },
 
   events: {
-    '{templates} change': function() {
+    '{templates} change': function () {
+      // required to resolve templatesPromise/templates?
+    },
+
+    '{displayList} length': function () {
       let vm = this.viewModel;
 
       vm.updateDisplayList();
@@ -54,17 +58,30 @@ export default Component.extend({
       vm.handleRestoredTemplates();
     },
 
-    '{viewModel} activeFilter': function() {
+    '{viewModel} hasSorted': function () {
+      let vm = this.viewModel;
+      const hasSorted = vm.attr('hasSorted');
+
+      if (hasSorted) {
+        const templateIds = vm.updateTemplatesOrder();
+        vm.saveTemplatesOrder(templateIds);
+        setTimeout(() => {
+          vm.attr('hasSorted', false);
+        }, 0);
+      }
+    },
+
+    '{viewModel} activeFilter': function () {
       let list = this.viewModel.makeDisplayList();
       this.viewModel.attr('displayList', list);
     },
 
-    '{viewModel} sortCriteria': function() {
+    '{viewModel} sortCriteria': function () {
       let list = this.viewModel.attr('displayList');
       this.viewModel.sortList(list);
     },
 
-    '{viewModel} searchToken': function() {
+    '{viewModel} searchToken': function () {
       let list = this.viewModel.makeDisplayList();
       let result = this.viewModel.performSearch(list);
       this.viewModel.attr('displayList', result);

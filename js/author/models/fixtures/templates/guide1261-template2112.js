@@ -2,6 +2,7 @@ export default {
   guideId: '1261',
   templateId: '2112',
   updatedAt: '2015-11-23T14:15:11.499Z',
+  active: true,
   title: 'Authorization for Medical Treatment of a Minor',
   rootNode: {
     tag: 'a2j-template',

@@ -5,10 +5,6 @@ const files = require('../util/files')
 const user = require('../util/user')
 const debug = require('debug')('A2J:routes/templates')
 
-const filterTemplatesByActive = function (active, templates) {
-  return (active != null) ? _.filter(templates, { active }) : templates
-}
-
 /**
  * @module {Module} /routes/templates templates
  * @parent api
@@ -65,16 +61,14 @@ module.exports = {
    * Find all templates in `fileDataUrl`
    *
    * Reads the templates.json file in `fileDataUrl`, then uses the templateId
-   * from this list to open each individual template file, filters them based
-   * on the `active` param (if available) and then send back the combined data.
+   * from this list to open an individual template file
    *
    * ## Use
    *
-   * GET /api/templates?fileDataUrl="path/to/data/folder"&active=true
-   * GET /api/templates?fileDataUrl="path/to/data/folder"&active=false
+   * GET /api/templates?fileDataUrl="path/to/data/folder"
    */
   find (params, callback) {
-    const { active, fileDataUrl } = (params.query || {})
+    const { fileDataUrl } = (params.query || {})
 
     if (!fileDataUrl) {
       return callback(new Error('You must provide fileDataUrl'))
@@ -95,8 +89,7 @@ module.exports = {
       })
 
     Q.all(templatePromises)
-      .then(templates => filterTemplatesByActive(active, templates))
-      .then(filteredTemplates => callback(null, filteredTemplates))
+      .then(templates => callback(null, templates))
       .catch(error => {
         debug(error)
         callback(error)
@@ -109,21 +102,14 @@ module.exports = {
    *
    * Get all templates associated with a guideId.
    *
-   * Filters the templates.json file to a list of templates that match the guideId.
-   * Then uses the guideId and templateId from this list to open each individual
-   * template file and combine the data.
-   *
    * ## Use
    *
    * GET /api/templates/{guide_id}
-   * GET /api/templates/{guide_id}?active=true
-   * GET /api/templates/{guide_id}?active=false
    */
   get (guideId, params, callback) {
     debug('GET /api/templates/' + guideId)
 
     const { cookieHeader } = params
-    const { active } = (params.query || {})
     const { fileDataUrl } = (params.query || '')
     const usernamePromise = user.getCurrentUser({ cookieHeader })
 
@@ -156,14 +142,50 @@ module.exports = {
     }
 
     Q.all(templatePromises)
-      .then(templates => filterTemplatesByActive(active, templates))
-      .then(filteredTemplates => {
-        debugTemplatesByGuide(filteredTemplates)
-        callback(null, filteredTemplates)
+      .then(templates => {
+        debugTemplatesByGuide(templates)
+        callback(null, templates)
       })
       .catch(error => {
         debug(error)
         callback(error)
       })
+  },
+
+  /**
+   * @property {Function} templates.update
+   * @parent templates
+   *
+   * update the list of templateIds, usually to update build/display order
+   *
+   * ## Use
+   *
+   * PUT /api/templates/{guide_id}
+   */
+  update (guideId, data, params, callback) {
+    debug('PUT /api/templates/' + guideId)
+
+    const { cookieHeader } = params
+    const { fileDataUrl } = (params.query || '')
+    const usernamePromise = user.getCurrentUser({ cookieHeader })
+
+    const updatedTemplateIds = data.templateIds
+
+    const templateIndexPathPromise = usernamePromise
+    .then(username => {
+      return paths.getTemplatesPath({ username, guideId, fileDataUrl })
+    })
+
+    templateIndexPathPromise
+    .then(path => {
+      return files.writeJSON({ path, data: {guideId: guideId, templateIds: updatedTemplateIds} })
+    })
+    .then(templatesJSON => {
+      callback(null, templatesJSON)
+    })
+    .catch(error => {
+      debug(error)
+      callback(error)
+    })
   }
 }

@@ -114,32 +114,6 @@ describe('lib/routes/templates', function () {
           done()
         })
       })
-
-      it('should filter templates to active=true', function (done) {
-        params = { query: { active: 'true' } }
-
-        templates.get('1261', params, function (err, data) {
-          if (err) {
-            return done(err)
-          }
-          assert.equal(data.length, 1, 'should get 1 templates')
-          assert.deepEqual(data[0], template2112Data, 'should get full data for first template')
-          done()
-        })
-      })
-
-      it('should filter templates to active=false', function (done) {
-        params = { query: { active: 'false' } }
-
-        templates.get('1261', params, function (err, data) {
-          if (err) {
-            return done(err)
-          }
-          assert.equal(data.length, 1, 'should get 1 templates')
-          assert.deepEqual(data[0], template2113Data, 'should get full data for first template')
-          done()
-        })
-      })
     })
   })
 

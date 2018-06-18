@@ -2,7 +2,7 @@
 <can-import from="caja/author/templates/list/list.less!"/>
 
 <ul>
-  {{#each templates}}
+  {{#each displayList}}
     <li {{#if isDraggable}}draggable="true"{{/if}}>
       <templates-list-item
         template="{.}"

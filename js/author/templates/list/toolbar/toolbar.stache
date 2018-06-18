@@ -35,13 +35,11 @@
         <span class="glyphicon-plus"></span> Create Text Template
       </button>
 
-      {{#if showPdfButton}}
       <button
         ($click)="openNewTemplate(true)"
         class="btn btn-primary navbar-btn new-template">
         <span class="glyphicon-plus"></span> Create PDF Template
       </button>
-      {{/if}}
     </div>
 
     <form class="navbar-form" role="search">

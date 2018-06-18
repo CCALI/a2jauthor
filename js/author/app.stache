@@ -260,7 +260,7 @@
     <div class="tab-panel has-toolbar" id="tabsGuides">
       {{#is page "interviews"}}
         <interviews-toolbar {(interviews)}="interviews"></interviews-toolbar>
-        <interviews-page {(interviews)}="interviews" {(trace-logic-list)}="traceLogicList"></interviews-page>
+        <interviews-page {(interviews)}="interviews" {(trace-logic-list)}="traceLogicList" {(viewer-interview)}="viewerInterview"></interviews-page>
       {{/is}}
     </div>
 

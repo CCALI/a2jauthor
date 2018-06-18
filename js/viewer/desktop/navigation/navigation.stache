@@ -4,16 +4,20 @@
 <nav class="navbar navbar-default" role="navigation">
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
     <ul class="nav navbar-nav">
-      <button class="btn btn-default navbar-btn" ($click)="navigateBack" {{^if canNavigateBack}}disabled{{/if}}>
-        <span class="glyphicon-left-open" aria-hidden="true"></span>{{lang.GoBack}}
-      </button>
-
-      <button class="btn btn-default navbar-btn" ($click)="navigateForward" {{^if canNavigateForward}}disabled{{/if}}>
-        {{lang.GoNext}}<span class="glyphicon-right-open" aria-hidden="true"></span>
-      </button>
+      <li class="nav-item {{^if canNavigateBack}}disabled{{/if}}" ($click)="navigateBack">
+        <a role="button" class="nav-link">
+          <span class="glyphicon-left-open" aria-hidden="true"></span>{{lang.GoBack}}
+        </a>
+      </li>
+      <li class="divider" role="separator"></li>
+      <li class="nav-item  {{^if canNavigateForward}}disabled{{/if}}" ($click)="navigateForward">
+        <a role="button" class="nav-link">
+          {{lang.GoNext}}<span class="glyphicon-right-open" aria-hidden="true"></span>
+        </a>
+      </li>
     </ul>
 
-    <form class="navbar-form navbar-left" role="search">
+    <form class="navbar-form navbar-left {{#if isMobile}}hidden{{/if}}" role="search">
       <span>{{lang.MyProgress}}:</span>
       <div class="form-group ">
         <div class="input-group">
@@ -28,26 +32,68 @@
       </div>
     </form>
 
-    <div class="nav navbar-nav navbar-right">
+  {{#if isMobile}}
+    <!-- / navbar-right-mobile -->
+    <ul class="navbar-mobile nav navbar-nav navbar-right">
       {{#if interview.sendfeedback}}
+      <li class="nav-item">
         <a role="button" target="_blank" href="{{feedbackFormUrl}}"
-          class="btn btn-default navbar-btn send-feedback">
-          <span class="glyphicon-mail" aria-hidden="true"></span> {{lang.SendFeedback}}
+          class="nav-link send-feedback">
+          <span class="glyphicon-mail" aria-hidden="true"></span>
         </a>
+      </li>
       {{/if}}
 
       {{#if canSaveAndExit}}
-        <button class="btn btn-default navbar-btn can-exit" ($click)="saveAndExit">
-          <span class="glyphicon-floppy" aria-hidden="true"></span> {{lang.SaveAndExit}}
-        </button>
+      <li class="divider" role="separator"></li>
+        <li class="nav-item can-exit" ($click)="saveAndExit">
+          <a role="button" class="nav-link">
+            <span class="glyphicon-floppy" aria-hidden="true"></span>
+          </a>
+        </li>
       {{/if}}
 
       {{#if canResumeInterview}}
-        <button class="btn btn-default navbar-btn can-resume" ($click)="resumeInterview">
-          <span class="glyphicon-right-thin" aria-hidden="true"></span> {{lang.ResumeExit}}
-        </button>
+      <li class="divider" role="separator"></li>
+        <li class="nav-item can-resume" ($click)="resumeInterview">
+          <a role="button" class="nav-link">
+            <span class="glyphicon-right-thin" aria-hidden="true"></span> {{lang.ResumeExit}}
+          </a>
+        </li>
       {{/if}}
-    </div><!-- /navbar-right -->
+    </ul><!-- /navbar-right-mobile -->
+  {{else}}
+    <!-- /navbar-right -->
+    <ul class="navbar-mobile nav navbar-nav navbar-right">
+      {{#if interview.sendfeedback}}
+      <li class="divider" role="separator"></li>
+      <li class="nav-item">
+        <a role="button" target="_blank" href="{{feedbackFormUrl}}"
+          class="nav-link send-feedback">
+          <span class="glyphicon-mail" aria-hidden="true"></span> {{lang.SendFeedback}}
+        </a>
+      </li>
+      {{/if}}
+
+      {{#if canSaveAndExit}}
+      <li class="divider" role="separator"></li>
+        <li class="nav-item can-exit" ($click)="saveAndExit">
+          <a role="button" class="nav-link">
+            <span class="glyphicon-floppy" aria-hidden="true"></span> {{lang.SaveAndExit}}
+          </a>
+        </li>
+      {{/if}}
+
+      {{#if canResumeInterview}}
+      <li class="divider" role="separator"></li>
+        <li class="nav-item can-resume" ($click)="resumeInterview">
+          <a role="button" class="nav-link">
+            <span class="glyphicon-right-thin" aria-hidden="true"></span> {{lang.ResumeExit}}
+          </a>
+        </li>
+      {{/if}}
+    </ul><!-- /navbar-right -->
+  {{/if}}
   </div><!-- /.navbar-collapse -->
 </nav>
 
@@ -58,10 +104,12 @@
   </app-alert>
 {{/if}}
 
-<div class="horizon">
-  {{#if courthouseImage}}
-    <img class="courthouse" src="{{courthouseImage}}" role="presentation" />
-  {{else}}
-    <img class="courthouse" src="{{joinBase 'viewer/images/A2J5_CourtHouse.svg'}}" role="presentation" />
-  {{/if}}
-</div>
+{{^if isMobile}}
+  <div class="horizon">
+    {{#if courthouseImage}}
+      <img class="courthouse" src="{{courthouseImage}}" role="presentation" />
+    {{else}}
+      <img class="courthouse" src="{{joinBase 'viewer/images/A2J5_CourtHouse.svg'}}" role="presentation" />
+    {{/if}}
+  </div>
+{{/if}}

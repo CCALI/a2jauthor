@@ -2,11 +2,13 @@ import $ from 'jquery';
 import Map from 'can/map/';
 import Component from 'can/component/';
 import _truncate from 'lodash/truncate';
-import template from './navigation.stache!';
+import template from './navigation.stache';
 import constants from 'caja/viewer/models/constants';
 import {Analytics} from 'caja/viewer/util/analytics';
+import isMobile from 'caja/viewer/is-mobile';
 
 import 'can/map/define/';
+import 'jquerypp/event/swipe/';
 
 /**
  * @property {can.Map} viewerNavigation.ViewModel
@@ -16,6 +18,17 @@ import 'can/map/define/';
  */
 export let ViewerNavigationVM = Map.extend({
   define: {
+    /**
+     * @property {can.compute} viewerNavigation.ViewModel.isMobile isMobile
+     *
+     * used to detect mobile viewer loaded
+     *
+     * */
+    isMobile: {
+      get () {
+        return isMobile();
+      }
+    },
     /**
      * @property {can.List} viewerNavigation.ViewModel.visitedPages visitedPages
      * @parent viewerNavigation.ViewModel
@@ -313,6 +326,20 @@ export default Component.extend({
   },
 
   events: {
+    inserted () {
+      const vm = this.viewModel;
+      $('#viewer-app').on('swiperight', function () {
+        if (vm.attr('canNavigateBack')) {
+          vm.navigateBack();
+        }
+      });
+
+      $('#viewer-app').on('swipeleft', function () {
+        if (vm.attr('canNavigateForward')) {
+          vm.navigateForward();
+        }
+      });
+    },
     /*
     * select most recently visited page in selectedPageIndex dropdown
     */

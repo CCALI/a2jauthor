@@ -1,9 +1,9 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
-import template from './mobile.stache!';
+import template from './mobile.stache';
 
 let MobileViewerVM = Map.extend({
-  hideCredits: function() {
+  hideCredits: function () {
     this.attr('mState.showCredits', false);
   }
 });
@@ -17,14 +17,14 @@ export default Component.extend({
   viewModel: MobileViewerVM,
 
   helpers: {
-    tocOrCreditsShown: function(options) {
+    tocOrCreditsShown: function (options) {
       let showToc = this.attr('mState.showToc');
       let showCredits = this.attr('mState.showCredits');
 
       return (showCredits || showToc) ? options.fn() : options.inverse();
     },
 
-    eval: function(str) {
+    eval: function (str) {
       str = typeof str === 'function' ? str() : str;
       return this.attr('logic').eval(str);
     }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;a2j-viewer-navigation-&gt;</title>
+  </head>
+
+  <body>
+    <script type="text/stache" id="demo-html" class="demo" can-autorender>
+      <can-import from="caja/viewer/styles.less!" />
+      <a2j-viewer-navigation
+      {lang}="lang"
+      {logic}="logic"
+      {is-mobile}="isMobile"
+      {(selected-page-name)}="appState.page"
+      {(app-state)}="appState"
+      {(interview)}="interview"
+      {(show-demo-notice)}="showDemoNotice"
+      />
+    </script>
+
+    <script src="../../../node_modules/steal/steal.js"
+    data-main="can/view/autorender/">
+      window.less = {
+        async: true,
+        fileSync: true
+      };
+      import canMap from 'can/map/';
+      import can from 'can';
+      import 'caja/viewer/desktop/navigation/';
+      var appState = new canMap({
+        visitedPages: [
+          {text: 'Here there be dragons', repeatVarValue: null},
+          {text: 'Here there be none', repeatVarValue: null}
+        ]
+      })
+      var interview = new canMap({sendfeedback: false})
+      var newProps = new canMap({
+        appState,
+        interview,
+        canSaveAndExit: true,
+        canResumeInterview: true,
+        showDemoNotice: false,
+        isMobile: true,
+        lang: {
+          GoNext: 'Next',
+          GoBack: 'Back',
+          MyProgress: 'My Progress',
+          SaveAndExit: 'Save & Exit',
+          ResumeExit: 'Resume'
+        },
+        logic: {},
+        feedbackFormUrl: ''
+        });
+
+      can.viewModel(document.getElementById('demo-html'), newProps)
+      </script>
+  </body>
+</html>

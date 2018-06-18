@@ -43,23 +43,6 @@ export let ViewerNavigationVM = Map.extend({
     },
 
     /**
-     * @property {Number} viewerNavigation.ViewModel.alreadyVisitedPageIndex alreadyVisitedPageIndex
-     * @parent viewerNavigation.ViewModel
-     *
-     * Index of a page that has been visited already - used to sync up nav dropdown to rendered page.
-     */
-    alreadyVisitedPageIndex: {
-      type: 'number',
-      get(newVal) {
-        if (newVal && this.attr('selectedPageIndex') !== newVal) {
-          this.attr('selectedPageIndex', newVal);
-        }
-
-        return newVal || 0;
-      }
-    },
-
-    /**
      * @property {Number} viewerNavigation.ViewModel.selectedPageIndex selectedPageIndex
      * @parent viewerNavigation.ViewModel
      *
@@ -72,38 +55,26 @@ export let ViewerNavigationVM = Map.extend({
      * `pageIndex === 0` is the last page (most recent).
      */
     selectedPageIndex: {
-      type: 'number',
-      set(newVal) {
-        const appState = this.attr('appState');
-        const selectedPage = this.attr('visitedPages').attr(newVal);
-        const selectedPageName = selectedPage.attr('name');
+      type: 'string',
+      get (lastSet) {
+        if (lastSet) {
+          const appState = this.attr('appState');
+          const selectedPage = this.attr('visitedPages').attr(lastSet);
+          const selectedPageName = selectedPage.attr('name');
 
-        if (selectedPageName !== appState.attr('page')) {
-          appState.attr({
-            page: selectedPageName,
-            forceNavigation: true
-          });
+          // nav via MyProgress restores repeatVar and outerLoopVar
+          this.restoreLoopVars(selectedPage);
+
+          // This means a GOTO logic macro was used, skip normal navigation rules
+          if (selectedPageName && selectedPageName !== appState.attr('page')) {
+            appState.attr({
+              page: selectedPageName,
+              forceNavigation: true
+            });
+          }
         }
-
-        // if user changes page using the dropdown,
-        // restore repeatVarValue of loop being navigated to
-        // as well as it's associated outerLoopVarValue if it exists
-        const repeatVar = selectedPage.attr('repeatVar');
-        const repeatVarValue = selectedPage.attr('repeatVarValue');
-        const outerLoopVar = selectedPage.attr('outerLoopVar');
-        const outerLoopVarValue = selectedPage.attr('outerLoopVarValue');
-
-        if (repeatVar && repeatVarValue) {
-          this.attr('appState.repeatVarValue', repeatVarValue);
-          this.attr('logic').varSet(repeatVar, repeatVarValue);
-        }
-
-        if (outerLoopVar && outerLoopVarValue) {
-          this.attr('appState.outerLoopVarValue', outerLoopVarValue);
-          this.attr('logic').varSet(outerLoopVar, outerLoopVarValue);
-        }
-
-        return newVal;
+      // if lastSet is undefined, it's a newly visted page at index 0
+      return lastSet || '0';
       }
     },
 
@@ -196,6 +167,32 @@ export let ViewerNavigationVM = Map.extend({
     }
   },
 
+    /**
+   * @property {Function} viewerNavigation.ViewModel.restoreLoopVars restoreLoopVars
+   * @parent viewerNavigation.ViewModel
+   *
+   * Restores repeatVar and outerLoopVar values to match the selected page
+   */
+  restoreLoopVars (selectedPage) {
+    const appState = this.attr('appState');
+
+    const repeatVar = selectedPage.attr('repeatVar');
+    const repeatVarValue = selectedPage.attr('repeatVarValue');
+    const outerLoopVar = selectedPage.attr('outerLoopVar');
+    const outerLoopVarValue = selectedPage.attr('outerLoopVarValue');
+
+
+    if (repeatVar && repeatVarValue) {
+      appState.attr('repeatVarValue', repeatVarValue);
+      this.attr('logic').varSet(repeatVar, repeatVarValue);
+    }
+
+    if (outerLoopVar && outerLoopVarValue) {
+      appState.attr('outerLoopVarValue', outerLoopVarValue);
+      this.attr('logic').varSet(outerLoopVar, outerLoopVarValue);
+    }
+  },
+
   /**
    * @property {Function} viewerNavigation.ViewModel.saveAndExit saveAndExit
    * @parent viewerNavigation.ViewModel
@@ -259,7 +256,7 @@ export let ViewerNavigationVM = Map.extend({
    * Navigates to previous page.
    */
   navigateBack() {
-    this.attr('selectedPageIndex', this.attr('selectedPageIndex') + 1);
+    this.attr('selectedPageIndex', parseInt(this.attr('selectedPageIndex')) + 1);
   },
 
   /**
@@ -269,10 +266,9 @@ export let ViewerNavigationVM = Map.extend({
    * Navigates to next page.
    */
   navigateForward() {
-    this.attr('selectedPageIndex', this.attr('selectedPageIndex') - 1);
+    this.attr('selectedPageIndex', parseInt(this.attr('selectedPageIndex')) - 1);
   }
 });
-
 /**
  * @module {Module} viewer/desktop/navigation/ <a2j-viewer-navigation>
  * @parent api-components
@@ -320,12 +316,12 @@ export default Component.extend({
     /*
     * select most recently visited page in selectedPageIndex dropdown
     */
-    '{visitedPages} length': function() {
-      this.viewModel.attr('selectedPageIndex', 0);
+    '{visitedPages} length': function () {
+      this.viewModel.attr('selectedPageIndex', '0');
     },
 
-    '{visitedPages} revisited': function(map, ev, selectedIndex) {
-      this.viewModel.attr('alreadyVisitedPageIndex', selectedIndex);
+    '{visitedPages} revisited': function (map, ev, revisitedIndex) {
+      this.viewModel.attr('selectedPageIndex', revisitedIndex);
     }
   }
 });

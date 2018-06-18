@@ -164,21 +164,24 @@ describe('<a2j-viewer-navigation>', function() {
       const logicSpy = { varSet: sinon.spy() };
       vm.attr('logic', logicSpy);
 
-      vm.attr('selectedPageIndex', 1);
+      vm.attr('selectedPageIndex', '1');
+      let currentlySelected = vm.attr('selectedPageIndex');
+
       assert.equal(
-        vm.attr('appState.page'),
-        pages.attr(1).attr('name'),
+        appState.attr('page'),
+        pages.attr(currentlySelected).attr('name'),
         'should set appState.page to page 1'
       );
 
       assert.equal(logicSpy.varSet.callCount, 0,
         'should not set repeatVar logic for page 1');
 
-      vm.attr('selectedPageIndex', 0);
+      vm.attr('selectedPageIndex', '0');
+      currentlySelected = vm.attr('selectedPageIndex');
 
       assert.equal(
-        vm.attr('appState.page'),
-        pages.attr(0).attr('name'),
+        '01-Introduction',
+        pages.attr(currentlySelected).attr('name'),
         'should set selectedpageName to page 0'
       );
 
@@ -188,28 +191,15 @@ describe('<a2j-viewer-navigation>', function() {
       pages.attr(2).attr('repeatVar', 'foo');
       pages.attr(2).attr('repeatVarValue', 2);
       vm.attr('selectedPageIndex', 2);
+      currentlySelected = vm.attr('selectedPageIndex');
 
       assert.equal(
-        vm.attr('appState.page'),
-        pages.attr(2).attr('name'),
+        '01-Decedent Full Name',
+        pages.attr(currentlySelected).attr('name'),
         'should set appState.page to page 2'
       );
 
       assert(logicSpy.varSet.calledWith('foo', 2), 'should set repeatVar logic');
-    });
-
-    it('alreadyVisitedPageIndex', () => {
-      // populate visited pages
-      visited.unshift(pages.attr(2));
-      visited.unshift(pages.attr(1));
-      visited.unshift(pages.attr(0));
-
-      // user changes dropdown to oldest page
-      vm.attr('selectedPageIndex', 2);
-      // mock using continue button instead of next or dropdown
-      vm.attr('alreadyVisitedPageIndex', 1);
-
-      assert.equal(vm.attr('alreadyVisitedPageIndex'), vm.attr('selectedPageIndex'), 'keeps selected page in nav dropdown in sync');
     });
   });
 
@@ -247,17 +237,11 @@ describe('<a2j-viewer-navigation>', function() {
     it('renders pages history dropdown', function() {
       // navigate to first page
       visited.unshift(pages.attr(0));
-
       assert.equal($('select option').length, 1, 'just one page visited');
-      assert.equal($('option:selected').val(), 0,
-        'most recent page should be the selected option');
 
       // navigate to second page
       visited.unshift(pages.attr(1));
-
       assert.equal($('select option').length, 2, 'two pages visited');
-      assert.equal($('option:selected').val(), 0,
-        'most recent page should be the selected option');
     });
 
     it('truncates dropdown text so it fits properly', function() {

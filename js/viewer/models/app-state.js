@@ -1,6 +1,6 @@
 import Map from 'can/map/';
 import List from 'can/list/';
-import _find from 'lodash/find';
+import _findIndex from 'lodash/findIndex';
 
 import 'can/map/define/';
 
@@ -114,11 +114,12 @@ export const ViewerAppState = Map.extend({
     }
 
     // do not add the same page twice.
-    let alreadyVisited = _find(visited, function(visitedPage) {
+    const alreadyVisitedIndex = _findIndex(visited, function (visitedPage) {
       let visitedPageRepeatVarValue = visitedPage.attr('repeatVarValue');
       return visitedPage.attr('name') === pageName &&
              (!visitedPageRepeatVarValue || (visitedPageRepeatVarValue === repeatVarValue));
     });
+    const alreadyVisited = alreadyVisitedIndex > -1;
 
     //if there is any codeBefore that we need to execute, let's do that.
     //this will make sure that any macros inside the page.attr('text') gets evaluated properly.
@@ -139,13 +140,7 @@ export const ViewerAppState = Map.extend({
     }
 
     if (page && alreadyVisited) {
-      let selectedIndex = 0;
-       visited.each(function(visitedPage, visitedPageIndex) {
-        if(page.attr('name') === visitedPage.attr('name') && repeatVarValue === visitedPage.attr('repeatVarValue')) {
-          selectedIndex = visitedPageIndex;
-        }
-      });
-      can.trigger(this.attr('visitedPages'), 'revisited', selectedIndex);
+      can.trigger(this.attr('visitedPages'), 'revisited', alreadyVisitedIndex);
     }
   },
 

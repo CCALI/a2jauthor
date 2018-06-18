@@ -31,4 +31,5 @@ import 'caja/author/debug-panel/debug-panel-test';
 
 import 'caja/author/pdf/assemble-test';
 import 'caja/author/pdf/editor/area-test';
+import 'caja/author/pdf/editor/editor-test';
 import 'caja/author/pdf/checkmark-picker/checkmark-picker-test';

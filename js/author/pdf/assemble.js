@@ -101,15 +101,16 @@
     var variableBoxesMap = boxes.filter(function (box) {
       return !!box.variable;
     }).reduce(function (map, box) {
-      var key = box.variable.toLowerCase();
+      var key = box.groupId || box.id;
       map[key] = map[key] || [];
       map[key].push(box);
+
       return map;
     }, {});
 
     var getBoxArea = getBoxPdfArea(pages);
-    var patches = Object.keys(variableBoxesMap).reduce(function (patches, variableName) {
-      var variableKey = variableName.toLowerCase();
+    var patches = Object.keys(variableBoxesMap).reduce(function (patches, boxKey) {
+      var variableKey = variableBoxesMap[boxKey][0].variable.toLowerCase();
       var variable = variables[variableKey];
       var answer = answers[variableKey];
       var hasVariableToPatch = variable && answer;
@@ -117,7 +118,7 @@
         return patches;
       }
 
-      var boxes = variableBoxesMap[variableKey];
+      var boxes = variableBoxesMap[boxKey];
       var answerValue = answer.values[1];
       var defaultVariableOptions = {
         overflowStyle: 'overflow-to-addendum',

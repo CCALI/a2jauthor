@@ -47,6 +47,20 @@
       <fieldset>
         {{#if hasOverflowOption}}
           <div>
+            <label>Text grouping:</label>
+              <div class='text-group'>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="text-group"
+                    ($change)="onGroupChange(%event)"
+                    {($checked)}='variableBuffer.isGroup'
+                  />
+                <span>Group Selected Text Boxes</span>
+                </label>
+              </div>
+          </div>
+          <div>
             <label>Text overflow:</label>
             <div class='overflow-picker'>
               <label>

@@ -45,6 +45,7 @@ function getBufferOptions(buffer, boxCount) {
     overflowStyle,
     addendumLabel,
     checkIcon,
+    isGroup,
     isCheck,
     isInverted,
     choices
@@ -54,6 +55,7 @@ function getBufferOptions(buffer, boxCount) {
     overflowStyle,
     addendumLabel,
     checkIcon,
+    isGroup,
     isCheck
   };
 
@@ -70,7 +72,7 @@ function getBufferOptions(buffer, boxCount) {
 
 function makeVariableBuffer(variable, options, boxes) {
   const { name, type, repeating, comment } = variable;
-  const { overflowStyle, addendumLabel, checkIcon, isCheck } = options;
+  const { overflowStyle, addendumLabel, checkIcon, isGroup, isCheck } = options;
   return {
     name,
     type,
@@ -79,6 +81,7 @@ function makeVariableBuffer(variable, options, boxes) {
     overflowStyle,
     addendumLabel,
     checkIcon,
+    isGroup,
     isCheck,
     isInverted: boxes.reduce((i, box) => i || box.isInverted, false),
     choices: boxes.map(box => box.variableValue)
@@ -93,6 +96,7 @@ function makeDefaultVariableBuffer() {
     comment: "",
     overflowStyle: "overflow-to-addendum",
     checkIcon: "normal-check",
+    isGroup: false,
     isCheck: false,
     isInverted: false,
     choices: []
@@ -106,7 +110,7 @@ function uniq(list) {
   );
 }
 
-export const AssignmentFormVm = Map.extend({
+export const AssignmentFormVm = Map.extend('AssignmentFormVm', {
   define: {
     onAssign: {
       type: 'function',
@@ -274,11 +278,23 @@ export const AssignmentFormVm = Map.extend({
       "choices",
       selectedBoxes.map(box => box.variableValue || "")
     );
+
+    const groupNames = uniq(
+      selectedBoxes.serialize().map(b => b.groupId)
+    );
+    const isGroup = groupNames.length === 1 && !!groupNames[0];
+    buffer.attr('isGroup', isGroup);
+
   },
 
   onOverflowStyleChange(event) {
     const { value: style } = event.target;
     this.attr("variableBuffer.overflowStyle", style);
+  },
+
+  onGroupChange (event) {
+    const isChecked = event.target.checked;
+    this.attr('variableBuffer.isGroup', isChecked);
   },
 
   onVariableChange(variable) {

@@ -1,6 +1,7 @@
 import $ from "jquery";
 import Map from "can/map/";
 import Component from "can/component/";
+import 'can/map/define/';
 import template from "./editor.stache";
 import { attemptAutofill } from "../autofill";
 import {
@@ -26,6 +27,8 @@ import moment from "moment";
 
 const { boxComparator } = assemble;
 const getNewVariableBoxId = IdGenerator("vb-");
+const getNewGroupId = IdGenerator("gp-");
+
 const getEventPoint = event => ({
   x: event.clientX,
   y: event.clientY
@@ -88,7 +91,7 @@ function setCrosshair(enable) {
   }
 }
 
-const PdfEditorVm = Map.extend({
+export const PdfEditorVm = Map.extend('PdfEditorVm', {
   didInsertElement () {
     if (!this.unbindTemplate) {
       this.unbindTemplate = this.bindTemplate();
@@ -572,6 +575,7 @@ const PdfEditorVm = Map.extend({
     const boxId = getNewVariableBoxId(existingBoxes.map(box => box.id));
     const box = {
       id: boxId,
+      groupId: '',
       isSelected: true,
       area,
       page
@@ -858,11 +862,15 @@ const PdfEditorVm = Map.extend({
   // </Boxing>
 
   relayBoxClick(id, isAdditive) {
+    let groupId;
     this.attr("boxes").forEach(box => {
       const isChosen = box.id === id;
       const isSelected = isAdditive ? box.isSelected || isChosen : isChosen;
       box.attr("isSelected", isSelected);
+      // command or ctrl click stops auto group select (isAdditive === true)
+      if (isChosen && !isAdditive) { groupId = box.groupId; }
     });
+    if (groupId) { this.selectGroup(groupId); }
   },
 
   relayDeleteSelection() {
@@ -914,6 +922,14 @@ const PdfEditorVm = Map.extend({
   updateSelections(fn) {
     this.attr("boxes").forEach(box => {
       box.attr("isSelected", !!fn(box));
+    });
+  },
+
+  selectGroup(groupId) {
+    this.attr("boxes").forEach(box => {
+      if(box.attr('groupId') === groupId) {
+        box.attr('isSelected', true);
+      }
     });
   },
 
@@ -975,7 +991,12 @@ const PdfEditorVm = Map.extend({
     const variableOptionsDict = this.attr("documentOptions.variableOptions");
     variableOptionsDict.attr(variableKey, variableOptions);
 
+    const existingGroupIds = this.attr('boxes').map(box => box.groupId).filter(groupId => groupId);
+    // possibly check for current groupId here and assign to all selected
+    const groupId = variableOptions.isGroup ? getNewGroupId(existingGroupIds) : '';
+
     this.attr("selectedBoxes").forEach((box, index) => {
+      box.attr('groupId', groupId);
       box.attr(boxOptions[index]);
     });
     this.endAssignment();

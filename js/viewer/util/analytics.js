@@ -8,7 +8,7 @@ function initialize (authorId) {
   // track hash changes as page changes
   handleHashChanges();
   // inserts piwik.js script tag into demo/viewer/viewer.html
-  generatePiwikScriptTag('//www.a2jauthor.org/piwik/', '5');
+  generatePiwikScriptTag('//analytics.a2jauthor.org/', '5');
 }
 
 function trackPageView (title, url) {

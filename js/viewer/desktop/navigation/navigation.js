@@ -269,7 +269,9 @@ export let ViewerNavigationVM = Map.extend({
    * Navigates to previous page.
    */
   navigateBack() {
-    this.attr('selectedPageIndex', parseInt(this.attr('selectedPageIndex')) + 1);
+    if (this.attr('canNavigateBack')) {
+      this.attr('selectedPageIndex', parseInt(this.attr('selectedPageIndex')) + 1);
+    }
   },
 
   /**
@@ -279,7 +281,9 @@ export let ViewerNavigationVM = Map.extend({
    * Navigates to next page.
    */
   navigateForward() {
-    this.attr('selectedPageIndex', parseInt(this.attr('selectedPageIndex')) - 1);
+    if (this.attr('canNavigateForward')) {
+      this.attr('selectedPageIndex', parseInt(this.attr('selectedPageIndex')) - 1);
+    }
   }
 });
 /**

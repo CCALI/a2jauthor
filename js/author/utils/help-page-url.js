@@ -9,7 +9,7 @@
  * the a2j author help page.
  *
  */
-const basePath = 'http://author.a2jauthor.org/content/';
+const basePath = 'http://author.a2jauthor.org/content/'
 
 const pageToHelpUrlMap = {
   about: 'chapter-4-about-tab',
@@ -25,12 +25,12 @@ const pageToHelpUrlMap = {
   publish: 'chapter-14-publish-tab',
   interviews: 'chapter-3-getting-started',
   templates: 'chapter-15-a2j-document-assembly-tool-a2j-dat-and-templates-tab'
-};
+}
 
-export default function(page) {
-  const urlPath = pageToHelpUrlMap[page];
+export default function (page) {
+  const urlPath = pageToHelpUrlMap[page]
 
   if (urlPath) {
-    return basePath + urlPath;
+    return basePath + urlPath
   }
 }

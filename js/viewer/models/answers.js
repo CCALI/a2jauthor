@@ -1,79 +1,78 @@
-import $ from 'jquery';
-import Model from 'can/model/';
-import _find from 'lodash/find';
-import CONST from 'caja/viewer/models/constants';
-import cString from 'caja/viewer/mobile/util/string';
-import cDate from 'caja/viewer/mobile/util/date';
-import readableList from 'caja/viewer/util/readable-list';
+import $ from 'jquery'
+import Model from 'can/model/'
+import _find from 'lodash/find'
+import CONST from 'caja/viewer/models/constants'
+import cString from 'caja/viewer/mobile/util/string'
+import cDate from 'caja/viewer/mobile/util/date'
+import readableList from 'caja/viewer/util/readable-list'
 
-import 'can/map/define/';
+import 'can/map/define/'
 
-export default Model.extend('Answers',{}, {
+export default Model.extend('Answers', {}, {
   define: {
     lang: {
-      serialize: function() {
-        return;
+      serialize: function () {
+
       }
     }
   },
 
-  varExists: function(prop) {
-    prop = $.trim(prop).toLowerCase();
+  varExists: function (prop) {
+    prop = $.trim(prop).toLowerCase()
 
-    let keys = can.Map.keys(this);
+    let keys = can.Map.keys(this)
 
-    let key = _find(keys, function(k) {
-      return k.toLowerCase() === prop;
-    });
+    let key = _find(keys, function (k) {
+      return k.toLowerCase() === prop
+    })
 
-    let v;
+    let v
 
     if (key) {
-      v = this.attr(key);
+      v = this.attr(key)
 
       if (!v.attr('values')) {
-        v.attr('values', [null]);
+        v.attr('values', [null])
       }
     }
 
-    return typeof v === 'undefined' ? null : v;
+    return typeof v === 'undefined' ? null : v
   },
 
-  varCreate: function(varName, varType, varRepeat) {
+  varCreate: function (varName, varType, varRepeat) {
     this.attr(varName.toLowerCase(), {
       name: varName,
       repeating: varRepeat,
       type: varType,
       values: [null]
-    });
+    })
 
-    return this.attr(varName.toLowerCase());
+    return this.attr(varName.toLowerCase())
   },
 
-  varGet: function(varName, varIndex, opts) {
-    var v = this.varExists(varName);
+  varGet: function (varName, varIndex, opts) {
+    var v = this.varExists(varName)
 
-    if (!v) return undefined;
+    if (!v) return undefined
 
     if (typeof varIndex === 'undefined' || varIndex === null || varIndex === '') {
       if (v.repeating) {
         // Repeating variable without an index returns a readable list for display
-        return readableList(v.values, this.attr('lang'));
-
+        return readableList(v.values, this.attr('lang'))
       }
 
-      varIndex = 1;
+      varIndex = 1
     }
 
-    var val = v.values[varIndex];
+    var val = v.values[varIndex]
     switch (v.type) {
       case CONST.vtNumber:
         if (opts && opts.num2num === true) {
           // For calculations for number to be number even if blank (returning 0).
-          val = cString.textToNumber(val);
+          val = cString.textToNumber(val)
         }
 
-        break;
+        break
 
       case CONST.vtDate:
         if (opts && opts.date2num === true) {
@@ -82,43 +81,43 @@ export default Model.extend('Answers',{}, {
           if (val) {
             // 11/28/06 If date is blank DON'T convert to number.
             // this number represents the date as days since epoch, '01/01/1970'
-            val = cDate.dateToDays(val);
+            val = cDate.dateToDays(val)
           }
         }
 
-        break;
+        break
 
       case CONST.vtText:
         if (opts && opts.date2num === true && cString.ismdy(val)) {
           // If it's a date type or looks like a date type, convert to number of days.
           // Why is this needed? TODO:
-          val = cDate.dateToDays(val);
+          val = cDate.dateToDays(val)
         }
 
-        break;
+        break
 
       case CONST.vtTF:
         if (typeof val === 'string') {
-          val = val.toLowerCase() === "true" ? true : false;
+          val = val.toLowerCase() === 'true'
         }
-        break;
+        break
     }
 
-    return val;
+    return val
   },
 
-  varSet: function(varName, varVal, varIndex) {
-    let v = this.varExists(varName);
+  varSet: function (varName, varVal, varIndex) {
+    let v = this.varExists(varName)
 
     if (v === null) {
       // Create variable at runtime
       v = this.varCreate(varName, CONST.vtText,
         !((typeof varIndex === 'undefined') || (varIndex === null) ||
-          (varIndex === '') || (varIndex === 0)), '');
+          (varIndex === '') || (varIndex === 0)), '')
     }
 
     if ((typeof varIndex === 'undefined') || (varIndex === null) || (varIndex === '')) {
-      varIndex = 0;
+      varIndex = 0
     }
 
     // Handle type conversion, like number to date and null to proper `notanswered` values.
@@ -126,30 +125,28 @@ export default Model.extend('Answers',{}, {
       case CONST.vtDate:
         if (typeof varVal === 'number') {
           // this can take a second format param. default is 'MM/DD/YYYY' if no second param sent
-          varVal = cDate.dateToString(varVal);
+          varVal = cDate.dateToString(varVal)
         }
-        break;
+        break
       case CONST.vtText:
         if (varVal === null) {
-          varVal = '';
+          varVal = ''
         }
-        break;
+        break
       case CONST.vtTF:
-        if (typeof varVal !=='boolean') {
-          varVal = undefined;
+        if (typeof varVal !== 'boolean') {
+          varVal = undefined
         }
-        break;
+        break
     }
 
     // Reset all values or set new single value
     if (varIndex === 0 && varVal === null) {
-      v.attr('values', [null]);
-    }
-    else if (varIndex === 0) {
-      v.attr('values.1', varVal);
-    }
-    else {
-      v.attr('values.' + varIndex, varVal);
+      v.attr('values', [null])
+    } else if (varIndex === 0) {
+      v.attr('values.1', varVal)
+    } else {
+      v.attr('values.' + varIndex, varVal)
     }
   }
-});
+})

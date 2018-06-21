@@ -1,10 +1,10 @@
-import moment from "moment";
-import Model from "can/model/";
-import _omit from "lodash/omit";
-import A2JNode from "./a2j-node";
-import comparator from "./template-comparator";
+import moment from 'moment'
+import Model from 'can/model/'
+import _omit from 'lodash/omit'
+import A2JNode from './a2j-node'
+import comparator from './template-comparator'
 
-import "can/map/define/";
+import 'can/map/define/'
 
 /**
  * @module {function} A2JTemplate
@@ -19,35 +19,35 @@ import "can/map/define/";
  */
 const A2JTemplate = Model.extend(
   {
-    init() {
+    init () {
       const update2 = update1 =>
-        function _update(id, template) {
-          const comboId = template.guideId + '-' + id;
-          const isPdf = template.rootNode.tag === "a2j-pdf";
+        function _update (id, template) {
+          const comboId = template.guideId + '-' + id
+          const isPdf = template.rootNode.tag === 'a2j-pdf'
           if (isPdf) {
             return $.ajax({
               url: `/api/template/${comboId}`,
-              method: "put",
-              contentType: "application/json",
-              dataType: "json",
+              method: 'put',
+              contentType: 'application/json',
+              dataType: 'json',
               data: JSON.stringify(template)
-            });
+            })
           }
-          this.update = update1;
-          const res = update1.apply(this, arguments);
-          this.update = _update;
-          return res;
-        };
-      this.update = update2(this.update);
+          this.update = update1
+          const res = update1.apply(this, arguments)
+          this.update = _update
+          return res
+        }
+      this.update = update2(this.update)
     },
 
-    id: "templateId",
+    id: 'templateId',
 
-    create: "/api/template",
-    update: "/api/template/{guideId}-{templateId}",
-    destroy: "/api/template/{guideId}-{templateId}",
-    findOne: "/api/template/{guideId}-{templateId}",
-    findAll: "/api/templates/{guideId}",
+    create: '/api/template',
+    update: '/api/template/{guideId}-{templateId}',
+    destroy: '/api/template/{guideId}-{templateId}',
+    findOne: '/api/template/{guideId}-{templateId}',
+    findAll: '/api/templates/{guideId}',
 
     /**
    * @function A2JTemplate.makeDocumentTree makeDocumentTree
@@ -57,74 +57,74 @@ const A2JTemplate = Model.extend(
    * [A2JNode].
    *
    */
-    makeDocumentTree(node) {
-      const branch = new A2JNode(node);
-      const children = branch.attr("children");
+    makeDocumentTree (node) {
+      const branch = new A2JNode(node)
+      const children = branch.attr('children')
 
       children.forEach((child, index) => {
         const isTemplate = !!(
-          child.attr("tag") == null || child.attr("rootNode")
-        );
+          child.attr('tag') == null || child.attr('rootNode')
+        )
 
         if (isTemplate) {
-          const template = new A2JTemplate(_omit(child.attr(), "rootNode"));
-          const docTree = this.makeDocumentTree(child.attr("rootNode"));
+          const template = new A2JTemplate(_omit(child.attr(), 'rootNode'))
+          const docTree = this.makeDocumentTree(child.attr('rootNode'))
 
-          template.attr("rootNode", docTree);
-          branch.attr(`children.${index}`, template);
+          template.attr('rootNode', docTree)
+          branch.attr(`children.${index}`, template)
         } else {
-          branch.attr(`children.${index}`, this.makeDocumentTree(child));
+          branch.attr(`children.${index}`, this.makeDocumentTree(child))
         }
-      });
+      })
 
-      return branch;
+      return branch
     },
 
-    makeFindAll(findAllData) {
-      return function(params, success, error) {
+    makeFindAll (findAllData) {
+      return function (params, success, error) {
         let dfd = findAllData(params).then(response => {
-          let a2jTemplates = this.models(response);
+          let a2jTemplates = this.models(response)
 
           a2jTemplates.each((a2jTemplate, index) => {
             // extend template with buildOrder property.
-            a2jTemplate.attr("buildOrder", index + 1);
+            a2jTemplate.attr('buildOrder', index + 1)
 
             let documentTree = this.makeDocumentTree(
-              a2jTemplate.attr("rootNode")
-            );
-            a2jTemplate.attr("rootNode", documentTree);
-          });
+              a2jTemplate.attr('rootNode')
+            )
+            a2jTemplate.attr('rootNode', documentTree)
+          })
 
-          return a2jTemplates;
-        });
+          return a2jTemplates
+        })
 
-        return dfd.then(success, error);
-      };
+        return dfd.then(success, error)
+      }
     },
 
-    makeFindOne(findOneData) {
-      return function(params, success, error) {
+    makeFindOne (findOneData) {
+      return function (params, success, error) {
         let dfd = findOneData(params).then(response => {
-          let a2jTemplate = this.model(response);
+          let a2jTemplate = this.model(response)
           let documentTree = this.makeDocumentTree(
-            a2jTemplate.attr("rootNode")
-          );
+            a2jTemplate.attr('rootNode')
+          )
 
-          a2jTemplate.attr("rootNode", documentTree);
-          return a2jTemplate;
-        });
+          a2jTemplate.attr('rootNode', documentTree)
+          return a2jTemplate
+        })
 
-        return dfd.then(success, error);
-      };
+        return dfd.then(success, error)
+      }
     },
 
-    makeFromTreeObject(tree) {
-      const template = new A2JTemplate(_omit(tree, "rootNode"));
-      const docTree = this.makeDocumentTree(tree.rootNode);
+    makeFromTreeObject (tree) {
+      const template = new A2JTemplate(_omit(tree, 'rootNode'))
+      const docTree = this.makeDocumentTree(tree.rootNode)
 
-      template.attr("rootNode", docTree);
+      template.attr('rootNode', docTree)
 
-      return template;
+      return template
     }
   },
   {
@@ -135,7 +135,7 @@ const A2JTemplate = Model.extend(
      * The guided interview that this template is related to.
      */
       guideId: {
-        value: ""
+        value: ''
       },
 
       /**
@@ -144,7 +144,7 @@ const A2JTemplate = Model.extend(
      * Unique identifier for this template.
      */
       templateId: {
-        value: ""
+        value: ''
       },
 
       /**
@@ -153,7 +153,7 @@ const A2JTemplate = Model.extend(
      * A human readable name for this template.
      */
       title: {
-        value: "Untitled Template"
+        value: 'Untitled Template'
       },
 
       /**
@@ -162,7 +162,7 @@ const A2JTemplate = Model.extend(
      * Whether the template should be rendered.
      */
       active: {
-        type: "boolean",
+        type: 'boolean',
         value: true
       },
 
@@ -172,10 +172,10 @@ const A2JTemplate = Model.extend(
      * The root container for any authoring components.
      */
       rootNode: {
-        value: function() {
+        value: function () {
           return new A2JNode({
-            tag: "a2j-template"
-          });
+            tag: 'a2j-template'
+          })
         }
       },
 
@@ -185,8 +185,8 @@ const A2JTemplate = Model.extend(
      * The date of the template's most recent update.
      */
       updatedAt: {
-        get(lastVal) {
-          return moment(lastVal);
+        get (lastVal) {
+          return moment(lastVal)
         }
       },
 
@@ -196,9 +196,9 @@ const A2JTemplate = Model.extend(
      * Short version of contents from the components inside.
      */
       outline: {
-        get() {
-          const rootNode = this.attr("rootNode");
-          return rootNode.attr("outline");
+        get () {
+          const rootNode = this.attr('rootNode')
+          return rootNode.attr('outline')
         }
       },
 
@@ -208,7 +208,7 @@ const A2JTemplate = Model.extend(
      * The Custom Header for the template.
      */
       header: {
-        value: ""
+        value: ''
       },
 
       /**
@@ -217,7 +217,7 @@ const A2JTemplate = Model.extend(
      * Whether the header should be hidden on the first page of the assembled PDF.
      */
       hideHeaderOnFirstPage: {
-        type: "boolean",
+        type: 'boolean',
         value: false
       },
 
@@ -227,7 +227,7 @@ const A2JTemplate = Model.extend(
      * The Custom Footer for the template.
      */
       footer: {
-        value: ""
+        value: ''
       },
 
       /**
@@ -236,53 +236,53 @@ const A2JTemplate = Model.extend(
      * Whether the footer should be hidden on the first page of the assembled PDF.
      */
       hideFooterOnFirstPage: {
-        type: "boolean",
+        type: 'boolean',
         value: false
       }
     },
 
-    addNode(node) {
+    addNode (node) {
       if (node) {
-        const rootNode = this.attr("rootNode");
-        const children = rootNode.attr("children");
-        children.push(node);
+        const rootNode = this.attr('rootNode')
+        const children = rootNode.attr('children')
+        children.push(node)
       }
     }
   }
-);
+)
 
 A2JTemplate.List = A2JTemplate.List.extend({
-  active() {
-    return this.filter(template => template.attr("active"));
+  active () {
+    return this.filter(template => template.attr('active'))
   },
 
-  deleted() {
-    return this.filter(template => !template.attr("active"));
+  deleted () {
+    return this.filter(template => !template.attr('active'))
   },
 
-  sortBy(key, direction = "asc") {
+  sortBy (key, direction = 'asc') {
     switch (key) {
-      case "buildOrder":
-        this.attr("comparator", comparator.number(key, direction));
-        break;
+      case 'buildOrder':
+        this.attr('comparator', comparator.number(key, direction))
+        break
 
-      case "title":
-        this.attr("comparator", comparator.string(key, direction));
-        break;
+      case 'title':
+        this.attr('comparator', comparator.string(key, direction))
+        break
 
-      case "updatedAt":
-        this.attr("comparator", comparator.moment(key, direction));
-        break;
+      case 'updatedAt':
+        this.attr('comparator', comparator.moment(key, direction))
+        break
     }
   },
 
-  search(token) {
-    return this.filter(function(template) {
-      token = token.toLowerCase();
-      let title = template.attr("title").toLowerCase();
-      return title.indexOf(token) !== -1;
-    });
+  search (token) {
+    return this.filter(function (template) {
+      token = token.toLowerCase()
+      let title = template.attr('title').toLowerCase()
+      return title.indexOf(token) !== -1
+    })
   }
-});
+})
 
-export default A2JTemplate;
+export default A2JTemplate

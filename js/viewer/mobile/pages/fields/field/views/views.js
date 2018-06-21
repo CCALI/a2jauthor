@@ -1,13 +1,13 @@
-import text from './text.stache!';
-import radio from './radio.stache!';
-import number from './number.stache!';
-import numberdollar from './numberdollar.stache!';
-import gender from './gender.stache!';
-import datemdy from './datemdy.stache!';
-import textpick from './textpick.stache!';
-import textlong from './textlong.stache!';
-import checkbox from './checkbox.stache!';
-import numberpick from './numberpick.stache!';
+import text from './text.stache'
+import radio from './radio.stache'
+import number from './number.stache'
+import numberdollar from './numberdollar.stache'
+import gender from './gender.stache'
+import datemdy from './datemdy.stache'
+import textpick from './textpick.stache'
+import textlong from './textlong.stache'
+import checkbox from './checkbox.stache'
+import numberpick from './numberpick.stache'
 
 /**
  * @property {Module} viewer/mobile/pages/fields/field/views/ views
@@ -38,4 +38,4 @@ export default {
   text,
   textlong,
   textpick
-};
+}

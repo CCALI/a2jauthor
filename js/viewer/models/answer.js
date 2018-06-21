@@ -1,5 +1,5 @@
-import Map from 'can/map/';
+import Map from 'can/map/'
 
-import 'can/map/define/';
+import 'can/map/define/'
 
-export default Map.extend({});
+export default Map.extend({})

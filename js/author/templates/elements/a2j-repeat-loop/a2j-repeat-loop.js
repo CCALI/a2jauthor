@@ -3,10 +3,10 @@ import stache from 'can/view/stache/';
 import Component from 'can/component/';
 import _isNumber from 'lodash/isNumber';
 import RepeatLoopVM from './a2j-repeat-loop-vm';
-import template from './a2j-repeat-loop.stache!';
-import loopListTpl from './loop-views/loop-list.stache!';
-import loopTableTpl from './loop-views/loop-table.stache!';
-import repeatLoopOptionsTpl from './repeat-loop-options.stache!';
+import template from './a2j-repeat-loop.stache';
+import loopListTpl from './loop-views/loop-list.stache';
+import loopTableTpl from './loop-views/loop-table.stache';
+import repeatLoopOptionsTpl from './repeat-loop-options.stache';
 
 import 'can/view/';
 

@@ -1,7 +1,7 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
-import contentTpl from './content.stache!';
-import template from './a2j-section-title.stache!';
+import contentTpl from './content.stache';
+import template from './a2j-section-title.stache';
 
 import 'can/view/';
 

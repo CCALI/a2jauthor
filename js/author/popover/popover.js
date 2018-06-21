@@ -1,11 +1,11 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
-import _includes from 'lodash/includes';
-import template from './popover.stache!';
+import Map from 'can/map/'
+import Component from 'can/component/'
+import _includes from 'lodash/includes'
+import template from './popover.stache'
 
-import 'can/map/define/';
+import 'can/map/define/'
 
-const placements = ['top', 'right', 'bottom', 'left', 'auto'];
+const placements = ['top', 'right', 'bottom', 'left', 'auto']
 
 /**
  * @module {Module} popover <app-popover>
@@ -55,16 +55,16 @@ export let Popover = Map.extend({
     placement: {
       value: 'right',
 
-      type(value) {
-        return _includes(placements, value) ? value : 'right';
+      type (value) {
+        return _includes(placements, value) ? value : 'right'
       }
     }
   }
-});
+})
 
 export default Component.extend({
   template,
   leakScope: false,
   viewModel: Popover,
   tag: 'app-popover'
-});
+})

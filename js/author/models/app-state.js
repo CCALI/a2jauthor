@@ -1,17 +1,17 @@
-import $ from 'jquery';
-import Map from 'can/map/';
-import List from 'can/list/';
-import A2JVariable from './a2j-variable';
-import _isEmpty from 'lodash/isEmpty';
-import {Gender, Hair, Skin} from 'caja/viewer/desktop/avatar/colors';
+import $ from 'jquery'
+import Map from 'can/map/'
+import List from 'can/list/'
+import A2JVariable from './a2j-variable'
+import _isEmpty from 'lodash/isEmpty'
+import {Gender, Hair, Skin} from 'caja/viewer/desktop/avatar/colors'
 
 // with the existing Guide model that works with a different data structure.
 let Guide = Map.extend('AppStateGuide', {
   define: {
     variablesList: {
-      get() {
-        let vars = this.attr('vars');
-        return A2JVariable.fromGuideVars(vars.attr());
+      get () {
+        let vars = this.attr('vars')
+        return A2JVariable.fromGuideVars(vars.attr())
       }
     },
 
@@ -30,7 +30,7 @@ let Guide = Map.extend('AppStateGuide', {
       value: Hair.defaultValue
     }
   }
-});
+})
 
 /**
  * @module {function} AuthorAppState
@@ -92,8 +92,8 @@ export default Map.extend({
      * The identifier to the guideId interview currently loaded.
      */
     guideId: {
-      value() {
-        return window.gGuideID || '';
+      value () {
+        return window.gGuideID || ''
       }
     },
 
@@ -111,8 +111,8 @@ export default Map.extend({
      */
     guidePath: {
       serialize: false,
-      value() {
-        return window.gGuidePath || '';
+      value () {
+        return window.gGuidePath || ''
       }
     },
 
@@ -124,8 +124,8 @@ export default Map.extend({
     guide: {
       serialize: false,
 
-      set(gGuide = {}) {
-        return new Guide(gGuide);
+      set (gGuide = {}) {
+        return new Guide(gGuide)
       }
     },
 
@@ -138,9 +138,9 @@ export default Map.extend({
     showDebugPanel: {
       value: false,
       serialize: false,
-      get(val) {
-        let page = this.attr('page');
-        return (page === 'preview') ? val : false;
+      get (val) {
+        let page = this.attr('page')
+        return (page === 'preview') ? val : false
       }
     },
 
@@ -153,9 +153,9 @@ export default Map.extend({
     previewMode: {
       value: false,
       serialize: false,
-      get(val) {
-        let page = this.attr('page');
-        return (page === 'preview') ? val : false;
+      get (val) {
+        let page = this.attr('page')
+        return (page === 'preview') ? val : false
       }
     },
 
@@ -168,8 +168,8 @@ export default Map.extend({
     showDevPublishButtons: {
       value: false,
       serialize: false,
-      get() {
-        return location.hostname === 'localhost' || location.hostname === 'staging.a2jauthor.org';
+      get () {
+        return window.location.hostname === 'localhost' || window.location.hostname === 'staging.a2jauthor.org'
       }
     },
 
@@ -224,7 +224,7 @@ export default Map.extend({
     viewerInterview: {
       serialize: false,
       set (val) {
-        return val;
+        return val
       }
     },
 
@@ -237,35 +237,35 @@ export default Map.extend({
      */
     globalAlertProps: {
       serialize: false,
-      value() {
+      value () {
         return {
           open: false,
           message: '',
           alertType: 'danger'
-        };
+        }
       }
     }
   },
 
-  init() {
-    let appState = this;
+  init () {
+    let appState = this
 
-    $(document).ajaxError(function globalAjaxHandler(event, jqxhr) {
-      let status = jqxhr.status;
-      let response = jqxhr.responseJSON || {};
+    $(document).ajaxError(function globalAjaxHandler (event, jqxhr) {
+      let status = jqxhr.status
+      let response = jqxhr.responseJSON || {}
 
       if (status >= 400 && !_isEmpty(response.error)) {
         appState.attr('globalAlertProps', {
           open: true,
           alertType: 'danger',
           message: response.error.message
-        });
+        })
       }
-    });
+    })
   },
 
-  toggleDebugPanel() {
-    let val = this.attr('showDebugPanel');
-    this.attr('showDebugPanel', !val);
+  toggleDebugPanel () {
+    let val = this.attr('showDebugPanel')
+    this.attr('showDebugPanel', !val)
   }
-});
+})

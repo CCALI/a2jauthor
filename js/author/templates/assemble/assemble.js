@@ -1,7 +1,7 @@
 import Map from 'can/map/';
 import _keys from 'lodash/keys';
 import Component from 'can/component/';
-import template from './assemble.stache!';
+import template from './assemble.stache';
 import parser from 'caja/viewer/mobile/util/parser';
 
 import 'can/map/define/';

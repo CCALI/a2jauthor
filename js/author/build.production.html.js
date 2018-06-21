@@ -1,8 +1,8 @@
 
-const fs = require('fs');
+const fs = require('fs')
 
-const version = Date.now();
-const html = template(version);
+const version = Date.now()
+const html = template(version)
 
 function template (version) {
   return `<!DOCTYPE HTML>
@@ -46,7 +46,7 @@ function template (version) {
 
       <script src="../node_modules/steal/steal.production.js?v=${version}" cache-key="v" cache-version="${version}" deps-bundle main="caja/author/app"></script>
     </body>
-  </html>`;
+  </html>`
 }
 
-fs.writeFileSync(__dirname + '/index.production.html', html, 'utf-8');
+fs.writeFileSync(__dirname + '/index.production.html', html, 'utf-8')

@@ -1,5 +1,5 @@
 import Component from 'can/component/';
-import template from './a2j-template-ssr.stache!';
+import template from './a2j-template-ssr.stache';
 import TemplateSsrVM from './a2j-template-ssr-vm';
 
 /**

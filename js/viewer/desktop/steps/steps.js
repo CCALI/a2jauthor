@@ -4,7 +4,7 @@ import List from 'can/list/';
 import _isNaN from 'lodash/isNaN';
 import _inRange from 'lodash/inRange';
 import Component from 'can/component/';
-import template from './steps.stache!';
+import template from './steps.stache';
 import _findIndex from 'lodash/findIndex';
 import _truncate from 'lodash/truncate';
 import learnMoreTemplate from './learn-more.stache';

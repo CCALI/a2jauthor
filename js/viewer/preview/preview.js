@@ -1,58 +1,58 @@
-import Map from 'can/map/';
-import _assign from 'lodash/assign';
-import Component from 'can/component/';
-import isMobile from 'caja/viewer/is-mobile';
-import template from 'caja/viewer/app.stache!';
-import Lang from 'caja/viewer/mobile/util/lang';
-import Logic from 'caja/viewer/mobile/util/logic';
-import AppState from 'caja/viewer/models/app-state';
-import Interview from 'caja/viewer/models/interview';
-import MemoryState from 'caja/viewer/models/memory-state';
-import PersistedState from 'caja/viewer/models/persisted-state';
-import parseGuideToMobile from 'caja/viewer/mobile/util/guide-to-mobile';
+import Map from 'can/map/'
+import _assign from 'lodash/assign'
+import Component from 'can/component/'
+import isMobile from 'caja/viewer/is-mobile'
+import template from 'caja/viewer/app.stache'
+import Lang from 'caja/viewer/mobile/util/lang'
+import Logic from 'caja/viewer/mobile/util/logic'
+import AppState from 'caja/viewer/models/app-state'
+import Interview from 'caja/viewer/models/interview'
+import MemoryState from 'caja/viewer/models/memory-state'
+import PersistedState from 'caja/viewer/models/persisted-state'
+import parseGuideToMobile from 'caja/viewer/mobile/util/guide-to-mobile'
 
 const ViewerPreviewVM = Map.extend('ViewerPreviewVM', {
   define: {
     interviewPageName: {
-      get: function(){
-        return this.attr("rState.page");
+      get: function () {
+        return this.attr('rState.page')
       }
     }
   }
-});
+})
 
 export default Component.extend({
   tag: 'a2j-viewer-preview',
   viewModel: ViewerPreviewVM,
 
   events: {
-    inserted() {
-      const vm = this.viewModel;
-      const rState = new AppState();
-      const mState = new MemoryState();
-      const pState = new PersistedState();
+    inserted () {
+      const vm = this.viewModel
+      const rState = new AppState()
+      const mState = new MemoryState()
+      const pState = new PersistedState()
 
-      const previewAnswers = vm.attr('interview.answers') ? vm.attr('interview.answers') : null;
+      const previewAnswers = vm.attr('interview.answers') ? vm.attr('interview.answers') : null
 
       // Set fileDataUrl to window.gGuidePath, so the viewer can locate the
       // interview assets (images, sounds, etc).
-      mState.attr('fileDataURL', vm.attr('guidePath'));
+      mState.attr('fileDataURL', vm.attr('guidePath'))
 
-      const mobileData = parseGuideToMobile(_assign({}, window.gGuide));
-      const parsedData = Interview.parseModel(mobileData);
-      const interview = new Interview(parsedData);
-      const lang = new Lang(interview.attr('language'));
+      const mobileData = parseGuideToMobile(_assign({}, window.gGuide))
+      const parsedData = Interview.parseModel(mobileData)
+      const interview = new Interview(parsedData)
+      const lang = new Lang(interview.attr('language'))
 
-      const answers = pState.attr('answers');
-      answers.attr('lang', lang);
-      answers.attr(can.extend({}, interview.serialize().vars));
+      const answers = pState.attr('answers')
+      answers.attr('lang', lang)
+      answers.attr(can.extend({}, interview.serialize().vars))
 
-      interview.attr('answers', answers);
-      rState.attr('interview', interview);
+      interview.attr('answers', answers)
+      rState.attr('interview', interview)
 
       // needs to be created after answers are set
-      const logic = new Logic({ interview });
-      rState.attr('logic', logic);
+      const logic = new Logic({ interview })
+      rState.attr('logic', logic)
 
       // if previewPageName is set, we need to make sure the viewer
       // loads that specific page (covers the case when user clicks
@@ -61,28 +61,34 @@ export default Component.extend({
         rState.attr({
           view: 'pages',
           page: vm.attr('previewPageName')
-        });
+        })
       } else {
-        rState.attr('view', 'intro');
+        rState.attr('view', 'intro')
       }
 
-      const modalContent = can.compute();
+      const modalContent = can.compute()
 
       if (previewAnswers) {
-        previewAnswers.each(function(answer) {
-          let name = answer.name ? answer.name.toLowerCase() : "";
-          if (interview.attr('answers.'+name)) {
-            interview.attr('answers.'+name+'.values', answer.attr('values'));
+        previewAnswers.each(function (answer) {
+          let name = answer.name ? answer.name.toLowerCase() : ''
+          if (interview.attr('answers.' + name)) {
+            interview.attr('answers.' + name + '.values', answer.attr('values'))
           }
-        });
+        })
       }
 
       vm.attr({
-        rState, pState, mState, interview,
-        logic, lang, isMobile, modalContent
-      });
+        rState,
+        pState,
+        mState,
+        interview,
+        logic,
+        lang,
+        isMobile,
+        modalContent
+      })
 
-      this.element.html(template(vm));
+      this.element.html(template(vm))
     }
   }
-});
+})

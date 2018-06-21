@@ -1,4 +1,4 @@
-import template from './tabs.stache!';
+import template from './tabs.stache';
 import Component from 'can/component/';
 import _throttle from 'lodash/throttle';
 import TemplateEditTabsVM from './tabs-vm';

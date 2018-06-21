@@ -1,6 +1,6 @@
-import Map from 'can/map/';
+import Map from 'can/map/'
 
-import 'can/map/define/';
+import 'can/map/define/'
 
 export default Map.extend({
   define: {
@@ -15,10 +15,10 @@ export default Map.extend({
     },
 
     templateURL: {
-      set: function(val) {
-        val = val.replace(/\.xml/, '.json');
-        return val;
+      set: function (val) {
+        val = val.replace(/\.xml/, '.json')
+        return val
       }
     }
   }
-});
+})

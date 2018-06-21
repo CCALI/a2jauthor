@@ -1,6 +1,6 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
-import template from './evaluate.stache!';
+import template from './evaluate.stache';
 import $ from 'jquery';
 
 import 'can/map/define/';

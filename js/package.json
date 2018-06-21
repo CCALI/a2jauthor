@@ -4,7 +4,9 @@
   "description": "Authoring and viewer App GUI.",
   "main": "caja/author/app",
   "scripts": {
-    "test": "grunt jshint && testee --reporter Spec --browsers firefox viewer/test/index.html author/test/index.html",
+    "lint:author": "standard author/*.js author/**/*.js --fix --env mocha",
+    "lint:viewer": "standard viewer/*.js viewer/**/*.js --fix --env mocha",
+    "test": "npm run lint:author && npm run lint:viewer && testee --reporter Spec --browsers firefox viewer/test/index.html author/test/index.html",
     "build-docs": "grunt documentjs",
     "serve-docs": "grunt documentjs-lite && http-server docs",
     "postinstall": "steal-tools bundle --deps --no-minify"
@@ -49,6 +51,7 @@
     "serve-index": "1.4.0",
     "serve-static": "1.6.4",
     "sinon": "^1.17.2",
+    "standard": "^11.0.1",
     "steal": "^1.6.2",
     "steal-css": "^1.3.1",
     "steal-less": "^1.2.2",
@@ -58,6 +61,18 @@
     "testee": "^0.2.0",
     "text-statistics": "^0.1.1",
     "typeahead.js": "git://github.com/twitter/typeahead.js.git#v0.11.1"
+  },
+  "standard": {
+    "globals": [
+      "$",
+      "jQuery",
+      "can"
+    ],
+    "ignore": [
+      "author/src/**",
+      "author/build.production.html.js",
+      "viewer/build.production.html.js"
+    ]
   },
   "system": {
     "transpiler": "babel",
@@ -212,6 +227,5 @@
         ]
       }
     }
-  },
-  "dependencies": {}
+  }
 }

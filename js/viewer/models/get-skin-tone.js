@@ -1,6 +1,6 @@
-let dark = 'dark';
-let darker = 'darker';
-let lighter = 'lighter';
+let dark = 'dark'
+let darker = 'darker'
+let lighter = 'lighter'
 
 let tonesMap = {
   tan: dark,
@@ -9,9 +9,9 @@ let tonesMap = {
   avatar1: lighter,
   avatar2: dark,
   avatar3: darker
-};
+}
 
-export default function getSkinTone(avatarName) {
-  if (!avatarName) return lighter;
-  return tonesMap[avatarName];
+export default function getSkinTone (avatarName) {
+  if (!avatarName) return lighter
+  return tonesMap[avatarName]
 }

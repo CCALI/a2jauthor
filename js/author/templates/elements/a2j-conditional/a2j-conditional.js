@@ -1,5 +1,5 @@
 import Component from 'can/component/';
-import template from './a2j-conditional.stache!';
+import template from './a2j-conditional.stache';
 import ConditionalVM from './a2j-conditional-vm';
 
 const operatorTextMap = {

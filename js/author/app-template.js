@@ -11,6 +11,6 @@
  * of the author app markup.
  *
  */
-import tpl from './app.stache';
+import tpl from './app.stache'
 
-export let template = tpl;
+export let template = tpl

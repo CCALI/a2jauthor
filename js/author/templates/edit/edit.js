@@ -1,6 +1,6 @@
 import Map from "can/map/";
 import Component from "can/component/";
-import template from "./edit.stache!";
+import template from "./edit.stache";
 import A2JTemplate from "caja/author/models/a2j-template";
 import A2JNode from "caja/author/models/a2j-node";
 

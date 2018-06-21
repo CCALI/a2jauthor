@@ -1,9 +1,9 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
-import template from './alert.stache!';
+import Map from 'can/map/'
+import Component from 'can/component/'
+import template from './alert.stache'
 
-import 'can/util/event';
-import 'can/map/define/';
+import 'can/util/event'
+import 'can/map/define/'
 
 const alertTypeClasses = {
   info: 'alert-info',
@@ -11,7 +11,7 @@ const alertTypeClasses = {
   default: 'alert-default',
   success: 'alert-success',
   warning: 'alert-warning'
-};
+}
 
 const alertTypeSymbols = {
   info: 'glyphicon-info-circled',
@@ -19,7 +19,7 @@ const alertTypeSymbols = {
   default: '',
   success: '',
   warning: 'glyphicon-info-circled'
-};
+}
 
 /**
  * @module {Module} author/alert <app-alert>
@@ -121,28 +121,28 @@ export let Alert = Map.extend({
     open: {
       type: 'boolean',
       value: false,
-      set(newVal) {
-        let autoClose = this.attr('autoClose');
+      set (newVal) {
+        let autoClose = this.attr('autoClose')
 
         if (autoClose && newVal) {
-          this.setAutoCloseTimeout();
+          this.setAutoCloseTimeout()
         }
 
-        return newVal;
+        return newVal
       }
-    },
+    }
   },
 
-  setAutoCloseTimeout() {
-    let delay = this.attr('autoCloseTime');
+  setAutoCloseTimeout () {
+    let delay = this.attr('autoCloseTime')
 
-    this.clearAutoCloseTimeout();
+    this.clearAutoCloseTimeout()
 
     let timeoutId = setTimeout(() => {
-      this.closeAlert();
-    }, delay);
+      this.closeAlert()
+    }, delay)
 
-    this.attr('autoCloseTimeoutId', timeoutId);
+    this.attr('autoCloseTimeoutId', timeoutId)
   },
 
   /**
@@ -153,18 +153,18 @@ export let Alert = Map.extend({
    * the timeout id stored. This method is called when user clicks the close
    * button.
    */
-  closeAlert() {
-    this.clearAutoCloseTimeout();
-    this.attr('open', false);
+  closeAlert () {
+    this.clearAutoCloseTimeout()
+    this.attr('open', false)
   },
 
-  clearAutoCloseTimeout() {
-    let timeoutId = this.attr('autoCloseTimeoutId');
+  clearAutoCloseTimeout () {
+    let timeoutId = this.attr('autoCloseTimeoutId')
 
-    clearTimeout(timeoutId);
-    this.attr('autoCloseTimeoutId', null);
+    clearTimeout(timeoutId)
+    this.attr('autoCloseTimeoutId', null)
   }
-});
+})
 
 export default Component.extend({
   template,
@@ -172,36 +172,36 @@ export default Component.extend({
   viewModel: Alert,
 
   events: {
-    inserted() {
+    inserted () {
       if (this.viewModel.attr('open')) {
-        this.element.show();
+        this.element.show()
       } else {
-        this.element.hide();
+        this.element.hide()
       }
     },
 
-    '{viewModel} open': function() {
-      let $el = this.element;
-      let vm = this.viewModel;
-      let open = vm.attr('open');
+    '{viewModel} open': function () {
+      let $el = this.element
+      let vm = this.viewModel
+      let open = vm.attr('open')
 
       if (open) {
-        $el.slideDown();
+        $el.slideDown()
       } else {
-        $el.slideUp(() => can.trigger(vm, 'closed'));
-        vm.clearAutoCloseTimeout();
+        $el.slideUp(() => can.trigger(vm, 'closed'))
+        vm.clearAutoCloseTimeout()
       }
     }
   },
 
   helpers: {
     alertTypeClass () {
-      let type = this.attr('alertType');
-      return alertTypeClasses[type];
+      let type = this.attr('alertType')
+      return alertTypeClasses[type]
     },
     alertTypeSymbol () {
-      let type = this.attr('alertType');
-      return alertTypeSymbols[type];
+      let type = this.attr('alertType')
+      return alertTypeSymbols[type]
     }
   }
-});
+})

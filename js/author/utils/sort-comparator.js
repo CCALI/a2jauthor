@@ -27,34 +27,34 @@
  */
 export default {
 
-  number(key, direction) {
-    return function(a, b) {
+  number (key, direction) {
+    return function (a, b) {
       if (direction === 'desc') {
-        [a, b] = [b, a];
+        [a, b] = [b, a]
       }
 
-      return a.attr(key) - b.attr(key);
-    };
+      return a.attr(key) - b.attr(key)
+    }
   },
 
-  string(key, direction) {
-    return function(a, b) {
+  string (key, direction) {
+    return function (a, b) {
       if (direction === 'desc') {
-        [a, b] = [b, a];
+        [a, b] = [b, a]
       }
 
-      return a.attr(key).localeCompare(b.attr(key), {numeric: true});
-    };
+      return a.attr(key).localeCompare(b.attr(key), {numeric: true})
+    }
   },
 
-  moment(key, direction) {
-    return function(a, b) {
+  moment (key, direction) {
+    return function (a, b) {
       if (direction === 'desc') {
-        [a, b] = [b, a];
+        [a, b] = [b, a]
       }
 
-      return a.attr(key).isAfter(b.attr(key)) ? -1 : 1;
-    };
+      return a.attr(key).isAfter(b.attr(key)) ? -1 : 1
+    }
   }
 
-};
+}

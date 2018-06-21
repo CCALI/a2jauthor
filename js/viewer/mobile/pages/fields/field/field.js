@@ -6,9 +6,9 @@ import views from './views/';
 import _range from 'lodash/range';
 import _isNaN from 'lodash/isNaN';
 import Component from 'can/component/';
-import template from './field.stache!';
-import invalidPromptTpl from './views/invalid-prompt.stache!';
-import exceededMaxcharsTpl from './views/exceeded-maxchars.stache!';
+import template from './field.stache';
+import invalidPromptTpl from './views/invalid-prompt.stache';
+import exceededMaxcharsTpl from './views/exceeded-maxchars.stache';
 import constants from 'caja/viewer/models/constants';
 
 import 'jquery-ui/ui/datepicker';
@@ -312,7 +312,7 @@ export let FieldVM = Map.extend('FieldVM', {
    * @parent field.ViewModel
    *
    * expands textlong field types into larger modal for easier editing
-   * validateField needs to trigger here as the change event on the textlong.stache
+   * validateField needs to trigger here as the change event on the textlong.stache'
    * was interfering with the click event and vice versa. (see below)
    * https://stackoverflow.com/questions/20523313/jquery-change-sometimes-event-prevents-click-event
    *

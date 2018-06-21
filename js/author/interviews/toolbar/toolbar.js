@@ -1,5 +1,5 @@
-import Component from 'can/component/';
-import template from './toolbar.stache!';
+import Component from 'can/component/'
+import template from './toolbar.stache'
 
 /**
  * @module {function} components/interviews/toolbar/ <interviews-toolbar>
@@ -14,20 +14,20 @@ export default Component.extend({
   tag: 'interviews-toolbar',
 
   events: {
-    '.open-guide click': function() {
-        const selectedGuide = $('a.guide.item-selected').first();
-        const gid = selectedGuide[0].getAttribute('gid');
-        window.openSelectedGuide(gid);
+    '.open-guide click': function () {
+      const selectedGuide = $('a.guide.item-selected').first()
+        const gid = selectedGuide[0].getAttribute('gid')
+        window.openSelectedGuide(gid)
     },
 
-    '.clone-guide click': function() {
+    '.clone-guide click': function () {
       window.dialogAlert({
-        title:'Clone interview'
-      });
+        title: 'Clone interview'
+      })
     },
 
-    '.delete-guide click': function() {
-      window.archiveSelectedGuide();
+    '.delete-guide click': function () {
+      window.archiveSelectedGuide()
     }
   }
-});
+})

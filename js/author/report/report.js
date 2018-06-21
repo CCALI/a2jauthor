@@ -1,16 +1,16 @@
-import Map from 'can/map/';
-import List from 'can/list/';
-import Component from 'can/component/';
-import template from './report.stache';
-import pagePartial from './page-partial.stache';
-import popupPartial from './popup-partial.stache';
-import naturalCompare from 'string-natural-compare/';
-import cString from 'caja/viewer/mobile/util/string';
-import textStats from 'text-statistics';
-import _cloneDeep from 'lodash/cloneDeep';
+import Map from 'can/map/'
+import List from 'can/list/'
+import Component from 'can/component/'
+import template from './report.stache'
+import pagePartial from './page-partial.stache'
+import popupPartial from './popup-partial.stache'
+import naturalCompare from 'string-natural-compare/'
+import cString from 'caja/viewer/mobile/util/string'
+import textStats from 'text-statistics'
+import _cloneDeep from 'lodash/cloneDeep'
 
-can.view.preload('page-partial', pagePartial);
-can.view.preload('popup-partial', popupPartial);
+can.view.preload('page-partial', pagePartial)
+can.view.preload('popup-partial', popupPartial)
 
 /**
  * @property {can.Map} report.ViewModel
@@ -23,12 +23,12 @@ export const ReportVM = Map.extend('ReportVM', {
   define: {
     parentGuide: {
       set (guide) {
-        const cloneMade = this.attr('cloneMade');
+        const cloneMade = this.attr('cloneMade')
         if (guide && !cloneMade) {
-          this.attr('guide', _cloneDeep(guide));
-          this.attr('cloneMade', true);
+          this.attr('guide', _cloneDeep(guide))
+          this.attr('cloneMade', true)
         }
-        return guide;
+        return guide
       }
     },
 
@@ -67,11 +67,11 @@ export const ReportVM = Map.extend('ReportVM', {
      */
     buildingReport: {
       value: function () {
-        return !!window.gGuide;
+        return !!window.gGuide
       }
     },
 
-     /**
+    /**
      * @property {Boolean} report.ViewModel.prototype.define.hideDefault hideDefault
      * @parent report.ViewModel
      *
@@ -80,7 +80,7 @@ export const ReportVM = Map.extend('ReportVM', {
     hideDefault: {
       value: false,
       get () {
-        return this.attr('selectedReport') === 'textReport' || this.attr('selectedReport') === 'citationReport';
+        return this.attr('selectedReport') === 'textReport' || this.attr('selectedReport') === 'citationReport'
       }
     },
 
@@ -93,7 +93,7 @@ export const ReportVM = Map.extend('ReportVM', {
     hideText: {
       value: false,
       get () {
-        return this.attr('selectedReport') === 'citationReport';
+        return this.attr('selectedReport') === 'citationReport'
       }
     },
 
@@ -106,7 +106,7 @@ export const ReportVM = Map.extend('ReportVM', {
     hideCitation: {
       value: false,
       get () {
-        return this.attr('selectedReport') === 'textReport';
+        return this.attr('selectedReport') === 'textReport'
       }
     },
 
@@ -119,17 +119,17 @@ export const ReportVM = Map.extend('ReportVM', {
     pagesPromise: {
       get () {
         return new Promise((resolve) => {
-          const guide = this.attr('guide');
+          const guide = this.attr('guide')
           if (guide) {
             // TODO: figure out why building this blocks rendering of the initial stache
             // and remove the setTimeout
             setTimeout(() => {
-              const pagesAndPopups = this.buildPagesByStep(guide.sortedPages, guide.steps);
-              resolve(pagesAndPopups);
-              this.attr('buildingReport', false);
-            });
+              const pagesAndPopups = this.buildPagesByStep(guide.sortedPages, guide.steps)
+              resolve(pagesAndPopups)
+              this.attr('buildingReport', false)
+            })
           }
-        });
+        })
       }
     },
 
@@ -143,7 +143,7 @@ export const ReportVM = Map.extend('ReportVM', {
       value: [],
       get (last, resolve) {
         return this.attr('pagesPromise')
-            .then(resolve);
+          .then(resolve)
       }
     },
 
@@ -155,8 +155,8 @@ export const ReportVM = Map.extend('ReportVM', {
      */
     pagesByStep: {
       get () {
-        const pagesAndPopups = this.attr('pagesAndPopups');
-        return pagesAndPopups && pagesAndPopups[0];
+        const pagesAndPopups = this.attr('pagesAndPopups')
+        return pagesAndPopups && pagesAndPopups[0]
       }
     },
 
@@ -168,8 +168,8 @@ export const ReportVM = Map.extend('ReportVM', {
      */
     popupPages: {
       get () {
-        const pagesAndPopups = this.attr('pagesAndPopups');
-        return pagesAndPopups && pagesAndPopups[1];
+        const pagesAndPopups = this.attr('pagesAndPopups')
+        return pagesAndPopups && pagesAndPopups[1]
       }
     },
 
@@ -181,9 +181,9 @@ export const ReportVM = Map.extend('ReportVM', {
      */
     sortedVariableList: {
       get () {
-        const guide = this.attr('guide');
+        const guide = this.attr('guide')
         if (guide && guide.vars) {
-          return this.getVariableList(guide.vars);
+          return this.getVariableList(guide.vars)
         }
       }
     },
@@ -196,10 +196,10 @@ export const ReportVM = Map.extend('ReportVM', {
      */
     displayLanguage: {
       get () {
-        const locale = this.attr('guide.language');
-        const languages = window.Languages ? window.Languages.regional : null ;
+        const locale = this.attr('guide.language')
+        const languages = window.Languages ? window.Languages.regional : null
         if (locale && languages) {
-          return `${languages[locale].Language} (${languages[locale].LanguageEN}) {${locale}}`;
+          return `${languages[locale].Language} (${languages[locale].LanguageEN}) {${locale}}`
         }
       }
     },
@@ -245,7 +245,7 @@ export const ReportVM = Map.extend('ReportVM', {
    * whether to hide the grading results
    */
   hideGrade (fkGrade) {
-    return !fkGrade || this.attr('hideAllGrades');
+    return !fkGrade || this.attr('hideAllGrades')
   },
 
   /**
@@ -255,13 +255,13 @@ export const ReportVM = Map.extend('ReportVM', {
    * computes and formats the overall interview reading grade level
    */
   getOverallGrade () {
-    const fkGradeList = this.attr('fkGradeList');
+    const fkGradeList = this.attr('fkGradeList')
     if (fkGradeList.length) {
-      let gradeTotal = 0;
+      let gradeTotal = 0
       fkGradeList.forEach(function (grade) {
-        gradeTotal += grade;
-      });
-      return (gradeTotal / fkGradeList.length).toFixed(1);
+        gradeTotal += grade
+      })
+      return (gradeTotal / fkGradeList.length).toFixed(1)
     }
   },
 
@@ -274,8 +274,8 @@ export const ReportVM = Map.extend('ReportVM', {
   getTextAlertClass (fkGrade) {
     if (fkGrade) {
       return (fkGrade < 6 ? 'alert-success'
-              : (fkGrade < 9 ? 'alert-warning'
-              : 'alert-danger'));
+        : (fkGrade < 9 ? 'alert-warning'
+          : 'alert-danger'))
     }
   },
 
@@ -286,11 +286,11 @@ export const ReportVM = Map.extend('ReportVM', {
    * builds variable list in natural sort order
    */
   getVariableList (guideVariables) {
-    let sortedList = [];
+    let sortedList = []
     guideVariables.each(tVariable => {
-      sortedList.push(tVariable);
-    });
-    return sortedList.sort(function (a, b) { return naturalCompare.caseInsensitive(a.name, b.name); });
+      sortedList.push(tVariable)
+    })
+    return sortedList.sort(function (a, b) { return naturalCompare.caseInsensitive(a.name, b.name) })
   },
 
   /**
@@ -301,21 +301,21 @@ export const ReportVM = Map.extend('ReportVM', {
    *  uses https://www.npmjs.com/package/text-statistics
    */
   getTextStats (text) {
-    const statsReports = textStats(text);
-    const fkGrade = statsReports.fleschKincaidGradeLevel();
-    const wordCount = statsReports.wordCount();
-    const averageWordsPerSentence = parseFloat(statsReports.averageWordsPerSentence().toFixed(1));
-    const alertClass = this.getTextAlertClass(fkGrade);
+    const statsReports = textStats(text)
+    const fkGrade = statsReports.fleschKincaidGradeLevel()
+    const wordCount = statsReports.wordCount()
+    const averageWordsPerSentence = parseFloat(statsReports.averageWordsPerSentence().toFixed(1))
+    const alertClass = this.getTextAlertClass(fkGrade)
 
     // add this grade to the overall list of scores
-    this.attr('fkGradeList').push(fkGrade);
+    this.attr('fkGradeList').push(fkGrade)
 
     return {
       fkGrade,
       wordCount,
       averageWordsPerSentence,
       alertClass
-    };
+    }
   },
 
   /**
@@ -325,35 +325,35 @@ export const ReportVM = Map.extend('ReportVM', {
    * builds 2 sorted arrays, pages and popups, from the existing sortedPages and steps Maps
    */
   buildPagesByStep (sortedPages, guideSteps) {
-    const vm = this;
+    const vm = this
 
-    const pagesByStep = [];
-    const popupPages = [];
+    const pagesByStep = []
+    const popupPages = []
 
     guideSteps.forEach(function (step) {
       pagesByStep.push({
         text: step.text,
         number: step.number,
         pages: []
-      });
-    });
+      })
+    })
 
     sortedPages.forEach(function (page) {
-      page.textStats = page.text ? vm.getTextStats(page.text) : null;
-      page.learnStats = page.learn ? vm.getTextStats(page.learn) : null;
-      page.helpStats = page.help ? vm.getTextStats(page.help) : null;
+      page.textStats = page.text ? vm.getTextStats(page.text) : null
+      page.learnStats = page.learn ? vm.getTextStats(page.learn) : null
+      page.helpStats = page.help ? vm.getTextStats(page.help) : null
 
       if (page.type === 'Popup') {
-        popupPages.push(page);
+        popupPages.push(page)
       } else {
-        const stepNumber = parseInt(page.step);
-        pagesByStep[stepNumber].pages.push(page);
+        const stepNumber = parseInt(page.step)
+        pagesByStep[stepNumber].pages.push(page)
       }
-    });
+    })
 
-    return [pagesByStep, popupPages];
+    return [pagesByStep, popupPages]
   }
-});
+})
 
 /**
  * @module {Module} viewer/author/report/ <report-page>
@@ -377,43 +377,43 @@ export default Component.extend({
 
   events: {
     '{fkGradeList} length': function () {
-      const interviewGradeLevel = this.viewModel.getOverallGrade();
-      this.viewModel.attr('fkOverallGrade', interviewGradeLevel);
+      const interviewGradeLevel = this.viewModel.getOverallGrade()
+      this.viewModel.attr('fkOverallGrade', interviewGradeLevel)
     }
   },
 
   helpers: {
     formatVariableCell (val) {
       if (typeof val === 'boolean') {
-        val = val.toString();
+        val = val.toString()
       }
-      return val || '-';
+      return val || '-'
     },
 
     formatPageTextCell (val) {
       if (val) {
         // this preserves hard returns from interview while keeping text shorter
-        val = val.replace(/(<br\s?\/>)/gi, '|').replace(/(<\/option>)/gi, ' | ').replace(/(<\/p>)/gi, ' | ');
+        val = val.replace(/(<br\s?\/>)/gi, '|').replace(/(<\/option>)/gi, ' | ').replace(/(<\/p>)/gi, ' | ')
       }
-      return cString.decodeEntities(val);
+      return cString.decodeEntities(val)
     },
 
     formatDefaultPrompt (val) {
-      return (val === '') ? '<default invalid prompt>' : val;
+      return (val === '') ? '<default invalid prompt>' : val
     },
 
     addOne (val) {
-      return parseInt(val) + 1;
+      return parseInt(val) + 1
     },
 
     alertGlyph (alertClass) {
       if (alertClass === 'alert-danger') {
-        return 'glyphicon-attention';
+        return 'glyphicon-attention'
       } else if (alertClass === 'alert-warning') {
-        return 'glyphicon-info-circled';
+        return 'glyphicon-info-circled'
       } else {
-        return '';
+        return ''
       }
     }
   }
-});
+})

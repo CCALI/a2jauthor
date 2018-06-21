@@ -1,6 +1,6 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
-import template from './sortbar.stache!';
+import template from './sortbar.stache';
 
 import 'can/list/sort/';
 import 'can/map/define/';

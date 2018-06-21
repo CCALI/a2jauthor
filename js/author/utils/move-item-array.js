@@ -1,4 +1,4 @@
-import _inRange from 'lodash/inRange';
+import _inRange from 'lodash/inRange'
 
 /**
  * @function move
@@ -21,20 +21,20 @@ import _inRange from 'lodash/inRange';
  * @param {Number} to Index at which element will be moved
  * @return {Array} The modified array
  */
-export default function moveItem(array, from, to) {
-  array = array || [];
+export default function moveItem (array, from, to) {
+  array = array || []
 
-  const length = array.length;
+  const length = array.length
 
-  from = parseInt(from, 10);
-  to = parseInt(to, 10);
+  from = parseInt(from, 10)
+  to = parseInt(to, 10)
 
   if (_inRange(from, 0, length) && _inRange(to, 0, length)) {
-    const copy = array.slice(0);
-    const item = copy.splice(from, 1)[0];
-    copy.splice(to, 0, item);
-    return copy;
+    const copy = array.slice(0)
+    const item = copy.splice(from, 1)[0]
+    copy.splice(to, 0, item)
+    return copy
   } else {
-    console.error('Indexes out of bound');
+    console.error('Indexes out of bound')
   }
 }

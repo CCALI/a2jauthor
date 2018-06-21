@@ -1,5 +1,5 @@
-import Component from 'can/component/';
-import template from './button-dropdown.stache!';
+import Component from 'can/component/'
+import template from './button-dropdown.stache'
 
 /**
  * @module {function} components/button-dropdown/ <button-dropdown>
@@ -13,4 +13,4 @@ export default Component.extend({
   template,
   leakScope: false,
   tag: 'button-dropdown'
-});
+})

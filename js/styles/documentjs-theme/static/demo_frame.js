@@ -1,10 +1,10 @@
-steal("can/control","./demo_frame.mustache!","jquery","can/observe","./prettify.js",function(Control,demoFrameMustache,$){
-	
-	
+steal("can/control","./demo_frame.mustache","jquery","can/observe","./prettify.js",function(Control,demoFrameMustache,$){
+
+
 
 return can.Control.extend({
 	init: function() {
-		
+
 		var docConfig = window.docConfig || {};
 		// Render out the demo container.
 		this.element.html(demoFrameMustache( {demoSrc: (docConfig.demoSrcRoot || ".." )+'/' + this.element.data('demoSrc')}));
@@ -20,7 +20,7 @@ return can.Control.extend({
 				sourceEl = this.contentDocument.getElementById('demo-source')
 
 			var html = demoEl ? demoEl.innerHTML : this.contentWindow.DEMO_HTML;
-			
+
 			if(!html) {
 				// try to make from body
 				var clonedBody = $(this.contentDocument.body).clone();
@@ -42,7 +42,7 @@ return can.Control.extend({
 						source =  scripts[i].innerHTML
 					}
 				}
-				
+
 			}
 			source = $.trim(source);
 
@@ -56,20 +56,20 @@ return can.Control.extend({
 
 
 			//prettyPrint();
-	
+
 			var resizeIframe = function(){
-				
-				// The following was called to make it possible to shrink the size of the demo.  
+
+				// The following was called to make it possible to shrink the size of the demo.
 				// This feature was removed because it broke the tooltip demo on can.view.attr's page
 				// iFrame.height(0);
 				iFrame.height($(iFrame).contents().height());
 				setTimeout( arguments.callee, 1000 )
 			};
-			
+
 			resizeIframe()
-			
-			
-			
+
+
+
 		});
 	},
 	'.tab click': function(el, ev) {

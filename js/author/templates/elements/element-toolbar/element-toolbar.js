@@ -1,7 +1,7 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
 import _isFunction from 'lodash/isFunction';
-import template from './element-toolbar.stache!';
+import template from './element-toolbar.stache';
 
 import 'can/map/define/';
 

@@ -1,5 +1,5 @@
-import Component from 'can/component/';
-import template from './button-toolbar.stache!';
+import Component from 'can/component/'
+import template from './button-toolbar.stache'
 
 /**
  * @module {function} components/button-toolbar/ <button-toolbar>
@@ -13,4 +13,4 @@ export default Component.extend({
   template,
   leakScope: false,
   tag: 'button-toolbar'
-});
+})

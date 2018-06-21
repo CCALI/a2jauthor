@@ -1,4 +1,4 @@
-import navbarItems from 'caja/author/vertical-navbar/navbar-items';
+import navbarItems from 'caja/author/vertical-navbar/navbar-items'
 
 /**
  * @module {{}} author/utils/tabs-routing tabs-routing
@@ -12,23 +12,22 @@ import navbarItems from 'caja/author/vertical-navbar/navbar-items';
  * page is in a Component.
  *
  */
-export default function tabsRouting(appState) {
-
-  let onPageChange = function(evt, newPage) {
+export default function tabsRouting (appState) {
+  let onPageChange = function (evt, newPage) {
     if (newPage !== 'templates') {
-      appState.removeAttr('templateId');
-      appState.removeAttr('action');
+      appState.removeAttr('templateId')
+      appState.removeAttr('action')
     }
 
-    let item = navbarItems.filter(item => item.page === newPage).shift();
+    let item = navbarItems.filter(item => item.page === newPage).shift()
     if (item && item.ref) {
-      window.gotoTabOrPage(item.ref);
+      window.gotoTabOrPage(item.ref)
     }
-  };
+  }
 
   // navigate to the right page/tab on load.
-  onPageChange(null, appState.attr('page'));
+  onPageChange(null, appState.attr('page'))
 
   // listen to the app state changes and manually load the selected page.
-  appState.bind('page', onPageChange);
+  appState.bind('page', onPageChange)
 }

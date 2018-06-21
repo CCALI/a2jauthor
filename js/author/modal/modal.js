@@ -1,7 +1,7 @@
-import Map from "can/map/";
-import Component from "can/component/";
-import template from "./modal.stache";
-import $ from "jquery";
+import Map from 'can/map/'
+import Component from 'can/component/'
+import template from './modal.stache'
+import $ from 'jquery'
 
 export const ModalVM = Map.extend({
   define: {
@@ -23,36 +23,36 @@ export const ModalVM = Map.extend({
     */
   },
 
-  fireCancel(usedCancelButton = false) {
-    const onCancel = this.attr("onCancel");
+  fireCancel (usedCancelButton = false) {
+    const onCancel = this.attr('onCancel')
     if (!onCancel) {
-      return;
+      return
     }
 
-    onCancel({ usedCancelButton });
+    onCancel({ usedCancelButton })
   },
 
-  fireSubmit() {
-    const onSubmit = this.attr("onSubmit");
+  fireSubmit () {
+    const onSubmit = this.attr('onSubmit')
     if (!onSubmit) {
-      return;
+      return
     }
 
-    onSubmit();
+    onSubmit()
   }
-});
+})
 
 export default Component.extend({
   template,
   leakScope: false,
   viewModel: ModalVM,
-  tag: "author-modal",
+  tag: 'author-modal',
   events: {
-    ".author-modal click"(target, event) {
-      const isBackgroundClick = $(event.target).is(".author-modal");
+    '.author-modal click' (target, event) {
+      const isBackgroundClick = $(event.target).is('.author-modal')
       if (isBackgroundClick) {
-        this.viewModel.fireCancel();
+        this.viewModel.fireCancel()
       }
     }
   }
-});
+})

@@ -1,9 +1,9 @@
-import List from 'can/list/';
-import Model from 'can/model/';
-import _values from 'lodash/values';
-import _toPlainObject from 'lodash/toPlainObject';
+import List from 'can/list/'
+import Model from 'can/model/'
+import _values from 'lodash/values'
+import _toPlainObject from 'lodash/toPlainObject'
 
-import 'can/map/define/';
+import 'can/map/define/'
 
 /**
  * @module A2JVariable
@@ -15,17 +15,17 @@ import 'can/map/define/';
 let A2JVariable = Model.extend({
   id: 'name',
 
-  makeFindOne() {
-    return function(params, success, error) {
-      let deferred = new can.Deferred();
-      let gGuide = window.gGuide || {};
-      let vars = gGuide.vars || {};
-      let name = params.name || '';
+  makeFindOne () {
+    return function (params, success, error) {
+      let deferred = new can.Deferred()
+      let gGuide = window.gGuide || {}
+      let vars = gGuide.vars || {}
+      let name = params.name || ''
 
-      deferred.resolve(this.model(vars[name.toLowerCase()] || { }));
+      deferred.resolve(this.model(vars[name.toLowerCase()] || { }))
 
-      return deferred.then(success, error);
-    };
+      return deferred.then(success, error)
+    }
   },
 
   /**
@@ -39,12 +39,12 @@ let A2JVariable = Model.extend({
    * `repeating` and `values`). This static method takes this object and
    * generates a collection where each item is an instance of `A2JVariable`.
    */
-  fromGuideVars(vars) {
+  fromGuideVars (vars) {
     // convert the array to TVariable objects to an array of raw Object,
     // otherwise the can.List constructor won't convert the TVariable objects
     // to Map instances.
-    let values = _values(vars).map(_toPlainObject);
-    return new A2JVariable.List(values);
+    let values = _values(vars).map(_toPlainObject)
+    return new A2JVariable.List(values)
   }
 }, {
 
@@ -65,10 +65,10 @@ let A2JVariable = Model.extend({
      * window.gGuide.vars
      */
     propertyName: {
-      get() {
-        let name = this.attr('name') || '';
+      get () {
+        let name = this.attr('name') || ''
 
-        return name.toLowerCase();
+        return name.toLowerCase()
       }
     },
 
@@ -90,6 +90,6 @@ let A2JVariable = Model.extend({
       value: List
     }
   }
-});
+})
 
-export default A2JVariable;
+export default A2JVariable

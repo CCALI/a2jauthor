@@ -1,28 +1,26 @@
-import assert from 'assert';
-import {Popover}  from './popover';
+import assert from 'assert'
+import {Popover} from './popover'
 
-import 'steal-mocha';
+import 'steal-mocha'
 
-describe('<app-popover>', function() {
+describe('<app-popover>', function () {
+  describe('viewModel', function () {
+    let vm
 
-  describe('viewModel', function() {
-    let vm;
+    beforeEach(function () {
+      vm = new Popover()
+    })
 
-    beforeEach(function() {
-      vm = new Popover();
-    });
+    it('defaults placement to "right"', function () {
+      assert.equal(vm.attr('placement'), 'right')
+    })
 
-    it('defaults placement to "right"', function() {
-      assert.equal(vm.attr('placement'), 'right');
-    });
+    it('return default placement if set to invalid value', function () {
+      vm.attr('placement', 'foo')
+      assert.equal(vm.attr('placement'), 'right', '"foo" is not a valid placement')
 
-    it('return default placement if set to invalid value', function() {
-      vm.attr('placement', 'foo');
-      assert.equal(vm.attr('placement'), 'right', '"foo" is not a valid placement');
-
-      vm.attr('placement', 'left');
-      assert.equal(vm.attr('placement'), 'left', 'should be "left"');
-    });
-  });
-
-});
+      vm.attr('placement', 'left')
+      assert.equal(vm.attr('placement'), 'left', 'should be "left"')
+    })
+  })
+})

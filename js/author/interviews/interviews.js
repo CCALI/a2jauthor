@@ -1,19 +1,19 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
-import List from 'can/list/';
-import Guide from 'caja/author/models/guide';
-import template from './interviews.stache!';
+import Map from 'can/map/'
+import Component from 'can/component/'
+import List from 'can/list/'
+import Guide from 'caja/author/models/guide'
+import template from './interviews.stache'
 
-import 'can/map/define/';
+import 'can/map/define/'
 
 export const InterviewsVM = Map.extend({
   define: {
     blankInterview: {
-      get() {
+      get () {
         return {
           id: 'a2j',
           title: 'Blank Interview'
-        };
+        }
       }
     },
 
@@ -27,43 +27,43 @@ export const InterviewsVM = Map.extend({
 
     currentGuideId: {
       type: 'string',
-      get(lastSet) {
-        return lastSet || window.gGuideID;
+      get (lastSet) {
+        return lastSet || window.gGuideID
       },
-      set(val) {
-        return val;
+      set (val) {
+        return val
       }
     }
   },
 
-  clearPreviewState() {
-      // fired on inserted event to clear any Author preview answer/tracelogic
-      if (this.attr('traceLogicList') && this.attr('traceLogicList').length > 0) {
-        this.attr('traceLogicList', new List());
-      }
+  clearPreviewState () {
+    // fired on inserted event to clear any Author preview answer/tracelogic
+    if (this.attr('traceLogicList') && this.attr('traceLogicList').length > 0) {
+      this.attr('traceLogicList', new List())
+    }
 
-      if (this.attr('viewerInterview')) {
-        this.attr('viewerInterview').clearAnswers();
-      }
+    if (this.attr('viewerInterview')) {
+      this.attr('viewerInterview').clearAnswers()
+    }
   },
 
-  deleteInterview(id) {
-    const interviews = this.attr('interviews');
+  deleteInterview (id) {
+    const interviews = this.attr('interviews')
 
     if (interviews) {
-      let index = -1;
+      let index = -1
 
-      interviews.each(function(interview, i) {
+      interviews.each(function (interview, i) {
         if (interview.attr('id') === id) {
-          index = i;
-          return false;
+          index = i
+          return false
         }
-      });
+      })
 
-      if (index !== -1) interviews.splice(index, 1);
+      if (index !== -1) interviews.splice(index, 1)
     }
   }
-});
+})
 
 /**
  * @module {function} components/interviews/ <interviews-page>
@@ -79,60 +79,60 @@ export default Component.extend({
   viewModel: InterviewsVM,
 
   helpers: {
-    formatFileSize: function(sizeInBytes) {
-      sizeInBytes = sizeInBytes();
-      let sizeInKB = Math.ceil(sizeInBytes / 1024);
-      return sizeInKB ? `${sizeInKB}K` : '';
+    formatFileSize: function (sizeInBytes) {
+      sizeInBytes = sizeInBytes()
+      let sizeInKB = Math.ceil(sizeInBytes / 1024)
+      return sizeInKB ? `${sizeInKB}K` : ''
     }
   },
 
   events: {
-    inserted: function() {
-      const vm = this.viewModel;
+    inserted: function () {
+      const vm = this.viewModel
 
       // clear debug-panel traceLogicList and preview answers
       // even if we don't change interviews
-      vm.clearPreviewState();
+      vm.clearPreviewState()
 
-      let updateGuidePromise = can.Deferred().resolve();
+      let updateGuidePromise = can.Deferred().resolve()
 
       // if there is a loaded guide when this component is inserted,
       // save the guide first and then fetch the guides.
       // https://github.com/CCALI/CAJA/issues/527
       if (window.gGuide) {
-        updateGuidePromise = can.Deferred();
+        updateGuidePromise = can.Deferred()
 
-        window.guideSave(function() {
-          updateGuidePromise.resolve();
-        });
+        window.guideSave(function () {
+          updateGuidePromise.resolve()
+        })
       }
 
       const interviewsPromise = updateGuidePromise
-        .then(function() {
-          return Guide.findAll();
+        .then(function () {
+          return Guide.findAll()
         })
-        .then(function(interviews) {
-          vm.attr('interviews', interviews);
-        });
+        .then(function (interviews) {
+          vm.attr('interviews', interviews)
+        })
 
-      vm.attr('interviewsPromise', interviewsPromise);
+      vm.attr('interviewsPromise', interviewsPromise)
     },
 
-    '.guide click': function(target) {
-      this.element.find('.guide').removeClass('item-selected');
-      target.addClass('item-selected');
+    '.guide click': function (target) {
+      this.element.find('.guide').removeClass('item-selected')
+      target.addClass('item-selected')
     },
 
-    '.guide dblclick': function(target) {
-      const gid = target.attr('gid');
-      window.openSelectedGuide(gid);
+    '.guide dblclick': function (target) {
+      const gid = target.attr('gid')
+      window.openSelectedGuide(gid)
       // reset collapsed steps tracker in A2J_Tabs
       // TODO: handle this in Pages tab refactor
-      window.collapsedSteps = [];
+      window.collapsedSteps = []
     },
 
-    '{window} author:guide-deleted': function(window, evt, guideId) {
-      this.viewModel.deleteInterview(guideId);
+    '{window} author:guide-deleted': function (window, evt, guideId) {
+      this.viewModel.deleteInterview(guideId)
     }
   }
-});
+})

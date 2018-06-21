@@ -1,8 +1,8 @@
-import $ from 'jquery';
-import Map from 'can/map/';
-import Component from 'can/component/';
-import template from './debug-menu.stache!';
-import _isFunction from 'lodash/isFunction';
+import $ from 'jquery'
+import Map from 'can/map/'
+import Component from 'can/component/'
+import template from './debug-menu.stache'
+import _isFunction from 'lodash/isFunction'
 
 /**
  * @module {Module} author/debug-menu <author-debug-menu>
@@ -21,10 +21,10 @@ import _isFunction from 'lodash/isFunction';
  */
 
 let DebugMenuVM = Map.extend({
-  resumeEdit() {
-    this.attr('appState.page', 'pages');
+  resumeEdit () {
+    this.attr('appState.page', 'pages')
   }
-});
+})
 
 export default Component.extend({
   template,
@@ -32,44 +32,44 @@ export default Component.extend({
   tag: 'author-debug-menu',
 
   events: {
-    '.btn-variables-panel click': function() {
-      let appState = this.viewModel.attr('appState');
-      appState.toggleDebugPanel();
+    '.btn-variables-panel click': function () {
+      let appState = this.viewModel.attr('appState')
+      appState.toggleDebugPanel()
     },
 
-    '.btn-fill-sample click': function() {
-      $('#author-app').trigger('author:fill-page-sample');
+    '.btn-fill-sample click': function () {
+      $('#author-app').trigger('author:fill-page-sample')
     },
 
-    '.btn-resume-edit click': function() {
-      let vm = this.viewModel;
-      let appState = vm.attr('appState');
-      let previewPageName = appState.attr('previewPageName');
+    '.btn-resume-edit click': function () {
+      let vm = this.viewModel
+      let appState = vm.attr('appState')
+      let previewPageName = appState.attr('previewPageName')
 
-      let $pageEditDialog = $('.page-edit-form');
-      let dialogInstance = $pageEditDialog.dialog('instance');
+      let $pageEditDialog = $('.page-edit-form')
+      let dialogInstance = $pageEditDialog.dialog('instance')
 
       // return user to the pages tab.
-      vm.resumeEdit();
+      vm.resumeEdit()
 
       // if user enters preview mode by clicking the preview tab, do not try
       // to open the edit page dialog, it should only be done when user clicks
       // the preview button in the edit page dialog.
       if (dialogInstance && previewPageName) {
-        appState.attr('previewPageName', '');
-        $pageEditDialog.dialog('open');
+        appState.attr('previewPageName', '')
+        $pageEditDialog.dialog('open')
       }
     },
 
-    '.btn-edit-this click': function() {
-      let vm = this.viewModel;
-      let appState = vm.attr('appState');
-      let pageName = appState.attr('interviewPageName');
+    '.btn-edit-this click': function () {
+      let vm = this.viewModel
+      let appState = vm.attr('appState')
+      let pageName = appState.attr('interviewPageName')
 
       if (_isFunction(window.gotoPageEdit)) {
-        vm.resumeEdit();
-        window.gotoPageEdit(pageName);
+        vm.resumeEdit()
+        window.gotoPageEdit(pageName)
       }
     }
   }
-});
+})

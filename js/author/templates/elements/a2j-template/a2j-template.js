@@ -1,5 +1,5 @@
 import Component from 'can/component/';
-import template from './a2j-template.stache!';
+import template from './a2j-template.stache';
 import A2JTemplateVM from './a2j-template-vm';
 
 export default Component.extend({

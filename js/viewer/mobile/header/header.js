@@ -1,6 +1,6 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
-import template from './header.stache!';
+import template from './header.stache';
 
 import 'can/map/define/';
 

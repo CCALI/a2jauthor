@@ -1,6 +1,6 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
-import template from './variables.stache!';
+import template from './variables.stache';
 import parser from 'caja/viewer/mobile/util/parser';
 
 let VariablesTableVM = Map.extend('VariablesTableVM', {

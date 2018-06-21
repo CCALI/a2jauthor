@@ -1,6 +1,6 @@
-import Component from 'can/component/';
-import TemplatesVM from './templates-vm';
-import template from './templates.stache';
+import Component from 'can/component/'
+import TemplatesVM from './templates-vm'
+import template from './templates.stache'
 
 /**
  * @module {Module} templatesPage <templates-page>
@@ -24,24 +24,24 @@ export default Component.extend({
 
   helpers: {
     listStateClassName () {
-      let className;
-      let filter = this.attr('activeFilter');
+      let className
+      let filter = this.attr('activeFilter')
 
       switch (filter) {
         case 'all':
-          className = 'all-templates';
-          break;
+          className = 'all-templates'
+          break
 
         case 'active':
-          className = 'active-templates';
-          break;
+          className = 'active-templates'
+          break
 
         case 'deleted':
-          className = 'deleted-templates';
-          break;
+          className = 'deleted-templates'
+          break
       }
 
-      return className;
+      return className
     }
   },
 
@@ -51,40 +51,40 @@ export default Component.extend({
     },
 
     '{displayList} length': function () {
-      let vm = this.viewModel;
+      let vm = this.viewModel
 
-      vm.updateDisplayList();
-      vm.handleDeletedTemplates();
-      vm.handleRestoredTemplates();
+      vm.updateDisplayList()
+      vm.handleDeletedTemplates()
+      vm.handleRestoredTemplates()
     },
 
     '{viewModel} hasSorted': function () {
-      let vm = this.viewModel;
-      const hasSorted = vm.attr('hasSorted');
+      let vm = this.viewModel
+      const hasSorted = vm.attr('hasSorted')
 
       if (hasSorted) {
-        const templateIds = vm.updateTemplatesOrder();
-        vm.saveTemplatesOrder(templateIds);
+        const templateIds = vm.updateTemplatesOrder()
+        vm.saveTemplatesOrder(templateIds)
         setTimeout(() => {
-          vm.attr('hasSorted', false);
-        }, 0);
+          vm.attr('hasSorted', false)
+        }, 0)
       }
     },
 
     '{viewModel} activeFilter': function () {
-      let list = this.viewModel.makeDisplayList();
-      this.viewModel.attr('displayList', list);
+      let list = this.viewModel.makeDisplayList()
+      this.viewModel.attr('displayList', list)
     },
 
     '{viewModel} sortCriteria': function () {
-      let list = this.viewModel.attr('displayList');
-      this.viewModel.sortList(list);
+      let list = this.viewModel.attr('displayList')
+      this.viewModel.sortList(list)
     },
 
     '{viewModel} searchToken': function () {
-      let list = this.viewModel.makeDisplayList();
-      let result = this.viewModel.performSearch(list);
-      this.viewModel.attr('displayList', result);
+      let list = this.viewModel.makeDisplayList()
+      let result = this.viewModel.performSearch(list)
+      this.viewModel.attr('displayList', result)
     }
   }
-});
+})

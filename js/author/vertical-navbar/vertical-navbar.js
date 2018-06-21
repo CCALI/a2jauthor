@@ -1,9 +1,9 @@
-import Map from 'can/map/';
-import items from './navbar-items';
-import Component from 'can/component/';
-import template from './vertical-navbar.stache!';
+import Map from 'can/map/'
+import items from './navbar-items'
+import Component from 'can/component/'
+import template from './vertical-navbar.stache'
 
-import 'can/map/define/';
+import 'can/map/define/'
 
 /**
  * @module {Module} author/vertical-navbar <vertical-navbar>
@@ -47,12 +47,12 @@ export let VerticalNavbarVM = Map.extend({
     theme: {
       type: 'string',
       value: 'default',
-      set(val) {
+      set (val) {
         if (val !== 'default' && val !== 'inverse') {
-          return 'default';
+          return 'default'
         }
 
-        return val;
+        return val
       }
     },
 
@@ -65,12 +65,12 @@ export let VerticalNavbarVM = Map.extend({
     position: {
       type: 'string',
       value: 'left',
-      set(val) {
+      set (val) {
         if (val !== 'left' && val !== 'right') {
-          return 'left';
+          return 'left'
         }
 
-        return val;
+        return val
       }
     }
   },
@@ -82,14 +82,14 @@ export let VerticalNavbarVM = Map.extend({
    * This callback sets [alert.ViewModel.prototype.page] which is bound to
    * `appState` (see `author/app.stache`) to handle the navigation between tabs.
    */
-  setPage(item) {
-    this.attr('page', item.attr('page'));
+  setPage (item) {
+    this.attr('page', item.attr('page'))
   }
-});
+})
 
 export default Component.extend({
   template,
   leakScope: false,
   tag: 'vertical-navbar',
   viewModel: VerticalNavbarVM
-});
+})

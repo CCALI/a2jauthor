@@ -1,4 +1,4 @@
-import A2JNode from 'caja/author/models/a2j-node';
+import A2JNode from 'caja/author/models/a2j-node'
 
 const emptyNodes = {
   'section-title': {
@@ -43,14 +43,14 @@ const emptyNodes = {
       editActive: true
     }
   }
-};
+}
 
-export default function createEmptyNode(nodeName) {
-  const nodeDefinition = emptyNodes[nodeName];
+export default function createEmptyNode (nodeName) {
+  const nodeDefinition = emptyNodes[nodeName]
 
   if (nodeDefinition) {
-    return new A2JNode(nodeDefinition);
+    return new A2JNode(nodeDefinition)
   } else {
-    console.error('Unknown Node: ', nodeName);
+    console.error('Unknown Node: ', nodeName)
   }
 }

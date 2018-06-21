@@ -1,33 +1,33 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
-import template from './color-chips.stache!';
+import Map from 'can/map/'
+import Component from 'can/component/'
+import template from './color-chips.stache'
 
 export const ColorChipsVm = Map.extend({
   define: {
     colorClasses: {
       value () {
-        return [];
+        return []
       }
     },
     selectedColorClass: {
       value () {
-        return null;
+        return null
       }
     },
     onColorClass: {
       value () {
-        return null;
+        return null
       }
     }
   },
 
   onSelect (color) {
-    const handler = this.attr('onColorClass');
+    const handler = this.attr('onColorClass')
     if (handler) {
-      handler(color);
+      handler(color)
     }
   }
-});
+})
 
 /**
  * @module {function} components/color-chips/ <color-chips>
@@ -42,4 +42,4 @@ export default Component.extend({
   viewModel: ColorChipsVm,
   leakScope: false,
   tag: 'color-chips'
-});
+})

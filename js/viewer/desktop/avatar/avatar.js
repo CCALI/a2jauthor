@@ -1,6 +1,6 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
-import template from './avatar.stache!';
+import template from './avatar.stache';
 import canUtil from 'can/util/';
 import {
   Face,
@@ -97,7 +97,7 @@ export let ViewerAvatarVM = Map.extend('ViewerAvatarVM', {
      * @property {String} avatar.ViewModel.prototype.svgInline svgInline
      * @parent avatar.ViewModel
      *
-     * svg text rendered inline in avatar.stache
+     * svg text rendered inline in avatar.stache'
      */
     svgInline: {
       value: ''

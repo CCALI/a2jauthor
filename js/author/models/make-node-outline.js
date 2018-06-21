@@ -1,5 +1,5 @@
-import _compact from 'lodash/compact';
-import _capitalize from 'lodash/capitalize';
+import _compact from 'lodash/compact'
+import _capitalize from 'lodash/capitalize'
 
 const elementTagToPrettyName = {
   'a2j-pdf': 'PDF Document',
@@ -8,7 +8,7 @@ const elementTagToPrettyName = {
   'a2j-page-break': 'Page Break',
   'a2j-repeat-loop': 'Repeat Loop',
   'a2j-section-title': 'Section Title'
-};
+}
 
 /**
  * @module {{}} author/models/make-node-outline makeNodeOutline
@@ -29,47 +29,47 @@ const elementTagToPrettyName = {
  * If / Else (Section Title, Repeat Loop (List))
  *
  */
-export default function(node) {
-  const tag = node.attr('tag');
-  const children = node.attr('children');
-  const prettyName = elementTagToPrettyName[tag];
-  const emptyTemplateMessage = 'This template is blank';
+export default function (node) {
+  const tag = node.attr('tag')
+  const children = node.attr('children')
+  const prettyName = elementTagToPrettyName[tag]
+  const emptyTemplateMessage = 'This template is blank'
 
-  let result;
+  let result
 
-  const childrenOutline = function() {
-    const outline = children.map(c => c.attr('outline'));
-    return _compact(outline);
-  };
+  const childrenOutline = function () {
+    const outline = children.map(c => c.attr('outline'))
+    return _compact(outline)
+  }
 
   switch (tag) {
     case 'a2j-template':
-      result = children.attr('length') ?
-        childrenOutline().join(', ') :
-        emptyTemplateMessage;
+      result = children.attr('length')
+        ? childrenOutline().join(', ')
+        : emptyTemplateMessage
 
-      break;
+      break
 
     case 'a2j-repeat-loop':
-      const display = node.attr('state.displayType') || 'table';
-      result = `${prettyName} (${_capitalize(display)})`;
+      const display = node.attr('state.displayType') || 'table'
+      result = `${prettyName} (${_capitalize(display)})`
 
-      break;
+      break
 
     case 'a2j-conditional':
       const withoutEmptyMessage = childrenOutline().filter(outline => {
-        return outline !== emptyTemplateMessage;
-      });
+        return outline !== emptyTemplateMessage
+      })
 
-      result = children.attr('length') && withoutEmptyMessage.length ?
-        `${prettyName} (${withoutEmptyMessage.join(', ')})` :
-        prettyName;
+      result = children.attr('length') && withoutEmptyMessage.length
+        ? `${prettyName} (${withoutEmptyMessage.join(', ')})`
+        : prettyName
 
-      break;
+      break
 
     default:
-      result = prettyName;
+      result = prettyName
   }
 
-  return result;
+  return result
 }

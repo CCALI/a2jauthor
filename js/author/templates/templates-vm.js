@@ -1,8 +1,8 @@
-import $ from 'jquery';
-import Map from 'can/map/';
-import A2JTemplate from 'caja/author/models/a2j-template';
+import $ from 'jquery'
+import Map from 'can/map/'
+import A2JTemplate from 'caja/author/models/a2j-template'
 
-import 'can/map/define/';
+import 'can/map/define/'
 
 /**
  * @property {can.Map} templatesPage.ViewModel
@@ -20,10 +20,10 @@ export default Map.extend({
      */
     templatesPromise: {
       get () {
-        let appState = this.attr('appState');
-        let guideId = appState.attr('guideId');
+        let appState = this.attr('appState')
+        let guideId = appState.attr('guideId')
 
-        return A2JTemplate.findAll({guideId});
+        return A2JTemplate.findAll({guideId})
       }
     },
 
@@ -36,13 +36,13 @@ export default Map.extend({
     templates: {
       get (lastSet, resolve) {
         if (lastSet) {
-          return lastSet;
+          return lastSet
         }
 
         this.attr('templatesPromise').then((data) => {
-          resolve(data);
-          this.attr('displayList', this.makeDisplayList());
-        });
+          resolve(data)
+          this.attr('displayList', this.makeDisplayList())
+        })
       }
     },
 
@@ -137,8 +137,8 @@ export default Map.extend({
      * templates are sorted by any other criteria.
      */
     listIsDraggable: {
-      get() {
-        return this.attr('sortCriteria.key') === 'buildOrder' && this.attr('activeFilter') === 'active';
+      get () {
+        return this.attr('sortCriteria.key') === 'buildOrder' && this.attr('activeFilter') === 'active'
       }
     },
 
@@ -152,12 +152,12 @@ export default Map.extend({
      * matches for that `searchToken`.
      */
     noSearchResults: {
-      get() {
-        let templates = this.attr('templates');
-        let searchToken = this.attr('searchToken');
-        let displayList = this.attr('displayList');
+      get () {
+        let templates = this.attr('templates')
+        let searchToken = this.attr('searchToken')
+        let displayList = this.attr('displayList')
         return searchToken.length &&
-          templates.attr('length') && !displayList.attr('length');
+          templates.attr('length') && !displayList.attr('length')
       }
     },
 
@@ -171,12 +171,12 @@ export default Map.extend({
      * there are no matches for `activeFilter`.
      */
     noTemplatesMatchFilter: {
-      get() {
-        let templates = this.attr('templates');
-        let searchToken = this.attr('searchToken');
-        let displayList = this.attr('displayList');
+      get () {
+        let templates = this.attr('templates')
+        let searchToken = this.attr('searchToken')
+        let displayList = this.attr('displayList')
         return !searchToken.length &&
-          templates.attr('length') && !displayList.attr('length');
+          templates.attr('length') && !displayList.attr('length')
       }
     },
 
@@ -189,10 +189,10 @@ export default Map.extend({
      * the filtered list (`displayList`) have items.
      */
     showTemplatesList: {
-      get() {
-        let templates = this.attr('templates');
-        let displayList = this.attr('displayList');
-        return templates.attr('length') && displayList.attr('length');
+      get () {
+        let templates = this.attr('templates')
+        let displayList = this.attr('displayList')
+        return templates.attr('length') && displayList.attr('length')
       }
     },
 
@@ -200,64 +200,64 @@ export default Map.extend({
   },
 
   makeDisplayList () {
-    const templates = this.attr('templates');
+    const templates = this.attr('templates')
 
     if (templates) {
       return this.performSearch(
         this.sortList(
           this.filterList(templates)
         )
-      );
+      )
     }
   },
 
-  sortList(templates) {
-    let criteria = this.attr('sortCriteria');
-    let {key, direction} = criteria.attr();
-    templates.sortBy(key, direction);
-    return templates;
+  sortList (templates) {
+    let criteria = this.attr('sortCriteria')
+    let {key, direction} = criteria.attr()
+    templates.sortBy(key, direction)
+    return templates
   },
 
-  filterList(templates) {
-    let filtered;
-    let filter = this.attr('activeFilter');
+  filterList (templates) {
+    let filtered
+    let filter = this.attr('activeFilter')
 
     switch (filter) {
       case 'all':
-        filtered = templates.slice();
-        break;
+        filtered = templates.slice()
+        break
 
       case 'active':
-        filtered = templates.filter(template => template.attr('active'));
-        break;
+        filtered = templates.filter(template => template.attr('active'))
+        break
 
       case 'deleted':
-        filtered = templates.filter(template => !template.attr('active'));
-        break;
+        filtered = templates.filter(template => !template.attr('active'))
+        break
     }
 
-    return filtered;
+    return filtered
   },
 
-  performSearch(templates) {
-    let searchToken = this.attr('searchToken');
-    return searchToken ? templates.search(searchToken) : templates;
+  performSearch (templates) {
+    let searchToken = this.attr('searchToken')
+    return searchToken ? templates.search(searchToken) : templates
   },
 
-  restoreTemplate(template) {
+  restoreTemplate (template) {
     template.attr({
       deleted: false,
       active: true
-    }).save();
-    this.attr('openDeletedAlert', false);
+    }).save()
+    this.attr('openDeletedAlert', false)
   },
 
-  deleteTemplate(template) {
+  deleteTemplate (template) {
     template.attr({
       restored: false,
       active: false
-    }).save();
-    this.attr('openRestoredAlert', false);
+    }).save()
+    this.attr('openRestoredAlert', false)
   },
 
   /**
@@ -269,12 +269,12 @@ export default Map.extend({
    * currently being displayed, the bound list is updated if there is a difference
    * between them (length).
    */
-  updateDisplayList() {
-    const currentDisplayList = this.attr('displayList');
-    let displayList = this.makeDisplayList();
+  updateDisplayList () {
+    const currentDisplayList = this.attr('displayList')
+    let displayList = this.makeDisplayList()
 
-    if (currentDisplayList.length !== displayList.length){
-      this.attr('displayList', displayList);
+    if (currentDisplayList.length !== displayList.length) {
+      this.attr('displayList', displayList)
     }
   },
 
@@ -285,21 +285,21 @@ export default Map.extend({
    * This function is executed when the list of templates changes, it observes the
    * templates set as `deleted` in order to show/hide the alert messages.
    */
-  handleDeletedTemplates() {
-    let templates = this.attr('templates');
-    let alreadyDeleted = this.attr('deletedTemplates');
-    let beingDeleted = templates.filter(template => template.attr('deleted'));
+  handleDeletedTemplates () {
+    let templates = this.attr('templates')
+    let alreadyDeleted = this.attr('deletedTemplates')
+    let beingDeleted = templates.filter(template => template.attr('deleted'))
 
     // remove the deleted flag from the previously deleted templates, otherwise
     // they will continue to show up in the alert component when other templates
     // are deleted later on.
     if (alreadyDeleted && alreadyDeleted.attr('length')) {
-      alreadyDeleted.each(template => template.removeAttr('deleted'));
+      alreadyDeleted.each(template => template.removeAttr('deleted'))
     }
 
     if (beingDeleted.attr('length')) {
-      this.attr('deletedTemplates', beingDeleted);
-      this.attr('openDeletedAlert', true);
+      this.attr('deletedTemplates', beingDeleted)
+      this.attr('openDeletedAlert', true)
     }
   },
 
@@ -309,18 +309,18 @@ export default Map.extend({
    *
    * Same as `handleDeletedTemplates` but for templates being restored.
    */
-  handleRestoredTemplates() {
-    let templates = this.attr('templates');
-    let alreadyRestored = this.attr('restoredTemplates');
-    let beingRestored = templates.filter(template => template.attr('restored'));
+  handleRestoredTemplates () {
+    let templates = this.attr('templates')
+    let alreadyRestored = this.attr('restoredTemplates')
+    let beingRestored = templates.filter(template => template.attr('restored'))
 
     if (alreadyRestored && alreadyRestored.attr('length')) {
-      alreadyRestored.each(template => template.removeAttr('restored'));
+      alreadyRestored.each(template => template.removeAttr('restored'))
     }
 
     if (beingRestored.attr('length')) {
-      this.attr('restoredTemplates', beingRestored);
-      this.attr('openRestoredAlert', true);
+      this.attr('restoredTemplates', beingRestored)
+      this.attr('openRestoredAlert', true)
     }
   },
 
@@ -333,19 +333,19 @@ export default Map.extend({
    * @return {Array} The new array of ordered templateIds
    */
   updateTemplatesOrder () {
-    let templates = this.attr('templates');
-    let currentDisplayList = this.attr('displayList');
+    let templates = this.attr('templates')
+    let currentDisplayList = this.attr('displayList')
 
     // TODO: build es6 map of template to it's index to remove performance hit of indexOf
 
     templates.sort((a, b) => {
-      if (!a.active) return 1;
-      if (!b.active) return -1;
-      return currentDisplayList.indexOf(a) - currentDisplayList.indexOf(b);
-    });
+      if (!a.active) return 1
+      if (!b.active) return -1
+      return currentDisplayList.indexOf(a) - currentDisplayList.indexOf(b)
+    })
 
-    const templateIds = templates.serialize().map(t => t.templateId);
-    return templateIds;
+    const templateIds = templates.serialize().map(t => t.templateId)
+    return templateIds
   },
 
   /**
@@ -356,7 +356,7 @@ export default Map.extend({
    *
    */
   saveTemplatesOrder (templateIds) {
-    const guideId = this.attr('appState.guideId');
+    const guideId = this.attr('appState.guideId')
     // const templateIds = this.attr('templates').serialize().map(t => t.templateId);
     if (templateIds) {
       return $.ajax({
@@ -366,9 +366,9 @@ export default Map.extend({
         dataType: 'json',
         data: JSON.stringify({ templateIds: templateIds }),
         error: function (err, xhr) {
-          console.error(err, xhr.responseText);
+          console.error(err, xhr.responseText)
         }
-      });
+      })
     }
   }
-});
+})

@@ -1,25 +1,25 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
-import template from './hair-picker.stache';
+import Map from 'can/map/'
+import Component from 'can/component/'
+import template from './hair-picker.stache'
 import {
   hairColors,
   getClassNameForHair
-} from 'caja/viewer/desktop/avatar/colors';
+} from 'caja/viewer/desktop/avatar/colors'
 
 const hairClasses = hairColors.map(hair => {
-  const hairClass = getClassNameForHair(hair);
-  return hair !== 'bald' ? hairClass : `${hairClass} cross-through`;
-});
+  const hairClass = getClassNameForHair(hair)
+  return hair !== 'bald' ? hairClass : `${hairClass} cross-through`
+})
 
 export const HairPickerVm = Map.extend({
   define: {
     selectedHairClass: {
       get () {
-        const hair = this.attr('selectedHair');
-        const classes = this.attr('hairClasses');
-        const hairIndex = hairColors.indexOf(hair);
-        const hairClass = classes[hairIndex];
-        return hairClass;
+        const hair = this.attr('selectedHair')
+        const classes = this.attr('hairClasses')
+        const hairIndex = hairColors.indexOf(hair)
+        const hairClass = classes[hairIndex]
+        return hairClass
       }
     },
 
@@ -27,19 +27,19 @@ export const HairPickerVm = Map.extend({
   },
 
   onHairClass (hairClass) {
-    const handler = this.attr('onHair');
+    const handler = this.attr('onHair')
     if (handler) {
-      const classes = this.attr('hairClasses');
-      const hairIndex = classes.indexOf(hairClass);
-      const hair = hairColors[hairIndex];
-      handler(hair);
+      const classes = this.attr('hairClasses')
+      const hairIndex = classes.indexOf(hairClass)
+      const hair = hairColors[hairIndex]
+      handler(hair)
     }
   }
-});
+})
 
 export default Component.extend({
   tag: 'hair-picker',
   template,
   leakScope: false,
   viewModel: HairPickerVm
-});
+})

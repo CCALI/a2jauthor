@@ -1,10 +1,10 @@
-import $ from 'jquery';
-import Map from 'can/map/';
-import List from 'can/list/';
-import Answer from 'caja/viewer/models/answer';
-import normalizePath from 'caja/viewer/util/normalize-path';
+import $ from 'jquery'
+import Map from 'can/map/'
+import List from 'can/list/'
+import Answer from 'caja/viewer/models/answer'
+import normalizePath from 'caja/viewer/util/normalize-path'
 
-import 'can/map/define/';
+import 'can/map/define/'
 
 /**
  * @module {can.Map} Field
@@ -19,13 +19,13 @@ const Field = Map.extend({
     },
 
     emptyAnswer: {
-      get() {
+      get () {
         return new Answer({
           values: [null],
           type: this.attr('type'),
           repeating: this.attr('repeating'),
           name: this.attr('name').toLowerCase()
-        });
+        })
       }
     }
   },
@@ -42,44 +42,44 @@ const Field = Map.extend({
    * get the options from a different endpoint or an XML stored in the guide
    * folder
    */
-  getOptions(guidePath) {
-    let dfd = $.Deferred();
-    let listSrc = this.attr('listSrc');
-    let listData = this.attr('listData');
+  getOptions (guidePath) {
+    let dfd = $.Deferred()
+    let listSrc = this.attr('listSrc')
+    let listData = this.attr('listData')
 
     if (!listData && !listSrc) {
-      return dfd.reject(new Error('Missing listData or listSrc values'));
+      return dfd.reject(new Error('Missing listData or listSrc values'))
     }
 
     if (listData) {
-      this.attr('options', listData);
-      return dfd.resolve(listData);
+      this.attr('options', listData)
+      return dfd.resolve(listData)
     }
 
     if (listSrc) {
       let ajaxOptions = {
         dataType: 'text',
         url: normalizePath(guidePath, listSrc)
-      };
+      }
 
       $.ajax(ajaxOptions)
         .then(options => {
           // strip anything before or after option tags
-          let formatted = options.replace(/<select>/ig, '').replace(/<\/select/ig, '');
-          this.attr('options', formatted);
-          dfd.resolve(formatted);
+          let formatted = options.replace(/<select>/ig, '').replace(/<\/select/ig, '')
+          this.attr('options', formatted)
+          dfd.resolve(formatted)
         })
-        .then(null, function(error) {
-          dfd.reject(error);
-        });
+        .then(null, function (error) {
+          dfd.reject(error)
+        })
     }
 
-    return dfd;
+    return dfd
   }
-});
+})
 
 Field.List = List.extend({
   Map: Field
-}, {});
+}, {})
 
-export default Field;
+export default Field

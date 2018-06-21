@@ -1,5 +1,4 @@
 module.exports = function (grunt) {
-
   grunt.initConfig({
     clean: {
       build: ['dist/'],
@@ -22,13 +21,6 @@ module.exports = function (grunt) {
           'viewer/build.production.html.js'
         ]
       }
-    },
-
-    jshint: {
-      options: {
-        jshintrc: '../.jshintrc'
-      },
-      all: ['author/**/*.js', 'viewer/**/*.js']
     },
 
     copy: {
@@ -99,32 +91,31 @@ module.exports = function (grunt) {
         }
       }
     }
-  });
+  })
 
-  grunt.loadNpmTasks('documentjs');
-  grunt.loadNpmTasks('grunt-steal');
-  grunt.loadNpmTasks('grunt-contrib-less');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-run');
+  grunt.loadNpmTasks('documentjs')
+  grunt.loadNpmTasks('grunt-steal')
+  grunt.loadNpmTasks('grunt-contrib-less')
+  grunt.loadNpmTasks('grunt-contrib-copy')
+  grunt.loadNpmTasks('grunt-contrib-clean')
+  grunt.loadNpmTasks('grunt-run')
 
-  grunt.renameTask('documentjs', 'documentjs-orig');
+  grunt.renameTask('documentjs', 'documentjs-orig')
 
-  grunt.registerTask('svg-styles', ['less:svg']);
-  grunt.registerTask('build', ['clean:build', 'steal-build', 'run:make_author_production', 'run:make_viewer_production']);
+  grunt.registerTask('svg-styles', ['less:svg'])
+  grunt.registerTask('build', ['clean:build', 'steal-build', 'run:make_author_production', 'run:make_viewer_production'])
   grunt.registerTask('documentjs', [
     'clean:cachedTemplate',
     'documentjs-orig',
     'copy:icon-font',
     'copy:demos',
     'less:docs'
-  ]);
+  ])
 
   grunt.registerTask('documentjs-lite', [
     'documentjs-orig',
     'copy:icon-font',
     'copy:demos',
     'less:docs'
-  ]);
-};
+  ])
+}

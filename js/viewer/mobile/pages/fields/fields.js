@@ -1,6 +1,6 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
-import template from './fields.stache!';
+import template from './fields.stache';
 
 import 'caja/viewer/mobile/pages/fields/field/';
 

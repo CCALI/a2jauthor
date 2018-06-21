@@ -1,6 +1,6 @@
 import Map from 'can/map/';
 import Component from 'can/component/';
-import template from './a2j-page-break.stache!';
+import template from './a2j-page-break.stache';
 
 import 'can/map/define/';
 

@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import Component from 'can/component/';
 import Map from 'can/map/';
-import template from './a2j-header-footer.stache!';
+import template from './a2j-header-footer.stache';
 
 /**
  * @property {can.Map} headerFooter.ViewModel

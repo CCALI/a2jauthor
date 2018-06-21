@@ -1,6 +1,6 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
-import template from './preview.stache!';
+import Map from 'can/map/'
+import Component from 'can/component/'
+import template from './preview.stache'
 
 /**
  * @module {Module} author/preview <author-preview>
@@ -28,14 +28,14 @@ let AuthorPreviewVM = Map.extend({
   lockScrolling (enable) {
     if (enable) {
       // ie11 and Edge require scrollTop reset
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-      document.body.style.overflow = 'hidden';
+      document.documentElement.scrollTop = 0
+      document.body.scrollTop = 0
+      document.body.style.overflow = 'hidden'
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = 'auto'
     }
   }
-});
+})
 
 export default Component.extend({
   template,
@@ -43,14 +43,14 @@ export default Component.extend({
   viewModel: AuthorPreviewVM,
 
   events: {
-    inserted() {
+    inserted () {
       if (window.gGuide) {
-        this.viewModel.attr('previewMode', true);
+        this.viewModel.attr('previewMode', true)
       }
-      this.viewModel.lockScrolling(true);
+      this.viewModel.lockScrolling(true)
     },
-    removed() {
-      this.viewModel.lockScrolling(false);
+    removed () {
+      this.viewModel.lockScrolling(false)
     }
   }
-});
+})

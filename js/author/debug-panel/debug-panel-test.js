@@ -1,32 +1,32 @@
-import { DebugPanelVM } from './debug-panel';
-import assert from 'assert';
+import { DebugPanelVM } from './debug-panel'
+import assert from 'assert'
 
-import 'steal-mocha';
+import 'steal-mocha'
 
 describe('<author-debug-panel>', () => {
-  let vm;
+  let vm
 
   describe('viewModel', () => {
     beforeEach(() => {
-      vm = new DebugPanelVM();
-    });
+      vm = new DebugPanelVM()
+    })
 
     it('traceLogic', () => {
       vm.attr('traceLogic').push({
         page: '1 - Intro'
-      });
+      })
       vm.attr('traceLogic').push({
         button: [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go!' } ]
-      });
+      })
       vm.attr('traceLogic').push({
         page: '2 - Questions'
-      });
+      })
       vm.attr('traceLogic').push({
         'first name': [ { format: 'var', msg: 'first name' }, { msg: ' = ' }, { format: 'val', msg: 'sam' } ]
-      });
+      })
       vm.attr('traceLogic').push({
         codeAfter: { format: 'info', msg: 'Logic After Question' }
-      });
+      })
 
       assert.deepEqual(vm.attr('traceLogicList').attr(), [
         {
@@ -38,19 +38,18 @@ describe('<author-debug-panel>', () => {
         }, {
           pageName: '2 - Questions',
           messages: [ {
-              key: 'first name',
-              fragments: [ { format: 'var', msg: 'first name' }, { msg: ' = ' }, { format: 'val', msg: 'sam' } ]
+            key: 'first name',
+            fragments: [ { format: 'var', msg: 'first name' }, { msg: ' = ' }, { format: 'val', msg: 'sam' } ]
           }, {
-              key: 'codeAfter',
-              fragments: [ { format: 'info', msg: 'Logic After Question' } ]
+            key: 'codeAfter',
+            fragments: [ { format: 'info', msg: 'Logic After Question' } ]
           } ]
         }
-      ], 'should list basic pages and messages');
-
+      ], 'should list basic pages and messages')
 
       vm.attr('traceLogic').push({
         'first name': [ { format: 'var', msg: 'first name' }, { msg: ' = ' }, { format: 'val', msg: 'manuel' } ]
-      });
+      })
 
       assert.deepEqual(vm.attr('traceLogicList').attr(), [
         {
@@ -62,52 +61,51 @@ describe('<author-debug-panel>', () => {
         }, {
           pageName: '2 - Questions',
           messages: [ {
-              key: 'first name',
-              fragments: [ { format: 'var', msg: 'first name' }, { msg: ' = ' }, { format: 'val', msg: 'manuel' } ]
+            key: 'first name',
+            fragments: [ { format: 'var', msg: 'first name' }, { msg: ' = ' }, { format: 'val', msg: 'manuel' } ]
           }, {
-              key: 'codeAfter',
-              fragments: [ { format: 'info', msg: 'Logic After Question' } ]
+            key: 'codeAfter',
+            fragments: [ { format: 'info', msg: 'Logic After Question' } ]
           } ]
         }
-      ], 'should be able to overwrite a previous message');
-
+      ], 'should be able to overwrite a previous message')
 
       vm.attr('traceLogic').push({
         page: '3 - Loop'
-      });
+      })
       vm.attr('traceLogic').push({
         codeBefore: { format: 'info', msg: 'Logic Before Question' }
-      });
+      })
       vm.attr('traceLogic').push({
-        'infinite-1': { msg: "Incrementing repeat variable" }
-      });
+        'infinite-1': { msg: 'Incrementing repeat variable' }
+      })
       vm.attr('traceLogic').push({
         page: '4 - Loop'
-      });
+      })
       vm.attr('traceLogic').push({
         codeBefore: { format: 'info', msg: 'Logic Before Question' }
-      });
+      })
       vm.attr('traceLogic').push({
-        'infinite-2': { msg: "Incrementing repeat variable" }
-      });
+        'infinite-2': { msg: 'Incrementing repeat variable' }
+      })
       vm.attr('traceLogic').push({
         page: '3 - Loop'
-      });
+      })
       vm.attr('traceLogic').push({
         codeBefore: { format: 'info', msg: 'Logic Before Question' }
-      });
+      })
       vm.attr('traceLogic').push({
-        'infinite-3': { msg: "Incrementing repeat variable" }
-      });
+        'infinite-3': { msg: 'Incrementing repeat variable' }
+      })
       vm.attr('traceLogic').push({
         page: '4 - Loop'
-      });
+      })
       vm.attr('traceLogic').push({
         codeBefore: { format: 'info', msg: 'Logic Before Question' }
-      });
+      })
       vm.attr('traceLogic').push({
-        'infinite-4': { msg: "Incrementing repeat variable" }
-      });
+        'infinite-4': { msg: 'Incrementing repeat variable' }
+      })
 
       assert.deepEqual(vm.attr('traceLogicList').attr(), [
         {
@@ -119,11 +117,11 @@ describe('<author-debug-panel>', () => {
         }, {
           pageName: '2 - Questions',
           messages: [ {
-              key: 'first name',
-              fragments: [ { format: 'var', msg: 'first name' }, { msg: ' = ' }, { format: 'val', msg: 'manuel' } ]
+            key: 'first name',
+            fragments: [ { format: 'var', msg: 'first name' }, { msg: ' = ' }, { format: 'val', msg: 'manuel' } ]
           }, {
-              key: 'codeAfter',
-              fragments: [ { format: 'info', msg: 'Logic After Question' } ]
+            key: 'codeAfter',
+            fragments: [ { format: 'info', msg: 'Logic After Question' } ]
           } ]
         },
         {
@@ -152,19 +150,19 @@ describe('<author-debug-panel>', () => {
             fragments: [ { msg: 'Incrementing repeat variable' } ]
           }]
         }
-      ], 'should handle loops');
+      ], 'should handle loops')
 
-      vm.clearTraceLogicList();
+      vm.clearTraceLogicList()
       assert.deepEqual(vm.attr('traceLogicList').attr(), [
         {
           pageName: '4 - Loop',
           messages: []
         }
-      ], 'should clear messages but keep current page');
+      ], 'should clear messages but keep current page')
 
       vm.attr('traceLogic').push({
-        'infinite-5': { msg: "Incrementing repeat variable" }
-      });
+        'infinite-5': { msg: 'Incrementing repeat variable' }
+      })
 
       assert.deepEqual(vm.attr('traceLogicList').attr(), [
         {
@@ -174,7 +172,7 @@ describe('<author-debug-panel>', () => {
             fragments: [ { msg: 'Incrementing repeat variable' } ]
           }]
         }
-      ], 'should list messages pushed after list was cleared');
-    });
-  });
-});
+      ], 'should list messages pushed after list was cleared')
+    })
+  })
+})

@@ -10,36 +10,36 @@
 */
 
 (function () {
-"use strict";
+  'use strict'
 
-function getOperandValue(operand, operandType, answers) {
-  if (operandType === "text") {
-    return operand;
-  } else {
-    return answers && operand ? getAnswerValue(answers, operand) : null;
-  }
-}
-
-function getAnswerValue(answers, answerName) {
-  if (answers.getValue) {
-    return answers.getValue(answerName);
+  function getOperandValue (operand, operandType, answers) {
+    if (operandType === 'text') {
+      return operand
+    } else {
+      return answers && operand ? getAnswerValue(answers, operand) : null
+    }
   }
 
-  const answer = answers[answerName.toLowerCase()];
-  if (!answer) {
-    return;
+  function getAnswerValue (answers, answerName) {
+    if (answers.getValue) {
+      return answers.getValue(answerName)
+    }
+
+    const answer = answers[answerName.toLowerCase()]
+    if (!answer) {
+      return
+    }
+
+    if (answer.values.length <= 2) {
+      return answer.values[1]
+    }
+
+    const values = answer.values.slice(1)
+    const last = values.pop()
+    return values.join(', ') + ' and ' + last
   }
 
-  if (answer.values.length <= 2) {
-    return answer.values[1];
-  }
-
-  const values = answer.values.slice(1);
-  const last = values.pop();
-  return values.join(", ") + ' and ' + last;
-}
-
-/**
+  /**
  * @module {function} evalAuthorCondition
  * @return {Boolean} Result of evaluating the condition set by the user.
  *
@@ -54,44 +54,44 @@ function getAnswerValue(answers, answerName) {
  *   - is-less-than    -> `leftOperandValue < rightOperandValue`
  *   - is-greater-than -> `leftOperandValue > rightOperandValue`
  */
-module.exports = function(params) {
-  const operator = params.operator;
-  const leftOperand = params.leftOperand;
-  const rightOperand = params.rightOperand;
-  const rightOperandType = params.rightOperandType;
-  const answers = params.answers;
+  module.exports = function (params) {
+    const operator = params.operator
+    const leftOperand = params.leftOperand
+    const rightOperand = params.rightOperand
+    const rightOperandType = params.rightOperandType
+    const answers = params.answers
 
-  var val;
-  const leftValue = getOperandValue(leftOperand, "variable", answers);
-  const rightValue = getOperandValue(rightOperand, rightOperandType, answers);
+    var val
+    const leftValue = getOperandValue(leftOperand, 'variable', answers)
+    const rightValue = getOperandValue(rightOperand, rightOperandType, answers)
 
-  switch (operator) {
-    case "is-true":
-      val =
-        leftValue === "true" || (Boolean(leftValue) && leftValue !== "false");
-      break;
+    switch (operator) {
+      case 'is-true':
+        val =
+        leftValue === 'true' || (Boolean(leftValue) && leftValue !== 'false')
+        break
 
-    case "is-false":
-      val = leftValue === "false" || !leftValue;
-      break;
+      case 'is-false':
+        val = leftValue === 'false' || !leftValue
+        break
 
-    case "is-equal":
-      val = leftValue === rightValue;
-      break;
+      case 'is-equal':
+        val = leftValue === rightValue
+        break
 
-    case "is-not-equal":
-      val = leftValue !== rightValue;
-      break;
+      case 'is-not-equal':
+        val = leftValue !== rightValue
+        break
 
-    case "is-greater-than":
-      val = leftValue > rightValue;
-      break;
+      case 'is-greater-than':
+        val = leftValue > rightValue
+        break
 
-    case "is-less-than":
-      val = leftValue < rightValue;
-      break;
+      case 'is-less-than':
+        val = leftValue < rightValue
+        break
+    }
+
+    return val
   }
-
-  return val;
-};
-})();
+})()

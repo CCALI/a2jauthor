@@ -1,16 +1,16 @@
-import cuid from 'cuid';
-import Map from 'can/map/';
-import List from 'can/list/';
-import _omit from 'lodash/omit';
-import makeNodeOutline from './make-node-outline';
+import cuid from 'cuid'
+import Map from 'can/map/'
+import List from 'can/list/'
+import _omit from 'lodash/omit'
+import makeNodeOutline from './make-node-outline'
 
-import 'can/map/define/';
+import 'can/map/define/'
 
 const omitStateAttrs = [
   'guide', 'answers', 'useAnswers', 'ckeditorInstance',
   'nodeIndex', 'activeNode', 'rootNodeScope', 'editActive',
   'editEnabled', 'variablesList'
-];
+]
 
 const NodeState = Map.extend({
   define: {
@@ -18,12 +18,12 @@ const NodeState = Map.extend({
       value: false
     }
   }
-});
+})
 
 // cuid requires mimeTypes to be defined, which is not the case
 // when this code is running on the server.
 if (navigator.mimeTypes == null) {
-  navigator.mimeTypes = [];
+  navigator.mimeTypes = []
 }
 
 /**
@@ -43,8 +43,8 @@ export default Map.extend({
      * Node's id
      */
     id: {
-      value() {
-        return cuid();
+      value () {
+        return cuid()
       }
     },
 
@@ -66,9 +66,9 @@ export default Map.extend({
     state: {
       Type: NodeState,
       Value: NodeState,
-      serialize(current) {
-        let serialized = current.serialize();
-        return _omit(serialized, ...omitStateAttrs);
+      serialize (current) {
+        let serialized = current.serialize()
+        return _omit(serialized, ...omitStateAttrs)
       }
     },
 
@@ -87,9 +87,9 @@ export default Map.extend({
      * Short version of contents from the components inside.
      */
     outline: {
-      get() {
-        return makeNodeOutline(this);
+      get () {
+        return makeNodeOutline(this)
       }
     }
   }
-});
+})

@@ -1,10 +1,10 @@
-var loader = require('@loader');
-var isWindow = loader.isPlatform('window');
+var loader = require('@loader')
+var isWindow = loader.isPlatform('window')
 
 // lodash requires `global` to be present otherwise it will failed silently
 // in production https://github.com/CCALI/CAJA/issues/1058; this `configDependency`
 // makes sure the variable is set to prevent runtime errors.
 // TODO: Remove this once we add support to Steal to detect globals
 if (isWindow) {
-  global = window;
+  window.global = window
 }

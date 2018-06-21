@@ -1,17 +1,17 @@
-import Map from 'can/map/';
-import _tail from 'lodash/tail';
-import _last from 'lodash/last';
-import _initial from 'lodash/initial';
+import Map from 'can/map/'
+import _tail from 'lodash/tail'
+import _last from 'lodash/last'
+import _initial from 'lodash/initial'
 
-import 'can/list/';
+import 'can/list/'
 
-const commaString = function(values) {
+const commaString = function (values) {
   if (values.length >= 2) {
-    return `${_initial(values).join(', ')} and ${_last(values)}`;
+    return `${_initial(values).join(', ')} and ${_last(values)}`
   } else {
-    return _last(values);
+    return _last(values)
   }
-};
+}
 
 /**
  * @module {Module} author/models/answers Answers
@@ -44,8 +44,8 @@ export default Map.extend({
    * Map instance with some properties of the variable like `name`, `repeating`
    * flag and `values` array.
    */
-  getVariable(varName = '') {
-    return this.attr(varName.toLowerCase());
+  getVariable (varName = '') {
+    return this.attr(varName.toLowerCase())
   },
 
   /**
@@ -61,18 +61,18 @@ export default Map.extend({
    * - If the variable is NOT repeating or only contains a single value
    *   then an index of 1 is defaulted and that element is returned.
    */
-  getValue(varName, varIndex) {
-    let variable = this.getVariable(varName);
+  getValue (varName, varIndex) {
+    let variable = this.getVariable(varName)
 
     if (variable) {
-      let repeating = variable.attr('repeating');
-      let values = _tail(variable.attr('values').attr());
+      let repeating = variable.attr('repeating')
+      let values = _tail(variable.attr('values').attr())
 
       if (repeating) {
-        return (varIndex != null) ? values[varIndex] : commaString(values);
+        return (varIndex != null) ? values[varIndex] : commaString(values)
       } else {
-        return _last(values);
+        return _last(values)
       }
     }
   }
-});
+})

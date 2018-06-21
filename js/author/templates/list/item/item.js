@@ -1,5 +1,5 @@
 import Map from 'can/map/';
-import template from './item.stache!';
+import template from './item.stache';
 import Component from 'can/component/';
 
 import 'can/map/define/';

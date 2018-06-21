@@ -78,4 +78,4 @@ export default [
     icon: 'glyphicon-court',
     active: true
   }
-];
+]

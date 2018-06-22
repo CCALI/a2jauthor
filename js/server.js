@@ -1,4 +1,4 @@
-import Map from 'can/map/map/'
+import Map from 'can/map/'
 
 import 'can/route/'
 import 'can/map/define/'

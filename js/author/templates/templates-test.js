@@ -61,7 +61,7 @@ describe('<templates-page>', function () {
       $('#test-area').empty()
     })
 
-    it.skip('renders a list of active templates by default', function (done) {
+    it('renders a list of active templates by default', function (done) {
       F(function () {
         let templates = $('templates-page').viewModel().attr('displayList')
         let deleted = templates.filter(template => !template.attr('active'))
@@ -71,7 +71,7 @@ describe('<templates-page>', function () {
       F(done)
     })
 
-    it.skip('rendered list is sorted by buildOrder asc by default', function (done) {
+    it('rendered list is sorted by buildOrder asc by default', function (done) {
       F(function () {
         let templates = $('templates-page').viewModel().attr('displayList')
         let buildOrder = templates.attr().map(template => template.buildOrder)
@@ -107,7 +107,7 @@ describe('<templates-page>', function () {
       F(done)
     })
 
-    it.skip('displays alert if there are no search results', function (done) {
+    it('displays alert if there are no search results', function (done) {
       F(function () {
         $('templates-page').viewModel().attr('searchToken', '123456789')
       })
@@ -117,7 +117,7 @@ describe('<templates-page>', function () {
       F(done)
     })
 
-    it.skip('displays alert if there are no templates', function (done) {
+    it('displays alert if there are no templates', function (done) {
       // replace component's template list with an empty array.
       F(function () {
         $('templates-page').viewModel().attr('templates').replace([])
@@ -140,7 +140,7 @@ describe('<templates-page>', function () {
       F(done)
     })
 
-    it.skip('displays alert if there are no templates in the trash', function (done) {
+    it('displays alert if there are no templates in the trash', function (done) {
       F(function () {
         let vm = $('templates-page').viewModel()
 

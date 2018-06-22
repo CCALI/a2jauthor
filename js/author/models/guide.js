@@ -1,7 +1,7 @@
 import $ from 'jquery'
-import Model from 'can/model/'
+import Model from "can-model"
 
-import 'can/map/define/'
+import "can-map-define"
 
 /**
  * @module {function} Guide

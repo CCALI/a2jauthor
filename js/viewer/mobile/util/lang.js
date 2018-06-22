@@ -1,8 +1,8 @@
-import Map from 'can/map/';
+import CanMap from "can-map";
 import TLang from 'caja/viewer/mobile/util/tlang';
 import cString from 'caja/viewer/mobile/util/string';
 
-export default Map.extend({
+export default CanMap.extend({
   init: function(id) {
     var o = {};
 

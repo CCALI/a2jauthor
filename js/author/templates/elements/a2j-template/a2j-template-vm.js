@@ -1,10 +1,10 @@
-import Map from 'can/map/';
+import CanMap from "can-map";
 import _omit from 'lodash/omit';
 import _inRange from 'lodash/inRange';
 import _isFunction from 'lodash/isFunction';
 import A2JNode from 'caja/author/models/a2j-node';
 
-import 'can/map/define/';
+import "can-map-define";
 
 const fontFamilyMap = {
   'sans-serif': '\'Open Sans\', sans-serif',
@@ -46,7 +46,7 @@ const moveItem = function(list, from, to) {
  *
  * `<a2j-template>`'s viewModel.
  */
-export default Map.extend({
+export default CanMap.extend({
   define: {
     /**
      * @property {A2JTemplate} a2jTemplate.ViewModel.prototype.template template

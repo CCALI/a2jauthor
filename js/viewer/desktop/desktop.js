@@ -1,11 +1,11 @@
-import Map from 'can/map/'
-import Component from 'can/component/'
+import CanMap from "can-map"
+import Component from "can-component"
 import template from './desktop.stache'
 import _isUndefined from 'lodash/isUndefined'
 
-import 'can/map/define/'
+import "can-map-define"
 
-let DesktopViewerVM = Map.extend({
+let DesktopViewerVM = CanMap.extend({
   define: {
     pageNotFound: {
       value: false
@@ -67,7 +67,7 @@ let DesktopViewerVM = Map.extend({
 })
 
 export default Component.extend({
-  template,
+  view: template,
   tag: 'a2j-desktop-viewer',
   viewModel: DesktopViewerVM,
 
@@ -88,5 +88,7 @@ export default Component.extend({
     '{rState} page': function () {
       this.viewModel.checkPageExists()
     }
-  }
+  },
+
+  leakScope: true
 })

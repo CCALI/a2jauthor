@@ -6,13 +6,13 @@
   <div class="col-lg-6">
     <button
       class="btn btn-default"
-      ($click)="editElement('header')">Custom Header</button>
+      on:el:click="editElement('header')">Custom Header</button>
   </div>
 
   <div class="col-lg-6">
     <button
       class="btn btn-default"
-      ($click)="editElement('footer')">Custom Footer</button>
+      on:el:click="editElement('footer')">Custom Footer</button>
   </div>
 </div>
 
@@ -20,7 +20,7 @@
 
 <div class="form-group">
   <label>Font Family</label>
-  <select class="form-control" {($value)}="template.rootNode.state.fontFamily">
+  <select class="form-control" el:value:bind="template.rootNode.state.fontFamily">
     <option value="sans-serif" selected>Sans Serif</option>
     <option value="arial">Arial</option>
     <option value="times-new-roman">Times New Roman</option>
@@ -30,7 +30,7 @@
 
 <div class="form-group">
   <label>Font Size</label>
-  <select class="form-control" {($value)}="templateState.fontSize">
+  <select class="form-control" el:value:bind="templateState.fontSize">
     <option value="10">10</option>
     <option value="11">11</option>
     <option value="12">12</option>
@@ -42,7 +42,7 @@
 
 <div class="form-group">
   <label>Section Numbering</label>
-  <select class="form-control" {($value)}="templateState.sectionCounter">
+  <select class="form-control" el:value:bind="templateState.sectionCounter">
     <option value="none" selected>None</option>
     <option value="decimal">1.2.3...</option>
     <option value="upper-roman">I.II.III...</option>
@@ -52,7 +52,7 @@
 
 <div class="checkbox conditional-logic">
   <label>
-    <input type="checkbox" {($checked)}="isConditionalLogicEnabled">
+    <input type="checkbox" el:checked:bind="isConditionalLogicEnabled">
     <h3>Conditional Logic</h3>
   </label>
 </div>
@@ -62,11 +62,11 @@
 </p>
 
 <condition-form
-  {variables-list}="variablesList"
-  {(operator)}="templateState.operator"
-  {(left-operand)}="templateState.leftOperand"
-  {(right-operand)}="templateState.rightOperand"
-  {disabled}="{{not(isConditionalLogicEnabled)}}"
-  {(right-operand-type)}="templateState.rightOperandType"
+  vm:variablesList:from="variablesList"
+  vm:operator:bind="templateState.operator"
+  vm:leftOperand:bind="templateState.leftOperand"
+  vm:rightOperand:bind="templateState.rightOperand"
+  vm:disabled:from="{{not(isConditionalLogicEnabled)}}"
+  vm:rightOperandType:bind="templateState.rightOperandType"
 />
 

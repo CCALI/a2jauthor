@@ -1,5 +1,5 @@
-import Map from 'can/map/'
-import Component from 'can/component/'
+import CanMap from "can-map"
+import Component from "can-component"
 import template from './hair-picker.stache'
 import {
   hairColors,
@@ -11,7 +11,7 @@ const hairClasses = hairColors.map(hair => {
   return hair !== 'bald' ? hairClass : `${hairClass} cross-through`
 })
 
-export const HairPickerVm = Map.extend({
+export const HairPickerVm = CanMap.extend({
   define: {
     selectedHairClass: {
       get () {
@@ -39,7 +39,7 @@ export const HairPickerVm = Map.extend({
 
 export default Component.extend({
   tag: 'hair-picker',
-  template,
+  view: template,
   leakScope: false,
   viewModel: HairPickerVm
 })

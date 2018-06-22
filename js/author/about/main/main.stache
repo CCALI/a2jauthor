@@ -11,7 +11,7 @@
         type="text"
         class="form-control ui-widget editable"
         placeholder='My awesome interview'
-        {($value)}='guide.title'
+        el:value:bind='guide.title'
       />
     </div>
 
@@ -19,7 +19,7 @@
       <label class="control-label">Description:</label>
       <textarea
         class="form-control text editable taller"
-        {($value)}="guide.description"
+        el:value:bind="guide.description"
       />
     </div>
 
@@ -29,7 +29,7 @@
         type="text"
         class="form-control ui-widget editable"
         placeholder='My awesome province'
-        {($value)}='guide.jurisdiction'
+        el:value:bind='guide.jurisdiction'
       />
     </div>
 
@@ -46,7 +46,7 @@
                 {{^is guide.guideGender 'male'}}
                   checked
                 {{/is}}
-                ($change)='updateAvatarGender(%event)'
+                on:el:change='updateAvatarGender(%event)'
               />
               <span>Female</span>
             </label>
@@ -58,7 +58,7 @@
                 {{#is guide.guideGender 'male'}}
                   checked
                 {{/is}}
-                ($change)='updateAvatarGender(%event)'
+                on:el:change='updateAvatarGender(%event)'
               />
               <span>Male</span>
             </label>
@@ -67,15 +67,15 @@
         <div>
           <label>Guide Skin Tone:</label>
           <skin-picker
-            {selected-skin}="guide.avatarSkinTone"
-            {on-skin}="@updateSkinTone"
+            vm:selectedSkin:from="guide.avatarSkinTone"
+            vm:onSkin:from="@updateSkinTone"
           />
         </div>
         <div>
           <label>Guide Hair Color:</label>
           <hair-picker
-            {selected-hair}="guide.avatarHairColor"
-            {on-hair}="@updateHairColor"
+            vm:selectedHair:from="guide.avatarHairColor"
+            vm:onHair:from="@updateHairColor"
           />
         </div>
       </div>
@@ -85,7 +85,7 @@
       <label class="control-label">Credits:</label>
       <textarea
         class="form-control text editable taller"
-        {($value)}="guide.credits"
+        el:value:bind="guide.credits"
       />
     </div>
 
@@ -95,8 +95,8 @@
           <label class="control-label">Language:</label>
           <select
             class="form-control"
-            {($value)}="guide.language"
-            ($change)="updateLanguagePack()"
+            el:value:bind="guide.language"
+            on:el:change="updateLanguagePack()"
           >
             {{#each languageOptions}}
               <option value='{{value}}'>{{displayName}}</option>
@@ -111,7 +111,7 @@
           type="text"
           class="form-control ui-widget editable"
           placeholder='42 minutes'
-          {($value)}='guide.completionTime'
+          el:value:bind='guide.completionTime'
           />
         </div>
       </div>
@@ -120,9 +120,9 @@
   <div class='col-xs-2'>
     <a2j-viewer-avatar
       kind="guide"
-      {gender}="guide.guideGender"
-      {skin}="guide.avatarSkinTone"
-      {hair}="guide.avatarHairColor"
+      vm:gender:from="guide.guideGender"
+      vm:skin:from="guide.avatarSkinTone"
+      vm:hair:from="guide.avatarHairColor"
     />
   </div>
 </div>

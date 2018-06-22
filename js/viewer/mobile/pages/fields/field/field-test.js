@@ -1,9 +1,9 @@
 import $ from 'jquery'
-import stache from 'can/view/stache/'
+import stache from "can-stache"
 import assert from 'assert'
 import { FieldVM } from './field'
-import List from 'can/list/'
-import Map from 'can/map/'
+import CanList from "can-list"
+import CanMap from "can-map"
 import sinon from 'sinon'
 
 import './field'
@@ -29,7 +29,7 @@ describe('<a2j-field>', () => {
 
       vm = new FieldVM({
         field: fieldStub,
-        traceLogic: new List()
+        traceLogic: new CanList()
       })
     })
 
@@ -206,14 +206,14 @@ describe('<a2j-field>', () => {
   describe('Component', () => {
     let logicStub
     let checkboxDefaults, NOTADefaults, textDefaults, numberDollarDefaults
-    let fields = new List()
-    let langStub = new Map({
+    let fields = new CanList()
+    let langStub = new CanMap({
       MonthNamesShort: 'Jan, Feb',
       MonthNamesLong: 'January, February'
     })
 
     beforeEach(() => {
-      logicStub = new Map({
+      logicStub = new CanMap({
         exec: $.noop,
         infinite: {
           errors: $.noop,
@@ -233,7 +233,7 @@ describe('<a2j-field>', () => {
         logic: logicStub,
         repeatVarValue: '',
         lang: langStub,
-        traceLogic: new List(),
+        traceLogic: new CanList(),
         name: 'Likes Chocolate TF',
         type: 'checkbox',
         label: 'Likes Chocolate',
@@ -249,7 +249,7 @@ describe('<a2j-field>', () => {
               }
             }
           },
-          traceLogic: new List()
+          traceLogic: new CanList()
         })
       }
 
@@ -258,7 +258,7 @@ describe('<a2j-field>', () => {
         logic: logicStub,
         repeatVarValue: '',
         lang: langStub,
-        traceLogic: new List(),
+        traceLogic: new CanList(),
         name: 'None of the Above',
         type: 'checkboxNOTA',
         label: 'None of the Above',
@@ -274,7 +274,7 @@ describe('<a2j-field>', () => {
               }
             }
           },
-          traceLogic: new List()
+          traceLogic: new CanList()
         })
       }
 
@@ -283,7 +283,7 @@ describe('<a2j-field>', () => {
         logic: logicStub,
         repeatVarValue: '',
         lang: langStub,
-        traceLogic: new List(),
+        traceLogic: new CanList(),
         name: 'Name',
         type: 'text',
         label: 'Name',
@@ -299,7 +299,7 @@ describe('<a2j-field>', () => {
               }
             }
           },
-          traceLogic: new List()
+          traceLogic: new CanList()
         })
       }
 
@@ -308,7 +308,7 @@ describe('<a2j-field>', () => {
         logic: logicStub,
         repeatVarValue: '',
         lang: langStub,
-        traceLogic: new List(),
+        traceLogic: new CanList(),
         name: 'Salary',
         type: 'numberdollar',
         label: 'Salary',
@@ -325,7 +325,7 @@ describe('<a2j-field>', () => {
               }
             }
           },
-          traceLogic: new List()
+          traceLogic: new CanList()
         })
       }
 
@@ -334,38 +334,38 @@ describe('<a2j-field>', () => {
 
       let checkboxFrag = stache(
         `<a2j-field
-        {(field)}="vm.field"
-        {lang}="lang"
-        {(logic)}="logic"
-        {(trace-logic)}="traceLogic"
-        {repeat-var-value}="repeatVarValue" />`
+        vm:field:bind="vm.field"
+        vm:lang:from="lang"
+        vm:logic:bind="logic"
+        vm:traceLogic:bind="traceLogic"
+        vm:repeatVarValue:from="repeatVarValue" />`
       )
 
       let NOTAFrag = stache(
         `<a2j-field
-        {(field)}="vm.field"
-        {lang}="lang"
-        {(logic)}="logic"
-        {(trace-logic)}="traceLogic"
-        {repeat-var-value}="repeatVarValue" />`
+        vm:field:bind="vm.field"
+        vm:lang:from="lang"
+        vm:logic:bind="logic"
+        vm:traceLogic:bind="traceLogic"
+        vm:repeatVarValue:from="repeatVarValue" />`
       )
 
       let textFrag = stache(
         `<a2j-field
-        {(field)}="vm.field"
-        {lang}="lang"
-        {(logic)}="logic"
-        {(trace-logic)}="traceLogic"
-        {repeat-var-value}="repeatVarValue" />`
+        vm:field:bind="vm.field"
+        vm:lang:from="lang"
+        vm:logic:bind="logic"
+        vm:traceLogic:bind="traceLogic"
+        vm:repeatVarValue:from="repeatVarValue" />`
       )
 
       let numberDollarFrag = stache(
         `<a2j-field
-        {(field)}="vm.field"
-        {lang}="lang"
-        {(logic)}="logic"
-        {(trace-logic)}="traceLogic"
-        {repeat-var-value}="repeatVarValue" />`
+        vm:field:bind="vm.field"
+        vm:lang:from="lang"
+        vm:logic:bind="logic"
+        vm:traceLogic:bind="traceLogic"
+        vm:repeatVarValue:from="repeatVarValue" />`
       )
 
       $('#test-area').html(checkboxFrag(checkboxDefaults)).append(numberDollarFrag(numberDollarDefaults)).append(NOTAFrag(NOTADefaults)).append(textFrag(textDefaults))

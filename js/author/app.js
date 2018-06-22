@@ -6,7 +6,7 @@ import viewerPreviewTpl from './viewer-preview-layout.stache'
 import bindCustomEvents from 'caja/author/utils/bind-custom-events'
 
 import 'can/view/'
-import 'can/route/'
+import "can-route"
 import 'calculator/jquery.plugin'
 import 'calculator/jquery.calculator'
 import 'calculator/jquery.calculator.css'
@@ -14,12 +14,12 @@ import 'bootstrap/js/dropdown.js'
 
 let appState = new AppState()
 
-can.route.map(appState)
-can.route(':page', {page: 'interviews'})
-can.route(':page/:guideId')
-can.route(':page/:action/:guideId-:templateId')
+route.map(appState)
+route(':page', {page: 'interviews'})
+route(':page/:guideId')
+route(':page/:action/:guideId-:templateId')
 
-can.route.ready()
+route.ready()
 can.view.preload('viewer-preview-layout', viewerPreviewTpl)
 
 $('body').on('click', 'a[href="#"]', ev => ev.preventDefault())

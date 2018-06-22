@@ -1,6 +1,6 @@
 import assert from 'assert';
 import Interview from 'caja/viewer/models/interview';
-import Map from 'can/map/';
+import CanMap from "can-map";
 
 describe('Interview model', function() {
 
@@ -168,7 +168,7 @@ describe('Interview model', function() {
 
     beforeEach(function() {
       interview = new Interview();
-      let answers = new Map({
+      let answers = new CanMap({
         name: {
           comment: "",
           name: 'Name',

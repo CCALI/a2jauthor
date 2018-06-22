@@ -1,9 +1,9 @@
-import Map from 'can/map/'
+import CanMap from "can-map"
 import _tail from 'lodash/tail'
 import _last from 'lodash/last'
 import _initial from 'lodash/initial'
 
-import 'can/list/'
+import "can-list"
 
 const commaString = function (values) {
   if (values.length >= 2) {
@@ -35,7 +35,7 @@ const commaString = function (values) {
  * (upper or lowercase) and `getValue` has logic to return the value of a variable
  * according to its type.
  */
-export default Map.extend({
+export default CanMap.extend({
   /**
    * @function Answers.prototype.getVariable getVariable
    * @param {String} varName Name of the interview variable (not case-sensitive)

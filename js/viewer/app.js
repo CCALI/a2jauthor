@@ -1,5 +1,5 @@
 import deparam from 'can/util/string/deparam/'
-import route from 'can/route/'
+import route from "can-route"
 import startApp from './start-app'
 import config from 'caja/viewer/config/'
 import _isEmpty from 'lodash/isEmpty'

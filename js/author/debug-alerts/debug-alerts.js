@@ -1,9 +1,9 @@
-import Map from 'can/map/'
-import List from 'can/list/'
-import Component from 'can/component/'
+import CanMap from "can-map"
+import CanList from "can-list"
+import Component from "can-component"
 import template from './debug-alerts.stache'
 
-import 'can/map/define/'
+import "can-map-define"
 
 /**
  * @module {Module} author/debug-alerts <author-debug-alerts>
@@ -25,7 +25,7 @@ import 'can/map/define/'
  *
  * `<author-debug-alerts>`'s viewModel.
  */
-const DebugAlerts = Map.extend({
+const DebugAlerts = CanMap.extend({
   define: {
     /**
      * @property {can.List} debugAlerts.viewModel.prototype.define.alertMessages alertMessages
@@ -34,7 +34,7 @@ const DebugAlerts = Map.extend({
      * List of error/warning messages related to an interview.
      */
     alertMessages: {
-      Value: List
+      Value: CanList
     },
 
     /**
@@ -57,7 +57,7 @@ const DebugAlerts = Map.extend({
 })
 
 export default Component.extend({
-  template,
+  view: template,
   viewModel: DebugAlerts,
   tag: 'author-debug-alerts',
 
@@ -71,5 +71,7 @@ export default Component.extend({
         alertMessages.replace([])
       })
     }
-  }
+  },
+
+  leakScope: true
 })

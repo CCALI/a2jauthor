@@ -3,11 +3,11 @@
 
 <author-modal
   modal-title='Addendum options'
-  {on-cancel}='@onModalCancel'
+  vm:onCancel:from='@onModalCancel'
   cancel-text='Cancel'
-  {on-submit}='@onSubmit'
+  vm:onSubmit:from='@onSubmit'
   submit-text='Save options'
-  {on-left-button-click}='@onReset'
+  vm:onLeftButtonClick:from='@onReset'
   left-button-text='Reset'
 >
   <div class='split-fields'>
@@ -19,7 +19,7 @@
           <input
             type='number'
             class='editable'
-            {($value)}='pageWidth'
+            el:value:bind='pageWidth'
           />
           <span class='unit'>inches</span>
         </label>
@@ -28,7 +28,7 @@
           <input
             type='number'
             class='editable'
-            {($value)}='pageHeight'
+            el:value:bind='pageHeight'
           />
           <span class='unit'>inches</span>
         </label>
@@ -43,7 +43,7 @@
           <input
             type='number'
             class='editable'
-            {($value)}='topBottomMargin'
+            el:value:bind='topBottomMargin'
           />
           <span class='unit'>inches</span>
         </label>
@@ -52,7 +52,7 @@
           <input
             type='number'
             class='editable'
-            {($value)}='leftRightMargin'
+            el:value:bind='leftRightMargin'
           />
           <span class='unit'>inches</span>
         </label>

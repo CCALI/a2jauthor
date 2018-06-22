@@ -1,9 +1,9 @@
-import Map from 'can/map/';
+import CanMap from "can-map";
 
-import 'can/map/define/';
+import "can-map-define";
 import 'can/map/validations/';
 
-export default Map.extend({
+export default CanMap.extend({
   init: function() {
     this.validateRangeOf(['_counter'], 0, 100);
   }

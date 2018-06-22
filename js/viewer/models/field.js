@@ -1,10 +1,10 @@
 import $ from 'jquery'
-import Map from 'can/map/'
-import List from 'can/list/'
+import CanMap from "can-map"
+import CanList from "can-list"
 import Answer from 'caja/viewer/models/answer'
 import normalizePath from 'caja/viewer/util/normalize-path'
 
-import 'can/map/define/'
+import "can-map-define"
 
 /**
  * @module {can.Map} Field
@@ -12,7 +12,7 @@ import 'can/map/define/'
  *
  * A map representing a field of an interview page
  */
-const Field = Map.extend({
+const Field = CanMap.extend({
   define: {
     options: {
       value: ''
@@ -78,7 +78,7 @@ const Field = Map.extend({
   }
 })
 
-Field.List = List.extend({
+Field.List = CanList.extend({
   Map: Field
 }, {})
 

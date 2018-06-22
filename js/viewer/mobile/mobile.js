@@ -1,8 +1,8 @@
-import Map from 'can/map/'
-import Component from 'can/component/'
+import CanMap from "can-map"
+import Component from "can-component"
 import template from './mobile.stache'
 
-let MobileViewerVM = Map.extend({
+let MobileViewerVM = CanMap.extend({
   hideCredits: function () {
     this.attr('mState.showCredits', false)
   }
@@ -11,7 +11,7 @@ let MobileViewerVM = Map.extend({
 // ScreenManager is to handle which view is currently on the screen. Also,
 // if we add any animations on bringing views into the viewport, we'll add that here.
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   tag: 'a2j-mobile-viewer',
   viewModel: MobileViewerVM,

@@ -5,9 +5,9 @@
   {{#each templates}}
     {{#if canRenderTemplate(this)}}
       <a2j-template
-        {template}="."
+        vm:template:from="."
         use-answers="true"
-        {answers}="answers"
+        vm:answers:from="answers"
         edit-enabled="false"
       />
     {{/if}}

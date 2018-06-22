@@ -8,8 +8,8 @@
 			id="{{label}}"
 			type="checkbox"
 			name="{{name}}"
-			($change)="validateField"
-			{($checked)}="field._answer.values"/>
+			on:el:change="validateField"
+			el:checked:bind="field._answer.values"/>
 		{{{ eval(label, repeatVarValue) }}}</label>
 		</div>
 	</div>

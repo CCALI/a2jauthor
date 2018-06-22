@@ -8,12 +8,12 @@
 
 {{#if editEnabled}}
   <element-container
-    {node-id}="id"
-    {deleted}="deleted"
-    {(selected)}="editActive"
-    {clone-node}="@cloneNode"
-    {delete-node}="@deleteNode"
-    {toggle-edit-active-node}="@toggleEditActiveNode"
+    vm:nodeId:from="id"
+    vm:deleted:from="deleted"
+    vm:selected:bind="editActive"
+    vm:cloneNode:from="@cloneNode"
+    vm:deleteNode:from="@deleteNode"
+    vm:toggleEditActiveNode:from="@toggleEditActiveNode"
   >
     <div class="panel panel-warning">
       <div class="panel-heading">
@@ -21,7 +21,7 @@
         {{#if leftOperand}}
           <span class="label label-default">
             {{#is leftOperandType 'variable'}}
-              <a2j-variable {name}="leftOperand" />
+              <a2j-variable vm:name:from="leftOperand" />
             {{else}}
               {{leftOperand}}
             {{/is}}
@@ -32,7 +32,7 @@
           {{#if rightOperand}}
             <span class="label label-default">
               {{#is rightOperandType 'variable'}}
-                <a2j-variable {name}="rightOperand" />
+                <a2j-variable vm:name:from="rightOperand" />
               {{else}}
                 {{rightOperand}}
               {{/is}}
@@ -44,15 +44,15 @@
       <div class="panel-body">
         <a2j-template
           edit-enabled="true"
-          {(template)}="ifBody"
-          {save-callback}="@updateNodeState"
+          vm:template:bind="ifBody"
+          vm:saveCallback:from="@updateNodeState"
         />
 
         <conditional-add-element
-          {(template)}="ifBody"
-          {node-id}="addToIfNode.id"
-          {(selected)}="addToIfNode.state.editActive"
-          {toggle-edit-active-node}="@toggleEditActiveNode"
+          vm:template:bind="ifBody"
+          vm:nodeId:from="addToIfNode.id"
+          vm:selected:bind="addToIfNode.state.editActive"
+          vm:toggleEditActiveNode:from="@toggleEditActiveNode"
         />
       </div>
 
@@ -62,15 +62,15 @@
         <div class="panel-body">
           <a2j-template
             edit-enabled="true"
-            {(template)}="elseBody"
-            {save-callback}="@updateNodeState"
+            vm:template:bind="elseBody"
+            vm:saveCallback:from="@updateNodeState"
           />
 
           <conditional-add-element
-            {(template)}="elseBody"
-            {node-id}="addToElseNode.id"
-            {(selected)}="addToElseNode.state.editActive"
-            {toggle-edit-active-node}="@toggleEditActiveNode"
+            vm:template:bind="elseBody"
+            vm:nodeId:from="addToElseNode.id"
+            vm:selected:bind="addToElseNode.state.editActive"
+            vm:toggleEditActiveNode:from="@toggleEditActiveNode"
           />
         </div>
       {{/if}}
@@ -81,21 +81,21 @@
 
   {{#if editActive}}
     <element-options-pane
-      {node-id}="nodeId"
+      vm:nodeId:from="nodeId"
       title="If / Else Conditional"
-      {save-and-close}="@updateNode"
+      vm:saveAndClose:from="@updateNode"
     >
       <condition-form
-        {variables-list}="variablesList"
-        {(operator)}="operator"
-        {(left-operand)}="leftOperand"
-        {(right-operand)}="rightOperand"
-        {(right-operand-type)}="rightOperandType"
+        vm:variablesList:from="variablesList"
+        vm:operator:bind="operator"
+        vm:leftOperand:bind="leftOperand"
+        vm:rightOperand:bind="rightOperand"
+        vm:rightOperandType:bind="rightOperandType"
       />
 
       <div class="checkbox">
         <label>
-          <input type="checkbox" {($checked)}="elseClause"> Else Clause
+          <input type="checkbox" el:checked:bind="elseClause"> Else Clause
         </label>
       </div>
     </element-options-pane>
@@ -104,16 +104,16 @@
   {{#if evalCondition()}}
     <a2j-template
       use-answers="true"
-      {answers}="answers"
-      {template}="ifBody"
+      vm:answers:from="answers"
+      vm:template:from="ifBody"
       edit-enabled="false"
     />
   {{else}}
     <a2j-template
       use-answers="true"
-      {answers}="answers"
+      vm:answers:from="answers"
       edit-enabled="false"
-      {template}="elseBody"
+      vm:template:from="elseBody"
     />
   {{/if}}
 {{/if}}

@@ -1,4 +1,4 @@
-import Control from 'can/control/';
+import Control from "can-control";
 
 import 'can/view/';
 
@@ -20,6 +20,6 @@ export default Control.extend({
 });
 
 // Expose an additional html attr for easy access
-can.view.attr('filler', function(el) {
+canViewCallbacks.attr('filler', function(el) {
   new Filler(el);
 });

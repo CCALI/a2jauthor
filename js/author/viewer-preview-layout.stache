@@ -8,25 +8,25 @@
   {{#if showDebugPanel}}
     <div class="author-debug-panel">
       <author-debug-panel
-        {(interview)}="viewerInterview"
-        {(trace-logic)}="traceLogic"
+        vm:interview:bind="viewerInterview"
+        vm:traceLogic:bind="traceLogic"
         {(trace-logic-list)} = "traceLogicList" />
     </div>
   {{/if}}
 
   <div id="viewer-app" class="{{#if showDebugPanel}}with-debug-panel{{/if}}">
     <a2j-viewer-preview
-      {guide-path}="guidePath"
-      {(trace-logic)}="traceLogic"
-      {(interview)}="viewerInterview"
-      {show-debug-panel}="showDebugPanel"
-      {preview-page-name}="previewPageName"
-      {^interview-page-name}="interviewPageName" />
+      vm:guidePath:from="guidePath"
+      vm:traceLogic:bind="traceLogic"
+      vm:interview:bind="viewerInterview"
+      vm:showDebugPanel:from="showDebugPanel"
+      vm:previewPageName:from="previewPageName"
+      vm:interviewPageName:to="interviewPageName" />
 
-    <author-debug-menu {(app-state)}="."/>
+    <author-debug-menu vm:appState:bind="."/>
 
     {{#if viewerAlertMessages.length}}
-      <author-debug-alerts {(alert-messages)}="viewerAlertMessages"/>
+      <author-debug-alerts vm:alertMessages:bind="viewerAlertMessages"/>
     {{/if}}
   </div>
 {{/if}}

@@ -29,12 +29,12 @@
   {{#if previewMode}}style="display: none;"{{/if}}>
 
   <div id="cajaheader" class="hidestart">
-    <app-header {page}="page" {title}="guide.title"/>
+    <app-header vm:page:from="page" vm:title:from="guide.title"/>
   </div>
 
   <div class="guideio"></div>
   <div class="">
-    <vertical-navbar theme="inverse" page="{page}" {guide-id}="guideId"></vertical-nabvar>
+    <vertical-navbar theme="inverse" page="{page}" vm:guideId:from="guideId"></vertical-nabvar>
   </div>
 
   <div class="guidepanels ui-widget xui-widget-content">
@@ -42,9 +42,9 @@
       auto-close="true"
       dismissible="true"
       class="global-alert"
-      {auto-close-timeout}="20000"
-      {(open)}="globalAlertProps.open"
-      {alert-type}="globalAlertProps.alertType"
+      vm:autoCloseTimeout:from="20000"
+      vm:open:bind="globalAlertProps.open"
+      vm:alertType:from="globalAlertProps.alertType"
     >
       {{{globalAlertProps.message}}}
     </app-alert>
@@ -77,7 +77,7 @@
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="tab-about">
             {{#if guide}}
-              <about-main {(guide)}="guide" />
+              <about-main vm:guide:bind="guide" />
             {{else}}
               <p>Please select an interview.</p>
             {{/if}}
@@ -95,7 +95,7 @@
 
     <!-- Variables Tab -->
     <div class="tab-panel has-toolbar" id="tabsVariables">
-      <variables-tab {(guide)}="guide"/>
+      <variables-tab vm:guide:bind="guide"/>
     </div><!-- tab-panel has-toolbar -->
 
     <!-- Steps Tab -->
@@ -259,8 +259,8 @@
     <!-- Interview Tab -->
     <div class="tab-panel has-toolbar" id="tabsGuides">
       {{#is page "interviews"}}
-        <interviews-toolbar {(interviews)}="interviews"></interviews-toolbar>
-        <interviews-page {(interviews)}="interviews" {(trace-logic-list)}="traceLogicList" {(viewer-interview)}="viewerInterview"></interviews-page>
+        <interviews-toolbar vm:interviews:bind="interviews"></interviews-toolbar>
+        <interviews-page vm:interviews:bind="interviews" vm:traceLogicList:bind="traceLogicList" vm:viewerInterview:bind="viewerInterview"></interviews-page>
       {{/is}}
     </div>
 
@@ -270,13 +270,13 @@
         {{#if guideId}}
           {{#if templateId}}
             <template-edit-page
-              {(guide)}="guide"
-              {(action)}="action"
-              {(template-id)}="templateId"
-              {guide-id}="guideId"
+              vm:guide:bind="guide"
+              vm:action:bind="action"
+              vm:templateId:bind="templateId"
+              vm:guideId:from="guideId"
             />
           {{else}}
-            <templates-page {(app-state)}="." />
+            <templates-page vm:appState:bind="." />
           {{/if}}
         {{/if}}
       {{/is}}
@@ -285,8 +285,8 @@
     <!-- Report Tab -->
     <div class="tab-panel has-toolbar" id="tabsReport">
       {{#is page 'report'}}
-        <report-toolbar {(hide-all-grades)}="hideAllGrades" {(selected-report)}="selectedReport"></report-toolbar>
-        <report-page {parent-guide}="guide" {(hide-all-grades)}="hideAllGrades" {(selected-report)}="selectedReport"></report-page>
+        <report-toolbar vm:hideAllGrades:bind="hideAllGrades" vm:selectedReport:bind="selectedReport"></report-toolbar>
+        <report-page vm:parentGuide:from="guide" vm:hideAllGrades:bind="hideAllGrades" vm:selectedReport:bind="selectedReport"></report-page>
       {{/is}}
     </div>
 

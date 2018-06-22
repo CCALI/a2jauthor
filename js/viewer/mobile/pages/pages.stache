@@ -6,7 +6,7 @@
   <div class="jumbotron">
     <h1>Oops!</h1>
     <p>You've reached this page in error.</p>
-    <p><a href="javascript://" ($click)="returnHome()" class="btn btn-primary">Return home</a></p>
+    <p><a href="javascript://" on:el:click="returnHome()" class="btn btn-primary">Return home</a></p>
   </div>
 {{/eq}}
 
@@ -23,19 +23,19 @@
       <p>{{{ eval(text, rState.repeatVarValue) }}}</p>
 
       {{#if fields.length}}
-        <a2j-fields {lang}="lang"
-                    {(logic)}="logic"
-                    {(fields)}="fields"
-                    {(trace-logic)}="traceLogic"
-                    {repeat-var-value}="rState.repeatVarValue"
-                    {(modal-content)}="modalContent"
-                    {(r-state)}="rState" 
+        <a2j-fields vm:lang:from="lang"
+                    vm:logic:bind="logic"
+                    vm:fields:bind="fields"
+                    vm:traceLogic:bind="traceLogic"
+                    vm:repeatVarValue:from="rState.repeatVarValue"
+                    vm:modalContent:bind="modalContent"
+                    vm:rState:bind="rState" 
                     role="form"/>
       {{/if}}
 
       {{#if textAudioURL}}
         <audio-player
-          {source-url}="normalizePath(mState.fileDataURL, textAudioURL)"
+          vm:sourceUrl:from="normalizePath(mState.fileDataURL, textAudioURL)"
         />
       {{/if}}
 
@@ -66,7 +66,7 @@
 
         {{#default}}
           <button type="button"
-                  ($click)="navigate"
+                  on:el:click="navigate"
                   class="btn btn-default btn-navigate">
             {{getButtonLabel(label)}}
           </button>

@@ -1,9 +1,9 @@
-import Map from 'can/map/'
+import CanMap from "can-map"
 import items from './navbar-items'
-import Component from 'can/component/'
+import Component from "can-component"
 import template from './vertical-navbar.stache'
 
-import 'can/map/define/'
+import "can-map-define"
 
 /**
  * @module {Module} author/vertical-navbar <vertical-navbar>
@@ -24,7 +24,7 @@ import 'can/map/define/'
  *
  * `<vertical-navbar>`'s viewModel.
  */
-export let VerticalNavbarVM = Map.extend({
+export let VerticalNavbarVM = CanMap.extend({
   define: {
     /**
      * @property {can.List} verticalNavbar.ViewModel.prototype.define.items items
@@ -88,7 +88,7 @@ export let VerticalNavbarVM = Map.extend({
 })
 
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   tag: 'vertical-navbar',
   viewModel: VerticalNavbarVM

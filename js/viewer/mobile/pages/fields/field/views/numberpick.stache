@@ -5,7 +5,7 @@
       {{#if required}}<small class="text-danger">(Required)</small>{{/if}}
     </label>
 
-    <select id="{{label}}" name="{{name}}" {($value)}="field._answer.values" ($change)="validateField">
+    <select id="{{label}}" name="{{name}}" el:value:bind="field._answer.values" on:el:change="validateField">
       {{#each numberPickOptions}}
         <option value="{{.}}">{{.}}</option>
       {{/each}}

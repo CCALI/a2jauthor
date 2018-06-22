@@ -1,10 +1,10 @@
-import Map from 'can/map/';
+import CanMap from "can-map";
 import _range from 'lodash/range';
 import template from './list.stache';
-import Component from 'can/component/';
+import Component from "can-component";
 import moveItem from 'caja/author/utils/move-item-array';
 
-import 'can/map/define/';
+import "can-map-define";
 
 /**
  * @module {Module} templatesList <templates-list>
@@ -28,7 +28,7 @@ import 'can/map/define/';
  *
  * `<templates-list>`'s viewModel.
  */
-export let List = Map.extend({
+export let List = CanMap.extend({
   define: {
     activeFilter: {
       serialize: false
@@ -51,7 +51,7 @@ export let List = Map.extend({
     let dropPos = this.attr('dropItemIndex');
 
     if (dragPos !== dropPos) {
-      can.batch.start();
+      canBatch.start();
 
       let positions = _range(displayList.attr('length'));
       let newPositions = moveItem(positions, dragPos, dropPos);
@@ -61,7 +61,7 @@ export let List = Map.extend({
         template.attr('buildOrder', index + 1);
       });
 
-      can.batch.stop();
+      canBatch.stop();
       // since the list is sorted automatically when it's mutated
       // we need to keep track of the current index of the dragged
       // template to move it properly while it is dragged.
@@ -75,7 +75,7 @@ export let List = Map.extend({
 });
 
 export default Component.extend({
-  template,
+  view: template,
   viewModel: List,
   leakScope: false,
   tag: 'templates-list',

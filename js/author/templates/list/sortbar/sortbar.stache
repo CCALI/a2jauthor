@@ -3,7 +3,7 @@
 <div class="sort-order clearfix">
   <a href="#"
     class="sort-flag {{sortCaretClasses 'buildOrder'}}"
-    ($click)="setSortCriteria('buildOrder')">#</a>
+    on:el:click="setSortCriteria('buildOrder')">#</a>
 </div>
 
 <div class="sort-columns">
@@ -11,13 +11,13 @@
     <div class="col-xs-9">
       <a href="#"
         class="sort-flag {{sortCaretClasses 'title'}}"
-        ($click)="setSortCriteria('title')">Title</a>
+        on:el:click="setSortCriteria('title')">Title</a>
     </div>
 
     <div class="col-xs-3 text-right">
       <a href="#"
         class="sort-flag {{sortCaretClasses 'updatedAt'}}"
-        ($click)="setSortCriteria('updatedAt')">Date Modified</a>
+        on:el:click="setSortCriteria('updatedAt')">Date Modified</a>
     </div>
   </div>
 </div>

@@ -1,8 +1,8 @@
-import Map from 'can/map/';
+import CanMap from "can-map";
 import template from './item.stache';
-import Component from 'can/component/';
+import Component from "can-component";
 
-import 'can/map/define/';
+import "can-map-define";
 
 /**
  * @module {Module} templatesListItem <templates-list-item>
@@ -28,7 +28,7 @@ import 'can/map/define/';
  *
  * `<templates-list-item>`'s viewModel.
  */
-export let Item = Map.extend({
+export let Item = CanMap.extend({
   define: {
     /**
      * @property {Boolean} templatesListItem.ViewModel.prototype.define.hovered hovered
@@ -144,7 +144,7 @@ export let Item = Map.extend({
 });
 
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   viewModel: Item,
   tag: 'templates-list-item',

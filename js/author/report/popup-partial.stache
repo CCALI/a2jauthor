@@ -7,7 +7,7 @@
                 <p class="{{#if hideCitation}}hide-section{{/if}}"><label>Notes:</label>  {{formatPageTextCell(notes)}}</p>
                 <div class="{{#if hideText}}hide-section{{/if}}">
                     <p><label>Text:</label>  {{formatPageTextCell(text)}}</p>
-                    <text-stats {stats}="textStats"></text-stats>
+                    <text-stats vm:stats:from="textStats"></text-stats>
                 </div>
                 <p class="{{#if hideDefault}}hide-section{{/if}}"><label>Text Audio:</label>  {{textAudioURL}}</p>
             </div>

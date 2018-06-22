@@ -25,7 +25,7 @@
 
     {{#each deletedTemplates}}
       {{title}} - has been deleted -
-      <a href="#" ($click)="restoreTemplate(this)">Restore</a>
+      <a href="#" on:el:click="restoreTemplate(this)">Restore</a>
     {{/each}}
   </app-alert>
 
@@ -39,7 +39,7 @@
 
     {{#each restoredTemplates}}
       {{title}} - has been restored -
-      <a href="#" ($click)="deleteTemplate(this)">Delete</a>
+      <a href="#" on:el:click="deleteTemplate(this)">Delete</a>
     {{/each}}
   </app-alert>
 
@@ -73,8 +73,8 @@
         <templates-sortbar criteria="{sortCriteria}"/>
 
         <templates-list
-          {display-list}="displayList"
-          {(has-sorted)}="hasSorted"
+          vm:displayList:from="displayList"
+          vm:hasSorted:bind="hasSorted"
           active-filter="{activeFilter}"
           class="{{listStateClassName}}"
           is-draggable="{listIsDraggable}" />
@@ -83,6 +83,6 @@
   </div>
 
   <test-assemble-options
-    {guide-id}="appState.guideId"
-    {guide-title}="appState.guide.title" />
+    vm:guideId:from="appState.guideId"
+    vm:guideTitle:from="appState.guide.title" />
 </div>

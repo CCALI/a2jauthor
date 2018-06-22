@@ -17,9 +17,9 @@
         <input
           class='template-name'
           type='text'
-          {($value)}="template.title"
+          el:value:bind="template.title"
           placeholder='My PDF Template'
-          ($change)="onTitleChange()"
+          on:el:change="onTitleChange()"
         />
       </label>
     </div>
@@ -27,7 +27,7 @@
       <div class='btn-set'>
         <button
           class="btn btn-default"
-          ($click)="onTestAssemble()"
+          on:el:click="onTestAssemble()"
           {{^if hasPdf}}disabled{{/if}}
         >
           <span class='ui-button-text'>
@@ -38,7 +38,7 @@
 
         <button
           class="btn btn-default"
-          ($click)="onTemplateSave()"
+          on:el:click="onTemplateSave()"
           {{#if isSavingTemplate}}
             disabled='disabled'
           {{/if}}
@@ -72,7 +72,7 @@
               <a title='View and/or download' href='{{templatePdfUrl}}' target='_blank'>View</a>
               &bull;
             {{/if}}
-            <a title='Replace base PDF' ($click)='uploadNewPdf()'>Replace</a>
+            <a title='Replace base PDF' on:el:click='uploadNewPdf()'>Replace</a>
           {{else}}
             None..yet
           {{/if}}
@@ -82,9 +82,9 @@
         <author-modal
           modal-title='Confirm PDF replacement'
           cancel-text='Cancel'
-          {@on-cancel}='@cancelLesserReplacement'
+          vm:@onCancel:from='@cancelLesserReplacement'
           submit-text='Replace PDF'
-          {@on-submit}='@confirmLesserReplacement'
+          vm:@onSubmit:from='@confirmLesserReplacement'
         >
           <p>
             The replacement PDF ({{newPageCount}} {{#is newPageCount 1}}page{{else}}pages{{/is}})
@@ -99,7 +99,7 @@
           <p title="{{fontError}}">Failed to load supported fonts</p>
         {{else}}
           <select
-            {($value)}="documentOptions.fontName"
+            el:value:bind="documentOptions.fontName"
             {{#if isLoadingFonts}}
               disabled='disabled'
             {{/if}}
@@ -112,7 +112,7 @@
       </div>
       <div class='font-option'>
         <label>Font size</label>
-        <select {($value)}="documentOptions.fontSize">
+        <select el:value:bind="documentOptions.fontSize">
           <option value="11">11</option>
           <option value="12">12</option>
           <option value="13">13</option>
@@ -123,15 +123,15 @@
       <div class='font-option'>
         <label>Addendum</label>
         <div>
-          <a ($click)="showAddendumOptions()">Configure</a>
+          <a on:el:click="showAddendumOptions()">Configure</a>
         </div>
       </div>
       {{#if isAddendumOptionsShowing}}
         <addendum-options
-          {default-page-size}="getDefaultPageSize()"
-          {saved-options}="documentOptions.addendumOptions"
-          {@on-save-options}="@saveAddendumOptions"
-          {@on-cancel}="@hideAddendumOptions"
+          vm:defaultPageSize:from="getDefaultPageSize()"
+          vm:savedOptions:from="documentOptions.addendumOptions"
+          vm:@onSaveOptions:from="@saveAddendumOptions"
+          vm:@onCancel:from="@hideAddendumOptions"
         />
       {{/if}}
     </section>
@@ -141,29 +141,29 @@
         <input
           type='checkbox'
           class='label-check'
-          {($checked)}="isConditionalLogicEnabled"
+          el:checked:bind="isConditionalLogicEnabled"
         />
       </label>
       <p class="{{#unless isConditionalLogicEnabled}}text-muted{{/unless}}">
         Only use this template if
       </p>
       <condition-form
-        {variables-list}="guide.variablesList"
-        {(operator)}="templateState.operator"
-        {(left-operand)}="templateState.leftOperand"
-        {(right-operand)}="templateState.rightOperand"
-        {disabled}="{{not(isConditionalLogicEnabled)}}"
-        {(right-operand-type)}="templateState.rightOperandType"
+        vm:variablesList:from="guide.variablesList"
+        vm:operator:bind="templateState.operator"
+        vm:leftOperand:bind="templateState.leftOperand"
+        vm:rightOperand:bind="templateState.rightOperand"
+        vm:disabled:from="{{not(isConditionalLogicEnabled)}}"
+        vm:rightOperandType:bind="templateState.rightOperandType"
       />
     </section>
   </div>
   <div class='editor-main'>
     {{#if thumbnailImageUrls.length}}
       <thumbnail-sidebar
-        {is-showing-thumbnails}="isShowingThumbnails"
-        {thumbnail-image-urls}="thumbnailImageUrls"
-        {on-drawer-handle-click}="@onDrawerHandleClick"
-        {on-thumbnail-click}="@onThumbnailClick"
+        vm:isShowingThumbnails:from="isShowingThumbnails"
+        vm:thumbnailImageUrls:from="thumbnailImageUrls"
+        vm:onDrawerHandleClick:from="@onDrawerHandleClick"
+        vm:onThumbnailClick:from="@onThumbnailClick"
       />
     {{/if}}
 
@@ -174,7 +174,7 @@
           <p>Upload a base PDF to get started</p>
           <button
             class='btn btn-primary'
-            ($click)='uploadNewPdf()'
+            on:el:click='uploadNewPdf()'
           >Upload PDF</button>
         </div>
       {{else}}
@@ -189,19 +189,19 @@
             <p title='{{pdfError}}'>Failed to load PDF</p>
             <button
               class='btn btn-primary'
-              ($click)='uploadNewPdf()'
+              on:el:click='uploadNewPdf()'
             >Upload new PDF</button>
           </div>
         {{/if}}
 
         {{#if isAssigning}}
           <assignment-form
-            {variable-dict}="guide.vars"
-            {variable-options-dict}="documentOptions.variableOptions"
-            {on-cancel}="@onAssignmentCancel"
-            {on-assign}="@onAssignmentSubmit"
-            {on-unassign}="@onAssignmentUnassign"
-            {selected-boxes}="selectedBoxes"
+            vm:variableDict:from="guide.vars"
+            vm:variableOptionsDict:from="documentOptions.variableOptions"
+            vm:onCancel:from="@onAssignmentCancel"
+            vm:onAssign:from="@onAssignmentSubmit"
+            vm:onUnassign:from="@onAssignmentUnassign"
+            vm:selectedBoxes:from="selectedBoxes"
           />
         {{/if}}
 
@@ -290,7 +290,7 @@
       <author-modal
         modal-title='Keyboard Shortcuts'
         cancel-text='Dismiss'
-        {@on-cancel}='@toggleShortcutMenu'
+        vm:@onCancel:from='@toggleShortcutMenu'
       >
         <table>
           <thead>

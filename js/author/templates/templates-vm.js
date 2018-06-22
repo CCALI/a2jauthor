@@ -1,8 +1,8 @@
 import $ from 'jquery'
-import Map from 'can/map/'
+import CanMap from "can-map"
 import A2JTemplate from 'caja/author/models/a2j-template'
 
-import 'can/map/define/'
+import "can-map-define"
 
 /**
  * @property {can.Map} templatesPage.ViewModel
@@ -10,7 +10,7 @@ import 'can/map/define/'
  *
  * `<templates-page>`'s viewModel.
  */
-export default Map.extend({
+export default CanMap.extend({
   define: {
     /**
      * @property {Promise} templatesPage.ViewModel.prototype.define.templatesPromise templatesPromise

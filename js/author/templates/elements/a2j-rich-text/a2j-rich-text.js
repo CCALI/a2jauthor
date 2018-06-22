@@ -1,12 +1,12 @@
-import Map from 'can/map/';
+import CanMap from "can-map";
 import loader from '@loader';
-import stache from 'can/view/stache/';
-import Component from 'can/component/';
+import stache from "can-stache";
+import Component from "can-component";
 import contentTpl from './content.stache';
 import template from './a2j-rich-text.stache';
 
 import 'can/view/';
-import 'can/map/define/';
+import "can-map-define";
 
 can.view.preload('rich-text-content', contentTpl);
 
@@ -16,7 +16,7 @@ can.view.preload('rich-text-content', contentTpl);
  *
  * <a2j-rich-text /> viewmodel
  */
-export let RichTextVM = Map.extend({
+export let RichTextVM = CanMap.extend({
   define: {
     /**
      * @property {String} notes
@@ -78,7 +78,7 @@ export let RichTextVM = Map.extend({
  * The Rich Text template element
  */
 export default Component.extend({
-  template,
+  view: template,
   tag: 'a2j-rich-text',
   viewModel: RichTextVM,
 
@@ -104,7 +104,7 @@ export default Component.extend({
       }
     },
 
-    removed() {
+    "{element} beforeremove"() {
       let vm = this.viewModel;
       vm.updateUserContent();
       vm.destroyEditorInstance();
@@ -145,5 +145,7 @@ export default Component.extend({
         }
       });
     }
-  }
+  },
+
+  leakScope: true
 });

@@ -1,8 +1,8 @@
-import Map from 'can/map/'
-import Component from 'can/component/'
+import CanMap from "can-map"
+import Component from "can-component"
 import template from './color-chips.stache'
 
-export const ColorChipsVm = Map.extend({
+export const ColorChipsVm = CanMap.extend({
   define: {
     colorClasses: {
       value () {
@@ -38,7 +38,7 @@ export const ColorChipsVm = Map.extend({
  * page. It just enforces the style and has no functionality by itself.
  */
 export default Component.extend({
-  template,
+  view: template,
   viewModel: ColorChipsVm,
   leakScope: false,
   tag: 'color-chips'

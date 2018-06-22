@@ -7,14 +7,14 @@
     <button
       id="var-add"
       class="btn btn-default navbar-btn"
-      ($click)="openVariableCreator()"
+      on:el:click="openVariableCreator()"
     >
       <span class="glyphicon-plus"></span> Add
     </button>
       <button
         id="uploadCMPFile"
         class="btn btn-primary navbar-btn"
-      ($click)="uploadCmpFile()"
+      on:el:click="uploadCmpFile()"
       >
         <span class="glyphicon-folder-open"></span>
         Add from HotDocs .CMP
@@ -36,7 +36,7 @@
       </thead>
       <tbody>
         {{#each variableList}}
-          <tr ($click)="openVariableEditor(name)">
+          <tr on:el:click="openVariableEditor(name)">
             <td>{{name}}</td>
             <td>{{type}}</td>
             <td>
@@ -60,14 +60,14 @@
     modal-title="Variable"
     cancel-text='Delete'
     submit-text='Save'
-    {@on-cancel}="@onDismissVariableEditing"
-    {@on-submit}="@onConfirmVariableEditing"
+    vm:@onCancel:from="@onDismissVariableEditing"
+    vm:@onSubmit:from="@onConfirmVariableEditing"
   >
     <variable-editor
-      {@initial-variable}="@editingVariable"
-      {@show-usage-finder}=true
-      {@on-variable-change}="@onVariableChange"
-      {@on-select-suggestion}="@onSelectSuggestion"
+      vm:@initialVariable:from="@editingVariable"
+      vm:@showUsageFinder:from=true
+      vm:@onVariableChange:from="@onVariableChange"
+      vm:@onSelectSuggestion:from="@onSelectSuggestion"
     />
   </author-modal>
 {{/if}}

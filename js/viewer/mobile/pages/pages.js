@@ -1,5 +1,5 @@
 import PagesVM from './pages-vm';
-import Component from 'can/component/';
+import Component from "can-component";
 import template from './pages.stache';
 import assembleFormTpl from './assemble-form.stache';
 import saveAnswersFormTpl from './save-answers-form.stache';
@@ -32,7 +32,7 @@ can.view.preload('save-answers-form', saveAnswersFormTpl);
  */
 
 export default Component.extend({
-  template,
+  view: template,
   tag: 'a2j-pages',
   leakScope: false,
   viewModel: PagesVM,

@@ -1,8 +1,8 @@
 import $ from 'jquery'
 import F from 'funcunit'
 import assert from 'assert'
-import stache from 'can/view/stache/'
-import List from 'can/list/'
+import stache from "can-stache"
+import CanList from "can-list"
 import { InterviewsVM } from './interviews'
 
 import 'steal-mocha'
@@ -38,7 +38,7 @@ describe('<interviews-page>', function () {
     })
 
     it('clears preview tracelogic messages', function () {
-      let previewTraceList = new List({ pageName: 'Intro', messages: ['These', 'are', 'usually', 'Maps'] })
+      let previewTraceList = new CanList({ pageName: 'Intro', messages: ['These', 'are', 'usually', 'Maps'] })
       vm.attr('traceLogicList', previewTraceList)
 
       vm.clearPreviewState()

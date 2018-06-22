@@ -1,9 +1,9 @@
-import Map from 'can/map/'
-import Component from 'can/component/'
+import CanMap from "can-map"
+import Component from "can-component"
 import template from './modal.stache'
 import $ from 'jquery'
 
-export const ModalVM = Map.extend({
+export const ModalVM = CanMap.extend({
   define: {
     /*
       modalTitle: String
@@ -43,7 +43,7 @@ export const ModalVM = Map.extend({
 })
 
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   viewModel: ModalVM,
   tag: 'author-modal',

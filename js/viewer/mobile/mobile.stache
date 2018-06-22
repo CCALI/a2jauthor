@@ -7,7 +7,7 @@
 
 <div>
   {{#unless tocOrCreditsShown}}
-    <a2j-header {p-state}="pState" {m-state}="mState" {interview}="interview" />
+    <a2j-header vm:pState:from="pState" vm:mState:from="mState" vm:interview:from="interview" />
   {{/unless}}
 
   {{#if mState.showCredits}}
@@ -26,10 +26,10 @@
   {{#unless tocOrCreditsShown}}
     {{#equal rState.view 'intro'}}
       <a2j-intro
-        {(r-state)}="rState"
-        {(p-state)}="pState"
-        {(m-state)}="mState"
-        {(interview)}="interview">
+        vm:rState:bind="rState"
+        vm:pState:bind="pState"
+        vm:mState:bind="mState"
+        vm:interview:bind="interview">
       </a2j-intro>
     {{/equal}}
 
@@ -42,20 +42,20 @@
 
     {{#equal rState.view 'pages'}}
       <a2j-viewer-navigation
-        {lang}="lang"
-        {logic}="logic"
-        {(selected-page-name)}="rState.page"
-        {(app-state)}="rState"
-        {(interview)}="interview"/>
+        vm:lang:from="lang"
+        vm:logic:from="logic"
+        vm:selectedPageName:bind="rState.page"
+        vm:appState:bind="rState"
+        vm:interview:bind="interview"/>
 
       <a2j-pages
-        {lang}="lang"
-        {(logic)}="logic"
-        {(r-state)}="rState"
-        {(p-state)}="pState"
-        {(m-state)}="mState"
-        {(interview)}="interview"
-        {(modal-content)}="modalContent" />
+        vm:lang:from="lang"
+        vm:logic:bind="logic"
+        vm:rState:bind="rState"
+        vm:pState:bind="pState"
+        vm:mState:bind="mState"
+        vm:interview:bind="interview"
+        vm:modalContent:bind="modalContent" />
     {{/equal}}
   {{/unless}}
 </div>

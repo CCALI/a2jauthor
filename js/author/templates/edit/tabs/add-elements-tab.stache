@@ -1,13 +1,13 @@
 <h3>Standard</h3>
 <div class="row clearfix">
   <div class="col-lg-6">
-    <button class="btn btn-default" ($click)="addElement('section-title')">
+    <button class="btn btn-default" on:el:click="addElement('section-title')">
       Section
     </button>
   </div>
 
   <div class="col-lg-6">
-    <button class="btn btn-default" ($click)="addElement('rich-text')">
+    <button class="btn btn-default" on:el:click="addElement('rich-text')">
       Rich Text
     </button>
   </div>
@@ -15,7 +15,7 @@
 
 <div class="row clearfix">
   <div class="col-lg-6">
-    <button class="btn btn-default" ($click)="addElement('page-break')">
+    <button class="btn btn-default" on:el:click="addElement('page-break')">
       Page Break
     </button>
   </div>
@@ -26,13 +26,13 @@
 <h3>Logic</h3>
 <div class="row clearfix">
   <div class="col-lg-6">
-    <button class="btn btn-default" ($click)="addElement('if-else')">
+    <button class="btn btn-default" on:el:click="addElement('if-else')">
       If / Else
     </button>
   </div>
 
   <div class="col-lg-6">
-    <button class="btn btn-default" ($click)="addElement('repeat-loop')">
+    <button class="btn btn-default" on:el:click="addElement('repeat-loop')">
       Repeat Loop
     </button>
   </div>

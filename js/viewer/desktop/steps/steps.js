@@ -1,16 +1,16 @@
 import $ from 'jquery';
-import Map from 'can/map/';
-import List from 'can/list/';
+import CanMap from "can-map";
+import CanList from "can-list";
 import _isNaN from 'lodash/isNaN';
 import _inRange from 'lodash/inRange';
-import Component from 'can/component/';
+import Component from "can-component";
 import template from './steps.stache';
 import _findIndex from 'lodash/findIndex';
 import _truncate from 'lodash/truncate';
 import learnMoreTemplate from './learn-more.stache';
 import {Analytics} from 'caja/viewer/util/analytics';
 
-import 'can/map/define/';
+import "can-map-define";
 
 can.view.preload('learn-more-tpl', learnMoreTemplate);
 
@@ -20,7 +20,7 @@ can.view.preload('learn-more-tpl', learnMoreTemplate);
  *
  * `<a2j-viewer-steps>`'s viewModel.
  */
-export let ViewerStepsVM = Map.extend('ViewerStepsVM', {
+export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
   define: {
     /**
      * @property {can.Map} steps.ViewModel.prototype.currentPage currentPage
@@ -349,8 +349,8 @@ export let ViewerStepsVM = Map.extend('ViewerStepsVM', {
     },
 
     stepNextCssBottom: {
-      Type: List,
-      Value: List
+      Type: CanList,
+      Value: CanList
     }
   },
 
@@ -514,7 +514,7 @@ export let ViewerStepsVM = Map.extend('ViewerStepsVM', {
  * @codeend
  */
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   tag: 'a2j-viewer-steps',
   viewModel: ViewerStepsVM,

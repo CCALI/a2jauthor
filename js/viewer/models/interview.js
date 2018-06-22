@@ -1,5 +1,5 @@
-import List from 'can/list/'
-import Model from 'can/model/'
+import CanList from "can-list"
+import Model from "can-model"
 import _last from 'lodash/last'
 import _keys from 'lodash/keys'
 import _find from 'lodash/find'
@@ -12,7 +12,7 @@ import parser from 'caja/viewer/mobile/util/parser'
 import {Hair, Skin} from 'caja/viewer/desktop/avatar/colors'
 
 import 'can/list/sort/'
-import 'can/map/define/'
+import "can-map-define"
 import 'can/util/batch/'
 
 /**
@@ -48,13 +48,13 @@ const Interview = Model.extend({
     let resumeDfd = can.Deferred()
     let interviewPath = getInterviewPath(data.url)
 
-    let interviewDfd = can.ajax({
+    let interviewDfd = ajax({
       url: data.url
     })
 
     interviewDfd.done(function (interview) {
       if (data.resume) {
-        can.ajax({
+        ajax({
           url: data.resume,
           dataType: 'text'
         })
@@ -88,7 +88,7 @@ const Interview = Model.extend({
     data._pages = data.pages
     data.pages = []
 
-    can.each(data._pages, function (p) {
+    each(data._pages, function (p) {
       const page = _assign({}, p)
       const step = data.steps[page.step]
 
@@ -97,7 +97,7 @@ const Interview = Model.extend({
       data.pages.push(page)
     })
 
-    can.each(data.vars, function (v) {
+    each(data.vars, function (v) {
       v.values = v.values || [null]
     })
 
@@ -211,7 +211,7 @@ const Interview = Model.extend({
       serialize: false,
 
       get () {
-        let list = new List()
+        let list = new CanList()
         let answers = this.attr('answers')
         let vars = this.attr('vars').attr()
 
@@ -264,7 +264,7 @@ const Interview = Model.extend({
 
   clearAnswers () {
     // can.batch required for Author preview mode with long var/answer lists
-    can.batch.start()
+    canBatch.start()
 
     this.attr('answers').each((answer) => {
       if (answer && answer.attr('values') && answer.attr('values').length > 1) {
@@ -272,7 +272,7 @@ const Interview = Model.extend({
       }
     })
 
-    can.batch.stop()
+    canBatch.stop()
   },
 
   createGuide () {

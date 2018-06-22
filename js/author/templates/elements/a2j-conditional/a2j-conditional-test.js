@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import F from 'funcunit';
 import assert from 'assert';
-import stache from 'can/view/stache/';
+import stache from "can-stache";
 import ConditionalVM from './a2j-conditional-vm';
 
 import 'steal-mocha';
@@ -43,7 +43,7 @@ describe('<a2j-conditional>', function() {
 
     beforeEach(function() {
       let frag = stache(
-        '<a2j-conditional {(children)}="children" />'
+        '<a2j-conditional vm:children:bind="children" />'
       );
 
       $('#test-area').html(frag({

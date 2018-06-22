@@ -1,5 +1,5 @@
 import Bloodhound from 'typeahead.js/dist/bloodhound';
-import Component from 'can/component/';
+import Component from "can-component";
 import VarPickerVM from './varpicker-vm';
 import template from './varpicker.stache';
 
@@ -22,7 +22,7 @@ import 'bootstrap-tokenfield';
  */
 
 export default Component.extend({
-  template,
+  view: template,
   tag: 'var-picker',
   viewModel: VarPickerVM,
 
@@ -53,7 +53,7 @@ export default Component.extend({
       });
     },
 
-    removed() {
+    "{element} beforeremove"() {
       let $input = this.element.find('input');
 
       $input
@@ -74,5 +74,7 @@ export default Component.extend({
     'input tokenfield:removedtoken': function() {
       this.element.find('.token-input.tt-input').show();
     }
-  }
+  },
+
+  leakScope: true
 });

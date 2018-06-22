@@ -1,8 +1,8 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
+import CanMap from "can-map";
+import Component from "can-component";
 import template from './header.stache';
 
-import 'can/map/define/';
+import "can-map-define";
 
 /**
  * @module {Module} viewer/mobile/header/ <a2j-header>
@@ -23,7 +23,7 @@ import 'can/map/define/';
  *
  * `<a2j-header>` viewModel.
  */
-const HeaderVM = Map.extend({
+const HeaderVM = CanMap.extend({
   define: {
     /**
      * @property {Booelan} header.ViewModel.prototype.disableSaveButton disableSaveButton
@@ -63,7 +63,7 @@ const HeaderVM = Map.extend({
 });
 
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   tag: 'a2j-header',
   viewModel: HeaderVM

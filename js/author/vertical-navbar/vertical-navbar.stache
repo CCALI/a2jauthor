@@ -9,7 +9,7 @@
   <nav class="nav navbar-nav">
     {{#each items}}
       <li ref="{{ref}}" class="{{#if active}}active{{/if}}">
-        <a href="#" ($click)="setPage(this)">
+        <a href="#" on:el:click="setPage(this)">
           <span class="icon {{icon}}"></span>
           <span class="title">{{title}}</span>
         </a>

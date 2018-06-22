@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import assert from 'assert';
-import stache from 'can/view/stache/';
+import stache from "can-stache";
 
 import 'steal-mocha';
 import './options-pane';

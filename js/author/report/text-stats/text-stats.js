@@ -1,5 +1,5 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
+import CanMap from "can-map";
+import Component from "can-component";
 import template from './text-stats.stache';
 
 /**
@@ -9,7 +9,7 @@ import template from './text-stats.stache';
  * `<text-stats>`'s viewModel.
  *
  */
-export const TextStatsVM = Map.extend('TextStatsVM', {
+export const TextStatsVM = CanMap.extend('TextStatsVM', {
   define: {
     stats: {}
   }
@@ -29,7 +29,8 @@ export const TextStatsVM = Map.extend('TextStatsVM', {
  * @codeend
  */
 export default Component.extend({
-  template,
+  view: template,
   tag: 'text-stats',
-  viewModel: TextStatsVM
+  viewModel: TextStatsVM,
+  leakScope: true
 });

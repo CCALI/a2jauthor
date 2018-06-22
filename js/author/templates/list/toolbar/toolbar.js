@@ -1,14 +1,14 @@
-import Map from "can/map/";
-import Component from "can/component/";
+import CanMap from "can-map";
+import Component from "can-component";
 import template from "./toolbar.stache";
 
-import "can/route/";
-import "can/map/define/";
+import "can-route";
+import "can-map-define";
 import "bootstrap/js/modal";
 
 import { sharedPdfFlag } from "caja/author/pdf/index";
 
-export let Toolbar = Map.extend({
+export let Toolbar = CanMap.extend({
   define: {
     filter: {
       type: "string"
@@ -41,12 +41,12 @@ export let Toolbar = Map.extend({
       templateId: "new"
     };
 
-    can.route.attr(newTemplateTransition);
+    route.attr(newTemplateTransition);
   }
 });
 
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   viewModel: Toolbar,
   tag: "templates-toolbar",

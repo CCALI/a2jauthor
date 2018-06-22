@@ -12,7 +12,7 @@
           <div class="spinner"></div>
       </div>
     {{else}}
-      <div class="play-pause-btn" ($click)='togglePlay()'>
+      <div class="play-pause-btn" on:el:click='togglePlay()'>
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="24" viewBox="0 0 18 24">
               <path
                 id="playPause"
@@ -40,7 +40,7 @@
     </div>
 
     <div class="volume">
-        <div class="volume-btn" ($click)='toggleVolume()'>
+        <div class="volume-btn" on:el:click='toggleVolume()'>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <path
                   id="speaker"
@@ -67,12 +67,12 @@
   {{/if}}
   <audio
     crossorigin
-    ($timeupdate)='updateProgress()'
-    ($volumechange)='updateVolume()'
-    ($loadedmetadata)='updateMetadata()'
-    ($canplay)='updateLoading()'
-    ($ended)='playerEnded()'
-    ($error)='playerErrored()'
+    on:el:timeupdate='updateProgress()'
+    on:el:volumechange='updateVolume()'
+    on:el:loadedmetadata='updateMetadata()'
+    on:el:canplay='updateLoading()'
+    on:el:ended='playerEnded()'
+    on:el:error='playerErrored()'
   >
     <source src="{{sourceUrl}}" type="audio/mpeg">
   </audio>

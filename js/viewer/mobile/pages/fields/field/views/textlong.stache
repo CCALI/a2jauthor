@@ -11,11 +11,11 @@
       id="{{label}}"
       class="form-control"
       name="{{name}}"
-      ($change)="validateField"
-      {($value)}="field._answer.values"
-      ($input)="calcAvailableLength(%event)"/>
+      on:el:change="validateField"
+      el:value:bind="field._answer.values"
+      on:el:input="calcAvailableLength(%event)"/>
 
-    <button class="btn btn-default btn-xs expand-textlong pull-right" ($mousedown)="expandTextlong(field)"><span class="icon resize-btn-icon glyphicon-resize" aria-hidden="true"></span></button>
+    <button class="btn btn-default btn-xs expand-textlong pull-right" on:el:mousedown="expandTextlong(field)"><span class="icon resize-btn-icon glyphicon-resize" aria-hidden="true"></span></button>
 
       {{#if maxChars}}
         {{> exceeded-maxchars-tpl }}

@@ -1,17 +1,17 @@
-import Map from 'can/map/'
-import Component from 'can/component/'
+import CanMap from "can-map"
+import Component from "can-component"
 import template from './modal.stache'
 import {Analytics} from 'caja/viewer/util/analytics'
 
-import 'can/map/define/'
+import "can-map-define"
 import 'bootstrap/js/modal'
 import 'lightbox2/dist/js/lightbox'
 import 'lightbox2/dist/css/lightbox.css'
 
-export let ModalVM = Map.extend({})
+export let ModalVM = CanMap.extend({})
 
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   tag: 'a2j-modal',
   viewModel: ModalVM,

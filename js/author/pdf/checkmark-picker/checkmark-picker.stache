@@ -9,7 +9,7 @@
     <div class='status'>
       <i>
         <span class='text-danger'>Failed to load available checkmarks.</span>
-        <button class='btn btn-link' ($click)='loadChecks()'>Retry</button>
+        <button class='btn btn-link' on:el:click='loadChecks()'>Retry</button>
       </i>
     </div>
   {{else}}
@@ -17,7 +17,7 @@
       {{#each checks}}
         <li
           class='check {{#is name selectedCheck}}check--selected{{/is}}'
-          ($click)='onSelectCheck(name)'
+          on:el:click='onSelectCheck(name)'
         >
           <span title='{{name}}'>{{text}}</span>
         </li>

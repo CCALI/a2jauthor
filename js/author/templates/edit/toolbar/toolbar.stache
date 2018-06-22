@@ -12,7 +12,7 @@
         <form class="navbar-form template-name-form">
           <div class="form-group">
             {{#if template}}
-              <input type="text" class="form-control" {($value)}="template.title" ($blur)="saveTemplate()">
+              <input type="text" class="form-control" el:value:bind="template.title" on:el:blur="saveTemplate()">
             {{/if}}
           </div>
         </form>
@@ -25,7 +25,7 @@
         </ul>
 
         <div class="nav navbar-nav navbar-right">
-          <button ($click)="saveTemplate"
+          <button on:el:click="saveTemplate"
             class="btn btn-default navbar-btn save-template">
 
             <span class="glyphicon-floppy"></span> Save Template

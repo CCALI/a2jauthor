@@ -1,10 +1,10 @@
-import Map from "can/map/";
-import Component from "can/component/";
+import CanMap from "can-map";
+import Component from "can-component";
 import template from "./tab.stache";
 import parser from 'caja/viewer/mobile/util/parser';
 import { promptFile } from 'caja/author/utils/uploader';
 
-export const VariablesTabVM = Map.extend({
+export const VariablesTabVM = CanMap.extend({
   define: {
     /* variables: List Variable */
 
@@ -112,7 +112,7 @@ export const VariablesTabVM = Map.extend({
 
   addUploadedVariables (cmpTuples) {
     const guide = this.attr('guide');
-    can.batch.start();
+    canBatch.start();
     if (guide && guide.vars) {
       cmpTuples.forEach(newVar => {
         // name, type, repeating, comment
@@ -121,12 +121,12 @@ export const VariablesTabVM = Map.extend({
         guide.vars.attr(newVar.name.toLowerCase(), variable);
       });
     }
-    can.batch.stop();
+    canBatch.stop();
   }
 });
 
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   viewModel: VariablesTabVM,
   tag: 'variables-tab'

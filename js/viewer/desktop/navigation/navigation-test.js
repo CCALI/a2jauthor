@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import assert from 'assert';
-import stache from 'can/view/stache/';
+import stache from "can-stache";
 import AppState from 'caja/viewer/models/app-state';
 import Interview from 'caja/viewer/models/interview';
 import constants from 'caja/viewer/models/constants';

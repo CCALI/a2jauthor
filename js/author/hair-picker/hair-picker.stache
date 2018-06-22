@@ -1,6 +1,6 @@
 <can-import from='caja/author/color-chips/' />
 <color-chips
-  {selected-color-class}="selectedHairClass"
-  {color-classes}="hairClasses"
-  {on-color-class}="@onHairClass"
+  vm:selectedColorClass:from="selectedHairClass"
+  vm:colorClasses:from="hairClasses"
+  vm:onColorClass:from="@onHairClass"
 />

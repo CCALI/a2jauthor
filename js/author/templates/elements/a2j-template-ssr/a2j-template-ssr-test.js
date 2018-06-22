@@ -1,5 +1,5 @@
 import assert from 'assert';
-import List from 'can/list/';
+import CanList from "can-list";
 import TemplateSsrVM from './a2j-template-ssr-vm';
 
 describe('a2j-template-srr', function() {
@@ -9,7 +9,7 @@ describe('a2j-template-srr', function() {
       const vm = new TemplateSsrVM({ guideId: '1261', templateId: '2112' });
 
       vm.attr('templatesPromise').then(templates => {
-        assert(templates instanceof List);
+        assert(templates instanceof CanList);
         done();
       });
     });

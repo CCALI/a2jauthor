@@ -1,4 +1,4 @@
-import fixture from 'can/util/fixture/';
+import fixture from "can-fixture";
 import a2jTemplates from './a2j-templates';
 
 fixture('GET /api/templates/{guideId}', a2jTemplates);

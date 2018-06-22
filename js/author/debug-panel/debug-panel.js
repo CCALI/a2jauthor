@@ -1,10 +1,10 @@
-import Map from 'can/map/'
-import List from 'can/list/'
+import CanMap from "can-map"
+import CanList from "can-list"
 import _find from 'lodash/find'
-import Component from 'can/component/'
+import Component from "can-component"
 import template from './debug-panel.stache'
 
-import 'can/map/define/'
+import "can-map-define"
 
 /**
  * @property {can.Map} authorDebugPanel.ViewModel
@@ -12,7 +12,7 @@ import 'can/map/define/'
  *
  * `<author-debug-panel>`'s viewModel.
  */
-export let DebugPanelVM = Map.extend({
+export let DebugPanelVM = CanMap.extend({
   define: {
     /**
      * @property {can.List} authorDebugPanel.ViewModel.prototype.variables variables
@@ -26,7 +26,7 @@ export let DebugPanelVM = Map.extend({
 
         return interview
           ? interview.attr('variablesList')
-          : new List([])
+          : new CanList([]);
       }
     },
 
@@ -60,7 +60,7 @@ export let DebugPanelVM = Map.extend({
      */
     traceLogic: {
       value: function () {
-        return new List()
+        return new CanList();
       }
     },
 
@@ -75,7 +75,7 @@ export let DebugPanelVM = Map.extend({
      */
     traceLogicList: {
       value: function () {
-        return new List()
+        return new CanList();
       },
 
       get (lastSetValue) {
@@ -186,7 +186,7 @@ export let DebugPanelVM = Map.extend({
  * @codeend
  */
 export default Component.extend({
-  template,
+  view: template,
   viewModel: DebugPanelVM,
   tag: 'author-debug-panel',
 
@@ -221,5 +221,7 @@ export default Component.extend({
 
       return (format === 'val' && !msg) ? 'blank' : msg
     }
-  }
+  },
+
+  leakScope: true
 })

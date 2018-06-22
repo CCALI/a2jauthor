@@ -12,10 +12,10 @@
         id="{{label}}"
         name="{{name}}"
         class="form-control"
-        ($input)="preValidateNumber"
-        ($change)="validateField"
-        {($value)}="field._answer.values"/>
-      {{#if field.calculator}}<img src="{{joinBase 'viewer/images/calculator.png'}}" class="calc-icon" ($click)="showCalculator(field)" role="presentation" />{{/if}}
+        on:el:input="preValidateNumber"
+        on:el:change="validateField"
+        el:value:bind="field._answer.values"/>
+      {{#if field.calculator}}<img src="{{joinBase 'viewer/images/calculator.png'}}" class="calc-icon" on:el:click="showCalculator(field)" role="presentation" />{{/if}}
     </div>
   </div>
   {{> invalid-prompt-tpl }}

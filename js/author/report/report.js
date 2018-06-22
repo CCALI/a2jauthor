@@ -1,6 +1,6 @@
-import Map from 'can/map/'
-import List from 'can/list/'
-import Component from 'can/component/'
+import CanMap from "can-map"
+import CanList from "can-list"
+import Component from "can-component"
 import template from './report.stache'
 import pagePartial from './page-partial.stache'
 import popupPartial from './popup-partial.stache'
@@ -19,7 +19,7 @@ can.view.preload('popup-partial', popupPartial)
  * `<report-page>`'s viewModel.
  *
  */
-export const ReportVM = Map.extend('ReportVM', {
+export const ReportVM = CanMap.extend('ReportVM', {
   define: {
     parentGuide: {
       set (guide) {
@@ -211,8 +211,8 @@ export const ReportVM = Map.extend('ReportVM', {
      * list of grades used to get overall interview reading grade level
      */
     fkGradeList: {
-      Type: List,
-      value: () => new List()
+      Type: CanList,
+      value: () => new CanList()
     },
 
     /**
@@ -371,7 +371,7 @@ export const ReportVM = Map.extend('ReportVM', {
  * @codeend
  */
 export default Component.extend({
-  template,
+  view: template,
   viewModel: ReportVM,
   tag: 'report-page',
 
@@ -415,5 +415,7 @@ export default Component.extend({
         return ''
       }
     }
-  }
+  },
+
+  leakScope: true
 })

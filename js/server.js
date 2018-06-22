@@ -1,10 +1,10 @@
-import Map from 'can/map/'
+import CanMap from "can-map"
 
-import 'can/route/'
-import 'can/map/define/'
-import 'can/route/pushstate/'
+import "can-route"
+import "can-map-define"
+import "can-route-pushstate"
 
-const AppViewModel = Map.extend({
+const AppViewModel = CanMap.extend({
   define: {
     title: {
       serialize: false,

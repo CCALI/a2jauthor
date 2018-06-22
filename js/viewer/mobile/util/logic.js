@@ -1,4 +1,4 @@
-import Map from 'can/map/';
+import CanMap from "can-map";
 import regex from 'caja/viewer/mobile/util/regex';
 import tLogic from 'caja/viewer/mobile/util/tlogic';
 import Lang from 'caja/viewer/mobile/util/lang';
@@ -8,9 +8,9 @@ import constants from 'caja/viewer/models/constants';
 import Infinite from 'caja/viewer/mobile/util/infinite';
 import numeral from 'numeral';
 
-import 'can/map/define/';
+import "can-map-define";
 
-export default Map.extend({
+export default CanMap.extend({
   define: {
     gotoPage: {
       get: function() {
@@ -38,15 +38,15 @@ export default Map.extend({
     let traceMethods = ['traceTag'];
     let methods = [this.guide, regex, constants];
 
-    can.each(stringMethods, function(fn) {
+    each(stringMethods, function(fn) {
       methods.push(can.proxy(cString[fn], cString));
     });
 
-    can.each(dateMethods, function(fn) {
+    each(dateMethods, function(fn) {
       methods.push(can.proxy(cDate[fn], cDate));
     });
 
-    can.each(traceMethods, function() {
+    each(traceMethods, function() {
       methods.push(function() {});
     });
 

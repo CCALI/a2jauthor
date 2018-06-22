@@ -1,8 +1,8 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
+import CanMap from "can-map";
+import Component from "can-component";
 import template from './intro.stache';
 
-const IntroVM = Map.extend({
+const IntroVM = CanMap.extend({
   navigate() {
     this.attr('rState').attr({
       page: this.attr('interview.firstPage'),
@@ -12,7 +12,7 @@ const IntroVM = Map.extend({
 });
 
 export default Component.extend({
-  template,
+  view: template,
   tag: 'a2j-intro',
   viewModel: IntroVM,
 
@@ -21,5 +21,7 @@ export default Component.extend({
       this.viewModel.attr('mState.header', '');
       this.viewModel.attr('mState.step', '');
     }
-  }
+  },
+
+  leakScope: true
 });

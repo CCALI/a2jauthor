@@ -9,7 +9,7 @@ import setMobileDesktopClass from 'caja/viewer/util/set-mobile-desktop-class'
 import {Analytics} from 'caja/viewer/util/analytics'
 
 export default function ({interview, pState, mState, rState}) {
-  can.route.ready()
+  route.ready()
 
   pState = pState || new PersistedState()
   pState.attr('setDataURL', mState.attr('setDataURL'))
@@ -45,7 +45,7 @@ export default function ({interview, pState, mState, rState}) {
 
   rState.attr('logic', logic)
 
-  const modalContent = can.compute()
+  const modalContent = compute()
 
   // piwik: set author id for filtering/tracking
   const authorId = interview.authorId || 0

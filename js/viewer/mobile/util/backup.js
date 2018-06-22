@@ -9,7 +9,7 @@
  */
 import $ from 'jquery'
 
-import 'can/map/'
+import "can-map"
 import 'can/util/object/'
 import 'can/util/library'
 
@@ -26,11 +26,11 @@ let flatProps = function (a, cur) {
   return obj
 };
 
-let oldSetup = can.Map.prototype.setup
+let oldSetup = CanMap.prototype.setup
 
-$.extend(can.Map.prototype, {
+$.extend(CanMap.prototype, {
   setup: function () {
-    this._backupStore = can.compute()
+    this._backupStore = compute()
     return oldSetup.apply(this, arguments)
   },
 

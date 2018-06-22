@@ -1,7 +1,7 @@
 import $ from 'jquery'
-import Map from 'can/map/'
-import List from 'can/list/'
-import stache from 'can/view/stache/'
+import CanMap from "can-map"
+import CanList from "can-list"
+import stache from "can-stache"
 import assert from 'assert'
 import PagesVM from './pages-vm'
 import sinon from 'sinon'
@@ -18,7 +18,7 @@ describe('<a2j-pages>', () => {
   let defaults
 
   beforeEach(() => {
-    logicStub = new Map({
+    logicStub = new CanMap({
       exec: $.noop,
       infinite: {
         errors: $.noop,
@@ -33,19 +33,19 @@ describe('<a2j-pages>', () => {
       varSet: sinon.spy()
     })
 
-    nextPageStub = new Map({
+    nextPageStub = new CanMap({
       name: 'Next',
       fields: []
     })
 
     defaults = {
-      traceLogic: new List(),
-      currentPage: new Map({ fields: [], repeatVar: '' }),
+      traceLogic: new CanList(),
+      currentPage: new CanMap({ fields: [], repeatVar: '' }),
       logic: logicStub,
       rState: new AppState(),
       mState: { },
       interview: {
-        answers: new Map(),
+        answers: new CanMap(),
         getPageByName: function () {
           return nextPageStub
         },
@@ -79,7 +79,7 @@ describe('<a2j-pages>', () => {
       })
 
       it('without repeatVar logic', () => {
-        const button = new Map({
+        const button = new CanMap({
           label: 'Go!',
           next: 'Next'
         })
@@ -111,7 +111,7 @@ describe('<a2j-pages>', () => {
       })
 
       it('with repeatVar logic', () => {
-        const button = new Map({
+        const button = new CanMap({
           label: 'Go!',
           next: 'Next',
           repeatVar: 'Repeat',
@@ -151,7 +151,7 @@ describe('<a2j-pages>', () => {
       it('saves answer when button has a value', () => {
         let answers = defaults.interview.answers
 
-        let kidstf = new Map({
+        let kidstf = new CanMap({
           comment: '',
           name: 'KidsTF',
           repeating: true,
@@ -161,7 +161,7 @@ describe('<a2j-pages>', () => {
 
         answers.attr('kidstf', kidstf)
 
-        const button = new Map({
+        const button = new CanMap({
           label: 'Go!',
           next: 'Next',
           name: 'KidsTF',
@@ -178,7 +178,7 @@ describe('<a2j-pages>', () => {
         let answers = defaults.interview.answers
         let page = defaults.currentPage
 
-        let agesnu = new Map({
+        let agesnu = new CanMap({
           comment: '',
           name: 'AgesNU',
           repeating: true,
@@ -188,7 +188,7 @@ describe('<a2j-pages>', () => {
 
         answers.attr('agesnu', agesnu)
 
-        const button = new Map({
+        const button = new CanMap({
           label: 'Go!',
           next: 'Next',
           name: 'AgesNU',
@@ -209,7 +209,7 @@ describe('<a2j-pages>', () => {
         const answers = defaults.interview.answers
         const incompleteTF = constants.vnInterviewIncompleteTF.toLowerCase()
 
-        const incomplete = new Map({
+        const incomplete = new CanMap({
           comment: '',
           name: incompleteTF,
           repeating: false,
@@ -217,7 +217,7 @@ describe('<a2j-pages>', () => {
           values: [null, true]
         })
 
-        const specialButton = new Map({
+        const specialButton = new CanMap({
           label: 'Special!',
           next: constants.qIDSUCCESS
         })
@@ -263,14 +263,14 @@ describe('<a2j-pages>', () => {
 
     describe('default values', () => {
       it('sets default value', () => {
-        let field = new Map({
+        let field = new CanMap({
           name: 'StateTE',
           label: 'Enter State:',
           type: 'text',
           value: 'Texas'
         })
 
-        let answerVar = new Map({
+        let answerVar = new CanMap({
           name: 'statete',
           type: 'text',
           values: [null]
@@ -287,14 +287,14 @@ describe('<a2j-pages>', () => {
       })
 
       it('ignores default value if previous answer exists', () => {
-        let field = new Map({
+        let field = new CanMap({
           name: 'StateTE',
           label: 'Enter State:',
           type: 'text',
           value: 'Texas'
         })
 
-        let answerVar = new Map({
+        let answerVar = new CanMap({
           name: 'statete',
           type: 'text',
           values: [null, 'Illinois']

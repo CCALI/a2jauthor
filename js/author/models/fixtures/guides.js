@@ -1,4 +1,4 @@
-import fixture from 'can/util/fixture/';
+import fixture from "can-fixture";
 import guidesList from './guides/guides-list.json';
 import thrcInterviewXML from './guides/thrc-interview.xml!text';
 import mobileInterviewXML from './guides/mobile-online-interview.xml!text';

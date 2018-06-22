@@ -1,9 +1,9 @@
-import Map from 'can/map/';
+import CanMap from "can-map";
 import moment from 'moment';
 import _isNull from 'lodash/isNull';
 import _isUndefined from 'lodash/isUndefined';
 
-import 'can/map/define/';
+import "can-map-define";
 
 /**
  * @property {can.Map} validations.prototype.Config
@@ -13,7 +13,7 @@ import 'can/map/define/';
  *
  * defines the type of each property in the validations Map
  */
-let Config = Map.extend({
+let Config = CanMap.extend({
   define: {
     maxChars: {
       type: 'number'
@@ -108,7 +108,7 @@ let Config = Map.extend({
  *   var error = validations.required() || validations.min() || validations.max();
  * @codeend
  */
-export default Map.extend({
+export default CanMap.extend({
   define: {
     /**
      * @property {can.Map} validations.prototype.config config

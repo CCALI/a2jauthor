@@ -1,9 +1,9 @@
-import Component from 'can/component/';
+import Component from "can-component";
 import template from './a2j-template.stache';
 import A2JTemplateVM from './a2j-template-vm';
 
 export default Component.extend({
-  template,
+  view: template,
   tag: 'a2j-template',
   viewModel: A2JTemplateVM,
 
@@ -97,5 +97,7 @@ export default Component.extend({
     '{viewModel} selectedNode': function(vm, evt, selectedNode) {
       this.element.trigger('node-selected', selectedNode);
     }
-  }
+  },
+
+  leakScope: true
 });

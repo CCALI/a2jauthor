@@ -1,9 +1,9 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
+import CanMap from "can-map";
+import Component from "can-component";
 import _isFunction from 'lodash/isFunction';
 import template from './element-toolbar.stache';
 
-import 'can/map/define/';
+import "can-map-define";
 
 /**
  * @module {Module} author/templates/elements/element-toolbar/ <element-toolbar>
@@ -19,7 +19,7 @@ import 'can/map/define/';
  * @codeend
  */
 
-export const ElementToolbar = Map.extend({
+export const ElementToolbar = CanMap.extend({
   define: {},
 
   clone() {
@@ -50,7 +50,7 @@ export const ElementToolbar = Map.extend({
 });
 
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   tag: 'element-toolbar',
   viewModel: ElementToolbar

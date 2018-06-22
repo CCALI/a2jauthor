@@ -1,8 +1,8 @@
 import $ from 'jquery';
 import F from 'funcunit';
-import Map from 'can/map/';
+import CanMap from "can-map";
 import assert from 'assert';
-import stache from 'can/view/stache/';
+import stache from "can-stache";
 
 import './header';
 import 'steal-mocha';
@@ -11,11 +11,11 @@ describe('a2j-header', function() {
   let vm;
 
   beforeEach(function() {
-    const mState = new Map();
-    const pState = new Map();
+    const mState = new CanMap();
+    const pState = new CanMap();
 
     const frag = stache(
-      '<a2j-header {m-state}="mState" {p-state}="pState" />'
+      '<a2j-header vm:mState:from="mState" vm:pState:from="pState" />'
     );
 
     $('#test-area').html(frag({ mState, pState }));

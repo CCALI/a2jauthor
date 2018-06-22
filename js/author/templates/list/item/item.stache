@@ -26,9 +26,9 @@
             <li class="divider"></li>
             {{#if hovered}}
               {{#if active}}
-                <li class="options"><a draggable="false" class="delete" ($click)="deleteTemplate()" href="#">Delete</a></li>
+                <li class="options"><a draggable="false" class="delete" on:el:click="deleteTemplate()" href="#">Delete</a></li>
               {{else}}
-                <li class="options"><a draggable="false" class="restore" ($click)="restoreTemplate()" href="#">Restore</a></li>
+                <li class="options"><a draggable="false" class="restore" on:el:click="restoreTemplate()" href="#">Restore</a></li>
               {{/if}}
             {{/if}}
           </ul>

@@ -1,5 +1,5 @@
-import Map from 'can/map/'
-import Component from 'can/component/'
+import CanMap from "can-map"
+import Component from "can-component"
 import template from './skin-picker.stache'
 import {
   skinTones,
@@ -8,7 +8,7 @@ import {
 
 const skinClasses = skinTones.map(getClassNameForSkin)
 
-export const SkinPickerVm = Map.extend({
+export const SkinPickerVm = CanMap.extend({
   define: {
     selectedSkinClass: {
       get () {
@@ -36,7 +36,7 @@ export const SkinPickerVm = Map.extend({
 
 export default Component.extend({
   tag: 'skin-picker',
-  template,
+  view: template,
   leakScope: false,
   viewModel: SkinPickerVm
 })

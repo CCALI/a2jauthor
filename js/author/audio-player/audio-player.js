@@ -1,8 +1,8 @@
-import Map from 'can/map/'
-import Component from 'can/component/'
+import CanMap from "can-map"
+import Component from "can-component"
 import template from './audio-player.stache'
 
-import 'can/map/define/'
+import "can-map-define"
 
 function leftPad (len, char, str) {
   while (str.length < len) {
@@ -33,7 +33,7 @@ function formatTime (inputSeconds) {
   return `${minutes}:${minTwoDigit(seconds)}`
 }
 
-export const AudioPlayerVm = Map.extend('AudioPlayer', {
+export const AudioPlayerVm = CanMap.extend('AudioPlayer', {
   define: {
     player: {value: null},
     isPlaying: {value: false},
@@ -196,7 +196,7 @@ function changeVolume (player, event, dragElement) {
 }
 
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   viewModel: AudioPlayerVm,
   tag: 'audio-player',
@@ -206,7 +206,7 @@ export default Component.extend({
       this.viewModel.attr('player', player)
       this.viewModel.attr('isLoadingAudio', true)
     },
-    removed () {
+    "{element} beforeremove" () {
       this.viewModel.attr('player', null)
     },
     '{window} mousedown' (target, event) {

@@ -1,8 +1,8 @@
-import Map from "can/map/";
-import Component from "can/component/";
+import CanMap from "can-map";
+import Component from "can-component";
 import template from "./thumbnail-sidebar.stache";
 
-export const ThumbnailSidebarVm = Map.extend({
+export const ThumbnailSidebarVm = CanMap.extend({
   define: {
     isShowingThumbnails: {
       type: 'boolean',
@@ -48,7 +48,7 @@ export const ThumbnailSidebarVm = Map.extend({
 
 export default Component.extend({
   tag: "thumbnail-sidebar",
-  template,
+  view: template,
   leakScope: false,
   viewModel: ThumbnailSidebarVm
 });

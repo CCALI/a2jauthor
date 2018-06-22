@@ -1,6 +1,6 @@
 import loader from '@loader';
-import stache from 'can/view/stache/';
-import Component from 'can/component/';
+import stache from "can-stache";
+import Component from "can-component";
 import _isNumber from 'lodash/isNumber';
 import RepeatLoopVM from './a2j-repeat-loop-vm';
 import template from './a2j-repeat-loop.stache';
@@ -34,7 +34,7 @@ const displayTypeMap = {
  * @codeend
  */
 export default Component.extend({
-  template,
+  view: template,
   tag: 'a2j-repeat-loop',
   viewModel: RepeatLoopVM,
 
@@ -148,5 +148,7 @@ export default Component.extend({
 
       return `<${tag}>${title}</${tag}>`;
     }
-  }
+  },
+
+  leakScope: true
 });

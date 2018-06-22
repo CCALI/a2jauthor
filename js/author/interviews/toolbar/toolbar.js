@@ -1,4 +1,4 @@
-import Component from 'can/component/'
+import Component from "can-component"
 import template from './toolbar.stache'
 
 /**
@@ -9,7 +9,7 @@ import template from './toolbar.stache'
  * Displays buttons that allow user to open, delete, clone and upload interviews.
  */
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   tag: 'interviews-toolbar',
 

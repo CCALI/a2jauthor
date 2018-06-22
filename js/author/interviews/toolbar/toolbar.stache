@@ -7,5 +7,5 @@
     <li><a href="#" class="open-guide"><span class="glyphicon-folder-open"></span> Open</a></li>
     <li><a href="#" class="delete-guide"><span class="glyphicon-trash"></span> Delete</a></li>
   </ul>
-  <a2j-upload {(interviews)}="interviews"></a2j-upload>
+  <a2j-upload vm:interviews:bind="interviews"></a2j-upload>
 </button-toolbar>

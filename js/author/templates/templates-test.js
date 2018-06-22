@@ -1,9 +1,9 @@
 import F from 'funcunit'
-import Map from 'can/map/'
+import CanMap from "can-map"
 import assert from 'assert'
 import Templates from './templates-vm'
 
-import 'can/route/'
+import "can-route"
 import 'steal-mocha'
 import './templates'
 
@@ -13,7 +13,7 @@ describe('<templates-page>', function () {
 
     beforeEach(function () {
       vm = new Templates({
-        appState: new Map()
+        appState: new CanMap()
       })
     })
 
@@ -45,7 +45,7 @@ describe('<templates-page>', function () {
 
   describe('Component', function () {
     beforeEach(function (done) {
-      let appState = new Map({guideId: '1261'})
+      let appState = new CanMap({guideId: '1261'})
 
       let frag = can.view.stache(
         '<templates-page app-state="{appState}"></templates-page>'

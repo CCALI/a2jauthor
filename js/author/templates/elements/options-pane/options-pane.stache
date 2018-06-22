@@ -10,7 +10,7 @@
       type="button"
       aria-label="Close"
       class="popover-close close"
-      ($click)="saveAndClose(nodeId)">
+      on:el:click="saveAndClose(nodeId)">
 
       <span aria-hidden="true">×</span>
     </button>
@@ -21,7 +21,7 @@
 
     {{#if showSaveButton}}
       <div class="text-center">
-        <button ($click)="saveAndClose(nodeId)" class="btn btn-default btn-save">
+        <button on:el:click="saveAndClose(nodeId)" class="btn btn-default btn-save">
           Save &amp; Close
         </button>
       </div>

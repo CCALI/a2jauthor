@@ -1,10 +1,10 @@
-import Component from 'can/component/'
+import Component from "can-component"
 import template from './footer.stache'
-import Map from 'can/map/'
+import CanMap from "can-map"
 import constants from 'caja/viewer/models/constants'
 import moment from 'moment'
 
-let FooterVM = Map.extend({
+let FooterVM = CanMap.extend({
   define: {
     viewerVersion: {
       get () {
@@ -26,7 +26,7 @@ let FooterVM = Map.extend({
 })
 
 export default Component.extend({
-  template,
+  view: template,
   viewModel: FooterVM,
   leakScope: false,
   tag: 'app-footer'

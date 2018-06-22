@@ -4,12 +4,12 @@
 
 {{#if editEnabled}}
   <element-container
-    {node-id}="id"
-    {deleted}="deleted"
-    {(selected)}="editActive"
-    {clone-node}="@cloneNode"
-    {delete-node}="@deleteNode"
-    {toggle-edit-active-node}="@toggleEditActiveNode">
+    vm:nodeId:from="id"
+    vm:deleted:from="deleted"
+    vm:selected:bind="editActive"
+    vm:cloneNode:from="@cloneNode"
+    vm:deleteNode:from="@deleteNode"
+    vm:toggleEditActiveNode:from="@toggleEditActiveNode">
 
     <p><span class="text-muted">Page Break</span></p>
   </element-container>
@@ -17,13 +17,13 @@
   {{#if editActive}}
     <element-options-pane
       title="Page Break"
-      {node-id}="nodeId"
-      {save-and-close}="@updateNode">
+      vm:nodeId:from="nodeId"
+      vm:saveAndClose:from="@updateNode">
 
       <form>
         <div class="form-group">
           <label>Notes</label>
-          <textarea class="form-control" {($value)}="notes" rows="3"></textarea>
+          <textarea class="form-control" el:value:bind="notes" rows="3"></textarea>
           <span class="help-block">
             For reference only. These notes are not part of the assembled document.
           </span>

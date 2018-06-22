@@ -5,34 +5,34 @@
 
 {{#if isMobile}}
   <a2j-mobile-viewer
-    {(lang)}="lang"
-    {(logic)}="logic"
-    {(r-state)}="rState"
-    {(p-state)}="pState"
-    {(m-state)}="mState"
+    vm:lang:bind="lang"
+    vm:logic:bind="logic"
+    vm:rState:bind="rState"
+    vm:pState:bind="pState"
+    vm:mState:bind="mState"
     class="bootstrap-styles"
-    {(interview)}="interview"
-    {(modal-content)}="modalContent" />
+    vm:interview:bind="interview"
+    vm:modalContent:bind="modalContent" />
 {{else}}
   <a2j-desktop-viewer
     *desktop-viewer
-    {show-debug-panel}="showDebugPanel"
-    {(lang)}="lang"
-    {(logic)}="logic"
-    {(r-state)}="rState"
-    {(p-state)}="pState"
-    {(m-state)}="mState"
-    {(interview)}="interview"
-    {(modal-content)}="modalContent"
-    {(trace-logic)}="traceLogic"
+    vm:showDebugPanel:from="showDebugPanel"
+    vm:lang:bind="lang"
+    vm:logic:bind="logic"
+    vm:rState:bind="rState"
+    vm:pState:bind="pState"
+    vm:mState:bind="mState"
+    vm:interview:bind="interview"
+    vm:modalContent:bind="modalContent"
+    vm:traceLogic:bind="traceLogic"
     class="bootstrap-styles steps-left-{{*desktopViewer.remainingSteps}} steps-{{*desktopViewer.maxDisplayedSteps}}" />
 {{/if}}
 
 <a2j-modal
-  {(logic)}="logic"
-  {(r-state)}="rState"
-  {(m-state)}="mState"
+  vm:logic:bind="logic"
+  vm:rState:bind="rState"
+  vm:mState:bind="mState"
   class="bootstrap-styles"
-  {(interview)}="interview"
-  {(modal-content)}="modalContent"
-  {repeat-var-value}="rState.repeatVarValue" />
+  vm:interview:bind="interview"
+  vm:modalContent:bind="modalContent"
+  vm:repeatVarValue:from="rState.repeatVarValue" />

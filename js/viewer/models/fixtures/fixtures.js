@@ -1,5 +1,5 @@
 import _assign from 'lodash/assign';
-import fixture from 'can/util/fixture/';
+import fixture from "can-fixture";
 import realInterviewJSON from './real_interview_1.json';
 import parseModelInterviewJSON from './parse-model-interview.json';
 

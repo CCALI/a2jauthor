@@ -1,11 +1,11 @@
 import $ from 'jquery';
-import Map from 'can/map/';
+import CanMap from "can-map";
 import moment from 'moment';
-import List from 'can/list/';
+import CanList from "can-list";
 import views from './views/';
 import _range from 'lodash/range';
 import _isNaN from 'lodash/isNaN';
-import Component from 'can/component/';
+import Component from "can-component";
 import template from './field.stache';
 import invalidPromptTpl from './views/invalid-prompt.stache';
 import exceededMaxcharsTpl from './views/exceeded-maxchars.stache';
@@ -22,7 +22,7 @@ can.view.preload('exceeded-maxchars-tpl', exceededMaxcharsTpl);
  *
  * `<a2j-field>`'s viewModel.
  */
-export let FieldVM = Map.extend('FieldVM', {
+export let FieldVM = CanMap.extend('FieldVM', {
   define: {
     /**
      * @property {List} field.ViewModel.prototype.numberPickOptions numberPickOptions
@@ -38,7 +38,7 @@ export let FieldVM = Map.extend('FieldVM', {
         const max = parseInt(this.attr('field.max'), 10);
         const options = (_isNaN(min) || _isNaN(max)) ? [] : _range(min, max + 1);
 
-        return new List(options);
+        return new CanList(options);
       }
     },
 

@@ -9,7 +9,7 @@
           type="text"
           name="varname"
           class="var-name editable text ui-widget-content ui-corner-all"
-          {($value)}="variableName"
+          el:value:bind="variableName"
           {{#if variableNameMaxLength}}
             maxlength="{{variableNameMaxLength}}"
           {{/if}}
@@ -24,7 +24,7 @@
           <div class='suggestion-container'>
             <ul class='suggestion-list'>
               {{#each variableSuggestions}}
-                <li ($click)="onSuggestionSelect(this)">{{this}}</li>
+                <li on:el:click="onSuggestionSelect(this)">{{this}}</li>
               {{/each}}
             </ul>
           </div>
@@ -37,7 +37,7 @@
         <select
           name="vartype"
           class="editable"
-          {($value)}="variableType"
+          el:value:bind="variableType"
         >
           <option value="Text">Text</option>
           <option value="TF">TF - True/False</option>
@@ -54,7 +54,7 @@
           <input
             type="checkbox"
             name="varrepeating"
-            {($checked)}="variableIsRepeating"
+            el:checked:bind="variableIsRepeating"
           />
           Check if multiple values
         </label>
@@ -67,7 +67,7 @@
           type="textarea"
           name="varcomment"
           class="editable taller text ui-widget-content ui-corner-all"
-          {($value)}="variableComment"
+          el:value:bind="variableComment"
         />
       </span>
     </div>

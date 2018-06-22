@@ -1,4 +1,4 @@
-import Map from 'can/map/';
+import CanMap from "can-map";
 import _includes from 'lodash/includes';
 
 /**
@@ -7,7 +7,7 @@ import _includes from 'lodash/includes';
  *
  * `<condition-form />` viewmodel
  */
-export default Map.extend({
+export default CanMap.extend({
   define: {
     /**
      * @property {Boolean} disabled

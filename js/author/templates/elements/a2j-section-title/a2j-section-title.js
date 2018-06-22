@@ -1,5 +1,5 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
+import CanMap from "can-map";
+import Component from "can-component";
 import contentTpl from './content.stache';
 import template from './a2j-section-title.stache';
 
@@ -28,7 +28,7 @@ can.view.preload('section-title-content', contentTpl);
  *
  * `<a2j-section-title>`'s viewModel.
  */
-export let SectionTitleVM = Map.extend({
+export let SectionTitleVM = CanMap.extend({
   define: {
     /**
      * @property {Boolean} sectionTitle.ViewModel.prototype.editEnabled editEnabled
@@ -86,7 +86,7 @@ export let SectionTitleVM = Map.extend({
 });
 
 export default Component.extend({
-  template,
+  view: template,
   tag: 'a2j-section-title',
   viewModel: SectionTitleVM,
 
@@ -104,5 +104,7 @@ export default Component.extend({
 
       return `<${tag} class="section-title count-${sectionCounter}">${title}</${tag}>`;
     }
-  }
+  },
+
+  leakScope: true
 });

@@ -1,5 +1,5 @@
 import _assign from 'lodash/assign';
-import Component from 'can/component/';
+import Component from "can-component";
 import template from './a2j-variable.stache';
 import A2JVariableVM from './a2j-variable-vm';
 
@@ -19,7 +19,7 @@ import A2JVariableVM from './a2j-variable-vm';
  * @codeend
  */
 export default Component.extend({
-  template,
+  view: template,
   tag: 'a2j-variable',
 
   viewModel(attrs, parentScope) {
@@ -41,5 +41,7 @@ export default Component.extend({
     }
 
     return new A2JVariableVM(vmAttrs);
-  }
+  },
+
+  leakScope: true
 });

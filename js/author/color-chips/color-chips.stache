@@ -3,7 +3,7 @@
   {{#each colorClasses}}
     <li
       class="color-chip {{.}} {{#is . selectedColorClass}}selected-chip{{/is}}"
-      ($click)="onSelect(.)"
+      on:el:click="onSelect(.)"
     ></li>
   {{/each}}
 </ul>

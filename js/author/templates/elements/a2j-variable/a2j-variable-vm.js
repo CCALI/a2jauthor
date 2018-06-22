@@ -1,4 +1,4 @@
-import Map from 'can/map/';
+import CanMap from "can-map";
 import Answers from 'caja/author/models/answers';
 
 /**
@@ -7,7 +7,7 @@ import Answers from 'caja/author/models/answers';
  *
  * <a2j-variable>'s viewModel.
  */
-export default Map.extend({
+export default CanMap.extend({
   define: {
     /**
      * @property {Answers} answers

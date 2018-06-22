@@ -1,11 +1,11 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
+import CanMap from "can-map";
+import Component from "can-component";
 import template from './sortbar.stache';
 
 import 'can/list/sort/';
-import 'can/map/define/';
+import "can-map-define";
 
-export let Sortbar = Map.extend({
+export let Sortbar = CanMap.extend({
   define: {
     criteria: {
       value: {}
@@ -32,7 +32,7 @@ export let Sortbar = Map.extend({
 });
 
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   viewModel: Sortbar,
   tag: 'templates-sortbar',

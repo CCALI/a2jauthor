@@ -1,11 +1,11 @@
 <form method="post" target="_blank" action="/api/assemble">
-  <input type="hidden" name="guideId" {$value}="guideId">
-  <input type="hidden" name="answers" {$value}="answersString">
-  <input type="hidden" name="guideTitle" {$value}="interview.title">
-  <input type="hidden" name="fileDataUrl" {$value}="mState.fileDataURL">
+  <input type="hidden" name="guideId" el:value:from="guideId">
+  <input type="hidden" name="answers" el:value:from="answersString">
+  <input type="hidden" name="guideTitle" el:value:from="interview.title">
+  <input type="hidden" name="fileDataUrl" el:value:from="mState.fileDataURL">
 
   <button type="submit"
-          ($click)="navigate"
+          on:el:click="navigate"
           class="btn btn-default btn-navigate">
     {{getButtonLabel(label)}}
   </button>

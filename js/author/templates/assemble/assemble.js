@@ -1,10 +1,10 @@
-import Map from 'can/map/';
+import CanMap from "can-map";
 import _keys from 'lodash/keys';
-import Component from 'can/component/';
+import Component from "can-component";
 import template from './assemble.stache';
 import parser from 'caja/viewer/mobile/util/parser';
 
-import 'can/map/define/';
+import "can-map-define";
 
 /**
  * @module {Module} author/templates/assemble/ <test-assemble-options>
@@ -29,7 +29,7 @@ import 'can/map/define/';
  *
  * <test-assemble-options>'s viewModel.
  */
-let AssembleOptionsVM = Map.extend({
+let AssembleOptionsVM = CanMap.extend({
   define: {
     /**
      * @property {String} assemble.ViewModel.prototype.guideId guideId
@@ -82,7 +82,7 @@ let AssembleOptionsVM = Map.extend({
      * uploaded by the author.
      */
     interviewAnswers: {
-      Value: Map
+      Value: CanMap
     },
 
     /**
@@ -115,12 +115,12 @@ let AssembleOptionsVM = Map.extend({
   },
 
   clearAnswers() {
-    this.attr('interviewAnswers', new Map());
+    this.attr('interviewAnswers', new CanMap());
   }
 });
 
 export default Component.extend({
-  template,
+  view: template,
   viewModel: AssembleOptionsVM,
   tag: 'test-assemble-options',
 
@@ -148,5 +148,7 @@ export default Component.extend({
         reader.readAsText(file);
       }
     }
-  }
+  },
+
+  leakScope: true
 });

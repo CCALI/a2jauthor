@@ -1,5 +1,5 @@
-import Map from "can/map/";
-import Component from "can/component/";
+import CanMap from "can-map";
+import Component from "can-component";
 import template from "./assignment-form.stache";
 
 /*
@@ -110,7 +110,7 @@ function uniq(list) {
   );
 }
 
-export const AssignmentFormVm = Map.extend('AssignmentFormVm', {
+export const AssignmentFormVm = CanMap.extend('AssignmentFormVm', {
   define: {
     onAssign: {
       type: 'function',
@@ -244,7 +244,7 @@ export const AssignmentFormVm = Map.extend('AssignmentFormVm', {
         "variableBuffer",
         makeVariableBuffer(
           toJs(variable),
-          toJs(options || new Map()),
+          toJs(options || new CanMap()),
           toJs(boxes || [])
         )
       );
@@ -366,7 +366,7 @@ export const AssignmentFormVm = Map.extend('AssignmentFormVm', {
 
 export default Component.extend({
   tag: "assignment-form",
-  template,
+  view: template,
   leakScope: false,
   viewModel: AssignmentFormVm,
   events: {

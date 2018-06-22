@@ -1,7 +1,7 @@
 import $ from "jquery";
-import Map from "can/map/";
-import Component from "can/component/";
-import 'can/map/define/';
+import CanMap from "can-map";
+import Component from "can-component";
+import "can-map-define";
 import template from "./editor.stache";
 import { attemptAutofill } from "../autofill";
 import {
@@ -91,7 +91,7 @@ function setCrosshair(enable) {
   }
 }
 
-export const PdfEditorVm = Map.extend('PdfEditorVm', {
+export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
   didInsertElement () {
     if (!this.unbindTemplate) {
       this.unbindTemplate = this.bindTemplate();
@@ -114,11 +114,11 @@ export const PdfEditorVm = Map.extend('PdfEditorVm', {
     documentOptions: rootNodeProperty(
       "documentOptions",
       () =>
-        new Map({
+        new CanMap({
           fontName: "Lato",
           fontSize: "12",
-          variableOptions: new Map(),
-          addendumOptions: new Map()
+          variableOptions: new CanMap(),
+          addendumOptions: new CanMap()
         })
     ),
     hasPdf: rootNodeProperty("hasPdf", () => false),
@@ -1145,7 +1145,7 @@ function targetAction(handler) {
 }
 
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   viewModel: PdfEditorVm,
   tag: "pdf-editor",
@@ -1246,7 +1246,7 @@ export default Component.extend({
           .off("mouseleave", handleMouseDone);
       };
     },
-    removed() {
+    "{element} beforeremove"() {
       this.viewModel.didDestroyElement();
       this.viewModel.teardownPdf();
       this.removeGlobalListeners();

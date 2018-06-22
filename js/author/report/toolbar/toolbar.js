@@ -1,8 +1,8 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
+import CanMap from "can-map";
+import Component from "can-component";
 import template from './toolbar.stache';
 
-import 'can/map/define/';
+import "can-map-define";
 
 /**
  * @property {can.Map} reportToolbar.ViewModel
@@ -11,7 +11,7 @@ import 'can/map/define/';
  * `<report-toolbar>`'s viewModel.
  *
  */
-export const ReportToolbarVM = Map.extend('ReportToolbarVM', {
+export const ReportToolbarVM = CanMap.extend('ReportToolbarVM', {
   define: {
     /**
      * @property {String} reportToolbar.ViewModel.prototype.define.selectedReport selectedReport
@@ -61,7 +61,7 @@ export const ReportToolbarVM = Map.extend('ReportToolbarVM', {
  * @codeend
  */
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   viewModel: ReportToolbarVM,
   tag: 'report-toolbar',

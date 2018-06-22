@@ -1,17 +1,17 @@
 <element-options-pane
-  {node-id}="nodeId"
+  vm:nodeId:from="nodeId"
   title="Repeat Loop"
-  {save-and-close}="@updateNode">
+  vm:saveAndClose:from="@updateNode">
 
   <form>
     <div class="form-group">
       <label for="">&nbsp;</label>
-      <input type="text" class="form-control input-loop-title" {$value}="loopTitle">
+      <input type="text" class="form-control input-loop-title" el:value:from="loopTitle">
     </div>
 
     <div class="form-group">
       <label for="">Title size:</label>
-      <select class="form-control" {($value)}="loopTitleTag">
+      <select class="form-control" el:value:bind="loopTitleTag">
         <option value="h1">Heading 1</option>
         <option value="h2">Heading 2</option>
         <option value="h3">Heading 3</option>
@@ -24,19 +24,19 @@
     <label for="">Repeat each:</label>
     <div class="form-group row clearfix">
       <div class="col-md-6">
-        <select class="form-control" {($value)}="loopType">
+        <select class="form-control" el:value:bind="loopType">
           <option value="counter">Number of times</option>
           <option value="variable">For each variable</option>
         </select>
       </div>
       <div class="col-md-6">
         {{#if useLoopCounter}}
-          <input type="number" min="1" class="form-control" {($value)}="loopCounter">
+          <input type="number" min="1" class="form-control" el:value:bind="loopCounter">
         {{else}}
           <var-picker
             filter-types="number"
-            {(selected)}="loopVariable"
-            {variables}="variablesList"
+            vm:selected:bind="loopVariable"
+            vm:variables:from="variablesList"
           />
         {{/if}}
       </div>
@@ -95,18 +95,18 @@
         {{#each tableColumns}}
           <div class="row clearfix table-form-row">
             <div class="col-md-5">
-              <input type="text" class="form-control" {($value)}="column">
+              <input type="text" class="form-control" el:value:bind="column">
             </div>
 
             <div class="col-md-4">
-              <input type="number" min="0" max="100" class="form-control" {($value)}="width">
+              <input type="number" min="0" max="100" class="form-control" el:value:bind="width">
             </div>
 
             <div class="col-md-3 table-column-buttons">
-              <span class="label label-success" ($click)="addColumn()">+</span>
+              <span class="label label-success" on:el:click="addColumn()">+</span>
 
               {{#showRemoveButton(%index)}}
-                <span class="label label-danger" ($click)="removeColumn(%index)">-</span>
+                <span class="label label-danger" on:el:click="removeColumn(%index)">-</span>
               {{/showRemoveButton}}
             </div>
           </div>
@@ -137,7 +137,7 @@
         <div class="form-group">
           <label for="">Kind</label>
 
-          <select class="form-control" {($value)}="listStyleType">
+          <select class="form-control" el:value:bind="listStyleType">
             <option value="disc">Bullets</option>
             <option value="decimal">Numbers</option>
             <option value="lower-alpha">Lowercase Alphabetical</option>
@@ -153,14 +153,14 @@
           {{#each listItems}}
             <div class="row clearfix table-form-row">
               <div class="col-md-8">
-                <input type="text" class="form-control" {($value)}="item">
+                <input type="text" class="form-control" el:value:bind="item">
               </div>
 
               <div class="col-md-4 table-column-buttons">
-                <span class="label label-success" ($click)="addListItem()">+</span>
+                <span class="label label-success" on:el:click="addListItem()">+</span>
 
                 {{#showRemoveButton(%index)}}
-                  <span class="label label-danger" ($click)="removeListItem(%index)">-</span>
+                  <span class="label label-danger" on:el:click="removeListItem(%index)">-</span>
                 {{/showRemoveButton}}
               </div>
             </div>

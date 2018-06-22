@@ -7,15 +7,15 @@
       <p class="navbar-text hidden-xs">View:</p>
 
       <li class="{{#is filter 'all'}}active{{/is}}">
-        <a href="#" ($click)="setFilter('all')">All</a>
+        <a href="#" on:el:click="setFilter('all')">All</a>
       </li>
 
       <li class="{{#is filter 'active'}}active{{/is}}">
-        <a href="#" ($click)="setFilter('active')">Active</a>
+        <a href="#" on:el:click="setFilter('active')">Active</a>
       </li>
 
       <li class="{{#is filter 'deleted'}}active{{/is}}">
-        <a href="#" ($click)="setFilter('deleted')">Deleted</a>
+        <a href="#" on:el:click="setFilter('deleted')">Deleted</a>
       </li>
 
       <li role="separator" class="divider hidden-xs"></li>
@@ -31,12 +31,12 @@
       </button>
 
       <button class="btn btn-primary navbar-btn new-template"
-        ($click)="openNewTemplate(false)">
+        on:el:click="openNewTemplate(false)">
         <span class="glyphicon-plus"></span> Create Text Template
       </button>
 
       <button
-        ($click)="openNewTemplate(true)"
+        on:el:click="openNewTemplate(true)"
         class="btn btn-primary navbar-btn new-template">
         <span class="glyphicon-plus"></span> Create PDF Template
       </button>
@@ -56,7 +56,7 @@
           </span>
 
           {{#if showClearButton}}
-            <span ($click)="clearSearchToken()" class="glyphicon glyphicon-cancel-circled form-control-feedback form-control-clear" aria-hidden="true"></span>
+            <span on:el:click="clearSearchToken()" class="glyphicon glyphicon-cancel-circled form-control-feedback form-control-clear" aria-hidden="true"></span>
           {{/if}}
         </div>
       </div>

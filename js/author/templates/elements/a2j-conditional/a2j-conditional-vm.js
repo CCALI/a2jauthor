@@ -1,4 +1,4 @@
-import Map from 'can/map/';
+import CanMap from "can-map";
 import _includes from 'lodash/includes';
 import _isFunction from 'lodash/isFunction';
 import Answers from 'caja/author/models/answers';
@@ -14,7 +14,7 @@ import 'can/view/';
  *
  * `<a2j-conditional>`'s viewModel.
  */
-export default Map.extend({
+export default CanMap.extend({
   define: {
     /**
      * @property {Answers} conditional.ViewModel.prototype.answers answers

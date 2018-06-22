@@ -1,4 +1,4 @@
-import Map from 'can/map/';
+import CanMap from "can-map";
 import _some from 'lodash/some';
 import _isString from 'lodash/isString';
 import AnswerVM from 'caja/viewer/models/answervm';
@@ -8,7 +8,7 @@ import constants from 'caja/viewer/models/constants';
 import {Analytics} from 'caja/viewer/util/analytics';
 
 import 'can/util/batch/';
-import 'can/map/define/';
+import "can-map-define";
 import 'can/util/jquery/';
 import 'bootstrap/js/modal';
 import { FieldVM } from './fields/field/field';
@@ -19,7 +19,7 @@ import { FieldVM } from './fields/field/field';
  *
  * `<a2j-pages>` viewModel.
  */
-export default Map.extend('PagesVM', {
+export default CanMap.extend('PagesVM', {
   define: {
     /**
      * @property {String} pages.ViewModel.prototype.currentPage currentPage
@@ -172,7 +172,7 @@ export default Map.extend('PagesVM', {
   validateAllFields() {
     const fields = this.attr('currentPage.fields');
 
-    can.each(fields, function(field) {
+    each(fields, function(field) {
       const hasError = !!field.attr('_answer').errors();
       field.attr('hasError', hasError);
     });
@@ -491,7 +491,7 @@ export default Map.extend('PagesVM', {
         return;
       }
 
-      can.batch.start();
+      canBatch.start();
 
       this.attr('traceLogic').push({ page: page.attr('name') });
       this.attr('currentPage', page);
@@ -499,7 +499,7 @@ export default Map.extend('PagesVM', {
       this.attr('mState.header', page.attr('step.text'));
       this.attr('mState.step', page.attr('step.number'));
 
-      can.batch.stop();
+      canBatch.stop();
     }
   },
 

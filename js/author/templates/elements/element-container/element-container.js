@@ -1,9 +1,9 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
+import CanMap from "can-map";
+import Component from "can-component";
 import _isFunction from 'lodash/isFunction';
 import template from './element-container.stache';
 
-import 'can/map/define/';
+import "can-map-define";
 
 /**
  * @module {Module} author/templates/elements/element-container/ <element-container>
@@ -28,7 +28,7 @@ import 'can/map/define/';
  *
  * `<element-container>`'s viewModel.
  */
-export let ContainerVM = Map.extend({
+export let ContainerVM = CanMap.extend({
   define: {
     /**
      * @property {Boolean} element-container.ViewModel.prototype.selected selected
@@ -78,7 +78,7 @@ export let ContainerVM = Map.extend({
 });
 
 export default Component.extend({
-  template,
+  view: template,
   viewModel: ContainerVM,
   tag: 'element-container',
 
@@ -104,5 +104,7 @@ export default Component.extend({
         $el.siblings('element-options-pane').show();
       }
     }
-  }
+  },
+
+  leakScope: true
 });

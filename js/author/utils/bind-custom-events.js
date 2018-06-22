@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import Map from 'can/map/'
+import CanMap from "can-map"
 import _includes from 'lodash/includes'
 import constants from 'caja/viewer/models/constants'
 
@@ -34,7 +34,7 @@ export default function bindCustomEvents (appState) {
   // TODO:remove after QA testing: ^
 
   // Updates window.gGuide with changes to guide.vars replacing above %root code
-  var vars = can.compute(function () {
+  var vars = compute(function () {
     var vars = appState.attr('guide.vars')
     if (vars) {
       return vars.serialize()
@@ -88,14 +88,14 @@ export default function bindCustomEvents (appState) {
     appState.attr({
       guideId: guideId,
       guidePath: window.gGuidePath,
-      guide: new Map(window.gGuide)
+      guide: new CanMap(window.gGuide)
     })
   })
 
   // when window.gGuide is saved to the server successfully,
   // sync the map reference in the appState.
   $authorApp.on('author:guide-updated', function () {
-    appState.attr('guide', new Map(window.gGuide))
+    appState.attr('guide', new CanMap(window.gGuide))
   })
 
   // TODO: Figure out a better way to do this.

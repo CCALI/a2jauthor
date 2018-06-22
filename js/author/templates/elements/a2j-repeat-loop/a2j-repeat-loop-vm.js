@@ -1,9 +1,9 @@
-import Map from 'can/map/';
-import List from 'can/list/';
+import CanMap from "can-map";
+import CanList from "can-list";
 import _last from 'lodash/last';
 import _range from 'lodash/range';
 
-import 'can/map/define/';
+import "can-map-define";
 
 /**
  * @property {can.Map} repeatLoop.ViewModel
@@ -11,7 +11,7 @@ import 'can/map/define/';
  *
  * `<a2j-repeat-loop>`'s viewModel.
  */
-export default Map.extend({
+export default CanMap.extend({
   define: {
     /**
      * @property {Boolean} repeatLoop.ViewModel.prototype.editEnabled editEnabled
@@ -173,7 +173,7 @@ export default Map.extend({
      */
     tableColumns: {
       value() {
-        return new List([{
+        return new CanList([{
           width: 100,
           variable: '',
           column: 'Column 1'
@@ -201,7 +201,7 @@ export default Map.extend({
      */
     listItems: {
       value() {
-        return new List([{
+        return new CanList([{
           variable: '',
           item: 'Item 1'
         }]);
@@ -237,7 +237,7 @@ export default Map.extend({
 
         if (useCounter) {
           let counter = this.attr('loopCounter');
-          return new List(_range(counter));
+          return new CanList(_range(counter));
         } else {
           let varName = this.attr('loopVariable');
           return this.rangeFromVariable(varName);
@@ -306,7 +306,7 @@ export default Map.extend({
       counter = _last(variable.attr('values').attr());
     }
 
-    return new List(_range(counter));
+    return new CanList(_range(counter));
   },
 
   updateLoopRichText() {

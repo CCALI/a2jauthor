@@ -1,10 +1,10 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
+import CanMap from "can-map";
+import Component from "can-component";
 import template from './add-element.stache';
 import _isFunction from 'lodash/isFunction';
 import createEmptyNode from 'caja/author/utils/create-empty-node';
 
-import 'can/map/define/';
+import "can-map-define";
 
 /**
  * @module {Module} author/templates/elements/a2j-conditional/add-element/ <conditional-add-element>
@@ -27,7 +27,7 @@ import 'can/map/define/';
  *
  * `<conditional-add-element>`'s viewModel.
  */
-const AddElementVM = Map.extend({
+const AddElementVM = CanMap.extend({
   define: {
     /**
      * @property {Boolean} addElement.ViewModel.prototype.selected selected
@@ -95,7 +95,8 @@ const AddElementVM = Map.extend({
 });
 
 export default Component.extend({
-  template,
+  view: template,
   viewModel: AddElementVM,
-  tag: 'conditional-add-element'
+  tag: 'conditional-add-element',
+  leakScope: true
 });

@@ -1,13 +1,13 @@
 import $ from 'jquery';
-import Map from 'can/map/';
-import Component from 'can/component/';
+import CanMap from "can-map";
+import Component from "can-component";
 import _truncate from 'lodash/truncate';
 import template from './navigation.stache';
 import constants from 'caja/viewer/models/constants';
 import {Analytics} from 'caja/viewer/util/analytics';
 import isMobile from 'caja/viewer/is-mobile';
 
-import 'can/map/define/';
+import "can-map-define";
 import 'jquerypp/event/swipe/';
 
 /**
@@ -16,7 +16,7 @@ import 'jquerypp/event/swipe/';
  *
  * `<a2j-viewer-navigation>`'s viewModel.
  */
-export let ViewerNavigationVM = Map.extend({
+export let ViewerNavigationVM = CanMap.extend({
   define: {
     /**
      * @property {can.compute} viewerNavigation.ViewModel.isMobile isMobile
@@ -303,7 +303,7 @@ export let ViewerNavigationVM = Map.extend({
  * @codeend
  */
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   tag: 'a2j-viewer-navigation',
   viewModel: ViewerNavigationVM,

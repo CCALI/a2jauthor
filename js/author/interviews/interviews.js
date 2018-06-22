@@ -1,12 +1,12 @@
-import Map from 'can/map/'
-import Component from 'can/component/'
-import List from 'can/list/'
+import CanMap from "can-map"
+import Component from "can-component"
+import CanList from "can-list"
 import Guide from 'caja/author/models/guide'
 import template from './interviews.stache'
 
-import 'can/map/define/'
+import "can-map-define"
 
-export const InterviewsVM = Map.extend({
+export const InterviewsVM = CanMap.extend({
   define: {
     blankInterview: {
       get () {
@@ -39,7 +39,7 @@ export const InterviewsVM = Map.extend({
   clearPreviewState () {
     // fired on inserted event to clear any Author preview answer/tracelogic
     if (this.attr('traceLogicList') && this.attr('traceLogicList').length > 0) {
-      this.attr('traceLogicList', new List())
+      this.attr('traceLogicList', new CanList())
     }
 
     if (this.attr('viewerInterview')) {
@@ -73,7 +73,7 @@ export const InterviewsVM = Map.extend({
  * Displays a list of existing interviews.
  */
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   tag: 'interviews-page',
   viewModel: InterviewsVM,

@@ -1,8 +1,8 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
+import CanMap from "can-map";
+import Component from "can-component";
 import template from './toolbar.stache';
 
-import 'can/map/define/';
+import "can-map-define";
 
 /**
  * @module {Module} author/templates/edit/toolbar/toolbar <template-edit-toolbar>
@@ -25,7 +25,7 @@ import 'can/map/define/';
  *
  * <template-edit-toolbar>'s viewModel.
  */
-export let EditToolbarVM = Map.extend({
+export let EditToolbarVM = CanMap.extend({
   define: {
     /**
      * @property {A2JTemplate} editToolbar.ViewModel.prototype.define.guideId guideId
@@ -54,7 +54,7 @@ export let EditToolbarVM = Map.extend({
 });
 
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   viewModel: EditToolbarVM,
   tag: 'template-edit-toolbar'

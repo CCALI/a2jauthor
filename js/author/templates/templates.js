@@ -1,4 +1,4 @@
-import Component from 'can/component/'
+import Component from "can-component"
 import TemplatesVM from './templates-vm'
 import template from './templates.stache'
 
@@ -17,7 +17,7 @@ import template from './templates.stache'
  * @codeend
  */
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   tag: 'templates-page',
   viewModel: TemplatesVM,

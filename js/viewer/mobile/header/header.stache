@@ -1,7 +1,7 @@
 <br/>
 <div class="row">
   <div class="col-xs-3 text-center">
-    <a ($click)="toggleCredits()" href="javascript://">
+    <a on:el:click="toggleCredits()" href="javascript://">
       <img src="{{joinBase 'viewer/images/a2j-circle-300.png'}}" class="logo-viewer-mobile" alt="Access to Justice Logo"/>
     </a>
   </div>
@@ -13,7 +13,7 @@
   {{#if showSaveButton}}
     <div class="col-xs-3">
       <button type="button"
-              ($click)="save()"
+              on:el:click="save()"
               {{#if disableSaveButton}}disabled{{/if}}
               class="btn save {{#if pState.isDirty}}btn-warning{{else}}btn-success{{/if}}">
         Save

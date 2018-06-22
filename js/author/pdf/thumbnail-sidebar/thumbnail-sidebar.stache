@@ -3,7 +3,7 @@
   <div
     title='Toggle thumbnails'
     class="drawer-handle"
-    ($click)="fireDrawerHandleClick()"
+    on:el:click="fireDrawerHandleClick()"
   >
     <span class="glyphicon-docs"></span>
   </div>
@@ -15,7 +15,7 @@
       {{#each numberedThumbnails}}
         <div
           class='thumbnail'
-          ($click)="fireThumbnailClick(url)"
+          on:el:click="fireThumbnailClick(url)"
         >
           <img src="{{url}}" />
           <span>{{pageNumber}}</span>

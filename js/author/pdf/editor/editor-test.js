@@ -1,8 +1,8 @@
 import 'steal-mocha';
 import assert from 'assert';
 import { PdfEditorVm } from './editor';
-import List from 'can/list/list';
-import Map from 'can/map/map';
+import CanList from "can-list";
+import CanMap from "can-map";
 
 describe('PdfEditorVm', function () {
 
@@ -11,15 +11,15 @@ describe('PdfEditorVm', function () {
 
     beforeEach(function () {
       vm = new PdfEditorVm();
-      template = new Map({
+      template = new CanMap({
         rootNode: {
           boxes: []
         }
       });
       vm.attr('template', template);
 
-      const box1 = new Map({
-        area: new Map(),
+      const box1 = new CanMap({
+        area: new CanMap(),
         id: 'vb-1',
         groupId: 'gp-1',
         isSelected: true,
@@ -28,8 +28,8 @@ describe('PdfEditorVm', function () {
         variableValue: null
       });
 
-      const box2 = new Map({
-        area: new Map(),
+      const box2 = new CanMap({
+        area: new CanMap(),
         id: 'vb-2',
         groupId: 'gp-1',
         isSelected: false,
@@ -38,7 +38,7 @@ describe('PdfEditorVm', function () {
         variableValue: null
       });
 
-      boxes = new List([box1, box2]);
+      boxes = new CanList([box1, box2]);
       vm.attr('template.rootNode.boxes', boxes);
     });
 

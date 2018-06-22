@@ -1,10 +1,10 @@
 {{#each fields}}
   <a2j-field
-    {(field)}="."
-    {lang}="lang"
-    {(logic)}="logic"
-    {(trace-logic)}="traceLogic"
-    {repeat-var-value}="repeatVarValue"
-    {(modal-content)}="modalContent"
-    {(r-state)}="rState" />
+    vm:field:bind="."
+    vm:lang:from="lang"
+    vm:logic:bind="logic"
+    vm:traceLogic:bind="traceLogic"
+    vm:repeatVarValue:from="repeatVarValue"
+    vm:modalContent:bind="modalContent"
+    vm:rState:bind="rState" />
 {{/each}}

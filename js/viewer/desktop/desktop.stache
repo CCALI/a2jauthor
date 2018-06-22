@@ -11,29 +11,29 @@
       </div>
     {{else}}
       <a2j-viewer-navigation
-        {lang}="lang"
-        {logic}="logic"
-        {(selected-page-name)}="rState.page"
-        {(app-state)}="rState"
-        {(interview)}="interview"
-        {(show-demo-notice)}="showDemoNotice"
+        vm:lang:from="lang"
+        vm:logic:from="logic"
+        vm:selectedPageName:bind="rState.page"
+        vm:appState:bind="rState"
+        vm:interview:bind="interview"
+        vm:showDemoNotice:bind="showDemoNotice"
         {{#if authorCourthouseImage}}courthouse-image="{{normalizePath(mState.fileDataURL, authorCourthouseImage)}}"{{/if}} />
 
       <div class="app-content">
         <div id="sidewalk" class="sidewalk"></div>
 
         <a2j-viewer-steps
-          {show-debug-panel}="showDebugPanel"
-          {^remaining-steps}="remainingSteps"
-          {^max-displayed-steps}="maxDisplayedSteps"
-          {lang}="lang"
-          {(logic)}="logic"
-          {(r-state)}="rState"
-          {(p-state)}="pState"
-          {(m-state)}="mState"
-          {(interview)}="interview"
-          {(modal-content)}="modalContent"
-          {(trace-logic)}="traceLogic" />
+          vm:showDebugPanel:from="showDebugPanel"
+          vm:remainingSteps:to="remainingSteps"
+          vm:maxDisplayedSteps:to="maxDisplayedSteps"
+          vm:lang:from="lang"
+          vm:logic:bind="logic"
+          vm:rState:bind="rState"
+          vm:pState:bind="pState"
+          vm:mState:bind="mState"
+          vm:interview:bind="interview"
+          vm:modalContent:bind="modalContent"
+          vm:traceLogic:bind="traceLogic" />
       </div><!-- app-content -->
 
       {{#if authorBrandLogo}}
@@ -43,6 +43,6 @@
       {{/if}}
     {{/if}}
 
-    <app-footer {r-state}="rState" />
+    <app-footer vm:rState:from="rState" />
   </div><!-- app-container -->
 </div><!-- app-wrapper -->

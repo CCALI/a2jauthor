@@ -1,4 +1,4 @@
-import Map from 'can/map/';
+import CanMap from "can-map";
 import _isString from 'lodash/isString';
 import _capitalize from 'lodash/capitalize';
 import createEmptyNode from 'caja/author/utils/create-empty-node';
@@ -9,7 +9,7 @@ import createEmptyNode from 'caja/author/utils/create-empty-node';
  *
  * `<template-edit-tabs />` viewmodel
  */
-export default Map.extend({
+export default CanMap.extend({
   define: {
     editingHeader: {
       type: 'boolean',

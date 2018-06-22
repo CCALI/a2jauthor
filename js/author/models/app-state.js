@@ -1,12 +1,12 @@
 import $ from 'jquery'
-import Map from 'can/map/'
-import List from 'can/list/'
+import CanMap from "can-map"
+import CanList from "can-list"
 import A2JVariable from './a2j-variable'
 import _isEmpty from 'lodash/isEmpty'
 import {Gender, Hair, Skin} from 'caja/viewer/desktop/avatar/colors'
 
 // with the existing Guide model that works with a different data structure.
-let Guide = Map.extend('AppStateGuide', {
+let Guide = CanMap.extend('AppStateGuide', {
   define: {
     variablesList: {
       get () {
@@ -38,7 +38,7 @@ let Guide = Map.extend('AppStateGuide', {
  *
  * This is the global application state.
  */
-export default Map.extend({
+export default CanMap.extend({
   define: {
     /**
     * @property {String} selectedReport
@@ -203,7 +203,7 @@ export default Map.extend({
      * preview mode.
      */
     viewerAlertMessages: {
-      Value: List,
+      Value: CanList,
       serialize: false
     },
 

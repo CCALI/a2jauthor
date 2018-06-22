@@ -1,9 +1,9 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
+import CanMap from "can-map";
+import Component from "can-component";
 import template from './evaluate.stache';
 import $ from 'jquery';
 
-import 'can/map/define/';
+import "can-map-define";
 
 /**
  * @property {can.Map} evaluatePanel.ViewModel
@@ -11,7 +11,7 @@ import 'can/map/define/';
  *
  * `<author-evaluate-panel>`'s viewModel.
  */
-export let EvaluatePanelVM = Map.extend('EvaluatePanelVM',{
+export let EvaluatePanelVM = CanMap.extend('EvaluatePanelVM',{
     define: {
         traceLogic: {
             value: null
@@ -52,7 +52,7 @@ export let EvaluatePanelVM = Map.extend('EvaluatePanelVM',{
 });
 
 export default Component.extend({
-    template,
+    view: template,
     leakScope: false,
     viewModel: EvaluatePanelVM,
     tag: 'author-evaluate-panel',

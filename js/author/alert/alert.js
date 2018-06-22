@@ -1,9 +1,9 @@
-import Map from 'can/map/'
-import Component from 'can/component/'
+import CanMap from "can-map"
+import Component from "can-component"
 import template from './alert.stache'
 
 import 'can/util/event'
-import 'can/map/define/'
+import "can-map-define"
 
 const alertTypeClasses = {
   info: 'alert-info',
@@ -43,7 +43,7 @@ const alertTypeSymbols = {
  *
  * `<app-alert>`'s viewModel.
  */
-export let Alert = Map.extend({
+export let Alert = CanMap.extend({
   define: {
     /**
      * @property {Boolean} alert.ViewModel.prototype.define.autoClose autoClose
@@ -167,7 +167,7 @@ export let Alert = Map.extend({
 })
 
 export default Component.extend({
-  template,
+  view: template,
   tag: 'app-alert',
   viewModel: Alert,
 
@@ -203,5 +203,7 @@ export default Component.extend({
       let type = this.attr('alertType')
       return alertTypeSymbols[type]
     }
-  }
+  },
+
+  leakScope: true
 })

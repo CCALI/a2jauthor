@@ -1,5 +1,5 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
+import CanMap from "can-map";
+import Component from "can-component";
 import template from './avatar.stache';
 import canUtil from 'can/util/';
 import {
@@ -11,7 +11,7 @@ import {
   getClassNameForHair
 } from './colors';
 
-import 'can/map/define/';
+import "can-map-define";
 
 function getBaseUrl () {
   // Source: https://github.com/canjs/canjs/blob/432c9b0c0f9f8ace62788cf7c8258998673856b9/view/stache/mustache_helpers.js#L204
@@ -32,7 +32,7 @@ function joinBaseUrl () {
  *
  * `<a2j-viewer-avatar>`'s viewModel.
  */
-export let ViewerAvatarVM = Map.extend('ViewerAvatarVM', {
+export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
   define: {
     /**
      * @property {String} avatar.ViewModel.prototype.gender gender
@@ -161,7 +161,7 @@ export let ViewerAvatarVM = Map.extend('ViewerAvatarVM', {
  * @codeend
  */
 export default Component.extend({
-  template,
+  view: template,
   tag: 'a2j-viewer-avatar',
   viewModel: ViewerAvatarVM,
 
@@ -204,5 +204,7 @@ export default Component.extend({
         vm.fireAvatarLoaded();
       });
     }
-  }
+  },
+
+  leakScope: true
 });

@@ -1,8 +1,8 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
+import CanMap from "can-map";
+import Component from "can-component";
 import template from './a2j-page-break.stache';
 
-import 'can/map/define/';
+import "can-map-define";
 
 /**
  * @module {Module} A2JPageBreakVM
@@ -10,7 +10,7 @@ import 'can/map/define/';
  *
  * <a2j-page-break /> viewmodel
  */
-const PageBreakVM = Map.extend({
+const PageBreakVM = CanMap.extend({
   define: {
     editEnabled: {
       value: false
@@ -44,7 +44,8 @@ const PageBreakVM = Map.extend({
  * @codeend
  */
 export default Component.extend({
-  template,
+  view: template,
   tag: 'a2j-page-break',
-  viewModel: PageBreakVM
+  viewModel: PageBreakVM,
+  leakScope: true
 });

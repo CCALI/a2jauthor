@@ -1,12 +1,12 @@
 import $ from 'jquery'
-import Model from 'can/model/'
+import Model from "can-model"
 import _find from 'lodash/find'
 import CONST from 'caja/viewer/models/constants'
 import cString from 'caja/viewer/mobile/util/string'
 import cDate from 'caja/viewer/mobile/util/date'
 import readableList from 'caja/viewer/util/readable-list'
 
-import 'can/map/define/'
+import "can-map-define"
 
 export default Model.extend('Answers', {}, {
   define: {
@@ -20,7 +20,7 @@ export default Model.extend('Answers', {}, {
   varExists: function (prop) {
     prop = $.trim(prop).toLowerCase()
 
-    let keys = can.Map.keys(this)
+    let keys = CanMap.keys(this)
 
     let key = _find(keys, function (k) {
       return k.toLowerCase() === prop

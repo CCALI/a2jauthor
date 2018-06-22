@@ -1,9 +1,9 @@
-import Map from 'can/map/';
-import List from 'can/list/';
+import CanMap from "can-map";
+import CanList from "can-list";
 import _compact from 'lodash/compact';
 import _includes from 'lodash/includes';
 
-import 'can/map/define/';
+import "can-map-define";
 
 const ocurrences = ['any', 'single', 'repeating'];
 
@@ -31,7 +31,7 @@ const byType = function(types, variable) {
  *
  * `<var-picker>`'s viewModel.
  */
-export default Map.extend({
+export default CanMap.extend({
   define: {
     /**
      * @property {Boolean} disabled
@@ -112,7 +112,7 @@ export default Map.extend({
      */
     variableNames: {
       get() {
-        let names = new List([]);
+        let names = new CanList([]);
         let variables = this.attr('variables');
 
         if (variables && variables.length) {

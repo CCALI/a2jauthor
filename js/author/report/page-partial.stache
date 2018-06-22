@@ -7,17 +7,17 @@
                 <p class="{{#if hideCitation}}hide-section{{/if}}"><label>Notes:</label>  {{formatPageTextCell(notes)}}</p>
                 <div  class="{{#if hideText}}hide-section{{/if}}">
                     <p><label>Text:</label>  {{formatPageTextCell(text)}}</p>
-                    <text-stats {stats}="textStats"></text-stats>
+                    <text-stats vm:stats:from="textStats"></text-stats>
                 </div>
                 <p class="{{#if hideCitation}}hide-section{{/if}}"><label>Text Citation:</label>  {{formatPageTextCell(textCitation)}}</p>
                 <p class="{{#if hideDefault}}hide-section{{/if}}"><label>Text Audio:</label>  {{textAudioURL}}</p>
                 <div class="{{#if hideText}}hide-section{{/if}}">
                     <p><label>Learn More Prompt:</label>  {{learn}}</p>
-                    <text-stats {stats}="learnStats"></text-stats>
+                    <text-stats vm:stats:from="learnStats"></text-stats>
                 </div>
                 <div class="{{#if hideText}}hide-section{{/if}}">
                     <p><label>Help Text:</label>  {{formatPageTextCell(help)}}</p>
-                    <text-stats {stats}="helpStats"></text-stats>
+                    <text-stats vm:stats:from="helpStats"></text-stats>
                 </div>
                 <p class="{{#if hideCitation}}hide-section{{/if}}"><label>Help Citation:</label>  {{formatPageTextCell(helpCitation)}}</p>
                 <p class="{{#if hideDefault}}hide-section{{/if}}"><label>Help Audio:</label>  {{helpAudioURL}}</p>

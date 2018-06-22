@@ -1,5 +1,5 @@
-import Map from 'can/map/'
-import Component from 'can/component/'
+import CanMap from "can-map"
+import Component from "can-component"
 import template from './preview.stache'
 
 /**
@@ -18,7 +18,7 @@ import template from './preview.stache'
  * @codeend
  */
 
-let AuthorPreviewVM = Map.extend({
+let AuthorPreviewVM = CanMap.extend({
   define: {
     previewMode: {
       value: false
@@ -38,7 +38,7 @@ let AuthorPreviewVM = Map.extend({
 })
 
 export default Component.extend({
-  template,
+  view: template,
   tag: 'author-preview',
   viewModel: AuthorPreviewVM,
 
@@ -49,8 +49,10 @@ export default Component.extend({
       }
       this.viewModel.lockScrolling(true)
     },
-    removed () {
+    "{element} beforeremove" () {
       this.viewModel.lockScrolling(false)
     }
-  }
+  },
+
+  leakScope: true
 })

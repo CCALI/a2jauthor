@@ -1,5 +1,5 @@
 import assert from 'assert';
-import List from 'can/list/';
+import CanList from "can-list";
 import VarPickerVM from './varpicker-vm';
 import Variable from 'caja/author/models/a2j-variable';
 
@@ -42,7 +42,7 @@ describe('<var-picker>', function() {
     it('variableNames - a list of variable names', function() {
       let names = vm.attr('variableNames');
 
-      assert.instanceOf(names, List);
+      assert.instanceOf(names, CanList);
       assert.include(names.attr(), 'Child Name');
       assert.include(names.attr(), 'First Name');
       assert.include(names.attr(), 'ChildCounter');

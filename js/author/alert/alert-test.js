@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import assert from 'assert'
 import {Alert} from './alert'
-import stache from 'can/view/stache/'
+import stache from "can-stache"
 
 import 'steal-mocha'
 

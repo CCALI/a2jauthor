@@ -1,9 +1,9 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
+import CanMap from "can-map";
+import Component from "can-component";
 import template from './variables.stache';
 import parser from 'caja/viewer/mobile/util/parser';
 
-let VariablesTableVM = Map.extend('VariablesTableVM', {
+let VariablesTableVM = CanMap.extend('VariablesTableVM', {
   clearAnswers() {
     let interview = this.attr('interview');
 
@@ -14,7 +14,7 @@ let VariablesTableVM = Map.extend('VariablesTableVM', {
 });
 
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   viewModel: VariablesTableVM,
   tag: 'author-variables-table',

@@ -1,6 +1,6 @@
 import $ from 'jquery';
-import Component from 'can/component/';
-import Map from 'can/map/';
+import Component from "can-component";
+import CanMap from "can-map";
 import template from './a2j-header-footer.stache';
 
 /**
@@ -9,7 +9,7 @@ import template from './a2j-header-footer.stache';
  *
  * `<a2j-header-footer>`'s viewModel.
  */
-export let HeaderFooterVM = Map.extend({
+export let HeaderFooterVM = CanMap.extend({
   define: {
     /**
      * @property {String} headerFooter.ViewModel.prototype.title title
@@ -141,12 +141,15 @@ export let HeaderFooterVM = Map.extend({
  * @codeend
  */
 export default Component.extend({
-  template,
+  view: template,
   tag: 'a2j-header-footer',
   viewModel: HeaderFooterVM,
+
   events: {
     inserted() {
       this.viewModel.attr('title', this.element.attr('title'));
     }
-  }
+  },
+
+  leakScope: true
 });

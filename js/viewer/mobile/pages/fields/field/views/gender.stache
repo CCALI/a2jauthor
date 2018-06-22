@@ -5,12 +5,12 @@
     </label>
 
     <label for="m" class="radio-inline">
-    <input type="radio" id="m" name="gender" value="Male" {{#is savedGenderValue "Male"}}checked{{/is}} ($change)="validateField"/>
+    <input type="radio" id="m" name="gender" value="Male" {{#is savedGenderValue "Male"}}checked{{/is}} on:el:change="validateField"/>
     {{i18n("Male")}}
     </label>
 
     <label for="f" class="radio-inline">
-    <input type="radio" id="f" name="gender" value="Female" {{#is savedGenderValue "Female"}}checked{{/is}} ($change)="validateField"/>
+    <input type="radio" id="f" name="gender" value="Female" {{#is savedGenderValue "Female"}}checked{{/is}} on:el:change="validateField"/>
     {{i18n("Female")}}</label>
 
     {{#if required}}

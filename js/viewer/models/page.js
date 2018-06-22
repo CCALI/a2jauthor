@@ -1,18 +1,18 @@
-import Map from 'can/map/'
-import List from 'can/list/'
+import CanMap from "can-map"
+import CanList from "can-list"
 import _find from 'lodash/find'
 import Field from 'caja/viewer/models/field'
 
-import 'can/map/define/'
+import "can-map-define"
 
 const userGenderVarName = 'user gender'
 
-const Page = Map.extend({
+const Page = CanMap.extend({
   define: {
     step: {
       // forces the convertion of TStep objects when converting
       // `window.gGuide` to an Interview model instance.
-      Type: Map
+      Type: CanMap
     },
 
     fields: {
@@ -35,7 +35,7 @@ const Page = Map.extend({
   }
 })
 
-Page.List = List.extend({
+Page.List = CanList.extend({
   Map: Page
 }, {
   find (name) {

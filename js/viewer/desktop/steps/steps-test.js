@@ -1,10 +1,10 @@
 import $ from 'jquery';
 import F from 'funcunit';
-import Map from 'can/map/';
+import CanMap from "can-map";
 import assert from 'assert';
 import _round from 'lodash/round';
 import _assign from 'lodash/assign';
-import stache from 'can/view/stache/';
+import stache from "can-stache";
 import AppState from 'caja/viewer/models/app-state';
 import Interview from 'caja/viewer/models/interview';
 import { ViewerStepsVM } from 'caja/viewer/desktop/steps/';
@@ -23,7 +23,7 @@ describe('<a2j-viewer-steps>', function() {
 
       interview = new Interview(parsedData);
 
-      const mState = new Map();
+      const mState = new CanMap();
       const page = interview.attr('firstPage');
       const rState = new AppState({ page });
 
@@ -88,14 +88,14 @@ describe('<a2j-viewer-steps>', function() {
     beforeEach(() => {
       vm = new ViewerStepsVM();
 
-      const currentPage = new Map({
+      const currentPage = new CanMap({
         step: {
           number: '2',
           text: 'Audio Test'
         }
       });
 
-      const answers = new Map({
+      const answers = new CanMap({
         'a2j step 0': {
           name: 'A2J Step 0',
           values: [null]
@@ -228,7 +228,7 @@ describe('<a2j-viewer-steps>', function() {
     });
 
     it('showClientAvatar / guideAvatarFacingDirection', () => {
-      let currentPage = new Map();
+      let currentPage = new CanMap();
 
       vm.attr({
         interview: {

@@ -1,5 +1,5 @@
-import Map from "can/map/";
-import List from "can/list/";
+import CanMap from "can-map";
+import CanList from "can-list";
 import Answers from "caja/author/models/answers";
 import A2JTemplate from "caja/author/models/a2j-template";
 import evalAuthorCondition from "caja/author/utils/eval-author-condition";
@@ -10,7 +10,7 @@ import evalAuthorCondition from "caja/author/utils/eval-author-condition";
  *
  * <a2j-template-ssr>'s viewModel.
  */
-export default Map.extend({
+export default CanMap.extend({
   define: {
     /**
      * @property {Promise} templatesPromise
@@ -30,7 +30,7 @@ export default Map.extend({
         if (Array.isArray(templateIds)) {
           return Promise.all(
             templateIds.map(templateId => A2JTemplate.findOne({ templateId }))
-          ).then(templates => new List(templates));
+          ).then(templates => new CanList(templates));
         }
 
         if (templateId) {
@@ -76,7 +76,7 @@ export default Map.extend({
    */
   findOneAndMakeList(guideId, templateId) {
     const promise = A2JTemplate.findOne({ guideId, templateId });
-    return promise.then(template => new List([template]));
+    return promise.then(template => new CanList([template]));
   },
 
   /**

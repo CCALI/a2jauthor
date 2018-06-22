@@ -1,5 +1,5 @@
-import Map from "can/map/";
-import Component from "can/component/";
+import CanMap from "can-map";
+import Component from "can-component";
 import template from "./addendum-options.stache";
 
 function toNumber (value, defaultValue) {
@@ -41,7 +41,7 @@ export function Resetable(attrs) {
   });
 }
 
-export const AddendumOptionsVm = Map.extend(
+export const AddendumOptionsVm = CanMap.extend(
   Resetable({
     define: {
       pageWidth: {
@@ -131,7 +131,7 @@ export const AddendumOptionsVm = Map.extend(
 );
 
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   viewModel: AddendumOptionsVm,
   tag: "addendum-options",

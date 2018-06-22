@@ -7,7 +7,7 @@
           type="button"
           class="modal-close"
           aria-label="Close"
-          ($click)="fireCancel()"
+          on:el:click="fireCancel()"
         >
           <span aria-hidden="true">×</span>
         </button>
@@ -21,7 +21,7 @@
           <div>
             <button
               class="btn btn-default"
-              ($click)="onLeftButtonClick()"
+              on:el:click="onLeftButtonClick()"
             >
               <span class='ui-button-text'>
                 {{#if leftButtonIcon}}
@@ -36,7 +36,7 @@
         <div>
           <button
             class="btn btn-default"
-            ($click)="fireCancel(true)"
+            on:el:click="fireCancel(true)"
           >
             <span class='ui-button-text'>{{cancelText}}</span>
           </button>
@@ -44,7 +44,7 @@
           {{#if submitText}}
             <button
               class="btn btn-primary"
-              ($click)="fireSubmit()"
+              on:el:click="fireSubmit()"
             >
               <span class='ui-button-text'>{{submitText}}</span>
             </button>

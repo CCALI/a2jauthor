@@ -6,12 +6,12 @@
 
         {{#if editActive}}
           <var-picker
-            {(selected)}="variable"
-            {variables}="variablesList"
+            vm:selected:bind="variable"
+            vm:variables:from="variablesList"
             filter-ocurrence="repeating"
           />
         {{else}}
-          <a2j-variable {name}="variable" />
+          <a2j-variable vm:name:from="variable" />
         {{/if}}
       </li>
     {{/each}}
@@ -22,7 +22,7 @@
       <ul style="list-style-type: {{listStyleType}}; margin-bottom: 20px;">
         {{#each loopCollection}}
           <li>
-            {{item}}: <a2j-variable {name}="../variable" {var-index}="%index" />
+            {{item}}: <a2j-variable vm:name:from="../variable" vm:varIndex:from="%index" />
           </li>
         {{/each}}
       </ul>
@@ -32,7 +32,7 @@
       <ul style="list-style-type: {{listStyleType}}; margin-bottom: 20px;">
         {{#each listItems}}
           <li>
-            {{item}}: <a2j-variable {name}="variable" {var-index}="../%index" />
+            {{item}}: <a2j-variable vm:name:from="variable" vm:varIndex:from="../%index" />
           </li>
         {{/each}}
       </ul>

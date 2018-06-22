@@ -17,7 +17,7 @@
           <div class="col-md-4">
             {{#if hasLoadedAnswers}}
               <button type="button"
-                ($click)="clearAnswers()"
+                on:el:click="clearAnswers()"
                 class="btn btn-link clear-answers pull-right">
 
                 Clear answers
@@ -34,15 +34,15 @@
 
       <div class="modal-footer">
         <form action="/api/assemble" method="post" target="_blank">
-          <input type="hidden" name="guideId" {$value}="guideId">
-          <input type="hidden" name="guideTitle" {$value}="guideTitle">
-          <input type="hidden" name="answers" {$value}="answersString">
-          <input type="hidden" name="templateId" {$value}="templateId">
+          <input type="hidden" name="guideId" el:value:from="guideId">
+          <input type="hidden" name="guideTitle" el:value:from="guideTitle">
+          <input type="hidden" name="answers" el:value:from="answersString">
+          <input type="hidden" name="templateId" el:value:from="templateId">
 
-          <input type="hidden" name="header" {$value}="header">
-          <input type="hidden" name="hideHeaderOnFirstPage" {$value}="hideHeaderOnFirstPage">
-          <input type="hidden" name="footer" {$value}="footer">
-          <input type="hidden" name="hideFooterOnFirstPage" {$value}="hideFooterOnFirstPage">
+          <input type="hidden" name="header" el:value:from="header">
+          <input type="hidden" name="hideHeaderOnFirstPage" el:value:from="hideHeaderOnFirstPage">
+          <input type="hidden" name="footer" el:value:from="footer">
+          <input type="hidden" name="hideFooterOnFirstPage" el:value:from="hideFooterOnFirstPage">
 
           <button type="submit" class="btn btn-primary btn-submit">Get PDF</button>
         </form>

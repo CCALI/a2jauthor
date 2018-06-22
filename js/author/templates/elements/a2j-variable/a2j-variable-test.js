@@ -1,4 +1,4 @@
-import Map from 'can/map/';
+import CanMap from "can-map";
 import assert from 'assert';
 import Answers from 'caja/author/models/answers';
 import A2JVariableVM from './a2j-variable-vm';
@@ -41,7 +41,7 @@ describe('<a2j-variable>', function() {
     it('gets variable object from answers if available', function() {
       let variable = vm.attr('variable');
 
-      assert.isTrue(variable instanceof Map);
+      assert.isTrue(variable instanceof CanMap);
       assert.isFalse(variable.attr('repeating'));
       assert.equal(variable.attr('name'), 'Client First Name');
     });

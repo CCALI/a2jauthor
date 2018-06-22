@@ -15,12 +15,12 @@
     {{#if a2jTemplate}}
       {{#if isPdfTemplate}}
         <pdf-editor
-          {(guide-id)}="guideId"
-          {(guide)}="guide"
-          {(template)}="a2jTemplate"
+          vm:guideId:bind="guideId"
+          vm:guide:bind="guide"
+          vm:template:bind="a2jTemplate"
         />
       {{else}}
-        <template-edit-toolbar {(guide-id)}="guideId" {(template)}="a2jTemplate" />
+        <template-edit-toolbar vm:guideId:bind="guideId" vm:template:bind="a2jTemplate" />
 
         <div class="container">
           <div class="row clearfix">
@@ -28,47 +28,47 @@
             <div class="col-md-8">
               <a2j-header-footer
               title="Custom Header"
-              {(edit-active)}="*editingHeader"
-              {(user-content)}="a2jTemplate.header"
-              {(not-displayed-on-first-Page)}="a2jTemplate.hideHeaderOnFirstPage"
-              {save-template}="a2jTemplate@save" />
+              vm:editActive:bind="*editingHeader"
+              vm:userContent:bind="a2jTemplate.header"
+              vm:notDisplayedOnFirstPage:bind="a2jTemplate.hideHeaderOnFirstPage"
+              vm:saveTemplate:from="a2jTemplate@save" />
 
               {{#if a2jTemplate.rootNode.children.length}}
               <a2j-template
-              {(guide)}="guide"
+              vm:guide:bind="guide"
               edit-enabled="true"
-              {(template)}="a2jTemplate" />
+              vm:template:bind="a2jTemplate" />
               {{else}}
               <a2j-blank-template />
               {{/if}}
 
               <a2j-header-footer
               title="Custom Footer"
-              {(edit-active)}="*editingFooter"
-              {(user-content)}="a2jTemplate.footer"
-              {(not-displayed-on-first-Page)}="a2jTemplate.hideFooterOnFirstPage"
-              {save-template}="a2jTemplate@save" />
+              vm:editActive:bind="*editingFooter"
+              vm:userContent:bind="a2jTemplate.footer"
+              vm:notDisplayedOnFirstPage:bind="a2jTemplate.hideFooterOnFirstPage"
+              vm:saveTemplate:from="a2jTemplate@save" />
             </div>
 
             {{! right column where template options tab is rendered }}
             <div class="col-md-4">
               <template-edit-tabs
-              {(template)}="a2jTemplate"
-              {^editing-header}="*editingHeader"
-              {^editing-footer}="*editingFooter"
-              {variables-list}="guide.variablesList"
+              vm:template:bind="a2jTemplate"
+              vm:editingHeader:to="*editingHeader"
+              vm:editingFooter:to="*editingFooter"
+              vm:variablesList:from="guide.variablesList"
               />
             </div>
           </div>
 
           <test-assemble-options
-          {guide-id}="guideId"
-          {guide-title}="guide.title"
-          {header}="a2jTemplate.header"
-          {footer}="a2jTemplate.footer"
-          {template-id}="a2jTemplate.templateId"
-          {hide-header-on-first-page}="a2jTemplate.hideHeaderOnFirstPage"
-          {hide-footer-on-first-page}="a2jTemplate.hideFooterOnFirstPage"
+          vm:guideId:from="guideId"
+          vm:guideTitle:from="guide.title"
+          vm:header:from="a2jTemplate.header"
+          vm:footer:from="a2jTemplate.footer"
+          vm:templateId:from="a2jTemplate.templateId"
+          vm:hideHeaderOnFirstPage:from="a2jTemplate.hideHeaderOnFirstPage"
+          vm:hideFooterOnFirstPage:from="a2jTemplate.hideFooterOnFirstPage"
           />
         </div>
       {{/if}}

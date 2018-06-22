@@ -4,10 +4,10 @@
       class="post-answers-form"
       action="{{pState.setDataURL}}">
 
-  <input type="hidden" name="AnswerKey" {$value}="answersANX" />
+  <input type="hidden" name="AnswerKey" el:value:from="answersANX" />
 
   <button type="submit"
-          ($click)="navigate"
+          on:el:click="navigate"
           class="btn btn-default btn-navigate">
     {{getButtonLabel(label)}}
   </button>

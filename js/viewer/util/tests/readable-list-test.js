@@ -1,4 +1,4 @@
-import List from 'can/list/';
+import CanList from "can-list";
 import assert from 'assert';
 import readableList from '../readable-list';
 
@@ -6,17 +6,17 @@ import 'steal-mocha';
 
 describe('readableList', function() {
   it('returns empty string if list has only blank values', function() {
-    const values = new List([null, undefined, '']);
+    const values = new CanList([null, undefined, '']);
     assert.equal(readableList(values), '', 'should return empty string');
   });
 
   it('zero 0 is not a blank value', function() {
-    const values = new List([null, '0']);
+    const values = new CanList([null, '0']);
     assert.equal(readableList(values), '0', 'should not strip 0');
   });
 
   it('separates two values using "and" or lang.RepeatAnd', function() {
-    const values = new List([null, 'Ana', 'Maria']);
+    const values = new CanList([null, 'Ana', 'Maria']);
 
     assert.equal(
       readableList(values, {}),
@@ -32,7 +32,7 @@ describe('readableList', function() {
   });
 
   it('uses commas to separate more than two values', function() {
-    const values = new List([null, 'Ana', 'Maria', 'Jose']);
+    const values = new CanList([null, 'Ana', 'Maria', 'Jose']);
 
     assert.equal(
       readableList(values, {}),

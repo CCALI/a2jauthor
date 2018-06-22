@@ -1,8 +1,8 @@
 import $ from 'jquery'
 import F from 'funcunit'
-import Map from 'can/map/'
+import CanMap from "can-map"
 import { ModalVM } from './modal'
-import stache from 'can/view/stache/'
+import stache from "can-stache"
 
 import 'caja/viewer/styles.less'
 
@@ -13,22 +13,22 @@ describe('<a2j-modal> ', function () {
     beforeEach(function () {
       const interview = {
         getPageByName () {
-          return new Map()
+          return new CanMap();
         }
       }
 
-      const rState = new Map({ page: 'foo' })
-      const mState = new Map({ fileDataURL: '/CAJA/js/images/' })
-      const logic = new Map({ eval () {} })
-      const modalContent = new Map({})
+      const rState = new CanMap({ page: 'foo' })
+      const mState = new CanMap({ fileDataURL: '/CAJA/js/images/' })
+      const logic = new CanMap({ eval () {} })
+      const modalContent = new CanMap({})
 
       const frag = stache(
         `<a2j-modal class="bootstrap-styles"
-          {logic}="logic"
-          {m-state}="mState"
-          {r-state}="rState"
-          {interview}="interview"
-          {modal-content}="modalContent" />`
+          vm:logic:from="logic"
+          vm:mState:from="mState"
+          vm:rState:from="rState"
+          vm:interview:from="interview"
+          vm:modalContent:from="modalContent" />`
       )
 
       $('#test-area').html(frag({ interview, rState, logic, mState, modalContent }))

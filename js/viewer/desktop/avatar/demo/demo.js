@@ -1,10 +1,10 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
+import CanMap from "can-map";
+import Component from "can-component";
 import template from './demo.stache';
 
-import 'can/map/define/';
+import "can-map-define";
 
-let AvatarDemoVM = Map.extend({
+let AvatarDemoVM = CanMap.extend({
   define: {
     gender: {
       value: 'female'
@@ -21,7 +21,8 @@ let AvatarDemoVM = Map.extend({
 });
 
 export default Component.extend({
-  template,
+  view: template,
   viewModel: AvatarDemoVM,
-  tag: 'a2j-viewer-avatar-demo'
+  tag: 'a2j-viewer-avatar-demo',
+  leakScope: true
 });

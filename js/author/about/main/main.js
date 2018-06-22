@@ -1,5 +1,5 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
+import CanMap from "can-map";
+import Component from "can-component";
 import template from './main.stache';
 
 function getLanguageList () {
@@ -54,7 +54,7 @@ function proxyGuideInfo (viewModel) {
   };
 }
 
-export const AboutMainVm = Map.extend({
+export const AboutMainVm = CanMap.extend({
   define: {
     languageOptions: {
       get () {
@@ -88,7 +88,7 @@ export const AboutMainVm = Map.extend({
 
 export default Component.extend({
   tag: 'about-main',
-  template,
+  view: template,
   leakScope: false,
   viewModel: AboutMainVm,
   events: {
@@ -98,7 +98,7 @@ export default Component.extend({
       }
       this.cancelProxy = proxyGuideInfo(this.viewModel);
     },
-    removed () {
+    "{element} beforeremove" () {
       if (this.cancelProxy) {
         this.cancelProxy();
         this.cancelProxy = undefined;

@@ -6,12 +6,12 @@
 
 {{#if editEnabled}}
   <element-container
-    {node-id}="id"
-    {deleted}="deleted"
-    {(selected)}="editActive"
-    {clone-node}="@cloneNode"
-    {delete-node}="@deleteNode"
-    {toggle-edit-active-node}="@toggleEditActiveNode">
+    vm:nodeId:from="id"
+    vm:deleted:from="deleted"
+    vm:selected:bind="editActive"
+    vm:cloneNode:from="@cloneNode"
+    vm:deleteNode:from="@deleteNode"
+    vm:toggleEditActiveNode:from="@toggleEditActiveNode">
 
     <div class="panel panel-info">
       <div class="panel-heading">

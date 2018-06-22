@@ -1,6 +1,6 @@
-import Map from 'can/map/'
+import CanMap from "can-map"
 import _assign from 'lodash/assign'
-import Component from 'can/component/'
+import Component from "can-component"
 import isMobile from 'caja/viewer/is-mobile'
 import template from 'caja/viewer/app.stache'
 import Lang from 'caja/viewer/mobile/util/lang'
@@ -11,7 +11,7 @@ import MemoryState from 'caja/viewer/models/memory-state'
 import PersistedState from 'caja/viewer/models/persisted-state'
 import parseGuideToMobile from 'caja/viewer/mobile/util/guide-to-mobile'
 
-const ViewerPreviewVM = Map.extend('ViewerPreviewVM', {
+const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
   define: {
     interviewPageName: {
       get: function () {
@@ -66,7 +66,7 @@ export default Component.extend({
         rState.attr('view', 'intro')
       }
 
-      const modalContent = can.compute()
+      const modalContent = compute()
 
       if (previewAnswers) {
         previewAnswers.each(function (answer) {
@@ -90,5 +90,7 @@ export default Component.extend({
 
       this.element.html(template(vm))
     }
-  }
+  },
+
+  leakScope: true
 })

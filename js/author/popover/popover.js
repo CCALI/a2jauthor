@@ -1,9 +1,9 @@
-import Map from 'can/map/'
-import Component from 'can/component/'
+import CanMap from "can-map"
+import Component from "can-component"
 import _includes from 'lodash/includes'
 import template from './popover.stache'
 
-import 'can/map/define/'
+import "can-map-define"
 
 const placements = ['top', 'right', 'bottom', 'left', 'auto']
 
@@ -28,7 +28,7 @@ const placements = ['top', 'right', 'bottom', 'left', 'auto']
  *
  * `<app-popover>`'s viewModel.
  */
-export let Popover = Map.extend({
+export let Popover = CanMap.extend({
   define: {
     /**
      * @property {String} popover.ViewModel.prototype.define.title title
@@ -63,7 +63,7 @@ export let Popover = Map.extend({
 })
 
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   viewModel: Popover,
   tag: 'app-popover'

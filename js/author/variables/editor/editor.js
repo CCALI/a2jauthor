@@ -1,9 +1,9 @@
-import Map from "can/map/";
-import Component from "can/component/";
+import CanMap from "can-map";
+import Component from "can-component";
 import template from "./editor.stache";
 import constants from "caja/viewer/models/constants";
 
-export const VariableEditorVM = Map.extend({
+export const VariableEditorVM = CanMap.extend({
   define: {
     /*
       type Variable = {
@@ -144,7 +144,7 @@ export const VariableEditorVM = Map.extend({
 });
 
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   viewModel: VariableEditorVM,
   tag: "variable-editor",

@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import assert from 'assert';
-import compute from 'can/compute/';
+import compute from "can-compute";
 import setMobileDesktopClass from 'caja/viewer/util/set-mobile-desktop-class';
 
 import 'steal-mocha';

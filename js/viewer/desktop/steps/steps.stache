@@ -4,21 +4,21 @@
 
 {{#if currentStep}}
   <div class="step-current">
-    <div class="app-step" {$style}="formatStepStyles( getStepWidth(true) )">
+    <div class="app-step" el:style:from="formatStepStyles( getStepWidth(true) )">
       <div class="step-circle bg-step{{currentStep.number}}"></div>
     </div>
 
     <div class="guide-wrapper {{^if showClientAvatar}}guide-center{{/if}}">
       <div id="guideBubble" class="bubble {{#if guideBubbleTallerThanAvatar}}vertical{{/else}}top{{/if}}">
         <a2j-pages
-          {lang}="lang"
-          {(logic)}="logic"
-          {(r-state)}="rState"
-          {(p-state)}="pState"
-          {(m-state)}="mState"
-          {(interview)}="interview"
-          {(modal-content)}="modalContent"
-          {(trace-logic)}="traceLogic" />
+          vm:lang:from="lang"
+          vm:logic:bind="logic"
+          vm:rState:bind="rState"
+          vm:pState:bind="pState"
+          vm:mState:bind="mState"
+          vm:interview:bind="interview"
+          vm:modalContent:bind="modalContent"
+          vm:traceLogic:bind="traceLogic" />
       </div><!-- guideBubble -->
 
       {{#unless showClientAvatar}}
@@ -35,11 +35,11 @@
         <span class="bubble-arrow"></span>
         <a2j-viewer-avatar
           kind="guide"
-          {@avatar-loaded}="@avatarLoaded"
-          {skin}="guideAvatarSkinTone"
-          {hair}="guideAvatarHairColor"
-          {gender}="interview.guideAvatarGender"
-          {facing}="guideAvatarFacingDirection" />
+          vm:@avatarLoaded:from="@avatarLoaded"
+          vm:skin:from="guideAvatarSkinTone"
+          vm:hair:from="guideAvatarHairColor"
+          vm:gender:from="interview.guideAvatarGender"
+          vm:facing:from="guideAvatarFacingDirection" />
       </div>
     </div><!-- guide-wrapper -->
 
@@ -49,10 +49,10 @@
           <a2j-viewer-avatar
             kind="client"
             facing="left"
-            {@avatar-loaded}="@avatarLoaded"
-            {skin}="clientAvatarSkinTone"
-            {hair}="clientAvatarHairColor"
-            {gender}="interview.userGender" />
+            vm:@avatarLoaded:from="@avatarLoaded"
+            vm:skin:from="clientAvatarSkinTone"
+            vm:hair:from="clientAvatarHairColor"
+            vm:gender:from="interview.userGender" />
         </div>
 
         {{#currentPage}}
@@ -91,7 +91,7 @@
       <div id="next-{{ add(%index, 2) }}"
         class="step-next next-{{ add(%index, 2) }} step-{{ add(%index, 2) }}">
 
-        <div class="app-step" {$style}="formatStepStyles( getStepWidth(false, %index) )">
+        <div class="app-step" el:style:from="formatStepStyles( getStepWidth(false, %index) )">
           <div class="step-circle bg-step{{number}}"></div>
         </div>
 

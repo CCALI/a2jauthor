@@ -1,5 +1,5 @@
-import Map from "can/map/";
-import Component from "can/component/";
+import CanMap from "can-map";
+import Component from "can-component";
 import template from "./checkmark-picker.stache";
 import { getCheckmarks } from "../index";
 
@@ -16,7 +16,7 @@ export function CheckmarkLoader(checkCache, getCheckmarks) {
   };
 }
 
-export const CheckmarkPickerVm = Map.extend({
+export const CheckmarkPickerVm = CanMap.extend({
   define: {
     check: {
       type: 'string'
@@ -90,7 +90,7 @@ export const CheckmarkPickerVm = Map.extend({
 });
 
 export default Component.extend({
-  template,
+  view: template,
   tag: "checkmark-picker",
   viewModel: CheckmarkPickerVm,
   leakScope: false,

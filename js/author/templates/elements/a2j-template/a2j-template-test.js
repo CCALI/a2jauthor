@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import F from 'funcunit';
 import assert from 'assert';
-import stache from 'can/view/stache/';
+import stache from "can-stache";
 import A2JTemplateVM from './a2j-template-vm';
 import A2JTemplate from 'caja/author/models/a2j-template';
 import templateFixture from 'caja/author/models/fixtures/templates/guide20-template2114';
@@ -26,7 +26,7 @@ describe('a2j-template', function() {
       const template = makeA2JTemplate(templateFixture);
 
       const frag = stache(
-        '<a2j-template edit-enabled="true" {(template)}="template" />'
+        '<a2j-template edit-enabled="true" vm:template:bind="template" />'
       );
 
       $('#test-area').html(frag({ template }));

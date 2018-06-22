@@ -1,4 +1,4 @@
-import Component from 'can/component/';
+import Component from "can-component";
 import template from './a2j-conditional.stache';
 import ConditionalVM from './a2j-conditional-vm';
 
@@ -25,7 +25,7 @@ const operatorTextMap = {
  * @codeend
  */
 export default Component.extend({
-  template,
+  view: template,
   tag: 'a2j-conditional',
   viewModel: ConditionalVM,
 
@@ -53,5 +53,7 @@ export default Component.extend({
         toggleEditActiveNode(selectedNode.attr('id'));
       }
     }
-  }
+  },
+
+  leakScope: true
 });

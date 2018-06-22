@@ -1,5 +1,5 @@
 import template from './tabs.stache';
-import Component from 'can/component/';
+import Component from "can-component";
 import _throttle from 'lodash/throttle';
 import TemplateEditTabsVM from './tabs-vm';
 import addElementsTabTpl from './add-elements-tab.stache';
@@ -17,7 +17,7 @@ can.view.preload('template-options-tab-tpl', templateOptionsTabTpl);
  * The tabs shown in the template edit page
  */
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   tag: 'template-edit-tabs',
   viewModel: TemplateEditTabsVM,

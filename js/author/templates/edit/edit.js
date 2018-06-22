@@ -1,11 +1,11 @@
-import Map from "can/map/";
-import Component from "can/component/";
+import CanMap from "can-map";
+import Component from "can-component";
 import template from "./edit.stache";
 import A2JTemplate from "caja/author/models/a2j-template";
 import A2JNode from "caja/author/models/a2j-node";
 
-import "can/route/";
-import "can/map/define/";
+import "can-route";
+import "can-map-define";
 
 import { sharedPdfFlag } from "caja/author/pdf/index";
 
@@ -30,7 +30,7 @@ import { sharedPdfFlag } from "caja/author/pdf/index";
  *
  * <template-edit-page>'s viewModel.
  */
-export const TemplateEditPageVM = Map.extend({
+export const TemplateEditPageVM = CanMap.extend({
   define: {
     /**
      * @property {Promise} editPage.ViewModel.prototype.a2jTemplatePromise a2jTemplatePromise
@@ -107,7 +107,7 @@ export const TemplateEditPageVM = Map.extend({
 });
 
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   tag: "template-edit-page",
   viewModel: TemplateEditPageVM

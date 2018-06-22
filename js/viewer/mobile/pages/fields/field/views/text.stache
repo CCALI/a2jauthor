@@ -10,9 +10,9 @@
       id="{{label}}"
       class="form-control"
       name="{{name}}"
-      ($change)="validateField"
-      {($value)}="field._answer.values"
-      ($input)="calcAvailableLength(%event)"
+      on:el:change="validateField"
+      el:value:bind="field._answer.values"
+      on:el:input="calcAvailableLength(%event)"
       placeholder="{{suggestionText}}" />
 
       {{#if maxChars}}

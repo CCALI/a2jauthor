@@ -1,8 +1,8 @@
-import Map from 'can/map/';
-import Component from 'can/component/';
+import CanMap from "can-map";
+import Component from "can-component";
 import template from './options-pane.stache';
 
-import 'can/map/define/';
+import "can-map-define";
 
 /**
  * @module {Module} optionsPane <element-options-pane>
@@ -26,7 +26,7 @@ import 'can/map/define/';
  *
  * `<element-options-pane>`'s viewModel.
  */
-export let OptionsPaneVM = Map.extend({
+export let OptionsPaneVM = CanMap.extend({
   define: {
     /**
      * @property {Boolean} optionsPane.ViewModel.prototype.define.title title
@@ -54,7 +54,8 @@ export let OptionsPaneVM = Map.extend({
 });
 
 export default Component.extend({
-  template,
+  view: template,
   viewModel: OptionsPaneVM,
-  tag: 'element-options-pane'
+  tag: 'element-options-pane',
+  leakScope: true
 });

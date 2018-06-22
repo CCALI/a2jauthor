@@ -1,6 +1,6 @@
 import $ from 'jquery'
-import Map from 'can/map/'
-import Component from 'can/component/'
+import CanMap from "can-map"
+import Component from "can-component"
 import template from './debug-menu.stache'
 import _isFunction from 'lodash/isFunction'
 
@@ -20,14 +20,14 @@ import _isFunction from 'lodash/isFunction'
  * @codeend
  */
 
-let DebugMenuVM = Map.extend({
+let DebugMenuVM = CanMap.extend({
   resumeEdit () {
     this.attr('appState.page', 'pages')
   }
 })
 
 export default Component.extend({
-  template,
+  view: template,
   viewModel: DebugMenuVM,
   tag: 'author-debug-menu',
 
@@ -71,5 +71,7 @@ export default Component.extend({
         window.gotoPageEdit(pageName)
       }
     }
-  }
+  },
+
+  leakScope: true
 })

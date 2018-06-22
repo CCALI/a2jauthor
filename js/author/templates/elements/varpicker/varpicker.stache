@@ -6,7 +6,7 @@
   type="text"
   style="display: none;"
   class="form-control"
-  {($value)}="selected"
-  {$disabled}="disabled"
+  el:value:bind="selected"
+  el:disabled:from="disabled"
   tokenfield-disabled="disabled"
 />

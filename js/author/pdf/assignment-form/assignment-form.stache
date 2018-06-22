@@ -7,7 +7,7 @@
   <author-modal
     modal-title='Assignment conflict'
     cancel-text='Dismiss'
-    {@on-cancel}='@fireCancel'
+    vm:@onCancel:from='@fireCancel'
   >
     <div class='conflict'>
       <p>
@@ -29,18 +29,18 @@
     modal-title='Assign variable'
     left-button-text='Unassign'
     left-button-icon='glyphicon-lock-open-alt'
-    {@on-left-button-click}="@fireUnassign"
+    vm:@onLeftButtonClick:from="@fireUnassign"
     cancel-text='Cancel'
-    {@on-cancel}="@fireCancel"
+    vm:@onCancel:from="@fireCancel"
     submit-text='Assign'
-    {@on-submit}="@fireAssign"
+    vm:@onSubmit:from="@fireAssign"
   >
     <variable-editor
-      {@initial-variable}="@initialVariable"
-      {@existing-variable-names}="@variableSuggestions"
-      {@show-usage-finder}=false
-      {@on-variable-change}="@onVariableChange"
-      {@on-select-suggestion}="@onSelectSuggestion"
+      vm:@initialVariable:from="@initialVariable"
+      vm:@existingVariableNames:from="@variableSuggestions"
+      vm:@showUsageFinder:from=false
+      vm:@onVariableChange:from="@onVariableChange"
+      vm:@onSelectSuggestion:from="@onSelectSuggestion"
     />
 
     {{#if hasOptions}}
@@ -53,8 +53,8 @@
                   <input
                     type="checkbox"
                     name="text-group"
-                    ($change)="onGroupChange(%event)"
-                    {($checked)}='variableBuffer.isGroup'
+                    on:el:change="onGroupChange(%event)"
+                    el:checked:bind='variableBuffer.isGroup'
                   />
                 <span>Group Selected Text Boxes</span>
                 </label>
@@ -68,7 +68,7 @@
                   type='radio'
                   name='overflow-style-1'
                   value='overflow-to-addendum'
-                  ($change)='onOverflowStyleChange(%event)'
+                  on:el:change='onOverflowStyleChange(%event)'
                   {{#is variableBuffer.overflowStyle 'overflow-to-addendum'}}
                     checked='checked'
                   {{/is}}
@@ -80,7 +80,7 @@
                   type='radio'
                   name='overflow-style-2'
                   value='everything-to-addendum'
-                  ($change)='onOverflowStyleChange(%event)'
+                  on:el:change='onOverflowStyleChange(%event)'
                   {{#is variableBuffer.overflowStyle 'everything-to-addendum'}}
                     checked='checked'
                   {{/is}}
@@ -92,7 +92,7 @@
                   type='radio'
                   name='overflow-style-3'
                   value='clip-overflow'
-                  ($change)='onOverflowStyleChange(%event)'
+                  on:el:change='onOverflowStyleChange(%event)'
                   {{#is variableBuffer.overflowStyle 'clip-overflow'}}
                     checked='checked'
                   {{/is}}
@@ -107,7 +107,7 @@
             <input
               type="text"
               class="editable"
-              {($value)}="variableBuffer.addendumLabel"
+              el:value:bind="variableBuffer.addendumLabel"
             />
           </div>
         {{/if}}
@@ -121,7 +121,7 @@
                   type='radio'
                   name='pass-type'
                   value='pass-value'
-                  ($change)='onPassValueChange(%event)'
+                  on:el:change='onPassValueChange(%event)'
                   {{^if variableBuffer.isCheck}}
                     checked='checked'
                   {{/if}}
@@ -133,7 +133,7 @@
                   type='radio'
                   name='pass-type'
                   value='pass-check'
-                  ($change)='onPassValueChange(%event)'
+                  on:el:change='onPassValueChange(%event)'
                   {{#if variableBuffer.isCheck}}
                     checked='checked'
                   {{/if}}
@@ -155,7 +155,7 @@
                     {{/if}}
                     placeholder="Multiple choice value #{{%index}}"
                     value="{{.}}"
-                    ($change)="onChoiceChange(%event, %index)"
+                    on:el:change="onChoiceChange(%event, %index)"
                   />
                 {{/each}}
               </div>
@@ -168,7 +168,7 @@
             <label>Checkmark style:</label>
             <checkmark-picker
               check="{{variableBuffer.checkIcon}}"
-              {@on-check}="@onCheckIcon"
+              vm:@onCheck:from="@onCheckIcon"
             />
             {{#if hasInvertOption}}
               <label>
@@ -177,7 +177,7 @@
                   {{#if variableBuffer.isInverted}}
                     checked='checked'
                   {{/if}}
-                  ($change)='onInvertChange(%event)'
+                  on:el:change='onInvertChange(%event)'
                 />
                 <span>If the variable is false, draw the checkmark.</span>
               </label>

@@ -2,9 +2,9 @@
   <div class="form-group row clearfix">
     <div class="col-md-12">
       <var-picker
-        {disabled}="disabled"
-        {(selected)}="leftOperand"
-        {variables}="variablesList"
+        vm:disabled:from="disabled"
+        vm:selected:bind="leftOperand"
+        vm:variables:from="variablesList"
       />
     </div>
   </div>
@@ -12,8 +12,8 @@
   <div class="form-group">
     <select
       class="form-control"
-      {($value)}="operator"
-      {$disabled}="disabled"
+      el:value:bind="operator"
+      el:disabled:from="disabled"
     >
       <option value="is-true">is true</option>
       <option value="is-false">is false</option>
@@ -28,8 +28,8 @@
     <div class="col-md-6">
       <select
         class="form-control"
-        {$disabled}="disabled"
-        {($value)}="rightOperandType"
+        el:disabled:from="disabled"
+        el:value:bind="rightOperandType"
       >
         <option value="variable">Variable</option>
         <option value="text">Text</option>
@@ -39,16 +39,16 @@
     <div class="col-md-6">
       {{#is rightOperandType 'variable'}}
         <var-picker
-          {$disabled}="disabled"
-          {(selected)}="rightOperand"
-          {variables}="variablesList"
+          el:disabled:from="disabled"
+          vm:selected:bind="rightOperand"
+          vm:variables:from="variablesList"
         />
       {{else}}
         <input
           type="text"
           class="form-control"
-          {$disabled}="disabled"
-          {($value)}="rightOperand"
+          el:disabled:from="disabled"
+          el:value:bind="rightOperand"
         />
       {{/if}}
     </div>

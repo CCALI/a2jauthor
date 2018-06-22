@@ -1,21 +1,24 @@
-import $ from 'jquery';
-import can from 'can';
-import assert from 'assert';
-import PagesVM from './pages-vm';
-import sinon from 'sinon';
-import AppState from 'caja/viewer/models/app-state';
-import constants from 'caja/viewer/models/constants';
-import './pages';
-import 'steal-mocha';
+import $ from 'jquery'
+import Map from 'can/map/'
+import List from 'can/list/'
+import stache from 'can/view/stache/'
+import assert from 'assert'
+import PagesVM from './pages-vm'
+import sinon from 'sinon'
+import AppState from 'caja/viewer/models/app-state'
+import constants from 'caja/viewer/models/constants'
+import event from 'can/util/event'
+import './pages'
+import 'steal-mocha'
 
 describe('<a2j-pages>', () => {
-  let vm;
-  let logicStub;
-  let nextPageStub;
-  let defaults;
+  let vm
+  let logicStub
+  let nextPageStub
+  let defaults
 
   beforeEach(() => {
-    logicStub = new can.Map({
+    logicStub = new Map({
       exec: $.noop,
       infinite: {
         errors: $.noop,
@@ -28,366 +31,361 @@ describe('<a2j-pages>', () => {
       varCreate: sinon.spy(),
       varGet: sinon.stub(),
       varSet: sinon.spy()
-    });
+    })
 
-    nextPageStub = new can.Map({
+    nextPageStub = new Map({
       name: 'Next',
       fields: []
-    });
+    })
 
     defaults = {
-      traceLogic: new can.List(),
-      currentPage: new can.Map ({ fields: [], repeatVar: "" }),
+      traceLogic: new List(),
+      currentPage: new Map({ fields: [], repeatVar: '' }),
       logic: logicStub,
       rState: new AppState(),
       mState: { },
       interview: {
-        answers: new can.Map(),
-        getPageByName: function() {
-          return nextPageStub;
+        answers: new Map(),
+        getPageByName: function () {
+          return nextPageStub
         },
         pages: {
-          find() {
-            return nextPageStub;
+          find () {
+            return nextPageStub
           }
         }
       }
-    };
-  });
+    }
+  })
 
   describe('viewModel', () => {
     beforeEach(() => {
-      vm = new PagesVM(defaults);
-    });
+      vm = new PagesVM(defaults)
+    })
 
     it('should set traceLogic with pageName on init', () => {
-      assert.deepEqual(vm.attr('traceLogic').attr(), []);
-    });
+      assert.deepEqual(vm.attr('traceLogic').attr(), [])
+    })
 
     describe('navigate', () => {
-      let setRepeatVariableStub;
+      let setRepeatVariableStub
 
       beforeEach(() => {
-        setRepeatVariableStub = sinon.stub(vm, 'setRepeatVariable');
-      });
+        setRepeatVariableStub = sinon.stub(vm, 'setRepeatVariable')
+      })
 
       afterEach(() => {
-        setRepeatVariableStub.restore();
-      });
+        setRepeatVariableStub.restore()
+      })
 
       it('without repeatVar logic', () => {
-        const button = new can.Map({
+        const button = new Map({
           label: 'Go!',
           next: 'Next'
-        });
+        })
 
-        vm.navigate(button);
+        vm.navigate(button)
 
         let expectedTrageLogic = [
           { button: [{ msg: 'You pressed' }, { format: 'ui', msg: 'Go!' }] }
-        ];
+        ]
 
         assert.deepEqual(vm.attr('traceLogic').attr(), expectedTrageLogic,
-          'should not run codeAfter if it is empty');
+          'should not run codeAfter if it is empty')
 
         assert.equal(setRepeatVariableStub.callCount, 0,
-          'should not call setRepeatVariable');
+          'should not call setRepeatVariable')
 
-        vm.attr('currentPage.codeAfter', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>');
-        button.attr('label', 'Go Again!');
-        vm.navigate(button);
+        vm.attr('currentPage.codeAfter', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>')
+        button.attr('label', 'Go Again!')
+        vm.navigate(button)
 
         expectedTrageLogic = [
           { button: [{ msg: 'You pressed' }, { format: 'ui', msg: 'Go!' }] },
           { button: [{ msg: 'You pressed' }, { format: 'ui', msg: 'Go Again!' }] },
           { codeAfter: { format: 'info', msg: 'Logic After Question' } }
-        ];
+        ]
 
         assert.deepEqual(vm.attr('traceLogic').attr(), expectedTrageLogic,
-          'should run codeAfter');
-      });
+          'should run codeAfter')
+      })
 
       it('with repeatVar logic', () => {
-        const button = new can.Map({
+        const button = new Map({
           label: 'Go!',
           next: 'Next',
           repeatVar: 'Repeat',
           repeatVarSet: '=1'
-        });
+        })
 
-        vm.navigate(button);
+        vm.navigate(button)
 
         let expectedTrageLogic = [
           { button: [{ msg: 'You pressed' }, { format: 'ui', msg: 'Go!' }] }
-        ];
+        ]
 
         assert.deepEqual(vm.attr('traceLogic').attr(), expectedTrageLogic,
-          'should not run codeAfter if it is empty');
+          'should not run codeAfter if it is empty')
 
         assert.equal(setRepeatVariableStub.callCount, 1,
-          'should call setRepeatVariable');
+          'should call setRepeatVariable')
         assert.equal(setRepeatVariableStub.firstCall.args[0], 'Repeat',
-          'should call setRepeatVariable with correct repeatVar');
+          'should call setRepeatVariable with correct repeatVar')
         assert.equal(setRepeatVariableStub.firstCall.args[1], '=1',
-          'should call setRepeatVariable with correct repeatVarSet');
+          'should call setRepeatVariable with correct repeatVarSet')
 
-        vm.attr('currentPage.codeAfter', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>');
-        button.attr('label', 'Go Again!');
-        vm.navigate(button);
+        vm.attr('currentPage.codeAfter', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>')
+        button.attr('label', 'Go Again!')
+        vm.navigate(button)
 
         expectedTrageLogic = [
           { button: [{ msg: 'You pressed' }, { format: 'ui', msg: 'Go!' }] },
           { button: [{ msg: 'You pressed' }, { format: 'ui', msg: 'Go Again!' }] },
           { codeAfter: { format: 'info', msg: 'Logic After Question' } }
-        ];
+        ]
 
         assert.deepEqual(vm.attr('traceLogic').attr(), expectedTrageLogic,
-          'should run codeAfter');
-      });
+          'should run codeAfter')
+      })
 
       it('saves answer when button has a value', () => {
-        let answers = defaults.interview.answers;
+        let answers = defaults.interview.answers
 
-        let kidstf = new can.Map({
-          comment: "",
-          name: "KidsTF",
+        let kidstf = new Map({
+          comment: '',
+          name: 'KidsTF',
           repeating: true,
-          type: "TF",
+          type: 'TF',
           values: [null]
-        });
+        })
 
-        answers.attr('kidstf', kidstf);
+        answers.attr('kidstf', kidstf)
 
-        const button = new can.Map({
+        const button = new Map({
           label: 'Go!',
           next: 'Next',
           name: 'KidsTF',
-          value: "true"
-        });
+          value: 'true'
+        })
 
-        vm.navigate(button);
+        vm.navigate(button)
 
         assert.deepEqual(answers.attr('kidstf.values.1'), true,
-        'first saved value should be true');
-      });
+          'first saved value should be true')
+      })
 
       it('saves answer when button can hold mutilple values', () => {
-        let answers = defaults.interview.answers;
-        let page = defaults.currentPage;
+        let answers = defaults.interview.answers
+        let page = defaults.currentPage
 
-        let agesnu = new can.Map({
-          comment: "",
-          name: "AgesNU",
+        let agesnu = new Map({
+          comment: '',
+          name: 'AgesNU',
           repeating: true,
-          type: "Number",
+          type: 'Number',
           values: [null, 14, 12]
-        });
+        })
 
-        answers.attr('agesnu', agesnu);
+        answers.attr('agesnu', agesnu)
 
-        const button = new can.Map({
+        const button = new Map({
           label: 'Go!',
           next: 'Next',
           name: 'AgesNU',
-          value: "42"
-        });
+          value: '42'
+        })
 
         // required to trigger mutli-value save
-        page.attr('repeatVar', 'AgeCount');
-        logicStub.varGet.returns(3);
+        page.attr('repeatVar', 'AgeCount')
+        logicStub.varGet.returns(3)
 
-        vm.navigate(button);
+        vm.navigate(button)
 
         assert.deepEqual(answers.attr('agesnu.values.3'), 42,
-        'adds mutli value to index 3');
-      });
+          'adds mutli value to index 3')
+      })
 
       it('sets a2j interview incomplete tf to false when special buttons fired', () => {
-        const answers = defaults.interview.answers;
-        const incompleteTF = constants.vnInterviewIncompleteTF.toLowerCase();
+        const answers = defaults.interview.answers
+        const incompleteTF = constants.vnInterviewIncompleteTF.toLowerCase()
 
-        const incomplete = new can.Map({
-          comment: "",
+        const incomplete = new Map({
+          comment: '',
           name: incompleteTF,
           repeating: false,
-          type: "TF",
+          type: 'TF',
           values: [null, true]
-        });
+        })
 
-        const specialButton = new can.Map({
+        const specialButton = new Map({
           label: 'Special!',
           next: constants.qIDSUCCESS
-        });
+        })
 
-        answers.attr(incompleteTF, incomplete);
-        vm.navigate(specialButton);
-        assert.equal(answers.attr(`${incompleteTF}.values.1`), false, 'success button should complete interview');
-      });
-
-    });
+        answers.attr(incompleteTF, incomplete)
+        vm.navigate(specialButton)
+        assert.equal(answers.attr(`${incompleteTF}.values.1`), false, 'success button should complete interview')
+      })
+    })
 
     it('setRepeatVariable', () => {
-      vm.setRepeatVariable('Repeat', '=1');
+      vm.setRepeatVariable('Repeat', '=1')
 
-      assert(logicStub.varExists.calledWith('Repeat'), 'Checks if repeatVar exists');
-      assert(logicStub.varCreate.calledWith('Repeat', 'Number', false, 'Repeat variable index'), 'Creates repeatVar');
-      assert(logicStub.varSet.calledWith('Repeat', 1), 'Sets repeatVar to 1');
+      assert(logicStub.varExists.calledWith('Repeat'), 'Checks if repeatVar exists')
+      assert(logicStub.varCreate.calledWith('Repeat', 'Number', false, 'Repeat variable index'), 'Creates repeatVar')
+      assert(logicStub.varSet.calledWith('Repeat', 1), 'Sets repeatVar to 1')
 
       assert.deepEqual(vm.attr('traceLogic').attr(), [{
         'Repeat-0': { msg: 'Setting [Repeat] to 1' }
-      }], 'Should log repeatVar initialization');
+      }], 'Should log repeatVar initialization')
 
-      logicStub.varGet.returns(1);
-      vm.setRepeatVariable('Repeat', '+=1');
+      logicStub.varGet.returns(1)
+      vm.setRepeatVariable('Repeat', '+=1')
 
-      assert(logicStub.varGet.calledWith('Repeat'), 'Gets current value of variable');
-      assert(logicStub.varSet.calledWith('Repeat', 2), 'Sets repeatVar to 2');
+      assert(logicStub.varGet.calledWith('Repeat'), 'Gets current value of variable')
+      assert(logicStub.varSet.calledWith('Repeat', 2), 'Sets repeatVar to 2')
 
       assert.deepEqual(vm.attr('traceLogic').attr(), [{
         'Repeat-0': { msg: 'Setting [Repeat] to 1' }
       }, {
         'Repeat-1': { msg: 'Incrementing [Repeat] to 2' }
-      }], 'Should log repeatVar increment');
-    });
+      }], 'Should log repeatVar increment')
+    })
 
     it('setCurrentPage', () => {
-      vm.attr('rState.page', 'foo');
-      vm.setCurrentPage();
+      vm.attr('rState.page', 'foo')
+      vm.setCurrentPage()
 
       assert.deepEqual(vm.attr('traceLogic').attr(), [{
         page: 'Next'
-      }], 'trace page name');
-    });
+      }], 'trace page name')
+    })
 
     describe('default values', () => {
       it('sets default value', () => {
-        let field = new can.Map({
+        let field = new Map({
           name: 'StateTE',
           label: 'Enter State:',
           type: 'text',
           value: 'Texas'
-        });
+        })
 
-        let answerVar = new can.Map({
+        let answerVar = new Map({
           name: 'statete',
           type: 'text',
           values: [null]
-        });
+        })
 
-        vm.attr('interview.answers.statete', answerVar);
+        vm.attr('interview.answers.statete', answerVar)
 
-        nextPageStub.fields.push(field);
-        vm.attr('rState.page', 'Next');  // page find() always returns nextPageStub
+        nextPageStub.fields.push(field)
+        vm.attr('rState.page', 'Next') // page find() always returns nextPageStub
 
-        vm.setCurrentPage();
+        vm.setCurrentPage()
 
-        assert.equal(vm.attr('interview.answers.statete.values.1'), 'Texas', 'Default values override empty answers');
-      });
+        assert.equal(vm.attr('interview.answers.statete.values.1'), 'Texas', 'Default values override empty answers')
+      })
 
       it('ignores default value if previous answer exists', () => {
-        let field = new can.Map({
+        let field = new Map({
           name: 'StateTE',
           label: 'Enter State:',
           type: 'text',
           value: 'Texas'
-        });
+        })
 
-        let answerVar = new can.Map({
+        let answerVar = new Map({
           name: 'statete',
           type: 'text',
           values: [null, 'Illinois']
-        });
+        })
 
-        vm.attr('interview.answers.statete', answerVar);
+        vm.attr('interview.answers.statete', answerVar)
 
-        nextPageStub.fields.push(field);
-        vm.attr('rState.page', 'Next');  // page find() always returns nextPageStub
+        nextPageStub.fields.push(field)
+        vm.attr('rState.page', 'Next') // page find() always returns nextPageStub
 
-        vm.setCurrentPage();
+        vm.setCurrentPage()
 
-        assert.equal(vm.attr('interview.answers.statete.values.1'), 'Illinois', 'Saved answers trump Default Values');
-      });
-    });
-
-    });
-
-
+        assert.equal(vm.attr('interview.answers.statete.values.1'), 'Illinois', 'Saved answers trump Default Values')
+      })
+    })
+  })
 
   describe('Component', () => {
     beforeEach(() => {
-      let frag = can.stache(
+      let frag = stache(
         '<a2j-pages></a2j-pages>'
-      );
-      $('#test-area').html(frag());
-      vm = $('a2j-pages').viewModel();
+      )
+      $('#test-area').html(frag())
+      vm = $('a2j-pages').viewModel()
 
-      vm.attr(defaults);
+      vm.attr(defaults)
 
       // prevent traceLogic changes happening in setCurrentPage
-      vm.setCurrentPage = $.noop;
-    });
+      vm.setCurrentPage = $.noop
+    })
 
     afterEach(() => {
-      $('#test-area').empty();
-    });
+      $('#test-area').empty()
+    })
 
     describe('{rState} page', () => {
       it('default', () => {
-        vm.attr('rState.page', 'foo');
+        vm.attr('rState.page', 'foo')
 
-        assert.deepEqual(vm.attr('traceLogic').attr(), [], 'should not run codeBefore trace if it is empty');
-      });
+        assert.deepEqual(vm.attr('traceLogic').attr(), [], 'should not run codeBefore trace if it is empty')
+      })
 
       it('codeBefore', () => {
-        nextPageStub.attr('codeBefore', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>');
-        vm.attr('rState.logic', defaults.logic);
-        vm.attr('rState.interview', defaults.interview);
-        vm.attr('rState.page', 'bar');
+        nextPageStub.attr('codeBefore', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>')
+        vm.attr('rState.logic', defaults.logic)
+        vm.attr('rState.interview', defaults.interview)
+        vm.attr('rState.page', 'bar')
         assert.deepEqual(vm.attr('rState.traceLogic').attr(), [{page: 'Next'}, {
           'codeBefore': { format: 'info', msg: 'Logic Before Question'}
-        }], 'logic before trace');
-      });
+        }], 'logic before trace')
+      })
 
       it('codeBefore with forceNavigation: true should not execute codeBefore', () => {
-        nextPageStub.attr('codeBefore', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>');
-        vm.attr('rState.forceNavigation', true);
-        vm.attr('rState.page', 'bar');
+        nextPageStub.attr('codeBefore', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>')
+        vm.attr('rState.forceNavigation', true)
+        vm.attr('rState.page', 'bar')
 
-        assert.deepEqual(vm.attr('traceLogic').attr(), [], 'logic before trace with forceNavigation true');
-      });
+        assert.deepEqual(vm.attr('traceLogic').attr(), [], 'logic before trace with forceNavigation true')
+      })
 
       it('Possible infinite loop', (done) => {
-        vm.attr('traceLogic').bind('change', function handler() {
-          vm.attr('traceLogic').unbind('change', handler);
+        vm.attr('traceLogic').bind('change', function handler () {
+          vm.attr('traceLogic').unbind('change', handler)
           assert.deepEqual(vm.attr('traceLogic').attr(), [{
             'infinite loop': {
               format: 'info',
               msg: 'Possible infinite loop. Too many page jumps without user interaction'
             }
-          }], 'Possible infinite loop');
-          done();
-        });
+          }], 'Possible infinite loop')
+          done()
+        })
 
-        logicStub.attr('infinite').errors = function() { return true; };
-        vm.attr('rState.page', 'foo');
-      });
-    });
+        logicStub.attr('infinite').errors = function () { return true }
+        vm.attr('rState.page', 'foo')
+      })
+    })
 
     it('sets traceLogic when traceLogic event is triggered on the window', (done) => {
-
-      vm.attr('traceLogic').bind('change', function handler() {
-        vm.attr('traceLogic').unbind('change', handler);
+      vm.attr('traceLogic').bind('change', function handler () {
+        vm.attr('traceLogic').unbind('change', handler)
 
         assert.deepEqual(vm.attr('traceLogic').attr(), [
           { error: [{ msg: 'error' }] }
-        ]);
+        ])
 
-        done();
-      });
+        done()
+      })
 
-      window.can.trigger(window, 'traceLogic', {
+      event.trigger(window, 'traceLogic', {
         error: [{ msg: 'error' }]
-      }, false);
-    });
-  });
-});
+      }, false)
+    })
+  })
+})

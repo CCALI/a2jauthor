@@ -1,4 +1,5 @@
-import can from 'can'
+import deparam from 'can/util/string/deparam/'
+import route from 'can/route/'
 import startApp from './start-app'
 import config from 'caja/viewer/config/'
 import _isEmpty from 'lodash/isEmpty'
@@ -8,7 +9,6 @@ import Interview from 'caja/viewer/models/interview'
 import MemoryState from 'caja/viewer/models/memory-state'
 import PersistedState from 'caja/viewer/models/persisted-state'
 
-import 'can/route/'
 import 'jquerypp/dom/cookie/'
 import 'caja/viewer/mobile/util/helpers'
 import 'calculator/jquery.plugin'
@@ -17,7 +17,7 @@ import 'calculator/jquery.calculator.css'
 
 // State attrs not needing persistance, such as showing/hiding the table of contents.
 // Load configuration from desktop into mobile
-const qsParams = can.deparam(window.location.search.substring(1))
+const qsParams = deparam(window.location.search.substring(1))
 const mState = new MemoryState(_isEmpty(qsParams)
   ? config
   : _assign({}, config, qsParams))
@@ -34,10 +34,10 @@ const persistedStatePromise = PersistedState.findOne()
 // Route state
 const rState = new AppState()
 
-can.route('', { view: 'intro' })
-can.route('view/:view/page/:page')
-can.route('view/:view/page/:page/:repeatVarValue')
-can.route.map(rState)
+route('', { view: 'intro' })
+route('view/:view/page/:page')
+route('view/:view/page/:page/:repeatVarValue')
+route.map(rState)
 
 Promise.all([interviewPromise, persistedStatePromise])
   .then(function ([interview, pState]) {

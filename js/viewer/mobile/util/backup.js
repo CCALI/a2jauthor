@@ -7,48 +7,48 @@
  * Includes: CanJS default build
  * Download from: http://canjs.us/
  */
-import can from 'can';
+import $ from 'jquery'
 
-import 'can/map/';
-import 'can/util/object/';
-import 'can/util/library';
+import 'can/map/'
+import 'can/util/object/'
+import 'can/util/library'
 
-let flatProps = function(a, cur) {
-  var obj = {};
+let flatProps = function (a, cur) {
+  var obj = {}
   for (var prop in a) {
     if (typeof a[prop] !== 'object' || a[prop] === null || a[prop] instanceof Date) {
-      obj[prop] = a[prop];
+      obj[prop] = a[prop]
     } else {
-      obj[prop] = cur.attr(prop);
+      obj[prop] = cur.attr(prop)
     }
   }
 
-  return obj;
+  return obj
 };
 
-let oldSetup = can.Map.prototype.setup;
+let oldSetup = can.Map.prototype.setup
 
-can.extend(can.Map.prototype, {
-  setup: function() {
-    this._backupStore = can.compute();
-    return oldSetup.apply(this, arguments);
+$.extend(can.Map.prototype, {
+  setup: function () {
+    this._backupStore = can.compute()
+    return oldSetup.apply(this, arguments)
   },
 
-  backup: function() {
-    this._backupStore(this.attr());
-    return this;
+  backup: function () {
+    this._backupStore(this.attr())
+    return this
   },
 
-  isDirty: function(checkAssociations) {
-    return this._backupStore() && !can.Object.same(this.attr(), this._backupStore(), undefined, undefined, undefined, !!checkAssociations);
+  isDirty: function (checkAssociations) {
+    return this._backupStore() && !can.Object.same(this.attr(), this._backupStore(), undefined, undefined, undefined, !!checkAssociations)
   },
 
-  restore: function(restoreAssociations) {
-    var props = restoreAssociations ? this._backupStore() : flatProps(this._backupStore(), this);
+  restore: function (restoreAssociations) {
+    var props = restoreAssociations ? this._backupStore() : flatProps(this._backupStore(), this)
     if (this.isDirty(restoreAssociations)) {
-      this.attr(props, true);
+      this.attr(props, true)
     }
 
-    return this;
+    return this
   }
-});
+})

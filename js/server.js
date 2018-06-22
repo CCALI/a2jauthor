@@ -1,16 +1,16 @@
-import can from 'can';
+import Map from 'can/map/map/'
 
-import 'can/route/';
-import 'can/map/define/';
-import 'can/route/pushstate/';
+import 'can/route/'
+import 'can/map/define/'
+import 'can/route/pushstate/'
 
-const AppViewModel = can.Map.extend({
+const AppViewModel = Map.extend({
   define: {
     title: {
       serialize: false,
       value: 'A2J Test Assemble'
     }
   }
-});
+})
 
-export default AppViewModel;
+export default AppViewModel

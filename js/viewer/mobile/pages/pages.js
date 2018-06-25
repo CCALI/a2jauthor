@@ -4,12 +4,11 @@ import template from './pages.stache';
 import assembleFormTpl from './assemble-form.stache';
 import saveAnswersFormTpl from './save-answers-form.stache';
 import {Analytics} from 'caja/viewer/util/analytics';
-
-import 'can/view/';
+import stache from 'can-stache'
 import 'caja/viewer/mobile/util/helpers';
 
-can.view.preload('assemble-form', assembleFormTpl);
-can.view.preload('save-answers-form', saveAnswersFormTpl);
+stache.registerPartial('assemble-form', assembleFormTpl);
+stache.registerPartial('save-answers-form', saveAnswersFormTpl);
 
 /**
  * @module {Module} viewer/mobile/pages/ <a2j-pages>

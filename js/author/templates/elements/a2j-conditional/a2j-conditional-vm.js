@@ -6,8 +6,6 @@ import A2JNode from 'caja/author/models/a2j-node';
 import A2JTemplate from 'caja/author/models/a2j-template';
 import evalAuthorCondition from 'caja/author/utils/eval-author-condition';
 
-import 'can/view/';
-
 /**
  * @property {can.Map} conditional.ViewModel
  * @parent author/templates/elements/a2j-conditional/

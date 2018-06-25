@@ -8,11 +8,9 @@ import loopListTpl from './loop-views/loop-list.stache';
 import loopTableTpl from './loop-views/loop-table.stache';
 import repeatLoopOptionsTpl from './repeat-loop-options.stache';
 
-import 'can/view/';
-
-can.view.preload('loop-list-tpl', loopListTpl);
-can.view.preload('loop-table-tpl', loopTableTpl);
-can.view.preload('repeat-loop-options-tpl', repeatLoopOptionsTpl);
+stache.registerPartial('loop-list-tpl', loopListTpl)
+stache.registerPartial('loop-table-tpl', loopTableTpl)
+stache.registerPartial('repeat-loop-options-tpl', repeatLoopOptionsTpl)
 
 const displayTypeMap = {
   list: 'A LIST',

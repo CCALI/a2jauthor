@@ -5,10 +5,9 @@ import TemplateEditTabsVM from './tabs-vm';
 import addElementsTabTpl from './add-elements-tab.stache';
 import templateOptionsTabTpl from './template-options-tab.stache';
 
-import 'can/view/';
-
-can.view.preload('add-elements-tab-tpl', addElementsTabTpl);
-can.view.preload('template-options-tab-tpl', templateOptionsTabTpl);
+import stache from 'can-stache'
+stache.registerPartial('add-elements-tab-tpl', addElementsTabTpl)
+stache.registerPartial('template-options-tab-tpl', templateOptionsTabTpl)
 
 /**
  * @module TemplateEditTabs

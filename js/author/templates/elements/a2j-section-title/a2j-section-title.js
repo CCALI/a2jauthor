@@ -2,11 +2,10 @@ import CanMap from "can-map";
 import Component from "can-component";
 import contentTpl from './content.stache';
 import template from './a2j-section-title.stache';
-
-import 'can/view/';
+import stache from 'can-stache'
 
 // preload stache partial
-can.view.preload('section-title-content', contentTpl);
+stache.registerPartial('section-title-content', contentTpl)
 
 /**
  * @module {Module} author/templates/elements/a2j-section-title/ <a2j-section-title>

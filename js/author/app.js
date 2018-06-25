@@ -5,8 +5,8 @@ import tabsRouting from 'caja/author/utils/tabs-routing'
 import viewerPreviewTpl from './viewer-preview-layout.stache'
 import bindCustomEvents from 'caja/author/utils/bind-custom-events'
 
-import 'can/view/'
-import "can-route"
+import stache from 'can-stache'
+import route from "can-route"
 import 'calculator/jquery.plugin'
 import 'calculator/jquery.calculator'
 import 'calculator/jquery.calculator.css'
@@ -20,7 +20,7 @@ route(':page/:guideId')
 route(':page/:action/:guideId-:templateId')
 
 route.ready()
-can.view.preload('viewer-preview-layout', viewerPreviewTpl)
+stache.registerPartial('viewer-preview-layout', viewerPreviewTpl)
 
 $('body').on('click', 'a[href="#"]', ev => ev.preventDefault())
 

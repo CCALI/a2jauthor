@@ -1,6 +1,5 @@
 import Control from "can-control";
-
-import 'can/view/';
+import canViewCallbacks from 'can-view-callbacks'
 
 export default Control.extend({
   init: function() {

@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-import 'can/view/';
+import canViewCallbacks from 'can-view-callbacks'
 
 canViewCallbacks.attr('tokenfield-disabled', function(el, attrData) {
   let $el = $(el);

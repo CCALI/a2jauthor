@@ -4,6 +4,6 @@
 	<div class="btn-group btn-group-justified">
 		<div class="btn-group">
 			<button type="button" class="btn btn-default" on:el:click="navigate">Start</button>
-		<div class="btn-group">
+		</div>
 	</div>
 </p>

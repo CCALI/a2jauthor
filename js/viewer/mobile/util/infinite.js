@@ -1,11 +1,11 @@
-import CanMap from "can-map";
+import CanMap from 'can-map'
 
-import "can-map-define";
-import 'can/map/validations/';
+import 'can-validate-legacy/map/validate/validate'
+import 'can/map/define/define'
 
 export default CanMap.extend({
-  init: function() {
-    this.validateRangeOf(['_counter'], 0, 100);
+  init: function () {
+    this.validateRangeOf(['_counter'], 0, 100)
   }
 }, {
   define: {
@@ -15,11 +15,11 @@ export default CanMap.extend({
     }
   },
 
-  inc: function() {
-    this.attr('_counter', this.attr('_counter') + 1);
+  inc: function () {
+    this.attr('_counter', this.attr('_counter') + 1)
   },
 
-  reset: function() {
-    this.attr('_counter', 0);
+  reset: function () {
+    this.attr('_counter', 0)
   }
-});
+})

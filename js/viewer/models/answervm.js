@@ -1,12 +1,12 @@
-import CanMap from "can-map"
+import CanMap from 'can-map'
 import moment from 'moment'
 import _some from 'lodash/some'
 import _filter from 'lodash/filter'
 import Validations from 'caja/viewer/mobile/util/validations'
 import cString from 'caja/viewer/mobile/util/string'
 
-import "can-map-define"
-import 'can/map/validations/'
+import 'can-validate-legacy/map/validate/validate'
+import 'can/map/define/define'
 
 export default CanMap.extend('AnswerVM', {
   init () {

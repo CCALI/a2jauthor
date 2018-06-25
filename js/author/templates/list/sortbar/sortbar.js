@@ -1,9 +1,9 @@
-import CanMap from "can-map";
-import Component from "can-component";
-import template from './sortbar.stache';
+import CanMap from 'can-map';
+import Component from 'can-component';
+import template from './sortbar.stache'
 
-import 'can/list/sort/';
-import "can-map-define";
+import 'can-list-sort'
+import 'can-map-define';
 
 export let Sortbar = CanMap.extend({
   define: {
@@ -12,24 +12,24 @@ export let Sortbar = CanMap.extend({
     }
   },
 
-  isSortedBy(key) {
-    return this.attr('criteria.key') === key;
+  isSortedBy (key) {
+    return this.attr('criteria.key') === key
   },
 
-  toggleDirection(direction) {
-    return direction === 'asc' ? 'desc' : 'asc';
+  toggleDirection (direction) {
+    return direction === 'asc' ? 'desc' : 'asc'
   },
 
-  setSortCriteria(key) {
-    let direction = 'asc';
+  setSortCriteria (key) {
+    let direction = 'asc'
 
     if (this.isSortedBy(key)) {
-      direction = this.toggleDirection(this.attr('criteria.direction'));
+      direction = this.toggleDirection(this.attr('criteria.direction'))
     }
 
-    this.attr('criteria', {key, direction});
+    this.attr('criteria', {key, direction})
   }
-});
+})
 
 export default Component.extend({
   view: template,
@@ -38,16 +38,16 @@ export default Component.extend({
   tag: 'templates-sortbar',
 
   helpers: {
-    sortCaretClasses(sortKey) {
-      let classes = [];
-      let {key, direction} = this.attr('criteria').attr();
+    sortCaretClasses (sortKey) {
+      let classes = []
+      let {key, direction} = this.attr('criteria').attr()
 
       if (key === sortKey) {
-        classes.push('active');
-        classes.push(direction === 'asc' ? 'caret-down' : 'caret-up');
+        classes.push('active')
+        classes.push(direction === 'asc' ? 'caret-down' : 'caret-up')
       }
 
-      return classes.join(' ');
+      return classes.join(' ')
     }
   }
-});
+})

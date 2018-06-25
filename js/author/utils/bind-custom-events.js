@@ -1,7 +1,8 @@
 import $ from 'jquery'
-import CanMap from "can-map"
+import CanMap from 'can-map'
 import _includes from 'lodash/includes'
 import constants from 'caja/viewer/models/constants'
+import compute from 'can-compute'
 
 // List of field types that can be filled with the `sample` property.
 const canUseSampleValues = [

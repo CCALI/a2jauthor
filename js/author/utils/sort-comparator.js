@@ -10,10 +10,10 @@
  * momentjs objects. You'd use it like this:
  *
  * @codestart
- *   import List from 'can/list/';
+ *   import List from 'can-list';
  *   import comparator from 'caja/author/utils/sort-comparator';
  *
- *   import 'can/list/sort/';
+ *   import 'can-list-sort';
  *
  *   let posts = new List({title: 'foo bar', order: 5}, ....);
  *   post.attr('comparator', comparator.number('order', 'desc'));

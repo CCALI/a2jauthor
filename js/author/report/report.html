@@ -9,12 +9,12 @@
       <can-import from="caja/author/report/" />
 
       <div>
-        <report-page {(guide)}="guide"></report-page>
+        <report-page vm:guide:bind="guide"></report-page>
       </div>
     </script>
 
     <script src="../../node_modules/steal/steal.js"
-    data-main="can/view/autorender/">
+    data-main="can-view-autorender/">
       window.less = {
         async: true,
         fileSync: true

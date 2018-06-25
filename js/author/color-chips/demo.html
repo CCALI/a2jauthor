@@ -17,25 +17,25 @@
           <label>Hair color picker</label>
 
           <color-chips
-            {color-classes}="@hairColorClasses"
-            {selected-color-class}="@hairSelectedColorClass"
-            {on-color-class}="@hairOnColorClass"
+            vm:colorClasses:from="@hairColorClasses"
+            vm:selectedColorClass:from="@hairSelectedColorClass"
+            vm:onColorClass:from="@hairOnColorClass"
           />
         </fieldset>
         <fieldset>
           <label>Skin color picker</label>
 
           <color-chips
-            {color-classes}="@skinColorClasses"
-            {selected-color-class}="@skinSelectedColorClass"
-            {on-color-class}="@skinOnColorClass"
+            vm:colorClasses:from="@skinColorClasses"
+            vm:selectedColorClass:from="@skinSelectedColorClass"
+            vm:onColorClass:from="@skinOnColorClass"
           />
         </fieldset>
       </fieldset>
     </script>
 
     <script src="../../node_modules/steal/steal.js"
-      data-main="can/view/autorender/">
+      data-main="can-view-autorender/">
       window.less = {
         async: true,
         fileSync: true

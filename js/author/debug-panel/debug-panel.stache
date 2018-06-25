@@ -10,7 +10,7 @@
 <div id="viewer-logic-form" class="bootstrap-styles">
   <div id="logic-trace-panel" class="tracepanel">
     <button id="clear-log-button" on:el:click="clearTraceLogicList()" class="btn btn-default btn-sm"><span class="glyphicon-trash"></span> Clear Log</button>
-    <ol id="tracer" contentEditable="true">
+    <ol id="tracer" content-editable="true">
       {{#each traceLogicList}}
         <li>Page <span class="page">{{pageName}}</span></li>
         {{#each messages}}

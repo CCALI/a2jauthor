@@ -7,7 +7,7 @@ import {ViewerNavigationVM} from 'caja/viewer/desktop/navigation/navigation';
 import constants from 'caja/viewer/models/constants';
 import {Analytics} from 'caja/viewer/util/analytics';
 
-import 'can/util/batch/';
+import 'can-event/batch/batch';
 import "can-map-define";
 import 'can/util/jquery/';
 import 'bootstrap/js/modal';

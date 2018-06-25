@@ -11,9 +11,9 @@ import Answers from 'caja/viewer/models/answers'
 import parser from 'caja/viewer/mobile/util/parser'
 import {Hair, Skin} from 'caja/viewer/desktop/avatar/colors'
 
-import 'can/list/sort/'
+import 'can-list-sort'
 import "can-map-define"
-import 'can/util/batch/'
+import 'can-event/batch/batch'
 
 /**
  * @module {function} Interview

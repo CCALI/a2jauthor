@@ -68,7 +68,7 @@
                 <video
                   class="modal-video"
                   controls="controls"
-                  controlsList="nodownload"
+                  controls-list="nodownload"
                   el:src:from="normalizePath(mState.fileDataURL, modalContent.videoURL)"
                 >
                   Sorry, your browser doesn't support embedded videos,

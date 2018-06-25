@@ -4,7 +4,7 @@ import Parser from 'caja/viewer/mobile/util/parser'
 
 import "can-map-define"
 import "can-construct-super"
-import 'caja/viewer/mobile/util/backup'
+import 'can-map-backup'
 
 export default Model.extend({
   findOne () {

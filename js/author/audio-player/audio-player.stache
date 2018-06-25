@@ -74,6 +74,6 @@
     on:el:ended='playerEnded()'
     on:el:error='playerErrored()'
   >
-    <source src="{{sourceUrl}}" type="audio/mpeg">
+    <source src="{{sourceUrl}}" type="audio/mpeg" />
   </audio>
 </div>

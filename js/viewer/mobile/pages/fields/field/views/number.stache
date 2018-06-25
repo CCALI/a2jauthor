@@ -19,4 +19,4 @@
     </div>
   </div>
   {{> invalid-prompt-tpl }}
-<div>
+</div>

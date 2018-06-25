@@ -37,7 +37,7 @@
     "grunt-run": "^0.8.0",
     "grunt-steal": "^1.0.0",
     "http-server": "^0.10.0",
-    "jquery": "~2.1.4",
+    "jquery": "^3.1.1",
     "jquery-ui": "git://github.com/jquery/jquery-ui.git#1.11.4",
     "jquerypp": "^2.0.2",
     "lightbox2": "^2.10.0",
@@ -76,12 +76,10 @@
   },
   "system": {
     "transpiler": "babel",
-    "ext": {
-      "text": "text"
-    },
     "plugins": [
       "done-css",
       "steal-less",
+      "steal-stache",
       "jquery",
       "can"
     ],
@@ -233,14 +231,22 @@
     "can-compute": "^3.3.10",
     "can-construct": "^3.4.4",
     "can-control": "^3.2.4",
+    "can-event": "^3.7.7",
+    "can-globals": "^1.1.1",
     "can-list": "^3.2.2",
+    "can-list-sort": "^3.0.0",
     "can-map": "^3.4.2",
+    "can-map-backup": "^3.1.1",
     "can-map-define": "^3.1.2",
     "can-model": "^3.0.3",
+    "can-reflect": "^1.16.7",
     "can-route": "^3.3.4",
     "can-route-pushstate": "^3.2.4",
     "can-stache": "^3.14.21",
     "can-util": "^3.11.6",
-    "can-view-import": "^3.2.9"
+    "can-validate-legacy": "^1.2.0",
+    "can-view-callbacks": "^3.2.5",
+    "can-view-import": "^3.2.9",
+    "steal-stache": "^3.1.3"
   }
 }

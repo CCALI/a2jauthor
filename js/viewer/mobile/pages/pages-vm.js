@@ -1,17 +1,17 @@
-import CanMap from "can-map";
-import _some from 'lodash/some';
-import _isString from 'lodash/isString';
-import AnswerVM from 'caja/viewer/models/answervm';
-import Parser from 'caja/viewer/mobile/util/parser';
-import {ViewerNavigationVM} from 'caja/viewer/desktop/navigation/navigation';
-import constants from 'caja/viewer/models/constants';
-import {Analytics} from 'caja/viewer/util/analytics';
+import CanMap from 'can-map'
+import _some from 'lodash/some'
+import _isString from 'lodash/isString'
+import AnswerVM from 'caja/viewer/models/answervm'
+import Parser from 'caja/viewer/mobile/util/parser'
+import {ViewerNavigationVM} from 'caja/viewer/desktop/navigation/navigation'
+import constants from 'caja/viewer/models/constants'
+import {Analytics} from 'caja/viewer/util/analytics'
 
-import 'can-event/batch/batch';
-import "can-map-define";
-import 'can/util/jquery/';
-import 'bootstrap/js/modal';
-import { FieldVM } from './fields/field/field';
+import 'can-event/batch/batch'
+import 'can-map-define'
+import 'can/util/jquery/'
+import 'bootstrap/js/modal'
+import { FieldVM } from './fields/field/field'
 
 /**
  * @property {can.Map} pages.ViewModel
@@ -74,7 +74,7 @@ export default CanMap.extend('PagesVM', {
       value: constants.qIDEXIT
     },
 
-     /**
+    /**
      * @property {String} pages.ViewModel.prototype.resumeButton resumeButton
      * @parent pages.ViewModel
      *
@@ -116,8 +116,8 @@ export default CanMap.extend('PagesVM', {
      * templates used to generate the final document.
      */
     guideId: {
-      get() {
-        return window.gGuideID;
+      get () {
+        return window.gGuideID
       }
     },
 
@@ -131,9 +131,9 @@ export default CanMap.extend('PagesVM', {
      * the author to any of the templates.
      */
     answersString: {
-      get() {
-        const answers = this.attr('pState.answers');
-        return JSON.stringify(answers.serialize());
+      get () {
+        const answers = this.attr('pState.answers')
+        return JSON.stringify(answers.serialize())
       }
     },
 
@@ -147,10 +147,10 @@ export default CanMap.extend('PagesVM', {
      * and populated when a user loads saved answers.
      */
     answersANX: {
-      get() {
-        const answers = this.attr('interview.answers');
-        const parsed = Parser.parseANX(answers.serialize());
-        return parsed;
+      get () {
+        const answers = this.attr('interview.answers')
+        const parsed = Parser.parseANX(answers.serialize())
+        return parsed
       }
     },
 
@@ -160,48 +160,47 @@ export default CanMap.extend('PagesVM', {
 
   },
 
-
-  init() {
-    this.setCurrentPage();
+  init () {
+    this.setCurrentPage()
   },
 
-  returnHome() {
-    this.attr('rState').attr({}, true);
+  returnHome () {
+    this.attr('rState').attr({}, true)
   },
 
-  validateAllFields() {
-    const fields = this.attr('currentPage.fields');
+  validateAllFields () {
+    const fields = this.attr('currentPage.fields')
 
-    each(fields, function(field) {
-      const hasError = !!field.attr('_answer').errors();
-      field.attr('hasError', hasError);
-    });
+    each(fields, function (field) {
+      const hasError = !!field.attr('_answer').errors()
+      field.attr('hasError', hasError)
+    })
   },
 
-  traceButtonClicked(buttonLabel) {
+  traceButtonClicked (buttonLabel) {
     this.attr('traceLogic').push({
       button: [
         { msg: 'You pressed' },
         { format: 'ui', msg: buttonLabel }
       ]
-    });
+    })
   },
 
-  traceLogicAfterQuestion() {
+  traceLogicAfterQuestion () {
     this.attr('traceLogic').push({
       codeAfter: { format: 'info', msg: 'Logic After Question' }
-    });
+    })
   },
 
   handleIE11 (fields, logic, traceLogic) {
     // this is to handle the mis-firing of `change` event
     // in IE11 when "tabbing" through the fields as per this bug
     if (logic && fields && fields.length > 0) {
-      const answers = logic.attr("interview.answers");
+      const answers = logic.attr('interview.answers')
       if (answers) {
-        let vm = new FieldVM();
+        let vm = new FieldVM()
         fields.each(function (field) {
-          const type = field.attr('type');
+          const type = field.attr('type')
           // These types work with native code because you have to click to select
           // which fires the blue/change event to validate the answer
           if (type !== 'gender' &&
@@ -211,40 +210,40 @@ export default CanMap.extend('PagesVM', {
               type !== 'textpick' &&
               type !== 'numberpick') {
             // Handle each field as if the blur/focus event had fired correctly with validateField
-            const fieldName = field.attr('name');
-            const escapedFieldName = fieldName.replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, "\\\$&");
-            const preSelector = field.type !== 'textlong' ? 'input' : 'textarea';
-            const $fieldEl = $(preSelector + "[name='" + escapedFieldName + "']");
+            const fieldName = field.attr('name')
+            const escapedFieldName = fieldName.replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, '\\\$&')
+            const preSelector = field.type !== 'textlong' ? 'input' : 'textarea'
+            const $fieldEl = $(preSelector + "[name='" + escapedFieldName + "']")
 
             // validateField expects `this` to have field and traceLogic
-            vm.attr({field, traceLogic});
+            vm.attr({field, traceLogic})
 
             // fire same answer pre-validation as jquery datepicker
             if (type === 'datemdy') {
-              vm.validateDatepicker($fieldEl);
+              vm.validateDatepicker($fieldEl)
             } else {
-              vm.validateField(vm, $fieldEl);
+              vm.validateField(vm, $fieldEl)
             }
           }
-        });
+        })
         // Cleanup temp FieldVM instance
-        vm = null;
+        vm = null
       }
     }
   },
 
   navigate (button) {
-    const page = this.attr('currentPage');
-    const fields = page.attr('fields');
-    const logic = this.attr('logic');
-    const traceLogic = this.attr('traceLogic');
+    const page = this.attr('currentPage')
+    const fields = page.attr('fields')
+    const logic = this.attr('logic')
+    const traceLogic = this.attr('traceLogic')
 
     // IE11 fails to fire all validateField events, handle that here
-    if (!!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-      this.handleIE11(fields, logic, traceLogic);
+    if (navigator.userAgent.match(/Trident.*rv\:11\./)) {
+      this.handleIE11(fields, logic, traceLogic)
     }
     // Author Preview Mode changes handling of special buttons, and does not post answers
-    const previewActive = this.attr('rState').attr('previewActive');
+    const previewActive = this.attr('rState').attr('previewActive')
     //
 
     if (previewActive &&
@@ -253,90 +252,89 @@ export default CanMap.extend('PagesVM', {
       button.next === constants.qIDSUCCESS ||
       button.next === constants.qIDASSEMBLESUCCESS ||
       button.next === constants.qIDASSEMBLE)
-      ) {
-      this.previewActiveResponses(button);
+    ) {
+      this.previewActiveResponses(button)
       // need `false` to stop default submit actions in preview
-      return false;
+      return false
     }
 
     // special destination dIDRESUME button skips rest of navigate
     if (button.next === constants.qIDRESUME) {
-      let interview = this.attr('interview');
-      let appState = this.attr('rState');
+      let interview = this.attr('interview')
+      let appState = this.attr('rState')
       // Handle the same as Desktop Navigation Resume
-      let vm = new ViewerNavigationVM({appState, interview});
-      vm.resumeInterview();
-      return;
+      let vm = new ViewerNavigationVM({appState, interview})
+      vm.resumeInterview()
+      return
     }
 
     // special destination qIDFAIL button skips rest of navigate
     // Author can provide an external URL to explain why user did not qualify
     if (button.next === constants.qIDFAIL) {
-      let failURL = button.url.toLowerCase();
-      let hasProtocol = failURL.indexOf('http') === 0;
-      failURL = hasProtocol ? failURL : 'http://' + failURL;
-        if(failURL === "http://") {
-          // If Empty, standard message
-          this.attr('modalContent', {
-            title: "You did not Qualify",
-            text: "Unfortunately, you did not qualify to use this A2J Guided Interview. Please close your browser window or tab to exit the interview.",
-          });
-        } else {
-          // track the external link
-          if (window._paq) {
-            Analytics.trackExitLink(failURL, 'link');
-          }
-          window.open(failURL, '_blank');
+      let failURL = button.url.toLowerCase()
+      let hasProtocol = failURL.indexOf('http') === 0
+      failURL = hasProtocol ? failURL : 'http://' + failURL
+      if (failURL === 'http://') {
+        // If Empty, standard message
+        this.attr('modalContent', {
+          title: 'You did not Qualify',
+          text: 'Unfortunately, you did not qualify to use this A2J Guided Interview. Please close your browser window or tab to exit the interview.'
+        })
+      } else {
+        // track the external link
+        if (window._paq) {
+          Analytics.trackExitLink(failURL, 'link')
         }
-      return;
+        window.open(failURL, '_blank')
+      }
+      return
     }
 
-
-    this.traceButtonClicked(button.attr('label'));
+    this.traceButtonClicked(button.attr('label'))
 
     // Set answers for buttons with values
     if (button.name) {
-      const logic = this.attr('logic');
-      const buttonAnswer = this.__ensureFieldAnswer(button);
-      let buttonAnswerIndex = 1;
+      const logic = this.attr('logic')
+      const buttonAnswer = this.__ensureFieldAnswer(button)
+      let buttonAnswerIndex = 1
 
       if (page.attr('repeatVar')) {
-        const repeatVar = page.attr('repeatVar');
-        const repeatVarCount = logic.varGet(repeatVar);
+        const repeatVar = page.attr('repeatVar')
+        const repeatVarCount = logic.varGet(repeatVar)
 
-        buttonAnswerIndex = (repeatVarCount != null) ? repeatVarCount : buttonAnswerIndex;
+        buttonAnswerIndex = (repeatVarCount != null) ? repeatVarCount : buttonAnswerIndex
       }
 
-      let buttonValue = button.value;
+      let buttonValue = button.value
 
       if (buttonAnswer.type === 'TF') {
-        buttonValue = buttonValue.toLowerCase() === "true" ? true : false;
-      } else if (buttonAnswer.type === "Number") {
-        buttonValue = parseInt(buttonValue);
+        buttonValue = buttonValue.toLowerCase() === 'true';
+      } else if (buttonAnswer.type === 'Number') {
+        buttonValue = parseInt(buttonValue)
       }
 
-      buttonAnswer.attr('values.' + buttonAnswerIndex, buttonValue);
+      buttonAnswer.attr('values.' + buttonAnswerIndex, buttonValue)
     }
 
-    this.validateAllFields();
+    this.validateAllFields()
 
-    const anyFieldWithError = _some(fields, f => f.attr('hasError'));
+    const anyFieldWithError = _some(fields, f => f.attr('hasError'))
 
     if (!anyFieldWithError) {
-      const logic = this.attr('logic');
-      const codeAfter = page.attr('codeAfter');
-      const repeatVar = button.attr('repeatVar');
-      const repeatVarSet = button.attr('repeatVarSet');
+      const logic = this.attr('logic')
+      const codeAfter = page.attr('codeAfter')
+      const repeatVar = button.attr('repeatVar')
+      const repeatVarSet = button.attr('repeatVarSet')
 
       // default next page is derived from the button pressed.
       // might be overridden by the After logic or special
       // back to prior question button.
-      logic.attr('gotoPage', button.next);
+      logic.attr('gotoPage', button.next)
 
       // execute After logic only if not going to a prior question
       if (codeAfter && button.next !== constants.qIDBACK) {
-        this.traceLogicAfterQuestion();
-        logic.exec(codeAfter);
+        this.traceLogicAfterQuestion()
+        logic.exec(codeAfter)
       }
 
       // repeatVar holds the name of the variable that acts as the total count
@@ -344,7 +342,7 @@ export default CanMap.extend('PagesVM', {
       // variable should be set to `1` or increased, `setRepeatVariable` takes
       // care of setting `repeatVar` properly.
       if (repeatVar && repeatVarSet) {
-        this.setRepeatVariable(repeatVar, repeatVarSet);
+        this.setRepeatVariable(repeatVar, repeatVarSet)
       }
 
       // Don't post to the server in Author Preview aka previewActive
@@ -353,37 +351,37 @@ export default CanMap.extend('PagesVM', {
         // prompting users to repeatedly press submit, crashing HotDocs
         // Matches A2J4 functionality, but should really be handled better on LHI's server
         this.attr('modalContent', {
-          title: "Answers Submitted :",
-          text: 'Page will redirect shortly',
-        });
-        can.trigger(this, 'post-answers-to-server');
+          title: 'Answers Submitted :',
+          text: 'Page will redirect shortly'
+        })
+        can.trigger(this, 'post-answers-to-server')
 
         // disable the previously clicked button
         setTimeout(() => {
-          $('button:contains(' + button.label + ')').prop('disabled', true);
-        });
+          $('button:contains(' + button.label + ')').prop('disabled', true)
+        })
       }
 
       // user has selected to navigate to a prior question
       if (button.next === constants.qIDBACK) {
-        const visitedPages = this.rState.attr('visitedPages');
+        const visitedPages = this.rState.attr('visitedPages')
         // last visited page always at index 1
         // TODO: GOTO logic could break the above assumption
         // might need a better way to track the last page
-        const priorQuestion = (visitedPages[1].attr('name'));
+        const priorQuestion = (visitedPages[1].attr('name'))
         // override with new gotoPage
-        logic.attr('gotoPage', priorQuestion);
-        button.attr('next', priorQuestion);
+        logic.attr('gotoPage', priorQuestion)
+        button.attr('next', priorQuestion)
       }
 
-      const gotoPage = logic.attr('gotoPage');
-      const logicPageisNotEmpty = _isString(gotoPage) && gotoPage.length;
+      const gotoPage = logic.attr('gotoPage')
+      const logicPageisNotEmpty = _isString(gotoPage) && gotoPage.length
 
       // this means the logic After has overriden the destination page, we
       // should navigate to this page instead of the page set by `button.next`.
       if (logicPageisNotEmpty && gotoPage !== button.next) {
-        logic.attr('gotoPage', null);
-        this._setPage(page, gotoPage);
+        logic.attr('gotoPage', null)
+        this._setPage(page, gotoPage)
 
       // only navigate to the `button.next` page if the button clicked is not
       // any of the buttons with "special" behavior.
@@ -392,9 +390,7 @@ export default CanMap.extend('PagesVM', {
         button.next !== constants.qIDASSEMBLE &&
         button.next !== constants.qIDASSEMBLESUCCESS &&
         button.next !== constants.qIDFAIL) {
-
-        this._setPage(page, button.next);
-
+        this._setPage(page, button.next)
       }
 
       // if these special buttons are used, the interview is complete (incomplete is false)
@@ -402,104 +398,103 @@ export default CanMap.extend('PagesVM', {
         button.next === constants.qIDSUCCESS ||
         button.next === constants.qIDASSEMBLE ||
         button.next === constants.qIDASSEMBLESUCCESS) {
-        const answers = this.attr('interview.answers');
-        answers.attr(`${constants.vnInterviewIncompleteTF.toLowerCase()}.values`, [null, false]);
+        const answers = this.attr('interview.answers')
+        answers.attr(`${constants.vnInterviewIncompleteTF.toLowerCase()}.values`, [null, false])
       }
       // Make sure pages looping on themselves update
       if (page.name === gotoPage) {
-        let rState = this.attr('rState');
-        let interview = this.attr('interview');
-        rState.attr('singlePageLoop', true);
+        let rState = this.attr('rState')
+        let interview = this.attr('interview')
+        rState.attr('singlePageLoop', true)
 
-        rState.setVisitedPages(gotoPage, interview);
-        can.trigger(rState, 'page',[gotoPage]);
+        rState.setVisitedPages(gotoPage, interview)
+        can.trigger(rState, 'page', [gotoPage])
 
-        rState.attr('singlePageLoop', false);
+        rState.attr('singlePageLoop', false)
       }
 
-      return;
+      return
     }
 
     // do nothing if there are field(s) with error(s)
-    return false;
+    return false
   },
 
   previewActiveResponses (button) {
-    switch(button.next) {
+    switch (button.next) {
       case constants.qIDFAIL:
         this.attr('modalContent', {
-          title: "Author note:",
-          text: 'User would be redirected to \n(' + button.url +')'
-        });
-        break;
+          title: 'Author note:',
+          text: 'User would be redirected to \n(' + button.url + ')'
+        })
+        break
 
       case constants.qIDEXIT:
         this.attr('modalContent', {
-          title: "Author note:",
+          title: 'Author note:',
           text: "User's INCOMPLETE data would upload to the server."
-        });
-        break;
+        })
+        break
 
       case constants.qIDASSEMBLE:
         this.attr('modalContent', {
-          title: "Author note:",
-          text: "Document Assembly would happen here.  Use Test Assemble under the Templates tab to assemble in A2J Author"
-        });
-        break;
+          title: 'Author note:',
+          text: 'Document Assembly would happen here.  Use Test Assemble under the Templates tab to assemble in A2J Author'
+        })
+        break
 
       case constants.qIDSUCCESS:
-      this.attr('modalContent', {
-        title: "Author note:",
-        text: "User's data would upload to the server."
-      });
-      break;
+        this.attr('modalContent', {
+          title: 'Author note:',
+          text: "User's data would upload to the server."
+        })
+        break
       case constants.qIDASSEMBLESUCCESS:
         this.attr('modalContent', {
-          title: "Author note:",
+          title: 'Author note:',
           text: "User's data would upload to the server, then assemble their document.  Use Test Assemble under the Templates tab to assemble in A2J Author"
-        });
-        break;
+        })
+        break
     }
   },
 
-  _setPage(page, gotoPage) {
-    const rState = this.attr('rState');
-    const repeatVar = page.attr('repeatVar');
-    const answers = this.attr('interview.answers');
-    const countVarName = (repeatVar || '').toLowerCase();
+  _setPage (page, gotoPage) {
+    const rState = this.attr('rState')
+    const repeatVar = page.attr('repeatVar')
+    const answers = this.attr('interview.answers')
+    const countVarName = (repeatVar || '').toLowerCase()
 
-    const answer = answers.attr(countVarName);
-    const i = answer ? (new AnswerVM({ answer })).attr('values') : null;
+    const answer = answers.attr(countVarName)
+    const i = answer ? (new AnswerVM({ answer })).attr('values') : null
 
     if (i) {
-      rState.attr({ page: gotoPage, i: parseInt(i, 10) });
+      rState.attr({ page: gotoPage, i: parseInt(i, 10) })
     } else {
-      rState.removeAttr('i');
-      rState.attr('page', gotoPage);
+      rState.removeAttr('i')
+      rState.attr('page', gotoPage)
     }
-
   },
 
-  setCurrentPage() {
-    const pageName = this.attr('rState.page');
+  setCurrentPage () {
+    const pageName = this.attr('rState.page')
 
     if (pageName && pageName !== 'FAIL') {
-      const page = this.attr('interview.pages').find(pageName);
+      const page = this.attr('interview.pages').find(pageName)
 
       if (!page) {
-        console.warn(`Unknown page: ${pageName}`);
-        return;
+        console.warn(`Unknown page: ${pageName}`)
+        return
       }
 
-      canBatch.start();
+      canBatch.start()
 
-      this.attr('traceLogic').push({ page: page.attr('name') });
-      this.attr('currentPage', page);
-      this.setFieldAnswers(page.attr('fields'));
-      this.attr('mState.header', page.attr('step.text'));
-      this.attr('mState.step', page.attr('step.number'));
+      this.attr('traceLogic').push({ page: page.attr('name') })
+      this.attr('currentPage', page)
+      this.setFieldAnswers(page.attr('fields'))
+      this.attr('mState.header', page.attr('step.text'))
+      this.attr('mState.step', page.attr('step.number'))
 
-      canBatch.stop();
+      canBatch.stop()
     }
   },
 
@@ -516,132 +511,131 @@ export default CanMap.extend('PagesVM', {
    *
    * ** This is doing too many things, it probably does not belong here either.
    */
-  __ensureFieldAnswer(field) {
-    const name = field.attr('name').toLowerCase();
-    const answers = this.attr('interview.answers');
+  __ensureFieldAnswer (field) {
+    const name = field.attr('name').toLowerCase()
+    const answers = this.attr('interview.answers')
 
-    let answer = answers.attr(name);
+    let answer = answers.attr(name)
 
     if (answer) {
-      return answer;
+      return answer
     } else {
-      answer = field.attr('emptyAnswer');
-      answers.attr(name, answer);
-      return answer;
+      answer = field.attr('emptyAnswer')
+      answers.attr(name, answer)
+      return answer
     }
   },
 
-  setFieldAnswers(fields) {
-    const logic = this.attr('logic');
-    const page = this.attr('currentPage');
+  setFieldAnswers (fields) {
+    const logic = this.attr('logic')
+    const page = this.attr('currentPage')
 
     if (logic && fields.length) {
-      let answerIndex = 1;
-      const rState = this.attr('rState');
-      const mState = this.attr('mState');
+      let answerIndex = 1
+      const rState = this.attr('rState')
+      const mState = this.attr('mState')
 
       if (page.attr('repeatVar')) {
-        const repeatVar = logic.varGet('repeatVar');
-        const repeatVarCount = logic.varGet(repeatVar);
+        const repeatVar = logic.varGet('repeatVar')
+        const repeatVarCount = logic.varGet(repeatVar)
 
-        answerIndex = (repeatVarCount != null) ? repeatVarCount : answerIndex;
+        answerIndex = (repeatVarCount != null) ? repeatVarCount : answerIndex
       }
 
       fields.each(field => {
-        const answer = this.__ensureFieldAnswer(field);
-        const avm = new AnswerVM({ field, answerIndex, answer, fields });
+        const answer = this.__ensureFieldAnswer(field)
+        const avm = new AnswerVM({ field, answerIndex, answer, fields })
 
         if (page.attr('repeatVar') && rState.attr('i')) {
-          avm.attr('answerIndex', parseInt(rState.attr('i'), 10));
+          avm.attr('answerIndex', parseInt(rState.attr('i'), 10))
         }
 
         if (field.attr('type') === 'textpick') {
-          field.getOptions(mState.attr('fileDataURL'));
+          field.getOptions(mState.attr('fileDataURL'))
         }
 
         // Assign default value if it exists and no previous answer
-        if (field.value && !avm.attr('answer.values.'+answerIndex)) {
+        if (field.value && !avm.attr('answer.values.' + answerIndex)) {
           // Default values used differently or not at all for these field types
           if (field.type !== constants.ftRadioButton &&
               field.type !== constants.ftCheckBox &&
               field.type !== constants.ftCheckBoxNOTA &&
-              field.type !== constants.ftGender)
-          {
-            avm.attr('answer.values.'+answerIndex, field.value);
+              field.type !== constants.ftGender) {
+            avm.attr('answer.values.' + answerIndex, field.value)
           }
         }
 
-        field.attr('_answer', avm);
-      });
+        field.attr('_answer', avm)
+      })
     }
   },
 
-  setRepeatVariable(repeatVar, repeatVarSet) {
-    const logic = this.attr('logic');
-    const traceLogic = this.attr('traceLogic');
+  setRepeatVariable (repeatVar, repeatVarSet) {
+    const logic = this.attr('logic')
+    const traceLogic = this.attr('traceLogic')
 
-    let traceLogicMsg = {};
+    let traceLogicMsg = {}
 
     if (!logic.varExists('repeatVar')) {
-      logic.varCreate('repeatVar', 'Text', false, 'Repeat variable name');
+      logic.varCreate('repeatVar', 'Text', false, 'Repeat variable name')
     }
 
-    logic.varSet('repeatVar', repeatVar);
+    logic.varSet('repeatVar', repeatVar)
 
     switch (repeatVarSet) {
       case constants.RepeatVarSetOne:
         if (!logic.varExists(repeatVar)) {
-          logic.varCreate(repeatVar, 'Number', false, 'Repeat variable index');
+          logic.varCreate(repeatVar, 'Number', false, 'Repeat variable index')
         }
 
-        logic.varSet(repeatVar, 1);
-        traceLogicMsg[repeatVar + '-0'] = { msg: 'Setting [' + repeatVar + '] to 1' };
-        traceLogic.push(traceLogicMsg);
-        break;
+        logic.varSet(repeatVar, 1)
+        traceLogicMsg[repeatVar + '-0'] = { msg: 'Setting [' + repeatVar + '] to 1' }
+        traceLogic.push(traceLogicMsg)
+        break
 
       case constants.RepeatVarSetPlusOne:
-        const value = logic.varGet(repeatVar);
+        const value = logic.varGet(repeatVar)
 
-        logic.varSet(repeatVar, value + 1);
-        traceLogicMsg[repeatVar + '-' + value] = { msg: 'Incrementing [' + repeatVar + '] to ' + (value + 1) };
-        traceLogic.push(traceLogicMsg);
-        break;
+        logic.varSet(repeatVar, value + 1)
+        traceLogicMsg[repeatVar + '-' + value] = { msg: 'Incrementing [' + repeatVar + '] to ' + (value + 1) }
+        traceLogic.push(traceLogicMsg)
+        break
     }
   },
 
-  changePage: function(rState, newPageName) {
-    const vm = this;
+  changePage: function (rState, newPageName) {
+    const vm = this
 
     // navigation via navbar skips logic
     if (rState.attr('forceNavigation')) {
-      vm.setCurrentPage();
-      rState.attr('forceNavigation', false);
-      return;
+      vm.setCurrentPage()
+      rState.attr('forceNavigation', false)
+      return
     }
 
     // Navigate to the exitURL if the page is set to a
     // non-undefined falsy or the explicit "FAIL" string
-    if ((! newPageName && typeof newPageName !== 'undefined') || newPageName === 'FAIL') {
-      let exitURL = vm.attr('mState.exitURL');
+    if ((!newPageName && typeof newPageName !== 'undefined') || newPageName === 'FAIL') {
+      let exitURL = vm.attr('mState.exitURL')
 
-      //TODO: This shouldn't be necessary, however something
-      //else is being executed.
-      setTimeout(function() {
-        window.location = exitURL;
-      });
+      // TODO: This shouldn't be necessary, however something
+      // else is being executed.
+      setTimeout(function () {
+        window.location = exitURL
+      })
 
-      return;
+      return
     }
 
     // // Next page is unknown page name
-    let nextPage = vm.attr('interview.pages').find(newPageName);
-    if (!nextPage) return;
+    let nextPage = vm.attr('interview.pages').find(newPageName)
+    if (!nextPage) return
 
-    let logic = vm.attr('logic');
+    let logic = vm.attr('logic')
 
-    var gotoPage = logic.attr('gotoPage');
+    var gotoPage = logic.attr('gotoPage')
     // If this has value, we are exiting the interview
-    var lastPageBeforeExit = rState.attr('lastPageBeforeExit');
+    var lastPageBeforeExit = rState.attr('lastPageBeforeExit')
 
     if (logic.attr('infinite').errors()) {
       vm.attr('traceLogic').push({
@@ -649,16 +643,15 @@ export default CanMap.extend('PagesVM', {
           format: 'info',
           msg: 'Possible infinite loop. Too many page jumps without user interaction'
         }
-      });
-      vm.attr('rState.page', '__error');
+      })
+      vm.attr('rState.page', '__error')
     } else if (gotoPage && gotoPage.length && !lastPageBeforeExit) {
-
-      logic.attr('infinite').inc();
-      vm._setPage(nextPage, gotoPage);
+      logic.attr('infinite').inc()
+      vm._setPage(nextPage, gotoPage)
     } else {
-      logic.attr('infinite').reset();
+      logic.attr('infinite').reset()
     }
 
-    vm.setCurrentPage();
+    vm.setCurrentPage()
   }
-});
+})

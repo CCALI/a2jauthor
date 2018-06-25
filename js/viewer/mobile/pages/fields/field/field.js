@@ -1,20 +1,21 @@
-import $ from 'jquery';
-import CanMap from "can-map";
-import moment from 'moment';
-import CanList from "can-list";
-import views from './views/';
-import _range from 'lodash/range';
-import _isNaN from 'lodash/isNaN';
-import Component from "can-component";
-import template from './field.stache';
-import invalidPromptTpl from './views/invalid-prompt.stache';
-import exceededMaxcharsTpl from './views/exceeded-maxchars.stache';
-import constants from 'caja/viewer/models/constants';
+import $ from 'jquery'
+import CanMap from 'can-map'
+import moment from 'moment'
+import CanList from 'can-list'
+import views from './views/'
+import _range from 'lodash/range'
+import _isNaN from 'lodash/isNaN'
+import Component from 'can-component'
+import template from './field.stache'
+import invalidPromptTpl from './views/invalid-prompt.stache'
+import exceededMaxcharsTpl from './views/exceeded-maxchars.stache'
+import constants from 'caja/viewer/models/constants'
+import stache from 'can-stache'
 
-import 'jquery-ui/ui/datepicker';
+import 'jquery-ui/ui/datepicker'
 
-can.view.preload('invalid-prompt-tpl', invalidPromptTpl);
-can.view.preload('exceeded-maxchars-tpl', exceededMaxcharsTpl);
+stache.registerPartial('invalid-prompt-tpl', invalidPromptTpl)
+stache.registerPartial('exceeded-maxchars-tpl', exceededMaxcharsTpl)
 
 /**
  * @property {can.Map} field.ViewModel
@@ -33,12 +34,12 @@ export let FieldVM = CanMap.extend('FieldVM', {
      * `5`, this property would return `[1, 2, 3, 4, 5]`.
      */
     numberPickOptions: {
-      get() {
-        const min = parseInt(this.attr('field.min'), 10);
-        const max = parseInt(this.attr('field.max'), 10);
-        const options = (_isNaN(min) || _isNaN(max)) ? [] : _range(min, max + 1);
+      get () {
+        const min = parseInt(this.attr('field.min'), 10)
+        const max = parseInt(this.attr('field.max'), 10)
+        const options = (_isNaN(min) || _isNaN(max)) ? [] : _range(min, max + 1)
 
-        return new CanList(options);
+        return new CanList(options)
       }
     },
 
@@ -50,8 +51,8 @@ export let FieldVM = CanMap.extend('FieldVM', {
      *
      */
     showInvalidPrompt: {
-      get() {
-        return this.attr('field.hasError') && this.attr('invalidPrompt');
+      get () {
+        return this.attr('field.hasError') && this.attr('invalidPrompt')
       }
     },
 
@@ -63,10 +64,10 @@ export let FieldVM = CanMap.extend('FieldVM', {
      *
      */
     invalidPrompt: {
-      get() {
-        let field = this.attr('field');
-        let defaultInvalidPrompt = this.attr('lang').attr('FieldPrompts_' + field.attr('type'));
-        return field.attr('invalidPrompt') || defaultInvalidPrompt;
+      get () {
+        let field = this.attr('field')
+        let defaultInvalidPrompt = this.attr('lang').attr('FieldPrompts_' + field.attr('type'))
+        return field.attr('invalidPrompt') || defaultInvalidPrompt
       }
     },
 
@@ -79,9 +80,9 @@ export let FieldVM = CanMap.extend('FieldVM', {
      */
     showMinMaxPrompt: {
       get () {
-        const min = this.attr('field.min');
-        const max = this.attr('field.max');
-        return !!(min || max);
+        const min = this.attr('field.min')
+        const max = this.attr('field.max')
+        return !!(min || max)
       }
     },
 
@@ -94,9 +95,9 @@ export let FieldVM = CanMap.extend('FieldVM', {
      */
     minMaxPrompt: {
       get () {
-        const min = this.attr('field.min') || 'any';
-        const max = this.attr('field.max') || 'any';
-        return `(${min} --- ${max})`;
+        const min = this.attr('field.min') || 'any'
+        const max = this.attr('field.max') || 'any'
+        return `(${min} --- ${max})`
       }
     },
 
@@ -108,36 +109,36 @@ export let FieldVM = CanMap.extend('FieldVM', {
      *
      */
     shouldBeChecked: {
-      get: function() {
-        let field = this.attr('field');
-        let radioButtonValue = field.attr('value');
-        let answerIndex = field.attr('_answer.answerIndex');
-        let answerValues = field.attr('_answer.answer.values');
-        let previousAnswer = answerValues[answerIndex];
+      get: function () {
+        let field = this.attr('field')
+        let radioButtonValue = field.attr('value')
+        let answerIndex = field.attr('_answer.answerIndex')
+        let answerValues = field.attr('_answer.answer.values')
+        let previousAnswer = answerValues[answerIndex]
 
-        return (radioButtonValue === previousAnswer);
-      },
+        return (radioButtonValue === previousAnswer)
+      }
     },
 
-   /**
+    /**
      * @property {String} field.ViewModel.prototype.savedGenderValue savedGenderValue
      * @parent field.ViewModel
      *
      * Used to determine if gender radio button should be checked based on saved answer
      *
      */
-      savedGenderValue: {
-      get: function() {
-        let name = this.attr('field.name').toLowerCase();
-        let answerIndex = this.attr('%root.%root.rState.i') ? this.attr('%root.%root.rState.i') : 1;
-        let answers = this.attr('logic.interview.answers');
+    savedGenderValue: {
+      get: function () {
+        let name = this.attr('field.name').toLowerCase()
+        let answerIndex = this.attr('%root.%root.rState.i') ? this.attr('%root.%root.rState.i') : 1
+        let answers = this.attr('logic.interview.answers')
         if (name && answers) {
-          return answers.attr(name).attr('values.'+answerIndex);
+          return answers.attr(name).attr('values.' + answerIndex)
         }
       }
     },
 
-     /**
+    /**
      * @property {String} field.ViewModel.prototype.suggestionText suggestionText
      * @parent field.ViewModel
      *
@@ -146,14 +147,14 @@ export let FieldVM = CanMap.extend('FieldVM', {
      */
 
     suggestionText: {
-      get: function() {
-        let fieldType = this.field.type;
+      get: function () {
+        let fieldType = this.field.type
         if (fieldType === 'numberssn') {
-          return '999-99-9999';
+          return '999-99-9999'
         } else if (fieldType === 'numberphone') {
-          return '(555) 555-5555';
+          return '(555) 555-5555'
         } else {
-          return '';
+          return ''
         }
       }
     },
@@ -165,7 +166,7 @@ export let FieldVM = CanMap.extend('FieldVM', {
      * remaining allowed characters before maxChar limit is reached
      *
      */
-    availableLength:{
+    availableLength: {
       value: undefined
     },
 
@@ -177,8 +178,8 @@ export let FieldVM = CanMap.extend('FieldVM', {
      *
      */
     overCharacterLimit: {
-      get() {
-        return this.attr('availableLength') < 0;
+      get () {
+        return this.attr('availableLength') < 0
       }
     }
   },
@@ -191,14 +192,14 @@ export let FieldVM = CanMap.extend('FieldVM', {
      *
      */
 
-  calcAvailableLength(ev) {
-    let maxChars = this.attr('field.maxChars');
-    let availableLengthValue;
+  calcAvailableLength (ev) {
+    let maxChars = this.attr('field.maxChars')
+    let availableLengthValue
     if (maxChars) {
-      availableLengthValue = (maxChars - ev.target.value.length);
-      this.attr('availableLength', availableLengthValue);
+      availableLengthValue = (maxChars - ev.target.value.length)
+      this.attr('availableLength', availableLengthValue)
     }
-    return availableLengthValue;
+    return availableLengthValue
   },
 
   /**
@@ -208,45 +209,45 @@ export let FieldVM = CanMap.extend('FieldVM', {
    * validates a field for errors
    *
    */
-  validateField(ctx, el) {
-    let field = this.attr('field');
-    let answer = field.attr('_answer');
-    let value;
+  validateField (ctx, el) {
+    let field = this.attr('field')
+    let answer = field.attr('_answer')
+    let value
 
-    if (field.type === "checkbox" || field.type === "checkboxNOTA") {
-      value = el[0].checked;
+    if (field.type === 'checkbox' || field.type === 'checkboxNOTA') {
+      value = el[0].checked
     } else {
-      value = el.val();
+      value = el.val()
     }
 
-    answer.attr('values', value);
+    answer.attr('values', value)
 
-    let errors = answer.errors();
-    field.attr('hasError', !!errors);
+    let errors = answer.errors()
+    field.attr('hasError', !!errors)
 
     if (!errors) {
-      let name = field.attr('name');
-      let message = {};
+      let name = field.attr('name')
+      let message = {}
 
       message[name] = [
         { format: 'var', msg: name },
         { msg: ' = ' },
         { format: 'val', msg: value }
-      ];
+      ]
 
-      this.attr('traceLogic').push(message);
+      this.attr('traceLogic').push(message)
     }
   },
 
   preValidateNumber (ctx, el) {
-    const field = this.attr('field');
+    const field = this.attr('field')
     // accept only numbers, commas, periods, and negative sign
-    const currentValue = el.val();
-    const scrubbedValue = currentValue.replace(/[^\d.,-]/g, '');
+    const currentValue = el.val()
+    const scrubbedValue = currentValue.replace(/[^\d.,-]/g, '')
     if (currentValue !== scrubbedValue) {
-      field.attr('hasError', true);
+      field.attr('hasError', true)
     } else {
-      field.attr('hasError', false);
+      field.attr('hasError', false)
     }
   },
 
@@ -257,16 +258,17 @@ export let FieldVM = CanMap.extend('FieldVM', {
    * shows input calculator
    *
    */
-  showCalculator(field) {
+  showCalculator (field) {
     if (field && field.calculator === true) {
-      let inputId = field.attr('label');
-      let $inputEl = $("[id='"+inputId+"']");
-      $inputEl.calculator({showOn: 'operator', eraseText: 'Clear',
-        onClose: function(calcValue, instance) {
-          instance.elem.prop('value', calcValue).change();
+      let inputId = field.attr('label')
+      let $inputEl = $("[id='" + inputId + "']")
+      $inputEl.calculator({showOn: 'operator',
+        eraseText: 'Clear',
+        onClose: function (calcValue, instance) {
+          instance.elem.prop('value', calcValue).change()
         }
-      });
-      $inputEl.calculator('show');
+      })
+      $inputEl.calculator('show')
     }
   },
 
@@ -284,10 +286,10 @@ export let FieldVM = CanMap.extend('FieldVM', {
    * @codeend
    */
   convertDate (date, outputFormat, inputFormat) {
-    inputFormat = inputFormat || '';
-    outputFormat = outputFormat || 'MM/DD/YYYY';
+    inputFormat = inputFormat || ''
+    outputFormat = outputFormat || 'MM/DD/YYYY'
 
-    return (date && date !== 'TODAY') ? moment(date, inputFormat).format(outputFormat) : date;
+    return (date && date !== 'TODAY') ? moment(date, inputFormat).format(outputFormat) : date
   },
 
   /**
@@ -298,13 +300,13 @@ export let FieldVM = CanMap.extend('FieldVM', {
    *
    */
   validateDatepicker ($el) {
-    let val = $el.val();
-    let unformattedVal = this.convertDate(val, 'MM/DD/YYYY');
-    $el.val(unformattedVal);
+    let val = $el.val()
+    let unformattedVal = this.convertDate(val, 'MM/DD/YYYY')
+    $el.val(unformattedVal)
 
-    this.validateField(null, $el);
+    this.validateField(null, $el)
 
-    $el.val(val);
+    $el.val(val)
   },
 
   /*
@@ -318,31 +320,31 @@ export let FieldVM = CanMap.extend('FieldVM', {
    *
    */
   expandTextlong (field) {
-    const answerName = field.attr('name');
-    const previewActive = this.attr('rState.previewActive');
+    const answerName = field.attr('name')
+    const previewActive = this.attr('rState.previewActive')
     if (!answerName && previewActive) {
-      this.attr('modalContent', {title: 'Author Warning', text: 'Text(long) fields require an assigned variable to expand'});
+      this.attr('modalContent', {title: 'Author Warning', text: 'Text(long) fields require an assigned variable to expand'})
     }
     // handle skipped validation as per above
     if (answerName) {
-      const $el = $('textarea[name="' + answerName + '"]');
-      this.validateField(null, $el);
+      const $el = $('textarea[name="' + answerName + '"]')
+      this.validateField(null, $el)
 
-      const answerIndex = field.attr('_answer.answerIndex');
-      const textlongValue = field._answer.attr('answer.values.'+ answerIndex);
-      const title = field.attr('label');
-      this.attr('modalContent', {title, textlongValue, answerIndex, answerName});
+      const answerIndex = field.attr('_answer.answerIndex')
+      const textlongValue = field._answer.attr('answer.values.' + answerIndex)
+      const title = field.attr('label')
+      this.attr('modalContent', {title, textlongValue, answerIndex, answerName})
     }
   },
 
   /**
    * default availableLength
    */
-  init() {
-    this.attr('availableLength', this.attr('field.maxChars'));
+  init () {
+    this.attr('availableLength', this.attr('field.maxChars'))
   }
 
-});
+})
 
 /**
  * @module {Module} viewer/mobile/pages/fields/field/ <a2j-field>
@@ -366,15 +368,15 @@ export default Component.extend('FieldComponent', {
   viewModel: FieldVM,
 
   events: {
-    inserted() {
-      let vm = this.viewModel;
+    inserted () {
+      let vm = this.viewModel
       if (vm.attr('field.type') === 'datemdy') {
-        let defaultDate = vm.convertDate(vm.attr('field._answer.values')) || null;
+        let defaultDate = vm.convertDate(vm.attr('field._answer.values')) || null
         // TODO: these dates need to be internationalized for output/input format
         // min/max values currently only come in as mm/dd/yyyy, or special value, TODAY, which is handled in convertDate above
-        let minDate = vm.convertDate(vm.attr('field.min'), null, 'MM/DD/YYYY') || null;
-        let maxDate = vm.convertDate(vm.attr('field.max'), null, 'MM/DD/YYYY') || null;
-        let lang = vm.attr('lang');
+        let minDate = vm.convertDate(vm.attr('field.min'), null, 'MM/DD/YYYY') || null
+        let maxDate = vm.convertDate(vm.attr('field.max'), null, 'MM/DD/YYYY') || null
+        let lang = vm.attr('lang')
 
         $('input.datepicker-input', this.element).datepicker({
           defaultDate,
@@ -382,76 +384,75 @@ export default Component.extend('FieldComponent', {
           maxDate,
           changeMonth: true,
           changeYear: true,
-          yearRange: constants.kMinYear + ":" + constants.kMaxYear,
+          yearRange: constants.kMinYear + ':' + constants.kMaxYear,
           monthNames: lang.MonthNamesLong.split(','),
           monthNamesShort: lang.MonthNamesShort.split(','),
           appendText: '(mm/dd/yyyy)',
           dateFormat: 'mm/dd/yy',
-          onClose() {
-            let $el = $(this);
-            vm.validateDatepicker($el);
+          onClose () {
+            let $el = $(this)
+            vm.validateDatepicker($el)
           }
-        }).val(defaultDate);
+        }).val(defaultDate)
       }
     },
 
-    '{a2j-field input[type=checkbox]} change': function(values, ev) {
-      let field = this.viewModel.attr('field');
+    '{a2j-field input[type=checkbox]} change': function (values, ev) {
+      let field = this.viewModel.attr('field')
 
-      if (ev.target.checked === true && (field.type === "checkbox" || field.type === "checkboxNOTA")) {
-        let fields = this.viewModel.attr('%root.fields');
+      if (ev.target.checked === true && (field.type === 'checkbox' || field.type === 'checkboxNOTA')) {
+        let fields = this.viewModel.attr('%root.fields')
         if (fields) {
-          let toStayChecked = field.type;
-            fields.each(function(field) {
-              if (field.type !== toStayChecked && (field.type === "checkbox" || field.type === "checkboxNOTA")) {
-                field.attr('_answer.answer.values.1', false);
-              }
-            });
-          }
+          let toStayChecked = field.type
+          fields.each(function (field) {
+            if (field.type !== toStayChecked && (field.type === 'checkbox' || field.type === 'checkboxNOTA')) {
+              field.attr('_answer.answer.values.1', false)
+            }
+          })
         }
+      }
     },
 
-    '{field._answer.answer.values} change': function(values, ev, attr) {
-
+    '{field._answer.answer.values} change': function (values, ev, attr) {
       if (attr === '1') {
-        let message = {};
-        let msgVar = this.viewModel.attr('field.name');
+        let message = {}
+        let msgVar = this.viewModel.attr('field.name')
         message[msgVar] = [
           { format: 'var', msg: msgVar },
           { msg: ' = ' },
           { format: 'val', msg: values[attr] }
-        ];
-        this.viewModel.attr('traceLogic').push(message);
+        ]
+        this.viewModel.attr('traceLogic').push(message)
       }
     }
   },
 
   helpers: {
-    selector(type, options) {
-      type = typeof type === 'function' ? type() : type;
+    selector (type, options) {
+      type = typeof type === 'function' ? type() : type
 
-      let self = this;
+      let self = this
 
       // TODO: CanJS should allow for passing helpers as well as scope.
       // This below is a copy of screenManager's eval helper.
       return views[type](options.scope, {
-        eval(str) {
-          str = typeof str === 'function' ? str() : str;
+        eval (str) {
+          str = typeof str === 'function' ? str() : str
 
-          return self.attr('logic').eval(str);
+          return self.attr('logic').eval(str)
         },
 
-        dateformat(val, format) {
-          val = val.isComputed ? val() : val;
-          format = format.isComputed ? format() : format;
-          return self.convertDate(val, format);
+        dateformat (val, format) {
+          val = val.isComputed ? val() : val
+          format = format.isComputed ? format() : format
+          return self.convertDate(val, format)
         },
 
-        i18n(key) {
-          key = typeof key === 'function' ? key() : key;
-          return self.attr('lang').attr(key) || key;
+        i18n (key) {
+          key = typeof key === 'function' ? key() : key
+          return self.attr('lang').attr(key) || key
         }
-      });
+      })
     }
   }
-});
+})

@@ -1,18 +1,19 @@
-import $ from 'jquery';
-import CanMap from "can-map";
-import CanList from "can-list";
-import _isNaN from 'lodash/isNaN';
-import _inRange from 'lodash/inRange';
-import Component from "can-component";
-import template from './steps.stache';
-import _findIndex from 'lodash/findIndex';
-import _truncate from 'lodash/truncate';
-import learnMoreTemplate from './learn-more.stache';
-import {Analytics} from 'caja/viewer/util/analytics';
+import $ from 'jquery'
+import CanMap from 'can-map'
+import CanList from 'can-list'
+import _isNaN from 'lodash/isNaN'
+import _inRange from 'lodash/inRange'
+import Component from 'can-component'
+import template from './steps.stache'
+import _findIndex from 'lodash/findIndex'
+import _truncate from 'lodash/truncate'
+import learnMoreTemplate from './learn-more.stache'
+import {Analytics} from 'caja/viewer/util/analytics'
+import stache from 'can-stache'
 
-import "can-map-define";
+import 'can-map-define'
 
-can.view.preload('learn-more-tpl', learnMoreTemplate);
+stache.registerPartial('learn-more-tpl', learnMoreTemplate)
 
 /**
  * @property {can.Map} steps.ViewModel
@@ -29,10 +30,10 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      * current page in interview
      */
     currentPage: {
-      get() {
-        const interview = this.attr('interview');
-        const pageName = this.attr('rState.page');
-        return interview.getPageByName(pageName);
+      get () {
+        const interview = this.attr('interview')
+        const pageName = this.attr('rState.page')
+        return interview.getPageByName(pageName)
       }
     },
 
@@ -43,8 +44,8 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      * list of steps in the interview
      */
     steps: {
-      get() {
-        return this.attr('interview.steps');
+      get () {
+        return this.attr('interview.steps')
       }
     },
 
@@ -55,8 +56,8 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      * current step in interview
      */
     currentStep: {
-      get() {
-        return this.attr('currentPage.step');
+      get () {
+        return this.attr('currentPage.step')
       }
     },
 
@@ -67,9 +68,9 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      * list of steps after current step in interview
      */
     nextSteps: {
-      get() {
-        const currentStepIndex = this.getStepIndex(this.attr('currentStep'));
-        return this.attr('steps').slice(currentStepIndex + 1);
+      get () {
+        const currentStepIndex = this.getStepIndex(this.attr('currentStep'))
+        return this.attr('steps').slice(currentStepIndex + 1)
       }
     },
 
@@ -80,8 +81,8 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      * number of steps after current step in interview
      */
     remainingSteps: {
-      get() {
-        return this.attr('nextSteps.length');
+      get () {
+        return this.attr('nextSteps.length')
       }
     },
 
@@ -95,24 +96,24 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      *
      */
     maxDisplayedSteps: {
-      get() {
-        let sidewalkHeight = this.attr('sidewalkHeight');
-        let interviewSteps = this.attr('steps.length');
-        let maxSteps;
+      get () {
+        let sidewalkHeight = this.attr('sidewalkHeight')
+        let interviewSteps = this.attr('steps.length')
+        let maxSteps
 
         if (sidewalkHeight < 100) {
-          maxSteps = 1;
+          maxSteps = 1
         } else if (_inRange(sidewalkHeight, 100, 450)) {
-          maxSteps = 2;
+          maxSteps = 2
         } else if (_inRange(sidewalkHeight, 450, 550)) {
-          maxSteps = 3;
+          maxSteps = 3
         } else if (_inRange(sidewalkHeight, 550, 750)) {
-          maxSteps = 4;
+          maxSteps = 4
         } else {
-          maxSteps = 5;
+          maxSteps = 5
         }
 
-        return interviewSteps < maxSteps ? interviewSteps : maxSteps;
+        return interviewSteps < maxSteps ? interviewSteps : maxSteps
       }
     },
 
@@ -124,18 +125,18 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      * listens for changes to A2J Step variables during an interview - used to update displayText
      */
     a2jStepVars: {
-      get() {
-        let a2jStepVars = [];
-        let answers = this.attr('interview.answers');
+      get () {
+        let a2jStepVars = []
+        let answers = this.attr('interview.answers')
         if (answers) {
-          answers.each(function(answer) {
-            if (answer.name && answer.name.indexOf("A2J Step") !== -1) {
-              answer.attr('values');  // setup binding on values(1)
-              a2jStepVars.push(answer);
+          answers.each(function (answer) {
+            if (answer.name && answer.name.indexOf('A2J Step') !== -1) {
+              answer.attr('values') // setup binding on values(1)
+              a2jStepVars.push(answer)
             }
-          });
+          })
         }
-        return a2jStepVars;
+        return a2jStepVars
       }
     },
 
@@ -147,10 +148,10 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      *
      */
     guideAvatarSkinTone: {
-      get() {
-        const globalSkinTone = this.attr('mState.avatarSkinTone');
-        const interviewSkinTone = this.attr('interview.avatarSkinTone');
-        return globalSkinTone || interviewSkinTone;
+      get () {
+        const globalSkinTone = this.attr('mState.avatarSkinTone')
+        const interviewSkinTone = this.attr('interview.avatarSkinTone')
+        return globalSkinTone || interviewSkinTone
       }
     },
 
@@ -162,10 +163,10 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      *
      */
     guideAvatarHairColor: {
-      get() {
-        const globalHairColor = this.attr('mState.avatarHairColor');
-        const interviewHairColor = this.attr('interview.avatarHairColor');
-        return globalHairColor || interviewHairColor;
+      get () {
+        const globalHairColor = this.attr('mState.avatarHairColor')
+        const interviewHairColor = this.attr('interview.avatarHairColor')
+        return globalHairColor || interviewHairColor
       }
     },
 
@@ -181,9 +182,9 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
     *
     */
     clientAvatarSkinTone: {
-      get() {
-        const guideSkinTone = this.attr('guideAvatarSkinTone');
-        return this.attr('customClientSkinTone') || guideSkinTone;
+      get () {
+        const guideSkinTone = this.attr('guideAvatarSkinTone')
+        return this.attr('customClientSkinTone') || guideSkinTone
       }
     },
 
@@ -195,9 +196,9 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
     *
     */
     clientAvatarHairColor: {
-      get() {
-        const guideHairColor = this.attr('guideAvatarHairColor');
-        return this.attr('customClientHairColor') || guideHairColor;
+      get () {
+        const guideHairColor = this.attr('guideAvatarHairColor')
+        return this.attr('customClientHairColor') || guideHairColor
       }
     },
 
@@ -213,8 +214,8 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      *
      */
     showClientAvatar: {
-      get() {
-        return this.attr('interview.userGender') && !this.attr('currentPage.hasUserGenderField');
+      get () {
+        return this.attr('interview.userGender') && !this.attr('currentPage.hasUserGenderField')
       }
     },
 
@@ -228,8 +229,8 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      *
      */
     guideAvatarFacingDirection: {
-      get() {
-        return this.attr('showClientAvatar') ? 'right' : 'front';
+      get () {
+        return this.attr('showClientAvatar') ? 'right' : 'front'
       }
     },
 
@@ -245,10 +246,10 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      */
     sidewalkLength: {
       type: 'number',
-      get() {
-        let sidewalkHeight = this.attr('sidewalkHeight');
-        let sidewalkWidth = this.attr('sidewalkWidth');
-        return Math.sqrt(Math.pow(sidewalkHeight, 2) + Math.pow(sidewalkWidth, 2));
+      get () {
+        let sidewalkHeight = this.attr('sidewalkHeight')
+        let sidewalkWidth = this.attr('sidewalkWidth')
+        return Math.sqrt(Math.pow(sidewalkHeight, 2) + Math.pow(sidewalkWidth, 2))
       }
     },
 
@@ -275,8 +276,8 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      */
     sidewalkAngleA: {
       type: 'number',
-      get() {
-        return Math.asin( this.attr('sidewalkHeight') / this.attr('sidewalkLength') );
+      get () {
+        return Math.asin(this.attr('sidewalkHeight') / this.attr('sidewalkLength'))
       }
     },
 
@@ -288,8 +289,8 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      *
      */
     guideBubbleTallerThanAvatar: {
-      get() {
-        return this.attr('guideBubbleHeight') > this.attr('avatarHeight');
+      get () {
+        return this.attr('guideBubbleHeight') > this.attr('avatarHeight')
       }
     },
 
@@ -301,8 +302,8 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      *
      */
     clientBubbleTallerThanAvatar: {
-      get() {
-        return this.attr('clientBubbleHeight') > this.attr('avatarHeight');
+      get () {
+        return this.attr('clientBubbleHeight') > this.attr('avatarHeight')
       }
     },
 
@@ -315,9 +316,9 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      */
     minusHeader: {
       type: 'number',
-      get() {
-        let headerHeight = this.attr('bodyHeight') - this.attr('sidewalkHeight');
-        return Math.ceil(headerHeight / 2);
+      get () {
+        let headerHeight = this.attr('bodyHeight') - this.attr('sidewalkHeight')
+        return Math.ceil(headerHeight / 2)
       }
     },
 
@@ -361,12 +362,12 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
    * index for a given step, step.number and index do not have to match
    */
   getStepIndex (step) {
-    const steps = this.attr('steps').attr();
+    const steps = this.attr('steps').attr()
     const stepIndex = _findIndex(steps, ({ number }) => {
-      return number == step.attr('number');
-    });
+      return number == step.attr('number')
+    })
 
-    return stepIndex;
+    return stepIndex
   },
 
   /**
@@ -376,14 +377,14 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
    * the step text which can be overridden by Authors assigned values to `A2J Step #` variables
    */
   getTextForStep (step) {
-    const index = this.getStepIndex(step);
-    const defaultText = this.attr(`interview.steps.${index}.text`);
-    let variableText;
-    const variable = this.attr('a2jStepVars')[index];
+    const index = this.getStepIndex(step)
+    const defaultText = this.attr(`interview.steps.${index}.text`)
+    let variableText
+    const variable = this.attr('a2jStepVars')[index]
     if (variable) {
-      variableText = variable.attr('values.1');
+      variableText = variable.attr('values.1')
     }
-    return variableText || defaultText;
+    return variableText || defaultText
   },
 
   /**
@@ -393,15 +394,15 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
    * final text to be displayed on step sign in viewer, truncated as needed
    */
   getDisplayTextForStep (step) {
-      const maxChars = 50;
-      const overflowText = '...';
-      const text = this.getTextForStep(step);
+    const maxChars = 50
+    const overflowText = '...'
+    const text = this.getTextForStep(step)
 
-      return _truncate(text, {
-        length: maxChars + overflowText.length,
-        separator: ' ',
-        omission: overflowText
-      });
+    return _truncate(text, {
+      length: maxChars + overflowText.length,
+      separator: ' ',
+      omission: overflowText
+    })
   },
 
   /**
@@ -424,19 +425,19 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
    *       A    w1
    * @codeend
    */
-  getStepWidth(isCurrentStep, index) {
+  getStepWidth (isCurrentStep, index) {
     // for current step, align the bottom of the step with the bottom of the avatar
     // for next steps, align the bottom of the step with the bottom of its parent (set by css)
-    let bottom = isCurrentStep ?
-                  this.attr('avatarOffsetTop') :
-                  this.attr('stepNextCssBottom').attr(index);
+    let bottom = isCurrentStep
+      ? this.attr('avatarOffsetTop')
+      : this.attr('stepNextCssBottom').attr(index)
 
     // reverse engineer less equation `calc(~"x% - " minusHeader) = bodyHeight`
     // solve above equation for x, which will be percentBelow
-    let percentBelow = Math.ceil(((bottom + this.attr('minusHeader')) / this.attr('bodyHeight')) * 100);
-    let percentAbove = (100 - percentBelow) / 100;
+    let percentBelow = Math.ceil(((bottom + this.attr('minusHeader')) / this.attr('bodyHeight')) * 100)
+    let percentAbove = (100 - percentBelow) / 100
 
-    return (this.attr('sidewalkHeight') * percentAbove) / Math.tan(this.attr('sidewalkAngleA'));
+    return (this.attr('sidewalkHeight') * percentAbove) / Math.tan(this.attr('sidewalkAngleA'))
   },
 
   /**
@@ -445,9 +446,9 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
    *
    * the style attribute value needed for styling a step based on its width
    */
-  formatStepStyles(width) {
+  formatStepStyles (width) {
     return 'margin-right: ' + `-${Math.ceil(width * 0.1)}px;` +
-           'width: ' +`calc(0% + ${Math.ceil(width + (width * 0.3))}px);`;
+           'width: ' + `calc(0% + ${Math.ceil(width + (width * 0.3))}px);`
   },
 
   /**
@@ -456,31 +457,31 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
    *
    *  updates the dom to keep step elements in proper relation to each other
    */
-  updateDomProperties() {
-    let vm = this;
+  updateDomProperties () {
+    let vm = this
 
-    vm.attr('bodyHeight', $('body').height());
+    vm.attr('bodyHeight', $('body').height())
 
-    let $sidewalk = $('#sidewalk');
-    vm.attr('sidewalkWidth', $sidewalk.width());
-    vm.attr('sidewalkHeight', $sidewalk.height());
+    let $sidewalk = $('#sidewalk')
+    vm.attr('sidewalkWidth', $sidewalk.width())
+    vm.attr('sidewalkHeight', $sidewalk.height())
 
-    let $guideBubble = $('#guideBubble');
-    vm.attr('guideBubbleHeight', $guideBubble.height());
+    let $guideBubble = $('#guideBubble')
+    vm.attr('guideBubbleHeight', $guideBubble.height())
 
-    let $clientBubble = $('#clientBubble');
-    vm.attr('clientBubbleHeight', $clientBubble.height());
+    let $clientBubble = $('#clientBubble')
+    vm.attr('clientBubbleHeight', $clientBubble.height())
 
-    let $avatar = $guideBubble.parent();
-    vm.attr('avatarHeight', $avatar.height());
-    vm.attr('avatarOffsetTop', $avatar.offset() && $avatar.offset().top);
+    let $avatar = $guideBubble.parent()
+    vm.attr('avatarHeight', $avatar.height())
+    vm.attr('avatarOffsetTop', $avatar.offset() && $avatar.offset().top)
 
     $('.step-next').each((i, el) => {
-      let $el = $(el);
-      let cssBottom = $el.css('bottom');
-      cssBottom = +cssBottom.slice(0, cssBottom.indexOf('px'));
-      vm.attr('stepNextCssBottom').attr(i, cssBottom);
-    });
+      let $el = $(el)
+      let cssBottom = $el.css('bottom')
+      cssBottom = +cssBottom.slice(0, cssBottom.indexOf('px'))
+      vm.attr('stepNextCssBottom').attr(i, cssBottom)
+    })
   },
 
   /**
@@ -489,16 +490,15 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
    *
    *  used to trigger the dom update from avatar.js on svg load
    */
-  avatarLoaded() {
-    this.afterAvatarLoaded(() => this.updateDomProperties());
+  avatarLoaded () {
+    this.afterAvatarLoaded(() => this.updateDomProperties())
   },
 
   // TODO: figure out a better way update the dom when the avatar changes in the DOM
   afterAvatarLoaded (callback) {
-    setTimeout(callback, 0);
+    setTimeout(callback, 0)
   }
-});
-
+})
 
 /**
  * @module {Module} viewer/desktop/steps/ <a2j-viewer-steps>
@@ -520,35 +520,35 @@ export default Component.extend({
   viewModel: ViewerStepsVM,
 
   events: {
-    inserted() {
-      this.viewModel.updateDomProperties();
+    inserted () {
+      this.viewModel.updateDomProperties()
     },
 
-    '{window} resize': function() {
-      this.viewModel.updateDomProperties();
+    '{window} resize': function () {
+      this.viewModel.updateDomProperties()
     },
 
-    '{viewModel} showDebugPanel': function(vm) {
-      vm.afterAvatarLoaded(() => vm.updateDomProperties());
+    '{viewModel} showDebugPanel': function (vm) {
+      vm.afterAvatarLoaded(() => vm.updateDomProperties())
     },
 
-    '{viewModel} currentPage': function(vm) {
-      vm.afterAvatarLoaded(() => vm.updateDomProperties());
+    '{viewModel} currentPage': function (vm) {
+      vm.afterAvatarLoaded(() => vm.updateDomProperties())
     },
 
-    'a.learn-more click': function(el, ev) {
-      ev.preventDefault();
+    'a.learn-more click': function (el, ev) {
+      ev.preventDefault()
 
-      const vm = this.viewModel;
-      const pages = vm.attr('interview.pages');
-      const pageName = vm.attr('rState.page');
+      const vm = this.viewModel
+      const pages = vm.attr('interview.pages')
+      const pageName = vm.attr('rState.page')
 
       if (pages && pageName) {
-        const page = pages.find(pageName);
+        const page = pages.find(pageName)
 
         // piwik tracking of learn-more clicks
-        if (window._paq){
-          Analytics.trackCustomEvent('Learn-More', 'from: ' + pageName, page.learn);
+        if (window._paq) {
+          Analytics.trackCustomEvent('Learn-More', 'from: ' + pageName, page.learn)
         }
 
         vm.attr('modalContent', {
@@ -557,26 +557,26 @@ export default Component.extend({
           imageURL: page.helpImageURL,
           audioURL: page.helpAudioURL,
           videoURL: page.helpVideoURL
-        });
+        })
       }
     }
 
   },
 
   helpers: {
-    zeroOrUndefined(number, options) {
-      number = number.isComputed ? number() : number;
-      number = parseInt(number, 10);
+    zeroOrUndefined (number, options) {
+      number = number.isComputed ? number() : number
+      number = parseInt(number, 10)
 
-      return (number === 0 || _isNaN(number)) ?
-        options.fn() :
-        options.inverse();
+      return (number === 0 || _isNaN(number))
+        ? options.fn()
+        : options.inverse()
     },
 
-    add(a, b) {
-      a = a.isComputed ? +a() : +a;
-      b = b.isComputed ? +b() : +b;
-      return a + b;
+    add (a, b) {
+      a = a.isComputed ? +a() : +a
+      b = b.isComputed ? +b() : +b
+      return a + b
     }
   }
-});
+})

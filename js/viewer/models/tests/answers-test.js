@@ -33,7 +33,7 @@ describe('Answers Model', function () {
     assert.equal(answers.varGet('gotMilk', 1), true, 'should cast legacy string values to boolean')
   })
 
-  it('handles zero and falsey valuse for number types', function () {
+  it('handles zero and falsy values for number types', function () {
     const answers = new Answers()
     answers.varCreate('numberFest', 'number', 'false')
     assert.equal(answers.varGet('numberFest', 1), undefined, 'should get undefined when unanswered')

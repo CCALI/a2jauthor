@@ -1,6 +1,7 @@
 import CanMap from 'can-map'
 import CanList from 'can-list'
 import Component from 'can-component'
+import stache from 'can-stache'
 import template from './report.stache'
 import pagePartial from './page-partial.stache'
 import popupPartial from './popup-partial.stache'
@@ -9,8 +10,8 @@ import cString from 'caja/viewer/mobile/util/string'
 import textStats from 'text-statistics'
 import _cloneDeep from 'lodash/cloneDeep'
 
-can.view.preload('page-partial', pagePartial)
-can.view.preload('popup-partial', popupPartial)
+stache.registerPartial('page-partial', pagePartial)
+stache.registerPartial('popup-partial', popupPartial)
 
 /**
  * @property {can.Map} report.ViewModel

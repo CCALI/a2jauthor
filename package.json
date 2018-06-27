@@ -41,14 +41,10 @@
     "configDependencies": [
       "globals-patch"
     ],
-    "ext": {
-      "ejs": "can/view/ejs/system",
-      "mustache": "can/view/mustache/system",
-      "stache": "can/view/stache/system"
-    },
     "plugins": [
       "done-css",
       "steal-less",
+      "steal-stache",
       "can"
     ],
     "directories": {

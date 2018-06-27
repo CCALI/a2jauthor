@@ -18,7 +18,7 @@
     "url": "https://github.com/CCALI/CAJA"
   },
   "devDependencies": {
-    "bit-tabs": "0.2.0",
+    "bit-tabs": "^1.0.4",
     "blueimp-file-upload": "^9.10.1",
     "bootstrap": "3.3.5",
     "bootstrap-tokenfield": "^0.12.0",

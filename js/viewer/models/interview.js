@@ -1,5 +1,8 @@
-import CanList from "can-list"
-import Model from "can-model"
+import CanList from 'can-list'
+import Model from 'can-model'
+import canAjax from 'can-ajax'
+import canBatch from 'can-event/batch/batch'
+import _forEach from 'lodash/forEach'
 import _last from 'lodash/last'
 import _keys from 'lodash/keys'
 import _find from 'lodash/find'
@@ -12,8 +15,7 @@ import parser from 'caja/viewer/mobile/util/parser'
 import {Hair, Skin} from 'caja/viewer/desktop/avatar/colors'
 
 import 'can-list-sort'
-import "can-map-define"
-import 'can-event/batch/batch'
+import 'can-map-define'
 
 /**
  * @module {function} Interview
@@ -48,13 +50,13 @@ const Interview = Model.extend({
     let resumeDfd = can.Deferred()
     let interviewPath = getInterviewPath(data.url)
 
-    let interviewDfd = ajax({
+    let interviewDfd = canAjax({
       url: data.url
     })
 
     interviewDfd.done(function (interview) {
       if (data.resume) {
-        ajax({
+        canAjax({
           url: data.resume,
           dataType: 'text'
         })
@@ -88,7 +90,7 @@ const Interview = Model.extend({
     data._pages = data.pages
     data.pages = []
 
-    each(data._pages, function (p) {
+    _forEach(data._pages, function (p) {
       const page = _assign({}, p)
       const step = data.steps[page.step]
 
@@ -97,7 +99,7 @@ const Interview = Model.extend({
       data.pages.push(page)
     })
 
-    each(data.vars, function (v) {
+    _forEach(data.vars, function (v) {
       v.values = v.values || [null]
     })
 

@@ -1,8 +1,9 @@
-import CanMap from "can-map"
-import CanList from "can-list"
+import CanMap from 'can-map'
+import CanList from 'can-list'
+import route from 'can-route'
 import _findIndex from 'lodash/findIndex'
 
-import "can-map-define"
+import 'can-map-define'
 
 export const ViewerAppState = CanMap.extend({
   define: {
@@ -28,7 +29,7 @@ export const ViewerAppState = CanMap.extend({
       type: 'boolean',
       serialize: false,
       get () {
-        return route.attr('page') === 'preview';
+        return route.attr('page') === 'preview'
       }
     },
 
@@ -78,7 +79,7 @@ export const ViewerAppState = CanMap.extend({
     traceLogic: {
       serialize: false,
       value: function () {
-        return new CanList();
+        return new CanList()
       }
     }
 

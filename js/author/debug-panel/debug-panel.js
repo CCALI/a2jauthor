@@ -1,10 +1,10 @@
-import CanMap from "can-map"
-import CanList from "can-list"
+import CanMap from 'can-map'
+import CanList from 'can-list'
 import _find from 'lodash/find'
-import Component from "can-component"
+import Component from 'can-component'
 import template from './debug-panel.stache'
 
-import "can-map-define"
+import 'can-map-define'
 
 /**
  * @property {can.Map} authorDebugPanel.ViewModel
@@ -26,7 +26,7 @@ export let DebugPanelVM = CanMap.extend({
 
         return interview
           ? interview.attr('variablesList')
-          : new CanList([]);
+          : new CanList([])
       }
     },
 
@@ -60,7 +60,7 @@ export let DebugPanelVM = CanMap.extend({
      */
     traceLogic: {
       value: function () {
-        return new CanList();
+        return new CanList()
       }
     },
 
@@ -75,7 +75,7 @@ export let DebugPanelVM = CanMap.extend({
      */
     traceLogicList: {
       value: function () {
-        return new CanList();
+        return new CanList()
       },
 
       get (lastSetValue) {

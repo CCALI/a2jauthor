@@ -1,9 +1,9 @@
-import CanMap from "can-map"
-import CanList from "can-list"
-import Component from "can-component"
+import CanMap from 'can-map'
+import CanList from 'can-list'
+import Component from 'can-component'
 import template from './debug-alerts.stache'
 
-import "can-map-define"
+import 'can-map-define'
 
 /**
  * @module {Module} author/debug-alerts <author-debug-alerts>

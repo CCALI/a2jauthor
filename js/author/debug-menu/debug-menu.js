@@ -1,6 +1,6 @@
 import $ from 'jquery'
-import CanMap from "can-map"
-import Component from "can-component"
+import CanMap from 'can-map'
+import Component from 'can-component'
 import template from './debug-menu.stache'
 import _isFunction from 'lodash/isFunction'
 

@@ -1,8 +1,8 @@
 import $ from 'jquery'
-import CanMap from "can-map"
+import CanMap from 'can-map'
 import A2JTemplate from 'caja/author/models/a2j-template'
 
-import "can-map-define"
+import 'can-map-define'
 
 /**
  * @property {can.Map} templatesPage.ViewModel

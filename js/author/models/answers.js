@@ -1,9 +1,9 @@
-import CanMap from "can-map"
+import CanMap from 'can-map'
 import _tail from 'lodash/tail'
 import _last from 'lodash/last'
 import _initial from 'lodash/initial'
 
-import "can-list"
+import 'can-list'
 
 const commaString = function (values) {
   if (values.length >= 2) {

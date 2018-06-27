@@ -6,7 +6,7 @@ import viewerPreviewTpl from './viewer-preview-layout.stache'
 import bindCustomEvents from 'caja/author/utils/bind-custom-events'
 
 import stache from 'can-stache'
-import route from "can-route"
+import route from 'can-route'
 import 'calculator/jquery.plugin'
 import 'calculator/jquery.calculator'
 import 'calculator/jquery.calculator.css'

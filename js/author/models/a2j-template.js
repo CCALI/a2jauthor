@@ -1,10 +1,10 @@
 import moment from 'moment'
-import Model from "can-model"
+import Model from 'can-model'
 import _omit from 'lodash/omit'
 import A2JNode from './a2j-node'
 import comparator from './template-comparator'
 
-import "can-map-define"
+import 'can-map-define'
 
 /**
  * @module {function} A2JTemplate

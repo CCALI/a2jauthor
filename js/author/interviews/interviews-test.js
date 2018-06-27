@@ -1,8 +1,8 @@
 import $ from 'jquery'
 import F from 'funcunit'
 import assert from 'assert'
-import stache from "can-stache"
-import CanList from "can-list"
+import stache from 'can-stache'
+import CanList from 'can-list'
 import { InterviewsVM } from './interviews'
 
 import 'steal-mocha'

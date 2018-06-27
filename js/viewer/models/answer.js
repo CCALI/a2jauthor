@@ -1,5 +1,5 @@
-import CanMap from "can-map"
+import CanMap from 'can-map'
 
-import "can-map-define"
+import 'can-map-define'
 
 export default CanMap.extend({})

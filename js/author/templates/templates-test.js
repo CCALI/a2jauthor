@@ -1,9 +1,9 @@
 import F from 'funcunit'
-import CanMap from "can-map"
+import CanMap from 'can-map'
 import assert from 'assert'
 import Templates from './templates-vm'
 
-import "can-route"
+import 'can-route'
 import 'steal-mocha'
 import './templates'
 

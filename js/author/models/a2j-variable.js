@@ -1,9 +1,9 @@
-import CanList from "can-list"
-import Model from "can-model"
+import CanList from 'can-list'
+import Model from 'can-model'
 import _values from 'lodash/values'
 import _toPlainObject from 'lodash/toPlainObject'
 
-import "can-map-define"
+import 'can-map-define'
 
 /**
  * @module A2JVariable

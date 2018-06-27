@@ -1,6 +1,6 @@
 import $ from 'jquery'
-import CanMap from "can-map"
-import CanList from "can-list"
+import CanMap from 'can-map'
+import CanList from 'can-list'
 import A2JVariable from './a2j-variable'
 import _isEmpty from 'lodash/isEmpty'
 import {Gender, Hair, Skin} from 'caja/viewer/desktop/avatar/colors'

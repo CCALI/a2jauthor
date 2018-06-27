@@ -1,4 +1,4 @@
-import Component from "can-component"
+import Component from 'can-component'
 import template from './button-dropdown.stache'
 
 /**

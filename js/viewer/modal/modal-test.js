@@ -1,8 +1,8 @@
 import $ from 'jquery'
 import F from 'funcunit'
-import CanMap from "can-map"
+import CanMap from 'can-map'
 import { ModalVM } from './modal'
-import stache from "can-stache"
+import stache from 'can-stache'
 
 import 'caja/viewer/styles.less'
 
@@ -13,7 +13,7 @@ describe('<a2j-modal> ', function () {
     beforeEach(function () {
       const interview = {
         getPageByName () {
-          return new CanMap();
+          return new CanMap()
         }
       }
 

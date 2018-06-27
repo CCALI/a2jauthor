@@ -1,10 +1,10 @@
 import cuid from 'cuid'
-import CanMap from "can-map"
-import CanList from "can-list"
+import CanMap from 'can-map'
+import CanList from 'can-list'
 import _omit from 'lodash/omit'
 import makeNodeOutline from './make-node-outline'
 
-import "can-map-define"
+import 'can-map-define'
 
 const omitStateAttrs = [
   'guide', 'answers', 'useAnswers', 'ckeditorInstance',

@@ -1,5 +1,5 @@
-import CanMap from "can-map"
-import Component from "can-component"
+import CanMap from 'can-map'
+import Component from 'can-component'
 import template from './preview.stache'
 
 /**
@@ -49,7 +49,7 @@ export default Component.extend({
       }
       this.viewModel.lockScrolling(true)
     },
-    "{element} beforeremove" () {
+    '{element} beforeremove' () {
       this.viewModel.lockScrolling(false)
     }
   },

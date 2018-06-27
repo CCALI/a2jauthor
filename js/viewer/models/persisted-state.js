@@ -1,9 +1,9 @@
-import Model from "can-model"
+import Model from 'can-model'
 import Answers from 'caja/viewer/models/answers'
 import Parser from 'caja/viewer/mobile/util/parser'
 
-import "can-map-define"
-import "can-construct-super"
+import 'can-map-define'
+import 'can-construct-super'
 import 'can-map-backup'
 
 export default Model.extend({

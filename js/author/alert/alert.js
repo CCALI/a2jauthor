@@ -1,9 +1,9 @@
-import CanMap from "can-map"
-import Component from "can-component"
+import CanMap from 'can-map'
+import Component from 'can-component'
 import template from './alert.stache'
 
-import "can-event"
-import "can-map-define"
+import 'can-event'
+import 'can-map-define'
 
 const alertTypeClasses = {
   info: 'alert-info',

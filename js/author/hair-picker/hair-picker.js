@@ -1,5 +1,5 @@
-import CanMap from "can-map"
-import Component from "can-component"
+import CanMap from 'can-map'
+import Component from 'can-component'
 import template from './hair-picker.stache'
 import {
   hairColors,

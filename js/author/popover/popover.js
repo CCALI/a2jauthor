@@ -1,9 +1,9 @@
-import CanMap from "can-map"
-import Component from "can-component"
+import CanMap from 'can-map'
+import Component from 'can-component'
 import _includes from 'lodash/includes'
 import template from './popover.stache'
 
-import "can-map-define"
+import 'can-map-define'
 
 const placements = ['top', 'right', 'bottom', 'left', 'auto']
 

@@ -1,8 +1,8 @@
-import CanMap from "can-map"
-import Component from "can-component"
+import CanMap from 'can-map'
+import Component from 'can-component'
 import template from './audio-player.stache'
 
-import "can-map-define"
+import 'can-map-define'
 
 function leftPad (len, char, str) {
   while (str.length < len) {
@@ -206,7 +206,7 @@ export default Component.extend({
       this.viewModel.attr('player', player)
       this.viewModel.attr('isLoadingAudio', true)
     },
-    "{element} beforeremove" () {
+    '{element} beforeremove' () {
       this.viewModel.attr('player', null)
     },
     '{window} mousedown' (target, event) {

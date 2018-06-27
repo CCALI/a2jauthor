@@ -1,4 +1,4 @@
-import Component from "can-component"
+import Component from 'can-component'
 import TemplatesVM from './templates-vm'
 import template from './templates.stache'
 

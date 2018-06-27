@@ -1,9 +1,9 @@
-import CanMap from "can-map"
-import Component from "can-component"
+import CanMap from 'can-map'
+import Component from 'can-component'
 import template from './desktop.stache'
 import _isUndefined from 'lodash/isUndefined'
 
-import "can-map-define"
+import 'can-map-define'
 
 let DesktopViewerVM = CanMap.extend({
   define: {

@@ -1,9 +1,9 @@
-import CanMap from "can-map"
-import CanList from "can-list"
+import CanMap from 'can-map'
+import CanList from 'can-list'
 import _find from 'lodash/find'
 import Field from 'caja/viewer/models/field'
 
-import "can-map-define"
+import 'can-map-define'
 
 const userGenderVarName = 'user gender'
 

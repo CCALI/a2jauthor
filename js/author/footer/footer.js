@@ -1,6 +1,6 @@
-import Component from "can-component"
+import Component from 'can-component'
 import template from './footer.stache'
-import CanMap from "can-map"
+import CanMap from 'can-map'
 import constants from 'caja/viewer/models/constants'
 import moment from 'moment'
 

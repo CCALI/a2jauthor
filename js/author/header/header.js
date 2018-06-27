@@ -1,9 +1,9 @@
-import CanMap from "can-map"
-import Component from "can-component"
+import CanMap from 'can-map'
+import Component from 'can-component'
 import template from './header.stache'
 import helpPageUrl from 'caja/author/utils/help-page-url'
 
-import "can-map-define"
+import 'can-map-define'
 
 export let HeaderVM = CanMap.extend({
   define: {

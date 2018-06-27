@@ -227,6 +227,7 @@
     }
   },
   "dependencies": {
+    "can-ajax": "^1.2.1",
     "can-component": "^3.3.10",
     "can-compute": "^3.3.10",
     "can-construct": "^3.4.4",

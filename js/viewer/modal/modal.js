@@ -1,9 +1,9 @@
-import CanMap from "can-map"
-import Component from "can-component"
+import CanMap from 'can-map'
+import Component from 'can-component'
 import template from './modal.stache'
 import {Analytics} from 'caja/viewer/util/analytics'
 
-import "can-map-define"
+import 'can-map-define'
 import 'bootstrap/js/modal'
 import 'lightbox2/dist/js/lightbox'
 import 'lightbox2/dist/css/lightbox.css'

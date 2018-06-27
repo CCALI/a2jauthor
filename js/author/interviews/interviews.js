@@ -1,10 +1,10 @@
-import CanMap from "can-map"
-import Component from "can-component"
-import CanList from "can-list"
+import CanMap from 'can-map'
+import Component from 'can-component'
+import CanList from 'can-list'
 import Guide from 'caja/author/models/guide'
 import template from './interviews.stache'
 
-import "can-map-define"
+import 'can-map-define'
 
 export const InterviewsVM = CanMap.extend({
   define: {

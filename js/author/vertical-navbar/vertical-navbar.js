@@ -1,9 +1,9 @@
-import CanMap from "can-map"
+import CanMap from 'can-map'
 import items from './navbar-items'
-import Component from "can-component"
+import Component from 'can-component'
 import template from './vertical-navbar.stache'
 
-import "can-map-define"
+import 'can-map-define'
 
 /**
  * @module {Module} author/vertical-navbar <vertical-navbar>

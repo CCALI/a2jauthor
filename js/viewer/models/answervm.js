@@ -6,6 +6,7 @@ import Validations from 'caja/viewer/mobile/util/validations'
 import cString from 'caja/viewer/mobile/util/string'
 
 import 'can-validate-legacy/map/validate/validate'
+import 'can-validate-legacy/shims/validatejs'
 import 'can/map/define/define'
 
 export default CanMap.extend('AnswerVM', {
@@ -79,8 +80,8 @@ export default CanMap.extend('AnswerVM', {
 
       return invalid
     })
-  }
-}, {
+  },
+
   field: null,
   answer: null,
   answerIndex: 1,

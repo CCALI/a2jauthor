@@ -12,6 +12,9 @@ import 'calculator/jquery.calculator'
 import 'calculator/jquery.calculator.css'
 import 'bootstrap/js/dropdown.js'
 
+import can from 'can-namespace'
+window.can = can
+
 let appState = new AppState()
 
 route.map(appState)

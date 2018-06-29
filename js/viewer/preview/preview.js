@@ -46,7 +46,7 @@ export default Component.extend({
 
       const answers = pState.attr('answers')
       answers.attr('lang', lang)
-      answers.attr(can.extend({}, interview.serialize().vars))
+      answers.attr(_assign({}, interview.serialize().vars))
 
       interview.attr('answers', answers)
       rState.attr('interview', interview)

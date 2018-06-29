@@ -7,6 +7,7 @@ import constants from 'caja/viewer/models/constants'
 import PersistedState from 'caja/viewer/models/persisted-state'
 import setMobileDesktopClass from 'caja/viewer/util/set-mobile-desktop-class'
 import {Analytics} from 'caja/viewer/util/analytics'
+import _assign from 'lodash/assign'
 import compute from 'can-compute'
 import route from 'can-route'
 
@@ -21,7 +22,7 @@ export default function ({interview, pState, mState, rState}) {
   const answers = pState.attr('answers')
 
   answers.attr('lang', lang)
-  answers.attr(can.extend({}, interview.serialize().vars))
+  answers.attr(_assign({}, interview.serialize().vars))
   answers.attr(constants.vnInterviewIncompleteTF.toLowerCase(), {
     name: constants.vnInterviewIncompleteTF.toLowerCase(),
     type: constants.vtTF,

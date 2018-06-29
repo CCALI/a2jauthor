@@ -1,24 +1,24 @@
-import CanMap from "can-map";
-import regex from 'caja/viewer/mobile/util/regex';
-import tLogic from 'caja/viewer/mobile/util/tlogic';
-import Lang from 'caja/viewer/mobile/util/lang';
-import cString from 'caja/viewer/mobile/util/string';
-import cDate from 'caja/viewer/mobile/util/date';
-import constants from 'caja/viewer/models/constants';
-import Infinite from 'caja/viewer/mobile/util/infinite';
-import numeral from 'numeral';
+import CanMap from 'can-map';
+import regex from 'caja/viewer/mobile/util/regex'
+import tLogic from 'caja/viewer/mobile/util/tlogic'
+import Lang from 'caja/viewer/mobile/util/lang'
+import cString from 'caja/viewer/mobile/util/string'
+import cDate from 'caja/viewer/mobile/util/date'
+import constants from 'caja/viewer/models/constants'
+import Infinite from 'caja/viewer/mobile/util/infinite'
+import numeral from 'numeral'
 
-import "can-map-define";
+import 'can-map-define';
 
 export default CanMap.extend({
   define: {
     gotoPage: {
-      get: function() {
-        return this._tLogic.GOTOPAGE;
+      get: function () {
+        return this._tLogic.GOTOPAGE
       },
 
-      set: function(val) {
-        this._tLogic.GOTOPAGE = val;
+      set: function (val) {
+        this._tLogic.GOTOPAGE = val
       }
     },
 
@@ -28,65 +28,65 @@ export default CanMap.extend({
     }
   },
 
-  init: function() {
-    this.guide = this.attr('interview').createGuide();
+  init: function () {
+    this.guide = this.attr('interview').createGuide()
 
-    let stringMethods = ['ismdy', 'decodeEntities', 'escapeHtml', 'jquote', 'isNumber'];
+    let stringMethods = ['ismdy', 'decodeEntities', 'escapeHtml', 'jquote', 'isNumber']
 
-    let dateMethods = ['swapMonthAndDay', 'dateToString', 'dateToDays', 'daysToDate', 'todaysDate', 'dateDiff'];
+    let dateMethods = ['swapMonthAndDay', 'dateToString', 'dateToDays', 'daysToDate', 'todaysDate', 'dateDiff']
 
-    let traceMethods = ['traceTag'];
-    let methods = [this.guide, regex, constants];
+    let traceMethods = ['traceTag']
+    let methods = [this.guide, regex, constants]
 
-    each(stringMethods, function(fn) {
-      methods.push(can.proxy(cString[fn], cString));
-    });
+    each(stringMethods, function (fn) {
+      methods.push(cString[fn].bind(cString))
+    })
 
-    each(dateMethods, function(fn) {
-      methods.push(can.proxy(cDate[fn], cDate));
-    });
+    each(dateMethods, function (fn) {
+      methods.push(cDate[fn].bind(cDate))
+    })
 
-    each(traceMethods, function() {
-      methods.push(function() {});
-    });
+    each(traceMethods, function () {
+      methods.push(function () {})
+    })
 
     // numeral replaces the jquery NumberFormatter plugin dependency in tlogic.js
-    methods.push(numeral);
+    methods.push(numeral)
 
-    this._tLogic = tLogic.apply(this, methods);
+    this._tLogic = tLogic.apply(this, methods)
 
     //TODO: This exposure is due to creating a function on the fly within
     //tlogic.js, line 539
-    window.gLogic = this._tLogic;
+    window.gLogic = this._tLogic
 
     // Exposed `lang` is required in mobile/util/tlogic.js
-    var langID = this.attr('interview').language;
-    window.lang = new Lang(langID);
+    var langID = this.attr('interview').language
+    window.lang = new Lang(langID)
   },
 
-  eval: function(str) {
-    var output = this._tLogic.evalLogicHTML(str);
+  eval: function (str) {
+    var output = this._tLogic.evalLogicHTML(str)
 
-    return output.html;
+    return output.html
   },
 
-  exec: function(cajascript) {
-    return this._tLogic.executeScript(cajascript);
+  exec: function (cajascript) {
+    return this._tLogic.executeScript(cajascript)
   },
 
-  varExists(...args) {
-    return this.guide.varExists(...args);
+  varExists (...args) {
+    return this.guide.varExists(...args)
   },
 
-  varCreate(...args) {
-    return this.guide.varCreate(...args);
+  varCreate (...args) {
+    return this.guide.varCreate(...args)
   },
 
-  varSet(...args) {
-    return this.guide.varSet(...args);
+  varSet (...args) {
+    return this.guide.varSet(...args)
   },
 
-  varGet(...args) {
-    return this.guide.varGet(...args);
+  varGet (...args) {
+    return this.guide.varGet(...args)
   }
-});
+})

@@ -127,7 +127,7 @@ export default Component.extend({
   events: {
     '.load-answers click': function($el, evt) {
       evt.preventDefault();
-      this.element.find('.answers-file-input').click();
+      $(this.element).find('.answers-file-input').click();
     },
 
     '.answers-file-input change': function($el) {

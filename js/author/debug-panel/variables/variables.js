@@ -31,7 +31,7 @@ export default Component.extend({
     },
 
     '#viewer-var-filter keyup': function() {
-      let $input = this.element.find('#viewer-var-filter');
+      let $input = $(this.element).find('#viewer-var-filter');
       let filter = $input.val().toLowerCase();
 
       this.element.find('tbody tr').each(function() {
@@ -45,7 +45,7 @@ export default Component.extend({
     '#uploadAnswerFileInput change': function() {
       let textTypeRegex = /text.*/;
       let interview = this.viewModel.attr('interview');
-      let $fileInput = this.element.find('#uploadAnswerFileInput');
+      let $fileInput = $(this.element).find('#uploadAnswerFileInput');
 
       let file = $fileInput.get(0).files[0];
       let vars = interview.attr('vars').attr();

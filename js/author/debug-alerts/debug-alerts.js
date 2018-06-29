@@ -63,7 +63,7 @@ export default Component.extend({
 
   events: {
     '.btn-dismiss click': function () {
-      let $el = this.element
+      let $el = $(this.element)
       let vm = this.viewModel
       let alertMessages = vm.attr('alertMessages')
 

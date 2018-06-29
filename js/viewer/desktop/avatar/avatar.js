@@ -1,7 +1,7 @@
-import CanMap from "can-map";
-import Component from "can-component";
-import template from './avatar.stache';
-import canUtil from 'can/util/';
+import CanMap from 'can-map'
+import Component from 'can-component'
+import template from './avatar.stache'
+import canUtil from 'can/util/'
 import {
   Face,
   Hair,
@@ -9,9 +9,9 @@ import {
   Gender,
   getClassNameForSkin,
   getClassNameForHair
-} from './colors';
+} from './colors'
 
-import "can-map-define";
+import 'can-map-define'
 
 function getBaseUrl () {
   // Source: https://github.com/canjs/canjs/blob/432c9b0c0f9f8ace62788cf7c8258998673856b9/view/stache/mustache_helpers.js#L204
@@ -19,11 +19,11 @@ function getBaseUrl () {
     canUtil.baseURL ||
     typeof System !== 'undefined' && (System.renderingLoader && System.renderingLoader.baseURL || System.baseURL) ||
     location.pathname
-  );
+  )
 }
 
 function joinBaseUrl () {
-  return canUtil.joinURIs(getBaseUrl(), 'viewer//images/');
+  return canUtil.joinURIs(getBaseUrl(), 'viewer//images/')
 }
 
 /**
@@ -53,7 +53,7 @@ export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
      */
     skin: {
       type: Skin,
-      value: Skin.defaultValue,
+      value: Skin.defaultValue
     },
 
     /**
@@ -64,7 +64,7 @@ export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
      */
     hair: {
       type: Hair,
-      value: Hair.defaultValue,
+      value: Hair.defaultValue
     },
 
     /**
@@ -85,11 +85,11 @@ export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
      * avatar image name is used for loading the svg
      */
     avatarImageName: {
-      get() {
-        let gender = this.attr('gender');
-        let facing = this.attr('facing');
+      get () {
+        let gender = this.attr('gender')
+        let facing = this.attr('facing')
 
-        return `avatar-${gender}-${facing}.svg`;
+        return `avatar-${gender}-${facing}.svg`
       }
     },
 
@@ -105,14 +105,14 @@ export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
 
     svgClassNames: {
       get () {
-        const isGuide = this.attr('kind') === 'guide';
-        const baseClass = isGuide ? 'avatar-guide' : 'avatar-client';
-        const isMale = this.attr('gender') === 'male';
-        const genderClass = isMale ? 'avatar-male' : 'avatar-female';
-        const skinClass = getClassNameForSkin(this.attr('skin'));
-        const hairClass = getClassNameForHair(this.attr('hair'));
+        const isGuide = this.attr('kind') === 'guide'
+        const baseClass = isGuide ? 'avatar-guide' : 'avatar-client'
+        const isMale = this.attr('gender') === 'male'
+        const genderClass = isMale ? 'avatar-male' : 'avatar-female'
+        const skinClass = getClassNameForSkin(this.attr('skin'))
+        const hairClass = getClassNameForHair(this.attr('hair'))
 
-        return `${baseClass} ${genderClass} ${skinClass} ${hairClass}`;
+        return `${baseClass} ${genderClass} ${skinClass} ${hairClass}`
       }
     },
 
@@ -123,8 +123,8 @@ export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
      * base path used with avatarImageName to load avatar svgs
      */
     svgBasePath: {
-      get() {
-        return joinBaseUrl('viewer//images/');
+      get () {
+        return joinBaseUrl('viewer//images/')
       }
     }
   },
@@ -135,13 +135,13 @@ export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
    *
    * fires the avatarLoaded() function passed from steps.js to trigger dom updates
    */
-  fireAvatarLoaded() {
-    const avatarLoaded = this.attr('avatarLoaded');
+  fireAvatarLoaded () {
+    const avatarLoaded = this.attr('avatarLoaded')
     if (avatarLoaded) {
-      avatarLoaded();
+      avatarLoaded()
     }
   }
-});
+})
 
 /**
  * @module {Module} viewer/desktop/avatar/ <a2j-viewer-avatar>
@@ -166,45 +166,45 @@ export default Component.extend({
   viewModel: ViewerAvatarVM,
 
   events: {
-    inserted() {
-      this.loadAvatarSvg();
+    inserted () {
+      this.loadAvatarSvg()
     },
 
     // when the image name changes, we need to wait for the new svg to be
     // loaded to then make the adjustments to the css class name.
-    '{viewModel} avatarImageName': function() {
-      this.loadAvatarSvg();
+    '{viewModel} avatarImageName': function () {
+      this.loadAvatarSvg()
     },
 
-    '{viewModel} svgClassNames': function() {
-      this.updateSvgClass();
+    '{viewModel} svgClassNames': function () {
+      this.updateSvgClass()
     },
 
     updateSvgClass () {
       if (!this.element) {
-        return;
+        return
       }
 
-      const classNames = this.viewModel.attr('svgClassNames');
-      const svg = this.element.find('.avatar-guide, .avatar-client');
-      svg.attr('class', classNames);
+      const classNames = this.viewModel.attr('svgClassNames')
+      const svg = $(this.element).find('.avatar-guide, .avatar-client')
+      svg.attr('class', classNames)
     },
 
-    loadAvatarSvg() {
-      const vm =  this.viewModel;
-      const svgBasePath = vm.attr('svgBasePath');
-      const avatarImageName = vm.attr('avatarImageName');
+    loadAvatarSvg () {
+      const vm = this.viewModel
+      const svgBasePath = vm.attr('svgBasePath')
+      const avatarImageName = vm.attr('avatarImageName')
 
       $.ajax({
         url: svgBasePath + avatarImageName,
         dataType: 'text'
       }).then(data => {
-        vm.attr('svgInline', data);
-        this.updateSvgClass();
-        vm.fireAvatarLoaded();
-      });
+        vm.attr('svgInline', data)
+        this.updateSvgClass()
+        vm.fireAvatarLoaded()
+      })
     }
   },
 
   leakScope: true
-});
+})

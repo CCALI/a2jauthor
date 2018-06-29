@@ -1,6 +1,7 @@
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './alert.stache'
+import $ from 'jquery'
 
 import 'can-event'
 import 'can-map-define'
@@ -173,6 +174,7 @@ export default Component.extend({
 
   events: {
     inserted () {
+      this.element = $(this.element)
       if (this.viewModel.attr('open')) {
         this.element.show()
       } else {
@@ -181,7 +183,7 @@ export default Component.extend({
     },
 
     '{viewModel} open': function () {
-      let $el = this.element
+      let $el = $(this.element)
       let vm = this.viewModel
       let open = vm.attr('open')
 

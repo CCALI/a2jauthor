@@ -378,7 +378,7 @@ export default Component.extend('FieldComponent', {
         let maxDate = vm.convertDate(vm.attr('field.max'), null, 'MM/DD/YYYY') || null
         let lang = vm.attr('lang')
 
-        $('input.datepicker-input', this.element).datepicker({
+        $('input.datepicker-input', $(this.element)).datepicker({
           defaultDate,
           minDate,
           maxDate,

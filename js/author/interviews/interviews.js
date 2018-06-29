@@ -1,8 +1,10 @@
+import $ from 'jquery'
 import CanMap from 'can-map'
 import Component from 'can-component'
 import CanList from 'can-list'
 import Guide from 'caja/author/models/guide'
 import template from './interviews.stache'
+import setupPromise from 'can-reflect-promise'
 
 import 'can-map-define'
 
@@ -94,13 +96,15 @@ export default Component.extend({
       // even if we don't change interviews
       vm.clearPreviewState()
 
-      let updateGuidePromise = can.Deferred().resolve()
+      let updateGuidePromise = $.Deferred().resolve()
+      setupPromise(updateGuidePromise)
 
       // if there is a loaded guide when this component is inserted,
       // save the guide first and then fetch the guides.
       // https://github.com/CCALI/CAJA/issues/527
       if (window.gGuide) {
-        updateGuidePromise = can.Deferred()
+        updateGuidePromise = $.Deferred()
+        setupPromise(updateGuidePromise)
 
         window.guideSave(function () {
           updateGuidePromise.resolve()
@@ -114,17 +118,19 @@ export default Component.extend({
         .then(function (interviews) {
           vm.attr('interviews', interviews)
         })
+      setupPromise(interviewsPromise)
 
       vm.attr('interviewsPromise', interviewsPromise)
     },
 
     '.guide click': function (target) {
+      this.element = $(this.element)
       this.element.find('.guide').removeClass('item-selected')
-      target.addClass('item-selected')
+      $(target).addClass('item-selected')
     },
 
     '.guide dblclick': function (target) {
-      const gid = target.attr('gid')
+      const gid = $(target).attr('gid')
       window.openSelectedGuide(gid)
       // reset collapsed steps tracker in A2J_Tabs
       // TODO: handle this in Pages tab refactor

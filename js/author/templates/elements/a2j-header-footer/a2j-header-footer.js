@@ -147,7 +147,7 @@ export default Component.extend({
 
   events: {
     inserted() {
-      this.viewModel.attr('title', this.element.attr('title'));
+      this.viewModel.attr('title', $(this.element).attr('title'));
     }
   },
 

@@ -157,7 +157,7 @@ export default Component.extend({
     // the dragged item will remain at its last valid position.
     '{document} drop': function(el, evt) {
       evt.preventDefault();
-      this.element.find('li').removeClass('drag-placeholder');
+      $(this.element).find('li').removeClass('drag-placeholder');
     },
 
     '{viewModel} dropItemIndex': function() {

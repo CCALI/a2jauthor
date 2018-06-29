@@ -202,7 +202,7 @@ export default Component.extend({
   tag: 'audio-player',
   events: {
     inserted () {
-      const player = this.element.find('audio')[0]
+      const player = $(this.element).find('audio')[0]
       this.viewModel.attr('player', player)
       this.viewModel.attr('isLoadingAudio', true)
     },
@@ -215,7 +215,7 @@ export default Component.extend({
       const dragElement = event.target
       const handleMethod = dragElement.dataset.method
       const handler = handleEvent => {
-        const player = this.element.find('audio')[0]
+        const player = $(this.element).find('audio')[0]
         if (handleMethod === 'time') {
           changeTime(player, handleEvent, dragElement)
         }
@@ -237,11 +237,11 @@ export default Component.extend({
       window.addEventListener('mouseup', done, false)
     },
     '.slider-time click' (target, event) {
-      const player = this.element.find('audio')[0]
+      const player = $(this.element).find('audio')[0]
       changeTime(player, event)
     },
     '.slider-volume click' (target, event) {
-      const player = this.element.find('audio')[0]
+      const player = $(this.element).find('audio')[0]
       changeVolume(player, event)
     }
   }

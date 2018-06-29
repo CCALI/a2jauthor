@@ -61,7 +61,7 @@ export default Component.extend({
 
     '{viewModel} modalContent': function (vm, ev, newVal) {
       if (newVal) {
-        this.element.find('#pageModal').modal()
+        $(this.element).find('#pageModal').modal()
       }
     },
 

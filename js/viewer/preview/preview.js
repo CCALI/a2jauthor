@@ -89,7 +89,7 @@ export default Component.extend({
         modalContent
       })
 
-      this.element.html(template(vm))
+      $(this.element).html(template(vm))
     }
   },
 

@@ -118,7 +118,7 @@ export default Component.extend({
     // it waits to asynchronously submit the form that posts the XML asnwers
     // to the `setDataURL` endpoint.
     '{viewModel} post-answers-to-server': function() {
-      const $form = this.element.find('.post-answers-form');
+      const $form = $(this.element).find('.post-answers-form');
 
       setTimeout(function() {
         $form.submit();

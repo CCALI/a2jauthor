@@ -1151,7 +1151,7 @@ export default Component.extend({
   tag: "pdf-editor",
   events: {
     inserted() {
-      const container = this.element.find(".editor-pdf-view")[0];
+      const container = $(this.element).find(".editor-pdf-view")[0];
       this.viewModel.setupPdf(container);
       this.viewModel.didInsertElement();
 

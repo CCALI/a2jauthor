@@ -1,5 +1,6 @@
 import $ from 'jquery'
 import Model from 'can-model'
+import setupPromise from 'can-reflect-promise'
 
 import 'can-map-define'
 
@@ -30,13 +31,14 @@ const Guide = Model.extend({
         let guides = data.guides || []
         return this.models(guides)
       })
-
+      setupPromise(dfd)
       return dfd.then(success, error)
     }
   },
 
   destroy (id) {
     const def = $.Deferred()
+    setupPromise(def)
 
     const reject = function () {
       def.reject()

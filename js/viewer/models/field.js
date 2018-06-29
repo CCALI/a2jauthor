@@ -3,6 +3,7 @@ import CanMap from 'can-map'
 import CanList from 'can-list'
 import Answer from 'caja/viewer/models/answer'
 import normalizePath from 'caja/viewer/util/normalize-path'
+import setupPromise from 'can-reflect-promise'
 
 import 'can-map-define'
 
@@ -44,6 +45,7 @@ const Field = CanMap.extend({
    */
   getOptions (guidePath) {
     let dfd = $.Deferred()
+    setupPromise(dfd)
     let listSrc = this.attr('listSrc')
     let listData = this.attr('listData')
 

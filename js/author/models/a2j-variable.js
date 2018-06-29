@@ -1,7 +1,9 @@
+import $ from 'jquery'
 import CanList from 'can-list'
 import Model from 'can-model'
 import _values from 'lodash/values'
 import _toPlainObject from 'lodash/toPlainObject'
+import setupPromise from 'can-reflect-promise'
 
 import 'can-map-define'
 
@@ -18,6 +20,7 @@ let A2JVariable = Model.extend({
   makeFindOne () {
     return function (params, success, error) {
       let deferred = new can.Deferred()
+      setupPromise(deferred)
       let gGuide = window.gGuide || {}
       let vars = gGuide.vars || {}
       let name = params.name || ''

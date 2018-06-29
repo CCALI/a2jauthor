@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import Model from 'can-model'
 import Answers from 'caja/viewer/models/answers'
 import Parser from 'caja/viewer/mobile/util/parser'
@@ -8,7 +9,7 @@ import 'can-map-backup'
 
 export default Model.extend({
   findOne () {
-    return can.Deferred().resolve({})
+    return Promise.resolve({})
   }
 }, {
 

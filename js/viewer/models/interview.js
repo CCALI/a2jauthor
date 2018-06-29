@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import CanList from 'can-list'
 import Model from 'can-model'
 import canAjax from 'can-ajax'
@@ -13,6 +14,7 @@ import _isString from 'lodash/isString'
 import Answers from 'caja/viewer/models/answers'
 import parser from 'caja/viewer/mobile/util/parser'
 import {Hair, Skin} from 'caja/viewer/desktop/avatar/colors'
+import setupPromise from 'can-reflect-promise'
 
 import 'can-list-sort'
 import 'can-map-define'
@@ -46,8 +48,10 @@ function getInterviewPath (url) {
 
 const Interview = Model.extend({
   findOne (data, success, error) {
-    let dfd = can.Deferred()
-    let resumeDfd = can.Deferred()
+    let dfd = $.Deferred()
+    setupPromise(dfd)
+    let resumeDfd = $.Deferred()
+    setupPromise(resumeDfd)
     let interviewPath = getInterviewPath(data.url)
 
     let interviewDfd = canAjax({
@@ -265,7 +269,7 @@ const Interview = Model.extend({
   },
 
   clearAnswers () {
-    // can.batch required for Author preview mode with long var/answer lists
+    // canBatch required for Author preview mode with long var/answer lists
     canBatch.start()
 
     this.attr('answers').each((answer) => {
@@ -282,10 +286,10 @@ const Interview = Model.extend({
 
     return {
       pages: this._pages,
-      varExists: can.proxy(answers.varExists, answers),
-      varCreate: can.proxy(answers.varCreate, answers),
-      varGet: can.proxy(answers.varGet, answers),
-      varSet: can.proxy(answers.varSet, answers)
+      varExists: answers.varExists.bind(answers),
+      varCreate: answers.varCreate.bind(answers),
+      varGet: answers.varGet.bind(answers),
+      varSet: answers.varSet.bind(answers)
     }
   },
 

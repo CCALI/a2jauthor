@@ -7,7 +7,7 @@ import PagesVM from './pages-vm'
 import sinon from 'sinon'
 import AppState from 'caja/viewer/models/app-state'
 import constants from 'caja/viewer/models/constants'
-import event from 'can/event/event'
+import event from 'can-event'
 import './pages'
 import 'steal-mocha'
 

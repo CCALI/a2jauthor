@@ -1,4 +1,4 @@
-import CanMap from 'can-map';
+import CanMap from 'can-map'
 import regex from 'caja/viewer/mobile/util/regex'
 import tLogic from 'caja/viewer/mobile/util/tlogic'
 import Lang from 'caja/viewer/mobile/util/lang'
@@ -6,9 +6,11 @@ import cString from 'caja/viewer/mobile/util/string'
 import cDate from 'caja/viewer/mobile/util/date'
 import constants from 'caja/viewer/models/constants'
 import Infinite from 'caja/viewer/mobile/util/infinite'
+import event from 'can-event'
+import _forEach from 'lodash/forEach'
 import numeral from 'numeral'
 
-import 'can-map-define';
+import 'can-map-define'
 
 export default CanMap.extend({
   define: {
@@ -38,25 +40,26 @@ export default CanMap.extend({
     let traceMethods = ['traceTag']
     let methods = [this.guide, regex, constants]
 
-    each(stringMethods, function (fn) {
+    _forEach(stringMethods, function (fn) {
       methods.push(cString[fn].bind(cString))
     })
 
-    each(dateMethods, function (fn) {
+    _forEach(dateMethods, function (fn) {
       methods.push(cDate[fn].bind(cDate))
     })
 
-    each(traceMethods, function () {
+    _forEach(traceMethods, function () {
       methods.push(function () {})
     })
 
     // numeral replaces the jquery NumberFormatter plugin dependency in tlogic.js
     methods.push(numeral)
+    methods.push(event)
 
     this._tLogic = tLogic.apply(this, methods)
 
-    //TODO: This exposure is due to creating a function on the fly within
-    //tlogic.js, line 539
+    // TODO: This exposure is due to creating a function on the fly within
+    // tlogic.js, line 539
     window.gLogic = this._tLogic
 
     // Exposed `lang` is required in mobile/util/tlogic.js

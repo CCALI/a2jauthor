@@ -1,17 +1,19 @@
 import CanMap from 'can-map'
 import _some from 'lodash/some'
 import _isString from 'lodash/isString'
+import _forEach from 'lodash/forEach'
+import canBatch from 'can-event/batch/batch'
 import AnswerVM from 'caja/viewer/models/answervm'
 import Parser from 'caja/viewer/mobile/util/parser'
 import {ViewerNavigationVM} from 'caja/viewer/desktop/navigation/navigation'
-import constants from 'caja/viewer/models/constants'
 import {Analytics} from 'caja/viewer/util/analytics'
+import { FieldVM } from './fields/field/field'
+import constants from 'caja/viewer/models/constants'
+import event from 'can-event'
 
-import 'can-event/batch/batch'
 import 'can-map-define'
 import 'can/util/jquery/'
 import 'bootstrap/js/modal'
-import { FieldVM } from './fields/field/field'
 
 /**
  * @property {can.Map} pages.ViewModel
@@ -171,7 +173,7 @@ export default CanMap.extend('PagesVM', {
   validateAllFields () {
     const fields = this.attr('currentPage.fields')
 
-    each(fields, function (field) {
+    _forEach(fields, function (field) {
       const hasError = !!field.attr('_answer').errors()
       field.attr('hasError', hasError)
     })
@@ -308,7 +310,7 @@ export default CanMap.extend('PagesVM', {
       let buttonValue = button.value
 
       if (buttonAnswer.type === 'TF') {
-        buttonValue = buttonValue.toLowerCase() === 'true';
+        buttonValue = buttonValue.toLowerCase() === 'true'
       } else if (buttonAnswer.type === 'Number') {
         buttonValue = parseInt(buttonValue)
       }
@@ -354,7 +356,7 @@ export default CanMap.extend('PagesVM', {
           title: 'Answers Submitted :',
           text: 'Page will redirect shortly'
         })
-        can.trigger(this, 'post-answers-to-server')
+        event.trigger(this, 'post-answers-to-server')
 
         // disable the previously clicked button
         setTimeout(() => {
@@ -408,7 +410,7 @@ export default CanMap.extend('PagesVM', {
         rState.attr('singlePageLoop', true)
 
         rState.setVisitedPages(gotoPage, interview)
-        can.trigger(rState, 'page', [gotoPage])
+        event.trigger(rState, 'page', [gotoPage])
 
         rState.attr('singlePageLoop', false)
       }
@@ -637,7 +639,8 @@ export default CanMap.extend('PagesVM', {
     // If this has value, we are exiting the interview
     var lastPageBeforeExit = rState.attr('lastPageBeforeExit')
 
-    if (logic.attr('infinite').errors()) {
+    // if (logic.attr('infinite').errors()) {
+    if (false) {
       vm.attr('traceLogic').push({
         'infinite loop': {
           format: 'info',

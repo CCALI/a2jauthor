@@ -365,7 +365,7 @@ export let FieldVM = CanMap.extend('FieldVM', {
 export default Component.extend('FieldComponent', {
   view: template,
   tag: 'a2j-field',
-  viewModel: FieldVM,
+  ViewModel: FieldVM,
 
   events: {
     inserted () {

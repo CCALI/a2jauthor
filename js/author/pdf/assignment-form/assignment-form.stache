@@ -38,7 +38,7 @@
     <variable-editor
       vm:@initialVariable:from="@initialVariable"
       vm:@existingVariableNames:from="@variableSuggestions"
-      vm:@showUsageFinder:from=false
+      vm:@showUsageFinder:from="false"
       vm:@onVariableChange:from="@onVariableChange"
       vm:@onSelectSuggestion:from="@onSelectSuggestion"
     />

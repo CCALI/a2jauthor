@@ -4,7 +4,7 @@
 
 <input
   type="text"
-  style="display: none;"
+  style:from="'display: none;'"
   class="form-control"
   el:value:bind="selected"
   el:disabled:from="disabled"

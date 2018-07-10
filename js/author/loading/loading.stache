@@ -1,5 +1,5 @@
 <can-import from="caja/author/loading/loading.less!"/>
 
 <div class="text-center">
-  <img src="{{joinBase 'viewer/images/A2J5_Icon_512.png'}}" border=1>
+  <img src="{{joinBase 'viewer/images/A2J5_Icon_512.png'}}" border="1">
 </div>

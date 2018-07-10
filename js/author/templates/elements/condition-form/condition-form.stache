@@ -50,7 +50,7 @@
           el:disabled:from="disabled"
           el:value:bind="rightOperand"
         />
-      {{/if}}
+      {{/is}}
     </div>
   </div>
 </form>

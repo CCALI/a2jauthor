@@ -29,7 +29,7 @@
                     vm:traceLogic:bind="traceLogic"
                     vm:repeatVarValue:from="rState.repeatVarValue"
                     vm:modalContent:bind="modalContent"
-                    vm:rState:bind="rState" 
+                    vm:rState:bind="rState"
                     role="form"/>
       {{/if}}
 
@@ -60,7 +60,7 @@
         {{/case}}
 
         {{#case assembleAndSaveButton}}
-          <div style="display: none;">{{> save-answers-form }}</div>
+          <div style:from="'display: none;'">{{> save-answers-form }}</div>
           {{> assemble-form }}
         {{/case}}
 

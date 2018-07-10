@@ -2,7 +2,7 @@
 
 {{#if isLoadingChecks}}
   <div class='status'>
-    <i class='text-muted'>Loading checkmarks...</li>
+    <i class='text-muted'>Loading checkmarks...</i>
   </div>
 {{else}}
   {{#if checkError}}

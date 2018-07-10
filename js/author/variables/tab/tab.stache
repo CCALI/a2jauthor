@@ -65,7 +65,7 @@
   >
     <variable-editor
       vm:@initialVariable:from="@editingVariable"
-      vm:@showUsageFinder:from=true
+      vm:@showUsageFinder:from="true"
       vm:@onVariableChange:from="@onVariableChange"
       vm:@onSelectSuggestion:from="@onSelectSuggestion"
     />

@@ -16,7 +16,7 @@
       {{#if deleted}}
         <app-alert
           open="true"
-          auto-close="true"
+          auto-close:from="'true'"
           dismissible="true"
           alert-type="default"
           on:vm:closed="removeNodeFromChildren(id)">

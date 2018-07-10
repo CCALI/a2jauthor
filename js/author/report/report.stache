@@ -6,7 +6,6 @@
             <span class="glyphicon-spin6 animate-spin"></span> Building Report ...
         </h2>
     </div>
-</div>
 {{/if}}
 
 {{#if pagesPromise.isResolved}}

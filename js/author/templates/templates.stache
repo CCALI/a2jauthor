@@ -16,7 +16,7 @@
 
 <div class="page">
   <app-alert
-    auto-close="true"
+    auto-close:from="'true'"
     dismissible="true"
     alert-type="warning"
     open="{openDeletedAlert}"
@@ -30,7 +30,7 @@
   </app-alert>
 
   <app-alert
-    auto-close="true"
+    auto-close:from="'true'"
     dismissible="true"
     alert-type="warning"
     open="{openRestoredAlert}"

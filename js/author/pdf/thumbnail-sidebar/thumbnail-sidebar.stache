@@ -19,7 +19,7 @@
         >
           <img src="{{url}}" />
           <span>{{pageNumber}}</span>
-        <div>
+        </div>
       {{/each}}
     </div>
   {{/if}}

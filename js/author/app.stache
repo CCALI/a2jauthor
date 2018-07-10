@@ -26,7 +26,7 @@
 
 <div id="authortool"
   class="hidestart authortool bootstrap-styles"
-  {{#if previewMode}}style="display: none;"{{/if}}>
+  {{#if previewMode}}style:from="'display: none;'"{{/if}}>
 
   <div id="cajaheader" class="hidestart">
     <app-header vm:page:from="page" vm:title:from="guide.title"/>
@@ -34,12 +34,12 @@
 
   <div class="guideio"></div>
   <div class="">
-    <vertical-navbar theme="inverse" page="{page}" vm:guideId:from="guideId"></vertical-nabvar>
+    <vertical-navbar theme="inverse" page="{page}" vm:guideId:from="guideId"></vertical-navbar>
   </div>
 
   <div class="guidepanels ui-widget xui-widget-content">
     <app-alert
-      auto-close="true"
+      auto-close:from="'true'"
       dismissible="true"
       class="global-alert"
       vm:autoCloseTimeout:from="20000"
@@ -111,7 +111,7 @@
       <nav class="navbar navbar-default">
         <div class="container-fluid">
           <ul class="nav navbar-nav">
-            <li><a href="#" id="open-guide"><span class="glyphicon-new-message"></span> Open</li>
+            <li><a href="#" id="open-guide"><span class="glyphicon-new-message"></span> Open</a></li>
             <li><a href="#" id="clone-guide"><span class="glyphicon-docs"></span> Clone</a></li>
             <li><a href="#" id="delete-guide"><span class="glyphicon-trash"></span> Delete</a></li>
             <li><a href="#" id="save-guide"><span class="glyphicon-floppy"></span> Save</a></li>
@@ -340,7 +340,7 @@
 
   <div id="clause-edit-form" title="Clause">
     <div class="editq">
-      <div id=clausefs></div>
+      <div id="clausefs"></div>
       <fieldset>
         <div>
           <label for="clauseusage">Used by:</label>
@@ -358,13 +358,13 @@
       <p>Color Schemes: <span class="text-muted">A2J 6</span></p>
 
       <p>Data Settings:</p>
-      <p><label><input type=checkbox id="setting_warnHotDocsNameLength"> Warn when variable name lengths are too long for HotDocs</label></p>
+      <p><label><input type="checkbox" id="setting_warnHotDocsNameLength"> Warn when variable name lengths are too long for HotDocs</label></p>
 
       <p>Text Statistics: (Flesh-Kincaid and more)</p>
       <p><label><input type="checkbox" id="setting_FKGradeAll" /> Include grade numbers for good text</label></p>
       <hr />
       <h3>Advanced</h3>
-      <p><label><input type=checkbox id="setting_showJS"> Show JS</label></p>
+      <p><label><input type="checkbox" id="setting_showJS"> Show JS</label></p>
     </ul>
   </div>
 

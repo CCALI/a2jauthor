@@ -10,7 +10,7 @@
       <author-debug-panel
         vm:interview:bind="viewerInterview"
         vm:traceLogic:bind="traceLogic"
-        {(trace-logic-list)} = "traceLogicList" />
+        vm:traceLogicList:bind="traceLogicList" />
     </div>
   {{/if}}
 

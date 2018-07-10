@@ -174,7 +174,7 @@ export default CanMap.extend('PagesVM', {
     const fields = this.attr('currentPage.fields')
 
     _forEach(fields, function (field) {
-      const hasError = !!field.attr('_answer').errors()
+      const hasError = !!field.attr('_answer').errors.hasErrors()
       field.attr('hasError', hasError)
     })
   },

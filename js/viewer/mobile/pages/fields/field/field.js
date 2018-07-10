@@ -210,19 +210,20 @@ export let FieldVM = CanMap.extend('FieldVM', {
    *
    */
   validateField (ctx, el) {
+    const $el = $(el)
     let field = this.attr('field')
     let answer = field.attr('_answer')
     let value
 
     if (field.type === 'checkbox' || field.type === 'checkboxNOTA') {
-      value = el[0].checked
+      value = $el[0].checked
     } else {
-      value = el.val()
+      value = $el.val()
     }
 
     answer.attr('values', value)
 
-    let errors = answer.errors()
+    let errors = answer.errors.hasErrors()
     field.attr('hasError', !!errors)
 
     if (!errors) {
@@ -240,9 +241,10 @@ export let FieldVM = CanMap.extend('FieldVM', {
   },
 
   preValidateNumber (ctx, el) {
+    const $el = $(el)
     const field = this.attr('field')
     // accept only numbers, commas, periods, and negative sign
-    const currentValue = el.val()
+    const currentValue = $el.val()
     const scrubbedValue = currentValue.replace(/[^\d.,-]/g, '')
     if (currentValue !== scrubbedValue) {
       field.attr('hasError', true)
@@ -366,6 +368,7 @@ export default Component.extend('FieldComponent', {
   view: template,
   tag: 'a2j-field',
   ViewModel: FieldVM,
+  leakScope: true,
 
   events: {
     inserted () {

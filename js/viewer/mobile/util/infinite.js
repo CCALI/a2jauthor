@@ -1,17 +1,20 @@
 import CanMap from 'can-map'
+import _inRange from 'lodash/inRange'
 
-import 'can-validate-legacy/map/validate/validate'
-import 'can-validate-legacy/shims/validatejs'
 import 'can/map/define/define'
 
 export default CanMap.extend({
-  init: function () {
-    this.validateRangeOf(['_counter'], 0, 100)
-  },
   define: {
     _counter: {
       type: 'number',
       value: 0
+    },
+
+    outOfRange: {
+      type: 'boolean',
+      get () {
+        return !_inRange(this._counter, 0, 100)
+      }
     }
   },
 

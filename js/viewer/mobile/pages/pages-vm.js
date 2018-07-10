@@ -639,8 +639,7 @@ export default CanMap.extend('PagesVM', {
     // If this has value, we are exiting the interview
     var lastPageBeforeExit = rState.attr('lastPageBeforeExit')
 
-    // if (logic.attr('infinite').errors()) {
-    if (false) {
+    if (logic.attr('infinite.outOfRange')) {
       vm.attr('traceLogic').push({
         'infinite loop': {
           format: 'info',

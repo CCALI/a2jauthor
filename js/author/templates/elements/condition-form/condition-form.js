@@ -13,5 +13,5 @@ export default Component.extend({
   view: template,
   leakScope: false,
   tag: 'condition-form',
-  viewModel: ConditionFormVM
+  ViewModel: ConditionFormVM
 });

@@ -55,7 +55,7 @@ export let OptionsPaneVM = CanMap.extend({
 
 export default Component.extend({
   view: template,
-  viewModel: OptionsPaneVM,
+  ViewModel: OptionsPaneVM,
   tag: 'element-options-pane',
   leakScope: true
 });

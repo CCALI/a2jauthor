@@ -69,7 +69,7 @@ let DesktopViewerVM = CanMap.extend({
 export default Component.extend({
   view: template,
   tag: 'a2j-desktop-viewer',
-  viewModel: DesktopViewerVM,
+  ViewModel: DesktopViewerVM,
 
   helpers: {
     eval (str) {

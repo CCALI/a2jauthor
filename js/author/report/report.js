@@ -373,7 +373,7 @@ export const ReportVM = CanMap.extend('ReportVM', {
  */
 export default Component.extend({
   view: template,
-  viewModel: ReportVM,
+  ViewModel: ReportVM,
   tag: 'report-page',
 
   events: {

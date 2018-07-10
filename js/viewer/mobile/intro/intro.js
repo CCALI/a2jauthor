@@ -14,7 +14,7 @@ const IntroVM = CanMap.extend({
 export default Component.extend({
   view: template,
   tag: 'a2j-intro',
-  viewModel: IntroVM,
+  ViewModel: IntroVM,
 
   events: {
     inserted() {

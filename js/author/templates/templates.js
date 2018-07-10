@@ -20,7 +20,7 @@ export default Component.extend({
   view: template,
   leakScope: false,
   tag: 'templates-page',
-  viewModel: TemplatesVM,
+  ViewModel: TemplatesVM,
 
   helpers: {
     listStateClassName () {

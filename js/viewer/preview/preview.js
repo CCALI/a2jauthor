@@ -24,7 +24,7 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
 
 export default Component.extend({
   tag: 'a2j-viewer-preview',
-  viewModel: ViewerPreviewVM,
+  ViewModel: ViewerPreviewVM,
 
   events: {
     inserted () {

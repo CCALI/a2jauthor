@@ -28,7 +28,7 @@ let DebugMenuVM = CanMap.extend({
 
 export default Component.extend({
   view: template,
-  viewModel: DebugMenuVM,
+  ViewModel: DebugMenuVM,
   tag: 'author-debug-menu',
 
   events: {

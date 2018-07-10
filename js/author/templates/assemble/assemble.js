@@ -121,7 +121,7 @@ let AssembleOptionsVM = CanMap.extend({
 
 export default Component.extend({
   view: template,
-  viewModel: AssembleOptionsVM,
+  ViewModel: AssembleOptionsVM,
   tag: 'test-assemble-options',
 
   events: {

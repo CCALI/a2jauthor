@@ -28,5 +28,5 @@ export default Component.extend({
   view: template,
   leakScope: false,
   tag: 'a2j-fields',
-  viewModel: FieldsVM
+  ViewModel: FieldsVM
 });

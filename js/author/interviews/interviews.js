@@ -78,7 +78,7 @@ export default Component.extend({
   view: template,
   leakScope: false,
   tag: 'interviews-page',
-  viewModel: InterviewsVM,
+  ViewModel: InterviewsVM,
 
   helpers: {
     formatFileSize: function (sizeInBytes) {

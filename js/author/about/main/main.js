@@ -90,7 +90,7 @@ export default Component.extend({
   tag: 'about-main',
   view: template,
   leakScope: false,
-  viewModel: AboutMainVm,
+  ViewModel: AboutMainVm,
   events: {
     inserted () {
       if (this.cancelProxy) {

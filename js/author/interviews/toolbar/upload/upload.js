@@ -36,7 +36,7 @@ export default Component.extend('UploadComponent', {
   template,
   leakScope: false,
   tag: 'a2j-upload',
-  viewModel: UploadVM,
+  ViewModel: UploadVM,
 
   events: {
     inserted: function (){

@@ -53,5 +53,5 @@ export default Component.extend({
   view: template,
   leakScope: false,
   tag: 'element-toolbar',
-  viewModel: ElementToolbar
+  ViewModel: ElementToolbar
 });

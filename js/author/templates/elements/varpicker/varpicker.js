@@ -25,7 +25,7 @@ import 'bootstrap-tokenfield'
 export default Component.extend({
   view: template,
   tag: 'var-picker',
-  viewModel: VarPickerVM,
+  ViewModel: VarPickerVM,
 
   events: {
     inserted () {

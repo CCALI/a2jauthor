@@ -133,7 +133,7 @@ export const AddendumOptionsVm = CanMap.extend(
 export default Component.extend({
   view: template,
   leakScope: false,
-  viewModel: AddendumOptionsVm,
+  ViewModel: AddendumOptionsVm,
   tag: "addendum-options",
   events: {
     inserted () {

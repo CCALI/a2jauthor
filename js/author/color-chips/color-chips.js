@@ -39,7 +39,7 @@ export const ColorChipsVm = CanMap.extend({
  */
 export default Component.extend({
   view: template,
-  viewModel: ColorChipsVm,
+  ViewModel: ColorChipsVm,
   leakScope: false,
   tag: 'color-chips'
 })

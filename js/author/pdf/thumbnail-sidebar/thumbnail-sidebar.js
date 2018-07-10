@@ -50,5 +50,5 @@ export default Component.extend({
   tag: "thumbnail-sidebar",
   view: template,
   leakScope: false,
-  viewModel: ThumbnailSidebarVm
+  ViewModel: ThumbnailSidebarVm
 });

@@ -198,7 +198,7 @@ function changeVolume (player, event, dragElement) {
 export default Component.extend({
   view: template,
   leakScope: false,
-  viewModel: AudioPlayerVm,
+  ViewModel: AudioPlayerVm,
   tag: 'audio-player',
   events: {
     inserted () {

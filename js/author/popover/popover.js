@@ -65,6 +65,6 @@ export let Popover = CanMap.extend({
 export default Component.extend({
   view: template,
   leakScope: false,
-  viewModel: Popover,
+  ViewModel: Popover,
   tag: 'app-popover'
 })

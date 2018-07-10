@@ -110,5 +110,5 @@ export default Component.extend({
   view: template,
   leakScope: false,
   tag: "template-edit-page",
-  viewModel: TemplateEditPageVM
+  ViewModel: TemplateEditPageVM
 });

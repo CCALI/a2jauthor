@@ -58,6 +58,6 @@ let VarPickerDemoVM = CanMap.extend({
 export default Component.extend({
   view: template,
   tag: 'varpicker-demo',
-  viewModel: VarPickerDemoVM,
+  ViewModel: VarPickerDemoVM,
   leakScope: true
 });

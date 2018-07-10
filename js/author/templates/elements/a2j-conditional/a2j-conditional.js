@@ -27,7 +27,7 @@ const operatorTextMap = {
 export default Component.extend({
   view: template,
   tag: 'a2j-conditional',
-  viewModel: ConditionalVM,
+  ViewModel: ConditionalVM,
 
   helpers: {
     formatOperator(operator) {

@@ -20,5 +20,5 @@ export default Component.extend({
   view: template,
   leakScope: false,
   tag: 'app-header',
-  viewModel: HeaderVM
+  ViewModel: HeaderVM
 })

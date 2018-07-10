@@ -16,7 +16,7 @@ let VariablesTableVM = CanMap.extend('VariablesTableVM', {
 export default Component.extend({
   view: template,
   leakScope: false,
-  viewModel: VariablesTableVM,
+  ViewModel: VariablesTableVM,
   tag: 'author-variables-table',
 
   events: {

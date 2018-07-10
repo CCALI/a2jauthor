@@ -48,7 +48,7 @@ export let Toolbar = CanMap.extend({
 export default Component.extend({
   view: template,
   leakScope: false,
-  viewModel: Toolbar,
+  ViewModel: Toolbar,
   tag: "templates-toolbar",
   events: {
     ".search-input keyup": function(target) {

@@ -14,7 +14,7 @@ export default Component.extend({
   view: template,
   leakScope: false,
   tag: 'a2j-mobile-viewer',
-  viewModel: MobileViewerVM,
+  ViewModel: MobileViewerVM,
 
   helpers: {
     tocOrCreditsShown: function (options) {

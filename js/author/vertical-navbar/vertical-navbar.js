@@ -91,5 +91,5 @@ export default Component.extend({
   view: template,
   leakScope: false,
   tag: 'vertical-navbar',
-  viewModel: VerticalNavbarVM
+  ViewModel: VerticalNavbarVM
 })

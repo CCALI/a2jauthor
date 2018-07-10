@@ -171,7 +171,7 @@ export let Alert = CanMap.extend({
 export default Component.extend({
   view: template,
   tag: 'app-alert',
-  viewModel: Alert,
+  ViewModel: Alert,
 
   events: {
     inserted () {

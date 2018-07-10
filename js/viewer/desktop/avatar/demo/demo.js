@@ -22,7 +22,7 @@ let AvatarDemoVM = CanMap.extend({
 
 export default Component.extend({
   view: template,
-  viewModel: AvatarDemoVM,
+  ViewModel: AvatarDemoVM,
   tag: 'a2j-viewer-avatar-demo',
   leakScope: true
 });

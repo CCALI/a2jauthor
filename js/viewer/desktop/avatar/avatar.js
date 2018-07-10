@@ -163,7 +163,7 @@ export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
 export default Component.extend({
   view: template,
   tag: 'a2j-viewer-avatar',
-  viewModel: ViewerAvatarVM,
+  ViewModel: ViewerAvatarVM,
 
   events: {
     inserted () {

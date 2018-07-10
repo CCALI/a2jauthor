@@ -128,6 +128,6 @@ export const VariablesTabVM = CanMap.extend({
 export default Component.extend({
   view: template,
   leakScope: false,
-  viewModel: VariablesTabVM,
+  ViewModel: VariablesTabVM,
   tag: 'variables-tab'
 });

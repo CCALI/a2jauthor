@@ -34,7 +34,7 @@ export let Sortbar = CanMap.extend({
 export default Component.extend({
   view: template,
   leakScope: false,
-  viewModel: Sortbar,
+  ViewModel: Sortbar,
   tag: 'templates-sortbar',
 
   helpers: {

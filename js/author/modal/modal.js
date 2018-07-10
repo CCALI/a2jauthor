@@ -45,7 +45,7 @@ export const ModalVM = CanMap.extend({
 export default Component.extend({
   view: template,
   leakScope: false,
-  viewModel: ModalVM,
+  ViewModel: ModalVM,
   tag: 'author-modal',
   events: {
     '.author-modal click' (target, event) {

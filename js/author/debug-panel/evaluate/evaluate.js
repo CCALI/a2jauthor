@@ -54,7 +54,7 @@ export let EvaluatePanelVM = CanMap.extend('EvaluatePanelVM',{
 export default Component.extend({
     view: template,
     leakScope: false,
-    viewModel: EvaluatePanelVM,
+    ViewModel: EvaluatePanelVM,
     tag: 'author-evaluate-panel',
 
     events: {

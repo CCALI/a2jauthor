@@ -517,7 +517,7 @@ export default Component.extend({
   view: template,
   leakScope: false,
   tag: 'a2j-viewer-steps',
-  viewModel: ViewerStepsVM,
+  ViewModel: ViewerStepsVM,
 
   events: {
     inserted () {

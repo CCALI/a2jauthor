@@ -1147,7 +1147,7 @@ function targetAction(handler) {
 export default Component.extend({
   view: template,
   leakScope: false,
-  viewModel: PdfEditorVm,
+  ViewModel: PdfEditorVm,
   tag: "pdf-editor",
   events: {
     inserted() {

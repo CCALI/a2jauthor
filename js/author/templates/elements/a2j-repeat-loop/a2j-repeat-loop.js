@@ -34,7 +34,7 @@ const displayTypeMap = {
 export default Component.extend({
   view: template,
   tag: 'a2j-repeat-loop',
-  viewModel: RepeatLoopVM,
+  ViewModel: RepeatLoopVM,
 
   events: {
     inserted() {

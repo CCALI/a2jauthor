@@ -87,7 +87,7 @@ export let SectionTitleVM = CanMap.extend({
 export default Component.extend({
   view: template,
   tag: 'a2j-section-title',
-  viewModel: SectionTitleVM,
+  ViewModel: SectionTitleVM,
 
   events: {
     '.title-input keyup': function($el) {

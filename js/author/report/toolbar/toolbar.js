@@ -63,7 +63,7 @@ export const ReportToolbarVM = CanMap.extend('ReportToolbarVM', {
 export default Component.extend({
   view: template,
   leakScope: false,
-  viewModel: ReportToolbarVM,
+  ViewModel: ReportToolbarVM,
   tag: 'report-toolbar',
 
   events: {

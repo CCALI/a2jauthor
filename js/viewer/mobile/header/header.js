@@ -66,5 +66,5 @@ export default Component.extend({
   view: template,
   leakScope: false,
   tag: 'a2j-header',
-  viewModel: HeaderVM
+  ViewModel: HeaderVM
 });

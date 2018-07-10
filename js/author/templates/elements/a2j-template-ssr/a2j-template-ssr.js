@@ -23,6 +23,6 @@ import TemplateSsrVM from './a2j-template-ssr-vm';
 export default Component.extend({
  view: template,
  tag: 'a2j-template-ssr',
- viewModel: TemplateSsrVM,
+ ViewModel: TemplateSsrVM,
  leakScope: true
 });

@@ -5,7 +5,7 @@ import A2JTemplateVM from './a2j-template-vm'
 export default Component.extend({
   view: template,
   tag: 'a2j-template',
-  viewModel: A2JTemplateVM,
+  ViewModel: A2JTemplateVM,
 
   events: {
     click: function (_, evt) {

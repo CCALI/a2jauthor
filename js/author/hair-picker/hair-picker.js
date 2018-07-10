@@ -41,5 +41,5 @@ export default Component.extend({
   tag: 'hair-picker',
   view: template,
   leakScope: false,
-  viewModel: HairPickerVm
+  ViewModel: HairPickerVm
 })

@@ -187,7 +187,7 @@ export let DebugPanelVM = CanMap.extend({
  */
 export default Component.extend({
   view: template,
-  viewModel: DebugPanelVM,
+  ViewModel: DebugPanelVM,
   tag: 'author-debug-panel',
 
   helpers: {

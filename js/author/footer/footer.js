@@ -27,7 +27,7 @@ let FooterVM = CanMap.extend({
 
 export default Component.extend({
   view: template,
-  viewModel: FooterVM,
+  ViewModel: FooterVM,
   leakScope: false,
   tag: 'app-footer'
 })

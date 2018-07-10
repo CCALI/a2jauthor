@@ -19,7 +19,7 @@ export default Component.extend({
   view: template,
   leakScope: false,
   tag: 'template-edit-tabs',
-  viewModel: TemplateEditTabsVM,
+  ViewModel: TemplateEditTabsVM,
 
   helpers: {
     not(value) {

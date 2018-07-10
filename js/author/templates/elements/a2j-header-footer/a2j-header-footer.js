@@ -143,7 +143,7 @@ export let HeaderFooterVM = CanMap.extend({
 export default Component.extend({
   view: template,
   tag: 'a2j-header-footer',
-  viewModel: HeaderFooterVM,
+  ViewModel: HeaderFooterVM,
 
   events: {
     inserted() {

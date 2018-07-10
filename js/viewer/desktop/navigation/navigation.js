@@ -306,7 +306,7 @@ export default Component.extend({
   view: template,
   leakScope: false,
   tag: 'a2j-viewer-navigation',
-  viewModel: ViewerNavigationVM,
+  ViewModel: ViewerNavigationVM,
 
   helpers: {
     feedbackFormUrl() {

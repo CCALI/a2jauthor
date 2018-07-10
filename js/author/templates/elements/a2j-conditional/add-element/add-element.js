@@ -96,7 +96,7 @@ const AddElementVM = CanMap.extend({
 
 export default Component.extend({
   view: template,
-  viewModel: AddElementVM,
+  ViewModel: AddElementVM,
   tag: 'conditional-add-element',
   leakScope: true
 });

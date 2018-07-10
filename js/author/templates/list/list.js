@@ -76,7 +76,7 @@ export let List = CanMap.extend({
 
 export default Component.extend({
   view: template,
-  viewModel: List,
+  ViewModel: List,
   leakScope: false,
   tag: 'templates-list',
 

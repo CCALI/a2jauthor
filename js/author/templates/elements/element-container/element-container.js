@@ -79,7 +79,7 @@ export let ContainerVM = CanMap.extend({
 
 export default Component.extend({
   view: template,
-  viewModel: ContainerVM,
+  ViewModel: ContainerVM,
   tag: 'element-container',
 
   events: {

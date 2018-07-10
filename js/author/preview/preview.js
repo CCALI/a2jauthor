@@ -40,7 +40,7 @@ let AuthorPreviewVM = CanMap.extend({
 export default Component.extend({
   view: template,
   tag: 'author-preview',
-  viewModel: AuthorPreviewVM,
+  ViewModel: AuthorPreviewVM,
 
   events: {
     inserted () {

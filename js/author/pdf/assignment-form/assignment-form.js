@@ -368,7 +368,7 @@ export default Component.extend({
   tag: "assignment-form",
   view: template,
   leakScope: false,
-  viewModel: AssignmentFormVm,
+  ViewModel: AssignmentFormVm,
   events: {
     inserted () {
       this.viewModel.didInsertElement();

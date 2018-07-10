@@ -34,7 +34,7 @@ export default Component.extend({
   view: template,
   tag: 'a2j-pages',
   leakScope: false,
-  viewModel: PagesVM,
+  ViewModel: PagesVM,
 
   helpers: {
     getButtonLabel (label) {

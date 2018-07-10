@@ -14,7 +14,7 @@ export default Component.extend({
   view: template,
   leakScope: false,
   tag: 'a2j-modal',
-  viewModel: ModalVM,
+  ViewModel: ModalVM,
 
   helpers: {
     isGif (url = '') {

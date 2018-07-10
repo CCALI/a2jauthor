@@ -46,6 +46,6 @@ const PageBreakVM = CanMap.extend({
 export default Component.extend({
   view: template,
   tag: 'a2j-page-break',
-  viewModel: PageBreakVM,
+  ViewModel: PageBreakVM,
   leakScope: true
 });

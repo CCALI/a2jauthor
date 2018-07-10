@@ -78,7 +78,7 @@ export let RichTextVM = CanMap.extend({
 export default Component.extend({
   view: template,
   tag: 'a2j-rich-text',
-  viewModel: RichTextVM,
+  ViewModel: RichTextVM,
 
   helpers: {
     a2jParse (templateSnippet) {

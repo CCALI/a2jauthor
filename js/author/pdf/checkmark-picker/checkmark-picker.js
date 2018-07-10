@@ -92,7 +92,7 @@ export const CheckmarkPickerVm = CanMap.extend({
 export default Component.extend({
   view: template,
   tag: "checkmark-picker",
-  viewModel: CheckmarkPickerVm,
+  ViewModel: CheckmarkPickerVm,
   leakScope: false,
   events: {
     inserted () {

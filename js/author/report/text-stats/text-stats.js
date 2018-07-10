@@ -31,6 +31,6 @@ export const TextStatsVM = CanMap.extend('TextStatsVM', {
 export default Component.extend({
   view: template,
   tag: 'text-stats',
-  viewModel: TextStatsVM,
+  ViewModel: TextStatsVM,
   leakScope: true
 });

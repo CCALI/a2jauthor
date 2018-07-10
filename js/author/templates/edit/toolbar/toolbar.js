@@ -56,6 +56,6 @@ export let EditToolbarVM = CanMap.extend({
 export default Component.extend({
   view: template,
   leakScope: false,
-  viewModel: EditToolbarVM,
+  ViewModel: EditToolbarVM,
   tag: 'template-edit-toolbar'
 });

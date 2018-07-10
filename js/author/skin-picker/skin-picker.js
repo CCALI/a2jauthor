@@ -38,5 +38,5 @@ export default Component.extend({
   tag: 'skin-picker',
   view: template,
   leakScope: false,
-  viewModel: SkinPickerVm
+  ViewModel: SkinPickerVm
 })

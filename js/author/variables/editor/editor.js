@@ -146,7 +146,7 @@ export const VariableEditorVM = CanMap.extend({
 export default Component.extend({
   view: template,
   leakScope: false,
-  viewModel: VariableEditorVM,
+  ViewModel: VariableEditorVM,
   tag: "variable-editor",
   events: {
     ".findBtn click"(target, event) {

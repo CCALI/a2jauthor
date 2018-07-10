@@ -58,7 +58,7 @@ const DebugAlerts = CanMap.extend({
 
 export default Component.extend({
   view: template,
-  viewModel: DebugAlerts,
+  ViewModel: DebugAlerts,
   tag: 'author-debug-alerts',
 
   events: {

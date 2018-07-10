@@ -1,7 +1,7 @@
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './avatar.stache'
-import canUtil from 'can/util/'
+import canUtil from 'can-util/'
 import {
   Face,
   Hair,
@@ -18,7 +18,7 @@ function getBaseUrl () {
   return (
     canUtil.baseURL ||
     typeof System !== 'undefined' && (System.renderingLoader && System.renderingLoader.baseURL || System.baseURL) ||
-    location.pathname
+    window.location.pathname
   )
 }
 

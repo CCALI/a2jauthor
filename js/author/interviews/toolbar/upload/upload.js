@@ -33,7 +33,7 @@ export const UploadVM = CanMap.extend('UploadVM', {
 });
 
 export default Component.extend('UploadComponent', {
-  template,
+  view: template,
   leakScope: false,
   tag: 'a2j-upload',
   ViewModel: UploadVM,

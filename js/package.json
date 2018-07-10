@@ -230,7 +230,7 @@
     "can-route-pushstate": "^3.2.4",
     "can-stache": "^3.14.21",
     "can-util": "^3.11.6",
-    "can-validate-legacy": "^1.2.0",
+    "can-validate-legacy": "^1.4.0",
     "can-view-callbacks": "^3.2.5",
     "can-view-import": "^3.2.9",
     "connect": "3.2.0",

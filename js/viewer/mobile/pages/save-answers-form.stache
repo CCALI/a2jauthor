@@ -7,7 +7,7 @@
   <input type="hidden" name="AnswerKey" el:value:from="answersANX" />
 
   <button type="submit"
-          on:el:click="navigate"
+          on:el:click="navigate()"
           class="btn btn-default btn-navigate">
     {{getButtonLabel(label)}}
   </button>

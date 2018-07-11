@@ -11,7 +11,7 @@
   {{/unless}}
 
   {{#if mState.showCredits}}
-    <div filler can-click="hideCredits">
+    <div filler can-click="hideCredits()">
       {{#if interview.logoImage}}
         <img src="{{normalizePath(mState.fileDataURL, interview.logoImage)}}" class="img-responsive"/>
       {{else}}

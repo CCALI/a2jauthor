@@ -66,7 +66,7 @@
 
         {{#default}}
           <button type="button"
-                  on:el:click="navigate"
+                  on:el:click="navigate()"
                   class="btn btn-default btn-navigate">
             {{getButtonLabel(label)}}
           </button>

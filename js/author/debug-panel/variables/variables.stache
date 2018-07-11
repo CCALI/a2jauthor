@@ -8,7 +8,7 @@
     <span class="glyphicon-floppy"></span> Save
   </button>
 
-  <button id="clearAnswer" class="btn btn-default btn-sm" on:el:click="clearAnswers">
+  <button id="clearAnswer" class="btn btn-default btn-sm" on:el:click="clearAnswers()">
     <span class="glyphicon-trash"></span> Clear
   </button>
 

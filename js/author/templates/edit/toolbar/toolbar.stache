@@ -25,7 +25,7 @@
         </ul>
 
         <div class="nav navbar-nav navbar-right">
-          <button on:el:click="saveTemplate"
+          <button on:el:click="saveTemplate()"
             class="btn btn-default navbar-btn save-template">
 
             <span class="glyphicon-floppy"></span> Save Template

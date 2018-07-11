@@ -1,7 +1,7 @@
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './avatar.stache'
-import canUtil from 'can-util/'
+import canUtil from 'can-util/can-util'
 import {
   Face,
   Hair,

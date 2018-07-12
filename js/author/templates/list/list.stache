@@ -1,4 +1,4 @@
-<can-import from="caja/author/template:from:from:froms/list/item/"/>
+<can-import from="caja/author/templates/list/item/"/>
 <can-import from="caja/author/templates/list/list.less!"/>
 
 <ul>

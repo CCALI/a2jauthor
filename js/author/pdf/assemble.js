@@ -113,15 +113,16 @@
       var variableKey = variableBoxesMap[boxKey][0].variable.toLowerCase()
       var variable = variables[variableKey]
       var answer = answers[variableKey]
-      var hasVariableToPatch = variable && answer
+      // TODO: does this need to handle repeatingVars
+      var answerValue = answer.values[1]
+      var hasVariableToPatch = variable && answer && answerValue
       if (!hasVariableToPatch) {
         return patches
       }
 
       var boxes = variableBoxesMap[boxKey]
-      var answerValue = answer.values[1]
       var defaultVariableOptions = {
-        overflowStyle: 'overflow-to-addendum',
+        overflowStyle: 'clip-overflow',
         addendumLabel: variable.name,
         checkIcon: 'normal-check',
         isCheck: false

@@ -34,7 +34,7 @@
 
   <div class="guideio"></div>
   <div class="">
-    <vertical-navbar theme="inverse" page="{page}" vm:guideId:from="guideId"></vertical-navbar>
+    <vertical-navbar theme:from='"inverse"' page=""'""{page}"'" vm:guideId:from="guideId"></vertical-navbar>
   </div>
 
   <div class="guidepanels ui-widget xui-widget-content">

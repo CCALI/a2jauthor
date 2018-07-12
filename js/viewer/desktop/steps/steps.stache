@@ -88,7 +88,7 @@
 {{#if nextSteps.length}}
   <div class="next-wrapper">
     {{#each nextSteps}}
-      <div id="next-{{ add(%index, 2) }}"
+      <div id="next-{{ add(scope.index, 2) }}"
         class="step-next next-{{ add(%index, 2) }} step-{{ add(%index, 2) }}">
 
         <div class="app-step" el:style:from="formatStepStyles( getStepWidth(false, %index) )">

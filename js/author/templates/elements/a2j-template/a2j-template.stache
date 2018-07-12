@@ -10,15 +10,15 @@
 <ul>
   {{#each rootNode.children}}
     <li
-      draggable="true"
+      draggable="'true'"
       class="node-wrapper{{#if isBeingDragged}} drag-placeholder{{/if}}">
 
       {{#if deleted}}
         <app-alert
-          open="true"
+          open:from="true"
           auto-close:from="'true'"
-          dismissible="true"
-          alert-type="default"
+          dismissible:from="true"
+          alert-type:from='"default"'
           on:vm:closed="removeNodeFromChildren(id)">
 
           <p>

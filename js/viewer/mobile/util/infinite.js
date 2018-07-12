@@ -1,7 +1,6 @@
 import CanMap from 'can-map'
 import _inRange from 'lodash/inRange'
-
-import 'can/map/define/define'
+import 'can-map-define'
 
 export default CanMap.extend({
   define: {

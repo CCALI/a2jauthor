@@ -2,7 +2,7 @@ import CanMap from 'can-map'
 import _some from 'lodash/some'
 import _isString from 'lodash/isString'
 import _forEach from 'lodash/forEach'
-import canBatch from 'can-event/batch/batch'
+import queues from 'can-queues'
 import AnswerVM from 'caja/viewer/models/answervm'
 import Parser from 'caja/viewer/mobile/util/parser'
 import {ViewerNavigationVM} from 'caja/viewer/desktop/navigation/navigation'
@@ -12,7 +12,6 @@ import constants from 'caja/viewer/models/constants'
 import event from 'can-event'
 
 import 'can-map-define'
-import 'can/util/jquery/'
 import 'bootstrap/js/modal'
 
 /**
@@ -488,7 +487,7 @@ export default CanMap.extend('PagesVM', {
         return
       }
 
-      canBatch.start()
+      queues.batch.start()
 
       this.attr('traceLogic').push({ page: page.attr('name') })
       this.attr('currentPage', page)
@@ -496,7 +495,7 @@ export default CanMap.extend('PagesVM', {
       this.attr('mState.header', page.attr('step.text'))
       this.attr('mState.step', page.attr('step.number'))
 
-      canBatch.stop()
+      queues.batch.stop()
     }
   },
 

@@ -1,13 +1,13 @@
-<can-import from="caja/author/templates/list/item/"/>
+<can-import from="caja/author/template:from:from:froms/list/item/"/>
 <can-import from="caja/author/templates/list/list.less!"/>
 
 <ul>
   {{#each displayList}}
     <li {{#if isDraggable}}draggable="true"{{/if}}>
       <templates-list-item
-        template="{.}"
-        is-draggable="{isDraggable}"
-        transition-time="{itemTransitionTime}">
+        template:from="'{.}'"
+        is-draggable:from='"{isDraggable}"'
+        transition-time:from='"{itemTransitionTime}"'>
       </templates-list-item>
     </li>
   {{/each}}

@@ -9,9 +9,9 @@
  */
 import $ from 'jquery'
 
-import "can-map"
-import 'can/util/object/'
-import 'can/util/library'
+import CanMap from 'can-map'
+// import 'can/util/object/'
+// import 'can/util/library'
 
 let flatProps = function (a, cur) {
   var obj = {}
@@ -24,7 +24,7 @@ let flatProps = function (a, cur) {
   }
 
   return obj
-};
+}
 
 let oldSetup = CanMap.prototype.setup
 

@@ -80,8 +80,8 @@
       </div>
       {{#if isReplacing}}
         <author-modal
-          modal-title='Confirm PDF replacement'
-          cancel-text='Cancel'
+          modal-title:from="'Confirm PDF replacement'"
+          cancel-text:from="'Cancel'"
           vm:@onCancel:from='@cancelLesserReplacement'
           submit-text='Replace PDF'
           vm:@onSubmit:from='@confirmLesserReplacement'

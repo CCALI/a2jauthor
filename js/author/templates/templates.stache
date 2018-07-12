@@ -9,19 +9,19 @@
 {{#if templatesPromise.isResolved}}
   <templates-toolbar
     class="clearfix"
-    filter="{activeFilter}"
+    filter:from='"{activeFilter}"'
     templates="{templates}"
-    search-token="{searchToken}"/>
+    search-token:from='"{searchToken}"'/>
 {{/if}}
 
 <div class="page">
   <app-alert
     auto-close:from="'true'"
-    dismissible="true"
-    alert-type="warning"
-    open="{openDeletedAlert}"
+    dismissible:from='"true"'
+    alert-type:from='"warning"'
+    open:from='"{openDeletedAlert}"'
     class="deleted-templates-alert"
-    auto-close-time="{alertAutoCloseTime}">
+    auto-close-time:from='"{alertAutoCloseTime}"'>
 
     {{#each deletedTemplates}}
       {{title}} - has been deleted -
@@ -33,9 +33,9 @@
     auto-close:from="'true'"
     dismissible="true"
     alert-type="warning"
-    open="{openRestoredAlert}"
+    open:from='"{openRestoredAlert}"'
     class="restored-templates-alert"
-    auto-close-time="{alertAutoCloseTime}">
+    auto-close-time:from="'{alertAutoCloseTime}'">
 
     {{#each restoredTemplates}}
       {{title}} - has been restored -
@@ -70,7 +70,7 @@
       {{/if}}
 
       {{#if showTemplatesList}}
-        <templates-sortbar criteria="{sortCriteria}"/>
+        <templates-sortbar criteria:from='"{sortCriteria}"'/>
 
         <templates-list
           vm:displayList:from="displayList"

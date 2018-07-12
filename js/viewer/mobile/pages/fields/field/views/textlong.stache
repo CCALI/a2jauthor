@@ -13,7 +13,7 @@
       name="{{name}}"
       on:el:change="validateField"
       el:value:bind="field._answer.values"
-      on:el:input="calcAvailableLength(%event)"/>
+      on:el:input="calcAvailableLength(scope.event)"/>
 
     <button class="btn btn-default btn-xs expand-textlong pull-right" on:el:mousedown="expandTextlong(field)"><span class="icon resize-btn-icon glyphicon-resize" aria-hidden="true"></span></button>
 

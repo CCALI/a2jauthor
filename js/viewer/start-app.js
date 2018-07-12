@@ -12,7 +12,7 @@ import compute from 'can-compute'
 import route from 'can-route'
 
 export default function ({interview, pState, mState, rState}) {
-  route.ready()
+  route.start()
 
   pState = pState || new PersistedState()
   pState.attr('setDataURL', mState.attr('setDataURL'))

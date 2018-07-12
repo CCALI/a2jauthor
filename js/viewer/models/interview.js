@@ -2,7 +2,7 @@ import $ from 'jquery'
 import CanList from 'can-list'
 import Model from 'can-model'
 import canAjax from 'can-ajax'
-import canBatch from 'can-event/batch/batch'
+import queues from "can-queues"
 import _forEach from 'lodash/forEach'
 import _last from 'lodash/last'
 import _keys from 'lodash/keys'
@@ -270,7 +270,7 @@ const Interview = Model.extend({
 
   clearAnswers () {
     // canBatch required for Author preview mode with long var/answer lists
-    canBatch.start()
+    queues.batch.start()
 
     this.attr('answers').each((answer) => {
       if (answer && answer.attr('values') && answer.attr('values').length > 1) {
@@ -278,7 +278,7 @@ const Interview = Model.extend({
       }
     })
 
-    canBatch.stop()
+    queues.batch.stop()
   },
 
   createGuide () {

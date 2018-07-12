@@ -57,9 +57,9 @@
 
 {{#if showVariableModal}}
   <author-modal
-    modal-title="Variable"
-    cancel-text='Delete'
-    submit-text='Save'
+    modal-title:from='"Variable"'
+    cancel-text:from="'Delete'"
+    submit-text:from="'Save'"
     vm:@onCancel:from="@onDismissVariableEditing"
     vm:@onSubmit:from="@onConfirmVariableEditing"
   >

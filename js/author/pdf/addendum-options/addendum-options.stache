@@ -2,7 +2,7 @@
 <can-import from='caja/author/modal/' />
 
 <author-modal
-  modal-title='Addendum options'
+  modal-title:from="'Addendum options'"
   vm:onCancel:from='@onModalCancel'
   cancel-text='Cancel'
   vm:onSubmit:from='@onSubmit'

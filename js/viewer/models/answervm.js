@@ -7,7 +7,7 @@ import cString from 'caja/viewer/mobile/util/string'
 
 import 'can-validate-legacy/map/validate/validate'
 import 'can-validate-legacy/shims/validatejs'
-import 'can/map/define/define'
+import 'can-map-define'
 
 export default CanMap.extend('AnswerVM', {
   init () {

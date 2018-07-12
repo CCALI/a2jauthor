@@ -46,7 +46,7 @@
                 {{^is guide.guideGender 'male'}}
                   checked
                 {{/is}}
-                on:el:change='updateAvatarGender(%event)'
+                on:el:change='updateAvatarGender(scope.event)'
               />
               <span>Female</span>
             </label>

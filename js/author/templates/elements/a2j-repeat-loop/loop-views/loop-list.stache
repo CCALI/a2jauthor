@@ -8,7 +8,7 @@
           <var-picker
             vm:selected:bind="variable"
             vm:variables:from="variablesList"
-            filter-ocurrence="repeating"
+            filter-ocurrence:from='"repeating"'
           />
         {{else}}
           <a2j-variable vm:name:from="variable" />
@@ -22,7 +22,7 @@
       <ul style="list-style-type: {{listStyleType}}; margin-bottom: 20px;">
         {{#each loopCollection}}
           <li>
-            {{item}}: <a2j-variable vm:name:from="../variable" vm:varIndex:from="%index" />
+            {{item}}: <a2j-variable vm:name:from="../variable" vm:varIndex:from="scope.index" />
           </li>
         {{/each}}
       </ul>

@@ -71,7 +71,7 @@
 
     {{#is displayType "text"}}
       {{#each loopCollection}}
-        {{a2jParse(loopRichText, %index)}}
+        {{a2jParse(loopRichText, scope.index)}}
       {{/each}}
     {{/is}}
   </div>

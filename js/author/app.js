@@ -17,12 +17,12 @@ window.can = can
 
 let appState = new AppState()
 
-route.map(appState)
-route(':page', {page: 'interviews'})
-route(':page/:guideId')
-route(':page/:action/:guideId-:templateId')
+route.data = appState
+route.register('{page}', {page: 'interviews'})
+route.register('{page}/{guideId}')
+route.register('{page}/{action}/{guideId}-{templateId}')
 
-route.ready()
+route.start()
 stache.registerPartial('viewer-preview-layout', viewerPreviewTpl)
 
 $('body').on('click', 'a[href="#"]', ev => ev.preventDefault())

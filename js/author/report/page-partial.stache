@@ -35,7 +35,7 @@
         {{^is selectedReport "citationReport"}}
             <div class="col-xs-4">
                 {{#each fields}}
-                    <div class="row"><label>Field #</label> {{addOne(%index)}}</div>
+                    <div class="row"><label>Field #</label> {{addOne(scope.index)}}</div>
                     <div class="row {{#if hideDefault}}hide-section{{/if}}"><label>Type:</label> {{type}}</div>
                     <div class="row"><label>Label:</label> {{label}}</div>
                     <div class="row {{#if hideDefault}}hide-section{{/if}}"><label>Variable:</label> {{name}}</div>

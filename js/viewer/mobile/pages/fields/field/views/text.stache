@@ -12,7 +12,7 @@
       name="{{name}}"
       on:el:change="validateField"
       el:value:bind="field._answer.values"
-      on:el:input="calcAvailableLength(%event)"
+      on:el:input="calcAvailableLength(scope.event)"
       placeholder="{{suggestionText}}" />
 
       {{#if maxChars}}

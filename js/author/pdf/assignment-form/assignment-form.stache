@@ -5,8 +5,8 @@
 
 {{#if conflictingVariables}}
   <author-modal
-    modal-title='Assignment conflict'
-    cancel-text='Dismiss'
+    modal-title:from="'Assignment conflict'"
+    cancel-text:from="'Dismiss'"
     vm:@onCancel:from='@fireCancel'
   >
     <div class='conflict'>
@@ -53,7 +53,7 @@
                   <input
                     type="checkbox"
                     name="text-group"
-                    on:el:change="onGroupChange(%event)"
+                    on:el:change="onGroupChange(scope.event)"
                     el:checked:bind='variableBuffer.isGroup'
                   />
                 <span>Group Selected Text Boxes</span>
@@ -153,7 +153,7 @@
                     {{^if hasChoicesOption}}
                       disabled
                     {{/if}}
-                    placeholder="Multiple choice value #{{%index}}"
+                    placeholder="Multiple choice value #{{scope.index}}"
                     value="{{.}}"
                     on:el:change="onChoiceChange(%event, %index)"
                   />

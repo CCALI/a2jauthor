@@ -382,6 +382,7 @@
     readInteger: readInteger,
     getTemplateOverlay: getTemplateOverlay,
     testing: {
+      getOverlay: getOverlay,
       getPatcher: getPatcher,
       getTextPatches: getTextPatches,
       getDatePatches: getDatePatches,

@@ -1,7 +1,8 @@
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './avatar.stache'
-import canUtil from 'can-util/can-util'
+import baseURL from 'can-util/js/base-url/base-url'
+import joinURIs from 'can-util/js/join-uris/join-uris'
 import {
   Face,
   Hair,
@@ -16,14 +17,14 @@ import 'can-map-define'
 function getBaseUrl () {
   // Source: https://github.com/canjs/canjs/blob/432c9b0c0f9f8ace62788cf7c8258998673856b9/view/stache/mustache_helpers.js#L204
   return (
-    canUtil.baseURL ||
-    typeof System !== 'undefined' && (System.renderingLoader && System.renderingLoader.baseURL || System.baseURL) ||
+    baseURL ||
+    typeof System !== 'undefined' && (window.System.renderingLoader && window.System.renderingLoader.baseURL || window.System.baseURL) ||
     window.location.pathname
   )
 }
 
 function joinBaseUrl () {
-  return canUtil.joinURIs(getBaseUrl(), 'viewer//images/')
+  return joinURIs(getBaseUrl(), 'viewer//images/')
 }
 
 /**

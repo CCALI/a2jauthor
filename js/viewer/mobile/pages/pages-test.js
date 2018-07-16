@@ -1,13 +1,13 @@
 import $ from 'jquery'
-import CanMap from "can-map"
-import CanList from "can-list"
-import stache from "can-stache"
+import CanMap from 'can-map'
+import CanList from 'can-list'
+import stache from 'can-stache'
 import assert from 'assert'
 import PagesVM from './pages-vm'
 import sinon from 'sinon'
 import AppState from 'caja/viewer/models/app-state'
 import constants from 'caja/viewer/models/constants'
-import event from 'can-event'
+import canDomEvents from 'can-dom-events'
 import './pages'
 import 'steal-mocha'
 
@@ -383,7 +383,7 @@ describe('<a2j-pages>', () => {
         done()
       })
 
-      event.trigger(window, 'traceLogic', {
+      canDomEvents.dispatch(window, 'traceLogic', {
         error: [{ msg: 'error' }]
       }, false)
     })

@@ -1,10 +1,8 @@
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './alert.stache'
-import event from 'can-event'
+import canDomEvents from 'can-dom-events'
 import $ from 'jquery'
-
-import 'can-event'
 import 'can-map-define'
 
 const alertTypeClasses = {
@@ -191,7 +189,7 @@ export default Component.extend({
       if (open) {
         $el.slideDown()
       } else {
-        $el.slideUp(() => event.trigger(vm, 'closed'))
+        $el.slideUp(() => canDomEvents.dispatch(vm, 'closed'))
         vm.clearAutoCloseTimeout()
       }
     }

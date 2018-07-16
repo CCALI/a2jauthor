@@ -1,4 +1,5 @@
 import CanMap from 'can-map'
+import canDomEvents from 'can-dom-events'
 import regex from 'caja/viewer/mobile/util/regex'
 import tLogic from 'caja/viewer/mobile/util/tlogic'
 import Lang from 'caja/viewer/mobile/util/lang'
@@ -6,7 +7,6 @@ import cString from 'caja/viewer/mobile/util/string'
 import cDate from 'caja/viewer/mobile/util/date'
 import constants from 'caja/viewer/models/constants'
 import Infinite from 'caja/viewer/mobile/util/infinite'
-import event from 'can-event'
 import _forEach from 'lodash/forEach'
 import numeral from 'numeral'
 
@@ -54,7 +54,7 @@ export default CanMap.extend({
 
     // numeral replaces the jquery NumberFormatter plugin dependency in tlogic.js
     methods.push(numeral)
-    methods.push(event)
+    methods.push(canDomEvents)
 
     this._tLogic = tLogic.apply(this, methods)
 

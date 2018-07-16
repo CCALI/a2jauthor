@@ -9,7 +9,7 @@ import {ViewerNavigationVM} from 'caja/viewer/desktop/navigation/navigation'
 import {Analytics} from 'caja/viewer/util/analytics'
 import { FieldVM } from './fields/field/field'
 import constants from 'caja/viewer/models/constants'
-import event from 'can-event'
+import canDomEvents from 'can-dom-events'
 
 import 'can-map-define'
 import 'bootstrap/js/modal'
@@ -355,7 +355,7 @@ export default CanMap.extend('PagesVM', {
           title: 'Answers Submitted :',
           text: 'Page will redirect shortly'
         })
-        event.trigger(this, 'post-answers-to-server')
+        canDomEvents.dispatch(this, 'post-answers-to-server')
 
         // disable the previously clicked button
         setTimeout(() => {
@@ -409,7 +409,7 @@ export default CanMap.extend('PagesVM', {
         rState.attr('singlePageLoop', true)
 
         rState.setVisitedPages(gotoPage, interview)
-        event.trigger(rState, 'page', [gotoPage])
+        canDomEvents.dispatch(rState, 'page', [gotoPage])
 
         rState.attr('singlePageLoop', false)
       }

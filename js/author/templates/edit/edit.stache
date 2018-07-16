@@ -28,7 +28,7 @@
             <div class="col-md-8">
               <a2j-header-footer
               title="Custom Header"
-              vm:editActive:bind="*editingHeader"
+              vm:editActive:bind="scope.vars.editingHeader"
               vm:userContent:bind="a2jTemplate.header"
               vm:notDisplayedOnFirstPage:bind="a2jTemplate.hideHeaderOnFirstPage"
               vm:saveTemplate:from="a2jTemplate@save" />
@@ -44,7 +44,7 @@
 
               <a2j-header-footer
               title="Custom Footer"
-              vm:editActive:bind="*editingFooter"
+              vm:editActive:bind="scope.vars.editingFooter"
               vm:userContent:bind="a2jTemplate.footer"
               vm:notDisplayedOnFirstPage:bind="a2jTemplate.hideFooterOnFirstPage"
               vm:saveTemplate:from="a2jTemplate@save" />
@@ -54,8 +54,8 @@
             <div class="col-md-4">
               <template-edit-tabs
               vm:template:bind="a2jTemplate"
-              vm:editingHeader:to="*editingHeader"
-              vm:editingFooter:to="*editingFooter"
+              vm:editingHeader:to="scope.vars.editingHeader"
+              vm:editingFooter:to="scope.vars.editingFooter"
               vm:variablesList:from="guide.variablesList"
               />
             </div>

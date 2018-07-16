@@ -34,13 +34,13 @@
 
   <div class="guideio"></div>
   <div class="">
-    <vertical-navbar theme:from='"inverse"' page=""'""{page}"'" vm:guideId:from="guideId"></vertical-navbar>
+    <vertical-navbar theme:raw="inverse" page:from="page" vm:guideId:from="guideId"></vertical-navbar>
   </div>
 
   <div class="guidepanels ui-widget xui-widget-content">
     <app-alert
-      auto-close:from="'true'"
-      dismissible="true"
+      autoClose:raw="true"
+      dismissible:raw="true"
       class="global-alert"
       vm:autoCloseTimeout:from="20000"
       vm:open:bind="globalAlertProps.open"

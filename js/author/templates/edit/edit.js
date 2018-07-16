@@ -1,13 +1,13 @@
-import CanMap from "can-map";
-import Component from "can-component";
-import template from "./edit.stache";
-import A2JTemplate from "caja/author/models/a2j-template";
-import A2JNode from "caja/author/models/a2j-node";
+import CanMap from 'can-map'
+import Component from 'can-component'
+import template from './edit.stache'
+import A2JTemplate from 'caja/author/models/a2j-template'
+import A2JNode from 'caja/author/models/a2j-node'
 
-import "can-route";
-import "can-map-define";
+import 'can-route'
+import 'can-map-define'
 
-import { sharedPdfFlag } from "caja/author/pdf/index";
+import { sharedPdfFlag } from 'caja/author/pdf/index'
 
 /**
  * @module {Module} author/templates/edit/ <template-edit-page>
@@ -40,14 +40,14 @@ export const TemplateEditPageVM = CanMap.extend({
      * an existing template.
      */
     a2jTemplatePromise: {
-      get() {
-        const templateId = this.attr('templateId');
-        const guideId = this.attr('guideId');
+      get () {
+        const templateId = this.attr('templateId')
+        const guideId = this.attr('guideId')
         if (templateId === 'new') {
-          return this.makeNewTemplate();
+          return this.makeNewTemplate()
         }
 
-        return A2JTemplate.findOne({ guideId, templateId });
+        return A2JTemplate.findOne({ guideId, templateId })
       }
     },
 
@@ -58,17 +58,17 @@ export const TemplateEditPageVM = CanMap.extend({
      * This is an async property that will be set then [a2jTemplatePromise] resolves.
      */
     a2jTemplate: {
-      get(last, set) {
-        this.attr("a2jTemplatePromise").then(set);
+      get (last, set) {
+        this.attr('a2jTemplatePromise').then(set)
       }
     },
 
     isPdfTemplate: {
-      get() {
-        const template = this.attr("a2jTemplate");
+      get () {
+        const template = this.attr('a2jTemplate')
         return (
-          template && template.rootNode && template.rootNode.tag === "a2j-pdf"
-        );
+          template && template.rootNode && template.rootNode.tag === 'a2j-pdf'
+        )
       }
     }
   },
@@ -78,37 +78,37 @@ export const TemplateEditPageVM = CanMap.extend({
    * @parent editPage.ViewModel
    * @return {A2JTemplate} A new A2JTemplate model instance.
    */
-  makeNewTemplate() {
-    const _this = this;
-    const guideId = this.attr("guideId");
-    const isPdfTemplate = sharedPdfFlag.get();
-    sharedPdfFlag.clear();
-    const defaultProps = { guideId };
-    let templateProps = defaultProps;
+  makeNewTemplate () {
+    const _this = this
+    const guideId = this.attr('guideId')
+    const isPdfTemplate = sharedPdfFlag.get()
+    sharedPdfFlag.clear()
+    const defaultProps = { guideId }
+    let templateProps = defaultProps
     if (isPdfTemplate) {
       templateProps = $.extend(defaultProps, {
-        rootNode: new A2JNode({ tag: "a2j-pdf" })
-      });
+        rootNode: new A2JNode({ tag: 'a2j-pdf' })
+      })
     }
 
-    const fn = can.__notObserve(function() {
-      const template = new A2JTemplate(templateProps);
+    const fn = can.__notObserve(function () {
+      const template = new A2JTemplate(templateProps)
       return template.save().then(template => {
-        const id = template.attr("templateId");
+        const id = template.attr('templateId')
         _this.attr({
-          action: "edit",
+          action: 'edit',
           templateId: id
-        });
-      });
-    });
+        })
+      })
+    })
 
-    return fn();
+    return fn()
   }
-});
+})
 
 export default Component.extend({
   view: template,
   leakScope: false,
-  tag: "template-edit-page",
+  tag: 'template-edit-page',
   ViewModel: TemplateEditPageVM
-});
+})

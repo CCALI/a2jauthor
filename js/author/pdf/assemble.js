@@ -113,7 +113,6 @@
       var variableKey = variableBoxesMap[boxKey][0].variable.toLowerCase()
       var variable = variables[variableKey]
       var answer = answers[variableKey]
-      // TODO: does this need to handle repeatingVars
       var answerValue = answer.values[1]
       var hasAnswerValue = answerValue !== null &&
                           answerValue !== undefined &&

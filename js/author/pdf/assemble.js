@@ -115,7 +115,10 @@
       var answer = answers[variableKey]
       // TODO: does this need to handle repeatingVars
       var answerValue = answer.values[1]
-      var hasVariableToPatch = variable && answer && answerValue
+      var hasAnswerValue = answerValue !== null &&
+                          answerValue !== undefined &&
+                          answerValue !== ''
+      var hasVariableToPatch = variable && answer && hasAnswerValue
       if (!hasVariableToPatch) {
         return patches
       }

@@ -174,7 +174,7 @@ describe('pdf/assemble', () => {
   })
 
   describe('getOverlay', () => {
-    it('should return only patches with non falsy answers', () => {
+    it('should return only patches with non falsy answers but allow 0 and false', () => {
       const boxes = [{
         id: 'vb-0',
         page: 0,
@@ -186,6 +186,20 @@ describe('pdf/assemble', () => {
         page: 0,
         area: {top: 10, left: 10, width: 10, height: 10},
         variable: 'Age NU'
+      },
+      {
+        id: 'vb-2',
+        page: 0,
+        area: {top: 30, left: 30, width: 30, height: 30},
+        isInverted: true,
+        variable: 'Fun TF'
+      },
+      {
+        id: 'vb-3',
+        page: 0,
+        area: {top: 60, left: 60, width: 60, height: 60},
+        variable: 'Status MC',
+        variableValue: 'married'
       }]
 
       const answers = {
@@ -197,7 +211,17 @@ describe('pdf/assemble', () => {
         'age nu': {
           name: 'Age NU',
           type: 'Number',
-          values: [null, 5]
+          values: [null, 0]
+        },
+        'fun tf': {
+          name: 'Fun TF',
+          type: 'TF',
+          values: [null, false]
+        },
+        'status mc': {
+          name: 'Status MC',
+          type: 'MC',
+          values: [null, 'married']
         }
       }
       const variables = {
@@ -208,10 +232,18 @@ describe('pdf/assemble', () => {
         'age nu': {
           name: 'Age NU',
           type: 'Number'
+        },
+        'fun tf': {
+          name: 'Fun TF',
+          type: 'TF'
+        },
+        'status mc': {
+          name: 'Status MC',
+          type: 'MC'
         }
       }
       const pages = [{ domSize: {height: 990, width: 765}, pdfSize: {height: 792, width: 612} }]
-      const documentOptions = {variableOptions: {}, addendumOptions: {}}
+      const documentOptions = {variableOptions: {'status mc': {isCheck: true}}, addendumOptions: {}}
       const templateData = {
         boxes,
         answers,
@@ -222,7 +254,7 @@ describe('pdf/assemble', () => {
 
       const patches = getOverlay(templateData).patches
 
-      assert.equal(patches.length, 1, 'should return only patches with answered values')
+      assert.equal(patches.length, 3, 'should return only patches with answered values, including 0 and false')
     })
   })
 

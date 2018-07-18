@@ -1,4 +1,4 @@
-// This is a local production sample of the config file read by the Document template
+// This is a local production sample of the config file read by A2J_DAT, the Document template
 // and assembly API server by NodeJS. It assumes serving the app from the `Sites`
 // folder on MacOS using MAMP, with default user and password of `root` for the database.
 // This is obviously not secure, and would be updated in a true production environment
@@ -20,5 +20,9 @@
   "DRUPAL_PASSWD": "root",
   "DRUPAL_DBNAME": "D7commons",
   "DRUPAL_PORT": 3306,
-  "WKHTMLTOPDF_PATH": "/usr/local/bin/wkhtmltopdf"
+  "WKHTMLTOPDF_PATH": "/usr/local/bin/wkhtmltopdf",
+  "WKHTMLTOPDF_PATH": "/usr/local/bin/wkhtmltopdf",
+  "WKHTMLTOPDF_ZOOM": 1.0,
+  "WKHTMLTOPDF_DPI": 300,
+  "VIEWER_PATH": ""
 }

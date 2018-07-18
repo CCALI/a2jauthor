@@ -3,6 +3,8 @@ const path = require('path')
 const uuid = require('uuid')
 const cheerio = require('cheerio')
 const {storage} = require('../pdf/storage')
+const debug = require('debug')('A2J:assemble')
+const wkhtmltopdf = require('wkhtmltopdf')
 const evalAuthorCondition = require('../../js/author/utils/eval-author-condition')
 
 function setDownloadHeaders (res, filename) {
@@ -113,7 +115,7 @@ function getRequestPdfOptions (req) {
     hideHeaderOnFirstPage,
     footer,
     hideFooterOnFirstPage
-   } = req.body
+  } = req.body
 
   const pdfOptions = {}
 
@@ -134,6 +136,39 @@ function getRequestPdfOptions (req) {
   return pdfOptions
 }
 
+function getConfig () {
+  let config
+  const configPath = path.join(__dirname, '..', '..', '..', 'config.json')
+  try {
+    fs.accessSync(configPath, fs.constants.R_OK)
+    debug('can read config.json from ', configPath)
+    config = require('../util/config')
+  } catch (err) {
+    console.error('config.json file not found or unreadable')
+    debug('expected config.json in ', configPath)
+  }
+  return config
+}
+
+function setWkhtmltopdfCommand (config) {
+  wkhtmltopdf.command = config.get('WKHTMLTOPDF_PATH')
+  debug('Setting path to wkhtmltopdf binary: ', wkhtmltopdf.command)
+}
+
+function getConfigPdfOptions (config) {
+  const configPdfOptions = {}
+  const dpiDefault = 300
+  const zoomDefault = 1.0
+
+  configPdfOptions.dpi = parseFloat(config.get('WKHTMLTOPDF_DPI')) || dpiDefault
+  configPdfOptions.zoom = parseFloat(config.get('WKHTMLTOPDF_ZOOM')) || zoomDefault
+
+  debug('wkhtmltopdf zoom: ', configPdfOptions.zoom)
+  debug('wkhtmltopdf dpi: ', configPdfOptions.dpi)
+
+  return configPdfOptions
+}
+
 module.exports = {
   setDownloadHeaders,
   deleteFile,
@@ -142,5 +177,8 @@ module.exports = {
   filterTemplatesByCondition,
   segmentTextAndPdfTemplates,
   getXmlVariables,
-  getRequestPdfOptions
+  getRequestPdfOptions,
+  getConfig,
+  getConfigPdfOptions,
+  setWkhtmltopdfCommand
 }

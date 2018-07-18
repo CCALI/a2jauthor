@@ -113,7 +113,7 @@
       var variableKey = variableBoxesMap[boxKey][0].variable.toLowerCase()
       var variable = variables[variableKey]
       var answer = answers[variableKey]
-      var answerValue = answer.values[1]
+      var answerValue = answer && answer.values[1]
       var hasAnswerValue = answerValue !== null &&
                           answerValue !== undefined &&
                           answerValue !== ''

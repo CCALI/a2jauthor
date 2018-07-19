@@ -26,7 +26,7 @@
 
 <div id="authortool"
   class="hidestart authortool bootstrap-styles"
-  {{#if previewMode}}style:from="'display: none;'"{{/if}}>
+  {{#if previewMode}}style="display: none;"{{/if}}>
 
   <div id="cajaheader" class="hidestart">
     <app-header vm:page:from="page" vm:title:from="guide.title"/>
@@ -34,7 +34,7 @@
 
   <div class="guideio"></div>
   <div class="">
-    <vertical-navbar theme:raw="inverse" page:from="page" vm:guideId:from="guideId"></vertical-navbar>
+    <vertical-navbar theme:raw="inverse" page:bind="page" guideId:from="guideId"></vertical-navbar>
   </div>
 
   <div class="guidepanels ui-widget xui-widget-content">
@@ -46,9 +46,8 @@
       vm:open:bind="globalAlertProps.open"
       vm:alertType:from="globalAlertProps.alertType"
     >
-      {{{globalAlertProps.message}}}
+      {{{../globalAlertProps.message}}}
     </app-alert>
-
     <!-- About Tab -->
     <div class="tab-panel bootstrap-styles" id="tabsAbout">
       <div class="tabContentFrame page">

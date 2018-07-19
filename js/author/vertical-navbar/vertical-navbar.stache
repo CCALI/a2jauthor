@@ -7,9 +7,9 @@
   <img class="logo img-responsive" src="images/a2j-circle.svg" alt="Access to Justice Logo" />
 
   <nav class="nav navbar-nav">
-    {{#each items}}
+    {{#each (items)}}
       <li ref="{{ref}}" class="{{#if active}}active{{/if}}">
-        <a href="#" on:el:click="setPage(this)">
+        <a href="#" on:el:click="scope.vm.setPage(this)">
           <span class="icon {{icon}}"></span>
           <span class="title">{{title}}</span>
         </a>

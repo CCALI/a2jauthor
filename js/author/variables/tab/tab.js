@@ -1,6 +1,6 @@
-import CanMap from 'can-map';
-import Component from 'can-component';
-import template from './tab.stache';
+import CanMap from 'can-map'
+import Component from 'can-component'
+import template from './tab.stache'
 import parser from 'caja/viewer/mobile/util/parser'
 import { promptFile } from 'caja/author/utils/uploader'
 import queues from 'can-queues'
@@ -18,7 +18,7 @@ export const VariablesTabVM = CanMap.extend({
           const vars = guide.attr('vars')
           if (vars) {
             const variables = []
-            vars.each(value => variables.push(value))
+            vars.forEach(value => variables.push(value))
             return variables.sort((a, b) =>
               (a.name || '').localeCompare(b.name || '')
             )
@@ -98,17 +98,17 @@ export const VariablesTabVM = CanMap.extend({
       .then(file => {
         return new Promise((resolve, reject) => {
           const reader = new window.FileReader()
-        reader.onloadend = () => resolve(reader.result)
-        reader.onerror = error => reject(error)
-        reader.readAsText(file)
+          reader.onloadend = () => resolve(reader.result)
+          reader.onerror = error => reject(error)
+          reader.readAsText(file)
+        })
       })
-    })
       .then(text => {
         return parser.parseHotDocsXML(text)
-    })
+      })
       .then(tuples => {
         this.addUploadedVariables(tuples)
-    })
+      })
   },
 
   addUploadedVariables (cmpTuples) {

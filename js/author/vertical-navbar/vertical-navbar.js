@@ -24,8 +24,16 @@ import 'can-map-define'
  *
  * `<vertical-navbar>`'s viewModel.
  */
-export let VerticalNavbarVM = CanMap.extend({
+export let VerticalNavbarVM = CanMap.extend('VerticalNavbarVM', {
   define: {
+    /**
+     * @property {String} verticalNavbar.ViewModel.prototype.define.page page
+     * @parent verticalNavbar.ViewModel
+     *
+     * Used to track the currently selected tab
+     */
+    page: {},
+
     /**
      * @property {can.List} verticalNavbar.ViewModel.prototype.define.items items
      * @parent verticalNavbar.ViewModel

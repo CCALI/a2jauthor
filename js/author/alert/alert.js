@@ -1,7 +1,6 @@
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './alert.stache'
-import canDomEvents from 'can-dom-events'
 import $ from 'jquery'
 import 'can-map-define'
 
@@ -189,7 +188,7 @@ export default Component.extend({
       if (open) {
         $el.slideDown()
       } else {
-        $el.slideUp(() => canDomEvents.dispatch(vm, 'closed'))
+        $el.slideUp()
         vm.clearAutoCloseTimeout()
       }
     }

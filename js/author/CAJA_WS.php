@@ -509,6 +509,7 @@ switch ($command){
 		if ($command=="guideZIPLHIQA") {
 			$LHI_POST_URL = "https://rebuildqa.lawhelpinteractive.org/Upload/A2JLoader.aspx?Session=" . $gid;
 		} else if ($command=="guideZIPLHIDEV") {
+			// $LHI_POST_URL = "https://dev.lawhelpinteractive.org/Upload/A2JLoader.aspx?Session=" . $gid;
 			$LHI_POST_URL = "https://dev.lawhelpinteractive.org/Upload/A2JLoader.aspx?Session=" . $gid;
 		} else if ($command=="guideZIPMARLABS") {
 			$LHI_POST_URL = "http://lhiuat.cloudapp.net/Upload/A2JLoader.aspx?Session=" . $gid;
@@ -516,34 +517,39 @@ switch ($command){
 			$LHI_POST_URL = "https://lawhelpinteractive.org/Upload/A2JLoader.aspx?Session=" . $gid; // LHI production site
 		}
 
-		$ch = curl_init($LHI_POST_URL);
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $LHI_POST_URL);
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER ,true);
 		// PHP 5.6 and newer requires CURLOPT_SAFE_UPLOAD set to false
-		curl_setopt($ch, CURLOPT_SAFE_UPLOAD, false);
+		// PHP 7.2 does not allow it
+		// curl_setopt($ch, CURLOPT_SAFE_UPLOAD, false);
+		$cfile = makeCurlFile($zipFull);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, array(
-			'file' => '@'. $zipFull
+			'file' => $cfile,
+			'gid' => $gid
 		));
 		// because Marlabs is using a self-signed cert we need to tell CURL to just carry on
 		// this should be removed in production
 		// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		// curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
 		$res  = curl_exec($ch);
 		if ($res === FALSE) {
-		  die(curl_error($ch));
+			$err = curl_error($ch);
+		  // die(curl_error($ch));
 		}
 		// Extract strURL markup from  LHI's HTML response and return to caller.
-		//var_dump($res);
-		//die;
 		$tag = "strURL";
 		$tagstart=strpos($res,"<$tag>");
 		$tagend=strpos($res,"</$tag>",$tagstart);
 		if ($tagstart!==false) {
-		  $res=trim(substr($res,$tagstart+strlen($tag)+2,$tagend-$tagstart-strlen($tag)-2));
+			$res=trim(substr($res,$tagstart+strlen($tag)+2,$tagend-$tagstart-strlen($tag)-2));
 		}
 		// $result['url']=$res ;
 		$result['url']=$LHI_POST_URL;
 		// Caller should open a new window with this URL.
 		// The new window is where author completes LHI process completely separate from A2J Author site.
+		curl_close ($ch);
 		break;
 
 	case 'guidepublish': // 11-01-26 This button/case removed from app.stache during public testing
@@ -605,7 +611,13 @@ echo $return;
 /**********************************************************/
 /************** helper functions **************************/
 /**********************************************************/
-
+function makeCurlFile($file) {
+	$mime = mime_content_type($file);
+	$info = pathinfo($file);
+	$name = $info['basename'];
+	$output = new CURLFile($file, $mime, $name);
+	return $output;
+}
 
 function check_for_upload_errors($upload_name) {
 	$upload_errors = [

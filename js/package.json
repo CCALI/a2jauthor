@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "bit-tabs": "0.2.0",
-    "blueimp-file-upload": "^9.10.1",
+    "blueimp-file-upload": "^9.22.0",
     "bootstrap": "3.3.5",
     "bootstrap-tokenfield": "^0.12.0",
     "can": "^2.3.33",

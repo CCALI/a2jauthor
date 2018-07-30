@@ -42,12 +42,13 @@
       autoClose:raw="true"
       dismissible:raw="true"
       class="global-alert"
-      vm:autoCloseTimeout:from="20000"
-      vm:open:bind="globalAlertProps.open"
-      vm:alertType:from="globalAlertProps.alertType"
+      autoCloseTimeout:raw="20000"
+      open:bind="globalAlertProps.open"
+      alertType:from="globalAlertProps.alertType"
     >
-      {{{../globalAlertProps.message}}}
+    {{{../globalAlertProps.message}}}
     </app-alert>
+
     <!-- About Tab -->
     <div class="tab-panel bootstrap-styles" id="tabsAbout">
       <div class="tabContentFrame page">
@@ -257,7 +258,7 @@
 
     <!-- Interview Tab -->
     <div class="tab-panel has-toolbar" id="tabsGuides">
-      {{#is page "interviews"}}
+      {{#is(page, "interviews")}}
         <interviews-toolbar vm:interviews:bind="interviews"></interviews-toolbar>
         <interviews-page vm:interviews:bind="interviews" vm:traceLogicList:bind="traceLogicList" vm:viewerInterview:bind="viewerInterview"></interviews-page>
       {{/is}}

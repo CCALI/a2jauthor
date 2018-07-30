@@ -5,6 +5,8 @@ import A2JVariable from './a2j-variable'
 import _isEmpty from 'lodash/isEmpty'
 import {Gender, Hair, Skin} from 'caja/viewer/desktop/avatar/colors'
 
+import 'can-map-define'
+
 // with the existing Guide model that works with a different data structure.
 let Guide = CanMap.extend('AppStateGuide', {
   define: {
@@ -38,7 +40,7 @@ let Guide = CanMap.extend('AppStateGuide', {
  *
  * This is the global application state.
  */
-export default CanMap.extend({
+export default CanMap.extend('AuthorAppState', {
   define: {
     /**
     * @property {String} selectedReport
@@ -197,13 +199,15 @@ export default CanMap.extend({
     },
 
     /**
-     * @property {String} viewerAlertMessages
+     * @property {CanList} viewerAlertMessages
      *
      * List of error messages meant to be displayed to the user (author) in
      * preview mode.
      */
     viewerAlertMessages: {
-      Value: CanList,
+      value () {
+        return new CanList()
+      },
       serialize: false
     },
 

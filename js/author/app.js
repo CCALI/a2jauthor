@@ -12,10 +12,11 @@ import 'calculator/jquery.calculator'
 import 'calculator/jquery.calculator.css'
 import 'bootstrap/js/dropdown.js'
 
+import 'can-3-4-compat/dom-mutation-events'
 import can from 'can-namespace'
 window.can = can
 
-let appState = new AppState()
+const appState = new AppState()
 
 route.data = appState
 route.register('{page}', {page: 'interviews'})
@@ -23,6 +24,7 @@ route.register('{page}/{guideId}')
 route.register('{page}/{action}/{guideId}-{templateId}')
 
 route.start()
+
 stache.registerPartial('viewer-preview-layout', viewerPreviewTpl)
 
 $('body').on('click', 'a[href="#"]', ev => ev.preventDefault())

@@ -30,7 +30,7 @@ export const ViewerAppState = CanMap.extend({
       type: 'boolean',
       serialize: false,
       get () {
-        return route.attr('page') === 'preview'
+        return route.data.attr('page') === 'preview'
       }
     },
 

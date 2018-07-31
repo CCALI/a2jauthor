@@ -10,6 +10,12 @@ import 'can-map-define'
 
 export const InterviewsVM = CanMap.extend({
   define: {
+    interviews: {
+      serialize: false
+    },
+    interviewsPromise: {
+      serialize: false
+    },
     blankInterview: {
       get () {
         return {
@@ -55,7 +61,7 @@ export const InterviewsVM = CanMap.extend({
     if (interviews) {
       let index = -1
 
-      interviews.each(function (interview, i) {
+      interviews.forEach(function (interview, i) {
         if (interview.attr('id') === id) {
           index = i
           return false
@@ -96,7 +102,7 @@ export default Component.extend({
       // even if we don't change interviews
       vm.clearPreviewState()
 
-      let updateGuidePromise = $.Deferred().resolve()
+      let updateGuidePromise = Promise.resolve()
       setupPromise(updateGuidePromise)
 
       // if there is a loaded guide when this component is inserted,

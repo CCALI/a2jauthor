@@ -2,7 +2,7 @@ import $ from 'jquery'
 import CanList from 'can-list'
 import Model from 'can-model'
 import canAjax from 'can-ajax'
-import queues from "can-queues"
+import queues from 'can-queues'
 import _forEach from 'lodash/forEach'
 import _last from 'lodash/last'
 import _keys from 'lodash/keys'
@@ -15,8 +15,8 @@ import Answers from 'caja/viewer/models/answers'
 import parser from 'caja/viewer/mobile/util/parser'
 import {Hair, Skin} from 'caja/viewer/desktop/avatar/colors'
 import setupPromise from 'can-reflect-promise'
+import naturalCompare from 'string-natural-compare/'
 
-import 'can-list-sort'
 import 'can-map-define'
 
 /**
@@ -221,14 +221,6 @@ const Interview = Model.extend({
         let answers = this.attr('answers')
         let vars = this.attr('vars').attr()
 
-        // sort list using "natural string" sort.
-        list.attr('comparator', function (a, b) {
-          let aName = a.attr('name')
-          let bName = b.attr('name')
-
-          return aName.localeCompare(bName, {numeric: true})
-        })
-
         _keys(vars).forEach(function (key) {
           let variable = vars[key]
           let answer = answers.attr(key.toLowerCase())
@@ -263,13 +255,13 @@ const Interview = Model.extend({
           }
         })
 
-        return list
+        return list.sort(function (a, b) { return naturalCompare.caseInsensitive(a.name, b.name) })
       }
     }
   },
 
   clearAnswers () {
-    // canBatch required for Author preview mode with long var/answer lists
+    // batch.start required for Author preview mode with long var/answer lists
     queues.batch.start()
 
     this.attr('answers').each((answer) => {

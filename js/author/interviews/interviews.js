@@ -4,18 +4,41 @@ import Component from 'can-component'
 import CanList from 'can-list'
 import Guide from 'caja/author/models/guide'
 import template from './interviews.stache'
-import setupPromise from 'can-reflect-promise'
 
 import 'can-map-define'
 
 export const InterviewsVM = CanMap.extend({
   define: {
     interviews: {
-      serialize: false
+      serialize: false,
+      get (lastSet, resolve) {
+        this.attr('interviewsPromise')
+          .then(resolve)
+      }
     },
+
     interviewsPromise: {
-      serialize: false
+      serialize: false,
+      get  () {
+        return this.attr('saveCurrentGuidePromise')
+          .then(() => Guide.findAll())
+      }
     },
+
+    saveCurrentGuidePromise: {
+      get () {
+        // this assures any changes to current guide are saved before loading
+        // interviews list TODO: remove when legacy code refactored to CanJS
+        return new Promise(function (resolve, reject) {
+          if (window.gGuide) {
+            window.guideSave(resolve)
+          } else {
+            resolve()
+          }
+        })
+      }
+    },
+
     blankInterview: {
       get () {
         return {
@@ -96,37 +119,11 @@ export default Component.extend({
 
   events: {
     inserted: function () {
-      const vm = this.viewModel
-
       // clear debug-panel traceLogicList and preview answers
       // even if we don't change interviews
+      // TODO: this should be moved to happen when a new interview is opened
+      const vm = this.viewModel
       vm.clearPreviewState()
-
-      let updateGuidePromise = Promise.resolve()
-      setupPromise(updateGuidePromise)
-
-      // if there is a loaded guide when this component is inserted,
-      // save the guide first and then fetch the guides.
-      // https://github.com/CCALI/CAJA/issues/527
-      if (window.gGuide) {
-        updateGuidePromise = $.Deferred()
-        setupPromise(updateGuidePromise)
-
-        window.guideSave(function () {
-          updateGuidePromise.resolve()
-        })
-      }
-
-      const interviewsPromise = updateGuidePromise
-        .then(function () {
-          return Guide.findAll()
-        })
-        .then(function (interviews) {
-          vm.attr('interviews', interviews)
-        })
-      setupPromise(interviewsPromise)
-
-      vm.attr('interviewsPromise', interviewsPromise)
     },
 
     '.guide click': function (target) {

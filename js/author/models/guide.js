@@ -19,7 +19,10 @@ import 'can-map-define'
  *
  */
 const Guide = Model.extend({
-  findAll: 'POST CAJA_WS.php',
+  findAll: {
+    method: 'POST',
+    url: 'CAJA_WS.php'
+  },
 
   makeFindAll (findAllData) {
     return function (params, success, error) {

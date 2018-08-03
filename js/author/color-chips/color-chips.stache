@@ -3,7 +3,7 @@
   {{#each colorClasses}}
     <li
       class="color-chip {{.}} {{#is (this, scope.vm.selectedColorClass)}}selected-chip{{/is}}"
-      on:el:click="onSelect(.)"
+      on:el:click="scope.vm.onSelect(.)"
     ></li>
   {{/each}}
 </ul>

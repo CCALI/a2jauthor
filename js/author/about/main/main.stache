@@ -58,7 +58,7 @@
                 {{#is guide.guideGender 'male'}}
                   checked
                 {{/is}}
-                on:el:change='updateAvatarGender(%event)'
+                on:el:change='updateAvatarGender(scope.event)'
               />
               <span>Male</span>
             </label>
@@ -68,14 +68,14 @@
           <label>Guide Skin Tone:</label>
           <skin-picker
             vm:selectedSkin:from="guide.avatarSkinTone"
-            vm:onSkin:from="@updateSkinTone"
+            vm:onSkin:from="updateSkinTone"
           />
         </div>
         <div>
           <label>Guide Hair Color:</label>
           <hair-picker
             vm:selectedHair:from="guide.avatarHairColor"
-            vm:onHair:from="@updateHairColor"
+            vm:onHair:from="updateHairColor"
           />
         </div>
       </div>

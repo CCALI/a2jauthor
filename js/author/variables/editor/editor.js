@@ -1,7 +1,7 @@
-import CanMap from "can-map";
-import Component from "can-component";
-import template from "./editor.stache";
-import constants from "caja/viewer/models/constants";
+import CanMap from 'can-map'
+import Component from 'can-component'
+import template from './editor.stache'
+import constants from 'caja/viewer/models/constants'
 
 export const VariableEditorVM = CanMap.extend({
   define: {
@@ -21,140 +21,144 @@ export const VariableEditorVM = CanMap.extend({
     */
 
     initialVariable: {
-      set(initialVariable) {
-        const variable = initialVariable || {};
-        this.attr("variableName", variable.name);
-        this.attr("variableType", variable.type);
-        this.attr("variableComment", variable.comment);
-        this.attr("variableIsRepeating", variable.repeating);
-        return initialVariable;
+      set (initialVariable) {
+        const variable = initialVariable || {}
+        this.attr('variableName', variable.name)
+        this.attr('variableType', variable.type)
+        this.attr('variableComment', variable.comment)
+        this.attr('variableIsRepeating', variable.repeating)
+        return initialVariable
       }
     },
 
     variableNameMaxLength: {
-      get() {
-        const { gPrefs } = window;
+      get () {
+        const { gPrefs } = window
         if (!gPrefs || !gPrefs.warnHotDocsNameLength) {
-          return false;
+          return false
         }
 
-        return constants.MAXVARNAMELENGTH;
+        return constants.MAXVARNAMELENGTH
       }
     },
 
     variableName: {
-      value: "",
-      set(x = "") {
-        this.emitVariable();
-        return x;
+      value: '',
+      set (x = '') {
+        this.emitVariable()
+        return x
       }
     },
     variableType: {
-      value: "Text",
-      set(x = "Text") {
-        this.emitVariable();
-        return x;
+      value: 'Text',
+      set (x = 'Text') {
+        this.emitVariable()
+        return x
       }
     },
     variableComment: {
-      value: "",
-      set(x = "") {
-        this.emitVariable();
-        return x;
+      value: '',
+      set (x = '') {
+        this.emitVariable()
+        return x
       }
     },
     variableIsRepeating: {
       value: false,
-      set(x = false) {
-        this.emitVariable();
-        return x;
+      set (x = false) {
+        this.emitVariable()
+        return x
       }
     },
 
+    variableUsageHtml: {},
+
+    existingVariableNames: {},
+
     variableSuggestions: {
-      get() {
-        const initialVariable = this.attr("initialVariable");
-        const hasWorkingVariable = !!initialVariable;
+      get () {
+        const initialVariable = this.attr('initialVariable')
+        const hasWorkingVariable = !!initialVariable
         if (hasWorkingVariable) {
-          return [];
+          return []
         }
 
-        const text = this.attr("variableName").toLowerCase();
+        const text = this.attr('variableName').toLowerCase()
         if (!text) {
-          return [];
+          return []
         }
 
-        let names = this.attr("existingVariableNames");
+        let names = this.attr('existingVariableNames')
         if (!names) {
-          return [];
+          return []
         }
 
-        const maxSuggestionCount = 5;
+        const maxSuggestionCount = 5
         return names
           .serialize()
           .filter(name => {
-            const containsText = name.toLowerCase().indexOf(text) !== -1;
-            return containsText;
+            const containsText = name.toLowerCase().indexOf(text) !== -1
+            return containsText
           })
           .sort((a, b) => a.localeCompare(b))
-          .slice(0, maxSuggestionCount);
+          .slice(0, maxSuggestionCount)
       }
     }
   },
 
-  emitVariable() {
+  emitVariable () {
     if (this._willEmit) {
-      return;
+      return
     }
 
-    this._willEmit = true;
+    this._willEmit = true
     setTimeout(() => {
-      this._willEmit = false;
+      this._willEmit = false
 
-      const onVariableChange = this.attr("onVariableChange");
+      const onVariableChange = this.attr('onVariableChange')
       if (!onVariableChange) {
-        return;
+        return
       }
 
       const variable = {
-        name: this.attr("variableName"),
-        type: this.attr("variableType"),
-        comment: this.attr("variableComment"),
-        repeating: this.attr("variableIsRepeating")
-      };
+        name: this.attr('variableName'),
+        type: this.attr('variableType'),
+        comment: this.attr('variableComment'),
+        repeating: this.attr('variableIsRepeating')
+      }
 
-      onVariableChange(variable);
-    }, 0);
+      onVariableChange(variable)
+    }, 0)
   },
 
-  onSuggestionSelect(name) {
-    const onSelectSuggestion = this.attr("onSelectSuggestion");
+  onSuggestionSelect (name) {
+    const onSelectSuggestion = this.attr('onSelectSuggestion')
     if (!onSelectSuggestion) {
-      return;
+      return
     }
 
-    this.onSelectSuggestion(name);
+    this.onSelectSuggestion(name)
   },
 
-  onFindUsage() {
-    const variableName = this.attr("variableName");
-    const html = window.vcGatherUsage(variableName);
-    this.attr("variableUsageHtml", html);
+  onFindUsage () {
+    const variableName = this.attr('variableName')
+    const html = window.vcGatherUsage(variableName)
+    this.attr('variableUsageHtml', html)
   }
-});
+})
 
 export default Component.extend({
   view: template,
   leakScope: false,
   ViewModel: VariableEditorVM,
-  tag: "variable-editor",
+  tag: 'variable-editor',
   events: {
-    ".findBtn click"(target, event) {
-      event.preventDefault();
-      this.viewModel.onFindUsage();
+    '.findBtn click' (target, event) {
+      event.preventDefault()
+      this.viewModel.onFindUsage()
     },
-    ".var-name input"(target, event) {
-      this.viewModel.attr("variableName", event.target.value);
+    '.var-name input' (target, event) {
+      this.viewModel.attr('variableName', event.target.value)
     }
   }
-});
+})

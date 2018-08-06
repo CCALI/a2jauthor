@@ -5,6 +5,12 @@ import $ from 'jquery'
 
 export const ModalVM = CanMap.extend({
   define: {
+    modalTitle: {},
+    isLarge: {},
+    leftButtonText: {},
+    leftButtonIcon: {},
+    cancelText: {},
+    submitText: {}
     /*
       modalTitle: String
       isLarge: Boolean

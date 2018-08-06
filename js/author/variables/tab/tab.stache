@@ -36,7 +36,7 @@
       </thead>
       <tbody>
         {{#each variableList}}
-          <tr on:el:click="openVariableEditor(name)">
+          <tr on:el:click="scope.vm.openVariableEditor(name)">
             <td>{{name}}</td>
             <td>{{type}}</td>
             <td>
@@ -57,17 +57,17 @@
 
 {{#if showVariableModal}}
   <author-modal
-    modal-title:from='"Variable"'
-    cancel-text:from="'Delete'"
-    submit-text:from="'Save'"
-    vm:@onCancel:from="@onDismissVariableEditing"
-    vm:@onSubmit:from="@onConfirmVariableEditing"
+    modalTitle:raw="Variable"
+    cancelText:raw="Delete"
+    submitText:raw="Save"
+    vm:onCancel:from="onDismissVariableEditing"
+    vm:onSubmit:from="onConfirmVariableEditing"
   >
     <variable-editor
-      vm:@initialVariable:from="@editingVariable"
-      vm:@showUsageFinder:from="true"
-      vm:@onVariableChange:from="@onVariableChange"
-      vm:@onSelectSuggestion:from="@onSelectSuggestion"
+      vm:initialVariable:from="editingVariable"
+      vm:showUsageFinder:raw="true"
+      vm:onVariableChange:from="onVariableChange"
+      vm:onSelectSuggestion:from="onSelectSuggestion"
     />
   </author-modal>
 {{/if}}

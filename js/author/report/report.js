@@ -288,7 +288,7 @@ export const ReportVM = CanMap.extend('ReportVM', {
    */
   getVariableList (guideVariables) {
     let sortedList = []
-    guideVariables.each(tVariable => {
+    guideVariables.forEach(tVariable => {
       sortedList.push(tVariable)
     })
     return sortedList.sort(function (a, b) { return naturalCompare.caseInsensitive(a.name, b.name) })

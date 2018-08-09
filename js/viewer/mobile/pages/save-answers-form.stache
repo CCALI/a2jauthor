@@ -5,6 +5,8 @@
       action="{{pState.setDataURL}}">
 
   <input type="hidden" name="AnswerKey" {$value}="answersANX" />
+  <input type="hidden" name="fileDataUrl" {$value}="mState.fileDataURL">
+  <input type="hidden" name="AnswerKeyJSON" {$value}="answersJSON" />
 
   <button type="submit"
           ($click)="navigate"

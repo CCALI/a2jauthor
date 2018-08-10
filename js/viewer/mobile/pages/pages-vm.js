@@ -5,6 +5,7 @@ import _forEach from 'lodash/forEach'
 import queues from 'can-queues'
 import AnswerVM from 'caja/viewer/models/answervm'
 import Parser from 'caja/viewer/mobile/util/parser'
+import { gGuideMeta } from 'caja/author/src/viewer/A2J_Types'
 import {ViewerNavigationVM} from 'caja/viewer/desktop/navigation/navigation'
 import {Analytics} from 'caja/viewer/util/analytics'
 import { FieldVM } from './fields/field/field'
@@ -118,7 +119,7 @@ export default CanMap.extend('PagesVM', {
      */
     guideId: {
       get () {
-        return window.gGuideID
+        return gGuideMeta.gGuideID
       }
     },
 
@@ -200,7 +201,7 @@ export default CanMap.extend('PagesVM', {
       const answers = logic.attr('interview.answers')
       if (answers) {
         let vm = new FieldVM()
-        fields.each(function (field) {
+        fields.forEach(function (field) {
           const type = field.attr('type')
           // These types work with native code because you have to click to select
           // which fires the blue/change event to validate the answer
@@ -543,7 +544,7 @@ export default CanMap.extend('PagesVM', {
         answerIndex = (repeatVarCount != null) ? repeatVarCount : answerIndex
       }
 
-      fields.each(field => {
+      fields.forEach(field => {
         const answer = this.__ensureFieldAnswer(field)
         const avm = new AnswerVM({ field, answerIndex, answer, fields })
 

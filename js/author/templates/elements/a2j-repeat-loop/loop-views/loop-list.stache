@@ -32,7 +32,7 @@
       <ul style="list-style-type: {{listStyleType}}; margin-bottom: 20px;">
         {{#each listItems}}
           <li>
-            {{item}}: <a2j-variable vm:name:from="variable" vm:varIndex:from="../%index" />
+            {{item}}: <a2j-variable vm:name:from="variable" vm:varIndex:from="../scope.index" />
           </li>
         {{/each}}
       </ul>

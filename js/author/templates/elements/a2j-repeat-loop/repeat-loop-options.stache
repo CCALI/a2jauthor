@@ -106,7 +106,7 @@
               <span class="label label-success" on:el:click="addColumn()">+</span>
 
               {{#showRemoveButton(scope.index)}}
-                <span class="label label-danger" on:el:click="removeColumn(%index)">-</span>
+                <span class="label label-danger" on:el:click="removeColumn(scope.index)">-</span>
               {{/showRemoveButton}}
             </div>
           </div>
@@ -159,8 +159,8 @@
               <div class="col-md-4 table-column-buttons">
                 <span class="label label-success" on:el:click="addListItem()">+</span>
 
-                {{#showRemoveButton(%index)}}
-                  <span class="label label-danger" on:el:click="removeListItem(%index)">-</span>
+                {{#showRemoveButton(scope.index)}}
+                  <span class="label label-danger" on:el:click="removeListItem(scope.index)">-</span>
                 {{/showRemoveButton}}
               </div>
             </div>

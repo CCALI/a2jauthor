@@ -4,7 +4,7 @@
 
 {{#if currentStep}}
   <div class="step-current">
-    <div class="app-step" el:style:from="formatStepStyles( getStepWidth(true) )">
+    <div class="app-step" el:style:from="scope.vm.formatStepStyles( scope.vm.getStepWidth(true) )">
       <div class="step-circle bg-step{{currentStep.number}}"></div>
     </div>
 
@@ -35,7 +35,7 @@
         <span class="bubble-arrow"></span>
         <a2j-viewer-avatar
           kind="guide"
-          vm:@avatarLoaded:from="@avatarLoaded"
+          vm:avatarLoaded:from="avatarLoaded"
           vm:skin:from="guideAvatarSkinTone"
           vm:hair:from="guideAvatarHairColor"
           vm:gender:from="interview.guideAvatarGender"
@@ -49,7 +49,7 @@
           <a2j-viewer-avatar
             kind="client"
             facing="left"
-            vm:@avatarLoaded:from="@avatarLoaded"
+            vm:avatarLoaded:from="avatarLoaded"
             vm:skin:from="clientAvatarSkinTone"
             vm:hair:from="clientAvatarHairColor"
             vm:gender:from="interview.userGender" />
@@ -78,7 +78,7 @@
           </span>
         </div> <!-- sign circle -->
         <div class="sign-content">
-          <span title="{{getTextForStep(currentStep)}}">{{getDisplayTextForStep(currentStep)}}</span>
+          <span title="{{scope.vm.getTextForStep(currentStep)}}">{{scope.vm.getDisplayTextForStep(currentStep)}}</span>
         </div> <!-- sign content -->
       </div> <!-- sign outer -->
     </div> <!-- sign wrapper -->
@@ -89,9 +89,9 @@
   <div class="next-wrapper">
     {{#each nextSteps}}
       <div id="next-{{ add(scope.index, 2) }}"
-        class="step-next next-{{ add(%index, 2) }} step-{{ add(%index, 2) }}">
+        class="step-next next-{{ add(scope.index, 2) }} step-{{ add(scope.index, 2) }}">
 
-        <div class="app-step" el:style:from="formatStepStyles( getStepWidth(false, %index) )">
+        <div class="app-step" el:style:from="scope.vm.formatStepStyles( scope.vm.getStepWidth(false, scope.index) )">
           <div class="step-circle bg-step{{number}}"></div>
         </div>
 
@@ -101,7 +101,7 @@
               <span class="circle-content">{{number}}</span>
             </div> <!-- sign circle -->
             <div class="sign-content">
-              <span title="{{getTextForStep(.)}}">{{getDisplayTextForStep(.)}}</span>
+              <span title="{{scope.vm.getTextForStep(.)}}">{{scope.vm.getDisplayTextForStep(.)}}</span>
             </div> <!-- sign content -->
           </div> <!-- sign outter -->
         </div> <!-- sign wrapper -->

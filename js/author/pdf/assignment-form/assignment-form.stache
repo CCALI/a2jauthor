@@ -68,7 +68,7 @@
                   type='radio'
                   name='overflow-style-1'
                   value='overflow-to-addendum'
-                  on:el:change='onOverflowStyleChange(%event)'
+                  on:el:change='onOverflowStyleChange(scope.event)'
                   {{#is variableBuffer.overflowStyle 'overflow-to-addendum'}}
                     checked='checked'
                   {{/is}}
@@ -80,7 +80,7 @@
                   type='radio'
                   name='overflow-style-2'
                   value='everything-to-addendum'
-                  on:el:change='onOverflowStyleChange(%event)'
+                  on:el:change='onOverflowStyleChange(scope.event)'
                   {{#is variableBuffer.overflowStyle 'everything-to-addendum'}}
                     checked='checked'
                   {{/is}}
@@ -92,7 +92,7 @@
                   type='radio'
                   name='overflow-style-3'
                   value='clip-overflow'
-                  on:el:change='onOverflowStyleChange(%event)'
+                  on:el:change='onOverflowStyleChange(scope.event)'
                   {{#is variableBuffer.overflowStyle 'clip-overflow'}}
                     checked='checked'
                   {{/is}}
@@ -121,7 +121,7 @@
                   type='radio'
                   name='pass-type'
                   value='pass-value'
-                  on:el:change='onPassValueChange(%event)'
+                  on:el:change='onPassValueChange(scope.event)'
                   {{^if variableBuffer.isCheck}}
                     checked='checked'
                   {{/if}}
@@ -133,7 +133,7 @@
                   type='radio'
                   name='pass-type'
                   value='pass-check'
-                  on:el:change='onPassValueChange(%event)'
+                  on:el:change='onPassValueChange(scope.event)'
                   {{#if variableBuffer.isCheck}}
                     checked='checked'
                   {{/if}}
@@ -155,7 +155,7 @@
                     {{/if}}
                     placeholder="Multiple choice value #{{scope.index}}"
                     value="{{.}}"
-                    on:el:change="onChoiceChange(%event, %index)"
+                    on:el:change="onChoiceChange(scope.event, scope.index)"
                   />
                 {{/each}}
               </div>
@@ -177,7 +177,7 @@
                   {{#if variableBuffer.isInverted}}
                     checked='checked'
                   {{/if}}
-                  on:el:change='onInvertChange(%event)'
+                  on:el:change='onInvertChange(scope.event)'
                 />
                 <span>If the variable is false, draw the checkmark.</span>
               </label>

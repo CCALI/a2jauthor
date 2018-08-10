@@ -11,6 +11,8 @@
 
 */
 
+import {CONST} from './viewer/A2J_Types'
+
 var gMapperScale = 1.0
 var gMapSize = 1 // 0 is small, 1 is normal
 
@@ -125,7 +127,7 @@ function mapLines () {
 function showPageOnMap () {}
 
 // Construct mapper flowcharts.
-function buildMap () {
+export function buildMap () {
   var page
   var $map = $('.map')
   var guidePages = gGuide.pages || {}
@@ -180,7 +182,7 @@ function buildMap () {
 }
 
 // JPM if showing/hiding page list, do that and zoom to fit
-function mapZoomSlide () {
+export function mapZoomSlide () {
   if ($('#tabsMap .col-4').hasClass('isHidden')) {
     $('#tabsMap .col-4').removeClass('isHidden')
     $('#tabsMap .col-4').animate({width: '30%'}, function (element) {})
@@ -207,7 +209,7 @@ function mapZoomSlide () {
 }
 
 // Zoom in or out or fit.
-function mapZoomClick () {
+export function mapZoomClick () {
   var zoom = $(this).attr('zoom')
   var $mapperPanel = $('#MapperPanel')
 

@@ -8,10 +8,16 @@
 	04/15/2013
 
 */
+import $ from 'jquery'
+import {TGuide, TPage, TField, TButton, gGuideMeta, gStartArgs, CONST} from './viewer/A2J_Types'
+import {gPrefs} from './viewer/A2J_Prefs'
+// import {form} from './A2J_Tabs'
 
-/* global gGuidePath,gPage,gGuide,gUserID,gGuideID,gUserNickName */
+var $pageEditDialog = null
 
-function pageNameFieldsForTextTab (pagefs, page) {	// Used by the Text tab.
+// import { updateTOC } from './A2J_Tabs'
+
+export function pageNameFieldsForTextTab (pagefs, page) {	// Used by the Text tab.
   // Include editable fields of all a page's text blocks.
   pagefs.append(form.htmlarea({label: 'Text:', value: page.text, change: function (val, page) { page.text = val }}))
   if (page.type !== CONST.ptPopup) {
@@ -105,9 +111,9 @@ function gotoPageView (destPageName, url) {
           traceAlert('Page is missing: ' + destPageName)
           traceLogic('Page is missing: ' + destPageName)
         } else {
-          gPage = page
+          gGuideMeta.gPage = page
           $('#authortool').hide()
-          A2JViewer.layoutPage($('.A2JViewer', '#page-viewer'), gPage)
+          A2JViewer.layoutPage($('.A2JViewer', '#page-viewer'), gGuideMeta.gPage)
           $('#page-viewer').removeClass('hidestart').show()
           A2JViewer.refreshVariables()// TODO more efficient updates
         }
@@ -115,7 +121,7 @@ function gotoPageView (destPageName, url) {
   }, 1)
 }
 
-function pageNameRelFilter (e, pageName) {	// Return all DOM elements whose REL points to page name.
+export function pageNameRelFilter (e, pageName) {	// Return all DOM elements whose REL points to page name.
   var rel = 'PAGE ' + pageName
   return $(e).filter(function () {
     return rel === $(this).attr('rel')
@@ -345,7 +351,7 @@ function gotoPageEdit (pageName) {
 }
 
 // Go to a tab or popup a page.
-function gotoTabOrPage (target) {
+export function gotoTabOrPage (target) {
   if (target.indexOf('PAGE ') === 0) {
     gotoPageEdit(target.substr(5))
     return
@@ -854,7 +860,7 @@ function guidePageEditForm (page, div, pagename)// novicePage
     div.append('<div class=xml>' + escapeHtml(page.xmla2j) + '</div>')
   }
 
-  gPage = page
+  gGuideMeta.gPage = page
   return page
 }
 

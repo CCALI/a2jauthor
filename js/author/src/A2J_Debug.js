@@ -12,12 +12,13 @@
 
 */
 
-function localGuideStart () {	// Load up command line specified local test file
+import {gStartArgs, gGuideMeta} from './viewer/A2J_Types'
+
+export function localGuideStart () {	// Load up command line specified local test file
   // trace("localGuideStart");
-  gUserNickName = 'Tester'
-  gUserID = 0
-  gGuideID = 0
-  $('#welcome .tabContent').html('Welcome ' + gUserNickName + ' user#' + gUserID + '<p id="guidelist"></p>')
+  gGuideMeta.gUserID = 0
+  gGuideMeta.gGuideID = 0
+  $('#welcome .tabContent').html('Welcome Tester, user#' + gUserID + '<p id="guidelist"></p>')
   if (gStartArgs.templateURL == 'new') {
     gGuide = blankGuide()
     guideStart('tabsPages')

@@ -1,6 +1,7 @@
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './toolbar.stache'
+import { openSelectedGuide } from 'caja/author/src/A2J_Guides'
 
 import 'can-map-define'
 
@@ -26,7 +27,7 @@ export default Component.extend({
     '.open-guide click': function () {
       const selectedGuide = $('a.guide.item-selected').first()
       const gid = selectedGuide[0].getAttribute('gid')
-      window.openSelectedGuide(gid)
+      openSelectedGuide(gid)
     },
 
     '.clone-guide click': function () {

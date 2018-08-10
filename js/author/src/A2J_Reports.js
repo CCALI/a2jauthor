@@ -11,6 +11,9 @@
 
 /* global gGuide, gLogic */
 
+import { setProgress } from './A2J_AuthorApp'
+import {gPrefs} from './viewer/A2J_Prefs'
+
 function longProcess (statusPrompt, process) {
   setProgress(statusPrompt, true)
 

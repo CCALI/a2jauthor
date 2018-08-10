@@ -7,6 +7,7 @@
 	Also can contain conditionals.
 
 */
+import { TGuide } from './viewer/A2J_Types'
 
 function clauseEdit (clause /* TClause */) {	// 2015-03-27 Clause editor
   var fs = form.fieldset('Clause', clause)
@@ -73,7 +74,7 @@ function clauseEdit (clause /* TClause */) {	// 2015-03-27 Clause editor
     ]})
 }
 
-function clauseAdd () { // Add new clause and edit.
+export function clauseAdd () { // Add new clause and edit.
   var c = new TClause()
   clauseEdit(c)
 }

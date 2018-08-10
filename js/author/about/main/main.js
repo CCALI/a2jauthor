@@ -1,18 +1,19 @@
-import CanMap from "can-map";
-import Component from "can-component";
-import template from './main.stache';
+import CanMap from 'can-map'
+import Component from 'can-component'
+import template from './main.stache'
+import { Languages } from 'caja/author/src/viewer/A2J_Languages'
 
 function getLanguageList () {
-  const langs = window.Languages.regional;
-  const locales = Object.keys(langs);
+  const langs = Languages.regional
+  const locales = Object.keys(langs)
   return locales.map(code => {
     const {
       locale,
       Language: name,
       LanguageEN: englishName
-    } = langs[code];
-    return {locale, name, englishName};
-  });
+    } = langs[code]
+    return {locale, name, englishName}
+  })
 }
 
 // TODO: Remove this when gGuide is.
@@ -28,30 +29,30 @@ function proxyGuideInfo (viewModel) {
     'jurisdiction',
     'language',
     'title'
-  ];
+  ]
 
   function onChange (event, attr) {
-    const rootKey = '%root.';
+    const rootKey = '%root.'
     if (attr.indexOf(rootKey) === 0) {
-      attr = attr.slice(rootKey.length);
+      attr = attr.slice(rootKey.length)
     }
 
-    const guideKey = 'guide.';
-    const isGuideAttr = attr.indexOf(guideKey) === 0;
+    const guideKey = 'guide.'
+    const isGuideAttr = attr.indexOf(guideKey) === 0
     if (!isGuideAttr) {
-      return;
+      return
     }
 
-    const guideAttr = attr.slice(guideKey.length);
+    const guideAttr = attr.slice(guideKey.length)
     if (mirrorProperties.indexOf(guideAttr) !== -1) {
-      window.gGuide[guideAttr] = viewModel.attr(attr);
+      window.gGuide[guideAttr] = viewModel.attr(attr)
     }
   }
 
-  viewModel.bind('change', onChange);
+  viewModel.bind('change', onChange)
   return function () {
-    viewModel.unbind('change', onChange);
-  };
+    viewModel.unbind('change', onChange)
+  }
 }
 
 export const AboutMainVm = CanMap.extend({
@@ -61,30 +62,30 @@ export const AboutMainVm = CanMap.extend({
         return getLanguageList().map(language => ({
           value: language.locale,
           displayName: `${language.name} (${language.englishName}) {${language.locale}}`
-        }));
+        }))
       }
     }
   },
 
   updateLanguagePack () {
-    const language = this.attr('guide.language');
-    window.Languages.set(language);
+    const language = this.attr('guide.language')
+    Languages.set(language)
   },
 
   updateAvatarGender (event) {
-    const {checked, value} = event.target;
-    const gender = checked && value.toLowerCase() === 'male' ? 'male' : 'female';
-    this.attr('guide.guideGender', gender);
+    const {checked, value} = event.target
+    const gender = checked && value.toLowerCase() === 'male' ? 'male' : 'female'
+    this.attr('guide.guideGender', gender)
   },
 
   updateSkinTone (skinTone) {
-    this.attr('guide.avatarSkinTone', skinTone);
+    this.attr('guide.avatarSkinTone', skinTone)
   },
 
   updateHairColor (hairColor) {
-    this.attr('guide.avatarHairColor', hairColor);
+    this.attr('guide.avatarHairColor', hairColor)
   }
-});
+})
 
 export default Component.extend({
   tag: 'about-main',
@@ -94,15 +95,15 @@ export default Component.extend({
   events: {
     inserted () {
       if (this.cancelProxy) {
-        return;
+        return
       }
-      this.cancelProxy = proxyGuideInfo(this.viewModel);
+      this.cancelProxy = proxyGuideInfo(this.viewModel)
     },
-    "{element} beforeremove" () {
+    '{element} beforeremove' () {
       if (this.cancelProxy) {
-        this.cancelProxy();
-        this.cancelProxy = undefined;
+        this.cancelProxy()
+        this.cancelProxy = undefined
       }
     }
   }
-});
+})

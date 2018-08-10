@@ -4,6 +4,7 @@ import assert from 'assert'
 import stache from 'can-stache'
 import CanList from 'can-list'
 import { InterviewsVM } from './interviews'
+import { openSelectedGuide } from 'caja/author/src/A2J_Guides'
 
 import 'steal-mocha'
 
@@ -95,7 +96,7 @@ describe('<interviews-page>', function () {
       F(done)
     })
 
-    window.openSelectedGuide = (gid) => {
+    openSelectedGuide = (gid) => {
       vm.attr('currentGuideId', gid)
     }
 

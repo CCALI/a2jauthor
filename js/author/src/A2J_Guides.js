@@ -8,7 +8,13 @@
 
 */
 
-/* global gGuidePath,gPage,gGuide,gUserID,gGuideID,gUserNickName */
+import { gEnv, gStartArgs, gGuideMeta, CONST } from './viewer/A2J_Types'
+import { gotoTabOrPage } from './A2J_Pages'
+import { setProgress, ws } from './A2J_AuthorApp'
+import { parseXML_Auto_to_CAJA, exportXML_CAJA_from_CAJA } from './viewer/A2J_Parser'
+import { urlSplit, makestr } from './viewer/A2J_Shared'
+import { updateTOC, updateAttachmentFiles } from './A2J_Tabs'
+import {buildMap} from './A2J_Mapper'
 
 /**
  * Parses data returned from the server
@@ -41,13 +47,13 @@ function guideLoaded (data) {
     return
   }
 
-  window.gGuideID = data.gid
+  gGuideMeta.gGuideID = data.gid
   window.gGuide = parseXML_Auto_to_CAJA(cajaDataXML)
   // used for piwik dashboard
   window.gGuide.authorId = data.userid
-  window.gGuidePath = urlSplit(data.path).path
+  gGuideMeta.gGuidePath = urlSplit(data.path).path
 
-  $('#author-app').trigger('author:item-selected', gGuideID)
+  $('#author-app').trigger('author:item-selected', gGuideMeta.gGuideID)
 
   guideStart('')
   setProgress('')
@@ -55,7 +61,7 @@ function guideLoaded (data) {
 
 // Recover most current guide saved in Versions folder
 function recoverSelectedGuide (guideId) {
-  window.ws({ cmd: 'guiderecover', gid: guideId },
+  ws({ cmd: 'guiderecover', gid: guideId },
     function recoverCallback (data) {
       if (data.error) {
         window.dialogAlert({
@@ -73,8 +79,8 @@ function recoverSelectedGuide (guideId) {
 }
 // Save current guide, but only if the XML has changed since last save to avoid upload overhead.
 // If successful or unsuccessful save, call onFinished.
-function guideSave (onFinished) {
-  if (gGuide !== null && gGuideID !== 0) {
+export function guideSave (onFinished) {
+  if (gGuide !== null && gGuideMeta.gGuideID !== 0) {
     var xml = exportXML_CAJA_from_CAJA(gGuide)
 
     setProgress('Saving ' + gGuide.title, true)
@@ -87,7 +93,7 @@ function guideSave (onFinished) {
 
       var params = {
         cmd: 'guidesave',
-        gid: gGuideID,
+        gid: gGuideMeta.gGuideID,
         guide: xml,
         title: gGuide.title,
         json: guideJSON_str
@@ -109,7 +115,7 @@ function guideSave (onFinished) {
   }
 }
 
-function loadNewGuidePrep () {
+export function loadNewGuidePrep () {
   $('.pageoutline').html('')
 }
 
@@ -127,7 +133,7 @@ function gotoPagesTab () {
       can.route.data.attr('page', pagesTabRef)
     }
   } else {
-    window.gotoTabOrPage('tabsPages')
+    gotoTabOrPage('tabsPages')
   }
 }
 
@@ -159,9 +165,9 @@ function guideStart (startTabOrPage) {
   // ### Upload file(s) to current guide
   $('#fileupload').addClass('fileupload-processing')
 
-  if (gGuideID !== 0) {
+  if (gGuideMeta.gGuideID !== 0) {
     $('#fileupload').fileupload({
-      url: CONST.uploadURL + gGuideID,
+      url: CONST.uploadURL + gGuideMeta.gGuideID,
       dataType: 'json',
       done: function (e, data) {
         setTimeout(updateAttachmentFiles, 1)
@@ -218,13 +224,13 @@ function createBlankGuide () {
 }
 
 // Open the currently selected guide (either double click or via Open button)
-function openSelectedGuide (gid) {
+export function openSelectedGuide (gid) {
   if (!gid) { return }
 
   var guideFile = $('[gid="' + gid + '"]').text()
 
   setProgress('Loading guide with ID: ' + gid, true)
-  window.loadNewGuidePrep()
+  loadNewGuidePrep()
   $('#splash').hide()
 
   if (gid === 'a2j') {

@@ -1,4 +1,5 @@
 import navbarItems from 'caja/author/vertical-navbar/navbar-items'
+import {gotoTabOrPage} from 'caja/author/src/A2J_Pages'
 
 /**
  * @module {{}} author/utils/tabs-routing tabs-routing
@@ -21,7 +22,7 @@ export default function tabsRouting (appState) {
 
     let item = navbarItems.filter(item => item.page === newPage).shift()
     if (item && item.ref) {
-      window.gotoTabOrPage(item.ref)
+      gotoTabOrPage(item.ref)
     }
   }
 

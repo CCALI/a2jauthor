@@ -4,6 +4,8 @@ import Component from 'can-component'
 import CanList from 'can-list'
 import Guide from 'caja/author/models/guide'
 import template from './interviews.stache'
+import { gGuideMeta } from 'caja/author/src/viewer/A2J_Types'
+import { openSelectedGuide, guideSave } from 'caja/author/src/A2J_Guides'
 
 import 'can-map-define'
 
@@ -31,7 +33,7 @@ export const InterviewsVM = CanMap.extend({
         // interviews list TODO: remove when legacy code refactored to CanJS
         return new Promise(function (resolve, reject) {
           if (window.gGuide) {
-            window.guideSave(resolve)
+            guideSave(resolve)
           } else {
             resolve()
           }
@@ -59,7 +61,7 @@ export const InterviewsVM = CanMap.extend({
     currentGuideId: {
       type: 'string',
       get (lastSet) {
-        return lastSet || window.gGuideID
+        return lastSet || gGuideMeta.gGuideID
       },
       set (val) {
         return val
@@ -134,7 +136,7 @@ export default Component.extend({
 
     '.guide dblclick': function (target) {
       const gid = $(target).attr('gid')
-      window.openSelectedGuide(gid)
+      openSelectedGuide(gid)
       // reset collapsed steps tracker in A2J_Tabs
       // TODO: handle this in Pages tab refactor
       window.collapsedSteps = []

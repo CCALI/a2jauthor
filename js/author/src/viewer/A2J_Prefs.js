@@ -8,80 +8,63 @@
 
 */
 
-
-var gPrefs =
+export var gPrefs =
 {
-	// Persistent for author
+  // Persistent for author
 
-	// Include warning when var name length exceeds HotDocs length
-	warnHotDocsNameLength : true,
+  // Include warning when var name length exceeds HotDocs length
+  warnHotDocsNameLength: true,
 
-	// Include grades for 'good' text as well
-	FKGradeAll : false,
+  // Include grades for 'good' text as well
+  FKGradeAll: false,
 
-	// Show JavaScript translations
-	showJS : false,
+  // Show JavaScript translations
+  showJS: false,
 
-	// Non persistent
+  // Non persistent
 
-	// Show all logic or just filled
-	showLogic : 1,
+  // Show all logic or just filled
+  showLogic: 1,
 
-	// Show all text or just filled
-	showText : 1
+  // Show all text or just filled
+  showText: 1
 
-};
+}
 
+gPrefs.save = function () {	// Save prefs to HTML5 LocalStorage
+  if (typeof (Storage) !== 'undefined') {
+    for (var p in gPrefs) {
+      if (gPrefs.hasOwnProperty(p) && typeof gPrefs[p] !== 'function') {
+      // trace('Setting saved: '+p+' = '+this[p]);
+        localStorage.setItem(p, gPrefs[p])
+      }
+    }
+  }
+}
 
+gPrefs.load = function () {	// Load prefs from HTML5 LocalStorage
+  if (typeof (Storage) !== 'undefined') {
+    for (var p in gPrefs) {
+      if (gPrefs.hasOwnProperty(p) && typeof gPrefs[p] !== 'function') {
+        try {
+          var v = localStorage.getItem(p)
+          if (v !== null) {
+            if (v === 'true') {
+              v = true
+            } else
+            if (v === 'false') {
+              v = false
+            }
+            v = Number(v)
+            // trace('Setting loaded: '+p+' = '+v);
+            gPrefs[p] = Number(v)
+          }
+        } catch (e) {
 
-gPrefs.save=function()
-{	// Save prefs to HTML5 LocalStorage
-	 if(typeof(Storage) !== "undefined")
-	 {
-		for (var p in gPrefs)
-		{
-			if (gPrefs.hasOwnProperty(p) && typeof gPrefs[p]!=='function')
-			{
-				//trace('Setting saved: '+p+' = '+this[p]);
-				localStorage.setItem(p,gPrefs[p]);
-			}
-		}
-	 }
-};
-
-gPrefs.load=function()
-{	// Load prefs from HTML5 LocalStorage
-	 if(typeof(Storage) !== "undefined")
-	 {
-		for (var p in gPrefs)
-		{
-			if (gPrefs.hasOwnProperty(p) && typeof gPrefs[p]!=='function')
-			{
-				try {
-					var v = localStorage.getItem(p);
-					if (v !== null)
-					{
-						if (v==='true') {
-							v=true;
-						}
-						else
-						if (v==='false') {
-							v=false;
-						}
-						v= Number(v);
-						//trace('Setting loaded: '+p+' = '+v);
-						gPrefs[p] =Number(v);
-					}
-				}
-				catch (e)
-				{
-
-				}
-			}
-		}
-	 }
-};
-
-
+        }
+      }
+    }
+  }
+}
 
 /* */

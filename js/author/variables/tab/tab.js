@@ -4,6 +4,7 @@ import template from './tab.stache'
 import parser from 'caja/viewer/mobile/util/parser'
 import { promptFile } from 'caja/author/utils/uploader'
 import queues from 'can-queues'
+import TVariable from 'caja/author/src/viewer/A2J_Types'
 
 export const VariablesTabVM = CanMap.extend({
   define: {
@@ -88,7 +89,7 @@ export const VariablesTabVM = CanMap.extend({
       this.deleteVariable(editingVariable.name)
     }
 
-    const variable = new window.TVariable()
+    const variable = new TVariable()
     $.extend(variable, buffer.serialize())
     guide.vars.attr(buffer.name.toLowerCase(), variable)
   },
@@ -117,7 +118,7 @@ export const VariablesTabVM = CanMap.extend({
     if (guide && guide.vars) {
       cmpTuples.forEach(newVar => {
         // name, type, repeating, comment
-        const variable = new window.TVariable()
+        const variable = new TVariable()
         $.extend(variable, newVar)
         guide.vars.attr(newVar.name.toLowerCase(), variable)
       })

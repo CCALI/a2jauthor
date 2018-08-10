@@ -16,19 +16,6 @@ const canUseSampleValues = [
 // This function sets some event handles for custom events used to communicate
 // the parts of the author app that are outside of the scope of CanJS.
 export default function bindCustomEvents (appState) {
-  // Updates window.gGuide with changes to guide.vars replacing above %root code
-  var vars = compute(function () {
-    var vars = appState.attr('guide.vars')
-    if (vars) {
-      return vars.serialize()
-    }
-  })
-  vars.bind('change', function (ev, newVars) {
-    if (newVars) {
-      window.gGuide.vars = newVars
-    }
-  })
-
   let $authorApp = $('#author-app')
 
   // user clicks the preview button in the edit page modal
@@ -67,18 +54,30 @@ export default function bindCustomEvents (appState) {
       alertMessages.replace([])
       alertMessages.attr('guideId', guideId)
     }
+    // this is work around for binding error in can-map
+    const gGuideMapData = {}
+    Object.keys(window.gGuide).forEach((key) => {
+      gGuideMapData[key] = window.gGuide[key]
+    })
+    const gGuideMap = new CanMap(gGuideMapData)
 
     appState.attr({
       guideId: guideId,
       guidePath: window.gGuidePath,
-      guide: new CanMap(window.gGuide)
+      guide: gGuideMap
     })
   })
 
   // when window.gGuide is saved to the server successfully,
   // sync the map reference in the appState.
   $authorApp.on('author:guide-updated', function () {
-    appState.attr('guide', new CanMap(window.gGuide))
+    // this is work around for binding error in can-map
+    const gGuideMapData = {}
+    Object.keys(window.gGuide).forEach((key) => {
+      gGuideMapData[key] = window.gGuide[key]
+    })
+    const gGuideMap = new CanMap(gGuideMapData)
+    appState.attr('guide', gGuideMap)
   })
 
   // TODO: Figure out a better way to do this.
@@ -100,5 +99,18 @@ export default function bindCustomEvents (appState) {
         answer.attr('values', sampleValue)
       }
     })
+  })
+
+  // Updates window.gGuide with changes to guide.vars replacing above %root code
+  var vars = compute(function () {
+    var vars = appState.attr('guide.vars')
+    if (vars) {
+      return vars.serialize()
+    }
+  })
+  vars.on('change', function (ev, newVars) {
+    if (newVars) {
+      window.gGuide.vars = newVars
+    }
   })
 }

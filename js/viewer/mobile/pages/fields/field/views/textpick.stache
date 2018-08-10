@@ -5,7 +5,7 @@
       {{#if required}}<small class="text-danger">(Required)</small>{{/if}}
     </label>
 
-    <select class="form-control" name="{{name}}" id="{{label}}" el:value:bind="field._answer.values" on:el:change="validateField">
+    <select class="form-control" name="{{name}}" id="{{label}}" el:value:bind="field._answer.values" on:el:change="validateField()">
       <option {{#if field.required}}disabled{{/if}} value="">{{ lang.ChooseListText }}</option>
       {{{options}}}
     </select>

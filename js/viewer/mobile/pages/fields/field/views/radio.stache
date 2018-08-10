@@ -10,7 +10,7 @@
 			el:value:bind="value"
 			{{#if shouldBeChecked}}checked{{/if}}
 			class="a2j-radio-button"
-			on:el:change="validateField"/>
+			on:el:change="validateField()"/>
 
 		{{{ eval(label, repeatVarValue) }}}</label>
 	</div>

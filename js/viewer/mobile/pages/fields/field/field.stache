@@ -1,1 +1,1 @@
-{{selector type}}
+{{selector(type)}}

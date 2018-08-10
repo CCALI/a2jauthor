@@ -11,7 +11,7 @@
       id="{{label}}"
       class="form-control"
       name="{{name}}"
-      on:el:change="validateField"
+      on:el:change="validateField()"
       el:value:bind="field._answer.values"
       on:el:input="calcAvailableLength(scope.event)"/>
 

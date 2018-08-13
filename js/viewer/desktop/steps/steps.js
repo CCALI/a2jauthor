@@ -129,7 +129,7 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
         let a2jStepVars = []
         let answers = this.attr('interview.answers')
         if (answers) {
-          answers.each(function (answer) {
+          answers.forEach(function (answer) {
             if (answer.name && answer.name.indexOf('A2J Step') !== -1) {
               answer.attr('values') // setup binding on values(1)
               a2jStepVars.push(answer)

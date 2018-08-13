@@ -293,7 +293,7 @@
     <!-- Preview Tab -->
     <div class="tab-panel page" id="tabsPreview">
       {{#is page 'preview'}}
-        <author-preview preview-mode="{previewMode}" />
+        <author-preview vm:previewMode:to="previewMode" />
       {{/is}}
     </div>
 

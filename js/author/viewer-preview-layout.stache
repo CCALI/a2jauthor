@@ -4,7 +4,7 @@
 <can-import from="caja/author/debug-alerts/"/>
 <can-import from="styles/author/viewer-layout.less!"/>
 
-{{#if previewMode}}
+{{#if(previewMode)}}
   {{#if showDebugPanel}}
     <div class="author-debug-panel">
       <author-debug-panel
@@ -25,7 +25,7 @@
 
     <author-debug-menu vm:appState:bind="."/>
 
-    {{#if viewerAlertMessages.length}}
+    {{#if(viewerAlertMessages.length)}}
       <author-debug-alerts vm:alertMessages:bind="viewerAlertMessages"/>
     {{/if}}
   </div>

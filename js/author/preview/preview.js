@@ -41,6 +41,7 @@ export default Component.extend({
   view: template,
   tag: 'author-preview',
   ViewModel: AuthorPreviewVM,
+  leakScope: true,
 
   events: {
     inserted () {
@@ -52,7 +53,5 @@ export default Component.extend({
     '{element} beforeremove' () {
       this.viewModel.lockScrolling(false)
     }
-  },
-
-  leakScope: true
+  }
 })

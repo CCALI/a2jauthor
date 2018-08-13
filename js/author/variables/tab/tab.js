@@ -4,7 +4,7 @@ import template from './tab.stache'
 import parser from 'caja/viewer/mobile/util/parser'
 import { promptFile } from 'caja/author/utils/uploader'
 import queues from 'can-queues'
-import TVariable from 'caja/author/src/viewer/A2J_Types'
+import { TVariable } from 'caja/author/src/viewer/A2J_Types'
 
 export const VariablesTabVM = CanMap.extend({
   define: {

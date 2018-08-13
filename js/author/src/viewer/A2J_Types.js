@@ -118,7 +118,7 @@ export var CONST = {
  * @struct
  * @this {TVariable}
  */
-function TVariable () {
+export function TVariable () {
   this.name = ''
   this.type = ''	// E.g., Text, MC, TF
   this.comment = ''

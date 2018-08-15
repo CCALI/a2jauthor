@@ -11,11 +11,8 @@
 import $ from 'jquery'
 import {TGuide, TPage, TField, TButton, gGuideMeta, gStartArgs, CONST} from './viewer/A2J_Types'
 import {gPrefs} from './viewer/A2J_Prefs'
-// import {form} from './A2J_Tabs'
 
 var $pageEditDialog = null
-
-// import { updateTOC } from './A2J_Tabs'
 
 export function pageNameFieldsForTextTab (pagefs, page) {	// Used by the Text tab.
   // Include editable fields of all a page's text blocks.

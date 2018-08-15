@@ -2,7 +2,7 @@ import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './fields.stache'
 
-import 'caja/viewer/mobile/pages/fields/field/';
+import 'caja/viewer/mobile/pages/fields/field/'
 
 /**
  * @property {can.Map} fields.ViewModel
@@ -26,7 +26,7 @@ let FieldsVM = CanMap.extend({})
  */
 export default Component.extend({
   view: template,
-  leakScope: false,
+  leakScope: true,
   tag: 'a2j-fields',
   ViewModel: FieldsVM
 })

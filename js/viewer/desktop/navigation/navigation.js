@@ -1,14 +1,14 @@
-import $ from 'jquery';
-import CanMap from "can-map";
-import Component from "can-component";
-import _truncate from 'lodash/truncate';
-import template from './navigation.stache';
-import constants from 'caja/viewer/models/constants';
-import {Analytics} from 'caja/viewer/util/analytics';
-import isMobile from 'caja/viewer/is-mobile';
+import $ from 'jquery'
+import CanMap from 'can-map'
+import Component from 'can-component'
+import _truncate from 'lodash/truncate'
+import template from './navigation.stache'
+import constants from 'caja/viewer/models/constants'
+import {Analytics} from 'caja/viewer/util/analytics'
+import isMobile from 'caja/viewer/is-mobile'
 
-import "can-map-define";
-import 'jquerypp/event/swipe/';
+import 'can-map-define'
+import 'jquerypp/event/swipe/'
 
 /**
  * @property {can.Map} viewerNavigation.ViewModel
@@ -18,6 +18,8 @@ import 'jquerypp/event/swipe/';
  */
 export let ViewerNavigationVM = CanMap.extend({
   define: {
+    courthouseImage: {},
+
     /**
      * @property {can.compute} viewerNavigation.ViewModel.isMobile isMobile
      *
@@ -26,7 +28,7 @@ export let ViewerNavigationVM = CanMap.extend({
      * */
     isMobile: {
       get () {
-        return isMobile();
+        return isMobile()
       }
     },
     /**
@@ -36,9 +38,9 @@ export let ViewerNavigationVM = CanMap.extend({
      * list of pages visited by the user.
      */
     visitedPages: {
-      get() {
-        let state = this.attr('appState');
-        return state.attr('visitedPages');
+      get () {
+        let state = this.attr('appState')
+        return state.attr('visitedPages')
       }
     },
 
@@ -49,9 +51,9 @@ export let ViewerNavigationVM = CanMap.extend({
      * Name of currently selected page.
      */
     selectedPageName: {
-      get(pageName) {
-        let pages = this.attr('visitedPages');
-        return pageName ? pageName : pages.attr('0.name');
+      get (pageName) {
+        let pages = this.attr('visitedPages')
+        return pageName || pages.attr('0.name')
       }
     },
 
@@ -71,23 +73,23 @@ export let ViewerNavigationVM = CanMap.extend({
       type: 'string',
       get (lastSet) {
         if (lastSet) {
-          const appState = this.attr('appState');
-          const selectedPage = this.attr('visitedPages').attr(lastSet);
-          const selectedPageName = selectedPage.attr('name');
+          const appState = this.attr('appState')
+          const selectedPage = this.attr('visitedPages').attr(lastSet)
+          const selectedPageName = selectedPage.attr('name')
 
           // nav via MyProgress restores repeatVar and outerLoopVar
-          this.restoreLoopVars(selectedPage);
+          this.restoreLoopVars(selectedPage)
 
           // This means a GOTO logic macro was used, skip normal navigation rules
           if (selectedPageName && selectedPageName !== appState.attr('page')) {
             appState.attr({
               page: selectedPageName,
               forceNavigation: true
-            });
+            })
           }
         }
-      // if lastSet is undefined, it's a newly visted page at index 0
-      return lastSet || '0';
+        // if lastSet is undefined, it's a newly visted page at index 0
+        return lastSet || '0'
       }
     },
 
@@ -98,12 +100,12 @@ export let ViewerNavigationVM = CanMap.extend({
      * Whether user can save and exit interview.
      */
     canSaveAndExit: {
-      get() {
-        let appState = this.attr('appState');
-        let interview = this.attr('interview');
+      get () {
+        let appState = this.attr('appState')
+        let interview = this.attr('interview')
 
         return !appState.attr('saveAndExitActive') &&
-          interview.attr('exitPage') !== constants.qIDNOWHERE;
+          interview.attr('exitPage') !== constants.qIDNOWHERE
       }
     },
 
@@ -114,11 +116,11 @@ export let ViewerNavigationVM = CanMap.extend({
      * Whether user can resume interview.
      */
     canResumeInterview: {
-      get() {
-        let appState = this.attr('appState');
+      get () {
+        let appState = this.attr('appState')
 
         return appState.attr('saveAndExitActive') &&
-          !!appState.attr('lastPageBeforeExit');
+          !!appState.attr('lastPageBeforeExit')
       }
     },
 
@@ -129,11 +131,11 @@ export let ViewerNavigationVM = CanMap.extend({
      * Whether user can navigate to the previous page.
      */
     canNavigateBack: {
-      get() {
-        let totalPages = this.attr('visitedPages.length');
-        let pageIndex = this.attr('selectedPageIndex');
+      get () {
+        let totalPages = this.attr('visitedPages.length')
+        let pageIndex = this.attr('selectedPageIndex')
 
-        return totalPages > 1 && pageIndex < totalPages - 1;
+        return totalPages > 1 && pageIndex < totalPages - 1
       }
     },
 
@@ -144,11 +146,11 @@ export let ViewerNavigationVM = CanMap.extend({
      * Whether user can navigate to the next page.
      */
     canNavigateForward: {
-      get() {
-        let totalPages = this.attr('visitedPages.length');
-        let pageIndex = this.attr('selectedPageIndex');
+      get () {
+        let totalPages = this.attr('visitedPages.length')
+        let pageIndex = this.attr('selectedPageIndex')
 
-        return totalPages > 1 && pageIndex > 0;
+        return totalPages > 1 && pageIndex > 0
       }
     },
 
@@ -160,13 +162,13 @@ export let ViewerNavigationVM = CanMap.extend({
      */
     feedbackData: {
       type: '*',
-      get() {
-        let interview = this.attr('interview');
-        let pageName = this.attr('selectedPageName');
-        let pages = interview.attr('pages');
-        let page = pages.find(pageName);
+      get () {
+        let interview = this.attr('interview')
+        let pageName = this.attr('selectedPageName')
+        let pages = interview.attr('pages')
+        let page = pages.find(pageName)
 
-        if (!page) return {};
+        if (!page) return {}
 
         return {
           questionid: page.attr('name'),
@@ -175,34 +177,33 @@ export let ViewerNavigationVM = CanMap.extend({
           viewerversion: constants.A2JVersionNum,
           emailto: interview.attr('emailContact'),
           interviewtitle: interview.attr('title')
-        };
+        }
       }
     }
   },
 
-    /**
+  /**
    * @property {Function} viewerNavigation.ViewModel.restoreLoopVars restoreLoopVars
    * @parent viewerNavigation.ViewModel
    *
    * Restores repeatVar and outerLoopVar values to match the selected page
    */
   restoreLoopVars (selectedPage) {
-    const appState = this.attr('appState');
+    const appState = this.attr('appState')
 
-    const repeatVar = selectedPage.attr('repeatVar');
-    const repeatVarValue = selectedPage.attr('repeatVarValue');
-    const outerLoopVar = selectedPage.attr('outerLoopVar');
-    const outerLoopVarValue = selectedPage.attr('outerLoopVarValue');
-
+    const repeatVar = selectedPage.attr('repeatVar')
+    const repeatVarValue = selectedPage.attr('repeatVarValue')
+    const outerLoopVar = selectedPage.attr('outerLoopVar')
+    const outerLoopVarValue = selectedPage.attr('outerLoopVarValue')
 
     if (repeatVar && repeatVarValue) {
-      appState.attr('repeatVarValue', repeatVarValue);
-      this.attr('logic').varSet(repeatVar, repeatVarValue);
+      appState.attr('repeatVarValue', repeatVarValue)
+      this.attr('logic').varSet(repeatVar, repeatVarValue)
     }
 
     if (outerLoopVar && outerLoopVarValue) {
-      appState.attr('outerLoopVarValue', outerLoopVarValue);
-      this.attr('logic').varSet(outerLoopVar, outerLoopVarValue);
+      appState.attr('outerLoopVarValue', outerLoopVarValue)
+      this.attr('logic').varSet(outerLoopVar, outerLoopVarValue)
     }
   },
 
@@ -212,25 +213,25 @@ export let ViewerNavigationVM = CanMap.extend({
    *
    * Saves interview and exits.
    */
-  saveAndExit() {
-    let appState = this.attr('appState');
-    let interview = this.attr('interview');
-    let answers = interview.attr('answers');
-    let exitPage = interview.attr('exitPage');
-    let pageName = this.attr('selectedPageName');
+  saveAndExit () {
+    let appState = this.attr('appState')
+    let interview = this.attr('interview')
+    let answers = interview.attr('answers')
+    let exitPage = interview.attr('exitPage')
+    let pageName = this.attr('selectedPageName')
 
-    appState.attr('saveAndExitActive', true);
-    appState.attr('lastPageBeforeExit', pageName);
+    appState.attr('saveAndExitActive', true)
+    appState.attr('lastPageBeforeExit', pageName)
 
     if (window._paq) {
-      Analytics.trackCustomEvent('Save&Exit', 'from: ' + pageName);
+      Analytics.trackCustomEvent('Save&Exit', 'from: ' + pageName)
     }
 
     if (answers) {
-      answers.attr('a2j interview incomplete tf').attr('values.1', true);
+      answers.attr('a2j interview incomplete tf').attr('values.1', true)
     }
 
-    this.attr('selectedPageName', exitPage);
+    this.attr('selectedPageName', exitPage)
   },
 
   /**
@@ -239,27 +240,27 @@ export let ViewerNavigationVM = CanMap.extend({
    *
    * Resumes saved interview.
    */
-  resumeInterview() {
-    let appState = this.attr('appState');
-    let lastPageName = appState.attr('lastPageBeforeExit');
-    let interview = this.attr('interview');
-    let answers = interview.attr('answers');
-    let visitedPages = appState.attr('visitedPages');
+  resumeInterview () {
+    let appState = this.attr('appState')
+    let lastPageName = appState.attr('lastPageBeforeExit')
+    let interview = this.attr('interview')
+    let answers = interview.attr('answers')
+    let visitedPages = appState.attr('visitedPages')
 
-    appState.attr('saveAndExitActive', false);
-    appState.attr('lastPageBeforeExit', null);
+    appState.attr('saveAndExitActive', false)
+    appState.attr('lastPageBeforeExit', null)
 
     // Special Exit page should only show in My Progress while on that page
-    visitedPages.shift();
+    visitedPages.shift()
 
     if (answers) {
-      answers.attr('a2j interview incomplete tf').attr('values', [null]);
+      answers.attr('a2j interview incomplete tf').attr('values', [null])
     }
 
     if (window._paq) {
-      Analytics.trackCustomEvent('Resume-Interview', 'to: ' + lastPageName);
+      Analytics.trackCustomEvent('Resume-Interview', 'to: ' + lastPageName)
     }
-    this.attr('selectedPageName', lastPageName);
+    this.attr('selectedPageName', lastPageName)
   },
 
   /**
@@ -268,9 +269,9 @@ export let ViewerNavigationVM = CanMap.extend({
    *
    * Navigates to previous page.
    */
-  navigateBack() {
+  navigateBack () {
     if (this.attr('canNavigateBack')) {
-      this.attr('selectedPageIndex', parseInt(this.attr('selectedPageIndex')) + 1);
+      this.attr('selectedPageIndex', parseInt(this.attr('selectedPageIndex')) + 1)
     }
   },
 
@@ -280,12 +281,12 @@ export let ViewerNavigationVM = CanMap.extend({
    *
    * Navigates to next page.
    */
-  navigateForward() {
+  navigateForward () {
     if (this.attr('canNavigateForward')) {
-      this.attr('selectedPageIndex', parseInt(this.attr('selectedPageIndex')) - 1);
+      this.attr('selectedPageIndex', parseInt(this.attr('selectedPageIndex')) - 1)
     }
   }
-});
+})
 /**
  * @module {Module} viewer/desktop/navigation/ <a2j-viewer-navigation>
  * @parent api-components
@@ -309,50 +310,51 @@ export default Component.extend({
   ViewModel: ViewerNavigationVM,
 
   helpers: {
-    feedbackFormUrl() {
-      let feedbackData = this.attr('feedbackData');
-      let baseUrl = 'http://www.a2jauthor.org/A2JFeedbackForm.php?';
-      return baseUrl + $.param(feedbackData);
+    feedbackFormUrl () {
+      let feedbackData = this.attr('feedbackData')
+      let baseUrl = 'http://www.a2jauthor.org/A2JFeedbackForm.php?'
+      return baseUrl + $.param(feedbackData)
     },
 
-    fitPageDescription(text, repeatVarValue) {
-      text = text.isComputed ? text() : text;
+    fitPageDescription (text, repeatVarValue) {
+      text = text.isComputed ? text() : text
 
       // strip html tags
-      text = text.replace(/(<([^>]+)>)/ig, '').trim();
+      text = text.replace(/(<([^>]+)>)/ig, '').trim()
 
       // truncate text to avoid https://github.com/CCALI/CAJA/issues/685
-      text = _truncate(text, {length: 40, separator: ' '});
-      text = (typeof repeatVarValue === 'number') ? text + '#' + repeatVarValue : text;
+      text = _truncate(text, {length: 40, separator: ' '})
+      text = (typeof repeatVarValue === 'number') ? text + '#' + repeatVarValue : text
 
-      return text;
+      return text
     }
   },
 
   events: {
     inserted () {
-      const vm = this.viewModel;
+      const vm = this.viewModel
       $('#viewer-app').on('swiperight', function () {
         if (vm.attr('canNavigateBack')) {
-          vm.navigateBack();
+          vm.navigateBack()
         }
-      });
+      })
 
       $('#viewer-app').on('swipeleft', function () {
         if (vm.attr('canNavigateForward')) {
-          vm.navigateForward();
+          vm.navigateForward()
         }
-      });
+      })
     },
     /*
     * select most recently visited page in selectedPageIndex dropdown
     */
     '{visitedPages} length': function () {
-      this.viewModel.attr('selectedPageIndex', '0');
+      this.viewModel.attr('selectedPageIndex', '0')
     },
 
     '{visitedPages} revisited': function (map, ev, revisitedIndex) {
-      this.viewModel.attr('selectedPageIndex', revisitedIndex);
+      console.log('revisited', arguments)
+      this.viewModel.attr('selectedPageIndex', revisitedIndex)
     }
   }
-});
+})

@@ -5,8 +5,16 @@ import _isUndefined from 'lodash/isUndefined'
 
 import 'can-map-define'
 
-let DesktopViewerVM = CanMap.extend({
+let DesktopViewerVM = CanMap.extend('DesktopViewerVM', {
   define: {
+    remainingSteps: {},
+
+    maxDisplayedSteps: {},
+
+    traceLogic: {
+      value: []
+    },
+
     pageNotFound: {
       value: false
     },

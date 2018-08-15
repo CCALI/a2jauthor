@@ -25,6 +25,9 @@ stache.registerPartial('exceeded-maxchars-tpl', exceededMaxcharsTpl)
  */
 export let FieldVM = CanMap.extend('FieldVM', {
   define: {
+    traceLogic: {
+      value: []
+    },
     /**
      * @property {List} field.ViewModel.prototype.numberPickOptions numberPickOptions
      * @parent field.ViewModel

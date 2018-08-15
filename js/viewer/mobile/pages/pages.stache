@@ -20,16 +20,15 @@
           {{step.number}}: {{step.text}}
         {{/is}}
       </h3>
-      <p>{{{ eval(text, rState.repeatVarValue) }}}</p>
-
+      <p>{{{ eval(text, scope.vm.rState.repeatVarValue) }}}</p>
       {{#if fields.length}}
-        <a2j-fields vm:lang:from="lang"
-                    vm:logic:bind="logic"
-                    vm:fields:bind="fields"
-                    vm:traceLogic:bind="traceLogic"
-                    vm:repeatVarValue:from="rState.repeatVarValue"
-                    vm:modalContent:bind="modalContent"
-                    vm:rState:bind="rState"
+        <a2j-fields vm:lang:from="scope.vm.lang"
+                    vm:logic:bind="scope.vm.logic"
+                    vm:fields:bind="scope.vm.fields"
+                    vm:traceLogic:bind="scope.vm.traceLogic"
+                    vm:repeatVarValue:from="scope.vm.rState.repeatVarValue"
+                    vm:modalContent:bind="scope.vm.modalContent"
+                    vm:rState:bind="scope.vm.rState"
                     role="form"/>
       {{/if}}
 
@@ -42,24 +41,24 @@
     </div><!-- bubble-content -->
 
     <p class="text-center modal-button">
-      <a class="learn-more">{{{ eval(learn, rState.repeatVarValue) }}}</a>
+      <a class="learn-more">{{{ eval(learn, scope.vm.rState.repeatVarValue) }}}</a>
     </p>
 
     {{#each buttons}}
       {{#switch next}}
-        {{#case saveAnswersButton}}
+        {{#case scope.vm.saveAnswersButton}}
           {{> save-answers-form }}
         {{/case}}
 
-        {{#case exitButton}}
+        {{#case scope.vm.exitButton}}
           {{> save-answers-form }}
         {{/case}}
 
-        {{#case assembleButton}}
+        {{#case scope.vm.assembleButton}}
           {{> assemble-form }}
         {{/case}}
 
-        {{#case assembleAndSaveButton}}
+        {{#case scope.vm.assembleAndSaveButton}}
           <div style:from="'display: none;'">{{> save-answers-form }}</div>
           {{> assemble-form }}
         {{/case}}

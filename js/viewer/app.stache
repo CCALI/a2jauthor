@@ -15,7 +15,8 @@
     vm:modalContent:bind="modalContent" />
 {{else}}
   <a2j-desktop-viewer
-    this:to="scope.vars.desktopViewer"
+    vm:remainingSteps:bind="remainingSteps"
+    vm:maxDislayedSteps:bind="maxDisplayedSteps"
     vm:showDebugPanel:from="showDebugPanel"
     vm:lang:bind="lang"
     vm:logic:bind="logic"
@@ -25,7 +26,7 @@
     vm:interview:bind="interview"
     vm:modalContent:bind="modalContent"
     vm:traceLogic:bind="traceLogic"
-    class="bootstrap-styles steps-left-{{scope.vars.desktopViewer.remainingSteps}} steps-{{scope.vars.desktopViewer.maxDisplayedSteps}}" />
+    class="bootstrap-styles steps-left-{{remainingSteps}} steps-{{maxDisplayedSteps}}" />
 {{/if}}
 
 <a2j-modal

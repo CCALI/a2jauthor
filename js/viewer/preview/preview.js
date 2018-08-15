@@ -15,6 +15,9 @@ import parseGuideToMobile from 'caja/viewer/mobile/util/guide-to-mobile'
 
 const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
   define: {
+    authorCourthouseImage: {},
+    remainingSteps: {},
+    maxDisplayedSteps: {},
     traceLogic: {},
 
     interviewPageName: {

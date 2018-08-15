@@ -43,6 +43,23 @@ let Guide = CanMap.extend('AppStateGuide', {
 export default CanMap.extend('AuthorAppState', {
   define: {
     /**
+    * @property {Number} remainingSteps
+    *
+    * number of steps left
+    */
+    remainingSteps: {
+      serialize: false
+    },
+
+    /**
+    * @property {Number} maxDisplayedStpes
+    *
+    * max # of signs to show
+    */
+    maxDisplayedStpes: {
+      serialize: false
+    },
+    /**
     * @property {String} selectedReport
     *
     * selected report type

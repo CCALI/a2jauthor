@@ -9,9 +9,9 @@
     aria-labelledby="pageModalLbl"
   >
 
-    <div class="modal-dialog {{#if modalContent.answerName}}modal-lg{{/if}}">
+    <div class="modal-dialog {{#if(modalContent.answerName)}}modal-lg{{/if}}">
       <div class="modal-content">
-        {{#if modalContent}}
+        {{#if(modalContent)}}
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">
             <span class="x-times" aria-hidden="true">&times;</span>
@@ -19,7 +19,7 @@
           </button>
 
           <h4 class="modal-title" id="pageModalLbl">
-            {{#if modalContent.title}}
+            {{#if(modalContent.title)}}
               {{ eval(modalContent.title, repeatVarValue) }}
             {{else}}
               <span class="glyphicon-lifebuoy" aria-hidden="true"></span>
@@ -27,8 +27,8 @@
           </h4>
         </div>
 
-        <div class="modal-body {{#if modalContent.answerName}}has-textarea{{/if}}">
-          {{#if modalContent.answerName}}
+        <div class="modal-body {{#if(modalContent.answerName)}}has-textarea{{/if}}">
+          {{#if(modalContent.answerName)}}
             <textarea autofocus
               id="textlong-input"
               class="form-control expanded-textarea"
@@ -40,7 +40,7 @@
           {{else}}
             {{{ eval(modalContent.text, repeatVarValue) }}}
 
-            {{#if modalContent.imageURL}}
+            {{#if(modalContent.imageURL)}}
             <img
               class="modal-image"
               el:src:from="normalizePath(mState.fileDataURL, modalContent.imageURL)" >
@@ -52,14 +52,14 @@
             </a>
             {{/if}}
 
-            {{#if modalContent.audioURL}}
+            {{#if(modalContent.audioURL)}}
               <audio-player
                 vm:sourceUrl:from="normalizePath(mState.fileDataURL, modalContent.audioURL)"
               />
             {{/if}}
 
-            {{#if modalContent.videoURL}}
-              {{#if isGif(modalContent.videoURL)}}
+            {{#if(modalContent.videoURL)}}
+              {{#if(isGif(modalContent.videoURL))}}
                 <img
                   class="modal-video"
                   el:src:from="normalizePath(mState.fileDataURL, modalContent.videoURL)"

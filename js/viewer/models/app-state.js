@@ -2,13 +2,11 @@ import CanMap from 'can-map'
 import CanList from 'can-list'
 import route from 'can-route'
 import _findIndex from 'lodash/findIndex'
-import canDomEvents from 'can-dom-events'
 
 import 'can-map-define'
 
 export const ViewerAppState = CanMap.extend({
   define: {
-
     visitedPages: {
       Value: CanList,
       serialize: false
@@ -139,7 +137,7 @@ export const ViewerAppState = CanMap.extend({
     }
 
     if (page && alreadyVisited) {
-      canDomEvents.dispatch(this.attr('visitedPages'), 'revisited', alreadyVisitedIndex)
+      visited.dispatch('revisited', alreadyVisitedIndex)
     }
   },
 

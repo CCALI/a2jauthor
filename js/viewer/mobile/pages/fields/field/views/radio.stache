@@ -8,7 +8,7 @@
 			id="{{label}}"
 			name="{{name}}"
 			el:value:bind="value"
-			{{#if shouldBeChecked}}checked{{/if}}
+			{{#if(shouldBeChecked)}}checked{{/if}}
 			class="a2j-radio-button"
 			on:el:change="validateField(null, scope.element)"/>
 

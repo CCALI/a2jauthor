@@ -116,12 +116,16 @@ export let FieldVM = CanMap.extend('FieldVM', {
     shouldBeChecked: {
       get: function () {
         let field = this.attr('field')
-        let radioButtonValue = field.attr('value')
-        let answerIndex = field.attr('_answer.answerIndex')
         let answerValues = field.attr('_answer.answer.values')
-        let previousAnswer = answerValues[answerIndex]
+        let answerIndex = field.attr('_answer.answerIndex')
 
-        return (radioButtonValue === previousAnswer)
+        if (field.type === 'radio') {
+          let radioButtonValue = field.attr('value')
+          let previousAnswer = answerValues[answerIndex]
+          return (radioButtonValue === previousAnswer)
+        } else { // Checkbox/TF variable type
+          return answerValues[answerIndex] === true
+        }
       }
     },
 

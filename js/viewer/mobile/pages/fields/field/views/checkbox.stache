@@ -8,8 +8,8 @@
 			id="{{label}}"
 			type="checkbox"
 			name="{{name}}"
-			on:el:change="validateField(null, scope.element)"
-			el:checked:bind="field._answer.values"/>
+			{{#if(shouldBeChecked)}}checked{{/if}}
+			on:el:change="validateField(null, scope.element)"/>
 		{{{ eval(label, repeatVarValue) }}}</label>
 		</div>
 	</div>

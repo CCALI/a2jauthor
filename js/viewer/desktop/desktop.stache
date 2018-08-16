@@ -23,9 +23,9 @@
         <div id="sidewalk" class="sidewalk"></div>
 
         <a2j-viewer-steps
+          vm:remainingSteps:to="remainingSteps"
+          vm:maxDisplayedSteps:to="maxDisplayedSteps"
           vm:showDebugPanel:from="showDebugPanel"
-          vm:remainingSteps:bind="remainingSteps"
-          vm:maxDisplayedSteps:bind="maxDisplayedSteps"
           vm:lang:from="lang"
           vm:logic:bind="logic"
           vm:rState:bind="rState"

@@ -11,11 +11,12 @@
 	06/2015
 
 */
-import { TGuide, gStartArgs, gGuideMeta, TAuthor, TStep, TClause, TPage, CONST, TButton, TField } from './A2J_Types'
-import { setProgress } from '../A2J_AuthorApp'
-import {loadNewGuidePrep} from '../A2J_Guides'
-import { makestr, textToBool, urlSplit, gJS2XML_SKIP, js2xml } from './A2J_Shared'
-import cString from 'caja/viewer/mobile/util/string'
+// TODO: fix legacy imports, removing circular dependencies
+// import { TGuide, gStartArgs, gGuideMeta, TAuthor, TStep, TClause, TPage, CONST, TButton, TField } from './A2J_Types'
+// import { setProgress } from '../A2J_AuthorApp'
+// import {loadNewGuidePrep} from '../A2J_Guides'
+// import { makestr, textToBool, urlSplit, gJS2XML_SKIP, js2xml } from './A2J_Shared'
+// import cString from 'caja/viewer/mobile/util/string'
 
 function fixPath (file) {	// ### Keep fully qualified web path, otherwise default to file within guide's folder (no subfolders)
   // 04/30/2015 Map data files to the fileDataURL instead of guide's path.
@@ -27,7 +28,7 @@ function fixPath (file) {	// ### Keep fully qualified web path, otherwise defaul
   var filesPath = gStartArgs.fileDataURL
   if (filesPath == '') {
     // 2015-06-10 If path not specified (likely for an Authoring installation), try to use guide's path.
-    filesPath = gGuideMeta.gGuidePath
+    filesPath = gGuidePath
   }
   var fileFixed = filesPath + urlSplit(file).file
   // var fileFixed = (filesPath == '') ? gGuidePath+urlSplit(file).file : filesPath+urlSplit(file).file;
@@ -130,7 +131,7 @@ function page2JSON (page) {
 }
 
 /** @param {TGuide} guide */
-export function exportXML_CAJA_from_CAJA (guide) {	// Convert Guide structure into XML
+function exportXML_CAJA_from_CAJA (guide) {	// Convert Guide structure into XML
   var JSON = {GUIDE: {INFO: {AUTHORS: []}, PAGES: [], STEPS: [], VARIABLES: [], CLAUSES: [] }}
 
   JSON.GUIDE.INFO.authorId = guide.authorId
@@ -177,7 +178,7 @@ export function exportXML_CAJA_from_CAJA (guide) {	// Convert Guide structure in
       STEP: {
         _NUMBER: step.number,
         // escape special chars, ex: &, for XML answer set
-        XML_TEXT: cString.escapeHtml(step.text)}})
+        XML_TEXT: escapeHtml(step.text)}})
   }
   var vi
   for (vi in guide.vars) {
@@ -556,7 +557,7 @@ function parseXML_A2J_to_CAJA (TEMPLATE) {	// Parse A2J into CAJA
         popup.page.type = 'Popup'
         // trace("Creating popup ["+popup.page.name+"]");
         popup.page.text = replacePopups(pageName, popup.text)
-        return '"POPUP://' + cString.escapeHtml(popup.page.name) + '"'
+        return '"POPUP://' + escapeHtml(popup.page.name) + '"'
       })
   }
 
@@ -678,7 +679,7 @@ function parseXML_A2J_to_CAJA (TEMPLATE) {	// Parse A2J into CAJA
         } else
         if ((args = statement.match(/goto\s+(\w+)\s?/i)) !== null) {
           // statement = "GOTO '"+args[1]+"'";//guide.pageIDtoName(args[1]);
-          statement = 'GOTO "' + cString.escapeHtml(fixID(args[1])) + '"'
+          statement = 'GOTO "' + escapeHtml(fixID(args[1])) + '"'
         } else {
           statement = '//' + statement
         }
@@ -739,7 +740,7 @@ function parseXML_A2J_to_CAJA (TEMPLATE) {	// Parse A2J into CAJA
   return parseXML_CAJA_to_CAJA($(jQuery.parseXML(exportXML_CAJA_from_CAJA(guide)))) // force complete IO
 }
 
-export function parseXML_Auto_to_CAJA (cajaData) {	// Parse XML into CAJA
+function parseXML_Auto_to_CAJA (cajaData) {	// Parse XML into CAJA
   var guide
   if ((cajaData.find('A2JVERSION').text()) !== '') {
     guide = parseXML_A2J_to_CAJA(cajaData)// Parse A2J into CAJA

@@ -29,11 +29,11 @@
 	2015 - 07/14/2012
 
 */
-
-import {makestr} from './A2J_Shared'
+// TODO: fix legacy imports, removing circular dependencies
+// import {makestr} from './A2J_Shared'
 
 // Language elements that are translatable
-export var lang = {
+var lang = {
   Language: '',
   AskYesNo_Yes: '',
   AskYesNo_No: '',
@@ -156,7 +156,7 @@ function TLanguages () {
   return this
 }
 
-export var Languages = new TLanguages()
+var Languages = new TLanguages()
 
 /* 05/05/2005, 03/11/2010 English language file used with A2J Viewer' */
 Languages.regional.en = {

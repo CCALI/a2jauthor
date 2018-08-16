@@ -8,13 +8,14 @@
 	04/15/2013
 
 */
-import $ from 'jquery'
-import {TGuide, TPage, TField, TButton, gGuideMeta, gStartArgs, CONST} from './viewer/A2J_Types'
-import {gPrefs} from './viewer/A2J_Prefs'
+// TODO: fix legacy imports, removing circular dependencies
+// import $ from 'jquery'
+// import {TGuide, TPage, TField, TButton, gGuideMeta, gStartArgs, CONST} from './viewer/A2J_Types'
+// import {gPrefs} from './viewer/A2J_Prefs'
 
 var $pageEditDialog = null
 
-export function pageNameFieldsForTextTab (pagefs, page) {	// Used by the Text tab.
+function pageNameFieldsForTextTab (pagefs, page) {	// Used by the Text tab.
   // Include editable fields of all a page's text blocks.
   pagefs.append(form.htmlarea({label: 'Text:', value: page.text, change: function (val, page) { page.text = val }}))
   if (page.type !== CONST.ptPopup) {
@@ -108,9 +109,9 @@ function gotoPageView (destPageName, url) {
           traceAlert('Page is missing: ' + destPageName)
           traceLogic('Page is missing: ' + destPageName)
         } else {
-          gGuideMeta.gPage = page
+          gPage = page
           $('#authortool').hide()
-          A2JViewer.layoutPage($('.A2JViewer', '#page-viewer'), gGuideMeta.gPage)
+          A2JViewer.layoutPage($('.A2JViewer', '#page-viewer'), gPage)
           $('#page-viewer').removeClass('hidestart').show()
           A2JViewer.refreshVariables()// TODO more efficient updates
         }
@@ -118,7 +119,7 @@ function gotoPageView (destPageName, url) {
   }, 1)
 }
 
-export function pageNameRelFilter (e, pageName) {	// Return all DOM elements whose REL points to page name.
+function pageNameRelFilter (e, pageName) {	// Return all DOM elements whose REL points to page name.
   var rel = 'PAGE ' + pageName
   return $(e).filter(function () {
     return rel === $(this).attr('rel')
@@ -302,7 +303,7 @@ function gotoPageEdit (pageName) {
 
     close: function () {
       // Update view and save any time edit dialog closes
-      updateTOCOnePage()
+      window.updateTOC()
       if (window.gGuide) {
         window.guideSave()
       }
@@ -348,7 +349,7 @@ function gotoPageEdit (pageName) {
 }
 
 // Go to a tab or popup a page.
-export function gotoTabOrPage (target) {
+function gotoTabOrPage (target) {
   if (target.indexOf('PAGE ') === 0) {
     gotoPageEdit(target.substr(5))
     return
@@ -857,7 +858,7 @@ function guidePageEditForm (page, div, pagename)// novicePage
     div.append('<div class=xml>' + escapeHtml(page.xmla2j) + '</div>')
   }
 
-  gGuideMeta.gPage = page
+  gPage = page
   return page
 }
 

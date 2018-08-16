@@ -10,8 +10,8 @@
   Future feature - replace with CANVAS/SVG flowcharter.
 
 */
-
-import {CONST} from './viewer/A2J_Types'
+// TODO: fix legacy imports, removing circular dependencies
+// import {CONST} from './viewer/A2J_Types'
 
 var gMapperScale = 1.0
 var gMapSize = 1 // 0 is small, 1 is normal
@@ -127,7 +127,7 @@ function mapLines () {
 function showPageOnMap () {}
 
 // Construct mapper flowcharts.
-export function buildMap () {
+function buildMap () {
   var page
   var $map = $('.map')
   var guidePages = gGuide.pages || {}
@@ -182,7 +182,7 @@ export function buildMap () {
 }
 
 // JPM if showing/hiding page list, do that and zoom to fit
-export function mapZoomSlide () {
+function mapZoomSlide () {
   if ($('#tabsMap .col-4').hasClass('isHidden')) {
     $('#tabsMap .col-4').removeClass('isHidden')
     $('#tabsMap .col-4').animate({width: '30%'}, function (element) {})
@@ -209,7 +209,7 @@ export function mapZoomSlide () {
 }
 
 // Zoom in or out or fit.
-export function mapZoomClick () {
+function mapZoomClick () {
   var zoom = $(this).attr('zoom')
   var $mapperPanel = $('#MapperPanel')
 

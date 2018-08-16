@@ -13,8 +13,8 @@
 	Dependencies: jqhashtable-2.1.js, jquery.numberformatter-1.2.1.jsmin.js
 
 */
-
-import {CONST} from './A2J_Types'
+// TODO: fix legacy imports, removing circular dependencies
+// import {CONST} from './A2J_Types'
 
 // Classes
 /**
@@ -80,12 +80,12 @@ TLogic.prototype.pageFindReferences = function (CAJAScript, findName) {	// Find/
 TLogic.prototype.testVar = function (name, lineNum, errors) {	// If variable name not defined in variables list, add error.
   if (!gGuide.varExists(name)) {
     const shoutName = name.toString().toUpperCase()
-		const reservedWordFound = (shoutName === 'NULL' || shoutName === 'TODAY' || shoutName === 'TRUE' || shoutName === 'FALSE')
-		if (reservedWordFound) {
+    const reservedWordFound = (shoutName === 'NULL' || shoutName === 'TODAY' || shoutName === 'TRUE' || shoutName === 'FALSE')
+    if (reservedWordFound) {
 
     } else {
       errors.push(new ParseError(lineNum, '', 'Undefined variable ' + name))
-		}
+    }
   }
 }
 
@@ -564,7 +564,7 @@ TLogic.prototype.stripLogicHTML = function (html) {
   return html
 }
 
-export var gLogic = new TLogic()
+var gLogic = new TLogic()
 
 /* Logic Script functions */
 

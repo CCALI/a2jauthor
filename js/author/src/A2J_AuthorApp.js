@@ -7,23 +7,23 @@
   04/15/2013
 
 */
+// TODO: fix legacy imports, removing circular dependencies
+// import $ from 'jquery'
+// import 'jquery-ui/ui/button'
+// import 'jquery-ui/ui/autocomplete'
+// import 'jquery-ui/ui/draggable'
+// import 'jquery-ui/ui/resizable'
+// import 'jquery-ui/ui/dialog'
+// import 'jquery-ui/ui/tooltip'
 
-import $ from 'jquery'
-import 'jquery-ui/ui/button'
-import 'jquery-ui/ui/autocomplete'
-import 'jquery-ui/ui/draggable'
-import 'jquery-ui/ui/resizable'
-import 'jquery-ui/ui/dialog'
-import 'jquery-ui/ui/tooltip'
-
-import {gGuide, gEnv, gStartArgs, gGuideMeta, CONST} from './viewer/A2J_Types'
-import {versionString} from './viewer/A2J_Viewer'
-import {clauseAdd} from './A2J_Clauses'
-import {editButton} from './A2J_Tabs'
-import {localGuideStart} from './A2J_Debug'
-import {Languages} from './viewer/A2J_Languages'
-import {mapZoomSlide, mapZoomClick} from './A2J_Mapper'
-import {gPrefs} from './viewer/A2J_Prefs'
+// import {gGuide, gEnv, gStartArgs, gGuideMeta, CONST} from './viewer/A2J_Types'
+// import {versionString} from './viewer/A2J_Viewer'
+// import {clauseAdd} from './A2J_Clauses'
+// import {editButton} from './A2J_Tabs'
+// import {localGuideStart} from './A2J_Debug'
+// import {Languages} from './viewer/A2J_Languages'
+// import {mapZoomSlide, mapZoomClick} from './A2J_Mapper'
+// import {gPrefs} from './viewer/A2J_Prefs'
 
 // File upload URLs for a guide's files and a new guide.
 CONST.uploadURL = 'CAJA_WS.php?cmd=uploadfile&gid='
@@ -33,11 +33,11 @@ CONST.uploadGuideURL = 'CAJA_WS.php?cmd=uploadguide'
 CONST.AutoSaveInterval = 5 * 60 * 1000
 
 // Reference for the page editing dialog box
-export var SELECTED = 'item-selected'
+var SELECTED = 'item-selected'
 
 /** @param {...}  status */
 /** @param {...boolean}  showSpinner */
-export function setProgress (status, showSpinner) {
+function setProgress (status, showSpinner) {
   if (typeof status === 'undefined') {
     status = ''
   }
@@ -50,7 +50,7 @@ export function setProgress (status, showSpinner) {
 
 // Contact the webservice to handle user signin, retrieval of guide lists and
 // load/update/cloning guides.
-export function ws (data, results) {
+function ws (data, results) {
   $.ajax({
     url: 'CAJA_WS.php',
     dataType: 'json',
@@ -78,7 +78,7 @@ function signin () {
     /** * @param {{userid,nickname}} data */
     function (data) {
       var gUserID = data.userid
-      gGuideMeta.gGuideID = 0
+      gGuideID = 0
       if (gUserID !== 0) { // ### Successful signin.
         $('#splash').hide()
         $('#cajaheader').removeClass('hidestart')
@@ -170,7 +170,7 @@ function main () { // Everything loaded, now execute code.
 
     ws({ cmd: 'guidezip', gid: gGuideID }, function (data) {
       setProgress('')
-      gGuideMeta.gGuideID = data.gid
+      gGuideID = data.gid
 
       if (data.zip !== '') {
         window.open(data.zip)
@@ -187,64 +187,64 @@ function main () { // Everything loaded, now execute code.
       }
     }
     setProgress('Creating published guide', true)
-    ws({cmd: 'guidepublish', gid: gGuideMeta.gGuideID}, guidePublished)
+    ws({cmd: 'guidepublish', gid: gGuideID}, guidePublished)
   })
 
   // 09/29/2106 Handle publishing guides to external test servers. URL is defined in CAJA_WS.php
   $('#guideZIPLHI').button({ disabled: false}).click(function () { // 08/10/2015 ZIP the guide files, POST them to LHI, open new window for author to complete LHI process.
     function guideZipped (data) {
       setProgress('')
-      gGuideMeta.gGuideID = data.gid
+      gGuideID = data.gid
       if (data.url !== '') {
         window.open(data.url)
       }
     }
     setProgress('Publishing to LHI', true)
-    ws({cmd: 'guideZIPLHI', gid: gGuideMeta.gGuideID}, guideZipped)
+    ws({cmd: 'guideZIPLHI', gid: gGuideID}, guideZipped)
   })
   $('#guideZIPLHIQA').button({ disabled: false}).click(function () { // 11/23/2015 ZIP the guide files, POST them to LHI, open new window for author to complete LHI process. For QA testing
     function guideZipped (data) {
       setProgress('')
-      gGuideMeta.gGuideID = data.gid
+      gGuideID = data.gid
       if (data.url !== '') {
         window.open(data.url)
       }
     }
     setProgress('Publishing to LHI - QA', true)
-    ws({cmd: 'guideZIPLHIQA', gid: gGuideMeta.gGuideID, server: 'QA'}, guideZipped)
+    ws({cmd: 'guideZIPLHIQA', gid: gGuideID, server: 'QA'}, guideZipped)
   })
   $('#guideZIPTESTLHIQA').button({ disabled: false}).click(function () { // 2/2016 ZIP the guide files,
     function guideZipped (data) {
       setProgress('')
-      gGuideMeta.gGuideID = data.gid
+      gGuideID = data.gid
       if (data.url !== '') {
         window.open(data.url)
       }
     }
     setProgress('Publishing to Test LHI - QA', true)
-    ws({cmd: 'guideZIPTESTLHIQA', gid: gGuideMeta.gGuideID, server: 'QA'}, guideZipped)
+    ws({cmd: 'guideZIPTESTLHIQA', gid: gGuideID, server: 'QA'}, guideZipped)
   })
   $('#guideZIPLHIDEV').button({ disabled: false}).click(function () { // 2/2016 ZIP the guide files,
     function guideZipped (data) {
       setProgress('')
-      gGuideMeta.gGuideID = data.gid
+      gGuideID = data.gid
       if (data.url !== '') {
         window.open(data.url)
       }
     }
     setProgress('Publishing to LHI DEV', true)
-    ws({cmd: 'guideZIPLHIDEV', gid: gGuideMeta.gGuideID, server: 'QA'}, guideZipped)
+    ws({cmd: 'guideZIPLHIDEV', gid: gGuideID, server: 'QA'}, guideZipped)
   })
   $('#guideZIPMARLABS').button({ disabled: false}).click(function () { // 2/2016 ZIP the guide files,
     function guideZipped (data) {
       setProgress('')
-      gGuideMeta.gGuideID = data.gid
+      gGuideID = data.gid
       if (data.url !== '') {
         window.open(data.url)
       }
     }
     setProgress('Publishing to Marlabs DEV', true)
-    ws({cmd: 'guideZIPMARLABS', gid: gGuideMeta.gGuideID, server: 'QA'}, guideZipped)
+    ws({cmd: 'guideZIPMARLABS', gid: gGuideID, server: 'QA'}, guideZipped)
   })
 
   $('#guideDownload').button({ disabled: false }).click(function () {
@@ -439,7 +439,7 @@ function main () { // Everything loaded, now execute code.
 window.onbeforeunload = function () {
   // Chrome no longer let's you customize the message
   // If we've got a guide loaded, ask if we want to leave.
-  if (gGuide && gGuideMeta.gGuideID && (gGuideMeta.gGuideID !== 0)) {
+  if (gGuide && gGuideID && (gGuideID !== 0)) {
     return 'Leave A2J Author?'
   } else {
     return null

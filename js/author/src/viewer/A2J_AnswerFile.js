@@ -7,7 +7,8 @@
 	12/22/2014, 02/20/2012
 
 */
-import { TGuide, CONST } from './A2J_Types'
+// TODO: fix legacy imports, removing circular dependencies
+// import { TGuide, CONST } from './A2J_Types'
 
 // 2/28/05 Bug in HotDocs requires empty variable to NOT be included.
 TGuide.prototype.HotDocsAnswerSetXML = function () {

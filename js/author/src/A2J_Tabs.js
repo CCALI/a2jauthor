@@ -7,18 +7,19 @@
 	04/15/2013
 */
 
-import $ from 'jquery'
-import 'jquery-ui/ui/sortable'
-import {TGuide, TAuthor, TStep, gGuideMeta, CONST} from './viewer/A2J_Types'
-import {gotoTabOrPage, pageNameFieldsForTextTab, pageNameRelFilter} from './A2J_Pages'
-import {gPrefs} from './viewer/A2J_Prefs'
-import {ws, SELECTED} from './A2J_AuthorApp'
-import {buildMap} from './A2J_Mapper'
-import {makestr} from './viewer/A2J_Shared'
-// TODO: this should be from js/viewer/mobile/util ?
-import {gLogic} from './viewer/A2J_Logic'
+// TODO: fix legacy imports, removing circular dependencies
+// import $ from 'jquery'
+// import 'jquery-ui/ui/sortable'
+// import {TGuide, TAuthor, TStep, gGuideMeta, CONST} from './viewer/A2J_Types'
+// import {gotoTabOrPage, pageNameFieldsForTextTab, pageNameRelFilter} from './A2J_Pages'
+// import {gPrefs} from './viewer/A2J_Prefs'
+// import {ws, SELECTED} from './A2J_AuthorApp'
+// import {buildMap} from './A2J_Mapper'
+// import {makestr} from './viewer/A2J_Shared'
+// // TODO: this should be from js/viewer/mobile/util ?
+// import {gLogic} from './viewer/A2J_Logic'
 
-export function updateAttachmentFiles () {
+function updateAttachmentFiles () {
   // Load list of uploaded existing files:
   gGuide.attachedFiles = {}
 
@@ -45,7 +46,7 @@ export function updateAttachmentFiles () {
         var inputHTML = (notGuide && notTemplate) ? '<input type="checkbox" />' : ''
 
         $('<tr><td>' + inputHTML + '</td><td>' +
-          '<a target=_blank href="' + gGuideMeta.gGuidePath + (file.name) + '">' + file.name + '</a>' +
+          '<a target=_blank href="' + gGuidePath + (file.name) + '">' + file.name + '</a>' +
           '</td><td>' + file.size + '</td></tr>'
         ).appendTo('#attachmentFiles')
       })
@@ -86,7 +87,7 @@ function deleteSelectedAttachmentFiles () {
       width: 400,
       name: name,
       Yes: function () {
-        ws({cmd: 'deletefiles', gid: gGuideMeta.gGuideID, fileDeleteList: fileDeleteList}, function (response) {
+        ws({cmd: 'deletefiles', gid: gGuideID, fileDeleteList: fileDeleteList}, function (response) {
           if (response.error) {
             console.error('error deleting files ', response.error)
           } else {
@@ -222,7 +223,7 @@ function setCollapsedSteps () {
   return window.collapsedSteps
 }
 
-export function updateTOC () {	// Build outline for entire interview includes meta, step and question sections.
+window.updateTOC = function updateTOC () {	// Build outline for entire interview includes meta, step and question sections.
   // 2014-06-02 TOC updates when page name, text, fields change. Or page is added/deleted.
   // Also we update the mapper since it also displays this info.
   var ts = getTOCStepPages(true, true)
@@ -676,10 +677,10 @@ window.form = {
       '</div>'
     )
 
-    if (gGuideMeta.gGuideID !== 0) {
+    if (gGuideID !== 0) {
       $fileupload.find('.fileupload').fileupload({
         dataType: 'json',
-        url: CONST.uploadURL + gGuideMeta.gGuideID,
+        url: CONST.uploadURL + gGuideID,
 
         done: function (evt, data) {
           var filename = data.result.files[0].name
@@ -1447,7 +1448,7 @@ function restoreSelection (savedSel) {
     }
   }
 }
-export function editButton () {	// ### For the simple editor, handle simple styles.
+function editButton () {	// ### For the simple editor, handle simple styles.
   function editLinkOrPop (preferURL) {	// 2014-08-01
     // Return selected text and url (a href) or blank if none.
     // Used when setting external link or popup link.

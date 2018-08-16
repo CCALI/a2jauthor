@@ -119,7 +119,7 @@ export default CanMap.extend('PagesVM', {
      */
     guideId: {
       get () {
-        return gGuideMeta.gGuideID
+        return gGuideID
       }
     },
 

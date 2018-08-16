@@ -8,15 +8,15 @@
   Required by Author and Desktop Viewer
 
 */
-
-import { gGuideMeta, CONST } from 'caja/author/src/viewer/A2J_Types'
+// TODO: fix legacy imports, removing circular dependencies
+// import { gGuideMeta, CONST } from 'caja/author/src/viewer/A2J_Types'
 
 // Elements: navbar, road step area, question, guide avatar, user avatar, learn more prompt, learn more bubble.
 // var gLogic;
 
 var alertCounter = 0
 
-export function versionString () {
+function versionString () {
   return 'Access to Justice Viewer/Author Version ' +
     CONST.A2JVersionNum + '(' + CONST.A2JVersionDate + ')'
 }
@@ -29,7 +29,7 @@ export function versionString () {
 function traceAlert (html) {
   $('#author-app').trigger('author:trace-alert', {
     message: html,
-    guideId: gGuideMeta.gGuideID
+    guideId: gGuideID
   })
 
   // trace alert into console too.

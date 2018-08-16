@@ -11,13 +11,13 @@
 	Guide and answer - loads guide, starts in player mode after loading answers.
 
 */
+// TODO: fix legacy imports, removing circular dependencies
+// import {gStartArgs, gGuideMeta} from './viewer/A2J_Types'
 
-import {gStartArgs, gGuideMeta} from './viewer/A2J_Types'
-
-export function localGuideStart () {	// Load up command line specified local test file
+function localGuideStart () {	// Load up command line specified local test file
   // trace("localGuideStart");
-  gGuideMeta.gUserID = 0
-  gGuideMeta.gGuideID = 0
+  gUserID = 0
+  gGuideID = 0
   $('#welcome .tabContent').html('Welcome Tester, user#' + gUserID + '<p id="guidelist"></p>')
   if (gStartArgs.templateURL == 'new') {
     gGuide = blankGuide()

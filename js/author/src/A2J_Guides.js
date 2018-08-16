@@ -7,14 +7,14 @@
 	2015 04/15/2013, 	05/2014
 
 */
-
-import { gEnv, gStartArgs, gGuideMeta, CONST } from './viewer/A2J_Types'
-import { gotoTabOrPage } from './A2J_Pages'
-import { setProgress, ws } from './A2J_AuthorApp'
-import { parseXML_Auto_to_CAJA, exportXML_CAJA_from_CAJA } from './viewer/A2J_Parser'
-import { urlSplit, makestr } from './viewer/A2J_Shared'
-import { updateTOC, updateAttachmentFiles } from './A2J_Tabs'
-import {buildMap} from './A2J_Mapper'
+// TODO: fix legacy imports, removing circular dependencies
+// import { gEnv, gStartArgs, gGuideMeta, CONST } from './viewer/A2J_Types'
+// import { gotoTabOrPage } from './A2J_Pages'
+// import { setProgress, ws } from './A2J_AuthorApp'
+// import { parseXML_Auto_to_CAJA, exportXML_CAJA_from_CAJA } from './viewer/A2J_Parser'
+// import { urlSplit, makestr } from './viewer/A2J_Shared'
+// import { updateAttachmentFiles } from './A2J_Tabs'
+// import {buildMap} from './A2J_Mapper'
 
 /**
  * Parses data returned from the server
@@ -47,13 +47,13 @@ function guideLoaded (data) {
     return
   }
 
-  gGuideMeta.gGuideID = data.gid
+  gGuideID = data.gid
   window.gGuide = parseXML_Auto_to_CAJA(cajaDataXML)
   // used for piwik dashboard
   window.gGuide.authorId = data.userid
-  gGuideMeta.gGuidePath = urlSplit(data.path).path
+  gGuidePath = urlSplit(data.path).path
 
-  $('#author-app').trigger('author:item-selected', gGuideMeta.gGuideID)
+  $('#author-app').trigger('author:item-selected', gGuideID)
 
   guideStart('')
   setProgress('')
@@ -79,8 +79,8 @@ function recoverSelectedGuide (guideId) {
 }
 // Save current guide, but only if the XML has changed since last save to avoid upload overhead.
 // If successful or unsuccessful save, call onFinished.
-export function guideSave (onFinished) {
-  if (gGuide !== null && gGuideMeta.gGuideID !== 0) {
+window.guideSave = function guideSave (onFinished) {
+  if (gGuide !== null && gGuideID !== 0) {
     var xml = exportXML_CAJA_from_CAJA(gGuide)
 
     setProgress('Saving ' + gGuide.title, true)
@@ -93,7 +93,7 @@ export function guideSave (onFinished) {
 
       var params = {
         cmd: 'guidesave',
-        gid: gGuideMeta.gGuideID,
+        gid: gGuideID,
         guide: xml,
         title: gGuide.title,
         json: guideJSON_str
@@ -115,7 +115,7 @@ export function guideSave (onFinished) {
   }
 }
 
-export function loadNewGuidePrep () {
+function loadNewGuidePrep () {
   $('.pageoutline').html('')
 }
 
@@ -160,14 +160,14 @@ function guideStart (startTabOrPage) {
     gotoTabOrPage(startTabOrPage)
   }
 
-  updateTOC()
+  window.updateTOC()
 
   // ### Upload file(s) to current guide
   $('#fileupload').addClass('fileupload-processing')
 
-  if (gGuideMeta.gGuideID !== 0) {
+  if (gGuideID !== 0) {
     $('#fileupload').fileupload({
-      url: CONST.uploadURL + gGuideMeta.gGuideID,
+      url: CONST.uploadURL + gGuideID,
       dataType: 'json',
       done: function (e, data) {
         setTimeout(updateAttachmentFiles, 1)
@@ -224,7 +224,7 @@ function createBlankGuide () {
 }
 
 // Open the currently selected guide (either double click or via Open button)
-export function openSelectedGuide (gid) {
+function openSelectedGuide (gid) {
   if (!gid) { return }
 
   var guideFile = $('[gid="' + gid + '"]').text()

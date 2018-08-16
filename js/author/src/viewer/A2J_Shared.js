@@ -77,7 +77,7 @@ function dialogAlert (args)
   })
 }
 
-export function urlSplit (url) {	// given a url like http://www.cali.org/intro/view.php?a=1#start,
+function urlSplit (url) {	// given a url like http://www.cali.org/intro/view.php?a=1#start,
   // return path object with {path:"http://www.cali.org/intro/", file:"view.php", params:"a=1", hash:"start"
   var parts = {path: '', file: '', params: '', hash: ''}
   var p
@@ -167,11 +167,11 @@ function isBlankOrNull (v) {	// Return true if v is blank or null.
   return (v === null || typeof v === 'undefined' || v === '')
 }
 
-export function makestr (s) {	// lazy test to make sure s is a string or blank, not "null" or "undefined"
+function makestr (s) {	// lazy test to make sure s is a string or blank, not "null" or "undefined"
   return (s === null || typeof s === 'undefined') ? '' : s
 }
 
-export function textToBool (b, defaultb) {
+function textToBool (b, defaultb) {
   if (b === null || typeof b === 'undefined') {
     return defaultb
   }
@@ -245,9 +245,9 @@ function pickHilite (html, term) {	// find term in html text and hilite it
     ), '<span class=hilite>$1</span>')
 }
 
-export var gJS2XML_SKIP = {skip: true}
+var gJS2XML_SKIP = {skip: true}
 
-export function js2xml (name, o) {	// 10/17/2012 Simple JSON to XML.
+function js2xml (name, o) {	// 10/17/2012 Simple JSON to XML.
   // If object property name starts with '_' it becomes an attribute.
   // If object property name starts with 'XML_' it becomes a node that's NOT encoded (PCDATA like)
   function trim (name, attr, body) {

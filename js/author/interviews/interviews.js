@@ -4,8 +4,6 @@ import Component from 'can-component'
 import CanList from 'can-list'
 import Guide from 'caja/author/models/guide'
 import template from './interviews.stache'
-import { gGuideMeta } from 'caja/author/src/viewer/A2J_Types'
-import { openSelectedGuide, guideSave } from 'caja/author/src/A2J_Guides'
 
 import 'can-map-define'
 
@@ -33,7 +31,7 @@ export const InterviewsVM = CanMap.extend({
         // interviews list TODO: remove when legacy code refactored to CanJS
         return new Promise(function (resolve, reject) {
           if (window.gGuide) {
-            guideSave(resolve)
+            window.guidesave(resolve)
           } else {
             resolve()
           }
@@ -61,7 +59,7 @@ export const InterviewsVM = CanMap.extend({
     currentGuideId: {
       type: 'string',
       get (lastSet) {
-        return lastSet || gGuideMeta.gGuideID
+        return lastSet || window.gGuideID
       },
       set (val) {
         return val

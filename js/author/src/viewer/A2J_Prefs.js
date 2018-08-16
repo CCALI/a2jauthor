@@ -8,7 +8,7 @@
 
 */
 
-export var gPrefs =
+var gPrefs =
 {
   // Persistent for author
 

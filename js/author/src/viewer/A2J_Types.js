@@ -9,12 +9,12 @@
 */
 
 // ### Constants  ###
-
-import {lang} from './A2J_Languages'
+// TODO: fix legacy imports, removing circular dependencies
+// import {lang} from './A2J_Languages'
 
 /** @const */
 // TODO: replace this with single constants.js file???
-export var CONST = {
+var CONST = {
 
   devShowTesting: false,
   showXML: 0,
@@ -118,7 +118,7 @@ export var CONST = {
  * @struct
  * @this {TVariable}
  */
-export function TVariable () {
+function TVariable () {
   this.name = ''
   this.type = ''	// E.g., Text, MC, TF
   this.comment = ''
@@ -143,7 +143,7 @@ function TText () {
  * @struct
  * @this {TButton}
  */
-export function TButton () {	// Guide defined button, 0 or more
+function TButton () {	// Guide defined button, 0 or more
   this.label = '' // Caption of button
   this.next = '' // Name of default page to jump to
   this.url = '' // URL if button is an Exit Fail
@@ -159,7 +159,7 @@ export function TButton () {	// Guide defined button, 0 or more
  * @struct
  * @this {TField}
  */
-export function TField () {
+function TField () {
   this.type = ''
   this.label = ''
   this.name = ''// reference TVar.name
@@ -259,7 +259,7 @@ function TScript () {
  * @struct
  * @this {TStep}
  */
-export function TStep () {
+function TStep () {
   this.number = ''
   this.text = ''
   return this
@@ -270,7 +270,7 @@ export function TStep () {
  * @struct
  * @this {TClause}
  */
-export function TClause () {
+function TClause () {
   this.name = ''
   this.text = ''
   this.comment = ''
@@ -291,7 +291,7 @@ function TPopup()
  * @struct
  * @this {TPage}
  */
-export function TPage () {	// This represents a single page within the lesson book/interview.
+function TPage () {	// This represents a single page within the lesson book/interview.
   // this.id="";// Unique id
   this.name = ''// Unique but author chosen name
   this.text = ''// Text of question
@@ -330,7 +330,7 @@ export function TPage () {	// This represents a single page within the lesson bo
  * @struct
  * @this {TAuthor}
  */
-export function TAuthor () {
+function TAuthor () {
   this.name = ''
   this.title = ''
   this.organization = ''
@@ -343,7 +343,7 @@ export function TAuthor () {
  * @struct
  * @this {TGuide}
  */
-export function TGuide () {	// This is the Guide representing a CALI lesson Book or an A2J Author Interview.
+function TGuide () {	// This is the Guide representing a CALI lesson Book or an A2J Author Interview.
   this.tool = 'CAJA'
   this.toolversion = '2014-06-24'
   this.avatar = ''				// Origin A2J - default avatar to use (blank or tan)
@@ -732,16 +732,20 @@ TGuide.prototype.varClearAll = function () {
 
 /** @type {TGuide} */
 var gGuide // global reference to current guide TGuide (CBK or A2J)
+var gGuideID
+var gGuidePath
+var gPage
 
-/** @type {Object} */
-export var gGuideMeta = {
-  gGuideID: undefined,
-  gGuidePath: undefined,
-  gPage: undefined
-}
+// this gGuideMeta is used to share globals as package during future refactor
+// /** @type {Object} */
+// var gGuideMeta = {
+//   gGuideID: undefined,
+//   gGuidePath: undefined,
+//   gPage: undefined
+// }
 
 /** @type {string} */
-export var gEnv = '' // Where are we running? Locally, on a2jauthor.org, as beta or dev?
+var gEnv = '' // Where are we running? Locally, on a2jauthor.org, as beta or dev?
 // Determine what stage we're in and display watermark.
 gEnv = (String(window.location).indexOf('http://bitovi.a2jauthor.org') === 0) ? 'DEV'
   : (String(window.location).indexOf('http://staging.a2jauthor.org') === 0) ? 'STAGING'
@@ -749,7 +753,7 @@ gEnv = (String(window.location).indexOf('http://bitovi.a2jauthor.org') === 0) ? 
 
 // gStartArgs is populated by the parent IFRAME Viewer (or A2J Author directly)
 // This is how the host site configures the viewer to handle data and urls.
-export var gStartArgs = {
+var gStartArgs = {
   templateURL: '',
   fileDataURL: '',
   getDataURL:	'',

@@ -74,13 +74,101 @@
       "localforage": "localforage/dist/localforage.nopromises"
     },
     "meta": {
+      "caja/author/src/A2J_Tabs": {
+        "format": "global",
+        "eval": "script",
+        "deps": [
+          "jquery-ui/ui/sortable"
+        ]
+      },
+      "caja/author/src/A2J_AuthorApp": {
+        "format": "global",
+        "eval": "script",
+        "deps": [
+          "jquery-ui/ui/button",
+          "jquery-ui/ui/autocomplete",
+          "jquery-ui/ui/draggable",
+          "jquery-ui/ui/resizable",
+          "jquery-ui/ui/dialog",
+          "jquery-ui/ui/tooltip"
+        ]
+      },
+      "caja/author/src/A2J_Clauses": {
+        "format": "global",
+        "eval": "script"
+      },
+      "caja/author/src/A2J_Reports": {
+        "format": "global",
+        "eval": "script",
+        "deps": [
+          "caja/author/src/viewer/A2J_Logic"
+        ]
+      },
+      "caja/author/src/A2J_Mapper": {
+        "format": "global",
+        "eval": "script"
+      },
+      "caja/author/src/A2J_Pages": {
+        "format": "global",
+        "eval": "script"
+      },
+      "caja/author/src/A2J_Guides": {
+        "format": "global",
+        "eval": "script"
+      },
+      "caja/author/src/A2J_Debug": {
+        "format": "global",
+        "eval": "script"
+      },
+      "caja/author/src/viewer/A2J_Types": {
+        "format": "global",
+        "eval": "script"
+      },
+      "caja/author/src/viewer/A2J_Logic": {
+        "format": "global",
+        "eval": "script"
+      },
+      "caja/author/src/viewer/A2J_ParserConvert": {
+        "format": "global",
+        "eval": "script"
+      },
+      "caja/author/src/viewer/A2J_Parser": {
+        "format": "global",
+        "eval": "script"
+      },
+      "caja/author/src/viewer/A2J_Viewer": {
+        "format": "global",
+        "eval": "script"
+      },
+      "caja/author/src/viewer/A2J_Prefs": {
+        "format": "global",
+        "eval": "script"
+      },
+      "caja/author/src/viewer/A2J_Languages": {
+        "format": "global",
+        "eval": "script"
+      },
       "caja/author/src/viewer/A2J_MobileFile": {
         "format": "global",
         "eval": "script"
       },
+      "caja/author/src/viewer/A2J_Shared": {
+        "format": "global",
+        "eval": "script",
+        "deps": [
+          "jquery-ui/ui/dialog"
+        ]
+      },
       "caja/author/src/viewer/A2J_SharedSus": {
         "format": "global",
         "eval": "script"
+      },
+      "caja/author/src/viewer/A2J_AnswerFile": {
+        "format": "global",
+        "eval": "script",
+        "deps": [
+          "caja/author/src/viewer/A2J_Types"
+        ]
       },
       "caja/author/src/viewer/jquery.ui.combobox": {
         "deps": [

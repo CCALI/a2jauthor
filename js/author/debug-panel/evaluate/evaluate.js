@@ -1,9 +1,9 @@
-import CanMap from "can-map";
-import Component from "can-component";
-import template from './evaluate.stache';
-import $ from 'jquery';
+import CanMap from 'can-map';
+import Component from 'can-component';
+import template from './evaluate.stache'
+import $ from 'jquery'
 
-import "can-map-define";
+import 'can-map-define';
 
 /**
  * @property {can.Map} evaluatePanel.ViewModel
@@ -11,14 +11,14 @@ import "can-map-define";
  *
  * `<author-evaluate-panel>`'s viewModel.
  */
-export let EvaluatePanelVM = CanMap.extend('EvaluatePanelVM',{
-    define: {
-        traceLogic: {
-            value: null
-        }
-    },
+export let EvaluatePanelVM = CanMap.extend('EvaluatePanelVM', {
+  define: {
+    traceLogic: {
+      value: []
+    }
+  },
 
-    /**
+  /**
      * @function authorEvaluatePanel.ViewModel.prototype.evaluateScript evaluateScript
      * @parent authorEvaluatePanel.ViewModel
      *
@@ -29,39 +29,39 @@ export let EvaluatePanelVM = CanMap.extend('EvaluatePanelVM',{
      *
      * ex: [User Gender] = "Female" or DOLLARROUND(54332.64)
      */
-    evaluateScript() {
-        let evalResults;
-        let traceLogic = this.attr('traceLogic');
-        let scriptText = $('#evaluate-input').val();
+  evaluateScript () {
+    let evalResults
+        let traceLogic = this.attr('traceLogic')
+        let scriptText = $('#evaluate-input').val()
         if (scriptText) {
-            evalResults = window.gLogic.evalBlock(scriptText);
+      evalResults = window.gLogic.evalBlock(scriptText)
         }
 
-        if (evalResults.errors.length > 0) {
-            evalResults.errors.forEach(function(error) {
-                traceLogic.push({
-                    expression: [ { format: 'valF', msg: 'ERROR' }, { format: 'code', msg: error.text } ]
-                });
-            });
-        } else if (evalResults.text &&  traceLogic) {
-            traceLogic.push({
-                expression: [ { format: 'code', msg: scriptText + ' evaluates to: ' }, { format: 'val', msg: evalResults.text } ]
-            });
+    if (evalResults.errors.length > 0) {
+      evalResults.errors.forEach(function (error) {
+        traceLogic.push({
+          expression: [ { format: 'valF', msg: 'ERROR' }, { format: 'code', msg: error.text } ]
+        })
+            })
+        } else if (evalResults.text && traceLogic) {
+      traceLogic.push({
+        expression: [ { format: 'code', msg: scriptText + ' evaluates to: ' }, { format: 'val', msg: evalResults.text } ]
+      })
         }
-    }
-});
+  }
+})
 
 export default Component.extend({
-    view: template,
-    leakScope: false,
-    ViewModel: EvaluatePanelVM,
-    tag: 'author-evaluate-panel',
+  view: template,
+  leakScope: false,
+  ViewModel: EvaluatePanelVM,
+  tag: 'author-evaluate-panel',
 
-    events: {
-    '#evaluate-input keyup': function(el, ev) {
-        if (ev.keyCode===13) {
-            $('#evaluate-button').click();
+  events: {
+    '#evaluate-input keyup': function (el, ev) {
+      if (ev.keyCode === 13) {
+        $('#evaluate-button').click()
         }
-    },
     }
-});
+  }
+})

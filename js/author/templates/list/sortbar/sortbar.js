@@ -1,9 +1,8 @@
-import CanMap from 'can-map';
-import Component from 'can-component';
+import CanMap from 'can-map'
+import Component from 'can-component'
 import template from './sortbar.stache'
 
-import 'can-list-sort'
-import 'can-map-define';
+import 'can-map-define'
 
 export let Sortbar = CanMap.extend({
   define: {

@@ -132,7 +132,7 @@ describe('<templates-page>', function () {
         let vm = $('templates-page').viewModel()
 
         // mark all templates as deleted
-        vm.attr('templates').each(template => template.attr('active', false))
+        vm.attr('templates').forEach(template => template.attr('active', false))
       })
 
       F('.no-match-filter').visible('no templates match "active" filter')
@@ -145,7 +145,7 @@ describe('<templates-page>', function () {
         let vm = $('templates-page').viewModel()
 
         // mark all templates as active and set filter to deleted.
-        vm.attr('templates').each(template => template.attr('active', true))
+        vm.attr('templates').forEach(template => template.attr('active', true))
         vm.attr('activeFilter', 'deleted')
       })
 

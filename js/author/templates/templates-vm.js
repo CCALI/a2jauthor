@@ -294,7 +294,7 @@ export default CanMap.extend({
     // they will continue to show up in the alert component when other templates
     // are deleted later on.
     if (alreadyDeleted && alreadyDeleted.attr('length')) {
-      alreadyDeleted.each(template => template.removeAttr('deleted'))
+      alreadyDeleted.forEach(template => template.removeAttr('deleted'))
     }
 
     if (beingDeleted.attr('length')) {
@@ -315,7 +315,7 @@ export default CanMap.extend({
     let beingRestored = templates.filter(template => template.attr('restored'))
 
     if (alreadyRestored && alreadyRestored.attr('length')) {
-      alreadyRestored.each(template => template.removeAttr('restored'))
+      alreadyRestored.forEach(template => template.removeAttr('restored'))
     }
 
     if (beingRestored.attr('length')) {

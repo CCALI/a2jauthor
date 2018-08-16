@@ -214,7 +214,7 @@ describe('Interview model', function() {
       let answers = interview.attr('answers');
       interview.clearAnswers();
 
-      answers.each(function(answer){
+      answers.forEach(function(answer){
         let values = answer.attr('values');
         if (values) { // skip answers without values prop
           assert.equal(values.length, 1);

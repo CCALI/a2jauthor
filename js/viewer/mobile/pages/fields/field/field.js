@@ -412,7 +412,7 @@ export default Component.extend('FieldComponent', {
         let fields = this.viewModel.attr('%root.fields')
         if (fields) {
           let toStayChecked = field.type
-          fields.each(function (field) {
+          fields.forEach(function (field) {
             if (field.type !== toStayChecked && (field.type === 'checkbox' || field.type === 'checkboxNOTA')) {
               field.attr('_answer.answer.values.1', false)
             }

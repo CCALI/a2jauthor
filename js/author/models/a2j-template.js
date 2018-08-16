@@ -85,7 +85,7 @@ const A2JTemplate = Model.extend(
         let dfd = findAllData(params).then(response => {
           let a2jTemplates = this.models(response)
 
-          a2jTemplates.each((a2jTemplate, index) => {
+          a2jTemplates.forEach((a2jTemplate, index) => {
             // extend template with buildOrder property.
             a2jTemplate.attr('buildOrder', index + 1)
 

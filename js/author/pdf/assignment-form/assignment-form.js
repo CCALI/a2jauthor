@@ -165,7 +165,7 @@ export const AssignmentFormVm = CanMap.extend('AssignmentFormVm', {
         }
 
         const names = [];
-        dict.each(variable => {
+        dict.forEach(variable => {
           names.push(variable.name);
         });
         return names;

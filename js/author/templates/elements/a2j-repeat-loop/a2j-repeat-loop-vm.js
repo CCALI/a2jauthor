@@ -251,7 +251,7 @@ export default CanMap.extend({
     let newLength = columns.attr('length') + 1;
     let colWidth = Math.floor(100 / newLength);
 
-    columns.each(function(col) {
+    columns.forEach(function(col) {
       col.attr('width', colWidth);
     });
 
@@ -267,7 +267,7 @@ export default CanMap.extend({
     let newLength = columns.attr('length') - 1;
     let colWidth = Math.floor(100 / newLength);
 
-    columns.each(function(col) {
+    columns.forEach(function(col) {
       col.attr('width', colWidth);
     });
 

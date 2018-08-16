@@ -102,7 +102,7 @@ describe('AnswerViewModel', function() {
         checkboxFactory()
       ]);
 
-      checkboxes.each(function(checkbox) {
+      checkboxes.forEach(function(checkbox) {
         checkbox.attr('_answer', new AnswerVM({
           answerIndex: 1,
           field: checkbox,
@@ -131,7 +131,7 @@ describe('AnswerViewModel', function() {
     });
 
     it('does not fail if none of the checkboxes is required', function() {
-      checkboxes.each(function(checkbox) {
+      checkboxes.forEach(function(checkbox) {
         checkbox.attr('required', false);
       });
 

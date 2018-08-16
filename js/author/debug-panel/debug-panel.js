@@ -106,7 +106,7 @@ export let DebugPanelVM = CanMap.extend({
             // update message if it already exists, such as  user changing a variable
             // {'first name': [ { format: 'var', msg: 'first name' }, { msg: ' = ' }, { format: 'val', msg: 'sam' } ]
             // {'first name': [ { format: 'var', msg: 'first name' }, { msg: ' = ' }, { format: 'val', msg: 'manuel' } ]
-            currentPage.attr('messages').each((message) => {
+            currentPage.attr('messages').forEach((message) => {
               if (message.attr('key') === key) {
                 message.attr('fragments', fragments)
                 existingMessageUpdated = true
@@ -145,7 +145,7 @@ export let DebugPanelVM = CanMap.extend({
           } else {
             let currentPage = lastSetValue.attr(lastSetValue.attr('length') - 1)
             if (currentPage) {
-              newMessage.each(onEachMessage(currentPage))
+              newMessage.forEach(onEachMessage(currentPage))
             }
           }
         }

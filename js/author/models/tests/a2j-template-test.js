@@ -29,7 +29,7 @@ describe('A2JTemplate Model', function () {
     let promise = A2JTemplate.findAll({guideId: 1261})
 
     return promise.then(function (a2jTemplates) {
-      a2jTemplates.each(function (a2jTemplate) {
+      a2jTemplates.forEach(function (a2jTemplate) {
         assert.ok(a2jTemplate.attr('rootNode') instanceof A2JNode)
 
         if (a2jTemplate.attr('rootNode.children.length')) {

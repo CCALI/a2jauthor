@@ -1,5 +1,5 @@
 <can-import from="caja/viewer/mobile/pages/fields/field/views/checkbox.less!" />
-
+{{console.log(field)}}
 <div>
 	<div class="{{#if field.hasError}}has-error{{/if}}">
 		<div class="checkbox">
@@ -8,7 +8,7 @@
 			id="{{label}}"
 			type="checkbox"
 			name="{{name}}"
-			on:el:change="validateField()"
+			on:el:change="validateField(null, scope.element)"
 			el:checked:bind="field._answer.values"/>
 		{{{ eval(label, repeatVarValue) }}}</label>
 		</div>

@@ -24,9 +24,9 @@
       {{#if fields.length}}
         <a2j-fields vm:lang:from="scope.vm.lang"
                     vm:logic:bind="scope.vm.logic"
-                    vm:fields:bind="scope.vm.fields"
+                    vm:fields:bind="fields"
                     vm:traceLogic:bind="scope.vm.traceLogic"
-                    vm:repeatVarValue:from="scope.vm.rState.repeatVarValue"
+                    vm:repeatVarValue:bind="scope.vm.rState.repeatVarValue"
                     vm:modalContent:bind="scope.vm.modalContent"
                     vm:rState:bind="scope.vm.rState"
                     role="form"/>
@@ -65,7 +65,7 @@
 
         {{#default}}
           <button type="button"
-                  on:el:click="navigate()"
+                  on:el:click="scope.vm.navigate(this)"
                   class="btn btn-default btn-navigate">
             {{getButtonLabel(label)}}
           </button>

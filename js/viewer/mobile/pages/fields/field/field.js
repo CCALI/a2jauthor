@@ -25,6 +25,8 @@ stache.registerPartial('exceeded-maxchars-tpl', exceededMaxcharsTpl)
  */
 export let FieldVM = CanMap.extend('FieldVM', {
   define: {
+    repeatVarValue: {},
+
     traceLogic: {
       value: []
     },

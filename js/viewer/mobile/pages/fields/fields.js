@@ -3,6 +3,7 @@ import Component from 'can-component'
 import template from './fields.stache'
 
 import 'caja/viewer/mobile/pages/fields/field/'
+import 'can-map-define'
 
 /**
  * @property {can.Map} fields.ViewModel
@@ -10,7 +11,11 @@ import 'caja/viewer/mobile/pages/fields/field/'
  *
  * `<a2j-fields>`'s viewModel.
  */
-let FieldsVM = CanMap.extend({})
+let FieldsVM = CanMap.extend({
+  define: {
+    repeatVarValue: {}
+  }
+})
 
 /**
  * @module {Module} viewer/mobile/pages/fields/ <a2j-fields>

@@ -1,5 +1,6 @@
+import $ from 'jquery'
 import PagesVM from './pages-vm'
-import Component from 'can-component';
+import Component from 'can-component'
 import template from './pages.stache'
 import assembleFormTpl from './assemble-form.stache'
 import saveAnswersFormTpl from './save-answers-form.stache'
@@ -38,7 +39,11 @@ export default Component.extend({
 
   helpers: {
     getButtonLabel (label) {
-      return label || this.attr('lang').attr('Continue');
+      return label || this.attr('lang').attr('Continue')
+    },
+    eval (str) {
+      str = typeof str === 'function' ? str() : str
+      return this.attr('logic').eval(str)
     }
   },
 
@@ -88,7 +93,7 @@ export default Component.extend({
         const pages = vm.attr('interview.pages')
 
         if (pages) {
-          const pageName = $(el.get(0)).attr('href').replace('popup://', '').replace('POPUP://', '').replace('/', '') //pathname is not supported in FF and IE.
+          const pageName = $(el.get(0)).attr('href').replace('popup://', '').replace('POPUP://', '').replace('/', '') // pathname is not supported in FF and IE.
           const page = pages.find(pageName)
           const sourcePageName = vm.attr('currentPage.name')
 

@@ -353,7 +353,6 @@ export default Component.extend({
     },
 
     '{visitedPages} revisited': function (map, ev, revisitedIndex) {
-      console.log('revisited', arguments)
       this.viewModel.attr('selectedPageIndex', revisitedIndex)
     }
   }

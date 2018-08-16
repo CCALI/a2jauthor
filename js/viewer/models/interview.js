@@ -264,7 +264,7 @@ const Interview = Model.extend({
     // batch.start required for Author preview mode with long var/answer lists
     queues.batch.start()
 
-    this.attr('answers').each((answer) => {
+    this.attr('answers').forEach((answer) => {
       if (answer && answer.attr('values') && answer.attr('values').length > 1) {
         answer.attr('values', [null])
       }

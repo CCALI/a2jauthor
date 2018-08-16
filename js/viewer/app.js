@@ -35,8 +35,8 @@ const persistedStatePromise = PersistedState.findOne()
 const rState = new AppState()
 
 route.register('', { view: 'intro' })
-route.register("view/{view}/page/{page}")
-route.register("view/{view}/page/{page}/{repeatVarValue}")
+route.register('view/{view}/page/{page}')
+route.register('view/{view}/page/{page}/{repeatVarValue}')
 route.map(rState)
 
 Promise.all([interviewPromise, persistedStatePromise])

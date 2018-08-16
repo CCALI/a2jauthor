@@ -10,6 +10,57 @@ import 'can-validate-legacy/shims/validatejs'
 import 'can-map-define'
 
 export default CanMap.extend('AnswerVM', {
+  define: {
+    field: {
+      value: null
+    },
+    answer: {
+      value: null
+    },
+    answerIndex: {
+      value: 1
+    },
+    values: {
+      get () {
+        const type = this.attr('field.type')
+        const index = this.attr('answerIndex')
+        const previousValue = this.attr(`answer.values.${index}`)
+
+        if (type === 'datemdy') {
+          const date = moment(previousValue, 'MM/DD/YYYY')
+          return date.isValid() ? date.format('MM/DD/YYYY') : ''
+        }
+
+        return previousValue
+      },
+
+      set (val) {
+        const index = this.attr('answerIndex')
+        const type = this.attr('field.type')
+
+        if (type === 'datemdy') {
+          const date = moment(val)
+          val = date.isValid() ? date.format('MM/DD/YYYY') : ''
+        }
+        // TODO: this conversion allows for future locales
+        // should probably be moved to a better place when that happens
+        if (type === 'number' || type === 'numberdollar') {
+          val = cString.textToNumber(val)
+        }
+
+        if (!this.attr('answer')) {
+          this.attr('answer', {})
+        }
+
+        if (!this.attr('answer.values')) {
+          this.attr('answer.values', [null])
+        }
+
+        this.attr(`answer.values.${index}`, val)
+      }
+    }
+  },
+
   init () {
     this.validate('values', function (val) {
       const field = this.attr('field')
@@ -80,50 +131,5 @@ export default CanMap.extend('AnswerVM', {
 
       return invalid
     })
-  },
-
-  field: null,
-  answer: null,
-  answerIndex: 1,
-  define: {
-    values: {
-      get () {
-        const type = this.attr('field.type')
-        const index = this.attr('answerIndex')
-        const previousValue = this.attr(`answer.values.${index}`)
-
-        if (type === 'datemdy') {
-          const date = moment(previousValue, 'MM/DD/YYYY')
-          return date.isValid() ? date.format('MM/DD/YYYY') : ''
-        }
-
-        return previousValue
-      },
-
-      set (val) {
-        const index = this.attr('answerIndex')
-        const type = this.attr('field.type')
-
-        if (type === 'datemdy') {
-          const date = moment(val)
-          val = date.isValid() ? date.format('MM/DD/YYYY') : ''
-        }
-        // TODO: this conversion allows for future locales
-        // should probably be moved to a better place when that happens
-        if (type === 'number' || type === 'numberdollar') {
-          val = cString.textToNumber(val)
-        }
-
-        if (!this.attr('answer')) {
-          this.attr('answer', {})
-        }
-
-        if (!this.attr('answer.values')) {
-          this.attr('answer.values', [null])
-        }
-
-        this.attr(`answer.values.${index}`, val)
-      }
-    }
   }
 })

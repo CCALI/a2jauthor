@@ -31,7 +31,7 @@ export const InterviewsVM = CanMap.extend({
         // interviews list TODO: remove when legacy code refactored to CanJS
         return new Promise(function (resolve, reject) {
           if (window.gGuide) {
-            window.guidesave(resolve)
+            window.guideSave(resolve)
           } else {
             resolve()
           }

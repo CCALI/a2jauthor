@@ -217,7 +217,7 @@ const Interview = Model.extend({
       serialize: false,
 
       get () {
-        let list = new CanList()
+        let list = []
         let answers = this.attr('answers')
         let vars = this.attr('vars').attr()
 

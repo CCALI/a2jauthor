@@ -1,5 +1,4 @@
 <can-import from="caja/viewer/mobile/pages/fields/field/views/checkbox.less!" />
-{{console.log(field)}}
 <div>
 	<div class="{{#if field.hasError}}has-error{{/if}}">
 		<div class="checkbox">

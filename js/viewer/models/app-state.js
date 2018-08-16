@@ -137,7 +137,7 @@ export const ViewerAppState = CanMap.extend({
     }
 
     if (page && alreadyVisited) {
-      visited.dispatch('revisited', alreadyVisitedIndex)
+      visited.dispatch(['revisited', alreadyVisitedIndex])
     }
   },
 

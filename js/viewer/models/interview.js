@@ -255,7 +255,8 @@ const Interview = Model.extend({
           }
         })
 
-        return list.sort(function (a, b) { return naturalCompare.caseInsensitive(a.name, b.name) })
+        const sortedVarList = list.sort(function (a, b) { return naturalCompare.caseInsensitive(a.name, b.name) })
+        return new CanList(sortedVarList)
       }
     }
   },

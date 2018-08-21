@@ -43,10 +43,10 @@ export default function ({interview, pState, mState, rState}) {
     }
   })
 
-  rState.attr('interview', interview)
+  rState.interview = interview
   setMobileDesktopClass(isMobile, $('body'))
 
-  rState.attr('logic', logic)
+  rState.logic = logic
 
   const modalContent = compute()
 

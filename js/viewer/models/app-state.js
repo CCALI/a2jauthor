@@ -2,86 +2,119 @@ import CanMap from 'can-map'
 import CanList from 'can-list'
 import route from 'can-route'
 import _findIndex from 'lodash/findIndex'
+import makeCompat from 'can-map-compat'
+import DefineMap from 'can-define/map/map'
 
 import 'can-map-define'
 
-export const ViewerAppState = CanMap.extend({
-  define: {
-    visitedPages: {
-      Value: CanList,
-      serialize: false
-    },
+export const ViewerAppState = makeCompat(DefineMap.extend('ViewerAppState', {
+  visitedPages: {
+    Default: CanList,
+    serialize: false
+  },
 
-    forceNavigation: {
-      type: 'boolean',
-      value: false,
-      serialize: false
-    },
-
-    singlePageLoop: {
-      type: 'boolean',
-      value: false,
-      serialize: false
-    },
-
-    previewActive: {
-      type: 'boolean',
-      serialize: false,
-      get () {
-        return route.data.attr('page') === 'preview'
-      }
-    },
-
-    saveAndExitActive: {
-      value: false,
-      serialize: false
-    },
-
-    lastPageBeforeExit: {
-      value: null,
-      serialize: false
-    },
-
-    lastVisitedPageName: {
-      value: false,
-      serialize: false
-    },
-
-    interview: {
-      serialize: false,
-      set (interview) {
-        return interview
-      }
-    },
-
-    page: {
-      value: '',
-      set (pageName) {
-        let interview = this.attr('interview')
-        this.setVisitedPages(pageName, interview)
-        return pageName
-      }
-    },
-
-    repeatVarValue: {
-      type: 'number'
-    },
-
-    outerLoopVarValue: {
-      type: 'number'
-    },
-
-    logic: {
-      serialize: false
-    },
-
-    traceLogic: {
-      serialize: false,
-      value: function () {
-        return new CanList()
-      }
+  selectedPageIndex: {
+    type: 'string',
+    get (lastSet) {
+      return lastSet || '0'
     }
+  },
 
+  selectedPageName: {
+    value ({lastSet, resolve, listenTo}) {
+      listenTo('selectedPageIndex', (ev, newVal) => {
+        const selectedPage = this.visitedPages[lastSet]
+        this.restoreLoopVars(selectedPage)
+        resolve(selectedPage.name)
+      })
+    }
+  },
+
+  page: {
+    value ({lastSet, resolve, listenTo}) {
+      let curVal = ''
+
+      listenTo('selectedPageName', (newVal) => {
+        if (newVal !== curVal) {
+          resolve(newVal)
+        }
+      })
+
+      listenTo(lastSet, (newVal) => {
+        curVal = newVal
+        resolve(newVal)
+      })
+    }
+  },
+
+  forceNavigation: {
+    type: 'boolean',
+    default: false,
+    serialize: false
+  },
+
+  singlePageLoop: {
+    type: 'boolean',
+    default: false,
+    serialize: false
+  },
+
+  previewActive: {
+    type: 'boolean',
+    serialize: false,
+    get () {
+      return route.data.attr('page') === 'preview'
+    }
+  },
+
+  saveAndExitActive: {
+    default: false,
+    serialize: false
+  },
+
+  lastPageBeforeExit: {
+    default: null,
+    serialize: false
+  },
+
+  lastVisitedPageName: {
+    default: false,
+    serialize: false
+  },
+
+  interview: {
+    serialize: false,
+    set (interview) {
+      return interview
+    }
+  },
+
+  // used for internal page routing in preview
+  view: {},
+
+  // TODO: probably can be derived from or replaced by repeatVarValue
+  answerIndex: {
+    serialize: false,
+    default: 1
+  },
+
+  repeatVarValue: {
+    type: 'number'
+  },
+
+  outerLoopVarValue: {
+    type: 'number'
+  },
+
+  logic: {
+    serialize: false
+  },
+
+  traceLogic: {
+    serialize: false,
+    default: function () {
+      return new CanList()
+    }
   },
 
   init () {
@@ -90,6 +123,31 @@ export const ViewerAppState = CanMap.extend({
     $(window).on('traceLogic', function (ev, msg) {
       self.attr('traceLogic').push(msg)
     })
+  },
+
+  /**
+   * @property {Function} viewerNavigation.ViewModel.restoreLoopVars restoreLoopVars
+   * @parent viewerNavigation.ViewModel
+   *
+   * Restores repeatVar and outerLoopVar values to match the selected page
+   */
+  restoreLoopVars (selectedPage) {
+    const appState = this.attr('appState')
+
+    const repeatVar = selectedPage.attr('repeatVar')
+    const repeatVarValue = selectedPage.attr('repeatVarValue')
+    const outerLoopVar = selectedPage.attr('outerLoopVar')
+    const outerLoopVarValue = selectedPage.attr('outerLoopVarValue')
+
+    if (repeatVar && repeatVarValue) {
+      appState.attr('repeatVarValue', repeatVarValue)
+      this.attr('logic').varSet(repeatVar, repeatVarValue)
+    }
+
+    if (outerLoopVar && outerLoopVarValue) {
+      appState.attr('outerLoopVarValue', outerLoopVarValue)
+      this.attr('logic').varSet(outerLoopVar, outerLoopVarValue)
+    }
   },
 
   setVisitedPages (pageName, interview) {
@@ -161,6 +219,6 @@ export const ViewerAppState = CanMap.extend({
     // if gotoPage changes, codeBefore fired a goto event
     return preGotoPage !== postGotoPage ? postGotoPage : false
   }
-})
+}))
 
 export default ViewerAppState

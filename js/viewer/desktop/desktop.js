@@ -43,32 +43,25 @@ let DesktopViewerVM = CanMap.extend('DesktopViewerVM', {
   init () {
     let routeState = this.attr('rState')
 
-    if (routeState) {
-      let view = routeState.attr('view')
-      let interview = this.attr('interview')
-
-      if (view === 'intro') {
-        routeState.attr({
-          view: 'pages',
-          page: interview.attr('firstPage')
-        })
-      }
-
-      this.checkPageExists()
+    if (routeState && routeState.view === 'intro') {
+      const interview = this.attr('interview')
+      routeState.view = 'pages'
+      routeState.page = interview.attr('firstPage')
     }
+
+    this.checkPageExists()
   },
 
   checkPageExists () {
-    let routeState = this.attr('rState')
-    let interview = this.attr('interview')
+    const routeState = this.attr('rState')
+    const interview = this.attr('interview')
 
     if (!routeState || !interview) return
 
-    let view = routeState.attr('view')
-    let pageName = routeState.attr('page')
+    const pageName = routeState.page
 
-    if (view === 'pages') {
-      let page = interview.attr('pages').find(pageName)
+    if (routeState.view === 'pages') {
+      const page = interview.attr('pages').find(pageName)
       this.attr('pageNotFound', _isUndefined(page))
     }
   }

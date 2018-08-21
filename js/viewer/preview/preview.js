@@ -48,22 +48,20 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
     answers.attr(_assign({}, interview.serialize().vars))
 
     interview.attr('answers', answers)
-    rState.attr('interview', interview)
+    rState.interview = interview
 
     // needs to be created after answers are set
     const logic = new Logic({ interview })
-    rState.attr('logic', logic)
+    rState.logic = logic
 
     // if previewPageName is set, we need to make sure the viewer
     // loads that specific page (covers the case when user clicks
     // `preview` from the edit page popup).
     if (vm.attr('previewPageName')) {
-      rState.attr({
-        view: 'pages',
-        page: vm.attr('previewPageName')
-      })
+      rState.view = 'pages'
+      rState.page = vm.attr('previewPageName')
     } else {
-      rState.attr('view', 'intro')
+      rState.view = 'intro'
     }
 
     const modalContent = compute()

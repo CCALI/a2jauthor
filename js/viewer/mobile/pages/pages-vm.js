@@ -366,11 +366,10 @@ export default CanMap.extend('PagesVM', {
 
       // user has selected to navigate to a prior question
       if (button.next === constants.qIDBACK) {
-        const visitedPages = this.rState.attr('visitedPages')
         // last visited page always at index 1
         // TODO: GOTO logic could break the above assumption
         // might need a better way to track the last page
-        const priorQuestion = (visitedPages[1].attr('name'))
+        const priorQuestion = (this.rState.visitedPages[1].attr('name'))
         // override with new gotoPage
         logic.attr('gotoPage', priorQuestion)
         button.attr('next', priorQuestion)
@@ -407,12 +406,12 @@ export default CanMap.extend('PagesVM', {
       if (page.name === gotoPage) {
         let rState = this.attr('rState')
         let interview = this.attr('interview')
-        rState.attr('singlePageLoop', true)
+        rState.singlePageLoop = true
 
         rState.setVisitedPages(gotoPage, interview)
-        canDomEvents.dispatch(rState, 'page', [gotoPage])
+        rState.page = gotoPage
 
-        rState.attr('singlePageLoop', false)
+        rState.singlePageLoop = false
       }
 
       return
@@ -467,13 +466,14 @@ export default CanMap.extend('PagesVM', {
     const countVarName = (repeatVar || '').toLowerCase()
 
     const answer = answers.attr(countVarName)
-    const i = answer ? (new AnswerVM({ answer })).attr('values') : null
+    const answerIndex = answer ? (new AnswerVM({ answer })).attr('values') : null
 
-    if (i) {
-      rState.attr({ page: gotoPage, i: parseInt(i, 10) })
+    if (answerIndex) {
+      rState.page = gotoPage
+      rState.answerIndex = parseInt(answerIndex, 10)
     } else {
-      rState.removeAttr('i')
-      rState.attr('page', gotoPage)
+      rState.answerIndex = 1
+      rState.page = gotoPage
     }
   },
 
@@ -548,8 +548,8 @@ export default CanMap.extend('PagesVM', {
         const answer = this.__ensureFieldAnswer(field)
         const avm = new AnswerVM({ field, answerIndex, answer, fields })
 
-        if (page.attr('repeatVar') && rState.attr('i')) {
-          avm.attr('answerIndex', parseInt(rState.attr('i'), 10))
+        if (page.attr('repeatVar') && rState.answerIndex) {
+          avm.attr('answerIndex', parseInt(rState.answerIndex, 10))
         }
 
         if (field.attr('type') === 'textpick') {
@@ -609,9 +609,9 @@ export default CanMap.extend('PagesVM', {
     const vm = this
 
     // navigation via navbar skips logic
-    if (rState.attr('forceNavigation')) {
+    if (rState.forceNavigation) {
       vm.setCurrentPage()
-      rState.attr('forceNavigation', false)
+      rState.forceNavigation = false
       return
     }
 
@@ -634,11 +634,9 @@ export default CanMap.extend('PagesVM', {
     if (!nextPage) return
 
     let logic = vm.attr('logic')
-
     var gotoPage = logic.attr('gotoPage')
-    // If this has value, we are exiting the interview
-    var lastPageBeforeExit = rState.attr('lastPageBeforeExit')
 
+    // If rState.lastPageBeforeExit has value, we are exiting the interview
     if (logic.attr('infinite.outOfRange')) {
       vm.attr('traceLogic').push({
         'infinite loop': {
@@ -647,7 +645,7 @@ export default CanMap.extend('PagesVM', {
         }
       })
       vm.attr('rState.page', '__error')
-    } else if (gotoPage && gotoPage.length && !lastPageBeforeExit) {
+    } else if (gotoPage && gotoPage.length && !rState.lastPageBeforeExit) {
       logic.attr('infinite').inc()
       vm._setPage(nextPage, gotoPage)
     } else {

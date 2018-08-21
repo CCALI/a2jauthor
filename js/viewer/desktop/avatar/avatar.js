@@ -16,15 +16,11 @@ import 'can-map-define'
 
 function getBaseUrl () {
   // Source: https://github.com/canjs/canjs/blob/432c9b0c0f9f8ace62788cf7c8258998673856b9/view/stache/mustache_helpers.js#L204
-  return (
-    baseURL ||
-    typeof System !== 'undefined' && (window.System.renderingLoader && window.System.renderingLoader.baseURL || window.System.baseURL) ||
-    window.location.pathname
-  )
+  return window.System.baseURL
 }
 
 function joinBaseUrl () {
-  return joinURIs(getBaseUrl(), 'viewer//images/')
+  return joinURIs(getBaseUrl(), 'viewer/images/')
 }
 
 /**

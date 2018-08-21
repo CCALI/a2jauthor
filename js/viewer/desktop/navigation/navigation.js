@@ -31,67 +31,12 @@ export let ViewerNavigationVM = CanMap.extend({
         return isMobile()
       }
     },
-    /**
-     * @property {can.List} viewerNavigation.ViewModel.visitedPages visitedPages
-     * @parent viewerNavigation.ViewModel
-     *
-     * list of pages visited by the user.
-     */
-    visitedPages: {
-      get () {
-        let state = this.attr('appState')
-        return state.attr('visitedPages')
-      }
-    },
 
-    /**
-     * @property {String} viewerNavigation.ViewModel.selectedPageName selectedPageName
-     * @parent viewerNavigation.ViewModel
-     *
-     * Name of currently selected page.
-     */
-    selectedPageName: {
-      get (pageName) {
-        let pages = this.attr('visitedPages')
-        return pageName || pages.attr('0.name')
-      }
-    },
+    visitedPages: {},
 
-    /**
-     * @property {Number} viewerNavigation.ViewModel.selectedPageIndex selectedPageIndex
-     * @parent viewerNavigation.ViewModel
-     *
-     * Index of currently selected page.
-     *
-     * Used for navigating between pages since the same page may appear multiple
-     * times in `visitedPages` list if user is navigating through a repeat loop.
-     *
-     * `pageIndex === totalPages - 1` is the oldest visited page.
-     * `pageIndex === 0` is the last page (most recent).
-     */
-    selectedPageIndex: {
-      type: 'string',
-      get (lastSet) {
-        if (lastSet) {
-          const appState = this.attr('appState')
-          const selectedPage = this.attr('visitedPages').attr(lastSet)
-          const selectedPageName = selectedPage.attr('name')
+    selectedPageName: {},
 
-          // nav via MyProgress restores repeatVar and outerLoopVar
-          this.restoreLoopVars(selectedPage)
-
-          // This means a GOTO logic macro was used, skip normal navigation rules
-          if (selectedPageName && selectedPageName !== appState.attr('page')) {
-            appState.attr({
-              page: selectedPageName,
-              forceNavigation: true
-            })
-          }
-        }
-        // if lastSet is undefined, it's a newly visted page at index 0
-        return lastSet || '0'
-      }
-    },
+    selectedPageIndex: {},
 
     /**
      * @property {Boolean} viewerNavigation.ViewModel.canSaveAndExit canSaveAndExit
@@ -104,7 +49,7 @@ export let ViewerNavigationVM = CanMap.extend({
         let appState = this.attr('appState')
         let interview = this.attr('interview')
 
-        return !appState.attr('saveAndExitActive') &&
+        return !appState.saveAndExitActive &&
           interview.attr('exitPage') !== constants.qIDNOWHERE
       }
     },
@@ -119,8 +64,7 @@ export let ViewerNavigationVM = CanMap.extend({
       get () {
         let appState = this.attr('appState')
 
-        return appState.attr('saveAndExitActive') &&
-          !!appState.attr('lastPageBeforeExit')
+        return appState.saveAndExitActive && !!appState.lastPageBeforeExit
       }
     },
 
@@ -183,31 +127,6 @@ export let ViewerNavigationVM = CanMap.extend({
   },
 
   /**
-   * @property {Function} viewerNavigation.ViewModel.restoreLoopVars restoreLoopVars
-   * @parent viewerNavigation.ViewModel
-   *
-   * Restores repeatVar and outerLoopVar values to match the selected page
-   */
-  restoreLoopVars (selectedPage) {
-    const appState = this.attr('appState')
-
-    const repeatVar = selectedPage.attr('repeatVar')
-    const repeatVarValue = selectedPage.attr('repeatVarValue')
-    const outerLoopVar = selectedPage.attr('outerLoopVar')
-    const outerLoopVarValue = selectedPage.attr('outerLoopVarValue')
-
-    if (repeatVar && repeatVarValue) {
-      appState.attr('repeatVarValue', repeatVarValue)
-      this.attr('logic').varSet(repeatVar, repeatVarValue)
-    }
-
-    if (outerLoopVar && outerLoopVarValue) {
-      appState.attr('outerLoopVarValue', outerLoopVarValue)
-      this.attr('logic').varSet(outerLoopVar, outerLoopVarValue)
-    }
-  },
-
-  /**
    * @property {Function} viewerNavigation.ViewModel.saveAndExit saveAndExit
    * @parent viewerNavigation.ViewModel
    *
@@ -220,8 +139,8 @@ export let ViewerNavigationVM = CanMap.extend({
     let exitPage = interview.attr('exitPage')
     let pageName = this.attr('selectedPageName')
 
-    appState.attr('saveAndExitActive', true)
-    appState.attr('lastPageBeforeExit', pageName)
+    appState.saveAndExitActive = true
+    appState.lastPageBeforeExit = pageName
 
     if (window._paq) {
       Analytics.trackCustomEvent('Save&Exit', 'from: ' + pageName)
@@ -242,13 +161,13 @@ export let ViewerNavigationVM = CanMap.extend({
    */
   resumeInterview () {
     let appState = this.attr('appState')
-    let lastPageName = appState.attr('lastPageBeforeExit')
+    let lastPageName = appState.lastPageBeforeExit
     let interview = this.attr('interview')
     let answers = interview.attr('answers')
-    let visitedPages = appState.attr('visitedPages')
+    let visitedPages = appState.visitedPages
 
-    appState.attr('saveAndExitActive', false)
-    appState.attr('lastPageBeforeExit', null)
+    appState.saveAndExitActive = false
+    appState.lastPageBeforeExit = null
 
     // Special Exit page should only show in My Progress while on that page
     visitedPages.shift()

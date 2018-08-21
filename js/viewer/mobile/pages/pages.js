@@ -138,10 +138,9 @@ export default Component.extend({
       // keep answer index in sync with repeatVarValue
       // when a user is navigating via the nav bar
       const rState = this.viewModel.attr('rState')
-      const repeatVarValue = rState.attr('repeatVarValue')
 
-      if (rState && repeatVarValue) {
-        rState.attr('i', repeatVarValue)
+      if (rState && rState.repeatVarValue) {
+        rState.answerIndex = rState.repeatVarValue
       }
 
       vm.setFieldAnswers(fields)

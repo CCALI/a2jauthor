@@ -149,13 +149,9 @@ async function assemble (req, res) {
     res.sendFile(pdf, error => {
       if (error) {
         debug('Send error:', error)
+        return reject(error)
       }
-      deleteFile(pdf)
-        .then(resolve)
-        .catch(error => {
-          debug('Delete error:', error)
-          reject(error)
-        })
+      return resolve()
     })
   })
 }

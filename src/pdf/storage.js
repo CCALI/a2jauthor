@@ -26,6 +26,27 @@ const storage = ({fs, uuid, data}) => {
     return pdfId
   }
 
+  // TODO: make this interval a config.json option?
+  // check every 30 min for old temp files and remove
+  setInterval(cleanupTempDir, 1800000)
+
+  function cleanupTempDir () {
+    return fs.readdir(tempDir).then(files => {
+      files.forEach(file => {
+        return fs.stat(path.join(tempDir, file)).then(stat => {
+          var endTime, now
+          now = new Date().getTime()
+          // remove temp files created 15+ min ago
+          endTime = new Date(stat.ctime).getTime() + 900000
+          if (now > endTime) {
+            return fs.unlink(path.join(tempDir, file))
+          }
+        })
+      })
+    })
+    .catch(error => console.error(error))
+  }
+
   return {
     getTemporaryDirectory () {
       return tempDir

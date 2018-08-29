@@ -22,7 +22,6 @@ const {data} = require('../util/data')
 
 const {
   setDownloadHeaders,
-  deleteFile,
   getTemporaryPdfFilepath,
   mergeGuideVariableWithAnswers,
   filterTemplatesByCondition,
@@ -207,8 +206,6 @@ async function combinePdfFiles (pdfFiles) {
     writer.appendPDFPagesFromPDF(pdf)
   })
   writer.end()
-
-  await Promise.all(otherPdfs.map(deleteFile))
 
   return firstPdf
 }

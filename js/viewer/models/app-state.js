@@ -1,18 +1,13 @@
-import CanMap from 'can-map'
 import CanList from 'can-list'
 import route from 'can-route'
 import _findIndex from 'lodash/findIndex'
-import makeCompat from 'can-map-compat'
+import _isEqual from 'lodash/isEqual'
 import DefineMap from 'can-define/map/map'
+import DefineList from 'can-define/list/list'
 
 import 'can-map-define'
 
-export const ViewerAppState = makeCompat(DefineMap.extend('ViewerAppState', {
-  visitedPages: {
-    Default: CanList,
-    serialize: false
-  },
-
+export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   selectedPageIndex: {
     type: 'string',
     get (lastSet) {
@@ -20,29 +15,70 @@ export const ViewerAppState = makeCompat(DefineMap.extend('ViewerAppState', {
     }
   },
 
-  selectedPageName: {
-    value ({lastSet, resolve, listenTo}) {
-      listenTo('selectedPageIndex', (ev, newVal) => {
-        const selectedPage = this.visitedPages[lastSet]
-        this.restoreLoopVars(selectedPage)
-        resolve(selectedPage.name)
-      })
+  selectedPageName: { // TODO: redundant?
+    type: 'string',
+    get () {
+      if (this.visitedPages.length) {
+        return this.visitedPages[this.selectedPageIndex].name
+      }
     }
   },
 
-  page: {
-    value ({lastSet, resolve, listenTo}) {
-      let curVal = ''
+  // current interview page name and text plus it's loopVarValues
+  currentVisitedPage: {
+    get () {
+      const currentPageName = this.page
+      console.log('updating to ' + currentPageName)
 
-      listenTo('selectedPageName', (newVal) => {
-        if (newVal !== curVal) {
-          resolve(newVal)
+      if (currentPageName) {
+        const currentPage = this.interview.getPageByName(currentPageName)
+        if (currentPage) {
+          return new DefineMap({
+            name: currentPage.attr('name'),
+            text: currentPage.attr('text'),
+            repeatVar: currentPage.attr('repeatVar'),
+            outerLoopVar: currentPage.attr('outerLoopVar'),
+            repeatVarValue: this.repeatVarValue,
+            outerLoopVarValue: this.outerLoopVarValue
+          })
         }
-      })
+      }
+    }
+  },
 
-      listenTo(lastSet, (newVal) => {
-        curVal = newVal
-        resolve(newVal)
+  repeatVarValue: {},
+  outerLoopVarValue: {},
+
+  // TODO: change this to currentPageName (fix viewer routes)
+  // page (currentPage?) should be reserved for the Map holding all page info
+  page: {
+    set (val) {
+      const currentPage = this.interview.getPageByName(val)
+      const repeatVar = currentPage && currentPage.attr('repeatVar')
+      const outerLoopVar = currentPage && currentPage.attr('outerLoopVar')
+      if (repeatVar) {
+        this.repeatVarValue = this.logic.varGet(repeatVar)
+      }
+      if (outerLoopVar) {
+        this.outerLoopVarValue = this.logic.varGet(outerLoopVar)
+      }
+      return val
+    }
+  },
+
+  visitedPages: {
+    // default () { return new DefineList([]) },
+    value ({lastSet, resolve, listenTo}) {
+      let currentList = new DefineList([])
+      resolve(currentList)
+
+      listenTo('currentVisitedPage', function (ev, visitedPage) {
+        if (this.getVisitedPageIndex(visitedPage) === -1) {
+          currentList.unshift(visitedPage)
+        } else {
+          this.restoreLoopVarValues(visitedPage)
+        }
+        resolve(currentList)
       })
     }
   },
@@ -98,13 +134,21 @@ export const ViewerAppState = makeCompat(DefineMap.extend('ViewerAppState', {
     default: 1
   },
 
-  repeatVarValue: {
-    type: 'number'
-  },
+  // repeatVarValue: {
+  //   type: 'number',
+  //   get () {
+  //     // needs to return the stored repeatVarValue
+  //     const newPage = this.interview.getPageByName(this.page)
+  //     const repeatVar = newPage && newPage.repeatVar
+  //     // current stateful value of repeatVar
+  //     return repeatVar && this.logic.get(repeatVar)
+  //     // return VisitedPages[currentPage].repeatVarValue
+  //   }
+  // },
 
-  outerLoopVarValue: {
-    type: 'number'
-  },
+  // outerLoopVarValue: {
+  //   type: 'number'
+  // },
 
   logic: {
     serialize: false
@@ -125,90 +169,54 @@ export const ViewerAppState = makeCompat(DefineMap.extend('ViewerAppState', {
     })
   },
 
+  getVisitedPageIndex (visitedPage) {
+    return _findIndex(this.visitedPages, function (page) {
+      return visitedPage.name === page.name &&
+      visitedPage.repeatVarValue === page.repeatVarValue &&
+      visitedPage.outerLoopValue === page.outerLoopVarValue
+    })
+  },
+
+  createVisitedPage (newPageName) {
+    const newPage = this.interview.getPageByName(newPageName)
+    const repeatVar = newPage.attr('repeatVar')
+    const repeatVarValue = (repeatVar) ? this.logic.varGet(repeatVar) : undefined
+    const outerLoopVar = newPage.attr('outerLoopVar')
+    const outerLoopVarValue = (outerLoopVar) ? this.logic.varGet(outerLoopVar) : undefined
+
+    return {
+      name: newPage.attr('name'),
+      text: newPage.attr('text'),
+      repeatVar,
+      repeatVarValue,
+      outerLoopVar,
+      outerLoopVarValue
+    }
+  },
+
+  handleRevisitedPage () {
+
+  },
+
   /**
    * @property {Function} viewerNavigation.ViewModel.restoreLoopVars restoreLoopVars
    * @parent viewerNavigation.ViewModel
    *
    * Restores repeatVar and outerLoopVar values to match the selected page
    */
-  restoreLoopVars (selectedPage) {
-    const appState = this.attr('appState')
-
-    const repeatVar = selectedPage.attr('repeatVar')
-    const repeatVarValue = selectedPage.attr('repeatVarValue')
-    const outerLoopVar = selectedPage.attr('outerLoopVar')
-    const outerLoopVarValue = selectedPage.attr('outerLoopVarValue')
-
-    if (repeatVar && repeatVarValue) {
-      appState.attr('repeatVarValue', repeatVarValue)
-      this.attr('logic').varSet(repeatVar, repeatVarValue)
-    }
-
-    if (outerLoopVar && outerLoopVarValue) {
-      appState.attr('outerLoopVarValue', outerLoopVarValue)
-      this.attr('logic').varSet(outerLoopVar, outerLoopVarValue)
-    }
-  },
-
-  setVisitedPages (pageName, interview) {
-    if (!pageName || !interview) return
-
-    let visited = this.attr('visitedPages')
-    let page = interview.getPageByName(pageName)
-
-    let logic = this.attr('logic')
-    let repeatVar = page && page.attr('repeatVar')
-    let repeatVarValue = (repeatVar) ? logic.varGet(repeatVar) : undefined
-    let outerLoopVar = page && page.attr('outerLoopVar')
-    let outerLoopVarValue = (outerLoopVar) ? logic.varGet(outerLoopVar) : undefined
-
-    let lastVisitedPageName = this.attr('lastVisitedPageName')
-
-    if (lastVisitedPageName === false || lastVisitedPageName !== pageName) {
-      this.attr('lastVisitedPageName', pageName)
-    }
-
-    // do not add the same page twice.
-    const alreadyVisitedIndex = _findIndex(visited, function (visitedPage) {
-      let visitedPageRepeatVarValue = visitedPage.attr('repeatVarValue')
-      return visitedPage.attr('name') === pageName &&
-             (!visitedPageRepeatVarValue || (visitedPageRepeatVarValue === repeatVarValue))
-    })
-    const alreadyVisited = alreadyVisitedIndex > -1
-
-    // if there is any codeBefore that we need to execute, let's do that.
-    // this will make sure that any macros inside the page.attr('text') gets evaluated properly.
-    let newGotoPage
-    if (page && page.attr('codeBefore') && (lastVisitedPageName !== pageName || this.attr('singlePageLoop'))) {
-      newGotoPage = this.fireCodeBefore(page, logic)
-    }
-    // newGotoPage means a GOTO event fired in the codeBefore skip this current pageName
-    // as visited, and set the newGotoPage instead
-    if (newGotoPage) {
-      this.setVisitedPages(newGotoPage, interview)
-    }
-
-    if (page && !alreadyVisited && !newGotoPage) {
-      let text = (logic && logic.eval) ? logic.eval(page.attr('text')) : page.attr('text')
-      let name = page.attr('name')
-      visited.unshift({ name, text, repeatVar, repeatVarValue, outerLoopVar, outerLoopVarValue })
-    }
-
-    if (page && alreadyVisited) {
-      visited.dispatch(['revisited', alreadyVisitedIndex])
-    }
+  restoreLoopVarValues (visitedPage) {
+    this.repeatVarValue = visitedPage.attr('repeatVarValue')
+    this.outerLoopVarValue = visitedPage.attr('outerLoopVarValue')
   },
 
   fireCodeBefore (page, logic) {
-    let forceNavigation = this.attr('forceNavigation')
-    let traceLogic = this.attr('traceLogic')
     let preGotoPage = logic.attr('gotoPage')
 
-    if (page && !forceNavigation && page.attr('codeBefore')) {
-      traceLogic.push({
+    if (page && !this.forceNavigation && page.attr('codeBefore')) {
+      this.traceLogic.push({
         page: page.attr('name')
       })
-      traceLogic.push({
+      this.traceLogic.push({
         codeBefore: { format: 'info', msg: 'Logic Before Question' }
       })
       logic.exec(page.attr('codeBefore'))
@@ -219,6 +227,6 @@ export const ViewerAppState = makeCompat(DefineMap.extend('ViewerAppState', {
     // if gotoPage changes, codeBefore fired a goto event
     return preGotoPage !== postGotoPage ? postGotoPage : false
   }
-}))
+})
 
 export default ViewerAppState

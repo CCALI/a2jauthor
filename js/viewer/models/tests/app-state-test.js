@@ -1,143 +1,147 @@
-import assert from 'assert';
-import AppState from 'caja/viewer/models/app-state';
-import Interview from 'caja/viewer/models/interview';
-import sinon from 'sinon';
+import assert from 'assert'
+import AppState from 'caja/viewer/models/app-state'
+import Interview from 'caja/viewer/models/interview'
+import sinon from 'sinon'
 
-import 'steal-mocha';
+import 'steal-mocha'
 
-describe('AppState', function() {
-  let appState;
-  let pageNames;
-  let interview;
-  let logic;
+describe('AppState', function () {
+  let appState // DefineMap
+  let pageNames
+  let interview
+  let logic
 
-  beforeEach(function(done) {
-    let promise = Interview.findOne({url: '/interview.json'});
+  beforeEach(function (done) {
+    let promise = Interview.findOne({url: '/interview.json'})
 
-    promise.then(function(_interview) {
-      interview = _interview;
+    promise.then(function (_interview) {
+      interview = _interview
       logic = {
         eval: sinon.spy(),
         varGet: sinon.stub()
-      };
+      }
 
-      appState = new AppState({interview, logic});
+      appState = new AppState({interview, logic})
 
       // collect the actual page names of the interview
-      let pages = interview.attr('pages');
-      pageNames = pages.map(page => page.attr('name'));
+      let pages = interview.attr('pages')
+      pageNames = pages.map(page => page.attr('name'))
 
-      done();
-    });
-  });
+      done()
+    })
+  })
 
-  it('defaults visitedPages to empty list', function() {
-    let visited = appState.attr('visitedPages');
-    assert.equal(visited.attr('length'), 0, 'empty on init');
-  });
+  it('defaults visitedPages to empty list', function () {
+    const visitedPages = appState.visitedPages
+    assert.equal(visitedPages.length, 0, 'empty on init')
+  })
 
-  it('keeps a list of visited pages', function() {
-    let visited = appState.attr('visitedPages');
-    assert.equal(visited.attr('length'), 0, 'empty on init');
+  it('keeps a list of visited pages', function () {
+    // simulate stache bind on visitedPages
+    appState.listenTo('visitedPages', () => {})
+
+    assert.equal(appState.visitedPages.length, 0, 'empty on init')
 
     // simulate page to page navigation
-    appState.attr('page', pageNames[0]);
-    appState.attr('page', pageNames[1]);
+    appState.page = pageNames[0]
+    appState.page = pageNames[1]
 
-    assert.equal(visited.attr('length'), 2, 'two pages visited');
-  });
+    assert.equal(appState.visitedPages.length, 2, 'two pages visited')
+  })
 
-  it('does not include pages already visited', function() {
-    let visited = appState.attr('visitedPages');
+  it('handles repeatVarValues', function () {
+    // simulate stache bind on visitedPages
+    appState.listenTo('visitedPages', () => {})
 
-    appState.attr('page', pageNames[0]);
-    appState.attr('page', pageNames[1]);
-    assert.equal(visited.attr('length'), 2, 'two pages visited');
+    interview.attr('pages.1.repeatVar', 'childCount')
+    logic.varGet.returns(1)
+    appState.page = pageNames[1]
 
-    // user goes back from the second page to the first
-    appState.attr('page', pageNames[1]);
-    assert.equal(visited.attr('length'), 2, 'second page already visited');
+    assert.equal(appState.visitedPages.length, 1, 'third page appState.visitedPages')
+    assert.equal(appState.visitedPages[0].repeatVar, 'childCount', 'page has repeatVar')
+    assert.equal(appState.visitedPages[0].repeatVarValue, '1', 'page has repeatVarValue')
+  })
 
-    // user goes to third page
-    interview.attr('pages.2.repeatVar', 'foo');
-    logic.varGet.returns(1);
-    appState.attr('page', pageNames[2]);
-    assert.equal(visited.attr('length'), 3, 'third page visited');
-    assert.equal(visited.attr('0.repeatVar'), 'foo', 'third page has repeatVar');
-    assert.equal(visited.attr('0.repeatVarValue'), '1', 'third page has repeatVarValue');
+  it('handles repeatVarValue changes with same page name', function () {
+    // simulate stache bind on visitedPages
+    appState.listenTo('visitedPages', () => {})
 
-    // user goes to third page with new repeatVarValue
-    logic.varGet.returns(2);
-    appState.attr('page', pageNames[2]);
-    assert.equal(visited.attr('length'), 4, 'third page visited in new repeatVar iteration');
-    assert.equal(visited.attr('0.repeatVar'), 'foo', 'third page still repeatVar');
-    assert.equal(visited.attr('0.repeatVarValue'), '2', 'third page still has repeatVarValue');
+    interview.attr('pages.1.repeatVar', 'childCount')
+    logic.varGet.returns(1)
+    appState.page = pageNames[1]
 
-    // user goes back to third page in previous iteration of repeatVar loop
-    logic.varGet.returns(1);
-    appState.attr('page', pageNames[2]);
-    assert.equal(visited.attr('length'), 4, 'third page already visited in repeatVar iteration');
+    assert.equal(appState.visitedPages.length, 1, 'first page appState.visitedPages')
+    assert.equal(appState.visitedPages[0].repeatVar, 'childCount', 'first page has repeatVar')
+    assert.equal(appState.visitedPages[0].repeatVarValue, '1', 'first page has repeatVarValue')
 
-    // user goes to fourth page with outerLoopVarValue
-    interview.attr('pages.3.outerLoopVar', 'outer');
-    logic.varGet.returns(1);
-    appState.attr('page', pageNames[3]);
-    assert.equal(visited.attr('length'), 5, 'fourth page visited');
-    assert.equal(visited.attr('0.outerLoopVar'), 'outer', 'fourth page has outerLoopVar');
-    assert.equal(visited.attr('0.outerLoopVarValue'), '1', 'fourth page has outerLoopVarValue');
+    logic.varGet.returns(2)
+    appState.page = pageNames[1]
+    assert.equal(appState.visitedPages.length, 2, 'second page appState.visitedPages')
+    assert.equal(appState.visitedPages[0].repeatVar, 'childCount', 'second page has repeatVar')
+    assert.equal(appState.visitedPages[0].repeatVarValue, '2', 'second page has repeatVarValue')
+  })
 
-    // user returns to the fourth page after navigating to new page
-    interview.attr('pages.5.outerLoopVar', '');
-    logic.varGet.returns(undefined);
-    appState.attr('page', pageNames[5]);
-    assert.equal(visited.attr('0.outerLoopVar'), '', 'fifth page does not have outerLoopVar');
-    assert.equal(visited.attr('length'), 6, 'fifth page adds to visited');
+  // it('handles restoring repeatVar values when revisiting a page', function () {
+  //   // simulate stache bind on visitedPages
+  //   appState.listenTo('visitedPages', () => {})
 
-    logic.varGet.returns(1);
-    appState.attr('page', pageNames[3]);
-    assert.equal(visited.attr('1.outerLoopVar'), 'outer', 'fourth page has same outerLoopVar');
-    assert.equal(visited.attr('length'), 6, 'fourth page already visited in outerLoopVar iteration');
-  });
+  //   interview.attr('pages.1.repeatVar', 'childCount')
+  //   logic.varGet.returns(1)
+  //   appState.page = pageNames[1]
 
-  it('only includes known pages', function() {
-    let visited = appState.attr('visitedPages');
+  //   assert.equal(appState.visitedPages.length, 1, 'first page appState.visitedPages')
+  //   assert.equal(appState.visitedPages[0].repeatVar, 'childCount', 'first page has repeatVar')
+  //   assert.equal(appState.visitedPages[0].repeatVarValue, '1', 'first page has repeatVarValue')
 
-    appState.attr('page', 'this-page-does-not-exist');
-    assert.equal(visited.attr('length'), 0, 'invalid page');
-  });
+  //   logic.varGet.returns(2)
+  //   appState.page = pageNames[1]
+  //   assert.equal(appState.visitedPages.length, 2, 'second page appState.visitedPages')
+  //   assert.equal(appState.visitedPages[0].repeatVar, 'childCount', 'second page has repeatVar')
+  //   assert.equal(appState.visitedPages[0].repeatVarValue, '2', 'second page has repeatVarValue')
+  // })
 
-  it('recently visited pages are at the top of the list', function() {
-    let visited = appState.attr('visitedPages');
+  it('only includes known pages', function () {
+    // simulate stache bind on visitedPages
+    appState.listenTo('visitedPages', () => {})
 
-    appState.attr('page', pageNames[0]);
-    appState.attr('page', pageNames[1]);
-    appState.attr('page', pageNames[2]);
-    assert.equal(visited.attr('length'), 3, 'three pages visited');
+    appState.page = 'this-page-does-not-exist'
+    assert.equal(appState.visitedPages.length, 0, 'invalid page')
+  })
 
-    assert.equal(visited.shift().attr('name'), pageNames[2]);
-    assert.equal(visited.shift().attr('name'), pageNames[1]);
-    assert.equal(visited.shift().attr('name'), pageNames[0]);
-  });
+  it('recently visited pages are at the top of the list', function () {
+    // simulate stache bind on visitedPages
+    appState.listenTo('visitedPages', () => {})
 
-  it('visitedPages should not be empty when both page/interview are set', function() {
-    let visited;
+    appState.page = pageNames[0]
+    appState.page = pageNames[1]
+    appState.page = pageNames[2]
 
-    // set first page then interview
-    appState = new AppState({ logic });
-    appState.attr('interview', interview);
-    appState.attr('page', pageNames[0]);
+    assert.equal(appState.visitedPages.length, 3, 'three pages visited')
 
-    visited = appState.attr('visitedPages');
-    assert.equal(visited.attr('length'), 1, 'should include first page name');
-    assert.equal(visited.attr('0.name'), pageNames[0]);
+    assert.equal(appState.visitedPages.shift().name, pageNames[2])
+    assert.equal(appState.visitedPages.shift().name, pageNames[1])
+    assert.equal(appState.visitedPages.shift().name, pageNames[0])
+  })
+
+  it('visitedPages should not be empty when both page/interview are set', function () {
+    // // set first page then interview
+    // appState = new AppState({ logic })
+    // // simulate stache bind on visitedPages
+    // appState.listenTo('visitedPages', () => {})
+    // appState.page = pageNames[0]
+    // appState.interview = interview
+
+    // assert.equal(appState.visitedPages.length, 1, 'should include first page name')
+    // assert.equal(appState.visitedPages[0].name, pageNames[0])
 
     // set first interview then page.
-    appState = new AppState({ logic });
-    appState.attr('interview', interview);
-    appState.attr('page', pageNames[0]);
+    appState = new AppState({ logic })
+    // simulate stache bind on visitedPages
+    appState.listenTo('visitedPages', () => {})
+    appState.interview = interview
+    appState.page = pageNames[0]
 
-    visited = appState.attr('visitedPages');
-    assert.equal(visited.attr('length'), 1, 'should include first page name');
-    assert.equal(visited.attr('0.name'), pageNames[0]);
-  });
-});
+    assert.equal(appState.visitedPages.length, 1, 'should include first page name')
+    assert.equal(appState.visitedPages[0].name, pageNames[0])
+  })
+})

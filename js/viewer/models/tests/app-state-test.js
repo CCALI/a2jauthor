@@ -1,6 +1,7 @@
 import assert from 'assert'
 import AppState from 'caja/viewer/models/app-state'
 import Interview from 'caja/viewer/models/interview'
+import CanMap from 'can-map'
 import sinon from 'sinon'
 
 import 'steal-mocha'
@@ -16,10 +17,12 @@ describe('AppState', function () {
 
     promise.then(function (_interview) {
       interview = _interview
-      logic = {
+      logic = new CanMap({
         eval: sinon.spy(),
-        varGet: sinon.stub()
-      }
+        exec: sinon.spy(),
+        varGet: sinon.stub(),
+        gotoPage: ''
+      })
 
       appState = new AppState({interview, logic})
 
@@ -36,9 +39,28 @@ describe('AppState', function () {
     assert.equal(visitedPages.length, 0, 'empty on init')
   })
 
+  it('creates a new visitedPage every time appState.page is set', function () {
+    // simulate stache bind on visitedPages
+    appState.listenTo('visitedPage', () => {})
+
+    let visitedPage = appState.visitedPage
+    assert.equal(visitedPage, undefined, 'initial value is undefined')
+
+    appState.page = pageNames[0]
+    visitedPage = appState.visitedPage
+    assert.equal(visitedPage.name, pageNames[0], 'visitedPage generated when page is set')
+
+    appState.visitedPage.mutated = true
+    assert.equal(appState.visitedPage.mutated, true, 'mutate appState.visitedPage before setting')
+
+    appState.page = pageNames[0]
+    visitedPage = appState.visitedPage
+    assert.equal(visitedPage.mutated, undefined, 'new unmutated appState.visitedPage generated')
+  })
+
   it('keeps a list of visited pages', function () {
     // simulate stache bind on visitedPages
-    appState.listenTo('visitedPages', () => {})
+    appState.listenTo('visitedPage', () => {})
 
     assert.equal(appState.visitedPages.length, 0, 'empty on init')
 
@@ -51,7 +73,7 @@ describe('AppState', function () {
 
   it('handles repeatVarValues', function () {
     // simulate stache bind on visitedPages
-    appState.listenTo('visitedPages', () => {})
+    appState.listenTo('visitedPage', () => {})
 
     interview.attr('pages.1.repeatVar', 'childCount')
     logic.varGet.returns(1)
@@ -64,7 +86,7 @@ describe('AppState', function () {
 
   it('handles repeatVarValue changes with same page name', function () {
     // simulate stache bind on visitedPages
-    appState.listenTo('visitedPages', () => {})
+    appState.listenTo('visitedPage', () => {})
 
     interview.attr('pages.1.repeatVar', 'childCount')
     logic.varGet.returns(1)
@@ -81,28 +103,38 @@ describe('AppState', function () {
     assert.equal(appState.visitedPages[0].repeatVarValue, '2', 'second page has repeatVarValue')
   })
 
-  // it('handles restoring repeatVar values when revisiting a page', function () {
-  //   // simulate stache bind on visitedPages
-  //   appState.listenTo('visitedPages', () => {})
+  it('pages with codeBefore goto logic should only add the target page to visitedPages instead', function () {
+    // simulate stache bind on visitedPages
+    appState.listenTo('visitedPage', () => {})
 
-  //   interview.attr('pages.1.repeatVar', 'childCount')
-  //   logic.varGet.returns(1)
-  //   appState.page = pageNames[1]
+    // simulate logic changing gotoPage based on A2J codeBefore script
+    logic.attr('gotoPage', pageNames[1])
+    logic.exec = function () { logic.attr('gotoPage', pageNames[2]) }
+    interview.attr('pages.0.codeBefore', 'a2j script is here, fired by logic.exec above to change gotoPage')
 
-  //   assert.equal(appState.visitedPages.length, 1, 'first page appState.visitedPages')
-  //   assert.equal(appState.visitedPages[0].repeatVar, 'childCount', 'first page has repeatVar')
-  //   assert.equal(appState.visitedPages[0].repeatVarValue, '1', 'first page has repeatVarValue')
+    appState.page = pageNames[0]
 
-  //   logic.varGet.returns(2)
-  //   appState.page = pageNames[1]
-  //   assert.equal(appState.visitedPages.length, 2, 'second page appState.visitedPages')
-  //   assert.equal(appState.visitedPages[0].repeatVar, 'childCount', 'second page has repeatVar')
-  //   assert.equal(appState.visitedPages[0].repeatVarValue, '2', 'second page has repeatVarValue')
-  // })
+    assert.equal(appState.visitedPages.length, 1, 'should only have one visited page')
+    assert.equal(appState.page, pageNames[2], 'page name should be set by codeBefore script')
+  })
+
+  it('sets the lastVisitedPage to be used as a RESUME target', function () {
+    appState.listenTo('visitedPage', () => {})
+    let lastVisitedPageName = appState.lastVisitedPageName
+    assert.equal(lastVisitedPageName, false, 'defaults to false')
+
+    appState.page = pageNames[0]
+    lastVisitedPageName = appState.lastVisitedPageName
+    assert.equal(lastVisitedPageName, pageNames[0], 'updates lastVisitedPage when page changes')
+
+    appState.page = pageNames[1]
+    lastVisitedPageName = appState.lastVisitedPageName
+    assert.equal(lastVisitedPageName, pageNames[1], 'lastVisitedPage stays up to date when page changes')
+  })
 
   it('only includes known pages', function () {
     // simulate stache bind on visitedPages
-    appState.listenTo('visitedPages', () => {})
+    appState.listenTo('visitedPage', () => {})
 
     appState.page = 'this-page-does-not-exist'
     assert.equal(appState.visitedPages.length, 0, 'invalid page')
@@ -110,7 +142,7 @@ describe('AppState', function () {
 
   it('recently visited pages are at the top of the list', function () {
     // simulate stache bind on visitedPages
-    appState.listenTo('visitedPages', () => {})
+    appState.listenTo('visitedPage', () => {})
 
     appState.page = pageNames[0]
     appState.page = pageNames[1]
@@ -137,7 +169,7 @@ describe('AppState', function () {
     // set first interview then page.
     appState = new AppState({ logic })
     // simulate stache bind on visitedPages
-    appState.listenTo('visitedPages', () => {})
+    appState.listenTo('visitedPage', () => {})
     appState.interview = interview
     appState.page = pageNames[0]
 

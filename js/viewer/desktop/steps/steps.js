@@ -32,7 +32,7 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
     currentPage: {
       get () {
         const interview = this.attr('interview')
-        const pageName = this.attr('rState.page')
+        const pageName = this.attr('rState').page
         return interview.getPageByName(pageName)
       }
     },

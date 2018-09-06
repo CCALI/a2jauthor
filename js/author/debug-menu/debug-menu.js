@@ -4,6 +4,8 @@ import Component from 'can-component'
 import template from './debug-menu.stache'
 import _isFunction from 'lodash/isFunction'
 
+import 'can-map-define'
+
 /**
  * @module {Module} author/debug-menu <author-debug-menu>
  * @parent api-components
@@ -20,7 +22,10 @@ import _isFunction from 'lodash/isFunction'
  * @codeend
  */
 
-let DebugMenuVM = CanMap.extend({
+let DebugMenuVM = CanMap.extend('DebugMenuVM', {
+  define: {
+    appState: {}
+  },
   resumeEdit () {
     this.attr('appState.page', 'pages')
   }

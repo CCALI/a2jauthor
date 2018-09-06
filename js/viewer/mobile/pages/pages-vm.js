@@ -239,16 +239,14 @@ export default CanMap.extend('PagesVM', {
     const fields = page.attr('fields')
     const logic = this.attr('logic')
     const traceLogic = this.attr('traceLogic')
+    const rState = this.attr('rState')
 
     // IE11 fails to fire all validateField events, handle that here
     if (navigator.userAgent.match(/Trident.*rv\:11\./)) {
       this.handleIE11(fields, logic, traceLogic)
     }
     // Author Preview Mode changes handling of special buttons, and does not post answers
-    const previewActive = this.attr('rState').attr('previewActive')
-    //
-
-    if (previewActive &&
+    if (rState.previewActive &&
       (button.next === constants.qIDFAIL ||
       button.next === constants.qIDEXIT ||
       button.next === constants.qIDSUCCESS ||
@@ -263,9 +261,8 @@ export default CanMap.extend('PagesVM', {
     // special destination dIDRESUME button skips rest of navigate
     if (button.next === constants.qIDRESUME) {
       let interview = this.attr('interview')
-      let appState = this.attr('rState')
       // Handle the same as Desktop Navigation Resume
-      let vm = new ViewerNavigationVM({appState, interview})
+      let vm = new ViewerNavigationVM({rState, interview})
       vm.resumeInterview()
       return
     }
@@ -348,7 +345,7 @@ export default CanMap.extend('PagesVM', {
       }
 
       // Don't post to the server in Author Preview aka previewActive
-      if (!previewActive && (button.next === constants.qIDASSEMBLESUCCESS || button.next === constants.qIDSUCCESS || button.next === constants.qIDEXIT)) {
+      if (!rState.previewActive && (button.next === constants.qIDASSEMBLESUCCESS || button.next === constants.qIDSUCCESS || button.next === constants.qIDEXIT)) {
         // This disable is for LHI/HotDocs issue taking too long to process
         // prompting users to repeatedly press submit, crashing HotDocs
         // Matches A2J4 functionality, but should really be handled better on LHI's server
@@ -369,7 +366,7 @@ export default CanMap.extend('PagesVM', {
         // last visited page always at index 1
         // TODO: GOTO logic could break the above assumption
         // might need a better way to track the last page
-        const priorQuestion = (this.rState.visitedPages[1].attr('name'))
+        const priorQuestion = (rState.visitedPages[1].attr('name'))
         // override with new gotoPage
         logic.attr('gotoPage', priorQuestion)
         button.attr('next', priorQuestion)
@@ -404,7 +401,6 @@ export default CanMap.extend('PagesVM', {
       }
       // Make sure pages looping on themselves update
       if (page.name === gotoPage) {
-        let rState = this.attr('rState')
         let interview = this.attr('interview')
         rState.singlePageLoop = true
 

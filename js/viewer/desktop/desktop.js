@@ -7,6 +7,10 @@ import 'can-map-define'
 
 let DesktopViewerVM = CanMap.extend('DesktopViewerVM', {
   define: {
+    visitedPages: {},
+
+    selectedPageIndex: {},
+
     remainingSteps: {},
 
     maxDisplayedSteps: {},
@@ -46,7 +50,9 @@ let DesktopViewerVM = CanMap.extend('DesktopViewerVM', {
     if (routeState && routeState.view === 'intro') {
       const interview = this.attr('interview')
       routeState.view = 'pages'
-      routeState.page = interview.attr('firstPage')
+      if (routeState.page !== interview.attr('firstPage')) {
+        routeState.page = interview.attr('firstPage')
+      }
     }
 
     this.checkPageExists()

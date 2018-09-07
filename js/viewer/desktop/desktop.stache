@@ -13,7 +13,9 @@
       <a2j-viewer-navigation
         vm:lang:from="lang"
         vm:logic:from="logic"
-        vm:selectedPageName:bind="rState.page"
+        vm:selectedPageName:bind="rState.selectedPageName"
+        vm:visitedPages:from="rState.visitedPages"
+        vm:selectedPageIndex:bind="rState.selectedPageIndex"
         vm:appState:bind="rState"
         vm:interview:bind="interview"
         vm:showDemoNotice:bind="showDemoNotice"

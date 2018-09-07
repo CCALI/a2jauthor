@@ -1,5 +1,4 @@
 import navbarItems from 'caja/author/vertical-navbar/navbar-items'
-import {gotoTabOrPage} from 'caja/author/src/A2J_Pages'
 
 /**
  * @module {{}} author/utils/tabs-routing tabs-routing

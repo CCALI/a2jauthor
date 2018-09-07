@@ -1,7 +1,6 @@
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './toolbar.stache'
-import { openSelectedGuide } from 'caja/author/src/A2J_Guides'
 
 import 'can-map-define'
 

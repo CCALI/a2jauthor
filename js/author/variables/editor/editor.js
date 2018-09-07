@@ -2,7 +2,6 @@ import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './editor.stache'
 import constants from 'caja/viewer/models/constants'
-import {gPrefs} from 'caja/author/src/viewer/A2J_Prefs'
 
 export const VariableEditorVM = CanMap.extend({
   define: {

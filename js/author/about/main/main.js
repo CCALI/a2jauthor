@@ -1,7 +1,6 @@
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './main.stache'
-import { Languages } from 'caja/author/src/viewer/A2J_Languages'
 
 function getLanguageList () {
   const langs = Languages.regional

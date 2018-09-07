@@ -4,7 +4,6 @@ import assert from 'assert'
 import stache from 'can-stache'
 import CanList from 'can-list'
 import { InterviewsVM } from './interviews'
-import { openSelectedGuide } from 'caja/author/src/A2J_Guides'
 
 import 'steal-mocha'
 

@@ -22,10 +22,10 @@ const Field = CanMap.extend({
     emptyAnswer: {
       get () {
         return new Answer({
-          values: [null],
-          type: this.attr('type'),
+          name: this.attr('name').toLowerCase(),
           repeating: this.attr('repeating'),
-          name: this.attr('name').toLowerCase()
+          type: this.attr('type'),
+          values: [null]
         })
       }
     }

@@ -9,7 +9,7 @@ import readableList from 'caja/viewer/util/readable-list'
 
 import 'can-map-define'
 
-export default Model.extend('Answers', {}, {
+export default Model.extend('AnswersModel', {}, {
   define: {
     lang: {
       serialize: function () {

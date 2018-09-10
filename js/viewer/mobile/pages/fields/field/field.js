@@ -31,6 +31,14 @@ export let FieldVM = CanMap.extend('FieldVM', {
       value: []
     },
     /**
+     * @property {Boolean} field.ViewModel.prototype.hasError hasError
+     * @parent field.ViewModel
+     *
+     * Tracks if field has invalid answer based on constraints ie: min, max, required, etc
+     */
+    hasError: {},
+
+    /**
      * @property {List} field.ViewModel.prototype.numberPickOptions numberPickOptions
      * @parent field.ViewModel
      *
@@ -221,7 +229,7 @@ export let FieldVM = CanMap.extend('FieldVM', {
   validateField (ctx, el) {
     const $el = $(el)
     let field = this.attr('field')
-    let answer = field.attr('_answer')
+    let _answer = field.attr('_answer')
     let value
 
     if (field.type === 'checkbox' || field.type === 'checkboxNOTA') {
@@ -230,10 +238,10 @@ export let FieldVM = CanMap.extend('FieldVM', {
       value = $el.val()
     }
 
-    answer.attr('values', value)
+    _answer.attr('values', value)
 
-    let errors = answer.errors.hasErrors()
-    field.attr('hasError', !!errors)
+    let errors = _answer.attr('errors')
+    field.attr('hasError', errors)
 
     if (!errors) {
       let name = field.attr('name')

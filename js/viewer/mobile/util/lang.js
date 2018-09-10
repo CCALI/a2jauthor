@@ -1,8 +1,9 @@
 import DefineMap from 'can-define/map/map'
 import TLang from 'caja/viewer/mobile/util/tlang'
 import cString from 'caja/viewer/mobile/util/string'
+import makeMapCompat from 'can-map-compat'
 
-export default DefineMap.extend({
+export default makeMapCompat(DefineMap.extend({
   seal: false
 },
 {
@@ -12,4 +13,4 @@ export default DefineMap.extend({
     TLang(o, cString.makestr.bind(cString)).set(id)
     return this.assign(o)
   }
-})
+}))

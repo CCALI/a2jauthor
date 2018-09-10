@@ -9,7 +9,6 @@ import {ViewerNavigationVM} from 'caja/viewer/desktop/navigation/navigation'
 import {Analytics} from 'caja/viewer/util/analytics'
 import { FieldVM } from './fields/field/field'
 import constants from 'caja/viewer/models/constants'
-import canDomEvents from 'can-dom-events'
 
 import 'can-map-define'
 import 'bootstrap/js/modal'
@@ -173,7 +172,7 @@ export default CanMap.extend('PagesVM', {
     const fields = this.attr('currentPage.fields')
 
     _forEach(fields, function (field) {
-      const hasError = !!field.attr('_answer').errors.hasErrors()
+      const hasError = !!field.attr('_answer.errors')
       field.attr('hasError', hasError)
     })
   },
@@ -352,7 +351,7 @@ export default CanMap.extend('PagesVM', {
           title: 'Answers Submitted :',
           text: 'Page will redirect shortly'
         })
-        canDomEvents.dispatch(this, 'post-answers-to-server')
+        this.dispatch(this, 'post-answers-to-server')
 
         // disable the previously clicked button
         setTimeout(() => {

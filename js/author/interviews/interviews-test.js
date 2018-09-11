@@ -95,7 +95,7 @@ describe('<interviews-page>', function () {
       F(done)
     })
 
-    openSelectedGuide = (gid) => {
+    window.openSelectedGuide = (gid) => {
       vm.attr('currentGuideId', gid)
     }
 

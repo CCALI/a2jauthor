@@ -4,6 +4,7 @@ import _findIndex from 'lodash/findIndex'
 import _assign from 'lodash/assign'
 import DefineMap from 'can-define/map/map'
 import DefineList from 'can-define/list/list'
+import canDomEvents from 'can-dom-events'
 
 import 'can-map-define'
 
@@ -71,9 +72,8 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   // the pageChange dispatched event allows visitedPage to check for new loopVar values, adding visitedPages as needed
   page: {
     type: 'string',
-    set (pageName) {
+    set () {
       this.dispatch('pageChange')
-      return pageName
     }
   },
 
@@ -117,10 +117,7 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   },
 
   interview: {
-    serialize: false,
-    set (interview) {
-      return interview
-    }
+    serialize: false
   },
 
   // used for internal page routing in preview
@@ -144,9 +141,14 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   },
 
   init () {
+    // bind to capture first page of invterview
+    // stopListenTo fired in preview.js and start-app.js
+    var firstPageHandler = function () {}
+    this.listenTo('visitedPage', firstPageHandler)
+
     var self = this
 
-    $(window).on('traceLogic', function (ev, msg) {
+    canDomEvents.addEventListener(window, 'traceLogic', function (ev, msg) {
       self.traceLogic.push(msg)
     })
   },

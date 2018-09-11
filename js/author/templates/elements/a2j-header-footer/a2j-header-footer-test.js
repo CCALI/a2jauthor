@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import sinon from 'sinon';
 import { HeaderFooterVM } from './a2j-header-footer';
 

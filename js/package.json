@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "can-fixture": "^2.1.0",
-    "chai": "^3.0.0",
+    "chai": "^4.1.2",
     "documentjs": "~0.4.1",
     "express": "^4.13.0",
     "funcunit": "^3.0.0",
@@ -67,8 +67,6 @@
       "author/utils/set-global-for-lodash"
     ],
     "map": {
-      "chai": "chai/chai",
-      "assert": "tests/assert",
       "cuid": "cuid/dist/browser-cuid",
       "jquery-ui/widget": "jquery-ui/ui/widget",
       "localforage": "localforage/dist/localforage.nopromises"

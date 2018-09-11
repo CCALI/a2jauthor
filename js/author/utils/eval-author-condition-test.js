@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from 'chai'
 import Answers from 'caja/author/models/answers'
 import evalAuthorCondition from './eval-author-condition'
 

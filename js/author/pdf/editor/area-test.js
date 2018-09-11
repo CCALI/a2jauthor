@@ -1,5 +1,5 @@
 import 'steal-mocha';
-import assert from 'assert';
+import { assert } from 'chai';
 import {
   IdGenerator,
   getArea,

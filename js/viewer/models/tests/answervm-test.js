@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from 'chai'
 import Field from 'caja/viewer/models/field'
 import Answer from 'caja/viewer/models/answer'
 import Answers from 'caja/viewer/models/answers'

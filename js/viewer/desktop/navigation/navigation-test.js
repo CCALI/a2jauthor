@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import assert from 'assert';
+import { assert } from 'chai';
 import stache from "can-stache";
 import AppState from 'caja/viewer/models/app-state';
 import Interview from 'caja/viewer/models/interview';

@@ -1,6 +1,6 @@
 import F from 'funcunit'
 import CanMap from 'can-map'
-import assert from 'assert'
+import { assert } from 'chai'
 import Templates from './templates-vm'
 
 import 'can-route'

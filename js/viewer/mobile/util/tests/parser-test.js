@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import Parser from 'caja/viewer/mobile/util/parser';
 import partialJSON from 'caja/viewer/models/fixtures/partial.json';
 import partialXML from 'caja/viewer/models/fixtures/partial.anx!text';

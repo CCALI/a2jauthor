@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import cString from 'caja/viewer/mobile/util/string';
 
 describe('util: string', function() {

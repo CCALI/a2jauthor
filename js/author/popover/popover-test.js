@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from 'chai'
 import {Popover} from './popover'
 
 import 'steal-mocha'

@@ -1,5 +1,5 @@
 import { DebugPanelVM } from './debug-panel'
-import assert from 'assert'
+import { assert } from 'chai'
 
 import 'steal-mocha'
 

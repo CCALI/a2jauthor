@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import normalizePath from '../normalize-path';
 
 import 'steal-mocha';

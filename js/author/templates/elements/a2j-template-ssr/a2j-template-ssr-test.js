@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import CanList from "can-list";
 import TemplateSsrVM from './a2j-template-ssr-vm';
 

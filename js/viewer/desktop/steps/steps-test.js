@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import F from 'funcunit';
 import CanMap from "can-map";
-import assert from 'assert';
+import { assert } from 'chai';
 import _round from 'lodash/round';
 import _assign from 'lodash/assign';
 import stache from "can-stache";

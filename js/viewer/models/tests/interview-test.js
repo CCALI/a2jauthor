@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import Interview from 'caja/viewer/models/interview';
 import CanMap from "can-map";
 

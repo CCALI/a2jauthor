@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import stache from "can-stache"
-import assert from 'assert'
+import { assert } from 'chai'
 import { FieldVM } from './field'
 import CanList from "can-list"
 import CanMap from "can-map"

@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import Tlogic from 'caja/viewer/mobile/util/tlogic';
 
 let testLogic = new Tlogic();

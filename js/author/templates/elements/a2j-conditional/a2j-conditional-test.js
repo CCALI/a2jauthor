@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import F from 'funcunit';
-import assert from 'assert';
+import { assert } from 'chai';
 import stache from "can-stache";
 import ConditionalVM from './a2j-conditional-vm';
 

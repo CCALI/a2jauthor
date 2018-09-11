@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import _omit from 'lodash/omit';
 import A2JNode from '../a2j-node';
 

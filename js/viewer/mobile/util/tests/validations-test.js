@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import Validations from 'caja/viewer/mobile/util/validations';
 import moment from 'moment';
 

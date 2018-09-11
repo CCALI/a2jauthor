@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import RepeatLoopVM from './a2j-repeat-loop-vm';
 
 describe('<a2j-repeat-loop>', function() {

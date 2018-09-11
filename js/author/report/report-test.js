@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from 'chai'
 import {ReportVM} from './report'
 
 import 'steal-mocha'

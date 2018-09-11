@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import Answer from 'caja/viewer/models/answer';
 import Answers from 'caja/viewer/models/answers';
 import Logic from 'caja/viewer/mobile/util/logic';

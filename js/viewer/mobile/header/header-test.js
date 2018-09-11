@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import F from 'funcunit'
 import CanMap from 'can-map';
-import assert from 'assert'
+import { assert } from 'chai'
 import stache from 'can-stache';
 import setupPromise from 'can-reflect-promise'
 

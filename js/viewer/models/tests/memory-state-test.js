@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import MemoryState from 'caja/viewer/models/memory-state';
 
 import 'steal-mocha';

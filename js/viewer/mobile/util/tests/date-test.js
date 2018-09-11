@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import moment from 'moment';
 import cDate from 'caja/viewer/mobile/util/date';
 

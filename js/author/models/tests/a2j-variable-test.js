@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import A2JVariable from '../a2j-variable';
 
 import 'steal-mocha';

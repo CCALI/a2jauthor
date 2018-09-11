@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import CanList from "can-list";
 import VarPickerVM from './varpicker-vm';
 import Variable from 'caja/author/models/a2j-variable';

@@ -1,5 +1,5 @@
 import 'steal-mocha';
-import assert from 'assert';
+import { assert } from 'chai';
 import { PdfEditorVm } from './editor';
 import CanList from "can-list";
 import CanMap from "can-map";

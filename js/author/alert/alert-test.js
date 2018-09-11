@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import assert from 'assert'
+import { assert } from 'chai'
 import {Alert} from './alert'
 import stache from 'can-stache'
 

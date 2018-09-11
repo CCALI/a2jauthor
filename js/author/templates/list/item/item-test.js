@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import assert from 'assert';
+import { assert } from 'chai';
 import {Item} from './item';
 import stache from "can-stache";
 import A2JTemplate from 'caja/author/models/a2j-template';

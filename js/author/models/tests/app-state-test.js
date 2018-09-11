@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import AppState from 'caja/author/models/app-state';
 
 import 'steal-mocha';

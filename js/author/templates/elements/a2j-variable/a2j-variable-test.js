@@ -1,5 +1,5 @@
 import CanMap from "can-map";
-import assert from 'assert';
+import { assert } from 'chai';
 import Answers from 'caja/author/models/answers';
 import A2JVariableVM from './a2j-variable-vm';
 

@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import assert from 'assert';
+import { assert } from 'chai';
 import stache from "can-stache";
 import {ViewerAvatarVM} from 'caja/viewer/desktop/avatar/';
 

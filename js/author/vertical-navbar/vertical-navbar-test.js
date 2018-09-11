@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from 'chai'
 import {VerticalNavbarVM} from './vertical-navbar'
 
 import 'steal-mocha'

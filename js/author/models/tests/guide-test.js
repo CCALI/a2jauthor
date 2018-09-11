@@ -1,4 +1,4 @@
-import assert from 'assert';
+import { assert } from 'chai';
 import Guide from '../guide';
 
 import 'steal-mocha';

@@ -1,5 +1,5 @@
 import CanList from "can-list";
-import assert from 'assert';
+import { assert } from 'chai';
 import readableList from '../readable-list';
 
 import 'steal-mocha';

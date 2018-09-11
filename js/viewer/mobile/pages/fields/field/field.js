@@ -352,10 +352,23 @@ export let FieldVM = CanMap.extend('FieldVM', {
       const answerIndex = field.attr('_answer.answerIndex')
       const textlongValue = field._answer.attr('answer.values.' + answerIndex)
       const title = field.attr('label')
-      this.attr('modalContent', {title, textlongValue, answerIndex, answerName})
+      this.attr('modalContent', {title, textlongValue, answerIndex, answerName, field})
     }
   },
 
+  connectedCallback (el) {
+    const vm = this
+
+    const $pageModal = $('#pageModal')
+    const handler = function (ev) {
+      vm.dispatch('modalClose')
+    }
+    $pageModal.on('hidden.bs.modal', handler)
+
+    return () => {
+      $pageModal.off('hidden.bs.modal', handler)
+    }
+  },
   /**
    * default availableLength
    */
@@ -444,6 +457,15 @@ export default Component.extend('FieldComponent', {
         ]
         this.viewModel.attr('traceLogic').push(message)
       }
+    },
+
+    '{viewModel} modalClose': function () {
+      const vm = this.viewModel
+      let field = vm.attr('field')
+      let _answer = field.attr('_answer')
+
+      const textlongValue = vm.attr('modalContent.textlongValue')
+      _answer.attr('values', textlongValue)
     }
   },
 

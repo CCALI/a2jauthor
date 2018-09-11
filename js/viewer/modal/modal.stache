@@ -32,10 +32,7 @@
             <textarea autofocus
               id="textlong-input"
               class="form-control expanded-textarea"
-              el:value:bind="modalContent.textlongValue"
-              el:answerIndex:from="modalContent.answerIndex"
-              el:answerName:from="modalContent.answerName"
-              el:answerIndex:from="modalContent.answerIndex">
+              el:value:bind="modalContent.textlongValue">
             </textarea>
           {{else}}
             {{{ eval(modalContent.text, repeatVarValue) }}}

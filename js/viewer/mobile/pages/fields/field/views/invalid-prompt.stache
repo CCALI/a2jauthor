@@ -1,8 +1,8 @@
-{{#if showInvalidPrompt}}
+{{#if(showInvalidPrompt)}}
   <div class="alert alert-danger" role="alert">
     <span class="glyphicon-attention" aria-hidden="true">
         {{{ eval(invalidPrompt, repeatVarValue) }}}
-        {{#if showMinMaxPrompt}}
+        {{#if(showMinMaxPrompt)}}
             {{minMaxPrompt}}
         {{/if}}
     </span>

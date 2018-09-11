@@ -20,7 +20,7 @@ describe('a2j-header', function () {
     )
 
     $('#test-area').html(frag({ mState, pState }))
-    vm = $('a2j-header').viewModel()
+    vm = $('a2j-header')[0].viewModel
   })
 
   afterEach(function () {

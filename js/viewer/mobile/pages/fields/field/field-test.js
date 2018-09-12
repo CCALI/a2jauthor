@@ -37,10 +37,11 @@ describe('<a2j-field>', () => {
       vm = null
     })
 
-    it('shouldBeChecked', () => {
+    it('shouldBeChecked works for radio types', () => {
       let values = vm.attr('field._answer.answer.values')
       values.push('bar')
-      vm.attr('field').attr('value', 'bar')
+      vm.attr('field.type', 'radio')
+      vm.attr('field.value', 'bar')
 
       assert.equal(vm.attr('shouldBeChecked'), true, 'should return true if answer matches radio button value')
     })
@@ -382,7 +383,7 @@ describe('<a2j-field>', () => {
 
         $("a2j-field [id='None of the Above']").prop('checked', true).change()
 
-        assert.equal(checkbox.attr('_answer.answer.values.1'), false, 'Checking NOTA clears other checkboxes')
+        assert.equal(checkbox.attr('_answer.values'), false, 'Checking NOTA clears other checkboxes')
 
       })
 
@@ -392,7 +393,7 @@ describe('<a2j-field>', () => {
 
         $("a2j-field [id='Likes Chocolate']").prop('checked', true).change()
 
-        assert.equal(checkboxNOTA.attr('_answer.answer.values.1'), false, 'Checking NOTA clears other checkboxes')
+        assert.equal(checkboxNOTA.attr('_answer.values'), false, 'Checking NOTA clears other checkboxes')
 
       })
 

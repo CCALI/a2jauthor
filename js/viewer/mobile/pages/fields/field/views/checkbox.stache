@@ -7,7 +7,7 @@
 			id="{{label}}"
 			type="checkbox"
 			name="{{name}}"
-			{{#if(shouldBeChecked)}}checked{{/if}}
+			el:checked:bind="field._answer.values"
 			on:el:change="validateField(null, scope.element)"/>
 		{{{ eval(label, repeatVarValue) }}}</label>
 		</div>

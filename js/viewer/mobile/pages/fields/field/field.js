@@ -127,13 +127,19 @@ export let FieldVM = CanMap.extend('FieldVM', {
         let answerValues = field.attr('_answer.answer.values')
         let answerIndex = field.attr('_answer.answerIndex')
 
-        if (field.type === 'radio') {
-          let radioButtonValue = field.attr('value')
-          let previousAnswer = answerValues[answerIndex]
-          return (radioButtonValue === previousAnswer)
-        } else { // Checkbox/TF variable type
-          return answerValues[answerIndex] === true
-        }
+        let radioButtonValue = field.attr('value')
+        let previousAnswer = answerValues[answerIndex]
+        return (radioButtonValue === previousAnswer)
+      }
+    },
+
+    checkboxShouldBeChecked: {
+      get () {
+        let field = this.attr('field')
+        let answerValues = field.attr('_answer.answer.values')
+        let answerIndex = field.attr('_answer.answerIndex')
+
+        return answerValues[answerIndex] === true
       }
     },
 
@@ -358,17 +364,17 @@ export let FieldVM = CanMap.extend('FieldVM', {
 
   connectedCallback (el) {
     const vm = this
-
     const $pageModal = $('#pageModal')
-    const handler = function (ev) {
+    const pageModalHandler = function (ev) {
       vm.dispatch('modalClose')
     }
-    $pageModal.on('hidden.bs.modal', handler)
+    $pageModal.on('hidden.bs.modal', pageModalHandler)
 
     return () => {
-      $pageModal.off('hidden.bs.modal', handler)
+      $pageModal.off('hidden.bs.modal', pageModalHandler)
     }
   },
+
   /**
    * default availableLength
    */
@@ -431,15 +437,15 @@ export default Component.extend('FieldComponent', {
     },
 
     '{a2j-field input[type=checkbox]} change': function (values, ev) {
-      let field = this.viewModel.attr('field')
+      const field = this.viewModel.attr('field')
 
       if (ev.target.checked === true && (field.type === 'checkbox' || field.type === 'checkboxNOTA')) {
-        let fields = this.viewModel.attr('%root.fields')
+        const fields = field.attr('_answer.fields')
         if (fields) {
-          let toStayChecked = field.type
+          const toStayChecked = field.type
           fields.forEach(function (field) {
             if (field.type !== toStayChecked && (field.type === 'checkbox' || field.type === 'checkboxNOTA')) {
-              field.attr('_answer.answer.values.1', false)
+              field.attr('_answer.values', false)
             }
           })
         }

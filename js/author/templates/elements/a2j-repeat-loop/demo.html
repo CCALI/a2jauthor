@@ -25,7 +25,7 @@
 
       $(function() {
         $('body').on('click', '#preview', function() {
-          var vm = $('a2j-repeat-loop').viewModel();
+          var vm = $('a2j-repeat-loop')[0].viewModel;
           var value = vm.attr('editEnabled');
           vm.attr('editEnabled', !value);
         });

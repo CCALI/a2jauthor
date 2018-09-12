@@ -63,12 +63,12 @@ describe('<app-alert>', function () {
     })
 
     it('is hidden if "open" is "false"', function () {
-      $('app-alert').viewModel().attr('open', false)
+      $('app-alert')[0].viewModel.attr('open', false)
       assert.isFalse($('app-alert').is(':visible'))
     })
 
     it('triggers "closed" event', function (done) {
-      let vm = $('app-alert').viewModel()
+      let vm = $('app-alert')[0].viewModel
 
       vm.bind('closed', function () {
         done()
@@ -79,7 +79,7 @@ describe('<app-alert>', function () {
     })
 
     it('close button is not visible unless dismissible', function () {
-      let vm = $('app-alert').viewModel()
+      let vm = $('app-alert')[0].viewModel
 
       // dismissible false by default
       assert.isFalse($('.close').is(':visible'))

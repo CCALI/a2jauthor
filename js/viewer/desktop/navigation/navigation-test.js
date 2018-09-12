@@ -294,7 +294,7 @@ describe('<a2j-viewer-navigation>', function() {
 
 
     it('shows custom courthouse image if provided', function() {
-      let vm = $('a2j-viewer-navigation').viewModel();
+      let vm = $('a2j-viewer-navigation')[0].viewModel;
       vm.attr('courthouseImage', 'my-custom-courthouse.jpg');
 
       let courthouseSrc = $('img.courthouse').attr('src');
@@ -302,7 +302,7 @@ describe('<a2j-viewer-navigation>', function() {
     });
 
     it('uses default courthouse image when custom not provided', function() {
-      let vm = $('a2j-viewer-navigation').viewModel();
+      let vm = $('a2j-viewer-navigation')[0].viewModel;
       vm.attr('courthouseImage', null);
 
       let courthouseSrc = $('img.courthouse').attr('src');

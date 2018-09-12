@@ -14,7 +14,7 @@ describe('element-options-pane', function() {
       let frag = stache('<element-options-pane />');
 
       $('#test-area').html(frag());
-      vm = $('element-options-pane').viewModel();
+      vm = $('element-options-pane')[0].viewModel;
     });
 
     it('shows "Save & Close" button by default', function() {

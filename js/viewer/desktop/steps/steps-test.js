@@ -35,7 +35,7 @@ describe('<a2j-viewer-steps>', function() {
       );
 
       $('#test-area').html(frag({rState, interview, mState}));
-      vm = $('a2j-viewer-steps').viewModel();
+      vm = $('a2j-viewer-steps')[0].viewModel;
     });
 
     afterEach(function() {

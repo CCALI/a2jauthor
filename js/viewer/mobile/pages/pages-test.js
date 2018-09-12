@@ -15,11 +15,13 @@ describe('<a2j-pages>', () => {
   let vm
   let logicStub
   let nextPageStub
+  let interview
   let defaults
 
   beforeEach(() => {
     logicStub = new CanMap({
       exec: $.noop,
+      eval: $.noop,
       infinite: {
         errors: $.noop,
         reset: $.noop,
@@ -38,23 +40,25 @@ describe('<a2j-pages>', () => {
       fields: []
     })
 
+    interview = {
+      answers: new CanMap(),
+      getPageByName: function () {
+        return nextPageStub
+      },
+      pages: {
+        find () {
+          return nextPageStub
+        }
+      }
+    }
+
     defaults = {
       traceLogic: new CanList(),
       currentPage: new CanMap({ fields: [], repeatVar: '' }),
       logic: logicStub,
-      rState: new AppState(),
+      rState: new AppState({interview, logic: logicStub}),
       mState: { },
-      interview: {
-        answers: new CanMap(),
-        getPageByName: function () {
-          return nextPageStub
-        },
-        pages: {
-          find () {
-            return nextPageStub
-          }
-        }
-      }
+      interview
     }
   })
 
@@ -318,7 +322,7 @@ describe('<a2j-pages>', () => {
         '<a2j-pages></a2j-pages>'
       )
       $('#test-area').html(frag())
-      vm = $('a2j-pages').viewModel()
+      vm = $('a2j-pages')[0].viewModel
 
       vm.attr(defaults)
 

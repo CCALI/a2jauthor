@@ -32,7 +32,7 @@ describe('<a2j-modal> ', function () {
       )
 
       $('#test-area').html(frag({ interview, rState, logic, mState, modalContent }))
-      vm = $('a2j-modal').viewModel()
+      vm = $('a2j-modal')[0].viewModel
     })
 
     afterEach(function () {

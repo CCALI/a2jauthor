@@ -52,7 +52,7 @@ describe('<a2j-conditional>', function() {
         children: []
       }));
 
-      vm = $('a2j-conditional').viewModel();
+      vm = $('a2j-conditional')[0].viewModel;
     });
 
     afterEach(function() {

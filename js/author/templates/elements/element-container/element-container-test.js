@@ -23,7 +23,7 @@ describe('<element-container>', function() {
     });
 
     it.skip('sets "selected" to "true" on click', function() {
-      let vm = $('element-container').viewModel();
+      let vm = $('element-container')[0].viewModel;
       assert.isFalse(vm.attr('selected'), 'should default to false');
 
       $('.wrapper').click();
@@ -31,14 +31,14 @@ describe('<element-container>', function() {
     });
 
     it('hides element-toolbar if not selected', function() {
-      let vm = $('element-container').viewModel();
+      let vm = $('element-container')[0].viewModel;
 
       assert.isFalse(vm.attr('selected'), 'should default to false');
       assert(!$('element-toolbar').length, 'element-toolbar should not be rendered');
     });
 
     it('shows element-toolbar if selected', function() {
-      let vm = $('element-container').viewModel();
+      let vm = $('element-container')[0].viewModel;
 
       vm.attr('selected', true);
       assert($('element-toolbar').length, 'should be visible');

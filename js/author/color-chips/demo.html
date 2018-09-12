@@ -45,7 +45,7 @@
     <script>
       setTimeout(() => { // waits for can to load
         can.autorender(() => {
-          const dm = $('#demo').viewModel()
+          const dm = $('#demo')[0].viewModel
           dm.attr({
             hairColorClasses: [
               'hair-blonde',

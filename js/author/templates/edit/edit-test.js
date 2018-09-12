@@ -48,7 +48,7 @@ describe('template-edit-page', function() {
       // a2j-template model findOne requires fixture guideId
       let frag = stache('<template-edit-page template-id="2113" guide-id="1261"/>');
       $('#test-area').html(frag());
-      vm = $('template-edit-page').viewModel();
+      vm = $('template-edit-page')[0].viewModel;
     });
 
     afterEach(function() {

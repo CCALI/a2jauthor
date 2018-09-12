@@ -55,7 +55,7 @@ describe('<interviews-page>', function () {
     beforeEach(function (done) {
       let frag = stache('<interviews-page></interviews-page>')
       $('#test-area').html(frag())
-      vm = $('interviews-page').viewModel()
+      vm = $('interviews-page')[0].viewModel
 
       F('.guide').size(n => n > 0)
       F(done)

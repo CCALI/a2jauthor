@@ -30,7 +30,7 @@ describe('a2j-template', function() {
       );
 
       $('#test-area').html(frag({ template }));
-      vm = $('a2j-template').viewModel();
+      vm = $('a2j-template')[0].viewModel;
     });
 
     afterEach(function() {
@@ -41,8 +41,8 @@ describe('a2j-template', function() {
       this.timeout(5000);
 
       it('selecting direct descendants', function(done) {
-        const firstElementVM = $('element-container').eq(0).viewModel();
-        const secondElementVM = $('element-container').eq(1).viewModel();
+        const firstElementVM = $('element-container').eq(0)[0].viewModel;
+        const secondElementVM = $('element-container').eq(1)[0].viewModel;
 
         F('element-options-pane').size(0, 'no element selected');
 
@@ -72,9 +72,9 @@ describe('a2j-template', function() {
       });
 
       it('selecting nested child then a direct descendant', function(done) {
-        const firstElementVM = $('element-container').eq(0).viewModel();
-        const secondElementVM = $('element-container').eq(1).viewModel();
-        const nestedChildVM = $('conditional-add-element').eq(0).viewModel();
+        const firstElementVM = $('element-container').eq(0)[0].viewModel;
+        const secondElementVM = $('element-container').eq(1)[0].viewModel;
+        const nestedChildVM = $('conditional-add-element').eq(0)[0].viewModel;
 
         // click conditional add element (add ot if inside a2j-conditional)
         F('conditional-add-element > div').click();
@@ -104,9 +104,9 @@ describe('a2j-template', function() {
       });
 
       it('selecting a direct descendant then a nested child', function(done) {
-        const firstElementVM = $('element-container').eq(0).viewModel();
-        const secondElementVM = $('element-container').eq(1).viewModel();
-        const nestedChildVM = $('conditional-add-element').eq(0).viewModel();
+        const firstElementVM = $('element-container').eq(0)[0].viewModel;
+        const secondElementVM = $('element-container').eq(1)[0].viewModel;
+        const nestedChildVM = $('conditional-add-element').eq(0)[0].viewModel;
 
         // click the first element
         F('element-container:nth(0) .wrapper').click();

@@ -63,7 +63,7 @@ describe('<templates-page>', function () {
 
     it('renders a list of active templates by default', function (done) {
       F(function () {
-        let templates = $('templates-page').viewModel().attr('displayList')
+        let templates = $('templates-page')[0].viewModel.attr('displayList')
         let deleted = templates.filter(template => !template.attr('active'))
         assert.equal(deleted.attr('length'), 0, 'should not have deleted templates')
       })
@@ -73,7 +73,7 @@ describe('<templates-page>', function () {
 
     it('rendered list is sorted by buildOrder asc by default', function (done) {
       F(function () {
-        let templates = $('templates-page').viewModel().attr('displayList')
+        let templates = $('templates-page')[0].viewModel.attr('displayList')
         let buildOrder = templates.attr().map(template => template.buildOrder)
         assert.deepEqual(buildOrder, [1, 2, 3], 'should be sorted asc')
       })
@@ -89,10 +89,10 @@ describe('<templates-page>', function () {
         totalActive = $('templates-list-item').length
 
         // set transition time to 0ms, to speed up the test
-        $('templates-list').viewModel().attr('itemTransitionTime', delay)
+        $('templates-list')[0].viewModel.attr('itemTransitionTime', delay)
 
         // set hovered to true to display the delete template link
-        $('templates-list-item').first().viewModel().attr('hovered', true)
+        $('templates-list-item').first()[0].viewModel.attr('hovered', true)
       })
 
       F('templates-list-item .delete').size(1, 'delete link should be on screen')
@@ -109,7 +109,7 @@ describe('<templates-page>', function () {
 
     it('displays alert if there are no search results', function (done) {
       F(function () {
-        $('templates-page').viewModel().attr('searchToken', '123456789')
+        $('templates-page')[0].viewModel.attr('searchToken', '123456789')
       })
 
       F('templates-list-item').size(0)
@@ -120,7 +120,7 @@ describe('<templates-page>', function () {
     it('displays alert if there are no templates', function (done) {
       // replace component's template list with an empty array.
       F(function () {
-        $('templates-page').viewModel().attr('templates').replace([])
+        $('templates-page')[0].viewModel.attr('templates').replace([])
       })
 
       F('.no-templates-exist').visible('no templates message should be visible')
@@ -129,7 +129,7 @@ describe('<templates-page>', function () {
 
     it.skip('displays alert if no templates match filters', function (done) {
       F(function () {
-        let vm = $('templates-page').viewModel()
+        let vm = $('templates-page')[0].viewModel
 
         // mark all templates as deleted
         vm.attr('templates').forEach(template => template.attr('active', false))
@@ -142,7 +142,7 @@ describe('<templates-page>', function () {
 
     it('displays alert if there are no templates in the trash', function (done) {
       F(function () {
-        let vm = $('templates-page').viewModel()
+        let vm = $('templates-page')[0].viewModel
 
         // mark all templates as active and set filter to deleted.
         vm.attr('templates').forEach(template => template.attr('active', true))

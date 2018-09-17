@@ -188,7 +188,7 @@ export default Component.extend({
       if (open) {
         $el.slideDown()
       } else {
-        $el.slideUp()
+        $el.slideUp(() => vm.dispatch('closed'))
         vm.clearAutoCloseTimeout()
       }
     }

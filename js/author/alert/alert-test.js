@@ -49,7 +49,7 @@ describe('<app-alert>', function () {
   describe('Component', function () {
     beforeEach(function () {
       $.fx.off = true
-      let frag = stache('<app-alert open="true"></app-alert>')
+      let frag = stache('<app-alert open:from="true"></app-alert>')
       $('#test-area').html(frag())
     })
 

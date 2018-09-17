@@ -1,13 +1,13 @@
 <can-import from="caja/author/alert/alert.less!"/>
 
-<div class="alert {{alertTypeClass}} {{#if dismissible}}alert-dismissible{{/if}}" role="alert">
+<div class="alert {{alertTypeClass()}} {{#if dismissible}}alert-dismissible{{/if}}" role="alert">
   {{#if dismissible}}
     <a class="close" aria-label="Close" data-dismiss="alert" on:el:click="closeAlert()">
       <span aria-hidden="true">&times;</span>
     </a>
   {{/if}}
 
-<span class="{{alertTypeSymbol}}" aria-hidden="true">
+<span class="{{alertTypeSymbol()}}" aria-hidden="true">
   <content />
 </span>
 </div>

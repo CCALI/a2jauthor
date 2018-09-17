@@ -2,6 +2,7 @@ import $ from 'jquery';
 import { assert } from 'chai';
 import stache from "can-stache";
 import { TemplateEditPageVM } from './edit';
+import 'caja/author/models/fixtures/templates'
 
 import 'steal-mocha';
 import '../elements/a2j-template/';
@@ -46,7 +47,7 @@ describe('template-edit-page', function() {
 
     beforeEach(function() {
       // a2j-template model findOne requires fixture guideId
-      let frag = stache('<template-edit-page template-id="2113" guide-id="1261"/>');
+      let frag = stache('<template-edit-page templateId:from="2113" guideId:from="1261"/>');
       $('#test-area').html(frag());
       vm = $('template-edit-page')[0].viewModel;
     });

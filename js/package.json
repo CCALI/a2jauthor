@@ -228,6 +228,7 @@
     "can-map-define": "^4.3.3",
     "can-model": "^4.0.1",
     "can-observation": "^4.1.0",
+    "can-observation-recorder": "^1.2.0",
     "can-reflect": "^1.17.0",
     "can-reflect-promise": "^2.1.0",
     "can-route": "^4.3.5",

@@ -1,5 +1,6 @@
 import CanMap from 'can-map'
 import Component from 'can-component'
+import ObservationRecorder from 'can-observation-recorder'
 import template from './edit.stache'
 import A2JTemplate from 'caja/author/models/a2j-template'
 import A2JNode from 'caja/author/models/a2j-node'
@@ -91,7 +92,7 @@ export const TemplateEditPageVM = CanMap.extend({
       })
     }
 
-    const fn = can.__notObserve(function () {
+    const fn = ObservationRecorder.ignore(function () {
       const template = new A2JTemplate(templateProps)
       return template.save().then(template => {
         const id = template.attr('templateId')

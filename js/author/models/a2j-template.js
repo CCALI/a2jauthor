@@ -3,6 +3,7 @@ import Model from 'can-model'
 import _omit from 'lodash/omit'
 import A2JNode from './a2j-node'
 import comparator from './template-comparator'
+import sort from '../utils/sort'
 
 import 'can-list'
 import 'can-map-define'
@@ -275,6 +276,8 @@ A2JTemplate.List = A2JTemplate.List.extend({
         this.attr('comparator', comparator.moment(key, direction))
         break
     }
+
+    sort(this, this.attr('comparator'));
   },
 
   search (token) {

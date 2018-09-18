@@ -69,7 +69,8 @@
     "map": {
       "cuid": "cuid/dist/browser-cuid",
       "jquery-ui/widget": "jquery-ui/ui/widget",
-      "localforage": "localforage/dist/localforage.nopromises"
+      "localforage": "localforage/dist/localforage.nopromises",
+      "chai": "chai/chai"
     },
     "meta": {
       "caja/author/src/A2J_Tabs": {

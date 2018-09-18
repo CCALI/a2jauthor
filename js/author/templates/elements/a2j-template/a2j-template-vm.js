@@ -162,7 +162,7 @@ export default CanMap.extend({
     const find = (nodes, id) => {
       let result;
 
-      nodes.each(node => {
+      nodes.forEach(node => {
         const nodeIsATemplate = Boolean(node.attr('rootNode'));
 
         if (nodeIsATemplate) {
@@ -292,12 +292,12 @@ export default CanMap.extend({
 
     let children = this.attr('rootNode.children');
     let draggedItem = children.attr(dragItemIndex);
-    
+
     if(typeof draggedItem !== 'undefined') {
       draggedItem.attr('isBeingDragged', true);
-      draggedItem.attr('state').attr('editActive', true);  
+      draggedItem.attr('state').attr('editActive', true);
     }
-    
+
   },
 
   removeDragPlaceholderFlag() {
@@ -310,6 +310,6 @@ export default CanMap.extend({
     if(typeof draggedItem !== 'undefined') {
       draggedItem.removeAttr('isBeingDragged');
     }
-    
+
   }
 });

@@ -19,7 +19,7 @@ let A2JVariable = Model.extend({
 
   makeFindOne () {
     return function (params, success, error) {
-      let deferred = new can.Deferred()
+      let deferred = new $.Deferred()
       setupPromise(deferred)
       let gGuide = window.gGuide || {}
       let vars = gGuide.vars || {}

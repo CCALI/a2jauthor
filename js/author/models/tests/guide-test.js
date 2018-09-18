@@ -1,5 +1,6 @@
 import { assert } from 'chai';
 import Guide from '../guide';
+import canReflect from 'can-reflect';
 
 import 'steal-mocha';
 
@@ -11,9 +12,9 @@ describe('Guide Model', () => {
 
       let guide = guides.attr(0);
 
-      assert.property(guide, 'id');
-      assert.deepProperty(guide, '_computedAttrs.title');
-      assert.deepProperty(guide, 'details.size');
+      assert.ok(canReflect.hasKey(guide, 'id'));
+      assert.ok(canReflect.hasKey(guide, 'title'));
+      assert.ok(canReflect.hasKey(guide.attr('details'), 'size'));
     });
   });
 

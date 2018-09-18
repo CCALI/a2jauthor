@@ -19,24 +19,35 @@ import 'can-map-define'
  *
  */
 const Guide = Model.extend({
-  findAll: {
-    method: 'POST',
-    url: 'CAJA_WS.php'
-  },
+  parseModels: 'guides',
+  findAll: function(params) {
+    params = (params == null) ? {} : params
+    params.cmd = 'guides'
 
-  makeFindAll (findAllData) {
-    return function (params, success, error) {
-      params = (params == null) ? {} : params
-      params.cmd = 'guides'
+    const def = $.Deferred()
+    setupPromise(def)
 
-      let dfd = findAllData(params).then((data) => {
-        data = (data == null) ? {} : data
-        let guides = data.guides || []
-        return this.models(guides)
-      })
-      setupPromise(dfd)
-      return dfd.then(success, error)
+    const reject = function (xhr, e, reason) {
+      def.reject(new Error(reason))
     }
+
+    const maybeResolve = function (result) {
+      if (result.error) {
+        def.reject(result.error)
+      } else {
+        def.resolve(result)
+      }
+    }
+
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: 'CAJA_WS.php',
+      data: params
+    })
+      .then(maybeResolve, reject)
+
+    return def.promise()
   },
 
   destroy (id) {

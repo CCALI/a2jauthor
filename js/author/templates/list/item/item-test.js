@@ -3,8 +3,10 @@ import { assert } from 'chai';
 import {Item} from './item';
 import stache from "can-stache";
 import A2JTemplate from 'caja/author/models/a2j-template';
+import domEvents from 'can-dom-events';
 import sinon from 'sinon';
 
+import 'caja/author/models/fixtures/templates'
 import 'steal-mocha';
 
 describe('<templates-list-item>', function() {
@@ -93,7 +95,7 @@ describe('<templates-list-item>', function() {
       });
 
       let frag = stache(
-        '<templates-list-item template="{template}"></templates-list-item>'
+        '<templates-list-item template:bind="template" />'
       );
       $('#test-area').html(frag({template}));
     });
@@ -102,22 +104,24 @@ describe('<templates-list-item>', function() {
 
     it('shows/hides delete link on hover for active templates', function() {
       assert.isTrue(template.attr('active'), 'should be active');
+      let wrapperEl = $('.template-wrapper')[0];
 
-      $('.template-wrapper').mouseenter();
+      domEvents.dispatch(wrapperEl, 'mouseenter');
       assert.isTrue($('.delete').is(':visible'), 'should be visible');
 
-      $('.template-wrapper').mouseleave();
+      domEvents.dispatch(wrapperEl, 'mouseleave');
       assert.isFalse($('.delete').is(':visible'), 'should be hidden');
     });
 
     it('shows/hides restore link on hover for deleted templates', function() {
       template.attr('active', false);
       assert.isFalse(template.attr('active'), 'should be deleted');
+      let wrapperEl = $('.template-wrapper')[0];
 
-      $('.template-wrapper').mouseenter();
+      domEvents.dispatch(wrapperEl, 'mouseenter');
       assert.isTrue($('.restore').is(':visible'), 'should be visible');
 
-      $('.template-wrapper').mouseleave();
+      domEvents.dispatch(wrapperEl, 'mouseleave');
       assert.isFalse($('.restore').is(':visible'), 'should be hidden');
     });
   });

@@ -2,6 +2,8 @@ import F from 'funcunit'
 import CanMap from 'can-map'
 import { assert } from 'chai'
 import Templates from './templates-vm'
+import stache from 'can-stache'
+import 'caja/author/models/fixtures/templates'
 
 import 'can-route'
 import 'steal-mocha'
@@ -12,9 +14,14 @@ describe('<templates-page>', function () {
     let vm
 
     beforeEach(function () {
+      localStorage.clear()
       vm = new Templates({
         appState: new CanMap()
       })
+    })
+
+    afterEach(function() {
+      localStorage.clear()
     })
 
     it('defaults activeFilter to "active" status', function () {
@@ -47,8 +54,8 @@ describe('<templates-page>', function () {
     beforeEach(function (done) {
       let appState = new CanMap({guideId: '1261'})
 
-      let frag = can.view.stache(
-        '<templates-page app-state="{appState}"></templates-page>'
+      let frag = stache(
+        '<templates-page appState:bind="appState" />'
       )
 
       $('#test-area').html(frag({appState}))

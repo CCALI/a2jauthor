@@ -4,6 +4,7 @@ import _omit from 'lodash/omit'
 import A2JNode from './a2j-node'
 import comparator from './template-comparator'
 
+import 'can-list'
 import 'can-map-define'
 
 /**

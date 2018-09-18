@@ -9,80 +9,78 @@
 {{#if templatesPromise.isResolved}}
   <templates-toolbar
     class="clearfix"
-    filter:from='"{activeFilter}"'
-    templates="{templates}"
-    search-token:from='"{searchToken}"'/>
+    filter:bind="activeFilter"
+    templates:bind="templates"
+    searchToken:from="searchToken"/>
 {{/if}}
 
 <div class="page">
   <app-alert
-    auto-close:from="'true'"
-    dismissible:from='"true"'
-    alert-type:from='"warning"'
-    open:from='"{openDeletedAlert}"'
+    auto-close:from="true"
+    dismissible:from="true"
+    alertType:raw="warning"
+    open:from="openDeletedAlert"
     class="deleted-templates-alert"
-    auto-close-time:from='"{alertAutoCloseTime}"'>
-
-    {{#each deletedTemplates}}
-      {{title}} - has been deleted -
-      <a href="#" on:el:click="restoreTemplate(this)">Restore</a>
+    autoCloseTime:from="alertAutoCloseTime">
+    {{#each(../deletedTemplates)}}
+      {{./title}} - has been deleted -
+      <a href="#" on:el:click="scope.vm.restoreTemplate(this)">Restore</a>
     {{/each}}
   </app-alert>
 
   <app-alert
-    auto-close:from="'true'"
-    dismissible="true"
-    alert-type="warning"
-    open:from='"{openRestoredAlert}"'
+    autoClose:from="true"
+    dismissible:from="true"
+    alertType:raw="warning"
+    open:from="openRestoredAlert"
     class="restored-templates-alert"
-    auto-close-time:from="'{alertAutoCloseTime}'">
-
-    {{#each restoredTemplates}}
-      {{title}} - has been restored -
-      <a href="#" on:el:click="deleteTemplate(this)">Delete</a>
+    autoCloseTime:from="alertAutoCloseTime">
+    {{#each(../restoredTemplates)}}
+      {{./title}} - has been restored -
+      <a href="#" on:el:click="scope.vm.deleteTemplate(this)">Delete</a>
     {{/each}}
   </app-alert>
 
   <div class="container-fluid">
-    {{#if templatesPromise.isPending}}
+    {{#if(templatesPromise.isPending)}}
       <app-loading/>
     {{/if}}
 
-    {{#if templatesPromise.isResolved}}
+    {{#if(templatesPromise.isResolved)}}
       {{! if source list is empty, there are no templates at all! }}
-      {{#unless templates.length}}
-        <app-alert open="true" alert-type="warning" class="no-templates-exist">
+      {{#unless(templates.length)}}
+        <app-alert open:from="true" alertType:raw="warning" class="no-templates-exist">
           There are no templates at all. Create one!
         </app-alert>
       {{/unless}}
 
-      {{#if noSearchResults}}
-        <app-alert open="true" class="no-results" alert-type="warning">
+      {{#if(noSearchResults)}}
+        <app-alert open:from="true" class="no-results" alertType:raw="warning">
           No templates match
         </app-alert>
       {{/if}}
 
-      {{#if noTemplatesMatchFilter}}
-        <app-alert open="true" class="no-match-filter" alert-type="warning">
-          {{#eq activeFilter 'active'}}No templates match the filters{{/eq}}
-          {{#eq activeFilter 'deleted'}}There are no templates in the trash{{/eq}}
+      {{#if(noTemplatesMatchFilter)}}
+        <app-alert open:from="true" class="no-match-filter" alertType:raw="warning">
+          {{#eq(../activeFilter, 'active')}}No templates match the filters{{/eq}}
+          {{#eq(../activeFilter, 'deleted')}}There are no templates in the trash{{/eq}}
         </app-alert>
       {{/if}}
 
-      {{#if showTemplatesList}}
-        <templates-sortbar criteria:from='"{sortCriteria}"'/>
+      {{#if(showTemplatesList)}}
+        <templates-sortbar criteria:from="sortCriteria" />
 
         <templates-list
           vm:displayList:from="displayList"
           vm:hasSorted:bind="hasSorted"
-          active-filter="{activeFilter}"
-          class="{{listStateClassName}}"
-          is-draggable="{listIsDraggable}" />
+          activeFilter:bind="activeFilter"
+          class:from="listStateClassName"
+          isDraggable:bind="listIsDraggable" />
       {{/if}}
     {{/if}}
   </div>
 
   <test-assemble-options
-    vm:guideId:from="appState.guideId"
-    vm:guideTitle:from="appState.guide.title" />
+    vm:guideId:from="scope.vm.appState.guideId"
+    vm:guideTitle:from="scope.vm.appState.guide.title" />
 </div>

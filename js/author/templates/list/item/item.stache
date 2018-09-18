@@ -1,14 +1,17 @@
-<can-import from="caja/author/templates/list/item/item.less!"/>
+<can-import from="caja/author/templates/list/item/item.less"/>
+<can-import from="can-stache-route-helpers" />
 
 {{#with template}}
-  <div class="template-wrapper{{#if deleting}} deleting{{/if}}{{#if restoring}} restoring{{/if}}">
+  <div class="template-wrapper{{#if(../deleting)}} deleting{{/if}}{{#if(../restoring)}} restoring{{/if}}"
+    on:el:mouseenter="scope.vm.setHovering()"
+    on:el:mouseleave="scope.vm.setNotHovering()">
     <a draggable="false" class="template-link" href="{{routeUrl page='templates' action='edit' guideId=guideId templateId=templateId}}">
 
       <div class="template-order">
         <span class="build-order">{{buildOrder}}</span><br>
 
-        {{#if hovered}}
-          {{#if isDraggable}}
+        {{#if(scope.vm.hovered)}}
+          {{#if(scope.vm.isDraggable)}}
             <span class="glyphicon-move small text-muted"></span>
           {{/if}}
         {{/if}}
@@ -22,13 +25,13 @@
           </div>
 
           <ul class="template-menu col-sm-3">
-            <li class="last-modified">{{updatedAtFromNow}}</li>
+            <li class="last-modified">{{scope.vm.updatedAtFromNow}}</li>
             <li class="divider"></li>
-            {{#if hovered}}
-              {{#if active}}
-                <li class="options"><a draggable="false" class="delete" on:el:click="deleteTemplate()" href="#">Delete</a></li>
+            {{#if(scope.vm.hovered)}}
+              {{#if(active)}}
+                <li class="options"><a draggable="false" class="delete" on:el:click="scope.vm.deleteTemplate()" href="#">Delete</a></li>
               {{else}}
-                <li class="options"><a draggable="false" class="restore" on:el:click="restoreTemplate()" href="#">Restore</a></li>
+                <li class="options"><a draggable="false" class="restore" on:el:click="scope.vm.restoreTemplate()" href="#">Restore</a></li>
               {{/if}}
             {{/if}}
           </ul>

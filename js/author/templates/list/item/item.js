@@ -93,6 +93,18 @@ export let Item = CanMap.extend({
         return updatedAt.isValid() ? updatedAt.fromNow() : '';
 
       }
+    },
+
+    /**
+     * @property {Boolean} templatesListItem.ViewModel.prototype.define.isDraggable isDraggable
+     * @parent templatesListItem.viewModel
+     *
+     * This defines if the list item is draggable
+     *
+     */
+    isDraggable: {
+      type: 'boolean',
+      value: false
     }
   },
 
@@ -140,6 +152,14 @@ export let Item = CanMap.extend({
     }, delay);
 
     return false;
+  },
+
+  setHovering() {
+    this.attr('hovered', true);
+  },
+
+  setNotHovering() {
+    this.attr('hovered', false);
   }
 });
 
@@ -147,15 +167,5 @@ export default Component.extend({
   view: template,
   leakScope: false,
   ViewModel: Item,
-  tag: 'templates-list-item',
-
-  events: {
-    '.template-wrapper mouseenter': function() {
-      this.viewModel.attr('hovered', true);
-    },
-
-    '.template-wrapper mouseleave': function() {
-      this.viewModel.attr('hovered', false);
-    }
-  }
+  tag: 'templates-list-item'
 });

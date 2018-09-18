@@ -1,6 +1,7 @@
 import $ from 'jquery'
 import CanMap from 'can-map'
 import A2JTemplate from 'caja/author/models/a2j-template'
+import sort from 'caja/author/utils/sort'
 
 import 'can-map-define'
 
@@ -12,6 +13,14 @@ import 'can-map-define'
  */
 export default CanMap.extend({
   define: {
+    /**
+     * @property {CanList?} templatesPage.ViewModel.prototype.define.appState appState
+     * @parent templatesPage.ViewModel
+     *
+     * The application state
+     */
+    appState: {},
+
     /**
      * @property {Promise} templatesPage.ViewModel.prototype.define.templatesPromise templatesPromise
      * @parent templatesPage.ViewModel
@@ -53,6 +62,22 @@ export default CanMap.extend({
      * displayList of templates based on filtering
      */
     displayList: {},
+
+    /**
+     * @property {CanList?} templatesPage.ViewModel.prototype.define.deletedTemplates deletedTemplates
+     * @parent templatesPage.ViewModel
+     *
+     * templates that were deleted
+     */
+    deletedTemplates: {},
+
+    /**
+     * @property {CanList?} templatesPage.ViewModel.prototype.define.restoredTemplates restoredTemplates
+     * @parent templatesPage.ViewModel
+     *
+     * templates that were deleted and then restored
+     */
+    restoredTemplates: {},
 
     /**
      * @property {String} templatesPage.ViewModel.prototype.define.activeFilter activeFilter
@@ -338,13 +363,13 @@ export default CanMap.extend({
 
     // TODO: build es6 map of template to it's index to remove performance hit of indexOf
 
-    templates.sort((a, b) => {
-      if (!a.active) return 1
-      if (!b.active) return -1
+    let outTemplates = sort(templates, (a, b) => {
+      if (!a.attr('active')) return -1
+      if (!b.attr('active')) return 1
       return currentDisplayList.indexOf(a) - currentDisplayList.indexOf(b)
     })
 
-    const templateIds = templates.serialize().map(t => t.templateId)
+    const templateIds = outTemplates.serialize().map(t => t.templateId)
     return templateIds
   },
 

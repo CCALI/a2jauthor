@@ -111,7 +111,43 @@ let AssembleOptionsVM = CanMap.extend({
 
         return JSON.stringify(answers.serialize());
       }
-    }
+    },
+
+    /**
+     * @property {String} assemble.ViewModel.prototype.header header
+     * @parent assemble.ViewModel
+     *
+     * The header
+     */
+    header: {
+      value: ''
+    },
+
+    /**
+     * @property {String} assemble.ViewModel.prototype.footer footer
+     * @parent assemble.ViewModel
+     *
+     * The footer
+     */
+    footer: {
+      value: ''
+    },
+
+    /**
+     * @property {String} assemble.ViewModel.prototype.hideHeaderOnFirstPage hideHeaderOnFirstPage
+     * @parent assemble.ViewModel
+     *
+     * hideHeaderOnFirstPage
+     */
+    hideHeaderOnFirstPage: {},
+
+    /**
+     * @property {String} assemble.ViewModel.prototype.hideFooterOnFirstPage hideFooterOnFirstPage
+     * @parent assemble.ViewModel
+     *
+     * hideFooterOnFirstPage
+     */
+    hideFooterOnFirstPage: {}
   },
 
   clearAnswers() {

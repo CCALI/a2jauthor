@@ -1,11 +1,11 @@
 <can-import from="caja/author/loading/"/>
 <can-import from="caja/author/interviews/interviews.less!"/>
 
-{{#if interviewsPromise.isPending}}
+{{#if(interviewsPromise.isPending)}}
   <app-loading />
 {{/if}}
 
-{{#if interviewsPromise.isResolved}}
+{{#if(interviewsPromise.isResolved)}}
   <div class="page">
     <h3 class="page-title">What would you like to do?</h3>
 

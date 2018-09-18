@@ -12,6 +12,10 @@ export const InterviewsVM = CanMap.extend({
     interviews: {
       serialize: false,
       get (lastSet, resolve) {
+        if(lastSet) {
+          return lastSet
+        }
+
         this.attr('interviewsPromise')
           .then(resolve)
       }

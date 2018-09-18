@@ -4,6 +4,8 @@ import { assert } from 'chai'
 import stache from 'can-stache'
 import CanList from 'can-list'
 import { InterviewsVM } from './interviews'
+import '../models/fixtures/'
+import domEvents from 'can-dom-events'
 
 import 'steal-mocha'
 
@@ -73,7 +75,7 @@ describe('<interviews-page>', function () {
       let interview = $('.guide').eq(0)
 
       assert.isFalse(interview.hasClass(selectedClass))
-      interview.click()
+      domEvents.dispatch(interview[0], 'click')
       assert.isTrue(interview.hasClass(selectedClass))
     })
 
@@ -103,7 +105,7 @@ describe('<interviews-page>', function () {
       let interview = $('.guide').eq(1)
 
       assert.isFalse(interview.hasClass(openedClass))
-      interview.dblclick()
+      domEvents.dispatch(interview[0], 'dblclick')
       assert.isTrue(interview.hasClass(openedClass))
     })
 

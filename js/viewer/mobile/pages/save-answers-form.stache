@@ -1,5 +1,6 @@
 <form method="POST"
       target="_parent"
+      id="post-a2j-answers"
       accept-charset="UTF-8"
       class="post-answers-form"
       action="{{pState.setDataURL}}">

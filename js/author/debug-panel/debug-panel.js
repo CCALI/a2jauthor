@@ -168,7 +168,7 @@ export let DebugPanelVM = CanMap.extend({
     let tr = this.attr('traceLogicList')
     let currentPage = tr.attr(tr.attr('length') - 1)
     currentPage.attr('messages').replace([])
-    tr.replace(currentPage)
+    tr.replace([currentPage])
   }
 })
 

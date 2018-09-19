@@ -3,21 +3,21 @@
 <can-import from="caja/author/debug-panel/debug-panel.less!"/>
 
 {{#if variables.length}}
-  <author-variables-table vm:interview:bind="interview" vm:variables:bind="variables"/>
+  <author-variables-table interview:bind="interview" variables:bind="variables"/>
 {{/if}}
 
 
 <div id="viewer-logic-form" class="bootstrap-styles">
   <div id="logic-trace-panel" class="tracepanel">
-    <button id="clear-log-button" on:el:click="clearTraceLogicList()" class="btn btn-default btn-sm"><span class="glyphicon-trash"></span> Clear Log</button>
+    <button id="clear-log-button" on:el:click="scope.vm.clearTraceLogicList()" class="btn btn-default btn-sm"><span class="glyphicon-trash"></span> Clear Log</button>
     <ol id="tracer" content-editable="true">
-      {{#each traceLogicList}}
+      {{#each(traceLogicList)}}
         <li>Page <span class="page">{{pageName}}</span></li>
-        {{#each messages}}
+        {{#each(messages)}}
           <li>
-          {{#each fragments}}
-            {{#if format}}
-              <span class="{{traceLogicFormat(format, msg)}}">{{traceLogicMessage(format, msg)}}</span>
+          {{#each(fragments)}}
+            {{#if(format)}}
+              <span class="{{../../../traceLogicFormat(format, msg)}}">{{../../../traceLogicMessage(format, msg)}}</span>
             {{else}}
               {{msg}}
             {{/if}}
@@ -30,6 +30,7 @@
 
 
   <div class="form-inline immediatepanel">
-    <author-evaluate-panel vm:traceLogic:bind="traceLogic" vm:interview:bind="interview"></author-evaluate-panel>
+    <author-evaluate-panel traceLogic:bind="traceLogic"
+      interview:bind="interview"></author-evaluate-panel>
   </div>
 </div>

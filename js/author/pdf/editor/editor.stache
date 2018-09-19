@@ -4,6 +4,7 @@
 <can-import from='caja/author/pdf/addendum-options/' />
 <can-import from='caja/author/pdf/assignment-form/' />
 <can-import from='caja/author/pdf/thumbnail-sidebar/' />
+<can-import from='can-stache-route-helpers' />
 
 <div class='editor-container'>
   <div class='editor-sidebar'>

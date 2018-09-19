@@ -16,7 +16,13 @@ const NodeState = CanMap.extend({
   define: {
     editActive: {
       value: false
-    }
+    },
+    deleted: {
+      type: 'boolean'
+    },
+    notes: {},
+    titleTag: {},
+    sectionCounter: {}
   }
 })
 
@@ -90,6 +96,8 @@ export default CanMap.extend({
       get () {
         return makeNodeOutline(this)
       }
-    }
+    },
+
+    deleted: {}
   }
 })

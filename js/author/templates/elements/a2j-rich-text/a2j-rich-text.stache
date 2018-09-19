@@ -5,8 +5,8 @@
 {{#if editEnabled}}
   {{#if wrapWithContainer}}
     <element-container
-      nodeId:from="id"
-      deleted:from="deleted"
+      nodeId:from="scope/id"
+      deleted:from="scope/deleted"
       selected:bind="editActive"
       cloneNode:from="cloneNode"
       deleteNode:from="deleteNode"

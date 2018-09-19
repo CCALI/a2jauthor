@@ -57,7 +57,7 @@
           fontProperties:from="../fontProperties"
           editActive:bind="./state.editActive"
           toggleEditActiveNode:from="../toggleEditActiveNode"
-          sectionCounter:from="../rootNode.state.sectionCounter"
+          sectionCounter:from="scope/rootNode.state.sectionCounter"
           titleTag:bind="state.titleTag"
         />
       {{/is}}
@@ -68,10 +68,10 @@
           userContent:bind="state.userContent"
 
           nodeId:from="id"
-          answers:from="answers"
+          answers:from="scope/answers"
           cloneNode:from="../cloneNode"
           useAnswers:from="../useAnswers"
-          deleted:from="state.deleted"
+          deleted:from="./state.deleted"
           deleteNode:from="../deleteNode"
           updateNode:from="../updateNode"
           editEnabled:from="../editEnabled"
@@ -93,7 +93,7 @@
           rightOperandType:bind="state.rightOperandType"
 
           nodeId:from="id"
-          answers:from="answers"
+          answers:from="scope/answers"
           cloneNode:from="../cloneNode"
           useAnswers:from="../useAnswers"
           deleted:from="state.deleted"
@@ -123,7 +123,7 @@
           repeatEachInOneList:bind="state.repeatEachInOneList"
 
           nodeId:from="id"
-          answers:from="answers"
+          answers:from="scope/answers"
           cloneNode:from="../cloneNode"
           useAnswers:from="../useAnswers"
           deleted:from="state.deleted"

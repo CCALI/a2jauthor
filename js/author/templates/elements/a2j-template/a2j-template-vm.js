@@ -3,6 +3,7 @@ import _omit from 'lodash/omit';
 import _inRange from 'lodash/inRange';
 import _isFunction from 'lodash/isFunction';
 import A2JNode from 'caja/author/models/a2j-node';
+import Answers from 'caja/author/models/answers';
 
 import "can-map-define";
 
@@ -48,6 +49,17 @@ const moveItem = function(list, from, to) {
  */
 export default CanMap.extend({
   define: {
+    /**
+     * @property {Answers} conditional.ViewModel.prototype.answers answers
+     * @parent conditional.ViewModel
+     *
+     * Answers object available when user uploads an ANX file during document
+     * assembly.
+     */
+    answers: {
+      Type: Answers
+    },
+
     /**
      * @property {A2JTemplate} a2jTemplate.ViewModel.prototype.template template
      * @parent a2jTemplate.ViewModel

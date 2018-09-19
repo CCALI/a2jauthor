@@ -8,12 +8,12 @@
 
 {{#if(editEnabled)}}
   <element-container
-    vm:nodeId:from="id"
-    vm:deleted:from="deleted"
-    vm:selected:bind="editActive"
-    vm:cloneNode:from="./cloneNode"
-    vm:deleteNode:from="./deleteNode"
-    vm:toggleEditActiveNode:from="./toggleEditActiveNode"
+    nodeId:from="scope/nodeId"
+    deleted:from="scope/deleted"
+    selected:bind="scope/editActive"
+    cloneNode:from="./cloneNode"
+    deleteNode:from="./deleteNode"
+    toggleEditActiveNode:from="./toggleEditActiveNode"
   >
     <div class="panel panel-warning">
       <div class="panel-heading">
@@ -49,10 +49,10 @@
         />
 
         <conditional-add-element
-          template:bind="../ifBody"
-          nodeId:from="../addToIfNode.id"
-          selected:bind="../addToIfNode.state.editActive"
-          toggleEditActiveNode:from="../toggleEditActiveNode"
+          template:bind="scope/ifBody"
+          nodeId:from="scope/addToIfNode.id"
+          selected:bind="scope/addToIfNode.state.editActive"
+          toggleEditActiveNode:from="scope/toggleEditActiveNode"
         />
       </div>
 

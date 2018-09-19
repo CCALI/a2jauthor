@@ -97,7 +97,8 @@ export default CanMap.extend({
 
         return useAnswers && value == null;
       }
-    }
+    },
+
+    name: {}
   }
 });
-

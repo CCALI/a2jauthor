@@ -91,7 +91,8 @@ export default CanMap.extend({
         let operator = this.attr('operator');
         return _includes(['is-true', 'is-false'], operator);
       }
-    }
+    },
+
+    variablesList: {}
   }
 });
-

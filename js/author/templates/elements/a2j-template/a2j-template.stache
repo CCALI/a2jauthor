@@ -10,41 +10,41 @@
 <ul>
   {{#each rootNode.children}}
     <li
-      draggable="'true'"
-      class="node-wrapper{{#if isBeingDragged}} drag-placeholder{{/if}}">
+      draggable="true"
+      class="node-wrapper{{#if(isBeingDragged)}} drag-placeholder{{/if}}">
 
-      {{#if deleted}}
+      {{#if(deleted)}}
         <app-alert
           open:from="true"
-          auto-close:from="'true'"
+          autoClose:from="'true'"
           dismissible:from="true"
-          alert-type:from='"default"'
-          on:vm:closed="removeNodeFromChildren(id)">
+          alertType:raw="default"
+          on:vm:closed="../removeNodeFromChildren(id)">
 
           <p>
             Element has been deleted -
-            <a href="#" on:el:click="restoreNode(id)">Restore</a>
+            <a href="#" on:el:click="../../restoreNode(id)">Restore</a>
           </p>
         </app-alert>
       {{/if}}
 
-      {{#is tag 'a2j-page-break'}}
+      {{#is(tag, 'a2j-page-break')}}
         <a2j-page-break
-          vm:notes:bind="state.notes"
+          notes:bind="state.notes"
 
-          vm:nodeId:from="id"
-          vm:cloneNode:from="@cloneNode"
-          vm:deleted:from="state.deleted"
-          vm:deleteNode:from="@deleteNode"
-          vm:updateNode:from="@updateNode"
-          vm:editEnabled:from="editEnabled"
-          vm:fontProperties:from="fontProperties"
-          vm:editActive:bind="./state.editActive"
-          vm:toggleEditActiveNode:from="@toggleEditActiveNode"
+          nodeId:from="id"
+          cloneNode:from="cloneNode"
+          deleted:from="state.deleted"
+          deleteNode:from="deleteNode"
+          updateNode:from="updateNode"
+          editEnabled:from="editEnabled"
+          fontProperties:from="fontProperties"
+          editActive:bind="./state.editActive"
+          toggleEditActiveNode:from="toggleEditActiveNode"
         />
       {{/is}}
 
-      {{#is tag 'a2j-section-title'}}
+      {{#is(tag, 'a2j-section-title')}}
         <a2j-section-title
           vm:title:bind="state.title"
           vm:underline:bind="state.underline"
@@ -56,83 +56,83 @@
           vm:editEnabled:from="editEnabled"
           vm:fontProperties:from="fontProperties"
           vm:editActive:bind="./state.editActive"
-          vm:toggleEditActiveNode:from="@toggleEditActiveNode"
+          vm:toggleEditActiveNode:from="toggleEditActiveNode"
           vm:sectionCounter:from="../rootNode.state.sectionCounter"
           vm:titleTag:bind="state.titleTag"
         />
       {{/is}}
 
-      {{#is tag 'a2j-rich-text'}}
+      {{#is(tag, 'a2j-rich-text')}}
         <a2j-rich-text
-          vm:notes:bind="state.notes"
-          vm:userContent:bind="state.userContent"
+          notes:bind="state.notes"
+          userContent:bind="state.userContent"
 
-          vm:nodeId:from="id"
-          vm:answers:from="answers"
-          vm:cloneNode:from="@cloneNode"
-          vm:useAnswers:from="useAnswers"
-          vm:deleted:from="{state.deleted}"
-          vm:deleteNode:from="@deleteNode"
-          vm:updateNode:from="@updateNode"
-          vm:editEnabled:from="editEnabled"
-          vm:fontProperties:from="fontProperties"
-          vm:editActive:bind="./state.editActive"
-          vm:toggleEditActiveNode:from="@toggleEditActiveNode"
+          nodeId:from="id"
+          answers:from="answers"
+          cloneNode:from="cloneNode"
+          useAnswers:from="useAnswers"
+          deleted:from="state.deleted"
+          deleteNode:from="deleteNode"
+          updateNode:from="updateNode"
+          editEnabled:from="editEnabled"
+          fontProperties:from="fontProperties"
+          editActive:bind="./state.editActive"
+          toggleEditActiveNode:from="toggleEditActiveNode"
         />
       {{/is}}
 
-      {{#is tag 'a2j-conditional'}}
+      {{#is(tag, 'a2j-conditional')}}
         <a2j-conditional
-          vm:children:bind="children"
-          vm:operator:bind="state.operator"
-          vm:elseClause:bind="state.elseClause"
-          vm:leftOperand:bind="state.leftOperand"
-          vm:rightOperand:bind="state.rightOperand"
-          vm:variablesList:from="guide.variablesList"
-          vm:leftOperandType:bind="state.leftOperandType"
-          vm:rightOperandType:bind="state.rightOperandType"
+          children:bind="children"
+          operator:bind="state.operator"
+          elseClause:bind="state.elseClause"
+          leftOperand:bind="state.leftOperand"
+          rightOperand:bind="state.rightOperand"
+          variablesList:from="guide.variablesList"
+          leftOperandType:bind="state.leftOperandType"
+          rightOperandType:bind="state.rightOperandType"
 
-          vm:nodeId:from="id"
-          vm:answers:from="answers"
-          vm:cloneNode:from="@cloneNode"
-          vm:useAnswers:from="useAnswers"
-          vm:deleted:from="{state.deleted}"
-          vm:deleteNode:from="@deleteNode"
-          vm:updateNode:from="@updateNode"
-          vm:editEnabled:from="editEnabled"
-          vm:fontProperties:from="fontProperties"
-          vm:editActive:bind="./state.editActive"
-          vm:toggleEditActiveNode:from="@toggleEditActiveNode"
+          nodeId:from="id"
+          answers:from="answers"
+          cloneNode:from="cloneNode"
+          useAnswers:from="useAnswers"
+          deleted:from="state.deleted"
+          deleteNode:from="deleteNode"
+          updateNode:from="updateNode"
+          editEnabled:from="editEnabled"
+          fontProperties:from="fontProperties"
+          editActive:bind="./state.editActive"
+          toggleEditActiveNode:from="toggleEditActiveNode"
         />
       {{/is}}
 
-      {{#is tag 'a2j-repeat-loop'}}
+      {{#is(tag, 'a2j-repeat-loop')}}
         <a2j-repeat-loop
-          vm:loopType:bind="state.loopType"
-          vm:loopTitle:bind="state.loopTitle"
-          vm:listItems:bind="state.listItems"
-          vm:tableStyle:bind="state.tableStyle"
-          vm:loopCounter:bind="state.loopCounter"
-          vm:displayType:bind="state.displayType"
-          vm:tableColumns:bind="state.tableColumns"
-          vm:loopVariable:bind="state.loopVariable"
-          vm:variablesList:from="guide.variablesList"
-          vm:loopTitleTag:bind="state.loopTitleTag"
-          vm:loopRichText:bind="state.loopRichText"
-          vm:listStyleType:bind="state.listStyleType"
-          vm:repeatEachInOneList:bind="state.repeatEachInOneList"
+          loopType:bind="state.loopType"
+          loopTitle:bind="state.loopTitle"
+          listItems:bind="state.listItems"
+          tableStyle:bind="state.tableStyle"
+          loopCounter:bind="state.loopCounter"
+          displayType:bind="state.displayType"
+          tableColumns:bind="state.tableColumns"
+          loopVariable:bind="state.loopVariable"
+          variablesList:from="guide.variablesList"
+          loopTitleTag:bind="state.loopTitleTag"
+          loopRichText:bind="state.loopRichText"
+          listStyleType:bind="state.listStyleType"
+          repeatEachInOneList:bind="state.repeatEachInOneList"
 
-          vm:nodeId:from="id"
-          vm:answers:from="answers"
-          vm:cloneNode:from="@cloneNode"
-          vm:useAnswers:from="useAnswers"
-          vm:deleted:from="{state.deleted}"
-          vm:deleteNode:from="@deleteNode"
-          vm:updateNode:from="@updateNode"
-          vm:editEnabled:from="editEnabled"
-          vm:fontProperties:from="fontProperties"
-          vm:editActive:bind="./state.editActive"
-          vm:toggleEditActiveNode:from="@toggleEditActiveNode"
+          nodeId:from="id"
+          answers:from="answers"
+          cloneNode:from="cloneNode"
+          useAnswers:from="useAnswers"
+          deleted:from="state.deleted"
+          deleteNode:from="deleteNode"
+          updateNode:from="updateNode"
+          editEnabled:from="editEnabled"
+          fontProperties:from="fontProperties"
+          editActive:bind="./state.editActive"
+          toggleEditActiveNode:from="toggleEditActiveNode"
         />
       {{/is}}
     </li>

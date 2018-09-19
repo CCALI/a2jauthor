@@ -196,7 +196,15 @@ export default CanMap.extend({
         const children = this.attr('children');
         return children.attr(3);
       }
-    }
+    },
+
+    toggleEditActiveNode: {},
+    cloneNode: {},
+    deleteNode: {},
+    updateNode: {},
+    deleted: {},
+    nodeId: {},
+    variablesList: {}
   },
 
   init() {

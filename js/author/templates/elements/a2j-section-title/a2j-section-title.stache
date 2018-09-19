@@ -5,27 +5,27 @@
 <div>
   {{#if editEnabled}}
     <element-container
-      vm:nodeId:from="nodeId"
-      vm:deleted:from="deleted"
-      vm:selected:bind="editActive"
-      vm:cloneNode:from="@cloneNode"
-      vm:deleteNode:from="@deleteNode"
-      vm:toggleEditActiveNode:from="@toggleEditActiveNode">
+      nodeId:from="nodeId"
+      deleted:from="deleted"
+      selected:bind="editActive"
+      cloneNode:from="cloneNode"
+      deleteNode:from="deleteNode"
+      toggleEditActiveNode:from="toggleEditActiveNode">
 
       {{> section-title-content}}
     </element-container>
 
     {{#if editActive}}
       <element-options-pane
-        vm:nodeId:from="nodeId"
+        nodeId:from="nodeId"
         title="Section Title"
-        vm:saveAndClose:from="@updateNode">
+        saveAndClose:from="updateNode">
 
         <form>
           <input class="form-control title-input" value="{{../title}}">
           <div class="form-group">
             <label for="">Title size:</label>
-            <select class="form-control" el:value:bind="titleTag">
+            <select class="form-control" el:value:bind="scope.top.titleTag">
               <option value="h1">Heading 1</option>
               <option value="h2">Heading 2</option>
               <option value="h3">Heading 3</option>
@@ -36,7 +36,7 @@
           </div>
           <div class="checkbox">
             <label>
-              <input type="checkbox" el:checked:bind="underline"> Underline
+              <input type="checkbox" el:checked:bind="scope.top.underline"> Underline
             </label>
           </div>
         </form>

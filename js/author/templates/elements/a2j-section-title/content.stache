@@ -1,4 +1,4 @@
-<div style="{{fontProperties}}">
-  {{{ showSectionTitle() }}}
-  {{#if underline}}<hr class="title-underline">{{/if}}
+<div style="{{scope.find('fontProperties')}}">
+  {{{ ../../showSectionTitle() }}}
+  {{#if(../underline)}}<hr class="title-underline">{{/if}}
 </div>

@@ -15,12 +15,12 @@
     {{#if a2jTemplate}}
       {{#if isPdfTemplate}}
         <pdf-editor
-          vm:guideId:bind="guideId"
-          vm:guide:bind="guide"
-          vm:template:bind="a2jTemplate"
+          guideId:bind="guideId"
+          guide:bind="guide"
+          template:bind="a2jTemplate"
         />
       {{else}}
-        <template-edit-toolbar vm:guideId:bind="guideId" vm:template:bind="a2jTemplate" />
+        <template-edit-toolbar guideId:bind="guideId" template:bind="a2jTemplate" />
 
         <div class="container">
           <div class="row clearfix">
@@ -28,16 +28,16 @@
             <div class="col-md-8">
               <a2j-header-footer
               title="Custom Header"
-              vm:editActive:bind="scope.vars.editingHeader"
-              vm:userContent:bind="a2jTemplate.header"
-              vm:notDisplayedOnFirstPage:bind="a2jTemplate.hideHeaderOnFirstPage"
-              vm:saveTemplate:from="a2jTemplate@save" />
+              editActive:bind="scope.vars.editingHeader"
+              userContent:bind="a2jTemplate.header"
+              notDisplayedOnFirstPage:bind="a2jTemplate.hideHeaderOnFirstPage"
+              saveTemplate:from="a2jTemplate.save" />
 
               {{#if a2jTemplate.rootNode.children.length}}
               <a2j-template
-              vm:guide:bind="guide"
-              edit-enabled="true"
-              vm:template:bind="a2jTemplate" />
+              guide:bind="guide"
+              editEnabled:from="true"
+              template:bind="a2jTemplate" />
               {{else}}
               <a2j-blank-template />
               {{/if}}
@@ -47,28 +47,28 @@
               vm:editActive:bind="scope.vars.editingFooter"
               vm:userContent:bind="a2jTemplate.footer"
               vm:notDisplayedOnFirstPage:bind="a2jTemplate.hideFooterOnFirstPage"
-              vm:saveTemplate:from="a2jTemplate@save" />
+              vm:saveTemplate:from="a2jTemplate.save" />
             </div>
 
             {{! right column where template options tab is rendered }}
             <div class="col-md-4">
               <template-edit-tabs
-              vm:template:bind="a2jTemplate"
-              vm:editingHeader:to="scope.vars.editingHeader"
-              vm:editingFooter:to="scope.vars.editingFooter"
-              vm:variablesList:from="guide.variablesList"
+              template:bind="a2jTemplate"
+              editingHeader:to="scope.vars.editingHeader"
+              editingFooter:to="scope.vars.editingFooter"
+              variablesList:from="guide.variablesList"
               />
             </div>
           </div>
 
           <test-assemble-options
-          vm:guideId:from="guideId"
-          vm:guideTitle:from="guide.title"
-          vm:header:from="a2jTemplate.header"
-          vm:footer:from="a2jTemplate.footer"
-          vm:templateId:from="a2jTemplate.templateId"
-          vm:hideHeaderOnFirstPage:from="a2jTemplate.hideHeaderOnFirstPage"
-          vm:hideFooterOnFirstPage:from="a2jTemplate.hideFooterOnFirstPage"
+          guideId:from="guideId"
+          guideTitle:from="guide.title"
+          header:from="a2jTemplate.header"
+          footer:from="a2jTemplate.footer"
+          templateId:from="a2jTemplate.templateId"
+          hideHeaderOnFirstPage:from="a2jTemplate.hideHeaderOnFirstPage"
+          hideFooterOnFirstPage:from="a2jTemplate.hideFooterOnFirstPage"
           />
         </div>
       {{/if}}

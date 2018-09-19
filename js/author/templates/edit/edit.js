@@ -71,7 +71,10 @@ export const TemplateEditPageVM = CanMap.extend({
           template && template.rootNode && template.rootNode.tag === 'a2j-pdf'
         )
       }
-    }
+    },
+
+    guide: {},
+    guideId: {}
   },
 
   /**

@@ -26,7 +26,7 @@ describe('a2j-template', function() {
       const template = makeA2JTemplate(templateFixture);
 
       const frag = stache(
-        '<a2j-template edit-enabled="true" vm:template:bind="template" />'
+        '<a2j-template editEnabled:from="true" vm:template:bind="template" />'
       );
 
       $('#test-area').html(frag({ template }));

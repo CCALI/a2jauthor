@@ -271,6 +271,7 @@ export default Map.extend('PagesVM', {
     // special destination qIDFAIL button skips rest of navigate
     // Author can provide an external URL to explain why user did not qualify
     if (button.next === constants.qIDFAIL) {
+      this.setInterviewAsComplete()
       let failURL = button.url.toLowerCase()
       let hasProtocol = failURL.indexOf('http') === 0
       failURL = hasProtocol ? failURL : 'http://' + failURL
@@ -308,7 +309,7 @@ export default Map.extend('PagesVM', {
       let buttonValue = button.value
 
       if (buttonAnswer.type === 'TF') {
-        buttonValue = buttonValue.toLowerCase() === 'true';
+        buttonValue = buttonValue.toLowerCase() === 'true'
       } else if (buttonAnswer.type === 'Number') {
         buttonValue = parseInt(buttonValue)
       }
@@ -345,7 +346,7 @@ export default Map.extend('PagesVM', {
         this.setRepeatVariable(repeatVar, repeatVarSet)
       }
 
-      // Don't post to the server in Author Preview aka previewActive
+      // Only post to the server if not in Author Preview
       if (!previewActive && (button.next === constants.qIDASSEMBLESUCCESS || button.next === constants.qIDSUCCESS || button.next === constants.qIDEXIT)) {
         // This disable is for LHI/HotDocs issue taking too long to process
         // prompting users to repeatedly press submit, crashing HotDocs
@@ -355,7 +356,8 @@ export default Map.extend('PagesVM', {
           text: 'Page will redirect shortly'
         })
 
-        ev.preventDefault()
+        this.setInterviewAsComplete()
+        ev && ev.preventDefault()
         can.trigger(this, 'post-answers-to-server')
 
         // disable the previously clicked button
@@ -395,14 +397,6 @@ export default Map.extend('PagesVM', {
         this._setPage(page, button.next)
       }
 
-      // if these special buttons are used, the interview is complete (incomplete is false)
-      if (button.next === constants.qIDFAIL ||
-        button.next === constants.qIDSUCCESS ||
-        button.next === constants.qIDASSEMBLE ||
-        button.next === constants.qIDASSEMBLESUCCESS) {
-        const answers = this.attr('interview.answers')
-        answers.attr(`${constants.vnInterviewIncompleteTF.toLowerCase()}.values`, [null, false])
-      }
       // Make sure pages looping on themselves update
       if (page.name === gotoPage) {
         let rState = this.attr('rState')
@@ -420,6 +414,11 @@ export default Map.extend('PagesVM', {
 
     // do nothing if there are field(s) with error(s)
     return false
+  },
+
+  setInterviewAsComplete () {
+    const answers = this.attr('interview.answers')
+    answers.attr(`${constants.vnInterviewIncompleteTF.toLowerCase()}.values`, [null, false])
   },
 
   previewActiveResponses (button) {

@@ -38,7 +38,11 @@ export let ContainerVM = CanMap.extend({
      */
     selected: {
       value: false
-    }
+    },
+
+    nodeId: {},
+    cloneNode: {},
+    deleteNode: {}
   },
 
   /**

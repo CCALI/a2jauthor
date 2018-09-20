@@ -7,10 +7,10 @@
     <element-container
       nodeId:from="scope/id"
       deleted:from="scope/deleted"
-      selected:bind="editActive"
-      cloneNode:from="cloneNode"
-      deleteNode:from="deleteNode"
-      toggleEditActiveNode:from="toggleEditActiveNode">
+      selected:bind="scope/editActive"
+      cloneNode:from="scope/cloneNode"
+      deleteNode:from="scope/deleteNode"
+      toggleEditActiveNode:from="scope/toggleEditActiveNode">
 
       {{> rich-text-content }}
     </element-container>

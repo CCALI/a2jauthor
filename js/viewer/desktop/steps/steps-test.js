@@ -1,5 +1,3 @@
-import $ from 'jquery';
-import F from 'funcunit';
 import CanMap from "can-map";
 import { assert } from 'chai';
 import _round from 'lodash/round';
@@ -7,9 +5,11 @@ import _assign from 'lodash/assign';
 import stache from "can-stache";
 import AppState from 'caja/viewer/models/app-state';
 import Interview from 'caja/viewer/models/interview';
+import $ from 'jquery';
 import { ViewerStepsVM } from 'caja/viewer/desktop/steps/';
 import interviewJSON from 'caja/viewer/models/fixtures/real_interview_1.json';
 import sinon from 'sinon'
+import F from 'funcunit';
 
 import 'steal-mocha';
 

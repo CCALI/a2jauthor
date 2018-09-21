@@ -1,9 +1,9 @@
-import $ from 'jquery'
-import F from 'funcunit'
-import CanMap from 'can-map'
 import { ModalVM } from './modal'
+import $ from 'jquery'
+import CanMap from 'can-map'
 import stache from 'can-stache'
 import canReflect from 'can-reflect'
+import F from 'funcunit'
 
 import 'steal-mocha';
 import 'caja/viewer/styles.less'

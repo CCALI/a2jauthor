@@ -1,12 +1,10 @@
+import $ from 'jquery'
+import 'bootstrap/js/modal'
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './modal.stache'
 import {Analytics} from 'caja/viewer/util/analytics'
-
-import $ from 'jquery'
-
 import 'can-map-define'
-import 'bootstrap/js/modal'
 import 'lightbox2/dist/js/lightbox'
 import 'lightbox2/dist/css/lightbox.css'
 

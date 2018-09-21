@@ -6,6 +6,7 @@ import Interview from 'caja/viewer/models/interview';
 import constants from 'caja/viewer/models/constants';
 import {ViewerNavigationVM} from 'caja/viewer/desktop/navigation/';
 import sinon from 'sinon';
+import canReflect from 'can-reflect';
 
 import 'steal-mocha';
 
@@ -26,7 +27,7 @@ describe('<a2j-viewer-navigation>', function() {
         appState = new AppState();
 
         pages = interview.attr('pages');
-        visited = appState.attr('visitedPages');
+        visited = canReflect.getKeyValue(appState, 'visitedPages');
         vm = new ViewerNavigationVM({appState, interview});
 
         done();
@@ -218,11 +219,11 @@ describe('<a2j-viewer-navigation>', function() {
         appState = new AppState();
 
         pages = interview.attr('pages');
-        visited = appState.attr('visitedPages');
+        visited = canReflect.getKeyValue(appState, 'visitedPages');
         vm = new ViewerNavigationVM({appState, interview});
 
         let frag = stache(
-          '<a2j-viewer-navigation interview="{interview}" app-state="{appState}" />'
+          '<a2j-viewer-navigation interview:from="interview" appState:from="appState" />'
         );
 
         $('#test-area').html(frag({appState, interview}));

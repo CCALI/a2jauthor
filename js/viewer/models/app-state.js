@@ -5,6 +5,7 @@ import _assign from 'lodash/assign'
 import DefineMap from 'can-define/map/map'
 import DefineList from 'can-define/list/list'
 import canDomEvents from 'can-dom-events'
+import canReflect from 'can-reflect'
 
 import 'can-map-define'
 
@@ -97,7 +98,7 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
     type: 'boolean',
     serialize: false,
     get () {
-      return route.data.attr('page') === 'preview'
+      return canReflect.getKeyValue(route.data, 'page') === 'preview'
     }
   },
 

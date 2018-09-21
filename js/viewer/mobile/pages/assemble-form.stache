@@ -1,12 +1,12 @@
 <form method="post" target="_blank" action="/api/assemble">
-  <input type="hidden" name="guideId" el:value:from="guideId">
-  <input type="hidden" name="answers" el:value:from="answersString">
-  <input type="hidden" name="guideTitle" el:value:from="interview.title">
-  <input type="hidden" name="fileDataUrl" el:value:from="mState.fileDataURL">
+  <input type="hidden" name="guideId" el:value:from="scope/guideId">
+  <input type="hidden" name="answers" el:value:from="scope/answersString">
+  <input type="hidden" name="guideTitle" el:value:from="scope/interview.title">
+  <input type="hidden" name="fileDataUrl" el:value:from="scope/mState.fileDataURL">
 
   <button type="submit"
-          on:el:click="navigate()"
+          on:el:click="scope/navigate()"
           class="btn btn-default btn-navigate">
-    {{getButtonLabel(label)}}
+    {{scope/getButtonLabel(scope/label)}}
   </button>
 </form>

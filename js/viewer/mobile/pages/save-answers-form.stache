@@ -2,13 +2,13 @@
       target="_parent"
       accept-charset="UTF-8"
       class="post-answers-form"
-      action="{{pState.setDataURL}}">
+      action="{{scope/pState.setDataURL}}">
 
-  <input type="hidden" name="AnswerKey" el:value:from="answersANX" />
+  <input type="hidden" name="AnswerKey" el:value:from="scope/answersANX" />
 
   <button type="submit"
-          on:el:click="navigate()"
+          on:el:click="scope/navigate()"
           class="btn btn-default btn-navigate">
-    {{getButtonLabel(label)}}
+    {{scope/getButtonLabel(scope/label)}}
   </button>
 </form>

@@ -451,17 +451,24 @@
 
     // Functions called by JS translation of CAJA code.
     TLogic.prototype._CAJA = function (c) {
-      canDomEvents.dispatch(window, 'traceLogic', { '_CAJA': { format: 'code', msg: c } }, false)
+      canDomEvents.dispatch(window, {
+        type: 'traceLogic',
+        data: { '_CAJA': { format: 'code', msg: c } }
+      })
     }
     TLogic.prototype._IF = function (d, c, e) {
       if ((e) === true) {
-        canDomEvents.dispatch(window, 'traceLogic', {
-          '_IF': [{ msg: 'IF' }, { format: 'valT', msg: c }, { msg: '\u2714' }]
-        }, false)
+        canDomEvents.dispatch(window, {
+          type: 'traceLogic',
+          data: {'_IF': [{ msg: 'IF' }, { format: 'valT', msg: c }, { msg: '\u2714' }]}
+        })
       } else {
-        canDomEvents.dispatch(window, 'traceLogic', {
-          '_IF': [{ msg: 'IF' }, { format: 'valF', msg: c }]
-        }, false)
+        canDomEvents.dispatch(window, {
+          type: 'traceLogic',
+          data: {
+            '_IF': [{ msg: 'IF' }, { format: 'valF', msg: c }]
+          }
+        })
       }
       this.indent = d
       return (e === true)
@@ -473,7 +480,10 @@
       // }
     }
     TLogic.prototype._VS = function (c, varname, varidx, val) {
-      canDomEvents.dispatch(window, 'traceLogic', { '_VS': { msg: c } }, false)
+      canDomEvents.dispatch(window, {
+        type:'traceLogic',
+        data: { '_VS': { msg: c } }
+      })
       return gGuide.varSet(varname, val, varidx)
     }
 
@@ -533,12 +543,21 @@
     }
     TLogic.prototype._GO = function (c, pageName) {
       this.GOTOPAGE = pageName
-      canDomEvents.dispatch(window, 'traceLogic', { '_GO': { msg: c } }, false)
+      canDomEvents.dispatch(window, {
+        type: 'traceLogic',
+        data: { '_GO': { msg: c } }
+      })
     }
     TLogic.prototype._TRACE = function (c, exp) {
-      canDomEvents.dispatch(window, 'traceLogic', { '_TRACE-c': { msg: c } }, false)
+      canDomEvents.dispatch(window, {
+        type: 'traceLogic',
+        data: { '_TRACE-c': { msg: c } }
+      })
       this.indent++
-      canDomEvents.dispatch(window, 'traceLogic', { '_TRACE-exp': { format: 'info', msg: exp } }, false)
+      canDomEvents.dispatch(window, {
+        type: 'traceLogic',
+        data: { '_TRACE-exp': { format: 'info', msg: exp } }
+      })
       this.indent--
     }
     TLogic.prototype._deltaVars = function () {}
@@ -563,17 +582,20 @@
           message['executeScript.error: ' + e.lineNumber + ': ' + e.message] = [{
             msg: 'executeScript.error: ' + e.lineNumber + ': ' + e.message
           }]
-          canDomEvents.dispatch(window, 'traceLogic', message, false)
+          canDomEvents.dispatch(window, {type: 'traceLogic', data: message})
           // trace(CAJAScriptHTML);
           // trace(js);
           return false
         }
       } else {
         script.errors.forEach(function (error) {
-          canDomEvents.dispatch(window, 'traceLogic', {
-            'executeScript.error: syntax error in logic': [{
-              msg: 'executeScript.error: ' + error.text
-            }]
+          canDomEvents.dispatch(window, {
+            type: 'traceLogic',
+            data: {
+              'executeScript.error: syntax error in logic': [{
+                msg: 'executeScript.error: ' + error.text
+              }]
+            }
           }, false)
         })
         return false

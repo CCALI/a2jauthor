@@ -156,8 +156,9 @@ export default CanMap.extend('PagesVM', {
 
     traceLogic: {
       value: []
-    }
+    },
 
+    rState: {}
   },
 
   init () {
@@ -351,7 +352,7 @@ export default CanMap.extend('PagesVM', {
           title: 'Answers Submitted :',
           text: 'Page will redirect shortly'
         })
-        this.dispatch(this, 'post-answers-to-server')
+        this.dispatch('post-answers-to-server')
 
         // disable the previously clicked button
         setTimeout(() => {

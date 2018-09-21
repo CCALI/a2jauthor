@@ -54,7 +54,15 @@ describe('<a2j-pages>', () => {
 
     defaults = {
       traceLogic: new CanList(),
-      currentPage: new CanMap({ fields: [], repeatVar: '' }),
+      currentPage: new CanMap({
+        fields: [],
+        repeatVar: '',
+        text: '',
+        textAudioURL: null,
+        learn: null,
+        buttons: null,
+        step: { number: undefined, text: '' } }
+      ),
       logic: logicStub,
       rState: new AppState({interview, logic: logicStub}),
       mState: { },
@@ -362,6 +370,7 @@ describe('<a2j-pages>', () => {
       it('Possible infinite loop', (done) => {
         vm.attr('traceLogic').bind('change', function handler () {
           vm.attr('traceLogic').unbind('change', handler)
+          debugger;
           assert.deepEqual(vm.attr('traceLogic').attr(), [{
             'infinite loop': {
               format: 'info',
@@ -387,8 +396,11 @@ describe('<a2j-pages>', () => {
         done()
       })
 
-      canDomEvents.dispatch(window, 'traceLogic', {
-        error: [{ msg: 'error' }]
+      canDomEvents.dispatch(window, {
+        type: 'traceLogic',
+        data: {
+          error: [{ msg: 'error' }]
+        }
       }, false)
     })
   })

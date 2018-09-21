@@ -2,11 +2,11 @@
 <can-import from="caja/viewer/mobile/pages/pages.less!" />
 <can-import from='caja/author/audio-player/' />
 
-{{#eq rState.page '__error'}}
+{{#eq(rState.page, '__error')}}
   <div class="jumbotron">
     <h1>Oops!</h1>
     <p>You've reached this page in error.</p>
-    <p><a href="javascript://" on:el:click="returnHome()" class="btn btn-primary">Return home</a></p>
+    <p><a href="javascript://" on:el:click="scope/returnHome()" class="btn btn-primary">Return home</a></p>
   </div>
 {{/eq}}
 
@@ -14,27 +14,27 @@
   {{#with currentPage}}
     <div class="bubble-content">
       <h3 class="visible-xs-block">
-        {{#is step.number '0'}}
+        {{#is(step.number, '0')}}
           <span class="glyphicon-right-open" aria-hidden="true">{{step.text}}</span>
         {{else}}
           {{step.number}}: {{step.text}}
         {{/is}}
       </h3>
       <p>{{{ eval(text, scope.vm.rState.repeatVarValue) }}}</p>
-      {{#if fields.length}}
-        <a2j-fields vm:lang:from="scope.vm.lang"
-                    vm:logic:bind="scope.vm.logic"
-                    vm:fields:bind="fields"
-                    vm:traceLogic:bind="scope.vm.traceLogic"
-                    vm:repeatVarValue:bind="scope.vm.rState.repeatVarValue"
-                    vm:modalContent:bind="scope.vm.modalContent"
-                    vm:rState:bind="scope.vm.rState"
+      {{#if(fields.length)}}
+        <a2j-fields lang:from="scope.vm.lang"
+                    logic:bind="scope.vm.logic"
+                    fields:bind="fields"
+                    traceLogic:bind="scope.vm.traceLogic"
+                    repeatVarValue:bind="scope.vm.rState.repeatVarValue"
+                    modalContent:bind="scope.vm.modalContent"
+                    rState:bind="scope.vm.rState"
                     role="form"/>
       {{/if}}
 
-      {{#if textAudioURL}}
+      {{#if(textAudioURL)}}
         <audio-player
-          vm:sourceUrl:from="normalizePath(mState.fileDataURL, textAudioURL)"
+          sourceUrl:from="normalizePath(mState.fileDataURL, textAudioURL)"
         />
       {{/if}}
 
@@ -44,7 +44,7 @@
       <a class="learn-more">{{{ eval(learn, scope.vm.rState.repeatVarValue) }}}</a>
     </p>
 
-    {{#each buttons}}
+    {{#each(buttons)}}
       {{#switch next}}
         {{#case scope.vm.saveAnswersButton}}
           {{> save-answers-form }}

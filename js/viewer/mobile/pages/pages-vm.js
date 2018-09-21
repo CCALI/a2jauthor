@@ -244,7 +244,6 @@ export default Map.extend('PagesVM', {
     }
     // Author Preview Mode changes handling of special buttons, and does not post answers
     const previewActive = this.attr('rState').attr('previewActive')
-    //
 
     if (previewActive &&
       (button.next === constants.qIDFAIL ||
@@ -357,8 +356,10 @@ export default Map.extend('PagesVM', {
         })
 
         this.setInterviewAsComplete()
-        // assemble & process answers requires the default event to trigger the assemble
-        // and the manual event below to trigger the answer save
+
+        // qIDASSEMBLESUCCESS requires the default event to trigger the assemble post
+        // and the manual submit below to trigger the answer save
+        // TODO: the way final answer forms are created and submitted needs a refactor
         if (button.next !== constants.qIDASSEMBLESUCCESS) {
           ev && ev.preventDefault()
         }

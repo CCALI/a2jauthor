@@ -116,7 +116,7 @@ export default Component.extend({
     },
 
     // This event is fired when the Exit, Success, or AssembleSuccess button is clicked,
-    // it waits to asynchronously submit the form that posts the XML asnwers
+    // it waits to asynchronously submit the form that posts the XML answers
     // to the `setDataURL` endpoint.
     '{viewModel} post-answers-to-server': function () {
       const $form = this.element.find('.post-answers-form')

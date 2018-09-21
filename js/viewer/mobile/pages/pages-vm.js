@@ -357,7 +357,11 @@ export default Map.extend('PagesVM', {
         })
 
         this.setInterviewAsComplete()
-        ev && ev.preventDefault()
+        // assemble & process answers requires the default event to trigger the assemble
+        // and the manual event below to trigger the answer save
+        if (button.next !== constants.qIDASSEMBLESUCCESS) {
+          ev && ev.preventDefault()
+        }
         can.trigger(this, 'post-answers-to-server')
 
         // disable the previously clicked button

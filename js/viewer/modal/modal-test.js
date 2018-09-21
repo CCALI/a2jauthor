@@ -3,8 +3,12 @@ import F from 'funcunit'
 import CanMap from 'can-map'
 import { ModalVM } from './modal'
 import stache from 'can-stache'
+import canReflect from 'can-reflect'
 
+import 'steal-mocha';
 import 'caja/viewer/styles.less'
+import 'can-map-define'
+import 'caja/viewer/mobile/util/helpers';
 
 describe('<a2j-modal> ', function () {
   describe('Component', function () {
@@ -20,15 +24,25 @@ describe('<a2j-modal> ', function () {
       const rState = new CanMap({ page: 'foo' })
       const mState = new CanMap({ fileDataURL: '/CAJA/js/images/' })
       const logic = new CanMap({ eval () {} })
-      const modalContent = new CanMap({})
+      const ModalContent = CanMap.extend({
+        define: {
+          answerName: {value: ''},
+          title: {value: ''},
+          text: {value: ''},
+          imageURL: {value: ''},
+          audioURL: {value: ''},
+          videoURL: {value: ''}
+        }
+      });
+      const modalContent = new ModalContent();
 
       const frag = stache(
         `<a2j-modal class="bootstrap-styles"
-          vm:logic:from="logic"
-          vm:mState:from="mState"
-          vm:rState:from="rState"
-          vm:interview:from="interview"
-          vm:modalContent:from="modalContent" />`
+          logic:from="logic"
+          mState:from="mState"
+          rState:from="rState"
+          interview:from="interview"
+          modalContent:from="modalContent" />`
       )
 
       $('#test-area').html(frag({ interview, rState, logic, mState, modalContent }))
@@ -42,7 +56,9 @@ describe('<a2j-modal> ', function () {
     it('renders image tag if modalContent includes imageURL', function (done) {
       const helpImageURL = 'ui-icons_ffffff_256x240.png'
 
-      vm.attr('modalContent', { imageURL: helpImageURL })
+      canReflect.assign(vm.attr('modalContent'), {
+        imageURL: helpImageURL
+      })
 
       F('img.modal-image').exists()
       F('img.modal-image').attr('src', '/CAJA/js/images/ui-icons_ffffff_256x240.png')

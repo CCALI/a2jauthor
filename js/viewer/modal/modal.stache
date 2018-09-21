@@ -20,7 +20,7 @@
 
           <h4 class="modal-title" id="pageModalLbl">
             {{#if(modalContent.title)}}
-              {{ eval(modalContent.title, repeatVarValue) }}
+              {{ eval(modalContent.title, scope/repeatVarValue) }}
             {{else}}
               <span class="glyphicon-lifebuoy" aria-hidden="true"></span>
             {{/if}}
@@ -35,14 +35,14 @@
               el:value:bind="modalContent.textlongValue">
             </textarea>
           {{else}}
-            {{{ eval(modalContent.text, repeatVarValue) }}}
+            {{{ eval(modalContent.text, scope/repeatVarValue) }}}
 
             {{#if(modalContent.imageURL)}}
             <img
               class="modal-image"
               el:src:from="normalizePath(mState.fileDataURL, modalContent.imageURL)" >
             <a
-              href="{{ normalizePath(mState.fileDataURL, modalContent.imageURL) }}" data-lightbox="image-1"
+              href="{{ normalizePath(scope/mState.fileDataURL, modalContent.imageURL) }}" data-lightbox="image-1"
               class="btn btn-default pull-right"
             >
               <span class="demo-icon glyphicon-resize-full" aria-hidden="true"></span>
@@ -51,12 +51,12 @@
 
             {{#if(modalContent.audioURL)}}
               <audio-player
-                vm:sourceUrl:from="normalizePath(mState.fileDataURL, modalContent.audioURL)"
+                sourceUrl:from="normalizePath(scope/mState.fileDataURL, modalContent.audioURL)"
               />
             {{/if}}
 
-            {{#if(modalContent.videoURL)}}
-              {{#if(isGif(modalContent.videoURL))}}
+            {{#if(./modalContent.videoURL)}}
+              {{#if(./isGif(modalContent.videoURL))}}
                 <img
                   class="modal-video"
                   el:src:from="normalizePath(mState.fileDataURL, modalContent.videoURL)"
@@ -66,10 +66,10 @@
                   class="modal-video"
                   controls="controls"
                   controls-list="nodownload"
-                  el:src:from="normalizePath(mState.fileDataURL, modalContent.videoURL)"
+                  el:src:from="normalizePath(scope/mState.fileDataURL, modalContent.videoURL)"
                 >
                   Sorry, your browser doesn't support embedded videos,
-                  but don't worry, you can <a href="{{normalizePath(mState.fileDataURL, modalContent.videoURL)}}">download it</a>
+                  but don't worry, you can <a href="{{normalizePath(scope/mState.fileDataURL, modalContent.videoURL)}}">download it</a>
                   and watch it with your favorite video player!
                 </video>
               {{/if}}

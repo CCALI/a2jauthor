@@ -10,6 +10,7 @@ import _truncate from 'lodash/truncate'
 import learnMoreTemplate from './learn-more.stache'
 import {Analytics} from 'caja/viewer/util/analytics'
 import stache from 'can-stache'
+import canReflect from 'can-reflect'
 
 import 'can-map-define'
 
@@ -129,8 +130,8 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
         let a2jStepVars = []
         let answers = this.attr('interview.answers')
         if (answers) {
-          answers.forEach(function (answer) {
-            if (answer.name && answer.name.indexOf('A2J Step') !== -1) {
+          canReflect.eachKey(answers, function(answer) {
+            if (answer && answer.name && answer.name.indexOf('A2J Step') !== -1) {
               answer.attr('values') // setup binding on values(1)
               a2jStepVars.push(answer)
             }

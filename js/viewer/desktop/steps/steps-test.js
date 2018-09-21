@@ -9,6 +9,7 @@ import AppState from 'caja/viewer/models/app-state';
 import Interview from 'caja/viewer/models/interview';
 import { ViewerStepsVM } from 'caja/viewer/desktop/steps/';
 import interviewJSON from 'caja/viewer/models/fixtures/real_interview_1.json';
+import sinon from 'sinon'
 
 import 'steal-mocha';
 
@@ -26,15 +27,36 @@ describe('<a2j-viewer-steps>', function() {
       const mState = new CanMap();
       const page = interview.attr('firstPage');
       const rState = new AppState({ page });
+      const logicStub = new CanMap({
+        exec: $.noop,
+        infinite: {
+          errors: $.noop,
+          reset: $.noop,
+          _counter: 0,
+          inc: $.noop
+        },
+        varExists: sinon.spy(),
+        varCreate: sinon.spy(),
+        varGet: sinon.stub(),
+        varSet: sinon.spy(),
+        eval: sinon.spy()
+      })
+      let langStub = new CanMap({
+        MonthNamesShort: 'Jan, Feb',
+        MonthNamesLong: 'January, February',
+        LearnMore: 'Learn More'
+      })
 
       const frag = stache(
         `<a2j-viewer-steps
-          r-state="{rState}"
-          m-state="{mState}"
-          interview="{interview}" />`
+          rState:bind="rState"
+          mState:bind="mState"
+          interview:bind="interview"
+          logic:bind="logicStub"
+          lang:bind="langStub"/>`
       );
 
-      $('#test-area').html(frag({rState, interview, mState}));
+      $('#test-area').html(frag({rState, interview, mState, logicStub, langStub}));
       vm = $('a2j-viewer-steps')[0].viewModel;
     });
 
@@ -86,7 +108,8 @@ describe('<a2j-viewer-steps>', function() {
     let vm;
 
     beforeEach(() => {
-      vm = new ViewerStepsVM();
+      const rState = new AppState({ page: '01-Introduction' });
+      vm = new ViewerStepsVM({ rState });
 
       const currentPage = new CanMap({
         step: {

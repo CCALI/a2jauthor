@@ -2,29 +2,29 @@
 <can-import from="caja/viewer/desktop/avatar/" />
 <can-import from="caja/viewer/desktop/steps/steps.less!" />
 
-{{#if currentStep}}
+{{#if(currentStep)}}
   <div class="step-current">
     <div class="app-step" el:style:from="scope.vm.formatStepStyles( scope.vm.getStepWidth(true) )">
       <div class="step-circle bg-step{{currentStep.number}}"></div>
     </div>
 
-    <div class="guide-wrapper {{^if showClientAvatar}}guide-center{{/if}}">
-      <div id="guideBubble" class="bubble {{#if guideBubbleTallerThanAvatar}}vertical{{/else}}top{{/if}}">
+    <div class="guide-wrapper {{^if(showClientAvatar)}}guide-center{{/if}}">
+      <div id="guideBubble" class="bubble {{#if(guideBubbleTallerThanAvatar)}}vertical{{/else}}top{{/if}}">
         <a2j-pages
-          vm:lang:from="lang"
-          vm:logic:bind="logic"
-          vm:rState:bind="rState"
-          vm:pState:bind="pState"
-          vm:mState:bind="mState"
-          vm:interview:bind="interview"
-          vm:modalContent:bind="modalContent"
-          vm:traceLogic:bind="traceLogic" />
+          lang:from="lang"
+          logic:bind="logic"
+          rState:bind="rState"
+          pState:bind="pState"
+          mState:bind="mState"
+          interview:bind="interview"
+          modalContent:bind="modalContent"
+          traceLogic:bind="traceLogic" />
       </div><!-- guideBubble -->
 
       {{#unless showClientAvatar}}
         {{#currentPage}}
-          {{#if learn}}
-            <div id="clientBubble" class="bubble right {{#if clientBubbleTallerThanAvatar}}vertical{{/else}}top{{/if}}" role="complementary">
+          {{#if(scope/learn)}}
+            <div id="clientBubble" class="bubble right {{#if(scope/clientBubbleTallerThanAvatar)}}vertical{{/else}}top{{/if}}" role="complementary">
               {{> learn-more-tpl}}
             </div>
           {{/if}}
@@ -34,12 +34,12 @@
       <div class="avatar-wrapper">
         <span class="bubble-arrow"></span>
         <a2j-viewer-avatar
-          kind="guide"
-          vm:avatarLoaded:from="avatarLoaded"
-          vm:skin:from="guideAvatarSkinTone"
-          vm:hair:from="guideAvatarHairColor"
-          vm:gender:from="interview.guideAvatarGender"
-          vm:facing:from="guideAvatarFacingDirection" />
+          kind:raw="guide"
+          avatarLoaded:from="scope/avatarLoaded"
+          skin:from="scope/guideAvatarSkinTone"
+          hair:from="scope/guideAvatarHairColor"
+          gender:from="scope/interview.guideAvatarGender"
+          facing:from="scope/guideAvatarFacingDirection" />
       </div>
     </div><!-- guide-wrapper -->
 
@@ -47,18 +47,18 @@
       {{#if showClientAvatar}}
         <div class="avatar-wrapper">
           <a2j-viewer-avatar
-            kind="client"
-            facing="left"
-            vm:avatarLoaded:from="avatarLoaded"
-            vm:skin:from="clientAvatarSkinTone"
-            vm:hair:from="clientAvatarHairColor"
-            vm:gender:from="interview.userGender" />
+            kind:raw="client"
+            facing:raw="left"
+            avatarLoaded:from="scope/avatarLoaded"
+            skin:from="scope/clientAvatarSkinTone"
+            hair:from="scope/clientAvatarHairColor"
+            gender:from="scope/interview.userGender" />
         </div>
 
         {{#currentPage}}
-          {{#if learn}}
+          {{#if(learn)}}
             <span class="bubble-arrow left"></span>
-            <div id="clientBubble" class="bubble {{#if clientBubbleTallerThanAvatar}}vertical{{/else}}top{{/if}}">
+            <div id="clientBubble" class="bubble {{#if(scope/clientBubbleTallerThanAvatar)}}vertical{{/else}}top{{/if}}">
               {{> learn-more-tpl}}
             </div>
           {{/if}}
@@ -70,10 +70,10 @@
       <div class="sign-outer bg-step{{currentStep.number}}">
         <div class="sign-circle">
           <span class="circle-content">
-            {{#zeroOrUndefined currentStep.number}}
+            {{#zeroOrUndefined(currentStep.number)}}
               <span class="glyphicon-step-zero" aria-hidden="true"></span>
             {{else}}
-              {{currentStep.number}}
+              {{scope/currentStep.number}}
             {{/zeroOrUndefined}}
           </span>
         </div> <!-- sign circle -->
@@ -85,20 +85,20 @@
   </div><!-- step-current -->
 {{/if}}
 
-{{#if nextSteps.length}}
+{{#if(nextSteps.length)}}
   <div class="next-wrapper">
-    {{#each nextSteps}}
-      <div id="next-{{ add(scope.index, 2) }}"
-        class="step-next next-{{ add(scope.index, 2) }} step-{{ add(scope.index, 2) }}">
+    {{#each(nextSteps)}}
+      <div id="next-{{ ../add(scope.index, 2) }}"
+        class="step-next next-{{ ../add(scope.index, 2) }} step-{{ ../add(scope.index, 2) }}">
 
         <div class="app-step" el:style:from="scope.vm.formatStepStyles( scope.vm.getStepWidth(false, scope.index) )">
-          <div class="step-circle bg-step{{number}}"></div>
+          <div class="step-circle bg-step{{scope/number}}"></div>
         </div>
 
         <div class="sign-wrapper">
-          <div class="sign-outer bg-step{{number}}">
+          <div class="sign-outer bg-step{{scope/number}}">
             <div class="sign-circle">
-              <span class="circle-content">{{number}}</span>
+              <span class="circle-content">{{scope/number}}</span>
             </div> <!-- sign circle -->
             <div class="sign-content">
               <span title="{{scope.vm.getTextForStep(.)}}">{{scope.vm.getDisplayTextForStep(.)}}</span>

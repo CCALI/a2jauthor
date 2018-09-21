@@ -4,27 +4,29 @@
 <nav class="navbar navbar-default" role="navigation">
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
     <ul class="nav navbar-nav">
-      <li class="nav-item {{^if canNavigateBack}}disabled{{/if}}" on:el:click="navigateBack()">
+      <li class="nav-item {{^if(./canNavigateBack)}}disabled{{/if}}"
+        on:el:click="./navigateBack()">
         <a role="button" class="nav-link">
-          <span class="glyphicon-left-open" aria-hidden:from="'true'"></span>{{lang.GoBack}}
+          <span class="glyphicon-left-open" aria-hidden:raw="true"></span>{{lang.GoBack}}
         </a>
       </li>
       <li class="divider" role="separator"></li>
-      <li class="nav-item  {{^if canNavigateForward}}disabled{{/if}}" on:el:click="navigateForward()">
+      <li class="nav-item  {{^if(./canNavigateForward)}}disabled{{/if}}"
+        on:el:click="./navigateForward()">
         <a role="button" class="nav-link">
-          {{lang.GoNext}}<span class="glyphicon-right-open" aria-hidden="true"></span>
+          {{./lang.GoNext}}<span class="glyphicon-right-open" aria-hidden="true"></span>
         </a>
       </li>
     </ul>
 
-    <form class="navbar-form navbar-left {{#if isMobile}}hidden{{/if}}" role="search">
-      <span>{{lang.MyProgress}}:</span>
+    <form class="navbar-form navbar-left {{#if(isMobile)}}hidden{{/if}}" role="search">
+      <span>{{./lang.MyProgress}}:</span>
       <div class="form-group ">
         <div class="input-group">
-          <select class="form-control" el:value:bind="selectedPageIndex">
-            {{#each visitedPages}}
+          <select class="form-control" el:value:bind="./selectedPageIndex">
+            {{#each(visitedPages)}}
               <option el:value:from="scope.index">
-                {{fitPageDescription(text, repeatVarValue)}}
+                {{../fitPageDescription(text, repeatVarValue)}}
               </option>
             {{/each}}
           </select>
@@ -32,32 +34,32 @@
       </div>
     </form>
 
-  {{#if isMobile}}
+  {{#if(./isMobile)}}
     <!-- / navbar-right-mobile -->
     <ul class="navbar-mobile nav navbar-nav navbar-right">
-      {{#if interview.sendfeedback}}
+      {{#if(interview.sendfeedback)}}
       <li class="nav-item">
-        <a role="button" target="_blank" href="{{feedbackFormUrl}}"
+        <a role="button" target="_blank" href="{{./feedbackFormUrl}}"
           class="nav-link send-feedback">
           <span class="glyphicon-mail" aria-hidden="true"></span>
         </a>
       </li>
       {{/if}}
 
-      {{#if canSaveAndExit}}
+      {{#if(./canSaveAndExit)}}
       <li class="divider" role="separator"></li>
-        <li class="nav-item can-exit" on:el:click="saveAndExit()">
+        <li class="nav-item can-exit" on:el:click="./saveAndExit()">
           <a role="button" class="nav-link">
             <span class="glyphicon-floppy" aria-hidden="true"></span>
           </a>
         </li>
       {{/if}}
 
-      {{#if canResumeInterview}}
+      {{#if(canResumeInterview)}}
       <li class="divider" role="separator"></li>
-        <li class="nav-item can-resume" on:el:click="resumeInterview()">
+        <li class="nav-item can-resume" on:el:click="./resumeInterview()">
           <a role="button" class="nav-link">
-            <span class="glyphicon-right-thin" aria-hidden="true"></span> {{lang.ResumeExit}}
+            <span class="glyphicon-right-thin" aria-hidden="true"></span> {{./lang.ResumeExit}}
           </a>
         </li>
       {{/if}}
@@ -65,30 +67,30 @@
   {{else}}
     <!-- /navbar-right -->
     <ul class="navbar-mobile nav navbar-nav navbar-right">
-      {{#if interview.sendfeedback}}
+      {{#if(interview.sendfeedback)}}
       <li class="divider" role="separator"></li>
       <li class="nav-item">
-        <a role="button" target="_blank" href="{{feedbackFormUrl}}"
+        <a role="button" target="_blank" href="{{./feedbackFormUrl}}"
           class="nav-link send-feedback">
-          <span class="glyphicon-mail" aria-hidden="true"></span> {{lang.SendFeedback}}
+          <span class="glyphicon-mail" aria-hidden="true"></span> {{./lang.SendFeedback}}
         </a>
       </li>
       {{/if}}
 
-      {{#if canSaveAndExit}}
+      {{#if(canSaveAndExit)}}
       <li class="divider" role="separator"></li>
-        <li class="nav-item can-exit" on:el:click="saveAndExit()">
+        <li class="nav-item can-exit" on:el:click="./saveAndExit()">
           <a role="button" class="nav-link">
-            <span class="glyphicon-floppy" aria-hidden="true"></span> {{lang.SaveAndExit}}
+            <span class="glyphicon-floppy" aria-hidden="true"></span> {{./lang.SaveAndExit}}
           </a>
         </li>
       {{/if}}
 
-      {{#if canResumeInterview}}
+      {{#if(canResumeInterview)}}
       <li class="divider" role="separator"></li>
-        <li class="nav-item can-resume" on:el:click="resumeInterview()">
+        <li class="nav-item can-resume" on:el:click="./resumeInterview()">
           <a role="button" class="nav-link">
-            <span class="glyphicon-right-thin" aria-hidden="true"></span> {{lang.ResumeExit}}
+            <span class="glyphicon-right-thin" aria-hidden="true"></span> {{./lang.ResumeExit}}
           </a>
         </li>
       {{/if}}
@@ -97,19 +99,20 @@
   </div><!-- /.navbar-collapse -->
 </nav>
 
-{{#if showDemoNotice}}
-  <app-alert open="true" alert-type:from='"warning"' class="demo-notice">
+{{#if(./showDemoNotice)}}
+  <app-alert open:from="true" alertType:raw="warning" class="demo-notice">
     For demonstration and testing purposes only. Not intended for use by the
     public. This A2J Guided Interview will not generate a form.
   </app-alert>
 {{/if}}
 
-{{^if isMobile}}
+{{^if(isMobile)}}
   <div class="horizon">
     {{#if courthouseImage}}
       <img class="courthouse" src="{{courthouseImage}}" role="presentation" />
     {{else}}
-      <img class="courthouse" src="{{joinBase 'viewer/images/A2J5_CourtHouse.svg'}}" role="presentation" />
+      <img class="courthouse" src="{{joinBase('viewer/images/A2J5_CourtHouse.svg')}}"
+        role="presentation" />
     {{/if}}
   </div>
 {{/if}}

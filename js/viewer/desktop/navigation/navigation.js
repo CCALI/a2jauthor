@@ -6,6 +6,7 @@ import template from './navigation.stache'
 import constants from 'caja/viewer/models/constants'
 import {Analytics} from 'caja/viewer/util/analytics'
 import isMobile from 'caja/viewer/is-mobile'
+import canKey from 'can-key';
 
 import 'can-map-define'
 import 'jquerypp/event/swipe/'
@@ -32,9 +33,31 @@ export let ViewerNavigationVM = CanMap.extend({
       }
     },
 
-    visitedPages: {},
+    /**
+     * @property {can.List} viewerNavigation.ViewModel.visitedPages visitedPages
+     * @parent viewerNavigation.ViewModel
+     *
+     * list of pages visited by the user.
+     */
+    visitedPages: {
+      get() {
+        let state = this.attr('appState')
+        return state.visitedPages
+      }
+    },
 
-    selectedPageName: {},
+    /**
+     * @property {String} viewerNavigation.ViewModel.selectedPageName selectedPageName
+     * @parent viewerNavigation.ViewModel
+     *
+     * Name of currently selected page.
+     */
+    selectedPageName: {
+      get(pageName) {
+        let pages = this.attr('visitedPages');
+        return pageName ? pageName : canKey.get(pages, '0.name');
+      }
+    },
 
     selectedPageIndex: {},
 
@@ -123,7 +146,13 @@ export let ViewerNavigationVM = CanMap.extend({
           interviewtitle: interview.attr('title')
         }
       }
-    }
+    },
+
+    showDemoNotice: {
+      type: 'boolean'
+    },
+
+    lang: {}
   },
 
   /**

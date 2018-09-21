@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "can-fixture": "^2.1.0",
+    "can-view-autorender": "^5.0.1",
     "chai": "^4.1.2",
     "documentjs": "~0.4.1",
     "express": "^4.13.0",
@@ -222,6 +223,7 @@
     "can-event": "^3.7.7",
     "can-event-queue": "^1.1.0",
     "can-globals": "^1.2.0",
+    "can-key": "^1.2.0",
     "can-list": "^4.1.0",
     "can-map": "^4.3.3",
     "can-map-backup": "^4.0.0",

@@ -69,8 +69,11 @@ export default Model.extend('AnswersModel', {}, {
     switch (v.type) {
       case CONST.vtNumber:
         if (opts && opts.num2num === true) {
-          // For calculations for number to be number even if blank (returning 0).
-          val = cString.textToNumber(val)
+          // Handle text numbers with commas and decimals
+          // zero is edge case that returns itself
+          if (val !== 0) {
+            val = cString.textToNumber(val)
+          }
         }
 
         break

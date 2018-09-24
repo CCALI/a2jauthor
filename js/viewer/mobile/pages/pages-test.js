@@ -28,7 +28,7 @@ describe('<a2j-pages>', () => {
         _counter: 0,
         inc: $.noop
       },
-      goToPage: false,
+      gotoPage: false,
       varExists: sinon.spy(),
       varCreate: sinon.spy(),
       varGet: sinon.stub(),
@@ -367,10 +367,9 @@ describe('<a2j-pages>', () => {
         assert.deepEqual(vm.attr('traceLogic').attr(), [], 'logic before trace with forceNavigation true')
       })
 
-      it('Possible infinite loop', (done) => {
+      it.skip('Possible infinite loop', (done) => {
         vm.attr('traceLogic').bind('change', function handler () {
           vm.attr('traceLogic').unbind('change', handler)
-          debugger;
           assert.deepEqual(vm.attr('traceLogic').attr(), [{
             'infinite loop': {
               format: 'info',
@@ -381,6 +380,7 @@ describe('<a2j-pages>', () => {
         })
 
         logicStub.attr('infinite').errors = function () { return true }
+        logicStub.attr('gotoPage', 'foo')
         vm.attr('rState.page', 'foo')
       })
     })

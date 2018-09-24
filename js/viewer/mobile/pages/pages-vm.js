@@ -318,6 +318,7 @@ export default CanMap.extend('PagesVM', {
 
     const anyFieldWithError = _some(fields, f => f.attr('hasError'))
 
+
     if (!anyFieldWithError) {
       const logic = this.attr('logic')
       const codeAfter = page.attr('codeAfter')
@@ -630,6 +631,8 @@ export default CanMap.extend('PagesVM', {
 
     let logic = vm.attr('logic')
     var gotoPage = logic.attr('gotoPage')
+
+    //debugger
 
     // If rState.lastPageBeforeExit has value, we are exiting the interview
     if (logic.attr('infinite.outOfRange')) {

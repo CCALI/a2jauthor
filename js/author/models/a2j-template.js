@@ -277,7 +277,7 @@ A2JTemplate.List = A2JTemplate.List.extend({
         break
     }
 
-    sort(this, this.attr('comparator'));
+    sort(this, this.attr('comparator'))
   },
 
   search (token) {

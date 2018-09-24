@@ -12,7 +12,7 @@ export const InterviewsVM = CanMap.extend({
     interviews: {
       serialize: false,
       get (lastSet, resolve) {
-        if(lastSet) {
+        if (lastSet) {
           return lastSet
         }
 
@@ -138,7 +138,7 @@ export default Component.extend({
 
     '.guide dblclick': function (target) {
       const gid = $(target).attr('gid')
-      openSelectedGuide(gid)
+      window.openSelectedGuide(gid)
       // reset collapsed steps tracker in A2J_Tabs
       // TODO: handle this in Pages tab refactor
       window.collapsedSteps = []

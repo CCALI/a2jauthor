@@ -21,7 +21,7 @@ export default function tabsRouting (appState) {
 
     let item = navbarItems.filter(item => item.page === newPage).shift()
     if (item && item.ref) {
-      gotoTabOrPage(item.ref)
+      window.gotoTabOrPage(item.ref)
     }
   }
 

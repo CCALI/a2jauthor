@@ -5,10 +5,10 @@ import stache from 'can-stache'
 import canReflect from 'can-reflect'
 import F from 'funcunit'
 
-import 'steal-mocha';
+import 'steal-mocha'
 import 'caja/viewer/styles.less'
 import 'can-map-define'
-import 'caja/viewer/mobile/util/helpers';
+import 'caja/viewer/mobile/util/helpers'
 
 describe('<a2j-modal> ', function () {
   describe('Component', function () {
@@ -33,8 +33,8 @@ describe('<a2j-modal> ', function () {
           audioURL: {value: ''},
           videoURL: {value: ''}
         }
-      });
-      const modalContent = new ModalContent();
+      })
+      const modalContent = new ModalContent()
 
       const frag = stache(
         `<a2j-modal class="bootstrap-styles"

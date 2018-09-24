@@ -20,7 +20,7 @@ import 'can-map-define'
  */
 const Guide = Model.extend({
   parseModels: 'guides',
-  findAll: function(params) {
+  findAll: function (params) {
     params = (params == null) ? {} : params
     params.cmd = 'guides'
 

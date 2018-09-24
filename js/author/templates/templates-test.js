@@ -14,14 +14,14 @@ describe('<templates-page>', function () {
     let vm
 
     beforeEach(function () {
-      localStorage.clear()
+      window.localStorage.clear()
       vm = new Templates({
         appState: new CanMap()
       })
     })
 
-    afterEach(function() {
-      localStorage.clear()
+    afterEach(function () {
+      window.localStorage.clear()
     })
 
     it('defaults activeFilter to "active" status', function () {

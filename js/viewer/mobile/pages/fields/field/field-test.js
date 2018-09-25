@@ -202,6 +202,19 @@ describe('<a2j-field>', () => {
 
       assert.equal(vm.attr('overCharacterLimit'), true, 'did not detect exceeding answer limit')
     })
+
+    it('passes textlong answer to modal', function () {
+      const field = vm.attr('field')
+      field.attr('_answer.answer.values', [null, 'cash money'])
+      field.attr({
+        'type': 'textlong',
+        'label': 'BigText'
+      })
+
+      vm.expandTextlong(field)
+      const textlongValue = vm.attr('modalContent.textlongValue')
+      assert.equal(textlongValue, 'cash money', 'should copy field answer value to modal')
+    })
   })
 
   describe('Component', () => {

@@ -339,9 +339,6 @@ export let FieldVM = CanMap.extend('FieldVM', {
    * @parent field.ViewModel
    *
    * expands textlong field types into larger modal for easier editing
-   * validateField needs to trigger here as the change event on the textlong.stache'
-   * was interfering with the click event and vice versa. (see below)
-   * https://stackoverflow.com/questions/20523313/jquery-change-sometimes-event-prevents-click-event
    *
    */
   expandTextlong (field) {
@@ -350,11 +347,7 @@ export let FieldVM = CanMap.extend('FieldVM', {
     if (!answerName && previewActive) {
       this.attr('modalContent', {title: 'Author Warning', text: 'Text(long) fields require an assigned variable to expand'})
     }
-    // handle skipped validation as per above
     if (answerName) {
-      const $el = $('textarea[name="' + answerName + '"]')
-      this.validateField(null, $el)
-
       const answerIndex = field.attr('_answer.answerIndex')
       const textlongValue = field._answer.attr('answer.values.' + answerIndex)
       const title = field.attr('label')
@@ -485,6 +478,8 @@ export default Component.extend('FieldComponent', {
       // This below is a copy of screenManager's eval helper.
       return views[type](options.scope, {
         eval (str) {
+          // TODO: should this always have a value, even empty string?
+          if (!str) { return }
           str = typeof str === 'function' ? str() : str
 
           return self.attr('logic').eval(str)

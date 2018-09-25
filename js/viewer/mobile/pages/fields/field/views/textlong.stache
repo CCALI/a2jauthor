@@ -16,7 +16,7 @@
       el:value:bind="field._answer.values"
       on:el:input="calcAvailableLength(scope.event)"/>
 
-    <button class="btn btn-default btn-xs pull-right" on:el:mousedown="expandTextlong(field)"><span class="icon resize-btn-icon glyphicon-resize" aria-hidden="true"></span></button>
+    <button class="btn btn-default btn-xs pull-right" on:el:click="expandTextlong(field, scope.element)"><span class="icon resize-btn-icon glyphicon-resize" aria-hidden="true"></span></button>
 
       {{#if maxChars}}
         {{> exceeded-maxchars-tpl }}

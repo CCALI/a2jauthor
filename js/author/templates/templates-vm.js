@@ -48,10 +48,7 @@ export default CanMap.extend({
           return lastSet
         }
 
-        this.attr('templatesPromise').then((data) => {
-          resolve(data)
-          this.attr('displayList', this.makeDisplayList())
-        })
+        this.attr('templatesPromise').then(resolve)
       }
     },
 
@@ -61,7 +58,19 @@ export default CanMap.extend({
      *
      * displayList of templates based on filtering
      */
-    displayList: {},
+    displayList: {
+      get() {
+        const templates = this.attr('templates')
+
+        if (templates) {
+          return this.performSearch(
+            this.sortList(
+              this.filterList(templates)
+            )
+          )
+        }
+      }
+    },
 
     /**
      * @property {CanList?} templatesPage.ViewModel.prototype.define.deletedTemplates deletedTemplates
@@ -224,18 +233,6 @@ export default CanMap.extend({
     hasSorted: {}
   },
 
-  makeDisplayList () {
-    const templates = this.attr('templates')
-
-    if (templates) {
-      return this.performSearch(
-        this.sortList(
-          this.filterList(templates)
-        )
-      )
-    }
-  },
-
   sortList (templates) {
     let criteria = this.attr('sortCriteria')
     let {key, direction} = criteria.attr()
@@ -283,24 +280,6 @@ export default CanMap.extend({
       active: false
     }).save()
     this.attr('openRestoredAlert', false)
-  },
-
-  /**
-   * @function templatesPage.ViewModel.prototype.updateDisplayList updateDisplayList
-   * @parent templatesPage.ViewModel
-   *
-   * This function is meant to update the list when templates are removed or
-   * restored, it generates the `displayList` again and compares it to the list
-   * currently being displayed, the bound list is updated if there is a difference
-   * between them (length).
-   */
-  updateDisplayList () {
-    const currentDisplayList = this.attr('displayList')
-    let displayList = this.makeDisplayList()
-
-    if (currentDisplayList.length !== displayList.length) {
-      this.attr('displayList', displayList)
-    }
   },
 
   /**

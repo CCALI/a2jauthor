@@ -53,7 +53,6 @@ export default Component.extend({
     '{displayList} length': function () {
       let vm = this.viewModel
 
-      vm.updateDisplayList()
       vm.handleDeletedTemplates()
       vm.handleRestoredTemplates()
     },
@@ -69,22 +68,6 @@ export default Component.extend({
           vm.attr('hasSorted', false)
         }, 0)
       }
-    },
-
-    '{viewModel} activeFilter': function () {
-      let list = this.viewModel.makeDisplayList()
-      this.viewModel.attr('displayList', list)
-    },
-
-    '{viewModel} sortCriteria': function () {
-      let list = this.viewModel.attr('displayList')
-      this.viewModel.sortList(list)
-    },
-
-    '{viewModel} searchToken': function () {
-      let list = this.viewModel.makeDisplayList()
-      let result = this.viewModel.performSearch(list)
-      this.viewModel.attr('displayList', result)
     }
   }
 })

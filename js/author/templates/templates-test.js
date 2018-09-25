@@ -2,6 +2,7 @@ import F from 'funcunit'
 import CanMap from 'can-map'
 import { assert } from 'chai'
 import Templates from './templates-vm'
+import A2JTemplate from 'caja/author/models/a2j-template'
 import stache from 'can-stache'
 import 'caja/author/models/fixtures/templates'
 
@@ -36,8 +37,8 @@ describe('<templates-page>', function () {
     })
 
     it('returns a newly ordered list of templateIds', function () {
-      const templatesSource = [{templateId: 1}, {templateId: 2}, {templateId: 3}]
-      vm.attr('templates', templatesSource)
+      const templatesSource = [{templateId: 1,active:true}, {templateId: 2,active:true}, {templateId: 3, active:true}]
+      vm.attr('templates', new A2JTemplate.List(templatesSource))
       const templates = vm.attr('templates')
 
       const currentTemplateIdOrder = templatesSource.map(t => t.templateId)
@@ -52,7 +53,10 @@ describe('<templates-page>', function () {
 
   describe('Component', function () {
     beforeEach(function (done) {
-      let appState = new CanMap({guideId: '1261'})
+      let appState = new CanMap({
+        guideId: '1261',
+        guide: { title: '' }
+      })
 
       let frag = stache(
         '<templates-page appState:bind="appState" />'

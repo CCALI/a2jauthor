@@ -22,14 +22,12 @@ import 'bootstrap/js/modal'
 export default CanMap.extend('PagesVM', {
   define: {
     /**
-     * @property {String} pages.ViewModel.prototype.currentPage currentPage
+     * @property {CanMap} pages.ViewModel.prototype.currentPage currentPage
      * @parent pages.ViewModel
      *
-     * String used to represent the current active page
+     * Map of the current active page
      */
-    currentPage: {
-      value: null
-    },
+    currentPage: {},
 
     /**
      * @property {Object} pages.ViewModel.prototype.modalContent modalContent
@@ -379,7 +377,8 @@ export default CanMap.extend('PagesVM', {
       // should navigate to this page instead of the page set by `button.next`.
       if (logicPageisNotEmpty && gotoPage !== button.next) {
         logic.attr('gotoPage', null)
-        this._setPage(page, gotoPage)
+        this._setAnswerIndex(page, gotoPage)
+        rState.page = gotoPage
 
       // only navigate to the `button.next` page if the button clicked is not
       // any of the buttons with "special" behavior.
@@ -388,7 +387,8 @@ export default CanMap.extend('PagesVM', {
         button.next !== constants.qIDASSEMBLE &&
         button.next !== constants.qIDASSEMBLESUCCESS &&
         button.next !== constants.qIDFAIL) {
-        this._setPage(page, button.next)
+        this._setAnswerIndex(page, button.next)
+        rState.page = button.next
       }
 
       // if these special buttons are used, the interview is complete (incomplete is false)
@@ -455,7 +455,7 @@ export default CanMap.extend('PagesVM', {
     }
   },
 
-  _setPage (page, gotoPage) {
+  _setAnswerIndex (page, gotoPage) {
     const rState = this.attr('rState')
     const repeatVar = page.attr('repeatVar')
     const answers = this.attr('interview.answers')
@@ -465,11 +465,9 @@ export default CanMap.extend('PagesVM', {
     const answerIndex = answer ? (new AnswerVM({ answer })).attr('values') : null
 
     if (answerIndex) {
-      rState.page = gotoPage
       rState.answerIndex = parseInt(answerIndex, 10)
     } else {
       rState.answerIndex = 1
-      rState.page = gotoPage
     }
   },
 
@@ -487,7 +485,6 @@ export default CanMap.extend('PagesVM', {
       queues.batch.start()
 
       this.attr('traceLogic').push({ page: page.attr('name') })
-      this.attr('currentPage', page)
       this.setFieldAnswers(page.attr('fields'))
       this.attr('mState.header', page.attr('step.text'))
       this.attr('mState.step', page.attr('step.number'))
@@ -601,15 +598,9 @@ export default CanMap.extend('PagesVM', {
     }
   },
 
+  // fired from event in pages.js listening to rState.page changing
   changePage: function (rState, newPageName) {
     const vm = this
-
-    // navigation via navbar skips logic
-    if (rState.forceNavigation) {
-      vm.setCurrentPage()
-      rState.forceNavigation = false
-      return
-    }
 
     // Navigate to the exitURL if the page is set to a
     // non-undefined falsy or the explicit "FAIL" string
@@ -632,8 +623,6 @@ export default CanMap.extend('PagesVM', {
     let logic = vm.attr('logic')
     var gotoPage = logic.attr('gotoPage')
 
-    //debugger
-
     // If rState.lastPageBeforeExit has value, we are exiting the interview
     if (logic.attr('infinite.outOfRange')) {
       vm.attr('traceLogic').push({
@@ -645,7 +634,7 @@ export default CanMap.extend('PagesVM', {
       vm.attr('rState.page', '__error')
     } else if (gotoPage && gotoPage.length && !rState.lastPageBeforeExit) {
       logic.attr('infinite').inc()
-      vm._setPage(nextPage, gotoPage)
+      vm._setAnswerIndex(nextPage, gotoPage)
     } else {
       logic.attr('infinite').reset()
     }

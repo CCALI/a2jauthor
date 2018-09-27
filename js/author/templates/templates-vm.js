@@ -59,7 +59,7 @@ export default CanMap.extend({
      * displayList of templates based on filtering
      */
     displayList: {
-      get() {
+      get () {
         const templates = this.attr('templates')
 
         if (templates) {

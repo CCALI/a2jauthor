@@ -30,13 +30,7 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      *
      * current page in interview
      */
-    currentPage: {
-      get () {
-        const interview = this.attr('interview')
-        const pageName = this.attr('rState').page
-        return interview.getPageByName(pageName)
-      }
-    },
+    currentPage: {},
 
     /**
      * @property {can.List} steps.ViewModel.prototype.steps steps
@@ -58,7 +52,20 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      */
     currentStep: {
       get () {
-        return this.attr('currentPage.step')
+        return this.attr('currentPage') && this.attr('currentPage.step')
+      }
+    },
+
+    /**
+     * @property {Boolean} steps.ViewModel.prototype.hasStep hasStep
+     * @parent steps.ViewModel
+     *
+     * has a currentStep
+     */
+    hasStep: {
+      type: 'boolean',
+      get () {
+        return !!this.attr('currentStep')
       }
     },
 
@@ -363,6 +370,7 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
    * index for a given step, step.number and index do not have to match
    */
   getStepIndex (step) {
+    if (!step) { return }
     const steps = this.attr('steps').attr()
     const stepIndex = _findIndex(steps, ({ number }) => {
       return number == step.attr('number')
@@ -378,6 +386,7 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
    * the step text which can be overridden by Authors assigned values to `A2J Step #` variables
    */
   getTextForStep (step) {
+    if (!step) { return }
     const index = this.getStepIndex(step)
     const defaultText = this.attr(`interview.steps.${index}.text`)
     let variableText

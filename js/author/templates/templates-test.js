@@ -37,7 +37,7 @@ describe('<templates-page>', function () {
     })
 
     it('returns a newly ordered list of templateIds', function () {
-      const templatesSource = [{templateId: 1,active:true}, {templateId: 2,active:true}, {templateId: 3, active:true}]
+      const templatesSource = [{templateId: 1, active: true}, {templateId: 2, active: true}, {templateId: 3, active: true}]
       vm.attr('templates', new A2JTemplate.List(templatesSource))
       const templates = vm.attr('templates')
 

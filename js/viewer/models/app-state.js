@@ -32,16 +32,9 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   // TODO: should this just be the full page extended with the loopVarValues?
   visitedPage: {
     value ({lastSet, listenTo, resolve}) {
-      listenTo('pageChange', (ev, val) => {
-        const currentPage = this.interview.getPageByName(this.page)
-        // TODO: should this resolve(lastSet) instead?
+      listenTo('currentPage', (ev, currentPage) => {
+
         if (!currentPage) { return }
-        // TODO: handle before logic and goto redirect here
-        const newGotoPage = this.fireCodeBefore(currentPage, this.logic)
-        if (newGotoPage) {
-          this.page = newGotoPage
-          return
-        }
 
         const loopVarState = {
           repeatVarValue: currentPage.attr('repeatVar') ? this.logic.varGet(currentPage.attr('repeatVar')) : undefined,
@@ -50,33 +43,62 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
 
         const newVisitedPage = _assign(loopVarState, currentPage.serialize())
 
-        if (this.getVisitedPageIndex(newVisitedPage) === -1) {
+        const selectedPageIndex = this.getVisitedPageIndex(newVisitedPage)
+        if (selectedPageIndex === -1) {
           this.visitedPages.unshift(newVisitedPage)
           if (this.lastVisitedPageName === false || this.lastVisitedPageName !== newVisitedPage.name) {
             this.lastVisitedPageName = newVisitedPage.name
           }
+        } else {
+          this.selectedPageIndex = selectedPageIndex
         }
         resolve(newVisitedPage)
       })
     }
   },
 
-  // these are stored at appState level to pass to navigation.stache/js
-  // remove somehow?
+  currentPage: {
+    value ({ listenTo, resolve }) {
+      let currentPage
+      const handler = function () {
+        let page = this.interview && this.interview.getPageByName(this.page)
+        if (page && page !== currentPage) {
+          currentPage = page
+          resolve(page)
+        }
+      }
+      listenTo('interview', handler)
+      listenTo('page', handler)
+    }
+  },
+
+  // TODO: change this to currentPageName (fix viewer app.js routes)
+  // to match currentPage which is the Map holding all page info
+  page: {
+    type: 'string',
+    value ({lastSet, listenTo, resolve}) {
+      // this.page = foo
+      listenTo(lastSet, (pageName) => {
+        resolve(pageName)
+      })
+
+      listenTo('selectedPageName', (ev, selectedPageName) => {
+        resolve(selectedPageName)
+      })
+
+      listenTo('currentPage', (ev, currentPage) => {
+        if (!currentPage) { return }
+        const newGotoPage = this.fireCodeBefore(currentPage, this.logic)
+        if (newGotoPage) {
+          resolve(newGotoPage)
+        }
+      })
+    }
+  },
 
   repeatVarValue: {},
 
   outerLoopVarValue: {},
-
-  // TODO: change this to currentPageName (fix viewer app.js routes)
-  // page (currentPage or visitedPage?) should be reserved for the Map holding all page info
-  // the pageChange dispatched event allows visitedPage to check for new loopVar values, adding visitedPages as needed
-  page: {
-    type: 'string',
-    set () {
-      this.dispatch('pageChange')
-    }
-  },
 
   visitedPages: {
     default () { return new DefineList([]) }

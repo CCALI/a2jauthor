@@ -2,7 +2,7 @@
 <can-import from="caja/viewer/desktop/avatar/" />
 <can-import from="caja/viewer/desktop/steps/steps.less!" />
 
-{{#if(currentStep)}}
+{{#if(hasStep)}}
   <div class="step-current">
     <div class="app-step" el:style:from="scope.vm.formatStepStyles( scope.vm.getStepWidth(true) )">
       <div class="step-circle bg-step{{currentStep.number}}"></div>
@@ -11,6 +11,7 @@
     <div class="guide-wrapper {{^if(showClientAvatar)}}guide-center{{/if}}">
       <div id="guideBubble" class="bubble {{#if(guideBubbleTallerThanAvatar)}}vertical{{/else}}top{{/if}}">
         <a2j-pages
+          currentPage:from="currentPage"
           lang:from="lang"
           logic:bind="logic"
           rState:bind="rState"

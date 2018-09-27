@@ -10,8 +10,8 @@
   </div>
 {{/eq}}
 
-{{#if currentPage}}
-  {{#with currentPage}}
+{{#if(currentPage)}}
+  {{#with(currentPage)}}
     <div class="bubble-content">
       <h3 class="visible-xs-block">
         {{#is(step.number, '0')}}

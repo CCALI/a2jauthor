@@ -1,4 +1,4 @@
-<form method="post" target="_blank" id="assemble-a2j-dat" action="/api/assemble">
+<form method="post" target="_blank" action="/api/assemble">
   <input type="hidden" name="guideId" {$value}="guideId">
   <input type="hidden" name="answers" {$value}="answersString">
   <input type="hidden" name="guideTitle" {$value}="interview.title">

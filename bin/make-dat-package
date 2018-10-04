@@ -25,9 +25,17 @@ function makePackageFolder () {
   fs.copySync(path.join(datPath, 'src'),
               path.join(outputPath, 'src'));
 
-  // copy node pdf files
+  // copy node pdf files, ignore files in temp folder
+  const filterFunc = (src, dest) => {
+    if (src.indexOf('temp') > -1) {
+      return fs.statSync(src).isDirectory()
+    } else {
+      return true
+    }
+  }
   fs.copySync(path.join(datPath, 'pdf'),
-              path.join(outputPath, 'pdf'));
+              path.join(outputPath, 'pdf'),
+              { filter: filterFunc });
 
   // copy server views
   fs.copySync(path.join(datPath, 'views'),

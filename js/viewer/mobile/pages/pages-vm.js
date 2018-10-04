@@ -154,6 +154,14 @@ export default Map.extend('PagesVM', {
       }
     },
 
+    answersJSON: {
+      get () {
+        const answers = this.attr('interview.answers')
+        const parsed = JSON.stringify(answers.serialize())
+        return parsed
+      }
+    },
+
     traceLogic: {
       value: []
     }

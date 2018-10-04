@@ -113,15 +113,18 @@
       var variableKey = variableBoxesMap[boxKey][0].variable.toLowerCase()
       var variable = variables[variableKey]
       var answer = answers[variableKey]
-      var hasVariableToPatch = variable && answer
+      var answerValue = answer && answer.values[1]
+      var hasAnswerValue = answerValue !== null &&
+                          answerValue !== undefined &&
+                          answerValue !== ''
+      var hasVariableToPatch = variable && answer && hasAnswerValue
       if (!hasVariableToPatch) {
         return patches
       }
 
       var boxes = variableBoxesMap[boxKey]
-      var answerValue = answer.values[1]
       var defaultVariableOptions = {
-        overflowStyle: 'overflow-to-addendum',
+        overflowStyle: 'clip-overflow',
         addendumLabel: variable.name,
         checkIcon: 'normal-check',
         isCheck: false
@@ -381,6 +384,7 @@
     readInteger: readInteger,
     getTemplateOverlay: getTemplateOverlay,
     testing: {
+      getOverlay: getOverlay,
       getPatcher: getPatcher,
       getTextPatches: getTextPatches,
       getDatePatches: getDatePatches,

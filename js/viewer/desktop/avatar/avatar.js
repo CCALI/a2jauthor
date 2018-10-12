@@ -1,7 +1,6 @@
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './avatar.stache'
-import baseURL from 'can-util/js/base-url/base-url'
 import joinURIs from 'can-util/js/join-uris/join-uris'
 import {
   Face,
@@ -15,7 +14,6 @@ import {
 import 'can-map-define'
 
 function getBaseUrl () {
-  // Source: https://github.com/canjs/canjs/blob/432c9b0c0f9f8ace62788cf7c8258998673856b9/view/stache/mustache_helpers.js#L204
   return window.System.baseURL
 }
 
@@ -121,7 +119,7 @@ export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
      */
     svgBasePath: {
       get () {
-        return joinBaseUrl('viewer//images/')
+        return joinBaseUrl('viewer/images/')
       }
     }
   },

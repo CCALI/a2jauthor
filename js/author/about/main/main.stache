@@ -119,7 +119,7 @@
   </div>
   <div class='col-xs-2'>
     <a2j-viewer-avatar
-      kind="guide"
+      kind:raw="guide"
       vm:gender:from="guide.guideGender"
       vm:skin:from="guide.avatarSkinTone"
       vm:hair:from="guide.avatarHairColor"

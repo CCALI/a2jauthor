@@ -3,7 +3,7 @@ import Component from 'can-component'
 import template from './main.stache'
 
 function getLanguageList () {
-  const langs = Languages.regional
+  const langs = window.Languages.regional
   const locales = Object.keys(langs)
   return locales.map(code => {
     const {
@@ -56,6 +56,7 @@ function proxyGuideInfo (viewModel) {
 
 export const AboutMainVm = CanMap.extend({
   define: {
+    guide: {},
     languageOptions: {
       get () {
         return getLanguageList().map(language => ({
@@ -68,7 +69,7 @@ export const AboutMainVm = CanMap.extend({
 
   updateLanguagePack () {
     const language = this.attr('guide.language')
-    Languages.set(language)
+    window.Languages.set(language)
   },
 
   updateAvatarGender (event) {
@@ -78,10 +79,12 @@ export const AboutMainVm = CanMap.extend({
   },
 
   updateSkinTone (skinTone) {
+    console.log('updating skin color')
     this.attr('guide.avatarSkinTone', skinTone)
   },
 
   updateHairColor (hairColor) {
+    console.log('updating hair color')
     this.attr('guide.avatarHairColor', hairColor)
   }
 })

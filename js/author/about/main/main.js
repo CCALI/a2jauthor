@@ -79,12 +79,10 @@ export const AboutMainVm = CanMap.extend({
   },
 
   updateSkinTone (skinTone) {
-    console.log('updating skin color')
     this.attr('guide.avatarSkinTone', skinTone)
   },
 
   updateHairColor (hairColor) {
-    console.log('updating hair color')
     this.attr('guide.avatarHairColor', hairColor)
   }
 })

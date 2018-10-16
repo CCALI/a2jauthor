@@ -8,13 +8,14 @@ import canDomEvents from 'can-dom-events'
 import canReflect from 'can-reflect'
 
 import 'can-map-define'
-// import { runInThisContext } from 'vm';
 
 export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   selectedPageIndex: {
     type: 'string',
-    get (lastSet) {
-      return lastSet || '0'
+    value ({lastSet, listenTo, resolve}) {
+      resolve(0)
+
+      listenTo(lastSet, resolve)
     }
   },
 
@@ -29,31 +30,7 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
 
   // visitedPage is the currentPage map plus repeatVarValue & outerLoopVarValue
   visitedPage: {
-    value ({lastSet, listenTo, resolve}) {
-      const visitedPageHandler = function () {
-        const loopVarState = {
-          repeatVarValue: this.repeatVarValue,
-          outerLoopVarValue: this.outerLoopVarValue
-        }
-
-        const newVisitedPage = _assign(loopVarState, this.currentPage.serialize())
-        const selectedPageIndex = this.getVisitedPageIndex(newVisitedPage)
-
-        // only resolve if visitedPage does not already exist
-        if(selectedPageIndex === -1) {
-          this.visitedPages.unshift(newVisitedPage)
-          resolve(newVisitedPage)
-        }
-      }
-
-      // changes to any of these 3 values requires checking for a newly visitedPage
-      listenTo('currentPage', visitedPageHandler)
-
-      listenTo('repeatVarValue', visitedPageHandler)
-
-      listenTo('outerloopVarValue', visitedPageHandler)
-
-    }
+    Type: DefineMap
   },
 
   // CanMap based on current page name (this.page)
@@ -70,8 +47,8 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
     value ({ lastSet, listenTo, resolve }) {
       // this.page = foo
       listenTo(lastSet, (pageName) => {
-        this.dispatch('pageSet')
         resolve(pageName)
+        this.dispatch('pageSet')
       })
       // page set by drop down navigation
       listenTo('selectedPageName', (ev, selectedPageName) => {
@@ -85,19 +62,46 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
       // page explicitly set, check for current repeatVarValue
       listenTo('pageSet', (ev) => {
         const repeatVar = this.currentPage && this.currentPage.repeatVar
-        const repeatVarValue = repeatVar && this.logic.varGet(repeatVar)
-        resolve(this.logic.varGet(repeatVar))
+        if (repeatVar) {
+          const repeatVarValue = repeatVar && this.logic.varGet(repeatVar)
+          resolve(repeatVarValue)
+        } else {
+          resolve(null)
+        }
+        console.log('rptv dispatch')
+        this.dispatch('loopVarUpdate')
       })
       // restoring from a previously visitedPage
       listenTo('selectedPageIndex', (ev, selectedPageIndex) => {
         const selectedPage = this.visitedPages[selectedPageIndex]
+        this.logic.varSet(selectedPage.repeatVar, selectedPage.repeatVarValue)
         resolve(selectedPage.repeatVarValue)
       })
     }
   },
 
   outerLoopVarValue: {
-    // mirrors repeatVarValue
+    value ({ lastSet, listenTo, resolve }) {
+      // page explicitly set, check for current repeatVarValue
+      listenTo('pageSet', (ev) => {
+        const outerLoopVar = this.currentPage && this.currentPage.outerLoopVar
+        if (outerLoopVar) {
+          const outerLoopVarValue = outerLoopVar && this.logic.varGet(outerLoopVar)
+          resolve(outerLoopVarValue)
+        } else {
+          resolve(null)
+        }
+
+        console.log('outerloopVar dispatch')
+        this.dispatch('loopVarUpdate')
+      })
+      // restoring from a previously visitedPage
+      listenTo('selectedPageIndex', (ev, selectedPageIndex) => {
+        const selectedPage = this.visitedPages[selectedPageIndex]
+        this.logic.varSet(selectedPage.outerLoopVar, selectedPage.outerLoopVarValue)
+        resolve(selectedPage.outerLoopVarValue)
+      })
+    }
   },
 
   visitedPages: {
@@ -179,8 +183,8 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   getVisitedPageIndex (visitedPage) {
     return _findIndex(this.visitedPages, function (page) {
       return visitedPage.name === page.name &&
-      visitedPage.repeatVarValue === page.repeatVarValue &&
-      visitedPage.outerLoopValue === page.outerLoopVarValue
+      visitedPage.repeatVarValue == page.repeatVarValue &&
+      visitedPage.outerLoopValue == page.outerLoopVarValue
     })
   },
 
@@ -207,6 +211,44 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
 
     // if gotoPage changes, codeBefore fired a goto event
     return preGotoPage !== postGotoPage ? postGotoPage : false
+  },
+
+  connectedCallback (el) {
+    const visitedPageHandler = () => {
+      if (!this.currentPage) { return }
+
+      const newVisitedPage = new DefineMap(this.currentPage)
+      newVisitedPage.set('repeatVarValue', this.repeatVarValue)
+      newVisitedPage.set('outerLoopVarValue', this.outerLoopVarValue)
+
+      const selectedPageIndex = this.getVisitedPageIndex(newVisitedPage)
+
+      // only resolve if visitedPage does not already exist
+      if (selectedPageIndex === -1) {
+        this.visitedPages.unshift(newVisitedPage)
+        this.lastVisitedPageName = newVisitedPage.name
+        this.visitedPage = newVisitedPage
+      } else {
+        this.selectedPageIndex = selectedPageIndex
+      }
+    }
+
+    // changes to any of these 3 values requires checking for a newly visitedPage
+    this.listenTo('loopVarUpdate', (ev) => {
+      const newGotoPage = this.fireCodeBefore(this.currentPage, this.logic)
+      if (!newGotoPage) {
+        visitedPageHandler.call(this)
+      } else {
+        this.page = newGotoPage
+      }
+    })
+
+    // TODO: this is a event cascade
+    this.listenTo('repeatVarValue', () => {})
+    this.listenTo('outerLoopVarValue', () => {})
+    this.listenTo('page', () => {})
+
+    return () => { this.stopListening() }
   }
 })
 

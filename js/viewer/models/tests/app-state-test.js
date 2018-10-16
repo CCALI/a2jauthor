@@ -12,6 +12,7 @@ describe('AppState', function () {
   let interview
   let answers
   let logic
+  let appStateTeardown
 
   beforeEach(function (done) {
     let promise = Interview.findOne({url: '/interview.json'})
@@ -25,17 +26,25 @@ describe('AppState', function () {
         eval: sinon.spy(),
         exec: sinon.spy(),
         varGet: sinon.stub(),
+        varSet: sinon.stub(),
         gotoPage: ''
       })
 
       appState = new AppState({interview, logic})
+      // simulate stache bind on visitedPages
+      appStateTeardown = appState.connectedCallback()
 
       // collect the actual page names of the interview
       let pages = interview.attr('pages')
       pageNames = pages.map(page => page.attr('name'))
 
+
       done()
     })
+  })
+
+  afterEach(function () {
+    appStateTeardown()
   })
 
   it('defaults visitedPages to empty list', function () {
@@ -44,9 +53,6 @@ describe('AppState', function () {
   })
 
   it('creates a new visitedPage when appState.page is set', function () {
-    // simulate stache bind on visitedPages
-    appState.listenTo('visitedPage', () => {})
-
     let visitedPage = appState.visitedPage
     assert.equal(visitedPage, undefined, 'initial value is undefined')
 
@@ -56,9 +62,6 @@ describe('AppState', function () {
   })
 
   it('keeps a list of visited pages', function () {
-    // simulate stache bind on visitedPages
-    appState.listenTo('visitedPage', () => {})
-
     assert.equal(appState.visitedPages.length, 0, 'empty on init')
 
     // simulate page to page navigation
@@ -69,22 +72,32 @@ describe('AppState', function () {
   })
 
   it('handles repeatVarValues', function () {
-    // simulate stache bind on visitedPages
-    appState.listenTo('visitedPage', () => {})
-
     interview.attr('pages.1.repeatVar', 'childCount')
     logic.varGet.returns(1)
     appState.page = pageNames[1]
 
-    assert.equal(appState.visitedPages.length, 1, 'third page appState.visitedPages')
+    assert.equal(appState.visitedPages.length, 1, 'appState.visitedPages should be correct length')
     assert.equal(appState.visitedPages[0].repeatVar, 'childCount', 'page has repeatVar')
     assert.equal(appState.visitedPages[0].repeatVarValue, '1', 'page has repeatVarValue')
   })
 
-  it.only('handles repeatVarValue changes with same page name', function () {
-    // simulate stache bind on visitedPages
-    appState.listenTo('visitedPage', () => {})
+  it('handles following pages without repeatVarValues', function () {
+    interview.attr('pages.1.repeatVar', 'childCount')
+    logic.varGet.returns(1)
+    appState.page = pageNames[1]
 
+    assert.equal(appState.visitedPages.length, 1, 'appState.visitedPages should be correct length')
+    assert.equal(appState.visitedPages[0].repeatVar, 'childCount', 'page has repeatVar')
+    assert.equal(appState.visitedPages[0].repeatVarValue, '1', 'page has repeatVarValue')
+
+    appState.page = pageNames[2]
+    logic.varGet.returns(null)
+    assert.equal(appState.visitedPages.length, 2, 'appState.visitedPages should be correct length')
+    assert.equal(appState.visitedPages[0].repeatVar, '', 'page should not have repeatVar')
+    assert.equal(appState.visitedPages[0].repeatVarValue, null, 'page has no repeatVarValue')
+  })
+
+  it('handles repeatVarValue changes with same page name', function () {
     interview.attr('pages.1.repeatVar', 'childCount')
     logic.varGet.returns(1)
     appState.page = pageNames[1]
@@ -100,10 +113,7 @@ describe('AppState', function () {
     assert.equal(appState.visitedPages[0].repeatVarValue, '2', 'second page has repeatVarValue')
   })
 
-  it.skip('pages with codeBefore goto logic should only add the target page to visitedPages instead', function () {
-    // simulate stache bind on visitedPages
-    appState.listenTo('visitedPage', () => {})
-
+  it('pages with codeBefore goto logic should only add the target page to visitedPages instead', function () {
     // simulate logic changing gotoPage based on A2J codeBefore script
     logic.attr('gotoPage', pageNames[1])
     logic.exec = function () { logic.attr('gotoPage', pageNames[2]) }
@@ -115,8 +125,7 @@ describe('AppState', function () {
     assert.equal(appState.page, pageNames[2], 'page name should be set by codeBefore script')
   })
 
-  it.skip('sets the lastVisitedPage to be used as a RESUME target', function () {
-    appState.listenTo('visitedPage', () => {})
+  it('sets the lastVisitedPageName to be used as a RESUME target', function () {
     let lastVisitedPageName = appState.lastVisitedPageName
     assert.equal(lastVisitedPageName, false, 'defaults to false')
 
@@ -129,18 +138,12 @@ describe('AppState', function () {
     assert.equal(lastVisitedPageName, pageNames[1], 'lastVisitedPage stays up to date when page changes')
   })
 
-  it.skip('only includes known pages', function () {
-    // simulate stache bind on visitedPages
-    appState.listenTo('visitedPage', () => {})
-
+  it('only includes known pages', function () {
     appState.page = 'this-page-does-not-exist'
     assert.equal(appState.visitedPages.length, 0, 'invalid page')
   })
 
-  it.skip('recently visited pages are at the top of the list', function () {
-    // simulate stache bind on visitedPages
-    appState.listenTo('visitedPage', () => {})
-
+  it('recently visited pages are at the top of the list', function () {
     appState.page = pageNames[0]
     appState.page = pageNames[1]
     appState.page = pageNames[2]
@@ -150,27 +153,5 @@ describe('AppState', function () {
     assert.equal(appState.visitedPages.shift().name, pageNames[2])
     assert.equal(appState.visitedPages.shift().name, pageNames[1])
     assert.equal(appState.visitedPages.shift().name, pageNames[0])
-  })
-
-  it.skip('visitedPages should not be empty when both page/interview are set', function () {
-    // // set first page then interview
-    // appState = new AppState({ logic })
-    // // simulate stache bind on visitedPages
-    // appState.listenTo('visitedPages', () => {})
-    // appState.page = pageNames[0]
-    // appState.interview = interview
-
-    // assert.equal(appState.visitedPages.length, 1, 'should include first page name')
-    // assert.equal(appState.visitedPages[0].name, pageNames[0])
-
-    // set first interview then page.
-    appState = new AppState({ logic })
-    // simulate stache bind on visitedPages
-    appState.listenTo('visitedPage', () => {})
-    appState.interview = interview
-    appState.page = pageNames[0]
-
-    assert.equal(appState.visitedPages.length, 1, 'should include first page name')
-    assert.equal(appState.visitedPages[0].name, pageNames[0])
   })
 })

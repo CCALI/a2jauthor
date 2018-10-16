@@ -33,6 +33,7 @@ const persistedStatePromise = PersistedState.findOne()
 
 // Route state
 const rState = new AppState()
+rState.connectedCallback(document.body)
 
 route.register('', { view: 'intro' })
 route.register('view/{view}/page/{page}')

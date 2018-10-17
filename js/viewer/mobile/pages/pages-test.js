@@ -6,6 +6,7 @@ import { assert } from 'chai'
 import PagesVM from './pages-vm'
 import sinon from 'sinon'
 import AppState from 'caja/viewer/models/app-state'
+import Infinite from 'caja/viewer/mobile/util/infinite'
 import constants from 'caja/viewer/models/constants'
 import canDomEvents from 'can-dom-events'
 import './pages'
@@ -22,12 +23,7 @@ describe('<a2j-pages>', () => {
     logicStub = new CanMap({
       exec: $.noop,
       eval: $.noop,
-      infinite: {
-        errors: $.noop,
-        reset: $.noop,
-        _counter: 0,
-        inc: $.noop
-      },
+      infinite: new Infinite(),
       gotoPage: false,
       varExists: sinon.spy(),
       varCreate: sinon.spy(),
@@ -71,8 +67,14 @@ describe('<a2j-pages>', () => {
   })
 
   describe('viewModel', () => {
+    let appStateTeardown
     beforeEach(() => {
       vm = new PagesVM(defaults)
+      appStateTeardown = vm.attr('rState').connectedCallback()
+    })
+
+    afterEach(() => {
+      appStateTeardown()
     })
 
     it('should set traceLogic with pageName on init', () => {
@@ -265,7 +267,7 @@ describe('<a2j-pages>', () => {
     })
 
     it('setCurrentPage', () => {
-      vm.attr('rState.page', 'foo')
+      vm.attr('rState').page = 'foo'
       vm.setCurrentPage()
 
       assert.deepEqual(vm.attr('traceLogic').attr(), [{
@@ -291,7 +293,7 @@ describe('<a2j-pages>', () => {
         vm.attr('interview.answers.statete', answerVar)
 
         nextPageStub.fields.push(field)
-        vm.attr('rState.page', 'Next') // page find() always returns nextPageStub
+        vm.attr('rState').page = 'Next' // page find() always returns nextPageStub
 
         vm.setCurrentPage()
 
@@ -315,7 +317,7 @@ describe('<a2j-pages>', () => {
         vm.attr('interview.answers.statete', answerVar)
 
         nextPageStub.fields.push(field)
-        vm.attr('rState.page', 'Next') // page find() always returns nextPageStub
+        vm.attr('rState').page = 'Next' // page find() always returns nextPageStub
 
         vm.setCurrentPage()
 
@@ -325,26 +327,28 @@ describe('<a2j-pages>', () => {
   })
 
   describe('Component', () => {
+    let rStateTeardown
     beforeEach(() => {
       let frag = stache(
-        '<a2j-pages></a2j-pages>'
+        '<a2j-pages rState:bind="rState"></a2j-pages>'
       )
-      $('#test-area').html(frag())
+      $('#test-area').html(frag({ rState: defaults.rState }))
       vm = $('a2j-pages')[0].viewModel
 
       vm.attr(defaults)
-
+      rStateTeardown = vm.attr('rState').connectedCallback()
       // prevent traceLogic changes happening in setCurrentPage
       vm.setCurrentPage = $.noop
     })
 
     afterEach(() => {
+      rStateTeardown()
       $('#test-area').empty()
     })
 
     describe('{rState} page', () => {
       it('default', () => {
-        vm.attr('rState.page', 'foo')
+        vm.attr('rState').page = 'foo'
 
         assert.deepEqual(vm.attr('traceLogic').attr(), [], 'should not run codeBefore trace if it is empty')
       })
@@ -353,8 +357,8 @@ describe('<a2j-pages>', () => {
         nextPageStub.attr('codeBefore', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>')
         vm.attr('rState.logic', defaults.logic)
         vm.attr('rState.interview', defaults.interview)
-        vm.attr('rState.page', 'bar')
-        assert.deepEqual(vm.attr('rState.traceLogic').attr(), [{page: 'Next'}, {
+        vm.attr('rState').page = 'bar'
+        assert.deepEqual(vm.attr('rState').traceLogic.attr(), [{page: 'Next'}, {
           'codeBefore': { format: 'info', msg: 'Logic Before Question'}
         }], 'logic before trace')
       })
@@ -362,12 +366,12 @@ describe('<a2j-pages>', () => {
       it('codeBefore with forceNavigation: true should not execute codeBefore', () => {
         nextPageStub.attr('codeBefore', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>')
         vm.attr('rState.forceNavigation', true)
-        vm.attr('rState.page', 'bar')
+        vm.attr('rState').page = 'bar'
 
         assert.deepEqual(vm.attr('traceLogic').attr(), [], 'logic before trace with forceNavigation true')
       })
 
-      it.skip('Possible infinite loop', (done) => {
+      it.only('Possible infinite loop', (done) => {
         vm.attr('traceLogic').bind('change', function handler () {
           vm.attr('traceLogic').unbind('change', handler)
           assert.deepEqual(vm.attr('traceLogic').attr(), [{
@@ -379,9 +383,8 @@ describe('<a2j-pages>', () => {
           done()
         })
 
-        logicStub.attr('infinite').errors = function () { return true }
-        logicStub.attr('gotoPage', 'foo')
-        vm.attr('rState.page', 'foo')
+        nextPageStub.attr('codeBefore', 'GOTO "foo"')
+        vm.attr('rState').page = 'foo'
       })
     })
 

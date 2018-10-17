@@ -472,7 +472,7 @@ export default CanMap.extend('PagesVM', {
   },
 
   setCurrentPage () {
-    const pageName = this.attr('rState.page')
+    const pageName = this.attr('rState').page
 
     if (pageName && pageName !== 'FAIL') {
       const page = this.attr('interview.pages').find(pageName)

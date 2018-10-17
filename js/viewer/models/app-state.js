@@ -1,7 +1,6 @@
 import CanList from 'can-list'
 import route from 'can-route'
 import _findIndex from 'lodash/findIndex'
-import _assign from 'lodash/assign'
 import DefineMap from 'can-define/map/map'
 import DefineList from 'can-define/list/list'
 import canDomEvents from 'can-dom-events'
@@ -68,7 +67,7 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
         } else {
           resolve(null)
         }
-        console.log('rptv dispatch')
+
         this.dispatch('loopVarUpdate')
       })
       // restoring from a previously visitedPage
@@ -92,7 +91,6 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
           resolve(null)
         }
 
-        console.log('outerloopVar dispatch')
         this.dispatch('loopVarUpdate')
       })
       // restoring from a previously visitedPage
@@ -172,12 +170,6 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
     // stopListenTo fired in preview.js and start-app.js
     var firstPageHandler = function () {}
     this.listenTo('visitedPage', firstPageHandler)
-
-    var self = this
-
-    canDomEvents.addEventListener(window, 'traceLogic', function (ev, msg) {
-      self.traceLogic.push(msg)
-    })
   },
 
   getVisitedPageIndex (visitedPage) {
@@ -225,28 +217,33 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
 
       // only resolve if visitedPage does not already exist
       if (selectedPageIndex === -1) {
-        this.visitedPages.unshift(newVisitedPage)
-        this.lastVisitedPageName = newVisitedPage.name
-        this.visitedPage = newVisitedPage
+        const newGotoPage = this.fireCodeBefore(this.currentPage, this.logic)
+        // newGotoPage means A2J GOTO logic sets a new page
+        // and does not add the current page to the visitedPages list
+        if (newGotoPage) {
+          this.page = newGotoPage
+        } else {
+          this.visitedPages.unshift(newVisitedPage)
+          this.lastVisitedPageName = newVisitedPage.name
+          this.visitedPage = newVisitedPage
+        }
       } else {
         this.selectedPageIndex = selectedPageIndex
       }
     }
 
-    // changes to any of these 3 values requires checking for a newly visitedPage
-    this.listenTo('loopVarUpdate', (ev) => {
-      const newGotoPage = this.fireCodeBefore(this.currentPage, this.logic)
-      if (!newGotoPage) {
-        visitedPageHandler.call(this)
-      } else {
-        this.page = newGotoPage
-      }
-    })
+    // any time one of the loopVars update, check for new visitedPage
+    this.listenTo('loopVarUpdate', visitedPageHandler)
 
-    // TODO: this is a event cascade
+    // TODO: figure out a way to do this without these bindings
+    this.listenTo('page', () => {})
     this.listenTo('repeatVarValue', () => {})
     this.listenTo('outerLoopVarValue', () => {})
-    this.listenTo('page', () => {})
+
+    // this.listenTo(this.traceLogic, 'length', ()=>{ debugger })
+    this.listenTo(window, 'traceLogic', (ev) => {
+      this.traceLogic.push(ev.data)
+    })
 
     return () => { this.stopListening() }
   }

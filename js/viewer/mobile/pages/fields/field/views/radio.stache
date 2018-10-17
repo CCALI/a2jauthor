@@ -2,17 +2,17 @@
 
 <div>
 	<div class="a2j-radio-button-group radio">
-		<label class="a2j-radio-button-label" for="{{label}}">
+		<label class="a2j-radio-button-label" for="{{field.label}}">
 		<input
 			type="radio"
-			id="{{label}}"
-			name="{{name}}"
+			id="{{field.label}}"
+			name="{{field.name}}"
 			el:value:bind="value"
 			{{#if(shouldBeChecked)}}checked{{/if}}
 			class="a2j-radio-button"
 			on:el:change="validateField(null, scope.element)"/>
 
-		{{{ eval(label, repeatVarValue) }}}</label>
+		{{{ eval(field.label, repeatVarValue) }}}</label>
 	</div>
 
 	{{> invalid-prompt-tpl }}

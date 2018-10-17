@@ -1,11 +1,11 @@
 <div>
   <div class="form-group {{#if(field.hasError)}}has-error{{/if}}">
-    <label for="{{label}}">
-      {{{ eval(label, repeatVarValue) }}}
+    <label for="{{field.label}}">
+      {{{ eval(field.label, repeatVarValue) }}}
       {{#if(field.required)}}<small class="text-danger">(Required)</small>{{/if}}
     </label>
 
-    <select id="{{label}}" name="{{name}}" el:value:bind="field._answer.values" on:el:change="validateField(null, scope.element)">
+    <select id="{{field.label}}" name="{{field.name}}" el:value:bind="field._answer.values" on:el:change="validateField(null, scope.element)">
       {{#each(numberPickOptions)}}
         <option value="{{.}}">{{.}}</option>
       {{/each}}

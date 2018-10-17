@@ -2,23 +2,23 @@
 
 <div>
   <div class="form-group {{#if(field.hasError)}}has-error{{/if}}">
-    <label class="control-label" for="{{label}}">
-      {{{ eval(label, repeatVarValue) }}}
+    <label class="control-label" for="{{field.label}}">
+      {{{ eval(field.label, repeatVarValue) }}}
       {{#if(field.required)}}<small class="text-danger">(Required)</small>{{/if}}
     </label>
 
     <textarea
-      id="{{label}}"
+      id="{{field.label}}"
       style="resize: none;"
       class="form-control"
-      name="{{name}}"
+      name="{{field.name}}"
       on:el:change="validateField(null, scope.element)"
       el:value:bind="field._answer.values"
       on:el:input="calcAvailableLength(scope.event)"/>
 
     <button class="btn btn-default btn-xs pull-right" on:el:click="expandTextlong(field, scope.element)"><span class="icon resize-btn-icon glyphicon-resize" aria-hidden="true"></span></button>
 
-      {{#if maxChars}}
+      {{#if(field.maxChars)}}
         {{> exceeded-maxchars-tpl }}
       {{/if}}
   </div>

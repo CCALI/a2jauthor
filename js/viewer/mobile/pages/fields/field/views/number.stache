@@ -2,15 +2,15 @@
 
 <div>
   <div class="form-group {{#if(field.hasError)}}has-error{{/if}}">
-    <label class="control-label" for="{{label}}">
-      {{{ eval(label, repeatVarValue) }}}
+    <label class="control-label" for="{{field.label}}">
+      {{{ eval(field.label, repeatVarValue) }}}
       {{#if(field.required)}}<small class="text-danger">(Required)</small>{{/if}}
     </label>
     <div>
       <input
         type="text"
-        id="{{label}}"
-        name="{{name}}"
+        id="{{field.label}}"
+        name="{{field.name}}"
         class="form-control"
         on:el:input="preValidateNumber(null, scope.element)"
         on:el:change="validateField(null, scope.element)"

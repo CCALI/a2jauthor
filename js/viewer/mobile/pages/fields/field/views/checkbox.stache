@@ -2,14 +2,14 @@
 <div>
 	<div class="{{#if(field.hasError)}}has-error{{/if}}">
 		<div class="checkbox">
-		<label for="{{label}}">
+		<label for="{{field.label}}">
 		<input
-			id="{{label}}"
+			id="{{field.label}}"
 			type="checkbox"
-			name="{{name}}"
+			name="{{field.name}}"
 			el:checked:bind="field._answer.values"
 			on:el:change="validateField(null, scope.element)"/>
-		{{{ eval(label, repeatVarValue) }}}</label>
+		{{{ eval(field.label, repeatVarValue) }}}</label>
 		</div>
 	</div>
 

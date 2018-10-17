@@ -587,6 +587,11 @@ export default Component.extend({
       a = a.isComputed ? +a() : +a
       b = b.isComputed ? +b() : +b
       return a + b
+    },
+
+    eval: function (str) {
+      str = typeof str === 'function' ? str() : str
+      return this.attr('logic').eval(str)
     }
   }
 })

@@ -3,39 +3,32 @@ import route from 'can-route'
 import _findIndex from 'lodash/findIndex'
 import DefineMap from 'can-define/map/map'
 import DefineList from 'can-define/list/list'
-import canDomEvents from 'can-dom-events'
 import canReflect from 'can-reflect'
 
 import 'can-map-define'
 
 export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   selectedPageIndex: {
+    serialize: false,
     type: 'string',
     value ({lastSet, listenTo, resolve}) {
       resolve(0)
 
-      listenTo(lastSet, resolve)
+      listenTo(lastSet, (index) => {
+        const revisitedPage = this.visitedPages[index]
+        this.restoreLoopVars(revisitedPage)
+        resolve(index)
+      })
     }
   },
 
   selectedPageName: {
+    serialize: false,
     type: 'string',
     get () {
       if (this.visitedPages.length) {
         return this.visitedPages[this.selectedPageIndex].name
       }
-    }
-  },
-
-  // visitedPage is the currentPage map plus repeatVarValue & outerLoopVarValue
-  visitedPage: {
-    Type: DefineMap
-  },
-
-  // CanMap based on current page name (this.page)
-  currentPage: {
-    get () {
-      return this.interview && this.interview.getPageByName(this.page)
     }
   },
 
@@ -52,70 +45,29 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
       // page set by drop down navigation
       listenTo('selectedPageName', (ev, selectedPageName) => {
         resolve(selectedPageName)
+        // this.dispatch('pageSet')
       })
+    }
+  },
+
+  // CanMap based on current page name (this.page)
+  currentPage: {
+    serialize: false,
+    get () {
+      return this.interview && this.interview.getPageByName(this.page)
     }
   },
 
   repeatVarValue: {
-    value ({ lastSet, listenTo, resolve }) {
-      // page explicitly set, check for current repeatVarValue
-      listenTo('pageSet', (ev) => {
-        const repeatVar = this.currentPage && this.currentPage.repeatVar
-        if (repeatVar) {
-          const repeatVarValue = repeatVar && this.logic.varGet(repeatVar)
-          resolve(repeatVarValue)
-        } else {
-          resolve(null)
-        }
-
-        this.dispatch('loopVarUpdate')
-      })
-      // restoring from a previously visitedPage
-      listenTo('selectedPageIndex', (ev, selectedPageIndex) => {
-        const selectedPage = this.visitedPages[selectedPageIndex]
-        this.logic.varSet(selectedPage.repeatVar, selectedPage.repeatVarValue)
-        resolve(selectedPage.repeatVarValue)
-      })
-    }
+    type: 'number'
   },
 
   outerLoopVarValue: {
-    value ({ lastSet, listenTo, resolve }) {
-      // page explicitly set, check for current repeatVarValue
-      listenTo('pageSet', (ev) => {
-        const outerLoopVar = this.currentPage && this.currentPage.outerLoopVar
-        if (outerLoopVar) {
-          const outerLoopVarValue = outerLoopVar && this.logic.varGet(outerLoopVar)
-          resolve(outerLoopVarValue)
-        } else {
-          resolve(null)
-        }
-
-        this.dispatch('loopVarUpdate')
-      })
-      // restoring from a previously visitedPage
-      listenTo('selectedPageIndex', (ev, selectedPageIndex) => {
-        const selectedPage = this.visitedPages[selectedPageIndex]
-        this.logic.varSet(selectedPage.outerLoopVar, selectedPage.outerLoopVarValue)
-        resolve(selectedPage.outerLoopVarValue)
-      })
-    }
+    type: 'number'
   },
 
   visitedPages: {
     default () { return new DefineList([]) }
-  },
-
-  forceNavigation: {
-    type: 'boolean',
-    default: false,
-    serialize: false
-  },
-
-  singlePageLoop: {
-    type: 'boolean',
-    default: false,
-    serialize: false
   },
 
   previewActive: {
@@ -165,13 +117,6 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
     }
   },
 
-  init () {
-    // bind to capture first page of invterview
-    // stopListenTo fired in preview.js and start-app.js
-    var firstPageHandler = function () {}
-    this.listenTo('visitedPage', firstPageHandler)
-  },
-
   getVisitedPageIndex (visitedPage) {
     return _findIndex(this.visitedPages, function (page) {
       return visitedPage.name === page.name &&
@@ -180,10 +125,17 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
     })
   },
 
-  updateLoopVars (pageName) {
-    const page = this.interview && this.interview.getPageByName(pageName)
-    this.repeatVarValue = page.repeatVar && this.logic.varGet(page.repeatVar)
-    this.outerLoopVarValue = page.outerLoopVar && this.logic.varGet(page.outerLoopVar)
+  restoreLoopVars (visitedPage) {
+    const repeatVar = visitedPage.repeatVar
+    if (repeatVar) {
+      this.logic.varSet(repeatVar, visitedPage.repeatVarValue)
+      this.repeatVarValue = visitedPage.repeatVarValue
+    }
+    const outerLoopVar = visitedPage.outerLoopVar
+    if (outerLoopVar) {
+      this.logic.varSet(outerLoopVar, visitedPage.outerLoopVarValue)
+      this.outerLoopVarValue = visitedPage.outerLoopVarValue
+    }
   },
 
   fireCodeBefore (page, logic) {
@@ -201,44 +153,45 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
 
     let postGotoPage = this.logic.attr('gotoPage')
 
-    // if gotoPage changes, codeBefore fired a goto event
+    // if gotoPage changes, codeBefore fired a A2J GOTO logic
     return preGotoPage !== postGotoPage ? postGotoPage : false
   },
 
   connectedCallback (el) {
-    const visitedPageHandler = () => {
+    const visitedPageHandler = (ev) => {
       if (!this.currentPage) { return }
 
+      const newGotoPage = this.fireCodeBefore(this.currentPage, this.logic)
+
+      if (newGotoPage) {
+        this.page = newGotoPage
+        return
+      }
+
+      const repeatVar = this.currentPage.repeatVar
+      const outerLoopVar = this.currentPage.outerLoopVar
+      const repeatVarValue = repeatVar ? this.logic.varGet(repeatVar) : null
+      const outerLoopVarValue = outerLoopVar ? this.logic.varGet(outerLoopVar) : null
+
       const newVisitedPage = new DefineMap(this.currentPage)
-      newVisitedPage.set('repeatVarValue', this.repeatVarValue)
-      newVisitedPage.set('outerLoopVarValue', this.outerLoopVarValue)
+      newVisitedPage.set('repeatVarValue', repeatVarValue)
+      newVisitedPage.set('outerLoopVarValue', outerLoopVarValue)
+      const revisitedPageIndex = this.getVisitedPageIndex(newVisitedPage)
 
-      const selectedPageIndex = this.getVisitedPageIndex(newVisitedPage)
-
-      // only resolve if visitedPage does not already exist
-      if (selectedPageIndex === -1) {
-        const newGotoPage = this.fireCodeBefore(this.currentPage, this.logic)
-        // newGotoPage means A2J GOTO logic sets a new page
-        // and does not add the current page to the visitedPages list
-        if (newGotoPage) {
-          this.page = newGotoPage
-        } else {
-          this.visitedPages.unshift(newVisitedPage)
-          this.lastVisitedPageName = newVisitedPage.name
-          this.visitedPage = newVisitedPage
-        }
+      if (revisitedPageIndex === -1) {
+        this.repeatVarValue = repeatVarValue
+        this.outerLoopVarValue = outerLoopVarValue
+        this.visitedPages.unshift(newVisitedPage)
       } else {
-        this.selectedPageIndex = selectedPageIndex
+        this.selectedPageIndex = revisitedPageIndex
       }
     }
 
     // any time one of the loopVars update, check for new visitedPage
-    this.listenTo('loopVarUpdate', visitedPageHandler)
+    this.listenTo('pageSet', visitedPageHandler)
 
     // TODO: figure out a way to do this without these bindings
     this.listenTo('page', () => {})
-    this.listenTo('repeatVarValue', () => {})
-    this.listenTo('outerLoopVarValue', () => {})
 
     // this.listenTo(this.traceLogic, 'length', ()=>{ debugger })
     this.listenTo(window, 'traceLogic', (ev) => {

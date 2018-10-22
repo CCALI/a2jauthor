@@ -399,16 +399,6 @@ export default CanMap.extend('PagesVM', {
         const answers = this.attr('interview.answers')
         answers.attr(`${constants.vnInterviewIncompleteTF.toLowerCase()}.values`, [null, false])
       }
-      // Make sure pages looping on themselves update
-      if (page.name === gotoPage) {
-        let interview = this.attr('interview')
-        rState.singlePageLoop = true
-
-        rState.setVisitedPages(gotoPage, interview)
-        rState.page = gotoPage
-
-        rState.singlePageLoop = false
-      }
 
       return
     }

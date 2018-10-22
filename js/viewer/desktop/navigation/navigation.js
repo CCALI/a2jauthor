@@ -6,7 +6,6 @@ import template from './navigation.stache'
 import constants from 'caja/viewer/models/constants'
 import {Analytics} from 'caja/viewer/util/analytics'
 import isMobile from 'caja/viewer/is-mobile'
-import canKey from 'can-key'
 
 import 'can-map-define'
 import 'jquerypp/event/swipe/'
@@ -51,12 +50,7 @@ export let ViewerNavigationVM = CanMap.extend({
      *
      * Name of currently selected page.
      */
-    selectedPageName: {
-      get(pageName) {
-        let pages = this.attr('visitedPages');
-        return pageName ? pageName : canKey.get(pages, '0.name');
-      }
-    },
+    selectedPageName: {},
 
     selectedPageIndex: {},
 
@@ -291,16 +285,6 @@ export default Component.extend({
           vm.navigateForward()
         }
       })
-    },
-    /*
-    * select most recently visited page in selectedPageIndex dropdown
-    */
-    '{visitedPages} length': function () {
-      this.viewModel.attr('selectedPageIndex', '0')
-    },
-
-    '{visitedPages} revisited': function (map, ev, revisitedIndex) {
-      this.viewModel.attr('selectedPageIndex', revisitedIndex)
     }
   }
 })

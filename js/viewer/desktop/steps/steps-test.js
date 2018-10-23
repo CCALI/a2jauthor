@@ -17,6 +17,7 @@ describe('<a2j-viewer-steps>', function() {
   describe('Component', function() {
     let vm;
     let interview;
+    let appStateTeardown
 
     beforeEach(function() {
       const rawData = _assign({}, interviewJSON);
@@ -25,8 +26,11 @@ describe('<a2j-viewer-steps>', function() {
       interview = new Interview(parsedData);
 
       const mState = new CanMap();
-      const page = interview.attr('firstPage');
-      const rState = new AppState({ page });
+      const rState = new AppState();
+      appStateTeardown = rState.connectedCallback()
+      rState.page = interview.attr('firstPage')
+      rState.interview = interview
+
       const logicStub = new CanMap({
         exec: $.noop,
         infinite: {
@@ -41,6 +45,7 @@ describe('<a2j-viewer-steps>', function() {
         varSet: sinon.spy(),
         eval: sinon.spy()
       })
+
       let langStub = new CanMap({
         MonthNamesShort: 'Jan, Feb',
         MonthNamesLong: 'January, February',
@@ -62,6 +67,7 @@ describe('<a2j-viewer-steps>', function() {
 
     afterEach(function() {
       $('#test-area').empty();
+      appStateTeardown()
     });
 
     it('renders arrow when step number is zero', function(done) {
@@ -106,12 +112,28 @@ describe('<a2j-viewer-steps>', function() {
 
   describe('ViewModel', function() {
     let vm;
+    let appStateTeardown
+    let currentPage
 
     beforeEach(() => {
-      const rState = new AppState({ page: '01-Introduction' });
-      vm = new ViewerStepsVM({ rState });
+      const rState = new AppState();
 
-      const currentPage = new CanMap({
+      const logicStub = new CanMap({
+        exec: $.noop,
+        infinite: {
+          errors: $.noop,
+          reset: $.noop,
+          _counter: 0,
+          inc: $.noop
+        },
+        varExists: sinon.spy(),
+        varCreate: sinon.spy(),
+        varGet: sinon.stub(),
+        varSet: sinon.spy(),
+        eval: sinon.spy()
+      })
+
+      currentPage = new CanMap({
         step: {
           number: '2',
           text: 'Audio Test'
@@ -126,7 +148,7 @@ describe('<a2j-viewer-steps>', function() {
       });
 
       const interview = {
-        getPageByName() {
+        getPageByName () {
           return currentPage;
         },
 
@@ -139,8 +161,19 @@ describe('<a2j-viewer-steps>', function() {
 
         answers
       };
+
+      appStateTeardown = rState.connectedCallback()
+      rState.interview = interview
+      rState.logic = logicStub
+      rState.page = '01-Introduction'
+
+      vm = new ViewerStepsVM({ rState });
       vm.attr({ interview });
     });
+
+    afterEach (() => {
+      appStateTeardown()
+    })
 
     it('getTextForStep', () => {
       let stepVar = vm.attr('interview.answers.a2j step 0');
@@ -185,7 +218,7 @@ describe('<a2j-viewer-steps>', function() {
       );
     });
 
-    it('computes nextSteps & remainingSteps based on current step', function() {
+    it('computes nextSteps & remainingSteps based on current step', function () {
       const expectedNextSteps = [
         { number: '3', text: 'Graphic Test' },
         { number: '4', text: 'Graphic with Audio Test' },
@@ -251,13 +284,13 @@ describe('<a2j-viewer-steps>', function() {
     });
 
     it('showClientAvatar / guideAvatarFacingDirection', () => {
-      let currentPage = new CanMap();
+      currentPage = new CanMap();
 
       vm.attr({
         interview: {
           userGender: '',
-          getPageByName() {
-            return currentPage;
+          getPageByName () {
+            return currentPage
           }
         }
       });

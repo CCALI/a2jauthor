@@ -30,7 +30,11 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      *
      * current page in interview
      */
-    currentPage: {},
+    currentPage: {
+      get () {
+        return this.attr('rState.currentPage')
+      }
+    },
 
     /**
      * @property {can.List} steps.ViewModel.prototype.steps steps

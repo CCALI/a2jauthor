@@ -21,6 +21,8 @@ let DesktopViewerVM = CanMap.extend('DesktopViewerVM', {
 
     maxDisplayedSteps: {},
 
+    interview: {},
+
     traceLogic: {
       value: []
     },

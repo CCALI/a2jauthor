@@ -9,9 +9,8 @@
     </div>
 
     <div class="guide-wrapper {{^if(showClientAvatar)}}guide-center{{/if}}">
-      <div id="guideBubble" class="bubble {{#if(guideBubbleTallerThanAvatar)}}vertical{{/else}}top{{/if}}">
+      <div id="guideBubble" class="bubble {{#if(guideBubbleTallerThanAvatar)}}vertical{{else}}top{{/if}}">
         <a2j-pages
-          currentPage:from="currentPage"
           lang:from="lang"
           logic:bind="logic"
           rState:bind="rState"
@@ -25,7 +24,7 @@
       {{#unless showClientAvatar}}
         {{#currentPage}}
           {{#if(scope/learn)}}
-            <div id="clientBubble" class="bubble right {{#if(scope/clientBubbleTallerThanAvatar)}}vertical{{/else}}top{{/if}}" role="complementary">
+            <div id="clientBubble" class="bubble right {{#if(scope/clientBubbleTallerThanAvatar)}}vertical{{else}}top{{/if}}" role="complementary">
               {{> learn-more-tpl}}
             </div>
           {{/if}}

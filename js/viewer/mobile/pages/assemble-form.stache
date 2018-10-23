@@ -5,7 +5,7 @@
   <input type="hidden" name="fileDataUrl" el:value:from="scope/mState.fileDataURL">
 
   <button type="submit"
-          on:el:click="scope/navigate()"
+          on:el:click="scope/navigate(this)"
           class="btn btn-default btn-navigate">
     {{scope/getButtonLabel(scope/label)}}
   </button>

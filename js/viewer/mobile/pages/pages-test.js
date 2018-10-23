@@ -6,6 +6,7 @@ import { assert } from 'chai'
 import PagesVM from './pages-vm'
 import sinon from 'sinon'
 import AppState from 'caja/viewer/models/app-state'
+import Infinite from 'caja/viewer/mobile/util/infinite'
 import constants from 'caja/viewer/models/constants'
 import canDomEvents from 'can-dom-events'
 import './pages'
@@ -20,6 +21,7 @@ describe('<a2j-pages>', () => {
 
   beforeEach(() => {
     logicStub = new CanMap({
+      infinite: new Infinite(),
       exec: $.noop,
       eval: $.noop,
       gotoPage: false,

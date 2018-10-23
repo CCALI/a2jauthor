@@ -614,16 +614,7 @@ export default CanMap.extend('PagesVM', {
     var gotoPage = logic.attr('gotoPage')
 
     // If rState.lastPageBeforeExit has value, we are exiting the interview
-    if (logic.attr('infinite.outOfRange')) {
-      vm.attr('traceLogic').push({
-        'infinite loop': {
-          format: 'info',
-          msg: 'Possible infinite loop. Too many page jumps without user interaction'
-        }
-      })
-      vm.attr('rState.page', '__error')
-    } else if (gotoPage && gotoPage.length && !rState.lastPageBeforeExit) {
-      logic.attr('infinite').inc()
+    if (gotoPage && gotoPage.length && !rState.lastPageBeforeExit) {
       vm._setAnswerIndex(nextPage, gotoPage)
     } else {
       logic.attr('infinite').reset()

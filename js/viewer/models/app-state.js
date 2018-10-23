@@ -157,12 +157,26 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
     return preGotoPage !== postGotoPage ? postGotoPage : false
   },
 
+  checkInfiniteLoop () {
+    if (this.logic.attr('infinite.outOfRange')) {
+      this.traceLogic.push({
+        'infinite loop': {
+          format: 'info',
+          msg: 'Possible infinite loop. Too many page jumps without user interaction'
+        }
+      })
+      this.page = '__error'
+    } else {
+      this.logic.attr('infinite').inc()
+    }
+  },
+
   connectedCallback (el) {
     const visitedPageHandler = (ev) => {
       if (!this.currentPage) { return }
+      this.checkInfiniteLoop()
 
       const newGotoPage = this.fireCodeBefore(this.currentPage, this.logic)
-
       if (newGotoPage) {
         this.page = newGotoPage
         return
@@ -182,6 +196,7 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
         this.repeatVarValue = repeatVarValue
         this.outerLoopVarValue = outerLoopVarValue
         this.visitedPages.unshift(newVisitedPage)
+        this.lastVisitedPageName = newVisitedPage.name
       } else {
         this.selectedPageIndex = revisitedPageIndex
       }

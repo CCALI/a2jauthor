@@ -1,6 +1,7 @@
 import { assert } from 'chai'
 import AppState from 'caja/viewer/models/app-state'
 import Interview from 'caja/viewer/models/interview'
+import Infinite from 'caja/viewer/mobile/util/infinite'
 import CanMap from 'can-map'
 import sinon from 'sinon'
 
@@ -23,6 +24,7 @@ describe('AppState', function () {
       interview.attr('answers', answers)
 
       logic = new CanMap({
+        infinite: new Infinite(),
         eval: sinon.spy(),
         exec: sinon.spy(),
         varGet: sinon.stub(),
@@ -35,7 +37,7 @@ describe('AppState', function () {
       appStateTeardown = appState.connectedCallback()
 
       // collect the actual page names of the interview
-      let pages = interview.attr('pages')
+      const pages = interview.attr('pages')
       pageNames = pages.map(page => page.attr('name'))
 
 
@@ -50,15 +52,6 @@ describe('AppState', function () {
   it('defaults visitedPages to empty list', function () {
     const visitedPages = appState.visitedPages
     assert.equal(visitedPages.length, 0, 'empty on init')
-  })
-
-  it('creates a new visitedPage when appState.page is set', function () {
-    let visitedPage = appState.visitedPage
-    assert.equal(visitedPage, undefined, 'initial value is undefined')
-
-    appState.page = pageNames[0]
-    visitedPage = appState.visitedPage
-    assert.equal(visitedPage.name, pageNames[0], 'visitedPage generated when page is set')
   })
 
   it('keeps a list of visited pages', function () {
@@ -153,5 +146,21 @@ describe('AppState', function () {
     assert.equal(appState.visitedPages.shift().name, pageNames[2])
     assert.equal(appState.visitedPages.shift().name, pageNames[1])
     assert.equal(appState.visitedPages.shift().name, pageNames[0])
+  })
+
+  it('Possible infinite loop', (done) => {
+    appState.traceLogic.bind('change', function handler () {
+      appState.traceLogic.unbind('change', handler)
+      assert.deepEqual(appState.traceLogic.attr(), [{
+        'infinite loop': {
+          format: 'info',
+          msg: 'Possible infinite loop. Too many page jumps without user interaction'
+        }
+      }], 'Possible infinite loop')
+      done()
+    })
+
+    appState.logic.attr('infinite._counter', 501)
+    appState.page = pageNames[0]
   })
 })

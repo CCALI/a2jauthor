@@ -6,7 +6,6 @@ import { assert } from 'chai'
 import PagesVM from './pages-vm'
 import sinon from 'sinon'
 import AppState from 'caja/viewer/models/app-state'
-import Infinite from 'caja/viewer/mobile/util/infinite'
 import constants from 'caja/viewer/models/constants'
 import canDomEvents from 'can-dom-events'
 import './pages'
@@ -23,7 +22,6 @@ describe('<a2j-pages>', () => {
     logicStub = new CanMap({
       exec: $.noop,
       eval: $.noop,
-      infinite: new Infinite(),
       gotoPage: false,
       varExists: sinon.spy(),
       varCreate: sinon.spy(),
@@ -361,30 +359,6 @@ describe('<a2j-pages>', () => {
         assert.deepEqual(vm.attr('rState').traceLogic.attr(), [{page: 'Next'}, {
           'codeBefore': { format: 'info', msg: 'Logic Before Question'}
         }], 'logic before trace')
-      })
-
-      it('codeBefore with forceNavigation: true should not execute codeBefore', () => {
-        nextPageStub.attr('codeBefore', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>')
-        vm.attr('rState.forceNavigation', true)
-        vm.attr('rState').page = 'bar'
-
-        assert.deepEqual(vm.attr('traceLogic').attr(), [], 'logic before trace with forceNavigation true')
-      })
-
-      it.only('Possible infinite loop', (done) => {
-        vm.attr('traceLogic').bind('change', function handler () {
-          vm.attr('traceLogic').unbind('change', handler)
-          assert.deepEqual(vm.attr('traceLogic').attr(), [{
-            'infinite loop': {
-              format: 'info',
-              msg: 'Possible infinite loop. Too many page jumps without user interaction'
-            }
-          }], 'Possible infinite loop')
-          done()
-        })
-
-        nextPageStub.attr('codeBefore', 'GOTO "foo"')
-        vm.attr('rState').page = 'foo'
       })
     })
 

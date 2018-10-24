@@ -10,6 +10,7 @@ import 'steal-mocha'
 describe('AppState', function () {
   let appState // DefineMap
   let pageNames
+  let pages
   let interview
   let answers
   let logic
@@ -37,7 +38,7 @@ describe('AppState', function () {
       appStateTeardown = appState.connectedCallback()
 
       // collect the actual page names of the interview
-      const pages = interview.attr('pages')
+      pages = interview.attr('pages')
       pageNames = pages.map(page => page.attr('name'))
 
 
@@ -162,5 +163,43 @@ describe('AppState', function () {
 
     appState.logic.attr('infinite._counter', 501)
     appState.page = pageNames[0]
+  })
+
+  it('changing selectedPageIndex resolves page', () => {
+    // populate visitedPages
+    appState.page = pages.attr(2).name
+    appState.page = pages.attr(1).name
+    appState.page = pages.attr(0).name
+
+    appState.selectedPageIndex = '1'
+
+    assert.equal(
+      appState.page,
+      pages.attr(appState.selectedPageIndex).attr('name'),
+      'should set appState.page to page 1'
+    )
+
+    appState.selectedPageIndex = '0'
+
+    assert.equal(
+      appState.page,
+      pages.attr(appState.selectedPageIndex).attr('name'),
+      'should set appState.page to page 1'
+    )
+  })
+
+  it('selectedPageName', function () {
+    // navigate to first page
+    appState.page = pages.attr(0).name
+    // navigate to second page
+    appState.page = pages.attr(1).name
+
+    appState.selectedPageIndex = 1
+    assert.equal(appState.selectedPageName, pages.attr(0).attr('name'),
+    'should return most recently visited page name')
+
+    appState.selectedPageIndex = 0
+    assert.equal(appState.selectedPageName, pages.attr(1).attr('name'),
+      'should return second page name')
   })
 })

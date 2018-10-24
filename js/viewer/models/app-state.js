@@ -45,7 +45,6 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
       // page set by drop down navigation
       listenTo('selectedPageName', (ev, selectedPageName) => {
         resolve(selectedPageName)
-        // this.dispatch('pageSet')
       })
     }
   },
@@ -120,8 +119,8 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   getVisitedPageIndex (visitedPage) {
     return _findIndex(this.visitedPages, function (page) {
       return visitedPage.name === page.name &&
-      visitedPage.repeatVarValue == page.repeatVarValue &&
-      visitedPage.outerLoopValue == page.outerLoopVarValue
+      visitedPage.repeatVarValue == page.repeatVarValue && // eslint-disable-line
+      visitedPage.outerLoopValue == page.outerLoopVarValue // eslint-disable-line
     })
   },
 

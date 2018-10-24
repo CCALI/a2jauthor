@@ -5,7 +5,6 @@ import AppState from 'caja/viewer/models/app-state';
 import Interview from 'caja/viewer/models/interview';
 import constants from 'caja/viewer/models/constants';
 import {ViewerNavigationVM} from 'caja/viewer/desktop/navigation/';
-import sinon from 'sinon';
 import canReflect from 'can-reflect';
 import 'caja/viewer/models/fixtures/'
 
@@ -13,7 +12,7 @@ import 'steal-mocha';
 
 describe('<a2j-viewer-navigation>', function() {
 
-  describe.skip('viewModel', function() {
+  describe('viewModel', function() {
     let vm;
     let pages;
     let visited;
@@ -25,26 +24,13 @@ describe('<a2j-viewer-navigation>', function() {
 
       promise.then(function(_interview) {
         interview = _interview;
-        appState = new AppState();
-
+        appState = new AppState({interview});
         pages = interview.attr('pages');
         visited = canReflect.getKeyValue(appState, 'visitedPages');
         vm = new ViewerNavigationVM({appState, interview});
 
         done();
       });
-    });
-
-    it('selectedPageName', function() {
-      // navigate to first page
-      visited.unshift(pages.attr(0));
-      assert.equal(vm.attr('selectedPageName'), pages.attr(0).attr('name'),
-        'should return most recently visited page name');
-
-      // navigate to second page
-      visited.unshift(pages.attr(1));
-      assert.equal(vm.attr('selectedPageName'), pages.attr(1).attr('name'),
-        'should return second page name');
     });
 
     it('collects feedback form data', function() {
@@ -156,52 +142,6 @@ describe('<a2j-viewer-navigation>', function() {
 
       vm.navigateForward();
       assert.equal(vm.attr('selectedPageIndex'), 0, 'should navigate to most recent page');
-    });
-
-    it('selectedPageIndex', () => {
-      visited.unshift(pages.attr(2));
-      visited.unshift(pages.attr(1));
-      visited.unshift(pages.attr(0));
-
-      const logicSpy = { varSet: sinon.spy() };
-      vm.attr('logic', logicSpy);
-
-      vm.attr('selectedPageIndex', '1');
-      let currentlySelected = vm.attr('selectedPageIndex');
-
-      assert.equal(
-        appState.page,
-        pages.attr(currentlySelected).attr('name'),
-        'should set appState.page to page 1'
-      );
-
-      assert.equal(logicSpy.varSet.callCount, 0,
-        'should not set repeatVar logic for page 1');
-
-      vm.attr('selectedPageIndex', '0');
-      currentlySelected = vm.attr('selectedPageIndex');
-
-      assert.equal(
-        '01-Introduction',
-        pages.attr(currentlySelected).attr('name'),
-        'should set selectedpageName to page 0'
-      );
-
-      assert.equal(logicSpy.varSet.callCount, 0,
-        'should not set repeatVar logic for page 0');
-
-      pages.attr(2).attr('repeatVar', 'foo');
-      pages.attr(2).attr('repeatVarValue', 2);
-      vm.attr('selectedPageIndex', 2);
-      currentlySelected = vm.attr('selectedPageIndex');
-
-      assert.equal(
-        '01-Decedent Full Name',
-        pages.attr(currentlySelected).attr('name'),
-        'should set appState.page to page 2'
-      );
-
-      assert(logicSpy.varSet.calledWith('foo', 2), 'should set repeatVar logic');
     });
   });
 

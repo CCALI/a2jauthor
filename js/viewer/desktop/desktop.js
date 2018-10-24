@@ -7,11 +7,7 @@ import 'can-map-define'
 
 let DesktopViewerVM = CanMap.extend('DesktopViewerVM', {
   define: {
-    currentPage: {
-      get () {
-        return this.attr('rState.currentPage')
-      }
-    },
+    currentPage: {},
 
     visitedPages: {},
 

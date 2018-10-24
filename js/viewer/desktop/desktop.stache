@@ -25,17 +25,18 @@
         <div id="sidewalk" class="sidewalk"></div>
 
         <a2j-viewer-steps
-          vm:remainingSteps:to="remainingSteps"
-          vm:maxDisplayedSteps:to="maxDisplayedSteps"
-          vm:showDebugPanel:from="showDebugPanel"
-          vm:lang:from="lang"
-          vm:logic:bind="logic"
-          vm:rState:bind="rState"
-          vm:pState:bind="pState"
-          vm:mState:bind="mState"
-          vm:interview:bind="interview"
-          vm:modalContent:bind="modalContent"
-          vm:traceLogic:bind="traceLogic" />
+          remainingSteps:to="remainingSteps"
+          maxDisplayedSteps:to="maxDisplayedSteps"
+          showDebugPanel:from="showDebugPanel"
+          currentPage:from="rState.currentPage"
+          lang:from="lang"
+          logic:bind="logic"
+          rState:bind="rState"
+          pState:bind="pState"
+          mState:bind="mState"
+          interview:bind="interview"
+          modalContent:bind="modalContent"
+          traceLogic:bind="traceLogic" />
       </div><!-- app-content -->
 
       {{#if authorBrandLogo}}

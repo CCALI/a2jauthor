@@ -11,6 +11,7 @@
     <div class="guide-wrapper {{^if(showClientAvatar)}}guide-center{{/if}}">
       <div id="guideBubble" class="bubble {{#if(guideBubbleTallerThanAvatar)}}vertical{{else}}top{{/if}}">
         <a2j-pages
+          currentPage:from="currentPage"
           lang:from="lang"
           logic:bind="logic"
           rState:bind="rState"

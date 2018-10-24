@@ -97,6 +97,15 @@ export const InterviewsVM = CanMap.extend({
 
       if (index !== -1) interviews.splice(index, 1)
     }
+  },
+
+  connectedCallback () {
+    const self = this
+    $('#author-app').on('author:guide-deleted', function (ev, guideId) {
+      self.deleteInterview(guideId)
+    })
+
+    return () => { $('#author-app').off('author:guide-deleted') }
   }
 })
 
@@ -142,10 +151,6 @@ export default Component.extend({
       // reset collapsed steps tracker in A2J_Tabs
       // TODO: handle this in Pages tab refactor
       window.collapsedSteps = []
-    },
-
-    '{window} author:guide-deleted': function (window, evt, guideId) {
-      this.viewModel.deleteInterview(guideId)
     }
   }
 })

@@ -462,22 +462,21 @@ export default CanMap.extend('PagesVM', {
   },
 
   setCurrentPage () {
-    const pageName = this.attr('rState').page
+    const currentPage = this.attr('currentPage')
 
-    if (pageName && pageName !== 'FAIL') {
-      const page = this.attr('interview.pages').find(pageName)
+    if (currentPage && currentPage.name !== 'FAIL') {
 
-      if (!page) {
-        console.warn(`Unknown page: ${pageName}`)
+      if (!currentPage) {
+        console.warn(`Unknown page: ${currentPage.name}`)
         return
       }
 
       queues.batch.start()
 
-      this.attr('traceLogic').push({ page: page.attr('name') })
-      this.setFieldAnswers(page.attr('fields'))
-      this.attr('mState.header', page.attr('step.text'))
-      this.attr('mState.step', page.attr('step.number'))
+      this.attr('traceLogic').push({ page: currentPage.attr('name') })
+      this.setFieldAnswers(currentPage.attr('fields'))
+      this.attr('mState.header', currentPage.attr('step.text'))
+      this.attr('mState.step', currentPage.attr('step.number'))
 
       queues.batch.stop()
     }

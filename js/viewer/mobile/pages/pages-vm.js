@@ -206,6 +206,7 @@ export default CanMap.extend('PagesVM', {
       const answers = logic.attr('interview.answers')
       if (answers) {
         let vm = new FieldVM()
+
         fields.forEach(function (field) {
           const type = field.attr('type')
           // These types work with native code because you have to click to select
@@ -276,7 +277,6 @@ export default CanMap.extend('PagesVM', {
     // Author can provide an external URL to explain why user did not qualify
     if (button.next === constants.qIDFAIL) {
       this.setInterviewAsComplete()
-
       let failURL = button.url.toLowerCase()
       let hasProtocol = failURL.indexOf('http') === 0
       failURL = hasProtocol ? failURL : 'http://' + failURL
@@ -409,7 +409,7 @@ export default CanMap.extend('PagesVM', {
         rState.page = button.next
       }
 
-            // if these special buttons are used, the interview is complete (incomplete is false)
+        // if these special buttons are used, the interview is complete (incomplete is false)
         if (button.next === constants.qIDFAIL ||
           button.next === constants.qIDSUCCESS ||
           button.next === constants.qIDASSEMBLE ||

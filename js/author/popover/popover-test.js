@@ -1,5 +1,5 @@
 import { assert } from 'chai'
-import {Popover} from './popover'
+import { Popover } from './popover'
 
 import 'steal-mocha'
 

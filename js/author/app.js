@@ -19,7 +19,7 @@ window.can = can
 const appState = new AppState()
 
 route.data = appState
-route.register('{page}', {page: 'interviews'})
+route.register('{page}', { page: 'interviews' })
 route.register('{page}/{guideId}')
 route.register('{page}/{action}/{guideId}-{templateId}')
 
@@ -37,7 +37,7 @@ let loadLegacyCode = function () {
   return loader.import('caja/author/src/')
 }
 
-let render = function ({template}) {
+let render = function ({ template }) {
   $('#author-app').html(template(appState))
 }
 

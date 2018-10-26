@@ -43,7 +43,7 @@ export default {
         [a, b] = [b, a]
       }
 
-      return a.attr(key).localeCompare(b.attr(key), {numeric: true})
+      return a.attr(key).localeCompare(b.attr(key), { numeric: true })
     }
   },
 

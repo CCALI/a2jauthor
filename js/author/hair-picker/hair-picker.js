@@ -23,7 +23,7 @@ export const HairPickerVm = CanMap.extend({
       }
     },
 
-    hairClasses: {value: () => hairClasses}
+    hairClasses: { value: () => hairClasses }
   },
 
   onHairClass (hairClass) {

@@ -32,7 +32,7 @@ export default CanMap.extend({
         let appState = this.attr('appState')
         let guideId = appState.attr('guideId')
 
-        return A2JTemplate.findAll({guideId})
+        return A2JTemplate.findAll({ guideId })
       }
     },
 
@@ -235,7 +235,7 @@ export default CanMap.extend({
 
   sortList (templates) {
     let criteria = this.attr('sortCriteria')
-    let {key, direction} = criteria.attr()
+    let { key, direction } = criteria.attr()
     templates.sortBy(key, direction)
     return templates
   },

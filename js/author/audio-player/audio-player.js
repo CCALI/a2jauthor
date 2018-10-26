@@ -35,15 +35,15 @@ function formatTime (inputSeconds) {
 
 export const AudioPlayerVm = CanMap.extend('AudioPlayer', {
   define: {
-    player: {value: null},
-    isPlaying: {value: false},
-    sourceUrl: {value: null},
-    isLoadingAudio: {value: false},
-    loadAudioError: {value: null},
-    isVolumeShowing: {value: false},
-    currentVolume: {value: 0},
-    currentSecond: {value: null},
-    totalSeconds: {value: null},
+    player: { value: null },
+    isPlaying: { value: false },
+    sourceUrl: { value: null },
+    isLoadingAudio: { value: false },
+    loadAudioError: { value: null },
+    isVolumeShowing: { value: false },
+    currentVolume: { value: 0 },
+    currentSecond: { value: null },
+    totalSeconds: { value: null },
     currentTime: {
       get () {
         return formatTime(this.attr('currentSecond'))

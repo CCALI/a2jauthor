@@ -65,10 +65,10 @@ export default {
         return
       }
 
-      if (stringA.localeCompare(stringB, {numeric: true}) === 0) {
+      if (stringA.localeCompare(stringB, { numeric: true }) === 0) {
         return tiebreaker(a, b)
       } else {
-        return stringA.localeCompare(stringB, {numeric: true})
+        return stringA.localeCompare(stringB, { numeric: true })
       }
     }
   },

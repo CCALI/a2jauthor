@@ -103,7 +103,7 @@ export function createOverlayPdf (guideId, templateId, overlay) {
   return request(settings).then(({ pdfId }) => pdfId)
 }
 
-export function assemblePdf ({variables, template}) {
+export function assemblePdf ({ variables, template }) {
   return promptFile(null, 'ANX')
     .then(file => {
       return new Promise((resolve, reject) => {

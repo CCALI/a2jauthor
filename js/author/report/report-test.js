@@ -1,5 +1,5 @@
 import { assert } from 'chai'
-import {ReportVM} from './report'
+import { ReportVM } from './report'
 
 import 'steal-mocha'
 
@@ -49,18 +49,18 @@ describe('<report-page>', () => {
 
     it('pagesAndPopups and buildPagesByStep', () => {
       const sortedPages = [
-        {type: 'a2j', step: '0'},
-        {type: 'a2j', step: '1'},
-        {type: 'a2j', step: '1'},
-        {type: 'Popup'}
+        { type: 'a2j', step: '0' },
+        { type: 'a2j', step: '1' },
+        { type: 'a2j', step: '1' },
+        { type: 'Popup' }
       ]
 
       const steps = [
-        {text: 'intro', number: '0'},
-        {text: 'info', number: '1'}
+        { text: 'intro', number: '0' },
+        { text: 'info', number: '1' }
       ]
 
-      const guide = {sortedPages, steps}
+      const guide = { sortedPages, steps }
       vm.attr('guide', guide)
 
       let promise = vm.attr('pagesAndPopups')
@@ -80,18 +80,18 @@ describe('<report-page>', () => {
     it('sortedVariableList and getVariableList', () => {
       const guide = {}
       guide.vars = [
-        {name: 'First Name'},
-        {name: 'User Gender'},
-        {name: 'Last Name'}
+        { name: 'First Name' },
+        { name: 'User Gender' },
+        { name: 'Last Name' }
       ]
 
       vm.attr('guide', guide)
 
       const sortedVariableList = vm.attr('sortedVariableList')
       const expectedOrder = [
-        {name: 'First Name'},
-        {name: 'Last Name'},
-        {name: 'User Gender'}
+        { name: 'First Name' },
+        { name: 'Last Name' },
+        { name: 'User Gender' }
       ]
 
       assert.equal(sortedVariableList[0].name, expectedOrder[0].name, 'variable list did not sort correctly')
@@ -100,12 +100,12 @@ describe('<report-page>', () => {
     })
 
     it('displayLanguage', () => {
-      const guide = {language: 'en'}
+      const guide = { language: 'en' }
       vm.attr('guide', guide)
 
       window.Languages = {
         regional: {
-          en: {locale: 'en', Language: 'English', LanguageEN: 'English'}}
+          en: { locale: 'en', Language: 'English', LanguageEN: 'English' } }
       }
 
       const displayLanguage = vm.attr('displayLanguage')

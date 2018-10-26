@@ -20,7 +20,7 @@ export const SkinPickerVm = CanMap.extend({
       }
     },
 
-    skinClasses: {value: () => skinClasses}
+    skinClasses: { value: () => skinClasses }
   },
 
   onSkinClass (skinClass) {

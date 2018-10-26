@@ -39,7 +39,7 @@ export default function bindCustomEvents (appState) {
       alertMessages.attr('guideId', data.guideId)
     }
 
-    alertMessages.push({message: data.message, open: true})
+    alertMessages.push({ message: data.message, open: true })
   })
 
   // user double clicks a guide in the interview tab or clicks the open guide

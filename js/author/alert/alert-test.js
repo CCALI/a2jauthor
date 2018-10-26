@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import { assert } from 'chai'
-import {Alert} from './alert'
+import { Alert } from './alert'
 import stache from 'can-stache'
 
 import 'steal-mocha'

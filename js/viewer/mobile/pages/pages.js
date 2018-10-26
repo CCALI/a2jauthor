@@ -41,6 +41,7 @@ export default Component.extend({
     getButtonLabel (label) {
       return label || this.attr('lang').attr('Continue')
     },
+
     eval (str) {
       str = typeof str === 'function' ? str() : str
       return this.attr('logic').eval(str)
@@ -120,11 +121,19 @@ export default Component.extend({
     },
 
     // This event is fired when the Exit, Success, or AssembleSuccess button is clicked,
-    // it waits to asynchronously submit the form that posts the XML asnwers
+    // it waits to asynchronously submit the form that posts the XML answers
     // to the `setDataURL` endpoint.
     '{viewModel} post-answers-to-server': function () {
-      const $form = $(this.element).find('.post-answers-form')
+      // multiple answer forms can be on the page at once, only submit the first
+      // as the answers to post in each instance of the form are the same
+      const $form = this.element.find('.post-answers-form')[0]
+      // prevent double clicks on submit
+      if (this._isSubmitting) {
+        return
+      }
 
+      this._isSubmitting = true
+      // this timeout allows final page answers to be saved before posting
       setTimeout(function () {
         $form.submit()
       })
@@ -137,8 +146,6 @@ export default Component.extend({
 
       // keep answer index in sync with repeatVarValue
       // when a user is navigating via the nav bar
-      const rState = this.viewModel.attr('rState')
-
       if (rState && rState.repeatVarValue) {
         rState.answerIndex = rState.repeatVarValue
       }

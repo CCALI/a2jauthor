@@ -115,7 +115,7 @@ export default CanMap.extend('PagesVM', {
      */
     guideId: {
       get () {
-        return gGuideID
+        return window.gGuideID
       }
     },
 
@@ -148,6 +148,14 @@ export default CanMap.extend('PagesVM', {
       get () {
         const answers = this.attr('interview.answers')
         const parsed = Parser.parseANX(answers.serialize())
+        return parsed
+      }
+    },
+
+    answersJSON: {
+      get () {
+        const answers = this.attr('interview.answers')
+        const parsed = JSON.stringify(answers.serialize())
         return parsed
       }
     },
@@ -231,7 +239,7 @@ export default CanMap.extend('PagesVM', {
     }
   },
 
-  navigate (button) {
+  navigate (button, el, ev) {
     const page = this.attr('currentPage')
     const fields = page.attr('fields')
     const logic = this.attr('logic')
@@ -267,6 +275,8 @@ export default CanMap.extend('PagesVM', {
     // special destination qIDFAIL button skips rest of navigate
     // Author can provide an external URL to explain why user did not qualify
     if (button.next === constants.qIDFAIL) {
+      this.setInterviewAsComplete()
+
       let failURL = button.url.toLowerCase()
       let hasProtocol = failURL.indexOf('http') === 0
       failURL = hasProtocol ? failURL : 'http://' + failURL
@@ -316,7 +326,6 @@ export default CanMap.extend('PagesVM', {
 
     const anyFieldWithError = _some(fields, f => f.attr('hasError'))
 
-
     if (!anyFieldWithError) {
       const logic = this.attr('logic')
       const codeAfter = page.attr('codeAfter')
@@ -351,7 +360,16 @@ export default CanMap.extend('PagesVM', {
           title: 'Answers Submitted :',
           text: 'Page will redirect shortly'
         })
+
         this.dispatch('post-answers-to-server')
+
+        // qIDASSEMBLESUCCESS requires the default event to trigger the assemble post
+        // and the manual submit below to trigger the answer save
+        // TODO: the way final answer forms are created and submitted needs a refactor
+        if (button.next !== constants.qIDASSEMBLESUCCESS) {
+          ev && ev.preventDefault()
+        }
+        this.setInterviewAsComplete()
 
         // disable the previously clicked button
         setTimeout(() => {
@@ -391,20 +409,25 @@ export default CanMap.extend('PagesVM', {
         rState.page = button.next
       }
 
-      // if these special buttons are used, the interview is complete (incomplete is false)
-      if (button.next === constants.qIDFAIL ||
-        button.next === constants.qIDSUCCESS ||
-        button.next === constants.qIDASSEMBLE ||
-        button.next === constants.qIDASSEMBLESUCCESS) {
-        const answers = this.attr('interview.answers')
-        answers.attr(`${constants.vnInterviewIncompleteTF.toLowerCase()}.values`, [null, false])
-      }
+            // if these special buttons are used, the interview is complete (incomplete is false)
+        if (button.next === constants.qIDFAIL ||
+          button.next === constants.qIDSUCCESS ||
+          button.next === constants.qIDASSEMBLE ||
+          button.next === constants.qIDASSEMBLESUCCESS) {
+          const answers = this.attr('interview.answers')
+          this.setInterviewAsComplete()
+        }
 
       return
     }
 
     // do nothing if there are field(s) with error(s)
     return false
+  },
+
+  setInterviewAsComplete () {
+    const answers = this.attr('interview.answers')
+    answers.attr(`${constants.vnInterviewIncompleteTF.toLowerCase()}.values`, [null, false])
   },
 
   previewActiveResponses (button) {

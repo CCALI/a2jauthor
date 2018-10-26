@@ -26,12 +26,12 @@ describe('<a2j-modal> ', function () {
       const logic = new CanMap({ eval () {} })
       const ModalContent = CanMap.extend({
         define: {
-          answerName: {value: ''},
-          title: {value: ''},
-          text: {value: ''},
-          imageURL: {value: ''},
-          audioURL: {value: ''},
-          videoURL: {value: ''}
+          answerName: { value: '' },
+          title: { value: '' },
+          text: { value: '' },
+          imageURL: { value: '' },
+          audioURL: { value: '' },
+          videoURL: { value: '' }
         }
       })
       const modalContent = new ModalContent()

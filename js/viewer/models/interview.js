@@ -13,7 +13,7 @@ import _includes from 'lodash/includes'
 import _isString from 'lodash/isString'
 import Answers from 'caja/viewer/models/answers'
 import parser from 'caja/viewer/mobile/util/parser'
-import {Hair, Skin} from 'caja/viewer/desktop/avatar/colors'
+import { Hair, Skin } from 'caja/viewer/desktop/avatar/colors'
 import setupPromise from 'can-reflect-promise'
 import naturalCompare from 'string-natural-compare/'
 
@@ -79,7 +79,7 @@ const Interview = Model.extend({
     })
 
     resumeDfd.done(function (interview) {
-      dfd.resolve(_assign({interviewPath}, interview))
+      dfd.resolve(_assign({ interviewPath }, interview))
     })
 
     resumeDfd.fail(function () {

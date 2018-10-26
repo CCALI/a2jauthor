@@ -11,7 +11,7 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   selectedPageIndex: {
     serialize: false,
     type: 'string',
-    value ({lastSet, listenTo, resolve}) {
+    value ({ lastSet, listenTo, resolve }) {
       resolve(0)
 
       listenTo(lastSet, (index) => {

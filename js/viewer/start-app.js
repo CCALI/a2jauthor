@@ -6,12 +6,12 @@ import Logic from 'caja/viewer/mobile/util/logic'
 import constants from 'caja/viewer/models/constants'
 import PersistedState from 'caja/viewer/models/persisted-state'
 import setMobileDesktopClass from 'caja/viewer/util/set-mobile-desktop-class'
-import {Analytics} from 'caja/viewer/util/analytics'
+import { Analytics } from 'caja/viewer/util/analytics'
 import _assign from 'lodash/assign'
 import compute from 'can-compute'
 import route from 'can-route'
 
-export default function ({interview, pState, mState, rState}) {
+export default function ({ interview, pState, mState, rState }) {
   route.start()
 
   pState = pState || new PersistedState()

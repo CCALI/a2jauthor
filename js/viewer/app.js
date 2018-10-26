@@ -42,5 +42,5 @@ route.map(rState)
 
 Promise.all([interviewPromise, persistedStatePromise])
   .then(function ([interview, pState]) {
-    startApp({interview, pState, mState, rState})
+    startApp({ interview, pState, mState, rState })
   })

@@ -51,6 +51,7 @@ describe('<a2j-pages>', () => {
     defaults = {
       traceLogic: new CanList(),
       currentPage: new CanMap({
+        name: 'Intro',
         fields: [],
         repeatVar: '',
         text: '',
@@ -77,10 +78,6 @@ describe('<a2j-pages>', () => {
       appStateTeardown()
     })
 
-    it('should set traceLogic with pageName on init', () => {
-      assert.deepEqual(vm.attr('traceLogic').attr(), [])
-    })
-
     describe('navigate', () => {
       let setRepeatVariableStub
 
@@ -92,6 +89,15 @@ describe('<a2j-pages>', () => {
         setRepeatVariableStub.restore()
       })
 
+      it('shows the firstPage on load', () => {
+        let expectedTraceLogic = [
+          { page: 'Intro' }
+        ]
+
+        assert.deepEqual(vm.attr('traceLogic').attr(), expectedTraceLogic,
+          'shows the first page name')
+      })
+
       it('without repeatVar logic', () => {
         const button = new CanMap({
           label: 'Go!',
@@ -100,11 +106,12 @@ describe('<a2j-pages>', () => {
 
         vm.navigate(button)
 
-        let expectedTrageLogic = [
+        let expectedTraceLogic = [
+          { page: 'Intro' },
           { button: [{ msg: 'You pressed' }, { format: 'ui', msg: 'Go!' }] }
         ]
 
-        assert.deepEqual(vm.attr('traceLogic').attr(), expectedTrageLogic,
+        assert.deepEqual(vm.attr('traceLogic').attr(), expectedTraceLogic,
           'should not run codeAfter if it is empty')
 
         assert.equal(setRepeatVariableStub.callCount, 0,
@@ -114,13 +121,14 @@ describe('<a2j-pages>', () => {
         button.attr('label', 'Go Again!')
         vm.navigate(button)
 
-        expectedTrageLogic = [
+        expectedTraceLogic = [
+          { page: 'Intro' },
           { button: [{ msg: 'You pressed' }, { format: 'ui', msg: 'Go!' }] },
           { button: [{ msg: 'You pressed' }, { format: 'ui', msg: 'Go Again!' }] },
           { codeAfter: { format: 'info', msg: 'Logic After Question' } }
         ]
 
-        assert.deepEqual(vm.attr('traceLogic').attr(), expectedTrageLogic,
+        assert.deepEqual(vm.attr('traceLogic').attr(), expectedTraceLogic,
           'should run codeAfter')
       })
 
@@ -134,11 +142,12 @@ describe('<a2j-pages>', () => {
 
         vm.navigate(button)
 
-        let expectedTrageLogic = [
+        let expectedTraceLogic = [
+          { page: 'Intro' },
           { button: [{ msg: 'You pressed' }, { format: 'ui', msg: 'Go!' }] }
         ]
 
-        assert.deepEqual(vm.attr('traceLogic').attr(), expectedTrageLogic,
+        assert.deepEqual(vm.attr('traceLogic').attr(), expectedTraceLogic,
           'should not run codeAfter if it is empty')
 
         assert.equal(setRepeatVariableStub.callCount, 1,
@@ -152,13 +161,14 @@ describe('<a2j-pages>', () => {
         button.attr('label', 'Go Again!')
         vm.navigate(button)
 
-        expectedTrageLogic = [
+        expectedTraceLogic = [
+          { page: 'Intro' },
           { button: [{ msg: 'You pressed' }, { format: 'ui', msg: 'Go!' }] },
           { button: [{ msg: 'You pressed' }, { format: 'ui', msg: 'Go Again!' }] },
           { codeAfter: { format: 'info', msg: 'Logic After Question' } }
         ]
 
-        assert.deepEqual(vm.attr('traceLogic').attr(), expectedTrageLogic,
+        assert.deepEqual(vm.attr('traceLogic').attr(), expectedTraceLogic,
           'should run codeAfter')
       })
 
@@ -249,9 +259,10 @@ describe('<a2j-pages>', () => {
       assert(logicStub.varCreate.calledWith('Repeat', 'Number', false, 'Repeat variable index'), 'Creates repeatVar')
       assert(logicStub.varSet.calledWith('Repeat', 1), 'Sets repeatVar to 1')
 
-      assert.deepEqual(vm.attr('traceLogic').attr(), [{
-        'Repeat-0': { msg: 'Setting [Repeat] to 1' }
-      }], 'Should log repeatVar initialization')
+      assert.deepEqual(vm.attr('traceLogic').attr(), [
+        { page: 'Intro' },
+        { 'Repeat-0': { msg: 'Setting [Repeat] to 1' } }
+      ], 'Should log repeatVar initialization')
 
       logicStub.varGet.returns(1)
       vm.setRepeatVariable('Repeat', '+=1')
@@ -259,20 +270,21 @@ describe('<a2j-pages>', () => {
       assert(logicStub.varGet.calledWith('Repeat'), 'Gets current value of variable')
       assert(logicStub.varSet.calledWith('Repeat', 2), 'Sets repeatVar to 2')
 
-      assert.deepEqual(vm.attr('traceLogic').attr(), [{
-        'Repeat-0': { msg: 'Setting [Repeat] to 1' }
-      }, {
-        'Repeat-1': { msg: 'Incrementing [Repeat] to 2' }
-      }], 'Should log repeatVar increment')
+      assert.deepEqual(vm.attr('traceLogic').attr(), [
+        { page: 'Intro' },
+        { 'Repeat-0': { msg: 'Setting [Repeat] to 1' } },
+        { 'Repeat-1': { msg: 'Incrementing [Repeat] to 2' } }
+      ], 'Should log repeatVar increment')
     })
 
     it('setCurrentPage', () => {
-      vm.attr('rState').page = 'foo'
+      vm.attr('currentPage.name', 'foo')
       vm.setCurrentPage()
 
-      assert.deepEqual(vm.attr('traceLogic').attr(), [{
-        page: 'Next'
-      }], 'trace page name')
+      assert.deepEqual(vm.attr('traceLogic').attr(), [
+        { page: 'Intro' },
+        { page: 'foo' }
+      ], 'trace page name')
     })
 
     describe('default values', () => {
@@ -292,7 +304,7 @@ describe('<a2j-pages>', () => {
 
         vm.attr('interview.answers.statete', answerVar)
 
-        nextPageStub.fields.push(field)
+        vm.attr('currentPage.fields').push(field)
         vm.attr('rState').page = 'Next' // page find() always returns nextPageStub
 
         vm.setCurrentPage()

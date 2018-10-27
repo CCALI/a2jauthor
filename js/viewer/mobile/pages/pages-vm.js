@@ -409,14 +409,13 @@ export default CanMap.extend('PagesVM', {
         rState.page = button.next
       }
 
-        // if these special buttons are used, the interview is complete (incomplete is false)
-        if (button.next === constants.qIDFAIL ||
-          button.next === constants.qIDSUCCESS ||
-          button.next === constants.qIDASSEMBLE ||
-          button.next === constants.qIDASSEMBLESUCCESS) {
-          const answers = this.attr('interview.answers')
-          this.setInterviewAsComplete()
-        }
+      // if these special buttons are used, the interview is complete (incomplete is false)
+      if (button.next === constants.qIDFAIL ||
+        button.next === constants.qIDSUCCESS ||
+        button.next === constants.qIDASSEMBLE ||
+        button.next === constants.qIDASSEMBLESUCCESS) {
+        this.setInterviewAsComplete()
+      }
 
       return
     }

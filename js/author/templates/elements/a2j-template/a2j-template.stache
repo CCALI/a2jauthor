@@ -11,13 +11,14 @@
   {{#each rootNode.children}}
     <li
       draggable="true"
+      {{debugger}}
       class="node-wrapper{{#if(isBeingDragged)}} drag-placeholder{{/if}}">
 
       {{#if(deleted)}}
         <app-alert
-          open:from="true"
-          autoClose:from="true"
-          dismissible:from="true"
+          open:raw="true"
+          autoClose:raw="true"
+          dismissible:raw="true"
           alertType:raw="default"
           on:vm:closed="../removeNodeFromChildren(id)">
 

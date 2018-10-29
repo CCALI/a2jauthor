@@ -9,11 +9,11 @@
 <can-import from="caja/author/pdf/editor/"/>
 
 <div class="page">
-  {{#if a2jTemplatePromise.isPending}}
+  {{#if(a2jTemplatePromise.isPending)}}
     <app-loading />
   {{else}}
-    {{#if a2jTemplate}}
-      {{#if isPdfTemplate}}
+    {{#if(a2jTemplate)}}
+      {{#if(isPdfTemplate)}}
         <pdf-editor
           guideId:bind="guideId"
           guide:bind="guide"
@@ -33,10 +33,10 @@
               notDisplayedOnFirstPage:bind="a2jTemplate.hideHeaderOnFirstPage"
               saveTemplate:from="a2jTemplate.save" />
 
-              {{#if a2jTemplate.rootNode.children.length}}
+              {{#if(a2jTemplate.rootNode.children.length)}}
               <a2j-template
               guide:bind="guide"
-              editEnabled:from="true"
+              editEnabled:raw="true"
               template:bind="a2jTemplate" />
               {{else}}
               <a2j-blank-template />

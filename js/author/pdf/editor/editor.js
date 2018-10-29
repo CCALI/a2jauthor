@@ -108,6 +108,20 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
 
   define: {
     guideId: {},
+    isSavingTemplate: {},
+    saveError: {},
+    isDirtyTimer: {},
+    isReplacing: {},
+    fontError: {},
+    supportedFonts: {},
+    isLoadingFonts: {},
+    isAddendumOptionsShowing: {},
+    isPdfLoading: {},
+    pdfError: {},
+    isAssigning: {},
+    isShortcutMenuShowing: {},
+    domSize: {},
+    isShowingThumbnails: {},
     template: {value: null},
     pdfController: {value: null},
     boxes: rootNodeProperty("boxes", () => []),
@@ -222,9 +236,12 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
     // <Assignment>
     selectedBoxes: {
       get() {
-        return this.attr("boxes")
-          .filter(box => box.isSelected)
-          .sort(boxComparator);
+        const boxes = this.attr('boxes')
+        const filtered = boxes.filter(box => box.isSelected).serialize()
+        return filtered.sort(boxComparator)
+        // return this.attr("boxes")
+        //   .filter(box => box.isSelected)
+        //   .sort(boxComparator);
       }
     }
     // </Assignment>
@@ -1136,7 +1153,8 @@ function getPagePoint(child, event) {
 // Only handle events fired on the target, not children
 function targetAction(handler) {
   return function(target, event) {
-    const isTargetEvent = target.is(event.target);
+    const $target = $(target)
+    const isTargetEvent = $target .is(event.target);
     if (!isTargetEvent) {
       return;
     }
@@ -1268,25 +1286,29 @@ export default Component.extend({
       this.viewModel.relayOverlayDoubleClick(point, page);
     }),
     ".box-resize-handle mousedown"(target) {
-      const id = target.parent(".variable-box").attr("data-id");
-      const dir = target
+      const $target = $(target)
+      const id = $target.parent(".variable-box").attr("data-id");
+      const dir = $target
         .attr("class")
         .split("--")
         .pop();
       this.viewModel.startBoxResize(id, dir);
     },
     ".box-content mousedown"(target, e) {
-      const id = target.parent(".variable-box").attr("data-id");
+      const $target = $(target)
+      const id = $target.parent(".variable-box").attr("data-id");
       const point = getPagePoint(e.target, e);
       this.viewModel.startBoxMove(id, point);
     },
     ".box-content click"(target, event) {
-      const boxId = target.parent(".variable-box").attr("data-id");
+      const $target = $(target)
+      const boxId = $target.parent(".variable-box").attr("data-id");
       this.viewModel.relayBoxClick(boxId, isAdditive(event));
     },
     ".box-content contextmenu"(target, e) {
       e.preventDefault();
-      const id = target.parent(".variable-box").attr("data-id");
+      const $target = $(target)
+      const id = $target.parent(".variable-box").attr("data-id");
       this.viewModel.relayBoxRightClick(id);
     }
   }

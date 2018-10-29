@@ -8,7 +8,7 @@
           <var-picker
             vm:selected:bind="variable"
             vm:variables:from="variablesList"
-            filter-ocurrence:from='"repeating"'
+            filter-ocurrence:raw="repeating"
           />
         {{else}}
           <a2j-variable vm:name:from="variable" />

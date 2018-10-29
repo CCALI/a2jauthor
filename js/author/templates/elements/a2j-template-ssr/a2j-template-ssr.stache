@@ -6,9 +6,9 @@
     {{#if canRenderTemplate(this)}}
       <a2j-template
         vm:template:from="."
-        use-answers:from='"true"'
+        use-answers:raw="true"
         vm:answers:from="answers"
-        edit-enabled:from='"false"'
+        edit-enabled:raw="false"
       />
     {{/if}}
   {{/each}}

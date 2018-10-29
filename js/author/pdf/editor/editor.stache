@@ -81,10 +81,10 @@
       </div>
       {{#if(isReplacing)}}
         <author-modal
-          modal-title:from="'Confirm PDF replacement'"
-          cancel-text:from="'Cancel'"
+          modal-title:raw="Confirm PDF replacement"
+          cancel-text:raw="Cancel"
           vm:onCancel:from='cancelLesserReplacement'
-          submit-text='Replace PDF'
+          submit-text:raw="Replace PDF"
           vm:onSubmit:from='confirmLesserReplacement'
         >
           <p>
@@ -289,8 +289,8 @@
   <div class='shortcut-menu'>
     {{#if(isShortcutMenuShowing)}}
       <author-modal
-        modal-title='Keyboard Shortcuts'
-        cancel-text='Dismiss'
+        modal-title:raw="Keyboard Shortcuts"
+        cancel-text:raw="Dismiss"
         vm:onCancel:from='toggleShortcutMenu'
       >
         <table>

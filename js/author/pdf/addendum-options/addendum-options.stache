@@ -2,13 +2,13 @@
 <can-import from='caja/author/modal/' />
 
 <author-modal
-  modal-title:from="'Addendum options'"
+  modal-title:raw="Addendum options"
   vm:onCancel:from='onModalCancel'
-  cancel-text='Cancel'
+  cancel-text:raw="Cancel"
   vm:onSubmit:from='onSubmit'
-  submit-text='Save options'
+  submit-text:raw="Save options"
   vm:onLeftButtonClick:from='onReset'
-  left-button-text='Reset'
+  left-button-text:raw="Reset"
 >
   <div class='split-fields'>
     <fieldset>

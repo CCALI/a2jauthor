@@ -5,8 +5,8 @@
 
 {{#if conflictingVariables}}
   <author-modal
-    modal-title:from="'Assignment conflict'"
-    cancel-text:from="'Dismiss'"
+    modal-title:raw="Assignment conflict"
+    cancel-text:raw="Dismiss"
     vm:onCancel:from='fireCancel'
   >
     <div class='conflict'>

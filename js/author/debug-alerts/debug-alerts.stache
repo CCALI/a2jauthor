@@ -7,7 +7,7 @@
   </button>
 
   {{#each alertMessages}}
-    <app-alert vm:open:bind="open" alert-type:from='"danger"' dismissible:from='"true"'>
+    <app-alert vm:open:bind="open" alert-type:raw="danger" dismissible:raw="true">
       {{{message}}}
     </app-alert>
   {{/each}}

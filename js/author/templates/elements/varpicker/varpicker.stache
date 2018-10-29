@@ -4,9 +4,9 @@
 
 <input
   type="text"
-  style:from="'display: none;'"
+  style:raw="display: none;"
   class="form-control"
   el:value:bind="selected"
   el:disabled:from="disabled"
-  tokenfield-disabled="disabled"
+  tokenfield-disabled:raw="disabled"
 />

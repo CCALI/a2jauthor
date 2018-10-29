@@ -59,7 +59,7 @@
         {{/case}}
 
         {{#case scope.vm.assembleAndSaveButton}}
-          <div style:from="'display: none;'">{{> save-answers-form }}</div>
+          <div style:raw="display: none;">{{> save-answers-form }}</div>
           {{> assemble-form }}
         {{/case}}
 

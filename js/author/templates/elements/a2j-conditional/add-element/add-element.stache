@@ -9,7 +9,7 @@
   <element-options-pane
     title="Add Elements"
     vm:showSaveButton:from="false"
-    vm:saveAndClose:from="@closeOptionsPopup">
+    vm:saveAndClose:from="closeOptionsPopup">
 
     <h3>Standard</h3>
     <div class="row clearfix">

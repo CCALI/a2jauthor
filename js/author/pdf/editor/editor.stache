@@ -83,9 +83,9 @@
         <author-modal
           modal-title:from="'Confirm PDF replacement'"
           cancel-text:from="'Cancel'"
-          vm:@onCancel:from='@cancelLesserReplacement'
+          vm:onCancel:from='cancelLesserReplacement'
           submit-text='Replace PDF'
-          vm:@onSubmit:from='@confirmLesserReplacement'
+          vm:onSubmit:from='confirmLesserReplacement'
         >
           <p>
             The replacement PDF ({{newPageCount}} {{#is(newPageCount, 1)}}page{{else}}pages{{/is}})
@@ -131,8 +131,8 @@
         <addendum-options
           vm:defaultPageSize:from="getDefaultPageSize()"
           vm:savedOptions:from="documentOptions.addendumOptions"
-          vm:@onSaveOptions:from="@saveAddendumOptions"
-          vm:@onCancel:from="@hideAddendumOptions"
+          vm:onSaveOptions:from="saveAddendumOptions"
+          vm:onCancel:from="hideAddendumOptions"
         />
       {{/if}}
     </section>
@@ -163,8 +163,8 @@
       <thumbnail-sidebar
         vm:isShowingThumbnails:from="isShowingThumbnails"
         vm:thumbnailImageUrls:from="thumbnailImageUrls"
-        vm:onDrawerHandleClick:from="@onDrawerHandleClick"
-        vm:onThumbnailClick:from="@onThumbnailClick"
+        vm:onDrawerHandleClick:from="onDrawerHandleClick"
+        vm:onThumbnailClick:from="onThumbnailClick"
       />
     {{/if}}
 
@@ -199,9 +199,9 @@
           <assignment-form
             vm:variableDict:from="guide.vars"
             vm:variableOptionsDict:from="documentOptions.variableOptions"
-            vm:onCancel:from="@onAssignmentCancel"
-            vm:onAssign:from="@onAssignmentSubmit"
-            vm:onUnassign:from="@onAssignmentUnassign"
+            vm:onCancel:from="onAssignmentCancel"
+            vm:onAssign:from="onAssignmentSubmit"
+            vm:onUnassign:from="onAssignmentUnassign"
             vm:selectedBoxes:from="selectedBoxes"
           />
         {{/if}}
@@ -291,7 +291,7 @@
       <author-modal
         modal-title='Keyboard Shortcuts'
         cancel-text='Dismiss'
-        vm:onCancel:from='@toggleShortcutMenu'
+        vm:onCancel:from='toggleShortcutMenu'
       >
         <table>
           <thead>

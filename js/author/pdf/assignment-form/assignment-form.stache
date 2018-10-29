@@ -7,7 +7,7 @@
   <author-modal
     modal-title:from="'Assignment conflict'"
     cancel-text:from="'Dismiss'"
-    vm:@onCancel:from='@fireCancel'
+    vm:onCancel:from='fireCancel'
   >
     <div class='conflict'>
       <p>
@@ -29,18 +29,18 @@
     modal-title='Assign variable'
     left-button-text='Unassign'
     left-button-icon='glyphicon-lock-open-alt'
-    vm:@onLeftButtonClick:from="@fireUnassign"
+    vm:onLeftButtonClick:from="fireUnassign"
     cancel-text='Cancel'
-    vm:@onCancel:from="@fireCancel"
+    vm:onCancel:from="fireCancel"
     submit-text='Assign'
-    vm:@onSubmit:from="@fireAssign"
+    vm:onSubmit:from="fireAssign"
   >
     <variable-editor
-      vm:@initialVariable:from="@initialVariable"
-      vm:@existingVariableNames:from="@variableSuggestions"
-      vm:@showUsageFinder:from="false"
-      vm:@onVariableChange:from="@onVariableChange"
-      vm:@onSelectSuggestion:from="@onSelectSuggestion"
+      vm:initialVariable:from="initialVariable"
+      vm:existingVariableNames:from="variableSuggestions"
+      vm:showUsageFinder:from="false"
+      vm:onVariableChange:from="onVariableChange"
+      vm:onSelectSuggestion:from="onSelectSuggestion"
     />
 
     {{#if hasOptions}}
@@ -168,7 +168,7 @@
             <label>Checkmark style:</label>
             <checkmark-picker
               check="{{variableBuffer.checkIcon}}"
-              vm:@onCheck:from="@onCheckIcon"
+              vm:onCheck:from="onCheckIcon"
             />
             {{#if hasInvertOption}}
               <label>

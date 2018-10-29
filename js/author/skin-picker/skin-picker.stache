@@ -2,5 +2,5 @@
 <color-chips
   vm:selectedColorClass:from="selectedSkinClass"
   vm:colorClasses:from="skinClasses"
-  vm:onColorClass:from="@onSkinClass"
+  vm:onColorClass:from="onSkinClass"
 />

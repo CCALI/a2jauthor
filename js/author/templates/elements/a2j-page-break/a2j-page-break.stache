@@ -7,9 +7,9 @@
     vm:nodeId:from="id"
     vm:deleted:from="deleted"
     vm:selected:bind="editActive"
-    vm:cloneNode:from="@cloneNode"
-    vm:deleteNode:from="@deleteNode"
-    vm:toggleEditActiveNode:from="@toggleEditActiveNode">
+    vm:cloneNode:from="cloneNode"
+    vm:deleteNode:from="deleteNode"
+    vm:toggleEditActiveNode:from="toggleEditActiveNode">
 
     <p><span class="text-muted">Page Break</span></p>
   </element-container>
@@ -18,7 +18,7 @@
     <element-options-pane
       title="Page Break"
       vm:nodeId:from="nodeId"
-      vm:saveAndClose:from="@updateNode">
+      vm:saveAndClose:from="updateNode">
 
       <form>
         <div class="form-group">

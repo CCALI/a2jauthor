@@ -9,9 +9,9 @@
     vm:nodeId:from="id"
     vm:deleted:from="deleted"
     vm:selected:bind="editActive"
-    vm:cloneNode:from="@cloneNode"
-    vm:deleteNode:from="@deleteNode"
-    vm:toggleEditActiveNode:from="@toggleEditActiveNode">
+    vm:cloneNode:from="cloneNode"
+    vm:deleteNode:from="deleteNode"
+    vm:toggleEditActiveNode:from="toggleEditActiveNode">
 
     <div class="panel panel-info">
       <div class="panel-heading">

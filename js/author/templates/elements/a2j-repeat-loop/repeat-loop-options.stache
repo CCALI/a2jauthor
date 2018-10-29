@@ -1,7 +1,7 @@
 <element-options-pane
   vm:nodeId:from="nodeId"
   title="Repeat Loop"
-  vm:saveAndClose:from="@updateNode">
+  vm:saveAndClose:from="updateNode">
 
   <form>
     <div class="form-group">

@@ -3,11 +3,11 @@
 
 <author-modal
   modal-title:from="'Addendum options'"
-  vm:onCancel:from='@onModalCancel'
+  vm:onCancel:from='onModalCancel'
   cancel-text='Cancel'
-  vm:onSubmit:from='@onSubmit'
+  vm:onSubmit:from='onSubmit'
   submit-text='Save options'
-  vm:onLeftButtonClick:from='@onReset'
+  vm:onLeftButtonClick:from='onReset'
   left-button-text='Reset'
 >
   <div class='split-fields'>

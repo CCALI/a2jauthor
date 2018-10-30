@@ -81,11 +81,11 @@
       </div>
       {{#if(isReplacing)}}
         <author-modal
-          modal-title:raw="Confirm PDF replacement"
-          cancel-text:raw="Cancel"
-          vm:onCancel:from='cancelLesserReplacement'
-          submit-text:raw="Replace PDF"
-          vm:onSubmit:from='confirmLesserReplacement'
+          modalTitle:raw="Confirm PDF replacement"
+          cancelText:raw="Cancel"
+          onCancel:from='cancelLesserReplacement'
+          submitText:raw="Replace PDF"
+          onSubmit:from='confirmLesserReplacement'
         >
           <p>
             The replacement PDF ({{newPageCount}} {{#is(newPageCount, 1)}}page{{else}}pages{{/is}})
@@ -129,10 +129,10 @@
       </div>
       {{#if(isAddendumOptionsShowing)}}
         <addendum-options
-          vm:defaultPageSize:from="getDefaultPageSize()"
-          vm:savedOptions:from="documentOptions.addendumOptions"
-          vm:onSaveOptions:from="saveAddendumOptions"
-          vm:onCancel:from="hideAddendumOptions"
+          defaultPageSize:from="getDefaultPageSize()"
+          savedOptions:from="documentOptions.addendumOptions"
+          onSaveOptions:from="saveAddendumOptions"
+          onCancel:from="hideAddendumOptions"
         />
       {{/if}}
     </section>
@@ -149,22 +149,22 @@
         Only use this template if
       </p>
       <condition-form
-        vm:variablesList:from="guide.variablesList"
-        vm:operator:bind="templateState.operator"
-        vm:leftOperand:bind="templateState.leftOperand"
-        vm:rightOperand:bind="templateState.rightOperand"
-        vm:disabled:from="{{not(isConditionalLogicEnabled)}}"
-        vm:rightOperandType:bind="templateState.rightOperandType"
+        variablesList:from="guide.variablesList"
+        operator:bind="templateState.operator"
+        leftOperand:bind="templateState.leftOperand"
+        rightOperand:bind="templateState.rightOperand"
+        disabled:from="{{not(isConditionalLogicEnabled)}}"
+        rightOperandType:bind="templateState.rightOperandType"
       />
     </section>
   </div>
   <div class='editor-main'>
     {{#if(thumbnailImageUrls.length)}}
       <thumbnail-sidebar
-        vm:isShowingThumbnails:from="isShowingThumbnails"
-        vm:thumbnailImageUrls:from="thumbnailImageUrls"
-        vm:onDrawerHandleClick:from="onDrawerHandleClick"
-        vm:onThumbnailClick:from="onThumbnailClick"
+        isShowingThumbnails:from="isShowingThumbnails"
+        thumbnailImageUrls:from="thumbnailImageUrls"
+        onDrawerHandleClick:from="onDrawerHandleClick"
+        onThumbnailClick:from="onThumbnailClick"
       />
     {{/if}}
 
@@ -197,12 +197,12 @@
 
         {{#if(isAssigning)}}
           <assignment-form
-            vm:variableDict:from="guide.vars"
-            vm:variableOptionsDict:from="documentOptions.variableOptions"
-            vm:onCancel:from="onAssignmentCancel"
-            vm:onAssign:from="onAssignmentSubmit"
-            vm:onUnassign:from="onAssignmentUnassign"
-            vm:selectedBoxes:from="selectedBoxes"
+            variableDict:from="guide.vars"
+            variableOptionsDict:from="documentOptions.variableOptions"
+            onCancel:from="onAssignmentCancel"
+            onAssign:from="onAssignmentSubmit"
+            onUnassign:from="onAssignmentUnassign"
+            selectedBoxes:from="selectedBoxes"
           />
         {{/if}}
 
@@ -289,9 +289,9 @@
   <div class='shortcut-menu'>
     {{#if(isShortcutMenuShowing)}}
       <author-modal
-        modal-title:raw="Keyboard Shortcuts"
-        cancel-text:raw="Dismiss"
-        vm:onCancel:from='toggleShortcutMenu'
+        modalTitle:raw="Keyboard Shortcuts"
+        cancelText:raw="Dismiss"
+        onCancel:from='toggleShortcutMenu'
       >
         <table>
           <thead>

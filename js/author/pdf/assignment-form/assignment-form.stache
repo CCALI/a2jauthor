@@ -5,9 +5,9 @@
 
 {{#if conflictingVariables}}
   <author-modal
-    modal-title:raw="Assignment conflict"
-    cancel-text:raw="Dismiss"
-    vm:onCancel:from='fireCancel'
+    modalTitle:raw="Assignment conflict"
+    cancelText:raw="Dismiss"
+    onCancel:from='fireCancel'
   >
     <div class='conflict'>
       <p>
@@ -26,21 +26,21 @@
   </author-modal>
 {{else}}
   <author-modal
-    modal-title='Assign variable'
-    left-button-text='Unassign'
-    left-button-icon='glyphicon-lock-open-alt'
-    vm:onLeftButtonClick:from="fireUnassign"
-    cancel-text='Cancel'
-    vm:onCancel:from="fireCancel"
-    submit-text='Assign'
-    vm:onSubmit:from="fireAssign"
+    modalTitle:raw='Assign variable'
+    leftButtonText:raw='Unassign'
+    leftButtonIcon:raw='glyphicon-lock-open-alt'
+    onLeftButtonClick:from="fireUnassign"
+    cancelText:raw='Cancel'
+    onCancel:from="fireCancel"
+    submitText:raw='Assign'
+    onSubmit:from="fireAssign"
   >
     <variable-editor
-      vm:initialVariable:from="initialVariable"
-      vm:existingVariableNames:from="variableSuggestions"
-      vm:showUsageFinder:from="false"
-      vm:onVariableChange:from="onVariableChange"
-      vm:onSelectSuggestion:from="onSelectSuggestion"
+      initialVariable:from="initialVariable"
+      existingVariableNames:from="variableSuggestions"
+      showUsageFinder:from="false"
+      onVariableChange:from="onVariableChange"
+      onSelectSuggestion:from="onSelectSuggestion"
     />
 
     {{#if hasOptions}}
@@ -168,7 +168,7 @@
             <label>Checkmark style:</label>
             <checkmark-picker
               check="{{variableBuffer.checkIcon}}"
-              vm:onCheck:from="onCheckIcon"
+              onCheck:from="onCheckIcon"
             />
             {{#if hasInvertOption}}
               <label>

@@ -10,21 +10,21 @@
           name="varname"
           class="var-name editable text ui-widget-content ui-corner-all"
           el:value:bind="variableName"
-          {{#if variableNameMaxLength}}
+          {{#if(variableNameMaxLength)}}
             maxlength="{{variableNameMaxLength}}"
           {{/if}}
-          {{#if existingVariableNames.length}}
+          {{#if(existingVariableNames.length)}}
             autocomplete="off"
           {{/if}}
           autofocus
         />
       </span>
-      {{#if variableSuggestions.length}}
+      {{#if(variableSuggestions.length)}}
         <div class='variable-suggestions'>
           <div class='suggestion-container'>
             <ul class='suggestion-list'>
-              {{#each variableSuggestions}}
-                <li on:el:click="onSuggestionSelect(this)">{{this}}</li>
+              {{#each(variableSuggestions)}}
+                <li on:el:click="scope/onSuggestionSelect(this)">{{this}}</li>
               {{/each}}
             </ul>
           </div>
@@ -71,7 +71,7 @@
         />
       </span>
     </div>
-    {{#if showUsageFinder}}
+    {{#if(showUsageFinder)}}
         <div id='var-usage-section'>
           <div>
             <label for="varusage">Used by:</label>
@@ -81,7 +81,7 @@
           </div>
           <div>
             <div id="varUsageList">
-              {{#if variableUsageHtml}}
+              {{#if(variableUsageHtml)}}
                 {{{variableUsageHtml}}}
               {{else}}
                 ...

@@ -24,7 +24,7 @@
               on:el:click="onLeftButtonClick()"
             >
               <span class='ui-button-text'>
-                {{#if leftButtonIcon}}
+                {{#if(leftButtonIcon)}}
                   <span class='{{leftButtonIcon}}'></span>&nbsp;
                 {{/if}}
                 {{leftButtonText}}
@@ -41,7 +41,7 @@
             <span class='ui-button-text'>{{cancelText}}</span>
           </button>
 
-          {{#if submitText}}
+          {{#if(submitText)}}
             <button
               class="btn btn-primary"
               on:el:click="fireSubmit()"

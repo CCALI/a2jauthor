@@ -24,7 +24,7 @@
 
 <div class="page tabContentFrame">
   <!-- <div class="tabContent editq"> -->
-  {{#if variableList.length}}
+  {{#if(variableList.length)}}
     <table class="table table-hover">
       <thead>
         <tr valign="top">
@@ -35,7 +35,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each variableList}}
+        {{#each(variableList)}}
           <tr on:el:click="scope.vm.openVariableEditor(name)">
             <td>{{name}}</td>
             <td>{{type}}</td>
@@ -55,19 +55,19 @@
   <!-- </div> -->
 </div>
 
-{{#if showVariableModal}}
+{{#if(showVariableModal)}}
   <author-modal
     modalTitle:raw="Variable"
     cancelText:raw="Delete"
     submitText:raw="Save"
-    vm:onCancel:from="onDismissVariableEditing"
-    vm:onSubmit:from="onConfirmVariableEditing"
+    onCancel:from="onDismissVariableEditing"
+    onSubmit:from="onConfirmVariableEditing"
   >
     <variable-editor
-      vm:initialVariable:from="editingVariable"
-      vm:showUsageFinder:raw="true"
-      vm:onVariableChange:from="onVariableChange"
-      vm:onSelectSuggestion:from="onSelectSuggestion"
+      initialVariable:from="editingVariable"
+      showUsageFinder:raw="true"
+      onVariableChange:from="onVariableChange"
+      onSelectSuggestion:from="onSelectSuggestion"
     />
   </author-modal>
 {{/if}}

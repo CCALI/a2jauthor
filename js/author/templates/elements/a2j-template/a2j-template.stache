@@ -11,7 +11,6 @@
   {{#each rootNode.children}}
     <li
       draggable="true"
-      {{debugger}}
       class="node-wrapper{{#if(isBeingDragged)}} drag-placeholder{{/if}}">
 
       {{#if(deleted)}}

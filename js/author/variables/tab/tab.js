@@ -11,6 +11,7 @@ export const VariablesTabVM = CanMap.extend({
 
     editingVariable: { value: null },
     showVariableModal: { value: false },
+    variableBuffer: {},
     variableList: {
       get () {
         const guide = this.attr('guide')

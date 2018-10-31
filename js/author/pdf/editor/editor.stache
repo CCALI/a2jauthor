@@ -153,7 +153,7 @@
         operator:bind="templateState.operator"
         leftOperand:bind="templateState.leftOperand"
         rightOperand:bind="templateState.rightOperand"
-        disabled:from="{{not(isConditionalLogicEnabled)}}"
+        disabled:from="not(isConditionalLogicEnabled)"
         rightOperandType:bind="templateState.rightOperandType"
       />
     </section>

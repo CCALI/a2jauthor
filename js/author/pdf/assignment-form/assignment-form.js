@@ -112,6 +112,8 @@ function uniq (list) {
 
 export const AssignmentFormVm = CanMap.extend('AssignmentFormVm', {
   define: {
+    conflictingVariables: {},
+
     onAssign: {
       type: 'function'
     },
@@ -341,7 +343,7 @@ export const AssignmentFormVm = CanMap.extend('AssignmentFormVm', {
   },
 
   fireAssign () {
-    const handler = this.attr('onAssign')
+    let handler = this.attr('onAssign')
     if (handler) {
       const buffer = this.attr('variableBuffer').serialize()
       const variable = getBufferVariable(buffer)
@@ -359,7 +361,7 @@ export const AssignmentFormVm = CanMap.extend('AssignmentFormVm', {
         createVariable: variable,
         variableOptions,
         boxOptions
-      })
+      })/* .call(this) */
     }
   }
 })

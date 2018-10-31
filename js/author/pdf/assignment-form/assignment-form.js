@@ -95,6 +95,7 @@ function makeDefaultVariableBuffer () {
     repeating: false,
     comment: '',
     overflowStyle: 'clip-overflow',
+    addendumLabel: '',
     checkIcon: 'normal-check',
     isGroup: false,
     isCheck: false,

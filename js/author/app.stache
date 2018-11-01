@@ -285,8 +285,8 @@
     <!-- Report Tab -->
     <div class="tab-panel has-toolbar" id="tabsReport">
       {{#is page 'report'}}
-        <report-toolbar vm:hideAllGrades:bind="hideAllGrades" vm:selectedReport:bind="selectedReport"></report-toolbar>
-        <report-page vm:parentGuide:from="guide" vm:hideAllGrades:bind="hideAllGrades" vm:selectedReport:bind="selectedReport"></report-page>
+        <report-toolbar vm:hideAllGrades:bind="scope/hideAllGrades" vm:selectedReport:bind="scope/selectedReport"></report-toolbar>
+        <report-page vm:parentGuide:from="guide" vm:hideAllGrades:bind="scope/hideAllGrades" vm:selectedReport:bind="scope/selectedReport"></report-page>
       {{/is}}
     </div>
 

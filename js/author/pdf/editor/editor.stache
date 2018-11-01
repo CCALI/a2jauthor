@@ -211,8 +211,8 @@
             class='editor-pdf-page'
             data-page='{{page}}'
             draggable="false"
-            {{#if(scope.vm.domSize)}}
-              style='width: {{scope.vm.domSize.width}}px; height: {{scope.vm.domSize.height}}px'
+            {{#if(domSize)}}
+              style='width: {{domSize.width}}px; height: {{domSize.height}}px'
             {{/if}}
           >
             {{#if(isLoading)}}

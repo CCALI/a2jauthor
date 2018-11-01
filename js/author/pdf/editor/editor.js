@@ -120,7 +120,6 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
     pdfError: {},
     isAssigning: {},
     isShortcutMenuShowing: {},
-    domSize: {},
     isShowingThumbnails: {},
     template: { value: null },
     pdfController: { value: null },

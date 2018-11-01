@@ -4,9 +4,9 @@
       class="post-answers-form"
       action="{{scope/pState.setDataURL}}">
 
-  <input type="hidden" name="AnswerKey" el:value:from="answersANX" />
-  <input type="hidden" name="fileDataUrl" el:value:from="mState.fileDataURL">
-  <input type="hidden" name="AnswerKeyJSON" el:value:from="answersJSON" />
+  <input type="hidden" name="AnswerKey" el:value:from="scope/answersANX" />
+  <input type="hidden" name="fileDataUrl" el:value:from="scope/mState.fileDataURL">
+  <input type="hidden" name="AnswerKeyJSON" el:value:from="scope/answersJSON" />
 
   <button type="submit"
           on:el:click="scope/navigate(this)"

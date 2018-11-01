@@ -1,4 +1,4 @@
-<p class="{{#if hideGrade(stats.fkGrade)}}hide-section{{/if}}">
+<p class="{{#if(scope/hideGrade(stats.fkGrade))}}hide-section{{/if}}">
     <small class="text-muted {{stats.alertClass}}">
         <span class="{{alertGlyph(stats.alertClass)}}"></span>
             Word Count: {{stats.wordCount}} | Avg Words/Sentence: {{stats.averageWordsPerSentence}} | Flesch-Kincaid Grade Level: {{stats.fkGrade}}

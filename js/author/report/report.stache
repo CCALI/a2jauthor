@@ -1,14 +1,14 @@
 <can-import from="caja/author/report/report.less!"/>
 
-{{#if buildingReport}}
+{{#if(buildingReport)}}
     <div class="building-report">
         <h2 class="text-center text-muted">
-            <span class="glyphicon-spin6 animate-spin"></span> Building Report ...
+            <span class="glyphicon-spin6 animate-spin" aria-hidden="true"></span> Building Report ...
         </h2>
     </div>
 {{/if}}
 
-{{#if pagesPromise.isResolved}}
+{{#if(pagesPromise.isResolved)}}
 <div id="print-report">
     <div class="bootstrap-styles report">
         <div class="report-header">
@@ -78,7 +78,7 @@
             </fieldset>
         </div>
 
-            <div class="variableslist {{^is selectedReport "fullReport"}}hide-section{{/is}}">
+            <div class="variableslist {{^is(scope/selectedReport, "fullReport")}}hide-section{{/is}}">
                 <fieldset><legend>Interview Variables ({{sortedVariableList.length}})</legend>
                 <div class="row">
                     <div class="col-sm-3"><p><label>Name</label></p></div>
@@ -96,7 +96,7 @@
                 {{/sortedVariableList}}
                 </fieldset>
             </div>
-        {{#if pagesPromise.isResolved}}
+        {{#if(pagesPromise.isResolved)}}
             <div class="pagesByStepsList">
                 <fieldset><legend>Interview Pages</legend>
                     {{#pagesByStep}}

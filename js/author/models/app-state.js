@@ -48,7 +48,9 @@ export default CanMap.extend('AuthorAppState', {
     * selected report type
     */
     selectedReport: {
-      serialize: false
+      serialize: false,
+      type: 'string',
+      value: 'fullReport'
     },
     /**
     * @property {List} traceLogic
@@ -212,12 +214,14 @@ export default CanMap.extend('AuthorAppState', {
     },
 
     /**
-     * @property {String} hideAllGrades
+     * @property {Boolean} hideAllGrades
      *
      * Used to pass state between reports tab and toolbar
      */
     hideAllGrades: {
-      serialize: false
+      serialize: false,
+      type: 'boolean',
+      value: false
     },
 
     /**

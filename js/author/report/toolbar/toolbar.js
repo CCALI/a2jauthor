@@ -27,10 +27,7 @@ export const ReportToolbarVM = CanMap.extend('ReportToolbarVM', {
      *
      * show fk text grades only when bad, or author selects hideAllGrades
      */
-    hideAllGrades: {
-      serialize: false,
-      type: 'boolean'
-    },
+    hideAllGrades: {},
 
     /**
      * @property {String} report.ViewModel.prototype.define.gradesButtonText gradesButtonText

@@ -259,9 +259,9 @@ export default CanMap.extend('PagesVM', {
       button.next === constants.qIDASSEMBLESUCCESS ||
       button.next === constants.qIDASSEMBLE)
     ) {
+      // stop default submit actions in preview
+      ev.preventDefault()
       this.previewActiveResponses(button)
-      // need `false` to stop default submit actions in preview
-      return false
     }
 
     // special destination dIDRESUME button skips rest of navigate

@@ -9,7 +9,7 @@
   <input type="hidden" name="AnswerKeyJSON" el:value:from="scope/answersJSON" />
 
   <button type="submit"
-          on:el:click="scope/navigate(this)"
+          on:el:click="scope/navigate(this, scope.element, scope.event)"
           class="btn btn-default btn-navigate">
     {{scope/getButtonLabel(scope/label)}}
   </button>

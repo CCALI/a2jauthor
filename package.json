@@ -118,6 +118,7 @@
     "babel-cli": "^6.4.5",
     "babel-preset-env": "^1.6.0",
     "babel-register": "^6.4.3",
+    "can": "^2.3.35",
     "chalk": "^1.1.1",
     "debug": "^2.2.0",
     "grunt": "^0.4.5",

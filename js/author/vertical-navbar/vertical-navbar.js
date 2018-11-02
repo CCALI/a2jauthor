@@ -84,10 +84,10 @@ export let VerticalNavbarVM = CanMap.extend('VerticalNavbarVM', {
   },
 
   /**
-   * @property {function} alert.ViewModel.prototype.setPage setPage
+   * @property {function} verticalNavbar.ViewModel.prototype.setPage setPage
    * @parent verticalNavbar.ViewModel
    *
-   * This callback sets [alert.ViewModel.prototype.page] which is bound to
+   * This callback sets [verticalNavbar.ViewModel.prototype.page] which is bound to
    * `appState` (see `author/app.stache`) to handle the navigation between tabs.
    */
   setPage (item) {

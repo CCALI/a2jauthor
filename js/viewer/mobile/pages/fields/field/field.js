@@ -79,7 +79,7 @@ export let FieldVM = CanMap.extend('FieldVM', {
     invalidPrompt: {
       get () {
         let field = this.attr('field')
-        let defaultInvalidPrompt = this.attr('lang').attr('FieldPrompts_' + field.attr('type'))
+        let defaultInvalidPrompt = this.attr('lang')['FieldPrompts_' + field.attr('type')]
         return field.attr('invalidPrompt') || defaultInvalidPrompt
       }
     },
@@ -493,7 +493,7 @@ export default Component.extend('FieldComponent', {
 
         i18n (key) {
           key = typeof key === 'function' ? key() : key
-          return self.attr('lang').attr(key) || key
+          return self.attr('lang')[key] || key
         }
       })
     }

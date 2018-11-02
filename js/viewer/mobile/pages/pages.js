@@ -39,7 +39,7 @@ export default Component.extend({
 
   helpers: {
     getButtonLabel (label) {
-      return label || this.attr('lang').attr('Continue')
+      return label || this.attr('lang')['Continue']
     },
 
     eval (str) {

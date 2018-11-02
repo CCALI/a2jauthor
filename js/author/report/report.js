@@ -55,7 +55,9 @@ export const ReportVM = CanMap.extend('ReportVM', {
      *
      * tracks and receives the selected report type from the `<report-toolbar>` component
      */
-    selectedReport: {},
+    selectedReport: {
+      value: 'fullReport'
+    },
 
     /**
      * @property {Boolean} report.ViewModel.prototype.define.buildingReport buildingReport
@@ -230,7 +232,9 @@ export const ReportVM = CanMap.extend('ReportVM', {
      *
      * show fk text grades only when bad, or author selects hide grades from toolbar
      */
-    hideAllGrades: {}
+    hideAllGrades: {
+      value: false
+    }
   },
 
   /**

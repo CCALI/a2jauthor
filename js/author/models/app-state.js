@@ -4,8 +4,12 @@ import CanList from 'can-list'
 import A2JVariable from './a2j-variable'
 import _isEmpty from 'lodash/isEmpty'
 import { Gender, Hair, Skin } from 'caja/viewer/desktop/avatar/colors'
-
 import 'can-map-define'
+
+// !steal-remove-start
+import debug from 'can-debug'
+debug()
+// !steal-remove-end
 
 // with the existing Guide model that works with a different data structure.
 let Guide = CanMap.extend('AppStateGuide', {
@@ -48,12 +52,10 @@ export default CanMap.extend('AuthorAppState', {
     * selected report type
     */
     selectedReport: {
-      serialize: false,
-      type: 'string',
-      value: 'fullReport'
+      serialize: false
     },
     /**
-    * @property {List} traceLogic
+    * @property {List} repceLogic
     *
     * latest message to display in the trace panel
     */
@@ -219,9 +221,7 @@ export default CanMap.extend('AuthorAppState', {
      * Used to pass state between reports tab and toolbar
      */
     hideAllGrades: {
-      serialize: false,
-      type: 'boolean',
-      value: false
+      serialize: false
     },
 
     /**

@@ -44,8 +44,8 @@ function makePackageFolder () {
   // copy package.json  and shrinkwrap to server
   fs.copySync(path.join(datPath, 'package.json'),
               path.join(outputPath, 'package.json'));
-  fs.copySync(path.join(datPath, 'npm-shrinkwrap.json'),
-              path.join(outputPath, 'npm-shrinkwrap.json'));
+  fs.copySync(path.join(datPath, 'package-lock.json'),
+              path.join(outputPath, 'package-lock.json'));
 
   // include globals-patch.js TODO: can remove after CanJS 3.x upgrade
   fs.copySync(path.join(datPath, 'globals-patch.js'),
@@ -55,8 +55,8 @@ function makePackageFolder () {
   // TODO: only install bootstrap in js dir, so may not need this
   fs.copySync(path.join(datPath, 'js', 'package.json'),
               path.join(outputPath, 'js', 'package.json'));
-  fs.copySync(path.join(datPath, 'js', 'npm-shrinkwrap.json'),
-              path.join(outputPath, 'js', 'npm-shrinkwrap.json'));
+  fs.copySync(path.join(datPath, 'js', 'package-lock.json'),
+              path.join(outputPath, 'js', 'package-lock.json'));
 
   // copy server.stache and server.js
   fs.copySync(path.join(datPath, 'js', 'server.stache'),

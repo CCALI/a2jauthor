@@ -266,7 +266,7 @@ const Interview = Model.extend({
     queues.batch.start()
 
     this.attr('answers').forEach((answer) => {
-      if (answer && answer.attr('values') && answer.attr('values').length > 1) {
+      if (answer && answer.attr && answer.attr('values')) {
         answer.attr('values', [null])
       }
     })

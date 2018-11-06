@@ -28,7 +28,7 @@
         <form>
           <div class="form-group">
             <label>Notes</label>
-            <textarea class="form-control" value:bind="notes" rows="3"></textarea>
+            <textarea class="form-control" value:bind="scope/notes" rows="3"></textarea>
             <span class="help-block">
               For reference only. These notes are not part of the assembled document.
             </span>

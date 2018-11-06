@@ -58,13 +58,13 @@ const Interview = Model.extend({
       url: data.url
     })
 
-    interviewDfd.done(function (interview) {
+    interviewDfd.then(function (interview) {
       if (data.resume) {
         canAjax({
           url: data.resume,
           dataType: 'text'
         })
-          .done(function (anx) {
+          .then(function (anx) {
             var vars = parser.parseJSON(anx, interview.vars)
             interview.vars = vars
 
@@ -78,7 +78,7 @@ const Interview = Model.extend({
       }
     })
 
-    resumeDfd.done(function (interview) {
+    resumeDfd.then(function (interview) {
       dfd.resolve(_assign({ interviewPath }, interview))
     })
 

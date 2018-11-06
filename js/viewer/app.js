@@ -1,4 +1,4 @@
-import deparam from 'can-util/js/deparam/deparam'
+import deparam from 'can-deparam'
 import route from 'can-route'
 import startApp from './start-app'
 import config from 'caja/viewer/config/'

@@ -268,7 +268,7 @@ export default CanMap.extend({
     const children = rootNode.attr('children');
 
     const toggle = (nodes, id) => {
-      nodes.each(node => {
+      nodes.forEach(node => {
         let children;
         const nodeId = node.attr('id');
         const isTemplate = !!node.attr('rootNode');

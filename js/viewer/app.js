@@ -9,6 +9,8 @@ import Interview from 'caja/viewer/models/interview'
 import MemoryState from 'caja/viewer/models/memory-state'
 import PersistedState from 'caja/viewer/models/persisted-state'
 
+import 'can-3-4-compat/dom-mutation-events'
+
 import 'jquerypp/dom/cookie/'
 import 'caja/viewer/mobile/util/helpers'
 import 'calculator/jquery.plugin'
@@ -38,7 +40,7 @@ rState.connectedCallback(document.body)
 route.register('', { view: 'intro' })
 route.register('view/{view}/page/{page}')
 route.register('view/{view}/page/{page}/{repeatVarValue}')
-route.map(rState)
+route.data = rState
 
 Promise.all([interviewPromise, persistedStatePromise])
   .then(function ([interview, pState]) {

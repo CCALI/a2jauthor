@@ -22,7 +22,7 @@
           traceLogic:bind="traceLogic" />
       </div><!-- guideBubble -->
 
-      {{#unless showClientAvatar}}
+      {{#unless(showClientAvatar)}}
         {{#currentPage}}
           {{#if(scope/learn)}}
             <div id="clientBubble" class="bubble right {{#if(scope/clientBubbleTallerThanAvatar)}}vertical{{else}}top{{/if}}" role="complementary">
@@ -36,11 +36,11 @@
         <span class="bubble-arrow"></span>
         <a2j-viewer-avatar
           kind:raw="guide"
-          avatarLoaded:from="scope/avatarLoaded"
-          skin:from="scope/guideAvatarSkinTone"
-          hair:from="scope/guideAvatarHairColor"
-          gender:from="scope/interview.guideAvatarGender"
-          facing:from="scope/guideAvatarFacingDirection" />
+          avatarLoaded:from="scope.vm.avatarLoaded"
+          skin:from="scope.vm.guideAvatarSkinTone"
+          hair:from="scope.vm.guideAvatarHairColor"
+          gender:from="scope.vm.interview.guideAvatarGender"
+          facing:from="scope.vm.guideAvatarFacingDirection" />
       </div>
     </div><!-- guide-wrapper -->
 

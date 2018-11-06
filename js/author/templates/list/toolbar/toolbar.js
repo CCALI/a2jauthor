@@ -2,7 +2,7 @@ import CanMap from "can-map";
 import Component from "can-component";
 import template from "./toolbar.stache";
 
-import "can-route";
+import route from "can-route";
 import "can-map-define";
 import "bootstrap/js/modal";
 
@@ -41,7 +41,7 @@ export let Toolbar = CanMap.extend({
       templateId: "new"
     };
 
-    route.attr(newTemplateTransition);
+    route.data = newTemplateTransition
   }
 });
 

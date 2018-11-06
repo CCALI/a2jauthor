@@ -7,7 +7,7 @@
 
     <select class="form-control" name="{{field.name}}" id="{{field.label}}" el:value:bind="field._answer.values" on:el:change="validateField(null, scope.element)">
       <option {{#if(field.required)}}disabled{{/if}} value="">{{ lang.ChooseListText }}</option>
-      {{{options}}}
+      {{{field.options}}}
     </select>
   </div>
 

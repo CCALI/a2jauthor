@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import CanMap from "can-map";
 import _keys from 'lodash/keys';
 import Component from "can-component";
@@ -166,7 +167,8 @@ export default Component.extend({
       $(this.element).find('.answers-file-input').click();
     },
 
-    '.answers-file-input change': function($el) {
+    '.answers-file-input change': function(el) {
+      const $el = $(el)
       const vm = this.viewModel;
       const file = $el.get(0).files[0];
 

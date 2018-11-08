@@ -88,7 +88,7 @@
     var variables = templateData.variables
     var customDocumentOptions = templateData.documentOptions
 
-    var documentOptions = $.extend({ fontName: 'Lato' }, customDocumentOptions, { fontSize: readInteger(customDocumentOptions.fontSize, 12) })
+    var documentOptions = Object.assign({ fontName: 'Lato' }, customDocumentOptions, { fontSize: readInteger(customDocumentOptions.fontSize, 12) })
     var documentGlobals = getDocumentGlobals(pages, documentOptions)
 
     var defaultTextOptions = {
@@ -130,7 +130,7 @@
         isCheck: false
       }
       var customVariableOptions = documentOptions.variableOptions[variableKey] || {}
-      var variableOptions = $.extend({}, defaultVariableOptions, customVariableOptions)
+      var variableOptions = Object.assign({}, defaultVariableOptions, customVariableOptions)
       var patcher = getPatcher(variable.type)
       var newPatches = patcher({
         boxes: boxes,
@@ -146,7 +146,7 @@
       return [].concat(patches, newPatches)
     }, [])
 
-    return $.extend({}, documentGlobals, { patches: patches })
+    return Object.assign({}, documentGlobals, { patches: patches })
   }
 
   function getTextPatches (options) {
@@ -372,7 +372,7 @@
   }
 
   function getTemplateOverlay (template, variables, answers) {
-    return getOverlay($.extend(getTemplateOverlayData(template), {
+    return getOverlay(Object.assign(getTemplateOverlayData(template), {
       variables: variables,
       answers: answers
     }))

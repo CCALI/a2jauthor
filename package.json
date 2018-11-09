@@ -40,8 +40,7 @@
     "plugins": [
       "done-css",
       "steal-less",
-      "steal-stache",
-      "can"
+      "steal-stache"
     ],
     "directories": {
       "lib": "js"
@@ -149,6 +148,7 @@
     "sinon": "^1.17.2",
     "standard": "^10.0.3",
     "steal-less": "^1.2.2",
+    "steal-stache": "^4.1.2",
     "steal-tools": "^1.10.0",
     "supertest": "^1.2.0"
   },

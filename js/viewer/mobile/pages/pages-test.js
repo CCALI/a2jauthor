@@ -61,7 +61,7 @@ describe('<a2j-pages>', () => {
         step: { number: undefined, text: '' } }
       ),
       logic: logicStub,
-      rState: new AppState({interview, logic: logicStub}),
+      rState: new AppState({ interview, logic: logicStub }),
       mState: { },
       interview
     }
@@ -370,8 +370,8 @@ describe('<a2j-pages>', () => {
         vm.attr('rState.logic', defaults.logic)
         vm.attr('rState.interview', defaults.interview)
         vm.attr('rState').page = 'bar'
-        assert.deepEqual(vm.attr('rState').traceLogic.attr(), [{page: 'Next'}, {
-          'codeBefore': { format: 'info', msg: 'Logic Before Question'}
+        assert.deepEqual(vm.attr('rState').traceLogic.attr(), [{ page: 'Next' }, {
+          'codeBefore': { format: 'info', msg: 'Logic Before Question' }
         }], 'logic before trace')
       })
     })

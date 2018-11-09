@@ -1,9 +1,9 @@
 import $ from 'jquery'
-import stache from "can-stache"
+import stache from 'can-stache'
 import { assert } from 'chai'
 import { FieldVM } from './field'
-import CanList from "can-list"
-import CanMap from "can-map"
+import CanList from 'can-list'
+import CanMap from 'can-map'
 import sinon from 'sinon'
 
 import './field'
@@ -158,19 +158,19 @@ describe('<a2j-field>', () => {
     it('minMaxPrompt should show or hide based on showMinMaxPrompt', function () {
       const field = vm.attr('field')
 
-      field.attr({'type': 'number', 'min': null, 'max': null})
+      field.attr({ 'type': 'number', 'min': null, 'max': null })
       assert.equal(vm.attr('showMinMaxPrompt'), false, 'if neither min/max has been set, showMinMaxPrompt should be false')
 
       field.attr('min', 5)
       assert.equal(vm.attr('showMinMaxPrompt'), true, 'if min exists, showMinMaxPrompt should be true')
 
-      field.attr({'min': null, 'max': 15})
+      field.attr({ 'min': null, 'max': 15 })
       assert.equal(vm.attr('showMinMaxPrompt'), true, 'if max exists, showMinMaxPrompt should be true')
     })
 
     it('minMaxPrompt should show min and max values in range display', function () {
       const field = vm.attr('field')
-      field.attr({'type': 'number', 'min': 5, 'max': 15})
+      field.attr({ 'type': 'number', 'min': 5, 'max': 15 })
       assert.equal(vm.attr('minMaxPrompt'), '(5 --- 15)', 'should show the range of acceptable values')
 
       field.attr('min', null)
@@ -180,7 +180,7 @@ describe('<a2j-field>', () => {
     it('calcAvailableLength', function () {
       let ev = { target: { value: 'this is' } }
       let field = vm.attr('field')
-      field.attr({'type': 'text', 'maxChars': undefined})
+      field.attr({ 'type': 'text', 'maxChars': undefined })
 
       vm.calcAvailableLength(ev)
       assert.equal(vm.attr('availableLength'), null, 'did not return undefined when maxChar not set')
@@ -397,7 +397,6 @@ describe('<a2j-field>', () => {
         $("a2j-field [id='None of the Above']").prop('checked', true).change()
 
         assert.equal(checkbox.attr('_answer.values'), false, 'Checking NOTA clears other checkboxes')
-
       })
 
       it('should set checkboxNOTA value to false when another checkbox is checked', () => {
@@ -407,7 +406,6 @@ describe('<a2j-field>', () => {
         $("a2j-field [id='Likes Chocolate']").prop('checked', true).change()
 
         assert.equal(checkboxNOTA.attr('_answer.values'), false, 'Checking NOTA clears other checkboxes')
-
       })
 
       it('should not set any non checkbox style fields to false', () => {
@@ -417,7 +415,6 @@ describe('<a2j-field>', () => {
 
         $("a2j-field [id='Likes Chocolate']").prop('checked', true).change()
         assert.equal(textField.attr('_answer.answer.values.1'), 'Wilhelmina', 'Checking checkbox does not change text field')
-
       })
     })
 
@@ -436,8 +433,6 @@ describe('<a2j-field>', () => {
 
         assert.equal($calcFound.attr('class'), undefined)
       })
-
     })
-
   })
 })

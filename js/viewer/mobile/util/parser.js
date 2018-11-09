@@ -33,7 +33,7 @@ let variableToField = function (varName, pages) {
   })
 
   return field
-};
+}
 
 let setVariable = function (variable, pages) {
   var varType
@@ -85,7 +85,7 @@ let setVariable = function (variable, pages) {
     }
 
     return xmlV
-  };
+  }
 
   var xml = ''
   if (variable.repeating) {
@@ -108,7 +108,7 @@ let setVariable = function (variable, pages) {
   }
 
   return xml
-};
+}
 
 export default {
   parseANX (answers, pages) {
@@ -154,11 +154,11 @@ export default {
       switch (varANXType) {
         case 'textvalue':
           guide.varSet(varName, $(this).find('TextValue').html())
-          break;
+          break
 
         case 'numvalue':
           guide.varSet(varName, +$(this).find('NumValue').html())
-          break;
+          break
 
         case 'tfvalue':
         // Needs to be true boolean for 2 way binding in checkbox.stache view
@@ -169,18 +169,18 @@ export default {
             bool = false
           }
           guide.varSet(varName, bool)
-          break;
+          break
 
         case 'datevalue':
         // HotDocs dates in british format while A2J expects US format
           let britDate = $(this).find('DateValue').html()
           let usDate = cDate.swapMonthAndDay(britDate)
           guide.varSet(varName, usDate)
-          break;
+          break
 
         case 'mcvalue':
           guide.varSet(varName, $(this).find('MCValue > SelValue').html())
-          break;
+          break
 
         case 'rptvalue':
           v.attr('repeating', true)
@@ -193,11 +193,11 @@ export default {
               switch (varANXType) {
                 case 'textvalue':
                   guide.varSet(varName, $(this).html(), i + 1)
-                  break;
+                  break
 
                 case 'numvalue':
                   guide.varSet(varName, +$(this).html(), i + 1)
-                  break;
+                  break
 
                 case 'tfvalue':
                   // Needs to be true boolean for 2 way binding in checkbox.stache view
@@ -208,22 +208,22 @@ export default {
                     bool = false
                   }
                   guide.varSet(varName, bool, i + 1)
-                  break;
+                  break
 
                 case 'datevalue':
                   let britDate = $(this).html()
                   let usDate = cDate.swapMonthAndDay(britDate)
                   guide.varSet(varName, usDate, i + 1)
-                  break;
+                  break
 
                 case 'mcvalue':
                   guide.varSet(varName, $(this).find('SelValue').html(), i + 1)
-                  break;
+                  break
               }
             }
           })
 
-          break;
+          break
       }
 
       if (v.attr('type') === constants.vtUnknown) {
@@ -266,12 +266,12 @@ export default {
           case 'hd:text':
             // hd:text name="AGR Petitioner Mother-Father-TE" askAutomatically="false" saveAnswer="false" warnIfUnanswered="false"/>
             newVarList.push({ name: name, type: constants.vtText })
-            break;
+            break
 
           case 'hd:trueFalse':
             // <hd:trueFalse name="Petitioner unemployment TF">
             newVarList.push({ name: name, type: constants.vtTF })
-            break;
+            break
 
           case 'hd:date':
             // <hd:date name="Date child came into petitioner care DA">
@@ -280,17 +280,17 @@ export default {
             // <hd:fieldWidth widthType="calculated"/>
             // </hd:date>
             newVarList.push({ name: name, type: constants.vtDate })
-            break;
+            break
 
           case 'hd:number':
             // <hd:number name="Putative children counter" askAutomatically="false" saveAnswer="false" warnIfUnanswered="false"/>
             newVarList.push({ name: name, type: constants.vtNumber })
-            break;
+            break
 
           case 'hd:multipleChoice':
             // <hd:multipleChoice name="Child gender MC" askAutomatically="false">
             newVarList.push({ name: name, type: constants.vtMC })
-            break;
+            break
 
           case 'hd:computation':
             // <hd:computation name="Any parent address not known CO" resultType="trueFalse">

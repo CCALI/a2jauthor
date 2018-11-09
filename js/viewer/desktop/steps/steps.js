@@ -8,7 +8,7 @@ import template from './steps.stache'
 import _findIndex from 'lodash/findIndex'
 import _truncate from 'lodash/truncate'
 import learnMoreTemplate from './learn-more.stache'
-import {Analytics} from 'caja/viewer/util/analytics'
+import { Analytics } from 'caja/viewer/util/analytics'
 import stache from 'can-stache'
 import canReflect from 'can-reflect'
 
@@ -141,7 +141,7 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
         let a2jStepVars = []
         let answers = this.attr('interview.answers')
         if (answers) {
-          canReflect.eachKey(answers, function(answer) {
+          canReflect.eachKey(answers, function (answer) {
             if (answer && answer.name && answer.name.indexOf('A2J Step') !== -1) {
               answer.attr('values') // setup binding on values(1)
               a2jStepVars.push(answer)
@@ -183,8 +183,8 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
     },
 
     // Local viewer customization
-    customClientSkinTone: {value: null},
-    customClientHairColor: {value: null},
+    customClientSkinTone: { value: null },
+    customClientHairColor: { value: null },
 
     /**
     * @property {String} steps.ViewModel.prototype.clientAvatarSkinTone clientAvatarSkinTone

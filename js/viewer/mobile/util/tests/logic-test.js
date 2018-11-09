@@ -1,16 +1,16 @@
-import { assert } from 'chai';
-import Answer from 'caja/viewer/models/answer';
-import Answers from 'caja/viewer/models/answers';
-import Logic from 'caja/viewer/mobile/util/logic';
-import AnswerVM from 'caja/viewer/models/answervm';
-import Interview from 'caja/viewer/models/interview';
+import { assert } from 'chai'
+import Answer from 'caja/viewer/models/answer'
+import Answers from 'caja/viewer/models/answers'
+import Logic from 'caja/viewer/mobile/util/logic'
+import AnswerVM from 'caja/viewer/models/answervm'
+import Interview from 'caja/viewer/models/interview'
 
-describe('Logic', function() {
-  let logic;
-  let answers;
-  let interview;
+describe('Logic', function () {
+  let logic
+  let answers
+  let interview
 
-  beforeEach(function() {
+  beforeEach(function () {
     answers = new Answers({
       firstname: {
         type: 'text',
@@ -27,7 +27,7 @@ describe('Logic', function() {
         values: [null],
         name: 'lastname'
       }
-    });
+    })
 
     interview = new Interview({
       _pages: {
@@ -53,19 +53,19 @@ describe('Logic', function() {
         fields: []
       }],
       answers: answers
-    });
+    })
 
-    let avm = new AnswerVM({ answer: answers.attr('firstname') });
-    avm.attr('values', 'John');
+    let avm = new AnswerVM({ answer: answers.attr('firstname') })
+    avm.attr('values', 'John')
 
-    avm = new AnswerVM({ answer: answers.attr('lastname') });
-    avm.attr('values', 'Doe');
+    avm = new AnswerVM({ answer: answers.attr('lastname') })
+    avm.attr('values', 'Doe')
 
-    logic = new Logic({ interview });
-  });
+    logic = new Logic({ interview })
+  })
 
-  it('simple set', function() {
-    logic.exec('set firstname to "Bob"');
+  it('simple set', function () {
+    logic.exec('set firstname to "Bob"')
 
     const expected = {
       firstname: {
@@ -83,58 +83,58 @@ describe('Logic', function() {
         type: 'text',
         values: [null, 'Doe']
       }
-    };
+    }
 
-    assert.deepEqual(answers.serialize(), expected, 'values set');
-  });
+    assert.deepEqual(answers.serialize(), expected, 'values set')
+  })
 
-  it('simple goto', function() {
-    let codeBefore = 'GOTO "1-job loss date"';
-    logic.exec(codeBefore);
+  it('simple goto', function () {
+    let codeBefore = 'GOTO "1-job loss date"'
+    logic.exec(codeBefore)
 
-    assert.equal(logic.attr('gotoPage'), '1-job loss date', 'target page set');
-  });
+    assert.equal(logic.attr('gotoPage'), '1-job loss date', 'target page set')
+  })
 
-  it('conditional goto', function() {
+  it('conditional goto', function () {
     let codeBefore =
       `if firstname = "John"<BR/>
       GOTO "1-job loss date"<BR/>
-      end if`;
+      end if`
 
-    logic.exec(codeBefore);
-    assert.equal(logic.attr('gotoPage'), '1-job loss date', 'target page set');
-  });
+    logic.exec(codeBefore)
+    assert.equal(logic.attr('gotoPage'), '1-job loss date', 'target page set')
+  })
 
-  it('eval text', function() {
-    assert.equal(logic.eval('%%1+1%%'), '2', 'simple eval');
-    assert.equal(logic.eval('%%firstname%%'), 'John', 'simple token interpolation');
+  it('eval text', function () {
+    assert.equal(logic.eval('%%1+1%%'), '2', 'simple eval')
+    assert.equal(logic.eval('%%firstname%%'), 'John', 'simple token interpolation')
 
     assert.equal(
       logic.eval('%%firstname%% %%FIRSTname%%'),
       'John John',
       'multiple token interpolation w/ case'
-    );
-  });
+    )
+  })
 
-  it('conditional set w/ linebreaks', function() {
+  it('conditional set w/ linebreaks', function () {
     let str =
       `if middlename = ""<BR/>
       set fullname to firstname + " " + lastname<BR/>
       else<BR/>
       set fullname to firstname + " " + middlename + " " + lastname<BR/>
-      end if`;
+      end if`
 
-    let avm = new AnswerVM({ answer: answers.attr('middlename') });
-    avm.attr('values', '');
+    let avm = new AnswerVM({ answer: answers.attr('middlename') })
+    avm.attr('values', '')
 
     answers.attr('fullname', new Answer({
       name: 'fullname',
       type: 'text',
       repeating: false,
       values: [null]
-    }));
+    }))
 
-    logic.exec(str);
+    logic.exec(str)
 
     assert.deepEqual(answers.serialize(), {
       fullname: {
@@ -158,12 +158,12 @@ describe('Logic', function() {
         type: 'text',
         values: [null, '']
       }
-    }, 'values set without extra whitespace');
+    }, 'values set without extra whitespace')
 
-    //setting middlename
-    avm.attr('values', 'T');
+    // setting middlename
+    avm.attr('values', 'T')
 
-    logic.exec(str);
+    logic.exec(str)
 
     assert.deepEqual(answers.serialize(), {
       fullname: {
@@ -187,18 +187,18 @@ describe('Logic', function() {
         type: 'text',
         values: [null, 'T']
       }
-    }, 'middle name set');
-  });
+    }, 'middle name set')
+  })
 
-  describe('conditional goto with linebreaks', function() {
+  describe('conditional goto with linebreaks', function () {
     const code =
       `IF  [ChildCount] = [Number of children NU] <BR/>
         GOTO "1- Do you have any?"<BR/>
       ELSE<BR/>
         GOTO "2- Child's name" <BR/>
-      END IF`;
+      END IF`
 
-    beforeEach(function() {
+    beforeEach(function () {
       answers = new Answers({
         childcount: {
           type: 'Number',
@@ -210,7 +210,7 @@ describe('Logic', function() {
           values: [null, '2'],
           name: 'Number of children NU'
         }
-      });
+      })
 
       interview = new Interview({
         answers,
@@ -218,22 +218,22 @@ describe('Logic', function() {
           '1- Do you have any?': {},
           '2- Child\'s name': {}
         }
-      });
+      })
 
-      logic = new Logic({ interview });
-    });
+      logic = new Logic({ interview })
+    })
 
-    it('evaluates to if block correctly', function() {
-      logic.exec(code);
-      assert.equal(logic.attr('gotoPage'), '1- Do you have any?');
-    });
+    it('evaluates to if block correctly', function () {
+      logic.exec(code)
+      assert.equal(logic.attr('gotoPage'), '1- Do you have any?')
+    })
 
-    it('evaluates to else block correctly', function() {
-      answers.attr('childcount').attr('values', [null, '1']);
+    it('evaluates to else block correctly', function () {
+      answers.attr('childcount').attr('values', [null, '1'])
 
-      logic.exec(code);
+      logic.exec(code)
 
-      assert.equal(logic.attr('gotoPage'), '2- Child\'s name');
-    });
-  });
-});
+      assert.equal(logic.attr('gotoPage'), '2- Child\'s name')
+    })
+  })
+})

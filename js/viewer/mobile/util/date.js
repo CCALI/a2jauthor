@@ -1,5 +1,5 @@
-import constants from 'caja/viewer/models/constants';
-import moment from 'moment';
+import constants from 'caja/viewer/models/constants'
+import moment from 'moment'
 
 /*
     A2J Dates are strings when being displayed or stored as answers,
@@ -14,56 +14,56 @@ import moment from 'moment';
 */
 
 export default {
-    // LHI uses british dates in HotDocs. This converts in both directions
-    swapMonthAndDay: function(stringDate) {
-        var result = '';
+  // LHI uses british dates in HotDocs. This converts in both directions
+  swapMonthAndDay: function (stringDate) {
+    var result = ''
 
-        if (stringDate && typeof stringDate === 'string') {
-            var parts = stringDate.split('/');
-            result = parts[1] + '/' + parts[0] + '/' + parts[2];
-        }
+    if (stringDate && typeof stringDate === 'string') {
+      var parts = stringDate.split('/')
+      result = parts[1] + '/' + parts[0] + '/' + parts[2]
+    }
 
-        return result;
-    },
+    return result
+  },
 
-    // used for display and to save answers
-    // takes optional format string
-    dateToString: function(date, format) {
-        // moment doesn't handle days since epoch by default
-        if (typeof date === 'number') {
-            date = this.daysToDate(date);
-        }
-        format = format ? format : 'MM/DD/YYYY';
-        return moment(date).format(format);
-    },
+  // used for display and to save answers
+  // takes optional format string
+  dateToString: function (date, format) {
+    // moment doesn't handle days since epoch by default
+    if (typeof date === 'number') {
+      date = this.daysToDate(date)
+    }
+    format = format || 'MM/DD/YYYY'
+    return moment(date).format(format)
+  },
 
-    // used to get days since epoch as the A2J parser expects days for math operations, ie: [bDay] + 30
-    // `date` can be a string date, or moment date
-    dateToDays: function(date) {
-        return this.dateDiff(date, constants.epoch, 'days');
-    },
+  // used to get days since epoch as the A2J parser expects days for math operations, ie: [bDay] + 30
+  // `date` can be a string date, or moment date
+  dateToDays: function (date) {
+    return this.dateDiff(date, constants.epoch, 'days')
+  },
 
-    // used to reconvert number of days since epoch to a moment date object
-    daysToDate: function(numDays) {
-        const refDate = moment(constants.epoch);
-        const newDate = refDate.add(numDays, 'days');
-        return newDate;
-    },
+  // used to reconvert number of days since epoch to a moment date object
+  daysToDate: function (numDays) {
+    const refDate = moment(constants.epoch)
+    const newDate = refDate.add(numDays, 'days')
+    return newDate
+  },
 
-    // will be formatted before display/save or changed to number for calculations
-    todaysDate: function() {
-        return moment();
-    },
+  // will be formatted before display/save or changed to number for calculations
+  todaysDate: function () {
+    return moment()
+  },
 
-    // startDate - string or moment object
-    // endDate - string or moment object
-    // unitOfMeasure - string ex: 'years' or 'days'
-    // Returns positive values when startDate is most recent date, negative if reversed
-    // ex: dateDiff('01-01-2000', '01-01-1970', 'years') returns the number 30
-    dateDiff: function(startDate, endDate, unitOfMeasure) {
-        unitOfMeasure = typeof unitOfMeasure === 'string' ? unitOfMeasure : 'days';
-        // diff can be negative for pre-epoch dates
-        return moment(startDate).diff(moment(endDate), unitOfMeasure);
-    },
+  // startDate - string or moment object
+  // endDate - string or moment object
+  // unitOfMeasure - string ex: 'years' or 'days'
+  // Returns positive values when startDate is most recent date, negative if reversed
+  // ex: dateDiff('01-01-2000', '01-01-1970', 'years') returns the number 30
+  dateDiff: function (startDate, endDate, unitOfMeasure) {
+    unitOfMeasure = typeof unitOfMeasure === 'string' ? unitOfMeasure : 'days'
+    // diff can be negative for pre-epoch dates
+    return moment(startDate).diff(moment(endDate), unitOfMeasure)
+  }
 
-};
+}

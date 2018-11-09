@@ -4,7 +4,7 @@ import Component from 'can-component'
 import template from './pages.stache'
 import assembleFormTpl from './assemble-form.stache'
 import saveAnswersFormTpl from './save-answers-form.stache'
-import {Analytics} from 'caja/viewer/util/analytics'
+import { Analytics } from 'caja/viewer/util/analytics'
 import stache from 'can-stache'
 import 'caja/viewer/mobile/util/helpers'
 

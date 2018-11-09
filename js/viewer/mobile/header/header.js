@@ -1,8 +1,8 @@
-import CanMap from "can-map";
-import Component from "can-component";
-import template from './header.stache';
+import CanMap from 'can-map'
+import Component from 'can-component'
+import template from './header.stache'
 
-import "can-map-define";
+import 'can-map-define'
 
 /**
  * @module {Module} viewer/mobile/header/ <a2j-header>
@@ -42,29 +42,29 @@ const HeaderVM = CanMap.extend({
      * Whether the display the save button.
      */
     showSaveButton: {
-      get() {
-        return !!this.attr('mState.autoSetDataURL');
+      get () {
+        return !!this.attr('mState.autoSetDataURL')
       }
     }
   },
 
-  toggleCredits() {
-    const currentVal = this.attr('mState.showCredits');
-    this.attr('mState.showCredits', !currentVal);
+  toggleCredits () {
+    const currentVal = this.attr('mState.showCredits')
+    this.attr('mState.showCredits', !currentVal)
   },
 
-  save() {
-    this.attr('disableSaveButton', true);
+  save () {
+    this.attr('disableSaveButton', true)
 
     this.attr('pState').save().always(() => {
-      this.attr('disableSaveButton', false);
-    });
+      this.attr('disableSaveButton', false)
+    })
   }
-});
+})
 
 export default Component.extend({
   view: template,
   leakScope: false,
   tag: 'a2j-header',
   ViewModel: HeaderVM
-});
+})

@@ -460,7 +460,7 @@
       if ((e) === true) {
         canDomEvents.dispatch(window, {
           type: 'traceLogic',
-          data: {'_IF': [{ msg: 'IF' }, { format: 'valT', msg: c }, { msg: '\u2714' }]}
+          data: { '_IF': [{ msg: 'IF' }, { format: 'valT', msg: c }, { msg: '\u2714' }] }
         })
       } else {
         canDomEvents.dispatch(window, {
@@ -481,7 +481,7 @@
     }
     TLogic.prototype._VS = function (c, varname, varidx, val) {
       canDomEvents.dispatch(window, {
-        type:'traceLogic',
+        type: 'traceLogic',
         data: { '_VS': { msg: c } }
       })
       return gGuide.varSet(varname, val, varidx)
@@ -582,7 +582,7 @@
           message['executeScript.error: ' + e.lineNumber + ': ' + e.message] = [{
             msg: 'executeScript.error: ' + e.lineNumber + ': ' + e.message
           }]
-          canDomEvents.dispatch(window, {type: 'traceLogic', data: message})
+          canDomEvents.dispatch(window, { type: 'traceLogic', data: message })
           // trace(CAJAScriptHTML);
           // trace(js);
           return false

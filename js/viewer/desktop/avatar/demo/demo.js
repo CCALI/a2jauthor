@@ -1,8 +1,8 @@
-import CanMap from "can-map";
-import Component from "can-component";
-import template from './demo.stache';
+import CanMap from 'can-map'
+import Component from 'can-component'
+import template from './demo.stache'
 
-import "can-map-define";
+import 'can-map-define'
 
 let AvatarDemoVM = CanMap.extend({
   define: {
@@ -18,11 +18,11 @@ let AvatarDemoVM = CanMap.extend({
       value: 'light'
     }
   }
-});
+})
 
 export default Component.extend({
   view: template,
   ViewModel: AvatarDemoVM,
   tag: 'a2j-viewer-avatar-demo',
   leakScope: true
-});
+})

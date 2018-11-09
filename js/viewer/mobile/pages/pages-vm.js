@@ -5,8 +5,8 @@ import _forEach from 'lodash/forEach'
 import queues from 'can-queues'
 import AnswerVM from 'caja/viewer/models/answervm'
 import Parser from 'caja/viewer/mobile/util/parser'
-import {ViewerNavigationVM} from 'caja/viewer/desktop/navigation/navigation'
-import {Analytics} from 'caja/viewer/util/analytics'
+import { ViewerNavigationVM } from 'caja/viewer/desktop/navigation/navigation'
+import { Analytics } from 'caja/viewer/util/analytics'
 import { FieldVM } from './fields/field/field'
 import constants from 'caja/viewer/models/constants'
 
@@ -224,7 +224,7 @@ export default CanMap.extend('PagesVM', {
             const $fieldEl = $(preSelector + "[name='" + escapedFieldName + "']")
 
             // validateField expects `this` to have field and traceLogic
-            vm.attr({field, traceLogic})
+            vm.attr({ field, traceLogic })
 
             // fire same answer pre-validation as jquery datepicker
             if (type === 'datemdy') {
@@ -268,7 +268,7 @@ export default CanMap.extend('PagesVM', {
     if (button.next === constants.qIDRESUME) {
       let interview = this.attr('interview')
       // Handle the same as Desktop Navigation Resume
-      let vm = new ViewerNavigationVM({rState, interview})
+      let vm = new ViewerNavigationVM({ rState, interview })
       vm.resumeInterview()
       return
     }
@@ -487,7 +487,6 @@ export default CanMap.extend('PagesVM', {
     const currentPage = this.attr('currentPage')
 
     if (currentPage && currentPage.name !== 'FAIL') {
-
       if (!currentPage) {
         console.warn(`Unknown page: ${currentPage.name}`)
         return

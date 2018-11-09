@@ -1,109 +1,103 @@
-import { assert } from 'chai';
-import moment from 'moment';
-import cDate from 'caja/viewer/mobile/util/date';
+import { assert } from 'chai'
+import moment from 'moment'
+import cDate from 'caja/viewer/mobile/util/date'
 
-describe('util: date', function() {
+describe('util: date', function () {
+  let testDate
 
-    let testDate;
+  beforeEach(function () {
+    testDate = moment('02/28/1970')
+  })
 
-    beforeEach(function(){
-        testDate = moment('02/28/1970');
-    });
+  describe('swapMonthAndDay', function () {
+    it('returns mm/dd/yyyy if given dd/mm/yyyy', function () {
+      let usDate = '02/24/1980'
+      let britDate = cDate.swapMonthAndDay(usDate)
+      assert.equal(britDate, '24/02/1980', 'failed to create brit date')
+    })
 
-    describe('swapMonthAndDay', function() {
+    it('returns dd/mm/yyyy if given mm/dd/yyyy', function () {
+      let britDate = '17/04/1988'
+      let usDate = cDate.swapMonthAndDay(britDate)
+      assert.equal(usDate, '04/17/1988', 'failed to create US date')
+    })
+  })
 
-        it('returns mm/dd/yyyy if given dd/mm/yyyy', function() {
-            let usDate = '02/24/1980';
-            let britDate = cDate.swapMonthAndDay(usDate);
-            assert.equal(britDate, '24/02/1980', 'failed to create brit date');
-        });
+  describe('dateToString', function () {
+    it('should return a string date given a moment object', function () {
+      let stringDate = cDate.dateToString(testDate)
 
-        it('returns dd/mm/yyyy if given mm/dd/yyyy', function() {
-            let britDate = '17/04/1988';
-            let usDate = cDate.swapMonthAndDay(britDate);
-            assert.equal(usDate, '04/17/1988', 'failed to create US date');
-        });
-    });
+      assert.equal(stringDate, '02/28/1970', 'did not format moment date')
+    })
 
-    describe('dateToString', function(){
+    it('should handle number of days since epoch', function () {
+      let numDays = 58 // '02/28/1970'
+      let stringDate = cDate.dateToString(numDays)
 
-        it('should return a string date given a moment object', function(){
-            let stringDate = cDate.dateToString(testDate);
+      assert.equal(stringDate, '02/28/1970', 'did not format days since epoch')
+    })
 
-            assert.equal(stringDate, '02/28/1970', 'did not format moment date');
-        });
+    it('should handle a string date', function () {
+      let sourceString = '02/28/1970'
+      let stringDate = cDate.dateToString(sourceString)
 
-        it('should handle number of days since epoch', function(){
-            let numDays = 58; // '02/28/1970'
-            let stringDate = cDate.dateToString(numDays);
+      assert.equal(stringDate, '02/28/1970', 'did not format string to string')
+    })
 
-            assert.equal(stringDate, '02/28/1970', 'did not format days since epoch');
-        });
+    it('should re-format a string date to new format', function () {
+      let sourceString = '02/28/1970'
+      let stringDate = cDate.dateToString(sourceString, 'DD-MM-YYYY')
 
-        it('should handle a string date', function(){
-            let sourceString = '02/28/1970';
-            let stringDate = cDate.dateToString(sourceString);
+      assert.equal(stringDate, '28-02-1970', 'did not format string to new string format')
+    })
+  })
 
-            assert.equal(stringDate, '02/28/1970', 'did not format string to string');
-        });
+  describe('dateToDays', function () {
+    it('should convert a moment object to days since epoch', function () {
+      let numDays = cDate.dateToDays(testDate) // 58
 
-        it('should re-format a string date to new format', function(){
-            let sourceString = '02/28/1970';
-            let stringDate = cDate.dateToString(sourceString, 'DD-MM-YYYY');
+      assert.equal(numDays, 58, 'failed to convert moment object to days')
+    })
 
-            assert.equal(stringDate, '28-02-1970', 'did not format string to new string format');
-        });
-    });
+    it('should also convert a string date to days', function () {
+      let stringDate = '02/28/1970'
+      let numDays = cDate.dateToDays(stringDate)
 
-    describe('dateToDays', function() {
+      assert.equal(numDays, 58, 'did not handle string date')
+    })
+  })
 
-        it('should convert a moment object to days since epoch', function(){
-            let numDays = cDate.dateToDays(testDate); //58
+  describe('daysToDate', function () {
+    it('should convert days since epoch to a moment object', function () {
+      let numDays = 58
+      let date = cDate.daysToDate(numDays)
 
-            assert.equal(numDays, 58, 'failed to convert moment object to days');
-        });
+      assert.equal(date._isAMomentObject, true, 'did not return a moment object')
+      assert.equal(date.format('MM/DD/YYYY'), '02/28/1970', 'date from days did not match')
+    })
+  })
 
-        it('should also convert a string date to days', function() {
-            let stringDate = '02/28/1970';
-            let numDays = cDate.dateToDays(stringDate);
+  describe('dateDiff', function () {
+    it('should return a positive number of days when most recent date is first', function () {
+      let endDate = moment('01/01/1970')
+      let daysDiff = cDate.dateDiff(testDate, endDate)
 
-            assert.equal(numDays, 58, 'did not handle string date');
-        });
-    });
+      assert.equal(daysDiff, 58, 'failed to compute number of days')
+    })
 
-    describe('daysToDate', function(){
+    it('should return a negative number of days when most recent date is second', function () {
+      let endDate = moment('01/01/1970')
+      let daysDiff = cDate.dateDiff(endDate, testDate)
 
-        it ('should convert days since epoch to a moment object', function(){
-            let numDays = 58;
-            let date = cDate.daysToDate(numDays);
+      assert.equal(daysDiff, -58, 'failed to compute negative number of days')
+    })
 
-            assert.equal(date._isAMomentObject, true, 'did not return a moment object');
-            assert.equal(date.format('MM/DD/YYYY'), '02/28/1970', 'date from days did not match');
-        });
-    });
+    it('should return number of years if passed 3rd param "years"', function () {
+      let endDate = moment('01/01/2000')
+      let startDate = moment('01/01/2010')
+      let yearsDiff = cDate.dateDiff(startDate, endDate, 'years')
 
-    describe('dateDiff', function(){
-
-        it('should return a positive number of days when most recent date is first', function(){
-            let endDate = moment('01/01/1970');
-            let daysDiff = cDate.dateDiff(testDate, endDate);
-
-            assert.equal(daysDiff, 58, 'failed to compute number of days');
-        });
-
-        it('should return a negative number of days when most recent date is second', function(){
-            let endDate = moment('01/01/1970');
-            let daysDiff = cDate.dateDiff(endDate, testDate);
-
-            assert.equal(daysDiff, -58, 'failed to compute negative number of days');
-        });
-
-        it('should return number of years if passed 3rd param "years"', function(){
-            let endDate = moment('01/01/2000');
-            let startDate = moment('01/01/2010');
-            let yearsDiff = cDate.dateDiff(startDate, endDate, 'years');
-
-            assert.equal(yearsDiff, 10, 'did not compute 10 years');
-        });
-    });
-});
+      assert.equal(yearsDiff, 10, 'did not compute 10 years')
+    })
+  })
+})

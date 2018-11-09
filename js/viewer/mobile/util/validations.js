@@ -1,9 +1,9 @@
-import CanMap from "can-map";
-import moment from 'moment';
-import _isNull from 'lodash/isNull';
-import _isUndefined from 'lodash/isUndefined';
+import CanMap from 'can-map'
+import moment from 'moment'
+import _isNull from 'lodash/isNull'
+import _isUndefined from 'lodash/isUndefined'
 
-import "can-map-define";
+import 'can-map-define'
 
 /**
  * @property {can.Map} validations.prototype.Config
@@ -29,16 +29,16 @@ let Config = CanMap.extend({
      * otherwise the value is returned as a number
      */
     min: {
-      type: function(val) {
+      type: function (val) {
         if (this.attr('type') === 'datemdy') {
           if (!val) {
-            return '';
+            return ''
           }
-          let date = (val.toUpperCase() === 'TODAY') ? moment() : moment(val);
-          return date.isValid() ? date.format('MM/DD/YYYY') : '';
+          let date = (val.toUpperCase() === 'TODAY') ? moment() : moment(val)
+          return date.isValid() ? date.format('MM/DD/YYYY') : ''
         }
 
-        return +val;
+        return +val
       }
     },
 
@@ -52,16 +52,16 @@ let Config = CanMap.extend({
      * otherwise the value is returned as a number
      */
     max: {
-      type: function(val) {
+      type: function (val) {
         if (this.attr('type') === 'datemdy') {
           if (!val) {
-            return '';
+            return ''
           }
-          let date = (val.toUpperCase() === 'TODAY') ? moment() : moment(val);
-          return date.isValid() ? date.format('MM/DD/YYYY') : '';
+          let date = (val.toUpperCase() === 'TODAY') ? moment() : moment(val)
+          return date.isValid() ? date.format('MM/DD/YYYY') : ''
         }
 
-        return +val;
+        return +val
       }
     },
 
@@ -85,7 +85,7 @@ let Config = CanMap.extend({
       type: 'boolean'
     }
   }
-});
+})
 
 /**
  * @module {can.Map} viewer/mobile/util/validations validations
@@ -128,13 +128,13 @@ export default CanMap.extend({
      * current value
      */
     val: {
-      type(val) {
+      type (val) {
         if (this.attr('config.type') === 'datemdy') {
-          let date = moment(val, 'MM/DD/YYYY');
-          return date.isValid() ? date.toDate() : '';
+          let date = moment(val, 'MM/DD/YYYY')
+          return date.isValid() ? date.toDate() : ''
         }
 
-        return val;
+        return val
       }
     }
   },
@@ -145,12 +145,12 @@ export default CanMap.extend({
    *
    * returns true if the val is required and empty
    */
-  required: function() {
+  required: function () {
     if (this.config.required &&
       (_isNull(this.val) ||
         _isUndefined(this.val) ||
         (typeof this.val === 'string' && !this.val.length))) {
-      return true;
+      return true
     }
   },
 
@@ -160,10 +160,10 @@ export default CanMap.extend({
    *
    * returns true if the val is longer than the configured maxChars
    */
-  maxChars: function() {
+  maxChars: function () {
     if (this.config.maxChars &&
       this.val && this.val.length > this.config.maxChars) {
-      return true;
+      return true
     }
   },
 
@@ -173,19 +173,19 @@ export default CanMap.extend({
    *
    * returns true if the val is lower than the configured minimum
    */
-  min: function() {
+  min: function () {
     if (this.config.min) {
       if (!this.val) {
-        return false;
+        return false
       }
 
       if (this.config.type === 'datemdy') {
         if (moment(this.val).isBefore(this.config.min)) {
-          return true;
+          return true
         }
       } else {
         if (this.val < this.config.min) {
-          return true;
+          return true
         }
       }
     }
@@ -197,19 +197,19 @@ export default CanMap.extend({
    *
    * returns true if the val is higher than the configure maximum
    */
-  max: function() {
+  max: function () {
     if (this.config.max) {
       if (!this.val) {
-        return false;
+        return false
       }
 
       if (this.config.type === 'datemdy') {
         if (moment(this.val).isAfter(this.config.max)) {
-          return true;
+          return true
         }
       } else {
         if (this.val > this.config.max) {
-          return true;
+          return true
         }
       }
     }
@@ -225,14 +225,14 @@ export default CanMap.extend({
   isNumber: function () {
     if (this.config.isNumber) {
       if (!this.val && !isNaN(this.val)) {
-        return false;
+        return false
       }
 
       if (isNaN(this.val)) {
-        return true;
+        return true
       } else {
-        return false;
+        return false
       }
     }
   }
-});
+})

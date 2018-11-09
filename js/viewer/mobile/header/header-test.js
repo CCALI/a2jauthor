@@ -1,8 +1,8 @@
 import $ from 'jquery'
 import F from 'funcunit'
-import CanMap from 'can-map';
+import CanMap from 'can-map'
 import { assert } from 'chai'
-import stache from 'can-stache';
+import stache from 'can-stache'
 import setupPromise from 'can-reflect-promise'
 
 import './header'
@@ -49,7 +49,7 @@ describe('a2j-header', function () {
     pState.save = () => {
       called = true
       return deferred
-    };
+    }
 
     // show save button
     vm.attr('mState.autoSetDataURL', '/ajax-save.php')
@@ -83,7 +83,7 @@ describe('a2j-header', function () {
     pState.save = () => {
       called = true
       return deferred
-    };
+    }
 
     // show save button
     vm.attr('mState.autoSetDataURL', '/ajax-save.php')

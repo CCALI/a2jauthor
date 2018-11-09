@@ -287,7 +287,7 @@ export let FieldVM = CanMap.extend('FieldVM', {
     if (field && field.calculator === true) {
       let inputId = field.attr('label')
       let $inputEl = $("[id='" + inputId + "']")
-      $inputEl.calculator({showOn: 'operator',
+      $inputEl.calculator({ showOn: 'operator',
         eraseText: 'Clear',
         onClose: function (calcValue, instance) {
           instance.elem.prop('value', calcValue).change()
@@ -345,13 +345,13 @@ export let FieldVM = CanMap.extend('FieldVM', {
     const answerName = field.attr('name')
     const previewActive = this.attr('rState.previewActive')
     if (!answerName && previewActive) {
-      this.attr('modalContent', {title: 'Author Warning', text: 'Text(long) fields require an assigned variable to expand'})
+      this.attr('modalContent', { title: 'Author Warning', text: 'Text(long) fields require an assigned variable to expand' })
     }
     if (answerName) {
       const answerIndex = field.attr('_answer.answerIndex')
       const textlongValue = field._answer.attr('answer.values.' + answerIndex)
       const title = field.attr('label')
-      this.attr('modalContent', {title, textlongValue, answerIndex, answerName, field})
+      this.attr('modalContent', { title, textlongValue, answerIndex, answerName, field })
     }
   },
 

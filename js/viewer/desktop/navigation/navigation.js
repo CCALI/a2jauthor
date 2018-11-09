@@ -4,7 +4,7 @@ import Component from 'can-component'
 import _truncate from 'lodash/truncate'
 import template from './navigation.stache'
 import constants from 'caja/viewer/models/constants'
-import {Analytics} from 'caja/viewer/util/analytics'
+import { Analytics } from 'caja/viewer/util/analytics'
 import isMobile from 'caja/viewer/is-mobile'
 
 import 'can-map-define'
@@ -264,7 +264,7 @@ export default Component.extend({
       text = text.replace(/(<([^>]+)>)/ig, '').trim()
 
       // truncate text to avoid https://github.com/CCALI/CAJA/issues/685
-      text = _truncate(text, {length: 40, separator: ' '})
+      text = _truncate(text, { length: 40, separator: ' ' })
       text = (typeof repeatVarValue === 'number') ? text + '#' + repeatVarValue : text
 
       return text

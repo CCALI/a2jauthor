@@ -4,7 +4,7 @@ const skinClassMap = {
   medium: 'skin-medium',
   dark: 'skin-dark',
   darker: 'skin-darker'
-};
+}
 
 const hairClassMap = {
   blonde: 'hair-blonde',
@@ -15,36 +15,36 @@ const hairClassMap = {
   grayDark: 'hair-gray-dark',
   grayLight: 'hair-gray-light',
   bald: 'hair-bald'
-};
-
-export const skinTones = Object.keys(skinClassMap);
-export const hairColors = Object.keys(hairClassMap);
-export const genders = ['female', 'male'];
-export const faces = ['front', 'right', 'left'];
-
-export function getClassNameForSkin(skin) {
-  return skinClassMap[skin];
 }
 
-export function getClassNameForHair(hair) {
-  return hairClassMap[hair];
+export const skinTones = Object.keys(skinClassMap)
+export const hairColors = Object.keys(hairClassMap)
+export const genders = ['female', 'male']
+export const faces = ['front', 'right', 'left']
+
+export function getClassNameForSkin (skin) {
+  return skinClassMap[skin]
 }
 
-const enumType = function(enumColl, defaultValue) {
+export function getClassNameForHair (hair) {
+  return hairClassMap[hair]
+}
+
+const enumType = function (enumColl, defaultValue) {
   function EnumType (value) {
-    const hasValue = enumColl.indexOf(value) !== -1;
+    const hasValue = enumColl.indexOf(value) !== -1
     if (hasValue) {
-      return value;
+      return value
     }
 
-    return defaultValue || enumColl[0];
+    return defaultValue || enumColl[0]
   }
 
-  EnumType.defaultValue = defaultValue;
-  return EnumType;
-};
+  EnumType.defaultValue = defaultValue
+  return EnumType
+}
 
-export const Face = enumType(faces, 'front');
-export const Gender = enumType(genders, 'female');
-export const Skin = enumType(skinTones, 'light');
-export const Hair = enumType(hairColors, 'brownDark');
+export const Face = enumType(faces, 'front')
+export const Gender = enumType(genders, 'female')
+export const Skin = enumType(skinTones, 'light')
+export const Hair = enumType(hairColors, 'brownDark')

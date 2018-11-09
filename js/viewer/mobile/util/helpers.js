@@ -1,5 +1,5 @@
-import stache from "can-stache"
-import route from "can-route"
+import stache from 'can-stache'
+import route from 'can-route'
 import $ from 'jquery'
 import _isFunction from 'lodash/isFunction'
 import normalizePath from 'caja/viewer/util/normalize-path'

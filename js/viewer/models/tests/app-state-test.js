@@ -17,7 +17,7 @@ describe('AppState', function () {
   let appStateTeardown
 
   beforeEach(function (done) {
-    let promise = Interview.findOne({url: '/interview.json'})
+    let promise = Interview.findOne({ url: '/interview.json' })
 
     promise.then(function (_interview) {
       interview = _interview
@@ -33,14 +33,13 @@ describe('AppState', function () {
         gotoPage: ''
       })
 
-      appState = new AppState({interview, logic})
+      appState = new AppState({ interview, logic })
       // simulate stache bind on visitedPages
       appStateTeardown = appState.connectedCallback()
 
       // collect the actual page names of the interview
       pages = interview.attr('pages')
       pageNames = pages.map(page => page.attr('name'))
-
 
       done()
     })
@@ -196,7 +195,7 @@ describe('AppState', function () {
 
     appState.selectedPageIndex = 1
     assert.equal(appState.selectedPageName, pages.attr(0).attr('name'),
-    'should return most recently visited page name')
+      'should return most recently visited page name')
 
     appState.selectedPageIndex = 0
     assert.equal(appState.selectedPageName, pages.attr(1).attr('name'),

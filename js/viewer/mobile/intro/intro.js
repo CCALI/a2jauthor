@@ -1,15 +1,15 @@
-import CanMap from "can-map";
-import Component from "can-component";
-import template from './intro.stache';
+import CanMap from 'can-map'
+import Component from 'can-component'
+import template from './intro.stache'
 
 const IntroVM = CanMap.extend({
-  navigate() {
+  navigate () {
     this.attr('rState').attr({
       page: this.attr('interview.firstPage'),
       view: 'pages'
-    });
+    })
   }
-});
+})
 
 export default Component.extend({
   view: template,
@@ -17,11 +17,11 @@ export default Component.extend({
   ViewModel: IntroVM,
 
   events: {
-    inserted() {
-      this.viewModel.attr('mState.header', '');
-      this.viewModel.attr('mState.step', '');
+    inserted () {
+      this.viewModel.attr('mState.header', '')
+      this.viewModel.attr('mState.step', '')
     }
   },
 
   leakScope: true
-});
+})

@@ -12,11 +12,11 @@
     <can-import from="caja/author/templates/elements/a2j-template-ssr/" />
 
     <a2j-template-ssr
-      vm:answers:from="request.body.answers"
-      vm:guideId:from="request.body.guideId"
-      vm:templateId:from="request.body.templateId"
-      vm:templateIds:from="request.body.templateIds"
-      vm:fileDataUrl:from="request.body.fileDataUrl"
+      answers:from="request.body.answers"
+      guideId:from="request.body.guideId"
+      templateId:from="request.body.templateId"
+      templateIds:from="request.body.templateIds"
+      fileDataUrl:from="request.body.fileDataUrl"
     />
   </body>
 </html>

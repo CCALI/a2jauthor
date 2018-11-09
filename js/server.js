@@ -4,7 +4,7 @@ import "can-route"
 import "can-map-define"
 import "can-route-pushstate"
 
-const AppViewModel = CanMap.extend({
+const AppViewModel = CanMap.extend('ServerAppViewModel', {
   define: {
     title: {
       serialize: false,

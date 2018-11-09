@@ -109,7 +109,6 @@ export default CanMap.extend({
    * Determines whether the template passed to the function can be rendered
    */
   canRenderTemplate (template) {
-    debugger
     const state = template.attr('rootNode.state')
     const hasConditionalLogic = state.attr('hasConditionalLogic') === 'true'
 

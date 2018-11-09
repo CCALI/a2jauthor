@@ -12,6 +12,11 @@ import evalAuthorCondition from "caja/author/utils/eval-author-condition";
  */
 export default CanMap.extend({
   define: {
+    // passed in from server.stache
+    guideId: {},
+    templateId: {},
+    templateIds: {},
+    fileDataUrl: {},
     /**
      * @property {Promise} templatesPromise
      *
@@ -32,9 +37,10 @@ export default CanMap.extend({
             templateIds.map(templateId => A2JTemplate.findOne({ templateId }))
           ).then(templates => new CanList(templates));
         }
-
         if (templateId) {
-          return this.findOneAndMakeList(guideId, templateId);
+          return this.findOneAndMakeList(guideId, templateId).then((val)=>{
+            return val
+          });
         }
 
         return A2JTemplate.findAll({ guideId, fileDataUrl, active });
@@ -103,6 +109,7 @@ export default CanMap.extend({
    * Determines whether the template passed to the function can be rendered
    */
   canRenderTemplate(template) {
+    debugger
     const state = template.attr("rootNode.state");
     const hasConditionalLogic = state.attr("hasConditionalLogic") === "true";
 

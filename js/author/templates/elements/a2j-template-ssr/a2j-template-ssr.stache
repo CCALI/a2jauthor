@@ -1,13 +1,13 @@
 <can-import from="caja/author/templates/elements/a2j-template/" />
 <can-import from="caja/author/templates/elements/a2j-template-ssr/a2j-template-ssr.less!" />
 
-{{#if templatesPromise.isResolved}}
-  {{#each templates}}
-    {{#if canRenderTemplate(this)}}
+{{#if(scope.vm.templatesPromise.isResolved)}}
+  {{#each(scope.vm.templates)}}
+    {{#if(scope.vm.canRenderTemplate(this))}}
       <a2j-template
         vm:template:from="."
         use-answers:raw="true"
-        vm:answers:from="answers"
+        vm:answers:from="scope.vm.answers"
         edit-enabled:raw="false"
       />
     {{/if}}

@@ -1,5 +1,5 @@
 import Component from "can-component";
-import template from './a2j-template-ssr.stache';
+import template from './a2j-template-ssr.stache!';
 import TemplateSsrVM from './a2j-template-ssr-vm';
 
 /**
@@ -24,5 +24,5 @@ export default Component.extend({
  view: template,
  tag: 'a2j-template-ssr',
  ViewModel: TemplateSsrVM,
- leakScope: true
+ leakScope: false
 });

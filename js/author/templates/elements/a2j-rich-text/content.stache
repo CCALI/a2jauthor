@@ -1,5 +1,5 @@
-{{#if(../editActive)}}
-  <textarea style="{{scope.find('fontProperties')}}">{{../userContent}}</textarea>
+{{#if(scope/editActive)}}
+  <textarea style="{{scope/fontProperties}}">{{scope/userContent}}</textarea>
 {{else}}
-  <div style="{{scope.find('fontProperties')}}">{{../a2jParse(../userContent)}}</div>
+  <div style="{{scope/fontProperties}}">{{scope/a2jParse(scope/userContent)}}</div>
 {{/if}}

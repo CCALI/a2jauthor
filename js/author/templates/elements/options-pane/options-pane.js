@@ -1,8 +1,8 @@
-import CanMap from "can-map";
-import Component from "can-component";
-import template from './options-pane.stache';
+import CanMap from 'can-map'
+import Component from 'can-component'
+import template from './options-pane.stache'
 
-import "can-map-define";
+import 'can-map-define'
 
 /**
  * @module {Module} optionsPane <element-options-pane>
@@ -51,11 +51,11 @@ export let OptionsPaneVM = CanMap.extend({
       value: true
     }
   }
-});
+})
 
 export default Component.extend({
   view: template,
   ViewModel: OptionsPaneVM,
   tag: 'element-options-pane',
   leakScope: true
-});
+})

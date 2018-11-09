@@ -1,48 +1,46 @@
-import $ from 'jquery';
-import { assert } from 'chai';
-import stache from "can-stache";
+import $ from 'jquery'
+import { assert } from 'chai'
+import stache from 'can-stache'
 
-import 'steal-mocha';
-import './element-container';
+import 'steal-mocha'
+import './element-container'
 
-describe('<element-container>', function() {
-
-  describe('Component', function() {
-    beforeEach(function() {
+describe('<element-container>', function () {
+  describe('Component', function () {
+    beforeEach(function () {
       let frag = stache(
         `<element-container>
           <h2>SectionTitle</h2>
         </element-container>`
-      );
+      )
 
-      $('#test-area').html(frag());
-    });
+      $('#test-area').html(frag())
+    })
 
-    afterEach(function() {
-      $('#test-area').empty();
-    });
+    afterEach(function () {
+      $('#test-area').empty()
+    })
 
-    it.skip('sets "selected" to "true" on click', function() {
-      let vm = $('element-container')[0].viewModel;
-      assert.isFalse(vm.attr('selected'), 'should default to false');
+    it.skip('sets "selected" to "true" on click', function () {
+      let vm = $('element-container')[0].viewModel
+      assert.isFalse(vm.attr('selected'), 'should default to false')
 
-      $('.wrapper').click();
-      assert.isTrue(vm.attr('selected'));
-    });
+      $('.wrapper').click()
+      assert.isTrue(vm.attr('selected'))
+    })
 
-    it('hides element-toolbar if not selected', function() {
-      let vm = $('element-container')[0].viewModel;
+    it('hides element-toolbar if not selected', function () {
+      let vm = $('element-container')[0].viewModel
 
-      assert.isFalse(vm.attr('selected'), 'should default to false');
-      assert(!$('element-toolbar').length, 'element-toolbar should not be rendered');
-    });
+      assert.isFalse(vm.attr('selected'), 'should default to false')
+      assert(!$('element-toolbar').length, 'element-toolbar should not be rendered')
+    })
 
-    it('shows element-toolbar if selected', function() {
-      let vm = $('element-container')[0].viewModel;
+    it('shows element-toolbar if selected', function () {
+      let vm = $('element-container')[0].viewModel
 
-      vm.attr('selected', true);
-      assert($('element-toolbar').length, 'should be visible');
-    });
-  });
-
-});
+      vm.attr('selected', true)
+      assert($('element-toolbar').length, 'should be visible')
+    })
+  })
+})

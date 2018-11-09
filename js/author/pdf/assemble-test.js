@@ -178,26 +178,26 @@ describe('pdf/assemble', () => {
       const boxes = [{
         id: 'vb-0',
         page: 0,
-        area: {top: 0, left: 0, width: 0, height: 0},
+        area: { top: 0, left: 0, width: 0, height: 0 },
         variable: 'Client first name TE'
       },
       {
         id: 'vb-1',
         page: 0,
-        area: {top: 10, left: 10, width: 10, height: 10},
+        area: { top: 10, left: 10, width: 10, height: 10 },
         variable: 'Age NU'
       },
       {
         id: 'vb-2',
         page: 0,
-        area: {top: 30, left: 30, width: 30, height: 30},
+        area: { top: 30, left: 30, width: 30, height: 30 },
         isInverted: true,
         variable: 'Fun TF'
       },
       {
         id: 'vb-3',
         page: 0,
-        area: {top: 60, left: 60, width: 60, height: 60},
+        area: { top: 60, left: 60, width: 60, height: 60 },
         variable: 'Status MC',
         variableValue: 'married'
       }]
@@ -242,8 +242,8 @@ describe('pdf/assemble', () => {
           type: 'MC'
         }
       }
-      const pages = [{ domSize: {height: 990, width: 765}, pdfSize: {height: 792, width: 612} }]
-      const documentOptions = {variableOptions: {'status mc': {isCheck: true}}, addendumOptions: {}}
+      const pages = [{ domSize: { height: 990, width: 765 }, pdfSize: { height: 792, width: 612 } }]
+      const documentOptions = { variableOptions: { 'status mc': { isCheck: true } }, addendumOptions: {} }
       const templateData = {
         boxes,
         answers,

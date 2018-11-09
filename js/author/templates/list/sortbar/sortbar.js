@@ -26,7 +26,7 @@ export let Sortbar = CanMap.extend({
       direction = this.toggleDirection(this.attr('criteria.direction'))
     }
 
-    this.attr('criteria', {key, direction})
+    this.attr('criteria', { key, direction })
   }
 })
 
@@ -39,7 +39,7 @@ export default Component.extend({
   helpers: {
     sortCaretClasses (sortKey) {
       let classes = []
-      let {key, direction} = this.attr('criteria').attr()
+      let { key, direction } = this.attr('criteria').attr()
 
       if (key === sortKey) {
         classes.push('active')

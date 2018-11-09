@@ -1,9 +1,9 @@
-import CanMap from 'can-map';
-import Component from 'can-component';
+import CanMap from 'can-map'
+import Component from 'can-component'
 import template from './evaluate.stache'
 import $ from 'jquery'
 
-import 'can-map-define';
+import 'can-map-define'
 
 /**
  * @property {can.Map} evaluatePanel.ViewModel
@@ -31,23 +31,23 @@ export let EvaluatePanelVM = CanMap.extend('EvaluatePanelVM', {
      */
   evaluateScript () {
     let evalResults
-        let traceLogic = this.attr('traceLogic')
-        let scriptText = $('#evaluate-input').val()
-        if (scriptText) {
+    let traceLogic = this.attr('traceLogic')
+    let scriptText = $('#evaluate-input').val()
+    if (scriptText) {
       evalResults = window.gLogic.evalBlock(scriptText)
-        }
+    }
 
     if (evalResults.errors.length > 0) {
       evalResults.errors.forEach(function (error) {
         traceLogic.push({
           expression: [ { format: 'valF', msg: 'ERROR' }, { format: 'code', msg: error.text } ]
         })
-            })
-        } else if (evalResults.text && traceLogic) {
+      })
+    } else if (evalResults.text && traceLogic) {
       traceLogic.push({
         expression: [ { format: 'code', msg: scriptText + ' evaluates to: ' }, { format: 'val', msg: evalResults.text } ]
       })
-        }
+    }
   }
 })
 
@@ -61,7 +61,7 @@ export default Component.extend({
     '#evaluate-input keyup': function (el, ev) {
       if (ev.keyCode === 13) {
         $('#evaluate-button').click()
-        }
+      }
     }
   }
 })

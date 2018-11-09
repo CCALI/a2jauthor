@@ -11,7 +11,7 @@ function getLanguageList () {
       Language: name,
       LanguageEN: englishName
     } = langs[code]
-    return {locale, name, englishName}
+    return { locale, name, englishName }
   })
 }
 
@@ -73,7 +73,7 @@ export const AboutMainVm = CanMap.extend({
   },
 
   updateAvatarGender (event) {
-    const {checked, value} = event.target
+    const { checked, value } = event.target
     const gender = checked && value.toLowerCase() === 'male' ? 'male' : 'female'
     this.attr('guide.guideGender', gender)
   },

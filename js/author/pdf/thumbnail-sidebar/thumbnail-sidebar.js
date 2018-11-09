@@ -1,6 +1,6 @@
-import CanMap from "can-map";
-import Component from "can-component";
-import template from "./thumbnail-sidebar.stache";
+import CanMap from 'can-map'
+import Component from 'can-component'
+import template from './thumbnail-sidebar.stache'
 
 export const ThumbnailSidebarVm = CanMap.extend({
   define: {
@@ -22,33 +22,33 @@ export const ThumbnailSidebarVm = CanMap.extend({
     },
 
     numberedThumbnails: {
-      get() {
-        return this.attr("thumbnailImageUrls").map((url, index) => ({
+      get () {
+        return this.attr('thumbnailImageUrls').map((url, index) => ({
           url,
           pageNumber: index + 1
-        }));
+        }))
       }
     }
   },
 
-  fireDrawerHandleClick() {
-    const handler = this.attr("onDrawerHandleClick");
+  fireDrawerHandleClick () {
+    const handler = this.attr('onDrawerHandleClick')
     if (handler) {
-      handler();
+      handler()
     }
   },
 
-  fireThumbnailClick(selectedThumbnailImageUrl) {
-    const handler = this.attr("onThumbnailClick");
+  fireThumbnailClick (selectedThumbnailImageUrl) {
+    const handler = this.attr('onThumbnailClick')
     if (handler) {
-      handler(selectedThumbnailImageUrl);
+      handler(selectedThumbnailImageUrl)
     }
   }
-});
+})
 
 export default Component.extend({
-  tag: "thumbnail-sidebar",
+  tag: 'thumbnail-sidebar',
   view: template,
   leakScope: false,
   ViewModel: ThumbnailSidebarVm
-});
+})

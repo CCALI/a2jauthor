@@ -1,6 +1,6 @@
-import Component from "can-component";
-import template from './condition-form.stache';
-import ConditionFormVM from './condition-form-vm';
+import Component from 'can-component'
+import template from './condition-form.stache'
+import ConditionFormVM from './condition-form-vm'
 
 /**
  * @module ConditionForm
@@ -14,4 +14,4 @@ export default Component.extend({
   leakScope: false,
   tag: 'condition-form',
   ViewModel: ConditionFormVM
-});
+})

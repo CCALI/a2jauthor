@@ -1,8 +1,8 @@
-import CanMap from "can-map";
-import Component from "can-component";
-import template from './a2j-page-break.stache';
+import CanMap from 'can-map'
+import Component from 'can-component'
+import template from './a2j-page-break.stache'
 
-import "can-map-define";
+import 'can-map-define'
 
 /**
  * @module {Module} A2JPageBreakVM
@@ -29,7 +29,7 @@ const PageBreakVM = CanMap.extend({
       value: ''
     }
   }
-});
+})
 
 /**
  * @module A2JPageBreak
@@ -48,4 +48,4 @@ export default Component.extend({
   tag: 'a2j-page-break',
   ViewModel: PageBreakVM,
   leakScope: true
-});
+})

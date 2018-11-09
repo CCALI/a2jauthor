@@ -1,7 +1,7 @@
-import CanMap from "can-map";
-import _isString from 'lodash/isString';
-import _capitalize from 'lodash/capitalize';
-import createEmptyNode from 'caja/author/utils/create-empty-node';
+import CanMap from 'can-map'
+import _isString from 'lodash/isString'
+import _capitalize from 'lodash/capitalize'
+import createEmptyNode from 'caja/author/utils/create-empty-node'
 
 /**
  * @module TemplateEditTabsVM
@@ -27,8 +27,8 @@ export default CanMap.extend({
      * State object of the root node template
      */
     templateState: {
-      get() {
-        return this.attr('template.rootNode.state');
+      get () {
+        return this.attr('template.rootNode.state')
       }
     },
 
@@ -38,36 +38,35 @@ export default CanMap.extend({
      * Whether the conditional logic form is enabled
      */
     isConditionalLogicEnabled: {
-      get() {
-        const templateState = this.attr('templateState');
+      get () {
+        const templateState = this.attr('templateState')
 
         if (templateState) {
-          const value = templateState.attr('hasConditionalLogic');
-          return _isString(value) ? value === 'true' : Boolean(value);
+          const value = templateState.attr('hasConditionalLogic')
+          return _isString(value) ? value === 'true' : Boolean(value)
         }
 
         // default value
-        return false;
+        return false
       },
 
-      set(newVal) {
-        const templateState = this.attr('templateState');
+      set (newVal) {
+        const templateState = this.attr('templateState')
 
-        if (templateState) templateState.attr('hasConditionalLogic', newVal);
-        return newVal;
+        if (templateState) templateState.attr('hasConditionalLogic', newVal)
+        return newVal
       }
     }
   },
 
-  addElement(elementName) {
-    const template = this.attr('template');
-    const newNode = createEmptyNode(elementName);
+  addElement (elementName) {
+    const template = this.attr('template')
+    const newNode = createEmptyNode(elementName)
 
-    template.addNode(newNode);
+    template.addNode(newNode)
   },
 
-  editElement(elementName) {
-    this.attr('editing' + _capitalize(elementName), true);
+  editElement (elementName) {
+    this.attr('editing' + _capitalize(elementName), true)
   }
-});
-
+})

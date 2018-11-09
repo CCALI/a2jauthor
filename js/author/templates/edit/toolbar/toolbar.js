@@ -1,8 +1,8 @@
-import CanMap from "can-map";
-import Component from "can-component";
-import template from './toolbar.stache';
+import CanMap from 'can-map'
+import Component from 'can-component'
+import template from './toolbar.stache'
 
-import "can-map-define";
+import 'can-map-define'
 
 /**
  * @module {Module} author/templates/edit/toolbar/toolbar <template-edit-toolbar>
@@ -48,14 +48,14 @@ export let EditToolbarVM = CanMap.extend({
     }
   },
 
-  saveTemplate() {
-    this.attr('template').save();
+  saveTemplate () {
+    this.attr('template').save()
   }
-});
+})
 
 export default Component.extend({
   view: template,
   leakScope: false,
   ViewModel: EditToolbarVM,
   tag: 'template-edit-toolbar'
-});
+})

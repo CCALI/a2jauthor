@@ -1,29 +1,29 @@
-import CanMap from "can-map";
-import CanList from "can-list";
-import _compact from 'lodash/compact';
-import _includes from 'lodash/includes';
+import CanMap from 'can-map'
+import CanList from 'can-list'
+import _compact from 'lodash/compact'
+import _includes from 'lodash/includes'
 
-import "can-map-define";
+import 'can-map-define'
 
-const ocurrences = ['any', 'single', 'repeating'];
+const ocurrences = ['any', 'single', 'repeating']
 
-const byRepeating = function(filter, variable) {
+const byRepeating = function (filter, variable) {
   if (filter !== 'any') {
-    let repeating = filter === 'repeating';
-    return variable.attr('repeating') === repeating;
+    let repeating = filter === 'repeating'
+    return variable.attr('repeating') === repeating
   } else {
-    return true;
+    return true
   }
-};
+}
 
-const byType = function(types, variable) {
+const byType = function (types, variable) {
   if (types && types.length) {
-    let type = variable.attr('type') || '';
-    return _includes(types, type.toLowerCase());
+    let type = variable.attr('type') || ''
+    return _includes(types, type.toLowerCase())
   } else {
-    return true;
+    return true
   }
-};
+}
 
 /**
  * @property {can.Map} varPicker.ViewModel
@@ -66,8 +66,8 @@ export default CanMap.extend({
      */
     filterOcurrence: {
       value: 'any',
-      set(value) {
-        return _includes(ocurrences, value) ? value : 'any';
+      set (value) {
+        return _includes(ocurrences, value) ? value : 'any'
       }
     },
 
@@ -79,9 +79,9 @@ export default CanMap.extend({
      */
     filterTypes: {
       value: '',
-      set(value = '') {
+      set (value = '') {
         return _compact(value.split(','))
-          .map(t => t.toLowerCase().trim());
+          .map(t => t.toLowerCase().trim())
       }
     },
 
@@ -92,14 +92,14 @@ export default CanMap.extend({
      * List of A2JVariable objects.
      */
     variables: {
-      get(list) {
-        let types = this.attr('filterTypes');
-        let ocurrence = this.attr('filterOcurrence');
+      get (list) {
+        let types = this.attr('filterTypes')
+        let ocurrence = this.attr('filterOcurrence')
 
         if (list) {
           return list
             .filter(v => byType(types, v))
-            .filter(v => byRepeating(ocurrence, v));
+            .filter(v => byRepeating(ocurrence, v))
         }
       }
     },
@@ -111,16 +111,16 @@ export default CanMap.extend({
      * List of variables names, this derived from the [variables] list.
      */
     variableNames: {
-      get() {
-        let names = new CanList([]);
-        let variables = this.attr('variables');
+      get () {
+        let names = new CanList([])
+        let variables = this.attr('variables')
 
         if (variables && variables.length) {
-          names = variables.map(v => v.attr('name'));
+          names = variables.map(v => v.attr('name'))
         }
 
-        return names;
+        return names
       }
     }
   }
-});
+})

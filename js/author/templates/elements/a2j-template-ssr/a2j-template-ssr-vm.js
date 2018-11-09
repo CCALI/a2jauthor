@@ -1,8 +1,8 @@
-import CanMap from "can-map";
-import CanList from "can-list";
-import Answers from "caja/author/models/answers";
-import A2JTemplate from "caja/author/models/a2j-template";
-import evalAuthorCondition from "caja/author/utils/eval-author-condition";
+import CanMap from 'can-map'
+import CanList from 'can-list'
+import Answers from 'caja/author/models/answers'
+import A2JTemplate from 'caja/author/models/a2j-template'
+import evalAuthorCondition from 'caja/author/utils/eval-author-condition'
 
 /**
  * @module {can.Map} A2jTemplateSsrVM
@@ -25,25 +25,25 @@ export default CanMap.extend({
      * otherwise it will retrieve the list of templates matching `guideId`.
      */
     templatesPromise: {
-      get() {
-        const active = true;
-        const guideId = this.attr("guideId");
-        const templateId = this.attr("templateId");
-        const templateIds = this.attr("templateIds");
-        const fileDataUrl = this.attr("fileDataUrl");
+      get () {
+        const active = true
+        const guideId = this.attr('guideId')
+        const templateId = this.attr('templateId')
+        const templateIds = this.attr('templateIds')
+        const fileDataUrl = this.attr('fileDataUrl')
 
         if (Array.isArray(templateIds)) {
           return Promise.all(
             templateIds.map(templateId => A2JTemplate.findOne({ templateId }))
-          ).then(templates => new CanList(templates));
+          ).then(templates => new CanList(templates))
         }
         if (templateId) {
-          return this.findOneAndMakeList(guideId, templateId).then((val)=>{
+          return this.findOneAndMakeList(guideId, templateId).then((val) => {
             return val
-          });
+          })
         }
 
-        return A2JTemplate.findAll({ guideId, fileDataUrl, active });
+        return A2JTemplate.findAll({ guideId, fileDataUrl, active })
       }
     },
 
@@ -53,10 +53,10 @@ export default CanMap.extend({
      * List of A2JTemplate instance(s).
      */
     templates: {
-      get(last, set) {
-        this.attr("templatesPromise").then(set, error => {
-          console.log("Failed to get templates from server: ", error);
-        });
+      get (last, set) {
+        this.attr('templatesPromise').then(set, error => {
+          console.log('Failed to get templates from server: ', error)
+        })
       }
     },
 
@@ -66,9 +66,9 @@ export default CanMap.extend({
      * Key/value map of interview's variable values.
      */
     answers: {
-      set(json) {
-        const answers = this.parseAnswers(json);
-        return new Answers(answers);
+      set (json) {
+        const answers = this.parseAnswers(json)
+        return new Answers(answers)
       }
     }
   },
@@ -80,9 +80,9 @@ export default CanMap.extend({
    * as a parameter and returns an `A2JTemplate.List` with the template instance
    * retrieved from the server.
    */
-  findOneAndMakeList(guideId, templateId) {
-    const promise = A2JTemplate.findOne({ guideId, templateId });
-    return promise.then(template => new CanList([template]));
+  findOneAndMakeList (guideId, templateId) {
+    const promise = A2JTemplate.findOne({ guideId, templateId })
+    return promise.then(template => new CanList([template]))
   },
 
   /**
@@ -91,16 +91,16 @@ export default CanMap.extend({
    * Parses the JSON string coming from the client and returns the resulting
    * object (returns an empty object if invalid json is passed).
    */
-  parseAnswers(json) {
-    let answers = {};
+  parseAnswers (json) {
+    let answers = {}
 
     try {
-      answers = JSON.parse(json);
+      answers = JSON.parse(json)
     } catch (e) {
-      console.error("Invalid JSON", e);
+      console.error('Invalid JSON', e)
     }
 
-    return answers;
+    return answers
   },
 
   /**
@@ -108,20 +108,20 @@ export default CanMap.extend({
    *
    * Determines whether the template passed to the function can be rendered
    */
-  canRenderTemplate(template) {
+  canRenderTemplate (template) {
     debugger
-    const state = template.attr("rootNode.state");
-    const hasConditionalLogic = state.attr("hasConditionalLogic") === "true";
+    const state = template.attr('rootNode.state')
+    const hasConditionalLogic = state.attr('hasConditionalLogic') === 'true'
 
     return (
       !hasConditionalLogic ||
       evalAuthorCondition({
-        answers: this.attr("answers"),
-        operator: state.attr("operator"),
-        leftOperand: state.attr("leftOperand"),
-        rightOperand: state.attr("rightOperand"),
-        rightOperandType: state.attr("rightOperandType")
+        answers: this.attr('answers'),
+        operator: state.attr('operator'),
+        leftOperand: state.attr('leftOperand'),
+        rightOperand: state.attr('rightOperand'),
+        rightOperandType: state.attr('rightOperandType')
       })
-    );
+    )
   }
-});
+})

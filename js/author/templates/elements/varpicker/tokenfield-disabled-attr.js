@@ -1,19 +1,19 @@
-import $ from 'jquery';
+import $ from 'jquery'
 
 import canViewCallbacks from 'can-view-callbacks'
 
-canViewCallbacks.attr('tokenfield-disabled', function(el, attrData) {
-  let $el = $(el);
-  let attrValue = el.getAttribute('tokenfield-disabled');
-  let disabledCompute = attrData.scope.compute(attrValue);
+canViewCallbacks.attr('tokenfield-disabled', function (el, attrData) {
+  let $el = $(el)
+  let attrValue = el.getAttribute('tokenfield-disabled')
+  let disabledCompute = attrData.scope.compute(attrValue)
 
-  function onChange(ev, newVal) {
-    $el.tokenfield(newVal ? 'disable' : 'enable');
+  function onChange (ev, newVal) {
+    $el.tokenfield(newVal ? 'disable' : 'enable')
   }
 
-  disabledCompute.bind('change', onChange);
+  disabledCompute.bind('change', onChange)
 
-  $el.on('tokenfield:destroyed', function() {
-    disabledCompute.unbind(onChange);
-  });
-});
+  $el.on('tokenfield:destroyed', function () {
+    disabledCompute.unbind(onChange)
+  })
+})

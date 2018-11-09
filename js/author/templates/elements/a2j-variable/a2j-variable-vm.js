@@ -1,5 +1,5 @@
-import CanMap from "can-map";
-import Answers from 'caja/author/models/answers';
+import CanMap from 'can-map'
+import Answers from 'caja/author/models/answers'
 
 /**
  * @module {can.Map} A2jTemplateVM
@@ -28,14 +28,14 @@ export default CanMap.extend({
      * looks up the variable name in `answers` and returns its value if found.
      */
     variable: {
-      get() {
-        let name = this.attr('name');
-        let answers = this.attr('answers');
+      get () {
+        let name = this.attr('name')
+        let answers = this.attr('answers')
 
         if (name && answers) {
-          return answers.getVariable(name);
+          return answers.getVariable(name)
         }
-      },
+      }
     },
 
     /**
@@ -56,15 +56,15 @@ export default CanMap.extend({
      * The effective variable value.
      */
     value: {
-      get() {
-        let variable = this.attr('variable');
+      get () {
+        let variable = this.attr('variable')
 
         if (variable) {
-          let name = this.attr('name');
-          let answers = this.attr('answers');
-          let index = this.attr('varIndex');
+          let name = this.attr('name')
+          let answers = this.attr('answers')
+          let index = this.attr('varIndex')
 
-          return answers.getValue(name, index);
+          return answers.getValue(name, index)
         }
       }
     },
@@ -76,11 +76,11 @@ export default CanMap.extend({
      * variable name passed to the component through its attributes.
      */
     canShowAnswer: {
-      get() {
-        let value = this.attr('value');
-        let useAnswers = this.attr('useAnswers');
+      get () {
+        let value = this.attr('value')
+        let useAnswers = this.attr('useAnswers')
 
-        return value != null && useAnswers;
+        return value != null && useAnswers
       }
     },
 
@@ -91,14 +91,14 @@ export default CanMap.extend({
      * to interpolate the answers is `true`.
      */
     isUnanswered: {
-      get() {
-        let value = this.attr('value');
-        let useAnswers = this.attr('useAnswers');
+      get () {
+        let value = this.attr('value')
+        let useAnswers = this.attr('useAnswers')
 
-        return useAnswers && value == null;
+        return useAnswers && value == null
       }
     },
 
     name: {}
   }
-});
+})

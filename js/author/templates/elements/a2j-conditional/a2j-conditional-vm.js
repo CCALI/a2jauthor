@@ -1,10 +1,10 @@
-import CanMap from "can-map";
-import _includes from 'lodash/includes';
-import _isFunction from 'lodash/isFunction';
-import Answers from 'caja/author/models/answers';
-import A2JNode from 'caja/author/models/a2j-node';
-import A2JTemplate from 'caja/author/models/a2j-template';
-import evalAuthorCondition from 'caja/author/utils/eval-author-condition';
+import CanMap from 'can-map'
+import _includes from 'lodash/includes'
+import _isFunction from 'lodash/isFunction'
+import Answers from 'caja/author/models/answers'
+import A2JNode from 'caja/author/models/a2j-node'
+import A2JTemplate from 'caja/author/models/a2j-template'
+import evalAuthorCondition from 'caja/author/utils/eval-author-condition'
 
 /**
  * @property {can.Map} conditional.ViewModel
@@ -82,9 +82,9 @@ export default CanMap.extend({
      * E.g: 'is-true' only requires one operand.
      */
     unaryOperation: {
-      get() {
-        let operator = this.attr('operator');
-        return _includes(['is-true', 'is-false'], operator);
+      get () {
+        let operator = this.attr('operator')
+        return _includes(['is-true', 'is-false'], operator)
       }
     },
 
@@ -149,9 +149,9 @@ export default CanMap.extend({
      * evaluates to `true` (`evalCondition()` yields `true`).
      */
     ifBody: {
-      get() {
-        const children = this.attr('children');
-        return children.attr(0);
+      get () {
+        const children = this.attr('children')
+        return children.attr(0)
       }
     },
 
@@ -164,9 +164,9 @@ export default CanMap.extend({
      * evaluates to `false` (`evalCondition()` yields `false`).
      */
     elseBody: {
-      get() {
-        const children = this.attr('children');
-        return children.attr(1);
+      get () {
+        const children = this.attr('children')
+        return children.attr(1)
       }
     },
 
@@ -178,9 +178,9 @@ export default CanMap.extend({
      * `conditional-add-element` instance used to add elements to `ifBody`.
      */
     addToIfNode: {
-      get() {
-        const children = this.attr('children');
-        return children.attr(2);
+      get () {
+        const children = this.attr('children')
+        return children.attr(2)
       }
     },
 
@@ -192,9 +192,9 @@ export default CanMap.extend({
      * `conditional-add-element` instance used to add elements to `elseBody`.
      */
     addToElseNode: {
-      get() {
-        const children = this.attr('children');
-        return children.attr(3);
+      get () {
+        const children = this.attr('children')
+        return children.attr(3)
       }
     },
 
@@ -207,8 +207,8 @@ export default CanMap.extend({
     variablesList: {}
   },
 
-  init() {
-    this.setChildrenIfEmpty();
+  init () {
+    this.setChildrenIfEmpty()
   },
 
   /**
@@ -218,14 +218,14 @@ export default CanMap.extend({
    * Callback passed down to the `a2j-templates` used in `ifBody`/`elseBody` to
    * to be called when the children of these template instances are saved.
    */
-  updateNodeState() {
-    const id = this.attr('nodeId');
-    const updateNode = this.attr('updateNode');
+  updateNodeState () {
+    const id = this.attr('nodeId')
+    const updateNode = this.attr('updateNode')
 
     if (_isFunction(updateNode)) {
-      updateNode(id);
+      updateNode(id)
     } else {
-      console.error('updateNode should be a function');
+      console.error('updateNode should be a function')
     }
   },
 
@@ -244,22 +244,22 @@ export default CanMap.extend({
    *
    *  TODO: Find a better way to do this.
    */
-  setChildrenIfEmpty() {
-    const children = this.attr('children');
+  setChildrenIfEmpty () {
+    const children = this.attr('children')
 
     if (!children.attr('length')) {
       const addElementNode = {
         state: {},
         children: [],
         tag: 'conditional-add-element'
-      };
+      }
 
       children.replace([
         new A2JTemplate(),
         new A2JTemplate(),
         new A2JNode(addElementNode),
         new A2JNode(addElementNode)
-      ]);
+      ])
     }
   },
 
@@ -267,13 +267,13 @@ export default CanMap.extend({
    * @function conditional.ViewModel.prototype.evalCondition evalCondition
    * @return {Boolean} Result of evaluating the condition set by the user.
    */
-  evalCondition() {
+  evalCondition () {
     return evalAuthorCondition({
       answers: this.attr('answers'),
       operator: this.attr('operator'),
       leftOperand: this.attr('leftOperand'),
       rightOperand: this.attr('rightOperand'),
       rightOperandType: this.attr('rightOperandType')
-    });
+    })
   }
-});
+})

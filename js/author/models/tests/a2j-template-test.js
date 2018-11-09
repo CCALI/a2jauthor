@@ -26,7 +26,7 @@ describe('A2JTemplate Model', function () {
   })
 
   it('findAll', function () {
-    let promise = A2JTemplate.findAll({guideId: 1261})
+    let promise = A2JTemplate.findAll({ guideId: 1261 })
 
     return promise.then(function (a2jTemplates) {
       a2jTemplates.forEach(function (a2jTemplate) {
@@ -40,7 +40,7 @@ describe('A2JTemplate Model', function () {
   })
 
   it('create', function () {
-    let a2jTemplate = new A2JTemplate({title: 'Best Template'})
+    let a2jTemplate = new A2JTemplate({ title: 'Best Template' })
 
     return a2jTemplate.save().then(function (bestTemplate) {
       assert.equal(bestTemplate.attr('title'), 'Best Template')
@@ -48,7 +48,7 @@ describe('A2JTemplate Model', function () {
   })
 
   it('update', function (done) {
-    let a2jTemplate = new A2JTemplate({title: 'Best Template'})
+    let a2jTemplate = new A2JTemplate({ title: 'Best Template' })
 
     a2jTemplate.save().then(function (bestTemplate) {
       assert.equal(bestTemplate.attr('title'), 'Best Template')
@@ -66,7 +66,7 @@ describe('A2JTemplate Model', function () {
   })
 
   it('destroy', function (done) {
-    let promise = A2JTemplate.findAll({guideId: 1261})
+    let promise = A2JTemplate.findAll({ guideId: 1261 })
 
     promise.then(function (a2jTemplates) {
       const destroyPromises = a2jTemplates.map(function (a2jTemplate) {
@@ -91,7 +91,7 @@ describe('A2JTemplate Model', function () {
       assert.equal(children.attr('length'), total,
         'it does nothing when invalid node is passed')
 
-      let newNode = new A2JNode({title: 'foo bar'})
+      let newNode = new A2JNode({ title: 'foo bar' })
       a2jTemplate.addNode(newNode)
 
       assert.equal(children.attr('length'), total + 1, 'there should be one more')
@@ -101,7 +101,7 @@ describe('A2JTemplate Model', function () {
 
   it('search - filters list that matches title', function () {
     let result
-    let templates = new A2JTemplate.List([{title: 'foo'}, {title: 'bar o'}])
+    let templates = new A2JTemplate.List([{ title: 'foo' }, { title: 'bar o' }])
 
     result = templates.search('baz')
     assert.equal(result.attr('length'), 0, 'no templates with baz title')

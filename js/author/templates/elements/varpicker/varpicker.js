@@ -47,7 +47,7 @@ export default Component.extend({
             tokens: selected,
             inputType: 'text',
             createTokensOnBlur: false,
-            typeahead: [null, {source: engine.ttAdapter()}]
+            typeahead: [null, { source: engine.ttAdapter() }]
           })
           .trigger('tokenfield:initialized')
           .show()

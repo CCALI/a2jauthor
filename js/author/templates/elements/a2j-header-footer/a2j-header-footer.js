@@ -1,7 +1,7 @@
-import $ from 'jquery';
-import Component from "can-component";
-import CanMap from "can-map";
-import template from './a2j-header-footer.stache';
+import $ from 'jquery'
+import Component from 'can-component'
+import CanMap from 'can-map'
+import template from './a2j-header-footer.stache'
 
 /**
  * @property {can.Map} headerFooter.ViewModel
@@ -53,8 +53,8 @@ export let HeaderFooterVM = CanMap.extend({
      */
     containsWords: {
       type: 'boolean',
-      get() {
-        return !!$(this.attr('userContent')).text();
+      get () {
+        return !!$(this.attr('userContent')).text()
       }
     },
 
@@ -104,7 +104,6 @@ export let HeaderFooterVM = CanMap.extend({
     }
   },
 
-
   /**
    * @property {Function} headerFooter.ViewModel.prototype.setEditActive setEditActive
    * @parent headerFooter.ViewModel
@@ -117,15 +116,15 @@ export let HeaderFooterVM = CanMap.extend({
    * <button ($click)="setEditActive(false)" type="button">Close</button>
    * @codeend
    */
-  setEditActive(val) {
-    this.attr('editActive', val);
+  setEditActive (val) {
+    this.attr('editActive', val)
 
     if (!val) {
-      let save = this.attr('saveTemplate');
-      save();
+      let save = this.attr('saveTemplate')
+      save()
     }
   }
-});
+})
 
 /**
  * @module {Module} author/templates/list/header-footer/ <a2j-header-footer>
@@ -146,10 +145,10 @@ export default Component.extend({
   ViewModel: HeaderFooterVM,
 
   events: {
-    inserted() {
-      this.viewModel.attr('title', $(this.element).attr('title'));
+    inserted () {
+      this.viewModel.attr('title', $(this.element).attr('title'))
     }
   },
 
   leakScope: true
-});
+})

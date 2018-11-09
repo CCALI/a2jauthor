@@ -1,11 +1,11 @@
 import $ from 'jquery'
-import CanMap from "can-map";
-import _keys from 'lodash/keys';
-import Component from "can-component";
-import template from './assemble.stache';
-import parser from 'caja/viewer/mobile/util/parser';
+import CanMap from 'can-map'
+import _keys from 'lodash/keys'
+import Component from 'can-component'
+import template from './assemble.stache'
+import parser from 'caja/viewer/mobile/util/parser'
 
-import "can-map-define";
+import 'can-map-define'
 
 /**
  * @module {Module} author/templates/assemble/ <test-assemble-options>
@@ -93,9 +93,9 @@ let AssembleOptionsVM = CanMap.extend({
      * Whether user has loaded an answers file already.
      */
     hasLoadedAnswers: {
-      get() {
-        const answers = this.attr('interviewAnswers');
-        return _keys(answers.attr()).length > 0;
+      get () {
+        const answers = this.attr('interviewAnswers')
+        return _keys(answers.attr()).length > 0
       }
     },
 
@@ -107,10 +107,10 @@ let AssembleOptionsVM = CanMap.extend({
      * document assembly.
      */
     answersString: {
-      get() {
-        const answers = this.attr('interviewAnswers');
+      get () {
+        const answers = this.attr('interviewAnswers')
 
-        return JSON.stringify(answers.serialize());
+        return JSON.stringify(answers.serialize())
       }
     },
 
@@ -151,10 +151,10 @@ let AssembleOptionsVM = CanMap.extend({
     hideFooterOnFirstPage: {}
   },
 
-  clearAnswers() {
-    this.attr('interviewAnswers', new CanMap());
+  clearAnswers () {
+    this.attr('interviewAnswers', new CanMap())
   }
-});
+})
 
 export default Component.extend({
   view: template,
@@ -162,31 +162,31 @@ export default Component.extend({
   tag: 'test-assemble-options',
 
   events: {
-    '.load-answers click': function($el, evt) {
-      evt.preventDefault();
-      $(this.element).find('.answers-file-input').click();
+    '.load-answers click': function ($el, evt) {
+      evt.preventDefault()
+      $(this.element).find('.answers-file-input').click()
     },
 
-    '.answers-file-input change': function(el) {
+    '.answers-file-input change': function (el) {
       const $el = $(el)
-      const vm = this.viewModel;
-      const file = $el.get(0).files[0];
+      const vm = this.viewModel
+      const file = $el.get(0).files[0]
 
       if (file) {
-        const reader = new FileReader();
+        const reader = new FileReader()
 
-        reader.onload = function() {
-          const answers = parser.parseJSON(reader.result, {});
+        reader.onload = function () {
+          const answers = parser.parseJSON(reader.result, {})
 
           if (answers) {
-            vm.attr('interviewAnswers', answers);
+            vm.attr('interviewAnswers', answers)
           }
-        };
+        }
 
-        reader.readAsText(file);
+        reader.readAsText(file)
       }
     }
   },
 
   leakScope: true
-});
+})

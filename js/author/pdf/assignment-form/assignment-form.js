@@ -1,6 +1,6 @@
-import CanMap from "can-map";
-import Component from "can-component";
-import template from "./assignment-form.stache";
+import CanMap from 'can-map'
+import Component from 'can-component'
+import template from './assignment-form.stache'
 
 /*
   Assignment = {
@@ -59,7 +59,7 @@ function getBufferOptions (buffer, boxCount) {
     isCheck
   }
 
-  const hasChoice = type === 'MC';
+  const hasChoice = type === 'MC'
   const boxes = fillArray(boxCount, 0)
   const boxOptions = boxes.map((_, index) => ({
     variable: name,
@@ -167,11 +167,11 @@ export const AssignmentFormVm = CanMap.extend('AssignmentFormVm', {
           return []
         }
 
-        const names = [];
+        const names = []
         dict.forEach(variable => {
-          names.push(variable.name);
-        });
-        return names;
+          names.push(variable.name)
+        })
+        return names
       }
     },
 
@@ -191,7 +191,7 @@ export const AssignmentFormVm = CanMap.extend('AssignmentFormVm', {
       type: 'boolean',
       get () {
         const type = this.attr('variableBuffer.type')
-        return type === 'Text';
+        return type === 'Text'
       }
     },
 
@@ -200,7 +200,7 @@ export const AssignmentFormVm = CanMap.extend('AssignmentFormVm', {
       get () {
         const type = this.attr('variableBuffer.type')
         const isCheck = this.attr('variableBuffer.isCheck')
-        return (isCheck && type === 'MC') || type === 'TF';
+        return (isCheck && type === 'MC') || type === 'TF'
       }
     },
 
@@ -208,7 +208,7 @@ export const AssignmentFormVm = CanMap.extend('AssignmentFormVm', {
       type: 'boolean',
       get () {
         const type = this.attr('variableBuffer.type')
-        return type === 'TF';
+        return type === 'TF'
       }
     },
 
@@ -216,7 +216,7 @@ export const AssignmentFormVm = CanMap.extend('AssignmentFormVm', {
       type: 'boolean',
       get () {
         const type = this.attr('variableBuffer.type')
-        return type === 'MC';
+        return type === 'MC'
       }
     },
 
@@ -224,7 +224,7 @@ export const AssignmentFormVm = CanMap.extend('AssignmentFormVm', {
       type: 'boolean',
       get () {
         const type = this.attr('variableBuffer.type')
-        const isMultipleChoice = type === 'MC';
+        const isMultipleChoice = type === 'MC'
         const isCheck = this.attr('variableBuffer.isCheck')
         return isMultipleChoice && isCheck
       }
@@ -287,7 +287,6 @@ export const AssignmentFormVm = CanMap.extend('AssignmentFormVm', {
     )
     const isGroup = groupNames.length === 1 && !!groupNames[0]
     buffer.attr('isGroup', isGroup)
-
   },
 
   onOverflowStyleChange (event) {
@@ -314,7 +313,7 @@ export const AssignmentFormVm = CanMap.extend('AssignmentFormVm', {
   },
 
   onPassValueChange (event) {
-    const {value: passValue} = event.target
+    const { value: passValue } = event.target
     const isCheck = passValue === 'pass-check'
     this.attr('variableBuffer.isCheck', isCheck)
   },
@@ -368,7 +367,7 @@ export const AssignmentFormVm = CanMap.extend('AssignmentFormVm', {
 })
 
 export default Component.extend({
-  tag: "assignment-form",
+  tag: 'assignment-form',
   view: template,
   leakScope: false,
   ViewModel: AssignmentFormVm,

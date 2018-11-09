@@ -1,8 +1,8 @@
-import CanMap from "can-map";
-import template from './item.stache';
-import Component from "can-component";
+import CanMap from 'can-map'
+import template from './item.stache'
+import Component from 'can-component'
 
-import "can-map-define";
+import 'can-map-define'
 
 /**
  * @module {Module} templatesListItem <templates-list-item>
@@ -39,7 +39,7 @@ export let Item = CanMap.extend({
      * links. In mobile this flag will be true if user taps the element.
      */
     hovered: {
-      value: false,
+      value: false
     },
 
     /**
@@ -87,11 +87,10 @@ export let Item = CanMap.extend({
      * e.g: "one month ago"
      */
     updatedAtFromNow: {
-      get() {
-        let template = this.attr('template');
-        let updatedAt = template.attr('updatedAt');
-        return updatedAt.isValid() ? updatedAt.fromNow() : '';
-
+      get () {
+        let template = this.attr('template')
+        let updatedAt = template.attr('updatedAt')
+        return updatedAt.isValid() ? updatedAt.fromNow() : ''
       }
     },
 
@@ -115,20 +114,20 @@ export let Item = CanMap.extend({
    * It sets up the proper flags to animate out the component and make sure its
    * `active` state is set to `false` after `transitionTime` has passed.
    */
-  deleteTemplate() {
-    let template = this.attr('template');
-    let delay = this.attr('transitionTime');
+  deleteTemplate () {
+    let template = this.attr('template')
+    let delay = this.attr('transitionTime')
 
-    this.attr('deleting', true);
-    template.attr('deleted', true);
+    this.attr('deleting', true)
+    template.attr('deleted', true)
 
     setTimeout(() => {
-      this.attr('deleting', false);
-      template.attr('active', false);
-      template.save();
-    }, delay);
+      this.attr('deleting', false)
+      template.attr('active', false)
+      template.save()
+    }, delay)
 
-    return false;
+    return false
   },
 
   /**
@@ -138,34 +137,34 @@ export let Item = CanMap.extend({
    * It sets up the proper flags to animate out the component and make sure its
    * `active` state is set to `true` after `transitionTime` has passed.
    */
-  restoreTemplate() {
-    let template = this.attr('template');
-    let delay = this.attr('transitionTime');
+  restoreTemplate () {
+    let template = this.attr('template')
+    let delay = this.attr('transitionTime')
 
-    this.attr('restoring', true);
-    template.attr('restored', true);
+    this.attr('restoring', true)
+    template.attr('restored', true)
 
     setTimeout(() => {
-      this.attr('restoring', false);
-      template.attr('active', true);
-      template.save();
-    }, delay);
+      this.attr('restoring', false)
+      template.attr('active', true)
+      template.save()
+    }, delay)
 
-    return false;
+    return false
   },
 
-  setHovering() {
-    this.attr('hovered', true);
+  setHovering () {
+    this.attr('hovered', true)
   },
 
-  setNotHovering() {
-    this.attr('hovered', false);
+  setNotHovering () {
+    this.attr('hovered', false)
   }
-});
+})
 
 export default Component.extend({
   view: template,
   leakScope: false,
   ViewModel: Item,
   tag: 'templates-list-item'
-});
+})

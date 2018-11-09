@@ -1,9 +1,9 @@
-import CanMap from "can-map";
-import Component from "can-component";
-import _isFunction from 'lodash/isFunction';
-import template from './element-toolbar.stache';
+import CanMap from 'can-map'
+import Component from 'can-component'
+import _isFunction from 'lodash/isFunction'
+import template from './element-toolbar.stache'
 
-import "can-map-define";
+import 'can-map-define'
 
 /**
  * @module {Module} author/templates/elements/element-toolbar/ <element-toolbar>
@@ -22,36 +22,36 @@ import "can-map-define";
 export const ElementToolbar = CanMap.extend({
   define: {},
 
-  clone() {
-    const id = this.attr('nodeId');
-    const cloneNode = this.attr('cloneNode');
+  clone () {
+    const id = this.attr('nodeId')
+    const cloneNode = this.attr('cloneNode')
 
     if (_isFunction(cloneNode)) {
-      cloneNode(id);
+      cloneNode(id)
     } else {
-      console.error('cloneNode should be a function');
+      console.error('cloneNode should be a function')
     }
 
-    return false;
+    return false
   },
 
-  delete() {
-    const id = this.attr('nodeId');
-    const deleteNode = this.attr('deleteNode');
+  delete () {
+    const id = this.attr('nodeId')
+    const deleteNode = this.attr('deleteNode')
 
     if (_isFunction(deleteNode)) {
-      deleteNode(id);
+      deleteNode(id)
     } else {
-      console.error('deleteNode should be a function');
+      console.error('deleteNode should be a function')
     }
 
-    return false;
+    return false
   }
-});
+})
 
 export default Component.extend({
   view: template,
   leakScope: false,
   tag: 'element-toolbar',
   ViewModel: ElementToolbar
-});
+})

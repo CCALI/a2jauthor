@@ -1,7 +1,7 @@
-import CanMap from "can-map";
-import Component from "can-component";
-import contentTpl from './content.stache';
-import template from './a2j-section-title.stache';
+import CanMap from 'can-map'
+import Component from 'can-component'
+import contentTpl from './content.stache'
+import template from './a2j-section-title.stache'
 import stache from 'can-stache'
 
 // preload stache partial
@@ -82,7 +82,7 @@ export let SectionTitleVM = CanMap.extend({
       value: false
     }
   }
-});
+})
 
 export default Component.extend({
   view: template,
@@ -90,20 +90,20 @@ export default Component.extend({
   ViewModel: SectionTitleVM,
 
   events: {
-    '.title-input keyup': function($el) {
-      this.viewModel.attr('title', $el.val());
+    '.title-input keyup': function ($el) {
+      this.viewModel.attr('title', $el.val())
     }
   },
 
   helpers: {
-    showSectionTitle() {
-      let title = this.attr('title');
-      let tag = this.attr('titleTag');
-      let sectionCounter = this.attr("sectionCounter");
+    showSectionTitle () {
+      let title = this.attr('title')
+      let tag = this.attr('titleTag')
+      let sectionCounter = this.attr('sectionCounter')
 
-      return `<${tag} class="section-title count-${sectionCounter}">${title}</${tag}>`;
+      return `<${tag} class="section-title count-${sectionCounter}">${title}</${tag}>`
     }
   },
 
   leakScope: true
-});
+})

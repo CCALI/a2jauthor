@@ -1,6 +1,6 @@
-import Component from "can-component";
-import template from './a2j-conditional.stache';
-import ConditionalVM from './a2j-conditional-vm';
+import Component from 'can-component'
+import template from './a2j-conditional.stache'
+import ConditionalVM from './a2j-conditional-vm'
 
 const operatorTextMap = {
   'is-true': 'IS TRUE',
@@ -9,7 +9,7 @@ const operatorTextMap = {
   'is-not-equal': 'DOES NOT EQUAL',
   'is-less-than': 'IS LESS THAN',
   'is-greater-than': 'IS GREATER THAN'
-};
+}
 
 /**
  * @module {Module} author/templates/elements/a2j-conditional/ <a2j-conditional>
@@ -30,30 +30,30 @@ export default Component.extend({
   ViewModel: ConditionalVM,
 
   helpers: {
-    formatOperator(operator) {
-      return operatorTextMap[operator];
+    formatOperator (operator) {
+      return operatorTextMap[operator]
     }
   },
 
   events: {
-    '{viewModel} leftOperandType': function() {
-      this.viewModel.attr('leftOperand', '');
+    '{viewModel} leftOperandType': function () {
+      this.viewModel.attr('leftOperand', '')
     },
 
-    '{viewModel} rightOperandType': function() {
-      this.viewModel.attr('rightOperand', '');
+    '{viewModel} rightOperandType': function () {
+      this.viewModel.attr('rightOperand', '')
     },
 
     // TODO: Find a viewModel oriented way to solve the selection of nested nodes.
-    'a2j-template node-selected': function(el, evt, selectedNode) {
+    'a2j-template node-selected': function (el, evt, selectedNode) {
       if (selectedNode) {
-        const vm = this.viewModel;
-        const toggleEditActiveNode = vm.attr('toggleEditActiveNode');
+        const vm = this.viewModel
+        const toggleEditActiveNode = vm.attr('toggleEditActiveNode')
 
-        toggleEditActiveNode(selectedNode.attr('id'));
+        toggleEditActiveNode(selectedNode.attr('id'))
       }
     }
   },
 
   leakScope: true
-});
+})

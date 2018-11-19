@@ -62,6 +62,16 @@ describe('AnswerViewModel', function () {
     assert.deepEqual(avm.attr('answer.values').attr(), [null, 123456.78])
   })
 
+  it('sets zero number values correctly', function () {
+    const field = new Field({ name: 'foo', type: 'number' });
+    field.attr('answer', field.attr('emptyAnswer'));
+
+    const avm = new AnswerVM({ field, answer: field.attr('answer') });
+    avm.attr('values', '0');
+
+    assert.deepEqual(avm.attr('answer.values').attr(), [null, 0]);
+  })
+
   it('does not set invalid dates', function () {
     const field = new Field({ name: 'foo', type: 'datemdy' })
     field.attr('answer', field.attr('emptyAnswer'))

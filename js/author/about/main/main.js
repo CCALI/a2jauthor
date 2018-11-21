@@ -15,45 +15,6 @@ function getLanguageList () {
   })
 }
 
-// TODO: Remove this when gGuide is.
-// We need this proxy to update the gGuide as we make changes.
-function proxyGuideInfo (viewModel) {
-  const mirrorProperties = [
-    'avatarHairColor',
-    'avatarSkinTone',
-    'completionTime',
-    'credits',
-    'description',
-    'guideGender',
-    'jurisdiction',
-    'language',
-    'title'
-  ]
-
-  function onChange (event, attr) {
-    const rootKey = '%root.'
-    if (attr.indexOf(rootKey) === 0) {
-      attr = attr.slice(rootKey.length)
-    }
-
-    const guideKey = 'guide.'
-    const isGuideAttr = attr.indexOf(guideKey) === 0
-    if (!isGuideAttr) {
-      return
-    }
-
-    const guideAttr = attr.slice(guideKey.length)
-    if (mirrorProperties.indexOf(guideAttr) !== -1) {
-      window.gGuide[guideAttr] = viewModel.attr(attr)
-    }
-  }
-
-  viewModel.bind('change', onChange)
-  return function () {
-    viewModel.unbind('change', onChange)
-  }
-}
-
 export const AboutMainVm = CanMap.extend({
   define: {
     guide: {},
@@ -84,6 +45,39 @@ export const AboutMainVm = CanMap.extend({
 
   updateHairColor (hairColor) {
     this.attr('guide.avatarHairColor', hairColor)
+  },
+
+  connectedCallback (el) {
+    // TODO: Remove this when gGuide is.
+    // We need this proxy to update the global gGuide as we make changes.
+    const vm = this
+    const mirrorProperties = [
+      'avatarHairColor',
+      'avatarSkinTone',
+      'completionTime',
+      'credits',
+      'description',
+      'guideGender',
+      'jurisdiction',
+      'language',
+      'title'
+    ]
+
+    const handler = (ev, newVal, oldVal) => {
+      const guideAttr = ev.type
+      window.gGuide[guideAttr] = newVal
+    }
+
+    mirrorProperties.forEach((prop) => {
+      // using the notify queue updates global gGuide instantly
+      vm.attr('guide').listenTo(prop, handler, 'notify')
+    })
+
+    return function () {
+      mirrorProperties.forEach((prop) => {
+        vm.attr('guide').stopListening(prop, handler, 'notify')
+      })
+    }
   }
 })
 
@@ -91,19 +85,5 @@ export default Component.extend({
   tag: 'about-main',
   view: template,
   leakScope: false,
-  ViewModel: AboutMainVm,
-  events: {
-    inserted () {
-      if (this.cancelProxy) {
-        return
-      }
-      this.cancelProxy = proxyGuideInfo(this.viewModel)
-    },
-    '{element} beforeremove' () {
-      if (this.cancelProxy) {
-        this.cancelProxy()
-        this.cancelProxy = undefined
-      }
-    }
-  }
+  ViewModel: AboutMainVm
 })

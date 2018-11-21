@@ -75,6 +75,7 @@
 
         <!-- Tab panes -->
         <div class="tab-content">
+        {{#is(page, "about")}}
           <div role="tabpanel" class="tab-pane active" id="tab-about">
             {{#if guide}}
               <about-main guide:bind="guide" />
@@ -86,6 +87,7 @@
           <div role="tabpanel" class="tab-pane" id="tab-feedback"></div>
           <div role="tabpanel" class="tab-pane" id="tab-revision"></div>
           <div role="tabpanel" class="tab-pane" id="tab-authors"></div>
+          {{/is}}
         </div>
         <!-- Tab panes -->
       </div>

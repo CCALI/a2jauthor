@@ -174,7 +174,7 @@ export default CanMap.extend({
    * returns true if the val is lower than the configured minimum
    */
   min: function () {
-    if (this.config.min) {
+    if (this.config.min || this.config.min === 0) {
       if (!this.val) {
         return false
       }
@@ -198,7 +198,7 @@ export default CanMap.extend({
    * returns true if the val is higher than the configure maximum
    */
   max: function () {
-    if (this.config.max) {
+    if (this.config.max || this.config.max === 0) {
       if (!this.val) {
         return false
       }

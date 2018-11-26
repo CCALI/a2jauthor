@@ -579,17 +579,13 @@ export default Component.extend({
 
   helpers: {
     zeroOrUndefined (number, options) {
-      number = number.isComputed ? number() : number
       number = parseInt(number, 10)
-
       return (number === 0 || _isNaN(number))
-        ? options.fn()
-        : options.inverse()
+        // ? options.fn()
+        // : options.inverse()
     },
 
     add (a, b) {
-      a = a.isComputed ? +a() : +a
-      b = b.isComputed ? +b() : +b
       return a + b
     },
 

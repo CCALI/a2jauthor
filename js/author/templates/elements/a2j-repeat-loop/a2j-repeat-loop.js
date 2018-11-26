@@ -131,8 +131,9 @@ export default Component.extend({
     },
 
     showRemoveButton (index, options) {
-      index = index.isComputed ? index() : index
-      return (index > 0) ? options.fn() : options.inverse()
+      // index = index.isComputed ? index() : index
+      return (index > 0)
+      //  ? options.fn() : options.inverse()
     },
 
     displayTypeText () {

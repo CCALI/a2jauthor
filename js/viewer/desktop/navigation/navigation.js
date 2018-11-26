@@ -258,8 +258,6 @@ export default Component.extend({
     },
 
     fitPageDescription (text, repeatVarValue) {
-      text = text.isComputed ? text() : text
-
       // strip html tags
       text = text.replace(/(<([^>]+)>)/ig, '').trim()
 

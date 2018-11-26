@@ -486,8 +486,6 @@ export default Component.extend('FieldComponent', {
         },
 
         dateformat (val, format) {
-          val = val.isComputed ? val() : val
-          format = format.isComputed ? format() : format
           return self.convertDate(val, format)
         },
 

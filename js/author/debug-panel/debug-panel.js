@@ -198,9 +198,6 @@ export default Component.extend({
      * helper used to get the class name to format each message fragment's span
      */
     traceLogicFormat (format, msg) {
-      format = (format && format.isComputed) ? format() : format
-      msg = (msg && msg.isComputed) ? msg() : msg
-
       if (format === 'val') {
         format = (!msg) ? 'valBlank'
           : ((msg === true || msg === 'true') ? 'valT'
@@ -216,9 +213,6 @@ export default Component.extend({
      * Format a message - used for providing "blank" for empty values set by the user
      */
     traceLogicMessage (format, msg) {
-      format = (format && format.isComputed) ? format() : format
-      msg = (msg && msg.isComputed) ? msg() : msg
-
       return (format === 'val' && !msg) ? 'blank' : msg
     }
   },

@@ -38,7 +38,7 @@ let Config = CanMap.extend({
           return date.isValid() ? date.format('MM/DD/YYYY') : ''
         }
 
-        return +val
+        return parseFloat(val)
       }
     },
 
@@ -61,7 +61,7 @@ let Config = CanMap.extend({
           return date.isValid() ? date.format('MM/DD/YYYY') : ''
         }
 
-        return +val
+        return parseFloat(val)
       }
     },
 

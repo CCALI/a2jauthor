@@ -66,6 +66,7 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   },
 
   visitedPages: {
+    serialize: false,
     default () { return new DefineList([]) }
   },
 
@@ -183,12 +184,14 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
 
       const repeatVar = this.currentPage.repeatVar
       const outerLoopVar = this.currentPage.outerLoopVar
-      const repeatVarValue = repeatVar ? this.logic.varGet(repeatVar) : null
-      const outerLoopVarValue = outerLoopVar ? this.logic.varGet(outerLoopVar) : null
+      const repeatVarValue = repeatVar ? this.logic.varGet(repeatVar) : undefined
+      const outerLoopVarValue = outerLoopVar ? this.logic.varGet(outerLoopVar) : undefined
 
       const newVisitedPage = new DefineMap(this.currentPage)
+      console.log('rvv before visitedPage Set', repeatVarValue)
       newVisitedPage.set('repeatVarValue', repeatVarValue)
       newVisitedPage.set('outerLoopVarValue', outerLoopVarValue)
+      console.log('rvv after visitedPage Set', repeatVarValue)
       const revisitedPageIndex = this.getVisitedPageIndex(newVisitedPage)
 
       if (revisitedPageIndex === -1) {

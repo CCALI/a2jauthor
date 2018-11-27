@@ -40,6 +40,7 @@ rState.connectedCallback(document.body)
 route.register('', { view: 'intro' })
 route.register('view/{view}/page/{page}')
 route.register('view/{view}/page/{page}/{repeatVarValue}')
+route.register('view/{view}/page/{page}/{repeatVarValue}/{outerLoopVarValue}')
 route.data = rState
 
 Promise.all([interviewPromise, persistedStatePromise])

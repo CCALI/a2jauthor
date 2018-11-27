@@ -12,12 +12,13 @@ import sinon from 'sinon'
 import F from 'funcunit'
 
 import 'steal-mocha'
+/* global describe it beforeEach afterEach */
 
 describe('<a2j-viewer-steps>', function () {
   describe('Component', function () {
-    let vm
     let interview
     let appStateTeardown
+    let vm // eslint-disable-line
 
     beforeEach(function () {
       const rawData = _assign({}, interviewJSON)
@@ -54,11 +55,11 @@ describe('<a2j-viewer-steps>', function () {
 
       const frag = stache(
         `<a2j-viewer-steps
-          rState:bind="rState"
-          mState:bind="mState"
-          interview:bind="interview"
-          logic:bind="logicStub"
-          lang:bind="langStub"/>`
+        rState:bind="rState"
+        mState:bind="mState"
+        interview:bind="interview"
+        logic:bind="logicStub"
+        lang:bind="langStub"/>`
       )
 
       $('#test-area').html(frag({ rState, interview, mState, logicStub, langStub }))

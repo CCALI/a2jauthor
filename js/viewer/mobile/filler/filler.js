@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import Control from 'can-control'
 import canViewCallbacks from 'can-view-callbacks'
 

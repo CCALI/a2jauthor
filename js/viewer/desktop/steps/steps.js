@@ -377,7 +377,7 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
     if (!step) { return }
     const steps = this.attr('steps').attr()
     const stepIndex = _findIndex(steps, ({ number }) => {
-      return number == step.attr('number')
+      return number === step.attr('number')
     })
 
     return stepIndex

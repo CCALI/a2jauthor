@@ -50,7 +50,10 @@
     ],
     "ignore": [
       "author/src/**",
+      "author/models/fixtures/**",
       "author/build.production.html.js",
+      "viewer/models/fixtures/**",
+      "viewer/mobile/util/**",
       "viewer/build.production.html.js"
     ]
   },

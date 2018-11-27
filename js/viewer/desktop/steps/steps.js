@@ -581,8 +581,6 @@ export default Component.extend({
     zeroOrUndefined (number, options) {
       number = parseInt(number, 10)
       return (number === 0 || _isNaN(number))
-        // ? options.fn()
-        // : options.inverse()
     },
 
     add (a, b) {

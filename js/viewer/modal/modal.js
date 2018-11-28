@@ -31,13 +31,13 @@ export default Component.extend({
   events: {
     'a click': function (el, ev) {
       // popup from within a popup
-      if (el.attr('href').toLowerCase().indexOf('popup') === 0) {
+      if (el.href && el.href.toLowerCase().indexOf('popup') === 0) {
         ev.preventDefault()
         const vm = this.viewModel
         const pages = vm.attr('interview.pages')
 
         if (pages) {
-          const pageName = $(el.get(0)).attr('href').replace('popup://', '').replace('POPUP://', '').replace('/', '') // pathname is not supported in FF and IE.
+          const pageName = el.href.replace('popup://', '').replace('POPUP://', '').replace('/', '') // pathname is not supported in FF and IE.
           const page = pages.find(pageName)
           const sourcePageName = this.scope.attr('rState.lastVisitedPageName')
 
@@ -54,7 +54,8 @@ export default Component.extend({
             audioURL: page.textAudioURL
           })
         } else { // external link
-          el.attr('target', '_blank')
+          const $el = $(el)
+          $el.attr('target', '_blank')
         }
       }
     },

@@ -88,13 +88,13 @@ export default Component.extend({
     },
 
     'a click': function (el, ev) {
-      if (el.attr('href').toLowerCase().indexOf('popup') === 0) {
+      if (el.href && el.href.toLowerCase().indexOf('popup') === 0) {
         ev.preventDefault()
         const vm = this.viewModel
         const pages = vm.attr('interview.pages')
 
         if (pages) {
-          const pageName = $(el.get(0)).attr('href').replace('popup://', '').replace('POPUP://', '').replace('/', '') // pathname is not supported in FF and IE.
+          const pageName = el.href.replace('popup://', '').replace('POPUP://', '').replace('/', '') // pathname is not supported in FF and IE.
           const page = pages.find(pageName)
           const sourcePageName = vm.attr('currentPage.name')
 
@@ -112,7 +112,8 @@ export default Component.extend({
           })
         }
       } else { // external link
-        el.attr('target', '_blank')
+        const $el = $(el)
+        $el.attr('target', '_blank')
       }
     },
 

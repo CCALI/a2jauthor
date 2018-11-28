@@ -4,34 +4,34 @@
 <can-import from="caja/viewer/styles.less!" />
 {{#if(isMobile)}}
   <a2j-mobile-viewer
-    vm:lang:bind="lang"
-    vm:logic:bind="logic"
-    vm:rState:bind="rState"
-    vm:pState:bind="pState"
-    vm:mState:bind="mState"
+    lang:bind="lang"
+    logic:bind="logic"
+    rState:bind="rState"
+    pState:bind="pState"
+    mState:bind="mState"
     class="bootstrap-styles"
-    vm:interview:bind="interview"
-    vm:modalContent:bind="modalContent" />
+    interview:bind="interview"
+    modalContent:bind="modalContent" />
 {{else}}
   <a2j-desktop-viewer
     this:to="scope.vars.desktopViewer"
-    vm:showDebugPanel:from="showDebugPanel"
-    vm:lang:bind="lang"
-    vm:logic:bind="logic"
-    vm:rState:bind="rState"
-    vm:pState:bind="pState"
-    vm:mState:bind="mState"
-    vm:interview:bind="interview"
-    vm:modalContent:bind="modalContent"
-    vm:traceLogic:bind="traceLogic"
+    showDebugPanel:from="showDebugPanel"
+    lang:bind="lang"
+    logic:bind="logic"
+    rState:bind="rState"
+    pState:bind="pState"
+    mState:bind="mState"
+    interview:bind="interview"
+    modalContent:bind="modalContent"
+    traceLogic:bind="traceLogic"
     class="bootstrap-styles steps-left-{{scope.vars.desktopViewer.remainingSteps}} steps-{{scope.vars.desktopViewer.maxDisplayedSteps}}" />
 {{/if}}
 
 <a2j-modal
-  vm:logic:bind="logic"
-  vm:rState:bind="rState"
-  vm:mState:bind="mState"
+  logic:bind="logic"
+  rState:bind="rState"
+  mState:bind="mState"
   class="bootstrap-styles"
-  vm:interview:bind="interview"
-  vm:modalContent:bind="modalContent"
-  vm:repeatVarValue:from="rState.repeatVarValue" />
+  interview:bind="interview"
+  modalContent:bind="modalContent"
+  repeatVarValue:from="rState.repeatVarValue" />

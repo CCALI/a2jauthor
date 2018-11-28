@@ -41,6 +41,8 @@
     {{/equal}}
     {{#equal(rState.view, 'pages')}}
       <a2j-viewer-navigation
+        selectedPageIndex:bind="rState.selectedPageIndex"
+        selectedPageName:from="rState.selectedPageName"
         lang:from="lang"
         logic:from="logic"
         selectedPageName:bind="rState.page"

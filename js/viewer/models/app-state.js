@@ -171,7 +171,7 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
     }
   },
 
-  connectedCallback (el) {
+  connectedCallback () {
     const visitedPageHandler = (ev) => {
       if (!this.currentPage) { return }
       this.checkInfiniteLoop()

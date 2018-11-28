@@ -17,11 +17,11 @@ export default Component.extend({
   ViewModel: MobileViewerVM,
 
   helpers: {
-    tocOrCreditsShown: function (options) {
+    tocOrCreditsShown: function () {
       let showToc = this.attr('mState.showToc')
       let showCredits = this.attr('mState.showCredits')
 
-      return (showCredits || showToc) ? options.fn() : options.inverse()
+      return (showCredits || showToc)
     },
 
     eval: function (str) {

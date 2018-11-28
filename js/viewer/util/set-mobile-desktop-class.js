@@ -1,3 +1,5 @@
+import $ from 'jquery'
+
 export default function setMobileDesktopClass (isMobileCompute, $element) {
   let isMobile = isMobileCompute()
   let $el = $element || $('body')

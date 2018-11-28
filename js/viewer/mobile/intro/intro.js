@@ -4,10 +4,9 @@ import template from './intro.stache'
 
 const IntroVM = CanMap.extend({
   navigate () {
-    this.attr('rState').attr({
-      page: this.attr('interview.firstPage'),
-      view: 'pages'
-    })
+    this.attr('rState').connectedCallback()
+    this.attr('rState').page = this.attr('interview.firstPage')
+    this.attr('rState').view = 'pages'
   }
 })
 

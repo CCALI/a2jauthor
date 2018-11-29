@@ -9,7 +9,6 @@ import isMobile from 'caja/viewer/is-mobile'
 
 import 'can-map-define'
 import 'jquerypp/event/swipe/'
-import { runInThisContext } from 'vm';
 
 /**
  * @property {can.Map} viewerNavigation.ViewModel
@@ -88,10 +87,11 @@ export let ViewerNavigationVM = CanMap.extend({
      */
     canNavigateBack: {
       get () {
+        let appState = this.attr('appState')
         let totalPages = this.attr('visitedPages.length')
         let pageIndex = this.attr('selectedPageIndex')
 
-        return totalPages > 1 && pageIndex < totalPages - 1
+        return totalPages > 1 && pageIndex < totalPages - 1 && !appState.saveAndExitActive
       }
     },
 
@@ -103,10 +103,11 @@ export let ViewerNavigationVM = CanMap.extend({
      */
     canNavigateForward: {
       get () {
+        let appState = this.attr('appState')
         let totalPages = this.attr('visitedPages.length')
         let pageIndex = this.attr('selectedPageIndex')
 
-        return totalPages > 1 && pageIndex > 0
+        return totalPages > 1 && pageIndex > 0 && !this.canSaveAndExit && !appState.saveAndExitActive
       }
     },
 
@@ -166,7 +167,8 @@ export let ViewerNavigationVM = CanMap.extend({
       answers.attr('a2j interview incomplete tf').attr('values.1', true)
     }
 
-    this.attr('selectedPageName', exitPage)
+    appState.page = exitPage
+    appState.selectedPageIndex = 0
   },
 
   /**
@@ -195,7 +197,7 @@ export let ViewerNavigationVM = CanMap.extend({
     if (window._paq) {
       Analytics.trackCustomEvent('Resume-Interview', 'to: ' + lastPageName)
     }
-    this.attr('selectedPageName', lastPageName)
+    appState.page = lastPageName
   },
 
   /**
@@ -220,6 +222,19 @@ export let ViewerNavigationVM = CanMap.extend({
     if (this.attr('canNavigateForward')) {
       this.attr('selectedPageIndex', parseInt(this.attr('selectedPageIndex')) - 1)
     }
+  },
+
+  /**
+   * @property {Function} viewerNavigation.ViewModel.disableOption disableOption
+   * @parent viewerNavigation.ViewModel
+   *
+   * Used to disable My Progress options when saveAndExit is active
+   */
+  disableOption (index) {
+    if (index !== 0 && this.attr('appState').saveAndExitActive) {
+      return true
+    }
+    return false
   }
 })
 /**

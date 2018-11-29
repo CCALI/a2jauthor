@@ -142,6 +142,15 @@ describe('<a2j-viewer-navigation>', function () {
       vm.navigateForward()
       assert.equal(vm.attr('selectedPageIndex'), 0, 'should navigate to most recent page')
     })
+
+    it('disableOption', () => {
+      assert.equal(vm.disableOption(0), false, 'false by default even with index 0')
+
+      appState.saveAndExitActive = true
+      assert.equal(vm.disableOption(0), false, 'false if index is 0 and saveAndExitActive is true')
+      assert.equal(vm.disableOption(1), true, 'true if index is NOT 0 and saveAndExitActive is true')
+
+    })
   })
 
   describe('Component', function () {

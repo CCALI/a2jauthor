@@ -41,6 +41,7 @@
     {{/equal}}
     {{#equal(rState.view, 'pages')}}
       <a2j-viewer-navigation
+        repeatVarValue:from="rState.repeatVarValue"
         selectedPageIndex:bind="rState.selectedPageIndex"
         selectedPageName:from="rState.selectedPageName"
         lang:from="lang"

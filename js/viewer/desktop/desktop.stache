@@ -11,15 +11,16 @@
       </div>
     {{else}}
       <a2j-viewer-navigation
-        vm:lang:from="lang"
-        vm:logic:from="logic"
-        vm:selectedPageName:from="rState.selectedPageName"
-        vm:visitedPages:from="rState.visitedPages"
-        vm:selectedPageIndex:bind="rState.selectedPageIndex"
-        vm:appState:bind="rState"
-        vm:interview:bind="interview"
-        vm:showDemoNotice:bind="showDemoNotice"
-        {{#if(scope.vm.authorCourthouseImage)}}vm:courthouseImage:raw="{{normalizePath(mState.fileDataURL, scope.vm.authorCourthouseImage)}}"{{/if}} />
+        lang:from="lang"
+        logic:from="logic"
+        repeatVarValue:from="rState.repeatVarValue"
+        selectedPageName:from="rState.selectedPageName"
+        visitedPages:from="rState.visitedPages"
+        selectedPageIndex:bind="rState.selectedPageIndex"
+        appState:bind="rState"
+        interview:bind="interview"
+        showDemoNotice:bind="showDemoNotice"
+        {{#if(scope.vm.authorCourthouseImage)}}courthouseImage:raw="{{normalizePath(mState.fileDataURL, scope.vm.authorCourthouseImage)}}"{{/if}} />
 
       <div class="app-content">
         <div id="sidewalk" class="sidewalk"></div>
@@ -46,6 +47,6 @@
       {{/if}}
     {{/if}}
 
-    <app-footer vm:rState:from="rState" />
+    <app-footer rState:from="rState" />
   </div><!-- app-container -->
 </div><!-- app-wrapper -->

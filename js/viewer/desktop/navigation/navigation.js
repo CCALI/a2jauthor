@@ -9,6 +9,7 @@ import isMobile from 'caja/viewer/is-mobile'
 
 import 'can-map-define'
 import 'jquerypp/event/swipe/'
+import { runInThisContext } from 'vm';
 
 /**
  * @property {can.Map} viewerNavigation.ViewModel
@@ -18,7 +19,12 @@ import 'jquerypp/event/swipe/'
  */
 export let ViewerNavigationVM = CanMap.extend({
   define: {
+    // passed in via stache bindings
     courthouseImage: {},
+    repeatVarValue: {},
+    selectedPageName: {},
+    selectedPageIndex: {},
+    lang: {},
 
     /**
      * @property {can.compute} viewerNavigation.ViewModel.isMobile isMobile
@@ -43,16 +49,6 @@ export let ViewerNavigationVM = CanMap.extend({
         return this.attr('appState').visitedPages
       }
     },
-
-    /**
-     * @property {String} viewerNavigation.ViewModel.selectedPageName selectedPageName
-     * @parent viewerNavigation.ViewModel
-     *
-     * Name of currently selected page.
-     */
-    selectedPageName: {},
-
-    selectedPageIndex: {},
 
     /**
      * @property {Boolean} viewerNavigation.ViewModel.canSaveAndExit canSaveAndExit
@@ -143,9 +139,7 @@ export let ViewerNavigationVM = CanMap.extend({
 
     showDemoNotice: {
       type: 'boolean'
-    },
-
-    lang: {}
+    }
   },
 
   /**

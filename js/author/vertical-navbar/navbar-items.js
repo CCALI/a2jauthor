@@ -36,7 +36,7 @@ export default [
   },
   {
     page: 'files',
-    title: 'Files',
+    title: 'All Files',
     ref: 'tabsFiles',
     icon: 'glyphicon-attach',
     active: false

@@ -23,12 +23,12 @@
       <span>{{./lang.MyProgress}}:</span>
       <div class="form-group ">
         <div class="input-group">
-          <select id="myProgressSelect" class="form-control" el:value:bind="./selectedPageIndex">
-            {{#each(visitedPages)}}
-              <option el:value:from="scope.index" {{#if(scope.vm.disableOption(scope.index))}}disabled="disabled"{{/if}}>
-                {{../fitPageDescription(text, scope.vm.repeatVarValue)}}
+          <select id="myProgressSelect" class="form-control" el:value:bind="this.selectedPageIndex">
+            {{#for(visitedPage of visitedPages)}}
+              <option el:value:from="scope.index" disabled:from="this.disableOption(scope.index)">
+                {{this.fitPageDescription(visitedPage.text, this.repeatVarValue)}}
               </option>
-            {{/each}}
+            {{/for}}
           </select>
         </div>
       </div>

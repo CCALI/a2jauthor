@@ -36,12 +36,9 @@ export let Toolbar = CanMap.extend({
 
   openNewTemplate (flag) {
     sharedPdfFlag.set(flag)
-    const newTemplateTransition = {
-      page: 'templates',
-      templateId: 'new'
-    }
 
-    route.data = newTemplateTransition
+    route.data.attr('page', 'templates')
+    route.data.attr('templateId', 'new')
   }
 })
 

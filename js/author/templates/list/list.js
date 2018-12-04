@@ -82,7 +82,8 @@ export default Component.extend({
 
   events: {
     'li dragstart': function (el, evt) {
-      let dt = evt.originalEvent.dataTransfer
+      el = $(el)
+      let dt = evt.dataTransfer
 
       dt.effectAllowed = 'move'
       dt.setData('text/html', null)
@@ -91,6 +92,7 @@ export default Component.extend({
     },
 
     'li dragenter': function (el) {
+      el = $(el)
       let dropIndex = this.viewModel.attr('dropItemIndex')
 
       // add placeholder class to the element being dragged.
@@ -102,6 +104,7 @@ export default Component.extend({
     },
 
     'li dragleave': function (el) {
+      el = $(el)
       let dropIndex = this.viewModel.attr('dropItemIndex')
 
       // similar to dragenter, this event is fired multiple times, we only
@@ -115,7 +118,7 @@ export default Component.extend({
     'li dragover': function (el, evt) {
       evt.preventDefault()
 
-      let dt = evt.originalEvent.dataTransfer
+      let dt = evt.dataTransfer
       dt.dropEffect = 'move'
     },
 
@@ -123,6 +126,7 @@ export default Component.extend({
     // drag, causing the placeholder to stay visible after the elemet has been
     // dropped.
     'li dragend': function (el) {
+      el = $(el)
       el.removeClass('drag-placeholder')
 
       this.viewModel.attr({
@@ -134,6 +138,7 @@ export default Component.extend({
     // we stop the propagation of this event to avoid the listener on the
     // document to execute when the one at the list item has been executed.
     'li drop': function (el, evt) {
+      el = $(el)
       evt.stopPropagation()
       el.removeClass('drag-placeholder')
 

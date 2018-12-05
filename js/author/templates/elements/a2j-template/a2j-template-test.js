@@ -19,8 +19,6 @@ function makeA2JTemplate ({ rootNode }) {
 
 describe('a2j-template', function () {
   describe('Component', function () {
-    let vm
-
     beforeEach(function () {
       const template = makeA2JTemplate(templateFixture)
 
@@ -29,7 +27,6 @@ describe('a2j-template', function () {
       )
 
       $('#test-area').html(frag({ template }))
-      vm = $('a2j-template')[0].viewModel
     })
 
     afterEach(function () {

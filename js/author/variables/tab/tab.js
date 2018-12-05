@@ -89,7 +89,7 @@ export const VariablesTabVM = CanMap.extend({
       this.deleteVariable(editingVariable.name)
     }
 
-    const variable = new TVariable()
+    const variable = new window.TVariable()
     $.extend(variable, buffer.serialize())
     guide.vars.attr(buffer.name.toLowerCase(), variable)
   },
@@ -118,7 +118,7 @@ export const VariablesTabVM = CanMap.extend({
     if (guide && guide.vars) {
       cmpTuples.forEach(newVar => {
         // name, type, repeating, comment
-        const variable = new TVariable()
+        const variable = new window.TVariable()
         $.extend(variable, newVar)
         guide.vars.attr(newVar.name.toLowerCase(), variable)
       })

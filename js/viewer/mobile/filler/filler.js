@@ -21,5 +21,6 @@ export default Control.extend({
 
 // Expose an additional html attr for easy access
 canViewCallbacks.attr('filler', function (el) {
-  new Filler(el)
+  /* eslint-disable no-new */
+  new window.Filler(el)
 })

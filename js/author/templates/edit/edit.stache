@@ -21,30 +21,31 @@
         />
       {{else}}
         <template-edit-toolbar guideId:bind="guideId" template:bind="a2jTemplate" />
-
+        {{ let editingHeader=undefined, editingFooter=undefined }}
         <div class="container">
           <div class="row clearfix">
             {{! left column where elements are rendered }}
             <div class="col-md-8">
               <a2j-header-footer
               title="Custom Header"
-              editActive:bind="scope.vars.editingHeader"
+              editActive:bind="editingHeader"
               userContent:bind="a2jTemplate.header"
               notDisplayedOnFirstPage:bind="a2jTemplate.hideHeaderOnFirstPage"
               saveTemplate:from="a2jTemplate.save" />
 
               {{#if(a2jTemplate.rootNode.children.length)}}
-              <a2j-template
-              guide:bind="guide"
-              editEnabled:raw="true"
-              template:bind="a2jTemplate" />
+                <a2j-template
+                  guide:bind="guide"
+                  editEnabled:raw="true"
+                  template:bind="a2jTemplate"
+                />
               {{else}}
-              <a2j-blank-template />
+                <a2j-blank-template />
               {{/if}}
 
               <a2j-header-footer
               title="Custom Footer"
-              vm:editActive:bind="scope.vars.editingFooter"
+              vm:editActive:bind="editingFooter"
               vm:userContent:bind="a2jTemplate.footer"
               vm:notDisplayedOnFirstPage:bind="a2jTemplate.hideFooterOnFirstPage"
               vm:saveTemplate:from="a2jTemplate.save" />
@@ -54,8 +55,8 @@
             <div class="col-md-4">
               <template-edit-tabs
               template:bind="a2jTemplate"
-              editingHeader:to="scope.vars.editingHeader"
-              editingFooter:to="scope.vars.editingFooter"
+              editingHeader:to="editingHeader"
+              editingFooter:to="editingFooter"
               variablesList:from="guide.variablesList"
               />
             </div>

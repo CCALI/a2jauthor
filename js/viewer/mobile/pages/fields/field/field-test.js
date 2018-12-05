@@ -6,7 +6,6 @@ import CanList from 'can-list'
 import CanMap from 'can-map'
 import sinon from 'sinon'
 
-import './field'
 import 'steal-mocha'
 
 describe('<a2j-field>', () => {

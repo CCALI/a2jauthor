@@ -8,11 +8,11 @@ import 'steal-mocha'
 
 describe('A2JTemplate Model', function () {
   beforeEach(function () {
-    localStorage.clear()
+    window.localStorage.clear()
   })
 
   afterEach(function () {
-    localStorage.clear()
+    window.localStorage.clear()
   })
 
   it('findOne', function () {
@@ -80,7 +80,7 @@ describe('A2JTemplate Model', function () {
     })
   })
 
-  it('addNode', function () {
+  it('addNode', function () {
     let promise = A2JTemplate.findOne({ guideId: 1261, templateId: 2112 })
 
     return promise.then(function (a2jTemplate) {

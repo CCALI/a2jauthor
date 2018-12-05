@@ -33,7 +33,7 @@ export const VariableEditorVM = CanMap.extend({
 
     variableNameMaxLength: {
       get () {
-        if (!gPrefs || !gPrefs.warnHotDocsNameLength) {
+        if (!window.gPrefs || !window.gPrefs.warnHotDocsNameLength) {
           return false
         }
 

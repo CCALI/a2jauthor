@@ -219,7 +219,7 @@ export default CanMap.extend('PagesVM', {
               type !== 'numberpick') {
             // Handle each field as if the blur/focus event had fired correctly with validateField
             const fieldName = field.attr('name')
-            const escapedFieldName = fieldName.replace(/[!"#$%&'()*+,.\/:;<=>?@[\\\]^`{|}~]/g, '\\\$&')
+            const escapedFieldName = fieldName.replace(/[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~]/g, '\\$&')
             const preSelector = field.type !== 'textlong' ? 'input' : 'textarea'
             const $fieldEl = $(preSelector + "[name='" + escapedFieldName + "']")
 
@@ -248,7 +248,7 @@ export default CanMap.extend('PagesVM', {
     const rState = this.attr('rState')
 
     // IE11 fails to fire all validateField events, handle that here
-    if (navigator.userAgent.match(/Trident.*rv\:11\./)) {
+    if (navigator.userAgent.match(/Trident.*rv:11\./)) {
       this.handleIE11(fields, logic, traceLogic)
     }
     // Author Preview Mode changes handling of special buttons, and does not post answers

@@ -50,8 +50,8 @@ export default Component.extend({
       let file = $fileInput.get(0).files[0]
       let vars = interview.attr('vars').attr()
 
-      if (file && file.type === '' || file.type.match(textTypeRegex)) {
-        let reader = new FileReader()
+      if (file && (file.type === '' || file.type.match(textTypeRegex))) {
+        let reader = new window.FileReader()
 
         reader.onload = () => {
           const answers = parser.parseJSON(reader.result, vars)

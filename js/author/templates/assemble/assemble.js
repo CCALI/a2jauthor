@@ -173,7 +173,7 @@ export default Component.extend({
       const file = $el.get(0).files[0]
 
       if (file) {
-        const reader = new FileReader()
+        const reader = new window.FileReader()
 
         reader.onload = function () {
           const answers = parser.parseJSON(reader.result, {})

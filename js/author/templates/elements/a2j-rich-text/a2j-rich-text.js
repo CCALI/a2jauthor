@@ -130,7 +130,7 @@ export default Component.extend({
         if ($el) {
           let $textarea = $el.find('textarea')
 
-          let editor = CKEDITOR.replace($textarea.get(0), {
+          let editor = window.CKEDITOR.replace($textarea.get(0), {
             extraPlugins: 'a2j-variable',
             extraAllowedContent: {
               'a2j-variable': {

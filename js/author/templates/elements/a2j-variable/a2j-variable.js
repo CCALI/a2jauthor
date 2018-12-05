@@ -24,8 +24,8 @@ export default Component.extend({
 
   viewModel (attrs, parentScope) {
     let vmAttrs = _assign({}, attrs)
-    let answers = parentScope.attr('answers')
-    let varIndex = parentScope.attr('varIndex')
+    let answers = parentScope && parentScope.get('answers')
+    let varIndex = parentScope && parentScope.get('varIndex')
 
     // only take `varIndex` from the parentScope if it's not null / undefined
     // and if `varIndex` has not been provided as an attribute already.

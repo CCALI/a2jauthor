@@ -8,7 +8,7 @@ describe('A2JVariable Model', function () {
     let originalGuide = window.gGuide
     window.gGuide = {}
 
-    gGuide.vars = {
+    window.gGuide.vars = {
       'a b c': {
         name: 'A B C',
         repeating: false,

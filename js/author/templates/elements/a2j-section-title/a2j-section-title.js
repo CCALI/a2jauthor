@@ -72,6 +72,16 @@ export let SectionTitleVM = CanMap.extend({
     },
 
     /**
+     * @property {String} sectionTitle.ViewModel.prototype.title title
+     * @parent sectionTitle.ViewModel
+     *
+     * The title of the section.
+     */
+    title: {
+      value: ''
+    },
+
+    /**
      * @property {String} sectionTitle.ViewModel.prototype.underline underline
      * @parent sectionTitle.ViewModel
      *
@@ -81,6 +91,11 @@ export let SectionTitleVM = CanMap.extend({
       type: 'boolean',
       value: false
     }
+  },
+  // Prevent the form from being submitted when pressing enter
+  // when inside an input
+  preventSubmit (e) {
+    e.preventDefault()
   }
 })
 
@@ -90,8 +105,8 @@ export default Component.extend({
   ViewModel: SectionTitleVM,
 
   events: {
-    '.title-input keyup': function ($el) {
-      this.viewModel.attr('title', $el.val())
+    '.title-input keyup': function (el) {
+      this.viewModel.attr('title', el.value)
     }
   },
 

@@ -27,7 +27,7 @@ import 'can-map-define'
  *
  * `<conditional-add-element>`'s viewModel.
  */
-const AddElementVM = CanMap.extend({
+const AddElementVM = CanMap.extend('AddElementVM', {
   define: {
     /**
      * @property {Boolean} addElement.ViewModel.prototype.selected selected
@@ -49,7 +49,9 @@ const AddElementVM = CanMap.extend({
    * `selected` to `true` which causes the `element-options-pane` to be shown
    * allowing the user to effectively add elements.
    */
-  select () {
+  select (event) {
+    event.preventDefault();
+    event.stopPropagation();
     const selected = this.attr('selected')
 
     if (!selected) {
@@ -64,8 +66,6 @@ const AddElementVM = CanMap.extend({
         console.error('toggleEditActiveNode should be a function')
       }
     }
-
-    return false
   },
 
   /**

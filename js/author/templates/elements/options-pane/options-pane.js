@@ -26,7 +26,7 @@ import 'can-map-define'
  *
  * `<element-options-pane>`'s viewModel.
  */
-export let OptionsPaneVM = CanMap.extend({
+export let OptionsPaneVM = CanMap.extend('OptionsPaneVM', {
   define: {
     /**
      * @property {Boolean} optionsPane.ViewModel.prototype.define.title title

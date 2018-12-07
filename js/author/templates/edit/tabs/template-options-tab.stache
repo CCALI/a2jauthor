@@ -52,21 +52,21 @@
 
 <div class="checkbox conditional-logic">
   <label>
-    <input type="checkbox" el:checked:bind="isConditionalLogicEnabled">
+    <input type="checkbox" checked:bind="scope.vm.isConditionalLogicEnabled">
     <h3>Conditional Logic</h3>
   </label>
 </div>
 
-<p class="{{#unless isConditionalLogicEnabled}}text-muted{{/unless}}">
+<p class="{{#not(scope.vm.isConditionalLogicEnabled)}}text-muted{{/not}}">
   Only use this template if
 </p>
 
 <condition-form
-  vm:variablesList:from="variablesList"
-  vm:operator:bind="templateState.operator"
-  vm:leftOperand:bind="templateState.leftOperand"
-  vm:rightOperand:bind="templateState.rightOperand"
-  vm:disabled:from="{{not(isConditionalLogicEnabled)}}"
-  vm:rightOperandType:bind="templateState.rightOperandType"
+  variablesList:from="variablesList"
+  operator:bind="templateState.operator"
+  leftOperand:bind="templateState.leftOperand"
+  rightOperand:bind="templateState.rightOperand"
+  disabled:from="{{not(scope.vm.isConditionalLogicEnabled)}}"
+  rightOperandType:bind="templateState.rightOperandType"
 />
 

@@ -142,10 +142,10 @@
         <input
           type='checkbox'
           class='label-check'
-          el:checked:bind="isConditionalLogicEnabled"
+          checked:bind="isConditionalLogicEnabled"
         />
       </label>
-      <p class="{{#unless(isConditionalLogicEnabled)}}text-muted{{/unless}}">
+      <p class="{{#not(isConditionalLogicEnabled)}}text-muted{{/not}}">
         Only use this template if
       </p>
       <condition-form

@@ -58,7 +58,7 @@ export default Component.extend({
       let $input = $(this.element).find('input')
 
       $input
-        .tokenfield('destoy')
+        .tokenfield('destroy')
         .trigger('tokenfield:destroyed')
     },
 

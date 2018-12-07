@@ -1,15 +1,15 @@
 <can-import from="bit-tabs" />
-<can-import from="caja/author/templates/edit/tabs/tabs.less!" />
+<can-import from="caja/author/templates/edit/tabs/tabs.less" />
 <can-import from="caja/author/templates/elements/varpicker/" />
 
-<bit-tabs tabs-class:raw="nav nav-tabs">
-  <bit-panel title="Add Elements">
+<bit-tabs tabsClass:raw="nav nav-tabs">
+  <bit-panel title:raw="Add Elements">
     <div class="tab-pane">
       {{> add-elements-tab-tpl}}
     </div>
   </bit-panel>
 
-  <bit-panel title="Template Options">
+  <bit-panel title:raw="Template Options">
     <div class="tab-pane">
       {{> template-options-tab-tpl}}
     </div>

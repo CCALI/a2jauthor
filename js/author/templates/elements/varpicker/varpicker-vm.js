@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import CanMap from 'can-map'
 import CanList from 'can-list'
 import _compact from 'lodash/compact'
@@ -122,5 +123,16 @@ export default CanMap.extend({
         return names
       }
     }
+  },
+
+  connectedCallback (el) {
+    // Get the input element
+    const inputEl = el.querySelector('input')
+
+    // ListenTo the disabled change and set the $.tokenField to
+    // enable | disable the plugin when the disabled scope changes
+    this.listenTo('disabled', function (ev, newVal) {
+      $(inputEl).tokenfield(newVal ? 'disable' : 'enable')
+    })
   }
 })

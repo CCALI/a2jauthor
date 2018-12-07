@@ -1,4 +1,5 @@
 import A2JNode from 'caja/author/models/a2j-node'
+import A2JTemplate from 'caja/author/models/a2j-template'
 
 const emptyNodes = {
   'section-title': {
@@ -39,6 +40,50 @@ const emptyNodes = {
   'if-else': {
     tag: 'a2j-conditional',
     children: [],
+    state: {
+      editActive: true
+    }
+  },
+
+  'legal-nav': {
+    tag: 'a2j-conditional',
+    children: [
+      A2JTemplate.makeFromTreeObject({
+        rootNode: {
+          tag: 'a2j-template',
+          children: [
+            {
+              tag: 'a2j-section-title',
+              state: {
+                underline: true,
+                editActive: true,
+                title: 'Section title'
+              },
+              children: []
+            },
+            {
+              tag: 'a2j-rich-text',
+              state: {
+                editActive: true,
+                userContent: 'Add some text...'
+              },
+              children: []
+            }
+          ]
+        }
+      }),
+      new A2JTemplate(),
+      new A2JNode({
+        state: {},
+        children: [],
+        tag: 'conditional-add-element'
+      }),
+      new A2JNode({
+        state: {},
+        children: [],
+        tag: 'conditional-add-element'
+      }),
+    ],
     state: {
       editActive: true
     }

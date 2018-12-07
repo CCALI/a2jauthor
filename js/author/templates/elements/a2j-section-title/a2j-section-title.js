@@ -27,7 +27,7 @@ stache.registerPartial('section-title-content', contentTpl)
  *
  * `<a2j-section-title>`'s viewModel.
  */
-export let SectionTitleVM = CanMap.extend({
+export let SectionTitleVM = CanMap.extend('SectionTitleVM', {
   define: {
     /**
      * @property {Boolean} sectionTitle.ViewModel.prototype.editEnabled editEnabled

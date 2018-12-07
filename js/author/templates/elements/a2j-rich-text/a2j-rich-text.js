@@ -15,7 +15,7 @@ stache.registerPartial('rich-text-content', contentTpl)
  *
  * <a2j-rich-text /> viewmodel
  */
-export let RichTextVM = CanMap.extend({
+export let RichTextVM = CanMap.extend('RichTextVM', {
   define: {
     /**
      * @property {String} notes

@@ -21,16 +21,17 @@ app.set('view engine', 'jade')
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.configure(feathers.rest())
-   .use(helmet())
-   .use(logger('dev'))
-   .use(bodyParser.json())
-   .use(bodyParser.urlencoded({ extended: true }))
-   .use(cookieParser())
-   .use('/', feathers.static(path.join(__dirname, '..')))
-   .use('/api/assemble', assemble)
-   .use('/api/template', forwardCookies, template)
-   .use('/api/templates', forwardCookies, templates)
-   .use('/api/a2j-doc', pdfRouter)
+  .use(helmet())
+  .use(logger('dev'))
+  // Increase the bodyParser limits so we can POST largest payloads
+  .use(bodyParser.json({ limit: '50mb' }))
+  .use(bodyParser.urlencoded({ extended: true, limit: '50mb' }))
+  .use(cookieParser())
+  .use('/', feathers.static(path.join(__dirname, '..')))
+  .use('/api/assemble', assemble)
+  .use('/api/template', forwardCookies, template)
+  .use('/api/templates', forwardCookies, templates)
+  .use('/api/a2j-doc', pdfRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

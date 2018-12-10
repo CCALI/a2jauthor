@@ -114,7 +114,10 @@ export let Item = CanMap.extend({
    * It sets up the proper flags to animate out the component and make sure its
    * `active` state is set to `false` after `transitionTime` has passed.
    */
-  deleteTemplate () {
+  deleteTemplate (event) {
+    event && event.preventDefault()
+    event && event.stopPropagation()
+
     let template = this.attr('template')
     let delay = this.attr('transitionTime')
 
@@ -126,8 +129,6 @@ export let Item = CanMap.extend({
       template.attr('active', false)
       template.save()
     }, delay)
-
-    return false
   },
 
   /**
@@ -137,7 +138,10 @@ export let Item = CanMap.extend({
    * It sets up the proper flags to animate out the component and make sure its
    * `active` state is set to `true` after `transitionTime` has passed.
    */
-  restoreTemplate () {
+  restoreTemplate (event) {
+    event && event.preventDefault()
+    event && event.stopPropagation()
+
     let template = this.attr('template')
     let delay = this.attr('transitionTime')
 
@@ -149,8 +153,6 @@ export let Item = CanMap.extend({
       template.attr('active', true)
       template.save()
     }, delay)
-
-    return false
   },
 
   setHovering () {

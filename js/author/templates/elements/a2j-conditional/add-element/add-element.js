@@ -50,8 +50,8 @@ const AddElementVM = CanMap.extend('AddElementVM', {
    * allowing the user to effectively add elements.
    */
   select (event) {
-    event.preventDefault();
-    event.stopPropagation();
+    event && event.preventDefault()
+    event && event.stopPropagation()
     const selected = this.attr('selected')
 
     if (!selected) {

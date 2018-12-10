@@ -3,11 +3,11 @@
 <div>
   <span class="glyphicon-move small text-muted drag-handle"></span>
   <div class="pull-right">
-    <a href="#" on:el:click="clone()">
+    <a href="#" on:el:click="clone(scope.event)">
       <span class="glyphicon-docs small text-muted"></span>Duplicate
     </a>
 
-    <a href="#" on:el:click="delete()">
+    <a href="#" on:el:click="delete(scope.event)">
       <span class="glyphicon-trash small text-muted"></span>Delete
     </a>
   </div>

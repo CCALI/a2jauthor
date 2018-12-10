@@ -22,7 +22,10 @@ import 'can-map-define'
 export const ElementToolbar = CanMap.extend({
   define: {},
 
-  clone () {
+  clone (event) {
+    event && event.preventDefault()
+    event && event.stopPropagation()
+
     const id = this.attr('nodeId')
     const cloneNode = this.attr('cloneNode')
 
@@ -31,11 +34,12 @@ export const ElementToolbar = CanMap.extend({
     } else {
       console.error('cloneNode should be a function')
     }
-
-    return false
   },
 
-  delete () {
+  delete (event) {
+    event && event.preventDefault()
+    event && event.stopPropagation()
+
     const id = this.attr('nodeId')
     const deleteNode = this.attr('deleteNode')
 
@@ -44,8 +48,6 @@ export const ElementToolbar = CanMap.extend({
     } else {
       console.error('deleteNode should be a function')
     }
-
-    return false
   }
 })
 

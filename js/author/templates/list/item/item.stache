@@ -29,9 +29,9 @@
             <li class="divider"></li>
             {{#if(scope.vm.hovered)}}
               {{#if(active)}}
-                <li class="options"><a draggable="false" class="delete" on:el:click="scope.vm.deleteTemplate()" href="#">Delete</a></li>
+                <li class="options"><a draggable="false" class="delete" on:el:click="scope.vm.deleteTemplate(scope.event)" href="#">Delete</a></li>
               {{else}}
-                <li class="options"><a draggable="false" class="restore" on:el:click="scope.vm.restoreTemplate()" href="#">Restore</a></li>
+                <li class="options"><a draggable="false" class="restore" on:el:click="scope.vm.restoreTemplate(scope.event)" href="#">Restore</a></li>
               {{/if}}
             {{/if}}
           </ul>

@@ -606,40 +606,72 @@ window.form = {
   },
   htmlarea: function (data) { // label,value,handler,name) {
     form.id++
-    var e = $('<div name="' + data.name + '">' +
-			'<div class="editspan form-group">' +
-			(typeof data.label !== 'undefined' ? ('<label class="control-label">' + data.label + '</label>') : '') +
-			'<div contenteditable=true class="htmledit form-control text editable taller" id="tinyMCE_' + form.id + '"  name="' + form.id + '" rows=' + 1 + '>' +
-			data.value + '</div></div></div>')
-    $('.editable', e).focus(
-      function () {
-        $(this).addClass('tallest')
-        form.editorAdd($(this))
+    // Create the div
+    const containerDiv = document.createElement('div')
+    containerDiv.setAttribute('name', data.name)
+    // Create the label
+    const formLabel = document.createElement('label')
+    formLabel.className = 'control-label'
+    // Create label text and add to label
+    const labelText = document.createTextNode(data.label)
+    formLabel.appendChild(labelText)
+
+    if (data.label) {
+      containerDiv.appendChild(formLabel)
+    }
+
+    // Create the textarea
+    const id = `tinyMCE_${form.id}`
+    const textArea = document.createElement('div')
+    textArea.setAttribute('id', id)
+    textArea.setAttribute('rows', 1)
+    textArea.setAttribute('contenteditable', true)
+    textArea.className = 'htmledit form-control text editable taller'
+    textArea.innerHTML = data.value
+
+    // Mutation observer to listen to when the element is created in the DOM
+    const observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        const nodes = Array.from(mutation.addedNodes)
+        nodes.forEach(function (node) {
+          // If we have the div node
+          // add the CKEditor
+          if ($(node).find(id)) {
+            CKEDITOR.replace(document.getElementById(id), {
+              height: 55,
+              autoGrow_minHeight: 55,
+              linkShowAdvancedTab: false,
+              linkShowTargetTab: false,
+              extraPlugins: 'indent,a2j-popout,autogrow',
+              toolbar: [
+                [ 'Bold', 'Italic', 'Link', 'Blockquote', 'Indent', 'Outdent', 'A2j-popout' ]
+              ],
+              on: {
+                blur: function (event) {
+                  // Update the data when the element is blured
+                  data.change(event.editor.getData())
+                },
+                change: function (event) {
+                  // Update the data when data changes
+                  data.change(event.editor.getData())
+                }
+              }
+            })
+            // Only add CKEditor once, so once added remove the observation
+            observer.disconnect()
+          }
+        })
       })
-    $('.editable', e).blur(function () {
-      form.editorRemove(this)
-      var html = form.htmlFix($(this).html())
-      form.change($(this), html)
     })
-    $('.editable', e).data('data', data)
-
-    // these event bindings are for IE11 to handle any
-    // updates to the `contenteditable`
-    // since blur event is not called properly
-    $('.editable', e).on('DOMNodeInserted', function () {
-      var html = form.htmlFix($(this).html())
-      form.change($(this), html)
-    })
-    $('.editable', e).on('DOMNodeRemoved', function () {
-      var html = form.htmlFix($(this).html())
-      form.change($(this), html)
-    })
-    $('.editable', e).on('DOMCharacterDataModified', function () {
-      var html = form.htmlFix($(this).html())
-      form.change($(this), html)
+    // Observer the containerDiv so we can listen to when the element is added
+    observer.observe(containerDiv, {
+      childList: true
     })
 
-    return e
+    // Add the form
+    containerDiv.appendChild(textArea)
+
+    return containerDiv
   },
 
   textArea: function (data) {

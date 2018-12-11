@@ -17,7 +17,7 @@ var $pageEditDialog = null
 
 function pageNameFieldsForTextTab (pagefs, page) {	// Used by the Text tab.
   // Include editable fields of all a page's text blocks.
-  pagefs.append(form.htmlarea({label: 'Text:', value: page.text, change: function (val, page) { page.text = val }}))
+  pagefs.append(form.htmlarea({label: 'Text:', value: page.text, change: function (val) { page.text = val }}))
   if (page.type !== CONST.ptPopup) {
     if (gPrefs.showText === 2 || page.learn !== '') {
       pagefs.append(form.text({label: 'Learn More prompt:',
@@ -28,12 +28,12 @@ function pageNameFieldsForTextTab (pagefs, page) {	// Used by the Text tab.
     if (gPrefs.showText === 2 || page.help !== '') {
       pagefs.append(form.htmlarea({label: 'Help:',
         value: page.help,
-        change: function (val, page) { page.help = val }}))
+        change: function (val) { page.help = val }}))
     }
     if (gPrefs.showText === 2 || page.helpReader !== '') {
       pagefs.append(form.htmlarea({label: 'Help Text Reader:',
         value: page.helpReader,
-        change: function (val, page) { page.helpReader = val }}))
+        change: function (val) { page.helpReader = val }}))
     }
     var f
     var labelChangeFnc = function (val, field) { field.label = val }
@@ -414,8 +414,8 @@ function guidePageEditForm (page, div, pagename)// novicePage
           $(this).val(page.name)
         }
       }}))
-    fs.append(form.htmlarea({label: 'Notes:', value: page.notes, change: function (val, page) { page.notes = val }}))
-    fs.append(form.htmlarea({label: 'Text:', value: page.text, change: function (val, page) { page.text = val }}))
+    fs.append(form.htmlarea({label: 'Notes:', value: page.notes, change: function (val) { page.notes = val }}))
+    fs.append(form.htmlarea({label: 'Text:', value: page.text, change: function (val) { page.text = val }}))
     fs.append(form.pickAudio({label: 'Text audio:',
       placeholder: 'mp3 file',
       value:	page.textAudioURL,
@@ -444,7 +444,13 @@ function guidePageEditForm (page, div, pagename)// novicePage
     if (page.type !== 'A2J') {
       fs.append(form.h2('Page type/style: ' + page.type + '/' + page.style))
     }
-    fs.append(form.htmlarea({label: 'Notes:', value: page.notes, change: function (val, page) { page.notes = val }}))
+    fs.append(form.htmlarea({
+      label: 'Notes:',
+      value: page.notes,
+      change: function (val) {
+        page.notes = val
+      }
+    }))
     t.append(fs)
 
     var pagefs = form.fieldset('Question text', page)
@@ -452,7 +458,7 @@ function guidePageEditForm (page, div, pagename)// novicePage
     pagefs.append(form.htmlarea({
       label: 'Text:',
       value: page.text,
-      change: function (val, page) {
+      change: function (val) {
         page.text = val
       }
     }))
@@ -460,7 +466,7 @@ function guidePageEditForm (page, div, pagename)// novicePage
     pagefs.append(form.htmlarea({
       label: 'Text Citation:',
       value: page.textCitation,
-      change: function (val, page) {
+      change: function (val) {
         page.textCitation = val
       }
     }))
@@ -513,9 +519,9 @@ function guidePageEditForm (page, div, pagename)// novicePage
         updateShowMe(form, (val))
       }}, [0, 'Text', 1, 'Show Me Graphic', 2, 'Show Me Video']))
 
-    pagefs.append(form.htmlarea({label: 'Help:', value: page.help, change: function (val, page) { page.help = val }}))
+    pagefs.append(form.htmlarea({label: 'Help:', value: page.help, change: function (val) { page.help = val }}))
 
-    pagefs.append(form.htmlarea({label: 'Help Citation:', value: page.helpCitation, change: function (val, page) { page.helpCitation = val }}))
+    pagefs.append(form.htmlarea({label: 'Help Citation:', value: page.helpCitation, change: function (val) { page.helpCitation = val }}))
 
     pagefs.append(form.pickAudio({name: 'helpAudio',
       label: 'Help audio:',
@@ -538,7 +544,7 @@ function guidePageEditForm (page, div, pagename)// novicePage
     pagefs.append(form.htmlarea({name: 'helpReader',
       label: 'Help Text Reader:',
       value: page.helpReader,
-      change: function (val, page) { page.helpReader = val }}))
+      change: function (val) { page.helpReader = val }}))
 
     pagefs.append(form.varPicker({label: 'Counting Variable:',
       placeholder: '',
@@ -654,7 +660,7 @@ function guidePageEditForm (page, div, pagename)// novicePage
           ))
           ff.append(form.htmlarea({label: 'Label:',
             value: field.label,
-            change: function (val, field) { field.label = val }}))
+            change: function (val) { field.label = val }}))
           ff.append(form.varPicker({label: 'Variable:',
             placeholder: 'Variable name',
             value: field.name,
@@ -721,7 +727,7 @@ function guidePageEditForm (page, div, pagename)// novicePage
             }}))
           ff.append(form.htmlarea({label: 'If invalid say:',
             value: field.invalidPrompt,
-            change: function (val, field) { field.invalidPrompt = val }}))
+            change: function (val) { field.invalidPrompt = val }}))
           ff.append(form.text({label: 'Sample value:',
             name: 'sample',
             value: field.sample,
@@ -857,6 +863,20 @@ function guidePageEditForm (page, div, pagename)// novicePage
     div.append('<div class=xml>' + escapeHtml(page.xml) + '</div>')
     div.append('<div class=xml>' + escapeHtml(page.xmla2j) + '</div>')
   }
+
+  //
+  // window.CKEDITOR.disableAutoInline = true
+  // window.CKEDITOR.inline('ckeditor1', {
+  //   toolbar: [
+  //     [ 'Bold', 'Italic' ]
+  //   ],
+  //   on: {
+  //     blur: function (event) {
+  //       console.log(event.editor.getData())
+  //       page.notes = event.editor.getData()
+  //     }
+  //   }
+  // })
 
   gPage = page
   return page

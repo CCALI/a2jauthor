@@ -82,7 +82,8 @@
         "format": "global",
         "eval": "script",
         "deps": [
-          "jquery-ui/ui/sortable"
+          "jquery-ui/ui/sortable",
+          "caja/ckeditor/ckeditor"
         ]
       },
       "caja/author/src/A2J_AuthorApp": {
@@ -114,7 +115,10 @@
       },
       "caja/author/src/A2J_Pages": {
         "format": "global",
-        "eval": "script"
+        "eval": "script",
+        "deps": [
+          "caja/ckeditor/ckeditor"
+        ]
       },
       "caja/author/src/A2J_Guides": {
         "format": "global",

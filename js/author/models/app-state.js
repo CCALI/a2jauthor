@@ -4,6 +4,7 @@ import CanList from 'can-list'
 import A2JVariable from './a2j-variable'
 import _isEmpty from 'lodash/isEmpty'
 import { Gender, Hair, Skin } from 'caja/viewer/desktop/avatar/colors'
+import route from 'can-route'
 import 'can-map-define'
 
 // !steal-remove-start
@@ -270,6 +271,21 @@ export default CanMap.extend('AuthorAppState', {
         })
       }
     })
+
+    // Check if we have a guide
+    // if not navigate back to the interviews page
+    // This is to fix issues with page reload not having the gGuide loaded
+    setTimeout(() => {
+      if (!appState.gGuide && typeof route.data.attr === 'function') {
+        route.data.attr('page', 'interviews')
+        if (route.data.attr('guideId')) {
+          route.data.attr('guideId', '')
+        }
+        if (route.data.attr('templateId')) {
+          route.data.attr('templateId', '')
+        }
+      }
+    }, 0)
   },
 
   toggleDebugPanel () {

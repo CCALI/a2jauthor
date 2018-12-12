@@ -107,6 +107,11 @@ export default Component.extend({
         $el.slideDown('fast')
         $el.siblings('element-options-pane').show()
       }
+    },
+
+    '.wrapper dblclick': function () {
+      const vm = this.viewModel
+      vm.setSelected()
     }
   },
 

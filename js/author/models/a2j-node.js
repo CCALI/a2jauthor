@@ -88,6 +88,16 @@ export default CanMap.extend({
     },
 
     /**
+     * @property {Boolean} A2JNode.prototype.isBeingDragged isBeingDragged
+     *
+     * If a node is being dragged for list ordering.
+     */
+    isBeingDragged: {
+      serialize: false,
+      value: false
+    },
+
+    /**
      * @property {String} A2JNode.prototype.outline outline
      *
      * Short version of contents from the components inside.

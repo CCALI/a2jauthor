@@ -82,7 +82,7 @@ const emptyNodes = {
         state: {},
         children: [],
         tag: 'conditional-add-element'
-      }),
+      })
     ],
     state: {
       editActive: true

@@ -322,6 +322,7 @@ export default CanMap.extend({
 
     if (editor) {
       editor.destroy()
+      editor.removeAllListeners()
       this.attr('ckeditorInstance', null)
     }
   }

@@ -64,6 +64,7 @@ export let RichTextVM = CanMap.extend('RichTextVM', {
 
     if (instance) {
       instance.destroy()
+      instance.removeAllListeners()
       this.attr('ckeditorInstance', null)
     }
   }

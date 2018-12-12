@@ -307,7 +307,6 @@ export default CanMap.extend({
 
     if (typeof draggedItem !== 'undefined') {
       draggedItem.attr('isBeingDragged', true)
-      draggedItem.attr('state').attr('editActive', true)
     }
   },
 
@@ -319,7 +318,7 @@ export default CanMap.extend({
     let draggedItem = children.attr(dragItemIndex)
 
     if (typeof draggedItem !== 'undefined') {
-      draggedItem.removeAttr('isBeingDragged')
+      draggedItem.attr('isBeingDragged', false)
     }
   }
 })

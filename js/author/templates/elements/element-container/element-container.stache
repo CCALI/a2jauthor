@@ -1,7 +1,7 @@
 <can-import from="caja/author/templates/elements/element-toolbar/"/>
 <can-import from="caja/author/templates/elements/element-container/element-container.less!"/>
 
-<div class="wrapper{{#if selected}} selected{{/if}}" on:el:click="setSelected()">
+<div class="wrapper{{#if(selected)}} selected{{/if}}">
   <content />
 </div>
 

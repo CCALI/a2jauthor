@@ -12,21 +12,19 @@ export default Component.extend({
       evt.stopPropagation()
     },
 
-    'li dragstart': function ($el, evt) {
-      let $handle = $el.find('.drag-handle')
-
-      if ($handle.length) {
-        let dt = evt.originalEvent.dataTransfer
-        dt.effectAllowed = 'move'
-        dt.setData('text/html', null)
-        this.viewModel.attr('dragItemIndex', $el.index())
-        $(this.element).find('element-options-pane').hide()
-      } else {
-        evt.preventDefault()
-      }
+    'li dragstart': function (el, evt) {
+      evt.stopPropagation()
+      let $el = $(el)
+      let dt = evt.dataTransfer
+      dt.effectAllowed = 'move'
+      dt.setData('text/html', null)
+      this.viewModel.attr('dragItemIndex', $el.index())
+      $(this.element).find('element-options-pane').hide()
     },
 
-    'li dragenter': function ($el) {
+    'li dragenter': function (el, evt) {
+      evt.stopPropagation()
+      let $el = $(el)
       let dropIndex = this.viewModel.attr('dropItemIndex')
 
       // add placeholder class to the dragged element (dropIndex is null) and
@@ -35,14 +33,12 @@ export default Component.extend({
       if (dropIndex == null || (dropIndex != null && dropIndex !== $el.index())) {
         this.viewModel.setDragPlaceholderFlag()
       }
-
-      this.viewModel.attr('dropItemIndex', $el.index())
     },
 
     'li dragover': function ($el, evt) {
       evt.preventDefault()
 
-      let dt = evt.originalEvent.dataTransfer
+      let dt = evt.dataTransfer
       dt.dropEffect = 'move'
     },
 
@@ -51,7 +47,6 @@ export default Component.extend({
     // dropped.
     'li dragend': function () {
       this.viewModel.removeDragPlaceholderFlag()
-      $(this.element).find('element-options-pane').show()
 
       this.viewModel.attr({
         dragItemIndex: null,
@@ -59,9 +54,12 @@ export default Component.extend({
       })
     },
 
-    'li drop': function ($el, evt) {
+    'li drop': function (el, evt) {
       evt.stopPropagation()
       this.viewModel.removeDragPlaceholderFlag()
+
+      let $el = $(el)
+      this.viewModel.attr('dropItemIndex', $el.index())
 
       this.viewModel.attr({
         dragItemIndex: null,

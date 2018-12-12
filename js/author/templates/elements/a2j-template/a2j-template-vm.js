@@ -240,6 +240,14 @@ export default CanMap.extend({
     deletedNode.attr('state.deleted', true)
   },
 
+  moveNode (id, indexModifier, currentNodeIndex) {
+    const children = this.attr('rootNode.children')
+    const from = currentNodeIndex
+    const to = currentNodeIndex + indexModifier
+
+    moveItem(children, from, to)
+  },
+
   // this function "really" removes the node from the children array, hence
   // the `li` tag that contains the node is also removed from the DOM.
   removeNodeFromChildren (id) {

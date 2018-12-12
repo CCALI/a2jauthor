@@ -2,12 +2,21 @@
 
 <div>
   <span class="glyphicon-move small text-muted drag-handle"></span>
+
+  <a href="#" on:click="move(scope.event, -1)" class="move-node-up">
+    <span class="glyphicon-up-open text-muted"></span>
+  </a>
+  {{nodeIndex}}
+  <a href="#" on:click="move(scope.event, 1)" class="move-node-down">
+    <span class="glyphicon-down-open text-muted"></span>
+  </a>
+
   <div class="pull-right">
-    <a href="#" on:el:click="clone(scope.event)">
+    <a href="#" on:click="clone(scope.event)">
       <span class="glyphicon-docs small text-muted"></span>Duplicate
     </a>
 
-    <a href="#" on:el:click="delete(scope.event)">
+    <a href="#" on:click="delete(scope.event)">
       <span class="glyphicon-trash small text-muted"></span>Delete
     </a>
   </div>

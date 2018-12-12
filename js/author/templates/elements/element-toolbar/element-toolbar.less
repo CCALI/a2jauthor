@@ -3,10 +3,43 @@
 element-toolbar {
   .drag-handle {
     cursor: move;
+    transition: all .3s ease-in-out;
+    margin-right: 10px;
+    font-size: 16px;
+    &:hover {
+      background: #aaaaaa;
+      color: white;
+    }
+  }
+
+  .move-node-up {
+    transition: all .3s ease-in-out;
+    span {
+      font-size: 16px;
+    }
+    &:hover {
+      background: #aaaaaa;
+      span {
+        color: white;
+      }
+    }
+  }
+
+  .move-node-down {
+    transition: all .3s ease-in-out;
+    span {
+      font-size: 16px;
+    }
+    &:hover {
+      background: #aaaaaa;
+      span {
+        color: white;
+      }
+    }
   }
 
   & > div {
-    padding-right: 10px;
+    padding: 0 10px;
     border: 1px solid darken(@gray-lighter, 20%);
   }
 }

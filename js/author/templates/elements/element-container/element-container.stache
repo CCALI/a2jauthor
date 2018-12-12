@@ -7,8 +7,10 @@
 
 {{#if selected}}
   <element-toolbar
-    vm:nodeId:from="scope/nodeId"
-    vm:cloneNode:from="scope/cloneNode"
-    vm:deleteNode:from="scope/deleteNode"
+    nodeIndex:from="scope.index"
+    nodeId:from="scope/nodeId"
+    cloneNode:from="scope/cloneNode"
+    deleteNode:from="scope/deleteNode"
+    moveNode:from="scope/moveNode"
   />
 {{/if}}

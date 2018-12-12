@@ -20,11 +20,19 @@ import 'can-map-define'
  */
 
 export const ElementToolbar = CanMap.extend({
-  define: {},
+  define: {
+    // passed in via stache
+    nodeId: {},
+    cloneNode: {},
+    deleteNode: {},
+    moveNode: {},
+    nodeIndex: {
+      type: 'number'
+    }
+  },
 
   clone (event) {
     event && event.preventDefault()
-    event && event.stopPropagation()
 
     const id = this.attr('nodeId')
     const cloneNode = this.attr('cloneNode')
@@ -38,7 +46,6 @@ export const ElementToolbar = CanMap.extend({
 
   delete (event) {
     event && event.preventDefault()
-    event && event.stopPropagation()
 
     const id = this.attr('nodeId')
     const deleteNode = this.attr('deleteNode')
@@ -47,6 +54,19 @@ export const ElementToolbar = CanMap.extend({
       deleteNode(id)
     } else {
       console.error('deleteNode should be a function')
+    }
+  },
+
+  move (event, direction) {
+    event && event.preventDefault()
+
+    const id = this.attr('nodeId')
+    const moveNode = this.attr('moveNode')
+
+    if (_isFunction(moveNode)) {
+      moveNode(id, direction, this.attr('nodeIndex'))
+    } else {
+      console.error('moveNode should be a function')
     }
   }
 })

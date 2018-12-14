@@ -36,6 +36,17 @@ export default CanMap.extend({
     },
 
     /**
+     * @property {Boolean} repeatLoop.ViewModel.prototype.deleted deleted
+     * @parent repeatLoop.ViewModel
+     *
+     * FIXME
+     */
+    deleted: {
+      type: 'boolean',
+      value: false
+    },
+
+    /**
      * @property {Number} repeatLoop.ViewModel.prototype.loopCounter loopCounter
      * @parent repeatLoop.ViewModel
      *

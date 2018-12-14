@@ -85,11 +85,14 @@ const AddElementVM = CanMap.extend('AddElementVM', {
    *
    * Adds the element matching `tagName` to the available `template` object.
    */
-  addElement (tagName) {
+  addElement (event, tagName) {
+    event.stopPropagation()
     const template = this.attr('template')
     const children = template.attr('rootNode.children')
 
     children.push(createEmptyNode(tagName))
+    // Close the options popup
+    this.closeOptionsPopup()
     return false
   }
 })

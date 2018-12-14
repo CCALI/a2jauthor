@@ -12,6 +12,9 @@ import 'can-map-define'
  */
 const PageBreakVM = CanMap.extend({
   define: {
+    // passed in via stache
+    deleted: {},
+
     editEnabled: {
       value: false
     },

@@ -1,8 +1,8 @@
-{{#if editEnabled}}
-  <table class="table table-{{tableStyle}}">
+{{#if ../editEnabled}}
+  <table class="table table-{{../tableStyle}}">
     <thead>
       <tr>
-        {{#each tableColumns}}
+        {{#each ../tableColumns}}
           <th style="width: {{width}}%;">{{column}}</th>
         {{/each}}
       </tr>
@@ -10,12 +10,12 @@
 
     <tbody>
       <tr>
-        {{#tableColumns}}
+        {{#../tableColumns}}
           <th style="width: {{width}}%;">
-            {{#if editActive}}
+            {{#if scope/editActive}}
               <var-picker
                 vm:selected:bind="variable"
-                vm:variables:from="variablesList"
+                vm:variables:from="scope/variablesList"
                 filter-ocurrence:raw="repeating"
               />
             {{else}}
@@ -27,19 +27,19 @@
     </tbody>
   </table>
 {{else}}
-  <table class="table table-{{tableStyle}}">
+  <table class="table table-{{../tableStyle}}">
     <thead>
       <tr>
-        {{#each tableColumns}}
+        {{#each ../tableColumns}}
           <th style="width: {{width}}%;">{{column}}</th>
         {{/each}}
       </tr>
     </thead>
 
     <tbody>
-      {{#each loopCollection}}
+      {{#each ../loopCollection}}
         <tr>
-          {{#each tableColumns}}
+          {{#each ../tableColumns}}
             <th style="width: {{width}}%;">
               <a2j-variable vm:name:from="variable" vm:varIndex:from="scope.top.index" />
             </th>

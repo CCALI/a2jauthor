@@ -1,13 +1,13 @@
-{{#if editEnabled}}
-  <ul style="list-style-type: {{listStyleType}};" class="inline-items-list">
-    {{#each listItems}}
+{{#if ../editEnabled}}
+  <ul style="list-style-type: {{../listStyleType}};" class="inline-items-list">
+    {{#each ../listItems}}
       <li>
         {{item}}:
 
-        {{#if editActive}}
+        {{#if scope/editActive}}
           <var-picker
             vm:selected:bind="variable"
-            vm:variables:from="variablesList"
+            vm:variables:from="scope/variablesList"
             filter-ocurrence:raw="repeating"
           />
         {{else}}
@@ -17,10 +17,10 @@
     {{/each}}
   </ul>
 {{else}}
-  {{#if repeatEachInOneList}}
-    {{#each listItems}}
-      <ul style="list-style-type: {{listStyleType}}; margin-bottom: 20px;">
-        {{#each loopCollection}}
+  {{#if ../repeatEachInOneList}}
+    {{#each ../listItems}}
+      <ul style="list-style-type: {{../listStyleType}}; margin-bottom: 20px;">
+        {{#each ../loopCollection}}
           <li>
             {{item}}: <a2j-variable vm:name:from="../variable" vm:varIndex:from="scope.index" />
           </li>
@@ -28,9 +28,9 @@
       </ul>
     {{/each}}
   {{else}}
-    {{#each loopCollection}}
-      <ul style="list-style-type: {{listStyleType}}; margin-bottom: 20px;">
-        {{#each listItems}}
+    {{#each ../loopCollection}}
+      <ul style="list-style-type: {{../listStyleType}}; margin-bottom: 20px;">
+        {{#each ../listItems}}
           <li>
             {{item}}: <a2j-variable vm:name:from="variable" vm:varIndex:from="../scope.index" />
           </li>

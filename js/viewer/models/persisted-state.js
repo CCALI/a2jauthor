@@ -7,7 +7,7 @@ import 'can-map-define'
 import 'can-construct-super'
 import 'can-map-backup'
 
-export default Model.extend({
+export default Model.extend('PersistedStateModel', {
   findOne () {
     return Promise.resolve({})
   }

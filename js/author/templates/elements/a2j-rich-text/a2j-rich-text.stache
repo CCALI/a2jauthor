@@ -2,15 +2,15 @@
 <can-import from="caja/author/templates/elements/element-container/" />
 <can-import from="caja/author/templates/elements/a2j-rich-text/a2j-rich-text.less!" />
 
-{{#if editEnabled}}
-  {{#if wrapWithContainer}}
+{{#if (editEnabled )}}
+  {{#if (wrapWithContainer) }}
     <element-container
-      nodeId:from="scope/id"
-      deleted:from="scope/deleted"
-      selected:bind="scope/editActive"
-      cloneNode:from="scope/cloneNode"
-      deleteNode:from="scope/deleteNode"
-      toggleEditActiveNode:from="scope/toggleEditActiveNode">
+      nodeId:from="nodeId"
+      deleted:from="deleted"
+      selected:from="editActive"
+      cloneNode:from="cloneNode"
+      deleteNode:from="deleteNode"
+      toggleEditActiveNode:from="toggleEditActiveNode">
 
       {{> rich-text-content }}
     </element-container>
@@ -18,8 +18,8 @@
     {{> rich-text-content }}
   {{/if}}
 
-  {{#if showOptionsPane}}
-    {{#if editActive}}
+  {{#if (showOptionsPane) }}
+    {{#if (editActive) }}
       <element-options-pane
         title="Text"
         nodeId:from="nodeId"
@@ -28,7 +28,7 @@
         <form>
           <div class="form-group">
             <label>Notes</label>
-            <textarea class="form-control" value:bind="scope/notes" rows="3"></textarea>
+            <textarea class="form-control" value:bind="../notes" rows="3"></textarea>
             <span class="help-block">
               For reference only. These notes are not part of the assembled document.
             </span>

@@ -1,5 +1,4 @@
 import $ from 'jquery'
-import Bloodhound from 'typeahead.js/dist/bloodhound'
 import Component from 'can-component'
 import VarPickerVM from './varpicker-vm'
 import template from './varpicker.stache'
@@ -28,32 +27,6 @@ export default Component.extend({
   ViewModel: VarPickerVM,
 
   events: {
-    inserted () {
-      let vm = this.viewModel
-      let selected = vm.attr('selected')
-      let $input = $(this.element).find('input')
-      let variableNames = vm.attr('variableNames').attr()
-
-      let engine = new Bloodhound({
-        local: variableNames,
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        datumTokenizer: Bloodhound.tokenizers.whitespace
-      })
-
-      setTimeout(function () {
-        $input
-          .tokenfield({
-            limit: 1,
-            tokens: selected,
-            inputType: 'text',
-            createTokensOnBlur: false,
-            typeahead: [null, { source: engine.ttAdapter() }]
-          })
-          .trigger('tokenfield:initialized')
-          .show()
-      })
-    },
-
     '{element} beforeremove' () {
       let $input = $(this.element).find('input')
 

@@ -31,7 +31,7 @@ import { sharedPdfFlag } from 'caja/author/pdf/index'
  *
  * <template-edit-page>'s viewModel.
  */
-export const TemplateEditPageVM = CanMap.extend({
+export const TemplateEditPageVM = CanMap.extend('TemplateEditPageVM', {
   define: {
     /**
      * @property {Promise} editPage.ViewModel.prototype.a2jTemplatePromise a2jTemplatePromise

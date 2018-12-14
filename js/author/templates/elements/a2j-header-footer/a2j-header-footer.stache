@@ -3,24 +3,26 @@
 
 {{#unless editActive}}
   {{#if containsWords}}
-    <div class="preview" on:el:click="setEditActive(true)">
+    <div class="preview" on:click="setEditActive(true)">
       {{{ userContent }}}
     </div>
   {{/if}}
 {{else}}
   <div class="edit">
-    <button on:el:click="setEditActive(false)" type="button" class="popover-close close" aria-label="Close">
+    <button on:click="setEditActive(false)" type="button" class="popover-close close" aria-label="Close">
       <span aria-hidden="true">×</span>
     </button>
 
     <h2>{{title}}</h2>
 
     <a2j-rich-text
-      vm:userContent:bind="userContent"
-      vm:editEnabled:from="editEnabled"
-      vm:editActive:from="editActive"
-      vm:showOptionsPane:from="showOptionsPane"
-      vm:wrapWithContainer:from="wrapWithContainer" />
+      userContent:from="userContent"
+      editEnabled:raw="true"
+      editActive:from="editActive"
+      showOptionsPane:from="showOptionsPane"
+      wrapWithContainer:from="wrapWithContainer"
+      fontProperties:from="fontProperties"
+      setUserContent:from="setUserContent" />
 
     <div class="text-center checkbox">
       <label>
@@ -29,7 +31,7 @@
       </label>
     </div>
     <div class="text-center">
-      <button on:el:click="setEditActive(false)" class="btn btn-primary">Save &amp; Close</button>
+      <button on:click="setEditActive(false)" class="btn btn-primary">Save &amp; Close</button>
     </div>
   </div>
 {{/unless}}

@@ -6,14 +6,14 @@
 <can-import from="caja/author/templates/elements/a2j-conditional/add-element/" />
 <can-import from="caja/author/templates/elements/a2j-conditional/a2j-conditional.less!" />
 
-{{#if(editEnabled)}}
+{{#if (editEnabled) }}
   <element-container
-    nodeId:from="scope/nodeId"
-    deleted:from="scope/deleted"
-    selected:bind="scope/editActive"
-    cloneNode:from="./cloneNode"
-    deleteNode:from="./deleteNode"
-    toggleEditActiveNode:from="./toggleEditActiveNode"
+    nodeId:from="nodeId"
+    deleted:from="deleted"
+    selected:from="editActive"
+    cloneNode:from="scope/cloneNode"
+    deleteNode:from="scope/deleteNode"
+    toggleEditActiveNode:from="toggleEditActiveNode"
   >
     <div class="panel panel-warning">
       <div class="panel-heading">
@@ -23,18 +23,18 @@
             {{#is(../leftOperandType, 'variable')}}
               <a2j-variable name:from="../leftOperand" />
             {{else}}
-              {{leftOperand}}
+              {{../leftOperand}}
             {{/is}}
           </span>
 
-          {{formatOperator(operator)}}
+          {{formatOperator(../operator)}}
 
-          {{#if rightOperand}}
+          {{#if ../rightOperand}}
             <span class="label label-default">
-              {{#is(rightOperandType, 'variable')}}
+              {{#is(../rightOperandType, 'variable')}}
                 <a2j-variable vm:name:from="../rightOperand" />
               {{else}}
-                {{rightOperand}}
+                {{../rightOperand}}
               {{/is}}
             </span>
           {{/if}}
@@ -49,10 +49,10 @@
         />
 
         <conditional-add-element
-          template:bind="scope/ifBody"
-          nodeId:from="scope/addToIfNode.id"
-          selected:bind="scope/addToIfNode.state.editActive"
-          toggleEditActiveNode:from="scope/toggleEditActiveNode"
+          template:bind="../ifBody"
+          nodeId:from="../addToIfNode.id"
+          selected:bind="../addToIfNode.state.editActive"
+          toggleEditActiveNode:from="toggleEditActiveNode"
         />
       </div>
 
@@ -70,7 +70,7 @@
             template:bind="../elseBody"
             nodeId:from="../addToElseNode.id"
             selected:bind="../addToElseNode.state.editActive"
-            toggleEditActiveNode:from="../toggleEditActiveNode"
+            toggleEditActiveNode:from="toggleEditActiveNode"
           />
         </div>
       {{/if}}
@@ -79,11 +79,11 @@
     </div>
   </element-container>
 
-  {{#if(../editActive)}}
+  {{#if(scope/editActive)}}
     <element-options-pane
-      nodeId:from="scope.top.nodeId"
+      nodeId:from="nodeId"
       title:raw="If / Else Conditional"
-      saveAndClose:from="scope.top.updateNode"
+      saveAndClose:from="updateNode"
     >
       <condition-form
         variablesList:from="../variablesList"

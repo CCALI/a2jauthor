@@ -78,40 +78,45 @@ export default Component.extend({
       }
     },
 
-    '.input-loop-title keyup': function ($el) {
-      this.viewModel.attr('loopTitle', $el.val())
+    '.input-loop-title keyup': function (el) {
+      this.viewModel.attr('loopTitle', el.value)
     },
 
-    'input[name="displayType"] change': function ($el) {
-      this.viewModel.attr('displayType', $el.val())
+    'input[name="displayType"] change': function (el) {
+      this.viewModel.attr('displayType', el.value)
     },
 
-    'input[name="tableStyle"] change': function ($el) {
-      this.viewModel.attr('tableStyle', $el.val())
+    'input[name="tableStyle"] change': function (el) {
+      this.viewModel.attr('tableStyle', el.value)
     },
 
-    'input[name="repeatEachInOneList"] change': function ($el) {
-      this.viewModel.attr('repeatEachInOneList', $el.val() === 'true')
+    'input[name="repeatEachInOneList"] change': function (el) {
+      this.viewModel.attr('repeatEachInOneList', el.value === 'true')
     },
 
     initCKEditor () {
       let vm = this.viewModel
+      let $el = $(this.element)
 
       // wait for the template to be updated, otherwise the `textarea`
       // won't be in the DOM when `ckeditor.replace` is called.
       setTimeout(() => {
-        let $textarea = $(this.element).find('textarea')
+        let $textarea = $el.find('textarea')
 
-        let editor = window.CKEDITOR.replace($textarea.get(0), {
-          extraPlugins: 'a2j-variable',
-          extraAllowedContent: {
-            'a2j-variable': {
-              attributes: ['name']
+        // check if we have access to the element while dragging is going on
+        if ($textarea.get(0)) {
+
+          let editor = window.CKEDITOR.replace($textarea.get(0), {
+            extraPlugins: 'a2j-variable',
+            extraAllowedContent: {
+              'a2j-variable': {
+                attributes: ['name']
+              }
             }
-          }
-        })
+          })
 
-        vm.attr('ckeditorInstance', editor)
+          vm.attr('ckeditorInstance', editor)
+        }
       })
     }
   },

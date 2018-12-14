@@ -26,29 +26,38 @@
           <div class="row clearfix">
             {{! left column where elements are rendered }}
             <div class="col-md-8">
+
+              {{let fontPropertiesFromA2jTemplate = ''}}
+
               <a2j-header-footer
               title="Custom Header"
               editActive:bind="editingHeader"
               userContent:bind="a2jTemplate.header"
               notDisplayedOnFirstPage:bind="a2jTemplate.hideHeaderOnFirstPage"
-              saveTemplate:from="a2jTemplate.save" />
+              saveTemplate:from="a2jTemplate.save"
+              fontProperties:from="fontPropertiesFromA2jTemplate"
+              />
 
               {{#if(a2jTemplate.rootNode.children.length)}}
-              <a2j-template
-              guide:bind="guide"
-              editEnabled:raw="true"
-              legalNavResources:from="legalNavResources"
-              template:bind="a2jTemplate" />
+                <a2j-template
+                  fontProperties:to="fontPropertiesFromA2jTemplate"
+                  guide:bind="guide"
+                  editEnabled:raw="true"
+                  template:bind="a2jTemplate"
+                  legalNavResources:from="legalNavResources"
+                />
               {{else}}
                 <a2j-blank-template />
               {{/if}}
 
               <a2j-header-footer
-              title="Custom Footer"
-              vm:editActive:bind="editingFooter"
-              vm:userContent:bind="a2jTemplate.footer"
-              vm:notDisplayedOnFirstPage:bind="a2jTemplate.hideFooterOnFirstPage"
-              vm:saveTemplate:from="a2jTemplate.save" />
+                title="Custom Footer"
+                editActive:bind="editingFooter"
+                userContent:bind="a2jTemplate.footer"
+                notDisplayedOnFirstPage:bind="a2jTemplate.hideFooterOnFirstPage"
+                saveTemplate:from="a2jTemplate.save"
+                fontProperties:from="fontPropertiesFromA2jTemplate"
+                />
             </div>
 
             {{! right column where template options tab is rendered }}

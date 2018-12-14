@@ -6,12 +6,12 @@
   <form>
     <div class="form-group">
       <label for="">&nbsp;</label>
-      <input type="text" class="form-control input-loop-title" el:value:from="loopTitle">
+      <input type="text" class="form-control input-loop-title" el:value:from="../loopTitle">
     </div>
 
     <div class="form-group">
       <label for="">Title size:</label>
-      <select class="form-control" el:value:bind="loopTitleTag">
+      <select class="form-control" el:value:bind="../loopTitleTag">
         <option value="h1">Heading 1</option>
         <option value="h2">Heading 2</option>
         <option value="h3">Heading 3</option>
@@ -24,19 +24,19 @@
     <label for="">Repeat each:</label>
     <div class="form-group row clearfix">
       <div class="col-md-6">
-        <select class="form-control" el:value:bind="loopType">
+        <select class="form-control" el:value:bind="../loopType">
           <option value="counter">Number of times</option>
           <option value="variable">For each variable</option>
         </select>
       </div>
       <div class="col-md-6">
-        {{#if useLoopCounter}}
-          <input type="number" min="1" class="form-control" el:value:bind="loopCounter">
+        {{#if ../useLoopCounter}}
+          <input type="number" min="1" class="form-control" el:value:bind="../loopCounter">
         {{else}}
           <var-picker
             filter-types="number"
-            vm:selected:bind="loopVariable"
-            vm:variables:from="variablesList"
+            vm:selected:bind="../loopVariable"
+            vm:variables:from="../variablesList"
           />
         {{/if}}
       </div>
@@ -44,17 +44,17 @@
 
     <div class="form-group">
       <div class="btn-group btn-group-justified" data-toggle="buttons">
-        <label class="btn btn-default {{#is displayType "table"}}active{{/is}}">
+        <label class="btn btn-default {{#is ../displayType "table"}}active{{/is}}">
           <input type="radio" value="table" name="displayType" autocomplete="off">
           Table
         </label>
 
-        <label class="btn btn-default {{#is displayType "list"}}active{{/is}}">
+        <label class="btn btn-default {{#is ../displayType "list"}}active{{/is}}">
           <input type="radio" value="list" name="displayType" autocomplete="off">
           List
         </label>
 
-        <label class="btn btn-default {{#is displayType "text"}}active{{/is}}">
+        <label class="btn btn-default {{#is ../displayType "text"}}active{{/is}}">
           <input type="radio" value="text" name="displayType" autocomplete="off">
           Text
         </label>
@@ -62,26 +62,26 @@
     </div>
 
     <div class="form-group">
-      {{#is displayType "table"}}
+      {{#is ../displayType "table"}}
         <div class="row clearfix" style="margin-bottom: 10px;">
           <div class="col-md-12">
             <label class="radio-inline">
               <input type="radio"
                 name="tableStyle"
                 value="bordered"
-                {{#is tableStyle "bordered"}}checked{{/is}}> Bordered
+                {{#is ../tableStyle "bordered"}}checked{{/is}}> Bordered
             </label>
             <label class="radio-inline">
               <input type="radio"
                 name="tableStyle"
                 value="condensed"
-                {{#is tableStyle "condensed"}}checked{{/is}}> Condensed
+                {{#is ../tableStyle "condensed"}}checked{{/is}}> Condensed
             </label>
             <label class="radio-inline">
               <input type="radio"
                 name="tableStyle"
                 value="striped"
-                {{#is tableStyle "striped"}}checked{{/is}}> Striped rows
+                {{#is ../tableStyle "striped"}}checked{{/is}}> Striped rows
             </label>
           </div>
         </div>
@@ -92,7 +92,7 @@
           <div class="col-md-2">&nbsp;</div>
         </div>
 
-        {{#each tableColumns}}
+        {{#each ../tableColumns}}
           <div class="row clearfix table-form-row">
             <div class="col-md-5">
               <input type="text" class="form-control" el:value:bind="column">
@@ -103,23 +103,23 @@
             </div>
 
             <div class="col-md-3 table-column-buttons">
-              <span class="label label-success" on:el:click="addColumn()">+</span>
+              <span class="label label-success" on:el:click="scope/addColumn()">+</span>
 
               {{#showRemoveButton(scope.index)}}
-                <span class="label label-danger" on:el:click="removeColumn(scope.index)">-</span>
+                <span class="label label-danger" on:el:click="scope/removeColumn(scope.index)">-</span>
               {{/showRemoveButton}}
             </div>
           </div>
         {{/each}}
       {{/is}}
 
-      {{#is displayType "list"}}
+      {{#is ../displayType "list"}}
         <div class="radio">
           <label>
             <input type="radio"
               value="true"
               name="repeatEachInOneList"
-              {{#if repeatEachInOneList}}checked{{/if}}>
+              {{#if ../repeatEachInOneList}}checked{{/if}}>
             Repeat each item in one list
           </label>
         </div>
@@ -129,7 +129,7 @@
             <input type="radio"
               value="false"
               name="repeatEachInOneList"
-              {{^if repeatEachInOneList}}checked{{/if}}>
+              {{^if ../repeatEachInOneList}}checked{{/if}}>
             Repeat an entire list multiple times
           </label>
         </div>
@@ -137,7 +137,7 @@
         <div class="form-group">
           <label for="">Kind</label>
 
-          <select class="form-control" el:value:bind="listStyleType">
+          <select class="form-control" el:value:bind="../listStyleType">
             <option value="disc">Bullets</option>
             <option value="decimal">Numbers</option>
             <option value="lower-alpha">Lowercase Alphabetical</option>
@@ -150,17 +150,17 @@
         <div class="form-group">
           <label for="">Item to repeat</label>
 
-          {{#each listItems}}
+          {{#each ../listItems}}
             <div class="row clearfix table-form-row">
               <div class="col-md-8">
                 <input type="text" class="form-control" el:value:bind="item">
               </div>
 
               <div class="col-md-4 table-column-buttons">
-                <span class="label label-success" on:el:click="addListItem()">+</span>
+                <span class="label label-success" on:el:click="scope/addListItem()">+</span>
 
                 {{#showRemoveButton(scope.index)}}
-                  <span class="label label-danger" on:el:click="removeListItem(scope.index)">-</span>
+                  <span class="label label-danger" on:el:click="scope/removeListItem(scope.index)">-</span>
                 {{/showRemoveButton}}
               </div>
             </div>

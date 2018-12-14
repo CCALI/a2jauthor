@@ -1,28 +1,28 @@
 <can-import from="caja/author/templates/elements/options-pane/" />
 <can-import from="caja/author/templates/elements/a2j-conditional/add-element/add-element.less!" />
 
-<div class="{{#if selected}}selected{{/if}}" on:el:click="select(scope.event)">
+<div class="{{#if selected}}selected{{/if}}" on:click="select(scope.event)">
   add elements here...
 </div>
 
 {{#if selected}}
   <element-options-pane
     title="Add Elements"
-    vm:showSaveButton:from="false"
-    vm:saveAndClose:from="closeOptionsPopup">
+    showSaveButton:from="false"
+    saveAndClose:from="closeOptionsPopup">
 
     <h3>Standard</h3>
     <div class="row clearfix">
       <div class="col-md-6">
         <button
           class="btn btn-default btn-block"
-          on:el:click="scope/addElement('section-title')">Section</button>
+          on:click="scope/addElement(scope.event, 'section-title')">Section</button>
       </div>
 
       <div class="col-md-6">
         <button
           class="btn btn-default btn-block"
-          on:el:click="scope/addElement('rich-text')">Rich Text</button>
+          on:click="scope/addElement(scope.event, 'rich-text')">Rich Text</button>
       </div>
     </div>
 
@@ -30,7 +30,7 @@
       <div class="col-md-6">
         <button
           class="btn btn-default btn-block"
-          on:el:click="scope/addElement('page-break')">Page Break</button>
+          on:click="scope/addElement(scope.event, 'page-break')">Page Break</button>
       </div>
 
       <div class="col-md-6">&nbsp;</div>
@@ -41,7 +41,7 @@
       <div class="col-md-6">
         <button
           class="btn btn-default btn-block"
-          on:el:click="scope/addElement('repeat-loop')">Repeat Loop</button>
+          on:click="scope/addElement(scope.event, 'repeat-loop')">Repeat Loop</button>
       </div>
 
       <div class="col-md-6">&nbsp;</div>

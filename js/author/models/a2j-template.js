@@ -19,7 +19,7 @@ import 'can-map-define'
  *
  * A guided interview can have one or more A2J Templates associated to it.
  */
-const A2JTemplate = Model.extend(
+const A2JTemplate = Model.extend('A2JTemplateModel',
   {
     init () {
       const update2 = update1 =>

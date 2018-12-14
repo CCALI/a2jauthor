@@ -14,7 +14,7 @@ import 'can-map-define'
  * An A2J variable is an answer, or list of answers, to a guided interview
  * question. They are used when generating documents.
  */
-let A2JVariable = Model.extend({
+let A2JVariable = Model.extend('A2JVariable', {
   id: 'name',
 
   makeFindOne () {

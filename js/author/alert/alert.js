@@ -42,7 +42,7 @@ const alertTypeSymbols = {
  *
  * `<app-alert>`'s viewModel.
  */
-export let Alert = CanMap.extend({
+export let Alert = CanMap.extend('AppAlertVM', {
   define: {
     /**
      * @property {Boolean} alert.ViewModel.prototype.define.autoClose autoClose

@@ -47,8 +47,12 @@ const moveItem = function (list, from, to) {
  *
  * `<a2j-template>`'s viewModel.
  */
-export default CanMap.extend({
+export default CanMap.extend("A2JTemplateVM", {
   define: {
+    // passed in
+    leftOperand: {},
+    leftOperandType: {},
+
     /**
      * @property {Answers} conditional.ViewModel.prototype.answers answers
      * @parent conditional.ViewModel
@@ -138,6 +142,10 @@ export default CanMap.extend({
     selectedNode: {
       get () {
         const rootNode = this.attr('rootNode')
+        if (!rootNode) {
+          return
+        }
+
         const children = rootNode.attr('children')
 
         const active = children.filter(child => {
@@ -233,14 +241,15 @@ export default CanMap.extend({
     this.saveTemplateChanges()
   },
 
-  restoreNode (id) {
+  restoreNode (id, event) {
+    event && event.preventDefault()
+    event && event.stopPropagation()
+
     const deletedNode = this.getChildById(id)
 
     deletedNode.attr('deleted', false)
     deletedNode.attr('state.deleted', false)
     deletedNode.attr('state.editActive', true)
-
-    return false
   },
 
   // this function only flags the node as deleted, so we have time to display

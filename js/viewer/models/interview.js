@@ -46,7 +46,7 @@ function getInterviewPath (url) {
   }
 }
 
-const Interview = Model.extend({
+const Interview = Model.extend('InterviewModel', {
   findOne (data, success, error) {
     let dfd = $.Deferred()
     setupPromise(dfd)

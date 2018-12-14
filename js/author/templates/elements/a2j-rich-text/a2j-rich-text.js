@@ -30,6 +30,19 @@ export let RichTextVM = CanMap.extend('RichTextVM', {
       value: ''
     },
 
+   /**
+    * @property {Function} rich-text.ViewModel.prototype.setUserContent setUserContent
+    * @parent rich-text.ViewModel
+    *
+    * Set the userContent property, out-of-band (it's usually set when
+    * `editActive' changes). This is useful e.g. if your element is removed from
+    * the DOM before its bindings can propagate. See a2j-header-footer's view
+    * for an example of this
+    */
+    setUserContent: {
+      type: 'any'
+    },
+
     editEnabled: {
       value: false
     },
@@ -67,7 +80,14 @@ export let RichTextVM = CanMap.extend('RichTextVM', {
     let instance = this.attr('ckeditorInstance')
 
     if (instance) {
-      this.attr('userContent', instance.getData())
+      let data = instance.getData()
+
+      this.attr('userContent', data)
+      // see the view model for why we're doing this twice
+      let setUserContent = this.attr('setUserContent')
+      if (typeof setUserContent === 'function') {
+        setUserContent(data)
+      }
     }
   },
 

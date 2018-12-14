@@ -12,7 +12,7 @@ import evalAuthorCondition from 'caja/author/utils/eval-author-condition'
  *
  * `<a2j-conditional>`'s viewModel.
  */
-export default CanMap.extend({
+export default CanMap.extend("A2JConditionalVM", {
   define: {
     /**
      * @property {Answers} conditional.ViewModel.prototype.answers answers

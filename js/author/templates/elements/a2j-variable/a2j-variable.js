@@ -23,9 +23,10 @@ export default Component.extend({
   tag: 'a2j-variable',
 
   viewModel (attrs, parentScope) {
-    let vmAttrs = _assign({}, attrs)
-    let answers = parentScope && parentScope.get('answers')
-    let varIndex = parentScope && parentScope.get('varIndex')
+    const vmAttrs = _assign({}, attrs)
+    const answers = parentScope && parentScope.get('answers')
+    const varIndex = parentScope && parentScope.get('varIndex')
+    const name = this.element.getAttribute('name')
 
     // only take `varIndex` from the parentScope if it's not null / undefined
     // and if `varIndex` has not been provided as an attribute already.
@@ -39,6 +40,11 @@ export default Component.extend({
         useAnswers: parentScope.attr('useAnswers')
       })
     }
+
+    // Set the name on the VM from the element attribute
+    _assign(vmAttrs, {
+      name
+    })
 
     return new A2JVariableVM(vmAttrs)
   }

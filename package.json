@@ -61,6 +61,7 @@
     "minify": true
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "body-parser": "~1.13.2",
     "bootstrap": "3.3.5",

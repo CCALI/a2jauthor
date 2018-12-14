@@ -74,7 +74,9 @@ export const TemplateEditPageVM = CanMap.extend({
     },
 
     guide: {},
-    guideId: {}
+    guideId: {},
+    // List of legalNavResources from the server
+    legalNavResources: {}
   },
 
   /**

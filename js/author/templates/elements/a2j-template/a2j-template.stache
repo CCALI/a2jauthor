@@ -66,7 +66,7 @@
         <a2j-rich-text
           notes:bind="state.notes"
           userContent:bind="state.userContent"
-
+          legalNavResources:from="../legalNavResources"
           nodeId:from="id"
           answers:from="scope/answers"
           cloneNode:from="../cloneNode"

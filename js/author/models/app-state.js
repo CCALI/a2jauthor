@@ -253,11 +253,28 @@ export default CanMap.extend('AuthorAppState', {
           alertType: 'danger'
         }
       }
+    },
+
+    /**
+     * @property {can.List} legalNavStates
+     *
+     * The list of available states for within the legalNav guid
+     * CKEditor widget
+     */
+    legalNavStates: {
+      serialize: false,
+      value () {
+        return [['AK'], ['HI']]
+      }
     }
   },
 
   init () {
     let appState = this
+
+    // Add the legalNavStates to the window
+    // So we can access this within the CKEditor widget
+    window.legalNavStates = appState.attr('legalNavStates').serialize()
 
     $(document).ajaxError(function globalAjaxHandler (event, jqxhr) {
       let status = jqxhr.status

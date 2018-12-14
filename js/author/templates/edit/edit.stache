@@ -34,11 +34,11 @@
               saveTemplate:from="a2jTemplate.save" />
 
               {{#if(a2jTemplate.rootNode.children.length)}}
-                <a2j-template
-                  guide:bind="guide"
-                  editEnabled:raw="true"
-                  template:bind="a2jTemplate"
-                />
+              <a2j-template
+              guide:bind="guide"
+              editEnabled:raw="true"
+              legalNavResources:from="legalNavResources"
+              template:bind="a2jTemplate" />
               {{else}}
                 <a2j-blank-template />
               {{/if}}

@@ -1,3 +1,5 @@
+<can-import from="caja/author/templates/elements/a2j-legal-nav-resource/" />
+
 {{#if(scope/editActive)}}
   <textarea style="{{scope/fontProperties}}">{{scope/userContent}}</textarea>
 {{else}}

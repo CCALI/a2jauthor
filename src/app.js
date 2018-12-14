@@ -8,6 +8,8 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const assemble = require('./routes/assemble')
 const templates = require('./routes/templates')
+const topicsResourcesResource = require('./routes/topics-resources-resource')
+const topicsResourcesTopics = require('./routes/topics-resources-topics')
 const template = require('./routes/template')
 const forwardCookies = require('./util/cookies').forwardCookies
 const pdfRouter = require('./pdf/router').router
@@ -31,6 +33,8 @@ app.configure(feathers.rest())
   .use('/api/assemble', assemble)
   .use('/api/template', forwardCookies, template)
   .use('/api/templates', forwardCookies, templates)
+  .use('/api/topics-resources/resource', topicsResourcesResource)
+  .use('/api/topics-resources/topics', topicsResourcesTopics)
   .use('/api/a2j-doc', pdfRouter)
 
 // catch 404 and forward to error handler

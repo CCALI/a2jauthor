@@ -41,7 +41,5 @@ export default Component.extend({
     }
 
     return new A2JVariableVM(vmAttrs)
-  },
-
-  leakScope: true
+  }
 })

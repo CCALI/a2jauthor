@@ -48,6 +48,18 @@ export let RichTextVM = CanMap.extend('RichTextVM', {
 
     wrapWithContainer: {
       value: true
+    },
+
+    /**
+     * @property {can.List} legalNavResources
+     *
+     * The list of legalNavResources from the server to be used
+     * in rich text editors
+     */
+    legalNavResources: {
+      value () {
+        return []
+      }
     }
   },
 
@@ -85,7 +97,8 @@ export default Component.extend({
     a2jParse (templateSnippet) {
       return stache(templateSnippet)({
         answers: this.attr('answers'),
-        useAnswers: this.attr('useAnswers')
+        useAnswers: this.attr('useAnswers'),
+        legalNavResources: this.attr('legalNavResources')
       })
     }
   },
@@ -132,10 +145,13 @@ export default Component.extend({
           let $textarea = $el.find('textarea')
 
           let editor = window.CKEDITOR.replace($textarea.get(0), {
-            extraPlugins: 'a2j-variable',
+            extraPlugins: 'a2j-variable,a2j-guid',
             extraAllowedContent: {
               'a2j-variable': {
                 attributes: ['name']
+              },
+              'legal-nav-resource-id': {
+                attributes: ['name', 'guid']
               }
             }
           })

@@ -50,6 +50,16 @@ export let SectionTitleVM = CanMap.extend('SectionTitleVM', {
     },
 
     /**
+     * @property {Boolean} sectionTitle.ViewModel.prototype.deleted deleted
+     * @parent sectionTitle.ViewModel
+     *
+     * Whether the component is currently deleted.
+     */
+    deleted: {
+      value: false
+    },
+
+    /**
      * @property {String} sectionTitle.ViewModel.prototype.sectionCounter sectionCounter
      * @parent sectionTitle.ViewModel
      *

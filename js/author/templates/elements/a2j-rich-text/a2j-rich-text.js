@@ -31,8 +31,8 @@ export let RichTextVM = CanMap.extend('RichTextVM', {
     },
 
    /**
-    * @property {Function} rich-text.ViewModel.prototype.setUserContent setUserContent
-    * @parent rich-text.ViewModel
+    * @property {Function} richText.ViewModel.prototype.setUserContent setUserContent
+    * @parent richText.ViewModel
     *
     * Set the userContent property, out-of-band (it's usually set when
     * `editActive' changes). This is useful e.g. if your element is removed from
@@ -43,11 +43,33 @@ export let RichTextVM = CanMap.extend('RichTextVM', {
       type: 'any'
     },
 
+    /**
+     * @property {Boolean} richText.ViewModel.prototype.editEnabled editEnabled
+     * @parent richText.ViewModel
+     *
+     * Whether the component's edit options are enabled or not.
+     */
     editEnabled: {
       value: false
     },
 
+    /**
+     * @property {Boolean} richText.ViewModel.prototype.editActive editActive
+     * @parent richText.ViewModel
+     *
+     * Whether the component is currently selected.
+     */
     editActive: {
+      value: false
+    },
+
+    /**
+     * @property {Boolean} richText.ViewModel.prototype.deleted deleted
+     * @parent richText.ViewModel
+     *
+     * Whether the component is currently deleted.
+     */
+    deleted: {
       value: false
     },
 
@@ -63,17 +85,7 @@ export let RichTextVM = CanMap.extend('RichTextVM', {
       value: true
     },
 
-    /**
-     * @property {can.List} legalNavResources
-     *
-     * The list of legalNavResources from the server to be used
-     * in rich text editors
-     */
-    legalNavResources: {
-      value () {
-        return []
-      }
-    }
+    nodeId: {}
   },
 
   updateUserContent () {

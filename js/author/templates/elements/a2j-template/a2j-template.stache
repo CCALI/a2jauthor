@@ -65,9 +65,9 @@
 
       {{#is (childNode.tag, 'a2j-rich-text') }}
         <a2j-rich-text
-          notes:bind="state.notes"
-          userContent:bind="state.userContent"
-          nodeId:from="id"
+          notes:bind="childNode.state.notes"
+          userContent:bind="childNode.state.userContent"
+          nodeId:from="childNode.id"
           answers:from="scope/answers"
           cloneNode:from="scope/cloneNode"
           useAnswers:from="this.useAnswers"

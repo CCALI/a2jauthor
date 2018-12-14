@@ -276,7 +276,6 @@
               action:bind="action"
               templateId:bind="templateId"
               guideId:from="guideId"
-              legalNavResources:from="legalNavResources"
             />
           {{else}}
             <templates-page appState:bind="." />

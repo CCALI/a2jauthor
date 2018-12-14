@@ -75,18 +75,6 @@ export default CanMap.extend("A2JTemplateVM", {
     },
 
     /**
-     * @property {Can.List} a2jTemplate.ViewModel.prototype.legalNavResources legalNavResources
-     * @parent a2jTemplate.ViewModel
-     *
-     * The [legalNavResources] model instance retrieved from the server.
-     */
-    legalNavResources: {
-      value () {
-        return []
-      }
-    },
-
-    /**
      * @property {A2JNode} a2jTemplate.ViewModel.prototype.rootNode rootNode
      * @parent a2jTemplate.ViewModel
      *

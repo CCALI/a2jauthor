@@ -1,3 +1,3 @@
-<can-import from="caja/author/templates/elements/a2j-variable/a2j-variable.less!" />
+<can-import from="caja/author/templates/elements/a2j-legal-nav-resource/a2j-legal-nav-resource.less!" />
 
 <span>{{name}}</span>

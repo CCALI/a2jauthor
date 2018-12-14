@@ -10,12 +10,10 @@
       // Register styles for variable widget frame.
       CKEDITOR.addCss(
         'legal-nav-resource-id {' +
-          'max-width: 170px;' +
-          'max-width: 10rem;' +
           'overflow: hidden;' +
           'text-overflow: ellipsis;' +
           'white-space: nowrap;' +
-          'background-color: #D7ECF5;' +
+          'background-color: #FFB6C1;' +
           'border-radius: 6px;' +
           'padding: 3px 10px;' +
           'display: inline-block;' +

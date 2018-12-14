@@ -40,12 +40,9 @@
 
               {{#if(a2jTemplate.rootNode.children.length)}}
                 <a2j-template
-                  fontProperties:to="fontPropertiesFromA2jTemplate"
-                  guide:bind="guide"
-                  editEnabled:raw="true"
-                  template:bind="a2jTemplate"
-                  legalNavResources:from="legalNavResources"
-                />
+                guide:bind="guide"
+                editEnabled:raw="true"
+                template:bind="a2jTemplate" />
               {{else}}
                 <a2j-blank-template />
               {{/if}}

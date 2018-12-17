@@ -40,6 +40,7 @@
 
               {{#if(a2jTemplate.rootNode.children.length)}}
                 <a2j-template
+                id="page-template"
                 guide:bind="guide"
                 editEnabled:raw="true"
                 template:bind="a2jTemplate" />

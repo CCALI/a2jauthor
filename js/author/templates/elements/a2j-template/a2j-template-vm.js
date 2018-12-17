@@ -281,7 +281,7 @@ export default CanMap.extend("A2JTemplateVM", {
   },
 
   toggleEditActiveNode (id) {
-    const rootNode = this.attr('rootNode')
+    const rootNode = document.getElementById('page-template').viewModel.attr('rootNode')
     const children = rootNode.attr('children')
 
     const toggle = (nodes, id) => {

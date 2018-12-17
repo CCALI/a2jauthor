@@ -40,7 +40,7 @@
           editEnabled:from="this.editEnabled"
           fontProperties:from="this.fontProperties"
           editActive:from="childNode.state.editActive"
-          toggleEditActiveNode:from="scope/toggleEditActiveNode"
+          toggleEditActiveNode:from="toggleEditActiveNode"
         />
       {{/is}}
 
@@ -57,7 +57,7 @@
           editEnabled:from="this.editEnabled"
           fontProperties:from="this.fontProperties"
           editActive:from="childNode.state.editActive"
-          toggleEditActiveNode:from="scope/toggleEditActiveNode"
+          toggleEditActiveNode:from="toggleEditActiveNode"
           sectionCounter:from="scope/rootNode.state.sectionCounter"
           titleTag:bind="childNode.state.titleTag"
         />
@@ -77,7 +77,7 @@
           editEnabled:from="this.editEnabled"
           fontProperties:from="this.fontProperties"
           editActive:from="childNode.state.editActive"
-          toggleEditActiveNode:from="scope/toggleEditActiveNode"
+          toggleEditActiveNode:from="toggleEditActiveNode"
         />
       {{/is}}
 
@@ -132,7 +132,7 @@
           editEnabled:from="this.editEnabled"
           fontProperties:from="this.fontProperties"
           editActive:from="childNode.state.editActive"
-          toggleEditActiveNode:from="scope/toggleEditActiveNode"
+          toggleEditActiveNode:from="toggleEditActiveNode"
         />
       {{/is}}
     </li>

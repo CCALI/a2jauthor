@@ -47,7 +47,7 @@ const moveItem = function (list, from, to) {
  *
  * `<a2j-template>`'s viewModel.
  */
-export default CanMap.extend("A2JTemplateVM", {
+export default CanMap.extend('A2JTemplateVM', {
   define: {
     // passed in
     leftOperand: {},

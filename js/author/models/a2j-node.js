@@ -41,7 +41,7 @@ if (navigator.mimeTypes == null) {
  * An A2JNode is a branch if it has child A2JNodes of its own,
  * otherwise it's a leaf.
  */
-export default CanMap.extend("A2JNodeModel", {
+export default CanMap.extend('A2JNodeModel', {
   define: {
     /**
      * @property {String} A2JNode.prototype.id id

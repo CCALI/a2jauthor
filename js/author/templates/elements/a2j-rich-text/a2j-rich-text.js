@@ -4,6 +4,7 @@ import stache from 'can-stache'
 import Component from 'can-component'
 import contentTpl from './content.stache'
 import template from './a2j-rich-text.stache'
+import $ from 'jquery'
 
 import 'can-map-define'
 
@@ -30,7 +31,7 @@ export let RichTextVM = CanMap.extend('RichTextVM', {
       value: ''
     },
 
-   /**
+    /**
     * @property {Function} richText.ViewModel.prototype.setUserContent setUserContent
     * @parent richText.ViewModel
     *

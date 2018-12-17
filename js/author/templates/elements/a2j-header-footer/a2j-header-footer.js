@@ -28,7 +28,7 @@ export let HeaderFooterVM = CanMap.extend('HeaderFooterVM', {
      * Font CSS rules to be applied to the content of each element of this
      * page's a2j-template (these should be taken directly from that template)
      */
-     fontProperties: {},
+    fontProperties: {},
 
     /**
      * @property {Boolean} headerFooter.ViewModel.prototype.notDisplayedOnFirstPage notDisplayedOnFirstPage

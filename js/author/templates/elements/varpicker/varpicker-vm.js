@@ -33,7 +33,7 @@ const byType = function (types, variable) {
  *
  * `<var-picker>`'s viewModel.
  */
-export default CanMap.extend("VarPickerVM", {
+export default CanMap.extend('VarPickerVM', {
   define: {
     /**
      * @property {Boolean} disabled
@@ -127,29 +127,29 @@ export default CanMap.extend("VarPickerVM", {
   },
 
   connectedCallback (el) {
-      let vm = el.viewModel
-      let selected = vm.attr('selected')
-      let $input = $(el).find('.form-control')
-      let variableNames = vm.attr('variableNames').attr()
+    let vm = el.viewModel
+    let selected = vm.attr('selected')
+    let $input = $(el).find('.form-control')
+    let variableNames = vm.attr('variableNames').attr()
 
-      let engine = new Bloodhound({
-        local: variableNames,
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        datumTokenizer: Bloodhound.tokenizers.whitespace
-      })
+    let engine = new Bloodhound({
+      local: variableNames,
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      datumTokenizer: Bloodhound.tokenizers.whitespace
+    })
 
-      setTimeout(function () {
-        $input
-          .tokenfield({
-            limit: 1,
-            tokens: selected,
-            inputType: 'text',
-            createTokensOnBlur: false,
-            typeahead: [null, { source: engine.ttAdapter() }]
-          })
-          .trigger('tokenfield:initialized')
-          .show()
-      })
+    setTimeout(function () {
+      $input
+        .tokenfield({
+          limit: 1,
+          tokens: selected,
+          inputType: 'text',
+          createTokensOnBlur: false,
+          typeahead: [null, { source: engine.ttAdapter() }]
+        })
+        .trigger('tokenfield:initialized')
+        .show()
+    })
 
     // ListenTo the disabled change and set the $.tokenField to
     // enable | disable the plugin when the disabled scope changes
@@ -160,7 +160,7 @@ export default CanMap.extend("VarPickerVM", {
     // we think the typeahead plugin messes up the `value:bind' in the input (by
     // removing it from the DOM or preventDefault/stopPropagation or something),
     // but this works around the issue
-    $input.on('change', function pickerInputChanged() {
+    $input.on('change', function pickerInputChanged () {
       vm.attr('selected', this.value)
     })
   }

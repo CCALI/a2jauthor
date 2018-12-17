@@ -42,7 +42,7 @@ export let ContainerVM = CanMap.extend('ElementContainerVM', {
 
     nodeId: {},
     cloneNode: {},
-    deleteNode: {},
+    deleteNode: {}
   },
 
   /**
@@ -110,8 +110,8 @@ export default Component.extend({
     },
 
     '.wrapper dblclick': function (_el, event) {
-      event.stopPropagation();
-      event.preventDefault();
+      event.stopPropagation()
+      event.preventDefault()
 
       const vm = this.viewModel
       vm.setSelected()

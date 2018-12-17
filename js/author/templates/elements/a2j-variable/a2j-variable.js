@@ -41,10 +41,12 @@ export default Component.extend({
       })
     }
 
-    // Set the name on the VM from the element attribute
-    _assign(vmAttrs, {
-      name
-    })
+    if (name) {
+      // Set the name on the VM from the element attribute
+      _assign(vmAttrs, {
+        name
+      })
+    }
 
     return new A2JVariableVM(vmAttrs)
   }

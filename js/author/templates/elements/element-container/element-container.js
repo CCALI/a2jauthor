@@ -28,7 +28,7 @@ import 'can-map-define'
  *
  * `<element-container>`'s viewModel.
  */
-export let ContainerVM = CanMap.extend({
+export let ContainerVM = CanMap.extend('ElementContainerVM', {
   define: {
     /**
      * @property {Boolean} element-container.ViewModel.prototype.selected selected

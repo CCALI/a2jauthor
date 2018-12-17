@@ -7,7 +7,7 @@ import Answers from 'caja/author/models/answers'
  *
  * <a2j-variable>'s viewModel.
  */
-export default CanMap.extend({
+export default CanMap.extend('A2JVariableVM', {
   define: {
     /**
      * @property {Answers} answers

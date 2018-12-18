@@ -19,6 +19,15 @@ a2j-conditional {
     }
   }
 
+  .panel.panel-warning {
+    & > .panel-heading,
+    & > .panel-else,
+    & > .panel-footer {
+      border: 1px solid #faebcc;
+      margin: -1px;
+    }
+  }
+
   .panel-warning > .panel-heading {
     color: #8a6d3b !important;
   }
@@ -27,12 +36,10 @@ a2j-conditional {
     color: #8a6d3b;
     padding: 8px 15px;
     background-color: #fcf8e3;
-    border: 1px solid #faebcc;
   }
 
   .panel-warning > .panel-footer {
     color: #8a6d3b;
-    border-color: #faebcc;
     background-color: #fcf8e3;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;

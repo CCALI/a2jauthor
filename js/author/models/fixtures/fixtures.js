@@ -1,2 +1,3 @@
 import './guides'
-import './legal-nav'
+import './legal-nav-topics'
+import './legal-nav-resources'

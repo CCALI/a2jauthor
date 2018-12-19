@@ -3,16 +3,16 @@ const nameSort = require('../util/name-sort')
 const debug = require('debug')('A2J:routes/topics-resources-resource')
 
 /**
- * @module {Module} /routes/topics-resources/resource template
+ * @module {Module} /routes/topics-resources/resources template
  * @parent api
  *
- * Module containing methods for handling /topics-resources/resource route
+ * Module containing methods for handling /topics-resources/resources route
  *
  * ## Use
  * @codestart
  * var topicsResourcesResource = require('routes/topics-resources-resource');
  * var app = feathers();
- * app.use('/api/topics-resources/resource', topicsResourcesResource);
+ * app.use('/api/topics-resources/resources', topicsResourcesResource);
  * @codeend
  *
  */
@@ -25,17 +25,17 @@ module.exports = {
    *
    * ## Use
    *
-   * GET /api/topics-resources
+   * GET /api/topics-resources/resources
    */
   find (params, callback) {
     const { query: { state, topic } } = params
-    debug(`FIND /api/topics-resources-resource request - state=${state}, topic=${topic}`)
+    debug(`FIND /api/topics-resources-resources request - state=${state}, topic=${topic}`)
 
     if (!state && !topic) {
       return callback(new Error('State and Topic are required!'))
     }
 
-    axios.get(`http://access2justiceapi.azurewebsites.net/api/topics-resources/resource?state=${state}&topicName=${topic}`)
+    axios.get(`https://access2justiceapi.azurewebsites.net/api/topics-resources/resources?state=${state}&topicName=${topic}`)
       .then(({ data }) => {
         // sort the data by name
         data.sort(nameSort)

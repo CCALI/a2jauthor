@@ -160,7 +160,7 @@ CKEDITOR.dialog.add('guid', function(editor) {
           window.$.ajax({
             type: 'GET',
             dataType: 'json',
-            url: `/api/topics-resources/resource?state=${selectedState}&topic=${topic}`
+            url: `/api/topics-resources/resources?state=${selectedState}&topic=${topic}`
           })
           .then((result) => {
             // Add results to the html

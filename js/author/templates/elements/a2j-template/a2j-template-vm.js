@@ -281,6 +281,10 @@ export default CanMap.extend('A2JTemplateVM', {
   },
 
   toggleEditActiveNode (id) {
+    // Grab the entire template's rootNode. Each a2j-conditional contains an
+    // a2j-template, which has its own root node. This was causing a bug where
+    // the a2j-conditional edit popup would stay open when editing one of its
+    // children
     const rootNode = document.getElementById('page-template').viewModel.attr('rootNode')
     const children = rootNode.attr('children')
 

@@ -69,7 +69,8 @@
       "grunt-contrib-less"
     ],
     "configDependencies": [
-      "author/utils/set-global-for-lodash"
+      "author/utils/set-global-for-lodash",
+      "author/utils/load-fixtures"
     ],
     "map": {
       "cuid": "cuid/dist/browser-cuid",

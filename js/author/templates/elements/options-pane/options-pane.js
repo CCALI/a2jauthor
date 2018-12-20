@@ -57,5 +57,15 @@ export default Component.extend({
   view: template,
   ViewModel: OptionsPaneVM,
   tag: 'element-options-pane',
+
+  events: {
+    '.popover dblclick': function (_target, event) {
+      // prevent a bug where double clicking an a2j-conditional child element's
+      // popup would unexpectedly close that popup, and open the a2j-conditional
+      // element's popup
+      event.stopPropagation()
+    }
+  },
+
   leakScope: true
 })

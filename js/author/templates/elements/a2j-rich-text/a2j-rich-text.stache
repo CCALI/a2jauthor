@@ -1,5 +1,6 @@
 <can-import from="caja/author/templates/elements/options-pane/" />
 <can-import from="caja/author/templates/elements/element-container/" />
+<can-import from="caja/author/templates/elements/a2j-legal-nav-resource/" />
 <can-import from="caja/author/templates/elements/a2j-rich-text/a2j-rich-text.less!" />
 
 {{#if (editEnabled )}}

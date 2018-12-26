@@ -14,8 +14,15 @@ a2j-repeat-loop {
     color: @panel-info-color;
   }
 
+  .panel.panel-info {
+    & > .panel-heading,
+    & > .panel-footer {
+      border: 1px solid #bce8f1;
+      margin: -1px;
+    }
+  }
+
   .panel-info > .panel-footer {
-    border-color: #bce8f1;
     color: @panel-info-color;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;

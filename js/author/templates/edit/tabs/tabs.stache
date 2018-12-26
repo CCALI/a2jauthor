@@ -9,7 +9,7 @@
     </div>
   </bit-panel>
 
-  <bit-panel title:raw="Template Options">
+  <bit-panel title:raw="Template Options" class="last-panel">
     <div class="tab-pane">
       {{> template-options-tab-tpl}}
     </div>

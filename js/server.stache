@@ -1,5 +1,6 @@
 <html>
   <head>
+    <meta charset="UTF-8" />
     <title>{{title}}</title>
 
     {{! TODO: find a better way to locate the css bundle }}

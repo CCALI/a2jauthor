@@ -5,23 +5,25 @@
   </head>
 
   <body>
-    <script type="text/stache" can-autorender>
-      <can-import from="caja/author/styles/" />
-      <can-import from="caja/author/main.less!" />
-      <can-import from="caja/author/models/fixtures/" />
-      <can-import from="caja/author/interviews/" />
+    <script>
+        window.less = {
+          async: true,
+          fileSync: true
+        };
+      </script>
 
-      <div>
-        <interviews-page></interviews-page>
-      </div>
-    </script>
+      <script src="../../node_modules/steal/steal.js"
+        deps-bundle
+        data-main="@empty">
+      </script>
 
-    <script src="../../node_modules/steal/steal.js"
-      data-main="can-view-autorender/">
-      window.less = {
-        async: true,
-        fileSync: true
-      };
-    </script>
+      <script type="steal-module">
+        import Interviews from "caja/author/interviews/"
+        import "caja/author/interviews/interviews.less"
+        import "caja/author/models/fixtures/"
+
+        const interviews = new Interviews({viewModel: {}})
+        document.body.appendChild(interviews.element)
+      </script>
   </body>
 </html>

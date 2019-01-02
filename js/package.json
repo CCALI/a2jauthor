@@ -20,7 +20,6 @@
   "devDependencies": {
     "can-debug": "^2.0.1",
     "can-fixture": "^2.1.0",
-    "can-view-autorender": "^5.0.1",
     "chai": "^4.1.2",
     "documentjs": "~0.4.1",
     "express": "^4.13.0",
@@ -253,6 +252,7 @@
     "can-super-model": "^1.0.1",
     "can-util": "^3.12.0",
     "can-validate-legacy": "^2.0.0",
+    "can-view-autorender": "^4.2.0",
     "can-view-callbacks": "^4.3.0",
     "can-view-import": "^4.2.0",
     "connect": "3.2.0",

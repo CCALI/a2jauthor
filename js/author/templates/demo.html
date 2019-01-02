@@ -5,23 +5,25 @@
   </head>
 
   <body>
-    <script type="text/stache" can-autorender>
-      <can-import from="caja/author/main.less!" />
-      <can-import from="caja/author/templates/" />
-      <can-import from="caja/author/models/fixtures/" />
-
-      <div class="bootstrap-styles">
-        <templates-page></templates-page>
-      </div>
-    </script>
-
-
-    <script src="../../../node_modules/steal/steal.js"
-      data-main="can-view-autorender/">
+    <script>
       window.less = {
         async: true,
         fileSync: true
       };
+    </script>
+
+    <script src="../../node_modules/steal/steal.js"
+      deps-bundle
+      data-main="@empty">
+    </script>
+
+    <script type="steal-module">
+      import Templates from "caja/author/templates/"
+      import "caja/author/templates/templates.less"
+      import "caja/author/models/fixtures/"
+
+      const templates = new Templates({viewModel: { appState: {guideId: '1261'} }})
+      document.body.appendChild(templates.element)
     </script>
   </body>
 </html>

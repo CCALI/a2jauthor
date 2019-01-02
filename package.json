@@ -98,6 +98,7 @@
     "can-stache-route-helpers": "^1.1.1",
     "can-util": "^3.12.0",
     "can-validate-legacy": "^2.0.0",
+    "can-view-autorender": "^4.2.0",
     "can-view-callbacks": "^4.3.0",
     "can-view-import": "^4.2.0",
     "cheerio": "^1.0.0-rc.2",
@@ -132,7 +133,7 @@
     "url-regex": "^3.1.0",
     "util.promisify": "^1.0.0",
     "uuid": "^3.1.0",
-    "wkhtmltopdf": "^0.1.5"
+    "wkhtmltopdf": "^0.3.4"
   },
   "devDependencies": {
     "archiver": "^0.21.0",

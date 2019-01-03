@@ -107,7 +107,13 @@ export default CanMap.extend('A2JTemplateVM', {
      */
     useAnswers: {
       type: 'boolean',
-      value: false
+      value: false,
+      get () {
+        const answers = this.attr('answers')
+        const answerKeys = answers ? Object.keys(answers) : []
+
+        return answerKeys.length > 0
+      }
     },
 
     /**

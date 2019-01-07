@@ -202,15 +202,18 @@ function blankGuide () {
   return guide
 }
 
-// create blank guide internally, do Save As to get a server id for future saves.
+// create blank guide internally, do guidesavenew to generate templates.json file.
 function createBlankGuide () {
   var guide = blankGuide()
+  // included JSON form of guide XML
+  var guideJsonStr = window.guide2JSON_Mobile(guide)
 
   var saveAsParams = {
     gid: 0,
-    cmd: 'guidesaveas',
+    cmd: 'guidesavenew',
     title: guide.title,
-    guide: exportXML_CAJA_from_CAJA(guide)
+    guide: window.exportXML_CAJA_from_CAJA(guide),
+    json: guideJsonStr
   }
 
   ws(saveAsParams, function (data) {

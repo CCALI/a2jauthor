@@ -361,7 +361,7 @@ export default CanMap.extend({
    */
   saveTemplatesOrder (templateIds) {
     const guideId = this.attr('appState.guideId')
-    // const templateIds = this.attr('templates').serialize().map(t => t.templateId);
+
     if (templateIds) {
       return $.ajax({
         url: `/api/templates/${guideId}`,

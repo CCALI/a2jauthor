@@ -376,6 +376,41 @@ switch ($command){
 		}
 		break;
 
+		case 'guidesavenew':
+		// Saving new guide
+		$title=($mysqli->real_escape_string($_REQUEST['title']));
+		$xml=$_REQUEST['guide'];
+		$json=$_REQUEST['json'];
+		// Create new entry in guide table.
+		$sql="insert into guides (title,editoruid) values ('".$mysqli->real_escape_string($title)."', ".$userid.")";
+		if ($res=$mysqli->query($sql)) {
+			// Save as content to new folder owned by editor
+			$newgid=$mysqli->insert_id;
+			$userdir=$_SESSION['userdir'];
+			// TODO: should throw error here, instead of assuming user 00000?
+			if (!isset($userdir))$userdir='00000';
+			// new GI asset directory, ex: /dev/guides/Guide924
+			$newdir = $userdir.'/guides/'."Guide".$newgid;
+			$newfile = $newdir.'/Guide.xml';
+			// ex: some/sever/path/userfiles/dev/guides/Guide924
+			$assetsdir = GUIDES_DIR.$newdir;
+			mkdir($assetsdir);
+			$filename=GUIDES_DIR.$newfile;
+			// create default Guide.xml and Guide.json
+			file_put_contents($filename,$xml);
+			file_put_contents(replace_extension($filename,'json'),$json);
+
+			// create new templates.json index file
+			create_templates_index($newgid, $assetsdir);
+			chmod($assetsdir , 0775);
+
+			$sql="update guides set filename='".$mysqli->real_escape_string($newfile)."' where gid = $newgid";
+			$res=$mysqli->query($sql);
+
+			$result['gid']=$newgid;
+		}
+		break;
+
 	case 'uploadfile':
 		/*
 		 * jQuery File Upload Plugin PHP Example 5.14
@@ -678,7 +713,7 @@ function process_uploaded_guide_file($guide_id, $destination_path) {
 		unzip($temp_file_path, $destination_path);
 		find_guide_file_and_rename($destination_path);
 		update_guide_templates($guide_id, $destination_path);
-		update_templates_index($guide_id, $destination_path);
+		update_or_create_templates_index($guide_id, $destination_path);
 	} else {
 		$filename = $file_data['name'];
 
@@ -757,12 +792,35 @@ function update_guide_templates($guide_id, $guide_folder_path) {
 }
 
 /**
+ * Create default empty templates.json file
+ * format  { guideId: 600, templateIds: [] }
+ */
+function create_templates_index($guide_id, $guide_folder_path) {
+	$templates_index_path = $guide_folder_path . "/templates.json";
+	if (!file_exists($templates_index_path)) {
+		try {
+				$templates_obj = new stdClass();
+				$templates_obj->guideId = $guide_id;
+				$templates_obj->templateIds = [];
+
+				// write new templates data to json
+				file_put_contents($templates_index_path, json_encode($templates_obj));
+		} catch (Exception $e) {
+			trace("Caught exception: ", $e->getMessage(), "\n");
+		}
+	}
+}
+
+/**
  * Update templates.json file with newly generated guideId from upload
  * format  { guideId: 600, templateIds: [2, 5, 14] }
  *
+ * creates a new templates.json if it doesn't exist (a2j4 GI uploaded)
+ * format  { guideId: 600, templateIds: [] }
+ *
  * note: front end code handles generating a new templates.json file if it doesn't exist
  */
-function update_templates_index($guide_id, $guide_folder_path) {
+function update_or_create_templates_index($guide_id, $guide_folder_path) {
 	$templates_index_path = $guide_folder_path . "/templates.json";
 	if (file_exists($templates_index_path)) {
 		try {
@@ -774,6 +832,12 @@ function update_templates_index($guide_id, $guide_folder_path) {
 
 				// write updated templates data to json
 				file_put_contents($templates_index_path, json_encode($templates_json_data));
+		} catch (Exception $e) {
+			trace("Caught exception: ", $e->getMessage(), "\n");
+		}
+	} else {
+		try {
+			create_templates_index($guide_id, $guide_folder_path);
 		} catch (Exception $e) {
 			trace("Caught exception: ", $e->getMessage(), "\n");
 		}

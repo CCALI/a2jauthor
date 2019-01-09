@@ -39,6 +39,13 @@ const router = feathers.Router()
 const render = ssr({
   main: 'caja/server.stache!done-autorender',
   config: path.join(__dirname, '..', '..', 'package.json!npm')
+}, {
+  // this allows for debugging in Node --inspect-brk
+  // setting a max of 15 seconds before done-ssr times out
+  // this does not prevent done-ssr from finishing earlier if
+  // the render is complete. see this issue for more details:
+  //
+  timeout: 15000
 })
 
 const config = getConfig()
@@ -204,9 +211,11 @@ function getHtmlForRichText (options) {
     {__cssBundlePath: getCssBundlePath()}
   )
   const webpageStream = render(request)
+  console.log(request.body)
   return new Promise((resolve, reject) => {
     webpageStream.pipe(through(buffer => {
       const html = buffer.toString()
+      console.log(html)
       resolve(he.decode(html))
     }))
     webpageStream.on('error', error => reject(error))

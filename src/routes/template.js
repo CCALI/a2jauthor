@@ -113,7 +113,7 @@ module.exports = {
     debug(`GET /api/template/${comboId} request`)
 
     const [ guideId, templateId ] = comboId.split('-')
-    const { fileDataUrl } = params.query || ''
+    const { fileDataUrl } = (params && params.query) || ''
     const usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader })
 
     usernamePromise

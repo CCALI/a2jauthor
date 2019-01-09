@@ -105,7 +105,6 @@ export default Component.extend({
 
         // check if we have access to the element while dragging is going on
         if ($textarea.get(0)) {
-
           let editor = window.CKEDITOR.replace($textarea.get(0), {
             extraPlugins: 'a2j-variable',
             extraAllowedContent: {

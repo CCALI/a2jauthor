@@ -22,35 +22,19 @@ const debug = require('debug')('A2J:routes/templates')
  */
 module.exports = {
   /**
-   * @property {Function} templates.getTemplatesPath
+   * @property {Function} templates.getTemplatesJSON
    * @parent templates
    *
-   * Read the templates.json file. If it does not exist,
-   * create it with this data structure:
-   *    { 'guideId': 600, 'templateIds': [] }
+   * Read the templates.json file.
    *
-   * @return {Promise} a Promise that will resolve to the
-   * path to templates data.
+   * @return {Promise} a Promise that will resolve to the templates.json data.
    */
   getTemplatesJSON ({ username, guideId, fileDataUrl }) {
-    let templatesJSONPath
-
-    const pathPromise = paths
-      .getTemplatesPath({ username, guideId, fileDataUrl })
-      .then(templatesPath => {
-        templatesJSONPath = templatesPath
-        return templatesPath
-      })
-
-    return pathPromise
+    return paths.getTemplatesPath({ username, guideId, fileDataUrl })
       .then(path => files.readJSON({ path }))
       .catch((err, path) => {
-        debug(err)
-        debug(`Writing ${templatesJSONPath}`)
-        return files.writeJSON({
-          path: templatesJSONPath,
-          data: { 'guideId': guideId, 'templateIds': [] }
-        })
+        debug('reading templates.json from this path failed', path)
+        console.error(err)
       })
   },
 
@@ -110,6 +94,7 @@ module.exports = {
     debug('GET /api/templates/' + guideId)
 
     const { cookieHeader } = params
+    // fileDataUrl is coming in as the string 'undefined'
     const { fileDataUrl } = (params.query || '')
     const usernamePromise = user.getCurrentUser({ cookieHeader })
 

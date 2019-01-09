@@ -51,21 +51,6 @@ describe('lib/routes/templates', function () {
           done()
         })
       })
-
-      it('should write empty templates JSON file when it does not exist and return the empty templateIds array', function (done) {
-        // force read error
-        let readFileStub = sinon.stub(files, 'readJSON')
-        readFileStub.throws(`Error: ENOENT: no such file or directory, open '../templates.json'`)
-        writeFileStub.returns([])
-
-        templates.getTemplatesJSON({ username: currentUserName, guideId: '600' })
-        .then(data => {
-          assert.deepEqual(writeFileStub.getCall(0).args[0].data.templateIds, [], 'with empty templateIds array')
-          assert.deepEqual(writeFileStub.getCall(0).args[0].data, {guideId: '600', templateIds: []}, 'with full data structure')
-          done()
-        })
-        readFileStub.restore()
-      })
     })
 
     describe('GET /api/templates/{guideId}', function () {

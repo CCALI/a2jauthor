@@ -12,10 +12,6 @@ export const InterviewsVM = CanMap.extend({
     interviews: {
       serialize: false,
       get (lastSet, resolve) {
-        if (lastSet) {
-          return lastSet
-        }
-
         this.attr('interviewsPromise')
           .then(resolve)
       }
@@ -23,7 +19,11 @@ export const InterviewsVM = CanMap.extend({
 
     interviewsPromise: {
       serialize: false,
-      get  () {
+      get  (lastSet) {
+        if (lastSet) {
+          return lastSet
+        }
+
         return this.attr('saveCurrentGuidePromise')
           .then(() => Guide.findAll())
       }
@@ -100,6 +100,11 @@ export const InterviewsVM = CanMap.extend({
   },
 
   connectedCallback () {
+    // clear debug-panel traceLogicList and preview answers
+    // even if we don't change interviews
+    // TODO: this should be moved to happen when a new interview is opened?
+    this.clearPreviewState()
+
     const self = this
     $('#author-app').on('author:guide-deleted', function (ev, guideId) {
       self.deleteInterview(guideId)
@@ -131,14 +136,6 @@ export default Component.extend({
   },
 
   events: {
-    inserted: function () {
-      // clear debug-panel traceLogicList and preview answers
-      // even if we don't change interviews
-      // TODO: this should be moved to happen when a new interview is opened
-      const vm = this.viewModel
-      vm.clearPreviewState()
-    },
-
     '.guide click': function (target) {
       this.element = $(this.element)
       this.element.find('.guide').removeClass('item-selected')

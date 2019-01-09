@@ -17,26 +17,32 @@ describe('<interviews-page>', function () {
       vm = new InterviewsVM()
     })
 
-    it('deleteInterview works', function () {
-      vm.attr('interviews', [
+    it('deleteInterview works', function (done) {
+      const interviewsPromiseResponse = new CanList([
         { id: 1, title: 'foo', owned: true },
         { id: 2, title: 'bar', owned: true }
       ])
 
-      assert.equal(vm.attr('interviews.length'), 2,
-        'there should be 2 interviews')
+      vm = new InterviewsVM({
+        interviewsPromise: Promise.resolve(interviewsPromiseResponse)
+      })
 
-      // delete interview with id 1
-      vm.deleteInterview(1)
+      vm.listenTo('interviews', () => {
+        assert.equal(vm.attr('interviews.length'), 2,
+          'there should be 2 interviews')
+        // delete interview with id 1
+        vm.deleteInterview(1)
 
-      assert.equal(vm.attr('interviews.length'), 1,
-        'interview with id 1 should have been deleted')
+        assert.equal(vm.attr('interviews.length'), 1,
+          'interview with id 1 should have been deleted')
 
-      // delete interview with id 5
-      vm.deleteInterview(5)
+        // delete interview with id 5
+        vm.deleteInterview(5)
 
-      assert.equal(vm.attr('interviews.length'), 1,
-        'should still be 1 since there is no interview with given id')
+        assert.equal(vm.attr('interviews.length'), 1,
+          'should still be 1 since there is no interview with given id')
+      })
+      done()
     })
 
     it('clears preview tracelogic messages', function () {

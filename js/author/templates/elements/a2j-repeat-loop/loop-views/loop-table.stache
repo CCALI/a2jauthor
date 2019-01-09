@@ -10,7 +10,7 @@
 
     <tbody>
       <tr>
-        {{#../tableColumns}}
+        {{#each ../tableColumns}}
           <th style="width: {{width}}%;">
             {{#if scope/editActive}}
               <var-picker
@@ -22,7 +22,7 @@
               <a2j-variable vm:name:from="variable" />
             {{/if}}
           </th>
-        {{/tableColumns}}
+        {{/each}}
       </tr>
     </tbody>
   </table>

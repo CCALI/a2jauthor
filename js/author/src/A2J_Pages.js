@@ -711,6 +711,7 @@ function guidePageEditForm (page, div, pagename)// novicePage
         max: CONST.MAXFIELDS,
         list: page.fields,
         blank: blankField,
+        customClass: 'page-edit-fields',
         save: function (newlist) {
           page.fields = newlist
         },
@@ -852,6 +853,7 @@ function guidePageEditForm (page, div, pagename)// novicePage
         max: CONST.MAXBUTTONS,
         list: page.buttons,
         blank: blankButton,
+        customClass: 'page-edit-buttons',
 
         save: function (newlist) {
           page.buttons = newlist

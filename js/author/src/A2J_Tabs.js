@@ -1018,6 +1018,7 @@ window.form = {
     var $div = $('<div/>')
 
     var $tbl = $('<table/>')
+      .addClass(settings.customClass)
       .addClass('list table table-striped')
       .data('settings', settings)
       .attr('list', settings.name)

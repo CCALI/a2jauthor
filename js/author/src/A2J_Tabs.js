@@ -637,7 +637,8 @@ window.form = {
           // If we have the div node
           // add the CKEditor
           if ($(node).find(id)) {
-            CKEDITOR.replace(document.getElementById(id), {
+            CKEDITOR.inline(document.getElementById(id), {
+              configStartupFocus: true,
               height: 55,
               autoGrow_minHeight: 55,
               linkShowAdvancedTab: false,

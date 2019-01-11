@@ -1057,3 +1057,11 @@ html, body, input, select, textarea , .htmledit, .codeedit {
 	color: #000;
 }
 
+.page-edit-dialog {
+  position: absolute;
+	height: auto;
+	width: 60vw!important;
+  top: 5%!important;
+  left: 20vw!important;
+  display: block;
+}

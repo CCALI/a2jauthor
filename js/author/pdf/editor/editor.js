@@ -529,8 +529,8 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
     } else {
       uploadTask = uploadTemplatePdf(comboId, newPageCount => {
         const currentPageCount = this.attr('pages').length
-        const hasMorePages = newPageCount > currentPageCount
-        if (hasMorePages) {
+        const hasEqualOrMorePages = newPageCount >= currentPageCount
+        if (hasEqualOrMorePages) {
           return true
         }
         return this.promptLesserReplacement({

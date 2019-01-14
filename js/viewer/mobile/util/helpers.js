@@ -13,13 +13,6 @@ stache.registerHelper('inc', function (val) {
   return parseInt(val, 10) || 0 + 1
 })
 
-stache.registerHelper('equal', function (a, b, options) {
-  a = typeof a === 'function' ? a() : a
-  b = typeof b === 'function' ? b() : b
-
-  return a === b ? options.fn() : options.inverse()
-})
-
 stache.registerHelper('normalizePath', function (fileDataUrl, path) {
   path = _isFunction(path) ? path() : path
   fileDataUrl = _isFunction(fileDataUrl) ? fileDataUrl() : fileDataUrl

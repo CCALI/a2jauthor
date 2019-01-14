@@ -2,6 +2,7 @@
 <can-import from='caja/author/modal/' />
 <can-import from='caja/author/variables/editor/' />
 <can-import from='caja/author/pdf/checkmark-picker/' />
+<can-import from='can-stache-converters' />
 
 {{#if conflictingVariables}}
   <author-modal
@@ -69,9 +70,7 @@
                   name='overflow-style-1'
                   value='overflow-to-addendum'
                   on:el:change='onOverflowStyleChange(scope.event)'
-                  {{#is variableBuffer.overflowStyle 'overflow-to-addendum'}}
-                    checked='checked'
-                  {{/is}}
+                  checked:bind="equal(variableBuffer.overflowStyle, 'overflow-to-addendum')"
                 />
                 <span>Append overflow text to an addendum</span>
               </label>
@@ -81,9 +80,7 @@
                   name='overflow-style-2'
                   value='everything-to-addendum'
                   on:el:change='onOverflowStyleChange(scope.event)'
-                  {{#is variableBuffer.overflowStyle 'everything-to-addendum'}}
-                    checked='checked'
-                  {{/is}}
+                  checked:bind="equal(variableBuffer.overflowStyle, 'everything-to-addendum')"
                 />
                 <span>Append all text to an addendum if there would be overflow</span>
               </label>
@@ -93,9 +90,7 @@
                   name='overflow-style-3'
                   value='clip-overflow'
                   on:el:change='onOverflowStyleChange(scope.event)'
-                  {{#is variableBuffer.overflowStyle 'clip-overflow'}}
-                    checked='checked'
-                  {{/is}}
+                  checked:bind="equal(variableBuffer.overflowStyle, 'clip-overflow')"
                 />
                 <span>Ignore text overflow</span>
               </label>

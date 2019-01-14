@@ -13,100 +13,6 @@
 // import {TGuide, TPage, TField, TButton, gGuideMeta, gStartArgs, CONST} from './viewer/A2J_Types'
 // import {gPrefs} from './viewer/A2J_Prefs'
 
-/* using only clickOut functionality
- * jQuery UI dialogOptions v1.0
- * @desc extending jQuery Ui Dialog - Responsive, click outside, class handling
- * @author Jason Day
- * MIT license: http://www.opensource.org/licenses/mit-license.php
- *
- * (c) Jason Day 2014
- * https://github.com/jasonday/jQuery-UI-Dialog-extended
- */
-
-  // add new options with default values
-  $.ui.dialog.prototype.options.clickOut = true;
-
-  // extend _init
-  var _init = $.ui.dialog.prototype._init;
-  $.ui.dialog.prototype._init = function () {
-      var self = this;
-
-      // apply original arguments
-      _init.apply(this, arguments);
-
-      //patch
-      if ($.ui && $.ui.dialog && $.ui.dialog.overlay) {
-          $.ui.dialog.overlay.events = $.map('focus,keydown,keypress'.split(','), function (event) {
-            return event + '.dialog-overlay';
-        }).join(' ');
-      }
-  };
-  // end _init
-
-
-  // extend open function
-  var _open = $.ui.dialog.prototype.open;
-  $.ui.dialog.prototype.open = function () {
-      var self = this;
-
-      // apply original arguments
-      _open.apply(this, arguments);
-
-      // // get dialog original size on open
-      // var oHeight = self.element.parent().outerHeight(),
-      //     oWidth = self.element.parent().outerWidth(),
-      //     isTouch = $("html").hasClass("touch");
-
-      // close on clickOut
-      if (self.options.clickOut && !self.options.modal) {
-          // use transparent div - simplest approach (rework)
-          $('<div id="dialog-overlay"></div>').insertBefore(self.element.parent());
-          $('#dialog-overlay').css({
-              "position": "fixed",
-              "top": 0,
-              "right": 0,
-              "bottom": 0,
-              "left": 0,
-              "background-color": "transparent"
-          });
-          $('#dialog-overlay').click(function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-              self.close();
-          });
-          // else close on modal click
-      } else if (self.options.clickOut && self.options.modal) {
-          $('.ui-widget-overlay').click(function (e) {
-              self.close();
-          });
-      }
-
-      // add dialogClass to overlay
-      if (self.options.dialogClass) {
-          $('.ui-widget-overlay').addClass(self.options.dialogClass);
-      }
-  };
-  //end open
-
-
-  // extend close function
-  var _close = $.ui.dialog.prototype.close;
-  $.ui.dialog.prototype.close = function () {
-      var self = this;
-      // apply original arguments
-      _close.apply(this, arguments);
-
-      // remove dialogClass to overlay
-      if (self.options.dialogClass) {
-          $('.ui-widget-overlay').removeClass(self.options.dialogClass);
-      }
-      //remove clickOut overlay
-      if ($("#dialog-overlay").length) {
-          $("#dialog-overlay").remove();
-      }
-  };
-  //end close
-
 var $pageEditDialog = null
 
 function pageNameFieldsForTextTab (pagefs, page) {	// Used by the Text tab.
@@ -397,6 +303,8 @@ function gotoPageEdit (pageName) {
       if (window.gGuide) {
         window.guideSave()
       }
+      // cleanup handler
+      $('body').off('click', offClickHandler)
     },
 
     buttons: [{
@@ -427,6 +335,15 @@ function gotoPageEdit (pageName) {
       }
     }]
   })
+
+  // close the dialog if you click outside it's boundary
+  var offClickHandler = function (e) {
+    var $el = $(e.target)
+    if (!$el.parents().hasClass('ui-dialog')) {
+      $pageEditDialog.dialog('close')
+    }
+  }
+  $('body').on('click', offClickHandler)
 
   // removes jQuery.ui classes from buttons
   var modal = $pageEditDialog.parents('.ui-dialog')

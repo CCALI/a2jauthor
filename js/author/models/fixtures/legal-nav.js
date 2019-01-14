@@ -2,7 +2,7 @@ import fixture from 'can-fixture'
 
 export default fixture('GET /api/topics-resources/topics', function (req, res) {
   const state = req.data ? req.data.state : null
-  console.log('state', state)
+
   const alaskaTopics = [
     {name: 'Divorce'},
     {name: 'Moose Issues'}

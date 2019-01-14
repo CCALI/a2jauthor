@@ -376,7 +376,6 @@ function reportTranscript () {	//  2016-06-24 List all text blocks for translati
 }
 
 function reportCitation () { // 2017-10-31 list all citation references per page
-  console.log('printing citation report')
   /** @type {TGuide} */
   var guide = gGuide
   /** @type {TPage} */

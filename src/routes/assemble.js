@@ -211,11 +211,9 @@ function getHtmlForRichText (options) {
     {__cssBundlePath: getCssBundlePath()}
   )
   const webpageStream = render(request)
-  console.log(request.body)
   return new Promise((resolve, reject) => {
     webpageStream.pipe(through(buffer => {
       const html = buffer.toString()
-      console.log(html)
       resolve(he.decode(html))
     }))
     webpageStream.on('error', error => reject(error))

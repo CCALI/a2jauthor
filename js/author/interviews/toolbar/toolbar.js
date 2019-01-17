@@ -6,7 +6,7 @@ import 'can-map-define'
 
 export const InterviewToolbarVM = CanMap.extend('InterviewToolbarVM', {
   define: {
-    interviews: { serialize: false }
+    interviews: {}
   }
 })
 /**

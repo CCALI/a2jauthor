@@ -28,30 +28,31 @@ describe('<interviews-page>', function () {
       })
 
       vm.listenTo('interviews', () => {
-        assert.equal(vm.attr('interviews.length'), 2,
+        assert.equal(vm.interviews.length, 2,
           'there should be 2 interviews')
         // delete interview with id 1
         vm.deleteInterview(1)
 
-        assert.equal(vm.attr('interviews.length'), 1,
+        assert.equal(vm.interviews.length, 1,
           'interview with id 1 should have been deleted')
 
         // delete interview with id 5
         vm.deleteInterview(5)
 
-        assert.equal(vm.attr('interviews.length'), 1,
+        assert.equal(vm.interviews.length, 1,
           'should still be 1 since there is no interview with given id')
       })
+      vm.stopListening()
       done()
     })
 
     it('clears preview tracelogic messages', function () {
       let previewTraceList = new CanList({ pageName: 'Intro', messages: ['These', 'are', 'usually', 'Maps'] })
-      vm.attr('traceLogicList', previewTraceList)
+      vm.traceLogicList = previewTraceList
 
       vm.clearPreviewState()
 
-      assert.equal(vm.attr('traceLogicList.length'), 0, 'there should be an empty list')
+      assert.equal(vm.traceLogicList.length, 0, 'there should be an empty list')
     })
   })
 
@@ -85,26 +86,8 @@ describe('<interviews-page>', function () {
       assert.isTrue(interview.hasClass(selectedClass))
     })
 
-    it('only one interview can be selected', function (done) {
-      F('.guide').hasClass(selectedClass, false, 'there should be no selected interview')
-
-      // select first interview of the list
-      F('.guide:eq(0)').click()
-
-      F('.guide:eq(0)').hasClass(selectedClass, true, 'should be selected')
-      F('.' + selectedClass).size(1, 'there should be one selected interview')
-
-      // select second interview of the list
-      F('.guide:eq(1)').click()
-
-      F('.guide:eq(1)').hasClass(selectedClass, true, 'should be selected')
-      F('.' + selectedClass).size(1, 'there should be one selected interview')
-
-      F(done)
-    })
-
     window.openSelectedGuide = (gid) => {
-      vm.attr('currentGuideId', gid)
+      vm.currentGuideId = gid
     }
 
     it('interviews are set as opened when double clicked', function () {

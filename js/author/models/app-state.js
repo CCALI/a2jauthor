@@ -55,8 +55,19 @@ export default CanMap.extend('AuthorAppState', {
     selectedReport: {
       serialize: false
     },
+
     /**
-    * @property {List} repceLogic
+    * @property {List} interviews
+    *
+    * list of interviews
+    * used to pass between toolbar and interviews component
+    */
+    interviews: {
+      serialize: false
+    },
+
+    /**
+    * @property {List} traceLogic
     *
     * latest message to display in the trace panel
     */
@@ -81,16 +92,6 @@ export default CanMap.extend('AuthorAppState', {
      */
     page: {
       value: ''
-    },
-
-    /**
-     * @property {can.Map} interviews
-     *
-     * The available interviews shown to the Author
-     *
-     */
-    interviews: {
-      serialize: false
     },
 
     /**

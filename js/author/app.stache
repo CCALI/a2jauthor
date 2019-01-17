@@ -261,8 +261,8 @@
     <!-- Interview Tab -->
     <div class="tab-panel has-toolbar" id="tabsGuides">
       {{#is(page, "interviews")}}
-        <interviews-toolbar interviews:bind="interviews"></interviews-toolbar>
-        <interviews-page interviews:bind="interviews" traceLogicList:bind="traceLogicList" viewerInterview:bind="viewerInterview"></interviews-page>
+        <interviews-toolbar interviews:to="interviews"></interviews-toolbar>
+        <interviews-page interviews:from="interviews" traceLogicList:bind="traceLogicList" viewerInterview:bind="viewerInterview"></interviews-page>
       {{/is}}
     </div>
 

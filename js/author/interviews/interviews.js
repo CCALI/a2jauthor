@@ -1,89 +1,89 @@
 import $ from 'jquery'
-import CanMap from 'can-map'
+import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import CanList from 'can-list'
 import Guide from 'caja/author/models/guide'
 import template from './interviews.stache'
 
-import 'can-map-define'
+export const InterviewsVM = DefineMap.extend('InterviewsVM', {
+  interviews: {
+    value ({ lastSet, listenTo, resolve }) {
+      this.interviewsPromise.then((interviews) => {
+        resolve(interviews)
+      })
 
-export const InterviewsVM = CanMap.extend({
-  define: {
-    interviews: {
-      serialize: false,
-      get (lastSet, resolve) {
-        this.attr('interviewsPromise')
-          .then(resolve)
+      listenTo(lastSet, (interviews) => {
+        resolve(interviews)
+      })
+    }
+  },
+
+  interviewsPromise: {
+    get  (lastSet) {
+      // used to override in tests
+      if (lastSet) {
+        return lastSet
       }
-    },
 
-    interviewsPromise: {
-      serialize: false,
-      get  (lastSet) {
-        if (lastSet) {
-          return lastSet
+      return this.saveCurrentGuidePromise
+        .then(() => Guide.findAll())
+    }
+  },
+
+  saveCurrentGuidePromise: {
+    get () {
+      // this assures any changes to current guide are saved before loading
+      // interviews list TODO: remove when legacy code refactored to CanJS
+      return new Promise(function (resolve, reject) {
+        if (window.gGuide) {
+          window.guideSave(resolve)
+        } else {
+          resolve()
         }
+      })
+    }
+  },
 
-        return this.attr('saveCurrentGuidePromise')
-          .then(() => Guide.findAll())
+  blankInterview: {
+    get () {
+      return {
+        id: 'a2j',
+        title: 'Blank Interview'
       }
-    },
+    }
+  },
 
-    saveCurrentGuidePromise: {
-      get () {
-        // this assures any changes to current guide are saved before loading
-        // interviews list TODO: remove when legacy code refactored to CanJS
-        return new Promise(function (resolve, reject) {
-          if (window.gGuide) {
-            window.guideSave(resolve)
-          } else {
-            resolve()
-          }
-        })
-      }
-    },
+  traceLogicList: {
+    serialize: false
+  },
 
-    blankInterview: {
-      get () {
-        return {
-          id: 'a2j',
-          title: 'Blank Interview'
-        }
-      }
-    },
+  viewerInterview: {
+    serialize: false
+  },
 
-    traceLogicList: {
-      serialize: false
+  currentGuideId: {
+    type: 'string',
+    get (lastSet) {
+      return lastSet || window.gGuideID
     },
-
-    viewerInterview: {
-      serialize: false
-    },
-
-    currentGuideId: {
-      type: 'string',
-      get (lastSet) {
-        return lastSet || window.gGuideID
-      },
-      set (val) {
-        return val
-      }
+    set (val) {
+      return val
     }
   },
 
   clearPreviewState () {
     // fired on inserted event to clear any Author preview answer/tracelogic
-    if (this.attr('traceLogicList') && this.attr('traceLogicList').length > 0) {
-      this.attr('traceLogicList', new CanList())
+    if (this.traceLogicList && this.traceLogicList.length > 0) {
+      this.traceLogicList = new CanList()
     }
 
-    if (this.attr('viewerInterview')) {
-      this.attr('viewerInterview').clearAnswers()
+    if (this.viewerInterview) {
+      this.viewerInterview.clearAnswers()
     }
   },
 
   deleteInterview (id) {
-    const interviews = this.attr('interviews')
+    const interviews = this.interviews
 
     if (interviews) {
       let index = -1
@@ -103,14 +103,19 @@ export const InterviewsVM = CanMap.extend({
     // clear debug-panel traceLogicList and preview answers
     // even if we don't change interviews
     // TODO: this should be moved to happen when a new interview is opened?
-    this.clearPreviewState()
+    const vm = this
 
-    const self = this
-    $('#author-app').on('author:guide-deleted', function (ev, guideId) {
-      self.deleteInterview(guideId)
-    })
+    vm.clearPreviewState()
 
-    return () => { $('#author-app').off('author:guide-deleted') }
+    const guideDeletedHandler = function (ev, guideId) {
+      vm.deleteInterview(guideId)
+    }
+
+    $('#author-app').on('author:guide-deleted', guideDeletedHandler)
+
+    return () => {
+      $('#author-app').off('author:guide-deleted', guideDeletedHandler)
+    }
   }
 })
 

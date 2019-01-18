@@ -566,6 +566,8 @@ export default Component.extend({
         }
 
         vm.attr('modalContent', {
+          // name undefined prevents stache warnings
+          answerName: undefined,
           title: page.learn,
           text: page.help,
           imageURL: page.helpImageURL,

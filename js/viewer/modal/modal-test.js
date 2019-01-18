@@ -56,7 +56,7 @@ describe('<a2j-modal> ', function () {
     it('renders image tag if modalContent includes imageURL', function (done) {
       const helpImageURL = 'ui-icons_ffffff_256x240.png'
 
-      canReflect.assign(vm.attr('modalContent'), {
+      canReflect.assign(vm.modalContent = {
         imageURL: helpImageURL
       })
 
@@ -69,7 +69,7 @@ describe('<a2j-modal> ', function () {
     it('renders audio tag if page includes helpAudioURL', function (done) {
       const helpAudioURL = 'pings.ogg'
 
-      vm.attr('modalContent', { audioURL: helpAudioURL })
+      vm.modalContent = { audioURL: helpAudioURL }
 
       F('audio-player').exists()
 
@@ -79,7 +79,7 @@ describe('<a2j-modal> ', function () {
     it('renders image tag if page includes helpVideoURL (gif)', function (done) {
       const helpVideoURL = 'panda.gif'
 
-      vm.attr('modalContent', { videoURL: helpVideoURL })
+      vm.modalContent = { videoURL: helpVideoURL }
       F('img.modal-video').exists()
       F('img.modal-video').attr('src', '/CAJA/js/images/panda.gif')
 
@@ -89,7 +89,7 @@ describe('<a2j-modal> ', function () {
     it('renders video tag if page includes helpVideoURL (other)', function (done) {
       const helpVideoURL = 'pings.ogg'
 
-      vm.attr('modalContent', { videoURL: helpVideoURL })
+      vm.modalContent = { videoURL: helpVideoURL }
       F('video.modal-video').exists()
       F('video.modal-video').attr('src', '/CAJA/js/images/pings.ogg')
 
@@ -97,7 +97,7 @@ describe('<a2j-modal> ', function () {
     })
 
     it('renders an expanded text area if page includes answerName (a2j variable name)', function (done) {
-      vm.attr('modalContent', { answerName: 'longAnswerTE' })
+      vm.modalContent = { answerName: 'longAnswerTE' }
       F('textarea.expanded-textarea').exists()
 
       F(done)

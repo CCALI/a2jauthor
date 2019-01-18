@@ -78,6 +78,8 @@ export default Component.extend({
         }
 
         vm.attr('modalContent', {
+          // name undefined prevents stache warnings
+          answerName: undefined,
           title: page.learn,
           text: page.help,
           imageURL: page.helpImageURL,
@@ -106,9 +108,13 @@ export default Component.extend({
           // popups only have text, textAudioURL possible values
           // title (page.name) is more of internal descriptor for popups
           vm.attr('modalContent', {
+            // undefined values prevent stache warnings
+            answerName: undefined,
             title: '',
             text: page.text,
-            audioURL: page.textAudioURL
+            imageURL: undefined,
+            audioURL: page.textAudioURL,
+            videoURL: undefined
           })
         }
       } else { // external link

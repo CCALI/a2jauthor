@@ -75,6 +75,8 @@ To take advantage of the Bootstrap grid system within a modal, just nest `.conta
 @modal-backdrop-bg:           #000;
 //* Modal backdrop opacity
 @modal-backdrop-opacity:      .5;
+//* Modal backdrop opacity OE
+@modal-backdrop-opacity-ie:      @modal-backdrop-opacity*100;
 //* Modal header border color
 @modal-header-border-color:   @brand-secondary;
 //* Modal footer border color
@@ -112,4 +114,8 @@ To take advantage of the Bootstrap grid system within a modal, just nest `.conta
   .modal-footer {
     background: @gray-lighter;
   }
+}
+
+.modal-backdrop {
+  z-index: @zindex-modal-background;
 }

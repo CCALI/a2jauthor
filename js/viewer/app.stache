@@ -28,10 +28,10 @@
 {{/if}}
 
 <a2j-modal
-  logic:bind="logic"
-  rState:bind="rState"
-  mState:bind="mState"
-  class="bootstrap-styles"
-  interview:bind="interview"
+  mState:from="mState"
+  logic:from="logic"
+  interview:from="interview"
   modalContent:bind="modalContent"
-  repeatVarValue:from="rState.repeatVarValue" />
+  lastVisitedPageName:from="rState.lastVisitedPageName"
+  repeatVarValue:from="rState.repeatVarValue"
+  class="bootstrap-styles" />

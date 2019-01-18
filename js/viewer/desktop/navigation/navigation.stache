@@ -4,14 +4,14 @@
 <nav class="navbar navbar-default" role="navigation">
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
     <ul class="nav navbar-nav">
-      <li class="nav-item {{^if(./canNavigateBack)}}disabled{{/if}}"
+      <li aria-label="Previous Visited Page" class="nav-item {{^if(./canNavigateBack)}}disabled{{/if}}"
         on:el:click="./navigateBack()">
         <a role="button" class="nav-link">
           <span class="glyphicon-left-open" aria-hidden:raw="true"></span>{{lang.GoBack}}
         </a>
       </li>
       <li class="divider" role="separator"></li>
-      <li class="nav-item  {{^if(./canNavigateForward)}}disabled{{/if}}"
+      <li aria-label="Next Visited Page" class="nav-item  {{^if(./canNavigateForward)}}disabled{{/if}}"
         on:el:click="./navigateForward()">
         <a role="button" class="nav-link">
           {{./lang.GoNext}}<span class="glyphicon-right-open" aria-hidden="true"></span>
@@ -20,10 +20,10 @@
     </ul>
 
     <form class="navbar-form navbar-left {{#if(isMobile)}}hidden{{/if}}" role="search">
-      <span>{{./lang.MyProgress}}:</span>
+      <span id="myProgress">{{./lang.MyProgress}}:</span>
       <div class="form-group ">
         <div class="input-group">
-          <select id="myProgressSelect" class="form-control" el:value:bind="this.selectedPageIndex">
+          <select aria-labelledby="myProgress" role="listbox"  id="myProgressSelect" class="form-control" el:value:bind="this.selectedPageIndex">
             {{#for(visitedPage of visitedPages)}}
               <option el:value:from="scope.index" disabled:from="this.disableOption(scope.index)">
                 {{this.fitPageDescription(visitedPage.text, this.repeatVarValue)}}

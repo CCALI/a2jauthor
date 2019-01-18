@@ -16,7 +16,12 @@
       el:value:bind="field._answer.values"
       on:el:input="calcAvailableLength(scope.event)"/>
 
-    <button class="btn btn-default btn-xs pull-right" on:el:click="expandTextlong(field, scope.element)"><span class="icon resize-btn-icon glyphicon-resize" aria-hidden="true"></span></button>
+      <button
+        aria-label="Expand Text"
+        class="btn btn-default btn-xs expand-textlong pull-right"
+        on:click="expandTextlong(field)">
+          <span class="icon resize-btn-icon glyphicon-resize" aria-hidden="true"></span>
+      </button>
 
       {{#if(field.maxChars)}}
         {{> exceeded-maxchars-tpl }}

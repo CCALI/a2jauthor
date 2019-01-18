@@ -49,6 +49,13 @@ describe('AppState', function () {
     appStateTeardown()
   })
 
+  it('sets the document title to the interview title', function () {
+    const interviewTitle = appState.interview.title
+    const prependedString = 'A2J Guided Interview called '
+    const documentTitle = document.title
+    assert.equal(prependedString + interviewTitle, documentTitle, 'prepended String plus interview title equals document title')
+  })
+
   it('defaults visitedPages to empty list', function () {
     const visitedPages = appState.visitedPages
     assert.equal(visitedPages.length, 0, 'empty on init')

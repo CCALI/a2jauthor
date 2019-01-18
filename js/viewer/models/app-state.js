@@ -94,7 +94,11 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   },
 
   interview: {
-    serialize: false
+    serialize: false,
+    set (interview) {
+      document.title = 'A2J Guided Interview called ' + interview.title
+      return interview
+    }
   },
 
   // used for internal page routing in preview

@@ -5,13 +5,28 @@
     </label>
 
     <label for="m" class="radio-inline">
-    <input type="radio" id="m" name="gender" value="Male" {{#is(savedGenderValue,  "Male")}}checked{{/is}} on:change="validateField(null, scope.element)"/>
-    {{i18n("Male")}}
+      <input
+        type="radio"
+        id="m"
+        name="gender"
+        {{#if(required)}}required{{/if}}
+        value="Male"
+        {{#is(savedGenderValue,  "Male")}}checked{{/is}}
+        on:change="validateField(null, scope.element)"/>
+      {{i18n("Male")}}
     </label>
 
     <label for="f" class="radio-inline">
-    <input type="radio" id="f" name="gender" value="Female" {{#is(savedGenderValue,  "Female")}}checked{{/is}} on:change="validateField(null, scope.element)"/>
-    {{i18n("Female")}}</label>
+      <input
+        type="radio"
+        id="f"
+        name="gender"
+        {{#if(required)}}required{{/if}}
+        value="Female"
+        {{#is(savedGenderValue,  "Female")}}checked{{/is}}
+        on:change="validateField(null, scope.element)"/>
+      {{i18n("Female")}}
+    </label>
 
     {{#if(field.required)}}
     <div>

@@ -10,6 +10,7 @@
       type="text"
       id="{{field.label}}"
       name="{{field.name}}"
+      {{#if(required)}}required{{/if}}
       class="form-control datepicker-input" />
   </div>
 

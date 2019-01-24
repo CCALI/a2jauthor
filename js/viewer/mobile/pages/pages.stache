@@ -6,12 +6,12 @@
   <div class="jumbotron">
     <h1>Oops!</h1>
     <p>You've reached this page in error.</p>
-    <p><a href="javascript://" on:el:click="scope/returnHome()" class="btn btn-primary">Return home</a></p>
+    <p><a href="javascript://" on:click="scope/returnHome()" class="btn btn-primary">Return home</a></p>
   </div>
 {{/eq}}
 
 {{#if(currentPage)}}
-  {{#with(currentPage)}}
+  {{ let step = currentPage.step }}
     <div class="bubble-content">
       <h3 class="visible-xs-block">
         {{#is(step.number, '0')}}
@@ -22,62 +22,61 @@
       </h3>
 
       <fieldset>
-        <legend><p>{{{ eval(text, rState.repeatVarValue) }}}</p></legend>
+        <legend><p>{{{ eval(currentPage.text, rState.repeatVarValue) }}}</p></legend>
 
-        {{#if(fields.length)}}
+        {{#if(currentPage.fields.length)}}
           <a2j-fields
             lang:from="lang"
-            logic:bind="logic"
-            fields:bind="fields"
-            traceLogic:bind="traceLogic"
+            logic:from="logic"
+            fields:from="currentPage.fields"
+            traceLogic:from="traceLogic"
             repeatVarValue:from="rState.repeatVarValue"
-            modalContent:bind="modalContent"
-            rState:bind="rState"
+            rState:from="rState"
+            modalContent:from="modalContent"
             role="form"/>
         {{/if}}
       </fieldset>
 
 
-      {{#if(textAudioURL)}}
+      {{#if(currentPage.textAudioURL)}}
         <audio-player
-          sourceUrl:from="normalizePath(mState.fileDataURL, textAudioURL)"
+          sourceUrl:from="normalizePath(mState.fileDataURL, currentPage.textAudioURL)"
         />
       {{/if}}
 
     </div><!-- bubble-content -->
 
     <p class="text-center modal-button">
-      <a class="learn-more">{{{ eval(learn, scope.vm.rState.repeatVarValue) }}}</a>
+      <a class="learn-more">{{{ eval(currentPage.learn, rState.repeatVarValue) }}}</a>
     </p>
 
-    {{#each(buttons)}}
-      {{#switch next}}
-        {{#case scope.vm.saveAnswersButton}}
+    {{#for(button of currentPage.buttons)}}
+      {{#switch(button.next)}}
+        {{#case(saveAnswersButton)}}
           {{> save-answers-form }}
         {{/case}}
 
-        {{#case scope.vm.exitButton}}
+        {{#case(exitButton)}}
           {{> save-answers-form }}
         {{/case}}
 
-        {{#case scope.vm.assembleButton}}
+        {{#case(assembleButton)}}
           {{> assemble-form }}
         {{/case}}
 
-        {{#case scope.vm.assembleAndSaveButton}}
+        {{#case(assembleAndSaveButton)}}
           <div style:raw="display: none;">{{> save-answers-form }}</div>
           {{> assemble-form }}
         {{/case}}
 
         {{#default}}
           <button type="button"
-                  on:el:click="scope.vm.navigate(this)"
+                  on:click="navigate(button)"
                   class="btn btn-default btn-navigate">
-            {{getButtonLabel(label)}}
+            {{getButtonLabel(button.label)}}
           </button>
         {{/default}}
       {{/switch}}
-    {{/each}}
+    {{/for}}
 
-  {{/with}}
 {{/if}}

@@ -24,6 +24,17 @@ stache.registerPartial('learn-more-tpl', learnMoreTemplate)
  */
 export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
   define: {
+    // passed in via desktop.stache bindings
+    showDebugPanel: {},
+    lang: {},
+    logic: {},
+    rState: {},
+    pState: {},
+    mState: {},
+    interview: {},
+    traceLogic: {},
+    modalContent: {},
+
     /**
      * @property {can.Map} steps.ViewModel.prototype.currentPage currentPage
      * @parent steps.ViewModel

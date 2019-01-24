@@ -5,28 +5,28 @@
 <can-import from="styles/author/viewer-layout.less!"/>
 
 {{#if(previewMode)}}
-  {{#if showDebugPanel}}
+  {{#if(showDebugPanel)}}
     <div class="author-debug-panel">
       <author-debug-panel
-        vm:interview:bind="viewerInterview"
-        vm:traceLogic:bind="traceLogic"
-        vm:traceLogicList:bind="traceLogicList" />
+        interview:bind="viewerInterview"
+        traceLogic:from="traceLogic"
+        traceLogicList:bind="traceLogicList" />
     </div>
   {{/if}}
 
-  <div id="viewer-app" class="{{#if showDebugPanel}}with-debug-panel{{/if}}">
+  <div id="viewer-app" class="{{#if(showDebugPanel)}}with-debug-panel{{/if}}">
     <a2j-viewer-preview
-      vm:guidePath:from="guidePath"
-      vm:traceLogic:bind="traceLogic"
-      vm:interview:bind="viewerInterview"
-      vm:showDebugPanel:from="showDebugPanel"
-      vm:previewPageName:from="previewPageName"
-      vm:interviewPageName:to="interviewPageName" />
+      guidePath:from="guidePath"
+      traceLogic:to="traceLogic"
+      showDebugPanel:from="showDebugPanel"
+      previewPageName:from="previewPageName"
+      interview:bind="viewerInterview"
+      interviewPageName:to="interviewPageName" />
 
-    <author-debug-menu vm:appState:bind="."/>
+    <author-debug-menu appState:from="."/>
 
     {{#if(viewerAlertMessages.length)}}
-      <author-debug-alerts vm:alertMessages:bind="viewerAlertMessages"/>
+      <author-debug-alerts alertMessages:bind="viewerAlertMessages"/>
     {{/if}}
   </div>
 {{/if}}

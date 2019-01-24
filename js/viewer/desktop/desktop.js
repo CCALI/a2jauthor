@@ -7,28 +7,21 @@ import 'can-map-define'
 
 let DesktopViewerVM = CanMap.extend('DesktopViewerVM', {
   define: {
-    currentPage: {},
-
-    visitedPages: {},
-
-    selectedPageIndex: {},
-
+    // passed in via viewer app.stache bindings
     remainingSteps: {},
-
     maxDisplayedSteps: {},
-
+    showDebugPanel: {},
+    lang: {},
+    logic: {},
+    rState: {},
+    pState: {},
+    mState: {},
     interview: {},
-
-    traceLogic: {
-      value: []
-    },
+    traceLogic: {},
+    modalContent: {},
 
     pageNotFound: {
       value: false
-    },
-
-    modalContent: {
-      value: null
     },
 
     showDemoNotice: {

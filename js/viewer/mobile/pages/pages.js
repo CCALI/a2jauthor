@@ -49,20 +49,6 @@ export default Component.extend({
   },
 
   events: {
-    'inserted': function () {
-      let stateTraceLogic = this.viewModel.attr('rState.traceLogic')
-      let traceLogic = this.viewModel.attr('traceLogic')
-
-      if (stateTraceLogic) {
-        let finalTraceLogic = stateTraceLogic.concat(traceLogic)
-        this.viewModel.attr('traceLogic', finalTraceLogic)
-        var vm = this.viewModel
-        stateTraceLogic.bind('change', function (ev, index, action, elements) {
-          vm.attr('traceLogic').push(elements[0])
-        })
-      }
-    },
-
     'a.learn-more click': function (el, ev) {
       ev.preventDefault()
 

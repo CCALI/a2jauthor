@@ -1,14 +1,22 @@
 import { DebugPanelVM } from './debug-panel'
 import { assert } from 'chai'
+import CanList from 'can-list'
 
 import 'steal-mocha'
 
 describe('<author-debug-panel>', () => {
-  let vm
+  let vm, traceLogic
 
   describe('viewModel', () => {
     beforeEach(() => {
       vm = new DebugPanelVM()
+      // emulate traceLogic passed in via stache bindings
+      traceLogic = new CanList()
+      vm.attr('traceLogic', traceLogic)
+    })
+
+    afterEach(() => {
+      vm.attr('traceLogic', null)
     })
 
     it('traceLogic', () => {

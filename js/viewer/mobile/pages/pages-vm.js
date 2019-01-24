@@ -21,23 +21,16 @@ import 'bootstrap/js/modal'
  */
 export default CanMap.extend('PagesVM', {
   define: {
-    /**
-     * @property {CanMap} pages.ViewModel.prototype.currentPage currentPage
-     * @parent pages.ViewModel
-     *
-     * Map of the current active page
-     */
+    // passed in via steps.stache or mobile.stache
     currentPage: {},
-
-    /**
-     * @property {Object} pages.ViewModel.prototype.modalContent modalContent
-     * @parent pages.ViewModel
-     *
-     * Object that defines properties and values for popup and learn more modals
-     */
-    modalContent: {
-      value: null
-    },
+    lang: {},
+    logic: {},
+    rState: {},
+    pState: {},
+    mState: {},
+    interview: {},
+    traceLogic: {},
+    modalContent: {},
 
     /**
      * @property {String} pages.ViewModel.prototype.backButton backButton
@@ -158,13 +151,7 @@ export default CanMap.extend('PagesVM', {
         const parsed = JSON.stringify(answers.serialize())
         return parsed
       }
-    },
-
-    traceLogic: {
-      value: []
-    },
-
-    rState: {}
+    }
   },
 
   init () {

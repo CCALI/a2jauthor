@@ -13,10 +13,10 @@
         id="{{field.label}}"
         name="{{field.name}}"
         class="form-control"
-        on:el:input="preValidateNumber(null, scope.element)"
-        on:el:change="validateField(null, scope.element)"
-        el:value:bind="field._answer.values"/>
-      {{#if(field.calculator)}}<img src="{{joinBase 'viewer/images/calculator.png'}}" class="calc-icon" on:el:click="showCalculator(field)" role="presentation"/>{{/if}}
+        on:input="preValidateNumber(null, scope.element)"
+        on:change="validateField(null, scope.element)"
+        value:bind="field._answer.values"/>
+      {{#if(field.calculator)}}<img src="{{joinBase 'viewer/images/calculator.png'}}" class="calc-icon" on:click="showCalculator(field)" role="presentation"/>{{/if}}
     </div>
   </div>
 

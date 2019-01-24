@@ -1,4 +1,5 @@
 import CanMap from 'can-map'
+import CanList from 'can-list'
 import { assert } from 'chai'
 import _round from 'lodash/round'
 import _assign from 'lodash/assign'
@@ -26,6 +27,7 @@ describe('<a2j-viewer-steps>', function () {
 
       interview = new Interview(parsedData)
 
+      const traceLogic = new CanList()
       const mState = new CanMap()
       const rState = new AppState()
       appStateTeardown = rState.connectedCallback()
@@ -55,6 +57,7 @@ describe('<a2j-viewer-steps>', function () {
 
       const frag = stache(
         `<a2j-viewer-steps
+        traceLogic:from="traceLogic"
         rState:bind="rState"
         mState:bind="mState"
         interview:bind="interview"
@@ -62,7 +65,7 @@ describe('<a2j-viewer-steps>', function () {
         lang:bind="langStub"/>`
       )
 
-      $('#test-area').html(frag({ rState, interview, mState, logicStub, langStub }))
+      $('#test-area').html(frag({ rState, interview, mState, logicStub, langStub, traceLogic }))
       vm = $('a2j-viewer-steps')[0].viewModel
     })
 

@@ -1,5 +1,6 @@
 import $ from 'jquery'
 import CanMap from 'can-map'
+import CanList from 'can-list'
 import compute from 'can-compute'
 import _assign from 'lodash/assign'
 import Component from 'can-component'
@@ -15,10 +16,15 @@ import parseGuideToMobile from 'caja/viewer/mobile/util/guide-to-mobile'
 
 const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
   define: {
-    authorCourthouseImage: {},
     remainingSteps: {},
     maxDisplayedSteps: {},
-    traceLogic: {},
+    // initialize traceLogic for preview
+    traceLogic: {
+      value: function () {
+        const tl = new CanList()
+        return tl
+      }
+    },
 
     interviewPageName: {
       get: function () {
@@ -26,6 +32,7 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
       }
     }
   },
+
   connectedCallback (el) {
     const vm = this
     const rState = new AppState()

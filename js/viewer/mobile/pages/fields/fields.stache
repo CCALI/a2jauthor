@@ -1,10 +1,10 @@
-{{#each fields}}
+{{#for(field of fields)}}
   <a2j-field
-    vm:field:bind="."
-    vm:lang:from="scope.vm.lang"
-    vm:logic:bind="scope.vm.logic"
-    vm:traceLogic:bind="scope.vm.traceLogic"
-    vm:repeatVarValue:from="scope.vm.repeatVarValue"
-    vm:modalContent:bind="scope.vm.modalContent"
-    vm:rState:bind="scope.vm.rState" />
-{{/each}}
+    field:from="field"
+    lang:from="lang"
+    logic:from="logic"
+    traceLogic:from="traceLogic"
+    repeatVarValue:from="repeatVarValue"
+    rState:from="rState"
+    modalContent:from="modalContent" />
+{{/for}}

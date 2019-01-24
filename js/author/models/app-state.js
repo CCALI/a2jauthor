@@ -230,12 +230,10 @@ export default CanMap.extend('AuthorAppState', {
      * @property {String} viewerInterview
      *
      * The Interview instance used by the viewer app in preview mode.
+     * this is set by viewer-preview-layout.stache bindings
      */
     viewerInterview: {
-      serialize: false,
-      set (val) {
-        return val
-      }
+      serialize: false
     },
 
     /**

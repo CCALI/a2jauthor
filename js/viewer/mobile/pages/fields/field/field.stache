@@ -1,1 +1,1 @@
-{{selector(scope/type)}}
+{{selector(field.type)}}

@@ -110,10 +110,15 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
     default: 1
   },
 
-  logic: {
+  modalContent: {
     serialize: false
   },
 
+  logic: {
+    serialize: false
+  },
+  // initialize traceLogic for standalone viewer
+  // author preview is initialize in preview.js
   traceLogic: {
     serialize: false,
     default: function () {

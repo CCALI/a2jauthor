@@ -2,14 +2,14 @@
 <can-import from="caja/author/debug-panel/evaluate/"/>
 <can-import from="caja/author/debug-panel/debug-panel.less!"/>
 
-{{#if variables.length}}
-  <author-variables-table interview:bind="interview" variables:bind="variables"/>
+{{#if(variables.length)}}
+  <author-variables-table interview:from="interview" variables:from="variables"/>
 {{/if}}
 
 
 <div id="viewer-logic-form" class="bootstrap-styles">
   <div id="logic-trace-panel" class="tracepanel">
-    <button id="clear-log-button" on:el:click="scope.vm.clearTraceLogicList()" class="btn btn-default btn-sm"><span class="glyphicon-trash"></span> Clear Log</button>
+    <button id="clear-log-button" on:click="scope.vm.clearTraceLogicList()" class="btn btn-default btn-sm"><span class="glyphicon-trash"></span> Clear Log</button>
     <ol id="tracer" content-editable="true">
       {{#each(traceLogicList)}}
         <li>Page <span class="page">{{pageName}}</span></li>
@@ -30,7 +30,8 @@
 
 
   <div class="form-inline immediatepanel">
-    <author-evaluate-panel traceLogic:bind="traceLogic"
-      interview:bind="interview"></author-evaluate-panel>
+    <author-evaluate-panel
+      traceLogic:from="traceLogic"
+      interview:from="interview" />
   </div>
 </div>

@@ -14,6 +14,9 @@ import 'can-map-define'
  */
 export let DebugPanelVM = CanMap.extend({
   define: {
+    // passed in via viewer-preview-layout.stache bindings
+    interview: {},
+
     /**
      * @property {can.List} authorDebugPanel.ViewModel.prototype.variables variables
      * @parent authorDebugPanel.ViewModel
@@ -57,12 +60,10 @@ export let DebugPanelVM = CanMap.extend({
      *   button: [ { msg: 'You pressed' }, { format: 'ui', msg: 'Go!' } ]
      * });
      * @codeend
+     *
+     * this is initialized in preview.js and passed in via stache bindings
      */
-    traceLogic: {
-      value: function () {
-        return new CanList()
-      }
-    },
+    traceLogic: {},
 
     /**
      * @property {can.List} authorDebugPanel.ViewModel.prototype.traceLogicList traceLogicList

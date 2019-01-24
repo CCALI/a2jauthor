@@ -13,7 +13,14 @@ import 'can-map-define'
  */
 let FieldsVM = CanMap.extend({
   define: {
-    repeatVarValue: {}
+    // passed in via pages.stache bindings
+    lang: {},
+    logic: {},
+    fields: {},
+    repeatVarValue: {},
+    traceLogic: {},
+    rState: {},
+    modalContent: {}
   }
 })
 

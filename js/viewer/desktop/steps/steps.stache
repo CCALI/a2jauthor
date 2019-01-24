@@ -13,13 +13,13 @@
         <a2j-pages
           currentPage:from="currentPage"
           lang:from="lang"
-          logic:bind="logic"
-          rState:bind="rState"
-          pState:bind="pState"
-          mState:bind="mState"
-          interview:bind="interview"
-          modalContent:bind="modalContent"
-          traceLogic:bind="traceLogic" />
+          logic:from="logic"
+          rState:from="rState"
+          pState:from="pState"
+          mState:from="mState"
+          interview:from="interview"
+          traceLogic:from="traceLogic"
+          modalContent:from="modalContent" />
       </div><!-- guideBubble -->
 
       {{#unless(showClientAvatar)}}

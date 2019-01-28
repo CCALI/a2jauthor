@@ -9,7 +9,7 @@
         type="radio"
         id="m"
         name="gender"
-        {{#if(required)}}required{{/if}}
+        {{#if(field.required)}}required{{/if}}
         value="Male"
         {{#is(savedGenderValue,  "Male")}}checked{{/is}}
         on:change="validateField(null, scope.element)"/>
@@ -21,7 +21,7 @@
         type="radio"
         id="f"
         name="gender"
-        {{#if(required)}}required{{/if}}
+        {{#if(field.required)}}required{{/if}}
         value="Female"
         {{#is(savedGenderValue,  "Female")}}checked{{/is}}
         on:change="validateField(null, scope.element)"/>

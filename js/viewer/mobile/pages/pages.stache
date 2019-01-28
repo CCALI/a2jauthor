@@ -30,7 +30,6 @@
             logic:from="logic"
             fields:from="currentPage.fields"
             traceLogic:from="traceLogic"
-            repeatVarValue:from="rState.repeatVarValue"
             rState:from="rState"
             modalContent:from="modalContent"
             role="form"/>
@@ -53,20 +52,20 @@
     {{#for(button of currentPage.buttons)}}
       {{#switch(button.next)}}
         {{#case(saveAnswersButton)}}
-          {{> save-answers-form }}
+          {{> save-answers-form button}}
         {{/case}}
 
         {{#case(exitButton)}}
-          {{> save-answers-form }}
+          {{> save-answers-form button}}
         {{/case}}
 
         {{#case(assembleButton)}}
-          {{> assemble-form }}
+          {{> assemble-form button}}
         {{/case}}
 
         {{#case(assembleAndSaveButton)}}
           <div style:raw="display: none;">{{> save-answers-form }}</div>
-          {{> assemble-form }}
+          {{> assemble-form button}}
         {{/case}}
 
         {{#default}}

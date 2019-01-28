@@ -3,6 +3,7 @@ import AppState from 'caja/viewer/models/app-state'
 import Interview from 'caja/viewer/models/interview'
 import Infinite from 'caja/viewer/mobile/util/infinite'
 import CanMap from 'can-map'
+import CanList from 'can-list'
 import sinon from 'sinon'
 
 import 'steal-mocha'
@@ -14,6 +15,7 @@ describe('AppState', function () {
   let interview
   let answers
   let logic
+  let traceLogic
   let appStateTeardown
 
   beforeEach(function (done) {
@@ -22,6 +24,7 @@ describe('AppState', function () {
     promise.then(function (_interview) {
       interview = _interview
       answers = new CanMap()
+      traceLogic = new CanList()
       interview.attr('answers', answers)
 
       logic = new CanMap({
@@ -33,7 +36,7 @@ describe('AppState', function () {
         gotoPage: ''
       })
 
-      appState = new AppState({ interview, logic })
+      appState = new AppState({ interview, logic, traceLogic })
       // simulate stache bind on visitedPages
       appStateTeardown = appState.connectedCallback()
 

@@ -1,22 +1,22 @@
 <div>
   <div class="form-group {{#if(field.hasError)}}has-error{{/if}}">
-    <label class="control-label" for="{{label}}">
-      {{{ eval(label, repeatVarValue) }}}
-      {{#if(required)}}<small class="text-danger">(Required)</small>{{/if}}
+    <label class="control-label" for="{{field.label}}">
+      {{{ eval(field.label, repeatVarValue) }}}
+      {{#if(field.required)}}<small class="text-danger">(Required)</small>{{/if}}
     </label>
 
     <input
       type="tel"
-      id="{{label}}"
+      id="{{field.label}}"
       class="form-control"
-      name="{{name}}"
-      {{#if(required)}}required{{/if}}
+      name="{{field.name}}"
+      {{#if(field.required)}}required{{/if}}
       on:change="validateField"
       value:bind="field._answer.values"
       on:input="calcAvailableLength(%event)"
       placeholder="{{suggestionText}}" />
 
-      {{#if(maxChars)}}
+      {{#if(field.maxChars)}}
         {{> exceeded-maxchars-tpl }}
       {{/if}}
   </div>

@@ -1,4 +1,3 @@
-import CanList from 'can-list'
 import route from 'can-route'
 import _findIndex from 'lodash/findIndex'
 import DefineMap from 'can-define/map/map'
@@ -120,10 +119,7 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   // initialize traceLogic for standalone viewer
   // author preview is initialize in preview.js
   traceLogic: {
-    serialize: false,
-    default: function () {
-      return new CanList()
-    }
+    serialize: false
   },
 
   getVisitedPageIndex (visitedPage) {

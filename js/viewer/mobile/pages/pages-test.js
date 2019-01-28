@@ -1,6 +1,5 @@
 import $ from 'jquery'
 import CanMap from 'can-map'
-import CanList from 'can-list'
 import stache from 'can-stache'
 import { assert } from 'chai'
 import PagesVM from './pages-vm'
@@ -49,7 +48,6 @@ describe('<a2j-pages>', () => {
     }
 
     defaults = {
-      traceLogic: new CanList(),
       currentPage: new CanMap({
         name: 'Intro',
         fields: [],
@@ -71,6 +69,7 @@ describe('<a2j-pages>', () => {
     let appStateTeardown
     beforeEach(() => {
       vm = new PagesVM(defaults)
+      vm.connectedCallback()
       appStateTeardown = vm.attr('rState').connectedCallback()
     })
 
@@ -348,6 +347,7 @@ describe('<a2j-pages>', () => {
       vm = $('a2j-pages')[0].viewModel
 
       vm.attr(defaults)
+      vm.connectedCallback()
       rStateTeardown = vm.attr('rState').connectedCallback()
       // prevent traceLogic changes happening in setCurrentPage
       vm.setCurrentPage = $.noop
@@ -360,17 +360,18 @@ describe('<a2j-pages>', () => {
 
     describe('{rState} page', () => {
       it('default', () => {
-        vm.attr('rState').page = 'foo'
+        vm.attr('rState').page = 'intro'
 
-        assert.deepEqual(vm.attr('traceLogic').attr(), [], 'should not run codeBefore trace if it is empty')
+        assert.deepEqual(vm.attr('traceLogic').attr(), [ { page: 'Intro' } ] , 'should not run codeBefore trace if it is empty, only log page name')
       })
 
       it('codeBefore', () => {
         nextPageStub.attr('codeBefore', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>')
         vm.attr('rState.logic', defaults.logic)
         vm.attr('rState.interview', defaults.interview)
+        vm.attr('rState.traceLogic', vm.attr('traceLogic'))
         vm.attr('rState').page = 'bar'
-        assert.deepEqual(vm.attr('rState').traceLogic.attr(), [{ page: 'Next' }, {
+        assert.deepEqual(vm.attr('rState').traceLogic.attr(), [{ page: 'Intro' }, { page: 'Next' }, {
           'codeBefore': { format: 'info', msg: 'Logic Before Question' }
         }], 'logic before trace')
       })
@@ -381,6 +382,7 @@ describe('<a2j-pages>', () => {
         vm.attr('traceLogic').unbind('change', handler)
 
         assert.deepEqual(vm.attr('traceLogic').attr(), [
+          { page: 'Intro' },
           { error: [{ msg: 'error' }] }
         ])
 

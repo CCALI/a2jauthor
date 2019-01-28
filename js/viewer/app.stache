@@ -24,7 +24,7 @@
     pState:from="pState"
     mState:from="mState"
     interview:from="interview"
-    traceLogic:from="traceLogic"
+    traceLogic:to="traceLogic"
     modalContent:from="modalContent"
     class="bootstrap-styles steps-left-{{remainingSteps}} steps-{{maxDisplayedSteps}}" />
 {{/if}}

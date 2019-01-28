@@ -1,4 +1,5 @@
 import CanMap from 'can-map'
+import CanList from 'can-list'
 import _some from 'lodash/some'
 import _isString from 'lodash/isString'
 import _forEach from 'lodash/forEach'
@@ -29,7 +30,11 @@ export default CanMap.extend('PagesVM', {
     pState: {},
     mState: {},
     interview: {},
-    traceLogic: {},
+    traceLogic: {
+      value () {
+        return new CanList()
+      }
+    },
     modalContent: {},
 
     /**
@@ -154,7 +159,7 @@ export default CanMap.extend('PagesVM', {
     }
   },
 
-  init () {
+  connectedCallback () {
     this.setCurrentPage()
   },
 

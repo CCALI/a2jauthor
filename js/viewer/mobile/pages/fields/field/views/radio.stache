@@ -7,7 +7,7 @@
 			type="radio"
 			id="{{field.label}}"
 			name="{{field.name}}"
-			{{#if(required)}}required{{/if}}
+			{{#if(field.required)}}required{{/if}}
 			value:bind="value"
 			{{#if(shouldBeChecked)}}checked{{/if}}
 			class="a2j-radio-button"

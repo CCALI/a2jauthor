@@ -298,13 +298,18 @@ function gotoPageEdit (pageName) {
     resizable: false,
 
     close: function () {
+      // callback from open below
+      this.removeOverlay()
       // Update view and save any time edit dialog closes
       window.updateTOC()
       if (window.gGuide) {
         window.guideSave()
       }
-      // cleanup handler
-      $('body').off('click', offClickHandler)
+    },
+
+    open: function () {
+      // create overlay which returns it's own cleanup function
+      this.removeOverlay = addDialogOverlay($(this))
     },
 
     buttons: [{
@@ -336,15 +341,6 @@ function gotoPageEdit (pageName) {
     }]
   })
 
-  // close the dialog if you click outside it's boundary
-  var offClickHandler = function (e) {
-    var $el = $(e.target)
-    if (!$el.parents().hasClass('ui-dialog')) {
-      $pageEditDialog.dialog('close')
-    }
-  }
-  $('body').on('click', offClickHandler)
-
   // removes jQuery.ui classes from buttons
   var modal = $pageEditDialog.parents('.ui-dialog')
   modal.find('.ui-button').removeClass('ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only')
@@ -355,6 +351,23 @@ function gotoPageEdit (pageName) {
 
   $pageEditDialog.dialog('open')
   $pageEditDialog.dialog('moveToTop')
+}
+
+// Add overlay/backdrop to dialog modals
+// returns it's own removal function
+function addDialogOverlay ($parentDialog) {
+  var $dialogOverlay = $('<div class="dialog-overlay ui-widget-overlay ui-front" />')
+  var $body = $(document.body)
+  $body.prepend($dialogOverlay)
+
+  $dialogOverlay.on('click', function () {
+    $parentDialog.dialog('close')
+  })
+
+  return function () {
+    $dialogOverlay.off()
+    $dialogOverlay.remove()
+  }
 }
 
 // Go to a tab or popup a page.

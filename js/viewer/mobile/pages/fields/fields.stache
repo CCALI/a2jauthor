@@ -6,5 +6,5 @@
     traceLogic:from="traceLogic"
     repeatVarValue:from="rState.repeatVarValue"
     rState:from="rState"
-    modalContent:from="modalContent" />
+    modalContent:bind="modalContent" />
 {{/for}}

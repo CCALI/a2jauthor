@@ -21,7 +21,9 @@ export default Model.extend('PersistedStateModel', {
 
     visited: {
       value: {}
-    }
+    },
+
+    setDataURL: {}
   },
 
   init () {

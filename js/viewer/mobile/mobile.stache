@@ -57,7 +57,7 @@
         pState:from="pState"
         mState:from="mState"
         interview:from="interview"
-        modalContent:from="modalContent" />
+        modalContent:bind="modalContent" />
     {{/equal}}
   {{/unless}}
 </div>

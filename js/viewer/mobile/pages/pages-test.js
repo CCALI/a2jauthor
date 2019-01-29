@@ -362,7 +362,7 @@ describe('<a2j-pages>', () => {
       it('default', () => {
         vm.attr('rState').page = 'intro'
 
-        assert.deepEqual(vm.attr('traceLogic').attr(), [ { page: 'Intro' } ] , 'should not run codeBefore trace if it is empty, only log page name')
+        assert.deepEqual(vm.attr('traceLogic').attr(), [ { page: 'Intro' } ], 'should not run codeBefore trace if it is empty, only log page name')
       })
 
       it('codeBefore', () => {

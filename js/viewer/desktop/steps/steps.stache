@@ -19,7 +19,7 @@
           mState:from="mState"
           interview:from="interview"
           traceLogic:to="traceLogic"
-          modalContent:from="modalContent" />
+          modalContent:bind="modalContent" />
       </div><!-- guideBubble -->
 
       {{#unless(showClientAvatar)}}

@@ -31,7 +31,7 @@
             fields:from="currentPage.fields"
             traceLogic:from="traceLogic"
             rState:from="rState"
-            modalContent:from="modalContent"
+            modalContent:bind="modalContent"
             role="form"/>
         {{/if}}
       </fieldset>
@@ -64,7 +64,7 @@
         {{/case}}
 
         {{#case(assembleAndSaveButton)}}
-          <div style:raw="display: none;">{{> save-answers-form }}</div>
+          <div style:raw="display: none;">{{> save-answers-form button}}</div>
           {{> assemble-form button}}
         {{/case}}
 

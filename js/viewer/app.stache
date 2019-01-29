@@ -10,7 +10,7 @@
     pState:from="pState"
     mState:from="mState"
     interview:from="interview"
-    modalContent:from="modalContent"
+    modalContent:bind="modalContent"
     class="bootstrap-styles" />
 {{else}}
   <a2j-desktop-viewer
@@ -25,7 +25,7 @@
     mState:from="mState"
     interview:from="interview"
     traceLogic:to="traceLogic"
-    modalContent:from="modalContent"
+    modalContent:bind="modalContent"
     class="bootstrap-styles steps-left-{{remainingSteps}} steps-{{maxDisplayedSteps}}" />
 {{/if}}
 
@@ -33,7 +33,7 @@
   mState:from="mState"
   logic:from="logic"
   interview:from="interview"
-  modalContent:from="modalContent"
+  modalContent:bind="modalContent"
   lastVisitedPageName:from="rState.lastVisitedPageName"
   repeatVarValue:from="rState.repeatVarValue"
   class="bootstrap-styles" />

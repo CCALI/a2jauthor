@@ -138,7 +138,9 @@ function getRequestPdfOptions (req) {
 
 function getConfig () {
   let config
+  const version = process.env.npm_package_version
   const configPath = path.join(__dirname, '..', '..', '..', 'config.json')
+  console.log('Starting A2J DAT, version: ' + version + '\n')
   try {
     fs.accessSync(configPath, fs.constants.R_OK)
     debug('can read config.json from ', configPath)

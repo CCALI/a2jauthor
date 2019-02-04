@@ -3,14 +3,14 @@
 <div class="popover right" style="display: block;">
   <div class="arrow"></div>
 
-  {{#if title}}
+  {{#if(title)}}
     <h3 class="pane-title">{{title}}</h3>
 
     <button
       type="button"
       aria-label="Close"
       class="popover-close close"
-      on:el:click="saveAndClose(nodeId)">
+      on:click="saveAndClose(nodeId)">
 
       <span aria-hidden="true">×</span>
     </button>
@@ -19,9 +19,9 @@
   <div class="popover-content">
     <content />
 
-    {{#if showSaveButton}}
+    {{#if(showSaveButton)}}
       <div class="text-center">
-        <button on:el:click="saveAndClose(nodeId)" class="btn btn-default btn-save">
+        <button on:click="saveAndClose(nodeId)" class="btn btn-default btn-save">
           Save &amp; Close
         </button>
       </div>

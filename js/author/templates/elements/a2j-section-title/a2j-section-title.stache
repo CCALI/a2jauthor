@@ -3,7 +3,7 @@
 <can-import from="caja/author/templates/elements/a2j-section-title/a2j-section-title.less!" />
 
 <div>
-  {{#if editEnabled}}
+  {{#if(editEnabled)}}
     <element-container
       nodeId:from="nodeId"
       deleted:from="deleted"
@@ -15,8 +15,9 @@
       {{> section-title-content}}
     </element-container>
 
-    {{#if editActive}}
+    {{#if(editActive)}}
       <element-options-pane
+        underline:bind="underline"
         nodeId:from="nodeId"
         title="Section Title"
         saveAndClose:from="updateNode">
@@ -36,7 +37,7 @@
           </div>
           <div class="checkbox">
             <label>
-              <input type="checkbox" checked:bind="scope/underline"> Underline
+              <input type="checkbox" checked:bind="underline"> Underline
             </label>
           </div>
         </form>

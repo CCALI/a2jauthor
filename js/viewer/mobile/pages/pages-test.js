@@ -251,6 +251,39 @@ describe('<a2j-pages>', () => {
       })
     })
 
+    it('setFieldAnswers with repeatVar', () => {
+      const answers = defaults.interview.answers
+      const salaryCount = new CanMap({
+        comment: '',
+        name: 'salaryCount',
+        repeating: false,
+        type: 'NU',
+        values: [null, 2]
+      })
+
+      const salary = new CanMap({
+        comment: '',
+        name: 'salary',
+        repeating: true,
+        type: 'NU',
+        values: [null, 101, 202]
+      })
+
+      answers.attr('salary', salary)
+      answers.attr('salaryCount', salaryCount)
+      vm.attr('currentPage.repeatVar', 'salaryCount')
+
+      const fields = vm.attr('currentPage.fields')
+      fields.push({ name: 'salary', type: 'number' })
+      logicStub.varGet.returns(2)
+
+      vm.setFieldAnswers(fields)
+      const field = vm.attr('currentPage.fields.0')
+      const answerValues = field.attr('_answer.answer.values')
+
+      assert.deepEqual(answerValues.attr(), [null, 101, 202], 'should set repeatVarValues')
+    })
+
     it('setRepeatVariable', () => {
       vm.setRepeatVariable('Repeat', '=1')
 

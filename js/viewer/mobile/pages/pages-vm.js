@@ -533,7 +533,7 @@ export default CanMap.extend('PagesVM', {
       const mState = this.attr('mState')
 
       if (page.attr('repeatVar')) {
-        const repeatVar = logic.varGet('repeatVar')
+        const repeatVar = page.attr('repeatVar')
         const repeatVarCount = logic.varGet(repeatVar)
 
         answerIndex = (repeatVarCount != null) ? repeatVarCount : answerIndex

@@ -7,9 +7,9 @@
 			type="radio"
 			id="{{field.label}}"
 			name="{{field.name}}"
+			value:bind="field.value"
 			{{#if(field.required)}}required{{/if}}
-			value:bind="value"
-			{{#if(shouldBeChecked)}}checked{{/if}}
+			checked:from="equal(field._answer.values, field.value)"
 			class="a2j-radio-button"
 			on:change="validateField(null, scope.element)"/>
 

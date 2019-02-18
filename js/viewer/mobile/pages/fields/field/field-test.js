@@ -36,15 +36,6 @@ describe('<a2j-field>', () => {
       vm = null
     })
 
-    it('shouldBeChecked works for radio types', () => {
-      let values = vm.attr('field._answer.answer.values')
-      values.push('bar')
-      vm.attr('field.type', 'radio')
-      vm.attr('field.value', 'bar')
-
-      assert.equal(vm.attr('shouldBeChecked'), true, 'should return true if answer matches radio button value')
-    })
-
     it('should suggest a format for SSN numbers', () => {
       vm.attr('field').attr('type', 'numberssn')
 

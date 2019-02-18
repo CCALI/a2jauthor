@@ -115,35 +115,6 @@ export let FieldVM = CanMap.extend('FieldVM', {
     },
 
     /**
-     * @property {Boolean} field.ViewModel.prototype.shouldBeChecked shouldBeChecked
-     * @parent field.ViewModel
-     *
-     * Whether a Radio Button should be checked based on saved answers
-     *
-     */
-    shouldBeChecked: {
-      get: function () {
-        let field = this.attr('field')
-        let answerValues = field.attr('_answer.answer.values')
-        let answerIndex = field.attr('_answer.answerIndex')
-
-        let radioButtonValue = field.attr('value')
-        let previousAnswer = answerValues[answerIndex]
-        return (radioButtonValue === previousAnswer)
-      }
-    },
-
-    checkboxShouldBeChecked: {
-      get () {
-        let field = this.attr('field')
-        let answerValues = field.attr('_answer.answer.values')
-        let answerIndex = field.attr('_answer.answerIndex')
-
-        return answerValues[answerIndex] === true
-      }
-    },
-
-    /**
      * @property {String} field.ViewModel.prototype.savedGenderValue savedGenderValue
      * @parent field.ViewModel
      *

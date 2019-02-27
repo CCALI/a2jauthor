@@ -109,10 +109,6 @@ export default Component.extend({
       }
     },
 
-    '{window} traceLogic': function (el, ev) {
-      this.viewModel.attr('traceLogic').push(ev.data)
-    },
-
     // This event is fired when the Exit, Success, or AssembleSuccess button is clicked,
     // it waits to asynchronously submit the form that posts the XML answers
     // to the `setDataURL` endpoint.

@@ -18,7 +18,7 @@ let FieldsVM = CanMap.extend({
     logic: {},
     fields: {},
     repeatVarValue: {},
-    traceLogic: {},
+    traceMessage: {},
     rState: {},
     modalContent: {}
   }

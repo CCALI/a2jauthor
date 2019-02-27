@@ -7,6 +7,10 @@ import canReflect from 'can-reflect'
 import 'can-map-define'
 
 export const ViewerAppState = DefineMap.extend('ViewerAppState', {
+  traceMessage: {
+    serialize: false
+  },
+
   selectedPageIndex: {
     serialize: false,
     type: 'string',
@@ -116,11 +120,6 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   logic: {
     serialize: false
   },
-  // initialize traceLogic for standalone viewer
-  // author preview is initialize in preview.js
-  traceLogic: {
-    serialize: false
-  },
 
   getVisitedPageIndex (visitedPage) {
     return _findIndex(this.visitedPages, function (page) {
@@ -143,17 +142,18 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
     }
   },
 
-  fireCodeBefore (page, logic) {
+  fireCodeBefore (currentPage, logic) {
     let preGotoPage = this.logic.attr('gotoPage')
 
-    if (page && !this.forceNavigation && page.attr('codeBefore')) {
-      this.traceLogic.push({
-        page: page.attr('name')
+    if (currentPage && !this.forceNavigation && currentPage.attr('codeBefore')) {
+      // set page that trace messages belong to
+      this.traceMessage.set('currentPageName', currentPage.attr('name'))
+      this.traceMessage.addMessage({
+        key: 'codeBefore',
+        fragments: [{ format: 'info', msg: 'Logic Before Question' }]
       })
-      this.traceLogic.push({
-        codeBefore: { format: 'info', msg: 'Logic Before Question' }
-      })
-      logic.exec(page.attr('codeBefore'))
+
+      logic.exec(currentPage.attr('codeBefore'))
     }
 
     let postGotoPage = this.logic.attr('gotoPage')
@@ -164,11 +164,12 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
 
   checkInfiniteLoop () {
     if (this.logic.attr('infinite.outOfRange')) {
-      this.traceLogic.push({
-        'infinite loop': {
+      this.traceMessage.addMessage({
+        key: 'infinite loop',
+        fragments: [{
           format: 'info',
           msg: 'Possible infinite loop. Too many page jumps without user interaction'
-        }
+        }]
       })
       this.page = '__error'
     } else {
@@ -213,11 +214,7 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
     // TODO: figure out a way to do this without these bindings
     this.listenTo('page', () => {})
 
-    // this.listenTo(this.traceLogic, 'length', ()=>{ debugger })
-    this.listenTo(window, 'traceLogic', (ev) => {
-      this.traceLogic.push(ev.data)
-    })
-
+    // cleanup memory
     return () => { this.stopListening() }
   }
 })

@@ -22,7 +22,7 @@
   </div>
 </div>
 
-{{> viewer-preview-layout}}
+{{> viewer-preview-layout }}
 
 <div id="authortool"
   class="hidestart authortool bootstrap-styles"
@@ -262,7 +262,7 @@
     <div class="tab-panel has-toolbar" id="tabsGuides">
       {{#is(page, "interviews")}}
         <interviews-toolbar interviews:to="interviews"></interviews-toolbar>
-        <interviews-page interviews:from="interviews" traceLogicList:bind="traceLogicList" viewerInterview:bind="viewerInterview"></interviews-page>
+        <interviews-page interviews:from="interviews" traceMessage:from="traceMessage" viewerInterview:bind="viewerInterview"></interviews-page>
       {{/is}}
     </div>
 

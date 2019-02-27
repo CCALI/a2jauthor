@@ -3,7 +3,7 @@
     field:from="field"
     lang:from="lang"
     logic:from="logic"
-    traceLogic:from="traceLogic"
+    traceMessage:from="traceMessage"
     repeatVarValue:from="rState.repeatVarValue"
     rState:from="rState"
     modalContent:bind="modalContent" />

@@ -1,11 +1,11 @@
 import CanMap from 'can-map'
-import CanList from 'can-list'
 import { assert } from 'chai'
 import _round from 'lodash/round'
 import _assign from 'lodash/assign'
 import stache from 'can-stache'
 import AppState from 'caja/viewer/models/app-state'
 import Interview from 'caja/viewer/models/interview'
+import TraceMessage from 'caja/author/models/trace-message'
 import $ from 'jquery'
 import { ViewerStepsVM } from 'caja/viewer/desktop/steps/'
 import interviewJSON from 'caja/viewer/models/fixtures/real_interview_1.json'
@@ -27,9 +27,9 @@ describe('<a2j-viewer-steps>', function () {
 
       interview = new Interview(parsedData)
 
-      const traceLogic = new CanList()
+      const traceMessage = new TraceMessage()
       const mState = new CanMap()
-      const rState = new AppState()
+      const rState = new AppState({ traceMessage })
       appStateTeardown = rState.connectedCallback()
       rState.page = interview.attr('firstPage')
       rState.interview = interview
@@ -57,7 +57,7 @@ describe('<a2j-viewer-steps>', function () {
 
       const frag = stache(
         `<a2j-viewer-steps
-        traceLogic:from="traceLogic"
+        traceMessage:from="traceMessage"
         rState:bind="rState"
         mState:bind="mState"
         interview:bind="interview"
@@ -65,7 +65,7 @@ describe('<a2j-viewer-steps>', function () {
         lang:bind="langStub"/>`
       )
 
-      $('#test-area').html(frag({ rState, interview, mState, logicStub, langStub, traceLogic }))
+      $('#test-area').html(frag({ rState, interview, mState, logicStub, langStub }))
       vm = $('a2j-viewer-steps')[0].viewModel
     })
 

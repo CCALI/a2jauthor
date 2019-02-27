@@ -9,7 +9,7 @@
     REG, CONST,
     ismdy, decodeEntities, escapeHtml, jquote, isNumber,
     swapMonthAndDay, dateToString, dateToDays, daysToDate, todaysDate, dateDiff,
-    traceTag, numeral, canDomEvents) {
+    traceTag, numeral, eventQueue) {
     gGuide = gGuide || window.gGuide
     REG = REG || window.REG
     CONST = CONST || window.CONST
@@ -28,25 +28,25 @@
     numeral = numeral || window.numeral
 
     /*******************************************************************************
-			A2J Author 6 * JusticeJustice * justicia * 正义 * công lý * 사법 * правосудие
-			All Contents Copyright The Center for Computer-Assisted Legal Instruction
+      A2J Author 6 * JusticeJustice * justicia * 正义 * công lý * 사법 * правосудие
+      All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
-			Logic
-			06/15/2012
+      Logic
+      06/15/2012
 
-			Convert CAJA script into JavaScript
-			Required by Author and Viewers
-			Phase 1: Compile the CAJA script to spot syntax errors or undefined functions or variables.
-			Phase 2: If compile ie successful, execute the JS version.
+      Convert CAJA script into JavaScript
+      Required by Author and Viewers
+      Phase 1: Compile the CAJA script to spot syntax errors or undefined functions or variables.
+      Phase 2: If compile ie successful, execute the JS version.
 
-		******************************************************************************/
+    ******************************************************************************/
 
     // Classes
     /**
-		 * @constructor
-		 * @struct
-		 * @this {ParseError}
-		 */
+     * @constructor
+     * @struct
+     * @this {ParseError}
+     */
     function ParseError (lineNum, errType, errText) {
       this.line = lineNum
       this.type = errType // missing page, unknown line, unknown function
@@ -444,46 +444,39 @@
       }
     }
 
-    TLogic.prototype.traceLogic = function (html) {
-      $(this.tracerID).append('<li style="text-indent:' + (this.indent) + 'em">' + html + '</li>')
-      // if(1) { trace(String(html).stripHTML());}
-    }
+    // TODO: don't think this is ever called, remove when sure
+    // TLogic.prototype.traceLogic = function (html) {
+    //   $(this.tracerID).append('<li style="text-indent:' + (this.indent) + 'em">' + html + '</li>')
+    //   // if(1) { trace(String(html).stripHTML());}
+    // }
 
     // Functions called by JS translation of CAJA code.
     TLogic.prototype._CAJA = function (c) {
-      canDomEvents.dispatch(window, {
-        type: 'traceLogic',
-        data: { '_CAJA': { format: 'code', msg: c } }
-      })
+      this.dispatchMessage({ key: '_CAJA', fragments: [{ format: 'code', msg: c }] })
     }
     TLogic.prototype._IF = function (d, c, e) {
       if ((e) === true) {
-        canDomEvents.dispatch(window, {
-          type: 'traceLogic',
-          data: { '_IF': [{ msg: 'IF' }, { format: 'valT', msg: c }, { msg: '\u2714' }] }
+        this.dispatchMessage({
+          key: '_IF',
+          fragments: [{ format: '', msg: 'IF' }, { format: 'valT', msg: c }, { format: '', msg: '\u2714' }]
         })
       } else {
-        canDomEvents.dispatch(window, {
-          type: 'traceLogic',
-          data: {
-            '_IF': [{ msg: 'IF' }, { format: 'valF', msg: c }]
-          }
+        this.dispatchMessage({
+          key: '_IF',
+          fragments: [{ format: '', msg: 'IF' }, { format: 'valF', msg: c }]
         })
       }
+
       this.indent = d
       return (e === true)
     }
+
     TLogic.prototype._ENDIF = function (d) {
-      // if (this.indent!==d){
       this.indent = d
-      // this.traceLogic( "ENDIF");
-      // }
     }
+
     TLogic.prototype._VS = function (c, varname, varidx, val) {
-      canDomEvents.dispatch(window, {
-        type: 'traceLogic',
-        data: { '_VS': { msg: c } }
-      })
+      this.dispatchMessage({ key: '_VS' + varname, fragments: [{ format: '', msg: c }] })
       return gGuide.varSet(varname, val, varidx)
     }
 
@@ -524,16 +517,15 @@
     TLogic.prototype._CF = function (fName) {
       const args = [].slice.call(arguments)
       const params = args.slice(1)
-      // this.indent++;
-      // this.traceLogic("Call function "+f);
+
       var f = this.userFunctions[fName.toLowerCase()]
       if (!f) {
         return 'Unknown function "' + fName + '"'
       } else {
         return f.func.apply(null, params)
       }
-      // this.indent--;
     }
+
     TLogic.prototype._ED = function (dstr) {
       // Date format expected: mm/dd/yyyy.
       // Converted to unix seconds
@@ -541,25 +533,19 @@
       // should be safe to remove after 01/01/2018 (remove regex parsing above as well)
       return Date.parse(dstr)
     }
+
     TLogic.prototype._GO = function (c, pageName) {
       this.GOTOPAGE = pageName
-      canDomEvents.dispatch(window, {
-        type: 'traceLogic',
-        data: { '_GO': { msg: c } }
-      })
+      this.dispatchMessage({ key: '_GO', fragments: [{ format: '', msg: c }] })
     }
+
     TLogic.prototype._TRACE = function (c, exp) {
-      canDomEvents.dispatch(window, {
-        type: 'traceLogic',
-        data: { '_TRACE-c': { msg: c } }
-      })
+      this.dispatchMessage({ key: '_TRACE-c', fragments: [{ format: '', msg: c }] })
       this.indent++
-      canDomEvents.dispatch(window, {
-        type: 'traceLogic',
-        data: { '_TRACE-exp': { format: 'info', msg: exp } }
-      })
+      this.dispatchMessage({ key: '_TRACE-exp', fragments: [{ format: 'info', msg: exp }] })
       this.indent--
     }
+
     TLogic.prototype._deltaVars = function () {}
 
     TLogic.prototype.executeScript = function (CAJAScriptHTML) { // Execute lines of CAJA script. Syntax/runtime errors go into logic tracer, error causes all logic to cease.
@@ -579,24 +565,21 @@
         } catch (e) {
           // Trace runtime errors
           var message = {}
-          message['executeScript.error: ' + e.lineNumber + ': ' + e.message] = [{
-            msg: 'executeScript.error: ' + e.lineNumber + ': ' + e.message
-          }]
-          canDomEvents.dispatch(window, { type: 'traceLogic', data: message })
-          // trace(CAJAScriptHTML);
-          // trace(js);
+          message.key = 'executeScript.error: ' + e.lineNumber + ': ' + e.message
+          message.fragments = [{ format: '', msg: 'executeScript.error: ' + e.lineNumber + ': ' + e.message }]
+          this.dispatchMessage('traceMessage', message)
+
           return false
         }
       } else {
         script.errors.forEach(function (error) {
-          canDomEvents.dispatch(window, {
-            type: 'traceLogic',
-            data: {
-              'executeScript.error: syntax error in logic': [{
-                msg: 'executeScript.error: ' + error.text
-              }]
-            }
-          }, false)
+          this.dispatchMessage({
+            key: 'executeScript.error: syntax error in logic',
+            fragments: [{
+              format: '',
+              msg: 'executeScript.error: ' + error.text
+            }]
+          })
         })
         return false
       }
@@ -627,7 +610,22 @@
       return html
     }
 
-    var gLogic = new TLogic()
+    TLogic.prototype.dispatchMessage = function (message) {
+      this.dispatch({
+        type: 'traceMessage',
+        message
+      })
+      return message
+    }
+
+    // TODO: Remove eventQueue and make logic/tlogic actual DefineMaps that support events natively
+    // the if statement is for the tlogic-test.js that does not require eventQueue
+    var gLogic
+    if (eventQueue) {
+      gLogic = eventQueue(new TLogic())
+    } else {
+      gLogic = new TLogic()
+    }
 
     /* Logic Script functions */
 
@@ -750,9 +748,10 @@
       return (gender.toLowerCase() === 'male') ? 'he' : 'she'
     })
 
-    function traceLogic (html) {
-      gLogic.traceLogic(html)
-    }
+    // TODO: don't think is used, remove when sure
+    // function traceLogic (html) {
+    //   gLogic.traceLogic(html)
+    // }
 
     // TRUNC polyfill for IE
     Math.trunc = Math.trunc || function (x) {

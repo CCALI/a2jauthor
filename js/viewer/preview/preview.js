@@ -1,6 +1,5 @@
 import $ from 'jquery'
 import CanMap from 'can-map'
-import CanList from 'can-list'
 import compute from 'can-compute'
 import _assign from 'lodash/assign'
 import Component from 'can-component'
@@ -16,15 +15,10 @@ import parseGuideToMobile from 'caja/viewer/mobile/util/guide-to-mobile'
 
 const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
   define: {
+    // passed in via viewer-preview-layout.stache bindings
     remainingSteps: {},
     maxDisplayedSteps: {},
-    // initialize traceLogic for preview
-    traceLogic: {
-      value: function () {
-        const tl = new CanList()
-        return tl
-      }
-    },
+    traceMessage: {},
 
     interviewPageName: {
       get: function () {
@@ -61,6 +55,13 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
     // needs to be created after answers are set
     const logic = new Logic({ interview })
     rState.logic = logic
+    rState.traceMessage = this.traceMessage
+
+    // listen for _tLogic trace message events
+    const tLogic = rState.logic._tLogic
+    tLogic.listenTo('traceMessage', (ev) => {
+      this.traceMessage.addMessage(ev.message)
+    })
 
     // if previewPageName is set, we need to make sure the viewer
     // loads that specific page (covers the case when user clicks

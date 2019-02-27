@@ -1,5 +1,5 @@
 import CanMap from 'can-map'
-import canDomEvents from 'can-dom-events'
+import eventQueue from 'can-event-queue/map/map'
 import regex from 'caja/viewer/mobile/util/regex'
 import tLogic from 'caja/viewer/mobile/util/tlogic'
 import Lang from 'caja/viewer/mobile/util/lang'
@@ -54,7 +54,7 @@ export default CanMap.extend({
 
     // numeral replaces the jquery NumberFormatter plugin dependency in tlogic.js
     methods.push(numeral)
-    methods.push(canDomEvents)
+    methods.push(eventQueue)
 
     this._tLogic = tLogic.apply(this, methods)
 

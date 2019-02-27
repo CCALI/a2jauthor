@@ -32,7 +32,6 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
     pState: {},
     mState: {},
     interview: {},
-    traceLogic: {},
     modalContent: {},
 
     /**

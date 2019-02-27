@@ -1,11 +1,14 @@
 import $ from 'jquery'
 import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
-import CanList from 'can-list'
 import Guide from 'caja/author/models/guide'
 import template from './interviews.stache'
 
 export const InterviewsVM = DefineMap.extend('InterviewsVM', {
+  // passed in via author app.stache
+  traceMessage: {},
+  viewerInterview: {},
+
   interviews: {
     value ({ lastSet, listenTo, resolve }) {
       this.interviewsPromise.then((interviews) => {
@@ -53,14 +56,6 @@ export const InterviewsVM = DefineMap.extend('InterviewsVM', {
     }
   },
 
-  traceLogicList: {
-    serialize: false
-  },
-
-  viewerInterview: {
-    serialize: false
-  },
-
   currentGuideId: {
     type: 'string',
     get (lastSet) {
@@ -72,9 +67,9 @@ export const InterviewsVM = DefineMap.extend('InterviewsVM', {
   },
 
   clearPreviewState () {
-    // fired on inserted event to clear any Author preview answer/tracelogic
-    if (this.traceLogicList && this.traceLogicList.length > 0) {
-      this.traceLogicList = new CanList()
+    // fired on inserted event to clear any Author preview answer/authorMessageLog
+    if (this.traceMessage) {
+      this.traceMessage.newMessageLog()
     }
 
     if (this.viewerInterview) {
@@ -100,11 +95,9 @@ export const InterviewsVM = DefineMap.extend('InterviewsVM', {
   },
 
   connectedCallback () {
-    // clear debug-panel traceLogicList and preview answers
+    // clear debug-panel traceMessage.messageLog and preview answers
     // even if we don't change interviews
-    // TODO: this should be moved to happen when a new interview is opened?
     const vm = this
-
     vm.clearPreviewState()
 
     const guideDeletedHandler = function (ev, guideId) {

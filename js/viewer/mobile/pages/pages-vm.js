@@ -1,5 +1,4 @@
 import CanMap from 'can-map'
-import CanList from 'can-list'
 import _some from 'lodash/some'
 import _isString from 'lodash/isString'
 import _forEach from 'lodash/forEach'
@@ -30,12 +29,12 @@ export default CanMap.extend('PagesVM', {
     pState: {},
     mState: {},
     interview: {},
-    traceLogic: {
-      value () {
-        return new CanList()
+    modalContent: {},
+    traceMessage: {
+      get () {
+        return this.attr('rState.traceMessage')
       }
     },
-    modalContent: {},
 
     /**
      * @property {String} pages.ViewModel.prototype.backButton backButton
@@ -160,7 +159,10 @@ export default CanMap.extend('PagesVM', {
   },
 
   connectedCallback () {
-    this.setCurrentPage()
+    const vm = this
+    vm.setCurrentPage()
+
+    return () => { vm.stopListening() }
   },
 
   returnHome () {
@@ -177,21 +179,23 @@ export default CanMap.extend('PagesVM', {
   },
 
   traceButtonClicked (buttonLabel) {
-    this.attr('traceLogic').push({
-      button: [
-        { msg: 'You pressed' },
+    this.attr('traceMessage').addMessage({
+      key: 'button',
+      fragments: [
+        { format: '', msg: 'You pressed' },
         { format: 'ui', msg: buttonLabel }
       ]
     })
   },
 
-  traceLogicAfterQuestion () {
-    this.attr('traceLogic').push({
-      codeAfter: { format: 'info', msg: 'Logic After Question' }
+  traceMessageAfterQuestion () {
+    this.attr('traceMessage').addMessage({
+      key: 'codeAfter',
+      fragments: [{ format: 'info', msg: 'Logic After Question' }]
     })
   },
 
-  handleIE11 (fields, logic, traceLogic) {
+  handleIE11 (fields, logic, traceMessage) {
     // this is to handle the mis-firing of `change` event
     // in IE11 when "tabbing" through the fields as per this bug
     if (logic && fields && fields.length > 0) {
@@ -215,8 +219,8 @@ export default CanMap.extend('PagesVM', {
             const preSelector = field.type !== 'textlong' ? 'input' : 'textarea'
             const $fieldEl = $(preSelector + "[name='" + escapedFieldName + "']")
 
-            // validateField expects `this` to have field and traceLogic
-            vm.attr({ field, traceLogic })
+            // validateField expects `this` to have field and traceMessage
+            vm.attr({ field, traceMessage })
 
             // fire same answer pre-validation as jquery datepicker
             if (type === 'datemdy') {
@@ -236,12 +240,12 @@ export default CanMap.extend('PagesVM', {
     const page = this.attr('currentPage')
     const fields = page.attr('fields')
     const logic = this.attr('logic')
-    const traceLogic = this.attr('traceLogic')
+    const traceMessage = this.attr('traceMessage')
     const rState = this.attr('rState')
 
     // IE11 fails to fire all validateField events, handle that here
     if (navigator.userAgent.match(/Trident.*rv:11\./)) {
-      this.handleIE11(fields, logic, traceLogic)
+      this.handleIE11(fields, logic, traceMessage)
     }
     // Author Preview Mode changes handling of special buttons, and does not post answers
     if (rState.previewActive &&
@@ -331,7 +335,7 @@ export default CanMap.extend('PagesVM', {
 
       // execute After logic only if not going to a prior question
       if (codeAfter && button.next !== constants.qIDBACK) {
-        this.traceLogicAfterQuestion()
+        this.traceMessageAfterQuestion()
         logic.exec(codeAfter)
       }
 
@@ -486,7 +490,7 @@ export default CanMap.extend('PagesVM', {
 
       queues.batch.start()
 
-      this.attr('traceLogic').push({ page: currentPage.attr('name') })
+      this.attr('traceMessage').currentPageName = currentPage.attr('name')
       this.setFieldAnswers(currentPage.attr('fields'))
       this.attr('mState.header', currentPage.attr('step.text'))
       this.attr('mState.step', currentPage.attr('step.number'))
@@ -569,9 +573,9 @@ export default CanMap.extend('PagesVM', {
 
   setRepeatVariable (repeatVar, repeatVarSet) {
     const logic = this.attr('logic')
-    const traceLogic = this.attr('traceLogic')
+    const traceMessage = this.attr('traceMessage')
 
-    let traceLogicMsg = {}
+    let traceMsg = {}
 
     if (!logic.varExists('repeatVar')) {
       logic.varCreate('repeatVar', 'Text', false, 'Repeat variable name')
@@ -586,16 +590,18 @@ export default CanMap.extend('PagesVM', {
         }
 
         logic.varSet(repeatVar, 1)
-        traceLogicMsg[repeatVar + '-0'] = { msg: 'Setting [' + repeatVar + '] to 1' }
-        traceLogic.push(traceLogicMsg)
+        traceMsg.key = repeatVar + '-0'
+        traceMsg.fragments = [{ format: '', msg: 'Setting [' + repeatVar + '] to 1' }]
+        traceMessage.addMessage(traceMsg)
         break
 
       case constants.RepeatVarSetPlusOne:
         const value = logic.varGet(repeatVar)
 
         logic.varSet(repeatVar, value + 1)
-        traceLogicMsg[repeatVar + '-' + value] = { msg: 'Incrementing [' + repeatVar + '] to ' + (value + 1) }
-        traceLogic.push(traceLogicMsg)
+        traceMsg.key = repeatVar + '-' + value
+        traceMsg.fragments = [{ format: '', msg: 'Incrementing [' + repeatVar + '] to ' + (value + 1) }]
+        traceMessage.addMessage(traceMsg)
         break
     }
   },

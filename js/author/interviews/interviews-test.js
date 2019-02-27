@@ -45,15 +45,6 @@ describe('<interviews-page>', function () {
       vm.stopListening()
       done()
     })
-
-    it('clears preview tracelogic messages', function () {
-      let previewTraceList = new CanList({ pageName: 'Intro', messages: ['These', 'are', 'usually', 'Maps'] })
-      vm.traceLogicList = previewTraceList
-
-      vm.clearPreviewState()
-
-      assert.equal(vm.traceLogicList.length, 0, 'there should be an empty list')
-    })
   })
 
   describe('Component', function () {

@@ -45,7 +45,8 @@
     "globals": [
       "$",
       "jQuery",
-      "can"
+      "can",
+      "mocha"
     ],
     "ignore": [
       "author/src/**",
@@ -54,6 +55,9 @@
       "viewer/models/fixtures/**",
       "viewer/mobile/util/**",
       "viewer/build.production.html.js"
+    ],
+    "env": [
+      "mocha"
     ]
   },
   "steal": {
@@ -68,8 +72,7 @@
       "grunt-contrib-less"
     ],
     "configDependencies": [
-      "author/utils/set-global-for-lodash",
-      "author/utils/load-fixtures"
+      "author/utils/set-global-for-lodash"
     ],
     "map": {
       "cuid": "cuid/dist/browser-cuid",
@@ -221,16 +224,16 @@
     "bootstrap-tokenfield": "git://github.com/sliptree/bootstrap-tokenfield.git#v0.12.1",
     "can-3-4-compat": "^1.0.0",
     "can-ajax": "^1.3.0",
+    "can-bind": "^1.3.0",
     "can-component": "^4.2.4",
     "can-compute": "^4.1.0",
     "can-connect": "^2.1.0",
     "can-construct": "^3.5.0",
     "can-construct-super": "^3.2.0",
     "can-control": "^4.2.0",
-    "can-define": "^2.5.2",
+    "can-define": "^2.7.10",
     "can-dom-events": "^1.3.0",
-    "can-event": "^3.7.7",
-    "can-event-queue": "^1.1.0",
+    "can-event-queue": "^1.1.4",
     "can-globals": "^1.2.0",
     "can-key": "^1.2.0",
     "can-list": "^4.2.0",
@@ -252,6 +255,7 @@
     "can-super-model": "^1.0.1",
     "can-util": "^3.12.0",
     "can-validate-legacy": "^2.0.0",
+    "can-value": "^1.1.0",
     "can-view-autorender": "^4.2.0",
     "can-view-callbacks": "^4.3.0",
     "can-view-import": "^4.2.0",

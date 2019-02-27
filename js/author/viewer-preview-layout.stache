@@ -8,16 +8,15 @@
   {{#if(showDebugPanel)}}
     <div class="author-debug-panel">
       <author-debug-panel
+        traceMessage:from="traceMessage"
         interview:bind="viewerInterview"
-        traceLogic:from="traceLogic"
-        traceLogicList:bind="traceLogicList" />
+        previewPageName:from="previewPageName" />
     </div>
   {{/if}}
-
   <div id="viewer-app" class="{{#if(showDebugPanel)}}with-debug-panel{{/if}}">
     <a2j-viewer-preview
+      traceMessage:from="traceMessage"
       guidePath:from="guidePath"
-      traceLogic:to="traceLogic"
       showDebugPanel:from="showDebugPanel"
       previewPageName:from="previewPageName"
       interview:bind="viewerInterview"

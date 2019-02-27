@@ -1,6 +1,7 @@
 import $ from 'jquery'
 import CanMap from 'can-map'
 import CanList from 'can-list'
+import TraceMessage from 'caja/author/models/trace-message'
 import A2JVariable from './a2j-variable'
 import _isEmpty from 'lodash/isEmpty'
 import { Gender, Hair, Skin } from 'caja/viewer/desktop/avatar/colors'
@@ -67,21 +68,13 @@ export default CanMap.extend('AuthorAppState', {
     },
 
     /**
-    * @property {List} traceLogic
+    * @property {DefineMap} traceMessage
     *
-    * latest message to display in the trace panel
+    * trace-message model to manage messages for the debug-panel
     */
-    traceLogic: {
-      serialize: false
-    },
-
-    /**
-    * @property {List} traceLogicList
-    *
-    * active list of each pages traceLogic
-    */
-    traceLogicList: {
-      serialize: false
+    traceMessage: {
+      serialize: false,
+      value: () => { return new TraceMessage() }
     },
 
     /**

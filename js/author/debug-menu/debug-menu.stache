@@ -2,7 +2,7 @@
 
 <div class="debugmenu">
   <button type="button" class="btn btn-default btn-warning btn-variables-panel btn-wide-md">
-    Variables/Script
+    Debug Panel
   </button>
 
   <button type="button" class="btn btn-default btn-warning btn-fill-sample btn-wide-md">

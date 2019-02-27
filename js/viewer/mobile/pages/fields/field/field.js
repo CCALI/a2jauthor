@@ -27,8 +27,8 @@ export let FieldVM = CanMap.extend('FieldVM', {
   define: {
     // passed in via fields.stache binding
     repeatVarValue: {},
-    traceLogic: {},
     field: {},
+    traceMessage: {},
 
     /**
      * @property {Boolean} field.ViewModel.prototype.hasError hasError
@@ -222,15 +222,15 @@ export let FieldVM = CanMap.extend('FieldVM', {
 
     if (!errors) {
       let name = field.attr('name')
-      let message = {}
-
-      message[name] = [
-        { format: 'var', msg: name },
-        { msg: ' = ' },
-        { format: 'val', msg: value }
-      ]
-
-      this.attr('traceLogic').push(message)
+      let message = {
+        key: name,
+        fragments: [
+          { format: 'var', msg: name },
+          { format: '', msg: ' = ' },
+          { format: 'val', msg: value }
+        ]
+      }
+      this.attr('traceMessage').addMessage(message)
     }
   },
 
@@ -361,7 +361,7 @@ export let FieldVM = CanMap.extend('FieldVM', {
  *    {repeat-var-value}="repeatVarValue"
  *    {(logic)}="logic"
  *    {lang}="lang"
- *    {(trace-logic)}="traceLogic" />
+ *    {(trace-message)}="traceMessage" />
  * @codeend
  */
 export default Component.extend('FieldComponent', {
@@ -413,19 +413,6 @@ export default Component.extend('FieldComponent', {
             }
           })
         }
-      }
-    },
-
-    '{field._answer.answer.values} change': function (values, ev, attr) {
-      if (attr === '1') {
-        let message = {}
-        let msgVar = this.viewModel.attr('field.name')
-        message[msgVar] = [
-          { format: 'var', msg: msgVar },
-          { msg: ' = ' },
-          { format: 'val', msg: values[attr] }
-        ]
-        this.viewModel.attr('traceLogic').push(message)
       }
     },
 

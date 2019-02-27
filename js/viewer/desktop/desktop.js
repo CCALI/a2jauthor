@@ -17,7 +17,6 @@ let DesktopViewerVM = CanMap.extend('DesktopViewerVM', {
     pState: {},
     mState: {},
     interview: {},
-    traceLogic: {},
     modalContent: {},
 
     pageNotFound: {

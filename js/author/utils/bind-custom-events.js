@@ -101,7 +101,7 @@ export default function bindCustomEvents (appState) {
     })
   })
 
-  // Updates window.gGuide with changes to guide.vars replacing above %root code
+  // Updates legacy window.gGuide with changes to canjs guide.vars
   var vars = compute(function () {
     var vars = appState.attr('guide.vars')
     if (vars) {

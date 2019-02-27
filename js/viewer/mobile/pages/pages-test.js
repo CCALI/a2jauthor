@@ -1,5 +1,6 @@
 import $ from 'jquery'
 import CanMap from 'can-map'
+import TraceMessage from 'caja/author/models/trace-message'
 import stache from 'can-stache'
 import { assert } from 'chai'
 import PagesVM from './pages-vm'
@@ -7,7 +8,6 @@ import sinon from 'sinon'
 import AppState from 'caja/viewer/models/app-state'
 import Infinite from 'caja/viewer/mobile/util/infinite'
 import constants from 'caja/viewer/models/constants'
-import canDomEvents from 'can-dom-events'
 import './pages'
 import 'steal-mocha'
 
@@ -17,6 +17,7 @@ describe('<a2j-pages>', () => {
   let nextPageStub
   let interview
   let defaults
+  let traceMessage
 
   beforeEach(() => {
     logicStub = new CanMap({
@@ -46,6 +47,8 @@ describe('<a2j-pages>', () => {
         }
       }
     }
+    // normally passed in via stache
+    traceMessage = new TraceMessage()
 
     defaults = {
       currentPage: new CanMap({
@@ -59,7 +62,7 @@ describe('<a2j-pages>', () => {
         step: { number: undefined, text: '' } }
       ),
       logic: logicStub,
-      rState: new AppState({ interview, logic: logicStub }),
+      rState: new AppState({ interview, logic: logicStub, traceMessage }),
       mState: { },
       interview
     }
@@ -78,99 +81,6 @@ describe('<a2j-pages>', () => {
     })
 
     describe('navigate', () => {
-      let setRepeatVariableStub
-
-      beforeEach(() => {
-        setRepeatVariableStub = sinon.stub(vm, 'setRepeatVariable')
-      })
-
-      afterEach(() => {
-        setRepeatVariableStub.restore()
-      })
-
-      it('shows the firstPage on load', () => {
-        let expectedTraceLogic = [
-          { page: 'Intro' }
-        ]
-
-        assert.deepEqual(vm.attr('traceLogic').attr(), expectedTraceLogic,
-          'shows the first page name')
-      })
-
-      it('without repeatVar logic', () => {
-        const button = new CanMap({
-          label: 'Go!',
-          next: 'Next'
-        })
-
-        vm.navigate(button)
-
-        let expectedTraceLogic = [
-          { page: 'Intro' },
-          { button: [{ msg: 'You pressed' }, { format: 'ui', msg: 'Go!' }] }
-        ]
-
-        assert.deepEqual(vm.attr('traceLogic').attr(), expectedTraceLogic,
-          'should not run codeAfter if it is empty')
-
-        assert.equal(setRepeatVariableStub.callCount, 0,
-          'should not call setRepeatVariable')
-
-        vm.attr('currentPage.codeAfter', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>')
-        button.attr('label', 'Go Again!')
-        vm.navigate(button)
-
-        expectedTraceLogic = [
-          { page: 'Intro' },
-          { button: [{ msg: 'You pressed' }, { format: 'ui', msg: 'Go!' }] },
-          { button: [{ msg: 'You pressed' }, { format: 'ui', msg: 'Go Again!' }] },
-          { codeAfter: { format: 'info', msg: 'Logic After Question' } }
-        ]
-
-        assert.deepEqual(vm.attr('traceLogic').attr(), expectedTraceLogic,
-          'should run codeAfter')
-      })
-
-      it('with repeatVar logic', () => {
-        const button = new CanMap({
-          label: 'Go!',
-          next: 'Next',
-          repeatVar: 'Repeat',
-          repeatVarSet: '=1'
-        })
-
-        vm.navigate(button)
-
-        let expectedTraceLogic = [
-          { page: 'Intro' },
-          { button: [{ msg: 'You pressed' }, { format: 'ui', msg: 'Go!' }] }
-        ]
-
-        assert.deepEqual(vm.attr('traceLogic').attr(), expectedTraceLogic,
-          'should not run codeAfter if it is empty')
-
-        assert.equal(setRepeatVariableStub.callCount, 1,
-          'should call setRepeatVariable')
-        assert.equal(setRepeatVariableStub.firstCall.args[0], 'Repeat',
-          'should call setRepeatVariable with correct repeatVar')
-        assert.equal(setRepeatVariableStub.firstCall.args[1], '=1',
-          'should call setRepeatVariable with correct repeatVarSet')
-
-        vm.attr('currentPage.codeAfter', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>')
-        button.attr('label', 'Go Again!')
-        vm.navigate(button)
-
-        expectedTraceLogic = [
-          { page: 'Intro' },
-          { button: [{ msg: 'You pressed' }, { format: 'ui', msg: 'Go!' }] },
-          { button: [{ msg: 'You pressed' }, { format: 'ui', msg: 'Go Again!' }] },
-          { codeAfter: { format: 'info', msg: 'Logic After Question' } }
-        ]
-
-        assert.deepEqual(vm.attr('traceLogic').attr(), expectedTraceLogic,
-          'should run codeAfter')
-      })
-
       it('saves answer when button has a value', () => {
         let answers = defaults.interview.answers
 
@@ -284,41 +194,6 @@ describe('<a2j-pages>', () => {
       assert.deepEqual(answerValues.attr(), [null, 101, 202], 'should set repeatVarValues')
     })
 
-    it('setRepeatVariable', () => {
-      vm.setRepeatVariable('Repeat', '=1')
-
-      assert(logicStub.varExists.calledWith('Repeat'), 'Checks if repeatVar exists')
-      assert(logicStub.varCreate.calledWith('Repeat', 'Number', false, 'Repeat variable index'), 'Creates repeatVar')
-      assert(logicStub.varSet.calledWith('Repeat', 1), 'Sets repeatVar to 1')
-
-      assert.deepEqual(vm.attr('traceLogic').attr(), [
-        { page: 'Intro' },
-        { 'Repeat-0': { msg: 'Setting [Repeat] to 1' } }
-      ], 'Should log repeatVar initialization')
-
-      logicStub.varGet.returns(1)
-      vm.setRepeatVariable('Repeat', '+=1')
-
-      assert(logicStub.varGet.calledWith('Repeat'), 'Gets current value of variable')
-      assert(logicStub.varSet.calledWith('Repeat', 2), 'Sets repeatVar to 2')
-
-      assert.deepEqual(vm.attr('traceLogic').attr(), [
-        { page: 'Intro' },
-        { 'Repeat-0': { msg: 'Setting [Repeat] to 1' } },
-        { 'Repeat-1': { msg: 'Incrementing [Repeat] to 2' } }
-      ], 'Should log repeatVar increment')
-    })
-
-    it('setCurrentPage', () => {
-      vm.attr('currentPage.name', 'foo')
-      vm.setCurrentPage()
-
-      assert.deepEqual(vm.attr('traceLogic').attr(), [
-        { page: 'Intro' },
-        { page: 'foo' }
-      ], 'trace page name')
-    })
-
     describe('default values', () => {
       it('sets default value', () => {
         let field = new CanMap({
@@ -382,52 +257,11 @@ describe('<a2j-pages>', () => {
       vm.attr(defaults)
       vm.connectedCallback()
       rStateTeardown = vm.attr('rState').connectedCallback()
-      // prevent traceLogic changes happening in setCurrentPage
-      vm.setCurrentPage = $.noop
     })
 
     afterEach(() => {
       rStateTeardown()
       $('#test-area').empty()
-    })
-
-    describe('{rState} page', () => {
-      it('default', () => {
-        vm.attr('rState').page = 'intro'
-
-        assert.deepEqual(vm.attr('traceLogic').attr(), [ { page: 'Intro' } ], 'should not run codeBefore trace if it is empty, only log page name')
-      })
-
-      it('codeBefore', () => {
-        nextPageStub.attr('codeBefore', 'SET [Total income NU] TO 0<BR/>SET A2JInterviewVersion TO "2010-09-28"<BR/>')
-        vm.attr('rState.logic', defaults.logic)
-        vm.attr('rState.interview', defaults.interview)
-        vm.attr('rState.traceLogic', vm.attr('traceLogic'))
-        vm.attr('rState').page = 'bar'
-        assert.deepEqual(vm.attr('rState').traceLogic.attr(), [{ page: 'Intro' }, { page: 'Next' }, {
-          'codeBefore': { format: 'info', msg: 'Logic Before Question' }
-        }], 'logic before trace')
-      })
-    })
-
-    it('sets traceLogic when traceLogic event is triggered on the window', (done) => {
-      vm.attr('traceLogic').bind('change', function handler () {
-        vm.attr('traceLogic').unbind('change', handler)
-
-        assert.deepEqual(vm.attr('traceLogic').attr(), [
-          { page: 'Intro' },
-          { error: [{ msg: 'error' }] }
-        ])
-
-        done()
-      })
-
-      canDomEvents.dispatch(window, {
-        type: 'traceLogic',
-        data: {
-          error: [{ msg: 'error' }]
-        }
-      }, false)
     })
   })
 })

@@ -18,7 +18,7 @@
           pState:from="pState"
           mState:from="mState"
           interview:from="interview"
-          traceLogic:to="traceLogic"
+          traceMessage:to="traceMessage"
           modalContent:bind="modalContent" />
       </div><!-- guideBubble -->
 

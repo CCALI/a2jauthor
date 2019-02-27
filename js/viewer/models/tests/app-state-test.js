@@ -2,8 +2,8 @@ import { assert } from 'chai'
 import AppState from 'caja/viewer/models/app-state'
 import Interview from 'caja/viewer/models/interview'
 import Infinite from 'caja/viewer/mobile/util/infinite'
+import DefineMap from 'can-define/map/map'
 import CanMap from 'can-map'
-import CanList from 'can-list'
 import sinon from 'sinon'
 
 import 'steal-mocha'
@@ -15,7 +15,7 @@ describe('AppState', function () {
   let interview
   let answers
   let logic
-  let traceLogic
+  let traceMessage
   let appStateTeardown
 
   beforeEach(function (done) {
@@ -24,7 +24,7 @@ describe('AppState', function () {
     promise.then(function (_interview) {
       interview = _interview
       answers = new CanMap()
-      traceLogic = new CanList()
+      traceMessage = new DefineMap({ addMessage: sinon.stub() })
       interview.attr('answers', answers)
 
       logic = new CanMap({
@@ -36,7 +36,7 @@ describe('AppState', function () {
         gotoPage: ''
       })
 
-      appState = new AppState({ interview, logic, traceLogic })
+      appState = new AppState({ interview, logic, traceMessage })
       // simulate stache bind on visitedPages
       appStateTeardown = appState.connectedCallback()
 
@@ -156,22 +156,6 @@ describe('AppState', function () {
     assert.equal(appState.visitedPages.shift().name, pageNames[2])
     assert.equal(appState.visitedPages.shift().name, pageNames[1])
     assert.equal(appState.visitedPages.shift().name, pageNames[0])
-  })
-
-  it('Possible infinite loop', (done) => {
-    appState.traceLogic.bind('change', function handler () {
-      appState.traceLogic.unbind('change', handler)
-      assert.deepEqual(appState.traceLogic.attr(), [{
-        'infinite loop': {
-          format: 'info',
-          msg: 'Possible infinite loop. Too many page jumps without user interaction'
-        }
-      }], 'Possible infinite loop')
-      done()
-    })
-
-    appState.logic.attr('infinite._counter', 501)
-    appState.page = pageNames[0]
   })
 
   it('changing selectedPageIndex resolves page', () => {

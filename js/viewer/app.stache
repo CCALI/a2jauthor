@@ -10,6 +10,7 @@
     pState:from="pState"
     mState:from="mState"
     interview:from="interview"
+    traceMessage:to="traceMessage"
     modalContent:bind="modalContent"
     class="bootstrap-styles" />
 {{else}}
@@ -24,7 +25,6 @@
     pState:from="pState"
     mState:from="mState"
     interview:from="interview"
-    traceLogic:to="traceLogic"
     modalContent:bind="modalContent"
     class="bootstrap-styles steps-left-{{remainingSteps}} steps-{{maxDisplayedSteps}}" />
 {{/if}}

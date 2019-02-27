@@ -17,8 +17,8 @@ function getBaseUrl () {
   return window.System.baseURL
 }
 
-function joinBaseUrl () {
-  return joinURIs(getBaseUrl(), 'viewer/images/')
+function joinBaseUrl (path) {
+  return joinURIs(getBaseUrl(), path)
 }
 
 /**

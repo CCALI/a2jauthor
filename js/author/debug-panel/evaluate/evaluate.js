@@ -13,9 +13,8 @@ import 'can-map-define'
  */
 export let EvaluatePanelVM = CanMap.extend('EvaluatePanelVM', {
   define: {
-    traceLogic: {
-      value: []
-    }
+    // passed in via pages.stache
+    traceMessage: {}
   },
 
   /**
@@ -31,7 +30,7 @@ export let EvaluatePanelVM = CanMap.extend('EvaluatePanelVM', {
      */
   evaluateScript () {
     let evalResults
-    let traceLogic = this.attr('traceLogic')
+    let traceMessage = this.attr('traceMessage')
     let scriptText = $('#evaluate-input').val()
     if (scriptText) {
       evalResults = window.gLogic.evalBlock(scriptText)
@@ -39,13 +38,15 @@ export let EvaluatePanelVM = CanMap.extend('EvaluatePanelVM', {
 
     if (evalResults.errors.length > 0) {
       evalResults.errors.forEach(function (error) {
-        traceLogic.push({
-          expression: [ { format: 'valF', msg: 'ERROR' }, { format: 'code', msg: error.text } ]
+        traceMessage.addMessage({
+          key: 'expression',
+          fragments: [ { format: 'valF', msg: 'ERROR' }, { format: 'code', msg: error.text } ]
         })
       })
-    } else if (evalResults.text && traceLogic) {
-      traceLogic.push({
-        expression: [ { format: 'code', msg: scriptText + ' evaluates to: ' }, { format: 'val', msg: evalResults.text } ]
+    } else if (evalResults.text && traceMessage) {
+      traceMessage.addMessage({
+        key: 'expression',
+        fragments: [ { format: 'code', msg: scriptText + ' evaluates to: ' }, { format: 'val', msg: evalResults.text } ]
       })
     }
   }

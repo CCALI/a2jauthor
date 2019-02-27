@@ -23,9 +23,8 @@
       interviewPageName:to="interviewPageName" />
 
     <author-debug-menu appState:from="."/>
-
     {{#if(viewerAlertMessages.length)}}
-      <author-debug-alerts alertMessages:bind="viewerAlertMessages"/>
+      <author-debug-alerts alertMessages:from="viewerAlertMessages"/>
     {{/if}}
   </div>
 {{/if}}

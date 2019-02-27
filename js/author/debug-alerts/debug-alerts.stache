@@ -6,9 +6,9 @@
     Dismiss All <span class="badge">{{messagesCount}}</span>
   </button>
 
-  {{#each alertMessages}}
-    <app-alert vm:open:bind="open" alert-type:raw="danger" dismissible:raw="true">
-      {{{message}}}
+  {{#for(item of alertMessages)}}
+    <app-alert open:raw="true" alert-type:raw="danger" dismissible:raw="true">
+      {{{item.message}}}
     </app-alert>
-  {{/each}}
+  {{/for}}
 </div>

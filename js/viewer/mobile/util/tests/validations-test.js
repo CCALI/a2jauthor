@@ -169,4 +169,47 @@ describe('Validations', function () {
       assert.ok(!validations.max(), 'valid')
     })
   })
+
+  describe('validations:isNumber', function () {
+    beforeEach(function () {
+      validations = new Validations({
+        config: {
+          isNumber: true
+        }
+      })
+    })
+
+    it('isNumber', function () {
+      // test is for `invalid`, so true is bad and false is good (valid number)
+      validations.attr('val', null)
+      assert.equal(validations.isNumber(), false, 'null is ok as unanswered value')
+      validations.attr('val', undefined)
+      assert.equal(validations.isNumber(), false, 'undefined is ok as unanswered value')
+      validations.attr('val', '')
+      assert.equal(validations.isNumber(), false, 'empty string is ok as unanswered value')
+      // handles numbers including zero, and negative numbers
+      validations.attr('val', 42)
+      assert.equal(validations.isNumber(), false, '42 is a valid number')
+      validations.attr('val', 0)
+      assert.equal(validations.isNumber(), false, 'zero is a valid number')
+      validations.attr('val', -43.67)
+      assert.equal(validations.isNumber(), false, '-43.67 (negative number) is a valid number')
+
+      // handles string
+      validations.attr('val', 'lasercats')
+      assert.equal(validations.isNumber(), true, 'strings other than empty string are invalid')
+      validations.attr('val', '42')
+      assert.equal(validations.isNumber(), true, 'strings other than empty string are invalid')
+      validations.attr('val', '0')
+      assert.equal(validations.isNumber(), true, 'strings other than empty string are invalid')
+
+      // handles infinity, -infinity, and NaN which are all not numbers for our use case
+      validations.attr('val', Infinity)
+      assert.equal(validations.isNumber(), true, 'Infinity is invalid for A2J purposes')
+      validations.attr('val', -Infinity)
+      assert.equal(validations.isNumber(), true, '-Infinity is invalid for A2J purposes')
+      validations.attr('val', NaN)
+      assert.equal(validations.isNumber(), true, 'NaN is invalid for A2J purposes')
+    })
+  })
 })

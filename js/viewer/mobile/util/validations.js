@@ -2,6 +2,7 @@ import CanMap from 'can-map'
 import moment from 'moment'
 import _isNull from 'lodash/isNull'
 import _isUndefined from 'lodash/isUndefined'
+import _isFinite from 'lodash/isFinite'
 
 import 'can-map-define'
 
@@ -220,18 +221,15 @@ export default CanMap.extend({
    * @parent validations
    *
    * using custom text input for number values, this assures it's a number
-   * null, empty string, and undefined are valid - essentially unanswered
    */
   isNumber: function () {
     if (this.config.isNumber) {
-      if (!this.val && !isNaN(this.val)) {
+      // null, empty string, and undefined are valid as unanswered number questions
+      if (this.val == null || this.val === '') {
         return false
-      }
-
-      if (isNaN(this.val)) {
-        return true
       } else {
-        return false
+      // infinity, NaN, and -infinity are invalid, as are string numbers
+        return !_isFinite(this.val)
       }
     }
   }

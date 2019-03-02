@@ -317,7 +317,6 @@ describe('<a2j-field>', () => {
         field:bind="vm.field"
         lang:from="lang"
         logic:bind="logic"
-        traceMessage:from="traceMessage"
         repeatVarValue:from="repeatVarValue" />`
       )
 
@@ -326,7 +325,6 @@ describe('<a2j-field>', () => {
         field:bind="vm.field"
         lang:from="lang"
         logic:bind="logic"
-        traceMessage:from="traceMessage"
         repeatVarValue:from="repeatVarValue" />`
       )
 
@@ -335,7 +333,6 @@ describe('<a2j-field>', () => {
         field:bind="vm.field"
         lang:from="lang"
         logic:bind="logic"
-        traceMessage:from="traceMessage"
         repeatVarValue:from="repeatVarValue" />`
       )
 
@@ -344,7 +341,6 @@ describe('<a2j-field>', () => {
         field:bind="vm.field"
         lang:from="lang"
         logic:bind="logic"
-        traceMessage:from="traceMessage"
         repeatVarValue:from="repeatVarValue" />`
       )
 

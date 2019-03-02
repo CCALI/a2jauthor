@@ -12,7 +12,7 @@ export default CanMap.extend({
     outOfRange: {
       type: 'boolean',
       get () {
-        return !_inRange(this._counter, 0, 500)
+        return !_inRange(this._counter, 0, 100)
       }
     }
   },

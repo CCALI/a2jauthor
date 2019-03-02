@@ -1,11 +1,11 @@
 import $ from 'jquery'
 import CanMap from 'can-map'
-import TraceMessage from 'caja/author/models/trace-message'
 import stache from 'can-stache'
 import { assert } from 'chai'
 import PagesVM from './pages-vm'
 import sinon from 'sinon'
 import AppState from 'caja/viewer/models/app-state'
+import TraceMessage from 'caja/author/models/trace-message'
 import Infinite from 'caja/viewer/mobile/util/infinite'
 import constants from 'caja/viewer/models/constants'
 import './pages'
@@ -66,6 +66,9 @@ describe('<a2j-pages>', () => {
       mState: { },
       interview
     }
+
+    // initialize messages list in traceMessage
+    traceMessage.currentPageName = defaults.currentPage.name
   })
 
   describe('viewModel', () => {

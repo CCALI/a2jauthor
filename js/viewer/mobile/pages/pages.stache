@@ -26,7 +26,6 @@
 
         {{#if(currentPage.fields.length)}}
           <a2j-fields
-            traceMessage:from="traceMessage"
             lang:from="lang"
             logic:from="logic"
             fields:from="currentPage.fields"

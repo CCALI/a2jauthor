@@ -1,5 +1,6 @@
 import route from 'can-route'
 import _findIndex from 'lodash/findIndex'
+import Infinite from 'caja/viewer/mobile/util/infinite'
 import DefineMap from 'can-define/map/map'
 import DefineList from 'can-define/list/list'
 import canReflect from 'can-reflect'
@@ -9,6 +10,11 @@ import 'can-map-define'
 export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   traceMessage: {
     serialize: false
+  },
+
+  infinite: {
+    Type: Infinite,
+    Default: Infinite
   },
 
   selectedPageIndex: {
@@ -82,7 +88,9 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   },
 
   saveAndExitActive: {
-    default: false,
+    get () {
+      return !!this.lastPageBeforeExit
+    },
     serialize: false
   },
 
@@ -144,50 +152,51 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
 
   fireCodeBefore (currentPage, logic) {
     let preGotoPage = this.logic.attr('gotoPage')
-
-    if (currentPage && !this.forceNavigation && currentPage.attr('codeBefore')) {
-      // set page that trace messages belong to
-      this.traceMessage.set('currentPageName', currentPage.attr('name'))
-      this.traceMessage.addMessage({
-        key: 'codeBefore',
-        fragments: [{ format: 'info', msg: 'Logic Before Question' }]
-      })
-
-      logic.exec(currentPage.attr('codeBefore'))
-    }
-
+    logic.exec(currentPage.attr('codeBefore'))
     let postGotoPage = this.logic.attr('gotoPage')
 
-    // if gotoPage changes, codeBefore fired a A2J GOTO logic
+    // if preGotoPage does not match postGotoPage, codeBefore fired an A2J GOTO logic
     return preGotoPage !== postGotoPage ? postGotoPage : false
   },
 
   checkInfiniteLoop () {
-    if (this.logic.attr('infinite.outOfRange')) {
+    if (this.infinite.attr('outOfRange')) {
       this.traceMessage.addMessage({
         key: 'infinite loop',
         fragments: [{
-          format: 'info',
-          msg: 'Possible infinite loop. Too many page jumps without user interaction'
+          format: 'valF',
+          msg: 'INFINITE LOOP: Too many page jumps without user interaction. GOTO target: ' + this.page
         }]
       })
-      this.page = '__error'
+      throw new Error('INFINITE LOOP: Too many page jumps without user interaction. GOTO target: ' + this.page)
     } else {
-      this.logic.attr('infinite').inc()
+      this.infinite.inc()
     }
+  },
+
+  resetInfiniteLoop () {
+    this.infinite.reset()
   },
 
   connectedCallback () {
     const visitedPageHandler = (ev) => {
-      if (!this.currentPage) { return }
       this.checkInfiniteLoop()
+      if (!this.currentPage) { return }
 
-      const newGotoPage = this.fireCodeBefore(this.currentPage, this.logic)
-      if (newGotoPage) {
-        this.page = newGotoPage
-        return
+      // handle codeBefore A2J logic
+      if (this.currentPage.attr('codeBefore')) {
+        this.traceMessage.addMessage({ key: 'codeBefore', fragments: [{ format: 'info', msg: 'Logic Before Question' }] })
+        const newGotoPage = this.fireCodeBefore(this.currentPage, this.logic)
+        if (newGotoPage) {
+          this.page = newGotoPage
+          return
+        }
       }
 
+      // safe to reset if past codeBefore logic
+      this.resetInfiniteLoop()
+
+      // handle whether a page is visited or re-visited
       const repeatVar = this.currentPage.repeatVar
       const outerLoopVar = this.currentPage.outerLoopVar
       const repeatVarValue = repeatVar ? this.logic.varGet(repeatVar) : undefined
@@ -206,13 +215,18 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
       } else {
         this.selectedPageIndex = revisitedPageIndex
       }
+
+      // setCurrentPage in pages-vm.js
+      this.dispatch('setCurrentPage')
     }
 
     // any time one of the loopVars update, check for new visitedPage
     this.listenTo('pageSet', visitedPageHandler)
 
-    // TODO: figure out a way to do this without these bindings
-    this.listenTo('page', () => {})
+    // update traceMessage page that messages belong to as page changes
+    this.listenTo('page', (ev, currentPageName) => {
+      this.traceMessage.currentPageName = currentPageName
+    })
 
     // cleanup memory
     return () => { this.stopListening() }

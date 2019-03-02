@@ -142,9 +142,8 @@ export default Component.extend({
       vm.setFieldAnswers(fields)
     },
 
-    '{rState} page': function (rState, ev, newPageName) {
-      this.viewModel.changePage(rState, newPageName)
+    '{rState} setCurrentPage': function () {
+      this.viewModel.setCurrentPage()
     }
-
   }
 })

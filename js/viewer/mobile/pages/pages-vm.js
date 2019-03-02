@@ -30,11 +30,6 @@ export default CanMap.extend('PagesVM', {
     mState: {},
     interview: {},
     modalContent: {},
-    traceMessage: {
-      get () {
-        return this.attr('rState.traceMessage')
-      }
-    },
 
     /**
      * @property {String} pages.ViewModel.prototype.backButton backButton
@@ -179,7 +174,7 @@ export default CanMap.extend('PagesVM', {
   },
 
   traceButtonClicked (buttonLabel) {
-    this.attr('traceMessage').addMessage({
+    this.attr('rState.traceMessage').addMessage({
       key: 'button',
       fragments: [
         { format: '', msg: 'You pressed' },
@@ -189,7 +184,7 @@ export default CanMap.extend('PagesVM', {
   },
 
   traceMessageAfterQuestion () {
-    this.attr('traceMessage').addMessage({
+    this.attr('rState.traceMessage').addMessage({
       key: 'codeAfter',
       fragments: [{ format: 'info', msg: 'Logic After Question' }]
     })
@@ -256,7 +251,7 @@ export default CanMap.extend('PagesVM', {
       button.next === constants.qIDASSEMBLE)
     ) {
       // stop default submit actions in preview
-      ev.preventDefault()
+      ev && ev.preventDefault()
       this.previewActiveResponses(button)
     }
 
@@ -463,9 +458,9 @@ export default CanMap.extend('PagesVM', {
     }
   },
 
-  _setAnswerIndex (page, gotoPage) {
+  _setAnswerIndex (currentPage) {
     const rState = this.attr('rState')
-    const repeatVar = page.attr('repeatVar')
+    const repeatVar = currentPage.attr('repeatVar')
     const answers = this.attr('interview.answers')
     const countVarName = (repeatVar || '').toLowerCase()
 
@@ -482,7 +477,7 @@ export default CanMap.extend('PagesVM', {
   setCurrentPage () {
     const currentPage = this.attr('currentPage')
 
-    if (currentPage && currentPage.name !== 'FAIL') {
+    if (currentPage && currentPage.name !== constants.qIDFAIL) {
       if (!currentPage) {
         console.warn(`Unknown page: ${currentPage.name}`)
         return
@@ -490,7 +485,6 @@ export default CanMap.extend('PagesVM', {
 
       queues.batch.start()
 
-      this.attr('traceMessage').currentPageName = currentPage.attr('name')
       this.setFieldAnswers(currentPage.attr('fields'))
       this.attr('mState.header', currentPage.attr('step.text'))
       this.attr('mState.step', currentPage.attr('step.number'))
@@ -567,13 +561,28 @@ export default CanMap.extend('PagesVM', {
         }
 
         field.attr('_answer', avm)
+        this.logVarMessage(field.attr('_answer'))
       })
     }
   },
 
+  logVarMessage (fieldAnswerVM) {
+    const answerName = fieldAnswerVM.attr('answer.name')
+    const answerValue = fieldAnswerVM.attr('values')
+
+    this.attr('rState.traceMessage').addMessage({
+      key: answerName,
+      fragments: [
+        { format: 'var', msg: answerName },
+        { format: '', msg: ' = ' },
+        { format: 'val', msg: answerValue }
+      ]
+    })
+  },
+
   setRepeatVariable (repeatVar, repeatVarSet) {
     const logic = this.attr('logic')
-    const traceMessage = this.attr('traceMessage')
+    const traceMessage = this.attr('rState.traceMessage')
 
     let traceMsg = {}
 
@@ -604,40 +613,5 @@ export default CanMap.extend('PagesVM', {
         traceMessage.addMessage(traceMsg)
         break
     }
-  },
-
-  // fired from event in pages.js listening to rState.page changing
-  changePage: function (rState, newPageName) {
-    const vm = this
-
-    // Navigate to the exitURL if the page is set to a
-    // non-undefined falsy or the explicit "FAIL" string
-    if ((!newPageName && typeof newPageName !== 'undefined') || newPageName === 'FAIL') {
-      let exitURL = vm.attr('mState.exitURL')
-
-      // TODO: This shouldn't be necessary, however something
-      // else is being executed.
-      setTimeout(function () {
-        window.location = exitURL
-      })
-
-      return
-    }
-
-    // // Next page is unknown page name
-    let nextPage = vm.attr('interview.pages').find(newPageName)
-    if (!nextPage) return
-
-    let logic = vm.attr('logic')
-    var gotoPage = logic.attr('gotoPage')
-
-    // If rState.lastPageBeforeExit has value, we are exiting the interview
-    if (gotoPage && gotoPage.length && !rState.lastPageBeforeExit) {
-      vm._setAnswerIndex(nextPage, gotoPage)
-    } else {
-      logic.attr('infinite').reset()
-    }
-
-    vm.setCurrentPage()
   }
 })

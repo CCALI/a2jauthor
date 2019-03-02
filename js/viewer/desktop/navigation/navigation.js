@@ -156,7 +156,6 @@ export let ViewerNavigationVM = CanMap.extend({
     let exitPage = interview.attr('exitPage')
     let pageName = this.attr('selectedPageName')
 
-    appState.saveAndExitActive = true
     appState.lastPageBeforeExit = pageName
 
     if (window._paq) {
@@ -184,7 +183,6 @@ export let ViewerNavigationVM = CanMap.extend({
     let answers = interview.attr('answers')
     let visitedPages = appState.visitedPages
 
-    appState.saveAndExitActive = false
     appState.lastPageBeforeExit = null
 
     // Special Exit page should only show in My Progress while on that page

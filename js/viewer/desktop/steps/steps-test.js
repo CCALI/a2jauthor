@@ -57,7 +57,6 @@ describe('<a2j-viewer-steps>', function () {
 
       const frag = stache(
         `<a2j-viewer-steps
-        traceMessage:from="traceMessage"
         rState:bind="rState"
         mState:bind="mState"
         interview:bind="interview"
@@ -169,6 +168,7 @@ describe('<a2j-viewer-steps>', function () {
       appStateTeardown = rState.connectedCallback()
       rState.interview = interview
       rState.logic = logicStub
+      rState.traceMessage = new TraceMessage()
       rState.page = '01-Introduction'
 
       vm = new ViewerStepsVM({ rState })

@@ -28,7 +28,7 @@ export let FieldVM = CanMap.extend('FieldVM', {
     // passed in via fields.stache binding
     repeatVarValue: {},
     field: {},
-    traceMessage: {},
+    rState: {},
 
     /**
      * @property {Boolean} field.ViewModel.prototype.hasError hasError
@@ -230,7 +230,7 @@ export let FieldVM = CanMap.extend('FieldVM', {
           { format: 'val', msg: value }
         ]
       }
-      this.attr('traceMessage').addMessage(message)
+      this.attr('rState.traceMessage').addMessage(message)
     }
   },
 
@@ -328,6 +328,10 @@ export let FieldVM = CanMap.extend('FieldVM', {
 
   connectedCallback (el) {
     const vm = this
+    // default availableLength
+    vm.attr('availableLength', vm.attr('field.maxChars'))
+
+    // modalClose event should fire any time modal is hidden
     const $pageModal = $('#pageModal')
     const pageModalHandler = function (ev) {
       vm.dispatch('modalClose')
@@ -337,15 +341,7 @@ export let FieldVM = CanMap.extend('FieldVM', {
     return () => {
       $pageModal.off('hidden.bs.modal', pageModalHandler)
     }
-  },
-
-  /**
-   * default availableLength
-   */
-  init () {
-    this.attr('availableLength', this.attr('field.maxChars'))
   }
-
 })
 
 /**

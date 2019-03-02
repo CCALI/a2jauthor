@@ -6,7 +6,6 @@ import Lang from 'caja/viewer/mobile/util/lang'
 import cString from 'caja/viewer/mobile/util/string'
 import cDate from 'caja/viewer/mobile/util/date'
 import constants from 'caja/viewer/models/constants'
-import Infinite from 'caja/viewer/mobile/util/infinite'
 import _forEach from 'lodash/forEach'
 import numeral from 'numeral'
 
@@ -22,11 +21,6 @@ export default CanMap.extend({
       set: function (val) {
         this._tLogic.GOTOPAGE = val
       }
-    },
-
-    infinite: {
-      Type: Infinite,
-      Value: Infinite
     }
   },
 

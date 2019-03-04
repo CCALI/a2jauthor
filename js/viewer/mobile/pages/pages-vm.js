@@ -386,7 +386,6 @@ export default CanMap.extend('PagesVM', {
       // should navigate to this page instead of the page set by `button.next`.
       if (logicPageisNotEmpty && gotoPage !== button.next) {
         logic.attr('gotoPage', null)
-        this._setAnswerIndex(page, gotoPage)
         rState.page = gotoPage
 
       // only navigate to the `button.next` page if the button clicked is not
@@ -396,7 +395,6 @@ export default CanMap.extend('PagesVM', {
         button.next !== constants.qIDASSEMBLE &&
         button.next !== constants.qIDASSEMBLESUCCESS &&
         button.next !== constants.qIDFAIL) {
-        this._setAnswerIndex(page, button.next)
         rState.page = button.next
       }
 
@@ -458,22 +456,6 @@ export default CanMap.extend('PagesVM', {
     }
   },
 
-  _setAnswerIndex (currentPage) {
-    const rState = this.attr('rState')
-    const repeatVar = currentPage.attr('repeatVar')
-    const answers = this.attr('interview.answers')
-    const countVarName = (repeatVar || '').toLowerCase()
-
-    const answer = answers.attr(countVarName)
-    const answerIndex = answer ? (new AnswerVM({ answer })).attr('values') : null
-
-    if (answerIndex) {
-      rState.answerIndex = parseInt(answerIndex, 10)
-    } else {
-      rState.answerIndex = 1
-    }
-  },
-
   setCurrentPage () {
     const currentPage = this.attr('currentPage')
 
@@ -523,27 +505,15 @@ export default CanMap.extend('PagesVM', {
 
   setFieldAnswers (fields) {
     const logic = this.attr('logic')
-    const page = this.attr('currentPage')
 
     if (logic && fields.length) {
-      let answerIndex = 1
       const rState = this.attr('rState')
       const mState = this.attr('mState')
-
-      if (page.attr('repeatVar')) {
-        const repeatVar = page.attr('repeatVar')
-        const repeatVarCount = logic.varGet(repeatVar)
-
-        answerIndex = (repeatVarCount != null) ? repeatVarCount : answerIndex
-      }
+      const answerIndex = rState.answerIndex
 
       fields.forEach(field => {
         const answer = this.__ensureFieldAnswer(field)
         const avm = new AnswerVM({ field, answerIndex, answer, fields })
-
-        if (page.attr('repeatVar') && rState.answerIndex) {
-          avm.attr('answerIndex', parseInt(rState.answerIndex, 10))
-        }
 
         if (field.attr('type') === 'textpick') {
           field.getOptions(mState.attr('fileDataURL'))
@@ -561,19 +531,21 @@ export default CanMap.extend('PagesVM', {
         }
 
         field.attr('_answer', avm)
-        this.logVarMessage(field.attr('_answer'))
+        // if repeating true, show var#count in debug-panel
+        this.logVarMessage(field.attr('_answer'), answer.repeating, answerIndex)
       })
     }
   },
 
-  logVarMessage (fieldAnswerVM) {
+  logVarMessage (fieldAnswerVM, isRepeating, answerIndex) {
     const answerName = fieldAnswerVM.attr('answer.name')
     const answerValue = fieldAnswerVM.attr('values')
+    const answerIndexDisplay = isRepeating ? `#${answerIndex}` : ''
 
     this.attr('rState.traceMessage').addMessage({
       key: answerName,
       fragments: [
-        { format: 'var', msg: answerName },
+        { format: 'var', msg: answerName + answerIndexDisplay },
         { format: '', msg: ' = ' },
         { format: 'val', msg: answerValue }
       ]

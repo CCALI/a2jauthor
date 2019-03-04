@@ -132,12 +132,6 @@ export default Component.extend({
     '{rState} repeatVarValue': function () {
       const vm = this.viewModel
       const fields = vm.attr('currentPage.fields')
-      const rState = vm.attr('rState')
-      // keep answer index in sync with repeatVarValue
-      // when a user is navigating via the nav bar
-      if (rState && rState.repeatVarValue) {
-        rState.answerIndex = rState.repeatVarValue
-      }
 
       vm.setFieldAnswers(fields)
     },

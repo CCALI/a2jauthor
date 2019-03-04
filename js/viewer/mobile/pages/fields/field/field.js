@@ -124,7 +124,7 @@ export let FieldVM = CanMap.extend('FieldVM', {
     savedGenderValue: {
       get: function () {
         let name = this.attr('field.name').toLowerCase()
-        let answerIndex = this.attr('%root.%root.rState.i') ? this.attr('%root.%root.rState.i') : 1
+        let answerIndex = this.attr('rState.answerIndex')
         let answers = this.attr('logic.interview.answers')
         if (name && answers) {
           return answers.attr(name).attr('values.' + answerIndex)
@@ -221,11 +221,15 @@ export let FieldVM = CanMap.extend('FieldVM', {
     field.attr('hasError', errors)
 
     if (!errors) {
-      let name = field.attr('name')
+      const name = field.attr('name')
+      const answerIndex = _answer.attr('answerIndex')
+      const isRepeating = _answer.attr('answer.repeating')
+      // if repeating true, show var#count in debug-panel
+      const displayAnswerIndex = isRepeating ? `#${answerIndex}` : ''
       let message = {
         key: name,
         fragments: [
-          { format: 'var', msg: name },
+          { format: 'var', msg: name + displayAnswerIndex },
           { format: '', msg: ' = ' },
           { format: 'val', msg: value }
         ]

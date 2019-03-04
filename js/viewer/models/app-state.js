@@ -112,13 +112,15 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
     }
   },
 
-  // used for internal page routing in preview
+  // used for internal page routing in preview.js
   view: {},
 
-  // TODO: probably can be derived from or replaced by repeatVarValue
+  // answerIndex is 1 if repeatVarValue is null, undefined, 0, or empty string
   answerIndex: {
     serialize: false,
-    default: 1
+    get () {
+      return !this.repeatVarValue ? 1 : this.repeatVarValue
+    }
   },
 
   modalContent: {
@@ -142,11 +144,15 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
     if (repeatVar) {
       this.logic.varSet(repeatVar, visitedPage.repeatVarValue)
       this.repeatVarValue = visitedPage.repeatVarValue
+    } else {
+      this.repeatVarValue = null
     }
     const outerLoopVar = visitedPage.outerLoopVar
     if (outerLoopVar) {
       this.logic.varSet(outerLoopVar, visitedPage.outerLoopVarValue)
       this.outerLoopVarValue = visitedPage.outerLoopVarValue
+    } else {
+      this.outerLoopVarValue = null
     }
   },
 

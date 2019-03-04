@@ -318,19 +318,21 @@ function gotoPageEdit (pageName) {
       click: function () {
         $(this).dialog('close')
       }
-    }, {
-      text: 'XML',
-      class: 'btn btn-default btn-wide-sm',
-      click: function () {
-        var pageName = $(this).attr('rel')
-        dialogAlert({
-          title: 'Page XML',
-          width: 800,
-          height: 600,
-          body: prettyXML(page2XML(gGuide.pages[pageName]))
-        })
-      }
-    }, {
+    },
+    // { TODO: remove completely if no complains this is missing
+    //   text: 'XML',
+    //   class: 'btn btn-default btn-wide-sm',
+    //   click: function () {
+    //     var pageName = $(this).attr('rel')
+    //     dialogAlert({
+    //       title: 'Page XML',
+    //       width: 800,
+    //       height: 600,
+    //       body: prettyXML(page2XML(gGuide.pages[pageName]))
+    //     })
+    //   }
+    // },
+    {
       text: 'Preview',
       class: 'btn btn-primary btn-wide-sm',
       click: function () {
@@ -345,7 +347,7 @@ function gotoPageEdit (pageName) {
   var modal = $pageEditDialog.parents('.ui-dialog')
   modal.find('.ui-button').removeClass('ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only')
   // modal dialog is responsive now, remove draggable icon from UI
-  modal.removeClass('ui-draggable ui-resizable')
+  modal.removeClass('ui-resizable')
 
   guidePageEditForm(page, $('.page-edit-form-panel', $pageEditDialog).html(''), page.name)
 

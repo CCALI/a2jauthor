@@ -22,12 +22,12 @@
   // important required due to ui-dialog doing inline styles
   // for width, top, and left.
   &.page-edit-dialog {
-    position: absolute;
-    height: auto;
+    position: fixed;
+    max-height: 90vh!important;
     width: 60vw!important;
     top: 5%!important;
-    left: 20vw!important;
     display: block;
+    overflow-y: auto!important;
   }
 
   // these are sub elements of the style above
@@ -136,7 +136,7 @@ ul#cajasettings {
 	text-align: left;
 	border-width: 1px 0 0 0;
 	background-image: none;
-	margin-top: 0;
+  margin-top: 0;
 	padding: .3em 1em .5em .4em;
 	background: @gray-lighter;
 	border-top: 1px solid @gray-light;
@@ -146,6 +146,7 @@ ul#cajasettings {
 }
 .ui-dialog .ui-dialog-buttonpane button {
   margin-top: .5em;
+  margin-left: .5em;
   margin-bottom: .5em;
 	cursor: pointer;
 }

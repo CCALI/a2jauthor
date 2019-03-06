@@ -6,7 +6,7 @@ describe('util: date', function () {
   let testDate
 
   beforeEach(function () {
-    testDate = moment('02/28/1970')
+    testDate = moment('02/28/1970', 'MM/DD/YYYY')
   })
 
   describe('swapMonthAndDay', function () {
@@ -45,10 +45,10 @@ describe('util: date', function () {
     })
 
     it('should re-format a string date to new format', function () {
-      let sourceString = '02/28/1970'
+      let sourceString = '02/12/1970'
       let stringDate = cDate.dateToString(sourceString, 'DD-MM-YYYY')
 
-      assert.equal(stringDate, '28-02-1970', 'did not format string to new string format')
+      assert.equal(stringDate, '12-02-1970', 'did not format string to new string format')
     })
   })
 

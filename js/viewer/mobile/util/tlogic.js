@@ -716,8 +716,8 @@
 
     gLogic.addUserFunction('Date', 1, function (numDays) {
       // A2J Date macro gets the value of the source date
-      // as number of days since epoch (01/10/1970)
-      // Should display nothing if numDays is falsey
+      // as number of days since epoch (01/01/1970)
+      // Should display nothing if numDays is falsy
       var displayDate = ''
 
       if (numDays) {

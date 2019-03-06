@@ -67,8 +67,6 @@ export default {
   // Reasonable limits for years in jquery date picker option list
   kMinYear: 1900,
   kMaxYear: 2200,
-  // Used for math operations with moment and A2J date macros
-  epoch: '01/01/1970',
 
   // 11/27/07 1.7.7 Ordering options for lists such as a county list
   ordDefault: '',

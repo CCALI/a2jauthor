@@ -1,4 +1,3 @@
-import constants from 'caja/viewer/models/constants'
 import moment from 'moment'
 
 /*
@@ -12,6 +11,8 @@ import moment from 'moment'
     To help manage all the date conversion back and forth, we now use momentJS for formatting, conversion, and future
     internationalization
 */
+
+const epoch = moment('1970-01-01 00:00:00')
 
 export default {
   // LHI uses british dates in HotDocs. This converts in both directions
@@ -29,25 +30,24 @@ export default {
   // used for display and to save answers
   // takes optional format string
   dateToString: function (date, format) {
+    format = format || 'MM/DD/YYYY'
     // moment doesn't handle days since epoch by default
     if (typeof date === 'number') {
       date = this.daysToDate(date)
     }
-    format = format || 'MM/DD/YYYY'
+
     return moment(date).format(format)
   },
 
   // used to get days since epoch as the A2J parser expects days for math operations, ie: [bDay] + 30
   // `date` can be a string date, or moment date
   dateToDays: function (date) {
-    return this.dateDiff(date, constants.epoch, 'days')
+    return this.dateDiff(date, epoch, 'days')
   },
 
   // used to reconvert number of days since epoch to a moment date object
   daysToDate: function (numDays) {
-    const refDate = moment(constants.epoch)
-    const newDate = refDate.add(numDays, 'days')
-    return newDate
+    return moment(epoch).add(numDays, 'days')
   },
 
   // will be formatted before display/save or changed to number for calculations

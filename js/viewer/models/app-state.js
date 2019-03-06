@@ -4,8 +4,7 @@ import Infinite from 'caja/viewer/mobile/util/infinite'
 import DefineMap from 'can-define/map/map'
 import DefineList from 'can-define/list/list'
 import canReflect from 'can-reflect'
-
-import 'can-map-define'
+import queues from 'can-queues'
 
 export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   traceMessage: {
@@ -158,7 +157,12 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
 
   fireCodeBefore (currentPage, logic) {
     let preGotoPage = this.logic.attr('gotoPage')
+
+    // batching here for performance reasons due to codeBefore string parsing
+    queues.batch.start()
     logic.exec(currentPage.attr('codeBefore'))
+    queues.batch.stop()
+
     let postGotoPage = this.logic.attr('gotoPage')
 
     // if preGotoPage does not match postGotoPage, codeBefore fired an A2J GOTO logic

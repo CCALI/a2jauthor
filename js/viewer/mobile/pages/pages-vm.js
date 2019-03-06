@@ -331,7 +331,12 @@ export default CanMap.extend('PagesVM', {
       // execute After logic only if not going to a prior question
       if (codeAfter && button.next !== constants.qIDBACK) {
         this.traceMessageAfterQuestion()
+
+        // parsing codeAfter causes several re-renders, batching for performance
+        // TODO: might not need this once afterLogic parsing is refactored to canjs
+        queues.batch.start()
         logic.exec(codeAfter)
+        queues.batch.stop()
       }
 
       // repeatVar holds the name of the variable that acts as the total count

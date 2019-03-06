@@ -4,6 +4,10 @@ import template from './variables.stache'
 import parser from 'caja/viewer/mobile/util/parser'
 
 let VariablesTableVM = CanMap.extend('VariablesTableVM', {
+  // passed in from debug-panel.stache
+  interview: {},
+  variables: {},
+
   clearAnswers () {
     let interview = this.attr('interview')
 

@@ -5,7 +5,7 @@ import parser from 'caja/viewer/mobile/util/parser'
 import { promptFile } from 'caja/author/utils/uploader'
 import queues from 'can-queues'
 
-export const VariablesTabVM = CanMap.extend({
+export const VariablesTabVM = CanMap.extend('VariablesTabVM', {
   define: {
     /* variables: List Variable */
 

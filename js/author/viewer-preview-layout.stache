@@ -9,7 +9,7 @@
     <div class="author-debug-panel">
       <author-debug-panel
         traceMessage:from="traceMessage"
-        interview:bind="viewerInterview"
+        interview:from="viewerInterview"
         previewPageName:from="previewPageName" />
     </div>
   {{/if}}
@@ -19,7 +19,7 @@
       guidePath:from="guidePath"
       showDebugPanel:from="showDebugPanel"
       previewPageName:from="previewPageName"
-      interview:bind="viewerInterview"
+      interview:to="viewerInterview"
       interviewPageName:to="interviewPageName" />
 
     <author-debug-menu appState:from="."/>

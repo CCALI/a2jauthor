@@ -89,9 +89,9 @@ async function assemble (req, res) {
   )
 
   const cookieHeader = req.headers.cookie
-  const {guideId, templateId, answers: answersJson, fileDataUrl} = req.body
+  const {isTestAssemble, guideTitle, guideId, templateId, answers: answersJson, fileDataUrl} = req.body
   const htmlOptions = req // Done SSR needs the whole request, sadly
-  const downloadName = filenamify('A2J Test Assemble')
+  const downloadName = isTestAssemble ? filenamify(guideTitle + ' test assemble') : filenamify(guideTitle)
 
   const isSingleTemplateAssemble = !!templateId
   if (isSingleTemplateAssemble) {

@@ -43,6 +43,7 @@
           <input type="hidden" name="hideHeaderOnFirstPage" value:from="hideHeaderOnFirstPage">
           <input type="hidden" name="footer" value:from="footer">
           <input type="hidden" name="hideFooterOnFirstPage" value:from="hideFooterOnFirstPage">
+          <input type="hidden" name="isTestAssemble" value:raw="true">
 
           <button type="submit" class="btn btn-primary btn-submit">Get PDF</button>
         </form>

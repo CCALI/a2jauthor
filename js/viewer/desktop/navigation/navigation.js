@@ -270,7 +270,7 @@ export default Component.extend({
 
       // truncate text to avoid https://github.com/CCALI/CAJA/issues/685
       text = _truncate(text, { length: 40, separator: ' ' })
-      text = (typeof repeatVarValue === 'number') ? text + '#' + repeatVarValue : text
+      text = (typeof repeatVarValue === 'number') ? text + ' #' + repeatVarValue : text
 
       return text
     }

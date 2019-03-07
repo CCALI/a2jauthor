@@ -1,9 +1,8 @@
-import CanMap from 'can-map'
+import $ from 'jquery'
 import CanList from 'can-list'
+import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './debug-panel.stache'
-
-import 'can-map-define'
 
 /**
  * @property {can.Map} authorDebugPanel.ViewModel
@@ -11,27 +10,30 @@ import 'can-map-define'
  *
  * `<author-debug-panel>`'s viewModel.
  */
-export let DebugPanelVM = CanMap.extend({
-  define: {
-    // passed in via viewer-preview-layout.stache bindings
-    interview: {},
-    previewPageName: {},
-    traceMessage: {},
+export let DebugPanelVM = DefineMap.extend('DebugPanelVM', {
+  // passed in via viewer-preview-layout.stache bindings
+  interview: {},
+  previewPageName: {},
+  traceMessage: {},
+  currentPageName: {
+    get () {
+      return this.traceMessage.currentPageName
+    }
+  },
 
-    /**
-     * @property {can.List} authorDebugPanel.ViewModel.prototype.variables variables
-     * @parent authorDebugPanel.ViewModel
-     *
-     * list of variables used in the interview and their values
-     */
-    variables: {
-      get () {
-        let interview = this.attr('interview')
+  /**
+   * @property {can.List} authorDebugPanel.ViewModel.prototype.variables variables
+   * @parent authorDebugPanel.ViewModel
+   *
+   * list of variables used in the interview and their values
+   */
+  variables: {
+    get () {
+      let interview = this.interview
 
-        return interview
-          ? interview.attr('variablesList')
-          : new CanList([])
-      }
+      return interview
+        ? interview.attr('variablesList')
+        : new CanList([])
     }
   },
 
@@ -45,7 +47,24 @@ export let DebugPanelVM = CanMap.extend({
    * This allows new messages to be added before the user navigates to a new page.
    */
   clearMessageLog () {
-    this.attr('traceMessage').clearMessageLog()
+    this.traceMessage.clearMessageLog()
+  },
+
+  connectedCallback (el) {
+    this.listenTo('currentPageName', (ev, newVal, oldVal) => {
+      const $pageName = $(`span.page:contains(${newVal})`)
+      const pageNameTop = $pageName[0].offsetTop
+      const $debugPanel = $('#logic-trace-panel')
+      const modifier = 5
+
+      setTimeout(() => {
+        $debugPanel.animate({ scrollTop: (pageNameTop - modifier) }, 100)
+      }, 0)
+    })
+
+    return () => {
+      this.stopListening()
+    }
   }
 })
 

@@ -13,7 +13,7 @@
       {{#if(field.required)}}required{{/if}}
       on:change="validateField"
       value:bind="field._answer.values"
-      on:input="calcAvailableLength(%event)"
+      on:input="calcAvailableLength(scope.event)"
       placeholder="{{suggestionText}}" />
 
       {{#if(field.maxChars)}}

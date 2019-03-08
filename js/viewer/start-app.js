@@ -11,6 +11,9 @@ import _assign from 'lodash/assign'
 import compute from 'can-compute'
 import route from 'can-route'
 
+// TODO: trace-message.js should be moved to a shared library between Author/Viewer
+import TraceMessage from 'caja/author/models/trace-message'
+
 export default function ({ interview, pState, mState, rState }) {
   route.start()
 
@@ -47,6 +50,7 @@ export default function ({ interview, pState, mState, rState }) {
   setMobileDesktopClass(isMobile, $('body'))
 
   rState.logic = logic
+  rState.traceMessage = new TraceMessage()
 
   const modalContent = compute()
 

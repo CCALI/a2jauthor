@@ -6,12 +6,17 @@ import 'can-route-pushstate'
 
 const Body = CanMap.extend({
   define: {
+    // passed to a2j-template-ssr-vm.js
     templateIds: {
-      type: '*'
+      type: 'array'
     },
     fileDataUrl: {
-      type: '*'
-    }
+      type: 'string',
+      value: ''
+    },
+    answers: {},
+    guideId: {},
+    templateId: {}
   }
 })
 

@@ -43,7 +43,7 @@
  * @module {function} evalAuthorCondition
  * @return {Boolean} Result of evaluating the condition set by the user.
  *
- * This method evaluates the condition especified by the user through the UI,
+ * This method evaluates the condition specified by the user through the UI,
  * it also handles the look up in the answers object if the user set a variable
  * name through var-picker instead of some other (text) value:
  *

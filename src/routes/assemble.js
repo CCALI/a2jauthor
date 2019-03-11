@@ -95,6 +95,7 @@ async function assemble (req, res) {
 
   const isSingleTemplateAssemble = !!templateId
   if (isSingleTemplateAssemble) {
+    req.body.templateIds = [templateId]
     return createPdfForTextTemplates(htmlOptions, pdfOptions)
     .then(pdfStream => {
       setDownloadHeaders(res, downloadName)

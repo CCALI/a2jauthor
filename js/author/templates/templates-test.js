@@ -86,7 +86,7 @@ describe('<templates-page>', function () {
       F(function () {
         let templates = $('templates-page')[0].viewModel.attr('displayList')
         let buildOrder = templates.attr().map(template => template.buildOrder)
-        assert.deepEqual(buildOrder, [1, 2, 3], 'should be sorted asc')
+        assert.deepEqual(buildOrder, [2, 3], 'should be sorted asc')
       })
 
       F(done)

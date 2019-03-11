@@ -12,7 +12,7 @@ import 'can-map-define'
  * @parent api-components
  *
  * This component is used when user clicks the "Test Assemble" button, it
- * exposes two buttons that allow the author to load an anwers file and/or get
+ * exposes two buttons that allow the author to load an answers file and/or get
  * a PDF generated out of a single template or of all the templates matching the
  * provided [guideId].
  *
@@ -30,8 +30,18 @@ import 'can-map-define'
  *
  * <test-assemble-options>'s viewModel.
  */
-let AssembleOptionsVM = CanMap.extend({
+let AssembleOptionsVM = CanMap.extend('AssembleOptionsVM', {
   define: {
+    /**
+     * @property {String} assemble.ViewModel.prototype.fileDataUrl fileDataUrl
+     * @parent assemble.ViewModel
+     *
+     * The fileDataUrl is not used in test assemble currently.
+     */
+    fileDataUrl: {
+      value: ''
+    },
+
     /**
      * @property {String} assemble.ViewModel.prototype.guideId guideId
      * @parent assemble.ViewModel

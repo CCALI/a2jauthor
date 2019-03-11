@@ -39,6 +39,14 @@ describe('A2JTemplate Model', function () {
     })
   })
 
+  it('findAll with active filter', function () {
+    let promise = A2JTemplate.findAll({ guideId: 1261, active: true })
+
+    return promise.then(function (a2jTemplates) {
+      assert.equal(a2jTemplates.length, 2, 'should only have 2 active of 3 templates')
+    })
+  })
+
   it('create', function () {
     let a2jTemplate = new A2JTemplate({ title: 'Best Template' })
 

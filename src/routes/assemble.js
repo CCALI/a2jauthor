@@ -95,15 +95,19 @@ async function assemble (req, res) {
 
   const isSingleTemplateAssemble = !!templateId
   if (isSingleTemplateAssemble) {
-    req.body.templateIds = [templateId]
-    return createPdfForTextTemplates(htmlOptions, pdfOptions)
-    .then(pdfStream => {
+    const template = { guideId, templateId }
+    return renderPdfForTextTemplates([template], htmlOptions, pdfOptions)
+    .then(pdf => {
       setDownloadHeaders(res, downloadName)
-      pdfStream.pipe(res)
-    })
-    .catch(error => {
-      debug('Single assemble error:', error)
-      res.status(500).send(error)
+      return new Promise((resolve, reject) => {
+        res.sendFile(pdf, error => {
+          if (error) {
+            debug('Single assemble error:', error)
+            return reject(error)
+          }
+          return resolve()
+        })
+      })
     })
   }
 
@@ -121,17 +125,7 @@ async function assemble (req, res) {
         return renderPdfForPdfTemplates(username, templates, variables, answers, fileDataUrl)
       }
 
-      req.body.templateIds = templates.map(t => t.templateId)
-      return createPdfForTextTemplates(req, pdfOptions).then(pdfStream => {
-        const temporaryPath = getTemporaryPdfFilepath()
-        const fileStream = fs.createWriteStream(temporaryPath)
-        return new Promise((resolve, reject) => {
-          pdfStream.on('error', error => reject(error))
-          fileStream.on('finish', () => resolve(temporaryPath))
-          fileStream.on('error', error => reject(error))
-          pdfStream.pipe(fileStream)
-        })
-      })
+      return renderPdfForTextTemplates(templates, req, pdfOptions)
     }
   )).catch(error => {
     debug('Assemble error:', error)
@@ -151,10 +145,36 @@ async function assemble (req, res) {
   })
 }
 
+async function renderPdfForTextTemplates (templates, req, pdfOptions) {
+  const __cssBundlePath = getCssBundlePath()
+  const pdfFiles = await Promise.all(templates.map(template => {
+    // make unique request body here for each templateId
+    const newReq = Object.assign(
+      {},
+      req,
+      { __cssBundlePath },
+      { body: { templateId: template.templateId, guideId: template.guideId } }
+    )
+
+    return createPdfForTextTemplate(newReq, pdfOptions).then(pdfStream => {
+      const temporaryPath = getTemporaryPdfFilepath()
+      const fileStream = fs.createWriteStream(temporaryPath)
+      return new Promise((resolve, reject) => {
+        pdfStream.on('error', error => reject(error))
+        fileStream.on('finish', () => resolve(temporaryPath))
+        fileStream.on('error', error => reject(error))
+        pdfStream.pipe(fileStream)
+      })
+    })
+  }))
+
+  return combinePdfFiles(pdfFiles)
+}
+
 async function getTemplatesForGuide (username, guideId, fileDataUrl) {
   const templateIndex = await templates.getTemplatesJSON({username, guideId, fileDataUrl})
   // if guideId not defined, we are in standalone viewer/dat assembly using fileDataUrl
-  // set guideId to the local templates.json valu
+  // set guideId to the local templates.json value
   if (fileDataUrl && !guideId) {
     guideId = templateIndex.guideId
   }
@@ -206,11 +226,7 @@ async function combinePdfFiles (pdfFiles) {
   return firstPdf
 }
 
-function getHtmlForRichText (options) {
-  const request = Object.assign(
-    options,
-    {__cssBundlePath: getCssBundlePath()}
-  )
+function getHtmlForRichText (request) {
   const webpageStream = render(request)
   return new Promise((resolve, reject) => {
     webpageStream.pipe(through(buffer => {
@@ -225,8 +241,8 @@ function getPdfForHtml (html, pdfOptions) {
   return wkhtmltopdf(html, pdfOptions)
 }
 
-async function createPdfForTextTemplates (htmlOptions, pdfOptions) {
-  const renderedWebpage = await getHtmlForRichText(htmlOptions)
+async function createPdfForTextTemplate (request, pdfOptions) {
+  const renderedWebpage = await getHtmlForRichText(request)
   return getPdfForHtml(renderedWebpage, pdfOptions)
 }
 

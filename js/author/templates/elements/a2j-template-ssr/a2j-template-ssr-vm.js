@@ -15,7 +15,9 @@ export default CanMap.extend({
     // passed in from server.stache
     guideId: {},
     templateId: {},
-    templateIds: {},
+    templateIds: {
+      type: '*'
+    },
     fileDataUrl: {},
     /**
      * @property {Promise} templatesPromise
@@ -32,9 +34,9 @@ export default CanMap.extend({
         const templateIds = this.attr('templateIds')
         const fileDataUrl = this.attr('fileDataUrl')
 
-        if (Array.isArray(templateIds)) {
+        if (templateIds && templateIds.length) {
           return Promise.all(
-            templateIds.map(templateId => A2JTemplate.findOne({ templateId }))
+            templateIds.map(templateId => A2JTemplate.findOne({ guideId, templateId }))
           ).then(templates => new CanList(templates))
         }
         if (templateId) {

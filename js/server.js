@@ -8,7 +8,7 @@ const Body = CanMap.extend({
   define: {
     // passed to a2j-template-ssr-vm.js
     templateIds: {
-      type: 'array'
+      type: '*'
     },
     fileDataUrl: {
       type: 'string',

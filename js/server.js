@@ -10,7 +10,7 @@ const Body = CanMap.extend({
     templateIds: {
       type: '*'
     },
-    fileDataUrl: {
+    fileDataURL: {
       type: 'string',
       value: ''
     },

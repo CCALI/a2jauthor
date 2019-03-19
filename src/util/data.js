@@ -23,13 +23,13 @@ function readJson (filepath) {
 }
 
 function dataLayer (config) {
-  function getGuidePath (username, guideId, fileDataUrl) {
-    return paths.getGuideDirPath(username, guideId, fileDataUrl)
+  function getGuidePath (username, guideId, fileDataURL) {
+    return paths.getGuideDirPath(username, guideId, fileDataURL)
   }
 
   return {
-    getGuideXml (username, guideId, fileDataUrl) {
-      const guideDir = getGuidePath(username, guideId, fileDataUrl)
+    getGuideXml (username, guideId, fileDataURL) {
+      const guideDir = getGuidePath(username, guideId, fileDataURL)
       const filepath = path.join(guideDir, 'Guide.xml')
       return new Promise((resolve, reject) => {
         fs.readFile(filepath, {encoding: 'utf8'}, (error, text) => {
@@ -46,8 +46,8 @@ function dataLayer (config) {
       })
     },
 
-    async getTemplateJsonPath (username, guideId, templateId, fileDataUrl) {
-      return paths.getTemplatePath({ username, guideId, templateId, fileDataUrl })
+    async getTemplateJsonPath (username, guideId, templateId, fileDataURL) {
+      return paths.getTemplatePath({ username, guideId, templateId, fileDataURL })
     }
   }
 }

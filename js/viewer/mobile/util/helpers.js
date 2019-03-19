@@ -13,11 +13,11 @@ stache.registerHelper('inc', function (val) {
   return parseInt(val, 10) || 0 + 1
 })
 
-stache.registerHelper('normalizePath', function (fileDataUrl, path) {
+stache.registerHelper('normalizePath', function (fileDataURL, path) {
   path = _isFunction(path) ? path() : path
-  fileDataUrl = _isFunction(fileDataUrl) ? fileDataUrl() : fileDataUrl
+  fileDataURL = _isFunction(fileDataURL) ? fileDataURL() : fileDataURL
 
-  return normalizePath(fileDataUrl, path)
+  return normalizePath(fileDataURL, path)
 })
 
 // override for setURL issue

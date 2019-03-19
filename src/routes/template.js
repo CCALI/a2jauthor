@@ -111,17 +111,22 @@ module.exports = {
    */
   get (comboId, params, callback) {
     debug(`GET /api/template/${comboId} request`)
-
     const [ guideId, templateId ] = comboId.split('-')
-    const { fileDataUrl } = (params && params.query) || ''
-    const usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader })
+    const { fileDataURL } = (params && params.query) || ''
+    let usernamePromise
+
+    if (fileDataURL) {     // standalone viewer/dat
+      usernamePromise = Promise.resolve(undefined)
+    } else {       // Author with logged in user
+      usernamePromise = user.getCurrentUser({ cookieHeader: params.cookieHeader })
+    }
 
     usernamePromise
       .then(username => paths.getTemplatePath({
         username,
         guideId,
         templateId,
-        fileDataUrl
+        fileDataURL
       }))
       .then(templatePath => files.readJSON({ path: templatePath }))
       .then(data => this.successHandler({

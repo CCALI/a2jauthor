@@ -36,7 +36,7 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
 
     const previewAnswers = vm.attr('interview.answers') ? vm.attr('interview.answers') : null
 
-    // Set fileDataUrl to window.gGuidePath, so the viewer can locate the
+    // Set fileDataURL to window.gGuidePath, so the viewer can locate the
     // interview assets (images, sounds, etc).
     mState.attr('fileDataURL', vm.attr('guidePath'))
 

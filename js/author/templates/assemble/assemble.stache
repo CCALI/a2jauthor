@@ -38,7 +38,7 @@
           <input type="hidden" name="guideTitle" value:from="guideTitle">
           <input type="hidden" name="answers" value:from="answersString">
           <input type="hidden" name="templateId" value:from="templateId">
-          <input type="hidden" name="fileDataUrl" value:from="fileDataUrl">
+          <input type="hidden" name="fileDataURL" value:from="fileDataURL">
 
           <input type="hidden" name="header" value:from="header">
           <input type="hidden" name="hideHeaderOnFirstPage" value:from="hideHeaderOnFirstPage">

@@ -103,11 +103,11 @@ describe('lib/routes/templates', function () {
   })
 
   describe('GET /api/templates?filterDataUrl=', function () {
-    it('fails if fileDataUrl query param missing', function (done) {
+    it('fails if fileDataURL query param missing', function (done) {
       request(app)
         .get('/api/templates')
         .expect(500, function (res) {
-          assert(res.body.indexOf('You must provide fileDataUrl') !== -1)
+          assert(res.body.indexOf('You must provide fileDataURL') !== -1)
         })
         .end(function (err) {
           if (err) return done(err)
@@ -115,13 +115,13 @@ describe('lib/routes/templates', function () {
         })
     })
 
-    it.skip('works with relative fileDataUrl', function (done) {
+    it.skip('works with relative fileDataURL', function (done) {
       // TODO: this test does not work on Travis - need better way to test
-      // fileDataUrl with relative and absolute paths that work on Travis
+      // fileDataURL with relative and absolute paths that work on Travis
       // default config.VIEWER_PATH is approot/js/viewer
       // test data in approot/test/data
       request(app)
-        .get('/api/templates?fileDataUrl=../../test/data/DEV/guides/Guide1262/')
+        .get('/api/templates?fileDataURL=../../test/data/DEV/guides/Guide1262/')
         .expect(200, [template2114Data])
         .end(function (err) {
           if (err) return done(err)

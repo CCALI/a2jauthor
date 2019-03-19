@@ -5,7 +5,7 @@
       action="{{scope.vm.pState.setDataURL}}">
 
   <input type="hidden" name="AnswerKey" el:value:from="scope.vm.answersANX" />
-  <input type="hidden" name="fileDataUrl" el:value:from="scope.vm.mState.fileDataURL">
+  <input type="hidden" name="fileDataURL" el:value:from="scope.vm.mState.fileDataURL">
   <input type="hidden" name="AnswerKeyJSON" el:value:from="scope.vm.answersJSON" />
 
   <button type="submit"

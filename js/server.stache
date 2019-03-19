@@ -17,7 +17,7 @@
       guideId:from="request.body.guideId"
       templateId:from="request.body.templateId"
       templateIds:from="request.body.templateIds"
-      fileDataUrl:from="request.body.fileDataUrl"
+      fileDataURL:from="request.body.fileDataURL"
     />
   </body>
 </html>

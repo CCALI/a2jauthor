@@ -56,11 +56,11 @@ if (config) {
 }
 
 const checkPresenceOf = function (req, res, next) {
-  const { guideId, fileDataUrl } = req.body
+  const { guideId, fileDataURL } = req.body
 
-  if (!guideId && !fileDataUrl) {
+  if (!guideId && !fileDataURL) {
     return res.status(400)
-      .send('You must provide either guideId or fileDataUrl')
+      .send('You must provide either guideId or fileDataURL')
   }
 
   next()
@@ -89,7 +89,8 @@ async function assemble (req, res) {
   )
 
   const cookieHeader = req.headers.cookie
-  const {isTestAssemble, guideTitle, guideId, templateId, answers: answersJson, fileDataUrl} = req.body
+  let { fileDataURL } = req.body
+  const { isTestAssemble, guideTitle, guideId, templateId, answers: answersJson } = req.body
   const htmlOptions = req // Done SSR needs the whole request, sadly
   const downloadName = isTestAssemble ? filenamify(guideTitle + ' test assemble') : filenamify(guideTitle)
 
@@ -111,21 +112,29 @@ async function assemble (req, res) {
     })
   }
 
-  const username = fileDataUrl ? undefined : await user.getCurrentUser({cookieHeader})
+  // if there is no fileDataURL, we are in Author preview and need to build it
+  // TODO: this is a middle step until Author, Viewer, and DAT are separate apps
+  // and username/guideId will no longer be needed to build paths
+  let username = ''
+  if (!fileDataURL) {
+    username = await user.getCurrentUser({cookieHeader})
+    fileDataURL = paths.getGuideDirPath(username, guideId, fileDataURL)
+  }
+
   const answers = JSON.parse(answersJson)
-  const allTemplates = await getTemplatesForGuide(username, guideId, fileDataUrl)
+  const allTemplates = await getTemplatesForGuide(username, guideId, fileDataURL)
   const isTemplateLogical = filterTemplatesByCondition(answers)
   const templates = allTemplates.filter(isTemplateLogical)
-  const guideVariables = await getVariablesForGuide(username, guideId, fileDataUrl)
+  const guideVariables = await getVariablesForGuide(username, guideId, fileDataURL)
   const variables = mergeGuideVariableWithAnswers(guideVariables, answers)
   const segments = segmentTextAndPdfTemplates(templates)
   const pdfFiles = await Promise.all(segments.map(
     ({isPdf, templates}) => {
       if (isPdf) {
-        return renderPdfForPdfTemplates(username, templates, variables, answers, fileDataUrl)
+        return renderPdfForPdfTemplates(username, templates, variables, answers, fileDataURL)
       }
 
-      return renderPdfForTextTemplates(templates, req, pdfOptions)
+      return renderPdfForTextTemplates(templates, req, pdfOptions, fileDataURL)
     }
   )).catch(error => {
     debug('Assemble error:', error)
@@ -145,43 +154,17 @@ async function assemble (req, res) {
   })
 }
 
-async function renderPdfForTextTemplates (templates, req, pdfOptions) {
-  const __cssBundlePath = getCssBundlePath()
-  const pdfFiles = await Promise.all(templates.map(template => {
-    // make unique request body here for each templateId
-    const newReq = Object.assign(
-      {},
-      req,
-      { __cssBundlePath },
-      { body: { templateId: template.templateId, guideId: template.guideId } }
-    )
-
-    return createPdfForTextTemplate(newReq, pdfOptions).then(pdfStream => {
-      const temporaryPath = getTemporaryPdfFilepath()
-      const fileStream = fs.createWriteStream(temporaryPath)
-      return new Promise((resolve, reject) => {
-        pdfStream.on('error', error => reject(error))
-        fileStream.on('finish', () => resolve(temporaryPath))
-        fileStream.on('error', error => reject(error))
-        pdfStream.pipe(fileStream)
-      })
-    })
-  }))
-
-  return combinePdfFiles(pdfFiles)
-}
-
-async function getTemplatesForGuide (username, guideId, fileDataUrl) {
-  const templateIndex = await templates.getTemplatesJSON({username, guideId, fileDataUrl})
-  // if guideId not defined, we are in standalone viewer/dat assembly using fileDataUrl
+async function getTemplatesForGuide (username, guideId, fileDataURL) {
+  const templateIndex = await templates.getTemplatesJSON({username, guideId, fileDataURL})
+  // if guideId not defined, we are in standalone viewer/dat assembly using fileDataURL
   // set guideId to the local templates.json value
-  if (fileDataUrl && !guideId) {
+  if (fileDataURL && !guideId) {
     guideId = templateIndex.guideId
   }
   const templateIds = templateIndex.templateIds
   const templatesPromises = templateIds
   .map(templateId => paths
-      .getTemplatePath({guideId, templateId, username, fileDataUrl})
+      .getTemplatePath({guideId, templateId, username, fileDataURL})
       .then(path => files.readJSON({path}))
     )
 
@@ -192,8 +175,8 @@ async function getTemplatesForGuide (username, guideId, fileDataUrl) {
     .then(templates => templates.filter(isActive))
 }
 
-async function getVariablesForGuide (username, guideId, fileDataUrl) {
-  const xml = await data.getGuideXml(username, guideId, fileDataUrl)
+async function getVariablesForGuide (username, guideId, fileDataURL) {
+  const xml = await data.getGuideXml(username, guideId, fileDataURL)
   if (!xml) {
     return {}
   }
@@ -204,9 +187,9 @@ async function getVariablesForGuide (username, guideId, fileDataUrl) {
   }, {})
 }
 
-async function renderPdfForPdfTemplates (username, templates, variables, answers, fileDataUrl) {
+async function renderPdfForPdfTemplates (username, templates, variables, answers, fileDataURL) {
   const pdfFiles = await Promise.all(templates.map(async template => {
-    const filepath = await storage.duplicateTemplatePdf(username, template.guideId, template.templateId, fileDataUrl)
+    const filepath = await storage.duplicateTemplatePdf(username, template.guideId, template.templateId, fileDataURL)
     const overlay = getTemplateOverlay(template, variables, answers)
     await overlayer.forkWithOverlay(filepath, overlay)
     return filepath
@@ -226,6 +209,34 @@ async function combinePdfFiles (pdfFiles) {
   return firstPdf
 }
 
+async function renderPdfForTextTemplates (templates, req, pdfOptions, fileDataURL) {
+  const __cssBundlePath = getCssBundlePath()
+  const pdfFiles = await Promise.all(templates.map(template => {
+    // make unique request here for each templateId
+    const newParams = Object.assign({}, req.params, {fileDataURL})
+    const newBody = Object.assign({}, req.body, { templateId: template.templateId, guideId: template.guideId, fileDataURL })
+    const newReq = Object.assign({}, req, { __cssBundlePath }, { body: newBody }, { params: newParams })
+
+    return createPdfForTextTemplate(newReq, pdfOptions).then(pdfStream => {
+      const temporaryPath = getTemporaryPdfFilepath()
+      const fileStream = fs.createWriteStream(temporaryPath)
+      return new Promise((resolve, reject) => {
+        pdfStream.on('error', error => reject(error))
+        fileStream.on('finish', () => resolve(temporaryPath))
+        fileStream.on('error', error => reject(error))
+        pdfStream.pipe(fileStream)
+      })
+    })
+  }))
+
+  return combinePdfFiles(pdfFiles)
+}
+
+async function createPdfForTextTemplate (request, pdfOptions) {
+  const renderedWebpage = await getHtmlForRichText(request)
+  return getPdfForHtml(renderedWebpage, pdfOptions)
+}
+
 function getHtmlForRichText (request) {
   const webpageStream = render(request)
   return new Promise((resolve, reject) => {
@@ -239,11 +250,6 @@ function getHtmlForRichText (request) {
 
 function getPdfForHtml (html, pdfOptions) {
   return wkhtmltopdf(html, pdfOptions)
-}
-
-async function createPdfForTextTemplate (request, pdfOptions) {
-  const renderedWebpage = await getHtmlForRichText(request)
-  return getPdfForHtml(renderedWebpage, pdfOptions)
 }
 
 router.get('/header-footer', forwardCookies, function (req, res) {

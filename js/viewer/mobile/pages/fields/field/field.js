@@ -319,32 +319,35 @@ export let FieldVM = CanMap.extend('FieldVM', {
   expandTextlong (field) {
     const answerName = field.attr('name')
     const previewActive = this.attr('rState.previewActive')
+    // warning modal only in Author
     if (!answerName && previewActive) {
       this.attr('modalContent', { title: 'Author Warning', text: 'Text(long) fields require an assigned variable to expand' })
     }
     if (answerName) {
-      const answerIndex = field.attr('_answer.answerIndex')
-      const textlongValue = field._answer.attr('answer.values.' + answerIndex)
       const title = field.attr('label')
-      this.attr('modalContent', { title, textlongValue, answerIndex, answerName, field })
+      const textlongValue = field.attr('_answer.values')
+      const textlongVM = this
+      this.attr('modalContent', {
+        title,
+        textlongValue,
+        answerName,
+        field,
+        textlongVM
+      })
     }
+  },
+
+  fireModalClose (field, newValue, textlongVM) {
+    field.attr('_answer.values', newValue)
+    const selector = "[name='" + field.name + "']"
+    const longtextEl = $(selector)[0]
+    textlongVM.validateField(textlongVM, longtextEl)
   },
 
   connectedCallback (el) {
     const vm = this
     // default availableLength
     vm.attr('availableLength', vm.attr('field.maxChars'))
-
-    // modalClose event should fire any time modal is hidden
-    const $pageModal = $('#pageModal')
-    const pageModalHandler = function (ev) {
-      vm.dispatch('modalClose')
-    }
-    $pageModal.on('hidden.bs.modal', pageModalHandler)
-
-    return () => {
-      $pageModal.off('hidden.bs.modal', pageModalHandler)
-    }
   }
 })
 
@@ -414,15 +417,6 @@ export default Component.extend('FieldComponent', {
           })
         }
       }
-    },
-
-    '{viewModel} modalClose': function () {
-      const vm = this.viewModel
-      let field = vm.attr('field')
-      let _answer = field.attr('_answer')
-
-      const textlongValue = vm.attr('modalContent.textlongValue')
-      _answer.attr('values', textlongValue)
     }
   },
 

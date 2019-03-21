@@ -29,7 +29,11 @@ describe('<a2j-field>', () => {
 
       vm = new FieldVM({
         field: fieldStub,
-        traceMessage: new TraceMessage()
+        rState: {
+          traceMessage: new TraceMessage({
+            currentPageName: 'FieldTest'
+          })
+        }
       })
     })
 
@@ -65,10 +69,6 @@ describe('<a2j-field>', () => {
         [],
         'should return an empty list'
       )
-    })
-
-    it.skip('validateField', () => {
-      // TODO: needs rewrite
     })
 
     it('convertDate', () => {
@@ -168,7 +168,7 @@ describe('<a2j-field>', () => {
 
     it('passes textlong answer to modal', function () {
       const field = vm.attr('field')
-      field.attr('_answer.answer.values', [null, 'cash money'])
+      field.attr('_answer.values', 'cash money')
       field.attr({
         'type': 'textlong',
         'label': 'BigText'

@@ -20,7 +20,7 @@
 
           <h4 class="modal-title" id="pageModalLbl">
             {{#if(modalContent.title)}}
-              {{ eval(modalContent.title, repeatVarValue) }}
+              {{ eval(cleanHTML(modalContent.title), repeatVarValue) }}
             {{else}}
               <span class="glyphicon-lifebuoy" aria-hidden="true"></span>
             {{/if}}
@@ -32,7 +32,7 @@
             <textarea autofocus
               id="textlong-input"
               class="form-control expanded-textarea"
-              el:value:bind="modalContent.textlongValue">
+              value:bind="modalContent.textlongValue">
             </textarea>
           {{else}}
             {{{ eval(modalContent.text, repeatVarValue) }}}
@@ -40,7 +40,7 @@
             {{#if(modalContent.imageURL)}}
             <img
               class="modal-image"
-              el:src:from="normalizePath(mState.fileDataURL, modalContent.imageURL)" >
+              src:from="normalizePath(mState.fileDataURL, modalContent.imageURL)" >
             <a
               href="{{ normalizePath(mState.fileDataURL, modalContent.imageURL) }}" data-lightbox="image-1"
               class="btn btn-default pull-right"
@@ -59,14 +59,14 @@
               {{#if(./isGif(modalContent.videoURL))}}
                 <img
                   class="modal-video"
-                  el:src:from="normalizePath(mState.fileDataURL, modalContent.videoURL)"
+                  src:from="normalizePath(mState.fileDataURL, modalContent.videoURL)"
                 >
               {{else}}
                 <video
                   class="modal-video"
                   controls="controls"
                   controls-list="nodownload"
-                  el:src:from="normalizePath(scope/mState.fileDataURL, modalContent.videoURL)"
+                  src:from="normalizePath(scope/mState.fileDataURL, modalContent.videoURL)"
                 >
                   Sorry, your browser doesn't support embedded videos,
                   but don't worry, you can <a href="{{normalizePath(mState.fileDataURL, modalContent.videoURL)}}">download it</a>

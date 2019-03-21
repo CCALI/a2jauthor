@@ -17,7 +17,16 @@ export let ModalVM = DefineMap.extend('ViewerModalVM', {
   logic: {},
   interview: {},
 
-  fireCancel () {
+  closeModalHandler () {
+    // answer names are always lowercase versions in the answers map
+    const answerName = this.modalContent.attr('answerName') && this.modalContent.attr('answerName').toLowerCase()
+    if (answerName) {
+      const newValue = this.modalContent.attr('textlongValue')
+      const field = this.modalContent.attr('field')
+      const textlongVM = this.modalContent.attr('textlongVM')
+      textlongVM.fireModalClose(field, newValue, textlongVM)
+    }
+
     $('body').removeClass('bootstrap-styles')
   },
 
@@ -25,28 +34,17 @@ export let ModalVM = DefineMap.extend('ViewerModalVM', {
     const showModalHandler = () => {
       $('body').addClass('bootstrap-styles')
     }
-    const closeModalHandler = () => {
-      // answer names are always lowercase versions in the answers map
-      const answerName = this.modalContent.answerName && this.modalContent.answerName.toLowerCase()
-      if (answerName) {
-        const interviewAnswers = this.interview.answers
-        const answerValues = interviewAnswers.attr(answerName + '.values')
-        const textlongValue = this.scope.attr('modalContent.textlongValue')
-        const answerIndex = this.scope.attr('modalContent.answerIndex')
-
-        answerValues.attr(answerIndex, textlongValue)
-      }
-
-      this.fireCancel()
-      this.modalContent = null
+    const fireCloseModalHandler = () => {
+      // preserves `this` for handler
+      this.closeModalHandler()
     }
 
     $('#pageModal').on('shown.bs.modal', showModalHandler)
-    $('#pageModal').on('hidden.bs.modal', closeModalHandler)
+    $('#pageModal').on('hidden.bs.modal', fireCloseModalHandler)
 
     return () => {
       $('#pageModal').off('shown.bs.modal', showModalHandler)
-      $('#pageModal').off('hidden.bs.modal', closeModalHandler)
+      $('#pageModal').off('hidden.bs.modal', fireCloseModalHandler)
     }
   }
 })
@@ -66,10 +64,29 @@ export default Component.extend({
     eval (str) {
       str = typeof str === 'function' ? str() : str
       return this.logic.eval(str)
+    },
+
+    cleanHTML (html) {
+      var stripped = html.replace(/<[^>]*>/g, '')
+      return stripped
     }
   },
 
   events: {
+    '#pageModal keydown': function (el, ev) {
+      // esc key closing modal
+      if (ev.keyCode === 27) {
+        this.viewModel.modalContent.attr('textlongValue', ev.target.value)
+        this.viewModel.closeModalHandler()
+      }
+    },
+
+    '{viewModel} modalContent': function (vm, ev, newVal) {
+      if (newVal) {
+        $(this.element).find('#pageModal').modal()
+      }
+    },
+
     'a click': function (el, ev) {
       // popup from within a popup
       if (el.href && el.href.toLowerCase().indexOf('popup') === 0) {
@@ -102,19 +119,6 @@ export default Component.extend({
           const $el = $(el)
           $el.attr('target', '_blank')
         }
-      }
-    },
-
-    '{viewModel} modalContent': function (vm, ev, newVal) {
-      if (newVal) {
-        $(this.element).find('#pageModal').modal()
-      }
-    },
-
-    '#pageModal click' (target, event) {
-      const isBackgroundClick = $(event.target).is('.author-modal')
-      if (isBackgroundClick) {
-        this.viewModel.fireCancel()
       }
     }
   }

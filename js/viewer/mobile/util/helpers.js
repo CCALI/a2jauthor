@@ -22,7 +22,7 @@ stache.registerHelper('normalizePath', function (fileDataURL, path) {
 
 // override for setURL issue
 route.bindings.hashchange.setURL = function (path) {
-  location.hash = path.length ? '#!' + path : ''
+  window.location.hash = path.length ? '#!' + path : ''
   return path
 }
 

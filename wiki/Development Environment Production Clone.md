@@ -124,7 +124,7 @@ Do not commit this change to the repo.
 
 ## Node Proxy
 
-It is necessary to set up a proxy in apache in order to communicate with the node server's api routes.
+It is necessary to set up a proxy in apache in order to communicate with the node server's api routes. (See [/wiki/resources](../wiki/resources_) for sample configs)
 
 1. Add proxy config to apache conf:
     - Open `/Applications/MAMP/conf/apache/httpd.conf` in your editor. This may require `sudo` to edit.
@@ -137,7 +137,42 @@ It is necessary to set up a proxy in apache in order to communicate with the nod
         ProxyBadHeader Ignore
         ```
 
-2. Restart MAMP
+2. If you plan to run Author and a Standalone Viewer/DAT instance simultaneously
+then instead of adding the proxy settings to `httpd.conf` above, uncomment the line in `/Applications/MAMP/conf/apache/httpd.conf` that says:
+```
+# Virtual hosts
+Include /Applications/MAMP/conf/apache/extra/httpd-vhosts.conf
+```
+
+and update your `/Applications/MAMP/conf/apache/extra/httpd-vhosts.conf` file to have these virtual host definitions, updating the `DocumentRoot` paths to match your setup. (This assumes you are starting and running A2J Author Node instance on port 3000 and Viewer/DAT Node instance on port 23000)
+
+```
+# CALI Author
+<VirtualHost *:80>
+    DocumentRoot /Users/mitchel/Sites/CALI
+    ServerName caja.local
+
+    # Proxy for CALI Author
+    ProxyPreserveHost On
+    ProxyPass /api http://localhost:3000/api
+    ProxyPassReverse /api http://localhost:3000/api
+    ProxyBadHeader Ignore
+</VirtualHost>
+
+# Viewer/DAT standalone
+<VirtualHost *:80>
+    DocumentRoot /Users/mitchel/Sites/a2jStandalone
+    ServerName a2jviewer.local
+
+    # Proxy for Viewer/DAT standalone
+    ProxyPreserveHost On
+    ProxyPass /api http://localhost:23000/api
+    ProxyPassReverse /api http://localhost:23000/api
+    ProxyBadHeader Ignore
+</VirtualHost>
+```
+
+3. Restart MAMP
 
 You should now have access to a working production copy of the app at [http://localhost/CALI/app/js/author/index.production.html](http://localhost/CALI/app/js/author/index.production.html). Client-side changes will require running `npm run build:client`. Changes in `~/Sites/CALI/app/src/` will require restarting the node server.
 

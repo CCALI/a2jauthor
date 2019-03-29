@@ -1,0 +1,19 @@
+{
+  "SERVER_URL": "http://caja.local/CAJA",
+  "GUIDES_DIR": "/Users/mitchel/Sites/CALI/userfiles/",
+  "GUIDES_URL": "/userfiles/",
+  "SQL_HOST": "localhost",
+  "SQL_USERNAME": "root",
+  "SQL_PASSWD": "root",
+  "SQL_DBNAME": "caja",
+  "SQL_PORT": 3306,
+  "DRUPAL_HOST": "localhost",
+  "DRUPAL_USERNAME": "root",
+  "DRUPAL_PASSWD": "root",
+  "DRUPAL_DBNAME": "D7commons",
+  "DRUPAL_PORT": 3306,
+  "WKHTMLTOPDF_PATH": "/usr/local/bin/wkhtmltopdf",
+  "WKHTMLTOPDF_ZOOM": 1.0,
+  "WKHTMLTOPDF_DPI": 300,
+  "VIEWER_PATH": ""
+}

@@ -213,11 +213,17 @@ async function renderPdfForTextTemplates (templates, req, pdfOptions, fileDataUR
   const __cssBundlePath = getCssBundlePath()
   const pdfFiles = await Promise.all(templates.map(template => {
     // make unique request here for each templateId
-    const newParams = Object.assign({}, req.params, {fileDataURL})
-    const newBody = Object.assign({}, req.body, { templateId: template.templateId, guideId: template.guideId, fileDataURL })
-    const newReq = Object.assign({}, req, { __cssBundlePath }, { body: newBody }, { params: newParams })
+    const newBody = Object.assign({}, req.body, { templateId: template.templateId, fileDataURL })
+    const donessrRequestObject = {
+      protocol: req.protocol,
+      get: req.get,
+      headers: req.headers,
+      body: newBody,
+      connection: req.connection,
+      __cssBundlePath: __cssBundlePath
+    }
 
-    return createPdfForTextTemplate(newReq, pdfOptions).then(pdfStream => {
+    return createPdfForTextTemplate(donessrRequestObject, pdfOptions).then(pdfStream => {
       const temporaryPath = getTemporaryPdfFilepath()
       const fileStream = fs.createWriteStream(temporaryPath)
       return new Promise((resolve, reject) => {

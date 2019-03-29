@@ -16,6 +16,7 @@ export let ModalVM = DefineMap.extend('ViewerModalVM', {
   lastVisitedPageName: {},
   logic: {},
   interview: {},
+  previewActive: {},
 
   closeModalHandler () {
     // answer names are always lowercase versions in the answers map
@@ -32,7 +33,9 @@ export let ModalVM = DefineMap.extend('ViewerModalVM', {
 
   connectedCallback (el) {
     const showModalHandler = () => {
-      $('body').addClass('bootstrap-styles')
+      if (!this.previewActive) {
+        $('body').addClass('bootstrap-styles')
+      }
     }
     const fireCloseModalHandler = () => {
       // preserves `this` for handler

@@ -34,6 +34,7 @@
   logic:from="logic"
   interview:from="interview"
   modalContent:bind="modalContent"
+  previewActive:from="rState.previewActive"
   lastVisitedPageName:from="rState.lastVisitedPageName"
   repeatVarValue:from="rState.repeatVarValue"
   class="bootstrap-styles" />

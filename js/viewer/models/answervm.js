@@ -1,5 +1,4 @@
 import CanMap from 'can-map'
-import moment from 'moment'
 import _some from 'lodash/some'
 import _filter from 'lodash/filter'
 import Validations from 'caja/viewer/mobile/util/validations'
@@ -21,27 +20,10 @@ export default CanMap.extend('AnswerVM', {
     },
 
     values: {
-      get (lastSet) {
-        const type = this.attr('field.type')
-        const index = this.attr('answerIndex')
-        const previousValue = this.attr(`answer.values.${index}`)
-
-        if (type === 'datemdy') {
-          const date = moment(previousValue, 'MM/DD/YYYY')
-          return date.isValid() ? date.format('MM/DD/YYYY') : ''
-        }
-
-        return previousValue
-      },
-
       set (val) {
         const index = this.attr('answerIndex')
         const type = this.attr('field.type')
 
-        if (type === 'datemdy') {
-          const date = moment(val)
-          val = date.isValid() ? date.format('MM/DD/YYYY') : ''
-        }
         // TODO: this conversion allows for future locales
         // should probably be moved to a better place when that happens
         if (type === 'number' || type === 'numberdollar') {
@@ -103,8 +85,10 @@ export default CanMap.extend('AnswerVM', {
         invalid = validations.isNumber() || validations.required() || validations.min() || validations.max()
         break
       case 'numberpick':
-      case 'datemdy':
         invalid = validations.required() || validations.min() || validations.max()
+        break
+      case 'datemdy':
+        invalid = validations.isDate() || validations.required() || validations.min() || validations.max()
         break
       case 'gender':
       case 'textpick':

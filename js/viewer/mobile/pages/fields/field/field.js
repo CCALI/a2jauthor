@@ -236,8 +236,17 @@ export let FieldVM = CanMap.extend('FieldVM', {
       }
       this.attr('rState.traceMessage').addMessage(message)
     }
+
+    return errors
   },
 
+  /**
+   * @property {Function} field.ViewModel.prototype.preValidateNumber preValidateNumber
+   * @parent field.ViewModel
+   *
+   * number inputs use a normal text input and need to be pre-validated as text is entered
+   *
+   */
   preValidateNumber (ctx, el) {
     const $el = $(el)
     const field = this.attr('field')
@@ -289,24 +298,7 @@ export let FieldVM = CanMap.extend('FieldVM', {
     inputFormat = inputFormat || ''
     outputFormat = outputFormat || 'MM/DD/YYYY'
 
-    return (date && date !== 'TODAY') ? moment(date, inputFormat).format(outputFormat) : date
-  },
-
-  /**
-   * @property {Function} field.ViewModel.prototype.validateDatepicker validateDatepicker
-   * @parent field.ViewModel
-   *
-   * pre-formats datepicker dates
-   *
-   */
-  validateDatepicker ($el) {
-    let val = $el.val()
-    let unformattedVal = this.convertDate(val, 'MM/DD/YYYY')
-    $el.val(unformattedVal)
-
-    this.validateField(null, $el)
-
-    $el.val(val)
+    return (date && date.toUpperCase() !== 'TODAY') ? moment(date, inputFormat).format(outputFormat) : date
   },
 
   /*
@@ -344,10 +336,63 @@ export let FieldVM = CanMap.extend('FieldVM', {
     textlongVM.validateField(textlongVM, longtextEl)
   },
 
+  /**
+   * @property {Function} field.ViewModel.prototype.normalizeDateInput normalizeDateInput
+   * @parent field.ViewModel
+   *
+   * allows date inputs like '010203', '01/02/03', '01022003', '01-02-03'
+   * and reformats them to standard mm/dd/yyyy format
+   */
+  normalizeDateInput (dateVal) {
+    // preserve special value of 'TODAY'
+    if (dateVal.toUpperCase() === 'TODAY') { return dateVal }
+
+    let normalizedDate = dateVal.replace(/\/|-/g, '')
+
+    if (normalizedDate.length === 8 || normalizedDate.length === 6) {
+      const inputFormat = normalizedDate.length === 8 ? 'MMDDYYYY' : 'MMDDYY'
+      normalizedDate = this.convertDate(normalizedDate, 'MM/DD/YYYY', inputFormat)
+    }
+
+    return normalizedDate
+  },
+
   connectedCallback (el) {
     const vm = this
+
     // default availableLength
     vm.attr('availableLength', vm.attr('field.maxChars'))
+
+    // setup datepicker widget
+    if (vm.attr('field.type') === 'datemdy') {
+      const defaultDate = vm.attr('field._answer.values')
+        ? vm.normalizeDateInput(vm.attr('field._answer.values')) : null
+      // TODO: these dates need to be internationalized for output/input format
+      // min/max values currently only come in as mm/dd/yyyy, or special value, TODAY, which is handled in convertDate above
+      const minDate = vm.convertDate(vm.attr('field.min'), null, 'MM/DD/YYYY') || null
+      const maxDate = vm.convertDate(vm.attr('field.max'), null, 'MM/DD/YYYY') || null
+      const lang = vm.attr('lang')
+
+      $('input.datepicker-input', $(el)).datepicker({
+        defaultDate,
+        minDate,
+        maxDate,
+        changeMonth: true,
+        changeYear: true,
+        yearRange: constants.kMinYear + ':' + constants.kMaxYear,
+        monthNames: lang.MonthNamesLong.split(','),
+        monthNamesShort: lang.MonthNamesShort.split(','),
+        appendText: '(mm/dd/yyyy)',
+        dateFormat: 'mm/dd/yy',
+        onClose (val, datepickerInstance) {
+          const $el = $(this)
+          // assure clean date format before validation
+          const formattedDate = vm.normalizeDateInput($el.val())
+          $el.val(formattedDate)
+          vm.validateField(null, $el)
+        }
+      }).val(defaultDate)
+    }
   }
 })
 
@@ -374,35 +419,6 @@ export default Component.extend('FieldComponent', {
   leakScope: true,
 
   events: {
-    inserted () {
-      let vm = this.viewModel
-      if (vm.attr('field.type') === 'datemdy') {
-        let defaultDate = vm.convertDate(vm.attr('field._answer.values')) || null
-        // TODO: these dates need to be internationalized for output/input format
-        // min/max values currently only come in as mm/dd/yyyy, or special value, TODAY, which is handled in convertDate above
-        let minDate = vm.convertDate(vm.attr('field.min'), null, 'MM/DD/YYYY') || null
-        let maxDate = vm.convertDate(vm.attr('field.max'), null, 'MM/DD/YYYY') || null
-        let lang = vm.attr('lang')
-
-        $('input.datepicker-input', $(this.element)).datepicker({
-          defaultDate,
-          minDate,
-          maxDate,
-          changeMonth: true,
-          changeYear: true,
-          yearRange: constants.kMinYear + ':' + constants.kMaxYear,
-          monthNames: lang.MonthNamesLong.split(','),
-          monthNamesShort: lang.MonthNamesShort.split(','),
-          appendText: '(mm/dd/yyyy)',
-          dateFormat: 'mm/dd/yy',
-          onClose () {
-            let $el = $(this)
-            vm.validateDatepicker($el)
-          }
-        }).val(defaultDate)
-      }
-    },
-
     '{a2j-field input[type=checkbox]} change': function (values, ev) {
       const field = this.viewModel.attr('field')
 

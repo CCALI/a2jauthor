@@ -212,4 +212,40 @@ describe('Validations', function () {
       assert.equal(validations.isNumber(), true, 'NaN is invalid for A2J purposes')
     })
   })
+
+  describe('validations:isDate', function () {
+    beforeEach(function () {
+      validations = new Validations({
+        config: {
+          isDate: true
+        }
+      })
+    })
+
+    it('handles unanswered dates', function () {
+      // test is for `invalid`, so true is bad and false is good (valid number)
+      validations.attr('val', null)
+      assert.equal(validations.isDate(), false, 'null is ok as unanswered value')
+      validations.attr('val', undefined)
+      assert.equal(validations.isDate(), false, 'undefined is ok as unanswered value')
+      validations.attr('val', '')
+      assert.equal(validations.isDate(), false, 'empty string is ok as unanswered value')
+    })
+
+    it('fails on string dates that are too short or too long', function () {
+      validations.attr('val', '12345')
+      assert.equal(validations.isDate(), true, '5 too short, need 6 digits for valid mdy date sans slashes, ex: 020499')
+
+      validations.attr('val', '12345678911')
+      assert.equal(validations.isDate(), true, '11 too long, 10 digits is max with slashes, ex: 02/03/2014')
+    })
+
+    it('uses moment test valid dates for other cases', function () {
+      validations.attr('val', 'crazydate')
+      assert.equal(validations.isDate(), true, 'invalid string dates caught by moment library')
+
+      validations.attr('val', '02/02/1980')
+      assert.equal(validations.isDate(), false, 'invalid string dates caught by moment library')
+    })
+  })
 })

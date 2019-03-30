@@ -128,16 +128,7 @@ export default CanMap.extend({
      *
      * current value
      */
-    val: {
-      type (val) {
-        if (this.attr('config.type') === 'datemdy') {
-          let date = moment(val, 'MM/DD/YYYY')
-          return date.isValid() ? date.toDate() : ''
-        }
-
-        return val
-      }
-    }
+    val: {}
   },
 
   /**
@@ -231,6 +222,24 @@ export default CanMap.extend({
       // infinity, NaN, and -infinity are invalid, as are string numbers
         return !_isFinite(this.val)
       }
+    }
+  },
+
+  /**
+   * @property {String} validations.prototype.date date
+   * @parent validations
+   *
+   * check if valid date, return true if invalid, false === valid
+   */
+  isDate: function () {
+    // null, empty string, and undefined are valid as unanswered number questions
+    if (this.val == null || this.val === '') {
+      return false
+    // fail too short or too long values automatically
+    } else if (this.val.length < 6 || this.val.length > 10) {
+      return true
+    } else {
+      return !moment(this.val).isValid()
     }
   }
 })

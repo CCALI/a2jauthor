@@ -79,6 +79,16 @@ describe('<a2j-field>', () => {
       assert.equal(vm.convertDate('TODAY'), 'TODAY', 'should keep TODAY')
     })
 
+    it('normalizeDate', () => {
+      assert.equal(vm.normalizeDateInput('TODAY'), 'TODAY', 'should keep TODAY')
+      assert.equal(vm.normalizeDateInput('122315'), '12/23/2015', 'should normalize 6 digit dates')
+      assert.equal(vm.normalizeDateInput('12-23-15'), '12/23/2015', 'should normalize 6 digit dates with hyphens')
+      assert.equal(vm.normalizeDateInput('12/23/15'), '12/23/2015', 'should normalize 6 digit dates with slashes')
+      assert.equal(vm.normalizeDateInput('12232015'), '12/23/2015', 'should normalize 8 digit dates')
+      assert.equal(vm.normalizeDateInput('12-23-2015'), '12/23/2015', 'should normalize 8 digit dates with hyphens')
+      assert.equal(vm.normalizeDateInput('12/23/2015'), '12/23/2015', 'should normalize 8 digit dates with slashes')
+    })
+
     it('invalidPrompt', () => {
       /* jshint ignore:start */
       vm.attr('lang', {

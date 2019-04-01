@@ -60,7 +60,7 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
     // listen for _tLogic trace message events
     const tLogic = rState.logic._tLogic
     tLogic.listenTo('traceMessage', (ev) => {
-      this.traceMessage.addMessage(ev.message)
+      rState.traceMessage.addMessage(ev.message)
     })
 
     // if previewPageName is set, we need to make sure the viewer

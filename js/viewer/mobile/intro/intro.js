@@ -2,7 +2,15 @@ import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './intro.stache'
 
-const IntroVM = CanMap.extend({
+import 'can-map-define'
+
+const IntroVM = CanMap.extend('IntroVM', {
+  define: {
+    // passed in via mobile.stache
+    rState: {},
+    mState: {},
+    interview: {}
+  },
   navigate () {
     this.attr('rState').page = this.attr('interview.firstPage')
     this.attr('rState').view = 'pages'

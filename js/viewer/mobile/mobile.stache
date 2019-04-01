@@ -6,9 +6,9 @@
 <can-import from="caja/viewer/desktop/navigation/"/>
 
 <div>
-  {{#unless(tocOrCreditsShown())}}
+  {{#not(tocOrCreditsShown())}}
     <a2j-header pState:from="pState" mState:from="mState" interview:from="interview" />
-  {{/unless}}
+  {{/not}}
 
   {{#if(mState.showCredits)}}
     <div filler can-click="hideCredits()">
@@ -23,32 +23,33 @@
     </div>
   {{/if}}
 
-  {{#unless(tocOrCreditsShown())}}
-    {{#equal(rState.view, 'intro')}}
+  {{#not(tocOrCreditsShown())}}
+    {{#eq(rState.view, 'intro')}}
       <a2j-intro
-        rState:bind="rState"
-        pState:bind="pState"
-        mState:bind="mState"
-        interview:bind="interview">
+        rState:from="rState"
+        mState:from="mState"
+        interview:from="interview">
       </a2j-intro>
-    {{/equal}}
+    {{/eq}}
 
-    {{#equal(rState.view, 'complete')}}
+    {{#eq(rState.view, 'complete')}}
       <img src="{{joinBase 'viewer/images/logo_big.png'}}" class="img-responsive"/>
       <div class="btn-group btn-group-justified">
         <a href="{{mState.redirect}}" class="btn btn-primary">{{lang.Continue}}</a>
       </div>
-    {{/equal}}
-    {{#equal(rState.view, 'pages')}}
+    {{/eq}}
+
+    {{#eq(rState.view, 'pages')}}
       <a2j-viewer-navigation
         repeatVarValue:from="rState.repeatVarValue"
         selectedPageName:from="rState.selectedPageName"
         lang:from="lang"
         logic:from="logic"
+        appState:from="rState"
+        interview:from="interview"
         selectedPageName:bind="rState.page"
-        appState:bind="rState"
-        interview:bind="interview"/>
-        selectedPageIndex:bind="rState.selectedPageIndex"
+        selectedPageIndex:bind="rState.selectedPageIndex" />
+
       <a2j-pages
         currentPage:from="rState.currentPage"
         lang:from="lang"
@@ -58,6 +59,6 @@
         mState:from="mState"
         interview:from="interview"
         modalContent:bind="modalContent" />
-    {{/equal}}
-  {{/unless}}
+    {{/eq}}
+  {{/not}}
 </div>

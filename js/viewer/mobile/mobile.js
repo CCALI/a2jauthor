@@ -1,8 +1,19 @@
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './mobile.stache'
+import 'can-map-define'
 
-let MobileViewerVM = CanMap.extend({
+let MobileViewerVM = CanMap.extend('MobileViewerVM', {
+  define: {
+    // passed in via app.stache bindings
+    lang: {},
+    logic: {},
+    rState: {},
+    pState: {},
+    mState: {},
+    interview: {},
+    modalContent: {}
+  },
   hideCredits: function () {
     this.attr('mState.showCredits', false)
   }

@@ -20,11 +20,11 @@ export let ModalVM = DefineMap.extend('ViewerModalVM', {
 
   closeModalHandler () {
     // answer names are always lowercase versions in the answers map
-    const answerName = this.modalContent.attr('answerName') && this.modalContent.attr('answerName').toLowerCase()
+    const answerName = this.modalContent.answerName && this.modalContent.answerName.toLowerCase()
     if (answerName) {
-      const newValue = this.modalContent.attr('textlongValue')
-      const field = this.modalContent.attr('field')
-      const textlongVM = this.modalContent.attr('textlongVM')
+      const newValue = this.modalContent.textlongValue
+      const field = this.modalContent.field
+      const textlongVM = this.modalContent.textlongVM
       textlongVM.fireModalClose(field, newValue, textlongVM)
     }
 
@@ -100,7 +100,7 @@ export default Component.extend({
         if (pages) {
           const pageName = el.href.replace('popup://', '').replace('POPUP://', '').replace('/', '') // pathname is not supported in FF and IE.
           const page = pages.find(pageName)
-          const sourcePageName = this.scope.rState.lastVisitedPageName
+          const sourcePageName = this.scope.lastVisitedPageName
 
           // piwik tracking of popups
           if (window._paq) {

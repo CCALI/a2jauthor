@@ -9,6 +9,7 @@ const IntroVM = CanMap.extend('IntroVM', {
     // passed in via mobile.stache
     rState: {},
     mState: {},
+    pState: {},
     interview: {}
   },
   navigate () {

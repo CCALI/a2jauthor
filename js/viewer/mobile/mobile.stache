@@ -28,6 +28,7 @@
       <a2j-intro
         rState:from="rState"
         mState:from="mState"
+        pState:from="pState"
         interview:from="interview">
       </a2j-intro>
     {{/eq}}

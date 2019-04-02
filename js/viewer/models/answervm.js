@@ -19,7 +19,17 @@ export default CanMap.extend('AnswerVM', {
       value: 1
     },
 
+    // TODO: find a better way to handle setting and restoring values
+    // at the very least, rename this to something better: ex,`getSetValues`
+    // `values` is confusing when reading this along side other code.
     values: {
+      get (lastSet) {
+        const index = this.attr('answerIndex')
+        const previousValue = this.attr(`answer.values.${index}`)
+
+        return previousValue
+      },
+
       set (val) {
         const index = this.attr('answerIndex')
         const type = this.attr('field.type')

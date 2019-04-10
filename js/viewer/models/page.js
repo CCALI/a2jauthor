@@ -10,7 +10,7 @@ const userGenderVarName = 'user gender'
 const Page = CanMap.extend({
   define: {
     step: {
-      // forces the convertion of TStep objects when converting
+      // forces the conversion of TStep objects when converting
       // `window.gGuide` to an Interview model instance.
       Type: CanMap
     },

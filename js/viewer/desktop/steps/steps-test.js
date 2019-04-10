@@ -180,18 +180,15 @@ describe('<a2j-viewer-steps>', function () {
     })
 
     it('getTextForStep', () => {
-      let stepVar = vm.attr('interview.answers.a2j step 0')
+      const step = vm.attr('interview.steps.0')
+      const stepVar = vm.attr('interview.answers.a2j step 0')
+
+      assert.equal(vm.getDisplayTextForStep(step), 'Audio Test', 'show default step sign text')
+      // update matching step var
       stepVar.attr('values.1', 'New Sign Text')
-      const step = vm.attr('interview.steps.0')
       assert.equal(vm.getDisplayTextForStep(step), 'New Sign Text', 'Authors can set new sign displayText')
-    })
-
-    it('Returns original step text if a2j step variable cleared', () => {
-      let stepToUpdate = vm.attr('interview.answers.a2j step 0')
-      stepToUpdate.attr('values.1', 'New Sign Text')
-      stepToUpdate.attr('values.1', '')
-      const step = vm.attr('interview.steps.0')
-
+      // clear custom value
+      stepVar.attr('values.1', '')
       assert.equal(vm.getDisplayTextForStep(step), 'Audio Test', 'should restore text when step var set to empty string')
     })
 

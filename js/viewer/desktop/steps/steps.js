@@ -153,7 +153,7 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
         if (answers) {
           canReflect.eachKey(answers, function (answer) {
             if (answer && answer.name && answer.name.indexOf('A2J Step') !== -1) {
-              answer.attr('values') // setup binding on values(1)
+              answer.attr('values.length') // setup binding on values
               a2jStepVars.push(answer)
             }
           })

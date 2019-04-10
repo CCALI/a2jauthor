@@ -11,7 +11,7 @@
       class="form-control"
       name="{{field.name}}"
       {{#if(field.required)}}required{{/if}}
-      on:change="validateField"
+      on:change="validateField(null, scope.element)"
       value:bind="field._answer.values"
       on:input="calcAvailableLength(scope.event)"
       placeholder="{{suggestionText}}" />

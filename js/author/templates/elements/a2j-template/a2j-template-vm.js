@@ -52,6 +52,7 @@ export default CanMap.extend('A2JTemplateVM', {
     // passed in
     leftOperand: {},
     leftOperandType: {},
+    guide: {},
 
     /**
      * @property {Answers} conditional.ViewModel.prototype.answers answers

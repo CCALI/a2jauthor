@@ -41,11 +41,11 @@ const render = ssr({
   config: path.join(__dirname, '..', '..', 'package.json!npm')
 }, {
   // this allows for debugging in Node --inspect-brk
-  // setting a max of 15 seconds before done-ssr times out
+  // setting a max of 20 seconds before done-ssr times out
   // this does not prevent done-ssr from finishing earlier if
-  // the render is complete. see this issue for more details:
+  // the render is complete.
   //
-  timeout: 15000
+  timeout: 20000
 })
 
 const config = getConfig()
@@ -78,26 +78,25 @@ router.post('/', checkPresenceOf, (req, res) => {
 
 async function assemble (req, res) {
   debug('Request body:', req.body)
-  const pdfOptions = Object.assign(
-    getRequestPdfOptions(req),
-    configPdfOptions,
-    {
-      'header-spacing': 5,
-      'footer-spacing': 5,
-      'margin-top': 20
-    }
-  )
-
   const cookieHeader = req.headers.cookie
   let { fileDataURL } = req.body
   const { isTestAssemble, guideTitle, guideId, templateId, answers: answersJson } = req.body
-  const htmlOptions = req // Done SSR needs the whole request, sadly
   const downloadName = isTestAssemble ? filenamify(guideTitle + ' test assemble') : filenamify(guideTitle)
 
+  // if there is no fileDataURL, we are in Author preview and need to build it
+  // TODO: this is a middle step until Author, Viewer, and DAT are separate apps
+  // and username/guideId will no longer be needed to build paths
+  let username = ''
+  if (!fileDataURL) {
+    username = await user.getCurrentUser({cookieHeader})
+    fileDataURL = paths.getGuideDirPath(username, guideId, fileDataURL)
+  }
+
+  // if single template, this is Author Test Assemble
   const isSingleTemplateAssemble = !!templateId
   if (isSingleTemplateAssemble) {
-    const template = { guideId, templateId }
-    return renderPdfForTextTemplates([template], htmlOptions, pdfOptions)
+    const template = await getSingleTemplate(templateId, fileDataURL)
+    return renderPdfForTextTemplates([template], req, fileDataURL)
     .then(pdf => {
       setDownloadHeaders(res, downloadName)
       return new Promise((resolve, reject) => {
@@ -110,15 +109,6 @@ async function assemble (req, res) {
         })
       })
     })
-  }
-
-  // if there is no fileDataURL, we are in Author preview and need to build it
-  // TODO: this is a middle step until Author, Viewer, and DAT are separate apps
-  // and username/guideId will no longer be needed to build paths
-  let username = ''
-  if (!fileDataURL) {
-    username = await user.getCurrentUser({cookieHeader})
-    fileDataURL = paths.getGuideDirPath(username, guideId, fileDataURL)
   }
 
   const answers = JSON.parse(answersJson)
@@ -134,7 +124,7 @@ async function assemble (req, res) {
         return renderPdfForPdfTemplates(username, templates, variables, answers, fileDataURL)
       }
 
-      return renderPdfForTextTemplates(templates, req, pdfOptions, fileDataURL)
+      return renderPdfForTextTemplates(templates, req, fileDataURL)
     }
   )).catch(error => {
     debug('Assemble error:', error)
@@ -152,6 +142,11 @@ async function assemble (req, res) {
       return resolve()
     })
   })
+}
+
+async function getSingleTemplate (templateId, fileDataURL) {
+  return paths.getTemplatePath({ username: '', guideID: '', templateId, fileDataURL })
+  .then((path) => files.readJSON({ path }))
 }
 
 async function getTemplatesForGuide (username, guideId, fileDataURL) {
@@ -209,19 +204,40 @@ async function combinePdfFiles (pdfFiles) {
   return firstPdf
 }
 
-async function renderPdfForTextTemplates (templates, req, pdfOptions, fileDataURL) {
+async function renderPdfForTextTemplates (templates, req, fileDataURL) {
   const __cssBundlePath = getCssBundlePath()
   const pdfFiles = await Promise.all(templates.map(template => {
     // make unique request here for each templateId
-    const newBody = Object.assign({}, req.body, { templateId: template.templateId, fileDataURL })
-    const donessrRequestObject = {
+    const newBody = Object.assign({}, req.body,
+      { templateId: template.templateId,
+        header: template.header,
+        hideHeaderOnFirstPage: template.hideHeaderOnFirstPage,
+        footer: template.footer,
+        hideFooterOnFirstPage: template.hideFooterOnFirstPage,
+        fileDataURL
+      }
+    )
+
+    const donessrRequestObject = Object.assign({}, {
       protocol: req.protocol,
+      originalUrl: req.originalUrl,
       get: req.get,
       headers: req.headers,
       body: newBody,
       connection: req.connection,
       __cssBundlePath: __cssBundlePath
-    }
+    })
+
+    const reqPdfOptions = Object.assign({}, getRequestPdfOptions(donessrRequestObject))
+    const pdfOptions = Object.assign({},
+      reqPdfOptions,
+      configPdfOptions,
+      {
+        'header-spacing': 5,
+        'footer-spacing': 5,
+        'margin-top': 20
+      }
+    )
 
     return createPdfForTextTemplate(donessrRequestObject, pdfOptions).then(pdfStream => {
       const temporaryPath = getTemporaryPdfFilepath()

@@ -1,8 +1,8 @@
 <can-import from="caja/author/templates/elements/a2j-rich-text/" />
 <can-import from="caja/author/templates/elements/a2j-header-footer/a2j-header-footer.less!" />
 
-{{#unless editActive}}
-  {{#if containsWords}}
+{{#not(editActive)}}
+  {{#if(containsWords)}}
     <div class="preview" on:click="setEditActive(true)">
       {{{ userContent }}}
     </div>
@@ -26,7 +26,7 @@
 
     <div class="text-center checkbox">
       <label>
-        <input type="checkbox" can-value="notDisplayedOnFirstPage">
+        <input type="checkbox" checked:bind="notDisplayedOnFirstPage">
         Don't display on first page
       </label>
     </div>
@@ -34,4 +34,4 @@
       <button on:click="setEditActive(false)" class="btn btn-primary">Save &amp; Close</button>
     </div>
   </div>
-{{/unless}}
+{{/not}}

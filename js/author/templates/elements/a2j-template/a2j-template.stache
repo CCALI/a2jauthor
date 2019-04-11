@@ -30,59 +30,64 @@
 
       {{#is (childNode.tag, 'a2j-page-break') }}
         <a2j-page-break
-          notes:bind="childNode.state.notes"
 
           nodeId:from="childNode.id"
-          cloneNode:from="scope/cloneNode"
           deleted:from="childNode.state.deleted"
+          editActive:from="childNode.state.editActive"
+          notes:bind="childNode.state.notes"
+
+          cloneNode:from="scope/cloneNode"
           deleteNode:from="scope/deleteNode"
           updateNode:from="scope/updateNode"
           editEnabled:from="this.editEnabled"
           fontProperties:from="this.fontProperties"
-          editActive:from="childNode.state.editActive"
           toggleEditActiveNode:from="toggleEditActiveNode"
         />
       {{/is}}
 
       {{#is (childNode.tag, 'a2j-section-title') }}
         <a2j-section-title
+          nodeId:from="childNode.id"
+          deleted:from="childNode.state.deleted"
+          editActive:from="childNode.state.editActive"
           title:bind="childNode.state.title"
           underline:bind="childNode.state.underline"
+          titleTag:bind="childNode.state.titleTag"
 
-          nodeId:from="childNode.id"
           cloneNode:from="scope/cloneNode"
-          deleted:from="childNode.state.deleted"
           deleteNode:from="scope/deleteNode"
           updateNode:from="scope/updateNode"
           editEnabled:from="this.editEnabled"
           fontProperties:from="this.fontProperties"
-          editActive:from="childNode.state.editActive"
           toggleEditActiveNode:from="toggleEditActiveNode"
           sectionCounter:from="scope/rootNode.state.sectionCounter"
-          titleTag:bind="childNode.state.titleTag"
         />
       {{/is}}
 
       {{#is (childNode.tag, 'a2j-rich-text') }}
         <a2j-rich-text
-          notes:bind="childNode.state.notes"
-          userContent:bind="childNode.state.userContent"
           nodeId:from="childNode.id"
+          userContent:bind="childNode.state.userContent"
+          deleted:from="childNode.state.deleted"
+          editActive:from="childNode.state.editActive"
+          notes:bind="childNode.state.notes"
+
           answers:from="scope/answers"
           cloneNode:from="scope/cloneNode"
           useAnswers:from="this.useAnswers"
-          deleted:from="childNode.state.deleted"
           deleteNode:from="scope/deleteNode"
           updateNode:from="scope/updateNode"
           editEnabled:from="this.editEnabled"
           fontProperties:from="this.fontProperties"
-          editActive:from="childNode.state.editActive"
           toggleEditActiveNode:from="toggleEditActiveNode"
         />
       {{/is}}
 
       {{#is (childNode.tag, 'a2j-conditional') }}
         <a2j-conditional
+          nodeId:from="childNode.id"
+          deleted:from="childNode.state.deleted"
+          editActive:from="childNode.state.editActive"
           children:bind="childNode.children"
           operator:bind="childNode.state.operator"
           elseClause:bind="childNode.state.elseClause"
@@ -92,46 +97,43 @@
           leftOperandType:bind="childNode.state.leftOperandType"
           rightOperandType:bind="childNode.state.rightOperandType"
 
-          nodeId:from="childNode.id"
           answers:from="answers"
           cloneNode:from="cloneNode"
           useAnswers:from="useAnswers"
-          deleted:from="childNode.state.deleted"
           deleteNode:from="deleteNode"
           updateNode:from="updateNode"
           editEnabled:from="editEnabled"
           fontProperties:from="fontProperties"
-          editActive:bind="childNode.state.editActive"
           toggleEditActiveNode:from="toggleEditActiveNode"
         />
       {{/is}}
 
       {{#is (childNode.tag, 'a2j-repeat-loop') }}
         <a2j-repeat-loop
-          loopType:bind="childNode.state.loopType"
-          loopTitle:bind="childNode.state.loopTitle"
-          listItems:bind="childNode.state.listItems"
-          tableStyle:bind="childNode.state.tableStyle"
-          loopCounter:bind="childNode.state.loopCounter"
-          displayType:bind="childNode.state.displayType"
-          tableColumns:bind="childNode.state.tableColumns"
-          loopVariable:bind="childNode.state.loopVariable"
-          variablesList:bind="this.guide.variablesList"
-          loopTitleTag:bind="childNode.state.loopTitleTag"
-          loopRichText:bind="childNode.state.loopRichText"
-          listStyleType:bind="childNode.state.listStyleType"
-          repeatEachInOneList:bind="childNode.state.repeatEachInOneList"
-
           nodeId:from="childNode.id"
+          editActive:from="childNode.state.editActive"
+          loopType:from="childNode.state.loopType"
+          loopTitle:from="childNode.state.loopTitle"
+          listItems:from="childNode.state.listItems"
+          tableStyle:from="childNode.state.tableStyle"
+          loopCounter:from="childNode.state.loopCounter"
+          displayType:from="childNode.state.displayType"
+          tableColumns:from="childNode.state.tableColumns"
+          loopVariable:from="childNode.state.loopVariable"
+          variablesList:from="this.guide.variablesList"
+          loopTitleTag:from="childNode.state.loopTitleTag"
+          loopRichText:from="childNode.state.loopRichText"
+          listStyleType:from="childNode.state.listStyleType"
+          deleted:from="childNode.state.deleted"
+          repeatEachInOneList:from="childNode.state.repeatEachInOneList"
+
           answers:from="scope/answers"
           cloneNode:from="scope/cloneNode"
-          useAnswers:from="this.useAnswers"
-          deleted:from="childNode.state.deleted"
           deleteNode:from="scope/deleteNode"
           updateNode:from="scope/updateNode"
+          useAnswers:from="this.useAnswers"
           editEnabled:from="this.editEnabled"
           fontProperties:from="this.fontProperties"
-          editActive:from="childNode.state.editActive"
           toggleEditActiveNode:from="toggleEditActiveNode"
         />
       {{/is}}

@@ -18,23 +18,23 @@
     <div class="panel panel-warning">
       <div class="panel-heading">
         IF
-        {{#if(../leftOperand)}}
+        {{#if (scope/leftOperand)}}
           <span class="label label-default">
-            {{#is(../leftOperandType, 'variable')}}
-              <a2j-variable name:from="../leftOperand" />
+            {{#is(scope/leftOperandType, 'variable')}}
+              <a2j-variable name:from="scope/leftOperand" />
             {{else}}
-              {{../leftOperand}}
+              {{scope/leftOperand}}
             {{/is}}
           </span>
 
-          {{formatOperator(../operator)}}
+          {{formatOperator(scope/operator)}}
 
-          {{#if ../rightOperand}}
+          {{#if (scope/rightOperand)}}
             <span class="label label-default">
-              {{#is(../rightOperandType, 'variable')}}
-                <a2j-variable vm:name:from="../rightOperand" />
+              {{#is(scope/rightOperandType, 'variable')}}
+                <a2j-variable vm:name:from="scope/rightOperand" />
               {{else}}
-                {{../rightOperand}}
+                {{scope/rightOperand}}
               {{/is}}
             </span>
           {{/if}}
@@ -44,32 +44,32 @@
       <div class="panel-body">
         <a2j-template
           editEnabled:from="true"
-          template:bind="../ifBody"
-          saveCallback:from="../updateNodeState"
+          template:from="scope/ifBody"
+          saveCallback:from="scope/updateNodeState"
         />
 
         <conditional-add-element
-          template:bind="../ifBody"
-          nodeId:from="../addToIfNode.id"
-          selected:bind="../addToIfNode.state.editActive"
+          template:from="scope/ifBody"
+          nodeId:from="scope/addToIfNode.id"
+          selected:bind="scope/addToIfNode.state.editActive"
           toggleEditActiveNode:from="toggleEditActiveNode"
         />
       </div>
 
-      {{#if(../elseClause)}}
+      {{#if (scope/elseClause)}}
         <div class="panel-else">ELSE</div>
 
         <div class="panel-body">
           <a2j-template
             editEnabled:from="true"
-            template:bind="../elseBody"
-            saveCallback:from="../updateNodeState"
+            template:from="scope/elseBody"
+            saveCallback:from="scope/updateNodeState"
           />
 
           <conditional-add-element
-            template:bind="../elseBody"
-            nodeId:from="../addToElseNode.id"
-            selected:bind="../addToElseNode.state.editActive"
+            template:from="scope/elseBody"
+            nodeId:from="scope/addToElseNode.id"
+            selected:bind="scope/addToElseNode.state.editActive"
             toggleEditActiveNode:from="toggleEditActiveNode"
           />
         </div>
@@ -86,16 +86,16 @@
       saveAndClose:from="updateNode"
     >
       <condition-form
-        variablesList:from="../variablesList"
-        operator:bind="../operator"
-        leftOperand:bind="../leftOperand"
-        rightOperand:bind="../rightOperand"
-        rightOperandType:bind="../rightOperandType"
+        variablesList:from="scope/variablesList"
+        operator:bind="scope/operator"
+        leftOperand:bind="scope/leftOperand"
+        rightOperand:bind="scope/rightOperand"
+        rightOperandType:bind="scope/rightOperandType"
       />
 
       <div class="checkbox">
         <label>
-          <input type="checkbox" checked:bind="../elseClause"> Else Clause
+          <input type="checkbox" checked:bind="scope/elseClause"> Else Clause
         </label>
       </div>
     </element-options-pane>
@@ -103,17 +103,17 @@
 {{else}}
   {{#if evalCondition()}}
     <a2j-template
-      useAnswers:from="true"
-      answers:from="../answers"
-      template:from="../ifBody"
-      editEnabled:from="false"
+      useAnswers:raw="true"
+      answers:from="scope/answers"
+      template:from="scope/ifBody"
+      editEnabled:raw="false"
     />
   {{else}}
     <a2j-template
-      useAnswers:from="true"
-      answers:from="../answers"
-      editEnabled:from="false"
-      template:from="../elseBody"
+      useAnswers:raw="true"
+      answers:from="scope/answers"
+      editEnabled:raw="false"
+      template:from="scope/elseBody"
     />
   {{/if}}
 {{/if}}

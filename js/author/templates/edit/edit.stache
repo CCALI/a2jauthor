@@ -15,9 +15,9 @@
     {{#if(a2jTemplate)}}
       {{#if(isPdfTemplate)}}
         <pdf-editor
-          guideId:bind="guideId"
-          guide:bind="guide"
-          template:bind="a2jTemplate"
+          guideId:from="guideId"
+          guide:from="guide"
+          template:from="a2jTemplate"
         />
       {{else}}
         <template-edit-toolbar guideId:bind="guideId" template:bind="a2jTemplate" />
@@ -41,9 +41,9 @@
               {{#if(a2jTemplate.rootNode.children.length)}}
                 <a2j-template
                 id="page-template"
-                guide:bind="guide"
+                guide:from="guide"
                 editEnabled:raw="true"
-                template:bind="a2jTemplate" />
+                template:from="a2jTemplate" />
               {{else}}
                 <a2j-blank-template />
               {{/if}}
@@ -61,7 +61,7 @@
             {{! right column where template options tab is rendered }}
             <div class="col-md-4">
               <template-edit-tabs
-              template:bind="a2jTemplate"
+              template:from="a2jTemplate"
               editingHeader:to="editingHeader"
               editingFooter:to="editingFooter"
               variablesList:from="guide.variablesList"

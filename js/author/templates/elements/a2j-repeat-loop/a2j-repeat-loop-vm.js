@@ -13,6 +13,16 @@ import 'can-map-define'
  */
 export default CanMap.extend({
   define: {
+    // passed in via stache
+    nodeId: {},
+    variablesList: {},
+    answers: {},
+    cloneNode: {},
+    useAnswers: {},
+    deleteNode: {},
+    updateNode: {},
+    fontProperties: {},
+    toggleEditActiveNode: {},
     /**
      * @property {Boolean} repeatLoop.ViewModel.prototype.editEnabled editEnabled
      * @parent repeatLoop.ViewModel

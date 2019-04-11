@@ -9,6 +9,10 @@ import Answers from 'caja/author/models/answers'
  */
 export default CanMap.extend('A2JVariableVM', {
   define: {
+    // passed in via stache
+    useAnswers: {},
+    name: {},
+
     /**
      * @property {Answers} answers
      *
@@ -97,8 +101,6 @@ export default CanMap.extend('A2JVariableVM', {
 
         return useAnswers && value == null
       }
-    },
-
-    name: {}
+    }
   }
 })

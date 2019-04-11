@@ -4,7 +4,7 @@
 <can-import from="caja/author/templates/elements/element-container/" />
 <can-import from="caja/author/templates/elements/a2j-repeat-loop/a2j-repeat-loop.less!" />
 
-{{#if (../editEnabled) }}
+{{#if (scope/editEnabled) }}
   <element-container
     nodeId:from="nodeId"
     deleted:from="deleted"
@@ -15,11 +15,11 @@
 
     <div class="panel panel-info">
       <div class="panel-heading">
-        {{#if (../useLoopCounter) }}
-          REPEAT <span class="label label-default">{{../loopCounter}}</span>
-          {{#is (../loopCounter, 1) }}TIME{{else}}TIMES{{/is}} in {{displayTypeText()}}
+        {{#if (scope/useLoopCounter) }}
+          REPEAT <span class="label label-default">{{scope/loopCounter}}</span>
+          {{#is (scope/loopCounter, 1) }}TIME{{else}}TIMES{{/is}} in {{displayTypeText()}}
         {{else}}
-          LOOP FOR EACH <span class="label label-default">{{../loopVariable}}</span>
+          LOOP FOR EACH <span class="label label-default">{{scope/loopVariable}}</span>
           in {{displayTypeText()}}
         {{/if}}
       </div>
@@ -27,25 +27,25 @@
       <div class="panel-body" style="{{scope/fontProperties}}">
         {{{ showRepeatLoopTitle() }}}
 
-        {{#is (../displayType, "table") }}
+        {{#is (scope/displayType, "table") }}
           {{> loop-table-tpl }}
         {{/is}}
 
-        {{#is (../displayType, "list") }}
+        {{#is (scope/displayType, "list") }}
           {{> loop-list-tpl }}
         {{/is}}
 
-        {{#is (../displayType, "text") }}
-          {{#if (../editActive) }}
-            <textarea>{{../loopRichText}}</textarea>
+        {{#is (scope/displayType, "text") }}
+          {{#if (scope/editActive) }}
+            <textarea>{{scope/loopRichText}}</textarea>
           {{else}}
-            {{a2jParse(../loopRichText)}}
+            {{a2jParse(scope/loopRichText)}}
           {{/if}}
         {{/is}}
       </div>
 
       <div class="panel-footer">
-        {{#if (../useLoopCounter) }}
+        {{#if (scope/useLoopCounter) }}
           END REPEAT
         {{else}}
           END LOOP
@@ -59,19 +59,18 @@
   {{/if}}
 {{else}}
   <div style="{{scope/fontProperties}}">
-    {{{ ../showRepeatLoopTitle() }}}
-
-    {{#is (../displayType, "table") }}
+    {{{ scope/showRepeatLoopTitle() }}}
+    {{#is (scope/displayType, "table") }}
       {{> loop-table-tpl }}
     {{/is}}
 
-    {{#is (../displayType, "list") }}
+    {{#is (scope/displayType, "list") }}
       {{> loop-list-tpl }}
     {{/is}}
 
-    {{#is (../displayType, "text") }}
-      {{#for (item of ../loopCollection) }}
-        {{ item.a2jParse(item.loopRichText, scope.index) }}
+    {{#is (scope/displayType, "text") }}
+      {{#for (loopIndex of scope/loopCollection) }}
+        {{ a2jParse(loopRichText, loopIndex) }}
       {{/for}}
     {{/is}}
   </div>

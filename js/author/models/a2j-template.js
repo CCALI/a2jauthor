@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import moment from 'moment'
 import Model from 'can-model'
 import _omit from 'lodash/omit'

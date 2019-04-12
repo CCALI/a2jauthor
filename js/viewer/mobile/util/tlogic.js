@@ -665,9 +665,13 @@
     })
 
     gLogic.addUserFunction('Sum', 1, function (readableListString) {
-      // Sum needs an array of number values from the friendly display string
       var sum = 0
-
+      // multi-value number variables of length one are a number already
+      if (typeof readableListString === 'number') {
+        return readableListString
+      }
+      // longer lists of multi-value number variables are
+      // converted to a readable string, ex: "13 and 5 and 8"
       if (readableListString && typeof readableListString === 'string') {
         var answerValues = readableListString.replace('and', ',').split(',')
         for (var i = 0; i < answerValues.length; i++) {

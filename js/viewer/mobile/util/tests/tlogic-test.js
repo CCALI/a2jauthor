@@ -17,6 +17,11 @@ describe('Tlogic', function () {
   })
 
   describe('SUM', function () {
+    it('SUM just returns the passed in value if given a number', function () {
+      let totalValue = testLogic._CF('SUM', 42)
+      assert.equal(totalValue, 42)
+    })
+
     it('SUM converts readableList display string and totals values', function () {
       let totalValue = testLogic._CF('SUM', '100, 200 and 300')
       assert.equal(totalValue, 600)

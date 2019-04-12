@@ -109,12 +109,10 @@
             </div>
 
             <div class="col-md-3 table-column-buttons">
-              <span class="label label-success" on:
-              click="scope/addColumn()">+</span>
+              <span class="label label-success" on:click="scope/addColumn()">+</span>
 
               {{#showRemoveButton(scope.index)}}
-                <span class="label label-danger" on:
-                click="scope/removeColumn(scope.index)">-</span>
+                <span class="label label-danger" on:click="scope/removeColumn(scope.index)">-</span>
               {{/showRemoveButton}}
             </div>
           </div>
@@ -167,12 +165,10 @@
               </div>
 
               <div class="col-md-4 table-column-buttons">
-                <span class="label label-success" on:
-                click="scope/addListItem()">+</span>
+                <span class="label label-success" on:click="scope/addListItem()">+</span>
 
                 {{#showRemoveButton(scope.index)}}
-                  <span class="label label-danger" on:
-                  click="scope/removeListItem(scope.index)">-</span>
+                  <span class="label label-danger" on:click="scope/removeListItem(scope.index)">-</span>
                 {{/showRemoveButton}}
               </div>
             </div>

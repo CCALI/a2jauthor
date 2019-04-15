@@ -87,7 +87,7 @@ export default function bindCustomEvents (appState) {
     // do nothing if `a2j-fields` component not in the DOM.
     if (!$fields.length) return
 
-    let pageFields = $fields.viewModel().attr('fields')
+    let pageFields = $fields[0].viewModel.attr('fields')
 
     pageFields.forEach(function (field) {
       let answer = field.attr('_answer')

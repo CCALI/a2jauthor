@@ -14,6 +14,18 @@ import evalAuthorCondition from 'caja/author/utils/eval-author-condition'
  */
 export default CanMap.extend('A2JConditionalVM', {
   define: {
+    // passed in via stache
+    toggleEditActiveNode: {},
+    cloneNode: {},
+    deleteNode: {},
+    updateNode: {},
+    deleted: {},
+    nodeId: {},
+    variablesList: {},
+    // conditionals are special in that they may have sub elements
+    // that require `guide`, and would normally get direct from a2j-template.stache
+    guide: {},
+
     /**
      * @property {Answers} conditional.ViewModel.prototype.answers answers
      * @parent conditional.ViewModel
@@ -196,15 +208,7 @@ export default CanMap.extend('A2JConditionalVM', {
         const children = this.attr('children')
         return children.attr(3)
       }
-    },
-
-    toggleEditActiveNode: {},
-    cloneNode: {},
-    deleteNode: {},
-    updateNode: {},
-    deleted: {},
-    nodeId: {},
-    variablesList: {}
+    }
   },
 
   init () {

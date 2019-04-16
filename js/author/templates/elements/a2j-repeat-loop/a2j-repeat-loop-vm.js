@@ -11,11 +11,10 @@ import 'can-map-define'
  *
  * `<a2j-repeat-loop>`'s viewModel.
  */
-export default CanMap.extend({
+export default CanMap.extend('RepeatLoopVM', {
   define: {
     // passed in via stache
     nodeId: {},
-    variablesList: {},
     answers: {},
     cloneNode: {},
     useAnswers: {},
@@ -23,6 +22,8 @@ export default CanMap.extend({
     updateNode: {},
     fontProperties: {},
     toggleEditActiveNode: {},
+    variablesList: {},
+
     /**
      * @property {Boolean} repeatLoop.ViewModel.prototype.editEnabled editEnabled
      * @parent repeatLoop.ViewModel

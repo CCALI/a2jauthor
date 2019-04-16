@@ -4,13 +4,14 @@
 <can-import from="caja/author/templates/elements/element-container/" />
 <can-import from="caja/author/templates/elements/a2j-repeat-loop/a2j-repeat-loop.less!" />
 
-{{#if (scope/editEnabled) }}
+{{#if (editEnabled) }}
   <element-container
     nodeId:from="nodeId"
     deleted:from="deleted"
     selected:from="editActive"
     cloneNode:from="cloneNode"
     deleteNode:from="deleteNode"
+    variablesList:from="this.variablesList"
     toggleEditActiveNode:from="toggleEditActiveNode">
 
     <div class="panel panel-info">
@@ -54,7 +55,7 @@
     </div>
   </element-container>
 
-  {{#if (editActive) }}
+  {{#if (editActive)}}
     {{> repeat-loop-options-tpl }}
   {{/if}}
 {{else}}

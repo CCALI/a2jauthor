@@ -1,17 +1,17 @@
-{{#if (scope/editEnabled)}}
+{{#if (../editEnabled)}}
   <ul style="list-style-type: {{scope/listStyleType}};" class="inline-items-list">
     {{#for (listItem of scope/listItems)}}
       <li>
         {{listItem.item}}:
 
         {{#if (scope/editActive)}}
-          <var-picker
-            selected:bind="listItem.variable"
-            variables:from="scope/variablesList"
-            filter-ocurrence:raw="repeating"
-          />
+              <var-picker
+                selected:bind="listItem.variable"
+                variables:from="scope/variablesList"
+                filterOcurrence:raw="repeating"
+              />
         {{else}}
-          <a2j-variable name:from="listItem.variable" />
+          <a2j-variable useAnswers:from="scope/useAnswers" name:from="listItem.variable" />
         {{/if}}
       </li>
     {{/for}}
@@ -22,7 +22,7 @@
       <ul style="list-style-type: {{scope/listStyleType}}; margin-bottom: 20px;">
         {{#for (loopIndex of scope/loopCollection)}}
           <li>
-            {{listItem.item}}: <a2j-variable name:from="listItem.variable" varIndex:from="loopIndex" />
+            {{listItem.item}}: <a2j-variable useAnswers:from="scope/useAnswers" name:from="listItem.variable" varIndex:from="loopIndex" />
           </li>
         {{/for}}
       </ul>
@@ -32,7 +32,7 @@
       <ul style="list-style-type: {{scope/listStyleType}}; margin-bottom: 20px;">
         {{#for (listItem of scope/listItems)}}
           <li>
-            {{listItem.item}}: <a2j-variable name:from="listItem.variable" varIndex:from="loopIndex" />
+            {{listItem.item}}: <a2j-variable useAnswers:from="scope/useAnswers" name:from="listItem.variable" varIndex:from="loopIndex" />
           </li>
         {{/for}}
       </ul>

@@ -33,14 +33,14 @@
         </select>
       </div>
       <div class="col-md-6">
-        {{#if ../useLoopCounter}}
+        {{#if (../useLoopCounter)}}
           <input type="number" min="1" class="form-control"
           value:bind="../loopCounter">
         {{else}}
           <var-picker
             filter-types="number"
-            selected:bind="../loopVariable"
-            variables:from="../variablesList"
+            selected:bind="scope/loopVariable"
+            variables:from="scope/variablesList"
           />
         {{/if}}
       </div>
@@ -48,17 +48,17 @@
 
     <div class="form-group">
       <div class="btn-group btn-group-justified" data-toggle="buttons">
-        <label class="btn btn-default {{#is ../displayType "table"}}active{{/is}}">
+        <label class="btn btn-default {{#eq (../displayType, "table")}}active{{/eq}}">
           <input type="radio" value="table" name="displayType" autocomplete="off">
           Table
         </label>
 
-        <label class="btn btn-default {{#is ../displayType "list"}}active{{/is}}">
+        <label class="btn btn-default {{#eq (../displayType, "list")}}active{{/eq}}">
           <input type="radio" value="list" name="displayType" autocomplete="off">
           List
         </label>
 
-        <label class="btn btn-default {{#is ../displayType "text"}}active{{/is}}">
+        <label class="btn btn-default {{#eq (../displayType, "text")}}active{{/eq}}">
           <input type="radio" value="text" name="displayType" autocomplete="off">
           Text
         </label>
@@ -66,26 +66,26 @@
     </div>
 
     <div class="form-group">
-      {{#is ../displayType "table"}}
+      {{#eq (../displayType, "table")}}
         <div class="row clearfix" style="margin-bottom: 10px;">
           <div class="col-md-12">
             <label class="radio-inline">
               <input type="radio"
                 name="tableStyle"
                 value="bordered"
-                {{#is ../tableStyle "bordered"}}checked{{/is}}> Bordered
+                {{#eq (../tableStyle, "bordered")}}checked{{/eq}}> Bordered
             </label>
             <label class="radio-inline">
               <input type="radio"
                 name="tableStyle"
                 value="condensed"
-                {{#is ../tableStyle "condensed"}}checked{{/is}}> Condensed
+                {{#eq (../tableStyle, "condensed")}}checked{{/eq}}> Condensed
             </label>
             <label class="radio-inline">
               <input type="radio"
                 name="tableStyle"
                 value="striped"
-                {{#is ../tableStyle "striped"}}checked{{/is}}> Striped rows
+                {{#eq (../tableStyle, "striped")}}checked{{/eq}}> Striped rows
             </label>
           </div>
         </div>
@@ -96,16 +96,16 @@
           <div class="col-md-2">&nbsp;</div>
         </div>
 
-        {{#each ../tableColumns}}
+        {{#for (tableColumn of ../tableColumns)}}
           <div class="row clearfix table-form-row">
             <div class="col-md-5">
               <input type="text" class="form-control"
-              value:bind="column">
+              value:bind="tableColumn.column">
             </div>
 
             <div class="col-md-4">
               <input type="number" min="0" max="100" class="form-control"
-              value:bind="width">
+              value:bind="tableColumn.width">
             </div>
 
             <div class="col-md-3 table-column-buttons">
@@ -116,16 +116,16 @@
               {{/showRemoveButton}}
             </div>
           </div>
-        {{/each}}
-      {{/is}}
+        {{/for}}
+      {{/eq}}
 
-      {{#is ../displayType "list"}}
+      {{#eq (../displayType, "list")}}
         <div class="radio">
           <label>
             <input type="radio"
               value="true"
               name="repeatEachInOneList"
-              {{#if ../repeatEachInOneList}}checked{{/if}}>
+              {{#if (../repeatEachInOneList)}}checked{{/if}}>
             Repeat each item in one list
           </label>
         </div>
@@ -135,7 +135,7 @@
             <input type="radio"
               value="false"
               name="repeatEachInOneList"
-              {{^if ../repeatEachInOneList}}checked{{/if}}>
+              {{#not (../repeatEachInOneList)}}checked{{/not}}>
             Repeat an entire list multiple times
           </label>
         </div>
@@ -156,12 +156,11 @@
 
         <div class="form-group">
           <label for="">Item to repeat</label>
-
-          {{#each ../listItems}}
+          {{#for (listItem of scope/listItems)}}
             <div class="row clearfix table-form-row">
               <div class="col-md-8">
                 <input type="text" class="form-control"
-                value:bind="item">
+                value:bind="listItem.item">
               </div>
 
               <div class="col-md-4 table-column-buttons">
@@ -172,9 +171,9 @@
                 {{/showRemoveButton}}
               </div>
             </div>
-          {{/each}}
+          {{/for}}
         </div>
-      {{/is}}
+      {{/eq}}
     </div>
   </form>
 </element-options-pane>

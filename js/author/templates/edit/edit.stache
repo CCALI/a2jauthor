@@ -20,7 +20,7 @@
           template:from="a2jTemplate"
         />
       {{else}}
-        <template-edit-toolbar guideId:bind="guideId" template:bind="a2jTemplate" />
+        <template-edit-toolbar guideId:from="guideId" template:from="a2jTemplate" />
         {{ let editingHeader=undefined, editingFooter=undefined }}
         <div class="container">
           <div class="row clearfix">
@@ -42,8 +42,8 @@
                 <a2j-template
                 id="page-template"
                 guide:from="guide"
-                editEnabled:raw="true"
-                template:from="a2jTemplate" />
+                template:from="a2jTemplate"
+                editEnabled:raw="true" />
               {{else}}
                 <a2j-blank-template />
               {{/if}}

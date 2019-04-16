@@ -10,8 +10,8 @@
 <can-import from="caja/author/interviews/toolbar/"/>
 <can-import from="caja/author/report/" />
 <can-import from="caja/author/report/toolbar/"/>
-<can-import from='caja/author/about/main/' />
-<can-import from='caja/author/variables/tab/'/>
+<can-import from="caja/author/about/main/" />
+<can-import from="caja/author/variables/tab/"/>
 
 <div id="splash" class="welcome">
   <div class="loading">
@@ -26,7 +26,7 @@
 
 <div id="authortool"
   class="hidestart authortool bootstrap-styles"
-  {{#if previewMode}}style="display: none;"{{/if}}>
+  {{#if (previewMode)}}style="display: none;"{{/if}}>
 
   <div id="cajaheader" class="hidestart">
     <app-header page:from="page" title:from="guide.title"/>
@@ -77,8 +77,8 @@
         <div class="tab-content">
         {{#is(page, "about")}}
           <div role="tabpanel" class="tab-pane active" id="tab-about">
-            {{#if guide}}
-              <about-main guide:bind="guide" />
+            {{#if (guide)}}
+              <about-main guide:from="guide" />
             {{else}}
               <p>Please select an interview.</p>
             {{/if}}
@@ -260,7 +260,7 @@
 
     <!-- Interview Tab -->
     <div class="tab-panel has-toolbar" id="tabsGuides">
-      {{#is(page, "interviews")}}
+      {{#is (page, "interviews")}}
         <interviews-toolbar interviews:to="interviews"></interviews-toolbar>
         <interviews-page interviews:from="interviews" traceMessage:from="traceMessage" viewerInterview:bind="viewerInterview"></interviews-page>
       {{/is}}
@@ -268,17 +268,17 @@
 
     <!-- Template Tab -->
     <div class="tab-panel has-toolbar" id="tabsTemplate">
-      {{#is page "templates"}}
-        {{#if guideId}}
-          {{#if templateId}}
+      {{#is (page, "templates")}}
+        {{#if (guideId)}}
+          {{#if (templateId)}}
             <template-edit-page
-              guide:bind="guide"
-              action:bind="action"
-              templateId:bind="templateId"
+              guide:from="guide"
               guideId:from="guideId"
+              templateId:from="templateId"
+              action:bind="action"
             />
           {{else}}
-            <templates-page appState:bind="." />
+            <templates-page appState:from="this" />
           {{/if}}
         {{/if}}
       {{/is}}
@@ -286,7 +286,7 @@
 
     <!-- Report Tab -->
     <div class="tab-panel has-toolbar" id="tabsReport">
-      {{#is page 'report'}}
+      {{#is (page, "report")}}
         <report-toolbar hideAllGrades:bind="scope/hideAllGrades" selectedReport:bind="selectedReport"></report-toolbar>
         <report-page parentGuide:from="guide" hideAllGrades:bind="scope/hideAllGrades" selectedReport:bind="selectedReport"></report-page>
       {{/is}}
@@ -294,7 +294,7 @@
 
     <!-- Preview Tab -->
     <div class="tab-panel page" id="tabsPreview">
-      {{#is page 'preview'}}
+      {{#is (page, "preview")}}
         <author-preview previewMode:to="previewMode" />
       {{/is}}
     </div>
@@ -310,7 +310,7 @@
       <p>To publish to LawHelp Interactive, use the buttons below</p>
       <button id="guideZIPLHIQA" class="btn btn-default btn-wide-md"><span class="glyphicon-publish"></span> Publish to RebuildQA</button>
       <button id="guideZIPLHI" class="btn btn-default btn-wide-md"><span class="glyphicon-publish"></span> Publish to LHI Production</button>
-      {{#if showDevPublishButtons}}
+      {{#if (showDevPublishButtons)}}
         <hr>
         <p>To publish to development servers, use the buttons below</p>
         <button id="guideZIPLHIDEV" class="btn btn-default btn-wide-md"><span class="glyphicon-publish"></span> Publish to LHI DEV</button>

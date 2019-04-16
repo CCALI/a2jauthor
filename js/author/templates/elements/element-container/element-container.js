@@ -30,6 +30,11 @@ import 'can-map-define'
  */
 export let ContainerVM = CanMap.extend('ElementContainerVM', {
   define: {
+    // passed in via stache
+    nodeId: {},
+    cloneNode: {},
+    deleteNode: {},
+    variablesList: {},
     /**
      * @property {Boolean} element-container.ViewModel.prototype.selected selected
      * @parent element-container.ViewModel
@@ -38,11 +43,7 @@ export let ContainerVM = CanMap.extend('ElementContainerVM', {
      */
     selected: {
       value: false
-    },
-
-    nodeId: {},
-    cloneNode: {},
-    deleteNode: {}
+    }
   },
 
   /**

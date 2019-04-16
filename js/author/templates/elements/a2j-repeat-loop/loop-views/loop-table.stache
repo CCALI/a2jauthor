@@ -1,10 +1,10 @@
-{{#if scope/editEnabled}}
+{{#if (../editEnabled)}}
   <table class="table table-{{scope/tableStyle}}">
     <thead>
       <tr>
-        {{#each scope/tableColumns}}
-          <th style="width: {{width}}%;">{{column}}</th>
-        {{/each}}
+        {{#for (tableColumn of scope/tableColumns)}}
+          <th style="width: {{tableColumn.width}}%;">{{tableColumn.column}}</th>
+        {{/for}}
       </tr>
     </thead>
 
@@ -16,10 +16,10 @@
               <var-picker
                 selected:bind="tableColumn.variable"
                 variables:from="scope/variablesList"
-                filter-ocurrence:raw="repeating"
+                filterOcurrence:raw="repeating"
               />
             {{else}}
-              <a2j-variable name:from="scope/variable" />
+              <a2j-variable useAnswers:from="scope/useAnswers" name:from="tableColumn.variable" />
             {{/if}}
           </th>
         {{/for}}

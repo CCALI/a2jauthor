@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import CanMap from 'can-map'
 import Component from 'can-component'
 import ObservationRecorder from 'can-observation-recorder'
@@ -33,6 +34,10 @@ import { sharedPdfFlag } from 'caja/author/pdf/index'
  */
 export const TemplateEditPageVM = CanMap.extend('TemplateEditPageVM', {
   define: {
+    // passed in via stache
+    guide: {},
+    guideId: {},
+
     /**
      * @property {Promise} editPage.ViewModel.prototype.a2jTemplatePromise a2jTemplatePromise
      * @parent editPage.ViewModel
@@ -42,8 +47,9 @@ export const TemplateEditPageVM = CanMap.extend('TemplateEditPageVM', {
      */
     a2jTemplatePromise: {
       get () {
-        const templateId = this.attr('templateId')
         const guideId = this.attr('guideId')
+        const templateId = this.attr('templateId')
+
         if (templateId === 'new') {
           return this.makeNewTemplate()
         }
@@ -71,10 +77,7 @@ export const TemplateEditPageVM = CanMap.extend('TemplateEditPageVM', {
           template && template.rootNode && template.rootNode.tag === 'a2j-pdf'
         )
       }
-    },
-
-    guide: {},
-    guideId: {}
+    }
   },
 
   /**

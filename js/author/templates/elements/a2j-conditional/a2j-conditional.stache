@@ -8,6 +8,7 @@
 
 {{#if (editEnabled) }}
   <element-container
+    variablesList:from="scope/variablesList"
     nodeId:from="nodeId"
     deleted:from="deleted"
     selected:from="editActive"
@@ -43,6 +44,7 @@
 
       <div class="panel-body">
         <a2j-template
+          guide:from="scope.top.guide"
           editEnabled:from="true"
           template:from="scope/ifBody"
           saveCallback:from="scope/updateNodeState"
@@ -61,6 +63,7 @@
 
         <div class="panel-body">
           <a2j-template
+            guide:from="scope.top.guide"
             editEnabled:from="true"
             template:from="scope/elseBody"
             saveCallback:from="scope/updateNodeState"
@@ -103,6 +106,7 @@
 {{else}}
   {{#if evalCondition()}}
     <a2j-template
+      guide:from="scope.top.guide"
       useAnswers:raw="true"
       answers:from="scope/answers"
       template:from="scope/ifBody"
@@ -110,6 +114,7 @@
     />
   {{else}}
     <a2j-template
+      guide:from="scope.top.guide"
       useAnswers:raw="true"
       answers:from="scope/answers"
       editEnabled:raw="false"

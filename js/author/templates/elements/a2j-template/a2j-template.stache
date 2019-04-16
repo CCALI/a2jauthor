@@ -85,15 +85,15 @@
 
       {{#is (childNode.tag, 'a2j-conditional') }}
         <a2j-conditional
+          guide:from="this.guide"
           nodeId:from="childNode.id"
           deleted:from="childNode.state.deleted"
           editActive:from="childNode.state.editActive"
-          children:bind="childNode.children"
+          children:from="childNode.children"
           operator:bind="childNode.state.operator"
           elseClause:bind="childNode.state.elseClause"
           leftOperand:bind="childNode.state.leftOperand"
           rightOperand:bind="childNode.state.rightOperand"
-          variablesList:from="this.guide.variablesList"
           leftOperandType:bind="childNode.state.leftOperandType"
           rightOperandType:bind="childNode.state.rightOperandType"
 
@@ -104,6 +104,7 @@
           updateNode:from="updateNode"
           editEnabled:from="editEnabled"
           fontProperties:from="fontProperties"
+          variablesList:from="this.guide.variablesList"
           toggleEditActiveNode:from="toggleEditActiveNode"
         />
       {{/is}}
@@ -119,13 +120,12 @@
           loopCounter:from="childNode.state.loopCounter"
           displayType:from="childNode.state.displayType"
           tableColumns:from="childNode.state.tableColumns"
-          loopVariable:from="childNode.state.loopVariable"
-          variablesList:from="this.guide.variablesList"
           loopTitleTag:from="childNode.state.loopTitleTag"
           loopRichText:from="childNode.state.loopRichText"
           listStyleType:from="childNode.state.listStyleType"
           deleted:from="childNode.state.deleted"
           repeatEachInOneList:from="childNode.state.repeatEachInOneList"
+          loopVariable:bind="childNode.state.loopVariable"
 
           answers:from="scope/answers"
           cloneNode:from="scope/cloneNode"
@@ -134,6 +134,7 @@
           useAnswers:from="this.useAnswers"
           editEnabled:from="this.editEnabled"
           fontProperties:from="this.fontProperties"
+          variablesList:from="this.guide.variablesList"
           toggleEditActiveNode:from="toggleEditActiveNode"
         />
       {{/is}}

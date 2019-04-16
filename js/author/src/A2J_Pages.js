@@ -274,6 +274,42 @@ function pageEditDelete (name) {	// Delete named page after confirmation that li
 		}})
 }
 
+// debounce for QDE resize
+// source: https://levelup.gitconnected.com/debounce-in-javascript-improve-your-applications-performance-5b01855e086
+function debounce (func, wait, immediate) {
+  var timeout
+
+  return function executedFunction () {
+    var context = this
+    var args = arguments
+
+    var later = function () {
+      timeout = null
+      if (!immediate) func.apply(context, args)
+    }
+
+    var callNow = immediate && !timeout
+
+    clearTimeout(timeout)
+
+    timeout = setTimeout(later, wait)
+
+    if (callNow) func.apply(context, args)
+  }
+}
+// update maxHeight on resize
+function setQDEmaxHeight () {
+  var $pageEditDialog = $('.page-edit-form')
+  var windowHeight = window.innerHeight
+  var maxHeight = 0.9 * windowHeight
+  $pageEditDialog.dialog('option', 'maxHeight', maxHeight)
+}
+
+// debounced version
+var debouncedSetQDEmaxHeight = debounce(function () {
+  setQDEmaxHeight()
+}, 150)
+
 // Bring page edit window forward with page content
 function gotoPageEdit (pageName) {
   $pageEditDialog = $('.page-edit-form')
@@ -298,6 +334,8 @@ function gotoPageEdit (pageName) {
     resizable: false,
 
     close: function () {
+      // cleanup QDE resize eventListener
+      window.removeEventListener('resize', debouncedSetQDEmaxHeight)
       // callback from open below
       this.removeOverlay()
       // Update view and save any time edit dialog closes
@@ -319,7 +357,7 @@ function gotoPageEdit (pageName) {
         $(this).dialog('close')
       }
     },
-    // { TODO: remove completely if no complains this is missing
+    // { TODO: remove completely if no Author complains this is missing
     //   text: 'XML',
     //   class: 'btn btn-default btn-wide-sm',
     //   click: function () {
@@ -353,6 +391,12 @@ function gotoPageEdit (pageName) {
 
   $pageEditDialog.dialog('open')
   $pageEditDialog.dialog('moveToTop')
+
+  // set QDE maxHeight based on window size,
+  // and throttle resize events to update it
+  setQDEmaxHeight()
+
+  window.addEventListener('resize', debouncedSetQDEmaxHeight)
 }
 
 // Add overlay/backdrop to dialog modals

@@ -39,7 +39,7 @@
     <ul class="navbar-mobile nav navbar-nav navbar-right">
       {{#if(interview.sendfeedback)}}
       <li class="nav-item">
-        <a role="button" target="_blank" href="{{./feedbackFormUrl}}"
+        <a role="button" target="_blank" href="{{./feedbackFormUrl()}}"
           class="nav-link send-feedback">
           <span class="glyphicon-mail" aria-hidden="true"></span>
         </a>
@@ -70,7 +70,7 @@
       {{#if(interview.sendfeedback)}}
       <li class="divider" role="separator"></li>
       <li class="nav-item">
-        <a role="button" target="_blank" href="{{./feedbackFormUrl}}"
+        <a role="button" target="_blank" href="{{./feedbackFormUrl()}}"
           class="nav-link send-feedback">
           <span class="glyphicon-mail" aria-hidden="true"></span> {{./lang.SendFeedback}}
         </a>

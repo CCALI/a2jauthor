@@ -20,6 +20,7 @@ export let ViewerNavigationVM = CanMap.extend({
   define: {
     // passed in via stache bindings
     courthouseImage: {},
+    interview: {},
     repeatVarValue: {},
     selectedPageName: {},
     selectedPageIndex: {},

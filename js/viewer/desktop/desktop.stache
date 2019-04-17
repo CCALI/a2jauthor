@@ -5,7 +5,7 @@
 
 <div class="app-wrapper">
   <div class="app-container" role="main">
-    {{#if pageNotFound}}
+    {{#if (pageNotFound)}}
       <div class="alert alert-danger text-center" role="alert">
         The page {{rState.page}} does not exist!
       </div>
@@ -17,9 +17,9 @@
         selectedPageName:from="rState.selectedPageName"
         visitedPages:from="rState.visitedPages"
         selectedPageIndex:bind="rState.selectedPageIndex"
-        appState:bind="rState"
-        interview:bind="interview"
-        showDemoNotice:bind="showDemoNotice"
+        appState:from="rState"
+        interview:from="interview"
+        showDemoNotice:from="showDemoNotice"
         {{#if(scope.vm.authorCourthouseImage)}}courthouseImage:raw="{{normalizePath(mState.fileDataURL, scope.vm.authorCourthouseImage)}}"{{/if}} />
 
       <div class="app-content">
@@ -39,7 +39,7 @@
           modalContent:bind="modalContent" />
       </div><!-- app-content -->
 
-      {{#if authorBrandLogo}}
+      {{#if (authorBrandLogo)}}
         <div class="author-brand-logo">
           <img src="{{normalizePath(mState.fileDataURL, authorBrandLogo)}}" alt="Author Brand Logo">
         </div>

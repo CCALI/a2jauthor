@@ -31,7 +31,7 @@
     {{#if(field.required)}}
     <div>
         <label>
-          <small class="text-danger">(Required)</small>
+          <small class="text-danger">({{lang.Required}})</small>
         </label>
       </div>
     {{/if}}

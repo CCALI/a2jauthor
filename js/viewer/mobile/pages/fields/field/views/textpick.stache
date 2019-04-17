@@ -2,7 +2,7 @@
   <div class="form-group {{#if(field.hasError)}}has-error{{/if}}">
     <label class="control-label" for="{{field.label}}">
       {{{ eval(field.label, repeatVarValue) }}}
-      {{#if(field.required)}}<small class="text-danger">(Required)</small>{{/if}}
+      {{#if(field.required)}}<small class="text-danger">({{lang.Required}})</small>{{/if}}
     </label>
 
     <select class="form-control" name="{{field.name}}" id="{{field.label}}" value:bind="field._answer.values" on:change="validateField(null, scope.element)" {{#if(field.required)}}required{{/if}}>

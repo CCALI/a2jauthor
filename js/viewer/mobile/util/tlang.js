@@ -2,42 +2,42 @@ export default function (lang, makestr) {
   lang = lang || window.lang
   makestr = makestr || window.makestr
   /******************************************************************************
-			A2J Author 6 * Justice * 正义 * công lý * 사법 * правосудие * sprawiedliwość
-			All Contents Copyright The Center for Computer-Assisted Legal Instruction
+    A2J Author 6 * Justice * 正义 * công lý * 사법 * правосудие * sprawiedliwość
+    All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
-			Language (INCOMPLETE)
-			07/14/2012
+    Language (INCOMPLETE)
+    07/14/2012
 
-			Language file for the authoring tool
-			Language blocks for each supported language.
-			There's a Languages[] structure for A2J Viewer specific code.
-			And jQuery UI structs for Calendar.
+    Language file for the authoring tool
+    Language blocks for each supported language.
+    There's a Languages[] structure for A2J Viewer specific code.
+    And jQuery UI structs for Calendar.
 
-			Currently supported languages:
-				English
-				Spanish
-				Vietnamese
-				Chinese-Simplified
-				Korean
-				French
-				Polish
-				Russian
-				Dutch
-				Albanian
-				Arabic
-				Bengali
-				Chaldean
-				Hmong
+    Currently supported languages:
+      English
+      Spanish
+      Vietnamese
+      Chinese-Simplified
+      Korean
+      French
+      Polish
+      Russian
+      Dutch
+      Albanian
+      Arabic
+      Bengali
+      Chaldean
+      Hmong
 
-			Pending:
+    Pending:
 
-		******************************************************************************/
+  ******************************************************************************/
 
-  function readableList (list) {	// 2014-09-03 Return comma separated, optional 'and' for array.
+  function readableList (list) { // 2014-09-03 Return comma separated, optional 'and' for array.
     var items = []
-    for (var i in list) {	// Remove null or blanks.
+    for (var i in list) { // Remove null or blanks.
       var item = list[i]
-      if (!isBlankOrNull(item)) {
+      if (!window.isBlankOrNull(item)) {
         items.push(item)
       }
     }
@@ -48,10 +48,10 @@ export default function (lang, makestr) {
     return text
   }
   /**
-		 * @constructor
-		 * @struct
-		 * @this {TLanguages}
-		 */
+   * @constructor
+   * @struct
+   * @this {TLanguages}
+   */
   function TLanguages () {
     this.defaultLanguage = 'en'
     this.regional = {}
@@ -81,7 +81,7 @@ export default function (lang, makestr) {
         }
       }
     }
-    this.en = function (txt) {	// needs translation
+    this.en = function (txt) { // needs translation
       return txt
     }
     return this
@@ -103,7 +103,8 @@ export default function (lang, makestr) {
     LearnMore: 'Learn More',
     MyProgress: 'MY PROGRESS',
     ProvideFeedbackOrComment: 'Provide feedback or comment on this page',
-    SaveAndExit: 'SAVE AND EXIT',
+    SaveAndExit: 'EXIT',
+    Required: 'Required',
     ResumeExit: 'RESUME',
     SendFeedback: 'SEND FEEDBACK',
     SoundIsOff: 'SOUND IS OFF',
@@ -199,6 +200,7 @@ export default function (lang, makestr) {
     MyProgress: 'PËRPARIMI IM',
     ProvideFeedbackOrComment: 'Reagoni ose komentoni mbi këtë faqe',
     SaveAndExit: 'DALJA',
+    Required: 'i nevojshëm',
     ResumeExit: 'RIFILLIM',
     SendFeedback: 'REAGIM',
     SoundIsOff: 'PA ZË',
@@ -269,6 +271,7 @@ export default function (lang, makestr) {
     MyProgress: 'تقدمي',
     ProvideFeedbackOrComment: 'قدم رأيك أو تعليقك على هذه الصفحة',
     SaveAndExit: 'خروج',
+    Required: 'أعرف أكثر',
     ResumeExit: 'متابعة',
     SendFeedback: 'إرسال تعليقات',
     SoundIsOff: 'تم إيقاف الصوت',
@@ -341,6 +344,7 @@ export default function (lang, makestr) {
     MyProgress: 'আমার অগ্রগতি',
     ProvideFeedbackOrComment: 'এই পাতায় মতামত বা মন্তব্য দিন',
     SaveAndExit: 'প্রস্থান',
+    Required: 'প্রয়োজনীয়',
     ResumeExit: 'আবার শুরু করুন',
     SendFeedback: 'মতামত পাঠান',
     SoundIsOff: 'শব্দ বন্ধ আছে',
@@ -411,6 +415,7 @@ export default function (lang, makestr) {
     MyProgress: 'تقدم أدي',
     ProvideFeedbackOrComment: 'ول تقييم أو معالق إلديا صفحة',
     SaveAndExit: 'بلاطة',
+    Required: 'Required',
     ResumeExit: 'مكمل',
     SendFeedback: 'ول تقييم',
     SoundIsOff: 'قالا هوله جميا',
@@ -477,10 +482,11 @@ export default function (lang, makestr) {
     Comment: 'Comentario',
     GoBack: 'Anterior',
     GoNext: 'Siguiente',
-    LearnMore: 'Aprender más',
+    LearnMore: 'Aprende más',
     MyProgress: 'Mi Progreso',
     ProvideFeedbackOrComment: 'Enviar comentarios y sugerencias',
     SaveAndExit: 'Salida',
+    Required: 'Necesario',
     ResumeExit: 'Anterior',
     SendFeedback: 'Enviar comentarios',
     SoundIsOff: 'Sonido está apagado',
@@ -585,9 +591,11 @@ export default function (lang, makestr) {
     Comment: 'Commenter',
     GoBack: 'Retour',
     GoNext: 'Prochain',
+    LearnMore: 'Apprendre encore plus',
     MyProgress: 'MON PROGRÈS',
     ProvideFeedbackOrComment: 'Fournir des suggestions ou des commentaires sur cette page',
     SaveAndExit: 'Sortir',
+    Required: 'Requis',
     ResumeExit: 'Reprendre',
     SendFeedback: 'Envoyer la suggestion',
     SoundIsOff: 'Audio désactivé',
@@ -658,6 +666,7 @@ export default function (lang, makestr) {
     MyProgress: 'KUV LI KEV KAWM TAU NTAU PAUM CAS LAWM',
     ProvideFeedbackOrComment: 'Muab lus pom licas rau lossis tawm lus pom rau phab no',
     SaveAndExit: 'TAWM HAUV NO MUS',
+    Required: 'Yuav tsum tau',
     ResumeExit: 'ROV QAB UA KOM POM LOJ DUA',
     SendFeedback: 'MUS MUAB LUS POM RAU',
     SoundIsOff: 'LUB SUAB KAW LAWM',
@@ -728,6 +737,7 @@ export default function (lang, makestr) {
     MyProgress: '내 진행 상황',
     ProvideFeedbackOrComment: 'z',
     SaveAndExit: '나가기',
+    Required: '필수',
     ResumeExit: '다시 하기',
     SendFeedback: '피드백 보내기',
     SoundIsOff: '소리 끄기',
@@ -799,6 +809,7 @@ export default function (lang, makestr) {
     MyProgress: 'វឌ្ឍនភាពរបស់ខ្ញុំ',
     ProvideFeedbackOrComment: 'ផ្ដល់មតិយោបល់ត្រឡប់ ឬយោបល់នៅក្នុងទំព័រនេះ',
     SaveAndExit: 'ចាកចេញ',
+    Required: 'ទាមទារ',
     ResumeExit: 'បន្ត',
     SendFeedback: 'ផ្ញើមតិស្ថាបនា',
     SoundIsOff: 'សំឡេងបិទ',
@@ -870,6 +881,7 @@ export default function (lang, makestr) {
     MyProgress: 'Mijn voortgang',
     ProvideFeedbackOrComment: 'Geef feedback of commentaar op deze pagina',
     SaveAndExit: 'Afronden',
+    Required: 'verplicht',
     ResumeExit: 'Hervatten',
     SendFeedback: 'VERZEND FEEDBACK',
     SoundIsOff: 'GELUID IS UIT',
@@ -940,6 +952,7 @@ export default function (lang, makestr) {
     MyProgress: 'Mój postęp',
     ProvideFeedbackOrComment: 'Zostaw opinię lub komentarz ',
     SaveAndExit: 'Wyjście',
+    Required: 'Wymagany',
     ResumeExit: 'Podsumowanie',
     SendFeedback: 'Wyślij podsumowanie',
     SoundIsOff: 'Dźwięk wyłączony',
@@ -1010,6 +1023,7 @@ export default function (lang, makestr) {
     MyProgress: 'МОЙ ХОД РАБОТЫ',
     ProvideFeedbackOrComment: 'Страница для отзывов или комментариев',
     SaveAndExit: 'ВЫХОД',
+    Required: 'необходимый',
     ResumeExit: 'ПРОДОЛЖЕНИЕ',
     SendFeedback: 'ОТЗЫВЫ',
     SoundIsOff: 'ЗВУК ВЫКЛЮЧЕН',
@@ -1080,6 +1094,7 @@ export default function (lang, makestr) {
     MyProgress: 'TIẾN ĐỘ',
     ProvideFeedbackOrComment: 'Trả lời của tôi hoặc là ý kiến trong trang này',
     SaveAndExit: 'RỜI KHỎI TRANG',
+    Required: 'cần thiết',
     ResumeExit: 'TRỞ LẠI TRANG ĐIỀN LẦN CUỐI CÙNG',
     SendFeedback: 'GỬI CÂU TRẢ LỜI',
     SoundIsOff: 'TẮT ÂM THANH',
@@ -1151,6 +1166,7 @@ export default function (lang, makestr) {
     MyProgress: '我的进度',
     ProvideFeedbackOrComment: '在本页作出回应或评论',
     SaveAndExit: '退出',
+    Required: '需要',
     ResumeExit: '恢复',
     SendFeedback: '送出回应',
     SoundIsOff: '关闭音效',
@@ -1222,6 +1238,7 @@ export default function (lang, makestr) {
     MyProgress: 'ความคืบหน้าของฉัน',
     ProvideFeedbackOrComment: 'แสดงคำติชมหรือความคิดเห็นในหน้านี้',
     SaveAndExit: 'ออก',
+    Required: 'จำเป็นต้องใช้',
     ResumeExit: 'เริ่มใหม่',
     SendFeedback: 'ส่งคำติชม',
     SoundIsOff: 'ปิดเสียง',

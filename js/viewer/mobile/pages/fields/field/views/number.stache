@@ -3,7 +3,7 @@
   <div class="form-group {{#if(field.hasError)}}has-error{{/if}}">
     <label class="control-label" for="{{field.label}}">
       {{{ eval(field.label, repeatVarValue) }}}
-      {{#if(field.required)}}<small class="text-danger">(Required)</small>{{/if}}
+      {{#if(field.required)}}<small class="text-danger">({{lang.Required}})</small>{{/if}}
     </label>
     <div>
       <input

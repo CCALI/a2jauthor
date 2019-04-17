@@ -135,8 +135,8 @@ export default Component.extend({
 
   events: {
     '.guide click': function (target) {
-      this.element = $(this.element)
-      this.element.find('.guide').removeClass('item-selected')
+      const $el = $(this.element)
+      $el.find('.guide').removeClass('item-selected')
       $(target).addClass('item-selected')
     },
 

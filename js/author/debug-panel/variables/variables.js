@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './variables.stache'
@@ -35,10 +36,11 @@ export default Component.extend({
     },
 
     '#viewer-var-filter keyup': function () {
-      let $input = $(this.element).find('#viewer-var-filter')
+      const $el = $(this.element)
+      let $input = $el.find('#viewer-var-filter')
       let filter = $input.val().toLowerCase()
 
-      this.element.find('tbody tr').each(function () {
+      $el.find('tbody tr').each(function () {
         let $row = $(this)
         let rowText = $row.text().toLowerCase()
         $row.toggle(rowText.indexOf(filter) !== -1)

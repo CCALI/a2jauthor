@@ -4,7 +4,7 @@
 
 {{#if(hasStep)}}
   <div class="step-current">
-    <div class="app-step" el:style:from="scope.vm.formatStepStyles( scope.vm.getStepWidth(true) )">
+    <div class="app-step" style:from="scope.vm.formatStepStyles( scope.vm.getStepWidth(true) )">
       <div class="step-circle bg-step{{currentStep.number}}"></div>
     </div>
 
@@ -22,7 +22,7 @@
           modalContent:bind="modalContent" />
       </div><!-- guideBubble -->
 
-      {{#unless(showClientAvatar)}}
+      {{#not(showClientAvatar)}}
         {{#currentPage}}
           {{#if(scope/learn)}}
             <div id="clientBubble" class="bubble right {{#if(scope/clientBubbleTallerThanAvatar)}}vertical{{else}}top{{/if}}" role="complementary">
@@ -30,7 +30,7 @@
             </div>
           {{/if}}
         {{/currentPage}}
-      {{/unless}}
+      {{/not}}
 
       <div class="avatar-wrapper">
         <span class="bubble-arrow"></span>
@@ -45,7 +45,7 @@
     </div><!-- guide-wrapper -->
 
     <div class="client-wrapper">
-      {{#if showClientAvatar}}
+      {{#if(showClientAvatar)}}
         <div class="avatar-wrapper">
           <a2j-viewer-avatar
             kind:raw="client"
@@ -88,25 +88,24 @@
 
 {{#if(nextSteps.length)}}
   <div class="next-wrapper">
-    {{#each(nextSteps)}}
+    {{#for(step of nextSteps)}}
       <div id="next-{{ ../add(scope.index, 2) }}"
         class="step-next next-{{ ../add(scope.index, 2) }} step-{{ ../add(scope.index, 2) }}">
-
-        <div class="app-step" el:style:from="scope.vm.formatStepStyles( scope.vm.getStepWidth(false, scope.index) )">
-          <div class="step-circle bg-step{{scope/number}}"></div>
+        <div class="app-step">
+          <div class="step-circle bg-step{{step.number}}"></div>
         </div>
 
         <div class="sign-wrapper">
-          <div class="sign-outer bg-step{{scope/number}}">
+          <div class="sign-outer bg-step{{step.number}}">
             <div class="sign-circle">
-              <span class="circle-content">{{scope/number}}</span>
+              <span class="circle-content">{{step.number}}</span>
             </div> <!-- sign circle -->
             <div class="sign-content">
-              <span title="{{scope.vm.getTextForStep(.)}}">{{scope.vm.getDisplayTextForStep(.)}}</span>
+              <span title="{{scope.vm.getTextForStep(step)}}">{{scope.vm.getDisplayTextForStep(step)}}</span>
             </div> <!-- sign content -->
           </div> <!-- sign outter -->
         </div> <!-- sign wrapper -->
       </div>
-    {{/each}}
+    {{/for}}
   </div>
 {{/if}}

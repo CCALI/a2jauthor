@@ -1,6 +1,5 @@
 import $ from 'jquery'
 import CanMap from 'can-map'
-import CanList from 'can-list'
 import _isNaN from 'lodash/isNaN'
 import _inRange from 'lodash/inRange'
 import Component from 'can-component'
@@ -369,11 +368,6 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
 
     avatarOffsetTop: {
       type: 'number'
-    },
-
-    stepNextCssBottom: {
-      Type: CanList,
-      Value: CanList
     }
   },
 
@@ -449,12 +443,12 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
    *       A    w1
    * @codeend
    */
-  getStepWidth (isCurrentStep, index) {
+  getStepWidth (isCurrentStep, cssBottom) {
     // for current step, align the bottom of the step with the bottom of the avatar
     // for next steps, align the bottom of the step with the bottom of its parent (set by css)
     let bottom = isCurrentStep
       ? this.attr('avatarOffsetTop')
-      : this.attr('stepNextCssBottom').attr(index)
+      : cssBottom
 
     // reverse engineer less equation `calc(~"x% - " minusHeader) = bodyHeight`
     // solve above equation for x, which will be percentBelow
@@ -504,7 +498,10 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
       let $el = $(el)
       let cssBottom = $el.css('bottom')
       cssBottom = +cssBottom.slice(0, cssBottom.indexOf('px'))
-      vm.attr('stepNextCssBottom').attr(i, cssBottom)
+      if (cssBottom) {
+        const style = vm.formatStepStyles(vm.getStepWidth(false, cssBottom))
+        $el.find('.app-step').attr('style', style)
+      }
     })
   },
 
@@ -544,10 +541,6 @@ export default Component.extend({
   ViewModel: ViewerStepsVM,
 
   events: {
-    inserted () {
-      this.viewModel.updateDomProperties()
-    },
-
     '{window} resize': function () {
       this.viewModel.updateDomProperties()
     },

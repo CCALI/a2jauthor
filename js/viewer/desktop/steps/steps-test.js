@@ -367,11 +367,10 @@ describe('<a2j-viewer-steps>', function () {
       vm.attr('bodyHeight', 768)
       vm.attr('sidewalkHeight', 573)
       vm.attr('sidewalkWidth', 512)
-      vm.attr('stepNextCssBottom', [378.156, 524.078])
 
       assert.equal(Math.ceil(vm.getStepWidth(true)), 303)
-      assert.equal(Math.ceil(vm.getStepWidth(false, 0)), 195)
-      assert.equal(Math.ceil(vm.getStepWidth(false, 1)), 98)
+      assert.equal(Math.ceil(vm.getStepWidth(false, 378.156)), 195)
+      assert.equal(Math.ceil(vm.getStepWidth(false, 524.078)), 98)
     })
 
     it('formatStepStyles()', () => {

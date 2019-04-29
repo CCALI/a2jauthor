@@ -575,8 +575,9 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
       showMe = Number(showMe)
 
       form.find('[name="helpAudio"]').showit(showMe !== 2)
-      form.find('[name="helpGraphic"]').showit(showMe === 1)
       form.find('[name="helpReader"]').showit(showMe >= 1)
+      form.find('[name="helpGraphic"]').showit(showMe === 1)
+      form.find('[name="helpAltText"]').showit(showMe === 1)
       form.find('[name="helpVideo"]').showit(showMe === 2)
 
       // only show outerLoopVar if nested is checked
@@ -589,7 +590,7 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
         updateShowMe(form, (val))
       } }, [0, 'Text', 1, 'Show Me Graphic', 2, 'Show Me Video']))
 
-    pagefs.append(form.htmlarea({ label: 'Help:', value: page.help, change: function (val) { page.help = val } }))
+    pagefs.append(form.htmlarea({label: 'Help Text:', value: page.help, change: function (val) { page.help = val }}))
 
     pagefs.append(form.htmlarea({ label: 'Help Citation:', value: page.helpCitation, change: function (val) { page.helpCitation = val } }))
 
@@ -605,7 +606,13 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
       value: page.helpImageURL,
       change: function (val, page) { page.helpImageURL = val } }))
 
-    pagefs.append(form.pickVideo({ name: 'helpVideo',
+    pagefs.append(form.text({name: 'helpAltText',
+      label: 'Help graphic alt text:',
+      placeholder: 'Enter 100 characters or less to describe your image for Aria readers. Hint: 100 characters ends here',
+      value: page.helpAltText,
+      change: function (val, page) { page.helpAltText = jQuery.trim(val).substring(0, 120) }}))
+
+    pagefs.append(form.pickVideo({name: 'helpVideo',
       label: 'Help video:',
       placeholder: 'Help video URL',
       value: page.helpVideoURL,

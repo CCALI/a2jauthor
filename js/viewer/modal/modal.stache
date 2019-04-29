@@ -40,10 +40,12 @@
             {{#if(modalContent.imageURL)}}
             <img
               class="modal-image"
-              src:from="normalizePath(mState.fileDataURL, modalContent.imageURL)" >
-            <a href="{{ normalizePath(mState.fileDataURL, modalContent.imageURL) }}"
-              data-lightbox="image-1"
-              class="zoom-button btn btn-default pull-right">
+              src:from="normalizePath(mState.fileDataURL, modalContent.imageURL)"
+              {{#if (modalContent.altText)}}alt="{{ modalContent.altText }}"{{/if}} >
+            <a
+              href="{{ normalizePath(mState.fileDataURL, modalContent.imageURL) }}" data-lightbox="image-1"
+              class="btn btn-default pull-right"
+            >
               <span class="demo-icon glyphicon-resize-full" aria-hidden="true"></span>
             </a>
             {{/if}}
@@ -71,6 +73,12 @@
                   but don't worry, you can <a href="{{normalizePath(mState.fileDataURL, modalContent.videoURL)}}">download it</a>
                   and watch it with your favorite video player!
                 </video>
+              {{/if}}
+              {{#if (modalContent.helpReader)}}
+                <div class="help-reader-toggle">Text Transcript</div>
+                <p>
+                  {{{ eval(modalContent.helpReader) }}}
+                </p>
               {{/if}}
             {{/if}}
           {{/if}}

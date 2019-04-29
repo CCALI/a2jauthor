@@ -28,6 +28,7 @@ function page2JSON_Mobile(page)
 		helpAudioURL:	page.helpAudioURL,
 		helpReader:		page.helpReader,
 		helpImageURL:	page.helpImageURL,
+		helpAltText: page.helpAltText,
 		helpVideoURL:	page.helpVideoURL,
 		buttons:		[],
 		fields:			[],

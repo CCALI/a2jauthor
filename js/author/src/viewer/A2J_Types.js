@@ -297,6 +297,7 @@ function TPage () {	// This represents a single page within the lesson book/inte
   this.helpAudioURL = ''
   this.helpReader = ''
   this.helpImageURL = ''
+  this.helpAltText = ''
   this.helpVideoURL = ''
   this.repeatVar = ''// built-in for attaching Field variables to array
   this.outerLoopVar = ''

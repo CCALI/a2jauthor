@@ -547,6 +547,7 @@ window.form = {
     var $el = $(
       '<div class="editspan form-group" ' + (data.name ? 'name="' + data.name + '"' : '') + '>' +
         label +
+        '<input class="form-control ui-widget editable" type="text" placeholder="' + data.placeholder + '">' +
         '<input class="form-control ui-widget editable" type="text">' +
       '</div>'
     )

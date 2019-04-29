@@ -563,16 +563,22 @@
       "src": "elusive"
     },
     {
+      "uid": "b035c28eba2b35c6ffe92aee8b0df507",
+      "css": "attention-circled",
+      "code": 59467,
+      "src": "fontawesome"
+    },
+    {
       "uid": "e82cedfa1d5f15b00c5a81c9bd731ea2",
       "css": "info-circled-1",
       "code": 59466,
       "src": "fontawesome"
     },
     {
-      "uid": "b035c28eba2b35c6ffe92aee8b0df507",
-      "css": "attention-circled",
-      "code": 59467,
-      "src": "fontawesome"
+      "uid": "a204f0fa972408eaae5a363c444991b2",
+      "css": "login",
+      "code": 59468,
+      "src": "entypo"
     }
   ]
 }

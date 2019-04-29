@@ -161,16 +161,15 @@ export default CanMap.extend('AuthorAppState', {
     },
 
     /**
-     * @property {Boolean} showDevPublishButtons
+     * @property {Boolean} showTesting
      *
-     * Whether currently developing locally or on Staging server
-     * used to show special DEV publish buttons for LHI and Marlabs
+     * used to hide testing interfaces (aka a2jorg publish buttons) on production
      */
-    showDevPublishButtons: {
+    showTesting: {
       value: false,
       serialize: false,
       get () {
-        return window.location.hostname === 'localhost' || window.location.hostname === 'staging.a2jauthor.org'
+        return window.location.hostname !== 'www.a2jauthor.org'
       }
     },
 

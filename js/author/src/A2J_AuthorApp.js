@@ -191,6 +191,54 @@ function main () { // Everything loaded, now execute code.
   })
 
   // 09/29/2106 Handle publishing guides to external test servers. URL is defined in CAJA_WS.php
+  $('#guideZIPA2JLOCAL').button({ disabled: false}).click(function () {
+    function guideZipped (data) {
+      setProgress('')
+      gGuideID = data.gid
+      if (data.url !== '') {
+        window.can.route.data.attr('page', 'a2jorg')
+      }
+    }
+    setProgress('Publishing to a2j.org local DEV', true)
+    ws({cmd: 'guideZIPA2JLOCAL', gid: gGuideID}, guideZipped)
+  })
+
+  $('#guideZIPA2JDEV').button({ disabled: false}).click(function () {
+    function guideZipped (data) {
+      setProgress('')
+      gGuideID = data.gid
+      if (data.url !== '') {
+        window.can.route.data.attr('page', 'a2jorg')
+      }
+    }
+    setProgress('Publishing to A2J.org DEV', true)
+    ws({cmd: 'guideZIPA2JDEV', gid: gGuideID}, guideZipped)
+  })
+
+  $('#guideZIPA2JSTAGE').button({ disabled: false}).click(function () {
+    function guideZipped (data) {
+      setProgress('')
+      gGuideID = data.gid
+      if (data.url !== '') {
+        window.can.route.data.attr('page', 'a2jorg')
+      }
+    }
+    setProgress('Publishing to staging.A2J.org', true)
+    ws({cmd: 'guideZIPA2JSTAGE', gid: gGuideID}, guideZipped)
+  })
+
+  $('#guideZIPA2JPROD').button({ disabled: false}).click(function () {
+    function guideZipped (data) {
+      setProgress('')
+      gGuideID = data.gid
+      if (data.url !== '') {
+        window.can.route.data.attr('page', 'a2jorg')
+      }
+    }
+    setProgress('Publishing to www.A2J.org', true)
+    ws({cmd: 'guideZIPA2JPROD', gid: gGuideID}, guideZipped)
+  })
+
   $('#guideZIPLHI').button({ disabled: false}).click(function () { // 08/10/2015 ZIP the guide files, POST them to LHI, open new window for author to complete LHI process.
     function guideZipped (data) {
       setProgress('')

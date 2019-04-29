@@ -533,6 +533,10 @@ switch ($command){
 	case 'guideZIPLHIDEV':
 	case 'guideZIPMARLABS':
 	case 'guideZIPLHI':
+	case 'guideZIPA2JLOCAL':
+	case 'guideZIPA2JDEV':
+	case 'guideZIPA2JPROD':
+	case 'guideZIPA2JSTAGE':
 
 	// 08/10/2015 ZIP guide, POST to LHI, return LHI's result.
 	// The zip code is identical to the 'guidezip' handler above. Extra steps are below.
@@ -550,6 +554,14 @@ switch ($command){
 			$LHI_POST_URL = "http://lhiuat.cloudapp.net/Upload/A2JLoader.aspx?Session=" . $gid;
 		} else if ($command=="guideZIPLHI") {
 			$LHI_POST_URL = "https://lawhelpinteractive.org/Upload/A2JLoader.aspx?Session=" . $gid; // LHI production site
+		} else if ($command=="guideZIPA2JLOCAL") {
+			$LHI_POST_URL = "http://localhost/api/guide";
+		} else if ($command=="guideZIPA2JDEV") {
+			$LHI_POST_URL = "https://dev.a2j.org/api/guide";
+		} else if ($command=="guideZIPA2JPROD") {
+			$LHI_POST_URL = "https://www.a2j.org/api/guide";
+		} else if ($command=="guideZIPA2JSTAGE") {
+			$LHI_POST_URL = "https://staging.a2j.org/api/guide";
 		}
 
 		$ch = curl_init();
@@ -628,7 +640,21 @@ switch ($command){
 		break;
 
 	case 'currentuser':
-		$result['username'] = ($userid == 45) ? "dev" : $user->name;
+		$path = dirname(__FILE__, 4);
+		$key = parse_ini_file($path . '/config_env.ini')['A2J_KEY'];
+		$url = parse_ini_file($path . '/config_env.ini')['A2J_URL'];
+
+		$date = date_create();
+		$timestamp = date_timestamp_get($date);
+		$payload = [ "id"=>$userid, "time"=>$timestamp ];
+		$json_payload = json_encode($payload);
+		$hash = hash_hmac('sha256', $json_payload, $key);
+		$payload['hmac']=$hash;
+		$token = base64_encode(json_encode($payload));
+
+		$result['token']=$token;
+		$result['username'] = ($userid == 45) ? "dev" : $user->name;			$result['username'] = ($userid == 45) ? "dev" : $user->name;
+		$result['a2j_url'] = $url;
 		break;
 
 	default:

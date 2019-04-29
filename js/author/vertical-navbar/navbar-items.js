@@ -77,6 +77,13 @@ export default [
     active: false
   },
   {
+    page: 'a2jorg',
+    title: 'A2J.org',
+    ref: 'a2jOrgDashboard',
+    icon: 'glyphicon-login',
+    active: false
+  },
+  {
     page: 'templates',
     title: 'Templates',
     ref: 'tabsTemplate',

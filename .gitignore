@@ -2,6 +2,7 @@
 # A2J Files to skip
 ##################################
 /pdf/temp/
+config_env.ini
 
 #################
 ## VS Code

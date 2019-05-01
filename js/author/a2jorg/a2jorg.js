@@ -3,7 +3,7 @@ import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './a2jorg.stache'
 
- /**
+/**
  * @property {can.Map} a2jorg-dashboard.ViewModel
  * @parent `<a2jorg-dashboard-page>`
  *
@@ -40,7 +40,7 @@ export const A2jorgVM = CanMap.extend('A2jorgVM', {
   }
 })
 
- /**
+/**
  * @module {Module} viewer/author/a2jorg/ <a2jorg-dashboard>
  * @parent api-components
  *

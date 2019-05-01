@@ -14,8 +14,8 @@
     modalContent:bind="modalContent"
     class="bootstrap-styles" />
 {{else}}
+  {{ let remainingSteps = null, maxDisplayedSteps = null }}
   <a2j-desktop-viewer
-    {{ let remainingSteps=null, maxDisplayedSteps=null }}
     remainingSteps:to="remainingSteps"
     maxDisplayedSteps:to="maxDisplayedSteps"
     showDebugPanel:from="showDebugPanel"

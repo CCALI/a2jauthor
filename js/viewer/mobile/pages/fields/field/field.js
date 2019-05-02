@@ -269,14 +269,22 @@ export let FieldVM = CanMap.extend('FieldVM', {
    */
   showCalculator (field) {
     if (field && field.calculator === true) {
-      let inputId = field.attr('label')
-      let $inputEl = $("[id='" + inputId + "']")
+      const vm = this
+      const inputId = field.attr('label')
+      const $inputEl = $("[id='" + inputId + "']")
       $inputEl.calculator({ showOn: 'operator',
         eraseText: 'Clear',
         onClose: function (calcValue, instance) {
-          instance.elem.prop('value', calcValue).change()
+          const $el = instance.elem
+          const vm = $el.prop('vm')
+          const field = vm.attr('field')
+
+          // set answer and validate
+          field.attr('_answer.values', calcValue)
+          vm.validateField(null, $el)
         }
       })
+      $inputEl.prop('vm', vm)
       $inputEl.calculator('show')
     }
   },

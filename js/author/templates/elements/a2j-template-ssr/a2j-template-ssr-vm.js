@@ -112,7 +112,7 @@ export default CanMap.extend({
    */
   canRenderTemplate (template) {
     const state = template.attr('rootNode.state')
-    const hasConditionalLogic = state.attr('hasConditionalLogic') === 'true'
+    const hasConditionalLogic = state.attr('hasConditionalLogic') === true
 
     return (
       !hasConditionalLogic ||

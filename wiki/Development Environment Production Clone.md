@@ -144,7 +144,7 @@ then instead of adding the proxy settings to `httpd.conf` above, uncomment the l
 Include /Applications/MAMP/conf/apache/extra/httpd-vhosts.conf
 ```
 
-and update your `/Applications/MAMP/conf/apache/extra/httpd-vhosts.conf` file to have these virtual host definitions, updating the `DocumentRoot` paths to match your setup. (This assumes you are starting and running A2J Author Node instance on port 3000 and Viewer/DAT Node instance on port 23000)
+and update your `/Applications/MAMP/conf/apache/extra/httpd-vhosts.conf` file to have these virtual host definitions, updating the `DocumentRoot` paths to match your setup. (Below assumes you are starting and running A2J Author Node instance on port 3000 and Viewer/DAT Node instance on port 23000)
 
 ```
 # CALI Author
@@ -198,5 +198,6 @@ You should now have access to a working production copy of the app at [http://lo
         ```
 2. Restart MAMP.
 3. Navigate back to [http://localhost/MAMP/index.php?language=English&page=phpinfo](http://localhost/MAMP/index.php?language=English&page=phpinfo). Search the page for "xdebug" and ensure the options set in step 1 are available.
+4. At this point, you can use a php debugging extension like [https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug) to add breakpoints to your php code.
 
 

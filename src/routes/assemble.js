@@ -219,6 +219,7 @@ async function renderPdfForTextTemplates (templates, req, fileDataURL) {
     )
 
     const donessrRequestObject = Object.assign({}, {
+      url: req.url,
       protocol: req.protocol,
       originalUrl: req.originalUrl,
       get: req.get,

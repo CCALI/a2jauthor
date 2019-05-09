@@ -5,6 +5,7 @@ var fs = require('fs-extra')
 var chalk = require('chalk')
 var archiver = require('archiver')
 var stealTools = require('steal-tools')
+var { buildViewerHtml } = require('../demo/build.viewer.html')
 
 var cajaPath = path.join(__dirname, '..')
 var outputPath = path.join(cajaPath, '..', 'a2j-viewer')
@@ -37,12 +38,16 @@ stealTools.build(buildConfig, buildOptions)
 function makePackageFolder () {
   fs.mkdirSync(outputPath)
 
+  // build the cache busting viewer.html
+  buildViewerHtml()
+
   // copy the bundled viewer code to 'a2j-viewer/dist'
   fs.copySync(path.join(cajaPath, 'js', 'dist'),
     path.join(outputPath, 'dist'))
 
   // copy CAJA/demo content inside `a2j-viewer/`
   fs.copySync(path.join(cajaPath, 'demo'), outputPath)
+
 
   // copy package.json to `a2j-viewer/`
   fs.copySync(path.join(cajaPath, 'js', 'package.json'),

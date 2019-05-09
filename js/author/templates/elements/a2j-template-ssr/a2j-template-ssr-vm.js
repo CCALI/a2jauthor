@@ -18,7 +18,7 @@ export default CanMap.extend({
     templateIds: {
       type: '*'
     },
-    fileDataURL: {},
+    fileDataUrl: {},
     /**
      * @property {Promise} templatesPromise
      *
@@ -32,7 +32,7 @@ export default CanMap.extend({
         const guideId = this.attr('guideId')
         const templateId = this.attr('templateId')
         const templateIds = this.attr('templateIds')
-        const fileDataURL = this.attr('fileDataURL')
+        const fileDataUrl = this.attr('fileDataUrl')
 
         if (templateIds && templateIds.length) {
           return Promise.all(
@@ -40,12 +40,12 @@ export default CanMap.extend({
           ).then(templates => new CanList(templates))
         }
         if (templateId) {
-          return this.findOneAndMakeList(guideId, templateId, fileDataURL).then((val) => {
+          return this.findOneAndMakeList(guideId, templateId, fileDataUrl).then((val) => {
             return val
           })
         }
 
-        return A2JTemplate.findAll({ guideId, fileDataURL, active })
+        return A2JTemplate.findAll({ guideId, fileDataUrl, active })
       }
     },
 
@@ -82,8 +82,8 @@ export default CanMap.extend({
    * as a parameter and returns an `A2JTemplate.List` with the template instance
    * retrieved from the server.
    */
-  findOneAndMakeList (guideId, templateId, fileDataURL) {
-    const promise = A2JTemplate.findOne({ guideId, templateId, fileDataURL })
+  findOneAndMakeList (guideId, templateId, fileDataUrl) {
+    const promise = A2JTemplate.findOne({ guideId, templateId, fileDataUrl })
     return promise.then(template => new CanList([template]))
   },
 

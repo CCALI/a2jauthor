@@ -38,33 +38,33 @@ describe('lib/util/paths', function () {
       })
     })
 
-    it('is correct when a relative fileDataURL path is provided', function () {
-      const fileDataURL = 'path/to/file/data'
-      const promise = paths.getTemplatesPath({ fileDataURL })
+    it('is correct when a relative fileDataUrl path is provided', function () {
+      const fileDataUrl = 'path/to/file/data'
+      const promise = paths.getTemplatesPath({ fileDataUrl })
 
       return promise.then(templatesPath => {
-        const expected = path.join(projectDirname(), `js/viewer/${fileDataURL}`)
+        const expected = path.join(projectDirname(), `js/viewer/${fileDataUrl}`)
         assert.ok(templatesPath, expected)
       })
     })
 
-    it('is correct when an absolute fileDataURL path is provided', function () {
-      const fileDataURL = '/path/to/files'
-      const promise = paths.getTemplatesPath({ fileDataURL })
+    it('is correct when an absolute fileDataUrl path is provided', function () {
+      const fileDataUrl = '/path/to/files'
+      const promise = paths.getTemplatesPath({ fileDataUrl })
 
       return promise.then(templatesPath => {
-        const expected = path.join(fileDataURL, 'templates.json')
-        assert.equal(templatesPath, expected, 'absolute fileDataURL should be used as-is')
+        const expected = path.join(fileDataUrl, 'templates.json')
+        assert.equal(templatesPath, expected, 'absolute fileDataUrl should be used as-is')
       })
     })
 
-    it('is correct when an actual fileDataURL url is provided', function () {
-      const fileDataURL = 'http://my.awesome.server/path/to/files'
-      const promise = paths.getTemplatesPath({ fileDataURL })
+    it('is correct when an actual fileDataUrl url is provided', function () {
+      const fileDataUrl = 'http://my.awesome.server/path/to/files'
+      const promise = paths.getTemplatesPath({ fileDataUrl })
 
       return promise.then(templatesPath => {
-        const expected = path.join(fileDataURL, 'templates.json')
-        assert.equal(templatesPath, expected, 'absolute fileDataURL should be used as-is')
+        const expected = path.join(fileDataUrl, 'templates.json')
+        assert.equal(templatesPath, expected, 'absolute fileDataUrl should be used as-is')
       })
     })
   })
@@ -83,44 +83,44 @@ describe('lib/util/paths', function () {
       })
     })
 
-    it('is correct when a relative fileDataURL path is provided', function () {
-      const fileDataURL = 'path/to/file/data'
+    it('is correct when a relative fileDataUrl path is provided', function () {
+      const fileDataUrl = 'path/to/file/data'
 
       const promise = paths.getTemplatePath({
-        fileDataURL,
+        fileDataUrl,
         templateId: 20
       })
 
       return promise.then(templatePath => {
-        const expected = path.join(projectDirname(), 'js/viewer', fileDataURL, `template20.json`)
+        const expected = path.join(projectDirname(), 'js/viewer', fileDataUrl, `template20.json`)
         assert.equal(templatePath, expected)
       })
     })
 
-    it('is correct when an absolute fileDataURL path is provided', function () {
-      const fileDataURL = '/path/to/file/data'
+    it('is correct when an absolute fileDataUrl path is provided', function () {
+      const fileDataUrl = '/path/to/file/data'
 
       const promise = paths.getTemplatePath({
-        fileDataURL,
+        fileDataUrl,
         templateId: 20
       })
 
       return promise.then(templatesPath => {
-        const expected = path.join(fileDataURL, 'template20.json')
+        const expected = path.join(fileDataUrl, 'template20.json')
         assert.equal(templatesPath, expected)
       })
     })
 
-    it('is correct when an actual fileDataURL url is provided', function () {
-      const fileDataURL = 'http://my.awesome.server/path/to/files'
+    it('is correct when an actual fileDataUrl url is provided', function () {
+      const fileDataUrl = 'http://my.awesome.server/path/to/files'
 
       const promise = paths.getTemplatePath({
-        fileDataURL,
+        fileDataUrl,
         templateId: 20
       })
 
       return promise.then(templatesPath => {
-        const expected = path.join(fileDataURL, 'template20.json')
+        const expected = path.join(fileDataUrl, 'template20.json')
         assert.equal(templatesPath, expected)
       })
     })

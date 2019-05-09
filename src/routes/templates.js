@@ -29,8 +29,8 @@ module.exports = {
    *
    * @return {Promise} a Promise that will resolve to the templates.json data.
    */
-  getTemplatesJSON ({ username, guideId, fileDataURL }) {
-    return paths.getTemplatesPath({ username, guideId, fileDataURL })
+  getTemplatesJSON ({ username, guideId, fileDataUrl }) {
+    return paths.getTemplatesPath({ username, guideId, fileDataUrl })
       .then(path => files.readJSON({ path }))
       .catch((err, path) => {
         debug('reading templates.json from this path failed', path)
@@ -42,24 +42,24 @@ module.exports = {
    * @property {Function} templates.find
    * @parent templates
    *
-   * Find all templates in `fileDataURL`
+   * Find all templates in `fileDataUrl`
    *
-   * Reads the templates.json file in `fileDataURL`, then uses the templateId
+   * Reads the templates.json file in `fileDataUrl`, then uses the templateId
    * from this list to open an individual template file
    *
    * ## Use
    *
-   * GET /api/templates?fileDataURL="path/to/data/folder"
+   * GET /api/templates?fileDataUrl="path/to/data/folder"
    */
   find (params, callback) {
-    const { fileDataURL } = (params.query || {})
+    const { fileDataUrl } = (params.query || {})
 
-    if (!fileDataURL) {
-      return callback(new Error('You must provide fileDataURL'))
+    if (!fileDataUrl) {
+      return callback(new Error('You must provide fileDataUrl'))
     }
 
     const templateIndexPromise = paths
-      .getTemplatesPath({ fileDataURL })
+      .getTemplatesPath({ fileDataUrl })
       .then(path => files.readJSON({ path }))
 
     const templatePromises = templateIndexPromise
@@ -67,7 +67,7 @@ module.exports = {
         const templateIds = templateIndex.templateIds
         return _.map(templateIds, (templateId) => {
           return paths
-            .getTemplatePath({ username: null, guideId: null, templateId, fileDataURL })
+            .getTemplatePath({ username: null, guideId: null, templateId, fileDataUrl })
             .then(path => files.readJSON({ path }))
         })
       })
@@ -94,8 +94,8 @@ module.exports = {
     debug('GET /api/templates/' + guideId)
 
     const { cookieHeader } = params
-    // fileDataURL is coming in as the string 'undefined'
-    const { fileDataURL } = (params.query || '')
+    // fileDataUrl is coming in as the string 'undefined'
+    const { fileDataUrl } = (params.query || '')
     const usernamePromise = user.getCurrentUser({ cookieHeader })
 
     let username
@@ -103,7 +103,7 @@ module.exports = {
     const templatePathPromises = usernamePromise
     .then(currentUsername => {
       username = currentUsername
-      return this.getTemplatesJSON({ username, guideId, fileDataURL })
+      return this.getTemplatesJSON({ username, guideId, fileDataUrl })
     })
     .then(({guideId, templateIds}) => {
       return templateIds.map(templateId => {
@@ -151,14 +151,14 @@ module.exports = {
     debug('PUT /api/templates/' + guideId)
 
     const { cookieHeader } = params
-    const { fileDataURL } = (params.query || '')
+    const { fileDataUrl } = (params.query || '')
     const usernamePromise = user.getCurrentUser({ cookieHeader })
 
     const updatedTemplateIds = data.templateIds
 
     const templateIndexPathPromise = usernamePromise
     .then(username => {
-      return paths.getTemplatesPath({ username, guideId, fileDataURL })
+      return paths.getTemplatesPath({ username, guideId, fileDataUrl })
     })
 
     templateIndexPathPromise

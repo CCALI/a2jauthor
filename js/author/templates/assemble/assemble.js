@@ -33,12 +33,12 @@ import 'can-map-define'
 let AssembleOptionsVM = CanMap.extend('AssembleOptionsVM', {
   define: {
     /**
-     * @property {String} assemble.ViewModel.prototype.fileDataURL fileDataURL
+     * @property {String} assemble.ViewModel.prototype.fileDataUrl fileDataUrl
      * @parent assemble.ViewModel
      *
-     * The fileDataURL for standalone viewer
+     * The fileDataUrl for standalone viewer
      */
-    fileDataURL: {
+    fileDataUrl: {
       value: ''
     },
 

@@ -1,45 +1,45 @@
-<can-import from="author/client-avatar-picker/client-avatar-picker.less!"/>
-<can-import from='viewer/desktop/avatar/' />
+<can-import from="caja/author/client-avatar-picker/client-avatar-picker.less!"/>
+<can-import from="caja/viewer/desktop/avatar/" />
 
 <div class="client-avatar-group">
   <div class="row">
-    {{#each femaleAvatars}}
-      <div class='col-xs-3'>
+    {{#for (avatar of femaleAvatars)}}
+      <div class="col-xs-3">
         <div
-          class='avatar-cell {{#if isSelected}}avatar-cell--selected{{/if}}'
-          ($click)='fireAvatar(index)'
+          class="avatar-cell {{#if (avatar.isSelected)}}avatar-cell--selected{{/if}}"
+          on:click="fireAvatar(scope.index)"
         >
           <a2j-viewer-avatar
-            kind='client'
-            facing='left'
-            {gender}='gender'
-            {skin}='skin'
-            {hair}='hair'
-            {is-old}='isOld'
-            {has-wheelchair}='hasWheelchair'
+            kind:raw="client"
+            facing:raw="left"
+            gender:from="avatar.gender"
+            skin:from="avatar.skin"
+            hair:from="avatar.hair"
+            is-old:from="avatar.isOld"
+            has-wheelchair:from="avatar.hasWheelchair"
           />
         </div>
       </div>
-    {{/each}}
+    {{/for}}
   </div>
-  <div class='row'>
-    {{#each maleAvatars}}
-      <div class='col-xs-3'>
+  <div class="row">
+    {{#for (avatar of maleAvatars)}}
+      <div class="col-xs-3">
         <div
-          class='avatar-cell {{#if isSelected}}avatar-cell--selected{{/if}}'
-          ($click)='fireAvatar(index)'
+          class="avatar-cell {{#if (avatar.isSelected)}}avatar-cell--selected{{/if}}"
+          on:click="fireAvatar(scope.index)"
         >
           <a2j-viewer-avatar
-            kind='client'
-            facing='left'
-            {gender}='gender'
-            {skin}='skin'
-            {hair}='hair'
-            {is-old}='isOld'
-            {has-wheelchair}='hasWheelchair'
+            kind:raw="client"
+            facing:raw="left"
+            gender:from="avatar.gender"
+            skin:from="avatar.skin"
+            hair:from="avatar.hair"
+            is-old:from="avatar.isOld"
+            has-wheelchair:from="avatar.hasWheelchair"
           />
         </div>
       </div>
-    {{/each}}
+    {{/for}}
   </div>
 </div>

@@ -1,0 +1,30 @@
+<can-import from='author/client-avatar-picker/' />
+<can-import from='author/hair-picker/' />
+<can-import from='author/skin-picker/' />
+
+<div>
+  <label>Avatar:</label>
+  <client-avatar-picker
+    {hair}="clientAvatar.hairColor"
+    {skin}="clientAvatar.skinTone"
+    {gender}="clientAvatar.gender"
+    {is-old}="clientAvatar.isOld"
+    {has-wheelchair}="clientAvatar.hasWheelchair"
+    {on-avatar}="@onClientAvatarChange"
+  />
+</div>
+
+<div>
+  <label>Skin tone:</label>
+  <skin-picker
+    {selected-skin}="clientAvatar.skinTone"
+    {on-skin}="@onClientAvatarSkinToneChange"
+  />
+</div>
+<div>
+  <label>Hair color:</label>
+  <hair-picker
+    {selected-hair}="clientAvatar.hairColor"
+    {on-hair}="@onClientAvatarHairColorChange"
+  />
+</div>

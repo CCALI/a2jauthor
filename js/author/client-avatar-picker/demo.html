@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;client-avatar-picker&gt;</title>
+  </head>
+
+  <body>
+    <script type="text/stache" can-autorender>
+      <can-import from="author/app" />
+      <can-import from="author/styles.less!" />
+      <can-import from="author/client-avatar-picker/" />
+
+      <client-avatar-picker/>
+    </script>
+
+    <script src="../../node_modules/steal/steal.js"
+      data-main="can/view/autorender/">
+      window.less = {
+        async: true,
+        fileSync: true
+      };
+    </script>
+  </body>
+</html>

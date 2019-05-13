@@ -8,23 +8,23 @@
     hair:from="clientAvatar.hairColor"
     skin:from="clientAvatar.skinTone"
     gender:from="clientAvatar.gender"
-    is-old:from="clientAvatar.isOld"
-    has-wheelchair:from="clientAvatar.hasWheelchair"
-    on-avatar:from="onClientAvatarChange"
+    isOld:from="clientAvatar.isOld"
+    hasWheelchair:from="clientAvatar.hasWheelchair"
+    onAvatar:from="onClientAvatarChange"
   />
 </div>
 
 <div>
   <label>Skin tone:</label>
   <skin-picker
-    selected-skin:from="clientAvatar.skinTone"
-    on-skin:from="onClientAvatarSkinToneChange"
+    selectedSkin:from="clientAvatar.skinTone"
+    onSkin:from="onClientAvatarSkinToneChange"
   />
 </div>
 <div>
   <label>Hair color:</label>
   <hair-picker
-    selected-hair:from="clientAvatar.hairColor"
-    on-hair:from="onClientAvatarHairColorChange"
+    selectedHair:from="clientAvatar.hairColor"
+    onHair:from="onClientAvatarHairColorChange"
   />
 </div>

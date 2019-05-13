@@ -60,6 +60,7 @@ var CONST = {
   ftCheckBox: 'checkbox',
   ftCheckBoxNOTA: 'checkboxNOTA',
   ftCheckBoxMultiple: 'checkboxmultiple',
+  ftClientAvatar: 'clientavatar',
 
   // Variable Types
   vtUnknown: 'Unknown', // 0,
@@ -178,41 +179,33 @@ function TField () {
   return this
 }
 
-TField.prototype.fieldTypeToVariableType = function ()// :Number
-{	// Return variable type corresponding to this field type.
-  var varType// :Number;
-  switch (this.type) {
-    case CONST.ftText:
-    case CONST.ftTextLong:
-    case CONST.ftNumberSSN:
-    case CONST.ftNumberPhone:
-    case CONST.ftNumberZIP:
-      varType = CONST.vtText
-      break
-    case CONST.ftRadioButton:
-    case CONST.ftGender:
-    case CONST.ftTextPick:
-    case CONST.ftCheckBoxMultiple:
-      varType = CONST.vtMC
-      break
-    case CONST.ftCheckBox:
-    case CONST.ftCheckBoxNOTA:
-      varType = CONST.vtTF
-      break
-    case CONST.ftNumber:
-    case CONST.ftNumberDollar:
-    case CONST.ftNumberPick:
-      varType = CONST.vtNumber
-      break
-    case CONST.ftDateMDY:
-      varType = CONST.vtDate
-      break
-    default:
-      varType = CONST.vtText
-      // CALI.debug.ERROR("HotDocsAnswerSetVariable","Unknown field type","["+type+"]");
-      break
+TField.prototype.fieldTypeToVariableType = function () {	// Return variable type corresponding to this field type.
+  // Since they are wordy, we abbreviate.
+  if (!TField.prototype.tagNames) {
+    var tn = {}
+    tn[CONST.ftText] = 'Txt'
+    tn[CONST.ftTextLong] = 'TxtLong'
+    tn[CONST.ftTextPick] = 'TxtPick'
+    tn[CONST.ftNumber] = 'Num'
+    tn[CONST.ftNumberDollar] = '$Num'
+    tn[CONST.ftNumberPick] = 'NumPick'
+    tn[CONST.ftNumberSSN] = 'SSN'
+    tn[CONST.ftNumberPhone] = 'Phone'
+    tn[CONST.ftNumberZIP] = 'ZIP'
+    tn[CONST.ftRadioButton] = 'RB'
+    tn[CONST.ftGender] = 'Gender'
+    tn[CONST.ftCheckBoxMultiple] = 'CBMulti'
+    tn[CONST.ftCheckBox] = 'CB'
+    tn[CONST.ftCheckBoxNOTA] = 'CBNOTA'
+    tn[CONST.ftDateMDY] = 'Date'
+    tn[CONST.ftClientAvatar] = 'ClAv'
+    TField.prototype.tagNames = tn
   }
-  return varType
+  var tag = this.tagNames[this.type]
+  if (!tag) {
+    tag = this.type
+  }
+  return tag
 }
 
 TField.prototype.fieldTypeToTagName = function () {	// Return variable type corresponding to this field type.

@@ -1,4 +1,4 @@
-import Map from 'can-map'
+import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './client-avatar-picker.stache'
 import {
@@ -18,7 +18,7 @@ const baseAvatars = [
   {gender: 'male', isOld: true, hasWheelchair: true}
 ]
 
-export const ClientAvatarPickerVm = Map.extend('ClientAvatarPickerVm', {
+export const ClientAvatarPickerVm = CanMap.extend('ClientAvatarPickerVm', {
   define: {
     hair: {
       type: Hair,

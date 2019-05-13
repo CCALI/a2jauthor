@@ -5,7 +5,7 @@ import {
   Hair,
   Skin,
   Gender
-} from 'viewer/desktop/avatar/colors'
+} from 'caja/viewer/desktop/avatar/colors'
 
 const baseAvatars = [
   {gender: 'female', isOld: false, hasWheelchair: false},
@@ -99,8 +99,8 @@ export const ClientAvatarPickerVm = Map.extend('ClientAvatarPickerVm', {
  * @signature `<client-avatar-picker>`
  */
 export default Component.extend({
-  template,
+  view: template,
   leakScope: false,
   tag: 'client-avatar-picker',
-  viewModel: ClientAvatarPickerVm
+  ViewModel: ClientAvatarPickerVm
 })

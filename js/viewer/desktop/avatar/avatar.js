@@ -73,6 +73,16 @@ export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
       value: Face.defaultValue
     },
 
+    isOld: {
+      type: 'boolean',
+      value: false
+    },
+
+    hasWheelchair: {
+      type: 'boolean',
+      value: false
+    },
+
     /**
      * @property {String} avatar.ViewModel.prototype.avatarImageName avatarImageName
      * @parent avatar.ViewModel
@@ -81,10 +91,12 @@ export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
      */
     avatarImageName: {
       get () {
-        let gender = this.attr('gender')
-        let facing = this.attr('facing')
+        const gender = this.attr('gender')
+        const facing = this.attr('facing')
+        const isOld = this.attr('isOld')
+        const hasWheelchair = this.attr('hasWheelchair')
 
-        return `avatar-${gender}-${facing}.svg`
+        return `avatar-${gender}${isOld ? '-old' : ''}${hasWheelchair ? '-chair' : ''}-${facing}.svg`
       }
     },
 
@@ -106,8 +118,10 @@ export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
         const genderClass = isMale ? 'avatar-male' : 'avatar-female'
         const skinClass = getClassNameForSkin(this.attr('skin'))
         const hairClass = getClassNameForHair(this.attr('hair'))
+        const oldClass = this.attr('isOld') ? 'avatar-old' : 'avatar-young'
+        const wheelchairClass = this.attr('hasWheelchair') ? 'avatar-wheelchair' : 'avatar-standing'
 
-        return `${baseClass} ${genderClass} ${skinClass} ${hairClass}`
+        return `${baseClass} ${genderClass} ${skinClass} ${hairClass} ${oldClass} ${wheelchairClass}`
       }
     },
 

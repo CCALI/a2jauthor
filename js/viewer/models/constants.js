@@ -43,6 +43,7 @@ export default {
   ftCheckBox: 'checkbox',
   ftCheckBoxNOTA: 'checkboxNOTA',
   ftCheckBoxMultiple: 'checkboxmultiple',
+  ftClientAvatar: 'clientavatar',
 
   // Variable Types
   vtUnknown: 'Unknown', // 0,

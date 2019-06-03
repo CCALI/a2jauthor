@@ -44,7 +44,7 @@
 
       <div class="panel-body">
         <a2j-template
-          guide:from="scope.top.guide"
+          guide:from="scope/guide"
           editEnabled:from="true"
           template:from="scope/ifBody"
           saveCallback:from="scope/updateNodeState"
@@ -63,7 +63,7 @@
 
         <div class="panel-body">
           <a2j-template
-            guide:from="scope.top.guide"
+            guide:from="scope/guide"
             editEnabled:from="true"
             template:from="scope/elseBody"
             saveCallback:from="scope/updateNodeState"
@@ -106,7 +106,7 @@
 {{else}}
   {{#if evalCondition()}}
     <a2j-template
-      guide:from="scope.top.guide"
+      guide:from="scope/guide"
       useAnswers:raw="true"
       answers:from="scope/answers"
       template:from="scope/ifBody"
@@ -114,7 +114,7 @@
     />
   {{else}}
     <a2j-template
-      guide:from="scope.top.guide"
+      guide:from="scope/guide"
       useAnswers:raw="true"
       answers:from="scope/answers"
       editEnabled:raw="false"

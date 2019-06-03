@@ -145,8 +145,7 @@
         // trace ('exp',exp);
       }
       for (l = 0; l < csLines.length; l++) {
-        // Strip trailing comments
-        var line = jQuery.trim(decodeEntities(csLines[l])).split('//')[0]
+        var line = this.removeTrailingComments(csLines[l])
         var args
         var js
         if (line !== '') {
@@ -258,6 +257,13 @@
         js: jsLines,
         errors: errors
       }
+    }
+
+    TLogic.prototype.removeTrailingComments = function (currentLine) {
+      // Strip trailing comments, but exclude urls aka `://`
+      // everything after non-url `//` considered a trailing comment
+      var reg = /[^:]\/\//
+      return window.jQuery.trim(decodeEntities(currentLine)).split(reg)[0]
     }
 
     TLogic.prototype.evalBlock = function (expressionInText) { // Evaluate a block of expression included in a text block.

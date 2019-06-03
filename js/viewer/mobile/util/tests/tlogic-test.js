@@ -1,7 +1,8 @@
 import { assert } from 'chai'
 import Tlogic from 'caja/viewer/mobile/util/tlogic'
+import cString from 'caja/viewer/mobile/util/string'
 
-let testLogic = new Tlogic()
+let testLogic = new Tlogic(null, null, null, null, cString.decodeEntities)
 
 describe('Tlogic', function () {
   describe('DATE', function () {
@@ -120,5 +121,15 @@ describe('Tlogic', function () {
 
       assert.equal(hasString, false)
     })
+  })
+
+  it('removes trailing comments from a2j logic statements, but not urls', function () {
+    const url = '"set [url] to http://www.google.com"  //comment 2'
+    const expectedUrl = testLogic.removeTrailingComments(url)
+    assert.equal(expectedUrl, '"set [url] to http://www.google.com" ', 'handles normal urls with comments')
+
+    const escapedUrl = '"set [url] to http:\/\/azlawhelp.org/A2JRedirect/A2J-ModestMeans-FullProcess.cfm" // comment 1'
+    const expectedEscapedUrl = testLogic.removeTrailingComments(escapedUrl)
+    assert.equal(expectedEscapedUrl, '"set [url] to http://azlawhelp.org/A2JRedirect/A2J-ModestMeans-FullProcess.cfm"', 'handles escaped urls with comments')
   })
 })

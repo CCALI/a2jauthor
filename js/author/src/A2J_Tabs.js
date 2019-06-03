@@ -638,6 +638,12 @@ window.form = {
           // add the CKEditor
           if ($(node).find(id)) {
             CKEDITOR.inline(document.getElementById(id), {
+              // do not escape html entities, except special characters
+              // for xml compatibility on pasted in characters
+              entities: false,
+              entities_latin: false,
+              entities_greek: false,
+              pasteFilter: 'div, p, br, ul, ol, li, a, b, i, u, blockquote',
               configStartupFocus: true,
               height: 55,
               autoGrow_minHeight: 55,
@@ -650,7 +656,8 @@ window.form = {
               on: {
                 blur: function (event) {
                   // Update the data when the element is blured
-                  data.change(event.editor.getData())
+                  var d = event.editor.getData()
+                  data.change(d)
                 },
                 change: function (event) {
                   // Update the data when data changes

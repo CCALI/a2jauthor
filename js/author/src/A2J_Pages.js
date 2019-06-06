@@ -460,16 +460,16 @@ function convertOptionsToText (optionsHTML) {
 };
 
 /** @param {TPage} page */
-function guidePageEditForm (page, div, pagename)// novicePage
-{	// Create editing wizard for given page.
-  var t = ''
+function guidePageEditForm (page, qdeParentDiv, pagename) {
+  // Create editing wizard (QDE, Question Design Editor) for given page.
+  var qde = ''
   // var page = gGuide.pages[pagename];
-  t = $('<div/>').addClass('tabsPanel editq')
+  qde = $('<div/>').addClass('tabsPanel editq')
   var fs
-
+  // form and it's methods are defined in A2J_Pages.js
   form.clear()
   if (page === null || typeof page === 'undefined') {
-    t.append(form.h2('Page not found ' + pagename))
+    qde.append(form.h2('Page not found ' + pagename))
   } else
   if (page.type === CONST.ptPopup) {	// Popup pages have only a few options - text, video, audio
     fs = form.fieldset('Popup info', page)
@@ -488,7 +488,7 @@ function guidePageEditForm (page, div, pagename)// novicePage
       placeholder: 'mp3 file',
       value:	page.textAudioURL,
       change: function (val, page) { page.textAudioURL = val }}))
-    t.append(fs)
+    qde.append(fs)
   } else {
     fs = form.fieldset('Page info', page)
 
@@ -519,7 +519,7 @@ function guidePageEditForm (page, div, pagename)// novicePage
         page.notes = val
       }
     }))
-    t.append(fs)
+    qde.append(fs)
 
     var pagefs = form.fieldset('Question text', page)
 
@@ -638,7 +638,7 @@ function guidePageEditForm (page, div, pagename)// novicePage
       value: page.outerLoopVar,
       change: function (val, page) { page.outerLoopVar = val }}))
 
-    t.append(pagefs)
+    qde.append(pagefs)
     updateShowMe(pagefs, getShowMe())
     pagefs = null
 
@@ -807,7 +807,7 @@ function guidePageEditForm (page, div, pagename)// novicePage
         }
       }))
 
-      t.append(fs)
+      qde.append(fs)
     }
 
     var updateButtonLayout = function (ff, b)
@@ -911,7 +911,7 @@ function guidePageEditForm (page, div, pagename)// novicePage
         }
       }))
 
-      t.append(fs)
+      qde.append(fs)
     }
 
     fs = form.fieldset('Advanced Logic')
@@ -923,15 +923,22 @@ function guidePageEditForm (page, div, pagename)// novicePage
       change: function (val) { page.codeAfter = val /* TODO Compile for syntax errors */	}}))
     fs.append(form.htmlarea({ label: 'Logic Citation:',
       value: page.codeCitation,
-		  change: function (val) { page.codeCitation = val }}))
-    t.append(fs)
+      change: function (val) { page.codeCitation = val }}))
+    qde.append(fs)
   }
 
-  div.append(t)
-  form.finish(t)
+  qdeParentDiv.append(qde)
+
+  // cleanup qde elements when the dialog closes
+  $('.page-edit-dialog').on('dialogclose', function (ev) {
+    $(qdeParentDiv).empty()
+  })
+
+  // TODO: the button that triggers showXML was commented out
+  // cleanup when the button is/feature is removed
   if (CONST.showXML) {
-    div.append('<div class=xml>' + escapeHtml(page.xml) + '</div>')
-    div.append('<div class=xml>' + escapeHtml(page.xmla2j) + '</div>')
+    qdeParentDiv.append('<div class=xml>' + escapeHtml(page.xml) + '</div>')
+    qdeParentDiv.append('<div class=xml>' + escapeHtml(page.xmla2j) + '</div>')
   }
 
   gPage = page

@@ -629,45 +629,67 @@ window.form = {
     textArea.className = 'htmledit form-control text editable taller'
     textArea.innerHTML = data.value
 
-    // Mutation observer to listen to when the element is created in the DOM
-    const observer = new MutationObserver(function (mutations) {
-      mutations.forEach(function (mutation) {
-        const nodes = Array.from(mutation.addedNodes)
-        nodes.forEach(function (node) {
-          // If we have the div node
-          // add the CKEditor
-          if ($(node).find(id)) {
-            CKEDITOR.inline(document.getElementById(id), {
-              // do not escape html entities, except special characters
-              // for xml compatibility on pasted in characters
-              entities: false,
-              entities_latin: false,
-              entities_greek: false,
-              pasteFilter: 'div, p, br, ul, ol, li, a, b, i, u, blockquote',
-              configStartupFocus: true,
-              height: 55,
-              autoGrow_minHeight: 55,
-              linkShowAdvancedTab: false,
-              linkShowTargetTab: false,
-              extraPlugins: 'indent,a2j-popout,autogrow',
-              toolbar: [
-                [ 'Bold', 'Italic', 'Link', 'Blockquote', 'Indent', 'Outdent', 'A2j-popout' ]
-              ],
-              on: {
-                blur: function (event) {
-                  // Update the data when the element is blured
-                  var d = event.editor.getData()
-                  data.change(d)
-                },
-                change: function (event) {
-                  // Update the data when data changes
-                  data.change(event.editor.getData())
-                }
-              }
-            })
-            // Only add CKEditor once, so once added remove the observation
-            observer.disconnect()
+    // used as focusin handler below
+    const replaceWithCKEditor = function (ev) {
+      // do not re initialize the current instance
+      if (window.CKEDITOR.instances[id]) { return }
+
+      // only keep one instance active at a time
+      Object.keys(window.CKEDITOR.instances).forEach(function (name) {
+        if (name !== id) {
+          window.CKEDITOR.instances[name].destroy(true)
+        }
+      })
+
+      // add the CKEditor
+      window.CKEDITOR.disableAutoInline = true
+      window.CKEDITOR.inline(document.getElementById(id), {
+        // do not escape html entities, except special characters for xml compatibility
+        // pasted in characters can cause issues otherwise, example: bullets
+        entities: false,
+        entities_latin: false,
+        entities_greek: false,
+        pasteFilter: 'div, p, br, ul, ol, li, a, b, i, u, blockquote',
+        configStartupFocus: true,
+        height: 55,
+        autoGrow_minHeight: 55,
+        linkShowAdvancedTab: false,
+        linkShowTargetTab: false,
+        extraPlugins: 'indent,a2j-popout,autogrow',
+        toolbar: [
+          [ 'Bold', 'Italic', 'Link', 'Blockquote', 'Indent', 'Outdent', 'A2j-popout' ]
+        ],
+        on: {
+          blur: function (event) {
+            // Update the data when the element is blured
+            var d = event.editor.getData()
+            data.change(d)
+          },
+          change: function (event) {
+            // Update the data when data changes
+            data.change(event.editor.getData())
           }
+        }
+      })
+
+      // Only add CKEditor once, so once added remove the observation
+      observer.disconnect()
+    }
+
+    // Mutation observer to listen to when the element is created in the DOM
+    const observer = new window.MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        const addedNodes = Array.from(mutation.addedNodes)
+        addedNodes.forEach(function (node) {
+          // only listen to ckeditor nodes
+          if (!node.classList.contains('htmledit')) { return }
+
+          // add ckeditor when node is focused
+          node.addEventListener('focusin', replaceWithCKEditor)
+          // handle event listener cleanup on node removal
+          window.can.domMutate.onNodeRemoval(node, function () {
+            node.removeEventListener('focusin', replaceWithCKEditor)
+          })
         })
       })
     })

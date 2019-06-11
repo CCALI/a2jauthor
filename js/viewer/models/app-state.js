@@ -13,7 +13,8 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
 
   infinite: {
     Type: Infinite,
-    Default: Infinite
+    Default: Infinite,
+    serialize: false
   },
 
   selectedPageIndex: {

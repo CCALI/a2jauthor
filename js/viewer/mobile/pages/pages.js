@@ -126,7 +126,7 @@ export default Component.extend({
       // this timeout allows final page answers to be saved before posting
       setTimeout(function () {
         $form.submit()
-      })
+      }, 500)
     },
 
     // when value of repeatVar changes, re-render page fields

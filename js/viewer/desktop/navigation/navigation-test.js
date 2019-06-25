@@ -15,7 +15,7 @@ describe('<a2j-viewer-navigation>', function () {
     let vm
     let pages
     let visited
-    let appState
+    let rState
     let interview
 
     beforeEach(function (done) {
@@ -23,10 +23,10 @@ describe('<a2j-viewer-navigation>', function () {
 
       promise.then(function (_interview) {
         interview = _interview
-        appState = new AppState({ interview })
+        rState = new AppState({ interview })
         pages = interview.attr('pages')
-        visited = canReflect.getKeyValue(appState, 'visitedPages')
-        vm = new ViewerNavigationVM({ appState, interview })
+        visited = canReflect.getKeyValue(rState, 'visitedPages')
+        vm = new ViewerNavigationVM({ rState, interview })
 
         done()
       })
@@ -48,28 +48,28 @@ describe('<a2j-viewer-navigation>', function () {
     })
 
     it('canSaveAndExit', function () {
-      // true only if appState.lastPageBeforeExit has a non falsy value
+      // true only if rState.lastPageBeforeExit has a non falsy value
       // and interview.attr('exitPage') NOT being constants.qIDNOWHERE
-      appState.lastPageBeforeExit = ''
+      rState.lastPageBeforeExit = ''
       interview.attr('exitPage', constants.qIDNOWHERE)
       assert.isFalse(vm.attr('canSaveAndExit'))
 
       // lastPageBeforeExit having a value means you've already hit Save&Exit button
-      appState.lastPageBeforeExit = '2-Name'
+      rState.lastPageBeforeExit = '2-Name'
       interview.attr('exitPage', '1-Exit')
       assert.isFalse(vm.attr('canSaveAndExit'))
 
       // exit page assigned, but Save&Exit button not hit
-      appState.lastPageBeforeExit = ''
+      rState.lastPageBeforeExit = ''
       interview.attr('exitPage', '1-Exit')
       assert.isTrue(vm.attr('canSaveAndExit'))
     })
 
     it('canResumeInterview - whether Resume button should be enabled', function () {
-      appState.lastPageBeforeExit = ''
+      rState.lastPageBeforeExit = ''
       assert.isFalse(vm.attr('canResumeInterview'))
 
-      appState.lastPageBeforeExit = '1-Intro'
+      rState.lastPageBeforeExit = '1-Intro'
       assert.isTrue(vm.attr('canResumeInterview'))
     })
 
@@ -138,8 +138,8 @@ describe('<a2j-viewer-navigation>', function () {
     it('disableOption', () => {
       assert.equal(vm.disableOption(0), false, 'false by default even with index 0')
 
-      // saveAndExitActive is derived from appState.lastPageBeforeExit having a value
-      appState.lastPageBeforeExit = '2-Name'
+      // saveAndExitActive is derived from rState.lastPageBeforeExit having a value
+      rState.lastPageBeforeExit = '2-Name'
       assert.equal(vm.disableOption(0), false, 'false if index is 0 and saveAndExitActive is true')
       assert.equal(vm.disableOption(1), true, 'true if index is NOT 0 and saveAndExitActive is true')
     })
@@ -149,7 +149,7 @@ describe('<a2j-viewer-navigation>', function () {
     let pages
     let visited
     let interview
-    let appState
+    let rState
     let vm // eslint-disable-line
     let lang
 
@@ -158,7 +158,7 @@ describe('<a2j-viewer-navigation>', function () {
 
       promise.then(function (_interview) {
         interview = _interview
-        appState = new AppState()
+        rState = new AppState()
         lang = {
           GoNext: 'Next',
           GoBack: 'Back',
@@ -169,17 +169,17 @@ describe('<a2j-viewer-navigation>', function () {
         }
 
         pages = interview.attr('pages')
-        visited = canReflect.getKeyValue(appState, 'visitedPages')
-        vm = new ViewerNavigationVM({ appState, interview, lang })
+        visited = canReflect.getKeyValue(rState, 'visitedPages')
+        vm = new ViewerNavigationVM({ rState, interview, lang })
 
         let frag = stache(
           `<a2j-viewer-navigation interview:from="interview"
-            appState:from="appState" lang:from="lang"
+            rState:from="rState" lang:from="lang"
             showDemoNotice:bind="showDemoNotice" />`
         )
 
         $('#test-area').html(frag({
-          appState,
+          rState,
           interview,
           lang,
           showDemoNotice: false
@@ -238,11 +238,11 @@ describe('<a2j-viewer-navigation>', function () {
 
     it('shows/hides Resume button based on vm.canSaveAndExit', function () {
       // turn off Resume button when saveAndExitActive is false even when lastPageBeforeExit has a value
-      appState.lastPageBeforeExit = '1-Intro'
+      rState.lastPageBeforeExit = '1-Intro'
       assert.equal($('.can-exit').length, 0, 'Resume button should not be rendered')
 
       // turn on Resume button when Exit button has been clicked
-      appState.lastPageBeforeExit = '1-Intro'
+      rState.lastPageBeforeExit = '1-Intro'
       assert.equal($('.can-resume').length, 1, 'Resume button should be rendered')
     })
 

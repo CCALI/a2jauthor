@@ -5,7 +5,6 @@ import _forEach from 'lodash/forEach'
 import queues from 'can-queues'
 import AnswerVM from 'caja/viewer/models/answervm'
 import Parser from 'caja/viewer/mobile/util/parser'
-import { ViewerNavigationVM } from 'caja/viewer/desktop/navigation/navigation'
 import { Analytics } from 'caja/viewer/util/analytics'
 import { FieldVM } from './fields/field/field'
 import constants from 'caja/viewer/models/constants'
@@ -23,6 +22,7 @@ export default CanMap.extend('PagesVM', {
   define: {
     // passed in via steps.stache or mobile.stache
     currentPage: {},
+    resumeInterview: {},
     lang: {},
     logic: {},
     rState: {},
@@ -255,12 +255,10 @@ export default CanMap.extend('PagesVM', {
       this.previewActiveResponses(button)
     }
 
-    // special destination dIDRESUME button skips rest of navigate
+    // resumeInterview function passed from NavigationVM via stache
     if (button.next === constants.qIDRESUME) {
-      let interview = this.attr('interview')
-      // Handle the same as Desktop Navigation Resume
-      let vm = new ViewerNavigationVM({ rState, interview })
-      vm.resumeInterview()
+      this.resumeInterview()
+      // special destination dIDRESUME button skips rest of navigate
       return
     }
 

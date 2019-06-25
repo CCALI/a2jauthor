@@ -145,14 +145,14 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
       this.logic.varSet(repeatVar, visitedPage.repeatVarValue)
       this.repeatVarValue = visitedPage.repeatVarValue
     } else {
-      this.repeatVarValue = null
+      this.repeatVarValue = undefined
     }
     const outerLoopVar = visitedPage.outerLoopVar
     if (outerLoopVar) {
       this.logic.varSet(outerLoopVar, visitedPage.outerLoopVarValue)
       this.outerLoopVarValue = visitedPage.outerLoopVarValue
     } else {
-      this.outerLoopVarValue = null
+      this.outerLoopVarValue = undefined
     }
   },
 

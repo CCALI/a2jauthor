@@ -62,7 +62,8 @@ export default Component.extend({
       // the preview button in the edit page dialog.
       if (dialogInstance && previewPageName) {
         appState.attr('previewPageName', '')
-        $pageEditDialog.dialog('open')
+        // gotoPageEdit defined in A2J_Pages.js: 314
+        window.gotoPageEdit(previewPageName)
       }
     },
 

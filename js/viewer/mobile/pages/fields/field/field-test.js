@@ -144,10 +144,10 @@ describe('<a2j-field>', () => {
     it('minMaxPrompt should show min and max values in range display', function () {
       const field = vm.attr('field')
       field.attr({ 'type': 'number', 'min': 5, 'max': 15 })
-      assert.equal(vm.attr('minMaxPrompt'), '(5 --- 15)', 'should show the range of acceptable values')
+      assert.equal(vm.attr('minMaxPrompt'), '(5 ~~~ 15)', 'should show the range of acceptable values')
 
       field.attr('min', null)
-      assert.equal(vm.attr('minMaxPrompt'), '(any --- 15)', 'should show the word "any" if min or max value not set')
+      assert.equal(vm.attr('minMaxPrompt'), '(any ~~~ 15)', 'should show the word "any" if min or max value not set')
     })
 
     it('calcAvailableLength', function () {

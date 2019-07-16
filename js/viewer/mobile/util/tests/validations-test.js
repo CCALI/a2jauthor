@@ -119,6 +119,15 @@ describe('Validations', function () {
       assert.ok(validations.min(), 'invalid')
     })
 
+    it('handles entered value of 0 against higher min', function () {
+      validations.attr('config.min', 1)
+      validations.attr('val', 1)
+      assert.ok(!validations.min(), 'valid')
+
+      validations.attr('val', 0)
+      assert.ok(validations.min(), 'invalid')
+    })
+
     it('date', function () {
       validations.attr('config.type', 'datemdy')
       validations.attr('config.min', '')
@@ -153,6 +162,15 @@ describe('Validations', function () {
       assert.ok(!validations.max(), 'valid')
 
       validations.attr('val', 3)
+      assert.ok(validations.max(), 'invalid')
+    })
+
+    it('handles entered value of 0 against higher max', function () {
+      validations.attr('config.max', 1)
+      validations.attr('val', 0)
+      assert.ok(!validations.max(), 'valid')
+
+      validations.attr('val', 2)
       assert.ok(validations.max(), 'invalid')
     })
 

@@ -110,7 +110,7 @@ export let FieldVM = CanMap.extend('FieldVM', {
       get () {
         const min = this.attr('field.min') || 'any'
         const max = this.attr('field.max') || 'any'
-        return `(${min} --- ${max})`
+        return `(${min} ~~~ ${max})`
       }
     },
 

@@ -167,7 +167,8 @@ export default CanMap.extend({
    */
   min: function () {
     if (this.config.min || this.config.min === 0) {
-      if (!this.val) {
+      // 0 is legit value to test against min
+      if (!this.val && this.val !== 0) {
         return false
       }
 
@@ -191,7 +192,8 @@ export default CanMap.extend({
    */
   max: function () {
     if (this.config.max || this.config.max === 0) {
-      if (!this.val) {
+      // 0 is legit value to test against min
+      if (!this.val && this.val !== 0) {
         return false
       }
 

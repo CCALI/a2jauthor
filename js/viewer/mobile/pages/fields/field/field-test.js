@@ -18,7 +18,6 @@ describe('<a2j-field>', () => {
       fieldStub = {
         name: 'Foo Input',
         type: '',
-        suggestionText: '',
         _answer: {
           answerIndex: 1,
           answer: {
@@ -87,6 +86,11 @@ describe('<a2j-field>', () => {
       assert.equal(vm.normalizeDateInput('12232015'), '12/23/2015', 'should normalize 8 digit dates')
       assert.equal(vm.normalizeDateInput('12-23-2015'), '12/23/2015', 'should normalize 8 digit dates with hyphens')
       assert.equal(vm.normalizeDateInput('12/23/2015'), '12/23/2015', 'should normalize 8 digit dates with slashes')
+      // dates missing leading zeros on day or month
+      assert.equal(vm.normalizeDateInput('2-4-15'), '02/04/2015', 'should normalize dates with hyphens and single digits')
+      assert.equal(vm.normalizeDateInput('2/4/15'), '02/04/2015', 'should normalize with slashes and single digits')
+      assert.equal(vm.normalizeDateInput('2/4/5'), '02045', 'should not normalize a single digit year, only single digit month or day')
+      assert.equal(vm.normalizeDateInput('2415'), '2415', 'should not normalize a date without slash or hyphen separator')
     })
 
     it('invalidPrompt', () => {

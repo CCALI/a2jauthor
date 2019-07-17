@@ -1,5 +1,4 @@
 <can-import from="caja/viewer/mobile/pages/"/>
-<can-import from="caja/viewer/mobile/intro/"/>
 <can-import from="caja/viewer/mobile/header/"/>
 <can-import from="caja/viewer/mobile/filler/"/>
 <can-import from="caja/viewer/mobile/mobile.less"/>
@@ -24,15 +23,6 @@
   {{/if}}
 
   {{#not(tocOrCreditsShown())}}
-    {{#eq(rState.view, 'intro')}}
-      <a2j-intro
-        rState:from="rState"
-        mState:from="mState"
-        pState:from="pState"
-        interview:from="interview">
-      </a2j-intro>
-    {{/eq}}
-
     {{#eq(rState.view, 'complete')}}
       <img src="{{joinBase 'viewer/images/logo_big.png'}}" class="img-responsive"/>
       <div class="btn-group btn-group-justified">
@@ -46,7 +36,7 @@
         selectedPageName:from="rState.selectedPageName"
         lang:from="lang"
         logic:from="logic"
-        appState:from="rState"
+        rState:from="rState"
         interview:from="interview"
         selectedPageName:bind="rState.page"
         selectedPageIndex:bind="rState.selectedPageIndex" />

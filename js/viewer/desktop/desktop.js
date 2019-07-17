@@ -40,29 +40,22 @@ let DesktopViewerVM = CanMap.extend('DesktopViewerVM', {
     }
   },
 
-  init () {
-    let routeState = this.attr('rState')
-
-    if (routeState && routeState.view === 'intro') {
-      const interview = this.attr('interview')
-      routeState.view = 'pages'
-      if (routeState.page !== interview.attr('firstPage')) {
-        routeState.page = interview.attr('firstPage')
-      }
-    }
+  connectedCallback () {
+    const location = window.location.toString()
+    this.attr('showDemoNotice', location.indexOf('.a2jauthor.org') !== -1)
 
     this.checkPageExists()
   },
 
   checkPageExists () {
-    const routeState = this.attr('rState')
+    const rState = this.attr('rState')
     const interview = this.attr('interview')
 
-    if (!routeState || !interview) return
+    if (!rState || !interview) return
 
-    const pageName = routeState.page
+    const pageName = rState.page
 
-    if (routeState.view === 'pages') {
+    if (rState.view === 'pages') {
       const page = interview.attr('pages').find(pageName)
       this.attr('pageNotFound', _isUndefined(page))
     }
@@ -82,12 +75,6 @@ export default Component.extend({
   },
 
   events: {
-    inserted () {
-      let vm = this.viewModel
-      let location = window.location.toString()
-      vm.attr('showDemoNotice', location.indexOf('.a2jauthor.org') !== -1)
-    },
-
     '{rState} page': function () {
       this.viewModel.checkPageExists()
     }

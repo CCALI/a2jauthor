@@ -66,18 +66,18 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
     // if previewPageName is set, we need to make sure the viewer
     // loads that specific page (covers the case when user clicks
     // `preview` from the edit page popup).
+    rState.view = 'pages'
     if (vm.attr('previewPageName')) {
-      rState.view = 'pages'
-      rState.page = vm.attr('previewPageName')
+      rState.set('page', vm.attr('previewPageName'))
     } else {
-      rState.view = 'intro'
+      rState.set('page', interview.attr('firstPage'))
     }
 
     const modalContent = compute()
 
     if (previewAnswers) {
       previewAnswers.forEach(function (answer) {
-        let name = answer.name ? answer.name.toLowerCase() : ''
+        const name = answer.name ? answer.name.toLowerCase() : ''
         if (interview.attr('answers.' + name)) {
           interview.attr('answers.' + name + '.values', answer.attr('values'))
         }

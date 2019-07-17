@@ -52,6 +52,10 @@ export default function ({ interview, pState, mState, rState }) {
   rState.logic = logic
   rState.traceMessage = new TraceMessage()
 
+  // set initial page route
+  rState.view = 'pages'
+  rState.page = interview.attr('firstPage')
+
   const modalContent = compute()
 
   // piwik: set author id for filtering/tracking

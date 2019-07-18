@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import CanMap from 'can-map'
 import _some from 'lodash/some'
 import _isString from 'lodash/isString'
@@ -6,7 +7,6 @@ import queues from 'can-queues'
 import AnswerVM from 'caja/viewer/models/answervm'
 import Parser from 'caja/viewer/mobile/util/parser'
 import { Analytics } from 'caja/viewer/util/analytics'
-import { FieldVM } from './fields/field/field'
 import constants from 'caja/viewer/models/constants'
 
 import 'can-map-define'
@@ -190,58 +190,11 @@ export default CanMap.extend('PagesVM', {
     })
   },
 
-  handleIE11 (fields, logic, traceMessage) {
-    // this is to handle the mis-firing of `change` event
-    // in IE11 when "tabbing" through the fields as per this bug
-    if (logic && fields && fields.length > 0) {
-      const answers = logic.attr('interview.answers')
-      if (answers) {
-        let vm = new FieldVM()
-
-        fields.forEach(function (field) {
-          const type = field.attr('type')
-          // These types work with native code because you have to click to select
-          // which fires the blue/change event to validate the answer
-          if (type !== 'gender' &&
-              type !== 'checkbox' &&
-              type !== 'checboxNOTA' &&
-              type !== 'radio' &&
-              type !== 'textpick' &&
-              type !== 'numberpick') {
-            // Handle each field as if the blur/focus event had fired correctly with validateField
-            const fieldName = field.attr('name')
-            const escapedFieldName = fieldName.replace(/[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~]/g, '\\$&')
-            const preSelector = field.type !== 'textlong' ? 'input' : 'textarea'
-            const $fieldEl = $(preSelector + "[name='" + escapedFieldName + "']")
-
-            // validateField expects `this` to have field and traceMessage
-            vm.attr({ field, traceMessage })
-
-            // fire same answer pre-validation as jquery datepicker
-            if (type === 'datemdy') {
-              vm.validateDatepicker($fieldEl)
-            } else {
-              vm.validateField(vm, $fieldEl)
-            }
-          }
-        })
-        // Cleanup temp FieldVM instance
-        vm = null
-      }
-    }
-  },
-
   navigate (button, el, ev) {
     const page = this.attr('currentPage')
     const fields = page.attr('fields')
-    const logic = this.attr('logic')
-    const traceMessage = this.attr('traceMessage')
     const rState = this.attr('rState')
 
-    // IE11 fails to fire all validateField events, handle that here
-    if (navigator.userAgent.match(/Trident.*rv:11\./)) {
-      this.handleIE11(fields, logic, traceMessage)
-    }
     // Author Preview Mode changes handling of special buttons, and does not post answers
     if (rState.previewActive &&
       (button.next === constants.qIDFAIL ||

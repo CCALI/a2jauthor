@@ -11,6 +11,8 @@ import _assign from 'lodash/assign'
 import compute from 'can-compute'
 import route from 'can-route'
 
+import 'caja/viewer/util/object-assign-polyfill'
+
 // TODO: trace-message.js should be moved to a shared library between Author/Viewer
 import TraceMessage from 'caja/author/models/trace-message'
 

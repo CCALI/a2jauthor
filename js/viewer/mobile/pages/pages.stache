@@ -22,7 +22,7 @@
       </h3>
 
       <fieldset>
-        <legend><p>{{{ eval(currentPage.text, rState.repeatVarValue) }}}</p></legend>
+        <legend class='question-text-legend'><p>{{{ eval(currentPage.text, rState.repeatVarValue) }}}</p></legend>
 
         {{#if(currentPage.fields.length)}}
           <a2j-fields

@@ -619,7 +619,7 @@
     TLogic.prototype.dispatchMessage = function (message) {
       this.dispatch({
         type: 'traceMessage',
-        message
+        message: message
       })
       return message
     }

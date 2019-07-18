@@ -235,7 +235,7 @@ export const FieldVM = CanMap.extend('FieldVM', {
           { format: 'val', msg: value }
         ]
       }
-      this.attr('rState.traceMessage').addMessage(message)
+      this.attr('rState').traceMessage.addMessage(message)
     }
 
     return errors

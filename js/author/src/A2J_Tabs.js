@@ -602,7 +602,7 @@ window.form = {
   },
   htmlFix: function (html) {
     html = form.pasteFix(html, ['DIV', 'P', 'BR', 'UL', 'OL', 'LI', 'A', 'B', 'I', 'U', 'BLOCKQUOTE'])
- 		return html
+    return html
   },
   htmlarea: function (data) { // label,value,handler,name) {
     form.id++
@@ -642,32 +642,50 @@ window.form = {
       })
 
       // add the CKEditor
-      window.CKEDITOR.disableAutoInline = true
-      window.CKEDITOR.inline(document.getElementById(id), {
+      window.CKEDITOR.replace(document.getElementById(id), {
         // do not escape html entities, except special characters for xml compatibility
         // pasted in characters can cause issues otherwise, example: bullets
         entities: false,
         entities_latin: false,
         entities_greek: false,
+        font_defaultLabel: 'Open Sans',
+        fontSize_defaultLabel: '14px',
         pasteFilter: 'div, p, br, ul, ol, li, a, b, i, u, blockquote',
-        configStartupFocus: true,
+        startupFocus: 'end',
+        autoGrow_onStartup: true,
         height: 55,
         autoGrow_minHeight: 55,
         linkShowAdvancedTab: false,
         linkShowTargetTab: false,
         extraPlugins: 'indent,a2j-popout,autogrow',
+        removePlugins: 'magicline',
         toolbar: [
-          [ 'Bold', 'Italic', 'Link', 'Blockquote', 'Indent', 'Outdent', 'A2j-popout' ]
+          { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline' ] },
+          { name: 'paragraph', items: [ 'Blockquote', 'Indent', 'Outdent', 'BulletedList', 'NumberedList' ] },
+          { name: 'links', items: [ 'Link', 'Unlink', 'A2j-popout' ] }
         ],
         on: {
           blur: function (event) {
             // Update the data when the element is blured
             var d = event.editor.getData()
-            data.change(d)
+            // change function sometimes requires field prop
+            data.change(d, data.field)
           },
           change: function (event) {
             // Update the data when data changes
-            data.change(event.editor.getData())
+            var d = event.editor.getData()
+            // change function sometimes requires field prop
+            data.change(d, data.field)
+          },
+          destroy: function (event) {
+            // update original div html with editor content
+            // editer.updateElement() native function was not working
+            var editorHTML = event.editor.getData()
+            var name = event.editor.name
+            var $originalEl = $(`#${name}`)
+            if ($originalEl && $originalEl[0]) {
+              $originalEl[0].innerHTML = editorHTML
+            }
           }
         }
       })

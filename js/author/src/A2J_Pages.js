@@ -42,12 +42,12 @@ function pageNameFieldsForTextTab (pagefs, page) {	// Used by the Text tab.
     for (f in page.fields) {
       var field = page.fields[f]
       var ff = form.fieldset('Field ' + (parseInt(f, 10) + 1), field)
-      ff.append(form.htmlarea({label: 'Label:', value: field.label, change: labelChangeFnc}))
+      ff.append(form.htmlarea({label: 'Label:', value: field.label, field: field, change: labelChangeFnc}))
       if (gPrefs.showText === 2 || field.value !== '') {
         ff.append(form.text({label: 'Default value:', placeholder: '', name: 'default', value: field.value, change: defValueChangeFnc}))
       }
       if (gPrefs.showText === 2 || field.invalidPrompt !== '') {
-        ff.append(form.htmlarea({label: 'If invalid say:', value: field.invalidPrompt, change: invalidChangeFnc}))
+        ff.append(form.htmlarea({label: 'If invalid say:', value: field.invalidPrompt, field: field, change: invalidChangeFnc}))
       }
       pagefs.append(ff)
     }

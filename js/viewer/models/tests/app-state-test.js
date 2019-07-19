@@ -128,9 +128,9 @@ describe('AppState', function () {
     assert.equal(appState.page, pageNames[2], 'page name should be set by codeBefore script')
   })
 
-  it('sets the lastVisitedPageName to be used as a RESUME target', function () {
+  it('sets the lastVisitedPageName to be used as a Back To Prior Question button target', function () {
     let lastVisitedPageName = appState.lastVisitedPageName
-    assert.equal(lastVisitedPageName, false, 'defaults to false')
+    assert.equal(lastVisitedPageName, undefined, 'defaults to undefined')
 
     appState.page = pageNames[0]
     lastVisitedPageName = appState.lastVisitedPageName

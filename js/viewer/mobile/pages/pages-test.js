@@ -15,6 +15,7 @@ describe('<a2j-pages>', () => {
   let vm
   let logicStub
   let nextPageStub
+  let priorPageStub
   let interview
   let defaults
   let traceMessage
@@ -36,16 +37,17 @@ describe('<a2j-pages>', () => {
       fields: []
     })
 
+    priorPageStub = new CanMap({
+      name: 'priorPage',
+      fields: []
+    })
+
     interview = {
       answers: new CanMap(),
-      getPageByName: function () {
-        return nextPageStub
+      getPageByName: function (pageName) {
+        return this.pages.attr(pageName)
       },
-      pages: {
-        find () {
-          return nextPageStub
-        }
-      }
+      pages: new CanMap({nextPageStub, priorPageStub})
     }
     // normally passed in via stache
     traceMessage = new TraceMessage()
@@ -84,6 +86,17 @@ describe('<a2j-pages>', () => {
     })
 
     describe('navigate', () => {
+      it('navigates to prior question', () => {
+        const rState = vm.attr('rState')
+        const visitedPages = rState.visitedPages
+        const button = new CanMap({ next: constants.qIDBACK })
+        visitedPages[0] = defaults.currentPage
+        visitedPages[1] = new CanMap({ name: 'priorPage' })
+
+        vm.navigate(button)
+        assert.equal(rState.page, 'priorPage', 'should navigate to prior page')
+      })
+
       it('saves answer when button has a value', () => {
         let answers = defaults.interview.answers
 

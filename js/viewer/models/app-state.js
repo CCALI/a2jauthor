@@ -100,7 +100,6 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   },
 
   lastVisitedPageName: {
-    default: false,
     serialize: false
   },
 
@@ -223,6 +222,8 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
         this.outerLoopVarValue = outerLoopVarValue
         this.visitedPages.unshift(newVisitedPage)
         this.lastVisitedPageName = newVisitedPage.name
+        // make sure newly visited page is selected
+        this.selectedPageIndex = 0
       } else {
         this.selectedPageIndex = revisitedPageIndex
       }

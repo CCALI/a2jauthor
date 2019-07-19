@@ -327,12 +327,10 @@ export default CanMap.extend('PagesVM', {
       // user has selected to navigate to a prior question
       if (button.next === constants.qIDBACK) {
         // last visited page always at index 1
-        // TODO: GOTO logic could break the above assumption
-        // might need a better way to track the last page
-        const priorQuestion = (rState.visitedPages[1].attr('name'))
+        const priorQuestionName = rState.visitedPages[1].name
         // override with new gotoPage
-        logic.attr('gotoPage', priorQuestion)
-        button.attr('next', priorQuestion)
+        logic.attr('gotoPage', priorQuestionName)
+        button.attr('next', priorQuestionName)
       }
 
       const gotoPage = logic.attr('gotoPage')

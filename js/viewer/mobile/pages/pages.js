@@ -40,11 +40,6 @@ export default Component.extend({
   helpers: {
     getButtonLabel (label) {
       return label || this.attr('lang')['Continue']
-    },
-
-    eval (str) {
-      str = typeof str === 'function' ? str() : str
-      return this.attr('logic').eval(str)
     }
   },
 

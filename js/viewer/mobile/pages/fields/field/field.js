@@ -11,6 +11,7 @@ import invalidPromptTpl from './views/invalid-prompt.stache'
 import exceededMaxcharsTpl from './views/exceeded-maxchars.stache'
 import constants from 'caja/viewer/models/constants'
 import stache from 'can-stache'
+import domData from 'can-dom-data'
 
 import 'can-map-define'
 import 'jquery-ui/ui/datepicker'
@@ -210,6 +211,14 @@ export const FieldVM = CanMap.extend('FieldVM', {
     let _answer = field.attr('_answer')
     let value
 
+    // textpick binding fired onChange even on first load
+    // this skips the first pass: https://github.com/CCALI/CAJA/issues/2432
+    let initialized = domData.get(el, 'initialized')
+    if (!initialized && field.type === 'textpick') {
+      domData.set(el, 'initialized', true)
+      return
+    }
+
     if (field.type === 'checkbox' || field.type === 'checkboxNOTA') {
       value = $el[0].checked
     } else {
@@ -217,6 +226,7 @@ export const FieldVM = CanMap.extend('FieldVM', {
     }
 
     _answer.attr('values', value)
+
 
     let errors = _answer.attr('errors')
     field.attr('hasError', errors)

@@ -161,7 +161,6 @@ export default CanMap.extend('PagesVM', {
   },
 
   parseText (html) {
-    console.log('calling w/', html)
     // re-eval if answer values have updated via beforeCode
     const answersChanged = this.attr('interview.answers').serialize() // eslint-disable-line
     return this.attr('logic').eval(html)

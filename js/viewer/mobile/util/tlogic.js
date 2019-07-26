@@ -259,11 +259,25 @@
       }
     }
 
+    // This function needs to be udpated as well A2J_Logic.js line: 251
+    // TODO: remove references to the legacy A2J_Logic.js file
     TLogic.prototype.removeTrailingComments = function (currentLine) {
       // Strip trailing comments, but exclude urls aka `://`
       // everything after non-url `//` considered a trailing comment
-      var reg = /[^:]\/\//
-      return window.jQuery.trim(decodeEntities(currentLine)).split(reg)[0]
+
+      // lines that start with `//` are always a full line comment regardless of content
+      if (currentLine.indexOf('//') === 0) { return '' }
+
+      // ignore url values in SET, ex: `SET [url] TO "https://www.google.com" // trailing comment`
+      const urlFound = currentLine.indexOf('://') !== -1
+      const commentRegEx = urlFound ? /[^:]\/\// : /\/\//
+
+      // TODO: decodeEntities may no longer be needed with CKEditor
+      const decodedComment = decodeEntities(currentLine)
+      const sansComment = decodedComment.split(commentRegEx)[0]
+      const trimmedComment = window.jQuery.trim(sansComment)
+
+      return trimmedComment
     }
 
     TLogic.prototype.evalBlock = function (expressionInText) { // Evaluate a block of expression included in a text block.

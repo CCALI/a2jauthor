@@ -136,7 +136,7 @@ TLogic.prototype.translateCAJAtoJS = function (CAJAScriptHTML) {	// Translate CA
   }
   for (l = 0; l < csLines.length; l++) {
     // Strip trailing comments
-    var line = jQuery.trim(decodeEntities(csLines[l])).split('//')[0]
+    var line = this.removeTrailingComments(csLines[l])
     var args
     var js
     if (line !== '') {
@@ -246,6 +246,25 @@ TLogic.prototype.translateCAJAtoJS = function (CAJAScriptHTML) {	// Translate CA
   }
 
   return {js: jsLines, errors: errors}
+}
+
+// This is a copy of the function in tlogic.js, minus the decoding
+TLogic.prototype.removeTrailingComments = function (currentLine) {
+  // Strip trailing comments, but exclude urls aka `://`
+  // everything after non-url `//` considered a trailing comment
+
+
+  // lines that start with `//` are always a full line comment regardless of content
+  if (currentLine.indexOf('//') === 0) { return '' }
+
+  // ignore url values in SET, ex: `SET [url] TO "https://www.google.com" // trailing comment`
+  const urlFound = currentLine.indexOf('://') !== -1
+  const commentRegEx = urlFound ? /[^:]\/\// : /\/\//
+
+  const sansComment = currentLine.split(commentRegEx)[0]
+  const trimmedComment = window.jQuery.trim(sansComment)
+
+  return trimmedComment
 }
 
 TLogic.prototype.evalBlock = function (expressionInText) {	// Evaluate a block of expression included in a text block.

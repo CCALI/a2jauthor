@@ -227,7 +227,6 @@ export const FieldVM = CanMap.extend('FieldVM', {
 
     _answer.attr('values', value)
 
-
     let errors = _answer.attr('errors')
     field.attr('hasError', errors)
 

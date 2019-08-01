@@ -219,12 +219,22 @@ export default CanMap.extend('AuthorAppState', {
     },
 
     /**
-     * @property {String} viewerInterview
+     * @property {String} previewInterview
      *
      * The Interview instance used by the viewer app in preview mode.
      * this is set by viewer-preview-layout.stache bindings
      */
-    viewerInterview: {
+    previewInterview: {
+      serialize: false
+    },
+
+    /**
+     * @property {String} previewAnswers
+     *
+     * Used to persist answers across preview/page edits
+     * Cleared on new interview (re)load or when clearAnswers() triggered in Debug Panel
+     */
+    previewAnswers: {
       serialize: false
     },
 

@@ -501,27 +501,31 @@
     }
 
     TLogic.prototype._VG = function (varname, varidx) {
+      let returnVal
+
       switch (varname.toUpperCase()) {
         case 'TODAY':
           // today's date as number of days since epoch (01/01/1970)
           // to be used for calculations in A2J scripts, example: `IF TODAY < [Due Date DA]`
-          return dateToDays(todaysDate())
+          returnVal = dateToDays(todaysDate())
           break
         case 'NULL':
-          return null
+          returnVal = null
           break
         case 'TRUE':
-          return true
+          returnVal = true
           break
         case 'FALSE':
-          return false
+          returnVal = false
           break
         default:
-          return gGuide.varGet(varname, varidx, {
+          returnVal = gGuide.varGet(varname, varidx, {
             date2num: true,
             num2num: true
           })
       }
+
+      return returnVal
     }
 
     TLogic.prototype.testVar = function (name, lineNum, errors) {
@@ -571,6 +575,7 @@
     TLogic.prototype.executeScript = function (CAJAScriptHTML) { // Execute lines of CAJA script. Syntax/runtime errors go into logic tracer, error causes all logic to cease.
       // GOTO's cause immediate break out of script and the caller is responsible for changing page.
       // Script statement lines separated <BR/> tags.
+      var self = this
       if (typeof CAJAScriptHTML === 'undefined') {
         return true
       }
@@ -587,13 +592,12 @@
           var message = {}
           message.key = 'executeScript.error: ' + e.lineNumber + ': ' + e.message
           message.fragments = [{ format: '', msg: 'executeScript.error: ' + e.lineNumber + ': ' + e.message }]
-          this.dispatchMessage('traceMessage', message)
-
+          self.dispatchMessage('traceMessage', message)
           return false
         }
       } else {
         script.errors.forEach(function (error) {
-          this.dispatchMessage({
+          self.dispatchMessage({
             key: 'executeScript.error: syntax error in logic',
             fragments: [{
               format: '',

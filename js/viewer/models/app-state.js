@@ -228,7 +228,7 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
         this.selectedPageIndex = revisitedPageIndex
       }
 
-      // setCurrentPage in pages-vm.js
+      // listened for in pages.js, fires setCurrentPage() in pages-vm.js
       this.dispatch('setCurrentPage')
     }
 

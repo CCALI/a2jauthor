@@ -478,7 +478,6 @@ describe('<a2j-field>', () => {
         hasErrors = vm.validateField(null, el)
         assert.equal(hasErrors, true, 'has errors after textpick initialized and second validation')
       })
-
     })
   })
 })

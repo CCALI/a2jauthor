@@ -16,15 +16,25 @@ import parseGuideToMobile from 'caja/viewer/mobile/util/guide-to-mobile'
 const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
   define: {
     // passed in via viewer-preview-layout.stache bindings
-    remainingSteps: {},
-    maxDisplayedSteps: {},
+    guidePath: {},
+    showDebugPanel: {},
+    previewPageName: {},
     traceMessage: {},
-
+    // passed up to Author app-state via viewer-preview-layout.stache bindings
     interviewPageName: {
       get: function () {
         return this.attr('rState.page')
       }
-    }
+    },
+    // set by attr call in connectedCallback
+    rState: {},
+    pState: {},
+    mState: {},
+    interview: {},
+    logic: {},
+    lang: {},
+    isMobile: {},
+    modalContent: {}
   },
 
   connectedCallback (el) {
@@ -33,8 +43,6 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
     const tearDownAppState = rState.connectedCallback(el)
     const mState = new MemoryState()
     const pState = new PersistedState()
-
-    const previewAnswers = vm.attr('interview.answers') ? vm.attr('interview.answers') : null
 
     // Set fileDataURL to window.gGuidePath, so the viewer can locate the
     // interview assets (images, sounds, etc).
@@ -45,11 +53,23 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
     const interview = new Interview(parsedData)
     const lang = new Lang(interview.attr('language'))
 
-    const answers = pState.attr('answers')
-    answers.attr('lang', lang)
-    answers.attr(_assign({}, interview.serialize().vars))
+    // if interview.answers exist here, they are restored from Author app-state binding
+    const previewAnswers = vm.attr('interview.answers') ? vm.attr('interview.answers') : null
 
+    const answers = pState.attr('answers')
+    let serializedVars = interview.serialize().vars
+
+    if (previewAnswers) { // restore previous answers with any new vars
+      const serializedpreviewAnswers = previewAnswers.serialize()
+      const restoredAnswers = _assign(serializedVars, serializedpreviewAnswers)
+      answers.attr(_assign({}, restoredAnswers))
+    } else { // just set the interview vars
+      answers.attr(_assign({}, serializedVars))
+    }
+
+    answers.attr('lang', lang)
     interview.attr('answers', answers)
+
     rState.interview = interview
 
     // needs to be created after answers are set
@@ -74,15 +94,6 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
     }
 
     const modalContent = compute()
-
-    if (previewAnswers) {
-      previewAnswers.forEach(function (answer) {
-        const name = answer.name ? answer.name.toLowerCase() : ''
-        if (interview.attr('answers.' + name)) {
-          interview.attr('answers.' + name + '.values', answer.attr('values'))
-        }
-      })
-    }
 
     vm.attr({
       rState,

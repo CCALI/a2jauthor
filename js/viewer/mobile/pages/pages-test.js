@@ -15,6 +15,7 @@ describe('<a2j-pages>', () => {
   let vm
   let logicStub
   let nextPageStub
+  let priorPageStub
   let interview
   let defaults
   let traceMessage
@@ -36,17 +37,18 @@ describe('<a2j-pages>', () => {
       fields: []
     })
 
-    interview = {
+    priorPageStub = new CanMap({
+      name: 'priorPage',
+      fields: []
+    })
+
+    interview = new CanMap({
       answers: new CanMap(),
-      getPageByName: function () {
-        return nextPageStub
+      getPageByName: function (pageName) {
+        return this.pages.attr(pageName)
       },
-      pages: {
-        find () {
-          return nextPageStub
-        }
-      }
-    }
+      pages: new CanMap({nextPageStub, priorPageStub})
+    })
     // normally passed in via stache
     traceMessage = new TraceMessage()
 
@@ -55,9 +57,9 @@ describe('<a2j-pages>', () => {
         name: 'Intro',
         fields: [],
         repeatVar: '',
-        text: '',
+        text: 'welcome!',
         textAudioURL: null,
-        learn: null,
+        learn: '',
         buttons: null,
         step: { number: undefined, text: '' } }
       ),
@@ -84,6 +86,17 @@ describe('<a2j-pages>', () => {
     })
 
     describe('navigate', () => {
+      it('navigates to prior question', () => {
+        const rState = vm.attr('rState')
+        const visitedPages = rState.visitedPages
+        const button = new CanMap({ next: constants.qIDBACK })
+        visitedPages[0] = defaults.currentPage
+        visitedPages[1] = new CanMap({ name: 'priorPage' })
+
+        vm.navigate(button)
+        assert.equal(rState.page, 'priorPage', 'should navigate to prior page')
+      })
+
       it('saves answer when button has a value', () => {
         let answers = defaults.interview.answers
 
@@ -251,15 +264,38 @@ describe('<a2j-pages>', () => {
   describe('Component', () => {
     let rStateTeardown
     beforeEach(() => {
-      let frag = stache(
-        '<a2j-pages rState:bind="rState"></a2j-pages>'
-      )
-      $('#test-area').html(frag({ rState: defaults.rState }))
-      vm = $('a2j-pages')[0].viewModel
+      defaults.logic.attr('eval', (text) => {
+        return text + ' ' + defaults.interview.attr('answers.foo')
+      })
 
+      let frag = stache(
+        '<a2j-pages></a2j-pages>'
+      )
+      $('#test-area').html(frag())
+      vm = $('a2j-pages')[0].viewModel
       vm.attr(defaults)
       vm.connectedCallback()
       rStateTeardown = vm.attr('rState').connectedCallback()
+    })
+
+    it('parseText refires if answers update', (done) => {
+      const oldEval = vm.attr('logic').eval
+      vm.attr('interview.answers.foo', 'bar')
+      vm.attr('logic').attr('eval', (text) => {
+        return text + ' ' + vm.attr('interview.answers.foo')
+      })
+      let currentPageText = $('.question-text')[0].innerHTML
+      assert.equal(currentPageText, 'welcome! bar', 'renders with `defaults` stub value')
+
+      vm.attr('interview.answers.foo', 'baz')
+      // wait for page update
+      setTimeout(() => {
+        currentPageText = $('.question-text')[0].innerHTML
+        assert.equal(currentPageText, 'welcome! baz', 'renders updated value')
+        done()
+      }, 100)
+
+      vm.attr('logic').eval = oldEval
     })
 
     afterEach(() => {

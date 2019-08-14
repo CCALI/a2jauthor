@@ -76,13 +76,13 @@ export default [
     icon: 'glyphicon-publish',
     active: false
   },
-  // { TODO: restore when Tobias ready
-  //   page: 'a2jorg',
-  //   title: 'A2J.org',
-  //   ref: 'a2jOrgDashboard',
-  //   icon: 'glyphicon-login',
-  //   active: false
-  // },
+  {
+    page: 'a2jorg',
+    title: 'A2J.org',
+    ref: 'a2jOrgDashboard',
+    icon: 'glyphicon-login',
+    active: false
+  },
   {
     page: 'templates',
     title: 'Templates',

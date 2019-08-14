@@ -41,10 +41,9 @@
             <img
               class="modal-image"
               src:from="normalizePath(mState.fileDataURL, modalContent.imageURL)" >
-            <a
-              href="{{ normalizePath(mState.fileDataURL, modalContent.imageURL) }}" data-lightbox="image-1"
-              class="btn btn-default pull-right"
-            >
+            <a href="{{ normalizePath(mState.fileDataURL, modalContent.imageURL) }}"
+              data-lightbox="image-1"
+              class="zoom-button btn btn-default pull-right">
               <span class="demo-icon glyphicon-resize-full" aria-hidden="true"></span>
             </a>
             {{/if}}

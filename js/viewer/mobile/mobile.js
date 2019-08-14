@@ -3,7 +3,7 @@ import Component from 'can-component'
 import template from './mobile.stache'
 import 'can-map-define'
 
-let MobileViewerVM = CanMap.extend('MobileViewerVM', {
+const MobileViewerVM = CanMap.extend('MobileViewerVM', {
   define: {
     // passed in via app.stache bindings
     lang: {},
@@ -16,6 +16,11 @@ let MobileViewerVM = CanMap.extend('MobileViewerVM', {
   },
   hideCredits: function () {
     this.attr('mState.showCredits', false)
+  },
+  connectedCallback () {
+    // mobile view does not use header or step
+    this.attr('mState.header', '')
+    this.attr('mState.step', '')
   }
 })
 
@@ -29,8 +34,8 @@ export default Component.extend({
 
   helpers: {
     tocOrCreditsShown: function () {
-      let showToc = this.attr('mState.showToc')
-      let showCredits = this.attr('mState.showCredits')
+      const showToc = this.attr('mState.showToc')
+      const showCredits = this.attr('mState.showCredits')
 
       return (showCredits || showToc)
     },

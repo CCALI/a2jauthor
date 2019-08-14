@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import CanMap from 'can-map'
 import _some from 'lodash/some'
 import _isString from 'lodash/isString'
@@ -5,9 +6,7 @@ import _forEach from 'lodash/forEach'
 import queues from 'can-queues'
 import AnswerVM from 'caja/viewer/models/answervm'
 import Parser from 'caja/viewer/mobile/util/parser'
-import { ViewerNavigationVM } from 'caja/viewer/desktop/navigation/navigation'
 import { Analytics } from 'caja/viewer/util/analytics'
-import { FieldVM } from './fields/field/field'
 import constants from 'caja/viewer/models/constants'
 
 import 'can-map-define'
@@ -23,6 +22,7 @@ export default CanMap.extend('PagesVM', {
   define: {
     // passed in via steps.stache or mobile.stache
     currentPage: {},
+    resumeInterview: {},
     lang: {},
     logic: {},
     rState: {},
@@ -160,6 +160,12 @@ export default CanMap.extend('PagesVM', {
     return () => { vm.stopListening() }
   },
 
+  parseText (html) {
+    // re-eval if answer values have updated via beforeCode
+    const answersChanged = this.attr('interview.answers').serialize() // eslint-disable-line
+    return this.attr('logic').eval(html)
+  },
+
   returnHome () {
     this.attr('rState').attr({}, true)
   },
@@ -190,58 +196,11 @@ export default CanMap.extend('PagesVM', {
     })
   },
 
-  handleIE11 (fields, logic, traceMessage) {
-    // this is to handle the mis-firing of `change` event
-    // in IE11 when "tabbing" through the fields as per this bug
-    if (logic && fields && fields.length > 0) {
-      const answers = logic.attr('interview.answers')
-      if (answers) {
-        let vm = new FieldVM()
-
-        fields.forEach(function (field) {
-          const type = field.attr('type')
-          // These types work with native code because you have to click to select
-          // which fires the blue/change event to validate the answer
-          if (type !== 'gender' &&
-              type !== 'checkbox' &&
-              type !== 'checboxNOTA' &&
-              type !== 'radio' &&
-              type !== 'textpick' &&
-              type !== 'numberpick') {
-            // Handle each field as if the blur/focus event had fired correctly with validateField
-            const fieldName = field.attr('name')
-            const escapedFieldName = fieldName.replace(/[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~]/g, '\\$&')
-            const preSelector = field.type !== 'textlong' ? 'input' : 'textarea'
-            const $fieldEl = $(preSelector + "[name='" + escapedFieldName + "']")
-
-            // validateField expects `this` to have field and traceMessage
-            vm.attr({ field, traceMessage })
-
-            // fire same answer pre-validation as jquery datepicker
-            if (type === 'datemdy') {
-              vm.validateDatepicker($fieldEl)
-            } else {
-              vm.validateField(vm, $fieldEl)
-            }
-          }
-        })
-        // Cleanup temp FieldVM instance
-        vm = null
-      }
-    }
-  },
-
   navigate (button, el, ev) {
     const page = this.attr('currentPage')
     const fields = page.attr('fields')
-    const logic = this.attr('logic')
-    const traceMessage = this.attr('traceMessage')
     const rState = this.attr('rState')
 
-    // IE11 fails to fire all validateField events, handle that here
-    if (navigator.userAgent.match(/Trident.*rv:11\./)) {
-      this.handleIE11(fields, logic, traceMessage)
-    }
     // Author Preview Mode changes handling of special buttons, and does not post answers
     if (rState.previewActive &&
       (button.next === constants.qIDFAIL ||
@@ -255,12 +214,10 @@ export default CanMap.extend('PagesVM', {
       this.previewActiveResponses(button)
     }
 
-    // special destination dIDRESUME button skips rest of navigate
+    // resumeInterview function passed from NavigationVM via stache
     if (button.next === constants.qIDRESUME) {
-      let interview = this.attr('interview')
-      // Handle the same as Desktop Navigation Resume
-      let vm = new ViewerNavigationVM({ rState, interview })
-      vm.resumeInterview()
+      this.resumeInterview()
+      // special destination dIDRESUME button skips rest of navigate
       return
     }
 
@@ -376,12 +333,10 @@ export default CanMap.extend('PagesVM', {
       // user has selected to navigate to a prior question
       if (button.next === constants.qIDBACK) {
         // last visited page always at index 1
-        // TODO: GOTO logic could break the above assumption
-        // might need a better way to track the last page
-        const priorQuestion = (rState.visitedPages[1].attr('name'))
+        const priorQuestionName = rState.visitedPages[1].name
         // override with new gotoPage
-        logic.attr('gotoPage', priorQuestion)
-        button.attr('next', priorQuestion)
+        logic.attr('gotoPage', priorQuestionName)
+        button.attr('next', priorQuestionName)
       }
 
       const gotoPage = logic.attr('gotoPage')

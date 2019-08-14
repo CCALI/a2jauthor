@@ -13,7 +13,8 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
 
   infinite: {
     Type: Infinite,
-    Default: Infinite
+    Default: Infinite,
+    serialize: false
   },
 
   selectedPageIndex: {
@@ -99,7 +100,6 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   },
 
   lastVisitedPageName: {
-    default: false,
     serialize: false
   },
 
@@ -144,14 +144,14 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
       this.logic.varSet(repeatVar, visitedPage.repeatVarValue)
       this.repeatVarValue = visitedPage.repeatVarValue
     } else {
-      this.repeatVarValue = null
+      this.repeatVarValue = undefined
     }
     const outerLoopVar = visitedPage.outerLoopVar
     if (outerLoopVar) {
       this.logic.varSet(outerLoopVar, visitedPage.outerLoopVarValue)
       this.outerLoopVarValue = visitedPage.outerLoopVarValue
     } else {
-      this.outerLoopVarValue = null
+      this.outerLoopVarValue = undefined
     }
   },
 
@@ -222,11 +222,13 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
         this.outerLoopVarValue = outerLoopVarValue
         this.visitedPages.unshift(newVisitedPage)
         this.lastVisitedPageName = newVisitedPage.name
+        // make sure newly visited page is selected
+        this.selectedPageIndex = 0
       } else {
         this.selectedPageIndex = revisitedPageIndex
       }
 
-      // setCurrentPage in pages-vm.js
+      // listened for in pages.js, fires setCurrentPage() in pages-vm.js
       this.dispatch('setCurrentPage')
     }
 

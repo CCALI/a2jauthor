@@ -101,14 +101,14 @@ export default function bindCustomEvents (appState) {
     })
   })
 
-  // Updates legacy window.gGuide with changes to canjs guide.vars
-  var vars = compute(function () {
-    var vars = appState.attr('guide.vars')
-    if (vars) {
-      return vars.serialize()
+  // Updates legacy global window.gGuide with changes to CanJS guide.vars
+  var serializedGuideVars = compute(function () {
+    var guideVars = appState.attr('guide.vars')
+    if (guideVars) {
+      return guideVars.serialize()
     }
   })
-  vars.on('change', function (ev, newVars) {
+  serializedGuideVars.on('change', function (ev, newVars) {
     if (newVars) {
       window.gGuide.vars = newVars
     }

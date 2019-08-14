@@ -12,6 +12,7 @@
       <div id="guideBubble" class="bubble {{#if(guideBubbleTallerThanAvatar)}}vertical{{else}}top{{/if}}">
         <a2j-pages
           currentPage:from="currentPage"
+          resumeInterview:from="resumeInterview"
           lang:from="lang"
           logic:from="logic"
           rState:from="rState"

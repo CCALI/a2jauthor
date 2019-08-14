@@ -1,9 +1,0 @@
-<p>
-	<br>
-	<br>
-	<div class="btn-group btn-group-justified">
-		<div class="btn-group">
-			<button type="button" class="btn btn-default" on:click="navigate(this)">Start</button>
-		</div>
-	</div>
-</p>

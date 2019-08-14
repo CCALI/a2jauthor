@@ -3,7 +3,7 @@
 <can-import from="caja/author/debug-panel/debug-panel.less!"/>
 
 {{#if(variables.length)}}
-  <author-variables-table interview:from="interview" variables:from="variables"/>
+  <author-variables-table previewInterview:from="previewInterview" variables:from="variables"/>
 {{/if}}
 
 
@@ -31,7 +31,6 @@
 
   <div class="form-inline immediatepanel">
     <author-evaluate-panel
-      traceMessage:from="traceMessage"
-      interview:from="interview" />
+      traceMessage:from="traceMessage" />
   </div>
 </div>

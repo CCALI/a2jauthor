@@ -22,7 +22,7 @@
       </h3>
 
       <fieldset>
-        <legend><p>{{{ eval(currentPage.text, rState.repeatVarValue) }}}</p></legend>
+        <legend class='question-text-legend'><p class="question-text">{{{ parseText(currentPage.text) }}}</p></legend>
 
         {{#if(currentPage.fields.length)}}
           <a2j-fields
@@ -45,7 +45,7 @@
     </div><!-- bubble-content -->
 
     <p class="text-center modal-button">
-      <a class="learn-more">{{{ eval(currentPage.learn, rState.repeatVarValue) }}}</a>
+      <a class="learn-more">{{{ parseText(currentPage.learn) }}}</a>
     </p>
 
     {{#for(button of currentPage.buttons)}}

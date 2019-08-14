@@ -12,7 +12,7 @@ import template from './debug-panel.stache'
  */
 export let DebugPanelVM = DefineMap.extend('DebugPanelVM', {
   // passed in via viewer-preview-layout.stache bindings
-  interview: {},
+  previewInterview: {},
   previewPageName: {},
   traceMessage: {},
   currentPageName: {
@@ -29,10 +29,10 @@ export let DebugPanelVM = DefineMap.extend('DebugPanelVM', {
    */
   variables: {
     get () {
-      let interview = this.interview
+      const previewInterview = this.previewInterview
 
-      return interview
-        ? interview.attr('variablesList')
+      return previewInterview
+        ? previewInterview.attr('variablesList')
         : new CanList([])
     }
   },
@@ -78,7 +78,7 @@ export let DebugPanelVM = DefineMap.extend('DebugPanelVM', {
  *
  * @codestart
  *   <author-debug-panel
- *     {interview}="viewerInterview" />
+ *     previewInterview:from="previewInterview" />
  * @codeend
  */
 export default Component.extend({

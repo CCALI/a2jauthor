@@ -7,7 +7,7 @@
     </label>
     <div>
       <input
-        type="text"
+        type="tel"
         id="{{field.label}}"
         name="{{field.name}}"
         {{#if(field.required)}}required{{/if}}

@@ -11,6 +11,8 @@ import _assign from 'lodash/assign'
 import compute from 'can-compute'
 import route from 'can-route'
 
+import 'caja/viewer/util/object-assign-polyfill'
+
 // TODO: trace-message.js should be moved to a shared library between Author/Viewer
 import TraceMessage from 'caja/author/models/trace-message'
 
@@ -51,6 +53,10 @@ export default function ({ interview, pState, mState, rState }) {
 
   rState.logic = logic
   rState.traceMessage = new TraceMessage()
+
+  // set initial page route
+  rState.view = 'pages'
+  rState.page = interview.attr('firstPage')
 
   const modalContent = compute()
 

@@ -7,7 +7,7 @@ import template from './interviews.stache'
 export const InterviewsVM = DefineMap.extend('InterviewsVM', {
   // passed in via author app.stache
   traceMessage: {},
-  viewerInterview: {},
+  previewInterview: {},
 
   interviews: {
     value ({ lastSet, listenTo, resolve }) {
@@ -72,8 +72,8 @@ export const InterviewsVM = DefineMap.extend('InterviewsVM', {
       this.traceMessage.newMessageLog()
     }
 
-    if (this.viewerInterview) {
-      this.viewerInterview.clearAnswers()
+    if (this.previewInterview) {
+      this.previewInterview.clearAnswers()
     }
   },
 

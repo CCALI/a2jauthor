@@ -1,7 +1,8 @@
 import { assert } from 'chai'
 import Tlogic from 'caja/viewer/mobile/util/tlogic'
+import cString from 'caja/viewer/mobile/util/string'
 
-let testLogic = new Tlogic()
+let testLogic = new Tlogic(null, null, null, null, cString.decodeEntities)
 
 describe('Tlogic', function () {
   describe('DATE', function () {
@@ -119,6 +120,36 @@ describe('Tlogic', function () {
       let hasString = testLogic._CF('CONTAINS', varValue, stringValue)
 
       assert.equal(hasString, false)
+    })
+  })
+
+  describe('comments are the devil', function () {
+    it('surgically removes trailing comments from a2j logic statements, but not urls', function () {
+      let output
+
+      const commentGoto = 'GOTO "1-Question" //nother comment'
+      output = testLogic.removeTrailingComments(commentGoto)
+      assert.equal(output, 'GOTO "1-Question"', 'handles GOTO with comment')
+
+      const commentWithSpace = '// this is a leading space comment'
+      output = testLogic.removeTrailingComments(commentWithSpace)
+      assert.equal(output, '', 'handles normal comments with leading spaces')
+
+      const commentWithoutSpace = '//this has no leading space'
+      output = testLogic.removeTrailingComments(commentWithoutSpace)
+      assert.equal(output, '', 'handles normal comments without leading spaces')
+
+      const url = 'SET [url] TO "http://www.google.com"  //comment 2'
+      output = testLogic.removeTrailingComments(url)
+      assert.equal(output, 'SET [url] TO "http://www.google.com"', 'handles url with no leading space comment')
+
+      const escapedUrl = 'SET [url] TO "http:\/\/azlawhelp.org/A2JRedirect/A2J-ModestMeans-FullProcess.cfm" // comment 1'
+      output = testLogic.removeTrailingComments(escapedUrl)
+      assert.equal(output, 'SET [url] TO "http://azlawhelp.org/A2JRedirect/A2J-ModestMeans-FullProcess.cfm"', 'handles escaped urls with leading space comment')
+
+      const urlInComment = '//SET [url] TO "http://www.google.com"  //comment 2'
+      output = testLogic.removeTrailingComments(urlInComment)
+      assert.equal(output, '', 'handles comments with urls in them')
     })
   })
 })

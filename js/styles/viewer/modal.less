@@ -3,23 +3,28 @@ a2j-modal {
 
   #pageModal {
     position: absolute;
-    top: 20%;
+    top: 5vh;
+    max-height: 90vh;
     width: 100%;
 
     .modal-body {
       .has-textarea {
         overflow-y: hidden;
       }
-      max-height: 800px;
+      max-height: 80vh;
       overflow-y: auto;
     }
     .modal-content {
       .modal-video, .modal-image {
         display: block;
-        max-height: 650px;
+        max-height: 60vh;
         margin: 0 auto;
         width: 100%;
       }
+    }
+    a.zoom-button {
+      position: relative;
+      margin-top: -40px;
     }
   }
 

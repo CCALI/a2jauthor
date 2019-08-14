@@ -2,6 +2,7 @@ import $ from 'jquery'
 import stache from 'can-stache'
 import { assert } from 'chai'
 import { FieldVM } from './field'
+import AnswerVM from 'caja/viewer/models/answervm'
 import CanList from 'can-list'
 import CanMap from 'can-map'
 import TraceMessage from 'caja/author/models/trace-message'
@@ -18,7 +19,6 @@ describe('<a2j-field>', () => {
       fieldStub = {
         name: 'Foo Input',
         type: '',
-        suggestionText: '',
         _answer: {
           answerIndex: 1,
           answer: {
@@ -87,6 +87,11 @@ describe('<a2j-field>', () => {
       assert.equal(vm.normalizeDateInput('12232015'), '12/23/2015', 'should normalize 8 digit dates')
       assert.equal(vm.normalizeDateInput('12-23-2015'), '12/23/2015', 'should normalize 8 digit dates with hyphens')
       assert.equal(vm.normalizeDateInput('12/23/2015'), '12/23/2015', 'should normalize 8 digit dates with slashes')
+      // dates missing leading zeros on day or month
+      assert.equal(vm.normalizeDateInput('2-4-15'), '02/04/2015', 'should normalize dates with hyphens and single digits')
+      assert.equal(vm.normalizeDateInput('2/4/15'), '02/04/2015', 'should normalize with slashes and single digits')
+      assert.equal(vm.normalizeDateInput('2/4/5'), '02045', 'should not normalize a single digit year, only single digit month or day')
+      assert.equal(vm.normalizeDateInput('2415'), '2415', 'should not normalize a date without slash or hyphen separator')
     })
 
     it('invalidPrompt', () => {
@@ -144,10 +149,10 @@ describe('<a2j-field>', () => {
     it('minMaxPrompt should show min and max values in range display', function () {
       const field = vm.attr('field')
       field.attr({ 'type': 'number', 'min': 5, 'max': 15 })
-      assert.equal(vm.attr('minMaxPrompt'), '(5 --- 15)', 'should show the range of acceptable values')
+      assert.equal(vm.attr('minMaxPrompt'), '(5 ~~~ 15)', 'should show the range of acceptable values')
 
       field.attr('min', null)
-      assert.equal(vm.attr('minMaxPrompt'), '(any --- 15)', 'should show the word "any" if min or max value not set')
+      assert.equal(vm.attr('minMaxPrompt'), '(any ~~~ 15)', 'should show the word "any" if min or max value not set')
     })
 
     it('calcAvailableLength', function () {
@@ -193,7 +198,7 @@ describe('<a2j-field>', () => {
   describe('Component', () => {
     let logicStub
     let traceMessage
-    let checkboxDefaults, NOTADefaults, textDefaults, numberDollarDefaults
+    let checkboxDefaults, NOTADefaults, textDefaults, numberDollarDefaults, textpickDefaults
     let fields = new CanList()
     let langStub = new CanMap({
       MonthNamesShort: 'Jan, Feb',
@@ -319,42 +324,87 @@ describe('<a2j-field>', () => {
         })
       }
 
+      textpickDefaults = {
+        fields: fields,
+        logic: logicStub,
+        repeatVarValue: '',
+        lang: langStub,
+        traceMessage,
+        name: 'State',
+        type: 'textpick',
+        label: 'State',
+        vm: new FieldVM({
+          field: {
+            name: 'State',
+            type: 'textpick',
+            label: 'State',
+            listData: '<option>Alaska</option><option>Hawaii</option><option>Texas</option>',
+            required: true,
+            calculator: false,
+            _answer: new AnswerVM({
+              answerIndex: 1,
+              answer: {
+                values: [null, undefined]
+              },
+              field: { // required for answervm validation
+                name: 'State',
+                type: 'textpick',
+                required: true
+              }
+            })
+          },
+          traceMessage
+        })
+      }
+
       // populate fields for this.viewModel.%root
       fields.push(checkboxDefaults.vm.attr('field'), NOTADefaults.vm.attr('field'), textDefaults.vm.attr('field'), numberDollarDefaults.vm.attr('field'))
 
       let checkboxFrag = stache(
         `<a2j-field
-        field:bind="vm.field"
+        field:from="vm.field"
         lang:from="lang"
-        logic:bind="logic"
+        logic:from="logic"
         repeatVarValue:from="repeatVarValue" />`
       )
 
       let NOTAFrag = stache(
         `<a2j-field
-        field:bind="vm.field"
+        field:from="vm.field"
         lang:from="lang"
-        logic:bind="logic"
+        logic:from="logic"
         repeatVarValue:from="repeatVarValue" />`
       )
 
       let textFrag = stache(
         `<a2j-field
-        field:bind="vm.field"
+        field:from="vm.field"
         lang:from="lang"
-        logic:bind="logic"
+        logic:from="logic"
         repeatVarValue:from="repeatVarValue" />`
       )
 
       let numberDollarFrag = stache(
         `<a2j-field
-        field:bind="vm.field"
+        field:from="vm.field"
         lang:from="lang"
-        logic:bind="logic"
+        logic:from="logic"
         repeatVarValue:from="repeatVarValue" />`
       )
 
-      $('#test-area').html(checkboxFrag(checkboxDefaults)).append(numberDollarFrag(numberDollarDefaults)).append(NOTAFrag(NOTADefaults)).append(textFrag(textDefaults))
+      let textpickFrag = stache(
+        `<a2j-field
+        field:from="vm.field"
+        lang:from="lang"
+        logic:from="logic"
+        repeatVarValue:from="repeatVarValue" />`
+      )
+
+      $('#test-area').html(checkboxFrag(checkboxDefaults))
+        .append(numberDollarFrag(numberDollarDefaults))
+        .append(NOTAFrag(NOTADefaults))
+        .append(textFrag(textDefaults))
+        .append(textpickFrag(textpickDefaults))
     })
 
     afterEach(() => {
@@ -404,6 +454,29 @@ describe('<a2j-field>', () => {
         let $calcFound = $('.calc-icon')
 
         assert.equal($calcFound.attr('class'), undefined)
+      })
+    })
+
+    describe('textpick ignores first onChange validation when field is set to `required`', () => {
+      it('field.errors should be false, then true', () => {
+        const vm = textpickDefaults.vm
+        const textpick = vm.attr('field')
+        const el = document.querySelector('select')
+
+        // textpick field types set default value to empty string
+        // this causes an initial onChange event to fire, which causes
+        // and immediate error state before a user has a chance to answer
+
+        // emulate initial value set
+        textpick.attr('_answer').attr('values', '')
+        // emulate onChange validation
+        let hasErrors = vm.validateField(null, el)
+        assert.equal(hasErrors, undefined, 'skips validateField, so hasErrors should be undefined')
+
+        // emulate second onChange validation: aka user hit Continue without selecting anything
+        // when the field is set to `required`
+        hasErrors = vm.validateField(null, el)
+        assert.equal(hasErrors, true, 'has errors after textpick initialized and second validation')
       })
     })
   })

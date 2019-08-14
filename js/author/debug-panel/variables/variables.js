@@ -6,14 +6,14 @@ import parser from 'caja/viewer/mobile/util/parser'
 
 let VariablesTableVM = CanMap.extend('VariablesTableVM', {
   // passed in from debug-panel.stache
-  interview: {},
+  previewInterview: {},
   variables: {},
 
   clearAnswers () {
-    let interview = this.attr('interview')
+    const previewInterview = this.attr('previewInterview')
 
-    if (interview) {
-      interview.clearAnswers()
+    if (previewInterview) {
+      previewInterview.clearAnswers()
     }
   }
 })
@@ -27,9 +27,9 @@ export default Component.extend({
   events: {
     // Download answer file directly from client to desktop.
     '#downloadAnswer click': function () {
-      const interview = this.viewModel.attr('interview')
-      const pages = interview.attr('_pages').serialize()
-      const answers = interview.attr('answers').serialize()
+      const previewInterview = this.viewModel.attr('previewInterview')
+      const pages = previewInterview.attr('_pages').serialize()
+      const answers = previewInterview.attr('answers').serialize()
 
       const hotDocsXML = parser.parseANX(answers, pages)
       window.downloadTextFile(hotDocsXML, 'answer.anx')
@@ -50,11 +50,11 @@ export default Component.extend({
     // Browse for answer file on local desktop to upload to client (no server).
     '#uploadAnswerFileInput change': function () {
       let textTypeRegex = /text.*/
-      let interview = this.viewModel.attr('interview')
+      let previewInterview = this.viewModel.attr('previewInterview')
       let $fileInput = $(this.element).find('#uploadAnswerFileInput')
 
       let file = $fileInput.get(0).files[0]
-      let vars = interview.attr('vars').attr()
+      let vars = previewInterview.attr('vars').attr()
 
       if (file && (file.type === '' || file.type.match(textTypeRegex))) {
         let reader = new window.FileReader()
@@ -64,7 +64,7 @@ export default Component.extend({
 
           // This updates current answers keeping single source
           // of truth for A2J scripts and canjs components
-          interview.attr('answers').attr(answers)
+          previewInterview.attr('answers').attr(answers)
         }
 
         reader.readAsText(file)

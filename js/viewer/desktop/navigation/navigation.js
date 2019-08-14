@@ -19,6 +19,7 @@ import 'jquerypp/event/swipe/'
 export let ViewerNavigationVM = CanMap.extend({
   define: {
     // passed in via stache bindings
+    rState: {},
     courthouseImage: {},
     interview: {},
     repeatVarValue: {},
@@ -46,7 +47,7 @@ export let ViewerNavigationVM = CanMap.extend({
      */
     visitedPages: {
       get () {
-        return this.attr('appState').visitedPages
+        return this.attr('rState').visitedPages
       }
     },
 
@@ -58,10 +59,10 @@ export let ViewerNavigationVM = CanMap.extend({
      */
     canSaveAndExit: {
       get () {
-        let appState = this.attr('appState')
+        let rState = this.attr('rState')
         let interview = this.attr('interview')
 
-        return !appState.saveAndExitActive &&
+        return !rState.saveAndExitActive &&
           interview.attr('exitPage') !== constants.qIDNOWHERE
       }
     },
@@ -74,9 +75,9 @@ export let ViewerNavigationVM = CanMap.extend({
      */
     canResumeInterview: {
       get () {
-        let appState = this.attr('appState')
+        let rState = this.attr('rState')
 
-        return appState.saveAndExitActive && !!appState.lastPageBeforeExit
+        return rState.saveAndExitActive && !!rState.lastPageBeforeExit
       }
     },
 
@@ -88,11 +89,11 @@ export let ViewerNavigationVM = CanMap.extend({
      */
     canNavigateBack: {
       get () {
-        let appState = this.attr('appState')
+        let rState = this.attr('rState')
         let totalPages = this.attr('visitedPages.length')
         let pageIndex = this.attr('selectedPageIndex')
 
-        return totalPages > 1 && pageIndex < totalPages - 1 && !appState.saveAndExitActive
+        return totalPages > 1 && pageIndex < totalPages - 1 && !rState.saveAndExitActive
       }
     },
 
@@ -104,11 +105,11 @@ export let ViewerNavigationVM = CanMap.extend({
      */
     canNavigateForward: {
       get () {
-        let appState = this.attr('appState')
+        let rState = this.attr('rState')
         let totalPages = this.attr('visitedPages.length')
         let pageIndex = this.attr('selectedPageIndex')
 
-        return totalPages > 1 && pageIndex > 0 && !this.canSaveAndExit && !appState.saveAndExitActive
+        return totalPages > 1 && pageIndex > 0 && !this.canSaveAndExit && !rState.saveAndExitActive
       }
     },
 
@@ -151,13 +152,13 @@ export let ViewerNavigationVM = CanMap.extend({
    * Saves interview and exits.
    */
   saveAndExit () {
-    let appState = this.attr('appState')
+    let rState = this.attr('rState')
     let interview = this.attr('interview')
     let answers = interview.attr('answers')
     let exitPage = interview.attr('exitPage')
     let pageName = this.attr('selectedPageName')
 
-    appState.lastPageBeforeExit = pageName
+    rState.lastPageBeforeExit = pageName
 
     if (window._paq) {
       Analytics.trackCustomEvent('Save&Exit', 'from: ' + pageName)
@@ -167,8 +168,8 @@ export let ViewerNavigationVM = CanMap.extend({
       answers.attr('a2j interview incomplete tf').attr('values.1', true)
     }
 
-    appState.page = exitPage
-    appState.selectedPageIndex = 0
+    rState.page = exitPage
+    rState.selectedPageIndex = 0
   },
 
   /**
@@ -178,13 +179,13 @@ export let ViewerNavigationVM = CanMap.extend({
    * Resumes saved interview.
    */
   resumeInterview () {
-    let appState = this.attr('appState')
-    let lastPageName = appState.lastPageBeforeExit
+    let rState = this.attr('rState')
+    let lastPageName = rState.lastPageBeforeExit
     let interview = this.attr('interview')
     let answers = interview.attr('answers')
-    let visitedPages = appState.visitedPages
+    let visitedPages = rState.visitedPages
 
-    appState.lastPageBeforeExit = null
+    rState.lastPageBeforeExit = null
 
     // Special Exit page should only show in My Progress while on that page
     visitedPages.shift()
@@ -196,7 +197,7 @@ export let ViewerNavigationVM = CanMap.extend({
     if (window._paq) {
       Analytics.trackCustomEvent('Resume-Interview', 'to: ' + lastPageName)
     }
-    appState.page = lastPageName
+    rState.page = lastPageName
   },
 
   /**
@@ -230,7 +231,7 @@ export let ViewerNavigationVM = CanMap.extend({
    * Used to disable My Progress options when saveAndExit is active
    */
   disableOption (index) {
-    if (index !== 0 && this.attr('appState').saveAndExitActive) {
+    if (index !== 0 && this.attr('rState').saveAndExitActive) {
       return true
     }
     return false

@@ -11,7 +11,9 @@ import invalidPromptTpl from './views/invalid-prompt.stache'
 import exceededMaxcharsTpl from './views/exceeded-maxchars.stache'
 import constants from 'caja/viewer/models/constants'
 import stache from 'can-stache'
+import domData from 'can-dom-data'
 
+import 'can-map-define'
 import 'jquery-ui/ui/datepicker'
 
 stache.registerPartial('invalid-prompt-tpl', invalidPromptTpl)
@@ -23,7 +25,7 @@ stache.registerPartial('exceeded-maxchars-tpl', exceededMaxcharsTpl)
  *
  * `<a2j-field>`'s viewModel.
  */
-export let FieldVM = CanMap.extend('FieldVM', {
+export const FieldVM = CanMap.extend('FieldVM', {
   define: {
     // passed in via fields.stache binding
     repeatVarValue: {},
@@ -110,7 +112,7 @@ export let FieldVM = CanMap.extend('FieldVM', {
       get () {
         const min = this.attr('field.min') || 'any'
         const max = this.attr('field.max') || 'any'
-        return `(${min} --- ${max})`
+        return `(${min} ~~~ ${max})`
       }
     },
 
@@ -142,7 +144,7 @@ export let FieldVM = CanMap.extend('FieldVM', {
 
     suggestionText: {
       get: function () {
-        let fieldType = this.field.type
+        let fieldType = this.attr('field.type')
         if (fieldType === 'numberssn') {
           return '999-99-9999'
         } else if (fieldType === 'numberphone') {
@@ -209,6 +211,14 @@ export let FieldVM = CanMap.extend('FieldVM', {
     let _answer = field.attr('_answer')
     let value
 
+    // textpick binding fired onChange even on first load
+    // this skips the first pass: https://github.com/CCALI/CAJA/issues/2432
+    let initialized = domData.get(el, 'initialized')
+    if (!initialized && field.type === 'textpick') {
+      domData.set(el, 'initialized', true)
+      return
+    }
+
     if (field.type === 'checkbox' || field.type === 'checkboxNOTA') {
       value = $el[0].checked
     } else {
@@ -234,7 +244,7 @@ export let FieldVM = CanMap.extend('FieldVM', {
           { format: 'val', msg: value }
         ]
       }
-      this.attr('rState.traceMessage').addMessage(message)
+      this.attr('rState').traceMessage.addMessage(message)
     }
 
     return errors
@@ -350,13 +360,30 @@ export let FieldVM = CanMap.extend('FieldVM', {
    *
    * allows date inputs like '010203', '01/02/03', '01022003', '01-02-03'
    * and reformats them to standard mm/dd/yyyy format
+   * now checks for standard date separators to allow single digit dates, '4/2/19', '4-2-19'
    */
   normalizeDateInput (dateVal) {
     // preserve special value of 'TODAY'
     if (dateVal.toUpperCase() === 'TODAY') { return dateVal }
 
-    let normalizedDate = dateVal.replace(/\/|-/g, '')
-
+    // check for separators
+    const hasSeparator = dateVal.match(/\/|-/g)
+    let normalizedDate
+    if (hasSeparator && hasSeparator.length === 2) {
+      const separator = hasSeparator[0]
+      const mdyArray = dateVal.split(separator)
+      mdyArray.forEach((part, index) => {
+        // don't correct single digit years
+        if (part.length === 1 && index < 2) {
+          mdyArray[index] = '0' + part
+        }
+      })
+      // rebuild string date with leading zeros
+      normalizedDate = mdyArray[0] + mdyArray[1] + mdyArray[2]
+    } else {
+      normalizedDate = dateVal.replace(/\/|-/g, '')
+    }
+    // legal dates will be 6 or 8 digits sans separators at this point, 010203 or 01022003
     if (normalizedDate.length === 8 || normalizedDate.length === 6) {
       const inputFormat = normalizedDate.length === 8 ? 'MMDDYYYY' : 'MMDDYY'
       normalizedDate = this.convertDate(normalizedDate, 'MM/DD/YYYY', inputFormat)

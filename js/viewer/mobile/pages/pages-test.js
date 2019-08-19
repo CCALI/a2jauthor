@@ -230,7 +230,7 @@ describe('<a2j-pages>', () => {
         vm.attr('currentPage.fields').push(field)
         vm.attr('rState').page = 'Next' // page find() always returns nextPageStub
 
-        vm.setCurrentPage()
+        vm.setFieldAnswers(vm.attr('currentPage.fields'))
 
         assert.equal(vm.attr('interview.answers.statete.values.1'), 'Texas', 'Default values override empty answers')
       })
@@ -254,9 +254,57 @@ describe('<a2j-pages>', () => {
         nextPageStub.fields.push(field)
         vm.attr('rState').page = 'Next' // page find() always returns nextPageStub
 
-        vm.setCurrentPage()
+        vm.setFieldAnswers(vm.attr('currentPage.fields'))
 
         assert.equal(vm.attr('interview.answers.statete.values.1'), 'Illinois', 'Saved answers trump Default Values')
+      })
+
+      it('handles number defaults with zero', () => {
+        let field = new CanMap({
+          name: 'SomeNum',
+          label: 'Enter SomeNum:',
+          type: 'number',
+          value: '0'
+        })
+
+        let answerVar = new CanMap({
+          name: 'somenum',
+          type: 'number',
+          values: [null]
+        })
+
+        vm.attr('interview.answers.somenum', answerVar)
+
+        vm.attr('currentPage.fields').push(field)
+        vm.attr('rState').page = 'Next' // page find() always returns nextPageStub
+
+        vm.setFieldAnswers(vm.attr('currentPage.fields'))
+
+        assert.strictEqual(vm.attr('interview.answers.somenum.values.1'), 0, 'Sets default number values')
+      })
+
+      it('handles numberdollar defaults with decimals', () => {
+        let field = new CanMap({
+          name: 'Salary',
+          label: 'Enter Salary:',
+          type: 'numberdollar',
+          value: '1234.56'
+        })
+
+        let answerVar = new CanMap({
+          name: 'salary',
+          type: 'numberdollar',
+          values: [null]
+        })
+
+        vm.attr('interview.answers.salary', answerVar)
+
+        vm.attr('currentPage.fields').push(field)
+        vm.attr('rState').page = 'Next' // page find() always returns nextPageStub
+
+        vm.setFieldAnswers(vm.attr('currentPage.fields'))
+
+        assert.strictEqual(vm.attr('interview.answers.salary.values.1'), 1234.56, 'Sets default number values')
       })
     })
   })

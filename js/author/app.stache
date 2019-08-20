@@ -309,10 +309,10 @@
       <button id="guideZIP" class="btn btn-default btn-wide-md"><span class="glyphicon-file-archive"></span> Download ZIP</button>
       <button id="guideDownload" class="btn btn-default btn-wide-md"><span class="glyphicon-folder-download"></span> Download A2J</button>
 
+      {{#if (showTesting)}}
       <hr>
       <p>To publish to A2J.org, use the buttons below</p>
         <button id="guideZIPA2JPROD" class="btn btn-default btn-wide-md"><span class="glyphicon-publish"></span> Publish to A2J.org</button>
-      {{#if (showTesting)}}
         <p>To publish to A2J.org development servers, use the buttons below</p>
           <button id="guideZIPA2JLOCAL" class="btn btn-default btn-md"><span class="glyphicon-publish"></span> local.a2j.org</button>
           <button id="guideZIPA2JDEV" class="btn btn-default btn-md"><span class="glyphicon-publish"></span> dev.a2j.org</button>

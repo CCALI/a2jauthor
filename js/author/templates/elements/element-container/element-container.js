@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import CanMap from 'can-map'
 import Component from 'can-component'
 import _isFunction from 'lodash/isFunction'
@@ -35,6 +36,7 @@ export let ContainerVM = CanMap.extend('ElementContainerVM', {
     cloneNode: {},
     deleteNode: {},
     variablesList: {},
+    toggleEditActiveNode: {},
     /**
      * @property {Boolean} element-container.ViewModel.prototype.selected selected
      * @parent element-container.ViewModel
@@ -88,7 +90,7 @@ export default Component.extend({
   tag: 'element-container',
 
   events: {
-    // when a new element is added to a template, is selected by default,
+    // when a new element is added to a template, it is selected by default,
     // we want to make sure any selected element is toggled properly.
     inserted () {
       const vm = this.viewModel

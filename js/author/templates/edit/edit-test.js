@@ -12,21 +12,19 @@ describe('template-edit-page', function () {
     let vm
 
     beforeEach(function () {
-      window.localStorage.clear()
-
       vm = new TemplateEditPageVM({
         templateId: 'new'
       })
     })
 
     afterEach(function () {
-      window.localStorage.clear()
+      vm = null
     })
 
     it('saves new templates automatically and sets new id', function (done) {
       assert.equal(vm.attr('templateId'), 'new')
       // a2j-template model findOne requires fixture guideId
-      vm.attr('guideId', '1261')
+      vm.attr('guideId', '5150')
 
       vm.bind('a2jTemplate', function () {
         const templateId = vm.attr('a2jTemplate.templateId')

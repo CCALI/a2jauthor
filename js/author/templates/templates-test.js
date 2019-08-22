@@ -1,10 +1,11 @@
+import $ from 'jquery'
 import F from 'funcunit'
 import CanMap from 'can-map'
 import { assert } from 'chai'
 import Templates from './templates-vm'
-import A2JTemplate from 'caja/author/models/a2j-template'
 import stache from 'can-stache'
 import 'caja/author/models/fixtures/templates'
+import 'caja/author/styles.less'
 
 import 'can-route'
 import 'steal-mocha'
@@ -15,14 +16,13 @@ describe('<templates-page>', function () {
     let vm
 
     beforeEach(function () {
-      window.localStorage.clear()
       vm = new Templates({
         appState: new CanMap()
       })
     })
 
     afterEach(function () {
-      window.localStorage.clear()
+      vm = null
     })
 
     it('defaults activeFilter to "active" status', function () {
@@ -35,46 +35,37 @@ describe('<templates-page>', function () {
         direction: 'asc'
       })
     })
-
-    it('returns a newly ordered list of templateIds', function () {
-      const templatesSource = [{ templateId: 1, active: true }, { templateId: 2, active: true }, { templateId: 3, active: true }]
-      vm.attr('templates', new A2JTemplate.List(templatesSource))
-      const templates = vm.attr('templates')
-
-      const currentTemplateIdOrder = templatesSource.map(t => t.templateId)
-      const moveTemplate = templates.pop()
-      templates.unshift(moveTemplate)
-      const newTemplateIdOrder = vm.updateTemplatesOrder()
-
-      assert.deepEqual(currentTemplateIdOrder, [1, 2, 3])
-      assert.deepEqual(newTemplateIdOrder, [3, 1, 2])
-    })
   })
 
   describe('Component', function () {
     beforeEach(function (done) {
-      let appState = new CanMap({
-        guideId: '1261',
+      const appState = new CanMap({
+        guideId: '1261', // 1261 has 3 templates by default
         guide: { title: '' }
       })
 
-      let frag = stache(
-        '<templates-page appState:bind="appState" />'
+      const frag = stache(
+        '<templates-page appState:from="appState" />'
       )
 
       $('#test-area').html(frag({ appState }))
 
-      F('templates-list-item').size(size => size > 0)
+      F('templates-list-item').size(size => {
+        console.log('size', size)
+        return size > 0
+      })
       F(done)
     })
 
-    afterEach(function () {
+    afterEach(function (done) {
       $('#test-area').empty()
+      done()
     })
 
     it('renders a list of active templates by default', function (done) {
       F(function () {
         let templates = $('templates-page')[0].viewModel.attr('displayList')
+        assert(templates.attr('length'), 3, 'should start with 3 templates')
         let deleted = templates.filter(template => !template.attr('active'))
         assert.equal(deleted.attr('length'), 0, 'should not have deleted templates')
       })
@@ -92,7 +83,7 @@ describe('<templates-page>', function () {
       F(done)
     })
 
-    it.skip('deleted templates are filtered out properly', function (done) {
+    it('deleted templates are filtered out properly', function (done) {
       let delay = 0
       let totalActive
 
@@ -138,7 +129,7 @@ describe('<templates-page>', function () {
       F(done)
     })
 
-    it.skip('displays alert if no templates match filters', function (done) {
+    it('displays alert if no templates match filters', function (done) {
       F(function () {
         let vm = $('templates-page')[0].viewModel
 

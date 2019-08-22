@@ -7,18 +7,11 @@ import '../fixtures/templates'
 import 'steal-mocha'
 
 describe('A2JTemplate Model', function () {
-  beforeEach(function () {
-    window.localStorage.clear()
-  })
-
-  afterEach(function () {
-    window.localStorage.clear()
-  })
-
   it('findOne', function () {
     let promise = A2JTemplate.findOne({ guideId: 1261, templateId: 2112 })
 
     return promise.then(function (a2jTemplate) {
+      assert.equal(a2jTemplate.attr('templateId'), '2112', 'should grab correct template')
       assert.ok(a2jTemplate.attr('rootNode') instanceof A2JNode)
       assert.ok(a2jTemplate.attr('rootNode.children.0') instanceof A2JNode)
       assert.ok(a2jTemplate.attr('rootNode.children.1') instanceof A2JNode)
@@ -29,6 +22,7 @@ describe('A2JTemplate Model', function () {
     let promise = A2JTemplate.findAll({ guideId: 1261 })
 
     return promise.then(function (a2jTemplates) {
+      assert.equal(a2jTemplates.length, 3, 'should have 3 total templates')
       a2jTemplates.forEach(function (a2jTemplate) {
         assert.ok(a2jTemplate.attr('rootNode') instanceof A2JNode)
 
@@ -44,47 +38,6 @@ describe('A2JTemplate Model', function () {
 
     return promise.then(function (a2jTemplates) {
       assert.equal(a2jTemplates.length, 2, 'should only have 2 active of 3 templates')
-    })
-  })
-
-  it('create', function () {
-    let a2jTemplate = new A2JTemplate({ title: 'Best Template' })
-
-    return a2jTemplate.save().then(function (bestTemplate) {
-      assert.equal(bestTemplate.attr('title'), 'Best Template')
-    })
-  })
-
-  it('update', function (done) {
-    let a2jTemplate = new A2JTemplate({ title: 'Best Template' })
-
-    a2jTemplate.save().then(function (bestTemplate) {
-      assert.equal(bestTemplate.attr('title'), 'Best Template')
-
-      let templateId = bestTemplate.attr('templateId')
-
-      bestTemplate.attr('title', 'Bestest Template')
-
-      bestTemplate.save().then(function (bestestTemplate) {
-        assert.equal(bestestTemplate.attr('title'), 'Bestest Template')
-        assert.equal(bestestTemplate.attr('templateId'), templateId)
-        done()
-      })
-    })
-  })
-
-  it('destroy', function (done) {
-    let promise = A2JTemplate.findAll({ guideId: 1261 })
-
-    promise.then(function (a2jTemplates) {
-      const destroyPromises = a2jTemplates.map(function (a2jTemplate) {
-        if (a2jTemplate.attr('templateId') >= 3000) {
-          return a2jTemplate.destroy()
-        }
-      })
-
-      Promise.all(destroyPromises)
-        .then(done())
     })
   })
 

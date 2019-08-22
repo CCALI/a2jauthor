@@ -1,7 +1,7 @@
 {
   "name": "caja",
   "private": true,
-  "version": "2.2.0",
+  "version": "2.2.1",
   "main": "caja/server.stache!done-autorender",
   "description": "Authoring and viewer App GUI.",
   "scripts": {
@@ -13,8 +13,8 @@
     "build:viewer-zip": "node ./bin/make-viewer-package",
     "build:dat-zip": "node ./bin/make-dat-package",
     "build:client": "grunt build --gruntfile=js/Gruntfile.js",
-    "mocha": "mocha test/routes test/util --compilers js:babel-register",
-    "mocha:watch": "mocha test/routes test/util --compilers js:babel-register --watch",
+    "mocha": "mocha test/routes test/util --require babel-register --exit",
+    "mocha:watch": "mocha test/routes test/util --require babel-register --watch",
     "test:pdf": "npm run build && babel test --out-dir test-lib --quiet && ava --serial",
     "lint:pdf": "standard src/*.js src/**/*.js --fix && standard test/**/*.js --fix --env mocha"
   },
@@ -61,11 +61,11 @@
     "minify": true
   },
   "dependencies": {
+    "@open-xchange/bootstrap-tokenfield": "^0.13.1",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
-    "body-parser": "~1.13.2",
+    "body-parser": "^1.19.0",
     "bootstrap": "^3.4.1",
-    "bootstrap-tokenfield": "^0.12.0",
     "can-3-4-compat": "^1.0.0",
     "can-ajax": "^1.3.0",
     "can-component": "^4.2.4",
@@ -109,22 +109,21 @@
     "done-css": "^3.0.1",
     "done-ssr": "^2.1.6",
     "express": "^4.0.0",
-    "feathers": "^1.3.0",
+    "feathers": "^2.2.4",
+    "feathers-rest": "^1.8.1",
     "filenamify": "^1.2.0",
     "fs-extra": "^4.0.3",
     "he": "^0.5.0",
-    "helmet": "^1.1.0",
+    "helmet": "^3.18.0",
     "hummus": "^1.0.83",
-    "jade": "~1.11.0",
     "joi": "^10.6.0",
-    "jquery": "~2.1.4",
+    "jquery": "^3.4.1",
     "lodash": "^4.0.0",
     "moment": "^2.10.3",
-    "morgan": "~1.6.1",
+    "morgan": "^1.9.1",
     "multer": "^1.3.0",
     "q": "^1.4.1",
     "request": "^2.69.0",
-    "serve-favicon": "~2.3.0",
     "steal": "^1.6.3",
     "steal-css": "^1.3.1",
     "through2": "^2.0.1",
@@ -135,23 +134,23 @@
     "wkhtmltopdf": "^0.3.4"
   },
   "devDependencies": {
-    "archiver": "^0.21.0",
+    "archiver": "^3.0.0",
     "assert": "^1.3.0",
-    "ava": "^0.21.0",
-    "babel-cli": "^6.4.5",
+    "ava": "^1.4.1",
+    "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-register": "^6.4.3",
     "chalk": "^1.1.1",
     "debug": "^2.2.0",
-    "grunt": "^0.4.5",
-    "grunt-cli": "^0.1.13",
-    "mocha": "^2.3.4",
+    "grunt": "^1.0.4",
+    "grunt-cli": "^1.3.2",
+    "mocha": "^6.1.4",
     "sinon": "^1.17.2",
     "standard": "^10.0.3",
     "steal-less": "^1.2.2",
     "steal-stache": "^4.1.2",
     "steal-tools": "^1.10.0",
-    "supertest": "^1.2.0"
+    "supertest": "^4.0.2"
   },
   "standard": {
     "env": [
@@ -165,7 +164,7 @@
     "files": [
       "test-lib/pdf/**/*.js"
     ],
-    "source": [
+    "sources": [
       "lib/pdf/**/*.js"
     ],
     "require": [
@@ -179,7 +178,7 @@
         {
           "useBuiltIns": "usage",
           "targets": {
-            "node": "8"
+            "node": "12"
           }
         }
       ]

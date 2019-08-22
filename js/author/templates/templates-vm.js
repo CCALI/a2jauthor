@@ -29,8 +29,8 @@ export default CanMap.extend({
      */
     templatesPromise: {
       get () {
-        let appState = this.attr('appState')
-        let guideId = appState.attr('guideId')
+        const appState = this.attr('appState')
+        const guideId = appState.attr('guideId')
 
         return A2JTemplate.findAll({ guideId })
       }

@@ -12,9 +12,8 @@ import exceededMaxcharsTpl from './views/exceeded-maxchars.stache'
 import constants from 'caja/viewer/models/constants'
 import stache from 'can-stache'
 import domData from 'can-dom-data'
-
+import 'jquery-ui/ui/widgets/datepicker'
 import 'can-map-define'
-import 'jquery-ui/ui/datepicker'
 
 stache.registerPartial('invalid-prompt-tpl', invalidPromptTpl)
 stache.registerPartial('exceeded-maxchars-tpl', exceededMaxcharsTpl)

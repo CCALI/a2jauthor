@@ -1,6 +1,7 @@
 import $ from 'jquery'
 import { assert } from 'chai'
 import stache from 'can-stache'
+import domEvents from 'can-dom-events'
 
 import 'steal-mocha'
 import './element-container'
@@ -8,24 +9,28 @@ import './element-container'
 describe('<element-container>', function () {
   describe('Component', function () {
     beforeEach(function () {
+      const toggleEditActiveNode = () => { console.log('toggle') }
       let frag = stache(
-        `<element-container>
+        `<element-container toggleEditActiveNode:from="toggleEditActiveNode">
           <h2>SectionTitle</h2>
         </element-container>`
       )
 
-      $('#test-area').html(frag())
+      $('#test-area').html(frag({ toggleEditActiveNode }))
     })
 
     afterEach(function () {
       $('#test-area').empty()
     })
 
-    it.skip('sets "selected" to "true" on click', function () {
-      let vm = $('element-container')[0].viewModel
+    it('sets "selected" to "true" on dblclick', function () {
+      const container = $('element-container')[0]
+      const vm = container.viewModel
+      const wrapper = $(container).find('.wrapper')[0]
       assert.isFalse(vm.attr('selected'), 'should default to false')
 
-      $('.wrapper').click()
+      domEvents.dispatch(wrapper, 'dblclick')
+
       assert.isTrue(vm.attr('selected'))
     })
 

@@ -481,13 +481,7 @@ export default CanMap.extend('PagesVM', {
 
         // Assign default value if it exists and no previous answer
         if (field.value && !avm.attr('answer.values.' + answerIndex)) {
-          // Default values used differently or not at all for these field types
-          if (field.type !== constants.ftRadioButton &&
-              field.type !== constants.ftCheckBox &&
-              field.type !== constants.ftCheckBoxNOTA &&
-              field.type !== constants.ftGender) {
-            avm.attr('answer.values.' + answerIndex, field.value)
-          }
+          this.setDefaultValue(field, avm, answer, answerIndex)
         }
 
         field.attr('_answer', avm)
@@ -495,6 +489,32 @@ export default CanMap.extend('PagesVM', {
         this.logVarMessage(field.attr('_answer'), answer.repeating, answerIndex)
       })
     }
+  },
+
+  setDefaultValue (field, avm, answer, answerIndex) {
+    const fieldIsNumber = (
+      field.type === constants.ftNumber ||
+      field.type === constants.ftNumberDollar ||
+      field.type === constants.ftNumberPick
+    )
+
+    // Default values used differently or not at all for these field types
+    const defaultAllowed = (
+      field.type !== constants.ftRadioButton &&
+      field.type !== constants.ftCheckBox &&
+      field.type !== constants.ftCheckBoxNOTA &&
+      field.type !== constants.ftGender
+    )
+
+    if (defaultAllowed) {
+      if (fieldIsNumber) {
+        avm.attr('answer.values.' + answerIndex, parseFloat(field.value, 10))
+      } else {
+        avm.attr('answer.values.' + answerIndex, field.value)
+      }
+    }
+
+    return avm
   },
 
   logVarMessage (fieldAnswerVM, isRepeating, answerIndex) {

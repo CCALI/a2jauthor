@@ -33,7 +33,6 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
 
   selectedPageName: {
     serialize: false,
-    type: 'string',
     get () {
       if (this.visitedPages.length) {
         return this.visitedPages[this.selectedPageIndex].name
@@ -80,7 +79,6 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   },
 
   previewActive: {
-    type: 'boolean',
     serialize: false,
     get () {
       return canReflect.getKeyValue(route.data, 'page') === 'preview'

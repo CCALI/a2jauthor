@@ -37,9 +37,9 @@ function makePackageFolder () {
     path.join(outputPath, 'pdf'),
     { filter: filterFunc })
 
-  // copy server views
-  fs.copySync(path.join(datPath, 'views'),
-    path.join(outputPath, 'views'))
+  // // copy server views
+  // fs.copySync(path.join(datPath, 'views'),
+  //   path.join(outputPath, 'views'))
 
   // copy package.json  and shrinkwrap to server
   fs.copySync(path.join(datPath, 'package.json'),

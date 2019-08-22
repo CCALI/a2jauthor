@@ -269,19 +269,19 @@ A2JTemplate.List = A2JTemplate.List.extend({
   sortBy (key, direction = 'asc') {
     switch (key) {
       case 'buildOrder':
-        this.attr('comparator', comparator.number(key, direction))
+        sort(this, comparator.number(key, direction))
         break
 
       case 'title':
-        this.attr('comparator', comparator.string(key, direction))
+        sort(this, comparator.string(key, direction))
         break
 
       case 'updatedAt':
-        this.attr('comparator', comparator.moment(key, direction))
+        sort(this, comparator.moment(key, direction))
         break
     }
 
-    sort(this, this.attr('comparator'))
+    // sort(this, this.attr('comparator'))
   },
 
   search (token) {

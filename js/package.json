@@ -22,14 +22,12 @@
     "can-debug": "^2.0.1",
     "can-fixture": "^2.1.0",
     "chai": "^4.1.2",
-    "documentjs": "~0.4.1",
     "express": "^4.13.0",
     "funcunit": "^3.0.0",
-    "grunt": "^1.0.1",
-    "grunt-contrib-clean": "^1.1.0",
+    "grunt": "^1.0.4",
+    "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-jshint": "^1.1.0",
-    "grunt-contrib-less": "^1.4.1",
+    "grunt-contrib-less": "^2.0.0",
     "grunt-run": "^0.8.0",
     "grunt-steal": "^1.0.0",
     "sinon": "^1.17.2",
@@ -37,10 +35,10 @@
     "steal": "^1.12.4",
     "steal-css": "^1.3.1",
     "steal-less": "^1.2.2",
-    "steal-mocha": "^1.0.0",
+    "steal-mocha": "^2.0.1",
     "steal-stache": "^4.1.2",
     "steal-tools": "^1.11.10",
-    "testee": "^0.2.0"
+    "testee": "^0.9.1"
   },
   "standard": {
     "globals": [
@@ -77,7 +75,6 @@
     ],
     "map": {
       "cuid": "cuid/dist/cuid",
-      "jquery-ui/widget": "jquery-ui/ui/widget",
       "localforage": "localforage/dist/localforage.nopromises",
       "chai": "chai/chai"
     },
@@ -86,7 +83,7 @@
         "format": "global",
         "eval": "script",
         "deps": [
-          "jquery-ui/ui/sortable",
+          "jquery-ui/ui/widgets/sortable",
           "caja/ckeditor/ckeditor"
         ]
       },
@@ -94,12 +91,12 @@
         "format": "global",
         "eval": "script",
         "deps": [
-          "jquery-ui/ui/button",
-          "jquery-ui/ui/autocomplete",
-          "jquery-ui/ui/draggable",
-          "jquery-ui/ui/resizable",
-          "jquery-ui/ui/dialog",
-          "jquery-ui/ui/tooltip"
+          "jquery-ui/ui/widgets/button",
+          "jquery-ui/ui/widgets/autocomplete",
+          "jquery-ui/ui/widgets/draggable",
+          "jquery-ui/ui/widgets/resizable",
+          "jquery-ui/ui/widgets/dialog",
+          "jquery-ui/ui/widgets/tooltip"
         ]
       },
       "caja/author/src/A2J_Clauses": {
@@ -168,7 +165,7 @@
         "format": "global",
         "eval": "script",
         "deps": [
-          "jquery-ui/ui/dialog"
+          "jquery-ui/ui/widgets/dialog"
         ]
       },
       "caja/author/src/viewer/A2J_SharedSus": {
@@ -189,7 +186,7 @@
       },
       "caja/author/src/viewer/jquery.ui.traggable": {
         "deps": [
-          "jquery-ui/ui/mouse",
+          "jquery-ui/ui/widgets/mouse",
           "jquery-ui/ui/widget"
         ]
       },
@@ -213,16 +210,13 @@
           "jQuery": "jquery@2.1.4#dist/jquery"
         }
       }
-    },
-    "paths": {
-      "tokenfield-jquery": "node_modules/bootstrap-tokenfield/node_modules/jquery/dist/jquery.js"
     }
   },
   "dependencies": {
+    "@open-xchange/bootstrap-tokenfield": "^0.13.1",
     "bit-tabs": "^2.0.0",
     "blueimp-file-upload": "^9.10.1",
     "bootstrap": "^3.4.1",
-    "bootstrap-tokenfield": "git://github.com/sliptree/bootstrap-tokenfield.git#v0.12.1",
     "can-3-4-compat": "^1.0.0",
     "can-ajax": "^1.3.0",
     "can-bind": "^1.3.0",
@@ -242,7 +236,7 @@
     "can-map": "^4.3.3",
     "can-map-backup": "^4.0.0",
     "can-map-compat": "^1.1.0",
-    "can-map-define": "^4.3.3",
+    "can-map-define": "^4.4.0",
     "can-model": "^4.0.3",
     "can-observation": "^4.1.0",
     "can-observation-recorder": "^1.2.0",
@@ -261,11 +255,11 @@
     "can-view-autorender": "^4.2.0",
     "can-view-callbacks": "^4.3.0",
     "can-view-import": "^4.2.0",
-    "connect": "3.2.0",
+    "connect": "^3.7.0",
     "cuid": "^2.1.6",
     "http-server": "^0.10.0",
-    "jquery": "~2.1.4",
-    "jquery-ui": "git://github.com/jquery/jquery-ui.git#1.11.4",
+    "jquery": "^3.4.1",
+    "jquery-ui": "^1.12.1",
     "jquerypp": "^2.0.2",
     "lightbox2": "^2.10.0",
     "localforage": "^1.3.0",
@@ -275,8 +269,8 @@
     "numeral": "^1.5.6",
     "path-browserify": "0.0.0",
     "pdfjs-dist": "^2.0.466",
-    "serve-index": "1.4.0",
-    "serve-static": "1.6.4",
+    "serve-index": "^1.9.1",
+    "serve-static": "^1.14.1",
     "string-natural-compare": "^2.0.2",
     "text-statistics": "^0.1.1",
     "typeahead.js": "git://github.com/twitter/typeahead.js.git#v0.11.1",

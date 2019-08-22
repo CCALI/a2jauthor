@@ -23,7 +23,7 @@ describe('a2j-template', function () {
       const template = makeA2JTemplate(templateFixture)
 
       const frag = stache(
-        '<a2j-template editEnabled:from="true" vm:template:bind="template" />'
+        '<a2j-template id="page-template"editEnabled:from="true" vm:template:bind="template" />'
       )
 
       $('#test-area').html(frag({ template }))
@@ -33,7 +33,7 @@ describe('a2j-template', function () {
       $('#test-area').empty()
     })
 
-    describe.skip('only one element can be selected at a time', function () {
+    describe('only one element can be selected at a time', function () {
       this.timeout(5000)
 
       it('selecting direct descendants', function (done) {
@@ -42,8 +42,8 @@ describe('a2j-template', function () {
 
         F('element-options-pane').size(0, 'no element selected')
 
-        // click the first element
-        F('element-container:nth(0) .wrapper').click()
+        // dblclick the first element
+        F('element-container:nth(0) .wrapper').dblclick()
 
         F(function () {
           assert.isTrue(firstElementVM.attr('selected'), 'first element should be selected')
@@ -53,8 +53,8 @@ describe('a2j-template', function () {
         // there should be only one options pane on screen
         F('element-options-pane').size(1)
 
-        // click the second element
-        F('element-container:nth(1) .wrapper').click()
+        // dblclick the second element
+        F('element-container:nth(1) .wrapper').dblclick()
 
         F(function () {
           assert.isTrue(secondElementVM.attr('selected'), 'second element should be selected')
@@ -84,8 +84,8 @@ describe('a2j-template', function () {
         // there should be only one options pane on screen
         F('element-options-pane').size(1)
 
-        // click the first element
-        F('element-container:nth(0) .wrapper').click()
+        // dblclick the first element
+        F('element-container:nth(0) .wrapper').dblclick()
 
         F(function () {
           assert.isTrue(firstElementVM.attr('selected'), 'first element should be selected')
@@ -104,8 +104,8 @@ describe('a2j-template', function () {
         const secondElementVM = $('element-container').eq(1)[0].viewModel
         const nestedChildVM = $('conditional-add-element').eq(0)[0].viewModel
 
-        // click the first element
-        F('element-container:nth(0) .wrapper').click()
+        // dblclick the first element
+        F('element-container:nth(0) .wrapper').dblclick()
 
         F(function () {
           assert.isTrue(firstElementVM.attr('selected'), 'first element should be selected')

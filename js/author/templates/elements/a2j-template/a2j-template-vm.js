@@ -37,7 +37,7 @@ const moveItem = function (list, from, to) {
  * ## Use
  *
  * @codestart
- * <a2j-template edit-enabled="true" template="{a2jTemplate}"/>
+ * <<a2j-template editEnabled:raw="true" template:from="template" />/>
  * @codeend
  */
 
@@ -132,7 +132,7 @@ export default CanMap.extend('A2JTemplateVM', {
      * @property {can.Map} a2jTemplate.ViewModel.prototype.selectedNode selectedNode
      * @parent a2jTemplate.ViewModel
      *
-     * The currenly selected node (element) view model.
+     * The currently selected node (element) view model.
      */
     selectedNode: {
       get () {

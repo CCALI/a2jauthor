@@ -68,7 +68,7 @@
       {{/if}}
 
       {{#if(showTemplatesList)}}
-        <templates-sortbar criteria:from="sortCriteria" />
+        <templates-sortbar criteria:bind="sortCriteria" />
 
         <templates-list
           vm:displayList:from="displayList"

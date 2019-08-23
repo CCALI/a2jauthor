@@ -280,8 +280,6 @@ A2JTemplate.List = A2JTemplate.List.extend({
         sort(this, comparator.moment(key, direction))
         break
     }
-
-    // sort(this, this.attr('comparator'))
   },
 
   search (token) {

@@ -158,6 +158,8 @@ function exportXML_CAJA_from_CAJA (guide) {	// Convert Guide structure into XML
   JSON.GUIDE.INFO.viewer = guide.viewer
   JSON.GUIDE.INFO.endImage = guide.endImage
   JSON.GUIDE.INFO.logoImage = guide.logoImage
+  JSON.GUIDE.INFO.clientAvatar = guide.clientAvatar
+
   var i
   for (i in guide.authors) {
     var author = guide.authors[i]
@@ -328,6 +330,13 @@ function parseXML_CAJA_to_CAJA (GUIDE) // GUIDE is XML DOM
   guide.endImage =		makestr(INFO.children('ENDIMAGE').text())
   guide.authors = []
 
+  guide.clientAvatar = {}
+  guide.clientAvatar.gender = makestr(INFO.children('CLIENTAVATAR').children('GENDER').text())
+  guide.clientAvatar.hair = makestr(INFO.children('CLIENTAVATAR').children('HAIR').text())
+  guide.clientAvatar.skin = makestr(INFO.children('CLIENTAVATAR').children('SKIN').text())
+  guide.clientAvatar.isOld = makestr(INFO.children('CLIENTAVATAR').children('ISOLD').text())
+  guide.clientAvatar.hasWheelchair = makestr(INFO.children('CLIENTAVATAR').children('HASWHEELCHAIR').text())
+
   GUIDE.find('AUTHORS > AUTHOR').each(function () {
     var AUTHOR = $(this)
     var author = new TAuthor()
@@ -347,7 +356,7 @@ function parseXML_CAJA_to_CAJA (GUIDE) // GUIDE is XML DOM
     // convert escaped XML special chars ex: &amp;
     step.text = decodeEntities(STEP.find('TEXT').xml())
     guide.steps.push(step)
-	 })
+	})
   // Parse pages into book.pages[] records.
   GUIDE.find('VARIABLES > VARIABLE').each(function () {
     var VARIABLE = $(this)
@@ -358,7 +367,7 @@ function parseXML_CAJA_to_CAJA (GUIDE) // GUIDE is XML DOM
     guide.varCreate(VARIABLE.attr('NAME'), VARIABLE.attr('TYPE'), textToBool(VARIABLE.attr('REPEATING'), false), makestr(VARIABLE.attr('COMMENT')))
     // v.traceLogic('Create variable');
     // guide.vars[v.name.toLowerCase()]=v;
-	 })
+	})
   guide.varCreateInternals()
 
   /*

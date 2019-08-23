@@ -332,8 +332,8 @@ function parseXML_CAJA_to_CAJA (GUIDE) // GUIDE is XML DOM
 
   guide.clientAvatar = {}
   guide.clientAvatar.gender = makestr(INFO.children('CLIENTAVATAR').find('GENDER').text())
-  guide.clientAvatar.hair = makestr(INFO.children('CLIENTAVATAR').find('HAIR').text())
-  guide.clientAvatar.skin = makestr(INFO.children('CLIENTAVATAR').find('SKIN').text())
+  guide.clientAvatar.hairColor = makestr(INFO.children('CLIENTAVATAR').find('HAIRCOLOR').text())
+  guide.clientAvatar.skinTone = makestr(INFO.children('CLIENTAVATAR').find('SKINTONE').text())
   guide.clientAvatar.isOld = makestr(INFO.children('CLIENTAVATAR').find('ISOLD').text())
   guide.clientAvatar.hasWheelchair = makestr(INFO.children('CLIENTAVATAR').find('HASWHEELCHAIR').text())
 

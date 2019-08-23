@@ -331,11 +331,11 @@ function parseXML_CAJA_to_CAJA (GUIDE) // GUIDE is XML DOM
   guide.authors = []
 
   guide.clientAvatar = {}
-  guide.clientAvatar.gender = makestr(INFO.children('CLIENTAVATAR').children('GENDER').text())
-  guide.clientAvatar.hair = makestr(INFO.children('CLIENTAVATAR').children('HAIR').text())
-  guide.clientAvatar.skin = makestr(INFO.children('CLIENTAVATAR').children('SKIN').text())
-  guide.clientAvatar.isOld = makestr(INFO.children('CLIENTAVATAR').children('ISOLD').text())
-  guide.clientAvatar.hasWheelchair = makestr(INFO.children('CLIENTAVATAR').children('HASWHEELCHAIR').text())
+  guide.clientAvatar.gender = makestr(INFO.children('CLIENTAVATAR').find('GENDER').text())
+  guide.clientAvatar.hair = makestr(INFO.children('CLIENTAVATAR').find('HAIR').text())
+  guide.clientAvatar.skin = makestr(INFO.children('CLIENTAVATAR').find('SKIN').text())
+  guide.clientAvatar.isOld = makestr(INFO.children('CLIENTAVATAR').find('ISOLD').text())
+  guide.clientAvatar.hasWheelchair = makestr(INFO.children('CLIENTAVATAR').find('HASWHEELCHAIR').text())
 
   GUIDE.find('AUTHORS > AUTHOR').each(function () {
     var AUTHOR = $(this)

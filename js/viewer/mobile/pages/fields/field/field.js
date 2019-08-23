@@ -31,6 +31,13 @@ export const FieldVM = CanMap.extend('FieldVM', {
     field: {},
     rState: {},
 
+    clientAvatar: {
+      get () {
+        const clientAvatar = this.attr('rState').interview.clientAvatar
+        return clientAvatar
+      }
+    },
+
     /**
      * @property {Boolean} field.ViewModel.prototype.hasError hasError
      * @parent field.ViewModel

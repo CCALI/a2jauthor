@@ -6,7 +6,7 @@ First, you need to cd into the folder where the app code is contained, at the ro
 pm2 start npm --name "templates-api" -- run start
 ```
 
-the name "authordev-api" in this example is arbitrary, it helps to identify the process when running commands like `pm2 list`. E.g:
+the name "templates-api" in this example is arbitrary, it helps to identify the process when running commands like `pm2 list`. E.g:
 
 | App name | id | mode | pid | status | restart | uptime | memory | watching
 |----------|----|------|-----|--------|---------|--------|--------|---------

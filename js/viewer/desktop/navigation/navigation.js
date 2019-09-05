@@ -235,6 +235,28 @@ export let ViewerNavigationVM = CanMap.extend({
       return true
     }
     return false
+  },
+
+  connectedCallback () {
+    const vm = this
+    const swipeRightHandler = function () {
+      if (vm.attr('canNavigateBack')) {
+        vm.navigateBack()
+      }
+    }
+    const swipeLeftHandler = function () {
+      if (vm.attr('canNavigateForward')) {
+        vm.navigateForward()
+      }
+    }
+
+    $('#viewer-app').on('swiperight', swipeRightHandler)
+    $('#viewer-app').on('swipeleft', swipeLeftHandler)
+
+    return () => {
+      $('#viewer-app').off('swiperight', swipeRightHandler)
+      $('#viewer-app').off('swipeleft', swipeLeftHandler)
+    }
   }
 })
 /**
@@ -275,23 +297,6 @@ export default Component.extend({
       text = (typeof repeatVarValue === 'number') ? text + ' #' + repeatVarValue : text
 
       return text
-    }
-  },
-
-  events: {
-    inserted () {
-      const vm = this.viewModel
-      $('#viewer-app').on('swiperight', function () {
-        if (vm.attr('canNavigateBack')) {
-          vm.navigateBack()
-        }
-      })
-
-      $('#viewer-app').on('swipeleft', function () {
-        if (vm.attr('canNavigateForward')) {
-          vm.navigateForward()
-        }
-      })
     }
   }
 })

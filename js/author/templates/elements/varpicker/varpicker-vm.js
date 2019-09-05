@@ -7,7 +7,7 @@ import Bloodhound from 'typeahead.js/dist/bloodhound'
 
 import 'can-map-define'
 
-const ocurrences = ['any', 'single', 'repeating']
+const occurrence = ['any', 'single', 'repeating']
 
 const byRepeating = function (filter, variable) {
   if (filter !== 'any') {
@@ -55,7 +55,7 @@ export default CanMap.extend('VarPickerVM', {
     },
 
     /**
-     * @property {String} varPicker.ViewModel.prototype.filterOcurrence filterOcurrence
+     * @property {String} varPicker.ViewModel.prototype.filterOccurrence filterOccurrence
      * @parent varPicker.ViewModel
      *
      * The variables can be either `repeating` (multiple values) or just
@@ -66,10 +66,10 @@ export default CanMap.extend('VarPickerVM', {
      * finally if the value is `single`, only the non-repeating variables will
      * be in the list.
      */
-    filterOcurrence: {
+    filterOccurrence: {
       value: 'any',
       set (value) {
-        return _includes(ocurrences, value) ? value : 'any'
+        return _includes(occurrence, value) ? value : 'any'
       }
     },
 
@@ -96,12 +96,12 @@ export default CanMap.extend('VarPickerVM', {
     variables: {
       get (list) {
         let types = this.attr('filterTypes')
-        let ocurrence = this.attr('filterOcurrence')
+        let occurrence = this.attr('filterOccurrence')
 
         if (list) {
           return list
             .filter(v => byType(types, v))
-            .filter(v => byRepeating(ocurrence, v))
+            .filter(v => byRepeating(occurrence, v))
         }
       }
     },
@@ -160,8 +160,16 @@ export default CanMap.extend('VarPickerVM', {
     // we think the typeahead plugin messes up the `value:bind' in the input (by
     // removing it from the DOM or preventDefault/stopPropagation or something),
     // but this works around the issue
-    $input.on('change', function pickerInputChanged () {
+    const pickerInputHandler = function pickerInputChanged () {
       vm.attr('selected', this.value)
-    })
+    }
+
+    $input.on('change', pickerInputHandler)
+
+    // cleanup
+    return () => {
+      $input.off('change', pickerInputHandler)
+      this.stopListening()
+    }
   }
 })

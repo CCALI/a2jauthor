@@ -99,7 +99,7 @@
 
     <!-- Variables Tab -->
     <div class="tab-panel has-toolbar" id="tabsVariables">
-      <variables-tab guide:bind="guide"/>
+      <variables-tab guide:from="guide"/>
     </div><!-- tab-panel has-toolbar -->
 
     <!-- Steps Tab -->

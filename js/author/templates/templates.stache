@@ -43,7 +43,7 @@
 
   <div class="container-fluid">
     {{#if(templatesPromise.isPending)}}
-      <app-loading/>
+      <app-loading loadingMessage:raw="Loading A2J Templates ..."/>
     {{/if}}
 
     {{#if(templatesPromise.isResolved)}}

@@ -63,11 +63,5 @@ export default Component.extend('UploadComponent', {
   view: template,
   leakScope: false,
   tag: 'a2j-upload',
-  ViewModel: UploadVM,
-
-  events: {
-    '{viewModel} uploadSuccess': function () {
-      console.log('much success', this.viewModel.attr('interviews'))
-    }
-  }
+  ViewModel: UploadVM
 })

@@ -16,7 +16,6 @@
   <div id="viewer-app" class="{{#if(showDebugPanel)}}with-debug-panel{{/if}}">
     <a2j-viewer-preview
       interview:to="previewInterview"
-      interview.answers:bind="previewAnswers"
       traceMessage:from="traceMessage"
       guidePath:from="guidePath"
       showDebugPanel:from="showDebugPanel"

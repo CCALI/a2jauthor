@@ -2,7 +2,7 @@
 <can-import from="caja/author/interviews/interviews.less!"/>
 
 {{#if(interviewsPromise.isPending)}}
-  <app-loading />
+  <app-loading loadingMessage:from="loadingMessage"></app-loading>
 {{/if}}
 
 {{#if(interviewsPromise.isResolved)}}

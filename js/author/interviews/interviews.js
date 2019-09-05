@@ -9,6 +9,12 @@ export const InterviewsVM = DefineMap.extend('InterviewsVM', {
   traceMessage: {},
   previewInterview: {},
 
+  loadingMessage: {
+    get () {
+      return `Saving Guide ID: ${this.currentGuideId} ...`
+    }
+  },
+
   interviews: {
     value ({ lastSet, listenTo, resolve }) {
       this.interviewsPromise.then((interviews) => {

@@ -2,6 +2,8 @@ import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './main.stache'
 
+import 'can-map-define'
+
 function getLanguageList () {
   const langs = window.Languages.regional
   const locales = Object.keys(langs)

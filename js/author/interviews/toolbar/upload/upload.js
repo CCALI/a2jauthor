@@ -5,6 +5,8 @@ import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './upload.stache'
 
+import 'can-map-define'
+
 export const UploadVM = CanMap.extend('UploadVM', {
   define: {
     interviews: {}

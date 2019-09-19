@@ -3,6 +3,8 @@ import Component from 'can-component'
 import template from './editor.stache'
 import constants from 'caja/viewer/models/constants'
 
+import 'can-map-define'
+
 export const VariableEditorVM = CanMap.extend({
   define: {
     /*

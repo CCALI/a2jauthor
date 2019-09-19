@@ -13,6 +13,8 @@ import MemoryState from 'caja/viewer/models/memory-state'
 import PersistedState from 'caja/viewer/models/persisted-state'
 import parseGuideToMobile from 'caja/viewer/mobile/util/guide-to-mobile'
 
+import 'can-map-define'
+
 const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
   define: {
     // passed in via viewer-preview-layout.stache bindings

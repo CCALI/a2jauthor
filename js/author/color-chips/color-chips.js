@@ -2,6 +2,8 @@ import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './color-chips.stache'
 
+import 'can-map-define'
+
 export const ColorChipsVm = CanMap.extend({
   define: {
     colorClasses: {

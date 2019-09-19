@@ -2,6 +2,8 @@ import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './assignment-form.stache'
 
+import 'can-map-define'
+
 /*
   Assignment = {
     deleteVariable: Maybe String,

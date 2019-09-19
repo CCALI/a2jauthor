@@ -6,6 +6,8 @@ import {
   getClassNameForSkin
 } from 'caja/viewer/desktop/avatar/colors'
 
+import 'can-map-define'
+
 const skinClasses = skinTones.map(getClassNameForSkin)
 
 export const SkinPickerVm = CanMap.extend({

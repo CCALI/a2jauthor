@@ -3,6 +3,8 @@ import Component from 'can-component'
 import template from './modal.stache'
 import $ from 'jquery'
 
+import 'can-map-define'
+
 export const ModalVM = CanMap.extend({
   define: {
     modalTitle: {},

@@ -2,6 +2,8 @@ import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './text-stats.stache'
 
+import 'can-map-define'
+
 /**
  * @property {can.Map} text-stats.ViewModel
  * @parent `<text-stats>`

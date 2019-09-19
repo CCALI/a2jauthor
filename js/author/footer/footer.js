@@ -4,6 +4,8 @@ import CanMap from 'can-map'
 import constants from 'caja/viewer/models/constants'
 import moment from 'moment'
 
+import 'can-map-define'
+
 let FooterVM = CanMap.extend({
   define: {
     viewerVersion: {

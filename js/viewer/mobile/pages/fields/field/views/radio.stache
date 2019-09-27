@@ -1,4 +1,5 @@
 <can-import from="caja/viewer/mobile/pages/fields/field/views/radio.less!" />
+<can-import from='can-stache-converters' />
 
 <div>
 	<div class="a2j-radio-button-group radio">
@@ -7,7 +8,7 @@
 			type="radio"
 			id="{{field.label}}"
 			name="{{field.name}}"
-			value:bind="field.value"
+			value:from="field.value"
 			{{#if(field.required)}}required{{/if}}
 			checked:from="equal(field._answer.values, field.value)"
 			class="a2j-radio-button"

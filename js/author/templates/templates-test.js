@@ -1,6 +1,5 @@
 import $ from 'jquery'
 import F from 'funcunit'
-import CanMap from 'can-map'
 import { assert } from 'chai'
 import Templates from './templates-vm'
 import stache from 'can-stache'
@@ -16,9 +15,7 @@ describe('<templates-page>', function () {
     let vm
 
     beforeEach(function () {
-      vm = new Templates({
-        appState: new CanMap()
-      })
+      vm = new Templates({})
     })
 
     afterEach(function () {
@@ -39,16 +36,14 @@ describe('<templates-page>', function () {
 
   describe('Component', function () {
     beforeEach(function (done) {
-      const appState = new CanMap({
-        guideId: '1261', // 1261 has 3 templates by default
-        guide: { title: '' }
-      })
-
       const frag = stache(
-        '<templates-page appState:from="appState" />'
+        '<templates-page guideId:from="guideId" guideTitle:from="guide.title" />'
       )
 
-      $('#test-area').html(frag({ appState }))
+      $('#test-area').html(frag({
+        guideId: '1261', // 1261 has 3 templates by default
+        guide: { title: '' }
+      }))
 
       F('templates-list-item').size(size => {
         console.log('size', size)

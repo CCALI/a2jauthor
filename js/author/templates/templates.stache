@@ -71,8 +71,8 @@
         <templates-sortbar criteria:bind="sortCriteria" />
 
         <templates-list
-          vm:displayList:from="displayList"
-          vm:hasSorted:bind="hasSorted"
+          displayList:from="displayList"
+          hasSorted:bind="hasSorted"
           activeFilter:bind="activeFilter"
           class:from="listStateClassName"
           isDraggable:bind="listIsDraggable" />
@@ -81,6 +81,6 @@
   </div>
 
   <test-assemble-options
-    vm:guideId:from="scope.vm.appState.guideId"
-    vm:guideTitle:from="scope.vm.appState.guide.title" />
+    guideId:from="guideId"
+    guideTitle:from="guideTitle" />
 </div>

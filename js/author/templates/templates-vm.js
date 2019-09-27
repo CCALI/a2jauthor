@@ -13,13 +13,9 @@ import 'can-map-define'
  */
 export default CanMap.extend({
   define: {
-    /**
-     * @property {CanList?} templatesPage.ViewModel.prototype.define.appState appState
-     * @parent templatesPage.ViewModel
-     *
-     * The application state
-     */
-    appState: {},
+    // passed in via Author app.stache
+    guideId: {},
+    guideTitle: {},
 
     /**
      * @property {Promise} templatesPage.ViewModel.prototype.define.templatesPromise templatesPromise
@@ -29,8 +25,7 @@ export default CanMap.extend({
      */
     templatesPromise: {
       get () {
-        const appState = this.attr('appState')
-        const guideId = appState.attr('guideId')
+        const guideId = this.attr('guideId')
 
         return A2JTemplate.findAll({ guideId })
       }
@@ -360,7 +355,7 @@ export default CanMap.extend({
    *
    */
   saveTemplatesOrder (templateIds) {
-    const guideId = this.attr('appState.guideId')
+    const guideId = this.attr('guideId')
 
     if (templateIds) {
       return $.ajax({

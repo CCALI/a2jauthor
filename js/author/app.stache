@@ -280,7 +280,7 @@
               action:bind="action"
             />
           {{else}}
-            <templates-page appState:from="this" />
+            <templates-page guideId:from="guideId" guideTitle:from="guide.title" />
           {{/if}}
         {{/if}}
       {{/is}}

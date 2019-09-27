@@ -1,8 +1,8 @@
-module.exports = function (grunt) {
+module.exports = function (grunt) { // documentjs tasks removed until security updates can be applied see: https://github.com/CCALI/CAJA/issues/2485
   grunt.initConfig({
     clean: {
       build: ['dist/'],
-      cachedTemplate: ['node_modules/documentjs/site/static', 'node_modules/documentjs/site/templates']
+      // cachedTemplate: ['node_modules/documentjs/site/static', 'node_modules/documentjs/site/templates']
     },
 
     run: {
@@ -93,29 +93,29 @@ module.exports = function (grunt) {
     }
   })
 
-  grunt.loadNpmTasks('documentjs')
+  // grunt.loadNpmTasks('documentjs')
   grunt.loadNpmTasks('grunt-steal')
   grunt.loadNpmTasks('grunt-contrib-less')
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-contrib-clean')
   grunt.loadNpmTasks('grunt-run')
 
-  grunt.renameTask('documentjs', 'documentjs-orig')
+  // grunt.renameTask('documentjs', 'documentjs-orig')
 
   grunt.registerTask('svg-styles', ['less:svg'])
   grunt.registerTask('build', ['clean:build', 'steal-build', 'run:make_author_production', 'run:make_viewer_production'])
-  grunt.registerTask('documentjs', [
-    'clean:cachedTemplate',
-    'documentjs-orig',
-    'copy:icon-font',
-    'copy:demos',
-    'less:docs'
-  ])
+  // grunt.registerTask('documentjs', [
+  //   'clean:cachedTemplate',
+  //   'documentjs-orig',
+  //   'copy:icon-font',
+  //   'copy:demos',
+  //   'less:docs'
+  // ])
 
-  grunt.registerTask('documentjs-lite', [
-    'documentjs-orig',
-    'copy:icon-font',
-    'copy:demos',
-    'less:docs'
-  ])
+  // grunt.registerTask('documentjs-lite', [
+  //   'documentjs-orig',
+  //   'copy:icon-font',
+  //   'copy:demos',
+  //   'less:docs'
+  // ])
 }

@@ -18,28 +18,6 @@
     "type": "git",
     "url": "https://github.com/CCALI/CAJA"
   },
-  "devDependencies": {
-    "can-debug": "^2.0.1",
-    "can-fixture": "^2.1.0",
-    "chai": "^4.1.2",
-    "express": "^4.13.0",
-    "funcunit": "^3.0.0",
-    "grunt": "^1.0.4",
-    "grunt-contrib-clean": "^2.0.0",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-less": "^2.0.0",
-    "grunt-run": "^0.8.0",
-    "grunt-steal": "^1.0.0",
-    "sinon": "^1.17.2",
-    "standard": "^11.0.1",
-    "steal": "^1.12.4",
-    "steal-css": "^1.3.1",
-    "steal-less": "^1.2.2",
-    "steal-mocha": "^2.0.1",
-    "steal-stache": "^4.1.2",
-    "steal-tools": "^1.11.10",
-    "testee": "^0.9.1"
-  },
   "standard": {
     "globals": [
       "$",
@@ -75,6 +53,7 @@
     ],
     "map": {
       "cuid": "cuid/dist/cuid",
+      "jquery-ui/widget": "jquery-ui/ui/widget",
       "localforage": "localforage/dist/localforage.nopromises",
       "chai": "chai/chai"
     },
@@ -210,6 +189,9 @@
           "jQuery": "jquery@2.1.4#dist/jquery"
         }
       }
+    },
+    "paths": {
+      "tokenfield-jquery": "node_modules/bootstrap-tokenfield/node_modules/jquery/dist/jquery.js"
     }
   },
   "dependencies": {
@@ -219,21 +201,20 @@
     "bootstrap": "^3.4.1",
     "can-3-4-compat": "^1.0.0",
     "can-ajax": "^1.3.0",
-    "can-bind": "^1.3.0",
     "can-component": "^4.2.4",
     "can-compute": "^4.1.0",
     "can-connect": "^2.1.0",
     "can-construct": "^3.5.0",
     "can-construct-super": "^3.2.0",
     "can-control": "^4.2.0",
-    "can-define": "^2.7.10",
+    "can-define": "^2.8.0",
     "can-dom-data": "^1.0.3",
     "can-dom-events": "^1.3.0",
-    "can-event-queue": "^1.1.4",
+    "can-event-queue": "^1.1.7",
     "can-globals": "^1.2.0",
     "can-key": "^1.2.0",
     "can-list": "^4.2.0",
-    "can-map": "^4.3.3",
+    "can-map": "4.3.9",
     "can-map-backup": "^4.0.0",
     "can-map-compat": "^1.1.0",
     "can-map-define": "^4.4.0",
@@ -244,7 +225,7 @@
     "can-reflect-promise": "^2.1.0",
     "can-route": "^4.3.5",
     "can-route-pushstate": "^4.1.1",
-    "can-stache": "^4.15.2",
+    "can-stache": "^4.17.21",
     "can-stache-converters": "^4.2.5",
     "can-stache-key": "^1.4.0",
     "can-stache-route-helpers": "^1.1.1",
@@ -253,7 +234,7 @@
     "can-validate-legacy": "^2.0.0",
     "can-value": "^1.1.0",
     "can-view-autorender": "^4.2.0",
-    "can-view-callbacks": "^4.3.0",
+    "can-view-callbacks": "^4.4.1",
     "can-view-import": "^4.2.0",
     "connect": "^3.7.0",
     "cuid": "^2.1.6",
@@ -263,17 +244,37 @@
     "jquerypp": "^2.0.2",
     "lightbox2": "^2.10.0",
     "localforage": "^1.3.0",
-    "lodash": "^4.0.0",
+    "lodash": "^4.17.15",
     "moment": "^2.10.3",
     "numbro": "^2.1.0",
     "numeral": "^1.5.6",
     "path-browserify": "0.0.0",
     "pdfjs-dist": "^2.0.466",
-    "serve-index": "^1.9.1",
-    "serve-static": "^1.14.1",
     "string-natural-compare": "^2.0.2",
     "text-statistics": "^0.1.1",
     "typeahead.js": "git://github.com/twitter/typeahead.js.git#v0.11.1",
     "validate.js": "^0.12.0"
+  },
+  "devDependencies": {
+    "can-debug": "^2.0.1",
+    "can-fixture": "^2.1.0",
+    "chai": "^4.1.2",
+    "funcunit": "^3.0.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-less": "^2.0.0",
+    "grunt-run": "^0.8.0",
+    "grunt-steal": "^1.0.0",
+    "sinon": "^1.17.2",
+    "standard": "^11.0.1",
+    "steal": "^1.12.4",
+    "steal-css": "^1.3.1",
+    "steal-less": "^1.2.2",
+    "steal-mocha": "^2.0.1",
+    "steal-stache": "^4.1.5",
+    "steal-tools": "^1.11.10",
+    "testee": "^0.9.1"
   }
 }

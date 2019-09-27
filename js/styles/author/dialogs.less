@@ -28,6 +28,7 @@
     top: 5%!important;
     display: block;
     overflow-y: auto!important;
+    overflow-x: hidden;
   }
 
   // these are sub elements of the style above
@@ -50,30 +51,30 @@
   }
 
   .ui-dialog-titlebar {
-  	padding: @grid-gutter-width/2;
-  	position: relative;
+    padding: @grid-gutter-width/2;
+    position: relative;
     background: @brand-secondary;
 
     .ui-dialog-title {
-    	float: left;
-    	margin: 0;
-    	white-space: nowrap;
-    	width: 90%;
-    	overflow: hidden;
-    	text-overflow: ellipsis;
-    	font-size: @font-size-h4;
-    	font-weight: @headings-font-weight;
-    	color: #fff;
+      float: left;
+      margin: 0;
+      white-space: nowrap;
+      width: 90%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: @font-size-h4;
+      font-weight: @headings-font-weight;
+      color: #fff;
     }
     .ui-dialog-titlebar-close {
-    	position: absolute;
-    	right: @grid-gutter-width/2;
-    	top: @grid-gutter-width/2;
-    	width: 20px;
-    	height: 20px;
-    	margin: 0;
-    	padding: @grid-gutter-width/2;
-    	border: none;
+      position: absolute;
+      right: @grid-gutter-width/2;
+      top: @grid-gutter-width/2;
+      width: 20px;
+      height: 20px;
+      margin: 0;
+      padding: @grid-gutter-width/2;
+      border: none;
       background: none;
 
       span {

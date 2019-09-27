@@ -31,7 +31,7 @@ module.exports = {
     const { query: { state } } = params
     debug('FIND /api/topics-resources/topics request')
 
-    axios.get(`https://api-dev.legalnav.org/api/topics-resources/topics?state=${state}`)
+    axios.get(`https://api-stage.legalnav.org/api/topics-resources/topics?state=${state}`)
       .then(({ data }) => {
         // sort the data by name
         data.sort(nameSort)

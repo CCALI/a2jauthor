@@ -35,7 +35,7 @@ module.exports = {
       return callback(new Error('State and Topic are required!'))
     }
 
-    axios.get(`https://api-dev.legalnav.org/api/topics-resources/resources?state=${state}&topicName=${topic}`)
+    axios.get(`https://api-stage.legalnav.org/api/topics-resources/resources?state=${state}&topicName=${topic}`)
       .then(({ data }) => {
         // sort the data by name
         data.sort(nameSort)

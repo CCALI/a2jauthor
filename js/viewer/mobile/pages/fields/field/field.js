@@ -186,6 +186,23 @@ export const FieldVM = CanMap.extend('FieldVM', {
     }
   },
 
+  onClientAvatarChange (clientAvatar) {
+    const vm = this
+    Object.keys(clientAvatar).forEach((prop) => {
+      vm.attr(`clientAvatar.${prop}`, clientAvatar[prop])
+    })
+  },
+
+  onClientAvatarSkinToneChange (skinTone) {
+    const vm = this
+    vm.attr('clientAvatar.skinTone', skinTone)
+  },
+
+  onClientAvatarHairColorChange (hairColor) {
+    const vm = this
+    vm.attr('clientAvatar.hairColor', hairColor)
+  },
+
   /**
      * @property {Number} field.ViewModel.prototype.calcAvailableLength suggestionText
      * @parent field.ViewModel

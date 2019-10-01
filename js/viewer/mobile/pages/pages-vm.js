@@ -197,84 +197,90 @@ export default CanMap.extend('PagesVM', {
   },
 
   navigate (button, el, ev) {
+    this.traceButtonClicked(button.attr('label'))
+
     const page = this.attr('currentPage')
     const fields = page.attr('fields')
     const rState = this.attr('rState')
 
-    // Author Preview Mode changes handling of special buttons, and does not post answers
-    if (rState.previewActive &&
-      (button.next === constants.qIDFAIL ||
-      button.next === constants.qIDEXIT ||
-      button.next === constants.qIDSUCCESS ||
-      button.next === constants.qIDASSEMBLESUCCESS ||
-      button.next === constants.qIDASSEMBLE)
-    ) {
-      // stop default submit actions in preview
-      ev && ev.preventDefault()
-      this.previewActiveResponses(button)
-    }
-
-    // resumeInterview function passed from NavigationVM via stache
-    if (button.next === constants.qIDRESUME) {
-      this.resumeInterview()
-      // special destination dIDRESUME button skips rest of navigate
-      return
-    }
-
-    // special destination qIDFAIL button skips rest of navigate
-    // Author can provide an external URL to explain why user did not qualify
-    if (button.next === constants.qIDFAIL) {
-      this.setInterviewAsComplete()
-      let failURL = button.url.toLowerCase()
-      let hasProtocol = failURL.indexOf('http') === 0
-      failURL = hasProtocol ? failURL : 'http://' + failURL
-      if (failURL === 'http://') {
-        // If Empty, standard message
-        this.attr('modalContent', {
-          title: 'You did not Qualify',
-          text: 'Unfortunately, you did not qualify to use this A2J Guided Interview. Please close your browser window or tab to exit the interview.'
-        })
-      } else {
-        // track the external link
-        if (window._paq) {
-          Analytics.trackExitLink(failURL, 'link')
-        }
-        window.open(failURL, '_blank')
-      }
-      return
-    }
-
-    this.traceButtonClicked(button.attr('label'))
-
-    // Set answers for buttons with values
-    if (button.name) {
-      const logic = this.attr('logic')
-      const buttonAnswer = this.__ensureFieldAnswer(button)
-      let buttonAnswerIndex = 1
-
-      if (page.attr('repeatVar')) {
-        const repeatVar = page.attr('repeatVar')
-        const repeatVarCount = logic.varGet(repeatVar)
-
-        buttonAnswerIndex = (repeatVarCount != null) ? repeatVarCount : buttonAnswerIndex
-      }
-
-      let buttonValue = button.value
-
-      if (buttonAnswer.type === 'TF') {
-        buttonValue = buttonValue.toLowerCase() === 'true'
-      } else if (buttonAnswer.type === 'Number') {
-        buttonValue = parseInt(buttonValue)
-      }
-
-      buttonAnswer.attr('values.' + buttonAnswerIndex, buttonValue)
-    }
-
+    // invalid fields stop all navigate logic (ex: required answer not answered, or min/max out of range)
     this.validateAllFields()
-
     const anyFieldWithError = _some(fields, f => f.attr('hasError'))
 
-    if (!anyFieldWithError) {
+    if (anyFieldWithError) {
+      // do nothing if there are field(s) with error(s)
+      // don't submit answers or assemble document
+      ev && ev.preventDefault()
+      return false
+    } else {
+      // Author Preview Mode changes handling of special buttons, and does not post answers
+      if (rState.previewActive &&
+        (button.next === constants.qIDFAIL ||
+        button.next === constants.qIDEXIT ||
+        button.next === constants.qIDSUCCESS ||
+        button.next === constants.qIDASSEMBLESUCCESS ||
+        button.next === constants.qIDASSEMBLE)
+      ) {
+        // stop default submit actions in preview
+        ev && ev.preventDefault()
+        this.previewActiveResponses(button)
+      }
+
+      // resumeInterview function passed from NavigationVM via stache
+      if (button.next === constants.qIDRESUME) {
+        this.resumeInterview()
+        // special destination dIDRESUME button skips rest of navigate
+        return
+      }
+
+      // special destination qIDFAIL button skips rest of navigate
+      // Author can provide an external URL to explain why user did not qualify
+      if (button.next === constants.qIDFAIL) {
+        this.setInterviewAsComplete()
+        let failURL = button.url.toLowerCase()
+        let hasProtocol = failURL.indexOf('http') === 0
+        failURL = hasProtocol ? failURL : 'http://' + failURL
+        if (failURL === 'http://') {
+          // If Empty, standard message
+          this.attr('modalContent', {
+            title: 'You did not Qualify',
+            text: 'Unfortunately, you did not qualify to use this A2J Guided Interview. Please close your browser window or tab to exit the interview.'
+          })
+        } else {
+          // track the external link
+          if (window._paq) {
+            Analytics.trackExitLink(failURL, 'link')
+          }
+          window.open(failURL, '_blank')
+        }
+        return
+      }
+
+      // Set answers for buttons with values
+      if (button.name) {
+        const logic = this.attr('logic')
+        const buttonAnswer = this.__ensureFieldAnswer(button)
+        let buttonAnswerIndex = 1
+
+        if (page.attr('repeatVar')) {
+          const repeatVar = page.attr('repeatVar')
+          const repeatVarCount = logic.varGet(repeatVar)
+
+          buttonAnswerIndex = (repeatVarCount != null) ? repeatVarCount : buttonAnswerIndex
+        }
+
+        let buttonValue = button.value
+
+        if (buttonAnswer.type === 'TF') {
+          buttonValue = buttonValue.toLowerCase() === 'true'
+        } else if (buttonAnswer.type === 'Number') {
+          buttonValue = parseInt(buttonValue)
+        }
+
+        buttonAnswer.attr('values.' + buttonAnswerIndex, buttonValue)
+      }
+
+      // handle afterLogic
       const logic = this.attr('logic')
       const codeAfter = page.attr('codeAfter')
       const repeatVar = button.attr('repeatVar')
@@ -368,9 +374,6 @@ export default CanMap.extend('PagesVM', {
 
       return
     }
-
-    // do nothing if there are field(s) with error(s)
-    return false
   },
 
   setInterviewAsComplete () {

@@ -86,6 +86,15 @@ describe('<a2j-pages>', () => {
     })
 
     describe('navigate', () => {
+      it('ignores navigate() logic if fields have errors', () => {
+        const button = new CanMap({ next: 'foo' })
+        const fieldWithError = { _answer: { errors: true } }
+        vm.attr('currentPage.fields').push(fieldWithError)
+
+        const shouldReturnFalse = vm.navigate(button)
+        assert.equal(shouldReturnFalse, false, 'fields with errors return false')
+      })
+
       it('navigates to prior question', () => {
         const rState = vm.attr('rState')
         const visitedPages = rState.visitedPages

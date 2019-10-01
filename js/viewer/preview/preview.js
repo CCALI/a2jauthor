@@ -23,6 +23,7 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
     previewPageName: {},
     traceMessage: {},
     // passed up to Author app-state via viewer-preview-layout.stache bindings
+    previewInterview: {},
     interviewPageName: {
       get: function () {
         return this.attr('rState.page')

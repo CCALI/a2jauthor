@@ -35,7 +35,8 @@ export const FieldVM = CanMap.extend('FieldVM', {
       get () {
         const clientAvatar = this.attr('rState').interview.clientAvatar
         return clientAvatar
-      }
+      },
+      value: () => {}
     },
 
     /**

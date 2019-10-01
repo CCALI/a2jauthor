@@ -7,7 +7,7 @@ import canReflect from 'can-reflect'
 import queues from 'can-queues'
 
 export const ViewerAppState = DefineMap.extend('ViewerAppState', {
-  // skin, hair, gender, isOld, hasWheelChair
+  // skinTone, hairColor, gender, isOld, hasWheelChair
   clientAvatar: {
     serialize: false
   },

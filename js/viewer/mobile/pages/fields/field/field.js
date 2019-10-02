@@ -31,14 +31,6 @@ export const FieldVM = CanMap.extend('FieldVM', {
     field: {},
     rState: {},
 
-    clientAvatar: {
-      get () {
-        const clientAvatar = this.attr('rState').interview.clientAvatar
-        return clientAvatar
-      },
-      value: () => {}
-    },
-
     /**
      * @property {Boolean} field.ViewModel.prototype.hasError hasError
      * @parent field.ViewModel
@@ -184,14 +176,25 @@ export const FieldVM = CanMap.extend('FieldVM', {
       get () {
         return this.attr('availableLength') < 0
       }
+    },
+
+    clientAvatar: {
+
+    },
+
+    clientAvatarString: {
+      resolver ({ resolve, listenTo, lastSet }) {
+        resolve('female-false-false')
+        listenTo('clientAvatar', (ev, newAvatar) => {
+          resolve(`${newAvatar.gender}-${newAvatar.isOld}-${newAvatar.hasWheelchair}`)
+        })
+      }
     }
   },
 
   onClientAvatarChange (clientAvatar) {
     const vm = this
-    Object.keys(clientAvatar).forEach((prop) => {
-      vm.attr(`clientAvatar.${prop}`, clientAvatar[prop])
-    })
+    vm.attr('clientAvatar', clientAvatar)
   },
 
   onClientAvatarSkinToneChange (skinTone) {
@@ -418,6 +421,10 @@ export const FieldVM = CanMap.extend('FieldVM', {
 
   connectedCallback (el) {
     const vm = this
+    vm.listenTo('clientAvatarString', (ev, newVal, oldVal) => {
+      // save answerString
+      this.attr('field._answer.values', newVal)
+    })
 
     // default availableLength
     vm.attr('availableLength', vm.attr('field.maxChars'))

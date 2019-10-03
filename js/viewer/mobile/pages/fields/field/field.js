@@ -419,8 +419,23 @@ export const FieldVM = CanMap.extend('FieldVM', {
     return normalizedDate
   },
 
+  restoreClientAvatar () {
+    const savedClientAvatarString = this.attr('field._answer.values')
+    if (savedClientAvatarString && savedClientAvatarString.length) {
+      const values = savedClientAvatarString.split('-')
+      const clientAvatar = this.attr('clientAvatar')
+      clientAvatar.attr('gender', values[0])
+      clientAvatar.attr('isOld', values[1])
+      clientAvatar.attr('hasWheelchair', values[2])
+      clientAvatar.attr('skinTone', values[3])
+      clientAvatar.attr('hairColor', values[4])
+    }
+  },
+
   connectedCallback (el) {
     const vm = this
+    // reload saved clientAvatar
+    if (this.attr('field.type') === 'clientavatar') { this.restoreClientAvatar() }
     // default availableLength
     vm.attr('availableLength', vm.attr('field.maxChars'))
 

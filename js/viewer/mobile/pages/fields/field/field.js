@@ -179,32 +179,29 @@ export const FieldVM = CanMap.extend('FieldVM', {
     },
 
     clientAvatar: {
-
-    },
-
-    clientAvatarString: {
-      resolver ({ resolve, listenTo, lastSet }) {
-        resolve('female-false-false')
-        listenTo('clientAvatar', (ev, newAvatar) => {
-          resolve(`${newAvatar.gender}-${newAvatar.isOld}-${newAvatar.hasWheelchair}`)
-        })
+      value: () => {
+        return { gender: 'female', isOld: false, hasWheelchair: false, hairColor: 'brownDark', skinTone: 'lighter' }
       }
     }
   },
 
-  onClientAvatarChange (clientAvatar) {
-    const vm = this
-    vm.attr('clientAvatar', clientAvatar)
+  onClientAvatarChange (selectedAvatar, el) {
+    this.attr('clientAvatar.gender', selectedAvatar.gender)
+    this.attr('clientAvatar.isOld', selectedAvatar.isOld)
+    this.attr('clientAvatar.hasWheelchair', selectedAvatar.hasWheelchair)
+    this.validateField(null, el)
   },
 
-  onClientAvatarSkinToneChange (skinTone) {
+  onClientAvatarSkinToneChange (skinTone, el) {
     const vm = this
     vm.attr('clientAvatar.skinTone', skinTone)
+    this.validateField(null, el)
   },
 
-  onClientAvatarHairColorChange (hairColor) {
+  onClientAvatarHairColorChange (hairColor, el) {
     const vm = this
     vm.attr('clientAvatar.hairColor', hairColor)
+    this.validateField(null, el)
   },
 
   /**
@@ -248,6 +245,9 @@ export const FieldVM = CanMap.extend('FieldVM', {
 
     if (field.type === 'checkbox' || field.type === 'checkboxNOTA') {
       value = $el[0].checked
+    } else if (field.type === 'clientavatar') {
+      const clientAvatar = this.attr('clientAvatar')
+      value = `${clientAvatar.gender}-${clientAvatar.isOld}-${clientAvatar.hasWheelchair}-${clientAvatar.skinTone}-${clientAvatar.hairColor}`
     } else {
       value = $el.val()
     }
@@ -421,11 +421,6 @@ export const FieldVM = CanMap.extend('FieldVM', {
 
   connectedCallback (el) {
     const vm = this
-    vm.listenTo('clientAvatarString', (ev, newVal, oldVal) => {
-      // save answerString
-      this.attr('field._answer.values', newVal)
-    })
-
     // default availableLength
     vm.attr('availableLength', vm.attr('field.maxChars'))
 

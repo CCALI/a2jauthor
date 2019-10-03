@@ -29,7 +29,14 @@ export const FieldVM = CanMap.extend('FieldVM', {
     // passed in via fields.stache binding
     repeatVarValue: {},
     field: {},
+    // Type: DefineMap
     rState: {},
+
+    clientAvatar: {
+      get () {
+        return this.attr('rState').clientAvatar
+      }
+    },
 
     /**
      * @property {Boolean} field.ViewModel.prototype.hasError hasError
@@ -178,11 +185,6 @@ export const FieldVM = CanMap.extend('FieldVM', {
       }
     },
 
-    clientAvatar: {
-      value: () => {
-        return { gender: 'female', isOld: false, hasWheelchair: false, hairColor: 'brownDark', skinTone: 'lighter' }
-      }
-    }
   },
 
   onClientAvatarChange (selectedAvatar, el) {

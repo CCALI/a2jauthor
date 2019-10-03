@@ -42,7 +42,7 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
 
   connectedCallback (el) {
     const vm = this
-    const rState = new AppState()
+    const rState = window.rState = new AppState()
     const tearDownAppState = rState.connectedCallback(el)
     const mState = new MemoryState()
     const pState = new PersistedState()

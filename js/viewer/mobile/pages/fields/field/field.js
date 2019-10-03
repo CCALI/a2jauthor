@@ -183,26 +183,26 @@ export const FieldVM = CanMap.extend('FieldVM', {
       get () {
         return this.attr('availableLength') < 0
       }
-    },
-
+    }
   },
 
   onClientAvatarChange (selectedAvatar, el) {
-    this.attr('clientAvatar.gender', selectedAvatar.gender)
-    this.attr('clientAvatar.isOld', selectedAvatar.isOld)
-    this.attr('clientAvatar.hasWheelchair', selectedAvatar.hasWheelchair)
+    const clientAvatar = this.attr('clientAvatar')
+
+    clientAvatar.gender = selectedAvatar.gender
+    clientAvatar.isOld = selectedAvatar.isOld
+    clientAvatar.hasWheelchair = selectedAvatar.hasWheelchair
+
     this.validateField(null, el)
   },
 
   onClientAvatarSkinToneChange (skinTone, el) {
-    const vm = this
-    vm.attr('clientAvatar.skinTone', skinTone)
+    this.attr('clientAvatar').skinTone = skinTone
     this.validateField(null, el)
   },
 
   onClientAvatarHairColorChange (hairColor, el) {
-    const vm = this
-    vm.attr('clientAvatar.hairColor', hairColor)
+    this.attr('clientAvatar').hairColor = hairColor
     this.validateField(null, el)
   },
 
@@ -426,11 +426,11 @@ export const FieldVM = CanMap.extend('FieldVM', {
     if (savedClientAvatarString && savedClientAvatarString.length) {
       const values = savedClientAvatarString.split('-')
       const clientAvatar = this.attr('clientAvatar')
-      clientAvatar.attr('gender', values[0])
-      clientAvatar.attr('isOld', values[1])
-      clientAvatar.attr('hasWheelchair', values[2])
-      clientAvatar.attr('skinTone', values[3])
-      clientAvatar.attr('hairColor', values[4])
+      clientAvatar.gender = values[0]
+      clientAvatar.isOld = values[1]
+      clientAvatar.hasWheelchair = values[2]
+      clientAvatar.skinTone = values[3]
+      clientAvatar.hairColor = values[4]
     }
   },
 

@@ -197,22 +197,25 @@ export default CanMap.extend('PagesVM', {
   },
 
   navigate (button, el, ev) {
-    this.traceButtonClicked(button.attr('label'))
+    const vm = this
+    vm.traceButtonClicked(button.attr('label'))
 
-    const page = this.attr('currentPage')
+    const page = vm.attr('currentPage')
     const fields = page.attr('fields')
-    const rState = this.attr('rState')
 
-    // invalid fields stop all navigate logic (ex: required answer not answered, or min/max out of range)
-    this.validateAllFields()
+    vm.validateAllFields()
     const anyFieldWithError = _some(fields, f => f.attr('hasError'))
-
+    // invalid fields stop all navigate logic (ex: `required` answer not answered, or min/max out of range)
     if (anyFieldWithError) {
-      // do nothing if there are field(s) with error(s)
       // don't submit answers or assemble document
       ev && ev.preventDefault()
+      // do nothing if there are field(s) with error(s)
       return false
     } else {
+      // no errors/normal navigation
+      const rState = vm.attr('rState')
+      const logic = vm.attr('logic')
+
       // Author Preview Mode changes handling of special buttons, and does not post answers
       if (rState.previewActive &&
         (button.next === constants.qIDFAIL ||
@@ -223,12 +226,12 @@ export default CanMap.extend('PagesVM', {
       ) {
         // stop default submit actions in preview
         ev && ev.preventDefault()
-        this.previewActiveResponses(button)
+        vm.previewActiveResponses(button)
       }
 
       // resumeInterview function passed from NavigationVM via stache
       if (button.next === constants.qIDRESUME) {
-        this.resumeInterview()
+        vm.resumeInterview()
         // special destination dIDRESUME button skips rest of navigate
         return
       }
@@ -236,13 +239,13 @@ export default CanMap.extend('PagesVM', {
       // special destination qIDFAIL button skips rest of navigate
       // Author can provide an external URL to explain why user did not qualify
       if (button.next === constants.qIDFAIL) {
-        this.setInterviewAsComplete()
+        vm.setInterviewAsComplete()
         let failURL = button.url.toLowerCase()
         let hasProtocol = failURL.indexOf('http') === 0
         failURL = hasProtocol ? failURL : 'http://' + failURL
         if (failURL === 'http://') {
           // If Empty, standard message
-          this.attr('modalContent', {
+          vm.attr('modalContent', {
             title: 'You did not Qualify',
             text: 'Unfortunately, you did not qualify to use this A2J Guided Interview. Please close your browser window or tab to exit the interview.'
           })
@@ -258,8 +261,7 @@ export default CanMap.extend('PagesVM', {
 
       // Set answers for buttons with values
       if (button.name) {
-        const logic = this.attr('logic')
-        const buttonAnswer = this.__ensureFieldAnswer(button)
+        const buttonAnswer = vm.__ensureFieldAnswer(button)
         let buttonAnswerIndex = 1
 
         if (page.attr('repeatVar')) {
@@ -281,10 +283,9 @@ export default CanMap.extend('PagesVM', {
       }
 
       // handle afterLogic
-      const logic = this.attr('logic')
       const codeAfter = page.attr('codeAfter')
-      const repeatVar = button.attr('repeatVar')
-      const repeatVarSet = button.attr('repeatVarSet')
+      const buttonRepeatVar = button.attr('repeatVar')
+      const buttonRepeatVarSet = button.attr('repeatVarSet')
 
       // default next page is derived from the button pressed.
       // might be overridden by the After logic or special
@@ -293,7 +294,7 @@ export default CanMap.extend('PagesVM', {
 
       // execute After logic only if not going to a prior question
       if (codeAfter && button.next !== constants.qIDBACK) {
-        this.traceMessageAfterQuestion()
+        vm.traceMessageAfterQuestion()
 
         // parsing codeAfter causes several re-renders, batching for performance
         // TODO: might not need this once afterLogic parsing is refactored to canjs
@@ -302,25 +303,25 @@ export default CanMap.extend('PagesVM', {
         queues.batch.stop()
       }
 
-      // repeatVar holds the name of the variable that acts as the total count
-      // of a repeating variable; and repeatVarSet indicates whether that
+      // buttonRepeatVar holds the name of the variable that acts as the total count
+      // of a repeating variable; and buttonRepeatVarSet indicates whether that
       // variable should be set to `1` or increased, `setRepeatVariable` takes
-      // care of setting `repeatVar` properly.
-      if (repeatVar && repeatVarSet) {
-        this.setRepeatVariable(repeatVar, repeatVarSet)
+      // care of setting `buttonRepeatVar` properly.
+      if (buttonRepeatVar && buttonRepeatVarSet) {
+        vm.setRepeatVariable(buttonRepeatVar, buttonRepeatVarSet)
       }
 
       // Don't post to the server in Author Preview aka previewActive
       if (!rState.previewActive && (button.next === constants.qIDASSEMBLESUCCESS || button.next === constants.qIDSUCCESS || button.next === constants.qIDEXIT)) {
-        // This disable is for LHI/HotDocs issue taking too long to process
+        // This modal and disable is for LHI/HotDocs issue taking too long to process
         // prompting users to repeatedly press submit, crashing HotDocs
         // Matches A2J4 functionality, but should really be handled better on LHI's server
-        this.attr('modalContent', {
+        vm.attr('modalContent', {
           title: 'Answers Submitted :',
           text: 'Page will redirect shortly'
         })
 
-        this.dispatch('post-answers-to-server')
+        vm.dispatch('post-answers-to-server')
 
         // qIDASSEMBLESUCCESS requires the default event to trigger the assemble post
         // and the manual submit below to trigger the answer save
@@ -328,7 +329,7 @@ export default CanMap.extend('PagesVM', {
         if (button.next !== constants.qIDASSEMBLESUCCESS) {
           ev && ev.preventDefault()
         }
-        this.setInterviewAsComplete()
+        vm.setInterviewAsComplete()
 
         // disable the previously clicked button
         setTimeout(() => {
@@ -346,11 +347,11 @@ export default CanMap.extend('PagesVM', {
       }
 
       const gotoPage = logic.attr('gotoPage')
-      const logicPageisNotEmpty = _isString(gotoPage) && gotoPage.length
+      const logicPageIsNotEmpty = _isString(gotoPage) && gotoPage.length
 
-      // this means the logic After has overriden the destination page, we
+      // this means the logic After has overridden the destination page, we
       // should navigate to this page instead of the page set by `button.next`.
-      if (logicPageisNotEmpty && gotoPage !== button.next) {
+      if (logicPageIsNotEmpty && gotoPage !== button.next) {
         logic.attr('gotoPage', null)
         rState.page = gotoPage
 
@@ -369,10 +370,8 @@ export default CanMap.extend('PagesVM', {
         button.next === constants.qIDSUCCESS ||
         button.next === constants.qIDASSEMBLE ||
         button.next === constants.qIDASSEMBLESUCCESS) {
-        this.setInterviewAsComplete()
+        vm.setInterviewAsComplete()
       }
-
-      return
     }
   },
 

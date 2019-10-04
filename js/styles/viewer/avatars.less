@@ -255,7 +255,7 @@ svg.avatar-guide {
 .avatar-client {
 
   .hair-color {
-    fill: @client-hair-color !important;
+    fill: @client-hair-color
   }
 
   &.avatar-male{
@@ -303,6 +303,17 @@ svg.avatar-guide {
     .skin-color {
       fill: @skin-darker !important;
     }
+  }
+
+  &.hair-blonde .hair-color       {fill: @hair-blonde;}
+  &.hair-red .hair-color          {fill: @hair-red;}
+  &.hair-brown-light .hair-color  {fill: @hair-brown-light;}
+  &.hair-brown-medium .hair-color {fill: @hair-brown-medium;}
+  &.hair-brown-dark .hair-color   {fill: @hair-brown-dark;}
+  &.hair-gray-dark .hair-color    {fill: @hair-gray-dark;}
+  &.hair-gray-light .hair-color   {fill: @hair-gray-light;}
+  &.hair-bald .hair-color, &.hair-bald .hair-lighten, &.hair-bald .hair-shade {
+      display: none;
   }
 }
 

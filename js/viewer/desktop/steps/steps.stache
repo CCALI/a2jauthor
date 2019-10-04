@@ -8,7 +8,7 @@
       <div class="step-circle bg-step{{currentStep.number}}"></div>
     </div>
 
-    <div class="guide-wrapper {{^if(showClientAvatar)}}guide-center{{/if}}">
+    <div class="guide-wrapper {{#not(showClientAvatar)}}guide-center{{/not}}">
       <div id="guideBubble" class="bubble {{#if(guideBubbleTallerThanAvatar)}}vertical{{else}}top{{/if}}">
         <a2j-pages
           currentPage:from="currentPage"

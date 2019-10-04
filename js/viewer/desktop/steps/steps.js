@@ -34,6 +34,18 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
     modalContent: {},
 
     /**
+     * @property {can.DefineMap} steps.ViewModel.prototype.clientAvatar clientAvatar
+     * @parent steps.ViewModel
+     *
+     * current client Avatar in interview
+     */
+    clientAvatar: {
+      get () {
+        return this.attr('rState').clientAvatar
+      }
+    },
+
+    /**
      * @property {can.Map} steps.ViewModel.prototype.currentPage currentPage
      * @parent steps.ViewModel
      *

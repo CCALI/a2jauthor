@@ -51,10 +51,12 @@
           <a2j-viewer-avatar
             kind:raw="client"
             facing:raw="left"
-            avatarLoaded:from="scope/avatarLoaded"
-            skin:from="scope/clientAvatarSkinTone"
-            hair:from="scope/clientAvatarHairColor"
-            gender:from="scope/interview.userGender" />
+            gender:from="clientAvatar.gender"
+            skin:from="clientAvatar.skinTone"
+            hair:from="clientAvatar.hairColor"
+            isOld:from="clientAvatar.isOld"
+            hasWheelchair:from="clientAvatar.hasWheelchair"
+          />
         </div>
 
         {{#currentPage}}

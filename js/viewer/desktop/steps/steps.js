@@ -203,38 +203,6 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
       }
     },
 
-    // Local viewer customization
-    customClientSkinTone: { value: null },
-    customClientHairColor: { value: null },
-
-    /**
-    * @property {String} steps.ViewModel.prototype.clientAvatarSkinTone clientAvatarSkinTone
-    * @parent steps.ViewModel
-    *
-    * skin tone of the client avatar to be displayed in steps
-    *
-    */
-    clientAvatarSkinTone: {
-      get () {
-        const guideSkinTone = this.attr('guideAvatarSkinTone')
-        return this.attr('customClientSkinTone') || guideSkinTone
-      }
-    },
-
-    /**
-    * @property {String} steps.ViewModel.prototype.clientAvatarHairColor clientAvatarHairColor
-    * @parent steps.ViewModel
-    *
-    * hair color of the client avatar to be displayed in steps
-    *
-    */
-    clientAvatarHairColor: {
-      get () {
-        const guideHairColor = this.attr('guideAvatarHairColor')
-        return this.attr('customClientHairColor') || guideHairColor
-      }
-    },
-
     /**
      * @property {Number} steps.ViewModel.prototype.showClientAvatar showClientAvatar
      * @parent steps.ViewModel

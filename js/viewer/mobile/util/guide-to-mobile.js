@@ -131,7 +131,6 @@ function parsePages (guidePages = {}) {
 export default function parseGuide (guide) {
   var mobileGuide = _pick(guide, guideProperties)
 
-  mobileGuide.clientAvatar = guide.clientAvatar
   mobileGuide.authors = parseAuthors(guide.authors)
   mobileGuide.steps = parseSteps(guide.steps)
   mobileGuide.vars = parseVars(guide.vars)

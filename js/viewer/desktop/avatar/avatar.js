@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './avatar.stache'

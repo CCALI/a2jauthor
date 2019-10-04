@@ -248,8 +248,7 @@ export const FieldVM = CanMap.extend('FieldVM', {
     if (field.type === 'checkbox' || field.type === 'checkboxNOTA') {
       value = $el[0].checked
     } else if (field.type === 'clientavatar') {
-      const clientAvatar = this.attr('clientAvatar')
-      value = `${clientAvatar.gender}-${clientAvatar.isOld}-${clientAvatar.hasWheelchair}-${clientAvatar.skinTone}-${clientAvatar.hairColor}`
+      value = JSON.stringify(this.attr('clientAvatar').serialize())
     } else {
       value = $el.val()
     }
@@ -421,16 +420,10 @@ export const FieldVM = CanMap.extend('FieldVM', {
     return normalizedDate
   },
 
-  restoreClientAvatar () {
+  restoreClientAvatar () { //TODO: move restore to answervm.js
     const savedClientAvatarString = this.attr('field._answer.values')
     if (savedClientAvatarString && savedClientAvatarString.length) {
-      const values = savedClientAvatarString.split('-')
-      const clientAvatar = this.attr('clientAvatar')
-      clientAvatar.gender = values[0]
-      clientAvatar.isOld = values[1]
-      clientAvatar.hasWheelchair = values[2]
-      clientAvatar.skinTone = values[3]
-      clientAvatar.hairColor = values[4]
+      this.attr('clientAvatar').update(JSON.parse(savedClientAvatarString))
     }
   },
 

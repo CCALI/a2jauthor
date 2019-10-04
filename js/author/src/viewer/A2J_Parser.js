@@ -158,7 +158,6 @@ function exportXML_CAJA_from_CAJA (guide) {	// Convert Guide structure into XML
   JSON.GUIDE.INFO.viewer = guide.viewer
   JSON.GUIDE.INFO.endImage = guide.endImage
   JSON.GUIDE.INFO.logoImage = guide.logoImage
-  JSON.GUIDE.INFO.clientAvatar = guide.clientAvatar
 
   var i
   for (i in guide.authors) {
@@ -329,13 +328,6 @@ function parseXML_CAJA_to_CAJA (GUIDE) // GUIDE is XML DOM
   guide.logoImage =		makestr(INFO.children('LOGOIMAGE').text())
   guide.endImage =		makestr(INFO.children('ENDIMAGE').text())
   guide.authors = []
-
-  guide.clientAvatar = {}
-  guide.clientAvatar.gender = makestr(INFO.children('CLIENTAVATAR').find('GENDER').text())
-  guide.clientAvatar.hairColor = makestr(INFO.children('CLIENTAVATAR').find('HAIRCOLOR').text())
-  guide.clientAvatar.skinTone = makestr(INFO.children('CLIENTAVATAR').find('SKINTONE').text())
-  guide.clientAvatar.isOld = makestr(INFO.children('CLIENTAVATAR').find('ISOLD').text())
-  guide.clientAvatar.hasWheelchair = makestr(INFO.children('CLIENTAVATAR').find('HASWHEELCHAIR').text())
 
   GUIDE.find('AUTHORS > AUTHOR').each(function () {
     var AUTHOR = $(this)

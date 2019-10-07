@@ -654,7 +654,7 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
         var canRequire = field.type !== 'radio' && field.type !== CONST.ftCheckBoxNOTA
         var canMinMax = field.type === CONST.ftNumber || field.type === CONST.ftNumberDollar || field.type === CONST.ftNumberPick || field.type === CONST.ftDateMDY
         var canList = field.type === CONST.ftTextPick
-        var canDefaultValue = field.type !== CONST.ftCheckBox && field.type !== CONST.ftCheckBoxNOTA && field.type !== CONST.ftGender
+        var canDefaultValue = field.type !== CONST.ftCheckBox && field.type !== CONST.ftCheckBoxNOTA && field.type !== CONST.ftGender && field.type !== CONST.ftClientAvatar
         var canOrder = field.type === CONST.ftTextPick || field.type === CONST.ftNumberPick || field.type === CONST.ftDateMDY
         var canUseCalc = (field.type === CONST.ftNumber) || (field.type === CONST.ftNumberDollar)
         var canMaxChars = field.type === CONST.ftText || field.type === CONST.ftTextLong || field.type === CONST.ftNumberPhone || field.type === CONST.ftNumberZIP || field.type === CONST.ftNumberSSN

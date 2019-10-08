@@ -5,20 +5,35 @@
   </head>
 
   <body>
-    <script type="text/stache" can-autorender>
-      <can-import from="author/app" />
-      <can-import from="author/styles.less!" />
-      <can-import from="author/client-avatar-picker/" />
-
-      <client-avatar-picker/>
-    </script>
-
-    <script src="../../node_modules/steal/steal.js"
-      data-main="can/view/autorender/">
+    <script>
       window.less = {
         async: true,
         fileSync: true
       };
+    </script>
+
+    <script src="../../node_modules/steal/steal.js"
+      deps-bundle
+      data-main="@empty">
+    </script>
+
+    <script type="steal-module">
+      import AvatarPicker from "caja/author/client-avatar-picker/"
+      import "caja/author/app"
+      import "caja/author/styles.less"
+      import "caja/author/client-avatar-picker/"
+
+      const avatarPicker = new AvatarPicker({
+        viewModel: {
+          onAvatar: (avatar) => {
+            vm.attr('gender', avatar.gender)
+            vm.attr('isOld', avatar.isOld)
+            vm.attr('hasWheelchair', avatar.hasWheelchair)
+          }
+        }
+      })
+      const vm = avatarPicker.viewModel
+      document.body.appendChild(avatarPicker.element)
     </script>
   </body>
 </html>

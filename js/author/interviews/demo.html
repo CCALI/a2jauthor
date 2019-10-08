@@ -6,24 +6,24 @@
 
   <body>
     <script>
-        window.less = {
-          async: true,
-          fileSync: true
-        };
-      </script>
+      window.less = {
+        async: true,
+        fileSync: true
+      };
+    </script>
 
-      <script src="../../node_modules/steal/steal.js"
-        deps-bundle
-        data-main="@empty">
-      </script>
+    <script src="../../node_modules/steal/steal.js"
+      deps-bundle
+      data-main="@empty">
+    </script>
 
-      <script type="steal-module">
-        import Interviews from "caja/author/interviews/"
-        import "caja/author/interviews/interviews.less"
-        import "caja/author/models/fixtures/"
+    <script type="steal-module">
+      import Interviews from "caja/author/interviews/"
+      import "caja/author/interviews/interviews.less"
+      import "caja/author/models/fixtures/"
 
-        const interviews = new Interviews({viewModel: {}})
-        document.body.appendChild(interviews.element)
-      </script>
+      const interviews = new Interviews({viewModel: {}})
+      document.body.appendChild(interviews.element)
+    </script>
   </body>
 </html>

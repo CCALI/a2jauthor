@@ -1,3 +1,5 @@
+<can-import from='can-stache-converters' />
+
 <div>
   <div class="form-group {{#if(field.hasError)}}has-error{{/if}}">
     <label class="control-label" for="{{field.label}}">
@@ -11,7 +13,7 @@
         name="gender"
         {{#if(field.required)}}required{{/if}}
         value="Male"
-        {{#is(savedGenderValue,  "Male")}}checked{{/is}}
+        checked:from="equal(savedGenderValue,  'Male')"
         on:change="validateField(null, scope.element)"/>
       {{i18n("Male")}}
     </label>
@@ -23,7 +25,7 @@
         name="gender"
         {{#if(field.required)}}required{{/if}}
         value="Female"
-        {{#is(savedGenderValue,  "Female")}}checked{{/is}}
+        checked:from="equal(savedGenderValue,  'Female')"
         on:change="validateField(null, scope.element)"/>
       {{i18n("Female")}}
     </label>

@@ -186,24 +186,28 @@ export const FieldVM = CanMap.extend('FieldVM', {
     }
   },
 
-  onClientAvatarChange (selectedAvatar, el) {
+  onClientAvatarChange (selectedAvatar) {
     const clientAvatar = this.attr('clientAvatar')
 
     clientAvatar.gender = selectedAvatar.gender
     clientAvatar.isOld = selectedAvatar.isOld
     clientAvatar.hasWheelchair = selectedAvatar.hasWheelchair
 
-    this.validateField(null, el)
+    this.validateField()
   },
 
-  onClientAvatarSkinToneChange (skinTone, el) {
-    this.attr('clientAvatar').skinTone = skinTone
-    this.validateField(null, el)
+  onClientAvatarSkinToneChange (skinTone) {
+    const clientAvatar = this.attr('clientAvatar')
+    clientAvatar.skinTone = skinTone
+
+    this.validateField()
   },
 
-  onClientAvatarHairColorChange (hairColor, el) {
-    this.attr('clientAvatar').hairColor = hairColor
-    this.validateField(null, el)
+  onClientAvatarHairColorChange (hairColor) {
+    const clientAvatar = this.attr('clientAvatar')
+    clientAvatar.hairColor = hairColor
+
+    this.validateField()
   },
 
   /**
@@ -429,8 +433,6 @@ export const FieldVM = CanMap.extend('FieldVM', {
 
   connectedCallback (el) {
     const vm = this
-    // reload saved clientAvatar
-    if (this.attr('field.type') === 'clientavatar') { this.restoreClientAvatar() }
     // default availableLength
     vm.attr('availableLength', vm.attr('field.maxChars'))
 

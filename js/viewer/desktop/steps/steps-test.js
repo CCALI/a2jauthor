@@ -304,7 +304,7 @@ describe('<a2j-viewer-steps>', function () {
       )
 
       vm.attr('interview.userGender', 'gender')
-      currentPage.attr('hasUserGenderField', true)
+      currentPage.attr('hasUserGenderOrAvatarField', true)
       assert.ok(!vm.attr('showClientAvatar'), 'should not show client avatar when current page has the user gender field')
       assert.equal(
         vm.attr('guideAvatarFacingDirection'),
@@ -312,7 +312,7 @@ describe('<a2j-viewer-steps>', function () {
         'should still show guide avatar facing front'
       )
 
-      currentPage.attr('hasUserGenderField', false)
+      currentPage.attr('hasUserGenderOrAvatarField', false)
       assert.ok(!!vm.attr('showClientAvatar'), 'should show client avatar when user has a gender')
       assert.equal(
         vm.attr('guideAvatarFacingDirection'),

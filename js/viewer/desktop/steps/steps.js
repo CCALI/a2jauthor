@@ -216,7 +216,7 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      */
     showClientAvatar: {
       get () {
-        return this.attr('interview.userGender') && !this.attr('currentPage.hasUserGenderField')
+        return this.attr('interview.userGender') && !this.attr('currentPage.hasUserGenderOrAvatarField')
       }
     },
 

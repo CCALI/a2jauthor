@@ -5,8 +5,6 @@ import Field from 'caja/viewer/models/field'
 
 import 'can-map-define'
 
-const userGenderVarName = 'user gender'
-
 const Page = CanMap.extend({
   define: {
     step: {
@@ -19,8 +17,8 @@ const Page = CanMap.extend({
       Type: Field.List
     },
 
-    // whether this page has an 'user gender' field.
-    hasUserGenderField: {
+    // whether this page has an 'user gender' or 'user avatar' field.
+    hasUserGenderOrAvatarField: {
       serialize: false,
 
       get () {
@@ -28,7 +26,7 @@ const Page = CanMap.extend({
 
         return !!_find(fields, function (field) {
           let fieldName = field.attr('name').toLowerCase()
-          return fieldName === userGenderVarName
+          return fieldName === 'user gender' || fieldName === 'user avatar'
         })
       }
     }

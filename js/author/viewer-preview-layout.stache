@@ -8,7 +8,7 @@
   {{#if(showDebugPanel)}}
     <div class="author-debug-panel">
       <author-debug-panel
-        previewInterview:from="previewInterview"
+        previewInterview:bind="previewInterview"
         traceMessage:from="traceMessage"
         previewPageName:from="previewPageName" />
     </div>

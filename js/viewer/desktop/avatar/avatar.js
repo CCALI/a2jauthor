@@ -150,6 +150,35 @@ export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
     if (avatarLoaded) {
       avatarLoaded()
     }
+  },
+
+  loadAvatarSvg (el) {
+    const vm = this
+    const svgBasePath = vm.attr('svgBasePath')
+    const avatarImageName = vm.attr('avatarImageName')
+
+    $.ajax({
+      url: svgBasePath + avatarImageName,
+      dataType: 'text'
+    }).then(data => {
+      vm.attr('svgInline', data)
+      this.updateSvgClass(el)
+      vm.fireAvatarLoaded()
+    })
+  },
+
+  updateSvgClass (el) {
+    if (!el) {
+      return
+    }
+
+    const classNames = this.attr('svgClassNames')
+    const svg = $(el).find('.avatar-guide, .avatar-client')
+    svg.attr('class', classNames)
+  },
+
+  connectedCallback (el) {
+    this.loadAvatarSvg(el)
   }
 })
 
@@ -176,43 +205,14 @@ export default Component.extend({
   ViewModel: ViewerAvatarVM,
 
   events: {
-    inserted () {
-      this.loadAvatarSvg()
-    },
-
     // when the image name changes, we need to wait for the new svg to be
     // loaded to then make the adjustments to the css class name.
     '{viewModel} avatarImageName': function () {
-      this.loadAvatarSvg()
+      this.viewModel.loadAvatarSvg(this.element)
     },
 
     '{viewModel} svgClassNames': function () {
-      this.updateSvgClass()
-    },
-
-    updateSvgClass () {
-      if (!this.element) {
-        return
-      }
-
-      const classNames = this.viewModel.attr('svgClassNames')
-      const svg = $(this.element).find('.avatar-guide, .avatar-client')
-      svg.attr('class', classNames)
-    },
-
-    loadAvatarSvg () {
-      const vm = this.viewModel
-      const svgBasePath = vm.attr('svgBasePath')
-      const avatarImageName = vm.attr('avatarImageName')
-
-      $.ajax({
-        url: svgBasePath + avatarImageName,
-        dataType: 'text'
-      }).then(data => {
-        vm.attr('svgInline', data)
-        this.updateSvgClass()
-        vm.fireAvatarLoaded()
-      })
+      this.viewModel.updateSvgClass(this.element)
     }
   },
 

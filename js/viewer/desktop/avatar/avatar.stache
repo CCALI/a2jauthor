@@ -1,7 +1,7 @@
 <can-import from="caja/viewer/desktop/avatar/avatar.less" />
 
 <div class="scaling-svg-container">
-  {{#if avatarImageName}}
+  {{#if(avatarImageName)}}
   <div class="scaling-svg">
     {{{svgInline}}}
   </div>

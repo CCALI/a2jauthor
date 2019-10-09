@@ -24,5 +24,5 @@ export default Component.extend({
   view: template,
   ViewModel: AvatarDemoVM,
   tag: 'a2j-viewer-avatar-demo',
-  leakScope: true
+  leakScope: false
 })

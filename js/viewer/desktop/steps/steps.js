@@ -498,6 +498,19 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
   // TODO: figure out a better way update the dom when the avatar changes in the DOM
   afterAvatarLoaded (callback) {
     setTimeout(callback, 0)
+  },
+
+  connectedCallback () {
+    const vm = this
+    // restore saved User Avatar value
+    this.listenTo('showClientAvatar', (ev, show) => {
+      if (show) {
+        const previousClientAvatar = vm.attr('rState').interview.answers['user avatar'].values[1]
+        if (previousClientAvatar) {
+          vm.attr('rState').clientAvatar.update(JSON.parse(previousClientAvatar))
+        }
+      }
+    })
   }
 })
 

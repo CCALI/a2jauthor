@@ -51,7 +51,7 @@
           <a2j-viewer-avatar
             kind:raw="client"
             facing:raw="left"
-            gender:from="clientAvatar.gender"
+            gender:from="interview.avatarGender"
             skin:from="clientAvatar.skinTone"
             hair:from="clientAvatar.hairColor"
             isOld:from="clientAvatar.isOld"

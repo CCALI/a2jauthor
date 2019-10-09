@@ -63,7 +63,7 @@ describe('Interview model', function () {
     })
   })
 
-  describe('userGender', function () {
+  describe('avatarGender', function () {
     let interview
 
     beforeEach(function () {
@@ -72,7 +72,7 @@ describe('Interview model', function () {
 
     it('is not serialized', function () {
       let serialized = interview.serialize()
-      assert.notProperty(serialized, 'userGender')
+      assert.notProperty(serialized, 'avatarGender')
     })
 
     it('computes its value from the answer of the "user gender" variable', function () {
@@ -80,20 +80,20 @@ describe('Interview model', function () {
 
       assert.notProperty(answers.attr(), 'user gender',
         'interview has no "user gender" variable')
-      assert.isUndefined(interview.attr('userGender'))
+      assert.isUndefined(interview.attr('avatarGender'))
 
       answers.attr('user gender', {
         name: 'user gender',
         values: [null]
       })
       assert.property(answers.attr(), 'user gender')
-      assert.isUndefined(interview.attr('userGender'), 'variable has no value')
+      assert.isUndefined(interview.attr('avatarGender'), 'variable has no value')
 
       answers.attr('user gender').attr('values').push('m')
-      assert.equal(interview.attr('userGender'), 'male')
+      assert.equal(interview.attr('avatarGender'), 'male')
 
       answers.attr('user gender').attr('values').push('female')
-      assert.equal(interview.attr('userGender'), 'female')
+      assert.equal(interview.attr('avatarGender'), 'female')
     })
   })
 

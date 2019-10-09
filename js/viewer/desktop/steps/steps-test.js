@@ -81,7 +81,7 @@ describe('<a2j-viewer-steps>', function () {
       F(done)
     })
 
-    it('renders only guide avatar if "userGender" is unknown', function (done) {
+    it('renders only guide avatar if "avatarGender" is unknown', function (done) {
       const answers = interview.attr('answers')
 
       // user has not set their gender
@@ -89,13 +89,13 @@ describe('<a2j-viewer-steps>', function () {
         name: 'user gender',
         values: [null]
       })
-      assert.isUndefined(interview.attr('userGender'))
+      assert.isUndefined(interview.attr('avatarGender'))
 
       F('a2j-viewer-avatar').size(1)
       F(done)
     })
 
-    it('renders both client and guide avatars if "userGender" is known',
+    it('renders both client and guide avatars if "avatarGender" is known',
       function (done) {
         const answers = interview.attr('answers')
 
@@ -105,7 +105,7 @@ describe('<a2j-viewer-steps>', function () {
           values: [null, 'f']
         })
 
-        assert.equal(interview.attr('userGender'), 'female')
+        assert.equal(interview.attr('avatarGender'), 'female')
 
         F('a2j-viewer-avatar').size(2)
         F(done)
@@ -289,7 +289,7 @@ describe('<a2j-viewer-steps>', function () {
 
       vm.attr({
         interview: {
-          userGender: '',
+          avatarGender: '',
           getPageByName () {
             return currentPage
           }
@@ -303,7 +303,7 @@ describe('<a2j-viewer-steps>', function () {
         'should show guide avatar facing front'
       )
 
-      vm.attr('interview.userGender', 'gender')
+      vm.attr('interview.avatarGender', 'gender')
       currentPage.attr('hasUserGenderOrAvatarField', true)
       assert.ok(!vm.attr('showClientAvatar'), 'should not show client avatar when current page has the user gender field')
       assert.equal(

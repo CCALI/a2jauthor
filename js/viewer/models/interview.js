@@ -171,13 +171,13 @@ const Interview = Model.extend('InterviewModel', {
       }
     },
 
-    userGender: {
+    avatarGender: {
       serialize: false,
       get () {
         let result
         const answers = this.attr('answers')
         const userAvatar = answers.attr('user avatar')
-        const gender = answers.attr(userGenderVarName)
+        const gender = answers.attr('user gender')
 
         if (userAvatar || gender) {
           const genderValues = (gender && gender.attr('values').attr()) || []
@@ -299,4 +299,3 @@ const Interview = Model.extend('InterviewModel', {
 })
 
 export default Interview
-export const userGenderVarName = 'user gender'

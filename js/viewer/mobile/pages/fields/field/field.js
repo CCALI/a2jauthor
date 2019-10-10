@@ -32,6 +32,12 @@ export const FieldVM = CanMap.extend('FieldVM', {
     // Type: DefineMap
     rState: {},
 
+    /**
+     * @property {DefineMap} field.ViewModel.prototype.clientAvatar clientAvatar
+     * @parent field.ViewModel
+     *
+     *  current clientAvatar
+     */
     clientAvatar: {
       get () {
         return this.attr('rState').clientAvatar

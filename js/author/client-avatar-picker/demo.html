@@ -26,9 +26,9 @@
       const avatarPicker = new AvatarPicker({
         viewModel: {
           onAvatar: (avatar) => {
-            vm.attr('gender', avatar.gender)
-            vm.attr('isOld', avatar.isOld)
-            vm.attr('hasWheelchair', avatar.hasWheelchair)
+            vm.gender = avatar.gender
+            vm.isOld = avatar.isOld
+            vm.hasWheelchair = avatar.hasWheelchair
           }
         }
       })

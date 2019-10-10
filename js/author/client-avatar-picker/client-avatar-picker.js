@@ -1,4 +1,5 @@
-import CanMap from 'can-map'
+import DefineMap from 'can-define/map/map'
+import DefineList from 'can-define/list/list'
 import Component from 'can-component'
 import template from './client-avatar-picker.stache'
 import {
@@ -18,77 +19,116 @@ const baseAvatars = [
   {gender: 'male', isOld: true, hasWheelchair: true}
 ]
 
-export const ClientAvatarPickerVm = CanMap.extend('ClientAvatarPickerVm', {
-  define: {
-    hair: {
-      type: Hair,
-      value: Hair.defaultValue
-    },
+export const AvatarPick = DefineMap.extend('AvatarPick', {
+  index: 'number',
+  gender: 'string',
+  isOld: 'boolean',
+  hasWheelchair: 'boolean',
+  skin: { type: Skin, default: Skin.defaultValue },
+  hair: { type: Hair, default: Hair.defaultValue }
+})
 
-    skin: {
-      type: Skin,
-      value: Skin.defaultValue
-    },
+AvatarPick.List = DefineList.extend('AvatarPickList', {
+  '#': AvatarPick
+})
 
-    gender: {
-      type: Gender,
-      value: Gender.defaultValue
-    },
+export const ClientAvatarPickerVm = DefineMap.extend('ClientAvatarPickerVm', {
+  // handler passed in via parent stache
+  onAvatar: {},
 
-    isOld: {
-      type: 'boolean',
-      value: false
-    },
+  hair: {
+    type: Hair,
+    default: Hair.defaultValue
+  },
 
-    hasWheelchair: {
-      type: 'boolean',
-      value: false
-    },
+  skin: {
+    type: Skin,
+    default: Skin.defaultValue
+  },
 
-    avatars: {
-      get () {
-        const hair = this.attr('hair')
-        const skin = this.attr('skin')
-        const gender = this.attr('gender')
-        const isOld = this.attr('isOld')
-        const hasWheelchair = this.attr('hasWheelchair')
-        return baseAvatars.map((avatar, index) => Object.assign(
-          {},
-          avatar,
-          {index,
-            hair,
-            skin,
-            isSelected: (
-              avatar.gender === gender &&
-            avatar.isOld === isOld &&
-            avatar.hasWheelchair === hasWheelchair
-            )}
-        ))
-      }
-    },
+  gender: {
+    type: Gender,
+    default: Gender.defaultValue
+  },
 
-    femaleAvatars: {
-      get () {
-        return this
-          .attr('avatars')
-          .filter(avatar => avatar.gender === 'female')
-      }
-    },
+  isOld: {
+    type: 'boolean',
+    default: false
+  },
 
-    maleAvatars: {
-      get () {
-        return this
-          .attr('avatars')
-          .filter(avatar => avatar.gender === 'male')
-      }
+  hasWheelchair: {
+    type: 'boolean',
+    default: false
+  },
+
+  avatars: {
+    default: () => {
+      const list = new AvatarPick.List()
+      baseAvatars.forEach((avatar, index) => {
+        list.push({ gender: avatar.gender, isOld: avatar.isOld, hasWheelchair: avatar.hasWheelchair, index })
+      })
+      return list
+    }
+  },
+
+  femaleAvatars: {
+    get () {
+      return this
+        .avatars
+        .filter(avatar => avatar.gender === 'female')
+    }
+  },
+
+  maleAvatars: {
+    get () {
+      return this
+        .avatars
+        .filter(avatar => avatar.gender === 'male')
     }
   },
 
   fireAvatar (index) {
-    const handleAvatar = this.attr('onAvatar')
+    const handleAvatar = this.onAvatar
     if (handleAvatar) {
       const avatar = baseAvatars[index]
       handleAvatar(avatar)
+    }
+  },
+
+  isSelected (avatar) {
+    const gender = this.gender
+    const isOld = this.isOld
+    const hasWheelchair = this.hasWheelchair
+
+    return avatar.gender === gender &&
+    avatar.isOld === isOld &&
+    avatar.hasWheelchair === hasWheelchair
+  },
+
+  updateHair () {
+    this.avatars.forEach((avatar) => {
+      avatar.hair = this.hair
+    })
+  },
+
+  updateSkin () {
+    this.avatars.forEach((avatar) => {
+      avatar.skin = this.skin
+    })
+  },
+
+  connectedCallback () {
+    const vm = this
+    // handle reloaded clientAvatar answers
+    vm.updateHair()
+    vm.updateSkin()
+
+    vm.listenTo('hair', vm.updateHair)
+    vm.listenTo('skin', vm.updateSkin)
+
+    return () => {
+      vm.stopListening('hair', vm.updateHair)
+      vm.stopListening('skin', vm.updateSkin)
     }
   }
 })

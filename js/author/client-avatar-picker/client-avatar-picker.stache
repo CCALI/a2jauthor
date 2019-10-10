@@ -6,7 +6,7 @@
     {{#for (avatar of femaleAvatars)}}
       <div class="col-xs-3">
         <div
-          class="avatar-cell {{#if (avatar.isSelected)}}avatar-cell--selected{{/if}}"
+          class="avatar-cell {{#if (isSelected(avatar))}}avatar-cell--selected{{/if}}"
           on:click="fireAvatar(avatar.index)"
         >
           <a2j-viewer-avatar
@@ -26,7 +26,7 @@
     {{#for (avatar of maleAvatars)}}
       <div class="col-xs-3">
         <div
-          class="avatar-cell {{#if (avatar.isSelected)}}avatar-cell--selected{{/if}}"
+          class="avatar-cell {{#if (isSelected(avatar))}}avatar-cell--selected{{/if}}"
           on:click="fireAvatar(avatar.index)"
         >
           <a2j-viewer-avatar

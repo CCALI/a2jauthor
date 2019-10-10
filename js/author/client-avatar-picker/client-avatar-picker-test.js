@@ -1,7 +1,7 @@
-import { ClientAvatarPickerVm, AvatarPick } from './client-avatar-picker'
-import stache from 'can-stache'
-import { assert } from 'chai'
 import $ from 'jquery'
+import { assert } from 'chai'
+import stache from 'can-stache'
+import { ClientAvatarPickerVm, AvatarPick } from 'caja/author/client-avatar-picker/'
 
 import 'steal-mocha'
 
@@ -70,32 +70,38 @@ describe('<client-avatar-picker>', () => {
       assert.equal(hairColorMap.length, 8, 'vm.hair color changes should update all avatars hair color')
     })
   })
+
+  describe('Component', () => {
+    let vm
+    beforeEach(() => {
+      const startingAvatar = {
+        gender: 'female',
+        isOld: false,
+        hasWheelchair: false,
+        hair: 'darkBrown',
+        skin: 'light'
+      }
+
+      let frag = stache('<client-avatar-picker />')
+      $('#test-area').html(frag({ clientAvatar: startingAvatar }))
+      vm = $('client-avatar-picker')[0].viewModel
+    })
+
+    afterEach(() => {
+      $('#test-area').empty()
+    })
+
+    it('works', () => {
+      assert.isTrue(true)
+    })
+  })
 })
 
-describe('Component', () => {
-  beforeEach((done) => {
-    const clientAvatar = {
-      hair: 'red',
-      skin: 'dark',
-      gender: 'female',
-      isOld: 'false',
-      hasWheelchair: 'false'
-    }
-
-    const frag = stache(
-      '<client-avatar-picker />'
-    )
-
-    $('#test-area').html(frag({ clientAvatar }))
-  })
-
-  afterEach((done) => {
-    $('#test-area').empty()
-    done()
-  })
-
-  // it('has a picker', (done) => {
-  //   assert.ok(true)
-  //   done()
-  // })
-})
+    //   <client-avatar-picker
+    //   hair:from="clientAvatar.hairColor"
+    //   skin:from="clientAvatar.skinTone"
+    //   gender:from="clientAvatar.gender"
+    //   isOld:from="clientAvatar.isOld"
+    //   hasWheelchair:from="clientAvatar.hasWheelchair"
+    //   onAvatar:from="onClientAvatarChange"
+    // />

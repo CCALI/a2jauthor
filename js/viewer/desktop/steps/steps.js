@@ -502,15 +502,19 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
 
   connectedCallback () {
     const vm = this
-    // restore saved User Avatar value
-    this.listenTo('showClientAvatar', (ev, show) => {
+    const restoreClientAvatar = (ev, show) => {
       if (show) {
         const previousClientAvatar = vm.attr('rState').interview.answers['user avatar'].values[1]
         if (previousClientAvatar) {
           vm.attr('rState').clientAvatar.update(JSON.parse(previousClientAvatar))
         }
       }
-    })
+    }
+    // if saved answer exists, restoreClientAvatar when shown
+    this.listenTo('showClientAvatar', restoreClientAvatar)
+
+    // cleanup
+    return () => { this.stopListenting('showClientAvatar', restoreClientAvatar) }
   }
 })
 

@@ -514,7 +514,7 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
     this.listenTo('showClientAvatar', restoreClientAvatar)
 
     // cleanup
-    return () => { this.stopListenting('showClientAvatar', restoreClientAvatar) }
+    return () => { this.stopListening('showClientAvatar', restoreClientAvatar) }
   }
 })
 

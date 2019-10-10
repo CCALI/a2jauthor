@@ -424,13 +424,6 @@ export const FieldVM = CanMap.extend('FieldVM', {
     return normalizedDate
   },
 
-  restoreClientAvatar () { //TODO: move restore to answervm.js
-    const savedClientAvatarString = this.attr('field._answer.values')
-    if (savedClientAvatarString && savedClientAvatarString.length) {
-      this.attr('clientAvatar').update(JSON.parse(savedClientAvatarString))
-    }
-  },
-
   connectedCallback (el) {
     const vm = this
     // default availableLength

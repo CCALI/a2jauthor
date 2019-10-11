@@ -91,17 +91,17 @@ describe('<client-avatar-picker>', () => {
       $('#test-area').empty()
     })
 
-    it('works', () => {
-      assert.isTrue(true)
+    it('has avatar picks', () => {
+      const a2jAvatars = $('a2j-viewer-avatar')
+      assert.equal(a2jAvatars.length, 8, 'should be 8 avatars to pick from')
+    })
+
+    it('onAvatar on click', () => {
+      let fired
+      vm.onAvatar = () => { fired = true }
+      $('a2j-viewer-avatar')[0].click()
+
+      assert.isTrue(fired, 'onAvatar handler should fire on click')
     })
   })
 })
-
-    //   <client-avatar-picker
-    //   hair:from="clientAvatar.hairColor"
-    //   skin:from="clientAvatar.skinTone"
-    //   gender:from="clientAvatar.gender"
-    //   isOld:from="clientAvatar.isOld"
-    //   hasWheelchair:from="clientAvatar.hasWheelchair"
-    //   onAvatar:from="onClientAvatarChange"
-    // />

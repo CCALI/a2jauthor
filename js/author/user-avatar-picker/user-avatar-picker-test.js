@@ -1,11 +1,11 @@
 import $ from 'jquery'
 import { assert } from 'chai'
 import stache from 'can-stache'
-import { ClientAvatarPickerVm, AvatarPick } from 'caja/author/client-avatar-picker/'
+import { UserAvatarPickerVm, AvatarPick } from 'caja/author/user-avatar-picker/'
 
 import 'steal-mocha'
 
-describe('<client-avatar-picker>', () => {
+describe('<user-avatar-picker>', () => {
   describe('viewModel', () => {
     let vm
     let teardown
@@ -19,7 +19,7 @@ describe('<client-avatar-picker>', () => {
     }
 
     beforeEach(() => {
-      vm = new ClientAvatarPickerVm({ clientAvatar: startingAvatar })
+      vm = new UserAvatarPickerVm({ userAvatar: startingAvatar })
       teardown = vm.connectedCallback()
     })
 
@@ -52,8 +52,8 @@ describe('<client-avatar-picker>', () => {
       const selectedAvatar = avatars[0]
       const notSelectedAvatar = avatars[1]
 
-      assert.isTrue(vm.isSelected(selectedAvatar), 'should return true when vm.clientAvatar values match')
-      assert.isFalse(vm.isSelected(notSelectedAvatar), 'should return false when vm.clientAvatar values do not match')
+      assert.isTrue(vm.isSelected(selectedAvatar), 'should return true when vm.userAvatar values match')
+      assert.isFalse(vm.isSelected(notSelectedAvatar), 'should return false when vm.userAvatar values do not match')
     })
 
     it('updateSkin', () => {
@@ -82,9 +82,9 @@ describe('<client-avatar-picker>', () => {
         skin: 'light'
       }
 
-      let frag = stache('<client-avatar-picker />')
-      $('#test-area').html(frag({ clientAvatar: startingAvatar }))
-      vm = $('client-avatar-picker')[0].viewModel
+      let frag = stache('<user-avatar-picker />')
+      $('#test-area').html(frag({ userAvatar: startingAvatar }))
+      vm = $('user-avatar-picker')[0].viewModel
     })
 
     afterEach(() => {

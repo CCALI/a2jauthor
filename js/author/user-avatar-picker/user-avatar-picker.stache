@@ -1,7 +1,7 @@
-<can-import from="caja/author/client-avatar-picker/client-avatar-picker.less!"/>
+<can-import from="caja/author/user-avatar-picker/user-avatar-picker.less!"/>
 <can-import from="caja/viewer/desktop/avatar/" />
 
-<div class="client-avatar-group">
+<div class="user-avatar-group">
   <div class="row">
     {{#for (avatar of femaleAvatars)}}
       <div class="col-xs-3">
@@ -10,7 +10,7 @@
           on:click="fireAvatar(avatar.index)"
         >
           <a2j-viewer-avatar
-            kind:raw="client"
+            kind:raw="user"
             facing:raw="left"
             gender:from="avatar.gender"
             skin:from="avatar.skin"
@@ -30,7 +30,7 @@
           on:click="fireAvatar(avatar.index)"
         >
           <a2j-viewer-avatar
-            kind:raw="client"
+            kind:raw="user"
             facing:raw="left"
             gender:from="avatar.gender"
             skin:from="avatar.skin"

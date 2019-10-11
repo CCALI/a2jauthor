@@ -1,7 +1,7 @@
 import DefineMap from 'can-define/map/map'
 import DefineList from 'can-define/list/list'
 import Component from 'can-component'
-import template from './client-avatar-picker.stache'
+import template from './user-avatar-picker.stache'
 import {
   Hair,
   Skin,
@@ -32,7 +32,7 @@ AvatarPick.List = DefineList.extend('AvatarPickList', {
   '#': AvatarPick
 })
 
-export const ClientAvatarPickerVm = DefineMap.extend('ClientAvatarPickerVm', {
+export const UserAvatarPickerVm = DefineMap.extend('UserAvatarPickerVm', {
   // handler passed in via parent stache
   onAvatar: {},
 
@@ -119,7 +119,7 @@ export const ClientAvatarPickerVm = DefineMap.extend('ClientAvatarPickerVm', {
 
   connectedCallback () {
     const vm = this
-    // handle reloaded clientAvatar answers
+    // handle reloaded userAvatar answers
     vm.updateHair()
     vm.updateSkin()
 
@@ -134,13 +134,13 @@ export const ClientAvatarPickerVm = DefineMap.extend('ClientAvatarPickerVm', {
 })
 
 /**
- * @module {function} components/client-avatar-picker/ <client-avatar-picker>
+ * @module {function} components/user-avatar-picker/ <user-avatar-picker>
  * @parent api-components
- * @signature `<client-avatar-picker>`
+ * @signature `<user-avatar-picker>`
  */
 export default Component.extend({
   view: template,
   leakScope: false,
-  tag: 'client-avatar-picker',
-  ViewModel: ClientAvatarPickerVm
+  tag: 'user-avatar-picker',
+  ViewModel: UserAvatarPickerVm
 })

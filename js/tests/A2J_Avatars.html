@@ -30,7 +30,7 @@
 }
 .pair:nth-child(even){
 	background-image: url("../img/step_circle_1.png");
-	
+
 }
 .avatar {
 	display: inline-block;
@@ -53,12 +53,12 @@
 #slider {
 	 clear: left;
 	 width: 300px;
-	 margin: 15px; 
+	 margin: 15px;
 }
 -->
 </style>
-<script type='text/javascript'> 
-// Tinting avatars not possible with CSS as of 9/2013. Instead laying dark avatar over light avatar using opacity. 
+<script type='text/javascript'>
+// Tinting avatars not possible with CSS as of 9/2013. Instead laying dark avatar over light avatar using opacity.
 $(document).ready(function()
 {
 	var av=$('.avatarSamples').html();
@@ -69,7 +69,7 @@ $(document).ready(function()
 	}
 	var cnt=$('.avatar').length;
 	$('.avatar').each(function(i){
-		var op=i/cnt; 
+		var op=i/cnt;
 		$('.avatarFigureShader img',$(this)).fadeTo(0,op);//css({'opacity':op});
 	});
 	$('.avatar img').each(function(){
@@ -108,7 +108,7 @@ function updateShader() {
 	<div class="avatarFigure">       <img src="../img/A2JAvatar-Guide-F0.png"/></div>
 	<div class="avatarFigureShader"> <img src="../img/A2JAvatar-Guide-F1.png"/></div>
 </div>
-<div class="avatar client" >
+<div class="avatar user" >
 	<div class="avatarFigure">       <img src="../img/A2JAvatar-Client-F0.png"/></div>
 	<div class="avatarFigureShader"> <img src="../img/A2JAvatar-Client-F1.png"/></div>
 </div>
@@ -118,7 +118,7 @@ function updateShader() {
 	<div class="avatarFigure">       <img src="../img/A2JAvatar-Guide-M0.png"/></div>
 	<div class="avatarFigureShader"> <img src="../img/A2JAvatar-Guide-M1.png"/></div>
 </div>
-<div class="avatar client" >
+<div class="avatar user" >
 	<div class="avatarFigure">       <img src="../img/A2JAvatar-Client-M0.png"/></div>
 	<div class="avatarFigureShader"> <img src="../img/A2JAvatar-Client-M1.png"/></div>
 </div>
@@ -128,7 +128,7 @@ function updateShader() {
 	<div class="avatarFigure">       <img src="../img/A2JAvatar-Guide-F0.png"/></div>
 	<div class="avatarFigureShader"> <img src="../img/A2JAvatar-Guide-F1.png"/></div>
 </div>
-<div class="avatar client" >
+<div class="avatar user" >
 	<div class="avatarFigure">       <img src="../img/A2JAvatar-Client-M0.png"/></div>
 	<div class="avatarFigureShader"> <img src="../img/A2JAvatar-Client-M1.png"/></div>
 </div>
@@ -138,7 +138,7 @@ function updateShader() {
 	<div class="avatarFigure">       <img src="../img/A2JAvatar-Guide-M0.png"/></div>
 	<div class="avatarFigureShader"> <img src="../img/A2JAvatar-Guide-M1.png"/></div>
 </div>
-<div class="avatar client" >
+<div class="avatar user" >
 	<div class="avatarFigure">       <img src="../img/A2JAvatar-Client-F0.png"/></div>
 	<div class="avatarFigureShader"> <img src="../img/A2JAvatar-Client-F1.png"/></div>
 </div>

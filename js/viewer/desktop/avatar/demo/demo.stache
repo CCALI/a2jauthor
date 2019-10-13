@@ -44,6 +44,6 @@
   </div>
 
   <div class="col-md-6">
-    <a2j-viewer-avatar class="avatar-client" gender:from="gender" facing:from="facing" skin:from="skin" />
+    <a2j-viewer-avatar class="avatar-user" gender:from="gender" facing:from="facing" skin:from="skin" />
   </div>
 </div>

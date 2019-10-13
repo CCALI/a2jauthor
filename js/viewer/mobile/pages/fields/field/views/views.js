@@ -8,7 +8,7 @@ import datemdy from './datemdy.stache'
 import textpick from './textpick.stache'
 import textlong from './textlong.stache'
 import checkbox from './checkbox.stache'
-import clientavatar from './client-avatar.stache'
+import useravatar from './user-avatar.stache'
 import numberpick from './numberpick.stache'
 
 /**
@@ -28,7 +28,7 @@ import numberpick from './numberpick.stache'
 export default {
   checkbox,
   checkboxNOTA: checkbox,
-  clientavatar,
+  useravatar,
   datemdy,
   gender,
   number,

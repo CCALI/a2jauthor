@@ -114,7 +114,7 @@ export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
     svgClassNames: {
       get () {
         const isGuide = this.attr('kind') === 'guide'
-        const baseClass = isGuide ? 'avatar-guide' : 'avatar-client'
+        const baseClass = isGuide ? 'avatar-guide' : 'avatar-user'
         const isMale = this.attr('gender') === 'male'
         const genderClass = isMale ? 'avatar-male' : 'avatar-female'
         const skinClass = getClassNameForSkin(this.attr('skin'))
@@ -173,7 +173,7 @@ export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
     }
 
     const classNames = this.attr('svgClassNames')
-    const svg = $(el).find('.avatar-guide, .avatar-client')
+    const svg = $(el).find('.avatar-guide, .avatar-user')
     svg.attr('class', classNames)
   },
 

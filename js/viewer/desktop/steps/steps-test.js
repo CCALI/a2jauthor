@@ -284,7 +284,7 @@ describe('<a2j-viewer-steps>', function () {
       assert.equal(vm.attr('guideAvatarSkinTone'), 'global', 'should use global skin tone if both are set')
     })
 
-    it('showClientAvatar / guideAvatarFacingDirection', () => {
+    it('showUserAvatar / guideAvatarFacingDirection', () => {
       currentPage = new CanMap()
 
       vm.attr({
@@ -296,7 +296,7 @@ describe('<a2j-viewer-steps>', function () {
         }
       })
 
-      assert.ok(!vm.attr('showClientAvatar'), 'should not show client avatar')
+      assert.ok(!vm.attr('showUserAvatar'), 'should not show user avatar')
       assert.equal(
         vm.attr('guideAvatarFacingDirection'),
         'front',
@@ -305,7 +305,7 @@ describe('<a2j-viewer-steps>', function () {
 
       vm.attr('interview.avatarGender', 'gender')
       currentPage.attr('hasUserGenderOrAvatarField', true)
-      assert.ok(!vm.attr('showClientAvatar'), 'should not show client avatar when current page has the user gender field')
+      assert.ok(!vm.attr('showUserAvatar'), 'should not show user avatar when current page has the user gender field')
       assert.equal(
         vm.attr('guideAvatarFacingDirection'),
         'front',
@@ -313,7 +313,7 @@ describe('<a2j-viewer-steps>', function () {
       )
 
       currentPage.attr('hasUserGenderOrAvatarField', false)
-      assert.ok(!!vm.attr('showClientAvatar'), 'should show client avatar when user has a gender')
+      assert.ok(!!vm.attr('showUserAvatar'), 'should show user avatar when user has a gender')
       assert.equal(
         vm.attr('guideAvatarFacingDirection'),
         'right',
@@ -346,13 +346,13 @@ describe('<a2j-viewer-steps>', function () {
       assert.equal(vm.attr('guideBubbleTallerThanAvatar'), true, 'true')
     })
 
-    it('clientBubbleTallerThanAvatar', () => {
+    it('userBubbleTallerThanAvatar', () => {
       vm.attr('clientBubbleHeight', 100)
       vm.attr('avatarHeight', 100)
-      assert.equal(vm.attr('clientBubbleTallerThanAvatar'), false, 'false')
+      assert.equal(vm.attr('userBubbleTallerThanAvatar'), false, 'false')
 
       vm.attr('avatarHeight', 99)
-      assert.equal(vm.attr('clientBubbleTallerThanAvatar'), true, 'true')
+      assert.equal(vm.attr('userBubbleTallerThanAvatar'), true, 'true')
     })
 
     it('minusHeader', () => {

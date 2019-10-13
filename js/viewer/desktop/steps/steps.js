@@ -34,14 +34,14 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
     modalContent: {},
 
     /**
-     * @property {can.DefineMap} steps.ViewModel.prototype.clientAvatar clientAvatar
+     * @property {can.DefineMap} steps.ViewModel.prototype.userAvatar userAvatar
      * @parent steps.ViewModel
      *
-     * current client Avatar in interview
+     * current User Avatar in interview
      */
-    clientAvatar: {
+    userAvatar: {
       get () {
-        return this.attr('rState').clientAvatar
+        return this.attr('rState').userAvatar
       }
     },
 
@@ -204,17 +204,17 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
     },
 
     /**
-     * @property {Number} steps.ViewModel.prototype.showClientAvatar showClientAvatar
+     * @property {Number} steps.ViewModel.prototype.showUserAvatar showUserAvatar
      * @parent steps.ViewModel
      *
-     * whether the client avatar should be shown
+     * whether the user avatar should be shown
      *
-     * we should not show the client avatar if the current page has the user
+     * we should not show the user avatar if the current page has the user
      * gender field, this prevents the avatar to be rendered right when user
      * selects their gender, which causes a weird jump of the avatar bubble.
      *
      */
-    showClientAvatar: {
+    showUserAvatar: {
       get () {
         return this.attr('interview.avatarGender') && !this.attr('currentPage.hasUserGenderOrAvatarField')
       }
@@ -226,12 +226,12 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      *
      * direction the guide avatar should face
      *
-     * face right when client avatar is displayed; otherwise, face front
+     * face right when user avatar is displayed; otherwise, face front
      *
      */
     guideAvatarFacingDirection: {
       get () {
-        return this.attr('showClientAvatar') ? 'right' : 'front'
+        return this.attr('showUserAvatar') ? 'right' : 'front'
       }
     },
 
@@ -296,13 +296,13 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
     },
 
     /**
-     * @property {Number} steps.ViewModel.prototype.clientBubbleTallerThanAvatar clientBubbleTallerThanAvatar
+     * @property {Number} steps.ViewModel.prototype.userBubbleTallerThanAvatar userBubbleTallerThanAvatar
      * @parent steps.ViewModel
      *
-     * whether the client bubble is taller than the avatar
+     * whether the user bubble is taller than the avatar
      *
      */
-    clientBubbleTallerThanAvatar: {
+    userBubbleTallerThanAvatar: {
       get () {
         return this.attr('clientBubbleHeight') > this.attr('avatarHeight')
       }
@@ -502,19 +502,19 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
 
   connectedCallback () {
     const vm = this
-    const restoreClientAvatar = (ev, show) => {
+    const restoreUserAvatar = (ev, show) => {
       if (show) {
-        const previousClientAvatar = vm.attr('rState').interview.answers['user avatar'].values[1]
-        if (previousClientAvatar) {
-          vm.attr('rState').clientAvatar.update(JSON.parse(previousClientAvatar))
+        const previousUserAvatar = vm.attr('rState').interview.answers['user avatar'].values[1]
+        if (previousUserAvatar) {
+          vm.attr('rState').userAvatar.update(JSON.parse(previousUserAvatar))
         }
       }
     }
-    // if saved answer exists, restoreClientAvatar when shown
-    this.listenTo('showClientAvatar', restoreClientAvatar)
+    // if saved answer exists, restoreUserAvatar when shown
+    this.listenTo('showUserAvatar', restoreUserAvatar)
 
     // cleanup
-    return () => { this.stopListening('showClientAvatar', restoreClientAvatar) }
+    return () => { this.stopListening('showUserAvatar', restoreUserAvatar) }
   }
 })
 

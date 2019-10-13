@@ -54,7 +54,7 @@
 @@guide-pant-color: #939598;
 @@guide-shoe-color: #161616;
 
-// base client avatar colors
+// base user avatar colors
 @@client-hair-color: #2C1B04;
 @@client-female-shirt-color: #607077;
 @@client-male-shirt-color: #5e5b69;
@@ -68,7 +68,7 @@
 * For example, the SVG file `avatar-male-left.svg` contains the following classname `skin-darker` by default.
 * Changing this classname to any of the above will alter the skin tone:
 *
-* Each file needs to have a classname set on the `<svg>` element of either `avatar-guide` or `avatar-client`
+* Each file needs to have a classname set on the `<svg>` element of either `avatar-guide` or `avatar-user`
 * along with a gender, `avatar-male` or `avatar-female`, and default skin tone classname like `skin-darker`, and hair color like `hair-brown-dark`.
 * For example:
 *
@@ -148,7 +148,7 @@
 @guide-pant-color: #939598;
 @guide-shoe-color: #161616;
 
-// base client avatar colors
+// base user avatar colors
 @client-hair-color: #2C1B04;
 @client-female-shirt-color: #607077;
 @client-male-shirt-color: #5e5b69;
@@ -185,7 +185,7 @@
   fill:#1F5074;
 }
 
-.avatar-guide, .avatar-client {
+.avatar-guide, .avatar-user {
   z-index: 10;
   width: 22%;
   height: auto;
@@ -252,7 +252,7 @@ svg.avatar-guide {
   }
 }
 
-.avatar-client {
+.avatar-user {
 
   .hair-color {
     fill: @client-hair-color

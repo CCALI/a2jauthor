@@ -33,14 +33,14 @@ export const FieldVM = CanMap.extend('FieldVM', {
     rState: {},
 
     /**
-     * @property {DefineMap} field.ViewModel.prototype.clientAvatar clientAvatar
+     * @property {DefineMap} field.ViewModel.prototype.userAvatar userAvatar
      * @parent field.ViewModel
      *
-     *  current clientAvatar
+     *  current userAvatar
      */
-    clientAvatar: {
+    userAvatar: {
       get () {
-        return this.attr('rState').clientAvatar
+        return this.attr('rState').userAvatar
       }
     },
 
@@ -192,26 +192,26 @@ export const FieldVM = CanMap.extend('FieldVM', {
     }
   },
 
-  onClientAvatarChange (selectedAvatar) {
-    const clientAvatar = this.attr('clientAvatar')
+  onUserAvatarChange (selectedAvatar) {
+    const userAvatar = this.attr('userAvatar')
 
-    clientAvatar.gender = selectedAvatar.gender
-    clientAvatar.isOld = selectedAvatar.isOld
-    clientAvatar.hasWheelchair = selectedAvatar.hasWheelchair
-
-    this.validateField()
-  },
-
-  onClientAvatarSkinToneChange (skinTone) {
-    const clientAvatar = this.attr('clientAvatar')
-    clientAvatar.skinTone = skinTone
+    userAvatar.gender = selectedAvatar.gender
+    userAvatar.isOld = selectedAvatar.isOld
+    userAvatar.hasWheelchair = selectedAvatar.hasWheelchair
 
     this.validateField()
   },
 
-  onClientAvatarHairColorChange (hairColor) {
-    const clientAvatar = this.attr('clientAvatar')
-    clientAvatar.hairColor = hairColor
+  onUserAvatarSkinToneChange (skinTone) {
+    const userAvatar = this.attr('userAvatar')
+    userAvatar.skinTone = skinTone
+
+    this.validateField()
+  },
+
+  onUserAvatarHairColorChange (hairColor) {
+    const userAvatar = this.attr('userAvatar')
+    userAvatar.hairColor = hairColor
 
     this.validateField()
   },
@@ -257,8 +257,8 @@ export const FieldVM = CanMap.extend('FieldVM', {
 
     if (field.type === 'checkbox' || field.type === 'checkboxNOTA') {
       value = $el[0].checked
-    } else if (field.type === 'clientavatar') {
-      value = JSON.stringify(this.attr('clientAvatar').serialize())
+    } else if (field.type === 'useravatar') {
+      value = JSON.stringify(this.attr('userAvatar').serialize())
     } else {
       value = $el.val()
     }

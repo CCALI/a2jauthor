@@ -181,9 +181,9 @@ const Interview = Model.extend('InterviewModel', {
 
         if (userAvatar || gender) {
           const genderValues = (gender && gender.attr('values').attr()) || []
-          const clientAvatarValues = (userAvatar && userAvatar.attr('values').attr()) || []
-          const clientAvatarValue = clientAvatarValues[1] && JSON.parse(clientAvatarValues[1]).gender
-          let lastValue = clientAvatarValue || genderValues.pop()
+          const userAvatarValues = (userAvatar && userAvatar.attr('values').attr()) || []
+          const userAvatarValue = userAvatarValues[1] && JSON.parse(userAvatarValues[1]).gender
+          let lastValue = userAvatarValue || genderValues.pop()
 
           if (_isString(lastValue) && lastValue.length) {
             lastValue = lastValue.toLowerCase()

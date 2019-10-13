@@ -1,0 +1,30 @@
+<can-import from='caja/author/user-avatar-picker/' />
+<can-import from='caja/author/hair-picker/' />
+<can-import from='caja/author/skin-picker/' />
+
+<div>
+  <label>Avatar:</label>
+  <user-avatar-picker
+    hair:from="userAvatar.hairColor"
+    skin:from="userAvatar.skinTone"
+    gender:from="userAvatar.gender"
+    isOld:from="userAvatar.isOld"
+    hasWheelchair:from="userAvatar.hasWheelchair"
+    onAvatar:from="onUserAvatarChange"
+  />
+</div>
+
+<div>
+  <label>Skin tone:</label>
+  <skin-picker
+    selectedSkin:from="userAvatar.skinTone"
+    onSkin:from="onUserAvatarSkinToneChange"
+  />
+</div>
+<div>
+  <label>Hair color:</label>
+  <hair-picker
+    selectedHair:from="userAvatar.hairColor"
+    onHair:from="onUserAvatarHairColorChange"
+  />
+</div>

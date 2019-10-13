@@ -60,7 +60,7 @@ var CONST = {
   ftCheckBox: 'checkbox',
   ftCheckBoxNOTA: 'checkboxNOTA',
   ftCheckBoxMultiple: 'checkboxmultiple',
-  ftClientAvatar: 'clientavatar',
+  ftUserAvatar: 'useravatar',
 
   // Variable Types
   vtUnknown: 'Unknown', // 0,
@@ -198,7 +198,7 @@ TField.prototype.fieldTypeToVariableType = function () {	// Return variable type
     tn[CONST.ftCheckBox] = 'CB'
     tn[CONST.ftCheckBoxNOTA] = 'CBNOTA'
     tn[CONST.ftDateMDY] = 'Date'
-    tn[CONST.ftClientAvatar] = 'ClAv'
+    tn[CONST.ftUserAvatar] = 'UserAv'
     TField.prototype.tagNames = tn
   }
   var tag = this.tagNames[this.type]
@@ -389,7 +389,7 @@ function TGuide () {	// This is the Guide representing a CALI lesson Book or an 
 TGuide.prototype.genderVarName = 'User Gender'
 
 TGuide.prototype.goodGender = function (g) {	// Return M, F or blank (if no client gender known).
-  // If blank, guide will face viewer (no client avatar appears).
+  // If blank, guide will face viewer (no user avatar appears).
   if (g === 'Male') { g = 'M' } else if (g === 'Female') { g = 'F' } else { g = '' }
   return g
 }

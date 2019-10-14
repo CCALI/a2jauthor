@@ -651,7 +651,7 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
       var updateFieldLayout = function (ff, field)
         //* * @param {TField} field */
       {
-        var canRequire = field.type !== 'radio' && field.type !== CONST.ftCheckBoxNOTA
+        var canRequire = field.type !== 'radio' && field.type !== CONST.ftCheckBoxNOTA && field.type !== CONST.ftUserAvatar
         var canMinMax = field.type === CONST.ftNumber || field.type === CONST.ftNumberDollar || field.type === CONST.ftNumberPick || field.type === CONST.ftDateMDY
         var canList = field.type === CONST.ftTextPick
         var canDefaultValue = field.type !== CONST.ftCheckBox && field.type !== CONST.ftCheckBoxNOTA && field.type !== CONST.ftGender && field.type !== CONST.ftUserAvatar

@@ -189,7 +189,28 @@ export const FieldVM = CanMap.extend('FieldVM', {
       get () {
         return this.attr('availableLength') < 0
       }
+    },
+
+    hasUserAvatarPicker: {
+      type: 'boolean',
+      value: true
     }
+  },
+
+  toggleUserAvatarPicker () {
+    const hasPicker = this.attr('hasUserAvatarPicker')
+    const field = this.attr('field')
+
+    if (hasPicker) { // clear User Avatar string in answers.anx
+      field.attr('_answer.values', undefined)
+      this.debugPanelMessage(field, undefined)
+    } else {
+      const userAvatarAnswer = JSON.stringify(this.attr('rState').userAvatar)
+      field.attr('_answer.values', userAvatarAnswer)
+      this.debugPanelMessage(field, userAvatarAnswer)
+    }
+
+    this.attr('hasUserAvatarPicker', !hasPicker)
   },
 
   onUserAvatarChange (selectedAvatar) {

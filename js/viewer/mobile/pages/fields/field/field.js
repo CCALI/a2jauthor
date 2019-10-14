@@ -269,23 +269,28 @@ export const FieldVM = CanMap.extend('FieldVM', {
     field.attr('hasError', errors)
 
     if (!errors) {
-      const name = field.attr('name')
-      const answerIndex = _answer.attr('answerIndex')
-      const isRepeating = _answer.attr('answer.repeating')
-      // if repeating true, show var#count in debug-panel
-      const displayAnswerIndex = isRepeating ? `#${answerIndex}` : ''
-      let message = {
-        key: name,
-        fragments: [
-          { format: 'var', msg: name + displayAnswerIndex },
-          { format: '', msg: ' = ' },
-          { format: 'val', msg: value }
-        ]
-      }
-      this.attr('rState').traceMessage.addMessage(message)
+      this.debugPanelMessage(field, value)
     }
 
     return errors
+  },
+
+  debugPanelMessage (field, value) {
+    const answerName = field.attr('name')
+    const answerIndex = field.attr('_answer.answerIndex')
+    const isRepeating = field.attr('_answer.answer.repeating')
+    // if repeating true, show var#count in debug-panel
+    const displayAnswerIndex = isRepeating ? `#${answerIndex}` : ''
+
+    const message = {
+      key: answerName,
+      fragments: [
+        { format: 'var', msg: answerName + displayAnswerIndex },
+        { format: '', msg: ' = ' },
+        { format: 'val', msg: value }
+      ]
+    }
+    this.attr('rState').traceMessage.addMessage(message)
   },
 
   /**

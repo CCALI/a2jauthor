@@ -193,6 +193,19 @@ describe('<a2j-field>', () => {
       const textlongValue = vm.attr('modalContent.textlongValue')
       assert.equal(textlongValue, 'cash money', 'should copy field answer value to modal')
     })
+
+    it('toggleUserAvatarPicker', function () {
+      const field = vm.attr('field')
+      field.attr({
+        'type': 'useravatar'
+      })
+      field.attr('_answer.values', 'hasAvatar')
+
+      assert.isTrue(vm.attr('hasUserAvatarPicker'), 'defaults to using an avatar')
+      vm.toggleUserAvatarPicker()
+      assert.isFalse(vm.attr('hasUserAvatarPicker'), 'toggles to false')
+      assert.equal(field.attr('_answer.values'), undefined, 'clears User Avatar answer when not using')
+    })
   })
 
   describe('Component', () => {

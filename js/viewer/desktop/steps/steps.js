@@ -546,6 +546,10 @@ export default Component.extend({
       vm.afterAvatarLoaded(() => vm.updateDomProperties())
     },
 
+    '{viewModel} showUserAvatar': function (vm) {
+      vm.afterAvatarLoaded(() => vm.updateDomProperties())
+    },
+
     '{viewModel} currentPage': function (vm) {
       vm.afterAvatarLoaded(() => vm.updateDomProperties())
     },

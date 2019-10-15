@@ -38,7 +38,7 @@ keep your projects:
     cd CALI
     git clone https://github.com/CCALI/CAJA
     cd CAJA
-    ./scripts/setup.sh
+    ./wiki/scripts/setup.sh
 
 ### Building
 

@@ -1,4 +1,4 @@
-# new deploy setup, or wipe out old
+# only for new deploy setup, or wipe out old
 su - a2jprod
 cd /vol/data/sites/drupal7.a2j/
 rm -rf app

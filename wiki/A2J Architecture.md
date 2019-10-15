@@ -5,7 +5,7 @@ There is a client, server, and file storage; all of which sit behind an Apache s
 
 The client application `CAJA/js` is broken into two parts: the authoring application `CAJA/js/author` and standalone viewer `CAJA/js/viewer`. These apps share code but build and deploy as separate application. Both projects contain legacy jQuery code, which is to say code not written in CanJs.
 
-The server application has two parts: the legacy PHP code and the newer NodeJs code. Most functionality including file management, uploads, and authentication are in PHP. The DAT (Document assembly tool) is written in Node. This code runs as a standalone server which proxies cookie headers to the PHP code for authentication.
+The server application has two parts: the legacy PHP code and the newer NodeJs code. Most functionality including file management, uploads, and authentication are in PHP. The DAT (Document assembly tool), including authoring of text templates, is written in Node. This code runs as a standalone server which proxies cookie headers to the PHP code for authentication.
 
 The data layer is the filesystem. All interviews (guides) and templates are stored in a `userfiles/` directory which is partitioned by user and then by guide. For example, user `mike` has a guide with ID `123` which is stored as `userfiles/mike/guides/Guide123`. There is MySQL server which stores indexes into these files; it is rarely used and the files are the source of truth.
 

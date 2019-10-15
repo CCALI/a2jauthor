@@ -1,4 +1,4 @@
-### How to start the templates node server
+### How to start the templates node server using PM2 process manager
 
 First, you need to cd into the folder where the app code is contained, at the root of this folder there should be a `package.json` file, once you've done that, run the following command:
 
@@ -24,7 +24,7 @@ or
 npm2 stop 0
 ```
 
-Using meaningful app names could be specially useful when multiple node server instances are active, which could be the case of the different environments where the app is deployed (staging, testing, development, etc).
+Using meaningful app names is useful when multiple node server instances are active, which could be the case for the different environments where the app is deployed (staging, testing, development, etc).
 
 ### How to provide a different port to the node server
 

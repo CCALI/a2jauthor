@@ -1,6 +1,6 @@
 ## Current Strategy
 * the `master` branch is used for deploy to production only
-* the `develop` branch is the working/staging branch used to for code being tested pre-production
+* the `develop` branch is the working/staging branch used for code being tested pre-production
 * issue branches are created off the `develop` branch, then reviewed and QA'ed prior to being merged back into the `develop` branch
 * branches are named with issue number + short description, ex: `1980-variable-creation`
 * commits generally follow this recommendation https://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-message

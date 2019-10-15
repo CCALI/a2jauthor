@@ -1,14 +1,7 @@
 <can-import from='caja/author/user-avatar-picker/' />
 <can-import from='caja/author/hair-picker/' />
 <can-import from='caja/author/skin-picker/' />
-
-<button id="avatarPickerToggle" class="btn btn-default btn-block" on:click="toggleUserAvatarPicker()">
-  {{#if(hasUserAvatarPicker)}}
-    Click to not use an Avatar
-  {{else}}
-    Click to Select Your Avatar
-  {{/if}}
-</button>
+<can-import from='caja/viewer/mobile/pages/fields/field/views/user-avatar.less' />
 
 {{#if(hasUserAvatarPicker)}}
   <div>
@@ -38,3 +31,10 @@
   </div>
 {{/if}}
 
+<label>Show Avatar</label><br>
+<label class="toggle">
+	<span class="toggle-label">Yes</span>
+	<input class="toggle-checkbox" type="checkbox"  on:click="toggleUserAvatarPicker()">
+	<div class="toggle-switch"></div>
+	<span class="toggle-label">No</span>
+</label>

@@ -15,7 +15,7 @@ let AvatarDemoVM = CanMap.extend({
     },
 
     skin: {
-      value: 'light'
+      value: 'medium'
     }
   }
 })

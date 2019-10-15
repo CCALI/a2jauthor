@@ -15,7 +15,7 @@ describe('<user-avatar-picker>', () => {
       isOld: false,
       hasWheelchair: false,
       hair: 'darkBrown',
-      skin: 'light'
+      skin: 'medium'
     }
 
     beforeEach(() => {
@@ -79,7 +79,7 @@ describe('<user-avatar-picker>', () => {
         isOld: false,
         hasWheelchair: false,
         hair: 'darkBrown',
-        skin: 'light'
+        skin: 'medium'
       }
 
       let frag = stache('<user-avatar-picker />')

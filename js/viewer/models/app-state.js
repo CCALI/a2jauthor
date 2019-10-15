@@ -11,7 +11,7 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   userAvatar: {
     serialize: false,
     default: () => {
-      return { gender: 'female', isOld: false, hasWheelchair: false, hairColor: 'brownDark', skinTone: 'lighter' }
+      return { gender: 'female', isOld: false, hasWheelchair: false, hairColor: 'brownDark', skinTone: 'medium' }
     }
   },
 

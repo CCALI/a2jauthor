@@ -38,11 +38,11 @@ keep your projects:
     cd CALI
     git clone https://github.com/CCALI/CAJA
     cd CAJA
-    ./wiki/scripts/setup.sh
+    ./docker-scripts/setup.sh
 
 ### Building
 
-To build the app, run `./CAJA/wiki/scripts/build.sh` from the `CALI/` directory. You'll
+To build the app, run `./CAJA/docker-scripts/build.sh` from the `CALI/` directory. You'll
 (possibly infrequently) need to re-run it (or at least `npm run build:server` from
 the `CAJA/` directory) when you change the node app, as the frontend should not
 need to be rebuilt during development.

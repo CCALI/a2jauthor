@@ -42,7 +42,7 @@ keep your projects:
 
 ### Building
 
-To build the app, run `./CAJA/scripts/build.sh` from the `CALI/` directory. You'll
+To build the app, run `./CAJA/wiki/scripts/build.sh` from the `CALI/` directory. You'll
 (possibly infrequently) need to re-run it (or at least `npm run build:server` from
 the `CAJA/` directory) when you change the node app, as the frontend should not
 need to be rebuilt during development.
@@ -53,7 +53,7 @@ To run the project, from the `CALI/` directory, in two separate terminals, run:
 
     docker-compose down && docker-compose up --build
 
-    cd CAJA/js
+    cd CAJA
     DEBUG=A2J:* npm run start
 
 To quit either, you can type `Ctrl-c`

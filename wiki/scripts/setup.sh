@@ -75,7 +75,7 @@ APACHECONFIG
 cat > docker/webserver/Dockerfile <<DOCKERFILE
 FROM php:7-apache
 
-RUN apt-get update && apt-get install -y zlib1g-dev \
+RUN apt-get update && apt-get install -y libzip-dev \
     && docker-php-ext-install zip
 RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 RUN a2enmod proxy proxy_http

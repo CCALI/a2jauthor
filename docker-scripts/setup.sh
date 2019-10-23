@@ -51,10 +51,13 @@ services:
     volumes:
       - ./db:/var/lib/mysql
       - ./caja/wiki/resources:/tmp/repo-resources
+      - ./logs/mysql.log:/var/log/mysql/general-log.log
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_ROOT_USER=root
       - MYSQL_DATABASE=caja
+    command: mysqld --general-log=1 --general-log-file=/var/log/mysql/general-log.log
+
 DOCKERCOMPOSE
 
 mkdir -p docker/webserver

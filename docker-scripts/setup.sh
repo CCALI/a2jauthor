@@ -4,13 +4,14 @@ git checkout e937772d8bab4ad659df7f894354b29d3efee8be # we had example userfiles
 cp wiki/resources/userfiles.zip ../
 git checkout -
 cd ..
+echo "unzipping userfiles to $PWD"
 unzip userfiles.zip
 cat > config.php <<CONFIGPHP
 <?php
 define("SERVER_URL","");
 define("DRUPAL_ROOT_DIR", "");
 define("GUIDES_DIR","/tmp/userfiles/");
-define("GUIDES_URL", "/CALI/userfiles/");
+define("GUIDES_URL", "/userfiles/");
 
 define('DB_NAME', "");
 define('DB_USER', "");
@@ -75,7 +76,10 @@ APACHECONFIG
 cat > docker/webserver/Dockerfile <<DOCKERFILE
 FROM php:7-apache
 
-RUN apt-get update && apt-get install -y libzip-dev \
+RUN apt-get update \
+    && apt-get install -y \
+    libzip-dev \
+    vim \
     && docker-php-ext-install zip
 RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 RUN a2enmod proxy proxy_http

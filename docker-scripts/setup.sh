@@ -6,27 +6,27 @@ git checkout -
 cd ..
 echo "unzipping userfiles to $PWD"
 unzip userfiles.zip
-cat > config.php <<CONFIGPHP
+cat > CONFIG.php <<CONFIGPHP
 <?php
-define("SERVER_URL","");
-define("DRUPAL_ROOT_DIR", "");
-define("GUIDES_DIR","/tmp/userfiles/");
-define("GUIDES_URL", "/userfiles/");
+  define("SERVER_URL","");
+  define("DRUPAL_ROOT_DIR", "");
+  define("GUIDES_DIR","/tmp/userfiles/");
+  define("GUIDES_URL", "/userfiles/");
 
-define('DB_NAME', "");
-define('DB_USER', "");
-define('DB_PASSWORD', '');
-define('DB_HOST', '');
+  define('DB_NAME', "");
+  define('DB_USER', "");
+  define('DB_PASSWORD', '');
+  define('DB_HOST', '');
 
-define('D7_DB_NAME', "");
-define('D7_DB_USER', "");
-define('D7_DB_PASSWORD', '');
-define('D7_DB_HOST', '');
+  define('D7_DB_NAME', "");
+  define('D7_DB_USER', "");
+  define('D7_DB_PASSWORD', '');
+  define('D7_DB_HOST', '');
 
-$mysqli = new mysqli('db', 'root', 'root', 'caja', 3306);
-define('LOCAL_USER', 45);  // sets to dev user number 45
+  $mysqli = new mysqli('db', 'root', 'root', 'caja', 3306);
+  define('LOCAL_USER', 45);  // sets to dev user number 45
 
-$isProductionServer = FALSE; //or FALSE
+  $isProductionServer = FALSE; //or FALSE
 ?>
 CONFIGPHP
 

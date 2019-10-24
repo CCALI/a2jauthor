@@ -174,6 +174,27 @@ describe('<a2j-pages>', () => {
       })
     })
 
+    it('setRepeatVariable', () => {
+      const answers = defaults.interview.answers
+      const counter = new CanMap({
+        comment: '',
+        name: 'counter',
+        repeating: false,
+        type: 'Number',
+        values: [null]
+      })
+
+      answers.attr('counter', counter)
+
+      vm.attr('currentPage.repeatVar', 'counter')
+
+      vm.setRepeatVariable('counter', constants.RepeatVarSetOne)
+      assert(vm.attr('logic').varGet('counter'), 1, 'sets initial value to 1')
+
+      vm.setRepeatVariable('counter', constants.RepeatVarSetPlusOne)
+      assert(vm.attr('logic').varGet('counter'), 1, 'increments counter to 2')
+    })
+
     it('setFieldAnswers with repeatVar', () => {
       const answers = defaults.interview.answers
       const salaryCount = new CanMap({

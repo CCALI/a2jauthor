@@ -120,11 +120,11 @@ describe('<a2j-pages>', () => {
           'first saved value should be true')
       })
 
-      it('saves answer when button can hold mutilple values', () => {
-        let answers = defaults.interview.answers
-        let page = defaults.currentPage
+      it('saves answer when button can hold multiple values', () => {
+        const answers = defaults.interview.answers
+        const page = defaults.currentPage
 
-        let agesnu = new CanMap({
+        const agesnu = new CanMap({
           comment: '',
           name: 'AgesNU',
           repeating: true,
@@ -132,7 +132,16 @@ describe('<a2j-pages>', () => {
           values: [null, 14, 12]
         })
 
+        const count = new CanMap({
+          comment: '',
+          name: 'count',
+          repeating: false,
+          type: 'Number',
+          values: [null, 3]
+        })
+
         answers.attr('agesnu', agesnu)
+        answers.attr('count', count)
 
         const button = new CanMap({
           label: 'Go!',
@@ -142,8 +151,7 @@ describe('<a2j-pages>', () => {
         })
 
         // required to trigger mutli-value save
-        page.attr('repeatVar', 'AgeCount')
-        logicStub.varGet.returns(3)
+        page.attr('repeatVar', 'count')
 
         vm.navigate(button)
 
@@ -219,7 +227,6 @@ describe('<a2j-pages>', () => {
 
       const fields = vm.attr('currentPage.fields')
       fields.push({ name: 'salary', type: 'number' })
-      logicStub.varGet.returns(2)
 
       vm.setFieldAnswers(fields)
       const field = vm.attr('currentPage.fields.0')
@@ -330,10 +337,6 @@ describe('<a2j-pages>', () => {
   describe('Component', () => {
     let rStateTeardown
     beforeEach(() => {
-      defaults.logic.attr('eval', (text) => {
-        return text + ' ' + defaults.interview.attr('answers.foo')
-      })
-
       let frag = stache(
         '<a2j-pages></a2j-pages>'
       )
@@ -344,24 +347,17 @@ describe('<a2j-pages>', () => {
       rStateTeardown = vm.attr('rState').connectedCallback()
     })
 
-    it('parseText refires if answers update', (done) => {
-      const oldEval = vm.attr('logic').eval
+    it('parseText refires if answers update', () => {
+      const logic = vm.attr('logic')
+      const oldEval = logic.oldEval
+      let count = 0
+      logic.eval = () => { return count++ }
+
+      // change answers
       vm.attr('interview.answers.foo', 'bar')
-      vm.attr('logic').attr('eval', (text) => {
-        return text + ' ' + vm.attr('interview.answers.foo')
-      })
-      let currentPageText = $('.question-text')[0].innerHTML
-      assert.equal(currentPageText, 'welcome! bar', 'renders with `defaults` stub value')
+      assert.equal(count, 2, 'parseText in stache twice and recalled 2 times')
 
-      vm.attr('interview.answers.foo', 'baz')
-      // wait for page update
-      setTimeout(() => {
-        currentPageText = $('.question-text')[0].innerHTML
-        assert.equal(currentPageText, 'welcome! baz', 'renders updated value')
-        done()
-      }, 100)
-
-      vm.attr('logic').eval = oldEval
+      logic.eval = oldEval
     })
 
     afterEach(() => {

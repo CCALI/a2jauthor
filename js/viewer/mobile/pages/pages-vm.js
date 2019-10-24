@@ -537,14 +537,7 @@ export default CanMap.extend('PagesVM', {
   setRepeatVariable (repeatVar, repeatVarSet) {
     const logic = this.attr('logic')
     const traceMessage = this.attr('rState.traceMessage')
-
-    let traceMsg = {}
-
-    if (!logic.varExists('repeatVar')) {
-      logic.varCreate('repeatVar', 'Text', false, 'Repeat variable name')
-    }
-
-    logic.varSet('repeatVar', repeatVar)
+    const traceMsg = {}
 
     switch (repeatVarSet) {
       case constants.RepeatVarSetOne:
@@ -555,7 +548,6 @@ export default CanMap.extend('PagesVM', {
         logic.varSet(repeatVar, 1)
         traceMsg.key = repeatVar + '-0'
         traceMsg.fragments = [{ format: '', msg: 'Setting [' + repeatVar + '] to 1' }]
-        traceMessage.addMessage(traceMsg)
         break
 
       case constants.RepeatVarSetPlusOne:
@@ -564,7 +556,6 @@ export default CanMap.extend('PagesVM', {
         logic.varSet(repeatVar, value + 1)
         traceMsg.key = repeatVar + '-' + value
         traceMsg.fragments = [{ format: '', msg: 'Incrementing [' + repeatVar + '] to ' + (value + 1) }]
-        traceMessage.addMessage(traceMsg)
         break
     }
   }

@@ -205,11 +205,9 @@ export default CanMap.extend('PagesVM', {
 
     vm.validateAllFields()
     const anyFieldWithError = _some(fields, f => f.attr('hasError'))
-    // invalid fields stop all navigate logic (ex: `required` answer not answered, or min/max out of range)
+    // do nothing if there are field(s) with error(s) - prevent form submission events
     if (anyFieldWithError) {
-      // don't submit answers or assemble document
       ev && ev.preventDefault()
-      // do nothing if there are field(s) with error(s)
       return false
     } else {
       // no errors/normal navigation
@@ -217,13 +215,7 @@ export default CanMap.extend('PagesVM', {
       const logic = vm.attr('logic')
 
       // Author Preview Mode changes handling of special buttons, and does not post answers
-      if (rState.previewActive &&
-        (button.next === constants.qIDFAIL ||
-        button.next === constants.qIDEXIT ||
-        button.next === constants.qIDSUCCESS ||
-        button.next === constants.qIDASSEMBLESUCCESS ||
-        button.next === constants.qIDASSEMBLE)
-      ) {
+      if (rState.previewActive && vm.hasSpecialButton(button)) {
         // stop default submit actions in preview
         ev && ev.preventDefault()
         vm.previewActiveResponses(button)
@@ -284,9 +276,6 @@ export default CanMap.extend('PagesVM', {
 
       // handle afterLogic
       const codeAfter = page.attr('codeAfter')
-      const buttonRepeatVar = button.attr('repeatVar')
-      const buttonRepeatVarSet = button.attr('repeatVarSet')
-
       // default next page is derived from the button pressed.
       // might be overridden by the After logic or special
       // back to prior question button.
@@ -301,14 +290,6 @@ export default CanMap.extend('PagesVM', {
         queues.batch.start()
         logic.exec(codeAfter)
         queues.batch.stop()
-      }
-
-      // buttonRepeatVar holds the name of the variable that acts as the total count
-      // of a repeating variable; and buttonRepeatVarSet indicates whether that
-      // variable should be set to `1` or increased, `setRepeatVariable` takes
-      // care of setting `buttonRepeatVar` properly.
-      if (buttonRepeatVar && buttonRepeatVarSet) {
-        vm.setRepeatVariable(buttonRepeatVar, buttonRepeatVarSet)
       }
 
       // Don't post to the server in Author Preview aka previewActive
@@ -357,22 +338,45 @@ export default CanMap.extend('PagesVM', {
 
       // only navigate to the `button.next` page if the button clicked is not
       // any of the buttons with "special" behavior.
-      } else if (button.next !== constants.qIDEXIT &&
-        button.next !== constants.qIDSUCCESS &&
-        button.next !== constants.qIDASSEMBLE &&
-        button.next !== constants.qIDASSEMBLESUCCESS &&
-        button.next !== constants.qIDFAIL) {
+      } else if (!vm.hasSpecialButton(button)) {
+        // first update any repeatVars set by buttons, setting to or incrementing by 1
+        const buttonRepeatVar = button.attr('repeatVar')
+        const buttonRepeatVarSet = button.attr('repeatVarSet')
+        if (buttonRepeatVar && buttonRepeatVarSet) {
+          vm.setRepeatVariable(buttonRepeatVar, buttonRepeatVarSet)
+        }
+
+        // nav to next page
         rState.page = button.next
       }
 
       // if these special buttons are used, the interview is complete (incomplete is false)
-      if (button.next === constants.qIDFAIL ||
-        button.next === constants.qIDSUCCESS ||
-        button.next === constants.qIDASSEMBLE ||
-        button.next === constants.qIDASSEMBLESUCCESS) {
+      if (vm.shouldCompleteInterview(button)) {
         vm.setInterviewAsComplete()
       }
     }
+  },
+
+  // navigate util functions
+  hasSpecialButton (button) {
+    return button.next === constants.qIDFAIL ||
+    button.next === constants.qIDEXIT ||
+    button.next === constants.qIDSUCCESS ||
+    button.next === constants.qIDASSEMBLESUCCESS ||
+    button.next === constants.qIDASSEMBLE
+  },
+
+  shouldPostOrAssemble (button) {
+    return button.next === constants.qIDSUCCESS ||
+    button.next === constants.qIDASSEMBLESUCCESS ||
+    button.next === constants.qIDASSEMBLE
+  },
+
+  shouldCompleteInterview (button) {
+    return button.next === constants.qIDFAIL ||
+        button.next === constants.qIDSUCCESS ||
+        button.next === constants.qIDASSEMBLE ||
+        button.next === constants.qIDASSEMBLESUCCESS
   },
 
   setInterviewAsComplete () {
@@ -558,5 +562,7 @@ export default CanMap.extend('PagesVM', {
         traceMsg.fragments = [{ format: '', msg: 'Incrementing [' + repeatVar + '] to ' + (value + 1) }]
         break
     }
+
+    traceMessage.addMessage(traceMsg)
   }
 })

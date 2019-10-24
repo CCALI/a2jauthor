@@ -3,17 +3,17 @@ import CanMap from 'can-map'
 import stache from 'can-stache'
 import { assert } from 'chai'
 import PagesVM from './pages-vm'
-import sinon from 'sinon'
 import AppState from 'caja/viewer/models/app-state'
 import TraceMessage from 'caja/author/models/trace-message'
-import Infinite from 'caja/viewer/mobile/util/infinite'
+import Interview from 'caja/viewer/models/interview'
+import Logic from 'caja/viewer/mobile/util/logic'
 import constants from 'caja/viewer/models/constants'
 import './pages'
 import 'steal-mocha'
 
 describe('<a2j-pages>', () => {
   let vm
-  let logicStub
+  let logic
   let nextPageStub
   let priorPageStub
   let interview
@@ -21,17 +21,6 @@ describe('<a2j-pages>', () => {
   let traceMessage
 
   beforeEach(() => {
-    logicStub = new CanMap({
-      infinite: new Infinite(),
-      exec: $.noop,
-      eval: $.noop,
-      gotoPage: false,
-      varExists: sinon.spy(),
-      varCreate: sinon.spy(),
-      varGet: sinon.stub(),
-      varSet: sinon.spy()
-    })
-
     nextPageStub = new CanMap({
       name: 'Next',
       fields: []
@@ -42,13 +31,12 @@ describe('<a2j-pages>', () => {
       fields: []
     })
 
-    interview = new CanMap({
+    interview = new Interview({
       answers: new CanMap(),
-      getPageByName: function (pageName) {
-        return this.pages.attr(pageName)
-      },
       pages: new CanMap({nextPageStub, priorPageStub})
     })
+
+    logic = new Logic({interview})
     // normally passed in via stache
     traceMessage = new TraceMessage()
 
@@ -63,8 +51,8 @@ describe('<a2j-pages>', () => {
         buttons: null,
         step: { number: undefined, text: '' } }
       ),
-      logic: logicStub,
-      rState: new AppState({ interview, logic: logicStub, traceMessage }),
+      logic: logic,
+      rState: new AppState({ interview, logic, traceMessage }),
       mState: { },
       interview
     }

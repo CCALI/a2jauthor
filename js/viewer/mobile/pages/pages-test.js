@@ -349,15 +349,12 @@ describe('<a2j-pages>', () => {
 
     it('parseText refires if answers update', () => {
       const logic = vm.attr('logic')
-      const oldEval = logic.oldEval
       let count = 0
       logic.eval = () => { return count++ }
 
       // change answers
       vm.attr('interview.answers.foo', 'bar')
       assert.equal(count, 2, 'parseText in stache twice and recalled 2 times')
-
-      logic.eval = oldEval
     })
 
     afterEach(() => {

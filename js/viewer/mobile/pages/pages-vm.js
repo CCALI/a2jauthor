@@ -272,7 +272,21 @@ export default CanMap.extend('PagesVM', {
   saveButtonValue (button, vm, page, logic) {
     if (!button.name) { return }
 
-    logic.varSet(button.name, button.value)
+    const buttonAnswer = vm.__ensureFieldAnswer(button)
+    const repeatVar = page.attr('repeatVar')
+    let buttonAnswerIndex = repeatVar ? logic.varGet(repeatVar) : 1
+    let buttonValue = button.value
+
+    // button source values are always text, so do type conversion here
+    // TODO: should probably handle in asnwers.js model
+    if (buttonAnswer.type === 'TF') {
+      buttonValue = buttonValue.toLowerCase() === 'true'
+    } else if (buttonAnswer.type === 'Number') {
+      buttonValue = parseInt(buttonValue)
+    }
+
+    vm.logVarMessage(button.name, buttonValue, false, buttonAnswerIndex)
+    logic.varSet(button.name, buttonValue, buttonAnswerIndex)
   },
 
   handleCodeAfter (button, vm, page, logic) {
@@ -494,7 +508,8 @@ export default CanMap.extend('PagesVM', {
 
         field.attr('_answer', avm)
         // if repeating true, show var#count in debug-panel
-        this.logVarMessage(field.attr('_answer'), answer.repeating, answerIndex)
+        const answerValue = avm.attr('answer.values.' + answerIndex)
+        this.logVarMessage(answer.name, answerValue, answer.repeating, answerIndex)
       })
     }
   },
@@ -525,9 +540,7 @@ export default CanMap.extend('PagesVM', {
     return avm
   },
 
-  logVarMessage (fieldAnswerVM, isRepeating, answerIndex) {
-    const answerName = fieldAnswerVM.attr('answer.name')
-    const answerValue = fieldAnswerVM.attr('values')
+  logVarMessage (answerName, answerValue, isRepeating, answerIndex) {
     const answerIndexDisplay = isRepeating ? `#${answerIndex}` : ''
 
     this.attr('rState.traceMessage').addMessage({

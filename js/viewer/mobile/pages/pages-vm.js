@@ -6,7 +6,7 @@ import _forEach from 'lodash/forEach'
 import queues from 'can-queues'
 import AnswerVM from 'caja/viewer/models/answervm'
 import Parser from 'caja/viewer/mobile/util/parser'
-import { Analytics } from 'caja/viewer/util/analytics'
+import { analytics } from 'caja/viewer/util/analytics'
 import constants from 'caja/viewer/models/constants'
 
 import 'can-map-define'
@@ -201,66 +201,46 @@ export default CanMap.extend('PagesVM', {
   navigate (button, el, ev) {
     const vm = this // preserve navigate context
     const anyFieldHasError = vm.validateAllFields()
-    vm.traceButtonClicked(button.attr('label'))
+    vm.traceButtonClicked(button.attr('label')) // always show button clicked in debug-panel
 
-    // do nothing if there are field(s) with error(s) - prevent form submission events
-    if (anyFieldHasError) {
+    if (anyFieldHasError) { // do nothing if there are field(s) with error(s)
       ev && ev.preventDefault()
       return false
     } else { // no errors/normal navigation
       const rState = vm.attr('rState')
       const page = vm.attr('currentPage')
       const logic = vm.attr('logic')
+      const previewActive = rState.previewActive
 
-      // qIDFAIL & qIDRESUME buttons skip rest of navigate
       if (button.next === constants.qIDFAIL || button.next === constants.qIDRESUME) {
         vm.handleFailOrResumeButton(button)
-        return
+        return // skip rest of navigate
       }
 
-      // Set answers for buttons with values
-      if (button.name) {
-        vm.saveButtonValue(button, vm, page, logic)
-      }
+      vm.saveButtonValue(button, vm, page, logic) // buttons with variables assigned
 
-      // handle afterLogic
-      vm.handleCodeAfter(button, vm, page, logic)
+      vm.handleCodeAfter(button, vm, page, logic) // afterLogic fired
 
-      // set/increment counting variables
-      vm.setRepeatVariable(button)
+      vm.setRepeatVariable(button) // set counting variables if exist
 
-      // Author Preview Mode changes handling of special buttons, and does not post answers
-      if (rState.previewActive && vm.hasSpecialButton(button)) {
-        ev && ev.preventDefault()
-        vm.previewActiveResponses(button, ev) // preview messages
-      }
-      if (!rState.previewActive && (vm.shouldPostOrAssemble(button))) {
-        vm.setInterviewAsComplete()
-        vm.handleServerPost(button, vm, rState, ev) // normal post/assemble
-      }
+      vm.handlePreviewResponses(button, previewActive, ev) // viewer preview messages
 
-      if (button.next === constants.qIDBACK) { // nav to prior question
-        vm.handleBackButton(button, rState, logic)
-      }
+      vm.handleServerPost(button, vm, previewActive, ev) // normal post/assemble
 
-      vm.handleGotoOrNormalNav(button, vm, rState, logic)
+      vm.handleBackButton(button, rState, logic) // prior question
+
+      vm.handleGotoOrNormalNav(button, rState, logic) // check GOTO logic redirect
     }
   },
 
-  handleGotoOrNormalNav (button, vm, rState, logic) {
+  handleGotoOrNormalNav (button, rState, logic) {
     const gotoPage = logic.attr('gotoPage')
     const logicPageIsNotEmpty = _isString(gotoPage) && gotoPage.length
 
-    // this means the logic After has overridden the destination page, we
-    // should navigate to this page instead of the page set by `button.next`.
-    if (logicPageIsNotEmpty && gotoPage !== button.next) {
+    if (logicPageIsNotEmpty && gotoPage !== button.next) { // GOTO nav
       logic.attr('gotoPage', null)
       rState.page = gotoPage
-
-    // only navigate to the `button.next` page if the button clicked is not
-    // any of the buttons with "special" behavior.
-    } else if (!vm.hasSpecialButton(button)) {
-      // nav to next page
+    } else if (!this.hasSpecialButton(button)) { // normal nav
       rState.page = button.next
     }
   },
@@ -275,7 +255,7 @@ export default CanMap.extend('PagesVM', {
     let failURL = button.url.toLowerCase()
     let hasProtocol = failURL.indexOf('http') === 0
     failURL = hasProtocol ? failURL : 'http://' + failURL
-    if (failURL === 'http://') {// If Empty, standard message
+    if (failURL === 'http://') { // If Empty, standard message
       vm.attr('modalContent', {
         title: 'You did not Qualify',
         text: 'Unfortunately, you did not qualify to use this A2J Guided Interview. Please close your browser window or tab to exit the interview.'
@@ -283,32 +263,16 @@ export default CanMap.extend('PagesVM', {
     } else {
       // track the external link
       if (window._paq) {
-        Analytics.trackExitLink(failURL, 'link')
+        analytics.trackExitLink(failURL, 'link')
       }
       window.open(failURL, '_blank')
     }
   },
 
   saveButtonValue (button, vm, page, logic) {
-    const buttonAnswer = vm.__ensureFieldAnswer(button)
-    let buttonAnswerIndex = 1
+    if (!button.name) { return }
 
-    if (page.attr('repeatVar')) {
-      const repeatVar = page.attr('repeatVar')
-      const repeatVarCount = logic.varGet(repeatVar)
-
-      buttonAnswerIndex = (repeatVarCount != null) ? repeatVarCount : buttonAnswerIndex
-    }
-
-    let buttonValue = button.value
-
-    if (buttonAnswer.type === 'TF') {
-      buttonValue = buttonValue.toLowerCase() === 'true'
-    } else if (buttonAnswer.type === 'Number') {
-      buttonValue = parseInt(buttonValue)
-    }
-
-    buttonAnswer.attr('values.' + buttonAnswerIndex, buttonValue)
+    logic.varSet(button.name, button.value)
   },
 
   handleCodeAfter (button, vm, page, logic) {
@@ -330,31 +294,109 @@ export default CanMap.extend('PagesVM', {
     }
   },
 
-  handleServerPost (button, vm, rState, ev) {
-    // This modal and disable is for LHI/HotDocs issue taking too long to process
-    // prompting users to repeatedly press submit, crashing HotDocs
-    // Matches A2J4 functionality, but should really be handled better on LHI's server
-    vm.attr('modalContent', {
-      title: 'Answers Submitted :',
-      text: 'Page will redirect shortly'
-    })
+  setRepeatVariable (button) {
+    const repeatVar = button.attr('repeatVar')
+    const repeatVarSet = button.attr('repeatVarSet')
 
-    vm.dispatch('post-answers-to-server')
+    if (repeatVar && repeatVarSet) {
+      const logic = this.attr('logic')
+      const traceMessage = this.attr('rState.traceMessage')
+      const traceMsg = {}
 
-    // qIDASSEMBLESUCCESS requires the default event to trigger the assemble post
-    // and the manual submit below to trigger the answer save
-    // TODO: the way final answer forms are created and submitted needs a refactor
-    if (button.next !== constants.qIDASSEMBLESUCCESS) {
-      ev && ev.preventDefault()
+      switch (repeatVarSet) {
+        case constants.RepeatVarSetOne:
+          if (!logic.varExists(repeatVar)) {
+            logic.varCreate(repeatVar, 'Number', false, 'Repeat variable index')
+          }
+
+          logic.varSet(repeatVar, 1)
+          traceMsg.key = repeatVar + '-0'
+          traceMsg.fragments = [{ format: '', msg: 'Setting [' + repeatVar + '] to 1' }]
+          break
+
+        case constants.RepeatVarSetPlusOne:
+          const value = logic.varGet(repeatVar)
+
+          logic.varSet(repeatVar, value + 1)
+          traceMsg.key = repeatVar + '-' + value
+          traceMsg.fragments = [{ format: '', msg: 'Incrementing [' + repeatVar + '] to ' + (value + 1) }]
+          break
+      }
+
+      traceMessage.addMessage(traceMsg)
     }
+  },
 
-    // disable the previously clicked button
-    setTimeout(() => {
-      $('button:contains(' + button.label + ')').prop('disabled', true)
-    })
+  handlePreviewResponses (button, previewActive, ev) {
+    if (previewActive && this.hasSpecialButton(button)) {
+      ev && ev.preventDefault()
+      switch (button.next) {
+        case constants.qIDFAIL:
+          this.attr('modalContent', {
+            title: 'Author note:',
+            text: 'User would be redirected to \n(' + button.url + ')'
+          })
+          break
+
+        case constants.qIDEXIT:
+          this.attr('modalContent', {
+            title: 'Author note:',
+            text: "User's INCOMPLETE data would upload to the server."
+          })
+          break
+
+        case constants.qIDASSEMBLE:
+          this.attr('modalContent', {
+            title: 'Author note:',
+            text: 'Document Assembly would happen here.  Use Test Assemble under the Templates tab to assemble in A2J Author'
+          })
+          break
+
+        case constants.qIDSUCCESS:
+          this.attr('modalContent', {
+            title: 'Author note:',
+            text: "User's data would upload to the server."
+          })
+          break
+        case constants.qIDASSEMBLESUCCESS:
+          this.attr('modalContent', {
+            title: 'Author note:',
+            text: "User's data would upload to the server, then assemble their document.  Use Test Assemble under the Templates tab to assemble in A2J Author"
+          })
+          break
+      }
+    }
+  },
+
+  handleServerPost (button, vm, previewActive, ev) {
+    if (!previewActive && (vm.shouldPostOrAssemble(button))) {
+      vm.setInterviewAsComplete()
+      // This modal and disable is for LHI/HotDocs issue taking too long to process
+      // prompting users to repeatedly press submit, crashing HotDocs
+      // Matches A2J4 functionality, but should really be handled better on LHI's server
+      vm.attr('modalContent', {
+        title: 'Answers Submitted :',
+        text: 'Page will redirect shortly'
+      })
+
+      vm.dispatch('post-answers-to-server')
+
+      // qIDASSEMBLESUCCESS requires the default event to trigger the assemble post
+      // and the manual submit below to trigger the answer save
+      // TODO: the way final answer forms are created and submitted needs a refactor
+      if (button.next !== constants.qIDASSEMBLESUCCESS) {
+        ev && ev.preventDefault()
+      }
+
+      // disable the previously clicked button
+      setTimeout(() => {
+        $('button:contains(' + button.label + ')').prop('disabled', true)
+      })
+    }
   },
 
   handleBackButton (button, rState, logic) {
+    if (button.next !== constants.qIDBACK) { return }
     // last visited page always at index 1
     const priorQuestionName = rState.visitedPages[1].name
     // override with new gotoPage
@@ -380,44 +422,6 @@ export default CanMap.extend('PagesVM', {
   setInterviewAsComplete () {
     const answers = this.attr('interview.answers')
     answers.attr(`${constants.vnInterviewIncompleteTF.toLowerCase()}.values`, [null, false])
-  },
-
-  previewActiveResponses (button) {
-    switch (button.next) {
-      case constants.qIDFAIL:
-        this.attr('modalContent', {
-          title: 'Author note:',
-          text: 'User would be redirected to \n(' + button.url + ')'
-        })
-        break
-
-      case constants.qIDEXIT:
-        this.attr('modalContent', {
-          title: 'Author note:',
-          text: "User's INCOMPLETE data would upload to the server."
-        })
-        break
-
-      case constants.qIDASSEMBLE:
-        this.attr('modalContent', {
-          title: 'Author note:',
-          text: 'Document Assembly would happen here.  Use Test Assemble under the Templates tab to assemble in A2J Author'
-        })
-        break
-
-      case constants.qIDSUCCESS:
-        this.attr('modalContent', {
-          title: 'Author note:',
-          text: "User's data would upload to the server."
-        })
-        break
-      case constants.qIDASSEMBLESUCCESS:
-        this.attr('modalContent', {
-          title: 'Author note:',
-          text: "User's data would upload to the server, then assemble their document.  Use Test Assemble under the Templates tab to assemble in A2J Author"
-        })
-        break
-    }
   },
 
   setCurrentPage () {
@@ -534,38 +538,5 @@ export default CanMap.extend('PagesVM', {
         { format: 'val', msg: answerValue }
       ]
     })
-  },
-
-  setRepeatVariable (button) {
-    const repeatVar = button.attr('repeatVar')
-    const repeatVarSet = button.attr('repeatVarSet')
-
-    if (repeatVar && repeatVarSet) {
-      const logic = this.attr('logic')
-      const traceMessage = this.attr('rState.traceMessage')
-      const traceMsg = {}
-
-      switch (repeatVarSet) {
-        case constants.RepeatVarSetOne:
-          if (!logic.varExists(repeatVar)) {
-            logic.varCreate(repeatVar, 'Number', false, 'Repeat variable index')
-          }
-
-          logic.varSet(repeatVar, 1)
-          traceMsg.key = repeatVar + '-0'
-          traceMsg.fragments = [{ format: '', msg: 'Setting [' + repeatVar + '] to 1' }]
-          break
-
-        case constants.RepeatVarSetPlusOne:
-          const value = logic.varGet(repeatVar)
-
-          logic.varSet(repeatVar, value + 1)
-          traceMsg.key = repeatVar + '-' + value
-          traceMsg.fragments = [{ format: '', msg: 'Incrementing [' + repeatVar + '] to ' + (value + 1) }]
-          break
-      }
-
-      traceMessage.addMessage(traceMsg)
-    }
   }
 })

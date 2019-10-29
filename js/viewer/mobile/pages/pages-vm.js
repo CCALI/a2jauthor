@@ -30,6 +30,12 @@ export default CanMap.extend('PagesVM', {
     mState: {},
     interview: {},
     modalContent: {},
+    previewActive: {
+      get (lastSet) {
+        if (lastSet) { return lastSet } // for testing override
+        return this.attr('rState').previewActive
+      }
+    },
 
     /**
      * @property {String} pages.ViewModel.prototype.backButton backButton
@@ -211,7 +217,7 @@ export default CanMap.extend('PagesVM', {
       const rState = vm.attr('rState')
       const page = vm.attr('currentPage')
       const logic = vm.attr('logic')
-      const previewActive = rState.previewActive
+      const previewActive = vm.attr('previewActive')
 
       if (button.next === constants.qIDFAIL || button.next === constants.qIDRESUME) {
         vm.handleFailOrResumeButton(button)

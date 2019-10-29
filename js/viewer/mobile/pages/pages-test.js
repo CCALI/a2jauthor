@@ -8,6 +8,7 @@ import TraceMessage from 'caja/author/models/trace-message'
 import Interview from 'caja/viewer/models/interview'
 import Logic from 'caja/viewer/mobile/util/logic'
 import constants from 'caja/viewer/models/constants'
+import route from 'can-route'
 import './pages'
 import 'steal-mocha'
 
@@ -87,6 +88,17 @@ describe('<a2j-pages>', () => {
         vm.navigate(button)
 
         assert.equal(logicCount, 1, 'should execute codeAfter logic')
+      })
+
+      it.only('handlePreviewResponses', () => {
+        const button = new CanMap({ next: constants.qIDSUCCESS })
+
+        // cause previewActive getter to return true
+        route.data = { page: 'preview' }
+        vm.navigate(button)
+        const modalContent = vm.attr('modalContent')
+
+        assert.equal(modalContent.text, `User's data would upload to the server.`, 'modalContent should update to display modal when previewActive')
       })
 
       it('ignores navigate() logic if fields have errors', () => {

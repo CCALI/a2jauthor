@@ -194,12 +194,17 @@ describe('<a2j-pages>', () => {
 
       answers.attr('counter', counter)
 
-      vm.attr('currentPage.repeatVar', 'counter')
+      const button = new CanMap({
+        repeatVar: 'counter',
+        repeatVarSet: constants.RepeatVarSetOne
+      })
 
-      vm.setRepeatVariable('counter', constants.RepeatVarSetOne)
+      vm.setRepeatVariable(button)
       assert(vm.attr('logic').varGet('counter'), 1, 'sets initial value to 1')
 
-      vm.setRepeatVariable('counter', constants.RepeatVarSetPlusOne)
+      button.attr('repeatVarSet', constants.RepeatVarSetPlusOne)
+
+      vm.setRepeatVariable(button)
       assert(vm.attr('logic').varGet('counter'), 1, 'increments counter to 2')
     })
 

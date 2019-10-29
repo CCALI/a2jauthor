@@ -4,28 +4,29 @@ git checkout e937772d8bab4ad659df7f894354b29d3efee8be # we had example userfiles
 cp wiki/resources/userfiles.zip ../
 git checkout -
 cd ..
+echo "unzipping userfiles to $PWD"
 unzip userfiles.zip
-cat > config.php <<CONFIGPHP
+cat > CONFIG.php <<CONFIGPHP
 <?php
-define("SERVER_URL","");
-define("DRUPAL_ROOT_DIR", "");
-define("GUIDES_DIR","/tmp/userfiles/");
-define("GUIDES_URL", "/CALI/userfiles/");
+  define("SERVER_URL","");
+  define("DRUPAL_ROOT_DIR", "");
+  define("GUIDES_DIR","/tmp/userfiles/");
+  define("GUIDES_URL", "/userfiles/");
 
-define('DB_NAME', "");
-define('DB_USER', "");
-define('DB_PASSWORD', '');
-define('DB_HOST', '');
+  define('DB_NAME', "");
+  define('DB_USER', "");
+  define('DB_PASSWORD', '');
+  define('DB_HOST', '');
 
-define('D7_DB_NAME', "");
-define('D7_DB_USER', "");
-define('D7_DB_PASSWORD', '');
-define('D7_DB_HOST', '');
+  define('D7_DB_NAME', "");
+  define('D7_DB_USER', "");
+  define('D7_DB_PASSWORD', '');
+  define('D7_DB_HOST', '');
 
-$mysqli = new mysqli('db', 'root', 'root', 'caja', 3306);
-define('LOCAL_USER', 45);  // sets to dev user number 45
+  $mysqli = new mysqli('db', 'root', 'root', 'caja', 3306);
+  define('LOCAL_USER', 45);  // sets to dev user number 45
 
-$isProductionServer = FALSE; //or FALSE
+  $isProductionServer = FALSE; //or FALSE
 ?>
 CONFIGPHP
 
@@ -54,6 +55,7 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_ROOT_USER=root
       - MYSQL_DATABASE=caja
+
 DOCKERCOMPOSE
 
 mkdir -p docker/webserver
@@ -75,7 +77,10 @@ APACHECONFIG
 cat > docker/webserver/Dockerfile <<DOCKERFILE
 FROM php:7-apache
 
-RUN apt-get update && apt-get install -y zlib1g-dev \
+RUN apt-get update \
+    && apt-get install -y \
+    libzip-dev \
+    vim \
     && docker-php-ext-install zip
 RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 RUN a2enmod proxy proxy_http

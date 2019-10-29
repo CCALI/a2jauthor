@@ -4,10 +4,10 @@ Written for OSX
 
 ## Prerequsites:
 - wkhtmltopdf used to generate assembled documents, easiest to install using Homebrew: http://brewformulas.org/Wkhtmltopdf
-- node.js version v8.9.4
-- npm 5.6.0
+- node.js version v12.5.0
+- npm 6.9.0
 - MAMP
-    - Kill system apache: `sudo apachectl stop`
+    - First kill system apache: `sudo apachectl stop`
     - Apache port 80
     - MySQL port 8889
     - "Document Root" directory pointed at `~/Sites`. You may need to create this directory.
@@ -16,7 +16,7 @@ Written for OSX
 
 1. Create a CALI directory: `cd ~/Sites && mkdir CALI && cd CALI`
 2. Create a file `~/Sites/CALI/config.json` with the settings below,
-    updating the directory paths as needed.
+    updating the directory paths as needed for your username.
 
     ```
     {
@@ -51,7 +51,7 @@ Written for OSX
     - `mysql> source ~/Sites/CALI/app/wiki/resources/caja_default_2018-10-09.sql`
     - CTRL-c to exit
 6. Seed the guide files:
-    - Unzip to `~/Sites/CALI/app/wiki/resources/userfiles.zip`to `~/Sites/CALI/`
+    - Unzip `~/Sites/CALI/app/wiki/resources/userfiles.zip`to `~/Sites/CALI/`
     - Ensure that the guides are available at `~/Sites/CALI/userfiles/dev/guides/`.
 7. Set php config, located at `~/Sites/CALI/app/CONFIG.php` to the following, replacing the username `mitchel` with your own.
 
@@ -179,7 +179,7 @@ You should now have access to a working production copy of the app at [http://lo
 ## Debugging PHP  ----NOTE---- Both Atom and VS Code provide php debug extensions
 `js/author/CAJA_WS.php` handles api transactions, user management, and file IO. You'll likely need to debug this file at some point.
 
-## follow their setup directions - the following may be deprecated
+## follow their setup directions - the following may be deprecated depending on your local setup.
 
 1. Activate xdebug:
     - Navigate to [http://localhost/MAMP/index.php?language=English&page=phpinfo](http://localhost/MAMP/index.php?language=English&page=phpinfo)

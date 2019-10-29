@@ -229,19 +229,19 @@ export default CanMap.extend('PagesVM', {
 
       vm.handleBackButton(button, rState, logic) // prior question
 
-      vm.handleGotoOrNormalNav(button, rState, logic) // check GOTO logic redirect
+      rState.page = vm.getNextPage(button, logic) // check for GOTO logic redirect, nav to next page
     }
   },
 
-  handleGotoOrNormalNav (button, rState, logic) {
+  getNextPage (button, logic) {
     const gotoPage = logic.attr('gotoPage')
     const logicPageIsNotEmpty = _isString(gotoPage) && gotoPage.length
 
     if (logicPageIsNotEmpty && gotoPage !== button.next) { // GOTO nav
       logic.attr('gotoPage', null)
-      rState.page = gotoPage
+      return gotoPage
     } else if (!this.hasSpecialButton(button)) { // normal nav
-      rState.page = button.next
+      return button.next
     }
   },
 

@@ -201,7 +201,8 @@ export default CanMap.extend('PagesVM', {
   navigate (button, el, ev) {
     const vm = this // preserve navigate context
     const anyFieldHasError = vm.validateAllFields()
-    vm.traceButtonClicked(button.attr('label')) // always show button clicked in debug-panel
+
+    vm.traceButtonClicked(button.attr('label')) // always show clicked button in debug-panel
 
     if (anyFieldHasError) { // do nothing if there are field(s) with error(s)
       ev && ev.preventDefault()
@@ -214,16 +215,16 @@ export default CanMap.extend('PagesVM', {
 
       if (button.next === constants.qIDFAIL || button.next === constants.qIDRESUME) {
         vm.handleFailOrResumeButton(button)
-        return // skip rest of navigate
+        return // these buttons skip rest of navigate
       }
 
       vm.saveButtonValue(button, vm, page, logic) // buttons with variables assigned
 
-      vm.handleCodeAfter(button, vm, page, logic) // afterLogic fired
+      vm.handleCodeAfter(button, vm, page, logic) // afterLogic fired, but GOTO resolves later
 
       vm.setRepeatVariable(button) // set counting variables if exist
 
-      vm.handlePreviewResponses(button, previewActive, ev) // viewer preview messages
+      vm.handlePreviewResponses(button, previewActive, ev) // a2j-viewer preview messages
 
       vm.handleServerPost(button, vm, previewActive, ev) // normal post/assemble
 
@@ -247,7 +248,7 @@ export default CanMap.extend('PagesVM', {
 
   handleFailOrResumeButton (button, vm) {
     if (button.next === constants.qIDRESUME) {
-      vm.resumeInterview()
+      vm.resumeInterview() // this function passed in via stache
       return
     }
     // Author can provide an external URL to explain why user did not qualify/failed out

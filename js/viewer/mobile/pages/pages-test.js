@@ -75,6 +75,20 @@ describe('<a2j-pages>', () => {
     })
 
     describe('navigate', () => {
+      it('getNextPage - check for normal nav or GOTO logic', () => {
+        const button = new CanMap({ next: 'foo' })
+        const currentPage = vm.attr('currentPage')
+        const logic = vm.attr('logic')
+        logic.guide.pages = { Next: nextPageStub }
+
+        const normalNavPage = vm.navigate(button)
+        assert.equal(normalNavPage, 'foo', 'logic gotoPage should override button "next" value')
+
+        currentPage.attr('codeAfter', `GOTO "Next"`)
+        const gotoPage = vm.navigate(button)
+        assert.equal(gotoPage, 'Next', 'logic gotoPage should override button "next" value')
+      })
+
       it('handleCodeAfter - process After Logic', () => {
         const button = new CanMap({ next: 'foo' })
         const currentPage = vm.attr('currentPage')
@@ -117,7 +131,7 @@ describe('<a2j-pages>', () => {
         assert.equal(shouldReturnFalse, false, 'fields with errors return false')
       })
 
-      it('navigates to prior question', () => {
+      it('navigates to prior question with BACK button', () => {
         const rState = vm.attr('rState')
         const visitedPages = rState.visitedPages
         const button = new CanMap({ next: constants.qIDBACK })

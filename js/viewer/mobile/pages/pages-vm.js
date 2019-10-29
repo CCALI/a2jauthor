@@ -205,7 +205,7 @@ export default CanMap.extend('PagesVM', {
   },
 
   navigate (button, el, ev) {
-    const vm = this // preserve navigate context
+    const vm = this // preserve navigate context for post/assemble stache forms
     const anyFieldHasError = vm.validateAllFields()
 
     vm.traceButtonClicked(button.attr('label')) // always show clicked button in debug-panel
@@ -237,6 +237,8 @@ export default CanMap.extend('PagesVM', {
       vm.handleBackButton(button, rState, logic) // prior question
 
       rState.page = vm.getNextPage(button, logic) // check for GOTO logic redirect, nav to next page
+
+      return rState.page // return destination page for testing
     }
   },
 

@@ -48,6 +48,7 @@ describe('<a2j-pages>', () => {
         text: 'welcome!',
         textAudioURL: null,
         learn: '',
+        codeAfter: '',
         buttons: null,
         step: { number: undefined, text: '' } }
       ),
@@ -74,6 +75,20 @@ describe('<a2j-pages>', () => {
     })
 
     describe('navigate', () => {
+      it('handleCodeAfter - process After Logic', () => {
+        const button = new CanMap({ next: 'foo' })
+        const currentPage = vm.attr('currentPage')
+        let logicCount = 0
+
+        vm.attr('logic').exec = () => { logicCount++ }
+
+        currentPage.attr('codeAfter', 'GOTO [Next]')
+
+        vm.navigate(button)
+
+        assert.equal(logicCount, 1, 'should execute codeAfter logic')
+      })
+
       it('ignores navigate() logic if fields have errors', () => {
         const button = new CanMap({ next: 'foo' })
         const fieldWithError = { _answer: { errors: true } }

@@ -220,7 +220,7 @@ export default CanMap.extend('PagesVM', {
       const previewActive = vm.attr('previewActive')
 
       if (button.next === constants.qIDFAIL || button.next === constants.qIDRESUME) {
-        vm.handleFailOrResumeButton(button)
+        vm.handleFailOrResumeButton(button, vm)
         return // these buttons skip rest of navigate
       }
 

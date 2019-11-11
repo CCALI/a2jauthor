@@ -82,9 +82,10 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
 
     // listen for _tLogic trace message events
     const tLogic = rState.logic._tLogic
-    tLogic.listenTo('traceMessage', (ev) => {
+    const tLogicMessageHandler = (ev) => {
       rState.traceMessage.addMessage(ev.message)
-    })
+    }
+    tLogic.listenTo('traceMessage', tLogicMessageHandler)
 
     // if previewPageName is set, we need to make sure the viewer
     // loads that specific page (covers the case when user clicks
@@ -111,8 +112,8 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
 
     $(el).html(template(vm))
 
-    return () => {
-      this.stopListening()
+    return function () {
+      tLogic.stopListening('traceMessage', tLogicMessageHandler)
       tearDownAppState()
     }
   }

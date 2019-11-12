@@ -232,6 +232,7 @@ export default CanMap.extend('PagesVM', {
 
       vm.handleBackButton(button, rState, logic) // prior question
 
+      if (previewActive && this.isSpecialButton(button)) {
         vm.handlePreviewResponses(button, ev) // a2j-viewer preview messages
         return // final buttons show Author note in modal and skip rest of navigate
       }
@@ -251,14 +252,14 @@ export default CanMap.extend('PagesVM', {
     if (logicPageIsNotEmpty && gotoPage !== button.next) { // GOTO nav
       logic.attr('gotoPage', null)
       return gotoPage
-    } else if (!this.hasSpecialButton(button)) { // normal nav
+    } else if (!this.isSpecialButton(button)) { // normal nav
       return button.next
     }
   },
 
   handleFailOrResumeButton (button, vm) {
     if (button.next === constants.qIDRESUME) {
-      vm.resumeInterview() // this function passed in via stache
+      vm.resumeInterview() // this function passed in via from navigation.stache to desktop.stache to pages-vm.js
       return
     }
     // Author can provide an external URL to explain why user did not qualify/failed out
@@ -281,7 +282,7 @@ export default CanMap.extend('PagesVM', {
   },
 
   saveButtonValue (button, vm, page, logic) {
-    if (!button.name) { return }
+    if (!button.name) { return } // no variable assigned
 
     const buttonAnswer = vm.__ensureFieldAnswer(button)
     const repeatVar = page.attr('repeatVar')
@@ -289,11 +290,11 @@ export default CanMap.extend('PagesVM', {
     let buttonValue = button.value
 
     // button source values are always text, so do type conversion here
-    // TODO: should probably handle in asnwers.js model
+    // TODO: should probably handle in answers.js model
     if (buttonAnswer.type === 'TF') {
       buttonValue = buttonValue.toLowerCase() === 'true'
     } else if (buttonAnswer.type === 'Number') {
-      buttonValue = parseInt(buttonValue)
+      buttonValue = parseFloat(buttonValue)
     }
 
     vm.logVarMessage(button.name, buttonValue, false, buttonAnswerIndex)
@@ -352,49 +353,50 @@ export default CanMap.extend('PagesVM', {
     }
   },
 
-  handlePreviewResponses (button, previewActive, ev) {
-    if (previewActive && this.hasSpecialButton(button)) {
-      ev && ev.preventDefault()
-      switch (button.next) {
-        case constants.qIDFAIL:
-          this.attr('modalContent', {
-            title: 'Author note:',
-            text: 'User would be redirected to \n(' + button.url + ')'
-          })
-          break
+  handlePreviewResponses (button, ev) {
+    ev && ev.preventDefault()
+    switch (button.next) {
+      case constants.qIDFAIL:
+        this.attr('modalContent', {
+          title: 'Author note:',
+          text: 'User would be redirected to \n(' + button.url + ')'
+        })
+        break
 
-        case constants.qIDEXIT:
-          this.attr('modalContent', {
-            title: 'Author note:',
-            text: "User's INCOMPLETE data would upload to the server."
-          })
-          break
+      case constants.qIDEXIT:
+        this.attr('modalContent', {
+          title: 'Author note:',
+          text: "User's INCOMPLETE data would upload to the server."
+        })
+        break
 
-        case constants.qIDASSEMBLE:
-          this.attr('modalContent', {
-            title: 'Author note:',
-            text: 'Document Assembly would happen here.  Use Test Assemble under the Templates tab to assemble in A2J Author'
-          })
-          break
+      case constants.qIDASSEMBLE:
+        this.attr('modalContent', {
+          title: 'Author note:',
+          text: 'Document Assembly would happen here.  Use Test Assemble under the Templates tab to assemble in A2J Author'
+        })
+        break
 
-        case constants.qIDSUCCESS:
-          this.attr('modalContent', {
-            title: 'Author note:',
-            text: "User's data would upload to the server."
-          })
-          break
-        case constants.qIDASSEMBLESUCCESS:
-          this.attr('modalContent', {
-            title: 'Author note:',
-            text: "User's data would upload to the server, then assemble their document.  Use Test Assemble under the Templates tab to assemble in A2J Author"
-          })
-          break
-      }
+      case constants.qIDSUCCESS:
+        this.attr('modalContent', {
+          title: 'Author note:',
+          text: "User's data would upload to the server."
+        })
+        break
+      case constants.qIDASSEMBLESUCCESS:
+        this.attr('modalContent', {
+          title: 'Author note:',
+          text: "User's data would upload to the server, then assemble their document.  Use Test Assemble under the Templates tab to assemble in A2J Author"
+        })
+        break
     }
   },
 
   handleServerPost (button, vm, previewActive, ev) {
-    if (!previewActive && (vm.shouldPostOrAssemble(button))) {
+    // do nothing if in preview
+    if (previewActive) { return }
+
+    if ((vm.isPostOrAssemble(button))) {
       vm.setInterviewAsComplete()
       // This modal and disable is for LHI/HotDocs issue taking too long to process
       // prompting users to repeatedly press submit, crashing HotDocs
@@ -430,7 +432,7 @@ export default CanMap.extend('PagesVM', {
   },
 
   // navigate util functions
-  hasSpecialButton (button) {
+  isSpecialButton (button) {
     return button.next === constants.qIDFAIL ||
     button.next === constants.qIDEXIT ||
     button.next === constants.qIDSUCCESS ||
@@ -438,7 +440,7 @@ export default CanMap.extend('PagesVM', {
     button.next === constants.qIDASSEMBLE
   },
 
-  shouldPostOrAssemble (button) {
+  isPostOrAssemble (button) {
     return button.next === constants.qIDSUCCESS ||
     button.next === constants.qIDASSEMBLESUCCESS ||
     button.next === constants.qIDASSEMBLE

@@ -15,7 +15,7 @@ import parseGuideToMobile from 'caja/viewer/mobile/util/guide-to-mobile'
 
 import 'can-map-define'
 
-const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
+export const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
   define: {
     // passed in via viewer-preview-layout.stache bindings
     guidePath: {},

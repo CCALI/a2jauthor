@@ -59,7 +59,6 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
     const interview = new Interview(parsedData)
     const lang = new Lang(interview.attr('language'))
 
-
     const answers = pState.attr('answers')
 
     if (previewAnswers) { // restore previous answers

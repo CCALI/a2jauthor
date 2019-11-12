@@ -230,7 +230,10 @@ export default CanMap.extend('PagesVM', {
 
       vm.setRepeatVariable(button) // set counting variables if exist
 
-      vm.handlePreviewResponses(button, previewActive, ev) // a2j-viewer preview messages
+      if (previewActive && this.hasSpecialButton(button)) {
+        vm.handlePreviewResponses(button, ev) // a2j-viewer preview messages
+        return // final buttons show Author note in modal and skip rest of navigate
+      }
 
       vm.handleServerPost(button, vm, previewActive, ev) // normal post/assemble
 

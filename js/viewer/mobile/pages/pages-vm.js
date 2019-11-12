@@ -230,14 +230,13 @@ export default CanMap.extend('PagesVM', {
 
       vm.setRepeatVariable(button) // set counting variables if exist
 
-      if (previewActive && this.hasSpecialButton(button)) {
+      vm.handleBackButton(button, rState, logic) // prior question
+
         vm.handlePreviewResponses(button, ev) // a2j-viewer preview messages
         return // final buttons show Author note in modal and skip rest of navigate
       }
 
       vm.handleServerPost(button, vm, previewActive, ev) // normal post/assemble
-
-      vm.handleBackButton(button, rState, logic) // prior question
 
       rState.page = vm.getNextPage(button, logic) // check for GOTO logic redirect, nav to next page
 

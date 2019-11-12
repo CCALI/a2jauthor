@@ -456,6 +456,13 @@ export const FieldVM = CanMap.extend('FieldVM', {
     return normalizedDate
   },
 
+  restoreUserAvatar (userAvatarJSON) {
+    const restoredUserAvatar = JSON.parse(userAvatarJSON)
+    this.onUserAvatarChange(restoredUserAvatar)
+    this.onUserAvatarSkinToneChange(restoredUserAvatar.skinTone)
+    this.onUserAvatarHairColorChange(restoredUserAvatar.hairColor)
+  },
+
   connectedCallback (el) {
     const vm = this
     // default availableLength
@@ -464,10 +471,7 @@ export const FieldVM = CanMap.extend('FieldVM', {
     if (vm.attr('field.type') === 'useravatar') {
       const userAvatarJSON = vm.attr('logic').varGet('user avatar')
       if (userAvatarJSON) {
-        const restoredUserAvatar = JSON.parse(userAvatarJSON)
-        vm.onUserAvatarChange(restoredUserAvatar)
-        vm.onUserAvatarSkinToneChange(restoredUserAvatar.skinTone)
-        vm.onUserAvatarHairColorChange(restoredUserAvatar.hairColor)
+        vm.restoreUserAvatar(userAvatarJSON)
       }
     }
 

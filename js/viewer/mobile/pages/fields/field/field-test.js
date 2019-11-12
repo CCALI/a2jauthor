@@ -32,13 +32,25 @@ describe('<a2j-field>', () => {
         rState: {
           traceMessage: new TraceMessage({
             currentPageName: 'FieldTest'
-          })
+          }),
+          userAvatar: {}
         }
       })
     })
 
     afterEach(() => {
       vm = null
+    })
+
+    it('restoreUserAvatar', () => {
+      const userAvatarJSON = '{"gender":"male","isOld":true,"hasWheelchair":false,"hairColor":"grayLight","skinTone":"darker"}'
+      vm.restoreUserAvatar(userAvatarJSON)
+      const userAvatar = vm.attr('rState.userAvatar')
+      assert.equal(userAvatar.hairColor, 'grayLight', 'should restore userAvatar.hairColor')
+      assert.equal(userAvatar.skinTone, 'darker', 'should restore userAvatar.skinTone')
+      assert.equal(userAvatar.gender, 'male', 'should restore userAvatar.skinTone')
+      assert.equal(userAvatar.hasWheelchair, false, 'should restore userAvatar.skinTone')
+      assert.equal(userAvatar.isOld, true, 'should restore userAvatar.skinTone')
     })
 
     it('should suggest a format for SSN numbers', () => {

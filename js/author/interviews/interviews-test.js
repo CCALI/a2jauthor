@@ -3,6 +3,8 @@ import F from 'funcunit'
 import { assert } from 'chai'
 import stache from 'can-stache'
 import CanList from 'can-list'
+import CanMap from 'can-map'
+import DefineMap from 'can-define/map/map'
 import { InterviewsVM } from './interviews'
 import '../models/fixtures/'
 import domEvents from 'can-dom-events'
@@ -15,6 +17,17 @@ describe('<interviews-page>', function () {
 
     beforeEach(function () {
       vm = new InterviewsVM()
+    })
+
+    it('clearPreviewState()', function () {
+      let newMessageLogIsCalled = false
+      const traceMessage = new DefineMap({ newMessageLog: () => { newMessageLogIsCalled = true } })
+      vm.traceMessage = traceMessage
+      vm.previewInterview = new CanMap({ answers: {} })
+
+      vm.clearPreviewState()
+      assert.equal(vm.previewInterview, undefined, 'should clear previewInterview by setting to undefined')
+      assert.isTrue(newMessageLogIsCalled, 'should call newMessageLog() when clearing preview state')
     })
 
     it('deleteInterview works', function (done) {

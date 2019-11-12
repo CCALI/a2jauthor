@@ -461,6 +461,16 @@ export const FieldVM = CanMap.extend('FieldVM', {
     // default availableLength
     vm.attr('availableLength', vm.attr('field.maxChars'))
 
+    if (vm.attr('field.type') === 'useravatar') {
+      const userAvatarJSON = vm.attr('logic').varGet('user avatar')
+      if (userAvatarJSON) {
+        const restoredUserAvatar = JSON.parse(userAvatarJSON)
+        vm.onUserAvatarChange(restoredUserAvatar)
+        vm.onUserAvatarSkinToneChange(restoredUserAvatar.skinTone)
+        vm.onUserAvatarHairColorChange(restoredUserAvatar.hairColor)
+      }
+    }
+
     // setup datepicker widget
     if (vm.attr('field.type') === 'datemdy') {
       const defaultDate = vm.attr('field._answer.values')

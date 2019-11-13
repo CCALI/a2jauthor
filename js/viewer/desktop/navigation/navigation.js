@@ -179,11 +179,10 @@ export let ViewerNavigationVM = CanMap.extend({
    * Resumes saved interview.
    */
   resumeInterview () {
-    let rState = this.attr('rState')
-    let lastPageName = rState.lastPageBeforeExit
-    let interview = this.attr('interview')
-    let answers = interview.attr('answers')
-    let visitedPages = rState.visitedPages
+    const rState = this.attr('rState')
+    const answers = this.attr('interview.answers')
+    const visitedPages = rState.visitedPages
+    const resumeTargetPageName = rState.lastPageBeforeExit
 
     rState.lastPageBeforeExit = null
 
@@ -195,9 +194,11 @@ export let ViewerNavigationVM = CanMap.extend({
     }
 
     if (window._paq) {
-      Analytics.trackCustomEvent('Resume-Interview', 'to: ' + lastPageName)
+      Analytics.trackCustomEvent('Resume-Interview', 'to: ' + resumeTargetPageName)
     }
-    rState.page = lastPageName
+    if (resumeTargetPageName) {
+      rState.page = resumeTargetPageName
+    }
   },
 
   /**

@@ -23,6 +23,7 @@ describe('<a2j-viewer-navigation>', function () {
 
       promise.then(function (_interview) {
         interview = _interview
+        interview.attr('answers', { 'a2j interview incomplete tf': {values: []} })
         rState = new AppState({ interview })
         pages = interview.attr('pages')
         visited = canReflect.getKeyValue(rState, 'visitedPages')
@@ -71,6 +72,23 @@ describe('<a2j-viewer-navigation>', function () {
 
       rState.lastPageBeforeExit = '1-Intro'
       assert.isTrue(vm.attr('canResumeInterview'))
+    })
+
+    it('resumeInterview', function () {
+      // navigate to first page
+      visited.unshift(pages.attr(0))
+      vm.attr('selectedPageIndex', 0)
+
+      // navigate to second page
+      visited.unshift(pages.attr(1))
+      vm.attr('selectedPageIndex', 0)
+
+      // navigate to exit page by normal nav (not Author best practice)
+      visited.unshift(pages.attr(2))
+      vm.attr('selectedPageIndex', 0)
+
+      vm.resumeInterview()
+      assert.equal(visited.length, 2, 'should remove the normal nav page from visitedPages on Resume')
     })
 
     it('canNavigateBack - whether back button should be enabled', function () {

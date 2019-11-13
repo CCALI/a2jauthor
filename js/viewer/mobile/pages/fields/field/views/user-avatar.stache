@@ -3,38 +3,44 @@
 <can-import from='caja/author/skin-picker/' />
 <can-import from='caja/viewer/mobile/pages/fields/field/views/user-avatar.less' />
 
-{{#if(hasUserAvatarPicker)}}
-  <div>
-    <user-avatar-picker
-      hair:from="userAvatar.hairColor"
-      skin:from="userAvatar.skinTone"
-      gender:from="userAvatar.gender"
-      isOld:from="userAvatar.isOld"
-      hasWheelchair:from="userAvatar.hasWheelchair"
-      onAvatar:from="onUserAvatarChange"
-    />
-  </div>
+{{#not(isMobile)}}
+  {{#if(hasUserAvatarPicker)}}
+    <div>
+      <user-avatar-picker
+        hair:from="userAvatar.hairColor"
+        skin:from="userAvatar.skinTone"
+        gender:from="userAvatar.gender"
+        isOld:from="userAvatar.isOld"
+        hasWheelchair:from="userAvatar.hasWheelchair"
+        onAvatar:from="onUserAvatarChange"
+      />
+    </div>
 
+    <div>
+      <label>Skin tone:</label>
+      <skin-picker
+        selectedSkin:from="userAvatar.skinTone"
+        onSkin:from="onUserAvatarSkinToneChange"
+      />
+    </div>
+    <div>
+      <label>Hair color:</label>
+      <hair-picker
+        selectedHair:from="userAvatar.hairColor"
+        onHair:from="onUserAvatarHairColorChange"
+      />
+    </div>
+  {{/if}}
+  <br>
+  <label>Use Avatar for A2J Guided Interview<sup>®</sup> ?</label><br>
+  <label class="toggle">
+    <span class="toggle-label">Yes</span>
+    <input class="toggle-checkbox" type="checkbox"  on:click="toggleUserAvatarPicker()">
+    <div class="toggle-switch"></div>
+    <span class="toggle-label">No</span>
+  </label>
+{{else}}
   <div>
-    <label>Skin tone:</label>
-    <skin-picker
-      selectedSkin:from="userAvatar.skinTone"
-      onSkin:from="onUserAvatarSkinToneChange"
-    />
+    <label>User Avatar selection not supported in Mobile Viewer</label>
   </div>
-  <div>
-    <label>Hair color:</label>
-    <hair-picker
-      selectedHair:from="userAvatar.hairColor"
-      onHair:from="onUserAvatarHairColorChange"
-    />
-  </div>
-{{/if}}
-
-<label>Show Avatar</label><br>
-<label class="toggle">
-	<span class="toggle-label">Yes</span>
-	<input class="toggle-checkbox" type="checkbox"  on:click="toggleUserAvatarPicker()">
-	<div class="toggle-switch"></div>
-	<span class="toggle-label">No</span>
-</label>
+{{/not}}

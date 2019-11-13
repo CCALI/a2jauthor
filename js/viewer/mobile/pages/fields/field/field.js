@@ -12,6 +12,8 @@ import exceededMaxcharsTpl from './views/exceeded-maxchars.stache'
 import constants from 'caja/viewer/models/constants'
 import stache from 'can-stache'
 import domData from 'can-dom-data'
+import isMobile from 'caja/viewer/is-mobile'
+
 import 'jquery-ui/ui/widgets/datepicker'
 import 'can-map-define'
 
@@ -31,6 +33,18 @@ export const FieldVM = CanMap.extend('FieldVM', {
     field: {},
     // Type: DefineMap
     rState: {},
+
+    /**
+     * @property {can.compute} field.ViewModel.prototype.isMobile isMobile
+     *
+     * used to detect mobile viewer loaded
+     *
+     * */
+    isMobile: {
+      get () {
+        return isMobile()
+      }
+    },
 
     /**
      * @property {DefineMap} field.ViewModel.prototype.userAvatar userAvatar

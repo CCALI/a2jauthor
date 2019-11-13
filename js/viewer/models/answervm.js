@@ -101,6 +101,7 @@ export default CanMap.extend('AnswerVM', {
         invalid = validations.isDate() || validations.required() || validations.min() || validations.max()
         break
       case 'gender':
+      case 'useravatar':
       case 'textpick':
         invalid = validations.required()
         break

@@ -271,7 +271,7 @@ export const FieldVM = CanMap.extend('FieldVM', {
 
     if (field.type === 'checkbox' || field.type === 'checkboxNOTA') {
       value = $el[0].checked
-    } else if (field.type === 'useravatar') {
+    } else if (field.type === 'useravatar') { // TODO: validate the JSON string here?
       value = JSON.stringify(this.attr('userAvatar').serialize())
     } else {
       value = $el.val()

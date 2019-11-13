@@ -75,7 +75,6 @@ describe('<a2j-pages>', () => {
     })
 
     describe('navigate', () => {
-
       it('handleServerPost', () => {
         let postCount = 0
         vm.listenTo('post-answers-to-server', () => {
@@ -123,15 +122,6 @@ describe('<a2j-pages>', () => {
         const modalContent = vm.attr('modalContent')
 
         assert.equal(modalContent.text, `User's data would upload to the server.`, 'modalContent should update to display modal when previewActive')
-      })
-
-      it('handleServerPost', () => {
-        const button = new CanMap({ next: constants.qIDSUCCESS })
-
-        vm.navigate(button)
-        const modalContent = vm.attr('modalContent')
-
-        assert.equal(modalContent.text, `Page will redirect shortly`, 'shows modal notice when post occurs')
       })
 
       it('ignores navigate() logic if fields have errors', () => {

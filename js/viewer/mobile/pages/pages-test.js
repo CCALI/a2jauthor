@@ -75,6 +75,18 @@ describe('<a2j-pages>', () => {
     })
 
     describe('navigate', () => {
+
+      it('handleServerPost', () => {
+        let postCount = 0
+        vm.listenTo('post-answers-to-server', () => {
+          postCount++
+        })
+        const button = new CanMap({ next: constants.qIDEXIT })
+
+        vm.navigate(button)
+        assert.equal(postCount, 1, 'should fire post event')
+      })
+
       it('getNextPage - check for normal nav or GOTO logic', () => {
         const button = new CanMap({ next: 'foo' })
         const currentPage = vm.attr('currentPage')

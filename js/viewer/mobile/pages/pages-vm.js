@@ -234,13 +234,15 @@ export default CanMap.extend('PagesVM', {
 
       if (previewActive && this.isSpecialButton(button)) {
         vm.handlePreviewResponses(button, ev) // a2j-viewer preview messages
-        return // final buttons show Author note in modal and skip rest of navigate
+        return // final preview buttons show Author note in modal and skip rest of navigate
       }
 
-      vm.handleServerPost(button, vm, previewActive, ev) // normal post/assemble
+      if (this.isPostOrAssemble(button)) {
+        vm.handleServerPost(button, vm, previewActive, ev) // normal post/assemble
+        return // final POST buttons skip rest of navigate
+      }
 
       rState.page = vm.getNextPage(button, logic) // check for GOTO logic redirect, nav to next page
-
       return rState.page // return destination page for testing
     }
   },
@@ -396,30 +398,31 @@ export default CanMap.extend('PagesVM', {
     // do nothing if in preview
     if (previewActive) { return }
 
-    if ((vm.isPostOrAssemble(button))) {
+    if (button.next !== constants.qIDEXIT) {
       vm.setInterviewAsComplete()
-      // This modal and disable is for LHI/HotDocs issue taking too long to process
-      // prompting users to repeatedly press submit, crashing HotDocs
-      // Matches A2J4 functionality, but should really be handled better on LHI's server
-      vm.attr('modalContent', {
-        title: 'Answers Submitted :',
-        text: 'Page will redirect shortly'
-      })
-
-      vm.dispatch('post-answers-to-server')
-
-      // qIDASSEMBLESUCCESS requires the default event to trigger the assemble post
-      // and the manual submit below to trigger the answer save
-      // TODO: the way final answer forms are created and submitted needs a refactor
-      if (button.next !== constants.qIDASSEMBLESUCCESS) {
-        ev && ev.preventDefault()
-      }
-
-      // disable the previously clicked button
-      setTimeout(() => {
-        $('button:contains(' + button.label + ')').prop('disabled', true)
-      })
     }
+
+    // This modal and disable is for LHI/HotDocs issue taking too long to process
+    // prompting users to repeatedly press submit, crashing HotDocs
+    // Matches A2J4 functionality, but should really be handled better on LHI's server
+    vm.attr('modalContent', {
+      title: 'Answers Submitted :',
+      text: 'Page will redirect shortly'
+    })
+
+    vm.dispatch('post-answers-to-server')
+
+    // qIDASSEMBLESUCCESS requires the default event to trigger the assemble post
+    // and the manual submit triggered by the dispatched event above to save answers
+    // TODO: there should be a better way to control these dual submits
+    if (button.next !== constants.qIDASSEMBLESUCCESS) {
+      ev && ev.preventDefault()
+    }
+
+    // disable the previously clicked button
+    setTimeout(() => {
+      $('button:contains(' + button.label + ')').prop('disabled', true)
+    })
   },
 
   handleBackButton (button, rState, logic) {
@@ -441,7 +444,8 @@ export default CanMap.extend('PagesVM', {
   },
 
   isPostOrAssemble (button) {
-    return button.next === constants.qIDSUCCESS ||
+    return button.next === constants.qIDEXIT ||
+    button.next === constants.qIDSUCCESS ||
     button.next === constants.qIDASSEMBLESUCCESS ||
     button.next === constants.qIDASSEMBLE
   },

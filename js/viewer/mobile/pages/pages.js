@@ -4,7 +4,7 @@ import Component from 'can-component'
 import template from './pages.stache'
 import assembleFormTpl from './assemble-form.stache'
 import saveAnswersFormTpl from './save-answers-form.stache'
-import { Analytics } from 'caja/viewer/util/analytics'
+import { analytics } from 'caja/viewer/util/analytics'
 import stache from 'can-stache'
 import 'caja/viewer/mobile/util/helpers'
 
@@ -55,7 +55,7 @@ export default Component.extend({
         const page = pages.find(pageName)
         // piwik tracking of learn-more clicks
         if (window._paq) {
-          Analytics.trackCustomEvent('Learn-More', 'from: ' + pageName, page.learn)
+          analytics.trackCustomEvent('Learn-More', 'from: ' + pageName, page.learn)
         }
 
         vm.attr('modalContent', {
@@ -83,7 +83,7 @@ export default Component.extend({
 
           // piwik tracking of popups
           if (window._paq) {
-            Analytics.trackCustomEvent('Pop-Up', 'from: ' + sourcePageName, pageName)
+            analytics.trackCustomEvent('Pop-Up', 'from: ' + sourcePageName, pageName)
           }
 
           // popups only have text, textAudioURL possible values

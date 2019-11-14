@@ -6,7 +6,7 @@ import Logic from 'caja/viewer/mobile/util/logic'
 import constants from 'caja/viewer/models/constants'
 import PersistedState from 'caja/viewer/models/persisted-state'
 import setMobileDesktopClass from 'caja/viewer/util/set-mobile-desktop-class'
-import { Analytics } from 'caja/viewer/util/analytics'
+import { analytics } from 'caja/viewer/util/analytics'
 import _assign from 'lodash/assign'
 import compute from 'can-compute'
 import route from 'can-route'
@@ -62,7 +62,7 @@ export default function ({ interview, pState, mState, rState }) {
 
   // piwik: set author id for filtering/tracking
   const authorId = interview.authorId || 0
-  Analytics.initialize(authorId)
+  analytics.initialize(authorId)
 
   $('#viewer-app').append(template({
     rState, pState, mState, interview, logic, lang, isMobile, modalContent

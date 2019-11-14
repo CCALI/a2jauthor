@@ -410,15 +410,16 @@ export default CanMap.extend('PagesVM', {
       text: 'Page will redirect shortly'
     })
 
-    vm.dispatch('post-answers-to-server')
+    if (button.next !== constants.qIDASSEMBLE) {
+      vm.dispatch('post-answers-to-server')
 
-    // qIDASSEMBLESUCCESS requires the default event to trigger the assemble post
-    // and the manual submit triggered by the dispatched event above to save answers
-    // TODO: there should be a better way to control these dual submits
-    if (button.next !== constants.qIDASSEMBLESUCCESS) {
-      ev && ev.preventDefault()
+      // qIDASSEMBLESUCCESS requires the default event to trigger the assemble post
+      // and the manual submit triggered by the dispatched event above to save answers
+      // TODO: there should be a better way to control these dual submits
+      if (button.next !== constants.qIDASSEMBLESUCCESS) {
+        ev && ev.preventDefault()
+      }
     }
-
     // disable the previously clicked button
     setTimeout(() => {
       $('button:contains(' + button.label + ')').prop('disabled', true)

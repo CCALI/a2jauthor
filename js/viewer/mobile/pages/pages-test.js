@@ -84,6 +84,11 @@ describe('<a2j-pages>', () => {
 
         vm.navigate(button)
         assert.equal(postCount, 1, 'should fire post event')
+
+        button.next = constants.qIDASSEMBLE
+
+        vm.navigate(button)
+        assert.equal(postCount, 1, 'should not fire post for assemble only')
       })
 
       it('getNextPage - check for normal nav or GOTO logic', () => {

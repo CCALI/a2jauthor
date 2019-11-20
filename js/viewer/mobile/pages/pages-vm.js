@@ -219,12 +219,12 @@ export default CanMap.extend('PagesVM', {
       const logic = vm.attr('logic')
       const previewActive = vm.attr('previewActive')
 
+      vm.saveButtonValue(button, vm, page, logic) // buttons with variables assigned
+
       if (button.next === constants.qIDFAIL || button.next === constants.qIDRESUME) {
         vm.handleFailOrResumeButton(button, vm)
         return // these buttons skip rest of navigate
       }
-
-      vm.saveButtonValue(button, vm, page, logic) // buttons with variables assigned
 
       vm.handleCodeAfter(button, vm, page, logic) // afterLogic fired, but GOTO resolves later
 

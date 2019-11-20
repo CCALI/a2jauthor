@@ -149,6 +149,33 @@ describe('<a2j-pages>', () => {
         assert.equal(rState.page, 'priorPage', 'should navigate to prior page')
       })
 
+      it('saves answer when button has a value with special buttons as next target', () => {
+        let answers = defaults.interview.answers
+
+        let kidstf = new CanMap({
+          comment: '',
+          name: 'KidsTF',
+          repeating: true,
+          type: 'TF',
+          values: [null]
+        })
+
+        answers.attr('kidstf', kidstf)
+
+        const button = new CanMap({
+          label: 'Go!',
+          next: constants.qIDFAIL,
+          name: 'KidsTF',
+          value: 'true',
+          url: ''
+        })
+
+        vm.navigate(button)
+
+        assert.deepEqual(answers.attr('kidstf.values.1'), true,
+          'saved value should be true')
+      })
+
       it('saves answer when button has a value', () => {
         let answers = defaults.interview.answers
 

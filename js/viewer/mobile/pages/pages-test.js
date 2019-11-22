@@ -3,17 +3,17 @@ import CanMap from 'can-map'
 import stache from 'can-stache'
 import { assert } from 'chai'
 import PagesVM from './pages-vm'
-import sinon from 'sinon'
 import AppState from 'caja/viewer/models/app-state'
 import TraceMessage from 'caja/author/models/trace-message'
-import Infinite from 'caja/viewer/mobile/util/infinite'
+import Interview from 'caja/viewer/models/interview'
+import Logic from 'caja/viewer/mobile/util/logic'
 import constants from 'caja/viewer/models/constants'
 import './pages'
 import 'steal-mocha'
 
 describe('<a2j-pages>', () => {
   let vm
-  let logicStub
+  let logic
   let nextPageStub
   let priorPageStub
   let interview
@@ -21,17 +21,6 @@ describe('<a2j-pages>', () => {
   let traceMessage
 
   beforeEach(() => {
-    logicStub = new CanMap({
-      infinite: new Infinite(),
-      exec: $.noop,
-      eval: $.noop,
-      gotoPage: false,
-      varExists: sinon.spy(),
-      varCreate: sinon.spy(),
-      varGet: sinon.stub(),
-      varSet: sinon.spy()
-    })
-
     nextPageStub = new CanMap({
       name: 'Next',
       fields: []
@@ -42,13 +31,12 @@ describe('<a2j-pages>', () => {
       fields: []
     })
 
-    interview = new CanMap({
+    interview = new Interview({
       answers: new CanMap(),
-      getPageByName: function (pageName) {
-        return this.pages.attr(pageName)
-      },
       pages: new CanMap({nextPageStub, priorPageStub})
     })
+
+    logic = new Logic({interview})
     // normally passed in via stache
     traceMessage = new TraceMessage()
 
@@ -60,11 +48,12 @@ describe('<a2j-pages>', () => {
         text: 'welcome!',
         textAudioURL: null,
         learn: '',
+        codeAfter: '',
         buttons: null,
         step: { number: undefined, text: '' } }
       ),
-      logic: logicStub,
-      rState: new AppState({ interview, logic: logicStub, traceMessage }),
+      logic: logic,
+      rState: new AppState({ interview, logic, traceMessage }),
       mState: { },
       interview
     }
@@ -86,6 +75,53 @@ describe('<a2j-pages>', () => {
     })
 
     describe('navigate', () => {
+      it('getNextPage - check for normal nav or GOTO logic', () => {
+        const button = new CanMap({ next: 'foo' })
+        const currentPage = vm.attr('currentPage')
+        const logic = vm.attr('logic')
+        logic.guide.pages = { Next: nextPageStub }
+
+        const normalNavPage = vm.navigate(button)
+        assert.equal(normalNavPage, 'foo', 'logic gotoPage should override button "next" value')
+
+        currentPage.attr('codeAfter', `GOTO "Next"`)
+        const gotoPage = vm.navigate(button)
+        assert.equal(gotoPage, 'Next', 'logic gotoPage should override button "next" value')
+      })
+
+      it('handleCodeAfter - process After Logic', () => {
+        const button = new CanMap({ next: 'foo' })
+        const currentPage = vm.attr('currentPage')
+        let logicCount = 0
+
+        vm.attr('logic').exec = () => { logicCount++ }
+
+        currentPage.attr('codeAfter', 'GOTO [Next]')
+
+        vm.navigate(button)
+
+        assert.equal(logicCount, 1, 'should execute codeAfter logic')
+      })
+
+      it('handlePreviewResponses', () => {
+        const button = new CanMap({ next: constants.qIDSUCCESS })
+
+        vm.attr('previewActive', true)
+        vm.navigate(button)
+        const modalContent = vm.attr('modalContent')
+
+        assert.equal(modalContent.text, `User's data would upload to the server.`, 'modalContent should update to display modal when previewActive')
+      })
+
+      it('handleServerPost', () => {
+        const button = new CanMap({ next: constants.qIDSUCCESS })
+
+        vm.navigate(button)
+        const modalContent = vm.attr('modalContent')
+
+        assert.equal(modalContent.text, `Page will redirect shortly`, 'shows modal notice when post occurs')
+      })
+
       it('ignores navigate() logic if fields have errors', () => {
         const button = new CanMap({ next: 'foo' })
         const fieldWithError = { _answer: { errors: true } }
@@ -95,7 +131,7 @@ describe('<a2j-pages>', () => {
         assert.equal(shouldReturnFalse, false, 'fields with errors return false')
       })
 
-      it('navigates to prior question', () => {
+      it('navigates to prior question with BACK button', () => {
         const rState = vm.attr('rState')
         const visitedPages = rState.visitedPages
         const button = new CanMap({ next: constants.qIDBACK })
@@ -132,11 +168,11 @@ describe('<a2j-pages>', () => {
           'first saved value should be true')
       })
 
-      it('saves answer when button can hold mutilple values', () => {
-        let answers = defaults.interview.answers
-        let page = defaults.currentPage
+      it('saves answer when button can hold multiple values', () => {
+        const answers = defaults.interview.answers
+        const page = defaults.currentPage
 
-        let agesnu = new CanMap({
+        const agesnu = new CanMap({
           comment: '',
           name: 'AgesNU',
           repeating: true,
@@ -144,7 +180,16 @@ describe('<a2j-pages>', () => {
           values: [null, 14, 12]
         })
 
+        const count = new CanMap({
+          comment: '',
+          name: 'count',
+          repeating: false,
+          type: 'Number',
+          values: [null, 3]
+        })
+
         answers.attr('agesnu', agesnu)
+        answers.attr('count', count)
 
         const button = new CanMap({
           label: 'Go!',
@@ -154,8 +199,7 @@ describe('<a2j-pages>', () => {
         })
 
         // required to trigger mutli-value save
-        page.attr('repeatVar', 'AgeCount')
-        logicStub.varGet.returns(3)
+        page.attr('repeatVar', 'count')
 
         vm.navigate(button)
 
@@ -186,6 +230,32 @@ describe('<a2j-pages>', () => {
       })
     })
 
+    it('setRepeatVariable', () => {
+      const answers = defaults.interview.answers
+      const counter = new CanMap({
+        comment: '',
+        name: 'counter',
+        repeating: false,
+        type: 'Number',
+        values: [null]
+      })
+
+      answers.attr('counter', counter)
+
+      const button = new CanMap({
+        repeatVar: 'counter',
+        repeatVarSet: constants.RepeatVarSetOne
+      })
+
+      vm.setRepeatVariable(button)
+      assert(vm.attr('logic').varGet('counter'), 1, 'sets initial value to 1')
+
+      button.attr('repeatVarSet', constants.RepeatVarSetPlusOne)
+
+      vm.setRepeatVariable(button)
+      assert(vm.attr('logic').varGet('counter'), 1, 'increments counter to 2')
+    })
+
     it('setFieldAnswers with repeatVar', () => {
       const answers = defaults.interview.answers
       const salaryCount = new CanMap({
@@ -210,7 +280,6 @@ describe('<a2j-pages>', () => {
 
       const fields = vm.attr('currentPage.fields')
       fields.push({ name: 'salary', type: 'number' })
-      logicStub.varGet.returns(2)
 
       vm.setFieldAnswers(fields)
       const field = vm.attr('currentPage.fields.0')
@@ -321,10 +390,6 @@ describe('<a2j-pages>', () => {
   describe('Component', () => {
     let rStateTeardown
     beforeEach(() => {
-      defaults.logic.attr('eval', (text) => {
-        return text + ' ' + defaults.interview.attr('answers.foo')
-      })
-
       let frag = stache(
         '<a2j-pages></a2j-pages>'
       )
@@ -335,24 +400,14 @@ describe('<a2j-pages>', () => {
       rStateTeardown = vm.attr('rState').connectedCallback()
     })
 
-    it('parseText refires if answers update', (done) => {
-      const oldEval = vm.attr('logic').eval
+    it('parseText refires if answers update', () => {
+      const logic = vm.attr('logic')
+      let count = 0
+      logic.eval = () => { return count++ }
+
+      // change answers
       vm.attr('interview.answers.foo', 'bar')
-      vm.attr('logic').attr('eval', (text) => {
-        return text + ' ' + vm.attr('interview.answers.foo')
-      })
-      let currentPageText = $('.question-text')[0].innerHTML
-      assert.equal(currentPageText, 'welcome! bar', 'renders with `defaults` stub value')
-
-      vm.attr('interview.answers.foo', 'baz')
-      // wait for page update
-      setTimeout(() => {
-        currentPageText = $('.question-text')[0].innerHTML
-        assert.equal(currentPageText, 'welcome! baz', 'renders updated value')
-        done()
-      }, 100)
-
-      vm.attr('logic').eval = oldEval
+      assert.equal(count, 2, 'parseText in stache twice and recalled 2 times')
     })
 
     afterEach(() => {

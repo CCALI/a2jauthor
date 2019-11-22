@@ -6,7 +6,7 @@ import _forEach from 'lodash/forEach'
 import queues from 'can-queues'
 import AnswerVM from 'caja/viewer/models/answervm'
 import Parser from 'caja/viewer/mobile/util/parser'
-import { Analytics } from 'caja/viewer/util/analytics'
+import { analytics } from 'caja/viewer/util/analytics'
 import constants from 'caja/viewer/models/constants'
 
 import 'can-map-define'
@@ -30,6 +30,12 @@ export default CanMap.extend('PagesVM', {
     mState: {},
     interview: {},
     modalContent: {},
+    previewActive: {
+      get (lastSet) {
+        if (lastSet) { return lastSet } // for testing override
+        return this.attr('rState').previewActive
+      }
+    },
 
     /**
      * @property {String} pages.ViewModel.prototype.backButton backButton
@@ -177,6 +183,8 @@ export default CanMap.extend('PagesVM', {
       const hasError = !!field.attr('_answer.errors')
       field.attr('hasError', hasError)
     })
+
+    return _some(fields, f => f.attr('hasError'))
   },
 
   traceButtonClicked (buttonLabel) {
@@ -197,225 +205,246 @@ export default CanMap.extend('PagesVM', {
   },
 
   navigate (button, el, ev) {
-    const vm = this
-    vm.traceButtonClicked(button.attr('label'))
+    const vm = this // preserve navigate context for post/assemble stache forms
+    const anyFieldHasError = vm.validateAllFields()
 
-    const page = vm.attr('currentPage')
-    const fields = page.attr('fields')
+    vm.traceButtonClicked(button.attr('label')) // always show clicked button in debug-panel
 
-    vm.validateAllFields()
-    const anyFieldWithError = _some(fields, f => f.attr('hasError'))
-    // invalid fields stop all navigate logic (ex: `required` answer not answered, or min/max out of range)
-    if (anyFieldWithError) {
-      // don't submit answers or assemble document
+    if (anyFieldHasError) { // do nothing if there are field(s) with error(s)
       ev && ev.preventDefault()
-      // do nothing if there are field(s) with error(s)
       return false
-    } else {
-      // no errors/normal navigation
+    } else { // no errors/normal navigation
       const rState = vm.attr('rState')
+      const page = vm.attr('currentPage')
       const logic = vm.attr('logic')
+      const previewActive = vm.attr('previewActive')
 
-      // Author Preview Mode changes handling of special buttons, and does not post answers
-      if (rState.previewActive &&
-        (button.next === constants.qIDFAIL ||
-        button.next === constants.qIDEXIT ||
-        button.next === constants.qIDSUCCESS ||
-        button.next === constants.qIDASSEMBLESUCCESS ||
-        button.next === constants.qIDASSEMBLE)
-      ) {
-        // stop default submit actions in preview
-        ev && ev.preventDefault()
-        vm.previewActiveResponses(button)
+      if (button.next === constants.qIDFAIL || button.next === constants.qIDRESUME) {
+        vm.handleFailOrResumeButton(button)
+        return // these buttons skip rest of navigate
       }
 
-      // resumeInterview function passed from NavigationVM via stache
-      if (button.next === constants.qIDRESUME) {
-        vm.resumeInterview()
-        // special destination dIDRESUME button skips rest of navigate
-        return
-      }
+      vm.saveButtonValue(button, vm, page, logic) // buttons with variables assigned
 
-      // special destination qIDFAIL button skips rest of navigate
-      // Author can provide an external URL to explain why user did not qualify
-      if (button.next === constants.qIDFAIL) {
-        vm.setInterviewAsComplete()
-        let failURL = button.url.toLowerCase()
-        let hasProtocol = failURL.indexOf('http') === 0
-        failURL = hasProtocol ? failURL : 'http://' + failURL
-        if (failURL === 'http://') {
-          // If Empty, standard message
-          vm.attr('modalContent', {
-            title: 'You did not Qualify',
-            text: 'Unfortunately, you did not qualify to use this A2J Guided Interview. Please close your browser window or tab to exit the interview.'
-          })
-        } else {
-          // track the external link
-          if (window._paq) {
-            Analytics.trackExitLink(failURL, 'link')
+      vm.handleCodeAfter(button, vm, page, logic) // afterLogic fired, but GOTO resolves later
+
+      vm.setRepeatVariable(button) // set counting variables if exist
+
+      vm.handlePreviewResponses(button, previewActive, ev) // a2j-viewer preview messages
+
+      vm.handleServerPost(button, vm, previewActive, ev) // normal post/assemble
+
+      vm.handleBackButton(button, rState, logic) // prior question
+
+      rState.page = vm.getNextPage(button, logic) // check for GOTO logic redirect, nav to next page
+
+      return rState.page // return destination page for testing
+    }
+  },
+
+  getNextPage (button, logic) {
+    const gotoPage = logic.attr('gotoPage')
+    const logicPageIsNotEmpty = _isString(gotoPage) && gotoPage.length
+
+    if (logicPageIsNotEmpty && gotoPage !== button.next) { // GOTO nav
+      logic.attr('gotoPage', null)
+      return gotoPage
+    } else if (!this.hasSpecialButton(button)) { // normal nav
+      return button.next
+    }
+  },
+
+  handleFailOrResumeButton (button, vm) {
+    if (button.next === constants.qIDRESUME) {
+      vm.resumeInterview() // this function passed in via stache
+      return
+    }
+    // Author can provide an external URL to explain why user did not qualify/failed out
+    vm.setInterviewAsComplete()
+    let failURL = button.url.toLowerCase()
+    let hasProtocol = failURL.indexOf('http') === 0
+    failURL = hasProtocol ? failURL : 'http://' + failURL
+    if (failURL === 'http://') { // If Empty, standard message
+      vm.attr('modalContent', {
+        title: 'You did not Qualify',
+        text: 'Unfortunately, you did not qualify to use this A2J Guided Interview. Please close your browser window or tab to exit the interview.'
+      })
+    } else {
+      // track the external link
+      if (window._paq) {
+        analytics.trackExitLink(failURL, 'link')
+      }
+      window.open(failURL, '_blank')
+    }
+  },
+
+  saveButtonValue (button, vm, page, logic) {
+    if (!button.name) { return }
+
+    const buttonAnswer = vm.__ensureFieldAnswer(button)
+    const repeatVar = page.attr('repeatVar')
+    let buttonAnswerIndex = repeatVar ? logic.varGet(repeatVar) : 1
+    let buttonValue = button.value
+
+    // button source values are always text, so do type conversion here
+    // TODO: should probably handle in asnwers.js model
+    if (buttonAnswer.type === 'TF') {
+      buttonValue = buttonValue.toLowerCase() === 'true'
+    } else if (buttonAnswer.type === 'Number') {
+      buttonValue = parseInt(buttonValue)
+    }
+
+    vm.logVarMessage(button.name, buttonValue, false, buttonAnswerIndex)
+    logic.varSet(button.name, buttonValue, buttonAnswerIndex)
+  },
+
+  handleCodeAfter (button, vm, page, logic) {
+    const codeAfter = page.attr('codeAfter')
+    // default next page is derived from the button pressed.
+    // might be overridden by the After logic or special
+    // back to prior question button.
+    logic.attr('gotoPage', button.next)
+
+    // execute After logic only if not going to a prior question
+    if (codeAfter && button.next !== constants.qIDBACK) {
+      vm.traceMessageAfterQuestion()
+
+      // parsing codeAfter causes several re-renders, batching for performance
+      // TODO: might not need this once afterLogic parsing is refactored to canjs
+      queues.batch.start()
+      logic.exec(codeAfter)
+      queues.batch.stop()
+    }
+  },
+
+  setRepeatVariable (button) {
+    const repeatVar = button.attr('repeatVar')
+    const repeatVarSet = button.attr('repeatVarSet')
+
+    if (repeatVar && repeatVarSet) {
+      const logic = this.attr('logic')
+      const traceMessage = this.attr('rState.traceMessage')
+      const traceMsg = {}
+
+      switch (repeatVarSet) {
+        case constants.RepeatVarSetOne:
+          if (!logic.varExists(repeatVar)) {
+            logic.varCreate(repeatVar, 'Number', false, 'Repeat variable index')
           }
-          window.open(failURL, '_blank')
-        }
-        return
+
+          logic.varSet(repeatVar, 1)
+          traceMsg.key = repeatVar + '-0'
+          traceMsg.fragments = [{ format: '', msg: 'Setting [' + repeatVar + '] to 1' }]
+          break
+
+        case constants.RepeatVarSetPlusOne:
+          const value = logic.varGet(repeatVar)
+
+          logic.varSet(repeatVar, value + 1)
+          traceMsg.key = repeatVar + '-' + value
+          traceMsg.fragments = [{ format: '', msg: 'Incrementing [' + repeatVar + '] to ' + (value + 1) }]
+          break
       }
 
-      // Set answers for buttons with values
-      if (button.name) {
-        const buttonAnswer = vm.__ensureFieldAnswer(button)
-        let buttonAnswerIndex = 1
+      traceMessage.addMessage(traceMsg)
+    }
+  },
 
-        if (page.attr('repeatVar')) {
-          const repeatVar = page.attr('repeatVar')
-          const repeatVarCount = logic.varGet(repeatVar)
+  handlePreviewResponses (button, previewActive, ev) {
+    if (previewActive && this.hasSpecialButton(button)) {
+      ev && ev.preventDefault()
+      switch (button.next) {
+        case constants.qIDFAIL:
+          this.attr('modalContent', {
+            title: 'Author note:',
+            text: 'User would be redirected to \n(' + button.url + ')'
+          })
+          break
 
-          buttonAnswerIndex = (repeatVarCount != null) ? repeatVarCount : buttonAnswerIndex
-        }
+        case constants.qIDEXIT:
+          this.attr('modalContent', {
+            title: 'Author note:',
+            text: "User's INCOMPLETE data would upload to the server."
+          })
+          break
 
-        let buttonValue = button.value
+        case constants.qIDASSEMBLE:
+          this.attr('modalContent', {
+            title: 'Author note:',
+            text: 'Document Assembly would happen here.  Use Test Assemble under the Templates tab to assemble in A2J Author'
+          })
+          break
 
-        if (buttonAnswer.type === 'TF') {
-          buttonValue = buttonValue.toLowerCase() === 'true'
-        } else if (buttonAnswer.type === 'Number') {
-          buttonValue = parseInt(buttonValue)
-        }
-
-        buttonAnswer.attr('values.' + buttonAnswerIndex, buttonValue)
-      }
-
-      // handle afterLogic
-      const codeAfter = page.attr('codeAfter')
-      const buttonRepeatVar = button.attr('repeatVar')
-      const buttonRepeatVarSet = button.attr('repeatVarSet')
-
-      // default next page is derived from the button pressed.
-      // might be overridden by the After logic or special
-      // back to prior question button.
-      logic.attr('gotoPage', button.next)
-
-      // execute After logic only if not going to a prior question
-      if (codeAfter && button.next !== constants.qIDBACK) {
-        vm.traceMessageAfterQuestion()
-
-        // parsing codeAfter causes several re-renders, batching for performance
-        // TODO: might not need this once afterLogic parsing is refactored to canjs
-        queues.batch.start()
-        logic.exec(codeAfter)
-        queues.batch.stop()
-      }
-
-      // buttonRepeatVar holds the name of the variable that acts as the total count
-      // of a repeating variable; and buttonRepeatVarSet indicates whether that
-      // variable should be set to `1` or increased, `setRepeatVariable` takes
-      // care of setting `buttonRepeatVar` properly.
-      if (buttonRepeatVar && buttonRepeatVarSet) {
-        vm.setRepeatVariable(buttonRepeatVar, buttonRepeatVarSet)
-      }
-
-      // Don't post to the server in Author Preview aka previewActive
-      if (!rState.previewActive && (button.next === constants.qIDASSEMBLESUCCESS || button.next === constants.qIDSUCCESS || button.next === constants.qIDEXIT)) {
-        // This modal and disable is for LHI/HotDocs issue taking too long to process
-        // prompting users to repeatedly press submit, crashing HotDocs
-        // Matches A2J4 functionality, but should really be handled better on LHI's server
-        vm.attr('modalContent', {
-          title: 'Answers Submitted :',
-          text: 'Page will redirect shortly'
-        })
-
-        vm.dispatch('post-answers-to-server')
-
-        // qIDASSEMBLESUCCESS requires the default event to trigger the assemble post
-        // and the manual submit below to trigger the answer save
-        // TODO: the way final answer forms are created and submitted needs a refactor
-        if (button.next !== constants.qIDASSEMBLESUCCESS) {
-          ev && ev.preventDefault()
-        }
-        vm.setInterviewAsComplete()
-
-        // disable the previously clicked button
-        setTimeout(() => {
-          $('button:contains(' + button.label + ')').prop('disabled', true)
-        })
-      }
-
-      // user has selected to navigate to a prior question
-      if (button.next === constants.qIDBACK) {
-        // last visited page always at index 1
-        const priorQuestionName = rState.visitedPages[1].name
-        // override with new gotoPage
-        logic.attr('gotoPage', priorQuestionName)
-        button.attr('next', priorQuestionName)
-      }
-
-      const gotoPage = logic.attr('gotoPage')
-      const logicPageIsNotEmpty = _isString(gotoPage) && gotoPage.length
-
-      // this means the logic After has overridden the destination page, we
-      // should navigate to this page instead of the page set by `button.next`.
-      if (logicPageIsNotEmpty && gotoPage !== button.next) {
-        logic.attr('gotoPage', null)
-        rState.page = gotoPage
-
-      // only navigate to the `button.next` page if the button clicked is not
-      // any of the buttons with "special" behavior.
-      } else if (button.next !== constants.qIDEXIT &&
-        button.next !== constants.qIDSUCCESS &&
-        button.next !== constants.qIDASSEMBLE &&
-        button.next !== constants.qIDASSEMBLESUCCESS &&
-        button.next !== constants.qIDFAIL) {
-        rState.page = button.next
-      }
-
-      // if these special buttons are used, the interview is complete (incomplete is false)
-      if (button.next === constants.qIDFAIL ||
-        button.next === constants.qIDSUCCESS ||
-        button.next === constants.qIDASSEMBLE ||
-        button.next === constants.qIDASSEMBLESUCCESS) {
-        vm.setInterviewAsComplete()
+        case constants.qIDSUCCESS:
+          this.attr('modalContent', {
+            title: 'Author note:',
+            text: "User's data would upload to the server."
+          })
+          break
+        case constants.qIDASSEMBLESUCCESS:
+          this.attr('modalContent', {
+            title: 'Author note:',
+            text: "User's data would upload to the server, then assemble their document.  Use Test Assemble under the Templates tab to assemble in A2J Author"
+          })
+          break
       }
     }
+  },
+
+  handleServerPost (button, vm, previewActive, ev) {
+    if (!previewActive && (vm.shouldPostOrAssemble(button))) {
+      vm.setInterviewAsComplete()
+      // This modal and disable is for LHI/HotDocs issue taking too long to process
+      // prompting users to repeatedly press submit, crashing HotDocs
+      // Matches A2J4 functionality, but should really be handled better on LHI's server
+      vm.attr('modalContent', {
+        title: 'Answers Submitted :',
+        text: 'Page will redirect shortly'
+      })
+
+      vm.dispatch('post-answers-to-server')
+
+      // qIDASSEMBLESUCCESS requires the default event to trigger the assemble post
+      // and the manual submit below to trigger the answer save
+      // TODO: the way final answer forms are created and submitted needs a refactor
+      if (button.next !== constants.qIDASSEMBLESUCCESS) {
+        ev && ev.preventDefault()
+      }
+
+      // disable the previously clicked button
+      setTimeout(() => {
+        $('button:contains(' + button.label + ')').prop('disabled', true)
+      })
+    }
+  },
+
+  handleBackButton (button, rState, logic) {
+    if (button.next !== constants.qIDBACK) { return }
+    // last visited page always at index 1
+    const priorQuestionName = rState.visitedPages[1].name
+    // override with new gotoPage
+    logic.attr('gotoPage', priorQuestionName)
+    button.attr('next', priorQuestionName)
+  },
+
+  // navigate util functions
+  hasSpecialButton (button) {
+    return button.next === constants.qIDFAIL ||
+    button.next === constants.qIDEXIT ||
+    button.next === constants.qIDSUCCESS ||
+    button.next === constants.qIDASSEMBLESUCCESS ||
+    button.next === constants.qIDASSEMBLE
+  },
+
+  shouldPostOrAssemble (button) {
+    return button.next === constants.qIDSUCCESS ||
+    button.next === constants.qIDASSEMBLESUCCESS ||
+    button.next === constants.qIDASSEMBLE
   },
 
   setInterviewAsComplete () {
     const answers = this.attr('interview.answers')
     answers.attr(`${constants.vnInterviewIncompleteTF.toLowerCase()}.values`, [null, false])
-  },
-
-  previewActiveResponses (button) {
-    switch (button.next) {
-      case constants.qIDFAIL:
-        this.attr('modalContent', {
-          title: 'Author note:',
-          text: 'User would be redirected to \n(' + button.url + ')'
-        })
-        break
-
-      case constants.qIDEXIT:
-        this.attr('modalContent', {
-          title: 'Author note:',
-          text: "User's INCOMPLETE data would upload to the server."
-        })
-        break
-
-      case constants.qIDASSEMBLE:
-        this.attr('modalContent', {
-          title: 'Author note:',
-          text: 'Document Assembly would happen here.  Use Test Assemble under the Templates tab to assemble in A2J Author'
-        })
-        break
-
-      case constants.qIDSUCCESS:
-        this.attr('modalContent', {
-          title: 'Author note:',
-          text: "User's data would upload to the server."
-        })
-        break
-      case constants.qIDASSEMBLESUCCESS:
-        this.attr('modalContent', {
-          title: 'Author note:',
-          text: "User's data would upload to the server, then assemble their document.  Use Test Assemble under the Templates tab to assemble in A2J Author"
-        })
-        break
-    }
   },
 
   setCurrentPage () {
@@ -488,7 +517,8 @@ export default CanMap.extend('PagesVM', {
 
         field.attr('_answer', avm)
         // if repeating true, show var#count in debug-panel
-        this.logVarMessage(field.attr('_answer'), answer.repeating, answerIndex)
+        const answerValue = avm.attr('answer.values.' + answerIndex)
+        this.logVarMessage(answer.name, answerValue, answer.repeating, answerIndex)
       })
     }
   },
@@ -519,9 +549,7 @@ export default CanMap.extend('PagesVM', {
     return avm
   },
 
-  logVarMessage (fieldAnswerVM, isRepeating, answerIndex) {
-    const answerName = fieldAnswerVM.attr('answer.name')
-    const answerValue = fieldAnswerVM.attr('values')
+  logVarMessage (answerName, answerValue, isRepeating, answerIndex) {
     const answerIndexDisplay = isRepeating ? `#${answerIndex}` : ''
 
     this.attr('rState.traceMessage').addMessage({
@@ -532,40 +560,5 @@ export default CanMap.extend('PagesVM', {
         { format: 'val', msg: answerValue }
       ]
     })
-  },
-
-  setRepeatVariable (repeatVar, repeatVarSet) {
-    const logic = this.attr('logic')
-    const traceMessage = this.attr('rState.traceMessage')
-
-    let traceMsg = {}
-
-    if (!logic.varExists('repeatVar')) {
-      logic.varCreate('repeatVar', 'Text', false, 'Repeat variable name')
-    }
-
-    logic.varSet('repeatVar', repeatVar)
-
-    switch (repeatVarSet) {
-      case constants.RepeatVarSetOne:
-        if (!logic.varExists(repeatVar)) {
-          logic.varCreate(repeatVar, 'Number', false, 'Repeat variable index')
-        }
-
-        logic.varSet(repeatVar, 1)
-        traceMsg.key = repeatVar + '-0'
-        traceMsg.fragments = [{ format: '', msg: 'Setting [' + repeatVar + '] to 1' }]
-        traceMessage.addMessage(traceMsg)
-        break
-
-      case constants.RepeatVarSetPlusOne:
-        const value = logic.varGet(repeatVar)
-
-        logic.varSet(repeatVar, value + 1)
-        traceMsg.key = repeatVar + '-' + value
-        traceMsg.fragments = [{ format: '', msg: 'Incrementing [' + repeatVar + '] to ' + (value + 1) }]
-        traceMessage.addMessage(traceMsg)
-        break
-    }
   }
 })

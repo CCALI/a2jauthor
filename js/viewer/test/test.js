@@ -15,3 +15,4 @@ import 'caja/viewer/desktop/avatar/avatar-test'
 import 'caja/viewer/desktop/navigation/navigation-test'
 
 import 'caja/viewer/modal/modal-test'
+import 'caja/viewer/preview/preview-test'

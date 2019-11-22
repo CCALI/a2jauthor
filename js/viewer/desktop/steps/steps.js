@@ -7,7 +7,7 @@ import template from './steps.stache'
 import _findIndex from 'lodash/findIndex'
 import _truncate from 'lodash/truncate'
 import learnMoreTemplate from './learn-more.stache'
-import { Analytics } from 'caja/viewer/util/analytics'
+import { analytics } from 'caja/viewer/util/analytics'
 import stache from 'can-stache'
 import canReflect from 'can-reflect'
 
@@ -565,7 +565,7 @@ export default Component.extend({
 
         // piwik tracking of learn-more clicks
         if (window._paq) {
-          Analytics.trackCustomEvent('Learn-More', 'from: ' + pageName, page.learn)
+          analytics.trackCustomEvent('Learn-More', 'from: ' + pageName, page.learn)
         }
 
         vm.attr('modalContent', {

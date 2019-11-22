@@ -4,7 +4,7 @@ import Component from 'can-component'
 import _truncate from 'lodash/truncate'
 import template from './navigation.stache'
 import constants from 'caja/viewer/models/constants'
-import { Analytics } from 'caja/viewer/util/analytics'
+import { analytics } from 'caja/viewer/util/analytics'
 import isMobile from 'caja/viewer/is-mobile'
 
 import 'can-map-define'
@@ -161,7 +161,7 @@ export let ViewerNavigationVM = CanMap.extend({
     rState.lastPageBeforeExit = pageName
 
     if (window._paq) {
-      Analytics.trackCustomEvent('Save&Exit', 'from: ' + pageName)
+      analytics.trackCustomEvent('Save&Exit', 'from: ' + pageName)
     }
 
     if (answers) {
@@ -179,11 +179,10 @@ export let ViewerNavigationVM = CanMap.extend({
    * Resumes saved interview.
    */
   resumeInterview () {
-    let rState = this.attr('rState')
-    let lastPageName = rState.lastPageBeforeExit
-    let interview = this.attr('interview')
-    let answers = interview.attr('answers')
-    let visitedPages = rState.visitedPages
+    const rState = this.attr('rState')
+    const answers = this.attr('interview.answers')
+    const visitedPages = rState.visitedPages
+    const resumeTargetPageName = rState.lastPageBeforeExit
 
     rState.lastPageBeforeExit = null
 
@@ -195,9 +194,11 @@ export let ViewerNavigationVM = CanMap.extend({
     }
 
     if (window._paq) {
-      Analytics.trackCustomEvent('Resume-Interview', 'to: ' + lastPageName)
+      analytics.trackCustomEvent('Resume-Interview', 'to: ' + resumeTargetPageName)
     }
-    rState.page = lastPageName
+    if (resumeTargetPageName) {
+      rState.page = resumeTargetPageName
+    }
   },
 
   /**

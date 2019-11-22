@@ -264,7 +264,7 @@
     <div class="tab-panel has-toolbar" id="tabsGuides">
       {{#is (page, "interviews")}}
         <interviews-toolbar interviews:to="interviews"></interviews-toolbar>
-        <interviews-page interviews:from="interviews" traceMessage:from="traceMessage" previewInterview:from="previewInterview"></interviews-page>
+        <interviews-page interviews:from="interviews" traceMessage:from="traceMessage" previewInterview:bind="previewInterview"></interviews-page>
       {{/is}}
     </div>
 

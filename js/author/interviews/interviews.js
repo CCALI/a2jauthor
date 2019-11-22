@@ -79,7 +79,7 @@ export const InterviewsVM = DefineMap.extend('InterviewsVM', {
     }
 
     if (this.previewInterview) {
-      this.previewInterview.clearAnswers()
+      this.previewInterview = undefined
     }
   },
 

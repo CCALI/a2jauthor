@@ -75,6 +75,22 @@ describe('<a2j-pages>', () => {
     })
 
     describe('navigate', () => {
+      it('handleServerPost', () => {
+        let postCount = 0
+        vm.listenTo('post-answers-to-server', () => {
+          postCount++
+        })
+        const button = new CanMap({ next: constants.qIDEXIT })
+
+        vm.navigate(button)
+        assert.equal(postCount, 1, 'should fire post event')
+
+        button.next = constants.qIDASSEMBLE
+
+        vm.navigate(button)
+        assert.equal(postCount, 1, 'should not fire post for assemble only')
+      })
+
       it('getNextPage - check for normal nav or GOTO logic', () => {
         const button = new CanMap({ next: 'foo' })
         const currentPage = vm.attr('currentPage')
@@ -113,15 +129,6 @@ describe('<a2j-pages>', () => {
         assert.equal(modalContent.text, `User's data would upload to the server.`, 'modalContent should update to display modal when previewActive')
       })
 
-      it('handleServerPost', () => {
-        const button = new CanMap({ next: constants.qIDSUCCESS })
-
-        vm.navigate(button)
-        const modalContent = vm.attr('modalContent')
-
-        assert.equal(modalContent.text, `Page will redirect shortly`, 'shows modal notice when post occurs')
-      })
-
       it('ignores navigate() logic if fields have errors', () => {
         const button = new CanMap({ next: 'foo' })
         const fieldWithError = { _answer: { errors: true } }
@@ -140,6 +147,33 @@ describe('<a2j-pages>', () => {
 
         vm.navigate(button)
         assert.equal(rState.page, 'priorPage', 'should navigate to prior page')
+      })
+
+      it('saves answer when button has a value with special buttons as next target', () => {
+        let answers = defaults.interview.answers
+
+        let kidstf = new CanMap({
+          comment: '',
+          name: 'KidsTF',
+          repeating: true,
+          type: 'TF',
+          values: [null]
+        })
+
+        answers.attr('kidstf', kidstf)
+
+        const button = new CanMap({
+          label: 'Go!',
+          next: constants.qIDFAIL,
+          name: 'KidsTF',
+          value: 'true',
+          url: ''
+        })
+
+        vm.navigate(button)
+
+        assert.deepEqual(answers.attr('kidstf.values.1'), true,
+          'saved value should be true')
       })
 
       it('saves answer when button has a value', () => {

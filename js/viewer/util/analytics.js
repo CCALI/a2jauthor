@@ -31,7 +31,7 @@ function setAuthorId (id) {
   window._paq.push(['setCustomDimension', 1, id])
 }
 
-export const Analytics = {
+export const analytics = {
   initialize,
   trackPageView,
   trackCustomEvent,

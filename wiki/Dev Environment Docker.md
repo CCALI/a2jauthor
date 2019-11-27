@@ -57,3 +57,18 @@ To run the project, from the `CALI/` directory, in two separate terminals, run:
     DEBUG=A2J:* npm run start
 
 To quit either, you can type `Ctrl-c`
+
+### Seed the mysql database (first run)
+    docker ps
+    copy CONTAINER ID for mysql
+        example:
+            CONTAINER ID        IMAGE
+            ecb7236e5bbe        cali_web
+    ---->   86fc202fff14        mysql:5.7
+    docker exec -it <pastedContainerID> /bin/bash
+    mysql -u root -p caja < tmp/repo-resources/caja_default_2018-10-09.sql
+
+Navigate to:
+`http://localhost/CAJA/js/author/`
+
+to load the A2J Author app.

@@ -23,10 +23,10 @@ cat > CONFIG.php <<CONFIGPHP
   define('D7_DB_PASSWORD', '');
   define('D7_DB_HOST', '');
 
-  $mysqli = new mysqli('db', 'root', 'root', 'caja', 3306);
+  \$mysqli = new mysqli('db', 'root', 'root', 'caja', 3306);
   define('LOCAL_USER', 45);  // sets to dev user number 45
 
-  $isProductionServer = FALSE; //or FALSE
+  \$isProductionServer = FALSE; //or FALSE
 ?>
 CONFIGPHP
 

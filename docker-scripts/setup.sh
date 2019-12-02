@@ -6,6 +6,8 @@ git checkout -
 cd ..
 echo "unzipping userfiles to $PWD"
 unzip userfiles.zip
+
+echo "generating CONFIG.php to $PWD"
 cat > CONFIG.php <<CONFIGPHP
 <?php
   define("SERVER_URL","");
@@ -30,6 +32,20 @@ cat > CONFIG.php <<CONFIGPHP
 ?>
 CONFIGPHP
 
+echo "generating config.json to $PWD"
+cat > config.json <<CONFIGJSON
+{
+  "SERVER_URL": "http://localhost/CAJA",
+  "GUIDES_DIR": "/tmp/userfiles/",
+  "GUIDES_URL": "/userfiles/",
+  "WKHTMLTOPDF_PATH": "/usr/local/bin/wkhtmltopdf",
+  "WKHTMLTOPDF_ZOOM": 1.0,
+  "WKHTMLTOPDF_DPI": 300,
+  "VIEWER_PATH": ""
+}
+CONFIGJSON
+
+echo "generating docker-compose.yml to $PWD"
 cat > docker-compose.yml <<DOCKERCOMPOSE
 version: '2'
 
@@ -62,6 +78,7 @@ DOCKERCOMPOSE
 
 mkdir -p docker/webserver
 
+echo "generating 000-default.conf to $PWD/docker/webserver/"
 cat > docker/webserver/000-default.conf <<APACHECONFIG
 <VirtualHost *:80>
   ServerAdmin webmaster@localhost
@@ -76,6 +93,7 @@ cat > docker/webserver/000-default.conf <<APACHECONFIG
 </VirtualHost>
 APACHECONFIG
 
+echo "generating Dockerfile to $PWD/docker/webserver/"
 cat > docker/webserver/Dockerfile <<DOCKERFILE
 FROM php:7-apache
 

@@ -87,8 +87,8 @@ cat > docker/webserver/000-default.conf <<APACHECONFIG
   ErrorLog ${APACHE_LOG_DIR}/error.log
   CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-  ProxyPass /api http://docker.for.mac.host.internal:3000/api
-  ProxyPassReverse /api http://docker.for.mac.host.internal:3000/api
+  ProxyPass /api http://host.docker.internal:3000/api
+  ProxyPassReverse /api http://host.docker.internal:3000/api
   ProxyBadHeader Ignore
 </VirtualHost>
 APACHECONFIG

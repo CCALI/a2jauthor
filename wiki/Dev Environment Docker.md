@@ -53,8 +53,12 @@ To run the project, from the `CALI/` directory, in two separate terminals, run:
 
     docker-compose down && docker-compose up --build
 
+To run the NodeJS server for templates:
     cd CAJA
     DEBUG=A2J:* npm run start
+
+note: you may need to update `config.json` in the `CALI/` directory with an explicit `GUIDES_DIR` path.
+Ex: `  "GUIDES_DIR": "/Users/mitchel/Sites/CALI/userfiles/",` rather than the default `/tmp/userfiles/`.
 
 To quit either, you can type `Ctrl-c`
 

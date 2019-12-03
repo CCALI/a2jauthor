@@ -4,7 +4,7 @@ import VarPickerVM from './varpicker-vm'
 import template from './varpicker.stache'
 
 import 'typeahead.js/dist/typeahead.jquery'
-import 'bootstrap-tokenfield'
+import '@open-xchange/bootstrap-tokenfield'
 
 /**
  * @module {Module} author/templates/elements/var-picker/ <var-picker>

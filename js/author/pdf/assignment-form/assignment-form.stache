@@ -44,9 +44,9 @@
       onSelectSuggestion:from="onSelectSuggestion"
     />
 
-    {{#if hasOptions}}
+    {{#if (hasOptions) }}
       <fieldset>
-        {{#if hasOverflowOption}}
+        {{#if (hasOverflowOption) }}
           <div>
             <label>Text grouping:</label>
               <div class='text-group'>
@@ -54,8 +54,8 @@
                   <input
                     type="checkbox"
                     name="text-group"
-                    on:el:change="onGroupChange(scope.event)"
-                    el:checked:bind='variableBuffer.isGroup'
+                    on:change="onGroupChange(scope.event)"
+                    checked:bind='variableBuffer.isGroup'
                   />
                 <span>Group Selected Text Boxes</span>
                 </label>
@@ -69,7 +69,7 @@
                   type='radio'
                   name='overflow-style-1'
                   value='overflow-to-addendum'
-                  on:el:change='onOverflowStyleChange(scope.event)'
+                  on:change='onOverflowStyleChange(scope.event)'
                   checked:bind="equal(variableBuffer.overflowStyle, 'overflow-to-addendum')"
                 />
                 <span>Append overflow text to an addendum</span>
@@ -79,7 +79,7 @@
                   type='radio'
                   name='overflow-style-2'
                   value='everything-to-addendum'
-                  on:el:change='onOverflowStyleChange(scope.event)'
+                  on:change='onOverflowStyleChange(scope.event)'
                   checked:bind="equal(variableBuffer.overflowStyle, 'everything-to-addendum')"
                 />
                 <span>Append all text to an addendum if there would be overflow</span>
@@ -89,7 +89,7 @@
                   type='radio'
                   name='overflow-style-3'
                   value='clip-overflow'
-                  on:el:change='onOverflowStyleChange(scope.event)'
+                  on:change='onOverflowStyleChange(scope.event)'
                   checked:bind="equal(variableBuffer.overflowStyle, 'clip-overflow')"
                 />
                 <span>Ignore text overflow</span>
@@ -102,12 +102,12 @@
             <input
               type="text"
               class="editable"
-              el:value:bind="variableBuffer.addendumLabel"
+              value:bind="variableBuffer.addendumLabel"
             />
           </div>
         {{/if}}
 
-        {{#if hasPassValueOption}}
+        {{#if (hasPassValueOption) }}
           <div>
             <label>Field type:</label>
             <div class='pass-type-picker'>
@@ -116,10 +116,8 @@
                   type='radio'
                   name='pass-type'
                   value='pass-value'
-                  on:el:change='onPassValueChange(scope.event)'
-                  {{^if variableBuffer.isCheck}}
-                    checked='checked'
-                  {{/if}}
+                  on:change='onPassValueChange(scope.event)'
+                  checked:from="not(variableBuffer.isCheck)"
                 />
                 <span>Pass multiple choice value</span>
               </label>
@@ -128,51 +126,46 @@
                   type='radio'
                   name='pass-type'
                   value='pass-check'
-                  on:el:change='onPassValueChange(scope.event)'
-                  {{#if variableBuffer.isCheck}}
-                    checked='checked'
-                  {{/if}}
+                  on:change='onPassValueChange(scope.event)'
+                  checked:from="variableBuffer.isCheck"
                 />
                 <span>Draw a checkmark if the variable matches</span>
               </label>
               <div class='multiple-choice'>
-                {{#is variableBuffer.choices.length 1}}
+                {{#eq (variableBuffer.choices.length, 1) }}
                   <label>Multiple choice value</label>
                 {{else}}
                   <label>Multiple choice values</label>
-                {{/is}}
-                {{#each variableBuffer.choices}}
+                {{/eq}}
+                {{#for (choice of variableBuffer.choices) }}
                   <input
                     type='text'
                     class='editable'
-                    {{^if hasChoicesOption}}
+                    {{#not (hasChoicesOption) }}
                       disabled
-                    {{/if}}
-                    placeholder="Multiple choice value #{{scope.index}}"
-                    value="{{.}}"
-                    on:el:change="onChoiceChange(scope.event, scope.index)"
+                    {{/not}}
+                    value="{{choice}}"
+                    on:change="onChoiceChange(scope.event, scope.index)"
                   />
-                {{/each}}
+                {{/for}}
               </div>
             </div>
           </div>
         {{/if}}
 
-        {{#if hasCheckmarkOption}}
+        {{#if (hasCheckmarkOption) }}
           <div class='checkmark-options'>
             <label>Checkmark style:</label>
             <checkmark-picker
-              check="{{variableBuffer.checkIcon}}"
+              check:raw="{{variableBuffer.checkIcon}}"
               onCheck:from="onCheckIcon"
             />
-            {{#if hasInvertOption}}
+            {{#if (hasInvertOption) }}
               <label>
                 <input
                   type='checkbox'
-                  {{#if variableBuffer.isInverted}}
-                    checked='checked'
-                  {{/if}}
-                  on:el:change='onInvertChange(scope.event)'
+                  checked:from="variableBuffer.isInverted"
+                  on:change='onInvertChange(scope.event)'
                 />
                 <span>If the variable is false, draw the checkmark.</span>
               </label>

@@ -413,7 +413,11 @@
         jj = jj.replace(/\bor\b/gi, '||')
         jj = jj.replace(/\bnot\b/gi, '!')
 
-        //	A2J uses = and <> for comparison while JS uses == and !=
+        // Handle escaped versions of <> comparators https://github.com/CCALI/CAJA/issues/2543
+        jj = jj.replace(/&lt;/g, '<')
+        jj = jj.replace(/&gt;/g, '>')
+
+        // A2J uses = and <> for comparison while JS uses == and !=
         jj = jj.replace(/\=/gi, '==')
         jj = jj.replace(/\>\=\=/gi, '>=')
         jj = jj.replace(REG.LOGIC_LE, '<=')

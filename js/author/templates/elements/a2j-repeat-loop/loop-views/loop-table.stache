@@ -16,7 +16,7 @@
               <var-picker
                 selected:bind="tableColumn.variable"
                 variables:from="scope/variablesList"
-                filterOcurrence:raw="repeating"
+                filterOccurrence:raw="repeating"
               />
             {{else}}
               <a2j-variable useAnswers:from="scope/useAnswers" name:from="tableColumn.variable" />

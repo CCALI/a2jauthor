@@ -2,6 +2,8 @@ import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './addendum-options.stache'
 
+import 'can-map-define'
+
 function toNumber (value, defaultValue) {
   if (typeof value !== 'number') {
     value = parseFloat(value)

@@ -4,6 +4,7 @@ const path = require('path')
 const helmet = require('helmet')
 const logger = require('morgan')
 const feathers = require('feathers')
+const rest = require('feathers-rest')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const assemble = require('./routes/assemble')
@@ -16,13 +17,7 @@ const pdfRouter = require('./pdf/router').router
 
 const app = feathers()
 
-// view engine setup
-app.set('views', path.join(__dirname, '../views'))
-app.set('view engine', 'jade')
-
-// uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.configure(feathers.rest())
+app.configure(rest())
   .use(helmet())
   .use(logger('dev'))
   // Increase the bodyParser limits so we can POST largest payloads

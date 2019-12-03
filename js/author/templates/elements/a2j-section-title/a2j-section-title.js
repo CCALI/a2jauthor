@@ -4,6 +4,8 @@ import contentTpl from './content.stache'
 import template from './a2j-section-title.stache'
 import stache from 'can-stache'
 
+import 'can-map-define'
+
 // preload stache partial
 stache.registerPartial('section-title-content', contentTpl)
 

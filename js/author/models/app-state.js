@@ -229,16 +229,6 @@ export default CanMap.extend('AuthorAppState', {
     },
 
     /**
-     * @property {String} previewAnswers
-     *
-     * Used to persist answers across preview/page edits
-     * Cleared on new interview (re)load or when clearAnswers() triggered in Debug Panel
-     */
-    previewAnswers: {
-      serialize: false
-    },
-
-    /**
      * @property {can.Map} globalAlertProps
      *
      * This map holds some properties use to control the behavior of the

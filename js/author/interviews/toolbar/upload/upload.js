@@ -5,6 +5,8 @@ import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './upload.stache'
 
+import 'can-map-define'
+
 export const UploadVM = CanMap.extend('UploadVM', {
   define: {
     interviews: {}
@@ -63,11 +65,5 @@ export default Component.extend('UploadComponent', {
   view: template,
   leakScope: false,
   tag: 'a2j-upload',
-  ViewModel: UploadVM,
-
-  events: {
-    '{viewModel} uploadSuccess': function () {
-      console.log('much success', this.viewModel.attr('interviews'))
-    }
-  }
+  ViewModel: UploadVM
 })

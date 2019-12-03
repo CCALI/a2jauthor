@@ -2,6 +2,8 @@ import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './thumbnail-sidebar.stache'
 
+import 'can-map-define'
+
 export const ThumbnailSidebarVm = CanMap.extend({
   define: {
     isShowingThumbnails: {

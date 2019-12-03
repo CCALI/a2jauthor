@@ -2,6 +2,8 @@ import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './assignment-form.stache'
 
+import 'can-map-define'
+
 /*
   Assignment = {
     deleteVariable: Maybe String,
@@ -84,7 +86,9 @@ function makeVariableBuffer (variable, options, boxes) {
     isGroup,
     isCheck,
     isInverted: boxes.reduce((i, box) => i || box.isInverted, false),
-    choices: boxes.map(box => box.variableValue)
+    // variableValue of `undefined` causes a bug in rendering the MC value input
+    // will be fixed with can-list & can-define/list bug fix
+    choices: boxes.map(box => box.variableValue === undefined ? '' : box.variableValue)
   }
 }
 
@@ -231,6 +235,10 @@ export const AssignmentFormVm = CanMap.extend('AssignmentFormVm', {
     }
   },
 
+  connectedCallback () {
+    this.didInsertElement()
+  },
+
   didInsertElement () {
     this.updateBufferWithBoxes()
   },
@@ -370,10 +378,5 @@ export default Component.extend({
   tag: 'assignment-form',
   view: template,
   leakScope: false,
-  ViewModel: AssignmentFormVm,
-  events: {
-    inserted () {
-      this.viewModel.didInsertElement()
-    }
-  }
+  ViewModel: AssignmentFormVm
 })

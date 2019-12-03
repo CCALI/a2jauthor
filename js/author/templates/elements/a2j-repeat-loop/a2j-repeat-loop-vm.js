@@ -231,7 +231,7 @@ export default CanMap.extend('RepeatLoopVM', {
     },
 
     /**
-     * @property {Booelan} repeatLoop.ViewModel.prototype.useLoopCounter useLoopCounter
+     * @property {Boolean} repeatLoop.ViewModel.prototype.useLoopCounter useLoopCounter
      * @parent repeatLoop.ViewModel
      *
      * Whether to use a static counter defined by the user or to use an existing

@@ -1,6 +1,8 @@
 import CanMap from 'can-map'
 import Answers from 'caja/author/models/answers'
 
+import 'can-map-define'
+
 /**
  * @module {can.Map} A2jTemplateVM
  * @parent A2JTemplate

@@ -10,7 +10,7 @@
 
 <div class="page">
   {{#if(a2jTemplatePromise.isPending)}}
-    <app-loading />
+    <app-loading loadingMessage:raw="Loading A2J Template ..."/>
   {{else}}
     {{#if(a2jTemplate)}}
       {{#if(isPdfTemplate)}}

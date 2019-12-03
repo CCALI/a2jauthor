@@ -2,7 +2,7 @@ import $ from 'jquery'
 import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './modal.stache'
-import { Analytics } from 'caja/viewer/util/analytics'
+import { analytics } from 'caja/viewer/util/analytics'
 
 import 'bootstrap/js/modal'
 import 'can-map-define'
@@ -104,7 +104,7 @@ export default Component.extend({
 
           // piwik tracking of popups
           if (window._paq) {
-            Analytics.trackCustomEvent('Pop-Up', 'from: ' + sourcePageName, pageName)
+            analytics.trackCustomEvent('Pop-Up', 'from: ' + sourcePageName, pageName)
           }
 
           // popup content is only title, text, and textAudio

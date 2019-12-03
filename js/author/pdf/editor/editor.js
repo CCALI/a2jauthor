@@ -107,7 +107,11 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
   },
 
   define: {
+    // passed in via edit.stache
     guideId: {},
+    guide: {},
+    template: { value: null },
+    // assigned values locally
     isSavingTemplate: {},
     saveError: {},
     isDirtyTimer: {},
@@ -121,7 +125,6 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
     isAssigning: {},
     isShortcutMenuShowing: {},
     isShowingThumbnails: {},
-    template: { value: null },
     pdfController: { value: null },
     boxes: rootNodeProperty('boxes', () => []),
     documentOptions: rootNodeProperty(
@@ -236,7 +239,7 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
     selectedBoxes: {
       get () {
         return this.attr('boxes')
-          .filter(box => box.isSelected)
+          .filter(box => box.attr('isSelected'))
           .sort(boxComparator)
       }
     }

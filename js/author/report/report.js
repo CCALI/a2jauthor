@@ -10,6 +10,8 @@ import cString from 'caja/viewer/mobile/util/string'
 import textStats from 'text-statistics'
 import _cloneDeep from 'lodash/cloneDeep'
 
+import 'can-map-define'
+
 stache.registerPartial('page-partial', pagePartial)
 stache.registerPartial('popup-partial', popupPartial)
 

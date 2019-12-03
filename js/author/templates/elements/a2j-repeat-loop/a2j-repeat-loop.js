@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import loader from '@loader'
 import stache from 'can-stache'
 import Component from 'can-component'
@@ -106,10 +107,13 @@ export default Component.extend({
         // check if we have access to the element while dragging is going on
         if ($textarea.get(0)) {
           let editor = window.CKEDITOR.replace($textarea.get(0), {
-            extraPlugins: 'a2j-variable',
+            extraPlugins: 'a2j-variable,a2j-guid',
             extraAllowedContent: {
               'a2j-variable': {
                 attributes: ['name']
+              },
+              'legal-nav-resource-id': {
+                attributes: ['name', 'guid']
               }
             }
           })

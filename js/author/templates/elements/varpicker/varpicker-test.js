@@ -54,12 +54,12 @@ describe('<var-picker>', function () {
 
     it('variables - list of variables filtered properly', function () {
       assert.deepEqual(vm.attr('filterTypes'), [])
-      assert.equal(vm.attr('filterOcurrence'), 'any', 'default value')
+      assert.equal(vm.attr('filterOccurrence'), 'any', 'default value')
 
       assert.equal(vm.attr('variables.length'), 3,
         'no filters set so it should have all variables')
 
-      vm.attr('filterOcurrence', 'single')
+      vm.attr('filterOccurrence', 'single')
       assert.equal(vm.attr('variables.length'), 2,
         'there are two non-repeating variables')
 

@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './tab.stache'
@@ -5,10 +6,14 @@ import parser from 'caja/viewer/mobile/util/parser'
 import { promptFile } from 'caja/author/utils/uploader'
 import queues from 'can-queues'
 
+import 'can-map-define'
+
 export const VariablesTabVM = CanMap.extend('VariablesTabVM', {
   define: {
-    /* variables: List Variable */
+    // passed in via js/author/app.stache
+    guide: {},
 
+    /* variables: List Variable */
     editingVariable: { value: null },
     showVariableModal: { value: false },
     variableBuffer: {},

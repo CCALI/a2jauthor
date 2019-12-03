@@ -8,7 +8,7 @@
               <var-picker
                 selected:bind="listItem.variable"
                 variables:from="scope/variablesList"
-                filterOcurrence:raw="repeating"
+                filterOccurrence:raw="repeating"
               />
         {{else}}
           <a2j-variable useAnswers:from="scope/useAnswers" name:from="listItem.variable" />

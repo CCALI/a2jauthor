@@ -28,7 +28,7 @@
         </app-alert>
       {{/if}}
 
-      {{#is (childNode.tag, 'a2j-page-break') }}
+      {{#eq (childNode.tag, 'a2j-page-break') }}
         <a2j-page-break
 
           nodeId:from="childNode.id"
@@ -43,9 +43,9 @@
           fontProperties:from="this.fontProperties"
           toggleEditActiveNode:from="toggleEditActiveNode"
         />
-      {{/is}}
+      {{/eq}}
 
-      {{#is (childNode.tag, 'a2j-section-title') }}
+      {{#eq (childNode.tag, 'a2j-section-title') }}
         <a2j-section-title
           nodeId:from="childNode.id"
           deleted:from="childNode.state.deleted"
@@ -62,9 +62,9 @@
           toggleEditActiveNode:from="toggleEditActiveNode"
           sectionCounter:from="scope/rootNode.state.sectionCounter"
         />
-      {{/is}}
+      {{/eq}}
 
-      {{#is (childNode.tag, 'a2j-rich-text') }}
+      {{#eq (childNode.tag, 'a2j-rich-text') }}
         <a2j-rich-text
           nodeId:from="childNode.id"
           userContent:bind="childNode.state.userContent"
@@ -81,9 +81,9 @@
           fontProperties:from="this.fontProperties"
           toggleEditActiveNode:from="toggleEditActiveNode"
         />
-      {{/is}}
+      {{/eq}}
 
-      {{#is (childNode.tag, 'a2j-conditional') }}
+      {{#eq (childNode.tag, 'a2j-conditional') }}
         <a2j-conditional
           guide:from="this.guide"
           nodeId:from="childNode.id"
@@ -107,24 +107,24 @@
           variablesList:from="this.guide.variablesList"
           toggleEditActiveNode:from="toggleEditActiveNode"
         />
-      {{/is}}
+      {{/eq}}
 
-      {{#is (childNode.tag, 'a2j-repeat-loop') }}
+      {{#eq (childNode.tag, 'a2j-repeat-loop') }}
         <a2j-repeat-loop
           nodeId:from="childNode.id"
-          editActive:from="childNode.state.editActive"
-          loopType:from="childNode.state.loopType"
-          loopTitle:from="childNode.state.loopTitle"
-          listItems:from="childNode.state.listItems"
-          tableStyle:from="childNode.state.tableStyle"
-          loopCounter:from="childNode.state.loopCounter"
-          displayType:from="childNode.state.displayType"
-          tableColumns:from="childNode.state.tableColumns"
-          loopTitleTag:from="childNode.state.loopTitleTag"
-          loopRichText:from="childNode.state.loopRichText"
-          listStyleType:from="childNode.state.listStyleType"
           deleted:from="childNode.state.deleted"
-          repeatEachInOneList:from="childNode.state.repeatEachInOneList"
+          editActive:from="childNode.state.editActive"
+          listStyleType:bind="childNode.state.listStyleType"
+          loopTitleTag:bind="childNode.state.loopTitleTag"
+          repeatEachInOneList:bind="childNode.state.repeatEachInOneList"
+          tableStyle:bind="childNode.state.tableStyle"
+          tableColumns:bind="childNode.state.tableColumns"
+          loopCounter:bind="childNode.state.loopCounter"
+          listItems:bind="childNode.state.listItems"
+          loopType:bind="childNode.state.loopType"
+          loopTitle:bind="childNode.state.loopTitle"
+          displayType:bind="childNode.state.displayType"
+          loopRichText:bind="childNode.state.loopRichText"
           loopVariable:bind="childNode.state.loopVariable"
 
           answers:from="scope/answers"
@@ -137,7 +137,7 @@
           variablesList:from="this.guide.variablesList"
           toggleEditActiveNode:from="toggleEditActiveNode"
         />
-      {{/is}}
+      {{/eq}}
     </li>
   {{/for}}
 </ul>

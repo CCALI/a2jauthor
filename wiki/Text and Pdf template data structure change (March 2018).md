@@ -1,4 +1,4 @@
-Templates used to rely on an index map (`templates.json`) of `guideId` to `templateId` at the user root in the file system, but also had a local `templates.json` for each guide to use in standalone document assembly:
+Templates previously relied on an index map (`templates.json`) of `guideId` to `templateId` at the user root in the file system, but also had a local `templates.json` for each guide to use in standalone document assembly:
 
 ```
 <filesRoot>
@@ -25,4 +25,4 @@ Now the local `templates.json` file is the single source of truth for mapping th
             |__ templates.json { "guideId":"600","templateIds": [1, 2] }
 ```
 
-This puts everything that matters to the Guided Interview in the GI itself when zipped for sharing/publishing, and allows it to work the same in a full Author environment as well as a standlone self-hosted A2J-Viewer/A2J-DAT environment.
+This puts everything that matters to the Guided Interview in the GI itself when zipped for sharing/publishing, and allows it to work the same in a full Author environment as well as a standalone self-hosted A2J-Viewer/A2J-DAT environment.

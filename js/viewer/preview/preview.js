@@ -13,7 +13,9 @@ import MemoryState from 'caja/viewer/models/memory-state'
 import PersistedState from 'caja/viewer/models/persisted-state'
 import parseGuideToMobile from 'caja/viewer/mobile/util/guide-to-mobile'
 
-const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
+import 'can-map-define'
+
+export const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
   define: {
     // passed in via viewer-preview-layout.stache bindings
     guidePath: {},
@@ -21,6 +23,7 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
     previewPageName: {},
     traceMessage: {},
     // passed up to Author app-state via viewer-preview-layout.stache bindings
+    previewInterview: {},
     interviewPageName: {
       get: function () {
         return this.attr('rState.page')
@@ -44,6 +47,9 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
     const mState = new MemoryState()
     const pState = new PersistedState()
 
+    // if previewInterview.answers exist here, they are restored from Author app-state binding
+    const previewAnswers = vm.attr('previewInterview.answers')
+
     // Set fileDataURL to window.gGuidePath, so the viewer can locate the
     // interview assets (images, sounds, etc).
     mState.attr('fileDataURL', vm.attr('guidePath'))
@@ -57,14 +63,11 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
     const previewAnswers = vm.attr('interview.answers') ? vm.attr('interview.answers') : null
 
     const answers = pState.attr('answers')
-    let serializedVars = interview.serialize().vars
 
-    if (previewAnswers) { // restore previous answers with any new vars
-      const serializedpreviewAnswers = previewAnswers.serialize()
-      const restoredAnswers = _assign(serializedVars, serializedpreviewAnswers)
-      answers.attr(_assign({}, restoredAnswers))
+    if (previewAnswers) { // restore previous answers
+      answers.attr(previewAnswers.serialize())
     } else { // just set the interview vars
-      answers.attr(_assign({}, serializedVars))
+      answers.attr(_assign({}, interview.serialize().vars))
     }
 
     answers.attr('lang', lang)
@@ -79,9 +82,10 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
 
     // listen for _tLogic trace message events
     const tLogic = rState.logic._tLogic
-    tLogic.listenTo('traceMessage', (ev) => {
+    const tLogicMessageHandler = (ev) => {
       rState.traceMessage.addMessage(ev.message)
-    })
+    }
+    tLogic.listenTo('traceMessage', tLogicMessageHandler)
 
     // if previewPageName is set, we need to make sure the viewer
     // loads that specific page (covers the case when user clicks
@@ -108,8 +112,11 @@ const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
 
     $(el).html(template(vm))
 
-    return () => {
-      this.stopListening()
+    // trigger update of previewInterview to author app-state
+    vm.attr('previewInterview', interview)
+
+    return function () {
+      tLogic.stopListening('traceMessage', tLogicMessageHandler)
       tearDownAppState()
     }
   }

@@ -1,5 +1,7 @@
-<can-import from="caja/author/loading/loading.less!"/>
+<can-import from="caja/author/loading/loading.less"/>
 
-<div class="text-center">
-  <img src="{{joinBase 'viewer/images/A2J5_Icon_512.png'}}" border="1">
-</div>
+  <div class="app-loading">
+      <h2 class="text-center text-muted">
+          <span class="glyphicon-spin6 animate-spin" aria-hidden="true"></span> {{this.loadingMessage}}
+      </h2>
+  </div>

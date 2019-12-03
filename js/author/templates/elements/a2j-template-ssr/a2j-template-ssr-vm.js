@@ -4,6 +4,8 @@ import Answers from 'caja/author/models/answers'
 import A2JTemplate from 'caja/author/models/a2j-template'
 import evalAuthorCondition from 'caja/author/utils/eval-author-condition'
 
+import 'can-map-define'
+
 /**
  * @module {can.Map} A2jTemplateSsrVM
  * @parent A2jTemplateSsr

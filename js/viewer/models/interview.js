@@ -70,7 +70,7 @@ const Interview = Model.extend('InterviewModel', {
 
             resumeDfd.resolve(interview)
           })
-          .fail(function () {
+          .catch(function () {
             resumeDfd.reject()
           })
       } else {

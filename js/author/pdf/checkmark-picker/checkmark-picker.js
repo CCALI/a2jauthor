@@ -3,6 +3,8 @@ import Component from 'can-component'
 import template from './checkmark-picker.stache'
 import { getCheckmarks } from '../index'
 
+import 'can-map-define'
+
 export function CheckmarkLoader (checkCache, getCheckmarks) {
   return function getCachedCheckmarks () {
     if (checkCache) {

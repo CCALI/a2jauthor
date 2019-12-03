@@ -3,6 +3,8 @@ import Component from 'can-component'
 import CanMap from 'can-map'
 import template from './a2j-header-footer.stache'
 
+import 'can-map-define'
+
 /**
  * @property {can.Map} headerFooter.ViewModel
  * @parent headerFooter

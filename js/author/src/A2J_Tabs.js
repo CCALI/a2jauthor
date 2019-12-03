@@ -1070,6 +1070,13 @@ window.form = {
       .data('settings', settings)
       .attr('list', settings.name)
 
+    // jquery 3.x requires manual <tbody> append
+    var $tb = $tbl.find('tbody')
+    if (!$tb.length) {
+      var $tbody = $('<tbody/>')
+      $tbl.append($tbody)
+    }
+
     $div.append(form.tableRowCounter(
       settings.name,
       settings.picker,

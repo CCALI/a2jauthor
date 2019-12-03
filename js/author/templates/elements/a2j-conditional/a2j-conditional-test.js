@@ -7,6 +7,7 @@ import ConditionalVM from './a2j-conditional-vm'
 import 'steal-mocha'
 import './a2j-conditional'
 import 'caja/author/templates/elements/a2j-template/'
+import 'caja/author/styles.less'
 
 describe('<a2j-conditional>', function () {
   describe('viewModel', function () {
@@ -16,6 +17,10 @@ describe('<a2j-conditional>', function () {
       vm = new ConditionalVM({
         children: []
       })
+    })
+
+    afterEach(function () {
+      vm = null
     })
 
     it('unaryOperation - whether only one operand is needed', function () {
@@ -42,7 +47,7 @@ describe('<a2j-conditional>', function () {
 
     beforeEach(function () {
       let frag = stache(
-        '<a2j-conditional vm:children:bind="children" />'
+        '<a2j-conditional children:from="children" />'
       )
 
       $('#test-area').html(frag({
@@ -68,7 +73,7 @@ describe('<a2j-conditional>', function () {
       assert.lengthOf($('.panel-body'), 2, 'if and else body should be rendered')
     })
 
-    describe.skip('element options pane', function () {
+    describe('element options pane', function () {
       beforeEach(function () {
         vm.attr('editActive', true)
         vm.attr('editEnabled', true)
@@ -89,6 +94,7 @@ describe('<a2j-conditional>', function () {
         F('.right-operand').css('visibility', 'hidden', 'visibility should be hidden')
 
         F(() => vm.attr('operator', 'is-greater-than'))
+
         F('.right-operand').css('visibility', 'visible', 'visibility should be visible')
 
         F(done)

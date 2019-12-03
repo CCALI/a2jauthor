@@ -59,9 +59,6 @@ export const ViewerPreviewVM = CanMap.extend('ViewerPreviewVM', {
     const interview = new Interview(parsedData)
     const lang = new Lang(interview.attr('language'))
 
-    // if interview.answers exist here, they are restored from Author app-state binding
-    const previewAnswers = vm.attr('interview.answers') ? vm.attr('interview.answers') : null
-
     const answers = pState.attr('answers')
 
     if (previewAnswers) { // restore previous answers

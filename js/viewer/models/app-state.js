@@ -10,8 +10,12 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   // skinTone, hairColor, gender, isOld, hasWheelChair
   userAvatar: {
     serialize: false,
-    default: () => {
-      return { gender: 'female', isOld: false, hasWheelchair: false, hairColor: 'brownDark', skinTone: 'medium' }
+    get () {
+      const defaultUserAvatar = { gender: 'female', isOld: false, hasWheelchair: false, hairColor: 'brownDark', skinTone: 'medium' }
+      const answers = this.interview && this.interview.attr('answers')
+      const savedUserAvatar = answers.attr('user avatar') && answers.attr('user avatar').values[1]
+      const userAvatar = savedUserAvatar ? JSON.parse(savedUserAvatar) : defaultUserAvatar
+      return new DefineMap(userAvatar)
     }
   },
 

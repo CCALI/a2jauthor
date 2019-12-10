@@ -504,7 +504,9 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
     const vm = this
     const restoreUserAvatar = (ev, show) => {
       if (show) {
-        const previousUserAvatar = vm.attr('rState').interview.answers['user avatar'].values[1]
+        const answers = vm.attr('interview.answers')
+        const userAvatar = answers.attr('user avatar')
+        const previousUserAvatar = userAvatar.attr('values.1')
         if (previousUserAvatar) {
           vm.attr('rState').userAvatar.update(JSON.parse(previousUserAvatar))
         }

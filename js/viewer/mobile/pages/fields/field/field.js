@@ -461,6 +461,7 @@ export const FieldVM = CanMap.extend('FieldVM', {
     // default availableLength
     vm.attr('availableLength', vm.attr('field.maxChars'))
 
+    // userAvatar stored as json string and needs manual restore aka not bound in stache
     if (vm.attr('field.type') === 'useravatar') {
       const userAvatarJSON = vm.attr('logic').varGet('user avatar')
       if (userAvatarJSON) {

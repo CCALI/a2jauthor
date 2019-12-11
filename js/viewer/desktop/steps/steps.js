@@ -46,6 +46,18 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
     },
 
     /**
+     * @property {can.DefineMap} steps.ViewModel.prototype.hasWheelchair hasWheelchair
+     * @parent steps.ViewModel
+     *
+     * for bubble styling when User Avatar has a wheelchair
+     */
+    hasWheelchair: {
+      get () {
+        return this.attr('userAvatar').hasWheelchair
+      }
+    },
+
+    /**
      * @property {can.Map} steps.ViewModel.prototype.currentPage currentPage
      * @parent steps.ViewModel
      *

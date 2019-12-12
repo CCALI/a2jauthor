@@ -674,7 +674,7 @@ var A2JViewer = {
       '<table class="steptextdiv"><tr valign=true><td><span class="steptext">' + gGuide.stepDisplayNameViewer(cs) + '</span></tr></tr></table></div>'
     }
 
-    // Setup guide and client avatars
+    // Setup guide and User Avatars
     var avatarVarName = 'User Avatar' // "blank" or "tan" or ""
     // var genderVarName="User Gender"; // "Male" or "Female" or ""
 

@@ -29,7 +29,20 @@ export const FieldVM = CanMap.extend('FieldVM', {
     // passed in via fields.stache binding
     repeatVarValue: {},
     field: {},
+    // Type: DefineMap
     rState: {},
+
+    /**
+     * @property {DefineMap} field.ViewModel.prototype.userAvatar userAvatar
+     * @parent field.ViewModel
+     *
+     *  current userAvatar
+     */
+    userAvatar: {
+      get () {
+        return this.attr('rState').userAvatar
+      }
+    },
 
     /**
      * @property {Boolean} field.ViewModel.prototype.hasError hasError
@@ -179,6 +192,30 @@ export const FieldVM = CanMap.extend('FieldVM', {
     }
   },
 
+  onUserAvatarChange (selectedAvatar) {
+    const userAvatar = this.attr('userAvatar')
+
+    userAvatar.gender = selectedAvatar.gender
+    userAvatar.isOld = selectedAvatar.isOld
+    userAvatar.hasWheelchair = selectedAvatar.hasWheelchair
+
+    this.validateField()
+  },
+
+  onUserAvatarSkinToneChange (skinTone) {
+    const userAvatar = this.attr('userAvatar')
+    userAvatar.skinTone = skinTone
+
+    this.validateField()
+  },
+
+  onUserAvatarHairColorChange (hairColor) {
+    const userAvatar = this.attr('userAvatar')
+    userAvatar.hairColor = hairColor
+
+    this.validateField()
+  },
+
   /**
      * @property {Number} field.ViewModel.prototype.calcAvailableLength suggestionText
      * @parent field.ViewModel
@@ -220,6 +257,8 @@ export const FieldVM = CanMap.extend('FieldVM', {
 
     if (field.type === 'checkbox' || field.type === 'checkboxNOTA') {
       value = $el[0].checked
+    } else if (field.type === 'useravatar') {
+      value = JSON.stringify(this.attr('userAvatar').serialize())
     } else {
       value = $el.val()
     }
@@ -393,7 +432,6 @@ export const FieldVM = CanMap.extend('FieldVM', {
 
   connectedCallback (el) {
     const vm = this
-
     // default availableLength
     vm.attr('availableLength', vm.attr('field.maxChars'))
 

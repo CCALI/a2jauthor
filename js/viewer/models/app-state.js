@@ -7,6 +7,14 @@ import canReflect from 'can-reflect'
 import queues from 'can-queues'
 
 export const ViewerAppState = DefineMap.extend('ViewerAppState', {
+  // skinTone, hairColor, gender, isOld, hasWheelChair
+  userAvatar: {
+    serialize: false,
+    default: () => {
+      return { gender: 'female', isOld: false, hasWheelchair: false, hairColor: 'brownDark', skinTone: 'lighter' }
+    }
+  },
+
   traceMessage: {
     serialize: false
   },

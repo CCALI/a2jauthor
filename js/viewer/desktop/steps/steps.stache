@@ -8,7 +8,7 @@
       <div class="step-circle bg-step{{currentStep.number}}"></div>
     </div>
 
-    <div class="guide-wrapper {{^if(showClientAvatar)}}guide-center{{/if}}">
+    <div class="guide-wrapper {{#not(showUserAvatar)}}guide-center{{/not}}">
       <div id="guideBubble" class="bubble {{#if(guideBubbleTallerThanAvatar)}}vertical{{else}}top{{/if}}">
         <a2j-pages
           currentPage:from="currentPage"
@@ -23,10 +23,10 @@
           modalContent:bind="modalContent" />
       </div><!-- guideBubble -->
 
-      {{#not(showClientAvatar)}}
+      {{#not(showUserAvatar)}}
         {{#currentPage}}
           {{#if(scope/learn)}}
-            <div id="clientBubble" class="bubble right {{#if(scope/clientBubbleTallerThanAvatar)}}vertical{{else}}top{{/if}}" role="complementary">
+            <div id="clientBubble" class="bubble right {{#if(scope/userBubbleTallerThanAvatar)}}vertical{{else}}top{{/if}}" role="complementary">
               {{> learn-more-tpl}}
             </div>
           {{/if}}
@@ -46,21 +46,23 @@
     </div><!-- guide-wrapper -->
 
     <div class="client-wrapper">
-      {{#if(showClientAvatar)}}
+      {{#if(showUserAvatar)}}
         <div class="avatar-wrapper">
           <a2j-viewer-avatar
-            kind:raw="client"
+            kind:raw="user"
             facing:raw="left"
-            avatarLoaded:from="scope/avatarLoaded"
-            skin:from="scope/clientAvatarSkinTone"
-            hair:from="scope/clientAvatarHairColor"
-            gender:from="scope/interview.userGender" />
+            gender:from="interview.avatarGender"
+            skin:from="userAvatar.skinTone"
+            hair:from="userAvatar.hairColor"
+            isOld:from="userAvatar.isOld"
+            hasWheelchair:from="userAvatar.hasWheelchair"
+          />
         </div>
 
         {{#currentPage}}
           {{#if(learn)}}
             <span class="bubble-arrow left"></span>
-            <div id="clientBubble" class="bubble {{#if(scope/clientBubbleTallerThanAvatar)}}vertical{{/else}}top{{/if}}">
+            <div id="clientBubble" class="bubble {{#if(scope/userBubbleTallerThanAvatar)}}vertical{{/else}}top{{/if}}">
               {{> learn-more-tpl}}
             </div>
           {{/if}}

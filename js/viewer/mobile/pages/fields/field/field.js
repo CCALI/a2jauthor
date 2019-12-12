@@ -12,6 +12,8 @@ import exceededMaxcharsTpl from './views/exceeded-maxchars.stache'
 import constants from 'caja/viewer/models/constants'
 import stache from 'can-stache'
 import domData from 'can-dom-data'
+import isMobile from 'caja/viewer/is-mobile'
+
 import 'jquery-ui/ui/widgets/datepicker'
 import 'can-map-define'
 
@@ -33,6 +35,21 @@ export const FieldVM = CanMap.extend('FieldVM', {
     rState: {},
 
     /**
+<<<<<<< HEAD
+=======
+     * @property {can.compute} field.ViewModel.prototype.isMobile isMobile
+     *
+     * used to detect mobile viewer loaded
+     *
+     * */
+    isMobile: {
+      get () {
+        return isMobile()
+      }
+    },
+
+    /**
+>>>>>>> 2599-no-avatar
      * @property {DefineMap} field.ViewModel.prototype.userAvatar userAvatar
      * @parent field.ViewModel
      *
@@ -257,7 +274,7 @@ export const FieldVM = CanMap.extend('FieldVM', {
 
     if (field.type === 'checkbox' || field.type === 'checkboxNOTA') {
       value = $el[0].checked
-    } else if (field.type === 'useravatar') {
+    } else if (field.type === 'useravatar') { // TODO: validate the JSON string here?
       value = JSON.stringify(this.attr('userAvatar').serialize())
     } else {
       value = $el.val()
@@ -269,23 +286,28 @@ export const FieldVM = CanMap.extend('FieldVM', {
     field.attr('hasError', errors)
 
     if (!errors) {
-      const name = field.attr('name')
-      const answerIndex = _answer.attr('answerIndex')
-      const isRepeating = _answer.attr('answer.repeating')
-      // if repeating true, show var#count in debug-panel
-      const displayAnswerIndex = isRepeating ? `#${answerIndex}` : ''
-      let message = {
-        key: name,
-        fragments: [
-          { format: 'var', msg: name + displayAnswerIndex },
-          { format: '', msg: ' = ' },
-          { format: 'val', msg: value }
-        ]
-      }
-      this.attr('rState').traceMessage.addMessage(message)
+      this.debugPanelMessage(field, value)
     }
 
     return errors
+  },
+
+  debugPanelMessage (field, value) {
+    const answerName = field.attr('name')
+    const answerIndex = field.attr('_answer.answerIndex')
+    const isRepeating = field.attr('_answer.answer.repeating')
+    // if repeating true, show var#count in debug-panel
+    const displayAnswerIndex = isRepeating ? `#${answerIndex}` : ''
+
+    const message = {
+      key: answerName,
+      fragments: [
+        { format: 'var', msg: answerName + displayAnswerIndex },
+        { format: '', msg: ' = ' },
+        { format: 'val', msg: value }
+      ]
+    }
+    this.attr('rState').traceMessage.addMessage(message)
   },
 
   /**
@@ -430,10 +452,25 @@ export const FieldVM = CanMap.extend('FieldVM', {
     return normalizedDate
   },
 
+  restoreUserAvatar (userAvatarJSON) {
+    const restoredUserAvatar = JSON.parse(userAvatarJSON)
+    this.onUserAvatarChange(restoredUserAvatar)
+    this.onUserAvatarSkinToneChange(restoredUserAvatar.skinTone)
+    this.onUserAvatarHairColorChange(restoredUserAvatar.hairColor)
+  },
+
   connectedCallback (el) {
     const vm = this
     // default availableLength
     vm.attr('availableLength', vm.attr('field.maxChars'))
+
+    // userAvatar stored as json string and needs manual restore aka not bound in stache
+    if (vm.attr('field.type') === 'useravatar') {
+      const userAvatarJSON = vm.attr('logic').varGet('user avatar')
+      if (userAvatarJSON) {
+        vm.restoreUserAvatar(userAvatarJSON)
+      }
+    }
 
     // setup datepicker widget
     if (vm.attr('field.type') === 'datemdy') {

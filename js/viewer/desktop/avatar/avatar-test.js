@@ -31,13 +31,13 @@ describe('<a2j-viewer-avatar>', function () {
     })
 
     it('defaults "skin" to "light"', function () {
-      assert.equal(vm.attr('skin'), 'light')
+      assert.equal(vm.attr('skin'), 'medium')
     })
 
     it('enforces "skin" enum type', function () {
       let testValues = [
         { skin: 'dark', expected: 'dark' },
-        { gender: 'foo', expected: 'light' }, // when invalid, default value is returned
+        { gender: 'foo', expected: 'medium' }, // when invalid, default value is returned
         { skin: 'lighter', expected: 'lighter' }
       ]
 

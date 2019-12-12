@@ -46,5 +46,5 @@ const enumType = function (enumColl, defaultValue) {
 
 export const Face = enumType(faces, 'front')
 export const Gender = enumType(genders, 'female')
-export const Skin = enumType(skinTones, 'light')
+export const Skin = enumType(skinTones, 'medium')
 export const Hair = enumType(hairColors, 'brownDark')

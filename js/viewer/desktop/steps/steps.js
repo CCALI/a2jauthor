@@ -46,6 +46,18 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
     },
 
     /**
+     * @property {can.DefineMap} steps.ViewModel.prototype.hasWheelchair hasWheelchair
+     * @parent steps.ViewModel
+     *
+     * for bubble styling when User Avatar has a wheelchair
+     */
+    hasWheelchair: {
+      get () {
+        return this.attr('userAvatar').hasWheelchair
+      }
+    },
+
+    /**
      * @property {can.Map} steps.ViewModel.prototype.currentPage currentPage
      * @parent steps.ViewModel
      *
@@ -504,7 +516,9 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
     const vm = this
     const restoreUserAvatar = (ev, show) => {
       if (show) {
-        const previousUserAvatar = vm.attr('rState').interview.answers['user avatar'].values[1]
+        const answers = vm.attr('interview.answers')
+        const userAvatar = answers.attr('user avatar')
+        const previousUserAvatar = userAvatar.attr('values.1')
         if (previousUserAvatar) {
           vm.attr('rState').userAvatar.update(JSON.parse(previousUserAvatar))
         }
@@ -543,6 +557,10 @@ export default Component.extend({
     },
 
     '{viewModel} showDebugPanel': function (vm) {
+      vm.afterAvatarLoaded(() => vm.updateDomProperties())
+    },
+
+    '{viewModel} showUserAvatar': function (vm) {
       vm.afterAvatarLoaded(() => vm.updateDomProperties())
     },
 

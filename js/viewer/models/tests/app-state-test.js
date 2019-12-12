@@ -52,6 +52,18 @@ describe('AppState', function () {
     appStateTeardown()
   })
 
+  it('sets default avatar when no saved userAvatar value', function () {
+    const defaultUserAvatar = { gender: 'female', isOld: false, hasWheelchair: false, hairColor: 'brownDark', skinTone: 'medium' }
+    assert.deepEqual(appState.userAvatar.serialize(), defaultUserAvatar, 'should set defaultAvatar')
+  })
+
+  it('restores userAvatar from saved interview.answers ', function () {
+    const savedAvatar = JSON.stringify({ gender: 'male', isOld: false, hasWheelchair: true, hairColor: 'red', skinTone: 'medium' })
+    const answers = appState.interview.attr('answers')
+    answers.attr('user avatar', { name: 'user avatar', values: [null, savedAvatar] })
+    assert.deepEqual(appState.userAvatar.serialize(), { gender: 'male', isOld: false, hasWheelchair: true, hairColor: 'red', skinTone: 'medium' }, 'should set defaultAvatar')
+  })
+
   it('sets the document title to the interview title', function () {
     const interviewTitle = appState.interview.title
     const prependedString = 'A2J Guided Interview called '

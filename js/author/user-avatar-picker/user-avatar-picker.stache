@@ -1,0 +1,45 @@
+<can-import from="caja/author/user-avatar-picker/user-avatar-picker.less!"/>
+<can-import from="caja/viewer/desktop/avatar/" />
+
+<div class="user-avatar-group">
+  <div class="row">
+    {{#for (avatar of femaleAvatars)}}
+      <div class="col-xs-3">
+        <div
+          class="avatar-cell {{#if (isSelected(avatar))}}avatar-cell--selected{{/if}}"
+          on:click="fireAvatar(avatar.index)"
+        >
+          <a2j-viewer-avatar
+            kind:raw="user"
+            facing:raw="left"
+            gender:from="avatar.gender"
+            skin:from="avatar.skin"
+            hair:from="avatar.hair"
+            isOld:from="avatar.isOld"
+            hasWheelchair:from="avatar.hasWheelchair"
+          />
+        </div>
+      </div>
+    {{/for}}
+  </div>
+  <div class="row">
+    {{#for (avatar of maleAvatars)}}
+      <div class="col-xs-3">
+        <div
+          class="avatar-cell {{#if (isSelected(avatar))}}avatar-cell--selected{{/if}}"
+          on:click="fireAvatar(avatar.index)"
+        >
+          <a2j-viewer-avatar
+            kind:raw="user"
+            facing:raw="left"
+            gender:from="avatar.gender"
+            skin:from="avatar.skin"
+            hair:from="avatar.hair"
+            isOld:from="avatar.isOld"
+            hasWheelchair:from="avatar.hasWheelchair"
+          />
+        </div>
+      </div>
+    {{/for}}
+  </div>
+</div>

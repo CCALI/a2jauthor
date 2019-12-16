@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;user-avatar-picker&gt;</title>
+  </head>
+
+  <body>
+    <script>
+      window.less = {
+        async: true,
+        fileSync: true
+      };
+    </script>
+
+    <script src="../../node_modules/steal/steal.js"
+      deps-bundle
+      data-main="@empty">
+    </script>
+
+    <script type="steal-module">
+      import AvatarPicker from "caja/author/user-avatar-picker/"
+      import "caja/author/app"
+      import "caja/author/styles.less"
+      import "caja/author/user-avatar-picker/"
+
+      const avatarPicker = new AvatarPicker({
+        viewModel: {
+          onAvatar: (avatar) => {
+            vm.gender = avatar.gender
+            vm.isOld = avatar.isOld
+            vm.hasWheelchair = avatar.hasWheelchair
+          }
+        }
+      })
+      const vm = avatarPicker.viewModel
+      document.body.appendChild(avatarPicker.element)
+    </script>
+  </body>
+</html>

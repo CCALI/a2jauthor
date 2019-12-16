@@ -334,13 +334,7 @@
     <!-- A2J Org Tab -->
       <div class="tab-panel page" id="a2jOrgDashboard">
         {{#is (page, 'a2jorg')}}
-          {{#if (showTesting)}}
-            <a2jorg-dashboard />
-          {{else}}
-            <div>
-              Login at <a href="https://www.a2j.org" target="_blank">A2J.org</a> to see published Guided Interviews
-            </div>
-          {{/if}}
+          <a2jorg-dashboard />
         {{/is}}
       </div>
   </div>

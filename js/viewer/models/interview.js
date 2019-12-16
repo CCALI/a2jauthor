@@ -171,16 +171,19 @@ const Interview = Model.extend('InterviewModel', {
       }
     },
 
-    userGender: {
+    avatarGender: {
       serialize: false,
       get () {
         let result
-        let answers = this.attr('answers')
-        let gender = answers.attr(userGenderVarName)
+        const answers = this.attr('answers')
+        const userAvatar = answers.attr('user avatar')
+        const gender = answers.attr('user gender')
 
-        if (gender) {
-          let values = gender.attr('values').attr() || []
-          let lastValue = values.pop()
+        if (userAvatar || gender) {
+          const genderValues = (gender && gender.attr('values').attr()) || []
+          const userAvatarValues = (userAvatar && userAvatar.attr('values').attr()) || []
+          const userAvatarValue = userAvatarValues[1] && JSON.parse(userAvatarValues[1]).gender
+          let lastValue = userAvatarValue || genderValues.pop()
 
           if (_isString(lastValue) && lastValue.length) {
             lastValue = lastValue.toLowerCase()
@@ -296,4 +299,3 @@ const Interview = Model.extend('InterviewModel', {
 })
 
 export default Interview
-export const userGenderVarName = 'user gender'

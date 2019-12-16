@@ -47,11 +47,11 @@
   margin-right: @grid-gutter-width/2;
 
 	&.vertical {
-  	.vertical-align(absolute);
+    .vertical-align(absolute);
   }
 
 	.bubble-content {
-  	max-height: calc(~"80vh - 40px");
+    max-height: calc(~"80vh - 40px");
     overflow-x: hidden;
     overflow-y: auto;
 	}
@@ -97,46 +97,58 @@
   width: 0px;
 
   &:after, &:before {
-  	left: 100%;
-  	top: 50%;
-  	border: solid transparent;
-  	content: " ";
-  	height: 0;
-  	width: 0;
-  	position: absolute;
-  	pointer-events: none;
+    left: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
   }
 
   &:after {
-  	border-color: rgba(255, 255, 255, 0);
-  	border-left-color: #ffffff;
-  	border-width: 15px;
-  	margin-top: -15px;
+    border-color: rgba(255, 255, 255, 0);
+    border-left-color: #ffffff;
+    border-width: 15px;
+    margin-top: -15px;
   }
   &:before {
-  	border-color: rgba(204, 204, 204, 0);
-  	border-left-color: #ccc;
-  	border-width: 16px;
-  	margin-top: -16px;
+    border-color: rgba(204, 204, 204, 0);
+    border-left-color: #ccc;
+    border-width: 16px;
+    margin-top: -16px;
   }
   &.left:after, &.left:before {
-  	right: 100%;
-  	left: auto;
+    right: 100%;
+    left: auto;
   }
 
   &.left:after {
     border-left-color: rgba(255, 255, 255, 0);
-  	border-right-color: #ffffff;
+    border-right-color: #ffffff;
   }
   &.left:before {
-     border-left-color: rgba(255, 255, 255, 0);
-  	border-right-color: #ccc;
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: #ccc;
   }
 }
 
 .client-wrapper {
-  .bubble-arrow, .bubble {
+  .bubble-arrow, .bubble{
     left: 25%;
+    margin: 0;
+  }
+
+  .bubble-arrow.has-wheelchair {
+    left: 38%;
+    top: 18%;
+    margin: 0;
+  }
+
+  .bubble.has-wheelchair {
+    left: 38%;
+    top: 7%;
     margin: 0;
   }
 }

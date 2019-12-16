@@ -42,9 +42,8 @@ keep your projects:
 
 ### Building
 
-To build the app, run `./CAJA/docker-scripts/build.sh` from the `CALI/` directory.
-
-You will (possibly) need to re-run it (or at least `npm run build:server` from
+To build the app, run `./CAJA/docker-scripts/build.sh` from the `CALI/` directory. You'll
+(possibly infrequently) need to re-run it (or at least `npm run build:server` from
 the `CAJA/` directory) when you change the node app, as the frontend should not
 need to be rebuilt during development.
 
@@ -56,12 +55,14 @@ To run the project(use 2 terminals):
 
     seed the db in the 2nd terminal (See below) on first run
 
-    Terminal 2:
+To run the NodeJS server for templates in Terminal 2:
     cd CAJA
     DEBUG=A2J:* npm run start
 
-To quit either, you can type `Ctrl-c`
+note: you may need to update `config.json` in the `CALI/` directory with an explicit `GUIDES_DIR` path.
+Ex: `  "GUIDES_DIR": "/Users/mitchel/Sites/CALI/userfiles/",` rather than the default `/tmp/userfiles/`.
 
+To quit either, you can type `Ctrl-c`
 
 ### Seed the mysql database (first run)
     docker ps
@@ -70,7 +71,7 @@ To quit either, you can type `Ctrl-c`
             CONTAINER ID        IMAGE
             ecb7236e5bbe        cali_web
     ---->   86fc202fff14        mysql:5.7
-    docker exec <pastedContainerID> -it /bin/bash
+    docker exec -it <pastedContainerID> /bin/bash
     mysql -u root -p caja < tmp/repo-resources/caja_default_2018-10-09.sql
 
 Navigate to:

@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './avatar.stache'
@@ -73,6 +74,16 @@ export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
       value: Face.defaultValue
     },
 
+    isOld: {
+      type: 'boolean',
+      value: false
+    },
+
+    hasWheelchair: {
+      type: 'boolean',
+      value: false
+    },
+
     /**
      * @property {String} avatar.ViewModel.prototype.avatarImageName avatarImageName
      * @parent avatar.ViewModel
@@ -81,10 +92,12 @@ export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
      */
     avatarImageName: {
       get () {
-        let gender = this.attr('gender')
-        let facing = this.attr('facing')
+        const gender = this.attr('gender')
+        const facing = this.attr('facing')
+        const isOld = this.attr('isOld')
+        const hasWheelchair = this.attr('hasWheelchair')
 
-        return `avatar-${gender}-${facing}.svg`
+        return `avatar-${gender}${isOld ? '-old' : ''}${hasWheelchair ? '-chair' : ''}-${facing}.svg`
       }
     },
 
@@ -101,13 +114,15 @@ export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
     svgClassNames: {
       get () {
         const isGuide = this.attr('kind') === 'guide'
-        const baseClass = isGuide ? 'avatar-guide' : 'avatar-client'
+        const baseClass = isGuide ? 'avatar-guide' : 'avatar-user'
         const isMale = this.attr('gender') === 'male'
         const genderClass = isMale ? 'avatar-male' : 'avatar-female'
         const skinClass = getClassNameForSkin(this.attr('skin'))
         const hairClass = getClassNameForHair(this.attr('hair'))
+        const oldClass = this.attr('isOld') ? 'avatar-old' : 'avatar-young'
+        const wheelchairClass = this.attr('hasWheelchair') ? 'avatar-wheelchair' : 'avatar-standing'
 
-        return `${baseClass} ${genderClass} ${skinClass} ${hairClass}`
+        return `${baseClass} ${genderClass} ${skinClass} ${hairClass} ${oldClass} ${wheelchairClass}`
       }
     },
 
@@ -135,6 +150,35 @@ export let ViewerAvatarVM = CanMap.extend('ViewerAvatarVM', {
     if (avatarLoaded) {
       avatarLoaded()
     }
+  },
+
+  loadAvatarSvg (el) {
+    const vm = this
+    const svgBasePath = vm.attr('svgBasePath')
+    const avatarImageName = vm.attr('avatarImageName')
+
+    $.ajax({
+      url: svgBasePath + avatarImageName,
+      dataType: 'text'
+    }).then(data => {
+      vm.attr('svgInline', data)
+      this.updateSvgClass(el)
+      vm.fireAvatarLoaded()
+    })
+  },
+
+  updateSvgClass (el) {
+    if (!el) {
+      return
+    }
+
+    const classNames = this.attr('svgClassNames')
+    const svg = $(el).find('.avatar-guide, .avatar-user')
+    svg.attr('class', classNames)
+  },
+
+  connectedCallback (el) {
+    this.loadAvatarSvg(el)
   }
 })
 
@@ -161,43 +205,14 @@ export default Component.extend({
   ViewModel: ViewerAvatarVM,
 
   events: {
-    inserted () {
-      this.loadAvatarSvg()
-    },
-
     // when the image name changes, we need to wait for the new svg to be
     // loaded to then make the adjustments to the css class name.
     '{viewModel} avatarImageName': function () {
-      this.loadAvatarSvg()
+      this.viewModel.loadAvatarSvg(this.element)
     },
 
     '{viewModel} svgClassNames': function () {
-      this.updateSvgClass()
-    },
-
-    updateSvgClass () {
-      if (!this.element) {
-        return
-      }
-
-      const classNames = this.viewModel.attr('svgClassNames')
-      const svg = $(this.element).find('.avatar-guide, .avatar-client')
-      svg.attr('class', classNames)
-    },
-
-    loadAvatarSvg () {
-      const vm = this.viewModel
-      const svgBasePath = vm.attr('svgBasePath')
-      const avatarImageName = vm.attr('avatarImageName')
-
-      $.ajax({
-        url: svgBasePath + avatarImageName,
-        dataType: 'text'
-      }).then(data => {
-        vm.attr('svgInline', data)
-        this.updateSvgClass()
-        vm.fireAvatarLoaded()
-      })
+      this.viewModel.updateSvgClass(this.element)
     }
   },
 

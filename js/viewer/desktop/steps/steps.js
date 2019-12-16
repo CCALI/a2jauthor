@@ -34,6 +34,30 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
     modalContent: {},
 
     /**
+     * @property {can.DefineMap} steps.ViewModel.prototype.userAvatar userAvatar
+     * @parent steps.ViewModel
+     *
+     * current User Avatar in interview
+     */
+    userAvatar: {
+      get () {
+        return this.attr('rState').userAvatar
+      }
+    },
+
+    /**
+     * @property {can.DefineMap} steps.ViewModel.prototype.hasWheelchair hasWheelchair
+     * @parent steps.ViewModel
+     *
+     * for bubble styling when User Avatar has a wheelchair
+     */
+    hasWheelchair: {
+      get () {
+        return this.attr('userAvatar').hasWheelchair
+      }
+    },
+
+    /**
      * @property {can.Map} steps.ViewModel.prototype.currentPage currentPage
      * @parent steps.ViewModel
      *
@@ -191,52 +215,20 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
       }
     },
 
-    // Local viewer customization
-    customClientSkinTone: { value: null },
-    customClientHairColor: { value: null },
-
     /**
-    * @property {String} steps.ViewModel.prototype.clientAvatarSkinTone clientAvatarSkinTone
-    * @parent steps.ViewModel
-    *
-    * skin tone of the client avatar to be displayed in steps
-    *
-    */
-    clientAvatarSkinTone: {
-      get () {
-        const guideSkinTone = this.attr('guideAvatarSkinTone')
-        return this.attr('customClientSkinTone') || guideSkinTone
-      }
-    },
-
-    /**
-    * @property {String} steps.ViewModel.prototype.clientAvatarHairColor clientAvatarHairColor
-    * @parent steps.ViewModel
-    *
-    * hair color of the client avatar to be displayed in steps
-    *
-    */
-    clientAvatarHairColor: {
-      get () {
-        const guideHairColor = this.attr('guideAvatarHairColor')
-        return this.attr('customClientHairColor') || guideHairColor
-      }
-    },
-
-    /**
-     * @property {Number} steps.ViewModel.prototype.showClientAvatar showClientAvatar
+     * @property {Number} steps.ViewModel.prototype.showUserAvatar showUserAvatar
      * @parent steps.ViewModel
      *
-     * whether the client avatar should be shown
+     * whether the user avatar should be shown
      *
-     * we should not show the client avatar if the current page has the user
+     * we should not show the user avatar if the current page has the user
      * gender field, this prevents the avatar to be rendered right when user
      * selects their gender, which causes a weird jump of the avatar bubble.
      *
      */
-    showClientAvatar: {
+    showUserAvatar: {
       get () {
-        return this.attr('interview.userGender') && !this.attr('currentPage.hasUserGenderField')
+        return this.attr('interview.avatarGender') && !this.attr('currentPage.hasUserGenderOrAvatarField')
       }
     },
 
@@ -246,12 +238,12 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
      *
      * direction the guide avatar should face
      *
-     * face right when client avatar is displayed; otherwise, face front
+     * face right when user avatar is displayed; otherwise, face front
      *
      */
     guideAvatarFacingDirection: {
       get () {
-        return this.attr('showClientAvatar') ? 'right' : 'front'
+        return this.attr('showUserAvatar') ? 'right' : 'front'
       }
     },
 
@@ -316,13 +308,13 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
     },
 
     /**
-     * @property {Number} steps.ViewModel.prototype.clientBubbleTallerThanAvatar clientBubbleTallerThanAvatar
+     * @property {Number} steps.ViewModel.prototype.userBubbleTallerThanAvatar userBubbleTallerThanAvatar
      * @parent steps.ViewModel
      *
-     * whether the client bubble is taller than the avatar
+     * whether the user bubble is taller than the avatar
      *
      */
-    clientBubbleTallerThanAvatar: {
+    userBubbleTallerThanAvatar: {
       get () {
         return this.attr('clientBubbleHeight') > this.attr('avatarHeight')
       }
@@ -518,6 +510,25 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
   // TODO: figure out a better way update the dom when the avatar changes in the DOM
   afterAvatarLoaded (callback) {
     setTimeout(callback, 0)
+  },
+
+  connectedCallback () {
+    const vm = this
+    const restoreUserAvatar = (ev, show) => {
+      if (show) {
+        const answers = vm.attr('interview.answers')
+        const userAvatar = answers.attr('user avatar')
+        const previousUserAvatar = userAvatar.attr('values.1')
+        if (previousUserAvatar) {
+          vm.attr('rState').userAvatar.update(JSON.parse(previousUserAvatar))
+        }
+      }
+    }
+    // if saved answer exists, restoreUserAvatar when shown
+    this.listenTo('showUserAvatar', restoreUserAvatar)
+
+    // cleanup
+    return () => { this.stopListening('showUserAvatar', restoreUserAvatar) }
   }
 })
 
@@ -546,6 +557,10 @@ export default Component.extend({
     },
 
     '{viewModel} showDebugPanel': function (vm) {
+      vm.afterAvatarLoaded(() => vm.updateDomProperties())
+    },
+
+    '{viewModel} showUserAvatar': function (vm) {
       vm.afterAvatarLoaded(() => vm.updateDomProperties())
     },
 

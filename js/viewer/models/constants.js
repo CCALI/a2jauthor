@@ -7,7 +7,7 @@ export default {
   AJAXLoader: '<span class="loader">&nbsp;</span>',
 
   A2JVersionNum: '6.0', // VersionInfo.verNum
-  A2JVersionDate: '2019-12-03',
+  A2JVersionDate: '2019-12-12pre',
 
   // CAVersionNum:'5.0.0',
   // CAVersionDate:'2013-04-15',
@@ -43,6 +43,7 @@ export default {
   ftCheckBox: 'checkbox',
   ftCheckBoxNOTA: 'checkboxNOTA',
   ftCheckBoxMultiple: 'checkboxmultiple',
+  ftUserAvatar: 'useravatar',
 
   // Variable Types
   vtUnknown: 'Unknown', // 0,

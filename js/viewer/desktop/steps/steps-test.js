@@ -81,7 +81,7 @@ describe('<a2j-viewer-steps>', function () {
       F(done)
     })
 
-    it('renders only guide avatar if "userGender" is unknown', function (done) {
+    it('renders only guide avatar if "avatarGender" is unknown', function (done) {
       const answers = interview.attr('answers')
 
       // user has not set their gender
@@ -89,13 +89,13 @@ describe('<a2j-viewer-steps>', function () {
         name: 'user gender',
         values: [null]
       })
-      assert.isUndefined(interview.attr('userGender'))
+      assert.isUndefined(interview.attr('avatarGender'))
 
       F('a2j-viewer-avatar').size(1)
       F(done)
     })
 
-    it('renders both client and guide avatars if "userGender" is known',
+    it('renders both client and guide avatars if "avatarGender" is known',
       function (done) {
         const answers = interview.attr('answers')
 
@@ -105,7 +105,7 @@ describe('<a2j-viewer-steps>', function () {
           values: [null, 'f']
         })
 
-        assert.equal(interview.attr('userGender'), 'female')
+        assert.equal(interview.attr('avatarGender'), 'female')
 
         F('a2j-viewer-avatar').size(2)
         F(done)
@@ -284,36 +284,36 @@ describe('<a2j-viewer-steps>', function () {
       assert.equal(vm.attr('guideAvatarSkinTone'), 'global', 'should use global skin tone if both are set')
     })
 
-    it('showClientAvatar / guideAvatarFacingDirection', () => {
+    it('showUserAvatar / guideAvatarFacingDirection', () => {
       currentPage = new CanMap()
 
       vm.attr({
         interview: {
-          userGender: '',
+          avatarGender: '',
           getPageByName () {
             return currentPage
           }
         }
       })
 
-      assert.ok(!vm.attr('showClientAvatar'), 'should not show client avatar')
+      assert.ok(!vm.attr('showUserAvatar'), 'should not show user avatar')
       assert.equal(
         vm.attr('guideAvatarFacingDirection'),
         'front',
         'should show guide avatar facing front'
       )
 
-      vm.attr('interview.userGender', 'gender')
-      currentPage.attr('hasUserGenderField', true)
-      assert.ok(!vm.attr('showClientAvatar'), 'should not show client avatar when current page has the user gender field')
+      vm.attr('interview.avatarGender', 'gender')
+      currentPage.attr('hasUserGenderOrAvatarField', true)
+      assert.ok(!vm.attr('showUserAvatar'), 'should not show user avatar when current page has the user gender field')
       assert.equal(
         vm.attr('guideAvatarFacingDirection'),
         'front',
         'should still show guide avatar facing front'
       )
 
-      currentPage.attr('hasUserGenderField', false)
-      assert.ok(!!vm.attr('showClientAvatar'), 'should show client avatar when user has a gender')
+      currentPage.attr('hasUserGenderOrAvatarField', false)
+      assert.ok(!!vm.attr('showUserAvatar'), 'should show user avatar when user has a gender')
       assert.equal(
         vm.attr('guideAvatarFacingDirection'),
         'right',
@@ -346,13 +346,13 @@ describe('<a2j-viewer-steps>', function () {
       assert.equal(vm.attr('guideBubbleTallerThanAvatar'), true, 'true')
     })
 
-    it('clientBubbleTallerThanAvatar', () => {
+    it('userBubbleTallerThanAvatar', () => {
       vm.attr('clientBubbleHeight', 100)
       vm.attr('avatarHeight', 100)
-      assert.equal(vm.attr('clientBubbleTallerThanAvatar'), false, 'false')
+      assert.equal(vm.attr('userBubbleTallerThanAvatar'), false, 'false')
 
       vm.attr('avatarHeight', 99)
-      assert.equal(vm.attr('clientBubbleTallerThanAvatar'), true, 'true')
+      assert.equal(vm.attr('userBubbleTallerThanAvatar'), true, 'true')
     })
 
     it('minusHeader', () => {

@@ -1,48 +1,49 @@
 <can-import from="caja/viewer/desktop/avatar/" />
 <can-import from="caja/viewer/styles.less!" />
+<can-import from='can-stache-converters' />
 
 <div class="row">
   <div class="col-md-6" style="padding-left: 50px;">
     <form>
       <h3>Gender</h3>
       <div class="radio">
-        <label><input type="radio" name="gender" can-value="{gender}" value="female">Female</label>
+        <label><input type="radio" checked:bind="equal(this.gender, 'female')">Female</label>
       </div>
       <div class="radio">
-        <label><input type="radio" name="gender" can-value="{gender}" value="male">Male</label>
+        <label><input type="radio" checked:bind="equal(this.gender, 'male')">Male</label>
       </div>
 
       <h3>Facing</h3>
       <div class="radio">
-        <label><input type="radio" name="facing" can-value="{facing}" value="front">Front</label>
+        <label><input type="radio" checked:bind="equal(this.facing, 'front')">Front</label>
       </div>
       <div class="radio">
-        <label><input type="radio" name="facing" can-value="{facing}" value="left">Left</label>
+        <label><input type="radio" checked:bind="equal(this.facing, 'left')">Left</label>
       </div>
       <div class="radio">
-        <label><input type="radio" name="facing" can-value="{facing}" value="right">Right</label>
+        <label><input type="radio" checked:bind="equal(this.facing, 'right')">Right</label>
       </div>
 
       <h3>Style</h3>
       <div class="radio">
-        <label><input type="radio" name="skin" can-value="{skin}" value="lighter">Lighter</label>
+        <label><input type="radio" checked:bind="equal(this.skin, 'lighter')">Lighter</label>
       </div>
       <div class="radio">
-        <label><input type="radio" name="skin" can-value="{skin}" value="light">Light</label>
+        <label><input type="radio" checked:bind="equal(this.skin, 'light')">Light</label>
       </div>
       <div class="radio">
-        <label><input type="radio" name="skin" can-value="{skin}" value="medium">Medium</label>
+        <label><input type="radio" checked:bind="equal(this.skin, 'medium')">Medium</label>
       </div>
       <div class="radio">
-        <label><input type="radio" name="skin" can-value="{skin}" value="dark">Dark</label>
+        <label><input type="radio" checked:bind="equal(this.skin, 'dark')">Dark</label>
       </div>
       <div class="radio">
-        <label><input type="radio" name="skin" can-value="{skin}" value="darker">Darker</label>
+        <label><input type="radio" checked:bind="equal(this.skin, 'darker')">Darker</label>
       </div>
     </form>
   </div>
 
   <div class="col-md-6">
-    <a2j-viewer-avatar class="avatar-client" vm:gender:from="gender" vm:facing:from="facing" vm:skin:from="skin" />
+    <a2j-viewer-avatar class="avatar-user" gender:from="gender" facing:from="facing" skin:from="skin" />
   </div>
 </div>

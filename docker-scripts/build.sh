@@ -7,4 +7,3 @@ npm install
 cd ..
 npm run build
 npm run build:server
-npm run build:client

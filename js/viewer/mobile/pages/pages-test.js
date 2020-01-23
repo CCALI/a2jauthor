@@ -23,11 +23,13 @@ describe('<a2j-pages>', () => {
   beforeEach(() => {
     nextPageStub = new CanMap({
       name: 'Next',
+      step: { number: '1', text: 'Step 1' },
       fields: []
     })
 
     priorPageStub = new CanMap({
       name: 'priorPage',
+      step: { number: '1', text: 'Step 1' },
       fields: []
     })
 
@@ -50,7 +52,7 @@ describe('<a2j-pages>', () => {
         learn: '',
         codeAfter: '',
         buttons: null,
-        step: { number: undefined, text: '' } }
+        step: { number: '0', text: 'Step 0' } }
       ),
       logic: logic,
       rState: new AppState({ interview, logic, traceMessage }),

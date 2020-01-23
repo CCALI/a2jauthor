@@ -26,7 +26,7 @@
           <select aria-labelledby="myProgress" role="listbox"  id="myProgressSelect" class="form-control" el:value:bind="this.selectedPageIndex">
             {{#for(visitedPage of visitedPages)}}
               <option value:from="scope.index" disabled:from="this.disableOption(scope.index)">
-                {{{this.fitPageDescription(visitedPage.text, visitedPage.repeatVarValue)}}}
+                {{{this.fitPageDescription(visitedPage)}}}
               </option>
             {{/for}}
           </select>

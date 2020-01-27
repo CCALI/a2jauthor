@@ -297,7 +297,8 @@
           txt = '<span class="code">' + expressionInText + '</span><span class="err">' + e.message + '</span>'
         }
       } else { // Compile time error
-        txt = '<span class="code">' + expressionInText + '</span><span class="err">' + 'syntax error' + '</span>'
+        const errorText = errors.length && errors[0].text
+        txt = '<span class="code">' + expressionInText + '</span><span class="err">' + 'syntax error: ' + errorText + '</span>'
       }
       return {
         js: js,

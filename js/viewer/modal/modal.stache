@@ -35,7 +35,7 @@
               value:bind="modalContent.textlongValue">
             </textarea>
           {{else}}
-            {{{ eval(modalContent.text, repeatVarValue) }}}
+            {{{insertExternalLinkIcon(eval(modalContent.text, repeatVarValue))}}}
 
             {{#if(modalContent.imageURL)}}
             <img

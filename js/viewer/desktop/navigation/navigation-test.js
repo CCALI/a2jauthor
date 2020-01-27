@@ -165,7 +165,6 @@ describe('<a2j-viewer-navigation>', function () {
       assert.equal(vm.disableOption(1), true, 'true if index is NOT 0 and saveAndExitActive is true')
     })
 
-
     it('resolveVarMacros', () => {
       const noMacroText = 'Hello, Welcome to the interview'
       const resolvedSansMacro = vm.resolveVarMacros(noMacroText)

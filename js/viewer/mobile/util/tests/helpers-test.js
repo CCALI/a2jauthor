@@ -15,6 +15,18 @@ describe('helpers module', function () {
       const outputHTML = insertExternalLinkIconHelper(questionHTML)
       assert.equal(outputHTML, questionHTML, 'should not add span for internal popup links')
     })
+
+    it('handles html being undefined', () => {
+      const questionHTML = undefined
+      const outputHTML = insertExternalLinkIconHelper(questionHTML)
+      assert.equal(outputHTML, questionHTML, 'should do nothing if html is undefined')
+    })
+
+    it('handles html being null', () => {
+      const questionHTML = null
+      const outputHTML = insertExternalLinkIconHelper(questionHTML)
+      assert.equal(outputHTML, questionHTML, 'should do nothing if html is null')
+    })
   })
 
   describe('normalizePathHelper', function () {

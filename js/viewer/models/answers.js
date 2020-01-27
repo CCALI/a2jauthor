@@ -98,6 +98,9 @@ export default Model.extend('AnswersModel', {}, {
           val = cDate.dateToDays(val)
         }
 
+        // handle undefined/null for macro display in viewer
+        if (val == null) { return '' }
+
         break
 
       case CONST.vtTF:

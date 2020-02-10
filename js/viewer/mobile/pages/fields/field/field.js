@@ -352,7 +352,9 @@ export const FieldVM = CanMap.extend('FieldVM', {
           // set answer and validate
           field.attr('_answer.values', calcValue)
           vm.validateField(null, $el)
-        }
+        },
+        useText: 'Enter',
+        useStatus: 'Execute any pending operation and then use the resulting value'
       })
       $inputEl.prop('vm', vm)
       $inputEl.calculator('show')

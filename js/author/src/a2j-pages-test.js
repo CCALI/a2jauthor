@@ -10,26 +10,26 @@ import 'steal-mocha'
 
 describe('src/A2J_Pages', function () {
   beforeEach(() => {
-    window.guide = new window.TGuide()
+    window.gGuide = new window.TGuide()
     const intro = new window.TPage()
     intro.name = 'intro'
     intro.buttons[0] = {label: 'Continue', next: 'page2'}
     const page2 = new window.TPage()
     page2.name = 'page2'
     page2.buttons[0] = {label: 'Continue', next: ''}
-    window.guide.pages = { intro, page2 }
+    window.gGuide.pages = { intro, page2 }
   })
 
   afterEach(() => { // cleanup globals
-    window.guide = null
+    window.gGuide = null
   })
 
   it('pageFindReferences', function () {
-    const matches = window.guide.pageFindReferences('page2', null)
+    const matches = window.gGuide.pageFindReferences('page2', null)
     assert.equal(matches.length, 1, 'should find references in button.next targets')
     assert.equal(matches[0].next, 'page2', 'should not rename next target if newName not passed')
 
-    const renameMatches = window.guide.pageFindReferences('page2', 'lasercats')
+    const renameMatches = window.gGuide.pageFindReferences('page2', 'lasercats')
     assert.equal(renameMatches.length, 1, 'should find references in button.next targets')
     assert.equal(renameMatches[0].next, 'lasercats', 'should rename next target if newName is passed')
   })

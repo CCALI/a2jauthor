@@ -375,6 +375,43 @@ describe('pdf/assemble', () => {
           text: defaultTextOptions
         }])
       })
+
+      it('should return a multi-line patch if single-line needs addendum', () => {
+        const variableOptions = {
+          overflowStyle: 'overflow-to-addendum',
+          addendumLabel: 'someLabel'
+        }
+
+        const boxes = [{
+          page: 1,
+          area: { top: 0, left: 0, width: 0, height: 0 }
+        }]
+        const variable = {}
+        const answerValue = 'Hello'
+        const patches = getTextPatches({
+          boxes,
+          getBoxArea,
+          variable,
+          variableOptions,
+          answerValue,
+          defaultTextOptions
+        })
+
+        assert.deepEqual(patches, [{
+          type: 'multiline-text',
+          content: 'Hello',
+          overflow: {
+            style: variableOptions.overflowStyle,
+            addendumLabel: variableOptions.addendumLabel
+          },
+          addendumText: defaultTextOptions,
+          lines: [{
+            page: 1,
+            area: 'GetBoxArea',
+            text: defaultTextOptions
+          }]
+        }])
+      })
     })
   })
 

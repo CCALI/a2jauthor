@@ -183,7 +183,8 @@
       return [tablePatch]
     }
 
-    var isSingleLine = boxes.length === 1
+    // mutli-line patch required for addendum overflow on single-text
+    var isSingleLine = boxes.length === 1 && (!style || style === 'clip-overflow')
     if (isSingleLine) {
       var box = boxes[0]
       var textPatch = {

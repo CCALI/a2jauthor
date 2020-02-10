@@ -49,18 +49,4 @@ describe('Answers Model', function () {
     answers.varSet('numberFest', null, 1)
     assert.equal(answers.varGet('numberFest', 1), null, 'should get null as when number cleared by logic')
   })
-
-  it('handles null and undefined values for text types', function () {
-    answers.varCreate('textTest', 'Text', 'false')
-    assert.equal(answers.varGet('textTest', 1), '', 'should get empty string when unanswered')
-
-    answers.varSet('textTest', null, 1)
-    assert.equal(answers.varGet('textTest', 1), '', 'should get empty string when explicitly cleared with null')
-
-    answers.varSet('textTest', 'lasercats', 1)
-    assert.equal(answers.varGet('textTest', 1), 'lasercats', 'should get set value when not null/undefined')
-
-    answers.varSet('textTest', undefined, 1)
-    assert.equal(answers.varGet('textTest', 1), '', 'should get empty string when explicitly cleared with undefined')
-  })
 })

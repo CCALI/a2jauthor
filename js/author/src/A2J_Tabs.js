@@ -498,7 +498,7 @@ window.form = {
       '<div ' + (data.name ? 'name="' + data.name + '"' : '') + '>' +
       label +
       '<div class="editspan form-group">' +
-        '<input class="form-control ui-combobox-input editable autocomplete picker varname dest" type="text" >' +
+        '<input class="form-control ui-combobox-input editable autocomplete picker varname dest" placeholder="' + data.placeholder + '" type="text" >' +
       '</div>' +
       '</div>'
     )

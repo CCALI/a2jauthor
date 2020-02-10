@@ -1,6 +1,6 @@
 export default {
   LOGIC_SET: /set\s+(.+)/i,
-  LOGIC_SETTO: /set\s+([\w#]+|\[.+\])\s*?(=|TO)\s?(.+)/i,
+  LOGIC_SETTO: /set\s+([\w#]+|\[.+\])\s*?\s(=|TO)\s+?(.+)/i,
   LOGIC_GOTO: /^goto\s+\"(.+)\"/i,
   LOGIC_GOTO2: /^goto\s+(.+)/i,
   LOGIC_TRACE: /trace\s+(.+)/i,

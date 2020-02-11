@@ -312,7 +312,8 @@ window.form = {
     return $(form.noteHTML('alert', t))
   },
   fieldset: function (legend, record, accordion) {
-    return $('<fieldset name="record" class="' + accordion + '"><legend>' + legend + '</legend></fieldset>').data('record', record)// .click(function(){$(this).toggleClass('collapse')});
+    var accordionClass = accordion ? 'class="' + accordion + '"' : ''
+    return $('<fieldset name="record" ' + accordionClass + '><legend>' + legend + '</legend></fieldset>').data('record', record)// .click(function(){$(this).toggleClass('collapse')});
   },
   div: function (legend, record) {
     return $(legend).data('record', record)

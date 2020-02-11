@@ -66,7 +66,8 @@ export default Component.extend({
           imageURL: page.helpImageURL,
           altText: page.helpAltText,
           audioURL: page.helpAudioURL,
-          videoURL: page.helpVideoURL
+          videoURL: page.helpVideoURL,
+          helpReader: page.helpReader
         })
       }
     },
@@ -97,7 +98,8 @@ export default Component.extend({
             imageURL: undefined,
             altText: page.helpAltText,
             audioURL: page.textAudioURL,
-            videoURL: undefined
+            videoURL: undefined,
+            helpReader: undefined
           })
         }
       } else { // external link

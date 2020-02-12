@@ -38,23 +38,26 @@
           {{else}}
             {{{ eval(modalContent.text, repeatVarValue) }}}
 
-            {{#if(modalContent.imageURL)}}
-            <img
-              class="modal-image"
-              src:from="normalizePath(mState.fileDataURL, modalContent.imageURL)"
-              {{#if (modalContent.altText)}}alt="{{ modalContent.altText }}"{{/if}} >
-            <a
-              href="{{ normalizePath(mState.fileDataURL, modalContent.imageURL) }}" data-lightbox="image-1"
-              class="btn btn-default pull-right"
-            >
-              <span class="demo-icon glyphicon-resize-full" aria-hidden="true"></span>
-            </a>
-            {{/if}}
-
             {{#if(modalContent.audioURL)}}
               <audio-player
+                class="modal-audio"
                 sourceUrl:from="normalizePath(scope/mState.fileDataURL, modalContent.audioURL)"
               />
+            {{/if}}
+
+            {{#if(modalContent.imageURL)}}
+            <div class="modal-image-wrapper">
+              <img
+                class="modal-image"
+                src:from="normalizePath(mState.fileDataURL, modalContent.imageURL)"
+                {{#if (modalContent.altText)}}alt="{{ modalContent.altText }}"{{/if}} >
+              <a
+                href="{{ normalizePath(mState.fileDataURL, modalContent.imageURL) }}" data-lightbox="image-1"
+                class="btn btn-default pull-right zoom-button"
+              >
+                <span class="demo-icon glyphicon-resize-full" aria-hidden="true"></span>
+              </a>
+            </div>
             {{/if}}
 
             {{#if(./modalContent.videoURL)}}

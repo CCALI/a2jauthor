@@ -841,7 +841,7 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
           ff.append(window.form.varPicker({
             value: b.name,
             label: 'Variable Name:',
-            placeholder: 'variable',
+            placeholder: '',
             change: function (val, b) {
               b.name = val
             }

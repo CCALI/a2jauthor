@@ -25,7 +25,7 @@ function pageNameFieldsForTextTab (pagefs, page) { // Used by the Text tab.
         change: function (val, page) { page.learn = val } }))
     }
     if (window.gPrefs.showText === 2 || page.help !== '') {
-      pagefs.append(window.form.htmlarea({ label: 'Text:',
+      pagefs.append(window.form.htmlarea({ label: 'Response:',
         value: page.help,
         change: function (val) { page.help = val } }))
     }
@@ -43,10 +43,10 @@ function pageNameFieldsForTextTab (pagefs, page) { // Used by the Text tab.
       var ff = window.form.fieldset('Field ' + (parseInt(f, 10) + 1), field)
       ff.append(window.form.htmlarea({ label: 'Label:', value: field.label, field: field, change: labelChangeFnc }))
       if (window.gPrefs.showText === 2 || field.value !== '') {
-        ff.append(window.form.text({ label: 'Default value:', placeholder: '', name: 'default', value: field.value, change: defValueChangeFnc }))
+        ff.append(window.form.text({ label: 'Default Value:', placeholder: '', name: 'default', value: field.value, change: defValueChangeFnc }))
       }
       if (window.gPrefs.showText === 2 || field.invalidPrompt !== '') {
-        ff.append(window.form.htmlarea({ label: 'If invalid say:', value: field.invalidPrompt, field: field, change: invalidChangeFnc }))
+        ff.append(window.form.htmlarea({ label: 'Custom Invalid Prompt:', value: field.invalidPrompt, field: field, change: invalidChangeFnc }))
       }
       pagefs.append(ff)
     }
@@ -57,10 +57,10 @@ function pageNameFieldsForTextTab (pagefs, page) { // Used by the Text tab.
       var b = page.buttons[bi]
       var bf = window.form.fieldset('Button ' + (parseInt(bi, 10) + 1), b)
       if (window.gPrefs.showText === 2 || b.label !== '') {
-        bf.append(window.form.text({ value: b.label, label: 'Label:', placeholder: 'button label', change: btnLabelChangeFnc }))
+        bf.append(window.form.text({ value: b.label, label: 'Label:', placeholder: '', change: btnLabelChangeFnc }))
       }
       if (window.gPrefs.showText === 2 || b.value !== '') {
-        bf.append(window.form.text({ value: b.value, label: 'Default value:', placeholder: 'Default value', change: bntDevValChangeFnc }))
+        bf.append(window.form.text({ value: b.value, label: 'Default Value:', placeholder: '', change: bntDevValChangeFnc }))
       }
       pagefs.append(bf)
     }
@@ -464,7 +464,7 @@ function buildPopupQDE (page) {
   popupFieldSet.append(window.form.htmlarea({ label: 'Text:', value: page.text, change: function (val) { page.text = val } }))
   popupFieldSet.append(window.form.pickAudio({
     label: 'Text Audio:',
-    placeholder: 'mp3 file',
+    placeholder: '',
     value: page.textAudioURL,
     change: function (val, page) { page.textAudioURL = val }
   }))
@@ -563,7 +563,7 @@ function buildLearnMoreFieldSet (page) {
     }
   }))
 
-  learnMoreFieldSet.append(window.form.htmlarea({ label: 'Text:', value: page.help, change: function (val) { page.help = val } }))
+  learnMoreFieldSet.append(window.form.htmlarea({ label: 'Response:', value: page.help, change: function (val) { page.help = val } }))
 
   learnMoreFieldSet.append(window.form.htmlarea({ label: 'Citation:', value: page.helpCitation, change: function (val) { page.helpCitation = val } }))
 
@@ -676,7 +676,7 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
 
       fs = window.form.fieldset('Fields')
       fs.append(window.form.listManager({ name: 'Fields',
-        picker: 'Number of fields:',
+        picker: 'Number of Fields:',
         min: 0,
         max: window.CONST.MAXFIELDS,
         list: page.fields,
@@ -724,12 +724,12 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
             value: field.label,
             change: function (val) { field.label = val } }))
           ff.append(window.form.varPicker({ label: 'Variable:',
-            placeholder: 'Variable name',
+            placeholder: '',
             value: field.name,
             change: function (val, field) { field.name = window.$.trim(val) } }))
-          ff.append(window.form.text({ label: 'Default value:',
+          ff.append(window.form.text({ label: 'Default Value:',
             name: 'default',
-            placeholder: 'Default value',
+            placeholder: '',
             value: field.value,
             change: function (val, field) { field.value = window.$.trim(val) } }))
           ff.append(window.form.checkbox({ label: 'Required:',
@@ -747,12 +747,12 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
             checkbox: '',
             value: field.calculator,
             change: function (val, field) { field.calculator = val } }))
-          ff.append(window.form.text({ label: 'Min value:',
+          ff.append(window.form.text({ label: 'Min Value:',
             name: 'min',
             placeholder: 'min',
             value: field.min,
             change: function (val, field) { field.min = val } }))
-          ff.append(window.form.text({ label: 'Max value:',
+          ff.append(window.form.text({ label: 'Max Value:',
             name: 'max',
             placeholder: 'max',
             value: field.max,
@@ -787,10 +787,11 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
               // trace(html);
               field.listData = html
             } }))
-          ff.append(window.form.htmlarea({ label: 'If invalid say:',
+          ff.append(window.form.htmlarea({ label: 'Custom Invalid Prompt:',
             value: field.invalidPrompt,
             change: function (val) { field.invalidPrompt = val } }))
-          ff.append(window.form.text({ label: 'Sample value:',
+          ff.append(window.form.text({ label: 'Sample Value:',
+            placeholder: '',
             name: 'sample',
             value: field.sample,
             change: function (val, field) { field.sample = val } }))
@@ -816,7 +817,7 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
 
       fs.append(window.form.listManager({
         name: 'Buttons',
-        picker: 'Number of buttons',
+        picker: 'Number of Buttons',
         min: 1,
         max: window.CONST.MAXBUTTONS,
         list: page.buttons,
@@ -848,7 +849,7 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
 
           ff.append(window.form.text({
             value: b.value,
-            label: 'Default value:',
+            label: 'Default Value:',
             placeholder: '',
             change: function (val, b) {
               b.value = val

@@ -737,9 +737,9 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
             checkbox: '',
             value: field.required,
             change: function (val, field) { field.required = val } }))
-          ff.append(window.form.text({ label: 'Max chars:',
+          ff.append(window.form.text({ label: 'Max Characters:',
             name: 'maxchars',
-            placeholder: 'Max Chars',
+            placeholder: 'Enter a number here to set a Character Limit for the End User\'s response',
             value: field.maxChars,
             change: function (val, field) { field.maxChars = val } }))
           ff.append(window.form.checkbox({ label: 'Show Calculator:',

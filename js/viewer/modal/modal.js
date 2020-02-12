@@ -18,6 +18,12 @@ export let ModalVM = DefineMap.extend('ViewerModalVM', {
   interview: {},
   previewActive: {},
 
+  showTranscript: { default: false },
+
+  toggleShowTranscript () {
+    this.showTranscript = !this.showTranscript
+  },
+
   closeModalHandler () {
     // answer names are always lowercase versions in the answers map
     const answerName = this.modalContent.answerName && this.modalContent.answerName.toLowerCase()

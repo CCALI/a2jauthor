@@ -22,6 +22,9 @@ export let ModalVM = DefineMap.extend('ViewerModalVM', {
 
   toggleShowTranscript () {
     this.showTranscript = !this.showTranscript
+    if (this.showTranscript) {
+      $('.modal-body').scrollTop(Number.MAX_SAFE_INTEGER)
+    }
   },
 
   closeModalHandler () {

@@ -460,9 +460,9 @@ function buildPopupQDE (page) {
         window.$(this).val(page.name)
       }
     } }))
-  popupFieldSet.append(window.lengthform.htmlarea({ label: 'Notes:', value: page.notes, change: function (val) { page.notes = val } }))
-  popupFieldSet.append(window.lengthform.htmlarea({ label: 'Text:', value: page.text, change: function (val) { page.text = val } }))
-  popupFieldSet.append(window.lengthform.pickAudio({
+  popupFieldSet.append(window.form.htmlarea({ label: 'Notes:', value: page.notes, change: function (val) { page.notes = val } }))
+  popupFieldSet.append(window.form.htmlarea({ label: 'Text:', value: page.text, change: function (val) { page.text = val } }))
+  popupFieldSet.append(window.form.pickAudio({
     label: 'Text Audio:',
     placeholder: 'mp3 file',
     value: page.textAudioURL,

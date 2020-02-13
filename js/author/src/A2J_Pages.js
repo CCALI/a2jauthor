@@ -802,6 +802,8 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
       }))
 
       qde.append(fs)
+      // courtesy return for tests
+      return fs
     }
 
     //* * @param {TButton} b */

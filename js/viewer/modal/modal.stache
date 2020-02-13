@@ -82,7 +82,7 @@
                 <div class="video-transcript-wrapper">
                   {{#if (this.showTranscript)}}
                     <button class="btn btn-secondary btn-sm btn-block" on:click="this.toggleShowTranscript()"><span class="glyphicon-resize-small">Hide Video Transcript</span></button>
-                    <p>
+                    <p class="video-transcript-text">
                       {{{ eval(modalContent.helpReader) }}}
                     </p>
                   {{else}}

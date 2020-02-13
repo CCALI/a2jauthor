@@ -4,7 +4,6 @@ import CanMap from 'can-map'
 import stache from 'can-stache'
 import canReflect from 'can-reflect'
 import F from 'funcunit'
-import { assert } from 'chai'
 import 'steal-mocha'
 import 'caja/viewer/styles.less'
 import 'can-map-define'
@@ -47,6 +46,7 @@ describe('<a2j-modal> ', function () {
           />`
       )
       vm = new ModalVM({ interview, rState, logic, mState, modalContent })
+
       $('#test-area').html(frag(vm))
       // vm = $('a2j-modal')[0].viewModel
     })
@@ -68,6 +68,20 @@ describe('<a2j-modal> ', function () {
       F(done)
     })
 
+    it('renders image AltText if modalContent includes altText', function (done) {
+      const helpImageURL = 'ui-icons_ffffff_256x240.png'
+
+      canReflect.assign(vm.modalContent = {
+        imageURL: helpImageURL,
+        altText: 'this is a bunch of icons'
+      })
+
+      F('img.modal-image').exists()
+      F('img.modal-image').attr('alt', 'this is a bunch of icons')
+
+      F(done)
+    })
+
     it('renders audio tag if page includes helpAudioURL', function (done) {
       const helpAudioURL = 'pings.ogg'
 
@@ -80,8 +94,9 @@ describe('<a2j-modal> ', function () {
 
     it('renders image tag if page includes helpVideoURL (gif)', function (done) {
       const helpVideoURL = 'panda.gif'
+      const altText = 'this is a panda'
 
-      vm.modalContent = { videoURL: helpVideoURL }
+      vm.modalContent = { videoURL: helpVideoURL, helpAltText: altText }
       F('img.modal-video').exists()
       F('img.modal-video').attr('src', '/CAJA/js/images/panda.gif')
 
@@ -98,6 +113,15 @@ describe('<a2j-modal> ', function () {
       F(done)
     })
 
+    it('renders video transcript text if modalContent includes helpReader property', function (done) {
+      canReflect.assign(vm.modalContent = { videoURL: 'pings.ogg', helpReader: 'some transcript text' })
+
+      F('button.btn.btn-secondary.btn-sm.btn-block').exists().click(() => {
+        F('p.video-transcript-text').text(/some transcript text/)
+        F(done)
+      })
+    })
+
     it('renders an expanded text area if page includes answerName (a2j variable name)', function (done) {
       vm.modalContent = { answerName: 'longAnswerTE', textlongValue: 'some really long text' }
       F('textarea.expanded-textarea').exists()
@@ -105,15 +129,14 @@ describe('<a2j-modal> ', function () {
       F(done)
     })
 
-    it.skip('targets a new tab (_blank) if question text contains a link', function (done) {
-      vm.modalContent = { title: '', text: '<p>My popup text <a href="http://www.google.com">lasercats</a></p>' }
+    it('targets a new tab (_blank) if question text contains a link', function (done) {
+      canReflect.assign(vm.modalContent = { title: '', text: '<p>My popup text <a href="http://www.google.com">lasercats</a></p>' })
+      // prevent the tab from opening
       $('a').click((ev) => {
-        console.log('click')
         ev.preventDefault()
       })
       F('.modal-body p a').exists().click(function () {
-        const target = F('.modal-body p a').attr('target')
-        assert.equal(target, 'foo', 'should set A HREF target to _blank')
+        F('.modal-body p a').attr('target', '_blank')
         F(done)
       })
     })

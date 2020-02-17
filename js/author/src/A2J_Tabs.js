@@ -1472,22 +1472,29 @@ function updateTOCOnePage () {	// TODO - just update only this page's TOC and Ma
   updateTOC()
 }
 
-function vcGatherUsage (name) {	// 2015-03-27 Search for variable or constant
+function vcGatherUsage (name) { // 2015-03-27 Search for variable or constant
   // This is a Lazy search so plain text words are also found.
   // TODO - exclude non-macro/logic bits.
   var html = ''
   var count = 0
   var p
   var nameL = name.toLowerCase()
-  for (p in gGuide.pages) {	// Search text, help, fields and logic for variable name.
+  for (p in window.gGuide.pages) {	// Search text, buttons, help, fields and logic for variable name.
     /** @type TPage */
     var where = [] //  list where it's on this page
-    var page = gGuide.pages[p]
-    for (var f in page.fields) {	// Search fields
+    var page = window.gGuide.pages[p]
+    for (var f in page.fields) { // Search fields
       /** @type TField */
       var field = page.fields[f]
-      if (field.name.toLowerCase() == nameL) {
+      if (field.name.toLowerCase() === nameL) {
         where.push('Field ' + field.label)
+      }
+    }
+    for (var b in page.buttons) { // Search buttons[]
+      /** @type TButton */
+      var button = page.buttons[b]
+      if (button.name.toLowerCase() === nameL) {
+        where.push('Button ' + button.label)
       }
     }
     if ((page.text + ' ' + page.help).toLowerCase().indexOf(nameL) >= 0) {
@@ -1496,11 +1503,12 @@ function vcGatherUsage (name) {	// 2015-03-27 Search for variable or constant
     if ((page.codeBefore + ' ' + page.codeAfter).toLowerCase().indexOf(nameL) >= 0) {
       where.push('Logic')
     }
-    if (where.length > 0) {	// If we foudn anything, we'll list the page and its location.
+    if (where.length > 0) { // If we found anything, we'll list the page and its location.
       count++
       html += ('<li>' + page.name + '</li><ul>' + '<li>' + where.join('<li>') + '</ul>')
     }
   }
+
   return 'Used in ' + count + ' pages' + '<ul>' + html + '</ul>'
 }
 

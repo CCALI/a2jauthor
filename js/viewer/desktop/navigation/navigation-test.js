@@ -3,6 +3,7 @@ import { assert } from 'chai'
 import stache from 'can-stache'
 import AppState from 'caja/viewer/models/app-state'
 import Interview from 'caja/viewer/models/interview'
+import Logic from 'caja/viewer/mobile/util/logic'
 import constants from 'caja/viewer/models/constants'
 import { ViewerNavigationVM } from 'caja/viewer/desktop/navigation/'
 import canReflect from 'can-reflect'
@@ -17,6 +18,7 @@ describe('<a2j-viewer-navigation>', function () {
     let visited
     let rState
     let interview
+    let logic
 
     beforeEach(function (done) {
       let promise = Interview.findOne({ url: '/interview.json' })
@@ -27,7 +29,8 @@ describe('<a2j-viewer-navigation>', function () {
         rState = new AppState({ interview })
         pages = interview.attr('pages')
         visited = canReflect.getKeyValue(rState, 'visitedPages')
-        vm = new ViewerNavigationVM({ rState, interview })
+        logic = new Logic({ interview })
+        vm = new ViewerNavigationVM({ rState, interview, logic })
 
         done()
       })
@@ -161,6 +164,21 @@ describe('<a2j-viewer-navigation>', function () {
       assert.equal(vm.disableOption(0), false, 'false if index is 0 and saveAndExitActive is true')
       assert.equal(vm.disableOption(1), true, 'true if index is NOT 0 and saveAndExitActive is true')
     })
+
+    it('resolveVarMacros', () => {
+      const noMacroText = 'Hello, Welcome to the interview'
+      const resolvedSansMacro = vm.resolveVarMacros(noMacroText)
+
+      assert.equal(resolvedSansMacro, 'Hello, Welcome to the interview', 'should do nothing if no macros')
+
+      interview.answers.varCreate('Client first name TE', 'Text', null)
+      interview.answers.varSet('Client first name TE', 'Mike', 1)
+
+      const questionText = 'Hello, %%[Client first name TE]%%'
+      const resolvedText = vm.resolveVarMacros(questionText)
+
+      assert.equal(resolvedText, 'Hello, Mike', 'should resolve variable macros')
+    })
   })
 
   describe('Component', function () {
@@ -170,6 +188,7 @@ describe('<a2j-viewer-navigation>', function () {
     let rState
     let vm // eslint-disable-line
     let lang
+    let logic
 
     beforeEach(function (done) {
       let promise = Interview.findOne({ url: '/interview.json' })
@@ -188,18 +207,21 @@ describe('<a2j-viewer-navigation>', function () {
 
         pages = interview.attr('pages')
         visited = canReflect.getKeyValue(rState, 'visitedPages')
-        vm = new ViewerNavigationVM({ rState, interview, lang })
+        logic = new Logic({ interview })
+        vm = new ViewerNavigationVM({ rState, interview, lang, logic })
 
         let frag = stache(
           `<a2j-viewer-navigation interview:from="interview"
             rState:from="rState" lang:from="lang"
-            showDemoNotice:bind="showDemoNotice" />`
+            showDemoNotice:bind="showDemoNotice"
+            logic:from="logic" />`
         )
 
         $('#test-area').html(frag({
           rState,
           interview,
           lang,
+          logic,
           showDemoNotice: false
         }))
         done()

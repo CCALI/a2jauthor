@@ -36,3 +36,5 @@ import 'caja/author/pdf/editor/area-test'
 import 'caja/author/pdf/editor/editor-test'
 import 'caja/author/pdf/checkmark-picker/checkmark-picker-test'
 import 'caja/author/user-avatar-picker/user-avatar-picker-test'
+
+import 'caja/author/src/a2j-legacy-tests'

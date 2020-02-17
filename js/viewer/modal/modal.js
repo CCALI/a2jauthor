@@ -118,10 +118,10 @@ export default Component.extend({
             audioURL: page.textAudioURL,
             videoURL: undefined
           }
-        } else { // external link
-          const $el = $(el)
-          $el.attr('target', '_blank')
         }
+      } else { // external link
+        const $el = $(el)
+        $el.attr('target', '_blank')
       }
     }
   }

@@ -4,7 +4,7 @@ import CanMap from 'can-map'
 import stache from 'can-stache'
 import canReflect from 'can-reflect'
 import F from 'funcunit'
-
+import { assert } from 'chai'
 import 'steal-mocha'
 import 'caja/viewer/styles.less'
 import 'can-map-define'
@@ -12,8 +12,7 @@ import 'caja/viewer/mobile/util/helpers'
 
 describe('<a2j-modal> ', function () {
   describe('Component', function () {
-    let vm = new ModalVM()
-
+    let vm
     beforeEach(function () {
       const interview = {
         getPageByName () {
@@ -23,7 +22,7 @@ describe('<a2j-modal> ', function () {
 
       const rState = new CanMap({ page: 'foo' })
       const mState = new CanMap({ fileDataURL: '/CAJA/js/images/' })
-      const logic = new CanMap({ eval () {} })
+      const logic = new CanMap({ eval (html) { return html } })
       const ModalContent = CanMap.extend({
         define: {
           answerName: { value: '' },
@@ -38,15 +37,18 @@ describe('<a2j-modal> ', function () {
 
       const frag = stache(
         `<a2j-modal class="bootstrap-styles"
-          logic:from="logic"
           mState:from="mState"
-          rState:from="rState"
+          logic:from="logic"
           interview:from="interview"
-          modalContent:from="modalContent" />`
+          modalContent:bind="modalContent"
+          previewActive:from="rState.previewActive"
+          lastVisitedPageName:from="rState.lastVisitedPageName"
+          repeatVarValue:from="rState.repeatVarValue"
+          />`
       )
-
-      $('#test-area').html(frag({ interview, rState, logic, mState, modalContent }))
-      vm = $('a2j-modal')[0].viewModel
+      vm = new ModalVM({ interview, rState, logic, mState, modalContent })
+      $('#test-area').html(frag(vm))
+      // vm = $('a2j-modal')[0].viewModel
     })
 
     afterEach(function () {
@@ -97,10 +99,23 @@ describe('<a2j-modal> ', function () {
     })
 
     it('renders an expanded text area if page includes answerName (a2j variable name)', function (done) {
-      vm.modalContent = { answerName: 'longAnswerTE' }
+      vm.modalContent = { answerName: 'longAnswerTE', textlongValue: 'some really long text' }
       F('textarea.expanded-textarea').exists()
 
       F(done)
+    })
+
+    it.skip('targets a new tab (_blank) if question text contains a link', function (done) {
+      vm.modalContent = { title: '', text: '<p>My popup text <a href="http://www.google.com">lasercats</a></p>' }
+      $('a').click((ev) => {
+        console.log('click')
+        ev.preventDefault()
+      })
+      F('.modal-body p a').exists().click(function () {
+        const target = F('.modal-body p a').attr('target')
+        assert.equal(target, 'foo', 'should set A HREF target to _blank')
+        F(done)
+      })
     })
   })
 })

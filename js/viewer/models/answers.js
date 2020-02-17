@@ -66,6 +66,7 @@ export default Model.extend('AnswersModel', {}, {
     }
 
     var val = v.values[varIndex]
+
     switch (v.type) {
       case CONST.vtNumber:
         if (opts && opts.num2num === true) {

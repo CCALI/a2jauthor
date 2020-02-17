@@ -136,6 +136,9 @@ $.fn.showit = function (yes) { // show/hide via class rather than .toggle to avo
 
 // http://stackoverflow.com/questions/1219860/javascript-jquery-html-encoding
 function escapeHtml (str) {
+  // Unanswered or cleared vars should not display
+  if (str == null) { return '' }
+
   return String(str)
     .replace(/&/g, '&amp;')
     .replace(/"/g, '&quot;')

@@ -76,6 +76,9 @@ export default {
   },
 
   escapeHtml: function (str) {
+    // Unanswered or cleared vars should not display
+    if (str == null) { return '' }
+
     return String(str)
       .replace(/&/g, '&amp;')
       .replace(/"/g, '&quot;')

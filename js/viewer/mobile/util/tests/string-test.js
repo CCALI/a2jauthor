@@ -1,5 +1,6 @@
-import { assert } from 'chai'
 import cString from 'caja/viewer/mobile/util/string'
+import { assert } from 'chai'
+import 'steal-mocha'
 
 describe('util: string', function () {
   describe('isNumber', function () {
@@ -38,6 +39,25 @@ describe('util: string', function () {
 
     it('returns a number from a string with comma seperators', function () {
       assert.equal(cString.textToNumber('4,567,890'), 4567890, 'string number with commas not parsed correctly')
+    })
+  })
+
+  describe('escapeHtml', function () {
+    it('returns emptystring if null or undefined', function () {
+      let html
+      assert.equal(cString.escapeHtml(html), '', 'should handle undefined, returning empty string for display')
+
+      html = null
+      assert.equal(cString.escapeHtml(html), '', 'should handle null, returning empty string for display')
+
+      html = 'someString ' + undefined
+      assert.equal(cString.escapeHtml(html), 'someString undefined', 'should not clear undefined on coerced values')
+    })
+
+    it('escapes &, ", <, >', function () {
+      const html = 'peas & carrots are < or > "what"?'
+      const expectedOutput = 'peas &amp; carrots are &lt; or &gt; &quot;what&quot;?'
+      assert.equal(cString.escapeHtml(html), expectedOutput, 'should escape for php safety')
     })
   })
 })

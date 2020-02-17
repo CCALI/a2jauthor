@@ -207,7 +207,6 @@
         {{/if}}
 
         {{#each(pages)}}
-        {{let domSize = undefined}}
           <div
             class='editor-pdf-page'
             data-page='{{page}}'
@@ -232,7 +231,6 @@
 
                 {{#each(scope.vm.boxes)}}
                   {{#is(./page, ../page)}}
-                    {{let variable = ''}}
                     <div
                       data-id='{{id}}'
                       class='variable-box{{#if(variable)}} variable-box--assigned{{/if}}{{#if(isSelected)}} variable-box--selected{{/if}}'

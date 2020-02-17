@@ -424,6 +424,10 @@ describe('<a2j-pages>', () => {
   describe('Component', () => {
     let rStateTeardown
     beforeEach(() => {
+      defaults.logic.attr('eval', (text) => {
+        return text + ' ' + defaults.interview.attr('answers.foo')
+      })
+
       let frag = stache(
         '<a2j-pages></a2j-pages>'
       )

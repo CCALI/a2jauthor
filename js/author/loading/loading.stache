@@ -1,7 +1,7 @@
 <can-import from="caja/author/loading/loading.less"/>
 
-  <div class="app-loading">
-      <h2 class="text-center text-muted">
-          <span class="glyphicon-spin6 animate-spin" aria-hidden="true"></span> {{this.loadingMessage}}
-      </h2>
-  </div>
+<div class="app-loading">
+    <p class="text-center text-muted">
+        <span class="glyphicon-spin6 animate-spin" aria-hidden="true"></span> {{this.loadingMessage}}
+    </p>
+</div>

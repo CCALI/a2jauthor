@@ -66,8 +66,7 @@ export default CanMap.extend({
     const answersChanged = this.attr('interview.answers').serialize() // eslint-disable-line
     var output = this._tLogic.evalLogicHTML(str)
 
-    // this is for display only, so return empty string if undefined/null
-    return output.html ? output.html : ''
+    return output.html
   },
 
   exec: function (cajascript) {

@@ -659,8 +659,24 @@ window.form = {
         linkShowTargetTab: false,
         extraPlugins: 'indent,a2j-popout,autogrow',
         removePlugins: 'magicline',
+        language_list: [
+          'sq:Albanian',
+          'ar:Arabic:rtl',
+          'bn:Bengali',
+          'zh-cn:Chinese-Simplified',
+          'cld:Chaldean',
+          'nl:Dutch',
+          'en:English',
+          'fr:French',
+          'km:Khmer',
+          'ko:Korean',
+          'pl:Polish',
+          'ru:Russian',
+          'es:Spanish',
+          'vi:Vietnamese'
+        ],
         toolbar: [
-          { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline' ] },
+          { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Language' ] },
           { name: 'paragraph', items: [ 'Blockquote', 'Indent', 'Outdent', 'BulletedList', 'NumberedList' ] },
           { name: 'links', items: [ 'Link', 'Unlink', 'A2j-popout' ] }
         ],

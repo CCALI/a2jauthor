@@ -14,20 +14,21 @@ export default function (lang, makestr) {
     And jQuery UI structs for Calendar.
 
     Currently supported languages:
-      English
-      Spanish
-      Vietnamese
-      Chinese-Simplified
-      Korean
-      French
-      Polish
-      Russian
-      Dutch
       Albanian
       Arabic
       Bengali
       Chaldean
+      Chinese-Simplified
+      Dutch
+      English
+      French
       Hmong
+      Korean
+      Mon Khmer
+      Polish
+      Russian
+      Spanish
+      Vietnamese
 
     Pending:
 

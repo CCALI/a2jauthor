@@ -73,7 +73,7 @@
     </div><!-- client-wrapper -->
 
     <div class="sign-wrapper">
-      <div class="sign-outer bg-step{{currentStep.number}}">
+      <div aria-labelledby="interview-steps" class="sign-outer bg-step{{currentStep.number}}">
         <div class="sign-circle">
           <span class="circle-content">
             {{#zeroOrUndefined(currentStep.number)}}
@@ -83,7 +83,7 @@
             {{/zeroOrUndefined}}
           </span>
         </div> <!-- sign circle -->
-        <div class="sign-content">
+        <div aria-labelledby="step-{{currentStep.number}}" class="sign-content">
           <span title="{{scope.vm.getTextForStep(currentStep)}}">{{scope.vm.getDisplayTextForStep(currentStep)}}</span>
         </div> <!-- sign content -->
       </div> <!-- sign outer -->
@@ -101,14 +101,14 @@
         </div>
 
         <div class="sign-wrapper">
-          <div class="sign-outer bg-step{{step.number}}">
+          <div aria-labelledby="interview-steps" class="sign-outer bg-step{{step.number}}">
             <div class="sign-circle">
               <span class="circle-content">{{step.number}}</span>
             </div> <!-- sign circle -->
-            <div class="sign-content">
+            <div aria-labelledby="step-{{step.number}}" class="sign-content">
               <span title="{{scope.vm.getTextForStep(step)}}">{{scope.vm.getDisplayTextForStep(step)}}</span>
             </div> <!-- sign content -->
-          </div> <!-- sign outter -->
+          </div> <!-- sign outer -->
         </div> <!-- sign wrapper -->
       </div>
     {{/for}}

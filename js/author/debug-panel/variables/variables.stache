@@ -1,15 +1,15 @@
 <can-import from="caja/author/debug-panel/variables/variables.less!"/>
 
 <div id="viewer-var-form" class="bootstrap-styles">
-  <button id="uploadAnswer" class="btn btn-default btn-sm"><span class="glyphicon-folder-open"></span> Open</button>
+  <button id="uploadAnswer" class="btn btn-default btn-sm"><span class="glyphicon-folder-open" aria-hidden="true"></span> Open</button>
   <input type="file" accept=".anx" id="uploadAnswerFileInput" />
 
   <button id="downloadAnswer" class="btn btn-default btn-sm">
-    <span class="glyphicon-floppy"></span> Save
+    <span class="glyphicon-floppy" aria-hidden="true"></span> Save
   </button>
 
   <button id="clearAnswer" class="btn btn-default btn-sm" on:el:click="clearAnswers()">
-    <span class="glyphicon-trash"></span> Clear
+    <span class="glyphicon-trash" aria-hidden="true"></span> Clear
   </button>
 
   <input

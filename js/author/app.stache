@@ -19,7 +19,7 @@
   <div class="loading">
     <img class="a2j-logo" src="images/a2j-circle.svg">
     <h2 class="text-center text-muted">
-      <span class="glyphicon-spin6 animate-spin"></span> Loading...
+      <span class="glyphicon-spin6 animate-spin" aria-hidden="true"></span> Loading...
     </h2>
   </div>
 </div>
@@ -60,7 +60,7 @@
           </div>
           <div class="utility-links col-xs-2 pull-right">
               <button id="settings" class="btn btn-link">
-                <span class="glyphicon-cog"></span> Advanced Settings
+                <span class="glyphicon-cog" aria-hidden="true"></span> Advanced Settings
               </button>
           </div>
         </div>
@@ -115,13 +115,13 @@
       <nav class="navbar navbar-default">
         <div class="container-fluid">
           <ul class="nav navbar-nav">
-            <li><a href="#" id="open-guide"><span class="glyphicon-new-message"></span> Open</a></li>
-            <li><a href="#" id="clone-guide"><span class="glyphicon-docs"></span> Clone</a></li>
-            <li><a href="#" id="delete-guide"><span class="glyphicon-trash"></span> Delete</a></li>
-            <li><a href="#" id="save-guide"><span class="glyphicon-floppy"></span> Save</a></li>
+            <li><a href="#" id="open-guide"><span class="glyphicon-new-message" aria-hidden="true"></span> Open</a></li>
+            <li><a href="#" id="clone-guide"><span class="glyphicon-docs" aria-hidden="true"></span> Clone</a></li>
+            <li><a href="#" id="delete-guide"><span class="glyphicon-trash" aria-hidden="true"></span> Delete</a></li>
+            <li><a href="#" id="save-guide"><span class="glyphicon-floppy" aria-hidden="true"></span> Save</a></li>
             <li class="divider"></li>
-            <li><a href="#" id="new-page"><span class="glyphicon-doc"></span> New Page</a></li>
-            <li><a href="#" id="new-popup"><span class="glyphicon-popup"></span> New Popup</a></li>
+            <li><a href="#" id="new-page"><span class="glyphicon-doc" aria-hidden="true"></span> New Page</a></li>
+            <li><a href="#" id="new-popup"><span class="glyphicon-popup" aria-hidden="true"></span> New Popup</a></li>
           </ul>
           <div class="nav navbar-nav navbar-right">
             <button id="expandCollapse" data-state="collapsed" class="btn btn-default navbar-btn"></button>
@@ -149,10 +149,10 @@
         </div><!-- col-4 -->
         <div class="col-8">
           <div id="MapperToolbar" class="map-toolbar">
-            <button class="btn btn-default"><span class="glyphicon-left-thin"></span> Hide Page List</button>
-            <button zoom="fit" class="btn btn-default"><span class="glyphicon-resize"></span> Fit</button>
-            <button zoom="1.25" class="btn btn-default"><span class="glyphicon-zoom-in"></span> Zoom In</button>
-            <button zoom="0.75" class="btn btn-default"><span class="glyphicon-zoom-out"></span> Zoom Out</button>
+            <button class="btn btn-default"><span class="glyphicon-left-thin" aria-hidden="true"></span> Hide Page List</button>
+            <button zoom="fit" class="btn btn-default"><span class="glyphicon-resize" aria-hidden="true"></span> Fit</button>
+            <button zoom="1.25" class="btn btn-default"><span class="glyphicon-zoom-in" aria-hidden="true"></span> Zoom In</button>
+            <button zoom="0.75" class="btn btn-default"><span class="glyphicon-zoom-out" aria-hidden="true"></span> Zoom Out</button>
           </div>
 
         <div id="tabsMapper">
@@ -183,7 +183,7 @@
               </li>
             </ul>
           <div class="nav navbar-nav navbar-right">
-            <button class="ecPanelButton btn btn-default navbar-btn" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
+            <button class="ecPanelButton btn btn-default navbar-btn" data-state="collapsed"><span class="glyphicon-collapse" aria-hidden="true"></span> Collapse All</button>
           </div>
         </div>
       </nav>
@@ -212,7 +212,7 @@
               </li>
             </ul>
           <div class="nav navbar-nav navbar-right">
-            <button class="ecPanelButton btn btn-default navbar-btn" data-state="collapsed"><span class="glyphicon-collapse"></span> Collapse All</button>
+            <button class="ecPanelButton btn btn-default navbar-btn" data-state="collapsed"><span class="glyphicon-collapse" aria-hidden="true"></span> Collapse All</button>
           </div>
         </div>
       </nav>
@@ -228,7 +228,7 @@
 
           <div class="nav navbar-nav navbar-right">
             <button id="files-delete" class="btn btn-default navbar-btn" role="button">
-              <span class="glyphicon-trash"> Delete checked files</span>
+              <span class="glyphicon-trash" aria-hidden="true"> Delete checked files</span>
             </button>
 
 
@@ -236,7 +236,7 @@
               <!-- The fileinput-button span is used to style the file input field as button -->
               <a href="javascript:void(0)" class="fileinput-button">
                 <button class="btn btn-default navbar-btn">
-                  <span class="glyphicon-folder-upload"></span> Upload files...
+                  <span class="glyphicon-folder-upload" aria-hidden="true"></span> Upload files...
                 </button>
                 <!-- The file input field used as target for the file upload widget -->
                 <input id="fileupload" type="file" name="files[]" multiple />
@@ -306,27 +306,27 @@
       <h3 class="page-title">Publish/Download</h3>
 
       <p>To download your A2J Guided Interview<sup>®</sup>, use the buttons below</p>
-      <button id="guideZIP" class="btn btn-default btn-wide-md"><span class="glyphicon-file-archive"></span> Download ZIP</button>
-      <button id="guideDownload" class="btn btn-default btn-wide-md"><span class="glyphicon-folder-download"></span> Download A2J</button>
+      <button id="guideZIP" class="btn btn-default btn-wide-md"><span class="glyphicon-file-archive" aria-hidden="true"></span> Download ZIP</button>
+      <button id="guideDownload" class="btn btn-default btn-wide-md"><span class="glyphicon-folder-download" aria-hidden="true"></span> Download A2J</button>
 
       <hr>
       <p>To publish to A2J.org, use the buttons below</p>
-        <button id="guideZIPA2JPROD" class="btn btn-default btn-wide-md"><span class="glyphicon-publish"></span> Publish to A2J.org</button>
+        <button id="guideZIPA2JPROD" class="btn btn-default btn-wide-md"><span class="glyphicon-publish" aria-hidden="true"></span> Publish to A2J.org</button>
       {{#if (showTesting)}}
         <p>To publish to A2J.org development servers, use the buttons below</p>
-          <button id="guideZIPA2JLOCAL" class="btn btn-default btn-md"><span class="glyphicon-publish"></span> local.a2j.org</button>
-          <button id="guideZIPA2JDEV" class="btn btn-default btn-md"><span class="glyphicon-publish"></span> dev.a2j.org</button>
-          <button id="guideZIPA2JSTAGE" class="btn btn-default btn-md"><span class="glyphicon-publish"></span> staging.a2j.org</button>
+          <button id="guideZIPA2JLOCAL" class="btn btn-default btn-md"><span class="glyphicon-publish" aria-hidden="true"></span> local.a2j.org</button>
+          <button id="guideZIPA2JDEV" class="btn btn-default btn-md"><span class="glyphicon-publish" aria-hidden="true"></span> dev.a2j.org</button>
+          <button id="guideZIPA2JSTAGE" class="btn btn-default btn-md"><span class="glyphicon-publish" aria-hidden="true"></span> staging.a2j.org</button>
       {{/if}}
 
       <hr>
       <p>To publish to LawHelp Interactive, use the buttons below</p>
-      <button id="guideZIPLHIQA" class="btn btn-default btn-wide-md"><span class="glyphicon-publish"></span> Publish to RebuildQA</button>
-      <button id="guideZIPLHI" class="btn btn-default btn-wide-md"><span class="glyphicon-publish"></span> Publish to LHI Production</button>
+      <button id="guideZIPLHIQA" class="btn btn-default btn-wide-md"><span class="glyphicon-publish" aria-hidden="true"></span> Publish to RebuildQA</button>
+      <button id="guideZIPLHI" class="btn btn-default btn-wide-md"><span class="glyphicon-publish" aria-hidden="true"></span> Publish to LHI Production</button>
       {{#if (showTesting)}}
         <p>To publish to LHI development servers, use the buttons below</p>
-        <button id="guideZIPLHIDEV" class="btn btn-default btn-wide-md"><span class="glyphicon-publish"></span> Publish to LHI DEV</button>
-        <button id="guideZIPMARLABS" class="btn btn-default btn-wide-md"><span class="glyphicon-publish"></span> Publish to Marlabs DEV</button>
+        <button id="guideZIPLHIDEV" class="btn btn-default btn-wide-md"><span class="glyphicon-publish" aria-hidden="true"></span> Publish to LHI DEV</button>
+        <button id="guideZIPMARLABS" class="btn btn-default btn-wide-md"><span class="glyphicon-publish" aria-hidden="true"></span> Publish to Marlabs DEV</button>
       {{/if}}
 
     </div><!-- id="tabsUpload" -->

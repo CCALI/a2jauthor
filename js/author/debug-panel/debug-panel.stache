@@ -9,7 +9,7 @@
 
 <div id="viewer-logic-form" class="bootstrap-styles">
   <div id="logic-trace-panel" class="tracepanel">
-    <button id="clear-log-button" on:click="scope.vm.clearMessageLog()" class="btn btn-default btn-sm"><span class="glyphicon-trash"></span> Clear Log</button>
+    <button id="clear-log-button" on:click="scope.vm.clearMessageLog()" class="btn btn-default btn-sm"><span class="glyphicon-trash" aria-hidden="true"></span> Clear Log</button>
     <ol id="tracer" content-editable="true">
       {{#for(logItem of traceMessage.messageLog)}}
         <li>Page <span class="page">{{logItem.pageName}}</span></li>

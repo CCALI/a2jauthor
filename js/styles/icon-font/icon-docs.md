@@ -4,9 +4,9 @@
 This page describes the custom icon font used for the application.
 
 ## Usage
-Adding an icon only requires adding the `glyphicon-` class to any HTML element, preferably inline elements like `<span>` or `<i>`.
+Adding an icon only requires adding the `glyphicon-` class to any HTML element, preferably inline elements like `<span>` or `<i>`. Note: please add `aria-hidden="true"` to all icons reduce noise for Aria Readers.
 
-Example: `<span class="glyphicon-pencil"></span>`
+Example: `<span class="glyphicon-pencil" aria-hidden="true"></span>`
 
 Because the icons are a font, all CSS rules can be applied to change the appearance like `text-shadow`, `color`, or `font-size`.
 
@@ -20,9 +20,9 @@ Example:
 <span class="my-special-icon glyphicon-flag"></span>
 ````
 
-It's best to add icons as a *separate* inline element (`span`) to a parent tag, rather than add the icon class to the parent tag itself. For example, if you want to add an icon to a H1 title, do: 
+It's best to add icons as a *separate* inline element (`span`) to a parent tag, rather than add the icon class to the parent tag itself. For example, if you want to add an icon to a H1 title, do:
 ````
-<h1><span class="glyphicon-doc"></span> My Heading Title</h1>
+<h1><span class="glyphicon-doc" aria-hidden="true"></span> My Heading Title</h1>
 ````
 
 ## Available icons

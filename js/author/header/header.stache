@@ -18,7 +18,7 @@
 
         {{#if helpPageUrl}}
           <a href="{{helpPageUrl}}" target="_blank" class="btn btn-link">
-            <span class="glyphicon-lifebuoy"></span> Help
+            <span class="glyphicon-lifebuoy" aria-hidden="true"></span> Help
           </a>
         {{/if}}
       </div>

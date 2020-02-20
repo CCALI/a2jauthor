@@ -5,7 +5,7 @@
     class="drawer-handle"
     on:el:click="fireDrawerHandleClick()"
   >
-    <span class="glyphicon-docs"></span>
+    <span class="glyphicon-docs" aria-hidden="true"></span>
   </div>
   {{#if isShowingThumbnails}}
     <div class='drawer-header'>

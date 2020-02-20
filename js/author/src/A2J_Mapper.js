@@ -192,7 +192,7 @@ function mapZoomSlide () {
       .first()
       .button({
         disabled: false,
-        label: '<span class="glyphicon-left-thin"></span> Hide Page List'
+        label: '<span class="glyphicon-left-thin" aria-hidden="true"></span> Hide Page List'
       })
   } else {
     $('#tabsMap .col-4').addClass('isHidden')
@@ -203,7 +203,7 @@ function mapZoomSlide () {
       .first()
       .button({
         disabled: false,
-        label: '<span class="glyphicon-right-thin"></span> Show Page List'
+        label: '<span class="glyphicon-right-thin" aria-hidden="true"></span> Show Page List'
       })
   }
 }

@@ -250,7 +250,7 @@ function archiveSelectedGuide () {
 
   var dialogMessage =
     '<div class="alert alert-danger">' +
-      '<span class="glyphicon-attention"></span>' +
+      '<span class="glyphicon-attention" aria-hidden="true"></span>' +
       'Would you like to delete ' + name + '?' +
     '</div>'
 

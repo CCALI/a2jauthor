@@ -254,7 +254,7 @@ function pageEditDelete (name) {	// Delete named page after confirmation that li
   dialogConfirmYesNo({
     title: 'Deleting page',
     closeText: '', // removes word "Close" from upper right titlebar close button
-    message: '<div class="alert alert-danger"><span class="glyphicon-attention"></span> Permanently delete page "' + name + '"?</div><div>' + txt + '</div>',
+    message: '<div class="alert alert-danger"><span class="glyphicon-attention" aria-hidden="true"></span> Permanently delete page "' + name + '"?</div><div>' + txt + '</div>',
     height: 400,
     width: 600,
     name: name,
@@ -957,22 +957,22 @@ TPage.prototype.tagList = function () {	// 05/23/2014 Return list of tags to add
     /** @type {TField} */
     var field = page.fields[f]
     if (field.required) {
-      tags += '<span class="label label-info tag"><span class="glyphicon-pencil"></span>' + field.fieldTypeToTagName() + '<span class="text-danger">*</span></span>'
+      tags += '<span class="label label-info tag"><span class="glyphicon-pencil" aria-hidden="true"></span>' + field.fieldTypeToTagName() + '<span class="text-danger">*</span></span>'
     } else {
-      tags += '<span class="label label-info tag"><span class="glyphicon-pencil"></span>' + field.fieldTypeToTagName() + '</span>'
+      tags += '<span class="label label-info tag"><span class="glyphicon-pencil" aria-hidden="true"></span>' + field.fieldTypeToTagName() + '</span>'
     }
   }
   if (page.help !== '') {
-    tags += '<span class="label label-warning tag"><span class="glyphicon-lifebuoy"></span>Help</span>'
+    tags += '<span class="label label-warning tag"><span class="glyphicon-lifebuoy" aria-hidden="true"></span>Help</span>'
   }
   if (page.codeAfter !== '' || page.codeBefore !== '') {
-    tags += '<span class="label label-success tag"><span class="glyphicon-split"></span>Logic</span>'
+    tags += '<span class="label label-success tag"><span class="glyphicon-split" aria-hidden="true"></span>Logic</span>'
   }
   if (page.repeatVar !== '') {
-    tags += '<span class="label label-danger glyphicon-cw">Loop</span>'
+    tags += '<span class="label label-danger glyphicon-cw" aria-hidden="true">Loop</span>'
   }
   if (page.outerLoopVar !== '') {
-    tags += '<span class="label label-danger glyphicon-cw">Nested Loop</span>'
+    tags += '<span class="label label-danger glyphicon-cw" aria-hidden="true">Nested Loop</span>'
   }
   return tags
 }

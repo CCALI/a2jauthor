@@ -85,7 +85,7 @@ function signin () {
         $('#authortool').removeClass('hidestart')// .addClass('authortool').show();
       } else { // ### If user not logged in inform them and redirect to main site.
         var $d = $('#dialog-confirm')
-        $d.html('<div class="alert alert-danger" role="alert"><span class="glyphicon-attention" style="float: left; margin: 0 7px 20px 0;"></span>' +
+        $d.html('<div class="alert alert-danger" role="alert"><span class="glyphicon-attention" style="float: left; margin: 0 7px 20px 0;" aria-hidden="true"></span>' +
               'Please login to your a2jauthor.org account first. Access to the A2J Author tool requires authentication first. To be authenticated, please fill out the survey that was emailed to you after you first registered for this site. If you have any problems after filling out the survey, please contact webmaster@a2jauthor.org.' +
               '</div>')
         $d.dialog({
@@ -130,12 +130,12 @@ function main () { // Everything loaded, now execute code.
     if (ecText === 'collapsed') {
       $('#CAJAOutline .panel-collapse').slideUp(300)
       $('#CAJAOutline .accordion').addClass('collapsed')
-      $('#expandCollapse').button({label: '<span class="glyphicon-expand"></span> Expand All'})
+      $('#expandCollapse').button({label: '<span class="glyphicon-expand" aria-hidden="true"></span> Expand All'})
       $('#expandCollapse').attr('data-state', 'expanded')
     } else {
       $('#CAJAOutline .panel-collapse').slideDown(300)
       $('#CAJAOutline .accordion').removeClass('collapsed')
-      $('#expandCollapse').button({label: '<span class="glyphicon-collapse"></span> Collapse All'})
+      $('#expandCollapse').button({label: '<span class="glyphicon-collapse" aria-hidden="true"></span> Collapse All'})
       $('#expandCollapse').attr('data-state', 'collapsed')
     }
   }
@@ -153,12 +153,12 @@ function main () { // Everything loaded, now execute code.
 
       if (ecPanelButtonState === 'collapsed') {
         $(this).parents('.tab-panel').find('legend ~ div').slideToggle(300)
-        $(this).button({label: '<span class="glyphicon-expand"></span> Expand All'})
+        $(this).button({label: '<span class="glyphicon-expand" aria-hidden="true"></span> Expand All'})
         $(this).attr('data-state', 'expanded')
         $('fieldset').addClass('collapsed')
       } else {
         $(this).parents('.tab-panel').find('legend ~ div').slideDown(300)
-        $(this).button({label: '<span class="glyphicon-collapse"></span> Collapse All'})
+        $(this).button({label: '<span class="glyphicon-collapse" aria-hidden="true"></span> Collapse All'})
         $(this).attr('data-state', 'collapsed')
         $('fieldset').removeClass('collapsed')
       }
@@ -337,7 +337,7 @@ function main () { // Everything loaded, now execute code.
 
   // JPM - added button to slide/hide page list on mapper
   $('#tabsMapper button').first()
-    .button({disabled: false, label: '<span class="glyphicon-left-thin"></span> Hide Page List'}).next()
+    .button({disabled: false, label: '<span class="glyphicon-left-thin" aria-hidden="true"></span> Hide Page List'}).next()
     .button({disabled: false}).next()
     .button().next()
     .button()

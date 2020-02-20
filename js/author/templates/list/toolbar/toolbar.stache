@@ -27,18 +27,18 @@
         data-target="#test-assemble-modal"
         class="btn btn-default navbar-btn test-assemble">
 
-        <span class="glyphicon-file-pdf"></span> Test Assemble
+        <span class="glyphicon-file-pdf" aria-hidden="true"></span> Test Assemble
       </button>
 
       <button class="btn btn-primary navbar-btn new-template"
         on:el:click="openNewTemplate(false)">
-        <span class="glyphicon-plus"></span> Create Text Template
+        <span class="glyphicon-plus" aria-hidden="true"></span> Create Text Template
       </button>
 
       <button
         on:el:click="openNewTemplate(true)"
         class="btn btn-primary navbar-btn new-template">
-        <span class="glyphicon-plus"></span> Create PDF Template
+        <span class="glyphicon-plus" aria-hidden="true"></span> Create PDF Template
       </button>
     </div>
 
@@ -51,7 +51,7 @@
             placeholder="search for a template...">
 
           <span class="input-group-addon">
-            <span class="glyphicon-search"></span>
+            <span class="glyphicon-search" aria-hidden="true"></span>
             <span class="sr-only">Search</span>
           </span>
 

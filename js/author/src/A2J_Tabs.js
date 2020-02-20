@@ -303,7 +303,7 @@ window.form = {
     return '<tr><td>' + label + '</td><td>' + value + '</td></tr>'
   },
   noteHTML: function (kind, t) {
-    return '<div class="alert alert-' + kind + '"><p><span class="glyphicon-attention"></span>' + t + '</p></div>'
+    return '<div class="alert alert-' + kind + '"><p><span class="glyphicon-attention" aria-hidden="true"></span>' + t + '</p></div>'
   },
   note: function (t) {
     return $(form.noteHTML('info', t))
@@ -767,7 +767,7 @@ window.form = {
     var $fileupload = $(
       '<div class="fileinput-button form-group">' +
         '<button class="btn btn-default btn-wide-sm">' +
-          '<span class="glyphicon-plus"></span> Upload' +
+          '<span class="glyphicon-plus" aria-hidden="true"></span> Upload' +
         '</button>' +
         '<input class="form-control fileupload" type="file" name="files[]" >' +
       '</div>'
@@ -892,7 +892,7 @@ window.form = {
           // (err.line)
           // '<span class="err">'+err.text+'</span>'
           // '<span class="ui-widget">
-          '<span class="text-danger"><span class="glyphicon-attention"></span>' + err.text + '</span></span>'
+          '<span class="text-danger"><span class="glyphicon-attention" aria-hidden="true"></span>' + err.text + '</span></span>'
           // </span>'
         )
       }

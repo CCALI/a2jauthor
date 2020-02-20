@@ -240,10 +240,7 @@ export let ViewerNavigationVM = CanMap.extend({
 
   resolveVarMacros (questionText) {
     // eval logic macros, aka %%[client first name te]%%, to resolve variable values
-    // TODO: this only works on first pass - a larger refactor will be required
-    // to make this display text live update as variable values update
-    const tLogic = this.attr('logic')._tLogic
-    const resolvedText = tLogic.evalLogicHTML(questionText).html
+    const resolvedText = this.attr('logic').eval(questionText)
 
     return resolvedText
   },

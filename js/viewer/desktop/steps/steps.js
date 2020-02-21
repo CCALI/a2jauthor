@@ -589,8 +589,10 @@ export default Component.extend({
           title: page.learn,
           text: page.help,
           imageURL: page.helpImageURL,
+          altText: page.helpAltText,
           audioURL: page.helpAudioURL,
-          videoURL: page.helpVideoURL
+          videoURL: page.helpVideoURL,
+          helpReader: page.helpReader
         })
       }
     }

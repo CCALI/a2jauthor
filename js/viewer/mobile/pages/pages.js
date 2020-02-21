@@ -64,8 +64,10 @@ export default Component.extend({
           title: page.learn,
           text: page.help,
           imageURL: page.helpImageURL,
+          altText: page.helpAltText,
           audioURL: page.helpAudioURL,
-          videoURL: page.helpVideoURL
+          videoURL: page.helpVideoURL,
+          helpReader: page.helpReader
         })
       }
     },
@@ -94,8 +96,10 @@ export default Component.extend({
             title: '',
             text: page.text,
             imageURL: undefined,
+            altText: page.helpAltText,
             audioURL: page.textAudioURL,
-            videoURL: undefined
+            videoURL: undefined,
+            helpReader: undefined
           })
         }
       } else { // external link

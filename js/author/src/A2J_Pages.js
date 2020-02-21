@@ -1,37 +1,36 @@
 /*
-	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
-	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+  A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
+  All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
-	Authoring App Pages GUI
-	Page editing dialog box
-	Editable page text for display in All Text
-	04/15/2013
-
+  Authoring App Pages GUI
+  Page editing dialog box
+  Editable page text for display in All Text
+  04/15/2013
 */
 // TODO: fix legacy imports, removing circular dependencies
 // import $ from 'jquery'
-// import {TGuide, TPage, TField, TButton, gGuideMeta, gStartArgs, CONST} from './viewer/A2J_Types'
+// import {TGuide, TPage, TField, TButton, window.gGuideMeta, gStartArgs, window.window.CONST} from './viewer/A2J_Types'
 // import {gPrefs} from './viewer/A2J_Prefs'
 
 var $pageEditDialog = null
 
-function pageNameFieldsForTextTab (pagefs, page) {	// Used by the Text tab.
+function pageNameFieldsForTextTab (pagefs, page) { // Used by the Text tab.
   // Include editable fields of all a page's text blocks.
-  pagefs.append(form.htmlarea({ label: 'Text:', value: page.text, change: function (val) { page.text = val } }))
-  if (page.type !== CONST.ptPopup) {
-    if (gPrefs.showText === 2 || page.learn !== '') {
-      pagefs.append(form.text({ label: 'Learn More prompt:',
+  pagefs.append(window.form.htmlarea({ label: 'Question Text:', value: page.text, change: function (val) { page.text = val } }))
+  if (page.type !== window.window.CONST.ptPopup) {
+    if (window.gPrefs.showText === 2 || page.learn !== '') {
+      pagefs.append(window.form.text({ label: 'Prompt:',
         placeholder: '',
         value: page.learn,
         change: function (val, page) { page.learn = val } }))
     }
-    if (gPrefs.showText === 2 || page.help !== '') {
-      pagefs.append(form.htmlarea({ label: 'Help:',
+    if (window.gPrefs.showText === 2 || page.help !== '') {
+      pagefs.append(window.form.htmlarea({ label: 'Response:',
         value: page.help,
         change: function (val) { page.help = val } }))
     }
-    if (gPrefs.showText === 2 || page.helpReader !== '') {
-      pagefs.append(form.htmlarea({ label: 'Help Text Reader:',
+    if (window.gPrefs.showText === 2 || page.helpReader !== '') {
+      pagefs.append(window.form.htmlarea({ label: 'Video Transcript:',
         value: page.helpReader,
         change: function (val) { page.helpReader = val } }))
     }
@@ -41,13 +40,13 @@ function pageNameFieldsForTextTab (pagefs, page) {	// Used by the Text tab.
     var invalidChangeFnc = function (val, field) { field.invalidPrompt = val }
     for (f in page.fields) {
       var field = page.fields[f]
-      var ff = form.fieldset('Field ' + (parseInt(f, 10) + 1), field)
-      ff.append(form.htmlarea({ label: 'Label:', value: field.label, field: field, change: labelChangeFnc }))
-      if (gPrefs.showText === 2 || field.value !== '') {
-        ff.append(form.text({ label: 'Default value:', placeholder: '', name: 'default', value: field.value, change: defValueChangeFnc }))
+      var ff = window.form.fieldset('Field ' + (parseInt(f, 10) + 1), field)
+      ff.append(window.form.htmlarea({ label: 'Label:', value: field.label, field: field, change: labelChangeFnc }))
+      if (window.gPrefs.showText === 2 || field.value !== '') {
+        ff.append(window.form.text({ label: 'Default Value:', placeholder: '', name: 'default', value: field.value, change: defValueChangeFnc }))
       }
-      if (gPrefs.showText === 2 || field.invalidPrompt !== '') {
-        ff.append(form.htmlarea({ label: 'If invalid say:', value: field.invalidPrompt, field: field, change: invalidChangeFnc }))
+      if (window.gPrefs.showText === 2 || field.invalidPrompt !== '') {
+        ff.append(window.form.htmlarea({ label: 'Custom Invalid Prompt:', value: field.invalidPrompt, field: field, change: invalidChangeFnc }))
       }
       pagefs.append(ff)
     }
@@ -56,12 +55,12 @@ function pageNameFieldsForTextTab (pagefs, page) {	// Used by the Text tab.
     var bntDevValChangeFnc = function (val, b) { b.value = val }
     for (bi in page.buttons) {
       var b = page.buttons[bi]
-      var bf = form.fieldset('Button ' + (parseInt(bi, 10) + 1), b)
-      if (gPrefs.showText === 2 || b.label !== '') {
-        bf.append(form.text({ value: b.label, label: 'Label:', placeholder: 'button label', change: btnLabelChangeFnc }))
+      var bf = window.form.fieldset('Button ' + (parseInt(bi, 10) + 1), b)
+      if (window.gPrefs.showText === 2 || b.label !== '') {
+        bf.append(window.form.text({ value: b.label, label: 'Label:', placeholder: '', change: btnLabelChangeFnc }))
       }
-      if (gPrefs.showText === 2 || b.value !== '') {
-        bf.append(form.text({ value: b.value, label: 'Default value:', placeholder: 'Default value', change: bntDevValChangeFnc }))
+      if (window.gPrefs.showText === 2 || b.value !== '') {
+        bf.append(window.form.text({ value: b.value, label: 'Default Value:', placeholder: '', change: bntDevValChangeFnc }))
       }
       pagefs.append(bf)
     }
@@ -75,59 +74,59 @@ function gotoPageView (destPageName, url) {
   window.setTimeout(function () {
     switch (destPageName) {
       // On success exit, flag interview as Complete.
-      case CONST.qIDSUCCESS:
-        gGuide.varSet(CONST.vnInterviewIncompleteTF, false)
-        dialogAlert('Author note: User\'s data would upload to server.')
+      case window.window.CONST.qIDSUCCESS:
+        window.gGuide.varSet(window.window.CONST.vnInterviewIncompleteTF, false)
+        window.dialogAlert('Author note: User\'s data would upload to server.')
         break
 
       // Exit/Resume
-      case CONST.qIDEXIT:
-        dialogAlert('Author note: User\'s INCOMPLETE data would upload to server.')
+      case window.window.CONST.qIDEXIT:
+        window.dialogAlert('Author note: User\'s INCOMPLETE data would upload to server.')
         break
 
-      case CONST.qIDFAIL:
-        if (makestr(url) === '') url = gStartArgs.exitURL
-        dialogAlert('Author note: User would be redirected to another page: <a target=_blank href="' + url + '">' + url + '</a>')
+      case window.window.CONST.qIDFAIL:
+        if (window.makestr(url) === '') url = window.gStartArgs.exitURL
+        window.dialogAlert('Author note: User would be redirected to another page: <a target=_blank href="' + url + '">' + url + '</a>')
         break
 
       // 8/17/09 3.0.1 Execute the Resume button.
-      case CONST.qIDRESUME:
-        traceLogic('Scripted \'Resume\'')
-        A2JViewer.goExitResume()
+      case window.window.CONST.qIDRESUME:
+        window.traceLogic('Scripted \'Resume\'')
+        window.A2JViewer.goExitResume()
         break
 
       // 8/17/09 3.0.1 Execute the Back button.
-      case CONST.qIDBACK:
-        traceLogic('Scripted \'Go Back\'')
-        A2JViewer.goBack()
+      case window.CONST.qIDBACK:
+        window.traceLogic('Scripted \'Go Back\'')
+        window.A2JViewer.goBack()
         break
 
       default:
-        var page = gGuide.pages[destPageName]
+        var page = window.window.gGuide.pages[destPageName]
 
         if (page === null || typeof page === 'undefined') {
-          traceAlert('Page is missing: ' + destPageName)
-          traceLogic('Page is missing: ' + destPageName)
+          window.traceAlert('Page is missing: ' + destPageName)
+          window.traceLogic('Page is missing: ' + destPageName)
         } else {
-          gPage = page
-          $('#authortool').hide()
-          A2JViewer.layoutPage($('.A2JViewer', '#page-viewer'), gPage)
-          $('#page-viewer').removeClass('hidestart').show()
-          A2JViewer.refreshVariables()// TODO more efficient updates
+          window.gPage = page
+          window.$('#authortool').hide()
+          window.A2JViewer.layoutPage(window.$('.A2JViewer', '#page-viewer'), window.gPage)
+          window.$('#page-viewer').removeClass('hidestart').show()
+          window.A2JViewer.refreshVariables() // TODO more efficient updates
         }
     }
   }, 1)
 }
 
-function pageNameRelFilter (e, pageName) {	// Return all DOM elements whose REL points to page name.
+function pageNameRelFilter (e, pageName) { // Return all DOM elements whose REL points to page name.
   var rel = 'PAGE ' + pageName
-  return $(e).filter(function () {
-    return rel === $(this).attr('rel')
+  return window.$(e).filter(function () {
+    return rel === window.$(this).attr('rel')
   })
 }
 
-function pageEditSelected () {	// Return currently selected page or '' if none selected.
-  var rel = makestr($('.pageoutline a.' + SELECTED).first().attr('rel'))
+function pageEditSelected () { // Return currently selected page or '' if none selected.
+  var rel = window.makestr(window.$('.pageoutline a.' + window.SELECTED).first().attr('rel'))
   if (rel.indexOf('PAGE ') === 0) {
     rel = rel.substr(5)
   } else {
@@ -135,32 +134,32 @@ function pageEditSelected () {	// Return currently selected page or '' if none s
   }
   return rel
 }
-function pageEditSelect (pageName) {	// Select named page in our list
-  $('.pageoutline a').removeClass(SELECTED)
-  pageNameRelFilter('.pageoutline a', pageName).toggleClass(SELECTED)
+function pageEditSelect (pageName) { // Select named page in our list
+  window.$('.pageoutline a').removeClass(window.SELECTED)
+  pageNameRelFilter('.pageoutline a', pageName).toggleClass(window.SELECTED)
 }
 
-function pageEditClone (pageName) {	// Clone named page and return new page's name.
+function pageEditClone (pageName) { // Clone named page and return new page's name.
   /** @type {TPage} */
-  var page = gGuide.pages[pageName]
+  var page = window.gGuide.pages[pageName]
   if (typeof page === 'undefined') { return '' }
-  var clonePage = pageFromXML(page2XML(page))
-  page = gGuide.addUniquePage(pageName, clonePage)
+  var clonePage = window.pageFromXML(window.page2XML(page))
+  page = window.gGuide.addUniquePage(pageName, clonePage)
   // Fix Git Issue #272 Stagger cloned question on mapper
   page.mapy += 30
   page.mapx += 30
-  gGuide.sortPages()
-  updateTOC()
+  window.gGuide.sortPages()
+  window.updateTOC()
   pageEditSelect(page.name)
   return page.name
 }
 
-function pageEditNew () {	// Create a new blank page, after selected page.
+function pageEditNew () { // Create a new blank page, after selected page.
   var newName = pageEditSelected()
   var newStep
   var selPage = false
-  if (newName === '') {	// No page selected, use first page listed in TOC and in first step.
-    var rel = makestr($('.pageoutline li').first().attr('rel'))
+  if (newName === '') { // No page selected, use first page listed in TOC and in first step.
+    var rel = window.makestr(window.$('.pageoutline li').first().attr('rel'))
     if (rel.indexOf('PAGE ') === 0) {
       rel = rel.substr(5)
     } else {
@@ -168,46 +167,46 @@ function pageEditNew () {	// Create a new blank page, after selected page.
     }
     newName = rel
     newStep = 0
-  } else {	// Create new page in same step as selected page.
-    selPage = gGuide.pages[newName]
+  } else { // Create new page in same step as selected page.
+    selPage = window.gGuide.pages[newName]
     newStep = selPage.step
   }
 
   if (selPage === false) {
-    selPage = gGuide.sortedPages.length > 0 ? gGuide.sortedPages[gGuide.sortedPages.length - 1] : false
+    selPage = window.gGuide.sortedPages.length > 0 ? window.gGuide.sortedPages[window.gGuide.sortedPages.length - 1] : false
   }
 
-  var page = gGuide.addUniquePage(newName)
+  var page = window.gGuide.addUniquePage(newName)
   page.type = 'A2J'
   page.text = 'My text'
   page.step = newStep
   page.mapx = selPage ? selPage.mapx : 0
-  page.mapy = selPage ? selPage.mapy + NODE_SIZE.h + 20 : 0
+  page.mapy = selPage ? selPage.mapy + window.NODE_SIZE.h + 20 : 0
 
   // 2014-10-22 Ensure a new page has at least one button
-  var cnt = new TButton()
-  cnt.label = lang.Continue
+  var cnt = new window.TButton()
+  cnt.label = window.lang.Continue
   page.buttons = [cnt]
-  gGuide.sortPages()
-  updateTOC()
+  window.gGuide.sortPages()
+  window.updateTOC()
   pageEditSelect(page.name)
   return page.name
 }
 
-function pagePopupEditNew () {	// Create a new blank popup page, after selected popup.
+function pagePopupEditNew () { // Create a new blank popup page, after selected popup.
   var newName = pageEditSelected()
   if (newName === '') {
     newName = 'Popup'
-  } else {	// Git Issue #268 - add Popup to new popup name
+  } else { // Git Issue #268 - add Popup to new popup name
     newName += ' - Popup'
   }
-  var page = gGuide.addUniquePage(newName)
-  page.type = CONST.ptPopup
+  var page = window.gGuide.addUniquePage(newName)
+  page.type = window.CONST.ptPopup
   page.mapx = null
   page.text = 'My popup text'
   page.step = 0
-  gGuide.sortPages()
-  updateTOC()
+  window.gGuide.sortPages()
+  window.updateTOC()
   pageEditSelect(page.name)
   return page.name
 }
@@ -217,16 +216,16 @@ function pageRename (page, newName) {
   // trace("Renaming page "+page.name+" to "+newName);
   if (page.name === newName) { return true }
   if (page.name.toLowerCase() !== newName.toLowerCase()) {
-    if (gGuide.pages[newName]) {
-      dialogAlert({ title: 'Page rename disallowed', body: 'There is already a page named ' + newName })
+    if (window.gGuide.pages[newName]) {
+      window.dialogAlert({ title: 'Page rename disallowed', body: 'There is already a page named ' + newName })
       return false
     }
   }
-  gGuide.pageFindReferences(page.name, newName)
-  delete gGuide.pages[page.name]
+  window.gGuide.pageFindReferences(page.name, newName)
+  delete window.gGuide.pages[page.name]
   page.name = newName
-  gGuide.pages[page.name] = page
-  gGuide.sortPages()
+  window.gGuide.pages[page.name] = page
+  window.gGuide.sortPages()
   // Update name for Preview button to have correct target
   if ($pageEditDialog) {
     $pageEditDialog.attr('rel', page.name)
@@ -235,11 +234,11 @@ function pageRename (page, newName) {
   return true
 }
 
-function pageEditDelete (name) {	// Delete named page after confirmation that lists all references to it.
-  if (name == '') {
+function pageEditDelete (name) { // Delete named page after confirmation that lists all references to it.
+  if (name === '') {
     return
   }
-  var refs = gGuide.pageFindReferences(name, null)
+  var refs = window.gGuide.pageFindReferences(name, null)
   var txt = ''
   var r
   if (refs.length > 0) {
@@ -251,7 +250,7 @@ function pageEditDelete (name) {	// Delete named page after confirmation that li
   } else {
     txt = 'No references to this page.'
   }
-  dialogConfirmYesNo({
+  window.dialogConfirmYesNo({
     title: 'Deleting page',
     closeText: '', // removes word "Close" from upper right titlebar close button
     message: '<div class="alert alert-danger"><span class="glyphicon-attention" aria-hidden="true"></span> Permanently delete page "' + name + '"?</div><div>' + txt + '</div>',
@@ -259,20 +258,21 @@ function pageEditDelete (name) {	// Delete named page after confirmation that li
     width: 600,
     name: name,
     Yes:
-		/** * @this {{name}} */
-		function () {
-		  var page = gGuide.pages[this.name]
-		  // 2015-06-29 Git ISsue #273 Anything pointing to this page is redirect to NOWHERE
-		  // Handle direct button branches and GOTO's in Logic blocks.
-		  gGuide.pageFindReferences(name, CONST.qIDNOWHERE)
-		  delete gGuide.pages[page.name]
-		  gGuide.sortPages()
-		  updateTOC()
-		  if ($pageEditDialog !== null) {
-		    $pageEditDialog.dialog('close')
-		    $pageEditDialog = null
-		  }
-		} })
+    /** * @this {{name}} */
+    function () {
+      var page = window.gGuide.pages[this.name]
+      // 2015-06-29 Git ISsue #273 Anything pointing to this page is redirect to NOWHERE
+      // Handle direct button branches and GOTO's in Logic blocks.
+      window.gGuide.pageFindReferences(name, window.CONST.qIDNOWHERE)
+      delete window.gGuide.pages[page.name]
+      window.gGuide.sortPages()
+      window.updateTOC()
+      if ($pageEditDialog !== null) {
+        $pageEditDialog.dialog('close')
+        $pageEditDialog = null
+      }
+    }
+  })
 }
 
 // debounce for QDE resize
@@ -300,7 +300,7 @@ function debounce (func, wait, immediate) {
 }
 // update maxHeight on resize
 function setQDEmaxHeight () {
-  var $pageEditDialog = $('.page-edit-form')
+  var $pageEditDialog = window.$('.page-edit-form')
   var windowHeight = window.innerHeight
   var maxHeight = 0.9 * windowHeight
   $pageEditDialog.dialog('option', 'maxHeight', maxHeight)
@@ -313,16 +313,16 @@ var debouncedSetQDEmaxHeight = debounce(function () {
 
 // Bring page edit window forward with page content
 function gotoPageEdit (pageName) {
-  $pageEditDialog = $('.page-edit-form')
+  $pageEditDialog = window.$('.page-edit-form')
 
-  $('#authortool').show()
-  $('#page-viewer').hide()
+  window.$('#authortool').show()
+  window.$('#page-viewer').hide()
 
-  var page = gGuide.pages[pageName]
+  var page = window.gGuide.pages[pageName]
   if (page == null) return
 
   // clear these so they refresh with new data. TODO - update in place
-  $('#tabsLogic  .tabContent, #tabsText .tabContent').html('')
+  window.$('#tabsLogic  .tabContent, #tabsText .tabContent').html('')
 
   $pageEditDialog.attr('rel', page.name)
   $pageEditDialog.attr('title', 'Question Editor')
@@ -342,43 +342,30 @@ function gotoPageEdit (pageName) {
       this.removeOverlay()
       // Update view and save any time edit dialog closes
       window.updateTOC()
-      if (window.gGuide) {
+      if (window.window.gGuide) {
         window.guideSave()
       }
     },
 
     open: function () {
       // create overlay which returns it's own cleanup function
-      this.removeOverlay = addDialogOverlay($(this))
+      this.removeOverlay = addDialogOverlay(window.$(this))
     },
 
     buttons: [{
       text: 'Close',
       class: 'btn btn-default btn-wide-sm',
       click: function () {
-        $(this).dialog('close')
+        window.$(this).dialog('close')
       }
     },
-    // { TODO: remove completely if no Author complains this is missing
-    //   text: 'XML',
-    //   class: 'btn btn-default btn-wide-sm',
-    //   click: function () {
-    //     var pageName = $(this).attr('rel')
-    //     dialogAlert({
-    //       title: 'Page XML',
-    //       width: 800,
-    //       height: 600,
-    //       body: prettyXML(page2XML(gGuide.pages[pageName]))
-    //     })
-    //   }
-    // },
     {
       text: 'Preview',
       class: 'btn btn-primary btn-wide-sm',
       click: function () {
-        var pageName = $(this).attr('rel')
+        var pageName = window.$(this).attr('rel')
         $pageEditDialog.dialog('close')
-        $('#author-app').trigger('edit-page:preview', pageName)
+        window.$('#author-app').trigger('edit-page:preview', pageName)
       }
     }]
   })
@@ -389,7 +376,7 @@ function gotoPageEdit (pageName) {
   // modal dialog is responsive now, remove draggable icon from UI
   modal.removeClass('ui-resizable')
 
-  guidePageEditForm(page, $('.page-edit-form-panel', $pageEditDialog).html(''), page.name)
+  guidePageEditForm(page, window.$('.page-edit-form-panel', $pageEditDialog).html(''), page.name)
 
   $pageEditDialog.dialog('open')
   $pageEditDialog.dialog('moveToTop')
@@ -404,8 +391,8 @@ function gotoPageEdit (pageName) {
 // Add overlay/backdrop to dialog modals
 // returns it's own removal function
 function addDialogOverlay ($parentDialog) {
-  var $dialogOverlay = $('<div class="dialog-overlay ui-widget-overlay ui-front" />')
-  var $body = $(document.body)
+  var $dialogOverlay = window.$('<div class="dialog-overlay ui-widget-overlay ui-front" />')
+  var $body = window.$(document.body)
   $body.prepend($dialogOverlay)
 
   $dialogOverlay.on('click', function () {
@@ -429,11 +416,11 @@ function gotoTabOrPage (target) {
     target = 'tabsSteps'
   }
 
-  $('.guidemenu nav li').removeClass('active')
-  $('.guidemenu nav li[ref="' + target + '"]').addClass('active')
-  $('.tab-panel').hide()
-  $('.tab-panel.panel-info').show()
-  $('#' + target).show()
+  window.$('.guidemenu nav li').removeClass('active')
+  window.$('.guidemenu nav li[ref="' + target + '"]').addClass('active')
+  window.$('.tab-panel').hide()
+  window.$('.tab-panel.panel-info').show()
+  window.$('#' + target).show()
 
   switch (target) {
     case 'tabsAbout':
@@ -442,7 +429,7 @@ function gotoTabOrPage (target) {
     case 'tabsLogic':
     case 'tabsText':
     case 'tabsClauses':
-      if (gGuide) gGuide.noviceTab(target, false)
+      if (window.gGuide) window.gGuide.noviceTab(target, false)
       break
   }
 }
@@ -462,212 +449,217 @@ function convertOptionsToText (optionsHTML) {
 };
 
 /** @param {TPage} page */
+function buildPopupQDE (page) {
+  var popupFieldSet = window.form.fieldset('Popup Info', page)
+  popupFieldSet.append(window.form.text({ label: 'Name:',
+    name: 'pagename',
+    value: page.name,
+    change: function (val, page, form) { // Renaming a popup page. Rename all references to the page. Use the new name only if it's unique.
+      val = window.$.trim(val)
+      if (pageRename(page, val) === false) {
+        window.$(this).val(page.name)
+      }
+    } }))
+  popupFieldSet.append(window.form.htmlarea({ label: 'Notes:', value: page.notes, change: function (val) { page.notes = val } }))
+  popupFieldSet.append(window.form.htmlarea({ label: 'Text:', value: page.text, change: function (val) { page.text = val } }))
+  popupFieldSet.append(window.form.pickAudio({
+    label: 'Text Audio:',
+    placeholder: '',
+    value: page.textAudioURL,
+    change: function (val, page) { page.textAudioURL = val }
+  }))
+
+  return popupFieldSet
+}
+
+/** @param {TPage} page */
+function buildPageFieldSet (page) {
+  var pageFieldSet = window.form.fieldset('Page Info', page)
+
+  pageFieldSet.append(window.form.pickStep({
+    label: 'Step:',
+    value: page.step,
+    change: function (val, page) {
+      page.step = parseInt(val, 10)
+      window.updateTOC()
+    }
+  }))
+
+  pageFieldSet.append(window.form.text({ label: 'Name:',
+    value: page.name,
+    change: function (val, page, form) { // Renaming a page. Rename all references to the page. Use the new name only if it's unique.
+      val = window.$.trim(val)
+      if (pageRename(page, val) === false) {
+        window.$(this).val(page.name)
+      }
+    } }))
+  if (page.type !== 'A2J') {
+    pageFieldSet.append(window.form.h2('Page type/style: ' + page.type + '/' + page.style))
+  }
+  pageFieldSet.append(window.form.htmlarea({
+    label: 'Notes:',
+    value: page.notes,
+    change: function (val) {
+      page.notes = val
+    }
+  }))
+
+  return pageFieldSet
+}
+
+/** @param {TPage} page */
+function buildQuestionFieldSet (page) {
+  var questionFieldSet = window.form.fieldset('Question Info', page)
+
+  questionFieldSet.append(window.form.htmlarea({
+    label: 'Text:',
+    value: page.text,
+    change: function (val) {
+      page.text = val
+    }
+  }))
+
+  questionFieldSet.append(window.form.htmlarea({
+    label: 'Citation:',
+    value: page.textCitation,
+    change: function (val) {
+      page.textCitation = val
+    }
+  }))
+
+  questionFieldSet.append(window.form.pickAudio({
+    label: 'Audio:',
+    placeholder: '',
+    value: page.textAudioURL,
+    change: function (val, page) {
+      page.textAudioURL = val
+    }
+  }))
+
+  questionFieldSet.append(window.form.varPicker({ label: 'Counting Variable:',
+    placeholder: '',
+    value: page.repeatVar,
+    change: function (val, page) { page.repeatVar = val } }))
+
+  questionFieldSet.append(window.form.varPicker({ name: 'outerLoopVar',
+    label: 'Outer Loop Counting Variable:',
+    placeholder: 'You should only use a variable here for Nested Loops',
+    value: page.outerLoopVar,
+    change: function (val, page) { page.outerLoopVar = val } }))
+
+  return questionFieldSet
+}
+
+/** @param {TPage} page */
+function buildLearnMoreFieldSet (page) {
+  var learnMoreFieldSet = window.form.fieldset('Learn More Info', page)
+
+  learnMoreFieldSet.append(window.form.text({
+    label: 'Prompt:',
+    placeholder: '',
+    value: page.learn,
+    change: function (val, page) {
+      page.learn = val
+    }
+  }))
+
+  learnMoreFieldSet.append(window.form.htmlarea({ label: 'Response:', value: page.help, change: function (val) { page.help = val } }))
+
+  learnMoreFieldSet.append(window.form.htmlarea({ label: 'Citation:', value: page.helpCitation, change: function (val) { page.helpCitation = val } }))
+
+  learnMoreFieldSet.append(window.form.pickAudio({
+    name: 'helpAudio',
+    label: 'Audio:',
+    placeholder: '',
+    value: page.helpAudioURL,
+    change: function (val, page) { page.helpAudioURL = val }
+  }))
+
+  learnMoreFieldSet.append(window.form.pickImage({
+    name: 'helpGraphic',
+    label: 'Graphic:',
+    placeholder: '',
+    value: page.helpImageURL,
+    change: function (val, page) { page.helpImageURL = val }
+  }))
+
+  learnMoreFieldSet.append(window.form.text({
+    name: 'helpAltText',
+    label: 'Graphic Alt-Text:',
+    placeholder: 'Enter 100 characters or less to describe your image for Aria readers. Hint: 100 characters ends here',
+    value: page.helpAltText,
+    change: function (val, page) { page.helpAltText = window.$.trim(val).substring(0, 120) }
+  }))
+
+  learnMoreFieldSet.append(window.form.pickVideo({
+    name: 'helpVideo',
+    label: 'Video:',
+    placeholder: '',
+    value: page.helpVideoURL,
+    change: function (val, page) { page.helpVideoURL = val }
+  }))
+
+  learnMoreFieldSet.append(window.form.htmlarea({
+    name: 'helpReader',
+    label: 'Video Transcript:',
+    value: page.helpReader,
+    change: function (val) { page.helpReader = val }
+  }))
+
+  return learnMoreFieldSet
+}
+
+/** @param {TPage} page */
 function guidePageEditForm (page, qdeParentDiv, pagename) {
   // Create editing wizard (QDE, Question Design Editor) for given page.
   var qde = ''
-  // var page = gGuide.pages[pagename];
-  qde = $('<div/>').addClass('tabsPanel editq')
+  // var page = window.gGuide.pages[pagename];
+  qde = window.$('<div/>').addClass('tabsPanel editq')
   var fs
   // form and it's methods are defined in A2J_Pages.js
-  form.clear()
+  window.form.clear()
   if (page === null || typeof page === 'undefined') {
-    qde.append(form.h2('Page not found ' + pagename))
-  } else
-  if (page.type === CONST.ptPopup) {	// Popup pages have only a few options - text, video, audio
-    fs = form.fieldset('Popup info', page)
-    fs.append(form.text({ label: 'Name:',
-      name: 'pagename',
-      value: page.name,
-      change: function (val, page, form) {	// Renaming a popup page. Rename all references to the page. Use the new name only if it's unique.
-        val = jQuery.trim(val)
-        if (pageRename(page, val) === false) {
-          $(this).val(page.name)
-        }
-      } }))
-    fs.append(form.htmlarea({ label: 'Notes:', value: page.notes, change: function (val) { page.notes = val } }))
-    fs.append(form.htmlarea({ label: 'Text:', value: page.text, change: function (val) { page.text = val } }))
-    fs.append(form.pickAudio({ label: 'Text audio:',
-      placeholder: 'mp3 file',
-      value:	page.textAudioURL,
-      change: function (val, page) { page.textAudioURL = val } }))
-    qde.append(fs)
+    qde.append(window.form.h2('Page not found ' + pagename))
+  } else if (page.type === window.CONST.ptPopup) { // Popup pages have only a few options - text, video, audio
+    var popupfs = buildPopupQDE(page)
+    qde.append(popupfs)
   } else {
-    fs = form.fieldset('Page info', page)
-
-    fs.append(form.pickStep({
-      label: 'Step:',
-      value: page.step,
-      change: function (val, page) {
-        page.step = parseInt(val, 10)
-        updateTOC()
-      }
-    }))
-
-    fs.append(form.text({ label: 'Name:',
-      value: page.name,
-      change: function (val, page, form) {	// Renaming a page. Rename all references to the page. Use the new name only if it's unique.
-        val = jQuery.trim(val)
-        if (pageRename(page, val) === false) {
-          $(this).val(page.name)
-        }
-      } }))
-    if (page.type !== 'A2J') {
-      fs.append(form.h2('Page type/style: ' + page.type + '/' + page.style))
-    }
-    fs.append(form.htmlarea({
-      label: 'Notes:',
-      value: page.notes,
-      change: function (val) {
-        page.notes = val
-      }
-    }))
-    qde.append(fs)
-
-    var pagefs = form.fieldset('Question text', page)
-
-    pagefs.append(form.htmlarea({
-      label: 'Text:',
-      value: page.text,
-      change: function (val) {
-        page.text = val
-      }
-    }))
-
-    pagefs.append(form.htmlarea({
-      label: 'Text Citation:',
-      value: page.textCitation,
-      change: function (val) {
-        page.textCitation = val
-      }
-    }))
-
-    pagefs.append(form.pickAudio({
-      label: 'Text audio:',
-      placeholder: 'mp3 file',
-      value: page.textAudioURL,
-      change: function (val, page) {
-        page.textAudioURL = val
-      }
-    }))
-
-    pagefs.append(form.text({
-      label: 'Learn More prompt:',
-      placeholder: 'Learn more',
-      value: page.learn,
-      change: function (val, page) {
-        page.learn = val
-      }
-    }))
-
-    var getShowMe = function () {
-      if (page.helpVideoURL !== '') {
-        return 2
-      }
-
-      if (page.helpImageURL !== '') {
-        return 1
-      }
-
-      return 0
-    }
-
-    var updateShowMe = function (form, showMe) {
-      showMe = Number(showMe)
-
-      form.find('[name="helpAudio"]').showit(showMe !== 2)
-      form.find('[name="helpGraphic"]').showit(showMe === 1)
-      form.find('[name="helpReader"]').showit(showMe >= 1)
-      form.find('[name="helpVideo"]').showit(showMe === 2)
-
-      // only show outerLoopVar if nested is checked
-      form.find('[name="outerLoopVar"]').showit(page.nested)
-    }
-
-    pagefs.append(form.pickList({ label: 'Help style:',
-      value: getShowMe(),
-      change: function (val, page, form) {
-        updateShowMe(form, (val))
-      } }, [0, 'Text', 1, 'Show Me Graphic', 2, 'Show Me Video']))
-
-    pagefs.append(form.htmlarea({ label: 'Help:', value: page.help, change: function (val) { page.help = val } }))
-
-    pagefs.append(form.htmlarea({ label: 'Help Citation:', value: page.helpCitation, change: function (val) { page.helpCitation = val } }))
-
-    pagefs.append(form.pickAudio({ name: 'helpAudio',
-      label: 'Help audio:',
-      placeholder: 'Help audio URL',
-      value: page.helpAudioURL,
-      change: function (val, page) { page.helpAudioURL = val } }))
-
-    pagefs.append(form.pickImage({ name: 'helpGraphic',
-      label: 'Help graphic:',
-      placeholder: 'Help image URL',
-      value: page.helpImageURL,
-      change: function (val, page) { page.helpImageURL = val } }))
-
-    pagefs.append(form.pickVideo({ name: 'helpVideo',
-      label: 'Help video:',
-      placeholder: 'Help video URL',
-      value: page.helpVideoURL,
-      change: function (val, page) { page.helpVideoURL = val } }))
-
-    pagefs.append(form.htmlarea({ name: 'helpReader',
-      label: 'Help Text Reader:',
-      value: page.helpReader,
-      change: function (val) { page.helpReader = val } }))
-
-    pagefs.append(form.varPicker({ label: 'Counting Variable:',
-      placeholder: '',
-      value: page.repeatVar,
-      change: function (val, page) { page.repeatVar = val } }))
-
-    pagefs.append(form.checkbox({ name: 'nested',
-      label: 'Nested:',
-      checkbox: '',
-      value: page.nested,
-      change: function (val, page) {
-        page.nested = val
-        $('[name="outerLoopVar"]').showit(page.nested)
-        // clear outerLoopVar if unchecked
-        if (!page.nested) {
-          page.outerLoopVar = ''
-        }
-      } }))
-
-    pagefs.append(form.varPicker({ name: 'outerLoopVar',
-      label: 'Outer Loop Counting Variable:',
-      placeholder: '',
-      value: page.outerLoopVar,
-      change: function (val, page) { page.outerLoopVar = val } }))
-
+    // Add the Page Info Field Set
+    var pagefs = buildPageFieldSet(page)
     qde.append(pagefs)
-    updateShowMe(pagefs, getShowMe())
+
+    // Add the Question Info Field Set
+    var questionfs = buildQuestionFieldSet(page)
+    qde.append(questionfs)
+
+    // Add the Learn More Info Field Set
+    var learnmorefs = buildLearnMoreFieldSet(page)
+    qde.append(learnmorefs)
+
     pagefs = null
 
     if (page.type === 'A2J' || page.fields.length > 0) {
-      var blankField = new TField()
-      blankField.type = CONST.ftText
+      var blankField = new window.TField()
+      blankField.type = window.CONST.ftText
       blankField.label = 'Label'
 
-      var updateFieldLayout = function (ff, field)
-      //* * @param {TField} field */
-      {
-        var canRequire = field.type !== 'radio' && field.type !== CONST.ftCheckBoxNOTA && field.type !== CONST.ftUserAvatar
-        var canMinMax = field.type === CONST.ftNumber || field.type === CONST.ftNumberDollar || field.type === CONST.ftNumberPick || field.type === CONST.ftDateMDY
-        var canList = field.type === CONST.ftTextPick
-        var canDefaultValue = field.type !== CONST.ftCheckBox && field.type !== CONST.ftCheckBoxNOTA && field.type !== CONST.ftGender && field.type !== CONST.ftUserAvatar
-        var canOrder = field.type === CONST.ftTextPick || field.type === CONST.ftNumberPick || field.type === CONST.ftDateMDY
-        var canUseCalc = (field.type === CONST.ftNumber) || (field.type === CONST.ftNumberDollar)
-        var canMaxChars = field.type === CONST.ftText || field.type === CONST.ftTextLong || field.type === CONST.ftNumberPhone || field.type === CONST.ftNumberZIP || field.type === CONST.ftNumberSSN
-        var canCalendar = field.type === CONST.ftDateMDY
-        var canUseSample = field.type === CONST.ftText || field.type === CONST.ftTextLong ||
-					field.type === CONST.ftTextPick || field.type === CONST.ftNumberPick ||
-					field.type === CONST.ftNumber || field.type === CONST.ftNumberZIP || field.type === CONST.ftNumberSSN || field.type === CONST.ftNumberDollar ||
-					field.type === CONST.ftDateMDY
+      var updateFieldLayout = function (ff, field) { //* * @param {TField} field */
+        var canRequire = field.type !== 'radio' && field.type !== window.CONST.ftCheckBoxNOTA && field.type !== window.CONST.ftUserAvatar
+        var canMinMax = field.type === window.CONST.ftNumber || field.type === window.CONST.ftNumberDollar || field.type === window.CONST.ftNumberPick || field.type === window.CONST.ftDateMDY
+        var canList = field.type === window.CONST.ftTextPick
+        var canDefaultValue = field.type !== window.CONST.ftCheckBox && field.type !== window.CONST.ftCheckBoxNOTA && field.type !== window.CONST.ftGender && field.type !== window.CONST.ftUserAvatar
+        var canOrder = field.type === window.CONST.ftTextPick || field.type === window.CONST.ftNumberPick || field.type === window.CONST.ftDateMDY
+        var canUseCalc = (field.type === window.CONST.ftNumber) || (field.type === window.CONST.ftNumberDollar)
+        var canMaxChars = field.type === window.CONST.ftText || field.type === window.CONST.ftTextLong || field.type === window.CONST.ftNumberPhone || field.type === window.CONST.ftNumberZIP || field.type === window.CONST.ftNumberSSN
+        var canCalendar = field.type === window.CONST.ftDateMDY
+        var canUseSample = field.type === window.CONST.ftText || field.type === window.CONST.ftTextLong ||
+     field.type === window.CONST.ftTextPick || field.type === window.CONST.ftNumberPick ||
+     field.type === window.CONST.ftNumber || field.type === window.CONST.ftNumberZIP || field.type === window.CONST.ftNumberSSN || field.type === window.CONST.ftNumberDollar ||
+     field.type === window.CONST.ftDateMDY
         // var canCBRange= curField.type==CField.ftCheckBox || curField.type==CField.ftCheckBoxNOTA;
         // Can it use extra long labels instead of single line?
-        //	useLongLabel = curField.type==CField.ftCheckBox ||	curField.type==CField.ftCheckBoxNOTA ||curField.type==CField.ftRadioButton ||urField.type==CField.ftCheckBoxMultiple;
-        //	useLongText =curField.type==CField.ftTextLong;
+        // useLongLabel = curField.type==CField.ftCheckBox || curField.type==CField.ftCheckBoxNOTA ||curField.type==CField.ftRadioButton ||urField.type==CField.ftCheckBoxMultiple;
+        // useLongText =curField.type==CField.ftTextLong;
         ff.find('[name="required"]').showit(canRequire)
         ff.find('[name="maxchars"]').showit(canMaxChars)
         ff.find('[name="min"]').showit(canMinMax)
@@ -682,28 +674,26 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
         ff.find('[name="sample"]').showit(canUseSample)
       }
 
-      fs = form.fieldset('Fields')
-      fs.append(form.listManager({ name: 'Fields',
-        picker: 'Number of fields:',
+      fs = window.form.fieldset('Fields')
+      fs.append(window.form.listManager({ name: 'Fields',
+        picker: 'Number of Fields:',
         min: 0,
-        max: CONST.MAXFIELDS,
+        max: window.CONST.MAXFIELDS,
         list: page.fields,
         blank: blankField,
         customClass: 'page-edit-fields',
         save: function (newlist) {
           page.fields = newlist
         },
-        create: function (ff, field)
-        //* * @param {TField} field */
-        {
-          ff.append(form.pickList({ label: 'Type:',
+        create: function (ff, field) { // @param {TField} field
+          ff.append(window.form.pickList({ label: 'Type:',
             value: field.type,
             change: function (val, field, ff) {
               field.type = val
               // Radio Buttons and CheckboxNOTA always required
               // Also check the `required` box so it will show checked
               // if the field type is switched to any other field
-              if (field.type === 'radio' || field.type === CONST.ftCheckBoxNOTA) {
+              if (field.type === 'radio' || field.type === window.CONST.ftCheckBoxNOTA) {
                 field.required = true
                 ff.find('[name="required"]').find('[type=checkbox]').prop('checked', true)
               }
@@ -712,62 +702,62 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
             } },
 
           [
-            CONST.ftText, 'Text',
-            CONST.ftTextLong, 'Text (Long)',
-            CONST.ftTextPick, 'Text (Pick from list)',
-            CONST.ftNumber, 'Number',
-            CONST.ftNumberDollar, 'Number Dollar',
-            CONST.ftNumberSSN, 'Number SSN',
-            CONST.ftNumberPhone, 'Number Phone',
-            CONST.ftNumberZIP, 'Number ZIP Code',
-            CONST.ftNumberPick, 'Number (Pick from list)',
-            CONST.ftDateMDY, 'Date MM/DD/YYYY',
-            CONST.ftGender, 'Gender',
-            CONST.ftRadioButton, 'Radio Button',
-            CONST.ftCheckBox, 'Check box',
-            CONST.ftCheckBoxNOTA, 'Check Box (None of the Above)',
-            CONST.ftUserAvatar, 'User Avatar'
+            window.CONST.ftText, 'Text',
+            window.CONST.ftTextLong, 'Text (Long)',
+            window.CONST.ftTextPick, 'Text (Pick from list)',
+            window.CONST.ftNumber, 'Number',
+            window.CONST.ftNumberDollar, 'Number Dollar',
+            window.CONST.ftNumberSSN, 'Number SSN',
+            window.CONST.ftNumberPhone, 'Number Phone',
+            window.CONST.ftNumberZIP, 'Number ZIP Code',
+            window.CONST.ftNumberPick, 'Number (Pick from list)',
+            window.CONST.ftDateMDY, 'Date MM/DD/YYYY',
+            window.CONST.ftGender, 'Gender',
+            window.CONST.ftRadioButton, 'Radio Button',
+            window.CONST.ftCheckBox, 'Check box',
+            window.CONST.ftCheckBoxNOTA, 'Check Box (None of the Above)',
+            window.CONST.ftUserAvatar, 'User Avatar'
           ]
 
           ))
-          ff.append(form.htmlarea({ label: 'Label:',
+          ff.append(window.form.htmlarea({ label: 'Label:',
             value: field.label,
             change: function (val) { field.label = val } }))
-          ff.append(form.varPicker({ label: 'Variable:',
-            placeholder: 'Variable name',
+          ff.append(window.form.varPicker({ label: 'Variable:',
+            placeholder: '',
             value: field.name,
-            change: function (val, field) { field.name = jQuery.trim(val) } }))
-          ff.append(form.text({ label: 'Default value:',
+            change: function (val, field) { field.name = window.$.trim(val) } }))
+          ff.append(window.form.text({ label: 'Default Value:',
             name: 'default',
-            placeholder: 'Default value',
+            placeholder: '',
             value: field.value,
-            change: function (val, field) { field.value = jQuery.trim(val) } }))
-          ff.append(form.checkbox({ label: 'Required:',
+            change: function (val, field) { field.value = window.$.trim(val) } }))
+          ff.append(window.form.checkbox({ label: 'Required:',
             name: 'required',
             checkbox: '',
             value: field.required,
             change: function (val, field) { field.required = val } }))
-          ff.append(form.text({ label: 'Max chars:',
+          ff.append(window.form.text({ label: 'Max Characters:',
             name: 'maxchars',
-            placeholder: 'Max Chars',
+            placeholder: 'Enter a number here to set a Character Limit for the End User\'s response',
             value: field.maxChars,
             change: function (val, field) { field.maxChars = val } }))
-          ff.append(form.checkbox({ label: 'Show Calculator:',
+          ff.append(window.form.checkbox({ label: 'Show Calculator:',
             name: 'calculator',
             checkbox: '',
             value: field.calculator,
             change: function (val, field) { field.calculator = val } }))
-          ff.append(form.text({ label: 'Min value:',
+          ff.append(window.form.text({ label: 'Min Value:',
             name: 'min',
             placeholder: 'min',
             value: field.min,
             change: function (val, field) { field.min = val } }))
-          ff.append(form.text({ label: 'Max value:',
+          ff.append(window.form.text({ label: 'Max Value:',
             name: 'max',
             placeholder: 'max',
             value: field.max,
             change: function (val, field) { field.max = val } }))
-          ff.append(form.pickXML({ label: 'External list:',
+          ff.append(window.form.pickXML({ label: 'External list:',
             name: 'listext',
             value: field.listSrc,
             change: function (val, field) {
@@ -778,29 +768,30 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
           // Restore previous text list or create from current html option list
           var listText = field.previousTextList ? field.previousTextList : convertOptionsToText(field.listData)
 
-          ff.append(form.textArea({ label: 'Internal list:',
+          ff.append(window.form.textArea({ label: 'Internal list:',
             name: 'listint',
             value: listText,
             change: function (val, field) {
               // 2014-11-24 Convert line break items into pairs like <OPTION VALUE="Purple">Purple</OPTION>
               field.previousTextList = val
               val = val.split('\n')
-              var select = $('<SELECT/>')
+              var select = window.$('<SELECT/>')
               for (var vi in val) {
-                var optText = jQuery.trim(val[vi])
+                var optText = window.$.trim(val[vi])
                 if (optText !== '') {
                   // 02/27/2015 <> don't encode as values and break xml. so for now, just use the text as the value.
-                  select.append($('<OPTION/>').text(optText))
+                  select.append(window.$('<OPTION/>').text(optText))
                 }
               }
               var html = select.html()
               // trace(html);
               field.listData = html
             } }))
-          ff.append(form.htmlarea({ label: 'If invalid say:',
+          ff.append(window.form.htmlarea({ label: 'Custom Invalid Prompt:',
             value: field.invalidPrompt,
             change: function (val) { field.invalidPrompt = val } }))
-          ff.append(form.text({ label: 'Sample value:',
+          ff.append(window.form.text({ label: 'Sample Value:',
+            placeholder: '',
             name: 'sample',
             value: field.sample,
             change: function (val, field) { field.sample = val } }))
@@ -811,25 +802,26 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
       }))
 
       qde.append(fs)
+      // courtesy return for tests
+      return fs
     }
 
-    var updateButtonLayout = function (ff, b)
     //* * @param {TButton} b */
-    {	// Choose a URL for failing the interview
-      var showURL = (b.next === CONST.qIDFAIL)
+    var updateButtonLayout = function (ff, b) { // Choose a URL for failing the interview
+      var showURL = (b.next === window.CONST.qIDFAIL)
       ff.find('[name="url"]').showit(showURL)
     }
 
     if (page.type === 'A2J' || page.buttons.length > 0) {
-      var blankButton = new TButton()
+      var blankButton = new window.TButton()
 
-      fs = form.fieldset('Buttons')
+      fs = window.form.fieldset('Buttons')
 
-      fs.append(form.listManager({
+      fs.append(window.form.listManager({
         name: 'Buttons',
-        picker: 'Number of buttons',
+        picker: 'Number of Buttons',
         min: 1,
-        max: CONST.MAXBUTTONS,
+        max: window.CONST.MAXBUTTONS,
         list: page.buttons,
         blank: blankButton,
         customClass: 'page-edit-buttons',
@@ -839,7 +831,7 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
         },
 
         create: function (ff, b) {
-          ff.append(form.text({
+          ff.append(window.form.text({
             value: b.label,
             label: 'Label:',
             placeholder: 'button label',
@@ -848,25 +840,25 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
             }
           }))
 
-          ff.append(form.varPicker({
+          ff.append(window.form.varPicker({
             value: b.name,
             label: 'Variable Name:',
-            placeholder: 'variable',
+            placeholder: '',
             change: function (val, b) {
               b.name = val
             }
           }))
 
-          ff.append(form.text({
+          ff.append(window.form.text({
             value: b.value,
-            label: 'Default value:',
-            placeholder: 'Default value',
+            label: 'Default Value:',
+            placeholder: '',
             change: function (val, b) {
               b.value = val
             }
           }))
 
-          ff.append(form.pickpage({
+          ff.append(window.form.pickpage({
             value: b.next,
             label: 'Destination:',
             buttonText: 'Set Destination',
@@ -876,7 +868,7 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
             }
           }))
 
-          ff.append(form.text({
+          ff.append(window.form.text({
             name: 'url',
             value: b.url,
             label: 'URL:',
@@ -888,11 +880,11 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
 
           var repeatOptions = [
             '', 'Normal',
-            CONST.RepeatVarSetOne, 'Set Counting Variable to 1',
-            CONST.RepeatVarSetPlusOne, 'Increment Counting Variable'
+            window.CONST.RepeatVarSetOne, 'Set Counting Variable to 1',
+            window.CONST.RepeatVarSetPlusOne, 'Increment Counting Variable'
           ]
 
-          ff.append(form.pickList({
+          ff.append(window.form.pickList({
             label: 'Repeat Options:',
             value: b.repeatVarSet,
             change: function (val, b) {
@@ -900,7 +892,7 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
             }
           }, repeatOptions))
 
-          ff.append(form.varPicker({
+          ff.append(window.form.varPicker({
             label: 'Counting Variable:',
             placeholder: '',
             value: b.repeatVar,
@@ -917,14 +909,14 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
       qde.append(fs)
     }
 
-    fs = form.fieldset('Advanced Logic')
-    fs.append(form.codearea({ label: 'Before:',
+    fs = window.form.fieldset('Advanced Logic')
+    fs.append(window.form.codearea({ label: 'Before:',
       value: page.codeBefore,
       change: function (val) { page.codeBefore = val /* TODO Compile for syntax errors */ } }))
-    fs.append(form.codearea({ label: 'After:',
+    fs.append(window.form.codearea({ label: 'After:',
       value: page.codeAfter,
-      change: function (val) { page.codeAfter = val /* TODO Compile for syntax errors */	} }))
-    fs.append(form.htmlarea({ label: 'Logic Citation:',
+      change: function (val) { page.codeAfter = val /* TODO Compile for syntax errors */ } }))
+    fs.append(window.form.htmlarea({ label: 'Logic Citation:',
       value: page.codeCitation,
       change: function (val) { page.codeCitation = val } }))
     qde.append(fs)
@@ -933,22 +925,22 @@ function guidePageEditForm (page, qdeParentDiv, pagename) {
   qdeParentDiv.append(qde)
 
   // cleanup qde elements when the dialog closes
-  $('.page-edit-dialog').on('dialogclose', function (ev) {
-    $(qdeParentDiv).empty()
+  window.$('.page-edit-dialog').on('dialogclose', function (ev) {
+    window.$(qdeParentDiv).empty()
   })
 
   // TODO: the button that triggers showXML was commented out
   // cleanup when the button is/feature is removed
-  if (CONST.showXML) {
-    qdeParentDiv.append('<div class=xml>' + escapeHtml(page.xml) + '</div>')
-    qdeParentDiv.append('<div class=xml>' + escapeHtml(page.xmla2j) + '</div>')
+  if (window.window.CONST.showXML) {
+    qdeParentDiv.append('<div class=xml>' + window.escapeHtml(page.xml) + '</div>')
+    qdeParentDiv.append('<div class=xml>' + window.escapeHtml(page.xmla2j) + '</div>')
   }
 
-  gPage = page
+  window.gPage = page
   return page
 }
 
-TPage.prototype.tagList = function () {	// 05/23/2014 Return list of tags to add to TOC or Mapper.
+window.TPage.prototype.tagList = function () { // 05/23/2014 Return list of tags to add to TOC or Mapper.
   /** @type {TPage} */
   var page = this
   var tags = ''
@@ -977,21 +969,20 @@ TPage.prototype.tagList = function () {	// 05/23/2014 Return list of tags to add
   return tags
 }
 
-TGuide.prototype.pageFindReferences = function (findName, newName) {
+window.TGuide.prototype.pageFindReferences = function (findName, newName) {
 // ### Return list of pages and fields pointing to pageName in {name:x,field:y} pairs
 // ### If newName is not null, perform a replacement.
   var guide = this
   var matches = []
   var testtext = function (page, field, fieldname) {
     var add = false
-    page[field] = page[field].replace(REG.LINK_POP, function (match, p1, offset, string) // jslint nolike: /\"POPUP:\/\/(([^\"])+)\"/ig
-
-    {
-      var popupid = match.match(REG.LINK_POP2)[1]
+    // jslint nolike: /\"POPUP:\/\/(([^\"])+)\"/ig
+    page[field] = page[field].replace(window.REG.LINK_POP, function (match, p1, offset, string) {
+      var popupid = match.match(window.REG.LINK_POP2)[1]
       if (popupid === findName) {
         add = true
         if (newName !== null) {
-          popupid = escapeHtml(newName)
+          popupid = window.escapeHtml(newName)
         }
       }
       return '"POPUP://' + popupid + '"'
@@ -1001,7 +992,7 @@ TGuide.prototype.pageFindReferences = function (findName, newName) {
     }
   }
   var testcode = function (page, field, fieldName) {
-    var result = gLogic.pageFindReferences(page[field], findName)
+    var result = window.gLogic.pageFindReferences(page[field], findName)
     if (result.add) {
       matches.push({ name: page.name, field: fieldName, text: '' })
     }
@@ -1016,7 +1007,7 @@ TGuide.prototype.pageFindReferences = function (findName, newName) {
     testcode(page, 'codeAfter', 'Logic After')
     for (var bi in page.buttons) {
       var b = page.buttons[bi]
-      if (b.next === findName) {	// 2014-06-02 Make button point to renamed page.
+      if (b.next === findName) { // 2014-06-02 Make button point to renamed page.
         if (newName || newName === '') { // https://github.com/CCALI/CAJA/issues/2614
           b.next = newName
         }
@@ -1027,5 +1018,3 @@ TGuide.prototype.pageFindReferences = function (findName, newName) {
   }
   return matches
 }
-
-/* */

@@ -273,7 +273,7 @@ function reportFull () {	// 2016-06-24 Generate full report, ala LessonText.
           fft += tupleAuto('Invalid Prompt audio', field.invalidPromptAudio)
           fft += tupleAuto('Min',	field.min)
           fft += tupleAuto('Max',	field.max)
-          fft += tupleAuto('Max chars',	field.maxChars)
+          fft += tupleAuto('Max Characters',	field.maxChars)
           fft += tupleAuto('List', decodeEntities(field.listData))
           fft += tupleAuto('List', field.listSrc)
           ft += tuple('Field#' + (parseInt(fi) + 1), tableWrap(fft))

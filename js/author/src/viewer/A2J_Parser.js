@@ -85,6 +85,7 @@ function page2JSON (page) {
     HELPAUDIO:	page.helpAudioURL,
     XML_HELPREADER:	page.helpReader,
     HELPIMAGE:	page.helpImageURL,
+    HELPALTTEXT: page.helpAltText,
     HELPVIDEO:	page.helpVideoURL,
     BUTTONS:	[],
     FIELDS:	[],
@@ -239,6 +240,7 @@ function parseXML2Page (PAGE, page) {
   page.helpAudioURL = makestr(PAGE.find('HELPAUDIO').text())
   page.helpReader = makestr(PAGE.find('HELPREADER').xml())
   page.helpImageURL = makestr(PAGE.find('HELPIMAGE').text())
+  page.helpAltText = makestr(PAGE.find("HELPALTTEXT").text())
   page.helpVideoURL = makestr(PAGE.find('HELPVIDEO').text())
   page.notes = makestr(PAGE.find('NOTES').xml())
   page.codeBefore = makestr(PAGE.find('CODEBEFORE').xml())

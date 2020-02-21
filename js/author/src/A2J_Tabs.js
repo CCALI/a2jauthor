@@ -312,7 +312,8 @@ window.form = {
     return $(form.noteHTML('alert', t))
   },
   fieldset: function (legend, record, accordion) {
-    return $('<fieldset name="record" class="' + accordion + '"><legend>' + legend + '</legend></fieldset>').data('record', record)// .click(function(){$(this).toggleClass('collapse')});
+    var accordionClass = accordion ? 'class="' + accordion + '"' : ''
+    return $('<fieldset name="record" ' + accordionClass + '><legend>' + legend + '</legend></fieldset>').data('record', record)// .click(function(){$(this).toggleClass('collapse')});
   },
   div: function (legend, record) {
     return $(legend).data('record', record)
@@ -498,7 +499,7 @@ window.form = {
       '<div ' + (data.name ? 'name="' + data.name + '"' : '') + '>' +
       label +
       '<div class="editspan form-group">' +
-        '<input class="form-control ui-combobox-input editable autocomplete picker varname dest" type="text" >' +
+        '<input class="form-control ui-combobox-input editable autocomplete picker varname dest" placeholder="' + data.placeholder + '" type="text" >' +
       '</div>' +
       '</div>'
     )
@@ -547,7 +548,7 @@ window.form = {
     var $el = $(
       '<div class="editspan form-group" ' + (data.name ? 'name="' + data.name + '"' : '') + '>' +
         label +
-        '<input class="form-control ui-widget editable" type="text">' +
+        '<input class="form-control ui-widget editable" type="text" placeholder="' + data.placeholder + '">' +
       '</div>'
     )
 

@@ -47,7 +47,7 @@ describe('<a2j-pages>', () => {
         name: 'Intro',
         fields: [],
         repeatVar: '',
-        text: 'welcome!',
+        text: 'welcome! %%[name]%%',
         textAudioURL: null,
         learn: '',
         codeAfter: '',
@@ -426,10 +426,6 @@ describe('<a2j-pages>', () => {
   describe('Component', () => {
     let rStateTeardown
     beforeEach(() => {
-      defaults.logic.attr('eval', (text) => {
-        return text + ' ' + defaults.interview.attr('answers.foo')
-      })
-
       let frag = stache(
         '<a2j-pages></a2j-pages>'
       )
@@ -440,14 +436,17 @@ describe('<a2j-pages>', () => {
       rStateTeardown = vm.attr('rState').connectedCallback()
     })
 
-    it('parseText refires if answers update', () => {
-      const logic = vm.attr('logic')
-      let count = 0
-      logic.eval = () => { return count++ }
+    it('eval from logic re-renders when answers change', () => {
+      const answers = vm.attr('interview').answers
+      answers.varCreate('name', 'Text', false)
+      answers.varSet('name', 'Jess', 1)
 
-      // change answers
-      vm.attr('interview.answers.foo', 'bar')
-      assert.equal(count, 2, 'parseText in stache twice and recalled 2 times')
+      let questionText = $('p.question-text').text()
+      assert.equal(questionText, 'welcome! Jess', 'should resolve %%[name]%% macro in question text.')
+
+      answers.varSet('name', 'JessBob', 1)
+      questionText = $('p.question-text').text()
+      assert.equal(questionText, 'welcome! JessBob', 'should update %%[name]%% macro in question text when answer changes.')
     })
 
     afterEach(() => {

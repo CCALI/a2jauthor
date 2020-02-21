@@ -207,4 +207,16 @@ describe('AppState', function () {
     assert.equal(appState.selectedPageName, pages.attr(1).attr('name'),
       'should return second page name')
   })
+
+  it('tracks questionNumber per step for each visitedPage', () => {
+    // simulate page to page navigation
+    appState.page = pageNames[0] // Step 0
+    appState.page = pageNames[1] // Step 1
+    appState.page = pageNames[2] // Step 1
+
+    // note, visitedPages are reverse array order as index 0 is the last visitedPage
+    assert.equal(appState.visitedPages[2].questionNumber, 1, 'should assign question number 1 to first visitedPage of a Step (0)')
+    assert.equal(appState.visitedPages[1].questionNumber, 1, 'should reset count to 1 when visitedPage is a new Step (1)')
+    assert.equal(appState.visitedPages[0].questionNumber, 2, 'should increment to next question number to a visitedPage of same Step (1)')
+  })
 })

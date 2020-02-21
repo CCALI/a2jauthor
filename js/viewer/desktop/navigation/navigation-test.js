@@ -246,14 +246,14 @@ describe('<a2j-viewer-navigation>', function () {
       let firstPage = pages.attr(0)
 
       visited.unshift(firstPage)
-      assert.isTrue(firstPage.attr('text').length > 40, 'very long text')
+      assert.isTrue(firstPage.attr('text').length > 50, 'very long text')
 
       // making sure the firstPage is selected
       let $selectedOption = $('option:selected')
       assert.equal($('option:selected').val(), 0)
 
       let optionText = $selectedOption.text().trim()
-      assert.isTrue(optionText.length <= 40, 'should be truncated')
+      assert.isTrue(optionText.length <= 50, 'should be truncated')
     })
 
     it('shows/hides feedback button based on interview.sendfeedback', function () {

@@ -299,12 +299,15 @@ export default Component.extend({
       return baseUrl + $.param(feedbackData)
     },
 
-    fitPageDescription (text, repeatVarValue) {
+    fitPageDescription (visitedPage) {
+      const stepQuestionText = `Step ${visitedPage.step.number} Q${visitedPage.questionNumber}: `
+      let text = stepQuestionText + visitedPage.text
+      const repeatVarValue = visitedPage.repeatVarValue
       // strip html tags
       text = text.replace(/(<([^>]+)>)/ig, '').trim()
 
       // truncate text to avoid https://github.com/CCALI/CAJA/issues/685
-      text = _truncate(text, { length: 40, separator: ' ' })
+      text = _truncate(text, { length: 50, separator: ' ' })
       text = (typeof repeatVarValue === 'number') ? text + ' #' + repeatVarValue : text
 
       return text

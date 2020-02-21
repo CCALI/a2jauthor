@@ -22,7 +22,7 @@
       </h3>
 
       <fieldset>
-        <legend class='question-text-legend'><p class="question-text">{{{ parseText(currentPage.text) }}}</p></legend>
+        <legend class='question-text-legend'><p class="question-text">{{{ insertExternalLinkIcon(parseText(currentPage.text)) }}}</p></legend>
 
         {{#if(currentPage.fields.length)}}
           <a2j-fields

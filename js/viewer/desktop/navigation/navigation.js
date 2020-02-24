@@ -298,7 +298,8 @@ export default Component.extend({
 
     fitPageDescription (visitedPage) {
       const stepQuestionText = `Step ${visitedPage.step.number} Q${visitedPage.questionNumber}: `
-      let text = stepQuestionText + visitedPage.text
+      const visitedPageText = this.resolveVarMacros(visitedPage.text)
+      let text = stepQuestionText + visitedPageText
       const repeatVarValue = visitedPage.repeatVarValue
       // strip html tags
       text = text.replace(/(<([^>]+)>)/ig, '').trim()

@@ -9,7 +9,7 @@
 */
 // TODO: fix legacy imports, removing circular dependencies
 // import $ from 'jquery'
-// import {TGuide, TPage, TField, TButton, window.gGuideMeta, gStartArgs, window.window.CONST} from './viewer/A2J_Types'
+// import {TGuide, TPage, TField, TButton, window.gGuideMeta, gStartArgs, window.CONST} from './viewer/A2J_Types'
 // import {gPrefs} from './viewer/A2J_Prefs'
 
 var $pageEditDialog = null
@@ -17,7 +17,7 @@ var $pageEditDialog = null
 function pageNameFieldsForTextTab (pagefs, page) { // Used by the Text tab.
   // Include editable fields of all a page's text blocks.
   pagefs.append(window.form.htmlarea({ label: 'Question Text:', value: page.text, change: function (val) { page.text = val } }))
-  if (page.type !== window.window.CONST.ptPopup) {
+  if (page.type !== window.CONST.ptPopup) {
     if (window.gPrefs.showText === 2 || page.learn !== '') {
       pagefs.append(window.form.text({ label: 'Prompt:',
         placeholder: '',
@@ -74,23 +74,23 @@ function gotoPageView (destPageName, url) {
   window.setTimeout(function () {
     switch (destPageName) {
       // On success exit, flag interview as Complete.
-      case window.window.CONST.qIDSUCCESS:
-        window.gGuide.varSet(window.window.CONST.vnInterviewIncompleteTF, false)
+      case window.CONST.qIDSUCCESS:
+        window.gGuide.varSet(window.CONST.vnInterviewIncompleteTF, false)
         window.dialogAlert('Author note: User\'s data would upload to server.')
         break
 
       // Exit/Resume
-      case window.window.CONST.qIDEXIT:
+      case window.CONST.qIDEXIT:
         window.dialogAlert('Author note: User\'s INCOMPLETE data would upload to server.')
         break
 
-      case window.window.CONST.qIDFAIL:
+      case window.CONST.qIDFAIL:
         if (window.makestr(url) === '') url = window.gStartArgs.exitURL
         window.dialogAlert('Author note: User would be redirected to another page: <a target=_blank href="' + url + '">' + url + '</a>')
         break
 
       // 8/17/09 3.0.1 Execute the Resume button.
-      case window.window.CONST.qIDRESUME:
+      case window.CONST.qIDRESUME:
         window.traceLogic('Scripted \'Resume\'')
         window.A2JViewer.goExitResume()
         break
@@ -102,7 +102,7 @@ function gotoPageView (destPageName, url) {
         break
 
       default:
-        var page = window.window.gGuide.pages[destPageName]
+        var page = window.gGuide.pages[destPageName]
 
         if (page === null || typeof page === 'undefined') {
           window.traceAlert('Page is missing: ' + destPageName)
@@ -342,7 +342,7 @@ function gotoPageEdit (pageName) {
       this.removeOverlay()
       // Update view and save any time edit dialog closes
       window.updateTOC()
-      if (window.window.gGuide) {
+      if (window.gGuide) {
         window.guideSave()
       }
     },
@@ -376,7 +376,8 @@ function gotoPageEdit (pageName) {
   // modal dialog is responsive now, remove draggable icon from UI
   modal.removeClass('ui-resizable')
 
-  guidePageEditForm(page, window.$('.page-edit-form-panel', $pageEditDialog).html(''), page.name)
+  var $qdeParentDiv = window.$('.page-edit-form-panel', $pageEditDialog).html('')
+  guidePageEditForm(page, $qdeParentDiv)
 
   $pageEditDialog.dialog('open')
   $pageEditDialog.dialog('moveToTop')
@@ -449,7 +450,7 @@ function convertOptionsToText (optionsHTML) {
 };
 
 /** @param {TPage} page */
-function buildPopupQDE (page) {
+function buildPopupFieldSet (page) {
   var popupFieldSet = window.form.fieldset('Popup Info', page)
   popupFieldSet.append(window.form.text({ label: 'Name:',
     name: 'pagename',
@@ -610,334 +611,353 @@ function buildLearnMoreFieldSet (page) {
 }
 
 /** @param {TPage} page */
-function guidePageEditForm (page, qdeParentDiv, pagename) {
+function buildFieldsFieldSet (page) {
+  var blankField = new window.TField()
+  blankField.type = window.CONST.ftText
+  blankField.label = 'Label'
+
+  var fieldsfs = window.form.fieldset('Fields')
+  var fieldsListManager = window.form.listManager({ name: 'Fields',
+    picker: 'Number of Fields:',
+    min: 0,
+    max: window.CONST.MAXFIELDS,
+    list: page.fields,
+    blank: blankField,
+    customClass: 'page-edit-fields',
+    save: function (newlist) {
+      page.fields = newlist
+    },
+    create: function (ff, field) { // @param {TField} field
+      ff.append(window.form.pickList({ label: 'Type:',
+        value: field.type,
+        change: function (val, field, ff) {
+          field.type = val
+          // Radio Buttons and CheckboxNOTA always required
+          // Also check the `required` box so it will show checked
+          // if the field type is switched to any other field
+          if (field.type === 'radio' || field.type === window.CONST.ftCheckBoxNOTA) {
+            field.required = true
+            ff.find('[name="required"]').find('[type=checkbox]').prop('checked', true)
+          }
+
+          updateFieldLayout(ff, field)
+        } },
+
+      [
+        window.CONST.ftText, 'Text',
+        window.CONST.ftTextLong, 'Text (Long)',
+        window.CONST.ftTextPick, 'Text (Pick from list)',
+        window.CONST.ftNumber, 'Number',
+        window.CONST.ftNumberDollar, 'Number Dollar',
+        window.CONST.ftNumberSSN, 'Number SSN',
+        window.CONST.ftNumberPhone, 'Number Phone',
+        window.CONST.ftNumberZIP, 'Number ZIP Code',
+        window.CONST.ftNumberPick, 'Number (Pick from list)',
+        window.CONST.ftDateMDY, 'Date MM/DD/YYYY',
+        window.CONST.ftGender, 'Gender',
+        window.CONST.ftRadioButton, 'Radio Button',
+        window.CONST.ftCheckBox, 'Check box',
+        window.CONST.ftCheckBoxNOTA, 'Check Box (None of the Above)',
+        window.CONST.ftUserAvatar, 'User Avatar'
+      ]
+
+      ))
+      ff.append(window.form.htmlarea({ label: 'Label:',
+        value: field.label,
+        change: function (val) { field.label = val } }))
+      ff.append(window.form.varPicker({ label: 'Variable:',
+        placeholder: '',
+        value: field.name,
+        change: function (val, field) { field.name = window.$.trim(val) } }))
+      ff.append(window.form.text({ label: 'Default Value:',
+        name: 'default',
+        placeholder: '',
+        value: field.value,
+        change: function (val, field) { field.value = window.$.trim(val) } }))
+      ff.append(window.form.checkbox({ label: 'Required:',
+        name: 'required',
+        checkbox: '',
+        value: field.required,
+        change: function (val, field) { field.required = val } }))
+      ff.append(window.form.text({ label: 'Max Characters:',
+        name: 'maxchars',
+        placeholder: 'Enter a number here to set a Character Limit for the End User\'s response',
+        value: field.maxChars,
+        change: function (val, field) { field.maxChars = val } }))
+      ff.append(window.form.checkbox({ label: 'Show Calculator:',
+        name: 'calculator',
+        checkbox: '',
+        value: field.calculator,
+        change: function (val, field) { field.calculator = val } }))
+      ff.append(window.form.text({ label: 'Min Value:',
+        name: 'min',
+        placeholder: 'min',
+        value: field.min,
+        change: function (val, field) { field.min = val } }))
+      ff.append(window.form.text({ label: 'Max Value:',
+        name: 'max',
+        placeholder: 'max',
+        value: field.max,
+        change: function (val, field) { field.max = val } }))
+      ff.append(window.form.pickXML({ label: 'External list:',
+        name: 'listext',
+        value: field.listSrc,
+        change: function (val, field) {
+          field.listSrc = val
+          // trace('List source is '+field.listSrc);
+        } }))
+
+      // Restore previous text list or create from current html option list
+      var listText = field.previousTextList ? field.previousTextList : convertOptionsToText(field.listData)
+
+      ff.append(window.form.textArea({ label: 'Internal list:',
+        name: 'listint',
+        value: listText,
+        change: function (val, field) {
+          // 2014-11-24 Convert line break items into pairs like <OPTION VALUE="Purple">Purple</OPTION>
+          field.previousTextList = val
+          val = val.split('\n')
+          var select = window.$('<SELECT/>')
+          for (var vi in val) {
+            var optText = window.$.trim(val[vi])
+            if (optText !== '') {
+              // 02/27/2015 <> don't encode as values and break xml. so for now, just use the text as the value.
+              select.append(window.$('<OPTION/>').text(optText))
+            }
+          }
+          var html = select.html()
+          // trace(html);
+          field.listData = html
+        } }))
+      ff.append(window.form.htmlarea({ label: 'Custom Invalid Prompt:',
+        value: field.invalidPrompt,
+        change: function (val) { field.invalidPrompt = val } }))
+      ff.append(window.form.text({ label: 'Sample Value:',
+        placeholder: '',
+        name: 'sample',
+        value: field.sample,
+        change: function (val, field) { field.sample = val } }))
+
+      updateFieldLayout(ff, field)
+      return ff
+    }
+  })
+  fieldsfs.append(fieldsListManager)
+
+  return fieldsfs
+}
+
+var updateFieldLayout = function (ff, field) { //* * @param {TField} field */
+  var canRequire = field.type !== 'radio' && field.type !== window.CONST.ftCheckBoxNOTA && field.type !== window.CONST.ftUserAvatar
+  var canMinMax = field.type === window.CONST.ftNumber || field.type === window.CONST.ftNumberDollar || field.type === window.CONST.ftNumberPick || field.type === window.CONST.ftDateMDY
+  var canList = field.type === window.CONST.ftTextPick
+  var canDefaultValue = field.type !== window.CONST.ftCheckBox && field.type !== window.CONST.ftCheckBoxNOTA && field.type !== window.CONST.ftGender && field.type !== window.CONST.ftUserAvatar
+  var canOrder = field.type === window.CONST.ftTextPick || field.type === window.CONST.ftNumberPick || field.type === window.CONST.ftDateMDY
+  var canUseCalc = (field.type === window.CONST.ftNumber) || (field.type === window.CONST.ftNumberDollar)
+  var canMaxChars = field.type === window.CONST.ftText || field.type === window.CONST.ftTextLong || field.type === window.CONST.ftNumberPhone || field.type === window.CONST.ftNumberZIP || field.type === window.CONST.ftNumberSSN
+  var canCalendar = field.type === window.CONST.ftDateMDY
+  var canUseSample = field.type === window.CONST.ftText || field.type === window.CONST.ftTextLong ||
+    field.type === window.CONST.ftTextPick || field.type === window.CONST.ftNumberPick ||
+    field.type === window.CONST.ftNumber || field.type === window.CONST.ftNumberZIP || field.type === window.CONST.ftNumberSSN || field.type === window.CONST.ftNumberDollar ||
+    field.type === window.CONST.ftDateMDY
+  // var canCBRange= curField.type==CField.ftCheckBox || curField.type==CField.ftCheckBoxNOTA;
+  // Can it use extra long labels instead of single line?
+  // useLongLabel = curField.type==CField.ftCheckBox || curField.type==CField.ftCheckBoxNOTA ||curField.type==CField.ftRadioButton ||urField.type==CField.ftCheckBoxMultiple;
+  // useLongText =curField.type==CField.ftTextLong;
+  ff.find('[name="required"]').showit(canRequire)
+  ff.find('[name="maxchars"]').showit(canMaxChars)
+  ff.find('[name="min"]').showit(canMinMax)
+  ff.find('[name="max"]').showit(canMinMax)
+  ff.find('[name="default"]').showit(canDefaultValue)
+  ff.find('[name="calculator"]').showit(canUseCalc)
+  ff.find('[name="calendar"]').showit(canCalendar)
+
+  ff.find('[name="listext"]').showit(canList)
+  ff.find('[name="listint"]').showit(canList)
+  ff.find('[name="orderlist"]').showit(canOrder)
+  ff.find('[name="sample"]').showit(canUseSample)
+}
+
+//* * @param {TButton} b */
+var updateButtonLayout = function (ff, b) { // Choose a URL for failing the interview
+  var showURL = (b.next === window.CONST.qIDFAIL)
+  ff.find('[name="url"]').showit(showURL)
+}
+
+/** @param {TPage} page */
+function buildButtonFieldSet (page) {
+  var blankButton = new window.TButton()
+
+  var buttonfs = window.form.fieldset('Buttons')
+
+  buttonfs.append(window.form.listManager({
+    name: 'Buttons',
+    picker: 'Number of Buttons',
+    min: 1,
+    max: window.CONST.MAXBUTTONS,
+    list: page.buttons,
+    blank: blankButton,
+    customClass: 'page-edit-buttons',
+
+    save: function (newlist) {
+      page.buttons = newlist
+    },
+
+    create: function (ff, b) {
+      ff.append(window.form.text({
+        value: b.label,
+        label: 'Label:',
+        placeholder: 'button label',
+        change: function (val, b) {
+          b.label = val
+        }
+      }))
+
+      ff.append(window.form.varPicker({
+        value: b.name,
+        label: 'Variable Name:',
+        placeholder: '',
+        change: function (val, b) {
+          b.name = val
+        }
+      }))
+
+      ff.append(window.form.text({
+        value: b.value,
+        label: 'Default Value:',
+        placeholder: '',
+        change: function (val, b) {
+          b.value = val
+        }
+      }))
+
+      ff.append(window.form.pickpage({
+        value: b.next,
+        label: 'Destination:',
+        buttonText: 'Set Destination',
+        change: function (val, b, ff) {
+          b.next = val
+          updateButtonLayout(ff, b)
+        }
+      }))
+
+      ff.append(window.form.text({
+        name: 'url',
+        value: b.url,
+        label: 'URL:',
+        placeholder: '',
+        change: function (val, b) {
+          b.url = val
+        }
+      }))
+
+      var repeatOptions = [
+        '', 'Normal',
+        window.CONST.RepeatVarSetOne, 'Set Counting Variable to 1',
+        window.CONST.RepeatVarSetPlusOne, 'Increment Counting Variable'
+      ]
+
+      ff.append(window.form.pickList({
+        label: 'Repeat Options:',
+        value: b.repeatVarSet,
+        change: function (val, b) {
+          b.repeatVarSet = val
+        }
+      }, repeatOptions))
+
+      ff.append(window.form.varPicker({
+        label: 'Counting Variable:',
+        placeholder: '',
+        value: b.repeatVar,
+        change: function (val, b) {
+          b.repeatVar = val
+        }
+      }))
+
+      updateButtonLayout(ff, b)
+      return ff
+    }
+  }))
+
+  return buttonfs
+}
+
+/** @param {TPage} page */
+function buildLogicFieldSet (page) {
+  var logicfs = window.form.fieldset('Advanced Logic')
+  logicfs.append(window.form.codearea({ label: 'Before:',
+    value: page.codeBefore,
+    change: function (val) { page.codeBefore = val /* TODO Compile for syntax errors */ } }))
+  logicfs.append(window.form.codearea({ label: 'After:',
+    value: page.codeAfter,
+    change: function (val) { page.codeAfter = val /* TODO Compile for syntax errors */ } }))
+  logicfs.append(window.form.htmlarea({ label: 'Logic Citation:',
+    value: page.codeCitation,
+    change: function (val) { page.codeCitation = val } }))
+
+  return logicfs
+}
+
+/** @param {TPage} page */
+function guidePageEditForm (page, $qdeParentDiv) {
   // Create editing wizard (QDE, Question Design Editor) for given page.
-  var qde = ''
-  // var page = window.gGuide.pages[pagename];
-  qde = window.$('<div/>').addClass('tabsPanel editq')
-  var fs
+  var $qde = ''
+  $qde = window.$('<div/>').addClass('tabsPanel editq')
   // form and it's methods are defined in A2J_Pages.js
   window.form.clear()
   if (page === null || typeof page === 'undefined') {
-    qde.append(window.form.h2('Page not found ' + pagename))
+    $qde.append(window.form.h2('Page not found ' + page.name))
   } else if (page.type === window.CONST.ptPopup) { // Popup pages have only a few options - text, video, audio
-    var popupfs = buildPopupQDE(page)
-    qde.append(popupfs)
+    var popupfs = buildPopupFieldSet(page)
+    $qde.append(popupfs)
   } else {
     // Add the Page Info Field Set
     var pagefs = buildPageFieldSet(page)
-    qde.append(pagefs)
+    $qde.append(pagefs)
 
     // Add the Question Info Field Set
     var questionfs = buildQuestionFieldSet(page)
-    qde.append(questionfs)
+    $qde.append(questionfs)
 
     // Add the Learn More Info Field Set
     var learnmorefs = buildLearnMoreFieldSet(page)
-    qde.append(learnmorefs)
+    $qde.append(learnmorefs)
 
-    pagefs = null
+    // pagefs = null
 
     if (page.type === 'A2J' || page.fields.length > 0) {
-      var blankField = new window.TField()
-      blankField.type = window.CONST.ftText
-      blankField.label = 'Label'
-
-      var updateFieldLayout = function (ff, field) { //* * @param {TField} field */
-        var canRequire = field.type !== 'radio' && field.type !== window.CONST.ftCheckBoxNOTA && field.type !== window.CONST.ftUserAvatar
-        var canMinMax = field.type === window.CONST.ftNumber || field.type === window.CONST.ftNumberDollar || field.type === window.CONST.ftNumberPick || field.type === window.CONST.ftDateMDY
-        var canList = field.type === window.CONST.ftTextPick
-        var canDefaultValue = field.type !== window.CONST.ftCheckBox && field.type !== window.CONST.ftCheckBoxNOTA && field.type !== window.CONST.ftGender && field.type !== window.CONST.ftUserAvatar
-        var canOrder = field.type === window.CONST.ftTextPick || field.type === window.CONST.ftNumberPick || field.type === window.CONST.ftDateMDY
-        var canUseCalc = (field.type === window.CONST.ftNumber) || (field.type === window.CONST.ftNumberDollar)
-        var canMaxChars = field.type === window.CONST.ftText || field.type === window.CONST.ftTextLong || field.type === window.CONST.ftNumberPhone || field.type === window.CONST.ftNumberZIP || field.type === window.CONST.ftNumberSSN
-        var canCalendar = field.type === window.CONST.ftDateMDY
-        var canUseSample = field.type === window.CONST.ftText || field.type === window.CONST.ftTextLong ||
-     field.type === window.CONST.ftTextPick || field.type === window.CONST.ftNumberPick ||
-     field.type === window.CONST.ftNumber || field.type === window.CONST.ftNumberZIP || field.type === window.CONST.ftNumberSSN || field.type === window.CONST.ftNumberDollar ||
-     field.type === window.CONST.ftDateMDY
-        // var canCBRange= curField.type==CField.ftCheckBox || curField.type==CField.ftCheckBoxNOTA;
-        // Can it use extra long labels instead of single line?
-        // useLongLabel = curField.type==CField.ftCheckBox || curField.type==CField.ftCheckBoxNOTA ||curField.type==CField.ftRadioButton ||urField.type==CField.ftCheckBoxMultiple;
-        // useLongText =curField.type==CField.ftTextLong;
-        ff.find('[name="required"]').showit(canRequire)
-        ff.find('[name="maxchars"]').showit(canMaxChars)
-        ff.find('[name="min"]').showit(canMinMax)
-        ff.find('[name="max"]').showit(canMinMax)
-        ff.find('[name="default"]').showit(canDefaultValue)
-        ff.find('[name="calculator"]').showit(canUseCalc)
-        ff.find('[name="calendar"]').showit(canCalendar)
-
-        ff.find('[name="listext"]').showit(canList)
-        ff.find('[name="listint"]').showit(canList)
-        ff.find('[name="orderlist"]').showit(canOrder)
-        ff.find('[name="sample"]').showit(canUseSample)
-      }
-
-      fs = window.form.fieldset('Fields')
-      fs.append(window.form.listManager({ name: 'Fields',
-        picker: 'Number of Fields:',
-        min: 0,
-        max: window.CONST.MAXFIELDS,
-        list: page.fields,
-        blank: blankField,
-        customClass: 'page-edit-fields',
-        save: function (newlist) {
-          page.fields = newlist
-        },
-        create: function (ff, field) { // @param {TField} field
-          ff.append(window.form.pickList({ label: 'Type:',
-            value: field.type,
-            change: function (val, field, ff) {
-              field.type = val
-              // Radio Buttons and CheckboxNOTA always required
-              // Also check the `required` box so it will show checked
-              // if the field type is switched to any other field
-              if (field.type === 'radio' || field.type === window.CONST.ftCheckBoxNOTA) {
-                field.required = true
-                ff.find('[name="required"]').find('[type=checkbox]').prop('checked', true)
-              }
-
-              updateFieldLayout(ff, field)
-            } },
-
-          [
-            window.CONST.ftText, 'Text',
-            window.CONST.ftTextLong, 'Text (Long)',
-            window.CONST.ftTextPick, 'Text (Pick from list)',
-            window.CONST.ftNumber, 'Number',
-            window.CONST.ftNumberDollar, 'Number Dollar',
-            window.CONST.ftNumberSSN, 'Number SSN',
-            window.CONST.ftNumberPhone, 'Number Phone',
-            window.CONST.ftNumberZIP, 'Number ZIP Code',
-            window.CONST.ftNumberPick, 'Number (Pick from list)',
-            window.CONST.ftDateMDY, 'Date MM/DD/YYYY',
-            window.CONST.ftGender, 'Gender',
-            window.CONST.ftRadioButton, 'Radio Button',
-            window.CONST.ftCheckBox, 'Check box',
-            window.CONST.ftCheckBoxNOTA, 'Check Box (None of the Above)',
-            window.CONST.ftUserAvatar, 'User Avatar'
-          ]
-
-          ))
-          ff.append(window.form.htmlarea({ label: 'Label:',
-            value: field.label,
-            change: function (val) { field.label = val } }))
-          ff.append(window.form.varPicker({ label: 'Variable:',
-            placeholder: '',
-            value: field.name,
-            change: function (val, field) { field.name = window.$.trim(val) } }))
-          ff.append(window.form.text({ label: 'Default Value:',
-            name: 'default',
-            placeholder: '',
-            value: field.value,
-            change: function (val, field) { field.value = window.$.trim(val) } }))
-          ff.append(window.form.checkbox({ label: 'Required:',
-            name: 'required',
-            checkbox: '',
-            value: field.required,
-            change: function (val, field) { field.required = val } }))
-          ff.append(window.form.text({ label: 'Max Characters:',
-            name: 'maxchars',
-            placeholder: 'Enter a number here to set a Character Limit for the End User\'s response',
-            value: field.maxChars,
-            change: function (val, field) { field.maxChars = val } }))
-          ff.append(window.form.checkbox({ label: 'Show Calculator:',
-            name: 'calculator',
-            checkbox: '',
-            value: field.calculator,
-            change: function (val, field) { field.calculator = val } }))
-          ff.append(window.form.text({ label: 'Min Value:',
-            name: 'min',
-            placeholder: 'min',
-            value: field.min,
-            change: function (val, field) { field.min = val } }))
-          ff.append(window.form.text({ label: 'Max Value:',
-            name: 'max',
-            placeholder: 'max',
-            value: field.max,
-            change: function (val, field) { field.max = val } }))
-          ff.append(window.form.pickXML({ label: 'External list:',
-            name: 'listext',
-            value: field.listSrc,
-            change: function (val, field) {
-              field.listSrc = val
-              // trace('List source is '+field.listSrc);
-            } }))
-
-          // Restore previous text list or create from current html option list
-          var listText = field.previousTextList ? field.previousTextList : convertOptionsToText(field.listData)
-
-          ff.append(window.form.textArea({ label: 'Internal list:',
-            name: 'listint',
-            value: listText,
-            change: function (val, field) {
-              // 2014-11-24 Convert line break items into pairs like <OPTION VALUE="Purple">Purple</OPTION>
-              field.previousTextList = val
-              val = val.split('\n')
-              var select = window.$('<SELECT/>')
-              for (var vi in val) {
-                var optText = window.$.trim(val[vi])
-                if (optText !== '') {
-                  // 02/27/2015 <> don't encode as values and break xml. so for now, just use the text as the value.
-                  select.append(window.$('<OPTION/>').text(optText))
-                }
-              }
-              var html = select.html()
-              // trace(html);
-              field.listData = html
-            } }))
-          ff.append(window.form.htmlarea({ label: 'Custom Invalid Prompt:',
-            value: field.invalidPrompt,
-            change: function (val) { field.invalidPrompt = val } }))
-          ff.append(window.form.text({ label: 'Sample Value:',
-            placeholder: '',
-            name: 'sample',
-            value: field.sample,
-            change: function (val, field) { field.sample = val } }))
-
-          updateFieldLayout(ff, field)
-          return ff
-        }
-      }))
-
-      qde.append(fs)
-      // courtesy return for tests
-      return fs
-    }
-
-    //* * @param {TButton} b */
-    var updateButtonLayout = function (ff, b) { // Choose a URL for failing the interview
-      var showURL = (b.next === window.CONST.qIDFAIL)
-      ff.find('[name="url"]').showit(showURL)
+      var fieldsfs = buildFieldsFieldSet(page)
+      $qde.append(fieldsfs)
     }
 
     if (page.type === 'A2J' || page.buttons.length > 0) {
-      var blankButton = new window.TButton()
-
-      fs = window.form.fieldset('Buttons')
-
-      fs.append(window.form.listManager({
-        name: 'Buttons',
-        picker: 'Number of Buttons',
-        min: 1,
-        max: window.CONST.MAXBUTTONS,
-        list: page.buttons,
-        blank: blankButton,
-        customClass: 'page-edit-buttons',
-
-        save: function (newlist) {
-          page.buttons = newlist
-        },
-
-        create: function (ff, b) {
-          ff.append(window.form.text({
-            value: b.label,
-            label: 'Label:',
-            placeholder: 'button label',
-            change: function (val, b) {
-              b.label = val
-            }
-          }))
-
-          ff.append(window.form.varPicker({
-            value: b.name,
-            label: 'Variable Name:',
-            placeholder: '',
-            change: function (val, b) {
-              b.name = val
-            }
-          }))
-
-          ff.append(window.form.text({
-            value: b.value,
-            label: 'Default Value:',
-            placeholder: '',
-            change: function (val, b) {
-              b.value = val
-            }
-          }))
-
-          ff.append(window.form.pickpage({
-            value: b.next,
-            label: 'Destination:',
-            buttonText: 'Set Destination',
-            change: function (val, b, ff) {
-              b.next = val
-              updateButtonLayout(ff, b)
-            }
-          }))
-
-          ff.append(window.form.text({
-            name: 'url',
-            value: b.url,
-            label: 'URL:',
-            placeholder: '',
-            change: function (val, b) {
-              b.url = val
-            }
-          }))
-
-          var repeatOptions = [
-            '', 'Normal',
-            window.CONST.RepeatVarSetOne, 'Set Counting Variable to 1',
-            window.CONST.RepeatVarSetPlusOne, 'Increment Counting Variable'
-          ]
-
-          ff.append(window.form.pickList({
-            label: 'Repeat Options:',
-            value: b.repeatVarSet,
-            change: function (val, b) {
-              b.repeatVarSet = val
-            }
-          }, repeatOptions))
-
-          ff.append(window.form.varPicker({
-            label: 'Counting Variable:',
-            placeholder: '',
-            value: b.repeatVar,
-            change: function (val, b) {
-              b.repeatVar = val
-            }
-          }))
-
-          updateButtonLayout(ff, b)
-          return ff
-        }
-      }))
-
-      qde.append(fs)
+      var buttonfs = buildButtonFieldSet(page)
+      $qde.append(buttonfs)
     }
 
-    fs = window.form.fieldset('Advanced Logic')
-    fs.append(window.form.codearea({ label: 'Before:',
-      value: page.codeBefore,
-      change: function (val) { page.codeBefore = val /* TODO Compile for syntax errors */ } }))
-    fs.append(window.form.codearea({ label: 'After:',
-      value: page.codeAfter,
-      change: function (val) { page.codeAfter = val /* TODO Compile for syntax errors */ } }))
-    fs.append(window.form.htmlarea({ label: 'Logic Citation:',
-      value: page.codeCitation,
-      change: function (val) { page.codeCitation = val } }))
-    qde.append(fs)
+    var logicfs = buildLogicFieldSet(page)
+    $qde.append(logicfs)
   }
 
-  qdeParentDiv.append(qde)
+  $qdeParentDiv.append($qde)
 
-  // cleanup qde elements when the dialog closes
+  // cleanup $qde elements when the dialog closes
   window.$('.page-edit-dialog').on('dialogclose', function (ev) {
-    window.$(qdeParentDiv).empty()
+    window.$($qdeParentDiv).empty()
   })
 
   // TODO: the button that triggers showXML was commented out
   // cleanup when the button is/feature is removed
-  if (window.window.CONST.showXML) {
-    qdeParentDiv.append('<div class=xml>' + window.escapeHtml(page.xml) + '</div>')
-    qdeParentDiv.append('<div class=xml>' + window.escapeHtml(page.xmla2j) + '</div>')
+  if (window.CONST.showXML) {
+    $qdeParentDiv.append('<div class=xml>' + window.escapeHtml(page.xml) + '</div>')
+    $qdeParentDiv.append('<div class=xml>' + window.escapeHtml(page.xmla2j) + '</div>')
   }
 
   window.gPage = page
-  return page
+
+  // // courtesy return for tests
+  return $qde
+  // return page
 }
 
 window.TPage.prototype.tagList = function () { // 05/23/2014 Return list of tags to add to TOC or Mapper.

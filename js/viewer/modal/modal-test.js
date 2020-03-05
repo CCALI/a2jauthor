@@ -4,6 +4,8 @@ import CanMap from 'can-map'
 import stache from 'can-stache'
 import canReflect from 'can-reflect'
 import F from 'funcunit'
+import { assert } from 'chai'
+import sinon from 'sinon'
 import 'steal-mocha'
 import 'caja/viewer/styles.less'
 import 'can-map-define'
@@ -11,7 +13,7 @@ import 'caja/viewer/mobile/util/helpers'
 
 describe('<a2j-modal> ', function () {
   describe('Component', function () {
-    let vm
+    let vm, pauseActivePlayersSpy
     beforeEach(function () {
       const interview = {
         getPageByName () {
@@ -33,6 +35,7 @@ describe('<a2j-modal> ', function () {
         }
       })
       const modalContent = new ModalContent()
+      pauseActivePlayersSpy = sinon.spy()
 
       const frag = stache(
         `<a2j-modal class="bootstrap-styles"
@@ -45,7 +48,7 @@ describe('<a2j-modal> ', function () {
           repeatVarValue:from="rState.repeatVarValue"
           />`
       )
-      vm = new ModalVM({ interview, rState, logic, mState, modalContent })
+      vm = new ModalVM({ interview, rState, logic, mState, modalContent, pauseActivePlayers: pauseActivePlayersSpy })
 
       $('#test-area').html(frag(vm))
       // vm = $('a2j-modal')[0].viewModel
@@ -139,6 +142,17 @@ describe('<a2j-modal> ', function () {
         F('.modal-body p a').attr('target', '_blank')
         F(done)
       })
+    })
+
+    it('pauseActivePlayers()', function () {
+      // simulate DOM insert
+      vm.connectedCallback()
+      // open modal
+      $('#pageModal').modal('show')
+      // close modal
+      $('#pageModal').modal('hide')
+
+      assert.isTrue(pauseActivePlayersSpy.calledOnce, 'should fire pauseActivePlayers() on modal close')
     })
   })
 })

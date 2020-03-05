@@ -152,7 +152,7 @@ describe('<a2j-modal> ', function () {
       // close modal
       $('#pageModal').modal('hide')
 
-      assert.isTrue(pauseActivePlayersSpy.calledOnce, 'should fire pauseActivePlayers() on modal close')
+      assert.isTrue(pauseActivePlayersSpy.calledOnce, 'should fire pauseActivePlayers() on modal close to pause audio and video players')
     })
   })
 })

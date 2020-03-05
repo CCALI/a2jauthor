@@ -212,11 +212,14 @@ export default CanMap.extend('PagesVM', {
       const page = vm.attr('currentPage')
       const logic = vm.attr('logic')
       const previewActive = vm.attr('previewActive')
+      const onExitPage = rState.saveAndExitActive && (rState.currentPage.name === vm.attr('interview').exitPage)
+
+      button.next = vm.handleCrossedUseOfResumeOrBack(button, onExitPage)
 
       vm.saveButtonValue(button, vm, page, logic) // buttons with variables assigned
 
       if (button.next === constants.qIDFAIL || button.next === constants.qIDRESUME) {
-        vm.handleFailOrResumeButton(button, vm)
+        vm.handleFailOrResumeButton(button, vm, onExitPage)
         return // these buttons skip rest of navigate
       }
 
@@ -238,6 +241,17 @@ export default CanMap.extend('PagesVM', {
 
       rState.page = vm.getNextPage(button, logic) // check for GOTO logic redirect, nav to next page
       return rState.page // return destination page for testing
+    }
+  },
+
+  // toggle Resume/Back button based on exit page, otherwise don't change button.next
+  handleCrossedUseOfResumeOrBack (button, onExitPage) {
+    if (onExitPage && button.next === constants.qIDBACK) {
+      return constants.qIDRESUME
+    } else if (!onExitPage && button.next === constants.qIDRESUME) {
+      return constants.qIDBACK
+    } else {
+      return button.next
     }
   },
 

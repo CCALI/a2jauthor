@@ -420,6 +420,20 @@ describe('<a2j-pages>', () => {
 
         assert.strictEqual(vm.attr('interview.answers.salary.values.1'), 1234.56, 'Sets default number values')
       })
+
+      it('handleCrossedUseOfResumeOrBack', () => {
+        const button = new CanMap({next: constants.qIDBACK})
+        let buttonNextTarget = vm.handleCrossedUseOfResumeOrBack(button, true)
+        assert.equal(buttonNextTarget, constants.qIDRESUME, 'should update BackToPriorQuestion to Resume if on exitPage')
+
+        button.next = constants.qIDRESUME
+        buttonNextTarget = vm.handleCrossedUseOfResumeOrBack(button, false)
+        assert.equal(buttonNextTarget, constants.qIDBACK, 'should update Resume to BackToPriorQuestion if not on exitPage')
+
+        button.next = 'Foo'
+        buttonNextTarget = vm.handleCrossedUseOfResumeOrBack(button, true)
+        assert.equal(buttonNextTarget, 'Foo', 'should not change the next target if not either Back or Resume button, even on exitPage')
+      })
     })
   })
 

@@ -4,16 +4,16 @@
 <nav class="navbar navbar-default" role="navigation">
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
     <ul class="nav navbar-nav">
-      <li aria-label="Previous Visited Page" class="nav-item {{^if(./canNavigateBack)}}disabled{{/if}}"
+      <li aria-labelledby="go-back-nav-button" class="nav-item {{^if(./canNavigateBack)}}disabled{{/if}}"
         on:el:click="./navigateBack()">
-        <a role="button" class="nav-link">
+        <a role="button" class="nav-link" id="go-back-nav-button">
           <span class="glyphicon-left-open" aria-hidden="true"></span>{{lang.GoBack}}
         </a>
       </li>
       <li class="divider" role="separator"></li>
-      <li aria-label="Next Visited Page" class="nav-item  {{^if(./canNavigateForward)}}disabled{{/if}}"
+      <li aria-labelledby="go-next-nav-button" class="nav-item  {{^if(./canNavigateForward)}}disabled{{/if}}"
         on:el:click="./navigateForward()">
-        <a role="button" class="nav-link">
+        <a role="button" class="nav-link" id="go-next-nav-button">
           {{./lang.GoNext}}<span class="glyphicon-right-open" aria-hidden="true"></span>
         </a>
       </li>
@@ -39,7 +39,10 @@
     <ul class="navbar-mobile nav navbar-nav navbar-right">
       {{#if(interview.sendfeedback)}}
       <li class="nav-item">
-        <a role="button" target="_blank" href="{{./feedbackFormUrl()}}"
+        <a role="button"
+          target="_blank"
+          href="{{./feedbackFormUrl()}}"
+          aria-label="{{./lang.SendFeedback}}"
           class="nav-link send-feedback">
           <span class="glyphicon-mail" aria-hidden="true"></span>
         </a>
@@ -48,7 +51,7 @@
 
       {{#if(./canSaveAndExit)}}
       <li class="divider" role="separator"></li>
-        <li class="nav-item can-exit" on:el:click="./saveAndExit()">
+        <li class="nav-item can-exit" on:el:click="./saveAndExit()" aria-label="{{./lang.SaveAndExit}}">
           <a role="button" class="nav-link">
             <span class="glyphicon-floppy" aria-hidden="true"></span>
           </a>
@@ -57,7 +60,7 @@
 
       {{#if(canResumeInterview)}}
       <li class="divider" role="separator"></li>
-        <li class="nav-item can-resume" on:el:click="./resumeInterview()">
+        <li class="nav-item can-resume" on:el:click="./resumeInterview()" aria-label="{{./lang.ResumeExit}}" >
           <a role="button" class="nav-link">
             <span class="glyphicon-right-thin" aria-hidden="true"></span> {{./lang.ResumeExit}}
           </a>
@@ -71,7 +74,9 @@
       <li class="divider" role="separator"></li>
       <li class="nav-item">
         <a role="button" target="_blank" href="{{./feedbackFormUrl()}}"
-          class="nav-link send-feedback">
+          aria-label="{{./lang.SendFeedback}}"
+          class="nav-link send-feedback"
+          id="send-feedback-button">
           <span class="glyphicon-mail" aria-hidden="true"></span> {{./lang.SendFeedback}}
         </a>
       </li>
@@ -80,7 +85,7 @@
       {{#if(canSaveAndExit)}}
       <li class="divider" role="separator"></li>
         <li class="nav-item can-exit" on:el:click="./saveAndExit()">
-          <a role="button" class="nav-link">
+          <a role="button" class="nav-link" aria-label="{{./lang.SaveAndExit}}">
             <span class="glyphicon-floppy" aria-hidden="true"></span> {{./lang.SaveAndExit}}
           </a>
         </li>
@@ -89,7 +94,7 @@
       {{#if(canResumeInterview)}}
       <li class="divider" role="separator"></li>
         <li class="nav-item can-resume" on:el:click="./resumeInterview()">
-          <a role="button" class="nav-link">
+          <a role="button" class="nav-link" aria-label="{{./lang.ResumeExit}}">
             <span class="glyphicon-right-thin" aria-hidden="true"></span> {{./lang.ResumeExit}}
           </a>
         </li>
@@ -109,10 +114,10 @@
 {{^if(isMobile)}}
   <div class="horizon">
     {{#if courthouseImage}}
-      <img class="courthouse" src="{{courthouseImage}}" role="presentation" />
+      <img class="courthouse" src="{{courthouseImage}}" role="presentation" alt="custom-courthouse-image"/>
     {{else}}
       <img class="courthouse" src="{{joinBase('viewer/images/A2J5_CourtHouse.svg')}}"
-        role="presentation" />
+        role="presentation" alt="author-courthouse-image" />
     {{/if}}
   </div>
 {{/if}}

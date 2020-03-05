@@ -61,7 +61,7 @@
 
         {{#currentPage}}
           {{#if(learn)}}
-            <span class="bubble-arrow left{{#if(scope/hasWheelchair}} has-wheelchair{{/if}"></span>
+            <span class="bubble-arrow left{{#if(scope/hasWheelchair)}} has-wheelchair{{/if}}"></span>
             <div
               id="clientBubble"
               class="bubble {{#if(scope/userBubbleTallerThanAvatar)}}vertical{{/else}}top{{/if}}{{#if(scope/hasWheelchair}} has-wheelchair{{/if}}">
@@ -73,7 +73,7 @@
     </div><!-- client-wrapper -->
 
     <div class="sign-wrapper">
-      <div aria-labelledby="interview-steps" class="sign-outer bg-step{{currentStep.number}}">
+      <div aria-label="interview-steps" class="sign-outer bg-step{{currentStep.number}}">
         <div class="sign-circle">
           <span class="circle-content">
             {{#zeroOrUndefined(currentStep.number)}}
@@ -83,8 +83,8 @@
             {{/zeroOrUndefined}}
           </span>
         </div> <!-- sign circle -->
-        <div aria-labelledby="step-{{currentStep.number}}" class="sign-content">
-          <span title="{{scope.vm.getTextForStep(currentStep)}}">{{scope.vm.getDisplayTextForStep(currentStep)}}</span>
+        <div aria-labelledby="step-{{currentStep.number}}-display-text" class="sign-content">
+          <span id="step-{{currentStep.number}}-display-text" title="{{scope.vm.getTextForStep(currentStep)}}">{{scope.vm.getDisplayTextForStep(currentStep)}}</span>
         </div> <!-- sign content -->
       </div> <!-- sign outer -->
     </div> <!-- sign wrapper -->
@@ -101,12 +101,12 @@
         </div>
 
         <div class="sign-wrapper">
-          <div aria-labelledby="interview-steps" class="sign-outer bg-step{{step.number}}">
+          <div aria-label="interview-steps" class="sign-outer bg-step{{step.number}}">
             <div class="sign-circle">
               <span class="circle-content">{{step.number}}</span>
             </div> <!-- sign circle -->
-            <div aria-labelledby="step-{{step.number}}" class="sign-content">
-              <span title="{{scope.vm.getTextForStep(step)}}">{{scope.vm.getDisplayTextForStep(step)}}</span>
+            <div aria-labelledby="step-{{currentStep.number}}-display-text" class="sign-content">
+              <span id="step-{{currentStep.number}}-display-text" title="{{scope.vm.getTextForStep(step)}}">{{scope.vm.getDisplayTextForStep(step)}}</span>
             </div> <!-- sign content -->
           </div> <!-- sign outer -->
         </div> <!-- sign wrapper -->

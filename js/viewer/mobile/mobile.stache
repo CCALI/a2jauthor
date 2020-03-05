@@ -12,9 +12,9 @@
   {{#if(mState.showCredits)}}
     <div filler can-click="hideCredits()">
       {{#if interview.logoImage}}
-        <img src="{{normalizePath(mState.fileDataURL, interview.logoImage)}}" class="img-responsive"/>
+        <img src="{{normalizePath(mState.fileDataURL, interview.logoImage)}}" class="img-responsive" alt="custom-logo-image"/>
       {{else}}
-        <img src="{{joinBase 'viewer/images/logo_big.png'}}" class="img-responsive"/>
+        <img src="{{joinBase 'viewer/images/logo_big.png'}}" class="img-responsive" alt="author-logo-image"/>
       {{/if}}
 
       <p>{{{eval interview.credits}}}</p>
@@ -24,9 +24,9 @@
 
   {{#not(tocOrCreditsShown())}}
     {{#eq(rState.view, 'complete')}}
-      <img src="{{joinBase 'viewer/images/logo_big.png'}}" class="img-responsive"/>
+      <img src="{{joinBase 'viewer/images/logo_big.png'}}" class="img-responsive" alt="author-logo-image"/>
       <div class="btn-group btn-group-justified">
-        <a href="{{mState.redirect}}" class="btn btn-primary">{{lang.Continue}}</a>
+        <a href="{{mState.redirect}}" aria-label="{{lang.Continue}}" class="btn btn-primary">{{lang.Continue}}</a>
       </div>
     {{/eq}}
 

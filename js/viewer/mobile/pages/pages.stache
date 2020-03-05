@@ -6,7 +6,9 @@
   <div class="jumbotron">
     <h1>Oops!</h1>
     <p>You've reached this page in error.</p>
-    <p><a href="javascript://" on:click="scope/returnHome()" class="btn btn-primary">Return home</a></p>
+    <p>
+      <a href="javascript://" on:click="scope/returnHome()" class="btn btn-primary" aria-label="Return home">Return home</a>
+    </p>
   </div>
 {{/eq}}
 
@@ -22,7 +24,9 @@
       </h3>
 
       <fieldset>
-        <legend class='question-text-legend'><p class="question-text">{{{ insertExternalLinkIcon(this.logic.eval(currentPage.text)) }}}</p></legend>
+        <legend class='question-text-legend'>
+          <p class="question-text">{{{ insertExternalLinkIcon(this.logic.eval(currentPage.text)) }}}</p>
+        </legend>
 
         {{#if(currentPage.fields.length)}}
           <a2j-fields
@@ -45,7 +49,7 @@
     </div><!-- bubble-content -->
 
     <p class="text-center modal-button">
-      <a class="learn-more">{{{ this.logic.eval(currentPage.learn) }}}</a>
+      <a class="learn-more" aria-label="{{{ this.logic.eval(currentPage.learn) }}}">{{{ this.logic.eval(currentPage.learn) }}}</a>
     </p>
 
     {{#for(button of currentPage.buttons)}}
@@ -70,7 +74,8 @@
         {{#default}}
           <button type="button"
                   on:click="navigate(button)"
-                  class="btn btn-default btn-navigate">
+                  class="btn btn-default btn-navigate"
+                  aria-label="{{getButtonLabel(this.logic.eval(button.label))}}">
             {{getButtonLabel(this.logic.eval(button.label))}}
           </button>
         {{/default}}

@@ -76,7 +76,7 @@ switch ($command){
 		$username='';
 		$userdir='';
 
-		if ($isProductionServer && !$isBitoviServer) {
+		if ($isProductionServer) {
 			if (($userid>0) && ($canAuthor)) {
 				// User logged in to Drupal, get their user id, etc.
 				// Can also get Roles here.

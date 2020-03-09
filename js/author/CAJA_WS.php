@@ -26,6 +26,7 @@ $result=array();
 $err="";
 $mysqli="";
 $drupaldb="";
+$isProductionServer=TRUE;
 
 require "../../../CONFIG.php";
 //check connection

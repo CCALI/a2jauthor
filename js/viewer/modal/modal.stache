@@ -40,9 +40,9 @@
 
             {{#if(modalContent.audioURL)}}
               <div class="modal-audio-wrapper">
-                {{#if (modalContent.audioLabel)}}
+                {{#if (modalContent.mediaLabel)}}
                   <div class="audio-label">
-                    {{{eval(modalContent.audioLabel)}}}
+                    {{{eval(modalContent.mediaLabel)}}}
                   </div>
                   {{/if}}
                 <audio-player

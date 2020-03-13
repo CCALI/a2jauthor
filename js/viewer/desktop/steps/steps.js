@@ -590,7 +590,7 @@ export default Component.extend({
           text: page.help,
           imageURL: page.helpImageURL,
           altText: page.helpAltText,
-          audioLabel: page.helpAudioLabel,
+          mediaLabel: page.helpMediaLabel,
           audioURL: page.helpAudioURL,
           videoURL: page.helpVideoURL,
           helpReader: page.helpReader

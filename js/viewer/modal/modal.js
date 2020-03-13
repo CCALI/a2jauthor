@@ -145,7 +145,7 @@ export default Component.extend({
             title: '',
             text: page.text,
             imageURL: undefined,
-            audioLabel: undefined,
+            mediaLabel: undefined,
             audioURL: page.textAudioURL,
             videoURL: undefined
           }

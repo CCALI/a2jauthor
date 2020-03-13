@@ -39,6 +39,9 @@
             {{{insertExternalLinkIcon(eval(modalContent.text, repeatVarValue))}}}
 
             {{#if(modalContent.audioURL)}}
+              <div class="audio-label">
+                {{{eval(modalContent.audioLabel)}}}
+                </div>
               <audio-player
                 class="modal-audio"
                 sourceUrl:from="normalizePath(scope/mState.fileDataURL, modalContent.audioURL)"

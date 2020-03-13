@@ -25,6 +25,7 @@ function page2JSON_Mobile(page)
 		learn:			page.learn,
 		help:			page.help,
 		helpCitation: 	page.helpCitation,
+		helpAudioLabel: page.helpAudioLabel,
 		helpAudioURL:	page.helpAudioURL,
 		helpReader:		page.helpReader,
 		helpImageURL:	page.helpImageURL,

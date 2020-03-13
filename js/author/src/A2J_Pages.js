@@ -568,6 +568,14 @@ function buildLearnMoreFieldSet (page) {
 
   learnMoreFieldSet.append(window.form.htmlarea({ label: 'Citation:', value: page.helpCitation, change: function (val) { page.helpCitation = val } }))
 
+  learnMoreFieldSet.append(window.form.htmlarea({
+    name: 'helpAudioLabel',
+    label: 'Audio Label:',
+    placeholder: '',
+    value: page.helpAudioLabel,
+    change: function (val) { page.helpAudioLabel = val }
+  }))
+
   learnMoreFieldSet.append(window.form.pickAudio({
     name: 'helpAudio',
     label: 'Audio:',

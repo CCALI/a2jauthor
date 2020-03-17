@@ -131,7 +131,6 @@ describe('src/A2J_Pages', function () {
     window.gGuideID = undefined
   })
 
-
   it('buildButtonFieldSet', function () {
     // this prevents an error trying to upload the fake mp3 file below
     window.gGuideID = 0
@@ -192,7 +191,7 @@ describe('src/A2J_Pages', function () {
       }
     }
 
-    const field = new TField()
+    const field = new window.TField()
     const page = {
       name: 'Information',
       text: 'This is important info',

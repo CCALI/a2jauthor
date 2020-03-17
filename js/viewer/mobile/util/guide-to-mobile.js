@@ -15,7 +15,7 @@ const fieldProperties = [
 
 const pageProperties = [
   'name', 'type', 'step', 'repeatVar', 'outerLoopVar', 'text', 'textCitation', 'textAudioURL',
-  'learn', 'help', 'helpCitation', 'helpAudioURL', 'helpReader', 'helpImageURL', 'helpAltText',
+  'learn', 'help', 'helpCitation', 'helpMediaLabel', 'helpAudioURL', 'helpReader', 'helpImageURL', 'helpAltText',
   'helpVideoURL', 'codeBefore', 'codeAfter', 'codeCitation', 'notes'
 ]
 

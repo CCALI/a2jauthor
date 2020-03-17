@@ -65,6 +65,7 @@ export default Component.extend({
           text: page.help,
           imageURL: page.helpImageURL,
           altText: page.helpAltText,
+          mediaLabel: page.helpMediaLabel,
           audioURL: page.helpAudioURL,
           videoURL: page.helpVideoURL,
           helpReader: page.helpReader
@@ -97,6 +98,7 @@ export default Component.extend({
             text: page.text,
             imageURL: undefined,
             altText: page.helpAltText,
+            mediaLabel: undefined,
             audioURL: page.textAudioURL,
             videoURL: undefined,
             helpReader: undefined

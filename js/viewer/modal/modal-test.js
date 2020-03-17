@@ -30,6 +30,7 @@ describe('<a2j-modal> ', function () {
           title: { value: '' },
           text: { value: '' },
           imageURL: { value: '' },
+          mediaLabel: { value: '' },
           audioURL: { value: '' },
           videoURL: { value: '' }
         }

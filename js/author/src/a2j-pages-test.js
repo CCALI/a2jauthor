@@ -51,7 +51,7 @@ describe('src/A2J_Pages', function () {
     }
 
     const $popupFieldset = window.buildPopupFieldSet(page)
-    assert.equal($popupFieldset[0].elements.length, 6, 'should create popup Fieldset with 4 elements')
+    assert.equal($popupFieldset[0].elements.length, 4, 'should create popup Fieldset with 4 elements')
     window.gGuideID = undefined
   })
 
@@ -69,7 +69,7 @@ describe('src/A2J_Pages', function () {
     }
 
     const $pageFieldSet = window.buildPageFieldSet(page)
-    assert.equal($pageFieldSet[0].elements.length, 3, 'should create pageFieldSet with 2 elements')
+    assert.equal($pageFieldSet[0].elements.length, 2, 'should create pageFieldSet with 2 elements')
 
     window.gGuideID = undefined
   })
@@ -88,7 +88,7 @@ describe('src/A2J_Pages', function () {
     }
 
     const $buildQuestionFieldSet = window.buildQuestionFieldSet(page)
-    assert.equal($buildQuestionFieldSet[0].elements.length, 7, 'should create buildQuestionFieldSet with 5 elements')
+    assert.equal($buildQuestionFieldSet[0].elements.length, 5, 'should create buildQuestionFieldSet with 5 elements')
 
     window.gGuideID = undefined
   })
@@ -107,7 +107,7 @@ describe('src/A2J_Pages', function () {
     }
 
     const $buildLearnMoreFieldSet = window.buildLearnMoreFieldSet(page)
-    assert.equal($buildLearnMoreFieldSet[0].elements.length, 15, 'should create buildQuestionFieldSet with 11 elements')
+    assert.equal($buildLearnMoreFieldSet[0].elements.length, 11, 'should create buildQuestionFieldSet with 11 elements')
 
     window.gGuideID = undefined
   })

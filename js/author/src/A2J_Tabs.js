@@ -623,12 +623,10 @@ window.form = {
 
     // Create the textarea
     const id = `tinyMCE_${form.id}`
-    const textArea = document.createElement('input')
-    textArea.setAttribute('type', 'text')
+    const textArea = document.createElement('div')
     textArea.setAttribute('id', id)
     textArea.setAttribute('rows', 1)
     textArea.setAttribute('contenteditable', true)
-    textArea.placeholder = data && data.placeholder ? data.placeholder : ''
     textArea.className = 'htmledit form-control text editable taller'
     textArea.innerHTML = data.value
 

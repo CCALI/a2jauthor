@@ -35,8 +35,6 @@ export const FieldVM = CanMap.extend('FieldVM', {
     rState: {},
 
     /**
-<<<<<<< HEAD
-=======
      * @property {can.compute} field.ViewModel.prototype.isMobile isMobile
      *
      * used to detect mobile viewer loaded
@@ -49,7 +47,6 @@ export const FieldVM = CanMap.extend('FieldVM', {
     },
 
     /**
->>>>>>> 2599-no-avatar
      * @property {DefineMap} field.ViewModel.prototype.userAvatar userAvatar
      * @parent field.ViewModel
      *

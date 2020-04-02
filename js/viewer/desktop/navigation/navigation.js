@@ -257,6 +257,25 @@ export let ViewerNavigationVM = CanMap.extend({
     return resolvedText
   },
 
+  // allows keyboard users to skip nav bar and go directly to either the first question input or nav button
+  focusMainContent (ev) {
+    // activated by keyboard navigation, allow Enter/Space to trigger
+    if (ev && (ev.keyCode !== 13 && ev.keyCode !== 32)) { return }
+
+    const $fieldInputs = $('input.form-control')
+    const $navigateButtons = $('button.btn.btn-default.btn-navigate')
+    let focusTarget
+
+    if ($fieldInputs.length && $fieldInputs[0].type !== 'hidden') {
+      focusTarget = $fieldInputs[0]
+    } else if ($navigateButtons.length) {
+      // TODO: handle post/assemble hidden button
+      focusTarget = $navigateButtons[0]
+    }
+
+    focusTarget && focusTarget.focus()
+  },
+
   connectedCallback () {
     const vm = this
     const swipeRightHandler = function () {

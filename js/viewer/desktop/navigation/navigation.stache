@@ -5,14 +5,14 @@
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
     <ul class="nav navbar-nav">
       <li aria-labelledby="go-back-nav-button" class="nav-item {{^if(./canNavigateBack)}}disabled{{/if}}"
-        on:el:click="./navigateBack()">
+        on:click="./navigateBack()" on:keydown="./navigateBack(scope.event)" tabindex="0">
         <a role="button" class="nav-link" id="go-back-nav-button">
           <span class="glyphicon-left-open" aria-hidden="true"></span>{{lang.GoBack}}
         </a>
       </li>
       <li class="divider" role="separator"></li>
       <li aria-labelledby="go-next-nav-button" class="nav-item  {{^if(./canNavigateForward)}}disabled{{/if}}"
-        on:el:click="./navigateForward()">
+        on:click="./navigateForward()" on:keydown="./navigateForward(scope.event)" tabindex="0">
         <a role="button" class="nav-link" id="go-next-nav-button">
           {{./lang.GoNext}}<span class="glyphicon-right-open" aria-hidden="true"></span>
         </a>
@@ -23,7 +23,7 @@
       <span id="myProgress">{{./lang.MyProgress}}:</span>
       <div class="form-group ">
         <div class="input-group">
-          <select aria-labelledby="myProgress" role="listbox"  id="myProgressSelect" class="form-control" el:value:bind="this.selectedPageIndex">
+          <select aria-labelledby="myProgress" role="listbox"  id="myProgressSelect" class="form-control" value:bind="this.selectedPageIndex">
             {{#for(visitedPage of visitedPages)}}
               <option value:from="scope.index" disabled:from="this.disableOption(scope.index)">
                 {{{this.fitPageDescription(visitedPage)}}}
@@ -51,8 +51,8 @@
 
       {{#if(./canSaveAndExit)}}
       <li class="divider" role="separator"></li>
-        <li class="nav-item can-exit" on:el:click="./saveAndExit()" aria-label="{{./lang.SaveAndExit}}">
-          <a role="button" class="nav-link">
+        <li class="nav-item can-exit" on:click="./saveAndExit()" aria-label="{{./lang.SaveAndExit}}">
+          <a role="button" class="nav-link" tabindex="0">
             <span class="glyphicon-floppy" aria-hidden="true"></span>
           </a>
         </li>
@@ -60,8 +60,8 @@
 
       {{#if(canResumeInterview)}}
       <li class="divider" role="separator"></li>
-        <li class="nav-item can-resume" on:el:click="./resumeInterview()" aria-label="{{./lang.ResumeExit}}" >
-          <a role="button" class="nav-link">
+        <li class="nav-item can-resume" on:click="./resumeInterview()" aria-label="{{./lang.ResumeExit}}" >
+          <a role="button" class="nav-link" tabindex="0">
             <span class="glyphicon-right-thin" aria-hidden="true"></span> {{./lang.ResumeExit}}
           </a>
         </li>
@@ -84,8 +84,8 @@
 
       {{#if(canSaveAndExit)}}
       <li class="divider" role="separator"></li>
-        <li class="nav-item can-exit" on:el:click="./saveAndExit()">
-          <a role="button" class="nav-link" aria-label="{{./lang.SaveAndExit}}">
+        <li class="nav-item can-exit" on:click="./saveAndExit()" on:keydown="./saveAndExit(scope.event)">
+          <a role="button" class="nav-link" aria-label="{{./lang.SaveAndExit}}" tabindex="0">
             <span class="glyphicon-floppy" aria-hidden="true"></span> {{./lang.SaveAndExit}}
           </a>
         </li>
@@ -93,8 +93,8 @@
 
       {{#if(canResumeInterview)}}
       <li class="divider" role="separator"></li>
-        <li class="nav-item can-resume" on:el:click="./resumeInterview()">
-          <a role="button" class="nav-link" aria-label="{{./lang.ResumeExit}}">
+        <li class="nav-item can-resume" on:click="./resumeInterview()" on:keydown="./resumeInterview(scope.event)">
+          <a role="button" class="nav-link" aria-label="{{./lang.ResumeExit}}"  tabindex="0">
             <span class="glyphicon-right-thin" aria-hidden="true"></span> {{./lang.ResumeExit}}
           </a>
         </li>

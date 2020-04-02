@@ -263,13 +263,12 @@ export let ViewerNavigationVM = CanMap.extend({
     if (ev && (ev.keyCode !== 13 && ev.keyCode !== 32)) { return }
 
     const $fieldInputs = $('input.form-control')
-    const $navigateButtons = $('button.btn.btn-default.btn-navigate')
+    const $navigateButtons = $('button.btn.btn-default.btn-navigate').filter(':visible')
     let focusTarget
 
     if ($fieldInputs.length && $fieldInputs[0].type !== 'hidden') {
       focusTarget = $fieldInputs[0]
     } else if ($navigateButtons.length) {
-      // TODO: handle post/assemble hidden button
       focusTarget = $navigateButtons[0]
     }
 

@@ -9,7 +9,7 @@
     </div>
 
     <div class="guide-wrapper {{#not(showUserAvatar)}}guide-center{{/not}}">
-      <div id="guideBubble" class="bubble {{#if(guideBubbleTallerThanAvatar)}}vertical{{else}}top{{/if}}">
+      <div id="guideBubble"  tabindex="0" class="bubble {{#if(guideBubbleTallerThanAvatar)}}vertical{{else}}top{{/if}}">
         <a2j-pages
           currentPage:from="currentPage"
           resumeInterview:from="resumeInterview"

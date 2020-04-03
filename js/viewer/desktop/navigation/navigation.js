@@ -261,22 +261,21 @@ export let ViewerNavigationVM = CanMap.extend({
   focusMainContent (ev) {
     // activated by keyboard navigation, allow Enter/Space to trigger
     if (ev && (ev.keyCode !== 13 && ev.keyCode !== 32)) { return }
-
-    const $fieldInputs = $('input.form-control')
-    const $navigateButtons = $('button.btn.btn-default.btn-navigate').filter(':visible')
-    let focusTarget
-
-    if ($fieldInputs.length && $fieldInputs[0].type !== 'hidden') {
-      focusTarget = $fieldInputs[0]
-    } else if ($navigateButtons.length) {
-      focusTarget = $navigateButtons[0]
-    }
-
+    let focusTarget = $('#guideBubble')[0]
     focusTarget && focusTarget.focus()
   },
 
   connectedCallback () {
     const vm = this
+
+    // Used to hide/show keyboard nav shortcut to GI Question content
+    $('.focus-main-content a').on('focus', (ev) => {
+      ev.currentTarget.textContent = 'Skip to Main Content'
+    })
+    $('.focus-main-content a').on('blur', (ev) => {
+      ev.currentTarget.textContent = ''
+    })
+
     const swipeRightHandler = function () {
       if (vm.attr('canNavigateBack')) {
         vm.navigateBack()
@@ -292,6 +291,7 @@ export let ViewerNavigationVM = CanMap.extend({
     $('#viewer-app').on('swipeleft', swipeLeftHandler)
 
     return () => {
+      $('.focus-main-content a').off()
       $('#viewer-app').off('swiperight', swipeRightHandler)
       $('#viewer-app').off('swipeleft', swipeLeftHandler)
     }

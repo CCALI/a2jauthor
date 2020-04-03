@@ -3,10 +3,12 @@
 
 <nav class="navbar navbar-default" role="navigation">
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
-    <div id="skiptocontent">
-      <a href="#" class="" on:click="focusMainContent()" on:keydown="focusMainContent(scope.event)">skip to main content</a>
-    </div>
-    <ul class="nav navbar-nav">
+    <ul class="nav navbar-nav navbar-mobile">
+    {{#not(isMobile)}}
+      <li class="focus-main-content nav-item">
+        <a href="#" class="nav-link" on:click="focusMainContent()" on:keydown="focusMainContent(scope.event)"></a>
+      </li>
+    {{/not}}
       <li aria-labelledby="go-back-nav-button" class="nav-item {{^if(./canNavigateBack)}}disabled{{/if}}"
         on:click="./navigateBack()" on:keydown="./navigateBack(scope.event)" tabindex="0">
         <a role="button" class="nav-link" id="go-back-nav-button">

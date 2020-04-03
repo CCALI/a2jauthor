@@ -1,27 +1,17 @@
 @import "../../../styles/viewer/variables.less";
 
 a2j-viewer-navigation {
-  #skiptocontent a {
-    padding:6px;
-    position: absolute;
+  .focus-main-content a {
+    padding: 0px!important;
     top:-60px;
-    left:0px;
-    height: @viewer-navbar-height;
-    columns: #494848;
-    border-right:1px solid white;
-    border-bottom:1px solid white;
-    border-bottom-right-radius:8px;
-    background: #f8f8f8;;
     -webkit-transition: top 1s ease-out;
       transition: top 1s ease-out;
       z-index: 100;
   }
 
-  #skiptocontent a:focus {
-    position:absolute;
-    height: @viewer-navbar-height;
-    left:0px;
+  .focus-main-content a:focus {
     top:0px;
+    padding: 15px 10px!important;
     outline-color:transparent;
     -webkit-transition: top .1s ease-in;
       transition: top .1s ease-in;

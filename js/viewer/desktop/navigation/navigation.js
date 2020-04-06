@@ -259,8 +259,6 @@ export let ViewerNavigationVM = CanMap.extend({
 
   // allows keyboard users to skip nav bar and go directly to either the first question input or nav button
   focusMainContent (ev) {
-    // activated by keyboard navigation, allow Enter/Space to trigger
-    if (ev && (ev.keyCode !== 13 && ev.keyCode !== 32)) { return }
     let focusTarget = $('#guideBubble')[0]
     focusTarget && focusTarget.focus()
   },

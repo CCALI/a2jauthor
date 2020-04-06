@@ -91,7 +91,7 @@ export const UserAvatarPickerVm = DefineMap.extend('UserAvatarPickerVm', {
     const handleAvatar = this.onAvatar
     if (handleAvatar) {
       const avatar = baseAvatars[index]
-      handleAvatar(avatar)
+      return () => handleAvatar(avatar)
     }
   },
 

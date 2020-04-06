@@ -1,5 +1,5 @@
 <p id="learnMore">{{{ eval(scope/learn, scope/rState.repeatVarValue) }}}</p>
 
-<a class="learn-more btn btn-default btn-navigate" aria-labelledby="learnMore">
+  tabindex="0"
   {{scope/lang.LearnMore}}
 </a>

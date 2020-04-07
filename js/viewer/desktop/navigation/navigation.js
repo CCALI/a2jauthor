@@ -151,10 +151,7 @@ export let ViewerNavigationVM = CanMap.extend({
    *
    * Saves interview and exits.
    */
-  saveAndExit (ev) {
-    // activated by keyboard navigation, allow Enter/Space to trigger
-    if (ev && (ev.keyCode !== 13 && ev.keyCode !== 32)) { return }
-
+  saveAndExit () {
     let rState = this.attr('rState')
     let interview = this.attr('interview')
     let answers = interview.attr('answers')
@@ -181,10 +178,7 @@ export let ViewerNavigationVM = CanMap.extend({
    *
    * Resumes saved interview.
    */
-  resumeInterview (ev) {
-    // activated by keyboard navigation, allow Enter/Space to trigger
-    if (ev && (ev.keyCode !== 13 && ev.keyCode !== 32)) { return }
-
+  resumeInterview () {
     const rState = this.attr('rState')
     const answers = this.attr('interview.answers')
     const visitedPages = rState.visitedPages
@@ -213,11 +207,8 @@ export let ViewerNavigationVM = CanMap.extend({
    *
    * Navigates to previous page.
    */
-  navigateBack (ev) {
+  navigateBack () {
     if (this.attr('canNavigateBack')) {
-      // activated by keyboard navigation, allow Enter/Space to trigger
-      if (ev && (ev.keyCode !== 13 && ev.keyCode !== 32)) { return }
-
       this.attr('selectedPageIndex', parseInt(this.attr('selectedPageIndex')) + 1)
     }
   },
@@ -228,11 +219,8 @@ export let ViewerNavigationVM = CanMap.extend({
    *
    * Navigates to next page.
    */
-  navigateForward (ev) {
+  navigateForward () {
     if (this.attr('canNavigateForward')) {
-      // activated by keyboard navigation, allow Enter/Space to trigger
-      if (ev && (ev.keyCode !== 13 && ev.keyCode !== 32)) { return }
-
       this.attr('selectedPageIndex', parseInt(this.attr('selectedPageIndex')) - 1)
     }
   },
@@ -258,7 +246,7 @@ export let ViewerNavigationVM = CanMap.extend({
   },
 
   // allows keyboard users to skip nav bar and go directly to either the first question input or nav button
-  focusMainContent (ev) {
+  focusMainContent () {
     let focusTarget = $('#guideBubble')[0]
     focusTarget && focusTarget.focus()
   },

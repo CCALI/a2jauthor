@@ -585,6 +585,12 @@
       "css": "link-ext",
       "code": 61582,
       "src": "fontawesome"
+    },
+    {
+      "uid": "531bc468eecbb8867d822f1c11f1e039",
+      "css": "calendar",
+      "code": 59469,
+      "src": "fontawesome"
     }
   ]
 }

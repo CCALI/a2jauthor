@@ -471,6 +471,12 @@ export const FieldVM = CanMap.extend('FieldVM', {
       }
     }
 
+    // wire up custom button in datemdy.stache
+    const datepickerShowHandler = (ev) => {
+      $('input.datepicker-input').datepicker('show')
+    }
+    $('.show-ui-datepicker-button').on('click', datepickerShowHandler)
+
     // setup datepicker widget
     if (vm.attr('field.type') === 'datemdy') {
       const defaultDate = vm.attr('field._answer.values')
@@ -482,6 +488,10 @@ export const FieldVM = CanMap.extend('FieldVM', {
       const lang = vm.attr('lang')
 
       $('input.datepicker-input', $(el)).datepicker({
+        showOn: 'button',
+        buttonImage: 'https://dequeuniversity.com/assets/images/calendar.png', // File (and file path) for the calendar image
+        buttonImageOnly: false,
+        buttonText: 'Calendar View',
         defaultDate,
         minDate,
         maxDate,
@@ -500,6 +510,12 @@ export const FieldVM = CanMap.extend('FieldVM', {
           vm.validateField(null, $el)
         }
       }).val(defaultDate)
+      // remove default button, use button in datemdy.stache instead
+      $('.ui-datepicker-trigger').remove()
+    }
+
+    return () => {
+      $('.show-ui-datepicker-button').off('click', datepickerShowHandler)
     }
   }
 })

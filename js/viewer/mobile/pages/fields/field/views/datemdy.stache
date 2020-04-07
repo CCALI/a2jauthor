@@ -12,6 +12,7 @@
       name="{{field.name}}"
       {{#if(field.required)}}required{{/if}}
       class="form-control datepicker-input" />
+      <button type="button" class="show-ui-datepicker-button pull-right"  alt="Calendar View" title="Calendar View"><span aria-hidden="true" class="glyphicon-calendar"></span></button>
   </div>
 
   {{> invalid-prompt-tpl }}

@@ -273,6 +273,11 @@ export const FieldVM = CanMap.extend('FieldVM', {
       value = $el[0].checked
     } else if (field.type === 'useravatar') { // TODO: validate the JSON string here?
       value = JSON.stringify(this.attr('userAvatar').serialize())
+    } else if (field.type === 'datemdy') {
+      // format date to (mm/dd/yyyy) from acceptable inputs
+      value = this.normalizeDateInput($el.val())
+      // render formatted date for end user
+      $el.val(value)
     } else {
       value = $el.val()
     }
@@ -504,9 +509,6 @@ export const FieldVM = CanMap.extend('FieldVM', {
         dateFormat: 'mm/dd/yy',
         onClose (val, datepickerInstance) {
           const $el = $(this)
-          // assure clean date format before validation
-          const formattedDate = vm.normalizeDateInput($el.val())
-          $el.val(formattedDate)
           vm.validateField(null, $el)
         }
       }).val(defaultDate)

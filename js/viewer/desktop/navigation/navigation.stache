@@ -24,9 +24,9 @@
       <div class="form-group ">
         <div class="input-group">
           <select aria-labelledby="myProgress" role="listbox"  id="myProgressSelect" class="form-control" el:value:bind="this.selectedPageIndex">
-            {{#for(visitedPage of visitedPages)}}
+            {{#for(option of myProgressOptions)}}
               <option value:from="scope.index" disabled:from="this.disableOption(scope.index)">
-                {{{this.fitPageDescription(visitedPage)}}}
+                {{{option}}}
               </option>
             {{/for}}
           </select>
@@ -111,7 +111,7 @@
   </app-alert>
 {{/if}}
 
-{{^if(isMobile)}}
+{{#not(isMobile)}}
   <div class="horizon">
     {{#if courthouseImage}}
       <img class="courthouse" src="{{courthouseImage}}" role="presentation" alt="custom-courthouse-image"/>
@@ -120,4 +120,4 @@
         role="presentation" alt="author-courthouse-image" />
     {{/if}}
   </div>
-{{/if}}
+{{/not}}

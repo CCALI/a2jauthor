@@ -261,7 +261,7 @@ export const FieldVM = CanMap.extend('FieldVM', {
   validateField (ctx, el) {
     const $el = $(el)
     let field = this.attr('field')
-    let _answer = field.attr('_answer')
+    let _answerVm = field.attr('_answerVm')
     let value
 
     // textpick binding fired onChange even on first load
@@ -280,9 +280,9 @@ export const FieldVM = CanMap.extend('FieldVM', {
       value = $el.val()
     }
 
-    _answer.attr('values', value)
+    _answerVm.attr('values', value)
 
-    let errors = _answer.attr('errors')
+    let errors = _answerVm.attr('errors')
     field.attr('hasError', errors)
 
     if (!errors) {
@@ -294,8 +294,8 @@ export const FieldVM = CanMap.extend('FieldVM', {
 
   debugPanelMessage (field, value) {
     const answerName = field.attr('name')
-    const answerIndex = field.attr('_answer.answerIndex')
-    const isRepeating = field.attr('_answer.answer.repeating')
+    const answerIndex = field.attr('_answerVm.answerIndex')
+    const isRepeating = field.attr('_answerVm.answer.repeating')
     // if repeating true, show var#count in debug-panel
     const displayAnswerIndex = isRepeating ? `#${answerIndex}` : ''
 
@@ -350,7 +350,7 @@ export const FieldVM = CanMap.extend('FieldVM', {
           const field = vm.attr('field')
 
           // set answer and validate
-          field.attr('_answer.values', calcValue)
+          field.attr('_answerVm.values', calcValue)
           vm.validateField(null, $el)
         },
         useText: 'Enter',
@@ -397,7 +397,7 @@ export const FieldVM = CanMap.extend('FieldVM', {
     }
     if (answerName) {
       const title = field.attr('label')
-      const textlongValue = field.attr('_answer.values')
+      const textlongValue = field.attr('_answerVm.values')
       const textlongVM = this
       this.attr('modalContent', {
         title,
@@ -410,7 +410,7 @@ export const FieldVM = CanMap.extend('FieldVM', {
   },
 
   fireModalClose (field, newValue, textlongVM) {
-    field.attr('_answer.values', newValue)
+    field.attr('_answerVm.values', newValue)
     const selector = "[name='" + field.name + "']"
     const longtextEl = $(selector)[0]
     textlongVM.validateField(textlongVM, longtextEl)
@@ -476,8 +476,8 @@ export const FieldVM = CanMap.extend('FieldVM', {
 
     // setup datepicker widget
     if (vm.attr('field.type') === 'datemdy') {
-      const defaultDate = vm.attr('field._answer.values')
-        ? vm.normalizeDateInput(vm.attr('field._answer.values')) : null
+      const defaultDate = vm.attr('field._answerVm.values')
+        ? vm.normalizeDateInput(vm.attr('field._answerVm.values')) : null
       // TODO: these dates need to be internationalized for output/input format
       // min/max values currently only come in as mm/dd/yyyy, or special value, TODAY, which is handled in convertDate above
       const minDate = vm.convertDate(vm.attr('field.min'), null, 'MM/DD/YYYY') || null
@@ -534,12 +534,12 @@ export default Component.extend('FieldComponent', {
       const field = this.viewModel.attr('field')
 
       if (ev.target.checked === true && (field.type === 'checkbox' || field.type === 'checkboxNOTA')) {
-        const fields = field.attr('_answer.fields')
+        const fields = field.attr('_answerVm.fields')
         if (fields) {
           const toStayChecked = field.type
           fields.forEach(function (field) {
             if (field.type !== toStayChecked && (field.type === 'checkbox' || field.type === 'checkboxNOTA')) {
-              field.attr('_answer.values', false)
+              field.attr('_answerVm.values', false)
             }
           })
         }

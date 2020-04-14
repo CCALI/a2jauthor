@@ -130,12 +130,14 @@ export default Component.extend({
       }, 500)
     },
 
-    // when value of repeatVar changes, re-render page fields
-    '{rState} repeatVarValue': function () {
+    // any navigation from myProgress, check for and re-render page fields for loop values
+    '{rState} selectedPageIndexSet': function () {
       const vm = this.viewModel
-      const fields = vm.attr('currentPage.fields')
-
-      vm.setFieldAnswers(fields)
+      // repeatVarValue means we're in a loop
+      if (vm.attr('rState.repeatVarValue')) {
+        const fields = vm.attr('currentPage.fields')
+        vm.setFieldAnswers(fields)
+      }
     },
 
     '{rState} setCurrentPage': function () {

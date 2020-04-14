@@ -39,6 +39,9 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
         const revisitedPage = this.visitedPages[index]
         this.restoreLoopVars(revisitedPage)
         resolve(index)
+        // listenTo is in navigation.js to rebuild options list
+        // handles new pages and revisited pages
+        this.dispatch('selectedPageIndexSet')
       })
     }
   },

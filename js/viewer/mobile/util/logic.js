@@ -62,8 +62,6 @@ export default CanMap.extend({
   },
 
   eval: function (str) {
-    // this hack will re-eval/re-render `str` if answer values have updated via beforeCode
-    const answersChanged = this.attr('interview.answers').serialize() // eslint-disable-line
     var output = this._tLogic.evalLogicHTML(str)
 
     return output.html

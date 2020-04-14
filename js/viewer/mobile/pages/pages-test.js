@@ -8,6 +8,7 @@ import TraceMessage from 'caja/author/models/trace-message'
 import Interview from 'caja/viewer/models/interview'
 import Logic from 'caja/viewer/mobile/util/logic'
 import constants from 'caja/viewer/models/constants'
+import sinon from 'sinon'
 import './pages'
 import 'steal-mocha'
 
@@ -133,7 +134,7 @@ describe('<a2j-pages>', () => {
 
       it('ignores navigate() logic if fields have errors', () => {
         const button = new CanMap({ next: 'foo' })
-        const fieldWithError = { _answer: { errors: true } }
+        const fieldWithError = { _answerVm: { errors: true } }
         vm.attr('currentPage.fields').push(fieldWithError)
 
         const shouldReturnFalse = vm.navigate(button)
@@ -319,7 +320,7 @@ describe('<a2j-pages>', () => {
 
       vm.setFieldAnswers(fields)
       const field = vm.attr('currentPage.fields.0')
-      const answerValues = field.attr('_answer.answer.values')
+      const answerValues = field.attr('_answerVm.answer.values')
 
       assert.deepEqual(answerValues.attr(), [null, 101, 202], 'should set repeatVarValues')
     })
@@ -450,17 +451,26 @@ describe('<a2j-pages>', () => {
       rStateTeardown = vm.attr('rState').connectedCallback()
     })
 
-    it('eval from logic re-renders when answers change', () => {
-      const answers = vm.attr('interview').answers
-      answers.varCreate('name', 'Text', false)
-      answers.varSet('name', 'Jess', 1)
+    it('fires setFieldAnswers to update repeat loops', () => {
+      const setFieldAnswersSpy = sinon.spy()
+      vm.setFieldAnswers = setFieldAnswersSpy
+      const button = new CanMap({ next: 'Next' })
+      vm.navigate(button)
+      assert.equal(setFieldAnswersSpy.calledOnce, true, 'should call setFieldAnswers once if no repeat loop')
 
-      let questionText = $('p.question-text').text()
-      assert.equal(questionText, 'welcome! Jess', 'should resolve %%[name]%% macro in question text.')
+      vm.attr('rState.repeatVarValue', 1)
+      vm.navigate(button)
+      assert.equal(setFieldAnswersSpy.callCount, 2, 'should call setFieldAnswers twice with repeat loop')
+    })
 
-      answers.varSet('name', 'JessBob', 1)
-      questionText = $('p.question-text').text()
-      assert.equal(questionText, 'welcome! JessBob', 'should update %%[name]%% macro in question text when answer changes.')
+    it('parseText refires if answers update', () => {
+      const logic = vm.attr('logic')
+      let count = 0
+      logic.eval = () => { return count++ }
+
+      // change answers
+      vm.attr('interview.answers.foo', 'bar')
+      assert.equal(count, 3, 'parseText exists in pages.stache 3 times and should be called 3 times')
     })
 
     afterEach(() => {

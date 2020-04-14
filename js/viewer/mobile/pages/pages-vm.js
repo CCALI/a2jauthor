@@ -37,6 +37,12 @@ export default CanMap.extend('PagesVM', {
       }
     },
 
+    repeatVarValue: {
+      get () {
+        return this.attr('rState').repeatVarValue
+      }
+    },
+
     /**
      * @property {String} pages.ViewModel.prototype.backButton backButton
      * @parent pages.ViewModel
@@ -166,6 +172,12 @@ export default CanMap.extend('PagesVM', {
     return () => { vm.stopListening() }
   },
 
+  parseText (html) {
+    // re-eval if answer values have updated via beforeCode
+    const answersChanged = this.attr('interview.answers').serialize() // eslint-disable-line
+    return this.attr('logic').eval(html)
+  },
+
   returnHome () {
     this.attr('rState').attr({}, true)
   },
@@ -174,7 +186,7 @@ export default CanMap.extend('PagesVM', {
     const fields = this.attr('currentPage.fields')
 
     _forEach(fields, function (field) {
-      const hasError = !!field.attr('_answer.errors')
+      const hasError = !!field.attr('_answerVm.errors')
       field.attr('hasError', hasError)
     })
 
@@ -513,7 +525,6 @@ export default CanMap.extend('PagesVM', {
 
   setFieldAnswers (fields) {
     const logic = this.attr('logic')
-
     if (logic && fields.length) {
       const rState = this.attr('rState')
       const mState = this.attr('mState')
@@ -532,7 +543,7 @@ export default CanMap.extend('PagesVM', {
           this.setDefaultValue(field, avm, answer, answerIndex)
         }
 
-        field.attr('_answer', avm)
+        field.attr('_answerVm', avm)
         // if repeating true, show var#count in debug-panel
         const answerValue = avm.attr('answer.values.' + answerIndex)
         this.logVarMessage(answer.name, answerValue, answer.repeating, answerIndex)

@@ -14,7 +14,7 @@
       name="{{field.name}}"
       {{#if(field.required)}}required{{/if}}
       on:change="validateField(null, scope.element)"
-      value:bind="field._answer.values"
+      value:bind="field._answerVm.values"
       on:input="calcAvailableLength(scope.event)"/>
 
       <button

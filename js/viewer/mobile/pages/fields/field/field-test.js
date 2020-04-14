@@ -19,7 +19,7 @@ describe('<a2j-field>', () => {
       fieldStub = {
         name: 'Foo Input',
         type: '',
-        _answer: {
+        _answerVm: {
           answerIndex: 1,
           answer: {
             values: [null]
@@ -195,7 +195,7 @@ describe('<a2j-field>', () => {
 
     it('passes textlong answer to modal', function () {
       const field = vm.attr('field')
-      field.attr('_answer.values', 'cash money')
+      field.attr('_answerVm.values', 'cash money')
       field.attr({
         'type': 'textlong',
         'label': 'BigText'
@@ -249,7 +249,7 @@ describe('<a2j-field>', () => {
             name: 'Likes Chocolate TF',
             type: 'checkbox',
             label: 'Likes Chocolate',
-            _answer: {
+            _answerVm: {
               answerIndex: 1,
               answer: {
                 values: [null]
@@ -274,7 +274,7 @@ describe('<a2j-field>', () => {
             name: 'None of the Above',
             type: 'checkboxNOTA',
             label: 'None of the Above',
-            _answer: {
+            _answerVm: {
               answerIndex: 1,
               answer: {
                 values: [null]
@@ -299,7 +299,7 @@ describe('<a2j-field>', () => {
             name: 'Name',
             type: 'text',
             label: 'Name',
-            _answer: {
+            _answerVm: {
               answerIndex: 1,
               answer: {
                 values: [null, 'Wilhelmina']
@@ -325,7 +325,7 @@ describe('<a2j-field>', () => {
             type: 'numberdollar',
             label: 'Salary',
             calculator: false,
-            _answer: {
+            _answerVm: {
               answerIndex: 1,
               answer: {
                 values: [null, 45678]
@@ -353,7 +353,7 @@ describe('<a2j-field>', () => {
             listData: '<option>Alaska</option><option>Hawaii</option><option>Texas</option>',
             required: true,
             calculator: false,
-            _answer: new AnswerVM({
+            _answerVm: new AnswerVM({
               answerIndex: 1,
               answer: {
                 values: [null, undefined]
@@ -426,29 +426,29 @@ describe('<a2j-field>', () => {
     describe('a2j-field input change', () => {
       it('should set other checkbox values to false when None of the Above is checked', () => {
         let checkbox = checkboxDefaults.vm.attr('field')
-        checkbox.attr('_answer.answer.values.1', true)
+        checkbox.attr('_answerVm.answer.values.1', true)
 
         $("a2j-field [id='None of the Above']").prop('checked', true).change()
 
-        assert.equal(checkbox.attr('_answer.values'), false, 'Checking NOTA clears other checkboxes')
+        assert.equal(checkbox.attr('_answerVm.values'), false, 'Checking NOTA clears other checkboxes')
       })
 
       it('should set checkboxNOTA value to false when another checkbox is checked', () => {
         let checkboxNOTA = NOTADefaults.vm.attr('field')
-        checkboxNOTA.attr('_answer.answer.values.1', true)
+        checkboxNOTA.attr('_answerVm.answer.values.1', true)
 
         $("a2j-field [id='Likes Chocolate']").prop('checked', true).change()
 
-        assert.equal(checkboxNOTA.attr('_answer.values'), false, 'Checking NOTA clears other checkboxes')
+        assert.equal(checkboxNOTA.attr('_answerVm.values'), false, 'Checking NOTA clears other checkboxes')
       })
 
       it('should not set any non checkbox style fields to false', () => {
         let checkbox = checkboxDefaults.vm.attr('field')
-        checkbox.attr('_answer.answer.values.1', false)
+        checkbox.attr('_answerVm.answer.values.1', false)
         let textField = textDefaults.vm.attr('field')
 
         $("a2j-field [id='Likes Chocolate']").prop('checked', true).change()
-        assert.equal(textField.attr('_answer.answer.values.1'), 'Wilhelmina', 'Checking checkbox does not change text field')
+        assert.equal(textField.attr('_answerVm.answer.values.1'), 'Wilhelmina', 'Checking checkbox does not change text field')
       })
     })
 
@@ -480,7 +480,7 @@ describe('<a2j-field>', () => {
         // and immediate error state before a user has a chance to answer
 
         // emulate initial value set
-        textpick.attr('_answer').attr('values', '')
+        textpick.attr('_answerVm').attr('values', '')
         // emulate onChange validation
         let hasErrors = vm.validateField(null, el)
         assert.equal(hasErrors, undefined, 'skips validateField, so hasErrors should be undefined')

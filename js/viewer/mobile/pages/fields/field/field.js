@@ -35,8 +35,6 @@ export const FieldVM = CanMap.extend('FieldVM', {
     rState: {},
 
     /**
-<<<<<<< HEAD
-=======
      * @property {can.compute} field.ViewModel.prototype.isMobile isMobile
      *
      * used to detect mobile viewer loaded
@@ -49,7 +47,6 @@ export const FieldVM = CanMap.extend('FieldVM', {
     },
 
     /**
->>>>>>> 2599-no-avatar
      * @property {DefineMap} field.ViewModel.prototype.userAvatar userAvatar
      * @parent field.ViewModel
      *
@@ -276,6 +273,11 @@ export const FieldVM = CanMap.extend('FieldVM', {
       value = $el[0].checked
     } else if (field.type === 'useravatar') { // TODO: validate the JSON string here?
       value = JSON.stringify(this.attr('userAvatar').serialize())
+    } else if (field.type === 'datemdy') {
+      // format date to (mm/dd/yyyy) from acceptable inputs
+      value = this.normalizeDateInput($el.val())
+      // render formatted date for end user
+      $el.val(value)
     } else {
       value = $el.val()
     }
@@ -474,6 +476,12 @@ export const FieldVM = CanMap.extend('FieldVM', {
       }
     }
 
+    // wire up custom button in datemdy.stache
+    const datepickerShowHandler = (ev) => {
+      $('input.datepicker-input').datepicker('show')
+    }
+    $('.show-ui-datepicker-button').on('click', datepickerShowHandler)
+
     // setup datepicker widget
     if (vm.attr('field.type') === 'datemdy') {
       const defaultDate = vm.attr('field._answerVm.values')
@@ -485,6 +493,10 @@ export const FieldVM = CanMap.extend('FieldVM', {
       const lang = vm.attr('lang')
 
       $('input.datepicker-input', $(el)).datepicker({
+        showOn: 'button',
+        buttonImage: 'https://dequeuniversity.com/assets/images/calendar.png', // File (and file path) for the calendar image
+        buttonImageOnly: false,
+        buttonText: 'Calendar View',
         defaultDate,
         minDate,
         maxDate,
@@ -497,12 +509,15 @@ export const FieldVM = CanMap.extend('FieldVM', {
         dateFormat: 'mm/dd/yy',
         onClose (val, datepickerInstance) {
           const $el = $(this)
-          // assure clean date format before validation
-          const formattedDate = vm.normalizeDateInput($el.val())
-          $el.val(formattedDate)
           vm.validateField(null, $el)
         }
       }).val(defaultDate)
+      // remove default button, use button in datemdy.stache instead
+      $('.ui-datepicker-trigger').remove()
+    }
+
+    return () => {
+      $('.show-ui-datepicker-button').off('click', datepickerShowHandler)
     }
   }
 })

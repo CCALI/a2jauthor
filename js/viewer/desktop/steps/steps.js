@@ -512,6 +512,33 @@ export let ViewerStepsVM = CanMap.extend('ViewerStepsVM', {
     setTimeout(callback, 0)
   },
 
+  fireLearnMoreModal () {
+    const pages = this.attr('interview.pages')
+    const pageName = this.attr('rState.page')
+
+    if (pages && pageName) {
+      const page = pages.find(pageName)
+
+      // piwik tracking of learn-more clicks
+      if (window._paq) {
+        analytics.trackCustomEvent('Learn-More', 'from: ' + pageName, page.learn)
+      }
+
+      this.attr('modalContent', {
+        // name undefined prevents stache warnings
+        answerName: undefined,
+        title: page.learn,
+        text: page.help,
+        imageURL: page.helpImageURL,
+        altText: page.helpAltText,
+        mediaLabel: page.helpMediaLabel,
+        audioURL: page.helpAudioURL,
+        videoURL: page.helpVideoURL,
+        helpReader: page.helpReader
+      })
+    }
+  },
+
   connectedCallback () {
     const vm = this
     const restoreUserAvatar = (ev, show) => {
@@ -566,38 +593,7 @@ export default Component.extend({
 
     '{viewModel} currentPage': function (vm) {
       vm.afterAvatarLoaded(() => vm.updateDomProperties())
-    },
-
-    'a.learn-more click': function (el, ev) {
-      ev.preventDefault()
-
-      const vm = this.viewModel
-      const pages = vm.attr('interview.pages')
-      const pageName = vm.attr('rState.page')
-
-      if (pages && pageName) {
-        const page = pages.find(pageName)
-
-        // piwik tracking of learn-more clicks
-        if (window._paq) {
-          analytics.trackCustomEvent('Learn-More', 'from: ' + pageName, page.learn)
-        }
-
-        vm.attr('modalContent', {
-          // name undefined prevents stache warnings
-          answerName: undefined,
-          title: page.learn,
-          text: page.help,
-          imageURL: page.helpImageURL,
-          altText: page.helpAltText,
-          mediaLabel: page.helpMediaLabel,
-          audioURL: page.helpAudioURL,
-          videoURL: page.helpVideoURL,
-          helpReader: page.helpReader
-        })
-      }
     }
-
   },
 
   helpers: {

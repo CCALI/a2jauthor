@@ -3,16 +3,31 @@
 
 <nav class="navbar navbar-default" role="navigation">
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
-    <ul class="nav navbar-nav">
-      <li aria-labelledby="go-back-nav-button" class="nav-item {{^if(./canNavigateBack)}}disabled{{/if}}"
-        on:el:click="./navigateBack()">
+    <ul class="nav navbar-nav navbar-mobile">
+    {{#not(isMobile)}}
+      <li class="focus-main-content nav-item">
+        <a href="#" class="nav-link" on:click="focusMainContent()" on:keydown="keydownFireClickHandler(scope.event, focusMainContent)"></a>
+      </li>
+    {{/not}}
+      <li
+        tabindex="0"
+        aria-labelledby="go-back-nav-button"
+        class="nav-item {{^if(./canNavigateBack)}}disabled{{/if}}"
+        on:click="./navigateBack()"
+        on:keydown="keydownFireClickHandler(scope.event, ./navigateBack)"
+      >
         <a role="button" class="nav-link" id="go-back-nav-button">
           <span class="glyphicon-left-open" aria-hidden="true"></span>{{lang.GoBack}}
         </a>
       </li>
       <li class="divider" role="separator"></li>
-      <li aria-labelledby="go-next-nav-button" class="nav-item  {{^if(./canNavigateForward)}}disabled{{/if}}"
-        on:el:click="./navigateForward()">
+      <li
+        tabindex="0"
+        aria-labelledby="go-next-nav-button"
+        class="nav-item  {{^if(./canNavigateForward)}}disabled{{/if}}"
+        on:click="./navigateForward()"
+        on:keydown="keydownFireClickHandler(scope.event, ./navigateForward)"
+      >
         <a role="button" class="nav-link" id="go-next-nav-button">
           {{./lang.GoNext}}<span class="glyphicon-right-open" aria-hidden="true"></span>
         </a>
@@ -51,8 +66,8 @@
 
       {{#if(./canSaveAndExit)}}
       <li class="divider" role="separator"></li>
-        <li class="nav-item can-exit" on:el:click="./saveAndExit()" aria-label="{{./lang.SaveAndExit}}">
-          <a role="button" class="nav-link">
+        <li class="nav-item can-exit" on:click="./saveAndExit()" aria-label="{{./lang.SaveAndExit}}">
+          <a role="button" class="nav-link" tabindex="0">
             <span class="glyphicon-floppy" aria-hidden="true"></span>
           </a>
         </li>
@@ -60,8 +75,8 @@
 
       {{#if(canResumeInterview)}}
       <li class="divider" role="separator"></li>
-        <li class="nav-item can-resume" on:el:click="./resumeInterview()" aria-label="{{./lang.ResumeExit}}" >
-          <a role="button" class="nav-link">
+        <li class="nav-item can-resume" on:click="./resumeInterview()" aria-label="{{./lang.ResumeExit}}" >
+          <a role="button" class="nav-link" tabindex="0">
             <span class="glyphicon-right-thin" aria-hidden="true"></span> {{./lang.ResumeExit}}
           </a>
         </li>
@@ -84,8 +99,8 @@
 
       {{#if(canSaveAndExit)}}
       <li class="divider" role="separator"></li>
-        <li class="nav-item can-exit" on:el:click="./saveAndExit()">
-          <a role="button" class="nav-link" aria-label="{{./lang.SaveAndExit}}">
+        <li class="nav-item can-exit" on:click="./saveAndExit()" on:keydown="keydownFireClickHandler(scope.event, ./saveAndExit)">
+          <a role="button" class="nav-link" aria-label="{{./lang.SaveAndExit}}" tabindex="0">
             <span class="glyphicon-floppy" aria-hidden="true"></span> {{./lang.SaveAndExit}}
           </a>
         </li>
@@ -93,8 +108,8 @@
 
       {{#if(canResumeInterview)}}
       <li class="divider" role="separator"></li>
-        <li class="nav-item can-resume" on:el:click="./resumeInterview()">
-          <a role="button" class="nav-link" aria-label="{{./lang.ResumeExit}}">
+        <li class="nav-item can-resume" on:click="./resumeInterview()" on:keydown="keydownFireClickHandler(scope.event, ./resumeInterview)">
+          <a role="button" class="nav-link" aria-label="{{./lang.ResumeExit}}"  tabindex="0">
             <span class="glyphicon-right-thin" aria-hidden="true"></span> {{./lang.ResumeExit}}
           </a>
         </li>
@@ -113,7 +128,7 @@
 
 {{#not(isMobile)}}
   <div class="horizon">
-    {{#if courthouseImage}}
+    {{#if(courthouseImage)}}
       <img class="courthouse" src="{{courthouseImage}}" role="presentation" alt="custom-courthouse-image"/>
     {{else}}
       <img class="courthouse" src="{{joinBase('viewer/images/A2J5_CourtHouse.svg')}}"

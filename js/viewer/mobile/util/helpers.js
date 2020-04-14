@@ -19,9 +19,18 @@ export const insertExternalLinkIconHelper = function (html) {
   return output
 }
 
+export const keydownFireClickHandlerHelper = function (ev, clickHandler) {
+  // activated by keyboard navigation, only allow Enter(13)/Space(32) to trigger
+  if (ev && (ev.keyCode === 13 || ev.keyCode === 32)) {
+    clickHandler()
+  }
+}
+
 stache.registerHelper('normalizePath', normalizePathHelper)
 
 stache.registerHelper('insertExternalLinkIcon', insertExternalLinkIconHelper)
+
+stache.registerHelper('keydownFireClickHandler', keydownFireClickHandlerHelper)
 
 // override for setURL issue
 route.bindings.hashchange.setURL = function (path) {

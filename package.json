@@ -1,7 +1,7 @@
 {
   "name": "caja",
   "private": true,
-  "version": "2.2.3",
+  "version": "2.2.4",
   "main": "caja/server.stache!done-autorender",
   "description": "Authoring and viewer App GUI.",
   "scripts": {

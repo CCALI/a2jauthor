@@ -37,6 +37,12 @@ export default CanMap.extend('PagesVM', {
       }
     },
 
+    repeatVarValue: {
+      get () {
+        return this.attr('rState').repeatVarValue
+      }
+    },
+
     /**
      * @property {String} pages.ViewModel.prototype.backButton backButton
      * @parent pages.ViewModel
@@ -180,7 +186,7 @@ export default CanMap.extend('PagesVM', {
     const fields = this.attr('currentPage.fields')
 
     _forEach(fields, function (field) {
-      const hasError = !!field.attr('_answer.errors')
+      const hasError = !!field.attr('_answerVm.errors')
       field.attr('hasError', hasError)
     })
 
@@ -218,11 +224,14 @@ export default CanMap.extend('PagesVM', {
       const page = vm.attr('currentPage')
       const logic = vm.attr('logic')
       const previewActive = vm.attr('previewActive')
+      const onExitPage = rState.saveAndExitActive && (rState.currentPage.name === vm.attr('interview').exitPage)
+
+      button.next = vm.handleCrossedUseOfResumeOrBack(button, onExitPage)
 
       vm.saveButtonValue(button, vm, page, logic) // buttons with variables assigned
 
       if (button.next === constants.qIDFAIL || button.next === constants.qIDRESUME) {
-        vm.handleFailOrResumeButton(button, vm)
+        vm.handleFailOrResumeButton(button, vm, onExitPage)
         return // these buttons skip rest of navigate
       }
 
@@ -244,6 +253,17 @@ export default CanMap.extend('PagesVM', {
 
       rState.page = vm.getNextPage(button, logic) // check for GOTO logic redirect, nav to next page
       return rState.page // return destination page for testing
+    }
+  },
+
+  // toggle Resume/Back button based on exit page, otherwise don't change button.next
+  handleCrossedUseOfResumeOrBack (button, onExitPage) {
+    if (onExitPage && button.next === constants.qIDBACK) {
+      return constants.qIDRESUME
+    } else if (!onExitPage && button.next === constants.qIDRESUME) {
+      return constants.qIDBACK
+    } else {
+      return button.next
     }
   },
 
@@ -505,7 +525,6 @@ export default CanMap.extend('PagesVM', {
 
   setFieldAnswers (fields) {
     const logic = this.attr('logic')
-
     if (logic && fields.length) {
       const rState = this.attr('rState')
       const mState = this.attr('mState')
@@ -524,7 +543,7 @@ export default CanMap.extend('PagesVM', {
           this.setDefaultValue(field, avm, answer, answerIndex)
         }
 
-        field.attr('_answer', avm)
+        field.attr('_answerVm', avm)
         // if repeating true, show var#count in debug-panel
         const answerValue = avm.attr('answer.values.' + answerIndex)
         this.logVarMessage(answer.name, answerValue, answer.repeating, answerIndex)

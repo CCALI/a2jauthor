@@ -95,7 +95,7 @@ describe('AnswerViewModel', function () {
       ])
 
       checkboxes.forEach(function (checkbox) {
-        checkbox.attr('_answer', new AnswerVM({
+        checkbox.attr('_answerVm', new AnswerVM({
           answerIndex: 1,
           field: checkbox,
           fields: checkboxes,
@@ -108,18 +108,18 @@ describe('AnswerViewModel', function () {
       const checkbox = checkboxes.attr(0)
 
       // trigger the validation logic
-      checkbox.attr('_answer.values', null)
+      checkbox.attr('_answerVm.values', null)
 
-      assert.equal(checkbox.attr('_answer.errors'), true, 'should fail')
+      assert.equal(checkbox.attr('_answerVm.errors'), true, 'should fail')
     })
 
     it('does not fail if a required checkbox has been checked', function () {
       const checkbox = checkboxes.attr(0)
 
       // trigger the validation logic
-      checkbox.attr('_answer.values', 'foo')
+      checkbox.attr('_answerVm.values', 'foo')
 
-      assert.equal(checkbox.attr('_answer.errors'), null, 'should not fail')
+      assert.equal(checkbox.attr('_answerVm.errors'), null, 'should not fail')
     })
 
     it('does not fail if none of the checkboxes is required', function () {
@@ -129,9 +129,9 @@ describe('AnswerViewModel', function () {
 
       // trigger the validation logic
       const checkbox = checkboxes.attr(0)
-      checkbox.attr('_answer.values', null)
+      checkbox.attr('_answerVm.values', null)
 
-      assert.equal(checkbox.attr('_answer.errors'), undefined, 'should not fail')
+      assert.equal(checkbox.attr('_answerVm.errors'), undefined, 'should not fail')
     })
   })
 })

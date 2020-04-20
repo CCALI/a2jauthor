@@ -90,13 +90,13 @@ export default function bindCustomEvents (appState) {
     let pageFields = $fields[0].viewModel.attr('fields')
 
     pageFields.forEach(function (field) {
-      let answer = field.attr('_answer')
+      let answerVm = field.attr('_answerVm')
       let fieldType = field.attr('type')
       let sampleValue = field.attr('sample')
 
       if (_includes(canUseSampleValues, fieldType)) {
         field.attr('hasError', false)
-        answer.attr('values', sampleValue)
+        answerVm.attr('values', sampleValue)
       }
     })
   })

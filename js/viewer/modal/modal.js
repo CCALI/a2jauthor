@@ -18,6 +18,20 @@ export let ModalVM = DefineMap.extend('ViewerModalVM', {
   interview: {},
   previewActive: {},
 
+  showTranscript: { default: false },
+
+  toggleShowTranscript () {
+    this.showTranscript = !this.showTranscript
+    if (this.showTranscript) {
+      this.scrollToVideoTop()
+    }
+  },
+
+  scrollToVideoTop () {
+    const modalVideoElement = document.querySelector('video.modal-video')
+    $('.modal-body').scrollTop(modalVideoElement.offsetTop)
+  },
+
   closeModalHandler () {
     // answer names are always lowercase versions in the answers map
     const answerName = this.modalContent.answerName && this.modalContent.answerName.toLowerCase()
@@ -31,6 +45,19 @@ export let ModalVM = DefineMap.extend('ViewerModalVM', {
     $('body').removeClass('bootstrap-styles')
   },
 
+  pauseActivePlayers () {
+    // stop video player
+    const modalVideoPlayer = $('video.modal-video')[0]
+    if (modalVideoPlayer) { modalVideoPlayer.pause() }
+
+    // togglePlay resets play/pause control icon on custom Author audio player
+    const modalAudioPlayer = $('audio-player.modal-audio')[0]
+    if (modalAudioPlayer) {
+      const player = modalAudioPlayer.viewModel
+      if (player.isPlaying) { player.togglePlay() }
+    }
+  },
+
   connectedCallback (el) {
     const showModalHandler = () => {
       if (!this.previewActive) {
@@ -38,6 +65,9 @@ export let ModalVM = DefineMap.extend('ViewerModalVM', {
       }
     }
     const fireCloseModalHandler = () => {
+      // pause audio/video before close
+      this.pauseActivePlayers()
+
       // preserves `this` for handler
       this.closeModalHandler()
     }
@@ -115,6 +145,7 @@ export default Component.extend({
             title: '',
             text: page.text,
             imageURL: undefined,
+            mediaLabel: undefined,
             audioURL: page.textAudioURL,
             videoURL: undefined
           }

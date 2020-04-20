@@ -21,7 +21,7 @@ const Field = CanMap.extend({
 
     hasError: {},
 
-    _answer: {},
+    _answerVm: {},
 
     emptyAnswer: {
       get () {

@@ -14,17 +14,40 @@ a2j-modal {
       max-height: 80vh;
       overflow-y: auto;
     }
+
     .modal-content {
-      .modal-video, .modal-image {
+      .modal-image {
+        width: 100%;
+        height: auto;
+      }
+
+      .modal-video {
         display: block;
         max-height: 60vh;
         margin: 0 auto;
         width: 100%;
       }
+
+      .modal-audio-wrapper, .modal-video-wrapper, .modal-image-wrapper {
+        margin-top: 40px;
+      }
+
+      .modal-video, {
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
+      }
+
+      .video-transcript-wrapper {
+        margin-top: 10px;
+        .btn {
+          padding: 10px 0;
+        }
+      }
     }
+
     a.zoom-button {
       position: relative;
-      margin-top: -40px;
+      margin-top: -30px;
+      margin-right: -4px;
     }
   }
 

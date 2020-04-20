@@ -64,8 +64,11 @@ export default Component.extend({
           title: page.learn,
           text: page.help,
           imageURL: page.helpImageURL,
+          altText: page.helpAltText,
+          mediaLabel: page.helpMediaLabel,
           audioURL: page.helpAudioURL,
-          videoURL: page.helpVideoURL
+          videoURL: page.helpVideoURL,
+          helpReader: page.helpReader
         })
       }
     },
@@ -94,8 +97,11 @@ export default Component.extend({
             title: '',
             text: page.text,
             imageURL: undefined,
+            altText: page.helpAltText,
+            mediaLabel: undefined,
             audioURL: page.textAudioURL,
-            videoURL: undefined
+            videoURL: undefined,
+            helpReader: undefined
           })
         }
       } else { // external link
@@ -124,12 +130,14 @@ export default Component.extend({
       }, 500)
     },
 
-    // when value of repeatVar changes, re-render page fields
-    '{rState} repeatVarValue': function () {
+    // any navigation from myProgress, check for and re-render page fields for loop values
+    '{rState} selectedPageIndexSet': function () {
       const vm = this.viewModel
-      const fields = vm.attr('currentPage.fields')
-
-      vm.setFieldAnswers(fields)
+      // repeatVarValue means we're in a loop
+      if (vm.attr('rState.repeatVarValue')) {
+        const fields = vm.attr('currentPage.fields')
+        vm.setFieldAnswers(fields)
+      }
     },
 
     '{rState} setCurrentPage': function () {

@@ -294,9 +294,11 @@ function TPage () {	// This represents a single page within the lesson book/inte
   this.learn = ''// Learn More prompt
   this.help = ''// Optional help text from Learn More button
   this.helpCitation = ''
+  this.helpMediaLabel = ''
   this.helpAudioURL = ''
   this.helpReader = ''
   this.helpImageURL = ''
+  this.helpAltText = ''
   this.helpVideoURL = ''
   this.repeatVar = ''// built-in for attaching Field variables to array
   this.outerLoopVar = ''

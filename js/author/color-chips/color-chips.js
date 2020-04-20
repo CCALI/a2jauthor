@@ -4,7 +4,7 @@ import template from './color-chips.stache'
 
 import 'can-map-define'
 
-export const ColorChipsVm = CanMap.extend({
+export const ColorChipsVm = CanMap.extend('ColorChipsVm', {
   define: {
     colorClasses: {
       value () {
@@ -26,7 +26,7 @@ export const ColorChipsVm = CanMap.extend({
   onSelect (color) {
     const handler = this.attr('onColorClass')
     if (handler) {
-      handler(color)
+      return () => handler(color)
     }
   }
 })

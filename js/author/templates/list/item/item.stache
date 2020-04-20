@@ -12,7 +12,7 @@
 
         {{#if(scope.vm.hovered)}}
           {{#if(scope.vm.isDraggable)}}
-            <span class="glyphicon-move small text-muted"></span>
+            <span class="glyphicon-move small text-muted" aria-hidden="true"></span>
           {{/if}}
         {{/if}}
       </div>

@@ -39,6 +39,9 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
         const revisitedPage = this.visitedPages[index]
         this.restoreLoopVars(revisitedPage)
         resolve(index)
+        // listenTo is in navigation.js to rebuild options list
+        // handles new pages and revisited pages
+        this.dispatch('selectedPageIndexSet')
       })
     }
   },
@@ -199,6 +202,8 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
   },
 
   connectedCallback () {
+    const questionCountPerStep = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
     const visitedPageHandler = (ev) => {
       this.checkInfiniteLoop()
       if (!this.currentPage) { return }
@@ -223,6 +228,12 @@ export const ViewerAppState = DefineMap.extend('ViewerAppState', {
       const outerLoopVarValue = outerLoopVar ? this.logic.varGet(outerLoopVar) : undefined
 
       const newVisitedPage = new DefineMap(this.currentPage)
+
+      const stepNumber = parseInt(newVisitedPage.step.number)
+      let questionNumber = parseInt(questionCountPerStep[stepNumber])
+      newVisitedPage.set('questionNumber', questionNumber)
+      questionCountPerStep[stepNumber] = questionNumber + 1
+
       newVisitedPage.set('repeatVarValue', repeatVarValue)
       newVisitedPage.set('outerLoopVarValue', outerLoopVarValue)
       const revisitedPageIndex = this.getVisitedPageIndex(newVisitedPage)

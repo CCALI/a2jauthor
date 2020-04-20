@@ -303,7 +303,7 @@ window.form = {
     return '<tr><td>' + label + '</td><td>' + value + '</td></tr>'
   },
   noteHTML: function (kind, t) {
-    return '<div class="alert alert-' + kind + '"><p><span class="glyphicon-attention"></span>' + t + '</p></div>'
+    return '<div class="alert alert-' + kind + '"><p><span class="glyphicon-attention" aria-hidden="true"></span>' + t + '</p></div>'
   },
   note: function (t) {
     return $(form.noteHTML('info', t))
@@ -312,7 +312,8 @@ window.form = {
     return $(form.noteHTML('alert', t))
   },
   fieldset: function (legend, record, accordion) {
-    return $('<fieldset name="record" class="' + accordion + '"><legend>' + legend + '</legend></fieldset>').data('record', record)// .click(function(){$(this).toggleClass('collapse')});
+    var accordionClass = accordion ? 'class="' + accordion + '"' : ''
+    return $('<fieldset name="record" ' + accordionClass + '><legend>' + legend + '</legend></fieldset>').data('record', record)// .click(function(){$(this).toggleClass('collapse')});
   },
   div: function (legend, record) {
     return $(legend).data('record', record)
@@ -498,7 +499,7 @@ window.form = {
       '<div ' + (data.name ? 'name="' + data.name + '"' : '') + '>' +
       label +
       '<div class="editspan form-group">' +
-        '<input class="form-control ui-combobox-input editable autocomplete picker varname dest" type="text" >' +
+        '<input class="form-control ui-combobox-input editable autocomplete picker varname dest" placeholder="' + data.placeholder + '" type="text" >' +
       '</div>' +
       '</div>'
     )
@@ -547,7 +548,7 @@ window.form = {
     var $el = $(
       '<div class="editspan form-group" ' + (data.name ? 'name="' + data.name + '"' : '') + '>' +
         label +
-        '<input class="form-control ui-widget editable" type="text">' +
+        '<input class="form-control ui-widget editable" type="text" placeholder="' + data.placeholder + '">' +
       '</div>'
     )
 
@@ -659,8 +660,24 @@ window.form = {
         linkShowTargetTab: false,
         extraPlugins: 'indent,a2j-popout,autogrow',
         removePlugins: 'magicline',
+        language_list: [
+          'sq:Albanian',
+          'ar:Arabic:rtl',
+          'bn:Bengali',
+          'zh-cn:Chinese-Simplified',
+          'cld:Chaldean',
+          'nl:Dutch',
+          'en:English',
+          'fr:French',
+          'km:Khmer',
+          'ko:Korean',
+          'pl:Polish',
+          'ru:Russian',
+          'es:Spanish',
+          'vi:Vietnamese'
+        ],
         toolbar: [
-          { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline' ] },
+          { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Language' ] },
           { name: 'paragraph', items: [ 'Blockquote', 'Indent', 'Outdent', 'BulletedList', 'NumberedList' ] },
           { name: 'links', items: [ 'Link', 'Unlink', 'A2j-popout' ] }
         ],
@@ -751,7 +768,7 @@ window.form = {
     var $fileupload = $(
       '<div class="fileinput-button form-group">' +
         '<button class="btn btn-default btn-wide-sm">' +
-          '<span class="glyphicon-plus"></span> Upload' +
+          '<span class="glyphicon-plus" aria-hidden="true"></span> Upload' +
         '</button>' +
         '<input class="form-control fileupload" type="file" name="files[]" >' +
       '</div>'
@@ -876,7 +893,7 @@ window.form = {
           // (err.line)
           // '<span class="err">'+err.text+'</span>'
           // '<span class="ui-widget">
-          '<span class="text-danger"><span class="glyphicon-attention"></span>' + err.text + '</span></span>'
+          '<span class="text-danger"><span class="glyphicon-attention" aria-hidden="true"></span>' + err.text + '</span></span>'
           // </span>'
         )
       }

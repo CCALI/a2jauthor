@@ -7,5 +7,5 @@
     id="evaluate-input"
     class="form-control input-sm"/>
 
-    <button on:el:click="evaluateScript()" id="evaluate-button" class="btn btn-default btn-sm pull-right"><span class="glyphicon-pencil"></span> Evaluate</button>
+    <button on:el:click="evaluateScript()" id="evaluate-button" class="btn btn-default btn-sm pull-right"><span class="glyphicon-pencil" aria-hidden="true"></span> Evaluate</button>
 </div>

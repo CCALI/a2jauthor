@@ -5,6 +5,8 @@ import Logic from 'caja/viewer/mobile/util/logic'
 import AnswerVM from 'caja/viewer/models/answervm'
 import Interview from 'caja/viewer/models/interview'
 
+import 'steal-mocha'
+
 describe('Logic', function () {
   let logic
   let answers
@@ -114,6 +116,14 @@ describe('Logic', function () {
       'John John',
       'multiple token interpolation w/ case'
     )
+  })
+
+  it('eval text updates when answers change', function () {
+    assert.equal(logic.eval('%%firstname%%'), 'John', 'simple token interpolation')
+
+    // change answer
+    answers.varSet('firstname', 'JessBob', 1)
+    assert.equal(logic.eval('%%firstname%%'), 'JessBob', 'simple token interpolation')
   })
 
   it('conditional set w/ linebreaks', function () {

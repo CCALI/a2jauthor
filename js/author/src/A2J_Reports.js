@@ -91,7 +91,7 @@ function getVariableListHTML (guide) {
   for (vi in sortvars) {
     var v = sortvars[vi]
     tb += html.row([v.name, v.type, v.repeating, v.comment +
-    (!v.warning ? '' : '<span class="text-danger"><span class="glyphicon-attention"></span> ' + v.warning + '</span>')])
+    (!v.warning ? '' : '<span class="text-danger"><span class="glyphicon-attention" aria-hidden="true"></span> ' + v.warning + '</span>')])
   }
   return '<table class="table table-hover">' + th + '<tbody>' + tb + '</tbody>' + '</table>'
 }
@@ -273,7 +273,7 @@ function reportFull () {	// 2016-06-24 Generate full report, ala LessonText.
           fft += tupleAuto('Invalid Prompt audio', field.invalidPromptAudio)
           fft += tupleAuto('Min',	field.min)
           fft += tupleAuto('Max',	field.max)
-          fft += tupleAuto('Max chars',	field.maxChars)
+          fft += tupleAuto('Max Characters',	field.maxChars)
           fft += tupleAuto('List', decodeEntities(field.listData))
           fft += tupleAuto('List', field.listSrc)
           ft += tuple('Field#' + (parseInt(fi) + 1), tableWrap(fft))

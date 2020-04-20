@@ -2,8 +2,10 @@
 <ul class='chip-list'>
   {{#each colorClasses}}
     <li
+      tabindex="0"
       class="color-chip {{.}} {{#is (this, scope.vm.selectedColorClass)}}selected-chip{{/is}}"
-      on:el:click="scope.vm.onSelect(., scope.element)"
+      on:click="scope.vm.onSelect(., scope.element)()"
+      on:keydown="keydownFireClickHandler(scope.event, scope.vm.onSelect(., scope.element))"
     ></li>
   {{/each}}
 </ul>

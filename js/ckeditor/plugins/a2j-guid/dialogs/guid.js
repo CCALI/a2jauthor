@@ -155,12 +155,12 @@ CKEDITOR.dialog.add('guid', function(editor) {
         items: [['Please select']],
         'default': 'Please select',
         onChange: function() {
-          const topic = this.getValue()
-          // Load the resources for this chosen state and topic
+          const topicName = this.getValue()
+          // Load the resources for this chosen state and topicName
           window.$.ajax({
             type: 'GET',
             dataType: 'json',
-            url: `/api/topics-resources/resources?state=${selectedState}&topic=${topic}`
+            url: `/api/topics-resources/resources?state=${selectedState}&topicName=${topicName}`
           })
           .then((result) => {
             // Add results to the html

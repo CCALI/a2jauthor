@@ -4,21 +4,33 @@ import $ from 'jquery'
 import _isFunction from 'lodash/isFunction'
 import normalizePath from 'caja/viewer/util/normalize-path'
 
-stache.registerHelper('~', function (prop, options) {
-  return options.context[prop]
-})
-
-stache.registerHelper('inc', function (val) {
-  val = typeof val === 'function' ? val() : val
-  return parseInt(val, 10) || 0 + 1
-})
-
-stache.registerHelper('normalizePath', function (fileDataUrl, path) {
+export const normalizePathHelper = function (fileDataUrl, path) {
   path = _isFunction(path) ? path() : path
   fileDataUrl = _isFunction(fileDataUrl) ? fileDataUrl() : fileDataUrl
 
   return normalizePath(fileDataUrl, path)
-})
+}
+
+export const insertExternalLinkIconHelper = function (html) {
+  const hrefMatch = /<a href="http\b[^>]*>(.*?)(?=<)/gi
+  const output = html && html.replace(hrefMatch, (match) => {
+    return match + ` <span class="glyphicon-link-ext" aria-hidden="true"/>`
+  })
+  return output
+}
+
+export const keydownFireClickHandlerHelper = function (ev, clickHandler) {
+  // activated by keyboard navigation, only allow Enter(13)/Space(32) to trigger
+  if (ev && (ev.keyCode === 13 || ev.keyCode === 32)) {
+    clickHandler()
+  }
+}
+
+stache.registerHelper('normalizePath', normalizePathHelper)
+
+stache.registerHelper('insertExternalLinkIcon', insertExternalLinkIconHelper)
+
+stache.registerHelper('keydownFireClickHandler', keydownFireClickHandlerHelper)
 
 // override for setURL issue
 route.bindings.hashchange.setURL = function (path) {

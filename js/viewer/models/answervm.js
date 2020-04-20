@@ -123,7 +123,7 @@ export default CanMap.extend('AnswerVM', {
         })
 
         const anyChecked = _some(checkboxes, function (checkbox) {
-          return !!checkbox.attr(`_answer.answer.values.${index}`)
+          return !!checkbox.attr(`_answerVm.answer.values.${index}`)
         })
 
         validations.attr('val', anyChecked || null)

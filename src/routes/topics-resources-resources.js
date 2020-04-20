@@ -28,14 +28,17 @@ module.exports = {
    * GET /api/topics-resources/resources
    */
   find (params, callback) {
-    const { query: { state, topic } } = params
-    debug(`FIND /api/topics-resources-resources request - state=${state}, topic=${topic}`)
+    const { query: { state, topicName } } = params
+    debug(`FIND /api/topics-resources-resources request - state=${state}, topicName=${topicName}`)
 
-    if (!state && !topic) {
+    if (!state && !topicName) {
       return callback(new Error('State and Topic are required!'))
     }
 
-    axios.get(`https://api-stage.legalnav.org/api/topics-resources/resources?state=${state}&topicName=${topic}`)
+    // pre-encode required to handle typographic apostrophe issue#2629
+    const encodedState = encodeURI(state)
+    const encodedTopicName = encodeURI(topicName)
+    axios.get(`https://api-stage.legalnav.org/api/topics-resources/resources?state=${encodedState}&topicName=${encodedTopicName}`)
       .then(({ data }) => {
         // sort the data by name
         data.sort(nameSort)

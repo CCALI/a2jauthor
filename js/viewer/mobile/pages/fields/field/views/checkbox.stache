@@ -8,7 +8,7 @@
 					type="checkbox"
 					name="{{field.name}}"
 					{{#if(field.required)}}required{{/if}}
-					checked:bind="field._answer.values"
+					checked:bind="field._answerVm.values"
 					on:change="validateField(null, scope.element)"/>
 				{{{ eval(field.label, repeatVarValue) }}}
 			</label>

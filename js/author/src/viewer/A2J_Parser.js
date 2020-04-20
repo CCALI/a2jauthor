@@ -82,9 +82,11 @@ function page2JSON (page) {
     LEARN:	page.learn,
     XML_HELP:	page.help,
     XML_HELPCITATION: page.helpCitation,
+    XML_HELPMEDIALABEL: page.helpMediaLabel,
     HELPAUDIO:	page.helpAudioURL,
     XML_HELPREADER:	page.helpReader,
     HELPIMAGE:	page.helpImageURL,
+    HELPALTTEXT: page.helpAltText,
     HELPVIDEO:	page.helpVideoURL,
     BUTTONS:	[],
     FIELDS:	[],
@@ -236,9 +238,11 @@ function parseXML2Page (PAGE, page) {
   page.learn = makestr(PAGE.find('LEARN').text())
   page.help = makestr(PAGE.find('HELP').xml())
   page.helpCitation = makestr(PAGE.find('HELPCITATION').xml())
+  page.helpMediaLabel = makestr(PAGE.find('HELPMEDIALABEL').xml())
   page.helpAudioURL = makestr(PAGE.find('HELPAUDIO').text())
   page.helpReader = makestr(PAGE.find('HELPREADER').xml())
   page.helpImageURL = makestr(PAGE.find('HELPIMAGE').text())
+  page.helpAltText = makestr(PAGE.find("HELPALTTEXT").text())
   page.helpVideoURL = makestr(PAGE.find('HELPVIDEO').text())
   page.notes = makestr(PAGE.find('NOTES').xml())
   page.codeBefore = makestr(PAGE.find('CODEBEFORE').xml())
@@ -590,6 +594,7 @@ function parseXML_A2J_to_CAJA (TEMPLATE) {	// Parse A2J into CAJA
     page.learn = makestr(QUESTION.find('LEARN').xml())
     page.help = replacePopups(page.name, makestr(QUESTION.find('HELP').xml()))
     page.helpCitation = cr2P(makestr(QUESTION.find('HELPCITATION').xml()))
+    page.helpMediaLabel = makestr(PAGE.find('HELPMEDIALABEL').xml())
     page.helpAudioURL = replacePopups(page.name, makestr(QUESTION.find('HELPAUDIO').xml()))
     page.helpReader = makestr(QUESTION.find('HELPREADER').xml())
     page.helpImageURL = makestr(QUESTION.find('HELPGRAPHIC').text())

@@ -8,6 +8,7 @@ import TraceMessage from 'caja/author/models/trace-message'
 import Interview from 'caja/viewer/models/interview'
 import Logic from 'caja/viewer/mobile/util/logic'
 import constants from 'caja/viewer/models/constants'
+import sinon from 'sinon'
 import './pages'
 import 'steal-mocha'
 
@@ -23,11 +24,13 @@ describe('<a2j-pages>', () => {
   beforeEach(() => {
     nextPageStub = new CanMap({
       name: 'Next',
+      step: { number: '1', text: 'Step 1' },
       fields: []
     })
 
     priorPageStub = new CanMap({
       name: 'priorPage',
+      step: { number: '1', text: 'Step 1' },
       fields: []
     })
 
@@ -45,12 +48,12 @@ describe('<a2j-pages>', () => {
         name: 'Intro',
         fields: [],
         repeatVar: '',
-        text: 'welcome!',
+        text: 'welcome! %%[name]%%',
         textAudioURL: null,
         learn: '',
         codeAfter: '',
         buttons: null,
-        step: { number: undefined, text: '' } }
+        step: { number: '0', text: 'Step 0' } }
       ),
       logic: logic,
       rState: new AppState({ interview, logic, traceMessage }),
@@ -131,7 +134,7 @@ describe('<a2j-pages>', () => {
 
       it('ignores navigate() logic if fields have errors', () => {
         const button = new CanMap({ next: 'foo' })
-        const fieldWithError = { _answer: { errors: true } }
+        const fieldWithError = { _answerVm: { errors: true } }
         vm.attr('currentPage.fields').push(fieldWithError)
 
         const shouldReturnFalse = vm.navigate(button)
@@ -317,7 +320,7 @@ describe('<a2j-pages>', () => {
 
       vm.setFieldAnswers(fields)
       const field = vm.attr('currentPage.fields.0')
-      const answerValues = field.attr('_answer.answer.values')
+      const answerValues = field.attr('_answerVm.answer.values')
 
       assert.deepEqual(answerValues.attr(), [null, 101, 202], 'should set repeatVarValues')
     })
@@ -418,16 +421,26 @@ describe('<a2j-pages>', () => {
 
         assert.strictEqual(vm.attr('interview.answers.salary.values.1'), 1234.56, 'Sets default number values')
       })
+
+      it('handleCrossedUseOfResumeOrBack', () => {
+        const button = new CanMap({next: constants.qIDBACK})
+        let buttonNextTarget = vm.handleCrossedUseOfResumeOrBack(button, true)
+        assert.equal(buttonNextTarget, constants.qIDRESUME, 'should update BackToPriorQuestion to Resume if on exitPage')
+
+        button.next = constants.qIDRESUME
+        buttonNextTarget = vm.handleCrossedUseOfResumeOrBack(button, false)
+        assert.equal(buttonNextTarget, constants.qIDBACK, 'should update Resume to BackToPriorQuestion if not on exitPage')
+
+        button.next = 'Foo'
+        buttonNextTarget = vm.handleCrossedUseOfResumeOrBack(button, true)
+        assert.equal(buttonNextTarget, 'Foo', 'should not change the next target if not either Back or Resume button, even on exitPage')
+      })
     })
   })
 
   describe('Component', () => {
     let rStateTeardown
     beforeEach(() => {
-      defaults.logic.attr('eval', (text) => {
-        return text + ' ' + defaults.interview.attr('answers.foo')
-      })
-
       let frag = stache(
         '<a2j-pages></a2j-pages>'
       )
@@ -438,6 +451,18 @@ describe('<a2j-pages>', () => {
       rStateTeardown = vm.attr('rState').connectedCallback()
     })
 
+    it('fires setFieldAnswers to update repeat loops', () => {
+      const setFieldAnswersSpy = sinon.spy()
+      vm.setFieldAnswers = setFieldAnswersSpy
+      const button = new CanMap({ next: 'Next' })
+      vm.navigate(button)
+      assert.equal(setFieldAnswersSpy.calledOnce, true, 'should call setFieldAnswers once if no repeat loop')
+
+      vm.attr('rState.repeatVarValue', 1)
+      vm.navigate(button)
+      assert.equal(setFieldAnswersSpy.callCount, 2, 'should call setFieldAnswers twice with repeat loop')
+    })
+
     it('parseText refires if answers update', () => {
       const logic = vm.attr('logic')
       let count = 0
@@ -445,7 +470,7 @@ describe('<a2j-pages>', () => {
 
       // change answers
       vm.attr('interview.answers.foo', 'bar')
-      assert.equal(count, 2, 'parseText in stache twice and recalled 2 times')
+      assert.equal(count, 3, 'parseText exists in pages.stache 3 times and should be called 3 times')
     })
 
     afterEach(() => {

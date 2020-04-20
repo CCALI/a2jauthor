@@ -197,7 +197,7 @@ br, .clear {
 /**
 * @styles icon-font Icon Font
 *
-* Add `.icon-font;` to any element that needs to display an icon and then put the icon value in `content` - this is most useful when adding an icon as a pseudo element or adding it to an existing element, like a title. Typical syntax for the icon fonts is `<span class="glyphicon-pencil"></span>` but this mixin allows you to easily add icons directly in the CSS without using markup.
+* Add `.icon-font;` to any element that needs to display an icon and then put the icon value in `content` - this is most useful when adding an icon as a pseudo element or adding it to an existing element, like a title. Typical syntax for the icon fonts is `<span class="glyphicon-pencil" aria-hidden="true"></span>` but this mixin allows you to easily add icons directly in the CSS without using markup.
 *
 * ```
 * .panel-heading {
@@ -226,7 +226,7 @@ br, .clear {
   -moz-osx-font-smoothing: grayscale;
 }
 
- 
+
 .transition(@property: all, @function: linear, @timing: 0.25s, @delay: 0s) {
   -webkit-transition: @property @timing @function @delay;
   -moz-transition: @property @timing @function @delay;

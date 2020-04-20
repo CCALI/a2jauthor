@@ -9,14 +9,14 @@
       class="btn btn-default navbar-btn"
       on:el:click="openVariableCreator()"
     >
-      <span class="glyphicon-plus"></span> Add
+      <span class="glyphicon-plus" aria-hidden="true"></span> Add
     </button>
       <button
         id="uploadCMPFile"
         class="btn btn-primary navbar-btn"
       on:el:click="uploadCmpFile()"
       >
-        <span class="glyphicon-folder-open"></span>
+        <span class="glyphicon-folder-open" aria-hidden="true"></span>
         Add from HotDocs .CMP
       </button>
   </div><!-- nav navbar-nav navbar-right -->

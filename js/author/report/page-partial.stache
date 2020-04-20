@@ -41,7 +41,7 @@
                     <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Variable:</label> {{name}}</div>
                     <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Default Value:</label> {{value}}</div>
                     <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Required:</label> {{required}}</div>
-                    <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Max Chars:</label> {{maxChars}}</div>
+                    <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Max Characters:</label> {{maxChars}}</div>
                     <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Min:</label> {{min}}</div>
                     <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Max:</label> {{max}}</div>
                     <div class="row"><label>Invalid Prompt:</label> {{formatDefaultPrompt(invalidPrompt)}}</div>

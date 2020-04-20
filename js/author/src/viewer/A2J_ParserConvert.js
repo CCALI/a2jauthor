@@ -142,9 +142,11 @@ function parseXML_A2J_to_CAJA(TEMPLATE)
 		page.learn = makestr(QUESTION.find("LEARN").xml());
 		page.help = replacePopups(page.name,makestr(QUESTION.find("HELP").xml()));
 		page.helpCitation = cr2P(makestr(QUESTION.find("HELPCITATION").xml()));
+		page.helpMediaLabel = makestr(QUESTION.find('HELPMEDIALABEL').xml());
 		page.helpAudioURL = replacePopups(page.name,makestr(QUESTION.find("HELPAUDIO").xml()));
 		page.helpReader = makestr(QUESTION.find("HELPREADER").xml());
 		page.helpImageURL = makestr(QUESTION.find("HELPGRAPHIC").text());
+		page.helpAltText = makestr(QUESTION.find("HELPALTTEXT").text());
 		page.helpVideoURL = makestr(QUESTION.find("HELPVIDEO").text());
 		page.notes = cr2P(makestr(QUESTION.find("NOTE").xml()));
 		page.codeCitation = cr2P(makestr(QUESTION.find("CODECITATION").xml()));

@@ -35,8 +35,6 @@ export const FieldVM = CanMap.extend('FieldVM', {
     rState: {},
 
     /**
-<<<<<<< HEAD
-=======
      * @property {can.compute} field.ViewModel.prototype.isMobile isMobile
      *
      * used to detect mobile viewer loaded
@@ -49,7 +47,6 @@ export const FieldVM = CanMap.extend('FieldVM', {
     },
 
     /**
->>>>>>> 2599-no-avatar
      * @property {DefineMap} field.ViewModel.prototype.userAvatar userAvatar
      * @parent field.ViewModel
      *
@@ -261,7 +258,7 @@ export const FieldVM = CanMap.extend('FieldVM', {
   validateField (ctx, el) {
     const $el = $(el)
     let field = this.attr('field')
-    let _answer = field.attr('_answer')
+    let _answerVm = field.attr('_answerVm')
     let value
 
     // textpick binding fired onChange even on first load
@@ -276,13 +273,18 @@ export const FieldVM = CanMap.extend('FieldVM', {
       value = $el[0].checked
     } else if (field.type === 'useravatar') { // TODO: validate the JSON string here?
       value = JSON.stringify(this.attr('userAvatar').serialize())
+    } else if (field.type === 'datemdy') {
+      // format date to (mm/dd/yyyy) from acceptable inputs
+      value = this.normalizeDateInput($el.val())
+      // render formatted date for end user
+      $el.val(value)
     } else {
       value = $el.val()
     }
 
-    _answer.attr('values', value)
+    _answerVm.attr('values', value)
 
-    let errors = _answer.attr('errors')
+    let errors = _answerVm.attr('errors')
     field.attr('hasError', errors)
 
     if (!errors) {
@@ -294,8 +296,8 @@ export const FieldVM = CanMap.extend('FieldVM', {
 
   debugPanelMessage (field, value) {
     const answerName = field.attr('name')
-    const answerIndex = field.attr('_answer.answerIndex')
-    const isRepeating = field.attr('_answer.answer.repeating')
+    const answerIndex = field.attr('_answerVm.answerIndex')
+    const isRepeating = field.attr('_answerVm.answer.repeating')
     // if repeating true, show var#count in debug-panel
     const displayAnswerIndex = isRepeating ? `#${answerIndex}` : ''
 
@@ -350,7 +352,7 @@ export const FieldVM = CanMap.extend('FieldVM', {
           const field = vm.attr('field')
 
           // set answer and validate
-          field.attr('_answer.values', calcValue)
+          field.attr('_answerVm.values', calcValue)
           vm.validateField(null, $el)
         },
         useText: 'Enter',
@@ -397,7 +399,7 @@ export const FieldVM = CanMap.extend('FieldVM', {
     }
     if (answerName) {
       const title = field.attr('label')
-      const textlongValue = field.attr('_answer.values')
+      const textlongValue = field.attr('_answerVm.values')
       const textlongVM = this
       this.attr('modalContent', {
         title,
@@ -410,7 +412,7 @@ export const FieldVM = CanMap.extend('FieldVM', {
   },
 
   fireModalClose (field, newValue, textlongVM) {
-    field.attr('_answer.values', newValue)
+    field.attr('_answerVm.values', newValue)
     const selector = "[name='" + field.name + "']"
     const longtextEl = $(selector)[0]
     textlongVM.validateField(textlongVM, longtextEl)
@@ -474,10 +476,16 @@ export const FieldVM = CanMap.extend('FieldVM', {
       }
     }
 
+    // wire up custom button in datemdy.stache
+    const datepickerShowHandler = (ev) => {
+      $('input.datepicker-input').datepicker('show')
+    }
+    $('.show-ui-datepicker-button').on('click', datepickerShowHandler)
+
     // setup datepicker widget
     if (vm.attr('field.type') === 'datemdy') {
-      const defaultDate = vm.attr('field._answer.values')
-        ? vm.normalizeDateInput(vm.attr('field._answer.values')) : null
+      const defaultDate = vm.attr('field._answerVm.values')
+        ? vm.normalizeDateInput(vm.attr('field._answerVm.values')) : null
       // TODO: these dates need to be internationalized for output/input format
       // min/max values currently only come in as mm/dd/yyyy, or special value, TODAY, which is handled in convertDate above
       const minDate = vm.convertDate(vm.attr('field.min'), null, 'MM/DD/YYYY') || null
@@ -485,6 +493,10 @@ export const FieldVM = CanMap.extend('FieldVM', {
       const lang = vm.attr('lang')
 
       $('input.datepicker-input', $(el)).datepicker({
+        showOn: 'button',
+        buttonImage: 'https://dequeuniversity.com/assets/images/calendar.png', // File (and file path) for the calendar image
+        buttonImageOnly: false,
+        buttonText: 'Calendar View',
         defaultDate,
         minDate,
         maxDate,
@@ -497,12 +509,15 @@ export const FieldVM = CanMap.extend('FieldVM', {
         dateFormat: 'mm/dd/yy',
         onClose (val, datepickerInstance) {
           const $el = $(this)
-          // assure clean date format before validation
-          const formattedDate = vm.normalizeDateInput($el.val())
-          $el.val(formattedDate)
           vm.validateField(null, $el)
         }
       }).val(defaultDate)
+      // remove default button, use button in datemdy.stache instead
+      $('.ui-datepicker-trigger').remove()
+    }
+
+    return () => {
+      $('.show-ui-datepicker-button').off('click', datepickerShowHandler)
     }
   }
 })
@@ -534,12 +549,12 @@ export default Component.extend('FieldComponent', {
       const field = this.viewModel.attr('field')
 
       if (ev.target.checked === true && (field.type === 'checkbox' || field.type === 'checkboxNOTA')) {
-        const fields = field.attr('_answer.fields')
+        const fields = field.attr('_answerVm.fields')
         if (fields) {
           const toStayChecked = field.type
           fields.forEach(function (field) {
             if (field.type !== toStayChecked && (field.type === 'checkbox' || field.type === 'checkboxNOTA')) {
-              field.attr('_answer.values', false)
+              field.attr('_answerVm.values', false)
             }
           })
         }

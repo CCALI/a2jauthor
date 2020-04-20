@@ -115,7 +115,7 @@
         {{/if}}
 
         <div class="GradeReport">
-            <div class="alert {{getTextAlertClass(fkOverallGrade)}}">The F-K Grade for all questions and help in this interview is {{fkOverallGrade}} (Less than 6 is Good)</div>
+            <div class="alert {{getTextAlertClass(fkOverallGrade)}}" aria-hidden="true">The F-K Grade for all questions and help in this interview is {{fkOverallGrade}} (Less than 6 is Good)</div>
         </div>
     </div>
 </div> <!-- print report div -->

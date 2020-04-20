@@ -6,7 +6,8 @@
 
   <button type="submit"
           on:click="scope.vm.navigate(button, scope.element, scope.event)"
-          class="btn btn-default btn-navigate">
+          class="btn btn-default btn-navigate"
+          aria-label="{{getButtonLabel(button.label)}}">
     {{getButtonLabel(button.label)}}
   </button>
 </form>

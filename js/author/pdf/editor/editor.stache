@@ -9,7 +9,7 @@
 <div class='editor-container'>
   <div class='editor-sidebar'>
     <a class='editor-list-return' href="{{routeUrl page='templates' guideId=guideId}}">
-      <i class="glyphicon glyphicon-left-open"></i>
+      <i class="glyphicon glyphicon-left-open" aria-hidden="true"></i>
       <span>Back to templates</span>
     </a>
     <div class='editor-template-info'>
@@ -32,7 +32,7 @@
           {{^if(hasPdf)}}disabled{{/if}}
         >
           <span class='ui-button-text'>
-            <span class="glyphicon-file-pdf"></span>
+            <span class="glyphicon-file-pdf" aria-hidden="true"></span>
             Test assemble
           </span>
         </button>
@@ -45,7 +45,7 @@
           {{/if}}
         >
           <span class='ui-button-text'>
-            <span class="glyphicon-floppy"></span>
+            <span class="glyphicon-floppy" aria-hidden="true"></span>
             Save
           </span>
         </button>
@@ -171,7 +171,7 @@
     <div class='editor-pdf-view'>
       {{^if(hasPdf)}}
         <div class='pdf-state pdf-state--initial'>
-          <span class="glyphicon-doc-new"></span>
+          <span class="glyphicon-doc-new" aria-hidden="true"></span>
           <p>Upload a base PDF to get started</p>
           <button
             class='btn btn-primary'
@@ -181,12 +181,12 @@
       {{else}}
       {{#if(isPdfLoading)}}
         <div class="loading">
-          <span class="glyphicon-spin6 animate-spin"></span>
+          <span class="glyphicon-spin6 animate-spin" aria-hidden="true"></span>
         </div>
       {{else}}
         {{#if(pdfError)}}
           <div class='pdf-state pdf-state--error'>
-            <span class="glyphicon-attention"></span>
+            <span class="glyphicon-attention" aria-hidden="true"></span>
             <p title='{{pdfError}}'>Failed to load PDF</p>
             <button
               class='btn btn-primary'
@@ -217,7 +217,7 @@
           >
             {{#if(isLoading)}}
               <div class="loading">
-                <span class="glyphicon-spin6 animate-spin"></span>
+                <span class="glyphicon-spin6 animate-spin" aria-hidden="true"></span>
               </div>
             {{else}}
               <img src="{{url}}" draggable="false" />

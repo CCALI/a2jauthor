@@ -16,15 +16,17 @@
   </div>
 
   <div>
-    <label>Skin tone:</label>
+    <label for="skin-tone-picker">Skin tone:</label>
     <skin-picker
+      id="skin-tone-picker"
       selectedSkin:from="userAvatar.skinTone"
       onSkin:from="onUserAvatarSkinToneChange"
     />
   </div>
   <div>
-    <label>Hair color:</label>
+    <label for="hair-color-picker">Hair color:</label>
     <hair-picker
+      id="hair-color-picker"
       selectedHair:from="userAvatar.hairColor"
       onHair:from="onUserAvatarHairColorChange"
     />

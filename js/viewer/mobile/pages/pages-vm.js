@@ -30,6 +30,9 @@ export default CanMap.extend('PagesVM', {
     mState: {},
     interview: {},
     modalContent: {},
+    // passed up from fields.js
+    groupValidationMap: {},
+
     previewActive: {
       get (lastSet) {
         if (lastSet) { return lastSet } // for testing override
@@ -183,11 +186,16 @@ export default CanMap.extend('PagesVM', {
   },
 
   validateAllFields () {
+    const vm = this
     const fields = this.attr('currentPage.fields')
 
     _forEach(fields, function (field) {
       const hasError = !!field.attr('_answerVm.errors')
       field.attr('hasError', hasError)
+      // track radio button group validation
+      const varName = field.attr('name')
+      const groupValidationMap = vm.attr('groupValidationMap')
+      groupValidationMap && groupValidationMap.attr(varName, hasError)
     })
 
     return _some(fields, f => f.attr('hasError'))

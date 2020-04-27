@@ -1,6 +1,9 @@
 {{#for(field of fields)}}
   <a2j-field
     field:from="field"
+    fieldIndex:from="scope.index"
+    lastIndexMap:from="lastIndexMap"
+    groupValidationMap:from="groupValidationMap"
     lang:from="lang"
     logic:from="logic"
     repeatVarValue:from="rState.repeatVarValue"

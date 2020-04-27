@@ -134,4 +134,54 @@ describe('AnswerViewModel', function () {
       assert.equal(checkbox.attr('_answerVm.errors'), undefined, 'should not fail')
     })
   })
+
+  describe('validating radioButtons', function () {
+    let radioButtons
+
+    beforeEach(function () {
+      const radioFactory = function () {
+        const radio = new Field({
+          name: 'foo',
+          required: true,
+          type: 'radio',
+          repeating: false
+        })
+
+        radio.attr('answer', radio.attr('emptyAnswer'))
+        return radio
+      }
+
+      radioButtons = new Field.List([
+        radioFactory(),
+        radioFactory(),
+        radioFactory()
+      ])
+
+      radioButtons.forEach(function (radio) {
+        radio.attr('_answerVm', new AnswerVM({
+          answerIndex: 1,
+          field: radio,
+          fields: radioButtons,
+          answer: radio.attr('answer')
+        }))
+      })
+    })
+
+    it('groups radio button validation by field.name', function () {
+      const barRadio = radioButtons[2].attr('name', 'bar')
+      const fooRadio0 = radioButtons[0]
+      const fooRadio1 = radioButtons[1]
+
+      // trigger the validation logic for barRadio only
+      barRadio.attr('_answerVm.values', 'has a value')
+      assert.equal(barRadio.attr('_answerVm.errors'), null, 'bar radio should be valid')
+      assert.equal(fooRadio0.attr('_answerVm.errors'), true, 'foo radio buttons should fail')
+      assert.equal(fooRadio1.attr('_answerVm.errors'), true, 'foo radio buttons should fail')
+
+      // trigger the validation logic for fooRadio0 only
+      fooRadio0.attr('_answerVm.values', 'has a value')
+      assert.equal(fooRadio0.attr('_answerVm.errors'), null, 'fooRadio0 button should be valid')
+      assert.equal(fooRadio1.attr('_answerVm.errors'), null, 'fooRadio1 button is in group and should also be valid')
+    })
+  })
 })

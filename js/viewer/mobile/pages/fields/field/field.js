@@ -31,9 +31,11 @@ export const FieldVM = CanMap.extend('FieldVM', {
     // passed in via fields.stache binding
     repeatVarValue: {},
     field: {},
+    fieldIndex: {},
+    groupValidationMap: {},
+    lastIndexMap: {},
     // Type: DefineMap
     rState: {},
-
     /**
      * @property {can.compute} field.ViewModel.prototype.isMobile isMobile
      *
@@ -93,7 +95,12 @@ export const FieldVM = CanMap.extend('FieldVM', {
      */
     showInvalidPrompt: {
       get () {
-        return this.attr('field.hasError') && this.attr('invalidPrompt')
+        const varName = this.attr('field.name')
+        const lastIndex = this.attr('lastIndexMap').attr(varName)
+        const isLastIndex = this.attr('fieldIndex') === lastIndex
+        const hasGroupError = this.attr('groupValidationMap').attr(varName)
+
+        return hasGroupError && isLastIndex && this.attr('invalidPrompt')
       }
     },
 
@@ -271,6 +278,7 @@ export const FieldVM = CanMap.extend('FieldVM', {
 
     if (field.type === 'checkbox' || field.type === 'checkboxNOTA') {
       value = $el[0].checked
+      this.notaCheckboxHandler(field, value)
     } else if (field.type === 'useravatar') { // TODO: validate the JSON string here?
       value = JSON.stringify(this.attr('userAvatar').serialize())
     } else if (field.type === 'datemdy') {
@@ -286,6 +294,9 @@ export const FieldVM = CanMap.extend('FieldVM', {
 
     let errors = _answerVm.attr('errors')
     field.attr('hasError', errors)
+    // update group validation for radio buttons
+    const varName = field.attr('name')
+    this.attr('groupValidationMap').attr(varName, !!errors)
 
     if (!errors) {
       this.debugPanelMessage(field, value)
@@ -463,6 +474,22 @@ export const FieldVM = CanMap.extend('FieldVM', {
     this.onUserAvatarHairColorChange(restoredUserAvatar.hairColor)
   },
 
+  // checkbox groups that include None of the Above(nota) need to uncheck any
+  // other checkbox selections when nota is checked, and vice-versa
+  notaCheckboxHandler (field, isChecked) {
+    if (isChecked) {
+      const fields = field.attr('_answerVm.fields')
+      if (fields) {
+        const toStayChecked = field.type
+        fields.forEach(function (field) {
+          if (field.type !== toStayChecked && (field.type === 'checkbox' || field.type === 'checkboxNOTA')) {
+            field.attr('_answerVm.values', false)
+          }
+        })
+      }
+    }
+  },
+
   connectedCallback (el) {
     const vm = this
     // default availableLength
@@ -543,24 +570,6 @@ export default Component.extend('FieldComponent', {
   tag: 'a2j-field',
   ViewModel: FieldVM,
   leakScope: true,
-
-  events: {
-    '{a2j-field input[type=checkbox]} change': function (values, ev) {
-      const field = this.viewModel.attr('field')
-
-      if (ev.target.checked === true && (field.type === 'checkbox' || field.type === 'checkboxNOTA')) {
-        const fields = field.attr('_answerVm.fields')
-        if (fields) {
-          const toStayChecked = field.type
-          fields.forEach(function (field) {
-            if (field.type !== toStayChecked && (field.type === 'checkbox' || field.type === 'checkboxNOTA')) {
-              field.attr('_answerVm.values', false)
-            }
-          })
-        }
-      }
-    }
-  },
 
   helpers: {
     selector (type, options) {

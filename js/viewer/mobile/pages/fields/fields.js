@@ -11,7 +11,7 @@ import 'can-map-define'
  *
  * `<a2j-fields>`'s viewModel.
  */
-let FieldsVM = CanMap.extend({
+export const FieldsVM = CanMap.extend('FieldsVM', {
   define: {
     // passed in via pages.stache bindings
     lang: {},
@@ -19,7 +19,51 @@ let FieldsVM = CanMap.extend({
     fields: {},
     repeatVarValue: {},
     rState: {},
-    modalContent: {}
+    modalContent: {},
+
+    lastIndexMap: {
+      resolver ({ listenTo, resolve }) {
+        resolve(this.buildLastIndexMap())
+
+        listenTo('fields', this.buildLastIndexMap)
+      }
+    },
+
+    groupValidationMap: {
+      resolver ({ listenTo, resolve }) {
+        resolve(this.buildGroupValidationMap())
+
+        listenTo('fields', this.buildGroupValidationMap)
+      }
+    }
+  },
+
+  buildLastIndexMap () {
+    const fields = this.attr('fields')
+    const lastIndexMap = new CanMap()
+
+    if (fields.length) {
+      fields.forEach((field, index) => {
+        const varName = field.attr('name')
+        lastIndexMap.attr(varName, index)
+      })
+    }
+
+    return lastIndexMap
+  },
+
+  buildGroupValidationMap () {
+    const fields = this.attr('fields')
+    const groupValidationMap = new CanMap()
+
+    if (fields.length) {
+      fields.forEach((field) => {
+        const varName = field.attr('name')
+        groupValidationMap.attr(varName, false)
+      })
+    }
+
+    return groupValidationMap
   }
 })
 

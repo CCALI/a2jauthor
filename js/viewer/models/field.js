@@ -13,7 +13,7 @@ import 'can-map-define'
  *
  * A map representing a field of an interview page
  */
-const Field = CanMap.extend({
+const Field = CanMap.extend('FieldModel', {
   define: {
     options: {
       value: ''

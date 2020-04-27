@@ -33,6 +33,7 @@
             lang:from="lang"
             logic:from="logic"
             fields:from="currentPage.fields"
+            groupValidationMap:to="groupValidationMap"
             rState:from="rState"
             modalContent:bind="modalContent"
             role="form"/>

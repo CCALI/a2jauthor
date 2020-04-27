@@ -58,7 +58,8 @@ describe('<a2j-pages>', () => {
       logic: logic,
       rState: new AppState({ interview, logic, traceMessage }),
       mState: { },
-      interview
+      interview,
+      groupValidationMap: new CanMap()
     }
 
     // initialize messages list in traceMessage
@@ -265,6 +266,23 @@ describe('<a2j-pages>', () => {
         vm.navigate(specialButton)
         assert.equal(answers.attr(`${incompleteTF}.values.1`), false, 'success button should complete interview')
       })
+    })
+
+    it('validateAllFields', () => {
+      let hasErrors = vm.validateAllFields()
+      assert.isFalse(hasErrors, 'should return false if there are no fields')
+
+      vm.attr('currentPage.fields', [{name: 'foo', _answerVm: {errors: true}}, {name: 'bar', _answerVm: {errors: false}}])
+      hasErrors = vm.validateAllFields()
+      assert.isTrue(hasErrors, 'should return true if at least one field is invalid')
+      assert.isTrue(vm.attr('currentPage.fields.0.hasError'), 'should set the field model hasError prop to true')
+      assert.isTrue(vm.attr('groupValidationMap').attr('foo'), 'should update the groupValidationMap for the matching field.name to true')
+
+      vm.attr('currentPage.fields', [{name: 'foo', _answerVm: {errors: false}}, {name: 'bar', _answerVm: {errors: false}}])
+      hasErrors = vm.validateAllFields()
+      assert.isFalse(hasErrors, 'should return false if no fields are invalid')
+      assert.isFalse(vm.attr('currentPage.fields.0.hasError'), 'should set the field model hasError prop to false')
+      assert.isFalse(vm.attr('groupValidationMap').attr('foo'), 'should update the groupValidationMap for the matching field.name to false')
     })
 
     it('setRepeatVariable', () => {

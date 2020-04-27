@@ -3,7 +3,7 @@ import stache from 'can-stache'
 import { assert } from 'chai'
 import { FieldVM } from './field'
 import AnswerVM from 'caja/viewer/models/answervm'
-import CanList from 'can-list'
+import FieldModel from 'caja/viewer/models/field'
 import CanMap from 'can-map'
 import TraceMessage from 'caja/author/models/trace-message'
 import sinon from 'sinon'
@@ -34,7 +34,9 @@ describe('<a2j-field>', () => {
             currentPageName: 'FieldTest'
           }),
           userAvatar: {}
-        }
+        },
+        groupValidationMap: new CanMap(),
+        lastIndexMap: new CanMap()
       })
     })
 
@@ -113,21 +115,21 @@ describe('<a2j-field>', () => {
         FieldPrompts_text: 'You must type a response in the highlighted space before you can continue.'
       })
       /* jshint ignore:end */
+      vm.attr('field', {name: 'foo'})
+      vm.attr('lastIndexMap', {'foo': 0})
+      vm.attr('fieldIndex', 0)
 
-      vm.attr('field', {})
-
-      vm.attr('field.hasError', false)
+      vm.attr('groupValidationMap', {'foo': false})
       assert.ok(!vm.attr('showInvalidPrompt'), 'showInvalidPrompt should be false when there is no error')
 
-      vm.attr('field.hasError', true)
+      vm.attr('groupValidationMap', {'foo': true})
       assert.ok(!vm.attr('showInvalidPrompt'), 'showInvalidPrompt should be false when there is an error but no message')
 
-      vm.attr('field.hasError', false)
+      vm.attr('groupValidationMap', {'foo': true})
       vm.attr('field.type', 'checkbox')
       vm.removeAttr('field.invalidPrompt')
       assert.equal(vm.attr('invalidPrompt'), vm.attr('lang.FieldPrompts_checkbox'), 'checkbox - should show the default error message')
 
-      vm.attr('field.hasError', true)
       assert.ok(vm.attr('showInvalidPrompt'), 'checkbox - showInvalidPrompt should be true when there is an error and a default message')
 
       vm.attr('field.invalidPrompt', 'This is invalid')
@@ -208,10 +210,9 @@ describe('<a2j-field>', () => {
   })
 
   describe('Component', () => {
+    let defaults
     let logicStub
-    let traceMessage
-    let checkboxDefaults, NOTADefaults, textDefaults, numberDollarDefaults, textpickDefaults
-    let fields = new CanList()
+    let checkboxVm, notaVm, textVm, numberDollarVm, textpickVm
     let langStub = new CanMap({
       MonthNamesShort: 'Jan, Feb',
       MonthNamesLong: 'January, February'
@@ -232,191 +233,67 @@ describe('<a2j-field>', () => {
         varSet: sinon.spy(),
         eval: sinon.spy()
       })
-      // normall passed in via stache
-      traceMessage = new TraceMessage()
 
-      checkboxDefaults = {
-        fields: fields,
+      defaults = {
+        field: null,
         logic: logicStub,
         repeatVarValue: '',
         lang: langStub,
-        traceMessage,
-        name: 'Likes Chocolate TF',
-        type: 'checkbox',
-        label: 'Likes Chocolate',
-        vm: new FieldVM({
-          field: {
-            name: 'Likes Chocolate TF',
-            type: 'checkbox',
-            label: 'Likes Chocolate',
-            _answerVm: {
-              answerIndex: 1,
-              answer: {
-                values: [null]
-              }
-            }
-          },
-          traceMessage
-        })
+        groupValidationMap: new CanMap(),
+        lastIndexMap: new CanMap(),
+        rState: {
+          traceMessage: new TraceMessage({
+            currentPageName: 'FieldTest'
+          }),
+          userAvatar: {}
+        }
       }
 
-      NOTADefaults = {
-        fields: fields,
-        logic: logicStub,
-        repeatVarValue: '',
-        lang: langStub,
-        traceMessage,
-        name: 'None of the Above',
-        type: 'checkboxNOTA',
-        label: 'None of the Above',
-        vm: new FieldVM({
-          field: {
-            name: 'None of the Above',
-            type: 'checkboxNOTA',
-            label: 'None of the Above',
-            _answerVm: {
-              answerIndex: 1,
-              answer: {
-                values: [null]
-              }
-            }
-          },
-          traceMessage
-        })
-      }
+      const fieldModels = [
+        new FieldModel({name: 'Likes Chocolate TF', type: 'checkbox', label: 'Likes Chocolate TF'}),
+        new FieldModel({name: 'None of the Above', type: 'checkboxNOTA', label: 'None of the Above'}),
+        new FieldModel({name: 'Name', type: 'text', label: 'Name'}),
+        new FieldModel({name: 'Salary', type: 'numberdollar', label: 'Salary', calculator: false}),
+        new FieldModel({name: 'State', type: 'textpick', label: 'State', listData: '<option>Alaska</option><option>Hawaii</option><option>Texas</option>', required: true, calculator: false})
+      ]
 
-      textDefaults = {
-        fields: fields,
-        logic: logicStub,
-        repeatVarValue: '',
-        lang: langStub,
-        traceMessage,
-        name: 'Name',
-        type: 'text',
-        label: 'Name',
-        vm: new FieldVM({
-          field: {
-            name: 'Name',
-            type: 'text',
-            label: 'Name',
-            _answerVm: {
-              answerIndex: 1,
-              answer: {
-                values: [null, 'Wilhelmina']
-              }
-            }
-          },
-          traceMessage
-        })
-      }
+      fieldModels.forEach((fieldModel) => {
+        fieldModel.attr('_answerVm', new AnswerVM({ field: fieldModel, answer: fieldModel.emptyAnswer, fields: fieldModels }))
+      })
 
-      numberDollarDefaults = {
-        fields: fields,
-        logic: logicStub,
-        repeatVarValue: '',
-        lang: langStub,
-        traceMessage,
-        name: 'Salary',
-        type: 'numberdollar',
-        label: 'Salary',
-        vm: new FieldVM({
-          field: {
-            name: 'Salary',
-            type: 'numberdollar',
-            label: 'Salary',
-            calculator: false,
-            _answerVm: {
-              answerIndex: 1,
-              answer: {
-                values: [null, 45678]
-              }
-            }
-          },
-          traceMessage
-        })
-      }
-
-      textpickDefaults = {
-        fields: fields,
-        logic: logicStub,
-        repeatVarValue: '',
-        lang: langStub,
-        traceMessage,
-        name: 'State',
-        type: 'textpick',
-        label: 'State',
-        vm: new FieldVM({
-          field: {
-            name: 'State',
-            type: 'textpick',
-            label: 'State',
-            listData: '<option>Alaska</option><option>Hawaii</option><option>Texas</option>',
-            required: true,
-            calculator: false,
-            _answerVm: new AnswerVM({
-              answerIndex: 1,
-              answer: {
-                values: [null, undefined]
-              },
-              field: { // required for answervm validation
-                name: 'State',
-                type: 'textpick',
-                required: true
-              }
-            })
-          },
-          traceMessage
-        })
-      }
-
-      // populate fields for this.viewModel.%root
-      fields.push(checkboxDefaults.vm.attr('field'), NOTADefaults.vm.attr('field'), textDefaults.vm.attr('field'), numberDollarDefaults.vm.attr('field'))
-
-      let checkboxFrag = stache(
+      let fieldRenderer = stache(
         `<a2j-field
-        field:from="vm.field"
-        lang:from="lang"
-        logic:from="logic"
-        repeatVarValue:from="repeatVarValue" />`
+          field:from="field"
+          lang:from="lang"
+          logic:from="logic"
+          repeatVarValue:from="repeatVarValue"
+          lastIndexMap:from="lastIndexMap"
+          groupValidationMap:from="groupValidationMap"
+          rState:from="rState"
+        />`
       )
 
-      let NOTAFrag = stache(
-        `<a2j-field
-        field:from="vm.field"
-        lang:from="lang"
-        logic:from="logic"
-        repeatVarValue:from="repeatVarValue" />`
-      )
+      // setup VMs with unique fields
+      checkboxVm = new FieldVM(defaults)
+      checkboxVm.attr('field', fieldModels[0])
 
-      let textFrag = stache(
-        `<a2j-field
-        field:from="vm.field"
-        lang:from="lang"
-        logic:from="logic"
-        repeatVarValue:from="repeatVarValue" />`
-      )
+      notaVm = new FieldVM(defaults)
+      notaVm.attr('field', fieldModels[1])
 
-      let numberDollarFrag = stache(
-        `<a2j-field
-        field:from="vm.field"
-        lang:from="lang"
-        logic:from="logic"
-        repeatVarValue:from="repeatVarValue" />`
-      )
+      textVm = new FieldVM(defaults)
+      textVm.attr('field', fieldModels[2])
 
-      let textpickFrag = stache(
-        `<a2j-field
-        field:from="vm.field"
-        lang:from="lang"
-        logic:from="logic"
-        repeatVarValue:from="repeatVarValue" />`
-      )
+      numberDollarVm = new FieldVM(defaults)
+      numberDollarVm.attr('field', fieldModels[3])
 
-      $('#test-area').html(checkboxFrag(checkboxDefaults))
-        .append(numberDollarFrag(numberDollarDefaults))
-        .append(NOTAFrag(NOTADefaults))
-        .append(textFrag(textDefaults))
-        .append(textpickFrag(textpickDefaults))
+      textpickVm = new FieldVM(defaults)
+      textpickVm.attr('field', fieldModels[4])
+
+      $('#test-area').append(fieldRenderer(checkboxVm))
+        .append(fieldRenderer(notaVm))
+        .append(fieldRenderer(textpickVm))
+        .append(fieldRenderer(numberDollarVm))
+        .append(fieldRenderer(textpickVm))
     })
 
     afterEach(() => {
@@ -425,36 +302,35 @@ describe('<a2j-field>', () => {
 
     describe('a2j-field input change', () => {
       it('should set other checkbox values to false when None of the Above is checked', () => {
-        let checkbox = checkboxDefaults.vm.attr('field')
+        const checkbox = checkboxVm.attr('field')
         checkbox.attr('_answerVm.answer.values.1', true)
 
-        $("a2j-field [id='None of the Above']").prop('checked', true).change()
-
+        document.getElementById('None of the Above').click()
         assert.equal(checkbox.attr('_answerVm.values'), false, 'Checking NOTA clears other checkboxes')
       })
 
       it('should set checkboxNOTA value to false when another checkbox is checked', () => {
-        let checkboxNOTA = NOTADefaults.vm.attr('field')
+        const checkboxNOTA = notaVm.attr('field')
         checkboxNOTA.attr('_answerVm.answer.values.1', true)
 
-        $("a2j-field [id='Likes Chocolate']").prop('checked', true).change()
-
+        document.getElementById('Likes Chocolate TF').click()
         assert.equal(checkboxNOTA.attr('_answerVm.values'), false, 'Checking NOTA clears other checkboxes')
       })
 
-      it('should not set any non checkbox style fields to false', () => {
-        let checkbox = checkboxDefaults.vm.attr('field')
+      it('should not affect non checkbox values', () => {
+        let checkbox = checkboxVm.attr('field')
         checkbox.attr('_answerVm.answer.values.1', false)
-        let textField = textDefaults.vm.attr('field')
+        let textField = textVm.attr('field')
+        textField.attr('_answerVm.answer.values.1', 'Wilhelmina')
 
-        $("a2j-field [id='Likes Chocolate']").prop('checked', true).change()
+        document.getElementById('Likes Chocolate TF').click()
         assert.equal(textField.attr('_answerVm.answer.values.1'), 'Wilhelmina', 'Checking checkbox does not change text field')
       })
     })
 
     describe('Calculator', () => {
       it('should show the calculator image when selected', () => {
-        let numberDollarField = numberDollarDefaults.vm.attr('field')
+        let numberDollarField = numberDollarVm.attr('field')
         numberDollarField.attr('calculator', true)
 
         let $calcFound = $('.calc-icon')
@@ -471,8 +347,7 @@ describe('<a2j-field>', () => {
 
     describe('textpick ignores first onChange validation when field is set to `required`', () => {
       it('field.errors should be false, then true', () => {
-        const vm = textpickDefaults.vm
-        const textpick = vm.attr('field')
+        const textpick = textpickVm.attr('field')
         const el = document.querySelector('select')
 
         // textpick field types set default value to empty string
@@ -482,12 +357,12 @@ describe('<a2j-field>', () => {
         // emulate initial value set
         textpick.attr('_answerVm').attr('values', '')
         // emulate onChange validation
-        let hasErrors = vm.validateField(null, el)
+        let hasErrors = textpickVm.validateField(null, el)
         assert.equal(hasErrors, undefined, 'skips validateField, so hasErrors should be undefined')
 
         // emulate second onChange validation: aka user hit Continue without selecting anything
         // when the field is set to `required`
-        hasErrors = vm.validateField(null, el)
+        hasErrors = textpickVm.validateField(null, el)
         assert.equal(hasErrors, true, 'has errors after textpick initialized and second validation')
       })
     })

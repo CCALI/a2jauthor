@@ -110,6 +110,7 @@ export default CanMap.extend('AnswerVM', {
       case 'checkboxNOTA':
         const fields = this.attr('fields')
         const index = this.attr('answerIndex')
+        const varName = this.attr('field.name')
 
         const checkboxes = _filter(fields, function (f) {
           // if the field being validated is either 'checkbox' or 'checkboxNOTA',
@@ -118,7 +119,8 @@ export default CanMap.extend('AnswerVM', {
             return f.type === 'checkbox' || f.type === 'checkboxNOTA'
             // otherwise filter fields that are 'radio' type.
           } else {
-            return f.type === 'radio'
+            // validate radio by shared varName
+            return f.type === 'radio' && f.name === varName
           }
         })
 

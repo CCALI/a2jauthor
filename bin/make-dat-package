@@ -47,10 +47,6 @@ function makePackageFolder () {
   fs.copySync(path.join(datPath, 'package-lock.json'),
     path.join(outputPath, 'package-lock.json'))
 
-  // include globals-patch.js TODO: can remove after CanJS 3.x upgrade
-  fs.copySync(path.join(datPath, 'globals-patch.js'),
-    path.join(outputPath, 'globals-patch.js'))
-
   // copy package.json to `a2j-viewer/` for shared code
   // TODO: only install bootstrap in js dir, so may not need this
   fs.copySync(path.join(datPath, 'js', 'package.json'),

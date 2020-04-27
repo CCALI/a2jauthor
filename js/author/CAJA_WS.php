@@ -26,8 +26,24 @@ $result=array();
 $err="";
 $mysqli="";
 $drupaldb="";
+$isProductionServer=TRUE;
 
-require "../../../CONFIG.php";
+if (file_exists("../../../CONFIG.php")) { // legacy php config file for Author
+	require "../../../CONFIG.php";
+} else { // unified config.json file for Author/DB/DAT config settings
+	$config = file_get_contents("../../../config.json");
+	$config_data = json_decode($config);
+	// define local vars from config.json
+	$isProductionServer = $config_data->isProductionServer;
+	define("LOCAL_USER", $config_data->LOCAL_USER);
+	define("GUIDES_DIR", $config_data->GUIDES_DIR);
+	define("GUIDES_URL", $config_data->GUIDES_URL);
+	define("SERVER_URL", $config_data->SERVER_URL);
+	define("DRUPAL_ROOT_DIR", $config_data->DRUPAL_ROOT_DIR);
+
+	$mysqli = new mysqli($config_data->DB_HOST, $config_data->DB_USER, $config_data->DB_PASSWORD, $config_data->DB_NAME, $config_data->DB_PORT);
+}
+
 //check connection
 if (mysqli_connect_errno()) {
   exit('Connect failed: '. mysqli_connect_error());
@@ -76,7 +92,7 @@ switch ($command){
 		$username='';
 		$userdir='';
 
-		if ($isProductionServer && !$isBitoviServer) {
+		if ($isProductionServer) {
 			if (($userid>0) && ($canAuthor)) {
 				// User logged in to Drupal, get their user id, etc.
 				// Can also get Roles here.

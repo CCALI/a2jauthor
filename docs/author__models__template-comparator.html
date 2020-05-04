@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<title>A2J-Docs  - author/models/template-comparator</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+	<link rel="stylesheet" type="text/css" href="./static/bundles/static.css">
+	
+	<!--[if lt IE 9]>
+   <script type="text/javascript" src="static/html5shiv.js"></script>
+    <!--<![endif]-->
+</head>
+
+<body class="docs">
+	<header>
+		<nav class="container">
+
+			<div class="logo-menu">
+				<a class="navbar-brand" href="index.html">
+                  <img class="a2j-logo" src="static/img/a2j-circle.svg" style="height:50px;width:auto;"/>
+                </a>
+			</div>
+
+			<ul class="main-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="overview.html">Style Guide</a></li>
+        <li class="separator"></li>
+        <li>API: </li>
+        <li><a href="api.html">Author</a></li>
+        <li><a href="viewer-api.html">Viewer</a></li>
+      </ul>
+
+			<div class="bitovi-menu pull-right">
+				<a href="http://bitovi.com" class="bitovi icon-bits">Bitovi</a>
+				<ul class="dropdown-menu">
+					<li><a href="http://bitovi.com">Bitovi.com</a></li>
+					<li><a href="http://bitovi.com/blog/">Blog</a></li>
+					<li><a href="http://bitovi.com/training/">Training</a></li>
+					<li><a href="http://bitovi.com/open-source/">Open Source</a></li>
+					<li><a href="http://bitovi.com/contact/">Contact Us</a></li>
+				</ul>
+			</div>
+
+		</nav>
+	</header>
+
+	
+<div class="container api">
+
+	
+	<nav class="sidebar">
+		
+		<ul class="api cascading primary-grouping"> 
+	
+		
+		<li class="search-container active parent">
+			<a class="sidebar-title" href="index.html" data-search="A2J-Docs">
+				A2J-Docs
+			</a>
+			
+		</li>
+		
+		
+			
+			<li class="search-container active">
+			<a class="sidebar-title" href="author__models__template-comparator.html" data-search="author/models/template-comparator">
+				author/models/template-comparator
+			</a>
+			
+		</li>
+			
+		
+	
+</ul>
+	</nav>
+	
+	
+	
+	<article class="content docs">
+	
+	
+		
+		<section class="title">
+			<div class="heading">
+<h1>author/models/template-comparator</h1>
+	<ul class="tags">
+		<li>module</li>
+	</ul>
+	
+	
+</div>
+
+<div class="sub-heading">
+	
+	
+	<h2><code>{Object}</code></h2>
+	
+	<span class="inherits">&nbsp;</span>
+</div>
+
+<ul class="links">
+	
+	
+	
+	
+</ul>
+<br />
+		</section>
+		
+		
+		
+		<section class="contents">
+		</section>
+		
+		
+		
+
+		
+		<section class="description">
+			<p>Provides functions that given a <code>key</code> and <code>direction</code> (<code>asc</code> or <code>desc</code>) will
+generate a comparator function meant to be used to sort <code>Template.List</code> instances
+through the sort plugin; the list will be sorted by the provided key and when
+templates have the same value for the given key, <code>active</code> templates will be
+sorted first.</p>
+
+		</section>
+		
+
+		
+			
+			<section class='primary-options'>
+				
+
+  <h2 id="sig_">Object
+</h2>
+<div class="signature-wrapper">
+
+
+
+
+
+
+  <h3>Properties</h3>
+  
+  <ol class="parameters">
+	
+	<li class="parameter">
+		<h4>number
+			<code>{function()}</code></h4>
+		<div class="description">
+			<p>Sort by number attributes</p>
+
+		</div>
+		
+		
+		
+	</li>
+	
+	<li class="parameter">
+		<h4>string
+			<code>{function()}</code></h4>
+		<div class="description">
+			<p>Sort by string attributes</p>
+
+		</div>
+		
+		
+		
+	</li>
+	
+	<li class="parameter">
+		<h4>moment
+			<code>{function()}</code></h4>
+		<div class="description">
+			<p>Sort by momentjs attributes</p>
+
+		</div>
+		
+		
+		
+	</li>
+	
+</ol>
+
+
+</div>
+
+  
+
+			</section>
+			
+		
+		
+		
+			<section class="signature">
+				<h2 id="sig_">function(a, b)
+</h2>
+<div class="signature-wrapper">
+<p>Provides functions that given a <code>key</code> and <code>direction</code> (<code>asc</code> or <code>desc</code>) will
+generate a comparator function meant to be used to sort <code>Template.List</code> instances
+through the sort plugin; the list will be sorted by the provided key and when
+templates have the same value for the given key, <code>active</code> templates will be
+sorted first.</p>
+
+
+	<h3>Parameters</h3>
+
+	<ol class="parameters">
+		
+		<li class="parameter">
+			<h4>a
+				<code>{*}</code></h4>
+			<div class="description">
+				
+			</div>
+			
+			
+			
+		</li>
+		
+		<li class="parameter">
+			<h4>b
+				<code>{*}</code></h4>
+			<div class="description">
+				
+			</div>
+			
+			
+			
+		</li>
+		
+	</ol>
+
+
+
+
+
+
+</div>
+
+			</section>
+		
+		
+
+		
+		<section class="comment">
+			
+		</section>
+		
+		
+
+		
+
+		
+	
+	
+	</article>
+	
+	
+
+</div>
+
+
+
+
+
+
+	<footer>
+	  <p class="center">Built by <a href="http://bitovi.com/">Bitovi</a> using <a href="http://documentjs.com/">DocumentJS</a>.
+	</footer>
+
+	<script type="text/javascript">
+		var docObject = {"type":"module","name":"author/models/template-comparator","params":[{"name":"a","types":[{"type":"*"}]},{"name":"b","types":[{"type":"*"}]}],"parent":"author/models/template-comparator.js","src":"author/models/template-comparator.js","line":4,"codeLine":18,"description":"Provides functions that given a `key` and `direction` (`asc` or `desc`) will\ngenerate a comparator function meant to be used to sort `Template.List` instances\nthrough the sort plugin; the list will be sorted by the provided key and when\ntemplates have the same value for the given key, `active` templates will be\nsorted first.","title":"","types":[{"type":"Object","options":[{"name":"number","description":"Sort by number attributes","types":[{"type":"function","returns":{"types":[{"type":"undefined"}]},"params":[]}]},{"name":"string","description":"Sort by string attributes","types":[{"type":"function","returns":{"types":[{"type":"undefined"}]},"params":[]}]},{"name":"moment","description":"Sort by momentjs attributes","types":[{"type":"function","returns":{"types":[{"type":"undefined"}]},"params":[]}]}]}],"templates":"/Users/mitchel/Sites/CAJA/js/styles/documentjs-theme/templates","static":"/Users/mitchel/Sites/CAJA/js/styles/documentjs-theme/static","glob":{"pattern":"{author,viewer,styles}/**/*.{js,md,less,mustache}","ignore":"{docs,viewer,node_modules,tests,minify,author/{src,libs,docs}}/**/*","cwd":"/Users/mitchel/Sites/CAJA/js"},"dest":"/Users/mitchel/Sites/CAJA/js/docs","generators":["html"],"docConfigDest":"../documentjs.json","project":{}};
+	</script>
+
+	
+		<script>
+		  steal = {
+		    instantiated: {
+		      "bundles/static.css!$css" : null
+		    }
+		  }
+		</script>
+		<script type="text/javascript" data-main="static" data-config="./static/config.js" src="./static/steal.production.js" bundles-path="bundles"></script>
+	
+</body>
+
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<title>A2J-Docs - Layout </title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+	<link rel="stylesheet" type="text/css" href="./static/bundles/static.css">
+	
+	<!--[if lt IE 9]>
+   <script type="text/javascript" src="static/html5shiv.js"></script>
+    <!--<![endif]-->
+</head>
+
+<body class="docs">
+	<header>
+		<nav class="container">
+
+			<div class="logo-menu">
+				<a class="navbar-brand" href="index.html">
+                  <img class="a2j-logo" src="static/img/a2j-circle.svg" style="height:50px;width:auto;"/>
+                </a>
+			</div>
+
+			<ul class="main-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="overview.html">Style Guide</a></li>
+        <li class="separator"></li>
+        <li>API: </li>
+        <li><a href="api.html">Author</a></li>
+        <li><a href="viewer-api.html">Viewer</a></li>
+      </ul>
+
+			<div class="bitovi-menu pull-right">
+				<a href="http://bitovi.com" class="bitovi icon-bits">Bitovi</a>
+				<ul class="dropdown-menu">
+					<li><a href="http://bitovi.com">Bitovi.com</a></li>
+					<li><a href="http://bitovi.com/blog/">Blog</a></li>
+					<li><a href="http://bitovi.com/training/">Training</a></li>
+					<li><a href="http://bitovi.com/open-source/">Open Source</a></li>
+					<li><a href="http://bitovi.com/contact/">Contact Us</a></li>
+				</ul>
+			</div>
+
+		</nav>
+	</header>
+
+	
+<div class="container api">
+
+	
+	<nav class="sidebar">
+		
+		<ul class="api cascading primary-grouping"> 
+	
+		
+		<li class="search-container active parent">
+			<a class="sidebar-title" href="index.html" data-search="A2J-Docs">
+				A2J-Docs
+			</a>
+			
+				
+			
+		</li>
+		
+		
+			
+		
+	
+</ul>
+	</nav>
+	
+	
+	
+	<article class="content docs">
+	
+	
+		
+		<section class="title">
+			<div class="heading">
+<h1>Layout</h1>
+	<ul class="tags">
+		<li>stylesheet</li>
+	</ul>
+	
+	
+</div>
+
+<div class="sub-heading">
+	
+	
+		<span class="module">a2j-layout.less</span>
+	
+	
+	
+	<span class="inherits">&nbsp;</span>
+</div>
+
+<ul class="links">
+	
+	
+	
+	
+</ul>
+<br />
+		</section>
+		
+		
+		
+		<section class="contents">
+		</section>
+		
+		
+		
+
+		
+		<section class="description">
+			<p>This defines some global styles that affect the layout of the overall application, specific to A2J Author.</p>
+
+		</section>
+		
+
+		
+			
+		
+		
+		
+		
+
+		
+		<section class="comment">
+			
+		</section>
+		
+		
+
+		
+			
+				<h2>Page</h2>
+				
+				
+				<section class="description">
+					<p>The class <code>.page</code> is used as a wrapper class for everything inside the scrollable area of the app and adds some default spacing and gutter widths.</p>
+
+				</section>
+				
+
+				
+					<section class="comment">
+						<pre><code>&lt;div class=&quot;page&quot;&gt;
+ ...
+&lt;/div&gt;
+</code></pre>
+
+					</section>
+					
+				
+			
+				<h2>Has Toolbar</h2>
+				
+				
+				<section class="description">
+					<p>A wrapping container with a class of <code>.has-toolbar</code> uses some additional styles to remove the top border from the default navbar and to apply positioning rules so that it's sticky. It uses the <code>@header-height</code> variable from <code>a2j-header.less</code> and <code>@vert-navbar-width</code> from <code>.vertical-navbar.less</code> to calculate it's position by modifying the padding on <code>.page</code>.</p>
+
+				</section>
+				
+
+				
+					<section class="comment">
+						<pre><code>&lt;div class=&quot;panel has-toolbar&quot;&gt;
+ &lt;nav class=&quot;navbar navbar-default&quot;&gt;
+   ...
+ &lt;/nav&gt;
+ &lt;div class=&quot;page&quot;&gt;
+  ...
+ &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+					</section>
+					
+				
+			
+				<h2>Header</h2>
+				
+				
+
+				
+					<section class="comment">
+						<p>A2J Author uses the HTML5 element <code>header</code> for the top title bar throughout the application. This usually consists of the interview title and utility links for Settings and Help. The JavaScript component which utilizes these styles is <code>&lt;app-header&gt;</code></p>
+<p>Usage: <code>&lt;app-header page=&quot;interviews&quot;&gt;&lt;/app-header&gt;</code></p>
+<p>Generates:</p>
+<pre><code>&lt;header&gt;
+ &lt;div class=&quot;container-fluid&quot;&gt;
+   &lt;div class=&quot;row&quot;&gt;
+     &lt;div class=&quot;title-column col-xs-8&quot;&gt;
+       &lt;h1 id=&quot;guidetitle&quot; class=&quot;guidetitle&quot;&gt;My Interview (6/24/2015)&lt;/h1&gt;
+     &lt;/div&gt;
+     &lt;div class=&quot;utility-links col-xs-4 text-right&quot;&gt;
+       &lt;button id=&quot;settings&quot; class=&quot;btn btn-link&quot;&gt;&lt;span class=&quot;glyphicon-cog&quot;&gt;&lt;/span&gt; Settings&lt;/button&gt;
+       &lt;a target=&quot;_blank&quot; class=&quot;btn btn-link&quot; href=&quot;http://author.a2jauthor.org/csh5/Interviews&quot;&gt;&lt;span class=&quot;glyphicon-lifebuoy&quot;&gt;&lt;/span&gt; Help&lt;/a&gt;
+       &lt;br&gt;
+       &lt;span class=&quot;authorenv&quot;&gt;&lt;/span&gt;
+     &lt;/div&gt;
+   &lt;/div&gt;
+ &lt;/div&gt;
+&lt;/header&gt;
+</code></pre>
+
+					</section>
+					
+				
+			
+				<h2>Dialogs</h2>
+				
+				
+				<section class="description">
+					<p>A2J Author currently uses JQuery UI for many of the modals, called 'dialogs' by JQueryUI. This file only contains overrides for JQueryUI necessary to style the dialogs the same as the Bootstrap modals. This file should be temporary and can be removed once all modals are using Bootstrap rather than JQueryUI.</p>
+
+				</section>
+				
+
+				
+			
+		
+
+		
+	
+	
+	</article>
+	
+	
+
+</div>
+
+
+
+
+
+
+	<footer>
+	  <p class="center">Built by <a href="http://bitovi.com/">Bitovi</a> using <a href="http://documentjs.com/">DocumentJS</a>.
+	</footer>
+
+	<script type="text/javascript">
+		var docObject = {"description":"This defines some global styles that affect the layout of the overall application, specific to A2J Author.","name":"a2j-layout.less","title":"Layout","type":"stylesheet","showChildrenInPage":true,"hideChildrenInMenu":true,"parent":"styles-custom","order":1,"src":"styles/author/layout.less","templates":"/Users/mitchel/Sites/CAJA/js/styles/documentjs-theme/templates","static":"/Users/mitchel/Sites/CAJA/js/styles/documentjs-theme/static","glob":{"pattern":"{author,viewer,styles}/**/*.{js,md,less,mustache}","ignore":"{docs,viewer,node_modules,tests,minify,author/{src,libs,docs}}/**/*","cwd":"/Users/mitchel/Sites/CAJA/js"},"dest":"/Users/mitchel/Sites/CAJA/js/docs","generators":["html"],"docConfigDest":"../documentjs.json","project":{}};
+	</script>
+
+	
+		<script>
+		  steal = {
+		    instantiated: {
+		      "bundles/static.css!$css" : null
+		    }
+		  }
+		</script>
+		<script type="text/javascript" data-main="static" data-config="./static/config.js" src="./static/steal.production.js" bundles-path="bundles"></script>
+	
+</body>
+
+</html>

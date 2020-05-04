@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<title>A2J-Docs - Editing SVG Files </title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	
+	<link rel="stylesheet" type="text/css" href="./static/bundles/static.css">
+	
+	<!--[if lt IE 9]>
+   <script type="text/javascript" src="static/html5shiv.js"></script>
+    <!--<![endif]-->
+</head>
+
+<body class="docs">
+	<header>
+		<nav class="container">
+
+			<div class="logo-menu">
+				<a class="navbar-brand" href="index.html">
+          <img alt="A2J" width="30" height="34" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAiCAYAAABIiGl0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDE0IDc5LjE1Njc5NywgMjAxNC8wOC8yMC0wOTo1MzowMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OTRBNzhEMDQ4NjM3MTFFNTg4NTM4QzU4ODMyQzQyMDMiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OTRBNzhEMDM4NjM3MTFFNTg4NTM4QzU4ODMyQzQyMDMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDozMEJEMzFENjVGMTQxMUU1QkEwMjgyRjkxMUNFNzNDNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDozMEJEMzFENzVGMTQxMUU1QkEwMjgyRjkxMUNFNzNDNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PvMXX4UAAAeoSURBVHja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">
+        </a>
+			</div>
+
+			<ul class="main-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="overview.html">Style Guide</a></li>
+        <li class="separator"></li>
+        <li>API: </li>
+        <li><a href="api.html">Author</a></li>
+        <li><a href="viewer-api.html">Viewer</a></li>
+      </ul>
+
+			<div class="bitovi-menu pull-right">
+				<a href="http://bitovi.com" class="bitovi icon-bits">Bitovi</a>
+				<ul class="dropdown-menu">
+					<li><a href="http://bitovi.com">Bitovi.com</a></li>
+					<li><a href="http://bitovi.com/blog/">Blog</a></li>
+					<li><a href="http://bitovi.com/training/">Training</a></li>
+					<li><a href="http://bitovi.com/open-source/">Open Source</a></li>
+					<li><a href="http://bitovi.com/contact/">Contact Us</a></li>
+				</ul>
+			</div>
+
+		</nav>
+	</header>
+
+	
+<div class="container api">
+
+	
+	<nav class="sidebar">
+		
+		<ul class="api cascading primary-grouping"> 
+	
+		
+		<li class="search-container active parent">
+			<a class="sidebar-title" href="index.html" data-search="A2J-Docs">
+				A2J-Docs
+			</a>
+			
+				
+			
+		</li>
+		
+		<li class="search-container active parent">
+			<a class="sidebar-title" href="styles.html" data-search="Styles">
+				Styles
+			</a>
+			
+				
+	<ul>
+		
+			
+				
+					<li class="heading search-container">
+						<span>Getting Started</span>
+						
+	<ul>
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="page" href="overview.html" data-search="Overview">
+						Overview
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="page" href="grid.html" data-search="Grid System">
+						Grid System
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="variables.less.html" data-search="Variables">
+						Variables
+					</a>
+				</li>
+				
+			
+			
+		
+	</ul>
+
+					</li>
+				
+				
+			
+			
+		
+			
+				
+					<li class="heading search-container">
+						<span>Theme Basics</span>
+						
+	<ul>
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="typography.less.html" data-search="Typography">
+						Typography
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="color-palette.less.html" data-search="Color Palette">
+						Color Palette
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="icons.html" data-search="Iconography">
+						Iconography
+					</a>
+				</li>
+				
+			
+			
+		
+	</ul>
+
+					</li>
+				
+				
+			
+			
+		
+			
+				
+					<li class="heading search-container">
+						<span>Base Elements</span>
+						
+	<ul>
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="buttons.less.html" data-search="Buttons">
+						Buttons
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="button-groups.less.html" data-search="Button Groups">
+						Button Groups
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="modals.less.html" data-search="Modals">
+						Modals
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="forms.less.html" data-search="Forms">
+						Forms
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="tables.less.html" data-search="Tables">
+						Tables
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="navs.less.html" data-search="Navs">
+						Navs
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="navbar.less.html" data-search="Navbars">
+						Navbars
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="labels.less.html" data-search="Labels">
+						Labels
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="alerts.less.html" data-search="Alerts">
+						Alerts
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="list-group.less.html" data-search="List group">
+						List group
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="panels.less.html" data-search="Panels">
+						Panels
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="popovers.less.html" data-search="Popovers">
+						Popovers
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="styles" href="loading.less.html" data-search="Loading">
+						Loading
+					</a>
+				</li>
+				
+			
+			
+		
+	</ul>
+
+					</li>
+				
+				
+			
+			
+		
+			
+				
+					<li class="heading search-container">
+						<span>Viewer</span>
+						
+	<ul>
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="avatars.less.html" data-search="Avatars">
+						Avatars
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="bubble.less.html" data-search="Bubbles">
+						Bubbles
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="sidewalk.less.html" data-search="Sidewalk">
+						Sidewalk
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="signs-steps.html" data-search="Signs &amp; Steps">
+						Signs &amp; Steps
+					</a>
+				</li>
+				
+			
+			
+		
+	</ul>
+
+					</li>
+				
+				
+			
+			
+		
+			
+				
+					<li class="heading search-container">
+						<span>Utilities</span>
+						
+	<ul>
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="a2j-mixins.less.html" data-search="Mixins">
+						Mixins
+					</a>
+				</li>
+				
+			
+			
+		
+			
+				
+				
+				<li class="search-container">
+					<a class="stylesheet" href="helper-classes.less.html" data-search="Helper Classes">
+						Helper Classes
+					</a>
+				</li>
+				
+			
+			
+		
+	</ul>
+
+					</li>
+				
+				
+			
+			
+		
+	</ul>
+
+			
+		</li>
+		
+		
+			
+		
+	
+</ul>
+	</nav>
+	
+	
+	
+	<article class="content docs">
+	
+	
+		
+		<section class="title">
+			<div class="heading">
+<h1>Editing SVG Files</h1>
+	<ul class="tags">
+		<li>styles</li>
+	</ul>
+	
+	
+</div>
+
+<div class="sub-heading">
+	
+	
+		<span class="module">svgs</span>
+	
+	
+	
+	<span class="inherits">&nbsp;</span>
+</div>
+
+<ul class="links">
+	
+	
+	
+	
+</ul>
+<br />
+		</section>
+		
+		
+		
+		<section class="contents">
+		</section>
+		
+		
+		
+
+		
+		<section class="description">
+			<p>The SVG files can be edited in any vector graphics application (like Adobe Illustrator). However, because of the CSS reference and classnames required for A2J the files will also need to be opened in a text editor prior to usage. Once vector editing is completed and saved as an SVG, open the files in a text editor to ensure that the CSS references are in tact. Each file should have a reference to the CSS at the top of the file like:</p>
+
+		</section>
+		
+
+		
+			
+		
+		
+		
+		
+
+		
+		<section class="comment">
+			<pre><code>&lt;?xml-stylesheet href=&quot;../../styles/viewer-avatars.css&quot; type=&quot;text/css&quot;?&gt;
+</code></pre>
+<p>Additionally, each file needs to have a classname set on the <code>&lt;svg&gt;</code> element of either <code>avatar-guide</code> or <code>avatar-client</code> along with a default skin tone classname like <code>skin-darker</code>. For example:</p>
+<pre><code>&lt;svg version=&quot;1.1&quot; id=&quot;Guide_-_Female_-_Front&quot; class=&quot;avatar-guide skin-darker&quot;
+    xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot;
+   x=&quot;0px&quot; y=&quot;0px&quot; viewBox=&quot;0 0 214.4 757.6&quot; style=&quot;enable-background:new 0 0 214.4 757.6;&quot;
+ xml:space=&quot;preserve&quot;&gt;
+</code></pre>
+<h3>Color Groups</h3>
+<p>Each SVG file also has several elements which contain unique IDs that determine what colors are applied to that portion of the vector image. For example, the avatar's hands will have <code>id=&quot;left-hand&quot;</code> which allows the CSS to apply the skin tone to that part of the image. These IDs can be edited directly in Illustrator by creating groups and layers with these names or by adding them with a text editor.</p>
+<p>Here is a list of currently used IDs that apply color to the SVGs:</p>
+<ul>
+<li>Skin color applied to IDs: <code>face</code>, <code>left-hand</code>, <code>right-hand</code>, <code>foot-right</code>, <code>foot-left</code></li>
+<li>Variations on the selected skin tone to create gradients and shadows are applied to IDs: <code>face-shadows</code>, <code>hand-shadow</code>, and <code>left-hand-graident_1_</code></li>
+<li>Shirt or tie color is applied to ID <code>shirt</code></li>
+<li>Hair color is applied to IDs: <code>hair</code>, <code>hair-front</code>, <code>hair-left</code>, <code>hair-right</code></li>
+<li>A darkened variation on hair color used to create shadows is applied to IDs: <code>hair-back</code>, <code>hair-top</code></li>
+</ul>
+
+		</section>
+		
+		
+
+		
+
+		
+	
+	
+	</article>
+	
+	
+
+</div>
+
+
+
+
+
+
+	<footer>
+	  <p class="center">Built by <a href="http://bitovi.com/">Bitovi</a> using <a href="http://documentjs.com/">DocumentJS</a>.
+	</footer>
+
+	<script type="text/javascript">
+		var docObject = {"description":"The SVG files can be edited in any vector graphics application (like Adobe Illustrator). However, because of the CSS reference and classnames required for A2J the files will also need to be opened in a text editor prior to usage. Once vector editing is completed and saved as an SVG, open the files in a text editor to ensure that the CSS references are in tact. Each file should have a reference to the CSS at the top of the file like:","name":"svgs","title":"Editing SVG Files","type":"styles","parent":"avatars.less","hideInParentMenu":true,"src":"styles/viewer/avatars.less","templates":"/Users/mitchel/Sites/CAJA/js/styles/documentjs-theme/templates","static":"/Users/mitchel/Sites/CAJA/js/styles/documentjs-theme/static","glob":{"pattern":"{author,viewer,styles}/**/*.{js,md,less,mustache}","ignore":"{docs,viewer,node_modules,tests,minify,author/{src,libs,docs}}/**/*","cwd":"/Users/mitchel/Sites/CAJA/js"},"dest":"/Users/mitchel/Sites/CAJA/js/docs","generators":["html"],"docConfigDest":"../documentjs.json","project":{}};
+	</script>
+
+	
+		<script>
+		  steal = {
+		    instantiated: {
+		      "bundles/static.css!$css" : null
+		    }
+		  }
+		</script>
+		<script type="text/javascript" data-main="static" data-config="./static/config.js" src="./static/steal.production.js" bundles-path="bundles"></script>
+	
+</body>
+
+</html>

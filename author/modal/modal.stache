@@ -1,4 +1,4 @@
-<can-import from='caja/author/modal/modal.less!' />
+<can-import from='./modal.less' />
 <div class='author-modal {{#if isLarge}}author-modal--large{{else}}author-modal--small{{/if}}'>
   <div class="modal-dialog">
     <div class="modal-content">

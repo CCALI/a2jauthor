@@ -205,6 +205,16 @@ describe('<a2j-field>', () => {
       const textlongValue = vm.attr('modalContent.textlongValue')
       assert.equal(textlongValue, 'cash money', 'should copy field answer value to modal')
     })
+
+    it('date validation normalizes the input value', () => {
+      const field = vm.attr('field')
+      field.attr({ type: 'datemdy', label: 'enter birthday' })
+      const input = document.createElement('input')
+      input.value = '040120'
+      vm.validateField(null, input)
+
+      assert.equal(input.value, '04/01/2020', 'validating date field should normalize the date')
+    })
   })
 
   describe('Component', () => {

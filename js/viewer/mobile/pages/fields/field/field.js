@@ -13,9 +13,18 @@ import constants from 'caja/viewer/models/constants'
 import stache from 'can-stache'
 import domData from 'can-dom-data'
 import isMobile from 'caja/viewer/is-mobile'
+import joinURIs from 'can-util/js/join-uris/join-uris'
 
 import 'jquery-ui/ui/widgets/datepicker'
 import 'can-map-define'
+
+function getBaseUrl () {
+  return window.System.baseURL
+}
+
+function joinBaseUrl (path) {
+  return joinURIs(getBaseUrl(), path)
+}
 
 stache.registerPartial('invalid-prompt-tpl', invalidPromptTpl)
 stache.registerPartial('exceeded-maxchars-tpl', exceededMaxcharsTpl)
@@ -463,6 +472,28 @@ export const FieldVM = CanMap.extend('FieldVM', {
     this.onUserAvatarHairColorChange(restoredUserAvatar.hairColor)
   },
 
+  // checkbox groups that include None of the Above(nota) need to uncheck any
+  // other checkbox selections when nota is checked, and vice-versa
+  notaCheckboxHandler (field, isChecked) {
+    if (isChecked) {
+      const fields = field.attr('_answerVm.fields')
+      if (fields) {
+        const toStayChecked = field.type
+        fields.forEach(function (field) {
+          if (field.type !== toStayChecked && (field.type === 'checkbox' || field.type === 'checkboxNOTA')) {
+            field.attr('_answerVm.values', false)
+          }
+        })
+      }
+    }
+  },
+
+  trimFieldLabel (html) {
+    // this fixes first preview edge case of datemdy.stache fields
+    //  https://github.com/CCALI/CAJA/issues/2722
+    return html.trim()
+  },
+
   connectedCallback (el) {
     const vm = this
     // default availableLength
@@ -476,13 +507,9 @@ export const FieldVM = CanMap.extend('FieldVM', {
       }
     }
 
-    // wire up custom button in datemdy.stache
-    const datepickerShowHandler = (ev) => {
-      $('input.datepicker-input').datepicker('show')
-    }
-    $('.show-ui-datepicker-button').on('click', datepickerShowHandler)
-
     // setup datepicker widget
+    const datepickerButtonSvg = joinBaseUrl('viewer/images/datepicker-button.svg')
+
     if (vm.attr('field.type') === 'datemdy') {
       const defaultDate = vm.attr('field._answerVm.values')
         ? vm.normalizeDateInput(vm.attr('field._answerVm.values')) : null
@@ -494,7 +521,7 @@ export const FieldVM = CanMap.extend('FieldVM', {
 
       $('input.datepicker-input', $(el)).datepicker({
         showOn: 'button',
-        buttonImage: 'https://dequeuniversity.com/assets/images/calendar.png', // File (and file path) for the calendar image
+        buttonImage: datepickerButtonSvg,
         buttonImageOnly: false,
         buttonText: 'Calendar View',
         defaultDate,
@@ -512,12 +539,6 @@ export const FieldVM = CanMap.extend('FieldVM', {
           vm.validateField(null, $el)
         }
       }).val(defaultDate)
-      // remove default button, use button in datemdy.stache instead
-      $('.ui-datepicker-trigger').remove()
-    }
-
-    return () => {
-      $('.show-ui-datepicker-button').off('click', datepickerShowHandler)
     }
   }
 })

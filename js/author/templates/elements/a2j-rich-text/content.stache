@@ -1,5 +1,0 @@
-{{#if(scope/editActive)}}
-  <textarea style="{{scope/fontProperties}}">{{scope/userContent}}</textarea>
-{{else}}
-  <div style="{{scope/fontProperties}}">{{scope/a2jParse(scope/userContent)}}</div>
-{{/if}}

@@ -1,3 +1,0 @@
-<can-import from="caja/author/templates/elements/varpicker/" />
-
-<var-picker style="width: 200px;" vm:variables:from="variables" />

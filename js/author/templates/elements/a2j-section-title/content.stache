@@ -1,4 +1,0 @@
-<div style="{{../fontProperties}}">
-  {{{ ../../showSectionTitle() }}}
-  {{#if(scope/underline)}}<hr class="title-underline">{{/if}}
-</div>

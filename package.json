@@ -11,8 +11,7 @@
     "test:viewer": "npm run lint:viewer && testee --reporter Spec --browsers firefox viewer/test/index.html",
     "test": "npm run lint && testee --reporter Spec --browsers firefox viewer/test/index.html author/test/index.html",
     "build-docs": "grunt documentjs",
-    "serve-docs": "grunt documentjs-lite && http-server docs",
-    "postinstall": "steal-tools bundle --deps --no-minify"
+    "serve-docs": "grunt documentjs-lite && http-server docs"
   },
   "author": "",
   "license": "ISC",

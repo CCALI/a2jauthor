@@ -3,13 +3,13 @@ import CanMap from 'can-map'
 import Component from 'can-component'
 import ObservationRecorder from 'can-observation-recorder'
 import template from './edit.stache'
-import A2JTemplate from 'caja/author/models/a2j-template'
-import A2JNode from 'caja/author/models/a2j-node'
+import A2JTemplate from 'a2j-deps/models/a2j-template'
+import A2JNode from 'a2j-deps/models/a2j-node'
 
 import 'can-route'
 import 'can-map-define'
 
-import { sharedPdfFlag } from 'caja/author/pdf/index'
+import { sharedPdfFlag } from 'a2j-deps/pdf/index'
 
 /**
  * @module {Module} author/templates/edit/ <template-edit-page>

@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import CanMap from 'can-map'
-import A2JTemplate from 'caja/author/models/a2j-template'
-import sort from 'caja/author/utils/sort'
+import A2JTemplate from 'a2j-deps/models/a2j-template'
+import sort from 'a2j-deps/utils/sort'
 
 import 'can-map-define'
 

@@ -1,7 +1,7 @@
 import CanMap from 'can-map'
 import _isString from 'lodash/isString'
 import _capitalize from 'lodash/capitalize'
-import createEmptyNode from 'caja/author/utils/create-empty-node'
+import createEmptyNode from 'a2j-deps/utils/create-empty-node'
 
 import 'can-map-define'
 

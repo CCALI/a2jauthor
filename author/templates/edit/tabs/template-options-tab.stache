@@ -1,4 +1,4 @@
-<can-import from="caja/author/templates/elements/condition-form/" />
+<can-import from="a2j-deps/elements/condition-form/" />
 
 <h3>Layout</h3>
 

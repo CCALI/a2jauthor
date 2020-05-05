@@ -8,6 +8,7 @@ import AnswerVM from 'caja/viewer/models/answervm'
 import Parser from 'caja/viewer/mobile/util/parser'
 import { analytics } from 'caja/viewer/util/analytics'
 import constants from 'caja/viewer/models/constants'
+import moment from 'moment'
 
 import 'can-map-define'
 import 'bootstrap/js/modal'
@@ -558,6 +559,8 @@ export default CanMap.extend('PagesVM', {
       field.type === constants.ftNumberPick
     )
 
+    const fieldIsDate = field.type === constants.ftDateMDY
+
     // Default values used differently or not at all for these field types
     const defaultAllowed = (
       field.type !== constants.ftRadioButton &&
@@ -569,6 +572,9 @@ export default CanMap.extend('PagesVM', {
     if (defaultAllowed) {
       if (fieldIsNumber) {
         avm.attr('answer.values.' + answerIndex, parseFloat(field.value, 10))
+      } else if (fieldIsDate && field.value.toUpperCase() === 'TODAY') {
+        // resolve special value TODAY
+        avm.attr('answer.values.' + answerIndex, moment().format('MM/DD/YYYY'))
       } else {
         avm.attr('answer.values.' + answerIndex, field.value)
       }

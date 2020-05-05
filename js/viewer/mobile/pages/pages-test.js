@@ -3,10 +3,12 @@ import CanMap from 'can-map'
 import stache from 'can-stache'
 import { assert } from 'chai'
 import PagesVM from './pages-vm'
+import AnswerVM from 'caja/viewer/models/answervm'
 import AppState from 'caja/viewer/models/app-state'
 import TraceMessage from 'caja/author/models/trace-message'
 import Interview from 'caja/viewer/models/interview'
 import Logic from 'caja/viewer/mobile/util/logic'
+import moment from 'moment'
 import constants from 'caja/viewer/models/constants'
 import sinon from 'sinon'
 import './pages'
@@ -267,6 +269,19 @@ describe('<a2j-pages>', () => {
         assert.equal(answers.attr(`${incompleteTF}.values.1`), false, 'success button should complete interview')
       })
     })
+    it('handleCrossedUseOfResumeOrBack', () => {
+      const button = new CanMap({next: constants.qIDBACK})
+      let buttonNextTarget = vm.handleCrossedUseOfResumeOrBack(button, true)
+      assert.equal(buttonNextTarget, constants.qIDRESUME, 'should update BackToPriorQuestion to Resume if on exitPage')
+
+      button.next = constants.qIDRESUME
+      buttonNextTarget = vm.handleCrossedUseOfResumeOrBack(button, false)
+      assert.equal(buttonNextTarget, constants.qIDBACK, 'should update Resume to BackToPriorQuestion if not on exitPage')
+
+      button.next = 'Foo'
+      buttonNextTarget = vm.handleCrossedUseOfResumeOrBack(button, true)
+      assert.equal(buttonNextTarget, 'Foo', 'should not change the next target if not either Back or Resume button, even on exitPage')
+    })
 
     it('validateAllFields', () => {
       let hasErrors = vm.validateAllFields()
@@ -368,6 +383,27 @@ describe('<a2j-pages>', () => {
         assert.equal(vm.attr('interview.answers.statete.values.1'), 'Texas', 'Default values override empty answers')
       })
 
+      it('handles datemdy default values of TODAY', () => {
+        const field = new CanMap({
+          name: 'bDay DA',
+          label: 'Enter Birthday:',
+          type: 'datemdy',
+          value: 'TODAY'
+        })
+        const answer = new CanMap({
+          name: 'bday da',
+          type: 'datemdy',
+          values: [null]
+        })
+        const fields = [field]
+        const answerIndex = 1
+        const avm = new AnswerVM({ field, answerIndex, answer, fields })
+        const returnedAnswerVm = vm.setDefaultValue(field, avm, answer, answerIndex)
+        const expectedDate = moment().format('MM/DD/YYYY')
+
+        assert.equal(returnedAnswerVm.attr('values'), expectedDate, 'it should set todays date with special keyword')
+      })
+
       it('ignores default value if previous answer exists', () => {
         let field = new CanMap({
           name: 'StateTE',
@@ -438,20 +474,6 @@ describe('<a2j-pages>', () => {
         vm.setFieldAnswers(vm.attr('currentPage.fields'))
 
         assert.strictEqual(vm.attr('interview.answers.salary.values.1'), 1234.56, 'Sets default number values')
-      })
-
-      it('handleCrossedUseOfResumeOrBack', () => {
-        const button = new CanMap({next: constants.qIDBACK})
-        let buttonNextTarget = vm.handleCrossedUseOfResumeOrBack(button, true)
-        assert.equal(buttonNextTarget, constants.qIDRESUME, 'should update BackToPriorQuestion to Resume if on exitPage')
-
-        button.next = constants.qIDRESUME
-        buttonNextTarget = vm.handleCrossedUseOfResumeOrBack(button, false)
-        assert.equal(buttonNextTarget, constants.qIDBACK, 'should update Resume to BackToPriorQuestion if not on exitPage')
-
-        button.next = 'Foo'
-        buttonNextTarget = vm.handleCrossedUseOfResumeOrBack(button, true)
-        assert.equal(buttonNextTarget, 'Foo', 'should not change the next target if not either Back or Resume button, even on exitPage')
       })
     })
   })

@@ -7,6 +7,7 @@ import 'can-map-define'
 
 export default CanMap.extend('AnswerVM', {
   define: {
+    // top 4 props passed in from pages-vm.js setFieldAnswers() #526
     field: {
       value: null
     },
@@ -17,6 +18,10 @@ export default CanMap.extend('AnswerVM', {
 
     answerIndex: {
       value: 1
+    },
+
+    fields: {
+      value: null
     },
 
     // TODO: find a better way to handle setting and restoring values

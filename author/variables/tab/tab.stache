@@ -1,5 +1,5 @@
-<can-import from='a2j-deps/modal/'/>
-<can-import from="a2j-deps/variables/editor/"/>
+<can-import from='a2jdeps/modal/'/>
+<can-import from="a2jdeps/variables/editor/"/>
 
 <nav class="navbar navbar-default">
   <p class="navbar-text">Variables used in this interview</p>

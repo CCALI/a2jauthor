@@ -1,7 +1,7 @@
 <can-import from='caja/author/hair-picker/' />
 <can-import from='caja/author/skin-picker/' />
 <can-import from='caja/author/about/main/main.less' />
-<can-import from='caja/viewer/desktop/avatar/' />
+<can-import from='a2jdeps/avatar/' />
 
 <div class='row'>
   <div class='col-xs-10'>

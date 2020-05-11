@@ -4,7 +4,7 @@ import CanList from 'can-list'
 import TraceMessage from 'caja/author/models/trace-message'
 import A2JVariable from 'a2jdeps/models/a2j-variable'
 import _isEmpty from 'lodash/isEmpty'
-import { Gender, Hair, Skin } from 'caja/viewer/desktop/avatar/colors'
+import { Gender, Hair, Skin } from 'a2jdeps/avatar/colors'
 import route from 'can-route'
 import 'can-map-define'
 

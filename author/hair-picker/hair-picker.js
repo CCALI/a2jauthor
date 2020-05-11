@@ -6,7 +6,7 @@ import 'can-map-define'
 import {
   hairColors,
   getClassNameForHair
-} from 'caja/viewer/desktop/avatar/colors'
+} from 'a2jdeps/avatar/colors'
 
 const hairClasses = hairColors.map(hair => {
   const hairClass = getClassNameForHair(hair)

@@ -1,5 +1,5 @@
 <can-import from="caja/author/user-avatar-picker/user-avatar-picker.less!"/>
-<can-import from="caja/viewer/desktop/avatar/" />
+<can-import from="a2jdeps/avatar/" />
 
 <div class="user-avatar-group">
   <div class="row">

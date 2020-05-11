@@ -6,7 +6,7 @@ import template from './report.stache'
 import pagePartial from './page-partial.stache'
 import popupPartial from './popup-partial.stache'
 import naturalCompare from 'string-natural-compare/'
-import cString from 'caja/viewer/mobile/util/string'
+import cString from 'a2jviewer/mobile/util/string'
 import textStats from 'text-statistics'
 import _cloneDeep from 'lodash/cloneDeep'
 

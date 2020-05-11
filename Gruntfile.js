@@ -42,7 +42,7 @@ module.exports = function (grunt) { // documentjs tasks removed until security u
       docs: {
         files: {
           'docs/author.css': 'caja/author/styles.less',
-          'docs/viewer.css': 'caja/viewer/styles.less'
+          'docs/viewer.css': 'a2jviewer/styles.less'
         }
       },
       svg: {
@@ -80,7 +80,7 @@ module.exports = function (grunt) { // documentjs tasks removed until security u
       viewer: {
         options: {
           steal: {
-            main: ['caja/viewer/app'],
+            main: ['a2jviewer/app'],
             config: __dirname + '/package.json!npm'
           },
           buildOptions: {

@@ -9,11 +9,11 @@ var isProduction = loader.isEnv('production')
 
 if (isWindow && !isProduction) {
   loader.import = function (name) {
-    if (name === 'caja/author/app' || name === 'caja/viewer/app') {
+    if (name === 'caja/author/app' || name === 'a2jviewer/app') {
       var _this = this
 
-      var fixtures = name === 'caja/viewer/app'
-        ? 'caja/viewer/models/fixtures/'
+      var fixtures = name === 'a2jviewer/app'
+        ? 'a2jdeps/models/fixtures/'
         : 'caja/author/models/fixtures/'
 
       return _this.import(fixtures).then(function () {

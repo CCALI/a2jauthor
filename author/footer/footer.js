@@ -1,7 +1,7 @@
 import Component from 'can-component'
 import template from './footer.stache'
 import CanMap from 'can-map'
-import constants from 'caja/viewer/models/constants'
+import constants from 'a2jdeps/models/constants'
 import moment from 'moment'
 
 import 'can-map-define'

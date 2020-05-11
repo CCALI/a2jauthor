@@ -1,8 +1,8 @@
-<can-import from="caja/viewer/preview/"/>
+
 <can-import from="caja/author/debug-menu/"/>
 <can-import from="caja/author/debug-panel/"/>
 <can-import from="caja/author/debug-alerts/"/>
-<can-import from="styles/author/viewer-layout.less!"/>
+<can-import from="styles/author/viewer-layout.less"/>
 
 {{#if(previewMode)}}
   {{#if(showDebugPanel)}}

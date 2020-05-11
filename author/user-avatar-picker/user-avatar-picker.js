@@ -6,7 +6,7 @@ import {
   Hair,
   Skin,
   Gender
-} from 'caja/viewer/desktop/avatar/colors'
+} from 'a2jdeps/avatar/colors'
 
 const baseAvatars = [
   {gender: 'female', isOld: false, hasWheelchair: false},

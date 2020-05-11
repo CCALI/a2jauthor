@@ -76,8 +76,8 @@
           <button type="button"
                   on:click="navigate(button)"
                   class="btn btn-default btn-navigate"
-                  aria-label="{{getButtonLabel(this.logic.eval(button.label))}}">
-            {{getButtonLabel(this.logic.eval(button.label))}}
+                  aria-label="{{getButtonLabel(this.parseText(button.label))}}">
+            {{getButtonLabel(this.parseText(button.label))}}
           </button>
         {{/default}}
       {{/switch}}

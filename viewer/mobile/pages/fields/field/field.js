@@ -589,6 +589,9 @@ export default Component.extend('FieldComponent', {
           // TODO: should this always have a value, even empty string?
           if (!str) { return }
           str = typeof str === 'function' ? str() : str
+          // re-eval if answer values have updated via beforeCode
+          const interview = self.attr('logic.interview')
+          const answersChanged = interview && interview.attr('answers').serialize() // eslint-disable-line
 
           return self.attr('logic').eval(str)
         },

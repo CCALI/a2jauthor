@@ -1,6 +1,0 @@
-<can-import from='caja/author/color-chips/' />
-<color-chips
-  vm:selectedColorClass:from="selectedSkinClass"
-  vm:colorClasses:from="skinClasses"
-  vm:onColorClass:from="onSkinClass"
-/>

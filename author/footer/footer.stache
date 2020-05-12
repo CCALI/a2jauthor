@@ -1,8 +1,0 @@
-<can-import from="caja/author/footer/footer.less!"/>
-
-<div class="cajafooter">
-  {{#if showCAJAStatus}}
-    <span id="CAJAStatus"></span>
-  {{/if}}
-  <span class="copyright" role="contentinfo">© 2000-{{currentYear}} IIT Chicago-Kent College of Law and CALI {{viewerVersion}}</span>
-</div>

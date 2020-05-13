@@ -8,7 +8,7 @@ import 'caja/author/models/tests/trace-message-test'
 import 'caja/author/utils/move-item-array-test'
 import 'caja/author/utils/eval-author-condition-test'
 
-import 'caja/author/alert/alert-test'
+import 'a2jdeps/alert/alert-test'
 import 'caja/author/popover/popover-test'
 import 'caja/author/report/report-test'
 import 'caja/author/templates/templates-test'

@@ -1,4 +1,4 @@
-<can-import from="caja/author/alert/"/>
+<can-import from="a2jdeps/alert/"/>
 <can-import from="caja/author/loading/"/>
 <can-import from="caja/author/templates/list/"/>
 <can-import from="caja/author/templates/assemble/"/>

@@ -7,9 +7,9 @@ import bindCustomEvents from 'caja/author/utils/bind-custom-events'
 
 import stache from 'can-stache'
 import route from 'can-route'
-import 'calculator/jquery.plugin'
-import 'calculator/jquery.calculator'
-import 'calculator/jquery.calculator.css'
+import 'a2jdeps/calculator/jquery.plugin'
+import 'a2jdeps/calculator/jquery.calculator'
+import 'a2jdeps/calculator/jquery.calculator.css'
 import 'bootstrap/js/dropdown.js'
 
 import 'can-3-4-compat/dom-mutation-events'

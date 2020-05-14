@@ -1,15 +1,11 @@
 {
-  "name": "caja",
+  "name": "a2jauthor",
   "version": "0.0.1",
   "description": "Authoring and viewer App GUI.",
-  "main": "caja/author/app",
+  "main": "a2jauthor/author/app",
   "scripts": {
-    "lint:author": "standard 'author/*.js' 'author/**/*.js' --fix --env mocha",
-    "lint:viewer": "standard 'viewer/*.js' 'viewer/**/*.js' --fix --env mocha",
-    "lint": "npm run lint:author && npm run lint:viewer",
-    "test:author": "npm run lint:author && testee --reporter Spec --browsers firefox author/test/index.html",
-    "test:viewer": "npm run lint:viewer && testee --reporter Spec --browsers firefox viewer/test/index.html",
-    "test": "npm run lint && testee --reporter Spec --browsers firefox viewer/test/index.html author/test/index.html",
+    "lint": "standard 'author/*.js' 'author/**/*.js' --fix --env mocha",
+    "test": "npm run lint && testee --reporter Spec --browsers firefox author/test/index.html",
     "build-docs": "grunt documentjs",
     "serve-docs": "grunt documentjs-lite && http-server docs"
   },
@@ -17,7 +13,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/CCALI/CAJA"
+    "url": "https://github.com/CCALI/a2jauthor"
   },
   "standard": {
     "globals": [
@@ -29,10 +25,7 @@
     "ignore": [
       "author/src/**",
       "author/models/fixtures/**",
-      "author/build.production.html.js",
-      "viewer/models/fixtures/**",
-      "viewer/mobile/util/**",
-      "viewer/build.production.html.js"
+      "author/build.production.html.js"
     ],
     "env": [
       "mocha"
@@ -199,7 +192,6 @@
     "@open-xchange/bootstrap-tokenfield": "^0.13.1",
     "a2jdeps": "file:../a2jdeps",
     "a2jstyles": "file:../a2jstyles",
-    "a2jviewer": "file:../a2jviewer",
     "bit-tabs": "^2.0.0",
     "blueimp-file-upload": "^9.10.1",
     "bootstrap": "^3.4.1",

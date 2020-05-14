@@ -1,9 +1,9 @@
-<can-import from="a2jstyles/author/styles.less!"/>
-<can-import from="a2jstyles/styles/"/>
+<can-import from="a2jstyles/styles/legacy-styles"/>
 <can-import from="caja/author/header/"/>
 <can-import from="a2jdeps/footer/"/>
 <can-import from="caja/author/preview/"/>
 <can-import from="caja/author/templates/"/>
+<can-import from="a2jstyles/author/styles.less!"/>
 <can-import from="caja/author/interviews/"/>
 <can-import from="caja/author/templates/edit/"/>
 <can-import from="caja/author/vertical-navbar/"/>

@@ -3,7 +3,7 @@ import CanMap from 'can-map'
 import _keys from 'lodash/keys'
 import Component from 'can-component'
 import template from './assemble.stache'
-import parser from 'a2jviewer/mobile/util/parser'
+import parser from 'a2jdeps/utils/parser'
 
 import 'can-map-define'
 

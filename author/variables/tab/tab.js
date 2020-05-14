@@ -2,7 +2,7 @@ import $ from 'jquery'
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './tab.stache'
-import parser from 'a2jviewer/mobile/util/parser'
+import parser from 'a2jdeps/utils/parser'
 import { promptFile } from 'caja/author/utils/uploader'
 import queues from 'can-queues'
 

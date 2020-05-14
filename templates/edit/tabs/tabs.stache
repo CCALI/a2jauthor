@@ -1,5 +1,5 @@
 <can-import from="bit-tabs" />
-<can-import from="caja/author/templates/edit/tabs/tabs.less" />
+<can-import from="a2jauthor/templates/edit/tabs/tabs.less" />
 <can-import from="a2jdeps/elements/varpicker/" />
 
 <bit-tabs tabsClass:raw="nav nav-tabs">

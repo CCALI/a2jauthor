@@ -1,3 +1,3 @@
-import 'caja/author/src/a2j-pages-test'
+import 'a2jauthor/src/a2j-pages-test'
 
-import 'caja/author/src/viewer/a2j-shared-sus-test'
+import 'a2jauthor/src/viewer/a2j-shared-sus-test'

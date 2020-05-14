@@ -3,14 +3,14 @@ import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './tab.stache'
 import parser from 'a2jdeps/utils/parser'
-import { promptFile } from 'caja/author/utils/uploader'
+import { promptFile } from 'a2jauthor/utils/uploader'
 import queues from 'can-queues'
 
 import 'can-map-define'
 
 export const VariablesTabVM = CanMap.extend('VariablesTabVM', {
   define: {
-    // passed in via js/author/app.stache
+    // passed in via app.stache
     guide: {},
 
     /* variables: List Variable */

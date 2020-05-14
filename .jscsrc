@@ -67,7 +67,6 @@
   "validateIndentation": 2,
   "excludeFiles": [
     "node_modules/**",
-    "js/author/src/**",
-    "js/node_modules/**"
+    "src/**"
   ]
 }

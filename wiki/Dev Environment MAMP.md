@@ -177,7 +177,7 @@ and update your `/Applications/MAMP/conf/apache/extra/httpd-vhosts.conf` file to
 You should now have access to a working production copy of the app at [http://localhost/CALI/app/js/author/index.production.html](http://localhost/CALI/app/js/author/index.production.html). Client-side changes will require running `npm run build:client`. Changes in `~/Sites/CALI/app/src/` will require restarting the node server.
 
 ## Debugging PHP  ----NOTE---- Both Atom and VS Code provide php debug extensions
-`js/author/CAJA_WS.php` handles api transactions, user management, and file IO. You'll likely need to debug this file at some point.
+`CAJA_WS.php` handles api transactions, user management, and file IO. You'll likely need to debug this file at some point.
 
 ## follow their setup directions - the following may be deprecated depending on your local setup.
 

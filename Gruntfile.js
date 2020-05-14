@@ -12,7 +12,7 @@ module.exports = function (grunt) { // documentjs tasks removed until security u
       make_author_production: {
         cmd: 'node',
         args: [
-          'author/build.production.html.js'
+          'build.production.html.js'
         ]
       },
       make_viewer_production: {
@@ -41,7 +41,7 @@ module.exports = function (grunt) { // documentjs tasks removed until security u
     less: {
       docs: {
         files: {
-          'docs/author.css': 'caja/author/styles.less',
+          'docs/author.css': 'a2jauthor/styles.less',
           'docs/viewer.css': 'a2jviewer/styles.less'
         }
       },
@@ -61,12 +61,12 @@ module.exports = function (grunt) { // documentjs tasks removed until security u
       author: {
         options: {
           steal: {
-            main: ['caja/author/app'],
+            main: ['a2jauthor/app'],
             config: __dirname + '/package.json!npm',
             bundle: [
-              'caja/author/app-template',
-              'caja/author/src/src',
-              'caja/author/styles.less!',
+              'a2jauthor/app-template',
+              'a2jauthor/src/src',
+              'a2jauthor/styles.less!',
               'caja/ckeditor/ckeditor'
             ]
           },

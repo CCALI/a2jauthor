@@ -1,4 +1,4 @@
-<can-import from="caja/author/templates/list/toolbar/toolbar.less!" />
+<can-import from="a2jauthor/templates/list/toolbar/toolbar.less!" />
 
 <nav class="navbar navbar-default">
   <div class="container-fluid">

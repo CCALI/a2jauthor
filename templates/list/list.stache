@@ -1,5 +1,5 @@
-<can-import from="caja/author/templates/list/item/"/>
-<can-import from="caja/author/templates/list/list.less"/>
+<can-import from="a2jauthor/templates/list/item/"/>
+<can-import from="a2jauthor/templates/list/list.less"/>
 
 <ul>
   {{#each(displayList)}}

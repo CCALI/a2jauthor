@@ -1,4 +1,4 @@
-<can-import from="caja/author/vertical-navbar/vertical-navbar.less!"/>
+<can-import from="a2jauthor/vertical-navbar/vertical-navbar.less!"/>
 
 <div class="vertical-navbar guidemenu
   {{#is theme 'inverse'}}navbar-inverse{{/is}}

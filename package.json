@@ -2,10 +2,10 @@
   "name": "a2jauthor",
   "version": "0.0.1",
   "description": "Authoring and viewer App GUI.",
-  "main": "a2jauthor/author/app",
+  "main": "a2jauthor/app",
   "scripts": {
-    "lint": "standard 'author/*.js' 'author/**/*.js' --fix --env mocha",
-    "test": "npm run lint && testee --reporter Spec --browsers firefox author/test/index.html",
+    "lint": "standard '*.js' '**/*.js' --fix --env mocha",
+    "test": "npm run lint && testee --reporter Spec --browsers firefox test/index.html",
     "build-docs": "grunt documentjs",
     "serve-docs": "grunt documentjs-lite && http-server docs"
   },
@@ -23,9 +23,9 @@
       "mocha"
     ],
     "ignore": [
-      "author/src/**",
-      "author/models/fixtures/**",
-      "author/build.production.html.js"
+      "src/**",
+      "models/fixtures/**",
+      "build.production.html.js"
     ],
     "env": [
       "mocha"
@@ -43,7 +43,7 @@
       "grunt-contrib-less"
     ],
     "configDependencies": [
-      "author/utils/set-global-for-lodash"
+      "utils/set-global-for-lodash"
     ],
     "map": {
       "cuid": "cuid/dist/cuid",
@@ -52,15 +52,15 @@
       "chai": "chai/chai"
     },
     "meta": {
-      "caja/author/src/A2J_Tabs": {
+      "a2jauthor/src/A2J_Tabs": {
         "format": "global",
         "eval": "script",
         "deps": [
           "jquery-ui/ui/widgets/sortable",
-          "caja/ckeditor/ckeditor"
+          "a2jauthor/ckeditor/ckeditor"
         ]
       },
-      "caja/author/src/A2J_AuthorApp": {
+      "a2jauthor/src/A2J_AuthorApp": {
         "format": "global",
         "eval": "script",
         "deps": [
@@ -72,92 +72,92 @@
           "jquery-ui/ui/widgets/tooltip"
         ]
       },
-      "caja/author/src/A2J_Clauses": {
+      "a2jauthor/src/A2J_Clauses": {
         "format": "global",
         "eval": "script"
       },
-      "caja/author/src/A2J_Reports": {
+      "a2jauthor/src/A2J_Reports": {
         "format": "global",
         "eval": "script",
         "deps": [
-          "caja/author/src/viewer/A2J_Logic"
+          "a2jauthor/src/viewer/A2J_Logic"
         ]
       },
-      "caja/author/src/A2J_Mapper": {
+      "a2jauthor/src/A2J_Mapper": {
         "format": "global",
         "eval": "script"
       },
-      "caja/author/src/A2J_Pages": {
+      "a2jauthor/src/A2J_Pages": {
         "format": "global",
         "eval": "script",
         "deps": [
-          "caja/ckeditor/ckeditor"
+          "a2jauthor/ckeditor/ckeditor"
         ]
       },
-      "caja/author/src/A2J_Guides": {
+      "a2jauthor/src/A2J_Guides": {
         "format": "global",
         "eval": "script"
       },
-      "caja/author/src/A2J_Debug": {
+      "a2jauthor/src/A2J_Debug": {
         "format": "global",
         "eval": "script"
       },
-      "caja/author/src/viewer/A2J_Types": {
+      "a2jauthor/src/viewer/A2J_Types": {
         "format": "global",
         "eval": "script"
       },
-      "caja/author/src/viewer/A2J_Logic": {
+      "a2jauthor/src/viewer/A2J_Logic": {
         "format": "global",
         "eval": "script"
       },
-      "caja/author/src/viewer/A2J_ParserConvert": {
+      "a2jauthor/src/viewer/A2J_ParserConvert": {
         "format": "global",
         "eval": "script"
       },
-      "caja/author/src/viewer/A2J_Parser": {
+      "a2jauthor/src/viewer/A2J_Parser": {
         "format": "global",
         "eval": "script"
       },
-      "caja/author/src/viewer/A2J_Viewer": {
+      "a2jauthor/src/viewer/A2J_Viewer": {
         "format": "global",
         "eval": "script"
       },
-      "caja/author/src/viewer/A2J_Prefs": {
+      "a2jauthor/src/viewer/A2J_Prefs": {
         "format": "global",
         "eval": "script"
       },
-      "caja/author/src/viewer/A2J_Languages": {
+      "a2jauthor/src/viewer/A2J_Languages": {
         "format": "global",
         "eval": "script"
       },
-      "caja/author/src/viewer/A2J_MobileFile": {
+      "a2jauthor/src/viewer/A2J_MobileFile": {
         "format": "global",
         "eval": "script"
       },
-      "caja/author/src/viewer/A2J_Shared": {
+      "a2jauthor/src/viewer/A2J_Shared": {
         "format": "global",
         "eval": "script",
         "deps": [
           "jquery-ui/ui/widgets/dialog"
         ]
       },
-      "caja/author/src/viewer/A2J_SharedSus": {
+      "a2jauthor/src/viewer/A2J_SharedSus": {
         "format": "global",
         "eval": "script"
       },
-      "caja/author/src/viewer/A2J_AnswerFile": {
+      "a2jauthor/src/viewer/A2J_AnswerFile": {
         "format": "global",
         "eval": "script",
         "deps": [
-          "caja/author/src/viewer/A2J_Types"
+          "a2jauthor/src/viewer/A2J_Types"
         ]
       },
-      "caja/author/src/viewer/jquery.ui.combobox": {
+      "a2jauthor/src/viewer/jquery.ui.combobox": {
         "deps": [
           "jquery-ui/ui/widget"
         ]
       },
-      "caja/author/src/viewer/jquery.ui.traggable": {
+      "a2jauthor/src/viewer/jquery.ui.traggable": {
         "deps": [
           "jquery-ui/ui/widgets/mouse",
           "jquery-ui/ui/widget"

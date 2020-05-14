@@ -1,4 +1,4 @@
-<can-import from="caja/author/debug-panel/variables/variables.less!"/>
+<can-import from="a2jauthor/debug-panel/variables/variables.less!"/>
 
 <div id="viewer-var-form" class="bootstrap-styles">
   <button id="uploadAnswer" class="btn btn-default btn-sm"><span class="glyphicon-folder-open" aria-hidden="true"></span> Open</button>

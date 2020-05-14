@@ -2,7 +2,7 @@ import $ from 'jquery'
 import { assert } from 'chai'
 import stache from 'can-stache'
 import { TemplateEditPageVM } from './edit'
-import 'caja/author/models/fixtures/templates'
+import 'a2jauthor/models/fixtures/templates'
 
 import 'steal-mocha'
 import '../elements/a2j-template/'

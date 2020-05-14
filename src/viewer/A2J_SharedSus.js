@@ -33,7 +33,7 @@ String.prototype.simpleHash=function()
 };
 
 
-// TODO: this import doesn't work due to import timing of legacy code in js/author/app.js
+// TODO: this import doesn't work due to import timing of legacy code in app.js
 // functions below are a copy paste of the module, minus the custom alphabet code
 // https://www.npmjs.com/package/string-natural-compare
 // should import this module normally when this code is refactored to CanJS

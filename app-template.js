@@ -1,5 +1,5 @@
 /**
- * @module {{}} author/app_template app_template
+ * @module {{}} app_template app_template
  * @parent api-utils
  *
  * This module exposes the author app renderer function and it is needed because

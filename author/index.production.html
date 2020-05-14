@@ -1,11 +1,4 @@
-
-const fs = require('fs')
-
-const version = Date.now()
-const html = template(version)
-
-function template (version) {
-  return `<!DOCTYPE HTML>
+<!DOCTYPE HTML>
   <!--
     A2J Author 6 * Justice * justicia * 正义 * công lý * 사법 * правосудие
     All Contents Copyright The Center for Computer-Assisted Legal Instruction
@@ -44,9 +37,6 @@ function template (version) {
         window.less = {async: true, fileSync: true};
       </script>
 
-      <script src="../node_modules/steal/steal.production.js?v=${version}" cache-key="v" cache-version="${version}" main="a2jauthor/app"></script>
+      <script src="../node_modules/steal/steal.production.js?v=1529606385397" cache-key="v" cache-version="1529606385397" main="a2jauthor/app"></script>
     </body>
-  </html>`
-}
-
-fs.writeFileSync(__dirname + '/index.production.html', html, 'utf-8')
+  </html>

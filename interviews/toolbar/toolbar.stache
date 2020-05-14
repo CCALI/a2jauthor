@@ -1,6 +1,6 @@
-<can-import from="caja/author/button-toolbar/"/>
-<can-import from="caja/author/interviews/toolbar/toolbar.less!"/>
-<can-import from="caja/author/interviews/toolbar/upload/"/>
+<can-import from="a2jauthor/button-toolbar/"/>
+<can-import from="a2jauthor/interviews/toolbar/toolbar.less!"/>
+<can-import from="a2jauthor/interviews/toolbar/upload/"/>
 
 <button-toolbar>
   <ul class="nav navbar-nav">

@@ -15,7 +15,7 @@
 	 zip/publish should ensure guide.json also exists for each guide.xml.
  */
 
-require_once "../vendor/Requests/library/Requests.php";
+require_once "vendor/Requests/library/Requests.php";
 Requests::register_autoloader();
 
 define('DATE_FORMAT',	  'Y-m-d-H-i-s'); // date stamp for file names
@@ -28,10 +28,10 @@ $mysqli="";
 $drupaldb="";
 $isProductionServer=TRUE;
 
-if (file_exists("../../CONFIG.php")) { // legacy php config file for Author
-	require "../../CONFIG.php";
+if (file_exists("../CONFIG.php")) { // legacy php config file for Author
+	require "../CONFIG.php";
 } else { // unified config.json file for Author/DB/DAT config settings
-	$config = file_get_contents("../../config.json");
+	$config = file_get_contents("../config.json");
 	$config_data = json_decode($config);
 	// define local vars from config.json
 	$isProductionServer = $config_data->isProductionServer;

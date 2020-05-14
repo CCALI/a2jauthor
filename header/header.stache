@@ -1,4 +1,4 @@
-<can-import from="caja/author/header/header.less!"/>
+<can-import from="a2jauthor/header/header.less!"/>
 
 <header>
   <div class="container-fluid">

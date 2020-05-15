@@ -40,11 +40,11 @@ function template (version) {
         // ckeditor loads its config file (styles and default plugins) by
         // injecting script tags into the document, without CKEDITOR_BASEPATH
         // being set properly it won't work. Use absolute file path, not relative.
-        CKEDITOR_BASEPATH = '/app/js/ckeditor/';
+        CKEDITOR_BASEPATH = 'ckeditor/';
         window.less = {async: true, fileSync: true};
       </script>
 
-      <script src="../node_modules/steal/steal.production.js?v=${version}" cache-key="v" cache-version="${version}" main="a2jauthor/app"></script>
+      <script src=node_modules/steal/steal.production.js?v=${version}" cache-key="v" cache-version="${version}" main="a2jauthor/app"></script>
     </body>
   </html>`
 }

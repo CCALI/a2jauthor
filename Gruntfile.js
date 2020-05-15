@@ -14,37 +14,31 @@ module.exports = function (grunt) { // documentjs tasks removed until security u
         args: [
           'build.production.html.js'
         ]
-      },
-      make_viewer_production: {
-        cmd: 'node',
-        args: [
-          'viewer/build.production.html.js'
-        ]
       }
     },
 
-    copy: {
-      'icon-font': {
-        expand: true,
-        cwd: 'styles/',
-        src: 'icon-font/**/*',
-        dest: 'docs/demos/'
-      },
-      demos: {
-        expand: true,
-        cwd: 'styles/style-guide/',
-        src: 'demos/**/*',
-        dest: 'docs/'
-      }
-    },
+    // copy: {
+    //   'icon-font': {
+    //     expand: true,
+    //     cwd: 'styles/',
+    //     src: 'icon-font/**/*',
+    //     dest: 'docs/demos/'
+    //   },
+    //   demos: {
+    //     expand: true,
+    //     cwd: 'styles/style-guide/',
+    //     src: 'demos/**/*',
+    //     dest: 'docs/'
+    //   }
+    // },
 
     less: {
-      docs: {
-        files: {
-          'docs/author.css': 'a2jauthor/styles.less',
-          'docs/viewer.css': 'a2jviewer/styles.less'
-        }
-      },
+      // docs: {
+      //   files: {
+      //     'docs/author.css': 'caja/author/styles.less',
+      //     'docs/viewer.css': 'a2jviewer/styles.less'
+      //   }
+      // },
       svg: {
         options: {
           compress: true,
@@ -66,22 +60,9 @@ module.exports = function (grunt) { // documentjs tasks removed until security u
             bundle: [
               'a2jauthor/app-template',
               'a2jauthor/src/src',
-              'a2jauthor/styles.less!',
-              'caja/ckeditor/ckeditor'
+              'a2jstyles/author/styles.less!',
+              'a2jauthor/ckeditor/ckeditor'
             ]
-          },
-          buildOptions: {
-            minify: true,
-            sourceMaps: true,
-            bundleSteal: false
-          }
-        }
-      },
-      viewer: {
-        options: {
-          steal: {
-            main: ['a2jviewer/app'],
-            config: __dirname + '/package.json!npm'
           },
           buildOptions: {
             minify: true,
@@ -95,15 +76,15 @@ module.exports = function (grunt) { // documentjs tasks removed until security u
 
   // grunt.loadNpmTasks('documentjs')
   grunt.loadNpmTasks('grunt-steal')
-  grunt.loadNpmTasks('grunt-contrib-less')
-  grunt.loadNpmTasks('grunt-contrib-copy')
+  // grunt.loadNpmTasks('grunt-contrib-less')
+  // grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-contrib-clean')
   grunt.loadNpmTasks('grunt-run')
 
   // grunt.renameTask('documentjs', 'documentjs-orig')
 
   grunt.registerTask('svg-styles', ['less:svg'])
-  grunt.registerTask('build', ['clean:build', 'steal-build', 'run:make_author_production', 'run:make_viewer_production'])
+  grunt.registerTask('build', ['clean:build', 'steal-build', 'run:make_author_production'])
   // grunt.registerTask('documentjs', [
   //   'clean:cachedTemplate',
   //   'documentjs-orig',

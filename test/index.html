@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Author App Tests</title>
+  </head>
+
+  <body>
+    <div id="mocha"></div>
+    <div id="test-area" class="bootstrap-styles"></div>
+
+    <script type="text/javascript">
+      window.less = {async: true, fileSync: true};
+    </script>
+
+    <script src="../node_modules/steal/steal.js"
+      mocha="bdd"
+      main="a2jauthor/test/test"></script>
+  </body>
+</html>

@@ -39,7 +39,6 @@ if (file_exists("../CONFIG.php")) { // legacy php config file for Author
 	define("GUIDES_DIR", $config_data->GUIDES_DIR);
 	define("GUIDES_URL", $config_data->GUIDES_URL);
 	define("SERVER_URL", $config_data->SERVER_URL);
-	define("DRUPAL_ROOT_DIR", $config_data->DRUPAL_ROOT_DIR);
 
 	$mysqli = new mysqli($config_data->DB_HOST, $config_data->DB_USER, $config_data->DB_PASSWORD, $config_data->DB_NAME, $config_data->DB_PORT);
 }
@@ -50,16 +49,15 @@ if (mysqli_connect_errno()) {
 }
 
 date_default_timezone_set("America/Chicago");
-/*
-{	// One COULD get user id from Drupal's session cookie then lookup that user in Drupal User table but needs more research.
-	//$prefix = ini_get('session.cookie_secure') ? 'SSESS' : 'SESS';
-	//session_name($prefix . substr(hash('sha256',".a2jauthor.org"), 0, 32));
-	//session_start();
-	//var_dump(session_name());
-}
-*/
 
 if ($isProductionServer) {
+	define('D7_DB_HOST', $config_data->D7_DB_HOST);
+	define('D7_DB_NAME', $config_data->D7_DB_NAME);
+	define('D7_DB_USER', $config_data->D7_DB_USER);
+	define('D7_DB_PASSWORD', $config_data->D7_DB_PASSWORD);
+	define("DRUPAL_ROOT_DIR", $config_data->DRUPAL_ROOT_DIR);
+
+	$drupaldb = new mysqli(D7_DB_HOST,D7_DB_USER,D7_DB_PASSWORD,D7_DB_NAME);
 	//	09/05/2013 SJG Get Drupal userid from session
 	// If user not signed in, userid will be 0.
 	chdir(DRUPAL_ROOT_DIR);

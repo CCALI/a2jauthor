@@ -657,20 +657,28 @@ switch ($command){
 
 	case 'currentuser':
 		$path = dirname(__FILE__, 4);
-		$key = parse_ini_file($path . '/config_env.ini')['A2J_KEY'];
-		$url = parse_ini_file($path . '/config_env.ini')['A2J_URL'];
+		$a2j_key = parse_ini_file($path . '/config_env.ini')['A2J_KEY'];
+		$a2j_url = parse_ini_file($path . '/config_env.ini')['A2J_URL'];
+
+    $analytics_key = parse_ini_file($path . '/config_env.ini')['A2J_KEY'];
+		$analytics_url = parse_ini_file($path . '/config_env.ini')['A2J_ANALYTICS_URL'];
+
+		$source_id = parse_ini_file($path . '/config_env.ini')['A2J_AUTHOR_SOURCE_ID'];
+
 
 		$date = date_create();
 		$timestamp = date_timestamp_get($date);
 		$payload = [ "id"=>$userid, "time"=>$timestamp ];
 		$json_payload = json_encode($payload);
-		$hash = hash_hmac('sha256', $json_payload, $key);
+		$hash = hash_hmac('sha256', $json_payload, $a2j_key);
 		$payload['hmac']=$hash;
 		$token = base64_encode(json_encode($payload));
 
 		$result['token']=$token;
 		$result['username'] = ($userid == 45) ? "dev" : $user->name;			$result['username'] = ($userid == 45) ? "dev" : $user->name;
-		$result['a2j_url'] = $url;
+		$result['a2j_url'] = $a2j_url;
+    $result['analytics_url'] = $analytics_url;
+		$result['sourceid'] = $source_id;
 		break;
 
 	default:

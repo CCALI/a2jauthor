@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;report-page&gt;</title>
+  </head>
+
+   <body>
+    <script type="text/stache" can-autorender>
+      <can-import from="caja/author/a2j-analytics/" />
+       <div>
+        <a2j-analytics-dashboard></a2j-analytics-dashboard>
+      </div>
+    </script>
+
+     <script src="../../node_modules/steal/steal.js"
+    data-main="can/view/autorender/">
+      window.less = {
+        async: true,
+        fileSync: true
+      };
+      import CanMap from 'can-map'
+       const VM = CanMap.extend({
+        define: {
+        }
+      })
+    </script>
+  </body>
+</html>

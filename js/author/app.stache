@@ -13,6 +13,7 @@
 <can-import from="caja/author/about/main/" />
 <can-import from="caja/author/variables/tab/"/>
 <can-import from="caja/author/a2jorg/"/>
+<can-import from="caja/author/a2j-analytics/"/>
 
 
 <div id="splash" class="welcome">
@@ -337,6 +338,13 @@
           <a2jorg-dashboard />
         {{/is}}
       </div>
+
+      <!-- A2J analytics Tab -->
+        <div class="tab-panel page" id="a2j-analytics">
+          {{#is (page, 'a2j-analytics')}}
+            <a2j-analytics-dashboard />
+          {{/is}}
+        </div>
   </div>
 
   <app-footer></app-footer>

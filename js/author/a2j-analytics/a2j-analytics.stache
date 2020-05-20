@@ -1,0 +1,5 @@
+<can-import from="caja/author/a2j-analytics/a2j-analytics.less"/>
+
+ <div id="a2j-analyticsContainer" class="intrinsic-container intrinsic-container-4x3">
+  <iframe id="a2j-analyticsiframe" height="90vh"></iframe>
+</div>

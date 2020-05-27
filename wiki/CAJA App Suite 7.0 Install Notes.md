@@ -15,6 +15,11 @@ cali/
 ## Install
 install order: a2jstyles -> a2jdeps -> a2jdat -> a2jauthor -> a2jviewer
 
+### Parent directory
+Create a parent director for the apps/config files (for example, in your Sites folder)
+mkdir cali
+cd cali
+
 ### a2jstyles
 git clone git@github.com:CCALI/a2jstyles.git
 npm install (should only have bootstrap@3)

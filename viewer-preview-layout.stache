@@ -2,6 +2,7 @@
 <can-import from="a2jauthor/debug-menu/"/>
 <can-import from="a2jauthor/debug-panel/"/>
 <can-import from="a2jauthor/debug-alerts/"/>
+<can-import from="a2jviewer/preview/"/>
 <can-import from="a2jstyles/styles/author/viewer-layout.less"/>
 
 {{#if(previewMode)}}

@@ -239,6 +239,7 @@
     "connect": "^3.7.0",
     "cuid": "^2.1.6",
     "http-server": "^0.10.0",
+    "jointjs": "file:../joint",
     "jquery": "^3.4.1",
     "jquery-ui": "^1.12.1",
     "jquerypp": "^2.0.2",

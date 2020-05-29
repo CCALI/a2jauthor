@@ -130,7 +130,7 @@ function getTOCStepPages (includePages, includePops, includeSpecial) {
 
   var ts = ''
   ts += '<div class="pages-container">'
-  ts += '<h3 class="page-title">Pages</h3>'
+  ts += '<h3 class="page-title">Pages by Step</h3>'
 
   if (includePages) {
     // List all steps including those for pages that are in steps that we may have removed.

@@ -220,7 +220,8 @@ function parseXML2Page (PAGE, page) {
   page.style = makestr(PAGE.attr('STYLE'))
   if (page.type === CONST.ptPopup || page.type === 'Pop-up page') {
     page.type = CONST.ptPopup
-    page.mapx = null
+    page.mapx = parseInt(PAGE.attr('MAPX'), 10)
+    page.mapy = parseInt(PAGE.attr('MAPY'), 10)
   } else {
     page.mapx = parseInt(PAGE.attr('MAPX'), 10)
     page.mapy = parseInt(PAGE.attr('MAPY'), 10)

@@ -28,7 +28,7 @@ export default [
     active: false
   },
   {
-    page: 'map',
+    page: 'mapper',
     title: 'Map',
     ref: 'tabsMap',
     icon: 'glyphicon-sitemap',

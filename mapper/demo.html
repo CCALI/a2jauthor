@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jointjs/2.1.0/joint.css" />
+</head>
+<body>
+    <!-- content -->
+    <div id="myholder"></div>
+
+    <!-- dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.3.3/backbone.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jointjs/2.1.0/joint.js"></script>
+
+    <!-- code -->
+    <script type="text/javascript">
+
+        var pages = [
+            {name: '1-Info', connections: {}, buttons: [{label: 'Continue', next: '2-Name'}], mapId: '', mapx: 30, mapy: 60},
+            {name: '2-Name', connections: {}, buttons: [], mapId: '', mapx: 30, mapy: 300},
+            {name: '3-Kids', connections: {}, buttons: [], mapId: '', mapx: 300, mapy: 300}
+        ]
+
+        var startX = 30
+        var startY = 30
+
+        var graph = new joint.dia.Graph;
+
+        var paper = new joint.dia.Paper({
+            el: document.getElementById('myholder'),
+            model: graph,
+            width: 600,
+            height: 800,
+            gridSize: 10,
+            drawGrid: true,
+            background: {
+                color: 'rgba(0, 255, 0, 0.3)'
+            },
+            // Enable link snapping within 75px lookup radius
+            snapLinks: { radius: 50 },
+            defaultRouter: {
+                name: 'metro'
+            }
+        });
+
+        var addNode = function(page) {
+            var m1 = new joint.shapes.devs.Model({
+                position: { x: page.mapx, y: page.mapy },
+                size: { width: 90, height: 90 },
+                inPorts: ['in'],
+                outPorts: ['b1', 'b2', 'b3'],
+                ports: {
+                    groups: {
+                        'in': {
+                            attrs: {
+                                '.port-body': {
+                                    fill: '#16A085'
+                                }
+                            },
+                            position: {
+                                name: 'top',
+                                args: {},
+                            }
+                        },
+                        'out': {
+                            attrs: {
+                                '.port-body': {
+                                    fill: '#E74C3C'
+                                }
+                            },
+                            position: {
+                                name: 'bottom',
+                                args: {},
+                            }
+                        }
+                    }
+                },
+                attrs: {
+                    '.label': { text: page.name, 'ref-x': .5, 'ref-y': .3 },
+                    rect: { fill: '#2ECC71' }
+                }
+            });
+            page.mapId = m1.id
+            // draws new node
+            graph.addCell(m1);
+        }
+
+        // add some Nodes
+        addNode(pages[0])
+        addNode(pages[1])
+        addNode(pages[2])
+
+        // events
+        graph.on('change:target', function(link, target) {
+            var sourcePort = link.get('source').port;
+            var sourceId = link.get('source').id;
+            var targetPort = link.get('target').port;
+            var targetId = link.get('target').id;
+
+            var message = [
+                'The port <b>' + sourcePort,
+                '</b> of element with ID <b>' + sourceId,
+                '</b> is connected to port <b>' + targetPort,
+                '</b> of elemnt with ID <b>' + targetId + '</b>'
+            ].join('');
+
+                savePortConnection(message, sourceId, sourcePort, targetId, targetPort);
+
+        });
+
+        // update pageName event listener
+        // possibly use this https://resources.jointjs.com/tutorial/html-elements
+        paper.on('element:pointerdblclick', function (child, ev) {
+            console.log('child el', child)
+            console.log('target', ev.target)
+        })
+
+        // handlers/functions
+        function savePortConnection(message, sourceId, sourcePort, targetId, targetPort) {
+            // only save outgoing connections
+            if (targetPort === 'in') { return }
+
+            var page = pages.filter((page) => page.mapId === sourceId)[0]
+            var connections = page.connections
+            connections[sourcePort] = { targetId: targetId }
+            console.log('saved connection', page.connections)
+        }
+
+
+
+    </script>
+    </body>
+</html>

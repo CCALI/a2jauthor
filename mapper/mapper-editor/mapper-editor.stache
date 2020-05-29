@@ -1,0 +1,54 @@
+<can-import from="caja/author/mapper/mapper-editor/mapper-editor.less"/>
+
+<div class="mapper-editor-container">
+
+  <div class="header-label">
+    <h3>&#9656; Page Info</h3>
+    <button on:click="openQDE()" class="open-qde-button pull-right">+ QDE</button>
+  </div>
+  <div class="page-info">
+    <label class="control-label">Page Name:</label>
+    <input
+      type="text"
+      value:bind="this.selectedPage.name"
+    />
+  </div>
+  <div class="header-label">
+    <h3>&#9656; Button Info</h3>
+  </div>
+  {{#for (button of this.selectedPage.buttons)}}
+    <div class="page-info border-bottom">
+      <label class="control-label">Label:</label>
+      <input
+        type="text"
+        value:bind="button.label"
+      />
+      <br>
+      <label class="control-label">Variable Name:</label>
+      <input
+        type="text"
+        value:bind="button.name"
+      />
+      <br>
+      <label class="control-label">Default Value:</label>
+      <input
+        type="text"
+        value:bind="button.value"
+      />
+      <br>
+      <label class="control-label">Destination:</label>
+      <input
+        type="text"
+        value:bind="button.next"
+      />
+      <br>
+      <label class="control-label">Url:</label>
+      <br>
+      <label class="control-label">Repeat Options:</label>
+      <br>
+      <label class="control-label">Counting Variable:</label>
+    </div>
+  {{/for}}
+  <div class="force-height"></div>
+</div>
+

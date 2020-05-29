@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;mapper-canvas&gt;</title>
+  </head>
+
+  <body>
+    <script>
+        window.less = {
+          async: true,
+          fileSync: true
+        };
+      </script>
+
+      <script src="../../../node_modules/steal/steal.js"
+        deps-bundle
+        data-main="@empty">
+      </script>
+
+      <script type="steal-module">
+        import Canvas, { MapperCanvasVM } from "caja/author/mapper/mapper-canvas/"
+        import "caja/author/mapper/mapper-canvas/mapper-canvas.less"
+
+        const vm = new MapperCanvasVM({
+          guide: {
+            pages: {
+              'Intro': {name: 'Intro', mapx: 120, mapy: 120, buttons: [{label: 'Continue', next: 'Name'}]},
+              'Name': {name: 'Name', mapx: 120, mapy: 270, buttons: [{label: 'Continue', next: 'Address'}]},
+              'Address': {name: 'Address', mapx: 240, mapy: 120, buttons: [{label: 'Continue', next: ''}]}
+            },
+            sortedPages: [
+              {name: 'Intro', mapx: 120, mapy: 120, buttons: [{label: 'Continue', next: 'Name'}]},
+              {name: 'Name', mapx: 120, mapy: 270, buttons: [{label: 'Continue', next: 'Address'}]},
+              {name: 'Address', mapx: 240, mapy: 120, buttons: [{label: 'Continue', next: ''}]}
+            ]
+          }
+        })
+
+        const canvas = new Canvas({viewModel: vm})
+
+        document.body.appendChild(canvas.element)
+      </script>
+  </body>
+</html>

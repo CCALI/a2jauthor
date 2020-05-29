@@ -1,0 +1,43 @@
+mapper-list {
+  display: block;
+  height: 100%;
+
+  .pages-by-step {
+    border: 1px solid #ddd !important;
+    overflow: scroll;
+    height: 100vh;
+    // TODO: this is required to force the height on the overflow scroll.
+    .force-height {
+      height: 160px;
+    }
+  }
+
+  .panel-heading {
+    h4 {
+      display: inline-block;
+    }
+  }
+
+  .add-btn {
+    font-size: 11px !important;
+    margin: 0 auto;
+    display: inline-block;
+  }
+
+  .list-group-item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border: 1px solid #fff !important;
+    cursor: pointer;
+  }
+
+  .list-group-item.item-selected {
+    border: 3px solid #ffaa00 !important;
+  }
+
+  .page-item {
+    border: 1px solid red;
+    background-color: #f5f5f5 !important;
+  }
+}

@@ -56,7 +56,7 @@ module.exports = function (grunt) { // documentjs tasks removed until security u
         options: {
           steal: {
             main: ['a2jauthor/app'],
-            config: __dirname + '/package.json!npm',
+            config: __dirname + '/package.json!npm', // eslint-disable-line
             bundle: [
               'a2jauthor/app-template',
               'a2jauthor/src/src',

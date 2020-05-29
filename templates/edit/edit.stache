@@ -3,10 +3,10 @@
 <can-import from="a2jauthor/templates/edit/tabs/"/>
 <can-import from="a2jauthor/templates/edit/toolbar/"/>
 <can-import from="a2jauthor/templates/edit/edit.less!"/>
-<can-import from="a2jdeps/elements/a2j-blank/"/>
-<can-import from="a2jdeps/elements/a2j-template/"/>
-<can-import from="a2jdeps/elements/a2j-header-footer/"/>
-<can-import from="a2jdeps/pdf/editor/"/>
+<can-import from="@caliorg/a2jdeps/elements/a2j-blank/"/>
+<can-import from="@caliorg/a2jdeps/elements/a2j-template/"/>
+<can-import from="@caliorg/a2jdeps/elements/a2j-header-footer/"/>
+<can-import from="@caliorg/a2jdeps/pdf/editor/"/>
 
 <div class="page">
   {{#if(a2jTemplatePromise.isPending)}}

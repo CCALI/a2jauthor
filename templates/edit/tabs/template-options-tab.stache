@@ -1,4 +1,4 @@
-<can-import from="a2jdeps/elements/condition-form/" />
+<can-import from="@caliorg/a2jdeps/elements/condition-form/" />
 
 <h3>Layout</h3>
 

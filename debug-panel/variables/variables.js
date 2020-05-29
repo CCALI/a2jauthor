@@ -2,7 +2,7 @@ import $ from 'jquery'
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './variables.stache'
-import parser from 'a2jdeps/utils/parser'
+import parser from '@caliorg/a2jdeps/utils/parser'
 
 let VariablesTableVM = CanMap.extend('VariablesTableVM', {
   // passed in from debug-panel.stache

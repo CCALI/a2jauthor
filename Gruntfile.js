@@ -60,7 +60,7 @@ module.exports = function (grunt) { // documentjs tasks removed until security u
             bundle: [
               'a2jauthor/app-template',
               'a2jauthor/src/src',
-              'a2jstyles/author/styles.less!',
+              '@caliorg/a2jstyles/author/styles.less!',
               'a2jauthor/ckeditor/ckeditor'
             ]
           },

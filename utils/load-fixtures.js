@@ -13,7 +13,7 @@ if (isWindow && !isProduction) {
       var _this = this
 
       var fixtures = name === 'a2jviewer/app'
-        ? 'a2jdeps/models/fixtures/'
+        ? '@caliorg/a2jdeps/models/fixtures/'
         : 'a2jauthor/models/fixtures/'
 
       return _this.import(fixtures).then(function () {

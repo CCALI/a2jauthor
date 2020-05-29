@@ -6,7 +6,7 @@ import route from 'can-route'
 import 'can-map-define'
 import 'bootstrap/js/modal'
 
-import { sharedPdfFlag } from 'a2jdeps/pdf/index'
+import { sharedPdfFlag } from '@caliorg/a2jdeps/pdf/index'
 
 export let Toolbar = CanMap.extend({
   define: {

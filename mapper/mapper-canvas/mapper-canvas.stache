@@ -1,6 +1,6 @@
 <can-import from="jointjs/dist/joint.css" />
-<can-import from="caja/author/mapper/mapper-canvas/mapper-canvas.less"/>
-<can-import from="caja/author/loading/"/>
+<can-import from="a2jauthor/loading/"/>
+<can-import from="./mapper-canvas.less"/>
 
 {{#if(buildingMapper)}}
     <app-loading loadingMessage:from="this.mapperLoadingMessage" />

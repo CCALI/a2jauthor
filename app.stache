@@ -2,6 +2,7 @@
 <can-import from="a2jauthor/preview/"/>
 <can-import from="a2jauthor/templates/"/>
 <can-import from="a2jauthor/interviews/"/>
+<can-import from="a2jauthor/mapper/"/>
 <can-import from="a2jauthor/templates/edit/"/>
 <can-import from="a2jauthor/vertical-navbar/"/>
 <can-import from="a2jauthor/interviews/toolbar/"/>
@@ -136,33 +137,9 @@
 
     <!-- Maps Tab -->
     <div class="tab-panel" id="tabsMap">
-      <div class="tabContentFrame page">
-        <div class="col-4">
-          <div class="tabsMapPages">
-            <div class="PagesPanel">
-              <div id="CAJAOutlineMap" class="pageoutline pagelist">
-                <ul>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div><!-- col-4 -->
-        <div class="col-8">
-          <div id="MapperToolbar" class="map-toolbar">
-            <button class="btn btn-default"><span class="glyphicon-left-thin" aria-hidden="true"></span> Hide Page List</button>
-            <button zoom="fit" class="btn btn-default"><span class="glyphicon-resize" aria-hidden="true"></span> Fit</button>
-            <button zoom="1.25" class="btn btn-default"><span class="glyphicon-zoom-in" aria-hidden="true"></span> Zoom In</button>
-            <button zoom="0.75" class="btn btn-default"><span class="glyphicon-zoom-out" aria-hidden="true"></span> Zoom Out</button>
-          </div>
-
-        <div id="tabsMapper">
-            <div id="MapperPanel">
-              <div class="map"></div>
-            </div>
-          </div>
-
-        </div><!-- col-8 -->
-      </div>
+      {{#is (page, "mapper")}}
+        <mapper-page guide:from="guide" />
+      {{/is}}
     </div>
 
     <!-- All Logic Tab -->

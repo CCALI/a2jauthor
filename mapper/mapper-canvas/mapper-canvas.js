@@ -1,9 +1,9 @@
+import $ from 'jquery'
 import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './mapper-canvas.stache'
-import $ from 'jquery'
 import _debounce from 'lodash/debounce'
-import constants from 'caja/viewer/models/constants'
+import constants from '@caliorg/a2jdeps/models/constants'
 import queues from 'can-queues'
 
 import {

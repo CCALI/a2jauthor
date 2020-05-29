@@ -1,4 +1,4 @@
-<can-import from="caja/author/mapper/mapper-list/mapper-list.less"/>
+<can-import from="./mapper-list.less"/>
 
 <div class="pages-by-step">
   {{#for (step of pagesAndPopups)}}

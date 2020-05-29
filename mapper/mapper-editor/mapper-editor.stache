@@ -1,4 +1,4 @@
-<can-import from="caja/author/mapper/mapper-editor/mapper-editor.less"/>
+<can-import from="./mapper-editor.less"/>
 
 <div class="mapper-editor-container">
 

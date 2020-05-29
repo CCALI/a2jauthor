@@ -190,10 +190,10 @@
     }
   },
   "dependencies": {
-    "@caliorg/a2jstyles": "^7.0.0",
+    "@caliorg/a2jdeps": "^7.0.4",
+    "@caliorg/a2jstyles": "^7.0.3",
+    "@caliorg/a2jviewer": "^7.0.2",
     "@open-xchange/bootstrap-tokenfield": "^0.13.1",
-    "a2jdeps": "file:../a2jdeps",
-    "a2jviewer": "file:../a2jviewer",
     "bit-tabs": "^2.0.0",
     "blueimp-file-upload": "^9.10.1",
     "bootstrap": "^3.4.1",

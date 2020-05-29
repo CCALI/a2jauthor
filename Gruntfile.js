@@ -1,7 +1,7 @@
 module.exports = function (grunt) { // documentjs tasks removed until security updates can be applied see: https://github.com/CCALI/CAJA/issues/2485
   grunt.initConfig({
     clean: {
-      build: ['dist/'],
+      build: ['dist/']
       // cachedTemplate: ['node_modules/documentjs/site/static', 'node_modules/documentjs/site/templates']
     },
 

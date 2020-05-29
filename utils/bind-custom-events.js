@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import CanMap from 'can-map'
 import _includes from 'lodash/includes'
-import constants from 'a2jdeps/models/constants'
+import constants from '@caliorg/a2jdeps/models/constants'
 import compute from 'can-compute'
 
 // List of field types that can be filled with the `sample` property.

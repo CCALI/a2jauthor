@@ -1,7 +1,7 @@
-<can-import from='a2jdeps/hair-picker/' />
-<can-import from='a2jdeps/skin-picker/' />
+<can-import from='@caliorg/a2jdeps/hair-picker/' />
+<can-import from='@caliorg/a2jdeps/skin-picker/' />
 <can-import from='a2jauthor/about/main/main.less' />
-<can-import from='a2jdeps/avatar/' />
+<can-import from='@caliorg/a2jdeps/avatar/' />
 
 <div class='row'>
   <div class='col-xs-10'>

@@ -910,7 +910,8 @@ window.form = {
     // tt=propsJSON('SCRIPT',script);
     $('.errors', $(elt).closest('.editspan')).html(tt)
   },
-  codearea: function (data) {
+
+  codeArea: function (data) {
     form.id++
     var e = $('<div class="editspan form-group">' +
 			(typeof data.label !== 'undefined' ? ('<label class="control-label">' + data.label + '</label>') : '') +
@@ -1164,10 +1165,10 @@ TGuide.prototype.noviceTab = function (tab, clear) {	// ### 08/03/2012 Edit pane
           if ((gPrefs.showLogic === 2) || (gPrefs.showLogic === 1 && (page.codeBefore !== '' || page.codeAfter !== ''))) {
             pagefs = form.fieldset(page.name, page, 'accordion')
             if (gPrefs.showLogic === 2 || page.codeBefore !== '') {
-              pagefs.append(form.codearea({label: 'Before:',	value: page.codeBefore, change: codeBeforeChange}))
+              pagefs.append(form.codeArea({label: 'Before:',	value: page.codeBefore, change: codeBeforeChange}))
             }
             if (gPrefs.showLogic === 2 || page.codeAfter !== '') {
-              pagefs.append(form.codearea({label: 'After:',	value: page.codeAfter, change: codeAfterChange}))
+              pagefs.append(form.codeArea({label: 'After:',	value: page.codeAfter, change: codeAfterChange}))
             }
             t.append(pagefs)
           }

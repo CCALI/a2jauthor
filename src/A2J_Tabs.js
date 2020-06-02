@@ -1527,7 +1527,7 @@ function vcGatherUsage (name) { // 2015-03-27 Search for variable or constant
       where.push('LearnMore Prompt')
     }
 
-    var learnMoreResponseMatches = page.learn.match(macroRegex)
+    var learnMoreResponseMatches = page.help.match(macroRegex)
     if (learnMoreResponseMatches && learnMoreResponseMatches.length) {
       where.push('LearnMore Response')
     }

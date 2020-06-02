@@ -29,30 +29,37 @@ describe('src/A2J_Tabs', function () {
   })
 
   describe('vcGatherUsage', function () {
-    it('gathers usage on fields using variables', function () {
+    it('gathers usage on Fields using variables', function () {
       const foundMessage = window.vcGatherUsage('User Avatar')
       const usedInField = foundMessage.indexOf('Field someField') !== -1
       assert.isTrue(usedInField, 'should find references in field.name for variable usage')
     })
 
-    it('gathers usage on buttons using variables', function () {
+    it('gathers usage on Buttons using variables', function () {
       const foundMessage = window.vcGatherUsage('User Avatar')
       const usedInButton = foundMessage.indexOf('Button Continue') !== -1
       assert.isTrue(usedInButton, 'should find references in button.name for variable usage')
     })
 
-    it('gathers usage on question and/or help text using variables', function () {
+    it('gathers usage on Question Text using variables as macros', function () {
       window.gGuide.pages['page2'].text = 'Q text %%[User Avatar]%%'
-      let foundMessage = window.vcGatherUsage('User Avatar')
-      const usedInQuestion = foundMessage.indexOf('Text/Help') !== -1
+      const foundMessage = window.vcGatherUsage('User Avatar')
+      const usedInQuestion = foundMessage.indexOf('Question Text') !== -1
       assert.isTrue(usedInQuestion, 'should find references in page.text for variable usage')
+    })
 
-      // clear text to test help
-      window.gGuide.pages['page2'].text = ''
-      window.gGuide.pages['page2'].help = 'halp text %%[User Avatar]%%'
-      foundMessage = window.vcGatherUsage('User Avatar')
-      const usedInHelp = foundMessage.indexOf('Text/Help') !== -1
-      assert.isTrue(usedInHelp, 'should find references in page.help for variable usage')
+    it('gathers usage on LearnMore Response text using variables as macros', function () {
+      window.gGuide.pages['page2'].help = 'Learn More text uses %%[User Avatar]%%'
+      const foundMessage = window.vcGatherUsage('User Avatar')
+      const usedInResponse = foundMessage.indexOf('LearnMore Response') !== -1
+      assert.isTrue(usedInResponse, 'should find references in page.help for variable usage')
+    })
+
+    it('gathers usage on LearnMore Prompt text using variables as macros', function () {
+      window.gGuide.pages['page2'].learn = 'Learn More prompt uses %%[User Avatar]%%'
+      const foundMessage = window.vcGatherUsage('User Avatar')
+      const usedInPrompt = foundMessage.indexOf('LearnMore Prompt') !== -1
+      assert.isTrue(usedInPrompt, 'should find references in page.learn for variable usage')
     })
 
     it('gathers usage on codeBefore and/or codeAfter Logic using variables', function () {

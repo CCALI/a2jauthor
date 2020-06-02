@@ -1496,6 +1496,8 @@ function vcGatherUsage (name) { // 2015-03-27 Search for variable or constant
   var count = 0
   var p
   var nameL = name.toLowerCase()
+  var regexString = `\\(\\s*${nameL}\\s*\\)|\\%\\s*${nameL}\\s*\\%|\\[\\s*${nameL}\\s*\\]`
+  var macroRegex = new RegExp( regexString , 'i')
   for (p in window.gGuide.pages) {	// Search text, buttons, help, fields and logic for variable name.
     /** @type TPage */
     var where = [] //  list where it's on this page
@@ -1514,12 +1516,26 @@ function vcGatherUsage (name) { // 2015-03-27 Search for variable or constant
         where.push('Button ' + button.label)
       }
     }
-    if ((page.text + ' ' + page.help).toLowerCase().indexOf(nameL) >= 0) {
-      where.push('Text/Help')
+
+    var questionTextMatches = page.text.match(macroRegex)
+    if (questionTextMatches && questionTextMatches.length) {
+      where.push('Question Text')
     }
+
+    var learnMorePromptMatches = page.learn.match(macroRegex)
+    if (learnMorePromptMatches && learnMorePromptMatches.length) {
+      where.push('LearnMore Prompt')
+    }
+
+    var learnMoreResponseMatches = page.learn.match(macroRegex)
+    if (learnMoreResponseMatches && learnMoreResponseMatches.length) {
+      where.push('LearnMore Response')
+    }
+
     if ((page.codeBefore + ' ' + page.codeAfter).toLowerCase().indexOf(nameL) >= 0) {
       where.push('Logic')
     }
+
     if (where.length > 0) { // If we found anything, we'll list the page and its location.
       count++
       html += ('<li>' + page.name + '</li><ul>' + '<li>' + where.join('<li>') + '</ul>')

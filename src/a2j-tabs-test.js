@@ -18,7 +18,7 @@ describe('src/A2J_Tabs', function () {
   })
 
   describe('vcGatherUsage', function () {
-    it('gathers usage on Fields using variables', function () {
+    it('gathers usage on Page, Field, and Button level property values using variables', function () {
       const usageTestPage = new window.TPage()
       usageTestPage.fields = [new window.TField()]
       usageTestPage.buttons = [new window.TButton()]

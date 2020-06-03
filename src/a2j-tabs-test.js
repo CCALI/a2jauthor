@@ -21,7 +21,7 @@ describe('src/A2J_Tabs', function () {
     page2.name = 'page2'
     page2.buttons[0] = {label: 'Continue', next: '', name: 'User Avatar'}
     page2.fields = [field]
-    window.gGuide.pages = { page2 }
+    window.gGuide.pages = { 'page2': page2 }
   })
 
   afterEach(() => { // cleanup globals
@@ -31,13 +31,13 @@ describe('src/A2J_Tabs', function () {
   describe('vcGatherUsage', function () {
     it('gathers usage on Fields using variables', function () {
       const foundMessage = window.vcGatherUsage('User Avatar')
-      const usedInField = foundMessage.indexOf('Field someField') !== -1
+      const usedInField = foundMessage.indexOf('Field Variable') !== -1
       assert.isTrue(usedInField, 'should find references in field.name for variable usage')
     })
 
     it('gathers usage on Buttons using variables', function () {
       const foundMessage = window.vcGatherUsage('User Avatar')
-      const usedInButton = foundMessage.indexOf('Button Continue') !== -1
+      const usedInButton = foundMessage.indexOf('Button Variable') !== -1
       assert.isTrue(usedInButton, 'should find references in button.name for variable usage')
     })
 

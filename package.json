@@ -28,7 +28,8 @@
       "models/fixtures/**",
       "build.production.html.js",
       "/ckeditor/",
-      "archive"
+      "archive",
+      "styles/documentjs-theme/**"
     ],
     "env": [
       "mocha"

@@ -596,8 +596,9 @@ window.form = {
     // trace('codefix before',html);
     html = html.replace(/<BR/gi, '\n<BR').replace(/<DIV/gi, '\n<DIV')// preserve line breaks
     html = form.pasteFix(html, [ 'A'])
-    // var code=html.replace(/<br/gi,"\n<br").replace(/<div/gi,"\n<div").stripHTML().replace(/[\n]/gi,"<BR/>");
     html = html.replace(/[\n]/gi, '<BR/>')
+    // always add trailing <br> for inline error message target
+    html = !!html ? html = html + '<BR/>' : html
     // trace('codefix after',html);
     return html
   },
@@ -857,44 +858,28 @@ window.form = {
       form.codeCheck(form.codeCheckList.pop())
     }
   },
+
   codeCheck: function (elt) {
-    $(elt).parent().removeClass('has-error')
-    $('SPAN', $(elt)).remove()
-    var code = form.codeFix($(elt).html())
-    $(elt).html(code)
+    $a2jLogicDiv = $(elt)
+
+    // remove error state and previous messages
+    $a2jLogicDiv.parent().removeClass('has-error')
+    $('SPAN', $a2jLogicDiv).remove()
+
+    var code = form.codeFix($a2jLogicDiv.html())
+    $a2jLogicDiv.html(code)
     // trace('codeCheck',code);
     // TODO remove markup
     var script = gLogic.translateCAJAtoJS(code)
     var tt = ''
     var t = []
     if (script.errors.length > 0) {
-      $(elt).parent().addClass('has-error')
-      /*
-			for (l=0;l<lines.length;l++)
-			{
-				var err=null;
-				for (var e in script.errors)
-					if (script.errors[e].line == l)
-						err=script.errors[e];
-				if (err == null)
-					t.push(lines[l]);
-				else
-				{
-					t.push('<span class="err">'+lines[l]+"</span>");
-				}
-			}
-			*/
+      $a2jLogicDiv.parent().addClass('has-error')
       var e
       for (e in script.errors) {
         var err = script.errors[e]
-        // tt+=form.noteHTML('alert',"<b>"+err.line+":"+err.text+"</b>");
-
-        $('BR:eq(' + (err.line) + ')', $(elt)).before(
-          // (err.line)
-          // '<span class="err">'+err.text+'</span>'
-          // '<span class="ui-widget">
+        $('BR:eq(' + (err.line) + ')', $a2jLogicDiv).before(
           '<span class="text-danger"><span class="glyphicon-attention" aria-hidden="true"></span>' + err.text + '</span></span>'
-          // </span>'
         )
       }
     }
@@ -907,10 +892,10 @@ window.form = {
       }
       tt += ('<BLOCKQUOTE class=Script>' + t.join('<BR>') + '</BLOCKQUOTE>')
     }
-    // tt=propsJSON('SCRIPT',script);
-    $('.errors', $(elt).closest('.editspan')).html(tt)
+    $('.errors', $a2jLogicDiv.closest('.editspan')).html(tt)
   },
-  codearea: function (data) {
+
+  codeArea: function (data) {
     form.id++
     var e = $('<div class="editspan form-group">' +
 			(typeof data.label !== 'undefined' ? ('<label class="control-label">' + data.label + '</label>') : '') +
@@ -1164,10 +1149,10 @@ TGuide.prototype.noviceTab = function (tab, clear) {	// ### 08/03/2012 Edit pane
           if ((gPrefs.showLogic === 2) || (gPrefs.showLogic === 1 && (page.codeBefore !== '' || page.codeAfter !== ''))) {
             pagefs = form.fieldset(page.name, page, 'accordion')
             if (gPrefs.showLogic === 2 || page.codeBefore !== '') {
-              pagefs.append(form.codearea({label: 'Before:',	value: page.codeBefore, change: codeBeforeChange}))
+              pagefs.append(form.codeArea({label: 'Before:',	value: page.codeBefore, change: codeBeforeChange}))
             }
             if (gPrefs.showLogic === 2 || page.codeAfter !== '') {
-              pagefs.append(form.codearea({label: 'After:',	value: page.codeAfter, change: codeAfterChange}))
+              pagefs.append(form.codeArea({label: 'After:',	value: page.codeAfter, change: codeAfterChange}))
             }
             t.append(pagefs)
           }

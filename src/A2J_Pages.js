@@ -893,10 +893,10 @@ function buildButtonFieldSet (page) {
 /** @param {TPage} page */
 function buildLogicFieldSet (page) {
   var logicfs = window.form.fieldset('Advanced Logic')
-  logicfs.append(window.form.codearea({ label: 'Before:',
+  logicfs.append(window.form.codeArea({ label: 'Before:',
     value: page.codeBefore,
     change: function (val) { page.codeBefore = val /* TODO Compile for syntax errors */ } }))
-  logicfs.append(window.form.codearea({ label: 'After:',
+  logicfs.append(window.form.codeArea({ label: 'After:',
     value: page.codeAfter,
     change: function (val) { page.codeAfter = val /* TODO Compile for syntax errors */ } }))
   logicfs.append(window.form.htmlarea({ label: 'Logic Citation:',

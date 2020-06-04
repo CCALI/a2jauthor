@@ -11,17 +11,6 @@ import 'steal-mocha'
 describe('src/A2J_Tabs', function () {
   beforeEach(() => {
     window.gGuide = new window.TGuide()
-
-    const page2 = new window.TPage()
-
-    const field = new window.TField()
-    field.name = 'User Avatar'
-    field.label = 'someField'
-
-    page2.name = 'page2'
-    page2.buttons[0] = {label: 'Continue', next: '', name: 'User Avatar'}
-    page2.fields = [field]
-    window.gGuide.pages = { page2 }
   })
 
   afterEach(() => { // cleanup globals
@@ -29,44 +18,71 @@ describe('src/A2J_Tabs', function () {
   })
 
   describe('vcGatherUsage', function () {
-    it('gathers usage on fields using variables', function () {
-      const foundMessage = window.vcGatherUsage('User Avatar')
-      const usedInField = foundMessage.indexOf('Field someField') !== -1
-      assert.isTrue(usedInField, 'should find references in field.name for variable usage')
-    })
+    it('gathers usage on Page, Field, and Button level property values using variables', function () {
+      const usageTestPage = new window.TPage()
+      usageTestPage.fields = [new window.TField()]
+      usageTestPage.buttons = [new window.TButton()]
 
-    it('gathers usage on buttons using variables', function () {
-      const foundMessage = window.vcGatherUsage('User Avatar')
-      const usedInButton = foundMessage.indexOf('Button Continue') !== -1
-      assert.isTrue(usedInButton, 'should find references in button.name for variable usage')
-    })
+      window.gGuide.pages = { 'usageTestPage': usageTestPage }
 
-    it('gathers usage on question and/or help text using variables', function () {
-      window.gGuide.pages['page2'].text = 'Q text %%[User Avatar]%%'
-      let foundMessage = window.vcGatherUsage('User Avatar')
-      const usedInQuestion = foundMessage.indexOf('Text/Help') !== -1
-      assert.isTrue(usedInQuestion, 'should find references in page.text for variable usage')
+      const testProps = {
+        page: [
+          {key: 'name' ,type: 'regex', display: 'Page Name'},
+          {key: 'text' ,type: 'regex', display: 'Question Text'},
+          {key: 'repeatVar' ,type: 'string', display: 'Counting Variable'},
+          {key: 'outerLoopVar' ,type: 'string', display: 'Outer Loop Variable'},
+          {key: 'learn' ,type: 'regex', display: 'LearnMore Prompt'},
+          {key: 'help' ,type: 'regex', display: 'LearnMore Response'},
+          {key: 'helpReader' ,type: 'regex', display: 'Video Transcript'},
+          {key: 'codeBefore' ,type: 'logic', display: 'Before Logic'},
+          {key: 'codeAfter' ,type: 'logic', display: 'After Logic'}
+        ],
+        fields: [
+          {key: 'label' ,type: 'regex', display: 'Field Label'},
+          {key: 'name' ,type: 'string', display: 'Field Variable'},
+          {key: 'value' ,type: 'regex', display: 'Field Default Value'},
+          {key: 'invalidPrompt' ,type: 'regex', display: 'Field Custom Invalid Prompt'},
+          {key: 'sample' ,type: 'regex', display: 'Field Sample Value'}
+        ],
+        buttons: [
+          {key: 'label' ,type: 'regex', display: 'Button Label'},
+          {key: 'name' ,type: 'string', display: 'Button Variable Name'},
+          {key: 'value' ,type: 'regex', display: 'Button Default Value'},
+          {key: 'repeatVar' ,type: 'string', display: 'Button Counting Variable'},
+          {key: 'url' ,type: 'regex', display: 'Button URL'}
+        ]
+      }
 
-      // clear text to test help
-      window.gGuide.pages['page2'].text = ''
-      window.gGuide.pages['page2'].help = 'halp text %%[User Avatar]%%'
-      foundMessage = window.vcGatherUsage('User Avatar')
-      const usedInHelp = foundMessage.indexOf('Text/Help') !== -1
-      assert.isTrue(usedInHelp, 'should find references in page.help for variable usage')
-    })
+      const setTestProps = (targetMap, propsToSet) => {
+        for(const entry of propsToSet) {
+          const prop = entry.key
+          if(entry.type === 'regex') {
+            targetMap[prop] = 'macro style %%[Number NU]%%'
+          } else if (entry.type === 'logic') {
+            targetMap[prop] = 'SET [Number NU] TO 1'
+          } else { // direct var set
+            targetMap[prop] = 'Number NU'
+          }
+        }
+      }
+      setTestProps(usageTestPage, testProps.page)
+      setTestProps(usageTestPage.fields[0], testProps.fields)
+      setTestProps(usageTestPage.buttons[0], testProps.buttons)
 
-    it('gathers usage on codeBefore and/or codeAfter Logic using variables', function () {
-      window.gGuide.pages['page2'].codeBefore = 'SET [User Avatar] TO "foo"'
-      let foundMessage = window.vcGatherUsage('User Avatar')
-      const usedInCodeBefore = foundMessage.indexOf('Logic') !== -1
-      assert.isTrue(usedInCodeBefore, 'should find references in page.codeBefore for variable usage')
-
-      // clear codeBefore to test codeAfter
-      window.gGuide.pages['page2'].codeBefore = ''
-      window.gGuide.pages['page2'].codeAfter = 'SET [User Avatar] TO "bar"'
-      foundMessage = window.vcGatherUsage('User Avatar')
-      const usedInHelp = foundMessage.indexOf('Logic') !== -1
-      assert.isTrue(usedInHelp, 'should find references in page.codeAfter for variable usage')
+      const foundMessage = window.vcGatherUsage('Number NU')
+      // if found, `display value` will be in foundMessage for each entry
+      for(const entry of testProps.page) {
+        const usedInPage = foundMessage.indexOf(entry.display) !== -1
+        assert.isTrue(usedInPage, `should find Number NU usage in page.${entry.key} by displaying ${entry.display} in returned foundMessage html`)
+      }
+      for(const entry of testProps.fields) {
+        const usedInField = foundMessage.indexOf(entry.display) !== -1
+        assert.isTrue(usedInField, `should find Number NU usage in field.${entry.key} by displaying ${entry.display} in returned foundMessage html`)
+      }
+      for(const entry of testProps.buttons) {
+        const usedInButton = foundMessage.indexOf(entry.display) !== -1
+        assert.isTrue(usedInButton, `should find Number NU usage in button.${entry.key} by displaying ${entry.display} in returned foundMessage html`)
+      }
     })
   })
 })

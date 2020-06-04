@@ -11,8 +11,8 @@
 <can-import from="a2jauthor/variables/tab/"/>
 <can-import from="a2jauthor/a2jorg/"/>
 <can-import from="@caliorg/a2jdeps/footer/"/>
-<can-import from="@caliorg/a2jstyles/styles/legacy-styles"/>
-<can-import from="@caliorg/a2jstyles/author/styles.less"/>
+<can-import from="a2jauthor/styles/"/>
+<can-import from="a2jauthor/styles.less"/>
 
 
 <div id="splash" class="welcome">

@@ -3,7 +3,7 @@
 <can-import from="a2jauthor/debug-panel/"/>
 <can-import from="a2jauthor/debug-alerts/"/>
 <can-import from="@caliorg/a2jviewer/preview/"/>
-<can-import from="@caliorg/a2jstyles/styles/author/viewer-layout.less"/>
+<can-import from="a2jauthor/styles/author/viewer-layout.less"/>
 
 {{#if(previewMode)}}
   {{#if(showDebugPanel)}}

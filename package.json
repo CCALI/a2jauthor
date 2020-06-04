@@ -28,7 +28,8 @@
       "models/fixtures/**",
       "build.production.html.js",
       "/ckeditor/",
-      "archive"
+      "archive",
+      "styles/documentjs-theme/**"
     ],
     "env": [
       "mocha"
@@ -193,7 +194,6 @@
   },
   "dependencies": {
     "@caliorg/a2jdeps": "^7.0.6",
-    "@caliorg/a2jstyles": "^7.0.3",
     "@caliorg/a2jviewer": "^7.0.4",
     "@open-xchange/bootstrap-tokenfield": "^0.13.1",
     "bit-tabs": "^2.0.0",

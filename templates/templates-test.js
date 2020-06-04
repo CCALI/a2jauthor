@@ -4,7 +4,7 @@ import { assert } from 'chai'
 import Templates from './templates-vm'
 import stache from 'can-stache'
 import 'a2jauthor/models/fixtures/templates'
-import '@caliorg/a2jstyles/styles.less'
+import 'a2jauthor/styles.less'
 
 import 'can-route'
 import 'steal-mocha'

@@ -154,9 +154,9 @@ function pageEditClone (pageName) { // Clone named page and return new page's na
   return page.name
 }
 
-function pageEditNew () { // Create a new blank page, after selected page.
-  var newName = pageEditSelected()
-  var newStep
+function pageEditNew (newStep, mapx, mapy) {	// Create a new blank page, after selected page.
+  // if newStep exists, this call came from the new Mapper tool
+  var newName =  pageEditSelected()
   var selPage = false
   if (newName === '') { // No page selected, use first page listed in TOC and in first step.
     var rel = window.makestr(window.$('.pageoutline li').first().attr('rel'))
@@ -166,7 +166,7 @@ function pageEditNew () { // Create a new blank page, after selected page.
       rel = 'New page'
     }
     newName = rel
-    newStep = 0
+    newStep = newStep || 0
   } else { // Create new page in same step as selected page.
     selPage = window.gGuide.pages[newName]
     newStep = selPage.step
@@ -180,8 +180,10 @@ function pageEditNew () { // Create a new blank page, after selected page.
   page.type = 'A2J'
   page.text = 'My text'
   page.step = newStep
-  page.mapx = selPage ? selPage.mapx : 0
-  page.mapy = selPage ? selPage.mapy + window.NODE_SIZE.h + 20 : 0
+  // page.mapx = selPage ? selPage.mapx : 0
+  // page.mapy = selPage ? selPage.mapy + 150 : 0
+  page.mapx = mapx || (selPage && selPage.mapx) || 60
+  page.mapy = mapy || (selPage ? selPage.mapy + 240 : 60)
 
   // 2014-10-22 Ensure a new page has at least one button
   var cnt = new window.TButton()
@@ -193,7 +195,7 @@ function pageEditNew () { // Create a new blank page, after selected page.
   return page.name
 }
 
-function pagePopupEditNew () { // Create a new blank popup page, after selected popup.
+function pagePopupEditNew (mapx, mapy) { // Create a new blank popup page, after selected popup.
   var newName = pageEditSelected()
   if (newName === '') {
     newName = 'Popup'
@@ -202,7 +204,8 @@ function pagePopupEditNew () { // Create a new blank popup page, after selected 
   }
   var page = window.gGuide.addUniquePage(newName)
   page.type = window.CONST.ptPopup
-  page.mapx = null
+  page.mapx = mapx || 60
+  page.mapy = mapy || 60
   page.text = 'My popup text'
   page.step = 0
   window.gGuide.sortPages()

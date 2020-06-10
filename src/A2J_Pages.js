@@ -332,12 +332,11 @@ function gotoPageEdit (pageName) {
 
   $pageEditDialog.dialog({
     dialogClass: 'page-edit-dialog',
-    closeText: '', // removes word "Close" from upper right titlebar close button
     autoOpen: false,
     title: page.name,
     modal: false,
     resizable: false,
-
+    closeText: '', // removes word "Close" from upper right titlebar close button
     close: function () {
       // cleanup QDE resize eventListener
       window.removeEventListener('resize', debouncedSetQDEmaxHeight)

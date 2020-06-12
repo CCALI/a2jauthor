@@ -22,7 +22,7 @@ import {
   nudgeAreaWithinBounds,
   moveAreaWithinBounds
 } from './area'
-import assemble from '../assemble'
+import assemble from '@caliorg/a2jdeps/pdf/assemble'
 import moment from 'moment'
 
 const { boxComparator } = assemble

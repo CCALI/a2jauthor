@@ -1,6 +1,6 @@
 import $ from 'jquery'
-import parser from '~/utils/parser'
-import assemble from './assemble'
+import parser from '@caliorg/a2jdeps/utils/parser'
+import assemble from '@caliorg/a2jdeps/pdf/assemble'
 import PDFJS from 'pdfjs-dist'
 import 'pdfjs-dist/build/pdf.worker.entry'
 

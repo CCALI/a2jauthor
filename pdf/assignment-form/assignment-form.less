@@ -1,0 +1,34 @@
+assignment-form {
+  .text-group,
+  .overflow-picker,
+  .pass-type-picker {
+    margin: 0px 0px 5px;
+
+    & > label {
+      display: block;
+      font-weight: normal;
+      margin-left: 5px;
+
+      span {
+        margin-left: 20px;
+      }
+    }
+  }
+
+  .multiple-choice {
+    margin: 0 0 15px 25px;
+
+    input {
+      margin-bottom: 8px;
+
+      &:last-child {
+        margin-bottom: 0px;
+      }
+
+      &:disabled {
+        background-color: #fafafa;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

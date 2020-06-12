@@ -9,7 +9,7 @@ import A2JNode from '@caliorg/a2jdeps/models/a2j-node'
 import 'can-route'
 import 'can-map-define'
 
-import { sharedPdfFlag } from '@caliorg/a2jdeps/pdf/index'
+import { sharedPdfFlag } from '../../pdf/index'
 
 /**
  * @module {Module} author/templates/edit/ <template-edit-page>

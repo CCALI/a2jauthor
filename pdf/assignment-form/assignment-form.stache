@@ -1,0 +1,178 @@
+<can-import from='./assignment-form.less' />
+<can-import from='../../modal/' />
+<can-import from='../../variables/editor/' />
+<can-import from='../checkmark-picker/' />
+<can-import from='can-stache-converters' />
+
+{{#if conflictingVariables}}
+  <author-modal
+    modalTitle:raw="Assignment conflict"
+    cancelText:raw="Dismiss"
+    onCancel:from='fireCancel'
+  >
+    <div class='conflict'>
+      <p>
+        There is a grouping conflict.
+        There are boxes selected which are assigned to {{conflictingVariables.length}} different variables.
+        Please deselect or unassign boxes so there is at most one selected variable.
+      </p>
+
+      <p>Currently selected variables:</p>
+      <ul>
+        {{#each conflictingVariables}}
+          <li>{{.}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  </author-modal>
+{{else}}
+  <author-modal
+    modalTitle:raw='Assign variable'
+    leftButtonText:raw='Unassign'
+    leftButtonIcon:raw='glyphicon-lock-open-alt'
+    onLeftButtonClick:from="fireUnassign"
+    cancelText:raw='Cancel'
+    onCancel:from="fireCancel"
+    submitText:raw='Assign'
+    onSubmit:from="fireAssign"
+  >
+    <variable-editor
+      initialVariable:from="initialVariable"
+      existingVariableNames:from="variableSuggestions"
+      showUsageFinder:from="false"
+      onVariableChange:from="onVariableChange"
+      onSelectSuggestion:from="onSelectSuggestion"
+    />
+
+    {{#if (hasOptions) }}
+      <fieldset>
+        {{#if (hasOverflowOption) }}
+          <div>
+            <label>Text grouping:</label>
+              <div class='text-group'>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="text-group"
+                    on:change="onGroupChange(scope.event)"
+                    checked:bind='variableBuffer.isGroup'
+                  />
+                <span>Group Selected Text Boxes</span>
+                </label>
+              </div>
+          </div>
+          <div>
+            <label>Text overflow:</label>
+            <div class='overflow-picker'>
+              <label>
+                <input
+                  type='radio'
+                  name='overflow-style-1'
+                  value='overflow-to-addendum'
+                  on:change='onOverflowStyleChange(scope.event)'
+                  checked:bind="equal(variableBuffer.overflowStyle, 'overflow-to-addendum')"
+                />
+                <span>Append overflow text to an addendum</span>
+              </label>
+              <label>
+                <input
+                  type='radio'
+                  name='overflow-style-2'
+                  value='everything-to-addendum'
+                  on:change='onOverflowStyleChange(scope.event)'
+                  checked:bind="equal(variableBuffer.overflowStyle, 'everything-to-addendum')"
+                />
+                <span>Append all text to an addendum if there would be overflow</span>
+              </label>
+              <label>
+                <input
+                  type='radio'
+                  name='overflow-style-3'
+                  value='clip-overflow'
+                  on:change='onOverflowStyleChange(scope.event)'
+                  checked:bind="equal(variableBuffer.overflowStyle, 'clip-overflow')"
+                />
+                <span>Ignore text overflow</span>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label>Addendum label:</label>
+            <input
+              type="text"
+              class="editable"
+              value:bind="variableBuffer.addendumLabel"
+            />
+          </div>
+        {{/if}}
+
+        {{#if (hasPassValueOption) }}
+          <div>
+            <label>Field type:</label>
+            <div class='pass-type-picker'>
+              <label>
+                <input
+                  type='radio'
+                  name='pass-type'
+                  value='pass-value'
+                  on:change='onPassValueChange(scope.event)'
+                  checked:from="not(variableBuffer.isCheck)"
+                />
+                <span>Pass multiple choice value</span>
+              </label>
+              <label>
+                <input
+                  type='radio'
+                  name='pass-type'
+                  value='pass-check'
+                  on:change='onPassValueChange(scope.event)'
+                  checked:from="variableBuffer.isCheck"
+                />
+                <span>Draw a checkmark if the variable matches</span>
+              </label>
+              <div class='multiple-choice'>
+                {{#eq (variableBuffer.choices.length, 1) }}
+                  <label>Multiple choice value</label>
+                {{else}}
+                  <label>Multiple choice values</label>
+                {{/eq}}
+                {{#for (choice of variableBuffer.choices) }}
+                  <input
+                    type='text'
+                    class='editable'
+                    {{#not (hasChoicesOption) }}
+                      disabled
+                    {{/not}}
+                    value="{{choice}}"
+                    on:change="onChoiceChange(scope.event, scope.index)"
+                  />
+                {{/for}}
+              </div>
+            </div>
+          </div>
+        {{/if}}
+
+        {{#if (hasCheckmarkOption) }}
+          <div class='checkmark-options'>
+            <label>Checkmark style:</label>
+            <checkmark-picker
+              check:raw="{{variableBuffer.checkIcon}}"
+              onCheck:from="onCheckIcon"
+            />
+            {{#if (hasInvertOption) }}
+              <label>
+                <input
+                  type='checkbox'
+                  checked:from="variableBuffer.isInverted"
+                  on:change='onInvertChange(scope.event)'
+                />
+                <span>If the variable is false, draw the checkmark.</span>
+              </label>
+            {{/if}}
+          </div>
+        {{/if}}
+      </fieldset>
+    {{/if}}
+  </author-modal>
+{{/if}}

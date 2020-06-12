@@ -1,0 +1,62 @@
+<can-import from='./addendum-options.less' />
+<can-import from='../../modal/' />
+
+<author-modal
+  modalTitle:raw="Addendum options"
+  onCancel:from='onModalCancel'
+  cancelText:raw="Cancel"
+  onSubmit:from='onSubmit'
+  submitText:raw="Save options"
+  onLeftButtonClick:from='onReset'
+  leftButtonText:raw="Reset"
+>
+  <div class='split-fields'>
+    <fieldset>
+      <label>Page size</label>
+      <div>
+        <label>
+          <span class='title'>Width:</span>
+          <input
+            type='number'
+            class='editable'
+            el:value:bind='pageWidth'
+          />
+          <span class='unit'>inches</span>
+        </label>
+        <label>
+          <span class='title'>Height:</span>
+          <input
+            type='number'
+            class='editable'
+            el:value:bind='pageHeight'
+          />
+          <span class='unit'>inches</span>
+        </label>
+      </div>
+    </fieldset>
+    <span class='separator'></span>
+    <fieldset>
+      <label>Page margins</label>
+      <div>
+        <label>
+          <span class='title'>Vertical:</span>
+          <input
+            type='number'
+            class='editable'
+            el:value:bind='topBottomMargin'
+          />
+          <span class='unit'>inches</span>
+        </label>
+        <label>
+          <span class='title'>Horizontal:</span>
+          <input
+            type='number'
+            class='editable'
+            el:value:bind='leftRightMargin'
+          />
+          <span class='unit'>inches</span>
+        </label>
+      </div>
+    </fieldset>
+  </div>
+</author-modal>

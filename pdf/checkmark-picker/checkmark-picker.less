@@ -1,0 +1,60 @@
+@font-face {
+    font-family: 'A2J PDF Checkmark';
+    src:
+      url('font/cali-icons.ttf') format('truetype'),
+      url('font/cali-icons.woff') format('woff'),
+      url('font/cali-icons.woff2') format('woff2');
+}
+
+checkmark-picker {
+  display: block;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin-bottom: 10px;
+
+  .status {
+    line-height: 40px;
+    text-align: center;
+  }
+
+  .checks {
+    display: flex;
+    margin: 0 !important;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  .check {
+    flex: 1;
+    line-height: 40px;
+    font-size: 16px;
+    text-align: center;
+    border-right: 1px solid #eee;
+    color: #777;
+    background-color: #f8f8f8;
+    font-family: 'A2J PDF Checkmark';
+    cursor: pointer;
+
+    &:hover {
+      color: #000;
+      background-color: #fcfcfc;
+    }
+
+    &--selected,
+    &--selected:hover  {
+      color: #222;
+      background-color: #fff;
+    }
+
+    &:first-child {
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+    }
+
+    &:last-child {
+      border-right: none;
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+    }
+  }
+}

@@ -40,7 +40,7 @@ function isAreaTooSmall (area) {
 }
 
 function getDataUrlForPage (page, scale) {
-  const viewport = page.getViewport(scale)
+  const viewport = page.getViewport({ scale: scale })
   const canvas = document.createElement('canvas')
   canvas.width = viewport.width
   canvas.height = viewport.height
@@ -50,7 +50,7 @@ function getDataUrlForPage (page, scale) {
     .render({
       canvasContext: context,
       viewport: viewport
-    })
+    }).promise
     .then(() => {
       return canvas.toDataURL('image/jpeg')
     })
@@ -381,7 +381,7 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
 
     const templatePdfUrl = getTemplatePdfUrl(this.getComboId())
     return getPdfJs()
-      .then(pdfJs => pdfJs.getDocument(templatePdfUrl))
+      .then(pdfJs => pdfJs.getDocument(templatePdfUrl).promise)
       .then(pdf => {
         this.attr({
           pdfController: pdf,
@@ -438,14 +438,14 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
           }
 
           return promise.then(page => {
-            const realViewport = page.getViewport(1)
+            const realViewport = page.getViewport({ scale: 1 })
             const pdfSize = {
               width: realViewport.width,
               height: realViewport.height
             }
 
             const scale = 2.5
-            const viewport = page.getViewport(scale)
+            const viewport = page.getViewport({ scale: scale })
             const canvasSize = {
               width: viewport.width,
               height: viewport.height
@@ -483,6 +483,7 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
         })
       })
       .catch(error => {
+        console.error('pdfError', error)
         this.attr({
           pdfError: error,
           isPdfLoading: false

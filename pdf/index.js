@@ -68,7 +68,7 @@ export function uploadTemplatePdf (templateId, confirmPdf) {
     return getPdfJs()
       .then(pdfJs => {
         const localUrl = window.URL.createObjectURL(file)
-        return pdfJs.getDocument(localUrl)
+        return pdfJs.getDocument(localUrl).promise
       })
       .then(pdf => confirmPdf(pdf.numPages))
       .then(isConfirmed => isConfirmed && submitTemplatePdf(templateId, file))

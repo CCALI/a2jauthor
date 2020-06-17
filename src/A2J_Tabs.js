@@ -402,11 +402,12 @@ window.form = {
         // $('page-picker-dialog').dialog( "close" );
       })
     $('#page-picker-dialog').data(data).dialog({
-  		dialogClass: 'modal bootstrap-styles',
+      dialogClass: 'modal bootstrap-styles',
       autoOpen: true,
       width: 700,
       height: 500,
       modal: true,
+      closeText: '', // removes word "Close" from upper right titlebar close button
       close: function () {
         $('#page-picker-list').empty()
       },
@@ -470,6 +471,7 @@ window.form = {
       width: 700,
       height: 500,
       modal: true,
+      closeText: '', // removes word "Close" from upper right titlebar close button
       close: function () {
         $('#page-picker-list').empty()
       },

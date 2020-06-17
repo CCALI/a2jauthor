@@ -22,6 +22,7 @@ function dialogConfirmYesNo (args) {
   $d.html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>' + args.message + '</p>')
   $d.dialog({
     title: args.title,
+    closeText: '', // removes word "Close" from upper right titlebar close button
     dialogClass: 'modal bootstrap-styles',
     resizable: false,
     width: args.width ? args.width : 350,
@@ -67,6 +68,7 @@ function dialogAlert (args)
   var $d = $('#dialog-confirm')
   $d.html('<p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>' + args.body + '</p>')
   $d.dialog({
+    closeText: '', // removes word "Close" from upper right titlebar close button
     title: args.title,
     dialogClass: 'modal bootstrap-styles',
     resizable: true,

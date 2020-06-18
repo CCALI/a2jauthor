@@ -5,7 +5,7 @@ import $ from 'jquery'
 
 import 'can-map-define'
 
-export const ModalVM = CanMap.extend({
+export const ModalVM = CanMap.extend('Author Modal', {
   define: {
     modalTitle: {},
     isLarge: {},

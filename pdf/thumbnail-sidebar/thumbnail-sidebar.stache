@@ -1,0 +1,26 @@
+<can-import from='./thumbnail-sidebar.less' />
+<div class='thumbnail-sidebar {{#if isShowingThumbnails}}active{{/if}}'>
+  <div
+    title='Toggle thumbnails'
+    class="drawer-handle"
+    on:el:click="fireDrawerHandleClick()"
+  >
+    <span class="glyphicon-docs" aria-hidden="true"></span>
+  </div>
+  {{#if isShowingThumbnails}}
+    <div class='drawer-header'>
+      <label>Thumbnails</label>
+    </div>
+    <div class='drawer-content'>
+      {{#each numberedThumbnails}}
+        <div
+          class='thumbnail'
+          on:el:click="fireThumbnailClick(url)"
+        >
+          <img src="{{url}}" />
+          <span>{{pageNumber}}</span>
+        </div>
+      {{/each}}
+    </div>
+  {{/if}}
+</div>

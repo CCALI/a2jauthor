@@ -6,7 +6,7 @@
 <can-import from="@caliorg/a2jdeps/elements/a2j-blank/"/>
 <can-import from="@caliorg/a2jdeps/elements/a2j-template/"/>
 <can-import from="@caliorg/a2jdeps/elements/a2j-header-footer/"/>
-<can-import from="@caliorg/a2jdeps/pdf/editor/"/>
+<can-import from="../../pdf/editor/"/>
 
 <div class="page">
   {{#if(a2jTemplatePromise.isPending)}}

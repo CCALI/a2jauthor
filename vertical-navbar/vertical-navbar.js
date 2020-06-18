@@ -24,7 +24,7 @@ import 'can-map-define'
  *
  * `<vertical-navbar>`'s viewModel.
  */
-export let VerticalNavbarVM = CanMap.extend('VerticalNavbarVM', {
+export const VerticalNavbarVM = CanMap.extend('VerticalNavbarVM', {
   define: {
     /**
      * @property {String} verticalNavbar.ViewModel.prototype.define.page page

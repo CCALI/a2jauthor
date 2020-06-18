@@ -1,5 +1,5 @@
 import { assert } from 'chai'
-import moveItem from './move-item-array'
+import moveItem from '../move-item-array'
 
 import 'steal-mocha'
 

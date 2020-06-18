@@ -1,0 +1,349 @@
+<can-import from='~/modal/' />
+<can-import from='can-stache-route-helpers' />
+<can-import from='~/variables/editor/' />
+<can-import from='../addendum-options/' />
+<can-import from='../assignment-form/' />
+<can-import from='../thumbnail-sidebar/' />
+<can-import from="./editor.less" />
+
+<div class='editor-container'>
+  <div class='editor-sidebar'>
+    <a class='editor-list-return' href="{{routeUrl page='templates' guideId=guideId}}">
+      <i class="glyphicon glyphicon-left-open" aria-hidden="true"></i>
+      <span>Back to templates</span>
+    </a>
+    <div class='editor-template-info'>
+      <label>
+        <span class='label-title'>Template title</span>
+        <input
+          class='template-name'
+          type='text'
+          el:value:bind="template.title"
+          placeholder='My PDF Template'
+          on:el:change="onTitleChange()"
+        />
+      </label>
+    </div>
+    <div class='actions'>
+      <div class='btn-set'>
+        <button
+          class="btn btn-default"
+          on:el:click="onTestAssemble()"
+          {{^if(hasPdf)}}disabled{{/if}}
+        >
+          <span class='ui-button-text'>
+            <span class="glyphicon-file-pdf" aria-hidden="true"></span>
+            Test assemble
+          </span>
+        </button>
+
+        <button
+          class="btn btn-default"
+          on:el:click="onTemplateSave()"
+          {{#if(isSavingTemplate)}}
+            disabled='disabled'
+          {{/if}}
+        >
+          <span class='ui-button-text'>
+            <span class="glyphicon-floppy" aria-hidden="true"></span>
+            Save
+          </span>
+        </button>
+      </div>
+      {{#if(lastSaveDate)}}
+        <div class='save-status'>
+          {{#if saveError}}
+            <p title='Error: {{saveError.message}}'>Unable to save template</p>
+          {{else}}
+            <time title='{{lastSaveDateLongText}}'>
+              {{lastSaveDateShortText}}
+            </time>
+          {{/if}}
+          <div class='indicator {{#if(isDirtyTimer)}}indicator--dirty{{else}}{{#if(isSavingTemplate)}}indicator--saving{{else}}{{#if(saveError)}}indicator--danger{{/if}}{{/if}}{{/if}}'></div>
+        </div>
+      {{/if}}
+    </div>
+    <section class='document-options'>
+      <label class='label-title'>Document options</label>
+      <div class='font-option'>
+        <label>Base PDF</label>
+        <div>
+          {{#if(hasPdf)}}
+            {{#if(templatePdfUrl)}}
+              <a title='View and/or download' href='{{templatePdfUrl}}' target='_blank'>View</a>
+              &bull;
+            {{/if}}
+            <a title='Replace base PDF' on:el:click='uploadNewPdf()'>Replace</a>
+          {{else}}
+            None..yet
+          {{/if}}
+        </div>
+      </div>
+      {{#if(isReplacing)}}
+        <author-modal
+          modalTitle:raw="Confirm PDF replacement"
+          cancelText:raw="Cancel"
+          onCancel:from='cancelLesserReplacement'
+          submitText:raw="Replace PDF"
+          onSubmit:from='confirmLesserReplacement'
+        >
+          <p>
+            The replacement PDF ({{newPageCount}} {{#is(newPageCount, 1)}}page{{else}}pages{{/is}})
+            is shorter then the original PDF ({{currentPageCount}} {{#is(currentPageCount, 1)}}page{{else}}pages{{/is}}).
+            Variable boxes will be discarded from the excess pages.
+          </p>
+        </author-modal>
+      {{/if}}
+      <div class='font-option'>
+        <label>Font name</label>
+        {{#if(fontError)}}
+          <p title="{{fontError}}">Failed to load supported fonts</p>
+        {{else}}
+          <select
+            el:value:bind="documentOptions.fontName"
+            {{#if(isLoadingFonts)}}
+              disabled='disabled'
+            {{/if}}
+          >
+            {{#each(supportedFonts)}}
+              <option value="{{.}}">{{.}}</option>
+            {{/each}}
+          </select>
+        {{/if}}
+      </div>
+      <div class='font-option'>
+        <label>Font size</label>
+        <select el:value:bind="documentOptions.fontSize">
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+          <option value="14">14</option>
+          <option value="15">15</option>
+        </select>
+      </div>
+      <div class='font-option'>
+        <label>Addendum</label>
+        <div>
+          <a on:el:click="showAddendumOptions()">Configure</a>
+        </div>
+      </div>
+      {{#if(isAddendumOptionsShowing)}}
+        <addendum-options
+          defaultPageSize:from="getDefaultPageSize()"
+          savedOptions:from="documentOptions.addendumOptions"
+          onSaveOptions:from="saveAddendumOptions"
+          onCancel:from="hideAddendumOptions"
+        />
+      {{/if}}
+    </section>
+    <section class='conditional-logic'>
+      <label class='label-title'>
+        Conditional logic
+        <input
+          type='checkbox'
+          class='label-check'
+          checked:bind="isConditionalLogicEnabled"
+        />
+      </label>
+      <p class="{{#not(isConditionalLogicEnabled)}}text-muted{{/not}}">
+        Only use this template if
+      </p>
+      <condition-form
+        variablesList:from="guide.variablesList"
+        operator:bind="templateState.operator"
+        leftOperand:bind="templateState.leftOperand"
+        rightOperand:bind="templateState.rightOperand"
+        disabled:from="not(isConditionalLogicEnabled)"
+        rightOperandType:bind="templateState.rightOperandType"
+      />
+    </section>
+  </div>
+  <div class='editor-main'>
+    {{#if(thumbnailImageUrls.length)}}
+      <thumbnail-sidebar
+        isShowingThumbnails:from="isShowingThumbnails"
+        thumbnailImageUrls:from="thumbnailImageUrls"
+        onDrawerHandleClick:from="onDrawerHandleClick"
+        onThumbnailClick:from="onThumbnailClick"
+      />
+    {{/if}}
+
+    <div class='editor-pdf-view'>
+      {{^if(hasPdf)}}
+        <div class='pdf-state pdf-state--initial'>
+          <span class="glyphicon-doc-new" aria-hidden="true"></span>
+          <p>Upload a base PDF to get started</p>
+          <button
+            class='btn btn-primary'
+            on:el:click='uploadNewPdf()'
+          >Upload PDF</button>
+        </div>
+      {{else}}
+      {{#if(isPdfLoading)}}
+        <div class="loading">
+          <span class="glyphicon-spin6 animate-spin" aria-hidden="true"></span>
+        </div>
+      {{else}}
+        {{#if(pdfError)}}
+          <div class='pdf-state pdf-state--error'>
+            <span class="glyphicon-attention" aria-hidden="true"></span>
+            <p title='{{pdfError}}'>Failed to load PDF</p>
+            <button
+              class='btn btn-primary'
+              on:el:click='uploadNewPdf()'
+            >Upload new PDF</button>
+          </div>
+        {{/if}}
+
+        {{#if(isAssigning)}}
+          <assignment-form
+            variableDict:from="guide.vars"
+            variableOptionsDict:from="documentOptions.variableOptions"
+            onCancel:from="onAssignmentCancel"
+            onAssign:from="onAssignmentSubmit"
+            onUnassign:from="onAssignmentUnassign"
+            selectedBoxes:from="selectedBoxes"
+          />
+        {{/if}}
+
+        {{#each(pages)}}
+          <div
+            class='editor-pdf-page'
+            data-page='{{page}}'
+            draggable="false"
+            {{#if(domSize)}}
+              style='width: {{domSize.width}}px; height: {{domSize.height}}px'
+            {{/if}}
+          >
+            {{#if(isLoading)}}
+              <div class="loading">
+                <span class="glyphicon-spin6 animate-spin" aria-hidden="true"></span>
+              </div>
+            {{else}}
+              <img src="{{url}}" draggable="false" />
+              <div class='editor-pdf-overlay' draggable="false">
+                {{#if(scope.vm.previewBox)}}
+                  <div
+                    class='preview-box'
+                    style="top: {{scope.vm.previewBox.top}}px; left: {{scope.vm.previewBox.left}}px; width: {{scope.vm.previewBox.width}}px; height: {{scope.vm.previewBox.height}}px">
+                  </div>
+                {{/if}}
+
+                {{#each(scope.vm.boxes)}}
+                  {{#is(./page, ../page)}}
+                    <div
+                      data-id='{{id}}'
+                      class='variable-box{{#if(variable)}} variable-box--assigned{{/if}}{{#if(isSelected)}} variable-box--selected{{/if}}'
+                      style="top: {{area.top}}px; left: {{area.left}}px; width: {{area.width}}px; height: {{area.height}}px"
+                    >
+                      {{#if(isSelected)}}
+                        {{^if scope.vm.isSmallDimension(area.width)}}
+                          <i class='box-resize-handle box-resize-handle--n'></i>
+                          <i class='box-resize-handle box-resize-handle--s'></i>
+                        {{/if}}
+                        {{^if(scope.vm.isSmallDimension(area.height))}}
+                          <i class='box-resize-handle box-resize-handle--w'></i>
+                          <i class='box-resize-handle box-resize-handle--e'></i>
+                        {{/if}}
+                        <i class='box-resize-handle box-resize-handle--nw'></i>
+                        <i class='box-resize-handle box-resize-handle--sw'></i>
+                        <i class='box-resize-handle box-resize-handle--ne'></i>
+                        <i class='box-resize-handle box-resize-handle--se'></i>
+                      {{/if}}
+                      <div class='box-content'>
+                        <span class='box-label'>
+                          {{#if(variable)}}
+                            {{variable}}
+                            {{#if(variableValue)}}
+                              &mdash; {{variableValue}}
+                            {{/if}}
+                          {{else}}
+                            <i>Unassigned Variable</i>
+                          {{/if}}
+                        </span>
+                      </div>
+                      {{#if(scope.vm.isMiniBox(.))}}
+                        <span class='box-tooltip'>
+                          {{#if(variable)}}
+                            {{variable}}
+                            {{#if(variableValue)}}
+                              &mdash; {{variableValue}}
+                            {{/if}}
+                          {{else}}
+                            <i>Unassigned Variable</i>
+                          {{/if}}
+                        </span>
+                      {{/if}}
+                    </div>
+                  {{/is}}
+                {{/each}}
+              </div>
+            {{/if}}
+          </div>
+        {{/each}}
+      </div>
+    {{/if}}
+    {{/if}}
+  </div>
+
+  <div class='shortcut-menu'>
+    {{#if(isShortcutMenuShowing)}}
+      <author-modal
+        modalTitle:raw="Keyboard Shortcuts"
+        cancelText:raw="Dismiss"
+        onCancel:from='toggleShortcutMenu'
+      >
+        <table>
+          <thead>
+            <tr>
+              <th class='shortcut'>Shortcut</th>
+              <th>Function</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class='shortcut'><kbd>Delete</kbd></td>
+              <td>Delete selected boxes.</td>
+            </tr>
+            <tr>
+              <td class='shortcut'><kbd>Backspace</kbd></td>
+              <td>Delete selected boxes.</td>
+            </tr>
+            <tr>
+              <td class='shortcut'><kbd>&uarr;</kbd></td>
+              <td>Nudge selected boxes up.</td>
+            </tr>
+            <tr>
+              <td class='shortcut'><kbd>&darr;</kbd></td>
+              <td>Nudge selected boxes down.</td>
+            </tr>
+            <tr>
+              <td class='shortcut'><kbd>&larr;</kbd></td>
+              <td>Nudge selected boxes to the left.</td>
+            </tr>
+            <tr>
+              <td class='shortcut'><kbd>&rarr;</kbd></td>
+              <td>Nudge selected boxes to the right.</td>
+            </tr>
+            <tr>
+              <td class='shortcut'><kbd>Control</kbd>&plus;<kbd>A</kbd></td>
+              <td>Select all boxes.</td>
+            </tr>
+            <tr>
+              <td class='shortcut'><kbd>Control</kbd>&plus;<kbd>D</kbd></td>
+              <td>Duplicate selection.</td>
+            </tr>
+            <tr>
+              <td class='shortcut'><kbd>Control</kbd>&plus;<kbd>I</kbd></td>
+              <td>Invert selection. Selected boxes are deselected and unselected boxes are selected.</td>
+            </tr>
+            <tr>
+              <td class='shortcut'><kbd>Control</kbd>&plus;<kbd>/</kbd></td>
+              <td>Toggle shortcut menu.</td>
+            </tr>
+          </tbody>
+        </table>
+      </author-modal>
+    {{/if}}
+  </div>
+</div>

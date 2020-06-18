@@ -584,8 +584,8 @@ function parseXML_A2J_to_CAJA (TEMPLATE) {	// Parse A2J into CAJA
     page.type = 'A2J'
     page.style = ''
     page.step = parseInt(QUESTION.attr('STEP'), 10)
-    page.mapx = parseInt(0.5 * QUESTION.attr('MAPX'), 10)
-    page.mapy = parseInt(0.7 * QUESTION.attr('MAPY'), 10) + 100
+    page.mapx = parseInt(QUESTION.attr('MAPX'), 10)
+    page.mapy = parseInt(QUESTION.attr('MAPY'), 10)
     page.repeatVar = makestr(QUESTION.attr('REPEATVAR'))
     page.outerLoopVar = makestr(QUESTION.attr('OUTERLOOPVAR'))
     page.nested = textToBool(QUESTION.attr('NESTED'))

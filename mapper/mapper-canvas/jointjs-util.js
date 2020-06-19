@@ -120,6 +120,11 @@ export const makeNode = (page) => {
 }
 
 const handlePaperEvents = (paper, vm) => {
+  // adjust paper grid (with padding options) to new content scale
+  paper.on('scale', function () {
+    paper.fitToContent(fitToContentOptions)
+  })
+
   paper.on('element:pointerdown', function (cellView) {
     // updating the pageName will cascade highlight events in mapper-list and mapper-canvas
     const pageName = cellView.model.attributes.pageName

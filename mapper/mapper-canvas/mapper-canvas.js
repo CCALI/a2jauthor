@@ -22,6 +22,11 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
   lastCoordinatesByStep: {},
   buildingMapper: { default: true },
   mapperLoadingMessage: { default: 'Building Mapper ... ' },
+  numberOfSteps: {
+    get () {
+      return this.guide.attr('steps').length
+    }
+  },
 
   // JointJS/Canvas related props
   paper: {}, // jointjs paper instance/view - set in connectedCallback()
@@ -312,7 +317,7 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
     })
 
     // create jointjs paper canvas/view and graph model
-    vm.paper = buildPaper(vm)
+    vm.paper = buildPaper(vm, this.numberOfSteps)
 
     // mutateQueue let's the dom update with the spinner while the expensive work
     // of adding the mapper nodes can happen after

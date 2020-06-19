@@ -31,15 +31,15 @@ export const stepBackgroundMap = {
 }
 
 /** jointjs paper/graph code and event listeners */
-export const buildPaper = (vm) => {
+export const buildPaper = (vm, numberOfSteps) => {
   // create graph model
   const graph = new dia.Graph()
   // return paper canvas
   const paper = new dia.Paper({
     el: document.getElementById('mapper-canvas'),
     model: graph,
-    width: mapSize.width,
-    height: mapSize.height,
+    width: numberOfSteps * nodeSize.width,
+    height: numberOfSteps * nodeSize.height,
     gridSize: gridSize,
     drawGrid: true,
     background: {

@@ -288,6 +288,7 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
     // turn off build spinner
     vm.buildingMapper = false
 
+    vm.paper.fitToContent(fitToContentOptions)
     return paper
   },
 

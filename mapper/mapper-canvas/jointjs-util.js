@@ -3,11 +3,8 @@ import { dia, shapes, util } from 'jointjs'
 // settings/constants for layout
 export const gridSize = 10
 export const nodeSize = { height: 120, width: 120 }
-export const mapSize = { height: nodeSize.height * 13, width: nodeSize.width * 16 }
 export const mapPadding = { top: nodeSize.height / 2, right: nodeSize.width / 2, bottom: nodeSize.height * 1.5, left: nodeSize.width / 2 }
 export const fitToContentOptions = {
-  minWidth: nodeSize.width * 26,
-  minHeight: nodeSize.height * 13,
   padding: { top: mapPadding.top, right: mapPadding.right, bottom: mapPadding.bottom, left: mapPadding.left }
 }
 
@@ -31,15 +28,15 @@ export const stepBackgroundMap = {
 }
 
 /** jointjs paper/graph code and event listeners */
-export const buildPaper = (vm, numberOfSteps) => {
+export const buildPaper = (vm, width, height) => {
   // create graph model
   const graph = new dia.Graph()
   // return paper canvas
   const paper = new dia.Paper({
     el: document.getElementById('mapper-canvas'),
     model: graph,
-    width: numberOfSteps * nodeSize.width,
-    height: numberOfSteps * nodeSize.height,
+    width: width || 1000,
+    height: height || 1000,
     gridSize: gridSize,
     drawGrid: true,
     background: {

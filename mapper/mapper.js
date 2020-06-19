@@ -1,6 +1,7 @@
 import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './mapper.stache'
+import _debounce from 'lodash/debounce'
 
 export const MapperVM = DefineMap.extend('MapperVM', {
   // passed in via author app.stache
@@ -73,6 +74,22 @@ export const MapperVM = DefineMap.extend('MapperVM', {
   // click handler for selection and highlighting
   onSelectPageName (pageName) {
     this.selectedPageName = pageName
+  },
+
+  connectedCallback (el) {
+    const $mapperPage = $(el)
+    const $mapperCanvasContainer = $('.mapper-canvas-container')
+    const updateCanvasHeight = () => {
+      $mapperCanvasContainer.height($mapperPage.height() - 66) // mapper-toolbar 50px, a2j-footer 16px
+    }
+
+    // this makes sure the x-axis scroll bar shows at the bottom of the mapper-canvas
+    updateCanvasHeight()
+    window.addEventListener('resize', updateCanvasHeight)
+
+    return () => {
+      window.removeEventListener('resize', _debounce(updateCanvasHeight, 150))
+    }
   }
 })
 

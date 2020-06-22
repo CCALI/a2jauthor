@@ -9,6 +9,7 @@ export const MapperToolbarVM = DefineMap.extend('MapperToolbarVM', {
   paper: {},
   graph: {},
 
+  // track scale outside of jointjs for zoom math
   scale: {
     default: 1
   },
@@ -44,7 +45,7 @@ export const MapperToolbarVM = DefineMap.extend('MapperToolbarVM', {
   },
 
   zoomOut () {
-    this.scale = this.scale - 0.1
+    this.scale = this.scale >= 0.2 ? this.scale - 0.1 : 0.1
     this.paper.scale(this.scale)
   },
 

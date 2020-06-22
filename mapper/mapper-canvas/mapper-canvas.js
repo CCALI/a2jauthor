@@ -243,7 +243,7 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
     const noPagesInStep = !lastY
     const mapy = noPagesInStep ? defaultY : lastY + defaultIncreaseY
 
-    const newPage = isPopup ? window.pagePopupEditNew(mapx, mapy) : window.createNewPage(stepIndex, mapx, mapy)
+    const newPage = isPopup ? window.createNewPopup() : window.createNewPage(stepIndex, mapx, mapy)
 
     // save the new page and it's mapx/mapy values
     // spinner here? make guideSave a promise ???

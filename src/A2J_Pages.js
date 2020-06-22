@@ -208,23 +208,19 @@ function createNewPage (newStep, mapx, mapy) {	// Create a new blank page, after
   return page
 }
 
-function pagePopupEditNew (mapx, mapy) { // Create a new blank popup page, after selected popup.
-  var newName = getSelectedPageName()
-  if (newName === '') {
-    newName = 'Popup'
-  } else { // Git Issue #268 - add Popup to new popup name
-    newName += ' - Popup'
-  }
+function createNewPopup () { // Create a new blank popup page, after selected popup.
+  var newName = 'New Popup'
   var page = window.gGuide.addUniquePage(newName)
   page.type = window.CONST.ptPopup
-  page.mapx = mapx || 60
-  page.mapy = mapy || 60
+  page.mapx = 60
+  page.mapy = window.getNewMapYForStep(0)
   page.text = 'My popup text'
   page.step = 0
   window.gGuide.sortPages()
   window.updateTOC()
   pageEditSelect(page.name)
-  return page.name
+
+  return page
 }
 
 function pageRename (page, newName) {

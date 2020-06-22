@@ -366,7 +366,7 @@ function main () { // Everything loaded, now execute code.
     createNewPage()
   })
   $('#tabsPages #new-popup').click(function () {
-    pagePopupEditNew()
+    createNewPopup()
   })
 
   $('#vars_load').button({label: 'Load', icons: {primary: 'ui-icon-locked'}}).next().button({label: 'Save', icons: {primary: 'ui-icon-locked'}})

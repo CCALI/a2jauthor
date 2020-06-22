@@ -125,7 +125,7 @@ function pageNameRelFilter (e, pageName) { // Return all DOM elements whose REL 
   })
 }
 
-function pageEditSelected () { // Return currently selected page or '' if none selected.
+function getSelectedPageName () { // Return currently selected page name or '' if none selected.
   var rel = window.makestr(window.$('.pageoutline a.' + window.SELECTED).first().attr('rel'))
   if (rel.indexOf('PAGE ') === 0) {
     rel = rel.substr(5)
@@ -156,7 +156,7 @@ function pageEditClone (pageName) { // Clone named page and return new page's na
 
 function pageEditNew (newStep, mapx, mapy) {	// Create a new blank page, after selected page.
   // if newStep exists, this call came from the new Mapper tool
-  var newName =  pageEditSelected()
+  var newName =  getSelectedPageName()
   var selPage = false
   if (newName === '') { // No page selected, use first page listed in TOC and in first step.
     var rel = window.makestr(window.$('.pageoutline li').first().attr('rel'))
@@ -196,7 +196,7 @@ function pageEditNew (newStep, mapx, mapy) {	// Create a new blank page, after s
 }
 
 function pagePopupEditNew (mapx, mapy) { // Create a new blank popup page, after selected popup.
-  var newName = pageEditSelected()
+  var newName = getSelectedPageName()
   if (newName === '') {
     newName = 'Popup'
   } else { // Git Issue #268 - add Popup to new popup name

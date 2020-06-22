@@ -348,13 +348,13 @@ function main () { // Everything loaded, now execute code.
   $('#MapperToolbar button:eq(3)').click(mapZoomClick)
 
   $('#tabsPages #open-guide').click(function () {
-    gotoPageEdit(pageEditSelected())
+    gotoPageEdit(getSelectedPageName())
   })
   $('#tabsPages #clone-guide').click(function () {
-    pageEditClone(pageEditSelected())
+    pageEditClone(getSelectedPageName())
   })
   $('#tabsPages #delete-guide').click(function () {
-    pageEditDelete(pageEditSelected())
+    pageEditDelete(getSelectedPageName())
   })
   $('#tabsPages #save-guide').click(function () {
     if (window.gGuide) {

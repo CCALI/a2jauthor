@@ -154,45 +154,58 @@ function pageEditClone (pageName) { // Clone named page and return new page's na
   return page.name
 }
 
-function pageEditNew (newStep, mapx, mapy) {	// Create a new blank page, after selected page.
-  // if newStep exists, this call came from the new Mapper tool
-  var newName =  getSelectedPageName()
-  var selPage = false
-  if (newName === '') { // No page selected, use first page listed in TOC and in first step.
-    var rel = window.makestr(window.$('.pageoutline li').first().attr('rel'))
-    if (rel.indexOf('PAGE ') === 0) {
-      rel = rel.substr(5)
-    } else {
-      rel = 'New page'
+function getNewMapYForStep (stepNumber) {
+  let newMapY = 60
+  window.gGuide.sortedPages.forEach((page) => {
+    const pageStepNumber = parseInt(page.step)
+    if(pageStepNumber === stepNumber && page.mapy > newMapY) {
+      newMapY = page.mapy
     }
-    newName = rel
-    newStep = newStep || 0
-  } else { // Create new page in same step as selected page.
-    selPage = window.gGuide.pages[newName]
-    newStep = selPage.step
+  })
+
+  // TODO: amount added to mapy should be based on nodeSize.height from jointjs-util.js
+  return newMapY + 240
+}
+
+function createNewPage (newStep, mapx, mapy) {	// Create a new blank page, after selected page.
+  // if newStep exists, this call came from the new Mapper tool
+  // var newPageName
+  var selectedPageName =  getSelectedPageName()
+  var firedFromPagesTab = !newStep
+
+  // resolve step/x&y from pages tab
+  if (firedFromPagesTab) {
+    if (selectedPageName) {
+      const selectedPage = window.gGuide.pages[selectedPageName]
+      newStep = selectedPage.step
+      mapx = selectedPage.mapx
+      // TODO: amount added to mapy should be based on nodeSize.height from jointjs-util.js
+      mapy = selectedPage.mapy + 240
+    } else {
+      newStep = 0
+      mapx = 60
+      mapy = getNewMapYForStep(0)
+    }
   }
 
-  if (selPage === false) {
-    selPage = window.gGuide.sortedPages.length > 0 ? window.gGuide.sortedPages[window.gGuide.sortedPages.length - 1] : false
-  }
-
-  var page = window.gGuide.addUniquePage(newName)
+  var page = window.gGuide.addUniquePage('New Page')
   page.type = 'A2J'
   page.text = 'My text'
   page.step = newStep
-  // page.mapx = selPage ? selPage.mapx : 0
-  // page.mapy = selPage ? selPage.mapy + 150 : 0
-  page.mapx = mapx || (selPage && selPage.mapx) || 60
-  page.mapy = mapy || (selPage ? selPage.mapy + 240 : 60)
+  page.mapx = mapx
+  page.mapy = mapy
 
   // 2014-10-22 Ensure a new page has at least one button
-  var cnt = new window.TButton()
-  cnt.label = window.lang.Continue
-  page.buttons = [cnt]
+  var defaultButton = new window.TButton()
+  defaultButton.label = window.lang.Continue
+  page.buttons = [defaultButton]
+  // sort pages and update view
   window.gGuide.sortPages()
   window.updateTOC()
+  // auto select new page
   pageEditSelect(page.name)
-  return page.name
+
+  return page
 }
 
 function pagePopupEditNew (mapx, mapy) { // Create a new blank popup page, after selected popup.

@@ -243,14 +243,13 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
     const noPagesInStep = !lastY
     const mapy = noPagesInStep ? defaultY : lastY + defaultIncreaseY
 
-    const newPageName = isPopup ? window.pagePopupEditNew(mapx, mapy) : window.pageEditNew(stepIndex, mapx, mapy)
+    const newPage = isPopup ? window.pagePopupEditNew(mapx, mapy) : window.createNewPage(stepIndex, mapx, mapy)
 
     // save the new page and it's mapx/mapy values
     // spinner here? make guideSave a promise ???
     window.guideSave()
 
     // create new node and add to mape
-    const newPage = window.gGuide.pages[newPageName]
     const newMapNode = this.createNode(newPage)
 
     // add the cell
@@ -260,7 +259,7 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
     this.paper.fitToContent(fitToContentOptions)
 
     // auto select the new added page
-    this.onSelectPageName(newPageName)
+    this.onSelectPageName(newPage.name)
   },
 
   sortAndSaveGuidePages () {

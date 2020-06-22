@@ -363,7 +363,7 @@ function main () { // Everything loaded, now execute code.
   })
 
   $('#tabsPages #new-page').click(function () {
-    pageEditNew()
+    createNewPage()
   })
   $('#tabsPages #new-popup').click(function () {
     pagePopupEditNew()

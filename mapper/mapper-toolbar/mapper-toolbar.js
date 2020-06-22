@@ -54,10 +54,14 @@ export const MapperToolbarVM = DefineMap.extend('MapperToolbarVM', {
   },
 
   zoomToWidth () {
-    const mapperPageWidth = $('mapper-canvas').width()
-    const area = this.paper.getContentArea()
-    const paperWidth = area.width
-    this.scale = mapperPageWidth / paperWidth
+    // paper.getContentArea().width never changes so use paper grid width to get multiplier
+    const mapperContainerWidth = $('.mapper-canvas-container').width()
+    const paperBackgroundWidth = $('.joint-paper-grid').width()
+    const multiplier = Math.floor((mapperContainerWidth / paperBackgroundWidth) * 10) / 10
+    const currentScale = this.paper.scale().sx
+    const newScale = currentScale * multiplier
+
+    this.scale = Math.floor(newScale * 10) / 10
     this.paper.scale(this.scale)
   },
 

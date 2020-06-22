@@ -44,12 +44,12 @@ export const MapperToolbarVM = DefineMap.extend('MapperToolbarVM', {
   },
 
   zoomOut () {
-    this.scale = this.scale * 0.9
+    this.scale = this.scale - 0.1
     this.paper.scale(this.scale)
   },
 
   zoomIn () {
-    this.scale = this.scale * 1.1
+    this.scale = this.scale + 0.1
     this.paper.scale(this.scale)
   },
 

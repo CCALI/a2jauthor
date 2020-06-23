@@ -171,7 +171,7 @@ function createNewPage (newStep, mapx, mapy) {	// Create a new blank page, after
   // if newStep exists, this call came from the new Mapper tool
   // var newPageName
   var selectedPageName =  getSelectedPageName()
-  var firedFromPagesTab = !newStep
+  var firedFromPagesTab = newStep == null
 
   // resolve step/x&y from pages tab
   if (firedFromPagesTab) {

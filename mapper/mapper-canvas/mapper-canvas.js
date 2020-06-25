@@ -28,6 +28,10 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
       return this.guide.attr('steps').length
     }
   },
+  scrollToSelectedNode (pageName) {
+    const selectedElement = $(`[model-id=${this.selectedNodeId}]`)[0]
+    selectedElement.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'})
+  },
 
   // JointJS/Canvas related props
   paper: {}, // jointjs paper instance/view - set in connectedCallback()
@@ -36,12 +40,12 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
       return this.paper && this.paper.model
     }
   },
-  selectedNodeId: { // selected graph model to match view below
+  selectedNodeId: { // selected graph model ID to match view below
     get () {
       return this.selectedPageName && this.pageNameToMapId[this.selectedPageName]
     }
   },
-  selectedNodeView: { // currently selected node in paper view(canvas)
+  selectedNodeView: { // currently selected element in paper view(canvas)
     get () {
       return this.selectedNodeId && this.paper.findViewByModel(this.selectedNodeId)
     }

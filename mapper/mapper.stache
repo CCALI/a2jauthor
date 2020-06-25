@@ -25,6 +25,7 @@
           addPage:from="addPage"
           addPopup:from="addPopup"
           pagesAndPopups:from="pagesAndPopups"
+          scrollToSelectedNode:from="scrollToSelectedNode"
         />
       </div>
       <div class="mapper-canvas-container col-sm-10">
@@ -36,9 +37,10 @@
           addPage:to="addPage"
           addPopup:to="addPopup"
           pagesAndPopups:from="pagesAndPopups"
+          lastCoordinatesByStep:from="lastCoordinatesByStep"
           paper:to="paper"
           graph:to="graph"
-          lastCoordinatesByStep:from="lastCoordinatesByStep"
+          scrollToSelectedNode:to="scrollToSelectedNode"
         />
       </div>
     </div>

@@ -10,7 +10,7 @@
       {{#for (page of step.pages)}}
         <span
           class="page-item list-group-item unselectable {{#eq(selectedPageName, page.name)}}item-selected{{/eq}}"
-          on:pointerdown="this.onSelectPageName(page.name)"
+          on:pointerdown="this.selectListPageName(page.name)"
           on:dblclick="this.openQDE(page.name)">
           {{page.name}}<br>
         </span>

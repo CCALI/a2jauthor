@@ -7,6 +7,7 @@ export const MapperVM = DefineMap.extend('MapperVM', {
   // passed in via author app.stache
   guide: {},
   // passed up from mapper-canvas.stache
+  scrollToSelectedNode: {},
   openQDE: {},
   addPage: {},
   addPopup: {},
@@ -23,8 +24,8 @@ export const MapperVM = DefineMap.extend('MapperVM', {
     }
   },
 
+  // returns {'0': { displayName: 'STEP 0', pages: [] }, 'popups': { displayName: 'POPUPS', pages: [] } }
   buildPagesAndPopups (sortedPages, guideSteps) {
-    // returns {'0': { displayName: 'STEP 0', pages: [] }, 'popups': { displayName: 'POPUPS', pages: [] } }
     const pagesAndPopups = {}
 
     guideSteps.forEach((step) => {

@@ -226,7 +226,9 @@ const handleGraphEvents = (graph, vm) => {
   })
 
   graph.on('change:position', function (element, position) {
-    const pageName = element.attributes.attrs['.label'].text
+    let pageName = element.attributes.attrs['.label'].text
+    // remove line breaks from label to get CanJS pageName
+    pageName = pageName.replace(/(\r\n|\n|\r)/gm, ' ')
     const page = vm.guide.attr('pages')[pageName]
     const gGuidePage = window.gGuide.pages[pageName]
     if (!page || !gGuidePage) { return }

@@ -60,9 +60,10 @@ export const MapperToolbarVM = DefineMap.extend('MapperToolbarVM', {
     const paperBackgroundWidth = $('.joint-paper-grid').width()
     const multiplier = Math.floor((mapperContainerWidth / paperBackgroundWidth) * 10) / 10
     const currentScale = this.paper.scale().sx
-    const newScale = currentScale * multiplier
+    const newScale = Math.floor((currentScale * multiplier) * 10) / 10
 
-    this.scale = Math.floor(newScale * 10) / 10
+    // ensure reasonable minimum scale
+    this.scale = newScale < 0.1 ? 0.1 : newScale
     this.paper.scale(this.scale)
   },
 

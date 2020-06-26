@@ -91,8 +91,8 @@ export const MapperToolbarVM = DefineMap.extend('MapperToolbarVM', {
 
   postItNightmare () {
     const cells = this.graph.getCells()
-    let getX = () => Math.random() * 801
-    let getY = () => Math.random() * 601
+    let getX = () => Math.random() * 1201
+    let getY = () => Math.random() * 801
     // TODO: these values should be dictated to computed by nodeSize constant(s)
     cells.forEach((cell) => {
       cell.position(getX(), getY())

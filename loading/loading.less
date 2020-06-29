@@ -1,8 +1,13 @@
+@modal-bg:  rgba(0,0,0,0.6);
+
 app-loading {
   display: block;
 
   p {
     font-size: 2.5em;
+    &.overlay-active {
+      color: #f8f8f8;
+    }
   }
 
   .app-loading{
@@ -10,5 +15,17 @@ app-loading {
 		top: 50%;
 		left: 50%;
 		transform: translateX(-50%) translateY(-50%);
+    &.overlay-active {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transform: initial;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1900;
+      background-color: @modal-bg;
+    }
   }
 }

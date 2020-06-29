@@ -8,6 +8,7 @@ export const MapperToolbarVM = DefineMap.extend('MapperToolbarVM', {
   // jointjs paper & graph passed in from mapper-canvas.stache
   paper: {},
   graph: {},
+  buildingMapper: {},
 
   // track scale outside of jointjs for zoom math
   scale: {
@@ -73,30 +74,38 @@ export const MapperToolbarVM = DefineMap.extend('MapperToolbarVM', {
   },
 
   autoCleanup () {
+    this.buildingMapper = true
     const cells = this.graph.getCells()
     const lastMapY = [60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60]
 
-    // TODO: these values should be dictated to computed by nodeSize constant(s)
-    cells.forEach((cell) => {
-      const stepNumber = cell.attributes.stepNumber === 'popups' ? 0 : parseInt(cell.attributes.stepNumber)
+    setTimeout(() => {
+      // TODO: these values should be dictated to computed by nodeSize constant(s)
+      cells.forEach((cell) => {
+        const stepNumber = cell.attributes.stepNumber === 'popups' ? 0 : parseInt(cell.attributes.stepNumber)
 
-      const newX = stepNumber === 0 ? 60 : (stepNumber * 180) + 60
-      const newY = lastMapY[stepNumber]
-      lastMapY[stepNumber] = newY + 240
+        const newX = stepNumber === 0 ? 60 : (stepNumber * 180) + 60
+        const newY = lastMapY[stepNumber]
+        lastMapY[stepNumber] = newY + 240
 
-      cell.position(newX, newY)
+        cell.position(newX, newY)
+      })
+
+      this.paper.fitToContent(fitToContentOptions)
+      this.buildingMapper = false
     })
-
-    this.paper.fitToContent(fitToContentOptions)
   },
 
   postItNightmare () {
+    this.buildingMapper = true
     const cells = this.graph.getCells()
     let getX = () => Math.random() * 1201
     let getY = () => Math.random() * 801
-    // TODO: these values should be dictated to computed by nodeSize constant(s)
-    cells.forEach((cell) => {
-      cell.position(getX(), getY())
+    setTimeout(() => {
+      // TODO: these values should be dictated to computed by nodeSize constant(s)
+      cells.forEach((cell) => {
+        cell.position(getX(), getY())
+      })
+      this.buildingMapper = false
     })
   }
 })

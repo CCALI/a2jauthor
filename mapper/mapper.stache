@@ -11,6 +11,7 @@
           <mapper-toolbar
             paper:from="paper"
             graph:from="graph"
+            buildingMapper:bind="buildingMapper"
           />
         </div>
     </div>
@@ -40,6 +41,7 @@
           lastCoordinatesByStep:from="lastCoordinatesByStep"
           paper:to="paper"
           graph:to="graph"
+          buildingMapper:bind="buildingMapper"
           scrollToSelectedNode:to="scrollToSelectedNode"
         />
       </div>

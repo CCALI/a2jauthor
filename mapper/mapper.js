@@ -8,6 +8,7 @@ export const MapperVM = DefineMap.extend('MapperVM', {
   guide: {},
   // passed up from mapper-canvas.stache
   scrollToSelectedNode: {},
+  buildingMapper: {},
   openQDE: {},
   addPage: {},
   addPopup: {},

@@ -116,7 +116,11 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
       const button = buttons[index]
       const previousLink = outPortLinks[index]
       const isSpecialButton = button && this.isSpecialButton(button)
+
+      // clean up legacy  GIs having `null` targets in button.next
+      button.next = button.next == null ? constants.qIDNOWHERE : button.next
       const hasNowhereTarget = button && button.next === constants.qIDNOWHERE
+
       // cleanup links for removed buttons, special target buttons, and empty string targets ''
       if (previousLink) {
         const targetId = this.pageNameToMapId[button.next]

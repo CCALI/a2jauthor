@@ -314,6 +314,17 @@ var debouncedSetQDEmaxHeight = debounce(function () {
   setQDEmaxHeight()
 }, 150)
 
+var handleNullButtonTargets = function (buttons) {
+  for (button of buttons) {
+    if (button.next == null) {
+      button.next = window.CONST.qIDNOWHERE
+    }
+  }
+
+  // courtesy return for tests
+  return buttons
+}
+
 // Bring page edit window forward with page content
 function gotoPageEdit (pageName) {
   $pageEditDialog = window.$('.page-edit-form')
@@ -323,6 +334,8 @@ function gotoPageEdit (pageName) {
 
   var page = window.gGuide.pages[pageName]
   if (page == null) return
+  // catches legacy interview button.next targets set to `null`
+  window.handleNullButtonTargets(page.buttons)
 
   // clear these so they refresh with new data. TODO - update in place
   window.$('#tabsLogic  .tabContent, #tabsText .tabContent').html('')
@@ -1011,7 +1024,7 @@ window.TGuide.prototype.pageFindReferences = function (findName, newName) {
       var popupid = match.match(window.REG.LINK_POP2)[1]
       if (popupid === findName) {
         add = true
-        if (newName !== null) {
+        if (newName != null) {
           popupid = window.escapeHtml(newName)
         }
       }
@@ -1038,7 +1051,7 @@ window.TGuide.prototype.pageFindReferences = function (findName, newName) {
     for (var bi in page.buttons) {
       var b = page.buttons[bi]
       if (b.next === findName) { // 2014-06-02 Make button point to renamed page.
-        if (newName || newName === '') { // https://github.com/CCALI/CAJA/issues/2614
+        if (newName != null) { // https://github.com/CCALI/CAJA/issues/2614
           b.next = newName
         }
 

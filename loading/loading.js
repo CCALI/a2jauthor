@@ -5,6 +5,10 @@ import template from './loading.stache'
 export const LoadingVM = DefineMap.extend('LoadingVM', {
   loadingMessage: {
     default: 'Loading ...'
+  },
+
+  hasOverlay: {
+    default: false
   }
 })
 

@@ -38,6 +38,22 @@ describe('src/A2J_Pages', function () {
     assert.equal(renameMatches[0].next, 'lasercats', 'should rename next target if newName is passed')
   })
 
+  it('handleNullButtonTargets', function () {
+    const buttons = [
+      {label: 'Continue', next: '1-Question'},
+      {label: 'Continue', next: null},
+      {label: 'Continue', next: undefined}
+    ]
+    const expectedButtons = [
+      {label: 'Continue', next: '1-Question'},
+      {label: 'Continue', next: ''},
+      {label: 'Continue', next: ''}
+    ]
+
+      const updatedButtons = window.handleNullButtonTargets(buttons)
+      assert.deepEqual(expectedButtons, updatedButtons, 'should replace button.next targets of `null` or `undefined` with empty string')
+  })
+
   it('buildPopupFieldSet', function () {
     // this prevents an error trying to upload the fake mp3 file below
     window.gGuideID = 0

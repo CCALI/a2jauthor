@@ -38,7 +38,6 @@ if (file_exists("../CONFIG.php")) { // legacy php config file for Author
 	define("LOCAL_USER", $config_data->LOCAL_USER);
 	define("GUIDES_DIR", $config_data->GUIDES_DIR);
 	define("GUIDES_URL", $config_data->GUIDES_URL);
-	define("SERVER_URL", $config_data->SERVER_URL);
 
 	$mysqli = new mysqli($config_data->DB_HOST, $config_data->DB_USER, $config_data->DB_PASSWORD, $config_data->DB_NAME, $config_data->DB_PORT);
 }
@@ -397,6 +396,7 @@ switch ($command){
 		$json=$_REQUEST['json'];
 		// Create new entry in guide table.
 		$sql="insert into guides (title,editoruid) values ('".$mysqli->real_escape_string($title)."', ".$userid.")";
+		// If this fails on blank interview, likely `archive` Field in guides db needs to be ticked to allow default value of null
 		if ($res=$mysqli->query($sql)) {
 			// Save as content to new folder owned by editor
 			$newgid=$mysqli->insert_id;

@@ -348,13 +348,13 @@ function main () { // Everything loaded, now execute code.
   $('#MapperToolbar button:eq(3)').click(mapZoomClick)
 
   $('#tabsPages #open-guide').click(function () {
-    gotoPageEdit(pageEditSelected())
+    gotoPageEdit(getSelectedPageName())
   })
   $('#tabsPages #clone-guide').click(function () {
-    pageEditClone(pageEditSelected())
+    pageEditClone(getSelectedPageName())
   })
   $('#tabsPages #delete-guide').click(function () {
-    pageEditDelete(pageEditSelected())
+    pageEditDelete(getSelectedPageName())
   })
   $('#tabsPages #save-guide').click(function () {
     if (window.gGuide) {
@@ -363,10 +363,10 @@ function main () { // Everything loaded, now execute code.
   })
 
   $('#tabsPages #new-page').click(function () {
-    pageEditNew()
+    createNewPage()
   })
   $('#tabsPages #new-popup').click(function () {
-    pagePopupEditNew()
+    createNewPopup()
   })
 
   $('#vars_load').button({label: 'Load', icons: {primary: 'ui-icon-locked'}}).next().button({label: 'Save', icons: {primary: 'ui-icon-locked'}})

@@ -3,11 +3,8 @@ import { dia, shapes, util } from 'jointjs'
 // settings/constants for layout
 export const gridSize = 10
 export const nodeSize = { height: 120, width: 120 }
-export const mapSize = { height: nodeSize.height * 13, width: nodeSize.width * 16 }
 export const mapPadding = { top: nodeSize.height / 2, right: nodeSize.width / 2, bottom: nodeSize.height * 1.5, left: nodeSize.width / 2 }
 export const fitToContentOptions = {
-  minWidth: nodeSize.width * 26,
-  minHeight: nodeSize.height * 13,
   padding: { top: mapPadding.top, right: mapPadding.right, bottom: mapPadding.bottom, left: mapPadding.left }
 }
 
@@ -31,15 +28,15 @@ export const stepBackgroundMap = {
 }
 
 /** jointjs paper/graph code and event listeners */
-export const buildPaper = (vm) => {
+export const buildPaper = (vm, width, height) => {
   // create graph model
   const graph = new dia.Graph()
   // return paper canvas
   const paper = new dia.Paper({
     el: document.getElementById('mapper-canvas'),
     model: graph,
-    width: mapSize.width,
-    height: mapSize.height,
+    width: width || 1000,
+    height: height || 1000,
     gridSize: gridSize,
     drawGrid: true,
     background: {
@@ -123,6 +120,11 @@ export const makeNode = (page) => {
 }
 
 const handlePaperEvents = (paper, vm) => {
+  // adjust paper grid (with padding options) to new content scale
+  paper.on('scale', function () {
+    paper.fitToContent(fitToContentOptions)
+  })
+
   paper.on('element:pointerdown', function (cellView) {
     // updating the pageName will cascade highlight events in mapper-list and mapper-canvas
     const pageName = cellView.model.attributes.pageName
@@ -224,7 +226,9 @@ const handleGraphEvents = (graph, vm) => {
   })
 
   graph.on('change:position', function (element, position) {
-    const pageName = element.attributes.attrs['.label'].text
+    let pageName = element.attributes.attrs['.label'].text
+    // remove line breaks from label to get CanJS pageName
+    pageName = pageName.replace(/(\r\n|\n|\r)/gm, ' ')
     const page = vm.guide.attr('pages')[pageName]
     const gGuidePage = window.gGuide.pages[pageName]
     if (!page || !gGuidePage) { return }

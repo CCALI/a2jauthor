@@ -3,7 +3,7 @@
 <can-import from="./mapper-canvas.less"/>
 
 {{#if(buildingMapper)}}
-    <app-loading loadingMessage:from="this.mapperLoadingMessage" />
+    <app-loading loadingMessage:from="this.mapperLoadingMessage" hasOverlay:raw="true" />
 {{/if}}
 
 <div id="mapper-canvas" />

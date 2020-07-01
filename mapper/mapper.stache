@@ -11,6 +11,7 @@
           <mapper-toolbar
             paper:from="paper"
             graph:from="graph"
+            buildingMapper:bind="buildingMapper"
           />
         </div>
     </div>
@@ -25,6 +26,7 @@
           addPage:from="addPage"
           addPopup:from="addPopup"
           pagesAndPopups:from="pagesAndPopups"
+          scrollToSelectedNode:from="scrollToSelectedNode"
         />
       </div>
       <div class="mapper-canvas-container col-sm-10">
@@ -36,9 +38,11 @@
           addPage:to="addPage"
           addPopup:to="addPopup"
           pagesAndPopups:from="pagesAndPopups"
+          lastCoordinatesByStep:from="lastCoordinatesByStep"
           paper:to="paper"
           graph:to="graph"
-          lastCoordinatesByStep:from="lastCoordinatesByStep"
+          buildingMapper:bind="buildingMapper"
+          scrollToSelectedNode:to="scrollToSelectedNode"
         />
       </div>
     </div>

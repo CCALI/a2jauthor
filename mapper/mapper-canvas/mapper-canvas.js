@@ -10,6 +10,7 @@ import {
   buildPaper,
   makeLink,
   makeNode,
+  nodeSize,
   fitToContentOptions
 } from './jointjs-util'
 
@@ -22,6 +23,15 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
   lastCoordinatesByStep: {},
   buildingMapper: { default: true },
   mapperLoadingMessage: { default: 'Building Mapper ... ' },
+  numberOfSteps: {
+    get () {
+      return this.guide.attr('steps').length
+    }
+  },
+  scrollToSelectedNode (pageName) {
+    const selectedElement = $(`[model-id=${this.selectedNodeId}]`)[0]
+    selectedElement.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'})
+  },
 
   // JointJS/Canvas related props
   paper: {}, // jointjs paper instance/view - set in connectedCallback()
@@ -30,12 +40,12 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
       return this.paper && this.paper.model
     }
   },
-  selectedNodeId: { // selected graph model to match view below
+  selectedNodeId: { // selected graph model ID to match view below
     get () {
       return this.selectedPageName && this.pageNameToMapId[this.selectedPageName]
     }
   },
-  selectedNodeView: { // currently selected node in paper view(canvas)
+  selectedNodeView: { // currently selected element in paper view(canvas)
     get () {
       return this.selectedNodeId && this.paper.findViewByModel(this.selectedNodeId)
     }
@@ -222,21 +232,38 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
     const isPopup = newStep === 'popups'
     const stepIndex = isPopup ? 0 : parseInt(newStep)
     const lastCoordinates = this.lastCoordinatesByStep[stepIndex]
-    // TODO: mapx/mapy math should be based on nodeSize
+    // Step 0 default X value is half the nodeSize.width
+    // other Steps are 1.5x the nodeSize.width plus the zero column value
+    const stepZeroX = nodeSize.width / 2
+    const otherStepX = stepIndex * nodeSize.width * 1.5
+    const defaultX = stepZeroX + otherStepX
     const lastX = lastCoordinates && lastCoordinates.mapx
-    const mapx = lastX || (stepIndex === 0 ? 60 : (stepIndex * 180) + 60)
-    const lastY = lastCoordinates && lastCoordinates.mapy
-    const mapy = !lastY ? 60 : lastY + 240
+    const mapx = lastX || defaultX
 
-    const newPageName = isPopup ? window.pagePopupEditNew(mapx, mapy) : window.pageEditNew(stepIndex, mapx, mapy)
+    // Use lastY value to place new page, or defaultY if no previous pages for that step
+    const defaultY = nodeSize.height / 2
+    const defaultIncreaseY = nodeSize.height * 2
+    const lastY = lastCoordinates && lastCoordinates.mapy
+    const noPagesInStep = !lastY
+    const mapy = noPagesInStep ? defaultY : lastY + defaultIncreaseY
+
+    const newPage = isPopup ? window.createNewPopup() : window.createNewPage(stepIndex, mapx, mapy)
+
+    // save the new page and it's mapx/mapy values
+    // spinner here? make guideSave a promise ???
     window.guideSave()
-    const newPage = window.gGuide.pages[newPageName]
+
+    // create new node and add to mape
     const newMapNode = this.createNode(newPage)
+
+    // add the cell
     this.graph.addCell(newMapNode)
-    // TODO: padding should be added to nodeSize constant
+
+    // fitContent expands paper grid as needed w/ padding
     this.paper.fitToContent(fitToContentOptions)
+
     // auto select the new added page
-    this.onSelectPageName(newPageName)
+    this.onSelectPageName(newPage.name)
   },
 
   sortAndSaveGuidePages () {
@@ -283,6 +310,7 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
     // turn off build spinner
     vm.buildingMapper = false
 
+    vm.paper.fitToContent(fitToContentOptions)
     return paper
   },
 
@@ -312,7 +340,7 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
     })
 
     // create jointjs paper canvas/view and graph model
-    vm.paper = buildPaper(vm)
+    vm.paper = buildPaper(vm, this.numberOfSteps)
 
     // mutateQueue let's the dom update with the spinner while the expensive work
     // of adding the mapper nodes can happen after

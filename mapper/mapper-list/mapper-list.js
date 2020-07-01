@@ -6,11 +6,18 @@ export const MapperListVM = DefineMap.extend('MapperListVM', {
   // passed in via mapper.stache
   guide: {},
   onSelectPageName: {},
+  scrollToSelectedNode: {},
   selectedPageName: {},
   openQDE: {},
   addPage: {},
   addPopup: {},
-  pagesAndPopups: {}
+  pagesAndPopups: {},
+
+  selectListPageName (pageName) {
+    this.onSelectPageName(pageName)
+    // passed from mapper-canvas.js
+    this.scrollToSelectedNode()
+  }
 })
 
 export default Component.extend('MapperListComponent', {

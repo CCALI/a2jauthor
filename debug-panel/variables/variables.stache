@@ -1,6 +1,6 @@
 <can-import from="a2jauthor/debug-panel/variables/variables.less!"/>
 
-<div id="viewer-var-form" class="bootstrap-styles">
+<div id="viewer-var-form">
   <button id="uploadAnswer" class="btn btn-default btn-sm"><span class="glyphicon-folder-open" aria-hidden="true"></span> Open</button>
   <input type="file" accept=".anx" id="uploadAnswerFileInput" />
 

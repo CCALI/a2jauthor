@@ -345,7 +345,7 @@ window.form = {
 
   pickpage: function (data) {	// 2014-06-02 Pick page via popup picker instead.
     var pageDispName = gGuide.pageDisplayName(data.value)
-    var e = $('<div class="destination-picker bootstrap-styles" name="' + data.name + '">' +
+    var e = $('<div class="destination-picker" name="' + data.name + '">' +
       (typeof data.label !== 'undefined'
         ? ('<label>' + data.label + '</label>')
         : '') +
@@ -402,7 +402,7 @@ window.form = {
         // $('page-picker-dialog').dialog( "close" );
       })
     $('#page-picker-dialog').data(data).dialog({
-      dialogClass: 'modal bootstrap-styles',
+      dialogClass: 'modal ',
       autoOpen: true,
       width: 700,
       height: 500,
@@ -466,7 +466,7 @@ window.form = {
       })
 
     $('#page-picker-dialog').data(data).dialog({
-  		dialogClass: 'modal bootstrap-styles',
+  		dialogClass: 'modal ',
       autoOpen: true,
       width: 700,
       height: 500,

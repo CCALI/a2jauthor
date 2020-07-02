@@ -7,7 +7,7 @@
 
 {{#if(pagesPromise.isResolved)}}
 <div id="print-report">
-    <div class="bootstrap-styles report">
+    <div class="report">
         <div class="report-header">
             <fieldset>
                 <legend>A2J Guided Interview Information</legend>

@@ -1,10 +1,10 @@
+import $ from 'jquery'
 import './viewer/A2J_Types'
 import './viewer/A2J_Prefs'
 import './viewer/A2J_SharedSus'
 import './viewer/A2J_Shared'
 import './viewer/A2J_Logic'
 import './viewer/A2J_Languages'
-import 'jquery'
 import './A2J_Pages'
 import './A2J_Tabs'
 import 'jquery-ui/ui/widgets/autocomplete'
@@ -196,6 +196,8 @@ describe('src/A2J_Pages', function () {
   })
 
   it('guidePageEditForm', function () {
+    // TODO: this test is failing on Travis due to too many dependencies on A2J_Tabs.js
+    // need refactor to break up that coupling/cascade
     // this prevents an error trying to upload the fake mp3 file below
     window.gGuideID = 0
     var $qdeParentDiv = window.$('<div></div>')
@@ -217,10 +219,16 @@ describe('src/A2J_Pages', function () {
       fields: [field]
     }
 
+    // overload some coupled functions for Travis tests
+    window.form.listManager.save = function () { return page.fields }
+    window.form.tableRowAdjust = function () { return }
+    window.lang.scriptErrorUnhandled = { printf: function () { return } }
+
     const $guidePageEditForm = window.guidePageEditForm(page, $qdeParentDiv)
     const fieldSets = $guidePageEditForm.find('fieldset')
     assert.equal(fieldSets.length, 6, 'should create 6 QDE fieldsets: Page, Question, Learn More, Fields, Buttons, Logic')
 
+    // cleanup
     window.gGuideID = undefined
   })
 })

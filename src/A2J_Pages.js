@@ -325,7 +325,7 @@ var debouncedSetQDEmaxHeight = debounce(function () {
 
 var handleNullButtonTargets = function (buttons) {
   for (button of buttons) {
-    if (button.next == null) {
+    if (button && button.next == null) {
       button.next = window.CONST.qIDNOWHERE
     }
   }

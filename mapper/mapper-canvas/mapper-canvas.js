@@ -128,7 +128,9 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
       const isSpecialButton = button && this.isSpecialButton(button)
 
       // clean up legacy  GIs having `null` targets in button.next
-      button.next = button.next == null ? constants.qIDNOWHERE : button.next
+      if (button && button.next == null) {
+        button.next = constants.qIDNOWHERE
+      }
       const hasNowhereTarget = button && button.next === constants.qIDNOWHERE
 
       // cleanup links for removed buttons, special target buttons, and empty string targets ''

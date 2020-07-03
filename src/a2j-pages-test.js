@@ -39,19 +39,25 @@ describe('src/A2J_Pages', function () {
   })
 
   it('handleNullButtonTargets', function () {
-    const buttons = [
+    let buttons = [
       {label: 'Continue', next: '1-Question'},
       {label: 'Continue', next: null},
       {label: 'Continue', next: undefined}
     ]
-    const expectedButtons = [
+    let expectedButtons = [
       {label: 'Continue', next: '1-Question'},
       {label: 'Continue', next: ''},
       {label: 'Continue', next: ''}
     ]
+    let updatedButtons = window.handleNullButtonTargets(buttons)
 
-      const updatedButtons = window.handleNullButtonTargets(buttons)
-      assert.deepEqual(expectedButtons, updatedButtons, 'should replace button.next targets of `null` or `undefined` with empty string')
+    assert.deepEqual(expectedButtons, updatedButtons, 'should replace button.next targets of `null` or `undefined` with empty string')
+
+    buttons = []
+    expectedButtons = []
+    updatedButtons = window.handleNullButtonTargets(buttons)
+
+    assert.deepEqual(expectedButtons, updatedButtons, 'should do nothing if button does not exist')
   })
 
   it('buildPopupFieldSet', function () {

@@ -1,4 +1,0 @@
-dist/**/*.js
-node_modules/**/*.js
-src/**/*.js
-node_modules/**/*.js

@@ -28,7 +28,7 @@
 {{> viewer-preview-layout }}
 
 <div id="authortool"
-  class="hidestart authortool bootstrap-styles"
+  class="hidestart authortool"
   {{#if (previewMode)}}style="display: none;"{{/if}}>
 
   <div id="cajaheader" class="hidestart">
@@ -53,7 +53,7 @@
     </app-alert>
 
     <!-- About Tab -->
-    <div class="tab-panel bootstrap-styles" id="tabsAbout">
+    <div class="tab-panel" id="tabsAbout">
       <div class="tabContentFrame page">
         <div class="row">
           <div class="col-xs-10">
@@ -351,7 +351,7 @@
       </fieldset>
     </div>
   </div>
-  <div id="settings-form" title="Settings" class="bootstrap-styles">
+  <div id="settings-form" title="Settings">
     <ul id="cajasettings">
       <h3>General</h3>
       <p>Color Schemes: <span class="text-muted">A2J 6</span></p>

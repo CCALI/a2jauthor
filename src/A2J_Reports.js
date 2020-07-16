@@ -28,7 +28,7 @@ function newWindowReport (title, html) {
   var reportWindow = window.open()
 
   html =
-    '<html class="bootstrap-styles reports">' +
+    '<html class="reports">' +
       '<head>' +
         '<title>' + title + '</title>' +
         '<link rel="stylesheet" type="text/css" ' +

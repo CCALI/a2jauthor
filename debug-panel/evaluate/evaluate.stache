@@ -1,6 +1,6 @@
 <can-import from="a2jauthor/debug-panel/evaluate/evaluate.less!"/>
 
-<div id="evaluate-form" class="bootstrap-styles">
+<div id="evaluate-form">
     <input
     type="text"
     placeholder="Enter short expression scripts here"

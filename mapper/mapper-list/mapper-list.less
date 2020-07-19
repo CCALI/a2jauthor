@@ -2,6 +2,14 @@ mapper-list {
   display: block;
   height: 100%;
 
+  label {
+    margin-bottom: 0px;
+  }
+
+  .pages-list-wrapper {
+    margin-bottom: 5px;
+  }
+
   .pages-by-step {
     border: 1px solid #ddd !important;
     overflow: scroll;
@@ -13,14 +21,12 @@ mapper-list {
   }
 
   .panel-heading {
-    h4 {
-      display: inline-block;
-    }
+    display: inline-block;
   }
 
   .add-btn {
     font-size: 11px !important;
-    margin: 0 auto;
+    margin-left: 50px;
     display: inline-block;
   }
 
@@ -39,5 +45,163 @@ mapper-list {
   .page-item {
     border: 1px solid red;
     background-color: #f5f5f5 !important;
+  }
+
+  .wrap-collabsible {
+    margin-bottom: 1.2rem 0;
+  }
+
+  input[type='checkbox'] {
+    display: none;
+  }
+
+  .lbl-toggle {
+    display: block;
+
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    text-align: center;
+
+    padding: 1rem;
+
+    color: #A77B0E;
+    background-color: #f8f8f8;
+
+    cursor: pointer;
+
+    border-radius: 7px;
+    transition: all 0.10s ease-out;
+
+    &.lbl-background0 {
+      // background: #EFEFC6;
+      background-color:rgba(239, 239, 198, 0.5);
+    }
+    &.lbl-background1 {
+      background-color: rgba(239, 239, 140, 0.5);
+    }
+    &.lbl-background2 {
+      background-color: rgba(239, 198, 239, 0.5);
+    }
+    &.lbl-background3 {
+      background-color: rgba(239, 198, 198, 0.5);
+    }
+    &.lbl-background4 {
+      background-color: rgba(239, 140, 239, 0.5);
+    }
+    &.lbl-background5 {
+      background-color: rgba(239,	140,	140, 0.5);
+    }
+    &.lbl-background6 {
+      background-color: rgba(198,	239,	239, 0.5);
+    }
+    &.lbl-background7 {
+      background-color: rgba(198,	239,	198, 0.5);
+    }
+    &.lbl-background8 {
+      background-color: rgba(198,	198,	239, 0.5);
+    }
+    &.lbl-background9 {
+      background-color: rgba(198,	198,	140, 0.5);
+    }
+    &.lbl-background10 {
+      background-color: rgba(198,	140,	198, 0.5);
+    }
+    &.lbl-background11 {
+      background-color: rgba(198,	140,	140, 0.5);
+    }
+    &.lbl-background12 {
+      background-color: rgba(140,	239,	239, 0.5);
+    }
+  }
+
+  .lbl-toggle:hover {
+    color: #7C5A0B;
+  }
+
+  .lbl-toggle::before {
+    content: ' ';
+    display: inline-block;
+
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid currentColor;
+    vertical-align: middle;
+    margin-right: .7rem;
+    transform: translateY(-2px);
+
+    transition: transform .10s ease-out;
+  }
+
+  .toggle:checked + .lbl-toggle::before {
+    transform: rotate(90deg) translateX(-3px);
+  }
+
+  .toggle + .lbl-toggle + .collapsible-content {
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height .10s ease-in-out;
+  }
+
+  .toggle:checked + .lbl-toggle + .collapsible-content {
+    max-height: 100vh;
+  }
+
+  .toggle:checked + .lbl-toggle {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .collapsible-content{
+    &.lbl-background0 {
+      background: #EFEFC6;
+    }
+    &.lbl-background1 {
+      background: #EFEF8C;
+    }
+    &.lbl-background2 {
+      background: #EFC6EF;
+    }
+    &.lbl-background3 {
+      background: #EFC6C6;
+    }
+    &.lbl-background4 {
+      background: #EF8CEF;
+    }
+    &.lbl-background5 {
+      background: #EF8C8C;
+    }
+    &.lbl-background6 {
+      background: #C6EFEF;
+    }
+    &.lbl-background7 {
+      background: #C6EFC6;
+    }
+    &.lbl-background8 {
+      background: #C6C6EF;
+    }
+    &.lbl-background9 {
+      background: #C6C68C;
+    }
+    &.lbl-background10 {
+      background: #C68CC6;
+    }
+    &.lbl-background11 {
+      background: #C68C8C;
+    }
+    &.lbl-background12 {
+      background: #8CEFEF;
+    }
+    &.lbl-background13 {
+      background: #8CEF8C;
+    }
+    .content-inner {
+      // background: rgba(250, 224, 66, .2);
+      border-bottom: 1px solid rgba(250, 224, 66, .45);
+      border-bottom-left-radius: 7px;
+      border-bottom-right-radius: 7px;
+      padding: .5rem 1rem;
+    }
   }
 }

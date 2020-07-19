@@ -31,7 +31,12 @@ export const MapperVM = DefineMap.extend('MapperVM', {
 
     guideSteps.forEach((step) => {
       const stepKey = `${step.number}`
-      pagesAndPopups[stepKey] = { displayName: 'STEP ' + stepKey, pages: [] }
+      pagesAndPopups[stepKey] = {
+        displayName: 'STEP ' + stepKey,
+        toggleTriggerId: `${step.number}step-toggle-trigger`,
+        labelBackground: `lbl-background${step.number}`,
+        pages: []
+      }
     })
     // pagesAndPopups['popups'] = { displayName: 'POPUPS', pages: [] }
 

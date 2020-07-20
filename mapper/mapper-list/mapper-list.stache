@@ -4,15 +4,15 @@
   {{#for (stepInfo of pagesAndPopups)}}
     <div class="pages-list-wrapper">
       <input
-        id="{{stepInfo.toggleTriggerId}}"
+        id="{{toggleTriggerId(stepInfo.stepNumber)}}"
         class="toggle"
         type="checkbox"
         {{#if isExpanded(stepInfo.stepNumber)}}checked{{/if}}
       >
-      <label for="{{stepInfo.toggleTriggerId}}" class="lbl-toggle {{stepInfo.labelBackground}}">{{stepInfo.displayName}}
+      <label for="{{toggleTriggerId(stepInfo.stepNumber)}}" class="lbl-toggle {{labelBackground(stepInfo.stepNumber)}}">{{stepInfo.displayName}}
         <button on:click="this.addPage(scope.key)" class="add-btn pull-right">+ PAGE</button>
       </label>
-      <div class="collapsible-content {{stepInfo.labelBackground}}">
+      <div class="collapsible-content {{labelBackground(stepInfo.stepNumber)}}">
         <div class="content-inner">
           {{#for (page of stepInfo.pages)}}
             <span

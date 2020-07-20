@@ -26,6 +26,16 @@ export const MapperListVM = DefineMap.extend('MapperListVM', {
     return !this.collapsedSteps[stepNumber]
   },
 
+  // used in input toggle and label `for` to set their relationship
+  toggleTriggerId (stepNumber) {
+    return `${stepNumber}step-toggle-trigger`
+  },
+
+  // css class used to target step label and pages-list backgrounds
+  labelBackground (stepNumber) {
+    return `lbl-background${stepNumber}`
+  },
+
   selectListPageName (pageName) {
     // these functions passed from mapper-canvas.js
     this.onSelectPageName(pageName)

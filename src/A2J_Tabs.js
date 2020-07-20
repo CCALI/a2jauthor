@@ -402,7 +402,7 @@ window.form = {
         // $('page-picker-dialog').dialog( "close" );
       })
     $('#page-picker-dialog').data(data).dialog({
-      dialogClass: 'modal ',
+      dialogClass: '',
       autoOpen: true,
       width: 700,
       height: 500,
@@ -466,7 +466,7 @@ window.form = {
       })
 
     $('#page-picker-dialog').data(data).dialog({
-  		dialogClass: 'modal ',
+  		dialogClass: '',
       autoOpen: true,
       width: 700,
       height: 500,

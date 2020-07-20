@@ -12,42 +12,37 @@ export const MapperListVM = DefineMap.extend('MapperListVM', {
   addPage: {},
   addPopup: {},
   pagesAndPopups: {},
-  // reference legacy window.collapsedSteps global to track collapse state
+  // reference legacy window.collapsedSteps global
+  // to track the collapse state of a Step's pages-list
   collapsedSteps: {
     get () {
       return window.collapsedSteps || []
     }
   },
 
-  restoreCollapsedSteps () {
-    if (Object.keys(this.pagesAndPopups) <= 0) { return }
-
-    for (const [stepNumber, stepInfo] of this.pagesAndPopups) {
-      const isCollapsed = this.collapsedSteps[stepNumber]
-      const targetInput = document.getElementById(stepInfo.toggleTriggerId)
-      // steps are checked/expanded by default, remove `checked` to collapse via click()
-      if (isCollapsed) {
-        targetInput.click()
-      }
-    }
+  // checked input toggle means page list for step is expanded
+  // which is the opposite of the global 'collapsed' boolean
+  isExpanded (stepNumber) {
+    return !this.collapsedSteps[stepNumber]
   },
 
   selectListPageName (pageName) {
+    // these functions passed from mapper-canvas.js
     this.onSelectPageName(pageName)
-    // passed from mapper-canvas.js
     this.scrollToSelectedNode()
   },
 
   connectedCallback () {
-    this.restoreCollapsedSteps()
-
-    // update collapsedSteps on click
     const toggleCollapsedHandler = (ev) => {
       // checked === true means not collapsed
       const shouldCollapse = !ev.target.checked
       const stepNumber = parseInt(ev.target.id)
+      // this global is also used by the Pages tab
+      // TODO: wire them together to track across both tab
       window.collapsedSteps[stepNumber] = shouldCollapse
     }
+
+    // handle click events to toggle and track `collapsed` boolean
     const stepInputs = document.querySelectorAll('input.toggle')
     for (const input of stepInputs) {
       input.addEventListener('change', toggleCollapsedHandler)

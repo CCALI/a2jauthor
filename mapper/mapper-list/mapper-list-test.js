@@ -8,57 +8,76 @@ import 'steal-mocha'
 describe('<mapper-list>', () => {
   describe('ViewModel', () => {
     let vm
+    let oldSteps
+
     beforeEach(() => {
+      // backup global
+      oldSteps = window.collapsedSteps
       vm = new MapperListVM()
     })
 
+    afterEach(function () {
+      // restore global
+      window.collapsedSteps = oldSteps
+    })
+
     it('collapsedSteps', () => {
-      const oldSteps = window.collapsedSteps
       window.collapsedSteps = [true, false]
       assert.deepEqual(vm.collapsedSteps, [true, false], 'it should reference the global collapsedSteps')
-      window.collapsedSteps = oldSteps
+    })
+
+    it('isExpanded', () => {
+      window.collapsedSteps = [true, false, true]
+      const expectedResults = []
+      vm.collapsedSteps.forEach((step, index) => {
+        // isExpanded is the opposite of collapsed boolean
+        expectedResults.push(!vm.isExpanded(index))
+      })
+
+      assert.deepEqual(vm.collapsedSteps, expectedResults, 'the expanded results should be the opposite of the collapsedSteps booleans')
     })
   })
 
   describe('Component', () => {
-    afterEach(function () {
-      document.querySelector('#test-area').innerHTML = ''
-    })
-
-    function render (data) {
+    const render = (data) => {
       const tpl = stache('<mapper-list pagesAndPopups:from="pagesAndPopups" />')
       document.querySelector('#test-area').appendChild(tpl(data))
       return canViewModel('mapper-list')
     }
 
-    it('restoreCollapsedSteps', (done) => {
-      const oldGlobalCollapsedSteps = window.collapsedSteps
-      window.collapsedSteps = [ true, false, false ]
+    let oldSteps
 
-      // labelBackground: `lbl-background${step.number}`,
+    beforeEach(() => {
+      // backup global
+      oldSteps = window.collapsedSteps
+    })
+
+    it('collapses page lists based on window.collapsedSteps', (done) => {
+      window.collapsedSteps = [true, false, true]
+      // references stepNumber to get 'checked' state
       const pagesAndPopups = {
-        0: { displayName: 'STEP 0', toggleTriggerId: 'foo', labelBackground: 'foo-lbl', pages: [] },
-        1: { displayName: 'STEP 1', toggleTriggerId: 'bar', labelBackground: 'bar-lbl', pages: [] },
-        2: { displayName: 'STEP 2', toggleTriggerId: 'baz', labelBackground: 'baz-lbl', pages: [] }
+        0: { stepNumber: 0 },
+        1: { stepNumber: 1 },
+        2: { stepNumber: 2 }
       }
-      const vm = render({
-        pagesAndPopups
-      })
 
+      const vm = render({ pagesAndPopups })
       setTimeout(() => {
         const expectedResults = []
-        for (const [ stepNumber, stepInfo ] of vm.pagesAndPopups) {
-          const targetInput = document.getElementById(stepInfo.toggleTriggerId)
-          const isCollapsed = !targetInput.checked
-          expectedResults[stepNumber] = isCollapsed
-        }
+        document.querySelectorAll('.toggle').forEach((input) => {
+          // checked is opposite of collapsedSteps
+          expectedResults.push(!input.checked)
+        })
 
-        assert.deepEqual(vm.collapsedSteps, expectedResults, 'should set checked attribute based on global collapsedState')
-
-        // restore global
-        window.collapsedSteps = oldGlobalCollapsedSteps
+        assert.deepEqual(vm.collapsedSteps, expectedResults, 'should apply checked attribute to non collapsed steps')
         done()
       })
+    })
+
+    afterEach(function () {
+      // restore global
+      window.collapsedSteps = oldSteps
+      document.querySelector('#test-area').innerHTML = ''
     })
   })
 })

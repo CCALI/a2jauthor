@@ -1,15 +1,20 @@
 <can-import from="./mapper-list.less"/>
 
 <div class="pages-by-step">
-  {{#for (step of pagesAndPopups)}}
+  {{#for (stepInfo of pagesAndPopups)}}
     <div class="pages-list-wrapper">
-      <input id="{{step.toggleTriggerId}}" class="toggle" type="checkbox" checked>
-      <label for="{{step.toggleTriggerId}}" class="lbl-toggle {{step.labelBackground}}">{{step.displayName}}
+      <input
+        id="{{stepInfo.toggleTriggerId}}"
+        class="toggle"
+        type="checkbox"
+        {{#if isExpanded(stepInfo.stepNumber)}}checked{{/if}}
+      >
+      <label for="{{stepInfo.toggleTriggerId}}" class="lbl-toggle {{stepInfo.labelBackground}}">{{stepInfo.displayName}}
         <button on:click="this.addPage(scope.key)" class="add-btn pull-right">+ PAGE</button>
       </label>
-      <div class="collapsible-content {{step.labelBackground}}">
+      <div class="collapsible-content {{stepInfo.labelBackground}}">
         <div class="content-inner">
-          {{#for (page of step.pages)}}
+          {{#for (page of stepInfo.pages)}}
             <span
               class="page-item list-group-item unselectable {{#eq(selectedPageName, page.name)}}item-selected{{/eq}}"
               on:pointerdown="this.selectListPageName(page.name)"

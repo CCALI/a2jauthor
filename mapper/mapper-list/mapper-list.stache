@@ -1,20 +1,29 @@
 <can-import from="./mapper-list.less"/>
 
 <div class="pages-by-step">
-  {{#for (step of pagesAndPopups)}}
-    <div class="panel-heading" role="tab" id="collapseListGroupHeading1">
-      <h4 class="panel-title"><a role="button" class="step" rel="STEP ' + s + '" data-stepnum="' + s + '">&#9656; {{step.displayName}}</a></h4>
-      <button on:click="this.addPage(scope.key) " class="add-btn pull-right">+ Page</button>
-    </div>
-    <div class="collapse">
-      {{#for (page of step.pages)}}
-        <span
-          class="page-item list-group-item unselectable {{#eq(selectedPageName, page.name)}}item-selected{{/eq}}"
-          on:pointerdown="this.selectListPageName(page.name)"
-          on:dblclick="this.openQDE(page.name)">
-          {{page.name}}<br>
-        </span>
-      {{/for}}
+  {{#for (stepInfo of pagesAndPopups)}}
+    <div class="pages-list-wrapper">
+      <input
+        id="{{toggleTriggerId(stepInfo.stepNumber)}}"
+        class="toggle"
+        type="checkbox"
+        {{#if isExpanded(stepInfo.stepNumber)}}checked{{/if}}
+      >
+      <label for="{{toggleTriggerId(stepInfo.stepNumber)}}" class="lbl-toggle {{labelBackground(stepInfo.stepNumber)}}">{{stepInfo.displayName}}
+        <button on:click="this.addPage(scope.key)" class="add-btn pull-right">+ PAGE</button>
+      </label>
+      <div class="collapsible-content {{labelBackground(stepInfo.stepNumber)}}">
+        <div class="content-inner">
+          {{#for (page of stepInfo.pages)}}
+            <span
+              class="page-item list-group-item unselectable {{#eq(selectedPageName, page.name)}}item-selected{{/eq}}"
+              on:pointerdown="this.selectListPageName(page.name)"
+              on:dblclick="this.openQDE(page.name)">
+              {{page.name}}<br>
+            </span>
+          {{/for}}
+        </div>
+      </div>
     </div>
   {{/for}}
   <div class="force-height"></div>

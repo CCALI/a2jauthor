@@ -23,7 +23,7 @@ function dialogConfirmYesNo (args) {
   $d.dialog({
     title: args.title,
     closeText: '', // removes word "Close" from upper right titlebar close button
-    dialogClass: 'modal',
+    dialogClass: '',
     resizable: false,
     width: args.width ? args.width : 350,
     height: args.height ? args.height : 240,
@@ -70,7 +70,7 @@ function dialogAlert (args)
   $d.dialog({
     closeText: '', // removes word "Close" from upper right titlebar close button
     title: args.title,
-    dialogClass: 'modal ',
+    dialogClass: '',
     resizable: true,
     width: args.width,
     height: args.height,

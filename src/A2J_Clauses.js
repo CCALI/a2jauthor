@@ -36,7 +36,7 @@ function clauseEdit (clause /* TClause */) {	// 2015-03-27 Clause editor
   })
   $('#clause-edit-form').data(clause).dialog({
     autoOpen: true,
-    dialogClass: 'modal',
+    dialogClass: '',
     width: 800,
     height: 500,
     modal: true,

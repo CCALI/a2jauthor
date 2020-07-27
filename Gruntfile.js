@@ -59,7 +59,7 @@ module.exports = function (grunt) { // documentjs tasks removed until security u
             config: __dirname + '/package.json!npm', // eslint-disable-line
             bundle: [
               'a2jauthor/app-template',
-              'a2jauthor/src/src',
+              'a2jauthor/legacy/legacy',
               'a2jauthor/styles.less!',
               'a2jauthor/ckeditor/ckeditor'
             ]

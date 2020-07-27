@@ -3,7 +3,7 @@ import './A2J_SharedSus'
 import { assert } from 'chai'
 import 'steal-mocha'
 
-describe('src/viewer/A2J_SharedSus', function () {
+describe('legacy/viewer/A2J_SharedSus', function () {
   describe('REG regex object', function () {
     it('REG.LOGIC_SETTO', () => {
       // `IF` edge case test based on past issue with `Asset` https://github.com/CCALI/CAJA/pull/2633

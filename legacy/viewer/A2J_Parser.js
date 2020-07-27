@@ -243,7 +243,7 @@ function parseXML2Page (PAGE, page) {
   page.helpAudioURL = makestr(PAGE.find('HELPAUDIO').text())
   page.helpReader = makestr(PAGE.find('HELPREADER').xml())
   page.helpImageURL = makestr(PAGE.find('HELPIMAGE').text())
-  page.helpAltText = makestr(PAGE.find("HELPALTTEXT").text())
+  page.helpAltText = makestr(PAGE.find('HELPALTTEXT').text())
   page.helpVideoURL = makestr(PAGE.find('HELPVIDEO').text())
   page.notes = makestr(PAGE.find('NOTES').xml())
   page.codeBefore = makestr(PAGE.find('CODEBEFORE').xml())
@@ -353,7 +353,7 @@ function parseXML_CAJA_to_CAJA (GUIDE) // GUIDE is XML DOM
     // convert escaped XML special chars ex: &amp;
     step.text = decodeEntities(STEP.find('TEXT').xml())
     guide.steps.push(step)
-	})
+  })
   // Parse pages into book.pages[] records.
   GUIDE.find('VARIABLES > VARIABLE').each(function () {
     var VARIABLE = $(this)
@@ -364,7 +364,7 @@ function parseXML_CAJA_to_CAJA (GUIDE) // GUIDE is XML DOM
     guide.varCreate(VARIABLE.attr('NAME'), VARIABLE.attr('TYPE'), textToBool(VARIABLE.attr('REPEATING'), false), makestr(VARIABLE.attr('COMMENT')))
     // v.traceLogic('Create variable');
     // guide.vars[v.name.toLowerCase()]=v;
-	})
+  })
   guide.varCreateInternals()
 
   /*

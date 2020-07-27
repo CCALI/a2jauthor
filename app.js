@@ -31,10 +31,10 @@ $('body').on('click', 'a[href="#"]', ev => ev.preventDefault())
 
 bindCustomEvents(appState)
 
-// The legacy code in src/src requires the dom to be populated in order to work,
+// The legacy code in legacy/legacy requires the dom to be populated in order to work,
 // so we first render the main app's template and then load the code.
 let loadLegacyCode = function () {
-  return loader.import('a2jauthor/src/')
+  return loader.import('a2jauthor/legacy/')
 }
 
 let render = function ({ template }) {

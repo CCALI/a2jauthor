@@ -12,7 +12,7 @@ import 'jquery-ui/ui/widgets/autocomplete'
 import { assert } from 'chai'
 import 'steal-mocha'
 
-describe('src/A2J_Pages', function () {
+describe('legacy/A2J_Pages', function () {
   beforeEach(() => {
     window.gGuide = new window.TGuide()
     const intro = new window.TPage()
@@ -227,8 +227,8 @@ describe('src/A2J_Pages', function () {
 
     // overload some coupled functions for Travis tests
     window.form.listManager.save = function () { return page.fields }
-    window.form.tableRowAdjust = function () { return }
-    window.lang.scriptErrorUnhandled = { printf: function () { return } }
+    window.form.tableRowAdjust = function () { }
+    window.lang.scriptErrorUnhandled = { printf: function () { } }
 
     const $guidePageEditForm = window.guidePageEditForm(page, $qdeParentDiv)
     const fieldSets = $guidePageEditForm.find('fieldset')

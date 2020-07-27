@@ -9,7 +9,7 @@
 
 */
 // TODO: fix legacy imports, removing circular dependencies
-// import { gGuideMeta, CONST } from 'a2jauthor/src/viewer/A2J_Types'
+// import { gGuideMeta, CONST } from 'a2jauthor/legacy/viewer/A2J_Types'
 
 // Elements: navbar, road step area, question, guide avatar, user avatar, learn more prompt, learn more bubble.
 // var gLogic;

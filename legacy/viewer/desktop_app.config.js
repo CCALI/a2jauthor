@@ -10,4 +10,4 @@
 var gConfig = {
   // Timeout (in milliseconds) for loading interview, lists or answerfiles
   AJAXLoadingTimeout: 59000 // 60 seconds for debugging
-};
+}

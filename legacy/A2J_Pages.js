@@ -158,7 +158,7 @@ function getNewMapYForStep (stepNumber) {
   let newMapY = 60
   window.gGuide.sortedPages.forEach((page) => {
     const pageStepNumber = parseInt(page.step)
-    if(pageStepNumber === stepNumber && page.mapy > newMapY) {
+    if (pageStepNumber === stepNumber && page.mapy > newMapY) {
       newMapY = page.mapy
     }
   })
@@ -170,7 +170,7 @@ function getNewMapYForStep (stepNumber) {
 function createNewPage (newStep, mapx, mapy) {	// Create a new blank page, after selected page.
   // if newStep exists, this call came from the new Mapper tool
   // var newPageName
-  var selectedPageName =  getSelectedPageName()
+  var selectedPageName = getSelectedPageName()
   var firedFromPagesTab = newStep == null
 
   // resolve step/x&y from pages tab

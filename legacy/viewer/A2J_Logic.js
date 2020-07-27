@@ -253,7 +253,6 @@ TLogic.prototype.removeTrailingComments = function (currentLine) {
   // Strip trailing comments, but exclude urls aka `://`
   // everything after non-url `//` considered a trailing comment
 
-
   // lines that start with `//` are always a full line comment regardless of content
   if (currentLine.indexOf('//') === 0) { return '' }
 

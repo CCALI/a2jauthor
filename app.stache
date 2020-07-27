@@ -10,7 +10,7 @@
 <can-import from="a2jauthor/report/toolbar/"/>
 <can-import from="a2jauthor/about/main/" />
 <can-import from="a2jauthor/variables/tab/"/>
-<can-import from="a2jauthor/a2jorg/"/>
+<can-import from="a2jauthor/a2jorg//"/>
 <can-import from="@caliorg/a2jdeps/footer/"/>
 <can-import from="a2jauthor/styles/"/>
 <can-import from="a2jauthor/styles.less"/>

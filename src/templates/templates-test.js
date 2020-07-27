@@ -3,7 +3,7 @@ import F from 'funcunit'
 import { assert } from 'chai'
 import Templates from './templates-vm'
 import stache from 'can-stache'
-import 'a2jauthor/models/fixtures/templates'
+import 'a2jauthor/src/models/fixtures/templates'
 import 'a2jauthor/styles.less'
 
 import 'can-route'

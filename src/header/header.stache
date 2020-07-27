@@ -1,4 +1,4 @@
-<can-import from="a2jauthor/header/header.less!"/>
+<can-import from="a2jauthor/src/header/header.less!"/>
 
 <header>
   <div class="container-fluid">

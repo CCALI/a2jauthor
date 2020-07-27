@@ -1,5 +1,5 @@
 <can-import from="@caliorg/a2jdeps/alert/"/>
-<can-import from="a2jauthor/debug-alerts/debug-alerts.less!"/>
+<can-import from="a2jauthor/src/debug-alerts/debug-alerts.less!"/>
 
 <div class="debug-alerts-wrapper">
   <button type="button" class="btn btn-default btn-block btn-dismiss">

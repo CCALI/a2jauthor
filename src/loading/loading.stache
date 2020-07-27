@@ -1,4 +1,4 @@
-<can-import from="a2jauthor/loading/loading.less"/>
+<can-import from="a2jauthor/src/loading/loading.less"/>
 
 <div class="app-loading {{#if (hasOverlay)}}overlay-active{{/if}}">
     <p class="text-center {{#if (hasOverlay)}}overlay-active{{else}}text-muted{{/if}}">

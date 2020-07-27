@@ -1,5 +1,5 @@
 import { assert } from 'chai'
-import TraceMessage, { LogItem, Messages, Message, Fragment } from 'a2jauthor/models/trace-message'
+import TraceMessage, { LogItem, Messages, Message, Fragment } from 'a2jauthor/src/models/trace-message'
 
 import 'steal-mocha'
 

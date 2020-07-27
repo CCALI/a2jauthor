@@ -1,4 +1,4 @@
-<can-import from="a2jauthor/popover/popover.less!"/>
+<can-import from="a2jauthor/src/popover/popover.less!"/>
 
 <div class="popover {{placement}}" style="display: block;">
   <div class="arrow"></div>

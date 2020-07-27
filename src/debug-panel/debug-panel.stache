@@ -1,6 +1,6 @@
-<can-import from="a2jauthor/debug-panel/variables/"/>
-<can-import from="a2jauthor/debug-panel/evaluate/"/>
-<can-import from="a2jauthor/debug-panel/debug-panel.less!"/>
+<can-import from="a2jauthor/src/debug-panel/variables/"/>
+<can-import from="a2jauthor/src/debug-panel/evaluate/"/>
+<can-import from="a2jauthor/src/debug-panel/debug-panel.less!"/>
 
 {{#if(variables.length)}}
   <author-variables-table previewInterview:from="previewInterview" variables:from="variables"/>

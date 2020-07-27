@@ -1,5 +1,5 @@
 import { assert } from 'chai'
-import AppState from 'a2jauthor/models/app-state'
+import AppState from 'a2jauthor/src/models/app-state'
 
 import 'steal-mocha'
 

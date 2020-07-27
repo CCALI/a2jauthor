@@ -1,4 +1,4 @@
-import navbarItems from 'a2jauthor/vertical-navbar/navbar-items'
+import navbarItems from 'a2jauthor/src/vertical-navbar/navbar-items'
 
 /**
  * @module {{}} author/utils/tabs-routing tabs-routing

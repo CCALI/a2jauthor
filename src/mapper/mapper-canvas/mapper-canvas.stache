@@ -1,5 +1,5 @@
 <can-import from="jointjs/dist/joint.css" />
-<can-import from="a2jauthor/loading/"/>
+<can-import from="a2jauthor/src/loading/"/>
 <can-import from="./mapper-canvas.less"/>
 
 {{#if(buildingMapper)}}

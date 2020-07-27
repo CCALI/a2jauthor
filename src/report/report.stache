@@ -1,5 +1,5 @@
-<can-import from="a2jauthor/report/report.less"/>
-<can-import from="a2jauthor/loading/"/>
+<can-import from="a2jauthor/src/report/report.less"/>
+<can-import from="a2jauthor/src/loading/"/>
 
 {{#if(buildingReport)}}
     <app-loading loadingMessage:raw="Building Report ..."/>

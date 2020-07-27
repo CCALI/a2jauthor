@@ -1,8 +1,8 @@
-<can-import from="a2jauthor/loading/"/>
-<can-import from="a2jauthor/templates/assemble/"/>
-<can-import from="a2jauthor/templates/edit/tabs/"/>
-<can-import from="a2jauthor/templates/edit/toolbar/"/>
-<can-import from="a2jauthor/templates/edit/edit.less!"/>
+<can-import from="a2jauthor/src/loading/"/>
+<can-import from="a2jauthor/src/templates/assemble/"/>
+<can-import from="a2jauthor/src/templates/edit/tabs/"/>
+<can-import from="a2jauthor/src/templates/edit/toolbar/"/>
+<can-import from="a2jauthor/src/templates/edit/edit.less!"/>
 <can-import from="@caliorg/a2jdeps/elements/a2j-blank/"/>
 <can-import from="@caliorg/a2jdeps/elements/a2j-template/"/>
 <can-import from="@caliorg/a2jdeps/elements/a2j-header-footer/"/>

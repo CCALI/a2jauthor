@@ -1,9 +1,9 @@
 import $ from 'jquery'
 import loader from '@loader'
-import AppState from './models/app-state'
-import tabsRouting from 'a2jauthor/utils/tabs-routing'
+import AppState from 'a2jauthor/src/models/app-state'
+import tabsRouting from 'a2jauthor/src/utils/tabs-routing'
 import viewerPreviewTpl from './viewer-preview-layout.stache'
-import bindCustomEvents from 'a2jauthor/utils/bind-custom-events'
+import bindCustomEvents from 'a2jauthor/src/utils/bind-custom-events'
 
 import stache from 'can-stache'
 import route from 'can-route'

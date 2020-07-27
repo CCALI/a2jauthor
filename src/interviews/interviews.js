@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
-import Guide from 'a2jauthor/models/guide'
+import Guide from 'a2jauthor/src/models/guide'
 import template from './interviews.stache'
 
 export const InterviewsVM = DefineMap.extend('InterviewsVM', {

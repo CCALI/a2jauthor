@@ -2,11 +2,11 @@ import $ from 'jquery'
 import { assert } from 'chai'
 import { Item } from './item'
 import stache from 'can-stache'
-import A2JTemplate from 'a2jauthor/models/a2j-template'
+import A2JTemplate from 'a2jauthor/src/models/a2j-template'
 import domEvents from 'can-dom-events'
 import sinon from 'sinon'
 
-import 'a2jauthor/models/fixtures/templates'
+import 'a2jauthor/src/models/fixtures/templates'
 import 'steal-mocha'
 
 describe('<templates-list-item>', function () {

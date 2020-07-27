@@ -1,5 +1,5 @@
-<can-import from="a2jauthor/loading/"/>
-<can-import from="a2jauthor/interviews/interviews.less!"/>
+<can-import from="a2jauthor/src/loading/"/>
+<can-import from="a2jauthor/src/interviews/interviews.less!"/>
 
 {{#if(interviewsPromise.isPending)}}
   <app-loading loadingMessage:from="loadingMessage"></app-loading>

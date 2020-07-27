@@ -1,7 +1,7 @@
-<can-import from="a2jauthor/mapper/mapper-toolbar/"/>
-<can-import from="a2jauthor/mapper/mapper-canvas/"/>
-<can-import from="a2jauthor/mapper/mapper-list/"/>
-<can-import from="a2jauthor/mapper/mapper-editor/"/>
+<can-import from="a2jauthor/src/mapper/mapper-toolbar/"/>
+<can-import from="a2jauthor/src/mapper/mapper-canvas/"/>
+<can-import from="a2jauthor/src/mapper/mapper-list/"/>
+<can-import from="a2jauthor/src/mapper/mapper-editor/"/>
 <can-import from="./mapper.less"/>
 
   <div class="container-fluid">

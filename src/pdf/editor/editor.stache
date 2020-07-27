@@ -1,6 +1,6 @@
-<can-import from='~/modal/' />
+<can-import from='~/src/modal/' />
 <can-import from='can-stache-route-helpers' />
-<can-import from='~/variables/editor/' />
+<can-import from='~/src/variables/editor/' />
 <can-import from='../addendum-options/' />
 <can-import from='../assignment-form/' />
 <can-import from='../thumbnail-sidebar/' />

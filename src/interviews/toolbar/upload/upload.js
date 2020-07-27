@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import 'blueimp-file-upload/js/jquery.fileupload'
-import Guide from 'a2jauthor/models/guide'
+import Guide from 'a2jauthor/src/models/guide'
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './upload.stache'

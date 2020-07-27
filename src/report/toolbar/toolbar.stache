@@ -1,5 +1,5 @@
-<can-import from="a2jauthor/button-toolbar/"/>
-<can-import from="a2jauthor/report/toolbar/toolbar.less!"/>
+<can-import from="a2jauthor/src/button-toolbar/"/>
+<can-import from="a2jauthor/src/report/toolbar/toolbar.less!"/>
 
 <button-toolbar>
   <ul class="nav navbar-nav">

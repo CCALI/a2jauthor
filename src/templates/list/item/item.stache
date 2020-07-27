@@ -1,4 +1,4 @@
-<can-import from="a2jauthor/templates/list/item/item.less"/>
+<can-import from="a2jauthor/src/templates/list/item/item.less"/>
 <can-import from="can-stache-route-helpers" />
 
 {{#with template}}

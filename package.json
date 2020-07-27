@@ -25,7 +25,7 @@
     ],
     "ignore": [
       "legacy/**",
-      "models/fixtures/**",
+      "src/models/fixtures/**",
       "build.production.html.js",
       "/ckeditor/",
       "archive",
@@ -47,7 +47,7 @@
       "grunt-contrib-less"
     ],
     "configDependencies": [
-      "utils/set-global-for-lodash"
+      "src/utils/set-global-for-lodash"
     ],
     "map": {
       "cuid": "cuid/dist/cuid",

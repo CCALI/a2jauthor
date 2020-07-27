@@ -1,4 +1,4 @@
-<can-import from="a2jauthor/a2jorg/a2jorg.less"/>
+<can-import from="./a2jorg.less"/>
 
  <div id="a2jorgContainer" class="intrinsic-container intrinsic-container-4x3">
   <iframe id="a2jorgiframe"></iframe>

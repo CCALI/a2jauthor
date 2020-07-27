@@ -1,4 +1,4 @@
-<can-import from="a2jauthor/templates/assemble/assemble.less!" />
+<can-import from="a2jauthor/src/templates/assemble/assemble.less!" />
 
 <div id="test-assemble-modal" class="modal fade" tabindex="-1" role="dialog">
   <div class="modal-dialog modal-md">

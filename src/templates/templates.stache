@@ -1,10 +1,10 @@
 <can-import from="@caliorg/a2jdeps/alert/"/>
-<can-import from="a2jauthor/loading/"/>
-<can-import from="a2jauthor/templates/list/"/>
-<can-import from="a2jauthor/templates/assemble/"/>
-<can-import from="a2jauthor/templates/list/sortbar/"/>
-<can-import from="a2jauthor/templates/list/toolbar/"/>
-<can-import from="a2jauthor/templates/templates.less!"/>
+<can-import from="a2jauthor/src/loading/"/>
+<can-import from="a2jauthor/src/templates/list/"/>
+<can-import from="a2jauthor/src/templates/assemble/"/>
+<can-import from="a2jauthor/src/templates/list/sortbar/"/>
+<can-import from="a2jauthor/src/templates/list/toolbar/"/>
+<can-import from="a2jauthor/src/templates/templates.less!"/>
 
 {{#if templatesPromise.isResolved}}
   <templates-toolbar

@@ -1,4 +1,4 @@
-<can-import from="a2jauthor/debug-panel/evaluate/evaluate.less!"/>
+<can-import from="a2jauthor/src/debug-panel/evaluate/evaluate.less!"/>
 
 <div id="evaluate-form">
     <input

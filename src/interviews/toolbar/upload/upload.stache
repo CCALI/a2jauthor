@@ -1,4 +1,4 @@
-<can-import from="a2jauthor/interviews/toolbar/upload/upload.less!"/>
+<can-import from="a2jauthor/src/interviews/toolbar/upload/upload.less!"/>
 
 <div class="fileuploader nav navbar-nav">
     <li role="separator" class="divider hidden-xs"></li>

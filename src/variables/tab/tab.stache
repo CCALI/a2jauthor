@@ -1,5 +1,5 @@
-<can-import from='~/modal/'/>
-<can-import from="~/variables/editor/"/>
+<can-import from='~/src/modal/'/>
+<can-import from="~/src/variables/editor/"/>
 
 <nav class="navbar navbar-default">
   <p class="navbar-text">Variables used in this interview</p>

@@ -1,4 +1,4 @@
-<can-import from="a2jauthor/button-toolbar/"/>
+<can-import from="a2jauthor/src/button-toolbar/"/>
 <can-import from="./mapper-toolbar.less"/>
 
 <nav class="navbar navbar-default" id="mapper-toolbar">

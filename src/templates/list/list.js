@@ -2,7 +2,7 @@ import CanMap from 'can-map'
 import _range from 'lodash/range'
 import template from './list.stache'
 import Component from 'can-component'
-import moveItem from 'a2jauthor/utils/move-item-array'
+import moveItem from 'a2jauthor/src/utils/move-item-array'
 import queues from 'can-queues'
 
 import 'can-map-define'

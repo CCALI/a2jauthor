@@ -1,7 +1,7 @@
 import CanMap from 'can-map'
 import Component from 'can-component'
 import template from './header.stache'
-import helpPageUrl from 'a2jauthor/utils/help-page-url'
+import helpPageUrl from 'a2jauthor/src/utils/help-page-url'
 
 import 'can-map-define'
 

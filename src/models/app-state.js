@@ -1,7 +1,7 @@
 import $ from 'jquery'
 import CanMap from 'can-map'
 import CanList from 'can-list'
-import TraceMessage from 'a2jauthor/models/trace-message'
+import TraceMessage from 'a2jauthor/src/models/trace-message'
 import A2JVariable from '@caliorg/a2jdeps/models/a2j-variable'
 import _isEmpty from 'lodash/isEmpty'
 import { Gender, Hair, Skin } from '@caliorg/a2jdeps/avatar/colors'

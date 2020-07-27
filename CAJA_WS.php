@@ -654,7 +654,7 @@ switch ($command){
 		break;
 
 	case 'currentuser':
-		$path = dirname(__FILE__, 4);
+		$path = dirname(__FILE__, 2);
 		$key = parse_ini_file($path . '/config_env.ini')['A2J_KEY'];
 		$url = parse_ini_file($path . '/config_env.ini')['A2J_URL'];
 
@@ -667,7 +667,7 @@ switch ($command){
 		$token = base64_encode(json_encode($payload));
 
 		$result['token']=$token;
-		$result['username'] = ($userid == 45) ? "dev" : $user->name;			$result['username'] = ($userid == 45) ? "dev" : $user->name;
+		$result['username'] = ($userid == 45) ? "dev" : $user->name;
 		$result['a2j_url'] = $url;
 		break;
 

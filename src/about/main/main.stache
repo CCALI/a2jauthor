@@ -1,0 +1,128 @@
+<can-import from='@caliorg/a2jdeps/hair-picker/' />
+<can-import from='@caliorg/a2jdeps/skin-picker/' />
+<can-import from='a2jauthor/src/about/main/main.less' />
+<can-import from='@caliorg/a2jdeps/avatar/' />
+
+<div class='row'>
+  <div class='col-xs-10'>
+    <div class='form-group'>
+      <label class="control-label">Title:</label>
+      <input
+        type="text"
+        class="form-control ui-widget editable"
+        placeholder='My awesome interview'
+        value:bind='guide.title'
+      />
+    </div>
+
+    <div class='form-group'>
+      <label class="control-label">Description:</label>
+      <textarea
+        class="form-control text editable taller"
+        value:bind="guide.description"
+      />
+    </div>
+
+    <div class='form-group'>
+      <label class="control-label">Jurisdiction:</label>
+      <input
+        type="text"
+        class="form-control ui-widget editable"
+        placeholder='My awesome province'
+        value:bind='guide.jurisdiction'
+      />
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 avatar">
+        <div class="editspan form-group">
+          <label class="control-label">Guide Gender:</label>
+          <div class='gender-options'>
+            <label>
+              <input
+                type='radio'
+                name='gender'
+                value='female'
+                {{^is guide.guideGender 'male'}}
+                  checked
+                {{/is}}
+                on:change='updateAvatarGender(scope.event)'
+              />
+              <span>Female</span>
+            </label>
+            <label>
+              <input
+                type='radio'
+                name='gender'
+                value='male'
+                {{#is guide.guideGender 'male'}}
+                  checked
+                {{/is}}
+                on:change='updateAvatarGender(scope.event)'
+              />
+              <span>Male</span>
+            </label>
+          </div>
+        </div>
+        <div>
+          <label>Guide Skin Tone:</label>
+          <skin-picker
+            selectedSkin:from="guide.avatarSkinTone"
+            onSkin:from="updateSkinTone"
+          />
+        </div>
+        <div>
+          <label>Guide Hair Color:</label>
+          <hair-picker
+            selectedHair:from="guide.avatarHairColor"
+            onHair:from="updateHairColor"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class='form-group'>
+      <label class="control-label">Credits:</label>
+      <textarea
+        class="form-control text editable taller"
+        value:bind="guide.credits"
+      />
+    </div>
+
+    <div class='row'>
+      <div class="col-sm-6 language">
+        <div class="editspan form-group">
+          <label class="control-label">Language:</label>
+          <select
+            class="form-control"
+            value:bind="guide.language"
+            on:change="updateLanguagePack()"
+          >
+            {{#each languageOptions}}
+              <option value='{{value}}'>{{displayName}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+      <div class='col-sm-6'>
+        <div class='form-group'>
+          <label class="control-label">Approximate Completion Time:</label>
+          <input
+          type="text"
+          class="form-control ui-widget editable"
+          placeholder='42 minutes'
+          value:bind='guide.completionTime'
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='col-xs-2'>
+    <a2j-viewer-avatar
+      kind:raw="guide"
+      gender:from="guide.guideGender"
+      skin:from="guide.avatarSkinTone"
+      hair:from="guide.avatarHairColor"
+    />
+  </div>
+</div>

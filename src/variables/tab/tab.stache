@@ -1,0 +1,73 @@
+<can-import from='~/src/modal/'/>
+<can-import from="~/src/variables/editor/"/>
+
+<nav class="navbar navbar-default">
+  <p class="navbar-text">Variables used in this interview</p>
+  <div class="nav navbar-nav navbar-right">
+    <button
+      id="var-add"
+      class="btn btn-default navbar-btn"
+      on:el:click="openVariableCreator()"
+    >
+      <span class="glyphicon-plus" aria-hidden="true"></span> Add
+    </button>
+      <button
+        id="uploadCMPFile"
+        class="btn btn-primary navbar-btn"
+      on:el:click="uploadCmpFile()"
+      >
+        <span class="glyphicon-folder-open" aria-hidden="true"></span>
+        Add from HotDocs .CMP
+      </button>
+  </div><!-- nav navbar-nav navbar-right -->
+</nav>
+
+<div class="page tabContentFrame">
+  <!-- <div class="tabContent editq"> -->
+  {{#if(variableList.length)}}
+    <table class="table table-hover">
+      <thead>
+        <tr valign="top">
+          <th>Name</th>
+          <th>Type</th>
+          <th>Repeating</th>
+          <th>Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each(variableList)}}
+          <tr on:el:click="scope.vm.openVariableEditor(name)">
+            <td>{{name}}</td>
+            <td>{{type}}</td>
+            <td>
+              {{#if repeating}}
+                Yes
+              {{else}}
+                No
+              {{/if}}
+            </td>
+            <td>{{comment}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{/if}}
+  <!-- </div> -->
+</div>
+
+{{#if(showVariableModal)}}
+  <author-modal
+    modalTitle:raw="Variable"
+    cancelText:raw="Delete"
+    submitText:raw="Save"
+    onCancel:from="onDismissVariableEditing"
+    onSubmit:from="onConfirmVariableEditing"
+  >
+    <variable-editor
+      initialVariable:from="editingVariable"
+      showUsageFinder:raw="true"
+      onVariableChange:from="onVariableChange"
+      onSelectSuggestion:from="onSelectSuggestion"
+    />
+  </author-modal>
+{{/if}}

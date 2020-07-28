@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;app-loading&gt;</title>
+  </head>
+
+  <body>
+    <script>
+      window.less = {
+        async: true,
+        fileSync: true
+      };
+    </script>
+
+    <script src="../node_modules/steal/steal.js"
+      data-main="@empty">
+    </script>
+
+    <script type="steal-module">
+      import Loading from "a2jauthor/src/loading/"
+      import "a2jauthor/src/loading/loading.less"
+
+      const loading = new Loading()
+    </script>
+  </body>
+</html>

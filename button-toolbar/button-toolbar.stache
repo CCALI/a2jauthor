@@ -1,7 +1,0 @@
-<can-import from="a2jauthor/button-toolbar/button-toolbar.less!"/>
-
-<nav class="navbar navbar-default navbar-toolbar">
-  <div class="container-fluid">
-    <content />
-  </div>
-</nav>

@@ -1,9 +1,9 @@
 import $ from 'jquery'
 import loader from '@loader'
-import AppState from './models/app-state'
-import tabsRouting from 'a2jauthor/utils/tabs-routing'
+import AppState from 'a2jauthor/src/models/app-state'
+import tabsRouting from 'a2jauthor/src/utils/tabs-routing'
 import viewerPreviewTpl from './viewer-preview-layout.stache'
-import bindCustomEvents from 'a2jauthor/utils/bind-custom-events'
+import bindCustomEvents from 'a2jauthor/src/utils/bind-custom-events'
 
 import stache from 'can-stache'
 import route from 'can-route'
@@ -31,10 +31,10 @@ $('body').on('click', 'a[href="#"]', ev => ev.preventDefault())
 
 bindCustomEvents(appState)
 
-// The legacy code in src/src requires the dom to be populated in order to work,
+// The legacy code in legacy/legacy requires the dom to be populated in order to work,
 // so we first render the main app's template and then load the code.
 let loadLegacyCode = function () {
-  return loader.import('a2jauthor/src/')
+  return loader.import('a2jauthor/legacy/')
 }
 
 let render = function ({ template }) {

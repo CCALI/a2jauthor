@@ -1,0 +1,86 @@
+<can-import from="@caliorg/a2jdeps/alert/"/>
+<can-import from="a2jauthor/src/loading/"/>
+<can-import from="a2jauthor/src/templates/list/"/>
+<can-import from="a2jauthor/src/templates/assemble/"/>
+<can-import from="a2jauthor/src/templates/list/sortbar/"/>
+<can-import from="a2jauthor/src/templates/list/toolbar/"/>
+<can-import from="a2jauthor/src/templates/templates.less!"/>
+
+{{#if templatesPromise.isResolved}}
+  <templates-toolbar
+    class="clearfix"
+    filter:bind="activeFilter"
+    templates:bind="templates"
+    searchToken:from="searchToken"/>
+{{/if}}
+
+<div class="page">
+  <app-alert
+    auto-close:from="true"
+    dismissible:from="true"
+    alertType:raw="warning"
+    open:from="openDeletedAlert"
+    class="deleted-templates-alert"
+    autoCloseTime:from="alertAutoCloseTime">
+    {{#each(../deletedTemplates)}}
+      {{./title}} - has been deleted -
+      <a href="#" on:el:click="scope.vm.restoreTemplate(this)">Restore</a>
+    {{/each}}
+  </app-alert>
+
+  <app-alert
+    autoClose:from="true"
+    dismissible:from="true"
+    alertType:raw="warning"
+    open:from="openRestoredAlert"
+    class="restored-templates-alert"
+    autoCloseTime:from="alertAutoCloseTime">
+    {{#each(../restoredTemplates)}}
+      {{./title}} - has been restored -
+      <a href="#" on:el:click="scope.vm.deleteTemplate(this)">Delete</a>
+    {{/each}}
+  </app-alert>
+
+  <div class="container-fluid">
+    {{#if(templatesPromise.isPending)}}
+      <app-loading loadingMessage:raw="Loading A2J Templates ..."/>
+    {{/if}}
+
+    {{#if(templatesPromise.isResolved)}}
+      {{! if source list is empty, there are no templates at all! }}
+      {{#unless(templates.length)}}
+        <app-alert open:from="true" alertType:raw="warning" class="no-templates-exist">
+          There are no templates at all. Create one!
+        </app-alert>
+      {{/unless}}
+
+      {{#if(noSearchResults)}}
+        <app-alert open:from="true" class="no-results" alertType:raw="warning">
+          No templates match
+        </app-alert>
+      {{/if}}
+
+      {{#if(noTemplatesMatchFilter)}}
+        <app-alert open:from="true" class="no-match-filter" alertType:raw="warning">
+          {{#eq(../activeFilter, 'active')}}No templates match the filters{{/eq}}
+          {{#eq(../activeFilter, 'deleted')}}There are no templates in the trash{{/eq}}
+        </app-alert>
+      {{/if}}
+
+      {{#if(showTemplatesList)}}
+        <templates-sortbar criteria:bind="sortCriteria" />
+
+        <templates-list
+          displayList:from="displayList"
+          hasSorted:bind="hasSorted"
+          activeFilter:bind="activeFilter"
+          class:from="listStateClassName"
+          isDraggable:bind="listIsDraggable" />
+      {{/if}}
+    {{/if}}
+  </div>
+
+  <test-assemble-options
+    guideId:from="guideId"
+    guideTitle:from="guideTitle" />
+</div>

@@ -1,0 +1,43 @@
+<can-import from="a2jauthor/src/templates/list/item/item.less"/>
+<can-import from="can-stache-route-helpers" />
+
+{{#with template}}
+  <div class="template-wrapper{{#if(../deleting)}} deleting{{/if}}{{#if(../restoring)}} restoring{{/if}}"
+    on:el:mouseenter="scope.vm.setHovering()"
+    on:el:mouseleave="scope.vm.setNotHovering()">
+    <a draggable="false" class="template-link" href="{{routeUrl page='templates' action='edit' guideId=guideId templateId=templateId}}">
+
+      <div class="template-order">
+        <span class="build-order">{{buildOrder}}</span><br>
+
+        {{#if(scope.vm.hovered)}}
+          {{#if(scope.vm.isDraggable)}}
+            <span class="glyphicon-move small text-muted" aria-hidden="true"></span>
+          {{/if}}
+        {{/if}}
+      </div>
+
+      <div class="template-panel {{#unless active}}deleted{{/unless}}">
+        <div class="row">
+          <div class="col-sm-9">
+            <h4 class="title">{{title}}</h4>
+            <p class="description">{{outline}}</p>
+          </div>
+
+          <ul class="template-menu col-sm-3">
+            <li class="last-modified">{{scope.vm.updatedAtFromNow}}</li>
+            <li class="divider"></li>
+            {{#if(scope.vm.hovered)}}
+              {{#if(active)}}
+                <li class="options"><a draggable="false" class="delete" on:el:click="scope.vm.deleteTemplate(scope.event)" href="#">Delete</a></li>
+              {{else}}
+                <li class="options"><a draggable="false" class="restore" on:el:click="scope.vm.restoreTemplate(scope.event)" href="#">Restore</a></li>
+              {{/if}}
+            {{/if}}
+          </ul>
+
+        </div>
+      </div>
+    </a>
+  </div>
+{{/with}}

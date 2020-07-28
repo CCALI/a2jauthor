@@ -1,0 +1,11 @@
+<can-import from="a2jauthor/src/button-toolbar/"/>
+<can-import from="a2jauthor/src/interviews/toolbar/toolbar.less!"/>
+<can-import from="a2jauthor/src/interviews/toolbar/upload/"/>
+
+<button-toolbar>
+  <ul class="nav navbar-nav">
+    <li><a href="#" class="open-guide"><span class="glyphicon-folder-open" aria-hidden="true"></span> Open</a></li>
+    <li><a href="#" class="delete-guide"><span class="glyphicon-trash" aria-hidden="true"></span> Delete</a></li>
+  </ul>
+  <a2j-upload interviews:to="interviews"></a2j-upload>
+</button-toolbar>

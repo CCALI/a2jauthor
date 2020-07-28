@@ -1,0 +1,25 @@
+@import (reference) '../../styles/shared/mixins';
+
+templates-page {
+  display: block;
+
+  .deleted-templates-alert,
+  .restored-templates-alert {
+    position: absolute;
+    z-index: 100;
+    width: 96%;
+    top: @navbar-height - 1;
+    left: 0;
+    margin-left: 2%;
+  }
+
+  .page {
+    position: relative;
+  }
+
+  templates-toolbar {
+    nav.navbar.navbar-default, nav.navbar.navbar-inverse {
+      margin-bottom: 0;
+    }
+  }
+}

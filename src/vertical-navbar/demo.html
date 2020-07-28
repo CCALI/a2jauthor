@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;vertical-navbar&gt;</title>
+  </head>
+
+  <body>
+    <script type="text/stache" can-autorender>
+      <can-import from="a2jauthor/styles/" />
+      <can-import from="a2jauthor/main.less!" />
+      <can-import from="a2jauthor/src/vertical-navbar/" />
+
+      <div>
+        <vertical-navbar position="right"></vertical-navbar>
+        <vertical-navbar theme="inverse"></vertical-navbar>
+      </div>
+    </script>
+
+    <script src="../../node_modules/steal/steal.js"
+      data-main="can-view-autorender/">
+      window.less = {
+        async: true,
+        fileSync: true
+      };
+    </script>
+  </body>
+</html>

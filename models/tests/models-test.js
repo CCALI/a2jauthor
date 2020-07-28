@@ -1,7 +1,0 @@
-import 'a2jauthor/models/fixtures/'
-import 'a2jauthor/models/tests/guide-test'
-import 'a2jauthor/models/tests/a2j-node-test'
-import 'a2jauthor/models/tests/app-state-test'
-import 'a2jauthor/models/tests/a2j-template-test'
-import 'a2jauthor/models/tests/a2j-variable-test'
-import 'a2jauthor/models/tests/trace-message-test'

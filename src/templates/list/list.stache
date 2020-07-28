@@ -1,0 +1,14 @@
+<can-import from="a2jauthor/src/templates/list/item/"/>
+<can-import from="a2jauthor/src/templates/list/list.less"/>
+
+<ul>
+  {{#each(displayList)}}
+    <li {{#if(scope.vm.isDraggable)}}draggable="true"{{/if}}>
+      <templates-list-item
+        template:from="."
+        isDraggable:from="scope.vm.isDraggable"
+        transitionTime:from="scope.vm.itemTransitionTime">
+      </templates-list-item>
+    </li>
+  {{/each}}
+</ul>

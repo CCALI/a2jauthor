@@ -24,8 +24,8 @@
       "mocha"
     ],
     "ignore": [
-      "src/**",
-      "models/fixtures/**",
+      "legacy/**",
+      "src/models/fixtures/**",
       "build.production.html.js",
       "/ckeditor/",
       "archive",
@@ -47,7 +47,7 @@
       "grunt-contrib-less"
     ],
     "configDependencies": [
-      "utils/set-global-for-lodash"
+      "src/utils/set-global-for-lodash"
     ],
     "map": {
       "cuid": "cuid/dist/cuid",
@@ -56,7 +56,7 @@
       "chai": "chai/chai"
     },
     "meta": {
-      "a2jauthor/src/A2J_Tabs": {
+      "a2jauthor/legacy/A2J_Tabs": {
         "format": "global",
         "eval": "script",
         "deps": [
@@ -64,7 +64,7 @@
           "a2jauthor/ckeditor/ckeditor"
         ]
       },
-      "a2jauthor/src/A2J_AuthorApp": {
+      "a2jauthor/legacy/A2J_AuthorApp": {
         "format": "global",
         "eval": "script",
         "deps": [
@@ -76,92 +76,92 @@
           "jquery-ui/ui/widgets/tooltip"
         ]
       },
-      "a2jauthor/src/A2J_Clauses": {
+      "a2jauthor/legacy/A2J_Clauses": {
         "format": "global",
         "eval": "script"
       },
-      "a2jauthor/src/A2J_Reports": {
+      "a2jauthor/legacy/A2J_Reports": {
         "format": "global",
         "eval": "script",
         "deps": [
-          "a2jauthor/src/viewer/A2J_Logic"
+          "a2jauthor/legacy/viewer/A2J_Logic"
         ]
       },
-      "a2jauthor/src/A2J_Mapper": {
+      "a2jauthor/legacy/A2J_Mapper": {
         "format": "global",
         "eval": "script"
       },
-      "a2jauthor/src/A2J_Pages": {
+      "a2jauthor/legacy/A2J_Pages": {
         "format": "global",
         "eval": "script",
         "deps": [
           "a2jauthor/ckeditor/ckeditor"
         ]
       },
-      "a2jauthor/src/A2J_Guides": {
+      "a2jauthor/legacy/A2J_Guides": {
         "format": "global",
         "eval": "script"
       },
-      "a2jauthor/src/A2J_Debug": {
+      "a2jauthor/legacy/A2J_Debug": {
         "format": "global",
         "eval": "script"
       },
-      "a2jauthor/src/viewer/A2J_Types": {
+      "a2jauthor/legacy/viewer/A2J_Types": {
         "format": "global",
         "eval": "script"
       },
-      "a2jauthor/src/viewer/A2J_Logic": {
+      "a2jauthor/legacy/viewer/A2J_Logic": {
         "format": "global",
         "eval": "script"
       },
-      "a2jauthor/src/viewer/A2J_ParserConvert": {
+      "a2jauthor/legacy/viewer/A2J_ParserConvert": {
         "format": "global",
         "eval": "script"
       },
-      "a2jauthor/src/viewer/A2J_Parser": {
+      "a2jauthor/legacy/viewer/A2J_Parser": {
         "format": "global",
         "eval": "script"
       },
-      "a2jauthor/src/viewer/A2J_Viewer": {
+      "a2jauthor/legacy/viewer/A2J_Viewer": {
         "format": "global",
         "eval": "script"
       },
-      "a2jauthor/src/viewer/A2J_Prefs": {
+      "a2jauthor/legacy/viewer/A2J_Prefs": {
         "format": "global",
         "eval": "script"
       },
-      "a2jauthor/src/viewer/A2J_Languages": {
+      "a2jauthor/legacy/viewer/A2J_Languages": {
         "format": "global",
         "eval": "script"
       },
-      "a2jauthor/src/viewer/A2J_MobileFile": {
+      "a2jauthor/legacy/viewer/A2J_MobileFile": {
         "format": "global",
         "eval": "script"
       },
-      "a2jauthor/src/viewer/A2J_Shared": {
+      "a2jauthor/legacy/viewer/A2J_Shared": {
         "format": "global",
         "eval": "script",
         "deps": [
           "jquery-ui/ui/widgets/dialog"
         ]
       },
-      "a2jauthor/src/viewer/A2J_SharedSus": {
+      "a2jauthor/legacy/viewer/A2J_SharedSus": {
         "format": "global",
         "eval": "script"
       },
-      "a2jauthor/src/viewer/A2J_AnswerFile": {
+      "a2jauthor/legacy/viewer/A2J_AnswerFile": {
         "format": "global",
         "eval": "script",
         "deps": [
-          "a2jauthor/src/viewer/A2J_Types"
+          "a2jauthor/legacy/viewer/A2J_Types"
         ]
       },
-      "a2jauthor/src/viewer/jquery.ui.combobox": {
+      "a2jauthor/legacy/viewer/jquery.ui.combobox": {
         "deps": [
           "jquery-ui/ui/widget"
         ]
       },
-      "a2jauthor/src/viewer/jquery.ui.traggable": {
+      "a2jauthor/legacy/viewer/jquery.ui.traggable": {
         "deps": [
           "jquery-ui/ui/widgets/mouse",
           "jquery-ui/ui/widget"

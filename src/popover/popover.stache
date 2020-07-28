@@ -1,0 +1,13 @@
+<can-import from="a2jauthor/src/popover/popover.less!"/>
+
+<div class="popover {{placement}}" style="display: block;">
+  <div class="arrow"></div>
+
+  {{#if title}}
+    <h3 class="popover-title">{{title}}</h3>
+  {{/if}}
+
+  <div class="popover-content">
+    <content></content>
+  </div>
+</div>

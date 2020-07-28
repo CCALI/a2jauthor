@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;report-page&gt;</title>
+  </head>
+
+  <body>
+    <script type="text/stache" can-autorender>
+      <can-import from="a2jauthor/src/report/" />
+
+      <div>
+        <report-page vm:guide:bind="guide"></report-page>
+      </div>
+    </script>
+
+    <script src="../../node_modules/steal/steal.js"
+    data-main="can-view-autorender/">
+      window.less = {
+        async: true,
+        fileSync: true
+      };
+      import CanMap from 'can-map'
+
+      const VM = CanMap.extend({
+        define: {
+          guide: {
+            get() {
+              return {
+                title: "Top o the World!",
+                revision: "32.8"
+              }
+            }
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

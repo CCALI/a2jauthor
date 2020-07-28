@@ -1,0 +1,87 @@
+@import (reference) '../../../../styles';
+
+templates-list-item {
+  display: block;
+
+  // specificity issues :/
+  a.template-link {
+    color: @text-color;
+
+    &:hover, &:active, &:focus {
+      color: @text-color;
+      text-decoration: none;
+    }
+  }
+
+  &:hover {
+    .template-panel {
+      border-color: lighten(@gray-light,10%);
+      background-color: lighten(@brand-info,35%);
+    }
+  }
+
+  .template-order {
+    float: left;
+    width: 30px;
+    display: inline-block;
+    padding: @grid-gutter-width/2;
+    padding-left: 0;
+
+    .build-order {
+      font-size: @font-size-h4;
+      font-weight: @headings-font-weight;
+      line-height: @font-size-h4;
+    }
+  }
+  .template-panel {
+    position: relative;
+    overflow: hidden;
+    .border;
+    padding: @grid-gutter-width/2;
+    margin-bottom: @grid-gutter-width/2;
+
+    h4, p {
+      margin: 0;
+      .truncate;
+    }
+    h4 {
+      overflow: visible;
+    }
+    .title {
+      margin-bottom: 5px;
+    }
+    &.deleted {
+      .border;
+      background-color: lighten(@gray-lighter,10%);
+      color: lighten(@gray-light,10%);
+    }
+    .template-menu {
+      font-size: floor(@font-size-small);
+      text-align: right;
+
+      .divider {
+        height: floor(@font-size-small*.75);
+      }
+      .options {
+        display: inline-block;
+      }
+    }
+  }
+
+  @media (max-width: @screen-sm) {
+    .template-panel .template-menu {
+
+      li {
+        display: inline-block;
+        margin-left: @grid-gutter-width/4;
+      }
+      .divider {
+        //height: floor(@font-size-small);
+        border-left: 1px solid @gray-light;
+      }
+      .options {
+        display: inline-block;
+      }
+    }
+  }
+}

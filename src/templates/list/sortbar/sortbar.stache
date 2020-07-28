@@ -1,0 +1,23 @@
+<can-import from="a2jauthor/src/templates/list/sortbar/sortbar.less!"/>
+
+<div class="sort-order clearfix">
+  <a href="#"
+    class="sort-flag {{sortCaretClasses 'buildOrder'}}"
+    on:el:click="setSortCriteria('buildOrder')">#</a>
+</div>
+
+<div class="sort-columns">
+  <div class="row">
+    <div class="col-xs-9">
+      <a href="#"
+        class="sort-flag {{sortCaretClasses 'title'}}"
+        on:el:click="setSortCriteria('title')">Title</a>
+    </div>
+
+    <div class="col-xs-3 text-right">
+      <a href="#"
+        class="sort-flag {{sortCaretClasses 'updatedAt'}}"
+        on:el:click="setSortCriteria('updatedAt')">Date Modified</a>
+    </div>
+  </div>
+</div>

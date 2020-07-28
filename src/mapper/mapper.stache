@@ -1,0 +1,50 @@
+<can-import from="a2jauthor/src/mapper/mapper-toolbar/"/>
+<can-import from="a2jauthor/src/mapper/mapper-canvas/"/>
+<can-import from="a2jauthor/src/mapper/mapper-list/"/>
+<can-import from="a2jauthor/src/mapper/mapper-editor/"/>
+<can-import from="./mapper.less"/>
+
+  <div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-12">
+          <mapper-toolbar
+            paper:from="paper"
+            graph:from="graph"
+            buildingMapper:bind="buildingMapper"
+          />
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-2">
+        <mapper-list
+          guide:from="guide"
+          selectedPageName:from="selectedPageName"
+          onSelectPageName:from="onSelectPageName"
+          openQDE:from="openQDE"
+          addPage:from="addPage"
+          addPopup:from="addPopup"
+          pagesAndPopups:from="pagesAndPopups"
+          scrollToSelectedNode:from="scrollToSelectedNode"
+        />
+      </div>
+      <div class="mapper-canvas-container col-sm-10">
+        <mapper-canvas
+          guide:from="guide"
+          selectedPageName:from="selectedPageName"
+          onSelectPageName:from="onSelectPageName"
+          openQDE:to="openQDE"
+          addPage:to="addPage"
+          addPopup:to="addPopup"
+          pagesAndPopups:from="pagesAndPopups"
+          lastCoordinatesByStep:from="lastCoordinatesByStep"
+          paper:to="paper"
+          graph:to="graph"
+          buildingMapper:bind="buildingMapper"
+          scrollToSelectedNode:to="scrollToSelectedNode"
+        />
+      </div>
+    </div>
+
+  </div>

@@ -1,7 +1,0 @@
-<can-import from="a2jauthor/loading/loading.less"/>
-
-<div class="app-loading {{#if (hasOverlay)}}overlay-active{{/if}}">
-    <p class="text-center {{#if (hasOverlay)}}overlay-active{{else}}text-muted{{/if}}">
-        <span class="glyphicon-spin6 animate-spin" aria-hidden="true"></span> {{this.loadingMessage}}
-    </p>
-</div>

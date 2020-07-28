@@ -1,0 +1,44 @@
+<can-import from="a2jauthor/src/templates/edit/toolbar/toolbar.less!" />
+<can-import from="bootstrap/js/modal" />
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-6 form-container">
+        <a class="back-to-list" href="{{routeUrl page='templates' guideId=guideId}}">
+          <i class="glyphicon glyphicon-left-open" aria-hidden="true"></i>
+        </a>
+
+        <form class="navbar-form template-name-form">
+          <div class="form-group">
+            {{#if template}}
+              <input type="text" class="form-control" el:value:bind="template.title" on:el:blur="saveTemplate()">
+            {{/if}}
+          </div>
+        </form>
+      </div>
+
+      <div class="col-xs-6">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">All Elements</a></li>
+          <li><a href="#">Outline</a></li>
+        </ul>
+
+        <div class="nav navbar-nav navbar-right">
+          <button on:el:click="saveTemplate()"
+            class="btn btn-default navbar-btn save-template">
+
+            <span class="glyphicon-floppy" aria-hidden="true"></span> Save Template
+          </button>
+          <button
+            data-toggle="modal"
+            data-target="#test-assemble-modal"
+            class="btn btn-default navbar-btn test-assemble">
+
+            <span class="glyphicon-file-pdf" aria-hidden="true"></span> Test Assemble
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

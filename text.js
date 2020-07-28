@@ -1,4 +1,5 @@
 // https://github.com/systemjs/plugin-text
+// TODO: keep as this is used during npm run test, but not sure why.
 exports.translate = function (load) {
   return 'def' + 'ine(function() {\nreturn "' + load.source
     .replace(/(["\\])/g, '\\$1')

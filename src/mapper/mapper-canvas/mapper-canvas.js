@@ -322,8 +322,7 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
 
   // this bootstraps the relationship between jointjs canvas and canjs state/models/events
   connectedCallback () {
-    // TODO: remove global vm
-    const vm = window.vm = this
+    const vm = this
 
     // TODO - this may cause circular events in jointjs-util.js
     vm.listenTo('node-position-update', _debounce(this.sortAndSaveGuidePages, 30))

@@ -2,8 +2,8 @@
 <can-import from="a2jauthor/src/debug-menu/"/>
 <can-import from="a2jauthor/src/debug-panel/"/>
 <can-import from="a2jauthor/src/debug-alerts/"/>
-<can-import from="@caliorg/a2jviewer/preview/"/>
 <can-import from="a2jauthor/styles/author/viewer-layout.less"/>
+<can-import from="@caliorg/a2jviewer/src/preview/"/>
 
 {{#if(previewMode)}}
   {{#if(showDebugPanel)}}

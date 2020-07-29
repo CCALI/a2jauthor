@@ -9,7 +9,7 @@
  * the a2j author help page.
  *
  */
-const basePath = 'http://author.a2jauthor.org/content/'
+const basePath = 'https://www.a2jauthor.org/content/'
 
 const pageToHelpUrlMap = {
   about: 'chapter-4-about-tab',

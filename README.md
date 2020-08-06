@@ -1,24 +1,33 @@
-[![Build Status](https://travis-ci.com/CCALI/CAJA.svg?token=2eqmqTqtZG7xAzR9G89f&branch=develop)](https://travis-ci.com/CCALI/CAJA)
+[![Build Status](https://travis-ci.com/CCALI/a2jauthor.svg?token=2eqmqTqtZG7xAzR9G89f&branch=develop)](https://travis-ci.com/CCALI/a2jauthor)
 
-A2J Author 7.0 (previously know as CAJA)
-====
+# A2J Author
 
-This the repo for the browser-based versions of A2J Author.
+[Access to Justice Author (A2J Author®)](https://www.a2jauthor.org/) is a cloud based software tool that delivers greater access to justice for self-represented litigants by enabling non-technical authors from the courts, clerk’s offices, legal services organizations, and law schools to rapidly build and implement user friendly web-based document assembly projects.
 
-Before following the instructions for setup below.  It is assumed that you have npm and nodejs already installed. Currently tested on Node v12.x-LTS and npm v6.x
+## Prerequisites
+A2J Author currently requires an *AMP stack to be running, most easily set up for local development on non-linux environments using [MAMP](https://www.mamp.info/en/downloads/). Make sure to update MAMP's webroot setting to the proper directory. See the [wiki](./wiki/Dev Environment MAMP.md) document for more details on setting up a MAMP environment.
 
+A2J Author requires A2J Document Assembly Tool (A2J DAT) for A2J Template creation and test assembly. Installation nstructions can be found at the [A2J DAT](https://github.com/CCALI/a2jdat) git repo.
 
-## To setup:
+## Getting started
+
+```bash
+$ git clone https://github.com/CCALI/a2jauthor.git
+$ cd a2jauthor/
+$ npm install
 ```
-npm install
-```
 
+## Run Author in your browser:
+Assuming you've cloned a2jauthor into your webroot:
+
+http://localhost/a2jauthor/
 
 ## To build the Author production code:
 
 From the root folder run
 ```
 npm run build
+mv index.production.html index.html
 ```
 
 ## To run Author tests:

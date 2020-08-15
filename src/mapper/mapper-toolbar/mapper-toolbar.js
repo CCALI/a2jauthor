@@ -79,7 +79,7 @@ export const MapperToolbarVM = DefineMap.extend('MapperToolbarVM', {
     const lastMapY = [60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60]
 
     setTimeout(() => {
-      // TODO: these values should be dictated to computed by nodeSize constant(s)
+      // TODO: these values should be computed by nodeSize constant(s)
       cells.forEach((cell) => {
         const stepNumber = cell.attributes.stepNumber === 'popups' ? 0 : parseInt(cell.attributes.stepNumber)
 
@@ -92,6 +92,8 @@ export const MapperToolbarVM = DefineMap.extend('MapperToolbarVM', {
 
       this.paper.fitToContent(fitToContentOptions)
       this.buildingMapper = false
+      // save new coords after cleanup
+      window.guideSave()
     })
   },
 

@@ -575,6 +575,13 @@ function buildQuestionFieldSet (page) {
   return questionFieldSet
 }
 
+var helpAltTextChangeHandler = function (val, page) {
+  val = val.replace(/[^\w\s]|_/g, "") // only allow letters, digits, and whitespace
+          .replace(/\s+/g, " ") // single spaces only
+  page.helpAltText = window.$.trim(val).substring(0, 120)
+  return val
+}
+
 /** @param {TPage} page */
 function buildLearnMoreFieldSet (page) {
   var learnMoreFieldSet = window.form.fieldset('Learn More Info', page)
@@ -619,9 +626,9 @@ function buildLearnMoreFieldSet (page) {
   learnMoreFieldSet.append(window.form.text({
     name: 'helpAltText',
     label: 'Graphic Alt-Text:',
-    placeholder: 'Enter 100 characters or less to describe your image for Aria readers. Hint: 100 characters ends here',
+    placeholder: 'Enter 100 characters or less (no punctuation) to describe your image for Aria readers. Hint: 100 characters ends here',
     value: page.helpAltText,
-    change: function (val, page) { page.helpAltText = window.$.trim(val).substring(0, 120) }
+    change: helpAltTextChangeHandler
   }))
 
   learnMoreFieldSet.append(window.form.pickVideo({
@@ -1068,5 +1075,23 @@ window.TGuide.prototype.pageFindReferences = function (findName, newName) {
       }
     }
   }
+  // test firstPage and exitPage values and update
+  if (guide.firstPage === findName) {
+    if (newName != null) {
+      guide.firstPage = newName
+      // span does not refresh, update it
+      $('.starting').find('span').text(newName)
+    }
+    matches.push({ name: 'Steps Tab', field: 'Starting Point', text: guide.firstPage })
+  }
+  if (guide.exitPage === findName) {
+    if (newName != null) {
+      guide.exitPage = newName
+      // span does not refresh, update it
+      $('.starting').find('span').text(newName)
+    }
+    matches.push({ name: 'Steps Tab', field: 'Exit Point', text: guide.exitPage })
+  }
+
   return matches
 }

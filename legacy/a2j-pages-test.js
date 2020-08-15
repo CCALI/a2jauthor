@@ -29,13 +29,20 @@ describe('legacy/A2J_Pages', function () {
   })
 
   it('pageFindReferences', function () {
+    window.gGuide.firstPage = 'page2'
+    window.gGuide.exitPage = 'page2'
+
     const matches = window.gGuide.pageFindReferences('page2', null)
-    assert.equal(matches.length, 1, 'should find references in button.next targets')
+    assert.equal(matches.length, 3, 'should find references in button.next targets and start/exit pages')
     assert.equal(matches[0].next, 'page2', 'should not rename next target if newName not passed')
+    assert.equal(matches[1].text, 'page2', 'should not rename starting page target if newName not passed')
+    assert.equal(matches[2].text, 'page2', 'should not rename exit page target if newName not passed')
 
     const renameMatches = window.gGuide.pageFindReferences('page2', 'lasercats')
-    assert.equal(renameMatches.length, 1, 'should find references in button.next targets')
+    assert.equal(renameMatches.length, 3, 'should find references in button.next targets and start/exit pages')
     assert.equal(renameMatches[0].next, 'lasercats', 'should rename next target if newName is passed')
+    assert.equal(renameMatches[1].text, 'lasercats', 'should rename starting target if newName is passed')
+    assert.equal(renameMatches[2].text, 'lasercats', 'should rename exit target if newName is passed')
   })
 
   it('handleNullButtonTargets', function () {
@@ -132,6 +139,15 @@ describe('legacy/A2J_Pages', function () {
     assert.equal($buildLearnMoreFieldSet[0].elements.length, 11, 'should create buildQuestionFieldSet with 11 elements')
 
     window.gGuideID = undefined
+  })
+
+  it('helpAltText change handler', function () {
+    const mockPage = { helpAltText: '' }
+    const dirtyAltText = 'Too much $%^ punctuation!! and     "whitespace" for 1'
+    const result = window.helpAltTextChangeHandler(dirtyAltText, mockPage)
+    const expectedResult = 'Too much punctuation and whitespace for 1'
+
+    assert.equal(result, expectedResult, 'should clear all unsafe characters leaving only letters, digits, and single whitespace')
   })
 
   it('buildFieldsFieldSet', function () {

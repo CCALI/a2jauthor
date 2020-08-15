@@ -5,11 +5,6 @@
 <can-import from="./mapper.less"/>
 
   <div class="container-fluid">
-    {{#not(this.guide)}}
-    <div class="center-message">
-      <span class="icon glyphicon-sitemap"> Please select an interview before using the Map Tool</span>
-    </div>
-    {{else}}
     <div class="row">
         <div class="col-sm-12">
           <mapper-toolbar
@@ -50,5 +45,4 @@
         />
       </div>
     </div>
-    {{/not}}
   </div>

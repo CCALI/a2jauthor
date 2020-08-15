@@ -1068,5 +1068,23 @@ window.TGuide.prototype.pageFindReferences = function (findName, newName) {
       }
     }
   }
+  // test firstPage and exitPage values and update
+  if (guide.firstPage === findName) {
+    if (newName != null) {
+      guide.firstPage = newName
+      // span does not refresh, update it
+      $('.starting').find('span').text(newName)
+    }
+    matches.push({ name: 'Steps Tab', field: 'Starting Point', text: guide.firstPage })
+  }
+  if (guide.exitPage === findName) {
+    if (newName != null) {
+      guide.exitPage = newName
+      // span does not refresh, update it
+      $('.starting').find('span').text(newName)
+    }
+    matches.push({ name: 'Steps Tab', field: 'Exit Point', text: guide.exitPage })
+  }
+
   return matches
 }

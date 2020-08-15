@@ -134,6 +134,15 @@ describe('legacy/A2J_Pages', function () {
     window.gGuideID = undefined
   })
 
+  it('helpAltText change handler', function () {
+    const mockPage = { helpAltText: '' }
+    const dirtyAltText = 'Too much $%^ punctuation!! and     "whitespace" for 1'
+    const result = window.helpAltTextChangeHandler(dirtyAltText, mockPage)
+    const expectedResult = 'Too much punctuation and whitespace for 1'
+
+    assert.equal(result, expectedResult, 'should clear all unsafe characters leaving only letters, digits, and single whitespace')
+  })
+
   it('buildFieldsFieldSet', function () {
     // this prevents an error trying to upload the fake mp3 file below
     window.gGuideID = 0

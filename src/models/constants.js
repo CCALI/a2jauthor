@@ -1,4 +1,4 @@
-// legacy code currently relies on these values being globally availabe as `CONST.someProp`
+// TODO: legacy code currently duplicates these values in A2J_Types.js, refactor down to one source of truth
 export default {
   devShowTesting: false,
   showXML: 0,

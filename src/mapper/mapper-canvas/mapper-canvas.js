@@ -272,6 +272,7 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
     this.onSelectPageName(newPage.name)
   },
 
+  // this is debounced in connectedCallback
   sortAndSaveGuidePages () {
     window.gGuide.sortPages()
     window.guideSave()
@@ -324,7 +325,7 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
   connectedCallback () {
     const vm = this
 
-    // TODO - this may cause circular events in jointjs-util.js
+    // TODO - watch for circular events in jointjs-util.js, good currently
     vm.listenTo('node-position-update', _debounce(this.sortAndSaveGuidePages, 30))
 
     vm.listenTo('selectedNodeView', function () {

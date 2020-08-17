@@ -75,36 +75,34 @@ export const MapperToolbarVM = DefineMap.extend('MapperToolbarVM', {
 
   autoCleanup () {
     this.buildingMapper = true
-    const cells = this.graph.getCells()
+    const elementCells = this.graph.getElements()
     const lastMapY = [60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60]
 
     setTimeout(() => {
       // TODO: these values should be computed by nodeSize constant(s)
-      cells.forEach((cell) => {
+      elementCells.forEach(function (cell) {
         const stepNumber = cell.attributes.stepNumber === 'popups' ? 0 : parseInt(cell.attributes.stepNumber)
 
         const newX = stepNumber === 0 ? 60 : (stepNumber * 180) + 60
         const newY = lastMapY[stepNumber]
         lastMapY[stepNumber] = newY + 240
 
-        cell.position(newX, newY)
+        cell.set('position', { x: newX, y: newY })
       })
 
       this.paper.fitToContent(fitToContentOptions)
       this.buildingMapper = false
-      // save new coords after cleanup
-      window.guideSave()
     })
   },
 
+  // This is for testing and only shows in non-production environments
   postItNightmare () {
     this.buildingMapper = true
-    const cells = this.graph.getCells()
+    const elementCells = this.graph.getElements()
     let getX = () => Math.random() * 1201
     let getY = () => Math.random() * 801
     setTimeout(() => {
-      // TODO: these values should be dictated to computed by nodeSize constant(s)
-      cells.forEach((cell) => {
+      elementCells.forEach((cell) => {
         cell.position(getX(), getY())
       })
       this.buildingMapper = false

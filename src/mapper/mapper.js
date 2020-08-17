@@ -6,6 +6,7 @@ import _debounce from 'lodash/debounce'
 export const MapperVM = DefineMap.extend('MapperVM', {
   // passed in via author app.stache
   guide: {},
+  showTesting: {},
   // passed up from mapper-canvas.stache
   scrollToSelectedNode: {},
   buildingMapper: {},

@@ -138,7 +138,7 @@
     <!-- Maps Tab -->
     <div class="tab-panel" id="tabsMap">
       {{#is (page, "map")}}
-        <mapper-page guide:from="guide" />
+        <mapper-page guide:from="guide" showTesting:from="showTesting" />
       {{/is}}
     </div>
 

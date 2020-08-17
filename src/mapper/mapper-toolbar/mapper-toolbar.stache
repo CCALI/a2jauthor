@@ -10,11 +10,14 @@
       <li><a href="#" on:click="this.zoomOut()"><span class="glyphicon-zoom-out"></span> Zoom Out</a></li>
       <li><a href="#" on:click="this.zoomIn()"><span class="glyphicon-zoom-in"></span> Zoom In</a></li>
       <li><a href="#" on:click="this.zoomToWidth()"><span class="glyphicon-search"></span> Zoom to Width</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
       <li><a href="#" on:click="this.autoCleanup()"><span class="glyphicon-lifebuoy"></span> Auto Cleanup</a></li>
-      <li><a href="#" on:click="this.postItNightmare()"><span class="glyphicon-lifebuoy"></span> Post-It Nightmare</a></li>
+      {{#if(showTesting)}}
+        <li><a href="#" on:click="this.postItNightmare()"><span class="glyphicon-lifebuoy"></span> Post-It Nightmare</a></li>
+      {{/if}}
       <li class="divider"></li>
-      <li><a href="#" on:click="this.toggleLinks()"><span class="glyphicon-link"></span> Toggle Links</a></li>
-      <li>
+      <li class="navbar-right">
         <div class="select-menu">
           <select class="link-select" on:change="this.updateRouter(scope.element.value)">
             <option>metro</option>
@@ -23,6 +26,7 @@
           </select>
         </div>
       </li>
+      <li class="navbar-right"><a href="#" on:click="this.toggleLinks()"><span class="glyphicon-link"></span> Toggle Links</a></li>
     </ul>
   </div>
 </nav>

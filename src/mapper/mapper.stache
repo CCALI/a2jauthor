@@ -10,6 +10,7 @@
           <mapper-toolbar
             paper:from="paper"
             graph:from="graph"
+            showTesting:from="showTesting"
             buildingMapper:bind="buildingMapper"
           />
         </div>

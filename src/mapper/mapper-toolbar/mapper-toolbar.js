@@ -10,6 +10,9 @@ export const MapperToolbarVM = DefineMap.extend('MapperToolbarVM', {
   graph: {},
   buildingMapper: {},
 
+  // passed in from app.stache -> mapper.stache
+  showTesting: {},
+
   // track scale outside of jointjs for zoom math
   scale: {
     default: 1
@@ -105,6 +108,7 @@ export const MapperToolbarVM = DefineMap.extend('MapperToolbarVM', {
       elementCells.forEach((cell) => {
         cell.position(getX(), getY())
       })
+      this.paper.fitToContent(fitToContentOptions)
       this.buildingMapper = false
     })
   }

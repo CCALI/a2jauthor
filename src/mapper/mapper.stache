@@ -17,7 +17,7 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-2">
+      <div class="col-md-3">
         <mapper-list
           guide:from="guide"
           selectedPageName:from="selectedPageName"
@@ -29,7 +29,7 @@
           scrollToSelectedNode:from="scrollToSelectedNode"
         />
       </div>
-      <div class="mapper-canvas-container col-sm-10">
+      <div class="mapper-canvas-container col-md-9">
         <mapper-canvas
           guide:from="guide"
           selectedPageName:from="selectedPageName"

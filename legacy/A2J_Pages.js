@@ -307,7 +307,9 @@ function debounce (func, wait, immediate) {
 
     timeout = setTimeout(later, wait)
 
-    if (callNow) func.apply(context, args)
+    if (callNow) { // call on leading edge
+      func.apply(context, args)
+    }
   }
 }
 // update maxHeight on resize
@@ -319,9 +321,7 @@ function setQDEmaxHeight () {
 }
 
 // debounced version
-var debouncedSetQDEmaxHeight = debounce(function () {
-  setQDEmaxHeight()
-}, 150)
+var debouncedSetQDEmaxHeight = debounce(setQDEmaxHeight, 150, false)
 
 var handleNullButtonTargets = function (buttons) {
   for (button of buttons) {

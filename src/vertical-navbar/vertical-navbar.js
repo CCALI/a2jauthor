@@ -26,11 +26,7 @@ import 'can-map-define'
  */
 export const VerticalNavbarVM = CanMap.extend('VerticalNavbarVM', {
   define: {
-    /**
-     * @property {String} authorVersion
-     *
-     * String of current version passed up from footer and defined in constants.js
-     */
+    // passed in from app.stache computed in app-state.js
     authorVersion: {},
 
     /**

@@ -1,18 +1,14 @@
 import Component from 'can-component'
 import template from './footer.stache'
 import CanMap from 'can-map'
-import constants from '~/src/models/constants'
 import moment from 'moment'
 
 import 'can-map-define'
 
 let FooterVM = CanMap.extend({
   define: {
-    authorVersion: {
-      get () {
-        return 'A2J ' + constants.A2JVersionNum + '-' + constants.A2JVersionDate
-      }
-    },
+    // passed in from app.stache computed in app-state.js
+    authorVersion: {},
     currentYear: {
       get () {
         return moment().year()

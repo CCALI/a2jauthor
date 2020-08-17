@@ -26,6 +26,9 @@ import 'can-map-define'
  */
 export const VerticalNavbarVM = CanMap.extend('VerticalNavbarVM', {
   define: {
+    // passed in from app.stache computed in app-state.js
+    authorVersion: {},
+
     /**
      * @property {String} verticalNavbar.ViewModel.prototype.define.page page
      * @parent verticalNavbar.ViewModel

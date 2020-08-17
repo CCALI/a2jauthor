@@ -120,7 +120,6 @@ function main () { // Everything loaded, now execute code.
   Languages.set(Languages.defaultLanguage)
 
   $('.authorenv').text(gEnv)
-  $('.authorver').html(CONST.A2JVersionNum + ' ' + CONST.A2JVersionDate)
   $('#cajainfo').attr('title', versionString())
   $('#settings').click(function () { $('#settings-form').dialog('open') })
 

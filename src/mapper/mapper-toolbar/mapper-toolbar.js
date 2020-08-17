@@ -90,7 +90,7 @@ export const MapperToolbarVM = DefineMap.extend('MapperToolbarVM', {
         const newY = lastMapY[stepNumber]
         lastMapY[stepNumber] = newY + 240
 
-        cell.set('position', { x: newX, y: newY })
+        cell.position(newX, newY)
       })
 
       this.paper.fitToContent(fitToContentOptions)

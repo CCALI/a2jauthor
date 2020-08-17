@@ -17,5 +17,5 @@
     {{/each}}
   </nav>
 
-  <p class="authorver"></p>
+  <p class="authorver">{{authorVersion}}</p>
 </div>

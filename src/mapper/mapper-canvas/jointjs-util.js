@@ -226,17 +226,22 @@ const handleGraphEvents = (graph, vm) => {
   })
 
   graph.on('change:position', function (element, position) {
-    let pageName = element.attributes.attrs['.label'].text
-    // remove line breaks from label to get CanJS pageName
-    pageName = pageName.replace(/(\r\n|\n|\r)/gm, ' ')
+    const pageName = vm.mapIdToPageName[element.id]
     const page = vm.guide.attr('pages')[pageName]
     const gGuidePage = window.gGuide.pages[pageName]
-    if (!page || !gGuidePage) { return }
-    page.mapx = position.x
-    page.mapy = position.y
-    // TODO: this should save to proxy/save to gGuide via some event
+
+    if (!page || !gGuidePage) {
+      console.warn('change:position event -> page not found with name:', pageName)
+      return
+    }
+
+    // set and save positions to the global gGuide
+    // event listener in bind-custom-events.js updates the CanJS guide model
     gGuidePage.mapx = position.x
     gGuidePage.mapy = position.y
+    // the callback console.log fires on successful save in A2J_Guides.js
+    window.debouncedGuideSave(() => { console.log('position updates saved') })
+
     // This dispatched event is debounced/handled in MapperCanvasVM
     vm.dispatch('node-position-update')
   })

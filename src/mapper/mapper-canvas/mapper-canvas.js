@@ -3,7 +3,7 @@ import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './mapper-canvas.stache'
 import _debounce from 'lodash/debounce'
-import constants from '@caliorg/a2jdeps/models/constants'
+import constants from '~/src/models/constants'
 import queues from 'can-queues'
 
 import {
@@ -272,6 +272,7 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
     this.onSelectPageName(newPage.name)
   },
 
+  // this is debounced in connectedCallback
   sortAndSaveGuidePages () {
     window.gGuide.sortPages()
     window.guideSave()
@@ -324,7 +325,7 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
   connectedCallback () {
     const vm = this
 
-    // TODO - this may cause circular events in jointjs-util.js
+    // TODO - watch for circular events in jointjs-util.js, good currently
     vm.listenTo('node-position-update', _debounce(this.sortAndSaveGuidePages, 30))
 
     vm.listenTo('selectedNodeView', function () {

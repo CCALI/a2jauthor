@@ -11,7 +11,7 @@
 <can-import from="a2jauthor/src/about/main/" />
 <can-import from="a2jauthor/src/variables/tab/"/>
 <can-import from="a2jauthor/src/a2jorg/"/>
-<can-import from="@caliorg/a2jdeps/footer/"/>
+<can-import from="a2jauthor/src/footer/"/>
 <can-import from="a2jauthor/styles/"/>
 <can-import from="a2jauthor/styles.less"/>
 
@@ -37,7 +37,7 @@
 
   <div class="guideio"></div>
   <div class="">
-    <vertical-navbar theme:raw="inverse" page:bind="page" guideId:from="guideId"></vertical-navbar>
+    <vertical-navbar theme:raw="inverse" page:bind="page" guideId:from="guideId" authorVersion:from="authorVersion"></vertical-navbar>
   </div>
 
   <div class="guidepanels ui-widget xui-widget-content">
@@ -138,7 +138,7 @@
     <!-- Maps Tab -->
     <div class="tab-panel" id="tabsMap">
       {{#is (page, "map")}}
-        <mapper-page guide:from="guide" />
+        <mapper-page guide:from="guide" showTesting:from="showTesting" />
       {{/is}}
     </div>
 
@@ -316,7 +316,7 @@
       </div>
   </div>
 
-  <app-footer></app-footer>
+  <author-footer authorVersion:from="authorVersion"></author-footer>
 </div>
 
 <div class="hidestart">

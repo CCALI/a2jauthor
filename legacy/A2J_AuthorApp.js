@@ -120,7 +120,6 @@ function main () { // Everything loaded, now execute code.
   Languages.set(Languages.defaultLanguage)
 
   $('.authorenv').text(gEnv)
-  $('.authorver').html(CONST.A2JVersionNum + ' ' + CONST.A2JVersionDate)
   $('#cajainfo').attr('title', versionString())
   $('#settings').click(function () { $('#settings-form').dialog('open') })
 
@@ -364,9 +363,13 @@ function main () { // Everything loaded, now execute code.
 
   $('#tabsPages #new-page').click(function () {
     createNewPage()
+    // debouncedGuideSave defined in A2J_Guides.js
+    window.debouncedGuideSave()
   })
   $('#tabsPages #new-popup').click(function () {
     createNewPopup()
+    // debouncedGuideSave defined in A2J_Guides.js
+    window.debouncedGuideSave()
   })
 
   $('#vars_load').button({label: 'Load', icons: {primary: 'ui-icon-locked'}}).next().button({label: 'Save', icons: {primary: 'ui-icon-locked'}})

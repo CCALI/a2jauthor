@@ -115,6 +115,9 @@ window.guideSave = function guideSave (onFinished) {
   }
 }
 
+// used for new page and new popup to allow mutiple new pages with single save
+var debouncedGuideSave =   window.debounce(window.guideSave, 1000, false)
+
 function loadNewGuidePrep () {
   $('.pageoutline').html('')
 }

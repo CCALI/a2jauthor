@@ -3,6 +3,7 @@ import CanMap from 'can-map'
 import CanList from 'can-list'
 import TraceMessage from 'a2jauthor/src/models/trace-message'
 import A2JVariable from '@caliorg/a2jdeps/models/a2j-variable'
+import constants from 'a2jauthor/src/models/constants'
 import _isEmpty from 'lodash/isEmpty'
 import { Gender, Hair, Skin } from '@caliorg/a2jdeps/avatar/colors'
 import route from 'can-route'
@@ -16,6 +17,12 @@ debug()
 // with the existing Guide model that works with a different data structure.
 let Guide = CanMap.extend('AppStateGuide', {
   define: {
+    authorVersion: {
+      get () {
+        return 'A2J ' + constants.A2JVersionNum + '-' + constants.A2JVersionDate
+      }
+    },
+
     variablesList: {
       get () {
         let vars = this.attr('vars')

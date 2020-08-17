@@ -3,7 +3,7 @@ import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './mapper-canvas.stache'
 import _debounce from 'lodash/debounce'
-import constants from '@caliorg/a2jdeps/models/constants'
+import constants from '~/src/models/constants'
 import queues from 'can-queues'
 
 import {

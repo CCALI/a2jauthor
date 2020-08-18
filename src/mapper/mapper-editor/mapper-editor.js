@@ -51,7 +51,6 @@ export const MapperEditorVM = DefineMap.extend('MapperEditorVM', {
     proxySelectedPageProperties(this.selectedPage)
 
     const selectedPageHandler = (event, newVal, oldVal) => {
-      console.log('handle', arguments)
       if (oldVal) {
         tearDownSelectedPageProxy(oldVal)
       }

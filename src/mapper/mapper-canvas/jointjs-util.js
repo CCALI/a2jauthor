@@ -239,8 +239,8 @@ const handleGraphEvents = (graph, vm) => {
     // event listener in bind-custom-events.js updates the CanJS guide model
     gGuidePage.mapx = position.x
     gGuidePage.mapy = position.y
-    // the callback console.log fires on successful save in A2J_Guides.js
-    window.debouncedGuideSave(() => { console.log('position updates saved') })
+    // debounce for autoCleanup() call from toolbar
+    window.debouncedGuideSave()
 
     // This dispatched event is debounced/handled in MapperCanvasVM
     vm.dispatch('node-position-update')

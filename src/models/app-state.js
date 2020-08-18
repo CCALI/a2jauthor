@@ -17,12 +17,6 @@ debug()
 // with the existing Guide model that works with a different data structure.
 let Guide = CanMap.extend('AppStateGuide', {
   define: {
-    authorVersion: {
-      get () {
-        return 'A2J ' + constants.A2JVersionNum + '-' + constants.A2JVersionDate
-      }
-    },
-
     variablesList: {
       get () {
         let vars = this.attr('vars')
@@ -55,6 +49,17 @@ let Guide = CanMap.extend('AppStateGuide', {
  */
 export default CanMap.extend('AuthorAppState', {
   define: {
+    /**
+    * @property {String} authorVersion
+    *
+    * displayed in vertical-navbar and author-footer
+    */
+    authorVersion: {
+      serialize: false,
+      get () {
+        return 'A2J ' + constants.A2JVersionNum + '-' + constants.A2JVersionDate
+      }
+    },
     /**
     * @property {String} selectedReport
     *

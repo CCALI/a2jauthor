@@ -404,8 +404,8 @@ window.form = {
     $('#page-picker-dialog').data(data).dialog({
       dialogClass: '',
       autoOpen: true,
-      width: 700,
-      height: 500,
+      width: 800,
+      height: 600,
       modal: true,
       closeText: '', // removes word "Close" from upper right titlebar close button
       close: function () {
@@ -468,8 +468,8 @@ window.form = {
     $('#page-picker-dialog').data(data).dialog({
   		dialogClass: '',
       autoOpen: true,
-      width: 700,
-      height: 500,
+      width: 800,
+      height: 600,
       modal: true,
       closeText: '', // removes word "Close" from upper right titlebar close button
       close: function () {

@@ -326,7 +326,7 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
     const vm = this
 
     // TODO - watch for circular events in jointjs-util.js, good currently
-    vm.listenTo('node-position-update', _debounce(this.sortAndSaveGuidePages, 30))
+    vm.listenTo('node-position-update', _debounce(this.sortAndSaveGuidePages, 300, false))
 
     vm.listenTo('selectedNodeView', function () {
       if (vm.selectedNodeView) {

@@ -90,6 +90,7 @@ function signin () {
               '</div>')
         $d.dialog({
           dialogClass: '',
+          closeText: '',
           width: 400,
           height: 300,
           modal: true,
@@ -363,13 +364,9 @@ function main () { // Everything loaded, now execute code.
 
   $('#tabsPages #new-page').click(function () {
     createNewPage()
-    // debouncedGuideSave defined in A2J_Guides.js
-    window.debouncedGuideSave()
   })
   $('#tabsPages #new-popup').click(function () {
     createNewPopup()
-    // debouncedGuideSave defined in A2J_Guides.js
-    window.debouncedGuideSave()
   })
 
   $('#vars_load').button({label: 'Load', icons: {primary: 'ui-icon-locked'}}).next().button({label: 'Save', icons: {primary: 'ui-icon-locked'}})
@@ -422,6 +419,7 @@ function main () { // Everything loaded, now execute code.
   // Load preferences
   $('#settings-form').dialog({
     autoOpen: false,
+    closeText: '',
     width: 600,
     height: 500,
     modal: true,

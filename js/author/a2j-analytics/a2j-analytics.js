@@ -21,12 +21,13 @@ export const A2JAnalyticsVM = CanMap.extend('A2JAnalyticsVM', {
       .done((userData) => {
         const authorId = userData.userid
         const sourceId = userData.sourceid
+        const authorEmail = userData.author_email
         const guideId = window.gGuideID //userData.userid
         const token = userData.token
         const url = userData.analytics_url
         $.ajax({
           method: 'GET',
-          url: url + '/' + sourceId + '/' + authorId +'/' + guideId, // + authorId,
+          url: url + '/' + authorId + '/' +  authorEmail +'/' + sourceId , // + authorId,
           beforeSend: function (xhr, settings) { xhr.setRequestHeader('Authorization', 'Bearer ' + token) },
           success: (data) => {
             const iframe = document.getElementById('a2j-analyticsiframe')

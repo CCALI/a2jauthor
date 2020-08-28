@@ -71,12 +71,14 @@ if ($isProductionServer) {
 	drupal_bootstrap(DRUPAL_BOOTSTRAP_SESSION);
 
 	$userid = intval($user->uid);
+	$user_email = intval($user->email);
 	$canAuthor = in_array('a2j author', array_values($user->roles));
 } else {
 	// Running locally, just use demo or devuser (26 ,45 for a2jauthor.org).
 	session_start();//  09/05/2013 WARNING! LEAVE session_start() OFF TO ACCESS DRUPAL SESSIONS!
 	$userid=LOCAL_USER;
 	$canAuthor=true;
+	$user_email = 'dev@localhost';
 }
 
 header("Content-type: text/plain; charset=utf-8");
@@ -679,6 +681,7 @@ switch ($command){
 		$result['a2j_url'] = $a2j_url;
     $result['analytics_url'] = $analytics_url;
 		$result['sourceid'] = $source_id;
+		$result['author_email'] = $user_email;
 		break;
 
 	default:

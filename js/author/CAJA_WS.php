@@ -577,7 +577,7 @@ switch ($command){
 		} else if ($command=="guideZIPA2JDEV") {
 			$LHI_POST_URL = "https://dev.a2j.org/api/guide";
 		} else if ($command=="guideZIPA2JPROD") {
-			$LHI_POST_URL = "https://www.a2j.org/api/guide";
+			$LHI_POST_URL = "https://a2j.org/api/guide";
 		} else if ($command=="guideZIPA2JSTAGE") {
 			$LHI_POST_URL = "https://staging.a2j.org/api/guide";
 		}

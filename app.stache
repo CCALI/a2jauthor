@@ -12,6 +12,7 @@
 <can-import from="a2jauthor/src/variables/tab/"/>
 <can-import from="a2jauthor/src/a2jorg/"/>
 <can-import from="a2jauthor/src/footer/"/>
+<can-import from="a2jauthor/src/a2j-analytics/"/>
 <can-import from="a2jauthor/styles/"/>
 <can-import from="a2jauthor/styles.less"/>
 
@@ -314,6 +315,13 @@
           <a2jorg-dashboard />
         {{/is}}
       </div>
+  </div>
+
+  <!-- A2J analytics Tab -->
+  <div class="tab-panel page" id="a2j-analytics">
+    {{#is (page, 'a2j-analytics')}}
+      <a2j-analytics-dashboard />
+    {{/is}}
   </div>
 
   <author-footer authorVersion:from="authorVersion"></author-footer>

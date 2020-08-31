@@ -91,6 +91,13 @@ export default [
     active: false
   },
   {
+    page: 'a2j-analytics',
+    title: 'Analytics',
+    ref: 'a2j-analytics',
+    icon: 'glyphicon-chart-bar',
+    active: false
+  },
+  {
     page: 'interviews',
     title: 'Interviews',
     ref: 'tabsGuides',

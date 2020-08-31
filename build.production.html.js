@@ -7,7 +7,7 @@ const html = template(version)
 function template (version) {
   return `<!DOCTYPE HTML>
   <!--
-    A2J Author 6 * Justice * justicia * 正义 * công lý * 사법 * правосудие
+    A2J Author 7 * Justice * justicia * 正义 * công lý * 사법 * правосудие
     All Contents Copyright The Center for Computer-Assisted Legal Instruction
     04/15/2013
     2016-03-25 5.5.1 Production
@@ -25,7 +25,7 @@ function template (version) {
       <link rel="apple-touch-icon" sizes="152x152" href="favicons/iPhone-152x152.png">
       <link rel="apple-touch-icon" sizes="167x167" href="favicons/iPhone-167x167.png">
 
-      <title>A2J Author 6</title>
+      <title>A2J Author 7</title>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
       <style type="text/css">

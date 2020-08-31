@@ -1,6 +1,6 @@
 <?php
 /*
-	CALI Author 6 / A2J Author 6 (CAJA) * Justice * justicia * 正义 * công lý * 사법 * правосудие
+	CALI Author 7 / A2J Author 7 (CAJA) * Justice * justicia * 正义 * công lý * 사법 * правосудие
 	All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
 	10/05/2012 Simple CAJA Author Web Service API

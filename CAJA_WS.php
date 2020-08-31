@@ -68,12 +68,14 @@ if ($isProductionServer) {
 	drupal_bootstrap(DRUPAL_BOOTSTRAP_SESSION);
 
 	$userid = intval($user->uid);
+	$user_email = intval($user->email);
 	$canAuthor = in_array('a2j author', array_values($user->roles));
 } else {
 	// Running locally, just use demo or devuser (26 ,45 for a2jauthor.org).
 	session_start();//  09/05/2013 WARNING! LEAVE session_start() OFF TO ACCESS DRUPAL SESSIONS!
 	$userid=LOCAL_USER;
 	$canAuthor=true;
+	$user_email = 'dev@localhost';
 }
 
 header("Content-type: text/plain; charset=utf-8");
@@ -573,7 +575,7 @@ switch ($command){
 		} else if ($command=="guideZIPA2JDEV") {
 			$LHI_POST_URL = "https://dev.a2j.org/api/guide";
 		} else if ($command=="guideZIPA2JPROD") {
-			$LHI_POST_URL = "https://www.a2j.org/api/guide";
+			$LHI_POST_URL = "https://a2j.org/api/guide";
 		} else if ($command=="guideZIPA2JSTAGE") {
 			$LHI_POST_URL = "https://staging.a2j.org/api/guide";
 		}
@@ -655,20 +657,28 @@ switch ($command){
 
 	case 'currentuser':
 		$path = dirname(__FILE__, 2);
-		$key = parse_ini_file($path . '/config_env.ini')['A2J_KEY'];
-		$url = parse_ini_file($path . '/config_env.ini')['A2J_URL'];
+		$a2j_key = parse_ini_file($path . '/config_env.ini')['A2J_KEY'];
+		$url = parse_ini_file($path . '/config_env.ini')['A2J_URL'];			$a2j_url = parse_ini_file($path . '/config_env.ini')['A2J_URL'];
+
+    $analytics_key = parse_ini_file($path . '/config_env.ini')['A2J_KEY'];
+		$analytics_url = parse_ini_file($path . '/config_env.ini')['A2J_ANALYTICS_URL'];
+
+		$source_id = parse_ini_file($path . '/config_env.ini')['A2J_AUTHOR_SOURCE_ID'];
 
 		$date = date_create();
 		$timestamp = date_timestamp_get($date);
 		$payload = [ "id"=>$userid, "time"=>$timestamp ];
 		$json_payload = json_encode($payload);
-		$hash = hash_hmac('sha256', $json_payload, $key);
+		$hash = hash_hmac('sha256', $json_payload, $a2j_key);
 		$payload['hmac']=$hash;
 		$token = base64_encode(json_encode($payload));
 
 		$result['token']=$token;
 		$result['username'] = ($userid == 45) ? "dev" : $user->name;
-		$result['a2j_url'] = $url;
+		$result['a2j_url'] = $a2j_url;
+    $result['analytics_url'] = $analytics_url;
+		$result['sourceid'] = $source_id;
+		$result['author_email'] = $user_email;
 		break;
 
 	default:

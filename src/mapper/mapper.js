@@ -46,8 +46,11 @@ export const MapperVM = DefineMap.extend('MapperVM', {
         // TODO: restore after popup step refactor
         // pagesAndPopups['popups'].pages.push(page)
       } else {
-        const stepKey = `${page.step}`
-        pagesAndPopups[stepKey].pages.push(page)
+        // page.step is index for Steps array, which is not always the same as the step number
+        const stepKey = `${guideSteps[page.step].number}`
+        if (pagesAndPopups[stepKey] && pagesAndPopups[stepKey].pages) {
+          pagesAndPopups[stepKey].pages.push(page)
+        }
       }
     })
 

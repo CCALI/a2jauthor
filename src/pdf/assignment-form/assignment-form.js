@@ -247,6 +247,7 @@ export const AssignmentFormVm = CanMap.extend('AssignmentFormVm', {
     const variableName = this.attr('selectedVariable')
     const variableKey = variableName.toLowerCase()
     const variable = this.attr(`variableDict.${variableKey}`)
+    const defaultOptions = (variable.type === 'Text') ? { overflowStyle: 'clip-overflow' } : {}
     if (variable) {
       const options = this.attr(`variableOptionsDict.${variableKey}`)
       const boxes = this.attr('selectedBoxes')
@@ -255,7 +256,7 @@ export const AssignmentFormVm = CanMap.extend('AssignmentFormVm', {
         'variableBuffer',
         makeVariableBuffer(
           toJs(variable),
-          toJs(options || new CanMap()),
+          toJs(options || new CanMap(defaultOptions)),
           toJs(boxes || [])
         )
       )

@@ -379,7 +379,7 @@ function parseXML_CAJA_to_CAJA (GUIDE) // GUIDE is XML DOM
   GUIDE.find('CLAUSES > CLAUSE').each(function () {
     var CLAUSE = $(this)
     var clause = new TClause()
-    clause.name = CLAUSE.attr('NAME')
+    clause.name = CLAUSE.attr('NAME') ? CLAUSE.attr('NAME') : ""
     clause.comment = makestr(CLAUSE.attr('COMMENT'))
     clause.text = makestr(CLAUSE.find('TEXT').xml())
     guide.clauses[clause.name.toLowerCase()] = clause

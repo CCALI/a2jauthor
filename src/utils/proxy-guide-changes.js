@@ -6,6 +6,9 @@ const handler = (ev, newVal, oldVal) => {
 }
 
 export default (guide, mirrorProperties) => {
+  // no guide loaded, return noop teardown handler
+  if (!guide) { return () => {} }
+
   mirrorProperties.forEach((prop) => {
     // using the notify queue updates global gGuide instantly
     guide.listenTo(prop, handler, 'notify')

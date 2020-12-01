@@ -1,0 +1,18 @@
+<can-import from="a2jauthor/src/about/main/" />
+<can-import from="a2jauthor/src/about/layout/" />
+
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="tab-about">
+    {{#if (guide)}}
+      <about-main guide:from="guide" />
+    {{else}}
+      <p>Please select an interview.</p>
+    {{/if}}
+  </div>
+  <div role="tabpanel" class="tab-pane" id="tab-layout">
+    <about-layout guide:from="guide" />
+  </div>
+  <div role="tabpanel" class="tab-pane" id="tab-feedback"></div>
+  <div role="tabpanel" class="tab-pane" id="tab-revision"></div>
+  <div role="tabpanel" class="tab-pane" id="tab-authors"></div>
+</div>

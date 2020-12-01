@@ -22,7 +22,6 @@
 // import {editButton} from './A2J_Tabs'
 // import {localGuideStart} from './A2J_Debug'
 // import {Languages} from './viewer/A2J_Languages'
-// import {mapZoomSlide, mapZoomClick} from './A2J_Mapper'
 // import {gPrefs} from './viewer/A2J_Prefs'
 
 // File upload URLs for a guide's files and a new guide.
@@ -334,18 +333,6 @@ function main () { // Everything loaded, now execute code.
     $(this).closest('tr').remove()
     form.listManagerSave($tbl)
   })
-
-  // JPM - added button to slide/hide page list on mapper
-  $('#tabsMapper button').first()
-    .button({disabled: false, label: '<span class="glyphicon-left-thin" aria-hidden="true"></span> Hide Page List'}).next()
-    .button({disabled: false}).next()
-    .button().next()
-    .button()
-
-  $('#MapperToolbar button:eq(0)').click(mapZoomSlide)
-  $('#MapperToolbar button:eq(1)').click(mapZoomClick)
-  $('#MapperToolbar button:eq(2)').click(mapZoomClick)
-  $('#MapperToolbar button:eq(3)').click(mapZoomClick)
 
   $('#tabsPages #open-guide').click(function () {
     gotoPageEdit(getSelectedPageName())

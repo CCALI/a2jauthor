@@ -14,7 +14,6 @@
 // import {gotoTabOrPage, pageNameFieldsForTextTab, pageNameRelFilter} from './A2J_Pages'
 // import {gPrefs} from './viewer/A2J_Prefs'
 // import {ws, SELECTED} from './A2J_AuthorApp'
-// import {buildMap} from './A2J_Mapper'
 // import {makestr} from './viewer/A2J_Shared'
 // // TODO: this should be from js/viewer/mobile/util ?
 // import {gLogic} from './viewer/A2J_Logic'
@@ -225,7 +224,6 @@ function setCollapsedSteps () {
 
 window.updateTOC = function updateTOC () {	// Build outline for entire interview includes meta, step and question sections.
   // 2014-06-02 TOC updates when page name, text, fields change. Or page is added/deleted.
-  // Also we update the mapper since it also displays this info.
   var ts = getTOCStepPages(true, true)
   $('.pageoutline').html(ts)
 
@@ -275,8 +273,6 @@ window.updateTOC = function updateTOC () {	// Build outline for entire interview
 
   // collapse any previously collapsed steps
   collapseSteps()
-  // 2014-06-02 Sync mapper to TOC.
-  // buildMap()
 }
 window.form = {
   id: 0,

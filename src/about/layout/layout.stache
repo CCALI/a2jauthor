@@ -1,0 +1,42 @@
+<div name="h4x0r" class="form-upload row clearfix">
+  <div class="col-xs-9 filename-input-container">
+    <div class="editspan form-group">
+      <label class="control-label">Logo graphic:</label>
+      <input
+        class="form-control ui-widget editable"
+        type="text"
+        placeholder="Logo URL"
+        value:bind="guide.logoImage"
+      />
+    </div>
+  </div>
+  <div class="col-xs-3">
+    <div class="fileinput-button form-group">
+      <button class="btn btn-default btn-wide-sm" on:click="uploadImageFile('logoImage')">
+        <span class="glyphicon-plus" aria-hidden="true"></span>
+        Upload
+      </button>
+    </div>
+  </div>
+</div>
+<div name="h4x0r" class="form-upload row clearfix">
+  <div class="col-xs-9 filename-input-container">
+    <div class="editspan form-group">
+      <label class="control-label">End graphic:</label>
+      <input
+        class="form-control ui-widget editable"
+        type="text"
+        placeholder="End (destination graphic) URL"
+        value:bind="guide.endImage"
+      />
+    </div>
+  </div>
+  <div class="col-xs-3">
+    <div class="fileinput-button form-group">
+      <button class="btn btn-default btn-wide-sm" on:click="uploadImageFile('endImage')">
+        <span class="glyphicon-plus" aria-hidden="true"></span>
+        Upload</button>
+    </div>
+  </div>
+</div>
+

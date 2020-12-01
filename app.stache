@@ -8,7 +8,7 @@
 <can-import from="a2jauthor/src/interviews/toolbar/"/>
 <can-import from="a2jauthor/src/report/" />
 <can-import from="a2jauthor/src/report/toolbar/"/>
-<can-import from="a2jauthor/src/about/main/" />
+<can-import from="a2jauthor/src/about/" />
 <can-import from="a2jauthor/src/variables/tab/"/>
 <can-import from="a2jauthor/src/a2jorg/"/>
 <can-import from="a2jauthor/src/footer/"/>
@@ -78,19 +78,9 @@
         <!-- Nav tabs -->
 
         <!-- Tab panes -->
-        <div class="tab-content">
-        {{#is(page, "about")}}
-          <div role="tabpanel" class="tab-pane active" id="tab-about">
-            {{#if (guide)}}
-              <about-main guide:from="guide" />
-            {{else}}
-              <p>Please select an interview.</p>
-            {{/if}}
-          </div>
-          <div role="tabpanel" class="tab-pane" id="tab-layout"></div>
-          <div role="tabpanel" class="tab-pane" id="tab-feedback"></div>
-          <div role="tabpanel" class="tab-pane" id="tab-revision"></div>
-          <div role="tabpanel" class="tab-pane" id="tab-authors"></div>
+        <div id="tabsAbout">
+          {{#is(page, "about")}}
+            <about-tab guide:from="guide" />
           {{/is}}
         </div>
         <!-- Tab panes -->

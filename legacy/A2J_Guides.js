@@ -14,7 +14,6 @@
 // import { parseXML_Auto_to_CAJA, exportXML_CAJA_from_CAJA } from './viewer/A2J_Parser'
 // import { urlSplit, makestr } from './viewer/A2J_Shared'
 // import { updateAttachmentFiles } from './A2J_Tabs'
-// import {buildMap} from './A2J_Mapper'
 
 /**
  * Parses data returned from the server
@@ -181,8 +180,6 @@ function guideStart (startTabOrPage) {
 
     updateAttachmentFiles()
   }
-
-  buildMap()
 
   if (gEnv !== '' && gStartArgs.getDataURL !== '') {
     localGuidePlay()

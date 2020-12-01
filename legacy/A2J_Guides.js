@@ -182,7 +182,7 @@ function guideStart (startTabOrPage) {
     updateAttachmentFiles()
   }
 
-  buildMap()
+  // buildMap()
 
   if (gEnv !== '' && gStartArgs.getDataURL !== '') {
     localGuidePlay()

@@ -276,7 +276,7 @@ window.updateTOC = function updateTOC () {	// Build outline for entire interview
   // collapse any previously collapsed steps
   collapseSteps()
   // 2014-06-02 Sync mapper to TOC.
-  buildMap()
+  // buildMap()
 }
 window.form = {
   id: 0,

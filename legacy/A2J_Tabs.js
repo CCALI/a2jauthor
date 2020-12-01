@@ -1182,33 +1182,6 @@ TGuide.prototype.noviceTab = function (tab, clear) {	// ### 08/03/2012 Edit pane
       $('#about-tabs > li').first().addClass('active')
       $('#tab-about').addClass('active')
 
-      // ------------------------------------------
-      // About tab - See author/about/main <about-main />
-
-      // ------------------------------------------
-      // Layout tab
-      var tabLayout = form.div('Layout')
-
-      tabLayout.append(form.pickImage({
-        label: 'Logo graphic:',
-        placeholder: 'Logo URL',
-        value: guide.logoImage,
-        change: function (val) {
-          guide.logoImage = val
-        }
-      }))
-
-      tabLayout.append(form.pickImage({
-        label: 'End graphic:',
-        placeholder: 'End (destination graphic) URL',
-        value: guide.endImage,
-        change: function (val) {
-          guide.endImage = val
-        }
-      }))
-
-      $('#tab-layout').html(tabLayout)
-
       // -------------------------------
       // Feedback tab
       var tabFeedback = form.div('Feedback')

@@ -9,6 +9,10 @@ export const AboutLayoutVm = DefineMap.extend('AboutLayoutVm', {
   // passed in via app.stache
   guide: {},
   guideId: {},
+
+  setGuideProp (guideProp, fileName) {
+    this.guide.attr(guideProp, fileName)
+  },
   // string
   attachBlueImpUploader (targetClassName, progressBarId, guideProp) {
     const $el = $(targetClassName)
@@ -22,11 +26,12 @@ export const AboutLayoutVm = DefineMap.extend('AboutLayoutVm', {
           const response = data.response()
           if (response.textStatus === 'success') {
             const fileName = data.files[0].name.trim()
-            vm.guide.attr(guideProp, fileName)
+            vm.setGuideProp(guideProp, fileName)
           }
         },
         fail: function (el, data) {
-          console.error('upload error for', data.files[0].name)
+          const filename = data.files && data.files[0] && data.files[0].name
+          console.error('upload error for', filename)
         },
         progressall (e, data) {
           const progress = parseInt(data.loaded / data.total * 100, 10)
@@ -43,6 +48,7 @@ export const AboutLayoutVm = DefineMap.extend('AboutLayoutVm', {
 
   connectedCallback (el) {
     const vm = this
+    // input selector, progress bar selector, guide prop to update
     vm.attachBlueImpUploader('.logo-image-fileupload', '#logo-image-progress', 'logoImage')
     vm.attachBlueImpUploader('.end-image-fileupload', '#end-image-progress', 'endImage')
   }

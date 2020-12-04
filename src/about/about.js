@@ -20,7 +20,9 @@ export const AboutVM = DefineMap.extend('AboutVM', {
         'language',
         'title',
         'logoImage', // layout
-        'endImage'
+        'endImage',
+        'sendfeedback', // feedback
+        'emailContact'
       ]
     }
   },

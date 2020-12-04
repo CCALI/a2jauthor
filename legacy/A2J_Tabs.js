@@ -1182,29 +1182,6 @@ TGuide.prototype.noviceTab = function (tab, clear) {	// ### 08/03/2012 Edit pane
       $('#about-tabs > li').first().addClass('active')
       $('#tab-about').addClass('active')
 
-      // -------------------------------
-      // Feedback tab
-      var tabFeedback = form.div('Feedback')
-
-      tabFeedback.append(form.checkbox({
-        label: 'Allow Send feedback?',
-        checkbox: '',
-        value: guide.sendfeedback,
-        change: function (val) {
-          guide.sendfeedback = val
-        }
-      }))
-
-      tabFeedback.append(form.text({
-        label: 'Feedback email:',
-        value: guide.emailContact,
-        change: function (val) {
-          guide.emailContact = val
-        }
-      }))
-
-      $('#tab-feedback').html(tabFeedback)
-
       // ------------------------------------------
       // Revision history tab
       var tabHistory = form.div('Revision History')

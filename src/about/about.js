@@ -6,6 +6,7 @@ import proxyGuideChanges from 'src/utils/proxy-guide-changes'
 export const AboutVM = DefineMap.extend('AboutVM', {
   // passed in via app.stache
   guide: {},
+  guideId: {},
 
   connectedCallback () {
     // TODO: Remove this when gGuide is.

@@ -7,7 +7,7 @@
       <about-main guide:from="guide" />
     </div>
     <div role="tabpanel" class="tab-pane" id="tab-layout">
-      <about-layout guide:from="guide" />
+      <about-layout guide:from="guide" guideId:from="guideId" />
     </div>
     <div role="tabpanel" class="tab-pane" id="tab-feedback"></div>
     <div role="tabpanel" class="tab-pane" id="tab-revision"></div>

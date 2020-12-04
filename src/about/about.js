@@ -8,24 +8,27 @@ export const AboutVM = DefineMap.extend('AboutVM', {
   guide: {},
   guideId: {},
 
+  mirrorProperties: {
+    get () {
+      return [
+        'avatarSkinTone', // main
+        'completionTime',
+        'credits',
+        'description',
+        'guideGender',
+        'jurisdiction',
+        'language',
+        'title',
+        'logoImage', // layout
+        'endImage'
+      ]
+    }
+  },
+
   connectedCallback () {
     // TODO: Remove this when gGuide is.
     // We need this proxy util to update the global gGuide as we make changes.
-    const mirrorProperties = [
-      'avatarHairColor', // main
-      'avatarSkinTone',
-      'completionTime',
-      'credits',
-      'description',
-      'guideGender',
-      'jurisdiction',
-      'language',
-      'title',
-      'logoImage', // layout
-      'endImage'
-    ]
-
-    const proxyTeardown = proxyGuideChanges(this.guide, mirrorProperties)
+    const proxyTeardown = proxyGuideChanges(this.guide, this.mirrorProperties)
 
     return function () {
       proxyTeardown()

@@ -1,7 +1,7 @@
 import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './about.stache'
-import proxyGuideChanges from 'src/utils/proxy-guide-changes'
+import proxyGuideChanges from '~/src/utils/proxy-guide-changes'
 
 export const AboutVM = DefineMap.extend('AboutVM', {
   // passed in via app.stache

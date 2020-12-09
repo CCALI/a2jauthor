@@ -6,6 +6,7 @@ import A2JVariable from '@caliorg/a2jdeps/models/a2j-variable'
 import constants from 'a2jauthor/src/models/constants'
 import _isEmpty from 'lodash/isEmpty'
 import { Gender, Hair, Skin } from '@caliorg/a2jdeps/avatar/colors'
+import ckeArea from '~/src/utils/ckeditor-area'
 import route from 'can-route'
 import 'can-map-define'
 
@@ -269,11 +270,21 @@ export default CanMap.extend('AuthorAppState', {
       value () {
         return [['AK'], ['HI']]
       }
+    },
+
+    // function to create an inline ckeditor instance
+    // returns a wrapper div and the ckeditor 'textarea' as child element
+    ckeArea: {
+      serialize: false,
+      value: () => ckeArea
     }
   },
 
   init () {
     let appState = this
+    // TODO: this global can be removed when legacy code refactored out
+    // used in window.form.htmlarea in A2J_Tabs.js
+    window.ckeArea = this.ckeArea
 
     // Add the legalNavStates to the window
     // So we can access this within the CKEditor widget

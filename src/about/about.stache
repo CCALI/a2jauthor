@@ -1,6 +1,7 @@
 <can-import from="a2jauthor/src/about/main/" />
 <can-import from="a2jauthor/src/about/layout/" />
 <can-import from="a2jauthor/src/about/feedback/" />
+<can-import from="a2jauthor/src/about/revision/" />
 
 <div class="tab-content">
   {{#if (guide)}}
@@ -13,7 +14,9 @@
     <div role="tabpanel" class="tab-pane" id="tab-feedback">
       <about-feedback guide:from="guide"/>
     </div>
-    <div role="tabpanel" class="tab-pane" id="tab-revision"></div>
+    <div role="tabpanel" class="tab-pane" id="tab-revision">
+      <about-revision guide:from="guide"/>
+    </div>
     <div role="tabpanel" class="tab-pane" id="tab-authors"></div>
   {{else}}
     <p>Please select an interview.</p>

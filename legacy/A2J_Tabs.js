@@ -1055,70 +1055,70 @@ TGuide.prototype.noviceTab = function (tab, clear) {	// ### 08/03/2012 Edit pane
 
       // ------------------------------------------
       // Authors tab
-      var tabAuthors = form.div('Authors')
-      var blankAuthor = new TAuthor()
+      // var tabAuthors = form.div('Authors')
+      // var blankAuthor = new TAuthor()
 
-      tabAuthors.append(form.listManager({
-        name: 'Authors',
-        picker: 'Number of authors',
-        min: 1,
-        max: 12,
-        list: guide.authors,
-        blank: blankAuthor,
-        save: function (newlist) {
-          guide.authors = newlist
-        },
+      // tabAuthors.append(form.listManager({
+      //   name: 'Authors',
+      //   picker: 'Number of authors',
+      //   min: 1,
+      //   max: 12,
+      //   list: guide.authors,
+      //   blank: blankAuthor,
+      //   save: function (newlist) {
+      //     guide.authors = newlist
+      //   },
 
-        create: function (ff, author) {
-          var colRow = $('<div class="row"></div>')
-          var colLeft = $('<div class="col-sm-6"></div>')
-          var colRight = $('<div class="col-sm-6"></div>')
+      //   create: function (ff, author) {
+      //     var colRow = $('<div class="row"></div>')
+      //     var colLeft = $('<div class="col-sm-6"></div>')
+      //     var colRight = $('<div class="col-sm-6"></div>')
 
-          colLeft.append(form.text({
-            label: 'Author\'s Name:',
-            placeholder: 'name',
-            value: author.name,
-            change: function (val, author) {
-              author.name = val
-            }
-          }))
+      //     colLeft.append(form.text({
+      //       label: 'Author\'s Name:',
+      //       placeholder: 'name',
+      //       value: author.name,
+      //       change: function (val, author) {
+      //         author.name = val
+      //       }
+      //     }))
 
-          colRight.append(form.text({
-            label: 'Author\'s Title:',
-            placeholder: 'title',
-            value: author.title,
-            change: function (val, author) {
-              author.title = val
-            }
-          }))
+      //     colRight.append(form.text({
+      //       label: 'Author\'s Title:',
+      //       placeholder: 'title',
+      //       value: author.title,
+      //       change: function (val, author) {
+      //         author.title = val
+      //       }
+      //     }))
 
-          colLeft.append(form.text({
-            label: 'Author\'s Organization:',
-            placeholder: 'organization',
-            value: author.organization,
-            change: function (val, author) {
-              author.organization = val
-            }
-          }))
+      //     colLeft.append(form.text({
+      //       label: 'Author\'s Organization:',
+      //       placeholder: 'organization',
+      //       value: author.organization,
+      //       change: function (val, author) {
+      //         author.organization = val
+      //       }
+      //     }))
 
-          colRight.append(form.text({
-            label: 'Author\'s email:',
-            placeholder: 'email',
-            value: author.email,
-            change: function (val, author) {
-              author.email = val
-            }
-          }))
+      //     colRight.append(form.text({
+      //       label: 'Author\'s email:',
+      //       placeholder: 'email',
+      //       value: author.email,
+      //       change: function (val, author) {
+      //         author.email = val
+      //       }
+      //     }))
 
-          ff.append(colRow)
-          ff.append(colLeft)
-          ff.append(colRight)
+      //     ff.append(colRow)
+      //     ff.append(colLeft)
+      //     ff.append(colRight)
 
-          return ff
-        }
-      }))
+      //     return ff
+      //   }
+      // }))
 
-      $('#tab-authors').html(tabAuthors)
+      // $('#tab-authors').html(tabAuthors)
 
       $('#about-tabs > li > a').click(function (event) {
         $('#about-tabs > li').removeClass('active')

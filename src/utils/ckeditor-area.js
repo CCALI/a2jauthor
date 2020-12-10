@@ -37,7 +37,6 @@ export default function ckeArea (data) { // change handler function, label, valu
     // only keep one instance active at a time
     Object.keys(window.CKEDITOR.instances).forEach(function (instanceKey) {
       if (instanceKey !== id && window.CKEDITOR.instances[instanceKey]) {
-        console.log('destroying instance', instanceKey)
         window.CKEDITOR.instances[instanceKey].destroy(true)
       }
     })
@@ -99,7 +98,6 @@ export default function ckeArea (data) { // change handler function, label, valu
           // editer.updateElement() native function was not working
           const editorHTML = event.editor.getData()
           const instanceName = event.editor.name
-          console.log('cke destroy event', instanceName)
           const $originalEl = $(`#${instanceName}`)
           if ($originalEl && $originalEl[0]) {
             $originalEl[0].innerHTML = editorHTML
@@ -124,7 +122,6 @@ export default function ckeArea (data) { // change handler function, label, valu
         node.addEventListener('focusin', replaceWithCKEditor)
         // handle event listener cleanup on node removal
         window.can.domMutate.onNodeRemoval(node, function () {
-          console.log('node removed', id)
           node.removeEventListener('focusin', replaceWithCKEditor)
         })
       })

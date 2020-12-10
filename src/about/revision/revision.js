@@ -24,7 +24,6 @@ export const AboutRevisionVM = DefineMap.extend('AboutRevisionVM', {
       for (let name in ckeInstances) {
         ckeInstances[name].destroy()
       }
-      console.log('ckeInstances', ckeInstances)
     }
   }
 })

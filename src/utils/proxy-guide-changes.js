@@ -2,7 +2,6 @@
 const handler = (ev, newVal, oldVal) => {
   const guideAttr = ev.type
   window.gGuide[guideAttr] = newVal
-  console.log('proxying', guideAttr, newVal)
 }
 
 export default (guide, mirrorProperties) => {

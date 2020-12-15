@@ -20,7 +20,7 @@ export default function ckeArea (data) { // change handler function, label, valu
     containerDiv.appendChild(formLabel)
   }
 
-  // Create the textarea
+  // Create the 'textarea'/div for ckeditor to replace
   const id = `tinyCKE_${idNumber}`
   const textArea = document.createElement('div')
   textArea.setAttribute('id', id)
@@ -33,14 +33,6 @@ export default function ckeArea (data) { // change handler function, label, valu
   const replaceWithCKEditor = function (ev) {
     // do not re initialize the current instance
     if (window.CKEDITOR.instances[id]) { return }
-
-    // only keep one instance active at a time
-    Object.keys(window.CKEDITOR.instances).forEach(function (instanceKey) {
-      if (instanceKey !== id && window.CKEDITOR.instances[instanceKey]) {
-        window.CKEDITOR.instances[instanceKey].destroy(true)
-      }
-    })
-
     // add the CKEditor
     window.CKEDITOR.replace(document.getElementById(id), {
       // do not escape html entities, except special characters for xml compatibility
@@ -82,10 +74,9 @@ export default function ckeArea (data) { // change handler function, label, valu
       ],
       on: {
         blur: function (event) {
-          // Update the data when the element is blured
-          const d = event.editor.getData()
-          // change function sometimes requires field prop
-          data.change(d, data.field)
+          // destroy triggers update to original div
+          const instanceName = event.editor.name
+          window.CKEDITOR.instances[instanceName].destroy(true)
         },
         change: function (event) {
           // Update the data when data changes
@@ -94,13 +85,13 @@ export default function ckeArea (data) { // change handler function, label, valu
           data.change(d, data.field)
         },
         destroy: function (event) {
-          // update original div html with editor content
-          // editer.updateElement() native function was not working
+          // update original div html with editor content, and cleanup event listener
+          // editor.updateElement() native function was not working
           const editorHTML = event.editor.getData()
           const instanceName = event.editor.name
-          const $originalEl = $(`#${instanceName}`)
-          if ($originalEl && $originalEl[0]) {
-            $originalEl[0].innerHTML = editorHTML
+          const originalEl = document.getElementById(instanceName)
+          if (originalEl) {
+            originalEl.innerHTML = editorHTML
           }
         }
       }
@@ -117,10 +108,10 @@ export default function ckeArea (data) { // change handler function, label, valu
       addedNodes.forEach(function (node) {
         // only listen to ckeditor nodes
         if (!node.classList.contains('htmledit')) { return }
-
         // add ckeditor when node is focused
         node.addEventListener('focusin', replaceWithCKEditor)
         // handle event listener cleanup on node removal
+        // have to use can.domMutate instead of removedNodes to target original div
         window.can.domMutate.onNodeRemoval(node, function () {
           node.removeEventListener('focusin', replaceWithCKEditor)
         })

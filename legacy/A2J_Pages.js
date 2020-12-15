@@ -986,6 +986,11 @@ function guidePageEditForm (page, $qdeParentDiv) {
 
   // cleanup $qde elements when the dialog closes
   window.$('.page-edit-dialog').on('dialogclose', function (ev) {
+    // cleanup any orphaned CKEDITOR instances before their node(s) removed from DOM
+    Object.keys(window.CKEDITOR.instances).forEach(function (instanceKey) {
+        // `true` says to not update original element with content - already completed in ckeditor-area.js
+        window.CKEDITOR.instances[instanceKey].destroy(true)
+    })
     window.$($qdeParentDiv).empty()
   })
 

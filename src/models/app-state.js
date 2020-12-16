@@ -283,7 +283,7 @@ export default CanMap.extend('AuthorAppState', {
   init () {
     let appState = this
     // TODO: this global can be removed when legacy code refactored out
-    // used in window.form.htmlarea in A2J_Tabs.js
+    // used in window.form.htmlarea defined in A2J_Tabs.js & used in A2J_Pages.js
     window.ckeArea = this.ckeArea
 
     // Add the legalNavStates to the window

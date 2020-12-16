@@ -1,10 +1,9 @@
 <can-import from="./revision.less" />
 
-<div class="editspan form-group">
+<div id="about-revision-history" class="editspan form-group">
   <label class="control-label">Current Version:</label>
   <input
     class="form-control ui-widget editable"
     type="text"
-    placeholder="undefined"
     value:bind="guide.version">
 </div>

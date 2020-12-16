@@ -111,7 +111,8 @@ export default function ckeArea (data) { // change handler function, label, valu
         // add ckeditor when node is focused
         node.addEventListener('focusin', replaceWithCKEditor)
         // handle event listener cleanup on node removal
-        // have to use can.domMutate instead of removedNodes to target original div
+        // have to use can.domMutate instead of mutation.removedNodes to target original div
+        // because removedNodes targets the ckeditor node that replaces the original div
         window.can.domMutate.onNodeRemoval(node, function () {
           node.removeEventListener('focusin', replaceWithCKEditor)
         })

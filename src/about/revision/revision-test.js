@@ -1,6 +1,3 @@
-// TODO: add this in to app level tests if needed
-
-import { AboutRevisionVM } from './revision'
 import { assert } from 'chai'
 import CanMap from 'can-map'
 import stache from 'can-stache'

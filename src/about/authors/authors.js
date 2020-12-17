@@ -1,16 +1,19 @@
 import DefineMap from 'can-define/map/map'
-import DefineList from 'can-define/list/list'
+import CanMap from 'can-map'
+import CanList from 'can-list'
 import Component from 'can-component'
 import template from './authors.stache'
 
-const Author = DefineMap.extend('Author', {
-  name: { default: 'Anonymous' },
-  title: { default: '' },
-  organization: { default: '' },
-  email: { default: '' }
+// app-state guide is a CanMap, which makes authorList a CanList of CanMaps
+// legacy type is window.TAuthor
+const Author = CanMap.extend('Author', {
+  name: '',
+  title: '',
+  organization: '',
+  email: ''
 })
 
-Author.List = DefineList.extend('AuthorList', {
+Author.List = CanList.extend('AuthorList', {
   '#': Author
 })
 
@@ -18,46 +21,40 @@ export const AboutAuthorsVM = DefineMap.extend('AboutAuthorsVM', {
   // passed in via about.stache
   guide: {},
 
+  // number of authors
   authorCount: {
-    get () {
-      return this.displayList && this.displayList.length
-    }
+    default: 1
   },
+  // used to maintain a list as it's being edited. could contain more than is being display
   authorList: {
-    get () {
-      return this.guide.attr('authors')
+    default () {
+      return new DefineList(this.guide.attr('authors').serialize())
     }
   },
 
+  // list of authors display in UI, could show less than the working list,
+  // and will be saved to the guide on nav away
   displayList: {
-    default: function () {
-      const authorList = this.guide.attr('authors')
-      return new DefineList(authorList)
-    }
-  },
+    value ({ listenTo, resolve }) {
+      resolve(this.authorList)
 
-  updateDisplayList (selectedValue) {
-    const currentCount = this.authorCount
-    const newCount = parseInt(selectedValue, 10)
+      listenTo('authorCount', (ev, selectedValue) => {
+        const currentCount = this.authorList.length
+        const diff = selectedValue - currentCount
 
-    const diff = newCount - currentCount
-    if (currentCount > newCount) {
-      this.removeAuthors(diff)
+        if (selectedValue > currentCount) {
+          for (let i = 0; i < diff; i++) {
+            this.authorList.push(new Author())
+          }
+          resolve(this.authorList)
+        }
+        if (currentCount > selectedValue) {
+          const howMany = currentCount - selectedValue
+          const newSubList = this.authorList.slice(0, howMany)
+          resolve(newSubList)
+        }
+      })
     }
-    if (newCount > currentCount) {
-      this.addAuthors(diff)
-    }
-  },
-
-  addAuthors (add) {
-    for (let i = 0; i < add; i++) {
-      this.displayList.push(new window.TAuthor())
-    }
-  },
-
-  // remove is a negative number
-  removeAuthors (remove) {
-    this.displayList.splice(remove)
   }
 })
 

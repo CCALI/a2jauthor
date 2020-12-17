@@ -1,3 +1,4 @@
+<can-import from='can-stache-converters' />
 <can-import from="./authors.less" />
 
   <div>
@@ -6,8 +7,7 @@
       <select
         list="Authors"
         class="form-control picklist"
-        value:from="this.authorCount"
-        on:change="updateDisplayList(scope.element.value)">
+        value:bind="string-to-any(this.authorCount)">
         <option>1</option>
         <option>2</option>
         <option>3</option>

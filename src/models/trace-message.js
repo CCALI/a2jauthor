@@ -57,7 +57,9 @@ export default DefineMap.extend('TraceMessageModel', {
     type: 'string',
     set (pageName) {
       if (!this.messageLog[pageName]) {
-        this.messageLog.set(pageName, new LogItem({ pageName }))
+        const pageMessage = {}
+        pageMessage[pageName] = new LogItem({ pageName })
+        this.messageLog.assign(pageMessage)
       }
       return pageName
     }
@@ -71,13 +73,17 @@ export default DefineMap.extend('TraceMessageModel', {
 
   // @param  { key: 'string', fragments: [] }
   addMessage (message) {
-    this.messageLog[this.currentPageName].messages.set(message.key, message)
+    const newMessage = {}
+    newMessage[message.key] = message
+    this.messageLog[this.currentPageName].messages.assign(newMessage)
   },
 
   // reset the messageLog preserving the currentPageName - used in debug-panel.js
   clearMessageLog () {
     const logItem = new LogItem({pageName: this.currentPageName})
-    this.messageLog.update(new DefineMap()).set(this.currentPageName, logItem)
+    const initialMessage = {}
+    initialMessage[this.currentPageName] = logItem
+    this.messageLog.update(new DefineMap(initialMessage))
   },
 
   // create new messageLog - used to completely reset the log

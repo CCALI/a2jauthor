@@ -121,7 +121,7 @@ Guide.List = Guide.List.extend({
    * @return {Guide.List} List of guides owned (created) by the logged in user.
    */
   owned: function () {
-    return this.filter(guide => guide.attr('owned'))
+    return this.filter(guide => guide.owned)
   },
 
   /**
@@ -130,7 +130,7 @@ Guide.List = Guide.List.extend({
    * @return {Guide.List} List of sample guides stored in the server.
    */
   samples: function () {
-    return this.filter(guide => !guide.attr('owned'))
+    return this.filter(guide => !guide.owned)
   }
 })
 

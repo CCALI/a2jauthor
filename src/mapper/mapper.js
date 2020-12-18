@@ -20,8 +20,8 @@ export const MapperVM = DefineMap.extend('MapperVM', {
 
   pagesAndPopups: {
     get () {
-      const sortedPages = this.guide.attr('sortedPages')
-      const guideSteps = this.guide.attr('steps')
+      const sortedPages = this.guide.sortedPages
+      const guideSteps = this.guide.steps
       return this.buildPagesAndPopups(sortedPages, guideSteps)
     }
   },

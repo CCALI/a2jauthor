@@ -13,7 +13,7 @@ describe('Guide Model', () => {
 
       assert.ok(canReflect.hasKey(guide, 'id'))
       assert.ok(canReflect.hasKey(guide, 'title'))
-      assert.ok(canReflect.hasKey(guide.attr('details'), 'size'))
+      assert.ok(canReflect.hasKey(guide.details, 'size'))
     })
   })
 

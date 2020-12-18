@@ -1003,7 +1003,9 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
 
     const tVariable = $.extend(new window.TVariable(), createVariable)
     const variableKey = tVariable.name.toLowerCase()
-    vars.attr(variableKey, tVariable)
+    const newVar = {}
+    newVar[variableKey] = tVariable
+    vars.assign(newVar)
 
     const variableOptionsDict = this.attr('documentOptions.variableOptions')
     variableOptionsDict.attr(variableKey, variableOptions)

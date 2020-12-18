@@ -39,9 +39,9 @@ describe('<mapper-page>', () => {
 
     it('pagesAndPopup when Author changes step.number', () => {
       // change step number prop
-      vm.guide.attr('steps')[0].number = '1'
-      vm.guide.attr('steps')[1].number = '2'
-      vm.guide.attr('steps')[2].number = '3'
+      vm.guide.steps[0].number = '1'
+      vm.guide.steps[1].number = '2'
+      vm.guide.steps[2].number = '3'
 
       const pagesAndPopups = vm.pagesAndPopups
 

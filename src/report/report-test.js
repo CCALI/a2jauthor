@@ -1,5 +1,6 @@
 import { assert } from 'chai'
 import { ReportVM } from './report'
+import DefineMap from 'can-define/map/map'
 
 import 'steal-mocha'
 
@@ -78,13 +79,13 @@ describe('<report-page>', () => {
     })
 
     it('sortedVariableList and getVariableList', () => {
-      const guide = {}
-      guide.vars = [
-        { name: 'First Name' },
-        { name: 'User Gender' },
-        { name: 'Last Name' }
-      ]
-
+      const guide = new DefineMap({
+        vars: {
+          'first name': { name: 'First Name' },
+          'user gender': { name: 'User Gender' },
+          'last name': { name: 'Last Name' }
+        }
+      })
       vm.attr('guide', guide)
 
       const sortedVariableList = vm.attr('sortedVariableList')

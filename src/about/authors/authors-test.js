@@ -8,11 +8,12 @@ import 'steal-mocha'
 describe('<about-authors>', () => {
   describe('ViewModel', () => {
     let vm
-    beforeEach () {
+    beforeEach(() => {
       vm = new AboutAuthorsVM()
-    }
+    })
 
     it('setGuideProp', () => {
+      assert(vm.prop, 'foo', 'this will fail')
     })
   })
 
@@ -27,7 +28,7 @@ describe('<about-authors>', () => {
 
     it('setGuideProp', () => {
       vm.setGuideProp('logoImage', 'foo')
-      assert.equal(vm.guide.attr('logoImage'), 'foo', 'should set the guide property')
+      assert.equal(vm.guide.logoImage, 'foo', 'should set the guide property')
     })
   })
 })

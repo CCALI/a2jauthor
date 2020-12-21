@@ -17,7 +17,7 @@
 
 //     it('setGuideProp', () => {
 //       vm.setGuideProp('logoImage', 'foo')
-//       assert.equal(vm.guide.attr('logoImage'), 'foo', 'should set the guide property')
+//       assert.equal(vm.guide.logoImage, 'foo', 'should set the guide property')
 //     })
 //   })
 // })

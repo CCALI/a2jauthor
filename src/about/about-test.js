@@ -14,7 +14,7 @@ describe('<about-tab>', () => {
       const oldGlobalGuide = window.gGuide
 
       window.gGuide = { description: '' }
-      vm.guide.attr('description', 'foo')
+      vm.guide.description = 'foo'
 
       setTimeout(() => {
         assert.equal(window.gGuide.description, 'foo', 'changes to CanJS `guide` should proxy to the global gGuide')

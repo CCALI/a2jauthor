@@ -28,7 +28,7 @@ export const AboutAuthorsVM = DefineMap.extend('AboutAuthorsVM', {
   // used to maintain a list as it's being edited. could contain more than is being display
   authorList: {
     default () {
-      return new DefineList(this.guide.attr('authors').serialize())
+      return this.guide.authors
     }
   },
 

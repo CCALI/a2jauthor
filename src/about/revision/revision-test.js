@@ -28,7 +28,7 @@ describe('<about-revision>', () => {
         const ckeDiv = document.querySelector('.htmledit')
         const divNotes = ckeDiv.textContent
 
-        assert.equal(divNotes, vm.guide.attr('notes'), 'should restore current notes from guide')
+        assert.equal(divNotes, vm.guide.notes, 'should restore current notes from guide')
         done()
       })
     })

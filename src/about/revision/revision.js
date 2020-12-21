@@ -9,9 +9,9 @@ export const AboutRevisionVM = DefineMap.extend('AboutRevisionVM', {
 
   connectedCallback (el) {
     const data = {
-      value: this.guide.attr('notes'),
+      value: this.guide.notes,
       label: 'Revision Notes',
-      change: (notes) => { this.guide.attr('notes', notes) },
+      change: (notes) => { this.guide.notes = notes },
       name: 'about-revision-notes'
     }
     const ckDiv = ckeArea(data)

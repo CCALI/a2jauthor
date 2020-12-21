@@ -74,7 +74,7 @@ export default DefineMap.extend('AuthorAppState', {
   * used to pass between toolbar uploader and interviews component
   */
   interviews: {
-    serialize: false,
+    serialize: false
   },
 
   /**

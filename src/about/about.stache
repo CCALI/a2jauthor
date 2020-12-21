@@ -1,0 +1,27 @@
+<can-import from="a2jauthor/src/about/main/" />
+<can-import from="a2jauthor/src/about/layout/" />
+<can-import from="a2jauthor/src/about/feedback/" />
+<can-import from="a2jauthor/src/about/revision/" />
+<can-import from="a2jauthor/src/about/authors/" />
+
+<div class="tab-content">
+  {{#if (guide)}}
+    <div role="tabpanel" class="tab-pane active" id="tab-about">
+      <about-main guide:from="guide" />
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tab-layout">
+      <about-layout guide:from="guide" guideId:from="guideId" />
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tab-feedback">
+      <about-feedback guide:from="guide"/>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tab-revision">
+      <about-revision guide:from="guide"/>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="tab-authors">
+      <about-authors guide:from="guide" />
+    </div>
+  {{else}}
+    <p>Please select an interview.</p>
+  {{/if}}
+</div>

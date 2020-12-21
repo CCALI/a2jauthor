@@ -1,6 +1,8 @@
 import 'a2jauthor/src/debug-panel/debug-panel-test'
 import 'a2jauthor/src/interviews/interviews-test'
 import 'a2jauthor/src/loading/loading-test'
+import 'a2jauthor/src/about/about-test'
+import 'a2jauthor/src/about/layout/layout-test'
 // import 'a2jauthor/src/mapper/mapper-test'
 // import 'a2jauthor/src/mapper/mapper-list/mapper-list-test'
 // import 'a2jauthor/src/mapper/mapper-canvas/mapper-canvas-test'

@@ -1,0 +1,17 @@
+<can-import from="./feedback.less" />
+
+<div class="checkbox">
+  <label>
+    <input type="checkbox" checked:bind="guide.sendfeedback"> Allow Send feedback?
+  </label>
+</div>
+
+<div class="editspan form-group">
+  <label class="control-label">Feedback email:</label>
+    <input
+      type="text"
+      class="form-control ui-widget editable"
+      value:bind="guide.emailContact"
+      placeholder="my contact email"
+    />
+</div>

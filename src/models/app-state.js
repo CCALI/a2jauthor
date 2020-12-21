@@ -257,13 +257,6 @@ export default DefineMap.extend('AuthorAppState', {
         message: '',
         alertType: 'danger'
       }
-    },
-
-    // function to create an inline ckeditor instance
-    // returns a wrapper div and the ckeditor 'textarea' as child element
-    ckeArea: {
-      serialize: false,
-      value: () => ckeArea
     }
   },
 
@@ -284,7 +277,7 @@ export default DefineMap.extend('AuthorAppState', {
     const appState = this
     // TODO: this global can be removed when legacy code refactored out
     // used in window.form.htmlarea defined in A2J_Tabs.js & used in A2J_Pages.js
-    window.ckeArea = this.ckeArea
+    window.ckeArea = ckeArea
 
     // Add the legalNavStates to the window
     // So we can access this within the CKEditor widget

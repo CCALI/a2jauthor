@@ -1,13 +1,13 @@
 import { AboutVM } from './about'
 import { assert } from 'chai'
-import CanMap from 'can-map'
+import DefineMap from 'can-define/map/map'
 
 import 'steal-mocha'
 
 describe('<about-tab>', () => {
   describe('viewModel', () => {
     let vm = new AboutVM()
-    vm.guide = new CanMap({ description: '' })
+    vm.guide = new DefineMap({ description: '' })
 
     it('connectedCallback', (done) => {
       vm.connectedCallback()

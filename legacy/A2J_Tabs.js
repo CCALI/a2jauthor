@@ -1046,24 +1046,6 @@ TGuide.prototype.noviceTab = function (tab, clear) {	// ### 08/03/2012 Edit pane
 
       break
 
-    case 'tabsAbout':
-      $('#about-tabs > li').removeClass('active')
-      $('.tab-pane').removeClass('active')
-
-      $('#about-tabs > li').first().addClass('active')
-      $('#tab-about').addClass('active')
-
-      $('#about-tabs > li > a').click(function (event) {
-        $('#about-tabs > li').removeClass('active')
-        $(this).parent().addClass('active')
-
-        $('.tab-pane').removeClass('active')
-        var panelId = $(this).data('panel')
-        $('#' + panelId).addClass('active')
-      })
-
-      break
-
     case 'tabsSteps':
       fs = form.fieldset('Start/Exit points', '', 'accordion')
 

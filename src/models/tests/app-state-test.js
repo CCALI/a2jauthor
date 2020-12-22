@@ -22,15 +22,4 @@ describe('AppState', function () {
     appState.showDebugPanel = true
     assert.isTrue(appState.showDebugPanel, 'should be true ')
   })
-
-  it('ckeArea - generate ckeditor div', function () {
-    // mock can/domMutate
-    window.can = {
-      domMutate: {
-        onNodeRemoval: () => {}
-      }
-    }
-    const ckeDiv = appState.ckeArea({label: 'some label'})
-    assert.equal(ckeDiv.children.length, 2, 'should create a ckeditor div')
-  })
 })

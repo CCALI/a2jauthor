@@ -4,7 +4,6 @@ import CanList from 'can-list'
 import Component from 'can-component'
 import template from './authors.stache'
 
-// app-state guide is a CanMap, which makes authorList a CanList of CanMaps
 // legacy type is window.TAuthor
 const Author = CanMap.extend('Author', {
   name: '',
@@ -23,7 +22,9 @@ export const AboutAuthorsVM = DefineMap.extend('AboutAuthorsVM', {
 
   // number of authors
   authorCount: {
-    default: 1
+    default () {
+      return this.authorList.length
+    }
   },
   // used to maintain a list as it's being edited. could contain more than is being display
   authorList: {
@@ -36,24 +37,67 @@ export const AboutAuthorsVM = DefineMap.extend('AboutAuthorsVM', {
   // and will be saved to the guide on nav away
   displayList: {
     value ({ listenTo, resolve }) {
+      // defaults to incoming authorList
       resolve(this.authorList)
 
       listenTo('authorCount', (ev, selectedValue) => {
         const currentCount = this.authorList.length
         const diff = selectedValue - currentCount
 
-        if (selectedValue > currentCount) {
+        if (diff === 0) {
+          resolve(this.authorList)
+        } else if (selectedValue > currentCount) {
           for (let i = 0; i < diff; i++) {
-            this.authorList.push(new Author())
+            this.authorList.push(new window.TAuthor())
           }
           resolve(this.authorList)
-        }
-        if (currentCount > selectedValue) {
-          const howMany = currentCount - selectedValue
-          const newSubList = this.authorList.slice(0, howMany)
+        } else {
+          const newSubList = this.authorList.slice(0, selectedValue)
           resolve(newSubList)
         }
       })
+    }
+  },
+  // TODO: remove when global gGuide is removed
+  saveAuthors (authorList) {
+    if (authorList && authorList.length) {
+      const authors = []
+      for (let author of authorList) {
+        authors.push(author)
+      }
+      // global guide is auto saved
+      window.gGuide['authors'] = authors
+    }
+  },
+
+  connectedCallback () {
+    const vm = this
+
+    const classChangeHandler = (mutationsList) => {
+      mutationsList.forEach(mutation => {
+        if (mutation.attributeName === 'class') {
+          const isActive = mutation.target.classList.value.indexOf('active') !== -1
+          console.log('has `active` class', isActive)
+          if (!isActive) {
+            vm.saveAuthors(vm.displayList)
+          }
+        }
+      })
+    }
+
+    const mutationObserver = new window.MutationObserver(classChangeHandler)
+
+    const authorsEl = document.getElementById('tab-authors')
+    if (authorsEl) {
+      mutationObserver.observe(
+        authorsEl,
+        { attributes: true }
+      )
+    }
+
+    return () => {
+      // cleanup
+      mutationObserver.disconnect()
     }
   }
 })

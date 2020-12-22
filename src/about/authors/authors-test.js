@@ -35,16 +35,16 @@ describe('<about-authors>', () => {
       document.getElementById('test-area').innerHTML = ''
     })
 
-    const render = (data) => {
-      const tpl = stache('<about-authors guide:from="guide" />')
-      document.querySelector('#test-area').appendChild(tpl(data))
-      return canViewModel('about-authors')
-    }
-
-    let testAuthor = { name: 'JessBob', title: 'boss', organization: 'CALI', email: 'jb@cali.org' }
-    const vm = render({ guide: { authors: [testAuthor] } })
-
     it('handles dynamic authorList and displayList', () => {
+      const render = (data) => {
+        const tpl = stache('<about-authors guide:from="guide" />')
+        document.querySelector('#test-area').appendChild(tpl(data))
+        return canViewModel('about-authors')
+      }
+
+      let testAuthor = { name: 'JessBob', title: 'boss', organization: 'CALI', email: 'jb@cali.org' }
+      const vm = render({ guide: { authors: [testAuthor] } })
+
       let expectedAuthorList = [testAuthor]
       let authorList = vm.authorList.serialize()
       let displayList

@@ -11,7 +11,7 @@ export const AboutLayoutVm = DefineMap.extend('AboutLayoutVm', {
   guideId: {},
 
   setGuideProp (guideProp, fileName) {
-    this.guide.guideProp = fileName
+    this.guide[guideProp] = fileName
   },
   // string
   attachBlueImpUploader (targetClassName, progressBarId, guideProp) {

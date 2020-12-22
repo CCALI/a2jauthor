@@ -1,13 +1,13 @@
 import { AboutLayoutVm } from './layout'
 import { assert } from 'chai'
-import CanMap from 'can-map'
+import DefineMap from 'can-define/map/map'
 
 import 'steal-mocha'
 
 describe('<about-layout>', () => {
   describe('viewModel', () => {
     let vm = new AboutLayoutVm()
-    vm.guide = new CanMap({ logoImage: '' })
+    vm.guide = new DefineMap({ logoImage: '' })
 
     it('setGuideProp', () => {
       vm.setGuideProp('logoImage', 'foo')

@@ -1,20 +1,6 @@
 import DefineMap from 'can-define/map/map'
-import CanMap from 'can-map'
-import CanList from 'can-list'
 import Component from 'can-component'
 import template from './authors.stache'
-
-// legacy type is window.TAuthor
-const Author = CanMap.extend('Author', {
-  name: '',
-  title: '',
-  organization: '',
-  email: ''
-})
-
-Author.List = CanList.extend('AuthorList', {
-  '#': Author
-})
 
 export const AboutAuthorsVM = DefineMap.extend('AboutAuthorsVM', {
   // passed in via about.stache
@@ -23,11 +9,11 @@ export const AboutAuthorsVM = DefineMap.extend('AboutAuthorsVM', {
   // number of authors
   authorCount: {
     default () {
-      return this.authorList.length
+      return this.workingList.length
     }
   },
-  // used to maintain a list as it's being edited. could contain more than is being display
-  authorList: {
+  // used to maintain a list as it's being edited. could contain more than is being displayed
+  workingList: {
     default () {
       return this.guide.authors
     }
@@ -35,34 +21,34 @@ export const AboutAuthorsVM = DefineMap.extend('AboutAuthorsVM', {
 
   // list of authors display in UI, could show less than the working list,
   // and will be saved to the guide on nav away
-  displayList: {
+  authorList: {
     value ({ listenTo, resolve }) {
-      // defaults to incoming authorList
-      resolve(this.authorList)
+      // defaults to incoming workingList
+      resolve(this.workingList)
 
       listenTo('authorCount', (ev, selectedValue) => {
-        const currentCount = this.authorList.length
+        const currentCount = this.workingList.length
         const diff = selectedValue - currentCount
 
         if (diff === 0) {
-          resolve(this.authorList)
+          resolve(this.workingList)
         } else if (selectedValue > currentCount) {
           for (let i = 0; i < diff; i++) {
-            this.authorList.push(new window.TAuthor())
+            this.workingList.push(new window.TAuthor())
           }
-          resolve(this.authorList)
+          resolve(this.workingList)
         } else {
-          const newSubList = this.authorList.slice(0, selectedValue)
+          const newSubList = this.workingList.slice(0, selectedValue)
           resolve(newSubList)
         }
       })
     }
   },
   // TODO: remove when global gGuide is removed
-  saveAuthors (authorList) {
-    if (authorList && authorList.length) {
+  saveAuthors (workingList) {
+    if (workingList && workingList.length) {
       const authors = []
-      for (let author of authorList) {
+      for (let author of workingList) {
         authors.push(author)
       }
       // global guide is auto saved
@@ -73,31 +59,17 @@ export const AboutAuthorsVM = DefineMap.extend('AboutAuthorsVM', {
   connectedCallback () {
     const vm = this
 
-    const classChangeHandler = (mutationsList) => {
-      mutationsList.forEach(mutation => {
-        if (mutation.attributeName === 'class') {
-          const isActive = mutation.target.classList.value.indexOf('active') !== -1
-          console.log('has `active` class', isActive)
-          if (!isActive) {
-            vm.saveAuthors(vm.displayList)
-          }
-        }
-      })
+    // proxy authors list changes to global gGuide for future save
+    const updateGlobalGuideAuthors = (ev, authorList) => {
+      vm.saveAuthors(authorList)
     }
 
-    const mutationObserver = new window.MutationObserver(classChangeHandler)
-
-    const authorsEl = document.getElementById('tab-authors')
-    if (authorsEl) {
-      mutationObserver.observe(
-        authorsEl,
-        { attributes: true }
-      )
-    }
+    vm.listenTo('authorList', updateGlobalGuideAuthors)
 
     return () => {
-      // cleanup
-      mutationObserver.disconnect()
+      // CanJS office hours Q
+      vm.saveAuthors(vm.authorList)
+      vm.stopListening('authorList', updateGlobalGuideAuthors)
     }
   }
 })

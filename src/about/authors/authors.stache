@@ -30,7 +30,7 @@
               class="ui-icon-circle-minus glyphicon-minus-circled"></span></td>
           <div>
             <div class="row">
-              {{#for(author of displayList)}}
+              {{#for(author of authorList)}}
                 <div class="col-sm-6">
                   <div class="editspan form-group">
                     <label class="control-label">Author's Name:</label>

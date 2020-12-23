@@ -19,14 +19,14 @@ describe('<about-authors>', () => {
       })
     })
 
-    it('authorList, authorCount and displayList defaults', () => {
-      const expectedAuthorList = [testAuthor]
+    it('authorList, authorCount and workingList defaults', () => {
+      const expectedWorkingList = [testAuthor]
       const authorList = vm.authorList.serialize()
-      const displayList = vm.displayList.serialize()
+      const workingList = vm.workingList.serialize()
 
-      assert.deepEqual(authorList, expectedAuthorList, 'defaults to incoming guide.authors list')
-      assert.deepEqual(authorList, displayList, 'defaults to authorList')
-      assert.equal(vm.authorCount, authorList.length, 'default authorCount based on authorList.length')
+      assert.deepEqual(workingList, expectedWorkingList, 'defaults to incoming guide.authors list')
+      assert.deepEqual(authorList, workingList, 'defaults to workingList')
+      assert.equal(vm.authorCount, authorList.length, 'default authorCount based on workingList.length')
     })
   })
 
@@ -35,7 +35,7 @@ describe('<about-authors>', () => {
       document.getElementById('test-area').innerHTML = ''
     })
 
-    it('handles dynamic authorList and displayList', () => {
+    it('handles dynamic workingList and authorList', () => {
       const render = (data) => {
         const tpl = stache('<about-authors guide:from="guide" />')
         document.querySelector('#test-area').appendChild(tpl(data))
@@ -45,37 +45,37 @@ describe('<about-authors>', () => {
       let testAuthor = { name: 'JessBob', title: 'boss', organization: 'CALI', email: 'jb@cali.org' }
       const vm = render({ guide: { authors: [testAuthor] } })
 
-      let expectedAuthorList = [testAuthor]
-      let authorList = vm.authorList.serialize()
-      let displayList
+      let expectedWorkingList = [testAuthor]
+      let workingList = vm.workingList.serialize()
+      let authorList
 
-      assert.deepEqual(expectedAuthorList, authorList, 'defaults to incoming guide.authors list')
+      assert.deepEqual(expectedWorkingList, workingList, 'defaults to incoming guide.authors list')
 
       vm.authorCount = 2
-      expectedAuthorList = [
+      expectedWorkingList = [
         testAuthor,
         { name: '', title: '', organization: '', email: '' }
       ]
 
+      workingList = vm.workingList.serialize()
       authorList = vm.authorList.serialize()
-      displayList = vm.displayList.serialize()
 
-      assert.deepEqual(expectedAuthorList, authorList, 'pushes new TAuthor into authorList')
-      assert.deepEqual(displayList, authorList, 'displayList resolves to the new authorList on additions')
+      assert.deepEqual(expectedWorkingList, workingList, 'pushes new TAuthor into workingList')
+      assert.deepEqual(authorList, workingList, 'authorList resolves to the new workingList on additions')
 
       vm.authorCount = 1
-      expectedAuthorList = [
+      expectedWorkingList = [
         testAuthor,
         { name: '', title: '', organization: '', email: '' }
       ]
 
       const expectedDisplayList = [testAuthor]
 
+      workingList = vm.workingList.serialize()
       authorList = vm.authorList.serialize()
-      displayList = vm.displayList.serialize()
 
-      assert.deepEqual(expectedAuthorList, authorList, 'pushes new TAuthor into authorList')
-      assert.deepEqual(expectedDisplayList, displayList, 'displayList resolves to a slice of the authorList when shorter')
+      assert.deepEqual(expectedWorkingList, workingList, 'pushes new TAuthor into workingList')
+      assert.deepEqual(expectedDisplayList, authorList, 'authorList resolves to a slice of the workingList when shorter')
     })
   })
 })

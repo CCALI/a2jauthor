@@ -55,38 +55,9 @@
 
     <!-- About Tab -->
     <div class="tab-panel" id="tabsAbout">
-      <div class="tabContentFrame page">
-        <div class="row">
-          <div class="col-xs-10">
-            <h3 class="page-title">Information about this interview</h3>
-          </div>
-          <div class="utility-links col-xs-2 pull-right">
-              <button id="settings" class="btn btn-link">
-                <span class="glyphicon-cog" aria-hidden="true"></span> Advanced Settings
-              </button>
-          </div>
-        </div>
-
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist" id="about-tabs">
-          <li role="presentation" class="active"><a href="#" role="tab" data-panel="tab-about">About</a></li>
-          <li role="presentation"><a href="#" role="tab" data-panel="tab-layout">Layout</a></li>
-          <li role="presentation"><a href="#" role="tab" data-panel="tab-feedback">Feedback</a></li>
-          <li role="presentation"><a href="#" role="tab" data-panel="tab-revision">Revision History</a></li>
-          <li role="presentation"><a href="#" role="tab" data-panel="tab-authors">Authors</a></li>
-        </ul>
-        <!-- Nav tabs -->
-
-        <!-- Tab panes -->
-        <div id="tabsAbout">
-          {{#is(page, "about")}}
-            <about-tab guide:from="guide" guideId:from="guideId" />
-          {{/is}}
-        </div>
-        <!-- Tab panes -->
-      </div>
-      <br />
-      <div class="tabContent editq"></div>
+      {{#is(page, "about")}}
+        <about-tab guide:from="guide" guideId:from="guideId" />
+      {{/is}}
     </div><!--tab-panel has-toolbar -->
 
     <!-- Variables Tab -->
@@ -348,21 +319,6 @@
         </div>
       </fieldset>
     </div>
-  </div>
-  <div id="settings-form" title="Settings">
-    <ul id="cajasettings">
-      <h3>General</h3>
-      <p>Color Schemes: <span class="text-muted">A2J 6</span></p>
-
-      <p>Data Settings:</p>
-      <p><label><input type="checkbox" id="setting_warnHotDocsNameLength"> Warn when variable name lengths are too long for HotDocs</label></p>
-
-      <p>Text Statistics: (Flesh-Kincaid and more)</p>
-      <p><label><input type="checkbox" id="setting_FKGradeAll" /> Include grade numbers for good text</label></p>
-      <hr />
-      <h3>Advanced</h3>
-      <p><label><input type="checkbox" id="setting_showJS"> Show JS</label></p>
-    </ul>
   </div>
 
   <div id="dialog-form-var-val-edit" title="Change value">

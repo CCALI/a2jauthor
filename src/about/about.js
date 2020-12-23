@@ -54,6 +54,8 @@ export const AboutVM = DefineMap.extend('AboutVM', {
     const proxyTeardown = proxyGuideChanges(this.guide, this.mirrorProperties)
 
     return function () {
+      // save any  guide changes before teardown
+      window.guideSave()
       proxyTeardown()
     }
   }

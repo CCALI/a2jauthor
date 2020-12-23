@@ -4,7 +4,6 @@ import './jquery.ui.traggable'
 
 import './desktop_app.config'
 import './A2J_Types'
-import './A2J_Prefs'
 import './A2J_Shared'
 import './A2J_SharedSus'
 import './A2J_Languages'

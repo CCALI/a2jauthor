@@ -70,4 +70,13 @@ describe('GlobalPreferences', function () {
     assert.equal(2, globalPrefs.showLogic, 'loads as 2')
     assert.equal(2, globalPrefs.showText, 'loads as 2')
   })
+
+  it('GlobalPreferences load() handles no previous save or a localStorage.clear() by using defaults', () => {
+    globalPrefs.load()
+
+    assert.equal(true, globalPrefs.warnHotDocsNameLength, 'loads default of true')
+    assert.equal(false, globalPrefs.showJS, 'loads default of false')
+    assert.equal(1, globalPrefs.showLogic, 'loads default of 1')
+    assert.equal(1, globalPrefs.showText, 'loads default of 1')
+  })
 })

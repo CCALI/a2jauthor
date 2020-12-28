@@ -36,26 +36,32 @@ export default DefineMap.extend('GlobalPreferences', {}, {
           a2jPrefs[pref] = this[pref]
         }
       }
+      window.localStorage.setItem('a2jPrefs', JSON.stringify(a2jPrefs))
     }
-    window.localStorage.setItem('a2jPrefs', JSON.stringify(a2jPrefs))
+    // courtesy return for testing
+    return a2jPrefs
   },
   // Load prefs from HTML5 LocalStorage
   load () {
     if (typeof (Storage) !== 'undefined') {
       const a2jPrefs = JSON.parse(window.localStorage.getItem('a2jPrefs'))
-      for (let pref in this) {
-        if (canReflect.hasKey(this, pref) && typeof this[pref] !== 'function') {
-          try {
-            let storageValue = a2jPrefs[pref]
-
-            if (storageValue !== null) {
-              this[pref] = storageValue
+      if (a2jPrefs != null) {
+        let storageValue
+        try {
+          for (let pref in this) {
+            storageValue = a2jPrefs[pref]
+            if (canReflect.hasKey(this, pref) && typeof this[pref] !== 'function') {
+              if (storageValue != null) {
+                this[pref] = storageValue
+              }
             }
-          } catch (e) {
-            console.error('Error loading preferences', e)
           }
+        } catch (e) {
+          console.error('Error loading preferences', e)
         }
       }
+      // courtesy return for testing
+      return a2jPrefs
     }
   }
 })

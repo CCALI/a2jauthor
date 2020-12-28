@@ -3,6 +3,7 @@
 <can-import from="a2jauthor/src/about/feedback/" />
 <can-import from="a2jauthor/src/about/revision/" />
 <can-import from="a2jauthor/src/about/authors/" />
+<can-import from="a2jauthor/src/about/settings/" />
 
 <!-- About Tab -->
 <div class="tabContentFrame page">
@@ -49,5 +50,17 @@
     <div class="tabContent editq"></div>
   {{else}}
     <p>Please select an interview.</p>
+  {{/if}}
+
+  {{#if(showSettingsModal)}}
+    <author-modal
+      modalTitle:raw="Settings"
+      submitText:raw="Save"
+      cancelText:raw="Cancel"
+      onSubmit:from="onSaveSettings"
+      onCancel:from="onDismissSettings"
+    >
+      <about-settings gPrefs:from="gPrefs"></about-settings>
+    </author-modal>
   {{/if}}
 </div>

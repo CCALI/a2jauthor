@@ -8,6 +8,9 @@ export const AboutVM = DefineMap.extend('AboutVM', {
   // passed in via app.stache
   guide: {},
   guideId: {},
+  gPrefs: {},
+
+  showSettingsModal: { default: false },
 
   mirrorProperties: {
     get () {
@@ -29,6 +32,19 @@ export const AboutVM = DefineMap.extend('AboutVM', {
         // 'authors' are proxied/saved in authors.js
       ]
     }
+  },
+
+  openSettingsModal () {
+    this.showSettingsModal = true
+  },
+
+  onSaveSettings () {
+    this.gPrefs.save()
+    this.showSettingsModal = false
+  },
+
+  onDismissSettings () {
+    this.showSettingsModal = false
   },
 
   connectedCallback () {
@@ -54,7 +70,7 @@ export const AboutVM = DefineMap.extend('AboutVM', {
     const proxyTeardown = proxyGuideChanges(this.guide, this.mirrorProperties)
 
     return function () {
-      // save any  guide changes before teardown
+      // save any final guide changes before teardown
       window.guideSave()
       proxyTeardown()
     }

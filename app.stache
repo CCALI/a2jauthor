@@ -56,7 +56,7 @@
     <!-- About Tab -->
     <div class="tab-panel" id="tabsAbout">
       {{#is(page, "about")}}
-        <about-tab guide:from="guide" guideId:from="guideId" />
+        <about-tab guide:from="guide" guideId:from="guideId" gPrefs:from="gPrefs" />
       {{/is}}
     </div><!--tab-panel has-toolbar -->
 

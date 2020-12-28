@@ -4,23 +4,49 @@
 <can-import from="a2jauthor/src/about/revision/" />
 <can-import from="a2jauthor/src/about/authors/" />
 
-<div class="tab-content">
+<!-- About Tab -->
+<div class="tabContentFrame page">
+  <div class="row">
+    <div class="col-xs-10">
+      <h3 class="page-title">Information about this interview</h3>
+    </div>
+    <div class="utility-links col-xs-2 pull-right">
+      <button id="settings" class="btn btn-link" on:click="openSettingsModal()">
+        <span class="glyphicon-cog" aria-hidden="true"></span> Advanced Settings
+      </button>
+    </div>
+  </div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist" id="about-tabs">
+    <li role="presentation" class="active"><a href="#" role="tab" data-panel="tab-about">About</a></li>
+    <li role="presentation"><a href="#" role="tab" data-panel="tab-layout">Layout</a></li>
+    <li role="presentation"><a href="#" role="tab" data-panel="tab-feedback">Feedback</a></li>
+    <li role="presentation"><a href="#" role="tab" data-panel="tab-revision">Revision History</a></li>
+    <li role="presentation"><a href="#" role="tab" data-panel="tab-authors">Authors</a></li>
+  </ul>
+  <!-- Nav tabs -->
+
   {{#if (guide)}}
-    <div role="tabpanel" class="tab-pane active" id="tab-about">
-      <about-main guide:from="guide" />
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="tab-about">
+        <about-main guide:from="guide" />
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tab-layout">
+        <about-layout guide:from="guide" guideId:from="guideId" />
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tab-feedback">
+        <about-feedback guide:from="guide"/>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tab-revision">
+        <about-revision guide:from="guide"/>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="tab-authors">
+        <about-authors guide:from="guide" />
+      </div>
     </div>
-    <div role="tabpanel" class="tab-pane" id="tab-layout">
-      <about-layout guide:from="guide" guideId:from="guideId" />
-    </div>
-    <div role="tabpanel" class="tab-pane" id="tab-feedback">
-      <about-feedback guide:from="guide"/>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="tab-revision">
-      <about-revision guide:from="guide"/>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="tab-authors">
-      <about-authors guide:from="guide" />
-    </div>
+    <br />
+    <div class="tabContent editq"></div>
   {{else}}
     <p>Please select an interview.</p>
   {{/if}}

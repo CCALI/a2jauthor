@@ -5,10 +5,17 @@ import 'steal-mocha'
 
 describe('GlobalPreferences', function () {
   let globalPrefs
+  let oldPrefs
 
   beforeEach(() => {
+    oldPrefs = window.localStorage.getItem('a2jPrefs')
     window.localStorage.clear()
     globalPrefs = new GlobalPreferences()
+  })
+
+  afterEach(() => {
+    // restore old prefs or remove test prefs
+    oldPrefs ? window.localStorage.setItem('a2jPrefs', oldPrefs) : window.localStorage.removeItem('a2jPrefs')
   })
 
   const expectedDefaults = {

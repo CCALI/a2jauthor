@@ -2,6 +2,7 @@ import $ from 'jquery'
 import CanList from 'can-list'
 import DefineMap from 'can-define/map/map'
 import TraceMessage from 'a2jauthor/src/models/trace-message'
+import GlobalPrefs from 'a2jauthor/src/models/global-preferences'
 import A2JVariable from '@caliorg/a2jdeps/models/a2j-variable'
 import constants from 'a2jauthor/src/models/constants'
 import _isEmpty from 'lodash/isEmpty'
@@ -148,6 +149,20 @@ export default DefineMap.extend('AuthorAppState', {
   },
 
   /**
+ * @module {function} GlobalPreferences
+ * @parent api-models
+ *
+ * this is used to read,write and track localStorage preferences for the user
+ * named gPrefs until Legacy code is refactored out completely
+ */
+  gPrefs: {
+    serialize: false,
+    default: () => {
+      return new GlobalPrefs()
+    }
+  },
+
+  /**
    * @property {Boolean} showDebugPanel
    *
    * Whether to show the debug panel (variables and trace panels) when
@@ -278,6 +293,8 @@ export default DefineMap.extend('AuthorAppState', {
     // TODO: this global can be removed when legacy code refactored out
     // used in window.form.htmlarea defined in A2J_Tabs.js & used in A2J_Pages.js
     window.ckeArea = ckeArea
+    // TODO: remove this global when it's no longer references from legacy code
+    window.gPrefs = appState.gPrefs
 
     // Add the legalNavStates to the window
     // So we can access this within the CKEditor widget

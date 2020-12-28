@@ -1,6 +1,5 @@
 import $ from 'jquery'
 import './viewer/A2J_Types'
-import './viewer/A2J_Prefs'
 import './viewer/A2J_SharedSus'
 import './viewer/A2J_Shared'
 import './viewer/A2J_Logic'

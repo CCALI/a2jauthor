@@ -2,6 +2,15 @@ import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './authors.stache'
 
+// local copy of global Author type from A2J_Types.js
+const TAuthor = function TAuthor () {
+  this.name = ''
+  this.title = ''
+  this.organization = ''
+  this.email = ''
+  return this
+}
+
 export const AboutAuthorsVM = DefineMap.extend('AboutAuthorsVM', {
   // passed in via about.stache
   guide: {},
@@ -15,12 +24,12 @@ export const AboutAuthorsVM = DefineMap.extend('AboutAuthorsVM', {
   // used to maintain a list as it's being edited. could contain more than is being displayed
   workingList: {
     default () {
-      return this.guide.authors
+      return (this.guide && this.guide.authors) || [new TAuthor()]
     }
   },
 
-  // list of authors display in UI, could show less than the working list,
-  // and will be saved to the guide on nav away
+  // list of authors to display in UI, could show less than the working list,
+  // and will be saved to the guide on nav away from About tab
   authorList: {
     value ({ listenTo, resolve }) {
       // defaults to incoming workingList
@@ -34,7 +43,7 @@ export const AboutAuthorsVM = DefineMap.extend('AboutAuthorsVM', {
           resolve(this.workingList)
         } else if (selectedValue > currentCount) {
           for (let i = 0; i < diff; i++) {
-            this.workingList.push(new window.TAuthor())
+            this.workingList.push(new TAuthor())
           }
           resolve(this.workingList)
         } else {

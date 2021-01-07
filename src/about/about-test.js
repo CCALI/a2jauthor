@@ -22,5 +22,11 @@ describe('<about-tab>', () => {
         done()
       })
     })
+
+    it('cleanupRevisionNotes', () => {
+      vm.guide.notes = '<p>This paragraph > yours,<b>this</b> sure is!</p><legend></span>'
+      vm.connectedCallback()
+      assert.equal(vm.guide.notes, 'This paragraph > yours,this sure is!', 'should remove any stray html tags only')
+    })
   })
 })

@@ -47,6 +47,10 @@ export const AboutVM = DefineMap.extend('AboutVM', {
     this.showSettingsModal = false
   },
 
+  cleanupRevisionNotes (html) {
+    return $('<div>' + html + '</div>').text()
+  },
+
   connectedCallback () {
     // copied from a2j_tabs legacy code to handle tab changes
     // TODO: refactor to CanJS tab component/widget
@@ -64,6 +68,9 @@ export const AboutVM = DefineMap.extend('AboutVM', {
       var panelId = $(this).data('panel')
       $('#' + panelId).addClass('active')
     })
+
+    // cleanup old revision notes that could have ckeditor html tags
+    this.guide.notes = this.cleanupRevisionNotes(this.guide.notes)
 
     // TODO: Remove this when gGuide is.
     // We need this proxy util to update the global gGuide as we make changes.

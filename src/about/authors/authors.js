@@ -52,7 +52,11 @@ export const AboutAuthorsVM = DefineMap.extend('AboutAuthorsVM', {
         authors.push(author)
       }
       // global guide is auto saved
-      window.gGuide['authors'] = authors
+      if (window.gGuide) {
+        window.gGuide['authors'] = authors
+      } else {
+        console.error('Authors save failed: no window.gGuide found')
+      }
     }
   },
 

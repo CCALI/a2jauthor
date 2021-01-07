@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;about-authors&gt;</title>
+  </head>
+
+  <body>
+    <div id="demo-area" style="margin: 20px;"></div>
+        <script>
+          window.less = {
+            async: true,
+            fileSync: true
+          };
+        </script>
+
+        <script src="../../../node_modules/steal/steal.js"
+          data-main="@empty">
+        </script>
+
+        <script type="steal-module">
+          import stache from 'can-stache'
+          import canViewModel from 'can-view-model'
+          import AboutAuthors from "~/src/about/authors/"
+          import "~/src/about/authors/authors.less"
+          import "~/styles/"
+          import "~/styles.less"
+
+          window.TAuthor = function TAuthor () {
+            this.name = ''
+            this.title = ''
+            this.organization = ''
+            this.email = ''
+            return this
+          }
+
+          const render = (data) => {
+            const tpl = stache('<about-authors guide:from="guide" />')
+            document.querySelector('#demo-area').appendChild(tpl(data))
+            return canViewModel('about-authors')
+          }
+
+          const demoData = {
+            guide: {
+              authors: [
+                { name: 'JessBob', title: 'boss', organization: 'CALI', email: 'jb@cali.org' },
+                { name: 'MitchBob', title: 'dev', organization: 'CALI', email: 'mb@cali.org' },
+                { name: 'TobBob', title: 'sysadmin', organization: 'CALI', email: 'tb@cali.org' }
+              ]
+            }
+          }
+
+          const vm = render(demoData)
+        </script>
+  </body>
+</html>

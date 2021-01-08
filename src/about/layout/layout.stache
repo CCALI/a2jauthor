@@ -7,7 +7,7 @@
       <input
         class="form-control ui-widget editable"
         type="text"
-        placeholder="Logo URL"
+        placeholder="Upload new image file or type an image file name from All Files list, ex: ourLogo.jpg"
         value:bind="guide.logoImage"
       />
     </div>
@@ -32,7 +32,7 @@
       <input
         class="form-control ui-widget editable"
         type="text"
-        placeholder="End (destination graphic) URL"
+        placeholder="Upload new image file or type an image file name from All Files list, ex: customCourthouse.jpg"
         value:bind="guide.endImage"
       />
     </div>

@@ -12,6 +12,6 @@
       type="text"
       class="form-control ui-widget editable"
       value:bind="guide.emailContact"
-      placeholder="my contact email"
+      placeholder="Example: feedback@yourorganization.org"
     />
 </div>

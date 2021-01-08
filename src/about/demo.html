@@ -21,8 +21,12 @@
           en: { Language: "English", LanguageEN: "English", locale: "en" },
           es: { Language: "Español", LanguageEN: "Spanish", locale: "es" },
           fr: { Language: "Français", LanguageEN: "French", locale: "fr" }
-        }
+        },
+        set: (lang) => { console.log('demo setting lanugage to ' + lang)}
       }
+
+      // replace any global guide with safe demo guide
+      window.gGuide = { title: 'canjs demo gGuide'}
 
       const guide = {
         title: 'The best GI',
@@ -44,6 +48,7 @@
 
       // passing the viewModel with guide data emulates stache bindings
       const aboutComponent = new AboutTab({viewModel: {guide, guideId: 3}})
+      aboutComponent.connectedCallback = () => {}
       const demoHtml = document.getElementById('demo-html')
       demoHtml.appendChild(aboutComponent.element)
     </script>

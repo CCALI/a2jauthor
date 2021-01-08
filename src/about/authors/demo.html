@@ -24,6 +24,9 @@
         ]
       }
 
+      // replace any global guide with safe demo guide
+      window.gGuide = { title: 'canjs demo gGuide'}
+
       // passing the viewModel with guide data emulates stache bindings
       const authorsComponent = new AboutAuthors({viewModel: {guide}})
       const demoHtml = document.getElementById('demo-html')

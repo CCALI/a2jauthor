@@ -16,13 +16,14 @@ export const AboutVM = DefineMap.extend('AboutVM', {
     get () {
       return [
         'avatarSkinTone', // main
-        'completionTime',
-        'credits',
-        'description',
+        'avatarHairColor',
         'guideGender',
-        'jurisdiction',
-        'language',
+        'completionTime',
         'title',
+        'description',
+        'jurisdiction',
+        'credits',
+        'language',
         'logoImage', // layout
         'endImage',
         'sendfeedback', // feedback

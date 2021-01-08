@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;about-main&gt;</title>
+  </head>
+
+  <body>
+    <div id="demo-html" style="margin: 20px;"></div>
+
+    <script src="../../../node_modules/steal/steal.js"
+      data-main="@empty">
+    </script>
+
+    <script type="steal-module">
+      import AboutMain from "~/src/about/main/"
+      import "~/styles/"
+      import "~/styles.less"
+
+      window.Languages = {
+        regional: {
+          en: { Language: "English", LanguageEN: "English", locale: "en" },
+          es: { Language: "Español", LanguageEN: "Spanish", locale: "es" },
+          fr: { Language: "Français", LanguageEN: "French", locale: "fr" }
+        }
+      }
+
+      const guide = {
+        title: 'The best GI',
+        description: 'some description',
+        jurisdiction: 'some jurisdiction',
+        guideGender: 'Female',
+        avatarSkinTone: 'darker',
+        avatarHairColor: 'red',
+        credits: 'some credits',
+        language: 'en',
+        completionTime: '42 minutes'
+      }
+      // passing the viewModel with guide data emulates stache bindings
+      const AboutMainComponent = new AboutMain({viewModel: {guide}})
+      const demoHtml = document.getElementById('demo-html')
+      demoHtml.appendChild(AboutMainComponent.element)
+    </script>
+  </body>
+</html>

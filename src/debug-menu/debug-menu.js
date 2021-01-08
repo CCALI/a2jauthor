@@ -49,7 +49,7 @@ export default Component.extend({
     '.btn-resume-edit click': function () {
       let vm = this.viewModel
       let appState = vm.attr('appState')
-      let previewPageName = appState.attr('previewPageName')
+      let previewPageName = appState.previewPageName
 
       let $pageEditDialog = $('.page-edit-form')
       let dialogInstance = $pageEditDialog.dialog('instance')
@@ -61,7 +61,7 @@ export default Component.extend({
       // to open the edit page dialog, it should only be done when user clicks
       // the preview button in the edit page dialog.
       if (dialogInstance && previewPageName) {
-        appState.attr('previewPageName', '')
+        appState.previewPageName = ''
         // gotoPageEdit defined in A2J_Pages.js: 314
         window.gotoPageEdit(previewPageName)
       }
@@ -70,7 +70,7 @@ export default Component.extend({
     '.btn-edit-this click': function () {
       let vm = this.viewModel
       let appState = vm.attr('appState')
-      let pageName = appState.attr('interviewPageName')
+      let pageName = appState.interviewPageName
 
       if (_isFunction(window.gotoPageEdit)) {
         vm.resumeEdit()

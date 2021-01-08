@@ -1,0 +1,52 @@
+<can-import from="./layout.less"/>
+
+<div name="h4x0r" class="form-upload row clearfix">
+  <div class="col-xs-9 filename-input-container">
+    <div class="editspan form-group">
+      <label class="control-label">Logo graphic:</label>
+      <input
+        class="form-control ui-widget editable"
+        type="text"
+        placeholder="Upload new image file or type an image file name from All Files list, ex: ourLogo.jpg"
+        value:bind="guide.logoImage"
+      />
+    </div>
+  </div>
+  <div class="col-xs-3">
+    <div class="fileinput-button form-group">
+      <button class="btn btn-default btn-wide-sm" >
+        <span class="glyphicon-plus" aria-hidden="true"></span>
+        Upload
+      </button>
+      <input class="form-control logo-image-fileupload" type="file" name="files[]" >
+      <div id="logo-image-progress" class="progress progress-success progress-striped">
+        <div class="bar"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div name="h4x0r" class="form-upload row clearfix">
+  <div class="col-xs-9 filename-input-container">
+    <div class="editspan form-group">
+      <label class="control-label">End graphic:</label>
+      <input
+        class="form-control ui-widget editable"
+        type="text"
+        placeholder="Upload new image file or type an image file name from All Files list, ex: customCourthouse.jpg"
+        value:bind="guide.endImage"
+      />
+    </div>
+  </div>
+  <div class="col-xs-3">
+    <div class="fileinput-button form-group">
+      <button class="btn btn-default btn-wide-sm">
+        <span class="glyphicon-plus" aria-hidden="true"></span>
+        Upload</button>
+      <input class="form-control end-image-fileupload" type="file" name="files[]" >
+    </div>
+    <div id="end-image-progress" class="progress progress-success progress-striped">
+      <div class="bar"></div>
+    </div>
+  </div>
+</div>
+

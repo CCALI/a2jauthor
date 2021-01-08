@@ -15,8 +15,8 @@ import navbarItems from 'a2jauthor/src/vertical-navbar/navbar-items'
 export default function tabsRouting (appState) {
   let onPageChange = function (evt, newPage) {
     if (newPage !== 'templates') {
-      appState.removeAttr('templateId')
-      appState.removeAttr('action')
+      appState.templateId = undefined
+      appState.action = undefined
     }
 
     let item = navbarItems.filter(item => item.page === newPage).shift()
@@ -26,7 +26,7 @@ export default function tabsRouting (appState) {
   }
 
   // navigate to the right page/tab on load.
-  onPageChange(null, appState.attr('page'))
+  onPageChange(null, appState.page)
 
   // listen to the app state changes and manually load the selected page.
   appState.bind('page', onPageChange)

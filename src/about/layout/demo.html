@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;about-layout&gt;</title>
+  </head>
+
+  <body>
+    <div id="demo-html" style="margin: 20px;">
+      <about-layout></about-layout>
+    </div>
+
+    <script src="../../../node_modules/steal/steal.js"
+      data-main="@empty">
+    </script>
+
+    <script type="steal-module">
+      import AboutLayout from "~/src/about/layout/"
+      import "~/styles/"
+      import "~/styles.less"
+
+      const guide = {
+        logoImage: 'fancy logo',
+        endImage: 'custom courthouse'
+      }
+
+      const vm = document.querySelector('about-layout').viewModel
+      vm.guide = guide
+    </script>
+  </body>
+</html>

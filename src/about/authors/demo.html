@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;about-authors&gt;</title>
+  </head>
+
+  <body>
+    <div id="demo-html" style="margin: 20px;" />
+
+    <script src="../../../node_modules/steal/steal.js"
+      data-main="@empty">
+    </script>
+
+    <script type="steal-module">
+      import AboutAuthors from "~/src/about/authors/"
+      import "~/styles/"
+      import "~/styles.less"
+
+      const guide = {
+        authors: [
+          { name: 'JessBob', title: 'boss', organization: 'CALI', email: 'jb@cali.org' },
+          { name: 'MitchBob', title: 'dev', organization: 'CALI', email: 'mb@cali.org' },
+          { name: 'TobBob', title: 'sysadmin', organization: 'CALI', email: 'tb@cali.org' }
+        ]
+      }
+
+      // replace any global guide with safe demo guide
+      window.gGuide = { title: 'canjs demo gGuide'}
+
+      // passing the viewModel with guide data emulates stache bindings
+      const authorsComponent = new AboutAuthors({viewModel: {guide}})
+      const demoHtml = document.getElementById('demo-html')
+      demoHtml.appendChild(authorsComponent.element)
+    </script>
+  </body>
+</html>

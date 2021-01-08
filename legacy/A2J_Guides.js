@@ -129,7 +129,7 @@ function gotoPagesTab () {
     var page = can.route.data.page
 
     if (page !== pagesTabRef) {
-      can.route.data.attr('page', pagesTabRef)
+      can.route.data.page = pagesTabRef
     }
   } else {
     gotoTabOrPage('tabsPages')

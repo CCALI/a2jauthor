@@ -1,5 +1,6 @@
 import CanMap from 'can-map'
 import CanList from 'can-list'
+import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import stache from 'can-stache'
 import template from './report.stache'
@@ -8,7 +9,6 @@ import popupPartial from './popup-partial.stache'
 import naturalCompare from 'string-natural-compare/'
 import cString from '@caliorg/a2jdeps/utils/string'
 import textStats from 'text-statistics'
-import _cloneDeep from 'lodash/cloneDeep'
 
 import 'can-map-define'
 
@@ -25,13 +25,15 @@ stache.registerPartial('popup-partial', popupPartial)
 export const ReportVM = CanMap.extend('ReportVM', {
   define: {
     parentGuide: {
-      set (guide) {
+      set (parentGuide) {
         const cloneMade = this.attr('cloneMade')
-        if (guide && !cloneMade) {
-          this.attr('guide', _cloneDeep(guide))
+        if (parentGuide && !cloneMade) {
+          const clonedGuide = new DefineMap()
+          clonedGuide.updateDeep(parentGuide)
+          this.attr('guide', clonedGuide)
           this.attr('cloneMade', true)
         }
-        return guide
+        return parentGuide
       }
     },
 
@@ -47,9 +49,7 @@ export const ReportVM = CanMap.extend('ReportVM', {
      * local deep copy of the current guide from the app-state
      * this prevents the auto save from updating the report while it is being viewed
      */
-    guide: {
-
-    },
+    guide: {},
 
     /**
      * @property {String} report.ViewModel.prototype.define.selectedReport selectedReport
@@ -288,9 +288,11 @@ export const ReportVM = CanMap.extend('ReportVM', {
    */
   getVariableList (guideVariables) {
     let sortedList = []
-    guideVariables.forEach(tVariable => {
-      sortedList.push(tVariable)
+
+    Object.keys(guideVariables).forEach((varName) => {
+      sortedList.push(guideVariables[varName])
     })
+
     return sortedList.sort(function (a, b) { return naturalCompare.caseInsensitive(a.name, b.name) })
   },
 

@@ -2,8 +2,9 @@
 export default {
   devShowTesting: false,
   showXML: 0,
-  uploadURL: '',
-  uploadGuideURL: '',
+  // TODO: can remove when CAJA_WS updated to restful api
+  uploadURL: 'CAJA_WS.php?cmd=uploadfile&gid=',
+  uploadGuideURL: 'CAJA_WS.php?cmd=uploadguide',
   // Spinnner for loading wait
   AJAXLoader: '<span class="loader">&nbsp;</span>',
 

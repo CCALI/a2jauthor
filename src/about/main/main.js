@@ -47,39 +47,6 @@ export const AboutMainVm = CanMap.extend({
 
   updateHairColor (hairColor) {
     this.attr('guide.avatarHairColor', hairColor)
-  },
-
-  connectedCallback (el) {
-    // TODO: Remove this when gGuide is.
-    // We need this proxy to update the global gGuide as we make changes.
-    const vm = this
-    const mirrorProperties = [
-      'avatarHairColor',
-      'avatarSkinTone',
-      'completionTime',
-      'credits',
-      'description',
-      'guideGender',
-      'jurisdiction',
-      'language',
-      'title'
-    ]
-
-    const handler = (ev, newVal, oldVal) => {
-      const guideAttr = ev.type
-      window.gGuide[guideAttr] = newVal
-    }
-
-    mirrorProperties.forEach((prop) => {
-      // using the notify queue updates global gGuide instantly
-      vm.attr('guide').listenTo(prop, handler, 'notify')
-    })
-
-    return function () {
-      mirrorProperties.forEach((prop) => {
-        vm.attr('guide').stopListening(prop, handler, 'notify')
-      })
-    }
   }
 })
 

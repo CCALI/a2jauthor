@@ -1,0 +1,14 @@
+<can-import from="./revision.less" />
+
+<div id="about-revision-history" class="editspan form-group">
+  <label class="control-label">Current Version:</label>
+  <input
+    class="form-control ui-widget editable"
+    type="text"
+    value:bind="guide.version">
+  <label class="control-label">Revision Notes:</label>
+  <input
+    class="form-control ui-widget editable"
+    type="text"
+    value:bind="guide.notes">
+</div>

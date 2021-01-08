@@ -21,7 +21,7 @@ export const VariablesTabVM = CanMap.extend('VariablesTabVM', {
       get () {
         const guide = this.attr('guide')
         if (guide) {
-          const vars = guide.attr('vars')
+          const vars = guide.vars
           if (vars) {
             const variables = []
             vars.forEach(value => variables.push(value))
@@ -65,7 +65,7 @@ export const VariablesTabVM = CanMap.extend('VariablesTabVM', {
 
   deleteVariable (name) {
     const guide = this.attr('guide')
-    guide.vars.removeAttr(name.toLowerCase())
+    guide.vars.deleteKey([name.toLowerCase()])
   },
 
   onDismissVariableEditing ({ usedCancelButton }) {
@@ -96,7 +96,10 @@ export const VariablesTabVM = CanMap.extend('VariablesTabVM', {
 
     const variable = new window.TVariable()
     $.extend(variable, buffer.serialize())
-    guide.vars.attr(buffer.name.toLowerCase(), variable)
+    const varName = buffer.name.toLowerCase()
+    const newVar = {}
+    newVar[varName] = variable
+    guide.vars.assign(newVar)
   },
 
   uploadCmpFile () {
@@ -125,7 +128,10 @@ export const VariablesTabVM = CanMap.extend('VariablesTabVM', {
         // name, type, repeating, comment
         const variable = new window.TVariable()
         $.extend(variable, newVar)
-        guide.vars.attr(newVar.name.toLowerCase(), variable)
+        const varName = newVar.name.toLowerCase()
+        const newUploadedVar = {}
+        newUploadedVar[varName] = variable
+        guide.vars.assign(newUploadedVar)
       })
     }
     queues.batch.stop()

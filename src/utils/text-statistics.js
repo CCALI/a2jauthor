@@ -21,12 +21,13 @@ const TextStatistics = DefineMap.extend({
 
     text = text
       .replace(/<[^>]+>/g, '') // Strip tags
-      // .replace(/[,:;()\-]/, ' ')	// Replace commas, hyphens etc (count them as spaces) (this messes up number, 10,000)
+      //  below replace messes up numbers aka 10,000 for word counts, TODO: should likely just remove those things?
+      // .replace(/[,:;()\-]/, ' ') // Replace commas, hyphens etc (count them as spaces)
       .replace(/[.!?]/g, '.') // Unify terminators
       .replace(/^\s+/, '') // Strip leading whitespace
       .replace(/[ ]*(\n|\r\n|\r)[ ]*/, ' ') // Replace new lines with spaces
-      .replace(/([\.])[\. ]+/g, '.') // Check for duplicated terminators
-      .replace(/[ ]*([\.])/, '. ') // Pad sentence terminators
+      .replace(/([.])[. ]+/g, '.') // Check for duplicated terminators
+      .replace(/[ ]*([.])/, '. ') // Pad sentence terminators
       .replace(/\s+/, ' ') // Remove multiple spaces
       .replace(/\s+$/, '') // Strip trailing whitespace
 
@@ -64,8 +65,8 @@ const TextStatistics = DefineMap.extend({
     const S = (sentenceCount / wordCount) * 100
     // return Math.round(((5.89 * (this.letterCount(text) / this.wordCount(text))) - (0.3 * (this.sentenceCount(text) / this.wordCount(text))) - 15.8) * 10) / 10
     const CLI = (0.0588 * L) - (0.296 * S) - 15.8
-    console.log(L, S, CLI)
     const roundedToTenths = Math.round(CLI * 10) / 10
+
     return roundedToTenths
   },
 
@@ -130,7 +131,6 @@ const TextStatistics = DefineMap.extend({
   },
 
   percentageWordsWithThreeSyllables (text, countProperNouns) {
-
     return (this.wordsWithThreeSyllables(text, countProperNouns) / this.wordCount(text)) * 100
   },
 

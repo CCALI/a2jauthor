@@ -26,6 +26,7 @@ describe('text-statistics util', function () {
   })
 
   it('cleanText - html and line breaks', () => {
+    /* eslint-disable no-irregular-whitespace */
     testContent = `<p><strong>Welcome!</strong> This interview will help you complete a <strong> Complaint for Absolute Divorce </strong>for use in the<strong> Superior Court of the District of Columbia.</strong></p>
 
     <p> </p>
@@ -94,7 +95,6 @@ describe('text-statistics util', function () {
   })
 
   it('fleschKincaidGradeLevel', () => {
-
     result = textStatistics.fleschKincaidGradeLevel(testContent)
     testContent = `Welcome! This interview will help you complete a Complaint for Absolute Divorce for use in the Superior Court of the District of Columbia.
 
@@ -105,7 +105,6 @@ describe('text-statistics util', function () {
   })
 
   it('colemanLiauIndex', () => {
-
     result = textStatistics.colemanLiauIndex(testContent)
     testContent = `Welcome! This interview will help you complete a Complaint for Absolute Divorce for use in the Superior Court of the District of Columbia.
 

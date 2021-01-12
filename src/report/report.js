@@ -8,12 +8,14 @@ import pagePartial from './page-partial.stache'
 import popupPartial from './popup-partial.stache'
 import naturalCompare from 'string-natural-compare/'
 import cString from '@caliorg/a2jdeps/utils/string'
-import textStats from 'text-statistics'
+import TextStatistics from '~/src/utils/text-statistics'
 
 import 'can-map-define'
 
 stache.registerPartial('page-partial', pagePartial)
 stache.registerPartial('popup-partial', popupPartial)
+
+const textStats = new TextStatistics()
 
 /**
  * @property {can.Map} report.ViewModel
@@ -304,10 +306,11 @@ export const ReportVM = CanMap.extend('ReportVM', {
    *  uses https://www.npmjs.com/package/text-statistics
    */
   getTextStats (text) {
-    const statsReports = textStats(text)
-    const fkGrade = statsReports.fleschKincaidGradeLevel()
-    const wordCount = statsReports.wordCount()
-    const averageWordsPerSentence = parseFloat(statsReports.averageWordsPerSentence().toFixed(1))
+    const cleanText = textStats.cleanText(text) // removes html tags, double spaces, etc
+    const fkGrade = textStats.fleschKincaidGradeLevel(cleanText)
+    const colemanLiauIndex = textStats.colemanLiauIndex(cleanText)
+    const wordCount = textStats.wordCount(cleanText)
+    const averageWordsPerSentence = Math.round((textStats.averageWordsPerSentence(cleanText) * 10)) / 10 // one decimal place
     const alertClass = this.getTextAlertClass(fkGrade)
 
     // add this grade to the overall list of scores
@@ -315,6 +318,7 @@ export const ReportVM = CanMap.extend('ReportVM', {
 
     return {
       fkGrade,
+      colemanLiauIndex,
       wordCount,
       averageWordsPerSentence,
       alertClass

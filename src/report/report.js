@@ -310,7 +310,7 @@ export const ReportVM = CanMap.extend('ReportVM', {
     const fkGrade = textStats.fleschKincaidGradeLevel(cleanText)
     const colemanLiauIndex = textStats.colemanLiauIndex(cleanText)
     const wordCount = textStats.wordCount(cleanText)
-    const averageWordsPerSentence = parseFloat(textStats.averageWordsPerSentence(cleanText).toFixed(1))
+    const averageWordsPerSentence = Math.round((textStats.averageWordsPerSentence(cleanText) * 10)) / 10 // one decimal place
     const alertClass = this.getTextAlertClass(fkGrade)
 
     // add this grade to the overall list of scores

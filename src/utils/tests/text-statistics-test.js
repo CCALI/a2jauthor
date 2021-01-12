@@ -3,19 +3,6 @@ import TextStatistics from '../text-statistics'
 
 import 'steal-mocha'
 
-// Page 005-Welcome!
-// Text: Welcome! This interview will help you complete a Complaint for Absolute Divorce for use in the Superior Court of the District of Columbia. | | By answering the following questions, you will be able to create a document you can print and file with the Court. | | Please click the Continue button below to see the next screen. |
-
-// Word Count: 56 | Avg Words/Sentence: 9.3 | Flesch-Kincaid Grade Level: 4.8
-
-// Learn More Prompt: Are you using the Chrome browser?
-
-// Word Count: 7 | Avg Words/Sentence: 3.5 | Flesch-Kincaid Grade Level: -0.7
-
-// Help Text: If you are using Chrome, you will not be able to use your backspace key in this interview. To delete text you have entered, you will have to select it and type over it. |
-
-// Word Count: 35 | Avg Words/Sentence: 8.8 | Flesch-Kincaid Grade Level: 1.3
-
 describe('text-statistics util', function () {
   let testContent
   let result

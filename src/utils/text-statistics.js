@@ -21,7 +21,8 @@ const TextStatistics = DefineMap.extend({
 
     text = text
       .replace(/<[^>]+>/g, '') // Strip tags
-      //  below replace messes up numbers aka 10,000 for word counts, TODO: should likely just remove those things?
+      //  below replace messes up numbers aka 10,000 for word counts,
+      // TODO: should likely just set to '' instead of ' '
       // .replace(/[,:;()\-]/, ' ') // Replace commas, hyphens etc (count them as spaces)
       .replace(/[.!?]/g, '.') // Unify terminators
       .replace(/^\s+/, '') // Strip leading whitespace
@@ -47,6 +48,7 @@ const TextStatistics = DefineMap.extend({
   },
 
   fleschKincaidGradeLevel (text) {
+    // Flesch-Kincaid grade level formula: 0.39 x (words/sentences) + 11.8 x (syllables/words) - 15.59.
     return Math.round(((0.39 * this.averageWordsPerSentence(text)) + (11.8 * this.averageSyllablesPerWord(text)) - 15.59) * 10) / 10
   },
 

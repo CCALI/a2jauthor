@@ -1,7 +1,7 @@
 {
   "name": "a2jauthor",
   "version": "7.0.1",
-  "description": "Authoring and viewer App GUI.",
+  "description": "A2J Authoring App GUI.",
   "main": "a2jauthor/app",
   "scripts": {
     "lint": "standard --fix --env mocha",
@@ -11,8 +11,12 @@
     "build-docs": "grunt documentjs",
     "serve-docs": "grunt documentjs-lite && http-server docs"
   },
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name": "Center for Computer-Assisted Legal Instruction (CALI)",
+    "email": "webmaster@a2jauthor.org",
+    "url": "https://www.a2jauthor.org"
+  },
+  "license": "AGPL-3.0-only",
   "repository": {
     "type": "git",
     "url": "https://github.com/CCALI/a2jauthor"

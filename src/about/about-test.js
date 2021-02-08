@@ -24,9 +24,10 @@ describe('<about-tab>', () => {
     })
 
     it('cleanupRevisionNotes', () => {
-      vm.guide.notes = '<p>This paragraph > yours,<b>this</b> sure is!</p><legend></span>'
+      vm.guide.notes = '<p>9/19/2018 <strong>interview</strong> created.</p>\n\n<p>new line <em>double</em> space<br />\nnewline 2 single <u>space</u></p>\n'
+      const expectedResult = '9/19/2018 interview created.\n\nnew line double space\nnewline 2 single space\n'
       vm.connectedCallback()
-      assert.equal(vm.guide.notes, 'This paragraph > yours,this sure is!', 'should remove any stray html tags only')
+      assert.equal(vm.guide.notes, expectedResult, 'should remove any stray html tags only, preserving new lines')
     })
   })
 })

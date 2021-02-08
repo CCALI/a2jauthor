@@ -7,8 +7,10 @@
     type="text"
     value:bind="guide.version">
   <label class="control-label">Revision Notes:</label>
-  <input
-    class="form-control ui-widget editable"
-    type="text"
-    value:bind="guide.notes">
+  <textarea
+    cols="1"
+    rows="11"
+    class="form-control text editable taller"
+    value:bind="guide.notes"
+  />
 </div>

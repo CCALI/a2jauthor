@@ -278,6 +278,20 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
     window.guideSave()
   },
 
+  saveCurrentGuidePromise: {
+    get () {
+      // this assures any changes to current guide are saved before loading
+      // the mapper canvas TODO: remove when legacy code refactored to CanJS
+      return new Promise(function (resolve, reject) {
+        if (window.gGuide) {
+          window.guideSave(resolve)
+        } else {
+          resolve()
+        }
+      })
+    }
+  },
+
   initMapper (paper) {
     const vm = this
     const graph = paper.options.model
@@ -350,7 +364,10 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
 
     // mutateQueue let's the dom update with the spinner while the expensive work
     // of adding the mapper nodes can happen after
-    queues.mutateQueue.enqueue(vm.initMapper, vm, [ vm.paper ])
+    // save the guide first
+    this.saveCurrentGuidePromise.then(() => {
+      queues.mutateQueue.enqueue(vm.initMapper, vm, [ vm.paper ])
+    })
 
     // cleanup event listeners
     return () => {

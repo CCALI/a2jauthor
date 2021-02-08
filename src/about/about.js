@@ -71,7 +71,9 @@ export const AboutVM = DefineMap.extend('AboutVM', {
     })
 
     // cleanup old revision notes that could have ckeditor html tags
-    this.guide.notes = this.cleanupRevisionNotes(this.guide.notes)
+    if (this.guide) {
+      this.guide.notes = this.cleanupRevisionNotes(this.guide.notes)
+    }
 
     // TODO: Remove this when gGuide is.
     // We need this proxy util to update the global gGuide as we make changes.

@@ -23,12 +23,11 @@ describe('<about-revision>', () => {
       const guide = new CanMap({ notes: 'some notes', sendrevision: false, emailContact: '', version: '12.20' })
       const vm = render({ guide })
 
-      const inputs = document.querySelectorAll('input')
-      const versionInput = inputs[0]
-      const notesInput = inputs[1]
+      const versionInput = document.querySelector('input')
+      const notesTextarea = document.querySelector('textarea')
 
       assert.equal(versionInput.value, vm.guide.version, 'should match incoming version value')
-      assert.equal(notesInput.value, vm.guide.notes, 'should match incoming notes value')
+      assert.equal(notesTextarea.value, vm.guide.notes, 'should match incoming notes value')
     })
   })
 })

@@ -13,16 +13,17 @@ import navbarItems from 'a2jauthor/src/vertical-navbar/navbar-items'
  *
  */
 export default function tabsRouting (appState) {
-  let onPageChange = function (evt, newPage) {
-    if (newPage !== 'templates') {
-      appState.templateId = undefined
-      appState.action = undefined
-    }
+  let onPageChange = function (evt, newPage, previousPage) {
+    console.log(previousPage, '-->', newPage)
+    // if (newPage !== 'templates') {
+    //   appState.templateId = undefined
+    //   appState.action = undefined
+    // }
 
-    let item = navbarItems.filter(item => item.page === newPage).shift()
-    if (item && item.ref) {
-      window.gotoTabOrPage(item.ref)
-    }
+    // let item = navbarItems.filter(item => item.page === newPage).shift()
+    // if (item && item.ref) {
+    //   window.gotoTabOrPage(item.ref)
+    // }
   }
 
   // navigate to the right page/tab on load.

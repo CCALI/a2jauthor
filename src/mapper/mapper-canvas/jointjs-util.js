@@ -29,31 +29,33 @@ export const stepBackgroundMap = {
 
 /** jointjs paper/graph code and event listeners */
 export const buildPaper = (vm, width, height) => {
-  // create graph model
-  const graph = new dia.Graph()
-  // return paper canvas
-  const paper = new dia.Paper({
-    el: document.getElementById('mapper-canvas'),
-    model: graph,
-    width: width || 1000,
-    height: height || 1000,
-    gridSize: gridSize,
-    drawGrid: true,
-    background: {
-      color: 'rgba(255, 255, 255, 0.3)'
-    },
-    // Enable link connection within 50px lookup radius of port
-    snapLinks: { radius: 50 },
-    defaultRouter: {
-      name: 'metro'
-    }
+  return new Promise((resolve, reject) => {
+    // create graph model
+    const graph = new dia.Graph()
+    // return paper canvas
+    const paper = new dia.Paper({
+      el: document.getElementById('mapper-canvas'),
+      model: graph,
+      width: width || 1000,
+      height: height || 1000,
+      gridSize: gridSize,
+      drawGrid: true,
+      background: {
+        color: 'rgba(255, 255, 255, 0.3)'
+      },
+      // Enable link connection within 50px lookup radius of port
+      snapLinks: { radius: 50 },
+      defaultRouter: {
+        name: 'metro'
+      }
+    })
+
+    // events
+    handlePaperEvents(paper, vm)
+    handleGraphEvents(graph, vm)
+
+    resolve(paper)
   })
-
-  // events
-  handlePaperEvents(paper, vm)
-  handleGraphEvents(graph, vm)
-
-  return paper
 }
 
 export const makeLink = (sourceId, sourcePort, targetId, targetPort) => {

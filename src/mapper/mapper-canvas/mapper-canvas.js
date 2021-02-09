@@ -21,7 +21,6 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
   selectedPageName: {},
   pagesAndPopups: {},
   lastCoordinatesByStep: {},
-  buildingMapper: { default: true },
   mapperLoadingMessage: { default: 'Building Mapper ... ' },
   numberOfSteps: {
     get () {
@@ -274,17 +273,35 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
 
   // this is debounced in connectedCallback
   sortAndSaveGuidePages () {
+    console.log('sortAndSave')
     window.gGuide.sortPages()
     window.guideSave()
   },
 
+  // used to trigger/remove spinner overlay
+  // first save any unsaved guide changes
+  initMapperPromise: {
+    get () {
+      const vm = this
+      return this.saveCurrentGuidePromise
+        .then(() => {
+          return buildPaper(vm)
+        })
+        .then((paper) => {
+          vm.paper = paper
+          // return vm.initMapper(paper)
+          return queues.mutateQueue.enqueue(vm.initMapper, vm, [ paper ])
+        })
+    }
+  },
+
   saveCurrentGuidePromise: {
     get () {
-      // this assures any changes to current guide are saved before loading
-      // the mapper canvas TODO: remove when legacy code refactored to CanJS
-      return new Promise(function (resolve, reject) {
+      return new Promise(resolve => {
         if (window.gGuide) {
+          console.log('before save')
           window.guideSave(resolve)
+          console.log('after save')
         } else {
           resolve()
         }
@@ -294,49 +311,50 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
 
   initMapper (paper) {
     const vm = this
-    const graph = paper.options.model
-    vm.guide.sortedPages.forEach((page) => {
-      // TODO: remove when popups are handled in code refactor
-      if (page.type === 'Popup') { return }
-      const mapNode = vm.createNode(page)
-      // highlight active/inactive buttons
-      vm.updateButtonHighlighting(mapNode)
-      vm.enqueueCell(mapNode)
-    })
-
-    // resetCells updates all the cells at once before drawing them for performance
-    // TODO: will need to change if we do async paper for performance <-- likely to happen
-    graph.resetCells(vm.cellQueue)
-    vm.cellQueue = []
-
-    // nodes/elements are made first as you need their ids to make links
-    vm.guide.sortedPages.forEach((page) => {
-      // popup pages don't have links
-      if (page.type === 'Popup') { return }
-      const mapNode = graph.getCell(page.mapId)
-
-      page.buttons.forEach((button, index) => {
-        const buttonNumber = index + 1
-        if (button.next && !vm.isSpecialButton(button)) {
-          const targetId = this.pageNameToMapId[button.next]
-          const link = makeLink(mapNode.id, buttonNumber, targetId, 'in')
-          vm.enqueueCell(link)
-        }
+    return new Promise(resolve => {
+      const graph = paper.options.model
+      vm.guide.sortedPages.forEach((page) => {
+        // TODO: remove when popups are handled in code refactor
+        if (page.type === 'Popup') { return }
+        const mapNode = vm.createNode(page)
+        // highlight active/inactive buttons
+        vm.updateButtonHighlighting(mapNode)
+        vm.enqueueCell(mapNode)
       })
+
+      // resetCells updates all the cells at once before drawing them for performance
+      // TODO: will need to change if we do async paper for performance <-- likely to happen
+      graph.resetCells(vm.cellQueue)
+      vm.cellQueue = []
+
+      // nodes/elements are made first as you need their ids to make links
+      vm.guide.sortedPages.forEach((page) => {
+        // popup pages don't have links
+        if (page.type === 'Popup') { return }
+        const mapNode = graph.getCell(page.mapId)
+
+        page.buttons.forEach((button, index) => {
+          const buttonNumber = index + 1
+          if (button.next && !vm.isSpecialButton(button)) {
+            const targetId = this.pageNameToMapId[button.next]
+            const link = makeLink(mapNode.id, buttonNumber, targetId, 'in')
+            vm.enqueueCell(link)
+          }
+        })
+      })
+
+      graph.addCells(vm.cellQueue)
+      vm.cellQueue = []
+
+      paper.fitToContent(fitToContentOptions)
+
+      resolve(paper)
     })
-
-    graph.addCells(vm.cellQueue)
-    vm.cellQueue = []
-
-    // turn off build spinner
-    vm.buildingMapper = false
-
-    vm.paper.fitToContent(fitToContentOptions)
-    return paper
   },
 
   // this bootstraps the relationship between jointjs canvas and canjs state/models/events
   connectedCallback () {
+    console.log('mapper-canvas connected')
     const vm = this
 
     // TODO - watch for circular events in jointjs-util.js, good currently
@@ -357,16 +375,6 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
         vm.updateButtonLinks(mapNode)
         vm.updateButtonHighlighting(mapNode)
       }
-    })
-
-    // create jointjs paper canvas/view and graph model
-    vm.paper = buildPaper(vm, this.numberOfSteps)
-
-    // mutateQueue let's the dom update with the spinner while the expensive work
-    // of adding the mapper nodes can happen after
-    // save the guide first
-    this.saveCurrentGuidePromise.then(() => {
-      queues.mutateQueue.enqueue(vm.initMapper, vm, [ vm.paper ])
     })
 
     // cleanup event listeners

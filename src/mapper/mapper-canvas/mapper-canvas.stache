@@ -2,7 +2,7 @@
 <can-import from="a2jauthor/src/loading/"/>
 <can-import from="./mapper-canvas.less"/>
 
-{{#if(buildingMapper)}}
+{{#if(initMapperPromise.isPending)}}
     <app-loading loadingMessage:from="this.mapperLoadingMessage" hasOverlay:raw="true" />
 {{/if}}
 

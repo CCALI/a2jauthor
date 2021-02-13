@@ -33,6 +33,13 @@ export default function ckeArea (data) { // change handler function, label, valu
   const replaceWithCKEditor = function (ev) {
     // do not re initialize the current instance
     if (window.CKEDITOR.instances[id]) { return }
+    // remove previous instance(s)
+    Object.keys(window.CKEDITOR.instances).forEach(function (instanceKey) {
+      if (instanceKey !== id) {
+        // `true` says to not update original element (blur event already did it)
+        window.CKEDITOR.instances[instanceKey].destroy(true)
+      }
+    })
     // add the CKEditor
     window.CKEDITOR.replace(document.getElementById(id), {
       // do not escape html entities, except special characters for xml compatibility
@@ -74,9 +81,10 @@ export default function ckeArea (data) { // change handler function, label, valu
       ],
       on: {
         blur: function (event) {
-          // destroy triggers update to original div
-          const instanceName = event.editor.name
-          window.CKEDITOR.instances[instanceName].destroy(true)
+          // Update the data when the element is blured
+          var d = event.editor.getData()
+          // change function sometimes requires field prop
+          data.change(d, data.field)
         },
         change: function (event) {
           // Update the data when data changes

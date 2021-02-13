@@ -74,9 +74,10 @@ export default function ckeArea (data) { // change handler function, label, valu
       ],
       on: {
         blur: function (event) {
-          // destroy triggers update to original div
-          const instanceName = event.editor.name
-          window.CKEDITOR.instances[instanceName].destroy(true)
+          // Update the data when the element is blured
+          var d = event.editor.getData()
+          // change function sometimes requires field prop
+          data.change(d, data.field)
         },
         change: function (event) {
           // Update the data when data changes

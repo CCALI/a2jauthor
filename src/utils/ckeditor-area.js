@@ -33,6 +33,13 @@ export default function ckeArea (data) { // change handler function, label, valu
   const replaceWithCKEditor = function (ev) {
     // do not re initialize the current instance
     if (window.CKEDITOR.instances[id]) { return }
+    // remove previous instance(s)
+    Object.keys(window.CKEDITOR.instances).forEach(function (instanceKey) {
+      if (instanceKey !== id) {
+        // `true` says to not update original element (blur event already did it)
+        window.CKEDITOR.instances[instanceKey].destroy(true)
+      }
+    })
     // add the CKEditor
     window.CKEDITOR.replace(document.getElementById(id), {
       // do not escape html entities, except special characters for xml compatibility

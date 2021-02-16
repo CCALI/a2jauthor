@@ -1,10 +1,10 @@
 import $ from 'jquery'
 import './viewer/A2J_Types'
-import './viewer/A2J_Prefs'
 import './viewer/A2J_SharedSus'
 import './viewer/A2J_Shared'
 import './viewer/A2J_Logic'
 import './viewer/A2J_Languages'
+import './viewer/A2J_Parser'
 import './A2J_Pages'
 import './A2J_Tabs'
 import 'jquery-ui/ui/widgets/autocomplete'
@@ -252,5 +252,42 @@ describe('legacy/A2J_Pages', function () {
 
     // cleanup
     window.gGuideID = undefined
+  })
+
+  it('createNewPage', () => {
+    let newStep = 1
+    const mapx = 0
+    const mapy = 0
+    let createdPage
+    let selectedPageName = ''
+
+    // overload globals
+    const oldGetSelectedPageName = window.getSelectedPageName
+    window.getSelectedPageName = () => selectedPageName
+    const oldGuide = window.gGuide
+    window.gGuide = new TGuide()
+
+    // fired from mapper, new page becomes 'selected page'
+    createdPage = createNewPage (newStep, mapx, mapy)
+    assert.equal(createdPage.name, 'New Page', 'should default to New Page if fired from Map tab')
+
+    // no newStep means fired from Pages tab, no selectedPage here
+    newStep = null
+    window.gGuide.pages = {}
+    createdPage = createNewPage (newStep, mapx, mapy)
+    assert.equal(createdPage.name, 'New Page', 'should default to New Page if fired from Pages tab & no selectedPage value')
+
+    // fired from Pages tab with a selectedPage
+    selectedPageName = 'Intro'
+    const introPage = new TPage()
+    introPage.name = 'Intro'
+    window.gGuide.pages['Intro'] = introPage
+
+    createdPage = createNewPage (newStep, mapx, mapy)
+    assert.equal(createdPage.name, 'Intro 2', 'should base new page on current selectedPage in Pages tab')
+
+    // restore globals
+    window.getSelectedPageName = oldGetSelectedPageName
+    window.gGuide = oldGuide
   })
 })

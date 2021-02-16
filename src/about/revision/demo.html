@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;about-revision&gt;</title>
+  </head>
+
+  <body>
+    <div id="demo-html" style="margin: 20px;">
+      <about-revision></about-revision>
+    </div>
+
+    <script src="../../../node_modules/steal/steal.js"
+      data-main="@empty">
+    </script>
+
+    <script type="steal-module">
+      import AboutRevision from "~/src/about/revision/"
+      import "~/styles/"
+      import "~/styles.less"
+
+      const guide = {
+        version: '12/20/2020',
+        notes: 'Created at 12/20/2020'
+      }
+
+      const vm = document.querySelector('about-revision').viewModel
+      vm.guide = guide
+    </script>
+  </body>
+</html>

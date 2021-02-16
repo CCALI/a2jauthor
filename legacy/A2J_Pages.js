@@ -188,7 +188,11 @@ function createNewPage (newStep, mapx, mapy) {	// Create a new blank page, after
     }
   }
 
-  var page = window.gGuide.addUniquePage('New Page')
+  // using previous page name puts pages in correct sort order in Pages Tab
+  // 'New Page' is used when adding pages on mapper
+  const newPageName = (firedFromPagesTab && selectedPageName) ? selectedPageName : 'New Page'
+
+  var page = window.gGuide.addUniquePage(newPageName)
   page.type = 'A2J'
   page.text = 'My text'
   page.step = newStep
@@ -982,6 +986,11 @@ function guidePageEditForm (page, $qdeParentDiv) {
 
   // cleanup $qde elements when the dialog closes
   window.$('.page-edit-dialog').on('dialogclose', function (ev) {
+    // cleanup any orphaned CKEDITOR instances before their node(s) removed from DOM
+    Object.keys(window.CKEDITOR.instances).forEach(function (instanceKey) {
+        // `true` says to not update original element with content - already completed in ckeditor-area.js
+        window.CKEDITOR.instances[instanceKey].destroy(true)
+    })
     window.$($qdeParentDiv).empty()
   })
 

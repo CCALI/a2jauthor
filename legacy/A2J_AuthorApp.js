@@ -22,7 +22,6 @@
 // import {editButton} from './A2J_Tabs'
 // import {localGuideStart} from './A2J_Debug'
 // import {Languages} from './viewer/A2J_Languages'
-// import {mapZoomSlide, mapZoomClick} from './A2J_Mapper'
 // import {gPrefs} from './viewer/A2J_Prefs'
 
 // File upload URLs for a guide's files and a new guide.
@@ -122,7 +121,6 @@ function main () { // Everything loaded, now execute code.
 
   $('.authorenv').text(gEnv)
   $('#cajainfo').attr('title', versionString())
-  $('#settings').click(function () { $('#settings-form').dialog('open') })
 
   // JPM Handles Expand/Collapse button on pages list
   function expandCollapsePageList () {
@@ -196,7 +194,7 @@ function main () { // Everything loaded, now execute code.
       setProgress('')
       gGuideID = data.gid
       if (data.url !== '') {
-        window.can.route.data.attr('page', 'a2jorg')
+        window.can.route.data.page = 'a2jorg'
       }
     }
     setProgress('Publishing to a2j.org local DEV', true)
@@ -208,7 +206,7 @@ function main () { // Everything loaded, now execute code.
       setProgress('')
       gGuideID = data.gid
       if (data.url !== '') {
-        window.can.route.data.attr('page', 'a2jorg')
+        window.can.route.data.page = 'a2jorg'
       }
     }
     setProgress('Publishing to A2J.org DEV', true)
@@ -220,7 +218,7 @@ function main () { // Everything loaded, now execute code.
       setProgress('')
       gGuideID = data.gid
       if (data.url !== '') {
-        window.can.route.data.attr('page', 'a2jorg')
+        window.can.route.data.page = 'a2jorg'
       }
     }
     setProgress('Publishing to staging.A2J.org', true)
@@ -232,7 +230,7 @@ function main () { // Everything loaded, now execute code.
       setProgress('')
       gGuideID = data.gid
       if (data.url !== '') {
-        window.can.route.data.attr('page', 'a2jorg')
+        window.can.route.data.page = 'a2jorg'
       }
     }
     setProgress('Publishing to www.A2J.org', true)
@@ -335,18 +333,6 @@ function main () { // Everything loaded, now execute code.
     form.listManagerSave($tbl)
   })
 
-  // JPM - added button to slide/hide page list on mapper
-  $('#tabsMapper button').first()
-    .button({disabled: false, label: '<span class="glyphicon-left-thin" aria-hidden="true"></span> Hide Page List'}).next()
-    .button({disabled: false}).next()
-    .button().next()
-    .button()
-
-  $('#MapperToolbar button:eq(0)').click(mapZoomSlide)
-  $('#MapperToolbar button:eq(1)').click(mapZoomClick)
-  $('#MapperToolbar button:eq(2)').click(mapZoomClick)
-  $('#MapperToolbar button:eq(3)').click(mapZoomClick)
-
   $('#tabsPages #open-guide').click(function () {
     gotoPageEdit(getSelectedPageName())
   })
@@ -415,43 +401,6 @@ function main () { // Everything loaded, now execute code.
 
   // Draggable
   $('.hotspot').draggable({ containment: 'parent' }).resizable().fadeTo(0.1, 0.9)
-
-  // Load preferences
-  $('#settings-form').dialog({
-    autoOpen: false,
-    closeText: '',
-    width: 600,
-    height: 500,
-    modal: true,
-    buttons: [
-      {text: 'Close',
-        class: 'btn btn-default btn-wide-sm',
-        click: function () {
-          $(this).dialog('close')
-          gPrefs.FKGradeAll = $('#setting_FKGradeAll').is(':checked')
-          gPrefs.showJS = $('#setting_showJS').is(':checked')
-          gPrefs.warnHotDocsNameLength = $('#setting_warnHotDocsNameLength').is(':checked')
-          gPrefs.save()
-        }}
-    ]})
-  gPrefs.load()
-  $('#setting_FKGradeAll').prop('checked', gPrefs.FKGradeAll)
-  $('#setting_showJS').prop('checked', gPrefs.showJS)
-  $('#setting_warnHotDocsNameLength').prop('checked', gPrefs.warnHotDocsNameLength)
-  $('#cajasettings a').click(function () {
-    var attr = $(this).attr('href')
-    switch (attr) {
-      case '#sample':
-        loadGuideFile($(this).text(), '')
-        break
-      case '#theme':
-        styleSheetSwitch($(this).text())
-        break
-      default:
-          // trace('Unhandled ' + attr);
-    }
-    return false
-  })
 
   $('#page-viewer').hide()
   $('#clause-add').button().click(clauseAdd)

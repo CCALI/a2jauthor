@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import CanMap from 'can-map'
+import DefineMap from 'can-define/map/map'
 import _includes from 'lodash/includes'
 import constants from '~/src/models/constants'
 import compute from 'can-compute'
@@ -20,15 +20,15 @@ export default function bindCustomEvents (appState) {
 
   // user clicks the preview button in the edit page modal
   $authorApp.on('edit-page:preview', function (evt, pageName) {
-    appState.attr('previewPageName', pageName)
-    appState.attr('page', 'preview')
-    appState.attr('previewMode', true)
+    appState.previewPageName = pageName
+    appState.page = 'preview'
+    appState.previewMode = true
   })
 
   // internal parts of the code call `window.traceAlert` which no longer
   // updates the DOM manually but triggers this event
   $authorApp.on('author:trace-alert', function (evt, data) {
-    let alertMessages = appState.attr('viewerAlertMessages')
+    let alertMessages = appState.viewerAlertMessages
     let guideId = alertMessages.attr('guideId')
 
     // we set a static `guideId` property to the alertMessages list to avoid
@@ -45,7 +45,7 @@ export default function bindCustomEvents (appState) {
   // user double clicks a guide in the interview tab or clicks the open guide
   // button in the toolbar.
   $authorApp.on('author:item-selected', function (evt, guideId) {
-    let alertMessages = appState.attr('viewerAlertMessages')
+    let alertMessages = appState.viewerAlertMessages
 
     // this check is similar to the one made in the `author:trace-alert`,
     // *this* covers the case where a selected interview does not generate
@@ -59,13 +59,11 @@ export default function bindCustomEvents (appState) {
     Object.keys(window.gGuide).forEach((key) => {
       gGuideMapData[key] = window.gGuide[key]
     })
-    const gGuideMap = new CanMap(gGuideMapData)
+    const gGuideMap = new DefineMap(gGuideMapData)
 
-    appState.attr({
-      guideId: guideId,
-      guidePath: window.gGuidePath,
-      guide: gGuideMap
-    })
+    appState.guideId = guideId
+    appState.guidePath = window.gGuidePath
+    appState.guide = gGuideMap
   })
 
   // when window.gGuide is saved to the server successfully,
@@ -76,8 +74,8 @@ export default function bindCustomEvents (appState) {
     Object.keys(window.gGuide).forEach((key) => {
       gGuideMapData[key] = window.gGuide[key]
     })
-    const gGuideMap = new CanMap(gGuideMapData)
-    appState.attr('guide', gGuideMap)
+    const gGuideMap = new DefineMap(gGuideMapData)
+    appState.guide = gGuideMap
   })
 
   // TODO: Figure out a better way to do this.
@@ -103,7 +101,7 @@ export default function bindCustomEvents (appState) {
 
   // Updates legacy global window.gGuide with changes to CanJS guide.vars
   var serializedGuideVars = compute(function () {
-    var guideVars = appState.attr('guide.vars')
+    var guideVars = appState.guide && appState.guide.vars
     if (guideVars) {
       return guideVars.serialize()
     }

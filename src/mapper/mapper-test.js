@@ -37,6 +37,27 @@ describe('<mapper-page>', () => {
       assert.equal(step1.displayName, 'STEP 1', 'should set displayName')
     })
 
+    it('pagesAndPopup when Author changes step.number', () => {
+      // change step number prop
+      vm.guide.steps[0].number = '1'
+      vm.guide.steps[1].number = '2'
+      vm.guide.steps[2].number = '3'
+
+      const pagesAndPopups = vm.pagesAndPopups
+
+      const step0 = pagesAndPopups['0']
+      const step1 = pagesAndPopups['1']
+      const step2 = pagesAndPopups['2']
+
+      assert.equal(step0, undefined, 'step0 should be undefined in this case')
+
+      assert.equal(step1.pages.length, 1, 'sorts step0 pages correctly')
+      assert.equal(step1.displayName, 'STEP 1', 'should set displayName')
+
+      assert.equal(step2.pages.length, 2, 'sorts step1 pages correctly')
+      assert.equal(step2.displayName, 'STEP 2', 'should set displayName')
+    })
+
     it('lastCoordinatesByStep', () => {
       const lastCoordinatesByStep = vm.lastCoordinatesByStep
       // popups are always step 0

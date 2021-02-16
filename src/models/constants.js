@@ -2,13 +2,14 @@
 export default {
   devShowTesting: false,
   showXML: 0,
-  uploadURL: '',
-  uploadGuideURL: '',
+  // TODO: can remove when CAJA_WS updated to restful api
+  uploadURL: 'CAJA_WS.php?cmd=uploadfile&gid=',
+  uploadGuideURL: 'CAJA_WS.php?cmd=uploadguide',
   // Spinnner for loading wait
   AJAXLoader: '<span class="loader">&nbsp;</span>',
 
   A2JVersionNum: '7.0', // VersionInfo.verNum
-  A2JVersionDate: '2020-08-31',
+  A2JVersionDate: '2021-02-16',
 
   // CAVersionNum:'5.0.0',
   // CAVersionDate:'2013-04-15',

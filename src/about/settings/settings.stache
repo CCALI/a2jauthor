@@ -1,0 +1,27 @@
+<can-import from="./settings.less" />
+
+<div id="settings-form" title="Settings">
+  <ul id="cajasettings">
+    <h3>General</h3>
+    <p>Color Schemes: <span class="text-muted">A2J 7</span></p>
+    <p>Data Settings:</p>
+    <p>
+      <label>
+        <input
+          type="checkbox"
+          id="setting_warnHotDocsNameLength"
+          checked:bind="gPrefs.warnHotDocsNameLength"> Warn when variable name lengths are too long for HotDocs
+      </label>
+    </p>
+    <hr />
+    <h3>Advanced</h3>
+    <p>
+      <label>
+        <input
+          type="checkbox"
+          id="setting_showJS"
+          checked:bind="gPrefs.showJS"> Show JS
+      </label>
+    </p>
+  </ul>
+</div>

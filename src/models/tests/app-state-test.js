@@ -11,15 +11,15 @@ describe('AppState', function () {
   })
 
   it('showDebugPanel - whether to show variables/trace panel', function () {
-    assert.isFalse(appState.attr('showDebugPanel'), 'default value')
+    assert.isFalse(appState.showDebugPanel, 'default value')
 
-    appState.attr('page', 'interviews')
-    appState.attr('showDebugPanel', true)
-    assert.isFalse(appState.attr('showDebugPanel'),
+    appState.page = 'interviews'
+    appState.showDebugPanel = true
+    assert.isFalse(appState.showDebugPanel,
       'can\'t be true since the panel should only be visible in preview tab')
 
-    appState.attr('page', 'preview')
-    appState.attr('showDebugPanel', true)
-    assert.isTrue(appState.attr('showDebugPanel'), 'should be true ')
+    appState.page = 'preview'
+    appState.showDebugPanel = true
+    assert.isTrue(appState.showDebugPanel, 'should be true ')
   })
 })

@@ -227,7 +227,7 @@ const handleGraphEvents = (graph, vm) => {
 
   graph.on('change:position', function (element, position) {
     const pageName = vm.mapIdToPageName[element.id]
-    const page = vm.guide.attr('pages')[pageName]
+    const page = vm.guide.pages[pageName]
     const gGuidePage = window.gGuide.pages[pageName]
 
     if (!page || !gGuidePage) {

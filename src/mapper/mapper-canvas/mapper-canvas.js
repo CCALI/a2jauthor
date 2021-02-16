@@ -25,7 +25,7 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
   mapperLoadingMessage: { default: 'Building Mapper ... ' },
   numberOfSteps: {
     get () {
-      return this.guide.attr('steps').length
+      return this.guide.steps.length
     }
   },
   scrollToSelectedNode (pageName) {

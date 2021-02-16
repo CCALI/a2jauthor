@@ -1,7 +1,7 @@
 <p class="{{#if(scope/hideGrade(stats.fkGrade))}}hide-section{{/if}}">
     <small class="text-muted {{stats.alertClass}}">
         <span class="{{alertGlyph(stats.alertClass)}}"></span>
-            Word Count: {{stats.wordCount}} | Avg Words/Sentence: {{stats.averageWordsPerSentence}} | Flesch-Kincaid Grade Level: {{stats.fkGrade}}
+            Word Count: {{stats.wordCount}} | Avg Words/Sentence: {{stats.averageWordsPerSentence}} | Flesch-Kincaid Grade Level: {{stats.fkGrade}} | Coleman-Liau Index: {{stats.colemanLiauIndex}}
         <span class="{{alertGlyph(stats.alertClass)}}"></span>
     </small>
 </p>

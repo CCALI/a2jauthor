@@ -1,4 +1,3 @@
-import 'a2jauthor/src/debug-panel/debug-panel-test'
 import 'a2jauthor/src/interviews/interviews-test'
 import 'a2jauthor/src/loading/loading-test'
 import 'a2jauthor/src/about/about-test'

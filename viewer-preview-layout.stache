@@ -1,31 +1,15 @@
-
-<can-import from="a2jauthor/src/debug-menu/"/>
-<can-import from="a2jauthor/src/debug-panel/"/>
-<can-import from="a2jauthor/src/debug-alerts/"/>
 <can-import from="a2jauthor/styles/author/viewer-layout.less"/>
 <can-import from="@caliorg/a2jviewer/src/preview/"/>
 
 {{#if(previewMode)}}
-  {{#if(showDebugPanel)}}
-    <div class="author-debug-panel">
-      <author-debug-panel
-        previewInterview:from="previewInterview"
-        traceMessage:from="traceMessage"
-        previewPageName:from="previewPageName" />
-    </div>
-  {{/if}}
   <div id="viewer-app" class="{{#if(showDebugPanel)}}with-debug-panel{{/if}}">
     <a2j-viewer-preview
       previewInterview:bind="previewInterview"
+      resumeEdit:from="resumeEdit"
       traceMessage:from="traceMessage"
       guidePath:from="guidePath"
       showDebugPanel:from="showDebugPanel"
       previewPageName:from="previewPageName"
       interviewPageName:to="interviewPageName" />
-
-    <author-debug-menu appState:from="."/>
-    {{#if(viewerAlertMessages.length)}}
-      <author-debug-alerts alertMessages:from="viewerAlertMessages"/>
-    {{/if}}
   </div>
 {{/if}}

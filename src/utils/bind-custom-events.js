@@ -1,17 +1,6 @@
 import $ from 'jquery'
 import DefineMap from 'can-define/map/map'
-import _includes from 'lodash/includes'
-import constants from '~/src/models/constants'
 import compute from 'can-compute'
-
-// List of field types that can be filled with the `sample` property.
-const canUseSampleValues = [
-  constants.ftText, constants.ftTextLong,
-  constants.ftTextPick, constants.ftNumber,
-  constants.ftNumberDollar, constants.ftNumberSSN,
-  constants.ftNumberPhone, constants.ftNumberZIP,
-  constants.ftNumberPick, constants.ftDateMDY
-]
 
 // This function sets some event handles for custom events used to communicate
 // the parts of the author app that are outside of the scope of CanJS.
@@ -76,27 +65,6 @@ export default function bindCustomEvents (appState) {
     })
     const gGuideMap = new DefineMap(gGuideMapData)
     appState.guide = gGuideMap
-  })
-
-  // TODO: Figure out a better way to do this.
-  $authorApp.on('author:fill-page-sample', function () {
-    let $fields = $('a2j-fields')
-
-    // do nothing if `a2j-fields` component not in the DOM.
-    if (!$fields.length) return
-
-    let pageFields = $fields[0].viewModel.attr('fields')
-
-    pageFields.forEach(function (field) {
-      let answerVm = field.attr('_answerVm')
-      let fieldType = field.attr('type')
-      let sampleValue = field.attr('sample')
-
-      if (_includes(canUseSampleValues, fieldType)) {
-        field.attr('hasError', false)
-        answerVm.attr('values', sampleValue)
-      }
-    })
   })
 
   // Updates legacy global window.gGuide with changes to CanJS guide.vars

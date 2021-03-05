@@ -26,7 +26,8 @@ import 'can-map-define'
  */
 export const VerticalNavbarVM = CanMap.extend('VerticalNavbarVM', {
   define: {
-    // passed in from app.stache computed in app-state.js
+    // passed in from app.stache
+    previewPageName: {},
     authorVersion: {},
 
     /**
@@ -94,7 +95,24 @@ export const VerticalNavbarVM = CanMap.extend('VerticalNavbarVM', {
    * `appState` (see `author/app.stache`) to handle the navigation between tabs.
    */
   setPage (item) {
+    // handles side effect to clear previewPageName in appState
+    // even if Preview navbar button was already active
+    this.dispatch('setPageFired', [ item.attr('page') ])
+
     this.attr('page', item.attr('page'))
+  },
+
+  connectedCallback () {
+    const previewHandler = (ev, pageName) => {
+      if (pageName === 'preview') {
+        this.attr('previewPageName', '')
+      }
+    }
+    this.listenTo('setPageFired', previewHandler)
+
+    return () => {
+      this.stopListening('setPageFired', previewHandler)
+    }
   }
 })
 

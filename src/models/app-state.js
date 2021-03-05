@@ -48,6 +48,24 @@ const Guide = DefineMap.extend('AppStateGuide', {
  * This is the global application state.
  */
 export default DefineMap.extend('AuthorAppState', {
+  resumeEdit (editThisPageName) {
+    // handle debug-menu editThis(somePageName) call
+    if (editThisPageName) {
+      window.gotoPageEdit(editThisPageName)
+    }
+
+    // return user to the pages tab.
+    this.page = 'pages'
+
+    // re-open Question Design Editor modal when preview launched from it
+    // custom event clears previewPageName when vertical-navbar Preview button clicked
+    const hasActiveQDE = this.previewPageName
+    if (hasActiveQDE) {
+      // gotoPageEdit defined in A2J_Pages.js: 314
+      window.gotoPageEdit(this.previewPageName)
+    }
+  },
+
   /**
   * @property {String} authorVersion
   *

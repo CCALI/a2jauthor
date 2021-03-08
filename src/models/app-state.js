@@ -184,14 +184,11 @@ export default DefineMap.extend('AuthorAppState', {
    * @property {Boolean} showDebugPanel
    *
    * Whether to show the debug panel (variables and trace panels) when
-   * the author is previewing the interview.
+   * the author is previewing the interview. Stored here between previews
    */
   showDebugPanel: {
     default: false,
-    serialize: false,
-    get (val) {
-      return (this.page === 'preview') ? val : false
-    }
+    serialize: false
   },
 
   /**
@@ -345,10 +342,5 @@ export default DefineMap.extend('AuthorAppState', {
         }
       }
     }, 0)
-  },
-
-  toggleDebugPanel () {
-    const val = this.showDebugPanel
-    this.showDebugPanel = !val
   }
 })

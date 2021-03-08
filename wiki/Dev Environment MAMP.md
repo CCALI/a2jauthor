@@ -4,123 +4,61 @@ Written for OSX
 
 ## Prerequsites:
 - wkhtmltopdf used to generate assembled documents, easiest to install using Homebrew: http://brewformulas.org/Wkhtmltopdf
-- node.js version v12.5.0
-- npm 6.9.0
-- MAMP
-    - First kill system apache: `sudo apachectl stop`
-    - Apache port 80
-    - MySQL port 8889
-    - "Document Root" directory pointed at `~/Sites`. You may need to create this directory.
+- (recommend using nvm to install Node/npm: https://jamesauble.medium.com/install-nvm-on-mac-with-brew-adb921fb92cc)
+- node.js version v12.20.1 
+- npm 6.14.19
+- MAMP Settings, under MAMP -> preferences
+    - Ports Tab -> Apache port 80 MySQL port 3306 (Set MAMP ports to default button)
+    - Web Server -> Click 'select' and browse to your username and select `Sites` folder
+    - if the `Sites` folder doesn't exist, create it in Mac Finder or from Mac terminal `mkdir ~/Sites`
 
 ## Getting Started
 
-1. Create a CALI directory: `cd ~/Sites && mkdir CALI && cd CALI`
-2. Create a file `~/Sites/CALI/config.json` with the settings below,
+1. Create an `a2j` directory: `cd ~/Sites && mkdir a2j && cd a2j`
+2. Create a file `~/Sites/a2j/config.json` with the settings below,
     updating the directory paths as needed for your username.
 
     ```
-    {
-        "SERVER_URL": "http://localhost/CALI/app",
-        "GUIDES_DIR": "/Users/mitchel/Sites/CALI/userfiles/",
-        "GUIDES_URL": "/CALI/userfiles/",
-        "SQL_HOST": "localhost",
-        "SQL_USERNAME": "root",
-        "SQL_PASSWD": "root",
-        "SQL_DBNAME": "caja",
-        "SQL_PORT": 3306,
-        "DRUPAL_HOST": "localhost",
-        "DRUPAL_USERNAME": "root",
-        "DRUPAL_PASSWD": "root",
-        "DRUPAL_DBNAME": "D7commons",
-        "DRUPAL_PORT": 3306,
-        "WKHTMLTOPDF_PATH": "/usr/local/bin/wkhtmltopdf",
-        "WKHTMLTOPDF_ZOOM": 1.0,
-        "WKHTMLTOPDF_DPI": 300,
-        "VIEWER_PATH": ""
-    }
+        {
+            "CAJA_WS_URL": "http://localhost/a2j/author/CAJA_WS.php",
+            "GUIDES_DIR": "/Users/your_username/Sites/a2j/userfiles/",
+            "GUIDES_URL": "/a2j/userfiles/",
+            "isProductionServer": false,
+            "LOCAL_USER": 45,
+            "DB_NAME": "caja",
+            "DB_USER": "root",
+            "DB_PASSWORD": "root",
+            "DB_HOST": "localhost",
+            "DB_PORT": 3306,
+            "DRUPAL_ROOT_DIR": "",
+            "WKHTMLTOPDF_PATH": "/usr/local/bin/wkhtmltopdf",
+            "WKHTMLTOPDF_ZOOM": 1.0,
+            "WKHTMLTOPDF_DPI": 300,
+            "VIEWER_PATH": "/Users/your_username/Sites/a2j/viewer"
+        }
     ```
 
-3. Clone the repo to the `app` directory:
-    `cd ~/Sites/CALI && git clone git@github.com:CCALI/CAJA.git app`
-4. Download and install dependencies (2 locations):
-    - `cd ~/Sites/CALI/app && npm install`
-    - `cd ~/Sites/CALI/app/js && npm install`
-5. Seed the database
-    - Start mysql: `/Applications/MAMP/Library/bin/mysql -u root -p`
-    - `Enter password: root`
-    - `mysql> source ~/Sites/CALI/app/wiki/resources/caja_default_2018-10-09.sql`
-    - CTRL-c to exit
+3. Clone the Author repo to the `author` directory:
+    `cd ~/Sites && git clone git@github.com:CCALI/a2jauthor.git author`
+4. Download and install dependencies:
+    - `cd ~/Sites/a2j/author && npm install`
+5. Seed the database, Enter these commands in the Mac terminal (MAMP should be running)
+    - Login to mysql: `/Applications/MAMP/Library/bin/mysql -u root -p`
+    - Enter password: `root`
+    - Import Database `source ~/Sites/a2j/author/wiki/resources/caja_default_2018-10-09.sql`
+    - type `quit` to exit
 6. Seed the guide files:
-    - Unzip `~/Sites/CALI/app/wiki/resources/userfiles.zip`to `~/Sites/CALI/`
-    - Ensure that the guides are available at `~/Sites/CALI/userfiles/dev/guides/`.
-7. Set php config, located at `~/Sites/CALI/app/CONFIG.php` to the following, replacing the username `mitchel` with your own.
+    - Unzip `~/Sites/a2j/author/wiki/resources/userfiles.zip`to `~/Sites/a2j/`
+    - Ensure that the guides are available at `~/Sites/a2j/userfiles/dev/guides/`.
 
-    ```
-    <?php
-        define("SERVER_URL","");
-        define("DRUPAL_ROOT_DIR", "");
-        define("GUIDES_DIR","/Users/mitchel/Sites/CALI/userfiles/");
-        define("GUIDES_URL", "/CALI/userfiles/");
-
-        // db variables
-        define('DB_NAME', "");
-        define('DB_USER', "");
-        define('DB_PASSWORD', '');
-        define('DB_HOST', '');
-
-        define('D7_DB_NAME', "");
-        define('D7_DB_USER', "");
-        define('D7_DB_PASSWORD', '');
-        define('D7_DB_HOST', '');
-
-        $mysqli = new mysqli('localhost','root','root','caja',3306);
-        define('LOCAL_USER', 45);
-
-        $isProductionServer = FALSE; //or FALSE
-    ?>
-    ```
-
-8. Build the app
-    - Wait until both `npm install`'s have finished
-    - `cd ~/Sites/CALI/app`
-    - `npm run build`
-    - `npm run build:server`
-    - `npm run build:client`
-9. Start the servers
+7. Start the servers
     - Ensure MAMP is running both apache and MySQL
-    - `cd ~/Sites/CALI/app && npm run dev`
+    - `cd ~/Sites/a2j/author`
+    - `npm run dev`
 
-You should now be able to access the development app at [http://localhost/CALI/app/js/author](http://localhost/CALI/app/js/author). This will serve pre-dist assets and will reflect client-side changes on reload. There is no database or file connection, and the data is mocked.
+You should now be able to access the development app at [http://localhost/a2j/author/](http://localhost/a2j/author/). This will serve pre-minified assets and will reflect client-side changes on reload.
 
-You should also be able to access the production copy at [http://localhost/CALI/app/js/author/index.production.html](http://localhost/CALI/app/js/author/index.production.html). The Interviews tab will display the guides listed in the database, but access will be limited. That requires a proxy.
-
-## CKEDITOR Path
-CKEditor is a third party plugin used for template creation and editing.  The path is defined in:
-```<webroot>/CALI/app/js/author/index.html``` and ```index.production.html```
-
-and has to be relative to the web root.  With the above folder structure, it should look like this:
-
-```CKEDITOR_BASEPATH = '/CALI/app/js/ckeditor/';```
-
-It needs to be restored to ```CKEDITOR_BASEPATH = '/app/js/ckeditor/';``` before committing and pushing code as it will break the tests on Github/Travis.
-
-## Local Database
-To allow your local database to serve and save guide files, while still refreshing dev changes on reload, edit `configDependencies` in `js/package.json`:
-
-With Fixtures:
-```
-    "configDependencies": [
-        "author/utils/load-fixtures",
-        "author/utils/set-global-for-lodash"
-    ],
-```
-Without Fixtures, local database active:
-```
-    "configDependencies":
-        "author/utils/set-global-for-lodash",
-```
-
-Do not commit this change to the repo.
+You should also be able to access the production copy at [http://localhost/a2j/author/index.production.html](http://localhost/a2j/author/index.production.html). The Interviews tab will display the guides listed in the database.
 
 ## Node Proxy
 
@@ -131,50 +69,13 @@ It is necessary to set up a proxy in apache in order to communicate with the nod
     - Add these lines to the end of the file:
 
         ```
-        # Proxy for CALI
+        # Proxy for a2j
         ProxyPass /api http://localhost:3000/api
         ProxyPassReverse /api http://localhost:3000/api
         ProxyBadHeader Ignore
         ```
 
-2. If you plan to run Author and a Standalone Viewer/DAT instance simultaneously
-then instead of adding the proxy settings to `httpd.conf` above, uncomment the line in `/Applications/MAMP/conf/apache/httpd.conf` that says:
-```
-# Virtual hosts
-Include /Applications/MAMP/conf/apache/extra/httpd-vhosts.conf
-```
-
-and update your `/Applications/MAMP/conf/apache/extra/httpd-vhosts.conf` file to have these virtual host definitions, updating the `DocumentRoot` paths to match your setup. (Below assumes you are starting and running A2J Author Node instance on port 3000 and Viewer/DAT Node instance on port 23000)
-
-```
-# CALI Author
-<VirtualHost *:80>
-    DocumentRoot /Users/mitchel/Sites/CALI
-    ServerName caja.local
-
-    # Proxy for CALI Author
-    ProxyPreserveHost On
-    ProxyPass /api http://localhost:3000/api
-    ProxyPassReverse /api http://localhost:3000/api
-    ProxyBadHeader Ignore
-</VirtualHost>
-
-# Viewer/DAT standalone
-<VirtualHost *:80>
-    DocumentRoot /Users/mitchel/Sites/a2jStandalone
-    ServerName a2jviewer.local
-
-    # Proxy for Viewer/DAT standalone
-    ProxyPreserveHost On
-    ProxyPass /api http://localhost:23000/api
-    ProxyPassReverse /api http://localhost:23000/api
-    ProxyBadHeader Ignore
-</VirtualHost>
-```
-
 3. Restart MAMP
-
-You should now have access to a working production copy of the app at [http://localhost/CALI/app/js/author/index.production.html](http://localhost/CALI/app/js/author/index.production.html). Client-side changes will require running `npm run build:client`. Changes in `~/Sites/CALI/app/src/` will require restarting the node server.
 
 ## Debugging PHP  ----NOTE---- Both Atom and VS Code provide php debug extensions
 `CAJA_WS.php` handles api transactions, user management, and file IO. You'll likely need to debug this file at some point.

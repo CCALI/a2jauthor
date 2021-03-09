@@ -1,7 +1,6 @@
 import $ from 'jquery'
 import CanList from 'can-list'
 import DefineMap from 'can-define/map/map'
-import TraceMessage from 'a2jauthor/src/models/trace-message'
 import GlobalPrefs from 'a2jauthor/src/models/global-preferences'
 import A2JVariable from '@caliorg/a2jdeps/models/a2j-variable'
 import constants from 'a2jauthor/src/models/constants'
@@ -94,16 +93,6 @@ export default DefineMap.extend('AuthorAppState', {
   */
   interviews: {
     serialize: false
-  },
-
-  /**
-  * @property {DefineMap} traceMessage
-  *
-  * trace-message model to manage messages for the debug-panel
-  */
-  traceMessage: {
-    serialize: false,
-    default: () => { return new TraceMessage() }
   },
 
   /**

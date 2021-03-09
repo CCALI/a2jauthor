@@ -7,7 +7,6 @@
       previewInterview:bind="previewInterview"
       showDebugPanel:bind="showDebugPanel"
       resumeEdit:from="resumeEdit"
-      traceMessage:from="traceMessage"
       guidePath:from="guidePath"
       previewPageName:from="previewPageName"
       interviewPageName:to="interviewPageName" />

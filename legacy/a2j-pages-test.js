@@ -8,12 +8,14 @@ import './viewer/A2J_Parser'
 import './A2J_Pages'
 import './A2J_Tabs'
 import 'jquery-ui/ui/widgets/autocomplete'
+import ckeArea from '~/src/utils/ckeditor-area'
 
 import { assert } from 'chai'
 import 'steal-mocha'
 
 describe('legacy/A2J_Pages', function () {
   beforeEach(() => {
+    window.ckeArea = ckeArea
     window.gGuide = new window.TGuide()
     const intro = new window.TPage()
     intro.name = 'intro'
@@ -25,6 +27,7 @@ describe('legacy/A2J_Pages', function () {
   })
 
   afterEach(() => { // cleanup globals
+    window.ckeArea = null
     window.gGuide = null
   })
 

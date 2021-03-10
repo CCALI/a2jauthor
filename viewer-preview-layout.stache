@@ -6,6 +6,7 @@
     <a2j-viewer-preview
       previewInterview:bind="previewInterview"
       showDebugPanel:bind="showDebugPanel"
+      traceMessage:bind="traceMessage"
       resumeEdit:from="resumeEdit"
       guidePath:from="guidePath"
       previewPageName:from="previewPageName"

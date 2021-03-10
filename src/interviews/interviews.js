@@ -7,6 +7,8 @@ import template from './interviews.stache'
 export const InterviewsVM = DefineMap.extend('InterviewsVM', {
   // passed in via author app.stache
   previewInterview: {},
+  // passed up via author app.stache
+  showDebugPanel: {},
 
   loadingMessage: {
     get () {
@@ -72,7 +74,13 @@ export const InterviewsVM = DefineMap.extend('InterviewsVM', {
   },
 
   clearPreviewState () {
-    // fired on inserted event to clear any Author preview answer
+    // fired on inserted event to clear any Author preview answer/authorMessageLog
+    this.showDebugPanel = false
+
+    if (this.traceMessage) {
+      this.traceMessage.newMessageLog()
+    }
+
     if (this.previewInterview) {
       this.previewInterview = undefined
     }

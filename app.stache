@@ -208,7 +208,12 @@
     <div class="tab-panel has-toolbar" id="tabsGuides">
       {{#is (page, "interviews")}}
         <interviews-toolbar interviews:to="interviews"></interviews-toolbar>
-        <interviews-page interviews:from="interviews" previewInterview:bind="previewInterview"></interviews-page>
+        <interviews-page
+          interviews:from="interviews"
+          previewInterview:bind="previewInterview"
+          traceMessage:from="traceMessage"
+          showDebugPanel:to="showDebugPanel">
+        </interviews-page>
       {{/is}}
     </div>
 

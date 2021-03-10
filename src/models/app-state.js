@@ -47,6 +47,11 @@ const Guide = DefineMap.extend('AppStateGuide', {
  * This is the global application state.
  */
 export default DefineMap.extend('AuthorAppState', {
+  // Used to preserve and reset the Viewer Preview messageLog
+  traceMessage: {
+    serialize: false
+  },
+
   resumeEdit (editThisPageName) {
     // handle debug-menu editThis(somePageName) call
     if (editThisPageName) {

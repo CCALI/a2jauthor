@@ -9,7 +9,8 @@
     "build": "grunt build --gruntfile=Gruntfile.js",
     "deploy": "npm i && npm run build && mv index.html index.dev.html && mv index.production.html index.html",
     "build-docs": "grunt documentjs",
-    "serve-docs": "grunt documentjs-lite && http-server docs"
+    "serve-docs": "grunt documentjs-lite && http-server docs",
+    "postinstall": "steal-tools bundle --deps --no-minify"
   },
   "author": {
     "name": "Center for Computer-Assisted Legal Instruction (CALI)",

@@ -10,16 +10,24 @@ describe('AppState', function () {
     appState = new AppState()
   })
 
-  it.skip('showDebugPanel - whether to show variables/trace panel', function () {
-    assert.isFalse(appState.showDebugPanel, 'default value')
-
-    appState.page = 'interviews'
-    appState.showDebugPanel = true
-    assert.isFalse(appState.showDebugPanel,
-      'can\'t be true since the panel should only be visible in preview tab')
-
+  it('resumeEdit()', function () {
+    const oldGotoPageEdit = window.gotoPageEdit
+    let qdeTargetPage = ''
+    window.gotoPageEdit = (targetPageName) => { qdeTargetPage = targetPageName }
     appState.page = 'preview'
-    appState.showDebugPanel = true
-    assert.isTrue(appState.showDebugPanel, 'should be true ')
+
+    appState.resumeEdit()
+    assert.equal(appState.page, 'pages', 'should restore Author to pages tab')
+    assert.equal(qdeTargetPage, '', 'should not open QDE if no appState.previewPageName or passed in targetPageName')
+
+    appState.previewPageName = 'foo'
+    appState.resumeEdit()
+    assert.equal(qdeTargetPage, 'foo', 'should open QDE with the previewPageName set during Preview launch')
+
+    appState.previewPageName = 'foo'
+    appState.resumeEdit('baz')
+    assert.equal(qdeTargetPage, 'baz', 'should open QDE with the targetPageName when passed in via the editThis() button')
+
+    window.gotoPageEdit = oldGotoPageEdit
   })
 })

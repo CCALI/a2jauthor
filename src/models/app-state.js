@@ -5,6 +5,7 @@ import GlobalPrefs from 'a2jauthor/src/models/global-preferences'
 import A2JVariable from '@caliorg/a2jdeps/models/a2j-variable'
 import constants from 'a2jauthor/src/models/constants'
 import _isEmpty from 'lodash/isEmpty'
+import _isFunction from 'lodash/isFunction'
 import { Gender, Hair, Skin } from '@caliorg/a2jdeps/avatar/colors'
 import ckeArea from '~/src/utils/ckeditor-area'
 import route from 'can-route'
@@ -52,21 +53,15 @@ export default DefineMap.extend('AuthorAppState', {
     serialize: false
   },
 
-  resumeEdit (editThisPageName) {
-    // handle debug-menu editThis(somePageName) call
-    if (editThisPageName) {
-      window.gotoPageEdit(editThisPageName)
-    }
-
-    // return user to the pages tab.
+  resumeEdit (targetPageName) {
+    // hide Viewer preview & return user to the Author `pages` tab.
     this.page = 'pages'
 
-    // re-open Question Design Editor modal when preview launched from it
-    // custom event clears previewPageName when vertical-navbar Preview button clicked
-    const hasActiveQDE = this.previewPageName
-    if (hasActiveQDE) {
-      // gotoPageEdit defined in A2J_Pages.js: 314
-      window.gotoPageEdit(this.previewPageName)
+    targetPageName = targetPageName || this.previewPageName
+
+    if (targetPageName) {
+      // opens QDE modal
+      window.gotoPageEdit(targetPageName)
     }
   },
 
@@ -307,7 +302,9 @@ export default DefineMap.extend('AuthorAppState', {
 
     // Add the legalNavStates to the window
     // So we can access this within the CKEditor widget
-    window.legalNavStates = appState.legalNavStates.serialize()
+    window.legalNavStates = _isFunction(appState.legalNavStates.serialize)
+      ? appState.legalNavStates.serialize()
+      : appState.legalNavStates
 
     $(document).ajaxError(function globalAjaxHandler (event, jqxhr) {
       const status = jqxhr.status

@@ -10,7 +10,7 @@ describe('AppState', function () {
     appState = new AppState()
   })
 
-  it('showDebugPanel - whether to show variables/trace panel', function () {
+  it.skip('showDebugPanel - whether to show variables/trace panel', function () {
     assert.isFalse(appState.showDebugPanel, 'default value')
 
     appState.page = 'interviews'

@@ -80,21 +80,35 @@ export default function bindCustomEvents (appState) {
 
   // TODO: Figure out a better way to do this.
   $authorApp.on('author:fill-page-sample', function () {
-    let $fields = $('a2j-fields')
+    // let $fieldsNodesList = $('a2j-fields')
+
+    let $fieldsNodesList = $('a2j-field')
 
     // do nothing if `a2j-fields` component not in the DOM.
-    if (!$fields.length) return
 
-    let pageFields = $fields[0].viewModel.attr('fields')
+    if (!$fieldsNodesList.length) return
 
-    pageFields.forEach(function (field) {
-      let answerVm = field.attr('_answerVm')
-      let fieldType = field.attr('type')
-      let sampleValue = field.attr('sample')
+    let fieldVM
+
+    $fieldsNodesList.each(function (index, fieldEl) {
+      fieldVM = fieldEl.viewModel
+
+      let field = fieldVM.field
+      console.log(field, 'sadml')
+      let answerVm = field._answerVm
+      let fieldType = field.type
+      let sampleValue = field.sample
+
+      // iterate over datepicker elements
+
+      // if (fieldType === 'datemdy') {
+      //   fieldEl.querySelector('input').value = sampleValue
+      //   fieldVM.validateField(null, fieldEl)
+      // }
 
       if (_includes(canUseSampleValues, fieldType)) {
-        field.attr('hasError', false)
-        answerVm.attr('values', sampleValue)
+        field.hasError = false
+        answerVm.values = sampleValue
       }
     })
   })

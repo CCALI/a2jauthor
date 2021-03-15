@@ -6,8 +6,9 @@ import template from './interviews.stache'
 
 export const InterviewsVM = DefineMap.extend('InterviewsVM', {
   // passed in via author app.stache
-  traceMessage: {},
   previewInterview: {},
+  // passed up via author app.stache
+  showDebugPanel: {},
 
   loadingMessage: {
     get () {
@@ -74,6 +75,8 @@ export const InterviewsVM = DefineMap.extend('InterviewsVM', {
 
   clearPreviewState () {
     // fired on inserted event to clear any Author preview answer/authorMessageLog
+    this.showDebugPanel = false
+
     if (this.traceMessage) {
       this.traceMessage.newMessageLog()
     }
@@ -101,8 +104,7 @@ export const InterviewsVM = DefineMap.extend('InterviewsVM', {
   },
 
   connectedCallback () {
-    // clear debug-panel traceMessage.messageLog and preview answers
-    // even if we don't change interviews
+    // clear preview answers even if we don't change interviews
     const vm = this
     vm.clearPreviewState()
 

@@ -38,7 +38,12 @@
 
   <div class="guideio"></div>
   <div class="">
-    <vertical-navbar theme:raw="inverse" page:bind="page" guideId:from="guideId" authorVersion:from="authorVersion"></vertical-navbar>
+    <vertical-navbar
+      theme:raw="inverse"
+      page:bind="page"
+      guideId:from="guideId"
+      authorVersion:from="authorVersion"
+      previewPageName:bind="previewPageName" />
   </div>
 
   <div class="guidepanels ui-widget xui-widget-content">
@@ -203,7 +208,12 @@
     <div class="tab-panel has-toolbar" id="tabsGuides">
       {{#is (page, "interviews")}}
         <interviews-toolbar interviews:to="interviews"></interviews-toolbar>
-        <interviews-page interviews:from="interviews" traceMessage:from="traceMessage" previewInterview:bind="previewInterview"></interviews-page>
+        <interviews-page
+          interviews:from="interviews"
+          previewInterview:bind="previewInterview"
+          traceMessage:from="traceMessage"
+          showDebugPanel:to="showDebugPanel">
+        </interviews-page>
       {{/is}}
     </div>
 

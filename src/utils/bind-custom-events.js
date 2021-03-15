@@ -1,17 +1,6 @@
 import $ from 'jquery'
 import DefineMap from 'can-define/map/map'
-import _includes from 'lodash/includes'
-import constants from '~/src/models/constants'
 import compute from 'can-compute'
-
-// List of field types that can be filled with the `sample` property.
-const canUseSampleValues = [
-  constants.ftText, constants.ftTextLong,
-  constants.ftTextPick, constants.ftNumber,
-  constants.ftNumberDollar, constants.ftNumberSSN,
-  constants.ftNumberPhone, constants.ftNumberZIP,
-  constants.ftNumberPick, constants.ftDateMDY
-]
 
 // This function sets some event handles for custom events used to communicate
 // the parts of the author app that are outside of the scope of CanJS.
@@ -76,41 +65,6 @@ export default function bindCustomEvents (appState) {
     })
     const gGuideMap = new DefineMap(gGuideMapData)
     appState.guide = gGuideMap
-  })
-
-  // TODO: Figure out a better way to do this.
-  $authorApp.on('author:fill-page-sample', function () {
-    // let $fieldsNodesList = $('a2j-fields')
-
-    let $fieldsNodesList = $('a2j-field')
-
-    // do nothing if `a2j-fields` component not in the DOM.
-
-    if (!$fieldsNodesList.length) return
-
-    let fieldVM
-
-    $fieldsNodesList.each(function (index, fieldEl) {
-      fieldVM = fieldEl.viewModel
-
-      let field = fieldVM.field
-      console.log(field, 'sadml')
-      let answerVm = field._answerVm
-      let fieldType = field.type
-      let sampleValue = field.sample
-
-      // iterate over datepicker elements
-
-      // if (fieldType === 'datemdy') {
-      //   fieldEl.querySelector('input').value = sampleValue
-      //   fieldVM.validateField(null, fieldEl)
-      // }
-
-      if (_includes(canUseSampleValues, fieldType)) {
-        field.hasError = false
-        answerVm.values = sampleValue
-      }
-    })
   })
 
   // Updates legacy global window.gGuide with changes to CanJS guide.vars

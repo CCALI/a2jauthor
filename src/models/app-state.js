@@ -1,11 +1,11 @@
 import $ from 'jquery'
 import CanList from 'can-list'
 import DefineMap from 'can-define/map/map'
-import TraceMessage from 'a2jauthor/src/models/trace-message'
 import GlobalPrefs from 'a2jauthor/src/models/global-preferences'
 import A2JVariable from '@caliorg/a2jdeps/models/a2j-variable'
 import constants from 'a2jauthor/src/models/constants'
 import _isEmpty from 'lodash/isEmpty'
+import _isFunction from 'lodash/isFunction'
 import { Gender, Hair, Skin } from '@caliorg/a2jdeps/avatar/colors'
 import ckeArea from '~/src/utils/ckeditor-area'
 import route from 'can-route'
@@ -48,6 +48,23 @@ const Guide = DefineMap.extend('AppStateGuide', {
  * This is the global application state.
  */
 export default DefineMap.extend('AuthorAppState', {
+  // Used to preserve and reset the Viewer Preview messageLog
+  traceMessage: {
+    serialize: false
+  },
+
+  resumeEdit (targetPageName) {
+    // hide Viewer preview & return user to the Author `pages` tab.
+    this.page = 'pages'
+
+    targetPageName = targetPageName || this.previewPageName
+
+    if (targetPageName) {
+      // opens QDE modal
+      window.gotoPageEdit(targetPageName)
+    }
+  },
+
   /**
   * @property {String} authorVersion
   *
@@ -76,16 +93,6 @@ export default DefineMap.extend('AuthorAppState', {
   */
   interviews: {
     serialize: false
-  },
-
-  /**
-  * @property {DefineMap} traceMessage
-  *
-  * trace-message model to manage messages for the debug-panel
-  */
-  traceMessage: {
-    serialize: false,
-    default: () => { return new TraceMessage() }
   },
 
   /**
@@ -166,14 +173,11 @@ export default DefineMap.extend('AuthorAppState', {
    * @property {Boolean} showDebugPanel
    *
    * Whether to show the debug panel (variables and trace panels) when
-   * the author is previewing the interview.
+   * the author is previewing the interview. Stored here between previews
    */
   showDebugPanel: {
     default: false,
-    serialize: false,
-    get (val) {
-      return (this.page === 'preview') ? val : false
-    }
+    serialize: false
   },
 
   /**
@@ -298,7 +302,9 @@ export default DefineMap.extend('AuthorAppState', {
 
     // Add the legalNavStates to the window
     // So we can access this within the CKEditor widget
-    window.legalNavStates = appState.legalNavStates.serialize()
+    window.legalNavStates = _isFunction(appState.legalNavStates.serialize)
+      ? appState.legalNavStates.serialize()
+      : appState.legalNavStates
 
     $(document).ajaxError(function globalAjaxHandler (event, jqxhr) {
       const status = jqxhr.status
@@ -327,10 +333,5 @@ export default DefineMap.extend('AuthorAppState', {
         }
       }
     }, 0)
-  },
-
-  toggleDebugPanel () {
-    const val = this.showDebugPanel
-    this.showDebugPanel = !val
   }
 })

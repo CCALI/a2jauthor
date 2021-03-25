@@ -399,6 +399,7 @@ switch ($command){
 		// Create new entry in guide table.
 		$sql="insert into guides (title,editoruid) values ('".$mysqli->real_escape_string($title)."', ".$userid.")";
 		// If this fails on blank interview, likely `archive` Field in guides db needs to be ticked to allow default value of null
+		// Also make sure `archive` Field in guides db is set to 0 for default value
 		if ($res=$mysqli->query($sql)) {
 			// Save as content to new folder owned by editor
 			$newgid=$mysqli->insert_id;

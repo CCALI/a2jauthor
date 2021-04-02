@@ -76,11 +76,11 @@ CKEDITOR.dialog.add('guid', function(editor) {
   function setTopics (topics) {
     // Remove existing topics
     clearTopic()
-    // Set default
-    addTopic('Please select')
+    // // Set default
+    addTopic(['Please select'])
 
     topics.forEach(topic => {
-      addTopic(topic.name)
+      addTopic(topic['topic-name'], topic['topic-id'])
     })
   }
 
@@ -104,7 +104,7 @@ CKEDITOR.dialog.add('guid', function(editor) {
     window.$.ajax({
       type: 'GET',
       dataType: 'json',
-      url: `/api/topics-resources/topics?state=${state}`
+      url: `https://legalnav.org/wp-json/wp/v2/topics/${state}`
     })
     .then((result) => {
       // Add the topics to the topicSelect
@@ -152,15 +152,15 @@ CKEDITOR.dialog.add('guid', function(editor) {
         width: '100%',
         style: 'width:100%',
         label: 'Select topic:',
-        items: [['Please select']],
+        items: [['Please select', 'Please select']],
         'default': 'Please select',
         onChange: function() {
-          const topicName = this.getValue()
-          // Load the resources for this chosen state and topicName
+          const topicId = this.getValue()
+          // Load the resources for this chosen state and topicId
           window.$.ajax({
             type: 'GET',
             dataType: 'json',
-            url: `/api/topics-resources/resources?state=${selectedState}&topicName=${topicName}`
+            url: `https://legalnav.org/wp-json/wp/v2/state-topic-resources/${selectedState}/${topicId}`
           })
           .then((result) => {
             // Add results to the html

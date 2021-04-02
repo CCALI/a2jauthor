@@ -284,7 +284,7 @@ export default DefineMap.extend('AuthorAppState', {
   legalNavStates: {
     serialize: false,
     default () {
-      return [['AK'], ['HI']]
+      return [['alaska'], ['hawaii']]
     }
   },
 

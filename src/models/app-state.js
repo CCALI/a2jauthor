@@ -275,21 +275,9 @@ export default DefineMap.extend('AuthorAppState', {
     }
   },
 
-  /**
-   * @property {DefineList} legalNavStates
-   *
-   * The list of available states for within the legalNav guid
-   * CKEditor widget
-   */
-  legalNavStates: {
-    serialize: false,
-    default () {
-      return [['alaska'], ['hawaii']]
-    }
-  },
-
   init () {
     const appState = this
+    console.log(this)
     // TODO: this global can be removed when legacy code refactored out
     // used in window.form.htmlarea defined in A2J_Tabs.js & used in A2J_Pages.js
     window.ckeArea = ckeArea
@@ -298,7 +286,7 @@ export default DefineMap.extend('AuthorAppState', {
 
     // Add the legalNavStates to the window
     // So we can access this within the CKEditor widget
-    window.legalNavStates = appState.legalNavStates.serialize()
+    this.setLegalNavStates()
 
     $(document).ajaxError(function globalAjaxHandler (event, jqxhr) {
       const status = jqxhr.status
@@ -327,6 +315,22 @@ export default DefineMap.extend('AuthorAppState', {
         }
       }
     }, 0)
+  },
+
+  // Fetch the list of available states for within the legalNav guid
+  // Used in the CKEditor widget
+  setLegalNavStates () {
+    let states = []
+    window.$.ajax({
+      type: 'GET',
+      dataType: 'json',
+      url: `https://legalnav.org/wp-json/wp/v2/states`
+    })
+      .then((result) => {
+        result.map((stateInfo) => states.push([stateInfo.name, stateInfo.slug]))
+        window.legalNavStates = states
+      })
+      .catch((err) => console.error(err.responseJSON.message))
   },
 
   toggleDebugPanel () {

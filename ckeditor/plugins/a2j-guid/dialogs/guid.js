@@ -117,7 +117,7 @@ CKEDITOR.dialog.add('guid', function(editor) {
   return {
     minWidth: 400,
     minHeight: 300,
-    title: 'Select a guid',
+    title: 'Select a Resource',
 
     contents: [{
       id: 'search',
@@ -127,7 +127,8 @@ CKEDITOR.dialog.add('guid', function(editor) {
         width: '100%',
         style: 'width:100%',
         label: 'Select state:',
-        // Each item needs to be an array //-> [['Hawaii'], ['Alaska']]
+        // Each item needs to be an array //-> [['Hawaii', 'hawaii'], ['Alaska', 'alaska']]
+        // it produces <option value=“alaska”>Alaska</option>
         items: [['Please select']].concat(window.legalNavStates),
         'default': 'Please select',
         onChange: function() {
@@ -181,7 +182,7 @@ CKEDITOR.dialog.add('guid', function(editor) {
         id: 'width',
         type: 'text',
         width: '100%',
-        label: 'Search for a guid:',
+        label: 'Search for a resource:',
         onKeyup: function() {
           // poor's man throtle
           var _this = this

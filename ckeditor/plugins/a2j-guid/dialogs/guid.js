@@ -55,7 +55,7 @@ CKEDITOR.dialog.add('guid', function(editor) {
     variables.forEach(function(variable) {
       var item = CKEDITOR.dom.element.createFromHtml('<li class="list-group-item"></li>')
       item.setHtml(variable.name)
-      item.setAttribute('guid', variable.id)
+      item.setAttribute('guid', variable.url)
 
       item.on('click', function() {
         setActiveItem(item)
@@ -201,8 +201,9 @@ CKEDITOR.dialog.add('guid', function(editor) {
           html: '<ul class="list-group"></ul>',
 
           commit: function (widget) {
+            let url = selectedVariable.getAttribute('guid')
             if (selectedVariable) {
-              widget.setData('guid', selectedVariable.getAttribute('guid'))
+              widget.setData('guid', url)
               widget.setData('name', selectedVariable.getHtml())
             }
           }

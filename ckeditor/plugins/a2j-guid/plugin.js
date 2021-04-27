@@ -13,7 +13,6 @@
           'overflow: hidden;' +
           'text-overflow: ellipsis;' +
           'white-space: nowrap;' +
-          'background-color: #FFB6C1;' +
           'border-radius: 6px;' +
           'padding: 3px 10px;' +
           'display: inline-block;' +
@@ -56,7 +55,6 @@
           // If we have an init value then use this for the
           this.element.setAttribute('guid', this.data.guid)
           this.element.setAttribute('name', this.data.name)
-          this.element.setText(this.data.name)
         }
       })
     }

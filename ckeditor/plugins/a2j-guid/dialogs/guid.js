@@ -3,7 +3,7 @@
 
 CKEDITOR.dialog.add('guid', function(editor) {
   var listItems
-  var selectedVariable
+  var selectedResource
   var contentElement
   var selectedState
   var addTopic
@@ -16,7 +16,7 @@ CKEDITOR.dialog.add('guid', function(editor) {
   function setActiveItem(item) {
     if (!listItems) return
 
-    // enable ok button on variable selection.
+    // enable ok button on resource selection.
     var dialog = CKEDITOR.dialog.getCurrent()
     dialog.enableButton('ok')
 
@@ -24,7 +24,7 @@ CKEDITOR.dialog.add('guid', function(editor) {
       listItem.removeClass('active')
     })
 
-    selectedVariable = item
+    selectedResource = item
     item.addClass('active')
   }
 
@@ -38,9 +38,9 @@ CKEDITOR.dialog.add('guid', function(editor) {
       })
     } else {
       listItems.forEach(function(item) {
-        var varName = item.getHtml().toLowerCase()
+        var resourceName = item.getHtml().toLowerCase()
 
-        if (varName.indexOf(text) !== -1) {
+        if (resourceName.indexOf(text) !== -1) {
           item.removeClass('hidden')
         } else {
           item.addClass('hidden')
@@ -49,13 +49,13 @@ CKEDITOR.dialog.add('guid', function(editor) {
     }
   }
 
-  function renderListItems(container, variables) {
+  function renderListItems(container, resources) {
     listItems = []
 
-    variables.forEach(function(variable) {
+    resources.forEach(function(resource) {
       var item = CKEDITOR.dom.element.createFromHtml('<li class="list-group-item"></li>')
-      item.setHtml(variable.name)
-      item.setAttribute('guid', variable.url)
+      item.setHtml(resource.name)
+      item.setAttribute('guid', resource.url)
 
       item.on('click', function() {
         setActiveItem(item)
@@ -201,8 +201,11 @@ CKEDITOR.dialog.add('guid', function(editor) {
           html: '<ul class="list-group"></ul>',
 
           commit: function (widget) {
-            let url = selectedVariable.getAttribute('guid')
-            if (selectedVariable) {
+            var dialog = CKEDITOR.dialog.getCurrent()
+            var url = selectedResource.getAttribute('guid')
+            var name = selectedResource.getHtml()
+
+            if (selectedResource) {
               widget.setData('guid', url)
               widget.setData('name', selectedVariable.getHtml())
             }
@@ -215,7 +218,7 @@ CKEDITOR.dialog.add('guid', function(editor) {
       var dialog = CKEDITOR.dialog.getCurrent()
       contentElement = this.getContentElement('search', 'guidList').getElement()
 
-      // disable ok button to avoid insertion of empty variables.
+      // disable ok button to avoid insertion of empty resources.
       dialog.disableButton('ok')
 
       // Clear the html when the state changes

@@ -37,7 +37,7 @@
 
         downcast: function(element) {
           // Downcast set the html to be the name of the resource
-          element.setHtml(this.data.guid)
+          element.setHtml(this.data.name)
         },
 
         init: function() {

@@ -202,12 +202,19 @@ CKEDITOR.dialog.add('guid', function(editor) {
 
           commit: function (widget) {
             var dialog = CKEDITOR.dialog.getCurrent()
+            var selectedElement = dialog.getSelectedElement()
             var url = selectedResource.getAttribute('guid')
             var name = selectedResource.getHtml()
 
             if (selectedResource) {
               widget.setData('guid', url)
-              widget.setData('name', selectedVariable.getHtml())
+              widget.setData('name', name)
+              // update the original source element's html on commit
+              if (selectedElement) {
+                // child 0 is the legal-nav-resource custom element
+                var sourceElement = selectedElement.getChild(0)
+                sourceElement.setHtml(name)
+              }
             }
           }
         }]

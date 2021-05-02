@@ -277,7 +277,6 @@ export default DefineMap.extend('AuthorAppState', {
 
   init () {
     const appState = this
-    console.log(this)
     // TODO: this global can be removed when legacy code refactored out
     // used in window.form.htmlarea defined in A2J_Tabs.js & used in A2J_Pages.js
     window.ckeArea = ckeArea

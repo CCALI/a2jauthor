@@ -13,7 +13,6 @@
           'overflow: hidden;' +
           'text-overflow: ellipsis;' +
           'white-space: nowrap;' +
-          'background-color: #FFB6C1;' +
           'border-radius: 6px;' +
           'padding: 3px 10px;' +
           'display: inline-block;' +
@@ -37,14 +36,14 @@
         },
 
         downcast: function(element) {
-          // Downcast set the html to be the guid
-          element.setHtml(this.data.guid)
+          // Downcast set the html to be the name of the resource
+          element.setHtml(this.data.name)
         },
 
         init: function() {
           // Set the name of the tag as the content on init
-          const id = this.element.getHtml()
-          const name = this.element.getAttribute('name')
+          const id = this.element.getAttribute('guid') || ''
+          const name = this.element.getAttribute('name') || ''
           // Set the attributes and the text for the widget within
           // the editor
           this.setData('guid', id)
@@ -56,7 +55,6 @@
           // If we have an init value then use this for the
           this.element.setAttribute('guid', this.data.guid)
           this.element.setAttribute('name', this.data.name)
-          this.element.setText(this.data.name)
         }
       })
     }

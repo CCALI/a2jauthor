@@ -77,7 +77,7 @@ CKEDITOR.dialog.add('guid', function(editor) {
   function setTopics (topics) {
     // Remove existing topics
     clearTopic()
-    // // Set default
+    // Set default
     addTopic(['Please select'])
 
     topics.forEach(topic => {

@@ -56,6 +56,7 @@ CKEDITOR.dialog.add('guid', function(editor) {
       var item = CKEDITOR.dom.element.createFromHtml('<li class="list-group-item"></li>')
       item.setHtml(resource.name)
       item.setAttribute('guid', resource.url)
+      item.setAttribute('name', resource.name)
 
       item.on('click', function() {
         setActiveItem(item)
@@ -204,7 +205,7 @@ CKEDITOR.dialog.add('guid', function(editor) {
             var dialog = CKEDITOR.dialog.getCurrent()
             var selectedElement = dialog.getSelectedElement()
             var url = selectedResource.getAttribute('guid')
-            var name = selectedResource.getHtml()
+            var name = selectedResource.getAttribute('name')
 
             if (selectedResource) {
               widget.setData('guid', url)
@@ -213,6 +214,7 @@ CKEDITOR.dialog.add('guid', function(editor) {
               if (selectedElement) {
                 // child 0 is the legal-nav-resource custom element
                 var sourceElement = selectedElement.getChild(0)
+                // sets the display in HTML
                 sourceElement.setHtml(name)
               }
             }

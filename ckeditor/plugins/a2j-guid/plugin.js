@@ -42,8 +42,8 @@
 
         init: function() {
           // Set the name of the tag as the content on init
-          const id = this.element.getHtml()
-          const name = this.element.getAttribute('name')
+          const id = this.element.getAttribute('guid') || ''
+          const name = this.element.getAttribute('name') || ''
           // Set the attributes and the text for the widget within
           // the editor
           this.setData('guid', id)

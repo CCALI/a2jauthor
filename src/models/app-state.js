@@ -5,7 +5,6 @@ import GlobalPrefs from 'a2jauthor/src/models/global-preferences'
 import A2JVariable from '@caliorg/a2jdeps/models/a2j-variable'
 import constants from 'a2jauthor/src/models/constants'
 import _isEmpty from 'lodash/isEmpty'
-import _isFunction from 'lodash/isFunction'
 import { Gender, Hair, Skin } from '@caliorg/a2jdeps/avatar/colors'
 import ckeArea from '~/src/utils/ckeditor-area'
 import route from 'can-route'
@@ -173,7 +172,7 @@ export default DefineMap.extend('AuthorAppState', {
    * @property {Boolean} showDebugPanel
    *
    * Whether to show the debug panel (variables and trace panels) when
-   * the author is previewing the interview. Stored here between previews
+   * the author is previewing the interview.
    */
   showDebugPanel: {
     default: false,
@@ -279,19 +278,6 @@ export default DefineMap.extend('AuthorAppState', {
     }
   },
 
-  /**
-   * @property {DefineList} legalNavStates
-   *
-   * The list of available states for within the legalNav guid
-   * CKEditor widget
-   */
-  legalNavStates: {
-    serialize: false,
-    default () {
-      return [['AK'], ['HI']]
-    }
-  },
-
   init () {
     const appState = this
     // TODO: this global can be removed when legacy code refactored out
@@ -302,9 +288,7 @@ export default DefineMap.extend('AuthorAppState', {
 
     // Add the legalNavStates to the window
     // So we can access this within the CKEditor widget
-    window.legalNavStates = _isFunction(appState.legalNavStates.serialize)
-      ? appState.legalNavStates.serialize()
-      : appState.legalNavStates
+    this.setLegalNavStates()
 
     $(document).ajaxError(function globalAjaxHandler (event, jqxhr) {
       const status = jqxhr.status
@@ -333,5 +317,26 @@ export default DefineMap.extend('AuthorAppState', {
         }
       }
     }, 0)
+  },
+
+  // Fetch the list of available states for within the legalNav guid
+  // Used in the CKEditor widget
+  setLegalNavStates () {
+    let states = []
+    window.$.ajax({
+      type: 'GET',
+      dataType: 'json',
+      url: `https://legalnav.org/wp-json/wp/v2/states`
+    })
+      .then((result) => {
+        result.map((stateInfo) => states.push([stateInfo.name, stateInfo.slug]))
+        window.legalNavStates = states
+      })
+      .catch((err) => console.error(err.responseJSON.message))
+  },
+
+  toggleDebugPanel () {
+    const val = this.showDebugPanel
+    this.showDebugPanel = !val
   }
 })

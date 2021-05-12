@@ -57,8 +57,9 @@ CKEDITOR.dialog.add('variables', function(editor) {
 
   function renderListItems(container, variables) {
     listItems = [];
+    const sortedVariables = variables.sort((a, b) => a.localeCompare(b))
 
-    variables.forEach(function(variable) {
+    sortedVariables.forEach(function(variable) {
       var item = CKEDITOR.dom.element.createFromHtml('<li class="list-group-item"></li>');
       item.setHtml(variable);
 

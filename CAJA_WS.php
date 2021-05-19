@@ -68,7 +68,7 @@ if ($isProductionServer) {
 	drupal_bootstrap(DRUPAL_BOOTSTRAP_SESSION);
 
 	$userid = intval($user->uid);
-	$user_email = intval($user->email);
+	$user_email = $user->email;
 	$canAuthor = in_array('a2j author', array_values($user->roles));
 } else {
 	// Running locally, just use demo or devuser (26 ,45 for a2jauthor.org).

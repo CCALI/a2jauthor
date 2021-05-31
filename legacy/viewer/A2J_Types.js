@@ -38,6 +38,7 @@ var CONST = {
   vnInterviewID: 'A2J Interview ID',
   vnStepPrefix: 'A2J Step ', // Step sign replacements (A2J Step 0 through MAXSTEPS )
   vnVersion: 'A2J Version',
+  vnResumePage: 'A2J Resume Page',
 
   // Page Types
   ptPopup: 'Popup',

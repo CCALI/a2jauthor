@@ -135,6 +135,7 @@ TGuide.prototype.HotDocsAnswerSetVariable = function (variable) {
 // Create the A2J internal answer set variables.
 TGuide.prototype.varCreateInternals = function () {
   this.varCreateOverride(CONST.vnVersion, CONST.vtText, false, 'A2J Author Version')
+  this.varCreateOverride(CONST.vnResumePage, CONST.vtText, false, 'A2J Resume Page')
   this.varCreateOverride(CONST.vnInterviewID, CONST.vtText, false, 'Guide ID')
   this.varCreateOverride(CONST.vnBookmark, CONST.vtText, false, 'Current Page')
   this.varCreateOverride(CONST.vnHistory, CONST.vtText, false, 'Progress History List (XML)')

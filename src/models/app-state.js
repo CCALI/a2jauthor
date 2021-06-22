@@ -170,14 +170,19 @@ export default DefineMap.extend('AuthorAppState', {
   },
 
   /**
-   * @property {Boolean} showDebugPanel
+   * @property {Boolean} showSlideoutContent
    *
    * Whether to show the debug panel (variables and trace panels) when
    * the author is previewing the interview. Stored here between previews
    */
-  showDebugPanel: {
-    default: false,
-    serialize: false
+  slideoutContent: {
+    serialize: false,
+    default: 'debug'
+  },
+
+  showSlideoutContent: {
+    serialize: false,
+    default: false
   },
 
   /**

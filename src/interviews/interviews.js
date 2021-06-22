@@ -8,7 +8,8 @@ export const InterviewsVM = DefineMap.extend('InterviewsVM', {
   // passed in via author app.stache
   previewInterview: {},
   // passed up via author app.stache
-  showDebugPanel: {},
+  slideoutContent: {},
+  showSlideoutContent: {},
 
   loadingMessage: {
     get () {
@@ -75,7 +76,8 @@ export const InterviewsVM = DefineMap.extend('InterviewsVM', {
 
   clearPreviewState () {
     // fired on inserted event to clear any Author preview answer/authorMessageLog
-    this.showDebugPanel = false
+    this.slideoutContent = 'debug'
+    this.showSlideoutContent = false
 
     if (this.traceMessage) {
       this.traceMessage.newMessageLog()

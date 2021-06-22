@@ -212,7 +212,8 @@
           interviews:from="interviews"
           previewInterview:bind="previewInterview"
           traceMessage:from="traceMessage"
-          showDebugPanel:to="showDebugPanel">
+          showSlideoutContent:to="showSlideoutContent"
+          slideoutContent:to="slideoutContent">
         </interviews-page>
       {{/is}}
     </div>

@@ -2,10 +2,11 @@
 <can-import from="@caliorg/a2jviewer/src/preview/"/>
 
 {{#if(previewMode)}}
-  <div id="viewer-app" class="{{#if(showDebugPanel)}}with-debug-panel{{/if}}">
+  <div id="viewer-app" class="{{#if(showSlideoutContent)}}with-debug-panel{{/if}}">
     <a2j-viewer-preview
       previewInterview:bind="previewInterview"
-      showDebugPanel:bind="showDebugPanel"
+      showSlideoutContent:bind="showSlideoutContent"
+      slideoutContent:bind="slideoutContent"
       traceMessage:bind="traceMessage"
       resumeEdit:from="resumeEdit"
       guidePath:from="guidePath"

@@ -444,33 +444,6 @@ function scrollToElt (container, scrollTo) {	// Scroll container so that element
   })
 }
 
-function downloadTextFile (fileTextContent, filename) {
-  var safeFilename = safeWindowsFilename(filename)
-  // 05/08/2014 Download generic text file directly from client to desktop.
-  // Create an anchor, set its url to the data, use type application/octet-stream to force download rather than view in browser.
-  if (window.navigator.msSaveBlob) {
-    var blob = new Blob([fileTextContent], {type: 'application/octet-stream'})
-    navigator.msSaveBlob(blob, safeFilename)
-  } else {
-    var a = window.document.createElement('a')
-    a.href = window.URL.createObjectURL(new Blob([fileTextContent], {type: 'application/octet-stream'}))
-    a.download = safeFilename
-    // Append anchor to body.
-    document.body.appendChild(a)
-    a.click()
-    // Remove anchor from body
-    document.body.removeChild(a)
-  }
-}
-
-function safeWindowsFilename (filename) {
-  if (typeof filename === 'string') {
-    // forward slashes become hypens for dates
-    // all others removed
-    return filename.replace(/[<>:"\\|?*]+/g, '').replace('/', '-')
-  }
-}
-
 function traceTag (cname, chtml) {	// cname is tag name, chtml is htmlized value
   if (cname === 'val') {
     if (chtml === '' || chtml === null) {

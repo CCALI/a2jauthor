@@ -198,7 +198,7 @@
     }
   },
   "dependencies": {
-    "@caliorg/a2jdeps": "^7.0.20",
+    "@caliorg/a2jdeps": "^7.0.21",
     "@caliorg/a2jviewer": "^7.1.1",
     "bit-tabs": "^2.0.0",
     "blueimp-file-upload": "^9.10.1",

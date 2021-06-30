@@ -38,6 +38,7 @@ function parseXML_CA_to_CAJA (BOOK) {	// Parse CALI Author into CAJA
   guide.notes =			cr2P(br2cr(makestr(BOOK.find('INFO > NOTES').xml())))
   console.log('caja_parser')
   guide.sendfeedback =	true
+  guide.forceMobileViewer =	false
   guide.emailContact =	makestr(BOOK.find('EMAILCONTACT').text())
   guide.subjectarea =	BOOK.find('INFO > SUBJECTAREA').xml()
   guide.title =			BOOK.find('TITLE').text()

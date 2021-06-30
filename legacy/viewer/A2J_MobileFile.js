@@ -80,6 +80,7 @@ function page2JSON_Mobile (page) {	// 12/22/2014 Convert native TPage into Mobil
 function guide2JSON_Mobile (guide) {	// 12/22/2014 Convert internal Guide structure into Mobile JSON format.
   // Drop internatl references and cyclic pointers.
   var newGuide = {}
+  console.log('guide2JSON_Mobile', guide.forceMobileViewer)
 
   newGuide.authorId = guide.authorId
   newGuide.tool = guide.tool
@@ -99,6 +100,7 @@ function guide2JSON_Mobile (guide) {	// 12/22/2014 Convert internal Guide struct
   newGuide.modifydate = guide.modifydate
   newGuide.notes = guide.notes
   newGuide.sendfeedback = guide.sendfeedback
+  newGuide.forceMobileViewer = guide.forceMobileViewer
   newGuide.subjectarea = guide.subjectarea
   newGuide.title = guide.title
   newGuide.version = guide.version

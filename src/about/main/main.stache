@@ -2,6 +2,7 @@
 <can-import from='@caliorg/a2jdeps/skin-picker/' />
 <can-import from='a2jauthor/src/about/main/main.less' />
 <can-import from='@caliorg/a2jdeps/avatar/' />
+<can-import from ="can-stache-converters" />
 
 <div class='row'>
   <div class='col-xs-10'>
@@ -31,6 +32,12 @@
         placeholder='My awesome province'
         value:bind='guide.jurisdiction'
       />
+    </div>
+
+    <div class='form-group'>
+      <label>
+        <input type="checkbox" checked:bind="guide.forceMobileViewer" > Force Mobile View (Simple Mobile View with no Avatars)
+      </label>
     </div>
 
     <div class="row">

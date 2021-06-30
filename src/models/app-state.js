@@ -38,6 +38,15 @@ const Guide = DefineMap.extend('AppStateGuide', {
   avatarHairColor: {
     type: Hair,
     default: Hair.defaultValue
+  },
+
+  forceMobileViewer: {
+    type: 'boolean',
+    default: false,
+    set (forceMobileViewer) {
+      console.log('forceMobileViewer', forceMobileViewer)
+      return forceMobileViewer
+    }
   }
 })
 

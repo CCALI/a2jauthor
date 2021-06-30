@@ -24,6 +24,7 @@ export const AboutVM = DefineMap.extend('AboutVM', {
         'jurisdiction',
         'credits',
         'language',
+        'forceMobileViewer',
         'logoImage', // layout
         'endImage',
         'sendfeedback', // feedback

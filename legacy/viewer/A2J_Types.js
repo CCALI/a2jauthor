@@ -354,6 +354,7 @@ function TGuide () {	// This is the Guide representing a CALI lesson Book or an 
   this.modifydate = ''			// Original CA - last date of editing of the lesson
   this.notes = ''					// Origin Both - author revision notes or CBK history
   this.sendfeedback = false	// Origin A2J - if true we show email link
+  this.forceMobileViewer = false	// Origin A2J - if true we only render mobile viewer, no avatars
   this.emailContact = ''		// Origin A2J - if defined, this sends feedback
   this.subjectarea = ''			// Original CA - CA places every lesson into a single main category like Torts.
   this.title = ''					// Origin Both - author title - in CA it's visible at top of page, not seen in A2J by user

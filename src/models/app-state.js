@@ -42,11 +42,7 @@ const Guide = DefineMap.extend('AppStateGuide', {
 
   forceMobileViewer: {
     type: 'boolean',
-    default: false,
-    set (forceMobileViewer) {
-      console.log('forceMobileViewer', forceMobileViewer)
-      return forceMobileViewer
-    }
+    default: false
   }
 })
 

@@ -19,6 +19,11 @@ export default function tabsRouting (appState) {
       appState.action = undefined
     }
 
+    // TODO: remove this side effect when All Files refactored to CanJS
+    if (newPage === 'files' && window.gGuide) {
+      window.updateAttachmentFiles()
+    }
+
     let item = navbarItems.filter(item => item.page === newPage).shift()
     if (item && item.ref) {
       window.gotoTabOrPage(item.ref)

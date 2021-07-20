@@ -3,7 +3,7 @@
 
 CKEDITOR.dialog.add('guid', function(editor) {
   var listItems
-  var selectedVariable
+  var selectedResource
   var contentElement
   var selectedState
   var addTopic
@@ -16,7 +16,7 @@ CKEDITOR.dialog.add('guid', function(editor) {
   function setActiveItem(item) {
     if (!listItems) return
 
-    // enable ok button on variable selection.
+    // enable ok button on resource selection.
     var dialog = CKEDITOR.dialog.getCurrent()
     dialog.enableButton('ok')
 
@@ -24,7 +24,7 @@ CKEDITOR.dialog.add('guid', function(editor) {
       listItem.removeClass('active')
     })
 
-    selectedVariable = item
+    selectedResource = item
     item.addClass('active')
   }
 
@@ -38,9 +38,9 @@ CKEDITOR.dialog.add('guid', function(editor) {
       })
     } else {
       listItems.forEach(function(item) {
-        var varName = item.getHtml().toLowerCase()
+        var resourceName = item.getHtml().toLowerCase()
 
-        if (varName.indexOf(text) !== -1) {
+        if (resourceName.indexOf(text) !== -1) {
           item.removeClass('hidden')
         } else {
           item.addClass('hidden')
@@ -49,13 +49,14 @@ CKEDITOR.dialog.add('guid', function(editor) {
     }
   }
 
-  function renderListItems(container, variables) {
+  function renderListItems(container, resources) {
     listItems = []
 
-    variables.forEach(function(variable) {
+    resources.forEach(function(resource) {
       var item = CKEDITOR.dom.element.createFromHtml('<li class="list-group-item"></li>')
-      item.setHtml(variable.name)
-      item.setAttribute('guid', variable.id)
+      item.setHtml(resource.name)
+      item.setAttribute('guid', resource.url)
+      item.setAttribute('name', resource.name)
 
       item.on('click', function() {
         setActiveItem(item)
@@ -77,10 +78,10 @@ CKEDITOR.dialog.add('guid', function(editor) {
     // Remove existing topics
     clearTopic()
     // Set default
-    addTopic('Please select')
+    addTopic(['Please select'])
 
     topics.forEach(topic => {
-      addTopic(topic.name)
+      addTopic(topic['topic-name'], topic['topic-id'])
     })
   }
 
@@ -104,7 +105,7 @@ CKEDITOR.dialog.add('guid', function(editor) {
     window.$.ajax({
       type: 'GET',
       dataType: 'json',
-      url: `/api/topics-resources/topics?state=${state}`
+      url: `https://legalnav.org/wp-json/wp/v2/topics/${state}`
     })
     .then((result) => {
       // Add the topics to the topicSelect
@@ -117,7 +118,7 @@ CKEDITOR.dialog.add('guid', function(editor) {
   return {
     minWidth: 400,
     minHeight: 300,
-    title: 'Select a guid',
+    title: 'Select a Resource',
 
     contents: [{
       id: 'search',
@@ -127,7 +128,8 @@ CKEDITOR.dialog.add('guid', function(editor) {
         width: '100%',
         style: 'width:100%',
         label: 'Select state:',
-        // Each item needs to be an array //-> [['Hawaii'], ['Alaska']]
+        // Each item needs to be an array //-> [['Hawaii', 'hawaii'], ['Alaska', 'alaska']]
+        // it produces <option value=“alaska”>Alaska</option>
         items: [['Please select']].concat(window.legalNavStates),
         'default': 'Please select',
         onChange: function() {
@@ -152,15 +154,15 @@ CKEDITOR.dialog.add('guid', function(editor) {
         width: '100%',
         style: 'width:100%',
         label: 'Select topic:',
-        items: [['Please select']],
+        items: [['Please select', 'Please select']],
         'default': 'Please select',
         onChange: function() {
-          const topicName = this.getValue()
-          // Load the resources for this chosen state and topicName
+          const topicId = this.getValue()
+          // Load the resources for this chosen state and topicId
           window.$.ajax({
             type: 'GET',
             dataType: 'json',
-            url: `/api/topics-resources/resources?state=${selectedState}&topicName=${topicName}`
+            url: `https://legalnav.org/wp-json/wp/v2/state-topic-resources/${selectedState}/${topicId}`
           })
           .then((result) => {
             // Add results to the html
@@ -181,7 +183,7 @@ CKEDITOR.dialog.add('guid', function(editor) {
         id: 'width',
         type: 'text',
         width: '100%',
-        label: 'Search for a guid:',
+        label: 'Search for a resource:',
         onKeyup: function() {
           // poor's man throtle
           var _this = this
@@ -200,9 +202,21 @@ CKEDITOR.dialog.add('guid', function(editor) {
           html: '<ul class="list-group"></ul>',
 
           commit: function (widget) {
-            if (selectedVariable) {
-              widget.setData('guid', selectedVariable.getAttribute('guid'))
-              widget.setData('name', selectedVariable.getHtml())
+            var dialog = CKEDITOR.dialog.getCurrent()
+            var selectedElement = dialog.getSelectedElement()
+            var url = selectedResource.getAttribute('guid')
+            var name = selectedResource.getAttribute('name')
+
+            if (selectedResource) {
+              widget.setData('guid', url)
+              widget.setData('name', name)
+              // update the original source element's html on commit
+              if (selectedElement) {
+                // child 0 is the legal-nav-resource custom element
+                var sourceElement = selectedElement.getChild(0)
+                // sets the display in HTML
+                sourceElement.setHtml(name)
+              }
             }
           }
         }]
@@ -213,7 +227,7 @@ CKEDITOR.dialog.add('guid', function(editor) {
       var dialog = CKEDITOR.dialog.getCurrent()
       contentElement = this.getContentElement('search', 'guidList').getElement()
 
-      // disable ok button to avoid insertion of empty variables.
+      // disable ok button to avoid insertion of empty resources.
       dialog.disableButton('ok')
 
       // Clear the html when the state changes

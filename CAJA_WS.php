@@ -28,6 +28,9 @@ $mysqli="";
 $drupaldb="";
 $isProductionServer=TRUE;
 
+const LOG_LOCATION =
+	parse_ini_file($path . '/config_env.ini')['LOG_LOCATION'];
+
 if (file_exists("../CONFIG.php")) { // legacy php config file for Author
 	require "../CONFIG.php";
 } else { // unified config.json file for Author/DB/DAT config settings
@@ -168,7 +171,9 @@ switch ($command){
 			$result['editoruid']=$row['editoruid'];
 			$result['guide']= file_get_contents(GUIDES_DIR.$row['filename'],TRUE);
 			//scandir()
-			trace(GUIDES_DIR.$row['filename']);
+			//trace(GUIDES_DIR.$row['filename']);
+			$msg = GUIDES_DIR.$row['filename'];
+			error_log($msg,3,LOG_LOCATION);
 			// 11/26/2013 Include guide's path so we can access local files.
 			$result['path']=GUIDES_URL.$row['filename'];
 		}
@@ -237,7 +242,9 @@ switch ($command){
 				// backup current corrupted file
                 $corname=$cordir.'/'.$filenameonly.'_CORRUPTED_'.date(DATE_FORMAT,filemtime($filename)).'.xml';
                 rename($filename, $corname);
-                trace('saved corrupt file to '.$corname);
+                //trace('saved corrupt file to '.$corname);
+								$msg = 'saved corrupt file to '.$corname;
+								error_log($msg,3,LOG_LOCATION);
 
 
 				// move recovered file to Guide.xml
@@ -271,6 +278,7 @@ switch ($command){
             // never rename the GUIDES_DIR
             if (file_exists($filename) && !is_dir($filename) && $filename !== GUIDES_DIR) {
                 //trace(filemtime($filename));
+
                 $verdir = $filedir.'/Versions';
 
                 if (!file_exists($verdir)) {
@@ -285,7 +293,11 @@ switch ($command){
                     $res=$mysqli->query($sql);
                 }
 
-                trace('saving to '.$filename);
+                //trace('saving to '.$filename);
+
+								$msg = 'saving to '.$filename;
+								error_log($msg,3,LOG_LOCATION);
+
                 file_put_contents($filename, $xml);
                 file_put_contents(replace_extension($filename, 'json'), $json);//01/14/2015
             }
@@ -335,11 +347,19 @@ switch ($command){
 					mkdir($verdir);
 				}
 				$revname=$verdir.'/answerset Version_'.date(DATE_FORMAT,filemtime($filename)).'.anx';
-				trace("renaming $filename to $revname");
+				//trace("renaming $filename to $revname");
+
+				$msg = "renaming $filename to $revname";
+				error_log($msg,3,LOG_LOCATION);
+
 				rename($filename, $revname);
 			}
 
-			trace('saving to '.$filename);
+			//trace('saving to '.$filename);
+
+			$msg = 'saving to '.$filename;
+			error_log($msg,3,LOG_LOCATION);
+
 			file_put_contents($filename,$xml);
 		}
 		else
@@ -378,6 +398,10 @@ switch ($command){
 			mkdir(GUIDES_DIR.$newdir);
 			$filename=GUIDES_DIR.$newfile;
 			//trace('saving to '.$filename);
+
+			$msg = 'saving to '.$filename;
+			error_log($msg,3,LOG_LOCATION);
+
 			file_put_contents($filename,$xml);
 			file_put_contents(replace_extension($filename,'json'),$json);//01/14/2015
 			$sql="update guides set filename='".$mysqli->real_escape_string($newfile)."' where gid = $newgid";
@@ -619,7 +643,10 @@ switch ($command){
 		//### Publish specified existing guide to custom unique public folder.
 		$oldgid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$res=$mysqli->query("select * from guides where gid=$oldgid  and (isPublic=1  or isFree=1  or editoruid=$userid)");
-		trace('Publishing gid '.$oldgid);
+		//trace('Publishing gid '.$oldgid);
+
+		$msg = 'Publishing gid '.$oldgid;
+		error_log($msg,3,LOG_LOCATION);
 
 		if ($row=$res->fetch_assoc())
 		{
@@ -631,7 +658,11 @@ switch ($command){
 			$guideNameOnly = $path_parts['filename'];
 			$newSubGuideDir = "public/".$guideDir."/".date(DATE_FORMAT);
 			$GuidePublicDir =  GUIDES_DIR.$newSubGuideDir;
-			trace('Public dir is "'.$GuidePublicDir.'"');
+			//trace('Public dir is "'.$GuidePublicDir.'"');
+
+			$msg = 'Public dir is "'.$GuidePublicDir.'"';
+			error_log($msg,3,LOG_LOCATION);
+
 			mkdir($GuidePublicDir,0775,true);
 			$files = scandir(GUIDES_DIR.$guideDir);
 			//### Ideally, scan Guide and only zip files used in the interview.
@@ -650,7 +681,7 @@ switch ($command){
 			file_put_contents($GuidePublicDir.'/index.php', '<?php header("Location: /app/js/viewer/A2J_Viewer.php?gid=".$_SERVER["REQUEST_URI"]."Guide.xml"); ?>');
 
 			$result['url']=GUIDES_URL.$newSubGuideDir;
-			trace($result['url']);
+			//trace($result['url']);
 			// Caller will redirect to download the zip.
 		}
 		break;
@@ -833,7 +864,10 @@ function update_guide_templates($guide_id, $guide_folder_path) {
 				file_put_contents($file_path, json_encode($json_data));
 			}
 		} catch (Exception $e) {
-			trace("Caught exception: ", $e->getMessage(), "\n");
+			//trace("Caught exception: ", $e->getMessage(), "\n");
+			$msg = "Caught exception: ", $e->getMessage(), "\n";
+			error_log($msg,3,LOG_LOCATION);
+
 		}
 	} else {
 		cleanup_failed_guide_upload();
@@ -856,7 +890,9 @@ function create_templates_index($guide_id, $guide_folder_path) {
 				// write new templates data to json
 				file_put_contents($templates_index_path, json_encode($templates_obj));
 		} catch (Exception $e) {
-			trace("Caught exception: ", $e->getMessage(), "\n");
+			//trace("Caught exception: ", $e->getMessage(), "\n");
+			$msg = "Caught exception: ", $e->getMessage(), "\n";
+			error_log($msg,3,LOG_LOCATION);
 		}
 	}
 }
@@ -883,13 +919,18 @@ function update_or_create_templates_index($guide_id, $guide_folder_path) {
 				// write updated templates data to json
 				file_put_contents($templates_index_path, json_encode($templates_json_data));
 		} catch (Exception $e) {
-			trace("Caught exception: ", $e->getMessage(), "\n");
+			//trace("Caught exception: ", $e->getMessage(), "\n");
+			$msg = "Caught exception: ", $e->getMessage(), "\n";
+			error_log($msg,3,LOG_LOCATION);
+
 		}
 	} else {
 		try {
 			create_templates_index($guide_id, $guide_folder_path);
 		} catch (Exception $e) {
-			trace("Caught exception: ", $e->getMessage(), "\n");
+			//trace("Caught exception: ", $e->getMessage(), "\n");
+			$msg = "Caught exception: ", $e->getMessage(), "\n";
+			error_log($msg,3,LOG_LOCATION);
 		}
 	}
 }
@@ -1028,9 +1069,14 @@ function createGuideZip($gid) {
 		$zipRes = $zip->open($zipFull, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
 		if ($zipRes !== TRUE) {
-			trace("cannot open ".$zipFull);
+			//trace("cannot open ".$zipFull);
+			$msg = "cannot open ".$zipFull;
+			error_log($msg,3,LOG_LOCATION);
 		} else {
-			trace("created ".$zipFull);
+			//trace("created ".$zipFull);
+			$msg = "cannot open ".$zipFull;
+			error_log($msg,3,LOG_LOCATION);
+
 			$zip->addFile(GUIDES_DIR.$guideName,'Guide.xml');
 
 			add_guide_json_file($guideName, $zip);
@@ -1110,7 +1156,7 @@ function getGuideFileDetails($filename) {	// 2014-08-26 Get info about guide
 
 function listGuides($sql) {
 	global $userid,$mysqli,$result;
-	trace($sql);
+	//trace($sql);
 	if ($userid!=0)
 	{
 		$res=$mysqli->query($sql);

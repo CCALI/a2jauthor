@@ -105,8 +105,11 @@
               disabled='disabled'
             {{/if}}
           >
-            {{#each(supportedFonts)}}
-              <option value="{{.}}">{{.}}</option>
+            {{#each(supportedFonts, fnt=value)}}
+              <option value="{{.}}"
+              {{#if(fnt.name==documentOptions.fontName)}}
+              selected
+              {{/if}}>{{.}}</option>
             {{/each}}
           </select>
         {{/if}}

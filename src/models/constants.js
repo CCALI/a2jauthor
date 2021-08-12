@@ -93,6 +93,7 @@ export default {
   // HotDocs ANX
   // 4/8/04 This is the DTD for the HotDocs ANX file format.
   // It's prepended to the answer set for upload.
-  HotDocsANXHeader_UTF8_str: '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n',
+  HotDocsANXHeader_UTF8_str:
+    '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n',
   ScriptLineBreak: '<BR/>'
 }

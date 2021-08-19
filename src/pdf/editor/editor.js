@@ -50,8 +50,8 @@ function getDataUrlForPage (page, scale) {
     .render({
       canvasContext: context,
       viewport: viewport
-    }).promise
-    .then(() => {
+    })
+    .promise.then(() => {
       return canvas.toDataURL('image/jpeg')
     })
 }
@@ -131,7 +131,7 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
       'documentOptions',
       () =>
         new CanMap({
-          fontName: 'Lato',
+          fontName: 'Arial',
           fontSize: '12',
           variableOptions: new CanMap(),
           addendumOptions: new CanMap()
@@ -228,9 +228,7 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
         if (!pages) {
           return []
         }
-        return pages
-          .map(page => page.attr('url'))
-          .filter(url => url)
+        return pages.map(page => page.attr('url')).filter(url => url)
       }
     },
     // </ThumbnailSidebar>
@@ -367,7 +365,9 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
   },
 
   getComboId () {
-    return `${this.attr('template.guideId')}-${this.attr('template.templateId')}`
+    return `${this.attr('template.guideId')}-${this.attr(
+      'template.templateId'
+    )}`
   },
 
   // pdfController pdfJs.Pdf
@@ -431,8 +431,8 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
         pagePromises = pagePromises.map((promise, index) => {
           const updatePage = fn => {
             const pages = this.attr('pages')
-            const newPages = pages.map(
-              (page, pageIndex) => (pageIndex === index ? fn(page) : page)
+            const newPages = pages.map((page, pageIndex) =>
+              pageIndex === index ? fn(page) : page
             )
             this.attr('pages', newPages)
           }
@@ -849,12 +849,7 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
     const { page } = box
     const latestPoint = this.getPagePoint(page, realPoint)
     const bounds = this.getPageArea(page)
-    const area = moveAreaWithinBounds(
-      bounds,
-      box.area,
-      startPoint,
-      latestPoint
-    )
+    const area = moveAreaWithinBounds(bounds, box.area, startPoint, latestPoint)
     box.attr('area', area)
     move.startPoint = latestPoint
   },
@@ -885,9 +880,13 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
       const isSelected = isAdditive ? box.isSelected || isChosen : isChosen
       box.attr('isSelected', isSelected)
       // command or ctrl click stops auto group select (isAdditive === true)
-      if (isChosen && !isAdditive) { groupId = box.groupId }
+      if (isChosen && !isAdditive) {
+        groupId = box.groupId
+      }
     })
-    if (groupId) { this.selectGroup(groupId) }
+    if (groupId) {
+      this.selectGroup(groupId)
+    }
   },
 
   relayDeleteSelection () {
@@ -1010,9 +1009,13 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
     const variableOptionsDict = this.attr('documentOptions.variableOptions')
     variableOptionsDict.attr(variableKey, variableOptions)
 
-    const existingGroupIds = this.attr('boxes').map(box => box.groupId).filter(groupId => groupId)
+    const existingGroupIds = this.attr('boxes')
+      .map(box => box.groupId)
+      .filter(groupId => groupId)
     // possibly check for current groupId here and assign to all selected
-    const groupId = variableOptions.isGroup ? getNewGroupId(existingGroupIds) : ''
+    const groupId = variableOptions.isGroup
+      ? getNewGroupId(existingGroupIds)
+      : ''
 
     this.attr('selectedBoxes').forEach((box, index) => {
       box.attr('groupId', groupId)
@@ -1115,8 +1118,7 @@ const dKey = 68
 const iKey = 73
 const helpKey = 191
 
-const isAdditive = event =>
-  (event.metaKey || event.ctrlKey) && !event.altKey
+const isAdditive = event => (event.metaKey || event.ctrlKey) && !event.altKey
 
 function getPageIndex (child) {
   const pageElement = $(child)

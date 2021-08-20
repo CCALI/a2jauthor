@@ -392,6 +392,12 @@ function gotoPageEdit (pageName) {
       class: 'btn btn-primary btn-wide-sm',
       click: function () {
         var pageName = window.$(this).attr('rel')
+        var variableElements = window.$(this).find('fieldset').find('.picker.autocomplete.variable')
+        var exit
+        variableElements.map((el) => {
+          if(variableElements[el].value === "") exit = true
+        })
+        if (exit) return
         $pageEditDialog.dialog('close')
         window.$('#author-app').trigger('edit-page:preview', pageName)
       }

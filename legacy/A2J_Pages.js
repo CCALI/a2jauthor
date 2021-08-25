@@ -392,6 +392,33 @@ function gotoPageEdit (pageName) {
       class: 'btn btn-primary btn-wide-sm',
       click: function () {
         var pageName = window.$(this).attr('rel')
+        var variableElements = window.$(this).find('fieldset').find('.divvariable')
+        var variableInputs = variableElements.find('input')
+        var exit = false
+        variableInputs.map((index) => {
+          if (variableInputs[index].value === '') {
+            $('.confirm-variable-dialog').dialog({
+              resizable: false,
+              height: "auto",
+              width: 400,
+              title: 'Warning',
+              modal: true,
+              closeText: '',
+              buttons: {
+                "Continue to Preview": function() {
+                  $pageEditDialog.dialog('close')
+                  $( this ).dialog( "close" );
+                  window.$('#author-app').trigger('edit-page:preview', pageName)
+                },
+                "Set Variable": function() {
+                  $( this ).dialog( "close" );
+                }
+              }
+            })
+            exit = true
+          }
+        })
+        if (exit) return
         $pageEditDialog.dialog('close')
         window.$('#author-app').trigger('edit-page:preview', pageName)
       }

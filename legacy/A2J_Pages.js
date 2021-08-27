@@ -395,6 +395,16 @@ function gotoPageEdit (pageName) {
         var variableElements = window.$(this).find('fieldset').find('.divvariable')
         var variableInputs = variableElements.find('input')
         var exit = false
+
+        function fieldIntoView() {
+          for (var index = 0; index < variableInputs.length; index++) {
+            if (variableInputs[index].value === '') {
+              variableElements[index].scrollIntoView()
+              break;
+            }
+          }
+        }
+
         variableInputs.map((index) => {
           if (variableInputs[index].value === '') {
             $('.confirm-variable-dialog').dialog({
@@ -407,11 +417,12 @@ function gotoPageEdit (pageName) {
               buttons: {
                 "Continue to Preview": function() {
                   $pageEditDialog.dialog('close')
-                  $( this ).dialog( "close" );
+                  $( this ).dialog( "close" )
                   window.$('#author-app').trigger('edit-page:preview', pageName)
                 },
                 "Set Variable": function() {
-                  $( this ).dialog( "close" );
+                  fieldIntoView();
+                  $( this ).dialog( "close" )
                 }
               }
             })

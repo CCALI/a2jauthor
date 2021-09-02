@@ -19,6 +19,12 @@
   z-index: @zindex-modal;
   border-color: @gray-light;
 
+  // used when field has no variable
+  &.confirm-variable-dialog,
+  .confirm-variable-message {
+    padding: 10px;
+  }
+
   // important required due to ui-dialog doing inline styles
   // for width, top, and left.
   &.page-edit-dialog {

@@ -409,30 +409,35 @@ function gotoPageEdit (pageName) {
           if (variableInputs[index].value === '') {
             $('.confirm-variable-dialog').dialog({
               resizable: false,
-              height: "auto",
-              width: 400,
-              title: 'Warning',
-              modal: true,
-              closeText: '',
-              buttons: {
-                "Continue to Preview": function() {
-                  $pageEditDialog.dialog('close')
-                  $( this ).dialog( "close" )
-                  window.$('#author-app').trigger('edit-page:preview', pageName)
+                buttons: {
+                  Cancel: function () {
+                    fieldIntoView()
+                    $(this).dialog('close')
+                  },
+                  Continue: function () {
+                    $pageEditDialog.dialog('close')
+                    $(this).dialog('close')
+                    window
+                      .$('#author-app')
+                      .trigger('edit-page:preview', pageName)
+                  }
                 },
-                "Set Variable": function() {
-                  fieldIntoView();
-                  $( this ).dialog( "close" )
-                }
-              }
-            })
-            exit = true
-          }
-        })
-        if (exit) return
-        $pageEditDialog.dialog('close')
-        window.$('#author-app').trigger('edit-page:preview', pageName)
-      }
+                open: function () {
+                  const dialogInstance = $(this).closest('.ui-dialog')
+                  const cancelButton = dialogInstance.find(
+                    'button:contains("Cancel")'
+                  )
+                  const continueButton = dialogInstance.find(
+                    'button:contains("Continue")'
+                  )
+                  // remove default dialog-ui button classes
+                  cancelButton.removeClass()
+                  continueButton.removeClass()
+                  // add bootstrap classes
+                  continueButton.addClass('btn btn-primary btn-wide-sm')
+                  cancelButton.addClass('btn btn-default btn-wide-sm')
+                  // focus Continue button for advanced Authors
+                  continueButton.focus()
     }]
   })
 

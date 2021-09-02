@@ -316,8 +316,8 @@
     <div class="page-edit-form-panel"></div>
   </div>
   <div class="confirm-variable-dialog">
-    <div>
-      Unassigned variable field
+    <div class="confirm-variable-message">
+      Unassigned Variable in Field
     </div>
   </div>
 

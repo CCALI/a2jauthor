@@ -315,6 +315,11 @@
   <div class="page-edit-form">
     <div class="page-edit-form-panel"></div>
   </div>
+  <div class="confirm-variable-dialog">
+    <div class="confirm-variable-message">
+      Unassigned Variable in Field
+    </div>
+  </div>
 
   <div id="clause-edit-form" title="Clause">
     <div class="editq">

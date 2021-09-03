@@ -19,24 +19,31 @@
   z-index: @zindex-modal;
   border-color: @gray-light;
 
+  // used when field has no variable
+  &.confirm-variable-dialog,
+  .confirm-variable-message {
+    padding: 10px;
+  }
+
   // important required due to ui-dialog doing inline styles
   // for width, top, and left.
   &.page-edit-dialog {
     position: fixed;
-    max-height: 90vh!important;
-    width: 60vw!important;
-    top: 5%!important;
+    max-height: 90vh !important;
+    width: 60vw !important;
+    top: 5% !important;
     display: block;
-    overflow-y: auto!important;
+    overflow-y: auto !important;
     overflow-x: hidden;
   }
 
   // these are sub elements of the style above
-  &.page-edit-fields, .page-edit-buttons {
+  &.page-edit-fields,
+  .page-edit-buttons {
     width: 55vw;
   }
 
-  .ui-button  {
+  .ui-button {
     background: @btn-default-bg;
     color: @btn-default-color;
     border: 1px solid @btn-default-border;
@@ -51,7 +58,7 @@
   }
 
   .ui-dialog-titlebar {
-    padding: @grid-gutter-width/2;
+    padding: @grid-gutter-width / 2;
     position: relative;
     background: @brand-secondary;
 
@@ -68,12 +75,12 @@
     }
     .ui-dialog-titlebar-close {
       position: absolute;
-      right: @grid-gutter-width/2;
-      top: @grid-gutter-width/2;
+      right: @grid-gutter-width / 2;
+      top: @grid-gutter-width / 2;
       width: 20px;
       height: 20px;
       margin: 0;
-      padding: @grid-gutter-width/2;
+      padding: @grid-gutter-width / 2;
       border: none;
       background: none;
 
@@ -103,9 +110,9 @@
   }
 }
 
-
-.page-edit-fields, .page-edit-buttons {
-	width: 55vw;
+.page-edit-fields,
+.page-edit-buttons {
+  width: 55vw;
 }
 #dialog-confirm {
   .ui-icon.ui-icon-alert {
@@ -114,18 +121,18 @@
 }
 ul#cajasettings {
   margin: 0;
-  padding: 0 @grid-gutter-width/2;
+  padding: 0 @grid-gutter-width / 2;
 
   label {
-    margin-left: @grid-gutter-width/2;
+    margin-left: @grid-gutter-width / 2;
   }
 }
 
 .ui-dialog .ui-dialog-content {
-	position: relative;
-	border: 0;
-	padding: @grid-gutter-width/4;
-	background: none;
+  position: relative;
+  border: 0;
+  padding: @grid-gutter-width / 4;
+  background: none;
   overflow: auto;
 
   .files-list {
@@ -134,34 +141,34 @@ ul#cajasettings {
   }
 }
 .ui-dialog .ui-dialog-buttonpane {
-	text-align: left;
-	border-width: 1px 0 0 0;
-	background-image: none;
+  text-align: left;
+  border-width: 1px 0 0 0;
+  background-image: none;
   margin-top: 0;
-	padding: .3em 1em .5em .4em;
-	background: @gray-lighter;
-	border-top: 1px solid @gray-light;
+  padding: 0.3em 1em 0.5em 0.4em;
+  background: @gray-lighter;
+  border-top: 1px solid @gray-light;
 }
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
-	float: right;
+  float: right;
 }
 .ui-dialog .ui-dialog-buttonpane button {
-  margin-top: .5em;
-  margin-left: .5em;
-  margin-bottom: .5em;
-	cursor: pointer;
+  margin-top: 0.5em;
+  margin-left: 0.5em;
+  margin-bottom: 0.5em;
+  cursor: pointer;
 }
 .ui-dialog .ui-resizable-se {
-	width: 12px;
-	height: 12px;
-	right: -5px;
-	bottom: -5px;
-	background-position: 16px 16px;
+  width: 12px;
+  height: 12px;
+  right: -5px;
+  bottom: -5px;
+  background-position: 16px 16px;
 }
 .ui-draggable .ui-dialog-titlebar {
-	cursor: move;
+  cursor: move;
 }
 
 .sorthandle {
-	cursor: move;
+  cursor: move;
 }

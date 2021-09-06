@@ -492,12 +492,12 @@ window.form = {
   varPicker: function (data) {
     var dval = (data.value)
     var label = data.label ? '<label class="control-label">' + data.label + '</label>' : ''
-
+    var variable = data.label === 'Variable:'? 'variable' : ''
     var $el = $(
-      '<div ' + (data.name ? 'name="' + data.name + '"' : '') + '>' +
+      '<div class="div'+ variable + '"' + (data.name ? 'name="' + data.name + '"' : '') + '>' +
       label +
       '<div class="editspan form-group">' +
-        '<input class="form-control ui-combobox-input editable autocomplete picker varname dest" placeholder="' + data.placeholder + '" type="text" >' +
+        '<input class="form-control ui-combobox-input editable autocomplete picker varname dest ' + variable + '" placeholder="' + data.placeholder + '" type="text" >' +
       '</div>' +
       '</div>'
     )

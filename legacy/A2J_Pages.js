@@ -380,22 +380,83 @@ function gotoPageEdit (pageName) {
       this.removeOverlay = addDialogOverlay(window.$(this))
     },
 
-    buttons: [{
-      text: 'Close',
-      class: 'btn btn-default btn-wide-sm',
-      click: function () {
-        window.$(this).dialog('close')
+    buttons: [
+      {
+        text: 'Close',
+        class: 'btn btn-default btn-wide-sm',
+        click: function () {
+          window.$(this).dialog('close')
+        }
+      },
+      {
+        text: 'Preview',
+        class: 'btn btn-primary btn-wide-sm',
+        click: function () {
+          var pageName = window.$(this).attr('rel')
+          var variableElements = window
+            .$(this)
+            .find('fieldset')
+            .find('.divvariable')
+          var variableInputs = variableElements.find('input')
+          var exit = false
+
+          function fieldIntoView () {
+            for (var index = 0; index < variableInputs.length; index++) {
+              if (variableInputs[index].value === '') {
+                variableElements[index].scrollIntoView()
+                break
+              }
+            }
+          }
+          variableInputs.map(index => {
+            if (variableInputs[index].value === '') {
+              $('.confirm-variable-dialog').dialog({
+                resizable: false,
+                height: 'auto',
+                width: 400,
+                title: 'Warning',
+                modal: true,
+                closeText: '',
+                buttons: {
+                  Cancel: function () {
+                    fieldIntoView()
+                    $(this).dialog('close')
+                  },
+                  Continue: function () {
+                    $pageEditDialog.dialog('close')
+                    $(this).dialog('close')
+                    window
+                      .$('#author-app')
+                      .trigger('edit-page:preview', pageName)
+                  }
+                },
+                open: function () {
+                  const dialogInstance = $(this).closest('.ui-dialog')
+                  const cancelButton = dialogInstance.find(
+                    'button:contains("Cancel")'
+                  )
+                  const continueButton = dialogInstance.find(
+                    'button:contains("Continue")'
+                  )
+                  // remove default dialog-ui button classes
+                  cancelButton.removeClass()
+                  continueButton.removeClass()
+                  // add bootstrap classes
+                  continueButton.addClass('btn btn-primary btn-wide-sm')
+                  cancelButton.addClass('btn btn-default btn-wide-sm')
+                  // focus Continue button for advanced Authors
+                  continueButton.focus()
+                }
+              })
+              exit = true
+            }
+          })
+          if (exit) return
+          $pageEditDialog.dialog('close')
+          window.$('#author-app').trigger('edit-page:preview', pageName)
+        }
       }
-    },
-    {
-      text: 'Preview',
-      class: 'btn btn-primary btn-wide-sm',
-      click: function () {
-        var pageName = window.$(this).attr('rel')
-        $pageEditDialog.dialog('close')
-        window.$('#author-app').trigger('edit-page:preview', pageName)
-      }
-    }]
+    ]
   })
 
   // removes jQuery.ui classes from buttons

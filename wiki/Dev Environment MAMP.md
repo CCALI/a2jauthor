@@ -36,7 +36,7 @@ Written for Mac OS
     `git clone git@github.com:CCALI/a2jdeps deps`
 
 5. Install dependencies for Author:
-    - `cd ~/Sites/a2j/author && npm install`
+    - `cd ~/Sites/a2j/author && npm ci`
     - 
 6. Seed the database
     - Start and login to mysql: `/Applications/MAMP/Library/bin/mysql -u root -p`
@@ -51,7 +51,7 @@ Written for Mac OS
 7. Start the DAT for template authoring and document assembly 
     - Ensure MAMP is running both apache and MySQL
     - `cd ~/Sites/a2j/dat`
-    -  `npm install` 
+    -  `npm ci` 
     - `npm run dev`
     - To run DAT in Node debug mode with Google Chrome (more messages, and node breakpoints)
     - `npm run dev:debug`

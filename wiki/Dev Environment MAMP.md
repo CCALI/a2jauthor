@@ -13,7 +13,7 @@ Written for Mac OS
     - Open MAMP and go to `preferences`, check the Ports, PHP and Web Server tabs for the below settings to match.
     - PHP v 7.4.2
     - Apache port 80
-    - MySQL port 3006
+    - MySQL port 3306
     - "Document Root" directory pointed at `~/Sites`. You may need to create this directory.
 
 ## Getting Started
@@ -26,14 +26,25 @@ Written for Mac OS
 3.  Unzip the guide files:
     - Unzip `~/Sites/a2j/author/wiki/resources/userfiles.zip`to `~/Sites/a2j/`
     - Ensure that the guides are available at `~/Sites/a2j/userfiles/dev/guides/`.
-    - 
-4. Clone the repos as siblings in the `a2j` directory (dropping the `a2j` from the repo name, see commands below - this is not critical, but makes it easier to read and navigate between repos):
-    `cd ~/Sites/a2j`
-    `git clone git@github.com:CCALI/a2jauthor author`
-    `git clone git@github.com:CCALI/a2jdat dat`
-    --- optional: needed for local Viewer and Deps development ---
-    `git clone git@github.com:CCALI/a2jviewer viewer`
-    `git clone git@github.com:CCALI/a2jdeps deps`
+  
+4. Clone the repos as siblings in the `a2j` directory (dropping the `a2j` from the repo name, see commands below):
+    - `cd ~/Sites/a2j`
+    - `git clone git@github.com:CCALI/a2jauthor author`
+    - `git clone git@github.com:CCALI/a2jdat dat`
+    - below repos are optional: needed for local Viewer and Deps development
+    - `git clone git@github.com:CCALI/a2jviewer viewer`
+    - `git clone git@github.com:CCALI/a2jdeps deps`
+
+- Your directory structure should now look like this (adjust if you used a different web root for MAMP)
+```md
+~/Sites/a2j/
+  -- config.json
+  -- userfiles/
+  -- author/
+  -- dat/
+  -- viewer/ (optional)
+  -- deps/   (optional)  
+```  
 
 5. Install dependencies for Author:
     - `cd ~/Sites/a2j/author && npm ci`

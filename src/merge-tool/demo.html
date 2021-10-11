@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;merge-tool&gt;</title>
+  </head>
+
+  <body>
+    <div id="demo-html" style="margin: 20px;" />
+
+    <script src="../../../node_modules/steal/steal.js"
+      data-main="@empty">
+    </script>
+
+    <script type="steal-module">
+      import MergeTool from "~/src/merge-tool/"
+      import sourceGuide from "~/src/merge-tool/resources/sourceGuide.json"
+      import targetGuide from "~/src/merge-tool/resources/targetGuide.json"
+      import "~/styles/"
+      import "~/styles.less"
+
+      // replace any global guide with safe demo guide
+      //  window.gGuide = { title: 'canjs demo gGuide'}
+      const sGuide = JSON.parse(sourceGuide)
+      const tGuide = JSON.parse(targetGuide)
+
+      // passing the viewModel with guide data emulates stache bindings
+      const mergeToolComponent = new MergeTool({viewModel: {sourceGuide: sGuide, targetGuide: tGuide}})
+      window.vm = mergeToolComponent.viewModel
+
+      const demoHtml = document.getElementById('demo-html')
+      demoHtml.appendChild(mergeToolComponent.element)
+    </script>
+  </body>
+</html>

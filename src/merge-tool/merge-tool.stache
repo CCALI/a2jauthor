@@ -1,0 +1,6 @@
+<can-import from='can-stache-converters' />
+<can-import from="./merge-tool.less" />
+
+<div>
+
+</div>

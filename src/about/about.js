@@ -26,6 +26,7 @@ export const AboutVM = DefineMap.extend('AboutVM', {
         'language',
         'logoImage', // layout
         'endImage',
+        'showNavDefault',
         'sendfeedback', // feedback
         'emailContact',
         'version', // revision history

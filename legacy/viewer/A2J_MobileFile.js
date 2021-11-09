@@ -99,6 +99,7 @@ function guide2JSON_Mobile (guide) {	// 12/22/2014 Convert internal Guide struct
   newGuide.modifydate = guide.modifydate
   newGuide.notes = guide.notes
   newGuide.sendfeedback = guide.sendfeedback
+  newGuide.showNavDefault = guide.showNavDefault
   newGuide.subjectarea = guide.subjectarea
   newGuide.title = guide.title
   newGuide.version = guide.version

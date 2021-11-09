@@ -154,6 +154,7 @@ function exportXML_CAJA_from_CAJA (guide) {	// Convert Guide structure into XML
   JSON.GUIDE.INFO.modifydate = guide.modifydate
   JSON.GUIDE.INFO.XML_notes = guide.notes
   JSON.GUIDE.INFO.sendfeedback = guide.sendfeedback
+  JSON.GUIDE.INFO.showNavDefault = guide.showNavDefault
   JSON.GUIDE.INFO.subjectarea = guide.subjectarea
   JSON.GUIDE.INFO.title = guide.title
   JSON.GUIDE.INFO.version = guide.version
@@ -325,6 +326,7 @@ function parseXML_CAJA_to_CAJA (GUIDE) // GUIDE is XML DOM
   guide.modifydate =		makestr(INFO.children('MODIFYDATE').text())
   guide.notes =			makestr(INFO.children('NOTES').xml())
   guide.sendfeedback =	textToBool(INFO.children('SENDFEEDBACK').text(), false)
+  guide.showNavDefault =	textToBool(INFO.children('SHOWNAVDEFAULT').text(), false)
   guide.emailContact =	makestr(INFO.children('EMAILCONTACT').text())
   guide.subjectarea = makestr(INFO.children('SUBJECTAREA').text())
   guide.title =			INFO.children('TITLE').text()
@@ -501,6 +503,7 @@ function parseXML_A2J_to_CAJA (TEMPLATE) {	// Parse A2J into CAJA
   guide.modifydate = ''
   guide.notes = cr2P(makestr(TEMPLATE.find('HISTORY').xml()))
   guide.sendfeedback = textToBool(TEMPLATE.find('SENDFEEDBACK').text(), false)
+  guide.showNavDefault = textToBool(TEMPLATE.find('SHOWNAVDEFAULT').text(), false)
   guide.emailContact = makestr(TEMPLATE.find('SENDFEEDBACKEMAIL').text())
   guide.subjectarea = guide.jurisdiction
   guide.title = TEMPLATE.find('TITLE').text()

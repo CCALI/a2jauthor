@@ -2,7 +2,15 @@
 
 <div name="h4x0r" class="form-upload row clearfix">
   <div class="col-xs-12 navpanelopen-input-container">
-    <div class="navpanelopen form-group">
+    <div class="checkbox-setting form-group">
+      <label class="control-label">
+        <input type="checkbox" checked:bind="guide.useMobileUI" />
+        Use reduced interface
+      </label>
+    </div>
+  </div>
+  <div class="col-xs-12 navpanelopen-input-container">
+    <div class="checkbox-setting form-group">
       <label class="control-label">
         <input type="checkbox" checked:bind="guide.showNavDefault" />
         Navigation Panel Open by Default

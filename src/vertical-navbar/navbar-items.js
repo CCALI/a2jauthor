@@ -72,7 +72,7 @@ export default [
   {
     page: 'publish',
     title: 'Publish',
-    ref: 'tabsUpload',
+    ref: 'tabsPublish',
     icon: 'glyphicon-publish',
     active: false
   },

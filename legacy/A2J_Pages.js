@@ -643,6 +643,7 @@ function gotoTabOrPage (target) {
 
   switch (target) {
     case 'tabsAbout':
+    case 'tabsPublish':
     case 'tabsVariables':
     case 'tabsSteps':
     case 'tabsLogic':

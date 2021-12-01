@@ -131,7 +131,7 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
       'documentOptions',
       () =>
         new CanMap({
-          fontName: 'Lato',
+          fontName: 'Arial',
           fontSize: '12',
           variableOptions: new CanMap(),
           addendumOptions: new CanMap()

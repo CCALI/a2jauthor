@@ -3,6 +3,72 @@ import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './publish-tab.stache'
 
+const LHICallback = function guideZipped (data) {
+  window.setProgress('')
+  window.gGuideID = data.gid
+  if (data.url !== '') {
+    window.open(data.url)
+  }
+}
+
+const A2JOrgCallback = function guideZipped (data) {
+  window.setProgress('')
+  window.gGuideID = data.gid
+  if (data.url !== '') {
+    window.can.route.data.page = 'a2jorg'
+  }
+}
+
+const publishFunctionMap = {
+  'guidezip': {
+    message: 'Generating ZIP',
+    callback: function (data) {
+      window.setProgress('')
+      window.gGuideID = data.gid
+
+      if (data.zip !== '') {
+        window.open(data.zip)
+      }
+    }
+  },
+  'guideZIPA2JLOCAL': {
+    message: 'Publishing to a2j.org local DEV',
+    callback: A2JOrgCallback
+  },
+  'guideZIPA2JDEV': {
+    message: 'Publishing to A2J.org DEV',
+    callback: A2JOrgCallback
+  },
+  'guideZIPA2JSTAGE': {
+    message: 'Publishing to staging.A2J.org',
+    callback: A2JOrgCallback
+  },
+  'guideZIPA2JPROD': {
+    message: 'Publishing to www.A2J.org',
+    callback: A2JOrgCallback
+  },
+  'guideZIPLHI': {
+    message: 'Publishing to LHI',
+    callback: LHICallback,
+    server: 'QA'
+  },
+  'guideZIPLHIQA': {
+    message: 'Publishing to LHI - QA',
+    callback: LHICallback,
+    server: 'QA'
+  },
+  'guideZIPLHIDEV': {
+    message: 'Publishing to LHI DEV',
+    callback: LHICallback,
+    server: 'QA'
+  },
+  'guideZIPMARLABS': {
+    message: 'Publishing to Marlabs DEV',
+    callback: LHICallback,
+    server: 'QA'
+  }
+}
+
 export const PublishTabVM = DefineMap.extend('PublishTabVM', {
   // passed in via app.stache
   guide: {
@@ -14,16 +80,21 @@ export const PublishTabVM = DefineMap.extend('PublishTabVM', {
   guideId: {},
 
   sendPublishCommand (cmd) {
-    window.setProgress('Generating ZIP', true)
+    const message = publishFunctionMap[cmd].message
+    const targetServer = publishFunctionMap[cmd].server
+    const wsCallback = publishFunctionMap[cmd].callback
+    if (message) {
+      window.setProgress(message, true)
+    }
 
-    window.ws({ cmd, gid: this.guideId }, function (data) {
-      window.setProgress('')
-      window.gGuideID = data.gid
+    const options = {
+      cmd,
+      gid: this.guideId
+    }
 
-      if (data.zip !== '') {
-        window.open(data.zip)
-      }
-    })
+    if (targetServer) { options.server = targetServer }
+
+    window.ws(options, wsCallback)
   },
 
   ws (data, results) { // duplicate of window.ws
@@ -39,7 +110,6 @@ export const PublishTabVM = DefineMap.extend('PublishTabVM', {
       type: 'POST',
       data: data,
       success: function (data) {
-        // trace(String.substr(JSON.stringify(data),0,299));
         results(data)
       },
       error: errorHandler

@@ -71,40 +71,47 @@ const publishFunctionMap = {
 
 export const PublishTabVM = DefineMap.extend('PublishTabVM', {
   // passed in via app.stache
-  guide: {
-    set (guide) {
-      console.log('setting guide', guide)
-      return guide
-    }
-  },
+  guide: {},
   guideId: {},
 
-  sendPublishCommand (cmd) {
-    const message = publishFunctionMap[cmd].message
-    const targetServer = publishFunctionMap[cmd].server
-    const wsCallback = publishFunctionMap[cmd].callback
-    if (message) {
-      window.setProgress(message, true)
-    }
-
-    const options = {
-      cmd,
-      gid: this.guideId
-    }
-
-    if (targetServer) { options.server = targetServer }
-
-    window.ws(options, wsCallback)
+  waiting: {
+    type: 'boolean',
+    default: false
   },
 
-  ws (data, results) { // duplicate of window.ws
+  sendPublishCommand (cmd) {
+    this.waiting = true
+    this.guide.publishedVersion = Date.now() + ''
+
+    return this.guideSave().done(() => {
+      const message = publishFunctionMap[cmd].message
+      const targetServer = publishFunctionMap[cmd].server
+      const wsCallback = publishFunctionMap[cmd].callback
+      if (message) {
+        window.setProgress(message, true)
+      }
+
+      const options = {
+        cmd,
+        gid: this.guideId
+      }
+
+      if (targetServer) {
+        options.server = targetServer
+      }
+
+      return this.ws(options, wsCallback).done(() => { this.waiting = false })
+    })
+  },
+
+  ws (data, results) { // duplicate of window.ws, modified with return value
     const errorHandler = (err, xhr) => {
       console.error('ws error', err)
       window.dialogAlert({ title: 'Error loading file', body: xhr.responseText })
       window.setProgress('Error: ' + xhr.responseText)
     }
 
-    $.ajax({
+    return $.ajax({
       url: 'CAJA_WS.php',
       dataType: 'json',
       type: 'POST',
@@ -114,6 +121,47 @@ export const PublishTabVM = DefineMap.extend('PublishTabVM', {
       },
       error: errorHandler
     })
+  },
+
+  // TODO: when everything is refactored/updated, this should be on guide.save()
+  // duplicate of the window.guideSave(), modified with a return value
+  guideSave (onFinished) {
+    const gGuide = this.guide
+    const gGuideID = this.guideId
+
+    if (gGuide !== null && gGuideID !== 0) {
+      var xml = window.exportXML_CAJA_from_CAJA(gGuide)
+
+      window.setProgress('Saving ' + gGuide.title, true)
+
+      if (xml !== gGuide.lastSaveXML) {
+        gGuide.lastSaveXML = xml
+
+        // 01/14/2015 included JSON form of guide XML
+        var guideJSONstr = window.guide2JSON_Mobile(gGuide)
+
+        var params = {
+          cmd: 'guidesave',
+          gid: gGuideID,
+          guide: xml,
+          title: gGuide.title,
+          json: guideJSONstr
+        }
+        return this.ws(params, function (response) {
+          if (typeof onFinished === 'function') onFinished()
+
+          if ((window.makestr(response.error) !== '')) {
+            window.setProgress(response.error)
+          } else {
+            window.setProgress('Saved')
+            $('#author-app').trigger('author:guide-updated')
+          }
+        })
+      } else {
+        window.setProgress('No changes since last save')
+        if (typeof onFinished === 'function') onFinished()
+      }
+    }
   }
 })
 

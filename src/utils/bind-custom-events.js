@@ -1,6 +1,7 @@
 import $ from 'jquery'
 import DefineMap from 'can-define/map/map'
 import compute from 'can-compute'
+import constants from '~/src/models/constants'
 
 // This function sets some event handles for custom events used to communicate
 // the parts of the author app that are outside of the scope of CanJS.
@@ -9,6 +10,13 @@ export default function bindCustomEvents (appState) {
 
   // user clicks the preview button in the edit page modal
   $authorApp.on('edit-page:preview', function (evt, pageName) {
+    const previewInterview = appState.previewInterview
+    const answers = previewInterview && previewInterview.attr('answers')
+    if (answers) {
+      // constants.js has PAGEHISTORY: 'A2J Visited Pages'
+      const answer = answers[constants.PAGEHISTORY.toLowerCase()]
+      answer && (answer.values = [null]) // this clears the visited pages history between individual previews
+    }
     appState.previewPageName = pageName
     appState.page = 'preview'
     appState.previewMode = true

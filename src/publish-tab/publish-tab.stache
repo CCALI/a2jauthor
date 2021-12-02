@@ -1,26 +1,42 @@
-<can-import from="~/styles/" />
-<can-import from="~/styles.less" />
+<can-import from="~/src/publish-tab/publish-tab.less" />
 
 <h3 class="page-title">Publish/Download</h3>
+{{#if(waiting)}} <span class="waiting-spinner glyphicon-spin6 animate-spin"></span> {{/if}}
 
-  <button class="btn btn-default btn-wide-md ui-button ui-corner-all ui-widget" on:click="this.sendPublishCommand('guidezip')"><span class="glyphicon-file-archive" aria-hidden="true"></span> Download A2J Guide Files</button>
-<hr>
-<p>To publish to A2J.org, use the buttons below</p>
-  <button class="btn btn-default btn-wide-md ui-button ui-corner-all ui-widget"  on:click="this.sendPublishCommand('guideZIPA2JPROD')"><span class="glyphicon-publish" aria-hidden="true"></span> Publish to A2J.org</button>
+{{^if(guide)}}
+  <p>No A2J Guided Interview® Selected</p>
+{{else}}
+  {{let buttonClasses = "btn btn-default btn-wide-md ui-button ui-corner-all ui-widget"}}
 
-<p>To publish to A2J.org development servers, use the buttons below</p>
-  <button class="btn btn-default btn-md ui-button ui-corner-all ui-widget" on:click="this.sendPublishCommand('guideZIPA2JLOCAL')"><span class="glyphicon-publish" aria-hidden="true"></span> local.a2j.org</button>
-  <button class="btn btn-default btn-md ui-button ui-corner-all ui-widget" on:click="this.sendPublishCommand('guideZIPA2JDEV')"><span class="glyphicon-publish" aria-hidden="true"></span> dev.a2j.org</button>
-  <button class="btn btn-default btn-md ui-button ui-corner-all ui-widget" on:click="this.sendPublishCommand('guideZIPA2JSTAGE')"><span class="glyphicon-publish" aria-hidden="true"></span> staging.a2j.org</button>
+  <p>To download your A2J Guided Interview®, use the button below</p>
+  <button disabled:from="waiting" class="{{buttonClasses}}" on:click="this.sendPublishCommand('guidezip')">
+    <span class="glyphicon-file-archive" aria-hidden="true"></span> Download A2J Guide Files
+  </button>
 
+  <hr>
 
-<hr>
-<p>To publish to LawHelp Interactive, use the buttons below</p>
-  <button class="btn btn-default btn-wide-md ui-button ui-corner-all ui-widget" on:click="this.sendPublishCommand('guideZIPLHIQA')"><span class="glyphicon-publish" aria-hidden="true"></span> Publish to RebuildQA</button>
-  <button class="btn btn-default btn-wide-md ui-button ui-corner-all ui-widget" on:click="this.sendPublishCommand('guideZIPLHI')"><span class="glyphicon-publish" aria-hidden="true"></span> Publish to LHI Production</button>
+  <p>To publish to A2J.org, use the buttons below</p>
+  <button disabled:from="waiting" class="{{buttonClasses}}" on:click="this.sendPublishCommand('guideZIPA2JPROD')">
+    <span class="glyphicon-publish" aria-hidden="true"></span> Publish to A2J.org
+  </button>
 
-<p>To publish to LHI development servers, use the buttons below</p>
-  <button class="btn btn-default btn-wide-md ui-button ui-corner-all ui-widget" on:click="this.sendPublishCommand('guideZIPLHIDEV')"><span class="glyphicon-publish" aria-hidden="true"></span> Publish to LHI DEV</button>
-  <button class="btn btn-default btn-wide-md ui-button ui-corner-all ui-widget" on:click="this.sendPublishCommand('guideZIPMARLABS')"><span class="glyphicon-publish" aria-hidden="true"></span> Publish to Marlabs DEV</button>
+  <hr>
 
+  <p>To publish to LawHelp Interactive, use the buttons below</p>
+  <button disabled:from="waiting" class="{{buttonClasses}}" on:click="this.sendPublishCommand('guideZIPLHIQA')">
+    <span class="glyphicon-publish" aria-hidden="true"></span> Publish to RebuildQA
+  </button>
+  <button disabled:from="waiting" class="{{buttonClasses}}" on:click="this.sendPublishCommand('guideZIPLHI')">
+    <span class="glyphicon-publish" aria-hidden="true"></span> Publish to LHI Production
+  </button>
 
+  <hr>
+
+  <p>To publish to LHI development servers, use the buttons below</p>
+  <button disabled:from="waiting" class="{{buttonClasses}}" on:click="this.sendPublishCommand('guideZIPLHIDEV')">
+    <span class="glyphicon-publish" aria-hidden="true"></span> Publish to LHI DEV
+  </button>
+  <button disabled:from="waiting" class="{{buttonClasses}}" on:click="this.sendPublishCommand('guideZIPMARLABS')">
+    <span class="glyphicon-publish" aria-hidden="true"></span> Publish to Marlabs DEV
+  </button>
+{{/if}}

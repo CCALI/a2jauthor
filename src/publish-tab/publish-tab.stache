@@ -10,7 +10,7 @@
 
   <p>To download your A2J Guided Interview®, use the button below</p>
   <button disabled:from="waiting" class="{{buttonClasses}}" on:click="this.sendPublishCommand('guidezip')">
-    <span class="glyphicon-file-archive" aria-hidden="true"></span> Download A2J Guide Files
+    <span class="glyphicon-file-archive" aria-hidden="true"></span> Download A2J Guided Interview Files
   </button>
 
   <hr>

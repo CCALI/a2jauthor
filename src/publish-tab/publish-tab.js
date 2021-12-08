@@ -73,6 +73,7 @@ export const PublishTabVM = DefineMap.extend('PublishTabVM', {
   // passed in via app.stache
   guide: {},
   guideId: {},
+  previewInterview: {}, // current viewer interview. Current answers in the preview (if any) are stored on .attr('answers')
 
   waiting: {
     type: 'boolean',
@@ -81,7 +82,14 @@ export const PublishTabVM = DefineMap.extend('PublishTabVM', {
 
   sendPublishCommand (cmd) {
     this.waiting = true
-    this.guide.publishedVersion = Date.now() + ''
+    const publishedVersion = Date.now() + ''
+    this.guide.publishedVersion = publishedVersion
+    if (this.previewInterview) {
+      this.previewInterview.attr('publishedVersion', publishedVersion)
+    }
+    if (window.gGuide) {
+      window.gGuide.publishedVersion = publishedVersion
+    }
 
     return this.guideSave().done(() => {
       const message = publishFunctionMap[cmd].message

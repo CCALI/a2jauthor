@@ -254,7 +254,7 @@
     <!-- Publish/Upload Tab -->
     <div class="tab-panel" id="tabsPublish">
       {{#is(page, "publish")}}
-        <publish-tab guide:from="guide" guideId:from="guideId" />
+        <publish-tab guide:from="guide" guideId:from="guideId" previewInterview:bind="previewInterview" />
       {{/is}}
     </div><!-- Publish/Upload Tab -->
 

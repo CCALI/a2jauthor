@@ -4,24 +4,36 @@
 about-layout {
   display: block;
 
-  #logo-image-progress, #end-image-progress {
-    .bar{
-        width: 0%;
-        height: 10px;
-        background-color: @brand-primary;
-        max-width: 100px;
+  .checkbox-setting {
+    label {
+      cursor: pointer;
     }
-    &.darken-div-anim{
-        animation: fadetogray 1s forwards;
-        max-width: 100px;
+    [type="checkbox"] {
+      height: 20px;
+      width: 20px;
+      vertical-align: bottom;
+      margin-right: 5px;
+    }
+  }
+
+  #logo-image-progress, #end-image-progress {
+    .bar {
+      width: 0%;
+      height: 10px;
+      background-color: @brand-primary;
+      max-width: 100px;
+    }
+    &.darken-div-anim {
+      animation: fadetogray 1s forwards;
+      max-width: 100px;
     }
     @keyframes fadetogray {
-        0%, 100% {
-            background-color: transparent;
-        }
-        100% {
-            background-color: @gray-lighter;
-        }
+      0%, 100% {
+        background-color: transparent;
+      }
+      100% {
+        background-color: @gray-lighter;
+      }
     }
   }
 }

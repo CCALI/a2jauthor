@@ -9,6 +9,7 @@
 <can-import from="a2jauthor/src/report/" />
 <can-import from="a2jauthor/src/report/toolbar/"/>
 <can-import from="a2jauthor/src/about/" />
+<can-import from="a2jauthor/src/publish-tab/" />
 <can-import from="a2jauthor/src/variables/tab/"/>
 <can-import from="a2jauthor/src/a2jorg/"/>
 <can-import from="a2jauthor/src/footer/"/>
@@ -257,34 +258,11 @@
     </div>
 
     <!-- Publish/Upload Tab -->
-    <div class="tab-panel page" id="tabsUpload">
-      <h3 class="page-title">Publish/Download</h3>
-
-      <p>To download your A2J Guided Interview<sup>®</sup>, use the buttons below</p>
-      <button id="guideZIP" class="btn btn-default btn-wide-md"><span class="glyphicon-file-archive" aria-hidden="true"></span> Download ZIP</button>
-      <button id="guideDownload" class="btn btn-default btn-wide-md"><span class="glyphicon-folder-download" aria-hidden="true"></span> Download A2J</button>
-
-      <hr>
-      <p>To publish to A2J.org, use the buttons below</p>
-        <button id="guideZIPA2JPROD" class="btn btn-default btn-wide-md"><span class="glyphicon-publish" aria-hidden="true"></span> Publish to A2J.org</button>
-      {{#if (showTesting)}}
-        <p>To publish to A2J.org development servers, use the buttons below</p>
-          <button id="guideZIPA2JLOCAL" class="btn btn-default btn-md"><span class="glyphicon-publish" aria-hidden="true"></span> local.a2j.org</button>
-          <button id="guideZIPA2JDEV" class="btn btn-default btn-md"><span class="glyphicon-publish" aria-hidden="true"></span> dev.a2j.org</button>
-          <button id="guideZIPA2JSTAGE" class="btn btn-default btn-md"><span class="glyphicon-publish" aria-hidden="true"></span> staging.a2j.org</button>
-      {{/if}}
-
-      <hr>
-      <p>To publish to LawHelp Interactive, use the buttons below</p>
-      <button id="guideZIPLHIQA" class="btn btn-default btn-wide-md"><span class="glyphicon-publish" aria-hidden="true"></span> Publish to RebuildQA</button>
-      <button id="guideZIPLHI" class="btn btn-default btn-wide-md"><span class="glyphicon-publish" aria-hidden="true"></span> Publish to LHI Production</button>
-      {{#if (showTesting)}}
-        <p>To publish to LHI development servers, use the buttons below</p>
-        <button id="guideZIPLHIDEV" class="btn btn-default btn-wide-md"><span class="glyphicon-publish" aria-hidden="true"></span> Publish to LHI DEV</button>
-        <button id="guideZIPMARLABS" class="btn btn-default btn-wide-md"><span class="glyphicon-publish" aria-hidden="true"></span> Publish to Marlabs DEV</button>
-      {{/if}}
-
-    </div><!-- id="tabsUpload" -->
+    <div class="tab-panel" id="tabsPublish">
+      {{#is(page, "publish")}}
+        <publish-tab guide:from="guide" guideId:from="guideId" previewInterview:bind="previewInterview" />
+      {{/is}}
+    </div><!-- Publish/Upload Tab -->
 
     <!-- A2J Org Tab -->
       <div class="tab-panel page" id="a2jOrgDashboard">

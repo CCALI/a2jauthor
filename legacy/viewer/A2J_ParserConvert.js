@@ -40,10 +40,13 @@ function parseXML_A2J_to_CAJA (TEMPLATE) {	// Parse A2J into CAJA
   guide.modifydate = ''
   guide.notes = cr2P(makestr(TEMPLATE.find('HISTORY').xml()))
   guide.sendfeedback = textToBool(TEMPLATE.find('SENDFEEDBACK').text(), false)
+  guide.useMobileUI = textToBool(TEMPLATE.find('USEMOBILEUI').text(), false)
+  guide.showNavDefault = textToBool(TEMPLATE.find('SHOWNAVDEFAULT').text(), false)
   guide.emailContact = makestr(TEMPLATE.find('SENDFEEDBACKEMAIL').text())
   guide.subjectarea = guide.jurisdiction
   guide.title = TEMPLATE.find('TITLE').text()
   guide.version = makestr(TEMPLATE.find('VERSION').text())
+  guide.publishedVersion = makestr(TEMPLATE.find('PUBLISHEDVERSION').text())
   guide.viewer = 'A2J'
   guide.endImage = TEMPLATE.find('ENDGRAPHIC').text()
   guide.logoImage = TEMPLATE.find('LOGOGRAPHIC').text()

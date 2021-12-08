@@ -9,7 +9,7 @@ export default {
   AJAXLoader: '<span class="loader">&nbsp;</span>',
 
   A2JVersionNum: '7.0', // VersionInfo.verNum
-  A2JVersionDate: '2021-02-16',
+  A2JVersionDate: '2021-08-11',
 
   // CAVersionNum:'5.0.0',
   // CAVersionDate:'2013-04-15',
@@ -89,6 +89,9 @@ export default {
   // 2014-06-04 Button-based repeat options
   RepeatVarSetOne: '=1',
   RepeatVarSetPlusOne: '+=1',
+
+  // Navigation/Page History for fast-forwarding back to the last viewed page if answers are loaded
+  PAGEHISTORY: 'A2J Visited Pages',
 
   // HotDocs ANX
   // 4/8/04 This is the DTD for the HotDocs ANX file format.

@@ -571,12 +571,9 @@ switch ($command){
 			$LHI_POST_URL = "http://lhiuat.cloudapp.net/Upload/A2JLoader.aspx?Session=" . $gid;
 		} else if ($command=="guideZIPLHI") {
 			$LHI_POST_URL = "https://lawhelpinteractive.org/Upload/A2JLoader.aspx?Session=" . $gid; // LHI production site
-		} else if ($command=="guideZIPA2JLOCAL") {
-			$LHI_POST_URL = "http://localhost/api/guide";
-		} else if ($command=="guideZIPA2JDEV") {
-			$LHI_POST_URL = "https://dev.a2j.org/api/guide";
 		} else if ($command=="guideZIPA2JPROD") {
-			$LHI_POST_URL = "https://a2j.org/api/guide";
+			$path = dirname(__FILE__, 2);
+			$LHI_POST_URL = parse_ini_file($path . '/config_env.ini')['A2J_POST_URL']; //"https://a2j.org/api/guide";
 		} else if ($command=="guideZIPA2JSTAGE") {
 			$LHI_POST_URL = "https://staging.a2j.org/api/guide";
 		}

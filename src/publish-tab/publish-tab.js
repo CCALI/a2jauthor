@@ -3,7 +3,7 @@ import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './publish-tab.stache'
 
-const LHICallback = function guideZipped (data) {
+const LHICallback = function (data) {
   window.setProgress('')
   window.gGuideID = data.gid
   if (data.url !== '') {
@@ -11,7 +11,7 @@ const LHICallback = function guideZipped (data) {
   }
 }
 
-const A2JOrgCallback = function guideZipped (data) {
+const A2JOrgCallback = function (data) {
   window.setProgress('')
   window.gGuideID = data.gid
   if (data.url !== '') {

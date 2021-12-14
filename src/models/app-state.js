@@ -280,6 +280,8 @@ export default DefineMap.extend('AuthorAppState', {
     }
   },
 
+  reloadInterviews: { serialize: false }, // function passed up from interviews-page
+
   init () {
     const appState = this
     // TODO: this global can be removed when legacy code refactored out

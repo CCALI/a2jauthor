@@ -210,12 +210,13 @@
     <div class="tab-panel has-toolbar" id="tabsGuides">
       {{#is (page, "interviews")}}
         {{#if(mergeTool)}}
-          <merge-tool vm:targets:from="interviews" vm:sources:from="interviews" open:bind="mergeTool" />
-          <a on:click="mergeTool = false" class="btn btn-default" style="margin: 25px;">Cancel without saving</a>
+          <a on:click="mergeTool = false" class="btn btn-default" style="position: absolute; right: 2rem; margin-top: 3.5rem;">Exit without saving</a>
+          <merge-tool vm:targets:from="interviews" vm:sources:from="interviews" reloadInterviews:from="reloadInterviews" open:bind="mergeTool" />
         {{/if}}
         <interviews-toolbar interviews:from="interviews"></interviews-toolbar>
         <interviews-page
           interviews:to="interviews"
+          reloadInterviews:to="reloadInterviews"
           previewInterview:bind="previewInterview"
           traceMessage:from="traceMessage"
           showDebugPanel:to="showDebugPanel"

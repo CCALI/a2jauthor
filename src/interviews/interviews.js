@@ -42,6 +42,10 @@ export const InterviewsVM = DefineMap.extend('InterviewsVM', {
     }
   },
 
+  reloadInterviews () {
+    Guide.findAll().then(i => (this.interviews = i))
+  },
+
   saveCurrentGuidePromise: {
     get () {
       // this assures any changes to current guide are saved before loading

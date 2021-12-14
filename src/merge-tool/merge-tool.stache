@@ -151,6 +151,7 @@
     {{else}}
       {{^if(mergeStack.length)}}
         <legend>Merging into a clone of "{{target.guide.title}}"</legend>
+        <label class="merge-title control-label">New Title: <input type="text" class="form-control search-input" value:bind="mergeTitle"></label>
         {{#if(source.guide)}}
           <accordion-checkbox
             children:from="target.accordionFromGuide"
@@ -161,6 +162,7 @@
         {{/if}}
       {{else}}
         <legend>Continue merging into the clone of "{{target.guide.title}}"</legend>
+        <label class="merge-title control-label">New Title: <input type="text" class="form-control search-input" value:bind="mergeTitle"></label>
         {{#if(source.guide)}}
           <accordion-checkbox
             children:from="mergedTarget.accordionFromGuide"
@@ -178,18 +180,18 @@
       {{^if(source.guide)}}
         {{^if(source.loadPromise)}}
           {{^if(mergeStack.length)}}
-            <legend>Step 2: Select a source to pull new parts from</legend>
-            {{>interviewList (searchFilter='sourcesFilter' listOfGuides=sources mtg=source)}}
             <div class="actions">
               <button class="btn btn-default" on:click="cancelTarget()">Cancel; Choose a different starting point</button>
             </div>
-          {{else}}
-            <legend>Step 3: Finish or select a source to pull more parts from</legend>
+            <legend>Step 2: Select a source to pull new parts from</legend>
             {{>interviewList (searchFilter='sourcesFilter' listOfGuides=sources mtg=source)}}
+          {{else}}
             <div class="actions">
               <button class="btn btn-default" on:click="undoPreviousMerge()">Undo Previous Merge</button>
               <button class="btn btn-primary" on:click="saveMerged(mergedTarget)">Finished; Save My Interview</button>
             </div>
+            <legend>Step 3: Finish or select a source to pull more parts from</legend>
+            {{>interviewList (searchFilter='sourcesFilter' listOfGuides=sources mtg=source)}}
           {{/if}}
         {{else}}
           {{#if(source.loadPromise.isPending)}}
@@ -199,16 +201,16 @@
           {{/if}}
         {{/if}}
       {{else}}
-        <legend>Select the items you'd like to merge from "{{source.guide.title}}"</legend>
-        <accordion-checkbox
-          children:from="source.accordionFromGuide"
-          this:to="sourceAccordionVM"
-        />
         <div class="actions">
           <button class="btn btn-default" on:click="cancelMerge()">Cancel; Choose a different source</button>
           <button class="btn btn-primary" on:click="mergeSelected()">Merge Selected</button>
           <button class="btn btn-primary" on:click="safeMergeSelected()">Safe Merge Selected</button>
         </div>
+        <legend>Select the items you'd like to merge from "{{source.guide.title}}"</legend>
+        <accordion-checkbox
+          children:from="source.accordionFromGuide"
+          this:to="sourceAccordionVM"
+        />
       {{/if}}
     {{/if}}
   </fieldset>

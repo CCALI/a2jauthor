@@ -19,8 +19,9 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
     value ({ lastSet, listenTo, resolve }) {
       listenTo('loadPromise', (ev, newVal) => {
         newVal && newVal.then(guide => {
-          // TODO: delete id because this should be a clone
-          resolve(new Guide(guide))
+          const copy = new Guide(guide)
+          // TODO: delete id because this should be a clone?
+          resolve(copy)
         }) // todo: catch
       })
 
@@ -279,6 +280,8 @@ const canModelGuideListToPOJOArraySetter = v => {
 export const MergeToolVM = DefineMap.extend('MergeToolVM', {
   // set to false and it will close from app.stache binding
   open: {},
+  // passed in from app.stache (source is in interviews-page), a function to reload interviews
+  reloadInterviews: {},
   // set to undefined to refresh the interviews list
   // interviewsPromise: {},
   // on the left, a list of target guides to show if one isn't selected yet
@@ -339,7 +342,16 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
         Object.assign(target.pages, p.pages)
       })
     }
+    target.title = this.mergeTitle || target.title
     return new MergeToolGuide({ guide: new Guide(target) })
+  },
+  mergeTitle: {
+    type: 'string',
+    default: '',
+    get (lsv) {
+      const today = window.jsDate2mdy(window.today2jsDate())
+      return lsv || `Merged Interview (${today})`
+    }
   },
 
   // merge the selected values into the the target guide without any checks
@@ -459,7 +471,7 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
     const guide = mergedTarget.guide.serialize()
     delete guide.authorId
     const today = window.jsDate2mdy(window.today2jsDate())
-    guide.title = `Merged Interview (${today})`
+    guide.title = this.mergeTitle || `Merged Interview (${today})`
     guide.version = today
     guide.notes = today + ' interview created.'
     // included JSON form of guide XML
@@ -480,6 +492,9 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
       } else {
         var newgid = data.gid // new guide id
         guide.id = newgid
+        if (typeof vm.reloadInterviews === 'function') {
+          vm.reloadInterviews()
+        }
         vm.open = false
       }
     })

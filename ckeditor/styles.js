@@ -59,9 +59,7 @@ CKEDITOR.stylesSet.add( 'default', [
 	{ name: 'Superscript',		element: 'sup' },
 	*/
 
-	{ name: 'Big',				element: 'big' },
 	{ name: 'Small',			element: 'small' },
-	{ name: 'Typewriter',		element: 'tt' },
 
 	{ name: 'Computer Code',	element: 'code' },
 	{ name: 'Keyboard Phrase',	element: 'kbd' },
@@ -95,9 +93,7 @@ CKEDITOR.stylesSet.add( 'default', [
 		name: 'Compact Table',
 		element: 'table',
 		attributes: {
-			cellpadding: '5',
 			cellspacing: '0',
-			border: '1',
 			bordercolor: '#ccc'
 		},
 		styles: {

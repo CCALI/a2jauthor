@@ -391,7 +391,7 @@ switch ($command){
 		}
 		break;
 
-		case 'guidesavenew':
+	case 'guidesavenew':
 		// Saving new guide
 		$title=($mysqli->real_escape_string($_REQUEST['title']));
 		$xml=$_REQUEST['guide'];

@@ -708,9 +708,9 @@ function buildPopupFieldSet (page) {
     window.form.pickAudio({
       label: 'Text Audio:',
       placeholder: '',
-      value: page.textAudioURL,
+      value: (page.textAudioURL || '').trim(),
       change: function (val, page) {
-        page.textAudioURL = val
+        page.textAudioURL = (val || '').trim()
       }
     })
   )
@@ -792,9 +792,9 @@ function buildQuestionFieldSet (page) {
     window.form.pickAudio({
       label: 'Audio:',
       placeholder: '',
-      value: page.textAudioURL,
+      value: (page.textAudioURL || '').trim(),
       change: function (val, page) {
-        page.textAudioURL = val
+        page.textAudioURL = (val || '').trim()
       }
     })
   )
@@ -885,9 +885,9 @@ function buildLearnMoreFieldSet (page) {
       name: 'helpAudio',
       label: 'Audio:',
       placeholder: '',
-      value: page.helpAudioURL,
+      value: (page.helpAudioURL || '').trim(),
       change: function (val, page) {
-        page.helpAudioURL = val
+        page.helpAudioURL = (val || '').trim()
       }
     })
   )
@@ -897,9 +897,9 @@ function buildLearnMoreFieldSet (page) {
       name: 'helpGraphic',
       label: 'Graphic:',
       placeholder: '',
-      value: page.helpImageURL,
+      value: (page.helpImageURL || '').trim(),
       change: function (val, page) {
-        page.helpImageURL = val
+        page.helpImageURL = (val || '').trim()
       }
     })
   )
@@ -920,9 +920,9 @@ function buildLearnMoreFieldSet (page) {
       name: 'helpVideo',
       label: 'Video:',
       placeholder: '',
-      value: page.helpVideoURL,
+      value: (page.helpVideoURL || '').trim(),
       change: function (val, page) {
-        page.helpVideoURL = val
+        page.helpVideoURL = (val || '').trim()
       }
     })
   )

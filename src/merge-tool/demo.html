@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;merge-tool&gt;</title>
+  </head>
+
+  <body>
+    <div id="demo-html" />
+
+    <script src="../../node_modules/steal/steal.js"
+      data-main="@empty">
+    </script>
+
+    <script type="steal-module">
+      import MergeTool from "~/src/merge-tool/"
+      // import targetGuide from "~/src/merge-tool/resources/targetGuide.json"
+      // import sourceGuide from "~/src/merge-tool/resources/sourceGuide.json"
+      // import Guide from '~/src/models/app-state-guide'
+      import "~/styles/"
+      import "~/styles.less"
+
+      // replace any global guide with safe demo guide
+      //  window.gGuide = { title: 'canjs demo gGuide'}
+
+      // a list of Interviews, same structure/shape as what's returned returned from Guide.findAll() in src/interviews/interviews.js
+      const blank = {
+        id: 'A2J',
+        owned: true,
+        title: 'Blank Interview (today)',
+        details: {
+          modified: '2021-10-20 01:23:45',
+          size: 2077
+        },
+        // these two are copies of details from define map
+        fileSize: 2077,
+        lastModified: '2021-10-20 01:23:45'
+      }
+      const sources = [
+        {
+          id: 'targetGuide',
+          owned: true,
+          title: 'My Interview (6/30/2021)',
+          details: {
+            modified: '2021-06-30 01:23:45',
+            size: 2077
+          },
+          // these two are copies of details from define map
+          fileSize: 2077,
+          lastModified: '2021-06-30 01:23:45'
+        },
+        {
+          id: 'sourceGuide',
+          owned: true,
+          title: 'AA Testing AuthorDev GI 2_March and May 2016',
+          details: {
+            modified: '2021-10-11 09:57:28',
+            size: 4149
+          },
+          // these two are copies of details from define map
+          fileSize: 4149,
+          lastModified: '2021-10-11 09:57:28'
+        }
+      ]
+
+      // passing the viewModel with guide data emulates stache bindings
+      const mergeToolComponent = new MergeTool({viewModel: {targets: [blank, ...sources], sources}})
+      window.vm = mergeToolComponent.viewModel
+
+      const demoHtml = document.getElementById('demo-html')
+      demoHtml.appendChild(mergeToolComponent.element)
+    </script>
+  </body>
+</html>

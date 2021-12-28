@@ -1,0 +1,93 @@
+<can-import from='can-stache-converters' />
+<can-import from="./accordion-checkbox.less" />
+
+{{<accordionDetail}}
+  <li class="accordion-detail">
+    {{#if(./hasSubDetails)}}
+      <button
+        aria-expanded="{{#if(./expanded)}}true{{else}}false{{/if}}"
+        aria-controls="{{./idRoot}}-subdetails"
+        aria-label="{{#if(./expanded)}}Collapse{{else}}Expand{{/if}} {{./label}}"
+        on:click="./toggleExpanded()"
+      >
+        <span class="{{#if(./expanded)}}glyphicon-down-open{{else}}glyphicon-right-open{{/if}}" aria-hidden="true"></span>
+      </button>
+    {{else}}
+      <span aria-hidden="true" class="leaf-spacer"></span>
+    {{/if}}
+    <div id="{{./idRoot}}-label" on:click="./toggleExpanded()">
+      {{{./label}}}
+      {{#if(./details.length)}}({{./details.length}}){{/if}}
+    </div>
+    {{#if(./hasSubDetails)}}
+      {{#if(./expanded)}}
+        <ul
+          class="subdetails"
+          id="{{./idRoot}}-subdetails"
+          role="region"
+          aria-labelledby="{{./idRoot}}-label"
+        >
+          {{#each(./details)}}
+            {{>accordionDetail .}}
+          {{/each}}
+        </ul>
+      {{/if}}
+    {{/if}}
+  </li>
+{{/accordionDetail}}
+
+{{<accordionItem}}
+  <li class="accordion-item">
+    {{#if(./hasChildrenOrDetails)}}
+      <button
+        aria-expanded="{{#if(./expanded)}}true{{else}}false{{/if}}"
+        aria-controls="{{./idRoot}}-children"
+        aria-label="{{#if(./expanded)}}Collapse{{else}}Expand{{/if}} {{./label}}"
+        on:click="./toggleExpanded()"
+      >
+        <span class="{{#if(./expanded)}}glyphicon-down-open{{else}}glyphicon-right-open{{/if}}" aria-hidden="true"></span>
+      </button>
+    {{else}}
+      <span aria-hidden="true" class="leaf-spacer"></span>
+    {{/if}}
+    {{#if(showCheckboxes())}}
+      <label id="{{./idRoot}}-label">
+        <input type="checkbox"
+          checked:bind="./displayChecked"
+          class="{{#if(./fullyChecked)}}fully-checked{{/if}}"
+          on:click="./checkboxClicked()"
+        >
+        {{./label}}
+        {{#if(./children.length)}}({{./checkedChildrenCount}}/{{./children.length}}){{/if}}
+      </label>
+    {{else}}
+      <div id="{{./idRoot}}-label" class="accordion-label" on:click="./toggleExpanded()">
+        {{./label}}
+        {{#if(./children.length)}}({{./children.length}}){{/if}}
+      </div>
+    {{/if}}
+    {{#if(./hasChildrenOrDetails)}}
+      {{#if(./expanded)}}
+        <ul
+          class="children"
+          id="{{./idRoot}}-children"
+          role="region"
+          aria-labelledby="{{./idRoot}}-label"
+        >
+          {{#each(./details)}}
+            {{>accordionDetail .}}
+          {{/each}}
+          {{#each(./children)}}
+            {{>accordionItem .}}
+          {{/each}}
+        </ul>
+      {{/if}}
+    {{/if}}
+  </li>
+{{/accordionItem}}
+
+<ul class="{{^if(showCheckboxes())}}no-checkboxes{{/if}}">
+  {{#each(./children)}}
+    {{>accordionItem .}}
+  {{/each}}
+</ul>

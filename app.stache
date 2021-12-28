@@ -14,6 +14,7 @@
 <can-import from="a2jauthor/src/a2jorg/"/>
 <can-import from="a2jauthor/src/footer/"/>
 <can-import from="a2jauthor/src/a2j-analytics/"/>
+<can-import from="a2jauthor/src/merge-tool/"/>
 <can-import from="a2jauthor/styles/"/>
 <can-import from="a2jauthor/styles.less"/>
 
@@ -208,12 +209,18 @@
     <!-- Interview Tab -->
     <div class="tab-panel has-toolbar" id="tabsGuides">
       {{#is (page, "interviews")}}
-        <interviews-toolbar interviews:to="interviews"></interviews-toolbar>
+        {{#if(mergeTool)}}
+          <a on:click="mergeTool = false" class="btn btn-default" style="position: absolute; right: 2rem; margin-top: 3.5rem;">Exit without saving</a>
+          <merge-tool vm:targets:from="interviews" vm:sources:from="interviews" reloadInterviews:from="reloadInterviews" open:bind="mergeTool" />
+        {{/if}}
+        <interviews-toolbar interviews:from="interviews"></interviews-toolbar>
         <interviews-page
-          interviews:from="interviews"
+          interviews:to="interviews"
+          reloadInterviews:to="reloadInterviews"
           previewInterview:bind="previewInterview"
           traceMessage:from="traceMessage"
-          showDebugPanel:to="showDebugPanel">
+          showDebugPanel:to="showDebugPanel"
+          mergeTool:bind="mergeTool">
         </interviews-page>
       {{/is}}
     </div>

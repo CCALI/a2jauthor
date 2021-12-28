@@ -1,0 +1,1713 @@
+{
+  "authorId": 45,
+  "tool": "A2J",
+  "toolversion": "2012-04-19",
+  "avatar": "avatar1",
+  "avatarSkinTone": "",
+  "avatarHairColor": "",
+  "guideGender": "Female",
+  "completionTime": "",
+  "copyrights": "",
+  "createdate": "",
+  "credits": "",
+  "description": "<P>Created this GI to test AuthorDev against <A href=\"http://https://docs.google.com/spreadsheets/d/171aD1nqJpM7WUeRaRumBtfov7Pyim88kb2pgTl-4M2E/edit?usp=sharing\" style=\"line-height: 1.42857;\">checklist </A></P>",
+  "emailContact": "webmaster@a2jauthor.org",
+  "jurisdiction": "All places",
+  "language": "en",
+  "modifydate": "",
+  "notes": "3/28/2016 interview created.05/02/2016 re-working on this GI after A2J 6 was moved to AuthorDev server. ",
+  "sendfeedback": true,
+  "subjectarea": "Jurisdiction of my interview",
+  "title": "AA Testing AuthorDev GI 2_March  and May 2016",
+  "version": "3/28/2016",
+  "viewer": "A2J",
+  "endImage": "",
+  "logoImage": "",
+  "authors": [],
+  "firstPage": "1-Introduction",
+  "exitPage": "",
+  "steps": [
+    {
+      "number": "1",
+      "text": "The Start"
+    },
+    {
+      "number": "2",
+      "text": "Jessica lower case test Information About Everything"
+    },
+    {
+      "number": "3",
+      "text": "Your Spouse's Information"
+    },
+    {
+      "number": "4",
+      "text": "Repeat Loops"
+    },
+    {
+      "number": "5",
+      "text": "The End"
+    }
+  ],
+  "vars": {
+    "user gender": {
+      "name": "User Gender",
+      "type": "Text",
+      "repeating": false,
+      "comment": "User's gender will be used to display appopriate avatar."
+    },
+    "user avatar": {
+      "name": "User Avatar",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "client first name te": {
+      "name": "Client first name TE",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "client middle name te": {
+      "name": "Client middle name TE",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "client last name te": {
+      "name": "Client last name TE",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "a2j version": {
+      "name": "A2J Version",
+      "type": "Text",
+      "repeating": false,
+      "comment": "A2J Author Version"
+    },
+    "a2j interview id": {
+      "name": "A2J Interview ID",
+      "type": "Text",
+      "repeating": false,
+      "comment": "Guide ID"
+    },
+    "a2j bookmark": {
+      "name": "A2J Bookmark",
+      "type": "Text",
+      "repeating": false,
+      "comment": "Current Page"
+    },
+    "a2j history": {
+      "name": "A2J History",
+      "type": "Text",
+      "repeating": false,
+      "comment": "Progress History List (XML)"
+    },
+    "a2j navigation tf": {
+      "name": "A2J Navigation TF",
+      "type": "TF",
+      "repeating": false,
+      "comment": "Allow navigation?"
+    },
+    "a2j interview incomplete tf": {
+      "name": "A2J Interview Incomplete TF",
+      "type": "TF",
+      "repeating": false,
+      "comment": "Reached Successful Exit?"
+    },
+    "a2j step 0": {
+      "name": "A2J Step 0",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "a2j step 1": {
+      "name": "A2J Step 1",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "a2j step 2": {
+      "name": "A2J Step 2",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "a2j step 3": {
+      "name": "A2J Step 3",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "a2j step 4": {
+      "name": "A2J Step 4",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "a2j step 5": {
+      "name": "A2J Step 5",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "a2j step 6": {
+      "name": "A2J Step 6",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "a2j step 7": {
+      "name": "A2J Step 7",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "a2j step 8": {
+      "name": "A2J Step 8",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "a2j step 9": {
+      "name": "A2J Step 9",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "a2j step 10": {
+      "name": "A2J Step 10",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "a2j step 11": {
+      "name": "A2J Step 11",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "net worth nu": {
+      "name": "Net worth NU",
+      "type": "Number",
+      "repeating": false,
+      "comment": ""
+    },
+    "text long te": {
+      "name": "Text long TE",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "text pick from list mc": {
+      "name": "Text pick from list MC",
+      "type": "MC",
+      "repeating": false,
+      "comment": ""
+    },
+    "text pick from list 2 mc": {
+      "name": "Text pick from list 2 MC",
+      "type": "MC",
+      "repeating": false,
+      "comment": ""
+    },
+    "number 1": {
+      "name": "Number 1",
+      "type": "Number",
+      "repeating": false,
+      "comment": ""
+    },
+    "number 2": {
+      "name": "Number 2",
+      "type": "Number",
+      "repeating": false,
+      "comment": ""
+    },
+    "number 3": {
+      "name": "Number 3",
+      "type": "Number",
+      "repeating": false,
+      "comment": ""
+    },
+    "number 4": {
+      "name": "Number 4",
+      "type": "Number",
+      "repeating": false,
+      "comment": ""
+    },
+    "number 5": {
+      "name": "Number 5",
+      "type": "Number",
+      "repeating": false,
+      "comment": ""
+    },
+    "number 6": {
+      "name": "Number 6",
+      "type": "Number",
+      "repeating": false,
+      "comment": ""
+    },
+    "favorite color mc": {
+      "name": "Favorite color MC",
+      "type": "MC",
+      "repeating": false,
+      "comment": ""
+    },
+    "assetcount": {
+      "name": "AssetCount",
+      "type": "Number",
+      "repeating": false,
+      "comment": ""
+    },
+    "asset value nu": {
+      "name": "Asset value NU",
+      "type": "Number",
+      "repeating": true,
+      "comment": ""
+    },
+    "asset name te": {
+      "name": "Asset name TE",
+      "type": "Text",
+      "repeating": true,
+      "comment": ""
+    },
+    "number of children nu": {
+      "name": "Number of children NU",
+      "type": "Number",
+      "repeating": false,
+      "comment": ""
+    },
+    "child dob da": {
+      "name": "Child DOB DA",
+      "type": "Date",
+      "repeating": true,
+      "comment": ""
+    },
+    "child name first te": {
+      "name": "Child name first TE",
+      "type": "Text",
+      "repeating": true,
+      "comment": ""
+    },
+    "total asset value nu": {
+      "name": "Total asset value NU",
+      "type": "Number",
+      "repeating": false,
+      "comment": ""
+    },
+    "childcount": {
+      "name": "ChildCount",
+      "type": "Number",
+      "repeating": false,
+      "comment": ""
+    },
+    "client name full te": {
+      "name": "Client name full TE",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "date of filing da": {
+      "name": "Date of filing DA",
+      "type": "Date",
+      "repeating": false,
+      "comment": ""
+    },
+    "testing case tf": {
+      "name": "Testing case TF",
+      "type": "TF",
+      "repeating": false,
+      "comment": ""
+    },
+    "testing null": {
+      "name": "Testing NULL",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "testing script te": {
+      "name": "Testing script TE",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "testing script 2 te": {
+      "name": "Testing script 2 TE",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "a2j step 12": {
+      "name": "A2J Step 12",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "ssn te": {
+      "name": "SSN TE",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "zipcode te": {
+      "name": "Zipcode TE",
+      "type": "Text",
+      "repeating": false,
+      "comment": ""
+    },
+    "loop radio test mc": {
+      "name": "Loop radio test MC",
+      "type": "MC",
+      "repeating": true,
+      "comment": ""
+    }
+  },
+  "pages": {
+    "Test Pop up": {
+      "name": "Test Pop up",
+      "type": "Popup",
+      "step": 0,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "This <I>pop up</I> is a <A href=\"http://google.com\" target=\"_blank\">test</A> - the word test is a hyperlink to <B>Google</B>. <BR/><BLOCKQUOTE>Indent test</BLOCKQUOTE><BLOCKQUOTE>Indenting makes the font size change. I can't change it back. Which is annoying. </BLOCKQUOTE>Unless I un-indent the text. <BR/>Go to <A href=\"POPUP://Second layer deep pop up\">2nd pop up</A>. Your gender is %%[User Gender]%%",
+      "textCitation": "",
+      "textAudioURL": "Voice0004.mp3",
+      "learn": "",
+      "help": "",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [],
+      "fields": [],
+      "codeBefore": "",
+      "codeAfter": "",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "1-Introduction": {
+      "name": "1-Introduction",
+      "type": "A2J",
+      "step": 0,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "<P>This is an introduction with a <A href=\"POPUP://Test Pop up\">pop-up</A>. </P><P/><BLOCKQUOTE><P>Jessica indent test</P><P><BR/></P></BLOCKQUOTE><P/>fgdfg<P/>",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "Check pop up in a Learn More",
+      "help": "Click this <A href=\"POPUP://Test Pop up\">pop up</A><BR/>",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Continue",
+          "next": "2-Gender",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [
+        {
+          "type": "text",
+          "label": "First:",
+          "name": "Client first name TE",
+          "value": "",
+          "order": "ASC",
+          "required": true,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "Jessica",
+          "invalidPrompt": "You must type a response in the highlighted space before you can continue."
+        },
+        {
+          "type": "text",
+          "label": "Middle:",
+          "name": "Client middle name TE",
+          "value": "",
+          "order": "ASC",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "Hope",
+          "invalidPrompt": "You must type a response in the highlighted space before you can continue."
+        },
+        {
+          "type": "text",
+          "label": "Last:",
+          "name": "Client last name TE",
+          "value": "",
+          "order": "ASC",
+          "required": true,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "Frank",
+          "invalidPrompt": "You must type a response in the highlighted space before you can continue."
+        }
+      ],
+      "codeBefore": "SET [Testing NULL] TO \"Jessica\"",
+      "codeAfter": "IF HASANSWERED([Client middle name TE]) <BR/>SET [Text long TE] TO \"Middle name entered.\"<BR/>ELSE<BR/>SET [Text long TE] TO \"No middle name entered.\"<BR/>END IF<BR/><BR/><BR/>IF HASANSWERED([Client middle name TE])<BR/>SET [Client name full TE] TO [Client first name TE] + \" \" + [Client middle name TE] + \" \" + [Client last name TE]<BR/>ELSE<BR/>SET [Client name full TE] TO [Client first name TE] + \" \" + [Client last name TE]<BR/>END IF",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "2-Gender": {
+      "name": "2-Gender",
+      "type": "A2J",
+      "step": 0,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "Choose your <A href=\"http://google.com\">gender</A>.  Adding a <A href=\"POPUP://Test Pop up\">pop up</A> Testing NULL should %%[Testing NULL]%%",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "Why do you ask?",
+      "help": "We ask to create an avatar to represent you. <A href=\"http://google.com\">Pick whatever gender</A> best represents you. ",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Continue",
+          "next": "3- testing Learn Mores",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [
+        {
+          "type": "gender",
+          "label": "Gender:",
+          "name": "User Gender",
+          "value": "",
+          "order": "",
+          "required": true,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        }
+      ],
+      "codeBefore": "IF HASANSWERED([Client middle name TE])<BR/>SET [A2J Step 2] TO \"Cool, you have a nice middle name!\"<BR/>END IF",
+      "codeAfter": "",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "3- testing Learn Mores": {
+      "name": "3- testing Learn Mores",
+      "type": "A2J",
+      "step": 0,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "This question is designed to show how a Learn More works. An <A href=\"POPUP://Test Pop up\">indenting tes</A>t is also here. <BLOCKQUOTE>* Test item 1* Test item 2* Test item 3</BLOCKQUOTE>",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "How does a Learn More work?",
+      "help": "A Learn More is a way to give the end user more information if they want it. ",
+      "helpCitation": "",
+      "helpAudioURL": "Lion Roar-SoundBible.com-718441804 (1).mp3",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Continue",
+          "next": "4- testing Learn Mores _ graphic",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [],
+      "codeBefore": "",
+      "codeAfter": "",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "4- testing Learn Mores _ graphic": {
+      "name": "4- testing Learn Mores _ graphic",
+      "type": "A2J",
+      "step": 0,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "This question is designed to show how a Learn More works.",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "How does a Learn More Graphic look like?",
+      "help": "It looks <I>like </I><B>this</B>. ",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "This says 123456",
+      "helpImageURL": "123456.png",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Continue",
+          "next": "5- testing Learn Mores _ video",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [],
+      "codeBefore": "",
+      "codeAfter": "SET [Testing script TE] TO \"Worked\"",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "5- testing Learn Mores _ video": {
+      "name": "5- testing Learn Mores _ video",
+      "type": "A2J",
+      "step": 0,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "This question is designed to show how a Learn More works.",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "How does a Learn More Video look like?",
+      "help": "It looks <I>like </I><B>this</B>. ",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "This says 123456",
+      "helpImageURL": "",
+      "helpVideoURL": "Snapchat--7391632219579838662.mp4",
+      "buttons": [
+        {
+          "label": "Move on",
+          "next": "6-Testing NULL, TRUE/FALSE",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [],
+      "codeBefore": "SET [Testing script 2 TE] TO \"Worked\"",
+      "codeAfter": "",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "1-Text and Date fields test": {
+      "name": "1-Text and Date fields test",
+      "type": "A2J",
+      "step": 1,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "<P>Testing text fields and date fields</P>",
+      "textCitation": "",
+      "textAudioURL": "Lion Roar-SoundBible.com-718441804 (2).mp3",
+      "learn": "",
+      "help": "",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Continue",
+          "next": "2- Number field types test",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [
+        {
+          "type": "text",
+          "label": "Text short",
+          "name": "Client first name TE",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "textlong",
+          "label": "Text long",
+          "name": "Text long TE",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "textpick",
+          "label": "Pick from list external list",
+          "name": "Text pick from list MC",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "US_states (6).xml",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "textpick",
+          "label": "Pick from list internal list",
+          "name": "Text pick from list 2 MC",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "<option>House</option><option>Car</option><option>Boat</option><option>Jet Ski</option><option>Villa</option><option>Apartment</option>",
+          "sample": "",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "datemdy",
+          "label": "Test bad dates",
+          "name": "Child DOB DA",
+          "value": "",
+          "order": "",
+          "required": true,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "datemdy",
+          "label": "Leave blank to test that",
+          "name": "Date of filing DA",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        }
+      ],
+      "codeBefore": "",
+      "codeAfter": "",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "2- Number field types test": {
+      "name": "2- Number field types test",
+      "type": "A2J",
+      "step": 1,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "<P>Testing number fields - all 6 types</P>",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "",
+      "help": "",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Save",
+          "next": "1-Test dates",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [
+        {
+          "type": "number",
+          "label": "Number max value 15",
+          "name": "Number 1",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "0",
+          "max": "15",
+          "calculator": true,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "numberdollar",
+          "label": "Dollar",
+          "name": "Number 2",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": true,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "numberssn",
+          "label": "SSN",
+          "name": "Number 3",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "numberphone",
+          "label": "Phone",
+          "name": "Number 4",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "numberzip",
+          "label": "Zip code",
+          "name": "Number 5",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "1",
+          "max": "",
+          "calculator": false,
+          "maxChars": "5",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "numberpick",
+          "label": "Pick from list",
+          "name": "Number 6",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "0",
+          "max": "100",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "text",
+          "label": "Label",
+          "name": "",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "text",
+          "label": "Label",
+          "name": "",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "text",
+          "label": "Label",
+          "name": "",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        }
+      ],
+      "codeBefore": "",
+      "codeAfter": "",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "3-Testing Buttons": {
+      "name": "3-Testing Buttons",
+      "type": "A2J",
+      "step": 1,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "<P>Pick your favorite color from these three options. </P>",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "",
+      "help": "",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Pink",
+          "next": "4- Pink is the winner",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "Favorite color MC",
+          "value": "pink"
+        },
+        {
+          "label": "Blue",
+          "next": "5- Color Blue picked",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "Favorite color MC",
+          "value": "blue"
+        },
+        {
+          "label": "Yellow",
+          "next": "6- Color Yellow picked",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "Favorite color MC",
+          "value": "yellow"
+        }
+      ],
+      "fields": [],
+      "codeBefore": "",
+      "codeAfter": "IF [Favorite color MC] = \"pink\"<BR/>GOTO \"4- Color Pink picked\"<BR/>END IF",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "5- Color Blue picked": {
+      "name": "5- Color Blue picked",
+      "type": "A2J",
+      "step": 1,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "<P>Text of my first question goes here.</P>",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "",
+      "help": "",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Save",
+          "next": "1-Any assets?",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [],
+      "codeBefore": "",
+      "codeAfter": "",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "6- Color Yellow picked": {
+      "name": "6- Color Yellow picked",
+      "type": "A2J",
+      "step": 1,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "<P><FONT>Text of my first question goes here.</FONT></P>",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "",
+      "help": "",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Save",
+          "next": "1-Any assets?",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [],
+      "codeBefore": "",
+      "codeAfter": "",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "1-Any assets?": {
+      "name": "1-Any assets?",
+      "type": "A2J",
+      "step": 3,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "Do you have any assets to tell me about?<BR/>",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "",
+      "help": "",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Yes",
+          "next": "2- Asset name and value",
+          "url": "",
+          "repeatVar": "AssetCount",
+          "repeatVarSet": "=1",
+          "name": "",
+          "value": ""
+        },
+        {
+          "label": "No- Don't pick this option if testing loops",
+          "next": "4-Number of children",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [],
+      "codeBefore": "",
+      "codeAfter": "",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "2- Asset name and value": {
+      "name": "2- Asset name and value",
+      "type": "A2J",
+      "step": 3,
+      "repeatVar": "AssetCount",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "",
+      "help": "",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Continue",
+          "next": "3-Any more assets?",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [
+        {
+          "type": "text",
+          "label": "Asset name:",
+          "name": "Asset name TE",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "numberdollar",
+          "label": "Value",
+          "name": "Asset value NU",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": true,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "radio",
+          "label": "Option 1",
+          "name": "Loop radio test MC",
+          "value": "1",
+          "order": "",
+          "required": true,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "radio",
+          "label": "Option 2",
+          "name": "Loop radio test MC",
+          "value": "2",
+          "order": "",
+          "required": true,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        }
+      ],
+      "codeBefore": "",
+      "codeAfter": "SET [Net worth NU] TO SUM([Asset value NU])",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "3-Any more assets?": {
+      "name": "3-Any more assets?",
+      "type": "A2J",
+      "step": 3,
+      "repeatVar": "AssetCount",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "Do you have any more assets to tell me about?",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "Which ones have I told you about?",
+      "help": "You've told me about your %%[Asset name TE]%%. ",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Yes",
+          "next": "2- Asset name and value",
+          "url": "",
+          "repeatVar": "AssetCount",
+          "repeatVarSet": "+=1",
+          "name": "",
+          "value": ""
+        },
+        {
+          "label": "No",
+          "next": "4-Number of children",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [],
+      "codeBefore": "",
+      "codeAfter": "",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "4-Number of children": {
+      "name": "4-Number of children",
+      "type": "A2J",
+      "step": 3,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "How many kids do  you have?",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "",
+      "help": "",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Continue",
+          "next": "5- Kids' names",
+          "url": "",
+          "repeatVar": "ChildCount",
+          "repeatVarSet": "=1",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [
+        {
+          "type": "textpick",
+          "label": "",
+          "name": "Number of children NU",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "99",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>100</option>",
+          "sample": "",
+          "invalidPrompt": ""
+        }
+      ],
+      "codeBefore": "",
+      "codeAfter": "",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "5- Kids' names": {
+      "name": "5- Kids' names",
+      "type": "A2J",
+      "step": 3,
+      "repeatVar": "ChildCount",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "What is your %%ORDINAL([ChildCount])%% child's name? ",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "",
+      "help": "",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Continue",
+          "next": "6-Kids' bdays",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [
+        {
+          "type": "text",
+          "label": "",
+          "name": "Child name first TE",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "14",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        }
+      ],
+      "codeBefore": "",
+      "codeAfter": "",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "6-Kids' bdays": {
+      "name": "6-Kids' bdays",
+      "type": "A2J",
+      "step": 3,
+      "repeatVar": "ChildCount",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "What is your kid's birthday?",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "",
+      "help": "",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Continue",
+          "next": "",
+          "url": "",
+          "repeatVar": "ChildCount",
+          "repeatVarSet": "+=1",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [
+        {
+          "type": "datemdy",
+          "label": "",
+          "name": "Child DOB DA",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "TODAY",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        }
+      ],
+      "codeBefore": "IF [Number of children NU] = 1<BR/>GOTO \"1-Assemble\"<BR/>END IF",
+      "codeAfter": "IF [ChildCount] = [Number of children NU]<BR/>GOTO \"4- Pink is the winner\"<BR/>ELSE <BR/>GOTO \"5- Kids' names\"<BR/>END IF",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "1-Assemble": {
+      "name": "1-Assemble",
+      "type": "A2J",
+      "step": 4,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "My text",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "",
+      "help": "",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Generate PDF",
+          "next": "ASSEMBLE",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        },
+        {
+          "label": "Generate PDF and go to LHI",
+          "next": "ASSEMBLE-SUCCESS",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [],
+      "codeBefore": "",
+      "codeAfter": "",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "6-Testing NULL, TRUE/FALSE": {
+      "name": "6-Testing NULL, TRUE/FALSE",
+      "type": "A2J",
+      "step": 0,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "There's logic on this question testing if NULL works and if TRUE/True/true works (does case matter?)",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "",
+      "help": "",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Continue",
+          "next": "1-Text and Date fields test",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [],
+      "codeBefore": "",
+      "codeAfter": "SET [Testing NULL] TO NULL",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "1-Test dates": {
+      "name": "1-Test dates",
+      "type": "A2J",
+      "step": 2,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "You said your child's birth date was %%[Child DOB DA]%% is that right? ",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "",
+      "help": "",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Yes",
+          "next": "2-SSN and zipcode test",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        },
+        {
+          "label": "No",
+          "next": "2-SSN and zipcode test",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [],
+      "codeBefore": "",
+      "codeAfter": "",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "Second layer deep pop up": {
+      "name": "Second layer deep pop up",
+      "type": "Popup",
+      "step": 0,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "You're in a pop up within a pop up. How cool. Go to the <A href=\"POPUP://Third layer deep pop up - Popup\">3rd level in. </A>",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "",
+      "help": "",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [],
+      "fields": [],
+      "codeBefore": "",
+      "codeAfter": "",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "Third layer deep pop up - Popup": {
+      "name": "Third layer deep pop up - Popup",
+      "type": "Popup",
+      "step": 0,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "3rd level in now! Go back to <A href=\"POPUP://Test Pop up\">1</A> or <A href=\"POPUP://Second layer deep pop up\">2 </A>",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "",
+      "help": "",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [],
+      "fields": [],
+      "codeBefore": "",
+      "codeAfter": "",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "4- Pink is the winner": {
+      "name": "4- Pink is the winner",
+      "type": "A2J",
+      "step": 1,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "<P>Tell me again that Pink is your favorite. </P>",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "",
+      "help": "",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Save",
+          "next": "1-Any assets?",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [
+        {
+          "type": "radio",
+          "label": "It really is",
+          "name": "Favorite color MC",
+          "value": "pink",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "pink",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "radio",
+          "label": "Maybe I really like blue",
+          "name": "Favorite color MC",
+          "value": "blue",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "radio",
+          "label": "Just kidding, I like yellow",
+          "name": "Favorite color MC",
+          "value": "yellow",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        }
+      ],
+      "codeBefore": "",
+      "codeAfter": "",
+      "codeCitation": "",
+      "notes": ""
+    },
+    "2-SSN and zipcode test": {
+      "name": "2-SSN and zipcode test",
+      "type": "A2J",
+      "step": 2,
+      "repeatVar": "",
+      "nested": false,
+      "outerLoopVar": "",
+      "text": "What is your SSN and zipcode?",
+      "textCitation": "",
+      "textAudioURL": "",
+      "learn": "",
+      "help": "",
+      "helpCitation": "",
+      "helpAudioURL": "",
+      "helpReader": "",
+      "helpImageURL": "",
+      "helpVideoURL": "",
+      "buttons": [
+        {
+          "label": "Continue",
+          "next": "1-Any assets?",
+          "url": "",
+          "repeatVar": "",
+          "repeatVarSet": "",
+          "name": "",
+          "value": ""
+        }
+      ],
+      "fields": [
+        {
+          "type": "numberzip",
+          "label": "zipcode",
+          "name": "Zipcode TE",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        },
+        {
+          "type": "numberssn",
+          "label": "SSN",
+          "name": "SSN TE",
+          "value": "",
+          "order": "",
+          "required": false,
+          "min": "",
+          "max": "",
+          "calculator": false,
+          "maxChars": "",
+          "listSrc": "",
+          "listData": "",
+          "sample": "",
+          "invalidPrompt": ""
+        }
+      ],
+      "codeBefore": "",
+      "codeAfter": "",
+      "codeCitation": "",
+      "notes": ""
+    }
+  }
+}

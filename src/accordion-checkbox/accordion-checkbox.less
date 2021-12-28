@@ -1,0 +1,59 @@
+accordion-checkbox {
+  display: block;
+
+  ul {
+    list-style: none;
+    padding-left: 26px;
+  }
+  > ul {
+    padding: 0;
+  }
+  .accordion-item {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+  }
+  .children {
+    margin-bottom: 5px;
+    grid-column-end: span 2;
+  }
+  button {
+    background: none;
+    border: none;
+    width: 30px;
+  }
+  .leaf-spacer {
+    display: inline-block;
+    width: 30px;
+    vertical-align: top;
+  }
+  .accordion-detail {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    > div {
+      display: inline-block;
+      vertical-align: top;
+    }
+    > ul {
+      grid-column-end: span 2;
+    }
+  }
+  label {
+    font-weight: normal;
+    cursor: pointer;
+    margin: 0;
+    margin-right: auto;
+    padding: 5px;
+  }
+  label:hover {
+    background-color: #e0e0e0;
+  }
+  label [type="checkbox"] {
+    cursor: pointer;
+  }
+  label [type="checkbox"]:checked:not(.fully-checked) {
+    opacity: 0.5;
+  }
+  .accordion-label {
+    padding: 5px;
+  }
+}

@@ -2,11 +2,10 @@ import $ from 'jquery'
 import CanList from 'can-list'
 import DefineMap from 'can-define/map/map'
 import GlobalPrefs from 'a2jauthor/src/models/global-preferences'
-import A2JVariable from '@caliorg/a2jdeps/models/a2j-variable'
 import constants from 'a2jauthor/src/models/constants'
 import _isEmpty from 'lodash/isEmpty'
-import { Gender, Hair, Skin } from '@caliorg/a2jdeps/avatar/colors'
 import ckeArea from '~/src/utils/ckeditor-area'
+import Guide from 'a2jauthor/src/models/app-state-guide'
 import route from 'can-route'
 import 'can-map-define'
 
@@ -14,31 +13,6 @@ import 'can-map-define'
 import debug from 'can-debug'
 debug()
 // !steal-remove-end
-
-// with the existing Guide model that works with a different data structure.
-const Guide = DefineMap.extend('AppStateGuide', {
-  variablesList: {
-    get () {
-      const vars = this.vars
-      return A2JVariable.fromGuideVars(vars.serialize())
-    }
-  },
-
-  guideGender: {
-    type: Gender,
-    default: Gender.defaultValue
-  },
-
-  avatarSkinTone: {
-    type: Skin,
-    default: Skin.defaultValue
-  },
-
-  avatarHairColor: {
-    type: Hair,
-    default: Hair.defaultValue
-  }
-})
 
 /**
  * @module {function} AuthorAppState
@@ -103,6 +77,34 @@ export default DefineMap.extend('AuthorAppState', {
   page: {
     default: ''
   },
+
+  /**
+   * @property {Boolean} mergeTool
+   *
+   * Show the merge tool in the interviews page
+   *
+   */
+  mergeTool: {
+    serialize: false,
+    type: 'boolean',
+    value: function (prop) {
+      prop.listenTo('page', (ev, page) => {
+        prop.resolve(false)
+        this.mergeTool = false
+      })
+      prop.listenTo(prop.lastSet, b => prop.resolve(!!b))
+      prop.resolve(!!prop.lastSet.get())
+    }
+  },
+  /**
+  * @property {Promise} interviewsPromise
+  *
+  * list of interviewsPromise
+  * used to refresh interviews list from merge-tool
+  interviewsPromise: {
+    serialize: false
+  },
+  */
 
   /**
    * @property {String} guideId
@@ -277,6 +279,8 @@ export default DefineMap.extend('AuthorAppState', {
       }
     }
   },
+
+  reloadInterviews: { serialize: false }, // function passed up from interviews-page
 
   init () {
     const appState = this

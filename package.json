@@ -1,6 +1,6 @@
 {
   "name": "a2jauthor",
-  "version": "7.1.0",
+  "version": "8.0.0",
   "description": "A2J Authoring App GUI.",
   "main": "a2jauthor/app",
   "scripts": {
@@ -198,8 +198,8 @@
     }
   },
   "dependencies": {
-    "@caliorg/a2jdeps": "^7.0.18",
-    "@caliorg/a2jviewer": "^7.1.1",
+    "@caliorg/a2jdeps": "^7.1.0",
+    "@caliorg/a2jviewer": "^7.2.0",
     "bit-tabs": "^2.0.0",
     "blueimp-file-upload": "^9.10.1",
     "bootstrap": "^3.4.1",

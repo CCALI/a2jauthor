@@ -8,8 +8,8 @@ export default {
   // Spinnner for loading wait
   AJAXLoader: '<span class="loader">&nbsp;</span>',
 
-  A2JVersionNum: '8.0.0', // VersionInfo.verNum
-  A2JVersionDate: '2021-12-21-stage',
+  A2JVersionNum: '8.1.0', // VersionInfo.verNum
+  A2JVersionDate: '2021-12-29-stage',
 
   // CAVersionNum:'5.0.0',
   // CAVersionDate:'2013-04-15',

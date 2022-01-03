@@ -166,6 +166,9 @@ function exportXML_CAJA_from_CAJA (guide) {	// Convert Guide structure into XML
 
   var i
   for (i in guide.authors) {
+    if (!guide.authors.hasOwnProperty(i)) {
+      continue
+    }
     var author = guide.authors[i]
     JSON.GUIDE.INFO.AUTHORS.push({
       AUTHOR: {
@@ -179,6 +182,9 @@ function exportXML_CAJA_from_CAJA (guide) {	// Convert Guide structure into XML
   JSON.GUIDE.INFO.exitPage = guide.exitPage
   var si
   for (si in guide.steps) {
+    if (!guide.steps.hasOwnProperty(si)) {
+      continue
+    }
     var step = guide.steps[si]
     JSON.GUIDE.STEPS.push({
       STEP: {

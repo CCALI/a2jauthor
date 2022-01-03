@@ -112,6 +112,9 @@ function guide2JSON_Mobile (guide) {	// 12/22/2014 Convert internal Guide struct
   newGuide.authors = []
   var i
   for (i in guide.authors) {
+    if (!guide.authors.hasOwnProperty(i)) {
+      continue
+    }
     var author = guide.authors[i]
     newGuide.authors.push({
       name: author.name,
@@ -127,6 +130,9 @@ function guide2JSON_Mobile (guide) {	// 12/22/2014 Convert internal Guide struct
   newGuide.steps = []
   var si
   for (si in guide.steps) {
+    if (!guide.steps.hasOwnProperty(si)) {
+      continue
+    }
     var step = guide.steps[si]
     newGuide.steps.push({
       number: step.number,

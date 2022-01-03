@@ -202,6 +202,9 @@ function reportFull () {	// 2016-06-24 Generate full report, ala LessonText.
     t += (tupleAuto('End graphic:', guide.endImage))
     var ta = tuples('TH', ['Name', 'Title', 'Organization', 'email'])
     for (var ai in guide.authors) {
+      if (!guide.authors.hasOwnProperty(ai)) {
+        continue
+      }
       author = guide.authors[ai]
       ta += tuples('TD', [ author.name, author.title, author.organization, author.email])
     }
@@ -220,6 +223,9 @@ function reportFull () {	// 2016-06-24 Generate full report, ala LessonText.
     t += tuple('Exit Page:', jumpAnchor(pageLink(guide.exitPage), guide.exitPage))
     var ts = ''
     for (var si in guide.steps) {
+      if (!guide.steps.hasOwnProperty(si)) {
+        continue
+      }
       step = guide.steps[si]
       ts += tuple('Step "' + step.number + '":', jumpAnchor('STEP' + si, step.text), 'bg-step' + parseInt(si))
       stepHTML[si] = ''
@@ -295,6 +301,9 @@ function reportFull () {	// 2016-06-24 Generate full report, ala LessonText.
       }
     }
     for (var si in guide.steps) {
+      if (!guide.steps.hasOwnProperty(si)) {
+        continue
+      }
       step = guide.steps[si]
       if (stepHTML[si] == '') {
         stepHTML[si] = 'No pages for this step'

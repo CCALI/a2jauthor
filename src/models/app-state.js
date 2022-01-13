@@ -278,6 +278,12 @@ export default DefineMap.extend('AuthorAppState', {
     }
   },
 
+  modalTabView: {
+    type: 'boolean',
+    default: false,
+    serialize: false
+  },
+
   init () {
     const appState = this
     // TODO: this global can be removed when legacy code refactored out

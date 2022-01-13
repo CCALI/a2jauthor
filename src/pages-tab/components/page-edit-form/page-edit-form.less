@@ -1,0 +1,68 @@
+@import (reference) '../../../../styles';
+
+page-edit-form {
+  display: block;
+  padding-top: @grid-gutter-width;
+
+  .page-edit-form-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: -@grid-gutter-width;
+    margin-right: 110px;
+
+    > * {
+      border: 1px solid gray;
+      border-radius: 5px;
+      margin: 5px;
+      opacity: 0.9;
+    }
+  }
+
+  @media (min-width: @screen-lg-min) {
+    .page-edit-form-tabs {
+      display: flex;
+      justify-content: flex-start;
+      margin: -8px;
+      margin-bottom: 20px;
+      margin-top: -38px;
+      padding: 8px;
+      padding-top: 16px;
+      background: #eee;
+      padding-bottom: 0;
+      border-bottom: 1px solid #777;
+
+      > * {
+        padding: 7px;
+        margin: 0px 5px;
+        margin-bottom: -1px;
+        border-bottom: 1px solid #777;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        background: #f8f8f8;
+        cursor: pointer;
+      }
+    }
+
+    .selected-tab {
+      border-bottom-color: white;
+    }
+  }
+
+  .selected-tab {
+    background: white;
+    opacity: 1;
+  }
+
+  .tabs-toggler {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    padding-left: 8px;
+  }
+
+  .hidden-tab {
+    visibility: hidden;
+    height: 0px;
+    overflow: hidden;
+  }
+}

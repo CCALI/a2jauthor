@@ -9,6 +9,7 @@
 <can-import from="a2jauthor/src/report/" />
 <can-import from="a2jauthor/src/report/toolbar/"/>
 <can-import from="a2jauthor/src/about/" />
+<can-import from="a2jauthor/src/pages-tab/" />
 <can-import from="a2jauthor/src/publish-tab/" />
 <can-import from="a2jauthor/src/variables/tab/"/>
 <can-import from="a2jauthor/src/a2jorg/"/>
@@ -81,26 +82,9 @@
 
     <!-- Pages Tab -->
     <div class="tab-panel has-toolbar" id="tabsPages">
-      <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <ul class="nav navbar-nav">
-            <li><a href="#" id="open-guide"><span class="glyphicon-new-message" aria-hidden="true"></span> Open</a></li>
-            <li><a href="#" id="clone-guide"><span class="glyphicon-docs" aria-hidden="true"></span> Clone</a></li>
-            <li><a href="#" id="delete-guide"><span class="glyphicon-trash" aria-hidden="true"></span> Delete</a></li>
-            <li><a href="#" id="save-guide"><span class="glyphicon-floppy" aria-hidden="true"></span> Save</a></li>
-            <li class="divider"></li>
-            <li><a href="#" id="new-page"><span class="glyphicon-doc" aria-hidden="true"></span> New Page</a></li>
-            <li><a href="#" id="new-popup"><span class="glyphicon-popup" aria-hidden="true"></span> New Popup</a></li>
-          </ul>
-          <div class="nav navbar-nav navbar-right">
-            <button id="expandCollapse" data-state="collapsed" class="btn btn-default navbar-btn"></button>
-          </div>
-        </div>
-      </nav>
-      <div id="CAJAOutline" class="page pageoutline pagelist">
-        <ul>
-        </ul>
-      </div>
+      {{#is(page, "pages")}}
+        <pages-tab class="page" guide:from="guide" guideId:from="guideId" appState:from="." />
+      {{/is}}
     </div> <!-- tab-panel has-toolbar -->
 
     <!-- Maps Tab -->

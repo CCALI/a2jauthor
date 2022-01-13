@@ -160,6 +160,7 @@ function parseXML_A2J_to_CAJA (TEMPLATE) {	// Parse A2J into CAJA
       button.name = jQuery.trim($(this).attr('NAME'))
       button.repeatVar = makestr($(this).attr('REPEATVAR'))
       button.repeatVarSet = makestr($(this).attr('REPEATVARSET'))
+      button.message = makestr($(this).attr('MESSAGE'))
       button.value = jQuery.trim($(this).find('VALUE').xml())
       page.buttons.push(button)
     })

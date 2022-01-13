@@ -168,6 +168,7 @@ function getTOCStepPages (includePages, includePops, includeSpecial) {
         CONST.qIDSUCCESS,
         CONST.qIDFAIL,
         CONST.qIDEXIT,
+        CONST.qMESSAGE,
         CONST.qIDBACK,
         CONST.qIDRESUME,
         CONST.qIDASSEMBLE,

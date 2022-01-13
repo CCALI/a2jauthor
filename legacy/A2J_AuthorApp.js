@@ -122,27 +122,6 @@ function main () { // Everything loaded, now execute code.
   $('.authorenv').text(gEnv)
   $('#cajainfo').attr('title', versionString())
 
-  // JPM Handles Expand/Collapse button on pages list
-  function expandCollapsePageList () {
-    var ecText = $('#expandCollapse').attr('data-state')
-    if (ecText === 'collapsed') {
-      $('#CAJAOutline .panel-collapse').slideUp(300)
-      $('#CAJAOutline .accordion').addClass('collapsed')
-      $('#expandCollapse').button({label: '<span class="glyphicon-expand" aria-hidden="true"></span> Expand All'})
-      $('#expandCollapse').attr('data-state', 'expanded')
-    } else {
-      $('#CAJAOutline .panel-collapse').slideDown(300)
-      $('#CAJAOutline .accordion').removeClass('collapsed')
-      $('#expandCollapse').button({label: '<span class="glyphicon-collapse" aria-hidden="true"></span> Collapse All'})
-      $('#expandCollapse').attr('data-state', 'collapsed')
-    }
-  }
-  // JPM Expand/Collapse button for pages list.
-  $('#expandCollapse')
-    .button({label: '<span class="glyphicon-collapse"></span> Collapse All'})
-    .click(function () {
-      expandCollapsePageList()
-    })
   // JPM expand/collapse all panel buttons on various tabs/popups
   $('.ecPanelButton') // SJG apply to all ec buttons operating on LEGEND tags
 
@@ -192,28 +171,6 @@ function main () { // Everything loaded, now execute code.
 
     $(this).closest('tr').remove()
     form.listManagerSave($tbl)
-  })
-
-  $('#tabsPages #open-guide').click(function () {
-    gotoPageEdit(getSelectedPageName())
-  })
-  $('#tabsPages #clone-guide').click(function () {
-    pageEditClone(getSelectedPageName())
-  })
-  $('#tabsPages #delete-guide').click(function () {
-    pageEditDelete(getSelectedPageName())
-  })
-  $('#tabsPages #save-guide').click(function () {
-    if (window.gGuide) {
-      window.guideSave()
-    }
-  })
-
-  $('#tabsPages #new-page').click(function () {
-    createNewPage()
-  })
-  $('#tabsPages #new-popup').click(function () {
-    createNewPopup()
   })
 
   $('#vars_load').button({label: 'Load', icons: {primary: 'ui-icon-locked'}}).next().button({label: 'Save', icons: {primary: 'ui-icon-locked'}})

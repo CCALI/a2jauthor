@@ -98,6 +98,7 @@ var CONST = {
   qIDRESUME: 'RESUME', // 8/24/09 3.0.2
   qIDASSEMBLE: 'ASSEMBLE',
   qIDASSEMBLESUCCESS: 'ASSEMBLE-SUCCESS',
+  qMESSAGE: 'MESSAGE',
 
   // 2014-06-04 Button-based repeat options
   RepeatVarSetOne: '=1',
@@ -152,6 +153,7 @@ function TButton () {	// Guide defined button, 0 or more
   this.value = '' // Value - when clicked, variable 'name' gets value 'value'
   this.repeatVar = '' // Old style repeat var - button option
   this.repeatVarSet = ''// Old style repeat var counter adjustments - button option
+  this.message = '' // message text if the button is Exit - Display Message
   return this
 }
 
@@ -511,6 +513,7 @@ TGuide.prototype.pageDisplayName = function (name) {
     autoIDs[CONST.qIDSUCCESS] =	lang.qIDSUCCESS
     autoIDs[CONST.qIDFAIL] = lang.qIDFAIL
     autoIDs[CONST.qIDEXIT] = lang.qIDEXIT
+    autoIDs[CONST.qMESSAGE] = lang.qMESSAGE
     autoIDs[CONST.qIDBACK] = lang.qIDBACK
     autoIDs[CONST.qIDRESUME] = lang.qIDRESUME
     autoIDs[CONST.qIDASSEMBLE] = lang.qIDASSEMBLE

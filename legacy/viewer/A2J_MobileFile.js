@@ -47,6 +47,7 @@ function page2JSON_Mobile (page) {	// 12/22/2014 Convert native TPage into Mobil
       url:	b.url,
       repeatVar:	b.repeatVar,
       repeatVarSet:	b.repeatVarSet,
+      message: b.message || '',
       name:	b.name,
       value:	b.value
     })

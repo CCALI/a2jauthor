@@ -104,6 +104,7 @@ function page2JSON (page) {
       _URL:	b.url,
       _REPEATVAR:	b.repeatVar,
       _REPEATVARSET:	b.repeatVarSet,
+      _MESSAGE: b.message,
       NAME:	b.name,
       VALUE:	b.value
     }})
@@ -266,6 +267,7 @@ function parseXML2Page (PAGE, page) {
     button.url = makestr($(this).attr('URL'))
     button.repeatVar = makestr($(this).attr('REPEATVAR'))
     button.repeatVarSet = makestr($(this).attr('REPEATVARSET'))
+    button.message = makestr($(this).attr('MESSAGE'))
     button.name = jQuery.trim($(this).find('NAME').xml())
     button.value = jQuery.trim($(this).find('VALUE').xml())
     page.buttons.push(button)
@@ -632,6 +634,7 @@ function parseXML_A2J_to_CAJA (TEMPLATE) {	// Parse A2J into CAJA
       button.name = jQuery.trim($(this).attr('NAME'))
       button.repeatVar = makestr($(this).attr('REPEATVAR'))
       button.repeatVarSet = makestr($(this).attr('REPEATVARSET'))
+      button.message = makestr($(this).attr('MESSAGE'))
       button.value = jQuery.trim($(this).find('VALUE').xml())
       page.buttons.push(button)
     })

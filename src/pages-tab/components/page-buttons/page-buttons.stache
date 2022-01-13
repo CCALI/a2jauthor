@@ -1,0 +1,98 @@
+<can-import from="./page-buttons.less" />
+
+<fieldset name="record">
+  <legend>Buttons</legend>
+  <div>
+    <div>
+      <label>Number of Buttons</label>
+      <select list="Buttons" class="form-control picklist" value:bind="numButtons">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+    </div>
+    <table class="page-edit-buttons list table table-striped" list="Buttons">
+      <tbody class="ui-sortable">
+        {{#for(button of observableButtons)}}
+          <tr valign="top" class="step-stepundefined button-row" name="record">
+            <td class="editicons">
+              <span class="ui-draggable sorthandle glyphicon-move ui-sortable-handle"></span>
+              <span class="ui-icon-circle-plus glyphicon-plus-circled"></span>
+              <span class="ui-icon-circle-minus glyphicon-minus-circled"></span>
+            </td>
+            <td>
+              <div class="editspan form-group">
+                <label class="control-label">Label:</label>
+                <input class="form-control ui-widget editable" type="text" placeholder="button label" value:bind="button.label">
+              </div>
+              <div class="div">
+                <label class="control-label">Variable Name:</label>
+                <div class="editspan form-group">
+                  <input class="form-control ui-combobox-input editable autocomplete picker varname dest ui-autocomplete-input"
+                    placeholder=""
+                    type="text"
+                    autocomplete="off"
+                    value:bind="button.name"
+                  >
+                </div>
+              </div>
+              <div class="editspan form-group">
+                <label class="control-label">Default Value:</label>
+                <input class="form-control ui-widget editable" type="text" placeholder="" value:bind="button.value">
+              </div>
+              <div class="destination-picker" name="undefined">
+                <label>Destination:</label>
+                <span>{{button.next}}</span>
+                <button
+                  on:click="pickPageDialog(scope.element, button, scope.index)"
+                  class="btn btn-default ui-button ui-corner-all ui-widget glyphicon-link"
+                >
+                  Set Destination
+                </button>
+              </div>
+              <div class="editspan form-group hidden" name="url">
+                <label class="control-label">URL:</label>
+                <input class="form-control ui-widget editable" type="text" placeholder="" value:bind="button.url">
+              </div>
+              <div class="editspan form-group {{^if(showMessageInputForButton[scope.index]}}hidden{{/if}}" name="message">
+                <label class="control-label">Message:</label>
+                <input
+                  class="form-control ui-widget editable"
+                  type="text"
+                  placeholder="You have completed this A2J Guided Interview. Please close your browser window to exit."
+                  value:bind="button.message">
+              </div>
+              <div name="undefined">
+                <div class="editspan form-group">
+                  <label class="control-label">Repeat Options:</label>
+                  <select class="form-control" value:bind="button.repeatVarSet">
+                    <option value="">Normal</option>
+                    <option value="=1">Set Counting Variable to 1</option>
+                    <option value="+=1">Increment Counting Variable</option>
+                  </select>
+                </div>
+              </div>
+              <div class="div">
+                <label class="control-label">Counting Variable:</label>
+                <div class="editspan form-group">
+                  <input class="form-control ui-combobox-input editable autocomplete picker varname dest ui-autocomplete-input"
+                    placeholder=""
+                    type="text"
+                    autocomplete="off"
+                  >
+                </div>
+              </div>
+            </td>
+          </tr>
+        {{/for}}
+      </tbody>
+    </table>
+  </div>
+</fieldset>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+

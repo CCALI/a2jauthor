@@ -85,6 +85,7 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
   isSpecialButton (button) {
     return button.next === constants.qIDFAIL ||
     button.next === constants.qIDEXIT ||
+    button.next === constants.qMESSAGE ||
     button.next === constants.qIDSUCCESS ||
     button.next === constants.qIDASSEMBLESUCCESS ||
     button.next === constants.qIDASSEMBLE ||

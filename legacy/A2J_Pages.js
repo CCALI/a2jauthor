@@ -1398,11 +1398,13 @@ function buildLogicFieldSet (page) {
 /** @param {TPage} page */
 function guidePageEditForm (page, $qdeParentDiv) {
   // Create editing wizard (QDE, Question Design Editor) for given page.
-  var $qde = ''
-  $qde = window.$('<div/>').addClass('tabsPanel editq')
+  var $qde = window.$('<div/>').addClass('tabsPanel editq')
   // form and it's methods are defined in A2J_Pages.js
   window.form.clear()
-  if (page === null || typeof page === 'undefined') {
+
+  if (window.canjs_LegacyModalPageEditFormInjection) {
+    $qde.append('<page-edit-form />')
+  } else if (page === null || typeof page === 'undefined') {
     $qde.append(window.form.h2('Page not found ' + page.name))
   } else if (page.type === window.CONST.ptPopup) {
     // Popup pages have only a few options - text, video, audio

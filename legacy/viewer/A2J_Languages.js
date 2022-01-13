@@ -241,6 +241,7 @@ Languages.regional.en = {
   qIDSUCCESS: '[Success - Process Form]',
   qIDFAIL: '[Exit - User does not qualify]',
   qIDEXIT: '[Exit - Save Incomplete Form]',
+  qMESSAGE: '[Exit - Display Message]',
   qIDBACK: '[Back to prior question]',
   qIDRESUME: '[Resume interview]',
   qIDASSEMBLE: '[Assemble - Generate PDF document]',

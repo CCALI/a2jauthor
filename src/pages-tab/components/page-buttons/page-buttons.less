@@ -3,4 +3,28 @@
 page-buttons {
   display: block;
   /* padding: @grid-gutter-width; */
+
+  .has-var-picker {
+    display: flex;
+    gap: 10px;
+
+    .var-picker-toggle {
+      width: 40px;
+      position: relative;
+
+      > button {
+        height: 40px;
+        margin-top: 2px;
+      }
+    }
+    var-picker {
+      position: absolute;
+      top: 100%;
+      right: 0px;
+      z-index: 99;
+    }
+  }
+  .invalid-entry {
+    border-color: @brand-danger;
+  }
 }

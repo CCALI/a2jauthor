@@ -15,6 +15,7 @@ export const PageEditFormVM = DefineMap.extend('PageEditFormVM', {
 
   connectedCallback () {
     // TOOD: obviously terrible, need more time to complete the upgrade fully
+    // sets "appState" and "page" on our viewModel
     Object.assign(this, window.canjs_LegacyModalPageEditFormInjection)
   }
 })

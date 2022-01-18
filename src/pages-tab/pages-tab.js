@@ -19,6 +19,7 @@ export const PagesTabVM = DefineMap.extend('PagesTabVM', {
   getSelectedPageName () {
     return window.getSelectedPageName()
   },
+  legacyGotoPageEdit: {},
   goToPageEdit () {
     const pageName = this.getSelectedPageName()
     const page = pageName && window.gGuide.pages[pageName]
@@ -65,5 +66,11 @@ export default Component.extend({
   tag: 'pages-tab',
   view: template,
   leakScope: false,
-  ViewModel: PagesTabVM
+  ViewModel: PagesTabVM,
+  events: {
+    '.pages-container a.page-item dblclick': function (legacyEl) {
+      // const pageName = console.log((legacyEl.rel || '').substr(5))
+      setTimeout(() => this.viewModel.goToPageEdit(), 10)
+    }
+  }
 })

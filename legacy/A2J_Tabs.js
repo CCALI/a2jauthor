@@ -269,7 +269,7 @@ window.updateTOC = function updateTOC () {	// Build outline for entire interview
       var rel = $(this).attr('rel')
       $('.pageoutline a.page-item').removeClass(SELECTED)
       $(this).addClass(SELECTED)
-      gotoTabOrPage(rel)
+      // gotoTabOrPage(rel) // pages-tab.js event binding calls this now from CanJS land to inject stache into legacy code
     })
 
   // collapse any previously collapsed steps

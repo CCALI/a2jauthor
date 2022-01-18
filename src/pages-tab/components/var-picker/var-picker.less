@@ -1,0 +1,52 @@
+@import (reference) '../../../../styles';
+
+var-picker {
+  display: block;
+  /* padding: @grid-gutter-width; */
+  width: 100%;
+  min-width: 300px;
+
+  ul {
+    margin: 0;
+    padding: 16px 0px;
+    list-style: none;
+    background: white;
+    overflow-y: auto;
+    max-height: 400px;
+    border: 1px solid @gray;
+    border-top: none;
+  }
+  li {
+    display: block;
+  }
+  .selected {
+    font-weight: bold;
+    background: @brand-secondary;
+    color: white;
+  }
+  .unmatched {
+    opacity: 0.8;
+  }
+  .unmatched:hover {
+    opacity: 1;
+  }
+  :not(.unmatched) + .unmatched {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 2px dashed @gray;
+  }
+  button {
+    display: block;
+    font-weight: inherit;
+    color: inherit;
+    background: transparent;
+    border: none;
+    padding: 8px;
+    text-align: left;
+    width: 100%;
+  }
+  li:hover button {
+    background: @link-active-color;
+    color: white;
+  }
+}

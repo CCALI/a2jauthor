@@ -60,7 +60,21 @@ export default DefineMap.extend('AuthorAppState', {
 
     if (targetPageName) {
       // opens QDE modal
-      window.gotoPageEdit(targetPageName)
+      const page = window.gGuide.pages[targetPageName]
+
+      // pages-tab.js does this same temporary legacy injection hack
+      // so we don't have to refactor every single thing to use canjs,
+      // instead this temproary hack lets us do more grainular upgrading over time.
+      page && (window.canjs_LegacyModalPageEditFormInjection = {
+        appState: this,
+        page: page
+      })
+
+      const retval = window.gotoPageEdit(targetPageName)
+
+      delete window.canjs_LegacyModalPageEditFormInjection
+
+      return retval
     }
   },
 

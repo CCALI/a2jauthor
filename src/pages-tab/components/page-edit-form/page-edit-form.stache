@@ -29,6 +29,6 @@
   <question-info class="tab-panel {{#if(appState.modalTabView)}}{{#is(selectedTab, 'Question Info')}}selected-tab-panel{{else}}hidden-tab{{/is}}{{/if}}" page:from="page" />
   <learn-more class="tab-panel {{#if(appState.modalTabView)}}{{#is(selectedTab, 'Learn More Info')}}selected-tab-panel{{else}}hidden-tab{{/is}}{{/if}}" page:from="page" />
   <page-fields class="tab-panel {{#if(appState.modalTabView)}}{{#is(selectedTab, 'Fields')}}selected-tab-panel{{else}}hidden-tab{{/is}}{{/if}}" page:from="page" />
-  <page-buttons class="tab-panel {{#if(appState.modalTabView)}}{{#is(selectedTab, 'Buttons')}}selected-tab-panel{{else}}hidden-tab{{/is}}{{/if}}" page:from="page" />
+  <page-buttons class="tab-panel {{#if(appState.modalTabView)}}{{#is(selectedTab, 'Buttons')}}selected-tab-panel{{else}}hidden-tab{{/is}}{{/if}}" page:from="page" appState:from="appState" />
   <advanced-logic class="tab-panel {{#if(appState.modalTabView)}}{{#is(selectedTab, 'Advanced Logic')}}selected-tab-panel{{else}}hidden-tab{{/is}}{{/if}}" page:from="page" />
 {{/if}}

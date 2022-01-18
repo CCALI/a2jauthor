@@ -1,0 +1,10 @@
+<can-import from="./var-picker.less" />
+
+<ul>
+  {{#for(v of matchedVars)}}
+    <li class="{{#is(varName, v.name)}}selected{{/is}}"><button on:click="onSelected(v.name)">{{v.name}} ({{v.type}})</button></li>
+  {{/for}}
+  {{#for(v of unmatchedVars)}}
+    <li class="unmatched"><button on:click="onSelected(v.name)">{{v.name}} ({{v.type}})</button></li>
+  {{/for}}
+</ul>

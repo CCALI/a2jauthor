@@ -1,9 +1,10 @@
-import $ from 'jquery'
+// import $ from 'jquery'
 import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './pages-tab.stache'
-import { PageEditFormVM } from './components/page-edit-form/page-edit-form.js'
-import pageEditForm from './components/page-edit-form/page-edit-form.stache'
+// need these imported for the legacy injection to work (and for them to be bundled)
+import { PageEditFormVM } from './components/page-edit-form/page-edit-form.js' // eslint-disable-line
+import pageEditForm from './components/page-edit-form/page-edit-form.stache' // eslint-disable-line
 
 export const PagesTabVM = DefineMap.extend('PagesTabVM', {
   // passed in via app.stache

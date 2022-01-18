@@ -1,4 +1,4 @@
-import $ from 'jquery'
+// import $ from 'jquery'
 import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './question-info.stache'

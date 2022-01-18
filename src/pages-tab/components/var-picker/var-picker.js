@@ -1,4 +1,4 @@
-import $ from 'jquery'
+// import $ from 'jquery'
 import DefineMap from 'can-define/map/map'
 import DefineList from 'can-define/list/list'
 import Component from 'can-component'
@@ -49,55 +49,3 @@ export default Component.extend({
   leakScope: false,
   ViewModel: VarPicker
 })
-
-// from A2J_Tabs.js
-// Pick variable name from list of defined variables
-const varPicker = function (data) {
-  var dval = (data.value)
-  var label = data.label ? '<label class="control-label">' + data.label + '</label>' : ''
-  var variable = data.label === 'Variable:'? 'variable' : ''
-  var $el = $(
-    '<div class="div'+ variable + '"' + (data.name ? 'name="' + data.name + '"' : '') + '>' +
-    label +
-    '<div class="editspan form-group">' +
-      '<input class="form-control ui-combobox-input editable autocomplete picker varname dest ' + variable + '" placeholder="' + data.placeholder + '" type="text" >' +
-    '</div>' +
-    '</div>'
-  )
-
-  var $pickerInput = $el.find('.picker.autocomplete')
-
-  var onBlur = function () {
-    var val = $(this).val()
-    form.change($(this), val)
-  }
-
-  // Create list of sorted variable names with type info.
-  var sortedVars = gGuide.varsSorted()
-
-  var source = sortedVars.map(function (variable) {
-    return {
-      value: variable.name,
-      label: variable.name + ' ' + variable.type
-    }
-  })
-
-  $pickerInput
-    .blur(onBlur)
-    .data('data', data)
-    .val(decodeEntities(dval))
-
-  $pickerInput.autocomplete({
-    source: source,
-    appendTo: '.page-edit-form-panel',
-    change: function () {
-      var newvalue = $(this).val()
-      $(this).val(newvalue)
-    }
-  })
-    .focus(function () {
-      $(this).autocomplete('search')
-    })
-
-  return $el
-}

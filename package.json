@@ -1,6 +1,6 @@
 {
   "name": "a2jauthor",
-  "version": "8.0.3",
+  "version": "8.0.3-0",
   "description": "A2J Authoring App GUI.",
   "license": "GNU AGPL v3.0",
   "author": {
@@ -17,7 +17,7 @@
     "lint": "standard --fix --env mocha",
     "test": "npm run lint && testee --reporter Spec --browsers firefox test/index.html",
     "build": "grunt build --gruntfile=Gruntfile.js",
-    "update-footer-version": "node ./bin/auto-version-update",
+    "update-footer-version": "node ./bin/update_author_version",
     "deploy": "npm run update-footer-version && npm i && npm run build && mv index.html index.dev.html && mv index.production.html index.html",
     "build-docs": "grunt documentjs",
     "serve-docs": "grunt documentjs-lite && http-server docs"

@@ -1,3 +1,5 @@
+import version from '../footer/footerVersion'
+
 // TODO: legacy code currently duplicates these values in A2J_Types.js, refactor down to one source of truth
 export default {
   devShowTesting: false,
@@ -8,8 +10,8 @@ export default {
   // Spinnner for loading wait
   AJAXLoader: '<span class="loader">&nbsp;</span>',
 
-  A2JVersionNum: '8.1.0', // VersionInfo.verNum
-  A2JVersionDate: '2021-12-21-hydra',
+  A2JVersionNum: version.number,//'8.1.0', // VersionInfo.verNum
+  A2JVersionDate: version.date,//'2021-12-21-hydra',
 
   // CAVersionNum:'5.0.0',
   // CAVersionDate:'2013-04-15',

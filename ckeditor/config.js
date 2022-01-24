@@ -7,6 +7,9 @@ CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
+
+	config.enterMode = CKEDITOR.ENTER_BR, // don't automatically wrap label in <p> tag: https://github.com/CCALI/a2jauthor/issues/95
+	config.shiftEnterMode = CKEDITOR.ENTER_P, // but still allow it on purpose if the user SHIFT+ENTER's
 	config.removePlugins = 'smiley';
 	config.toolbarGroups = [
 		{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },

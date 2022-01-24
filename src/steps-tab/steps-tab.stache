@@ -71,13 +71,22 @@
                   class="move-button glyphicon-up-dir {{^if(canMoveStepUp(step)}}disabled{{/if}}"
                   on:click="moveStepUp(step)"
                 ></button>
-                {{let deleteLabel = stepDeleteLabel(step)}}
-                <button
-                  title="{{deleteLabel}}"
-                  aria-label="{{deleteLabel}}"
-                  class="glyphicon-trash {{^if(canDeleteStep(step)}}disabled{{/if}}"
-                  on:click="deleteStep(step)"
-                ></button>
+                {{#if(stepPagesLoaded)}}
+                  {{let deleteLabel = stepDeleteLabel(step)}}
+                  <button
+                    title="{{deleteLabel}}"
+                    aria-label="{{deleteLabel}}"
+                    class="glyphicon-trash {{^if(canDeleteStep(step)}}disabled{{/if}}"
+                    on:click="deleteStep(step)"
+                  ></button>
+                {{else}}
+                  <button
+                    title="Cannot Delete: Checking For Assigned Pages..."
+                    aria-label="Cannot Delete: Checking For Assigned Pages..."
+                    class="glyphicon-trash disabled"
+                    disabled
+                  ></button>
+                {{/if}}
                 <button
                   title="Move Step Later"
                   aria-label="Move Step Later"

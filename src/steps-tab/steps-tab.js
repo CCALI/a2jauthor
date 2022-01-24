@@ -148,6 +148,7 @@ export const StepsTabVM = DefineMap.extend('StepsTabVM', {
 
   // weakmap where keys are step objects from guide.steps array and the value is an array of pages assigned to that step
   stepPagesWeakMap: {},
+  stepPagesLoaded: { type: 'boolean', default: false },
 
   stepPages (step) {
     const wm = this.stepPagesWeakMap || new WeakMap()
@@ -226,6 +227,7 @@ export const StepsTabVM = DefineMap.extend('StepsTabVM', {
           wm.get(guide.steps[p.step]).push(p)
         }
       }
+      this.stepPagesLoaded = true
     }
   }
 })

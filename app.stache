@@ -10,6 +10,7 @@
 <can-import from="a2jauthor/src/report/toolbar/"/>
 <can-import from="a2jauthor/src/about/" />
 <can-import from="a2jauthor/src/pages-tab/" />
+<can-import from="a2jauthor/src/steps-tab/" />
 <can-import from="a2jauthor/src/publish-tab/" />
 <can-import from="a2jauthor/src/variables/tab/"/>
 <can-import from="a2jauthor/src/a2jorg/"/>
@@ -17,7 +18,6 @@
 <can-import from="a2jauthor/src/a2j-analytics/"/>
 <can-import from="a2jauthor/styles/"/>
 <can-import from="a2jauthor/styles.less"/>
-
 
 <div id="splash" class="welcome">
   <div class="loading">
@@ -74,10 +74,9 @@
 
     <!-- Steps Tab -->
     <div class="tab-panel" id="tabsSteps">
-      <div class="tabContentFrame page">
-        <h3 class="page-title">Steps</h3>
-        <div class="tabContent editq"></div>
-      </div>
+      {{#is(page, "steps")}}
+        <steps-tab class="page" guide:from="guide" appState:from="." />
+      {{/is}}
     </div>
 
     <!-- Pages Tab -->

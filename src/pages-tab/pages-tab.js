@@ -60,6 +60,10 @@ export const PagesTabVM = DefineMap.extend('PagesTabVM', {
       this.expanded = true
       window.$('#CAJAOutline .panel-collapse').slideDown(300)
     }
+  },
+
+  connectedCallback () {
+    this.guide && setTimeout(window.updateTOC, 10)
   }
 })
 

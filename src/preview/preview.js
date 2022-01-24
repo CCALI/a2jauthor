@@ -32,7 +32,9 @@ let AuthorPreviewVM = CanMap.extend({
       // ie11 and Edge require scrollTop reset
       document.documentElement.scrollTop = 0
       document.body.scrollTop = 0
-      document.body.style.overflow = 'hidden'
+      // document.body.style.overflow = 'hidden' // a2jauthor#199
+      // whatever old problems might be re-caused by removing the
+      // above line, it should be fixed without disabling scroll.
     } else {
       document.body.style.overflow = 'auto'
     }

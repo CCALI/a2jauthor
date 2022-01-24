@@ -1060,7 +1060,7 @@ TGuide.prototype.noviceTab = function (tab, clear) {	// ### 08/03/2012 Edit pane
       fs.append(cols66)
       t.append(fs)
 
-      $('.starting').append(form.pickpage({
+      $('.tabContent .starting').append(form.pickpage({
         value: guide.firstPage,
         label: 'Starting Point: ',
         buttonText: 'Set Start Point',
@@ -1069,7 +1069,7 @@ TGuide.prototype.noviceTab = function (tab, clear) {	// ### 08/03/2012 Edit pane
         }
       }))
 
-      $('.exit').append(form.pickpage({
+      $('.tabContent .exit').append(form.pickpage({
         value: guide.exitPage,
         label: 'Exit Point: ',
         buttonText: 'Set Exit Point',

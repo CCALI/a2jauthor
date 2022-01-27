@@ -1,3 +1,33 @@
 interviews-page {
   display: block;
+
+  legend button,
+  .change-folder {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+  .change-folder {
+    margin-left: 8px;
+    opacity: 0.4;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  .folder-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    position: relative;
+
+    .popover {
+      left: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .guide {
+      margin-bottom: 0px;
+    }
+  }
 }

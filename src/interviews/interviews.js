@@ -1,8 +1,23 @@
 import $ from 'jquery'
 import DefineMap from 'can-define/map/map'
+import DefineList from 'can-define/list/list'
 import Component from 'can-component'
 import Guide from 'a2jauthor/src/models/guide'
 import template from './interviews.stache'
+
+const ObservableProxy = DefineMap.extend('ObservableProxy', {
+  obj: {},
+  key: {},
+  value: {
+    value ({ lastSet, listenTo, resolve }) {
+      listenTo(lastSet, function (val) {
+        this.obj[this.key] = val
+        resolve(val)
+      })
+      resolve(this.obj[this.key])
+    }
+  }
+})
 
 export const InterviewsVM = DefineMap.extend('InterviewsVM', {
   // passed in via author app.stache
@@ -16,9 +31,13 @@ export const InterviewsVM = DefineMap.extend('InterviewsVM', {
     }
   },
 
-  interviews: {
+  interviews: { /* all rows/records from CAJA_WS listGuides() api, meta data about the actual interviews */
     value ({ lastSet, listenTo, resolve }) {
       this.interviewsPromise.then((interviews) => {
+
+        // TODO: remove this test line when the 'folder' column is reutrned from listGuides() API
+        interviews.forEach(f => (f.folder = ['', 'foo', 'bar', 'Test Folder', 'test/folder/path', 'just a string'][~~(Math.random() * 6)]))
+
         resolve(interviews)
       })
 
@@ -38,6 +57,63 @@ export const InterviewsVM = DefineMap.extend('InterviewsVM', {
       return this.saveCurrentGuidePromise
         .then(() => Guide.findAll())
     }
+  },
+
+  isUnsorted (path) {
+    return !path
+  },
+  newObservableBool (tf = false) {
+    return new DefineMap({ value: tf })
+  },
+  toggleBool (observableBool) {
+    observableBool.value = !observableBool.value
+  },
+
+  // bound and passed to folder-picker as the savedCallback param
+  forceFolderUpdate (observableBool) {
+    observableBool.value = false // close this folder-picker
+    this.ownedInterviewsByFolder = this.interviews // force ownedInterviewsByFolder to recalc
+  },
+
+  // folders = [ { path: 'foobar', ls: [] }, ... ]
+  // TODO: this is done, the CAJA_WS listGuides() api just needs to return the "folder" property along with the rest of the meta data
+  ownedInterviewsByFolder: {
+    value ({ lastSet, listenTo, resolve }) {
+      const resolver = interviews => {
+        if (interviews && interviews.value && interviews.value.length) {
+          interviews = interviews.value // old can model weirdness?
+        }
+        const folders = new DefineList()
+        const folderMap = {}
+        const ownedList = (interviews && interviews.owned && interviews.owned()) || []
+        ownedList.forEach(i => {
+          const path = i.folder || '' // guideListRow.folder is just a string
+          const folderMeta = folderMap[path] = (folderMap[path] || new DefineMap())
+          if (!folderMeta.ls) {
+            folderMeta.path = path
+            folderMeta.ls = new DefineList()
+            folders.push(folderMeta)
+          }
+          folderMeta.ls.push(i)
+        })
+        resolve(folders)
+      }
+      listenTo('interviews', resolver)
+      listenTo('interviews.lenth', () => resolver(this.interviews))
+      listenTo(lastSet, resolver)
+      resolver([])
+    }
+  },
+
+  newObservableProxy (obj, key) {
+    return new ObservableProxy({ obj, key })
+  },
+  folderPopoverTitle (interviewTitle) {
+    let title = interviewTitle || ''
+    if (title.length > 53) {
+      title = title.substr(0, 50) + '...'
+    }
+    return `Move Interview "${title}" into folder`
   },
 
   saveCurrentGuidePromise: {

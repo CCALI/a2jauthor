@@ -1,0 +1,29 @@
+<can-import from="./folder-picker.less" />
+
+{{#if(savePromise.isPending)}}
+  Saving...
+{{else}}
+  <input type="text" value:bind="folderSearch" on:input="folderSearch = scope.element.value" class="form-control" placeholder="Unsorted">
+
+  <ul>
+    {{#for(folder of foldersFiltered)}}
+      <li class="{{#if(folderSearch)}}{{#is(folder.path, folderSearch)}}exact-match{{/is}}{{/if}}">
+        <button class="btn {{#is(folder.path, folderSearch)}}btn-primary{{else}}btn-default{{/is}}" on:click="setFolderTo(folder.path)">
+          <span aria-hidden="true" class="glyphicon-folder-upload"></span>
+          {{#if(folder.path)}}{{folder.path}}{{else}}Unsorted{{/if}}
+        </button>
+      </li>
+    {{/for}}
+    {{#if(folderSearch)}}
+      {{^is(folderSearch, "Unsorted")}}
+        <li class="add-new-folder">
+          <button class="btn btn-primary" on:click="setFolderTo(folder.path)">
+            Place in New Folder:<br>
+            <span aria-hidden="true" class="glyphicon-folder-open"></span>
+            <b>{{folderSearch}}</b>
+          </button>
+        </li>
+      {{/is}}
+    {{/if}}
+  </ul>
+{{/if}}

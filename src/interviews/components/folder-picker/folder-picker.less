@@ -1,0 +1,43 @@
+@import (reference) '../../../../styles';
+
+folder-picker {
+  display: block;
+  /* padding: @grid-gutter-width; */
+
+  .exact-match ~ .add-new-folder {
+    display: none;
+  }
+
+  ul, li {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+  }
+
+  ul {
+    position: relative;
+    height: 200px;
+    overflow-y: auto;
+    margin-top: 16px;
+    padding-bottom: 80px;
+  }
+
+  li {
+    margin-top: 8px;
+  }
+
+  ul .btn {
+    padding: 8px;
+    margin: 0px;
+    width: 100%;
+    text-align: left;
+  }
+
+  .add-new-folder {
+    width: ~"calc(100% - 28px)";
+    position: fixed;
+    bottom: 9px;
+    left: 14px;
+  }
+}

@@ -1,5 +1,7 @@
 <can-import from="a2jauthor/src/loading/"/>
 <can-import from="a2jauthor/src/interviews/interviews.less!"/>
+<can-import from="a2jauthor/src/popover/" />
+<can-import from="a2jauthor/src/interviews/components/folder-picker/"/>
 
 {{#if(interviewsPromise.isPending)}}
   <app-loading loadingMessage:from="loadingMessage"></app-loading>
@@ -24,14 +26,43 @@
     <fieldset>
       <legend>Edit one of my interviews</legend>
 
-      <div class="list-group">
-        {{#each(interviews.owned())}}
-          <a class="guide list-group-item {{#eq(id, scope.vm.currentGuideId)}}guide-opened{{/eq}}" gid="{{id}}">
-            <span class="title">{{title}}</span>
-            <small class="pull-right text-muted">#{{id}} | {{formatFileSize fileSize}} | {{lastModified}}</small>
-          </a>
-        {{/each}}
-      </div>
+      {{#for(folder of ownedInterviewsByFolder)}}
+        <fieldset>
+          {{let expanded = newObservableBool(isUnsorted(folder.path))}}
+          <legend>
+            <button on:click="toggleBool(expanded)" aria-label="{{#if(expanded.value)}}hide{{else}}show{{/if}} interviews">
+              <span aria-hidden="true" class="{{#if(expanded.value)}}glyphicon-folder-open{{else}}glyphicon-folder{{/if}}"></span>
+              ({{folder.ls.length}})
+              {{#if(folder.path)}}{{folder.path}}{{else}}Unsorted{{/if}}
+            </button>
+          </legend>
+          <div class="list-group" {{^if(expanded.value)}}style="display: none;"{{/if}}>
+            {{#for(guideListRow of folder.ls)}}
+              <div class="folder-item">
+                {{let pickerShown = newObservableBool(false)}}
+                <button class="change-folder" title="Move into folder..." ariia-label="Move into folder..." on:click="toggleBool(pickerShown)">
+                  <span aria-hidden="true" class="glyphicon-step-zero"></span>
+                </button>
+                <a class="guide list-group-item {{#eq(guideListRow.id, scope.vm.currentGuideId)}}guide-opened{{/eq}}" gid="{{guideListRow.id}}">
+                  <span class="title">{{guideListRow.title}}</span>
+                  <small class="pull-right text-muted">
+                    #{{guideListRow.id}} | {{formatFileSize guideListRow.fileSize}} | {{guideListRow.lastModified}}
+                  </small>
+                </a>
+                {{#if(pickerShown.value)}}
+                  <app-popover title:from="folderPopoverTitle(guideListRow.title)">
+                    <folder-picker
+                      guideListRow:bind="guideListRow"
+                      folders:bind="ownedInterviewsByFolder"
+                      savedCallback:from="forceFolderUpdate.bind(scope.vm, pickerShown)"
+                    />
+                  </app-popover>
+                {{/if}}
+              </div>
+            {{/for}}
+          </div>
+        </fieldset>
+      {{/for}}
     </fieldset>
 
     <fieldset>

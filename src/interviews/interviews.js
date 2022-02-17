@@ -10,6 +10,8 @@ export const InterviewsVM = DefineMap.extend('InterviewsVM', {
   // passed up via author app.stache
   showDebugPanel: {},
 
+  mergeTool: { type: 'boolean', default: false },
+
   loadingMessage: {
     get () {
       return `Saving Guide ID: ${this.currentGuideId} ...`
@@ -38,6 +40,10 @@ export const InterviewsVM = DefineMap.extend('InterviewsVM', {
       return this.saveCurrentGuidePromise
         .then(() => Guide.findAll())
     }
+  },
+
+  reloadInterviews () {
+    Guide.findAll().then(i => (this.interviews = i))
   },
 
   saveCurrentGuidePromise: {
@@ -150,7 +156,11 @@ export default Component.extend({
 
     '.guide dblclick': function (target) {
       const gid = $(target).attr('gid')
-      window.openSelectedGuide(gid)
+      if (gid === 'mergeTool') {
+        this.viewModel.mergeTool = true
+      } else {
+        window.openSelectedGuide(gid)
+      }
       // reset collapsed steps tracker in A2J_Tabs
       // TODO: handle this in Pages tab refactor
       window.collapsedSteps = []

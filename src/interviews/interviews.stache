@@ -18,6 +18,9 @@
             <span class="title">{{title}}</span>
           </a>
         {{/with}}
+        <a class="guide list-group-item " gid="mergeTool">
+          <span class="title">Merged Interview: Pick parts from existing interviews</span>
+        </a>
       </div>
     </fieldset>
 

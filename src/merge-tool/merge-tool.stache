@@ -1,0 +1,217 @@
+<can-import from='can-stache-converters' />
+<can-import from="./merge-tool.less" />
+<can-import from="../accordion-checkbox/" />
+
+{{<interviewList}}
+  <div class="source-list list-group">
+    <form class="navbar-form" role="search">
+      <div class="input-group" style="width: 100%;">
+        <input type="text"
+          value:from="getSearchFilter(./searchFilter)"
+          on:input="setSearchFilter(./searchFilter, scope.element.value)"
+          class="form-control search-input"
+          placeholder="search for an interview...">
+        {{#if(getSearchFilter(./searchFilter).length)}}
+          <span on:el:click="setSearchFilter(./searchFilter, '')" class="glyphicon glyphicon-cancel-circled form-control-clear" aria-hidden="true"></span>
+        {{/if}}
+        <span class="input-group-addon" style="width: 34px;">
+          <span class="glyphicon-search" aria-hidden="true"></span>
+          <span class="sr-only">Search</span>
+        </span>
+      </div>
+    </form>
+    {{let list=filterGuideList(./listOfGuides, getSearchFilter(./searchFilter))}}
+    {{#for(guide of list)}}
+      <a class="list-group-item" on:click="mtg.load(guide.id)">
+        <span class="title">{{guide.title}}</span><br>
+        <small class="text-muted">#{{guide.id}} | {{formatFileSize guide.fileSize}} | {{guide.lastModified}}</small>
+      </a>
+    {{/for}}
+  </div>
+{{/interviewList}}
+
+{{<wideView}}
+  <fieldset class="vars">
+    <legend>Interview Variables ({{./sortedVariableList.length}})</legend>
+    <div class="row">
+      <div class="col-sm-3"><p><label>Name</label></p></div>
+      <div class="col-sm-1"><label>Type</label></div>
+      <div class="col-sm-2"><label>Repeating</label></div>
+      <div class="col-sm-6"><label>Comment</label></div>
+    </div>
+    {{#./sortedVariableList}}
+      <div class="row">
+        <div class="col-sm-3"><p>{{formatVariableCell(name)}}</p></div>
+        <div class="col-sm-1">{{formatVariableCell(type)}}</div>
+        <div class="col-sm-2">{{formatVariableCell(repeating)}}</div>
+        <div class="col-sm-6">{{formatVariableCell(comment)}}</div>
+      </div>
+    {{/./sortedVariableList}}
+  </fieldset>
+
+  <fieldset class="pages">
+    <legend>Interview Pages</legend>
+    {{#./guide.steps}}
+      <h4>Step {{number}} - {{text}}</h4>
+      {{#../sortedPages}}
+        {{#is(step, parseInt(../number))}}
+          {{^is(type, "Popup")}}
+            <fieldset class="page-fieldset">
+              <legend>Page {{name}}</legend>
+              <p><label>Notes:</label> {{formatPageTextCell(notes)}}</p>
+              <p><label>Text:</label> {{formatPageTextCell(text)}}</p>
+              <p><label>Learn More Prompt:</label> {{learn}}</p>
+              <p><label>Help Text:</label> {{formatPageTextCell(help)}}</p>
+              <p><label>Before Logic:</label> {{formatPageTextCell(codeBefore)}}</p>
+              <p><label>After Logic:</label> {{formatPageTextCell(codeAfter)}}</p>
+              <p><label>Logic Citation:</label> {{formatPageTextCell(codeCitation)}}</p>
+              {{#if(fields.length)}}
+                <details>
+                  <summary>Fields ({{fields.length}})</summary>
+                  <table>
+                    <thead>
+                      <tr>
+                        <td>Type</td>
+                        <td>Label</td>
+                        <td>Variable</td>
+                        <td>Invalid Prompt</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {{#for(f of fields)}}
+                        <tr>
+                          <td>{{f.type}}</td>
+                          <td>{{f.label}}</td>
+                          <td>{{f.name}}</td>
+                          <td>{{f.invalidPrompt}}</td>
+                        </tr>
+                      {{/for}}
+                    </tbody>
+                  </table>
+                </details>
+              {{/if}}
+              {{#if(buttons.length)}}
+                <details>
+                  <summary>Buttons ({{buttons.length}})</summary>
+                  <table>
+                    <thead>
+                      <tr>
+                        <td>Label</td>
+                        <td>Next</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {{#for(b of buttons)}}
+                        <tr>
+                          <td>{{b.label}}</td>
+                          <td>{{b.next}}</td>
+                        </tr>
+                      {{/for}}
+                    </tbody>
+                  </table>
+                </details>
+              {{/if}}
+            </fieldset>
+          {{/is}}
+        {{/is}}
+      {{/../sortedPages}}
+      <div class="empty">No pages here</div>
+    {{/./guide.steps}}
+  </fieldset>
+
+  <fieldset class="popups">
+    <legend>PopUp Pages</legend>
+    {{#./sortedPages}}
+      {{#is(type, "Popup")}}
+        <fieldset>
+          <legend>{{name}}</legend>
+          <p><label>Notes:</label> {{formatPageTextCell(notes)}}</p>
+          <p><label>Text:</label> {{formatPageTextCell(text)}}</p>
+        </fieldset>
+      {{/is}}
+    {{/./sortedPages}}
+    <div class="empty">No pages here</div>
+  </fieldset>
+{{/wideView}}
+
+<div class="merge-tool-grid {{#if(source.guide)}}wide-source{{/if}}">
+  <h3>Create a new Merged Interview</h3>
+  <fieldset class="target-guide">
+    {{^if(target.guide)}}
+      {{^if(target.loadPromise)}}
+        <legend>Step 1: Clone an existing interview for your starting point</legend>
+        {{>interviewList (searchFilter='targetsFilter' listOfGuides=blankAndTargets mtg=target)}}
+      {{else}}
+        {{#if(target.loadPromise.isPending)}}
+          <h3>Loading...</h3>
+        {{else}}
+          <!-- err loading -->
+        {{/if}}
+      {{/if}}
+    {{else}}
+      {{^if(mergeStack.length)}}
+        <legend>Merging into a clone of "{{target.guide.title}}"</legend>
+        <label class="merge-title control-label">New Title: <input type="text" class="form-control search-input" value:bind="mergeTitle"></label>
+        {{#if(source.guide)}}
+          <accordion-checkbox
+            children:from="target.accordionFromGuide"
+            checkboxes:from="false"
+          />
+        {{else}}
+          {{>wideView target}}
+        {{/if}}
+      {{else}}
+        <legend>Continue merging into the clone of "{{target.guide.title}}"</legend>
+        <label class="merge-title control-label">New Title: <input type="text" class="form-control search-input" value:bind="mergeTitle"></label>
+        {{#if(source.guide)}}
+          <accordion-checkbox
+            children:from="mergedTarget.accordionFromGuide"
+            checkboxes:from="false"
+          />
+        {{else}}
+          {{>wideView mergedTarget}}
+        {{/if}}
+      {{/if}}
+    {{/if}}
+  </fieldset>
+
+  <fieldset class="source-guide">
+    {{#if(target.guide)}}
+      {{^if(source.guide)}}
+        {{^if(source.loadPromise)}}
+          {{^if(mergeStack.length)}}
+            <div class="actions">
+              <button class="btn btn-default" on:click="cancelTarget()">Cancel; Choose a different starting point</button>
+            </div>
+            <legend>Step 2: Select a source to pull new parts from</legend>
+            {{>interviewList (searchFilter='sourcesFilter' listOfGuides=sources mtg=source)}}
+          {{else}}
+            <div class="actions">
+              <button class="btn btn-default" on:click="undoPreviousMerge()">Undo Previous Merge</button>
+              <button class="btn btn-primary" on:click="saveMerged(mergedTarget)">Finished; Save My Interview</button>
+            </div>
+            <legend>Step 3: Finish or select a source to pull more parts from</legend>
+            {{>interviewList (searchFilter='sourcesFilter' listOfGuides=sources mtg=source)}}
+          {{/if}}
+        {{else}}
+          {{#if(source.loadPromise.isPending)}}
+            <legend>Loading...</legend>
+          {{else}}
+            <!-- err loading -->
+          {{/if}}
+        {{/if}}
+      {{else}}
+        <div class="actions">
+          <button class="btn btn-default" on:click="cancelMerge()">Cancel; Choose a different source</button>
+          <button class="btn btn-primary" on:click="mergeSelected()">Merge Selected</button>
+          <button class="btn btn-primary" on:click="safeMergeSelected()">Safe Merge Selected</button>
+        </div>
+        <legend>Select the items you'd like to merge from "{{source.guide.title}}"</legend>
+        <accordion-checkbox
+          children:from="source.accordionFromGuide"
+          this:to="sourceAccordionVM"
+        />
+      {{/if}}
+    {{/if}}
+  </fieldset>
+</div>

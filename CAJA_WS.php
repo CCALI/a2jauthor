@@ -442,6 +442,19 @@ switch ($command){
 
 		// 07/2013 SJG - setup to save to user's guide's folder only.
 
+                if (count($_FILES)){
+                    // This check is sloppy though it should always work
+                    // unless the $_FILES[] structure changes or we upload multiple files
+                    // All uploads will fail if a single file in list is bad.
+                    // Might be too strict
+                    foreach($_FILES['files']['name'] as $upname){
+                        if (!isExtensionAllowed($upname)){
+                            error_log("Attempt to upload bad file: " . $upname);
+                            fail_and_exit(400, "Attempt to upload bad file: " . $upname); 
+                        }
+                    }
+                }
+
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$res=$mysqli->query("select * from guides where gid=$gid and editoruid=$userid");
 		if ($row=$res->fetch_assoc())
@@ -971,6 +984,31 @@ function is_valid_guide_file($file) {
 }
 
 /**
+ * Check file extension is safe  to upload
+ *
+ * Returns true if is allowed
+ */
+function isExtensionAllowed($filename) {
+    $path = dirname(__FILE__, 2);
+    $allowed =  parse_ini_file($path . '/config_env.ini')['EXTS_ALLOWED'];
+
+     $matches =[];
+     $isAllowed = false;
+
+     // find file extension without
+     // leading period and at end of string
+     preg_match('/\.(\w+)$/', $filename, $matches);
+     if (count($matches)){
+         $isAllowed = in_array($matches[1], $allowed);
+     } else {
+         // allow for no extension
+         $isAllowed = true;
+     }
+
+     return $isAllowed;
+}
+
+/**
  * Extracts the zip archive content to the indicated destination
  *
  * Returns the folder name of the unzipped archive
@@ -979,12 +1017,39 @@ function is_valid_guide_file($file) {
 function unzip($zip_path, $destination) {
 	$zip = new ZipArchive;
 
+	$isSafe = false;
+
 	if ($zip->open($zip_path) === TRUE) {
-		$foldername = $zip->getNameIndex(0);
-		$zip->extractTo($destination);
-		$zip->close();
-	} else {
-		fail_and_exit(400, 'Unable to open .zip file');
+		//$extractPath = $guidesPath . '/' . $guideId;
+      		// check for proper file structure and safety
+
+      		if($zip->getFromName('Guide.json')) {
+        		// check if contained files are in whitelist
+        		// don't want to upload executable code
+
+        		$i = 0;
+        		for (; $i < $zip->numFiles; $i++) {
+             			$filename = $zip->getNameIndex($i);
+             			if (!isExtensionAllowed($filename)){
+                                    break;
+                                }
+        		}
+
+        		// if all files have been looked at without finding
+        		// something unsafe, then it is safe
+        		if ($i  === $zip->numFiles){
+             			$isSafe = true;
+        		}
+      		}
+      		// all good. zip is safe. extract
+      		if ($isSafe){
+			$foldername = $zip->getNameIndex(0);
+			$zip->extractTo($destination);
+			$zip->close();
+		} else {
+			error_log('Attempt to upload bad guide');
+			fail_and_exit(400, 'Unable to open .zip file');
+		}
 	}
 }
 

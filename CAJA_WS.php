@@ -441,19 +441,22 @@ switch ($command){
 		 */
 
 		// 07/2013 SJG - setup to save to user's guide's folder only.
+		// 2022-02-22 TNN add security fixes
 
-                if (count($_FILES)){
-                    // This check is sloppy though it should always work
-                    // unless the $_FILES[] structure changes or we upload multiple files
-                    // All uploads will fail if a single file in list is bad.
-                    // Might be too strict
-                    foreach($_FILES['files']['name'] as $upname){
-                        if (!isExtensionAllowed($upname)){
-                            error_log("Attempt to upload bad file: " . $upname);
-                            fail_and_exit(400, "Attempt to upload bad file: " . $upname); 
-                        }
-                    }
-                }
+		if (count($_FILES)){
+	    // This check is sloppy though it should always work
+	    // unless the $_FILES[] structure changes in a future php
+	    // All uploads should fail if a single file in list is bad.
+			// Which might be too strict...
+			// but turns out it only fails on the bad file... not sure why
+			// looks like this code is re-entered for each file
+	    foreach($_FILES['files']['name'] as $upname){
+	      if (!isExtensionAllowed($upname)){
+	          error_log("Attempt to upload bad file: " . $upname);
+	          fail_and_exit(400, "Attempt to upload bad file: " . $upname);
+	      }
+	    }
+		}
 
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$res=$mysqli->query("select * from guides where gid=$gid and editoruid=$userid");
@@ -984,72 +987,93 @@ function is_valid_guide_file($file) {
 }
 
 /**
- * Check file extension is safe  to upload
+ * Check file extension is safe to upload
  *
  * Returns true if is allowed
+ * @param string $filename technically the path of file
+ * @return bool
  */
 function isExtensionAllowed($filename) {
-    $path = dirname(__FILE__, 2);
-    $allowed =  parse_ini_file($path . '/config_env.ini')['EXTS_ALLOWED'];
+	$path = dirname(__FILE__, 2);
+	$allowed =  parse_ini_file($path . '/config_env.ini')['EXTS_ALLOWED'];
 
-     $matches =[];
-     $isAllowed = false;
+	$matches =[];
+	$isAllowed = false;
 
-     // find file extension without
-     // leading period and at end of string
-     preg_match('/\.(\w+)$/', $filename, $matches);
-     if (count($matches)){
-         $isAllowed = in_array($matches[1], $allowed);
-     } else {
-         // allow for no extension
-         $isAllowed = true;
-     }
+	// find file extension without
+	// leading period and at end of string
+	preg_match('/\.(\w+)$/', $filename, $matches);
+	if (count($matches)){
+		$isAllowed = in_array($matches[1], $allowed);
+	} else {
+		// allow for no extension
+		$isAllowed = true;
+	}
 
-     return $isAllowed;
+	return $isAllowed;
 }
 
 /**
  * Extracts the zip archive content to the indicated destination
+ * fails if zip contains any files whose extensions are not allowed
+ * logs failure and returns HTTP 400
  *
  * Returns the folder name of the unzipped archive
  * **This code assumes the archive will contain a root folder**
+ * @param string $zip_path path of guide
+ * @param string $destination to extract
+ * @return void
  */
 function unzip($zip_path, $destination) {
 	$zip = new ZipArchive;
 
-	$isSafe = false;
+	$isSafe = false;	//Assume unsafe.
 
 	if ($zip->open($zip_path) === TRUE) {
-		//$extractPath = $guidesPath . '/' . $guideId;
-      		// check for proper file structure and safety
+		// check for proper file structure and safety
 
-      		if($zip->getFromName('Guide.json')) {
-        		// check if contained files are in whitelist
-        		// don't want to upload executable code
+		if($zip->getFromName('Guide.json')) {
+			/** check if contained files are in whitelist
+			 *  don't want to upload executable code
+			 */
 
-        		$i = 0;
-        		for (; $i < $zip->numFiles; $i++) {
-             			$filename = $zip->getNameIndex($i);
-             			if (!isExtensionAllowed($filename)){
-                                    break;
-                                }
-        		}
+			$i = 0;
+			for (; $i < $zip->numFiles; $i++) {
+				$filename = $zip->getNameIndex($i);
+				if (!isExtensionAllowed($filename)){
+			    break;
+				}
+			}
 
-        		// if all files have been looked at without finding
-        		// something unsafe, then it is safe
-        		if ($i  === $zip->numFiles){
-             			$isSafe = true;
-        		}
-      		}
-      		// all good. zip is safe. extract
-      		if ($isSafe){
-			$foldername = $zip->getNameIndex(0);
-			$zip->extractTo($destination);
-			$zip->close();
-		} else {
-			error_log('Attempt to upload bad guide');
-			fail_and_exit(400, 'Unable to open .zip file');
+			// if all files have been looked at without finding
+			// something unsafe, then it is safe
+			if ($i  === $zip->numFiles){
+		  	$isSafe = true;
+			}
 		}
+	}
+
+	// all good. zip is safe. extract
+	// This case also should cover
+	// if the zip fails to open
+	// as $isSafe is never set to true
+  if ($isSafe){
+		// if zip was opened, $zip object will be valid
+		$foldername = $zip->getNameIndex(0);
+		$canExtract = $zip->extractTo($destination);
+		if (!$canExtract){
+			// Not sure if this error and
+			// the next in the else should be different
+			// But they are distinct cases.
+			// Not sure if it matters but log data
+			// could be interesting
+			error_log('Attempt to upload unextractable guide');
+			fail_and_exit(400, 'Unable to extract .zip file');
+		}
+		$zip->close();
+	} else {
+		error_log('Attempt to upload bad guide');
+		fail_and_exit(400, 'Unable to open .zip file');
 	}
 }
 

@@ -1,0 +1,120 @@
+<can-import from="~/src/steps-tab/steps-tab.less" />
+
+<h3 class="page-title">Steps</h3>
+
+{{^if(guide)}}
+  <p>No A2J Guided Interview® Selected</p>
+{{else}}
+  <fieldset name="record" class="accordion {{#if(startExitIsCollapsed)}}collapsed{{/if}}">
+    <legend on:click="toggleStartExitCollapse(scope.element)">Start/Exit points</legend>
+    <div class="row">
+      <div class="col-sm-6 starting">
+        <div class="destination-picker" name="undefined">
+          <label>Starting Point: </label>
+          <span>{{#if(guide.firstPage}}{{guide.firstPage}}{{else}}[no where]{{/if}}</span>
+          <button class="btn btn-default ui-button ui-corner-all ui-widget glyphicon-link"
+            on:click="startPPD(scope.element)"
+          >
+            Set Start Point
+          </button>
+        </div>
+      </div>
+      <div class="col-sm-6 exit">
+        <div class="destination-picker" name="undefined">
+          <label>Exit Point: </label>
+          <span>{{#if(guide.exitPage}}{{guide.exitPage}}{{else}}[no where]{{/if}}</span>
+          <button class="btn btn-default ui-button ui-corner-all ui-widget glyphicon-link"
+            on:click="exitPPD(scope.element)"
+          >
+            Set Exit Point
+          </button>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset name="record" class="accordion {{#if(stepsIsCollapsed)}}collapsed{{/if}}">
+    <legend on:click="toggleStepsCollapse(scope.element)">Steps</legend>
+    <div>
+      <div>
+        <label>Number of Steps:</label>
+        <select list="Steps" class="form-control picklist" value:bind="numSteps">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+        </select>
+      </div>
+      <div>
+        <label class="use-intro-page">
+          Start with an Intro Step (Step 0):
+          <input type="checkbox" checked:from="startsAt0" on:click="toggleIntroStep(scope.element.checked)">
+        </label>
+      </div>
+      <table class="list table table-striped" list="Steps">
+        <tbody class="ui-sortable">
+          {{#for(step of guide.steps)}}
+            <tr valign="top" class="step-step{{step.number}}" name="record">
+              <td class="editicons">
+                <button
+                  title="Move Step Earlier"
+                  aria-label="Move Step Earlier"
+                  class="move-button glyphicon-up-dir {{^if(canMoveStepUp(step)}}disabled{{/if}}"
+                  on:click="moveStepUp(step)"
+                ></button>
+                {{#if(stepPagesLoaded)}}
+                  {{let deleteLabel = stepDeleteLabel(step)}}
+                  <button
+                    title="{{deleteLabel}}"
+                    aria-label="{{deleteLabel}}"
+                    class="glyphicon-trash {{^if(canDeleteStep(step)}}disabled{{/if}}"
+                    on:click="deleteStep(step)"
+                  ></button>
+                {{else}}
+                  <button
+                    title="Cannot Delete: Checking For Assigned Pages..."
+                    aria-label="Cannot Delete: Checking For Assigned Pages..."
+                    class="glyphicon-trash disabled"
+                    disabled
+                  ></button>
+                {{/if}}
+                <button
+                  title="Move Step Later"
+                  aria-label="Move Step Later"
+                  class="move-button glyphicon-down-dir {{^if(canMoveStepDown(step)}}disabled{{/if}}"
+                  on:click="moveStepDown(step)"
+                ></button>
+              </td>
+              <td>
+                <div class="row">
+                  <div class="col-sm-2">
+                    <div class="editspan form-group">
+                      {{ let stepNumber = newBoundObservableProxy(step, 'number', startsAt0) }}
+                      <label class="control-label">Step Number:</label>
+                      <input class="form-control ui-widget editable step-number" type="text" placeholder="#" value:from="stepNumber.value" disabled>
+                    </div>
+                  </div>
+                  <div class="col-sm-10">
+                    <div class="editspan form-group">
+                      <label class="control-label">Step Sign:</label>
+                      <input class="form-control ui-widget editable" type="text" placeholder="title" value:bind="step.text">
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          {{/for}}
+        </tbody>
+      </table>
+    </div>
+  </fieldset>
+{{/if}}

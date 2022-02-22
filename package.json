@@ -1,6 +1,6 @@
 {
   "name": "a2jauthor",
-  "version": "8.0.3-0",
+  "version": "9.0.0",
   "description": "A2J Authoring App GUI.",
   "license": "GNU AGPL v3.0",
   "author": {
@@ -283,5 +283,8 @@
     "paths": {
       "tokenfield-jquery": "node_modules/bootstrap-tokenfield/node_modules/jquery/dist/jquery.js"
     }
+  },
+  "volta": {
+    "node": "16.13.1"
   }
 }

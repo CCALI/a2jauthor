@@ -44,7 +44,7 @@ function template (version) {
         window.less = {async: true, fileSync: true};
       </script>
 
-      <script src=node_modules/steal/steal-sans-promises.production.js?v=${version}" cache-key="v" cache-version="${version}" main="a2jauthor/app"></script>
+      <script src=node_modules/steal/steal.production.js?v=${version}" cache-key="v" cache-version="${version}" main="a2jauthor/app"></script>
     </body>
   </html>`
 }

@@ -269,15 +269,6 @@
       },
       "typeahead.js/dist/bloodhound": {
         "format": "cjs"
-      },
-      "bootstrap/js/modal": {
-        "format": "global",
-        "deps": [
-          "jquery@2.1.4#dist/jquery"
-        ],
-        "globals": {
-          "jQuery": "jquery@2.1.4#dist/jquery"
-        }
       }
     },
     "paths": {

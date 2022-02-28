@@ -90,7 +90,9 @@ describe('<interviews-page>', function () {
     }
 
     it('interviews are set as opened when double clicked', function () {
-      let interview = $('.guide').eq(1)
+      let interview = $('.guide').eq(2)
+      // merge tool link changed the location of the link this test was clicking.
+      // eq(1) is the merge tool entry point now
 
       assert.isFalse(interview.hasClass(openedClass))
       domEvents.dispatch(interview[0], 'dblclick')
@@ -101,15 +103,15 @@ describe('<interviews-page>', function () {
       F('.guide').hasClass(openedClass, false, 'there should be no opened interview')
 
       // select first interview of the list
-      F('.guide:eq(1)').dblclick()
-
-      F('.guide:eq(1)').hasClass(openedClass, true, 'should be opened')
-      F('.' + openedClass).size(1, 'there should be one opened interview')
-
-      // select second interview of the list
       F('.guide:eq(2)').dblclick()
 
       F('.guide:eq(2)').hasClass(openedClass, true, 'should be opened')
+      F('.' + openedClass).size(1, 'there should be one opened interview')
+
+      // select second interview of the list
+      F('.guide:eq(3)').dblclick()
+
+      F('.guide:eq(3)').hasClass(openedClass, true, 'should be opened')
       F('.' + openedClass).size(1, 'there should be one opened interview')
 
       F(done)

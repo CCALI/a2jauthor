@@ -41,11 +41,11 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
     // then return a promise that resolves to the guide pojo like the following (temporary mock) line
     // const loadPromise = fetch(new Request('./resources/' + gid + '.json')).then(response => response.json())
 
-    const loadPromise = fetch('CAJA_WS.php', {
+    const loadPromise = window.fetch('CAJA_WS.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
       body: `cmd=guide&gid=${gid}`
-    }).then(response => response.json()).then(data => parseXML_Auto_to_CAJA($(jQuery.parseXML(data.guide))))
+    }).then(response => response.json()).then(data => window.parseXML_Auto_to_CAJA($(jQuery.parseXML(data.guide))))
 
     this.loadPromise = loadPromise
     return loadPromise
@@ -485,7 +485,7 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
       json: guideJsonStr
     }
 
-    ws(saveAsParams, function (data) {
+    window.ws(saveAsParams, function (data) {
       if (data.error !== undefined) {
         // TODO: setProgress(data.error)
         console.log(data.error)

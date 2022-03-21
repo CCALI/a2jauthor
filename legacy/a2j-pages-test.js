@@ -83,7 +83,7 @@ describe('legacy/A2J_Pages', function () {
     }
 
     const $popupFieldset = window.buildPopupFieldSet(page)
-    assert.equal($popupFieldset[0].elements.length, 4, 'should create popup Fieldset with 4 elements')
+    assert.equal($popupFieldset[0].elements.length, 14, 'should create popup Fieldset with 14 elements')
     window.gGuideID = undefined
   })
 

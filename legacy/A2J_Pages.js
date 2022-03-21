@@ -715,6 +715,76 @@ function buildPopupFieldSet (page) {
     })
   )
 
+  popupFieldSet.append(
+    window.form.htmlarea({
+      name: 'helpMediaLabel',
+      label: 'Media Label:',
+      placeholder: 'Short explanatory label for Learn More Media',
+      value: page.helpMediaLabel,
+      change: function (val) {
+        page.helpMediaLabel = val
+      }
+    })
+  )
+
+  popupFieldSet.append(
+    window.form.pickAudio({
+      name: 'helpAudio',
+      label: 'Audio:',
+      placeholder: '',
+      value: (page.helpAudioURL || '').trim(),
+      change: function (val, page) {
+        page.helpAudioURL = (val || '').trim()
+      }
+    })
+  )
+
+  popupFieldSet.append(
+    window.form.pickImage({
+      name: 'helpGraphic',
+      label: 'Graphic:',
+      placeholder: '',
+      value: (page.helpImageURL || '').trim(),
+      change: function (val, page) {
+        page.helpImageURL = (val || '').trim()
+      }
+    })
+  )
+
+  popupFieldSet.append(
+    window.form.text({
+      name: 'helpAltText',
+      label: 'Graphic Alt-Text:',
+      placeholder:
+        'Enter 100 characters or less (no punctuation) to describe your image for Aria readers. Hint: 100 characters ends here',
+      value: page.helpAltText,
+      change: helpAltTextChangeHandler
+    })
+  )
+
+  popupFieldSet.append(
+    window.form.pickVideo({
+      name: 'helpVideo',
+      label: 'Video:',
+      placeholder: '',
+      value: (page.helpVideoURL || '').trim(),
+      change: function (val, page) {
+        page.helpVideoURL = (val || '').trim()
+      }
+    })
+  )
+
+  popupFieldSet.append(
+    window.form.htmlarea({
+      name: 'helpReader',
+      label: 'Video Transcript:',
+      value: page.helpReader,
+      change: function (val) {
+        page.helpReader = val
+      }
+    })
+  )
+
   return popupFieldSet
 }
 

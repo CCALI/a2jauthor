@@ -512,6 +512,7 @@ function gotoPageEdit (pageName) {
       {
         text: 'Preview',
         class: 'btn btn-primary btn-wide-sm',
+        disabled: () => page.type === 'Popup',
         click: function () {
           var pageName = window.$(this).attr('rel')
           var variableElements = window

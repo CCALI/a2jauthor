@@ -1,7 +1,7 @@
 CKEDITOR.plugins.add('textindent', {
     icons: 'textindent',
-    availableLangs: { 'pt-br': 1, 'en': 1 },
-    lang: 'pt-br, en',
+    availableLangs: { 'en': 1, 'pt-br': 1 },
+    lang: 'en, pt-br',
     init: function (editor) {
 
         var indentation = editor.config.indentation;

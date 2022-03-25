@@ -7,7 +7,7 @@ CKEDITOR.editorConfig = function (config) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
-	// extraPlugins defined in a2j-deps: a2j-repeat-loop.js, a2j-rich-text.js
+	// extraPlugins, indentation & indentOffset defined in a2j-deps: a2j-repeat-loop.js, a2j-rich-text.js
 	config.removePlugins = 'smiley';
 
 	config.toolbarGroups = [
@@ -17,7 +17,7 @@ CKEDITOR.editorConfig = function (config) {
 		{ name: 'forms', groups: ['forms'] },
 		'/',
 		{ name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
-		{ name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'textindent', 'paragraph'] },
+		{ name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
 		{ name: 'links', groups: ['links'] },
 		{ name: 'insert', groups: ['insert'] },
 		'/',

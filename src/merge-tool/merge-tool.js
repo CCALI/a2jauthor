@@ -16,7 +16,7 @@ const formatPageTextCell = val => { // report.js helpers
 export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
   guide: {
     default: undefined,
-    value({ lastSet, listenTo, resolve }) {
+    value ({ lastSet, listenTo, resolve }) {
       listenTo('loadPromise', (ev, newVal) => {
         newVal && newVal.then(guide => {
           const copy = new Guide(guide)
@@ -32,7 +32,7 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
   loadPromise: {
     type: 'any'
   },
-  load(gid) {
+  load (gid) {
     // openSelectedGuide(gid) // legacy/A2J_Guides.js
     // -> calls: ws({ cmd: 'guide', gid: gid }, guideLoaded) // legacy/A2J_AuthorApp.js
     // guideLoaded is a callback that recieves xml version of the guide from the web service
@@ -57,7 +57,7 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
    *
    * builds a list in natural sort order from a var or pages object on a guide
    */
-  guidePartToSortedArray(guidePart, sortByProp = 'name') {
+  guidePartToSortedArray (guidePart, sortByProp = 'name') {
     let sortedList = []
 
     Object.keys(guidePart).forEach((partKey) => {
@@ -74,7 +74,7 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
    * sorted variable list for display
    */
   sortedVariableList: {
-    get() {
+    get () {
       const guide = this.guide
       if (guide && guide.vars) {
         return this.guidePartToSortedArray(guide.vars)
@@ -83,7 +83,7 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
   },
 
   sortedPages: {
-    get() {
+    get () {
       const guide = this.guide
       if (guide && guide.pages) {
         return this.guidePartToSortedArray(guide.pages)
@@ -92,7 +92,7 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
   },
 
   // converts a guide into a generic recursive structure that the checkbox accordion can render
-  get accordionFromGuide() {
+  get accordionFromGuide () {
     const accordion = [
       {
         label: 'Interview Variables',
@@ -233,7 +233,7 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
     return accordion
   },
 
-  accordionValuesToGuidePartial(children, partial) {
+  accordionValuesToGuidePartial (children, partial) {
     children.forEach(checkedValueChildrenObj => {
       // the 'value' from each item in accordionFromSourceGuide that was passed into the accordion
       const checkedValue = checkedValueChildrenObj.value
@@ -254,7 +254,7 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
   },
 
   // convert the generic [{value, children[]}] output from the checkbox accordion back into a (partial) guide
-  guidePartialFromCheckedValues(checkedAccordionData) {
+  guidePartialFromCheckedValues (checkedAccordionData) {
     return this.accordionValuesToGuidePartial(checkedAccordionData, {
       steps: {},
       vars: {},
@@ -289,7 +289,7 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
     default: () => [],
     set: canModelGuideListToPOJOArraySetter
   },
-  get blankAndTargets() {
+  get blankAndTargets () {
     return [{ title: 'Blank Interview', id: 'a2j', fileSize: 2000, lastModified: '-' }, ...this.targets]
   },
   // search string that filters targets list
@@ -308,7 +308,7 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
   // root of the recursive viewmodel pulled up from the accordion-checkbox component in this component's stache template
   sourceAccordionVM: 'any',
   // convert the generic [{value, children[]}] output from the checkbox accordion back into a (partial) guide
-  get sourceGuidePartial() {
+  get sourceGuidePartial () {
     const sourceAccordionVM = this.sourceAccordionVM
     if (!sourceAccordionVM) {
       return undefined
@@ -316,14 +316,14 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
     return this.source.guidePartialFromCheckedValues(sourceAccordionVM.getCheckedValues())
   },
 
-  cancelTarget() {
+  cancelTarget () {
     this.target.assign({
       guide: undefined,
       loadPromise: undefined
     })
   },
 
-  cancelMerge() {
+  cancelMerge () {
     this.source.assign({
       guide: undefined,
       loadPromise: undefined
@@ -332,7 +332,7 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
 
   // array of guidePartials that were merged onto the base target, in order
   mergeStack: { default: () => [] },
-  get mergedTarget() {
+  get mergedTarget () {
     const target = this.target && this.target.guide && this.target.guide.serialize()
     const partials = this.mergeStack
     if (partials.length && target) {
@@ -348,21 +348,21 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
   mergeTitle: {
     type: 'string',
     default: '',
-    get(lsv) {
+    get (lsv) {
       const today = window.jsDate2mdy(window.today2jsDate())
       return lsv || `Merged Interview (${today})`
     }
   },
 
   // merge the selected values into the the target guide without any checks
-  simpleMerge() {
+  simpleMerge () {
     const sourceGuidePartial = this.sourceGuidePartial
     this.mergeStack.push(sourceGuidePartial)
     // this.interviewsPromise = undefined
     this.cancelMerge()
   },
 
-  mergeSelected() {
+  mergeSelected () {
     const sourceGuidePartial = this.sourceGuidePartial
     const { steps, pages } = sourceGuidePartial
     const mergedTarget = this.mergedTarget
@@ -412,7 +412,7 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
     this.cancelMerge()
   },
 
-  safeMergeSelected() {
+  safeMergeSelected () {
     const sourceGuidePartial = this.sourceGuidePartial
     const { vars, steps, pages } = sourceGuidePartial
     const mergedTarget = this.mergedTarget
@@ -462,11 +462,11 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
     this.cancelMerge()
   },
 
-  undoPreviousMerge() {
+  undoPreviousMerge () {
     this.mergeStack.pop()
   },
 
-  saveMerged(mergedTarget) {
+  saveMerged (mergedTarget) {
     const vm = this
     const guide = mergedTarget.guide.serialize()
     delete guide.authorId
@@ -507,22 +507,22 @@ export default Component.extend({
   leakScope: false,
   ViewModel: MergeToolVM,
   helpers: {
-    setSearchFilter(key, value) {
+    setSearchFilter (key, value) {
       this[key] = value
     },
-    getSearchFilter(key) {
+    getSearchFilter (key) {
       return this[key]
     },
-    filterGuideList(list = [], filter = '') {
+    filterGuideList (list = [], filter = '') {
       if (!filter) {
         return list
       }
       return (list.guides || list).filter(g => ((g.title || '').toLowerCase().includes(filter.toLowerCase()) || g.lastModified.includes(filter)))
     },
-    parseInt(val, b = 10) {
+    parseInt (val, b = 10) {
       return parseInt(val, b)
     },
-    formatVariableCell(val) {
+    formatVariableCell (val) {
       if (typeof val === 'boolean') {
         val = val.toString()
       }

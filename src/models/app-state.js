@@ -26,7 +26,7 @@ export default DefineMap.extend('AuthorAppState', {
     serialize: false
   },
 
-  resumeEdit(targetPageName) {
+  resumeEdit (targetPageName) {
     // hide Viewer preview & return user to the Author `pages` tab.
     this.page = 'pages'
 
@@ -59,7 +59,7 @@ export default DefineMap.extend('AuthorAppState', {
   */
   authorVersion: {
     serialize: false,
-    get() {
+    get () {
       return 'A2J ' + constants.A2JVersionNum + '-' + constants.A2JVersionDate
     }
   },
@@ -126,7 +126,7 @@ export default DefineMap.extend('AuthorAppState', {
    * The identifier to the guideId interview currently loaded.
    */
   guideId: {
-    default() {
+    default () {
       return window.gGuideID || ''
     }
   },
@@ -152,7 +152,7 @@ export default DefineMap.extend('AuthorAppState', {
    */
   guidePath: {
     serialize: false,
-    default() {
+    default () {
       return window.gGuidePath || ''
     }
   },
@@ -165,7 +165,7 @@ export default DefineMap.extend('AuthorAppState', {
   guide: {
     serialize: false,
 
-    set(gGuide = {}) {
+    set (gGuide = {}) {
       return new Guide(gGuide)
     }
   },
@@ -204,7 +204,7 @@ export default DefineMap.extend('AuthorAppState', {
   previewMode: {
     default: false,
     serialize: false,
-    get(val) {
+    get (val) {
       return (this.page === 'preview') ? val : false
     }
   },
@@ -216,7 +216,7 @@ export default DefineMap.extend('AuthorAppState', {
    */
   showTesting: {
     serialize: false,
-    get() {
+    get () {
       return window.location.hostname !== 'www.a2jauthor.org'
     }
   },
@@ -251,7 +251,7 @@ export default DefineMap.extend('AuthorAppState', {
    * preview mode.
    */
   viewerAlertMessages: {
-    default() {
+    default () {
       return new CanList()
     },
     serialize: false
@@ -285,7 +285,7 @@ export default DefineMap.extend('AuthorAppState', {
    */
   globalAlertProps: {
     serialize: false,
-    default() {
+    default () {
       return {
         open: false,
         message: '',
@@ -302,7 +302,7 @@ export default DefineMap.extend('AuthorAppState', {
 
   reloadInterviews: { serialize: false }, // function passed up from interviews-page
 
-  init() {
+  init () {
     const appState = this
     // TODO: this global can be removed when legacy code refactored out
     // used in window.form.htmlarea defined in A2J_Tabs.js & used in A2J_Pages.js
@@ -314,7 +314,7 @@ export default DefineMap.extend('AuthorAppState', {
     // So we can access this within the CKEditor widget
     this.setLegalNavStates()
 
-    $(document).ajaxError(function globalAjaxHandler(event, jqxhr) {
+    $(document).ajaxError(function globalAjaxHandler (event, jqxhr) {
       const status = jqxhr.status
       const response = jqxhr.responseJSON || {}
 
@@ -345,7 +345,7 @@ export default DefineMap.extend('AuthorAppState', {
 
   // Fetch the list of available states for within the legalNav guid
   // Used in the CKEditor widget
-  setLegalNavStates() {
+  setLegalNavStates () {
     let states = []
     window.$.ajax({
       type: 'GET',
@@ -359,7 +359,7 @@ export default DefineMap.extend('AuthorAppState', {
       .catch((err) => console.error(err.responseJSON.message))
   },
 
-  toggleDebugPanel() {
+  toggleDebugPanel () {
     const val = this.showDebugPanel
     this.showDebugPanel = !val
   }

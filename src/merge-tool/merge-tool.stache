@@ -203,8 +203,8 @@
       {{else}}
         <div class="actions">
           <button class="btn btn-default" on:click="cancelMerge()">Cancel; Choose a different source</button>
-          <button class="btn btn-primary" on:click="mergeSelected()">Merge Selected</button>
-          <button class="btn btn-primary" on:click="safeMergeSelected()">Safe Merge Selected</button>
+          <button class="btn btn-primary" title="Incoming names of conflicting variables and pages overwrite target items." on:click="mergeSelected()">Merge Selected</button>
+          <button class="btn btn-primary" title="Incoming names of conflicting variables and pages have zzz prepended for safety." on:click="safeMergeSelected()">Safe Merge Selected</button>
         </div>
         <legend>Select the items you'd like to merge from "{{source.guide.title}}"</legend>
         <accordion-checkbox

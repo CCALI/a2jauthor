@@ -1191,27 +1191,35 @@ export default Component.extend({
             this.viewModel.relayDeleteSelection()
             break
           case upKey:
-            const didNudgeUp = this.viewModel.relayNudgeSelection('up')
-            if (didNudgeUp) {
-              event.preventDefault()
+            {
+              const didNudgeUp = this.viewModel.relayNudgeSelection('up')
+              if (didNudgeUp) {
+                event.preventDefault()
+              }
             }
             break
           case downKey:
-            const didNudgeDown = this.viewModel.relayNudgeSelection('down')
-            if (didNudgeDown) {
-              event.preventDefault()
+            {
+              const didNudgeDown = this.viewModel.relayNudgeSelection('down')
+              if (didNudgeDown) {
+                event.preventDefault()
+              }
             }
             break
           case leftKey:
-            const didNudgeLeft = this.viewModel.relayNudgeSelection('left')
-            if (didNudgeLeft) {
-              event.preventDefault()
+            {
+              const didNudgeLeft = this.viewModel.relayNudgeSelection('left')
+              if (didNudgeLeft) {
+                event.preventDefault()
+              }
             }
             break
           case rightKey:
-            const didNudgeRight = this.viewModel.relayNudgeSelection('right')
-            if (didNudgeRight) {
-              event.preventDefault()
+            {
+              const didNudgeRight = this.viewModel.relayNudgeSelection('right')
+              if (didNudgeRight) {
+                event.preventDefault()
+              }
             }
             break
           case aKey:

@@ -153,7 +153,8 @@ const TextStatistics = DefineMap.extend({
     }
 
     // Return if we've hit one of those...
-    if (problemWords.hasOwnProperty(word)) return problemWords[word]
+    const hasProblemWord = Object.prototype.hasOwnProperty.call(problemWords, word)
+    if (hasProblemWord) return problemWords[word]
 
     // These syllables would be counted as two but should be one
     const subSyllables = [

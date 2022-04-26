@@ -6,7 +6,7 @@ import constants from '~/src/models/constants'
 // This function sets some event handles for custom events used to communicate
 // the parts of the author app that are outside of the scope of CanJS.
 export default function bindCustomEvents (appState) {
-  let $authorApp = $('#author-app')
+  const $authorApp = $('#author-app')
 
   // user clicks the preview button in the edit page modal
   $authorApp.on('edit-page:preview', function (evt, pageName) {
@@ -25,8 +25,8 @@ export default function bindCustomEvents (appState) {
   // internal parts of the code call `window.traceAlert` which no longer
   // updates the DOM manually but triggers this event
   $authorApp.on('author:trace-alert', function (evt, data) {
-    let alertMessages = appState.viewerAlertMessages
-    let guideId = alertMessages.attr('guideId')
+    const alertMessages = appState.viewerAlertMessages
+    const guideId = alertMessages.attr('guideId')
 
     // we set a static `guideId` property to the alertMessages list to avoid
     // mixing alert messages from different interviews when the selected
@@ -42,7 +42,7 @@ export default function bindCustomEvents (appState) {
   // user double clicks a guide in the interview tab or clicks the open guide
   // button in the toolbar.
   $authorApp.on('author:item-selected', function (evt, guideId) {
-    let alertMessages = appState.viewerAlertMessages
+    const alertMessages = appState.viewerAlertMessages
 
     // this check is similar to the one made in the `author:trace-alert`,
     // *this* covers the case where a selected interview does not generate
@@ -76,8 +76,8 @@ export default function bindCustomEvents (appState) {
   })
 
   // Updates legacy global window.gGuide with changes to CanJS guide.vars
-  var serializedGuideVars = compute(function () {
-    var guideVars = appState.guide && appState.guide.vars
+  const serializedGuideVars = compute(function () {
+    const guideVars = appState.guide && appState.guide.vars
     if (guideVars) {
       return guideVars.serialize()
     }

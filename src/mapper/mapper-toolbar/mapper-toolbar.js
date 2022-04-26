@@ -102,8 +102,8 @@ export const MapperToolbarVM = DefineMap.extend('MapperToolbarVM', {
   postItNightmare () {
     this.buildingMapper = true
     const elementCells = this.graph.getElements()
-    let getX = () => Math.random() * 1201
-    let getY = () => Math.random() * 801
+    const getX = () => Math.random() * 1201
+    const getY = () => Math.random() * 801
     setTimeout(() => {
       elementCells.forEach((cell) => {
         cell.position(getX(), getY())

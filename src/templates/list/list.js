@@ -28,7 +28,7 @@ import 'can-map-define'
  *
  * `<templates-list>`'s viewModel.
  */
-export let List = CanMap.extend({
+export const List = CanMap.extend({
   define: {
     activeFilter: {
       serialize: false
@@ -46,15 +46,15 @@ export let List = CanMap.extend({
   },
 
   updateSortOrder () {
-    let displayList = this.attr('displayList')
-    let dragPos = this.attr('dragItemIndex')
-    let dropPos = this.attr('dropItemIndex')
+    const displayList = this.attr('displayList')
+    const dragPos = this.attr('dragItemIndex')
+    const dropPos = this.attr('dropItemIndex')
 
     if (dragPos !== dropPos) {
       queues.batch.start()
 
-      let positions = _range(displayList.attr('length'))
-      let newPositions = moveItem(positions, dragPos, dropPos)
+      const positions = _range(displayList.attr('length'))
+      const newPositions = moveItem(positions, dragPos, dropPos)
 
       newPositions.forEach(function (pos, index) {
         const template = displayList.attr(pos)
@@ -83,7 +83,7 @@ export default Component.extend({
   events: {
     'li dragstart': function (el, evt) {
       el = $(el)
-      let dt = evt.dataTransfer
+      const dt = evt.dataTransfer
 
       dt.effectAllowed = 'move'
       dt.setData('text/html', null)
@@ -93,7 +93,7 @@ export default Component.extend({
 
     'li dragenter': function (el) {
       el = $(el)
-      let dropIndex = this.viewModel.attr('dropItemIndex')
+      const dropIndex = this.viewModel.attr('dropItemIndex')
 
       // add placeholder class to the element being dragged.
       if (dropIndex == null) {
@@ -105,7 +105,7 @@ export default Component.extend({
 
     'li dragleave': function (el) {
       el = $(el)
-      let dropIndex = this.viewModel.attr('dropItemIndex')
+      const dropIndex = this.viewModel.attr('dropItemIndex')
 
       // similar to dragenter, this event is fired multiple times, we only
       // remove the class when the 'leaved' element's index is different from
@@ -118,7 +118,7 @@ export default Component.extend({
     'li dragover': function (el, evt) {
       evt.preventDefault()
 
-      let dt = evt.dataTransfer
+      const dt = evt.dataTransfer
       dt.dropEffect = 'move'
     },
 

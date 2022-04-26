@@ -20,7 +20,7 @@ import 'can-map-define'
  * @codeend
  */
 
-let AuthorPreviewVM = CanMap.extend({
+const AuthorPreviewVM = CanMap.extend({
   define: {
     previewMode: {
       value: false

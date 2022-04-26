@@ -182,9 +182,9 @@ export default CanMap.extend({
      */
     noSearchResults: {
       get () {
-        let templates = this.attr('templates')
-        let searchToken = this.attr('searchToken')
-        let displayList = this.attr('displayList')
+        const templates = this.attr('templates')
+        const searchToken = this.attr('searchToken')
+        const displayList = this.attr('displayList')
         return searchToken.length &&
           templates.attr('length') && !displayList.attr('length')
       }
@@ -201,9 +201,9 @@ export default CanMap.extend({
      */
     noTemplatesMatchFilter: {
       get () {
-        let templates = this.attr('templates')
-        let searchToken = this.attr('searchToken')
-        let displayList = this.attr('displayList')
+        const templates = this.attr('templates')
+        const searchToken = this.attr('searchToken')
+        const displayList = this.attr('displayList')
         return !searchToken.length &&
           templates.attr('length') && !displayList.attr('length')
       }
@@ -219,8 +219,8 @@ export default CanMap.extend({
      */
     showTemplatesList: {
       get () {
-        let templates = this.attr('templates')
-        let displayList = this.attr('displayList')
+        const templates = this.attr('templates')
+        const displayList = this.attr('displayList')
         return templates.attr('length') && displayList.attr('length')
       }
     },
@@ -229,15 +229,15 @@ export default CanMap.extend({
   },
 
   sortList (templates) {
-    let criteria = this.attr('sortCriteria')
-    let { key, direction } = criteria.attr()
+    const criteria = this.attr('sortCriteria')
+    const { key, direction } = criteria.attr()
     templates.sortBy(key, direction)
     return templates
   },
 
   filterList (templates) {
     let filtered
-    let filter = this.attr('activeFilter')
+    const filter = this.attr('activeFilter')
 
     switch (filter) {
       case 'all':
@@ -257,7 +257,7 @@ export default CanMap.extend({
   },
 
   performSearch (templates) {
-    let searchToken = this.attr('searchToken')
+    const searchToken = this.attr('searchToken')
     return searchToken ? templates.search(searchToken) : templates
   },
 
@@ -285,9 +285,9 @@ export default CanMap.extend({
    * templates set as `deleted` in order to show/hide the alert messages.
    */
   handleDeletedTemplates () {
-    let templates = this.attr('templates')
-    let alreadyDeleted = this.attr('deletedTemplates')
-    let beingDeleted = templates.filter(template => template.attr('deleted'))
+    const templates = this.attr('templates')
+    const alreadyDeleted = this.attr('deletedTemplates')
+    const beingDeleted = templates.filter(template => template.attr('deleted'))
 
     // remove the deleted flag from the previously deleted templates, otherwise
     // they will continue to show up in the alert component when other templates
@@ -309,9 +309,9 @@ export default CanMap.extend({
    * Same as `handleDeletedTemplates` but for templates being restored.
    */
   handleRestoredTemplates () {
-    let templates = this.attr('templates')
-    let alreadyRestored = this.attr('restoredTemplates')
-    let beingRestored = templates.filter(template => template.attr('restored'))
+    const templates = this.attr('templates')
+    const alreadyRestored = this.attr('restoredTemplates')
+    const beingRestored = templates.filter(template => template.attr('restored'))
 
     if (alreadyRestored && alreadyRestored.attr('length')) {
       alreadyRestored.forEach(template => template.removeAttr('restored'))
@@ -332,12 +332,12 @@ export default CanMap.extend({
    * @return {Array} The new array of ordered templateIds
    */
   updateTemplatesOrder () {
-    let templates = this.attr('templates')
-    let currentDisplayList = this.attr('displayList')
+    const templates = this.attr('templates')
+    const currentDisplayList = this.attr('displayList')
 
     // TODO: build es6 map of template to it's index to remove performance hit of indexOf
 
-    let outTemplates = sort(templates, (a, b) => {
+    const outTemplates = sort(templates, (a, b) => {
       if (!a.attr('active')) return -1
       if (!b.attr('active')) return 1
       return currentDisplayList.indexOf(a) - currentDisplayList.indexOf(b)
@@ -363,7 +363,7 @@ export default CanMap.extend({
         type: 'PUT',
         contentType: 'application/json',
         dataType: 'json',
-        data: JSON.stringify({ templateIds: templateIds }),
+        data: JSON.stringify({ templateIds }),
         error: function (err, xhr) {
           console.error(err, xhr.responseText)
         }

@@ -41,7 +41,7 @@ export default DefineMap.extend('AuthorAppState', {
       // instead this temproary hack lets us do more grainular upgrading over time.
       page && (window.canjs_LegacyModalPageEditFormInjection = {
         appState: this,
-        page: page
+        page
       })
 
       const retval = window.gotoPageEdit(targetPageName)
@@ -346,11 +346,11 @@ export default DefineMap.extend('AuthorAppState', {
   // Fetch the list of available states for within the legalNav guid
   // Used in the CKEditor widget
   setLegalNavStates () {
-    let states = []
+    const states = []
     window.$.ajax({
       type: 'GET',
       dataType: 'json',
-      url: `https://legalnav.org/wp-json/wp/v2/states`
+      url: 'https://legalnav.org/wp-json/wp/v2/states'
     })
       .then((result) => {
         result.map((stateInfo) => states.push([stateInfo.name, stateInfo.slug]))

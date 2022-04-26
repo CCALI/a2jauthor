@@ -165,7 +165,7 @@ export const StepsTabVM = DefineMap.extend('StepsTabVM', {
     if (stepPages.length) {
       return `Cannot Delete Step, Step has ${stepPages.length} Pages assigned`
     } else if (this.guide.steps.length <= 1) {
-      return `Cannot Delete, There must be at least one step`
+      return 'Cannot Delete, There must be at least one step'
     }
     return 'Delete Step'
   },

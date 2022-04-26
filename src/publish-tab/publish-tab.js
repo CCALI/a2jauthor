@@ -20,7 +20,7 @@ const A2JOrgCallback = function (data) {
 }
 
 const publishFunctionMap = {
-  'guidezip': {
+  guidezip: {
     message: 'Generating ZIP',
     callback: function (data) {
       window.setProgress('')
@@ -31,38 +31,38 @@ const publishFunctionMap = {
       }
     }
   },
-  'guideZIPA2JLOCAL': {
+  guideZIPA2JLOCAL: {
     message: 'Publishing to a2j.org local DEV',
     callback: A2JOrgCallback
   },
-  'guideZIPA2JDEV': {
+  guideZIPA2JDEV: {
     message: 'Publishing to A2J.org DEV',
     callback: A2JOrgCallback
   },
-  'guideZIPA2JSTAGE': {
+  guideZIPA2JSTAGE: {
     message: 'Publishing to staging.A2J.org',
     callback: A2JOrgCallback
   },
-  'guideZIPA2JPROD': {
+  guideZIPA2JPROD: {
     message: 'Publishing to www.A2J.org',
     callback: A2JOrgCallback
   },
-  'guideZIPLHI': {
+  guideZIPLHI: {
     message: 'Publishing to LHI',
     callback: LHICallback,
     server: 'QA'
   },
-  'guideZIPLHIQA': {
+  guideZIPLHIQA: {
     message: 'Publishing to LHI - QA',
     callback: LHICallback,
     server: 'QA'
   },
-  'guideZIPLHIDEV': {
+  guideZIPLHIDEV: {
     message: 'Publishing to LHI DEV',
     callback: LHICallback,
     server: 'QA'
   },
-  'guideZIPMARLABS': {
+  guideZIPMARLABS: {
     message: 'Publishing to Marlabs DEV',
     callback: LHICallback,
     server: 'QA'
@@ -123,7 +123,7 @@ export const PublishTabVM = DefineMap.extend('PublishTabVM', {
       url: 'CAJA_WS.php',
       dataType: 'json',
       type: 'POST',
-      data: data,
+      data,
       success: function (data) {
         results(data)
       },
@@ -138,7 +138,7 @@ export const PublishTabVM = DefineMap.extend('PublishTabVM', {
     const gGuideID = this.guideId
 
     if (gGuide !== null && gGuideID !== 0) {
-      var xml = window.exportXML_CAJA_from_CAJA(gGuide)
+      const xml = window.exportXML_CAJA_from_CAJA(gGuide)
 
       window.setProgress('Saving ' + gGuide.title, true)
 
@@ -146,9 +146,9 @@ export const PublishTabVM = DefineMap.extend('PublishTabVM', {
         gGuide.lastSaveXML = xml
 
         // 01/14/2015 included JSON form of guide XML
-        var guideJSONstr = window.guide2JSON_Mobile(gGuide)
+        const guideJSONstr = window.guide2JSON_Mobile(gGuide)
 
-        var params = {
+        const params = {
           cmd: 'guidesave',
           gid: gGuideID,
           guide: xml,

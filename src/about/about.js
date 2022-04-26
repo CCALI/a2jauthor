@@ -69,7 +69,7 @@ export const AboutVM = DefineMap.extend('AboutVM', {
       $(this).parent().addClass('active')
 
       $('.tab-pane').removeClass('active')
-      var panelId = $(this).data('panel')
+      const panelId = $(this).data('panel')
       $('#' + panelId).addClass('active')
     })
 

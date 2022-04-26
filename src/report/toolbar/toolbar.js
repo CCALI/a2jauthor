@@ -86,8 +86,8 @@ export default Component.extend({
       const reportTitleElement = document.getElementsByClassName('guidetitle')[0]
 
       if (reportElement) {
-        var printPreview = window.open('about:blank', 'print_preview')
-        var printDocument = printPreview.document
+        const printPreview = window.open('about:blank', 'print_preview')
+        const printDocument = printPreview.document
         printDocument.open()
 
         printDocument.write('<!DOCTYPE html><html><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">' +

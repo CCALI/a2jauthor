@@ -97,7 +97,7 @@ export const VerticalNavbarVM = CanMap.extend('VerticalNavbarVM', {
   setPage (item) {
     // handles side effect to clear previewPageName in appState
     // even if Preview navbar button was already active
-    this.dispatch('setPageFired', [ item.attr('page') ])
+    this.dispatch('setPageFired', [item.attr('page')])
 
     this.attr('page', item.attr('page'))
   },

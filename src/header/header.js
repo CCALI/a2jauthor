@@ -5,7 +5,7 @@ import helpPageUrl from 'a2jauthor/src/utils/help-page-url'
 
 import 'can-map-define'
 
-export let HeaderVM = CanMap.extend({
+export const HeaderVM = CanMap.extend({
   define: {
     /**
      * @property {String} alert.ViewModel.prototype.define.title title
@@ -23,7 +23,7 @@ export let HeaderVM = CanMap.extend({
      */
     helpPageUrl: {
       get () {
-        let page = this.attr('page')
+        const page = this.attr('page')
         return helpPageUrl(page)
       }
     }

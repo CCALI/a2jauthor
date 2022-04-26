@@ -14,15 +14,15 @@ export const UploadVM = CanMap.extend('UploadVM', {
 
   scrollToUploadedFile (gid) {
     if (gid) {
-      var $el = $('a[gid="' + gid + '"]')
+      const $el = $('a[gid="' + gid + '"]')
 
       if ($el) {
         $('a.guide').removeClass('guide-uploaded')
         $el.addClass('guide-uploaded')
 
-        var uploadedGuidePosition = $('.guide-uploaded').offset().top
-        var navBarHeight = 140
-        var scrollTo = uploadedGuidePosition - navBarHeight
+        const uploadedGuidePosition = $('.guide-uploaded').offset().top
+        const navBarHeight = 140
+        const scrollTo = uploadedGuidePosition - navBarHeight
 
         $('html,body').animate({ scrollTop: scrollTo }, 300)
       }

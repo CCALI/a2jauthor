@@ -30,7 +30,7 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
   },
   scrollToSelectedNode (pageName) {
     const selectedElement = $(`[model-id=${this.selectedNodeId}]`)[0]
-    selectedElement.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'})
+    selectedElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
   },
 
   // JointJS/Canvas related props
@@ -217,7 +217,7 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
     // update canvas node with any name updates
     const $pageEditDialog = $('.page-edit-form')
     $pageEditDialog.dialog({
-      'beforeClose': function () {
+      beforeClose: function () {
         const newPageName = $pageEditDialog.attr('rel')
         if (pageName !== newPageName) {
           const nodeModel = cellView.model
@@ -351,7 +351,7 @@ export const MapperCanvasVM = DefineMap.extend('MapperCanvasVM', {
 
     // mutateQueue let's the dom update with the spinner while the expensive work
     // of adding the mapper nodes can happen after
-    queues.mutateQueue.enqueue(vm.initMapper, vm, [ vm.paper ])
+    queues.mutateQueue.enqueue(vm.initMapper, vm, [vm.paper])
 
     // cleanup event listeners
     return () => {

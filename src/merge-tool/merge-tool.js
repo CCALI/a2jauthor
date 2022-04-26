@@ -58,7 +58,7 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
    * builds a list in natural sort order from a var or pages object on a guide
    */
   guidePartToSortedArray (guidePart, sortByProp = 'name') {
-    let sortedList = []
+    const sortedList = []
 
     Object.keys(guidePart).forEach((partKey) => {
       sortedList.push(guidePart[partKey])
@@ -240,7 +240,7 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
       // if we provided that value (the checkbox at the roots don't have values themselves in our case)
       if (checkedValue) {
         // destructure the 'value'
-        const {which, key, value} = checkedValue
+        const { which, key, value } = checkedValue
         // use the data from it to build up the partial guide
         partial[which][key] = value // this 'value' is the actual (===) variable/step/page from the source guide
       }
@@ -490,7 +490,7 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
         // TODO: setProgress(data.error)
         console.log(data.error)
       } else {
-        var newgid = data.gid // new guide id
+        const newgid = data.gid // new guide id
         guide.id = newgid
         if (typeof vm.reloadInterviews === 'function') {
           vm.reloadInterviews()
@@ -530,7 +530,7 @@ export default Component.extend({
     },
     formatFileSize: function (sizeInBytes) {
       sizeInBytes = sizeInBytes()
-      let sizeInKB = Math.ceil(sizeInBytes / 1024)
+      const sizeInKB = Math.ceil(sizeInBytes / 1024)
       return sizeInKB ? `${sizeInKB}K` : ''
     },
     formatPageTextCell

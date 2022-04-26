@@ -30,11 +30,11 @@ bindCustomEvents(appState)
 
 // The legacy code in legacy/legacy requires the dom to be populated in order to work,
 // so we first render the main app's template and then load the code.
-let loadLegacyCode = function () {
+const loadLegacyCode = function () {
   return loader.import('a2jauthor/legacy/')
 }
 
-let render = function ({ template }) {
+const render = function ({ template }) {
   $('#author-app').html(template(appState))
 }
 

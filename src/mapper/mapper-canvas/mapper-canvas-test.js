@@ -10,21 +10,21 @@ describe('<mapper-canvas>', () => {
       vm = new MapperCanvasVM({
         guide: {
           pages: {
-            'intro': {name: 'intro', mapx: 42, mapy: 24, step: '0', buttons: [{label: 'Continue', next: 'address'}]},
-            'address': {name: 'address', mapx: 60, mapy: 60, step: '1', buttons: [{label: 'Continue', next: 'lasers'}]},
-            'lasers': {name: 'lasers', mapx: 60, mapy: 120, step: '1', buttons: [{label: 'Continue', next: ''}, {label: 'Return', next: 'intro'}]}
+            intro: { name: 'intro', mapx: 42, mapy: 24, step: '0', buttons: [{ label: 'Continue', next: 'address' }] },
+            address: { name: 'address', mapx: 60, mapy: 60, step: '1', buttons: [{ label: 'Continue', next: 'lasers' }] },
+            lasers: { name: 'lasers', mapx: 60, mapy: 120, step: '1', buttons: [{ label: 'Continue', next: '' }, { label: 'Return', next: 'intro' }] }
           },
           sortedPages: [
-            {name: 'address', mapx: 60, mapy: 60, step: '1', buttons: [{label: 'Continue', next: 'lasers'}]},
-            {name: 'intro', mapx: 42, mapy: 24, step: '0', buttons: [{label: 'Continue', next: 'address'}]},
-            {name: 'lasers', mapx: 60, mapy: 120, step: '1', buttons: [{label: 'Continue', next: ''}, {label: 'Return', next: 'intro'}]}
+            { name: 'address', mapx: 60, mapy: 60, step: '1', buttons: [{ label: 'Continue', next: 'lasers' }] },
+            { name: 'intro', mapx: 42, mapy: 24, step: '0', buttons: [{ label: 'Continue', next: 'address' }] },
+            { name: 'lasers', mapx: 60, mapy: 120, step: '1', buttons: [{ label: 'Continue', next: '' }, { label: 'Return', next: 'intro' }] }
           ]
         }
       })
     })
 
     it('createNode()', () => {
-      const page = vm.guide.pages['intro']
+      const page = vm.guide.pages.intro
       const mapNode = vm.createNode(page)
 
       assert.equal(mapNode.attributes.pageName, 'intro', 'should add page.name to the node')
@@ -45,7 +45,7 @@ describe('<mapper-canvas>', () => {
       // create starting nodes, links, and name <-> id DefineMaps
       vm.connectedCallback()
 
-      const nodeId = vm.pageNameToMapId['intro']
+      const nodeId = vm.pageNameToMapId.intro
       const mapNode = vm.graph.getCell(nodeId)
       const ourPortLinks = vm.getNodeOutPortLinks(mapNode)
       assert.equal(ourPortLinks.length, 1, 'should only return out ports - aka this mapNode is link source')
@@ -55,8 +55,8 @@ describe('<mapper-canvas>', () => {
       // create starting nodes, links, and name <-> id DefineMaps
       vm.connectedCallback()
 
-      const page = vm.guide.pages['intro']
-      const nodeId = vm.pageNameToMapId['intro']
+      const page = vm.guide.pages.intro
+      const nodeId = vm.pageNameToMapId.intro
       const mapNode = vm.graph.getCell(nodeId)
 
       let outPorts = vm.getNodeOutPortLinks(mapNode)
@@ -81,8 +81,8 @@ describe('<mapper-canvas>', () => {
     it('updateButtonHighlighting()', () => {
       // create starting nodes, links, and name <-> id DefineMaps
       vm.connectedCallback()
-      const page = vm.guide.pages['intro']
-      const nodeId = vm.pageNameToMapId['intro']
+      const page = vm.guide.pages.intro
+      const nodeId = vm.pageNameToMapId.intro
       const mapNode = vm.graph.getCell(nodeId)
 
       let outPortColor = mapNode.portProp('2', 'attrs/circle/fill')
@@ -103,7 +103,7 @@ describe('<mapper-canvas>', () => {
 
     it('highlightCellView()', () => {
       vm.connectedCallback()
-      let nodeId = vm.pageNameToMapId['intro']
+      let nodeId = vm.pageNameToMapId.intro
       const firstCellView = vm.paper.findViewByModel(nodeId)
       vm.highlightCellView(firstCellView)
 
@@ -111,7 +111,7 @@ describe('<mapper-canvas>', () => {
       assert.isTrue(hasHighlight, 'should highlight the cell')
       assert.equal(vm.lastActiveCellView.id, firstCellView.id, 'should set lastActiveCellView for future highlight removal')
 
-      nodeId = vm.pageNameToMapId['lasers']
+      nodeId = vm.pageNameToMapId.lasers
       const secondCellView = vm.paper.findViewByModel(nodeId)
       vm.highlightCellView(secondCellView)
 

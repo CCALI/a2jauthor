@@ -27,7 +27,7 @@ export const PagesTabVM = DefineMap.extend('PagesTabVM', {
 
     page && (window.canjs_LegacyModalPageEditFormInjection = {
       appState: this.appState,
-      page: page
+      page
     })
 
     const retval = window.gotoPageEdit(pageName)

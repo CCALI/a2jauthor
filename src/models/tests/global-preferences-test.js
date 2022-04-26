@@ -44,15 +44,15 @@ describe('GlobalPreferences', function () {
     globalPrefs.save()
     // test all globalPrefs (DefineMap skips methods)
     const a2jPrefs = JSON.parse(window.localStorage.getItem('a2jPrefs'))
-    for (let pref in globalPrefs) {
+    for (const pref in globalPrefs) {
       const storageValue = a2jPrefs[pref]
       if (typeof pref !== 'function') {
         assert.equal(expectedStoredValues[pref], storageValue, 'saved values should match')
       }
 
       // double check that functions save and load should not be stored
-      assert.equal(a2jPrefs['save'], null, 'should not store save function')
-      assert.equal(a2jPrefs['load'], null, 'should not store load function')
+      assert.equal(a2jPrefs.save, null, 'should not store save function')
+      assert.equal(a2jPrefs.load, null, 'should not store load function')
     }
   })
 
@@ -66,7 +66,7 @@ describe('GlobalPreferences', function () {
     }
     // emmulate a previous save
     const a2jPrefs = {}
-    for (let key in expectedStoredValues) {
+    for (const key in expectedStoredValues) {
       a2jPrefs[key] = expectedStoredValues[key]
     }
     window.localStorage.setItem('a2jPrefs', JSON.stringify(a2jPrefs))

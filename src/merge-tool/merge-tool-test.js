@@ -9,7 +9,7 @@ import 'steal-mocha'
 describe('<about-authors>', () => {
   describe('ViewModel', () => {
     let vm
-    let testAuthor = { name: 'JessBob', title: 'boss', organization: 'CALI', email: 'jb@cali.org' }
+    const testAuthor = { name: 'JessBob', title: 'boss', organization: 'CALI', email: 'jb@cali.org' }
 
     beforeEach(() => {
       vm = new AboutAuthorsVM({
@@ -42,7 +42,7 @@ describe('<about-authors>', () => {
         return canViewModel('about-authors')
       }
 
-      let testAuthor = { name: 'JessBob', title: 'boss', organization: 'CALI', email: 'jb@cali.org' }
+      const testAuthor = { name: 'JessBob', title: 'boss', organization: 'CALI', email: 'jb@cali.org' }
       const vm = render({ guide: { authors: [testAuthor] } })
 
       let expectedWorkingList = [testAuthor]

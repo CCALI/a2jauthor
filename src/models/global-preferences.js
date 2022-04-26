@@ -31,7 +31,7 @@ export default DefineMap.extend('GlobalPreferences', {}, {
   save () {
     const a2jPrefs = {}
     if (typeof (Storage) !== 'undefined') {
-      for (let pref in this) {
+      for (const pref in this) {
         if (canReflect.hasKey(this, pref) && typeof this[pref] !== 'function') {
           a2jPrefs[pref] = this[pref]
         }
@@ -48,7 +48,7 @@ export default DefineMap.extend('GlobalPreferences', {}, {
       if (a2jPrefs != null) {
         let storageValue
         try {
-          for (let pref in this) {
+          for (const pref in this) {
             storageValue = a2jPrefs[pref]
             if (canReflect.hasKey(this, pref) && typeof this[pref] !== 'function') {
               if (storageValue != null) {

@@ -44,7 +44,7 @@ describe('template-edit-page', function () {
 
     beforeEach(function () {
       // a2j-template model findOne requires fixture guideId
-      let frag = stache('<template-edit-page templateId:from="2113" guideId:from="1261"/>')
+      const frag = stache('<template-edit-page templateId:from="2113" guideId:from="1261"/>')
       $('#test-area').html(frag())
       vm = $('template-edit-page')[0].viewModel
     })
@@ -55,7 +55,7 @@ describe('template-edit-page', function () {
 
     it('renders a2j-template when template has elements', function (done) {
       vm.bind('a2jTemplate', function (ev, template) {
-        let totalChildren = template.attr('rootNode.children.length')
+        const totalChildren = template.attr('rootNode.children.length')
 
         assert.isTrue(totalChildren > 0, 'template has elements')
 

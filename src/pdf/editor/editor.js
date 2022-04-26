@@ -40,7 +40,7 @@ function isAreaTooSmall (area) {
 }
 
 function getDataUrlForPage (page, scale) {
-  const viewport = page.getViewport({ scale: scale })
+  const viewport = page.getViewport({ scale })
   const canvas = document.createElement('canvas')
   canvas.width = viewport.width
   canvas.height = viewport.height
@@ -49,7 +49,7 @@ function getDataUrlForPage (page, scale) {
   return page
     .render({
       canvasContext: context,
-      viewport: viewport
+      viewport
     }).promise
     .then(() => {
       return canvas.toDataURL('image/jpeg')
@@ -445,7 +445,7 @@ export const PdfEditorVm = CanMap.extend('PdfEditorVm', {
             }
 
             const scale = 2.5
-            const viewport = page.getViewport({ scale: scale })
+            const viewport = page.getViewport({ scale })
             const canvasSize = {
               width: viewport.width,
               height: viewport.height

@@ -18,7 +18,7 @@ describe('<report-page>', () => {
     })
 
     it('buildingReport', () => {
-      let originalGuide = window.gGuide
+      const originalGuide = window.gGuide
       window.gGuide = {}
 
       assert.equal(vm.attr('buildingReport'), false, 'should be false when no guide loaded')
@@ -64,7 +64,7 @@ describe('<report-page>', () => {
       const guide = { sortedPages, steps }
       vm.attr('guide', guide)
 
-      let promise = vm.attr('pagesAndPopups')
+      const promise = vm.attr('pagesAndPopups')
 
       return promise.then((pagesAndPopups) => {
         assert.equal(pagesAndPopups.length, 2, 'pagesAndPopups should be a 2 element array')
@@ -105,8 +105,7 @@ describe('<report-page>', () => {
       vm.attr('guide', guide)
 
       window.Languages = {
-        regional: {
-          en: { locale: 'en', Language: 'English', LanguageEN: 'English' } }
+        regional: { en: { locale: 'en', Language: 'English', LanguageEN: 'English' } }
       }
 
       const displayLanguage = vm.attr('displayLanguage')

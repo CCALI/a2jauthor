@@ -6,7 +6,7 @@ import 'steal-mocha'
 
 describe('<about-layout>', () => {
   describe('viewModel', () => {
-    let vm = new AboutLayoutVm()
+    const vm = new AboutLayoutVm()
     vm.guide = new DefineMap({ logoImage: '' })
 
     it('setGuideProp', () => {

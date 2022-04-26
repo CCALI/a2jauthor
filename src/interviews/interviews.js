@@ -142,7 +142,7 @@ export default Component.extend({
   helpers: {
     formatFileSize: function (sizeInBytes) {
       sizeInBytes = sizeInBytes()
-      let sizeInKB = Math.ceil(sizeInBytes / 1024)
+      const sizeInKB = Math.ceil(sizeInBytes / 1024)
       return sizeInKB ? `${sizeInKB}K` : ''
     }
   },

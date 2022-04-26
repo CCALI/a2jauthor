@@ -276,9 +276,11 @@ export const ReportVM = CanMap.extend('ReportVM', {
    */
   getTextAlertClass (fkGrade) {
     if (fkGrade) {
-      return (fkGrade < 6 ? 'alert-success'
-        : (fkGrade < 9 ? 'alert-warning'
-          : 'alert-danger'))
+      return (fkGrade < 6
+        ? 'alert-success'
+        : (fkGrade < 9
+            ? 'alert-warning'
+            : 'alert-danger'))
     }
   },
 
@@ -289,7 +291,7 @@ export const ReportVM = CanMap.extend('ReportVM', {
    * builds variable list in natural sort order
    */
   getVariableList (guideVariables) {
-    let sortedList = []
+    const sortedList = []
 
     Object.keys(guideVariables).forEach((varName) => {
       sortedList.push(guideVariables[varName])

@@ -89,7 +89,7 @@ export const VariableEditorVM = CanMap.extend({
           return []
         }
 
-        let names = this.attr('existingVariableNames')
+        const names = this.attr('existingVariableNames')
         if (!names) {
           return []
         }

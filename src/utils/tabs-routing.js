@@ -13,7 +13,7 @@ import navbarItems from 'a2jauthor/src/vertical-navbar/navbar-items'
  *
  */
 export default function tabsRouting (appState) {
-  let onPageChange = function (evt, newPage) {
+  const onPageChange = function (evt, newPage) {
     if (newPage !== 'templates') {
       appState.templateId = undefined
       appState.action = undefined
@@ -24,7 +24,7 @@ export default function tabsRouting (appState) {
       window.updateAttachmentFiles()
     }
 
-    let item = navbarItems.filter(item => item.page === newPage).shift()
+    const item = navbarItems.filter(item => item.page === newPage).shift()
     if (item && item.ref) {
       window.gotoTabOrPage(item.ref)
     }

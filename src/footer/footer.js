@@ -5,7 +5,7 @@ import moment from 'moment'
 
 import 'can-map-define'
 
-let FooterVM = CanMap.extend({
+const FooterVM = CanMap.extend({
   define: {
     // passed in from app.stache computed in app-state.js
     authorVersion: {},

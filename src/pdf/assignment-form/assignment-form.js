@@ -352,7 +352,7 @@ export const AssignmentFormVm = CanMap.extend('AssignmentFormVm', {
   },
 
   fireAssign () {
-    let handler = this.attr('onAssign')
+    const handler = this.attr('onAssign')
     if (handler) {
       const buffer = this.attr('variableBuffer').serialize()
       const variable = getBufferVariable(buffer)

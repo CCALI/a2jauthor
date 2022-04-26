@@ -135,11 +135,11 @@
 {{/wideView}}
 
 <div class="merge-tool-grid {{#if(source.guide)}}wide-source{{/if}}">
-  <h3>Create a new Merged Interview</h3>
+  <h3>Create a new merged interview</h3>
   <fieldset class="target-guide">
     {{^if(target.guide)}}
       {{^if(target.loadPromise)}}
-        <legend>Step 1: Clone an existing interview for your starting point</legend>
+        <legend>Step 1: Clone an existing interview or pick a blank interview for your starting point</legend>
         {{>interviewList (searchFilter='targetsFilter' listOfGuides=blankAndTargets mtg=target)}}
       {{else}}
         {{#if(target.loadPromise.isPending)}}

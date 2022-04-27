@@ -26,7 +26,7 @@ $result=array();
 $err="";
 $mysqli="";
 $drupaldb="";
-$isProductionServer=TRUE;
+$isProductionServer=true;
 
 if (file_exists("../CONFIG.php")) { // legacy php config file for Author
 	require "../CONFIG.php";
@@ -166,7 +166,7 @@ switch ($command){
 		{
 			$result['gid']=$row['gid'];
 			$result['editoruid']=$row['editoruid'];
-			$result['guide']= file_get_contents(GUIDES_DIR.$row['filename'],TRUE);
+			$result['guide']= file_get_contents(GUIDES_DIR.$row['filename'],true);
 			//scandir()
 			trace(GUIDES_DIR.$row['filename']);
 			// 11/26/2013 Include guide's path so we can access local files.
@@ -802,7 +802,7 @@ function process_uploaded_guide_file($guide_id, $destination_path) {
 	} else {
 		$filename = $file_data['name'];
 
-		if (has_a2j_or_xml_ext($filename) == TRUE) {
+		if (has_a2j_or_xml_ext($filename) == true) {
 			mkdir($destination_path);
 			move_uploaded_file($temp_file_path, $destination_path . '/Guide.xml');
 		} else {
@@ -941,7 +941,7 @@ function createCookie ($cookie_array) {
 }
 
 function get_guide_title_from_xml($xml) {
-	libxml_use_internal_errors(TRUE);
+	libxml_use_internal_errors(true);
 	$guide_xml = simplexml_load_string($xml);
 
 	if ($guide_xml === FALSE) {
@@ -1073,7 +1073,7 @@ function unzip($zip_path, $destination) {
 
 	$isSafe = false;	//Assume unsafe.
 
-	if ($zip->open($zip_path) === TRUE) {
+	if ($zip->open($zip_path) === true) {
 		// check for proper file structure and safety
 
 		if($zip->getFromName('Guide.json')) {
@@ -1158,7 +1158,7 @@ function createGuideZip($gid) {
 		$zipFull = GUIDES_DIR.$zipName;
 		$zipRes = $zip->open($zipFull, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
-		if ($zipRes !== TRUE) {
+		if ($zipRes !== true) {
 			trace("cannot open ".$zipFull);
 		} else {
 			trace("created ".$zipFull);

@@ -41,11 +41,34 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
     // then return a promise that resolves to the guide pojo like the following (temporary mock) line
     // const loadPromise = fetch(new Request('./resources/' + gid + '.json')).then(response => response.json())
 
-    const loadPromise = window.fetch('CAJA_WS.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-      body: `cmd=guide&gid=${gid}`
-    }).then(response => response.json()).then(data => window.parseXML_Auto_to_CAJA($(jQuery.parseXML(data.guide))))
+    let loadPromise, filesPromise
+
+    if (gid === 'a2j') {
+      const a2jGuide = window.blankGuide()
+      loadPromise = Promise.resolve(a2jGuide)
+    } else {
+      filesPromise = window.fetch('CAJA_WS.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+        body: `cmd=guidefiles&gid=${gid}`
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('guidefiles', data)
+        })
+
+      loadPromise = window.fetch('CAJA_WS.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+        body: `cmd=guide&gid=${gid}`
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          return window.parseXML_Auto_to_CAJA($(jQuery.parseXML(data.guide)))
+        })
+        .catch(err => console.error(err))
+    }
 
     this.loadPromise = loadPromise
     return loadPromise

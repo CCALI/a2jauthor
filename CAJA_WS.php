@@ -174,6 +174,27 @@ switch ($command){
 		}
 		else
 		{// not found
+			$result['error']='guide with ID ' + $gid + ' not found.';
+		}
+		break;
+
+	case 'guidefiles':
+		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+		$res=$mysqli->query("select * from guides where gid=$gid   and (isPublic=1  or isFree=1  or editoruid=$userid)");
+		if ($row=$res->fetch_assoc())
+		{
+			$filename=GUIDES_DIR.$row['filename'];
+			$path_parts = pathinfo($filename);
+			$filedir = $path_parts['dirname'];
+			$files = scandir($filedir);
+			$templates = array_values(array_filter($files, "is_template_file"));
+			$media = scan_for_files($filedir, ['mp3']);
+
+
+			$result['fileDir']=$filedir;
+			$result['files']=$files;
+			$result['templates']=$templates;
+			$result['media']=$media;
 		}
 		break;
 
@@ -970,6 +991,29 @@ function has_a2j_or_xml_ext($file) {
  */
 function is_template_file($filename) {
 	return (preg_match("/\btemplate\d+.json/", $filename, $matches) === 1);
+}
+
+/**
+ * check for medial files
+ *
+ * Template filenames start with the word "template" followed by a numerical id
+ */
+function scan_for_files($path, array $exts) {
+    $files = scanDir($path);
+
+    $return = array();
+
+    foreach($files as $file)
+    {
+        if($file != '.' && $file != '..')
+        {
+            if(in_array(pathinfo($file, PATHINFO_EXTENSION), $exts)) {
+              $return[] = $file;   
+            }
+        }
+    }
+
+    return $return;
 }
 
 /**

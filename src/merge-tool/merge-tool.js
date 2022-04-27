@@ -52,10 +52,13 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
         body: `cmd=guidefiles&gid=${gid}`
       })
-        .then(response => response.json())
-        .then(data => {
-          console.log('guidefiles', data)
+        .then(response => {
+          return response.json()
         })
+        .then(data => {
+          console.log('all files', data)
+        })
+        .catch(err => console.error(err))
 
       loadPromise = window.fetch('CAJA_WS.php', {
         method: 'POST',
@@ -63,10 +66,7 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
         body: `cmd=guide&gid=${gid}`
       })
         .then(response => response.json())
-        .then(data => {
-          console.log(data)
-          return window.parseXML_Auto_to_CAJA($(jQuery.parseXML(data.guide)))
-        })
+        .then(data => window.parseXML_Auto_to_CAJA($(jQuery.parseXML(data.guide))))
         .catch(err => console.error(err))
     }
 

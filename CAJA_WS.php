@@ -187,9 +187,9 @@ switch ($command){
 			$path_parts = pathinfo($filename);
 			$filedir = $path_parts['dirname'];
 			$files = scandir($filedir);
-			$templates = array_values(array_filter($files, "is_template_file"));
-			$media = scan_for_files($filedir, ['mp3']);
 
+			$templates = array_values(array_filter($files, "is_template_file"));
+			$media = array_values(array_filter($files, "is_media_file"));
 
 			$result['fileDir']=$filedir;
 			$result['files']=$files;
@@ -212,7 +212,7 @@ switch ($command){
 			$guideDir = $path_parts['dirname'];
 			$guideNameOnly = $path_parts['filename'];
 			$answerset=GUIDES_DIR.$guideDir.'/answerset.anx';
-			$result['answerset']= file_get_contents($answerset,TRUE);
+			$result['answerset']= file_get_contents($answerset,true);
 			// 11/26/2013 Include guide's path so we can access local files.
 			//$result['path']=GUIDES_URL.$row['filename'];
 		}
@@ -235,7 +235,7 @@ switch ($command){
             $filenameonly=$path_parts['filename'];
 
 			// retrieve most recent saved xml file, if it exists
-		    $verdir = $filedir.'/Versions';
+			$verdir = $filedir.'/Versions';
 			// ignore hidden files starting with a dot
 			$versionslist = preg_grep('/^([^.])/', scandir($verdir, SCANDIR_SORT_DESCENDING));
 			$newestfile = $versionslist[0];
@@ -996,24 +996,10 @@ function is_template_file($filename) {
 /**
  * check for medial files
  *
- * Template filenames start with the word "template" followed by a numerical id
+ * Allowed media files are controlled in the local config_env.ini file
  */
-function scan_for_files($path, array $exts) {
-    $files = scanDir($path);
-
-    $return = array();
-
-    foreach($files as $file)
-    {
-        if($file != '.' && $file != '..')
-        {
-            if(in_array(pathinfo($file, PATHINFO_EXTENSION), $exts)) {
-              $return[] = $file;   
-            }
-        }
-    }
-
-    return $return;
+function is_media_file($filename) {
+	return (!is_valid_guide_file($filename) && isExtensionAllowed($filename, true));
 }
 
 /**
@@ -1027,31 +1013,39 @@ function is_valid_guide_file($file) {
 	$filename = strtolower($file);
 
 	return has_a2j_ext($filename) ||
-		($filename == "interview.xml" || $filename == "guide.xml");
+		($filename == "interview.xml" || $filename == "guide.xml" || $filename == "guide.json");
 }
 
 /**
- * Check file extension is safe to upload
+ * Check file extension is allowed - used for filtering media and safe upload files
  *
  * Returns true if is allowed
  * @param string $filename technically the path of file
+ * @param bool whether to grab only media extensions, defaults to full list
  * @return bool
  */
-function isExtensionAllowed($filename) {
+function isExtensionAllowed($filename, $mediaOnly = false) {
 	$path = dirname(__FILE__, 2);
-	$allowed =  parse_ini_file($path . '/config_env.ini')['EXTS_ALLOWED'];
+
+	$media =  parse_ini_file($path . '/config_env.ini')['MEDIA_EXTS_ALLOWED'];
+	$other = parse_ini_file($path . '/config_env.ini')['EXTS_ALLOWED'];
+
+	if ($mediaOnly) {
+		$allowed = $media;
+	} else {
+		$allowed = array_merge($media, $other);
+	}
+
+	$testname = strtolower($filename);
 
 	$matches =[];
 	$isAllowed = false;
 
 	// find file extension without
 	// leading period and at end of string
-	preg_match('/\.(\w+)$/', $filename, $matches);
+	preg_match('/\.(\w+)$/', $testname, $matches);
 	if (count($matches)){
 		$isAllowed = in_array($matches[1], $allowed);
-	} else {
-		// allow for no extension
-		$isAllowed = true;
 	}
 
 	return $isAllowed;

@@ -178,7 +178,7 @@ switch ($command){
 		}
 		break;
 
-	case 'guidefiles':
+	case 'guideandfiles':
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$res=$mysqli->query("select * from guides where gid=$gid   and (isPublic=1  or isFree=1  or editoruid=$userid)");
 		if ($row=$res->fetch_assoc())
@@ -191,10 +191,14 @@ switch ($command){
 			$templates = array_values(array_filter($files, "is_template_file"));
 			$media = array_values(array_filter($files, "is_media_file"));
 
-			$result['fileDir']=$filedir;
+			$result['gid']=$row['gid'];
+			$result['editoruid']=$row['editoruid'];
+			$result['guide']= file_get_contents(GUIDES_DIR.$row['filename'],true);
+			$result['guideRoot']=$filedir;
 			$result['files']=$files;
 			$result['templates']=$templates;
 			$result['media']=$media;
+			$result['path']=GUIDES_URL.$row['filename'];
 		}
 		break;
 

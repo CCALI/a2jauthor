@@ -4,6 +4,8 @@ import naturalCompare from 'string-natural-compare/'
 import template from './merge-tool.stache'
 import Guide from '~/src/models/app-state-guide'
 import cString from '@caliorg/a2jdeps/utils/string'
+import A2JTemplate from '@caliorg/a2jdeps/models/a2j-template'
+
 const formatPageTextCell = val => { // report.js helpers
   if (val) {
     // this preserves hard returns from interview while keeping text shorter
@@ -14,12 +16,19 @@ const formatPageTextCell = val => { // report.js helpers
 
 // guide wrapper that adds functionality for use in the merge tool such as converting to/from the generic recursive accordion data
 export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
+  gid: {
+    default: undefined
+  },
   guide: {
     default: undefined,
     value ({ lastSet, listenTo, resolve }) {
       listenTo('loadPromise', (ev, newVal) => {
-        newVal && newVal.then(guide => {
-          const copy = new Guide(guide)
+        newVal && newVal.then(data => {
+          const copy = new Guide(data.guide)
+          if (data.media && data.media.length) {
+            console.log('media found')
+            this.media = data.media
+          }
           // TODO: delete id because this should be a clone?
           resolve(copy)
         }) // todo: catch
@@ -27,6 +36,29 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
 
       listenTo(lastSet, resolve)
       resolve(lastSet.get())
+    }
+  },
+  media: {
+    default: undefined
+
+  },
+
+  templatesPromise: {
+    get () {
+      const guideId = this.gid
+      if (guideId && guideId !== 'a2j') {
+        return A2JTemplate.findAll({ guideId })
+      }
+    }
+  },
+
+  templates: {
+    get (lastSet, resolve) {
+      if (lastSet) {
+        return lastSet
+      }
+
+      this.templatesPromise && this.templatesPromise.then(resolve)
     }
   },
   loadPromise: {
@@ -41,32 +73,27 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
     // then return a promise that resolves to the guide pojo like the following (temporary mock) line
     // const loadPromise = fetch(new Request('./resources/' + gid + '.json')).then(response => response.json())
 
-    let loadPromise, filesPromise
+    let loadPromise
 
     if (gid === 'a2j') {
       const a2jGuide = window.blankGuide()
-      loadPromise = Promise.resolve(a2jGuide)
+      loadPromise = Promise.resolve({ guide: a2jGuide })
     } else {
-      filesPromise = window.fetch('CAJA_WS.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-        body: `cmd=guidefiles&gid=${gid}`
-      })
-        .then(response => {
-          return response.json()
-        })
-        .then(data => {
-          console.log('all files', data)
-        })
-        .catch(err => console.error(err))
+      this.gid = gid
 
       loadPromise = window.fetch('CAJA_WS.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-        body: `cmd=guide&gid=${gid}`
+        body: `cmd=guideandfiles&gid=${gid}`
       })
         .then(response => response.json())
-        .then(data => window.parseXML_Auto_to_CAJA($(jQuery.parseXML(data.guide))))
+        .then(data => {
+          return {
+            guide: window.parseXML_Auto_to_CAJA($(jQuery.parseXML(data.guide))),
+            media: data.media,
+            guideRoot: data.guideRoot
+          }
+        })
         .catch(err => console.error(err))
     }
 
@@ -137,8 +164,23 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
         details: [],
         children: [],
         value: undefined
+      },
+      {
+        label: 'Media Files',
+        expanded: true,
+        details: [],
+        children: [],
+        value: undefined
+      },
+      {
+        label: 'Templates',
+        expanded: true,
+        details: [],
+        children: [],
+        value: undefined
       }
     ]
+    // first guide parts
     const guide = this.guide
     if (guide) {
       const vars = this.sortedVariableList
@@ -253,6 +295,43 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
 
       accordion[2].children = popupPages
     }
+    // then media files
+    const media = this.media
+    if (media) {
+      accordion[3].children = media.map(file => {
+        return {
+          label: `${file}`
+        }
+      })
+    }
+    // then media files
+    const templates = this.templates
+    if (templates) {
+      console.log('templates found', templates)
+      accordion[4].children = templates.map(template => {
+        const type = template.rootNode.tag === 'a2j-pdf' ? 'PDF' : 'Text'
+        const filename = `template${template.templateId}`
+        const status = template.active ? 'Active' : 'Deleted'
+
+        return {
+          label: `${template.title}`,
+          details: [{
+            label: `
+            <b>Filename</b> ${filename}.json<br>
+            <b>Type</b> ${type}<br>
+            <b>Template Id</b> ${template.templateId}<br>
+            <b>Status</b> ${status}<br>
+            `
+          }],
+          value: {
+            which: 'templates',
+            key: template.templateId,
+            value: template
+          }
+        }
+      })
+    }
+
     return accordion
   },
 

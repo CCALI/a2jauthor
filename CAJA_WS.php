@@ -178,7 +178,7 @@ switch ($command){
 		}
 		break;
 
-	case 'guideandfiles':
+	case 'guidemedia':
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$res=$mysqli->query("select * from guides where gid=$gid   and (isPublic=1  or isFree=1  or editoruid=$userid)");
 		if ($row=$res->fetch_assoc())
@@ -186,18 +186,23 @@ switch ($command){
 			$filename=GUIDES_DIR.$row['filename'];
 			$path_parts = pathinfo($filename);
 			$filedir = $path_parts['dirname'];
-			$files = scandir($filedir);
 
-			$templates = array_values(array_filter($files, "is_template_file"));
-			$media = array_values(array_filter($files, "is_media_file"));
+			$allfiles = scandir($filedir);
+			$media = array_filter($allfiles, is_media_file);
+			$details=Array();
 
-			$result['gid']=$row['gid'];
-			$result['editoruid']=$row['editoruid'];
-			$result['guide']= file_get_contents(GUIDES_DIR.$row['filename'],true);
+			foreach($media as $mediafile) {
+				$details[]=array(
+					"name"=> $mediafile,
+					"modified"=> date (DATE_FORMAT_UI, filemtime($mediafile)),
+					"size"=> filesize($mediafile)
+				);
+			}
+
 			$result['guideRoot']=$filedir;
-			$result['files']=$files;
-			$result['templates']=$templates;
 			$result['media']=$media;
+			$result['mediaDetails']=$details;
+			$result['gid']=$gid;
 			$result['path']=GUIDES_URL.$row['filename'];
 		}
 		break;

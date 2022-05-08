@@ -5,6 +5,7 @@ import template from './merge-tool.stache'
 import Guide from '~/src/models/app-state-guide'
 import cString from '@caliorg/a2jdeps/utils/string'
 import A2JTemplate from '@caliorg/a2jdeps/models/a2j-template'
+import Media from '~/src/models/media'
 
 const formatPageTextCell = val => { // report.js helpers
   if (val) {
@@ -25,10 +26,6 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
       listenTo('loadPromise', (ev, newVal) => {
         newVal && newVal.then(data => {
           const copy = new Guide(data.guide)
-          if (data.media && data.media.length) {
-            console.log('media found')
-            this.media = data.media
-          }
           // TODO: delete id because this should be a clone?
           resolve(copy)
         }) // todo: catch
@@ -38,9 +35,23 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
       resolve(lastSet.get())
     }
   },
+  mediaPromise: {
+    get () {
+      const gid = this.gid
+      if (gid && gid !== 'a2j') {
+        console.log('getting media for', gid)
+        return Media.findAll(gid)
+      }
+    }
+  },
   media: {
-    default: undefined
+    get (lastSet, resolve) {
+      if (lastSet) {
+        return lastSet
+      }
 
+      this.mediaPromise && this.mediaPromise.then(resolve)
+    }
   },
 
   templatesPromise: {
@@ -307,7 +318,6 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
     // then media files
     const templates = this.templates
     if (templates) {
-      console.log('templates found', templates)
       accordion[4].children = templates.map(template => {
         const type = template.rootNode.tag === 'a2j-pdf' ? 'PDF' : 'Text'
         const filename = `template${template.templateId}`

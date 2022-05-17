@@ -15,6 +15,18 @@ const formatPageTextCell = val => { // report.js helpers
   return cString.decodeEntities(val)
 }
 
+const formatBytes = (bytes, decimals = 2) => {
+  if (bytes === 0) return '0 Bytes'
+
+  const k = 1024
+  const dm = decimals < 0 ? 0 : decimals
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
+}
+
 // guide wrapper that adds functionality for use in the merge tool such as converting to/from the generic recursive accordion data
 export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
   gid: {
@@ -39,12 +51,12 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
     get () {
       const gid = this.gid
       if (gid && gid !== 'a2j') {
-        console.log('getting media for', gid)
         return Media.findAll(gid)
       }
     }
   },
   media: {
+    default: undefined,
     get (lastSet, resolve) {
       if (lastSet) {
         return lastSet
@@ -311,11 +323,24 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
     if (media) {
       accordion[3].children = media.map(file => {
         return {
-          label: `${file}`
+          label: `${file.name}`,
+          details: [{
+            label: `
+            <b>Filename</b> ${file.filename}<br>
+            <b>Extension</b> ${file.extension}<br>
+            <b>Modified</b> ${file.modified}<br>
+            <b>Size</b> ${formatBytes(file.size)}<br>
+            `
+          }],
+          value: {
+            which: 'media',
+            key: file.filename,
+            value: file
+          }
         }
       })
     }
-    // then media files
+    // then template files
     const templates = this.templates
     if (templates) {
       accordion[4].children = templates.map(template => {
@@ -335,7 +360,7 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
           }],
           value: {
             which: 'templates',
-            key: template.templateId,
+            key: filename,
             value: template
           }
         }
@@ -370,7 +395,9 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
     return this.accordionValuesToGuidePartial(checkedAccordionData, {
       steps: {},
       vars: {},
-      pages: {}
+      pages: {},
+      media: {},
+      templates: {}
     })
   }
 })
@@ -600,7 +627,7 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
     window.ws(saveAsParams, function (data) {
       if (data.error !== undefined) {
         // TODO: setProgress(data.error)
-        console.log(data.error)
+        console.error(data.error)
       } else {
         const newgid = data.gid // new guide id
         guide.id = newgid

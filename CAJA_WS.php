@@ -189,19 +189,25 @@ switch ($command){
 
 			$allfiles = scandir($filedir);
 			$media = array_filter($allfiles, is_media_file);
-			$details=Array();
+			$mediaDetails=Array();
 
-			foreach($media as $mediafile) {
-				$details[]=array(
-					"name"=> $mediafile,
-					"modified"=> date (DATE_FORMAT_UI, filemtime($mediafile)),
-					"size"=> filesize($mediafile)
+			foreach($media as $mediaName) {
+				$mediaFilePath = $filedir . '/' . $mediaName;
+				$file_parts = pathinfo($mediaName);
+				$filename = $file_parts['filename'];
+				$extension = $file_parts['extension']; 
+
+				$mediaDetails[]=array(
+					"name" => $mediaName,
+					"filename" => $filename,
+					"extension" => $extension,
+					"modified" => date (DATE_FORMAT_UI, filemtime($mediaFilePath)),
+					"size" => filesize($mediaFilePath),
+					"path" => $mediaFilePath
 				);
 			}
 
-			$result['guideRoot']=$filedir;
-			$result['media']=$media;
-			$result['mediaDetails']=$details;
+			$result['mediaDetails']=$mediaDetails;
 			$result['gid']=$gid;
 			$result['path']=GUIDES_URL.$row['filename'];
 		}
@@ -1210,35 +1216,16 @@ function add_guide_json_file($guide_name, $zip) {
 	}
 }
 
-function getGuideFileDetails($filename) {	// 2014-08-26 Get info about guide
-	$filename=GUIDES_DIR.$filename;
+function getFileDetails($filePath) {	// 2014-08-26 Get info about guide
+	
 	$details="";
-	if (file_exists($filename))
+	if (file_exists($filePath))
 	{
 		$details = Array();
-		$details['modified' ] = date (DATE_FORMAT_UI, filemtime($filename));
-		$details['size'] = filesize($filename);
-		// Get XML info - XML could be A2J version 4. ignore for now.
-		/*($olderr=error_reporting(0);
-		$xml = simplexml_load_file($filename);
-		error_reporting($olderr);
-		if ($xml!=FALSE)
-		{
-		  $details['pagecount'] = count($xml->PAGES->PAGE);
-		  $details['version' ] =  (string)$xml->INFO->VERSION;
-			//,'description' => (string) $xml->INFO->DESCRIPTION
-		}
-		else{
-			trace('getGuideFileDetails XML parsing error:'.$filename);
-
-		}
-		*/
-		//trace('Details:'.$details);
+		$details['modified' ] = date (DATE_FORMAT_UI, filemtime($filePath));
+		$details['size'] = filesize($filePath);
 	}
-	else
-	{
-	  //trace('getGuideFileDetails file not found:'.$filename);
-	}
+	
 	return $details;
 }
 
@@ -1250,12 +1237,13 @@ function listGuides($sql) {
 		$res=$mysqli->query($sql);
 		while($row=$res->fetch_assoc())
 		{
-			$guides[]=array(
+			$guidePath = GUIDES_DIR.$row['filename'];
+			$guides[] = array(
 				"id"=> $row['gid'],
 				"title"=> $row['title'],
 				"owned"=> $row["editoruid"]==$userid,
-				"details"=> getGuideFileDetails( $row['filename']));
-		  }
+				"details"=> getFileDetails($guidePath));
+		}
 	}
 	$result['guides']=$guides;
 }

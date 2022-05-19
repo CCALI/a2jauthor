@@ -3,29 +3,9 @@ import Component from 'can-component'
 import naturalCompare from 'string-natural-compare/'
 import template from './merge-tool.stache'
 import Guide from '~/src/models/app-state-guide'
-import cString from '@caliorg/a2jdeps/utils/string'
 import A2JTemplate from '@caliorg/a2jdeps/models/a2j-template'
 import Media from '~/src/models/media'
-
-const formatPageTextCell = val => { // report.js helpers
-  if (val) {
-    // this preserves hard returns from interview while keeping text shorter
-    val = val.replace(/(<br\s?\/>)/gi, '|').replace(/(<\/option>)/gi, ' | ').replace(/(<\/p>)/gi, ' | ')
-  }
-  return cString.decodeEntities(val)
-}
-
-const formatBytes = (bytes, decimals = 2) => {
-  if (bytes === 0) return '0 Bytes'
-
-  const k = 1024
-  const dm = decimals < 0 ? 0 : decimals
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
-}
+import { formatPageTextCell, formatBytes } from './helpers/helpers'
 
 // guide wrapper that adds functionality for use in the merge tool such as converting to/from the generic recursive accordion data
 export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {

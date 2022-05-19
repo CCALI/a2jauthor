@@ -178,7 +178,7 @@ switch ($command){
 		}
 		break;
 
-	case 'guidemedia':
+	case 'guidefiles':
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$res=$mysqli->query("select * from guides where gid=$gid   and (isPublic=1  or isFree=1  or editoruid=$userid)");
 		if ($row=$res->fetch_assoc())
@@ -188,28 +188,48 @@ switch ($command){
 			$filedir = $path_parts['dirname'];
 
 			$allfiles = scandir($filedir);
-			$media = array_filter($allfiles, is_media_file);
-			$mediaDetails=Array();
+			$mediaFiles = array_filter($allfiles, is_media_file);
+			$templateFiles = array_filter($allfiles, is_template_file);
 
-			foreach($media as $mediaName) {
+			$media=Array();
+
+			foreach($mediaFiles as $mediaName) {
 				$mediaFilePath = $filedir . '/' . $mediaName;
 				$file_parts = pathinfo($mediaName);
 				$filename = $file_parts['filename'];
 				$extension = $file_parts['extension']; 
 
-				$mediaDetails[]=array(
+				$media[]=(object)[
 					"name" => $mediaName,
 					"filename" => $filename,
 					"extension" => $extension,
 					"modified" => date (DATE_FORMAT_UI, filemtime($mediaFilePath)),
 					"size" => filesize($mediaFilePath),
 					"path" => $mediaFilePath
-				);
+				];
 			}
 
-			$result['mediaDetails']=$mediaDetails;
+			$templates=Array();
+
+			foreach($templateFiles as $template) {
+				$templateFilePath = $filedir . '/' . $template;
+				$file_parts = pathinfo($template);
+				$filename = $file_parts['filename'];
+				$extension = $file_parts['extension']; 
+
+				$templates[]=(object)[
+					"name" => $template,
+					"filename" => $filename,
+					"extension" => $extension,
+					"modified" => date (DATE_FORMAT_UI, filemtime($templateFilePath)),
+					"size" => filesize($templateFilePath),
+					"path" => $templateFilePath
+				];
+			}
+
+			$result['media']=$media;
+			$result['templates']=$templates;
 			$result['gid']=$gid;
-			$result['path']=GUIDES_URL.$row['filename'];
 		}
 		break;
 

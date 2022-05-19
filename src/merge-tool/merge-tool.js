@@ -4,7 +4,7 @@ import naturalCompare from 'string-natural-compare/'
 import template from './merge-tool.stache'
 import Guide from '~/src/models/app-state-guide'
 import A2JTemplate from '@caliorg/a2jdeps/models/a2j-template'
-import Media from '~/src/models/media'
+import GuideFiles from '~/src/models/guide-files'
 import { formatPageTextCell, formatBytes } from './helpers/helpers'
 
 // guide wrapper that adds functionality for use in the merge tool such as converting to/from the generic recursive accordion data
@@ -27,46 +27,46 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
       resolve(lastSet.get())
     }
   },
-  mediaPromise: {
+  guideFilesPromise: {
     default: undefined,
     get () {
       const gid = this.gid
       if (gid && gid !== 'a2j') {
-        return Media.findAll(gid)
+        return GuideFiles.findAll(gid)
       }
     }
   },
-  media: {
+  guideFiles: {
     default: undefined,
     get (lastSet, resolve) {
       if (lastSet) {
         return lastSet
       }
 
-      this.mediaPromise && this.mediaPromise.then(resolve)
+      this.guideFilesPromise && this.guideFilesPromise.then(resolve)
     }
   },
 
-  templatesPromise: {
-    default: undefined,
-    get () {
-      const guideId = this.gid
-      if (guideId && guideId !== 'a2j') {
-        return A2JTemplate.findAll({ guideId })
-      }
-    }
-  },
+  // templatesPromise: {
+  //   default: undefined,
+  //   get () {
+  //     const guideId = this.gid
+  //     if (guideId && guideId !== 'a2j') {
+  //       return A2JTemplate.findAll({ guideId })
+  //     }
+  //   }
+  // },
 
-  templates: {
-    default: undefined,
-    get (lastSet, resolve) {
-      if (lastSet) {
-        return lastSet
-      }
+  // templates: {
+  //   default: undefined,
+  //   get (lastSet, resolve) {
+  //     if (lastSet) {
+  //       return lastSet
+  //     }
 
-      this.templatesPromise && this.templatesPromise.then(resolve)
-    }
-  },
+  //     this.templatesPromise && this.templatesPromise.then(resolve)
+  //   }
+  // },
   loadPromise: {
     type: 'any'
   },
@@ -296,7 +296,7 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
       accordion[2].children = popupPages
     }
     // then media files
-    const media = this.media
+    const media = this.guideFiles && this.guideFiles.media
     if (media) {
       accordion[3].children = media.map(file => {
         return {
@@ -318,26 +318,22 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
       })
     }
     // then template files
-    const templates = this.templates
+    const templates = this.guideFiles && this.guideFiles.templates
     if (templates) {
       accordion[4].children = templates.map(template => {
-        const type = template.rootNode.tag === 'a2j-pdf' ? 'PDF' : 'Text'
-        const filename = `template${template.templateId}`
-        const status = template.active ? 'Active' : 'Deleted'
-
         return {
-          label: `${template.title}`,
+          label: `${template.name}`,
           details: [{
             label: `
-            <b>Filename</b> ${filename}.json<br>
-            <b>Type</b> ${type}<br>
-            <b>Template Id</b> ${template.templateId}<br>
-            <b>Status</b> ${status}<br>
+            <b>Filename</b> ${template.filename}<br>
+            <b>Extension</b> ${template.extension}<br>
+            <b>Modified</b> ${template.modified}<br>
+            <b>Size</b> ${formatBytes(template.size)}<br>
             `
           }],
           value: {
-            which: 'templates',
-            key: filename,
+            which: 'media',
+            key: template.filename,
             value: template
           }
         }

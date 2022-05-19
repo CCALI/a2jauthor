@@ -48,6 +48,7 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
     }
   },
   mediaPromise: {
+    default: undefined,
     get () {
       const gid = this.gid
       if (gid && gid !== 'a2j') {
@@ -67,6 +68,7 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
   },
 
   templatesPromise: {
+    default: undefined,
     get () {
       const guideId = this.gid
       if (guideId && guideId !== 'a2j') {
@@ -76,6 +78,7 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
   },
 
   templates: {
+    default: undefined,
     get (lastSet, resolve) {
       if (lastSet) {
         return lastSet
@@ -607,6 +610,7 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
 
   saveMerged (mergedTarget) {
     const vm = this
+    const errors = []
     const guide = mergedTarget.guide.serialize()
     delete guide.authorId
     const today = window.jsDate2mdy(window.today2jsDate())
@@ -616,7 +620,7 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
     // included JSON form of guide XML
     const guideJsonStr = window.guide2JSON_Mobile(guide)
 
-    const saveAsParams = {
+    const saveNewGuideParams = {
       gid: 0,
       cmd: 'guidesavenew',
       title: guide.title,
@@ -624,16 +628,47 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
       json: guideJsonStr
     }
 
-    window.ws(saveAsParams, function (data) {
+    let newGuideUrl
+    window.ws(saveNewGuideParams, function (data) {
       if (data.error !== undefined) {
         // TODO: setProgress(data.error)
+        errors.push(data.error)
         console.error(data.error)
       } else {
         const newgid = data.gid // new guide id
+        newGuideUrl = data.url // location of new guide for file copying
         guide.id = newgid
         if (typeof vm.reloadInterviews === 'function') {
           vm.reloadInterviews()
         }
+
+        // TODO: successful merge process should be promise chain?
+        const list = []
+        vm.mergeStack.forEach(stackItem => {
+          const media = stackItem.media
+          const keys = media && Object.keys(media)
+          if (keys.length) {
+            keys.forEach(key => {
+              const fileToCopy = media[key]
+              const filePath = fileToCopy.path
+              const fileName = fileToCopy.name
+              if (filePath) {
+                list.push({ fileName, filePath })
+              }
+            })
+          }
+        })
+
+        // copy the list of files
+        window.ws({
+          cmd: 'copyfiles',
+          fileList: list,
+          targetPath: newGuideUrl
+        }, function (data) {
+          console.log(data)
+        })
+
+        // return to merge view
         vm.open = false
       }
     })

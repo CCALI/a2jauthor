@@ -213,6 +213,26 @@ switch ($command){
 		}
 		break;
 
+	// TODO: this will need file size limit, and maybe async queue with UX feedback
+	// to keep Authors from easily filling up the hard disk if things seem to be
+	// 'taking too long'
+	case 'copyfiles':
+		$files = $_REQUEST['fileList'];
+		$targetPath = $_REQUEST['targetPath'];
+
+		foreach ($files as $file) {
+			$source = $file['filePath'];
+			$newFile = $file['fileName'];
+			// php copy requires a file to exist already
+			$destination = $targetPath . '/' . $newFile;
+			touch($destination);
+			// then do the copy part
+			copy($source, $destination);
+		}
+
+		$result['copied']='it copied!';
+		break;
+
 	case 'answerset':
 		// 4/29/2014 INCOMPLETE return XML of answerfile given answer id. No security check currently.
 		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
@@ -460,6 +480,7 @@ switch ($command){
 			$sql="update guides set filename='".$mysqli->real_escape_string($newfile)."' where gid = $newgid";
 			$res=$mysqli->query($sql);
 
+			$result['url']=$assetsdir;
 			$result['gid']=$newgid;
 		}
 		break;

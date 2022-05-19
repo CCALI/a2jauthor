@@ -165,7 +165,6 @@ function guideStart (startTabOrPage) {
   $('#fileupload').addClass('fileupload-processing')
 
   if (gGuideID !== 0) {
-    debugger
     $('#fileupload').fileupload({
       url: CONST.uploadURL + gGuideID,
       dataType: 'json',

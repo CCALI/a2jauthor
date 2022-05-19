@@ -18,6 +18,18 @@
 // // TODO: this should be from js/viewer/mobile/util ?
 // import {gLogic} from './viewer/A2J_Logic'
 
+const formatBytes = (bytes, decimals = 2) => {
+  if (bytes === 0) return '0 Bytes'
+
+  const k = 1024
+  const dm = decimals < 0 ? 0 : decimals
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
+}
+
 function updateAttachmentFiles () {
   // Load list of uploaded existing files:
   gGuide.attachedFiles = {}
@@ -43,10 +55,11 @@ function updateAttachmentFiles () {
         var startWithTemplate = file.name.indexOf('template') === 0
         var notTemplate = !(startWithTemplate && jsonExt)
         var inputHTML = (notGuide && notTemplate) ? '<input type="checkbox" />' : ''
+        var formattedFileSize = formatBytes(file.size)
 
         $('<tr><td>' + inputHTML + '</td><td>' +
           '<a target=_blank href="' + gGuidePath + (file.name) + '">' + file.name + '</a>' +
-          '</td><td>' + file.size + '</td></tr>'
+          '</td><td>' + formattedFileSize + '</td></tr>'
         ).appendTo('#attachmentFiles')
       })
     }

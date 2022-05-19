@@ -16,8 +16,8 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
     default: undefined,
     value ({ lastSet, listenTo, resolve }) {
       listenTo('loadPromise', (ev, newVal) => {
-        newVal && newVal.then(data => {
-          const copy = new Guide(data.guide)
+        newVal && newVal.then(guide => {
+          const copy = new Guide(guide)
           // TODO: delete id because this should be a clone?
           resolve(copy)
         }) // todo: catch
@@ -83,23 +83,17 @@ export const MergeToolGuide = DefineMap.extend('MergeToolGuide', {
 
     if (gid === 'a2j') {
       const a2jGuide = window.blankGuide()
-      loadPromise = Promise.resolve({ guide: a2jGuide })
+      loadPromise = Promise.resolve(a2jGuide)
     } else {
       this.gid = gid
 
       loadPromise = window.fetch('CAJA_WS.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-        body: `cmd=guideandfiles&gid=${gid}`
+        body: `cmd=guide&gid=${gid}`
       })
         .then(response => response.json())
-        .then(data => {
-          return {
-            guide: window.parseXML_Auto_to_CAJA($(jQuery.parseXML(data.guide))),
-            media: data.media,
-            guideRoot: data.guideRoot
-          }
-        })
+        .then(data => window.parseXML_Auto_to_CAJA($(jQuery.parseXML(data.guide))))
         .catch(err => console.error(err))
     }
 

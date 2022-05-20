@@ -190,8 +190,9 @@ switch ($command){
 			$allfiles = scandir($filedir);
 			$mediaFiles = array_filter($allfiles, is_media_file);
 			$templateFiles = array_filter($allfiles, is_template_file);
+			// template1.json, template1.pdf
 
-			$media=Array();
+			$media=Array(); // $media=getFileDetails($mediaFiles)
 
 			foreach($mediaFiles as $mediaName) {
 				$mediaFilePath = $filedir . '/' . $mediaName;
@@ -209,7 +210,7 @@ switch ($command){
 				];
 			}
 
-			$templates=Array();
+			$templates=Array(); // $templates=getFileDetails($templateFiles)
 
 			foreach($templateFiles as $template) {
 				$templateFilePath = $filedir . '/' . $template;
@@ -243,7 +244,7 @@ switch ($command){
 		foreach ($files as $file) {
 			$source = $file['filePath'];
 			$newFile = $file['fileName'];
-			// php copy requires a file to exist already
+			// php copy requires a file to exist already ?!?!?!
 			$destination = $targetPath . '/' . $newFile;
 			touch($destination);
 			// then do the copy part

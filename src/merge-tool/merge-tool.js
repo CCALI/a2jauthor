@@ -613,6 +613,7 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
         }
 
         // TODO: successful merge process should be promise chain?
+        // Also, this currently only copies media, not templates
         const list = []
         vm.mergeStack.forEach(stackItem => {
           const media = stackItem.media

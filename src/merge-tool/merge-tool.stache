@@ -132,6 +132,35 @@
     {{/./sortedPages}}
     <div class="empty">No pages here</div>
   </fieldset>
+
+  {{#if(./guideFiles)}}
+    <fieldset class="media">
+      <legend>Media Files</legend>
+      {{#./guideFiles.media}}
+        <fieldset>
+          <legend>{{filename}} {{^is(../gid, gid)}}from #{{gid}}{{/is}}</legend>
+          {{#if(rename)}}<b>Renamed</b> {{rename}}<br>{{/if}}
+          <b>Extension</b> {{extension}}<br>
+          <b>Modified</b> {{modified}}<br>
+          <b>Size</b> {{formatBytes(size)}}<br>
+        </fieldset>
+      {{/./guideFiles.media}}
+    </fieldset>
+
+    <fieldset class="templates">
+      <legend>Template Files</legend>
+      {{#./guideFiles.templates}}
+        <fieldset>
+          <legend>{{filename}} {{^is(../gid, gid)}}from #{{gid}}{{/is}}</legend>
+          {{#if(rename)}}<b>Renamed</b> {{rename}}<br>{{/if}}
+          <b>Extension</b> {{extension}}<br>
+          <b>Modified</b> {{modified}}<br>
+          <b>Size</b> {{formatBytes(size)}}<br>
+          <b>PDF</b> {{#if(pdf)}}Yes{{else}}No{{/if}}<br>
+        </fieldset>
+      {{/./guideFiles.templates}}
+    </fieldset>
+  {{/if}}
 {{/wideView}}
 
 <div class="merge-tool-grid {{#if(source.guide)}}wide-source{{/if}}">

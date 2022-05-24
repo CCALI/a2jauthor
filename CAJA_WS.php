@@ -186,6 +186,7 @@ switch ($command){
 			$filename=GUIDES_DIR.$row['filename'];
 			$path_parts = pathinfo($filename);
 			$filedir = $path_parts['dirname'];
+			$ownerfolder = substr($row['filename'], 0, stripos($row['filename'], "/", 0));
 
 			$allfiles = scandir($filedir);
 			$mediaFiles = array_filter($allfiles, is_media_file);
@@ -201,12 +202,15 @@ switch ($command){
 				$extension = $file_parts['extension']; 
 
 				$media[]=(object)[
+					"gid" => $gid,
+					"ownerfolder" => $ownerfolder,
 					"name" => $mediaName,
 					"filename" => $filename,
+					"rename" => "",
 					"extension" => $extension,
 					"modified" => date (DATE_FORMAT_UI, filemtime($mediaFilePath)),
-					"size" => filesize($mediaFilePath),
-					"path" => $mediaFilePath
+					// "path" => $mediaFilePath,
+					"size" => filesize($mediaFilePath)
 				];
 			}
 
@@ -219,17 +223,29 @@ switch ($command){
 				$extension = $file_parts['extension']; 
 
 				$templates[]=(object)[
+					"gid" => $gid,
+					"ownerfolder" => $ownerfolder,
 					"name" => $template,
 					"filename" => $filename,
+					"rename" => "",
 					"extension" => $extension,
 					"modified" => date (DATE_FORMAT_UI, filemtime($templateFilePath)),
+					// "path" => $templateFilePath,
 					"size" => filesize($templateFilePath),
-					"path" => $templateFilePath
+					"pdf" => file_exists(substr_replace($templateFilePath, ".pdf", -5)) // remove ".json" from the end, replace with ".pdf"
 				];
+			}
+
+			$templateIds = [];
+
+			if (file_exists($filedir . "/templates.json")) {
+				$templates_json_data = json_decode(file_get_contents($filedir . "/templates.json"));
+				$templateIds = $templates_json_data->templateIds;
 			}
 
 			$result['media']=$media;
 			$result['templates']=$templates;
+			$result['templateIds']=$templateIds;
 			$result['gid']=$gid;
 		}
 		break;
@@ -238,20 +254,66 @@ switch ($command){
 	// to keep Authors from easily filling up the hard disk if things seem to be
 	// 'taking too long'
 	case 'copyfiles':
-		$files = $_REQUEST['fileList'];
-		$targetPath = $_REQUEST['targetPath'];
+		$templateIds = $_REQUEST['templateIds'];
+		foreach ($templateIds as $index => $id) {
+			$templateIds[$index] = intval($mysqli->real_escape_string($id));
+		}
+		$destGid = intval($mysqli->real_escape_string($_REQUEST['gid']));
+		$res = $mysqli->query("select * from guides where gid=$destGid and editoruid=$userid");
+		if ($row = $res->fetch_assoc())
+		{
+			$destinationPath = pathinfo(GUIDES_DIR.$row['filename'])['dirname'] . '/';
+		  $files = $_REQUEST['fileList'];
 
-		foreach ($files as $file) {
-			$source = $file['filePath'];
-			$newFile = $file['fileName'];
-			// php copy requires a file to exist already ?!?!?!
-			$destination = $targetPath . '/' . $newFile;
-			touch($destination);
-			// then do the copy part
-			copy($source, $destination);
+			$sourcePaths = [];
+			foreach ($files as $file) {
+				$file['sourceGid'] = intval($mysqli->real_escape_string($file['sourceGid']));
+				$sourcePaths[] = $file['sourceGid'];
+			}
+			$sourcePaths = array_unique($sourcePaths);
+
+			$res = $mysqli->query(
+				"select gid, filename from guides where gid IN (".implode(',', $sourcePaths).") and (isPublic=1 or isFree=1 or editoruid=$userid)"
+			);
+
+			$sourcePaths = [];
+			while ($path = $res->fetch_assoc()) {
+				$sourcePaths[$path['gid']] = pathinfo(GUIDES_DIR.$path['filename'])['dirname'];
+			}
+
+			foreach ($files as $file) {
+				$filename = $file['filename'];
+				$rename = $file['rename'] ?: $filename;
+				$extension = $file['extension'];
+				// $sourceGid = $file['sourceGid'];
+				// $ownerfolder = $file['ownerfolder'];
+				$sourcePath = $sourcePaths[$file['sourceGid']] . '/';
+
+				$source = $sourcePath . $filename . '.' . $extension;
+				$destination = $destinationPath . $rename . '.' . $extension;
+				touch($destination); // php copy requires a file to exist already ?!?!?!
+				copy($source, $destination); // then do the copy part
+
+				// also copy corresponding pdf files when they exist for json templates
+				if ($extension == "json") {
+					$source = $sourcePath . $filename . '.pdf';
+					$destination = $destinationPath . $rename . '.pdf';
+					if (file_exists($source)) {
+						touch($destination);
+						copy($source, $destination);
+					}
+				}
+			}
+
+			// TODO: templates.json
+
+			$result['copied']='copied!';
+		}
+		else
+		{ // not found
+			$result['error']='guide with ID ' + $gid + ' not found.';
 		}
 
-		$result['copied']='it copied!';
 		break;
 
 	case 'answerset':

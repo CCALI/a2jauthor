@@ -114,6 +114,9 @@ export const MergeToolGuideVM = DefineMap.extend('MergeToolGuideVM', {
     }
   },
 
+  // passed in from merge-tool
+  pageCheckedCallback: 'any',
+
   // converts a guide into a generic recursive structure that the checkbox accordion can render
   get accordionFromGuide () {
     const accordion = [
@@ -194,7 +197,8 @@ export const MergeToolGuideVM = DefineMap.extend('MergeToolGuideVM', {
               which: 'pages',
               key: page.name,
               value: page
-            }
+            },
+            checkedCallback: (checked, value) => (checked && this.pageCheckedCallback(value.value))
           })
           return sc
         }
@@ -247,7 +251,8 @@ export const MergeToolGuideVM = DefineMap.extend('MergeToolGuideVM', {
             which: 'pages',
             key: page.name,
             value: page
-          }
+          },
+          checkedCallback: (checked, value) => (checked && this.pageCheckedCallback(value.value))
         })
         return sc
       }, [])

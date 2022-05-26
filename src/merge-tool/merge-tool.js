@@ -2,7 +2,7 @@ import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './merge-tool.stache'
 import Guide from '~/src/models/app-state-guide'
-import { formatPageTextCell, formatBytes } from './helpers/helpers'
+import { formatPageTextCell, formatBytes, pageVarString, renameVars } from './helpers/helpers'
 import _findIndex from 'lodash/findIndex'
 
 // guide wrapper that adds functionality for use in the merge tool such as converting to/from the generic recursive accordion data
@@ -48,8 +48,39 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
   },
   // search string that filters sources list
   sourcesFilter: 'string',
+
+  pageDependancyAutoChecker (page) {
+    const mediaNames = {
+      [page.helpImageURL]: true,
+      [page.helpVideoURL]: true,
+      [page.helpAudioURL]: true,
+      [page.textAudioURL]: true
+    }
+    const savm = this.sourceAccordionVM
+    const mediaAccordionList = savm && savm.children[3] && savm.children[3].children
+    if (mediaAccordionList && mediaAccordionList.length) {
+      mediaAccordionList.forEach(ma => {
+        const name = ma && ma.value && ma.value.value && ma.value.value.name
+        name && mediaNames[name] && ma.checkAll()
+      })
+    }
+
+    const pageVars = pageVarString(page)
+    const varAccordionList = savm && savm.children[0] && savm.children[0].children
+    if (varAccordionList && varAccordionList.length) {
+      varAccordionList.forEach(va => {
+        const name = va && va.value && va.value.value && va.value.value.name
+        name && pageVars.indexOf('%' + name.toLowerCase() + '%') !== -1 && va.checkAll()
+      })
+    }
+  },
+
   // on the right, the selected guide from which we are checking boxes to bring its stuff into targetGuide
-  source: { default: () => new MergeToolGuideVM() },
+  source: {
+    default: function () {
+      return new MergeToolGuideVM({ pageCheckedCallback: this.pageDependancyAutoChecker.bind(this) })
+    }
+  },
   // root of the recursive viewmodel pulled up from the accordion-checkbox component in this component's stache template
   sourceAccordionVM: 'any',
   // convert the generic [{value, children[]}] output from the checkbox accordion back into a (partial) guide
@@ -190,11 +221,11 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
         }
       })
     })
-    mergedTarget.guideFiles = guideFiles
 
     // Non-Overwriting Merge
     // update the sourceGuideParial so merging resolves as intended:
     // 1) var conflicts create a new var with 'zzz' prefix
+    const varRenameMap = {}
     Object.keys(vars).forEach(k => {
       if (mergedTarget.guide.vars[k]) {
         let prefix = 'zz'
@@ -204,7 +235,9 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
           prefixk = `${prefix} ${k}`
         } while (mergedTarget.guide.vars[prefixk] || vars[prefixk])
         vars[prefixk] = vars[k]
-        vars[k].name = `${prefix} ${vars[k].name}`
+        const newname = `${prefix} ${vars[k].name}`
+        varRenameMap[vars[k].name] = newname
+        vars[k].name = newname
         delete vars[k]
       }
     })
@@ -215,6 +248,7 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
     Object.keys(steps).forEach(k => { delete steps[k] })
     steps[safeMergeStepIndex] = safeStep
     Object.keys(pages).forEach(k => {
+      renameVars(pages[k], varRenameMap)
       pages[k].step = parseInt(safeMergeStepNumber, 10)
       // 3) page conflicts create a new page with 'zzz' prefix
       if (mergedTarget.guide.pages[k]) {

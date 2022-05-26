@@ -148,6 +148,7 @@ export const AccordionCheckboxVM = DefineMap.extend('AccordionCheckboxVM', {
   },
   // TODO: the tri-state of soft-checked vs fully checked is not accessible in the stache yet
 
+  checkedCallback: 'any',
   // determine what happens when a checkbox is clicked, based on its current state
   checkboxClicked () {
     this.fullyChecked ? this.uncheckAll() : this.checkAll()
@@ -157,12 +158,14 @@ export const AccordionCheckboxVM = DefineMap.extend('AccordionCheckboxVM', {
   checkAll () {
     (this.children || []).forEach(c => c.checkAll())
     this.checked = true
+    this.checkedCallback && this.checkedCallback(true, this.value)
   },
 
   // recursively set the checked state to false at this instance and every node bellow
   uncheckAll () {
     (this.children || []).forEach(c => c.uncheckAll())
     this.checked = false
+    this.checkedCallback && this.checkedCallback(false, this.value)
   },
 
   // returns a recurssive array of {value, children[]} objects for any items that display as checked

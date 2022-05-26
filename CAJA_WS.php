@@ -254,10 +254,6 @@ switch ($command){
 	// to keep Authors from easily filling up the hard disk if things seem to be
 	// 'taking too long'
 	case 'copyfiles':
-		$templateIds = $_REQUEST['templateIds'];
-		foreach ($templateIds as $index => $id) {
-			$templateIds[$index] = intval($mysqli->real_escape_string($id));
-		}
 		$destGid = intval($mysqli->real_escape_string($_REQUEST['gid']));
 		$res = $mysqli->query("select * from guides where gid=$destGid and editoruid=$userid");
 		if ($row = $res->fetch_assoc())
@@ -305,13 +301,21 @@ switch ($command){
 				}
 			}
 
-			// TODO: templates.json
+			// templates.json
+			$templateIds = $_REQUEST['templateIds'] ?: [];
+			foreach ($templateIds as $index => $id) {
+				$templateIds[$index] = intval($mysqli->real_escape_string($id));
+			}
+			$templates_obj = new stdClass();
+			$templates_obj->guideId = $destGid;
+			$templates_obj->templateIds = $templateIds;
+			file_put_contents($destinationPath . 'templates.json', json_encode($templates_obj));
 
 			$result['copied']='copied!';
 		}
 		else
 		{ // not found
-			$result['error']='guide with ID ' + $gid + ' not found.';
+			$result['error']='guide with ID ' + $destGid + ' not found.';
 		}
 
 		break;

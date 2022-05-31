@@ -55,7 +55,7 @@ export const MergeToolGuideVM = DefineMap.extend('MergeToolGuideVM', {
       const a2jGuide = window.blankGuide()
       loadPromise = Promise.resolve(a2jGuide)
     } else {
-      let gfProm = this.guideFilesPromise || Promise.resolve({ media: [], templates: [] })
+      const gfProm = this.guideFilesPromise || Promise.resolve({ media: [], templates: [] })
 
       loadPromise = gfProm.then(gf => {
         this.guideFiles = gf
@@ -277,7 +277,7 @@ export const MergeToolGuideVM = DefineMap.extend('MergeToolGuideVM', {
     const media = this.guideFiles && this.guideFiles.media
     if (media) {
       accordion[3].children = media.map(file => {
-        const sourceIndicator = file.gid == this.gid ? '' : ` from #${file.gid}`
+        const sourceIndicator = file.gid == this.gid ? '' : ` from #${file.gid}` // eslint-disable-line
         return {
           label: `${file.name}${sourceIndicator}`,
           details: [{
@@ -301,7 +301,7 @@ export const MergeToolGuideVM = DefineMap.extend('MergeToolGuideVM', {
     const templates = this.guideFiles && this.guideFiles.templates
     if (templates) {
       accordion[4].children = templates.map(template => {
-        const sourceIndicator = template.gid == this.gid ? '' : ` from #${template.gid}`
+        const sourceIndicator = template.gid == this.gid ? '' : ` from #${template.gid}` // eslint-disable-line
         return {
           label: `${template.name}${sourceIndicator}`,
           details: [{

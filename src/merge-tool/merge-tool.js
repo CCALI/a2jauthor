@@ -112,7 +112,7 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
     const target = this.target && this.target.guide && this.target.guide.serialize()
     let guideFiles = new DefineMap((this.target && this.target.guideFiles) || { media: [], templates: [] })
     guideFiles = guideFiles.serialize()
-    
+
     const partials = this.mergeStack
     if (partials.length && target) {
       partials.forEach(p => {

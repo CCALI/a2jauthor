@@ -54,7 +54,7 @@ export const renameVars = (page, varRenameMap) => {
   Object.keys(varRenameMap).forEach(oldname => {
     const newname = varRenameMap[oldname]
     const rx = new RegExp(oldname, 'gi')
-    page.name = page.name && page.name.replace(rx, newname) 
+    page.name = page.name && page.name.replace(rx, newname)
     page.text = page.text && page.text.replace(rx, newname)
     page.repeatVar = page.repeatVar && page.repeatVar.replace(rx, newname)
     page.outerLoopVar = page.outerLoopVar && page.outerLoopVar.replace(rx, newname)
@@ -66,7 +66,6 @@ export const renameVars = (page, varRenameMap) => {
     page.fields.forEach(f => {
       f.label = f.label && f.label.replace(rx, newname)
       f.name = f.name && f.name.replace(rx, newname)
-      debugger
       f.value = f.value && f.value.replace(rx, newname)
       f.invalidPrompt = f.invalidPrompt && f.invalidPrompt.replace(rx, newname)
       f.sample = f.sample && f.sample.replace(rx, newname)

@@ -7,7 +7,7 @@ describe('Assignment Form', function () {
     it('updateBufferWithVariable - default overflow option', () => {
       const vm = new AssignmentFormVm()
       // set variable
-      const textVar = {comment: '', repeating: false, name: 'middle', type: 'Text'}
+      const textVar = { comment: '', repeating: false, name: 'middle', type: 'Text' }
       vm.attr('selectedVariable', textVar.name)
       vm.attr(`variableDict.${textVar.name}`, textVar)
 

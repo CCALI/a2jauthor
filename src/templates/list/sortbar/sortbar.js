@@ -4,7 +4,7 @@ import template from './sortbar.stache'
 
 import 'can-map-define'
 
-export let Sortbar = CanMap.extend({
+export const Sortbar = CanMap.extend({
   define: {
     criteria: {
       value: {}
@@ -38,8 +38,8 @@ export default Component.extend({
 
   helpers: {
     sortCaretClasses (sortKey) {
-      let classes = []
-      let { key, direction } = this.attr('criteria').attr()
+      const classes = []
+      const { key, direction } = this.attr('criteria').attr()
 
       if (key === sortKey) {
         classes.push('active')

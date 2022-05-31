@@ -9,22 +9,22 @@ export const fitToContentOptions = {
 }
 
 export const stepBackgroundMap = {
-  '0': '#EFEFC6',
-  '1': '#EFEF8C',
-  '2': '#EFC6EF',
-  '3': '#EFC6C6',
-  '4': '#EF8CEF',
-  '5': '#EF8C8C',
-  '6': '#C6EFEF',
-  '7': '#C6EFC6',
-  '8': '#C6C6EF',
-  '9': '#C6C68C',
-  '10': '#C68CC6',
-  '11': '#C68C8C',
-  '12': '#8CEFEF',
-  '13': '#8CEF8C',
-  '14': '#8CC6C6',
-  '15': '#8CC68C'
+  0: '#EFEFC6',
+  1: '#EFEF8C',
+  2: '#EFC6EF',
+  3: '#EFC6C6',
+  4: '#EF8CEF',
+  5: '#EF8C8C',
+  6: '#C6EFEF',
+  7: '#C6EFC6',
+  8: '#C6C6EF',
+  9: '#C6C68C',
+  10: '#C68CC6',
+  11: '#C68C8C',
+  12: '#8CEFEF',
+  13: '#8CEF8C',
+  14: '#8CC6C6',
+  15: '#8CC68C'
 }
 
 /** jointjs paper/graph code and event listeners */
@@ -37,7 +37,7 @@ export const buildPaper = (vm, width, height) => {
     model: graph,
     width: width || 1000,
     height: height || 1000,
-    gridSize: gridSize,
+    gridSize,
     drawGrid: true,
     background: {
       color: 'rgba(255, 255, 255, 0.3)'
@@ -71,11 +71,11 @@ export const makeNode = (page) => {
     pageName: page.name,
     position: { x: page.mapx || nodeSize.width / 2, y: page.mapy || nodeSize.height },
     size: { height: nodeSize.height, width: nodeSize.width },
-    inPorts: inPorts,
-    outPorts: outPorts,
+    inPorts,
+    outPorts,
     ports: {
       groups: {
-        'in': {
+        in: {
           attrs: {
             '.port-body': {
               fill: '#00ccff',
@@ -92,7 +92,7 @@ export const makeNode = (page) => {
             args: {}
           }
         },
-        'out': {
+        out: {
           attrs: {
             '.port-body': {
               fill: '#BEBEBE',

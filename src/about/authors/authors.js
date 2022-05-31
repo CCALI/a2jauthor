@@ -57,12 +57,12 @@ export const AboutAuthorsVM = DefineMap.extend('AboutAuthorsVM', {
   saveAuthors (workingList) {
     if (workingList && workingList.length) {
       const authors = []
-      for (let author of workingList) {
+      for (const author of workingList) {
         authors.push(author)
       }
       // global guide is auto saved
       if (window.gGuide) {
-        window.gGuide['authors'] = authors
+        window.gGuide.authors = authors
       } else {
         console.error('Authors save failed: no window.gGuide found')
       }

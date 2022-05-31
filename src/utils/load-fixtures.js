@@ -1,7 +1,7 @@
-var loader = require('@loader')
-var _import = loader.import
-var isWindow = loader.isPlatform('window')
-var isProduction = loader.isEnv('production')
+const loader = require('@loader')
+const _import = loader.import
+const isWindow = loader.isPlatform('window')
+const isProduction = loader.isEnv('production')
 
 // if this module is loaded, the `import` hook of the available loader will
 // be overridden to make sure the fixtures module is loaded before the app's
@@ -10,9 +10,9 @@ var isProduction = loader.isEnv('production')
 if (isWindow && !isProduction) {
   loader.import = function (name) {
     if (name === 'a2jauthor/app' || name === 'a2jviewer/app') {
-      var _this = this
+      const _this = this
 
-      var fixtures = name === 'a2jviewer/app'
+      const fixtures = name === 'a2jviewer/app'
         ? '@caliorg/a2jdeps/models/fixtures/'
         : 'a2jauthor/src/models/fixtures/'
 

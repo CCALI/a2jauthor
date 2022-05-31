@@ -13,7 +13,7 @@ import DefineMap from 'can-define/map/map'
 const TextStatistics = DefineMap.extend({
   cleanText (text) {
     // all these tags should be preceded by a full stop.
-    var fullStopTags = ['li', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'dd']
+    const fullStopTags = ['li', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'dd']
 
     fullStopTags.forEach(function (tag) {
       text = text.replace('</' + tag + '>', '.')
@@ -32,7 +32,7 @@ const TextStatistics = DefineMap.extend({
       .replace(/\s+/, ' ') // Remove multiple spaces
       .replace(/\s+$/, '') // Strip trailing whitespace
 
-    var hasFinalTerminator = text[text.length - 1] === '.' ||
+    const hasFinalTerminator = text[text.length - 1] === '.' ||
       text[text.length - 1] === '?' ||
       text[text.length - 1] === '!'
 
@@ -103,9 +103,9 @@ const TextStatistics = DefineMap.extend({
   },
 
   averageSyllablesPerWord (text) {
-    var syllableCount = 0
-    var wordCount = this.wordCount(text)
-    var self = this
+    let syllableCount = 0
+    const wordCount = this.wordCount(text)
+    const self = this
 
     text.split(/\s+/).forEach(function (word) {
       syllableCount += self.syllableCount(word)
@@ -116,8 +116,8 @@ const TextStatistics = DefineMap.extend({
   },
 
   wordsWithThreeSyllables (text, countProperNouns) {
-    var longWordCount = 0
-    var self = this
+    let longWordCount = 0
+    const self = this
 
     countProperNouns = countProperNouns !== false
 
@@ -137,26 +137,27 @@ const TextStatistics = DefineMap.extend({
   },
 
   syllableCount (word) {
-    var syllableCount = 0
-    var prefixSuffixCount = 0
-    var wordPartCount = 0
+    let syllableCount = 0
+    let prefixSuffixCount = 0
+    let wordPartCount = 0
 
     // Prepare word - make lower case and remove non-word characters
     word = word.toLowerCase().replace(/[^a-z]/g, '')
 
     // Specific common exceptions that don't follow the rule set below are handled individually
     // Array of problem words (with word as key, syllable count as value)
-    var problemWords = {
-      'simile': 3,
-      'forever': 3,
-      'shoreline': 2
+    const problemWords = {
+      simile: 3,
+      forever: 3,
+      shoreline: 2
     }
 
     // Return if we've hit one of those...
-    if (problemWords.hasOwnProperty(word)) return problemWords[word]
+    const hasProblemWord = Object.prototype.hasOwnProperty.call(problemWords, word)
+    if (hasProblemWord) return problemWords[word]
 
     // These syllables would be counted as two but should be one
-    var subSyllables = [
+    const subSyllables = [
       /cial/,
       /tia/,
       /cius/,
@@ -176,7 +177,7 @@ const TextStatistics = DefineMap.extend({
     ]
 
     // These syllables would be counted as one but should be two
-    var addSyllables = [
+    const addSyllables = [
       /ia/,
       /riet/,
       /dien/,
@@ -197,7 +198,7 @@ const TextStatistics = DefineMap.extend({
     ]
 
     // Single syllable prefixes and suffixes
-    var prefixSuffix = [
+    const prefixSuffix = [
       /^un/,
       /^fore/,
       /ly$/,

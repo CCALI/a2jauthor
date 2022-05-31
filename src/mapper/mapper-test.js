@@ -16,7 +16,7 @@ describe('<mapper-page>', () => {
             { name: 'salary', type: 'a2j', buttons: [], step: 1, mapx: 2, mapy: 2 },
             { name: 'somePop', type: 'Popup', buttons: [], step: 0, mapx: 3, mapy: 3 }
           ],
-          steps: [ {number: '0', text: 'info'}, {number: '1', text: 'qualify'}, {number: '2', text: 'document'} ]
+          steps: [{ number: '0', text: 'info' }, { number: '1', text: 'qualify' }, { number: '2', text: 'document' }]
         })
       })
     })

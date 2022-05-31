@@ -25,7 +25,7 @@ import 'can-map-define'
  *
  * <template-edit-toolbar>'s viewModel.
  */
-export let EditToolbarVM = CanMap.extend({
+export const EditToolbarVM = CanMap.extend({
   define: {
     /**
      * @property {A2JTemplate} editToolbar.ViewModel.prototype.define.guideId guideId

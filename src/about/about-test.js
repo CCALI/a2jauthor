@@ -6,7 +6,7 @@ import 'steal-mocha'
 
 describe('<about-tab>', () => {
   describe('viewModel', () => {
-    let vm = new AboutVM()
+    const vm = new AboutVM()
     vm.guide = new DefineMap({ description: '' })
 
     it('connectedCallback', (done) => {

@@ -75,14 +75,14 @@ export default function ckeArea (data) { // change handler function, label, valu
         'vi:Vietnamese'
       ],
       toolbar: [
-        { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Language' ] },
-        { name: 'paragraph', items: [ 'Blockquote', 'Indent', 'Outdent', 'BulletedList', 'NumberedList' ] },
-        { name: 'links', items: [ 'Link', 'Unlink', 'A2j-popout' ] }
+        { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Language'] },
+        { name: 'paragraph', items: ['Blockquote', 'Indent', 'Outdent', 'BulletedList', 'NumberedList'] },
+        { name: 'links', items: ['Link', 'Unlink', 'A2j-popout'] }
       ],
       on: {
         blur: function (event) {
           // Update the data when the element is blured
-          var d = event.editor.getData()
+          const d = event.editor.getData()
           // change function sometimes requires field prop
           data.change(d, data.field)
         },

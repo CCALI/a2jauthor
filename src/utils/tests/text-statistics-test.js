@@ -37,11 +37,11 @@ describe('text-statistics util', function () {
   })
 
   it('wordCount', () => {
-    testContent = `Welcome to the future!`
+    testContent = 'Welcome to the future!'
     result = textStatistics.wordCount(testContent)
     assert.equal(result, 4, 'should count words accurately for a single sentence')
 
-    testContent = `Welcome to the future! It's 10,000 times cooler than you thought, right?`
+    testContent = 'Welcome to the future! It\'s 10,000 times cooler than you thought, right?'
     result = textStatistics.wordCount(testContent)
     assert.equal(result, 12, 'should count words accurately for multi sentences')
 
@@ -54,7 +54,7 @@ describe('text-statistics util', function () {
   })
 
   it('sentenceCount', () => {
-    testContent = `Are you using the Chrome browser?`
+    testContent = 'Are you using the Chrome browser?'
     result = textStatistics.sentenceCount(testContent)
     assert.equal(result, 1, 'should not double a single sentence with punctuation')
 

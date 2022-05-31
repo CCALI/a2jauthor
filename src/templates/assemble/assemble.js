@@ -30,7 +30,7 @@ import 'can-map-define'
  *
  * <test-assemble-options>'s viewModel.
  */
-let AssembleOptionsVM = CanMap.extend('AssembleOptionsVM', {
+const AssembleOptionsVM = CanMap.extend('AssembleOptionsVM', {
   define: {
     /**
      * @property {String} assemble.ViewModel.prototype.fileDataUrl fileDataUrl

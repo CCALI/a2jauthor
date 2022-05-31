@@ -9,7 +9,7 @@ describe('Guide Model', () => {
     return Guide.findAll().then(function (guides) {
       assert(guides.attr('length') > 0)
 
-      let guide = guides.attr(0)
+      const guide = guides.attr(0)
 
       assert.ok(canReflect.hasKey(guide, 'id'))
       assert.ok(canReflect.hasKey(guide, 'title'))
@@ -19,7 +19,7 @@ describe('Guide Model', () => {
 
   it('retrieves list of guides that belong to user', function () {
     return Guide.findAll().then(function (guides) {
-      let owned = guides.owned()
+      const owned = guides.owned()
 
       assert.isTrue(owned.attr(0).attr('owned'))
       assert.equal(owned.attr('length'), 2,
@@ -29,7 +29,7 @@ describe('Guide Model', () => {
 
   it('retrieves list of sample guides', function () {
     return Guide.findAll().then(function (guides) {
-      let samples = guides.samples()
+      const samples = guides.samples()
 
       assert.isFalse(samples.attr(0).attr('owned'))
       assert.equal(samples.attr('length'), 4)

@@ -1,10 +1,10 @@
 /*
-	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
-	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+  A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
+  All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
-	Authoring App Guides GUI
-	Guide mangement including loading/saving/archive, display list.
-	2015 04/15/2013, 	05/2014
+  Authoring App Guides GUI
+  Guide mangement including loading/saving/archive, display list.
+  2015 04/15/2013, 	05/2014
 
 */
 // TODO: fix legacy imports, removing circular dependencies
@@ -32,7 +32,7 @@ function guideLoaded (data) {
     dialogAlert({
       title: 'Error loading  A2J Guided Interview with #' + data.gid,
       body: errorMessage +
-		'<p>You can attempt to recover your A2J Guided Interview from the last successful save point by clicking the RECOVER button</p>',
+        '<p>You can attempt to recover your A2J Guided Interview from the last successful save point by clicking the RECOVER button</p>',
       buttons: {
         RECOVER: function () {
           window.recoverSelectedGuide(data.gid)
@@ -174,7 +174,7 @@ function guideStart (startTabOrPage) {
 
       progressall: function (e, data) {
         var progress = parseInt(data.loaded / data.total * 100, 10)
-        $('#progress .bar').css('width',	progress + '%')
+        $('#progress .bar').css('width', progress + '%')
       }
     })
 
@@ -213,14 +213,17 @@ function createBlankGuide () {
     json: guideJsonStr
   }
 
+  let newGuideId
   ws(saveAsParams, function (data) {
     if (data.error !== undefined) {
       setProgress(data.error)
     } else {
-      var newgid = data.gid // new guide id
-      ws({cmd: 'guide', gid: newgid}, guideLoaded)
+      newGuideId = data.gid // new guide id
+      ws({ cmd: 'guide', gid: newGuideId }, guideLoaded)
     }
   })
+
+  return newGuideId
 }
 
 // Open the currently selected guide (either double click or via Open button)
@@ -236,7 +239,7 @@ function openSelectedGuide (gid) {
   if (gid === 'a2j') {
     createBlankGuide()
   } else {
-    ws({cmd: 'guide', gid: gid}, guideLoaded)
+    ws({ cmd: 'guide', gid: gid }, guideLoaded)
   }
 }
 
@@ -247,8 +250,8 @@ function archiveSelectedGuide () {
 
   var dialogMessage =
     '<div class="alert alert-danger">' +
-      '<span class="glyphicon-attention" aria-hidden="true"></span>' +
-      'Would you like to delete ' + name + '?' +
+    '<span class="glyphicon-attention" aria-hidden="true"></span>' +
+    'Would you like to delete ' + name + '?' +
     '</div>'
 
   dialogConfirmYesNo({

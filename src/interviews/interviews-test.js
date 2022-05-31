@@ -61,7 +61,7 @@ describe('<interviews-page>', function () {
     const openedClass = 'guide-opened'
 
     beforeEach(function (done) {
-      let frag = stache('<interviews-page></interviews-page>')
+      const frag = stache('<interviews-page></interviews-page>')
       $('#test-area').html(frag())
       vm = $('interviews-page')[0].viewModel
 
@@ -78,7 +78,7 @@ describe('<interviews-page>', function () {
     })
 
     it('interviews are set as selected when clicked', function () {
-      let interview = $('.guide').eq(0)
+      const interview = $('.guide').eq(0)
 
       assert.isFalse(interview.hasClass(selectedClass))
       domEvents.dispatch(interview[0], 'click')
@@ -90,7 +90,7 @@ describe('<interviews-page>', function () {
     }
 
     it('interviews are set as opened when double clicked', function () {
-      let interview = $('.guide').eq(2)
+      const interview = $('.guide').eq(2)
       // merge tool link changed the location of the link this test was clicking.
       // eq(1) is the merge tool entry point now
 

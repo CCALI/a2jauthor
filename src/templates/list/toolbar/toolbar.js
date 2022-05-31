@@ -8,7 +8,7 @@ import 'bootstrap/js/modal'
 
 import { sharedPdfFlag } from '../../../pdf/index'
 
-export let Toolbar = CanMap.extend({
+export const Toolbar = CanMap.extend({
   define: {
     filter: {
       type: 'string'
@@ -49,7 +49,7 @@ export default Component.extend({
   tag: 'templates-toolbar',
   events: {
     '.search-input keyup': function (target) {
-      let newToken = target.val().trim()
+      const newToken = target.val().trim()
       this.viewModel.attr('searchToken', newToken)
     }
   }

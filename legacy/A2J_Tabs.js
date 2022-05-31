@@ -1,10 +1,10 @@
 /*
-	A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
-	All Contents Copyright The Center for Computer-Assisted Legal Instruction
+  A2J Author 5 * Justice * justicia * 正义 * công lý * 사법 * правосудие
+  All Contents Copyright The Center for Computer-Assisted Legal Instruction
 
-	Authoring App Tabs GUI
-	Code for each tab in the Authoring app
-	04/15/2013
+  Authoring App Tabs GUI
+  Code for each tab in the Authoring app
+  04/15/2013
 */
 
 // TODO: fix legacy imports, removing circular dependencies
@@ -17,6 +17,18 @@
 // import {makestr} from './viewer/A2J_Shared'
 // // TODO: this should be from js/viewer/mobile/util ?
 // import {gLogic} from './viewer/A2J_Logic'
+
+const formatBytes = (bytes, decimals = 2) => {
+  if (bytes === 0) return '0 Bytes'
+
+  const k = 1024
+  const dm = decimals < 0 ? 0 : decimals
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
+}
 
 function updateAttachmentFiles () {
   // Load list of uploaded existing files:
@@ -43,10 +55,11 @@ function updateAttachmentFiles () {
         var startWithTemplate = file.name.indexOf('template') === 0
         var notTemplate = !(startWithTemplate && jsonExt)
         var inputHTML = (notGuide && notTemplate) ? '<input type="checkbox" />' : ''
+        var formattedFileSize = formatBytes(file.size)
 
         $('<tr><td>' + inputHTML + '</td><td>' +
           '<a target=_blank href="' + gGuidePath + (file.name) + '">' + file.name + '</a>' +
-          '</td><td>' + file.size + '</td></tr>'
+          '</td><td>' + formattedFileSize + '</td></tr>'
         ).appendTo('#attachmentFiles')
       })
     }
@@ -74,7 +87,7 @@ function deleteSelectedAttachmentFiles () {
     }).join('')
 
     var dialogMessage =
-    '<div class="alert alert-danger">' +
+      '<div class="alert alert-danger">' +
       'You are about to delete the following files:' +
       '<ul class="files-list">' + listHTML + '</ul>' +
       'Are you sure you want to permanently delete these files from your A2J Guided Interview?'
@@ -86,7 +99,7 @@ function deleteSelectedAttachmentFiles () {
       width: 400,
       name: name,
       Yes: function () {
-        ws({cmd: 'deletefiles', gid: gGuideID, fileDeleteList: fileDeleteList}, function (response) {
+        ws({ cmd: 'deletefiles', gid: gGuideID, fileDeleteList: fileDeleteList }, function (response) {
           if (response.error) {
             console.error('error deleting files ', response.error)
           } else {
@@ -230,8 +243,8 @@ window.updateTOC = function updateTOC () {	// Build outline for entire interview
 
   // JPM Clicking a step toggle slides step's page list.
   $('#CAJAOutline .panel-heading .step').click(function () {
-  	var stepNum = $(this).data('stepnum')
-  	$('#step' + stepNum).toggleClass('collapsed')
+    var stepNum = $(this).data('stepnum')
+    $('#step' + stepNum).toggleClass('collapsed')
     $('#panel' + stepNum).slideToggle(300)
     // save collapsed steps status
     setCollapsedSteps()
@@ -323,11 +336,11 @@ window.form = {
   },
   checkbox: function (data) {
     var e = $('<div name="' + data.name + '">' +
-			'<div class="checkbox">' +
-			'<label>' +
-			'<input type="checkbox" /> ' + data.checkbox +
-			(typeof data.label !== 'undefined' ? (data.label) : '') +
-			'</label></div></div>')
+      '<div class="checkbox">' +
+      '<label>' +
+      '<input type="checkbox" /> ' + data.checkbox +
+      (typeof data.label !== 'undefined' ? (data.label) : '') +
+      '</label></div></div>')
 
     var input = $('input', e)
 
@@ -350,13 +363,13 @@ window.form = {
       ('<button class="btn btn-default" />') +
       '</div>')
     $('button', e)
-      .button({label: data.buttonText})
+      .button({ label: data.buttonText })
       .addClass('glyphicon-link')
       .data('data', data)
       .click(function () {
-		  	// alert(data.value);
-			  form.pickPageDialog($(this), data)
-		  })
+        // alert(data.value);
+        form.pickPageDialog($(this), data)
+      })
     return e
   },
 
@@ -367,11 +380,11 @@ window.form = {
     // Special destinations of page ids we can go to including the built-ins like no where, exit.
     // In Steps, Starting Point lists only Author Pages, Exit Point includes built-in 'noWhere' to clear it
     if (data.label === 'Starting Point: ') {
-		  var ts = getTOCStepPages(true, false, false)
+      var ts = getTOCStepPages(true, false, false)
     } else if (data.label === 'Exit Point: ') {
       var ts = getTOCStepPages(true, false, 'noWhereOnly')
     } else {
-  		var ts = getTOCStepPages(true, false, true)
+      var ts = getTOCStepPages(true, false, true)
     }
 
     // $('#CAJAOutline').clone().appendTo('#page-picker-list');
@@ -409,13 +422,15 @@ window.form = {
         $('#page-picker-list').empty()
       },
       buttons: [
-        {text: 'Cancel',
+        {
+          text: 'Cancel',
           class: 'btn btn-default btn-wide-sm',
           click: function () {
             $(this).dialog('close')
           }
         },
-        {text: 'Change',
+        {
+          text: 'Change',
           class: 'btn btn-primary btn-wide-sm',
           click: function () {
             var newPageDest = makestr($('#page-picker-list .list-group-item.' + SELECTED).first().attr('rel')).substr(5)
@@ -434,7 +449,8 @@ window.form = {
             $(this).dialog('close')
           }
         }
-      ]})
+      ]
+    })
     // removes jQuery.ui classes from buttons
     var modal = $('#page-picker-dialog').parents('.ui-dialog')
     modal.find('.ui-button').removeClass('ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only')
@@ -463,7 +479,7 @@ window.form = {
       })
 
     $('#page-picker-dialog').data(data).dialog({
-  		dialogClass: '',
+      dialogClass: '',
       autoOpen: true,
       width: 800,
       height: 600,
@@ -473,7 +489,8 @@ window.form = {
         $('#page-picker-list').empty()
       },
       buttons: [
-        {text: 'Change',
+        {
+          text: 'Change',
           click: function () {
             var newPageDest = makestr($('#page-picker-list .list-group-item.' + SELECTED).first().attr('rel')).substr(5)
             data.value = newPageDest
@@ -481,24 +498,26 @@ window.form = {
             $(this).dialog('close')
           }
         },
-        {text: 'Cancel',
+        {
+          text: 'Cancel',
           click: function () {
             $(this).dialog('close')
           }
         }
-      ]})
+      ]
+    })
   },
 
   // Pick variable name from list of defined variables
   varPicker: function (data) {
     var dval = (data.value)
     var label = data.label ? '<label class="control-label">' + data.label + '</label>' : ''
-    var variable = data.label === 'Variable:'? 'variable' : ''
+    var variable = data.label === 'Variable:' ? 'variable' : ''
     var $el = $(
-      '<div class="div'+ variable + '"' + (data.name ? 'name="' + data.name + '"' : '') + '>' +
+      '<div class="div' + variable + '"' + (data.name ? 'name="' + data.name + '"' : '') + '>' +
       label +
       '<div class="editspan form-group">' +
-        '<input class="form-control ui-combobox-input editable autocomplete picker varname dest ' + variable + '" placeholder="' + data.placeholder + '" type="text" >' +
+      '<input class="form-control ui-combobox-input editable autocomplete picker varname dest ' + variable + '" placeholder="' + data.placeholder + '" type="text" >' +
       '</div>' +
       '</div>'
     )
@@ -546,8 +565,8 @@ window.form = {
 
     var $el = $(
       '<div class="editspan form-group" ' + (data.name ? 'name="' + data.name + '"' : '') + '>' +
-        label +
-        '<input class="form-control ui-widget editable" type="text" placeholder="' + data.placeholder + '">' +
+      label +
+      '<input class="form-control ui-widget editable" type="text" placeholder="' + data.placeholder + '">' +
       '</div>'
     )
 
@@ -575,14 +594,14 @@ window.form = {
         if (ta == tag || ta == '/' + tag) {
           html += '<' + ta + '>'
         } else
-        if (ta.indexOf(tag + ' ') == 0) {
-          if (tag == 'A') {
-            // Only Anchor tags will allow attributes
-            html += '<' + tag + part2[0].substr(1) + '>'
-          } else {
-            html += '<' + tag + '>'
+          if (ta.indexOf(tag + ' ') == 0) {
+            if (tag == 'A') {
+              // Only Anchor tags will allow attributes
+              html += '<' + tag + part2[0].substr(1) + '>'
+            } else {
+              html += '<' + tag + '>'
+            }
           }
-        }
       }
       html += makestr(part2[1])
     }
@@ -594,7 +613,7 @@ window.form = {
     // Remove extraneous DIV markup due to copy/paste.
     // trace('codefix before',html);
     html = html.replace(/<BR/gi, '\n<BR').replace(/<DIV/gi, '\n<DIV')// preserve line breaks
-    html = form.pasteFix(html, [ 'A'])
+    html = form.pasteFix(html, ['A'])
     html = html.replace(/[\n]/gi, '<BR/>')
     // always add trailing <br> for inline error message target
     html = html ? html = html + '<BR/>' : html
@@ -616,12 +635,12 @@ window.form = {
 
     var $el = $(
       '<div name="' + data.name + '">' +
-        '<div class="editspan form-group">' +
-          label +
-          '<textarea class="form-control text editable taller" rows="2">' +
-            data.value +
-          '</textarea>' +
-        '</div>' +
+      '<div class="editspan form-group">' +
+      label +
+      '<textarea class="form-control text editable taller" rows="2">' +
+      data.value +
+      '</textarea>' +
+      '</div>' +
       '</div>'
     )
 
@@ -638,10 +657,10 @@ window.form = {
   pickFile: function (mask) {
     var $fileupload = $(
       '<div class="fileinput-button form-group">' +
-        '<button class="btn btn-default btn-wide-sm">' +
-          '<span class="glyphicon-plus" aria-hidden="true"></span> Upload' +
-        '</button>' +
-        '<input class="form-control fileupload" type="file" name="files[]" >' +
+      '<button class="btn btn-default btn-wide-sm">' +
+      '<span class="glyphicon-plus" aria-hidden="true"></span> Upload' +
+      '</button>' +
+      '<input class="form-control fileupload" type="file" name="files[]" >' +
       '</div>'
     )
 
@@ -768,8 +787,8 @@ window.form = {
   codeArea: function (data) {
     form.id++
     var e = $('<div class="editspan form-group">' +
-			(typeof data.label !== 'undefined' ? ('<label class="control-label">' + data.label + '</label>') : '') +
-			'<div spellcheck="false" contenteditable=true spellcheck=false class="form-control text editable taller codeedit"  rows=' + 4 + '>' + data.value + '</div><div class="errors help-block"></div></div>')
+      (typeof data.label !== 'undefined' ? ('<label class="control-label">' + data.label + '</label>') : '') +
+      '<div spellcheck="false" contenteditable=true spellcheck=false class="form-control text editable taller codeedit"  rows=' + 4 + '>' + data.value + '</div><div class="errors help-block"></div></div>')
     $('.editable', e).blur(function () {
       form.codeCheckSoon(this)
       $('SPAN', $(this)).remove()
@@ -790,7 +809,7 @@ window.form = {
     for (i = 0; i < listValueLabel.length; i += 2) {
       options +=
         '<option value="' + listValueLabel[i] + '">' +
-          listValueLabel[i + 1] +
+        listValueLabel[i + 1] +
         '</option>'
     }
 
@@ -799,12 +818,12 @@ window.form = {
 
     var $selectFormGroup = $(
       '<div name="' + data.name + '">' +
-        '<div class="editspan form-group">' +
-          label +
-          '<select class="form-control">' +
-            options +
-          '</select>' +
-        '</div>' +
+      '<div class="editspan form-group">' +
+      label +
+      '<select class="form-control">' +
+      options +
+      '</select>' +
+      '</div>' +
       '</div>'
     )
 
@@ -921,9 +940,9 @@ window.form = {
 
     $row.append(
       '<td class="editicons">' +
-        '<span class="ui-draggable sorthandle glyphicon-move"></span>' +
-        '<span class="ui-icon-circle-plus glyphicon-plus-circled"></span>' +
-        '<span class="ui-icon-circle-minus glyphicon-minus-circled"></span>' +
+      '<span class="ui-draggable sorthandle glyphicon-move"></span>' +
+      '<span class="ui-icon-circle-plus glyphicon-plus-circled"></span>' +
+      '<span class="ui-icon-circle-minus glyphicon-minus-circled"></span>' +
       '</td>'
     )
 
@@ -1019,10 +1038,10 @@ TGuide.prototype.noviceTab = function (tab, clear) {	// ### 08/03/2012 Edit pane
           if ((gPrefs.showLogic === 2) || (gPrefs.showLogic === 1 && (page.codeBefore !== '' || page.codeAfter !== ''))) {
             pagefs = form.fieldset(page.name, page, 'accordion')
             if (gPrefs.showLogic === 2 || page.codeBefore !== '') {
-              pagefs.append(form.codeArea({label: 'Before:',	value: page.codeBefore, change: codeBeforeChange}))
+              pagefs.append(form.codeArea({ label: 'Before:', value: page.codeBefore, change: codeBeforeChange }))
             }
             if (gPrefs.showLogic === 2 || page.codeAfter !== '') {
-              pagefs.append(form.codeArea({label: 'After:',	value: page.codeAfter, change: codeAfterChange}))
+              pagefs.append(form.codeArea({ label: 'After:', value: page.codeAfter, change: codeAfterChange }))
             }
             t.append(pagefs)
           }
@@ -1052,8 +1071,8 @@ TGuide.prototype.noviceTab = function (tab, clear) {	// ### 08/03/2012 Edit pane
 
       var cols66 = $(
         '<div class="row">' +
-          '<div class="col-sm-6 starting"></div>' +
-          '<div class="col-sm-6 exit"></div>' +
+        '<div class="col-sm-6 starting"></div>' +
+        '<div class="col-sm-6 exit"></div>' +
         '</div>'
       )
 
@@ -1180,15 +1199,15 @@ function vcGatherUsage (varName) { // 2015-03-27 Search for variable or constant
 
     // check top level page properties
     const pageProps = [
-      {key: 'name', type: 'regex', display: 'Page Name'},
-      {key: 'text', type: 'regex', display: 'Question Text'},
-      {key: 'repeatVar', type: 'string', display: 'Counting Variable'},
-      {key: 'outerLoopVar', type: 'string', display: 'Outer Loop Variable'},
-      {key: 'learn', type: 'regex', display: 'LearnMore Prompt'},
-      {key: 'help', type: 'regex', display: 'LearnMore Response'},
-      {key: 'helpReader', type: 'regex', display: 'Video Transcript'},
-      {key: 'codeBefore', type: 'logic', display: 'Before Logic'},
-      {key: 'codeAfter', type: 'logic', display: 'After Logic'}
+      { key: 'name', type: 'regex', display: 'Page Name' },
+      { key: 'text', type: 'regex', display: 'Question Text' },
+      { key: 'repeatVar', type: 'string', display: 'Counting Variable' },
+      { key: 'outerLoopVar', type: 'string', display: 'Outer Loop Variable' },
+      { key: 'learn', type: 'regex', display: 'LearnMore Prompt' },
+      { key: 'help', type: 'regex', display: 'LearnMore Response' },
+      { key: 'helpReader', type: 'regex', display: 'Video Transcript' },
+      { key: 'codeBefore', type: 'logic', display: 'Before Logic' },
+      { key: 'codeAfter', type: 'logic', display: 'After Logic' }
     ]
     for (const entry of pageProps) {
       findMatches(page, entry)
@@ -1196,11 +1215,11 @@ function vcGatherUsage (varName) { // 2015-03-27 Search for variable or constant
 
     // check all page fields
     const fieldProps = [
-      {key: 'label', type: 'regex', display: 'Field Label'},
-      {key: 'name', type: 'string', display: 'Field Variable'},
-      {key: 'value', type: 'regex', display: 'Field Default Value'},
-      {key: 'invalidPrompt', type: 'regex', display: 'Field Custom Invalid Prompt'},
-      {key: 'sample', type: 'regex', display: 'Field Sample Value'}
+      { key: 'label', type: 'regex', display: 'Field Label' },
+      { key: 'name', type: 'string', display: 'Field Variable' },
+      { key: 'value', type: 'regex', display: 'Field Default Value' },
+      { key: 'invalidPrompt', type: 'regex', display: 'Field Custom Invalid Prompt' },
+      { key: 'sample', type: 'regex', display: 'Field Sample Value' }
     ]
     for (const field of page.fields) {
       for (const entry of fieldProps) {
@@ -1210,11 +1229,11 @@ function vcGatherUsage (varName) { // 2015-03-27 Search for variable or constant
 
     // check all buttons
     const buttonProps = [
-      {key: 'label', type: 'regex', display: 'Button Label'},
-      {key: 'name', type: 'string', display: 'Button Variable Name'},
-      {key: 'value', type: 'regex', display: 'Button Default Value'},
-      {key: 'repeatVar', type: 'string', display: 'Button Counting Variable'},
-      {key: 'url', type: 'regex', display: 'Button URL'}
+      { key: 'label', type: 'regex', display: 'Button Label' },
+      { key: 'name', type: 'string', display: 'Button Variable Name' },
+      { key: 'value', type: 'regex', display: 'Button Default Value' },
+      { key: 'repeatVar', type: 'string', display: 'Button Counting Variable' },
+      { key: 'url', type: 'regex', display: 'Button URL' }
     ]
     for (const button of page.buttons) {
       for (const entry of buttonProps) {
@@ -1323,7 +1342,7 @@ function editButton () {	// ### For the simple editor, handle simple styles.
       setHTML()
     } else {
       // pop = window.prompt("Popup?", pop);
-      form.pickPopupDialog('', {value: pop}, function (newPop) {
+      form.pickPopupDialog('', { value: pop }, function (newPop) {
         if (newPop !== null) {
           if (newPop === '') {
             url = ''
@@ -1341,7 +1360,7 @@ function editButton () {	// ### For the simple editor, handle simple styles.
     case 'italic': document.execCommand('italic', false, null); break
     case 'indent': document.execCommand('indent', false, null); break
     case 'outdent': document.execCommand('outdent', false, null); break
-    case 'unlink':document.execCommand('unlink', false, null); break
+    case 'unlink': document.execCommand('unlink', false, null); break
     case 'link':
       // Add new, edit or remove hyperlink.
       editLinkOrPop(true)

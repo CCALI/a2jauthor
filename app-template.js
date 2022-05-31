@@ -13,4 +13,4 @@
  */
 import tpl from './app.stache'
 
-export let template = tpl
+export const template = tpl

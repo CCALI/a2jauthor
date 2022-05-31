@@ -26,7 +26,7 @@ $result=array();
 $err="";
 $mysqli="";
 $drupaldb="";
-$isProductionServer=TRUE;
+$isProductionServer=true;
 
 if (file_exists("../CONFIG.php")) { // legacy php config file for Author
 	require "../CONFIG.php";
@@ -166,7 +166,7 @@ switch ($command){
 		{
 			$result['gid']=$row['gid'];
 			$result['editoruid']=$row['editoruid'];
-			$result['guide']= file_get_contents(GUIDES_DIR.$row['filename'],TRUE);
+			$result['guide']= file_get_contents(GUIDES_DIR.$row['filename'],true);
 			//scandir()
 			trace(GUIDES_DIR.$row['filename']);
 			// 11/26/2013 Include guide's path so we can access local files.
@@ -174,7 +174,147 @@ switch ($command){
 		}
 		else
 		{// not found
+			$result['error']='guide with ID ' + $gid + ' not found.';
 		}
+		break;
+
+	case 'guidefiles':
+		$gid=intval($mysqli->real_escape_string($_REQUEST['gid']));
+		$res=$mysqli->query("select * from guides where gid=$gid   and (isPublic=1  or isFree=1  or editoruid=$userid)");
+		if ($row=$res->fetch_assoc())
+		{
+			$filename=GUIDES_DIR.$row['filename'];
+			$path_parts = pathinfo($filename);
+			$filedir = $path_parts['dirname'];
+			$ownerfolder = substr($row['filename'], 0, stripos($row['filename'], "/", 0));
+
+			$allfiles = scandir($filedir);
+			$mediaFiles = array_filter($allfiles, is_media_file);
+			$templateFiles = array_filter($allfiles, is_template_file);
+
+			$media=Array(); // $media=getFileDetails($mediaFiles)
+
+			foreach($mediaFiles as $mediaName) {
+				$mediaFilePath = $filedir . '/' . $mediaName;
+				$file_parts = pathinfo($mediaName);
+				$filename = $file_parts['filename'];
+				$extension = $file_parts['extension']; 
+
+				$media[]=(object)[
+					"gid" => $gid,
+					"ownerfolder" => $ownerfolder,
+					"name" => $mediaName,
+					"filename" => $filename,
+					"rename" => "",
+					"extension" => $extension,
+					"modified" => date (DATE_FORMAT_UI, filemtime($mediaFilePath)),
+					// "path" => $mediaFilePath,
+					"size" => filesize($mediaFilePath)
+				];
+			}
+
+			$templates=Array(); // $templates=getFileDetails($templateFiles)
+
+			foreach($templateFiles as $template) {
+				$templateFilePath = $filedir . '/' . $template;
+				$file_parts = pathinfo($template);
+				$filename = $file_parts['filename'];
+				$extension = $file_parts['extension']; 
+
+				$templates[]=(object)[
+					"gid" => $gid,
+					"ownerfolder" => $ownerfolder,
+					"name" => $template,
+					"filename" => $filename,
+					"rename" => "",
+					"extension" => $extension,
+					"modified" => date (DATE_FORMAT_UI, filemtime($templateFilePath)),
+					// "path" => $templateFilePath,
+					"size" => filesize($templateFilePath),
+					"pdf" => file_exists(substr_replace($templateFilePath, ".pdf", -5)) // remove ".json" from the end, replace with ".pdf"
+				];
+			}
+
+			$templateIds = [];
+
+			if (file_exists($filedir . "/templates.json")) {
+				$templates_json_data = json_decode(file_get_contents($filedir . "/templates.json"));
+				$templateIds = $templates_json_data->templateIds;
+			}
+
+			$result['media']=$media;
+			$result['templates']=$templates;
+			$result['templateIds']=$templateIds;
+			$result['gid']=$gid;
+		}
+		break;
+
+	// TODO: this will need file size limit, and maybe async queue with UX feedback
+	// to keep Authors from easily filling up the hard disk if things seem to be
+	// 'taking too long'
+	case 'copyfiles':
+		$destGid = intval($mysqli->real_escape_string($_REQUEST['gid']));
+		$res = $mysqli->query("select * from guides where gid=$destGid and editoruid=$userid");
+		if ($row = $res->fetch_assoc())
+		{
+			$destinationPath = pathinfo(GUIDES_DIR.$row['filename'])['dirname'] . '/';
+		  $files = $_REQUEST['fileList'];
+
+			$sourcePaths = [];
+			foreach ($files as $file) {
+				$file['sourceGid'] = intval($mysqli->real_escape_string($file['sourceGid']));
+				$sourcePaths[] = $file['sourceGid'];
+			}
+			$sourcePaths = array_unique($sourcePaths);
+
+			$res = $mysqli->query(
+				"select gid, filename from guides where gid IN (".implode(',', $sourcePaths).") and (isPublic=1 or isFree=1 or editoruid=$userid)"
+			);
+
+			$sourcePaths = [];
+			while ($path = $res->fetch_assoc()) {
+				$sourcePaths[$path['gid']] = pathinfo(GUIDES_DIR.$path['filename'])['dirname'];
+			}
+
+			foreach ($files as $file) {
+				$filename = $file['filename'];
+				$rename = $file['rename'] ?: $filename;
+				$extension = $file['extension'];
+				$sourcePath = $sourcePaths[$file['sourceGid']] . '/';
+
+				$source = $sourcePath . $filename . '.' . $extension;
+				$destination = $destinationPath . $rename . '.' . $extension;
+				touch($destination); // php copy requires a file to exist already ?!?!?!
+				copy($source, $destination); // then do the copy part
+
+				// also copy corresponding pdf files when they exist for json templates
+				if ($extension == "json") {
+					$source = $sourcePath . $filename . '.pdf';
+					$destination = $destinationPath . $rename . '.pdf';
+					if (file_exists($source)) {
+						touch($destination);
+						copy($source, $destination);
+					}
+				}
+			}
+
+			// templates.json
+			$templateIds = $_REQUEST['templateIds'] ?: [];
+			foreach ($templateIds as $index => $id) {
+				$templateIds[$index] = intval($mysqli->real_escape_string($id));
+			}
+			$templates_obj = new stdClass();
+			$templates_obj->guideId = $destGid;
+			$templates_obj->templateIds = $templateIds;
+			file_put_contents($destinationPath . 'templates.json', json_encode($templates_obj));
+
+			$result['copied']='copied!';
+		}
+		else
+		{ // not found
+			$result['error']='guide with ID ' + $destGid + ' not found.';
+		}
+
 		break;
 
 	case 'answerset':
@@ -191,7 +331,7 @@ switch ($command){
 			$guideDir = $path_parts['dirname'];
 			$guideNameOnly = $path_parts['filename'];
 			$answerset=GUIDES_DIR.$guideDir.'/answerset.anx';
-			$result['answerset']= file_get_contents($answerset,TRUE);
+			$result['answerset']= file_get_contents($answerset,true);
 			// 11/26/2013 Include guide's path so we can access local files.
 			//$result['path']=GUIDES_URL.$row['filename'];
 		}
@@ -214,7 +354,7 @@ switch ($command){
             $filenameonly=$path_parts['filename'];
 
 			// retrieve most recent saved xml file, if it exists
-		    $verdir = $filedir.'/Versions';
+			$verdir = $filedir.'/Versions';
 			// ignore hidden files starting with a dot
 			$versionslist = preg_grep('/^([^.])/', scandir($verdir, SCANDIR_SORT_DESCENDING));
 			$newestfile = $versionslist[0];
@@ -424,6 +564,7 @@ switch ($command){
 			$sql="update guides set filename='".$mysqli->real_escape_string($newfile)."' where gid = $newgid";
 			$res=$mysqli->query($sql);
 
+			$result['url']=$assetsdir;
 			$result['gid']=$newgid;
 		}
 		break;
@@ -781,7 +922,7 @@ function process_uploaded_guide_file($guide_id, $destination_path) {
 	} else {
 		$filename = $file_data['name'];
 
-		if (has_a2j_or_xml_ext($filename) == TRUE) {
+		if (has_a2j_or_xml_ext($filename) == true) {
 			mkdir($destination_path);
 			move_uploaded_file($temp_file_path, $destination_path . '/Guide.xml');
 		} else {
@@ -920,7 +1061,7 @@ function createCookie ($cookie_array) {
 }
 
 function get_guide_title_from_xml($xml) {
-	libxml_use_internal_errors(TRUE);
+	libxml_use_internal_errors(true);
 	$guide_xml = simplexml_load_string($xml);
 
 	if ($guide_xml === FALSE) {
@@ -973,6 +1114,15 @@ function is_template_file($filename) {
 }
 
 /**
+ * check for medial files
+ *
+ * Allowed media files are controlled in the local config_env.ini file
+ */
+function is_media_file($filename) {
+	return (!is_valid_guide_file($filename) && isExtensionAllowed($filename, true));
+}
+
+/**
  * Given a filename will check if file is a valid guide definition file
  *
  * Any file with an extension that starts with `a2j` is valid or a file named
@@ -983,31 +1133,39 @@ function is_valid_guide_file($file) {
 	$filename = strtolower($file);
 
 	return has_a2j_ext($filename) ||
-		($filename == "interview.xml" || $filename == "guide.xml");
+		($filename == "interview.xml" || $filename == "guide.xml" || $filename == "guide.json");
 }
 
 /**
- * Check file extension is safe to upload
+ * Check file extension is allowed - used for filtering media and safe upload files
  *
  * Returns true if is allowed
  * @param string $filename technically the path of file
+ * @param bool whether to grab only media extensions, defaults to full list
  * @return bool
  */
-function isExtensionAllowed($filename) {
+function isExtensionAllowed($filename, $mediaOnly = false) {
 	$path = dirname(__FILE__, 2);
-	$allowed =  parse_ini_file($path . '/config_env.ini')['EXTS_ALLOWED'];
+
+	$media =  parse_ini_file($path . '/config_env.ini')['MEDIA_EXTS_ALLOWED'];
+	$other = parse_ini_file($path . '/config_env.ini')['EXTS_ALLOWED'];
+
+	if ($mediaOnly) {
+		$allowed = $media;
+	} else {
+		$allowed = array_merge($media, $other);
+	}
+
+	$testname = strtolower($filename);
 
 	$matches =[];
 	$isAllowed = false;
 
 	// find file extension without
 	// leading period and at end of string
-	preg_match('/\.(\w+)$/', $filename, $matches);
+	preg_match('/\.(\w+)$/', $testname, $matches);
 	if (count($matches)){
 		$isAllowed = in_array($matches[1], $allowed);
-	} else {
-		// allow for no extension
-		$isAllowed = true;
 	}
 
 	return $isAllowed;
@@ -1029,7 +1187,7 @@ function unzip($zip_path, $destination) {
 
 	$isSafe = false;	//Assume unsafe.
 
-	if ($zip->open($zip_path) === TRUE) {
+	if ($zip->open($zip_path) === true) {
 		// check for proper file structure and safety
 
 		if($zip->getFromName('Guide.json')) {
@@ -1114,7 +1272,7 @@ function createGuideZip($gid) {
 		$zipFull = GUIDES_DIR.$zipName;
 		$zipRes = $zip->open($zipFull, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
-		if ($zipRes !== TRUE) {
+		if ($zipRes !== true) {
 			trace("cannot open ".$zipFull);
 		} else {
 			trace("created ".$zipFull);
@@ -1163,35 +1321,16 @@ function add_guide_json_file($guide_name, $zip) {
 	}
 }
 
-function getGuideFileDetails($filename) {	// 2014-08-26 Get info about guide
-	$filename=GUIDES_DIR.$filename;
+function getFileDetails($filePath) {	// 2014-08-26 Get info about guide
+	
 	$details="";
-	if (file_exists($filename))
+	if (file_exists($filePath))
 	{
 		$details = Array();
-		$details['modified' ] = date (DATE_FORMAT_UI, filemtime($filename));
-		$details['size'] = filesize($filename);
-		// Get XML info - XML could be A2J version 4. ignore for now.
-		/*($olderr=error_reporting(0);
-		$xml = simplexml_load_file($filename);
-		error_reporting($olderr);
-		if ($xml!=FALSE)
-		{
-		  $details['pagecount'] = count($xml->PAGES->PAGE);
-		  $details['version' ] =  (string)$xml->INFO->VERSION;
-			//,'description' => (string) $xml->INFO->DESCRIPTION
-		}
-		else{
-			trace('getGuideFileDetails XML parsing error:'.$filename);
-
-		}
-		*/
-		//trace('Details:'.$details);
+		$details['modified' ] = date (DATE_FORMAT_UI, filemtime($filePath));
+		$details['size'] = filesize($filePath);
 	}
-	else
-	{
-	  //trace('getGuideFileDetails file not found:'.$filename);
-	}
+	
 	return $details;
 }
 
@@ -1203,12 +1342,13 @@ function listGuides($sql) {
 		$res=$mysqli->query($sql);
 		while($row=$res->fetch_assoc())
 		{
-			$guides[]=array(
+			$guidePath = GUIDES_DIR.$row['filename'];
+			$guides[] = array(
 				"id"=> $row['gid'],
 				"title"=> $row['title'],
 				"owned"=> $row["editoruid"]==$userid,
-				"details"=> getGuideFileDetails( $row['filename']));
-		  }
+				"details"=> getFileDetails($guidePath));
+		}
 	}
 	$result['guides']=$guides;
 }

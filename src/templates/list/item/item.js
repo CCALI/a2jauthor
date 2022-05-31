@@ -28,7 +28,7 @@ import 'can-map-define'
  *
  * `<templates-list-item>`'s viewModel.
  */
-export let Item = CanMap.extend({
+export const Item = CanMap.extend({
   define: {
     /**
      * @property {Boolean} templatesListItem.ViewModel.prototype.define.hovered hovered
@@ -88,8 +88,8 @@ export let Item = CanMap.extend({
      */
     updatedAtFromNow: {
       get () {
-        let template = this.attr('template')
-        let updatedAt = template.attr('updatedAt')
+        const template = this.attr('template')
+        const updatedAt = template.attr('updatedAt')
         return updatedAt.isValid() ? updatedAt.fromNow() : ''
       }
     },
@@ -118,8 +118,8 @@ export let Item = CanMap.extend({
     event && event.preventDefault()
     event && event.stopPropagation()
 
-    let template = this.attr('template')
-    let delay = this.attr('transitionTime')
+    const template = this.attr('template')
+    const delay = this.attr('transitionTime')
 
     this.attr('deleting', true)
     template.attr('deleted', true)
@@ -142,8 +142,8 @@ export let Item = CanMap.extend({
     event && event.preventDefault()
     event && event.stopPropagation()
 
-    let template = this.attr('template')
-    let delay = this.attr('transitionTime')
+    const template = this.attr('template')
+    const delay = this.attr('transitionTime')
 
     this.attr('restoring', true)
     template.attr('restored', true)

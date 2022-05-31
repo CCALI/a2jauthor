@@ -38,8 +38,8 @@ describe('<templates-list-item>', function () {
     })
 
     it('deleteTemplate works', function (done) {
-      let delay = 0
-      let template = vm.attr('template')
+      const delay = 0
+      const template = vm.attr('template')
 
       // sensible defaults
       template.attr('active', true)
@@ -60,8 +60,8 @@ describe('<templates-list-item>', function () {
     })
 
     it('restoreTemplate works', function (done) {
-      let delay = 0
-      let template = vm.attr('template')
+      const delay = 0
+      const template = vm.attr('template')
 
       // sensible defaults
       template.attr('active', false)
@@ -94,7 +94,7 @@ describe('<templates-list-item>', function () {
         description: 'Lorem ipsum dolor sit amet, homero salutandi te sea'
       })
 
-      let frag = stache(
+      const frag = stache(
         '<templates-list-item template:bind="template" />'
       )
       $('#test-area').html(frag({ template }))
@@ -104,7 +104,7 @@ describe('<templates-list-item>', function () {
 
     it('shows/hides delete link on hover for active templates', function () {
       assert.isTrue(template.attr('active'), 'should be active')
-      let wrapperEl = $('.template-wrapper')[0]
+      const wrapperEl = $('.template-wrapper')[0]
 
       domEvents.dispatch(wrapperEl, 'mouseenter')
       assert.isTrue($('.delete').is(':visible'), 'should be visible')
@@ -116,7 +116,7 @@ describe('<templates-list-item>', function () {
     it('shows/hides restore link on hover for deleted templates', function () {
       template.attr('active', false)
       assert.isFalse(template.attr('active'), 'should be deleted')
-      let wrapperEl = $('.template-wrapper')[0]
+      const wrapperEl = $('.template-wrapper')[0]
 
       domEvents.dispatch(wrapperEl, 'mouseenter')
       assert.isTrue($('.restore').is(':visible'), 'should be visible')

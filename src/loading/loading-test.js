@@ -24,7 +24,7 @@ describe('<app-loading>', function () {
   describe('Component', function () {
     let vm
     beforeEach(function (done) {
-      let frag = stache('<app-loading></app-loading>')
+      const frag = stache('<app-loading></app-loading>')
       $('#test-area').html(frag())
       vm = $('app-loading')[0].viewModel
       done()

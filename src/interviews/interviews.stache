@@ -18,11 +18,17 @@
             <span class="title">{{title}}</span>
           </a>
         {{/with}}
-        <a class="guide list-group-item " gid="mergeTool">
-          <span class="title">Merged Interview: Pick parts from existing interviews</span>
-        </a>
       </div>
     </fieldset>
+
+      <fieldset>
+        <legend>Merge interview components</legend>
+        <div class="list-group">
+          <a class="guide list-group-item " gid="mergeTool">
+            <span class="title">Merged Interview: Import components from a source interview into an exisiting or blank target interview</span>
+          </a>
+        </div>
+      </fieldset>
 
     <fieldset>
       <legend>Edit one of my interviews</legend>

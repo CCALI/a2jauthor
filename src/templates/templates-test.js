@@ -59,9 +59,9 @@ describe('<templates-page>', function () {
 
     it('renders a list of active templates by default', function (done) {
       F(function () {
-        let templates = $('templates-page')[0].viewModel.attr('displayList')
+        const templates = $('templates-page')[0].viewModel.attr('displayList')
         assert(templates.attr('length'), 3, 'should start with 3 templates')
-        let deleted = templates.filter(template => !template.attr('active'))
+        const deleted = templates.filter(template => !template.attr('active'))
         assert.equal(deleted.attr('length'), 0, 'should not have deleted templates')
       })
 
@@ -70,8 +70,8 @@ describe('<templates-page>', function () {
 
     it('rendered list is sorted by buildOrder asc by default', function (done) {
       F(function () {
-        let templates = $('templates-page')[0].viewModel.attr('displayList')
-        let buildOrder = templates.attr().map(template => template.buildOrder)
+        const templates = $('templates-page')[0].viewModel.attr('displayList')
+        const buildOrder = templates.attr().map(template => template.buildOrder)
         assert.deepEqual(buildOrder, [2, 3], 'should be sorted asc')
       })
 
@@ -79,7 +79,7 @@ describe('<templates-page>', function () {
     })
 
     it('deleted templates are filtered out properly', function (done) {
-      let delay = 0
+      const delay = 0
       let totalActive
 
       F(function () {
@@ -97,7 +97,7 @@ describe('<templates-page>', function () {
       F('templates-list-item .delete').click()
 
       F(function () {
-        let current = $('templates-list-item').length
+        const current = $('templates-list-item').length
         assert.equal(current, totalActive - 1, 'there should be one less')
       })
 
@@ -126,7 +126,7 @@ describe('<templates-page>', function () {
 
     it('displays alert if no templates match filters', function (done) {
       F(function () {
-        let vm = $('templates-page')[0].viewModel
+        const vm = $('templates-page')[0].viewModel
 
         // mark all templates as deleted
         vm.attr('templates').forEach(template => template.attr('active', false))
@@ -139,7 +139,7 @@ describe('<templates-page>', function () {
 
     it('displays alert if there are no templates in the trash', function (done) {
       F(function () {
-        let vm = $('templates-page')[0].viewModel
+        const vm = $('templates-page')[0].viewModel
 
         // mark all templates as active and set filter to deleted.
         vm.attr('templates').forEach(template => template.attr('active', true))

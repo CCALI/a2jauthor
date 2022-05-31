@@ -25,7 +25,7 @@ export default Component.extend({
   helpers: {
     listStateClassName () {
       let className
-      let filter = this.attr('activeFilter')
+      const filter = this.attr('activeFilter')
 
       switch (filter) {
         case 'all':
@@ -51,14 +51,14 @@ export default Component.extend({
     },
 
     '{displayList} length': function () {
-      let vm = this.viewModel
+      const vm = this.viewModel
 
       vm.handleDeletedTemplates()
       vm.handleRestoredTemplates()
     },
 
     '{viewModel} hasSorted': function () {
-      let vm = this.viewModel
+      const vm = this.viewModel
       const hasSorted = vm.attr('hasSorted')
 
       if (hasSorted) {

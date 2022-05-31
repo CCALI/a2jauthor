@@ -28,7 +28,7 @@ const placements = ['top', 'right', 'bottom', 'left', 'auto']
  *
  * `<app-popover>`'s viewModel.
  */
-export let Popover = CanMap.extend({
+export const Popover = CanMap.extend({
   define: {
     /**
      * @property {String} popover.ViewModel.prototype.define.title title

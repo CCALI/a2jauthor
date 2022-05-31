@@ -191,7 +191,6 @@ switch ($command){
 			$allfiles = scandir($filedir);
 			$mediaFiles = array_filter($allfiles, is_media_file);
 			$templateFiles = array_filter($allfiles, is_template_file);
-			// template1.json, template1.pdf
 
 			$media=Array(); // $media=getFileDetails($mediaFiles)
 
@@ -281,8 +280,6 @@ switch ($command){
 				$filename = $file['filename'];
 				$rename = $file['rename'] ?: $filename;
 				$extension = $file['extension'];
-				// $sourceGid = $file['sourceGid'];
-				// $ownerfolder = $file['ownerfolder'];
 				$sourcePath = $sourcePaths[$file['sourceGid']] . '/';
 
 				$source = $sourcePath . $filename . '.' . $extension;

@@ -2,6 +2,7 @@
 import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './page-edit-form.stache'
+import GuideFiles from '~/src/models/guide-files'
 
 export const PageEditFormVM = DefineMap.extend('PageEditFormVM', {
   appState: {},
@@ -11,6 +12,35 @@ export const PageEditFormVM = DefineMap.extend('PageEditFormVM', {
 
   toggleTabs () {
     this.appState.modalTabView = !this.appState.modalTabView
+  },
+
+  guideFiles: {
+    value (props) {
+      const { resolve } = props
+
+      props.lastResolved = props.lastResolved || new DefineMap({ media: [], templates: [], xml: [] })
+      const gid = this.appState.guideId
+      if (gid && gid !== 'a2j') {
+        GuideFiles.findAll(gid).then(gf => {
+          if (gf && gf.media.length) {
+            props.lastResolved.media.length = 0
+            props.lastResolved.media.push(...gf.media)
+          }
+          if (gf && gf.templates.length) {
+            props.lastResolved.templates.length = 0
+            props.lastResolved.templates.push(...gf.templates)
+          }
+          if (gf && gf.xml.length) {
+            props.lastResolved.xml.length = 0
+            props.lastResolved.xml.push(...gf.xml)
+          }
+          resolve(props.lastResolved)
+        })
+        return () => {} // required
+      }
+      // listenTo(lastSet, v => resolve(prop.lastResolved))
+      resolve(props.lastResolved)
+    }
   },
 
   connectedCallback () {

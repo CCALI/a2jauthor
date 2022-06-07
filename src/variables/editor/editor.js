@@ -104,6 +104,16 @@ export const VariableEditorVM = CanMap.extend({
           .sort((a, b) => a.localeCompare(b))
           .slice(0, maxSuggestionCount)
       }
+    },
+
+    // the variable name as it was before the editor was opened, or whatever it is now if its a new variable
+    initialVarName: {
+      get () {
+        const iv = this.attr('initialVariable')
+        const ivname = iv && iv.name // use the initially loaded name in case they've edited it in the form before checking usage
+        const variableName = ivname || this.attr('variableName')
+        return variableName
+      }
     }
   },
 
@@ -142,7 +152,8 @@ export const VariableEditorVM = CanMap.extend({
   },
 
   onFindUsage () {
-    const variableName = this.attr('variableName')
+    // use the initially loaded name in case they've edited it in the form before checking usage
+    const variableName = this.attr('initialVarName')
     const html = window.vcGatherUsage(variableName)
     this.attr('variableUsageHtml', html)
   }

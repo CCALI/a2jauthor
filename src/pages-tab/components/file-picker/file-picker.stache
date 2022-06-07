@@ -1,0 +1,44 @@
+<can-import from="./file-picker.less" />
+
+<div class="div">
+  {{let pickerVisible = newObservableBool(false)}}
+  <label class="control-label">{{label}}:</label>
+  <div class="has-file-picker">
+    <input
+      class="
+        form-control ui-combobox-input editable
+        autocomplete picker dest ui-autocomplete-input
+        {{^if(validName(filterText)}}invalid-entry{{/if}}
+      "
+      placeholder=""
+      type="text"
+      autocomplete="off"
+      on:focus="pickerVisible.value = true"
+      value:bind="filterText"
+      on:input="filterText = scope.element.value"
+    >
+    <div class="file-picker-toggle">
+      <button aria-label="Toggle File Picker" on:click="toggleBool(pickerVisible)" class="glyphicon-list-bullet"></button>
+      {{#if(pickerVisible.value)}}
+        <ul>
+          <li class="no-items">No Files Uploaded</li>
+          {{#for(v of matchedItems)}}
+            <li class="{{#is(filterText, v.name)}}selected{{/is}}"><button on:click="textAndBool(v.name, pickerVisible)">{{v.name}}</button></li>
+          {{/for}}
+          {{#for(v of unmatchedItems)}}
+            <li class="unmatched"><button on:click="textAndBool(v.name, pickerVisible)">{{v.name}}</button></li>
+          {{/for}}
+        </ul>
+      {{/if}}
+    </div>
+
+    <div>
+      <div class="fileinput-button-group">
+        <input aria-label="Upload File" class="form-control" type="file" name="files[]" on:change="uploadFile(scope.element)">
+        <button tabIndex="-1" class="fileupload-button btn btn-default btn-wide-sm">
+          <span class="glyphicon-plus" aria-hidden="true"></span> Upload
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,154 @@
 <can-import from="./page-fields.less" />
+<can-import from="../var-picker/field/var-picker-field" />
+<can-import from="../file-picker/" />
 
-{{{legacySection}}}
+<fieldset name="record">
+  <legend>Fields</legend>
+  <div>
+    <div>
+      <label>Number of Fields:</label>
+      <select class="form-control picklist" value:bind="numFields">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+      </select>
+    </div>
+    <table class="page-edit-fields list table table-striped">
+      <tbody class="ui-sortable">
+        {{#for(field of fields)}}
+          <tr valign="top" class="step-stepundefined" name="record">
+            <td class="newediticons">
+              <span class="list-position">
+                <button
+                  title="Move field up"
+                  aria-label="Move field up"
+                  class="glyphicon-up-dir {{^if(canMoveUp(field))}}disabled{{/if}}"
+                  on:click="moveUp(field)"
+                ></button>
+                <button
+                  title="Move field down"
+                  aria-label="Move field down"
+                  class="glyphicon-down-dir {{^if(canMoveDown(field))}}disabled{{/if}}"
+                  on:click="moveDown(field)"
+                ></button>
+              </span>
+              <button
+                title="Add New Field {{^if(canAdd)}}(disabled, maximum number of fields is {{maxFields}}){{/if}}"
+                aria-label="Add New Field {{^if(canAdd)}}(disabled, maximum number of fields is {{maxFields}}){{/if}}"
+                class="ui-icon-circle-plus glyphicon-plus-circled {{^if(canAdd)}}disabled{{/if}}"
+                on:click="add(field)"
+              ></button>
+              <button
+                title="Remove Field {{^if(canRemove)}}(disabled, minimum number of fields is 0){{/if}}"
+                aria-label="Remove Field {{^if(canRemove)}}(disabled, minimum number of fields is 0){{/if}}"
+                class="ui-icon-circle-minus glyphicon-minus-circled {{^if(canRemove)}}disabled{{/if}}"
+                on:click="remove(field)"
+              ></button>
+            </td>
+            <td>
+              <div name="undefined">
+                <div class="editspan form-group">
+                  <label class="control-label">Type:</label>
+                  <select class="form-control" value:bind="field.type">
+                    {{#for(type of field.types)}}
+                      <option value="{{type.value}}" {{#is(type.value, field.type)}}selected{{/if}}>{{type.label}}</option>
+                    {{/for}}
+                  </select>
+                </div>
+              </div>
+              <div style="padding-bottom: 15px;">
+                {{{ckeFactory(field.field, 'label', 'Label:')}}}
+              </div>
+              <var-picker-field appState:from="appState" obj:bind="field.field" key:from="'name'" />
+              {{#if(field.canDefaultValue)}}
+                <div class="editspan form-group" name="default">
+                  <label class="control-label">Default Value:</label>
+                  <input class="form-control ui-widget editable"
+                    type="text" placeholder=""
+                    value:bind="field.field.value"
+                    on:blur="field.field.value = trim(scope.element)"
+                  >
+                </div>
+              {{/if}}
+              <div name="required" class="{{^if(field.canRequire)}}hidden{{/if}}">
+                <div class="checkbox">
+                  <label><input type="checkbox" checked:bind="field.required"> Required:</label>
+                </div>
+              </div>
+              {{#if(field.canMaxChars)}}
+                <div class="editspan form-group" name="maxchars">
+                  <label class="control-label">Max Characters:</label>
+                  <input
+                    class="form-control ui-widget editable" type="text"
+                    placeholder="Enter a number here to set a Character Limit for the End User's response"
+                    value:bind="field.field.maxChars"
+                    pattern="\d*"
+                    on:blur="field.field.maxChars = applyPattern(scope.element)"
+                  >
+                </div>
+              {{/if}}
+              <div name="calculator" class="{{^if(field.canUseCalc)}}hidden{{/if}}">
+                <div class="checkbox">
+                  <label><input type="checkbox" checked:bind="field.calculator"> Show Calculator:</label>
+                </div>
+              </div>
+              {{#if(field.canMinMax)}}
+                <div class="editspan form-group" name="min">
+                  <label class="control-label">Min Value:</label>
+                  <input class="form-control ui-widget editable" type="text" placeholder="min"
+                    value:bind="field.field.min"
+                    pattern="(?:^-(?=.*\d))|\d*"
+                    on:blur="field.field.min = applyPattern(scope.element)"
+                  >
+                </div>
+                <div class="editspan form-group" name="max">
+                  <label class="control-label">Max Value:</label>
+                  <input class="form-control ui-widget editable" type="text" placeholder="max"
+                    value:bind="field.field.max"
+                    pattern="(?:^-(?=.*\d))|\d*"
+                    on:blur="field.field.max = applyPattern(scope.element)"
+                  >
+                </div>
+              {{/if}}
+              {{#if(field.canList)}}
+                <div name="listext" class="form-upload clearfix" style="padding-bottom: 15px;">
+                  <file-picker appState:from="appState" label:from="'External list'" obj:from="field.field" key:from="'listSrc'" items:from="guideFiles.xml" />
+                </div>
+                <div name="listint" class="">
+                  <div class="editspan form-group">
+                    <label class="control-label">Internal list:</label>
+                    <textarea rows="2"
+                      class="form-control text editable taller"
+                      placeholder="{{"Item 1\nItem 2\nItem 3"}}"
+                      value:bind="field.internalList"
+                    ></textarea>
+                  </div>
+                </div>
+              {{/if}}
+              <div style="padding-bottom: 15px;">
+                {{{ckeFactory(field.field, 'invalidPrompt', 'Custom Invalid Prompt:')}}}
+              </div>
+              {{#if(field.canUseSample)}}
+                <div class="editspan form-group" name="sample">
+                  <label class="control-label">Sample Value:</label>
+                  <input class="form-control ui-widget editable"
+                    type="text" placeholder=""
+                    value:bind="field.field.sample"
+                    on:blur="field.field.sample = trim(scope.element)"
+                  >
+                </div>
+              {{/if}}
+            </td>
+          </tr>
+        {{/for}}
+      </tbody>
+    </table>
+  </div>
+</fieldset>

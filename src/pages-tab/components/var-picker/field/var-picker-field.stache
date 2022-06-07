@@ -1,0 +1,28 @@
+<can-import from="./var-picker-field.less" />
+<can-import from="../var-picker" />
+
+<div class="divvariable">
+  {{let nameVarPickerVisible = newObservableBool(false)}}
+  <label class="control-label">{{label}}</label>
+  <div class="form-group has-var-picker">
+    <input
+      class="
+        form-control ui-combobox-input editable
+        autocomplete picker varname dest ui-autocomplete-input
+        {{^if(validVarName(filterText)}}invalid-entry{{/if}}
+      "
+      placeholder:from="placeholder"
+      type="text"
+      autocomplete="off"
+      on:focus="makeTrue(nameVarPickerVisible)"
+      value:bind="filterText"
+      on:input="filterText = scope.element.value"
+    >
+    <div class="var-picker-toggle">
+      <button aria-label="Toggle Variable Picker" on:click="toggleBool(nameVarPickerVisible)" class="glyphicon-list-bullet"></button>
+      {{#if(nameVarPickerVisible.value)}}
+        <var-picker appState:from="appState" varName:bind="filterText" selectedCallback:from="nameVarPickerVisible.value = false" />
+      {{/if}}
+    </div>
+  </div>
+</div>

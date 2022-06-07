@@ -5,7 +5,7 @@ import template from './tab.stache'
 import parser from '@caliorg/a2jdeps/utils/parser'
 import { promptFile } from 'a2jauthor/src/utils/uploader'
 import queues from 'can-queues'
-
+import { renameVars } from '~/src/merge-tool/helpers/helpers'
 import 'can-map-define'
 
 export const VariablesTabVM = CanMap.extend('VariablesTabVM', {
@@ -81,6 +81,13 @@ export const VariablesTabVM = CanMap.extend('VariablesTabVM', {
     }
   },
 
+  renameAllVarReferences (oldName, newName) {
+    const guide = this.attr('guide')
+    Object.keys(guide.pages).forEach(k => {
+      renameVars(guide.pages[k], { [oldName]: newName })
+    })
+  },
+
   onConfirmVariableEditing () {
     this.attr('showVariableModal', false)
     const guide = this.attr('guide')
@@ -100,6 +107,10 @@ export const VariablesTabVM = CanMap.extend('VariablesTabVM', {
     const newVar = {}
     newVar[varName] = variable
     guide.vars.assign(newVar)
+
+    if (editingVariable && (editingVariable.name !== buffer.name)) {
+      this.renameAllVarReferences(editingVariable.name, buffer.name)
+    }
   },
 
   uploadCmpFile () {

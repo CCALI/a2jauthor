@@ -1,3 +1,24 @@
 <can-import from="./advanced-logic.less" />
 
+<!-- fieldset name="record">
+  <legend>Advanced Logic</legend>
+  <div class="editspan form-group">
+    <label class="control-label">Before:</label>
+    <div spellcheck="false" contenteditable="true" class="form-control text editable taller codeedit" rows="4">
+
+    </div>
+    <div class="errors help-block"></div>
+  </div>
+  <div class="editspan form-group">
+    <label class="control-label">After:</label>
+    <div spellcheck="false" contenteditable="true" class="form-control text editable taller codeedit" rows="4">
+
+    </div>
+    <div class="errors help-block"></div>
+  </div>
+  <div style="padding-top: 15px;">
+    {{{ckeFactory(page, 'codeCitation', 'Logic Citation:')}}}
+  </div>
+</fieldset -->
+
 {{{legacySection}}}

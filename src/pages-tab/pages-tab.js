@@ -21,13 +21,14 @@ export const PagesTabVM = DefineMap.extend('PagesTabVM', {
     return window.getSelectedPageName()
   },
   legacyGotoPageEdit: {},
-  goToPageEdit () {
-    const pageName = this.getSelectedPageName()
+  goToPageEdit (pageName) {
+    pageName = pageName || this.getSelectedPageName()
     const page = pageName && window.gGuide.pages[pageName]
 
     page && (window.canjs_LegacyModalPageEditFormInjection = {
       appState: this.appState,
-      page
+      page,
+      goToPageEdit: this.goToPageEdit.bind(this)
     })
 
     const retval = window.gotoPageEdit(pageName)

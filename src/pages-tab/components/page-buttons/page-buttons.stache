@@ -63,6 +63,13 @@
                 >
                   Set Destination
                 </button>
+                {{#if(button.next)}}
+                  <button on:click="scrollTopAndEdit(scope.element, button.next)"
+                    class="btn btn-default ui-button ui-corner-all ui-widget glyphicon-new-message"
+                  >
+                    Edit Page
+                  </button>
+                {{/if}}
               </div>
               <div class="editspan form-group hidden" name="url">
                 <label class="control-label">URL:</label>

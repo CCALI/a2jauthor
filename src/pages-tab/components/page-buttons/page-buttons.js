@@ -9,6 +9,22 @@ import constants from 'a2jauthor/src/models/constants'
 export const PageButtonsVM = DefineMap.extend('PageButtonsVM', {
   page: {},
   appState: {},
+  goToPageEdit: {},
+  scrollTopAndEdit (el, pageName) {
+    if (this.goToPageEdit) {
+      if (el && el.closest) {
+        el = el.closest('.page-edit-form')
+        if (el) {
+          el.scrollTop = 0
+        }
+      }
+      window.updateTOC()
+      if (window.gGuide) {
+        window.guideSave()
+      }
+      this.goToPageEdit(pageName)
+    }
+  },
 
   minButtons: {
     type: 'number',

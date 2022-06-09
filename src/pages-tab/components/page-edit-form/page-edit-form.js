@@ -7,6 +7,7 @@ import GuideFiles from '~/src/models/guide-files'
 export const PageEditFormVM = DefineMap.extend('PageEditFormVM', {
   appState: {},
   page: {},
+  goToPageEdit: {},
 
   selectedTab: { default: 'Page Info' },
 

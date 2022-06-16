@@ -6,23 +6,25 @@ import template from './page-buttons.stache'
 import { TButton } from '~/legacy/viewer/A2J_Types'
 import constants from 'a2jauthor/src/models/constants'
 
-const ObservableProxy = DefineMap.extend('ObservableProxy', {
-  obj: {},
-  key: {},
-  value: {
-    value ({ lastSet, listenTo, resolve }) {
-      listenTo(lastSet, function (val) {
-        this.obj[this.key] = val
-        resolve(val)
-      })
-      resolve(this.obj[this.key])
-    }
-  }
-})
-
 export const PageButtonsVM = DefineMap.extend('PageButtonsVM', {
   page: {},
   appState: {},
+  goToPageEdit: {},
+  scrollTopAndEdit (el, pageName) {
+    if (this.goToPageEdit) {
+      if (el && el.closest) {
+        el = el.closest('.page-edit-form')
+        if (el) {
+          el.scrollTop = 0
+        }
+      }
+      window.updateTOC()
+      if (window.gGuide) {
+        window.guideSave()
+      }
+      this.goToPageEdit(pageName)
+    }
+  },
 
   minButtons: {
     type: 'number',
@@ -51,7 +53,7 @@ export const PageButtonsVM = DefineMap.extend('PageButtonsVM', {
 
   addButton (button) {
     if (this.canAddButton) {
-      this.numButtons = this.numButtons + 1
+      this.numButtons = (parseInt(this.numButtons, 10) + 1) + ''
     }
   },
 
@@ -59,7 +61,7 @@ export const PageButtonsVM = DefineMap.extend('PageButtonsVM', {
     if (this.canRemoveButton) {
       const bi = this.page.buttons.indexOf(button)
       this.page.buttons.splice(bi, 1)
-      this.numButtons = this.numButtons - 1
+      this.numButtons = (parseInt(this.numButtons, 10) - 1) + ''
     }
   },
 
@@ -92,21 +94,6 @@ export const PageButtonsVM = DefineMap.extend('PageButtonsVM', {
       this.page.buttons.splice(bi + 1, 0, button)
       this.buttonsChanged = this.buttonsChanged + 1
     }
-  },
-
-  newObservableBool (tf = false) {
-    return new DefineMap({ value: tf })
-  },
-  toggleBool (observableBool) {
-    observableBool.value = !observableBool.value
-  },
-
-  validVarName (newValue) {
-    return (!newValue) || (!!this.appState.guide.vars[newValue.toLowerCase()])
-  },
-
-  newObservableProxy (obj, key) {
-    return new ObservableProxy({ obj, key })
   },
 
   buttonIsDisplayMessage (button) {

@@ -1,5 +1,5 @@
 <can-import from="./page-buttons.less" />
-<can-import from="../var-picker/" />
+<can-import from="../var-picker/field/var-picker-field" />
 
 <fieldset name="record">
   <legend>Buttons</legend>
@@ -21,26 +21,26 @@
                 <button
                   title="Move button up"
                   aria-label="Move button up"
-                  class="glyphicon-up-dir {{^if(canMoveButtonUp(button)}}disabled{{/if}}"
+                  class="glyphicon-up-dir {{^if(canMoveButtonUp(button))}}disabled{{/if}}"
                   on:click="moveButtonUp(button)"
                 ></button>
                 <button
                   title="Move button down"
                   aria-label="Move button down"
-                  class="glyphicon-down-dir {{^if(canMoveButtonDown(button)}}disabled{{/if}}"
+                  class="glyphicon-down-dir {{^if(canMoveButtonDown(button))}}disabled{{/if}}"
                   on:click="moveButtonDown(button)"
                 ></button>
               </span>
               <button
-                title="Add New Button {{^if(canAddButton}}(disabled, maximum number of buttons is {{maxButtons}}){{/if}}"
-                aria-label="Add New Button {{^if(canAddButton}}(disabled, maximum number of buttons is {{maxButtons}}){{/if}}"
-                class="ui-icon-circle-plus glyphicon-plus-circled {{^if(canAddButton}}disabled{{/if}}"
+                title="Add New Button {{^if(canAddButton)}}(disabled, maximum number of buttons is {{maxButtons}}){{/if}}"
+                aria-label="Add New Button {{^if(canAddButton)}}(disabled, maximum number of buttons is {{maxButtons}}){{/if}}"
+                class="ui-icon-circle-plus glyphicon-plus-circled {{^if(canAddButton)}}disabled{{/if}}"
                 on:click="addButton(button)"
               ></button>
               <button
-                title="Remove Button {{^if(canRemoveButton}}(disabled, minimum number of buttons is {{minButtons}}){{/if}}"
-                aria-label="Remove Button {{^if(canRemoveButton}}(disabled, minimum number of buttons is {{minButtons}}){{/if}}"
-                class="ui-icon-circle-minus glyphicon-minus-circled {{^if(canRemoveButton}}disabled{{/if}}"
+                title="Remove Button {{^if(canRemoveButton)}}(disabled, minimum number of buttons is {{minButtons}}){{/if}}"
+                aria-label="Remove Button {{^if(canRemoveButton)}}(disabled, minimum number of buttons is {{minButtons}}){{/if}}"
+                class="ui-icon-circle-minus glyphicon-minus-circled {{^if(canRemoveButton)}}disabled{{/if}}"
                 on:click="removeButton(button)"
               ></button>
             </td>
@@ -49,32 +49,7 @@
                 <label class="control-label">Label:</label>
                 <input class="form-control ui-widget editable" type="text" placeholder="button label" value:bind="button.label">
               </div>
-              <div class="div">
-                {{let nameVarPickerVisible = newObservableBool(false)}}
-                {{let buttonNameVar = newObservableProxy(button, 'name')}}
-                <label class="control-label">Variable Name:</label>
-                <div class="form-group has-var-picker">
-                  <input
-                    class="
-                      form-control ui-combobox-input editable
-                      autocomplete picker varname dest ui-autocomplete-input
-                      {{^if(validVarName(buttonNameVar.value)}}invalid-entry{{/if}}
-                    "
-                    placeholder=""
-                    type="text"
-                    autocomplete="off"
-                    on:focus="nameVarPickerVisible.value = true"
-                    value:bind="buttonNameVar.value"
-                    on:input="buttonNameVar.value = scope.element.value"
-                  >
-                  <div class="var-picker-toggle">
-                    <button aria-label="Toggle Variable Picker" on:click="toggleBool(nameVarPickerVisible)" class="glyphicon-list-bullet"></button>
-                    {{#if(nameVarPickerVisible.value)}}
-                      <var-picker appState:from="appState" varName:bind="buttonNameVar.value" selectedCallback:from="nameVarPickerVisible.value = false" />
-                    {{/if}}
-                  </div>
-                </div>
-              </div>
+              <var-picker-field appState:from="appState" obj:bind="button" key:from="'name'" />
               <div class="editspan form-group">
                 <label class="control-label">Default Value:</label>
                 <input class="form-control ui-widget editable" type="text" placeholder="" value:bind="button.value">
@@ -88,6 +63,13 @@
                 >
                   Set Destination
                 </button>
+                {{#if(button.next)}}
+                  <button on:click="scrollTopAndEdit(scope.element, button.next)"
+                    class="btn btn-default ui-button ui-corner-all ui-widget glyphicon-new-message"
+                  >
+                    Edit Page
+                  </button>
+                {{/if}}
               </div>
               <div class="editspan form-group hidden" name="url">
                 <label class="control-label">URL:</label>
@@ -111,31 +93,7 @@
                   </select>
                 </div>
               </div>
-              <div class="div">
-                {{let varPickerVisible = newObservableBool(false)}}
-                {{let buttonVar = newObservableProxy(button, 'repeatVar')}}
-                <label class="control-label">Counting Variable:</label>
-                <div class="form-group has-var-picker">
-                  <input
-                    class="form-control ui-combobox-input editable
-                      autocomplete picker varname dest ui-autocomplete-input
-                      {{^if(validVarName(buttonVar.value)}}invalid-entry{{/if}}
-                    "
-                    placeholder=""
-                    type="text"
-                    autocomplete="off"
-                    on:focus="varPickerVisible.value = true"
-                    value:bind="buttonVar.value"
-                    on:input="buttonVar.value = scope.element.value"
-                  >
-                  <div class="var-picker-toggle">
-                    <button aria-label="Toggle Variable Picker" on:click="toggleBool(varPickerVisible)" class="glyphicon-list-bullet"></button>
-                    {{#if(varPickerVisible.value)}}
-                      <var-picker appState:from="appState" varName:bind="buttonVar.value" selectedCallback:from="varPickerVisible.value = false" />
-                    {{/if}}
-                  </div>
-                </div>
-              </div>
+              <var-picker-field appState:from="appState" obj:bind="button" key:from="'repeatVar'" label:from="'Counting Variable:'" />
             </td>
           </tr>
         {{/for}}

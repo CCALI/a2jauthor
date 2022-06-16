@@ -1,0 +1,41 @@
+<can-import from="./logic-editor.less" />
+
+{{<listUI}}
+  <div class="suggestions">
+    {{#for(item of matchedItems)}}
+      <button on:click="updateReference(item)" class="btn btn-default">{{item}}</button>
+    {{/for}}
+    <span>|</span>
+    {{#for(item of unmatchedItems)}}
+      <button on:click="updateReference(item)" class="btn btn-default">{{item}}</button>
+    {{/for}}
+  </div>
+{{/listUI}}
+
+<div class="editspan form-group {{#if(metaData.errors.length)}}has-error{{/if}}">
+  {{#if(label)}}<label class="control-label">{{label}}:</label>{{/if}}
+  <div
+    spellcheck="false"
+    contenteditable="true"
+    class="form-control text editable taller codeedit"
+    rows="4"
+    el:innerHTML:from="displayedValue"
+    on:blur="updateDisplayedValueASAP(scope.element, true)"
+    on:pointerup="updateCursorPosition(scope.event)"
+    on:keyup="updateCursorPosition(scope.event)"
+    on:paste="plaintextPaste(scope.event)"
+  ></div>
+  <div class="suggestion-bar">
+    {{#if(gotoActive)}}
+      <span>Page:</span>
+      {{>listUI .}}
+    {{/if}}
+    {{#if(varActive)}}
+      <span>Variable:</span>
+      {{>listUI .}}
+    {{/if}}
+  </div>
+  <div class="errors help-block">
+    {{#if(showJS)}}{{{transpiled}}}{{/if}}
+  </div>
+</div>

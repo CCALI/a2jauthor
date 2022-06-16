@@ -1,3 +1,11 @@
 <can-import from="./advanced-logic.less" />
+<can-import from="./logic-editor/" />
 
-{{{legacySection}}}
+<fieldset name="record">
+  <legend>Advanced Logic</legend>
+  <logic-editor label:raw="Before" key:raw="codeBefore" page:from="page" appState:from="appState" />
+  <logic-editor label:raw="After" key:raw="codeAfter" page:from="page" appState:from="appState" />
+  <div>
+    {{{ckeFactory(page, 'codeCitation', 'Logic Citation:')}}}
+  </div>
+</fieldset>

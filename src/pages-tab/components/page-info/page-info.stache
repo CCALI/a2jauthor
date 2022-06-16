@@ -1,3 +1,25 @@
 <can-import from="./page-info.less" />
 
-{{{legacySection}}}
+<fieldset name="record">
+  <legend>Page Info</legend>
+  <div name="undefined">
+    <div class="editspan form-group">
+      <label class="control-label">Step:</label>
+      <select class="form-control" value:bind="step">
+        {{#for(step of steps)}}
+          <option value:from="step.number">{{step.number}}. {{step.text}}</option>
+        {{/for}}
+      </select>
+    </div>
+  </div>
+  <div class="editspan form-group">
+    <label class="control-label">Name:</label>
+    <input class="form-control ui-widget editable" type="text" placeholder="page name" value:bind="name">
+  </div>
+  {{^is(page.type, 'A2J')}}
+    <h2>Page type/style: {{page.type}}/{{page.style}}</h2>
+  {{/is}}
+  <div>
+    {{{ckePageNotesArea}}}
+  </div>
+</fieldset>

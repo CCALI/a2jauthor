@@ -1,0 +1,31 @@
+@import (reference) '../../../../../styles';
+
+logic-editor {
+  display: block;
+  /* padding: @grid-gutter-width; */
+
+  .suggestion-bar {
+    display: flex;
+    height: 32px;
+    background: #f0f0f0;
+    align-items: baseline;
+    padding: 2px;
+
+    > :first-child {
+      height: 20px;
+      margin-right: 5px;
+    }
+  }
+  .suggestions {
+    white-space: nowrap;
+    width: 100%;
+    overflow-x: auto;
+
+    > * {
+      display: inline-block;
+      margin-right: 2px;
+      margin-bottom: 5px;
+      padding: 2px;
+    }
+  }
+}

@@ -72,23 +72,23 @@
       </span>
     </div>
     {{#if(showUsageFinder)}}
-        <div id='var-usage-section'>
-          <div>
-            <label for="varusage">Used by:</label>
-            <button class='btn btn-default findBtn'>
-              <span class='ui-button-text'>Find Usage</span>
-            </button>
-          </div>
-          <div>
-            <div id="varUsageList">
-              {{#if(variableUsageHtml)}}
-                {{{variableUsageHtml}}}
-              {{else}}
-                ...
-              {{/if}}
-            </div>
+      <div id='var-usage-section'>
+        <div>
+          <label for="varusage">"{{initialVarName}}" used by:</label>
+          <button class='btn btn-default findBtn'>
+            <span class='ui-button-text'>Find Usage</span>
+          </button>
+        </div>
+        <div>
+          <div id="varUsageList">
+            {{#if(variableUsageHtml)}}
+              {{{variableUsageHtml}}}
+            {{else}}
+              ...
+            {{/if}}
           </div>
         </div>
+      </div>
     {{/if}}
   </fieldset>
 </form>

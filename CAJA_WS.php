@@ -189,8 +189,11 @@ switch ($command){
 			$ownerfolder = substr($row['filename'], 0, stripos($row['filename'], "/", 0));
 
 			$allfiles = scandir($filedir);
-			$mediaFiles = array_filter($allfiles, is_media_file);
-			$templateFiles = array_filter($allfiles, is_template_file);
+			$mediaFiles = array_filter($allfiles, "is_media_file");
+			$templateFiles = array_filter($allfiles, "is_template_file");
+			$xmlFiles = array_filter($allfiles, function ($fn) {
+				return substr($fn, -4) == ".xml";
+			});
 
 			$media=Array(); // $media=getFileDetails($mediaFiles)
 
@@ -210,6 +213,27 @@ switch ($command){
 					"modified" => date (DATE_FORMAT_UI, filemtime($mediaFilePath)),
 					// "path" => $mediaFilePath,
 					"size" => filesize($mediaFilePath)
+				];
+			}
+
+			$xmlList=Array();
+
+			foreach($xmlFiles as $xmlName) {
+				$xmlFilePath = $filedir . '/' . $xmlName;
+				$file_parts = pathinfo($xmlName);
+				$filename = $file_parts['filename'];
+				$extension = $file_parts['extension']; 
+
+				$xmlList[]=(object)[
+					"gid" => $gid,
+					"ownerfolder" => $ownerfolder,
+					"name" => $xmlName,
+					"filename" => $filename,
+					"rename" => "",
+					"extension" => $extension,
+					"modified" => date (DATE_FORMAT_UI, filemtime($xmlFilePath)),
+					// "path" => $xmlFilePath,
+					"size" => filesize($xmlFilePath)
 				];
 			}
 
@@ -245,6 +269,7 @@ switch ($command){
 			$result['media']=$media;
 			$result['templates']=$templates;
 			$result['templateIds']=$templateIds;
+			$result['xml']=$xmlList;
 			$result['gid']=$gid;
 		}
 		break;

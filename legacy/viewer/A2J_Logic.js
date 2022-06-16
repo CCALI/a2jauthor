@@ -52,7 +52,7 @@ function TLogic () {
 }
 
 TLogic.prototype.pageExists = function (pageName) {	// Return true if page name exists (Case-sensitive check)
-  return gGuide.pages[pageName] !== null
+  return !!gGuide.pages[pageName]
 }
 
 TLogic.prototype.pageFindReferences = function (CAJAScript, findName) {	// Find/replace all GOTO findName with newName or just return if found.

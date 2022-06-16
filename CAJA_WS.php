@@ -960,35 +960,46 @@ function process_uploaded_guide_file($guide_id, $destination_path) {
 function find_guide_file_and_rename($path) {
 	global $mysqli;
 
-	$possible_xml_files = array("interview.xml", "guide.xml");
-
 	if (($files = scandir($path)) != FALSE) {
 		$guide_files = array_map("strtolower", array_filter($files, "is_valid_guide_file"));
+		$interviewXMLExists = in_array("interview.xml", $guide_files);
+		$guideXMLExists = in_array("guide.xml", $guide_files);
+		$a2j_files = array_filter($guide_files, "has_a2j_ext");
+		$a2jCount = count($a2j_files);
 
-		if (count($guide_files) === 0) {
+		// zip contains multiple .a2j files
+		if ($a2jCount > 1) {
+			cleanup_failed_guide_upload();
+			fail_and_exit(422, "The .zip file cannot contain multiple .a2j files");
+		}
+
+		if ($guideXMLExists) {
+			// rename it
+			rename($path . "/guide.xml", $path . "/Guide.xml");
+
+			if ($interviewXMLExists) {
+				// delete it
+				unlink($path . "/interview.xml");
+			}
+			if ($a2jCount == 1) {
+				// delete it
+				unlink($path . "/" . array_values($a2j_files)[0]);
+			}
+		} else if ($interviewXMLExists) {
+			// rename it
+			rename($path . "/interview.xml", $path . "/Guide.xml");
+
+			if ($a2jCount == 1) {
+				// delete it
+				unlink($path . "/" . array_values($a2j_files)[0]);
+			}
+		} else if ($a2jCount == 1) {
+			// rename it
+			rename($path . "/" . array_values($a2j_files)[0], $path . "/Guide.xml");
+		} else {
 			cleanup_failed_guide_upload();
 			fail_and_exit(422, "No valid .a2j or .xml file was found in the .zip file");
 		}
-
-		if (count($guide_files) > 1) {
-			cleanup_failed_guide_upload();
-
-			// zip contains both an interview.xml and guide.xml
-			if (count(array_intersect($possible_xml_files, $guide_files)) === 2) {
-				fail_and_exit(422, "The .zip file cannot contain both an interview.xml and guide.xml");
-			}
-
-			// zip contains multiple .a2j files
-			if (count(array_filter($guide_files, "has_a2j_ext")) > 1) {
-				fail_and_exit(422, "The .zip file cannot contain multiple .a2j files");
-			}
-
-			fail_and_exit(422, "The .zip cannot contain both an interview.xml or guide.xml and an .a2j file");
-		}
-
-		// rename the found guide file to Guide.xml
-		$guide_file_path = $path . "/" . array_values($guide_files)[0];
-		rename($guide_file_path, $path . "/Guide.xml");
 	} else {
 		cleanup_failed_guide_upload();
 		fail_and_exit(422, "Unable to open .zip file");

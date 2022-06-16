@@ -1,4 +1,3 @@
-// import $ from 'jquery'
 import DefineMap from 'can-define/map/map'
 import DefineList from 'can-define/list/list'
 import Component from 'can-component'

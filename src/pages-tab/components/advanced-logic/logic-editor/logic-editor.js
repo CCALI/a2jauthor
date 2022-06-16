@@ -4,7 +4,7 @@ import Component from 'can-component'
 import template from './logic-editor.stache'
 import _unescape from 'lodash/unescape'
 
-export const LogicEditor = DefineMap.extend('LogicEditor', {
+export const LogicEditorVM = DefineMap.extend('LogicEditorVM', {
   page: {},
   appState: {},
 
@@ -273,5 +273,5 @@ export default Component.extend({
   tag: 'logic-editor',
   view: template,
   leakScope: false,
-  ViewModel: LogicEditor
+  ViewModel: LogicEditorVM
 })

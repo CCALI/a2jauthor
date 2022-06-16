@@ -3,8 +3,8 @@
 
 <fieldset name="record">
   <legend>Advanced Logic</legend>
-  <logic-editor label:from="'Before'" key:from="'codeBefore'" page:from="page" appState:from="appState" />
-  <logic-editor label:from="'After'" key:from="'codeAfter'" page:from="page" appState:from="appState" />
+  <logic-editor label:raw="Before" key:raw="codeBefore" page:from="page" appState:from="appState" />
+  <logic-editor label:raw="After" key:raw="codeAfter" page:from="page" appState:from="appState" />
   <div>
     {{{ckeFactory(page, 'codeCitation', 'Logic Citation:')}}}
   </div>

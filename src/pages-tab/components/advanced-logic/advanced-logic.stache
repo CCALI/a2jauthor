@@ -1,24 +1,11 @@
 <can-import from="./advanced-logic.less" />
+<can-import from="./logic-editor/" />
 
-<!-- fieldset name="record">
+<fieldset name="record">
   <legend>Advanced Logic</legend>
-  <div class="editspan form-group">
-    <label class="control-label">Before:</label>
-    <div spellcheck="false" contenteditable="true" class="form-control text editable taller codeedit" rows="4">
-
-    </div>
-    <div class="errors help-block"></div>
-  </div>
-  <div class="editspan form-group">
-    <label class="control-label">After:</label>
-    <div spellcheck="false" contenteditable="true" class="form-control text editable taller codeedit" rows="4">
-
-    </div>
-    <div class="errors help-block"></div>
-  </div>
-  <div style="padding-top: 15px;">
+  <logic-editor label:from="'Before'" key:from="'codeBefore'" page:from="page" appState:from="appState" />
+  <logic-editor label:from="'After'" key:from="'codeAfter'" page:from="page" appState:from="appState" />
+  <div>
     {{{ckeFactory(page, 'codeCitation', 'Logic Citation:')}}}
   </div>
-</fieldset -->
-
-{{{legacySection}}}
+</fieldset>

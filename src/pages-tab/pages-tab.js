@@ -76,6 +76,10 @@ export default Component.extend({
     '.pages-container a.page-item dblclick': function (legacyEl) {
       // const pageName = console.log((legacyEl.rel || '').substr(5))
       setTimeout(() => this.viewModel.goToPageEdit(), 10)
+    },
+    '.popups-container a.page-item dblclick': function (legacyEl) {
+      // const pageName = console.log((legacyEl.rel || '').substr(5))
+      setTimeout(() => this.viewModel.goToPageEdit(), 10)
     }
   }
 })

@@ -42,18 +42,5 @@
         {{/each}}
       </div>
     </fieldset>
-
-    <fieldset>
-      <legend>Open a sample interview</legend>
-
-      <div class="list-group">
-        {{#each(interviews.samples())}}
-          <a class="guide list-group-item" gid="{{id}}">
-            <span class="title">{{title}}</span>
-            <small class="pull-right text-muted">#{{id}} | {{formatFileSize fileSize}} | {{lastModified}}</small>
-          </a>
-        {{/each}}
-      </div>
-    </fieldset>
   </div>
 {{/if}}

@@ -356,6 +356,10 @@ export default Component.extend({
     getSearchFilter (key) {
       return this[key]
     },
+    samples(list)
+    {
+      return (list.guides || list).filter(guide => !guide.owned)
+    },
     filterGuideList (list = [], filter = '') {
       if (!filter) {
         return list

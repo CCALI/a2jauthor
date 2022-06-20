@@ -360,6 +360,14 @@ export default Component.extend({
     {
       return (list.guides || list).filter(guide => !guide.owned)
     },
+    scrollTo(selector){
+
+      const uploadedGuidePosition = $(selector).offset().top
+      const navBarHeight = 140
+      const scrollTo = uploadedGuidePosition - navBarHeight
+
+      $('html,body').animate({ scrollTop: scrollTo }, 300)
+    },
     filterGuideList (list = [], filter = '') {
       if (!filter) {
         return list

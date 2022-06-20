@@ -4,7 +4,7 @@
 
 {{<interviewList}}
   <div class="source-list list-group">
-  <a href="#samples">[go to samples]</a>
+  <a class="merge-guides-top" on:click="scrollTo('.sample-guides-merge')">[go to samples]</a>
     <form class="navbar-form" role="search">
       <div class="input-group" style="width: 100%;">
         <input type="text"
@@ -32,10 +32,11 @@
       </a>
     {{/for}}
     <hr>
-    Sample Guides
+    <a id="samples" class="sample-guides-merge">Sample Guides</a>
+    <a on:click="scrollTo('.merge-guides-top')">[back to top]</a>
     {{let samplelist=samples(./listOfGuides)}}
     {{#for(guide of samplelist)}}
-      <a id="samples" class="list-group-item" on:click="mtg.load(guide.id)">
+      <a class="list-group-item" on:click="mtg.load(guide.id)">
         <span class="title">{{guide.title}}</span><br>
         <small class="text-muted">#{{guide.id}} | {{formatFileSize guide.fileSize}} | {{guide.lastModified}}</small>
       </a>

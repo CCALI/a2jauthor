@@ -516,8 +516,7 @@ function gotoPageEdit (pageName) {
           var pageName = window.$(this).attr('rel')
           var variableElements = window
             .$(this)
-            .find('fieldset')
-            .find('.divvariable')
+            .find('page-fields .divvariable')
           var variableInputs = variableElements.find('input')
           var exit = false
 
@@ -529,49 +528,56 @@ function gotoPageEdit (pageName) {
               }
             }
           }
+          const fieldsMissingVariable = []
           variableInputs.map(index => {
             if (variableInputs[index].value === '') {
-              $('.confirm-variable-dialog').dialog({
-                resizable: false,
-                height: 'auto',
-                width: 400,
-                title: 'Warning',
-                modal: true,
-                closeText: '',
-                buttons: {
-                  Cancel: function () {
-                    fieldIntoView()
-                    $(this).dialog('close')
-                  },
-                  Continue: function () {
-                    $pageEditDialog.dialog('close')
-                    $(this).dialog('close')
-                    window
-                      .$('#author-app')
-                      .trigger('edit-page:preview', pageName)
-                  }
-                },
-                open: function () {
-                  const dialogInstance = $(this).closest('.ui-dialog')
-                  const cancelButton = dialogInstance.find(
-                    'button:contains("Cancel")'
-                  )
-                  const continueButton = dialogInstance.find(
-                    'button:contains("Continue")'
-                  )
-                  // remove default dialog-ui button classes
-                  cancelButton.removeClass()
-                  continueButton.removeClass()
-                  // add bootstrap classes
-                  continueButton.addClass('btn btn-primary btn-wide-sm')
-                  cancelButton.addClass('btn btn-default btn-wide-sm')
-                  // focus Continue button for advanced Authors
-                  continueButton.focus()
-                }
-              })
+              fieldsMissingVariable.push(index)
               exit = true
             }
           })
+          if (fieldsMissingVariable.length) {
+            $('.confirm-variable-message').html(
+              `Unassigned Variable in Field${fieldsMissingVariable.length > 1 ? 's' : ''}: ${fieldsMissingVariable.map(x => x + 1).join(', ')}`
+            )
+            $('.confirm-variable-dialog').dialog({
+              resizable: false,
+              height: 'auto',
+              width: 400,
+              title: 'Warning',
+              modal: true,
+              closeText: '',
+              buttons: {
+                Cancel: function () {
+                  variableElements[fieldsMissingVariable[0]].scrollIntoView()
+                  $(this).dialog('close')
+                },
+                Continue: function () {
+                  $pageEditDialog.dialog('close')
+                  $(this).dialog('close')
+                  window
+                    .$('#author-app')
+                    .trigger('edit-page:preview', pageName)
+                }
+              },
+              open: function () {
+                const dialogInstance = $(this).closest('.ui-dialog')
+                const cancelButton = dialogInstance.find(
+                  'button:contains("Cancel")'
+                )
+                const continueButton = dialogInstance.find(
+                  'button:contains("Continue")'
+                )
+                // remove default dialog-ui button classes
+                cancelButton.removeClass()
+                continueButton.removeClass()
+                // add bootstrap classes
+                continueButton.addClass('btn btn-primary btn-wide-sm')
+                cancelButton.addClass('btn btn-default btn-wide-sm')
+                // focus Continue button for advanced Authors
+                continueButton.focus()
+              }
+            })
+          }
           if (exit) return
           $pageEditDialog.dialog('close')
           window.$('#author-app').trigger('edit-page:preview', pageName)

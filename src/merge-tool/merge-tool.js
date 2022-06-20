@@ -321,7 +321,7 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
         // const newGuideUrl = data.url // location of new guide for file copying
         guide.id = newgid
         if (typeof vm.reloadInterviews === 'function') {
-          vm.reloadInterviews()
+          vm.reloadInterviews(newgid)
         }
 
         if (fileList.length) {
@@ -333,7 +333,7 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
             fileList,
             templateIds
           }, function (data) {
-            console.log(newgid, data)
+            // console.log(newgid, data)
           })
         }
 

@@ -2,11 +2,17 @@ import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './page-edit-form.stache'
 import GuideFiles from '~/src/models/guide-files'
+import constants from 'a2jauthor/src/models/constants'
 
 export const PageEditFormVM = DefineMap.extend('PageEditFormVM', {
   appState: {},
   page: {},
   goToPageEdit: {},
+
+  get isPopup () {
+    const page = this.page || {}
+    return page.type === constants.ptPopup
+  },
 
   selectedTab: { default: 'Page Info' },
 

@@ -19,14 +19,18 @@ export const InterviewsVM = DefineMap.extend('InterviewsVM', {
   },
 
   interviews: {
-    value ({ lastSet, listenTo, resolve }) {
-      this.interviewsPromise.then((interviews) => {
-        resolve(interviews)
+    value (prop) {
+      const { lastSet, listenTo, resolve } = prop
+      prop.resolver = prop.resolver || (interviews => {
+        if (!prop.lastResolved) {
+          prop.lastResolved = interviews
+        } else {
+          prop.lastResolved.replace(interviews)
+        }
+        resolve(prop.lastResolved)
       })
-
-      listenTo(lastSet, (interviews) => {
-        resolve(interviews)
-      })
+      this.interviewsPromise.then(prop.resolver)
+      listenTo(lastSet, prop.resolver)
     }
   },
 
@@ -42,8 +46,31 @@ export const InterviewsVM = DefineMap.extend('InterviewsVM', {
     }
   },
 
-  reloadInterviews () {
-    Guide.findAll().then(i => (this.interviews = i))
+  scrollToNewFile (gid) {
+    if (gid) {
+      const $el = $('a[gid="' + gid + '"]')
+
+      if ($el.length) {
+        $('a.guide').removeClass('guide-uploaded')
+        $el.addClass('guide-uploaded')
+
+        const uploadedGuidePosition = $('.guide-uploaded').offset().top
+        const navBarHeight = 140
+        const scrollTo = uploadedGuidePosition - navBarHeight
+
+        $('html,body').animate({ scrollTop: scrollTo }, 300)
+      }
+    }
+  },
+
+  reloadInterviews (gid) {
+    Guide.findAll().then(i => {
+      this.interviews = i
+      if (gid) {
+        setTimeout(() => this.scrollToNewFile(gid), 100)
+      }
+      return this.interviews
+    })
   },
 
   saveCurrentGuidePromise: {

@@ -32,12 +32,24 @@ export const FilePicker = DefineMap.extend('FilePicker', {
   items: {},
   accept: { type: 'text', default: '' },
 
+  legacyFlattenPath (file) {
+    return file.split('\\').pop().split('/').pop()
+  },
+
+  get legacyIgnoreFoldersInFileNameFilter () {
+    return this.legacyFlattenPath(this.filterText.toLowerCase())
+  },
+
   get matchedItems () {
-    return this.items.filter(i => i.name && i.name.toLowerCase().indexOf(this.filterText.toLowerCase()) !== -1)
+    return this.items.filter(
+      i => i.name && i.name.toLowerCase().indexOf(this.legacyIgnoreFoldersInFileNameFilter) !== -1
+    )
   },
 
   get unmatchedItems () {
-    return this.items.filter(i => i.name && i.name.toLowerCase().indexOf(this.filterText.toLowerCase()) === -1)
+    return this.items.filter(
+      i => i.name && i.name.toLowerCase().indexOf(this.legacyIgnoreFoldersInFileNameFilter) === -1
+    )
   },
 
   textAndBool (value, pickerVisible) {
@@ -55,7 +67,9 @@ export const FilePicker = DefineMap.extend('FilePicker', {
   },
 
   validName (newValue) {
-    return (!newValue) || (!this.items) || (this.items.filter(i => i.name.toLowerCase() === newValue.toLowerCase()).length > 0)
+    return (!newValue) || (!this.items) || (newValue.indexOf('http') === 0) || (
+      this.items.filter(i => i.name.toLowerCase() === this.legacyFlattenPath(newValue.toLowerCase())).length > 0
+    )
   },
 
   uploadFile (fileInputEl) {

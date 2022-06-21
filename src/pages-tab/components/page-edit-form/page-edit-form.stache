@@ -1,4 +1,5 @@
 <can-import from="./page-edit-form.less" />
+<can-import from='../popup-editor/' />
 <can-import from='../page-info/' />
 <can-import from='../question-info/' />
 <can-import from='../learn-more/' />
@@ -7,33 +8,37 @@
 <can-import from='../advanced-logic/' />
 
 {{#if(page)}}
-  <button class="tabs-toggler btn btn-default" on:click="toggleTabs()">
-    <span aria-hidden="true" class="glyphicon-exchange"></span>
+  {{#if(isPopup)}}
+    <popup-editor class="tab-panel" page:from="page" appState:from="appState" guideFiles:from="guideFiles" />
+  {{else}}
+    <button class="tabs-toggler btn btn-default" on:click="toggleTabs()">
+      <span aria-hidden="true" class="glyphicon-exchange"></span>
+      {{#if(appState.modalTabView)}}
+        Full View
+      {{else}}
+        Tabbed View
+      {{/if}}
+    </button>
     {{#if(appState.modalTabView)}}
-      Full View
-    {{else}}
-      Tabbed View
+      <div class="page-edit-form-tabs">
+        <button on:click="selectedTab = 'Page Info'" class="{{#is(selectedTab, 'Page Info')}}selected-tab{{/is}}">Page Info</button>
+        <button on:click="selectedTab = 'Question Info'" class="{{#is(selectedTab, 'Question Info')}}selected-tab{{/is}}">Question Info</button>
+        <button on:click="selectedTab = 'Learn More Info'" class="{{#is(selectedTab, 'Learn More Info')}}selected-tab{{/is}}">Learn More Info</button>
+        <button on:click="selectedTab = 'Fields'" class="{{#is(selectedTab, 'Fields')}}selected-tab{{/is}}">Fields</button>
+        <button on:click="selectedTab = 'Buttons'" class="{{#is(selectedTab, 'Buttons')}}selected-tab{{/is}}">Buttons</button>
+        <button on:click="selectedTab = 'Advanced Logic'" class="{{#is(selectedTab, 'Advanced Logic')}}selected-tab{{/is}}">Advanced Logic</button>
+      </div>
     {{/if}}
-  </button>
-  {{#if(appState.modalTabView)}}
-    <div class="page-edit-form-tabs">
-      <button on:click="selectedTab = 'Page Info'" class="{{#is(selectedTab, 'Page Info')}}selected-tab{{/is}}">Page Info</button>
-      <button on:click="selectedTab = 'Question Info'" class="{{#is(selectedTab, 'Question Info')}}selected-tab{{/is}}">Question Info</button>
-      <button on:click="selectedTab = 'Learn More Info'" class="{{#is(selectedTab, 'Learn More Info')}}selected-tab{{/is}}">Learn More Info</button>
-      <button on:click="selectedTab = 'Fields'" class="{{#is(selectedTab, 'Fields')}}selected-tab{{/is}}">Fields</button>
-      <button on:click="selectedTab = 'Buttons'" class="{{#is(selectedTab, 'Buttons')}}selected-tab{{/is}}">Buttons</button>
-      <button on:click="selectedTab = 'Advanced Logic'" class="{{#is(selectedTab, 'Advanced Logic')}}selected-tab{{/is}}">Advanced Logic</button>
-    </div>
+    <page-info class="tab-panel {{#if(appState.modalTabView)}}{{#is(selectedTab, 'Page Info')}}selected-tab-panel{{else}}hidden-tab{{/is}}{{/if}}" page:from="page" appState:from="appState" />
+    <question-info class="tab-panel {{#if(appState.modalTabView)}}{{#is(selectedTab, 'Question Info')}}selected-tab-panel{{else}}hidden-tab{{/is}}{{/if}}" page:from="page" appState:from="appState" guideFiles:from="guideFiles" />
+    <learn-more class="tab-panel {{#if(appState.modalTabView)}}{{#is(selectedTab, 'Learn More Info')}}selected-tab-panel{{else}}hidden-tab{{/is}}{{/if}}" page:from="page" appState:from="appState" guideFiles:from="guideFiles" />
+    <page-fields class="tab-panel {{#if(appState.modalTabView)}}{{#is(selectedTab, 'Fields')}}selected-tab-panel{{else}}hidden-tab{{/is}}{{/if}}" page:from="page" appState:from="appState" guideFiles:from="guideFiles" />
+    <page-buttons
+      class="tab-panel {{#if(appState.modalTabView)}}{{#is(selectedTab, 'Buttons')}}selected-tab-panel{{else}}hidden-tab{{/is}}{{/if}}"
+      page:from="page"
+      appState:from="appState"
+      goToPageEdit:from="goToPageEdit"
+    />
+    <advanced-logic class="tab-panel {{#if(appState.modalTabView)}}{{#is(selectedTab, 'Advanced Logic')}}selected-tab-panel{{else}}hidden-tab{{/is}}{{/if}}" page:from="page" appState:from="appState" />
   {{/if}}
-  <page-info class="tab-panel {{#if(appState.modalTabView)}}{{#is(selectedTab, 'Page Info')}}selected-tab-panel{{else}}hidden-tab{{/is}}{{/if}}" page:from="page" appState:from="appState" />
-  <question-info class="tab-panel {{#if(appState.modalTabView)}}{{#is(selectedTab, 'Question Info')}}selected-tab-panel{{else}}hidden-tab{{/is}}{{/if}}" page:from="page" appState:from="appState" guideFiles:from="guideFiles" />
-  <learn-more class="tab-panel {{#if(appState.modalTabView)}}{{#is(selectedTab, 'Learn More Info')}}selected-tab-panel{{else}}hidden-tab{{/is}}{{/if}}" page:from="page" appState:from="appState" guideFiles:from="guideFiles" />
-  <page-fields class="tab-panel {{#if(appState.modalTabView)}}{{#is(selectedTab, 'Fields')}}selected-tab-panel{{else}}hidden-tab{{/is}}{{/if}}" page:from="page" appState:from="appState" guideFiles:from="guideFiles" />
-  <page-buttons
-    class="tab-panel {{#if(appState.modalTabView)}}{{#is(selectedTab, 'Buttons')}}selected-tab-panel{{else}}hidden-tab{{/is}}{{/if}}"
-    page:from="page"
-    appState:from="appState"
-    goToPageEdit:from="goToPageEdit"
-  />
-  <advanced-logic class="tab-panel {{#if(appState.modalTabView)}}{{#is(selectedTab, 'Advanced Logic')}}selected-tab-panel{{else}}hidden-tab{{/is}}{{/if}}" page:from="page" appState:from="appState" />
 {{/if}}

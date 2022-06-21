@@ -1,0 +1,46 @@
+<can-import from="./popup-editor.less" />
+<can-import from="../file-picker/" />
+
+<fieldset name="record">
+  <legend>Popup Info</legend>
+  <div class="editspan form-group">
+    <label class="control-label">Name:</label>
+    <input class="form-control ui-widget editable" type="text" placeholder="popup name" value:bind="name">
+  </div>
+  <div>
+    {{{ckeFactory(page, 'notes', 'Notes:')}}}
+  </div>
+  <div style="padding-top: 15px;">
+    {{{ckeFactory(page, 'text', 'Text:')}}}
+  </div>
+  <div name="helpAudio" class="form-upload">
+    <file-picker appState:from="appState" label:raw="Text Audio" obj:from="page" key:raw="textAudioURL" items:from="guideFiles.media" />
+  </div>
+  <div style="padding-top: 15px;">
+    {{{ckeFactory(page, 'helpMediaLabel', 'Media Label:', 'Short explanatory label for Learn More Media')}}}
+  </div>
+  <div name="helpAudio" class="form-upload">
+    <file-picker appState:from="appState" label:raw="Audio" obj:from="page" key:raw="helpAudioURL" items:from="guideFiles.media" />
+  </div>
+  <div name="helpGraphic" class="form-upload">
+    <file-picker appState:from="appState" label:raw="Graphic" obj:from="page" key:raw="helpImageURL" items:from="guideFiles.media" />
+  </div>
+  <div class="editspan" style="padding-top: 15px;" name="helpAltText">
+    <label class="control-label">Graphic Alt-Text:</label>
+    <input
+      class="form-control ui-widget editable"
+      type="text"
+      maxlength="100"
+      placeholder="Enter 100 characters or less (no punctuation) to describe your image for Aria readers. Hint: 100 characters ends here"
+      value:bind="page.helpAltText"
+      on:change="helpAltTextChangeHandler(scope.element)"
+    >
+  </div>
+  <div name="helpVideo" class="form-upload">
+    <file-picker appState:from="appState" label:raw="Video" obj:from="page" key:raw="helpVideoURL" items:from="guideFiles.media" />
+  </div>
+  <div name="helpReader" style="padding-top: 15px;">
+    {{{ckeFactory(page, 'helpReader', 'Video Transcript:')}}}
+  </div>
+  <br>
+</fieldset>

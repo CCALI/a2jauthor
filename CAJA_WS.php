@@ -287,7 +287,8 @@ switch ($command){
 		$res = $mysqli->query("select * from guides where gid=$destGid and editoruid=$userid");
 		if ($row = $res->fetch_assoc())
 		{
-			$destinationPath = pathinfo(GUIDES_DIR.$row['filename'])['dirname'] . '/';
+			$destinationPathWithoutTrailingSlash = pathinfo(GUIDES_DIR.$row['filename'])['dirname'];
+			$destinationPath = $destinationPathWithoutTrailingSlash . '/';
 		  $files = $_REQUEST['fileList'];
 
 			$sourcePaths = [];
@@ -337,6 +338,8 @@ switch ($command){
 			$templates_obj->guideId = $destGid;
 			$templates_obj->templateIds = $templateIds;
 			file_put_contents($destinationPath . 'templates.json', json_encode($templates_obj));
+
+			update_guide_templates($destGid, $destinationPathWithoutTrailingSlash);
 
 			$result['copied']='copied!';
 		}

@@ -134,7 +134,7 @@ export const FieldVM = DefineMap.extend('FieldVM', {
         (!canUseCalc[this.type]) && resolver(false)
       })
       listenTo(lastSet, resolver)
-      resolver(this.field.required)
+      resolver(this.field.calculator)
     }
   },
 

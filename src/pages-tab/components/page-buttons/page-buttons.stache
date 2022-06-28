@@ -54,17 +54,18 @@
                 <label class="control-label">Default Value:</label>
                 <input class="form-control ui-widget editable" type="text" placeholder="" value:bind="button.value">
               </div>
-              <div class="destination-picker" name="undefined">
+              <div class="button-destination-picker" name="undefined">
+                {{let buttonNextProxy = newObservableProxy(button, 'next')}}
                 <label>Destination:</label>
-                <span>{{button.next}}</span>
+                <span>{{buttonNextProxy.value}}</span>
                 <button
-                  on:click="pickPageDialog(scope.element, button, scope.index)"
+                  on:click="pickPageDialog(scope.element, button, scope.index, buttonNextProxy)"
                   class="btn btn-default ui-button ui-corner-all ui-widget glyphicon-link"
                 >
                   Set Destination
                 </button>
-                {{#if(button.next)}}
-                  <button on:click="scrollTopAndEdit(scope.element, button.next)"
+                {{#if(buttonNextProxy.value)}}
+                  <button on:click="scrollTopAndEdit(scope.element, buttonNextProxy.value)"
                     class="btn btn-default ui-button ui-corner-all ui-widget glyphicon-new-message"
                   >
                     Edit Page

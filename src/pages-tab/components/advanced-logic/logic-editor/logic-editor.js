@@ -147,7 +147,7 @@ export const LogicEditorVM = DefineMap.extend('LogicEditorVM', {
   },
 
   get gotoActive () {
-    return this.unescapedActiveLine.toLowerCase().indexOf('goto') === 0
+    return this.unescapedActiveLine.toLowerCase().trim().indexOf('goto') === 0
   },
 
   get gotoFilterText () {
@@ -158,7 +158,8 @@ export const LogicEditorVM = DefineMap.extend('LogicEditorVM', {
     const node = this.cursorInNode
     if (this.gotoActive && node) {
       if (node.nodeType === 3) { // text node
-        node.data = `GOTO "${newPageName}"`
+        const preserveLeadingSpacesAndCasing = this.unescapedActiveLine.replace(/(^\s*(?:goto)?).*/i, '$1') || 'GOTO'
+        node.data = `${preserveLeadingSpacesAndCasing} "${newPageName}"`
       }
     }
   },
@@ -220,6 +221,7 @@ export const LogicEditorVM = DefineMap.extend('LogicEditorVM', {
     } else if (!(document.activeElement && document.activeElement.hasAttribute('contenteditable'))) {
       // skip updating displayedValue if we re-focused the editor already, as it will blur again when author is done editing
       this.displayedValue = el.innerHTML
+      this.activeLine = '' // clear suggestions since html changed
     }
   },
 

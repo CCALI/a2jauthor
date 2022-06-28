@@ -5,6 +5,7 @@ import Component from 'can-component'
 import template from './page-buttons.stache'
 import { TButton } from '~/legacy/viewer/A2J_Types'
 import constants from 'a2jauthor/src/models/constants'
+import { ObservableProxy } from '../../helpers/helpers'
 
 export const PageButtonsVM = DefineMap.extend('PageButtonsVM', {
   page: {},
@@ -103,20 +104,25 @@ export const PageButtonsVM = DefineMap.extend('PageButtonsVM', {
   // el is the button element itself,
   // button is the page button object,
   // index is which button it is in the buttons list
-  pickPageDialog (el, button, index) {
+  pickPageDialog (el, button, index, buttonNextProxy) {
     const vm = this
     return window.form.pickPageDialog(el, {
       value: button.next,
       label: 'Destination:',
       buttonText: 'Set Destination',
       change: function (val, b, ff) {
-        button.next = val
+        buttonNextProxy.value = val // sets button.next but also lets stache update when it changes
         // ff is jquery wrapped el.closest('tr') and I think the var name means 'fieldset field'? or 'form fieldset'?
         window.updateButtonLayout(ff, button)
         vm.showMessageInputForButton[index] = vm.buttonIsDisplayMessage(button)
         vm.buttonsChanged = vm.buttonsChanged + 1
       }
     })
+  },
+
+  // helps us watch/bind legacy properties that aren't observable
+  newObservableProxy (obj, key) {
+    return new ObservableProxy({ obj, key })
   },
 
   get observableButtons () {

@@ -1,6 +1,6 @@
 <can-import from="./file-picker.less" />
 
-<div class="div">
+<div class="div auto-close-shared-bool-on-outside-focus">
   {{let pickerVisible = newObservableBool(false)}}
   <label class="control-label">{{label}}:</label>
   <div class="has-file-picker">
@@ -13,9 +13,10 @@
       placeholder=""
       type="text"
       autocomplete="off"
-      on:focus="pickerVisible.value = true"
+      on:focus="makeTrue(pickerVisible)"
       value:bind="filterText"
       on:input="filterText = scope.element.value"
+      on:keydown="focusFirstButtonInList(scope.event)"
     >
     <div class="file-picker-toggle">
       <button aria-label="Toggle File Picker" on:click="toggleBool(pickerVisible)" class="glyphicon-list-bullet"></button>

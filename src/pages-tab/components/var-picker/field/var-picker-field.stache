@@ -3,7 +3,7 @@
 <can-import from='~/src/modal/'/>
 <can-import from="~/src/variables/editor/"/>
 
-<div class="divvariable">
+<div class="divvariable auto-close-shared-bool-on-outside-focus">
   {{let nameVarPickerVisible = newObservableBool(false)}}
   {{let showVariableModal = newObservableBool(false)}}
   <label class="control-label">{{label}}</label>
@@ -20,6 +20,7 @@
       on:focus="makeTrue(nameVarPickerVisible)"
       value:bind="filterText"
       on:input="filterText = scope.element.value"
+      on:keydown="focusFirstButtonInList(scope.event)"
     >
     <div class="var-picker-toggle">
       <button aria-label="Toggle Variable Picker" on:click="toggleBool(nameVarPickerVisible)" class="glyphicon-list-bullet"></button>

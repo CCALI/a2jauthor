@@ -49,6 +49,10 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
   // search string that filters sources list
   sourcesFilter: 'string',
 
+  isSample (guide) {
+    return !(guide && guide.owned)
+  },
+
   pageDependancyAutoChecker (page) {
     const mediaNames = {
       [page.helpImageURL]: true,
@@ -245,24 +249,28 @@ export const MergeToolVM = DefineMap.extend('MergeToolVM', {
     const safeMergeStepIndex = mergedTarget.guide.steps.length
     const safeMergeStepNumber = (parseInt(safeMergeStepIndex ? mergedTarget.guide.steps[safeMergeStepIndex - 1].number : -1, 10) + 1).toString(10)
     const safeStep = { number: safeMergeStepNumber, text: 'zzz Merged' }
-    Object.keys(steps).forEach(k => { delete steps[k] })
-    steps[safeMergeStepIndex] = safeStep
-    Object.keys(pages).forEach(k => {
-      renameVars(pages[k], varRenameMap)
-      pages[k].step = parseInt(safeMergeStepNumber, 10)
-      // 3) page conflicts create a new page with 'zzz' prefix
-      if (mergedTarget.guide.pages[k]) {
-        let prefix = 'zz'
-        let prefixk = ''
-        do {
-          prefix += 'z'
-          prefixk = `${prefix} ${k}`
-        } while (mergedTarget.guide.pages[prefixk] || pages[prefixk])
-        pages[prefixk] = pages[k]
-        pages[k].name = `${prefix} ${pages[k].name}`
-        delete pages[k]
-      }
-    })
+    const stepKeys = Object.keys(steps)
+    const pageKeys = Object.keys(pages)
+    if (stepKeys.length || pageKeys.length) { // only add the safe merge step to our new guide if necessary CCALI/a2jauthor#331
+      stepKeys.forEach(k => { delete steps[k] })
+      steps[safeMergeStepIndex] = safeStep
+      pageKeys.forEach(k => {
+        renameVars(pages[k], varRenameMap)
+        pages[k].step = parseInt(safeMergeStepNumber, 10)
+        // 3) page conflicts create a new page with 'zzz' prefix
+        if (mergedTarget.guide.pages[k]) {
+          let prefix = 'zz'
+          let prefixk = ''
+          do {
+            prefix += 'z'
+            prefixk = `${prefix} ${k}`
+          } while (mergedTarget.guide.pages[prefixk] || pages[prefixk])
+          pages[prefixk] = pages[k]
+          pages[k].name = `${prefix} ${pages[k].name}`
+          delete pages[k]
+        }
+      })
+    }
 
     this.mergeStack.push(sourceGuidePartial)
 
@@ -356,12 +364,10 @@ export default Component.extend({
     getSearchFilter (key) {
       return this[key]
     },
-    samples(list)
-    {
+    samples (list) {
       return (list.guides || list).filter(guide => !guide.owned)
     },
-    scrollTo(selector){
-
+    scrollTo (selector) {
       const uploadedGuidePosition = $(selector).offset().top
       const navBarHeight = 140
       const scrollTo = uploadedGuidePosition - navBarHeight

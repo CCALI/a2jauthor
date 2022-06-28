@@ -14,7 +14,7 @@ export const PageEditFormVM = DefineMap.extend('PageEditFormVM', {
     return page.type === constants.ptPopup
   },
 
-  selectedTab: { default: 'Page Info' },
+  selectedTab: { default: 'Page & Question Info' },
 
   toggleTabs () {
     this.appState.modalTabView = !this.appState.modalTabView

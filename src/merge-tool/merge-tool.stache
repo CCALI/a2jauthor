@@ -4,7 +4,7 @@
 
 {{<interviewList}}
   <div class="source-list list-group">
-  <a class="merge-guides-top" on:click="scrollTo('.sample-guides-merge')">[go to sample A2J Guided Interviews®]</a>
+    <a class="merge-guides-top" on:click="scrollTo('.sample-guides-merge')" tabindex="0">[go to sample A2J Guided Interviews®]</a>
     <form class="navbar-form" role="search">
       <div class="input-group" style="width: 100%;">
         <input type="text"
@@ -23,22 +23,24 @@
     </form>
     {{let list=filterGuideList(./listOfGuides, getSearchFilter(./searchFilter))}}
     {{#for(guide of list)}}
-      <a class="list-group-item" on:click="mtg.load(guide.id)">
+      <a class="list-group-item" on:click="mtg.load(guide.id)" tabindex="0">
         <span class="title">{{guide.title}}</span><br>
-        <small class="text-muted">#{{guide.id}} | {{formatFileSize guide.fileSize}} | {{guide.lastModified}} 
-        {{^if guide.owned}}
-         | sample
-        {{/if}}</small>
+        <small class="text-muted">
+          #{{guide.id}} | {{formatFileSize guide.fileSize}} | {{guide.lastModified}} {{#if(../isSample(guide))}}| sample {{/if}}
+        </small>
       </a>
     {{/for}}
     <hr>
-    <a id="samples" class="sample-guides-merge">Sample A2J Guided Interviews®</a>
-    <a on:click="scrollTo('.merge-guides-top')">[back to top]</a>
+    <div id="samples" class="sample-guides-merge">
+      Sample A2J Guided Interviews® <a on:click="scrollTo('.merge-guides-top')" tabindex="0">[back to top]</a>
+    </div>
     {{let samplelist=samples(./listOfGuides)}}
     {{#for(guide of samplelist)}}
-      <a class="list-group-item" on:click="mtg.load(guide.id)">
+      <a class="list-group-item" on:click="mtg.load(guide.id)" tabindex="0">
         <span class="title">{{guide.title}}</span><br>
-        <small class="text-muted">#{{guide.id}} | {{formatFileSize guide.fileSize}} | {{guide.lastModified}}</small>
+        <small class="text-muted">
+          #{{guide.id}} | {{formatFileSize guide.fileSize}} | {{guide.lastModified}} {{#if(../isSample(guide))}}| sample {{/if}}
+        </small>
       </a>
     {{/for}}
   </div>

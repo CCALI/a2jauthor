@@ -2,8 +2,7 @@ import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './var-picker-field.stache'
 import { TVariable } from '~/legacy/viewer/A2J_Types'
-
-let onlyOneOpenAtATime
+import { onlyOne } from '../../../helpers/helpers'
 
 export const VarPickerField = DefineMap.extend('VarPickerField', {
   page: {},
@@ -38,10 +37,10 @@ export const VarPickerField = DefineMap.extend('VarPickerField', {
     return new DefineMap({ value: tf })
   },
   onlyOne (observableBool) {
-    if (onlyOneOpenAtATime && observableBool !== onlyOneOpenAtATime) {
-      onlyOneOpenAtATime.value = false
+    if (onlyOne.observableBoolAtATime && observableBool !== onlyOne.observableBoolAtATime) {
+      onlyOne.observableBoolAtATime.value = false
     }
-    onlyOneOpenAtATime = observableBool
+    onlyOne.observableBoolAtATime = observableBool
   },
   toggleBool (observableBool) {
     this.onlyOne(observableBool)
@@ -86,10 +85,17 @@ export const VarPickerField = DefineMap.extend('VarPickerField', {
         this.appState.guide.vars.assign({ [name.toLowerCase()]: v })
         this.filterText = ''
         this.filterText = name
+        if (window.gGuide && window.gGuide.varCreate) {
+          window.gGuide.varCreate(name, v.type, v.repeating, v.comment)
+        }
       }
       bool.value = false
       this.newVarData = undefined
     }
+  },
+
+  focusFirstButtonInList (ev) {
+    (ev.keyCode === 40) && ev.target.parentNode.querySelector('ul button').focus() // down arrow key
   }
 })
 

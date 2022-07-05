@@ -82,7 +82,6 @@
     "pdfjs-dist": "^2.0.466",
     "string-natural-compare": "^2.0.2",
     "text-statistics": "^0.1.1",
-    "typeahead.js": "git://github.com/twitter/typeahead.js.git#v0.11.1",
     "validate.js": "^0.12.0"
   },
   "devDependencies": {
@@ -263,12 +262,6 @@
         "deps": [
           "jquery"
         ]
-      },
-      "typeahead.js/dist/typeahead.jquery": {
-        "format": "global"
-      },
-      "typeahead.js/dist/bloodhound": {
-        "format": "cjs"
       }
     },
     "paths": {

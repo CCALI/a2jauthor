@@ -1,6 +1,6 @@
 {
   "name": "a2jauthor",
-  "version": "9.0.0",
+  "version": "10.0.1",
   "description": "A2J Authoring App GUI.",
   "license": "GNU AGPL v3.0",
   "author": {
@@ -23,8 +23,8 @@
     "serve-docs": "grunt documentjs-lite && http-server docs"
   },
   "dependencies": {
-    "@caliorg/a2jdeps": "^7.1.4",
-    "@caliorg/a2jviewer": "^8.1.2",
+    "@caliorg/a2jdeps": "^7.1.5",
+    "@caliorg/a2jviewer": "^8.1.4",
     "bit-tabs": "^2.0.0",
     "blueimp-file-upload": "^9.10.1",
     "bootstrap": "^3.4.1",
@@ -82,6 +82,7 @@
     "pdfjs-dist": "^2.0.466",
     "string-natural-compare": "^2.0.2",
     "text-statistics": "^0.1.1",
+    "typeahead.js": "git://github.com/twitter/typeahead.js.git#v0.11.1",
     "validate.js": "^0.12.0"
   },
   "devDependencies": {
@@ -262,6 +263,12 @@
         "deps": [
           "jquery"
         ]
+      },
+      "typeahead.js/dist/typeahead.jquery": {
+        "format": "global"
+      },
+      "typeahead.js/dist/bloodhound": {
+        "format": "cjs"
       }
     },
     "paths": {

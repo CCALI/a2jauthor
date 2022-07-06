@@ -372,7 +372,12 @@ export default Component.extend({
       if (!filter) {
         return list
       }
-      return (list.guides || list).filter(g => ((g.title || '').toLowerCase().includes(filter.toLowerCase()) || g.lastModified.includes(filter)))
+      return (list.guides || list).filter(
+        g => (
+          (g.title || '').toLowerCase().
+            includes(filter.toLowerCase()) ||
+          g.lastModified.includes(filter) ||
+          (!g.owned && ('sample').includes(filter.toLowerCase()))))
     },
     parseInt (val, b = 10) {
       return parseInt(val, b)

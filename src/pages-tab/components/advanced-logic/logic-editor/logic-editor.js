@@ -218,7 +218,7 @@ export const LogicEditorVM = DefineMap.extend('LogicEditorVM', {
     if (waitThisTime || (document.activeElement && document.activeElement.parentElement.className === 'suggestions')) {
       // active element check allows user to tab through suggestions without finalizing editing state yet
       this.delayTimeout = setTimeout(() => this.updateDisplayedValueASAP(el), 250)
-    } else if (!(document.activeElement && document.activeElement.hasAttribute('contenteditable'))) {
+    } else if (!(document.activeElement && document.activeElement === el)) {
       // skip updating displayedValue if we re-focused the editor already, as it will blur again when author is done editing
       this.displayedValue = el.innerHTML
       this.activeLine = '' // clear suggestions since html changed

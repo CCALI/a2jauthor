@@ -16,6 +16,7 @@ export const PageInfoVM = DefineMap.extend('PageInfoVM', {
   step: {
     value ({ lastSet, listenTo, resolve }) {
       listenTo(lastSet, function (val) {
+        // page.step is the index of steps, it is not always equal to step.number CCALI/a2jauthor#342
         this.page.step = parseInt(val, 10)
         resolve(val)
         window.updateTOC()

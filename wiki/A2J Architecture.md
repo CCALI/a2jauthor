@@ -1,11 +1,15 @@
 *This document describes how A2J author works at a high level. Please update this document as changes are made.*
 
 ## Summary
-There is a client, server, and file storage; all of which sit behind an Apache server.
+There is a Author client, Viewer client, server, and file storage; all of which sit behind an Apache server.
 
-The client application `CAJA/js` is broken into two parts: the authoring application `CAJA/js/author` and standalone viewer `CAJA/js/viewer`. These apps share code but build and deploy as separate application. Both projects contain legacy jQuery code, which is to say code not written in CanJs.
+The [A2J Author](https://github.com/CCALI/a2jauthor) client is a CanJS application that also contains legacy jquery code. It used to create A2J Guided Interviews.
 
-The server application has two parts: the legacy PHP code and the newer NodeJs code. Most functionality including file management, uploads, and authentication are in PHP. The DAT (Document assembly tool), including authoring of text templates, is written in Node. This code runs as a standalone server which proxies cookie headers to the PHP code for authentication.
+The [A2J Viewer](https://github.com/CCALI/a2jviewer) app is used to consume and display the A2J Guided Interviews by end users, and also used as a preview app for Authors for GI testing.
+
+The server application has two parts: the legacy PHP code and the newer NodeJs code. Most functionality including file management, uploads, and authentication are in PHP. The [A2J DAT](https://github.com/CCALI/a2jdat) or Document assembly tool, including authoring of text templates, is written in Node. This code runs as a standalone server which proxies cookie headers to the PHP code for authentication.
+
+There is also a shared dependency library, [A2J Deps](https://github.com/CCALI/a2jdeps) mostly containing CanJS components used on the 'templates' tab in the Authoring tool, and also to render those text templates to PDF via the [A2J DAT](https://github.com/CCALI/a2jdat). It is also used in the Viewer application for shared Avatar components.
 
 The data layer is the filesystem. All interviews (guides) and templates are stored in a `userfiles/` directory which is partitioned by user and then by guide. For example, user `mike` has a guide with ID `123` which is stored as `userfiles/mike/guides/Guide123`. There is MySQL server which stores indexes into these files; it is rarely used and the files are the source of truth.
 

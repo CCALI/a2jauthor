@@ -10,7 +10,12 @@ document.addEventListener('focus', ev => {
     // ie doesn't have closest
     if (ev && ev.target && ev.target.closest) {
       // if focus moved outside of var picker field or file picker components...
-      if (!ev.target.closest('.auto-close-shared-bool-on-outside-focus')) {
+      const targetInScope = ev.target.closest('.auto-close-shared-bool-on-outside-focus')
+      // In Safari, that check ^ may fail in cases when it should not...
+      const didSafariMakeOurTabIndexNeg1DialogTheTarget = (!targetInScope) && (/apple/i.test(navigator.vendor)) && (ev.target.role === 'dialog')
+      const safariRelatedTargetInScope = didSafariMakeOurTabIndexNeg1DialogTheTarget && ev.relatedTarget && ev.relatedTarget.closest('.auto-close-shared-bool-on-outside-focus')
+      const eventIsOutsideOfScope = !(targetInScope || safariRelatedTargetInScope)
+      if (eventIsOutsideOfScope) {
         onlyOne.observableBoolAtATime.value = false // auto close when focused elsewhere
       }
     }

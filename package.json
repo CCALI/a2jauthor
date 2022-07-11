@@ -23,7 +23,7 @@
     "serve-docs": "grunt documentjs-lite && http-server docs"
   },
   "dependencies": {
-    "@caliorg/a2jdeps": "^7.1.4",
+    "@caliorg/a2jdeps": "^7.1.5",
     "@caliorg/a2jviewer": "^8.1.4",
     "bit-tabs": "^2.0.0",
     "blueimp-file-upload": "^9.10.1",

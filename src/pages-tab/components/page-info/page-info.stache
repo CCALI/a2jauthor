@@ -7,7 +7,7 @@
       <label class="control-label">Step:</label>
       <select class="form-control" value:bind="step">
         {{#for(step of steps)}}
-          <option value:from="step.number">{{step.number}}. {{step.text}}</option>
+          <option value="{{scope.index}}">{{step.number}}. {{step.text}}</option>
         {{/for}}
       </select>
     </div>

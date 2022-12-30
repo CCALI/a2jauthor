@@ -5,30 +5,10 @@ jobs:
   check-bats-version:
     runs-on: ubuntu-latest
     steps:
-      - name: Notify slack success
-        if: success()
-        id: slack # IMPORTANT: reference this step ID value in future Slack steps
+      - uses: "8398a7/action-slack@v3"
+        with:
+          status: ${{ job.status }}
+          fields: "repo,message,commit,author,action,eventName,ref,workflow,job,took,pullRequest"
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-          uses: voxmedia/github-action-slack-notify-build@v1
-          channel: app-alerts
-          status: STARTING
-          color: warning
- 
-      - name: Run tests
-      # ... your test step here
-  
-      - name: Notify slack success
-        if: success()
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-          uses: voxmedia/github-action-slack-notify-build@v1
-          # Updates existing message from the first step
-          message_id: ${{ steps.slack.outputs.message_id }}
-          channel: app-alerts
-          status: SUCCESS
-          color: good
-
-  
-
-  
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always() # Pick up events even if the job fails or is canceled.

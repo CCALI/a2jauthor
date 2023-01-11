@@ -11,7 +11,7 @@ const FooterVM = CanMap.extend({
     authorVersion: {},
     currentYear: {
       get () {
-        return moment().year();
+        return moment().year()
       }
     },
     // Used to hide status updates in Author preview mode

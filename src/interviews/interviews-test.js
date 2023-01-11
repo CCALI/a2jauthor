@@ -74,7 +74,7 @@ describe('<interviews-page>', function () {
     })
 
     it('lists interviews fetched from the server', function () {
-      assert.isFalse($('.guide').length > 0, 'interviews should be listed')
+      assert.isTrue($('.guide').length > 0, 'interviews should be listed')
     })
 
     it('interviews are set as selected when clicked', function () {

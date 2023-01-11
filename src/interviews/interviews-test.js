@@ -36,7 +36,7 @@ describe('<interviews-page>', function () {
       })
 
       vm.listenTo('interviews', () => {
-        assert.equal(vm.interviews.length, 2,
+        assert.equal(vm.interviews.length, 20,
           'there should be 2 interviews')
         // delete interview with id 1
         vm.deleteInterview(1)

@@ -79,7 +79,15 @@ and has to be relative to the web root.  With the above folder structure, it sho
 
 It is necessary to set up a proxy in apache in order to communicate with the node server's api routes. (See [/wiki/resources](../wiki/resources_) for sample configs)
 
-1. Add proxy config to apache conf:
+1. To enable logs access logs which may aid in troubleshooting, uncomment the following line in `/Applications/MAMP/conf/apache/httpd.conf`
+CustomLog "/Applications/MAMP/logs/apache_access.log" combined
+
+2. ensure that the proxy modules are being loaded in `/Applications/MAMP/conf/apache/httpd.conf`. These lines should either be uncommented or added if not present.
+
+`LoadModule proxy_module modules/mod_proxy.so`
+`LoadModule proxy_http_module modules/mod_proxy_http.so`
+
+3. Add proxy config to apache conf:
     - Open `/Applications/MAMP/conf/apache/httpd.conf` in your editor. This may require `sudo` to edit.
     - Add these lines to the end of the file:
 
@@ -90,7 +98,7 @@ It is necessary to set up a proxy in apache in order to communicate with the nod
         ProxyBadHeader Ignore
         ```
 
-2. Restart MAMP
+4. Restart MAMP
 
 You should now be able to access the development app at [http://localhost/a2j/author](http://localhost/a2j/author). This will serve pre-dist assets and will reflect client-side changes on reload.
 

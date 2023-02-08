@@ -6,8 +6,8 @@ Written for Mac OS
 
 - wkhtmltopdf used to generate assembled documents, download and install instructions https://wkhtmltopdf.org/downloads.html
 - NOTE: refer to https://support.apple.com/guide/mac-help/open-a-mac-app-from-an-unidentified-developer-mh40616/mac for getting around the `unidentified developer` warning if it pops up for you.
-- node.js version v12.20.1
-- npm 6.14.10
+- node.js version v16.x
+- npm 7.x
 - MAMP 5.7 Install via [Homebrew](https://brew.sh/) or direct [download](https://www.mamp.info/en/downloads/)
     - First kill system apache: `sudo apachectl stop`
     - Open MAMP and go to `preferences`, check the Ports, PHP and Web Server tabs for the below settings to match.

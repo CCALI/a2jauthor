@@ -1197,7 +1197,7 @@ function isExtensionAllowed($filename, $mediaOnly = false) {
 	if ($mediaOnly) {
 		$allowed = $media;
 	} else {
-		$allowed = array_merge($media, $other);
+		$allowed = $media ? array_merge($media, $other) : $other;
 	}
 
 	$testname = strtolower($filename);

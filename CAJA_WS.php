@@ -1193,12 +1193,25 @@ function isExtensionAllowed($filename, $mediaOnly = false) {
 
 	$media =  parse_ini_file($path . '/config_env.ini')['MEDIA_EXTS_ALLOWED'];
 	$other = parse_ini_file($path . '/config_env.ini')['EXTS_ALLOWED'];
-
-	if ($mediaOnly) {
-		$allowed = $media;
-	} else {
-		$allowed = array_merge($media, $other);
-	}
+    
+    // Test for valid entries in config file
+    // currently only tests if entries are arrays
+    // this could be expanded
+    if (!is_array($media)){
+        error_log("MEDIA_EXTS_ALLOWED in config_env.ini is empty");
+        fail_and_exit(500, 'bad configuration');
+    }
+    
+    if (!is_array($other)){
+        error_log("EXTS_ALLOWED in config_env.ini is empty");
+        fail_and_exit(500, 'bad configuration');
+    }
+ 
+    if ($mediaOnly) {
+		    $allowed = $media;
+    } else {
+	    $allowed = array_merge($media, $other);
+    }
 
 	$testname = strtolower($filename);
 

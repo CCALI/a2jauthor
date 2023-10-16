@@ -77,8 +77,8 @@ export default function ckeArea (data) { // change handler function, label, valu
       toolbar: [
         { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Language'] },
         { name: 'paragraph', items: ['Blockquote', 'Indent', 'Outdent', 'BulletedList', 'NumberedList'] },
-        { name: 'links', items: ['Link','Unlink', 'A2j-popout'] },
-        { name: 'source', items: ['Source']},
+        { name: 'links', items: ['Link', 'Unlink', 'A2j-popout'] },
+        { name: 'source', items: ['Source'] }
       ],
       on: {
         blur: function (event) {

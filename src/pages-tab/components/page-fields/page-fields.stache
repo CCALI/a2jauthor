@@ -104,7 +104,7 @@
                   <label class="control-label">Min Value:</label>
                   <input class="form-control ui-widget editable" type="text" placeholder="min"
                     value:bind="field.field.min"
-                    pattern="(?:^-(?=.*\d))|\d*"
+                    pattern="TODAY|(?:^-(?=.*\d))|\d*"
                     on:blur="field.field.min = applyPattern(scope.element)"
                   >
                 </div>
@@ -112,7 +112,7 @@
                   <label class="control-label">Max Value:</label>
                   <input class="form-control ui-widget editable" type="text" placeholder="max"
                     value:bind="field.field.max"
-                    pattern="(?:^-(?=.*\d))|\d*"
+                    pattern="TODAY|(?:^-(?=.*\d))|\d*"
                     on:blur="field.field.max = applyPattern(scope.element)"
                   >
                 </div>

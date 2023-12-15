@@ -9,12 +9,15 @@ A2J Author 7.0 (previously know as CAJA)
 ##### 4. A2J Dependencies - https://github.com/CCALI/a2jdeps
 ====
 
-This the private repo for the browser-based versions of A2J Author and Viewer.
+This the public repo for the browser-based versions of A2J Author
 
+# IF YOU ARE ATTEMPTING TO SELF HOST AND RUN THE A2JAUHTOR SUITE IT IS HIGHLY UNLIKELY THAT THIS IS THE REPO YOU ARE LOOKING FOR!!! YOU MOST LIKELY NEED THE A2JVIEWER AND A2J DOCUMENT AUTOMATION TOOL. THIS REPO IS FOR THE AUTHORING TOOL.
+
+
+## Notes and pre-requisites
 Before following the instructions for setup below.  It is assumed that you have npm and nodejs already installed.
 
-- /user/sam/git/caja is where this all gets installed (replace "sam" with whatever username you are on your system.
-- npm and nodejs are installed at the system level using appget or other install tool dependent on your Linux/Mac distro.
+- Currently only node 16 is supported. You must have nodejs and npm installed on your system for these instructions to work
 - According to John, you cannot run this on Windows machines at all due to the path length limitation of 256 characters.  This is actually a limitation of the Windows API, not the NTFS file system, but it makes it almost impossible to work on reasonably complex javascript projects on Windows.
 
 
@@ -30,48 +33,27 @@ prebuilt version for your system
 Once `wkhtmltopdf` command line tool is available on your system, install the
 node dependencies from the root folder of the app by running the following command:
 
-```
-npm install
-```
-
-Then you need to install the dependencies of the CanJS Author and Viewer apps
-which are located in `CAJA/js/`
-
-```
-$ cd js
-$ npm install
-```
 
 
 ## To build the server code:
 
-From the root folder (`CAJA/`) run
+From the root folder (`a2jauthor/`) run
 ```
-$ npm run build
+$ npm run deploy
 ```
-This will also be done automatically when starting the server (see below).
 
 
-## To run server tests:
+## To run tests:
 
-From the root folder (`CAJA/`) run
+From the root folder (`a2jauthor/`) run
 ```
 $ npm test
 ```
 
 
-## To run server locally:
+## Server setup:
 
-From the root folder (`CAJA/`) run
-
-```
-$ npm start
-```
-
-Then, if you want to load the author app go to
-[http://localhost:3000/js/author](http://localhost:3000/js/author) or go to
-[http://localhost:3000/js/viewer](http://localhost:3000/js/viewer) if you want
-to load the viewer app instead.
+There are two
 
 ### Server Configuration
 

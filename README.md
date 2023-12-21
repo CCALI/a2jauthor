@@ -64,15 +64,6 @@ Once `wkhtmltopdf` command line tool is available on your system, take note of t
 $ npm run deploy
 ```
 
-
-## To run tests:
-
-From the root folder (`a2jauthor/`) run
-```
-$ npm test
-```
-
-
 ## Server setup:
 
 There are two configuration files necessary: `config.json` and `config_env.ini`
@@ -140,6 +131,12 @@ is expected to be in the parent directory of the folder where the git repo, i.e.
 ### Launch the app
 To launch the app simply open a broswser and navigate to the a2jauthor folder e.g. http://a2jauthor.loc/a2jauthor
 
+## To run tests:
+
+From the root folder (`a2jauthor/`) run
+```
+$ npm test
+```
 
 ## Debugging the server:
 
@@ -149,7 +146,6 @@ For example, to debug the server running locally:
 $ DEBUG=A2J:* npm start
 ```
 Then any `debug(...)` messages in the code will be displayed in the console.
-
 
 ## To run client tests:
 

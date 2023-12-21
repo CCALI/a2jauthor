@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.com/CCALI/CAJA.svg?token=2eqmqTqtZG7xAzR9G89f&branch=develop)](https://travis-ci.com/CCALI/CAJA)
 
-A2J Author 7.0 (previously know as CAJA)
+A2J Author 11 (previously know as CAJA)
 
 ##### This repo is part of the A2J Author Project which consists of four repos...
 ##### 1. A2JViewer - https://github.com/CCALI/a2jviewer
@@ -108,7 +108,7 @@ is cloned. A sample is located at wiki/resources/config.json.sample.md. This fil
 
 `CAJA_WS_URL` is the url path for `CAJA_WS.php`. This is used by the DAT.
 
-`GUIDES_DIR` is the system path location of the guide files. Must be web accessible
+`GUIDES_DIR` is the system path location of the guide files. Must be web accessible. If you are in dev mode create the directory `dev` in this directory now.
 
 `VIEWER_PATH` is identical to `GUIDES_DIR` in production but is the location of the viewer when setup for standalone viewer and DAT
 

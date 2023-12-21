@@ -40,14 +40,16 @@ Once `wkhtmltopdf` command line tool is available on your system, take note of t
 1.) open mysql and create a user for the app.
 `CREATE USER 'a2j'@'localhost' IDENTIFIED BY 'password';`
 
-2.) create the database CAJA
+2.) create the database for the app. This can be any available name. caja is a legacy name.
 
 
 `CREATE DATABASE caja;`
+
 `FLUSH PRIVILEGES;`
 
 3.) grant all privileges to the above user
 `GRANT ALL PRIVILEGES ON caja TO 'a2j'@'localhost' WITH GRANT OPTION;`
+
 `FLUSH PRIVILEGES;`
 
 4.) Seed the db with the command below
@@ -75,17 +77,17 @@ that is expected to be in the parent directory of the folder where the git repo
 is cloned. A sample is located at wiki/resources/config.json.sample.md. This file should have the following structure:
 ```
 {
-  
   "isProductionServer": true,
   "LOCAL_USER": "45",
   "SERVER_URL": "http://my.server.org/",
+  "CAJA_WS_URL": "https:/my.server.org/a2jauthor/CAJA_WS.php",
   "GUIDES_DIR": "/www/my.server.org/a2jauthor/userfiles/",
   "VIEWER_PATH": "/path/to/viewer/a2j-viewer/viewer",
-  "GUIDES_URL": "/caja/userfiles/",
+  "GUIDES_URL": "../userfiles/",
   "SQL_HOST": "localhost",
   "SQL_USERNAME": "a2j",
   "SQL_PASSWD": "PASSWD",
-  "SQL_DBNAME": "SQL DBNAME",
+  "SQL_DBNAME": "caja",
   "SQL_PORT": 3356,
   "DRUPAL_HOST": "localhost",
   "DRUPAL_USERNAME": "DRUPAL USERNAME",
@@ -99,23 +101,43 @@ is cloned. A sample is located at wiki/resources/config.json.sample.md. This fil
 ```
 
 `isProductionServer` is optional for production
+
 `LOCAL_USER` is used for development to assign an id for authorid. For CALI environments typically the dev user is 45.
-`SERVER_URL` is the URL for 
+
+`SERVER_URL` is the base URL for the server hosting the app
+
+`CAJA_WS_URL` is the url path for `CAJA_WS.php`. This is used by the DAT.
+
 `GUIDES_DIR` is the system path location of the guide files. Must be web accessible
+
 `VIEWER_PATH` is identical to `GUIDES_DIR` in production but is the location of the viewer when setup for standalone viewer and DAT
-`GUIDES_URL` is the relative url of guides
+
+`GUIDES_URL` is the relative url of guides with respect to CAJA_WS.php
+
 `SQL_HOST` is the address of the mysql server
+
 `SQL_USERNAME` is the mysql username for the app
+
 `SQL_PASSWD` is the mysql username for the app
+
 `SQL_DBNAME` is the mysql database for the app
+
 `SQL_PORT` is the mysql port where the apps database lives
+
 `DRUPAL_HOST` is the address of the mysql server for Drupal
+
 `DRUPAL_USERNAME` is the mysql username for Drupal
+
 `DRUPAL_PASSWD` is the mysql username for Drupal
+
 `DRUPAL_DBNAME` is the mysql database for Drupal
+
 `DRUPAL_PORT` is the mysql port where the Drupal database lives
+
 `WKHTMLTOPDF_PATH` is the system path for wkhtmltopdf
+
 `WKHTMLTOPDF_DPI` is the DAT property to control how wkhtmltopdf renders documents. Usually this should be set to 300
+
 `WKHTMLTOPDF_ZOOM`is the DAT property to control how wkhtmltopdf renders documents. 
 Usually this should be set to 1.6711 on linux but this might need to be tested and tweaked for your environment to render properly.
 

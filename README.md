@@ -33,14 +33,30 @@ on your system first, `wkhtmltopdf` is a command line tool that renders HTML int
 easiest way to do this is to [download](http://wkhtmltopdf.org/downloads.html#stable) a
 prebuilt version for your system
 
-Once `wkhtmltopdf` command line tool is available on your system, install the
-node dependencies from the root folder of the app by running the following command:
+Once `wkhtmltopdf` command line tool is available on your system, take note of the path as this will be needed for the config file.
 
+### Setup the database
+
+1.) open mysql and create a user for the app.
+`CREATE USER 'a2j'@'localhost' IDENTIFIED BY 'password';`
+
+2.) create the database CAJA
+
+
+`CREATE DATABASE caja;`
+`FLUSH PRIVILEGES;`
+
+3.) grant all privileges to the above user
+`GRANT ALL PRIVILEGES ON caja TO 'a2j'@'localhost' WITH GRANT OPTION;`
+`FLUSH PRIVILEGES;`
+
+4.) Seed the db with the command below
+`mysql -u a2j -p caja < wiki/resources/caja_default_2021-03-23.sql`
 
 
 ## To build the main application:
 
-1.) clone the repo as a subfolder in the root of the drupal install
+1.) clone the repo as a subfolder in the root of the drupal install if this is production or webfolder if this is development.
 
 
 2.) From the root folder (`a2jauthor/`) run
@@ -59,24 +75,25 @@ $ npm test
 
 ## Server setup:
 
-There are two
+There are two configuration files necessary: `config.json` and `config_env.ini`
 
 ### Server Configuration: config.json
 
 In production mode, the server uses a configuration file called `config.json`
 that is expected to be in the parent directory of the folder where the git repo
-is cloned. This file should have the following structure:
+is cloned. A sample is located at wiki/resources/config.json.sample.md. This file should have the following structure:
 ```
 {
   
   "isProductionServer": true,
   "LOCAL_USER": "45",
-  "SERVER_URL": "http://bitovi.a2jauthor.org/",
-  "GUIDES_DIR": "/www/caja.cali.org/caja/userfiles/",
+  "SERVER_URL": "http://my.server.org/",
+  "GUIDES_DIR": "/www/my.server.org/a2jauthor/userfiles/",
+  "VIEWER_PATH": "/path/to/viewer/a2j-viewer/viewer",
   "GUIDES_URL": "/caja/userfiles/",
   "SQL_HOST": "localhost",
-  "SQL_USERNAME": "SQL USERNAME",
-  "SQL_PASSWD": "SQL PASSWD",
+  "SQL_USERNAME": "a2j",
+  "SQL_PASSWD": "PASSWD",
   "SQL_DBNAME": "SQL DBNAME",
   "SQL_PORT": 3356,
   "DRUPAL_HOST": "localhost",
@@ -84,26 +101,47 @@ is cloned. This file should have the following structure:
   "DRUPAL_PASSWD": "DRUPAL PASSWD",
   "DRUPAL_DBNAME": "DRUPAL DBNAME",
   "DRUPAL_PORT": 3356
-  "VIEWER_PATH": "/path/to/viewer/a2j-viewer/viewer",
   "WKHTMLTOPDF_PATH": "/usr/bin/local/wkhtmltopdf",
   "WKHTMLTOPDF_DPI": 300,
   "WKHTMLTOPDF_ZOOM": 1.6711
 }
 ```
+
+`isProductionServer` is optional for production
+`LOCAL_USER` is used for development to assign an id for authorid. For CALI environments typically the dev user is 45.
+`SERVER_URL` is the URL for 
+`GUIDES_DIR` is the system path location of the guide files. Must be web accessible
+`VIEWER_PATH` is identical to `GUIDES_DIR` in production but is the location of the viewer when setup for standalone viewer and DAT
+`GUIDES_URL` is the relative url of guides
+`SQL_HOST` is the address of the mysql server
+`SQL_USERNAME` is the mysql username for the app
+`SQL_PASSWD` is the mysql username for the app
+`SQL_DBNAME` is the mysql database for the app
+`SQL_PORT` is the mysql port where the apps database lives
+`DRUPAL_HOST` is the address of the mysql server for Drupal
+`DRUPAL_USERNAME` is the mysql username for Drupal
+`DRUPAL_PASSWD` is the mysql username for Drupal
+`DRUPAL_DBNAME` is the mysql database for Drupal
+`DRUPAL_PORT` is the mysql port where the Drupal database lives
+`WKHTMLTOPDF_PATH` is the system path for wkhtmltopdf
+`WKHTMLTOPDF_DPI` is the DAT property to control how wkhtmltopdf renders documents. Usually this should be set to 300
+`WKHTMLTOPDF_ZOOM`is the DAT property to control how wkhtmltopdf renders documents. 
+Usually this should be set to 1.6711 on linux but this might need to be tested and tweaked for your environment to render properly.
+
 The `SERVER_URL` and `GUIDES_DIR` properties are used by the Node server, but
 this file will also be used by `CONFIG.PHP`, which also uses the database
 connection information.
 
-`GUIDES_DIR` must be web accessible
-`isProductionServer` is optional for production
 
 ### Server Configuration: config_env.ini
-config_env.ini is used to setup allowed file types, analytics, and a2j.org
+a second configuration file is necessary called `config_env.ini`. This is used to setup allowed file types, analytics, and a2j.org. This file 
+is expected to be in the parent directory of the folder where the git repo, i.e. the same folder as config.json. A sample config is located here sample-configs/config_env.ini.sample
+
+### Launch the app
+To launch the app simply open a broswser and navigate to the a2jauthor folder e.g. http://a2jauthor.loc/a2jauthor
 
 
-
-
-### Debugging the server:
+## Debugging the server:
 
 Prepend any of the `npm` commands above with `DEBUG=A2J:*`
 For example, to debug the server running locally:
@@ -113,23 +151,10 @@ $ DEBUG=A2J:* npm start
 Then any `debug(...)` messages in the code will be displayed in the console.
 
 
-## To build the Author and Viewer client code:
-
-```
-$ npm run build:client
-```
-
-If you want to view the app in production mode, just start the server (`npm start`)
-and go to [http://localhost:3000/js/author/index.production.html](http://localhost:3000/js/author/index.production.html)
-or [http://localhost:3000/js/viewer/index.production.html](http://localhost:3000/js/viewer/index.production.html)
-
-
 ## To run client tests:
 
 ```
 $ npm test
 ```
 
-or, if your local server is running (you ran `npm start` before) you can run tests in your browser
-by loading [http://localhost:3000/js/author/test/](http://localhost:3000/js/author/test/) or
-[http://localhost:3000/js/viewer/test/](http://localhost:3000/js/viewer/test/)
+for questions contact tobias@cali.org

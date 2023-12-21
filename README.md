@@ -17,6 +17,7 @@ This the public repo for the browser-based versions of A2J Author
 ## Notes and pre-requisites
 Before following the instructions for setup below.  It is assumed that you have npm and nodejs already installed.
 
+- Currently only PHP 7 is supported
 - Currently only node 16 is supported. You must have nodejs and npm installed on your system for these instructions to work
 - According to John, you cannot run this on Windows machines at all due to the path length limitation of 256 characters.  This is actually a limitation of the Windows API, not the NTFS file system, but it makes it almost impossible to work on reasonably complex javascript projects on Windows.
 

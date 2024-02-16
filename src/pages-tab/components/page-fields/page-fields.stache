@@ -106,6 +106,17 @@
                     value:bind="field.field.min"
                     pattern="TODAY|(?:^-(?=.*\d))|\d*"
                     on:blur="field.field.min = applyPattern(scope.element)"
+                    hidden
+                  >
+                  <input class="form-control ui-widget editable" type="date" placeholder="min"
+                    value:bind="field.field.minDate"
+                    pattern="TODAY|(?:^-(?=.*\d))|\d*"
+                    on:blur="field.field.min = applyPattern(scope.element)"
+                  >
+                  <input class="form-control ui-widget editable" type="checkbox" placeholder="min"
+                    value:bind="field.field.min"
+                    pattern="TODAY|(?:^-(?=.*\d))|\d*"
+                    on:blur="field.field.min = applyPattern(scope.element)"
                   >
                 </div>
                 <div class="editspan form-group" name="max">
@@ -114,6 +125,17 @@
                     value:bind="field.field.max"
                     pattern="TODAY|(?:^-(?=.*\d))|\d*"
                     on:blur="field.field.max = applyPattern(scope.element)"
+                    hidden
+                  >
+                  <input class="form-control ui-widget editable" type="date" placeholder="min"
+                    value:bind="field.field.maxDate"
+                    pattern="TODAY|(?:^-(?=.*\d))|\d*"
+                    on:blur="field.field.min = applyPattern(field.field.maxDate)"
+                  >
+                  <input class="form-control ui-widget editable" type="checkbox" placeholder="min"
+                    value:bind="field.field.max"
+                    pattern="TODAY|(?:^-(?=.*\d))|\d*"
+                    on:blur="field.field.min = applyPattern(scope.element)"
                   >
                 </div>
               {{/if}}

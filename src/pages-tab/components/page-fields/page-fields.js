@@ -212,6 +212,67 @@ export const PageFieldsVM = DefineMap.extend('PageFieldsVM', {
     return el.value
   },
 
+  setBound(el){
+  },
+
+  checktoToday(el){
+    return el.checked ? "TODAY": ""
+  },
+
+  parseDateBound(boundedDate){
+    let textDate = "" // assume unfilled
+
+    console.log("YOYO" + boundedDate)
+
+    if (boundedDate){
+      //if set assume it's today
+
+      //textDate = Date.toString()
+
+      if (boundedDate !== "TODAY"){
+        if (boundedDate.length == 8) {
+          textDate =
+          boundedDate.substr(0,4) + '-' +
+          boundedDate.substr(4, 2) + '-' +
+          boundedDate.substr(6, 2)
+
+        } else if (boundedDate.length == 6 ){
+          textDate =
+          boundedDate.substr(0,2) + '-' +
+          boundedDate.substr(2, 2) + '-' +
+          boundedDate.substr(4, 2)
+
+        }
+        
+      }
+
+    }
+
+    console.log("DISCO" + textDate)
+
+    return textDate //Date.parse(textDate)
+
+  },
+
+  toggleDateBoundEnable(el){
+    $(el).prop('disabled', !$(el).prop('disabled'))
+  },
+
+  mangleDateBound(el){
+
+    let str = 
+      el.value.substr(0,2) + '/' +
+      el.value.substr(2, 2) + '/' +
+      el.value.substr(4)
+
+    str = str.match(new RegExp(el.pattern || '.', 'g')).join('')
+
+    console.log("MANG: " + str)
+
+   return str
+
+  },
+
   applyPattern (el) {
     el.value = el.value.match(new RegExp(el.pattern || '.', 'g')).join('')
     return el.value

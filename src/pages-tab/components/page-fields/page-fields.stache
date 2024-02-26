@@ -125,6 +125,7 @@
                     </div>
                   </div>
                 </div>
+                <div>
                   <label class="control-label">Max Value:</label>
                   <input class="form-control ui-widget editable" 
                     type="date" placeholder="max"

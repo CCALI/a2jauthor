@@ -230,20 +230,10 @@ export const PageFieldsVM = DefineMap.extend('PageFieldsVM', {
       //textDate = Date.toString()
 
       if (boundedDate !== "TODAY"){
-        if (boundedDate.length == 8) {
-          textDate =
-          boundedDate.substr(0,4) + '-' +
-          boundedDate.substr(4, 2) + '-' +
-          boundedDate.substr(6, 2)
-
-        } else if (boundedDate.length == 6 ){
-          textDate =
-          boundedDate.substr(0,2) + '-' +
-          boundedDate.substr(2, 2) + '-' +
-          boundedDate.substr(4, 2)
-
-        }
-        
+        textDate =
+        boundedDate.substr(4) + '-' +
+        boundedDate.substr(2, 2) + '-' +
+        boundedDate.substr(0,2)
       }
 
     }
@@ -260,10 +250,17 @@ export const PageFieldsVM = DefineMap.extend('PageFieldsVM', {
 
   mangleDateBound(el){
 
-    let str = 
-      el.value.substr(0,2) + '/' +
-      el.value.substr(2, 2) + '/' +
-      el.value.substr(4)
+    let str = el.value.split(',').join('')
+    str = str.split('-').join('')
+    console.log("JAWN: " + str)
+
+    str =
+      str.substr(4,2) + '/' +
+      str.substr(6, 2) + '/' +
+      str.substr(0,4)
+      
+    console.log("BRUV: " + str)
+      
 
     str = str.match(new RegExp(el.pattern || '.', 'g')).join('')
 

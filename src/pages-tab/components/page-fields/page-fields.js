@@ -222,12 +222,8 @@ export const PageFieldsVM = DefineMap.extend('PageFieldsVM', {
   parseDateBound(boundedDate){
     let textDate = "" // assume unfilled
 
-    console.log("YOYO" + boundedDate)
 
     if (boundedDate){
-      //if set assume it's today
-
-      //textDate = Date.toString()
 
       if (boundedDate !== "TODAY"){
         textDate =
@@ -238,9 +234,7 @@ export const PageFieldsVM = DefineMap.extend('PageFieldsVM', {
 
     }
 
-    console.log("DISCO" + textDate)
-
-    return textDate //Date.parse(textDate)
+    return textDate
 
   },
 
@@ -257,14 +251,9 @@ export const PageFieldsVM = DefineMap.extend('PageFieldsVM', {
     str =
       str.substr(4,2) + '/' +
       str.substr(6, 2) + '/' +
-      str.substr(0,4)
-      
-    console.log("BRUV: " + str)
-      
+      str.substr(0,4)      
 
     str = str.match(new RegExp(el.pattern || '.', 'g')).join('')
-
-    console.log("MANG: " + str)
 
    return str
 

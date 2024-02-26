@@ -212,6 +212,53 @@ export const PageFieldsVM = DefineMap.extend('PageFieldsVM', {
     return el.value
   },
 
+  setBound(el){
+  },
+
+  checktoToday(el){
+    return el.checked ? "TODAY": ""
+  },
+
+  parseDateBound(boundedDate){
+    let textDate = "" // assume unfilled
+
+
+    if (boundedDate){
+
+      if (boundedDate !== "TODAY"){
+        textDate =
+        boundedDate.substr(4) + '-' +
+        boundedDate.substr(0, 2) + '-' +
+        boundedDate.substr(2,2)
+      }
+
+    }
+
+    return textDate
+
+  },
+
+  toggleDateBoundEnable(el){
+    $(el).prop('disabled', !$(el).prop('disabled'))
+  },
+
+  mangleDateBound(el){
+
+    let str = el.value.split(',').join('')
+    str = str.split('-').join('')
+    console.log("JAWN: " + str)
+
+    str =
+      str.substr(4,2) + '/' +
+      str.substr(6, 2) + '/' +
+      str.substr(0,4)      
+
+    str = str.match(new RegExp(el.pattern || '.', 'g')).join('')
+
+   return str
+
+  },
+
   applyPattern (el) {
     el.value = el.value.match(new RegExp(el.pattern || '.', 'g')).join('')
     return el.value

@@ -232,8 +232,8 @@ export const PageFieldsVM = DefineMap.extend('PageFieldsVM', {
       if (boundedDate !== "TODAY"){
         textDate =
         boundedDate.substr(4) + '-' +
-        boundedDate.substr(2, 2) + '-' +
-        boundedDate.substr(0,2)
+        boundedDate.substr(0, 2) + '-' +
+        boundedDate.substr(2,2)
       }
 
     }

@@ -27,7 +27,7 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'tools', groups: [ 'tools' ] },
 		{ name: 'others', groups: [ 'others' ] },
 		{ name: 'about', groups: [ 'about' ] },
-		config.htmlEncodeOutput = true,
+	config.htmlEncodeOutput = true,
 	];
 
 	config.removeButtons = 'Image,ImageButton,Paste,PasteText,PasteFromWord,Anchor,Iframe,Flash,CreateDiv,HiddenField,Form,Checkbox,Radio,TextField,Textarea,Select,Button';

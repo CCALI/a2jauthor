@@ -241,8 +241,7 @@ export const PageFieldsVM = DefineMap.extend('PageFieldsVM', {
   mangleDateBound (el) {
     let str = el.value.split(',').join('')
     str = str.split('-').join('')
-    console.log('JAWN: ' + str)
-
+    
     str =
       str.substr(4, 2) + '/' +
       str.substr(6, 2) + '/' +

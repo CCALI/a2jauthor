@@ -140,8 +140,9 @@
                       <label>
                         <input type="checkbox"
                           {{ #eq(field.field.max, "TODAY")}} checked {{/eq}}
-                          on:blur="field.field.max = TODAY"
+                          on:blur="field.field.max = checktoToday(scope.element)"
                           on:click="toggleDateBoundEnable('#max-date')"
+                          value:bind="field.field.max"
                           value="TODAY"> TODAY
                       </label>
                     </div>

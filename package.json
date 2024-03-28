@@ -1,6 +1,6 @@
 {
   "name": "a2jauthor",
-  "version": "10.2.0-3",
+  "version": "10.2.0-4",
   "description": "A2J Authoring App GUI.",
   "license": "GNU AGPL v3.0",
   "author": {
@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@caliorg/a2jdeps": "^7.1.7",
-    "@caliorg/a2jviewer": "^8.2.0-11",
+    "@caliorg/a2jviewer": "^8.2.0-13",
     "bit-tabs": "^2.0.0",
     "blueimp-file-upload": "^9.10.1",
     "bootstrap": "^3.4.1",

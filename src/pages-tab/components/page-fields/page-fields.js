@@ -3,22 +3,18 @@ import DefineList from 'can-define/list/list'
 import Component from 'can-component'
 import template from './page-fields.stache'
 import constants from 'a2jauthor/src/models/constants'
-import { ckeFactory } from '../../pageHelpers/pageHelpers'
+import { ckeFactory } from '../../helpers/helpers'
 import { TField } from '~/legacy/viewer/A2J_Types'
 import * as pageHelpers from './page-fields-helpers'
 
 /* VM used for each field item, another VM used for the fields tab itself is below this */
 export const FieldVM = DefineMap.extend('FieldVM', {
-  page: {},
-  appState: {},
-  guideFiles: {},
+  field: {}, // A2J Types TField
+  vars: {}, // A2J Types TVariable[]
 
-  field: {
-    set (field) {
-      console.log('field', field)
-      return field
-    }
-  }, // A2J Types TField
+  isHealthy: {
+    default: true
+  },
 
   // validate on this type change
   type: { // bindable proxy to TField type
@@ -31,14 +27,40 @@ export const FieldVM = DefineMap.extend('FieldVM', {
     }
   },
 
-  // validate on this type change
-  variable: { // bindable proxy to TField type
+  name: { // bindable proxy to TField name
     value ({ lastSet, listenTo, resolve }) {
       listenTo(lastSet, function (val) {
-        this.field.type = val
+        this.field.name = val
         resolve(val)
       })
-      resolve(this.field.type)
+      resolve(this.field.name)
+    }
+  },
+
+  get varType () {
+    const variable = this.vars[this.name.toLowerCase()]
+    return variable.type
+  },
+
+  hasValidType: {
+    value ({ listenTo, resolve }) {
+      listenTo('name', function (name, preName) {
+        const fieldType = this.type.toLowerCase()
+        const varType = this.varType.toLowerCase()
+
+        resolve(pageHelpers.variableTypeCheck(fieldType, varType))
+      })
+      listenTo('type', function (type, preType) {
+        const fieldType = this.type.toLowerCase()
+        const varType = this.varType.toLowerCase()
+
+        resolve(pageHelpers.variableTypeCheck(fieldType, varType))
+      })
+
+      const fieldType = this.type.toLowerCase()
+      const varType = this.varType.toLowerCase()
+
+      resolve(pageHelpers.variableTypeCheck(fieldType, varType))
     }
   },
 
@@ -164,10 +186,15 @@ export const PageFieldsVM = DefineMap.extend('PageFieldsVM', {
     return el.value
   },
 
+  get vars () {
+    return this.appState.guide.vars
+  },
+
   get fields () {
     this.numFields // eslint-disable-line
     this.fieldsChanged // eslint-disable-line
-    return new DefineList(this.page.fields.map(field => new FieldVM({ field })))
+    const vars = this.vars
+    return new DefineList(this.page.fields.map(field => new FieldVM({ field, vars })))
   },
 
   minFields: { default: 0 },

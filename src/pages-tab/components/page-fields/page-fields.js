@@ -3,88 +3,24 @@ import DefineList from 'can-define/list/list'
 import Component from 'can-component'
 import template from './page-fields.stache'
 import constants from 'a2jauthor/src/models/constants'
-import { ckeFactory } from '../../helpers/helpers'
+import { ckeFactory } from '../../pageHelpers/pageHelpers'
 import { TField } from '~/legacy/viewer/A2J_Types'
-
-// O(1) field type constant VM prop maps
-const canRequire = {
-  radio: false,
-  [constants.ftCheckBoxNOTA]: false,
-  [constants.ftUserAvatar]: false
-}
-const canMinMax = {
-  [constants.ftNumber]: true,
-  [constants.ftNumberDollar]: true,
-  [constants.ftNumberPick]: true,
-  [constants.ftDateMDY]: true
-}
-const canList = {
-  [constants.ftTextPick]: true
-}
-const canDefaultValue = {
-  [constants.ftCheckBox]: false,
-  [constants.ftCheckBoxNOTA]: false,
-  [constants.ftGender]: false,
-  [constants.ftUserAvatar]: false
-}
-const canOrder = {
-  [constants.ftTextPick]: true,
-  [constants.ftNumberPick]: true,
-  [constants.ftDateMDY]: true
-}
-const canUseCalc = {
-  [constants.ftNumber]: true,
-  [constants.ftNumberDollar]: true
-}
-const canMaxChars = {
-  [constants.ftText]: true,
-  [constants.ftTextLong]: true,
-  [constants.ftNumberPhone]: true,
-  [constants.ftNumberZIP]: true,
-  [constants.ftNumberSSN]: true
-}
-const canCalendar = {
-  [constants.ftDateMDY]: true
-}
-const canUseSample = {
-  [constants.ftText]: true,
-  [constants.ftTextLong]: true,
-  [constants.ftTextPick]: true,
-  [constants.ftNumberPick]: true,
-  [constants.ftNumber]: true,
-  [constants.ftNumberZIP]: true,
-  [constants.ftNumberSSN]: true,
-  [constants.ftNumberDollar]: true,
-  [constants.ftDateMDY]: true
-}
-const forceRequired = {
-  radio: true,
-  [constants.ftCheckBoxNOTA]: true
-}
-/* eslint-disable no-multi-spaces */
-const fieldTypes = new DefineList([
-  { value: constants.ftText,         label: 'Text' },
-  { value: constants.ftTextLong,     label: 'Text (Long)' },
-  { value: constants.ftTextPick,     label: 'Text (Pick from list)' },
-  { value: constants.ftNumber,       label: 'Number' },
-  { value: constants.ftNumberDollar, label: 'Number Dollar' },
-  { value: constants.ftNumberSSN,    label: 'Number SSN' },
-  { value: constants.ftNumberPhone,  label: 'Number Phone' },
-  { value: constants.ftNumberZIP,    label: 'Number ZIP Code' },
-  { value: constants.ftNumberPick,   label: 'Number (Pick from list)' },
-  { value: constants.ftDateMDY,      label: 'Date MM/DD/YYYY' },
-  { value: constants.ftGender,       label: 'Gender' },
-  { value: constants.ftRadioButton,  label: 'Radio Button' },
-  { value: constants.ftCheckBox,     label: 'Check box' },
-  { value: constants.ftCheckBoxNOTA, label: 'Check Box (None of the Above)' },
-  { value: constants.ftUserAvatar,   label: 'User Avatar' }
-])
-/* eslint-enable no-multi-spaces */
+import * as pageHelpers from './page-fields-helpers'
 
 /* VM used for each field item, another VM used for the fields tab itself is below this */
 export const FieldVM = DefineMap.extend('FieldVM', {
-  field: {}, // A2J Types TField
+  page: {},
+  appState: {},
+  guideFiles: {},
 
+  field: {
+    set (field) {
+      console.log('field', field)
+      return field
+    }
+  }, // A2J Types TField
+
+  // validate on this type change
   type: { // bindable proxy to TField type
     value ({ lastSet, listenTo, resolve }) {
       listenTo(lastSet, function (val) {
@@ -95,14 +31,25 @@ export const FieldVM = DefineMap.extend('FieldVM', {
     }
   },
 
+  // validate on this type change
+  variable: { // bindable proxy to TField type
+    value ({ lastSet, listenTo, resolve }) {
+      listenTo(lastSet, function (val) {
+        this.field.type = val
+        resolve(val)
+      })
+      resolve(this.field.type)
+    }
+  },
+
   types: {
-    default: () => fieldTypes
+    default: () => pageHelpers.fieldTypes
   },
 
   required: {
     value ({ lastSet, listenTo, resolve }) {
       listenTo('type', function (type, prevType) {
-        if (forceRequired[this.type]) {
+        if (pageHelpers.forceRequired[this.type]) {
           this.field.required = true
           resolve(true)
         } else if (this.type === constants.ftUserAvatar) {
@@ -122,7 +69,7 @@ export const FieldVM = DefineMap.extend('FieldVM', {
     value ({ lastSet, listenTo, resolve }) {
       const vm = this
       const resolver = function (val) {
-        if (canUseCalc[vm.type]) {
+        if (pageHelpers.canUseCalc[vm.type]) {
           vm.field.calculator = !!val
           resolve(!!val)
         } else {
@@ -131,7 +78,7 @@ export const FieldVM = DefineMap.extend('FieldVM', {
         }
       }
       listenTo('type', function (type, prevType) {
-        (!canUseCalc[this.type]) && resolver(false)
+        (!pageHelpers.canUseCalc[this.type]) && resolver(false)
       })
       listenTo(lastSet, resolver)
       resolver(this.field.calculator)
@@ -163,39 +110,39 @@ export const FieldVM = DefineMap.extend('FieldVM', {
   },
 
   get canRequire () {
-    return canRequire[this.type] !== false
+    return pageHelpers.canRequire[this.type] !== false
   },
 
   get canDefaultValue () {
-    return canDefaultValue[this.type] !== false
+    return pageHelpers.canDefaultValue[this.type] !== false
   },
 
   get canMaxChars () {
-    return canMaxChars[this.type] === true
+    return pageHelpers.canMaxChars[this.type] === true
   },
 
   get canUseCalc () {
-    return canUseCalc[this.type] === true
+    return pageHelpers.canUseCalc[this.type] === true
   },
 
   get canMinMax () {
-    return canMinMax[this.type] === true
+    return pageHelpers.canMinMax[this.type] === true
   },
 
   get canList () {
-    return canList[this.type] === true
+    return pageHelpers.canList[this.type] === true
   },
 
   get canUseSample () {
-    return canUseSample[this.type] === true
+    return pageHelpers.canUseSample[this.type] === true
   },
 
   get canOrder () { // unused
-    return canOrder[this.type] === true
+    return pageHelpers.canOrder[this.type] === true
   },
 
   get canCalendar () { // unused
-    return canCalendar[this.type] === true
+    return pageHelpers.canCalendar[this.type] === true
   }
 })
 

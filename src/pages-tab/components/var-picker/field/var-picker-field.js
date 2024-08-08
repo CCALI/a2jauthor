@@ -64,6 +64,7 @@ export const VarPickerField = DefineMap.extend('VarPickerField', {
   },
 
   newVarData: {},
+
   onVariableChange (variable) {
     this.newVarData = variable
   },

@@ -67,7 +67,11 @@
                 </div>
               </div>
               {{#not(fieldVM.hasValidType)}} 
-                <div class="type-error alert-danger"><span class="glyphicon-attention"></span>Field Type: {{fieldVM.type}} is mis-matched with Var Type: {{fieldVM.varType}}</div>
+                <div class="type-error alert-danger">
+                  <span class="glyphicon-attention"></span>
+                    Field Type: ({{fieldVM.type}}) requires Variable Type: ({{fieldVM.expectedVarType}})
+                  <span class="glyphicon-attention"></span>
+                </div>
               {{/not}}
               <var-picker-field appState:from="appState" filterText:bind="fieldVM.name" obj:bind="fieldVM.field" key:from="'name'" />
               {{#if(fieldVM.canDefaultValue)}}

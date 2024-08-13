@@ -5,16 +5,12 @@ import template from './page-fields.stache'
 import constants from 'a2jauthor/src/models/constants'
 import { ckeFactory } from '../../helpers/helpers'
 import { TField } from '~/legacy/viewer/A2J_Types'
-import * as pageHelpers from './page-fields-helpers'
+import * as pageFieldsHelpers from './page-fields-helpers'
 
 /* VM used for each field item, another VM used for the fields tab itself is below this */
 export const FieldVM = DefineMap.extend('FieldVM', {
   field: {}, // A2J Types TField
   vars: {}, // A2J Types TVariable[]
-
-  isHealthy: {
-    default: true
-  },
 
   // validate on this type change
   type: { // bindable proxy to TField type
@@ -42,36 +38,40 @@ export const FieldVM = DefineMap.extend('FieldVM', {
     return variable.type
   },
 
+  get expectedVarType () {
+    return pageFieldsHelpers.getExpectedVarType(this.type).toLowerCase()
+  },
+
   hasValidType: {
     value ({ listenTo, resolve }) {
       listenTo('name', function (name, preName) {
         const fieldType = this.type.toLowerCase()
         const varType = this.varType.toLowerCase()
 
-        resolve(pageHelpers.variableTypeCheck(fieldType, varType))
+        resolve(pageFieldsHelpers.hasValidVarType(fieldType, varType))
       })
       listenTo('type', function (type, preType) {
         const fieldType = this.type.toLowerCase()
         const varType = this.varType.toLowerCase()
 
-        resolve(pageHelpers.variableTypeCheck(fieldType, varType))
+        resolve(pageFieldsHelpers.hasValidVarType(fieldType, varType))
       })
 
       const fieldType = this.type.toLowerCase()
       const varType = this.varType.toLowerCase()
 
-      resolve(pageHelpers.variableTypeCheck(fieldType, varType))
+      resolve(pageFieldsHelpers.hasValidVarType(fieldType, varType))
     }
   },
 
   types: {
-    default: () => pageHelpers.fieldTypes
+    default: () => pageFieldsHelpers.fieldTypes
   },
 
   required: {
     value ({ lastSet, listenTo, resolve }) {
       listenTo('type', function (type, prevType) {
-        if (pageHelpers.forceRequired[this.type]) {
+        if (pageFieldsHelpers.forceRequired[this.type]) {
           this.field.required = true
           resolve(true)
         } else if (this.type === constants.ftUserAvatar) {
@@ -91,7 +91,7 @@ export const FieldVM = DefineMap.extend('FieldVM', {
     value ({ lastSet, listenTo, resolve }) {
       const vm = this
       const resolver = function (val) {
-        if (pageHelpers.canUseCalc[vm.type]) {
+        if (pageFieldsHelpers.canUseCalc[vm.type]) {
           vm.field.calculator = !!val
           resolve(!!val)
         } else {
@@ -100,7 +100,7 @@ export const FieldVM = DefineMap.extend('FieldVM', {
         }
       }
       listenTo('type', function (type, prevType) {
-        (!pageHelpers.canUseCalc[this.type]) && resolver(false)
+        (!pageFieldsHelpers.canUseCalc[this.type]) && resolver(false)
       })
       listenTo(lastSet, resolver)
       resolver(this.field.calculator)
@@ -132,39 +132,39 @@ export const FieldVM = DefineMap.extend('FieldVM', {
   },
 
   get canRequire () {
-    return pageHelpers.canRequire[this.type] !== false
+    return pageFieldsHelpers.canRequire[this.type] !== false
   },
 
   get canDefaultValue () {
-    return pageHelpers.canDefaultValue[this.type] !== false
+    return pageFieldsHelpers.canDefaultValue[this.type] !== false
   },
 
   get canMaxChars () {
-    return pageHelpers.canMaxChars[this.type] === true
+    return pageFieldsHelpers.canMaxChars[this.type] === true
   },
 
   get canUseCalc () {
-    return pageHelpers.canUseCalc[this.type] === true
+    return pageFieldsHelpers.canUseCalc[this.type] === true
   },
 
   get canMinMax () {
-    return pageHelpers.canMinMax[this.type] === true
+    return pageFieldsHelpers.canMinMax[this.type] === true
   },
 
   get canList () {
-    return pageHelpers.canList[this.type] === true
+    return pageFieldsHelpers.canList[this.type] === true
   },
 
   get canUseSample () {
-    return pageHelpers.canUseSample[this.type] === true
+    return pageFieldsHelpers.canUseSample[this.type] === true
   },
 
   get canOrder () { // unused
-    return pageHelpers.canOrder[this.type] === true
+    return pageFieldsHelpers.canOrder[this.type] === true
   },
 
   get canCalendar () { // unused
-    return pageHelpers.canCalendar[this.type] === true
+    return pageFieldsHelpers.canCalendar[this.type] === true
   }
 })
 

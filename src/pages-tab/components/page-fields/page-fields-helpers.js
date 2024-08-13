@@ -97,7 +97,11 @@ const mapFieldToVariableType = {
   [constants.ftUserAvatar]: constants.vtText.toLowerCase()
 }
 
-export const variableTypeCheck = (fieldType, variableType) => {
+export const getExpectedVarType = (fieldType) => {
+  return mapFieldToVariableType[fieldType]
+}
+
+export const hasValidVarType = (fieldType, variableType) => {
   const expectedType = mapFieldToVariableType[fieldType.toLowerCase()]
   const hasValidTypes = expectedType === variableType.toLowerCase()
 

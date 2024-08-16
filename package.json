@@ -97,6 +97,7 @@
     "grunt-contrib-less": "^2.0.0",
     "grunt-run": "^0.8.0",
     "grunt-steal": "^1.0.0",
+    "prettier-standard": "^16.4.1",
     "sinon": "^1.17.2",
     "standard": "^17.0.0",
     "steal": "^2.2.4",

@@ -310,10 +310,6 @@ export default DefineMap.extend('AuthorAppState', {
     // TODO: remove this global when it's no longer references from legacy code
     window.gPrefs = appState.gPrefs
 
-    // Add the legalNavStates to the window
-    // So we can access this within the CKEditor widget
-    this.setLegalNavStates()
-
     $(document).ajaxError(function globalAjaxHandler (event, jqxhr) {
       const status = jqxhr.status
       const response = jqxhr.responseJSON || {}
@@ -341,22 +337,6 @@ export default DefineMap.extend('AuthorAppState', {
         }
       }
     }, 0)
-  },
-
-  // Fetch the list of available states for within the legalNav guid
-  // Used in the CKEditor widget
-  setLegalNavStates () {
-    const states = []
-    window.$.ajax({
-      type: 'GET',
-      dataType: 'json',
-      url: 'https://legalnav.org/wp-json/wp/v2/states'
-    })
-      .then((result) => {
-        result.map((stateInfo) => states.push([stateInfo.name, stateInfo.slug]))
-        window.legalNavStates = states
-      })
-      .catch((err) => console.error(err.responseJSON.message))
   },
 
   toggleDebugPanel () {

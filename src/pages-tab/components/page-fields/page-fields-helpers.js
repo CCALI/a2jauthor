@@ -103,7 +103,7 @@ export const getExpectedVarType = (fieldType) => {
 
 export const hasValidVarType = (fieldType, variableType) => {
   const expectedType = mapFieldToVariableType[fieldType.toLowerCase()]
-  const hasValidTypes = expectedType === variableType.toLowerCase()
+  const hasValidTypes = expectedType === variableType.toLowerCase() // "Text", "TF"
 
   return hasValidTypes
 }

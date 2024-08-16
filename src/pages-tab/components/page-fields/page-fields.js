@@ -171,10 +171,9 @@ export const FieldVM = DefineMap.extend('FieldVM', {
 export const PageFieldsVM = DefineMap.extend('PageFieldsVM', {
   ckeFactory,
 
-  guideFiles: {},
-
   page: {},
   appState: {},
+  guideFiles: {},
 
   trim (el) {
     el.value = el.value.trim()

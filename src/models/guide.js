@@ -1,5 +1,6 @@
 import $ from 'jquery'
 import Model from 'can-model'
+import GuideHealth from './guide-health'
 import setupPromise from 'can-reflect-promise'
 
 import 'can-map-define'
@@ -109,6 +110,15 @@ const Guide = Model.extend('GuideModel', {
       type: 'string',
       get () {
         return this.attr('details.modified')
+      }
+    },
+
+    guideHealth: {
+      type: GuideHealth,
+      default: () => new GuideHealth(),
+      set (gh) {
+        console.log('new GH', gh)
+        return gh
       }
     }
   }

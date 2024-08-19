@@ -35,7 +35,7 @@ export const FieldVM = DefineMap.extend('FieldVM', {
 
   get varType () {
     const variable = this.vars[this.name.toLowerCase()]
-    return variable.type
+    return variable && variable.type
   },
 
   get expectedVarType () {
@@ -44,21 +44,16 @@ export const FieldVM = DefineMap.extend('FieldVM', {
 
   hasValidType: {
     value ({ listenTo, resolve }) {
+      const fieldType = this.type && this.type.toLowerCase()
+      const varType = this.varType && this.varType.toLowerCase()
+
       listenTo('name', function (name, preName) {
-        const fieldType = this.type.toLowerCase()
-        const varType = this.varType.toLowerCase()
-
         resolve(pageFieldsHelpers.hasValidVarType(fieldType, varType))
       })
+
       listenTo('type', function (type, preType) {
-        const fieldType = this.type.toLowerCase()
-        const varType = this.varType.toLowerCase()
-
         resolve(pageFieldsHelpers.hasValidVarType(fieldType, varType))
       })
-
-      const fieldType = this.type.toLowerCase()
-      const varType = this.varType.toLowerCase()
 
       resolve(pageFieldsHelpers.hasValidVarType(fieldType, varType))
     }

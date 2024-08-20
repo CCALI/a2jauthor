@@ -5,55 +5,55 @@
   <div class="row">
     <div class="{{#is(scope/selectedReport, "citationReport")}}col-xs-12{{/else}}col-xs-8{{/is}}">
       <div>
-        <p class="{{#if(scope/hideCitation)}}hide-section{{/if}}"><label>Notes:</label> {{formatPageTextCell(notes)}}</p>
+        <p class="{{#if(scope/hideCitation)}}hide-section{{/if}}"><div class="report-label">Notes:</div> {{formatPageTextCell(notes)}}</p>
         <div class="{{#if(scope/hideText)}}hide-section{{/if}}">
-          <p><label>Text:</label> {{formatPageTextCell(text)}}</p>
+          <p><div class="report-label">Text:</div> {{formatPageTextCell(text)}}</p>
           <text-stats vm:stats:from="textStats"></text-stats>
         </div>
-        <p class="{{#if(scope/hideCitation)}}hide-section{{/if}}"><label>Text Citation:</label> {{formatPageTextCell(textCitation)}}</p>
-        <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Text Audio:</label> {{textAudioURL}}</p>
+        <p class="{{#if(scope/hideCitation)}}hide-section{{/if}}"><div class="report-label">Text Citation:</div> {{formatPageTextCell(textCitation)}}</p>
+        <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Text Audio:</div> {{textAudioURL}}</p>
         <fieldset>
           <legend>Learn More</legend>
           <div class="{{#if(scope/hideText)}}hide-section{{/if}}">
-            <p><label>Prompt:</label> {{learn}}</p>
+            <p><div class="report-label">Prompt:</div> {{learn}}</p>
             <text-stats vm:stats:from="learnStats"></text-stats>
           </div>
           <div class="{{#if(scope/hideText)}}hide-section{{/if}}">
-            <p><label>Response:</label> {{formatPageTextCell(help)}}</p>
+            <p><div class="report-label">Response:</div> {{formatPageTextCell(help)}}</p>
             <text-stats vm:stats:from="helpStats"></text-stats>
           </div>
-          <p class="{{#if(scope/hideCitation)}}hide-section{{/if}}"><label>Citation:</label> {{formatPageTextCell(helpCitation)}}</p>
-          <p class="{{#if(scope/hideCitation)}}hide-section{{/if}}"><label>Media Label:</label> {{formatPageTextCell(helpMediaLabel)}}</p>
-          <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Audio:</label> {{helpAudioURL}}</p>
-          <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Graphic:</label> {{helpImageURL}}</p>
-          <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Graphic Alt-Text:</label> {{helpAltText}}</p>
-          <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Video:</label> {{helpVideoURL}}</p>
-          <p class="{{#if(scope/hideText)}}hide-section{{/if}}"><label>Video Transcript:</label> {{helpReader}}</p>
+          <p class="{{#if(scope/hideCitation)}}hide-section{{/if}}"><div class="report-label">Citation:</div> {{formatPageTextCell(helpCitation)}}</p>
+          <p class="{{#if(scope/hideCitation)}}hide-section{{/if}}"><div class="report-label">Media Label:</div> {{formatPageTextCell(helpMediaLabel)}}</p>
+          <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Audio:</div> {{helpAudioURL}}</p>
+          <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Graphic:</div> {{helpImageURL}}</p>
+          <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Graphic Alt-Text:</div> {{helpAltText}}</p>
+          <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Video:</div> {{helpVideoURL}}</p>
+          <p class="{{#if(scope/hideText)}}hide-section{{/if}}"><div class="report-label">Video Transcript:</div> {{helpReader}}</p>
         </fieldset>
-        <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Loop Variable:</label> {{repeatVar}}</p>
-        <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Nested Loop:</label> {{nested}}</p>
-        <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Outer Loop Variable:</label> {{outerLoopVar}}</p>
-        <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Before Logic:</label> {{formatPageTextCell(codeBefore)}}</p>
-        <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><label>After Logic:</label> {{formatPageTextCell(codeAfter)}}</p>
-        <p class="{{#if(scope/hideCitation)}}hide-section{{/if}}"><label>Logic Citation:</label> {{formatPageTextCell(codeCitation)}}</p>
+        <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Loop Variable:</div> {{repeatVar}}</p>
+        <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Nested Loop:</div> {{nested}}</p>
+        <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Outer Loop Variable:</div> {{outerLoopVar}}</p>
+        <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Before Logic:</div> {{formatPageTextCell(codeBefore)}}</p>
+        <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">After Logic:</div> {{formatPageTextCell(codeAfter)}}</p>
+        <p class="{{#if(scope/hideCitation)}}hide-section{{/if}}"><div class="report-label">Logic Citation:</div> {{formatPageTextCell(codeCitation)}}</p>
       </div>
     </div>
     {{^is(scope/selectedReport, "citationReport")}}
       <div class="col-xs-4">
         {{#each(fields)}}
-          <div class="row"><label>Field #</label> {{addOne(scope.index)}}</div>
-          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Type:</label> {{type}}</div>
-          <div class="row"><label>Label:</label> {{label}}</div>
-          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Variable:</label> {{name}}</div>
-          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Default Value:</label> {{value}}</div>
-          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Required:</label> {{required}}</div>
-          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Max Characters:</label> {{maxChars}}</div>
-          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Min:</label> {{min}}</div>
-          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Max:</label> {{max}}</div>
-          <div class="row"><label>Invalid Prompt:</label> {{formatDefaultPrompt(invalidPrompt)}}</div>
-          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Sample Value:</label> {{sample}}</div>
-          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><label>External List:</label> {{listSrc}}</div>
-          <div class="row"><label>Internal List:</label> {{formatPageTextCell(listData)}}</div>
+          <div class="row"><div class="report-label">Field #</div> {{addOne(scope.index)}}</div>
+          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Type:</div> {{type}}</div>
+          <div class="row"><div class="report-label">Label:</div> {{label}}</div>
+          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Variable:</div> {{name}}</div>
+          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Default Value:</div> {{value}}</div>
+          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Required:</div> {{required}}</div>
+          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Max Characters:</div> {{maxChars}}</div>
+          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Min:</div> {{min}}</div>
+          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Max:</div> {{max}}</div>
+          <div class="row"><div class="report-label">Invalid Prompt:</div> {{formatDefaultPrompt(invalidPrompt)}}</div>
+          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Sample Value:</div> {{sample}}</div>
+          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">External List:</div> {{listSrc}}</div>
+          <div class="row"><div class="report-label">Internal List:</div> {{formatPageTextCell(listData)}}</div>
         {{/each}}
       </div>
     {{/is}}
@@ -62,10 +62,10 @@
   {{#is(scope/selectedReport, "fullReport")}}
     <div class="sub-legend">Buttons </div>
     <div class="row ml-1">
-      <div class="col-xs-2"><p><label>Label</label></p></div>
-      <div class="col-xs-2"><label>Variable</label></div>
-      <div class="col-xs-2"><label>Value</label></div>
-      <div class="col-xs-2"><label>Next</label></div>
+      <div class="col-xs-2"><p><div class="report-label">Label</div></p></div>
+      <div class="col-xs-2"><div class="report-label">Variable</div></div>
+      <div class="col-xs-2"><div class="report-label">Value</div></div>
+      <div class="col-xs-2"><div class="report-label">Next</div></div>
     </div>
     {{#buttons}}
     <div class="row ml-1">

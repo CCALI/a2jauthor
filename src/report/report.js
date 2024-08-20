@@ -1,6 +1,7 @@
 import CanMap from 'can-map'
 import CanList from 'can-list'
 import DefineMap from 'can-define/map/map'
+import DefineList from 'can-define/list/list'
 import Component from 'can-component'
 import stache from 'can-stache'
 import template from './report.stache'
@@ -24,16 +25,14 @@ const textStats = new TextStatistics()
  * `<report-page>`'s viewModel.
  *
  */
-export const ReportVM = CanMap.extend('ReportVM', {
-  define: {
+export const ReportVM = DefineMap.extend('ReportVM', {
     parentGuide: {
       set (parentGuide) {
-        const cloneMade = this.attr('cloneMade')
-        if (parentGuide && !cloneMade) {
+      if (parentGuide && !this.cloneMade) {
           const clonedGuide = new DefineMap()
           clonedGuide.updateDeep(parentGuide)
-          this.attr('guide', clonedGuide)
-          this.attr('cloneMade', true)
+        this.guide = clonedGuide
+        this.cloneMade = true
         }
         return parentGuide
       }
@@ -41,7 +40,7 @@ export const ReportVM = CanMap.extend('ReportVM', {
 
     cloneMade: {
       type: 'boolean',
-      value: false
+    default: false
     },
 
     /**
@@ -60,7 +59,7 @@ export const ReportVM = CanMap.extend('ReportVM', {
      * tracks and receives the selected report type from the `<report-toolbar>` component
      */
     selectedReport: {
-      value: 'fullReport'
+    default: 'fullReport'
     },
 
     /**
@@ -71,7 +70,7 @@ export const ReportVM = CanMap.extend('ReportVM', {
      * initial value function prevents spinner when no guide loaded
      */
     buildingReport: {
-      value: function () {
+    default: function () {
         return !!window.gGuide
       }
     },
@@ -83,9 +82,8 @@ export const ReportVM = CanMap.extend('ReportVM', {
      * whether to hide the default page properties based on report type
      */
     hideDefault: {
-      value: false,
       get () {
-        return this.attr('selectedReport') === 'textReport' || this.attr('selectedReport') === 'citationReport'
+      return this.selectedReport === 'textReport' || this.selectedReport === 'citationReport'
       }
     },
 
@@ -96,9 +94,8 @@ export const ReportVM = CanMap.extend('ReportVM', {
      * whether to hide the page text properties, generally for translation
      */
     hideText: {
-      value: false,
       get () {
-        return this.attr('selectedReport') === 'citationReport'
+      return this.selectedReport === 'citationReport'
       }
     },
 
@@ -109,9 +106,8 @@ export const ReportVM = CanMap.extend('ReportVM', {
      * whether to hide the page citation properties, generally for yearly citation updates
      */
     hideCitation: {
-      value: false,
       get () {
-        return this.attr('selectedReport') === 'textReport'
+      return this.selectedReport === 'textReport'
       }
     },
 
@@ -124,14 +120,14 @@ export const ReportVM = CanMap.extend('ReportVM', {
     pagesPromise: {
       get () {
         return new Promise((resolve) => {
-          const guide = this.attr('guide')
+        const guide = this.guide
           if (guide) {
             // TODO: figure out why building this blocks rendering of the initial stache
             // and remove the setTimeout
             setTimeout(() => {
               const pagesAndPopups = this.buildPagesByStep(guide.sortedPages, guide.steps)
               resolve(pagesAndPopups)
-              this.attr('buildingReport', false)
+            this.buildingReport = false
             })
           }
         })
@@ -145,9 +141,8 @@ export const ReportVM = CanMap.extend('ReportVM', {
      * a 2 element array containing an array of a2j pages, and an array of popup pages for display
      */
     pagesAndPopups: {
-      value: [],
       get (last, resolve) {
-        return this.attr('pagesPromise')
+      return this.pagesPromise
           .then(resolve)
       }
     },
@@ -160,7 +155,7 @@ export const ReportVM = CanMap.extend('ReportVM', {
      */
     pagesByStep: {
       get () {
-        const pagesAndPopups = this.attr('pagesAndPopups')
+      const pagesAndPopups = this.pagesAndPopups
         return pagesAndPopups && pagesAndPopups[0]
       }
     },
@@ -173,7 +168,7 @@ export const ReportVM = CanMap.extend('ReportVM', {
      */
     popupPages: {
       get () {
-        const pagesAndPopups = this.attr('pagesAndPopups')
+      const pagesAndPopups = this.pagesAndPopups
         return pagesAndPopups && pagesAndPopups[1]
       }
     },
@@ -186,7 +181,7 @@ export const ReportVM = CanMap.extend('ReportVM', {
      */
     sortedVariableList: {
       get () {
-        const guide = this.attr('guide')
+      const guide = this.guide
         if (guide && guide.vars) {
           return this.getVariableList(guide.vars)
         }
@@ -201,7 +196,7 @@ export const ReportVM = CanMap.extend('ReportVM', {
      */
     displayLanguage: {
       get () {
-        const locale = this.attr('guide.language')
+      const locale = this.guide.language
         const languages = window.Languages ? window.Languages.regional : null
         if (locale && languages) {
           return `${languages[locale].Language} (${languages[locale].LanguageEN}) {${locale}}`
@@ -216,8 +211,8 @@ export const ReportVM = CanMap.extend('ReportVM', {
      * list of grades used to get overall interview reading grade level
      */
     fkGradeList: {
-      Type: CanList,
-      value: () => new CanList()
+    Type: DefineList,
+    default: () => new DefineList()
     },
 
     /**
@@ -237,8 +232,7 @@ export const ReportVM = CanMap.extend('ReportVM', {
      * show fk text grades only when bad, or author selects hide grades from toolbar
      */
     hideAllGrades: {
-      value: false
-    }
+    default: false
   },
 
   /**
@@ -248,7 +242,7 @@ export const ReportVM = CanMap.extend('ReportVM', {
    * whether to hide the grading results
    */
   hideGrade (fkGrade) {
-    return !fkGrade || this.attr('hideAllGrades')
+    return !fkGrade || this.hideAllGrades
   },
 
   /**
@@ -258,7 +252,7 @@ export const ReportVM = CanMap.extend('ReportVM', {
    * computes and formats the overall interview reading grade level
    */
   getOverallGrade () {
-    const fkGradeList = this.attr('fkGradeList')
+    const fkGradeList = this.fkGradeList
     if (fkGradeList.length) {
       let gradeTotal = 0
       fkGradeList.forEach(function (grade) {
@@ -316,7 +310,7 @@ export const ReportVM = CanMap.extend('ReportVM', {
     const alertClass = this.getTextAlertClass(fkGrade)
 
     // add this grade to the overall list of scores
-    this.attr('fkGradeList').push(fkGrade)
+    this.fkGradeList.push(fkGrade)
 
     return {
       fkGrade,
@@ -361,6 +355,7 @@ export const ReportVM = CanMap.extend('ReportVM', {
     })
 
     return [pagesByStep, popupPages]
+  },
   }
 })
 
@@ -387,7 +382,7 @@ export default Component.extend({
   events: {
     '{fkGradeList} length': function () {
       const interviewGradeLevel = this.viewModel.getOverallGrade()
-      this.viewModel.attr('fkOverallGrade', interviewGradeLevel)
+      this.viewModel.fkOverallGrade = interviewGradeLevel
     }
   },
 

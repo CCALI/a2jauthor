@@ -1,0 +1,7 @@
+<can-import from="./guide-health.less" />
+
+<div class="problem alert-danger">
+  <span class="glyphicon-attention"></span>
+    <content />
+  <span class="glyphicon-attention"></span>
+</div>

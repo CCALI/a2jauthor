@@ -163,6 +163,7 @@ function TButton () {	// Guide defined button, 0 or more
  * @this {TField}
  */
 function TField () {
+  this.problem = ''
   this.type = ''
   this.label = ''
   this.name = ''// reference TVar.name

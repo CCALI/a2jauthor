@@ -1,5 +1,3 @@
-import CanMap from 'can-map'
-import CanList from 'can-list'
 import DefineMap from 'can-define/map/map'
 import DefineList from 'can-define/list/list'
 import Component from 'can-component'
@@ -10,8 +8,6 @@ import popupPartial from './popup-partial.stache'
 import naturalCompare from 'string-natural-compare/'
 import cString from '@caliorg/a2jdeps/utils/string'
 import TextStatistics from '~/src/utils/text-statistics'
-
-import 'can-map-define'
 
 stache.registerPartial('page-partial', pagePartial)
 stache.registerPartial('popup-partial', popupPartial)
@@ -26,212 +22,212 @@ const textStats = new TextStatistics()
  *
  */
 export const ReportVM = DefineMap.extend('ReportVM', {
-    parentGuide: {
-      set (parentGuide) {
+  parentGuide: {
+    set (parentGuide) {
       if (parentGuide && !this.cloneMade) {
-          const clonedGuide = new DefineMap()
-          clonedGuide.updateDeep(parentGuide)
+        const clonedGuide = new DefineMap()
+        clonedGuide.updateDeep(parentGuide)
         this.guide = clonedGuide
         this.cloneMade = true
-        }
-        return parentGuide
       }
-    },
+      return parentGuide
+    }
+  },
 
-    cloneMade: {
-      type: 'boolean',
+  cloneMade: {
+    type: 'boolean',
     default: false
-    },
+  },
 
-    /**
+  /**
      * @property {Map} report.ViewModel.prototype.define.guide guide
      * @parent report.ViewModel
      *
      * local deep copy of the current guide from the app-state
      * this prevents the auto save from updating the report while it is being viewed
      */
-    guide: {},
+  guide: {},
 
-    /**
+  /**
      * @property {String} report.ViewModel.prototype.define.selectedReport selectedReport
      * @parent report.ViewModel
      *
      * tracks and receives the selected report type from the `<report-toolbar>` component
      */
-    selectedReport: {
+  selectedReport: {
     default: 'fullReport'
-    },
+  },
 
-    /**
+  /**
      * @property {Boolean} report.ViewModel.prototype.define.buildingReport buildingReport
      * @parent report.ViewModel
      *
      * used to active the 'building report' spinner
      * initial value function prevents spinner when no guide loaded
      */
-    buildingReport: {
+  buildingReport: {
     default: function () {
-        return !!window.gGuide
-      }
-    },
+      return !!window.gGuide
+    }
+  },
 
-    /**
+  /**
      * @property {Boolean} report.ViewModel.prototype.define.hideDefault hideDefault
      * @parent report.ViewModel
      *
      * whether to hide the default page properties based on report type
      */
-    hideDefault: {
-      get () {
+  hideDefault: {
+    get () {
       return this.selectedReport === 'textReport' || this.selectedReport === 'citationReport'
-      }
-    },
+    }
+  },
 
-    /**
+  /**
      * @property {Boolean} report.ViewModel.prototype.define.hideText hideText
      * @parent report.ViewModel
      *
      * whether to hide the page text properties, generally for translation
      */
-    hideText: {
-      get () {
+  hideText: {
+    get () {
       return this.selectedReport === 'citationReport'
-      }
-    },
+    }
+  },
 
-    /**
+  /**
      * @property {Boolean} report.ViewModel.prototype.define.hideCitation hideCitation
      * @parent report.ViewModel
      *
      * whether to hide the page citation properties, generally for yearly citation updates
      */
-    hideCitation: {
-      get () {
+  hideCitation: {
+    get () {
       return this.selectedReport === 'textReport'
-      }
-    },
+    }
+  },
 
-    /**
+  /**
      * @property {Promise} report.ViewModel.prototype.define.pagesPromise pagesPromise
      * @parent report.ViewModel
      *
      * used to resolve the building of report data and end the 'building report' spinner
      */
-    pagesPromise: {
-      get () {
-        return new Promise((resolve) => {
+  pagesPromise: {
+    get () {
+      return new Promise((resolve) => {
         const guide = this.guide
-          if (guide) {
-            // TODO: figure out why building this blocks rendering of the initial stache
-            // and remove the setTimeout
-            setTimeout(() => {
-              const pagesAndPopups = this.buildPagesByStep(guide.sortedPages, guide.steps)
-              resolve(pagesAndPopups)
+        if (guide) {
+          // TODO: figure out why building this blocks rendering of the initial stache
+          // and remove the setTimeout
+          setTimeout(() => {
+            const pagesAndPopups = this.buildPagesByStep(guide.sortedPages, guide.steps)
+            resolve(pagesAndPopups)
             this.buildingReport = false
-            })
-          }
-        })
-      }
-    },
+          })
+        }
+      })
+    }
+  },
 
-    /**
+  /**
      * @property {Array} report.ViewModel.prototype.define.pagesAndPopups pagesAndPopups
      * @parent report.ViewModel
      *
      * a 2 element array containing an array of a2j pages, and an array of popup pages for display
      */
-    pagesAndPopups: {
-      get (last, resolve) {
+  pagesAndPopups: {
+    get (last, resolve) {
       return this.pagesPromise
-          .then(resolve)
-      }
-    },
+        .then(resolve)
+    }
+  },
 
-    /**
+  /**
      * @property {Array} report.ViewModel.prototype.define.pagesByStep pagesByStep
      * @parent report.ViewModel
      *
      * an array of steps containing naturally sorted pages by step number.
      */
-    pagesByStep: {
-      get () {
+  pagesByStep: {
+    get () {
       const pagesAndPopups = this.pagesAndPopups
-        return pagesAndPopups && pagesAndPopups[0]
-      }
-    },
+      return pagesAndPopups && pagesAndPopups[0]
+    }
+  },
 
-    /**
+  /**
      * @property {Array} report.ViewModel.prototype.define.popupPages popupPages
      * @parent report.ViewModel
      *
      * an array of naturally sorted popup pages.
      */
-    popupPages: {
-      get () {
+  popupPages: {
+    get () {
       const pagesAndPopups = this.pagesAndPopups
-        return pagesAndPopups && pagesAndPopups[1]
-      }
-    },
+      return pagesAndPopups && pagesAndPopups[1]
+    }
+  },
 
-    /**
+  /**
      * @property {Array} report.ViewModel.prototype.define.sortedVariableList sortedVariableList
      * @parent report.ViewModel
      *
      * sorted variable list for display
      */
-    sortedVariableList: {
-      get () {
+  sortedVariableList: {
+    get () {
       const guide = this.guide
-        if (guide && guide.vars) {
-          return this.getVariableList(guide.vars)
-        }
+      if (guide && guide.vars) {
+        return this.getVariableList(guide.vars)
       }
-    },
+    }
+  },
 
-    /**
+  /**
      * @property {String} report.ViewModel.prototype.define.displayLanguage displayLanguage
      * @parent report.ViewModel
      *
      * current language formatted for display
      */
-    displayLanguage: {
-      get () {
+  displayLanguage: {
+    get () {
       const locale = this.guide.language
-        const languages = window.Languages ? window.Languages.regional : null
-        if (locale && languages) {
-          return `${languages[locale].Language} (${languages[locale].LanguageEN}) {${locale}}`
-        }
+      const languages = window.Languages ? window.Languages.regional : null
+      if (locale && languages) {
+        return `${languages[locale].Language} (${languages[locale].LanguageEN}) {${locale}}`
       }
-    },
+    }
+  },
 
-    /**
+  /**
      * @property {Array} report.ViewModel.prototype.define.fkGradeList fkGradeList
      * @parent report.ViewModel
      *
      * list of grades used to get overall interview reading grade level
      */
-    fkGradeList: {
+  fkGradeList: {
     Type: DefineList,
     default: () => new DefineList()
-    },
+  },
 
-    /**
+  /**
      * @property {Number} report.ViewModel.prototype.define.fkOverallGrade fkOverallGrade
      * @parent report.ViewModel
      *
      * average of all interview text scores from the above list
      */
-    fkOverallGrade: {
+  fkOverallGrade: {
 
-    },
+  },
 
-    /**
+  /**
      * @property {Boolean} report.ViewModel.prototype.define.hideAllGrades hideAllGrades
      * @parent report.ViewModel
      *
      * show fk text grades only when bad, or author selects hide grades from toolbar
      */
-    hideAllGrades: {
+  hideAllGrades: {
     default: false
   },
 
@@ -355,7 +351,6 @@ export const ReportVM = DefineMap.extend('ReportVM', {
     })
 
     return [pagesByStep, popupPages]
-  },
   }
 })
 

@@ -166,7 +166,9 @@ export default DefineMap.extend('AuthorAppState', {
     serialize: false,
 
     set (gGuide = {}) {
-      return new Guide(gGuide)
+      const guide = new Guide(gGuide)
+      guide.runHealthCheck()
+      return guide
     }
   },
 

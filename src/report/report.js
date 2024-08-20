@@ -62,7 +62,7 @@ export const ReportVM = DefineMap.extend('ReportVM', {
      * @property {Boolean} report.ViewModel.prototype.define.buildingReport buildingReport
      * @parent report.ViewModel
      *
-     * used to active the 'building report' spinner
+     * used to activate the 'building report' spinner
      * initial value function prevents spinner when no guide loaded
      */
   buildingReport: {

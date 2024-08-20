@@ -1,4 +1,5 @@
-<can-import from='a2jauthor/src/report/text-stats/' />
+<can-import from='~/src/report/text-stats/' />
+<can-import from='~/src/guide-health/' />
 
 <fieldset>
   <legend>Page {{name}}</legend>
@@ -42,6 +43,9 @@
       <div class="col-xs-4">
         {{#each(fields)}}
           <div class="row"><div class="report-label">Field #</div> {{addOne(scope.index)}}</div>
+          {{#if(problem.length)}}
+              <guide-health>{{problem}}</guide-health>
+          {{/if}}
           <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Type:</div> {{type}}</div>
           <div class="row"><div class="report-label">Label:</div> {{label}}</div>
           <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Variable:</div> {{name}}</div>

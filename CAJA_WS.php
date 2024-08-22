@@ -288,8 +288,12 @@ switch ($command){
 		if ($row = $res->fetch_assoc())
 		{
 			$destinationPathWithoutTrailingSlash = pathinfo(GUIDES_DIR.$row['filename'])['dirname'];
+			$realDestPath = realpath($destinationPathWithoutTrailingSlash);
+			if (strpos($realDestPath,GUIDES_DIR) !== 0){
+				fail_and_exit(403, "!e. Bad Directory request")
+			}
 			$destinationPath = $destinationPathWithoutTrailingSlash . '/';
-		  $files = $_REQUEST['fileList'];
+			$files = $_REQUEST['fileList'];
 
 			$sourcePaths = [];
 			foreach ($files as $file) {
@@ -314,6 +318,12 @@ switch ($command){
 				$sourcePath = $sourcePaths[$file['sourceGid']] . '/';
 
 				$source = $sourcePath . $filename . '.' . $extension;
+
+				$realSourcePath = realpath($sourcePath);
+				if (strpos($realSourcePath,GUIDES_DIR) !== 0){
+					fail_and_exit(403, "!e. Bad Directory request")
+				}
+
 				$destination = $destinationPath . $rename . '.' . $extension;
 				touch($destination); // php copy requires a file to exist already ?!?!?!
 				copy($source, $destination); // then do the copy part
@@ -573,7 +583,7 @@ switch ($command){
 		$sql="insert into guides (title,editoruid) values ('".$mysqli->real_escape_string($title)."', ".$userid.")";
 		// If this fails on blank interview, likely `archive` Field in guides db needs to be ticked to allow default value of null
 		// Also make sure `archive` Field in guides db is set to 0 for default value
-		if ($res=$mysqli->query($sql)) {
+		if ($res=$mysqli->query($sql)) { 
 			// Save as content to new folder owned by editor
 			$newgid=$mysqli->insert_id;
 			$userdir=$_SESSION['userdir'];
@@ -584,7 +594,9 @@ switch ($command){
 			$newfile = $newdir.'/Guide.xml';
 			// ex: some/sever/path/userfiles/dev/guides/Guide924
 			$assetsdir = GUIDES_DIR.$newdir;
-			mkdir($assetsdir);
+
+			//"changing permissions fix for mac"
+			mkdir($assetsdir, 0775, true);
 			$filename=GUIDES_DIR.$newfile;
 			// create default Guide.xml and Guide.json
 			file_put_contents($filename,$xml);

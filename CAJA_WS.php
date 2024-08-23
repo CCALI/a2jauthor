@@ -290,7 +290,7 @@ switch ($command){
 			$destinationPathWithoutTrailingSlash = pathinfo(GUIDES_DIR.$row['filename'])['dirname'];
 			$realDestPath = realpath($destinationPathWithoutTrailingSlash);
 			if (strpos($realDestPath,GUIDES_DIR) !== 0){
-				fail_and_exit(403, "!e. Bad Directory request")
+				fail_and_exit(403, "!e. Bad Directory request");
 			}
 			$destinationPath = $destinationPathWithoutTrailingSlash . '/';
 			$files = $_REQUEST['fileList'];
@@ -321,7 +321,7 @@ switch ($command){
 
 				$realSourcePath = realpath($sourcePath);
 				if (strpos($realSourcePath,GUIDES_DIR) !== 0){
-					fail_and_exit(403, "!e. Bad Directory request")
+					fail_and_exit(403, "!e. Bad Source Directory request");
 				}
 
 				$destination = $destinationPath . $rename . '.' . $extension;

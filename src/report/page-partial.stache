@@ -1,5 +1,5 @@
 <can-import from='~/src/report/text-stats/' />
-<can-import from='~/src/guide-health/' />
+<can-import from='~/src/health-message/' />
 
 <fieldset>
   <legend>Page {{name}}</legend>
@@ -41,24 +41,24 @@
     </div>
     {{^is(scope/selectedReport, "citationReport")}}
       <div class="col-xs-4">
-        {{#each(fields)}}
+        {{#for(fieldVM of fields)}}
           <div class="row"><div class="report-label">Field #</div> {{addOne(scope.index)}}</div>
-          {{#if(problem.length)}}
-              <guide-health>{{problem}}</guide-health>
-          {{/if}}
-          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Type:</div> {{type}}</div>
-          <div class="row"><div class="report-label">Label:</div> {{label}}</div>
-          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Variable:</div> {{name}}</div>
-          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Default Value:</div> {{value}}</div>
-          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Required:</div> {{required}}</div>
-          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Max Characters:</div> {{maxChars}}</div>
-          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Min:</div> {{min}}</div>
-          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Max:</div> {{max}}</div>
-          <div class="row"><div class="report-label">Invalid Prompt:</div> {{formatDefaultPrompt(invalidPrompt)}}</div>
-          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Sample Value:</div> {{sample}}</div>
-          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">External List:</div> {{listSrc}}</div>
-          <div class="row"><div class="report-label">Internal List:</div> {{formatPageTextCell(listData)}}</div>
-        {{/each}}
+          {{#not(fieldVM.hasValidType)}}
+              <health-message message:from="fieldVM.problemMessage"></health-message>
+          {{/not}}
+          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Type:</div> {{fieldVM.field.type}}</div>
+          <div class="row"><div class="report-label">Label:</div> {{fieldVM.field.label}}</div>
+          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Variable:</div> {{fieldVM.field.name}}</div>
+          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Default Value:</div> {{fieldVM.field.value}}</div>
+          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Required:</div> {{fieldVM.field.required}}</div>
+          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Max Characters:</div> {{fieldVM.field.maxChars}}</div>
+          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Min:</div> {{fieldVM.field.min}}</div>
+          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Max:</div> {{fieldVM.field.max}}</div>
+          <div class="row"><div class="report-label">Invalid Prompt:</div> {{formatDefaultPrompt(fieldVM.field.invalidPrompt)}}</div>
+          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Sample Value:</div> {{fieldVM.field.sample}}</div>
+          <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">External List:</div> {{fieldVM.field.listSrc}}</div>
+          <div class="row"><div class="report-label">Internal List:</div> {{formatPageTextCell(fieldVM.field.listData)}}</div>
+        {{/for}}
       </div>
     {{/is}}
   </div>

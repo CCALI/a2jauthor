@@ -33,30 +33,48 @@ export const FieldVM = DefineMap.extend('FieldVM', {
     }
   },
 
-  get varType () {
-    const variable = this.vars[this.name.toLowerCase()]
-    return variable && variable.type
+  get varType () { // Text, Number, MC, TF ...
+    const varName = this.name.toLowerCase()
+    const variable = varName && this.vars[varName]
+    const varType = variable && variable.type.toLowerCase()
+
+    return varType
   },
 
-  get expectedVarType () {
-    return pageFieldsHelpers.getExpectedVarType(this.type).toLowerCase()
+  get expectedVarType () { // Text, Number, MC, TF ...
+    return pageFieldsHelpers.getExpectedVarType(this.type)
   },
 
   hasValidType: {
     value ({ listenTo, resolve }) {
-      const fieldType = this.type && this.type.toLowerCase()
-      const varType = this.varType && this.varType.toLowerCase()
+      let fieldType = this.type && this.type.toLowerCase()
+      let varType = this.varType && this.varType.toLowerCase()
+      let isValid = pageFieldsHelpers.hasValidVarType(fieldType, varType)
 
       listenTo('name', function (name, preName) {
-        resolve(pageFieldsHelpers.hasValidVarType(fieldType, varType))
+        fieldType = this.type && this.type.toLowerCase()
+        varType = this.varType && this.varType.toLowerCase()
+        isValid = pageFieldsHelpers.hasValidVarType(fieldType, varType)
+
+        resolve(isValid)
       })
 
       listenTo('type', function (type, preType) {
-        resolve(pageFieldsHelpers.hasValidVarType(fieldType, varType))
+        fieldType = this.type && this.type.toLowerCase()
+        varType = this.varType && this.varType.toLowerCase()
+        isValid = pageFieldsHelpers.hasValidVarType(fieldType, varType)
+
+        resolve(isValid)
       })
 
-      resolve(pageFieldsHelpers.hasValidVarType(fieldType, varType))
+      resolve(isValid)
     }
+  },
+
+  get problemMessage () {
+    const message = this.hasValidType ? '' : `Field Type: (${this.field.type}) requires Variable Type: (${this.expectedVarType}), found Variable Type: (${this.varType})`
+    this.field.problem = message
+    return message
   },
 
   types: {

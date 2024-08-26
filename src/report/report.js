@@ -8,6 +8,7 @@ import popupPartial from './popup-partial.stache'
 import naturalCompare from 'string-natural-compare/'
 import cString from '@caliorg/a2jdeps/utils/string'
 import TextStatistics from '~/src/utils/text-statistics'
+import { FieldVM } from '../pages-tab/components/page-fields/page-fields'
 
 stache.registerPartial('page-partial', pagePartial)
 stache.registerPartial('popup-partial', popupPartial)
@@ -121,7 +122,7 @@ export const ReportVM = DefineMap.extend('ReportVM', {
           // TODO: figure out why building this blocks rendering of the initial stache
           // and remove the setTimeout
           setTimeout(() => {
-            const pagesAndPopups = this.buildPagesByStep(guide.sortedPages, guide.steps)
+            const pagesAndPopups = this.buildPagesByStep(guide.sortedPages, guide.steps, guide.vars)
             resolve(pagesAndPopups)
             this.buildingReport = false
           })
@@ -323,7 +324,7 @@ export const ReportVM = DefineMap.extend('ReportVM', {
    *
    * builds 2 sorted arrays, pages and popups, from the existing sortedPages and steps Maps
    */
-  buildPagesByStep (sortedPages, guideSteps) {
+  buildPagesByStep (sortedPages, guideSteps, vars) {
     const vm = this
 
     const pagesByStep = []
@@ -341,6 +342,7 @@ export const ReportVM = DefineMap.extend('ReportVM', {
       page.textStats = page.text ? vm.getTextStats(page.text) : null
       page.learnStats = page.learn ? vm.getTextStats(page.learn) : null
       page.helpStats = page.help ? vm.getTextStats(page.help) : null
+      page.fields = new DefineList(page.fields.map(field => new FieldVM({ field, vars })))
 
       if (page.type === 'Popup') {
         popupPages.push(page)

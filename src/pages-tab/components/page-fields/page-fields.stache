@@ -1,7 +1,7 @@
 <can-import from="./page-fields.less" />
 <can-import from="../var-picker/field/var-picker-field" />
 <can-import from="../file-picker/" />
-<can-import from="~/src/guide-health/" />
+<can-import from="~/src/health-message/" />
 
 <fieldset name="record">
   <legend>Fields</legend>
@@ -67,9 +67,9 @@
                   </select>
                 </div>
               </div>
-              {{#if(fieldVM.field.problem.length)}} 
-                <guide-health>{{fieldVM.field.problem}}</guide-health>
-              {{/if}}
+              {{#not(fieldVM.hasValidType)}}
+                <health-message message:from="fieldVM.problemMessage"></health-message>
+              {{/not}}
               <var-picker-field appState:from="appState" filterText:bind="fieldVM.name" obj:bind="fieldVM.field" key:from="'name'" />
               {{#if(fieldVM.canDefaultValue)}}
                 <div class="editspan form-group" name="default">

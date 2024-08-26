@@ -1,13 +1,10 @@
-import CanMap from 'can-map'
+import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './editor.stache'
 import constants from '~/src/models/constants'
 
-import 'can-map-define'
-
-export const VariableEditorVM = CanMap.extend({
-  define: {
-    /*
+export const VariableEditorVM = DefineMap.extend('VariableEditorVM', {
+  /*
       type Variable = {
         name: String,
         type: String,
@@ -22,98 +19,98 @@ export const VariableEditorVM = CanMap.extend({
       onVariableChange: Function Variable
     */
 
-    initialVariable: {
-      set (initialVariable) {
-        const variable = initialVariable || {}
-        this.attr('variableName', variable.name)
-        this.attr('variableType', variable.type)
-        this.attr('variableComment', variable.comment)
-        this.attr('variableIsRepeating', variable.repeating)
-        return initialVariable
+  initialVariable: {
+    set (initialVariable) {
+      console.log('setting initial', initialVariable)
+      const variable = initialVariable || {}
+      this.variableName = variable.name
+      this.variableType = variable.type
+      this.variableComment = variable.comment
+      this.variableIsRepeating = variable.repeating
+      return initialVariable
+    }
+  },
+
+  variableNameMaxLength: {
+    get () {
+      if (!window.gPrefs || !window.gPrefs.warnHotDocsNameLength) {
+        return false
       }
-    },
 
-    variableNameMaxLength: {
-      get () {
-        if (!window.gPrefs || !window.gPrefs.warnHotDocsNameLength) {
-          return false
-        }
+      return constants.MAXVARNAMELENGTH
+    }
+  },
 
-        return constants.MAXVARNAMELENGTH
+  variableName: {
+    default: '',
+    set (x = '') {
+      this.emitVariable()
+      return x
+    }
+  },
+  variableType: {
+    default: 'Text',
+    set (x = 'Text') {
+      this.emitVariable()
+      return x
+    }
+  },
+  variableComment: {
+    default: '',
+    set (x = '') {
+      this.emitVariable()
+      return x
+    }
+  },
+  variableIsRepeating: {
+    default: false,
+    set (x = false) {
+      this.emitVariable()
+      return x
+    }
+  },
+
+  variableUsageHtml: {},
+
+  existingVariableNames: {},
+
+  variableSuggestions: {
+    get () {
+      const initialVariable = this.initialVariable
+      const hasWorkingVariable = !!initialVariable
+      if (hasWorkingVariable) {
+        return []
       }
-    },
 
-    variableName: {
-      value: '',
-      set (x = '') {
-        this.emitVariable()
-        return x
+      const text = this.variableName.toLowerCase()
+      if (!text) {
+        return []
       }
-    },
-    variableType: {
-      value: 'Text',
-      set (x = 'Text') {
-        this.emitVariable()
-        return x
+
+      const names = this.existingVariableNames
+      if (!names) {
+        return []
       }
-    },
-    variableComment: {
-      value: '',
-      set (x = '') {
-        this.emitVariable()
-        return x
-      }
-    },
-    variableIsRepeating: {
-      value: false,
-      set (x = false) {
-        this.emitVariable()
-        return x
-      }
-    },
 
-    variableUsageHtml: {},
+      const maxSuggestionCount = 5
+      return names
+        .serialize()
+        .filter(name => {
+          const containsText = name.toLowerCase().indexOf(text) !== -1
+          return containsText
+        })
+        .sort((a, b) => a.localeCompare(b))
+        .slice(0, maxSuggestionCount)
+    }
+  },
 
-    existingVariableNames: {},
-
-    variableSuggestions: {
-      get () {
-        const initialVariable = this.attr('initialVariable')
-        const hasWorkingVariable = !!initialVariable
-        if (hasWorkingVariable) {
-          return []
-        }
-
-        const text = this.attr('variableName').toLowerCase()
-        if (!text) {
-          return []
-        }
-
-        const names = this.attr('existingVariableNames')
-        if (!names) {
-          return []
-        }
-
-        const maxSuggestionCount = 5
-        return names
-          .serialize()
-          .filter(name => {
-            const containsText = name.toLowerCase().indexOf(text) !== -1
-            return containsText
-          })
-          .sort((a, b) => a.localeCompare(b))
-          .slice(0, maxSuggestionCount)
-      }
-    },
-
-    // the variable name as it was before the editor was opened, or whatever it is now if its a new variable
-    initialVarName: {
-      get () {
-        const iv = this.attr('initialVariable')
-        const ivname = iv && iv.name // use the initially loaded name in case they've edited it in the form before checking usage
-        const variableName = ivname || this.attr('variableName')
-        return variableName
-      }
+  // the variable name as it was before the editor was opened, or whatever it is now if its a new variable
+  initialVarName: {
+    get () {
+      const iv = this.initialVariable
+      const ivname = iv && iv.name // use the initially loaded name in case they've edited it in the form before checking usage
+      const variableName = ivname || this.variableName
+      return variableName
     }
   },
 
@@ -126,16 +123,16 @@ export const VariableEditorVM = CanMap.extend({
     setTimeout(() => {
       this._willEmit = false
 
-      const onVariableChange = this.attr('onVariableChange')
+      const onVariableChange = this.onVariableChange
       if (!onVariableChange) {
         return
       }
 
       const variable = {
-        name: this.attr('variableName'),
-        type: this.attr('variableType'),
-        comment: this.attr('variableComment'),
-        repeating: this.attr('variableIsRepeating')
+        name: this.variableName,
+        type: this.variableType,
+        comment: this.variableComment,
+        repeating: this.variableIsRepeating
       }
 
       onVariableChange(variable)
@@ -143,7 +140,7 @@ export const VariableEditorVM = CanMap.extend({
   },
 
   onSuggestionSelect (name) {
-    const onSelectSuggestion = this.attr('onSelectSuggestion')
+    const onSelectSuggestion = this.onSelectSuggestion
     if (!onSelectSuggestion) {
       return
     }
@@ -153,9 +150,9 @@ export const VariableEditorVM = CanMap.extend({
 
   onFindUsage () {
     // use the initially loaded name in case they've edited it in the form before checking usage
-    const variableName = this.attr('initialVarName')
+    const variableName = this.initialVarName
     const html = window.vcGatherUsage(variableName)
-    this.attr('variableUsageHtml', html)
+    this.variableUsageHtml = html
   }
 })
 
@@ -170,7 +167,7 @@ export default Component.extend({
       this.viewModel.onFindUsage()
     },
     '.var-name input' (target, event) {
-      this.viewModel.attr('variableName', event.target.value)
+      this.viewModel.variableName = event.target.value
     }
   }
 })

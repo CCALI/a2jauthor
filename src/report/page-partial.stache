@@ -41,7 +41,7 @@
     </div>
     {{^is(scope/selectedReport, "citationReport")}}
       <div class="col-xs-4">
-        {{#for(fieldVM of fields)}}
+        {{#for(fieldVM of fieldsWithVM)}}
           <div class="row"><div class="report-label">Field #</div> {{addOne(scope.index)}}</div>
           {{#not(fieldVM.hasValidType)}}
               <health-message message:from="fieldVM.problemMessage"></health-message>

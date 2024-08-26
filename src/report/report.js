@@ -342,7 +342,7 @@ export const ReportVM = DefineMap.extend('ReportVM', {
       page.textStats = page.text ? vm.getTextStats(page.text) : null
       page.learnStats = page.learn ? vm.getTextStats(page.learn) : null
       page.helpStats = page.help ? vm.getTextStats(page.help) : null
-      page.fields = new DefineList(page.fields.map(field => new FieldVM({ field, vars })))
+      page.fieldsWithVM = new DefineList(page.fields.map(field => new FieldVM({ field, vars })))
 
       if (page.type === 'Popup') {
         popupPages.push(page)

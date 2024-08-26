@@ -1,8 +1,8 @@
 import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
-import template from './guide-health.stache'
+import template from './health-message.stache'
 
-export const GuideHealthVM = DefineMap.extend('GuideHealthVM', {
+export const HealthMessageVM = DefineMap.extend('HealthMessageVM', {
   message: {
     type: 'text',
     default: ''
@@ -10,8 +10,8 @@ export const GuideHealthVM = DefineMap.extend('GuideHealthVM', {
 })
 
 export default Component.extend({
-  tag: 'guide-health',
+  tag: 'health-message',
   view: template,
   leakScope: false,
-  ViewModel: GuideHealthVM
+  ViewModel: HealthMessageVM
 })

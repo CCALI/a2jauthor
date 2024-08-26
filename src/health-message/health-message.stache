@@ -1,7 +1,7 @@
-<can-import from="./guide-health.less" />
+<can-import from="./health-message.less" />
 
 <div class="problem alert-danger">
   <span class="glyphicon-attention"></span>
-    <content />
+    {{message}}
   <span class="glyphicon-attention"></span>
 </div>

@@ -21,7 +21,6 @@ export const VariableEditorVM = DefineMap.extend('VariableEditorVM', {
 
   initialVariable: {
     set (initialVariable) {
-      console.log('setting initial', initialVariable)
       const variable = initialVariable || {}
       this.variableName = variable.name
       this.variableType = variable.type

@@ -71,10 +71,28 @@ export const FieldVM = DefineMap.extend('FieldVM', {
     }
   },
 
+  get noVariableAssigned () {
+    return !this.name
+  },
+
+  get showVarRemovalMessage () {
+    return !this.noVariableAssigned && !this.hasValidTypes
+  },
+
+  get alertClass () {
+    return this.noVariableAssigned ? 'warning' : 'danger'
+  },
+
   get problemMessage () {
-    const message = this.hasValidType ? '' : `Field Type: (${this.field.type}) requires Variable Type: (${this.expectedVarType}), found Variable Type: (${this.varType})`
-    this.field.problem = message
-    return message
+    if (this.noVariableAssigned) {
+      return `No Variable Assigned -> Field Type: (${this.field.type}) requires Variable Type: (${this.expectedVarType})`
+    } else if (!this.hasValidTypes) {
+      this.field.problem = `Field Type: (${this.field.type}) requires Variable Type: (${this.expectedVarType}), found Variable Type: (${this.varType})`
+      return this.field.problem
+    }
+
+    this.field.problem = ''
+    return ''
   },
 
   types: {

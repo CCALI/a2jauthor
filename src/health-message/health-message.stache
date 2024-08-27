@@ -1,7 +1,15 @@
 <can-import from="./health-message.less" />
 
-<div class="problem alert-danger">
-  <span class="glyphicon-attention"></span>
-    {{message}}
-  <span class="glyphicon-attention"></span>
-</div>
+{{#is(alertClass , "warning")}}
+  <div class="problem alert-warning">
+    <span class="glyphicon-info-circled-1"></span>
+      {{message}}
+    <span class="glyphicon-info-circled-1"></span>
+  </div>
+{{else}}
+  <div class="problem alert-danger">
+    <span class="glyphicon-attention"></span>
+      {{message}}
+    <span class="glyphicon-attention"></span>
+  </div>
+{{/is}}

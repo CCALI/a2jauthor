@@ -7,6 +7,7 @@ import { onlyOne } from '../../../helpers/helpers'
 export const VarPickerField = DefineMap.extend('VarPickerField', {
   page: {},
   appState: {},
+  showVarRemovalMessage: {},
   // obj[key] like button['name']
   obj: {
     type: 'any'
@@ -39,7 +40,6 @@ export const VarPickerField = DefineMap.extend('VarPickerField', {
     Object.assign(partialVariable, { name: this.filterText, type: 'Text' })
     const assignedVariable = validVarName ? this.appState.guide.vars[this.filterText.toLowerCase()] : partialVariable
 
-    console.log('assignedVariable', assignedVariable)
     return assignedVariable
   },
 
@@ -80,7 +80,6 @@ export const VarPickerField = DefineMap.extend('VarPickerField', {
   newVarData: {},
 
   onVariableChange (variable) {
-    console.log('onvarchange', variable)
     this.newVarData = variable
   },
 

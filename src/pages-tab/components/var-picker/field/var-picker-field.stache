@@ -8,6 +8,9 @@
   {{let showVariableModal = newObservableBool(false)}}
   {{let showVariableEditModal = newObservableBool(false)}}
   <label class="control-label">{{label}}</label>
+  {{#if(showVarRemovalMessage)}}
+    <span class="alert-warning"> ( Warning! Mismatched Variable will be removed on Close/Save. ) </span>
+  {{/if}}
   <div class="form-group has-var-picker">
     <input
       class="

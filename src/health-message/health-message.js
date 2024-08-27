@@ -6,7 +6,9 @@ export const HealthMessageVM = DefineMap.extend('HealthMessageVM', {
   message: {
     type: 'text',
     default: ''
-  }
+  },
+
+  alertClass: {}
 })
 
 export default Component.extend({

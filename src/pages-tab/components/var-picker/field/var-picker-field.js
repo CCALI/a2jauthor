@@ -69,6 +69,14 @@ export const VarPickerField = DefineMap.extend('VarPickerField', {
     return (!newValue) || (!!this.appState.guide.vars[newValue.toLowerCase()])
   },
 
+  get disableEdit () {
+    const filterText = this.filterText
+    const validVarName = this.validVarName(filterText)
+    const shouldDisable = !filterText.length && validVarName
+
+    return shouldDisable
+  },
+
   makeTrueAndFocusPopup (bool) {
     this.makeTrue(bool)
     setTimeout(() => {

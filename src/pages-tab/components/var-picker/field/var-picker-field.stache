@@ -31,15 +31,15 @@
       {{#if(nameVarPickerVisible.value)}}
         <var-picker appState:from="appState" varName:bind="filterText" selectedCallback:from="nameVarPickerVisible.value = false" />
       {{/if}}
-    </div>
-    <div class="var-picker-edit">
-      <button class="newvar-button btn btn-default btn-wide-sm" on:click="makeTrueAndFocusPopup(showVariableEditModal)" style="margin-top: 4px;">
-        <span class="glyphicon-plus" aria-hidden="true"></span> Edit Current
-      </button>
-    </div>
+    </div>    
     <div class="var-picker-add">
       <button class="newvar-button btn btn-default btn-wide-sm" on:click="makeTrueAndFocusPopup(showVariableModal)" style="margin-top: 4px;">
         <span class="glyphicon-plus" aria-hidden="true"></span> Add New
+      </button>
+    </div>
+    <div class="var-picker-edit">
+      <button {{#if(disableEdit)}}disabled{{/if}} class="newvar-button btn btn-default btn-wide-sm" on:click="makeTrueAndFocusPopup(showVariableEditModal)" style="margin-top: 4px;">
+        <span class="glyphicon-pencil" aria-hidden="true"></span> Edit Current
       </button>
     </div>
   </div>

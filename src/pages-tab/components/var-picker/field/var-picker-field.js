@@ -33,6 +33,20 @@ export const VarPickerField = DefineMap.extend('VarPickerField', {
     default: ''
   },
 
+  get assignedVariable () {
+    const validVarName = this.validVarName(this.filterText)
+    const partialVariable = new TVariable()
+    Object.assign(partialVariable, { name: this.filterText, type: 'Text' })
+    const assignedVariable = validVarName ? this.appState.guide.vars[this.filterText.toLowerCase()] : partialVariable
+
+    console.log('assignedVariable', assignedVariable)
+    return assignedVariable
+  },
+
+  get blankVariable () {
+    return new TVariable()
+  },
+
   newObservableBool (tf = false) {
     return new DefineMap({ value: tf })
   },
@@ -66,6 +80,7 @@ export const VarPickerField = DefineMap.extend('VarPickerField', {
   newVarData: {},
 
   onVariableChange (variable) {
+    console.log('onvarchange', variable)
     this.newVarData = variable
   },
 
@@ -76,7 +91,7 @@ export const VarPickerField = DefineMap.extend('VarPickerField', {
     }
   },
 
-  addVarCB (bool) {
+  addEditVarCB (bool) {
     return () => {
       const variable = this.newVarData
       const name = variable && variable.name

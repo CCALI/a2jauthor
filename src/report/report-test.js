@@ -50,10 +50,10 @@ describe('<report-page>', () => {
 
     it('pagesAndPopups and buildPagesByStep', () => {
       const sortedPages = [
-        { type: 'a2j', step: '0' },
-        { type: 'a2j', step: '1' },
-        { type: 'a2j', step: '1' },
-        { type: 'Popup' }
+        { type: 'a2j', step: '0', fields: [] },
+        { type: 'a2j', step: '1', fields: [] },
+        { type: 'a2j', step: '1', fields: [] },
+        { type: 'Popup', fields: [] }
       ]
 
       const steps = [

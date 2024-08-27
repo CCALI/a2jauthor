@@ -68,7 +68,7 @@
                 </div>
               </div>
               {{#not(fieldVM.hasValidTypes)}}
-              <health-message alertClass:from="fieldVM.alertClass" message:from="fieldVM.problemMessage"></health-message>
+                <health-message alertClass:from="fieldVM.alertClass" message:from="fieldVM.problemMessage"></health-message>
               {{/not}}
               <var-picker-field showVarRemovalMessage:from="fieldVM.showVarRemovalMessage" appState:from="appState" filterText:bind="fieldVM.name" obj:bind="fieldVM.field" key:from="'name'" />
               {{#if(fieldVM.canDefaultValue)}}

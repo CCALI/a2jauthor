@@ -16,6 +16,9 @@
   </div>
 
   <var-picker-field appState:from="appState" obj:bind="page" key:from="'repeatVar'" label:from="'Counting Variable:'" />
+  {{#if(showCountingVariableWarning)}}
+    <health-message alertClass:raw="warning" message:from="healthMessage"></health-message>
+  {{/if}}
 
   <var-picker-field
     appState:from="appState"
@@ -23,4 +26,7 @@
     label:from="'Outer Loop Counting Variable:'"
     placeholder:from="'You should only use a variable here for Nested Loops'"
   />
+  {{#if(showOuterLoopVariableWarning)}}
+    <health-message alertClass:raw="warning" message:from="healthMessage"></health-message>
+  {{/if}}
 </fieldset>

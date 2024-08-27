@@ -469,7 +469,7 @@ function checkPageHealth (page) {
       return
     }
     // bad var assigned, clear var name and problem message
-    if (field && field.problem.length !== 0) {
+    if (field && field.problem && field.problem.length !== 0) {
       field.name = ''
       field.problem = ''
     }

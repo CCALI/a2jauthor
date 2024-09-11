@@ -4,10 +4,24 @@ import template from './var-picker-field.stache'
 import { TVariable } from '~/legacy/viewer/A2J_Types'
 import { onlyOne } from '../../../helpers/helpers'
 
-export const VarPickerField = DefineMap.extend('VarPickerField', {
+export const VarPickerFieldVM = DefineMap.extend('VarPickerFieldVM', {
   page: {},
   appState: {},
-  showVarRemovalMessage: {},
+  expectedVarType: {}, // passed in from parent
+  get showMessage () {
+    const assignedVarType = this.assignedVariable ? this.assignedVariable.type.toLowerCase() : ''
+    const expectedVarType = this.expectedVarType ? this.expectedVarType.toLowerCase() : ''
+
+    // if they don't match, show 'will not save' message as well
+    // validVarName might matter here as well - like while they are typing/assiging, no error? warning?
+    return assignedVarType !== expectedVarType
+  },
+  get message () {
+    const assignedVarType = this.assignedVariable ? this.assignedVariable.type.toLowerCase() : ''
+    const expectedVarType = this.expectedVarType ? this.expectedVarType.toLowerCase() : ''
+
+    return `Found Variable Type: (${assignedVarType}) but expected Variable Type: (${expectedVarType})`
+  },
   // obj[key] like button['name']
   obj: {
     type: 'any'
@@ -126,5 +140,5 @@ export default Component.extend({
   tag: 'var-picker-field',
   view: template,
   leakScope: false,
-  ViewModel: VarPickerField
+  ViewModel: VarPickerFieldVM
 })

@@ -53,7 +53,7 @@ $headers  = "MIME-Version: 1.0\r\n";
 $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
 
 /* additional headers */
-$headers .= "From: A2J Viewer Feedback Form <a2jauthorfeedback@cali.org>\r\n";
+$headers .= "From: A2J Viewer answerset parser <support@a2jauthor.org>\r\n";
 
 /* and now mail it */
 mail($to, $subject, $message, $headers);

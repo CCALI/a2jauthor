@@ -32,12 +32,6 @@
   </div>
 
   <div class="col-lg-6">
-    <button class="btn btn-default" on:el:click="addElement('legal-nav')">
-      Legal Nav (If / Else)
-    </button>
-  </div>
-
-  <div class="col-lg-6">
     <button class="btn btn-default" on:el:click="addElement('repeat-loop')">
       Repeat Loop
     </button>

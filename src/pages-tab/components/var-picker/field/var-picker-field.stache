@@ -6,7 +6,11 @@
 <div class="divvariable auto-close-shared-bool-on-outside-focus">
   {{let nameVarPickerVisible = newObservableBool(false)}}
   {{let showVariableModal = newObservableBool(false)}}
+  {{let showVariableEditModal = newObservableBool(false)}}
   <label class="control-label">{{label}}</label>
+  {{#if(showVarRemovalMessage)}}
+    <span class="alert-warning"> ( Warning! Mismatched Variable will be removed on Close/Save. ) </span>
+  {{/if}}
   <div class="form-group has-var-picker">
     <input
       class="
@@ -27,23 +31,48 @@
       {{#if(nameVarPickerVisible.value)}}
         <var-picker appState:from="appState" varName:bind="filterText" selectedCallback:from="nameVarPickerVisible.value = false" />
       {{/if}}
-    </div>
+    </div>    
     <div class="var-picker-add">
       <button class="newvar-button btn btn-default btn-wide-sm" on:click="makeTrueAndFocusPopup(showVariableModal)" style="margin-top: 4px;">
         <span class="glyphicon-plus" aria-hidden="true"></span> Add New
+      </button>
+    </div>
+    <div class="var-picker-edit">
+      <button {{#if(disableEdit)}}disabled{{/if}} class="newvar-button btn btn-default btn-wide-sm" on:click="makeTrueAndFocusPopup(showVariableEditModal)" style="margin-top: 4px;">
+        <span class="glyphicon-pencil" aria-hidden="true"></span> Edit Current
       </button>
     </div>
   </div>
 
   {{#if(showVariableModal.value)}}
     <author-modal
-      modalTitle:raw="Add New Variable"
+      modalTitle:raw="Add Variable"
       cancelText:raw="Cancel"
       submitText:raw="Save"
       onCancel:from="makeFalseAndClearDataCB(showVariableModal)"
-      onSubmit:from="addVarCB(showVariableModal)"
+      onSubmit:from="addEditVarCB(showVariableModal)"
     >
-      <variable-editor showUsageFinder:from="{{false}}" onVariableChange:from="onVariableChange" />
+      <variable-editor 
+        initialVariable:from="blankVariable" 
+        showUsageFinder:from="{{false}}" 
+        onVariableChange:from="onVariableChange" 
+      />
     </author-modal>
   {{/if}}
+
+  {{#if(showVariableEditModal.value)}}
+    <author-modal
+      modalTitle:raw="Edit Variable"
+      cancelText:raw="Cancel"
+      submitText:raw="Save"
+      onCancel:from="makeFalseAndClearDataCB(showVariableEditModal)"
+      onSubmit:from="addEditVarCB(showVariableEditModal)"
+    >
+      <variable-editor
+        initialVariable:from="assignedVariable"
+        showUsageFinder:raw="true"
+        onVariableChange:from="onVariableChange"
+      />
+    </author-modal>
+{{/if}}
 </div>

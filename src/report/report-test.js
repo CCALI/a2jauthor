@@ -14,46 +14,46 @@ describe('<report-page>', () => {
     })
 
     it('selectedReport', () => {
-      assert.equal(vm.attr('selectedReport'), 'fullReport', 'initial value should be fullReport')
+      assert.equal(vm.selectedReport, 'fullReport', 'initial value should be fullReport')
     })
 
     it('buildingReport', () => {
       const originalGuide = window.gGuide
-      window.gGuide = {}
+      window.gGuide = undefined
 
-      assert.equal(vm.attr('buildingReport'), false, 'should be false when no guide loaded')
+      assert.equal(vm.buildingReport, false, 'should be false when no guide loaded')
       window.gGuide = originalGuide
     })
 
     it('hideDefault', () => {
-      assert.equal(vm.attr('hideDefault'), false, 'hideDefault should start at false')
+      assert.equal(vm.hideDefault, false, 'hideDefault should start at false')
 
-      vm.attr('selectedReport', 'textReport')
-      assert.equal(vm.attr('hideDefault'), true, 'should be true if selectedReport is textReport')
+      vm.selectedReport = 'textReport'
+      assert.equal(vm.hideDefault, true, 'should be true if selectedReport is textReport')
 
-      vm.attr('selectedReport', 'citationReport')
-      assert.equal(vm.attr('hideDefault'), true, 'should be true if selectedReport is citationReport')
+      vm.selectedReport = 'citationReport'
+      assert.equal(vm.hideDefault, true, 'should be true if selectedReport is citationReport')
     })
 
     it('hideText', () => {
-      assert.equal(vm.attr('hideText'), false, 'hideText should start at false')
+      assert.equal(vm.hideText, false, 'hideText should start at false')
 
-      vm.attr('selectedReport', 'citationReport')
-      assert.equal(vm.attr('hideText'), true, 'should be true if selectedReport is citationReport')
+      vm.selectedReport = 'citationReport'
+      assert.equal(vm.hideText, true, 'should be true if selectedReport is citationReport')
     })
 
     it('hideCitation', () => {
-      assert.equal(vm.attr('hideCitation'), false, 'hideCitation should start at false')
-      vm.attr('selectedReport', 'textReport')
-      assert.equal(vm.attr('hideCitation'), true, 'should be true if selectedReport is textReport')
+      assert.equal(vm.hideCitation, false, 'hideCitation should start at false')
+      vm.selectedReport = 'textReport'
+      assert.equal(vm.hideCitation, true, 'should be true if selectedReport is textReport')
     })
 
     it('pagesAndPopups and buildPagesByStep', () => {
       const sortedPages = [
-        { type: 'a2j', step: '0' },
-        { type: 'a2j', step: '1' },
-        { type: 'a2j', step: '1' },
-        { type: 'Popup' }
+        { type: 'a2j', step: '0', fields: [] },
+        { type: 'a2j', step: '1', fields: [] },
+        { type: 'a2j', step: '1', fields: [] },
+        { type: 'Popup', fields: [] }
       ]
 
       const steps = [
@@ -62,9 +62,9 @@ describe('<report-page>', () => {
       ]
 
       const guide = { sortedPages, steps }
-      vm.attr('guide', guide)
+      vm.guide = guide
 
-      const promise = vm.attr('pagesAndPopups')
+      const promise = vm.pagesAndPopups
 
       return promise.then((pagesAndPopups) => {
         assert.equal(pagesAndPopups.length, 2, 'pagesAndPopups should be a 2 element array')
@@ -86,9 +86,9 @@ describe('<report-page>', () => {
           'last name': { name: 'Last Name' }
         }
       })
-      vm.attr('guide', guide)
+      vm.guide = guide
 
-      const sortedVariableList = vm.attr('sortedVariableList')
+      const sortedVariableList = vm.sortedVariableList
       const expectedOrder = [
         { name: 'First Name' },
         { name: 'Last Name' },
@@ -102,13 +102,13 @@ describe('<report-page>', () => {
 
     it('displayLanguage', () => {
       const guide = { language: 'en' }
-      vm.attr('guide', guide)
+      vm.guide = guide
 
       window.Languages = {
         regional: { en: { locale: 'en', Language: 'English', LanguageEN: 'English' } }
       }
 
-      const displayLanguage = vm.attr('displayLanguage')
+      const displayLanguage = vm.displayLanguage
       assert.equal(displayLanguage, 'English (English) {en}', 'display language is wrong or improperly formatted')
     })
   })

@@ -7,6 +7,7 @@ import { onlyOne } from '../../../helpers/helpers'
 export const VarPickerField = DefineMap.extend('VarPickerField', {
   page: {},
   appState: {},
+  showVarRemovalMessage: {},
   // obj[key] like button['name']
   obj: {
     type: 'any'
@@ -33,6 +34,19 @@ export const VarPickerField = DefineMap.extend('VarPickerField', {
     default: ''
   },
 
+  get assignedVariable () {
+    const validVarName = this.validVarName(this.filterText)
+    const partialVariable = new TVariable()
+    Object.assign(partialVariable, { name: this.filterText, type: 'Text' })
+    const assignedVariable = validVarName ? this.appState.guide.vars[this.filterText.toLowerCase()] : partialVariable
+
+    return assignedVariable
+  },
+
+  get blankVariable () {
+    return new TVariable()
+  },
+
   newObservableBool (tf = false) {
     return new DefineMap({ value: tf })
   },
@@ -55,6 +69,14 @@ export const VarPickerField = DefineMap.extend('VarPickerField', {
     return (!newValue) || (!!this.appState.guide.vars[newValue.toLowerCase()])
   },
 
+  get disableEdit () {
+    const filterText = this.filterText
+    const validVarName = this.validVarName(filterText)
+    const shouldDisable = !filterText.length && validVarName
+
+    return shouldDisable
+  },
+
   makeTrueAndFocusPopup (bool) {
     this.makeTrue(bool)
     setTimeout(() => {
@@ -64,6 +86,7 @@ export const VarPickerField = DefineMap.extend('VarPickerField', {
   },
 
   newVarData: {},
+
   onVariableChange (variable) {
     this.newVarData = variable
   },
@@ -75,7 +98,7 @@ export const VarPickerField = DefineMap.extend('VarPickerField', {
     }
   },
 
-  addVarCB (bool) {
+  addEditVarCB (bool) {
     return () => {
       const variable = this.newVarData
       const name = variable && variable.name

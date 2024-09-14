@@ -5,86 +5,14 @@ import template from './page-fields.stache'
 import constants from 'a2jauthor/src/models/constants'
 import { ckeFactory } from '../../helpers/helpers'
 import { TField } from '~/legacy/viewer/A2J_Types'
-
-// O(1) field type constant VM prop maps
-const canRequire = {
-  radio: false,
-  [constants.ftCheckBoxNOTA]: false,
-  [constants.ftUserAvatar]: false
-}
-const canMinMax = {
-  [constants.ftNumber]: true,
-  [constants.ftNumberDollar]: true,
-  [constants.ftNumberPick]: true,
-  [constants.ftDateMDY]: true
-}
-const canList = {
-  [constants.ftTextPick]: true
-}
-const canDefaultValue = {
-  [constants.ftCheckBox]: false,
-  [constants.ftCheckBoxNOTA]: false,
-  [constants.ftGender]: false,
-  [constants.ftUserAvatar]: false
-}
-const canOrder = {
-  [constants.ftTextPick]: true,
-  [constants.ftNumberPick]: true,
-  [constants.ftDateMDY]: true
-}
-const canUseCalc = {
-  [constants.ftNumber]: true,
-  [constants.ftNumberDollar]: true
-}
-const canMaxChars = {
-  [constants.ftText]: true,
-  [constants.ftTextLong]: true,
-  [constants.ftNumberPhone]: true,
-  [constants.ftNumberZIP]: true,
-  [constants.ftNumberSSN]: true
-}
-const canCalendar = {
-  [constants.ftDateMDY]: true
-}
-const canUseSample = {
-  [constants.ftText]: true,
-  [constants.ftTextLong]: true,
-  [constants.ftTextPick]: true,
-  [constants.ftNumberPick]: true,
-  [constants.ftNumber]: true,
-  [constants.ftNumberZIP]: true,
-  [constants.ftNumberSSN]: true,
-  [constants.ftNumberDollar]: true,
-  [constants.ftDateMDY]: true
-}
-const forceRequired = {
-  radio: true,
-  [constants.ftCheckBoxNOTA]: true
-}
-/* eslint-disable no-multi-spaces */
-const fieldTypes = new DefineList([
-  { value: constants.ftText,         label: 'Text' },
-  { value: constants.ftTextLong,     label: 'Text (Long)' },
-  { value: constants.ftTextPick,     label: 'Text (Pick from list)' },
-  { value: constants.ftNumber,       label: 'Number' },
-  { value: constants.ftNumberDollar, label: 'Number Dollar' },
-  { value: constants.ftNumberSSN,    label: 'Number SSN' },
-  { value: constants.ftNumberPhone,  label: 'Number Phone' },
-  { value: constants.ftNumberZIP,    label: 'Number ZIP Code' },
-  { value: constants.ftNumberPick,   label: 'Number (Pick from list)' },
-  { value: constants.ftDateMDY,      label: 'Date MM/DD/YYYY' },
-  { value: constants.ftGender,       label: 'Gender' },
-  { value: constants.ftRadioButton,  label: 'Radio Button' },
-  { value: constants.ftCheckBox,     label: 'Check box' },
-  { value: constants.ftCheckBoxNOTA, label: 'Check Box (None of the Above)' },
-  { value: constants.ftUserAvatar,   label: 'User Avatar' }
-])
-/* eslint-enable no-multi-spaces */
+import * as pageFieldsHelpers from './page-fields-helpers'
 
 /* VM used for each field item, another VM used for the fields tab itself is below this */
 export const FieldVM = DefineMap.extend('FieldVM', {
   field: {}, // A2J Types TField
+  vars: {}, // A2J Types TVariable[]
 
+  // validate on this type change
   type: { // bindable proxy to TField type
     value ({ lastSet, listenTo, resolve }) {
       listenTo(lastSet, function (val) {
@@ -95,14 +23,86 @@ export const FieldVM = DefineMap.extend('FieldVM', {
     }
   },
 
+  name: { // bindable proxy to TField name
+    value ({ lastSet, listenTo, resolve }) {
+      listenTo(lastSet, function (val) {
+        this.field.name = val
+        resolve(val)
+      })
+      resolve(this.field.name)
+    }
+  },
+
+  get varType () { // Text, Number, MC, TF ...
+    const varName = this.name.toLowerCase()
+    const variable = varName && this.vars[varName]
+    const varType = variable && variable.type.toLowerCase()
+
+    return varType
+  },
+
+  get expectedVarType () { // Text, Number, MC, TF ...
+    return pageFieldsHelpers.getExpectedVarType(this.type)
+  },
+
+  hasValidTypes: {
+    value ({ listenTo, resolve }) {
+      let fieldType = this.type && this.type.toLowerCase()
+      let varType = this.varType && this.varType.toLowerCase()
+      let isValid = pageFieldsHelpers.hasValidVarType(fieldType, varType)
+
+      listenTo('name', function (name, preName) {
+        fieldType = this.type && this.type.toLowerCase()
+        varType = this.varType && this.varType.toLowerCase()
+        isValid = pageFieldsHelpers.hasValidVarType(fieldType, varType)
+
+        resolve(isValid)
+      })
+
+      listenTo('type', function (type, preType) {
+        fieldType = this.type && this.type.toLowerCase()
+        varType = this.varType && this.varType.toLowerCase()
+        isValid = pageFieldsHelpers.hasValidVarType(fieldType, varType)
+
+        resolve(isValid)
+      })
+
+      resolve(isValid)
+    }
+  },
+
+  get noVariableAssigned () {
+    return !this.name
+  },
+
+  get showVarRemovalMessage () {
+    return !this.noVariableAssigned && !this.hasValidTypes
+  },
+
+  get alertClass () {
+    return this.noVariableAssigned ? 'warning' : 'danger'
+  },
+
+  get problemMessage () {
+    if (this.noVariableAssigned) {
+      return `No Variable Assigned -> Field Type: (${this.field.type}) requires Variable Type: (${this.expectedVarType})`
+    } else if (!this.hasValidTypes) {
+      this.field.problem = `Field Type: (${this.field.type}) requires Variable Type: (${this.expectedVarType}), found Variable Type: (${this.varType})`
+      return this.field.problem
+    }
+
+    this.field.problem = ''
+    return ''
+  },
+
   types: {
-    default: () => fieldTypes
+    default: () => pageFieldsHelpers.fieldTypes
   },
 
   required: {
     value ({ lastSet, listenTo, resolve }) {
       listenTo('type', function (type, prevType) {
-        if (forceRequired[this.type]) {
+        if (pageFieldsHelpers.forceRequired[this.type]) {
           this.field.required = true
           resolve(true)
         } else if (this.type === constants.ftUserAvatar) {
@@ -122,7 +122,7 @@ export const FieldVM = DefineMap.extend('FieldVM', {
     value ({ lastSet, listenTo, resolve }) {
       const vm = this
       const resolver = function (val) {
-        if (canUseCalc[vm.type]) {
+        if (pageFieldsHelpers.canUseCalc[vm.type]) {
           vm.field.calculator = !!val
           resolve(!!val)
         } else {
@@ -131,7 +131,7 @@ export const FieldVM = DefineMap.extend('FieldVM', {
         }
       }
       listenTo('type', function (type, prevType) {
-        (!canUseCalc[this.type]) && resolver(false)
+        (!pageFieldsHelpers.canUseCalc[this.type]) && resolver(false)
       })
       listenTo(lastSet, resolver)
       resolver(this.field.calculator)
@@ -163,49 +163,48 @@ export const FieldVM = DefineMap.extend('FieldVM', {
   },
 
   get canRequire () {
-    return canRequire[this.type] !== false
+    return pageFieldsHelpers.canRequire[this.type] !== false
   },
 
   get canDefaultValue () {
-    return canDefaultValue[this.type] !== false
+    return pageFieldsHelpers.canDefaultValue[this.type] !== false
   },
 
   get canMaxChars () {
-    return canMaxChars[this.type] === true
+    return pageFieldsHelpers.canMaxChars[this.type] === true
   },
 
   get canUseCalc () {
-    return canUseCalc[this.type] === true
+    return pageFieldsHelpers.canUseCalc[this.type] === true
   },
 
   get canMinMax () {
-    return canMinMax[this.type] === true
+    return pageFieldsHelpers.canMinMax[this.type] === true
   },
 
   get canList () {
-    return canList[this.type] === true
+    return pageFieldsHelpers.canList[this.type] === true
   },
 
   get canUseSample () {
-    return canUseSample[this.type] === true
+    return pageFieldsHelpers.canUseSample[this.type] === true
   },
 
   get canOrder () { // unused
-    return canOrder[this.type] === true
+    return pageFieldsHelpers.canOrder[this.type] === true
   },
 
   get canCalendar () { // unused
-    return canCalendar[this.type] === true
+    return pageFieldsHelpers.canCalendar[this.type] === true
   }
 })
 
 export const PageFieldsVM = DefineMap.extend('PageFieldsVM', {
   ckeFactory,
 
-  guideFiles: {},
-
   page: {},
   appState: {},
+  guideFiles: {},
 
   trim (el) {
     el.value = el.value.trim()
@@ -217,10 +216,15 @@ export const PageFieldsVM = DefineMap.extend('PageFieldsVM', {
     return el.value
   },
 
+  get vars () {
+    return this.appState.guide.vars
+  },
+
   get fields () {
     this.numFields // eslint-disable-line
     this.fieldsChanged // eslint-disable-line
-    return new DefineList(this.page.fields.map(field => new FieldVM({ field })))
+    const vars = this.vars
+    return new DefineList(this.page.fields.map(field => new FieldVM({ field, vars })))
   },
 
   minFields: { default: 0 },

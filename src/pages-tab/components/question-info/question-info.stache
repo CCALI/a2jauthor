@@ -12,21 +12,26 @@
   </div>
 
   <div class="form-upload" style="padding-bottom: 15px;">
-    <file-picker appState:from="appState" label:from="'Audio'" obj:from="page" key:from="'textAudioURL'" items:from="guideFiles.media" />
+    <file-picker 
+      appState:from="appState" 
+      label:from="'Audio'" 
+      obj:from="page" 
+      key:from="'textAudioURL'" 
+      items:from="guideFiles.media" />
   </div>
 
-  <var-picker-field appState:from="appState" obj:bind="page" key:from="'repeatVar'" label:from="'Counting Variable:'" />
-  {{#if(showCountingVariableWarning)}}
-    <health-message alertClass:raw="warning" message:from="healthMessage"></health-message>
-  {{/if}}
+  <var-picker-field 
+    appState:from="appState" 
+    obj:bind="page" 
+    key:from="'repeatVar'" 
+    label:from="'Counting Variable:'"
+    expectedVarType:from="'number'" />
 
   <var-picker-field
     appState:from="appState"
     obj:bind="page" key:from="'outerLoopVar'"
     label:from="'Outer Loop Counting Variable:'"
     placeholder:from="'You should only use a variable here for Nested Loops'"
+    expectedVarType:from="'number'"
   />
-  {{#if(showOuterLoopVariableWarning)}}
-    <health-message alertClass:raw="warning" message:from="healthMessage"></health-message>
-  {{/if}}
 </fieldset>

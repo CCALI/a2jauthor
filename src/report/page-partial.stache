@@ -43,9 +43,7 @@
       <div class="col-xs-4">
         {{#for(fieldVM of fieldsWithVM)}}
           <div class="row"><div class="report-label">Field #</div> {{addOne(scope.index)}}</div>
-          {{#not(fieldVM.hasValidTypes)}}
-              <health-message alertClass:from="fieldVM.alertClass" message:from="fieldVM.problemMessage"></health-message>
-          {{/not}}
+          <health-message message:from="fieldVM.message" showMessage:from="fieldVM.showMessage" alertClass:from="'warning'"></health-message>
           <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Type:</div> {{fieldVM.field.type}}</div>
           <div class="row"><div class="report-label">Label:</div> {{fieldVM.field.label}}</div>
           <div class="row {{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Variable:</div> {{fieldVM.field.name}}</div>

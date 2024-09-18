@@ -1,5 +1,9 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST');
+header("Access-Control-Allow-Headers: X-Requested-With");
 
+$path = dirname(__FILE__, 2);
 $config = parse_ini_file($path . '/config_env.ini');
 $service_email = $config['SERVICE_EMAIL'];
 

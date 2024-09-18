@@ -43,6 +43,7 @@ $message="
 An A2J user has submitted an answerset with invalid dates or numbers:
     <ul>
     <li>Bad vars: </li> " . $variables . "
+    <li>Author ID: </li> " . $authorid . "
     <li>Interview Title: " . htmlentities(stripslashes($interviewtitle)) . "
     <li>Interview URL: " . htmlentities(stripslashes($interviewid)). "
     <li>Viewer Version: $viewerversion

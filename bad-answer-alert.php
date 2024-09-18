@@ -34,7 +34,7 @@ if (checkRequest($keys, $user_agent)){
 
 $interviewtitle= ($body_data["guideTitle"]);
 $viewerversion=  ($body_data["guideTitle"]);
-$variables =   ($body_data["invalidAnswers"]);
+$variables =   json_encode($body_data["invalidAnswers"]);
 $authorid =  ($body_data["authorid"]);
 $created=$now=date("Y-m-d-H-i-s");
 
@@ -42,12 +42,12 @@ $created=$now=date("Y-m-d-H-i-s");
 $message="
 An A2J user has submitted an answerset with invalid dates or numbers:
     <ul>
-    <li>Bad vars: </li> " . $variables . "
-    <li>Author ID: </li> " . $authorid . "
-    <li>Interview Title: " . htmlentities(stripslashes($interviewtitle)) . "
-    <li>Interview URL: " . htmlentities(stripslashes($interviewid)). "
-    <li>Viewer Version: $viewerversion
-    <li>User Agent: $user_agent
+    <li>Bad vars: " . $variables . "</li>
+    <li>Author ID: " . $authorid . "</li>
+    <li>Interview Title: " . htmlentities(stripslashes($interviewtitle)) . "</li>
+    <li>Interview URL: " . htmlentities(stripslashes($interviewid)). "</li>
+    <li>Viewer Version: " . $viewerversion . "</li> 
+    <li>User Agent: " . $user_agent . "</li>
     </ul>
     
     ";

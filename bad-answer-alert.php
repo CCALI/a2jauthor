@@ -3,6 +3,10 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST');
 header("Access-Control-Allow-Headers: X-Requested-With");
 
+
+$entityBody = file_get_contents('php://input');
+$body_data = json_decode(file_get_contents('php://input'), true);
+
 $path = dirname(__FILE__, 2);
 $config = parse_ini_file($path . '/config_env.ini');
 $service_email = $config['SERVICE_EMAIL'];
@@ -28,10 +32,10 @@ if (checkRequest($keys, $user_agent)){
             die();
 }
 
-$interviewtitle= ($_REQUEST["guideTitle"]);
-$viewerversion=  ($_REQUEST["guideTitle"]);
-$variables =   ($_REQUEST["invalidAnswers"]);
-$authorid =  ($_REQUEST["authorid"]);
+$interviewtitle= ($body_data["guideTitle"]);
+$viewerversion=  ($body_data["guideTitle"]);
+$variables =   ($body_data["invalidAnswers"]);
+$authorid =  ($body_data["authorid"]);
 $created=$now=date("Y-m-d-H-i-s");
 
 

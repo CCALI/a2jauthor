@@ -28,16 +28,17 @@ if (checkRequest($keys, $user_agent)){
             die();
 }
 
-$interviewtitle= ($_REQUEST["interviewtitle"]);
-$viewerversion=  ($_REQUEST["viewerversion"]);
-$variables =   ($_REQUEST["type"]);
-$authoremail =  ($_REQUEST["authoremail"]);
+$interviewtitle= ($_REQUEST["guideTitle"]);
+$viewerversion=  ($_REQUEST["guideTitle"]);
+$variables =   ($_REQUEST["invalidAnswers"]);
+$authorid =  ($_REQUEST["authorid"]);
 $created=$now=date("Y-m-d-H-i-s");
 
 
 $message="
 An A2J user has submitted an answerset with invalid dates or numbers:
     <ul>
+    <li>Bad vars: </li> " . $variables . "
     <li>Interview Title: " . htmlentities(stripslashes($interviewtitle)) . "
     <li>Interview URL: " . htmlentities(stripslashes($interviewid)). "
     <li>Viewer Version: $viewerversion

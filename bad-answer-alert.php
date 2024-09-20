@@ -33,9 +33,10 @@ if (checkRequest($keys, $user_agent)){
 }
 
 $interviewtitle= ($body_data["guideTitle"]);
-$viewerversion=  ($body_data["guideTitle"]);
+$viewerversion=  ($body_data["viewerversion"]);
 $variables =   json_encode($body_data["invalidAnswers"]);
 $authorid =  ($body_data["authorid"]);
+$url = $body_data["url"];
 $created=$now=date("Y-m-d-H-i-s");
 
 

@@ -11,16 +11,18 @@ export const VarPickerFieldVM = DefineMap.extend('VarPickerFieldVM', {
   get showMessage () {
     const assignedVarType = this.assignedVariable ? this.assignedVariable.type.toLowerCase() : ''
     const expectedVarType = this.expectedVarType ? this.expectedVarType.toLowerCase() : ''
+    const validVarName = this.validVarName(this.filterText)
 
-    // if they don't match, show 'will not save' message as well
-    // validVarName might matter here as well - like while they are typing/assiging, no error? warning?
-    return assignedVarType !== expectedVarType
+    return !validVarName || (assignedVarType !== '' && assignedVarType !== expectedVarType)
   },
   get message () {
     const assignedVarType = this.assignedVariable ? this.assignedVariable.type.toLowerCase() : ''
     const expectedVarType = this.expectedVarType ? this.expectedVarType.toLowerCase() : ''
+    const validVarName = this.validVarName(this.filterText)
 
-    return `Found Variable Type: (${assignedVarType}) but expected Variable Type: (${expectedVarType})`
+    return validVarName
+      ? `Found Variable Type: (${assignedVarType}) but expected Variable Type: (${expectedVarType})`
+      : 'Variable Not Found, please assign a valid Variable Name'
   },
   // obj[key] like button['name']
   obj: {

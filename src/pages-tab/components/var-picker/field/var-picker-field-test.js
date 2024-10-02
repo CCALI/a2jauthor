@@ -22,7 +22,7 @@ describe('<VarPickerField>', () => {
       vm = new VarPickerFieldVM({ appState })
     })
 
-    it('showMessage', () => {
+    it('showMessage - type mismatch', () => {
       vm.obj = testField
       vm.key = 'name'
       vm.filterText = 'Test Variable'
@@ -32,6 +32,19 @@ describe('<VarPickerField>', () => {
 
       vm.expectedVarType = 'text'
       assert.equal(vm.showMessage, false, 'should return false/hide message when types match')
+    })
+
+    it('showMessage - unknown variable name', () => {
+      const originalName = testField.name
+      testField.name = 'Bad Var'
+      vm.obj = testField
+      vm.key = 'name'
+
+      const expectedHealthMessage = 'Variable Not Found, please assign a valid Variable Name'
+      assert.equal(vm.showMessage, true, 'should return true when unknown variable found ex: typo')
+      assert.equal(vm.message, expectedHealthMessage, 'should show variable not found message')
+
+      testField.name = originalName
     })
 
     it('message', () => {

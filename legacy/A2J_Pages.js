@@ -459,6 +459,23 @@ var handleNullButtonTargets = function (buttons) {
   return buttons
 }
 
+// this clears vars and problem messages before save in QDE
+function checkPageHealth (page) {
+  var fields = page && page.fields
+  for (var field of fields) {
+    // no var assigned, clear any problem message
+    if (field.name === '') {
+      field.problem = ''
+      return
+    }
+    // bad var assigned, clear var name and problem message
+    if (field && field.problem && field.problem.length !== 0) {
+      field.name = ''
+      field.problem = ''
+    }
+  }
+}
+
 // Bring page edit window forward with page content
 function gotoPageEdit (pageName) {
   $pageEditDialog = window.$('.page-edit-form')
@@ -487,6 +504,8 @@ function gotoPageEdit (pageName) {
     close: function () {
       // cleanup QDE resize eventListener
       window.removeEventListener('resize', debouncedSetQDEmaxHeight)
+      // check for mismatched field/variable types and clear assignments if `health problem`
+      checkPageHealth(page)
       // callback from open below
       this.removeOverlay()
       // Update view and save any time edit dialog closes

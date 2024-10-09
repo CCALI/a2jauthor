@@ -33,6 +33,10 @@ export const FieldVM = DefineMap.extend('FieldVM', {
     }
   },
 
+  get expectedVarType () { // Text, Number, MC, TF ...
+    return pageFieldsHelpers.getExpectedVarType(this.type)
+  },
+
   get varType () { // Text, Number, MC, TF ...
     const varName = this.name.toLowerCase()
     const variable = varName && this.vars[varName]
@@ -41,58 +45,15 @@ export const FieldVM = DefineMap.extend('FieldVM', {
     return varType
   },
 
-  get expectedVarType () { // Text, Number, MC, TF ...
-    return pageFieldsHelpers.getExpectedVarType(this.type)
+  get message () {
+    const assignedVarType = this.varType ? this.varType.toLowerCase() : ''
+    const expectedVarType = this.expectedVarType ? this.expectedVarType.toLowerCase() : ''
+
+    return `Found Variable Type: (${assignedVarType}) but expected Variable Type: (${expectedVarType})`
   },
 
-  hasValidTypes: {
-    value ({ listenTo, resolve }) {
-      let fieldType = this.type && this.type.toLowerCase()
-      let varType = this.varType && this.varType.toLowerCase()
-      let isValid = pageFieldsHelpers.hasValidVarType(fieldType, varType)
-
-      listenTo('name', function (name, preName) {
-        fieldType = this.type && this.type.toLowerCase()
-        varType = this.varType && this.varType.toLowerCase()
-        isValid = pageFieldsHelpers.hasValidVarType(fieldType, varType)
-
-        resolve(isValid)
-      })
-
-      listenTo('type', function (type, preType) {
-        fieldType = this.type && this.type.toLowerCase()
-        varType = this.varType && this.varType.toLowerCase()
-        isValid = pageFieldsHelpers.hasValidVarType(fieldType, varType)
-
-        resolve(isValid)
-      })
-
-      resolve(isValid)
-    }
-  },
-
-  get noVariableAssigned () {
-    return !this.name
-  },
-
-  get showVarRemovalMessage () {
-    return !this.noVariableAssigned && !this.hasValidTypes
-  },
-
-  get alertClass () {
-    return this.noVariableAssigned ? 'warning' : 'danger'
-  },
-
-  get problemMessage () {
-    if (this.noVariableAssigned) {
-      return `No Variable Assigned -> Field Type: (${this.field.type}) requires Variable Type: (${this.expectedVarType})`
-    } else if (!this.hasValidTypes) {
-      this.field.problem = `Field Type: (${this.field.type}) requires Variable Type: (${this.expectedVarType}), found Variable Type: (${this.varType})`
-      return this.field.problem
-    }
-
-    this.field.problem = ''
-    return ''
+  get showMessage () {
+    return this.expectedVarType.toLowerCase() !== this.varType
   },
 
   types: {

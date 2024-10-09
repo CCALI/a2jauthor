@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;health-message&gt;</title>
+  </head>
+
+  <body>
+    <h1 class="text-center">Health-Message Component Demo</h1>
+    <br />
+    <h2 class="text-center">alertClass: danger</h2>
+    <div id="demo-html1" style="margin: 20px;"></div>
+    <br />
+    <h2 class="text-center">alertClass: warning</h2>
+    <div id="demo-html2" style="margin: 20px;"></div>
+
+    <script src="../../node_modules/steal/steal.js"
+      data-main="@empty">
+    </script>
+
+    <script type="steal-module">
+      import HealthMessage from "~/src/health-message/"
+      import "~/styles/"
+      import "~/styles.less"
+
+      const HealthMessageComponentDanger = new HealthMessage({viewModel: {message: 'Expected Variable Type (text), found Variable Type (number)', showMessage: true, alertClass: 'danger'}})
+      const HealthMessageComponentWarning = new HealthMessage({viewModel: {message: 'You have no varriable assigned to the current field', showMessage: true, alertClass: 'warning'}})
+
+
+      const demoHtml1 = document.getElementById('demo-html1')
+      const demoHtml2 = document.getElementById('demo-html2')
+
+      demoHtml1.appendChild(HealthMessageComponentDanger.element)
+      demoHtml2.appendChild(HealthMessageComponentWarning.element)
+    </script>
+  </body>
+</html>

@@ -2,15 +2,13 @@
 <can-import from="../var-picker" />
 <can-import from='~/src/modal/'/>
 <can-import from="~/src/variables/editor/"/>
+<can-import from="~/src/health-message/" />
 
 <div class="divvariable auto-close-shared-bool-on-outside-focus">
   {{let nameVarPickerVisible = newObservableBool(false)}}
   {{let showVariableModal = newObservableBool(false)}}
   {{let showVariableEditModal = newObservableBool(false)}}
   <label class="control-label">{{label}}</label>
-  {{#if(showVarRemovalMessage)}}
-    <span class="alert-warning"> ( Warning! Mismatched Variable will be removed on Close/Save. ) </span>
-  {{/if}}
   <div class="form-group has-var-picker">
     <input
       class="
@@ -26,6 +24,7 @@
       on:input="filterText = scope.element.value"
       on:keydown="focusFirstButtonInList(scope.event)"
     >
+ 
     <div class="var-picker-toggle">
       <button aria-label="Toggle Variable Picker" on:click="toggleBool(nameVarPickerVisible)" class="glyphicon-list-bullet"></button>
       {{#if(nameVarPickerVisible.value)}}
@@ -41,7 +40,7 @@
       <button {{#if(disableEdit)}}disabled{{/if}} class="newvar-button btn btn-default btn-wide-sm" on:click="makeTrueAndFocusPopup(showVariableEditModal)" style="margin-top: 4px;">
         <span class="glyphicon-pencil" aria-hidden="true"></span> Edit Current
       </button>
-    </div>
+    </div>   
   </div>
 
   {{#if(showVariableModal.value)}}
@@ -75,4 +74,6 @@
       />
     </author-modal>
 {{/if}}
+
+  <health-message showMessage:from="showMessage" message:from="message"></health-message>
 </div>

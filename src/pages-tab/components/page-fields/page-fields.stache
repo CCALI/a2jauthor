@@ -108,20 +108,51 @@
               </div>
               {{#if(fieldVM.canMinMax)}}
                 <div class="editspan form-group" name="min">
+
                   <label class="control-label">Min Value:</label>
-                  <input class="form-control ui-widget editable" type="text" placeholder="min"
-                    value:bind="fieldVM.field.min"
+                  <input class="form-control ui-widget editable" 
+                    type="date" placeholder="min" 
+                    id="min-date"
                     pattern="TODAY|(?:^-(?=.*\d))|\d*"
-                    on:blur="fieldVM.field.min = applyPattern(scope.element)"
+                    value="{{parseDateBound(field.field.min)}}"
+                    on:blur="field.field.min = mangleDateBound(scope.element)"
+                    {{ #eq(field.field.min, "TODAY")}} disabled {{/eq}}
                   >
+
+                  <div name="today-min" class="{{^if(field.canRequire)}}hidden{{/if}}">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" 
+                          {{ #eq(field.field.min, "TODAY")}} checked {{/eq}}
+                          on:blur="field.field.min = checktoToday(scope.element)"
+                          on:click="toggleDateBoundEnable('#min-date')"
+                          value:bind="field.field.min"
+                          value="TODAY"> TODAY
+                      </label>
+                    </div>
+                  </div>
                 </div>
-                <div class="editspan form-group" name="max">
+                <div>
                   <label class="control-label">Max Value:</label>
-                  <input class="form-control ui-widget editable" type="text" placeholder="max"
-                    value:bind="fieldVM.field.max"
+                  <input class="form-control ui-widget editable" 
+                    type="date" placeholder="max"
+                    id="max-date"
+                    value="{{parseDateBound(field.field.max)}}"
                     pattern="TODAY|(?:^-(?=.*\d))|\d*"
-                    on:blur="fieldVM.field.max = applyPattern(scope.element)"
+                    {{ #eq(field.field.max, "TODAY")}} disabled {{/eq}}
+                    on:blur="field.field.max = mangleDateBound(scope.element)"
                   >
+                  <div name="today-max" class="{{^if(field.canRequire)}}hidden{{/if}}">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox"
+                          {{ #eq(field.field.max, "TODAY")}} checked {{/eq}}
+                          on:blur="field.field.max = TODAY"
+                          on:click="toggleDateBoundEnable('#max-date')"
+                          value="TODAY"> TODAY
+                      </label>
+                    </div>
+                  </div>
                 </div>
               {{/if}}
               {{#if(fieldVM.canList)}}

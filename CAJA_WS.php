@@ -573,7 +573,7 @@ switch ($command){
 		$sql="insert into guides (title,editoruid) values ('".$mysqli->real_escape_string($title)."', ".$userid.")";
 		// If this fails on blank interview, likely `archive` Field in guides db needs to be ticked to allow default value of null
 		// Also make sure `archive` Field in guides db is set to 0 for default value
-		if ($res=$mysqli->query($sql)) {
+		if ($res=$mysqli->query($sql)) { 
 			// Save as content to new folder owned by editor
 			$newgid=$mysqli->insert_id;
 			$userdir=$_SESSION['userdir'];
@@ -584,7 +584,9 @@ switch ($command){
 			$newfile = $newdir.'/Guide.xml';
 			// ex: some/sever/path/userfiles/dev/guides/Guide924
 			$assetsdir = GUIDES_DIR.$newdir;
-			mkdir($assetsdir);
+
+			error_log("changing permissions fix for mac" . $assetsdir);
+			mkdir($assetsdir, 0775, true);
 			$filename=GUIDES_DIR.$newfile;
 			// create default Guide.xml and Guide.json
 			file_put_contents($filename,$xml);

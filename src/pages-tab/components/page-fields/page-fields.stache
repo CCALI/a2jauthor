@@ -114,19 +114,19 @@
                     type="date" placeholder="min" 
                     id="min-date"
                     pattern="TODAY|(?:^-(?=.*\d))|\d*"
-                    value="{{parseDateBound(field.field.min)}}"
-                    on:blur="field.field.min = mangleDateBound(scope.element)"
-                    {{ #eq(field.field.min, "TODAY")}} disabled {{/eq}}
+                    value="{{parseDateBound(fieldVM.field.min)}}"
+                    on:blur="fieldVM.field.min = mangleDateBound(scope.element)"
+                    {{ #eq(fieldVM.field.min, "TODAY")}} disabled {{/eq}}
                   >
 
-                  <div name="today-min" class="{{^if(field.canRequire)}}hidden{{/if}}">
+                  <div name="today-min">
                     <div class="checkbox">
                       <label>
                         <input type="checkbox" 
-                          {{ #eq(field.field.min, "TODAY")}} checked {{/eq}}
-                          on:blur="field.field.min = checktoToday(scope.element)"
+                          {{ #eq(fieldVM.field.min, "TODAY")}} checked {{/eq}}
+                          on:blur="fieldVM.field.min = checktoToday(scope.element)"
                           on:click="toggleDateBoundEnable('#min-date')"
-                          value:bind="field.field.min"
+                          value:bind="fieldVM.field.min"
                           value="TODAY"> TODAY
                       </label>
                     </div>
@@ -137,18 +137,19 @@
                   <input class="form-control ui-widget editable" 
                     type="date" placeholder="max"
                     id="max-date"
-                    value="{{parseDateBound(field.field.max)}}"
+                    value="{{parseDateBound(fieldVM.field.max)}}"
                     pattern="TODAY|(?:^-(?=.*\d))|\d*"
-                    {{ #eq(field.field.max, "TODAY")}} disabled {{/eq}}
-                    on:blur="field.field.max = mangleDateBound(scope.element)"
+                    {{ #eq(fieldVM.field.max, "TODAY")}} disabled {{/eq}}
+                    on:blur="fieldVM.field.max = mangleDateBound(scope.element)"
                   >
-                  <div name="today-max" class="{{^if(field.canRequire)}}hidden{{/if}}">
+                  <div name="today-max">
                     <div class="checkbox">
                       <label>
                         <input type="checkbox"
-                          {{ #eq(field.field.max, "TODAY")}} checked {{/eq}}
-                          on:blur="field.field.max = TODAY"
+                          {{ #eq(fieldVM.field.max, "TODAY")}} checked {{/eq}}
+                          on:blur="fieldVM.field.max = checktoToday(scope.element)"
                           on:click="toggleDateBoundEnable('#max-date')"
+                          value:bind="fieldVM.field.max"
                           value="TODAY"> TODAY
                       </label>
                     </div>

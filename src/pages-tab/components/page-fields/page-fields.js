@@ -180,7 +180,7 @@ export const PageFieldsVM = DefineMap.extend('PageFieldsVM', {
   },
 
   parseDateBound (boundedDate) {
-    let textDate = '' // assume unfilled
+    let textDate = ''// assume unfilled
 
     if (boundedDate) {
       if (boundedDate !== 'TODAY') {
@@ -190,7 +190,7 @@ export const PageFieldsVM = DefineMap.extend('PageFieldsVM', {
         boundedDate.substr(2, 2)
       }
     }
-
+    
     return textDate
   },
 
@@ -201,8 +201,7 @@ export const PageFieldsVM = DefineMap.extend('PageFieldsVM', {
   mangleDateBound (el) {
     let str = el.value.split(',').join('')
     str = str.split('-').join('')
-    console.log('JAWN: ' + str)
-
+    
     str =
       str.substr(4, 2) + '/' +
       str.substr(6, 2) + '/' +

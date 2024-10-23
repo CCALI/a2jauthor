@@ -11,6 +11,7 @@
 <can-import from="a2jauthor/src/about/" />
 <can-import from="a2jauthor/src/pages-tab/" />
 <can-import from="a2jauthor/src/steps-tab/" />
+<can-import from="a2jauthor/src/health-tab/" />
 <can-import from="a2jauthor/src/publish-tab/" />
 <can-import from="a2jauthor/src/variables/tab/"/>
 <can-import from="a2jauthor/src/a2jorg/"/>
@@ -84,6 +85,13 @@
     <div class="tab-panel has-toolbar" id="tabsPages">
       {{#is(page, "pages")}}
         <pages-tab class="page" guide:from="guide" guideId:from="guideId" appState:from="." />
+      {{/is}}
+    </div> <!-- tab-panel has-toolbar -->
+
+    <!-- Health Tab -->
+    <div class="tab-panel has-toolbar" id="tabsHealth">
+      {{#is(page, "health")}}
+        <health-tab guide:from="guide" guideId:from="guideId" />
       {{/is}}
     </div> <!-- tab-panel has-toolbar -->
 

@@ -28,6 +28,13 @@ export default [
     active: false
   },
   {
+    page: 'health',
+    title: 'Health',
+    ref: 'tabsHealth',
+    icon: 'glyphicon-heartbeat',
+    active: false
+  },
+  {
     page: 'map',
     title: 'Map',
     ref: 'tabsMap',

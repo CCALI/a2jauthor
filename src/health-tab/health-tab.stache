@@ -1,0 +1,8 @@
+<can-import from="~/src/health-tab/health-tab.less" />
+
+<h3 class="page-title">Health Check</h3>
+{{#if(waiting)}} <span class="waiting-spinner glyphicon-spin6 animate-spin"></span> {{/if}}
+
+{{^if(guide)}}
+  <p>No A2J Guided Interview® Selected</p>
+{{/if}}

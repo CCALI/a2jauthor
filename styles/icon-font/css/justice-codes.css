@@ -81,9 +81,12 @@
 .glyphicon-ok-circled:before { content: '\e84e'; } /* '' */
 .glyphicon-link-ext:before { content: '\f08e'; } /* '' */
 .glyphicon-exchange:before { content: '\f0ec'; } /* '' */
+.glyphicon-user-md:before { content: '\f0f0'; } /* '' */
+.glyphicon-stethoscope:before { content: '\f0f1'; } /* '' */
 .glyphicon-circle-empty:before { content: '\f10c'; } /* '' */
 .glyphicon-circle:before { content: '\f111'; } /* '' */
 .glyphicon-dot-circled:before { content: '\f192'; } /* '' */
 .glyphicon-circle-thin:before { content: '\f1db'; } /* '' */
 .glyphicon-calc:before { content: '\f1ec'; } /* '' */
+.glyphicon-heartbeat:before { content: '\f21e'; } /* '' */
 .glyphicon-list-bullet:before { content: '🔄'; } /* '\1f504' */

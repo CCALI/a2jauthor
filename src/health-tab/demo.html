@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;publish-tab&gt;</title>
+  </head>
+
+  <body>
+    <div id="demo-html" style="margin: 20px;"></div>
+
+    <script src="../../node_modules/steal/steal.js"
+      data-main="@empty">
+    </script>
+
+    <script type="steal-module">
+      import HealthTab from "~/src/publish-tab/"
+      import "~/styles/"
+      import "~/styles.less"
+
+      window.Languages = {
+        regional: {
+          en: { Language: "English", LanguageEN: "English", locale: "en" },
+          es: { Language: "Español", LanguageEN: "Spanish", locale: "es" },
+          fr: { Language: "Français", LanguageEN: "French", locale: "fr" }
+        },
+        set: (lang) => { console.log('demo setting lanugage to ' + lang)}
+      }
+
+      // replace any global guide with safe demo guide
+      window.gGuide = { title: 'canjs demo gGuide'}
+
+      const guide = {
+        title: 'The best GI',
+        version: '12/20/2020',
+        notes: 'Created at 12/20/2020',
+        sendfeedback: true,
+        emailContact: 'foo@bar.com',
+        logoImage: 'fancy logo',
+        endImage: 'custom courthouse',
+        description: 'some description',
+        jurisdiction: 'some jurisdiction',
+        guideGender: 'Female',
+        avatarSkinTone: 'darker',
+        avatarHairColor: 'red',
+        credits: 'some credits',
+        language: 'en',
+        completionTime: '42 minutes'
+      }
+
+      // passing the viewModel with guide data emulates stache bindings
+      const publishComponent = new HealthTab({viewModel: {guide, guideId: 3}})
+      publishComponent.connectedCallback = () => {}
+      const demoHtml = document.getElementById('demo-html')
+      demoHtml.appendChild(publishComponent.element)
+    </script>
+  </body>
+</html>

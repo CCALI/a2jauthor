@@ -37,6 +37,7 @@ $viewerversion=  ($body_data["viewerversion"]);
 $variables =   json_encode($body_data["invalidAnswers"]);
 $authorid =  ($body_data["authorid"]);
 $url = $body_data["url"];
+$uri = $body_data["uri"];
 $created=$now=date("Y-m-d-H-i-s");
 
 
@@ -46,7 +47,8 @@ An A2J user has submitted an answerset with invalid dates or numbers:
     <li>Bad vars: " . $variables . "</li>
     <li>Author ID: " . $authorid . "</li>
     <li>Interview Title: " . htmlentities(stripslashes($interviewtitle)) . "</li>
-    <li>Interview URL: " . htmlentities(stripslashes($interviewid)). "</li>
+    <li>Interview URL: " . htmlentities(stripslashes($url)). "</li>
+    <li>Interview URI: " . htmlentities(stripslashes($uri)). "</li>
     <li>Viewer Version: " . $viewerversion . "</li> 
     <li>User Agent: " . $user_agent . "</li>
     </ul>

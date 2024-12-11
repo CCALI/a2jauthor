@@ -1,0 +1,72 @@
+<?php
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST');
+header("Access-Control-Allow-Headers: X-Requested-With");
+
+
+$entityBody = file_get_contents('php://input');
+$body_data = json_decode(file_get_contents('php://input'), true);
+
+$path = dirname(__FILE__, 2);
+$config = parse_ini_file($path . '/config_env.ini');
+$service_email = $config['SERVICE_EMAIL'];
+
+
+$keys = ["interviewtitle", "viewerversion", 
+             "type", "authoremail"]; 
+$user_agent = $_SERVER['HTTP_USER_AGENT'];
+
+function checkRequest($keys, $user_agent){
+
+    foreach ($keys as $key){
+        if ((empty($_REQUEST[$key])) || 
+        (strlen($_REQUEST[$key]) === 0) ){
+            return false;
+        }
+    }
+    return true;
+}
+
+if (checkRequest($keys, $user_agent)){
+    error_log('bad viewer variable alert: '. $user_agent,0);
+            die();
+}
+
+$interviewtitle= ($body_data["guideTitle"]);
+$viewerversion=  ($body_data["viewerversion"]);
+$variables =   json_encode($body_data["invalidAnswers"]);
+$authorid =  ($body_data["authorid"]);
+$url = $body_data["url"];
+$uri = $body_data["uri"];
+$created=$now=date("Y-m-d-H-i-s");
+
+
+$message="
+An A2J user has submitted an answerset with invalid dates or numbers:
+    <ul>
+    <li>Bad vars: " . $variables . "</li>
+    <li>Author ID: " . $authorid . "</li>
+    <li>Interview Title: " . htmlentities(stripslashes($interviewtitle)) . "</li>
+    <li>Interview URL: " . htmlentities(stripslashes($url)). "</li>
+    <li>Interview URI: " . htmlentities(stripslashes($uri)). "</li>
+    <li>Viewer Version: " . $viewerversion . "</li> 
+    <li>User Agent: " . $user_agent . "</li>
+    </ul>
+    
+    ";
+
+
+$to  = $service_email;
+
+/* subject */
+$subject = "Bad Answer Values";
+
+/* To send HTML mail, you can set the Content-type header. */
+$headers  = "MIME-Version: 1.0\r\n";
+$headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
+
+/* additional headers */
+$headers .= "From: A2J Viewer answerset parser <support@a2jauthor.org>\r\n";
+
+/* and now mail it */
+mail($to, $subject, $message, $headers);

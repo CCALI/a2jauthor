@@ -14,43 +14,43 @@
           <div class="row">
             <div class="col-sm-6 reportinfo">
               <div class="sub-legend">About Tab</div>
-              <p><label>Title:</label> {{guide.title}}</p>
-              <p><label>Description:</label> {{formatPageTextCell(guide.description)}}</p>
-              <p><label>Jurisdiction:</label> {{guide.jurisdiction}}</p>
-              <p><label>Guide Gender:</label> {{guide.guideGender}}</p>
-              <p><label>Guide Skin Tone:</label> {{guide.avatarSkinTone}}</p>
-              <p><label>Guide Hair Color:</label> {{guide.avatarHairColor}}</p>
-              <p><label>Credits:</label> {{formatPageTextCell(guide.credits)}}</p>
-              <p><label>Language:</label> {{displayLanguage}}</p>
-              <p><label>Approximate Completion Time:</label> {{guide.completionTime}}</p>
+              <p><div class="report-label">Title:</div> {{guide.title}}</p>
+              <p><div class="report-label">Description:</div> {{formatPageTextCell(guide.description)}}</p>
+              <p><div class="report-label">Jurisdiction:</div> {{guide.jurisdiction}}</p>
+              <p><div class="report-label">Guide Gender:</div> {{guide.guideGender}}</p>
+              <p><div class="report-label">Guide Skin Tone:</div> {{guide.avatarSkinTone}}</p>
+              <p><div class="report-label">Guide Hair Color:</div> {{guide.avatarHairColor}}</p>
+              <p><div class="report-label">Credits:</div> {{formatPageTextCell(guide.credits)}}</p>
+              <p><div class="report-label">Language:</div> {{displayLanguage}}</p>
+              <p><div class="report-label">Approximate Completion Time:</div> {{guide.completionTime}}</p>
             </div>
 
             <div class="col-sm-6 extrainfo">
               <div class="sub-legend">Layout Tab</div>
-              <p><label>Logo graphic:</label> {{guide.logoImage}}</p>
-              <p><label>End graphic:</label> {{guide.endImage}}</p>
+              <p><div class="report-label">Logo graphic:</div> {{guide.logoImage}}</p>
+              <p><div class="report-label">End graphic:</div> {{guide.endImage}}</p>
 
               <div class="sub-legend">Feedback Tab</div>
-              <p><label>Allow Feedback:</label> {{guide.sendfeedback}}</p>
-              <p><label>Email contact:</label> {{guide.emailContact}}</p>
+              <p><div class="report-label">Allow Feedback:</div> {{guide.sendfeedback}}</p>
+              <p><div class="report-label">Email contact:</div> {{guide.emailContact}}</p>
 
               <div class="sub-legend">Revision Tab</div>
-              <p><label>Current Version:</label> {{guide.version}}</p>
-              <p><label>Revision Notes:</label> {{formatPageTextCell(guide.notes)}}</p>
+              <p><div class="report-label">Current Version:</div> {{guide.version}}</p>
+              <p><div class="report-label">Revision Notes:</div> {{formatPageTextCell(guide.notes)}}</p>
 
               <div class="sub-legend">Special Pages</div>
-              <p><label>Start Page:</label> {{guide.firstPage}}</p>
-              <p><label>Exit Page:</label> {{guide.exitPage}}</p>
+              <p><div class="report-label">Start Page:</div> {{guide.firstPage}}</p>
+              <p><div class="report-label">Exit Page:</div> {{guide.exitPage}}</p>
             </div>
           </div>
 
           <br>
           <div class="sub-legend">Author Tab</div>
             <div class="row authorheading">
-              <div class="col-sm-3"><p><label>Name</label></p></div>
-              <div class="col-sm-3"><label>Title</label></div>
-              <div class="col-sm-3"><label>Organization</label></div>
-              <div class="col-sm-3"><label>Email</label></div>
+              <div class="col-sm-3"><p><div class="report-label">Name</div></p></div>
+              <div class="col-sm-3"><div class="report-label">Title</div></div>
+              <div class="col-sm-3"><div class="report-label">Organization</div></div>
+              <div class="col-sm-3"><div class="report-label">Email</div></div>
             </div>
             {{#guide.authors}}
               <div class="row authorinfo">
@@ -78,10 +78,10 @@
           <fieldset>
             <legend>Interview Variables ({{sortedVariableList.length}})</legend>
             <div class="row">
-              <div class="col-sm-3"><p><label>Name</label></p></div>
-              <div class="col-sm-1"><label>Type</label></div>
-              <div class="col-sm-2"><label>Repeating</label></div>
-              <div class="col-sm-6"><label>Comment</label></div>
+              <div class="col-sm-3"><p><div class="report-label">Name</div></p></div>
+              <div class="col-sm-1"><div class="report-label">Type</div></div>
+              <div class="col-sm-2"><div class="report-label">Repeating</div></div>
+              <div class="col-sm-6"><div class="report-label">Comment</div></div>
             </div>
             {{#sortedVariableList}}
             <div class="row">

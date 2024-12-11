@@ -5,12 +5,12 @@
   <div class="row">
     <div class="col-xs-12">
       <div>
-        <p class="{{#if(scope/hideCitation)}}hide-section{{/if}}"><label>Notes:</label> {{formatPageTextCell(notes)}}</p>
+        <p class="{{#if(scope/hideCitation)}}hide-section{{/if}}"><div class="report-label">Notes:</div> {{formatPageTextCell(notes)}}</p>
         <div class="{{#if(scope/hideText)}}hide-section{{/if}}">
-          <p><label>Text:</label> {{formatPageTextCell(text)}}</p>
+          <p><div class="report-label">Text:</div> {{formatPageTextCell(text)}}</p>
           <text-stats vm:stats:from="textStats"></text-stats>
         </div>
-        <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><label>Text Audio:</label> {{textAudioURL}}</p>
+        <p class="{{#if(scope/hideDefault)}}hide-section{{/if}}"><div class="report-label">Text Audio:</div> {{textAudioURL}}</p>
       </div>
     </div>
   </div>

@@ -4,9 +4,26 @@ import template from './var-picker-field.stache'
 import { TVariable } from '~/legacy/viewer/A2J_Types'
 import { onlyOne } from '../../../helpers/helpers'
 
-export const VarPickerField = DefineMap.extend('VarPickerField', {
+export const VarPickerFieldVM = DefineMap.extend('VarPickerFieldVM', {
   page: {},
   appState: {},
+  expectedVarType: {}, // passed in from parent
+  get showMessage () {
+    const assignedVarType = this.assignedVariable ? this.assignedVariable.type.toLowerCase() : ''
+    const expectedVarType = this.expectedVarType ? this.expectedVarType.toLowerCase() : ''
+    const validVarName = this.validVarName(this.filterText)
+
+    return !validVarName || (assignedVarType !== '' && assignedVarType !== expectedVarType)
+  },
+  get message () {
+    const assignedVarType = this.assignedVariable ? this.assignedVariable.type.toLowerCase() : ''
+    const expectedVarType = this.expectedVarType ? this.expectedVarType.toLowerCase() : ''
+    const validVarName = this.validVarName(this.filterText)
+
+    return validVarName
+      ? `Found Variable Type: (${assignedVarType}) but expected Variable Type: (${expectedVarType})`
+      : 'Variable Not Found, please assign a valid Variable Name'
+  },
   // obj[key] like button['name']
   obj: {
     type: 'any'
@@ -33,6 +50,19 @@ export const VarPickerField = DefineMap.extend('VarPickerField', {
     default: ''
   },
 
+  get assignedVariable () {
+    const validVarName = this.validVarName(this.filterText)
+    const partialVariable = new TVariable()
+    Object.assign(partialVariable, { name: this.filterText, type: 'Text' })
+    const assignedVariable = validVarName ? this.appState.guide.vars[this.filterText.toLowerCase()] : partialVariable
+
+    return assignedVariable
+  },
+
+  get blankVariable () {
+    return new TVariable()
+  },
+
   newObservableBool (tf = false) {
     return new DefineMap({ value: tf })
   },
@@ -55,6 +85,14 @@ export const VarPickerField = DefineMap.extend('VarPickerField', {
     return (!newValue) || (!!this.appState.guide.vars[newValue.toLowerCase()])
   },
 
+  get disableEdit () {
+    const filterText = this.filterText
+    const validVarName = this.validVarName(filterText)
+    const shouldDisable = !filterText.length && validVarName
+
+    return shouldDisable
+  },
+
   makeTrueAndFocusPopup (bool) {
     this.makeTrue(bool)
     setTimeout(() => {
@@ -64,6 +102,7 @@ export const VarPickerField = DefineMap.extend('VarPickerField', {
   },
 
   newVarData: {},
+
   onVariableChange (variable) {
     this.newVarData = variable
   },
@@ -75,7 +114,7 @@ export const VarPickerField = DefineMap.extend('VarPickerField', {
     }
   },
 
-  addVarCB (bool) {
+  addEditVarCB (bool) {
     return () => {
       const variable = this.newVarData
       const name = variable && variable.name
@@ -103,5 +142,5 @@ export default Component.extend({
   tag: 'var-picker-field',
   view: template,
   leakScope: false,
-  ViewModel: VarPickerField
+  ViewModel: VarPickerFieldVM
 })

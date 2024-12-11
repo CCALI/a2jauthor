@@ -61,9 +61,4 @@ export default Component.extend({
   view: template,
   leakScope: false,
   ViewModel: PageEditFormVM
-  // , events: {
-  //   '* focus': function (target) {
-  //     console.log(arguments)
-  //   }
-  // }
 })

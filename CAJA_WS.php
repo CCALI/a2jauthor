@@ -573,7 +573,7 @@ switch ($command){
 		$sql="insert into guides (title,editoruid) values ('".$mysqli->real_escape_string($title)."', ".$userid.")";
 		// If this fails on blank interview, likely `archive` Field in guides db needs to be ticked to allow default value of null
 		// Also make sure `archive` Field in guides db is set to 0 for default value
-		if ($res=$mysqli->query($sql)) {
+		if ($res=$mysqli->query($sql)) { 
 			// Save as content to new folder owned by editor
 			$newgid=$mysqli->insert_id;
 			$userdir=$_SESSION['userdir'];
@@ -584,7 +584,9 @@ switch ($command){
 			$newfile = $newdir.'/Guide.xml';
 			// ex: some/sever/path/userfiles/dev/guides/Guide924
 			$assetsdir = GUIDES_DIR.$newdir;
-			mkdir($assetsdir);
+
+			error_log("changing permissions fix for mac" . $assetsdir);
+			mkdir($assetsdir, 0775, true);
 			$filename=GUIDES_DIR.$newfile;
 			// create default Guide.xml and Guide.json
 			file_put_contents($filename,$xml);
@@ -1193,12 +1195,25 @@ function isExtensionAllowed($filename, $mediaOnly = false) {
 
 	$media =  parse_ini_file($path . '/config_env.ini')['MEDIA_EXTS_ALLOWED'];
 	$other = parse_ini_file($path . '/config_env.ini')['EXTS_ALLOWED'];
-
-	if ($mediaOnly) {
-		$allowed = $media;
-	} else {
-		$allowed = array_merge($media, $other);
-	}
+    
+    // Test for valid entries in config file
+    // currently only tests if entries are arrays
+    // this could be expanded
+    if (!is_array($media)){
+        error_log("MEDIA_EXTS_ALLOWED in config_env.ini is empty");
+        fail_and_exit(500, 'bad configuration');
+    }
+    
+    if (!is_array($other)){
+        error_log("EXTS_ALLOWED in config_env.ini is empty");
+        fail_and_exit(500, 'bad configuration');
+    }
+ 
+    if ($mediaOnly) {
+		    $allowed = $media;
+    } else {
+	    $allowed = array_merge($media, $other);
+    }
 
 	$testname = strtolower($filename);
 

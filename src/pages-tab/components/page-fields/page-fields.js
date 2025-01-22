@@ -123,6 +123,10 @@ export const FieldVM = DefineMap.extend('FieldVM', {
     }
   },
 
+  get isDateType () {
+    return this.type === constants.ftDateMDY
+  },
+
   get canRequire () {
     return pageFieldsHelpers.canRequire[this.type] !== false
   },
@@ -190,7 +194,7 @@ export const PageFieldsVM = DefineMap.extend('PageFieldsVM', {
         boundedDate.substr(2, 2)
       }
     }
-    
+
     return textDate
   },
 
@@ -201,7 +205,7 @@ export const PageFieldsVM = DefineMap.extend('PageFieldsVM', {
   mangleDateBound (el) {
     let str = el.value.split(',').join('')
     str = str.split('-').join('')
-    
+
     str =
       str.substr(4, 2) + '/' +
       str.substr(6, 2) + '/' +

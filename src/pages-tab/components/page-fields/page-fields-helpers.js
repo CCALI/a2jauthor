@@ -82,7 +82,7 @@ const mapFieldToVariableType = {
   [constants.ftTextLong]: constants.vtText.toLowerCase(),
   [constants.ftTextPick]: constants.vtText.toLowerCase(),
   [constants.ftNumber]: constants.vtNumber.toLowerCase(),
-  [constants.ftNumberDollar]: constants.vtText.toLowerCase(),
+  [constants.ftNumberDollar]: constants.vtNumber.toLowerCase(),
   [constants.ftNumberSSN]: constants.vtText.toLowerCase(),
   [constants.ftNumberPhone]: constants.vtText.toLowerCase(),
   [constants.ftNumberZIP]: constants.vtText.toLowerCase(),

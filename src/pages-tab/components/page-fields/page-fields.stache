@@ -163,7 +163,6 @@
                     <input class="form-control ui-widget editable" 
                       type="number" placeholder="min" 
                       id="min-number"
-            
                       value="{{fieldVM.field.min}}"
                       on:blur="fieldVM.field.min = scope.element.value"
                   
@@ -174,8 +173,7 @@
                     <input class="form-control ui-widget editable" 
                       type="number" placeholder="max"
                       id="max-number"
-                      value="{{fieldVM.field.max}}"
-            
+                      value="{{fieldVM.field.max}}"           
                       on:blur="fieldVM.field.max = scope.element.value"
                     >
                   </div>

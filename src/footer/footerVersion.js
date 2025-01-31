@@ -1,7 +1,7 @@
 
 const version = {
-  number: '10.2.0',
-  date: '2024-12-11'
+  number: '10.2.1-0',
+  date: '2025-01-31'
 }
 
 export default version

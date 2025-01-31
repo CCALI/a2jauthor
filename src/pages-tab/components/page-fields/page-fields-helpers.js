@@ -58,6 +58,7 @@ export const forceRequired = {
 }
 /* eslint-disable no-multi-spaces */
 export const fieldTypes = new DefineList([
+  { value: constants.ftButton,       label: 'Button' },
   { value: constants.ftText,         label: 'Text' },
   { value: constants.ftTextLong,     label: 'Text (Long)' },
   { value: constants.ftTextPick,     label: 'Text (Pick from list)' },

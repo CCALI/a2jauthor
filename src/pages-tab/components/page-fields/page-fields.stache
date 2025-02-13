@@ -107,54 +107,77 @@
                 </div>
               </div>
               {{#if(fieldVM.canMinMax)}}
-                <div class="editspan form-group" name="min">
+                {{#if(fieldVM.isDateType)}}
+                  <div class="editspan form-group" name="min">
 
-                  <label class="control-label">Min Value:</label>
-                  <input class="form-control ui-widget editable" 
-                    type="date" placeholder="min" 
-                    id="min-date"
-                    pattern="TODAY|(?:^-(?=.*\d))|\d*"
-                    value="{{parseDateBound(fieldVM.field.min)}}"
-                    on:blur="fieldVM.field.min = mangleDateBound(scope.element)"
-                    {{ #eq(fieldVM.field.min, "TODAY")}} disabled {{/eq}}
-                  >
+                    <label class="control-label">Min Value:</label>
+                    <input class="form-control ui-widget editable" 
+                      type="date" placeholder="min" 
+                      id="min-date"
+                      pattern="TODAY|(?:^-(?=.*\d))|\d*"
+                      value="{{parseDateBound(fieldVM.field.min)}}"
+                      on:blur="fieldVM.field.min = mangleDateBound(scope.element)"
+                      {{ #eq(fieldVM.field.min, "TODAY")}} disabled {{/eq}}
+                    >
 
-                  <div name="today-min">
-                    <div class="checkbox">
-                      <label>
-                        <input type="checkbox" 
-                          {{ #eq(fieldVM.field.min, "TODAY")}} checked {{/eq}}
-                          on:blur="fieldVM.field.min = checktoToday(scope.element)"
-                          on:click="toggleDateBoundEnable('#min-date')"
-                          value:bind="fieldVM.field.min"
-                          value="TODAY"> TODAY
-                      </label>
+                    <div name="today-min">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" 
+                            {{ #eq(fieldVM.field.min, "TODAY")}} checked {{/eq}}
+                            on:blur="fieldVM.field.min = checktoToday(scope.element)"
+                            on:click="toggleDateBoundEnable('#min-date')"
+                            value:bind="fieldVM.field.min"
+                            value="TODAY"> TODAY
+                        </label>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div>
-                  <label class="control-label">Max Value:</label>
-                  <input class="form-control ui-widget editable" 
-                    type="date" placeholder="max"
-                    id="max-date"
-                    value="{{parseDateBound(fieldVM.field.max)}}"
-                    pattern="TODAY|(?:^-(?=.*\d))|\d*"
-                    {{ #eq(fieldVM.field.max, "TODAY")}} disabled {{/eq}}
-                    on:blur="fieldVM.field.max = mangleDateBound(scope.element)"
-                  >
-                  <div name="today-max">
-                    <div class="checkbox">
-                      <label>
-                        <input type="checkbox"
-                          {{ #eq(fieldVM.field.max, "TODAY")}} checked {{/eq}}
-                          on:blur="fieldVM.field.max = checktoToday(scope.element)"
-                          on:click="toggleDateBoundEnable('#max-date')"
-                          value:bind="fieldVM.field.max"
-                          value="TODAY"> TODAY
-                      </label>
+                  <div>
+                    <label class="control-label">Max Value:</label>
+                    <input class="form-control ui-widget editable" 
+                      type="date" placeholder="max"
+                      id="max-date"
+                      value="{{parseDateBound(fieldVM.field.max)}}"
+                      pattern="TODAY|(?:^-(?=.*\d))|\d*"
+                      {{ #eq(fieldVM.field.max, "TODAY")}} disabled {{/eq}}
+                      on:blur="fieldVM.field.max = mangleDateBound(scope.element)"
+                    >
+                    <div name="today-max">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox"
+                            {{ #eq(fieldVM.field.max, "TODAY")}} checked {{/eq}}
+                            on:blur="fieldVM.field.max = checktoToday(scope.element)"
+                            on:click="toggleDateBoundEnable('#max-date')"
+                            value:bind="fieldVM.field.max"
+                            value="TODAY"> TODAY
+                        </label>
+                      </div>
                     </div>
                   </div>
-                </div>
+                {{else}}
+                    <div class="editspan form-group" name="min">
+
+                    <label class="control-label">Min Value:</label>
+                    <input class="form-control ui-widget editable" 
+                      type="number" placeholder="min" 
+                      id="min-number"
+                      value="{{fieldVM.field.min}}"
+                      on:blur="fieldVM.field.min = scope.element.value"
+                  
+                    >
+                  </div>
+                  <div>
+                    <label class="control-label">Max Value:</label>
+                    <input class="form-control ui-widget editable" 
+                      type="number" placeholder="max"
+                      id="max-number"
+                      value="{{fieldVM.field.max}}"           
+                      on:blur="fieldVM.field.max = scope.element.value"
+                    >
+                  </div>
+                {{/if}}
               {{/if}}
               {{#if(fieldVM.canList)}}
                 <div name="listext" class="form-upload clearfix" style="padding-bottom: 15px;">

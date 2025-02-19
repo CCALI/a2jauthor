@@ -64,6 +64,7 @@
     onSubmit:from="onConfirmVariableEditing"
   >
     <variable-editor
+      guide:from="guide"
       initialVariable:from="editingVariable"
       showUsageFinder:raw="true"
       onVariableChange:from="onVariableChange"

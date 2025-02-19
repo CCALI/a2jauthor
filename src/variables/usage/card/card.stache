@@ -1,0 +1,18 @@
+<can-import from="~/src/variables/usage/card/card.less" />
+
+<div class="details-card">       
+  {{#if (isOpen)}}
+    <span class="glyphicon-down-open" aria-hidden="true" on:click="toggleDetails(scope.element)"></span>
+  {{else}}
+    <span class="glyphicon-right-open" aria-hidden="true" on:click="toggleDetails(scope.element)"></span>
+  {{/if}}
+
+  <details class="details-element" open on:click="toggleDetails(scope.element, scope.event)">
+  <summary>{{cardInfo.pageName}}</summary>
+  <ul>        
+    {{#each(cardInfo.page, item=value)}}
+      <li>{{item}}</li>
+    {{/each}}
+  </ul>
+  </details>
+</div>

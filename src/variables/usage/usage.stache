@@ -1,0 +1,22 @@
+<can-import from="./usage.less" />
+<can-import from="~/src/variables/usage/card/" />
+
+<div id='var-usage-section'>
+  <div>
+    <label for="varusage">"{{initialVarName}}" used by:</label>
+    <button class='btn btn-default findBtn'>
+      <span class='ui-button-text'>Find Usage</span>
+    </button>
+  </div>
+  <div>
+
+    <div id="varUsageList">
+      <div>
+        {{#each (varUsageList, cardInfo=value)}}
+          <usage-card cardInfo:from="cardInfo"></usage-card>
+        {{/each}}
+      </div>
+
+    </div>
+  </div>
+</div>

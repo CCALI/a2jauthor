@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;variable-usage&gt;</title>
+  </head>
+
+  <body>
+    <div id="demo-html" style="margin: 20px;">
+      <variable-usage></variable-usage>
+    </div>
+
+    <script src="../../../node_modules/steal/steal.js"
+      data-main="@empty">
+    </script>
+
+    <script type="steal-module">
+      import VariableUsage from "~/src/variables/usage/"
+      import "~/styles/"
+      import "~/styles.less"
+    
+      const usageData = [
+        {
+          pageName: '1-Introduction',
+          page: ['Question Text', 'Counting Variable', 'Outer Loop Variable', 'Before Logic', 'After Logic'
+          ],
+          fields: ['Field Variable'],
+          buttons: ['Button Variable Name', 'Button Counting Variable']
+        },
+        { pageName: '3-Avatar', page: ['After Logic'], fields: [], buttons: ['Button Label'] },
+        { pageName: '2-Name %%Foo%%', page: ['Page Name', 'After Logic'], fields: [], buttons: [] }
+      ]
+
+      const vm = document.querySelector('variable-usage').viewModel
+      vm.set("initialVarName", "Foo")
+      vm.set("varUsageList", usageData)
+    </script>
+  </body>
+</html>

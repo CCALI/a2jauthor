@@ -2,6 +2,7 @@ import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './editor.stache'
 import constants from '~/src/models/constants'
+import { findVarUsage } from './util/findVarUsage'
 
 export const VariableEditorVM = DefineMap.extend('VariableEditorVM', {
   /*
@@ -147,7 +148,8 @@ export const VariableEditorVM = DefineMap.extend('VariableEditorVM', {
     this.onSelectSuggestion(name)
   },
 
-  onFindUsage () {
+  onFindVarUsage () {
+    console.log('finding .....')
     // use the initially loaded name in case they've edited it in the form before checking usage
     const variableName = this.initialVarName
     const html = window.vcGatherUsage(variableName)
@@ -163,7 +165,7 @@ export default Component.extend({
   events: {
     '.findBtn click' (target, event) {
       event.preventDefault()
-      this.viewModel.onFindUsage()
+      this.viewModel.onFindVarUsage()
     },
     '.var-name input' (target, event) {
       this.viewModel.variableName = event.target.value

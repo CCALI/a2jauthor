@@ -2,13 +2,13 @@ export function vcGatherUsage (varName) { // 2015-03-27 Search for variable or c
   let html = ''
   let count = 0
   let pageName
-  let lowerCaseVarName = varName.toLowerCase()
-  let regexString = `\\(\\s*${lowerCaseVarName}\\s*\\)|\\%\\s*${lowerCaseVarName}\\s*\\%|\\[\\s*${lowerCaseVarName}\\s*\\]`
-  let macroRegex = new RegExp(regexString, 'i')
-  for (pageName in window.gGuide.pages) {	// Search text, buttons, help, fields and logic for variable name.
+  const lowerCaseVarName = varName.toLowerCase()
+  const regexString = `\\(\\s*${lowerCaseVarName}\\s*\\)|\\%\\s*${lowerCaseVarName}\\s*\\%|\\[\\s*${lowerCaseVarName}\\s*\\]`
+  const macroRegex = new RegExp(regexString, 'i')
+  for (pageName in window.gGuide.pages) { // Search text, buttons, help, fields and logic for variable name.
     /** @type TPage */
-    var where = [] //  list where it's on this page
-    let page = window.gGuide.pages[pageName]
+    const where = [] //  list where it's on this page
+    const page = window.gGuide.pages[pageName]
 
     const findMatches = (searchTarget, usageItem) => {
       // skip check if not string value to check

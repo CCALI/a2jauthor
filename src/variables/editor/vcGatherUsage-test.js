@@ -13,7 +13,7 @@ describe('vcGatherUsage', function () {
     usageTestPage.fields = [new window.TField()]
     usageTestPage.buttons = [new window.TButton()]
 
-    window.gGuide.pages = { usageTestPage: usageTestPage }
+    window.gGuide.pages = { usageTestPage }
 
     const testProps = {
       page: [

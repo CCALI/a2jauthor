@@ -23,3 +23,4 @@ import 'a2jauthor/src/pages-tab/components/var-picker/field/var-picker-field-tes
 // import 'a2jauthor/src/templates/edit/toolbar/toolbar-test'
 // import 'a2jauthor/src/templates/list/item/item-test'
 // import 'a2jauthor/src/templates/list/sortbar/sortbar-test'
+import 'a2jauthor/src/variables/editor/vcGatherUsage-test.js'

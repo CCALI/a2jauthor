@@ -1,18 +1,52 @@
 import 'jquery'
 import { assert } from 'chai'
 import 'steal-mocha'
-import { vcGatherUsage, findMacroMatches } from './vcGatherUsage'
+import { vcGatherUsage, findMacroMatches, findLogicMatches, findLiteralMatches} from './vcGatherUsage'
+
+// Tests for these functions reflect that varname and testValue will be lowercase by the point they reach these functions 
 
 describe('findMacroMatches', function () {
   it.only('returns matches based on A2J Macro Syntax', function () {
-    const matches = findMacroMatches('Hello %%[Client First Name TE]%%, welcome to the interview!', 'Client First Name TE')
-    const expectedResult = [ '[Client First Name TE]' ]
-    console.log(matches)
-    assert.deepEqual(matches, expectedResult, 'should find one match')
+    const matches = findMacroMatches('Enter your mailing address, %%[Client First Name TE  ]%%', 'Client First Name TE')
+    const matches2 = findMacroMatches('Enter your mailing address, %%[Client First Name TE  D]%%', 'Client First Name TE')
+    const matches3 = findMacroMatches('Enter your mailing address, %%[ Client First Name TE ]%%', 'Client First Name TE')
+
+    //explicit = true should pass, fail, pass
+    //explicit = false should pass all
+    assert.deepEqual(matches, ['[Client First Name TE  ]'], 'Should find one match')
+    assert.deepEqual(matches2, ['[Client First Name TE  D]'], 'Should find one match')
+    assert.deepEqual(matches3, [ '[ Client First Name TE ]' ], 'Should find one match')
   })
 })
 
-//Copy above function for other two branches in findMatches, make fail, go from there
+
+// describe('findLogicMatches', function () {
+//   it.only('Returns true search target is matched', function () {
+//     const matches = findLogicMatches('set client first name te to "matt"','client first name te')
+//     const matches2 = findLogicMatches("set [client last name te] to 'matt'",'client first name te')
+
+//     assert.deepEqual(matches, true, "should return true if match is found")
+//     assert.deepEqual(matches2, null, "should return null if no match is found")
+//   })
+// })
+
+describe('findLiteralMatches', function () {
+  it.only('Returns true if target matches exactly', function () {
+    const matches = findLiteralMatches('client age', 'clientage')
+    const matches2 = findLiteralMatches('client age', 'CLIENT AGE')   
+
+    assert.deepEqual(matches, null, "should return null if no match found")
+    assert.deepEqual(matches2, true, "Returns true if exact match")
+  })
+})
+
+// saving just in case
+// const matches = findLiteralMatches('client age', 'client age')
+// const matches2 = findLiteralMatches('age', 'client age')
+
+// assert.deepEqual(matches, true, "should return true if exact match")
+// assert.deepEqual(matches2, false, "should return false if not exact match")
+
 
 
 // describe('vcGatherUsage', function () {

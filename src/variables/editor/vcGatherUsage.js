@@ -27,24 +27,6 @@ const buttonProps = [
 ]
 
 /*
-All three tests greedy if explicitSearch = notTrue
-Test 3 currently is explicit (testValue === lowerCaseVarName)
-Make test 3 greedy
-
-Rename three regex consts
-
--could simply be
-  parenRegexString `^\\(\\s*${lowerCaseVarName}\\s*\\)$`
-  percentRegexString `^\\%\\s*${lowerCaseVarName}\\s*\\%$`
-  bracketRegexString `^\\[\\s*${lowerCaseVarName}\\s*\\]$`
-  if explicitSearch === true, use search Regex with ^/$
-
-*After above is done*
-If explicit, find explicit matches
-Either if/else or find Explicit function
-
-const match = findMatches()
-if (match) { add to where[] }
 
 Type Match = {
 pageName:  
@@ -55,7 +37,7 @@ foundCount:
 */
 
 export const findMacroMatches = (testValue, lowerCaseVarName, explicit) => {
-  explicit = false;
+  explicit = true;
 
   //For greedy search, Regex looks for lowerCaseVarName followed by any character 0+ times, then white space 0+ times, then the closing half of bracket, paren, percent
   const parenRegexString = `\\(\\s*${lowerCaseVarName}.*\\s*\\)`
@@ -74,7 +56,7 @@ export const findMacroMatches = (testValue, lowerCaseVarName, explicit) => {
   const macroRegex = (explicit === false) ? new RegExp(regexString, 'ig'): new RegExp(regexStringX, 'ig')
 
   const matches = testValue.match(macroRegex)
-  console.log(matches)
+  
   return matches ? matches :[]
 }
 
@@ -101,26 +83,22 @@ export const findMatches = (searchTarget, usageItem, varName) => {
   // skip check if not string value to check
   const prop = usageItem.key
   if (!searchTarget[prop]) { return }
+
+  let found = []
+  let explicit
+
   const testValue = searchTarget[prop].toLowerCase()
   const lowerCaseVarName = varName.toLowerCase()
 
   if (usageItem.type === 'regex') { // check for macro matches, `%%someVar%%`
-    const found = findMacroMatches(testValue, lowerCaseVarName)
-    if (found) {
-      where.push(usageItem.display)
-      console.log(where)
-    }
+    found = findMacroMatches(testValue, lowerCaseVarName, explicit)
   } else if (usageItem.type === 'logic') {
-    const found = findLogicMatches(testValue, lowerCaseVarName)
-    if (found) { // check for logic usage (no macro syntax, `set someVar to "foo"`)
-      where.push(usageItem.display)
-    }
+    found = findLogicMatches(testValue, lowerCaseVarName)
   } else {
-    const found = findLiteralMatches(testValue, lowerCaseVarName)
-    if (found) { // check for varName itself, `someVar`
-      where.push(usageItem.display)
-    }
+    found = findLiteralMatches(testValue, lowerCaseVarName)
   }
+  
+  return (found.length !== 0) ? usageItem.display : []
 }
 
 export function vcGatherUsage (varName, explicitSearch) { // 2015-03-27 Search for variable or constant
@@ -133,19 +111,25 @@ export function vcGatherUsage (varName, explicitSearch) { // 2015-03-27 Search f
   for (pageName in window.gGuide.pages) { // Search text, buttons, help, fields and logic for variable name.
     /** @type TPage */
     let where = [] //  list where it's on this page
-    const page = window.gGuide.pages[pageName]
     let pageMatches, fieldMatches, buttonMatches
+    
+    const page = window.gGuide.pages[pageName]
 
     // check top level page properties
     for (const entry of pageProps) {
       pageMatches = findMatches(page, entry, varName)
-      // populate where array here!
+      if(pageMatches && pageMatches.length > 1) {
+        where = [...where, pageMatches]
+      }
     }
-
+    
     // check all page fields
     for (const field of page.fields) {
       for (const entry of fieldProps) {
         fieldMatches = findMatches(field, entry, varName)
+        if(fieldMatches && fieldMatches.length > 1) {
+          where = [...where, fieldMatches]
+        }
       }
     }
 
@@ -153,15 +137,16 @@ export function vcGatherUsage (varName, explicitSearch) { // 2015-03-27 Search f
     for (const button of page.buttons) {
       for (const entry of buttonProps) {
         buttonMatches = findMatches(button, entry, varName)
+        if(buttonMatches && buttonMatches.length > 1) {
+          where = [...where, buttonMatches]
+        }
       }
     }
-    where = [...where, ...pageMatches, ...fieldMatches, ...buttonMatches]
 
     if (where.length) { // If we found anything, we'll list the page and its location.
       count++
       html += ('<li>' + page.name + '</li><ul>' + '<li>' + where.join('<li>') + '</ul>')
     }
   }
-
   return 'Used in ' + count + ' pages' + '<ul>' + html + '</ul>'
 }

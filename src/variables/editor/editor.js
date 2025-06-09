@@ -2,6 +2,7 @@ import DefineMap from 'can-define/map/map'
 import Component from 'can-component'
 import template from './editor.stache'
 import constants from '~/src/models/constants'
+import { vcGatherUsage } from './vcGatherUsage'
 
 export const VariableEditorVM = DefineMap.extend('VariableEditorVM', {
   /*
@@ -150,7 +151,7 @@ export const VariableEditorVM = DefineMap.extend('VariableEditorVM', {
   onFindUsage () {
     // use the initially loaded name in case they've edited it in the form before checking usage
     const variableName = this.initialVarName
-    const html = window.vcGatherUsage(variableName)
+    const html = vcGatherUsage(variableName)
     this.variableUsageHtml = html
   }
 })
